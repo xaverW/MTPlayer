@@ -16,7 +16,12 @@ weitere Infos über das Programm und was sich geändert hat, kann auf der Websit
 https://www.p2tools.de/mtplayer/
 
 ## Datenübernahme aus MediathekView
-Wer Einstellungen von MediathekView übernehmen will, muss aus dessen Config-Ordner (.mediathek3) diese Dateien in den neuen Config-Ordner kopieren: history.txt downloadAbos.txt (diese Datei muss umbenannt werden in: downloads.txt) mediathek.xml (diese Datei muss umbenannt werden in: mtplayer.xml) Alle Einstellungen können nicht übernommen werden da sich einiges geändert hat, nach dem Start bitte die Einstellungen durchgehen und überprüfen.
+Wer Einstellungen von MediathekView übernehmen will, muss aus dessen Config-Ordner (.mediathek3) diese Dateien in den neuen Config-Ordner kopieren:  
+history.txt  
+downloadAbos.txt (diese Datei muss umbenannt werden in: downloads.txt)  
+mediathek.xml (diese Datei muss umbenannt werden in: mtplayer.xml)
+
+Alle Einstellungen können nicht übernommen werden da sich einiges geändert hat, nach dem Start bitte die Einstellungen durchgehen und überprüfen.
 
 ## Systemvoraussetzungen
 Unterstützt wird Windows (7, 8, 10) und Linux. Das Programm benötigt unter Windows und Linux eine aktuelle Java-VM ab Version: 1.8 (= Java 8). Für Linux-Benutzer wird OpenJDK8 empfohlen, außerdem benötigen Linux Benutzer die aktuelle Version von JavaFX (OpenJFX).
