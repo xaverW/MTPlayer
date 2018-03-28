@@ -1,0 +1,174 @@
+/*  Programmweites style sheet */
+
+/* CheckBoxCell */
+.checkbox-table * {
+    -fx-background-color: transparent;
+}
+.checkbox-table:disabled {
+    -fx-opacity: 1;
+}
+.checkbox-table .box {
+    -fx-border-radius: 10px;
+    -fx-border-color: lightgray;
+}
+.checkbox-table:selected .box {
+    -fx-border-color: steelblue;
+}
+.checkbox-table:selected .mark {
+    -fx-background-color: black;
+}
+
+
+/* Rahmen */
+.dialog-title-border {
+    -fx-background-insets: 10;
+    -fx-border-color: lightgray;
+    -fx-border-insets: 0;
+    -fx-border-width: 5 1;
+    -fx-padding: 5px;
+}
+.dialog-border {
+    -fx-background-insets: 10, 40;
+    -fx-border-color: lightgray transparent lightgray transparent, steelblue;
+    -fx-border-insets: 0, 15;
+    -fx-border-width: 20 5, 10 3;
+    -fx-padding: 20px;
+}
+
+.dialog-only-border {
+    -fx-background-insets: 0, 40;
+    -fx-border-color: lightgray transparent lightgray transparent, steelblue;
+    -fx-border-insets: 15, 30;
+    -fx-border-width: 20 5, 10 3;
+    -fx-padding: 20px;
+}
+
+/* damit leere Tabellenzeilen nicht angezeigt werden */
+.table-row-cell:empty {
+    -fx-background-color: white;
+}
+
+.table-row-cell:empty .table-cell {
+    -fx-border-width: 0px;
+}
+
+
+ .menu-button > .arrow-button {
+     -fx-padding: 0;
+ }
+
+ .menu-button > .arrow-button > .arrow {
+     -fx-padding: 0;
+ }
+
+ .contPanel {
+     -fx-border-color: blue;
+     -fx-background-color: white;
+ }
+
+
+ .btnTab{
+    -fx-font-weight: bold;
+    -fx-alignment: center ;
+    -fx-background-color: #c3c4c4,
+        linear-gradient(from 0% 0% to 100% 100%, #d6d6d6 50%, white 100%),
+        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,1;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+    -fx-padding: 10 20 10 20;
+    -fx-border: 10;
+ }
+
+ .btnTab:hover{
+    -fx-font-weight: bold;
+    -fx-alignment: center ;
+    -fx-background-color: #5d5e8c,
+        linear-gradient(from 0% 0% to 100% 100%, #d6d6d6 50%, white 100%),
+        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,1;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+    -fx-padding: 10 20 10 20;
+    -fx-border: 10;
+ }
+
+ .btnTab:pressed{
+    -fx-font-weight: bold;
+    -fx-alignment: center ;
+    -fx-background-color: blue,
+        linear-gradient(from 0% 0% to 100% 100%, #d6d6d6 50%, white 100%),
+        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,1;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+    -fx-padding: 10 20 10 20;
+    -fx-border: 10;
+ }
+
+ .btnTab-sel{
+    -fx-font-weight: bold;
+    -fx-alignment: center ;
+    -fx-background-color: blue,
+         linear-gradient(from 0% 0% to 100% 100%, #d6d6d6 50%, white 100%),
+         radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,1;
+    -fx-text-fill: blue;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+    -fx-padding: 10 20 10 20;
+    -fx-border: 10;
+ }
+
+
+ .btnFilmlist{
+    -fx-background-color: #c3c4c4,
+        linear-gradient(from 0% 0% to 100% 100%, #d6d6d6 50%, white 100%),
+        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,1;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+    -fx-padding: 10 20 10 20;
+    -fx-border: 5;
+ }
+
+ .btnFilmlist:hover{
+     -fx-background-color: #f3f4f4,
+         linear-gradient(from 0% 0% to 100% 100%, #d6d6d6 50%, white 100%),
+         radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+ }
+
+ .btnFilmlist:pressed{
+     -fx-background-color: #5d5e8c,
+         linear-gradient(from 0% 0% to 100% 100%, #d6d6d6 40%, white 90%),
+         radial-gradient(center 80% -70%, radius 200%, #e6e6e6 35%, rgba(230,230,230,0) 40%);
+ }
+
+ .btnFunction{
+    -fx-background-color: #c3c4c4,
+        linear-gradient(from 0% 0% to 100% 100%, #d6d6d6 50%, white 100%),
+        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,1;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+    -fx-padding: 5;
+    -fx-border: 5;
+ }
+
+ .btnFunction:hover{
+     -fx-background-color: #f3f4f4,
+         linear-gradient(from 0% 0% to 100% 100%, #d6d6d6 50%, white 100%),
+         radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+ }
+
+ .btnFunction:pressed{
+     -fx-background-color: #5d5e8c,
+         linear-gradient(from 0% 0% to 100% 100%, #d6d6d6 40%, white 90%),
+         radial-gradient(center 80% -70%, radius 200%, #e6e6e6 35%, rgba(230,230,230,0) 40%);
+ }
+
