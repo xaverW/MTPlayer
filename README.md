@@ -6,7 +6,7 @@ Das Programm MTPlayer ist eine Art Suchmaschine für Filme der Mediatheken der �
 
 Es ist möglich, diese URLs an externe Programme weiterzugeben. Mit diesen Programmen können dann diese Filme angesehen oder aufgezeichnet werden.
 
-Das Programm MTPlayer ist eine Alternative zu meinem früheren Programm MediathekView das jetzt von einer neuen Community weiter gepflegt wird. Dort wird auch die Filmliste hervorragend gepflegt. 
+Das Programm MTPlayer ist eine Alternative zu meinem früheren Programm MediathekView das jetzt von einer neuen Community weiter gepflegt wird. 
 
 ## Infos über das Programm
 Das Programm nutzt den Ordner ".mtplayer" als Konfig-Ordner, es kann also parallel zu MediathekView benutzt werden. Man kann dem Programm auch einen Ordner für die Einstellungen mitgeben (und es z.B. auf einem USB-Stick verwenden):  
