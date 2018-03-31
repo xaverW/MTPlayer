@@ -1,6 +1,6 @@
 /*
  * MTPlayer Copyright (C) 2017 W. Xaver W.Xaver[at]googlemail.com
- * https://www.p2tools.de/mtplayer/
+ * https://www.p2tools.de
  *
  * This program is free software: you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation, either version 3 of the
@@ -41,8 +41,8 @@ public class Const {
     public static final String ADRESSE_FILMLISTEN_SERVER_AKT = "http://res.mediathekview.de/akt.xml";
 
 
-    public static final String ADRESSE_MTPLAYER_CONFIGS = "https://mtplayer.sourceforge.io/mtp/v-" + Functions.getProgVersion() + "/";
-    public static final String ADRESSE_MTPLAYER_VERSION = "https://mtplayer.sourceforge.io/mtp/prog-version.xml";
+    public static final String ADRESSE_MTPLAYER_CONFIGS = "https://www.p2tools.de/extra/mtplayer/v-" + Functions.getProgVersion() + "/";
+    public static final String ADRESSE_MTPLAYER_VERSION = "https://www.p2tools.de/extra/mtplayer/prog-version.xml";
 
     public static final String ADRESSE_VORLAGE_PROGRAMMGRUPPEN = ADRESSE_MTPLAYER_CONFIGS + "programmgruppen.xml";
     public static final String ADRESSE_WEBSITE = "https://www.p2tools.de/mtplayer/";

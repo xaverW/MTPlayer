@@ -1,6 +1,6 @@
 /*
  * MTPlayer Copyright (C) 2017 W. Xaver W.Xaver[at]googlemail.com
- * https://www.p2tools.de/mtplayer/
+ * https://www.p2tools.de
  *
  * This program is free software: you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation, either version 3 of the
@@ -40,6 +40,10 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Daten {
+
+    static {
+        System.out.println("Test");
+    }
 
     private static Daten instance;
 
