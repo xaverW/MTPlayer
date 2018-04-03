@@ -10,8 +10,8 @@
 
 **Release 1-50**
 
-* Die Fehlermeldung "Windows: Fehlermeldung Softwareaktualisierung" beim Start durch fehlende Crypto-lib im System wird unterdrückt.
-http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html
+* Die Fehlermeldung "Windows: Fehlermeldung Softwareaktualisierung" beim Start durch fehlende Crypto-lib im System wird unterdrückt.  
+http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html  
 https://de.wikipedia.org/wiki/Java_Cryptography_Extension
 
 
