@@ -41,9 +41,9 @@ import javafx.util.Duration;
 
 public class Daten {
 
-    static {
-        System.out.println("Test");
-    }
+//    static {
+//        System.out.println("Test");
+//    }
 
     private static Daten instance;
 
