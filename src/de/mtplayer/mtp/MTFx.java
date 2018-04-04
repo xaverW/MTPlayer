@@ -92,8 +92,8 @@ public class MTFx extends Application {
             root = new MTFxController();
             daten.mtFxController = root;
             scene = new Scene(root,
-                    GuiSize.getWidth(Config.SYSTEM_GROESSE_GUI),
-                    GuiSize.getHeight(Config.SYSTEM_GROESSE_GUI));
+                    GuiSize.getWidth(Config.SYSTEM_SIZE_GUI),
+                    GuiSize.getHeight(Config.SYSTEM_SIZE_GUI));
 
             String css = this.getClass().getResource(Const.CSS_FILE).toExternalForm();
             scene.getStylesheets().add(css);
@@ -104,7 +104,7 @@ public class MTFx extends Application {
                 new ProgQuitt().beenden(true, false);
             });
 
-            GuiSize.setPos(Config.SYSTEM_GROESSE_GUI, primaryStage);
+            GuiSize.setPos(Config.SYSTEM_SIZE_GUI, primaryStage);
             primaryStage.show();
 
         } catch (final Exception e) {
@@ -146,7 +146,7 @@ public class MTFx extends Application {
                 final SetList pSet = ListePsetVorlagen.getStandarset(true /*replaceMuster*/);
                 if (pSet != null) {
                     daten.setList.addPset(pSet);
-                    Config.SYSTEM_VERSION_PROGRAMMSET.setValue(pSet.version);
+                    Config.SYSTEM_UPDATE_PROGSET_VERSION.setValue(pSet.version);
                 }
             });
 
@@ -240,7 +240,7 @@ public class MTFx extends Application {
 
     private void checkProgUpdate() {
         if (!Boolean.parseBoolean(Config.SYSTEM_UPDATE_SEARCH.get()) ||
-                Config.SYSTEM_BUILD_NR.get().equals(Functions.getProgVersion())
+                Config.SYSTEM_UPDATE_BUILD_NR.get().equals(Functions.getProgVersion())
                         && Config.SYSTEM_UPDATE_DATE.get().equals(StringFormatters.FORMATTER_yyyyMMdd.format(new Date()))) {
             // will der User nicht --oder-- keine neue Version und heute schon gemacht
             return;

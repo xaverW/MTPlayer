@@ -108,10 +108,10 @@ public class Filter {
             if (makePattern(text) == null) {
                 // soll Pattern sein, ist aber falsch
                 tf.setStyle("");
-                tf.setStyle("-fx-control-inner-background: " + MTColor.FILTER_REGEX_FEHLER.getColorToWeb() + ";");
+                tf.setStyle("-fx-control-inner-background: " + MTColor.FILTER_REGEX_ERROR.getColorToWeb() + ";");
             } else {
                 tf.setStyle("");
-                tf.setStyle("-fx-control-inner-background: " + MTColor.FILTER_REGEX_FEHLER.getColorToWeb() + ";");
+                tf.setStyle("-fx-control-inner-background: " + MTColor.FILTER_REGEX_ERROR.getColorToWeb() + ";");
                 tf.setStyle("-fx-control-inner-background: " + MTColor.FILTER_REGEX.getColorToWeb() + ";");
             }
         } else {

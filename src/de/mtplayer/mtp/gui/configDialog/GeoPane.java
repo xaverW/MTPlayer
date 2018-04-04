@@ -38,7 +38,7 @@ public class GeoPane {
     RadioButton rbEu = new RadioButton("EU (EUB - European Broadcasting Union");
     RadioButton rbSonst = new RadioButton("sonst");
 
-    BooleanProperty geoProperty = Config.SYSTEM_GEO_MARK.getBooleanProperty();
+    BooleanProperty geoProperty = Config.SYSTEM_MARK_GEO.getBooleanProperty();
 
     public TitledPane makeGeo() {
         int row = 0;

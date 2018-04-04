@@ -191,7 +191,7 @@ public class SetsPrograms {
         }
 
         if (Daten.getInstance().setList.addPset(pSet)) {
-            Config.SYSTEM_VERSION_PROGRAMMSET.setValue(pSet.version);
+            Config.SYSTEM_UPDATE_PROGSET_VERSION.setValue(pSet.version);
             return true;
         } else {
             return false;

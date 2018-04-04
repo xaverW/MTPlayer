@@ -100,9 +100,9 @@ public class LoadFilmList {
         if (!dateiUrl.isEmpty()) {
             // der Benutzer hat eine Datei vorgegeben, es wird diese Liste NEU geladen
             immerNeuLaden = true;
-        } else if (dateiUrl.isEmpty() && !Config.SYSTEM_LOAD_FILME_MANUELL.get().isEmpty()) {
+        } else if (dateiUrl.isEmpty() && !Config.SYSTEM_LOAD_FILMS_MANUALLY.get().isEmpty()) {
             // der Benutzer hat eine Datei vorgegeben, es wird diese Liste NEU geladen
-            dateiUrl = Config.SYSTEM_LOAD_FILME_MANUELL.get();
+            dateiUrl = Config.SYSTEM_LOAD_FILMS_MANUALLY.get();
             immerNeuLaden = true;
         }
 
@@ -130,13 +130,13 @@ public class LoadFilmList {
                 // Filme als Liste importieren, Url automatisch ermitteln
                 SysMsg.sysMsg("Filmliste laden (auto)");
                 importFilmliste.filmeImportierenAuto(daten.filmList,
-                        diffListe, Config.SYSTEM_ANZ_TAGE_FILMLISTE.getInt());
+                        diffListe, Config.SYSTEM_NUM_DAYS_FILMLIST.getInt());
             } else {
                 // Filme als Liste importieren, feste URL/Datei
                 SysMsg.sysMsg("Filmliste laden von: " + dateiUrl);
                 daten.filmList.clear();
                 importFilmliste.filmeImportierenDatei(dateiUrl,
-                        daten.filmList, Config.SYSTEM_ANZ_TAGE_FILMLISTE.getInt());
+                        daten.filmList, Config.SYSTEM_NUM_DAYS_FILMLIST.getInt());
             }
         }
         System.out.println("--------> LOADFILMLIST-->fertig");
@@ -232,7 +232,7 @@ public class LoadFilmList {
             daten.filmList.clear();
             setStop(false);
             new ReadFilmlist().readFilmListe(ProgInfos.getFilmListFile(),
-                    daten.filmList, Config.SYSTEM_ANZ_TAGE_FILMLISTE.getInt());
+                    daten.filmList, Config.SYSTEM_NUM_DAYS_FILMLIST.getInt());
             SysMsg.sysMsg("");
         } else {
             new ProgSave().filmlisteSpeichern();

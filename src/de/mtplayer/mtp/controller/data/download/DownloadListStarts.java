@@ -171,7 +171,7 @@ public class DownloadListStarts {
         // erste passende Element der Liste zurückgeben oder null
         // und versuchen dass bei mehreren laufenden Downloads ein anderer Sender gesucht wird
         Download ret = null;
-        if (downloadList.size() > 0 && getDown(Config.SYSTEM_DOWNLOAD_MAX_DOWNLOAD.getInt())) {
+        if (downloadList.size() > 0 && getDown(Config.DOWNLOAD_MAX_DOWNLOADS.getInt())) {
             final Download datenDownload = naechsterStart();
             if (datenDownload != null && datenDownload.isStateStartedWaiting()) {
                 ret = datenDownload;
@@ -201,7 +201,7 @@ public class DownloadListStarts {
         // zweiter Versuch, Start mit einem passenden Sender
         nr = -1;
         int maxProSender = Const.MAX_SENDER_FILME_LADEN;
-        if (Boolean.parseBoolean(Config.SYSTEM_MAX_1_DOWNLOAD_PRO_SERVER.get())) {
+        if (Boolean.parseBoolean(Config.DOWNLOAD_MAX_ONE_PER_SERVER.get())) {
             // dann darf nur ein Download pro Server gestartet werden
             maxProSender = 1;
         }

@@ -43,8 +43,8 @@ public class DownloadFilterController extends FilterController {
     Label lblBandwidth = new Label();
 
     // funktioniert nur wenn hier angelegt, geht sonst die Ref verloren!
-    IntegerProperty bandwidthValue = Config.SYSTEM_DOWNLOAD_BANDBREITE_KBYTE.getIntegerProperty();
-    IntegerProperty anzValue = Config.SYSTEM_DOWNLOAD_MAX_DOWNLOAD.getIntegerProperty();
+    IntegerProperty bandwidthValue = Config.DOWNLOAD_MAX_BANDWITH_KBYTE.getIntegerProperty();
+    IntegerProperty anzValue = Config.DOWNLOAD_MAX_DOWNLOADS.getIntegerProperty();
     IntegerProperty integerProperty;
 
     public DownloadFilterController() {
@@ -104,7 +104,7 @@ public class DownloadFilterController extends FilterController {
                 DownloadInfos.SRC_COMBO_DOWNLOAD,
                 DownloadInfos.SRC_COMBO_ABO);
 
-        Bindings.bindBidirectional(cbSrc.valueProperty(), Config.FILTER_DOWNLOAD_QUELLE.getStringProperty(),
+        Bindings.bindBidirectional(cbSrc.valueProperty(), Config.FILTER_DOWNLOAD_SOURCE.getStringProperty(),
                 new StringConverter<String>() {
 
                     public String fromString(String cb) {
@@ -138,7 +138,7 @@ public class DownloadFilterController extends FilterController {
                 DownloadInfos.ART_COMBO_DOWNLOAD,
                 DownloadInfos.ART_COMBO_PROGRAMM);
 
-        Bindings.bindBidirectional(cbArt.valueProperty(), Config.FILTER_DOWNLOAD_ART.getStringProperty(),
+        Bindings.bindBidirectional(cbArt.valueProperty(), Config.FILTER_DOWNLOAD_KIND.getStringProperty(),
                 new StringConverter<String>() {
 
                     public String fromString(String cb) {
@@ -201,7 +201,7 @@ public class DownloadFilterController extends FilterController {
     private void setTextBandwith() {
         int bandbreiteKByte;
         String ret;
-        bandbreiteKByte = Config.SYSTEM_DOWNLOAD_BANDBREITE_KBYTE.getInt();
+        bandbreiteKByte = Config.DOWNLOAD_MAX_BANDWITH_KBYTE.getInt();
         if (bandbreiteKByte == MLBandwidthTokenBucket.BANDWIDTH_MAX_KBYTE) {
             ret = "aus";
         } else {

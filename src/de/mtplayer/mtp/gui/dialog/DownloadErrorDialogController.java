@@ -58,14 +58,14 @@ public class DownloadErrorDialogController extends MTDialog {
 
 
     private Timeline timeline = null;
-    private Integer timeSeconds = Config.SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SEKUNDEN.getInt();
+    private Integer timeSeconds = Config.SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getInt();
 
     private final String message;
     private final Download download;
 
     public DownloadErrorDialogController(Download download, String message) {
         super("/de/mtplayer/mtp/gui/dialog/DownloadErrorDialog.fxml",
-                Config.DOWNOAD_DIALOG_ERROR_GROESSE,
+                Config.DOWNLOAD_DIALOG_ERROR_SIZE,
                 "Fehler", true);
 
         this.download = download;

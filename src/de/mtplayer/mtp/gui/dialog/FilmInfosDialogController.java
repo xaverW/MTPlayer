@@ -41,7 +41,7 @@ public class FilmInfosDialogController extends MTDialogExtra {
     private final Daten daten;
 
     public FilmInfosDialogController(Daten daten) {
-        super(null, Config.SYSTEM_GROESSE_DIALOG_FILMINFO,
+        super(null, Config.SYSTEM_SIZE_DIALOG_FILMINFO,
                 "Filminfos", false);
 
         this.daten = daten;

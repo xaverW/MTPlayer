@@ -40,7 +40,7 @@ import java.util.Collection;
 public class BlackPane {
     TableView<BlackData> tableView = new TableView<>();
 
-    BooleanProperty propWhite = Config.SYSTEM_BLACKLIST_IST_WHITELIST.getBooleanProperty();
+    BooleanProperty propWhite = Config.SYSTEM_BLACKLIST_IS_WHITELIST.getBooleanProperty();
 
     public void makeBlackTable(Collection<TitledPane> result) {
         final VBox vBox = new VBox();
@@ -73,7 +73,7 @@ public class BlackPane {
         rbBlack.setToggleGroup(group);
         rbWhite.setToggleGroup(group);
 
-        rbBlack.setSelected(!Config.SYSTEM_BLACKLIST_IST_WHITELIST.getBool());
+        rbBlack.setSelected(!Config.SYSTEM_BLACKLIST_IS_WHITELIST.getBool());
 
         gridPane.add(rbBlack, 0, 1);
         gridPane.add(new Label("\"Sender / Thema / Titel\" werden nicht angezeigt (Blacklist)"), 1, 1);

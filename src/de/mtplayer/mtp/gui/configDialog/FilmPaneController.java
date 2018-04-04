@@ -48,9 +48,9 @@ public class FilmPaneController extends AnchorPane {
     private final int FILTER_DAYS_MAX = 150;
 
     BooleanProperty accordionProp = Config.CONFIG_DIALOG_ACCORDION.getBooleanProperty();
-    IntegerProperty propDay = Config.SYSTEM_ANZ_TAGE_FILMLISTE.getIntegerProperty();
-    BooleanProperty propLoad = Config.SYSTEM_LOAD_FILME_START.getBooleanProperty();
-    StringProperty propUrl = Config.SYSTEM_LOAD_FILME_MANUELL.getStringProperty();
+    IntegerProperty propDay = Config.SYSTEM_NUM_DAYS_FILMLIST.getIntegerProperty();
+    BooleanProperty propLoad = Config.SYSTEM_LOAD_FILMS_ON_START.getBooleanProperty();
+    StringProperty propUrl = Config.SYSTEM_LOAD_FILMS_MANUALLY.getStringProperty();
 
     public FilmPaneController() {
         daten = Daten.getInstance();

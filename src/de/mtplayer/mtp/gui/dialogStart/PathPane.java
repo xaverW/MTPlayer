@@ -38,9 +38,9 @@ import java.io.File;
 import static de.mtplayer.mLib.tools.Functions.getOs;
 
 public class PathPane {
-    StringProperty vlcProp = Config.SYSTEM_PFAD_VLC.getStringProperty();
-    StringProperty flvProp = Config.SYSTEM_PFAD_FLVSTREAMER.getStringProperty();
-    StringProperty ffmpegProp = Config.SYSTEM_PFAD_FFMPEG.getStringProperty();
+    StringProperty vlcProp = Config.SYSTEM_PATH_VLC.getStringProperty();
+    StringProperty flvProp = Config.SYSTEM_PATH_FLVSTREAMER.getStringProperty();
+    StringProperty ffmpegProp = Config.SYSTEM_PATH_FFMPEG.getStringProperty();
 
     private final ColumnConstraints ccTxt = new ColumnConstraints();
 
@@ -100,7 +100,7 @@ public class PathPane {
                 hyperlink = new Hyperlink(Const.ADRESSE_WEBSITE_FLVSTREAMER);
                 property = flvProp;
                 btnFind.setOnAction(event -> {
-                    Config.SYSTEM_PFAD_FLVSTREAMER.setValue("");
+                    Config.SYSTEM_PATH_FLVSTREAMER.setValue("");
                     txtPlayer.setText(SetsPrograms.getMusterPfadFlv());
                 });
                 hyperlink.setOnAction(a -> {
@@ -116,7 +116,7 @@ public class PathPane {
                 hyperlink = new Hyperlink(Const.ADRESSE_WEBSITE_FFMPEG);
                 property = ffmpegProp;
                 btnFind.setOnAction(event -> {
-                    Config.SYSTEM_PFAD_FFMPEG.setValue("");
+                    Config.SYSTEM_PATH_FFMPEG.setValue("");
                     txtPlayer.setText(SetsPrograms.getMusterPfadFFmpeg());
                 });
                 hyperlink.setOnAction(a -> {
@@ -133,7 +133,7 @@ public class PathPane {
                 hyperlink = new Hyperlink(Const.ADRESSE_WEBSITE_VLC);
                 property = vlcProp;
                 btnFind.setOnAction(event -> {
-                    Config.SYSTEM_PFAD_VLC.setValue("");
+                    Config.SYSTEM_PATH_VLC.setValue("");
                     txtPlayer.setText(SetsPrograms.getMusterPfadVlc());
                 });
                 hyperlink.setOnAction(a -> {
@@ -151,7 +151,7 @@ public class PathPane {
         txtPlayer.textProperty().addListener((observable, oldValue, newValue) -> {
             File file = new File(txtPlayer.getText());
             if (!file.exists() || !file.isFile()) {
-                txtPlayer.setStyle(MTColor.DATEINAME_FEHLER.getCssBackground());
+                txtPlayer.setStyle(MTColor.DOWNLOAD_NAME_ERROR.getCssBackground());
             } else {
                 txtPlayer.setStyle("");
             }

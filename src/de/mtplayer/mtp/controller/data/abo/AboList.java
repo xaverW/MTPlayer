@@ -81,13 +81,13 @@ public class AboList extends SimpleListProperty<Abo> {
 
         int mindestdauer, maxdauer;
         try {
-            mindestdauer = Config.ABO_MIN_SIZE_MIN.getInt();
-            maxdauer = Config.ABO_MAX_SIZE_MIN.getInt();
+            mindestdauer = Config.ABO_MINUTE_MIN_SIZE.getInt();
+            maxdauer = Config.ABO_MINUTE_MAX_SIZE.getInt();
         } catch (final Exception ex) {
             mindestdauer = 0;
             maxdauer = SelectedFilter.FILTER_DURATIION_MAX_MIN;
-            Config.ABO_MIN_SIZE_MIN.setValue("0");
-            Config.ABO_MAX_SIZE_MIN.setValue(SelectedFilter.FILTER_DURATIION_MAX_MIN);
+            Config.ABO_MINUTE_MIN_SIZE.setValue("0");
+            Config.ABO_MINUTE_MAX_SIZE.setValue(SelectedFilter.FILTER_DURATIION_MAX_MIN);
         }
 
         String namePfad = DownloadTools.replaceLeerDateiname(aboname,
@@ -111,8 +111,8 @@ public class AboList extends SimpleListProperty<Abo> {
         if (editAboController.getOk()) {
             if (!aboExistiertBereits(abo)) {
                 // als Vorgabe merken
-                Config.ABO_MIN_SIZE_MIN.setValue(abo.getMin());
-                Config.ABO_MAX_SIZE_MIN.setValue(abo.getMax());
+                Config.ABO_MINUTE_MIN_SIZE.setValue(abo.getMin());
+                Config.ABO_MINUTE_MAX_SIZE.setValue(abo.getMax());
                 addAbo(abo);
                 sort();
                 aenderungMelden();

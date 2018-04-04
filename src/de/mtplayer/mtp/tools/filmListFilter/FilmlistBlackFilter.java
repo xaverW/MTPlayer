@@ -134,22 +134,22 @@ public class FilmlistBlackFilter {
      */
     private static void loadCurrentFilterSettings() {
         try {
-            if (Config.SYSTEM_BLACKLIST_DAYS.getInt() == 0) {
+            if (Config.SYSTEM_BLACKLIST_SHOW_ONLY_DAYS.getInt() == 0) {
                 days = 0;
             } else {
-                final long max = 1000L * 60L * 60L * 24L * Config.SYSTEM_BLACKLIST_DAYS.getInt();
+                final long max = 1000L * 60L * 60L * 24L * Config.SYSTEM_BLACKLIST_SHOW_ONLY_DAYS.getInt();
                 days = System.currentTimeMillis() - max;
             }
         } catch (final Exception ex) {
             days = 0;
         }
         try {
-            filmlaengeSoll = Long.valueOf(Config.SYSTEM_BLACKLIST_FILMLAENGE.get()) * 60; // Minuten
+            filmlaengeSoll = Long.valueOf(Config.SYSTEM_BLACKLIST_FILMSIZE.get()) * 60; // Minuten
         } catch (final Exception ex) {
             filmlaengeSoll = 0;
         }
-        doNotShowFutureFilms = Boolean.parseBoolean(Config.SYSTEM_BLACKLIST_ZUKUNFT_NICHT_ANZEIGEN.get());
-        doNotShowGeoBlockedFilms = Boolean.parseBoolean(Config.SYSTEM_BLACKLIST_GEO_NICHT_ANZEIGEN.get());
+        doNotShowFutureFilms = Boolean.parseBoolean(Config.SYSTEM_BLACKLIST_SHOW_NO_FUTURE.get());
+        doNotShowGeoBlockedFilms = Boolean.parseBoolean(Config.SYSTEM_BLACKLIST_SHOW_NO_GEO.get());
     }
 
     /**
@@ -232,10 +232,10 @@ public class FilmlistBlackFilter {
                     film,
                     false /* auch die Länge prüfen */)) {
 
-                return Config.SYSTEM_BLACKLIST_IST_WHITELIST.getBool();
+                return Config.SYSTEM_BLACKLIST_IS_WHITELIST.getBool();
             }
         }
-        return !Config.SYSTEM_BLACKLIST_IST_WHITELIST.getBool();
+        return !Config.SYSTEM_BLACKLIST_IS_WHITELIST.getBool();
     }
 
 }

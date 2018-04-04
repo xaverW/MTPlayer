@@ -109,7 +109,7 @@ public class TableAbo {
                         TableRow<Abo> currentRow = getTableRow();
                         if (currentRow != null) {
                             if (!item.booleanValue()) {
-                                currentRow.setStyle(MTColor.ABO_AUSGESCHALTET.getCssBackground());
+                                currentRow.setStyle(MTColor.ABO_SWITCHED_OFF.getCssBackground());
                             } else {
                                 currentRow.setStyle("");
                             }

@@ -35,7 +35,7 @@ public class MTNotification {
     }
 
     private static void add(String text, boolean error) {
-        if (Boolean.parseBoolean(Config.DOWNLOAD_NOTIFICATION.get())) {
+        if (Boolean.parseBoolean(Config.DOWNLOAD_SHOW_NOTIFICATION.get())) {
 
             Platform.runLater(() -> {
                 if (error) {

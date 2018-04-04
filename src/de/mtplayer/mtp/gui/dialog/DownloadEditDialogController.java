@@ -73,7 +73,7 @@ public class DownloadEditDialogController extends MTDialogExtra {
     private final Daten daten;
 
     public DownloadEditDialogController(Daten daten, Download download, boolean isStarted) {
-        super(null, Config.DOWNOAD_DIALOG_EDIT_GROESSE,
+        super(null, Config.DOWNLOAD_DIALOG_EDIT_SIZE,
                 "Download ändern", true);
 
         this.daten = daten;
@@ -355,7 +355,7 @@ public class DownloadEditDialogController extends MTDialogExtra {
         ++row;
 
         // gespeicherte Pfade eintragen
-        final String[] p = Config.SYSTEM_DIALOG_DOWNLOAD__PFADE_ZUM_SPEICHERN.get().split("<>");
+        final String[] p = Config.DOWNLOAD_DIALOG_PATH_SAVING.get().split("<>");
         cbPath.getItems().addAll(p);
 
         if (download.getZielPfad().isEmpty()) {
@@ -387,7 +387,7 @@ public class DownloadEditDialogController extends MTDialogExtra {
 
             if (!txt[DownloadXml.DOWNLOAD_ZIEL_DATEINAME].getText().equals(
                     FileNameUtils.checkDateiname(txt[DownloadXml.DOWNLOAD_ZIEL_DATEINAME].getText(), false /* pfad */))) {
-                txt[DownloadXml.DOWNLOAD_ZIEL_DATEINAME].setStyle(MTColor.DATEINAME_FEHLER.getCssBackground());
+                txt[DownloadXml.DOWNLOAD_ZIEL_DATEINAME].setStyle(MTColor.DOWNLOAD_NAME_ERROR.getCssBackground());
             } else {
                 txt[DownloadXml.DOWNLOAD_ZIEL_DATEINAME].setStyle("");
             }

@@ -154,7 +154,7 @@ public class StarterClass {
 
     private static void fertigmeldung(final Download download) {
         final Start start = download.getStart();
-        if (Boolean.parseBoolean(Config.SYSTEM_DOWNLOAD_BEEP.get())) {
+        if (Boolean.parseBoolean(Config.DOWNLOAD_BEEP.get())) {
             try {
                 Toolkit.getDefaultToolkit().beep();
             } catch (final Exception ignored) {

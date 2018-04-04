@@ -128,7 +128,7 @@ public class DirectHttpDownload extends Thread {
         }
 
         download.getStart().setInputStream(new MLInputStream(conn.getInputStream(),
-                bandwidthCalculationTimer, Config.SYSTEM_DOWNLOAD_BANDBREITE_KBYTE.getIntegerProperty()));
+                bandwidthCalculationTimer, Config.DOWNLOAD_MAX_BANDWITH_KBYTE.getIntegerProperty()));
 
         fos = new FileOutputStream(file, (downloaded != 0));
 
@@ -226,8 +226,8 @@ public class DirectHttpDownload extends Thread {
                     download.getDownloadSize().setSize(getContentLength(url));
                     download.getDownloadSize().setAktFileSize(0);
                     conn = (HttpURLConnection) url.openConnection();
-                    conn.setConnectTimeout(1000 * Config.SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SEKUNDEN.getInt());
-                    conn.setReadTimeout(1000 * Config.SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SEKUNDEN.getInt());
+                    conn.setConnectTimeout(1000 * Config.SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getInt());
+                    conn.setReadTimeout(1000 * Config.SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getInt());
 
                     setupHttpConnection(conn);
                     conn.connect();

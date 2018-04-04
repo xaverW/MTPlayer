@@ -73,11 +73,11 @@ public class DownloadContinueDialogController extends MTDialog {
     private String oldPathFile;
 
     private Timeline timeline = null;
-    private Integer timeSeconds = Config.SYSTEM_PARAMETER_DOWNLOAD_WEITERFUEHREN_IN_SEKUNDEN.getInt();
+    private Integer timeSeconds = Config.SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECOND.getInt();
 
     public DownloadContinueDialogController(Daten daten, Download download, boolean direkterDownload) {
         super("/de/mtplayer/mtp/gui/dialog/DownloadContinueDialog.fxml",
-                Config.DOWNOAD_DIALOG_CONTINUE_GROESSE,
+                Config.DOWNLOAD_DIALOG_CONTINUE_SIZE,
                 "Download weiterführen", true);
 
         this.daten = daten;
@@ -203,7 +203,7 @@ public class DownloadContinueDialogController extends MTDialog {
 
     private void initPathAndName() {
         // gespeicherte Pfade eintragen
-        final String[] p = Config.SYSTEM_DIALOG_DOWNLOAD__PFADE_ZUM_SPEICHERN.get().split("<>");
+        final String[] p = Config.DOWNLOAD_DIALOG_PATH_SAVING.get().split("<>");
         cbPath.getItems().addAll(p);
 
         if (download.getZielPfad().isEmpty()) {
@@ -224,7 +224,7 @@ public class DownloadContinueDialogController extends MTDialog {
             stopCounter();
 
             if (!txtFileName.getText().equals(FileNameUtils.checkDateiname(txtFileName.getText(), false /* pfad */))) {
-                txtFileName.setStyle(MTColor.DATEINAME_FEHLER.getCssBackground());
+                txtFileName.setStyle(MTColor.DOWNLOAD_NAME_ERROR.getCssBackground());
             } else {
                 txtFileName.setStyle("");
             }

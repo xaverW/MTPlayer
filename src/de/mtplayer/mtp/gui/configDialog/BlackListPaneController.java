@@ -46,11 +46,11 @@ public class BlackListPaneController extends AnchorPane {
     private final Label lblDays = new Label("");
 
     BooleanProperty accordionProp = Config.CONFIG_DIALOG_ACCORDION.getBooleanProperty();
-    IntegerProperty propSize = Config.SYSTEM_BLACKLIST_FILMLAENGE.getIntegerProperty();
-    IntegerProperty propDay = Config.SYSTEM_BLACKLIST_DAYS.getIntegerProperty();
-    BooleanProperty propGeo = Config.SYSTEM_BLACKLIST_GEO_NICHT_ANZEIGEN.getBooleanProperty();
-    BooleanProperty propAbo = Config.SYSTEM_BLACKLIST_AUCH_ABO.getBooleanProperty();
-    BooleanProperty propFutur = Config.SYSTEM_BLACKLIST_ZUKUNFT_NICHT_ANZEIGEN.getBooleanProperty();
+    IntegerProperty propSize = Config.SYSTEM_BLACKLIST_FILMSIZE.getIntegerProperty();
+    IntegerProperty propDay = Config.SYSTEM_BLACKLIST_SHOW_ONLY_DAYS.getIntegerProperty();
+    BooleanProperty propGeo = Config.SYSTEM_BLACKLIST_SHOW_NO_GEO.getBooleanProperty();
+    BooleanProperty propAbo = Config.SYSTEM_BLACKLIST_SHOW_ABO.getBooleanProperty();
+    BooleanProperty propFutur = Config.SYSTEM_BLACKLIST_SHOW_NO_FUTURE.getBooleanProperty();
 
     private final int SIZE_MAX = 100;
     private final int FILTER_DAYS_MAX = 150;

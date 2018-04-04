@@ -42,7 +42,7 @@ public class ImportSetDialogController extends MTDialog {
     private ScrollPane pathPane, setPane;
 
     public ImportSetDialogController(Daten daten) {
-        super("", Config.CONFIG_DIALOG_IMPORT_SET_GROESSE,
+        super("", Config.CONFIG_DIALOG_IMPORT_SET_SIZE,
                 "Set importieren", true);
 
         this.daten = daten;

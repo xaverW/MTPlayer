@@ -117,32 +117,32 @@ public class SetList extends SimpleListProperty<SetData> {
 
     private static String getPfadVlc() {
         // liefert den Pfad wenn vorhanden, wenn nicht wird er in einem Dialog abgefragt
-        if (Config.SYSTEM_PFAD_VLC.get().isEmpty()) {
-            Config.SYSTEM_PFAD_VLC.setValue(new MTAlert().showAlertFileCooser("VLC", "VLC wird nicht gefunden.",
+        if (Config.SYSTEM_PATH_VLC.get().isEmpty()) {
+            Config.SYSTEM_PATH_VLC.setValue(new MTAlert().showAlertFileCooser("VLC", "VLC wird nicht gefunden.",
                     "Bitte den Pfad zum\n" +
                             "VLC-Player angeben.", false));
         }
-        return Config.SYSTEM_PFAD_VLC.get();
+        return Config.SYSTEM_PATH_VLC.get();
     }
 
     private static String getPfadFlv() {
         // liefert den Pfad wenn vorhanden, wenn nicht wird er in einem Dialog abgefragt
-        if (Config.SYSTEM_PFAD_FLVSTREAMER.get().isEmpty()) {
-            Config.SYSTEM_PFAD_FLVSTREAMER.setValue(new MTAlert().showAlertFileCooser("flvstreamer", "flvstreamer wird nicht gefunden.",
+        if (Config.SYSTEM_PATH_FLVSTREAMER.get().isEmpty()) {
+            Config.SYSTEM_PATH_FLVSTREAMER.setValue(new MTAlert().showAlertFileCooser("flvstreamer", "flvstreamer wird nicht gefunden.",
                     "Bitte den Pfad zum\n" +
                             "flvstreamer angeben.", false));
         }
-        return Config.SYSTEM_PFAD_FLVSTREAMER.get();
+        return Config.SYSTEM_PATH_FLVSTREAMER.get();
     }
 
     private static String getPfadFFmpeg() {
         // liefert den Pfad wenn vorhanden, wenn nicht wird er in einem Dialog abgefragt
-        if (Config.SYSTEM_PFAD_FFMPEG.get().isEmpty()) {
-            Config.SYSTEM_PFAD_FFMPEG.setValue(new MTAlert().showAlertFileCooser("ffmpeg", "ffmpeg wird nicht gefunden.",
+        if (Config.SYSTEM_PATH_FFMPEG.get().isEmpty()) {
+            Config.SYSTEM_PATH_FFMPEG.setValue(new MTAlert().showAlertFileCooser("ffmpeg", "ffmpeg wird nicht gefunden.",
                     "Bitte den Pfad zu\n" +
                             "ffmpeg angeben.", false));
         }
-        return Config.SYSTEM_PFAD_FFMPEG.get();
+        return Config.SYSTEM_PATH_FFMPEG.get();
     }
 
     public SetData getPsetAbspielen() {

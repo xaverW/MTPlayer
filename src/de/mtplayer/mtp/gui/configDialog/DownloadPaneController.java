@@ -43,10 +43,10 @@ public class DownloadPaneController extends AnchorPane {
     private final CheckBox cbxAccordion = new CheckBox("");
 
     BooleanProperty accordionProp = Config.CONFIG_DIALOG_ACCORDION.getBooleanProperty();
-    BooleanProperty propNotify = Config.DOWNLOAD_NOTIFICATION.getBooleanProperty();
-    BooleanProperty propErr = Config.SYSTEM_DOWNLOAD_ERRORMSG.getBooleanProperty();
-    BooleanProperty propOne = Config.SYSTEM_MAX_1_DOWNLOAD_PRO_SERVER.getBooleanProperty();
-    BooleanProperty propBeep = Config.SYSTEM_DOWNLOAD_BEEP.getBooleanProperty();
+    BooleanProperty propNotify = Config.DOWNLOAD_SHOW_NOTIFICATION.getBooleanProperty();
+    BooleanProperty propErr = Config.DOWNLOAD_ERROR_MSG.getBooleanProperty();
+    BooleanProperty propOne = Config.DOWNLOAD_MAX_ONE_PER_SERVER.getBooleanProperty();
+    BooleanProperty propBeep = Config.DOWNLOAD_BEEP.getBooleanProperty();
 
     private final ScrollPane scrollPane = new ScrollPane();
 

@@ -66,7 +66,7 @@ public class AboEditDialogController extends MTDialogExtra {
     private Daten daten;
 
     public AboEditDialogController(Daten daten, Abo abo) {
-        super(null, Config.ABO_EDIT_DIALOG_GROESSE,
+        super(null, Config.ABO_DIALOG_EDIT_SIZE,
                 "Abo ändern", true);
 
         this.daten = daten;
@@ -79,7 +79,7 @@ public class AboEditDialogController extends MTDialogExtra {
     }
 
     public AboEditDialogController(Daten daten, ObservableList<Abo> lAbo) {
-        super(null, Config.ABO_EDIT_DIALOG_GROESSE,
+        super(null, Config.ABO_DIALOG_EDIT_SIZE,
                 "Abo ändern", true);
         this.lAbo = lAbo;
         this.daten = daten;
@@ -280,13 +280,13 @@ public class AboEditDialogController extends MTDialogExtra {
                 setDefaultTxt(i, grid);
                 txt[i].textProperty().addListener((observable, oldValue, newValue) -> {
                     if (txt[i].getText().isEmpty()) {
-                        txt[i].setStyle(MTColor.DATEINAME_FEHLER.getCssBackground());
+                        txt[i].setStyle(MTColor.DOWNLOAD_NAME_ERROR.getCssBackground());
                     } else {
                         txt[i].setStyle("");
                     }
                 });
                 if (txt[i].getText().isEmpty()) {
-                    txt[i].setStyle(MTColor.DATEINAME_FEHLER.getCssBackground());
+                    txt[i].setStyle(MTColor.DOWNLOAD_NAME_ERROR.getCssBackground());
                 } else {
                     txt[i].setStyle("");
                 }

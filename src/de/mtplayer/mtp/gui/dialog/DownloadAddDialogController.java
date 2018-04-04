@@ -122,7 +122,7 @@ public class DownloadAddDialogController extends MTDialog {
     final private SetList setList;
     private SetData psetData;
     private String filterAufloesung;
-    final String[] storedPath = Config.SYSTEM_DIALOG_DOWNLOAD__PFADE_ZUM_SPEICHERN.get().split("<>");
+    final String[] storedPath = Config.DOWNLOAD_DIALOG_PATH_SAVING.get().split("<>");
 
 
     private int filmNr = 0;
@@ -206,7 +206,7 @@ public class DownloadAddDialogController extends MTDialog {
 
     public DownloadAddDialogController(Daten daten, ArrayList<Film> films, SetData psetData, String filterAufloesung) {
         super("/de/mtplayer/mtp/gui/dialog/DownloadAddDialog.fxml",
-                films.size() > 1 ? Config.DOWNOAD_DIALOG_ADD_MORE_GROESSE : Config.DOWNOAD_DIALOG_ADD_GROESSE,
+                films.size() > 1 ? Config.DOWNLOAD_DIALOG_ADD_MORE_SIZE : Config.DOWNLOAD_DIALOG_ADD_SIZE,
                 "Download anlegen", true);
 
         this.daten = daten;
@@ -497,7 +497,7 @@ public class DownloadAddDialogController extends MTDialog {
             }
         }
 
-        Config.SYSTEM_DIALOG_DOWNLOAD__PFADE_ZUM_SPEICHERN.setValue(s);
+        Config.DOWNLOAD_DIALOG_PATH_SAVING.setValue(s);
     }
 
     /**
@@ -672,7 +672,7 @@ public class DownloadAddDialogController extends MTDialog {
             downInfo[filmNr].setName(txtName.getText());
 
             if (!txtName.getText().equals(FileNameUtils.checkDateiname(txtName.getText(), false /* pfad */))) {
-                txtName.setStyle(MTColor.DATEINAME_FEHLER.getCssBackground());
+                txtName.setStyle(MTColor.DOWNLOAD_NAME_ERROR.getCssBackground());
             } else {
                 txtName.setStyle("");
             }
@@ -696,7 +696,7 @@ public class DownloadAddDialogController extends MTDialog {
 
     private void initCheckBox() {
         // und jetzt noch die Listener anhängen
-        cbxStart.selectedProperty().bindBidirectional(Config.SYSTEM_DIALOG_DOWNLOAD_D_STARTEN.getBooleanProperty());
+        cbxStart.selectedProperty().bindBidirectional(Config.DOWNLOAD_DIALOG_START_DOWNLOAD.getBooleanProperty());
 //        cbxPath.selectedProperty().bindBidirectional(Config.SYSTEM_DIALOG_DOWNLOAD__LETZTEN_PFAD_ANZEIGEN.getBooleanProperty());
 
         cbxSubtitle.setOnAction(event -> downInfo[filmNr].setSubtitle(cbxSubtitle.isSelected()));

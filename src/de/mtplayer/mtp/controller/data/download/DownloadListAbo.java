@@ -100,7 +100,7 @@ public class DownloadListAbo {
         downloadList.forEach((download) -> listeUrls.add(download.getUrl()));
 
         // prüfen ob in "alle Filme" oder nur "nach Blacklist" gesucht werden soll
-        final boolean checkWithBlackList = Config.SYSTEM_BLACKLIST_AUCH_ABO.getBool();
+        final boolean checkWithBlackList = Config.SYSTEM_BLACKLIST_SHOW_ABO.getBool();
 
         if (daten.setList.getPsetAbo("") == null) {
             // dann fehlt ein Set für die Abos

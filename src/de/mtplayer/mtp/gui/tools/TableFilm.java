@@ -42,7 +42,7 @@ public class TableFilm {
 
     public TableFilm(Daten daten) {
         this.daten = daten;
-        geoMelden = Config.SYSTEM_GEO_MARK.getBooleanProperty();
+        geoMelden = Config.SYSTEM_MARK_GEO.getBooleanProperty();
     }
 
     public TableColumn[] initFilmColumn(TableView table) {
@@ -153,7 +153,7 @@ public class TableFilm {
                     } else if (film.isNewFilm()) {
                         // neue Filme
                         for (int i = 0; i < getChildren().size(); i++) {
-                            getChildren().get(i).setStyle(MTColor.FILM_NEU.getCssFont());
+                            getChildren().get(i).setStyle(MTColor.FILM_NEW.getCssFont());
                         }
 
                     } else {

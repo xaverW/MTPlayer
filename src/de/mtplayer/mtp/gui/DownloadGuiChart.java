@@ -41,7 +41,7 @@ import java.util.LinkedList;
 
 public class DownloadGuiChart {
 
-    private BooleanProperty separatChartProp = Config.SYSTEM_DOWNLOAD_CHART_SEPARAT.getBooleanProperty();
+    private BooleanProperty separatChartProp = Config.DOWNLOAD_CHART_SEPARAT.getBooleanProperty();
     private final Daten daten;
 
     private int countSek = 0;
@@ -155,7 +155,7 @@ public class DownloadGuiChart {
     }
 
     private void selectChartData() {
-        if (Config.SYSTEM_DOWNLOAD_CHART_SEPARAT.getBool()) {
+        if (Config.DOWNLOAD_CHART_SEPARAT.getBool()) {
             lineChart.setData(listChartSerparat);
         } else {
             lineChart.setData(listChartSum);
@@ -220,7 +220,7 @@ public class DownloadGuiChart {
         double max = 0;
         final ObservableList<XYChart.Series<Number, Number>> list;
 
-        if (Config.SYSTEM_DOWNLOAD_CHART_SEPARAT.getBool()) {
+        if (Config.DOWNLOAD_CHART_SEPARAT.getBool()) {
             list = listChartSerparat;
         } else {
             list = listChartSum;

@@ -69,7 +69,7 @@ public class ProgStart {
 
             Platform.runLater(() -> daten.mtFxController.getBtnFilmliste().setDisable(true));
             new ReadFilmlist().readFilmListe(ProgInfos.getFilmListFile(),
-                    daten.filmList, Config.SYSTEM_ANZ_TAGE_FILMLISTE.getInt());
+                    daten.filmList, Config.SYSTEM_NUM_DAYS_FILMLIST.getInt());
             Platform.runLater(() -> daten.mtFxController.getBtnFilmliste().setDisable(false));
 
             SysMsg.sysMsg("Liste Filme gelesen am: " + StringFormatters.FORMATTER_ddMMyyyyHHmm.format(new Date()));
@@ -77,7 +77,7 @@ public class ProgStart {
             SysMsg.sysMsg("  Anzahl Filme: " + daten.filmList.size());
             SysMsg.sysMsg("  Anzahl Neue: " + daten.filmList.countNewFilms());
 
-            if (daten.filmList.isTooOld() && Config.SYSTEM_LOAD_FILME_START.getBool()) {
+            if (daten.filmList.isTooOld() && Config.SYSTEM_LOAD_FILMS_ON_START.getBool()) {
                 SysMsg.sysMsg("Filmliste zu alt, neue Filmliste laden");
                 daten.loadFilmList.loadFilmlist("", false);
 

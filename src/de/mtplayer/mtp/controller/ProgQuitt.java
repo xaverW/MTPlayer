@@ -41,7 +41,7 @@ public class ProgQuitt {
 
     private void writeWindowSizes() {
         // Hauptfenster
-        GuiSize.getSizeScene(Config.SYSTEM_GROESSE_GUI, daten.primaryStage);
+        GuiSize.getSizeScene(Config.SYSTEM_SIZE_GUI, daten.primaryStage);
     }
 
     private void writeTabSettings() {

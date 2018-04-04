@@ -62,7 +62,7 @@ public class Table {
             case FILM:
                 confWidth = Config.FILM_GUI_TABLE_WIDTH;
                 confSort = Config.FILM_GUI_TABLE_SORT;
-                confUpDown = Config.FILM_GUI_TABLE_UPDOWN;
+                confUpDown = Config.FILM_GUI_TABLE_UP_DOWN;
                 confVis = Config.FILM_GUI_TABLE_VIS;
                 confOrder = Config.FILM_GUI_TABLE_ORDER;
                 break;
@@ -70,7 +70,7 @@ public class Table {
             case DOWNLOAD:
                 confWidth = Config.DOWNLOAD_GUI_TABLE_WIDTH;
                 confSort = Config.DOWNLOAD_GUI_TABLE_SORT;
-                confUpDown = Config.DOWNLOAD_GUI_TABLE_UPDOWN;
+                confUpDown = Config.DOWNLOAD_GUI_TABLE_UP_DOWN;
                 confVis = Config.DOWNLOAD_GUI_TABLE_VIS;
                 confOrder = Config.DOWNLOAD_GUI_TABLE_ORDER;
                 break;
@@ -78,7 +78,7 @@ public class Table {
             case ABO:
                 confWidth = Config.ABO_GUI_TABLE_WIDTH;
                 confSort = Config.ABO_GUI_TABLE_SORT;
-                confUpDown = Config.ABO_GUI_TABLE_UPDOWN;
+                confUpDown = Config.ABO_GUI_TABLE_UP_DOWN;
                 confVis = Config.ABO_GUI_TABLE_VIS;
                 confOrder = Config.ABO_GUI_TABLE_ORDER;
                 break;

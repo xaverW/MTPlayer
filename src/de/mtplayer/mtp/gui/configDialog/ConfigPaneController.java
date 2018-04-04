@@ -47,9 +47,9 @@ public class ConfigPaneController extends AnchorPane {
     private final CheckBox cbxAccordion = new CheckBox("");
 
     BooleanProperty accordionProp = Config.CONFIG_DIALOG_ACCORDION.getBooleanProperty();
-    BooleanProperty updateProp = Config.SYSTEM_UPDATE_SEARCH.getBooleanProperty();
-    BooleanProperty propAbo = Config.ABO_SOFORT_SUCHEN.getBooleanProperty();
-    BooleanProperty propDown = Config.SYSTEM_DOWNLOAD_SOFORT_STARTEN.getBooleanProperty();
+    BooleanProperty propUpdateSearch = Config.SYSTEM_UPDATE_SEARCH.getBooleanProperty();
+    BooleanProperty propAbo = Config.ABO_SEARCH_NOW.getBooleanProperty();
+    BooleanProperty propDown = Config.DOWNLOAD_START_NOW.getBooleanProperty();
     StringProperty propDir = Config.SYSTEM_PROG_OPEN_DIR.getStringProperty();
     StringProperty propUrl = Config.SYSTEM_PROG_OPEN_URL.getStringProperty();
     StringProperty propPlay = Config.SYSTEM_PROG_PLAY_FILE.getStringProperty();
@@ -237,7 +237,7 @@ public class ConfigPaneController extends AnchorPane {
 
         //einmal am Tag Update suchen
         final ToggleSwitch tglSearch = new ToggleSwitch("einmal am Tag nach einer neuen Programmversion suchen");
-        tglSearch.selectedProperty().bindBidirectional(updateProp);
+        tglSearch.selectedProperty().bindBidirectional(propUpdateSearch);
         gridPane.add(tglSearch, 0, 0);
 
         final Button btnHelp = new Button("");

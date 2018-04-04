@@ -21,10 +21,17 @@ import de.mtplayer.mLib.tools.StringFormatters;
 import de.mtplayer.mtp.controller.config.Config;
 import de.mtplayer.mtp.controller.config.Const;
 import de.p2tools.p2Lib.checkForUpdates.SearchProgInfo;
+import javafx.beans.property.BooleanProperty;
 
 import java.util.Date;
 
 public class SearchProgramUpdate {
+
+    BooleanProperty updateProp;
+
+    public SearchProgramUpdate() {
+        updateProp = Config.SYSTEM_UPDATE_SEARCH.getBooleanProperty();
+    }
 
     /**
      * @param showError
@@ -33,12 +40,11 @@ public class SearchProgramUpdate {
      */
     public boolean checkVersion(boolean showError, boolean showProgramInformation) {
         // prüft auf neue Version,
-
-        Config.SYSTEM_BUILD_NR.setValue(Functions.getProgVersion());
+        Config.SYSTEM_UPDATE_BUILD_NR.setValue(Functions.getProgVersion());
         Config.SYSTEM_UPDATE_DATE.setValue(StringFormatters.FORMATTER_yyyyMMdd.format(new Date()));
 
-        return new SearchProgInfo().checkUpdate(Const.ADRESSE_MTPLAYER_VERSION, Config.SYSTEM_BUILD_NR.getInt(),
-                Config.SYSTEM_INFO_NR_SHOWN.getIntegerProperty(), Config.SYSTEM_UPDATE_SEARCH.getBooleanProperty(),
+        return new SearchProgInfo().checkUpdate(Const.ADRESSE_MTPLAYER_VERSION, Config.SYSTEM_UPDATE_BUILD_NR.getInt(),
+                Config.SYSTEM_UPDATE_INFO_NR_SHOWN.getIntegerProperty(), updateProp,
                 showProgramInformation, showError);
     }
 

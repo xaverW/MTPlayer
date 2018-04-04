@@ -135,7 +135,7 @@ public class DownloadGuiController extends AnchorPane {
         // erledigte entfernen, nicht gestartete Abos entfernen und neu nach Abos suchen
         daten.downloadList.abosSuchen();
 
-        if (Boolean.parseBoolean(Config.SYSTEM_DOWNLOAD_SOFORT_STARTEN.get())) {
+        if (Boolean.parseBoolean(Config.DOWNLOAD_START_NOW.get())) {
             // und wenn gewollt auch gleich starten
             downloadStartenWiederholen(true /* alle */, false /* fertige wieder starten */);
         }
@@ -353,20 +353,20 @@ public class DownloadGuiController extends AnchorPane {
         Listener.addListener(new Listener(Listener.EREIGNIS_BLACKLIST_GEAENDERT, DownloadGuiController.class.getSimpleName()) {
             @Override
             public void ping() {
-                if (Boolean.parseBoolean(Config.ABO_SOFORT_SUCHEN.get())
-                        && Boolean.parseBoolean(Config.SYSTEM_BLACKLIST_AUCH_ABO.get())) {
+                if (Boolean.parseBoolean(Config.ABO_SEARCH_NOW.get())
+                        && Boolean.parseBoolean(Config.SYSTEM_BLACKLIST_SHOW_ABO.get())) {
                     // nur auf Blacklist reagieren, wenn auch für Abos eingeschaltet
                     aktualisieren();
                 }
             }
         });
-        Config.SYSTEM_BLACKLIST_AUCH_ABO.getBooleanProperty().addListener((observable, oldValue, newValue) -> {
-            if (Config.ABO_SOFORT_SUCHEN.getBool()) {
+        Config.SYSTEM_BLACKLIST_SHOW_ABO.getBooleanProperty().addListener((observable, oldValue, newValue) -> {
+            if (Config.ABO_SEARCH_NOW.getBool()) {
                 aktualisieren();
             }
         });
         daten.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
-            if (Config.ABO_SOFORT_SUCHEN.getBool()) {
+            if (Config.ABO_SEARCH_NOW.getBool()) {
                 aktualisieren();
             }
         });
@@ -378,7 +378,7 @@ public class DownloadGuiController extends AnchorPane {
 
             @Override
             public void fertig(ListenerFilmListLoadEvent event) {
-                if (Config.ABO_SOFORT_SUCHEN.getBool()) {
+                if (Config.ABO_SEARCH_NOW.getBool()) {
                     aktualisieren();
                 }
             }
@@ -423,10 +423,10 @@ public class DownloadGuiController extends AnchorPane {
         Config.FILTER_DOWNLOAD_ABO.getStringProperty().addListener((observable, oldValue, newValue) -> {
             setfilter();
         });
-        Config.FILTER_DOWNLOAD_QUELLE.getStringProperty().addListener((observable, oldValue, newValue) -> {
+        Config.FILTER_DOWNLOAD_SOURCE.getStringProperty().addListener((observable, oldValue, newValue) -> {
             setfilter();
         });
-        Config.FILTER_DOWNLOAD_ART.getStringProperty().addListener((observable, oldValue, newValue) -> {
+        Config.FILTER_DOWNLOAD_KIND.getStringProperty().addListener((observable, oldValue, newValue) -> {
             setfilter();
         });
     }
@@ -434,8 +434,8 @@ public class DownloadGuiController extends AnchorPane {
     private void setfilter() {
         final String sender = Config.FILTER_DOWNLOAD_SENDER.get();
         final String abo = Config.FILTER_DOWNLOAD_ABO.get();
-        final String quelle = Config.FILTER_DOWNLOAD_QUELLE.get();
-        final String art = Config.FILTER_DOWNLOAD_ART.get();
+        final String quelle = Config.FILTER_DOWNLOAD_SOURCE.get();
+        final String art = Config.FILTER_DOWNLOAD_KIND.get();
 
         //System.out.println("Sender: " + sender + " Abo: " + abo + " Quelle: " + quelle + " Art: " + art);
         filteredDownloads.setPredicate(download -> (!download.isZurueckgestellt() &&

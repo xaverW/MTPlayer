@@ -41,7 +41,7 @@ public class TableDownload {
     private final BooleanProperty geoMelden;
 
     public TableDownload() {
-        geoMelden = Config.SYSTEM_GEO_MARK.getBooleanProperty();
+        geoMelden = Config.SYSTEM_MARK_GEO.getBooleanProperty();
     }
 
     public TableColumn[] initDownloadColumn(TableView table) {
@@ -267,10 +267,10 @@ public class TableDownload {
                 currentRow.setStyle(MTColor.DOWNLOAD_RUN.getCssBackground());
                 break;
             case DownloadInfos.STATE_FINISHED:
-                currentRow.setStyle(MTColor.DOWNLOAD_FERTIG.getCssBackground());
+                currentRow.setStyle(MTColor.DOWNLOAD_FINISHED.getCssBackground());
                 break;
             case DownloadInfos.STATE_ERROR:
-                currentRow.setStyle(MTColor.DOWNLOAD_FEHLER.getCssBackground());
+                currentRow.setStyle(MTColor.DOWNLOAD_ERROR.getCssBackground());
                 break;
         }
     }

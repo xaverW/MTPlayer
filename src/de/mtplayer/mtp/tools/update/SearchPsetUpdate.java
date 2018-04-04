@@ -42,7 +42,7 @@ public class SearchPsetUpdate {
             Platform.runLater(() -> {
 
                 final SetList listePsetStandard = ListePsetVorlagen.getStandarset(false /* replaceMuster */);
-                final String version = Config.SYSTEM_VERSION_PROGRAMMSET.get();
+                final String version = Config.SYSTEM_UPDATE_PROGSET_VERSION.get();
                 if (listePsetStandard == null) {
                     return;
                 }
@@ -69,7 +69,7 @@ public class SearchPsetUpdate {
                         if (!newSetDialogController.getAskAgain()) {
                             // dann auch die Versionsnummer aktualisieren
                             SysMsg.sysMsg("Setanlegen: Nicht wieder nachfragen");
-                            Config.SYSTEM_VERSION_PROGRAMMSET.setValue(listePsetStandard.version);
+                            Config.SYSTEM_UPDATE_PROGSET_VERSION.setValue(listePsetStandard.version);
                         }
                         SysMsg.sysMsg("==========================================");
                         return;
@@ -81,7 +81,7 @@ public class SearchPsetUpdate {
                 // gibt keine Sets oder aktualisieren
                 // damit die Variablen ersetzt werden
                 SetList.progMusterErsetzen(listePsetStandard);
-                Config.SYSTEM_VERSION_PROGRAMMSET.setValue(listePsetStandard.version);
+                Config.SYSTEM_UPDATE_PROGSET_VERSION.setValue(listePsetStandard.version);
 
                 // die Zielpafade anpassen
                 final SetList listePsetOrgSpeichern = daten.setList.getListeSpeichern();
