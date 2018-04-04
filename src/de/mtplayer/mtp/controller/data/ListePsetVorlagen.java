@@ -19,14 +19,12 @@ package de.mtplayer.mtp.controller.data;
 import de.mtplayer.mLib.tools.FileUtils;
 import de.mtplayer.mLib.tools.Log;
 import de.mtplayer.mtp.controller.config.Const;
-import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.tools.file.GetFile;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamReader;
-import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -60,6 +58,7 @@ public class ListePsetVorlagen extends LinkedList<String[]> {
     public static SetList getStandarset(boolean replaceMuster) {
         SetList setList = null;
         String[] vorlage = null;
+
         final ListePsetVorlagen listePsetVorlagen = new ListePsetVorlagen();
         if (listePsetVorlagen.loadListOfSets()) {
             for (final String[] ar : listePsetVorlagen) {
@@ -70,13 +69,14 @@ public class ListePsetVorlagen extends LinkedList<String[]> {
             }
             if (vorlage != null) {
                 if (!vorlage[PGR_URL_NR].isEmpty()) {
-                    setList = ListePsetVorlagen.importPsetFile(vorlage[ListePsetVorlagen.PGR_URL_NR], true);
+                    setList = ListePsetVorlagen.importPsetFile(vorlage[ListePsetVorlagen.PGR_URL_NR]);
                     if (setList != null) {
                         setList.version = vorlage[PGR_VERSION_NR];
                     }
                 }
             }
         }
+
         if (setList == null) {
             // dann nehmen wir halt die im jar-File
             // liefert das Standard Programmset für das entsprechende BS
@@ -89,7 +89,7 @@ public class ListePsetVorlagen extends LinkedList<String[]> {
                     inReader = new GetFile().getPsetVorlageWindows();
             }
             // Standardgruppen laden
-            setList = ListePsetVorlagen.importPset(inReader, true);
+            setList = ListePsetVorlagen.importPset(inReader);
         }
 
         if (replaceMuster && setList != null) {
@@ -134,7 +134,7 @@ public class ListePsetVorlagen extends LinkedList<String[]> {
         return true;
     }
 
-    public static SetList importPsetFile(String dateiUrl, boolean log) {
+    public static SetList importPsetFile(String dateiUrl) {
         final int timeout = 10_000; //10 Sekunden
         try {
             if (FileUtils.istUrl(dateiUrl)) {
@@ -143,23 +143,21 @@ public class ListePsetVorlagen extends LinkedList<String[]> {
                 conn.setConnectTimeout(timeout);
                 conn.setReadTimeout(timeout);
                 conn.setRequestProperty("User-Agent", ProgInfos.getUserAgent());
-                return ListePsetVorlagen.importPset(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8), log);
+                return ListePsetVorlagen.importPset(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8));
             } else {
-                return ListePsetVorlagen.importPset(new InputStreamReader(new FileInputStream(dateiUrl), StandardCharsets.UTF_8), log);
+                return ListePsetVorlagen.importPset(new InputStreamReader(new FileInputStream(dateiUrl), StandardCharsets.UTF_8));
             }
         } catch (final Exception ex) {
-            if (log) {
-                Log.errorLog(630048926, ex);
-            }
+            Log.errorLog(630048926, ex);
             return null;
         }
     }
 
-    public static SetList importPsetText(Daten dd, String text, boolean log) {
-        return ListePsetVorlagen.importPset(new InputStreamReader(new ByteArrayInputStream(text.getBytes())), log);
-    }
+//    public static SetList importPsetText(Daten dd, String text, boolean log) {
+//        return ListePsetVorlagen.importPset(new InputStreamReader(new ByteArrayInputStream(text.getBytes())), log);
+//    }
 
-    private static SetList importPset(InputStreamReader in, boolean log) {
+    private static SetList importPset(InputStreamReader in) {
         SetData psetData = null;
         final SetList liste = new SetList();
         try {
@@ -199,9 +197,8 @@ public class ListePsetVorlagen extends LinkedList<String[]> {
             }
             in.close();
         } catch (final Exception ex) {
-            if (log) {
-                Log.errorLog(467810360, ex);
-            }
+            Log.errorLog(467810360, ex);
+
             return null;
         }
         if (liste.isEmpty()) {

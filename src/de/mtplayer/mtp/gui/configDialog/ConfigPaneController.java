@@ -25,7 +25,7 @@ import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.gui.tools.MTOpen;
-import de.mtplayer.mtp.tools.update.ProgrammUpdateSuchen;
+import de.mtplayer.mtp.tools.update.SearchProgramUpdate;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.HPos;
@@ -259,20 +259,12 @@ public class ConfigPaneController extends AnchorPane {
         //jetzt suchen
         Button btnNow = new Button("Jetzt suchen");
         btnNow.setMaxWidth(Double.MAX_VALUE);
-        btnNow.setOnAction(event -> new ProgrammUpdateSuchen().checkVersion(true, true /* bei aktuell anzeigen */,
-                false /* Hinweis */,
-                true /* hinweiseAlleAnzeigen */));
-
-        Button btnInfo = new Button("Programminfos anzeigen");
-        btnInfo.setMaxWidth(Double.MAX_VALUE);
-        btnInfo.setOnAction(event -> new ProgrammUpdateSuchen().checkVersion(true, false /* bei aktuell anzeigen */,
-                true /* Hinweis */,
-                true /* hinweiseAlleAnzeigen */));
+        btnNow.setOnAction(event -> new SearchProgramUpdate().checkVersion(true, true /* anzeigen */));
 
         HBox hBox = new HBox();
         hBox.setPadding(new Insets(10, 0, 0, 0));
         hBox.setSpacing(10);
-        hBox.getChildren().addAll(btnNow, btnInfo);
+        hBox.getChildren().addAll(btnNow);
         gridPane.add(hBox, 0, 1);
 
 

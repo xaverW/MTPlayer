@@ -43,8 +43,9 @@ public class Const {
 
     public static final String ADRESSE_MTPLAYER_CONFIGS = "https://www.p2tools.de/extra/mtplayer/v-" + Functions.getProgVersion() + "/";
     public static final String ADRESSE_MTPLAYER_VERSION = "https://www.p2tools.de/extra/mtplayer/prog-version.xml";
+//    public static final String ADRESSE_MTPLAYER_VERSION = "https://www.p2tools.de/extra/mtplayer-info.xml";
 
-    public static final String ADRESSE_VORLAGE_PROGRAMMGRUPPEN = ADRESSE_MTPLAYER_CONFIGS + "pset-templates .xml";
+    public static final String ADRESSE_VORLAGE_PROGRAMMGRUPPEN = ADRESSE_MTPLAYER_CONFIGS + "pset-templates.xml";
     public static final String ADRESSE_WEBSITE = "https://www.p2tools.de/mtplayer/";
 
     // ProgrammUrls

@@ -15,9 +15,7 @@
  */
 package de.mtplayer.mtp;
 
-import de.mtplayer.mLib.tools.Duration;
-import de.mtplayer.mLib.tools.Functions;
-import de.mtplayer.mLib.tools.SysMsg;
+import de.mtplayer.mLib.tools.*;
 import de.mtplayer.mtp.controller.ProgQuitt;
 import de.mtplayer.mtp.controller.ProgSave;
 import de.mtplayer.mtp.controller.ProgStart;
@@ -33,14 +31,17 @@ import de.mtplayer.mtp.gui.tools.GuiSize;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.res.GetIcon;
 import de.mtplayer.mtp.tools.storedFilter.ProgInitFilter;
-import de.mtplayer.mtp.tools.update.CheckUpdate;
+import de.mtplayer.mtp.tools.update.SearchProgramUpdate;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.util.Date;
 import java.util.List;
+
+import static java.lang.Thread.sleep;
 
 public class MTFx extends Application {
 
@@ -134,7 +135,7 @@ public class MTFx extends Application {
             // konnte nicht geladen werden
             Duration.staticPing("Erster Start");
 
-            // einmal ein Muster anlegen, für Linux/OS X ist es bereits aktiv!
+            // einmal ein Muster anlegen, für Linux ist es bereits aktiv!
             daten.replaceList.init();
 
             new StartDialogController();
@@ -229,11 +230,42 @@ public class MTFx extends Application {
             public void fertigOnlyOne(ListenerFilmListLoadEvent event) {
                 // Prüfen obs ein Programmupdate gibt
                 Duration.staticPing(LOG_TEXT_CHECK_UPDATE);
-                new CheckUpdate(daten).checkProgUpdate();
+                checkProgUpdate();
                 daten.mediaDbList.loadSavedList();
                 daten.mediaDbList.createMediaDB();
             }
         });
 
     }
+
+    private void checkProgUpdate() {
+        if (!Boolean.parseBoolean(Config.SYSTEM_UPDATE_SEARCH.get()) ||
+                Config.SYSTEM_BUILD_NR.get().equals(Functions.getProgVersion())
+                        && Config.SYSTEM_UPDATE_DATE.get().equals(StringFormatters.FORMATTER_yyyyMMdd.format(new Date()))) {
+            // will der User nicht --oder-- keine neue Version und heute schon gemacht
+            return;
+        }
+
+        new Thread(this::prog).start();
+    }
+
+    private synchronized void prog() {
+        try {
+            if (new SearchProgramUpdate().checkVersion(false, false /* immer anzeigen */)) {
+                Listener.notify(Listener.EREIGNIS_GUI_UPDATE_VERFUEGBAR, MTFx.class.getSimpleName());
+            } else {
+                Listener.notify(Listener.EREIGNIS_GUI_PROGRAMM_AKTUELL, MTFx.class.getSimpleName());
+            }
+
+            try {
+                sleep(10_000);
+            } catch (final InterruptedException ignored) {
+            }
+            Listener.notify(Listener.EREIGNIS_GUI_ORG_TITEL, MTFx.class.getSimpleName());
+
+        } catch (final Exception ex) {
+            Log.errorLog(794612801, ex);
+        }
+    }
+
 }

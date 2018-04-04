@@ -166,6 +166,7 @@ public class FilmList extends SimpleListProperty<Film> {
         // viele Filme sind bei mehreren Sendern vorhanden
         final HashSet<String> hash = new HashSet<>(size(), 0.75F);
 
+        // todo exception parallel??
         this.parallelStream().forEach((Film f) -> {
             f.setGeoBlocked();
             f.setInFuture();
