@@ -16,10 +16,10 @@
 
 package de.mtplayer.mtp.gui.tools;
 
-import de.mtplayer.mLib.tools.Log;
 import de.mtplayer.mLib.tools.MLConfigs;
 import de.mtplayer.mtp.controller.config.Config;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
+import de.p2tools.p2Lib.tools.Log;
 import javafx.application.Platform;
 
 import java.awt.*;

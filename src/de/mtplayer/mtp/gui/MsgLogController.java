@@ -17,7 +17,7 @@
 
 package de.mtplayer.mtp.gui;
 
-import de.mtplayer.mLib.tools.SysMsg;
+import de.p2tools.p2Lib.tools.SysMsg;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;

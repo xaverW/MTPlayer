@@ -18,8 +18,8 @@ package de.mtplayer.mtp.controller.data;
 
 import de.mtplayer.mLib.tools.FilmDate;
 import de.mtplayer.mLib.tools.Functions;
-import de.mtplayer.mLib.tools.GermanStringSorter;
-import de.mtplayer.mLib.tools.Log;
+import de.p2tools.p2Lib.tools.GermanStringSorter;
+import de.p2tools.p2Lib.tools.Log;
 import org.apache.commons.lang3.time.FastDateFormat;
 
 public class HistoryData implements Comparable<HistoryData> {

@@ -17,9 +17,9 @@
 package de.mtplayer.mtp.controller.loadFilmlist;
 
 import de.mtplayer.mLib.tools.Functions;
-import de.mtplayer.mLib.tools.Log;
 import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.ProgInfos;
+import de.p2tools.p2Lib.tools.Log;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;

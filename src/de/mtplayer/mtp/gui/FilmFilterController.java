@@ -16,13 +16,13 @@
 
 package de.mtplayer.mtp.gui;
 
-import de.mtplayer.mLib.tools.Duration;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.loadFilmlist.ListenerFilmListLoad;
 import de.mtplayer.mtp.controller.loadFilmlist.ListenerFilmListLoadEvent;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
+import de.p2tools.p2Lib.tools.Duration;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.geometry.Pos;

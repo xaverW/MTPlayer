@@ -16,11 +16,11 @@
 
 package de.mtplayer.mtp.controller.data.film;
 
-import de.mtplayer.mLib.tools.Duration;
-import de.mtplayer.mLib.tools.Log;
 import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.tools.filmListFilter.FilmlistBlackFilter;
+import de.p2tools.p2Lib.tools.Duration;
+import de.p2tools.p2Lib.tools.Log;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;

@@ -17,7 +17,6 @@
 package de.mtplayer.mtp.gui.configDialog;
 
 import de.mtplayer.mLib.tools.DirFileChooser;
-import de.mtplayer.mLib.tools.Log;
 import de.mtplayer.mtp.controller.config.Config;
 import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.Daten;
@@ -26,6 +25,7 @@ import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.gui.tools.MTOpen;
 import de.mtplayer.mtp.tools.update.SearchProgramUpdate;
+import de.p2tools.p2Lib.tools.Log;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.HPos;

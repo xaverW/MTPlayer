@@ -16,9 +16,6 @@
 
 package de.mtplayer.mtp.gui;
 
-import de.mtplayer.mLib.tools.Log;
-import de.mtplayer.mLib.tools.SysMsg;
-import de.mtplayer.mLib.tools.SysTools;
 import de.mtplayer.mtp.controller.config.Config;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.data.download.Download;
@@ -32,6 +29,9 @@ import de.mtplayer.mtp.gui.mediaDialog.MediaDialogController;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.gui.tools.MTOpen;
 import de.mtplayer.mtp.gui.tools.Table;
+import de.p2tools.p2Lib.tools.Log;
+import de.p2tools.p2Lib.tools.SysMsg;
+import de.p2tools.p2Lib.tools.SysTools;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;

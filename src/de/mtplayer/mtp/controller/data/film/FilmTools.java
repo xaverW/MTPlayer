@@ -16,8 +16,7 @@
 
 package de.mtplayer.mtp.controller.data.film;
 
-import de.mtplayer.mLib.tools.FileSize;
-import de.mtplayer.mLib.tools.Log;
+import de.mtplayer.mLib.tools.FileSizeUrl;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.download.Download;
@@ -25,6 +24,7 @@ import de.mtplayer.mtp.gui.dialog.DownloadAddDialogController;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.dialog.NoSetDialogController;
 import de.mtplayer.mtp.gui.tools.MTOpen;
+import de.p2tools.p2Lib.tools.Log;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.text.Font;
@@ -72,7 +72,7 @@ public class FilmTools {
         if (url.equals(film.arr[FilmXml.FILM_URL])) {
             return film.arr[FilmXml.FILM_GROESSE];
         } else {
-            return FileSize.getFileSizeFromUrl(url);
+            return FileSizeUrl.getFileSizeFromUrl(url);
         }
     }
 

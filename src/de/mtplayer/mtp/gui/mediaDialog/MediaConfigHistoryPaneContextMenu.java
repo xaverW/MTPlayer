@@ -16,10 +16,10 @@
 
 package de.mtplayer.mtp.gui.mediaDialog;
 
-import de.mtplayer.mLib.tools.SysTools;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.data.HistoryData;
 import de.mtplayer.mtp.controller.data.film.Film;
+import de.p2tools.p2Lib.tools.SysTools;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 

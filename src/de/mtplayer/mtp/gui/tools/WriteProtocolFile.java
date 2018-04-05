@@ -17,14 +17,14 @@
 package de.mtplayer.mtp.gui.tools;
 
 import de.mtplayer.mLib.tools.FileUtils;
-import de.mtplayer.mLib.tools.Log;
 import de.mtplayer.mLib.tools.StringFormatters;
-import de.mtplayer.mLib.tools.SysMsg;
 import de.mtplayer.mtp.controller.config.Config;
 import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
+import de.p2tools.p2Lib.tools.Log;
+import de.p2tools.p2Lib.tools.SysMsg;
 
 import java.io.*;
 import java.nio.file.Files;

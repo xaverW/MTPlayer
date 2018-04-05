@@ -16,13 +16,13 @@
 
 package de.mtplayer.mtp.controller;
 
-import de.mtplayer.mLib.tools.Log;
-import de.mtplayer.mLib.tools.SysMsg;
 import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.loadFilmlist.WriteFilmlistJson;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
+import de.p2tools.p2Lib.tools.Log;
+import de.p2tools.p2Lib.tools.SysMsg;
 import javafx.application.Platform;
 import org.apache.commons.lang3.time.FastDateFormat;
 

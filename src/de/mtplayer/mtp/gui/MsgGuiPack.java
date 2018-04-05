@@ -16,9 +16,9 @@
 
 package de.mtplayer.mtp.gui;
 
-import de.mtplayer.mLib.tools.SysMsg;
 import de.mtplayer.mtp.controller.config.Config;
 import de.mtplayer.mtp.controller.config.Daten;
+import de.p2tools.p2Lib.tools.SysMsg;
 import javafx.beans.property.DoubleProperty;
 import javafx.geometry.Orientation;
 import javafx.scene.control.SplitPane;

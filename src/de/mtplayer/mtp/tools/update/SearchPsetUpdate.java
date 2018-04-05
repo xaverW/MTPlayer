@@ -18,7 +18,6 @@
 package de.mtplayer.mtp.tools.update;
 
 import de.mtplayer.mLib.tools.StringFormatters;
-import de.mtplayer.mLib.tools.SysMsg;
 import de.mtplayer.mtp.controller.config.Config;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.data.ListePsetVorlagen;
@@ -26,6 +25,7 @@ import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.SetList;
 import de.mtplayer.mtp.gui.dialog.NewSetDialogController;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
+import de.p2tools.p2Lib.tools.SysMsg;
 import javafx.application.Platform;
 
 import java.util.Date;

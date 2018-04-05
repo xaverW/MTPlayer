@@ -17,11 +17,11 @@
 package de.mtplayer.mtp.gui.dialog;
 
 import de.mtplayer.mLib.tools.Functions;
-import de.mtplayer.mLib.tools.Log;
 import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.gui.tools.MTOpen;
+import de.p2tools.p2Lib.tools.Log;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;

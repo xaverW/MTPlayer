@@ -16,8 +16,6 @@
 
 package de.mtplayer.mtp.controller.data.abo;
 
-import de.mtplayer.mLib.tools.Duration;
-import de.mtplayer.mLib.tools.GermanStringSorter;
 import de.mtplayer.mtp.controller.config.Config;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.data.download.DownloadTools;
@@ -28,6 +26,8 @@ import de.mtplayer.mtp.gui.dialog.AboEditDialogController;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.tools.filmListFilter.FilmFilter;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
+import de.p2tools.p2Lib.tools.Duration;
+import de.p2tools.p2Lib.tools.GermanStringSorter;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;

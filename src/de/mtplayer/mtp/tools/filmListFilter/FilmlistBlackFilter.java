@@ -16,14 +16,14 @@
 
 package de.mtplayer.mtp.tools.filmListFilter;
 
-import de.mtplayer.mLib.tools.Duration;
-import de.mtplayer.mLib.tools.Log;
 import de.mtplayer.mtp.controller.config.Config;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.data.BlackData;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmList;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
+import de.p2tools.p2Lib.tools.Duration;
+import de.p2tools.p2Lib.tools.Log;
 
 import java.util.ArrayList;
 import java.util.List;

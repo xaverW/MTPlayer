@@ -16,12 +16,12 @@
 
 package de.mtplayer.mtp.gui.mediaDb;
 
-import de.mtplayer.mLib.tools.Duration;
-import de.mtplayer.mLib.tools.Log;
 import de.mtplayer.mtp.controller.config.Config;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.Listener;
+import de.p2tools.p2Lib.tools.Duration;
+import de.p2tools.p2Lib.tools.Log;
 import javafx.application.Platform;
 
 import java.io.File;

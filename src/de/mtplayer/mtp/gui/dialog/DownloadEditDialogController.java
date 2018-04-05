@@ -18,8 +18,6 @@ package de.mtplayer.mtp.gui.dialog;
 
 import de.mtplayer.mLib.tools.DirFileChooser;
 import de.mtplayer.mLib.tools.FileNameUtils;
-import de.mtplayer.mLib.tools.Log;
-import de.mtplayer.mLib.tools.SysMsg;
 import de.mtplayer.mtp.controller.config.Config;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.data.Icons;
@@ -32,6 +30,8 @@ import de.mtplayer.mtp.controller.data.download.DownloadXml;
 import de.mtplayer.mtp.controller.data.film.FilmTools;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.mtplayer.mtp.tools.file.GetFile;
+import de.p2tools.p2Lib.tools.Log;
+import de.p2tools.p2Lib.tools.SysMsg;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;

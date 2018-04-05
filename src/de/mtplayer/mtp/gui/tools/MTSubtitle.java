@@ -18,11 +18,11 @@
 package de.mtplayer.mtp.gui.tools;
 
 import de.mtplayer.mLib.tools.FileUtils;
-import de.mtplayer.mLib.tools.Log;
-import de.mtplayer.mLib.tools.SysMsg;
 import de.mtplayer.mLib.tools.TimedTextMarkupLanguageParser;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.download.Download;
+import de.p2tools.p2Lib.tools.Log;
+import de.p2tools.p2Lib.tools.SysMsg;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

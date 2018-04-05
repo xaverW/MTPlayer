@@ -16,12 +16,12 @@
 
 package de.mtplayer.mtp.controller.starter;
 
-import de.mtplayer.mLib.tools.Log;
 import de.mtplayer.mLib.tools.MLProperty;
-import de.mtplayer.mLib.tools.SysMsg;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadInfos;
 import de.mtplayer.mtp.controller.data.download.DownloadSize;
+import de.p2tools.p2Lib.tools.Log;
+import de.p2tools.p2Lib.tools.SysMsg;
 
 import java.io.BufferedReader;
 import java.io.IOException;

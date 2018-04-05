@@ -17,8 +17,6 @@
 
 package de.mtplayer.mtp.controller;
 
-import de.mtplayer.mLib.tools.Duration;
-import de.mtplayer.mLib.tools.Log;
 import de.mtplayer.mLib.tools.MLConfigs;
 import de.mtplayer.mtp.controller.config.Config;
 import de.mtplayer.mtp.controller.config.Daten;
@@ -33,6 +31,8 @@ import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.tools.storedFilter.FilterToXml;
 import de.mtplayer.mtp.tools.storedFilter.ProgInitFilter;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
+import de.p2tools.p2Lib.tools.Duration;
+import de.p2tools.p2Lib.tools.Log;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;

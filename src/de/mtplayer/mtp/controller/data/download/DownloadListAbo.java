@@ -17,7 +17,6 @@
 package de.mtplayer.mtp.controller.data.download;
 
 import de.mtplayer.mLib.tools.MDate;
-import de.mtplayer.mLib.tools.Duration;
 import de.mtplayer.mtp.controller.config.Config;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.data.SetData;
@@ -25,6 +24,7 @@ import de.mtplayer.mtp.controller.data.abo.Abo;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.gui.dialog.NoSetDialogController;
 import de.mtplayer.mtp.tools.filmListFilter.FilmlistBlackFilter;
+import de.p2tools.p2Lib.tools.Duration;
 
 import java.util.*;
 

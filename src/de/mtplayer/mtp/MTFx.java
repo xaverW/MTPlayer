@@ -15,7 +15,8 @@
  */
 package de.mtplayer.mtp;
 
-import de.mtplayer.mLib.tools.*;
+import de.mtplayer.mLib.tools.Functions;
+import de.mtplayer.mLib.tools.StringFormatters;
 import de.mtplayer.mtp.controller.ProgQuitt;
 import de.mtplayer.mtp.controller.ProgSave;
 import de.mtplayer.mtp.controller.ProgStart;
@@ -31,6 +32,9 @@ import de.mtplayer.mtp.gui.tools.GuiSize;
 import de.mtplayer.mtp.res.GetIcon;
 import de.mtplayer.mtp.tools.storedFilter.ProgInitFilter;
 import de.mtplayer.mtp.tools.update.SearchProgramUpdate;
+import de.p2tools.p2Lib.tools.Duration;
+import de.p2tools.p2Lib.tools.Log;
+import de.p2tools.p2Lib.tools.SysMsg;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;

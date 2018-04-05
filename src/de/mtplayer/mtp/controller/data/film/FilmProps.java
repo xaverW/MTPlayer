@@ -17,9 +17,9 @@
 package de.mtplayer.mtp.controller.data.film;
 
 import de.mtplayer.mLib.tools.FilmDate;
-import de.mtplayer.mLib.tools.Log;
 import de.mtplayer.mLib.tools.MDate;
 import de.mtplayer.mtp.controller.config.Config;
+import de.p2tools.p2Lib.tools.Log;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 

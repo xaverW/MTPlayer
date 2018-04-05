@@ -16,11 +16,11 @@
 
 package de.mtplayer.mtp.gui.dialog;
 
-import de.mtplayer.mLib.tools.Log;
 import de.mtplayer.mLib.tools.MLConfigs;
 import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.gui.tools.GuiSize;
+import de.p2tools.p2Lib.tools.Log;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXMLLoader;

@@ -16,7 +16,7 @@
 
 package de.mtplayer.mtp.controller.data.film;
 
-import de.mtplayer.mLib.tools.Log;
+import de.p2tools.p2Lib.tools.Log;
 
 public class FilmSize implements Comparable<FilmSize> {
 

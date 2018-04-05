@@ -16,10 +16,10 @@
 
 package de.mtplayer.mtp.controller.data.download;
 
-import de.mtplayer.mLib.tools.Duration;
-import de.mtplayer.mLib.tools.SysMsg;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.data.SetData;
+import de.p2tools.p2Lib.tools.Duration;
+import de.p2tools.p2Lib.tools.SysMsg;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;

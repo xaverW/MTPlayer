@@ -15,12 +15,12 @@
  */
 package de.mtplayer.mtp;
 
-import de.mtplayer.mLib.tools.Log;
-import de.mtplayer.mLib.tools.SysMsg;
 import de.mtplayer.mLib.tools.SystemInfo;
 import de.mtplayer.mtp.controller.ProgStart;
 import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.Daten;
+import de.p2tools.p2Lib.tools.Log;
+import de.p2tools.p2Lib.tools.SysMsg;
 import javafx.application.Application;
 import javafx.application.Platform;
 

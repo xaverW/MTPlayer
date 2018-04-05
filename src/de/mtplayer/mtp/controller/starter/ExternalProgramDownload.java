@@ -16,7 +16,6 @@
 
 package de.mtplayer.mtp.controller.starter;
 
-import de.mtplayer.mLib.tools.Log;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadInfos;
@@ -24,6 +23,7 @@ import de.mtplayer.mtp.gui.dialog.DownloadContinueDialogController;
 import de.mtplayer.mtp.gui.dialog.DownloadErrorDialogController;
 import de.mtplayer.mtp.gui.tools.MTInfoFile;
 import de.mtplayer.mtp.gui.tools.MTSubtitle;
+import de.p2tools.p2Lib.tools.Log;
 import javafx.application.Platform;
 
 import java.io.File;

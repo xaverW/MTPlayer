@@ -16,11 +16,11 @@
 
 package de.mtplayer.mtp.gui.tools;
 
-import de.mtplayer.mLib.tools.Log;
-import de.mtplayer.mLib.tools.SysMsg;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadXml;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
+import de.p2tools.p2Lib.tools.Log;
+import de.p2tools.p2Lib.tools.SysMsg;
 
 import java.io.*;
 import java.nio.file.Files;

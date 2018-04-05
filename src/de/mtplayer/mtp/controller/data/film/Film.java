@@ -17,10 +17,10 @@
 package de.mtplayer.mtp.controller.data.film;
 
 import de.mtplayer.mLib.tools.FilmDate;
-import de.mtplayer.mLib.tools.Log;
 import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.data.abo.Abo;
+import de.p2tools.p2Lib.tools.Log;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;

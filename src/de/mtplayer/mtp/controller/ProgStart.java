@@ -17,7 +17,8 @@
 package de.mtplayer.mtp.controller;
 
 import de.mtplayer.mLib.MLInit;
-import de.mtplayer.mLib.tools.*;
+import de.mtplayer.mLib.tools.MLAlert;
+import de.mtplayer.mLib.tools.StringFormatters;
 import de.mtplayer.mtp.controller.config.Config;
 import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.Daten;
@@ -25,6 +26,9 @@ import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.loadFilmlist.ListenerFilmListLoadEvent;
 import de.mtplayer.mtp.controller.loadFilmlist.ReadFilmlist;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
+import de.p2tools.p2Lib.tools.Duration;
+import de.p2tools.p2Lib.tools.Log;
+import de.p2tools.p2Lib.tools.SysMsg;
 import javafx.application.Platform;
 
 import java.nio.file.Files;
@@ -32,7 +36,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static de.mtplayer.mLib.tools.Log.LILNE;
+import static de.p2tools.p2Lib.tools.SysMsg.LILNE;
 
 public class ProgStart {
     Daten daten;

@@ -16,10 +16,10 @@
 
 package de.mtplayer.mtp.controller.data.download;
 
-import de.mtplayer.mLib.tools.Log;
 import de.mtplayer.mLib.tools.SizeTools;
 import de.mtplayer.mtp.controller.config.Config;
 import de.mtplayer.mtp.controller.config.Daten;
+import de.p2tools.p2Lib.tools.Log;
 
 import java.text.DecimalFormat;
 import java.util.LinkedList;

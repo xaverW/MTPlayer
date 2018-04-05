@@ -16,9 +16,13 @@
 
 package de.mtplayer.mtp.controller.data.download;
 
-import de.mtplayer.mLib.tools.*;
+import de.mtplayer.mLib.tools.FileNameUtils;
+import de.mtplayer.mLib.tools.FileUtils;
+import de.mtplayer.mLib.tools.SizeTools;
+import de.mtplayer.mLib.tools.SystemInfo;
 import de.mtplayer.mtp.controller.config.Config;
 import de.mtplayer.mtp.controller.config.Daten;
+import de.p2tools.p2Lib.tools.SysTools;
 import javafx.scene.control.Label;
 
 public class DownloadTools {

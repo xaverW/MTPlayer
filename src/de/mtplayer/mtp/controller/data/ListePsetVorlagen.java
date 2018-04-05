@@ -17,10 +17,10 @@
 package de.mtplayer.mtp.controller.data;
 
 import de.mtplayer.mLib.tools.FileUtils;
-import de.mtplayer.mLib.tools.Log;
 import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.tools.file.GetFile;
+import de.p2tools.p2Lib.tools.Log;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;

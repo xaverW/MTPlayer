@@ -16,8 +16,8 @@
 
 package de.mtplayer.mtp.controller.data.download;
 
-import de.mtplayer.mLib.tools.Log;
 import de.mtplayer.mLib.tools.SizeTools;
+import de.p2tools.p2Lib.tools.Log;
 import javafx.beans.property.ObjectPropertyBase;
 
 public class DownloadSize extends ObjectPropertyBase<DownloadSizeData> implements Comparable<DownloadSize> {
