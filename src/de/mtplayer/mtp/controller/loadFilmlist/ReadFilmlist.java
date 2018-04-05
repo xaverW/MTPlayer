@@ -59,7 +59,6 @@ public class ReadFilmlist {
     }
 
     public void readFilmListe(String source, final FilmList filmList, int days) {
-        System.out.println("--------> READFILMLIST");
         try {
             Log.sysLog("Liste Filme lesen von: " + source);
             filmList.clear();
@@ -74,7 +73,7 @@ public class ReadFilmlist {
             }
 
             if (Daten.getInstance().loadFilmList.getStop()) {
-                Log.sysLog("--> Abbruch");
+                Log.sysLog("Filme lesen --> Abbruch");
                 filmList.clear();
             }
         } catch (final MalformedURLException ex) {
@@ -82,7 +81,7 @@ public class ReadFilmlist {
         }
 
         notifyFertig(source, filmList);
-        System.out.println("--------> READFILMLIST --> fertig");
+        Log.sysLog("Filme lesen --> fertig");
     }
 
     private InputStream selectDecompressor(String source, InputStream in) throws Exception {
