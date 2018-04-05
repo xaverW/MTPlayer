@@ -28,7 +28,6 @@ import de.mtplayer.mtp.controller.loadFilmlist.ListenerFilmListLoad;
 import de.mtplayer.mtp.controller.loadFilmlist.ListenerFilmListLoadEvent;
 import de.mtplayer.mtp.gui.dialogStart.StartDialogController;
 import de.mtplayer.mtp.gui.tools.GuiSize;
-import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.res.GetIcon;
 import de.mtplayer.mtp.tools.storedFilter.ProgInitFilter;
 import de.mtplayer.mtp.tools.update.SearchProgramUpdate;
@@ -59,7 +58,6 @@ public class MTFx extends Application {
     private static final String ARGUMENT_PREFIX = "-";
     private static final String TITLE_TEXT_PROGRAMMVERSION_IST_AKTUELL = "Programmversion ist aktuell";
     private static final String TITLE_TEXT_EIN_PROGRAMMUPDATE_IST_VERFUEGBAR = "Ein Programmupdate ist verfügbar";
-    private static final String LOG_TEXT_CHECK_UPDATE = "CheckUpdate";
 
     protected Daten daten;
     ProgStart progStart;
@@ -121,8 +119,6 @@ public class MTFx extends Application {
         Duration.staticPing("Erster Start");
         setOrgTitel();
         initProg();
-
-        addListener();
 
         Duration.staticPing("Gui steht!");
         progStart.loadDataProgStart();
@@ -189,29 +185,16 @@ public class MTFx extends Application {
         SysMsg.sysMsg("");
     }
 
-    private void addListener() {
-        Listener.addListener(new Listener(Listener.EREIGNIS_GUI_ORG_TITEL, MTFx.class.getSimpleName()) {
-            @Override
-            public void ping() {
-                setOrgTitel();
-            }
-        });
-        Listener.addListener(new Listener(Listener.EREIGNIS_GUI_PROGRAMM_AKTUELL, MTFx.class.getSimpleName()) {
-            @Override
-            public void ping() {
-                primaryStage.setTitle(TITLE_TEXT_PROGRAMMVERSION_IST_AKTUELL);
-            }
-        });
-        Listener.addListener(new Listener(Listener.EREIGNIS_GUI_UPDATE_VERFUEGBAR, MTFx.class.getSimpleName()) {
-            @Override
-            public void ping() {
-                primaryStage.setTitle(TITLE_TEXT_EIN_PROGRAMMUPDATE_IST_VERFUEGBAR);
-            }
-        });
-    }
-
     private void setOrgTitel() {
         primaryStage.setTitle(Const.PROGRAMMNAME + " " + Functions.getProgVersion());
+    }
+
+    private void setUpdateTitel() {
+        primaryStage.setTitle(TITLE_TEXT_EIN_PROGRAMMUPDATE_IST_VERFUEGBAR);
+    }
+
+    private void setNoUpdateTitel() {
+        primaryStage.setTitle(TITLE_TEXT_PROGRAMMVERSION_IST_AKTUELL);
     }
 
     private void initProg() {
@@ -228,44 +211,46 @@ public class MTFx extends Application {
 
             @Override
             public void fertigOnlyOne(ListenerFilmListLoadEvent event) {
-                // Prüfen obs ein Programmupdate gibt
-                Duration.staticPing(LOG_TEXT_CHECK_UPDATE);
-                checkProgUpdate();
                 daten.mediaDbList.loadSavedList();
                 daten.mediaDbList.createMediaDB();
+                checkProgUpdate();
             }
         });
 
     }
 
     private void checkProgUpdate() {
+        // Prüfen obs ein Programmupdate gibt
+        Duration.staticPing("check update");
         if (!Boolean.parseBoolean(Config.SYSTEM_UPDATE_SEARCH.get()) ||
-                Config.SYSTEM_UPDATE_BUILD_NR.get().equals(Functions.getProgVersion())
+                Config.SYSTEM_UPDATE_BUILD_NR.get().equals(Functions.getProgVersion() /*Start mit neuer Version*/)
                         && Config.SYSTEM_UPDATE_DATE.get().equals(StringFormatters.FORMATTER_yyyyMMdd.format(new Date()))) {
             // will der User nicht --oder-- keine neue Version und heute schon gemacht
+            Log.sysLog("Kein Update-Check");
             return;
         }
 
-        new Thread(this::prog).start();
+        check();
     }
 
-    private synchronized void prog() {
-        try {
-            if (new SearchProgramUpdate().checkVersion(false, false /* immer anzeigen */)) {
-                Listener.notify(Listener.EREIGNIS_GUI_UPDATE_VERFUEGBAR, MTFx.class.getSimpleName());
-            } else {
-                Listener.notify(Listener.EREIGNIS_GUI_PROGRAMM_AKTUELL, MTFx.class.getSimpleName());
-            }
+    private synchronized void check() {
 
+        new Thread(() -> {
             try {
-                sleep(10_000);
-            } catch (final InterruptedException ignored) {
-            }
-            Listener.notify(Listener.EREIGNIS_GUI_ORG_TITEL, MTFx.class.getSimpleName());
+                if (new SearchProgramUpdate().checkVersion(false, false /* immer anzeigen */)) {
+                    Platform.runLater(() -> setUpdateTitel());
+                } else {
+                    Platform.runLater(() -> setNoUpdateTitel());
+                }
 
-        } catch (final Exception ex) {
-            Log.errorLog(794612801, ex);
-        }
+                sleep(10_000);
+
+                Platform.runLater(() -> setOrgTitel());
+
+            } catch (final Exception ex) {
+                Log.errorLog(794612801, ex);
+            }
+        }).start();
     }
 
 }

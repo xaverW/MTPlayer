@@ -35,9 +35,9 @@ public class Listener implements EventListener {
 
     public static final int EREIGNIS_REPLACELIST_CHANGED = count++;
 
-    public static final int EREIGNIS_GUI_ORG_TITEL = count++;
-    public static final int EREIGNIS_GUI_PROGRAMM_AKTUELL = count++;
-    public static final int EREIGNIS_GUI_UPDATE_VERFUEGBAR = count++;
+    //    public static final int EREIGNIS_GUI_ORG_TITEL = count++;
+//    public static final int EREIGNIS_GUI_PROGRAMM_AKTUELL = count++;
+//    public static final int EREIGNIS_GUI_UPDATE_VERFUEGBAR = count++;
     public static final int EREIGNIS_GUI_COLOR_CHANGED = count++;
 
 
