@@ -21,8 +21,8 @@ import de.mtplayer.mLib.tools.FileUtils;
 import de.mtplayer.mLib.tools.TimedTextMarkupLanguageParser;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.download.Download;
-import de.p2tools.p2Lib.tools.Log;
-import de.p2tools.p2Lib.tools.SysMsg;
+import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2Lib.tools.log.SysMsg;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -117,9 +117,9 @@ public class MTSubtitle {
                 if (!strSubtitelFile.endsWith(SRT_FILETYPE))
                     writeSrt(strSubtitelFile, datenDownload);
             } else
-                Log.errorLog(752301248, "url: " + urlSubtitle);
+                PLog.errorLog(752301248, "url: " + urlSubtitle);
         } catch (final Exception ignored) {
-            Log.errorLog(461203210, ignored, "SubtitelUrl: " + urlSubtitle);
+            PLog.errorLog(461203210, ignored, "SubtitelUrl: " + urlSubtitle);
         } finally {
             try {
                 if (in != null) {

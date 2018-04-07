@@ -20,7 +20,7 @@ import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.tools.filmListFilter.FilmlistBlackFilter;
 import de.p2tools.p2Lib.tools.Duration;
-import de.p2tools.p2Lib.tools.Log;
+import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
@@ -178,7 +178,7 @@ public class FilmList extends SimpleListProperty<Film> {
                 f.setDoubleUrl(true);
             }
         });
-        Log.sysLog("Anzahl doppelte Filme: " + countDouble);
+        PLog.sysLog("Anzahl doppelte Filme: " + countDouble);
         hash.clear();
     }
 
@@ -344,7 +344,7 @@ public class FilmList extends SimpleListProperty<Film> {
     public boolean isOlderThan(int sekunden) {
         final int ret = getAge();
         if (ret != 0) {
-            Log.sysLog("Die Filmliste ist " + ret / 60 + " Minuten alt");
+            PLog.sysLog("Die Filmliste ist " + ret / 60 + " Minuten alt");
         }
         return ret > sekunden;
     }

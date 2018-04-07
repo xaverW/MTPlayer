@@ -17,7 +17,7 @@
 package de.mtplayer.mtp.controller.data.download;
 
 import de.mtplayer.mLib.tools.SizeTools;
-import de.p2tools.p2Lib.tools.Log;
+import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.beans.property.ObjectPropertyBase;
 
 public class DownloadSize extends ObjectPropertyBase<DownloadSizeData> implements Comparable<DownloadSize> {
@@ -80,7 +80,7 @@ public class DownloadSize extends ObjectPropertyBase<DownloadSizeData> implement
                 fileSize = Long.valueOf(size);
                 fileSize = fileSize * 1000 * 1000;
             } catch (final Exception ex) {
-                Log.errorLog(978745320, ex, "String: " + size);
+                PLog.errorLog(978745320, ex, "String: " + size);
                 fileSize = 0L;
             }
         }

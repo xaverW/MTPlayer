@@ -33,8 +33,8 @@ import de.mtplayer.mtp.gui.mediaDb.MediaPathData;
 import de.mtplayer.mtp.tools.storedFilter.FilterToXml;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
 import de.mtplayer.mtp.tools.storedFilter.StoredFilter;
-import de.p2tools.p2Lib.tools.Log;
-import de.p2tools.p2Lib.tools.SysMsg;
+import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2Lib.tools.log.SysMsg;
 
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -73,7 +73,7 @@ public class IoXmlSchreiben implements AutoCloseable {
             xmlSchreibenPset(pSet);
             xmlSchreibenEnde();
         } catch (final Exception ex) {
-            Log.errorLog(392846204, ex, "nach: " + datei);
+            PLog.errorLog(392846204, ex, "nach: " + datei);
         }
     }
 
@@ -132,7 +132,7 @@ public class IoXmlSchreiben implements AutoCloseable {
             writer.writeCharacters("\n\n");
             xmlSchreibenEnde();
         } catch (final Exception ex) {
-            Log.errorLog(656328109, ex);
+            PLog.errorLog(656328109, ex);
         }
     }
 
@@ -293,7 +293,7 @@ public class IoXmlSchreiben implements AutoCloseable {
             writer.writeEndElement();
             writer.writeCharacters("\n"); // neue Zeile
         } catch (final Exception ex) {
-            Log.errorLog(198325017, ex);
+            PLog.errorLog(198325017, ex);
         }
     }
 
@@ -315,7 +315,7 @@ public class IoXmlSchreiben implements AutoCloseable {
             writer.writeEndElement();
             writer.writeCharacters("\n"); // neue Zeile
         } catch (final Exception ex) {
-            Log.errorLog(951230478, ex);
+            PLog.errorLog(951230478, ex);
         }
     }
 

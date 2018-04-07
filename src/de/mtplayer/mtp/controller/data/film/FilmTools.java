@@ -24,7 +24,7 @@ import de.mtplayer.mtp.gui.dialog.DownloadAddDialogController;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.dialog.NoSetDialogController;
 import de.mtplayer.mtp.gui.tools.MTOpen;
-import de.p2tools.p2Lib.tools.Log;
+import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.text.Font;
@@ -62,7 +62,7 @@ public class FilmTools {
                 try {
                     MTOpen.openURL(film.arr[FilmXml.FILM_WEBSEITE]);
                 } catch (Exception e) {
-                    Log.errorLog(975421021, e);
+                    PLog.errorLog(975421021, e);
                 }
             });
         }

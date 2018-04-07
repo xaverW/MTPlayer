@@ -19,7 +19,7 @@ package de.mtplayer.mtp.gui.tools;
 import de.mtplayer.mLib.tools.MLConfigs;
 import de.mtplayer.mtp.controller.config.Config;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
-import de.p2tools.p2Lib.tools.Log;
+import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
 
 import java.awt.*;
@@ -199,7 +199,7 @@ public class MTOpen {
 
         } catch (final Exception eex) {
             ok = false;
-            Log.errorLog(959632369, eex, new String[]{"Kann nicht öffnen,", "Programm: " + programm,
+            PLog.errorLog(959632369, eex, new String[]{"Kann nicht öffnen,", "Programm: " + programm,
                     "File/Url: " + directory});
         }
 

@@ -29,9 +29,9 @@ import de.mtplayer.mtp.gui.mediaDialog.MediaDialogController;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.gui.tools.MTOpen;
 import de.mtplayer.mtp.gui.tools.Table;
-import de.p2tools.p2Lib.tools.Log;
-import de.p2tools.p2Lib.tools.SysMsg;
 import de.p2tools.p2Lib.tools.SysTools;
+import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2Lib.tools.log.SysMsg;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
@@ -177,7 +177,7 @@ public class DownloadGuiController extends AnchorPane {
         } catch (Exception ex) {
             new MTAlert().showErrorAlert("Film löschen", "Konnte die Datei nicht löschen!", "Fehler beim löschen von:\n\n" +
                     download.get().getZielPfadDatei());
-            Log.errorLog(915236547, "Fehler beim löschen: " + download.get().getZielPfadDatei());
+            PLog.errorLog(915236547, "Fehler beim löschen: " + download.get().getZielPfadDatei());
         }
     }
 

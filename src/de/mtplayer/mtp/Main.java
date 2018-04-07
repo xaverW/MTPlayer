@@ -19,8 +19,8 @@ import de.mtplayer.mLib.tools.SystemInfo;
 import de.mtplayer.mtp.controller.ProgStart;
 import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.Daten;
-import de.p2tools.p2Lib.tools.Log;
-import de.p2tools.p2Lib.tools.SysMsg;
+import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2Lib.tools.log.SysMsg;
 import javafx.application.Application;
 import javafx.application.Platform;
 
@@ -128,7 +128,7 @@ public class Main {
                 case ProgramArguments.STARTUPMODE_VERBOSE:
                     EventQueue.invokeLater(() -> {
                         ProgStart.startMeldungen();
-                        Log.endMsg();
+                        PLog.endMsg();
                         System.exit(0);
                     });
                     break;

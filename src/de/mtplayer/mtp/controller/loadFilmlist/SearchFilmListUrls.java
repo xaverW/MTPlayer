@@ -19,7 +19,7 @@ package de.mtplayer.mtp.controller.loadFilmlist;
 import de.mtplayer.mLib.tools.Functions;
 import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.ProgInfos;
-import de.p2tools.p2Lib.tools.Log;
+import de.p2tools.p2Lib.tools.log.PLog;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -139,7 +139,7 @@ public class SearchFilmListUrls {
             filmListUrlList_diff.sort();
         }
         if (tmp.isEmpty()) {
-            Log.errorLog(491203216, new String[]{"Es ist ein Fehler aufgetreten!",
+            PLog.errorLog(491203216, new String[]{"Es ist ein Fehler aufgetreten!",
                     "Es konnten keine Updateserver zum aktualisieren der Filme",
                     "gefunden werden."});
         }
@@ -182,7 +182,7 @@ public class SearchFilmListUrls {
                 }
             }
         } catch (Exception ex) {
-            Log.errorLog(821069874, ex, "Die URL-Filmlisten konnte nicht geladen werden: " + dateiUrl);
+            PLog.errorLog(821069874, ex, "Die URL-Filmlisten konnte nicht geladen werden: " + dateiUrl);
         }
     }
 

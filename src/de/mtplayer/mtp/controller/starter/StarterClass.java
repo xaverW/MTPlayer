@@ -25,8 +25,8 @@ import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadInfos;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
-import de.p2tools.p2Lib.tools.Log;
-import de.p2tools.p2Lib.tools.SysMsg;
+import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2Lib.tools.log.SysMsg;
 
 import java.awt.*;
 import java.io.File;
@@ -76,15 +76,15 @@ public class StarterClass {
 
         if (progress > DownloadInfos.PROGRESS_NICHT_GESTARTET && progress < DownloadInfos.PROGRESS_FAST_FERTIG) {
             // *progress* Prozent werden berechnet und es wurde vor 99,5% abgebrochen
-            Log.errorLog(696510258, "Download fehlgeschlagen: 99,5% wurden nicht erreicht" + datenDownload.getZielPfadDatei());
+            PLog.errorLog(696510258, "Download fehlgeschlagen: 99,5% wurden nicht erreicht" + datenDownload.getZielPfadDatei());
             return false;
         }
 
         final File file = new File(datenDownload.getZielPfadDatei());
         if (!file.exists()) {
-            Log.errorLog(550236231, "Download fehlgeschlagen: Datei existiert nicht" + datenDownload.getZielPfadDatei());
+            PLog.errorLog(550236231, "Download fehlgeschlagen: Datei existiert nicht" + datenDownload.getZielPfadDatei());
         } else if (file.length() < Const.MIN_DATEI_GROESSE_FILM) {
-            Log.errorLog(795632500, "Download fehlgeschlagen: Datei zu klein" + datenDownload.getZielPfadDatei());
+            PLog.errorLog(795632500, "Download fehlgeschlagen: Datei zu klein" + datenDownload.getZielPfadDatei());
         } else {
             if (datenDownload.isAbo()) {
                 daten.erledigteAbos.writeHistory(datenDownload.getThema(), datenDownload.getTitel(), datenDownload.getHistoryUrl());
@@ -117,7 +117,7 @@ public class StarterClass {
                 }
             }
         } catch (final Exception ex) {
-            Log.errorLog(795632500, "Fehler beim löschen" + file.getAbsolutePath());
+            PLog.errorLog(795632500, "Fehler beim löschen" + file.getAbsolutePath());
         }
     }
 
@@ -261,7 +261,7 @@ public class StarterClass {
                 }
             }
         } catch (final Exception ex) {
-            Log.errorLog(461204780,
+            PLog.errorLog(461204780,
                     "Fehler beim Ermitteln der Dateigröße: " + datenDownload.getZielPfadDatei());
         }
     }
@@ -299,7 +299,7 @@ public class StarterClass {
                     // löschen
                     sleep(3 * 1000);
                 } catch (final Exception ex) {
-                    Log.errorLog(613822015, ex);
+                    PLog.errorLog(613822015, ex);
                 }
             }
         }

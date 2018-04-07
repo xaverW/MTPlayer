@@ -28,8 +28,8 @@ import de.mtplayer.mtp.gui.dialog.DownloadContinueDialogController;
 import de.mtplayer.mtp.gui.dialog.DownloadErrorDialogController;
 import de.mtplayer.mtp.gui.tools.MTInfoFile;
 import de.mtplayer.mtp.gui.tools.MTSubtitle;
-import de.p2tools.p2Lib.tools.Log;
-import de.p2tools.p2Lib.tools.SysMsg;
+import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2Lib.tools.log.SysMsg;
 import javafx.application.Platform;
 
 import java.io.File;
@@ -97,7 +97,7 @@ public class DirectHttpDownload extends Thread {
             }
         } catch (final Exception ex) {
             ret = -1;
-            Log.errorLog(643298301, ex);
+            PLog.errorLog(643298301, ex);
         } finally {
             if (connection != null) {
                 connection.disconnect();
@@ -253,7 +253,7 @@ public class DirectHttpDownload extends Thread {
                             // ==================================
                             // dann wars das
                             responseCode = "Responsecode: " + conn.getResponseCode() + '\n' + conn.getResponseMessage();
-                            Log.errorLog(915236798, "HTTP-Fehler: " + conn.getResponseCode() + ' ' + conn.getResponseMessage());
+                            PLog.errorLog(915236798, "HTTP-Fehler: " + conn.getResponseCode() + ' ' + conn.getResponseMessage());
                             if (download.getStart().getRestartCounter() == 0) {
                                 // nur beim ersten Mal melden -> nervt sonst
                                 Platform.runLater(() -> new DownloadErrorDialogController(download, responseCode));
@@ -283,7 +283,7 @@ public class DirectHttpDownload extends Thread {
                 } else {
                     // dann weiß der Geier!
                     exMessage = ex.getMessage();
-                    Log.errorLog(316598941, ex, "Fehler");
+                    PLog.errorLog(316598941, ex, "Fehler");
                     download.setStateError();
                     if (download.getStart().getRestartCounter() == 0) {
                         // nur beim ersten Mal melden -> nervt sonst
@@ -355,7 +355,7 @@ public class DirectHttpDownload extends Thread {
                             file = new File(download.getZielPfadDatei());
                         } catch (final Exception ex) {
                             // kann nicht gelöscht werden, evtl. klappt ja das Überschreiben
-                            Log.errorLog(915263654, ex,
+                            PLog.errorLog(915263654, ex,
                                     "file exists: " + download.getZielPfadDatei());
                         }
                     } else {

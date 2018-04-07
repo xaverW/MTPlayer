@@ -23,8 +23,8 @@ import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
-import de.p2tools.p2Lib.tools.Log;
-import de.p2tools.p2Lib.tools.SysMsg;
+import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2Lib.tools.log.SysMsg;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -74,7 +74,7 @@ public class WriteProtocolFile {
              BufferedWriter bw = new BufferedWriter(osw)) {
             bw.write("");
             bw.newLine();
-            bw.write(Log.LOGO);
+            bw.write(PLog.LOGO);
             bw.write("");
             bw.newLine();
             bw.write("");
@@ -197,7 +197,7 @@ public class WriteProtocolFile {
             bw.newLine();
             bw.write("## Fehlermeldungen                                       ");
             bw.newLine();
-            final ArrayList<String> retList = Log.printErrorMsg();
+            final ArrayList<String> retList = PLog.printErrorMsg();
             for (final String s : retList) {
                 bw.write(s);
                 bw.newLine();
@@ -206,7 +206,7 @@ public class WriteProtocolFile {
             bw.newLine();
             bw.newLine();
         } catch (final IOException ex) {
-            Log.errorLog(319865493, ex);
+            PLog.errorLog(319865493, ex);
             throw ex;
         }
     }

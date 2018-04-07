@@ -16,7 +16,7 @@
 
 package de.mtplayer.mtp.tools.file;
 
-import de.p2tools.p2Lib.tools.Log;
+import de.p2tools.p2Lib.tools.log.PLog;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -43,7 +43,7 @@ public class GetFile {
                 ret = ret + '\n' + strLine;
             }
         } catch (final IOException ex) {
-            Log.errorLog(885692213, ex);
+            PLog.errorLog(885692213, ex);
         }
         return ret;
     }
@@ -52,7 +52,7 @@ public class GetFile {
         try {
             return new InputStreamReader(getClass().getResource(PFAD_PSET_LINUX).openStream(), StandardCharsets.UTF_8);
         } catch (final IOException ex) {
-            Log.errorLog(469691002, ex);
+            PLog.errorLog(469691002, ex);
         }
         return null;
     }
@@ -61,7 +61,7 @@ public class GetFile {
         try {
             return new InputStreamReader(getClass().getResource(PFAD_PSET_WINDOWS).openStream(), StandardCharsets.UTF_8);
         } catch (final IOException ex) {
-            Log.errorLog(842306087, ex);
+            PLog.errorLog(842306087, ex);
         }
         return null;
     }

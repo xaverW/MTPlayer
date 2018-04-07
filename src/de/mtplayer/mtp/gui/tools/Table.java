@@ -21,7 +21,7 @@ import de.mtplayer.mLib.tools.MLConfigs;
 import de.mtplayer.mtp.controller.config.Config;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.data.abo.Abo;
-import de.p2tools.p2Lib.tools.Log;
+import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
@@ -233,7 +233,7 @@ public class Table {
                 }
             }
         } catch (final Exception ex) {
-            Log.errorLog(642103218, ex.getMessage());
+            PLog.errorLog(642103218, ex.getMessage());
             reset(ta, eTable);
         }
 

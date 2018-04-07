@@ -57,7 +57,7 @@ public class GetIcon {
 //                    icon = getStdImage(strIcon, path, w, h);
 //                }
 //            } catch (final Exception ex) {
-//                Log.errorLog(932107891, strIcon);
+//                PLog.errorLog(932107891, strIcon);
 //                icon = getStdImage(strIcon, path, w, h);
 //            }
 //        }

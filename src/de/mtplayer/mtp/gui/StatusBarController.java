@@ -23,7 +23,7 @@ import de.mtplayer.mtp.controller.data.download.DownloadInfos;
 import de.mtplayer.mtp.controller.loadFilmlist.ListenerFilmListLoad;
 import de.mtplayer.mtp.controller.loadFilmlist.ListenerFilmListLoadEvent;
 import de.mtplayer.mtp.gui.tools.Listener;
-import de.p2tools.p2Lib.tools.Log;
+import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -192,7 +192,7 @@ public class StatusBarController extends AnchorPane {
                         setStatusbar();
                     }
                 } catch (final Exception ex) {
-                    Log.errorLog(936251087, ex);
+                    PLog.errorLog(936251087, ex);
                 }
             }
         });

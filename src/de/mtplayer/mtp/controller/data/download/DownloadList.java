@@ -19,7 +19,7 @@ package de.mtplayer.mtp.controller.data.download;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.p2tools.p2Lib.tools.Duration;
-import de.p2tools.p2Lib.tools.SysMsg;
+import de.p2tools.p2Lib.tools.log.SysMsg;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;

@@ -16,7 +16,7 @@
 
 package de.mtplayer.mtp.controller.loadFilmlist;
 
-import de.p2tools.p2Lib.tools.Log;
+import de.p2tools.p2Lib.tools.log.PLog;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -124,7 +124,7 @@ public class FilmlistUrlData implements Comparable<FilmlistUrlData> {
             Date d_du = sdf.parse(du);
             ret = d_du.compareTo(d_ich);
         } catch (ParseException ex) {
-            Log.errorLog(936542876, ex);
+            PLog.errorLog(936542876, ex);
         }
         return ret;
     }
@@ -140,7 +140,7 @@ public class FilmlistUrlData implements Comparable<FilmlistUrlData> {
             cal.add(Calendar.DATE, -tage);
             ret = d_ich.before(cal.getTime());
         } catch (ParseException ex) {
-            Log.errorLog(915468973, ex);
+            PLog.errorLog(915468973, ex);
         }
         return ret;
     }

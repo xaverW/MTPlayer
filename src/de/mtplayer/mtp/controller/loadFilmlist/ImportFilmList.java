@@ -18,7 +18,7 @@ package de.mtplayer.mtp.controller.loadFilmlist;
 
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.data.film.FilmList;
-import de.p2tools.p2Lib.tools.Log;
+import de.p2tools.p2Lib.tools.log.PLog;
 
 import javax.swing.event.EventListenerList;
 import java.util.ArrayList;
@@ -100,7 +100,7 @@ public class ImportFilmList {
                 }
             }
             if (!ret /* filmList ist schon wieder null -> "FilmeLaden" */) {
-                Log.errorLog(951235497, "Es konnten keine Filme geladen werden!");
+                PLog.errorLog(951235497, "Es konnten keine Filme geladen werden!");
             }
             fertigMelden(ret);
         }
@@ -130,7 +130,7 @@ public class ImportFilmList {
                 ret = urlLaden(updateUrl, liste, days);
                 if (ret && i < 1 && liste.isOlderThan(5 * 60 * 60 /* sekunden */)) {
                     // Laden hat geklappt ABER: Liste zu alt, dann gibts einen 2. Versuch
-                    Log.sysLog("Filmliste zu alt, neuer Versuch");
+                    PLog.sysLog("Filmliste zu alt, neuer Versuch");
                     ret = false;
                 }
 
@@ -201,14 +201,14 @@ public class ImportFilmList {
         boolean ret = false;
         try {
             if (!dateiUrl.isEmpty()) {
-                Log.sysLog("Filmliste laden von: " + dateiUrl);
+                PLog.sysLog("Filmliste laden von: " + dateiUrl);
                 readFilmlist.readFilmListe(dateiUrl, filmList, days);
                 if (!filmList.isEmpty()) {
                     ret = true;
                 }
             }
         } catch (final Exception ex) {
-            Log.errorLog(965412378, ex);
+            PLog.errorLog(965412378, ex);
         }
         return ret;
 

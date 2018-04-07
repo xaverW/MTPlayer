@@ -26,8 +26,8 @@ import de.mtplayer.mtp.controller.data.abo.Abo;
 import de.mtplayer.mtp.controller.data.abo.AboXml;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
-import de.p2tools.p2Lib.tools.Log;
 import de.p2tools.p2Lib.tools.SysTools;
+import de.p2tools.p2Lib.tools.log.PLog;
 import org.apache.commons.lang3.time.FastDateFormat;
 
 import java.io.File;
@@ -71,7 +71,7 @@ public class DownloadProg {
             dateinamePfadBauen(pSet, film, abo, nname, ppfad);
             programmaufrufBauen(progData);
         } catch (final Exception ex) {
-            Log.errorLog(825600145, ex);
+            PLog.errorLog(825600145, ex);
         }
         return true;
     }
@@ -332,7 +332,7 @@ public class DownloadProg {
                     }
                 }
             } catch (final Exception ex) {
-                Log.errorLog(775421006, ex, datum);
+                PLog.errorLog(775421006, ex, datum);
             }
         }
         return ret;
@@ -361,7 +361,7 @@ public class DownloadProg {
                     }
                 }
             } catch (final Exception ex) {
-                Log.errorLog(775421006, ex, zeit);
+                PLog.errorLog(775421006, ex, zeit);
             }
         }
         return ret;
@@ -378,7 +378,7 @@ public class DownloadProg {
                     ret = tmp;
                 }
             } catch (final Exception ex) {
-                Log.errorLog(775421006, ex, datum);
+                PLog.errorLog(775421006, ex, datum);
             }
         }
         return ret;

@@ -22,7 +22,7 @@ import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmTools;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.p2tools.p2Lib.tools.Duration;
-import de.p2tools.p2Lib.tools.Log;
+import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
@@ -198,7 +198,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
 
                 }
             } catch (final Exception ex) {
-                Log.errorLog(401020398, ex);
+                PLog.errorLog(401020398, ex);
             }
 
             // und jetzt wieder schreiben, wenn nötig
@@ -218,7 +218,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
                     bufferedWriter.write(entry + '\n');
                 }
             } catch (final Exception ex) {
-                Log.errorLog(784512067, ex);
+                PLog.errorLog(784512067, ex);
             }
         }
 
@@ -243,7 +243,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
             bufferedWriter.write(text);
             ret = true;
         } catch (final Exception ex) {
-            Log.errorLog(945258023, ex);
+            PLog.errorLog(945258023, ex);
         }
         return ret;
     }
@@ -270,7 +270,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
 
             ret = true;
         } catch (final Exception ex) {
-            Log.errorLog(420312459, ex);
+            PLog.errorLog(420312459, ex);
         }
         return ret;
     }
@@ -300,7 +300,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
 
             ret = true;
         } catch (final Exception ex) {
-            Log.errorLog(940120459, ex);
+            PLog.errorLog(940120459, ex);
         }
         return ret;
     }
@@ -343,7 +343,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
                 addToList(tmpList);
             }
         } catch (final Exception ex) {
-            Log.errorLog(926362547, ex);
+            PLog.errorLog(926362547, ex);
         }
     }
 

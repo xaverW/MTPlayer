@@ -21,7 +21,7 @@ import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.gui.tools.MTOpen;
-import de.p2tools.p2Lib.tools.Log;
+import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
@@ -111,7 +111,7 @@ public class AboutDialogController extends MTDialogExtra {
             try {
                 MTOpen.openURL(Const.ADRESSE_WEBSITE);
             } catch (Exception e) {
-                Log.errorLog(974125469, e);
+                PLog.errorLog(974125469, e);
             }
         });
 

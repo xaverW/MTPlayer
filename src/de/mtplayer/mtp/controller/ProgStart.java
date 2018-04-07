@@ -27,8 +27,8 @@ import de.mtplayer.mtp.controller.loadFilmlist.ListenerFilmListLoadEvent;
 import de.mtplayer.mtp.controller.loadFilmlist.ReadFilmlist;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.p2tools.p2Lib.tools.Duration;
-import de.p2tools.p2Lib.tools.Log;
-import de.p2tools.p2Lib.tools.SysMsg;
+import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2Lib.tools.log.SysMsg;
 import javafx.application.Platform;
 
 import java.nio.file.Files;
@@ -36,7 +36,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static de.p2tools.p2Lib.tools.SysMsg.LILNE;
+import static de.p2tools.p2Lib.tools.log.SysMsg.LILNE;
 
 public class ProgStart {
     Daten daten;
@@ -54,7 +54,7 @@ public class ProgStart {
     }
 
     public static void startMeldungen() {
-        Log.versionMsg(Const.PROGRAMMNAME);
+        PLog.versionMsg(Const.PROGRAMMNAME);
         SysMsg.sysMsg("Programmpfad: " + ProgInfos.getPathJar());
         SysMsg.sysMsg("Verzeichnis Einstellungen: " + ProgInfos.getSettingsDirectory_String());
         SysMsg.sysMsg("");

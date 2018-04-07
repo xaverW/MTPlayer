@@ -19,7 +19,7 @@ package de.mtplayer.mtp.controller.data.download;
 import de.mtplayer.mLib.tools.SizeTools;
 import de.mtplayer.mtp.controller.config.Config;
 import de.mtplayer.mtp.controller.config.Daten;
-import de.p2tools.p2Lib.tools.Log;
+import de.p2tools.p2Lib.tools.log.PLog;
 
 import java.text.DecimalFormat;
 import java.util.LinkedList;
@@ -160,7 +160,7 @@ public class DownloadInfosAll {
             text += " ]  " + SizeTools.getGroesse(byteAktDownloads) + " von " + SizeTools.getGroesse(byteAlleDownloads) + " MByte /";
             text += " Downloads: " + anzDownloadsRun + " /";
             text += " Bandbreite: " + roundBandwidth();
-            Log.progress(text);
+            PLog.progress(text);
         }
     }
 

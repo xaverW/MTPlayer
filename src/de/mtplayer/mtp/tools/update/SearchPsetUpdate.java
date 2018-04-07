@@ -25,7 +25,7 @@ import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.SetList;
 import de.mtplayer.mtp.gui.dialog.NewSetDialogController;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
-import de.p2tools.p2Lib.tools.SysMsg;
+import de.p2tools.p2Lib.tools.log.SysMsg;
 import javafx.application.Platform;
 
 import java.util.Date;

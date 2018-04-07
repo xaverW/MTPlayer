@@ -19,7 +19,7 @@ package de.mtplayer.mtp.controller.data.film;
 import de.mtplayer.mLib.tools.FilmDate;
 import de.mtplayer.mLib.tools.MDate;
 import de.mtplayer.mtp.controller.config.Config;
-import de.p2tools.p2Lib.tools.Log;
+import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 
@@ -89,7 +89,7 @@ public class FilmProps extends FilmXml {
                 inFuture = false;
             }
         } catch (final Exception ex) {
-            Log.errorLog(915236478, ex);
+            PLog.errorLog(915236478, ex);
             inFuture = false;
         }
     }

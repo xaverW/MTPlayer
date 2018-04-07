@@ -23,7 +23,7 @@ import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmList;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
 import de.p2tools.p2Lib.tools.Duration;
-import de.p2tools.p2Lib.tools.Log;
+import de.p2tools.p2Lib.tools.log.PLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -193,7 +193,7 @@ public class FilmlistBlackFilter {
                 return false;
             }
         } catch (final Exception ex) {
-            Log.errorLog(696987123, ex);
+            PLog.errorLog(696987123, ex);
         }
         return true;
     }

@@ -20,8 +20,8 @@ import de.mtplayer.mLib.tools.MLProperty;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadInfos;
 import de.mtplayer.mtp.controller.data.download.DownloadSize;
-import de.p2tools.p2Lib.tools.Log;
-import de.p2tools.p2Lib.tools.SysMsg;
+import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2Lib.tools.log.SysMsg;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -99,7 +99,7 @@ public class RuntimeExec {
             clearIn.start();
             clearOut.start();
         } catch (final Exception ex) {
-            Log.errorLog(450028932, ex, "Fehler beim Starten");
+            PLog.errorLog(450028932, ex, "Fehler beim Starten");
         }
         return process;
     }
@@ -164,7 +164,7 @@ public class RuntimeExec {
                     final double d = Double.parseDouble(prozent);
                     meldenDouble(d);
                 } catch (final Exception ex) {
-                    Log.errorLog(912036780, input);
+                    PLog.errorLog(912036780, input);
                 }
                 return;
             }
@@ -227,7 +227,7 @@ public class RuntimeExec {
                     }
                 }
             } catch (final Exception ex) {
-                Log.errorLog(912036780, input);
+                PLog.errorLog(912036780, input);
             }
         }
 

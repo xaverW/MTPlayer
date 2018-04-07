@@ -33,8 +33,8 @@ import de.mtplayer.mtp.res.GetIcon;
 import de.mtplayer.mtp.tools.storedFilter.ProgInitFilter;
 import de.mtplayer.mtp.tools.update.SearchProgramUpdate;
 import de.p2tools.p2Lib.tools.Duration;
-import de.p2tools.p2Lib.tools.Log;
-import de.p2tools.p2Lib.tools.SysMsg;
+import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2Lib.tools.log.SysMsg;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -230,7 +230,7 @@ public class MTFx extends Application {
                 Config.SYSTEM_UPDATE_BUILD_NR.get().equals(Functions.getProgVersion() /*Start mit neuer Version*/)
                         && Config.SYSTEM_UPDATE_DATE.get().equals(StringFormatters.FORMATTER_yyyyMMdd.format(new Date()))) {
             // will der User nicht --oder-- keine neue Version und heute schon gemacht
-            Log.sysLog("Kein Update-Check");
+            PLog.sysLog("Kein Update-Check");
             return;
         }
 
@@ -252,7 +252,7 @@ public class MTFx extends Application {
                 Platform.runLater(() -> setOrgTitel());
 
             } catch (final Exception ex) {
-                Log.errorLog(794612801, ex);
+                PLog.errorLog(794612801, ex);
             }
         }).start();
     }

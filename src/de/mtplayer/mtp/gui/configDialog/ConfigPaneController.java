@@ -25,7 +25,7 @@ import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.gui.tools.MTOpen;
 import de.mtplayer.mtp.tools.update.SearchProgramUpdate;
-import de.p2tools.p2Lib.tools.Log;
+import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.HPos;
@@ -273,7 +273,7 @@ public class ConfigPaneController extends AnchorPane {
             try {
                 MTOpen.openURL(Const.ADRESSE_WEBSITE);
             } catch (Exception e) {
-                Log.errorLog(932012478, e);
+                PLog.errorLog(932012478, e);
             }
         });
         hBox = new HBox();

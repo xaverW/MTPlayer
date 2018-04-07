@@ -25,8 +25,8 @@ import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmList;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.p2tools.p2Lib.tools.Duration;
-import de.p2tools.p2Lib.tools.Log;
-import de.p2tools.p2Lib.tools.SysMsg;
+import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2Lib.tools.log.SysMsg;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -280,7 +280,7 @@ public class LoadFilmList {
 
             });
         } catch (final Exception ex) {
-            Log.errorLog(765213654, ex);
+            PLog.errorLog(765213654, ex);
         }
     }
 
@@ -293,7 +293,7 @@ public class LoadFilmList {
 
             });
         } catch (final Exception ex) {
-            Log.errorLog(201020369, ex);
+            PLog.errorLog(201020369, ex);
         }
     }
 
@@ -312,7 +312,7 @@ public class LoadFilmList {
             });
 
         } catch (final Exception ex) {
-            Log.errorLog(912045120, ex);
+            PLog.errorLog(912045120, ex);
         }
     }
 

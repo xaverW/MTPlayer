@@ -24,7 +24,7 @@ import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmList;
 import de.mtplayer.mtp.controller.data.film.FilmListXml;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
-import de.p2tools.p2Lib.tools.Log;
+import de.p2tools.p2Lib.tools.log.PLog;
 import org.tukaani.xz.LZMA2Options;
 import org.tukaani.xz.XZOutputStream;
 
@@ -74,7 +74,7 @@ public class WriteFilmlistJson {
         filmlisteSchreibenJson(tempFile, filmList);
 
         try {
-            Log.sysLog("Komprimiere Datei: " + datei);
+            PLog.sysLog("Komprimiere Datei: " + datei);
             if (datei.endsWith(Const.FORMAT_XZ)) {
                 final Path xz = testNativeXz();
                 if (xz != null) {
@@ -89,15 +89,15 @@ public class WriteFilmlistJson {
 
             Files.deleteIfExists(Paths.get(tempFile));
         } catch (IOException | InterruptedException ex) {
-            Log.sysLog("Komprimieren fehlgeschlagen");
+            PLog.sysLog("Komprimieren fehlgeschlagen");
         }
     }
 
     public void filmlisteSchreibenJson(String datei, FilmList filmList) {
         try {
-            Log.sysLog("Filme schreiben (" + filmList.size() + " Filme) :");
+            PLog.sysLog("Filme schreiben (" + filmList.size() + " Filme) :");
 
-            Log.sysLog("   --> Start Schreiben nach: " + datei);
+            PLog.sysLog("   --> Start Schreiben nach: " + datei);
             String sender = "", thema = "";
 
             try (FileOutputStream fos = new FileOutputStream(datei);
@@ -144,10 +144,10 @@ public class WriteFilmlistJson {
                     jg.writeEndArray();
                 }
                 jg.writeEndObject();
-                Log.sysLog("   --> geschrieben!");
+                PLog.sysLog("   --> geschrieben!");
             }
         } catch (Exception ex) {
-            Log.errorLog(846930145, ex, "nach: " + datei);
+            PLog.errorLog(846930145, ex, "nach: " + datei);
         }
     }
 

@@ -19,7 +19,7 @@ package de.mtplayer.mtp.controller.data;
 import de.mtplayer.mLib.tools.FilmDate;
 import de.mtplayer.mLib.tools.Functions;
 import de.p2tools.p2Lib.tools.GermanStringSorter;
-import de.p2tools.p2Lib.tools.Log;
+import de.p2tools.p2Lib.tools.log.PLog;
 import org.apache.commons.lang3.time.FastDateFormat;
 
 public class HistoryData implements Comparable<HistoryData> {
@@ -113,7 +113,7 @@ public class HistoryData implements Comparable<HistoryData> {
                 url = zeile;
             }
         } catch (final Exception ex) {
-            Log.errorLog(398853224, ex);
+            PLog.errorLog(398853224, ex);
         }
         return new HistoryData(datum, thema, titel, url);
     }

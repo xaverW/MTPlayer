@@ -30,8 +30,8 @@ import de.mtplayer.mtp.controller.data.download.DownloadXml;
 import de.mtplayer.mtp.controller.data.film.FilmTools;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.mtplayer.mtp.tools.file.GetFile;
-import de.p2tools.p2Lib.tools.Log;
-import de.p2tools.p2Lib.tools.SysMsg;
+import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2Lib.tools.log.SysMsg;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -149,7 +149,7 @@ public class DownloadEditDialogController extends MTDialogExtra {
             new MTAlert().showErrorAlert("Film löschen",
                     "Konnte die Datei nicht löschen!",
                     "Fehler beim löschen: " + datenDownload.getZielPfadDatei());
-            Log.errorLog(812036789, "Fehler beim löschen: " + datenDownload.arr[DownloadXml.DOWNLOAD_ZIEL_PFAD_DATEINAME]);
+            PLog.errorLog(812036789, "Fehler beim löschen: " + datenDownload.arr[DownloadXml.DOWNLOAD_ZIEL_PFAD_DATEINAME]);
         }
         return true;
     }

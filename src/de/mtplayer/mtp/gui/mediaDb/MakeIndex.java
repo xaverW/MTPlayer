@@ -21,7 +21,7 @@ import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.p2tools.p2Lib.tools.Duration;
-import de.p2tools.p2Lib.tools.Log;
+import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
 
 import java.io.File;
@@ -85,7 +85,7 @@ public class MakeIndex implements Runnable {
                         searchFile(new File(mp.getPath()), false));
             }
         } catch (final Exception ex) {
-            Log.errorLog(120321254, ex);
+            PLog.errorLog(120321254, ex);
         }
 
         daten.mediaDbList.setAll(search);

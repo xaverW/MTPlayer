@@ -16,7 +16,7 @@
 
 package de.mtplayer.mtp.gui.tools;
 
-import de.p2tools.p2Lib.tools.Log;
+import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
 
 import java.util.ArrayList;
@@ -59,7 +59,7 @@ public class Listener implements EventListener {
     }
 
     public static synchronized void addListener(Listener listener) {
-        System.out.println("Anz. Listener: " + listeners.size());
+        PLog.sysLog("Anz. Listener: " + listeners.size());
         listeners.add(listener);
     }
 
@@ -79,7 +79,7 @@ public class Listener implements EventListener {
                         //System.out.println("Ping: " + ereignis);
                         listener.pingen();
                     } catch (final Exception ex) {
-                        Log.errorLog(512021043, ex);
+                        PLog.errorLog(512021043, ex);
                     }
                 }
 
@@ -94,7 +94,7 @@ public class Listener implements EventListener {
         try {
             Platform.runLater(() -> ping());
         } catch (final Exception ex) {
-            Log.errorLog(698989743, ex);
+            PLog.errorLog(698989743, ex);
         }
     }
 

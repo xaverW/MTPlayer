@@ -20,7 +20,7 @@ import de.mtplayer.mLib.tools.FileUtils;
 import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.tools.file.GetFile;
-import de.p2tools.p2Lib.tools.Log;
+import de.p2tools.p2Lib.tools.log.PLog;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -128,7 +128,7 @@ public class ListePsetVorlagen extends LinkedList<String[]> {
                 }
             }
         } catch (final Exception ex) {
-            Log.errorLog(398001963, ex);
+            PLog.errorLog(398001963, ex);
             return false;
         }
         return true;
@@ -148,7 +148,7 @@ public class ListePsetVorlagen extends LinkedList<String[]> {
                 return ListePsetVorlagen.importPset(new InputStreamReader(new FileInputStream(dateiUrl), StandardCharsets.UTF_8));
             }
         } catch (final Exception ex) {
-            Log.errorLog(630048926, ex);
+            PLog.errorLog(630048926, ex);
             return null;
         }
     }
@@ -197,7 +197,7 @@ public class ListePsetVorlagen extends LinkedList<String[]> {
             }
             in.close();
         } catch (final Exception ex) {
-            Log.errorLog(467810360, ex);
+            PLog.errorLog(467810360, ex);
 
             return null;
         }
@@ -233,7 +233,7 @@ public class ListePsetVorlagen extends LinkedList<String[]> {
             }
         } catch (final Exception ex) {
             ret = false;
-            Log.errorLog(467256394, ex);
+            PLog.errorLog(467256394, ex);
         }
         return ret;
     }

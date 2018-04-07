@@ -26,7 +26,7 @@ import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.gui.tools.MTOpen;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
-import de.p2tools.p2Lib.tools.Log;
+import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -107,7 +107,7 @@ public class PathPane {
                     try {
                         MTOpen.openURL(Const.ADRESSE_WEBSITE_FLVSTREAMER);
                     } catch (Exception e) {
-                        Log.errorLog(784125469, e);
+                        PLog.errorLog(784125469, e);
                     }
                 });
                 break;
@@ -123,7 +123,7 @@ public class PathPane {
                     try {
                         MTOpen.openURL(Const.ADRESSE_WEBSITE_FFMPEG);
                     } catch (Exception e) {
-                        Log.errorLog(976420301, e);
+                        PLog.errorLog(976420301, e);
                     }
                 });
                 break;
@@ -140,7 +140,7 @@ public class PathPane {
                     try {
                         MTOpen.openURL(Const.ADRESSE_WEBSITE_VLC);
                     } catch (Exception e) {
-                        Log.errorLog(701010205, e);
+                        PLog.errorLog(701010205, e);
                     }
                 });
                 break;

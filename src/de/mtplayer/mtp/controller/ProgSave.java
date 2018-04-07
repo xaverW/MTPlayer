@@ -21,8 +21,8 @@ import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.loadFilmlist.WriteFilmlistJson;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
-import de.p2tools.p2Lib.tools.Log;
-import de.p2tools.p2Lib.tools.SysMsg;
+import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2Lib.tools.log.SysMsg;
 import javafx.application.Platform;
 import org.apache.commons.lang3.time.FastDateFormat;
 
@@ -89,7 +89,7 @@ public class ProgSave {
                     } catch (final Exception ignored) {
                     }
                 }
-                Log.errorLog(465690123, e);
+                PLog.errorLog(465690123, e);
             }
         }
     }
@@ -134,7 +134,7 @@ public class ProgSave {
                 }
             } catch (final IOException e) {
                 SysMsg.sysMsg("Die Einstellungen konnten nicht komplett gesichert werden!");
-                Log.errorLog(795623147, e);
+                PLog.errorLog(795623147, e);
             }
 
             alreadyMadeBackup = true;

@@ -24,8 +24,8 @@ import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.p2tools.p2Lib.tools.Duration;
-import de.p2tools.p2Lib.tools.Log;
-import de.p2tools.p2Lib.tools.SysMsg;
+import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2Lib.tools.log.SysMsg;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -158,7 +158,7 @@ public class MediaDbList extends SimpleListProperty<MediaDbData> {
                 }
             }
         } catch (final Exception ex) {
-            Log.errorLog(461203787, ex);
+            PLog.errorLog(461203787, ex);
         }
     }
 
@@ -173,13 +173,13 @@ public class MediaDbList extends SimpleListProperty<MediaDbData> {
                 final File dir = new File(file.getParent());
                 if (!dir.exists()) {
                     if (!dir.mkdirs()) {
-                        Log.errorLog(945120365, "Kann den Pfad nicht anlegen: " + dir.toString());
+                        PLog.errorLog(945120365, "Kann den Pfad nicht anlegen: " + dir.toString());
                     }
                 }
                 SysMsg.sysMsg("   --> Start Schreiben nach: " + datei);
                 logFilePath = file.toPath();
             } catch (final Exception ex) {
-                Log.errorLog(102035478, ex, "nach: " + datei);
+                PLog.errorLog(102035478, ex, "nach: " + datei);
             }
         } else {
             SysMsg.sysMsg("   --> Start Schreiben nach: " + getFilePath().toString());
@@ -256,7 +256,7 @@ public class MediaDbList extends SimpleListProperty<MediaDbData> {
             }
             return new MediaDbData(name, pfad, size, true /*extern*/);
         } catch (final Exception ex) {
-            Log.errorLog(912035647, ex);
+            PLog.errorLog(912035647, ex);
         }
         return null;
     }

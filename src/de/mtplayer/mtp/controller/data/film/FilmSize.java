@@ -16,7 +16,7 @@
 
 package de.mtplayer.mtp.controller.data.film;
 
-import de.p2tools.p2Lib.tools.Log;
+import de.p2tools.p2Lib.tools.log.PLog;
 
 public class FilmSize implements Comparable<FilmSize> {
 
@@ -41,7 +41,7 @@ public class FilmSize implements Comparable<FilmSize> {
                 s = film.arr[FilmXml.FILM_GROESSE];
             }
         } catch (final Exception ex) {
-            Log.errorLog(649891025, ex, "String: " + film.arr[FilmXml.FILM_GROESSE]);
+            PLog.errorLog(649891025, ex, "String: " + film.arr[FilmXml.FILM_GROESSE]);
             l = 0L;
             s = "";
         }

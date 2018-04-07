@@ -23,7 +23,7 @@ import de.mtplayer.mtp.gui.dialog.DownloadContinueDialogController;
 import de.mtplayer.mtp.gui.dialog.DownloadErrorDialogController;
 import de.mtplayer.mtp.gui.tools.MTInfoFile;
 import de.mtplayer.mtp.gui.tools.MTSubtitle;
-import de.p2tools.p2Lib.tools.Log;
+import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
 
 import java.io.File;
@@ -77,7 +77,7 @@ public class ExternalProgramDownload extends Thread {
             Files.createDirectories(Paths.get(download.getZielPfad()));
         } catch (final IOException ignored) {
         } catch (final Exception ex) {
-            Log.errorLog(469365281, ex);
+            PLog.errorLog(469365281, ex);
         }
     }
 
@@ -97,7 +97,7 @@ public class ExternalProgramDownload extends Thread {
         } catch (final Exception ex) {
             download.setStateError();
             exMessage = ex.getLocalizedMessage();
-            Log.errorLog(395623710, ex);
+            PLog.errorLog(395623710, ex);
             if (download.getStart().getRestartCounter() == 0) {
                 // nur beim ersten Mal melden -> nervt sonst
                 Platform.runLater(() -> new DownloadErrorDialogController(download, exMessage));
@@ -293,7 +293,7 @@ public class ExternalProgramDownload extends Thread {
                             Files.deleteIfExists(file.toPath());
                         } catch (final Exception ex) {
                             // kann nicht gelöscht werden, evtl. klappt ja das Überschreiben
-                            Log.errorLog(945120398, ex, "file exists: " + download.getZielPfadDatei());
+                            PLog.errorLog(945120398, ex, "file exists: " + download.getZielPfadDatei());
                         }
                     } else {
                         // wenn Name geändert den Programmaufruf nochmal mit dem geänderten Dateinamen bauen

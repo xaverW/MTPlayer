@@ -24,8 +24,8 @@ import de.mtplayer.mLib.tools.SystemInfo;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
-import de.p2tools.p2Lib.tools.Log;
 import de.p2tools.p2Lib.tools.SysTools;
+import de.p2tools.p2Lib.tools.log.PLog;
 
 public class Config extends MLConfig {
 
@@ -235,19 +235,19 @@ public class Config extends MLConfig {
         check(SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECOND, 5, 1000);
         check(SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND, 5, 1000);
 
-        Log.sysLog("");
-        Log.sysLog("=======================================");
-        Log.sysLog("Systemparameter");
-        Log.sysLog("-----------------");
-        Log.sysLog("Download-Timeout [s]: " + SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getInt());
-        Log.sysLog("max. Download-Restart: " + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getInt());
-        Log.sysLog("max. Download-Restart-Http: " + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP.getInt());
-        Log.sysLog("Download weiterführen in [s]: " + SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECOND.getInt());
-        Log.sysLog("Download Fehlermeldung anzeigen [s]: " + Config.SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getInt());
-        Log.sysLog("Downoadprogress anzeigen: " + Config.SYSTEM_PARAMETER_DOWNLOAD_PROGRESS.get());
-        Log.sysLog("Useragent: " + Config.SYSTEM_PARAMETER_USERAGENT.get());
-        Log.sysLog("=======================================");
-        Log.sysLog("");
+        PLog.sysLog("");
+        PLog.sysLog("=======================================");
+        PLog.sysLog("Systemparameter");
+        PLog.sysLog("-----------------");
+        PLog.sysLog("Download-Timeout [s]: " + SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getInt());
+        PLog.sysLog("max. Download-Restart: " + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getInt());
+        PLog.sysLog("max. Download-Restart-Http: " + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP.getInt());
+        PLog.sysLog("Download weiterführen in [s]: " + SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECOND.getInt());
+        PLog.sysLog("Download Fehlermeldung anzeigen [s]: " + Config.SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getInt());
+        PLog.sysLog("Downoadprogress anzeigen: " + Config.SYSTEM_PARAMETER_DOWNLOAD_PROGRESS.get());
+        PLog.sysLog("Useragent: " + Config.SYSTEM_PARAMETER_USERAGENT.get());
+        PLog.sysLog("=======================================");
+        PLog.sysLog("");
     }
 
 }
