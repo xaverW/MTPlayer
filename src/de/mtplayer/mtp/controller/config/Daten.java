@@ -33,6 +33,7 @@ import de.mtplayer.mtp.gui.mediaDb.MediaPathList;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.tools.filmListFilter.FilmListFilter;
 import de.mtplayer.mtp.tools.storedFilter.StoredFilter;
+import de.p2tools.p2Lib.tools.log.PlayerMsg;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -84,9 +85,10 @@ public class Daten {
     public HistoryList history = null; // alle angesehenen Filme
     public HistoryList erledigteAbos = null; // erfolgreich geladenen Abos
     public ReplaceList replaceList = null;
-
+    public PlayerMsg playerMsg = null;
 
     private Daten() {
+        playerMsg = new PlayerMsg();
         replaceList = new ReplaceList();
         storedFilter = new StoredFilter(this);
         filmList = new FilmList();

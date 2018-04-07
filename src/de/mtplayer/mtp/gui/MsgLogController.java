@@ -17,6 +17,7 @@
 
 package de.mtplayer.mtp.gui;
 
+import de.mtplayer.mtp.controller.config.Daten;
 import de.p2tools.p2Lib.tools.log.SysMsg;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
@@ -38,12 +39,15 @@ public class MsgLogController extends AnchorPane {
     private final int logart;
     private final ObservableList<String> textList;
 
+    public static final int LOG_SYSTEM_MSG = 1;
+    public static final int LOG_PLAYER_MSG = 2;
+
     public MsgLogController(int logart) {
         this.logart = logart;
-        if (logart == SysMsg.LOG_SYSTEM) {
+        if (logart == LOG_SYSTEM_MSG) {
             textList = SysMsg.textSystem;
         } else {
-            textList = SysMsg.textProgramm;
+            textList = Daten.getInstance().playerMsg.textProgramm;
         }
 
         vBoxCont.setSpacing(10);
@@ -54,7 +58,7 @@ public class MsgLogController extends AnchorPane {
         AnchorPane.setLeftAnchor(vBoxCont, 0.0);
 
         Label lblTitle;
-        if (logart == SysMsg.LOG_SYSTEM) {
+        if (logart == LOG_SYSTEM_MSG) {
             lblTitle = new Label("Log vom Programm");
         } else {
             lblTitle = new Label("Log von externen Programmen");
@@ -111,17 +115,32 @@ public class MsgLogController extends AnchorPane {
 
     private void setTextToArea() {
         if (cbxScroll.isSelected()) {
-            textArea.setText(SysMsg.getText(logart));
+            if (logart == LOG_SYSTEM_MSG) {
+                textArea.setText(SysMsg.getText(logart));
+            } else {
+                textArea.setText(Daten.getInstance().playerMsg.getText(logart));
+            }
+
             textArea.selectPositionCaret(textArea.getLength());
             textArea.deselect();
         } else {
             double scrollPosition = textArea.getScrollTop();
-            textArea.setText(SysMsg.getText(logart));
+
+            if (logart == LOG_SYSTEM_MSG) {
+                textArea.setText(SysMsg.getText(logart));
+            } else {
+                textArea.setText(Daten.getInstance().playerMsg.getText(logart));
+            }
+
             textArea.setScrollTop(scrollPosition);
         }
     }
 
     private void clearLog() {
-        SysMsg.clearText(logart);
+        if (logart == LOG_SYSTEM_MSG) {
+            SysMsg.clearText(logart);
+        } else {
+            Daten.getInstance().playerMsg.clearText(logart);
+        }
     }
 }

@@ -18,7 +18,6 @@ package de.mtplayer.mtp.gui;
 
 import de.mtplayer.mtp.controller.config.Config;
 import de.mtplayer.mtp.controller.config.Daten;
-import de.p2tools.p2Lib.tools.log.SysMsg;
 import javafx.beans.property.DoubleProperty;
 import javafx.geometry.Orientation;
 import javafx.scene.control.SplitPane;
@@ -37,8 +36,8 @@ public class MsgGuiPack {
 
     public SplitPane pack() {
 
-        final MsgLogController logControllerLogs = new MsgLogController(SysMsg.LOG_SYSTEM);
-        final MsgLogController logControllerProgs = new MsgLogController(SysMsg.LOG_PLAYER);
+        final MsgLogController logControllerLogs = new MsgLogController(MsgLogController.LOG_SYSTEM_MSG);
+        final MsgLogController logControllerProgs = new MsgLogController(MsgLogController.LOG_PLAYER_MSG);
         SplitPane splitPane = new SplitPane();
         SplitPane splitPaneLog = new SplitPane();
 

@@ -187,7 +187,7 @@ public class WriteProtocolFile {
             bw.write("#####################################################");
             bw.newLine();
             bw.newLine();
-            bw.write(SysMsg.textProgramm.toString());
+            bw.write(Daten.getInstance().playerMsg.textProgramm.toString());
             bw.newLine();
             bw.newLine();
             bw.newLine();
