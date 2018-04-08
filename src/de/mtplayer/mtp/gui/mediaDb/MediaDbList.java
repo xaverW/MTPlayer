@@ -23,9 +23,8 @@ import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.Listener;
-import de.p2tools.p2Lib.tools.Duration;
+import de.p2tools.p2Lib.tools.log.Duration;
 import de.p2tools.p2Lib.tools.log.PLog;
-import de.p2tools.p2Lib.tools.log.SysMsg;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -165,7 +164,7 @@ public class MediaDbList extends SimpleListProperty<MediaDbData> {
     public synchronized void exportListe(String datei) {
         Path logFilePath = null;
         boolean export = false;
-        SysMsg.sysMsg("MediaDB schreiben (" + daten.mediaDbList.size() + " Dateien) :");
+        PLog.userLog("MediaDB schreiben (" + daten.mediaDbList.size() + " Dateien) :");
         if (!datei.isEmpty()) {
             export = true;
             try {
@@ -176,13 +175,13 @@ public class MediaDbList extends SimpleListProperty<MediaDbData> {
                         PLog.errorLog(945120365, "Kann den Pfad nicht anlegen: " + dir.toString());
                     }
                 }
-                SysMsg.sysMsg("   --> Start Schreiben nach: " + datei);
+                PLog.userLog("   --> Start Schreiben nach: " + datei);
                 logFilePath = file.toPath();
             } catch (final Exception ex) {
                 PLog.errorLog(102035478, ex, "nach: " + datei);
             }
         } else {
-            SysMsg.sysMsg("   --> Start Schreiben nach: " + getFilePath().toString());
+            PLog.userLog("   --> Start Schreiben nach: " + getFilePath().toString());
             logFilePath = getFilePath();
         }
 
@@ -207,7 +206,7 @@ public class MediaDbList extends SimpleListProperty<MediaDbData> {
             Platform.runLater(() -> new MTAlert().showErrorAlert("Fehler beim Schreiben",
                     "Datei konnte nicht geschrieben werden!"));
         }
-        SysMsg.sysMsg("   --> geschrieben!");
+        PLog.userLog("   --> geschrieben!");
     }
 
     private String getLine(MediaDbData med, boolean export) {

@@ -17,6 +17,7 @@
 
 package de.mtplayer.mtp.controller.config;
 
+import de.mtplayer.mLib.tools.PlayerMsg;
 import de.mtplayer.mtp.MTFxController;
 import de.mtplayer.mtp.controller.data.*;
 import de.mtplayer.mtp.controller.data.abo.AboList;
@@ -33,7 +34,6 @@ import de.mtplayer.mtp.gui.mediaDb.MediaPathList;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.tools.filmListFilter.FilmListFilter;
 import de.mtplayer.mtp.tools.storedFilter.StoredFilter;
-import de.p2tools.p2Lib.tools.log.PlayerMsg;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

@@ -22,7 +22,6 @@ import de.mtplayer.mLib.tools.TimedTextMarkupLanguageParser;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.p2tools.p2Lib.tools.log.PLog;
-import de.p2tools.p2Lib.tools.log.SysMsg;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -73,7 +72,7 @@ public class MTSubtitle {
             while ((n = in.read(buffer)) != -1) {
                 fos.write(buffer, 0, n);
             }
-            SysMsg.sysMsg(new String[]{"Untertitel", "  geschrieben"});
+            PLog.sysLog(new String[]{"Untertitel", "  geschrieben"});
         }
     }
 
@@ -96,7 +95,7 @@ public class MTSubtitle {
             return;
 
         try {
-            SysMsg.sysMsg(new String[]{"Untertitel: ", datenDownload.getUrlSubtitle(),
+            PLog.sysLog(new String[]{"Untertitel: ", datenDownload.getUrlSubtitle(),
                     "schreiben nach: ", datenDownload.getZielPfad()});
 
             urlSubtitle = datenDownload.getUrlSubtitle();

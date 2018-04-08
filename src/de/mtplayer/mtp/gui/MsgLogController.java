@@ -116,9 +116,9 @@ public class MsgLogController extends AnchorPane {
     private void setTextToArea() {
         if (cbxScroll.isSelected()) {
             if (logart == LOG_SYSTEM_MSG) {
-                textArea.setText(SysMsg.getText(logart));
+                textArea.setText(SysMsg.getText());
             } else {
-                textArea.setText(Daten.getInstance().playerMsg.getText(logart));
+                textArea.setText(Daten.getInstance().playerMsg.getText());
             }
 
             textArea.selectPositionCaret(textArea.getLength());
@@ -127,9 +127,9 @@ public class MsgLogController extends AnchorPane {
             double scrollPosition = textArea.getScrollTop();
 
             if (logart == LOG_SYSTEM_MSG) {
-                textArea.setText(SysMsg.getText(logart));
+                textArea.setText(SysMsg.getText());
             } else {
-                textArea.setText(Daten.getInstance().playerMsg.getText(logart));
+                textArea.setText(Daten.getInstance().playerMsg.getText());
             }
 
             textArea.setScrollTop(scrollPosition);
@@ -138,9 +138,9 @@ public class MsgLogController extends AnchorPane {
 
     private void clearLog() {
         if (logart == LOG_SYSTEM_MSG) {
-            SysMsg.clearText(logart);
+            SysMsg.clearText();
         } else {
-            Daten.getInstance().playerMsg.clearText(logart);
+            Daten.getInstance().playerMsg.clearText();
         }
     }
 }

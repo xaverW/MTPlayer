@@ -95,9 +95,9 @@ public class WriteFilmlistJson {
 
     public void filmlisteSchreibenJson(String datei, FilmList filmList) {
         try {
-            PLog.sysLog("Filme schreiben (" + filmList.size() + " Filme) :");
+            PLog.userLog("Filme schreiben (" + filmList.size() + " Filme) :");
 
-            PLog.sysLog("   --> Start Schreiben nach: " + datei);
+            PLog.userLog("   --> Start Schreiben nach: " + datei);
             String sender = "", thema = "";
 
             try (FileOutputStream fos = new FileOutputStream(datei);
@@ -144,7 +144,7 @@ public class WriteFilmlistJson {
                     jg.writeEndArray();
                 }
                 jg.writeEndObject();
-                PLog.sysLog("   --> geschrieben!");
+                PLog.userLog("   --> geschrieben!");
             }
         } catch (Exception ex) {
             PLog.errorLog(846930145, ex, "nach: " + datei);

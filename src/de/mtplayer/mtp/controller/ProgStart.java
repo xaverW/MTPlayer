@@ -26,9 +26,8 @@ import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.loadFilmlist.ListenerFilmListLoadEvent;
 import de.mtplayer.mtp.controller.loadFilmlist.ReadFilmlist;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
-import de.p2tools.p2Lib.tools.Duration;
+import de.p2tools.p2Lib.tools.log.Duration;
 import de.p2tools.p2Lib.tools.log.PLog;
-import de.p2tools.p2Lib.tools.log.SysMsg;
 import javafx.application.Platform;
 
 import java.nio.file.Files;
@@ -55,12 +54,12 @@ public class ProgStart {
 
     public static void startMeldungen() {
         PLog.versionMsg(Const.PROGRAMMNAME);
-        SysMsg.sysMsg("Programmpfad: " + ProgInfos.getPathJar());
-        SysMsg.sysMsg("Verzeichnis Einstellungen: " + ProgInfos.getSettingsDirectory_String());
-        SysMsg.sysMsg("");
-        SysMsg.sysMsg(LILNE);
-        SysMsg.sysMsg("");
-        SysMsg.sysMsg("");
+        PLog.userLog("Programmpfad: " + ProgInfos.getPathJar());
+        PLog.userLog("Verzeichnis Einstellungen: " + ProgInfos.getSettingsDirectory_String());
+        PLog.userLog("");
+        PLog.userLog(LILNE);
+        PLog.userLog("");
+        PLog.userLog("");
     }
 
     private class loadFilmlistProgStart_ implements Runnable {
@@ -76,13 +75,13 @@ public class ProgStart {
                     daten.filmList, Config.SYSTEM_NUM_DAYS_FILMLIST.getInt());
             Platform.runLater(() -> daten.mtFxController.getBtnFilmliste().setDisable(false));
 
-            SysMsg.sysMsg("Liste Filme gelesen am: " + StringFormatters.FORMATTER_ddMMyyyyHHmm.format(new Date()));
-            SysMsg.sysMsg("  erstellt am: " + daten.filmList.genDate());
-            SysMsg.sysMsg("  Anzahl Filme: " + daten.filmList.size());
-            SysMsg.sysMsg("  Anzahl Neue: " + daten.filmList.countNewFilms());
+            PLog.userLog("Liste Filme gelesen am: " + StringFormatters.FORMATTER_ddMMyyyyHHmm.format(new Date()));
+            PLog.userLog("  erstellt am: " + daten.filmList.genDate());
+            PLog.userLog("  Anzahl Filme: " + daten.filmList.size());
+            PLog.userLog("  Anzahl Neue: " + daten.filmList.countNewFilms());
 
             if (daten.filmList.isTooOld() && Config.SYSTEM_LOAD_FILMS_ON_START.getBool()) {
-                SysMsg.sysMsg("Filmliste zu alt, neue Filmliste laden");
+                PLog.userLog("Filmliste zu alt, neue Filmliste laden");
                 daten.loadFilmList.loadFilmlist("", false);
 
             } else {
@@ -103,12 +102,12 @@ public class ProgStart {
      */
     public boolean allesLaden() {
         if (!load()) {
-            SysMsg.sysMsg("Weder Konfig noch Backup konnte geladen werden!");
+            PLog.userLog("Weder Konfig noch Backup konnte geladen werden!");
             // teils geladene Reste entfernen
             clearKonfig();
             return false;
         }
-        SysMsg.sysMsg("Konfig wurde gelesen!");
+        PLog.userLog("Konfig wurde gelesen!");
         MLInit.initLib(Daten.debug, Const.PROGRAMMNAME, ProgInfos.getUserAgent());
         Daten.mTColor.load(); // Farben einrichten
         return true;
@@ -135,11 +134,11 @@ public class ProgStart {
                     return true;
                 } else {
                     // dann hat das Laden nicht geklappt
-                    SysMsg.sysMsg("Konfig konnte nicht gelesen werden!");
+                    PLog.userLog("Konfig konnte nicht gelesen werden!");
                 }
             } else {
                 // dann hat das Laden nicht geklappt
-                SysMsg.sysMsg("Konfig existiert nicht!");
+                PLog.userLog("Konfig existiert nicht!");
             }
         } catch (final Exception ex) {
             ex.printStackTrace();
@@ -158,12 +157,12 @@ public class ProgStart {
         final ArrayList<Path> path = new ArrayList<>();
         new ProgInfos().getMTPlayerXmlCopyFilePath(path);
         if (path.isEmpty()) {
-            SysMsg.sysMsg("Es gibt kein Backup");
+            PLog.userLog("Es gibt kein Backup");
             return false;
         }
 
         // dann gibts ein Backup
-        SysMsg.sysMsg("Es gibt ein Backup");
+        PLog.userLog("Es gibt ein Backup");
 
 
         if (MLAlert.BUTTON.YES != new MTAlert().showAlert_yes_no("Gesicherte Einstellungen laden?",
@@ -174,17 +173,17 @@ public class ProgStart {
                         + "(ansonsten startet das Programm mit\n"
                         + "Standardeinstellungen)")) {
 
-            SysMsg.sysMsg("User will kein Backup laden.");
+            PLog.userLog("User will kein Backup laden.");
             return false;
         }
 
         for (final Path p : path) {
             // teils geladene Reste entfernen
             clearKonfig();
-            SysMsg.sysMsg(new String[]{"Versuch Backup zu laden:", p.toString()});
+            PLog.userLog(new String[]{"Versuch Backup zu laden:", p.toString()});
             try (IoXmlLesen reader = new IoXmlLesen(daten)) {
                 if (reader.readConfiguration(p)) {
-                    SysMsg.sysMsg(new String[]{"Backup hat geklappt:", p.toString()});
+                    PLog.userLog(new String[]{"Backup hat geklappt:", p.toString()});
                     ret = true;
                     break;
                 }

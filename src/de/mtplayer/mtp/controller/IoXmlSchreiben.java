@@ -34,7 +34,6 @@ import de.mtplayer.mtp.tools.storedFilter.FilterToXml;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
 import de.mtplayer.mtp.tools.storedFilter.StoredFilter;
 import de.p2tools.p2Lib.tools.log.PLog;
-import de.p2tools.p2Lib.tools.log.SysMsg;
 
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -61,14 +60,14 @@ public class IoXmlSchreiben implements AutoCloseable {
 
     public synchronized void datenSchreiben() {
         xmlFilePath = new ProgInfos().getXmlFilePath();
-        SysMsg.sysMsg("Daten Schreiben nach: " + xmlFilePath.toString());
+        PLog.userLog("Daten Schreiben nach: " + xmlFilePath.toString());
         xmlDatenSchreiben();
     }
 
     public synchronized void exportPset(SetData[] pSet, String datei) {
         try {
             xmlFilePath = Paths.get(datei);
-            SysMsg.sysMsg("Pset exportieren nach: " + xmlFilePath.toString());
+            PLog.userLog("Pset exportieren nach: " + xmlFilePath.toString());
             xmlSchreibenStart();
             xmlSchreibenPset(pSet);
             xmlSchreibenEnde();
@@ -137,7 +136,7 @@ public class IoXmlSchreiben implements AutoCloseable {
     }
 
     private void xmlSchreibenStart() throws IOException, XMLStreamException {
-        SysMsg.sysMsg("Start Schreiben nach: " + xmlFilePath.toAbsolutePath());
+        PLog.userLog("Start Schreiben nach: " + xmlFilePath.toAbsolutePath());
         os = Files.newOutputStream(xmlFilePath);
         out = new OutputStreamWriter(os, StandardCharsets.UTF_8);
 
@@ -324,7 +323,7 @@ public class IoXmlSchreiben implements AutoCloseable {
         writer.writeEndDocument();
         writer.flush();
 
-        SysMsg.sysMsg("geschrieben!");
+        PLog.userLog("geschrieben!");
     }
 
     @Override

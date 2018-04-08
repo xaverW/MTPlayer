@@ -25,7 +25,7 @@ import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.SetList;
 import de.mtplayer.mtp.gui.dialog.NewSetDialogController;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
-import de.p2tools.p2Lib.tools.log.SysMsg;
+import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
 
 import java.util.Date;
@@ -65,13 +65,13 @@ public class SearchPsetUpdate {
                         daten.setList.clear();
                     } else if (!newSetDialogController.getAddNewSet()) {
                         // und wenn auch nicht "Anfügen" gewählt, dann halt nix
-                        SysMsg.sysMsg("Setanlegen: Abbruch");
+                        PLog.userLog("Setanlegen: Abbruch");
                         if (!newSetDialogController.getAskAgain()) {
                             // dann auch die Versionsnummer aktualisieren
-                            SysMsg.sysMsg("Setanlegen: Nicht wieder nachfragen");
+                            PLog.userLog("Setanlegen: Nicht wieder nachfragen");
                             Config.SYSTEM_UPDATE_PROGSET_VERSION.setValue(listePsetStandard.version);
                         }
-                        SysMsg.sysMsg("==========================================");
+                        PLog.userLog("==========================================");
                         return;
                     }
                 }
@@ -113,8 +113,8 @@ public class SearchPsetUpdate {
 
                 SetsPrograms.addSetVorlagen(listePsetStandard); // damit auch AddOns
                 // geladen werden
-                SysMsg.sysMsg("Setanlegen: OK");
-                SysMsg.sysMsg("==========================================");
+                PLog.userLog("Setanlegen: OK");
+                PLog.userLog("==========================================");
             });
 
         } catch (final Exception ignored) {

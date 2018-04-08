@@ -29,7 +29,6 @@ import de.mtplayer.mtp.gui.dialog.DownloadErrorDialogController;
 import de.mtplayer.mtp.gui.tools.MTInfoFile;
 import de.mtplayer.mtp.gui.tools.MTSubtitle;
 import de.p2tools.p2Lib.tools.log.PLog;
-import de.p2tools.p2Lib.tools.log.SysMsg;
 import javafx.application.Platform;
 
 import java.io.File;
@@ -275,7 +274,7 @@ public class DirectHttpDownload extends Thread {
                         text.add("Timeout, Download Restarts: " + restartCount);
                         text.add("Ziel: " + download.getZielPfadDatei());
                         text.add("URL: " + download.getUrl());
-                        SysMsg.sysMsg(text.toArray(new String[text.size()]));
+                        PLog.userLog(text.toArray(new String[text.size()]));
                     }
 
                     restartCount++;

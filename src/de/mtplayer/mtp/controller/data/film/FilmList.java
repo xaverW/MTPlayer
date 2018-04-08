@@ -19,7 +19,7 @@ package de.mtplayer.mtp.controller.data.film;
 import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.tools.filmListFilter.FilmlistBlackFilter;
-import de.p2tools.p2Lib.tools.Duration;
+import de.p2tools.p2Lib.tools.log.Duration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
@@ -164,22 +164,30 @@ public class FilmList extends SimpleListProperty<Film> {
     public synchronized void markFilms() {
         // doppelte Filme (URL) markieren
         // viele Filme sind bei mehreren Sendern vorhanden
-        final HashSet<String> hash = new HashSet<>(size(), 0.75F);
+//        final HashSet<String> hash = new HashSet<>(size(), 0.75F);
+        Set set = Collections.synchronizedSet(new HashSet(size(), 0.75F));
 
-        // todo exception parallel??
-        this.parallelStream().forEach((Film f) -> {
-            f.setGeoBlocked();
-            f.setInFuture();
-            if (!hash.contains(f.getUrl())) {
-                f.setDoubleUrl(false);
-                hash.add(f.getUrl());
-            } else {
-                ++countDouble;
-                f.setDoubleUrl(true);
-            }
-        });
+
+        try {
+            // todo exception parallel??
+            this.parallelStream().forEach((Film f) -> {
+                f.setGeoBlocked();
+                f.setInFuture();
+                if (!set.contains(f.getUrl())) {
+//                    System.out.println(f.getUrl());
+                    f.setDoubleUrl(false);
+                    set.add(f.getUrl());
+                } else {
+                    ++countDouble;
+                    f.setDoubleUrl(true);
+                }
+            });
+        } catch (Exception ex) {
+            System.out.println(ex.getStackTrace());
+        }
+
         PLog.sysLog("Anzahl doppelte Filme: " + countDouble);
-        hash.clear();
+        set.clear();
     }
 
     private boolean addInit(Film film) {

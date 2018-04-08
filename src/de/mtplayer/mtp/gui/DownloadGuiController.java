@@ -31,7 +31,6 @@ import de.mtplayer.mtp.gui.tools.MTOpen;
 import de.mtplayer.mtp.gui.tools.Table;
 import de.p2tools.p2Lib.tools.SysTools;
 import de.p2tools.p2Lib.tools.log.PLog;
-import de.p2tools.p2Lib.tools.log.SysMsg;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
@@ -169,7 +168,7 @@ public class DownloadGuiController extends AnchorPane {
             if (new MTAlert().showAlert("Film Löschen?", "", "Die Datei löschen:\n\n" + download.get().getZielPfadDatei())) {
 
                 // und jetzt die Datei löschen
-                SysMsg.sysMsg(new String[]{"Datei löschen: ", file.getAbsolutePath()});
+                PLog.sysLog(new String[]{"Datei löschen: ", file.getAbsolutePath()});
                 if (!file.delete()) {
                     throw new Exception();
                 }

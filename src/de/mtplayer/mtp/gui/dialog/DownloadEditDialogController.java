@@ -31,7 +31,6 @@ import de.mtplayer.mtp.controller.data.film.FilmTools;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.mtplayer.mtp.tools.file.GetFile;
 import de.p2tools.p2Lib.tools.log.PLog;
-import de.p2tools.p2Lib.tools.log.SysMsg;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -141,7 +140,7 @@ public class DownloadEditDialogController extends MTDialogExtra {
             }
 
             // und jetzt die Datei löschen
-            SysMsg.sysMsg(new String[]{"Datei löschen: ", file.getAbsolutePath()});
+            PLog.userLog(new String[]{"Datei löschen: ", file.getAbsolutePath()});
             if (!file.delete()) {
                 throw new Exception();
             }

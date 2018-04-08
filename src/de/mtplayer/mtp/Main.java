@@ -20,11 +20,11 @@ import de.mtplayer.mtp.controller.ProgStart;
 import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.p2tools.p2Lib.tools.log.PLog;
-import de.p2tools.p2Lib.tools.log.SysMsg;
 import javafx.application.Application;
 import javafx.application.Platform;
 
 import java.awt.*;
+import java.io.IOException;
 import java.net.Authenticator;
 import java.net.PasswordAuthentication;
 
@@ -153,15 +153,21 @@ public class Main {
                         return authenticator;
                     }
                 });
-                SysMsg.sysMsg(String.format(LOG_TEXT_PROXY_AUTHENTICATION_SUCESSFUL, prxUser));
+                PLog.sysLog(String.format(LOG_TEXT_PROXY_AUTHENTICATION_SUCESSFUL, prxUser));
             } else if (prxUser != null && prxPassword == null) {
-                SysMsg.sysMsg(LOG_TEXT_PROXY_PASSWORD_NOT_SET);
+                PLog.sysLog(LOG_TEXT_PROXY_PASSWORD_NOT_SET);
             } else {
-                SysMsg.sysMsg(LOG_TEXT_PROXY_AUTHENTICATION_NOT_CONFIGURED);
+                PLog.sysLog(LOG_TEXT_PROXY_AUTHENTICATION_NOT_CONFIGURED);
             }
 
         } catch (final SecurityException se) {
-            SysMsg.sysMsg(LOG_TEXT_PROXY_AUTHENTICATION_CANNOT_ACCESS_PROXY_USER_PROXY_PW + se.toString());
+            PLog.sysLog(LOG_TEXT_PROXY_AUTHENTICATION_CANNOT_ACCESS_PROXY_USER_PROXY_PW + se.toString());
         }
+
+        // todo
+        PLog.errorLog(512222012, new IOException());
+        PLog.errorLog(512012012, new IOException(), "Test1");
+        PLog.errorLog(512012312, "Test2");
+
     }
 }

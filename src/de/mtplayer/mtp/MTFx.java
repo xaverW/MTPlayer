@@ -32,9 +32,8 @@ import de.mtplayer.mtp.gui.tools.GuiSize;
 import de.mtplayer.mtp.res.GetIcon;
 import de.mtplayer.mtp.tools.storedFilter.ProgInitFilter;
 import de.mtplayer.mtp.tools.update.SearchProgramUpdate;
-import de.p2tools.p2Lib.tools.Duration;
+import de.p2tools.p2Lib.tools.log.Duration;
 import de.p2tools.p2Lib.tools.log.PLog;
-import de.p2tools.p2Lib.tools.log.SysMsg;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -180,13 +179,13 @@ public class MTFx extends Application {
     }
 
     private void printArguments(final String[] aArguments) {
-        SysMsg.sysMsg("");
-        SysMsg.sysMsg(TEXT_LINE);
+        PLog.sysLog("");
+        PLog.sysLog(TEXT_LINE);
         for (final String argument : aArguments) {
-            SysMsg.sysMsg(String.format(LOG_TEXT_STARTPARAMETER_PATTERN, argument));
+            PLog.sysLog(String.format(LOG_TEXT_STARTPARAMETER_PATTERN, argument));
         }
-        SysMsg.sysMsg(TEXT_LINE);
-        SysMsg.sysMsg("");
+        PLog.sysLog(TEXT_LINE);
+        PLog.sysLog("");
     }
 
     private void setOrgTitel() {

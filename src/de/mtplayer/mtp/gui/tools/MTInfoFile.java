@@ -20,7 +20,6 @@ import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadXml;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.p2tools.p2Lib.tools.log.PLog;
-import de.p2tools.p2Lib.tools.log.SysMsg;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -30,7 +29,7 @@ import java.nio.file.Paths;
 public class MTInfoFile {
 
     public static void writeInfoFile(Download datenDownload) {
-        SysMsg.sysMsg(new String[]{"Infofile schreiben nach: ", datenDownload.getZielPfad()});
+        PLog.sysLog(new String[]{"Infofile schreiben nach: ", datenDownload.getZielPfad()});
 
         new File(datenDownload.getZielPfad()).mkdirs();
         final Path path = Paths.get(datenDownload.getFileNameWithoutSuffix() + ".txt");
@@ -81,7 +80,7 @@ public class MTInfoFile {
             }
             br.write("\n\n");
             br.flush();
-            SysMsg.sysMsg(new String[]{"Infofile", "  geschrieben"});
+            PLog.userLog(new String[]{"Infofile", "  geschrieben"});
         } catch (final IOException ex) {
             PLog.errorLog(975410369, datenDownload.getZielPfadDatei());
         }

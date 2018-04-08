@@ -20,7 +20,6 @@ import de.mtplayer.mtp.controller.config.Config;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.gui.dialog.QuittDialogController;
 import de.mtplayer.mtp.gui.tools.GuiSize;
-import de.p2tools.p2Lib.tools.Duration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
 
@@ -88,7 +87,6 @@ public class ProgQuitt {
         new ProgSave().allesSpeichern();
 
         PLog.endMsg();
-        Duration.printCounter();
 
         return true;
     }

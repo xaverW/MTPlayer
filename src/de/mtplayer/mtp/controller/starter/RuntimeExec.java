@@ -22,7 +22,6 @@ import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadInfos;
 import de.mtplayer.mtp.controller.data.download.DownloadSize;
 import de.p2tools.p2Lib.tools.log.PLog;
-import de.p2tools.p2Lib.tools.log.SysMsg;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -79,18 +78,18 @@ public class RuntimeExec {
         try {
             if (arrProgCallArray != null) {
                 if (log) {
-                    SysMsg.sysMsg("=====================");
-                    SysMsg.sysMsg("Starte Array: ");
-                    SysMsg.sysMsg(" -> " + strProgCallArray);
-                    SysMsg.sysMsg("=====================");
+                    PLog.userLog("=====================");
+                    PLog.userLog("Starte Array: ");
+                    PLog.userLog(" -> " + strProgCallArray);
+                    PLog.userLog("=====================");
                 }
                 process = Runtime.getRuntime().exec(arrProgCallArray);
             } else {
                 if (log) {
-                    SysMsg.sysMsg("=====================");
-                    SysMsg.sysMsg("Starte nicht als Array:");
-                    SysMsg.sysMsg(" -> " + strProgCall);
-                    SysMsg.sysMsg("=====================");
+                    PLog.userLog("=====================");
+                    PLog.userLog("Starte nicht als Array:");
+                    PLog.userLog(" -> " + strProgCall);
+                    PLog.userLog("=====================");
                 }
                 process = Runtime.getRuntime().exec(strProgCall);
             }

@@ -26,7 +26,6 @@ import de.mtplayer.mtp.controller.data.download.DownloadInfos;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.p2tools.p2Lib.tools.log.PLog;
-import de.p2tools.p2Lib.tools.log.SysMsg;
 
 import java.awt.*;
 import java.io.File;
@@ -105,12 +104,12 @@ public class StarterClass {
                 // zum Wiederstarten/Aufräumen die leer/zu kleine Datei löschen, alles auf Anfang
                 if (file.length() == 0) {
                     // zum Wiederstarten/Aufräumen die leer/zu kleine Datei löschen, alles auf Anfang
-                    SysMsg.sysMsg(new String[]{"Restart/Aufräumen: leere Datei löschen", file.getAbsolutePath()});
+                    PLog.userLog(new String[]{"Restart/Aufräumen: leere Datei löschen", file.getAbsolutePath()});
                     if (!file.delete()) {
                         throw new Exception();
                     }
                 } else if (file.length() < Const.MIN_DATEI_GROESSE_FILM) {
-                    SysMsg.sysMsg(new String[]{"Restart/Aufräumen: Zu kleine Datei löschen", file.getAbsolutePath()});
+                    PLog.userLog(new String[]{"Restart/Aufräumen: Zu kleine Datei löschen", file.getAbsolutePath()});
                     if (!file.delete()) {
                         throw new Exception();
                     }
@@ -143,7 +142,7 @@ public class StarterClass {
             text.add("Programmaufruf: " + download.getProgrammAufruf());
             text.add("Programmaufruf[]: " + download.getProgrammAufrufArray());
         }
-        SysMsg.sysMsg(text.toArray(new String[text.size()]));
+        PLog.userLog(text.toArray(new String[text.size()]));
     }
 
     private void reStartmeldung(Download datenDownload) {
@@ -151,7 +150,7 @@ public class StarterClass {
         text.add("Fehlerhaften Download neu starten - Restart (Summe Starts: " + datenDownload.getStart().getRestartCounter() + ')');
         text.add("Ziel: " + datenDownload.getZielPfadDatei());
         text.add("URL: " + datenDownload.getUrl());
-        SysMsg.sysMsg(text.toArray(new String[text.size()]));
+        PLog.userLog(text.toArray(new String[text.size()]));
     }
 
     private static void fertigmeldung(final Download download) {
@@ -203,7 +202,7 @@ public class StarterClass {
             text.add("Programmaufruf: " + download.getProgrammAufruf());
             text.add("Programmaufruf[]: " + download.getProgrammAufrufArray());
         }
-        SysMsg.sysMsg(text.toArray(new String[text.size()]));
+        PLog.userLog(text.toArray(new String[text.size()]));
 
         if (!download.getSource().equals(DownloadInfos.SRC_BUTTON) && !download.isStateStoped()) {
             //war ein Abo und wurde nicht abgebrochen

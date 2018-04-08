@@ -60,7 +60,7 @@ public class ReadFilmlist {
 
     public void readFilmListe(String source, final FilmList filmList, int days) {
         try {
-            PLog.sysLog("Liste Filme lesen von: " + source);
+            PLog.userLog("Liste Filme lesen von: " + source);
             filmList.clear();
             notifyStart(source, ListenerFilmListLoad.PROGRESS_MAX); // für die Progressanzeige
 
@@ -73,7 +73,7 @@ public class ReadFilmlist {
             }
 
             if (Daten.getInstance().loadFilmList.getStop()) {
-                PLog.sysLog("Filme lesen --> Abbruch");
+                PLog.userLog("Filme lesen --> Abbruch");
                 filmList.clear();
             }
         } catch (final MalformedURLException ex) {
@@ -81,7 +81,7 @@ public class ReadFilmlist {
         }
 
         notifyFertig(source, filmList);
-        PLog.sysLog("Filme lesen --> fertig");
+        PLog.userLog("Filme lesen --> fertig");
     }
 
     private InputStream selectDecompressor(String source, InputStream in) throws Exception {
@@ -269,9 +269,9 @@ public class ReadFilmlist {
     }
 
     private void notifyFertig(String url, FilmList liste) {
-        PLog.sysLog("Liste Filme gelesen am: " + FastDateFormat.getInstance("dd.MM.yyyy, HH:mm").format(new Date()));
-        PLog.sysLog("  erstellt am: " + liste.genDate());
-        PLog.sysLog("  Anzahl Filme: " + liste.size());
+        PLog.userLog("Liste Filme gelesen am: " + FastDateFormat.getInstance("dd.MM.yyyy, HH:mm").format(new Date()));
+        PLog.userLog("  erstellt am: " + liste.genDate());
+        PLog.userLog("  Anzahl Filme: " + liste.size());
         for (final ListenerFilmListLoad l : listeners.getListeners(ListenerFilmListLoad.class)) {
             l.fertig(new ListenerFilmListLoadEvent(url, "", max, progress, 0, false));
         }
