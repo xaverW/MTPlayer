@@ -165,9 +165,17 @@ public class Main {
         }
 
         // todo
+        PLog.sysLog("");
+        PLog.sysLog("");
+        PLog.sysLog("");
+        PLog.sysLog("'''''''''''''''''''''''''''''''''''''''");
+        PLog.errorLog(512012312, "Testmeldung 1");
         PLog.errorLog(512222012, new IOException());
-        PLog.errorLog(512012012, new IOException(), "Test1");
-        PLog.errorLog(512012312, "Test2");
+        PLog.errorLog(512012012, new IOException(), "Testmeldung 2 mit Exception");
+        PLog.sysLog("'''''''''''''''''''''''''''''''''''''''");
+        PLog.sysLog("");
+        PLog.sysLog("");
+        PLog.sysLog("");
 
     }
 }

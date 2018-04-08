@@ -161,48 +161,50 @@ public class StarterClass {
             } catch (final Exception ignored) {
             }
         }
-        final ArrayList<String> text = new ArrayList<>();
+        final ArrayList<String> list = new ArrayList<>();
+        list.add(PLog.LILNE3);
         if (download.isStateStoped()) {
-            text.add("Download wurde abgebrochen");
+            list.add("Download wurde abgebrochen");
         } else if (download.getSource().equals(DownloadInfos.SRC_BUTTON)) {
-            text.add("Film fertig");
+            list.add("Film fertig");
         } else {
             if (download.isStateFinished()) {
                 // dann ists gut
-                text.add("Download ist fertig und hat geklappt");
+                list.add("Download ist fertig und hat geklappt");
             } else if (download.isStateError()) {
-                text.add("Download ist fertig und war fehlerhaft");
+                list.add("Download ist fertig und war fehlerhaft");
             }
             if (download.isProgrammDownloadmanager()) {
-                text.add("Programm ist ein Downloadmanager");
+                list.add("Programm ist ein Downloadmanager");
             }
-            text.add("Programmset: " + download.getSet());
-            text.add("Ziel: " + download.getZielPfadDatei());
+            list.add("Programmset: " + download.getSet());
+            list.add("Ziel: " + download.getZielPfadDatei());
         }
-        text.add("Startzeit: " + StringFormatters.FORMATTER_HHmmss.format(start.getStartTime()));
-        text.add("Endzeit: " + StringFormatters.FORMATTER_HHmmss.format(new MDate().getTime()));
-        text.add("Restarts: " + start.getRestartCounter());
-        text.add("Dauer: " + start.getStartTime().diffInSekunden() + " s");
+        list.add("Startzeit: " + StringFormatters.FORMATTER_HHmmss.format(start.getStartTime()));
+        list.add("Endzeit: " + StringFormatters.FORMATTER_HHmmss.format(new MDate().getTime()));
+        list.add("Restarts: " + start.getRestartCounter());
+        list.add("Dauer: " + start.getStartTime().diffInSekunden() + " s");
         final long dauer = start.getStartTime().diffInMinuten();
         if (dauer == 0) {
-            text.add("Dauer: <1 Min.");
+            list.add("Dauer: <1 Min.");
         } else {
-            text.add("Dauer: " + start.getStartTime().diffInMinuten() + " Min");
+            list.add("Dauer: " + start.getStartTime().diffInMinuten() + " Min");
         }
         if (download.getArt().equals(DownloadInfos.ART_DOWNLOAD)) {
             if (start.getInputStream() != null) {
-                text.add("Bytes gelesen: " + SizeTools.humanReadableByteCount(start.getInputStream().getSumByte(), true));
-                text.add("Bandbreite: " + SizeTools.humanReadableBandwidth(start.getInputStream().getSumBandwidth()));
+                list.add("Bytes gelesen: " + SizeTools.humanReadableByteCount(start.getInputStream().getSumByte(), true));
+                list.add("Bandbreite: " + SizeTools.humanReadableBandwidth(start.getInputStream().getSumBandwidth()));
             }
         }
-        text.add("URL: " + download.getUrl());
+        list.add("URL: " + download.getUrl());
         if (download.getArt().equals(DownloadInfos.ART_DOWNLOAD)) {
-            text.add(DownloadInfos.ART_DOWNLOAD);
+            list.add(DownloadInfos.ART_DOWNLOAD);
         } else {
-            text.add("Programmaufruf: " + download.getProgrammAufruf());
-            text.add("Programmaufruf[]: " + download.getProgrammAufrufArray());
+            list.add("Programmaufruf: " + download.getProgrammAufruf());
+            list.add("Programmaufruf[]: " + download.getProgrammAufrufArray());
         }
-        PLog.userLog(text.toArray(new String[text.size()]));
+        list.add(PLog.LILNE3);
+        PLog.userLog(list);
 
         if (!download.getSource().equals(DownloadInfos.SRC_BUTTON) && !download.isStateStoped()) {
             //war ein Abo und wurde nicht abgebrochen

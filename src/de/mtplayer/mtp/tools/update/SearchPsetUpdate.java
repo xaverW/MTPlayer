@@ -59,6 +59,7 @@ public class SearchPsetUpdate {
                         return;
                     }
 
+                    //todo PLog zusammenfassen
                     final NewSetDialogController newSetDialogController = new NewSetDialogController(daten);
                     if (newSetDialogController.getReplaceSet()) {
                         // dann werden die Sets durch die Neuen ersetzt

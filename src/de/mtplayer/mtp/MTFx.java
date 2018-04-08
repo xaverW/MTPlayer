@@ -179,6 +179,10 @@ public class MTFx extends Application {
     }
 
     private void printArguments(final String[] aArguments) {
+        if (aArguments.length == 0) {
+            return;
+        }
+
         PLog.sysLog("");
         PLog.sysLog(TEXT_LINE);
         for (final String argument : aArguments) {

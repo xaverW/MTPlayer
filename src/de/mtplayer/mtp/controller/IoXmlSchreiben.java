@@ -45,6 +45,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 public class IoXmlSchreiben implements AutoCloseable {
 
@@ -53,6 +54,7 @@ public class IoXmlSchreiben implements AutoCloseable {
     private Path xmlFilePath = null;
     private OutputStream os = null;
     private Daten daten = null;
+    private final ArrayList<String> list = new ArrayList<>();
 
     public IoXmlSchreiben(Daten daten) {
         this.daten = daten;
@@ -60,8 +62,9 @@ public class IoXmlSchreiben implements AutoCloseable {
 
     public synchronized void datenSchreiben() {
         xmlFilePath = new ProgInfos().getXmlFilePath();
-        PLog.userLog("Daten Schreiben nach: " + xmlFilePath.toString());
+        list.add("Daten Schreiben nach: " + xmlFilePath.toString());
         xmlDatenSchreiben();
+        PLog.userLog(list);
     }
 
     public synchronized void exportPset(SetData[] pSet, String datei) {
@@ -136,7 +139,7 @@ public class IoXmlSchreiben implements AutoCloseable {
     }
 
     private void xmlSchreibenStart() throws IOException, XMLStreamException {
-        PLog.userLog("Start Schreiben nach: " + xmlFilePath.toAbsolutePath());
+        list.add("Start Schreiben nach: " + xmlFilePath.toAbsolutePath());
         os = Files.newOutputStream(xmlFilePath);
         out = new OutputStreamWriter(os, StandardCharsets.UTF_8);
 
@@ -323,7 +326,7 @@ public class IoXmlSchreiben implements AutoCloseable {
         writer.writeEndDocument();
         writer.flush();
 
-        PLog.userLog("geschrieben!");
+        list.add("geschrieben!");
     }
 
     @Override

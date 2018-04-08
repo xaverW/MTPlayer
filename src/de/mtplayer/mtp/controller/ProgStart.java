@@ -35,8 +35,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static de.p2tools.p2Lib.tools.log.SysMsg.LILNE;
-
 public class ProgStart {
     Daten daten;
 
@@ -54,12 +52,17 @@ public class ProgStart {
 
     public static void startMeldungen() {
         PLog.versionMsg(Const.PROGRAMMNAME);
-        PLog.userLog("Programmpfad: " + ProgInfos.getPathJar());
-        PLog.userLog("Verzeichnis Einstellungen: " + ProgInfos.getSettingsDirectory_String());
-        PLog.userLog("");
-        PLog.userLog(LILNE);
-        PLog.userLog("");
-        PLog.userLog("");
+
+        ArrayList<String> list = new ArrayList<>();
+        list.add(PLog.LILNE2);
+        list.add("Verzeichnisse:");
+        list.add("Programmpfad: " + ProgInfos.getPathJar());
+        list.add("Verzeichnis Einstellungen: " + ProgInfos.getSettingsDirectory_String());
+        list.add(PLog.LILNE2);
+
+        PLog.emptyLine();
+        PLog.userLog(list);
+        PLog.emptyLine();
     }
 
     private class loadFilmlistProgStart_ implements Runnable {
@@ -69,19 +72,21 @@ public class ProgStart {
             Duration.staticPing("Programmstart Daten laden");
 
             final Daten daten = Daten.getInstance();
+            ArrayList<String> list = new ArrayList<>();
 
             Platform.runLater(() -> daten.mtFxController.getBtnFilmliste().setDisable(true));
             new ReadFilmlist().readFilmListe(ProgInfos.getFilmListFile(),
                     daten.filmList, Config.SYSTEM_NUM_DAYS_FILMLIST.getInt());
             Platform.runLater(() -> daten.mtFxController.getBtnFilmliste().setDisable(false));
 
-            PLog.userLog("Liste Filme gelesen am: " + StringFormatters.FORMATTER_ddMMyyyyHHmm.format(new Date()));
-            PLog.userLog("  erstellt am: " + daten.filmList.genDate());
-            PLog.userLog("  Anzahl Filme: " + daten.filmList.size());
-            PLog.userLog("  Anzahl Neue: " + daten.filmList.countNewFilms());
+            list.add(PLog.LILNE3);
+            list.add("Liste Filme gelesen am: " + StringFormatters.FORMATTER_ddMMyyyyHHmm.format(new Date()));
+            list.add("  erstellt am: " + daten.filmList.genDate());
+            list.add("  Anzahl Filme: " + daten.filmList.size());
+            list.add("  Anzahl Neue: " + daten.filmList.countNewFilms());
 
             if (daten.filmList.isTooOld() && Config.SYSTEM_LOAD_FILMS_ON_START.getBool()) {
-                PLog.userLog("Filmliste zu alt, neue Filmliste laden");
+                list.add("Filmliste zu alt, neue Filmliste laden");
                 daten.loadFilmList.loadFilmlist("", false);
 
             } else {
@@ -90,6 +95,8 @@ public class ProgStart {
                 daten.loadFilmList.afterFilmlistLoad();
                 daten.loadFilmList.notifyFertig(new ListenerFilmListLoadEvent("", "", 0, 0, 0, false/* Fehler */));
             }
+            list.add(PLog.LILNE3);
+            PLog.userLog(list);
         }
 
     }

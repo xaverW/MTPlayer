@@ -43,6 +43,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import java.util.zip.ZipInputStream;
@@ -59,8 +60,9 @@ public class ReadFilmlist {
     }
 
     public void readFilmListe(String source, final FilmList filmList, int days) {
+        ArrayList<String> list = new ArrayList<>();
         try {
-            PLog.userLog("Liste Filme lesen von: " + source);
+            list.add("Liste Filme lesen von: " + source);
             filmList.clear();
             notifyStart(source, ListenerFilmListLoad.PROGRESS_MAX); // für die Progressanzeige
 
@@ -73,7 +75,7 @@ public class ReadFilmlist {
             }
 
             if (Daten.getInstance().loadFilmList.getStop()) {
-                PLog.userLog("Filme lesen --> Abbruch");
+                list.add("Filme lesen --> Abbruch");
                 filmList.clear();
             }
         } catch (final MalformedURLException ex) {
@@ -81,7 +83,8 @@ public class ReadFilmlist {
         }
 
         notifyFertig(source, filmList);
-        PLog.userLog("Filme lesen --> fertig");
+        list.add("Filme lesen --> fertig");
+        PLog.userLog(list);
     }
 
     private InputStream selectDecompressor(String source, InputStream in) throws Exception {
@@ -269,12 +272,16 @@ public class ReadFilmlist {
     }
 
     private void notifyFertig(String url, FilmList liste) {
-        PLog.userLog("Liste Filme gelesen am: " + FastDateFormat.getInstance("dd.MM.yyyy, HH:mm").format(new Date()));
-        PLog.userLog("  erstellt am: " + liste.genDate());
-        PLog.userLog("  Anzahl Filme: " + liste.size());
+        ArrayList<String> list = new ArrayList<>();
+        list.add(PLog.LILNE3);
+        list.add("Liste Filme gelesen am: " + FastDateFormat.getInstance("dd.MM.yyyy, HH:mm").format(new Date()));
+        list.add("  erstellt am: " + liste.genDate());
+        list.add("  Anzahl Filme: " + liste.size());
         for (final ListenerFilmListLoad l : listeners.getListeners(ListenerFilmListLoad.class)) {
             l.fertig(new ListenerFilmListLoadEvent(url, "", max, progress, 0, false));
         }
+        list.add(PLog.LILNE3);
+        PLog.userLog(list);
     }
 
 }

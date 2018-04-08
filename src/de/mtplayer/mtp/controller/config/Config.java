@@ -27,6 +27,8 @@ import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
 import de.p2tools.p2Lib.tools.SysTools;
 import de.p2tools.p2Lib.tools.log.PLog;
 
+import java.util.ArrayList;
+
 public class Config extends MLConfig {
 
     public static final String SYSTEM = "system";
@@ -235,19 +237,23 @@ public class Config extends MLConfig {
         check(SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECOND, 5, 1000);
         check(SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND, 5, 1000);
 
-        PLog.sysLog("");
-        PLog.sysLog("=======================================");
-        PLog.sysLog("Systemparameter");
-        PLog.sysLog("-----------------");
-        PLog.sysLog("Download-Timeout [s]: " + SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getInt());
-        PLog.sysLog("max. Download-Restart: " + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getInt());
-        PLog.sysLog("max. Download-Restart-Http: " + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP.getInt());
-        PLog.sysLog("Download weiterführen in [s]: " + SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECOND.getInt());
-        PLog.sysLog("Download Fehlermeldung anzeigen [s]: " + Config.SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getInt());
-        PLog.sysLog("Downoadprogress anzeigen: " + Config.SYSTEM_PARAMETER_DOWNLOAD_PROGRESS.get());
-        PLog.sysLog("Useragent: " + Config.SYSTEM_PARAMETER_USERAGENT.get());
-        PLog.sysLog("=======================================");
-        PLog.sysLog("");
+        ArrayList<String> list = new ArrayList<>();
+        list.add(PLog.LILNE2);
+        list.add("Systemparameter");
+        list.add("-----------------");
+        list.add("Download-Timeout [s]: " + SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getInt());
+        list.add("max. Download-Restart: " + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getInt());
+        list.add("max. Download-Restart-Http: " + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP.getInt());
+        list.add("Download weiterführen in [s]: " + SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECOND.getInt());
+        list.add("Download Fehlermeldung anzeigen [s]: " + Config.SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getInt());
+        list.add("Downoadprogress anzeigen: " + Config.SYSTEM_PARAMETER_DOWNLOAD_PROGRESS.get());
+        list.add("Useragent: " + Config.SYSTEM_PARAMETER_USERAGENT.get());
+        list.add(PLog.LILNE2);
+        list.add("");
+
+        PLog.emptyLine();
+        PLog.sysLog(list);
+        PLog.emptyLine();
     }
 
 }

@@ -167,7 +167,7 @@ public class LoadFilmList {
 
         notifyProgress(new ListenerFilmListLoadEvent("", "Filme in Downloads eintragen",
                 ListenerFilmListLoad.PROGRESS_MAX, ListenerFilmListLoad.PROGRESS_MAX, 0, false/* Fehler */));
-        PLog.userLog("Filme in Downloads eintragen");
+//        PLog.userLog("Filme in Downloads eintragen");
         daten.downloadList.filmEintragen();
     }
 

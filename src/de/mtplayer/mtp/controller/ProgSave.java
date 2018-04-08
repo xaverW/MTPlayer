@@ -33,6 +33,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -97,49 +98,53 @@ public class ProgSave {
      * Create backup copies of settings file.
      */
     private void konfigCopy() {
-        if (!alreadyMadeBackup) {
-            // nur einmal pro Programmstart machen
-            PLog.userLog("-------------------------------------------------------");
-            PLog.userLog("Einstellungen sichern");
+        if (alreadyMadeBackup) {
+            return;
+        }
+        ArrayList<String> list = new ArrayList<>();
+        // nur einmal pro Programmstart machen
+        list.add(PLog.LILNE3);
+        list.add("Einstellungen sichern");
 
-            try {
-                final Path xmlFilePath = new ProgInfos().getXmlFilePath();
-                long creatTime = -1;
+        try {
+            final Path xmlFilePath = new ProgInfos().getXmlFilePath();
+            long creatTime = -1;
 
-                Path xmlFilePathCopy_1 = ProgInfos.getSettingsDirectory().resolve(Const.CONFIG_FILE_COPY + 1);
-                if (Files.exists(xmlFilePathCopy_1)) {
-                    final BasicFileAttributes attrs = Files.readAttributes(xmlFilePathCopy_1, BasicFileAttributes.class);
-                    final FileTime d = attrs.lastModifiedTime();
-                    creatTime = d.toMillis();
-                }
-
-                if (creatTime == -1 || creatTime < getHeute_0Uhr()) {
-                    // nur dann ist die letzte Kopie älter als einen Tag
-                    for (int i = Const.MAX_COPY_BACKUPFILE; i > 1; --i) {
-                        xmlFilePathCopy_1 = ProgInfos.getSettingsDirectory().resolve(Const.CONFIG_FILE_COPY + (i - 1));
-                        final Path xmlFilePathCopy_2 = ProgInfos.getSettingsDirectory().resolve(Const.CONFIG_FILE_COPY + i);
-                        if (Files.exists(xmlFilePathCopy_1)) {
-                            Files.move(xmlFilePathCopy_1, xmlFilePathCopy_2, StandardCopyOption.REPLACE_EXISTING);
-                        }
-                    }
-                    if (Files.exists(xmlFilePath)) {
-                        Files.move(xmlFilePath,
-                                ProgInfos.getSettingsDirectory().resolve(Const.CONFIG_FILE_COPY + 1),
-                                StandardCopyOption.REPLACE_EXISTING);
-                    }
-                    PLog.userLog("Einstellungen wurden gesichert");
-                } else {
-                    PLog.userLog("Einstellungen wurden heute schon gesichert");
-                }
-            } catch (final IOException e) {
-                PLog.userLog("Die Einstellungen konnten nicht komplett gesichert werden!");
-                PLog.errorLog(795623147, e);
+            Path xmlFilePathCopy_1 = ProgInfos.getSettingsDirectory().resolve(Const.CONFIG_FILE_COPY + 1);
+            if (Files.exists(xmlFilePathCopy_1)) {
+                final BasicFileAttributes attrs = Files.readAttributes(xmlFilePathCopy_1, BasicFileAttributes.class);
+                final FileTime d = attrs.lastModifiedTime();
+                creatTime = d.toMillis();
             }
 
-            alreadyMadeBackup = true;
-            PLog.userLog("-------------------------------------------------------");
+            if (creatTime == -1 || creatTime < getHeute_0Uhr()) {
+                // nur dann ist die letzte Kopie älter als einen Tag
+                for (int i = Const.MAX_COPY_BACKUPFILE; i > 1; --i) {
+                    xmlFilePathCopy_1 = ProgInfos.getSettingsDirectory().resolve(Const.CONFIG_FILE_COPY + (i - 1));
+                    final Path xmlFilePathCopy_2 = ProgInfos.getSettingsDirectory().resolve(Const.CONFIG_FILE_COPY + i);
+                    if (Files.exists(xmlFilePathCopy_1)) {
+                        Files.move(xmlFilePathCopy_1, xmlFilePathCopy_2, StandardCopyOption.REPLACE_EXISTING);
+                    }
+                }
+                if (Files.exists(xmlFilePath)) {
+                    Files.move(xmlFilePath,
+                            ProgInfos.getSettingsDirectory().resolve(Const.CONFIG_FILE_COPY + 1),
+                            StandardCopyOption.REPLACE_EXISTING);
+                }
+                list.add("Einstellungen wurden gesichert");
+            } else {
+                list.add("Einstellungen wurden heute schon gesichert");
+            }
+        } catch (final IOException e) {
+            list.add("Die Einstellungen konnten nicht komplett gesichert werden!");
+            PLog.errorLog(795623147, e);
         }
+
+        alreadyMadeBackup = true;
+        list.add(PLog.LILNE3);
+        PLog.userLog(list);
     }
+
 
     /**
      * Return the number of milliseconds from today´s midnight.

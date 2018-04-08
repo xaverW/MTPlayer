@@ -40,6 +40,7 @@ import java.io.LineNumberReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Predicate;
@@ -164,7 +165,8 @@ public class MediaDbList extends SimpleListProperty<MediaDbData> {
     public synchronized void exportListe(String datei) {
         Path logFilePath = null;
         boolean export = false;
-        PLog.userLog("MediaDB schreiben (" + daten.mediaDbList.size() + " Dateien) :");
+        ArrayList<String> list = new ArrayList<>();
+        list.add("MediaDB schreiben (" + daten.mediaDbList.size() + " Dateien) :");
         if (!datei.isEmpty()) {
             export = true;
             try {
@@ -175,13 +177,13 @@ public class MediaDbList extends SimpleListProperty<MediaDbData> {
                         PLog.errorLog(945120365, "Kann den Pfad nicht anlegen: " + dir.toString());
                     }
                 }
-                PLog.userLog("   --> Start Schreiben nach: " + datei);
+                list.add("   --> Start Schreiben nach: " + datei);
                 logFilePath = file.toPath();
             } catch (final Exception ex) {
                 PLog.errorLog(102035478, ex, "nach: " + datei);
             }
         } else {
-            PLog.userLog("   --> Start Schreiben nach: " + getFilePath().toString());
+            list.add("   --> Start Schreiben nach: " + getFilePath().toString());
             logFilePath = getFilePath();
         }
 
@@ -206,7 +208,8 @@ public class MediaDbList extends SimpleListProperty<MediaDbData> {
             Platform.runLater(() -> new MTAlert().showErrorAlert("Fehler beim Schreiben",
                     "Datei konnte nicht geschrieben werden!"));
         }
-        PLog.userLog("   --> geschrieben!");
+        list.add("   --> geschrieben!");
+        PLog.userLog(list);
     }
 
     private String getLine(MediaDbData med, boolean export) {
