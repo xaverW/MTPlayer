@@ -24,7 +24,6 @@ import javafx.application.Application;
 import javafx.application.Platform;
 
 import java.awt.*;
-import java.io.IOException;
 import java.net.Authenticator;
 import java.net.PasswordAuthentication;
 
@@ -43,9 +42,11 @@ public class Main {
     private static final String LOG_TEXT_PROXY_PASSWORD_NOT_SET = "Proxy Authentication: Password is not set";
     private static final String LOG_TEXT_PROXY_AUTHENTICATION_CANNOT_ACCESS_PROXY_USER_PROXY_PW = "Proxy Authentication: cannot access proxyUser / proxyPassword";
     private static final String X11_AWT_APP_CLASS_NAME = "awtAppClassName";
-    private static final String ERROR_NO_JAVAFX_INSTALLED = "JavaFX wurde nicht im Klassenpfad gefunden. %n Stellen Sie sicher, dass Sie "
-            + "ein Java JRE ab Version 8 benutzen. %n Falls Sie Linux nutzen, installieren Sie das openjfx-Paket ihres "
-            + "Package-Managers,%n oder nutzen Sie eine eigene JRE-Installation.%n";
+
+    private static final String ERROR_NO_JAVAFX_INSTALLED = "JavaFX wurde nicht im Klassenpfad gefunden. \n" +
+            "Stellen Sie sicher, dass Sie ein Java JRE ab Version 8 benutzen. \n" +
+            "Falls Sie Linux nutzen, installieren Sie das openjfx-Paket ihres \n" +
+            "Package-Managers, oder nutzen Sie eine eigene JRE-Installation.";
     public static final String TEXT_LINE = "===========================================";
 
     /**
@@ -57,9 +58,9 @@ public class Main {
             return true;
 
         } catch (final ClassNotFoundException e) {
-            System.out.println(TEXT_LINE);
-            System.out.printf(ERROR_NO_JAVAFX_INSTALLED);
-            System.out.println(TEXT_LINE);
+            PLog.errorLog(487651240, TEXT_LINE);
+            PLog.errorLog(701202547, ERROR_NO_JAVAFX_INSTALLED);
+            PLog.errorLog(602102347, TEXT_LINE);
 
             return false;
         }
@@ -127,7 +128,7 @@ public class Main {
             switch (argument) {
                 case ProgramArguments.STARTUPMODE_VERBOSE:
                     EventQueue.invokeLater(() -> {
-                        ProgStart.startMeldungen();
+                        ProgStart.shortStartMsg();
                         PLog.endMsg();
                         System.exit(0);
                     });
@@ -161,21 +162,8 @@ public class Main {
             }
 
         } catch (final SecurityException se) {
-            PLog.sysLog(LOG_TEXT_PROXY_AUTHENTICATION_CANNOT_ACCESS_PROXY_USER_PROXY_PW + se.toString());
+            PLog.errorLog(932012078, LOG_TEXT_PROXY_AUTHENTICATION_CANNOT_ACCESS_PROXY_USER_PROXY_PW + se.toString());
         }
-
-        // todo
-        PLog.sysLog("");
-        PLog.sysLog("");
-        PLog.sysLog("");
-        PLog.sysLog("'''''''''''''''''''''''''''''''''''''''");
-        PLog.errorLog(512012312, "Testmeldung 1");
-        PLog.errorLog(512222012, new IOException());
-        PLog.errorLog(512012012, new IOException(), "Testmeldung 2 mit Exception");
-        PLog.sysLog("'''''''''''''''''''''''''''''''''''''''");
-        PLog.sysLog("");
-        PLog.sysLog("");
-        PLog.sysLog("");
 
     }
 }

@@ -24,6 +24,7 @@ import de.mtplayer.mLib.tools.SystemInfo;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
+import de.p2tools.p2Lib.tools.PStringUtils;
 import de.p2tools.p2Lib.tools.SysTools;
 import de.p2tools.p2Lib.tools.log.PLog;
 
@@ -34,27 +35,27 @@ public class Config extends MLConfig {
     public static final String SYSTEM = "system";
 
     // ============================================
-    // Programm-Configs, änderbar nur im Konfig-File
-    // ============================================
-    // 250 Sekunden, wie bei Firefox
     public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND = addNewKey("__system-parameter__download-timeout-second_250__", "250");
-    // max. Startversuche für fehlgeschlagene Downloads (insgesamt: restart * restart_http Versuche)
+    // 250 Sekunden, wie bei Firefox
     public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART = addNewKey("__system-parameter__download-max-restart_5__", "5");
-    // max. Startversuche für fehlgeschlagene Downloads, direkt beim Download
+    // max. Startversuche für fehlgeschlagene Downloads (insgesamt: restart * restart_http Versuche)
     public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP = addNewKey("__system-parameter__download-max-restart-http_10__", "10");
-    // Beim Dialog "Download weiterführen" wird in dieser Zeit der DownloadXml weitergeführt
+    // max. Startversuche für fehlgeschlagene Downloads, direkt beim Download
     public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECOND = addNewKey("__system-parameter__download-continue-second_60__", "60");
-    // Downloadfehlermeldung wird xx Sedunden lang angezeigt
+    // Beim Dialog "Download weiterführen" wird in dieser Zeit der DownloadXml weitergeführt
     public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND = addNewKey("__system-parameter__download-errormsg-in-second_30__", "30");
-    // Useragent für direkte Downloads
+    // Downloadfehlermeldung wird xx Sedunden lang angezeigt
     public static MLConfigs SYSTEM_PARAMETER_USERAGENT = addNewKey("__system-parameter__useragent__", Const.USER_AGENT_DEFAULT);
-    // Downloadprogress im Terminal (-auto) anzeigen
+    // Useragent für direkte Downloads
     public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_PROGRESS = addNewKey("__system-parameter__download_progress_", Boolean.TRUE.toString());
 
-    // ============================================
+    // Downloadprogress im Terminal (-auto) anzeigen
     public static MLConfigs SYSTEM_UPDATE_BUILD_NR = addNewKey("system-update-build-nr");
+    // ============================================
     public static MLConfigs SYSTEM_UPDATE_SEARCH = addNewKey("system-update-search", Boolean.TRUE.toString());
+    // ============================================
     public static MLConfigs SYSTEM_UPDATE_DATE = addNewKey("system-update-date");
+    // Programm-Configs, änderbar nur im Konfig-File
     public static MLConfigs SYSTEM_UPDATE_INFO_NR_SHOWN = addNewKey("system-update-info-nr-shown");
     public static MLConfigs SYSTEM_UPDATE_PROGSET_VERSION = addNewKey("system-update-progset-version");
 
@@ -66,6 +67,7 @@ public class Config extends MLConfig {
     public static MLConfigs SYSTEM_PROG_PLAY_FILE = addNewKey("system-prog-play-file");
     public static MLConfigs SYSTEM_MARK_GEO = addNewKey("system-mark-geo", Boolean.TRUE.toString());
     public static MLConfigs SYSTEM_GEO_HOME_PLACE = addNewKey("system-geo-home-place", FilmXml.GEO_DE);
+    public static MLConfigs SYSTEM_LOG_DIR = addNewKey("system-log-dir", "");
 
     // Fenstereinstellungen
     public static MLConfigs SYSTEM_SIZE_GUI = addNewKey("system-size-gui", "1000:900");
@@ -229,31 +231,49 @@ public class Config extends MLConfig {
             + "\t" + "Useragent für direkte Downloads, Standardwert: "
             + SYSTEM_PARAMETER_USERAGENT.get() + "\n";
 
-
-    public static void loadSystemParameter() {
-        check(SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND, 5, 1000);
-        check(SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART, 0, 100);
-        check(SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP, 0, 100);
-        check(SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECOND, 5, 1000);
-        check(SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND, 5, 1000);
-
+    public static void logAllConfigs() {
         ArrayList<String> list = new ArrayList<>();
+
         list.add(PLog.LILNE2);
-        list.add("Systemparameter");
-        list.add("-----------------");
-        list.add("Download-Timeout [s]: " + SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getInt());
-        list.add("max. Download-Restart: " + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getInt());
-        list.add("max. Download-Restart-Http: " + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP.getInt());
-        list.add("Download weiterführen in [s]: " + SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECOND.getInt());
-        list.add("Download Fehlermeldung anzeigen [s]: " + Config.SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getInt());
-        list.add("Downoadprogress anzeigen: " + Config.SYSTEM_PARAMETER_DOWNLOAD_PROGRESS.get());
-        list.add("Useragent: " + Config.SYSTEM_PARAMETER_USERAGENT.get());
+        list.add("Programmeinstellungen");
+        list.add("===========================");
+        for (final String[] s : Config.getAll()) {
+            if (!s[1].isEmpty()) {
+                list.add(s[0] + "\t\t" + s[1]);
+            }
+        }
         list.add(PLog.LILNE2);
-        list.add("");
+        PStringUtils.appendString(list, "|  ", "=");
 
         PLog.emptyLine();
         PLog.sysLog(list);
         PLog.emptyLine();
     }
 
+
+    static {
+        check(SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND, 5, 1000);
+        check(SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART, 0, 100);
+        check(SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP, 0, 100);
+        check(SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECOND, 5, 1000);
+        check(SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND, 5, 1000);
+
+//        ArrayList<String> list = new ArrayList<>();
+//        list.add(PLog.LILNE2);
+//        list.add("Systemparameter");
+//        list.add("-----------------");
+//        list.add("Download-Timeout [s]: " + SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getInt());
+//        list.add("max. Download-Restart: " + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getInt());
+//        list.add("max. Download-Restart-Http: " + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP.getInt());
+//        list.add("Download weiterführen in [s]: " + SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECOND.getInt());
+//        list.add("Download Fehlermeldung anzeigen [s]: " + Config.SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getInt());
+//        list.add("Downoadprogress anzeigen: " + Config.SYSTEM_PARAMETER_DOWNLOAD_PROGRESS.get());
+//        list.add("Useragent: " + Config.SYSTEM_PARAMETER_USERAGENT.get());
+//        list.add(PLog.LILNE2);
+//        list.add("");
+//
+//        PLog.emptyLine();
+//        PLog.sysLog(list);
+//        PLog.emptyLine();
+    }
 }

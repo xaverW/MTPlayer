@@ -123,6 +123,16 @@ public class ProgInfos {
         return getSettingsDirectory().toString();
     }
 
+    public static String getLogDirectory_String() {
+        final String logDir;
+        if (Config.SYSTEM_LOG_DIR.get().isEmpty()) {
+            logDir = Paths.get(getSettingsDirectory_String(), Const.LOG_DIR).toString();
+        } else {
+            logDir = Config.SYSTEM_LOG_DIR.get();
+        }
+        return logDir;
+    }
+
     /**
      * Return the path to "mtplayer.xml_copy_" first copy exists
      *

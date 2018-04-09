@@ -117,7 +117,7 @@ public class MTFx extends Application {
         Duration.counterStop(LOG_TEXT_PROGRAMMSTART);
         primaryStage.getIcons().add(GetIcon.getImage(ICON_NAME, ICON_PATH, ICON_WIDTH, ICON_HEIGHT));
 
-        progStart.startMeldungen();
+        progStart.startMsg();
 
         Duration.staticPing("Erster Start");
         setOrgTitel();
@@ -149,10 +149,9 @@ public class MTFx extends Application {
                 }
             });
 
-            Config.loadSystemParameter();
+//            Config.loadSystemParameter();
             ProgInitFilter.setProgInitFilter();
         }
-
         daten.initDialogs();
     }
 

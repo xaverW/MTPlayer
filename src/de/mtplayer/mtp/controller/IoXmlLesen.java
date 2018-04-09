@@ -189,7 +189,7 @@ public class IoXmlLesen implements AutoCloseable {
             if (daten.storedFilter.getStordeFilterList().isEmpty()) {
                 ProgInitFilter.setProgInitFilter();
             }
-            Config.loadSystemParameter();
+//            Config.loadSystemParameter();
         }
 
         Duration.counterStop("Konfig lesen");

@@ -27,6 +27,7 @@ public class Const {
     public static final String FILE_ERLEDIGTE_ABOS = "downloads.txt";
     public static final String FILE_HISTORY = "history.txt";
     public static final String FILE_MEDIA_DB = "mediadb.txt";
+    public static final String LOG_DIR = "Log";
     public static final String CSS_FILE = "/de/mtplayer/mtp/mtfx.css";
 
     public static final String FORMAT_ZIP = ".zip";

@@ -23,7 +23,7 @@ import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
-import de.p2tools.p2Lib.tools.log.Logo;
+import de.p2tools.p2Lib.tools.log.P2Logo;
 import de.p2tools.p2Lib.tools.log.PLog;
 import de.p2tools.p2Lib.tools.log.SysMsg;
 
@@ -75,7 +75,7 @@ public class WriteProtocolFile {
              BufferedWriter bw = new BufferedWriter(osw)) {
             bw.write("");
             bw.newLine();
-            bw.write(Logo.LOGO);
+            bw.write(P2Logo.LOGO);
             bw.write("");
             bw.newLine();
             bw.write("");
