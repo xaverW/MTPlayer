@@ -212,6 +212,7 @@ public class SetPaneController extends AnchorPane {
         btnCheck.setMaxWidth(Double.MAX_VALUE);
 
         final Button btnHelp = new Button("");
+        btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
         btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
         btnHelp.setOnAction(a -> new MTAlert().showHelpAlert("Set",
                 new GetFile().getHilfeSuchen(GetFile.PFAD_HILFETEXT_PRGRAMME)));

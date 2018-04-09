@@ -126,11 +126,15 @@ public class ProgInfos {
     public static String getLogDirectory_String() {
         final String logDir;
         if (Config.SYSTEM_LOG_DIR.get().isEmpty()) {
-            logDir = Paths.get(getSettingsDirectory_String(), Const.LOG_DIR).toString();
+            logDir = getStandardLogDirectory_String();
         } else {
             logDir = Config.SYSTEM_LOG_DIR.get();
         }
         return logDir;
+    }
+
+    public static String getStandardLogDirectory_String() {
+        return Paths.get(getSettingsDirectory_String(), Const.LOG_DIR).toString();
     }
 
     /**

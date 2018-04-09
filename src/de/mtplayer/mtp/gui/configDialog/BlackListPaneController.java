@@ -114,6 +114,7 @@ public class BlackListPaneController extends AnchorPane {
         tglAbo.selectedProperty().bindBidirectional(propAbo);
 
         final Button btnHelp = new Button("");
+        btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
         btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
         btnHelp.setOnAction(a -> new MTAlert().showHelpAlert("Blacklist",
                 HelpText.BLACKLIST_ABO));
@@ -124,6 +125,7 @@ public class BlackListPaneController extends AnchorPane {
         tglFuture.selectedProperty().bindBidirectional(propFutur);
 
         final Button btnHelpFuture = new Button("");
+        btnHelpFuture.setTooltip(new Tooltip("Hilfe anzeigen."));
         btnHelpFuture.setGraphic(new Icons().ICON_BUTTON_HELP);
         btnHelpFuture.setOnAction(a -> new MTAlert().showHelpAlert("Blacklist",
                 HelpText.BLACKLIST_FUTURE));
@@ -134,6 +136,7 @@ public class BlackListPaneController extends AnchorPane {
         tglGeo.selectedProperty().bindBidirectional(propGeo);
 
         final Button btnHelpGeo = new Button("");
+        btnHelpGeo.setTooltip(new Tooltip("Hilfe anzeigen."));
         btnHelpGeo.setGraphic(new Icons().ICON_BUTTON_HELP);
         btnHelpGeo.setOnAction(a -> new MTAlert().showHelpAlert("Blacklist",
                 HelpText.BLACKLIST_GEO));
@@ -142,12 +145,14 @@ public class BlackListPaneController extends AnchorPane {
         initDays();
 
         final Button btnHelpSize = new Button("");
+        btnHelpSize.setTooltip(new Tooltip("Hilfe anzeigen."));
         btnHelpSize.setGraphic(new Icons().ICON_BUTTON_HELP);
         btnHelpSize.setOnAction(a -> new MTAlert().showHelpAlert("Blacklist",
                 HelpText.BLACKLIST_SIZE));
 
 
         final Button btnHelpDays = new Button("");
+        btnHelpDays.setTooltip(new Tooltip("Hilfe anzeigen."));
         btnHelpDays.setGraphic(new Icons().ICON_BUTTON_HELP);
         btnHelpDays.setOnAction(a -> new MTAlert().showHelpAlert("Blacklist",
                 HelpText.BLACKLIST_DAYS));

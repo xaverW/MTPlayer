@@ -109,6 +109,7 @@ public class FilmPaneController extends AnchorPane {
         initDays();
 
         final Button btnHelpDays = new Button("");
+        btnHelpDays.setTooltip(new Tooltip("Hilfe anzeigen."));
         btnHelpDays.setGraphic(new Icons().ICON_BUTTON_HELP);
         btnHelpDays.setOnAction(a -> new MTAlert().showHelpAlert("nur Filme der letzten Tage laden",
                 HelpText.LOAD_FILM_ONLY_DAYS));
@@ -122,6 +123,7 @@ public class FilmPaneController extends AnchorPane {
         tglLoad.selectedProperty().bindBidirectional(propLoad);
 
         final Button btnHelpLoad = new Button("");
+        btnHelpLoad.setTooltip(new Tooltip("Hilfe anzeigen."));
         btnHelpLoad.setGraphic(new Icons().ICON_BUTTON_HELP);
         btnHelpLoad.setOnAction(a -> new MTAlert().showHelpAlert("Filmliste laden",
                 HelpText.LOAD_FILMLIST_PROGRAMSTART));
@@ -190,6 +192,7 @@ public class FilmPaneController extends AnchorPane {
         btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
 
         final Button btnHelp = new Button("");
+        btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
         btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
         btnHelp.setOnAction(a -> new MTAlert().showHelpAlert("Filmliste laden",
                 HelpText.LOAD_FILMLIST_MANUEL));

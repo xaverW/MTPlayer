@@ -109,6 +109,7 @@ public class DownloadPaneController extends AnchorPane {
         tglFinished.selectedProperty().bindBidirectional(propNotify);
 
         final Button btnHelpFinished = new Button("");
+        btnHelpFinished.setTooltip(new Tooltip("Hilfe anzeigen."));
         btnHelpFinished.setGraphic(new Icons().ICON_BUTTON_HELP);
         btnHelpFinished.setOnAction(a -> new MTAlert().showHelpAlert("Download",
                 HelpText.DOWNLOAD_FINISHED));
@@ -119,6 +120,7 @@ public class DownloadPaneController extends AnchorPane {
         tglError.selectedProperty().bindBidirectional(propErr);
 
         final Button btnHelpError = new Button("");
+        btnHelpError.setTooltip(new Tooltip("Hilfe anzeigen."));
         btnHelpError.setGraphic(new Icons().ICON_BUTTON_HELP);
         btnHelpError.setOnAction(a -> new MTAlert().showHelpAlert("Download",
                 HelpText.DOWNLOAD_ERROR));
@@ -129,6 +131,7 @@ public class DownloadPaneController extends AnchorPane {
         tglOne.selectedProperty().bindBidirectional(propOne);
 
         final Button btnHelpOne = new Button("");
+        btnHelpOne.setTooltip(new Tooltip("Hilfe anzeigen."));
         btnHelpOne.setGraphic(new Icons().ICON_BUTTON_HELP);
         btnHelpOne.setOnAction(a -> new MTAlert().showHelpAlert("Download",
                 HelpText.DOWNLOAD_ONE_SERVER));

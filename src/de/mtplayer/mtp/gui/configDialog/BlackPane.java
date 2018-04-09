@@ -78,6 +78,7 @@ public class BlackPane {
         gridPane.add(rbBlack, 0, 1);
         gridPane.add(new Label("\"Sender / Thema / Titel\" werden nicht angezeigt (Blacklist)"), 1, 1);
         final Button btnHelp = new Button("");
+        btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
         btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
         btnHelp.setOnAction(a -> new MTAlert().showHelpAlert("Blacklist / Whitelist",
                 HelpText.BLACKLIST_WHITELIST));

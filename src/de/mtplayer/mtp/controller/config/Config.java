@@ -68,6 +68,7 @@ public class Config extends MLConfig {
     public static MLConfigs SYSTEM_MARK_GEO = addNewKey("system-mark-geo", Boolean.TRUE.toString());
     public static MLConfigs SYSTEM_GEO_HOME_PLACE = addNewKey("system-geo-home-place", FilmXml.GEO_DE);
     public static MLConfigs SYSTEM_LOG_DIR = addNewKey("system-log-dir", "");
+    public static MLConfigs SYSTEM_LOG_ON = addNewKey("system-log-on", Boolean.TRUE.toString());
 
     // Fenstereinstellungen
     public static MLConfigs SYSTEM_SIZE_GUI = addNewKey("system-size-gui", "1000:900");

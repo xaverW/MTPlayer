@@ -109,7 +109,9 @@ public class ProgStart {
      */
     public boolean allesLaden() {
         boolean load = load();
-        PLogger.setFileHandler(ProgInfos.getLogDirectory_String());
+        if (Config.SYSTEM_LOG_ON.getBool()) {
+            PLogger.setFileHandler(ProgInfos.getLogDirectory_String());
+        }
 
         if (!load) {
             PLog.userLog("Weder Konfig noch Backup konnte geladen werden!");

@@ -20,6 +20,7 @@ import de.mtplayer.mLib.tools.DirFileChooser;
 import de.mtplayer.mtp.controller.config.Config;
 import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
@@ -53,6 +54,8 @@ public class ConfigPaneController extends AnchorPane {
     StringProperty propDir = Config.SYSTEM_PROG_OPEN_DIR.getStringProperty();
     StringProperty propUrl = Config.SYSTEM_PROG_OPEN_URL.getStringProperty();
     StringProperty propPlay = Config.SYSTEM_PROG_PLAY_FILE.getStringProperty();
+    BooleanProperty propLog = Config.SYSTEM_LOG_ON.getBooleanProperty();
+    StringProperty propLogDir = Config.SYSTEM_LOG_DIR.getStringProperty();
 
     ScrollPane scrollPane = new ScrollPane();
 
@@ -115,30 +118,74 @@ public class ConfigPaneController extends AnchorPane {
         final ToggleSwitch tglSearchAbo = new ToggleSwitch("Abos automatisch suchen");
         tglSearchAbo.setMaxWidth(Double.MAX_VALUE);
         tglSearchAbo.selectedProperty().bindBidirectional(propAbo);
-        gridPane.add(tglSearchAbo, 0, 1);
+
         final Button btnHelpAbo = new Button("");
+        btnHelpAbo.setTooltip(new Tooltip("Hilfe anzeigen."));
         btnHelpAbo.setGraphic(new Icons().ICON_BUTTON_HELP);
         btnHelpAbo.setOnAction(a -> new MTAlert().showHelpAlert("Abos automatisch suchen",
                 HelpText.ABOS_SOFRT_SUCHEN));
-        GridPane.setHalignment(btnHelpAbo, HPos.RIGHT);
-        gridPane.add(btnHelpAbo, 1, 1);
 
         final ToggleSwitch tglStartDownload = new ToggleSwitch("Downloads aus Abos sofort starten");
         tglStartDownload.setMaxWidth(Double.MAX_VALUE);
         tglStartDownload.selectedProperty().bindBidirectional(propDown);
-        gridPane.add(tglStartDownload, 0, 2);
+
         final Button btnHelpDownload = new Button("");
+        btnHelpDownload.setTooltip(new Tooltip("Hilfe anzeigen."));
         btnHelpDownload.setGraphic(new Icons().ICON_BUTTON_HELP);
         btnHelpDownload.setOnAction(a -> new MTAlert().showHelpAlert("Downloads sofort starten",
                 HelpText.DOWNLOADS_AUS_ABOS_SOFORT_STARTEN));
-        GridPane.setHalignment(btnHelpDownload, HPos.RIGHT);
-        gridPane.add(btnHelpDownload, 1, 2);
+
+        gridPane.add(tglSearchAbo, 0, 0, 3, 1);
+        gridPane.add(btnHelpAbo, 3, 0);
+        gridPane.add(tglStartDownload, 0, 1, 3, 1);
+        gridPane.add(btnHelpDownload, 3, 1);
+        addLogFile(gridPane, 2);
 
         final ColumnConstraints ccTxt = new ColumnConstraints();
         ccTxt.setFillWidth(true);
         ccTxt.setMinWidth(Region.USE_COMPUTED_SIZE);
         ccTxt.setHgrow(Priority.ALWAYS);
         gridPane.getColumnConstraints().addAll(new ColumnConstraints(), ccTxt);
+    }
+
+    private void addLogFile(GridPane gridPane, int row) {
+        final ToggleSwitch tglSearchLog = new ToggleSwitch("Ein Logfile anlegen");
+        tglSearchLog.setMaxWidth(Double.MAX_VALUE);
+        tglSearchLog.selectedProperty().bindBidirectional(propLog);
+
+        final Button btnHelp = new Button("");
+        btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
+        btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
+        btnHelp.setOnAction(a -> new MTAlert().showHelpAlert("Logfile", HelpText.LOGFILE));
+
+        TextField txtFileManager = new TextField();
+        txtFileManager.textProperty().bindBidirectional(propLogDir);
+        if (txtFileManager.getText().isEmpty()) {
+            txtFileManager.setText(ProgInfos.getLogDirectory_String());
+        }
+
+        final Button btnFile = new Button();
+        btnFile.setTooltip(new Tooltip("Einen Ordner für das Logfile auswählen."));
+        btnFile.setOnAction(event -> {
+            DirFileChooser.DirChooser(Daten.getInstance().primaryStage, txtFileManager);
+        });
+        btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
+
+        final Button btnReset = new Button();
+        btnReset.setTooltip(new Tooltip("Standardpfad für das Logfile wieder herstellen."));
+        btnReset.setOnAction(event -> {
+            txtFileManager.setText(ProgInfos.getStandardLogDirectory_String());
+        });
+        btnReset.setGraphic(new Icons().ICON_BUTTON_RESET);
+
+        gridPane.add(new Label(" "), 0, row++);
+        gridPane.add(tglSearchLog, 0, row, 3, 1);
+        gridPane.add(btnHelp, 3, row++);
+        gridPane.add(new Label("Ordner:"), 0, row);
+        gridPane.add(txtFileManager, 1, row);
+        gridPane.add(btnFile, 2, row);
+        gridPane.add(btnReset, 3, row);
+
     }
 
     private void makeProg(Collection<TitledPane> result) {
@@ -177,6 +224,7 @@ public class ConfigPaneController extends AnchorPane {
         gridPane.add(btnFile, 1, row + 1);
 
         final Button btnHelp = new Button("");
+        btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
         btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
         btnHelp.setOnAction(a -> new MTAlert().showHelpAlert("Dateimanager", HelpText.FILEMANAGER));
         gridPane.add(btnHelp, 2, row + 1);
@@ -198,6 +246,7 @@ public class ConfigPaneController extends AnchorPane {
         gridPane.add(btnFile, 1, row + 1);
 
         final Button btnHelp = new Button("");
+        btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
         btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
         btnHelp.setOnAction(a -> new MTAlert().showHelpAlert("Videoplayer", HelpText.VIDEOPLAYER));
         gridPane.add(btnHelp, 2, row + 1);
@@ -218,6 +267,7 @@ public class ConfigPaneController extends AnchorPane {
         gridPane.add(btnFile, 1, row + 1);
 
         final Button btnHelp = new Button("");
+        btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
         btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
         btnHelp.setOnAction(a -> new MTAlert().showHelpAlert("Webbrowser", HelpText.WEBBROWSER));
         gridPane.add(btnHelp, 2, row + 1);
@@ -241,8 +291,8 @@ public class ConfigPaneController extends AnchorPane {
         gridPane.add(tglSearch, 0, 0);
 
         final Button btnHelp = new Button("");
-        javafx.scene.image.ImageView i1 = new Icons().ICON_BUTTON_HELP;
-        btnHelp.setGraphic(i1);
+        btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
+        btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
         btnHelp.setOnAction(a -> new MTAlert().showHelpAlert("Programmupdate suchen",
                 "Beim Programmstart wird geprüft, ob es eine neue Version des Programms gibt. " +
                         "Ist eine aktualisierte Version vorhanden, wird das dann gemeldet.\n" +

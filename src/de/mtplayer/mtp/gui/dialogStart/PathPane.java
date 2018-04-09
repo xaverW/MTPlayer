@@ -71,6 +71,7 @@ public class PathPane {
         }
 
         final Button btnHelp = new Button("");
+        btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
         btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
         btnHelp.setOnAction(a -> new MTAlert().showHelpAlert("Videoplayer", HelpText.PROG_PATHS));
 
