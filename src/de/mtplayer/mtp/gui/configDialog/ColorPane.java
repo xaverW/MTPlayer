@@ -26,7 +26,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
@@ -41,7 +40,6 @@ public class ColorPane {
         vBox.setSpacing(10);
 
         TableView<MLC> tableView = new TableView<>();
-        tableView.setMinHeight(Region.USE_PREF_SIZE);
         VBox.setVgrow(tableView, Priority.ALWAYS);
         initTableColor(tableView);
 

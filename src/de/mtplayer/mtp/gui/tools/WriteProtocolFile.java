@@ -39,6 +39,7 @@ import static de.mtplayer.mLib.tools.Functions.*;
 public class WriteProtocolFile {
     private static final String TITEL = "Protokoll erstellen";
 
+    // todo
     public void write() {
         String logFile = "";
         logFile = new MTAlert().showAlertFileCooser(TITEL,

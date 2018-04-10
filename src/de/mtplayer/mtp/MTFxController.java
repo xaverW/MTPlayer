@@ -25,7 +25,6 @@ import de.mtplayer.mtp.gui.configDialog.ConfigDialogController;
 import de.mtplayer.mtp.gui.dialog.AboutDialogController;
 import de.mtplayer.mtp.gui.dialog.ResetDialogController;
 import de.mtplayer.mtp.gui.mediaDialog.MediaConfigDialogController;
-import de.mtplayer.mtp.gui.tools.WriteProtocolFile;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.geometry.Insets;
@@ -158,14 +157,11 @@ public class MTFxController extends StackPane {
             final MenuItem miAbout = new MenuItem("Über dieses Programm");
             miAbout.setOnAction(event -> new AboutDialogController(daten));
 
-            final MenuItem miLog = new MenuItem("Protokolldatei erstellen");
-            miLog.setOnAction(event -> new WriteProtocolFile().write());
-
             final MenuItem miReset = new MenuItem("Einstellungen zurücksetzen");
             miReset.setOnAction(event -> new ResetDialogController(daten));
 
             final Menu mHelp = new Menu("Hilfe");
-            mHelp.getItems().addAll(miAbout, new SeparatorMenuItem(), miLog, miReset);
+            mHelp.getItems().addAll(miAbout, new SeparatorMenuItem(), miReset);
 
             menuButton.getStyleClass().add("btnFunction");
             menuButton.setText("");

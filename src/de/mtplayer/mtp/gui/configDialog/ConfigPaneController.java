@@ -27,7 +27,9 @@ import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.gui.tools.MTOpen;
 import de.mtplayer.mtp.tools.update.SearchProgramUpdate;
 import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2Lib.tools.log.PLogger;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -46,6 +48,8 @@ public class ConfigPaneController extends AnchorPane {
     private final Accordion accordion = new Accordion();
     private final HBox hBox = new HBox(0);
     private final CheckBox cbxAccordion = new CheckBox("");
+
+    BooleanProperty logfileChanged = new SimpleBooleanProperty(false);
 
     BooleanProperty accordionProp = Config.CONFIG_DIALOG_ACCORDION.getBooleanProperty();
     BooleanProperty propUpdateSearch = Config.SYSTEM_UPDATE_SEARCH.getBooleanProperty();
@@ -99,6 +103,7 @@ public class ConfigPaneController extends AnchorPane {
     private Collection<TitledPane> createPanes() {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
         makeConfig(result);
+        makeLogfile(result);
         new ColorPane().makeColor(result);
         result.add(new GeoPane().makeGeo());
         makeProg(result);
@@ -139,7 +144,6 @@ public class ConfigPaneController extends AnchorPane {
         gridPane.add(btnHelpAbo, 3, 0);
         gridPane.add(tglStartDownload, 0, 1, 3, 1);
         gridPane.add(btnHelpDownload, 3, 1);
-        addLogFile(gridPane, 2);
 
         final ColumnConstraints ccTxt = new ColumnConstraints();
         ccTxt.setFillWidth(true);
@@ -148,10 +152,31 @@ public class ConfigPaneController extends AnchorPane {
         gridPane.getColumnConstraints().addAll(new ColumnConstraints(), ccTxt);
     }
 
-    private void addLogFile(GridPane gridPane, int row) {
-        final ToggleSwitch tglSearchLog = new ToggleSwitch("Ein Logfile anlegen");
-        tglSearchLog.setMaxWidth(Double.MAX_VALUE);
-        tglSearchLog.selectedProperty().bindBidirectional(propLog);
+    private void makeLogfile(Collection<TitledPane> result) {
+        final VBox vBox = new VBox();
+        vBox.setFillWidth(true);
+        TitledPane tpConfig = new TitledPane("Logfile", vBox);
+        result.add(tpConfig);
+
+        final GridPane gridPane = new GridPane();
+        gridPane.setHgap(15);
+        gridPane.setVgap(15);
+        gridPane.setPadding(new Insets(20, 20, 20, 20));
+        vBox.getChildren().add(gridPane);
+
+        final ToggleSwitch tglEnableLog = new ToggleSwitch("Ein Logfile anlegen");
+        tglEnableLog.setMaxWidth(Double.MAX_VALUE);
+        tglEnableLog.selectedProperty().bindBidirectional(propLog);
+        tglEnableLog.selectedProperty().addListener(((observable, oldValue, newValue) -> {
+            if (newValue == null) {
+                return;
+            }
+            if (newValue) {
+                PLogger.setFileHandler(ProgInfos.getLogDirectory_String());
+            } else {
+                PLogger.removeFileHandler();
+            }
+        }));
 
         final Button btnHelp = new Button("");
         btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
@@ -178,13 +203,38 @@ public class ConfigPaneController extends AnchorPane {
         });
         btnReset.setGraphic(new Icons().ICON_BUTTON_RESET);
 
-        gridPane.add(new Label(" "), 0, row++);
-        gridPane.add(tglSearchLog, 0, row, 3, 1);
-        gridPane.add(btnHelp, 3, row++);
-        gridPane.add(new Label("Ordner:"), 0, row);
+        final Button btnChange = new Button("Logfile ändern");
+        btnChange.setTooltip(new Tooltip("Mit den geänderten Einstellungen ein neues Logfile erstellen"));
+        btnChange.setOnAction(event -> {
+            PLogger.setFileHandler(ProgInfos.getLogDirectory_String());
+            logfileChanged.setValue(false);
+        });
+
+        int row = 0;
+        gridPane.add(tglEnableLog, 0, row, 3, 1);
+        gridPane.add(btnHelp, 3, row);
+        gridPane.add(new Label("Ordner:"), 0, ++row);
         gridPane.add(txtFileManager, 1, row);
         gridPane.add(btnFile, 2, row);
         gridPane.add(btnReset, 3, row);
+        gridPane.add(btnChange, 0, ++row, 2, 1);
+
+        final ColumnConstraints ccTxt = new ColumnConstraints();
+        ccTxt.setFillWidth(true);
+        ccTxt.setMinWidth(Region.USE_COMPUTED_SIZE);
+        ccTxt.setHgrow(Priority.ALWAYS);
+        gridPane.getColumnConstraints().addAll(new ColumnConstraints(), ccTxt);
+
+
+        txtFileManager.disableProperty().bind(tglEnableLog.selectedProperty().not());
+        btnFile.disableProperty().bind(tglEnableLog.selectedProperty().not());
+        btnReset.disableProperty().bind(tglEnableLog.selectedProperty().not());
+        btnChange.disableProperty().bind(tglEnableLog.selectedProperty().not().or(logfileChanged.not()));
+
+        txtFileManager.textProperty().addListener((observable, oldValue, newValue) -> {
+            logfileChanged.setValue(true);
+        });
+
 
     }
 

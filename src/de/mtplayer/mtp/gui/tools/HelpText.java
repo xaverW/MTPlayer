@@ -322,9 +322,7 @@ public class HelpText {
 
     public static final String LOGFILE = "Hier kann ein Ordner angegeben werden " +
             "in dem ein Logfile erstellt wird. Darin wird der Programmverlauf skizziert. " +
-            "Das kann hilfreich sein, wenn das Programm nicht wie erwartet funktioniert.\n" +
-            "\n" +
-            "Änderungen wirken sich erst nach einem Programmneustart aus.";
+            "Das kann hilfreich sein, wenn das Programm nicht wie erwartet funktioniert.\n";
 
     public static final String FILEMANAGER = "Im Tab \"Downloads\" kann man mit der rechten " +
             "Maustaste den Downloadordner (Zielordner) " +
