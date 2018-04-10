@@ -27,6 +27,7 @@ import de.mtplayer.mtp.controller.loadFilmlist.ListenerFilmListLoadEvent;
 import de.mtplayer.mtp.controller.loadFilmlist.ReadFilmlist;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.p2tools.p2Lib.tools.log.Duration;
+import de.p2tools.p2Lib.tools.log.LogMsg;
 import de.p2tools.p2Lib.tools.log.PLog;
 import de.p2tools.p2Lib.tools.log.PLogger;
 import javafx.application.Platform;
@@ -57,7 +58,13 @@ public class ProgStart {
         list.add("Programmpfad: " + ProgInfos.getPathJar());
         list.add("Verzeichnis Einstellungen: " + ProgInfos.getSettingsDirectory_String());
 
-        PLog.versionMsg(Const.PROGRAMMNAME, list);
+        LogMsg.startMsg(Const.PROGRAMMNAME, list);
+
+        list = new ArrayList<>();
+        list.add(PLog.LILNE2);
+        list.add("|  Programmsets:");
+        list.addAll(Daten.getInstance().setList.getListProg());
+        PLog.sysLog(list);
     }
 
     public static void startMsg() {
