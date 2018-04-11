@@ -1,6 +1,13 @@
 ## MTPlayer
 
 
+**Release 1-81**
+
+* Zur Programmausgabe in der Konsole wird jetzt auch ein Logfile geschrieben (in den Einstellungen kann angegeben werden, ob und wo es geschrieben werden soll)
+* Das Format des Log (Konsole und Logfile) wurde übersichtlicher gestaltet
+* Die Suche nach einem Programmupdate wurde geändert und auf die neue Website umgestellt
+
+
 **Release 1-55**
 
 * Es gibt einen neuen Filter (in "nicht anzeigen"): "Zukunft", damit werden Filme in der Zukunft nicht angezeigt.
