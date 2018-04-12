@@ -39,9 +39,7 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.util.Date;
-import java.util.List;
 
 import static java.lang.Thread.sleep;
 
@@ -57,7 +55,7 @@ public class MTFx extends Application {
     private static final int ICON_HEIGHT = 58;
 
     private static final String LOG_TEXT_PROGRAMMSTART = "***Programmstart***";
-    private static final String ARGUMENT_PREFIX = "-";
+
     private static final String TITLE_TEXT_PROGRAMMVERSION_IST_AKTUELL = "Programmversion ist aktuell";
     private static final String TITLE_TEXT_EIN_PROGRAMMUPDATE_IST_VERFUEGBAR = "Ein Programmupdate ist verfügbar";
 
@@ -73,12 +71,8 @@ public class MTFx extends Application {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
 
-        final Parameters parameters = getParameters();
-        final List<String> rawArguments = parameters.getRaw();
-        final String pfad = readPfadFromArguments(rawArguments.toArray(new String[]{}));
-
         Duration.counterStart(LOG_TEXT_PROGRAMMSTART);
-        daten = Daten.getInstance(pfad);
+        daten = Daten.getInstance();
         daten.primaryStage = primaryStage;
         progStart = new ProgStart(daten);
 
@@ -152,27 +146,6 @@ public class MTFx extends Application {
             ProgInitFilter.setProgInitFilter();
         }
         daten.initDialogs();
-    }
-
-    private String readPfadFromArguments(final String[] aArguments) {
-        String pfad;
-        if (aArguments == null) {
-            pfad = "";
-        } else {
-            if (aArguments.length > 0) {
-                if (!aArguments[0].startsWith(ARGUMENT_PREFIX)) {
-                    if (!aArguments[0].endsWith(File.separator)) {
-                        aArguments[0] += File.separator;
-                    }
-                    pfad = aArguments[0];
-                } else {
-                    pfad = "";
-                }
-            } else {
-                pfad = "";
-            }
-        }
-        return pfad;
     }
 
 
