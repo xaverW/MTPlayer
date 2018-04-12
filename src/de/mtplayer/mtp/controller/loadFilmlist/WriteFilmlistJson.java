@@ -19,41 +19,17 @@ package de.mtplayer.mtp.controller.loadFilmlist;
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
-import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmList;
 import de.mtplayer.mtp.controller.data.film.FilmListXml;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.p2tools.p2Lib.tools.log.PLog;
-import org.tukaani.xz.LZMA2Options;
-import org.tukaani.xz.XZOutputStream;
 
-import java.io.*;
-import java.nio.ByteBuffer;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
-import java.nio.channels.WritableByteChannel;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 public class WriteFilmlistJson {
-
-    private void fastChannelCopy(final ReadableByteChannel src, final WritableByteChannel dest) throws IOException {
-        final ByteBuffer buffer = ByteBuffer.allocateDirect(64 * 1024);
-        while (src.read(buffer) != -1) {
-            buffer.flip();
-            dest.write(buffer);
-            buffer.compact();
-        }
-
-        buffer.flip();
-
-        while (buffer.hasRemaining()) {
-            dest.write(buffer);
-        }
-    }
 
     protected JsonGenerator getJsonGenerator(OutputStream os) throws IOException {
         JsonFactory jsonF = new JsonFactory();
@@ -61,36 +37,6 @@ public class WriteFilmlistJson {
         jg.useDefaultPrettyPrinter(); // enable indentation just to make debug/testing easier
 
         return jg;
-    }
-
-    /**
-     * Write film data and compress with LZMA2.
-     *
-     * @param datei    file path
-     * @param filmList film data
-     */
-    public void filmlisteSchreibenJsonCompressed(String datei, FilmList filmList) {
-        final String tempFile = datei + "_temp";
-        filmlisteSchreibenJson(tempFile, filmList);
-
-        try {
-            PLog.sysLog("Komprimiere Datei: " + datei);
-            if (datei.endsWith(Const.FORMAT_XZ)) {
-                final Path xz = testNativeXz();
-                if (xz != null) {
-                    Process p = new ProcessBuilder(xz.toString(), "-9", tempFile).start();
-                    final int exitCode = p.waitFor();
-                    if (exitCode == 0) {
-                        Files.move(Paths.get(tempFile + ".xz"), Paths.get(datei), StandardCopyOption.REPLACE_EXISTING);
-                    }
-                } else
-                    compressFile(tempFile, datei);
-            }
-
-            Files.deleteIfExists(Paths.get(tempFile));
-        } catch (IOException | InterruptedException ex) {
-            PLog.sysLog("Komprimieren fehlgeschlagen");
-        }
     }
 
     public void filmlisteSchreibenJson(String datei, FilmList filmList) {
@@ -148,33 +94,6 @@ public class WriteFilmlistJson {
             }
         } catch (Exception ex) {
             PLog.errorLog(846930145, ex, "nach: " + datei);
-        }
-    }
-
-    private Path testNativeXz() {
-        final String[] paths = {"/usr/bin/xz", "/opt/local/bin/xz", "/usr/local/bin/xz"};
-
-        Path xz = null;
-
-        for (String path : paths) {
-            xz = Paths.get(path);
-            if (Files.isExecutable(xz)) {
-                break;
-            }
-        }
-
-        return xz;
-    }
-
-    private void compressFile(String inputName, String outputName) throws IOException {
-        try (InputStream input = new FileInputStream(inputName);
-             FileOutputStream fos = new FileOutputStream(outputName);
-             final OutputStream output = new XZOutputStream(fos, new LZMA2Options());
-             final ReadableByteChannel inputChannel = Channels.newChannel(input);
-             final WritableByteChannel outputChannel = Channels.newChannel(output)) {
-
-            fastChannelCopy(inputChannel, outputChannel);
-        } catch (IOException ignored) {
         }
     }
 }

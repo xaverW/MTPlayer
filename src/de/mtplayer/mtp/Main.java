@@ -24,15 +24,13 @@ import de.p2tools.p2Lib.tools.log.PLog;
 import de.p2tools.p2Lib.tools.net.Proxy;
 import javafx.application.Application;
 import javafx.application.Platform;
+import org.apache.commons.cli.*;
 
 import java.awt.*;
+import java.io.File;
+import java.util.ArrayList;
 
 public class Main {
-
-    private final class ProgramArguments {
-        private static final String STARTUPMODE_DEBUG = "-d";
-        private static final String STARTUPMODE_VERBOSE = "-v";
-    }
 
     private static final String JAVAFX_CLASSNAME_APPLICATION_PLATFORM = "javafx.application.Platform";
     private static final String X11_AWT_APP_CLASS_NAME = "awtAppClassName";
@@ -52,10 +50,7 @@ public class Main {
             return true;
 
         } catch (final ClassNotFoundException e) {
-            PLog.errorLog(487651240, TEXT_LINE);
-            PLog.errorLog(701202547, ERROR_NO_JAVAFX_INSTALLED);
-            PLog.errorLog(602102347, TEXT_LINE);
-
+            PLog.errorLog(487651240, new String[]{TEXT_LINE, ERROR_NO_JAVAFX_INSTALLED, TEXT_LINE});
             return false;
         }
     }
@@ -65,8 +60,10 @@ public class Main {
      *
      * Programmschalter:
      *
+     * -h print help
      * -d debug
-     * -v Programmversion
+     * -v programversion
+     * -p config file path
      *
      */
 
@@ -117,23 +114,98 @@ public class Main {
     }
 
     private void processArgs(final String... aArguments) {
-        for (String argument : aArguments) {
-            argument = argument.toLowerCase();
-            switch (argument) {
-                case ProgramArguments.STARTUPMODE_VERBOSE:
-                    EventQueue.invokeLater(() -> {
-                        ProgStart.shortStartMsg();
-                        LogMsg.endMsg();
-                        System.exit(0);
-                    });
-                    break;
+        printArguments(aArguments);
 
-                case ProgramArguments.STARTUPMODE_DEBUG:
-                    Daten.debug = true;
-                    break;
-
+        try {
+            final Options allowed = new Options();
+            for (ProgParameter parameter : ProgParameter.values()) {
+                allowed.addOption(parameter.shortname, parameter.name, parameter.hasArgs, parameter.helpText);
             }
+
+            final CommandLineParser parser = new DefaultParser();
+            final CommandLine line = parser.parse(allowed, aArguments);
+
+            if (hasOption(line, ProgParameter.HELP)) {
+                printHelp(allowed);
+                System.exit(0);
+            }
+
+            if (hasOption(line, ProgParameter.VERSION)) {
+                EventQueue.invokeLater(() -> {
+                    ProgStart.shortStartMsg();
+                    LogMsg.endMsg();
+                    System.exit(0);
+                });
+            }
+
+            if (hasOption(line, ProgParameter.DEBUG)) {
+                Daten.debug = true;
+            }
+
+            if (hasOption(line, ProgParameter.PATH)) {
+                String configDir = line.getOptionValue(ProgParameter.PATH.name);
+                if (!configDir.endsWith(File.separator)) {
+                    configDir += File.separator;
+                }
+                Daten.configDir = configDir;
+            }
+
+        } catch (Exception ex) {
+            PLog.errorLog(941237890, ex);
         }
+    }
+
+    private void printArguments(final String[] aArguments) {
+        if (aArguments.length == 0) {
+            return;
+        }
+
+        ArrayList<String> list = new ArrayList<>();
+        list.add(TEXT_LINE);
+        for (final String argument : aArguments) {
+            list.add(String.format("Startparameter: %s", argument));
+        }
+        list.add(TEXT_LINE);
+
+        PLog.emptyLine();
+        PLog.sysLog(list);
+        PLog.emptyLine();
+    }
+
+    enum ProgParameter {
+        HELP("h", "help", false, "show help"),
+        VERSION("v", "version", false, "show version"),
+        PATH("p", "path", true, "path of configuration file"),
+        DEBUG("d", "debug", false, "show debug info");
+
+        final String shortname;
+        final String name;
+        final boolean hasArgs;
+        final String helpText;
+
+        ProgParameter(final String shortname, final String name,
+                      final boolean hasArgs, final String helpText) {
+            this.shortname = shortname;
+            this.name = name;
+            this.hasArgs = hasArgs;
+            this.helpText = helpText;
+        }
+
+    }
+
+
+    private static boolean hasOption(final CommandLine line, final ProgParameter parameter) {
+        return line.hasOption(parameter.name);
+    }
+
+    private static int extractInt(final CommandLine line, final ProgParameter parameter) {
+        return Integer.parseInt(line.getOptionValue(parameter.name));
+    }
+
+    private static void printHelp(final Options allowed) {
+        final HelpFormatter formatter = new HelpFormatter();
+        formatter.printHelp(Const.PROGRAMMNAME, allowed);
+
     }
 
 }

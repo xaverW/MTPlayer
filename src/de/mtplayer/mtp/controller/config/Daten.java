@@ -53,7 +53,7 @@ public class Daten {
     public static boolean reset = false; // Programm auf Starteinstellungen zurücksetzen
 
     // Infos
-    public static String configDir; // Verzeichnis zum Speichern der Programmeinstellungen
+    public static String configDir = ""; // Verzeichnis zum Speichern der Programmeinstellungen
     public NameLists nameLists = null; // Liste aller Sender, Themen, ...
 
     // zentrale Klassen
@@ -131,7 +131,9 @@ public class Daten {
     }
 
     public static final Daten getInstance(String dir) {
-        configDir = dir;
+        if (!dir.isEmpty()) {
+            configDir = dir;
+        }
         return getInstance();
     }
 

@@ -20,7 +20,6 @@ import de.p2tools.p2Lib.tools.log.PLog;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.SimpleTimeZone;
 
@@ -86,30 +85,6 @@ public class FilmlistUrlData implements Comparable<FilmlistUrlData> {
         return d;
     }
 
-    public String getDateStr() {
-        SimpleDateFormat sdf_ = new SimpleDateFormat("dd.MM.yyyy");
-        sdf_.setTimeZone(SimpleTimeZone.getDefault());
-        String d;
-        try {
-            d = sdf_.format(getDate());
-        } catch (Exception ex) {
-            d = sdf_.format(new Date());
-        }
-        return d;
-    }
-
-    public String getTimeStr() {
-        SimpleDateFormat sdf_ = new SimpleDateFormat("HH:mm:ss");
-        sdf_.setTimeZone(SimpleTimeZone.getDefault());
-        String d;
-        try {
-            d = sdf_.format(getDate());
-        } catch (Exception ex) {
-            d = sdf_.format(new Date());
-        }
-        return d;
-    }
-
     @Override
     public int compareTo(FilmlistUrlData arg0) {
         int ret = 0;
@@ -125,22 +100,6 @@ public class FilmlistUrlData implements Comparable<FilmlistUrlData> {
             ret = d_du.compareTo(d_ich);
         } catch (ParseException ex) {
             PLog.errorLog(936542876, ex);
-        }
-        return ret;
-    }
-
-    public boolean aelterAls(int tage) {
-        boolean ret = false;
-        try {
-            //31.10.2010	16:54:17
-            String ich = arr[FILMLIST_UPDATE_SERVER_DATUM_NR] + " " + arr[FILMLIST_UPDATE_SERVER_ZEIT_NR];
-            Date d_ich = sdf.parse(ich);
-            Calendar cal = Calendar.getInstance();
-            // tage vom calendar abziehen
-            cal.add(Calendar.DATE, -tage);
-            ret = d_ich.before(cal.getTime());
-        } catch (ParseException ex) {
-            PLog.errorLog(915468973, ex);
         }
         return ret;
     }

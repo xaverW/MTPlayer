@@ -139,9 +139,9 @@ public class LoadFilmList {
     }
 
     public void afterFilmlistLoad() {
-        notifyProgress(new ListenerFilmListLoadEvent("", "doppelte URLs suchen",
+        notifyProgress(new ListenerFilmListLoadEvent("", "Filem markieren: Geo, Zukunft, Doppelt",
                 ListenerFilmListLoad.PROGRESS_MAX, ListenerFilmListLoad.PROGRESS_MAX, 0, false/* Fehler */));
-        PLog.userLog("doppelte URLs suchen");
+        PLog.userLog("Filem markieren: Geo, Zukunft, Doppelt");
         daten.filmList.markFilms();
 
 
@@ -167,7 +167,7 @@ public class LoadFilmList {
 
         notifyProgress(new ListenerFilmListLoadEvent("", "Filme in Downloads eintragen",
                 ListenerFilmListLoad.PROGRESS_MAX, ListenerFilmListLoad.PROGRESS_MAX, 0, false/* Fehler */));
-//        PLog.userLog("Filme in Downloads eintragen");
+        PLog.userLog("Filme in Downloads eintragen");
         daten.downloadList.filmEintragen();
     }
 

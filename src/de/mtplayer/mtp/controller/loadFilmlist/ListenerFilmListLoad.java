@@ -22,8 +22,6 @@ public class ListenerFilmListLoad implements EventListener {
 
     public static final double PROGRESS_MAX = 1.0;
 
-    ListenerFilmListLoadEvent event;
-
     public void start(ListenerFilmListLoadEvent e) {
     }
 
@@ -34,6 +32,6 @@ public class ListenerFilmListLoad implements EventListener {
     }
 
     public void fertigOnlyOne(ListenerFilmListLoadEvent e) {
-        // dient dem Melden des ersten Mal Laden der Filmliste beim ProgStart
+        // dient zum Melden des ersten Ladens der Filmliste beim ProgStart
     }
 }

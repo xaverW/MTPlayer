@@ -50,8 +50,7 @@ public class MTFx extends Application {
     private Stage primaryStage;
     private MTFxController root;
 
-    private static final String TEXT_LINE = "==========================================";
-    private static final String LOG_TEXT_STARTPARAMETER_PATTERN = "Startparameter: %s";
+
     private static final String ICON_NAME = "Icon.png";
     private static final String ICON_PATH = "/de/mtplayer/mtp/res/";
     private static final int ICON_WIDTH = 58;
@@ -160,7 +159,6 @@ public class MTFx extends Application {
         if (aArguments == null) {
             pfad = "";
         } else {
-            printArguments(aArguments);
             if (aArguments.length > 0) {
                 if (!aArguments[0].startsWith(ARGUMENT_PREFIX)) {
                     if (!aArguments[0].endsWith(File.separator)) {
@@ -177,19 +175,6 @@ public class MTFx extends Application {
         return pfad;
     }
 
-    private void printArguments(final String[] aArguments) {
-        if (aArguments.length == 0) {
-            return;
-        }
-
-        PLog.sysLog("");
-        PLog.sysLog(TEXT_LINE);
-        for (final String argument : aArguments) {
-            PLog.sysLog(String.format(LOG_TEXT_STARTPARAMETER_PATTERN, argument));
-        }
-        PLog.sysLog(TEXT_LINE);
-        PLog.sysLog("");
-    }
 
     private void setOrgTitel() {
         primaryStage.setTitle(Const.PROGRAMMNAME + " " + Functions.getProgVersion());

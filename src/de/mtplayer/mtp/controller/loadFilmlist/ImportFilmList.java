@@ -193,10 +193,6 @@ public class ImportFilmList {
         eventListenerList.add(ListenerFilmListLoad.class, listener);
     }
 
-    public void updateDownloadUrlsFilmlisten(boolean akt) {
-        searchFilmListUrls.updateURLsFilmlisten(akt);
-    }
-
     private boolean urlLaden(String dateiUrl, FilmList filmList, int days) {
         boolean ret = false;
         try {

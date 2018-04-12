@@ -162,29 +162,34 @@ public class FilmList extends SimpleListProperty<Film> {
 
 
     public synchronized void markFilms() {
-        // doppelte Filme (URL) markieren
+        // läuft direkt nach dem Laden der Filmliste!
+        // doppelte Filme (URL), Geo, InFuture markieren
         // viele Filme sind bei mehreren Sendern vorhanden
-//        final HashSet<String> hash = new HashSet<>(size(), 0.75F);
-        Set set = Collections.synchronizedSet(new HashSet(size(), 0.75F));
 
+        final HashSet<String> set = new HashSet<>(size(), 0.75F);
 
+        // todo exception parallel?? Unterschied ~10ms (bei Gesamt: 110ms)
+        Duration.counterStart("markFilms");
         try {
-            // todo exception parallel??
-            this.parallelStream().forEach((Film f) -> {
+
+            this.stream().forEach((Film f) -> {
+
                 f.setGeoBlocked();
                 f.setInFuture();
-                if (!set.contains(f.getUrl())) {
-//                    System.out.println(f.getUrl());
-                    f.setDoubleUrl(false);
-                    set.add(f.getUrl());
-                } else {
+
+                if (set.add(f.getUrl())) {
                     ++countDouble;
                     f.setDoubleUrl(true);
+//                } else {
+//                    f.setDoubleUrl(false);
                 }
+
             });
+
         } catch (Exception ex) {
             System.out.println(ex.getStackTrace());
         }
+        Duration.counterStop("markFilms");
 
         PLog.sysLog("Anzahl doppelte Filme: " + countDouble);
         set.clear();

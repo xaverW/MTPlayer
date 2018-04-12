@@ -19,18 +19,18 @@ package de.mtplayer.mtp.controller.loadFilmlist;
 public class ListenerFilmListLoadEvent {
 
     public String senderUrl = "";
-    public String text = "";
-    public double max = 0;
-    public double progress = 0;
-    public boolean fehler = false;
-    public int count = 0;
+    public String text;
+    public double max;
+    public double progress;
+    public boolean fehler;
+    public int count;
 
-    public ListenerFilmListLoadEvent(String ssender, String ttext, double mmax, double pprogress, int ccount, boolean ffehler) {
-        senderUrl = ssender;
-        text = ttext;
-        max = mmax;
-        progress = pprogress;
-        count = ccount;
-        fehler = ffehler;
+    public ListenerFilmListLoadEvent(String senderUrl, String text, double max, double progress, int count, boolean fehler) {
+        this.senderUrl = senderUrl;
+        this.text = text;
+        this.max = max;
+        this.progress = progress;
+        this.count = count;
+        this.fehler = fehler;
     }
 }
