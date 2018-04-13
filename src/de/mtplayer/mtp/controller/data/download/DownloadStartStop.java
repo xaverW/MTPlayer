@@ -174,6 +174,7 @@ public class DownloadStartStop {
 
     public boolean startDownloads(ArrayList<Download> liste, boolean auchFertige) {
         Duration.counterStart("DownloadStartStop.startDownloads");
+
         MTAlert.BUTTON antwort = MTAlert.BUTTON.UNKNOWN;
         final ArrayList<Download> listeDownloadsLoeschen = new ArrayList<>();
         final ArrayList<Download> listeDownloadsStarten = new ArrayList<>();
@@ -228,8 +229,9 @@ public class DownloadStartStop {
                         listeDownloadsStarten.add(download);
                 }
             }
-            Duration.counterStop("DownloadStartStop.startDownloads");
         }
+
+        Duration.counterStop("DownloadStartStop.startDownloads");
 
 
         if (antwort.equals(MTAlert.BUTTON.CANCEL)) {
