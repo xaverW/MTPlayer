@@ -279,6 +279,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
                 PLog.errorLog(401020398, ex);
             }
 
+            // todo -> synchronize
             // und jetzt wieder schreiben, wenn nötig
             writeTmpList(newListe, gefunden);
             Duration.counterStop("removeDownloadListFromHistory");

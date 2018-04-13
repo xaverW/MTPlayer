@@ -46,6 +46,28 @@ public class Filter {
         this.exakt = exakt;
     }
 
+    public void set() {
+        // keine Auftrennung mit ":" oder "," für z.B. URLs
+        if (filter.isEmpty()) {
+            filterArr = new String[]{""};
+            pattern = null;
+            empty = true;
+            return;
+        }
+
+        empty = false;
+        pattern = makePattern(filter);
+
+        if (exakt || pattern != null) {
+            filterArr = new String[]{filter};
+
+        } else {
+            filterArr = new String[]{filter.trim().toLowerCase()};
+        }
+
+        checkArray();
+    }
+
     public void setArray() {
         if (filter.isEmpty()) {
             filterArr = new String[]{""};

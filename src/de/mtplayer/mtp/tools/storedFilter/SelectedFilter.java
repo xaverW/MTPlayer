@@ -292,7 +292,7 @@ public final class SelectedFilter extends SelectedFilterProps {
 
         // URL
         fUrl = new Filter(filterUrl);
-        fUrl.setArray();
+        fUrl.set();// gibt URLs mit ",", das also nicht trennen
 
         final boolean noAbos = selectedFilter.isNotVis() ? selectedFilter.isNotAbo() : false;
         final boolean noShown = selectedFilter.isNotVis() ? selectedFilter.isNotHistory() : false;
