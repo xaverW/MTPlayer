@@ -177,7 +177,7 @@ public class FilmList extends SimpleListProperty<Film> {
                 f.setGeoBlocked();
                 f.setInFuture();
 
-                if (set.add(f.getUrl())) {
+                if (!set.add(f.getUrl())) {
                     ++countDouble;
                     f.setDoubleUrl(true);
 //                } else {
