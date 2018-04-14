@@ -28,10 +28,10 @@ import de.mtplayer.mtp.controller.data.SetList;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.mtplayer.mtp.gui.dialogStart.StartDialogController;
-import de.mtplayer.mtp.gui.tools.GuiSize;
 import de.mtplayer.mtp.res.GetIcon;
 import de.mtplayer.mtp.tools.storedFilter.ProgInitFilter;
 import de.mtplayer.mtp.tools.update.SearchProgramUpdate;
+import de.p2tools.p2Lib.guiTools.GuiSize;
 import de.p2tools.p2Lib.tools.log.Duration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Application;
@@ -87,8 +87,8 @@ public class MTFx extends Application {
             root = new MTFxController();
             daten.mtFxController = root;
             scene = new Scene(root,
-                    GuiSize.getWidth(Config.SYSTEM_SIZE_GUI),
-                    GuiSize.getHeight(Config.SYSTEM_SIZE_GUI));
+                    GuiSize.getWidth(Config.SYSTEM_SIZE_GUI.getStringProperty()),
+                    GuiSize.getHeight(Config.SYSTEM_SIZE_GUI.getStringProperty()));
 
             String css = this.getClass().getResource(Const.CSS_FILE).toExternalForm();
             scene.getStylesheets().add(css);
@@ -99,7 +99,7 @@ public class MTFx extends Application {
                 new ProgQuitt().beenden(true, false);
             });
 
-            GuiSize.setPos(Config.SYSTEM_SIZE_GUI, primaryStage);
+            GuiSize.setPos(Config.SYSTEM_SIZE_GUI.getStringProperty(), primaryStage);
             primaryStage.show();
 
         } catch (final Exception e) {

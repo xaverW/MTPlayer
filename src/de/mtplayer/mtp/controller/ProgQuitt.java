@@ -19,7 +19,7 @@ package de.mtplayer.mtp.controller;
 import de.mtplayer.mtp.controller.config.Config;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.gui.dialog.QuittDialogController;
-import de.mtplayer.mtp.gui.tools.GuiSize;
+import de.p2tools.p2Lib.guiTools.GuiSize;
 import de.p2tools.p2Lib.tools.log.LogMsg;
 import javafx.application.Platform;
 
@@ -40,7 +40,7 @@ public class ProgQuitt {
 
     private void writeWindowSizes() {
         // Hauptfenster
-        GuiSize.getSizeScene(Config.SYSTEM_SIZE_GUI, daten.primaryStage);
+        GuiSize.getSizeScene(Config.SYSTEM_SIZE_GUI.getStringProperty(), daten.primaryStage);
     }
 
     private void writeTabSettings() {

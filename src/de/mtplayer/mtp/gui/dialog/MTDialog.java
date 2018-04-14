@@ -19,7 +19,7 @@ package de.mtplayer.mtp.gui.dialog;
 import de.mtplayer.mLib.tools.MLConfigs;
 import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.Daten;
-import de.mtplayer.mtp.gui.tools.GuiSize;
+import de.p2tools.p2Lib.guiTools.GuiSize;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -152,10 +152,10 @@ public class MTDialog {
         if (conf == null) {
             this.scene = new Scene(parent);
         } else {
-            int w = GuiSize.getWidth(conf);
-            int h = GuiSize.getHeight(conf);
+            int w = GuiSize.getWidth(conf.getStringProperty());
+            int h = GuiSize.getHeight(conf.getStringProperty());
             if (w > 0 && h > 0) {
-                this.scene = new Scene(parent, GuiSize.getWidth(conf), GuiSize.getHeight(conf));
+                this.scene = new Scene(parent, GuiSize.getWidth(conf.getStringProperty()), GuiSize.getHeight(conf.getStringProperty()));
             } else {
                 this.scene = new Scene(parent);
             }
@@ -177,7 +177,7 @@ public class MTDialog {
         stageHeight = stage.getHeight();
 
         if (conf != null) {
-            GuiSize.getSizeScene(conf, stage);
+            GuiSize.getSizeScene(conf.getStringProperty(), stage);
         }
         stage.close();
     }
@@ -190,7 +190,7 @@ public class MTDialog {
         }
 
         if (conf != null) {
-            GuiSize.setPos(conf, stage);
+            GuiSize.setPos(conf.getStringProperty(), stage);
         } else {
             Stage parentStage = Daten.getInstance().primaryStage;
             ChangeListener<Number> widthListener = (observable, oldValue, newValue) -> {

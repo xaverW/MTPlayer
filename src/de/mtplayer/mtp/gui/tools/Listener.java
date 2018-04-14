@@ -34,16 +34,14 @@ public class Listener implements EventListener {
     public static final int EREIGNIS_MEDIA_DB_STOP = count++;
 
     public static final int EREIGNIS_REPLACELIST_CHANGED = count++;
-
-    //    public static final int EREIGNIS_GUI_ORG_TITEL = count++;
-//    public static final int EREIGNIS_GUI_PROGRAMM_AKTUELL = count++;
-//    public static final int EREIGNIS_GUI_UPDATE_VERFUEGBAR = count++;
     public static final int EREIGNIS_GUI_COLOR_CHANGED = count++;
-
 
     public int[] event = {-1};
     public String eventClass = "";
     private static final ArrayList<Listener> listeners = new ArrayList<>();
+
+    public Listener() {
+    }
 
     public Listener(int event, String eventClass) {
         this.event = new int[]{event};

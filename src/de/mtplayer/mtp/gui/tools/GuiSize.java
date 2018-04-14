@@ -16,71 +16,68 @@
 
 package de.mtplayer.mtp.gui.tools;
 
-import de.mtplayer.mLib.tools.MLConfigs;
-import javafx.stage.Stage;
-
 public class GuiSize {
+//
+//    public static void getSizeScene(MLConfigs nr, Stage stage) {
+//        if (stage != null && stage.getScene() != null && nr != null) {
+//            nr.setValue(
+//                    (int) stage.getScene().getWidth() + ":"
+//                            + (int) stage.getScene().getHeight()
+//                            + ':'
+//                            + (int) stage.getX()
+//                            + ':'
+//                            + (int) stage.getY());
+//        }
+//    }
 
-    public static void getSizeScene(MLConfigs nr, Stage stage) {
-        if (stage != null && stage.getScene() != null && nr != null) {
-            nr.setValue(
-                    (int) stage.getScene().getWidth() + ":"
-                            + (int) stage.getScene().getHeight()
-                            + ':'
-                            + (int) stage.getX()
-                            + ':'
-                            + (int) stage.getY());
-        }
-    }
-
-    public static int getWidth(MLConfigs nr) {
-        int breite = 0;
-        final String[] arr = nr.get().split(":");
-
-        try {
-            if (arr.length == 4 || arr.length == 2) {
-                breite = Integer.parseInt(arr[0]);
-            }
-        } catch (final Exception ex) {
-            breite = 0;
-        }
-
-        return breite;
-    }
-
-    public static int getHeight(MLConfigs nr) {
-        int hoehe = 0;
-        final String[] arr = nr.get().split(":");
-
-        try {
-            if (arr.length == 4 || arr.length == 2) {
-                hoehe = Integer.parseInt(arr[1]);
-            }
-        } catch (final Exception ex) {
-            hoehe = 0;
-        }
-
-        return hoehe;
-    }
-
-    public static void setPos(MLConfigs nr, Stage stage) {
-        int posX, posY;
-        posX = 0;
-        posY = 0;
-        final String[] arr = nr.get().split(":");
-        try {
-            if (arr.length == 4) {
-                posX = Integer.parseInt(arr[2]);
-                posY = Integer.parseInt(arr[3]);
-            }
-        } catch (final Exception ex) {
-            posX = 0;
-            posY = 0;
-        }
-        if (posX > 0 && posY > 0) {
-            stage.setX(posX);
-            stage.setY(posY);
-        }
-    }
+//    public static int getWidth(MLConfigs nr) {
+//        int breite = 0;
+//        final String[] arr = nr.get().split(":");
+//
+//        try {
+//            if (arr.length == 4 || arr.length == 2) {
+//                breite = Integer.parseInt(arr[0]);
+//            }
+//        } catch (final Exception ex) {
+//            breite = 0;
+//        }
+//
+//        return breite;
+//    }
+//
+//    public static int getHeight(MLConfigs nr) {
+//        int hoehe = 0;
+//        final String[] arr = nr.get().split(":");
+//
+//        try {
+//            if (arr.length == 4 || arr.length == 2) {
+//                hoehe = Integer.parseInt(arr[1]);
+//            }
+//        } catch (final Exception ex) {
+//            hoehe = 0;
+//        }
+//
+//        return hoehe;
+//    }
+//
+//    public static void setPos(MLConfigs nr, Stage stage) {
+//        int posX, posY;
+//        posX = 0;
+//        posY = 0;
+//        final String[] arr = nr.get().split(":");
+//        try {
+//            if (arr.length == 4) {
+//                posX = Integer.parseInt(arr[2]);
+//                posY = Integer.parseInt(arr[3]);
+//            }
+//        } catch (final Exception ex) {
+//            posX = 0;
+//            posY = 0;
+//        }
+//        if (posX > 0 && posY > 0) {
+//            stage.setX(posX);
+//            stage.setY(posY);
+//        }
+//    }
 
 }
