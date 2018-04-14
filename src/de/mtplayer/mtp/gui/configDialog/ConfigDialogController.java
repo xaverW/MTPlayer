@@ -71,7 +71,7 @@ public class ConfigDialogController extends MTDialog {
         }
 
         // todo nur wenn die Black und Geo wirklich geändert
-        if (!daten.loadFilmlist.getPropListSearching()) {
+        if (!daten.loadFilmlist.getPropLoadFilmlist()) {
             // wird sonst dann eh gemacht
             daten.filmlist.filterList();
             Listener.notify(Listener.EREIGNIS_BLACKLIST_GEAENDERT, ConfigDialogController.class.getSimpleName());

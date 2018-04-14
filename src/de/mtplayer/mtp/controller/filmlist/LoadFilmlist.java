@@ -23,7 +23,7 @@ import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.Filmlist;
-import de.mtplayer.mtp.controller.filmlist.filmlistUrls.FilmListUrlList;
+import de.mtplayer.mtp.controller.filmlist.filmlistUrls.FilmlistUrlList;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ImportNewFilmlist;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
@@ -51,9 +51,10 @@ public class LoadFilmlist {
     private final Daten daten;
     private final ImportNewFilmlist importNewFilmliste;
     private final EventListenerList listeners = new EventListenerList();
-    private BooleanProperty propListSearching = new SimpleBooleanProperty(false);
-
+    private BooleanProperty propLoadFilmlist = new SimpleBooleanProperty(false);
     private static final AtomicBoolean stop = new AtomicBoolean(false); // damit kannn das Laden gestoppt werden kann
+
+    enum NOTIFY {START, PROGRESS, FINISHED}
 
     public LoadFilmlist(Daten daten) {
         this.daten = daten;
@@ -62,12 +63,12 @@ public class LoadFilmlist {
         importNewFilmliste.addAdListener(new ListenerFilmlistLoad() {
             @Override
             public synchronized void start(ListenerFilmlistLoadEvent event) {
-                notifyStart(event);
+                notifyEvent(NOTIFY.START, event);
             }
 
             @Override
             public synchronized void progress(ListenerFilmlistLoadEvent event) {
-                notifyProgress(event);
+                notifyEvent(NOTIFY.PROGRESS, event);
             }
 
             @Override
@@ -79,24 +80,16 @@ public class LoadFilmlist {
         });
     }
 
-    public boolean getPropListSearching() {
-        return propListSearching.get();
+    public boolean getPropLoadFilmlist() {
+        return propLoadFilmlist.get();
     }
 
-    public BooleanProperty propListSearchingProperty() {
-        return propListSearching;
+    public BooleanProperty propLoadFilmlistProperty() {
+        return propLoadFilmlist;
     }
 
-    public void setPropListSearching(boolean propListSearching) {
-        this.propListSearching.set(propListSearching);
-    }
-
-    public BooleanProperty getIstAmLaufen() {
-        return propListSearching;
-    }
-
-    public void setIstAmLaufen(BooleanProperty istAmLaufen) {
-        this.propListSearching = istAmLaufen;
+    public void setPropLoadFilmlist(boolean propLoadFilmlist) {
+        this.propLoadFilmlist.set(propLoadFilmlist);
     }
 
     public void addAdListener(ListenerFilmlistLoad listener) {
@@ -111,12 +104,12 @@ public class LoadFilmlist {
         return stop.get();
     }
 
-    public FilmListUrlList getDownloadUrlsFilmlisten_akt() {
-        return importNewFilmliste.searchFilmListUrls.filmListUrlList_akt;
+    public FilmlistUrlList getDownloadUrlsFilmlisten_akt() {
+        return importNewFilmliste.searchFilmListUrls.filmlistUrlList_akt;
     }
 
-    public FilmListUrlList getDownloadUrlsFilmlisten_diff() {
-        return importNewFilmliste.searchFilmListUrls.filmListUrlList_diff;
+    public FilmlistUrlList getDownloadUrlsFilmlisten_diff() {
+        return importNewFilmliste.searchFilmListUrls.filmlistUrlList_diff;
     }
 
     /**
@@ -153,9 +146,9 @@ public class LoadFilmlist {
         PLog.userLog("  Anzahl Filme: " + daten.filmlist.size());
         PLog.userLog("  Anzahl Neue: " + daten.filmlist.countNewFilms());
 
-        if (!getPropListSearching()) {
+        if (!getPropLoadFilmlist()) {
             // nicht doppelt starten
-            setPropListSearching(true);
+            setPropLoadFilmlist(true);
             // Hash mit URLs füllen
             hashSet.clear();
             fillHash(daten.filmlist);
@@ -185,6 +178,9 @@ public class LoadFilmlist {
      * Filmliste beim Programmstart laden
      */
     public void loadFilmlistProgStart() {
+
+        setPropLoadFilmlist(true);
+
         // Gui startet ein wenig flüssiger
         Thread th = new Thread(() -> {
 
@@ -207,13 +203,14 @@ public class LoadFilmlist {
 
             if (daten.filmlist.isTooOld() && Config.SYSTEM_LOAD_FILMS_ON_START.getBool()) {
                 list.add("Filmliste zu alt, neue Filmliste laden");
+                setPropLoadFilmlist(false);
                 loadFilmlist("", false);
 
             } else {
                 // beim Neuladen wird es dann erst gemacht
-                notifyStart(new ListenerFilmlistLoadEvent("", "", 0, 0, 0, false/* Fehler */));
+                notifyEvent(NOTIFY.START, new ListenerFilmlistLoadEvent("", "", 0, 0, false/* Fehler */));
                 afterLoadFilmlist();
-                notifyFinished(new ListenerFilmlistLoadEvent("", "", 0, 0, 0, false/* Fehler */));
+                notifyEvent(NOTIFY.FINISHED, new ListenerFilmlistLoadEvent("", "", 0, 0, false/* Fehler */));
             }
             list.add(PLog.LILNE3);
             PLog.userLog(list);
@@ -230,36 +227,38 @@ public class LoadFilmlist {
      * alles was nach einem Neuladen oder Einlesen einer gespeicherten Filmliste ansteht
      */
     private void afterLoadFilmlist() {
-        notifyProgress(new ListenerFilmlistLoadEvent("", "Filem markieren: Geo, Zukunft, Doppelt",
-                ListenerFilmlistLoad.PROGRESS_MAX, ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
+        notifyEvent(NOTIFY.PROGRESS, new ListenerFilmlistLoadEvent("", "Filem markieren: Geo, Zukunft, Doppelt",
+                ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
         PLog.userLog("Filem markieren: Geo, Zukunft, Doppelt");
         daten.filmlist.markFilms();
 
 
-        notifyProgress(new ListenerFilmlistLoadEvent("", "Themen suchen",
-                ListenerFilmlistLoad.PROGRESS_MAX, ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
+        notifyEvent(NOTIFY.PROGRESS, new ListenerFilmlistLoadEvent("", "Themen suchen",
+                ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
         PLog.userLog("Themen suchen");
         daten.filmlist.themenLaden();
 
 
         if (!daten.aboList.isEmpty()) {
-            notifyProgress(new ListenerFilmlistLoadEvent("", "Abos eintragen",
-                    ListenerFilmlistLoad.PROGRESS_MAX, ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
+            notifyEvent(NOTIFY.PROGRESS, new ListenerFilmlistLoadEvent("", "Abos eintragen",
+                    ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
             PLog.userLog("Abos eintragen");
             daten.aboList.setAboFuerFilm(daten.filmlist);
         }
 
 
-        notifyProgress(new ListenerFilmlistLoadEvent("", "Blacklist filtern",
-                ListenerFilmlistLoad.PROGRESS_MAX, ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
+        notifyEvent(NOTIFY.PROGRESS, new ListenerFilmlistLoadEvent("", "Blacklist filtern",
+                ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
         PLog.userLog("Blacklist filtern");
         daten.filmlist.filterList();
 
 
-        notifyProgress(new ListenerFilmlistLoadEvent("", "Filme in Downloads eintragen",
-                ListenerFilmlistLoad.PROGRESS_MAX, ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
+        notifyEvent(NOTIFY.PROGRESS, new ListenerFilmlistLoadEvent("", "Filme in Downloads eintragen",
+                ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
         PLog.userLog("Filme in Downloads eintragen");
         daten.downloadList.filmEintragen();
+
+        setPropLoadFilmlist(false);
     }
 
     /**
@@ -316,69 +315,45 @@ public class LoadFilmlist {
 
         afterLoadFilmlist();
 
-        setPropListSearching(false);
-        notifyFinished(event);
+        notifyEvent(NOTIFY.FINISHED, event);
     }
 
     private void fillHash(Filmlist filmlist) {
         hashSet.addAll(filmlist.stream().map(Film::getUrlHistory).collect(Collectors.toList()));
     }
 
-    /**
-     * Search through history and mark new films.
-     *
-     * @param filmlist
-     */
+
     private void findAndMarkNewFilms(Filmlist filmlist) {
 
-        filmlist.parallelStream()
+        filmlist.stream() //genauso schnell wie "parallel": ~90ms
                 .peek(film -> film.setNewFilm(false))
                 .filter(film -> !hashSet.contains(film.getUrlHistory()))
-                .forEach(film -> {
-                    film.setNewFilm(true);
-                });
+                .forEach(film -> film.setNewFilm(true));
 
         hashSet.clear();
     }
 
-    private void notifyStart(ListenerFilmlistLoadEvent event) {
-        final ListenerFilmlistLoadEvent e = event;
+    private void notifyEvent(NOTIFY notify, ListenerFilmlistLoadEvent event) {
         try {
             Platform.runLater(() -> {
+
                 for (final ListenerFilmlistLoad l : listeners.getListeners(ListenerFilmlistLoad.class)) {
-                    l.start(e);
+                    switch (notify) {
+                        case START:
+                            l.start(event);
+                            break;
+                        case PROGRESS:
+                            l.progress(event);
+                            break;
+                        case FINISHED:
+                            l.fertig(event);
+                            break;
+                    }
                 }
 
             });
-        } catch (final Exception ex) {
-            PLog.errorLog(765213654, ex);
-        }
-    }
-
-    private void notifyProgress(ListenerFilmlistLoadEvent event) {
-        try {
-            Platform.runLater(() -> {
-                for (final ListenerFilmlistLoad l : listeners.getListeners(ListenerFilmlistLoad.class)) {
-                    l.progress(event);
-                }
-
-            });
-        } catch (final Exception ex) {
-            PLog.errorLog(201020369, ex);
-        }
-    }
-
-    private void notifyFinished(ListenerFilmlistLoadEvent event) {
-        try {
-            Platform.runLater(() -> {
-                for (final ListenerFilmlistLoad l : listeners.getListeners(ListenerFilmlistLoad.class)) {
-                    l.fertig(event);
-                }
-            });
-
         } catch (final Exception ex) {
             PLog.errorLog(912045120, ex);
         }
     }
-
 }

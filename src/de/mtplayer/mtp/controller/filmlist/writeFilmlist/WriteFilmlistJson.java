@@ -20,9 +20,9 @@ import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import de.mtplayer.mtp.controller.data.film.Film;
-import de.mtplayer.mtp.controller.data.film.FilmListXml;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.mtplayer.mtp.controller.data.film.Filmlist;
+import de.mtplayer.mtp.controller.data.film.FilmlistXml;
 import de.p2tools.p2Lib.tools.log.PLog;
 
 import java.io.FileOutputStream;
@@ -51,13 +51,13 @@ public class WriteFilmlistJson {
 
                 jg.writeStartObject();
                 // Infos zur Filmliste
-                jg.writeArrayFieldStart(FilmListXml.FILMLISTE);
-                for (int i = 0; i < FilmListXml.MAX_ELEM; ++i) {
+                jg.writeArrayFieldStart(FilmlistXml.FILMLISTE);
+                for (int i = 0; i < FilmlistXml.MAX_ELEM; ++i) {
                     jg.writeString(filmlist.metaDaten[i]);
                 }
                 jg.writeEndArray();
                 // Infos der Felder in der Filmliste
-                jg.writeArrayFieldStart(FilmListXml.FILMLISTE);
+                jg.writeArrayFieldStart(FilmlistXml.FILMLISTE);
                 for (int i = 0; i < FilmXml.JSON_NAMES.length; ++i) {
                     jg.writeString(FilmXml.COLUMN_NAMES[FilmXml.JSON_NAMES[i]]);
                 }

@@ -16,7 +16,7 @@
 
 package de.mtplayer.mtp.controller.data.film;
 
-public class FilmListXml {
+public class FilmlistXml {
 
     public static final String FILMLISTE = "Filmliste";
     public static final String FILMLISTE_DATUM = "Filmliste-Datum";

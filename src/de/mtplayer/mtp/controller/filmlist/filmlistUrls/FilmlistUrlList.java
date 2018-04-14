@@ -22,7 +22,7 @@ import java.util.LinkedList;
 import java.util.Random;
 
 @SuppressWarnings("serial")
-public class FilmListUrlList extends LinkedList<FilmlistUrlData> {
+public class FilmlistUrlList extends LinkedList<FilmlistUrlData> {
     // ist die Liste mit den URLs zum Download einer Filmliste
     public boolean addWithCheck(FilmlistUrlData filmliste) {
         for (FilmlistUrlData datenUrlFilmliste : this) {
@@ -44,6 +44,12 @@ public class FilmListUrlList extends LinkedList<FilmlistUrlData> {
             }
             datenUrlFilmliste.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_NR_NR] = str;
         }
+    }
+
+    public ArrayList<String> getUrls() {
+        ArrayList<String> ret = new ArrayList<>();
+        this.stream().forEach(filmlistUrlData -> ret.add(filmlistUrlData.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_URL_NR]));
+        return ret;
     }
 
     public String getRand(ArrayList<String> bereitsGebraucht) {

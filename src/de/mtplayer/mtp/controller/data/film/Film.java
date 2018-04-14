@@ -58,6 +58,11 @@ public class Film extends FilmProps {
         setFilmTime();
     }
 
+    public void initDate() {
+        // ActList braucht nur das, geht schneller
+        setDatum();
+    }
+
     private void setFilmTime() {
         if (!arr[FilmXml.FILM_ZEIT].isEmpty()) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");

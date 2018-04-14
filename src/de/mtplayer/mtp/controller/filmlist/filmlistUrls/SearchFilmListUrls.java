@@ -38,8 +38,8 @@ public class SearchFilmListUrls {
 
     // damit werden die DownloadURLs zum Laden einer Filmliste gesucht
     // Liste mit den URLs zum Download der Filmliste
-    public FilmListUrlList filmListUrlList_akt = new FilmListUrlList();
-    public FilmListUrlList filmListUrlList_diff = new FilmListUrlList();
+    public FilmlistUrlList filmlistUrlList_akt = new FilmlistUrlList();
+    public FilmlistUrlList filmlistUrlList_diff = new FilmlistUrlList();
     private static boolean firstSearchAkt = true;
     private static boolean firstSearchDiff = true;
     private final int UPDATE_LISTE_MAX = 10; // die Downloadliste für die Filmlisten nur jeden 10. Programmstart aktualisieren
@@ -47,7 +47,7 @@ public class SearchFilmListUrls {
     public String searchCompleteListUrl(ArrayList<String> bereitsVersucht) {
         // passende URL zum Laden der Filmliste suchen
         String retUrl;
-        if (filmListUrlList_akt.isEmpty()) {
+        if (filmlistUrlList_akt.isEmpty()) {
             // bei leerer Liste immer aktualisieren
             updateURLsFilmlisten(true);
         } else if (firstSearchAkt) {
@@ -59,7 +59,7 @@ public class SearchFilmListUrls {
             }
         }
         firstSearchAkt = false;
-        retUrl = (filmListUrlList_akt.getRand(bereitsVersucht)); //eine Zufällige Adresse wählen
+        retUrl = (filmlistUrlList_akt.getRand(bereitsVersucht)); //eine Zufällige Adresse wählen
         if (bereitsVersucht != null) {
             bereitsVersucht.add(retUrl);
         }
@@ -69,7 +69,7 @@ public class SearchFilmListUrls {
     public String searchDiffListUrl(ArrayList<String> bereitsVersucht) {
         // passende URL zum Laden der Filmliste suchen
         String retUrl;
-        if (filmListUrlList_diff.isEmpty()) {
+        if (filmlistUrlList_diff.isEmpty()) {
             // bei leerer Liste immer aktualisieren
             updateURLsFilmlisten(false);
         } else if (firstSearchDiff) {
@@ -81,7 +81,7 @@ public class SearchFilmListUrls {
             }
         }
         firstSearchDiff = false;
-        retUrl = (filmListUrlList_diff.getRand(bereitsVersucht)); //eine Zufällige Adresse wählen
+        retUrl = (filmlistUrlList_diff.getRand(bereitsVersucht)); //eine Zufällige Adresse wählen
         if (bereitsVersucht != null) {
             bereitsVersucht.add(retUrl);
         }
@@ -92,26 +92,26 @@ public class SearchFilmListUrls {
      * Add our default full list servers.
      */
     private void insertDefaultCompleteListServers() {
-        filmListUrlList_akt.add(new FilmlistUrlData("http://verteiler1.mediathekview.de/Filmliste-akt.xz", FilmlistUrlData.SERVER_ART_AKT));
-        filmListUrlList_akt.add(new FilmlistUrlData("http://verteiler2.mediathekview.de/Filmliste-akt.xz", FilmlistUrlData.SERVER_ART_AKT));
-        filmListUrlList_akt.add(new FilmlistUrlData("http://verteiler3.mediathekview.de/Filmliste-akt.xz", FilmlistUrlData.SERVER_ART_AKT));
-        filmListUrlList_akt.add(new FilmlistUrlData("http://verteiler4.mediathekview.de/Filmliste-akt.xz", FilmlistUrlData.SERVER_ART_AKT));
-        filmListUrlList_akt.add(new FilmlistUrlData("http://verteiler5.mediathekview.de/Filmliste-akt.xz", FilmlistUrlData.SERVER_ART_AKT));
-        filmListUrlList_akt.add(new FilmlistUrlData("http://verteiler6.mediathekview.de/Filmliste-akt.xz", FilmlistUrlData.SERVER_ART_AKT));
-        filmListUrlList_akt.add(new FilmlistUrlData("hhttps://archiv.mediathekviewweb.de/Filmliste-akt.xz", FilmlistUrlData.SERVER_ART_AKT));
+        filmlistUrlList_akt.add(new FilmlistUrlData("http://verteiler1.mediathekview.de/Filmliste-akt.xz", FilmlistUrlData.SERVER_ART_AKT));
+        filmlistUrlList_akt.add(new FilmlistUrlData("http://verteiler2.mediathekview.de/Filmliste-akt.xz", FilmlistUrlData.SERVER_ART_AKT));
+        filmlistUrlList_akt.add(new FilmlistUrlData("http://verteiler3.mediathekview.de/Filmliste-akt.xz", FilmlistUrlData.SERVER_ART_AKT));
+        filmlistUrlList_akt.add(new FilmlistUrlData("http://verteiler4.mediathekview.de/Filmliste-akt.xz", FilmlistUrlData.SERVER_ART_AKT));
+        filmlistUrlList_akt.add(new FilmlistUrlData("http://verteiler5.mediathekview.de/Filmliste-akt.xz", FilmlistUrlData.SERVER_ART_AKT));
+        filmlistUrlList_akt.add(new FilmlistUrlData("http://verteiler6.mediathekview.de/Filmliste-akt.xz", FilmlistUrlData.SERVER_ART_AKT));
+        filmlistUrlList_akt.add(new FilmlistUrlData("hhttps://archiv.mediathekviewweb.de/Filmliste-akt.xz", FilmlistUrlData.SERVER_ART_AKT));
     }
 
     /**
      * Add our default diff list servers.
      */
     private void insertDefaultDifferentialListServers() {
-        filmListUrlList_diff.add(new FilmlistUrlData("http://verteiler1.mediathekview.de/Filmliste-diff.xz", FilmlistUrlData.SERVER_ART_DIFF));
-        filmListUrlList_diff.add(new FilmlistUrlData("http://verteiler2.mediathekview.de/Filmliste-diff.xz", FilmlistUrlData.SERVER_ART_DIFF));
-        filmListUrlList_diff.add(new FilmlistUrlData("http://verteiler3.mediathekview.de/Filmliste-diff.xz", FilmlistUrlData.SERVER_ART_DIFF));
-        filmListUrlList_diff.add(new FilmlistUrlData("http://verteiler4.mediathekview.de/Filmliste-diff.xz", FilmlistUrlData.SERVER_ART_DIFF));
-        filmListUrlList_diff.add(new FilmlistUrlData("http://verteiler5.mediathekview.de/Filmliste-diff.xz", FilmlistUrlData.SERVER_ART_DIFF));
-        filmListUrlList_diff.add(new FilmlistUrlData("http://verteiler6.mediathekview.de/Filmliste-diff.xz", FilmlistUrlData.SERVER_ART_DIFF));
-        filmListUrlList_diff.add(new FilmlistUrlData("https://archiv.mediathekviewweb.de/Filmliste-diff.xz", FilmlistUrlData.SERVER_ART_DIFF));
+        filmlistUrlList_diff.add(new FilmlistUrlData("http://verteiler1.mediathekview.de/Filmliste-diff.xz", FilmlistUrlData.SERVER_ART_DIFF));
+        filmlistUrlList_diff.add(new FilmlistUrlData("http://verteiler2.mediathekview.de/Filmliste-diff.xz", FilmlistUrlData.SERVER_ART_DIFF));
+        filmlistUrlList_diff.add(new FilmlistUrlData("http://verteiler3.mediathekview.de/Filmliste-diff.xz", FilmlistUrlData.SERVER_ART_DIFF));
+        filmlistUrlList_diff.add(new FilmlistUrlData("http://verteiler4.mediathekview.de/Filmliste-diff.xz", FilmlistUrlData.SERVER_ART_DIFF));
+        filmlistUrlList_diff.add(new FilmlistUrlData("http://verteiler5.mediathekview.de/Filmliste-diff.xz", FilmlistUrlData.SERVER_ART_DIFF));
+        filmlistUrlList_diff.add(new FilmlistUrlData("http://verteiler6.mediathekview.de/Filmliste-diff.xz", FilmlistUrlData.SERVER_ART_DIFF));
+        filmlistUrlList_diff.add(new FilmlistUrlData("https://archiv.mediathekviewweb.de/Filmliste-diff.xz", FilmlistUrlData.SERVER_ART_DIFF));
     }
 
     /**
@@ -119,24 +119,24 @@ public class SearchFilmListUrls {
      *
      * @param updateFullList if true, update full list server, otherwise diff servers.
      **/
-    private void updateURLsFilmlisten(final boolean updateFullList) {
-        FilmListUrlList tmp = new FilmListUrlList();
+    public void updateURLsFilmlisten(final boolean updateFullList) {
+        FilmlistUrlList tmp = new FilmlistUrlList();
         if (updateFullList) {
             getDownloadUrlsFilmlisten(Const.ADRESSE_FILMLISTEN_SERVER_AKT, tmp, ProgInfos.getUserAgent(), FilmlistUrlData.SERVER_ART_AKT);
             if (!tmp.isEmpty()) {
-                filmListUrlList_akt = tmp;
-            } else if (filmListUrlList_akt.isEmpty()) {
+                filmlistUrlList_akt = tmp;
+            } else if (filmlistUrlList_akt.isEmpty()) {
                 insertDefaultCompleteListServers();
             }
-            filmListUrlList_akt.sort();
+            filmlistUrlList_akt.sort();
         } else {
             getDownloadUrlsFilmlisten(Const.ADRESSE_FILMLISTEN_SERVER_DIFF, tmp, ProgInfos.getUserAgent(), FilmlistUrlData.SERVER_ART_DIFF);
             if (!tmp.isEmpty()) {
-                filmListUrlList_diff = tmp;
-            } else if (filmListUrlList_diff.isEmpty()) {
+                filmlistUrlList_diff = tmp;
+            } else if (filmlistUrlList_diff.isEmpty()) {
                 insertDefaultDifferentialListServers();
             }
-            filmListUrlList_diff.sort();
+            filmlistUrlList_diff.sort();
         }
         if (tmp.isEmpty()) {
             PLog.errorLog(491203216, new String[]{"Es ist ein Fehler aufgetreten!",
@@ -145,7 +145,7 @@ public class SearchFilmListUrls {
         }
     }
 
-    private void getDownloadUrlsFilmlisten(String dateiUrl, FilmListUrlList filmListUrlList, String userAgent, String art) {
+    private void getDownloadUrlsFilmlisten(String dateiUrl, FilmlistUrlList filmlistUrlList, String userAgent, String art) {
         //String[] ret = new String[]{""/* version */, ""/* release */, ""/* updateUrl */};
         try {
             int event;
@@ -177,7 +177,7 @@ public class SearchFilmListUrls {
                     String parsername = parser.getLocalName();
                     if (parsername.equals("Server")) {
                         //wieder ein neuer Server, toll
-                        parseServerEntry(parser, filmListUrlList, art);
+                        parseServerEntry(parser, filmlistUrlList, art);
                     }
                 }
             }
@@ -190,10 +190,10 @@ public class SearchFilmListUrls {
      * Parse the server XML file.
      *
      * @param parser
-     * @param filmListUrlList
+     * @param filmlistUrlList
      * @param art
      */
-    private void parseServerEntry(XMLStreamReader parser, FilmListUrlList filmListUrlList, String art) {
+    private void parseServerEntry(XMLStreamReader parser, FilmlistUrlList filmlistUrlList, String art) {
         String serverUrl = "";
         String prio = "";
         int event;
@@ -219,7 +219,7 @@ public class SearchFilmListUrls {
                             if (prio.equals("")) {
                                 prio = FilmlistUrlData.FILMLIST_UPDATE_SERVER_PRIO_1;
                             }
-                            filmListUrlList.addWithCheck(new FilmlistUrlData(serverUrl, prio, art));
+                            filmlistUrlList.addWithCheck(new FilmlistUrlData(serverUrl, prio, art));
                         }
                         break;
                     }

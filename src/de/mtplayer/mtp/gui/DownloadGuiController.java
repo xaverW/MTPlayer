@@ -126,7 +126,7 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     public void aktualisieren() {
-        if (daten.loadFilmlist.getPropListSearching()) {
+        if (daten.loadFilmlist.getPropLoadFilmlist()) {
             // wird danach eh gemacht
             return;
         }

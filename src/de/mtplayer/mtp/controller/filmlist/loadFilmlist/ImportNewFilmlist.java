@@ -150,11 +150,11 @@ public class ImportNewFilmlist {
                 switch (state) {
                     case COMPLETE:
                         // nächste Adresse in der Liste wählen
-                        updateUrl = searchFilmListUrls.filmListUrlList_akt.getRand(versuchteUrls);
+                        updateUrl = searchFilmListUrls.filmlistUrlList_akt.getRand(versuchteUrls);
                         break;
                     case DIFF:
                         // nächste Adresse in der Liste wählen
-                        updateUrl = searchFilmListUrls.filmListUrlList_diff.getRand(versuchteUrls);
+                        updateUrl = searchFilmListUrls.filmlistUrlList_diff.getRand(versuchteUrls);
                         break;
                 }
 
@@ -220,7 +220,7 @@ public class ImportNewFilmlist {
 
     private synchronized void fertigMelden(boolean ok) {
         for (final ListenerFilmlistLoad l : eventListenerList.getListeners(ListenerFilmlistLoad.class)) {
-            l.fertig(new ListenerFilmlistLoadEvent("", "", 0, 0, 0, !ok));
+            l.fertig(new ListenerFilmlistLoadEvent("", "", 0, 0, !ok));
         }
     }
 }

@@ -26,9 +26,9 @@ import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.film.Film;
-import de.mtplayer.mtp.controller.data.film.FilmListXml;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.mtplayer.mtp.controller.data.film.Filmlist;
+import de.mtplayer.mtp.controller.data.film.FilmlistXml;
 import de.p2tools.p2Lib.tools.log.PLog;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -51,7 +51,6 @@ import java.util.zip.ZipInputStream;
 public class ReadFilmlist {
 
     private final EventListenerList listeners = new EventListenerList();
-    private double max = 0;
     private double progress = 0;
     private long milliseconds = 0;
 
@@ -67,7 +66,7 @@ public class ReadFilmlist {
         try {
             list.add("Liste Filme lesen von: " + sourceFileUrl);
             filmlist.clear();
-            notifyStart(sourceFileUrl, ListenerFilmlistLoad.PROGRESS_MAX); // für die Progressanzeige
+            notifyStart(sourceFileUrl); // für die Progressanzeige
 
             checkDays(days);
 
@@ -114,7 +113,7 @@ public class ReadFilmlist {
                 break;
             }
             if (jp.isExpectedStartArrayToken()) {
-                for (int k = 0; k < FilmListXml.MAX_ELEM; ++k) {
+                for (int k = 0; k < FilmlistXml.MAX_ELEM; ++k) {
                     filmlist.metaDaten[k] = jp.nextTextValue();
                 }
                 break;
@@ -256,21 +255,20 @@ public class ReadFilmlist {
         return true;
     }
 
-    private void notifyStart(String url, double mmax) {
-        max = mmax;
+    private void notifyStart(String url) {
         progress = 0;
         for (final ListenerFilmlistLoad l : listeners.getListeners(ListenerFilmlistLoad.class)) {
-            l.start(new ListenerFilmlistLoadEvent(url, "", max, 0, 0, false));
+            l.start(new ListenerFilmlistLoadEvent(url, "", 0, 0, false));
         }
     }
 
     private void notifyProgress(String url, double iProgress) {
         progress = iProgress;
-        if (progress > max) {
-            progress = max;
+        if (progress > ListenerFilmlistLoad.PROGRESS_MAX) {
+            progress = ListenerFilmlistLoad.PROGRESS_MAX;
         }
         for (final ListenerFilmlistLoad l : listeners.getListeners(ListenerFilmlistLoad.class)) {
-            l.progress(new ListenerFilmlistLoadEvent(url, "Download", max, progress, 0, false));
+            l.progress(new ListenerFilmlistLoadEvent(url, "Download", progress, 0, false));
         }
     }
 
@@ -281,7 +279,7 @@ public class ReadFilmlist {
         list.add("  erstellt am: " + liste.genDate());
         list.add("  Anzahl Filme: " + liste.size());
         for (final ListenerFilmlistLoad l : listeners.getListeners(ListenerFilmlistLoad.class)) {
-            l.fertig(new ListenerFilmlistLoadEvent(url, "", max, progress, 0, false));
+            l.fertig(new ListenerFilmlistLoadEvent(url, "", progress, 0, false));
         }
         list.add(PLog.LILNE3);
         PLog.userLog(list);

@@ -33,4 +33,13 @@ public class ListenerFilmlistLoadEvent {
         this.count = count;
         this.fehler = fehler;
     }
+
+    public ListenerFilmlistLoadEvent(String senderUrl, String text, double progress, int count, boolean fehler) {
+        this.senderUrl = senderUrl;
+        this.text = text;
+        max = 0;
+        this.progress = progress;
+        this.count = count;
+        this.fehler = fehler;
+    }
 }
