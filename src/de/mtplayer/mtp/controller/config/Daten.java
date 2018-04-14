@@ -22,8 +22,8 @@ import de.mtplayer.mtp.MTFxController;
 import de.mtplayer.mtp.controller.data.*;
 import de.mtplayer.mtp.controller.data.abo.AboList;
 import de.mtplayer.mtp.controller.data.download.DownloadList;
-import de.mtplayer.mtp.controller.data.film.FilmList;
-import de.mtplayer.mtp.controller.filmlist.loadFilmlist.LoadFilmlist;
+import de.mtplayer.mtp.controller.data.film.Filmlist;
+import de.mtplayer.mtp.controller.filmlist.LoadFilmlist;
 import de.mtplayer.mtp.controller.starter.StarterClass;
 import de.mtplayer.mtp.gui.AboGuiController;
 import de.mtplayer.mtp.gui.DownloadGuiController;
@@ -73,8 +73,8 @@ public class Daten {
     public FilmInfosDialogController filmInfosDialogController = null;
 
     // Programmdaten
-    public FilmList filmList = null; // ist die komplette Filmliste
-    public FilmList filmListFiltered = null; // Filmliste, wie im TabFilme angezeigt
+    public Filmlist filmlist = null; // ist die komplette Filmliste
+    public Filmlist filmlistFiltered = null; // Filmliste, wie im TabFilme angezeigt
     public DownloadList downloadList = null; // Filme die als "Download" geladen werden sollen
     public DownloadList downloadListButton = null; // Filme die über "Tab Filme" als Button/Film abspielen gestartet werden
     public AboList aboList = null;
@@ -91,10 +91,10 @@ public class Daten {
         playerMsg = new PlayerMsg();
         replaceList = new ReplaceList();
         storedFilter = new StoredFilter(this);
-        filmList = new FilmList();
+        filmlist = new Filmlist();
         loadFilmlist = new LoadFilmlist(this);
 
-        filmListFiltered = new FilmList();
+        filmlistFiltered = new Filmlist();
         blackList = new BlackList(this);
 
         setList = new SetList();

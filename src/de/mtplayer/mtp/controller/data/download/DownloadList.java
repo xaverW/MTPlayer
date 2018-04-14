@@ -108,7 +108,7 @@ public class DownloadList extends SimpleListProperty<Download> {
             if (counter < 0) {
                 break;
             }
-            d.setFilm(daten.filmList.getFilmByUrl_klein_hoch_hd(d.getUrl())); //todo sollen da wirklich alle Filmfelder gesetzt werden??
+            d.setFilm(daten.filmlist.getFilmByUrl_klein_hoch_hd(d.getUrl())); //todo sollen da wirklich alle Filmfelder gesetzt werden??
             d.setSizeDownloadFromFilm();
         }
 //        parallelStream().filter(d -> {
@@ -120,7 +120,7 @@ public class DownloadList extends SimpleListProperty<Download> {
 //                return false;
 //            }
 //        }).forEach(d -> {
-//            d.setFilm(daten.filmList.getFilmByUrl_klein_hoch_hd(d.getUrl())); //todo sollen da wirklich alle Filmfelder gesetzt werden??
+//            d.setFilm(daten.filmlist.getFilmByUrl_klein_hoch_hd(d.getUrl())); //todo sollen da wirklich alle Filmfelder gesetzt werden??
 //            d.setSizeDownloadFromFilm();
 //
 //        });

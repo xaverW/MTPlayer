@@ -26,9 +26,9 @@ import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.film.Film;
-import de.mtplayer.mtp.controller.data.film.FilmList;
 import de.mtplayer.mtp.controller.data.film.FilmListXml;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
+import de.mtplayer.mtp.controller.data.film.Filmlist;
 import de.p2tools.p2Lib.tools.log.PLog;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -59,30 +59,33 @@ public class ReadFilmlist {
         listeners.add(ListenerFilmlistLoad.class, listener);
     }
 
-    public void readFilmListe(String source, final FilmList filmList, int days) {
+    /*
+    Hier wird die Filmliste tatsächlich geladen (von Datei/URL)
+     */
+    public void readFilmlist(String sourceFileUrl, final Filmlist filmlist, int days) {
         ArrayList<String> list = new ArrayList<>();
         try {
-            list.add("Liste Filme lesen von: " + source);
-            filmList.clear();
-            notifyStart(source, ListenerFilmlistLoad.PROGRESS_MAX); // für die Progressanzeige
+            list.add("Liste Filme lesen von: " + sourceFileUrl);
+            filmlist.clear();
+            notifyStart(sourceFileUrl, ListenerFilmlistLoad.PROGRESS_MAX); // für die Progressanzeige
 
             checkDays(days);
 
-            if (!source.startsWith("http")) {
-                processFromFile(source, filmList);
+            if (!sourceFileUrl.startsWith("http")) {
+                processFromFile(sourceFileUrl, filmlist);
             } else {
-                processFromWeb(new URL(source), filmList);
+                processFromWeb(new URL(sourceFileUrl), filmlist);
             }
 
             if (Daten.getInstance().loadFilmlist.getStop()) {
                 list.add("Filme lesen --> Abbruch");
-                filmList.clear();
+                filmlist.clear();
             }
         } catch (final MalformedURLException ex) {
             ex.printStackTrace();
         }
 
-        notifyFertig(source, filmList);
+        notifyFertig(sourceFileUrl, filmlist);
         list.add("Filme lesen --> fertig");
         PLog.userLog(list);
     }
@@ -98,7 +101,7 @@ public class ReadFilmlist {
         return in;
     }
 
-    private void readData(JsonParser jp, FilmList filmList) throws IOException {
+    private void readData(JsonParser jp, Filmlist filmlist) throws IOException {
         JsonToken jsonToken;
         String sender = "", thema = "";
 
@@ -112,7 +115,7 @@ public class ReadFilmlist {
             }
             if (jp.isExpectedStartArrayToken()) {
                 for (int k = 0; k < FilmListXml.MAX_ELEM; ++k) {
-                    filmList.metaDaten[k] = jp.nextTextValue();
+                    filmlist.metaDaten[k] = jp.nextTextValue();
                 }
                 break;
             }
@@ -159,12 +162,12 @@ public class ReadFilmlist {
                     thema = film.arr[FilmXml.FILM_THEMA];
                 }
 
-                filmList.importFilmliste(film);
+                filmlist.importFilmliste(film);
                 if (milliseconds > 0) {
                     // muss "rückwärts" laufen, da das Datum sonst 2x gebaut werden muss
                     // wenns drin bleibt, kann mans noch ändern
                     if (!checkDate(film)) {
-                        filmList.remove(film);
+                        filmlist.remove(film);
                     }
                 }
             }
@@ -175,19 +178,19 @@ public class ReadFilmlist {
      * Read a locally available filmlist.
      *
      * @param source   file path as string
-     * @param filmList the list to read to
+     * @param filmlist the list to read to
      */
-    private void processFromFile(String source, FilmList filmList) {
+    private void processFromFile(String source, Filmlist filmlist) {
         notifyProgress(source, ListenerFilmlistLoad.PROGRESS_MAX);
         try (InputStream in = selectDecompressor(source, new FileInputStream(source));
              JsonParser jp = new JsonFactory().createParser(in)) {
-            readData(jp, filmList);
+            readData(jp, filmlist);
         } catch (final FileNotFoundException ex) {
             PLog.errorLog(894512369, "FilmListe existiert nicht: " + source);
-            filmList.clear();
+            filmlist.clear();
         } catch (final Exception ex) {
             PLog.errorLog(945123641, ex, "FilmListe: " + source);
-            filmList.clear();
+            filmlist.clear();
         }
     }
 
@@ -203,9 +206,9 @@ public class ReadFilmlist {
      * Download a process a filmliste from the web.
      *
      * @param source   source url as string
-     * @param filmList the list to read to
+     * @param filmlist the list to read to
      */
-    private void processFromWeb(URL source, FilmList filmList) {
+    private void processFromWeb(URL source, Filmlist filmlist) {
         final Request.Builder builder = new Request.Builder().url(source);
         builder.addHeader("User-Agent", ProgInfos.getUserAgent());
 
@@ -229,13 +232,13 @@ public class ReadFilmlist {
                 try (InputStream input = new ProgressMonitorInputStream(body.byteStream(), body.contentLength(), monitor)) {
                     try (InputStream is = selectDecompressor(source.toString(), input);
                          JsonParser jp = new JsonFactory().createParser(is)) {
-                        readData(jp, filmList);
+                        readData(jp, filmlist);
                     }
                 }
             }
         } catch (final Exception ex) {
             PLog.errorLog(945123641, ex, "FilmListe: " + source);
-            filmList.clear();
+            filmlist.clear();
         }
     }
 
@@ -271,7 +274,7 @@ public class ReadFilmlist {
         }
     }
 
-    private void notifyFertig(String url, FilmList liste) {
+    private void notifyFertig(String url, Filmlist liste) {
         ArrayList<String> list = new ArrayList<>();
         list.add(PLog.LILNE3);
         list.add("Liste Filme gelesen am: " + FastDateFormat.getInstance("dd.MM.yyyy, HH:mm").format(new Date()));

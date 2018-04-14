@@ -216,7 +216,7 @@ public final class StoredFilter {
 
     private void postBlacklistChange() {
         // dann hat sich auch Blacklist-ein/aus geändert
-        daten.filmList.filterList();
+        daten.filmlist.filterList();
         setFilterChange(!isFilterChange());
     }
 

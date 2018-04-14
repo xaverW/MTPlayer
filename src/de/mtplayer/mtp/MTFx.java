@@ -62,6 +62,7 @@ public class MTFx extends Application {
     protected Daten daten;
     ProgStart progStart;
     Scene scene = null;
+    private boolean onlyOne = false;
 
     @Override
     public void init() throws Exception {
@@ -164,20 +165,14 @@ public class MTFx extends Application {
     private void initProg() {
         daten.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
             @Override
-            public void start(ListenerFilmlistLoadEvent event) {
-
-            }
-
-            @Override
             public void fertig(ListenerFilmlistLoadEvent event) {
                 new ProgSave().allesSpeichern(); // damit nichts verlorengeht
-            }
-
-            @Override
-            public void fertigOnlyOne(ListenerFilmlistLoadEvent event) {
-                daten.mediaDbList.loadSavedList();
-                daten.mediaDbList.createMediaDB();
-                checkProgUpdate();
+                if (!onlyOne) {
+                    onlyOne = true;
+                    daten.mediaDbList.loadSavedList();
+                    daten.mediaDbList.createMediaDB();
+                    checkProgUpdate();
+                }
             }
         });
 

@@ -119,7 +119,7 @@ public class SearchFilmListUrls {
      *
      * @param updateFullList if true, update full list server, otherwise diff servers.
      **/
-    public void updateURLsFilmlisten(final boolean updateFullList) {
+    private void updateURLsFilmlisten(final boolean updateFullList) {
         FilmListUrlList tmp = new FilmListUrlList();
         if (updateFullList) {
             getDownloadUrlsFilmlisten(Const.ADRESSE_FILMLISTEN_SERVER_AKT, tmp, ProgInfos.getUserAgent(), FilmlistUrlData.SERVER_ART_AKT);
@@ -145,7 +145,7 @@ public class SearchFilmListUrls {
         }
     }
 
-    public void getDownloadUrlsFilmlisten(String dateiUrl, FilmListUrlList filmListUrlList, String userAgent, String art) {
+    private void getDownloadUrlsFilmlisten(String dateiUrl, FilmListUrlList filmListUrlList, String userAgent, String art) {
         //String[] ret = new String[]{""/* version */, ""/* release */, ""/* updateUrl */};
         try {
             int event;

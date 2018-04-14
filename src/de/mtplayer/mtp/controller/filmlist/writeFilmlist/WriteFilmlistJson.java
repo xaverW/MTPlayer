@@ -20,9 +20,9 @@ import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import de.mtplayer.mtp.controller.data.film.Film;
-import de.mtplayer.mtp.controller.data.film.FilmList;
 import de.mtplayer.mtp.controller.data.film.FilmListXml;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
+import de.mtplayer.mtp.controller.data.film.Filmlist;
 import de.p2tools.p2Lib.tools.log.PLog;
 
 import java.io.FileOutputStream;
@@ -39,9 +39,9 @@ public class WriteFilmlistJson {
         return jg;
     }
 
-    public void write(String datei, FilmList filmList) {
+    public void write(String datei, Filmlist filmlist) {
         try {
-            PLog.userLog("Filme schreiben (" + filmList.size() + " Filme) :");
+            PLog.userLog("Filme schreiben (" + filmlist.size() + " Filme) :");
 
             PLog.userLog("   --> Start Schreiben nach: " + datei);
             String sender = "", thema = "";
@@ -53,7 +53,7 @@ public class WriteFilmlistJson {
                 // Infos zur Filmliste
                 jg.writeArrayFieldStart(FilmListXml.FILMLISTE);
                 for (int i = 0; i < FilmListXml.MAX_ELEM; ++i) {
-                    jg.writeString(filmList.metaDaten[i]);
+                    jg.writeString(filmlist.metaDaten[i]);
                 }
                 jg.writeEndArray();
                 // Infos der Felder in der Filmliste
@@ -63,7 +63,7 @@ public class WriteFilmlistJson {
                 }
                 jg.writeEndArray();
                 //Filme schreiben
-                for (Film datenFilm : filmList) {
+                for (Film datenFilm : filmlist) {
                     datenFilm.arr[FilmXml.FILM_NEU] = Boolean.toString(datenFilm.isNewFilm()); // damit wirs beim nächsten Programmstart noch wissen
 
                     jg.writeArrayFieldStart(FilmXml.TAG_JSON_LIST);

@@ -73,7 +73,7 @@ public class FilmGuiController extends AnchorPane {
         splitPane.setOrientation(Orientation.VERTICAL);
         getChildren().addAll(splitPane);
 
-        sortedList = daten.filmListFiltered.getSortedList();
+        sortedList = daten.filmlistFiltered.getSortedList();
 
         filmGuiInfoController = new FilmGuiInfoController(filmInfoPane);
 
@@ -307,7 +307,7 @@ public class FilmGuiController extends AnchorPane {
 
     private synchronized void saveFilm(SetData pSet) {
         final ArrayList<Film> liste = getSelList();
-        daten.filmList.saveFilm(liste, pSet);
+        daten.filmlist.saveFilm(liste, pSet);
     }
 
 }

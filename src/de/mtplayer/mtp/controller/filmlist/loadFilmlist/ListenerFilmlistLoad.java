@@ -30,8 +30,4 @@ public class ListenerFilmlistLoad implements EventListener {
 
     public void fertig(ListenerFilmlistLoadEvent e) {
     }
-
-    public void fertigOnlyOne(ListenerFilmlistLoadEvent e) {
-        // dient zum Melden des ersten Ladens der Filmliste beim ProgStart
-    }
 }

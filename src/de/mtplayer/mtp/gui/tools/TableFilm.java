@@ -245,7 +245,7 @@ public class TableFilm {
                     FilmTools.playFilm(film, null);
                 });
                 btnSave.setOnAction(event -> {
-                    Daten.getInstance().filmList.saveFilm(film, null);
+                    Daten.getInstance().filmlist.saveFilm(film, null);
                 });
                 hbox.getChildren().addAll(btnPlay, btnSave);
                 setGraphic(hbox);

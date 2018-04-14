@@ -20,14 +20,14 @@ import de.mtplayer.mtp.controller.config.Config;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.data.download.DownloadTools;
 import de.mtplayer.mtp.controller.data.film.Film;
-import de.mtplayer.mtp.controller.data.film.FilmList;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
+import de.mtplayer.mtp.controller.data.film.Filmlist;
 import de.mtplayer.mtp.gui.dialog.AboEditDialogController;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.tools.filmListFilter.FilmFilter;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
-import de.p2tools.p2Lib.tools.log.Duration;
 import de.p2tools.p2Lib.tools.GermanStringSorter;
+import de.p2tools.p2Lib.tools.log.Duration;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -179,7 +179,7 @@ public class AboList extends SimpleListProperty<Abo> {
         // Filmliste anpassen
         if (!daten.loadFilmlist.getPropListSearching()) {
             // wird danach eh gemacht
-            setAboFuerFilm(daten.filmList);
+            setAboFuerFilm(daten.filmlist);
         }
         listChanged.setValue(!listChanged.get());
     }
@@ -300,7 +300,7 @@ public class AboList extends SimpleListProperty<Abo> {
         }
     }
 
-    public synchronized void setAboFuerFilm(FilmList filmList) {
+    public synchronized void setAboFuerFilm(Filmlist filmlist) {
         // hier wird tatsächlich für jeden Film die Liste der Abos durchsucht
         // braucht länger
 
@@ -311,12 +311,12 @@ public class AboList extends SimpleListProperty<Abo> {
 
         if (isEmpty()) {
             // dann nur die Abos in der Filmliste löschen
-            filmList.parallelStream().forEach(this::deleteAboInFilm);
+            filmlist.parallelStream().forEach(this::deleteAboInFilm);
             return;
         }
 
         // das kostet die Zeit!!
-        filmList.parallelStream().forEach(this::assignAboToFilm);
+        filmlist.parallelStream().forEach(this::assignAboToFilm);
 
         Duration.counterStop("Abo in Filmliste eintragen");
     }

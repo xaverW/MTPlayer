@@ -18,24 +18,18 @@ package de.mtplayer.mtp.controller;
 
 import de.mtplayer.mLib.MLInit;
 import de.mtplayer.mLib.tools.MLAlert;
-import de.mtplayer.mLib.tools.StringFormatters;
 import de.mtplayer.mtp.controller.config.Config;
 import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.config.ProgInfos;
-import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
-import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ReadFilmlist;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
-import de.p2tools.p2Lib.tools.log.Duration;
 import de.p2tools.p2Lib.tools.log.LogMsg;
 import de.p2tools.p2Lib.tools.log.PLog;
 import de.p2tools.p2Lib.tools.log.PLogger;
-import javafx.application.Platform;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class ProgStart {
     Daten daten;
@@ -48,10 +42,7 @@ public class ProgStart {
     // Filmliste beim Programmstart!! laden
     // #########################################################
     public void loadDataProgStart() {
-        // Gui startet ein wenig flüssiger
-        Thread th = new Thread(new loadFilmlistProgStart_());
-        th.setName("loadDataProgStart");
-        th.start();
+        daten.loadFilmlist.loadFilmlistProgStart();
     }
 
     public static void shortStartMsg() {
@@ -72,42 +63,6 @@ public class ProgStart {
     public static void startMsg() {
         shortStartMsg();
         Config.logAllConfigs();
-    }
-
-    private class loadFilmlistProgStart_ implements Runnable {
-
-        @Override
-        public synchronized void run() {
-            Duration.staticPing("Programmstart Daten laden");
-
-            final Daten daten = Daten.getInstance();
-            ArrayList<String> list = new ArrayList<>();
-
-            Platform.runLater(() -> daten.mtFxController.getBtnFilmliste().setDisable(true));
-            new ReadFilmlist().readFilmListe(ProgInfos.getFilmListFile(),
-                    daten.filmList, Config.SYSTEM_NUM_DAYS_FILMLIST.getInt());
-            Platform.runLater(() -> daten.mtFxController.getBtnFilmliste().setDisable(false));
-
-            list.add(PLog.LILNE3);
-            list.add("Liste Filme gelesen am: " + StringFormatters.FORMATTER_ddMMyyyyHHmm.format(new Date()));
-            list.add("  erstellt am: " + daten.filmList.genDate());
-            list.add("  Anzahl Filme: " + daten.filmList.size());
-            list.add("  Anzahl Neue: " + daten.filmList.countNewFilms());
-
-            if (daten.filmList.isTooOld() && Config.SYSTEM_LOAD_FILMS_ON_START.getBool()) {
-                list.add("Filmliste zu alt, neue Filmliste laden");
-                daten.loadFilmlist.loadFilmlist("", false);
-
-            } else {
-                // beim Neuladen wird es dann erst gemacht
-                daten.loadFilmlist.notifyStart(new ListenerFilmlistLoadEvent("", "", 0, 0, 0, false/* Fehler */));
-                daten.loadFilmlist.afterFilmlistLoad();
-                daten.loadFilmlist.notifyFertig(new ListenerFilmlistLoadEvent("", "", 0, 0, 0, false/* Fehler */));
-            }
-            list.add(PLog.LILNE3);
-            PLog.userLog(list);
-        }
-
     }
 
 

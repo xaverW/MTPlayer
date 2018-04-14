@@ -33,7 +33,7 @@ import java.util.*;
 import java.util.function.Predicate;
 
 @SuppressWarnings("serial")
-public class FilmList extends SimpleListProperty<Film> {
+public class Filmlist extends SimpleListProperty<Film> {
 
     public int nr = 1;
     public String[] metaDaten = new String[]{"", "", "", "", ""};
@@ -46,7 +46,7 @@ public class FilmList extends SimpleListProperty<Film> {
     private FilteredList<Film> filteredList = null;
     private SortedList<Film> sortedList = null;
 
-    public FilmList() {
+    public Filmlist() {
         super(FXCollections.observableArrayList());
     }
 
@@ -103,7 +103,7 @@ public class FilmList extends SimpleListProperty<Film> {
         }
     }
 
-    public synchronized void updateListe(FilmList listeEinsortieren,
+    public synchronized void updateListe(Filmlist listeEinsortieren,
                                          boolean index /* Vergleich über Index, sonst nur URL */,
                                          boolean ersetzen) {
         // in eine vorhandene Liste soll eine andere Filmliste einsortiert werden
@@ -215,8 +215,8 @@ public class FilmList extends SimpleListProperty<Film> {
         }
     }
 
-    public synchronized void setMeta(FilmList filmList) {
-        System.arraycopy(filmList.metaDaten, 0, metaDaten, 0, FilmListXml.MAX_ELEM);
+    public synchronized void setMeta(Filmlist filmlist) {
+        System.arraycopy(filmlist.metaDaten, 0, metaDaten, 0, FilmListXml.MAX_ELEM);
     }
 
     public synchronized Film getFilmByUrl(final String url) {

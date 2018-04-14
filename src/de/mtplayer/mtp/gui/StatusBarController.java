@@ -243,13 +243,13 @@ public class StatusBarController extends AnchorPane {
 
 
     private void setTextNone() {
-        final int anzAll = daten.filmList.size();
+        final int anzAll = daten.filmlist.size();
         lblLeftNone.setText("Anzahl Filme: " + anzAll);
     }
 
     private void setInfoFilme() {
         String textLinks;
-        final int gesamt = daten.filmList.size();
+        final int gesamt = daten.filmlist.size();
         final int anzListe = daten.filmGuiController.getFilmCount();
         final int runs = daten.downloadListButton.getListOfStartsNotFinished(DownloadInfos.SRC_BUTTON).size();
 
@@ -406,10 +406,10 @@ public class StatusBarController extends AnchorPane {
     private void setTextForRightDisplay() {
         // Text rechts: alter/neuladenIn anzeigen
         String strText = "Filmliste erstellt: ";
-        strText += daten.filmList.genDate();
+        strText += daten.filmlist.genDate();
         strText += " Uhr  ";
 
-        final int sekunden = daten.filmList.getAge();
+        final int sekunden = daten.filmlist.getAge();
 
         if (sekunden != 0) {
             strText += "||  Alter: ";

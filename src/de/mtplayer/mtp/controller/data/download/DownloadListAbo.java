@@ -108,7 +108,7 @@ public class DownloadListAbo {
             return;
         }
 
-        for (final Film film : daten.filmList) {
+        for (final Film film : daten.filmlist) {
             abo = daten.aboList.getAboFuerFilm_schnell(film, true /* auch die Länge überprüfen */);
 
             if (abo == null) {

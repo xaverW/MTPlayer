@@ -47,7 +47,7 @@ public class ProgSave {
     }
 
     public void filmlisteSpeichern() {
-        new WriteFilmlistJson().write(ProgInfos.getFilmListFile(), daten.filmList);
+        new WriteFilmlistJson().write(ProgInfos.getFilmListFile(), daten.filmlist);
     }
 
     public void allesSpeichern() {

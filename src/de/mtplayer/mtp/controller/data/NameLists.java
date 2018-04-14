@@ -62,7 +62,7 @@ public class NameLists {
     }
 
     private void getAllSender() {
-        obsAllSender.setAll(Arrays.asList(daten.filmList.sender));
+        obsAllSender.setAll(Arrays.asList(daten.filmlist.sender));
     }
 
 
@@ -80,11 +80,11 @@ public class NameLists {
     public void getThemen(String sender) {
         final ArrayList<String> thema = new ArrayList<>();
         if (sender.isEmpty()) {
-            thema.addAll(Arrays.asList(daten.filmListFiltered.themenPerSender[0]));
+            thema.addAll(Arrays.asList(daten.filmlistFiltered.themenPerSender[0]));
         } else {
-            for (int i = 1; i < daten.filmListFiltered.themenPerSender.length; ++i) {
-                if (daten.filmListFiltered.sender[i].equalsIgnoreCase(sender)) {
-                    thema.addAll(Arrays.asList(daten.filmListFiltered.themenPerSender[i]));
+            for (int i = 1; i < daten.filmlistFiltered.themenPerSender.length; ++i) {
+                if (daten.filmlistFiltered.sender[i].equalsIgnoreCase(sender)) {
+                    thema.addAll(Arrays.asList(daten.filmlistFiltered.themenPerSender[i]));
                     break;
                 }
             }

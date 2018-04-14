@@ -56,7 +56,7 @@ public class BlackList extends SimpleListProperty<BlackData> {
     }
 
     public synchronized void filterListAndNotifyListeners() {
-        daten.filmList.filterList();
+        daten.filmlist.filterList();
         Listener.notify(Listener.EREIGNIS_BLACKLIST_GEAENDERT, BlackList.class.getSimpleName());
     }
 

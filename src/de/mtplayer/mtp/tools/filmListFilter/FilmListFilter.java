@@ -64,7 +64,7 @@ public class FilmListFilter {
             Thread th = new Thread(() -> {
                 try {
                     Platform.runLater(() -> {
-                        daten.filmListFiltered.filterdListSetPred(daten.storedFilter.getSelectedFilter().getPred());
+                        daten.filmlistFiltered.filterdListSetPred(daten.storedFilter.getSelectedFilter().getPred());
                         search.set(false);
                         if (research.get()) {
                             filterList();

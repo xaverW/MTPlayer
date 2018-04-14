@@ -20,7 +20,7 @@ import de.mtplayer.mtp.controller.config.Config;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.data.BlackData;
 import de.mtplayer.mtp.controller.data.film.Film;
-import de.mtplayer.mtp.controller.data.film.FilmList;
+import de.mtplayer.mtp.controller.data.film.Filmlist;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
 import de.p2tools.p2Lib.tools.log.Duration;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -43,18 +43,18 @@ public class FilmlistBlackFilter {
         // hier wird die komplette Filmliste gegen die Blacklist gefilter
         // mit der Liste wird dannn im TabFilme weiter gearbeitet
 
-        final FilmList filmList = daten.filmList;
-        final FilmList listeRet = daten.filmListFiltered;
+        final Filmlist filmlist = daten.filmlist;
+        final Filmlist listeRet = daten.filmlistFiltered;
 
         loadCurrentFilterSettings();
 
         Duration.counterStart("FilmlistBlackFilter.getFilmListBlackFiltered");
         listeRet.clear();
 
-        if (filmList != null) {
-            listeRet.setMeta(filmList);
+        if (filmlist != null) {
+            listeRet.setMeta(filmlist);
 
-            Stream<Film> initialStream = filmList.parallelStream();
+            Stream<Film> initialStream = filmlist.parallelStream();
 
             filterList.clear();
             if (daten.storedFilter.getSelectedFilter().isBlacklistOn()) {

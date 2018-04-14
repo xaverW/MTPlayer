@@ -45,7 +45,7 @@ public class MediaConfigHistoryPaneContextMenu {
 
     private void getMenu(ContextMenu contextMenu) {
 
-        Film film = daten.filmList.getFilmByUrl(historyDataArrayList.get(0).getUrl());
+        Film film = daten.filmlist.getFilmByUrl(historyDataArrayList.get(0).getUrl());
 
         // Start/Stop
         MenuItem miDelUrl = new MenuItem("Url aus der Liste löschen");
@@ -75,7 +75,7 @@ public class MediaConfigHistoryPaneContextMenu {
 
         MenuItem miDownload = new MenuItem("Download noch einmal anlegen");
         miDownload.setDisable(film == null);
-        miDownload.setOnAction(a -> daten.filmList.saveFilm(film, null));
+        miDownload.setOnAction(a -> daten.filmlist.saveFilm(film, null));
 
         contextMenu.getItems().addAll(miDelUrl, miCopyUrl, miShowFilm, miDownload);
 

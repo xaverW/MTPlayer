@@ -67,13 +67,13 @@ public class ConfigDialogController extends MTDialog {
     public void close() {
         if (!geo.equals(Config.SYSTEM_GEO_HOME_PLACE.get())) {
             // dann hat sich der Geo-Standort geändert
-            daten.filmList.markGeoBlocked();
+            daten.filmlist.markGeoBlocked();
         }
 
         // todo nur wenn die Black und Geo wirklich geändert
         if (!daten.loadFilmlist.getPropListSearching()) {
             // wird sonst dann eh gemacht
-            daten.filmList.filterList();
+            daten.filmlist.filterList();
             Listener.notify(Listener.EREIGNIS_BLACKLIST_GEAENDERT, ConfigDialogController.class.getSimpleName());
         }
         super.close();
