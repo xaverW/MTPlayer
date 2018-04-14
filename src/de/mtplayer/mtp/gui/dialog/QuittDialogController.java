@@ -110,7 +110,9 @@ public class QuittDialogController extends MTDialog {
 
     private void startWaiting() {
         maskerPane.setVisible(true);
-        new Thread(waitTask).start();
+        Thread th = new Thread(waitTask);
+        th.setName("startWaiting");
+        th.start();
     }
 
     private class WaitTask extends Task<Void> {

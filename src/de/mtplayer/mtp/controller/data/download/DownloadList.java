@@ -192,7 +192,7 @@ public class DownloadList extends SimpleListProperty<Download> {
         daten.mtFxController.setMasker();
 
         final int count = getSize();
-        new Thread(() -> {
+        Thread th = new Thread(() -> {
             downloadListAbo.abosAuffrischen();
             downloadListAbo.abosSuchen();
             if (daten.downloadList.getSize() == count) {
@@ -200,7 +200,9 @@ public class DownloadList extends SimpleListProperty<Download> {
                 setDownloadsChanged();
             }
             daten.mtFxController.resetMasker();
-        }).start();
+        });
+        th.setName("abosSuchen");
+        th.start();
     }
 
     public synchronized ArrayList<String> generateAboNameList(ArrayList<String> nameList) {

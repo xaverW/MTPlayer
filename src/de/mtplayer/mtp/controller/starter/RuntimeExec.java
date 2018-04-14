@@ -96,7 +96,11 @@ public class RuntimeExec {
 
             clearIn = new Thread(new ClearInOut(INPUT, process));
             clearOut = new Thread(new ClearInOut(ERROR, process));
+
+            clearIn.setName("exec-in");
             clearIn.start();
+
+            clearOut.setName("exec-out");
             clearOut.start();
         } catch (final Exception ex) {
             PLog.errorLog(450028932, ex, "Fehler beim Starten");

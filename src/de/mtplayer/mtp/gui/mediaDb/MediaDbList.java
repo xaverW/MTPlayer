@@ -143,7 +143,9 @@ public class MediaDbList extends SimpleListProperty<MediaDbData> {
         }
 
         del(true /*ohneSave*/);
-        new Thread(new MakeIndex(suffix)).start();
+        Thread th = new Thread(new MakeIndex(suffix));
+        th.setName("createMediaDB");
+        th.start();
     }
 
     public synchronized void loadSavedList() {

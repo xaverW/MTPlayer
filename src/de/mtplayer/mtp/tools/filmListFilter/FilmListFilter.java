@@ -61,7 +61,7 @@ public class FilmListFilter {
         if (!search.getAndSet(true)) {
 
             research.set(false);
-            new Thread(() -> {
+            Thread th = new Thread(() -> {
                 try {
                     Platform.runLater(() -> {
                         daten.filmListFiltered.filterdListSetPred(daten.storedFilter.getSelectedFilter().getPred());
@@ -73,7 +73,10 @@ public class FilmListFilter {
                 } catch (Exception ex) {
                     ex.printStackTrace(); //todo???
                 }
-            }).start();
+            });
+
+            th.setName("filterList");
+            th.start();
 
         } else {
             research.set(true);

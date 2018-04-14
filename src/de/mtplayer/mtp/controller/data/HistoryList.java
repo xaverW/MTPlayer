@@ -195,7 +195,9 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
             urlList.add(film.getUrlHistory());
         });
 
-        new Thread(new Remove(urlList)).start();
+        Thread th = new Thread(new Remove(urlList));
+        th.setName("removeFilmListFromHistory");
+        th.start();
     }
 
     public synchronized void removeListFromHistory(ArrayList<HistoryData> historyDataArrayList) {
@@ -212,7 +214,9 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
             urlList.add(historyData.getUrl());
         }
 
-        new Thread(new Remove(urlList)).start();
+        Thread th = new Thread(new Remove(urlList));
+        th.setName("removeListFromHistory");
+        th.start();
     }
 
     public synchronized void removeDownloadListFromHistory(ArrayList<Download> downloads) {
@@ -232,7 +236,9 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
             }
         });
 
-        new Thread(new Remove(urlList)).start();
+        Thread th = new Thread(new Remove(urlList));
+        th.setName("removeDownloadListFromHistory");
+        th.start();
     }
 
     private class Remove implements Runnable {

@@ -199,7 +199,7 @@ public class MTFx extends Application {
 
     private synchronized void check() {
 
-        new Thread(() -> {
+        Thread th = new Thread(() -> {
             try {
                 if (new SearchProgramUpdate().checkVersion(false, false /* immer anzeigen */)) {
                     Platform.runLater(() -> setUpdateTitel());
@@ -214,7 +214,9 @@ public class MTFx extends Application {
             } catch (final Exception ex) {
                 PLog.errorLog(794612801, ex);
             }
-        }).start();
+        });
+        th.setName("check");
+        th.start();
     }
 
 }

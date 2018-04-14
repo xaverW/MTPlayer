@@ -58,22 +58,24 @@ public class ImportFilmList {
     // #########################################################
     // Filmeliste importieren, URL automatisch wählen
     // #########################################################
-    public void filmeImportierenAuto(FilmList filmList, FilmList filmListDiff, int days) {
+    public void filmImportAuto(FilmList filmList, FilmList filmListDiff, int days) {
         Daten.getInstance().loadFilmList.setStop(false);
-        new Thread(new FilmeImportierenAutoThread(filmList, filmListDiff, days)).start();
+        Thread th = new Thread(new FilmImportAutoThread(filmList, filmListDiff, days));
+        th.setName("filmImportAuto");
+        th.start();
     }
 
     public enum STATE {
         AKT, DIFF
     }
 
-    private class FilmeImportierenAutoThread implements Runnable {
+    private class FilmImportAutoThread implements Runnable {
         private final FilmList filmList;
         private final FilmList filmListDiff;
         private STATE state;
         private final int days;
 
-        public FilmeImportierenAutoThread(FilmList filmList, FilmList filmListDiff, int days) {
+        public FilmImportAutoThread(FilmList filmList, FilmList filmListDiff, int days) {
             this.filmList = filmList;
             this.filmListDiff = filmListDiff;
             this.days = days;
@@ -163,19 +165,21 @@ public class ImportFilmList {
     // #######################################
     // Filmeliste importieren, mit fester URL/Pfad
     // #######################################
-    public void filmeImportierenDatei(String pfad, FilmList filmList, int days) {
+    public void filmImportFile(String pfad, FilmList filmList, int days) {
         Daten.getInstance().loadFilmList.setStop(false);
-        new Thread(new FilmeImportierenDateiThread(pfad, filmList, days)).start();
+        Thread th = new Thread(new FilmImportFileThread(pfad, filmList, days));
+        th.setName("filmImportFile");
+        th.start();
 
     }
 
-    private class FilmeImportierenDateiThread implements Runnable {
+    private class FilmImportFileThread implements Runnable {
 
         private final String pfad;
         private final FilmList filmList;
         private final int days;
 
-        public FilmeImportierenDateiThread(String pfad, FilmList filmList, int days) {
+        public FilmImportFileThread(String pfad, FilmList filmList, int days) {
             this.pfad = pfad;
             this.filmList = filmList;
             this.days = days;

@@ -57,7 +57,7 @@ public class MTOpen {
 
 
         } else {
-            new Thread(() -> {
+            Thread th = new Thread(() -> {
                 try {
                     if (Desktop.isDesktopSupported()) {
                         final Desktop d = Desktop.getDesktop();
@@ -68,7 +68,9 @@ public class MTOpen {
                 } catch (Exception ex) {
                     Platform.runLater(() -> afterPlay(directory.getAbsolutePath(), TEXT.DIR, ex));
                 }
-            }).start();
+            });
+            th.setName("openDestDir");
+            th.start();
 
         }
     }
@@ -100,7 +102,7 @@ public class MTOpen {
 
         } else {
             // den Systemeigenen Player starten
-            new Thread(() -> {
+            Thread th = new Thread(() -> {
                 try {
                     if (Desktop.isDesktopSupported()) {
                         final Desktop d = Desktop.getDesktop();
@@ -111,7 +113,9 @@ public class MTOpen {
                 } catch (Exception ex) {
                     Platform.runLater(() -> afterPlay(filmFile.getAbsolutePath(), TEXT.FILE, ex));
                 }
-            }).start();
+            });
+            th.setName("playStoredFilm");
+            th.start();
 
         }
     }
@@ -136,7 +140,7 @@ public class MTOpen {
 
         } else {
             // den Systemeigenen Player starten
-            new Thread(() -> {
+            Thread th = new Thread(() -> {
                 try {
                     if (Desktop.isDesktopSupported()) {
                         final Desktop d = Desktop.getDesktop();
@@ -147,7 +151,9 @@ public class MTOpen {
                 } catch (Exception ex) {
                     Platform.runLater(() -> afterPlay(url, TEXT.URL, ex));
                 }
-            }).start();
+            });
+            th.setName("openURL");
+            th.start();
 
         }
     }
