@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.mtplayer.mtp.controller.loadFilmlist;
+package de.mtplayer.mtp.controller.filmlist.filmlistUrls;
 
 import de.mtplayer.mLib.tools.Functions;
 import de.mtplayer.mtp.controller.config.Const;
@@ -44,7 +44,7 @@ public class SearchFilmListUrls {
     private static boolean firstSearchDiff = true;
     private final int UPDATE_LISTE_MAX = 10; // die Downloadliste für die Filmlisten nur jeden 10. Programmstart aktualisieren
 
-    public String suchenAkt(ArrayList<String> bereitsVersucht) {
+    public String searchCompleteListUrl(ArrayList<String> bereitsVersucht) {
         // passende URL zum Laden der Filmliste suchen
         String retUrl;
         if (filmListUrlList_akt.isEmpty()) {
@@ -66,7 +66,7 @@ public class SearchFilmListUrls {
         return retUrl;
     }
 
-    public String suchenDiff(ArrayList<String> bereitsVersucht) {
+    public String searchDiffListUrl(ArrayList<String> bereitsVersucht) {
         // passende URL zum Laden der Filmliste suchen
         String retUrl;
         if (filmListUrlList_diff.isEmpty()) {
@@ -91,7 +91,7 @@ public class SearchFilmListUrls {
     /**
      * Add our default full list servers.
      */
-    private void insertDefaultActiveServers() {
+    private void insertDefaultCompleteListServers() {
         filmListUrlList_akt.add(new FilmlistUrlData("http://verteiler1.mediathekview.de/Filmliste-akt.xz", FilmlistUrlData.SERVER_ART_AKT));
         filmListUrlList_akt.add(new FilmlistUrlData("http://verteiler2.mediathekview.de/Filmliste-akt.xz", FilmlistUrlData.SERVER_ART_AKT));
         filmListUrlList_akt.add(new FilmlistUrlData("http://verteiler3.mediathekview.de/Filmliste-akt.xz", FilmlistUrlData.SERVER_ART_AKT));
@@ -126,7 +126,7 @@ public class SearchFilmListUrls {
             if (!tmp.isEmpty()) {
                 filmListUrlList_akt = tmp;
             } else if (filmListUrlList_akt.isEmpty()) {
-                insertDefaultActiveServers();
+                insertDefaultCompleteListServers();
             }
             filmListUrlList_akt.sort();
         } else {

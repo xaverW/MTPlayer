@@ -21,8 +21,8 @@ import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmTools;
-import de.mtplayer.mtp.controller.loadFilmlist.ListenerFilmListLoad;
-import de.mtplayer.mtp.controller.loadFilmlist.ListenerFilmListLoadEvent;
+import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
+import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.mtplayer.mtp.gui.dialog.DownloadEditDialogController;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.mediaDialog.MediaDialogController;
@@ -126,7 +126,7 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     public void aktualisieren() {
-        if (daten.loadFilmList.getPropListSearching()) {
+        if (daten.loadFilmlist.getPropListSearching()) {
             // wird danach eh gemacht
             return;
         }
@@ -369,14 +369,14 @@ public class DownloadGuiController extends AnchorPane {
                 aktualisieren();
             }
         });
-        daten.loadFilmList.addAdListener(new ListenerFilmListLoad() {
+        daten.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
             @Override
-            public void start(ListenerFilmListLoadEvent event) {
+            public void start(ListenerFilmlistLoadEvent event) {
 
             }
 
             @Override
-            public void fertig(ListenerFilmListLoadEvent event) {
+            public void fertig(ListenerFilmlistLoadEvent event) {
                 if (Config.ABO_SEARCH_NOW.getBool()) {
                     aktualisieren();
                 }

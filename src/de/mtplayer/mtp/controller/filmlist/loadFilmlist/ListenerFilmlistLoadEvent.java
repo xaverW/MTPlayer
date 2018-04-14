@@ -14,9 +14,9 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.mtplayer.mtp.controller.loadFilmlist;
+package de.mtplayer.mtp.controller.filmlist.loadFilmlist;
 
-public class ListenerFilmListLoadEvent {
+public class ListenerFilmlistLoadEvent {
 
     public String senderUrl = "";
     public String text;
@@ -25,7 +25,7 @@ public class ListenerFilmListLoadEvent {
     public boolean fehler;
     public int count;
 
-    public ListenerFilmListLoadEvent(String senderUrl, String text, double max, double progress, int count, boolean fehler) {
+    public ListenerFilmlistLoadEvent(String senderUrl, String text, double max, double progress, int count, boolean fehler) {
         this.senderUrl = senderUrl;
         this.text = text;
         this.max = max;

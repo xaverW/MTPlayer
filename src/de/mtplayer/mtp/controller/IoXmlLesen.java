@@ -25,7 +25,7 @@ import de.mtplayer.mtp.controller.data.abo.Abo;
 import de.mtplayer.mtp.controller.data.abo.AboXml;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadXml;
-import de.mtplayer.mtp.controller.loadFilmlist.FilmlistUrlData;
+import de.mtplayer.mtp.controller.filmlist.filmlistUrls.FilmlistUrlData;
 import de.mtplayer.mtp.gui.mediaDb.MediaPathData;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.tools.storedFilter.FilterToXml;
@@ -157,10 +157,10 @@ public class IoXmlLesen implements AutoCloseable {
                                         filmlistUrlData.arr)) {
                                     switch (filmlistUrlData.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_ART_NR]) {
                                         case FilmlistUrlData.SERVER_ART_AKT:
-                                            daten.loadFilmList.getDownloadUrlsFilmlisten_akt().addWithCheck(filmlistUrlData);
+                                            daten.loadFilmlist.getDownloadUrlsFilmlisten_akt().addWithCheck(filmlistUrlData);
                                             break;
                                         case FilmlistUrlData.SERVER_ART_DIFF:
-                                            daten.loadFilmList.getDownloadUrlsFilmlisten_diff().addWithCheck(filmlistUrlData);
+                                            daten.loadFilmlist.getDownloadUrlsFilmlisten_diff().addWithCheck(filmlistUrlData);
                                             break;
                                     }
                                 }
@@ -184,8 +184,8 @@ public class IoXmlLesen implements AutoCloseable {
             daten.aboList.sort();
 //            daten.aboList.aenderungMelden();
             // ListeFilmUpdateServer aufbauen
-            daten.loadFilmList.getDownloadUrlsFilmlisten_akt().sort();
-            daten.loadFilmList.getDownloadUrlsFilmlisten_diff().sort();
+            daten.loadFilmlist.getDownloadUrlsFilmlisten_akt().sort();
+            daten.loadFilmlist.getDownloadUrlsFilmlisten_diff().sort();
             if (daten.storedFilter.getStordeFilterList().isEmpty()) {
                 ProgInitFilter.setProgInitFilter();
             }

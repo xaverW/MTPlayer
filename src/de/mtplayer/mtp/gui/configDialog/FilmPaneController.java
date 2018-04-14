@@ -116,7 +116,7 @@ public class FilmPaneController extends AnchorPane {
 
         Button btnLoad = new Button("Filmliste jetzt laden");
         btnLoad.setOnAction(event -> {
-            daten.loadFilmList.loadFilmlist("", true);
+            daten.loadFilmlist.loadFilmlist("", true);
         });
 
         final ToggleSwitch tglLoad = new ToggleSwitch("Filmliste beim Programmstart laden");
@@ -199,7 +199,7 @@ public class FilmPaneController extends AnchorPane {
 
         Button btnLoad = new Button("Filmliste jetzt laden");
         btnLoad.disableProperty().bind(txtUrl.textProperty().isEmpty());
-        btnLoad.setOnAction(event -> daten.loadFilmList.loadFilmlist(txtUrl.getText()));
+        btnLoad.setOnAction(event -> daten.loadFilmlist.loadFilmlist(txtUrl.getText()));
 
         GridPane.setMargin(btnLoad, new Insets(20, 0, 0, 0));
 

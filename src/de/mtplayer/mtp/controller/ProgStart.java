@@ -23,8 +23,8 @@ import de.mtplayer.mtp.controller.config.Config;
 import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.config.ProgInfos;
-import de.mtplayer.mtp.controller.loadFilmlist.ListenerFilmListLoadEvent;
-import de.mtplayer.mtp.controller.loadFilmlist.ReadFilmlist;
+import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
+import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ReadFilmlist;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.p2tools.p2Lib.tools.log.Duration;
 import de.p2tools.p2Lib.tools.log.LogMsg;
@@ -96,13 +96,13 @@ public class ProgStart {
 
             if (daten.filmList.isTooOld() && Config.SYSTEM_LOAD_FILMS_ON_START.getBool()) {
                 list.add("Filmliste zu alt, neue Filmliste laden");
-                daten.loadFilmList.loadFilmlist("", false);
+                daten.loadFilmlist.loadFilmlist("", false);
 
             } else {
                 // beim Neuladen wird es dann erst gemacht
-                daten.loadFilmList.notifyStart(new ListenerFilmListLoadEvent("", "", 0, 0, 0, false/* Fehler */));
-                daten.loadFilmList.afterFilmlistLoad();
-                daten.loadFilmList.notifyFertig(new ListenerFilmListLoadEvent("", "", 0, 0, 0, false/* Fehler */));
+                daten.loadFilmlist.notifyStart(new ListenerFilmlistLoadEvent("", "", 0, 0, 0, false/* Fehler */));
+                daten.loadFilmlist.afterFilmlistLoad();
+                daten.loadFilmlist.notifyFertig(new ListenerFilmlistLoadEvent("", "", 0, 0, 0, false/* Fehler */));
             }
             list.add(PLog.LILNE3);
             PLog.userLog(list);

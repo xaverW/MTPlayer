@@ -177,7 +177,7 @@ public class AboList extends SimpleListProperty<Abo> {
 
     public synchronized void aenderungMelden() {
         // Filmliste anpassen
-        if (!daten.loadFilmList.getPropListSearching()) {
+        if (!daten.loadFilmlist.getPropListSearching()) {
             // wird danach eh gemacht
             setAboFuerFilm(daten.filmList);
         }

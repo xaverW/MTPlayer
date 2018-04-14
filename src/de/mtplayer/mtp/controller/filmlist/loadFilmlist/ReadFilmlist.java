@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.mtplayer.mtp.controller.loadFilmlist;
+package de.mtplayer.mtp.controller.filmlist.loadFilmlist;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
@@ -55,8 +55,8 @@ public class ReadFilmlist {
     private double progress = 0;
     private long milliseconds = 0;
 
-    public void addAdListener(ListenerFilmListLoad listener) {
-        listeners.add(ListenerFilmListLoad.class, listener);
+    public void addAdListener(ListenerFilmlistLoad listener) {
+        listeners.add(ListenerFilmlistLoad.class, listener);
     }
 
     public void readFilmListe(String source, final FilmList filmList, int days) {
@@ -64,7 +64,7 @@ public class ReadFilmlist {
         try {
             list.add("Liste Filme lesen von: " + source);
             filmList.clear();
-            notifyStart(source, ListenerFilmListLoad.PROGRESS_MAX); // für die Progressanzeige
+            notifyStart(source, ListenerFilmlistLoad.PROGRESS_MAX); // für die Progressanzeige
 
             checkDays(days);
 
@@ -74,7 +74,7 @@ public class ReadFilmlist {
                 processFromWeb(new URL(source), filmList);
             }
 
-            if (Daten.getInstance().loadFilmList.getStop()) {
+            if (Daten.getInstance().loadFilmlist.getStop()) {
                 list.add("Filme lesen --> Abbruch");
                 filmList.clear();
             }
@@ -127,7 +127,7 @@ public class ReadFilmlist {
                 break;
             }
         }
-        while (!Daten.getInstance().loadFilmList.getStop() && (jsonToken = jp.nextToken()) != null) {
+        while (!Daten.getInstance().loadFilmlist.getStop() && (jsonToken = jp.nextToken()) != null) {
             if (jsonToken == JsonToken.END_OBJECT) {
                 break;
             }
@@ -178,7 +178,7 @@ public class ReadFilmlist {
      * @param filmList the list to read to
      */
     private void processFromFile(String source, FilmList filmList) {
-        notifyProgress(source, ListenerFilmListLoad.PROGRESS_MAX);
+        notifyProgress(source, ListenerFilmlistLoad.PROGRESS_MAX);
         try (InputStream in = selectDecompressor(source, new FileInputStream(source));
              JsonParser jp = new JsonFactory().createParser(in)) {
             readData(jp, filmList);
@@ -256,8 +256,8 @@ public class ReadFilmlist {
     private void notifyStart(String url, double mmax) {
         max = mmax;
         progress = 0;
-        for (final ListenerFilmListLoad l : listeners.getListeners(ListenerFilmListLoad.class)) {
-            l.start(new ListenerFilmListLoadEvent(url, "", max, 0, 0, false));
+        for (final ListenerFilmlistLoad l : listeners.getListeners(ListenerFilmlistLoad.class)) {
+            l.start(new ListenerFilmlistLoadEvent(url, "", max, 0, 0, false));
         }
     }
 
@@ -266,8 +266,8 @@ public class ReadFilmlist {
         if (progress > max) {
             progress = max;
         }
-        for (final ListenerFilmListLoad l : listeners.getListeners(ListenerFilmListLoad.class)) {
-            l.progress(new ListenerFilmListLoadEvent(url, "Download", max, progress, 0, false));
+        for (final ListenerFilmlistLoad l : listeners.getListeners(ListenerFilmlistLoad.class)) {
+            l.progress(new ListenerFilmlistLoadEvent(url, "Download", max, progress, 0, false));
         }
     }
 
@@ -277,8 +277,8 @@ public class ReadFilmlist {
         list.add("Liste Filme gelesen am: " + FastDateFormat.getInstance("dd.MM.yyyy, HH:mm").format(new Date()));
         list.add("  erstellt am: " + liste.genDate());
         list.add("  Anzahl Filme: " + liste.size());
-        for (final ListenerFilmListLoad l : listeners.getListeners(ListenerFilmListLoad.class)) {
-            l.fertig(new ListenerFilmListLoadEvent(url, "", max, progress, 0, false));
+        for (final ListenerFilmlistLoad l : listeners.getListeners(ListenerFilmlistLoad.class)) {
+            l.fertig(new ListenerFilmlistLoadEvent(url, "", max, progress, 0, false));
         }
         list.add(PLog.LILNE3);
         PLog.userLog(list);

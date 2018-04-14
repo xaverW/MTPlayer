@@ -17,8 +17,8 @@
 package de.mtplayer.mtp.gui;
 
 import de.mtplayer.mtp.controller.data.Icons;
-import de.mtplayer.mtp.controller.loadFilmlist.ListenerFilmListLoad;
-import de.mtplayer.mtp.controller.loadFilmlist.ListenerFilmListLoadEvent;
+import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
+import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
@@ -101,14 +101,14 @@ public class FilmFilterController extends FilterController {
         initCheckFilter();
 
         initRest();
-        daten.loadFilmList.addAdListener(new ListenerFilmListLoad() {
+        daten.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
             @Override
-            public void start(ListenerFilmListLoadEvent event) {
+            public void start(ListenerFilmlistLoadEvent event) {
                 dis(true);
             }
 
             @Override
-            public void fertig(ListenerFilmListLoadEvent event) {
+            public void fertig(ListenerFilmlistLoadEvent event) {
                 dis(false);
             }
         });

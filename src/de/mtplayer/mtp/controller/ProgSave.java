@@ -19,7 +19,7 @@ package de.mtplayer.mtp.controller;
 import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.config.ProgInfos;
-import de.mtplayer.mtp.controller.loadFilmlist.WriteFilmlistJson;
+import de.mtplayer.mtp.controller.filmlist.writeFilmlist.WriteFilmlistJson;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
@@ -47,7 +47,7 @@ public class ProgSave {
     }
 
     public void filmlisteSpeichern() {
-        new WriteFilmlistJson().filmlisteSchreibenJson(ProgInfos.getFilmListFile(), daten.filmList);
+        new WriteFilmlistJson().write(ProgInfos.getFilmListFile(), daten.filmList);
     }
 
     public void allesSpeichern() {

@@ -20,8 +20,8 @@ import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.abo.Abo;
 import de.mtplayer.mtp.controller.data.download.DownloadInfos;
-import de.mtplayer.mtp.controller.loadFilmlist.ListenerFilmListLoad;
-import de.mtplayer.mtp.controller.loadFilmlist.ListenerFilmListLoadEvent;
+import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
+import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.geometry.Insets;
@@ -165,20 +165,20 @@ public class StatusBarController extends AnchorPane {
         lblSelDownload.setStyle(labelStyle);
         lblSelAbo.setStyle(labelStyle);
 
-        daten.loadFilmList.addAdListener(new ListenerFilmListLoad() {
+        daten.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
             @Override
-            public void start(ListenerFilmListLoadEvent event) {
+            public void start(ListenerFilmlistLoadEvent event) {
                 loadList = true;
                 setStatusbar();
             }
 
             @Override
-            public void progress(ListenerFilmListLoadEvent event) {
+            public void progress(ListenerFilmlistLoadEvent event) {
                 updateProgressBar(event);
             }
 
             @Override
-            public void fertig(ListenerFilmListLoadEvent event) {
+            public void fertig(ListenerFilmlistLoadEvent event) {
                 stopTimer = false;
                 loadList = false;
                 setStatusbar();
@@ -196,7 +196,7 @@ public class StatusBarController extends AnchorPane {
                 }
             }
         });
-        btnStop.setOnAction(a -> daten.loadFilmList.setStop(true));
+        btnStop.setOnAction(a -> daten.loadFilmlist.setStop(true));
     }
 
     public void setStatusbar() {
@@ -235,7 +235,7 @@ public class StatusBarController extends AnchorPane {
         }
     }
 
-    private void updateProgressBar(ListenerFilmListLoadEvent event) {
+    private void updateProgressBar(ListenerFilmlistLoadEvent event) {
         stopTimer = true;
         progress.setProgress(event.progress);
         lblProgress.setText(event.text);

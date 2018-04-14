@@ -23,7 +23,7 @@ import de.mtplayer.mtp.controller.data.*;
 import de.mtplayer.mtp.controller.data.abo.AboList;
 import de.mtplayer.mtp.controller.data.download.DownloadList;
 import de.mtplayer.mtp.controller.data.film.FilmList;
-import de.mtplayer.mtp.controller.loadFilmlist.LoadFilmList;
+import de.mtplayer.mtp.controller.filmlist.loadFilmlist.LoadFilmlist;
 import de.mtplayer.mtp.controller.starter.StarterClass;
 import de.mtplayer.mtp.gui.AboGuiController;
 import de.mtplayer.mtp.gui.DownloadGuiController;
@@ -58,7 +58,7 @@ public class Daten {
 
     // zentrale Klassen
     public StarterClass starterClass = null; // Klasse zum Ausführen der Programme (für die Downloads): VLC, flvstreamer, ...
-    public LoadFilmList loadFilmList; // erledigt das updaten der Filmliste
+    public LoadFilmlist loadFilmlist; // erledigt das updaten der Filmliste
     public static final MTColor mTColor = new MTColor(); // verwendete Farben
     public StoredFilter storedFilter = null; // gespeicherte Filterprofile
     public FilmListFilter filmListFilter = null;
@@ -92,7 +92,7 @@ public class Daten {
         replaceList = new ReplaceList();
         storedFilter = new StoredFilter(this);
         filmList = new FilmList();
-        loadFilmList = new LoadFilmList(this);
+        loadFilmlist = new LoadFilmlist(this);
 
         filmListFiltered = new FilmList();
         blackList = new BlackList(this);

@@ -25,8 +25,8 @@ import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.data.ListePsetVorlagen;
 import de.mtplayer.mtp.controller.data.SetList;
-import de.mtplayer.mtp.controller.loadFilmlist.ListenerFilmListLoad;
-import de.mtplayer.mtp.controller.loadFilmlist.ListenerFilmListLoadEvent;
+import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
+import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.mtplayer.mtp.gui.dialogStart.StartDialogController;
 import de.mtplayer.mtp.gui.tools.GuiSize;
 import de.mtplayer.mtp.res.GetIcon;
@@ -162,19 +162,19 @@ public class MTFx extends Application {
     }
 
     private void initProg() {
-        daten.loadFilmList.addAdListener(new ListenerFilmListLoad() {
+        daten.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
             @Override
-            public void start(ListenerFilmListLoadEvent event) {
+            public void start(ListenerFilmlistLoadEvent event) {
 
             }
 
             @Override
-            public void fertig(ListenerFilmListLoadEvent event) {
+            public void fertig(ListenerFilmlistLoadEvent event) {
                 new ProgSave().allesSpeichern(); // damit nichts verlorengeht
             }
 
             @Override
-            public void fertigOnlyOne(ListenerFilmListLoadEvent event) {
+            public void fertigOnlyOne(ListenerFilmlistLoadEvent event) {
                 daten.mediaDbList.loadSavedList();
                 daten.mediaDbList.createMediaDB();
                 checkProgUpdate();

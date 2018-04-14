@@ -18,8 +18,8 @@
 package de.mtplayer.mtp.tools.filmListFilter;
 
 import de.mtplayer.mtp.controller.config.Daten;
-import de.mtplayer.mtp.controller.loadFilmlist.ListenerFilmListLoad;
-import de.mtplayer.mtp.controller.loadFilmlist.ListenerFilmListLoadEvent;
+import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
+import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.mtplayer.mtp.gui.FilmGuiController;
 import de.mtplayer.mtp.gui.tools.Listener;
 import javafx.application.Platform;
@@ -37,9 +37,9 @@ public class FilmListFilter {
         daten.aboList.listChangedProperty().addListener((observable, oldValue, newValue) ->
                 Platform.runLater(() -> filterList()));
 
-        daten.loadFilmList.addAdListener(new ListenerFilmListLoad() {
+        daten.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
             @Override
-            public void fertig(ListenerFilmListLoadEvent event) {
+            public void fertig(ListenerFilmlistLoadEvent event) {
                 filterList();
             }
         });

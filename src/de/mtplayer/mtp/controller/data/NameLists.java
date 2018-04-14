@@ -17,8 +17,8 @@
 package de.mtplayer.mtp.controller.data;
 
 import de.mtplayer.mtp.controller.config.Daten;
-import de.mtplayer.mtp.controller.loadFilmlist.ListenerFilmListLoad;
-import de.mtplayer.mtp.controller.loadFilmlist.ListenerFilmListLoadEvent;
+import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
+import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -39,13 +39,13 @@ public class NameLists {
 
     public NameLists(Daten daten) {
         this.daten = daten;
-        daten.loadFilmList.addAdListener(new ListenerFilmListLoad() {
+        daten.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
             @Override
-            public void start(ListenerFilmListLoadEvent event) {
+            public void start(ListenerFilmlistLoadEvent event) {
             }
 
             @Override
-            public void fertig(ListenerFilmListLoadEvent event) {
+            public void fertig(ListenerFilmlistLoadEvent event) {
                 getAllSender();
                 getThemen("");
             }

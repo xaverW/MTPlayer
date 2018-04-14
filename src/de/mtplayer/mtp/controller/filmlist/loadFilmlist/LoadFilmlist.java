@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.mtplayer.mtp.controller.loadFilmlist;
+package de.mtplayer.mtp.controller.filmlist.loadFilmlist;
 
 import de.mtplayer.mLib.tools.StringFormatters;
 import de.mtplayer.mtp.controller.ProgSave;
@@ -23,6 +23,7 @@ import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmList;
+import de.mtplayer.mtp.controller.filmlist.filmlistUrls.FilmListUrlList;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.p2tools.p2Lib.tools.log.Duration;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -36,14 +37,14 @@ import java.util.HashSet;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
-public class LoadFilmList {
+public class LoadFilmlist {
 
     private final HashSet<String> hashSet = new HashSet<>();
     private final FilmList diffListe;
 
     // private
     private final Daten daten;
-    private final ImportFilmList importFilmliste;
+    private final ImportFilmlist importFilmliste;
     private final EventListenerList listeners = new EventListenerList();
     private BooleanProperty propListSearching = new SimpleBooleanProperty(false);
     private boolean onlyOne = false;
@@ -51,23 +52,23 @@ public class LoadFilmList {
     private static final AtomicBoolean stop = new AtomicBoolean(false); // damit kannn das Laden
     // gestoppt werden
 
-    public LoadFilmList(Daten daten) {
+    public LoadFilmlist(Daten daten) {
         this.daten = daten;
         diffListe = new FilmList();
-        importFilmliste = new ImportFilmList();
-        importFilmliste.addAdListener(new ListenerFilmListLoad() {
+        importFilmliste = new ImportFilmlist();
+        importFilmliste.addAdListener(new ListenerFilmlistLoad() {
             @Override
-            public synchronized void start(ListenerFilmListLoadEvent event) {
+            public synchronized void start(ListenerFilmlistLoadEvent event) {
                 notifyStart(event);
             }
 
             @Override
-            public synchronized void progress(ListenerFilmListLoadEvent event) {
+            public synchronized void progress(ListenerFilmlistLoadEvent event) {
                 notifyProgress(event);
             }
 
             @Override
-            public synchronized void fertig(ListenerFilmListLoadEvent event) {
+            public synchronized void fertig(ListenerFilmlistLoadEvent event) {
                 // Ergebnisliste listeFilme eintragen -> Feierabend!
                 Duration.staticPing("Filme laden, ende");
                 undEnde(event);
@@ -126,55 +127,55 @@ public class LoadFilmList {
             if (dateiUrl.isEmpty()) {
                 // Filme als Liste importieren, Url automatisch ermitteln
                 PLog.userLog("Filmliste laden (auto)");
-                importFilmliste.filmImportAuto(daten.filmList,
+                importFilmliste.importFilmListAuto(daten.filmList,
                         diffListe, Config.SYSTEM_NUM_DAYS_FILMLIST.getInt());
             } else {
                 // Filme als Liste importieren, feste URL/Datei
                 PLog.userLog("Filmliste laden von: " + dateiUrl);
                 daten.filmList.clear();
-                importFilmliste.filmImportFile(dateiUrl,
+                importFilmliste.importFilmlistFromFile(dateiUrl,
                         daten.filmList, Config.SYSTEM_NUM_DAYS_FILMLIST.getInt());
             }
         }
     }
 
     public void afterFilmlistLoad() {
-        notifyProgress(new ListenerFilmListLoadEvent("", "Filem markieren: Geo, Zukunft, Doppelt",
-                ListenerFilmListLoad.PROGRESS_MAX, ListenerFilmListLoad.PROGRESS_MAX, 0, false/* Fehler */));
+        notifyProgress(new ListenerFilmlistLoadEvent("", "Filem markieren: Geo, Zukunft, Doppelt",
+                ListenerFilmlistLoad.PROGRESS_MAX, ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
         PLog.userLog("Filem markieren: Geo, Zukunft, Doppelt");
         daten.filmList.markFilms();
 
 
-        notifyProgress(new ListenerFilmListLoadEvent("", "Themen suchen",
-                ListenerFilmListLoad.PROGRESS_MAX, ListenerFilmListLoad.PROGRESS_MAX, 0, false/* Fehler */));
+        notifyProgress(new ListenerFilmlistLoadEvent("", "Themen suchen",
+                ListenerFilmlistLoad.PROGRESS_MAX, ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
         PLog.userLog("Themen suchen");
         daten.filmList.themenLaden();
 
 
         if (!daten.aboList.isEmpty()) {
-            notifyProgress(new ListenerFilmListLoadEvent("", "Abos eintragen",
-                    ListenerFilmListLoad.PROGRESS_MAX, ListenerFilmListLoad.PROGRESS_MAX, 0, false/* Fehler */));
+            notifyProgress(new ListenerFilmlistLoadEvent("", "Abos eintragen",
+                    ListenerFilmlistLoad.PROGRESS_MAX, ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
             PLog.userLog("Abos eintragen");
             daten.aboList.setAboFuerFilm(daten.filmList);
         }
 
 
-        notifyProgress(new ListenerFilmListLoadEvent("", "Blacklist filtern",
-                ListenerFilmListLoad.PROGRESS_MAX, ListenerFilmListLoad.PROGRESS_MAX, 0, false/* Fehler */));
+        notifyProgress(new ListenerFilmlistLoadEvent("", "Blacklist filtern",
+                ListenerFilmlistLoad.PROGRESS_MAX, ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
         PLog.userLog("Blacklist filtern");
         daten.filmList.filterList();
 
 
-        notifyProgress(new ListenerFilmListLoadEvent("", "Filme in Downloads eintragen",
-                ListenerFilmListLoad.PROGRESS_MAX, ListenerFilmListLoad.PROGRESS_MAX, 0, false/* Fehler */));
+        notifyProgress(new ListenerFilmlistLoadEvent("", "Filme in Downloads eintragen",
+                ListenerFilmlistLoad.PROGRESS_MAX, ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
         PLog.userLog("Filme in Downloads eintragen");
         daten.downloadList.filmEintragen();
     }
 
     // #######################################
     // #######################################
-    public void addAdListener(ListenerFilmListLoad listener) {
-        listeners.add(ListenerFilmListLoad.class, listener);
+    public void addAdListener(ListenerFilmlistLoad listener) {
+        listeners.add(ListenerFilmlistLoad.class, listener);
     }
 
     public synchronized void setStop(boolean set) {
@@ -195,7 +196,7 @@ public class LoadFilmList {
 
     // #######################################
     // #######################################
-    private void undEnde(ListenerFilmListLoadEvent event) {
+    private void undEnde(ListenerFilmlistLoadEvent event) {
         // Abos eintragen in der gesamten Liste vor Blacklist da das nur beim Ändern der Filmliste oder
         // beim Ändern von Abos gemacht wird
 
@@ -266,11 +267,11 @@ public class LoadFilmList {
         hashSet.clear();
     }
 
-    public void notifyStart(ListenerFilmListLoadEvent event) {
-        final ListenerFilmListLoadEvent e = event;
+    public void notifyStart(ListenerFilmlistLoadEvent event) {
+        final ListenerFilmlistLoadEvent e = event;
         try {
             Platform.runLater(() -> {
-                for (final ListenerFilmListLoad l : listeners.getListeners(ListenerFilmListLoad.class)) {
+                for (final ListenerFilmlistLoad l : listeners.getListeners(ListenerFilmlistLoad.class)) {
                     l.start(e);
                 }
 
@@ -280,10 +281,10 @@ public class LoadFilmList {
         }
     }
 
-    public void notifyProgress(ListenerFilmListLoadEvent event) {
+    public void notifyProgress(ListenerFilmlistLoadEvent event) {
         try {
             Platform.runLater(() -> {
-                for (final ListenerFilmListLoad l : listeners.getListeners(ListenerFilmListLoad.class)) {
+                for (final ListenerFilmlistLoad l : listeners.getListeners(ListenerFilmlistLoad.class)) {
                     l.progress(event);
                 }
 
@@ -293,13 +294,13 @@ public class LoadFilmList {
         }
     }
 
-    public void notifyFertig(ListenerFilmListLoadEvent event) {
+    public void notifyFertig(ListenerFilmlistLoadEvent event) {
         try {
             Platform.runLater(() -> {
-                for (final ListenerFilmListLoad l : listeners.getListeners(ListenerFilmListLoad.class)) {
+                for (final ListenerFilmlistLoad l : listeners.getListeners(ListenerFilmlistLoad.class)) {
                     l.fertig(event);
                 }
-                for (final ListenerFilmListLoad l : listeners.getListeners(ListenerFilmListLoad.class)) {
+                for (final ListenerFilmlistLoad l : listeners.getListeners(ListenerFilmlistLoad.class)) {
                     if (!onlyOne) {
                         l.fertigOnlyOne(event);
                     }

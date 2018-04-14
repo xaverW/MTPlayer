@@ -14,43 +14,44 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.mtplayer.mtp.controller.loadFilmlist;
+package de.mtplayer.mtp.controller.filmlist.loadFilmlist;
 
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.data.film.FilmList;
+import de.mtplayer.mtp.controller.filmlist.filmlistUrls.SearchFilmListUrls;
 import de.p2tools.p2Lib.tools.log.PLog;
 
 import javax.swing.event.EventListenerList;
 import java.util.ArrayList;
 
-public class ImportFilmList {
+public class ImportFilmlist {
 
     private final EventListenerList eventListenerList;
     private final ReadFilmlist readFilmlist;
     public SearchFilmListUrls searchFilmListUrls;
 
-    public ImportFilmList() {
+    public ImportFilmlist() {
         eventListenerList = new EventListenerList();
         readFilmlist = new ReadFilmlist();
         searchFilmListUrls = new SearchFilmListUrls();
-        readFilmlist.addAdListener(new ListenerFilmListLoad() {
+        readFilmlist.addAdListener(new ListenerFilmlistLoad() {
             @Override
-            public synchronized void start(ListenerFilmListLoadEvent event) {
-                for (final ListenerFilmListLoad l : eventListenerList.getListeners(ListenerFilmListLoad.class)) {
+            public synchronized void start(ListenerFilmlistLoadEvent event) {
+                for (final ListenerFilmlistLoad l : eventListenerList.getListeners(ListenerFilmlistLoad.class)) {
                     l.start(event);
                 }
             }
 
             @Override
-            public synchronized void progress(ListenerFilmListLoadEvent event) {
-                for (final ListenerFilmListLoad l : eventListenerList.getListeners(ListenerFilmListLoad.class)) {
+            public synchronized void progress(ListenerFilmlistLoadEvent event) {
+                for (final ListenerFilmlistLoad l : eventListenerList.getListeners(ListenerFilmlistLoad.class)) {
                     l.progress(event);
 
                 }
             }
 
             @Override
-            public synchronized void fertig(ListenerFilmListLoadEvent event) {
+            public synchronized void fertig(ListenerFilmlistLoadEvent event) {
             }
         });
     }
@@ -58,10 +59,10 @@ public class ImportFilmList {
     // #########################################################
     // Filmeliste importieren, URL automatisch wählen
     // #########################################################
-    public void filmImportAuto(FilmList filmList, FilmList filmListDiff, int days) {
-        Daten.getInstance().loadFilmList.setStop(false);
-        Thread th = new Thread(new FilmImportAutoThread(filmList, filmListDiff, days));
-        th.setName("filmImportAuto");
+    public void importFilmListAuto(FilmList filmList, FilmList filmListDiff, int days) {
+        Daten.getInstance().loadFilmlist.setStop(false);
+        Thread th = new Thread(new importAutoThread(filmList, filmListDiff, days));
+        th.setName("importFilmListAuto");
         th.start();
     }
 
@@ -69,13 +70,13 @@ public class ImportFilmList {
         AKT, DIFF
     }
 
-    private class FilmImportAutoThread implements Runnable {
+    private class importAutoThread implements Runnable {
         private final FilmList filmList;
         private final FilmList filmListDiff;
         private STATE state;
         private final int days;
 
-        public FilmImportAutoThread(FilmList filmList, FilmList filmListDiff, int days) {
+        public importAutoThread(FilmList filmList, FilmList filmListDiff, int days) {
             this.filmList = filmList;
             this.filmListDiff = filmListDiff;
             this.days = days;
@@ -114,10 +115,10 @@ public class ImportFilmList {
 
             switch (state) {
                 case AKT:
-                    updateUrl = searchFilmListUrls.suchenAkt(versuchteUrls);
+                    updateUrl = searchFilmListUrls.searchCompleteListUrl(versuchteUrls);
                     break;
                 case DIFF:
-                    updateUrl = searchFilmListUrls.suchenDiff(versuchteUrls);
+                    updateUrl = searchFilmListUrls.searchDiffListUrl(versuchteUrls);
                     break;
             }
 
@@ -153,7 +154,7 @@ public class ImportFilmList {
                 }
                 versuchteUrls.add(updateUrl);
                 // nur wenn nicht abgebrochen, weitermachen
-                if (Daten.getInstance().loadFilmList.getStop()) {
+                if (Daten.getInstance().loadFilmlist.getStop()) {
                     break;
                 }
 
@@ -165,10 +166,10 @@ public class ImportFilmList {
     // #######################################
     // Filmeliste importieren, mit fester URL/Pfad
     // #######################################
-    public void filmImportFile(String pfad, FilmList filmList, int days) {
-        Daten.getInstance().loadFilmList.setStop(false);
+    public void importFilmlistFromFile(String pfad, FilmList filmList, int days) {
+        Daten.getInstance().loadFilmlist.setStop(false);
         Thread th = new Thread(new FilmImportFileThread(pfad, filmList, days));
-        th.setName("filmImportFile");
+        th.setName("importFilmlistFromFile");
         th.start();
 
     }
@@ -193,8 +194,8 @@ public class ImportFilmList {
 
     // #######################################
     // #######################################
-    public void addAdListener(ListenerFilmListLoad listener) {
-        eventListenerList.add(ListenerFilmListLoad.class, listener);
+    public void addAdListener(ListenerFilmlistLoad listener) {
+        eventListenerList.add(ListenerFilmlistLoad.class, listener);
     }
 
     private boolean urlLaden(String dateiUrl, FilmList filmList, int days) {
@@ -215,8 +216,8 @@ public class ImportFilmList {
     }
 
     private synchronized void fertigMelden(boolean ok) {
-        for (final ListenerFilmListLoad l : eventListenerList.getListeners(ListenerFilmListLoad.class)) {
-            l.fertig(new ListenerFilmListLoadEvent("", "", 0, 0, 0, !ok));
+        for (final ListenerFilmlistLoad l : eventListenerList.getListeners(ListenerFilmlistLoad.class)) {
+            l.fertig(new ListenerFilmlistLoadEvent("", "", 0, 0, 0, !ok));
         }
     }
 }

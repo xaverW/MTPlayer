@@ -115,7 +115,7 @@ public class MTFxController extends StackPane {
             maskerPane.setVisible(false);
 
             btnFilmliste.getStyleClass().add("btnFilmlist");
-            btnFilmliste.setOnAction(e -> daten.loadFilmList.loadFilmlist(""));
+            btnFilmliste.setOnAction(e -> daten.loadFilmlist.loadFilmlist(""));
 
             btnFilm.getStyleClass().add("btnFilm");
             btnFilm.setOnAction(e -> selPanelFilm());

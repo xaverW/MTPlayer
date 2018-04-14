@@ -14,24 +14,24 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.mtplayer.mtp.controller.loadFilmlist;
+package de.mtplayer.mtp.controller.filmlist.loadFilmlist;
 
 import java.util.EventListener;
 
-public class ListenerFilmListLoad implements EventListener {
+public class ListenerFilmlistLoad implements EventListener {
 
     public static final double PROGRESS_MAX = 1.0;
 
-    public void start(ListenerFilmListLoadEvent e) {
+    public void start(ListenerFilmlistLoadEvent e) {
     }
 
-    public void progress(ListenerFilmListLoadEvent e) {
+    public void progress(ListenerFilmlistLoadEvent e) {
     }
 
-    public void fertig(ListenerFilmListLoadEvent e) {
+    public void fertig(ListenerFilmlistLoadEvent e) {
     }
 
-    public void fertigOnlyOne(ListenerFilmListLoadEvent e) {
+    public void fertigOnlyOne(ListenerFilmlistLoadEvent e) {
         // dient zum Melden des ersten Ladens der Filmliste beim ProgStart
     }
 }

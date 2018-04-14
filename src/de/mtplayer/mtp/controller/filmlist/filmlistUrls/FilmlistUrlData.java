@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.mtplayer.mtp.controller.loadFilmlist;
+package de.mtplayer.mtp.controller.filmlist.filmlistUrls;
 
 import de.p2tools.p2Lib.tools.log.PLog;
 
@@ -74,16 +74,16 @@ public class FilmlistUrlData implements Comparable<FilmlistUrlData> {
         arr[FILMLIST_UPDATE_SERVER_ART_NR] = art;
     }
 
-    public Date getDate() {
-        String date = arr[FILMLIST_UPDATE_SERVER_DATUM_NR] + " " + arr[FILMLIST_UPDATE_SERVER_ZEIT_NR];
-        Date d;
-        try {
-            d = sdf.parse(date);
-        } catch (Exception ex) {
-            d = new Date();
-        }
-        return d;
-    }
+//    public Date getDate() {
+//        String date = arr[FILMLIST_UPDATE_SERVER_DATUM_NR] + " " + arr[FILMLIST_UPDATE_SERVER_ZEIT_NR];
+//        Date d;
+//        try {
+//            d = sdf.parse(date);
+//        } catch (Exception ex) {
+//            d = new Date();
+//        }
+//        return d;
+//    }
 
     @Override
     public int compareTo(FilmlistUrlData arg0) {

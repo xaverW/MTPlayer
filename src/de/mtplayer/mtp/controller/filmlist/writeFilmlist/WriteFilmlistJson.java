@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.mtplayer.mtp.controller.loadFilmlist;
+package de.mtplayer.mtp.controller.filmlist.writeFilmlist;
 
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
@@ -39,7 +39,7 @@ public class WriteFilmlistJson {
         return jg;
     }
 
-    public void filmlisteSchreibenJson(String datei, FilmList filmList) {
+    public void write(String datei, FilmList filmList) {
         try {
             PLog.userLog("Filme schreiben (" + filmList.size() + " Filme) :");
 
