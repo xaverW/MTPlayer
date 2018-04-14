@@ -130,14 +130,14 @@ public class Daten {
         timeline.play();
     }
 
-    public static final Daten getInstance(String dir) {
+    public synchronized static final Daten getInstance(String dir) {
         if (!dir.isEmpty()) {
             configDir = dir;
         }
         return getInstance();
     }
 
-    public static final Daten getInstance() {
+    public synchronized static final Daten getInstance() {
         return instance == null ? instance = new Daten() : instance;
     }
 
