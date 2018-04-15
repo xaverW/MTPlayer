@@ -30,17 +30,29 @@ import java.util.List;
 
 public class MakeIndex implements Runnable {
 
-    String pfad = "";
-    String error = "";
-    boolean more = false;
-    Daten daten;
-    private String[] suffix = {""};
+    private String error = "";
+    private boolean more = false;
+
+    private final Daten daten;
+    private final String[] suffix;
+    private final MediaDbList mediaDbList;
+    private final String path;
     private List search = new ArrayList<MediaDbData>();
+
     final boolean ohneSuffix = Boolean.parseBoolean(Config.MEDIA_DB_WITH_OUT_SUFFIX.get());
 
-    public MakeIndex(String[] suffix) {
+    public MakeIndex(String[] suffix, MediaDbList mediaDbList) {
         daten = Daten.getInstance();
         this.suffix = suffix;
+        this.path = "";
+        this.mediaDbList = mediaDbList;
+    }
+
+    public MakeIndex(String[] suffix, String path, MediaDbList mediaDbList) {
+        daten = Daten.getInstance();
+        this.suffix = suffix;
+        this.path = path;
+        this.mediaDbList = mediaDbList;
     }
 
 
@@ -48,24 +60,10 @@ public class MakeIndex implements Runnable {
     public synchronized void run() {
         Duration.counterStart("Mediensammlung erstellen");
         try {
-            if (!pfad.isEmpty()) {
-                // dann nur einen Pfad hinzufügen
-                final File f = new File(pfad);
-                if (!f.canRead()) {
-                    if (!error.isEmpty()) {
-                        error = error + '\n';
-                    }
-                    error = error + f.getPath();
-                }
-                if (!error.isEmpty()) {
-                    // Verzeichnisse können nicht durchsucht werden
-                    errorMsg();
-                }
-                searchFile(new File(pfad), true);
 
-            } else if (!daten.mediaPathList.isEmpty()) {
+            if (path.isEmpty()) {
                 for (final MediaPathData mediaPathData : daten.mediaPathList) {
-                    if (mediaPathData.isSave()) {
+                    if (mediaPathData.isExtern()) {
                         continue;
                     }
                     final File f = new File(mediaPathData.getPath());
@@ -81,18 +79,34 @@ public class MakeIndex implements Runnable {
                     // Verzeichnisse können nicht durchsucht werden
                     errorMsg();
                 }
-                daten.mediaPathList.stream().filter((mediaPathData) -> (!mediaPathData.isSave())).forEach((mp) ->
+                daten.mediaPathList.stream().filter((mediaPathData) -> (!mediaPathData.isExtern())).forEach((mp) ->
                         searchFile(new File(mp.getPath()), false));
+
+            } else if (!daten.mediaPathList.isEmpty()) {
+                // dann nur einen Pfad hinzufügen
+                final File f = new File(path);
+                if (!f.canRead()) {
+                    if (!error.isEmpty()) {
+                        error = error + '\n';
+                    }
+                    error = error + f.getPath();
+                }
+                if (!error.isEmpty()) {
+                    // Verzeichnisse können nicht durchsucht werden
+                    errorMsg();
+                }
+                searchFile(new File(path), true);
             }
+
         } catch (final Exception ex) {
             PLog.errorLog(120321254, ex);
         }
 
-        daten.mediaDbList.setAll(search);
-        daten.mediaDbList.exportListe("");
+        mediaDbList.setAll(search);
+        mediaDbList.exportList("");
 
         Duration.counterStop("Mediensammlung erstellen");
-        daten.mediaDbList.setPropSearch(false);
+        mediaDbList.setPropSearch(false);
         Listener.notify(Listener.EREIGNIS_MEDIA_DB_STOP, MediaDbList.class.getSimpleName());
     }
 

@@ -18,8 +18,6 @@ package de.mtplayer.mtp.gui.mediaDb;
 
 import de.mtplayer.mLib.tools.Data;
 import de.mtplayer.mtp.controller.config.Const;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 
 public class MediaDbData extends Data<MediaDbData> {
 
@@ -31,11 +29,11 @@ public class MediaDbData extends Data<MediaDbData> {
     public final static int MAX_ELEM = 4;
     public final static String[] COLUMN_NAMES = {"Name", "Pfad", "Größe [MB]", "Extern"};
     public final static String[] XML_NAMES = {"Name", "Pfad", "Groesse", "Extern"};
+    public static final String TAG = "Mediensammlung";
 
     public String[] arr;
     public MediaDBFileSize mVMediaDBFileSize;
-
-    private BooleanProperty extern = new SimpleBooleanProperty(false);
+    private boolean extern = false;
 
     public MediaDbData(String name, String pfad, long size, boolean extern) {
         makeArr();
@@ -61,15 +59,11 @@ public class MediaDbData extends Data<MediaDbData> {
     }
 
     public boolean isExtern() {
-        return extern.get();
-    }
-
-    public BooleanProperty externProperty() {
         return extern;
     }
 
     public void setExtern(boolean extern) {
-        this.extern.set(extern);
+        this.extern = extern;
     }
 
 

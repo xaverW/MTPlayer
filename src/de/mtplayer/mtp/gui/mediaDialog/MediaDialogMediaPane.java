@@ -16,6 +16,7 @@
 
 package de.mtplayer.mtp.gui.mediaDialog;
 
+import de.mtplayer.mLib.tools.CheckBoxCell;
 import de.mtplayer.mLib.tools.Functions;
 import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.Daten;
@@ -161,18 +162,22 @@ public class MediaDialogMediaPane extends ScrollPane {
         tableMedia.getColumns().clear();
 
         final TableColumn<MediaDbData, String> nameColumn = new TableColumn<>("Name");
-        final TableColumn<MediaDbData, String> pfadColumn = new TableColumn<>("Pfad");
+        final TableColumn<MediaDbData, String> pathColumn = new TableColumn<>("Pfad");
         final TableColumn<MediaDbData, Date> sizeColumn = new TableColumn<>("Größe [MB]");
+        final TableColumn<MediaDbData, Boolean> externColumn = new TableColumn<>("extern");
 
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        pfadColumn.setCellValueFactory(new PropertyValueFactory<>("path"));
+        pathColumn.setCellValueFactory(new PropertyValueFactory<>("path"));
         sizeColumn.setCellValueFactory(new PropertyValueFactory<>("size"));
+        externColumn.setCellValueFactory(new PropertyValueFactory<>("extern"));
+        externColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
 
-        tableMedia.getColumns().addAll(nameColumn, pfadColumn, sizeColumn);
+        tableMedia.getColumns().addAll(nameColumn, pathColumn, sizeColumn, externColumn);
 
-        nameColumn.prefWidthProperty().bind(tableMedia.widthProperty().multiply(60.0 / 100));
-        pfadColumn.prefWidthProperty().bind(tableMedia.widthProperty().multiply(25.0 / 100));
-        sizeColumn.prefWidthProperty().bind(tableMedia.widthProperty().multiply(14.0 / 100));
+        nameColumn.prefWidthProperty().bind(tableMedia.widthProperty().multiply(50.0 / 100));
+        pathColumn.prefWidthProperty().bind(tableMedia.widthProperty().multiply(25.0 / 100));
+        sizeColumn.prefWidthProperty().bind(tableMedia.widthProperty().multiply(15.0 / 100));
+        externColumn.prefWidthProperty().bind(tableMedia.widthProperty().multiply(10.0 / 100));
 
         tableMedia.getSelectionModel().selectedItemProperty().addListener((observableValue, dataOld, dataNew) -> {
             if (dataNew != null) {

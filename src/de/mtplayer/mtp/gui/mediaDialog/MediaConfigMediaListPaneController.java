@@ -16,6 +16,7 @@
 
 package de.mtplayer.mtp.gui.mediaDialog;
 
+import de.mtplayer.mLib.tools.CheckBoxCell;
 import de.mtplayer.mtp.controller.config.Config;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.gui.mediaDb.MediaDbData;
@@ -112,11 +113,16 @@ public class MediaConfigMediaListPaneController extends AnchorPane {
         final TableColumn<MediaDbData, String> sizeColumn = new TableColumn<>("Größe [MB]");
         sizeColumn.setCellValueFactory(new PropertyValueFactory<>("size"));
 
-        tableView.getColumns().addAll(nameColumn, pathColumn, sizeColumn);
+        final TableColumn<MediaDbData, Boolean> externColumn = new TableColumn<>("extern");
+        externColumn.setCellValueFactory(new PropertyValueFactory<>("extern"));
+        externColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
 
-        nameColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(60.0 / 100));
+        tableView.getColumns().addAll(nameColumn, pathColumn, sizeColumn, externColumn);
+
+        nameColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(50.0 / 100));
         pathColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(25.0 / 100));
-        sizeColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(14.0 / 100));
+        sizeColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(15.0 / 100));
+        externColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(10.0 / 100));
 
         SortedList<MediaDbData> sortedList = daten.mediaDbList.getSortedList();
         daten.mediaDbList.filterdListClearPred(true);

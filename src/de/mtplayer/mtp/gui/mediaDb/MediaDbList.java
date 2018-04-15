@@ -33,7 +33,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.io.LineNumberReader;
@@ -120,7 +119,7 @@ public class MediaDbList extends SimpleListProperty<MediaDbData> {
             this.setAll(l);
         } else {
             clear();
-            exportListe("");
+            exportList("");
         }
     }
 
@@ -143,7 +142,7 @@ public class MediaDbList extends SimpleListProperty<MediaDbData> {
         }
 
         del(true /*ohneSave*/);
-        Thread th = new Thread(new MakeIndex(suffix));
+        Thread th = new Thread(new MakeIndex(suffix, this));
         th.setName("createMediaDB");
         th.start();
     }
@@ -164,54 +163,96 @@ public class MediaDbList extends SimpleListProperty<MediaDbData> {
         }
     }
 
-    public synchronized void exportListe(String datei) {
-        Path logFilePath = null;
-        boolean export = false;
-        ArrayList<String> list = new ArrayList<>();
-        list.add("MediaDB schreiben (" + daten.mediaDbList.size() + " Dateien) :");
-        if (!datei.isEmpty()) {
-            export = true;
-            try {
-                final File file = new File(datei);
-                final File dir = new File(file.getParent());
-                if (!dir.exists()) {
-                    if (!dir.mkdirs()) {
-                        PLog.errorLog(945120365, "Kann den Pfad nicht anlegen: " + dir.toString());
-                    }
-                }
-                list.add("   --> Start Schreiben nach: " + datei);
-                logFilePath = file.toPath();
-            } catch (final Exception ex) {
-                PLog.errorLog(102035478, ex, "nach: " + datei);
-            }
+    public synchronized void writeList(String fileStr) {
+        final Path path;
+
+        if (fileStr == null || fileStr.isEmpty()) {
+            path = getFilePath();
         } else {
-            list.add("   --> Start Schreiben nach: " + getFilePath().toString());
-            logFilePath = getFilePath();
+            path = Paths.get(fileStr);
         }
 
-        try (BufferedWriter bw = Files.newBufferedWriter(logFilePath)) {
-            bw.newLine();
-            bw.newLine();
-            for (final MediaDbData entry : this) {
-                if (!datei.isEmpty()) {
-                    //dann alles schreiben
-                    bw.write(getLine(entry, export));
-                    bw.newLine();
-                } else if (entry.isExtern()) {
-                    //in der Konfig nur die externen
-                    bw.write(getLine(entry, export));
-                    bw.newLine();
-                }
+        ArrayList<String> list = new ArrayList<>();
+        list.add("MediaDB schreiben (" + daten.mediaDbList.size() + " Dateien) :");
+        list.add("   --> Start Schreiben nach: " + path.toString());
+
+        try {
+            final File file = path.toFile();
+            final File dir = new File(file.getParent());
+            if (!dir.exists() && !dir.mkdirs()) {
+                PLog.errorLog(932102478, "Kann den Pfad nicht anlegen: " + dir.toString());
+                Platform.runLater(() -> new MTAlert().showErrorAlert("Fehler beim Schreiben",
+                        "Der Pfad zum Schreiben der Mediensammlung kann nicht angelegt werden: \n" +
+                                path.toString()));
+                return;
             }
-            bw.newLine();
-            //
-            bw.flush();
+
+            new WriteMediaDb().datenSchreiben(path, this);
+            list.add("   --> geschrieben!");
+
         } catch (final Exception ex) {
+            list.add("   --> Fehler, nicht geschrieben!");
+            PLog.errorLog(931201478, ex, "nach: " + path.toString());
             Platform.runLater(() -> new MTAlert().showErrorAlert("Fehler beim Schreiben",
-                    "Datei konnte nicht geschrieben werden!"));
+                    "Die Mediensammlung konnte nicht geschrieben werden:\n" +
+                            path.toString()));
         }
-        list.add("   --> geschrieben!");
+
         PLog.userLog(list);
+    }
+
+
+    public synchronized void exportList(String fileStr) {
+        writeList(fileStr);
+        return;
+
+//        Path logFilePath = null;
+//        boolean export = false;
+//        ArrayList<String> list = new ArrayList<>();
+//        list.add("MediaDB schreiben (" + daten.mediaDbList.size() + " Dateien) :");
+//        if (!fileStr.isEmpty()) {
+//            export = true;
+//            try {
+//                final File file = new File(fileStr);
+//                final File dir = new File(file.getParent());
+//                if (!dir.exists()) {
+//                    if (!dir.mkdirs()) {
+//                        PLog.errorLog(945120365, "Kann den Pfad nicht anlegen: " + dir.toString());
+//                    }
+//                }
+//                list.add("   --> Start Schreiben nach: " + fileStr);
+//                logFilePath = file.toPath();
+//            } catch (final Exception ex) {
+//                PLog.errorLog(102035478, ex, "nach: " + fileStr);
+//            }
+//        } else {
+//            list.add("   --> Start Schreiben nach: " + getFilePath().toString());
+//            logFilePath = getFilePath();
+//        }
+//
+//        try (BufferedWriter bw = Files.newBufferedWriter(logFilePath)) {
+//            bw.newLine();
+//            bw.newLine();
+//            for (final MediaDbData entry : this) {
+//                if (!fileStr.isEmpty()) {
+//                    //dann alles schreiben
+//                    bw.write(getLine(entry, export));
+//                    bw.newLine();
+//                } else if (entry.isExtern()) {
+//                    //in der Konfig nur die externen
+//                    bw.write(getLine(entry, export));
+//                    bw.write("Test");
+//                    bw.newLine();
+//                }
+//            }
+//            bw.newLine();
+//            bw.flush();
+//        } catch (final Exception ex) {
+//            Platform.runLater(() -> new MTAlert().showErrorAlert("Fehler beim Schreiben",
+//                    "Datei konnte nicht geschrieben werden!"));
+//        }
+//        list.add("   --> geschrieben!");
+//        PLog.userLog(list);
     }
 
     private String getLine(MediaDbData med, boolean export) {

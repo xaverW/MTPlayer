@@ -17,15 +17,13 @@
 package de.mtplayer.mtp.gui.mediaDb;
 
 import de.mtplayer.mLib.tools.Data;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class MediaPathData extends Data<MediaPathData> {
 
     private final static int MEDIA_PATH_PATH = 0;
-    private final static int MEDIA_PATHE_SAVE = 1; // damit merkt er sich Pfade die "Offline" sind, kann entfallen??
+    private final static int MEDIA_PATH_EXTERN = 1; // damit merkt er sich Pfade die "Offline" sind, kann entfallen??
 
     public final static String[] COLUMN_NAMES = {"Pfad", "Speichern"};
     public final static String[] XML_NAMES = COLUMN_NAMES;
@@ -45,32 +43,28 @@ public class MediaPathData extends Data<MediaPathData> {
         this.path.set(path);
     }
 
-    public boolean isSave() {
-        return save.get();
+    public boolean isExtern() {
+        return extern;
     }
 
-    public BooleanProperty saveProperty() {
-        return save;
-    }
-
-    public void setSave(boolean save) {
-        this.save.set(save);
+    public void setExtern(boolean extern) {
+        this.extern = extern;
     }
 
     private StringProperty path = new SimpleStringProperty("");
-    private BooleanProperty save = new SimpleBooleanProperty(false);
+    private boolean extern = false;
 
 
     public MediaPathData(String pfad, boolean sichern) {
         makeArr();
         setPath(pfad);
-        setSave(sichern);
+        setExtern(sichern);
     }
 
     public MediaPathData(String pfad) {
         makeArr();
         setPath(pfad);
-        setSave(false);
+        setExtern(false);
     }
 
     public MediaPathData() {
@@ -89,12 +83,12 @@ public class MediaPathData extends Data<MediaPathData> {
 
     public void setPropsFromXml() {
         setPath(arr[MEDIA_PATH_PATH]);
-        setSave(Boolean.parseBoolean(arr[MEDIA_PATHE_SAVE]));
+        setExtern(Boolean.parseBoolean(arr[MEDIA_PATH_EXTERN]));
     }
 
     public void setXmlFromProps() {
         arr[MEDIA_PATH_PATH] = getPath();
-        arr[MEDIA_PATHE_SAVE] = String.valueOf(isSave());
+        arr[MEDIA_PATH_EXTERN] = String.valueOf(isExtern());
     }
 
 }

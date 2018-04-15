@@ -99,7 +99,7 @@ public class Config extends MLConfig {
     public static MLConfigs DOWNLOAD_MAX_ONE_PER_SERVER = addNewKey("download-max-one-per-server"); // nur ein Download pro Server - sonst max 2
     public static MLConfigs DOWNLOAD_MAX_BANDWITH_KBYTE = addNewKey("download-max-bandwith-kbyte", String.valueOf(MLBandwidthTokenBucket.BANDWIDTH_MAX_KBYTE));
 
-    // Film
+    // Gui Film
     public static MLConfigs FILM_GUI_FILTER_DIVIDER = addNewKey("film-gui-filter-divider", Const.GUI_FILME_FILTER_DIVIDER_LOCATION);
     public static MLConfigs FILM_GUI_FILTER_DIVIDER_ON = addNewKey("film-gui-filter-divider-on", Boolean.TRUE.toString());
     public static MLConfigs FILM_GUI_DIVIDER = addNewKey("film-gui-divider", Const.GUI_FILME_DIVIDER_LOCATION);
@@ -110,7 +110,7 @@ public class Config extends MLConfig {
     public static MLConfigs FILM_GUI_TABLE_VIS = addNewKey("film-gui-table-vis");
     public static MLConfigs FILM_GUI_TABLE_ORDER = addNewKey("film-gui-table-order");
 
-    // Download
+    // Gui Download
     public static MLConfigs DOWNLOAD_DIALOG_PATH_SAVING = addNewKey("download-dialog-path-saving"); // gesammelten Downloadpfade im Downloaddialog
     public static MLConfigs DOWNLOAD_DIALOG_START_DOWNLOAD = addNewKey("download-dialog-start-download", Boolean.TRUE.toString());
     public static MLConfigs DOWNLOAD_DIALOG_EDIT_SIZE = addNewKey("download-dialog-edit-size", "800:800");
@@ -129,7 +129,7 @@ public class Config extends MLConfig {
     public static MLConfigs DOWNLOAD_GUI_TABLE_ORDER = addNewKey("download-gui-table-order");
     public static MLConfigs DOWNLOAD_SHOW_NOTIFICATION = addNewKey("download-show-notification", Boolean.TRUE.toString());
 
-    // Abo
+    // Gui Abo
     public static MLConfigs ABO_SEARCH_NOW = addNewKey("abo-search-now", Boolean.TRUE.toString());
     public static MLConfigs ABO_MINUTE_MIN_SIZE = addNewKey("abo-minute-min-size", 0); //Vorgabe beim Anlegen eines Abos
     public static MLConfigs ABO_MINUTE_MAX_SIZE = addNewKey("abo-minute-max-size", SelectedFilter.FILTER_DURATIION_MAX_MIN); //Vorgabe beim Anlegen eines Abos
@@ -162,6 +162,8 @@ public class Config extends MLConfig {
     public static MLConfigs MEDIA_DIALOG_SIZE = addNewKey("media-dialog-size", "800:700");
     public static MLConfigs MEDIA_DB_SUFFIX = addNewKey("media-db-suffix");
     public static MLConfigs MEDIA_DB_WITH_OUT_SUFFIX = addNewKey("media-db-with-out-suffix");
+    public static MLConfigs MEDIA_DB_PATH_EXTERN = addNewKey("media-db-path-extern");
+    public static MLConfigs MEDIA_DB_NAME_EXTERN = addNewKey("media-db-name-extern");
 
     // Filter
     public static MLConfigs FILTER_ABO_SENDER = addNewKey("filter-abo-sender");

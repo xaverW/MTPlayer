@@ -46,15 +46,11 @@ public class LoadFilmlist {
     private final HashSet<String> hashSet = new HashSet<>();
     private final Filmlist diffListe;
 
-    // private
     private final Daten daten;
     private final ImportNewFilmlist importNewFilmliste;
-    //    private final EventListenerList listeners = new EventListenerList();
     private final NotifyProgress notifyProgress = new NotifyProgress();
     private BooleanProperty propLoadFilmlist = new SimpleBooleanProperty(false);
     private static final AtomicBoolean stop = new AtomicBoolean(false); // damit kannn das Laden gestoppt werden kann
-
-//    enum NOTIFY {START, PROGRESS, FINISHED}
 
     public LoadFilmlist(Daten daten) {
         this.daten = daten;
@@ -115,28 +111,28 @@ public class LoadFilmlist {
     /**
      * Filmliste laden
      *
-     * @param dateiUrl
+     * @param fileUrl
      */
-    public void loadFilmlist(String dateiUrl) {
-        loadFilmlist(dateiUrl, false);
+    public void loadFilmlist(String fileUrl) {
+        loadFilmlist(fileUrl, false);
     }
 
     /**
      * Filmliste laden
      *
-     * @param dateiUrl
-     * @param immerNeuLaden
+     * @param fileUrl
+     * @param alwaysLoadNew
      */
-    public void loadFilmlist(String dateiUrl, boolean immerNeuLaden) {
+    public void loadFilmlist(String fileUrl, boolean alwaysLoadNew) {
         // damit wird die Filmliste geladen UND auch gleich im Konfig-Ordner gespeichert
 
-        if (!dateiUrl.isEmpty()) {
+        if (!fileUrl.isEmpty()) {
             // der Benutzer hat eine Datei vorgegeben, es wird diese Liste NEU geladen
-            immerNeuLaden = true;
-        } else if (dateiUrl.isEmpty() && !Config.SYSTEM_LOAD_FILMS_MANUALLY.get().isEmpty()) {
+            alwaysLoadNew = true;
+        } else if (fileUrl.isEmpty() && !Config.SYSTEM_LOAD_FILMS_MANUALLY.get().isEmpty()) {
             // der Benutzer hat eine Datei vorgegeben, es wird diese Liste NEU geladen
-            dateiUrl = Config.SYSTEM_LOAD_FILMS_MANUALLY.get();
-            immerNeuLaden = true;
+            fileUrl = Config.SYSTEM_LOAD_FILMS_MANUALLY.get();
+            alwaysLoadNew = true;
         }
 
         Duration.staticPing("Filme laden, start");
@@ -151,14 +147,14 @@ public class LoadFilmlist {
             // Hash mit URLs füllen
             hashSet.clear();
             fillHash(daten.filmlist);
-            if (immerNeuLaden) {
+            if (alwaysLoadNew) {
                 // dann die alte löschen, damit immer komplett geladen wird, aber erst nach dem Hash!!
                 // sonst wird eine "zu kurze" Liste wieder nur mit einer Diff-Liste aufgefüllt, wenn das
                 // Alter noch passt
                 daten.filmlist.clear();
             }
             daten.filmlistFiltered.clear();
-            if (dateiUrl.isEmpty()) {
+            if (fileUrl.isEmpty()) {
                 // Filme als Liste importieren, Url automatisch ermitteln
                 PLog.userLog("Filmliste laden (auto)");
                 setStop(false);
@@ -166,10 +162,10 @@ public class LoadFilmlist {
                         diffListe, Config.SYSTEM_NUM_DAYS_FILMLIST.getInt());
             } else {
                 // Filme als Liste importieren, feste URL/Datei
-                PLog.userLog("Filmliste laden von: " + dateiUrl);
+                PLog.userLog("Filmliste laden von: " + fileUrl);
                 daten.filmlist.clear();
                 setStop(false);
-                importNewFilmliste.importFilmlistFromFile(dateiUrl,
+                importNewFilmliste.importFilmlistFromFile(fileUrl,
                         daten.filmlist, Config.SYSTEM_NUM_DAYS_FILMLIST.getInt());
             }
         }

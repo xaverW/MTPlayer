@@ -62,7 +62,7 @@ public class IoXmlSchreiben implements AutoCloseable {
 
     public synchronized void datenSchreiben() {
         xmlFilePath = new ProgInfos().getXmlFilePath();
-        list.add("Daten Schreiben nach: " + xmlFilePath.toString());
+        list.add("Daten schreiben nach: " + xmlFilePath.toString());
         xmlDatenSchreiben();
         PLog.userLog(list);
     }
