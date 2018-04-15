@@ -64,7 +64,7 @@ public class ImportNewFilmlist {
     // Filmeliste importieren, URL automatisch wählen
     // #########################################################
     public void importFilmListAuto(Filmlist filmlist, Filmlist filmlistDiff, int days) {
-        Daten.getInstance().loadFilmlist.setStop(false);
+//        Daten.getInstance().loadFilmlist.setStop(false);
         Thread th = new Thread(new importAutoThread(filmlist, filmlistDiff, days));
         th.setName("importFilmListAuto");
         th.start();
@@ -173,7 +173,7 @@ public class ImportNewFilmlist {
     // Filmeliste importieren, mit fester URL/Pfad
     // #######################################
     public void importFilmlistFromFile(String pfad, Filmlist filmlist, int days) {
-        Daten.getInstance().loadFilmlist.setStop(false);
+//        Daten.getInstance().loadFilmlist.setStop(false);
         Thread th = new Thread(new FilmImportFileThread(pfad, filmlist, days));
         th.setName("importFilmlistFromFile");
         th.start();

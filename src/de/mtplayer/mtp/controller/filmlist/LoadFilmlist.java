@@ -162,12 +162,14 @@ public class LoadFilmlist {
             if (dateiUrl.isEmpty()) {
                 // Filme als Liste importieren, Url automatisch ermitteln
                 PLog.userLog("Filmliste laden (auto)");
+                setStop(false);
                 importNewFilmliste.importFilmListAuto(daten.filmlist,
                         diffListe, Config.SYSTEM_NUM_DAYS_FILMLIST.getInt());
             } else {
                 // Filme als Liste importieren, feste URL/Datei
                 PLog.userLog("Filmliste laden von: " + dateiUrl);
                 daten.filmlist.clear();
+                setStop(false);
                 importNewFilmliste.importFilmlistFromFile(dateiUrl,
                         daten.filmlist, Config.SYSTEM_NUM_DAYS_FILMLIST.getInt());
             }
