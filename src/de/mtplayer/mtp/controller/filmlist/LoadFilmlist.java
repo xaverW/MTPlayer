@@ -35,7 +35,6 @@ import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 
-import javax.swing.event.EventListenerList;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -50,11 +49,12 @@ public class LoadFilmlist {
     // private
     private final Daten daten;
     private final ImportNewFilmlist importNewFilmliste;
-    private final EventListenerList listeners = new EventListenerList();
+    //    private final EventListenerList listeners = new EventListenerList();
+    private final NotifyProgress notifyProgress = new NotifyProgress();
     private BooleanProperty propLoadFilmlist = new SimpleBooleanProperty(false);
     private static final AtomicBoolean stop = new AtomicBoolean(false); // damit kannn das Laden gestoppt werden kann
 
-    enum NOTIFY {START, PROGRESS, FINISHED}
+//    enum NOTIFY {START, PROGRESS, FINISHED}
 
     public LoadFilmlist(Daten daten) {
         this.daten = daten;
@@ -63,12 +63,12 @@ public class LoadFilmlist {
         importNewFilmliste.addAdListener(new ListenerFilmlistLoad() {
             @Override
             public synchronized void start(ListenerFilmlistLoadEvent event) {
-                notifyEvent(NOTIFY.START, event);
+                notifyProgress.notifyEvent(NotifyProgress.NOTIFY.START, event);
             }
 
             @Override
             public synchronized void progress(ListenerFilmlistLoadEvent event) {
-                notifyEvent(NOTIFY.PROGRESS, event);
+                notifyProgress.notifyEvent(NotifyProgress.NOTIFY.PROGRESS, event);
             }
 
             @Override
@@ -93,7 +93,7 @@ public class LoadFilmlist {
     }
 
     public void addAdListener(ListenerFilmlistLoad listener) {
-        listeners.add(ListenerFilmlistLoad.class, listener);
+        notifyProgress.listeners.add(ListenerFilmlistLoad.class, listener);
     }
 
     public synchronized void setStop(boolean set) {
@@ -138,7 +138,6 @@ public class LoadFilmlist {
             dateiUrl = Config.SYSTEM_LOAD_FILMS_MANUALLY.get();
             immerNeuLaden = true;
         }
-
 
         Duration.staticPing("Filme laden, start");
         PLog.userLog("");
@@ -210,9 +209,9 @@ public class LoadFilmlist {
 
             } else {
                 // beim Neuladen wird es dann erst gemacht
-                notifyEvent(NOTIFY.START, new ListenerFilmlistLoadEvent("", "", 0, 0, false/* Fehler */));
+                notifyProgress.notifyEvent(NotifyProgress.NOTIFY.START, new ListenerFilmlistLoadEvent("", "", 0, 0, false/* Fehler */));
                 afterLoadFilmlist();
-                notifyEvent(NOTIFY.FINISHED, new ListenerFilmlistLoadEvent("", "", 0, 0, false/* Fehler */));
+                notifyProgress.notifyEvent(NotifyProgress.NOTIFY.FINISHED, new ListenerFilmlistLoadEvent("", "", 0, 0, false/* Fehler */));
             }
             list.add(PLog.LILNE3);
             PLog.userLog(list);
@@ -229,33 +228,33 @@ public class LoadFilmlist {
      * alles was nach einem Neuladen oder Einlesen einer gespeicherten Filmliste ansteht
      */
     private void afterLoadFilmlist() {
-        notifyEvent(NOTIFY.PROGRESS, new ListenerFilmlistLoadEvent("", "Filem markieren: Geo, Zukunft, Doppelt",
+        notifyProgress.notifyEvent(NotifyProgress.NOTIFY.PROGRESS, new ListenerFilmlistLoadEvent("", "Filem markieren: Geo, Zukunft, Doppelt",
                 ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
         PLog.userLog("Filem markieren: Geo, Zukunft, Doppelt");
         daten.filmlist.markFilms();
 
 
-        notifyEvent(NOTIFY.PROGRESS, new ListenerFilmlistLoadEvent("", "Themen suchen",
+        notifyProgress.notifyEvent(NotifyProgress.NOTIFY.PROGRESS, new ListenerFilmlistLoadEvent("", "Themen suchen",
                 ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
         PLog.userLog("Themen suchen");
         daten.filmlist.themenLaden();
 
 
         if (!daten.aboList.isEmpty()) {
-            notifyEvent(NOTIFY.PROGRESS, new ListenerFilmlistLoadEvent("", "Abos eintragen",
+            notifyProgress.notifyEvent(NotifyProgress.NOTIFY.PROGRESS, new ListenerFilmlistLoadEvent("", "Abos eintragen",
                     ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
             PLog.userLog("Abos eintragen");
             daten.aboList.setAboFuerFilm(daten.filmlist);
         }
 
 
-        notifyEvent(NOTIFY.PROGRESS, new ListenerFilmlistLoadEvent("", "Blacklist filtern",
+        notifyProgress.notifyEvent(NotifyProgress.NOTIFY.PROGRESS, new ListenerFilmlistLoadEvent("", "Blacklist filtern",
                 ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
         PLog.userLog("Blacklist filtern");
         daten.filmlist.filterList();
 
 
-        notifyEvent(NOTIFY.PROGRESS, new ListenerFilmlistLoadEvent("", "Filme in Downloads eintragen",
+        notifyProgress.notifyEvent(NotifyProgress.NOTIFY.PROGRESS, new ListenerFilmlistLoadEvent("", "Filme in Downloads eintragen",
                 ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
         PLog.userLog("Filme in Downloads eintragen");
         daten.downloadList.filmEintragen();
@@ -317,7 +316,7 @@ public class LoadFilmlist {
 
         afterLoadFilmlist();
 
-        notifyEvent(NOTIFY.FINISHED, event);
+        notifyProgress.notifyEvent(NotifyProgress.NOTIFY.FINISHED, event);
     }
 
     private void fillHash(Filmlist filmlist) {
@@ -335,27 +334,27 @@ public class LoadFilmlist {
         hashSet.clear();
     }
 
-    private void notifyEvent(NOTIFY notify, ListenerFilmlistLoadEvent event) {
-        try {
-            Platform.runLater(() -> {
-
-                for (final ListenerFilmlistLoad l : listeners.getListeners(ListenerFilmlistLoad.class)) {
-                    switch (notify) {
-                        case START:
-                            l.start(event);
-                            break;
-                        case PROGRESS:
-                            l.progress(event);
-                            break;
-                        case FINISHED:
-                            l.fertig(event);
-                            break;
-                    }
-                }
-
-            });
-        } catch (final Exception ex) {
-            PLog.errorLog(912045120, ex);
-        }
-    }
+//    private void notifyEvent(NOTIFY notify, ListenerFilmlistLoadEvent event) {
+//        try {
+//            Platform.runLater(() -> {
+//
+//                for (final ListenerFilmlistLoad l : listeners.getListeners(ListenerFilmlistLoad.class)) {
+//                    switch (notify) {
+//                        case START:
+//                            l.start(event);
+//                            break;
+//                        case PROGRESS:
+//                            l.progress(event);
+//                            break;
+//                        case FINISHED:
+//                            l.fertig(event);
+//                            break;
+//                    }
+//                }
+//
+//            });
+//        } catch (final Exception ex) {
+//            PLog.errorLog(912045120, ex);
+//        }
+//    }
 }
