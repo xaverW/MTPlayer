@@ -31,6 +31,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.List;
 
 public class WriteMediaDb implements AutoCloseable {
 
@@ -39,19 +40,19 @@ public class WriteMediaDb implements AutoCloseable {
     private Path xmlFilePath = null;
     private OutputStream os = null;
     private final ArrayList<String> list = new ArrayList<>();
-    private MediaDbList mediaDbList;
+    private List<MediaDbData> mediaDbList;
 
     public WriteMediaDb() {
     }
 
-    public synchronized void datenSchreiben(Path file, MediaDbList mediaDbList) {
+    public synchronized void write(Path file, List<MediaDbData> mediaDbList) {
         try {
 
             this.mediaDbList = mediaDbList;
             xmlFilePath = file;
             list.add("Medien schreiben nach: " + xmlFilePath.toString());
 
-            xmlDatenSchreiben();
+            writeXmlData();
 
         } catch (final Exception ex) {
             list.add("Fehler, nicht geschrieben!");
@@ -64,7 +65,7 @@ public class WriteMediaDb implements AutoCloseable {
         PLog.userLog(list);
     }
 
-    private void xmlDatenSchreiben() throws XMLStreamException, IOException {
+    private void writeXmlData() throws XMLStreamException, IOException {
         xmlWriteStart();
 
         writer.writeCharacters("\n\n");
@@ -93,11 +94,13 @@ public class WriteMediaDb implements AutoCloseable {
         // Filme schreiben
         for (final MediaDbData mediaDbData : mediaDbList) {
             mediaDbData.setXmlFromProps();
-            xmlSchreibenDaten(MediaDbData.TAG, MediaDbData.XML_NAMES, mediaDbData.arr, true);
+            if (mediaDbData.isExtern()) {
+                xmlWrite(MediaDbData.TAG, MediaDbData.XML_NAMES, mediaDbData.arr, true);
+            }
         }
     }
 
-    private void xmlSchreibenDaten(String xmlName, String[] xmlSpalten, String[] datenArray, boolean newLine) throws XMLStreamException {
+    private void xmlWrite(String xmlName, String[] xmlSpalten, String[] datenArray, boolean newLine) throws XMLStreamException {
         final int xmlMax = datenArray.length;
         writer.writeStartElement(xmlName);
         if (newLine) {

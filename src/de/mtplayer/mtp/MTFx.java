@@ -169,7 +169,6 @@ public class MTFx extends Application {
                 new ProgSave().allesSpeichern(); // damit nichts verlorengeht
                 if (!onlyOne) {
                     onlyOne = true;
-                    daten.mediaDbList.loadSavedList();
                     daten.mediaDbList.createMediaDB();
                     checkProgUpdate();
                 }

@@ -35,6 +35,10 @@ public class MediaDbData extends Data<MediaDbData> {
     public MediaDBFileSize mVMediaDBFileSize;
     private boolean extern = false;
 
+    public MediaDbData() {
+        makeArr();
+    }
+
     public MediaDbData(String name, String pfad, long size, boolean extern) {
         makeArr();
         arr[MEDIA_DB_NAME] = putzen(name);
@@ -43,23 +47,40 @@ public class MediaDbData extends Data<MediaDbData> {
         arr[MEDIA_DB_SIZE] = mVMediaDBFileSize.toString();
 
         setExtern(extern);
-        arr[MEDIA_DB_EXTERN] = Boolean.toString(extern);// todo das muss noch weg
+        arr[MEDIA_DB_EXTERN] = Boolean.toString(extern);
     }
 
     public String getName() {
         return arr[MEDIA_DB_NAME];
     }
 
+    public void setName(String name) {
+        arr[MEDIA_DB_NAME] = name;
+    }
+
     public String getPath() {
         return arr[MEDIA_DB_PATH];
+    }
+
+    public void setPath(String path) {
+        arr[MEDIA_DB_PATH] = path;
     }
 
     public String getSize() {
         return arr[MEDIA_DB_SIZE];
     }
 
+    public void setSize(String size) {
+        arr[MEDIA_DB_SIZE] = size;
+    }
+
+
     public boolean isExtern() {
         return extern;
+    }
+
+    public void setExtern(String extern) {
+        arr[MEDIA_DB_EXTERN] = extern;
     }
 
     public void setExtern(boolean extern) {
@@ -95,6 +116,17 @@ public class MediaDbData extends Data<MediaDbData> {
             }
         }
         return ret;
+    }
+
+    public void setPropsFromXml() {
+        mVMediaDBFileSize = new MediaDBFileSize(arr[MEDIA_DB_SIZE]);
+        boolean ex;
+        try {
+            ex = Boolean.parseBoolean(arr[MEDIA_DB_EXTERN]);
+        } catch (Exception ignore) {
+            ex = false;
+        }
+        setExtern(ex);
     }
 
     //===================================

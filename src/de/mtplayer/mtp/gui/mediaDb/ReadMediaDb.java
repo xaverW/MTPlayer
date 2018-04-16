@@ -18,9 +18,6 @@
 package de.mtplayer.mtp.gui.mediaDb;
 
 import de.mtplayer.mtp.controller.config.Daten;
-import de.mtplayer.mtp.controller.data.SetData;
-import de.mtplayer.mtp.controller.data.abo.Abo;
-import de.mtplayer.mtp.controller.data.abo.AboXml;
 import de.p2tools.p2Lib.tools.log.Duration;
 import de.p2tools.p2Lib.tools.log.PLog;
 
@@ -32,62 +29,65 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 
 public class ReadMediaDb implements AutoCloseable {
 
-    private XMLInputFactory inFactory = null;
-    private Daten daten = null;
+    private XMLInputFactory inFactory;
+    private Daten daten;
+    private ArrayList<MediaDbData> list;
 
     public ReadMediaDb(Daten daten) {
         this.daten = daten;
+        this.list = new ArrayList<>();
 
         inFactory = XMLInputFactory.newInstance();
         inFactory.setProperty(XMLInputFactory.IS_COALESCING, Boolean.FALSE);
     }
 
-    public boolean readConfiguration(Path xmlFilePath) {
+    public ArrayList<MediaDbData> read(Path xmlFilePath) {
+
+        if (!Files.exists(xmlFilePath)) {
+            return list;
+        }
+
         Duration.counterStart("Konfig lesen");
-        boolean ret = false;
-        int filtercount = 0;
+        XMLStreamReader parser = null;
 
-        if (Files.exists(xmlFilePath)) {
-            SetData psetData = null;
-            XMLStreamReader parser = null;
-            try (InputStream is = Files.newInputStream(xmlFilePath);
-                 InputStreamReader in = new InputStreamReader(is, StandardCharsets.UTF_8)) {
-                parser = inFactory.createXMLStreamReader(in);
-                while (parser.hasNext()) {
-                    final int event = parser.next();
-                    if (event == XMLStreamConstants.START_ELEMENT) {
-                        switch (parser.getLocalName()) {
-                            case AboXml.TAG:
-                                // Abo
-                                final Abo abo = new Abo();
-                                if (get(parser, AboXml.TAG, AboXml.XML_NAMES, abo.arr)) {
-                                    abo.setPropsFromXml();
-                                    daten.aboList.addAbo(abo);
-                                }
+        try (InputStream is = Files.newInputStream(xmlFilePath);
+             InputStreamReader in = new InputStreamReader(is, StandardCharsets.UTF_8)) {
 
-                                break;
-                        }
-                    }
+            parser = inFactory.createXMLStreamReader(in);
+            while (parser.hasNext()) {
+                final int event = parser.next();
+                if (event != XMLStreamConstants.START_ELEMENT) {
+                    continue;
                 }
-                ret = true;
-            } catch (final Exception ex) {
-                ret = false;
-                PLog.errorLog(392840096, ex);
-            } finally {
-                try {
-                    if (parser != null) {
-                        parser.close();
-                    }
-                } catch (final Exception ignored) {
+                if (!parser.getLocalName().equals(MediaDbData.TAG)) {
+                    continue;
                 }
+
+                final MediaDbData mediaDbData = new MediaDbData();
+                if (get(parser, MediaDbData.TAG, MediaDbData.XML_NAMES, mediaDbData.arr)) {
+                    mediaDbData.setPropsFromXml();
+                    list.add(mediaDbData);
+                }
+
+            }
+        } catch (final Exception ex) {
+            list.clear();
+            PLog.errorLog(936251078, ex);
+        } finally {
+            try {
+                if (parser != null) {
+                    parser.close();
+                }
+            } catch (final Exception ignored) {
             }
         }
 
         Duration.counterStop("Konfig lesen");
-        return ret;
+        return list;
     }
 
 
@@ -119,7 +119,7 @@ public class ReadMediaDb implements AutoCloseable {
             }
         } catch (final Exception ex) {
             ret = false;
-            PLog.errorLog(739530149, ex);
+            PLog.errorLog(912036578, ex);
         }
         return ret;
     }

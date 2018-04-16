@@ -22,6 +22,7 @@ import de.mtplayer.mtp.controller.config.Config;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
+import de.mtplayer.mtp.gui.mediaDb.CreateMediaDb;
 import de.mtplayer.mtp.gui.mediaDb.MediaDbDataExtern;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import javafx.geometry.Insets;
@@ -77,6 +78,20 @@ public class MediaConfigExternPane {
                 HelpText.ABOS_SOFRT_SUCHEN)); //todo
 
         final Button btnAdd = new Button("Hinzufügen");
+        btnAdd.setOnAction(a -> {
+            // todo
+            String[] suffix = Config.MEDIA_DB_SUFFIX.get().split(",");
+            for (int i = 0; i < suffix.length; ++i) {
+                suffix[i] = suffix[i].toLowerCase();
+                if (!suffix[i].isEmpty() && !suffix[i].startsWith(".")) {
+                    suffix[i] = '.' + suffix[i];
+                }
+            }
+
+            Thread th = new Thread(new CreateMediaDb(suffix, txtPath.getText(), daten.mediaDbList));
+            th.setName("createMediaDB-EXTERN");
+            th.start();
+        });
 
         int row = 0;
         gridPane.add(new Label("Pfad:"), 0, row);
@@ -101,7 +116,6 @@ public class MediaConfigExternPane {
     private void initTable(VBox vBox) {
 
         TableView<MediaDbDataExtern> tableView = new TableView<>();
-//        tableView.setMinHeight(Region.USE_PREF_SIZE);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         final TableColumn<MediaDbDataExtern, String> nameColumn = new TableColumn<>("Name");

@@ -26,6 +26,15 @@ public class MediaDBFileSize implements Comparable<MediaDBFileSize> {
         sizeStr = setGroesse(size);
     }
 
+    public MediaDBFileSize(String size) {
+        try {
+            sizeL = Long.parseLong(size);
+        } catch (Exception ignore) {
+            sizeL = 0L;
+        }
+        sizeStr = setGroesse(sizeL);
+    }
+
     @Override
     public int compareTo(MediaDBFileSize ll) {
         return (sizeL.compareTo(ll.sizeL));
