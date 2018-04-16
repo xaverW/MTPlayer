@@ -79,16 +79,8 @@ public class MediaConfigExternPane {
 
         final Button btnAdd = new Button("Hinzufügen");
         btnAdd.setOnAction(a -> {
-            // todo
-            String[] suffix = Config.MEDIA_DB_SUFFIX.get().split(",");
-            for (int i = 0; i < suffix.length; ++i) {
-                suffix[i] = suffix[i].toLowerCase();
-                if (!suffix[i].isEmpty() && !suffix[i].startsWith(".")) {
-                    suffix[i] = '.' + suffix[i];
-                }
-            }
 
-            Thread th = new Thread(new CreateMediaDb(suffix, txtPath.getText(), daten.mediaDbList));
+            Thread th = new Thread(new CreateMediaDb(txtPath.getText(), daten.mediaDbList, txtName.getText()));
             th.setName("createMediaDB-EXTERN");
             th.start();
         });

@@ -40,9 +40,10 @@ public class CreateMediaDb implements Runnable {
     private boolean more = false;
 
     private final Daten daten;
-    private final String[] suffix;
     private final MediaDbList mediaDbList;
     private final String path;
+    private final String sammlung;
+    private String[] suffix;
     private List search = new ArrayList<MediaDbData>();
 
     final boolean ohneSuffix = Boolean.parseBoolean(Config.MEDIA_DB_WITH_OUT_SUFFIX.get());
@@ -51,35 +52,47 @@ public class CreateMediaDb implements Runnable {
      * duchsucht die vom User angelegten Pfade für die Mediensammlung
      * -> bei jedem Start
      *
-     * @param suffix
      * @param mediaDbList
      */
-    public CreateMediaDb(String[] suffix, MediaDbList mediaDbList) {
+    public CreateMediaDb(MediaDbList mediaDbList) {
         daten = Daten.getInstance();
-        this.suffix = suffix;
         this.path = "";
+        this.sammlung = "";
         this.mediaDbList = mediaDbList;
+        getSuffix();
     }
 
     /**
      * durchsucht einen EXTERNEN Pfad
      * -> wird nur manuel vom User gestartet und löscht nicht die MediaDB
      *
-     * @param suffix
      * @param path
      * @param mediaDbList
      */
-    public CreateMediaDb(String[] suffix, String path, MediaDbList mediaDbList) {
+    public CreateMediaDb(String path, MediaDbList mediaDbList, String sammlung) {
         daten = Daten.getInstance();
-        this.suffix = suffix;
         this.path = path;
+        this.sammlung = sammlung;
         this.mediaDbList = mediaDbList;
+        getSuffix();
     }
 
+    private void getSuffix() {
+        suffix = Config.MEDIA_DB_SUFFIX.get().split(",");
+        for (int i = 0; i < suffix.length; ++i) {
+            suffix[i] = suffix[i].toLowerCase();
+            if (!suffix[i].isEmpty() && !suffix[i].startsWith(".")) {
+                suffix[i] = '.' + suffix[i];
+            }
+        }
+    }
 
     @Override
     public synchronized void run() {
+
         Duration.counterStart("Mediensammlung erstellen");
+        mediaDbList.setPropSearch(true);
+        Listener.notify(Listener.EREIGNIS_MEDIA_DB_START, MediaDbList.class.getSimpleName());
 
         try {
             if (path.isEmpty()) {
@@ -130,9 +143,9 @@ public class CreateMediaDb implements Runnable {
             PLog.errorLog(120321254, ex);
         }
 
-        Duration.counterStop("Mediensammlung erstellen");
         mediaDbList.setPropSearch(false);
         Listener.notify(Listener.EREIGNIS_MEDIA_DB_STOP, MediaDbList.class.getSimpleName());
+        Duration.counterStop("Mediensammlung erstellen");
     }
 
     private List<MediaDbData> loadSavedList() {
@@ -201,7 +214,8 @@ public class CreateMediaDb implements Runnable {
                 if (file.isDirectory()) {
                     searchFile(file, extern);
                 } else if (checkSuffix(suffix, file.getName())) {
-                    search.add(new MediaDbData(file.getName(), file.getParent().intern(), file.length(), extern));
+                    search.add(new MediaDbData(file.getName(), file.getParent().intern(),
+                            file.length(), sammlung, extern));
                 }
             }
         }

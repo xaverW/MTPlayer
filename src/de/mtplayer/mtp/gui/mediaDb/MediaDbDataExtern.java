@@ -66,8 +66,8 @@ public class MediaDbDataExtern extends Data<MediaDbDataExtern> {
     }
 
     public boolean equal(MediaDbData m) {
-        return m.arr[MEDIA_DB_NAME].equals(arr[MEDIA_DB_NAME])
-                && m.arr[MEDIA_DB_PATH].equals(arr[MEDIA_DB_PATH]);
+        return m.arr[MediaDbData.MEDIA_DB_COLLECTION].equals(arr[MEDIA_DB_NAME])
+                && m.arr[MediaDbData.MEDIA_DB_PATH].equals(arr[MEDIA_DB_PATH]);
     }
 
     public boolean equal(MediaDbDataExtern m) {
@@ -82,7 +82,6 @@ public class MediaDbDataExtern extends Data<MediaDbDataExtern> {
     private static String putzen(String s) {
         s = s.replace("\n", "");
         s = s.replace("|", "");
-        s = s.replace(MediaDbList.TRENNER, "");
         return s;
     }
 

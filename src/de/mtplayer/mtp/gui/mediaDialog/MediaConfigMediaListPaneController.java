@@ -104,7 +104,6 @@ public class MediaConfigMediaListPaneController extends AnchorPane {
         VBox.setVgrow(tpConfig, Priority.ALWAYS);
 
         TableView<MediaDbData> tableView = new TableView<>();
-//        tableView.setMinHeight(Region.USE_PREF_SIZE);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         final TableColumn<MediaDbData, String> nameColumn = new TableColumn<>("Name");
@@ -116,16 +115,20 @@ public class MediaConfigMediaListPaneController extends AnchorPane {
         final TableColumn<MediaDbData, String> sizeColumn = new TableColumn<>("Größe [MB]");
         sizeColumn.setCellValueFactory(new PropertyValueFactory<>("size"));
 
+        final TableColumn<MediaDbData, String> colColumn = new TableColumn<>("Sammlung");
+        colColumn.setCellValueFactory(new PropertyValueFactory<>("collection"));
+
         final TableColumn<MediaDbData, Boolean> externColumn = new TableColumn<>("extern");
         externColumn.setCellValueFactory(new PropertyValueFactory<>("extern"));
         externColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
 
-        tableView.getColumns().addAll(nameColumn, pathColumn, sizeColumn, externColumn);
+        tableView.getColumns().addAll(nameColumn, pathColumn, sizeColumn, colColumn, externColumn);
 
-        nameColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(50.0 / 100));
-        pathColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(25.0 / 100));
-        sizeColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(15.0 / 100));
-        externColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(10.0 / 100));
+        nameColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(45.0 / 100));
+        pathColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(20.0 / 100));
+        sizeColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(10.0 / 100));
+        colColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(20.0 / 100));
+        externColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(5.0 / 100));
 
         SortedList<MediaDbData> sortedList = daten.mediaDbList.getSortedList();
         daten.mediaDbList.filterdListClearPred(true);

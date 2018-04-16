@@ -67,7 +67,7 @@ public class MediaDbListExtern extends SimpleListProperty<MediaDbDataExtern> {
         if (extern != null) {
             extern.setSize(extern.getSize() + 1);
         } else {
-            MediaDbDataExtern mde = new MediaDbDataExtern(md.getName(), md.getPath());
+            MediaDbDataExtern mde = new MediaDbDataExtern(md.getCollection(), md.getPath());
             mde.setSize(1);
             super.add(mde);
         }

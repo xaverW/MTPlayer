@@ -24,28 +24,31 @@ public class MediaDbData extends Data<MediaDbData> {
     public final static int MEDIA_DB_NAME = 0;
     public final static int MEDIA_DB_PATH = 1;
     public final static int MEDIA_DB_SIZE = 2;
-    public final static int MEDIA_DB_EXTERN = 3;
+    public final static int MEDIA_DB_COLLECTION = 3;
+    public final static int MEDIA_DB_EXTERN = 4;
 
-    public final static int MAX_ELEM = 4;
-    public final static String[] COLUMN_NAMES = {"Name", "Pfad", "Größe [MB]", "Extern"};
-    public final static String[] XML_NAMES = {"Name", "Pfad", "Groesse", "Extern"};
+    public final static int MAX_ELEM = 5;
+    public final static String[] COLUMN_NAMES = {"Name", "Pfad", "Größe [MB]", "Sammlung", "Extern"};
+    public final static String[] XML_NAMES = {"Name", "Pfad", "Groesse", "Sammlung", "Extern"};
     public static final String TAG = "Mediensammlung";
 
     public String[] arr;
-    public MediaDBFileSize mVMediaDBFileSize;
+    public MediaDBFileSize mediaDBFileSize;
     private boolean extern = false;
 
     public MediaDbData() {
         makeArr();
     }
 
-    public MediaDbData(String name, String pfad, long size, boolean extern) {
+    public MediaDbData(String name, String pfad, long size, String sammlung, boolean extern) {
         makeArr();
         arr[MEDIA_DB_NAME] = putzen(name);
         arr[MEDIA_DB_PATH] = putzen(pfad);
-        mVMediaDBFileSize = new MediaDBFileSize(size);
-        arr[MEDIA_DB_SIZE] = mVMediaDBFileSize.toString();
 
+        mediaDBFileSize = new MediaDBFileSize(size);
+        arr[MEDIA_DB_SIZE] = mediaDBFileSize.toString();
+
+        arr[MEDIA_DB_COLLECTION] = putzen(sammlung);
         setExtern(extern);
         arr[MEDIA_DB_EXTERN] = Boolean.toString(extern);
     }
@@ -72,6 +75,14 @@ public class MediaDbData extends Data<MediaDbData> {
 
     public void setSize(String size) {
         arr[MEDIA_DB_SIZE] = size;
+    }
+
+    public String getCollection() {
+        return arr[MEDIA_DB_COLLECTION];
+    }
+
+    public void setCollection(String sammlung) {
+        arr[MEDIA_DB_COLLECTION] = sammlung;
     }
 
 
@@ -101,7 +112,6 @@ public class MediaDbData extends Data<MediaDbData> {
     private static String putzen(String s) {
         s = s.replace("\n", "");
         s = s.replace("|", "");
-        s = s.replace(MediaDbList.TRENNER, "");
         return s;
     }
 
@@ -119,7 +129,7 @@ public class MediaDbData extends Data<MediaDbData> {
     }
 
     public void setPropsFromXml() {
-        mVMediaDBFileSize = new MediaDBFileSize(arr[MEDIA_DB_SIZE]);
+        mediaDBFileSize = new MediaDBFileSize(arr[MEDIA_DB_SIZE]);
         boolean ex;
         try {
             ex = Boolean.parseBoolean(arr[MEDIA_DB_EXTERN]);
