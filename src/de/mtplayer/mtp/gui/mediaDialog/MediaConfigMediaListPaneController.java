@@ -26,7 +26,10 @@ import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -101,7 +104,7 @@ public class MediaConfigMediaListPaneController extends AnchorPane {
         VBox.setVgrow(tpConfig, Priority.ALWAYS);
 
         TableView<MediaDbData> tableView = new TableView<>();
-        tableView.setMinHeight(Region.USE_PREF_SIZE);
+//        tableView.setMinHeight(Region.USE_PREF_SIZE);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         final TableColumn<MediaDbData, String> nameColumn = new TableColumn<>("Name");

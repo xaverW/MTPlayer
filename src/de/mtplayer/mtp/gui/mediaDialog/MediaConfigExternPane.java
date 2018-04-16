@@ -22,9 +22,11 @@ import de.mtplayer.mtp.controller.config.Config;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
+import de.mtplayer.mtp.gui.mediaDb.MediaDbDataExtern;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 
 import java.util.Collection;
@@ -92,7 +94,35 @@ public class MediaConfigExternPane {
         ccTxt.setHgrow(Priority.ALWAYS);
         gridPane.getColumnConstraints().addAll(new ColumnConstraints(), ccTxt);
 
+        initTable(vBox);
         vBox.getChildren().addAll(gridPane);
+    }
+
+    private void initTable(VBox vBox) {
+
+        TableView<MediaDbDataExtern> tableView = new TableView<>();
+//        tableView.setMinHeight(Region.USE_PREF_SIZE);
+        tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+        final TableColumn<MediaDbDataExtern, String> nameColumn = new TableColumn<>("Name");
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        final TableColumn<MediaDbDataExtern, String> pathColumn = new TableColumn<>("Pfad");
+        pathColumn.setCellValueFactory(new PropertyValueFactory<>("path"));
+
+        final TableColumn<MediaDbDataExtern, Integer> countColumn = new TableColumn<>("Anzahl");
+        countColumn.setCellValueFactory(new PropertyValueFactory<>("count"));
+
+        tableView.getColumns().addAll(nameColumn, pathColumn, countColumn);
+
+        nameColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(40.0 / 100));
+        pathColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(40.0 / 100));
+        countColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(10.0 / 100));
+
+        tableView.setItems(daten.mediaDbList.getExternList());
+
+        VBox.setVgrow(tableView, Priority.ALWAYS);
+        vBox.getChildren().addAll(tableView);
     }
 
 }

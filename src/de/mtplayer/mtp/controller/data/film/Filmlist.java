@@ -169,7 +169,7 @@ public class Filmlist extends SimpleListProperty<Film> {
         final HashSet<String> set = new HashSet<>(size(), 0.75F);
 
         // todo exception parallel?? Unterschied ~10ms (bei Gesamt: 110ms)
-        Duration.counterStart("markFilms");
+        Duration.counterStart("Filme markieren");
         try {
 
             this.stream().forEach((Film f) -> {
@@ -189,7 +189,7 @@ public class Filmlist extends SimpleListProperty<Film> {
         } catch (Exception ex) {
             System.out.println(ex.getStackTrace());
         }
-        Duration.counterStop("markFilms");
+        Duration.counterStop("Filme markieren");
 
         PLog.sysLog("Anzahl doppelte Filme: " + countDouble);
         set.clear();

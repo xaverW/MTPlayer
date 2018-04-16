@@ -49,8 +49,6 @@ import java.util.stream.Collectors;
 public class MediaDbList extends SimpleListProperty<MediaDbData> {
 
     public final static String TRENNER = "  |###|  ";
-    public final String FILE_SEPERATOR_MEDIA_PATH = "<>";
-    private boolean makeIndex = false;
     private String[] suffix = {""};
 
     private final Daten daten;
@@ -58,11 +56,13 @@ public class MediaDbList extends SimpleListProperty<MediaDbData> {
     private SortedList<MediaDbData> sortedList = null;
 
     private BooleanProperty propSearch = new SimpleBooleanProperty(false);
+    private MediaDbListExtern externList;
 
 
-    public MediaDbList(Daten aDaten) {
+    public MediaDbList(Daten daten) {
         super(FXCollections.observableArrayList());
-        daten = aDaten;
+        this.daten = daten;
+        externList = new MediaDbListExtern(this.daten);
     }
 
     public boolean isPropSearch() {
@@ -79,7 +79,7 @@ public class MediaDbList extends SimpleListProperty<MediaDbData> {
 
     public SortedList<MediaDbData> getSortedList() {
         if (sortedList == null || filteredList == null) {
-            filteredList = new FilteredList<MediaDbData>(this, p -> true);
+            filteredList = new FilteredList<>(this, p -> true);
             sortedList = new SortedList<>(filteredList);
         }
         return sortedList;
@@ -87,7 +87,7 @@ public class MediaDbList extends SimpleListProperty<MediaDbData> {
 
     public FilteredList<MediaDbData> getFilteredList() {
         if (sortedList == null || filteredList == null) {
-            filteredList = new FilteredList<MediaDbData>(this, p -> true);
+            filteredList = new FilteredList<>(this, p -> true);
             sortedList = new SortedList<>(filteredList);
         }
         return filteredList;
@@ -105,11 +105,22 @@ public class MediaDbList extends SimpleListProperty<MediaDbData> {
         filteredList.setPredicate(p -> pred);
     }
 
-    public synchronized boolean setAll(Collection elements) {
-        return super.setAll(elements);
+    public MediaDbListExtern getExternList() {
+        return externList;
+    }
+
+    public synchronized boolean setAll(Collection<? extends MediaDbData> mediaDbData) {
+        externList.mediaDbDataSetAll(mediaDbData);
+        return super.setAll(mediaDbData);
+    }
+
+    public synchronized boolean addAll(Collection<? extends MediaDbData> mediaDbData) {
+        externList.mediaDbDataAddAll(mediaDbData);
+        return super.addAll(mediaDbData);
     }
 
     public synchronized boolean add(MediaDbData mediaDbData) {
+        externList.mediaDbDataAdd(mediaDbData);
         return super.add(mediaDbData);
     }
 
