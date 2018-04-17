@@ -73,9 +73,9 @@ public class MediaConfigDialogController extends MTDialog {
     @Override
     public void make() {
         btnOk.setOnAction(a -> close());
-        progress.visibleProperty().bind(daten.mediaDbList.propSearchProperty());
-        btnCreateMediaDB.disableProperty().bind(daten.mediaDbList.propSearchProperty());
-        btnCreateMediaDB.setOnAction(event -> daten.mediaDbList.createMediaDb());
+        progress.visibleProperty().bind(daten.mediaList.propSearchProperty());
+        btnCreateMediaDB.disableProperty().bind(daten.mediaList.propSearchProperty());
+        btnCreateMediaDB.setOnAction(event -> daten.mediaList.createMediaDb());
 
         btnHlp.setText("");
         btnHlp.setGraphic(new Icons().ICON_BUTTON_HELP);

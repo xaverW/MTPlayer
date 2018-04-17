@@ -87,7 +87,7 @@ public class MediaDialogController extends MTDialog {
         mediaDialogMediaPane.mediaPaneClose();
 
         daten.erledigteAbos.filterdListClearPred();
-        daten.mediaDbList.filterdListClearPred();
+        daten.mediaList.filterdListClearPred();
         super.close();
     }
 

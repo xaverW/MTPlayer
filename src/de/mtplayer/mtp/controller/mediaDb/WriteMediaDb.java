@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.mtplayer.mtp.gui.mediaDb;
+package de.mtplayer.mtp.controller.mediaDb;
 
 import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
@@ -40,12 +40,12 @@ public class WriteMediaDb implements AutoCloseable {
     private Path xmlFilePath = null;
     private OutputStream os = null;
     private final ArrayList<String> list = new ArrayList<>();
-    private List<MediaDbData> mediaDbList;
+    private List<MediaData> mediaDbList;
 
     public WriteMediaDb() {
     }
 
-    public synchronized void write(Path file, List<MediaDbData> mediaDbList) {
+    public synchronized void write(Path file, List<MediaData> mediaDbList) {
         try {
 
             this.mediaDbList = mediaDbList;
@@ -92,10 +92,10 @@ public class WriteMediaDb implements AutoCloseable {
 
     private void xmlWrite() throws XMLStreamException {
         // Filme schreiben
-        for (final MediaDbData mediaDbData : mediaDbList) {
-            mediaDbData.setXmlFromProps();
-            if (mediaDbData.isExtern()) {
-                xmlWrite(MediaDbData.TAG, MediaDbData.XML_NAMES, mediaDbData.arr, true);
+        for (final MediaData mediaData : mediaDbList) {
+            mediaData.setXmlFromProps();
+            if (mediaData.isExternal()) {
+                xmlWrite(MediaData.TAG, MediaData.XML_NAMES, mediaData.arr, true);
             }
         }
     }

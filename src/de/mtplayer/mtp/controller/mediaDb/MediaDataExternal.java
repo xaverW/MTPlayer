@@ -14,20 +14,20 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.mtplayer.mtp.gui.mediaDb;
+package de.mtplayer.mtp.controller.mediaDb;
 
 import de.mtplayer.mLib.tools.Data;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class MediaDbDataExtern extends Data<MediaDbDataExtern> {
+public class MediaDataExternal extends Data<MediaDataExternal> {
 
     private String collectionName = "";
     private String path = "";
     private IntegerProperty count = new SimpleIntegerProperty(0);
 
 
-    public MediaDbDataExtern(String name, String path) {
+    public MediaDataExternal(String name, String path) {
         setCollectionName(clean(name));
         setPath(clean(path));
         setCount(0);
@@ -61,11 +61,11 @@ public class MediaDbDataExtern extends Data<MediaDbDataExtern> {
         this.count.set(count);
     }
 
-    public boolean equal(MediaDbData m) {
-        return m.arr[MediaDbData.MEDIA_DB_COLLECTION_NAME].equals(getCollectionName());
+    public boolean equalCollection(MediaData m) {
+        return m.arr[MediaData.MEDIA_DB_COLLECTION_NAME].equals(getCollectionName());
     }
 
-    public boolean equal(MediaDbDataExtern m) {
+    public boolean equal(MediaDataExternal m) {
         return m.getCollectionName().equals(getCollectionName())
                 && m.getPath().equals(getPath());
     }

@@ -14,19 +14,19 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.mtplayer.mtp.gui.mediaDb;
+package de.mtplayer.mtp.controller.mediaDb;
 
-public class MediaDbFileSize implements Comparable<MediaDbFileSize> {
+public class MediaFileSize implements Comparable<MediaFileSize> {
 
     public Long sizeL = 0L;
     private String sizeStr = "";
 
-    public MediaDbFileSize(long size) {
+    public MediaFileSize(long size) {
         sizeL = size;
         sizeStr = setSize(size);
     }
 
-    public MediaDbFileSize(String size) {
+    public MediaFileSize(String size) {
         try {
             sizeL = Long.parseLong(size);
         } catch (Exception ignore) {
@@ -36,7 +36,7 @@ public class MediaDbFileSize implements Comparable<MediaDbFileSize> {
     }
 
     @Override
-    public int compareTo(MediaDbFileSize ll) {
+    public int compareTo(MediaFileSize ll) {
         return (sizeL.compareTo(ll.sizeL));
     }
 

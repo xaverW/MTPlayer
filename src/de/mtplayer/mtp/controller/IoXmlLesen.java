@@ -26,7 +26,7 @@ import de.mtplayer.mtp.controller.data.abo.AboXml;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadXml;
 import de.mtplayer.mtp.controller.filmlist.filmlistUrls.FilmlistUrlData;
-import de.mtplayer.mtp.gui.mediaDb.MediaPathData;
+import de.mtplayer.mtp.controller.mediaDb.MediaPathData;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.tools.storedFilter.FilterToXml;
 import de.mtplayer.mtp.tools.storedFilter.ProgInitFilter;

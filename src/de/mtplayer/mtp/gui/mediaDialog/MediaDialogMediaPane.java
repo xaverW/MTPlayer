@@ -21,7 +21,7 @@ import de.mtplayer.mLib.tools.Functions;
 import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.data.Icons;
-import de.mtplayer.mtp.gui.mediaDb.MediaDbData;
+import de.mtplayer.mtp.controller.mediaDb.MediaData;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.gui.tools.MTOpen;
 import de.mtplayer.mtp.tools.storedFilter.Filter;
@@ -45,7 +45,7 @@ public class MediaDialogMediaPane extends ScrollPane {
 
     Label lblGesamtMedia = new Label();
     Label lblTrefferMedia = new Label();
-    TableView<MediaDbData> tableMedia = new TableView();
+    TableView<MediaData> tableMedia = new TableView();
     TextField txtTitleMedia = new TextField();
     TextField txtPathMedia = new TextField();
 
@@ -115,12 +115,12 @@ public class MediaDialogMediaPane extends ScrollPane {
     public void make() {
         Listener.addListener(listenerDbStop);
 
-        daten.mediaDbList.sizeProperty().addListener((observable, oldValue, newValue) ->
-                Platform.runLater(() -> lblGesamtMedia.setText(daten.mediaDbList.size() + "")));
+        daten.mediaList.sizeProperty().addListener((observable, oldValue, newValue) ->
+                Platform.runLater(() -> lblGesamtMedia.setText(daten.mediaList.size() + "")));
 
-        progress.visibleProperty().bind(daten.mediaDbList.propSearchProperty());
-        btnCreateMediaDB.disableProperty().bind(daten.mediaDbList.propSearchProperty());
-        btnCreateMediaDB.setOnAction(e -> daten.mediaDbList.createMediaDb());
+        progress.visibleProperty().bind(daten.mediaList.propSearchProperty());
+        btnCreateMediaDB.disableProperty().bind(daten.mediaList.propSearchProperty());
+        btnCreateMediaDB.setOnAction(e -> daten.mediaList.createMediaDb());
 
         btnOpen.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
         btnOpen.setOnAction(e -> open());
@@ -148,8 +148,8 @@ public class MediaDialogMediaPane extends ScrollPane {
     }
 
     private void setTableDate() {
-        SortedList<MediaDbData> sortedList = daten.mediaDbList.getSortedList();
-        lblGesamtMedia.setText(daten.mediaDbList.size() + "");
+        SortedList<MediaData> sortedList = daten.mediaList.getSortedList();
+        lblGesamtMedia.setText(daten.mediaList.size() + "");
         tableMedia.setItems(sortedList);
         sortedList.comparatorProperty().bind(tableMedia.comparatorProperty());
     }
@@ -161,23 +161,23 @@ public class MediaDialogMediaPane extends ScrollPane {
 
         tableMedia.getColumns().clear();
 
-        final TableColumn<MediaDbData, String> nameColumn = new TableColumn<>("Name");
-        final TableColumn<MediaDbData, String> pathColumn = new TableColumn<>("Pfad");
-        final TableColumn<MediaDbData, Date> sizeColumn = new TableColumn<>("Größe [MB]");
-        final TableColumn<MediaDbData, Boolean> externColumn = new TableColumn<>("extern");
+        final TableColumn<MediaData, String> nameColumn = new TableColumn<>("Name");
+        final TableColumn<MediaData, String> pathColumn = new TableColumn<>("Pfad");
+        final TableColumn<MediaData, Date> sizeColumn = new TableColumn<>("Größe [MB]");
+        final TableColumn<MediaData, Boolean> externalColumn = new TableColumn<>("extern");
 
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         pathColumn.setCellValueFactory(new PropertyValueFactory<>("path"));
         sizeColumn.setCellValueFactory(new PropertyValueFactory<>("size"));
-        externColumn.setCellValueFactory(new PropertyValueFactory<>("extern"));
-        externColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
+        externalColumn.setCellValueFactory(new PropertyValueFactory<>("external"));
+        externalColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
 
-        tableMedia.getColumns().addAll(nameColumn, pathColumn, sizeColumn, externColumn);
+        tableMedia.getColumns().addAll(nameColumn, pathColumn, sizeColumn, externalColumn);
 
         nameColumn.prefWidthProperty().bind(tableMedia.widthProperty().multiply(50.0 / 100));
         pathColumn.prefWidthProperty().bind(tableMedia.widthProperty().multiply(25.0 / 100));
         sizeColumn.prefWidthProperty().bind(tableMedia.widthProperty().multiply(15.0 / 100));
-        externColumn.prefWidthProperty().bind(tableMedia.widthProperty().multiply(10.0 / 100));
+        externalColumn.prefWidthProperty().bind(tableMedia.widthProperty().multiply(10.0 / 100));
 
         tableMedia.getSelectionModel().selectedItemProperty().addListener((observableValue, dataOld, dataNew) -> {
             if (dataNew != null) {
@@ -193,7 +193,7 @@ public class MediaDialogMediaPane extends ScrollPane {
 
     public void filter(String searchStr) {
         this.searchStr = searchStr;
-        daten.mediaDbList.filterdListSetPred(media -> {
+        daten.mediaList.filterdListSetPred(media -> {
             if (searchStr.isEmpty()) {
                 return false;
             }
@@ -204,14 +204,14 @@ public class MediaDialogMediaPane extends ScrollPane {
                 return filterMedien(media, searchStr);
             }
         });
-        lblTrefferMedia.setText(daten.mediaDbList.getFilteredList().size() + "");
+        lblTrefferMedia.setText(daten.mediaList.getFilteredList().size() + "");
     }
 
-    private boolean filterMedien(MediaDbData media, Pattern p) {
+    private boolean filterMedien(MediaData media, Pattern p) {
         return p.matcher(media.getName()).matches();
     }
 
-    private boolean filterMedien(MediaDbData media, String search) {
+    private boolean filterMedien(MediaData media, String search) {
         return media.getName().toLowerCase().contains(search);
     }
 

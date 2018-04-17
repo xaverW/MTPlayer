@@ -14,68 +14,62 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.mtplayer.mtp.gui.mediaDb;
+package de.mtplayer.mtp.controller.mediaDb;
 
 import javafx.beans.Observable;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.SortedList;
-import javafx.util.Callback;
 
 import java.util.Collection;
 
 @SuppressWarnings("serial")
-public class MediaDbListExtern extends SimpleListProperty<MediaDbDataExtern> {
+public class MediaListExternal extends SimpleListProperty<MediaDataExternal> {
 
-    private SortedList<MediaDbDataExtern> sortedList = null;
+    private SortedList<MediaDataExternal> sortedList = null;
 
 
-    public MediaDbListExtern() {
+    public MediaListExternal() {
         super(FXCollections.observableArrayList(
-                new Callback<MediaDbDataExtern, Observable[]>() {
-                    @Override
-                    public Observable[] call(MediaDbDataExtern param) {
-                        return new Observable[]{
-                                param.countProperty()
-                        };
-                    }
+                param -> new Observable[]{
+                        param.countProperty()
                 }
         ));
     }
 
-    public SortedList<MediaDbDataExtern> getSortedList() {
+    public SortedList<MediaDataExternal> getSortedList() {
         if (sortedList == null) {
             sortedList = new SortedList<>(this);
         }
         return sortedList;
     }
 
-    public synchronized boolean mediaDbDataSetAll(Collection<? extends MediaDbData> mediaDbData) {
+    public synchronized boolean mediaDbDataSetAll(Collection<? extends MediaData> mediaDbData) {
         this.clear();
         mediaDbData.stream().forEach(e -> addMediaDbData(e));
         return true;
     }
 
-    public synchronized boolean mediaDbDataAddAll(Collection<? extends MediaDbData> mediaDbData) {
+    public synchronized boolean mediaDbDataAddAll(Collection<? extends MediaData> mediaDbData) {
         mediaDbData.stream().forEach(e -> addMediaDbData(e));
         return true;
     }
 
-    public synchronized boolean mediaDbDataAdd(MediaDbData mediaDbData) {
-        addMediaDbData(mediaDbData);
+    public synchronized boolean mediaDbDataAdd(MediaData mediaData) {
+        addMediaDbData(mediaData);
         return true;
     }
 
-    private void addMediaDbData(MediaDbData md) {
-        if (!md.isExtern()) {
+    private void addMediaDbData(MediaData md) {
+        if (!md.isExternal()) {
             return;
         }
 
-        MediaDbDataExtern extern = stream().filter(m -> m.equal(md)).findAny().orElse(null);
-        if (extern != null) {
-            extern.setCount(extern.getCount() + 1);
+        MediaDataExternal external = stream().filter(m -> m.equalCollection(md)).findAny().orElse(null);
+        if (external != null) {
+            external.setCount(external.getCount() + 1);
         } else {
-            MediaDbDataExtern mde = new MediaDbDataExtern(md.getCollectionName(), md.getPath());
+            MediaDataExternal mde = new MediaDataExternal(md.getCollectionName(), md.getPath());
             mde.setCount(1);
             super.add(mde);
         }

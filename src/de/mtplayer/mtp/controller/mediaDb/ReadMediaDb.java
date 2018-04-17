@@ -15,7 +15,7 @@
  */
 
 
-package de.mtplayer.mtp.gui.mediaDb;
+package de.mtplayer.mtp.controller.mediaDb;
 
 import de.mtplayer.mtp.controller.config.Daten;
 import de.p2tools.p2Lib.tools.log.Duration;
@@ -35,7 +35,7 @@ public class ReadMediaDb implements AutoCloseable {
 
     private XMLInputFactory inFactory;
     private Daten daten;
-    private ArrayList<MediaDbData> list;
+    private ArrayList<MediaData> list;
 
     public ReadMediaDb(Daten daten) {
         this.daten = daten;
@@ -45,7 +45,7 @@ public class ReadMediaDb implements AutoCloseable {
         inFactory.setProperty(XMLInputFactory.IS_COALESCING, Boolean.FALSE);
     }
 
-    public ArrayList<MediaDbData> read(Path xmlFilePath) {
+    public ArrayList<MediaData> read(Path xmlFilePath) {
 
         if (!Files.exists(xmlFilePath) || xmlFilePath.toFile().length() == 0) {
             return list;
@@ -63,14 +63,14 @@ public class ReadMediaDb implements AutoCloseable {
                 if (event != XMLStreamConstants.START_ELEMENT) {
                     continue;
                 }
-                if (!parser.getLocalName().equals(MediaDbData.TAG)) {
+                if (!parser.getLocalName().equals(MediaData.TAG)) {
                     continue;
                 }
 
-                final MediaDbData mediaDbData = new MediaDbData();
-                if (get(parser, MediaDbData.TAG, MediaDbData.XML_NAMES, mediaDbData.arr)) {
-                    mediaDbData.setPropsFromXml();
-                    list.add(mediaDbData);
+                final MediaData mediaData = new MediaData();
+                if (get(parser, MediaData.TAG, MediaData.XML_NAMES, mediaData.arr)) {
+                    mediaData.setPropsFromXml();
+                    list.add(mediaData);
                 }
 
             }

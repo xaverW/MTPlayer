@@ -14,9 +14,8 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.mtplayer.mtp.gui.mediaDb;
+package de.mtplayer.mtp.controller.mediaDb;
 
-import de.mtplayer.mtp.controller.config.Daten;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -28,20 +27,18 @@ import java.util.Collection;
 import java.util.function.Predicate;
 
 @SuppressWarnings("serial")
-public class MediaDbList extends SimpleListProperty<MediaDbData> {
+public class MediaList extends SimpleListProperty<MediaData> {
 
-    private final Daten daten;
-    private FilteredList<MediaDbData> filteredList = null;
-    private SortedList<MediaDbData> sortedList = null;
+    private FilteredList<MediaData> filteredList = null;
+    private SortedList<MediaData> sortedList = null;
 
     private BooleanProperty propSearch = new SimpleBooleanProperty(false);
-    private MediaDbListExtern externList;
+    private MediaListExternal mediaListExternal;
 
 
-    public MediaDbList(Daten daten) {
+    public MediaList() {
         super(FXCollections.observableArrayList());
-        this.daten = daten;
-        externList = new MediaDbListExtern();
+        mediaListExternal = new MediaListExternal();
     }
 
     public boolean isPropSearch() {
@@ -56,7 +53,7 @@ public class MediaDbList extends SimpleListProperty<MediaDbData> {
         this.propSearch.set(propSearch);
     }
 
-    public SortedList<MediaDbData> getSortedList() {
+    public SortedList<MediaData> getSortedList() {
         if (sortedList == null || filteredList == null) {
             filteredList = new FilteredList<>(this, p -> true);
             sortedList = new SortedList<>(filteredList);
@@ -64,7 +61,7 @@ public class MediaDbList extends SimpleListProperty<MediaDbData> {
         return sortedList;
     }
 
-    public FilteredList<MediaDbData> getFilteredList() {
+    public FilteredList<MediaData> getFilteredList() {
         if (sortedList == null || filteredList == null) {
             filteredList = new FilteredList<>(this, p -> true);
             sortedList = new SortedList<>(filteredList);
@@ -72,7 +69,7 @@ public class MediaDbList extends SimpleListProperty<MediaDbData> {
         return filteredList;
     }
 
-    public synchronized void filterdListSetPred(Predicate<MediaDbData> predicate) {
+    public synchronized void filterdListSetPred(Predicate<MediaData> predicate) {
         filteredList.setPredicate(predicate);
     }
 
@@ -84,28 +81,28 @@ public class MediaDbList extends SimpleListProperty<MediaDbData> {
         filteredList.setPredicate(p -> pred);
     }
 
-    public MediaDbListExtern getExternList() {
-        return externList;
+    public MediaListExternal getMediaListExternal() {
+        return mediaListExternal;
     }
 
-    public synchronized boolean setAll(Collection<? extends MediaDbData> mediaDbData) {
-        externList.mediaDbDataSetAll(mediaDbData);
+    public synchronized boolean setAll(Collection<? extends MediaData> mediaDbData) {
+        mediaListExternal.mediaDbDataSetAll(mediaDbData);
         return super.setAll(mediaDbData);
     }
 
-    public synchronized boolean addAll(Collection<? extends MediaDbData> mediaDbData) {
-        externList.mediaDbDataAddAll(mediaDbData);
+    public synchronized boolean addAll(Collection<? extends MediaData> mediaDbData) {
+        mediaListExternal.mediaDbDataAddAll(mediaDbData);
         return super.addAll(mediaDbData);
     }
 
-    public synchronized boolean add(MediaDbData mediaDbData) {
-        externList.mediaDbDataAdd(mediaDbData);
-        return super.add(mediaDbData);
+    public synchronized boolean add(MediaData mediaData) {
+        mediaListExternal.mediaDbDataAdd(mediaData);
+        return super.add(mediaData);
     }
 
     public synchronized void checkExternDuplicates() {
         MediaDb.checkExternalDuplicates(this);
-        resetExtern();
+        resetExternal();
     }
 
     public synchronized void createMediaDb() {
@@ -119,12 +116,23 @@ public class MediaDbList extends SimpleListProperty<MediaDbData> {
         th.start();
     }
 
-    private void resetExtern() {
-        externList.mediaDbDataSetAll(this);
+    public synchronized void createMediaDbExternal(String pathStr, String collName) {
+        if (isPropSearch()) {
+            // dann mach mers gerade schon :)
+            return;
+        }
+
+        Thread th = new Thread(new CreateMediaDb(this, pathStr, collName));
+        th.setName("createMediaDbExternal");
+        th.start();
+    }
+
+    private void resetExternal() {
+        mediaListExternal.mediaDbDataSetAll(this);
     }
 
     public synchronized void removeCollectionFromMediaDb(String collection) {
         MediaDb.removeCollection(this, collection);
-        resetExtern();
+        resetExternal();
     }
 }

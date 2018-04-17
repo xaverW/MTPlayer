@@ -14,12 +14,12 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.mtplayer.mtp.gui.mediaDb;
+package de.mtplayer.mtp.controller.mediaDb;
 
 import de.mtplayer.mLib.tools.Data;
 import de.mtplayer.mtp.controller.config.Const;
 
-public class MediaDbData extends Data<MediaDbData> {
+public class MediaData extends Data<MediaData> {
 
     public final static int MEDIA_DB_NAME = 0;
     public final static int MEDIA_DB_PATH = 1;
@@ -33,24 +33,24 @@ public class MediaDbData extends Data<MediaDbData> {
     public static final String TAG = "Mediensammlung";
 
     public String[] arr;
-    public MediaDbFileSize mediaDbFileSize;
-    private boolean extern = false;
+    public MediaFileSize mediaFileSize;
+    private boolean external = false;
 
-    public MediaDbData() {
+    public MediaData() {
         makeArr();
     }
 
-    public MediaDbData(String name, String pfad, long size, String sammlung, boolean extern) {
+    public MediaData(String name, String pfad, long size, String sammlung, boolean external) {
         makeArr();
         arr[MEDIA_DB_NAME] = putzen(name);
         arr[MEDIA_DB_PATH] = putzen(pfad);
 
-        mediaDbFileSize = new MediaDbFileSize(size);
-        arr[MEDIA_DB_SIZE] = mediaDbFileSize.toString();
+        mediaFileSize = new MediaFileSize(size);
+        arr[MEDIA_DB_SIZE] = mediaFileSize.toString();
 
         arr[MEDIA_DB_COLLECTION_NAME] = putzen(sammlung);
-        setExtern(extern);
-        arr[MEDIA_DB_EXTERN] = Boolean.toString(extern);
+        setExternal(external);
+        arr[MEDIA_DB_EXTERN] = Boolean.toString(external);
     }
 
     public String getName() {
@@ -86,20 +86,12 @@ public class MediaDbData extends Data<MediaDbData> {
     }
 
 
-    public boolean isExtern() {
-        return extern;
-    }
-
-    public void setExtern(String extern) {
-        arr[MEDIA_DB_EXTERN] = extern;
-    }
-
-    public void setExtern(boolean extern) {
-        this.extern = extern;
+    public boolean isExternal() {
+        return external;
     }
 
 
-    public boolean equal(MediaDbData m) {
+    public boolean equal(MediaData m) {
         return m.arr[MEDIA_DB_NAME].equals(arr[MEDIA_DB_NAME])
                 && m.arr[MEDIA_DB_PATH].equals(arr[MEDIA_DB_PATH])
                 && m.arr[MEDIA_DB_SIZE].equals(arr[MEDIA_DB_SIZE]);
@@ -107,12 +99,6 @@ public class MediaDbData extends Data<MediaDbData> {
 
     public String getEqual() {
         return arr[MEDIA_DB_NAME] + arr[MEDIA_DB_PATH] + arr[MEDIA_DB_SIZE];
-    }
-
-    private static String putzen(String s) {
-        s = s.replace("\n", "");
-        s = s.replace("|", "");
-        return s;
     }
 
     @Override
@@ -129,23 +115,30 @@ public class MediaDbData extends Data<MediaDbData> {
     }
 
     public String getHash() {
-        return getName() + getPath() + getCollectionName();
+        return getName() + "##" + getPath() + "##" + getCollectionName();
     }
 
     public void setPropsFromXml() {
-        mediaDbFileSize = new MediaDbFileSize(arr[MEDIA_DB_SIZE]);
+        mediaFileSize = new MediaFileSize(arr[MEDIA_DB_SIZE]);
         boolean ex;
         try {
             ex = Boolean.parseBoolean(arr[MEDIA_DB_EXTERN]);
         } catch (Exception ignore) {
             ex = false;
         }
-        setExtern(ex);
+        setExternal(ex);
     }
 
-    //===================================
-    // Private
-    //===================================
+    private void setExternal(boolean external) {
+        this.external = external;
+    }
+
+    private static String putzen(String s) {
+        s = s.replace("\n", "");
+        s = s.replace("|", "");
+        return s;
+    }
+
     private void makeArr() {
         arr = new String[MAX_ELEM];
         for (int i = 0; i < arr.length; ++i) {

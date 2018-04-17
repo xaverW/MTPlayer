@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.mtplayer.mtp.gui.mediaDb;
+package de.mtplayer.mtp.controller.mediaDb;
 
 import de.mtplayer.mLib.tools.Data;
 import javafx.beans.property.SimpleStringProperty;
@@ -23,13 +23,14 @@ import javafx.beans.property.StringProperty;
 public class MediaPathData extends Data<MediaPathData> {
 
     private final static int MEDIA_PATH_PATH = 0;
-    private final static int MEDIA_PATH_EXTERN = 1; // damit merkt er sich Pfade die "Offline" sind, kann entfallen??
 
-    public final static String[] COLUMN_NAMES = {"Pfad", "Speichern"};
+    public final static String[] COLUMN_NAMES = {"Pfad"};
     public final static String[] XML_NAMES = COLUMN_NAMES;
     public static final String TAG = "MediaPath";
-    public final static int MAX_ELEM = 2;
+    public final static int MAX_ELEM = 1;
     public String[] arr;
+
+    private StringProperty path = new SimpleStringProperty("");
 
     public String getPath() {
         return path.get();
@@ -43,28 +44,9 @@ public class MediaPathData extends Data<MediaPathData> {
         this.path.set(path);
     }
 
-    public boolean isExtern() {
-        return extern;
-    }
-
-    public void setExtern(boolean extern) {
-        this.extern = extern;
-    }
-
-    private StringProperty path = new SimpleStringProperty("");
-    private boolean extern = false;
-
-
-    public MediaPathData(String pfad, boolean sichern) {
-        makeArr();
-        setPath(pfad);
-        setExtern(sichern);
-    }
-
     public MediaPathData(String pfad) {
         makeArr();
         setPath(pfad);
-        setExtern(false);
     }
 
     public MediaPathData() {
@@ -83,12 +65,10 @@ public class MediaPathData extends Data<MediaPathData> {
 
     public void setPropsFromXml() {
         setPath(arr[MEDIA_PATH_PATH]);
-        setExtern(Boolean.parseBoolean(arr[MEDIA_PATH_EXTERN]));
     }
 
     public void setXmlFromProps() {
         arr[MEDIA_PATH_PATH] = getPath();
-        arr[MEDIA_PATH_EXTERN] = String.valueOf(isExtern());
     }
 
 }

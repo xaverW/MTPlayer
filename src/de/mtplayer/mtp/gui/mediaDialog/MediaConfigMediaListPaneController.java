@@ -20,7 +20,7 @@ import de.mtplayer.mLib.tools.CheckBoxCell;
 import de.mtplayer.mtp.controller.config.Config;
 import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.Daten;
-import de.mtplayer.mtp.gui.mediaDb.MediaDbData;
+import de.mtplayer.mtp.controller.mediaDb.MediaData;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.collections.transformation.SortedList;
@@ -83,9 +83,9 @@ public class MediaConfigMediaListPaneController extends AnchorPane {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
         initTable(result);
 
-        lblGesamtMedia.setText(daten.mediaDbList.size() + "");
-        daten.mediaDbList.sizeProperty().addListener((observable, oldValue, newValue) ->
-                Platform.runLater(() -> lblGesamtMedia.setText(daten.mediaDbList.size() + "")));
+        lblGesamtMedia.setText(daten.mediaList.size() + "");
+        daten.mediaList.sizeProperty().addListener((observable, oldValue, newValue) ->
+                Platform.runLater(() -> lblGesamtMedia.setText(daten.mediaList.size() + "")));
 
         return result;
     }
@@ -104,39 +104,39 @@ public class MediaConfigMediaListPaneController extends AnchorPane {
         tpConfig.setMaxHeight(Double.MAX_VALUE);
         VBox.setVgrow(tpConfig, Priority.ALWAYS);
 
-        TableView<MediaDbData> tableView = new TableView<>();
+        TableView<MediaData> tableView = new TableView<>();
         tableView.setMinHeight(Const.MIN_TABLE_HEIGHT);
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        final TableColumn<MediaDbData, String> nameColumn = new TableColumn<>("Name");
+        final TableColumn<MediaData, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-        final TableColumn<MediaDbData, String> pathColumn = new TableColumn<>("Pfad");
+        final TableColumn<MediaData, String> pathColumn = new TableColumn<>("Pfad");
         pathColumn.setCellValueFactory(new PropertyValueFactory<>("path"));
 
-        final TableColumn<MediaDbData, String> sizeColumn = new TableColumn<>("Größe [MB]");
+        final TableColumn<MediaData, String> sizeColumn = new TableColumn<>("Größe [MB]");
         sizeColumn.setCellValueFactory(new PropertyValueFactory<>("size"));
 
-        final TableColumn<MediaDbData, String> colColumn = new TableColumn<>("Sammlung");
+        final TableColumn<MediaData, String> colColumn = new TableColumn<>("Sammlung");
         colColumn.setCellValueFactory(new PropertyValueFactory<>("collectionName"));
 
-        final TableColumn<MediaDbData, Boolean> externColumn = new TableColumn<>("extern");
-        externColumn.setCellValueFactory(new PropertyValueFactory<>("extern"));
-        externColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
+        final TableColumn<MediaData, Boolean> externalColumn = new TableColumn<>("extern");
+        externalColumn.setCellValueFactory(new PropertyValueFactory<>("external"));
+        externalColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
 
-        tableView.getColumns().addAll(nameColumn, pathColumn, sizeColumn, colColumn, externColumn);
+        tableView.getColumns().addAll(nameColumn, pathColumn, sizeColumn, colColumn, externalColumn);
 
 
         nameColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(40.0 / 100));
         pathColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(20.0 / 100));
         sizeColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(10.0 / 100));
         colColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(20.0 / 100));
-        externColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(5.0 / 100));
+        externalColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(5.0 / 100));
 
-        SortedList<MediaDbData> sortedList = daten.mediaDbList.getSortedList();
+        SortedList<MediaData> sortedList = daten.mediaList.getSortedList();
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
-        daten.mediaDbList.filterdListClearPred(true);
+        daten.mediaList.filterdListClearPred(true);
         tableView.setItems(sortedList);
 
         VBox.setVgrow(tableView, Priority.ALWAYS);

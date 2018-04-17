@@ -22,9 +22,8 @@ import de.mtplayer.mLib.tools.StringFormatters;
 import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.data.Icons;
+import de.mtplayer.mtp.controller.mediaDb.MediaDataExternal;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
-import de.mtplayer.mtp.gui.mediaDb.CreateMediaDb;
-import de.mtplayer.mtp.gui.mediaDb.MediaDbDataExtern;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.dialog.PAlert;
 import javafx.beans.binding.Bindings;
@@ -41,7 +40,7 @@ import java.util.Date;
 public class MediaConfigExternPane {
 
     private final Daten daten;
-    private final TableView<MediaDbDataExtern> tableView = new TableView<>();
+    private final TableView<MediaDataExternal> tableView = new TableView<>();
 
     public MediaConfigExternPane() {
         this.daten = Daten.getInstance();
@@ -88,11 +87,11 @@ public class MediaConfigExternPane {
 
         final Button btnAdd = new Button("Neue Sammlung hinzufügen");
         btnAdd.disableProperty().bind(txtName.textProperty().isEmpty().or(txtPath.textProperty().isEmpty()));
-        GridPane.setHalignment(btnAdd, HPos.RIGHT
-        );
+        GridPane.setHalignment(btnAdd, HPos.RIGHT);
+        btnAdd.disableProperty().bind(daten.mediaList.propSearchProperty());
         btnAdd.setOnAction(a -> {
 
-            MediaDbDataExtern found = daten.mediaDbList.getExternList().stream()
+            MediaDataExternal found = daten.mediaList.getMediaListExternal().stream()
                     .filter(m -> m.getCollectionName().equals(txtName.getText())).findAny().orElse(null);
             if (found == null ||
                     PAlert.showAlert_yes_no("Sammlung hinzufügen", "Sammlung: " + txtName.getText(),
@@ -100,10 +99,7 @@ public class MediaConfigExternPane {
                                     "Sollen weitere Filme in " +
                                     "die Sammlung integriert werden?").equals(PAlert.BUTTON.YES)) {
 
-                // nur wenn noch nicht läuft
-                Thread th = new Thread(new CreateMediaDb(daten.mediaDbList, txtPath.getText(), txtName.getText()));
-                th.setName("createMediaDb-EXTERN");
-                th.start();
+                daten.mediaList.createMediaDbExternal(txtPath.getText(), txtName.getText());
             }
         });
 
@@ -129,8 +125,8 @@ public class MediaConfigExternPane {
         Button btnDel = new Button("Sammlung entfernen");
         btnDel.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
         btnDel.setOnAction(a -> {
-            MediaDbDataExtern md = tableView.getSelectionModel().getSelectedItem();
-            daten.mediaDbList.removeCollectionFromMediaDb(md.getCollectionName());
+            MediaDataExternal md = tableView.getSelectionModel().getSelectedItem();
+            daten.mediaList.removeCollectionFromMediaDb(md.getCollectionName());
         });
 
         HBox hBox = new HBox(10);
@@ -147,13 +143,13 @@ public class MediaConfigExternPane {
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-        final TableColumn<MediaDbDataExtern, String> nameColumn = new TableColumn<>("Name");
+        final TableColumn<MediaDataExternal, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("collectionName"));
 
-        final TableColumn<MediaDbDataExtern, String> pathColumn = new TableColumn<>("Pfad");
+        final TableColumn<MediaDataExternal, String> pathColumn = new TableColumn<>("Pfad");
         pathColumn.setCellValueFactory(new PropertyValueFactory<>("path"));
 
-        final TableColumn<MediaDbDataExtern, Integer> countColumn = new TableColumn<>("Anzahl");
+        final TableColumn<MediaDataExternal, Integer> countColumn = new TableColumn<>("Anzahl");
         countColumn.setCellValueFactory(new PropertyValueFactory<>("count"));
 
         tableView.getColumns().addAll(nameColumn, pathColumn, countColumn);
@@ -162,7 +158,7 @@ public class MediaConfigExternPane {
         pathColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(40.0 / 100));
         countColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(10.0 / 100));
 
-        tableView.setItems(daten.mediaDbList.getExternList());
+        tableView.setItems(daten.mediaList.getMediaListExternal());
 
         VBox.setVgrow(tableView, Priority.ALWAYS);
         vBox.getChildren().addAll(tableView);

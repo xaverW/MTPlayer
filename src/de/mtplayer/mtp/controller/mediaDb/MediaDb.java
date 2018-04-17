@@ -15,7 +15,7 @@
  */
 
 
-package de.mtplayer.mtp.gui.mediaDb;
+package de.mtplayer.mtp.controller.mediaDb;
 
 import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.Daten;
@@ -39,12 +39,12 @@ public class MediaDb {
 
     final static Daten daten = Daten.getInstance();
 
-    static void checkExternalDuplicates(List<MediaDbData> mediaDbList) {
+    static void checkExternalDuplicates(List<MediaData> mediaDbList) {
         HashSet<String> hashSet = new HashSet<>(mediaDbList.size());
-        Iterator<MediaDbData> it = mediaDbList.iterator();
+        Iterator<MediaData> it = mediaDbList.iterator();
         while (it.hasNext()) {
-            MediaDbData md = it.next();
-            if (!md.isExtern()) {
+            MediaData md = it.next();
+            if (!md.isExternal()) {
                 continue;
             }
 
@@ -55,11 +55,11 @@ public class MediaDb {
         }
     }
 
-    static void removeCollection(List<MediaDbData> mediaDbList, String collection) {
-        Iterator<MediaDbData> it = mediaDbList.iterator();
+    static void removeCollection(List<MediaData> mediaDbList, String collection) {
+        Iterator<MediaData> it = mediaDbList.iterator();
         while (it.hasNext()) {
-            MediaDbData md = it.next();
-            if (md.isExtern() && md.getCollectionName().equals(collection)) {
+            MediaData md = it.next();
+            if (md.isExternal() && md.getCollectionName().equals(collection)) {
                 it.remove();
             }
         }
@@ -79,16 +79,16 @@ public class MediaDb {
         return urlPath;
     }
 
-    static List<MediaDbData> loadSavedList() {
+    static List<MediaData> loadSavedList() {
         final Path urlPath = MediaDb.getFilePath();
         return new ReadMediaDb(daten).read(urlPath);
     }
 
-    static synchronized void writeList(List<MediaDbData> mediaDbData) {
+    static synchronized void writeList(List<MediaData> mediaData) {
         final Path path = getFilePath();
 
         ArrayList<String> list = new ArrayList<>();
-        list.add("MediaDB schreiben (" + daten.mediaDbList.size() + " Dateien) :");
+        list.add("MediaDB schreiben (" + daten.mediaList.size() + " Dateien) :");
         list.add("   --> Start Schreiben nach: " + path.toString());
 
         try {
@@ -102,7 +102,7 @@ public class MediaDb {
                 return;
             }
 
-            List<MediaDbData> mediaList = mediaDbData.stream().filter(m -> m.isExtern()).collect(Collectors.toList());
+            List<MediaData> mediaList = mediaData.stream().filter(m -> m.isExternal()).collect(Collectors.toList());
             new WriteMediaDb().write(path, mediaList);
             list.add("   --> geschrieben!");
 

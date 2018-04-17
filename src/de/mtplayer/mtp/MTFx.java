@@ -170,7 +170,7 @@ public class MTFx extends Application {
 
                 if (!onlyOne) {
                     onlyOne = true;
-                    daten.mediaDbList.createMediaDb();
+                    daten.mediaList.createMediaDb();
                     checkProgUpdate();
                 }
 
