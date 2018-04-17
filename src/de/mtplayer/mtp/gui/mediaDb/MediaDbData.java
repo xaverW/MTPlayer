@@ -128,6 +128,10 @@ public class MediaDbData extends Data<MediaDbData> {
         return ret;
     }
 
+    public String getHash() {
+        return getName() + getPath() + getCollectionName();
+    }
+
     public void setPropsFromXml() {
         mediaDbFileSize = new MediaDbFileSize(arr[MEDIA_DB_SIZE]);
         boolean ex;

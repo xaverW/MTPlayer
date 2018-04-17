@@ -18,7 +18,7 @@
 package de.mtplayer.mtp.gui.mediaDialog;
 
 import de.mtplayer.mLib.tools.DirFileChooser;
-import de.mtplayer.mtp.controller.config.Config;
+import de.mtplayer.mLib.tools.StringFormatters;
 import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.data.Icons;
@@ -26,7 +26,9 @@ import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.mediaDb.CreateMediaDb;
 import de.mtplayer.mtp.gui.mediaDb.MediaDbDataExtern;
 import de.mtplayer.mtp.gui.tools.HelpText;
+import de.p2tools.p2Lib.dialog.PAlert;
 import javafx.beans.binding.Bindings;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -34,6 +36,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 
 import java.util.Collection;
+import java.util.Date;
 
 public class MediaConfigExternPane {
 
@@ -61,10 +64,12 @@ public class MediaConfigExternPane {
         gridPane.setPadding(new Insets(20, 20, 20, 20));
 
         final TextField txtPath = new TextField();
-        txtPath.textProperty().bindBidirectional(Config.MEDIA_DB_PATH_EXTERN.getStringProperty());
+//        txtPath.textProperty().bindBidirectional(Config.MEDIA_DB_PATH_EXTERN.getStringProperty());
 
         final TextField txtName = new TextField();
-        txtName.textProperty().bindBidirectional(Config.MEDIA_DB_NAME_EXTERN.getStringProperty());
+        txtName.setText("Sammlung-" + StringFormatters.FORMATTER_ddMMyyyy.format(new Date())
+        );
+//        txtName.textProperty().bindBidirectional(Config.MEDIA_DB_NAME_EXTERN.getStringProperty());
 
         final Button btnPath = new Button("");
         btnPath.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
@@ -81,14 +86,25 @@ public class MediaConfigExternPane {
         btnHelpPath.setOnAction(a -> new MTAlert().showHelpAlert("Abos automatisch suchen",
                 HelpText.ABOS_SOFRT_SUCHEN)); //todo
 
-        final Button btnAdd = new Button("Sammlung hinzufügen");
+        final Button btnAdd = new Button("Neue Sammlung hinzufügen");
         btnAdd.disableProperty().bind(txtName.textProperty().isEmpty().or(txtPath.textProperty().isEmpty()));
+        GridPane.setHalignment(btnAdd, HPos.RIGHT
+        );
         btnAdd.setOnAction(a -> {
 
-            // nur wenn noch nicht läuft
-            Thread th = new Thread(new CreateMediaDb(txtPath.getText(), daten.mediaDbList, txtName.getText()));
-            th.setName("createMediaDb-EXTERN");
-            th.start();
+            MediaDbDataExtern found = daten.mediaDbList.getExternList().stream()
+                    .filter(m -> m.getCollectionName().equals(txtName.getText())).findAny().orElse(null);
+            if (found == null ||
+                    PAlert.showAlert_yes_no("Sammlung hinzufügen", "Sammlung: " + txtName.getText(),
+                            "Eine Sammlung mit dem Namen existiert bereits.\n" +
+                                    "Sollen weitere Filme in " +
+                                    "die Sammlung integriert werden?").equals(PAlert.BUTTON.YES)) {
+
+                // nur wenn noch nicht läuft
+                Thread th = new Thread(new CreateMediaDb(daten.mediaDbList, txtPath.getText(), txtName.getText()));
+                th.setName("createMediaDb-EXTERN");
+                th.start();
+            }
         });
 
         int row = 0;
@@ -100,7 +116,7 @@ public class MediaConfigExternPane {
         gridPane.add(txtPath, 1, row);
         gridPane.add(btnPath, 2, row);
 
-//        gridPane.add(btnAdd, 1, ++row);
+        gridPane.add(btnAdd, 1, ++row, 2, 1);
 
 
         final ColumnConstraints ccTxt = new ColumnConstraints();
@@ -119,7 +135,7 @@ public class MediaConfigExternPane {
 
         HBox hBox = new HBox(10);
         hBox.setAlignment(Pos.CENTER_RIGHT);
-        hBox.getChildren().addAll(btnAdd, btnDel);
+        hBox.getChildren().addAll(btnDel);
 
         vBox.getChildren().add(hBox);
         vBox.getChildren().addAll(gridPane);

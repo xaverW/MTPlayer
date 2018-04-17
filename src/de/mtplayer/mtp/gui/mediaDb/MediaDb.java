@@ -30,6 +30,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,6 +38,22 @@ import java.util.stream.Collectors;
 public class MediaDb {
 
     final static Daten daten = Daten.getInstance();
+
+    static void checkExternalDuplicates(List<MediaDbData> mediaDbList) {
+        HashSet<String> hashSet = new HashSet<>(mediaDbList.size());
+        Iterator<MediaDbData> it = mediaDbList.iterator();
+        while (it.hasNext()) {
+            MediaDbData md = it.next();
+            if (!md.isExtern()) {
+                continue;
+            }
+
+            final String h = md.getHash();
+            if (!hashSet.add(h)) {
+                it.remove();
+            }
+        }
+    }
 
     static void removeCollection(List<MediaDbData> mediaDbList, String collection) {
         Iterator<MediaDbData> it = mediaDbList.iterator();

@@ -103,6 +103,11 @@ public class MediaDbList extends SimpleListProperty<MediaDbData> {
         return super.add(mediaDbData);
     }
 
+    public synchronized void checkExternDuplicates() {
+        MediaDb.checkExternalDuplicates(this);
+        resetExtern();
+    }
+
     public synchronized void createMediaDb() {
         if (isPropSearch()) {
             // dann mach mers gerade schon :)
@@ -114,7 +119,7 @@ public class MediaDbList extends SimpleListProperty<MediaDbData> {
         th.start();
     }
 
-    public void resetExtern() {
+    private void resetExtern() {
         externList.mediaDbDataSetAll(this);
     }
 

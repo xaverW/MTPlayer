@@ -50,9 +50,9 @@ public class CreateMediaDb implements Runnable {
      */
     public CreateMediaDb(MediaDbList mediaDbList) {
         daten = Daten.getInstance();
+        this.mediaDbList = mediaDbList;
         this.path = "";
         this.collection = "";
-        this.mediaDbList = mediaDbList;
         getSuffix();
     }
 
@@ -63,11 +63,11 @@ public class CreateMediaDb implements Runnable {
      * @param path
      * @param mediaDbList
      */
-    public CreateMediaDb(String path, MediaDbList mediaDbList, String collection) {
+    public CreateMediaDb(MediaDbList mediaDbList, String path, String collection) {
         daten = Daten.getInstance();
+        this.mediaDbList = mediaDbList;
         this.path = path;
         this.collection = collection;
-        this.mediaDbList = mediaDbList;
         getSuffix();
     }
 
@@ -135,6 +135,7 @@ public class CreateMediaDb implements Runnable {
                 searchFile(new File(path), true);
 
                 mediaDbList.addAll(search);
+                mediaDbList.checkExternDuplicates();
                 MediaDb.writeList(mediaDbList);
             }
 
