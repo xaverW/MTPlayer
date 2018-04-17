@@ -21,7 +21,7 @@ import de.mtplayer.mtp.controller.config.Const;
 
 public class MediaDbDataExtern extends Data<MediaDbDataExtern> {
 
-    public final static int MEDIA_DB_NAME = 0;
+    public final static int MEDIA_DB_COLLECTION_NAME = 0;
     public final static int MEDIA_DB_PATH = 1;
     public final static int MEDIA_DB_COUNT = 2;
 
@@ -34,24 +34,20 @@ public class MediaDbDataExtern extends Data<MediaDbDataExtern> {
 
     public MediaDbDataExtern(String name, String pfad) {
         makeArr();
-        arr[MEDIA_DB_NAME] = putzen(name);
+        arr[MEDIA_DB_COLLECTION_NAME] = putzen(name);
         arr[MEDIA_DB_PATH] = putzen(pfad);
         arr[MEDIA_DB_COUNT] = "0";
     }
 
-    public String getName() {
-        return arr[MEDIA_DB_NAME];
+    public String getCollectionName() {
+        return arr[MEDIA_DB_COLLECTION_NAME];
     }
 
     public String getPath() {
         return arr[MEDIA_DB_PATH];
     }
 
-    public String getSizeStr() {
-        return arr[MEDIA_DB_COUNT];
-    }
-
-    public int getSize() {
+    public int getCount() {
         int ret;
         try {
             ret = Integer.parseInt(arr[MEDIA_DB_COUNT]);
@@ -61,22 +57,17 @@ public class MediaDbDataExtern extends Data<MediaDbDataExtern> {
         return ret;
     }
 
-    public void setSize(int size) {
+    public void setCount(int size) {
         arr[MEDIA_DB_COUNT] = size + "";
     }
 
     public boolean equal(MediaDbData m) {
-        return m.arr[MediaDbData.MEDIA_DB_COLLECTION].equals(arr[MEDIA_DB_NAME])
-                && m.arr[MediaDbData.MEDIA_DB_PATH].equals(arr[MEDIA_DB_PATH]);
+        return m.arr[MediaDbData.MEDIA_DB_COLLECTION].equals(arr[MEDIA_DB_COLLECTION_NAME]);
     }
 
     public boolean equal(MediaDbDataExtern m) {
-        return m.arr[MEDIA_DB_NAME].equals(arr[MEDIA_DB_NAME])
+        return m.arr[MEDIA_DB_COLLECTION_NAME].equals(arr[MEDIA_DB_COLLECTION_NAME])
                 && m.arr[MEDIA_DB_PATH].equals(arr[MEDIA_DB_PATH]);
-    }
-
-    public String getEqual() {
-        return arr[MEDIA_DB_NAME] + arr[MEDIA_DB_PATH];
     }
 
     private static String putzen(String s) {
@@ -98,9 +89,6 @@ public class MediaDbDataExtern extends Data<MediaDbDataExtern> {
         return ret;
     }
 
-    //===================================
-    // Private
-    //===================================
     private void makeArr() {
         arr = new String[MAX_ELEM];
         for (int i = 0; i < arr.length; ++i) {

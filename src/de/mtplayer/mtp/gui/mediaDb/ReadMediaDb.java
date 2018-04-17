@@ -47,7 +47,7 @@ public class ReadMediaDb implements AutoCloseable {
 
     public ArrayList<MediaDbData> read(Path xmlFilePath) {
 
-        if (!Files.exists(xmlFilePath)) {
+        if (!Files.exists(xmlFilePath) || xmlFilePath.toFile().length() == 0) {
             return list;
         }
 

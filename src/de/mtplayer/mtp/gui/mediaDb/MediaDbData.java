@@ -33,7 +33,7 @@ public class MediaDbData extends Data<MediaDbData> {
     public static final String TAG = "Mediensammlung";
 
     public String[] arr;
-    public MediaDBFileSize mediaDBFileSize;
+    public MediaDbFileSize mediaDbFileSize;
     private boolean extern = false;
 
     public MediaDbData() {
@@ -45,8 +45,8 @@ public class MediaDbData extends Data<MediaDbData> {
         arr[MEDIA_DB_NAME] = putzen(name);
         arr[MEDIA_DB_PATH] = putzen(pfad);
 
-        mediaDBFileSize = new MediaDBFileSize(size);
-        arr[MEDIA_DB_SIZE] = mediaDBFileSize.toString();
+        mediaDbFileSize = new MediaDbFileSize(size);
+        arr[MEDIA_DB_SIZE] = mediaDbFileSize.toString();
 
         arr[MEDIA_DB_COLLECTION] = putzen(sammlung);
         setExtern(extern);
@@ -129,7 +129,7 @@ public class MediaDbData extends Data<MediaDbData> {
     }
 
     public void setPropsFromXml() {
-        mediaDBFileSize = new MediaDBFileSize(arr[MEDIA_DB_SIZE]);
+        mediaDbFileSize = new MediaDbFileSize(arr[MEDIA_DB_SIZE]);
         boolean ex;
         try {
             ex = Boolean.parseBoolean(arr[MEDIA_DB_EXTERN]);

@@ -19,13 +19,16 @@ package de.mtplayer.mtp.gui.mediaDialog;
 
 import de.mtplayer.mLib.tools.DirFileChooser;
 import de.mtplayer.mtp.controller.config.Config;
+import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.mediaDb.CreateMediaDb;
 import de.mtplayer.mtp.gui.mediaDb.MediaDbDataExtern;
 import de.mtplayer.mtp.gui.tools.HelpText;
+import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
@@ -35,6 +38,7 @@ import java.util.Collection;
 public class MediaConfigExternPane {
 
     private final Daten daten;
+    private final TableView<MediaDbDataExtern> tableView = new TableView<>();
 
     public MediaConfigExternPane() {
         this.daten = Daten.getInstance();
@@ -77,22 +81,26 @@ public class MediaConfigExternPane {
         btnHelpPath.setOnAction(a -> new MTAlert().showHelpAlert("Abos automatisch suchen",
                 HelpText.ABOS_SOFRT_SUCHEN)); //todo
 
-        final Button btnAdd = new Button("Hinzufügen");
+        final Button btnAdd = new Button("Sammlung hinzufügen");
+        btnAdd.disableProperty().bind(txtName.textProperty().isEmpty().or(txtPath.textProperty().isEmpty()));
         btnAdd.setOnAction(a -> {
 
+            // nur wenn noch nicht läuft
             Thread th = new Thread(new CreateMediaDb(txtPath.getText(), daten.mediaDbList, txtName.getText()));
-            th.setName("createMediaDB-EXTERN");
+            th.setName("createMediaDb-EXTERN");
             th.start();
         });
 
         int row = 0;
-        gridPane.add(new Label("Pfad:"), 0, row);
+        gridPane.add(new Label("Name der Sammlung:"), 0, row);
+        gridPane.add(txtName, 1, row);
+        gridPane.add(btnHelpPath, 2, row);
+
+        gridPane.add(new Label("Pfad:"), 0, ++row);
         gridPane.add(txtPath, 1, row);
         gridPane.add(btnPath, 2, row);
-        gridPane.add(btnHelpPath, 3, row);
-        gridPane.add(new Label("Name der Sammlung:"), 0, ++row);
-        gridPane.add(txtName, 1, row);
-        gridPane.add(btnAdd, 1, ++row);
+
+//        gridPane.add(btnAdd, 1, ++row);
 
 
         final ColumnConstraints ccTxt = new ColumnConstraints();
@@ -102,16 +110,29 @@ public class MediaConfigExternPane {
         gridPane.getColumnConstraints().addAll(new ColumnConstraints(), ccTxt);
 
         initTable(vBox);
+        Button btnDel = new Button("Sammlung entfernen");
+        btnDel.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
+        btnDel.setOnAction(a -> {
+            MediaDbDataExtern md = tableView.getSelectionModel().getSelectedItem();
+            daten.mediaDbList.removeCollectionFromMediaDb(md.getCollectionName());
+        });
+
+        HBox hBox = new HBox(10);
+        hBox.setAlignment(Pos.CENTER_RIGHT);
+        hBox.getChildren().addAll(btnAdd, btnDel);
+
+        vBox.getChildren().add(hBox);
         vBox.getChildren().addAll(gridPane);
     }
 
     private void initTable(VBox vBox) {
 
-        TableView<MediaDbDataExtern> tableView = new TableView<>();
-        tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        tableView.setMinHeight(Const.MIN_TABLE_HEIGHT);
+        tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+        tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         final TableColumn<MediaDbDataExtern, String> nameColumn = new TableColumn<>("Name");
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("collectionName"));
 
         final TableColumn<MediaDbDataExtern, String> pathColumn = new TableColumn<>("Pfad");
         pathColumn.setCellValueFactory(new PropertyValueFactory<>("path"));

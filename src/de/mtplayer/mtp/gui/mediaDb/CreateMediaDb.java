@@ -17,9 +17,7 @@
 package de.mtplayer.mtp.gui.mediaDb;
 
 import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.Daten;
-import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.p2tools.p2Lib.tools.log.Duration;
@@ -27,10 +25,6 @@ import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,7 +91,7 @@ public class CreateMediaDb implements Runnable {
         try {
             if (path.isEmpty()) {
                 // die gesamte MediaDB laden: gespeichert und lokale Filme
-                search.addAll(loadSavedList());
+                search.addAll(MediaDb.loadSavedList());
 
                 for (final MediaPathData mediaPathData : daten.mediaPathList) {
                     if (mediaPathData.isExtern()) {
@@ -136,7 +130,7 @@ public class CreateMediaDb implements Runnable {
                 }
                 searchFile(new File(path), true);
                 mediaDbList.addAll(search);
-                writeList(search);
+                MediaDb.writeList(mediaDbList);
             }
 
         } catch (final Exception ex) {
@@ -148,55 +142,6 @@ public class CreateMediaDb implements Runnable {
         Duration.counterStop("Mediensammlung erstellen");
     }
 
-    private List<MediaDbData> loadSavedList() {
-        final Path urlPath = getFilePath();
-        return new ReadMediaDb(daten).read(urlPath);
-    }
-
-    private Path getFilePath() {
-        Path urlPath = null;
-        try {
-            urlPath = Paths.get(ProgInfos.getSettingsDirectory_String()).resolve(Const.FILE_MEDIA_DB);
-            if (Files.notExists(urlPath)) {
-                urlPath = Files.createFile(urlPath);
-            }
-        } catch (final IOException ex) {
-            ex.printStackTrace();
-        }
-        return urlPath;
-    }
-
-    private synchronized void writeList(List<MediaDbData> data) {
-        final Path path = getFilePath();
-
-        ArrayList<String> list = new ArrayList<>();
-        list.add("MediaDB schreiben (" + daten.mediaDbList.size() + " Dateien) :");
-        list.add("   --> Start Schreiben nach: " + path.toString());
-
-        try {
-            final File file = path.toFile();
-            final File dir = new File(file.getParent());
-            if (!dir.exists() && !dir.mkdirs()) {
-                PLog.errorLog(932102478, "Kann den Pfad nicht anlegen: " + dir.toString());
-                Platform.runLater(() -> new MTAlert().showErrorAlert("Fehler beim Schreiben",
-                        "Der Pfad zum Schreiben der Mediensammlung kann nicht angelegt werden: \n" +
-                                path.toString()));
-                return;
-            }
-
-            new WriteMediaDb().write(path, data);
-            list.add("   --> geschrieben!");
-
-        } catch (final Exception ex) {
-            list.add("   --> Fehler, nicht geschrieben!");
-            PLog.errorLog(931201478, ex, "nach: " + path.toString());
-            Platform.runLater(() -> new MTAlert().showErrorAlert("Fehler beim Schreiben",
-                    "Die Mediensammlung konnte nicht geschrieben werden:\n" +
-                            path.toString()));
-        }
-
-        PLog.userLog(list);
-    }
 
     private void errorMsg() {
         Platform.runLater(() -> new MTAlert().showErrorAlert("Fehler beim Erstellen der Mediensammlung",

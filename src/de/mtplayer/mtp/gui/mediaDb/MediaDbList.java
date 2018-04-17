@@ -103,15 +103,18 @@ public class MediaDbList extends SimpleListProperty<MediaDbData> {
         return super.add(mediaDbData);
     }
 
-    public synchronized void createMediaDB() {
+    public synchronized void createMediaDb() {
         if (isPropSearch()) {
             // dann mach mers gerade schon :)
             return;
         }
 
         Thread th = new Thread(new CreateMediaDb(this));
-        th.setName("createMediaDB");
+        th.setName("createMediaDb");
         th.start();
     }
 
+    public synchronized void removeCollectionFromMediaDb(String collection) {
+        MediaDb.removeCollection(this, collection);
+    }
 }

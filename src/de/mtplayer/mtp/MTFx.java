@@ -107,7 +107,7 @@ public class MTFx extends Application {
         }
     }
 
-    public void losGehts() {
+    private void losGehts() {
         Duration.counterStop(LOG_TEXT_PROGRAMMSTART);
         primaryStage.getIcons().add(GetIcon.getImage(ICON_NAME, ICON_PATH, ICON_WIDTH, ICON_HEIGHT));
 
@@ -167,14 +167,15 @@ public class MTFx extends Application {
             @Override
             public void fertig(ListenerFilmlistLoadEvent event) {
                 new ProgSave().allesSpeichern(); // damit nichts verlorengeht
+
                 if (!onlyOne) {
                     onlyOne = true;
-                    daten.mediaDbList.createMediaDB();
+                    daten.mediaDbList.createMediaDb();
                     checkProgUpdate();
                 }
+
             }
         });
-
     }
 
     private void checkProgUpdate() {

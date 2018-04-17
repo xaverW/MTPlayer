@@ -37,7 +37,7 @@ import java.util.regex.Pattern;
 
 public class MediaDialogMediaPane extends ScrollPane {
 
-    Button btnIndex = new Button("Mediensammlung neu aufbauen");
+    Button btnCreateMediaDB = new Button("Mediensammlung neu aufbauen");
     Button btnPlay = new Button();
     Button btnOpen = new Button();
 
@@ -100,7 +100,7 @@ public class MediaDialogMediaPane extends ScrollPane {
         hBoxProgess.setSpacing(10);
         hBoxProgess.setPadding(new Insets(10));
         progress.setVisible(false);
-        hBoxProgess.getChildren().addAll(progress, region, btnIndex);
+        hBoxProgess.getChildren().addAll(progress, region, btnCreateMediaDB);
 
 
         tableMedia.setMinHeight(Const.MIN_TABLE_HEIGHT);
@@ -119,8 +119,8 @@ public class MediaDialogMediaPane extends ScrollPane {
                 Platform.runLater(() -> lblGesamtMedia.setText(daten.mediaDbList.size() + "")));
 
         progress.visibleProperty().bind(daten.mediaDbList.propSearchProperty());
-        btnIndex.disableProperty().bind(daten.mediaDbList.propSearchProperty());
-        btnIndex.setOnAction(e -> daten.mediaDbList.createMediaDB());
+        btnCreateMediaDB.disableProperty().bind(daten.mediaDbList.propSearchProperty());
+        btnCreateMediaDB.setOnAction(e -> daten.mediaDbList.createMediaDb());
 
         btnOpen.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
         btnOpen.setOnAction(e -> open());
