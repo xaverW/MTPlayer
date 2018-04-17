@@ -24,7 +24,7 @@ public class MediaDbData extends Data<MediaDbData> {
     public final static int MEDIA_DB_NAME = 0;
     public final static int MEDIA_DB_PATH = 1;
     public final static int MEDIA_DB_SIZE = 2;
-    public final static int MEDIA_DB_COLLECTION = 3;
+    public final static int MEDIA_DB_COLLECTION_NAME = 3;
     public final static int MEDIA_DB_EXTERN = 4;
 
     public final static int MAX_ELEM = 5;
@@ -48,7 +48,7 @@ public class MediaDbData extends Data<MediaDbData> {
         mediaDbFileSize = new MediaDbFileSize(size);
         arr[MEDIA_DB_SIZE] = mediaDbFileSize.toString();
 
-        arr[MEDIA_DB_COLLECTION] = putzen(sammlung);
+        arr[MEDIA_DB_COLLECTION_NAME] = putzen(sammlung);
         setExtern(extern);
         arr[MEDIA_DB_EXTERN] = Boolean.toString(extern);
     }
@@ -77,12 +77,12 @@ public class MediaDbData extends Data<MediaDbData> {
         arr[MEDIA_DB_SIZE] = size;
     }
 
-    public String getCollection() {
-        return arr[MEDIA_DB_COLLECTION];
+    public String getCollectionName() {
+        return arr[MEDIA_DB_COLLECTION_NAME];
     }
 
-    public void setCollection(String sammlung) {
-        arr[MEDIA_DB_COLLECTION] = sammlung;
+    public void setCollectionName(String sammlung) {
+        arr[MEDIA_DB_COLLECTION_NAME] = sammlung;
     }
 
 

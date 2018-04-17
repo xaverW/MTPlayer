@@ -41,7 +41,7 @@ public class MediaDbList extends SimpleListProperty<MediaDbData> {
     public MediaDbList(Daten daten) {
         super(FXCollections.observableArrayList());
         this.daten = daten;
-        externList = new MediaDbListExtern(this.daten);
+        externList = new MediaDbListExtern();
     }
 
     public boolean isPropSearch() {
@@ -114,7 +114,12 @@ public class MediaDbList extends SimpleListProperty<MediaDbData> {
         th.start();
     }
 
+    public void resetExtern() {
+        externList.mediaDbDataSetAll(this);
+    }
+
     public synchronized void removeCollectionFromMediaDb(String collection) {
         MediaDb.removeCollection(this, collection);
+        resetExtern();
     }
 }

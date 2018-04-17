@@ -42,7 +42,7 @@ public class MediaDb {
         Iterator<MediaDbData> it = mediaDbList.iterator();
         while (it.hasNext()) {
             MediaDbData md = it.next();
-            if (md.isExtern() && md.getCollection().equals(collection)) {
+            if (md.isExtern() && md.getCollectionName().equals(collection)) {
                 it.remove();
             }
         }

@@ -23,7 +23,7 @@ public class MediaDbFileSize implements Comparable<MediaDbFileSize> {
 
     public MediaDbFileSize(long size) {
         sizeL = size;
-        sizeStr = setGroesse(size);
+        sizeStr = setSize(size);
     }
 
     public MediaDbFileSize(String size) {
@@ -32,7 +32,7 @@ public class MediaDbFileSize implements Comparable<MediaDbFileSize> {
         } catch (Exception ignore) {
             sizeL = 0L;
         }
-        sizeStr = setGroesse(sizeL);
+        sizeStr = setSize(sizeL);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class MediaDbFileSize implements Comparable<MediaDbFileSize> {
         return sizeStr;
     }
 
-    private String setGroesse(long l) {
+    private String setSize(long l) {
         // l: Anzahl Bytes
         String ret = "";
         if (l > 1000 * 1000) {

@@ -36,7 +36,7 @@ public class CreateMediaDb implements Runnable {
     private final Daten daten;
     private final MediaDbList mediaDbList;
     private final String path;
-    private final String sammlung;
+    private final String collection;
     private String[] suffix;
     private List search = new ArrayList<MediaDbData>();
 
@@ -51,7 +51,7 @@ public class CreateMediaDb implements Runnable {
     public CreateMediaDb(MediaDbList mediaDbList) {
         daten = Daten.getInstance();
         this.path = "";
-        this.sammlung = "";
+        this.collection = "";
         this.mediaDbList = mediaDbList;
         getSuffix();
     }
@@ -63,10 +63,10 @@ public class CreateMediaDb implements Runnable {
      * @param path
      * @param mediaDbList
      */
-    public CreateMediaDb(String path, MediaDbList mediaDbList, String sammlung) {
+    public CreateMediaDb(String path, MediaDbList mediaDbList, String collection) {
         daten = Daten.getInstance();
         this.path = path;
-        this.sammlung = sammlung;
+        this.collection = collection;
         this.mediaDbList = mediaDbList;
         getSuffix();
     }
@@ -89,7 +89,9 @@ public class CreateMediaDb implements Runnable {
         Listener.notify(Listener.EREIGNIS_MEDIA_DB_START, MediaDbList.class.getSimpleName());
 
         try {
+
             if (path.isEmpty()) {
+                // ===================================
                 // die gesamte MediaDB laden: gespeichert und lokale Filme
                 search.addAll(MediaDb.loadSavedList());
 
@@ -115,7 +117,9 @@ public class CreateMediaDb implements Runnable {
 
                 mediaDbList.setAll(search);
 
+
             } else {
+                // ===================================
                 // dann nur einen Pfad hinzufügen
                 final File f = new File(path);
                 if (!f.canRead()) {
@@ -129,6 +133,7 @@ public class CreateMediaDb implements Runnable {
                     errorMsg();
                 }
                 searchFile(new File(path), true);
+
                 mediaDbList.addAll(search);
                 MediaDb.writeList(mediaDbList);
             }
@@ -160,7 +165,7 @@ public class CreateMediaDb implements Runnable {
                     searchFile(file, extern);
                 } else if (checkSuffix(suffix, file.getName())) {
                     search.add(new MediaDbData(file.getName(), file.getParent().intern(),
-                            file.length(), sammlung, extern));
+                            file.length(), collection, extern));
                 }
             }
         }

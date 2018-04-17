@@ -17,83 +17,63 @@
 package de.mtplayer.mtp.gui.mediaDb;
 
 import de.mtplayer.mLib.tools.Data;
-import de.mtplayer.mtp.controller.config.Const;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 public class MediaDbDataExtern extends Data<MediaDbDataExtern> {
 
-    public final static int MEDIA_DB_COLLECTION_NAME = 0;
-    public final static int MEDIA_DB_PATH = 1;
-    public final static int MEDIA_DB_COUNT = 2;
+    private String collectionName = "";
+    private String path = "";
+    private IntegerProperty count = new SimpleIntegerProperty(0);
 
-    public final static int MAX_ELEM = 3;
-    public final static String[] COLUMN_NAMES = {"Name", "Pfad", "Anzahl"};
-    public final static String[] XML_NAMES = {"Name", "Pfad", "Anzahl"};
-    public static final String TAG = "MediensammlungExtern";
 
-    public String[] arr;
-
-    public MediaDbDataExtern(String name, String pfad) {
-        makeArr();
-        arr[MEDIA_DB_COLLECTION_NAME] = putzen(name);
-        arr[MEDIA_DB_PATH] = putzen(pfad);
-        arr[MEDIA_DB_COUNT] = "0";
+    public MediaDbDataExtern(String name, String path) {
+        setCollectionName(clean(name));
+        setPath(clean(path));
+        setCount(0);
     }
 
     public String getCollectionName() {
-        return arr[MEDIA_DB_COLLECTION_NAME];
+        return collectionName;
+    }
+
+    public void setCollectionName(String collectionName) {
+        this.collectionName = collectionName;
     }
 
     public String getPath() {
-        return arr[MEDIA_DB_PATH];
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public int getCount() {
-        int ret;
-        try {
-            ret = Integer.parseInt(arr[MEDIA_DB_COUNT]);
-        } catch (Exception ignore) {
-            ret = 0;
-        }
-        return ret;
+        return count.get();
     }
 
-    public void setCount(int size) {
-        arr[MEDIA_DB_COUNT] = size + "";
+    public IntegerProperty countProperty() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count.set(count);
     }
 
     public boolean equal(MediaDbData m) {
-        return m.arr[MediaDbData.MEDIA_DB_COLLECTION].equals(arr[MEDIA_DB_COLLECTION_NAME]);
+        return m.arr[MediaDbData.MEDIA_DB_COLLECTION_NAME].equals(getCollectionName());
     }
 
     public boolean equal(MediaDbDataExtern m) {
-        return m.arr[MEDIA_DB_COLLECTION_NAME].equals(arr[MEDIA_DB_COLLECTION_NAME])
-                && m.arr[MEDIA_DB_PATH].equals(arr[MEDIA_DB_PATH]);
+        return m.getCollectionName().equals(getCollectionName())
+                && m.getPath().equals(getPath());
     }
 
-    private static String putzen(String s) {
+    private static String clean(String s) {
         s = s.replace("\n", "");
         s = s.replace("|", "");
         return s;
-    }
-
-    @Override
-    public String toString() {
-        String ret = "";
-        for (int i = 0; i < MAX_ELEM; ++i) {
-            if (i == 0) {
-                ret += "| ***|" + COLUMN_NAMES[i] + ": " + arr[i] + Const.LINE_SEPARATOR;
-            } else {
-                ret += "|    |" + COLUMN_NAMES[i] + ": " + arr[i] + Const.LINE_SEPARATOR;
-            }
-        }
-        return ret;
-    }
-
-    private void makeArr() {
-        arr = new String[MAX_ELEM];
-        for (int i = 0; i < arr.length; ++i) {
-            arr[i] = "";
-        }
     }
 
 }

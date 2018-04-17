@@ -16,23 +16,31 @@
 
 package de.mtplayer.mtp.gui.mediaDb;
 
-import de.mtplayer.mtp.controller.config.Daten;
+import javafx.beans.Observable;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.SortedList;
+import javafx.util.Callback;
 
 import java.util.Collection;
 
 @SuppressWarnings("serial")
 public class MediaDbListExtern extends SimpleListProperty<MediaDbDataExtern> {
 
-    private final Daten daten;
     private SortedList<MediaDbDataExtern> sortedList = null;
 
 
-    public MediaDbListExtern(Daten daten) {
-        super(FXCollections.observableArrayList());
-        this.daten = daten;
+    public MediaDbListExtern() {
+        super(FXCollections.observableArrayList(
+                new Callback<MediaDbDataExtern, Observable[]>() {
+                    @Override
+                    public Observable[] call(MediaDbDataExtern param) {
+                        return new Observable[]{
+                                param.countProperty()
+                        };
+                    }
+                }
+        ));
     }
 
     public SortedList<MediaDbDataExtern> getSortedList() {
@@ -67,7 +75,7 @@ public class MediaDbListExtern extends SimpleListProperty<MediaDbDataExtern> {
         if (extern != null) {
             extern.setCount(extern.getCount() + 1);
         } else {
-            MediaDbDataExtern mde = new MediaDbDataExtern(md.getCollection(), md.getPath());
+            MediaDbDataExtern mde = new MediaDbDataExtern(md.getCollectionName(), md.getPath());
             mde.setCount(1);
             super.add(mde);
         }

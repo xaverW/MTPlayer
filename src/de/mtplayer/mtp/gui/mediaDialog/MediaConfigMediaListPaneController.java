@@ -18,6 +18,7 @@ package de.mtplayer.mtp.gui.mediaDialog;
 
 import de.mtplayer.mLib.tools.CheckBoxCell;
 import de.mtplayer.mtp.controller.config.Config;
+import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.gui.mediaDb.MediaDbData;
 import javafx.application.Platform;
@@ -104,6 +105,8 @@ public class MediaConfigMediaListPaneController extends AnchorPane {
         VBox.setVgrow(tpConfig, Priority.ALWAYS);
 
         TableView<MediaDbData> tableView = new TableView<>();
+        tableView.setMinHeight(Const.MIN_TABLE_HEIGHT);
+        tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         final TableColumn<MediaDbData, String> nameColumn = new TableColumn<>("Name");
@@ -116,7 +119,7 @@ public class MediaConfigMediaListPaneController extends AnchorPane {
         sizeColumn.setCellValueFactory(new PropertyValueFactory<>("size"));
 
         final TableColumn<MediaDbData, String> colColumn = new TableColumn<>("Sammlung");
-        colColumn.setCellValueFactory(new PropertyValueFactory<>("collection"));
+        colColumn.setCellValueFactory(new PropertyValueFactory<>("collectionName"));
 
         final TableColumn<MediaDbData, Boolean> externColumn = new TableColumn<>("extern");
         externColumn.setCellValueFactory(new PropertyValueFactory<>("extern"));
@@ -124,16 +127,17 @@ public class MediaConfigMediaListPaneController extends AnchorPane {
 
         tableView.getColumns().addAll(nameColumn, pathColumn, sizeColumn, colColumn, externColumn);
 
-        nameColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(45.0 / 100));
+
+        nameColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(40.0 / 100));
         pathColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(20.0 / 100));
         sizeColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(10.0 / 100));
         colColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(20.0 / 100));
         externColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(5.0 / 100));
 
         SortedList<MediaDbData> sortedList = daten.mediaDbList.getSortedList();
+        sortedList.comparatorProperty().bind(tableView.comparatorProperty());
         daten.mediaDbList.filterdListClearPred(true);
         tableView.setItems(sortedList);
-        sortedList.comparatorProperty().bind(tableView.comparatorProperty());
 
         VBox.setVgrow(tableView, Priority.ALWAYS);
         vBox.getChildren().addAll(tableView, hBoxSum);
