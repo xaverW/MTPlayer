@@ -26,7 +26,9 @@ import de.mtplayer.mtp.controller.mediaDb.MediaDataExternal;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.dialog.PAlert;
+import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import javafx.beans.binding.Bindings;
+import javafx.collections.transformation.SortedList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -34,6 +36,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.Date;
 
@@ -60,17 +63,14 @@ public class MediaConfigExternPane {
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
         gridPane.setVgap(15);
-        gridPane.setPadding(new Insets(20, 20, 20, 20));
+        gridPane.setPadding(new Insets(20, 0, 0, 0));
 
         final TextField txtPath = new TextField();
-//        txtPath.textProperty().bindBidirectional(Config.MEDIA_DB_PATH_EXTERN.getStringProperty());
-
         final TextField txtName = new TextField();
-        txtName.setText("Sammlung-" + StringFormatters.FORMATTER_ddMMyyyy.format(new Date())
-        );
-//        txtName.textProperty().bindBidirectional(Config.MEDIA_DB_NAME_EXTERN.getStringProperty());
+        txtName.setText("Sammlung-" + StringFormatters.FORMATTER_ddMMyyyy.format(new Date()));
 
         final Button btnPath = new Button("");
+        btnPath.setTooltip(new Tooltip("Einen Pfad zum Einlesen einer neuen Sammlung auswählen."));
         btnPath.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
         btnPath.setOnAction(event -> {
             DirFileChooser.DirChooser(Daten.getInstance().primaryStage, txtPath);
@@ -82,15 +82,17 @@ public class MediaConfigExternPane {
         final Button btnHelpPath = new Button("");
         btnHelpPath.setTooltip(new Tooltip("Hilfe anzeigen."));
         btnHelpPath.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelpPath.setOnAction(a -> new MTAlert().showHelpAlert("Abos automatisch suchen",
-                HelpText.ABOS_SOFRT_SUCHEN)); //todo
+        btnHelpPath.setOnAction(a -> new MTAlert().showHelpAlert("Externe Mediensammlungen verwalten",
+                HelpText.EXTERN_MEDIA_COLLECTION));
 
-        final Button btnAdd = new Button("Neue Sammlung hinzufügen");
-        btnAdd.disableProperty().bind(txtName.textProperty().isEmpty().or(txtPath.textProperty().isEmpty()));
-        GridPane.setHalignment(btnAdd, HPos.RIGHT);
-        btnAdd.disableProperty().bind(daten.mediaList.propSearchProperty());
+        final Button btnAdd = new Button("");
+        btnAdd.setTooltip(new Tooltip("Eine neue Sammlung wird angelegt und vom angegebenen Pfad eingelesen."));
+        btnAdd.setGraphic(new Icons().ICON_BUTTON_ADD);
+
+        btnAdd.disableProperty().bind(txtName.textProperty().isEmpty()
+                .or(txtPath.textProperty().isEmpty())
+                .or(daten.mediaList.propSearchProperty()));
         btnAdd.setOnAction(a -> {
-
             MediaDataExternal found = daten.mediaList.getMediaListExternal().stream()
                     .filter(m -> m.getCollectionName().equals(txtName.getText())).findAny().orElse(null);
             if (found == null ||
@@ -104,35 +106,55 @@ public class MediaConfigExternPane {
         });
 
         int row = 0;
+        GridPane.setHalignment(btnAdd, HPos.RIGHT);
         gridPane.add(new Label("Name der Sammlung:"), 0, row);
         gridPane.add(txtName, 1, row);
-        gridPane.add(btnHelpPath, 2, row);
+        gridPane.add(btnAdd, 2, row);
 
         gridPane.add(new Label("Pfad:"), 0, ++row);
         gridPane.add(txtPath, 1, row);
         gridPane.add(btnPath, 2, row);
 
-        gridPane.add(btnAdd, 1, ++row, 2, 1);
-
-
-        final ColumnConstraints ccTxt = new ColumnConstraints();
-        ccTxt.setFillWidth(true);
-        ccTxt.setMinWidth(Region.USE_COMPUTED_SIZE);
-        ccTxt.setHgrow(Priority.ALWAYS);
-        gridPane.getColumnConstraints().addAll(new ColumnConstraints(), ccTxt);
+        gridPane.getColumnConstraints().addAll(new ColumnConstraints(), PColumnConstraints.getCcComputedSize());
 
         initTable(vBox);
-        Button btnDel = new Button("Sammlung entfernen");
+
+        Button btnUpdate = new Button("");
+        btnUpdate.setTooltip(new Tooltip("Die markierte Sammlung wird neu eingelesen."));
+        btnUpdate.setGraphic(new Icons().ICON_BUTTON_UPDATE);
+        btnUpdate.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
+        btnUpdate.setOnAction(a -> {
+            MediaDataExternal md = tableView.getSelectionModel().getSelectedItem();
+            File file = new File(md.getPath());
+
+            if (!file.exists()) {
+                PAlert.showErrorAlert("Pfad existiert nicht!", "Der Pfad der Sammlung:\n" +
+                        md.getPath() + "\n" +
+                        "existiert nicht. Die Sammlung kann nicht eingelesen werden");
+                return;
+            }
+
+            daten.mediaList.updateCollectionFromMediaDb(md);
+        });
+
+        Button btnDel = new Button("");
+        btnDel.setTooltip(new Tooltip("Die markierte Sammlung wird gelöscht."));
+        btnDel.setGraphic(new Icons().ICON_BUTTON_REMOVE);
         btnDel.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
         btnDel.setOnAction(a -> {
             MediaDataExternal md = tableView.getSelectionModel().getSelectedItem();
             daten.mediaList.removeCollectionFromMediaDb(md.getCollectionName());
         });
 
+        HBox hHelp = new HBox();
+        hHelp.setAlignment(Pos.CENTER_RIGHT);
+        HBox.setHgrow(hHelp, Priority.ALWAYS);
+        hHelp.getChildren().add(btnHelpPath);
+
         HBox hBox = new HBox(10);
         hBox.setAlignment(Pos.CENTER_RIGHT);
-        hBox.getChildren().addAll(btnDel);
 
+        hBox.getChildren().addAll(btnUpdate, btnDel, hHelp);
         vBox.getChildren().add(hBox);
         vBox.getChildren().addAll(gridPane);
     }
@@ -158,7 +180,9 @@ public class MediaConfigExternPane {
         pathColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(40.0 / 100));
         countColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(10.0 / 100));
 
-        tableView.setItems(daten.mediaList.getMediaListExternal());
+        SortedList<MediaDataExternal> sortedList = daten.mediaList.getSortedMediaListExternal();
+        sortedList.comparatorProperty().bind(tableView.comparatorProperty());
+        tableView.setItems(sortedList);
 
         VBox.setVgrow(tableView, Priority.ALWAYS);
         vBox.getChildren().addAll(tableView);

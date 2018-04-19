@@ -31,6 +31,7 @@ public class MediaList extends SimpleListProperty<MediaData> {
 
     private FilteredList<MediaData> filteredList = null;
     private SortedList<MediaData> sortedList = null;
+    private SortedList<MediaDataExternal> sortedListExternal = null;
 
     private BooleanProperty propSearch = new SimpleBooleanProperty(false);
     private MediaListExternal mediaListExternal;
@@ -85,6 +86,14 @@ public class MediaList extends SimpleListProperty<MediaData> {
         return mediaListExternal;
     }
 
+    public SortedList<MediaDataExternal> getSortedMediaListExternal() {
+        if (sortedListExternal == null) {
+            sortedListExternal = new SortedList<>(mediaListExternal);
+        }
+        return sortedListExternal;
+    }
+
+
     public synchronized boolean setAll(Collection<? extends MediaData> mediaDbData) {
         mediaListExternal.mediaDbDataSetAll(mediaDbData);
         return super.setAll(mediaDbData);
@@ -127,12 +136,28 @@ public class MediaList extends SimpleListProperty<MediaData> {
         th.start();
     }
 
-    private void resetExternal() {
-        mediaListExternal.mediaDbDataSetAll(this);
+    public synchronized void removeCollectionFromMediaDb(String collection) {
+        if (isPropSearch()) {
+            // dann mach mers gerade schon :)
+            return;
+        }
+
+        MediaDb.removeCollection(this, collection);
+        MediaDb.writeList(this);
+        resetExternal();
     }
 
-    public synchronized void removeCollectionFromMediaDb(String collection) {
-        MediaDb.removeCollection(this, collection);
-        resetExternal();
+    public synchronized void updateCollectionFromMediaDb(MediaDataExternal md) {
+        if (isPropSearch()) {
+            // dann mach mers gerade schon :)
+            return;
+        }
+
+        MediaDb.removeCollection(this, md.getCollectionName());
+        createMediaDbExternal(md.getPath(), md.getCollectionName());
+    }
+
+    private void resetExternal() {
+        mediaListExternal.mediaDbDataSetAll(this);
     }
 }

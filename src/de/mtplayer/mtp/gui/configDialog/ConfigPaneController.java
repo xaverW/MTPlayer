@@ -197,11 +197,11 @@ public class ConfigPaneController extends AnchorPane {
         btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
 
         final Button btnReset = new Button();
+        btnReset.setGraphic(new Icons().ICON_BUTTON_RESET);
         btnReset.setTooltip(new Tooltip("Standardpfad für das Logfile wieder herstellen."));
         btnReset.setOnAction(event -> {
             txtFileManager.setText(ProgInfos.getStandardLogDirectory_String());
         });
-        btnReset.setGraphic(new Icons().ICON_BUTTON_RESET);
 
         final Button btnChange = new Button("Logfile ändern");
         btnChange.setTooltip(new Tooltip("Mit den geänderten Einstellungen ein neues Logfile erstellen"));

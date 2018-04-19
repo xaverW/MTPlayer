@@ -63,7 +63,6 @@ public class MediaDb {
                 it.remove();
             }
         }
-        writeList(mediaDbList);
     }
 
     static Path getFilePath() {

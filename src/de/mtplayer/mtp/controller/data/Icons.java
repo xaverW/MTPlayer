@@ -28,6 +28,7 @@ public class Icons {
 
 
     public final ImageView ICON_BUTTON_RESET = GetIcon.getImageView("button-reset.png", 16, 16);
+    public final ImageView ICON_BUTTON_UPDATE = GetIcon.getImageView("button-update.png", 16, 16);
     public final ImageView ICON_BUTTON_EDIT_FILTER = GetIcon.getImageView("button-edit-filter.png", 16, 16);
     public final ImageView ICON_BUTTON_MENUE = GetIcon.getImageView("menue.png", 18, 15);
     public final ImageView ICON_BUTTON_HELP = GetIcon.getImageView("button-help.png", 16, 16);

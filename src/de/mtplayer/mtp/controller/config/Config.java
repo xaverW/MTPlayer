@@ -162,8 +162,6 @@ public class Config extends MLConfig {
     public static MLConfigs MEDIA_DIALOG_SIZE = addNewKey("media-dialog-size", "800:700");
     public static MLConfigs MEDIA_DB_SUFFIX = addNewKey("media-db-suffix");
     public static MLConfigs MEDIA_DB_WITH_OUT_SUFFIX = addNewKey("media-db-with-out-suffix");
-    public static MLConfigs MEDIA_DB_PATH_EXTERN = addNewKey("media-db-path-extern");
-    public static MLConfigs MEDIA_DB_NAME_EXTERN = addNewKey("media-db-name-extern");
 
     // Filter
     public static MLConfigs FILTER_ABO_SENDER = addNewKey("filter-abo-sender");

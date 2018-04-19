@@ -342,4 +342,10 @@ public class HelpText {
             "und die Standardanwendung (z.B. \"Firefox\") nicht startet, " +
             "kann damit ein Programm ausgewählt und " +
             "fest zugeordnet werden (z.B. der Browser \"Firefox\").";
+
+    public static final String EXTERN_MEDIA_COLLECTION = "Externe Mediensammlungen werden nicht bei " +
+            "jedem Programmstart neu eingelesen. Die können dadurch auf externen Medien liegen und " +
+            "müssen nur einmal eingelesen werden. Hier können externe Mediensammlungen verwaltet werden:\n" +
+            "Neue anlegen, aktualisieren oder auch wieder löschen." +
+            "";
 }

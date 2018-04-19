@@ -24,14 +24,12 @@ import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.mediaDb.MediaPathData;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
+import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import org.controlsfx.control.table.TableRowExpanderColumn;
 
 import java.util.Collection;
@@ -66,9 +64,9 @@ public class MediaConfigPathPane {
         vBox.getChildren().addAll(tableView);
 
 
-        Button del = new Button("");
-        del.setGraphic(new Icons().ICON_BUTTON_REMOVE);
-        del.setOnAction(event -> {
+        Button btnDel = new Button("");
+        btnDel.setGraphic(new Icons().ICON_BUTTON_REMOVE);
+        btnDel.setOnAction(event -> {
             final ObservableList<MediaPathData> sels = tableView.getSelectionModel().getSelectedItems();
             if (sels == null || sels.isEmpty()) {
                 new MTAlert().showInfoNoSelection();
@@ -88,9 +86,9 @@ public class MediaConfigPathPane {
             DirFileChooser.DirChooser(Daten.getInstance().primaryStage, txtPath);
         });
 
-        Button btnNeu = new Button("");
-        btnNeu.setGraphic(new Icons().ICON_BUTTON_ADD);
-        btnNeu.setOnAction(event -> {
+        Button btnAdd = new Button("");
+        btnAdd.setGraphic(new Icons().ICON_BUTTON_ADD);
+        btnAdd.setOnAction(event -> {
             MediaPathData mediaPathData = new MediaPathData(txtPath.getText());
             if (daten.mediaPathList.addSave(mediaPathData)) {
                 tableView.getSelectionModel().select(mediaPathData);
@@ -100,14 +98,23 @@ public class MediaConfigPathPane {
                         "Der Pfad ist schon enthalten");
             }
         });
-        btnNeu.disableProperty().bind(txtPath.textProperty().isEmpty());
+        btnAdd.disableProperty().bind(txtPath.textProperty().isEmpty());
 
-        HBox hBox1 = new HBox();
-        hBox1.setSpacing(10);
-        hBox1.getChildren().addAll(del, btnNeu, txtPath, btnFile);
+
+        final GridPane gridPane = new GridPane();
+        gridPane.setHgap(15);
+        gridPane.setVgap(15);
+        gridPane.setPadding(new Insets(20, 0, 0, 0));
+
+        gridPane.add(new Label("Pfad:"), 0, 0);
+        gridPane.add(txtPath, 1, 0);
+        gridPane.add(btnFile, 2, 0);
+        gridPane.add(btnAdd, 3, 0);
+
+        gridPane.getColumnConstraints().addAll(new ColumnConstraints(), PColumnConstraints.getCcComputedSize());
 
         HBox.setHgrow(txtPath, Priority.ALWAYS);
-        vBox.getChildren().addAll(hBox1);
+        vBox.getChildren().addAll(btnDel, gridPane);
     }
 
 
