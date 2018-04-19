@@ -36,7 +36,7 @@ public class CreateMediaDb implements Runnable {
     private final Daten daten;
     private final MediaList mediaList;
     private final String path;
-    private final String collection;
+    private final String collName;
     private String[] suffix;
     private List search = new ArrayList<MediaData>();
 
@@ -52,7 +52,7 @@ public class CreateMediaDb implements Runnable {
         daten = Daten.getInstance();
         this.mediaList = mediaList;
         this.path = "";
-        this.collection = "";
+        this.collName = "";
         getSuffix();
     }
 
@@ -63,11 +63,11 @@ public class CreateMediaDb implements Runnable {
      * @param path
      * @param mediaList
      */
-    public CreateMediaDb(MediaList mediaList, String path, String collection) {
+    public CreateMediaDb(MediaList mediaList, String path, String collName) {
         daten = Daten.getInstance();
         this.mediaList = mediaList;
         this.path = path;
-        this.collection = collection;
+        this.collName = collName;
         getSuffix();
     }
 
@@ -153,7 +153,7 @@ public class CreateMediaDb implements Runnable {
                     searchFile(file, extern);
                 } else if (checkSuffix(suffix, file.getName())) {
                     search.add(new MediaData(file.getName(), file.getParent().intern(),
-                            file.length(), collection, extern));
+                            file.length(), collName.intern(), extern));
                 }
             }
         }

@@ -83,7 +83,7 @@ public class MediaDb {
         return new ReadMediaDb(daten).read(urlPath);
     }
 
-    static synchronized void writeList(List<MediaData> mediaData) {
+    static synchronized void writeList(List<MediaData> mediaDataList) {
         final Path path = getFilePath();
 
         ArrayList<String> list = new ArrayList<>();
@@ -101,7 +101,7 @@ public class MediaDb {
                 return;
             }
 
-            List<MediaData> mediaList = mediaData.stream().filter(m -> m.isExternal()).collect(Collectors.toList());
+            List<MediaData> mediaList = mediaDataList.stream().filter(m -> m.isExternal()).collect(Collectors.toList());
             new WriteMediaDb().write(path, mediaList);
             list.add("   --> geschrieben!");
 
