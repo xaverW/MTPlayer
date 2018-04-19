@@ -118,7 +118,6 @@ public class ListePsetVorlagen extends LinkedList<String[]> {
                 event = parser.next();
                 if (event == XMLStreamConstants.START_ELEMENT) {
                     if (parser.getLocalName().equals(PGR)) {
-                        //wieder ein neuer Server, toll
                         final String[] p = new String[PGR_MAX_ELEM];
                         get(parser, PGR, PGR_COLUMN_NAMES, p);
                         if (!p[PGR_URL_NR].isEmpty()) {
@@ -153,10 +152,6 @@ public class ListePsetVorlagen extends LinkedList<String[]> {
         }
     }
 
-//    public static SetList importPsetText(Daten dd, String text, boolean log) {
-//        return ListePsetVorlagen.importPset(new InputStreamReader(new ByteArrayInputStream(text.getBytes())), log);
-//    }
-
     private static SetList importPset(InputStreamReader in) {
         SetData psetData = null;
         final SetList liste = new SetList();
@@ -169,7 +164,6 @@ public class ListePsetVorlagen extends LinkedList<String[]> {
             while (parser.hasNext()) {
                 event = parser.next();
                 if (event == XMLStreamConstants.START_ELEMENT) {
-                    //String t = parser.getLocalName();
                     switch (parser.getLocalName()) {
                         case SetData.TAG:
                             psetData = new SetData();

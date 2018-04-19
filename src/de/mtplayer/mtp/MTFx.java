@@ -54,7 +54,7 @@ public class MTFx extends Application {
     private static final int ICON_WIDTH = 58;
     private static final int ICON_HEIGHT = 58;
 
-    private static final String LOG_TEXT_PROGRAMMSTART = "***Programmstart***";
+    private static final String LOG_TEXT_PROGRAMMSTART = "Dauer Programmstart";
 
     private static final String TITLE_TEXT_PROGRAMMVERSION_IST_AKTUELL = "Programmversion ist aktuell";
     private static final String TITLE_TEXT_EIN_PROGRAMMUPDATE_IST_VERFUEGBAR = "Ein Programmupdate ist verfügbar";
@@ -80,6 +80,7 @@ public class MTFx extends Application {
         loadData();
         initRootLayout();
         losGehts();
+        Duration.counterStop(LOG_TEXT_PROGRAMMSTART);
     }
 
     private void initRootLayout() {
@@ -108,7 +109,6 @@ public class MTFx extends Application {
     }
 
     private void losGehts() {
-        Duration.counterStop(LOG_TEXT_PROGRAMMSTART);
         primaryStage.getIcons().add(GetIcon.getImage(ICON_NAME, ICON_PATH, ICON_WIDTH, ICON_HEIGHT));
 
         progStart.startMsg();
@@ -125,7 +125,6 @@ public class MTFx extends Application {
 
         if (!progStart.allesLaden()) {
 
-            // konnte nicht geladen werden
             Duration.staticPing("Erster Start");
 
             // einmal ein Muster anlegen, für Linux ist es bereits aktiv!
@@ -133,7 +132,8 @@ public class MTFx extends Application {
 
             new StartDialogController();
 
-            //todo das ist noch nicht ganz klar ob dahin
+//            //todo das ist noch nicht ganz klar ob dahin
+            Duration.staticPing("Erster Start: PSet");
             Platform.runLater(() -> {
                 // kann ein Dialog aufgehen
                 final SetList pSet = ListePsetVorlagen.getStandarset(true /*replaceMuster*/);
@@ -141,9 +141,9 @@ public class MTFx extends Application {
                     daten.setList.addPset(pSet);
                     Config.SYSTEM_UPDATE_PROGSET_VERSION.setValue(pSet.version);
                 }
+                Duration.staticPing("Erster Start: PSet geladen");
             });
 
-//            Config.loadSystemParameter();
             ProgInitFilter.setProgInitFilter();
         }
         daten.initDialogs();
@@ -188,11 +188,6 @@ public class MTFx extends Application {
             PLog.sysLog("Kein Update-Check");
             return;
         }
-
-        check();
-    }
-
-    private synchronized void check() {
 
         Thread th = new Thread(() -> {
             try {
