@@ -104,22 +104,34 @@ public class MediaList extends SimpleListProperty<MediaData> {
         th.start();
     }
 
-    public synchronized void createMediaDbExternal(MediaPathData mediaPathData) {
-        createMediaDbExternal(mediaPathData.getPath(), mediaPathData.getCollectionName());
+    public synchronized void createCollection(MediaPathData mediaPathData) {
+        createCollection(mediaPathData.getPath(), mediaPathData.getCollectionName());
     }
 
-    public synchronized void createMediaDbExternal(String path, String collection) {
+    public synchronized void createCollection(String path, String collection) {
         if (isPropSearch()) {
             // dann mach mers gerade schon :)
             return;
         }
 
         Thread th = new Thread(new CreateMediaDb(this, path, collection));
-        th.setName("createMediaDbExternal");
+        th.setName("createCollection");
         th.start();
     }
 
-    public synchronized void removeCollectionFromMediaDb(MediaPathData mediaPathData) {
+    public synchronized void updateCollection(MediaPathData mediaPathData) {
+        if (isPropSearch()) {
+            // dann mach mers gerade schon :)
+            return;
+        }
+
+        MediaDb.removeCollectionMedia(this, mediaPathData);
+        mediaPathData.setCount(0);
+        
+        createCollection(mediaPathData);
+    }
+
+    public synchronized void removeCollection(MediaPathData mediaPathData) {
         if (isPropSearch()) {
             // dann mach mers gerade schon :)
             return;
@@ -127,15 +139,5 @@ public class MediaList extends SimpleListProperty<MediaData> {
 
         MediaDb.removeCollection(this, mediaPathData);
         MediaDb.writeList(this);
-    }
-
-    public synchronized void updateCollectionFromMediaDb(MediaPathData mediaPathData) {
-        if (isPropSearch()) {
-            // dann mach mers gerade schon :)
-            return;
-        }
-
-        MediaDb.removeCollection(this, mediaPathData);
-        createMediaDbExternal(mediaPathData);
     }
 }

@@ -99,7 +99,7 @@ public class MediaConfigPanePathExtern {
                                     "Sollen weitere Filme in " +
                                     "die Sammlung integriert werden?").equals(PAlert.BUTTON.YES)) {
 
-                daten.mediaList.createMediaDbExternal(txtPath.getText(), txtName.getText());
+                daten.mediaList.createCollection(txtPath.getText(), txtName.getText());
             }
         });
 
@@ -122,17 +122,17 @@ public class MediaConfigPanePathExtern {
         btnUpdate.setGraphic(new Icons().ICON_BUTTON_UPDATE);
         btnUpdate.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
         btnUpdate.setOnAction(a -> {
-            MediaPathData md = tableView.getSelectionModel().getSelectedItem();
-            File file = new File(md.getPath());
+            MediaPathData mediaPathData = tableView.getSelectionModel().getSelectedItem();
 
+            File file = new File(mediaPathData.getPath());
             if (!file.exists()) {
                 PAlert.showErrorAlert("Pfad existiert nicht!", "Der Pfad der Sammlung:\n" +
-                        md.getPath() + "\n" +
+                        mediaPathData.getPath() + "\n" +
                         "existiert nicht. Die Sammlung kann nicht eingelesen werden");
                 return;
             }
 
-            daten.mediaList.updateCollectionFromMediaDb(md);
+            daten.mediaList.updateCollection(mediaPathData);
         });
 
         Button btnDel = new Button("");
@@ -141,7 +141,7 @@ public class MediaConfigPanePathExtern {
         btnDel.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
         btnDel.setOnAction(a -> {
             MediaPathData md = tableView.getSelectionModel().getSelectedItem();
-            daten.mediaList.removeCollectionFromMediaDb(md);
+            daten.mediaList.removeCollection(md);
         });
 
         HBox hHelp = new HBox();

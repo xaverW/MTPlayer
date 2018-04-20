@@ -55,9 +55,14 @@ public class MediaDb {
             }
         }
 
+        countExternalMediaData(mediaDataList);
+    }
+
+    static void countExternalMediaData(List<MediaData> mediaDataList) {
+        // creates the counter in the pathList
         final MediaPathList mediaPathList = Daten.getInstance().mediaPathList;
+
         mediaPathList.stream().forEach(m -> m.setCount(0));
-        
         mediaDataList.stream().filter(md -> md.isExternal()).forEach(mediaData -> {
 
             if (!mediaPathList.containExternal(mediaData)) {
@@ -68,8 +73,8 @@ public class MediaDb {
         });
     }
 
-    static void removeCollection(List<MediaData> mediaDataList, MediaPathData mediaPathData) {
-        // remove collection AND all media of this collection
+    static void removeCollectionMedia(List<MediaData> mediaDataList, MediaPathData mediaPathData) {
+        // remove all media of this collection
         Iterator<MediaData> itMedia = mediaDataList.iterator();
         while (itMedia.hasNext()) {
             MediaData md = itMedia.next();
@@ -77,6 +82,11 @@ public class MediaDb {
                 itMedia.remove();
             }
         }
+    }
+
+    static void removeCollection(List<MediaData> mediaDataList, MediaPathData mediaPathData) {
+        // remove collection AND all media of this collection
+        removeCollectionMedia(mediaDataList, mediaPathData);
 
         Iterator<MediaPathData> itPath = daten.mediaPathList.iterator();
         while (itPath.hasNext()) {
@@ -85,7 +95,6 @@ public class MediaDb {
                 itPath.remove();
             }
         }
-
     }
 
     static Path getFilePath() {
