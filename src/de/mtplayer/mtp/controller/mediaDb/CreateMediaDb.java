@@ -36,11 +36,11 @@ public class CreateMediaDb implements Runnable {
     private final Daten daten;
     private final MediaList mediaList;
     private final String path;
-    private final String collName;
+    private final String collection;
     private String[] suffix;
     private List search = new ArrayList<MediaData>();
 
-    final boolean ohneSuffix = Boolean.parseBoolean(Config.MEDIA_DB_WITH_OUT_SUFFIX.get());
+    final boolean withoutSuffix = Boolean.parseBoolean(Config.MEDIA_DB_WITH_OUT_SUFFIX.get());
 
     /**
      * duchsucht die vom User angelegten Pfade für die Mediensammlung
@@ -52,7 +52,7 @@ public class CreateMediaDb implements Runnable {
         daten = Daten.getInstance();
         this.mediaList = mediaList;
         this.path = "";
-        this.collName = "";
+        this.collection = "";
         getSuffix();
     }
 
@@ -63,11 +63,11 @@ public class CreateMediaDb implements Runnable {
      * @param path
      * @param mediaList
      */
-    public CreateMediaDb(MediaList mediaList, String path, String collName) {
+    public CreateMediaDb(MediaList mediaList, String path, String collection) {
         daten = Daten.getInstance();
         this.mediaList = mediaList;
         this.path = path;
-        this.collName = collName;
+        this.collection = collection;
         getSuffix();
     }
 
@@ -85,7 +85,7 @@ public class CreateMediaDb implements Runnable {
                 // die gesamte MediaDB laden: gespeichert und lokale Filme
                 search.addAll(MediaDb.loadSavedList());
 
-                for (final MediaPathData mediaPathData : daten.mediaPathList) {
+                for (final MediaPathData mediaPathData : daten.mediaPathList.getInternalList()) {
                     final File f = new File(mediaPathData.getPath());
                     if (!f.canRead()) {
                         if (!error.isEmpty()) {
@@ -99,11 +99,11 @@ public class CreateMediaDb implements Runnable {
                     // Verzeichnisse können nicht durchsucht werden
                     errorMsg();
                 }
-                daten.mediaPathList.stream().forEach((mp) ->
+                daten.mediaPathList.getInternalList().stream().forEach((mp) ->
                         searchFile(new File(mp.getPath()), false));
 
                 mediaList.setAll(search);
-
+                mediaList.checkExternalMediaData();
 
             } else {
                 // ===================================
@@ -121,8 +121,9 @@ public class CreateMediaDb implements Runnable {
                 }
                 searchFile(new File(path), true);
 
+                daten.mediaPathList.addExternal(collection, path);
                 mediaList.addAll(search);
-                mediaList.checkExternDuplicates();
+                mediaList.checkExternalMediaData();
                 MediaDb.writeList(mediaList);
             }
 
@@ -142,7 +143,7 @@ public class CreateMediaDb implements Runnable {
                         : "Der Pfad der Mediensammlung kann nicht gelesen werden:\n") + error));
     }
 
-    private void searchFile(File dir, boolean extern) {
+    private void searchFile(File dir, boolean external) {
         if (dir == null) {
             return;
         }
@@ -150,10 +151,10 @@ public class CreateMediaDb implements Runnable {
         if (files != null) {
             for (final File file : files) {
                 if (file.isDirectory()) {
-                    searchFile(file, extern);
+                    searchFile(file, external);
                 } else if (checkSuffix(suffix, file.getName())) {
                     search.add(new MediaData(file.getName(), file.getParent().intern(),
-                            file.length(), collName.intern(), extern));
+                            file.length(), collection.intern(), external));
                 }
             }
         }
@@ -169,7 +170,7 @@ public class CreateMediaDb implements Runnable {
         }
     }
 
-    private boolean checkSuffix(String[] str, String uurl) {
+    private boolean checkSuffix(String[] str, String url) {
         // liefert TRUE wenn die Datei in die Mediensammlung kommt
         // prüfen ob url mit einem Argument in str endet
         // wenn str leer dann true
@@ -178,17 +179,17 @@ public class CreateMediaDb implements Runnable {
         }
 
         boolean ret = true;
-        final String url = uurl.toLowerCase();
+        final String urlLowerCase = url.toLowerCase();
         for (final String s : str) {
             //Suffix prüfen
-            if (ohneSuffix) {
-                if (url.endsWith(s)) {
+            if (withoutSuffix) {
+                if (urlLowerCase.endsWith(s)) {
                     ret = false;
                     break;
                 }
             } else {
                 ret = false;
-                if (url.endsWith(s)) {
+                if (urlLowerCase.endsWith(s)) {
                     ret = true;
                     break;
                 }

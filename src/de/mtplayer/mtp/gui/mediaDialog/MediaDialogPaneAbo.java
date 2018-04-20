@@ -29,7 +29,7 @@ import javafx.scene.layout.*;
 import java.util.Date;
 import java.util.regex.Pattern;
 
-public class MediaDialogAboPane extends ScrollPane {
+public class MediaDialogPaneAbo extends ScrollPane {
 
     Label lblGesamtAbo = new Label();
     Label lblTrefferAbo = new Label();
@@ -40,7 +40,7 @@ public class MediaDialogAboPane extends ScrollPane {
     Daten daten = Daten.getInstance();
     String searchStr = "";
 
-    public MediaDialogAboPane() {
+    public MediaDialogPaneAbo() {
         initPanel();
     }
 

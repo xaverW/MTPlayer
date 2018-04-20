@@ -18,15 +18,108 @@ package de.mtplayer.mtp.controller.mediaDb;
 
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
+
+import java.util.stream.Collectors;
 
 @SuppressWarnings("serial")
 public class MediaPathList extends SimpleListProperty<MediaPathData> {
+
+    private FilteredList<MediaPathData> filteredList = null;
+    private SortedList<MediaPathData> sortedList = null;
+    private FilteredList<MediaPathData> filteredListExternal = null;
+    private SortedList<MediaPathData> sortedListExternal = null;
 
     public MediaPathList() {
         super(FXCollections.observableArrayList());
     }
 
-    public boolean addSave(MediaPathData dmp) {
+
+    public FilteredList<MediaPathData> getFilteredList() {
+        if (filteredList == null) {
+            filteredList = new FilteredList<>(this, p -> !p.isExternal());
+        }
+        return filteredList;
+    }
+
+    public SortedList<MediaPathData> getSortedList() {
+        filteredList = getFilteredList();
+        if (sortedList == null) {
+            sortedList = new SortedList<>(filteredList);
+        }
+        return sortedList;
+    }
+
+    public FilteredList<MediaPathData> getFilteredListExternal() {
+        if (filteredListExternal == null) {
+            filteredListExternal = new FilteredList<>(this, p -> p.isExternal());
+        }
+        return filteredListExternal;
+    }
+
+    public SortedList<MediaPathData> getSortedListExternal() {
+        filteredListExternal = getFilteredListExternal();
+        if (sortedListExternal == null) {
+            sortedListExternal = new SortedList<>(filteredListExternal);
+        }
+        return sortedListExternal;
+    }
+
+
+    public MediaPathList getInternalList() {
+        MediaPathList list = new MediaPathList();
+        list.addAll(this.stream().filter(l -> !l.isExternal()).collect(Collectors.toList()));
+        return list;
+    }
+
+    public MediaPathList getExternalList() {
+        MediaPathList list = new MediaPathList();
+        list.addAll(this.stream().filter(l -> l.isExternal()).collect(Collectors.toList()));
+        return list;
+    }
+
+    public boolean addExternal(String collection, String path) {
+        boolean ret = false;
+        MediaPathData md = this.stream()
+                .filter(m -> m.isExternal())
+                .filter(m -> m.getCollectionName().equals(collection))
+                .findAny().orElse(null);
+        if (md != null) {
+            md.setPath(path);
+        } else {
+            add(new MediaPathData(path, collection, true));
+            ret = true;
+        }
+        return ret;
+    }
+
+    public boolean containExternal(MediaData dm) {
+        MediaPathData md = this.stream()
+                .filter(m -> m.isExternal())
+                .filter(m -> m.getCollectionName().equals(dm.getCollectionName()))
+                .findAny().orElse(null);
+        if (md != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public int addCounter(MediaData dm) {
+        MediaPathData md = this.stream()
+                .filter(m -> m.isExternal())
+                .filter(m -> m.getCollectionName().equals(dm.getCollectionName()))
+                .findAny().orElse(null);
+        if (md != null) {
+            md.setCount(md.getCount() + 1);
+            return md.getCount();
+        } else {
+            return 0;
+        }
+    }
+
+    public boolean addInternal(MediaPathData dmp) {
         if (contain(dmp)) {
             return false;
         }

@@ -39,9 +39,9 @@ public class MediaDb {
 
     final static Daten daten = Daten.getInstance();
 
-    static void checkExternalDuplicates(List<MediaData> mediaDbList) {
-        HashSet<String> hashSet = new HashSet<>(mediaDbList.size());
-        Iterator<MediaData> it = mediaDbList.iterator();
+    static void checkExternalMediaData(List<MediaData> mediaDataList) {
+        HashSet<String> hashSet = new HashSet<>(mediaDataList.size());
+        Iterator<MediaData> it = mediaDataList.iterator();
         while (it.hasNext()) {
             MediaData md = it.next();
             if (!md.isExternal()) {
@@ -53,16 +53,36 @@ public class MediaDb {
                 it.remove();
             }
         }
+
+        final MediaPathList mediaPathList = Daten.getInstance().mediaPathList;
+        mediaDataList.stream().filter(md -> md.isExternal()).forEach(mediaData -> {
+
+            if (!mediaPathList.containExternal(mediaData)) {
+                mediaPathList.addExternal(mediaData.getCollectionName(), mediaData.getPath());
+            }
+            mediaPathList.addCounter(mediaData);
+
+        });
     }
 
-    static void removeCollection(List<MediaData> mediaDbList, String collection) {
-        Iterator<MediaData> it = mediaDbList.iterator();
-        while (it.hasNext()) {
-            MediaData md = it.next();
-            if (md.isExternal() && md.getCollectionName().equals(collection)) {
-                it.remove();
+    static void removeCollection(List<MediaData> mediaDataList, MediaPathData mediaPathData) {
+        // remove collection AND all media of this collection
+        Iterator<MediaData> itMedia = mediaDataList.iterator();
+        while (itMedia.hasNext()) {
+            MediaData md = itMedia.next();
+            if (md.isExternal() && md.getCollectionName().equals(mediaPathData.getCollectionName())) {
+                itMedia.remove();
             }
         }
+
+        Iterator<MediaPathData> itPath = daten.mediaPathList.iterator();
+        while (itMedia.hasNext()) {
+            MediaPathData md = itPath.next();
+            if (md.isExternal() && md.getCollectionName().equals(mediaPathData.getCollectionName())) {
+                itPath.remove();
+            }
+        }
+
     }
 
     static Path getFilePath() {

@@ -34,11 +34,11 @@ import org.controlsfx.control.table.TableRowExpanderColumn;
 
 import java.util.Collection;
 
-public class MediaConfigPathPane {
+public class MediaConfigPanePath {
 
     private final Daten daten;
 
-    public MediaConfigPathPane() {
+    public MediaConfigPanePath() {
         this.daten = Daten.getInstance();
     }
 
@@ -58,7 +58,7 @@ public class MediaConfigPathPane {
         pathColumn.setCellValueFactory(new PropertyValueFactory<>("path"));
 
         tableView.getColumns().addAll(expander, pathColumn);
-        tableView.setItems(daten.mediaPathList);
+        tableView.setItems(daten.mediaPathList.getSortedList());
 
         VBox.setVgrow(tableView, Priority.ALWAYS);
         vBox.getChildren().addAll(tableView);
@@ -90,7 +90,7 @@ public class MediaConfigPathPane {
         btnAdd.setGraphic(new Icons().ICON_BUTTON_ADD);
         btnAdd.setOnAction(event -> {
             MediaPathData mediaPathData = new MediaPathData(txtPath.getText());
-            if (daten.mediaPathList.addSave(mediaPathData)) {
+            if (daten.mediaPathList.addInternal(mediaPathData)) {
                 tableView.getSelectionModel().select(mediaPathData);
                 tableView.scrollTo(mediaPathData);
             } else {

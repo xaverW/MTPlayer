@@ -26,20 +26,16 @@ import javafx.collections.transformation.SortedList;
 import java.util.Collection;
 import java.util.function.Predicate;
 
-@SuppressWarnings("serial")
 public class MediaList extends SimpleListProperty<MediaData> {
 
     private FilteredList<MediaData> filteredList = null;
     private SortedList<MediaData> sortedList = null;
-    private SortedList<MediaDataExternal> sortedListExternal = null;
 
     private BooleanProperty propSearch = new SimpleBooleanProperty(false);
-    private MediaListExternal mediaListExternal;
 
 
     public MediaList() {
         super(FXCollections.observableArrayList());
-        mediaListExternal = new MediaListExternal();
     }
 
     public boolean isPropSearch() {
@@ -55,22 +51,21 @@ public class MediaList extends SimpleListProperty<MediaData> {
     }
 
     public SortedList<MediaData> getSortedList() {
-        if (sortedList == null || filteredList == null) {
-            filteredList = new FilteredList<>(this, p -> true);
+        filteredList = getFilteredList();
+        if (sortedList == null) {
             sortedList = new SortedList<>(filteredList);
         }
         return sortedList;
     }
 
     public FilteredList<MediaData> getFilteredList() {
-        if (sortedList == null || filteredList == null) {
+        if (filteredList == null) {
             filteredList = new FilteredList<>(this, p -> true);
-            sortedList = new SortedList<>(filteredList);
         }
         return filteredList;
     }
 
-    public synchronized void filterdListSetPred(Predicate<MediaData> predicate) {
+    public synchronized void filteredListSetPredicate(Predicate<MediaData> predicate) {
         filteredList.setPredicate(predicate);
     }
 
@@ -82,36 +77,20 @@ public class MediaList extends SimpleListProperty<MediaData> {
         filteredList.setPredicate(p -> pred);
     }
 
-    public MediaListExternal getMediaListExternal() {
-        return mediaListExternal;
+    public synchronized boolean setAll(Collection<? extends MediaData> mediaData) {
+        return super.setAll(mediaData);
     }
 
-    public SortedList<MediaDataExternal> getSortedMediaListExternal() {
-        if (sortedListExternal == null) {
-            sortedListExternal = new SortedList<>(mediaListExternal);
-        }
-        return sortedListExternal;
-    }
-
-
-    public synchronized boolean setAll(Collection<? extends MediaData> mediaDbData) {
-        mediaListExternal.mediaDbDataSetAll(mediaDbData);
-        return super.setAll(mediaDbData);
-    }
-
-    public synchronized boolean addAll(Collection<? extends MediaData> mediaDbData) {
-        mediaListExternal.mediaDbDataAddAll(mediaDbData);
-        return super.addAll(mediaDbData);
+    public synchronized boolean addAll(Collection<? extends MediaData> mediaData) {
+        return super.addAll(mediaData);
     }
 
     public synchronized boolean add(MediaData mediaData) {
-        mediaListExternal.mediaDbDataAdd(mediaData);
         return super.add(mediaData);
     }
 
-    public synchronized void checkExternDuplicates() {
-        MediaDb.checkExternalDuplicates(this);
-        resetExternal();
+    public synchronized void checkExternalMediaData() {
+        MediaDb.checkExternalMediaData(this);
     }
 
     public synchronized void createMediaDb() {
@@ -125,39 +104,39 @@ public class MediaList extends SimpleListProperty<MediaData> {
         th.start();
     }
 
-    public synchronized void createMediaDbExternal(String pathStr, String collName) {
+    public synchronized void createMediaDbExternal(MediaPathData mediaPathData) {
+        createMediaDbExternal(mediaPathData.getPath(), mediaPathData.getCollectionName());
+    }
+
+    public synchronized void createMediaDbExternal(String path, String collection) {
         if (isPropSearch()) {
             // dann mach mers gerade schon :)
             return;
         }
 
-        Thread th = new Thread(new CreateMediaDb(this, pathStr, collName));
+        Thread th = new Thread(new CreateMediaDb(this,
+                path, collection));
         th.setName("createMediaDbExternal");
         th.start();
     }
 
-    public synchronized void removeCollectionFromMediaDb(String collection) {
+    public synchronized void removeCollectionFromMediaDb(MediaPathData mediaPathData) {
         if (isPropSearch()) {
             // dann mach mers gerade schon :)
             return;
         }
 
-        MediaDb.removeCollection(this, collection);
+        MediaDb.removeCollection(this, mediaPathData);
         MediaDb.writeList(this);
-        resetExternal();
     }
 
-    public synchronized void updateCollectionFromMediaDb(MediaDataExternal md) {
+    public synchronized void updateCollectionFromMediaDb(MediaPathData mediaPathData) {
         if (isPropSearch()) {
             // dann mach mers gerade schon :)
             return;
         }
 
-        MediaDb.removeCollection(this, md.getCollectionName());
-        createMediaDbExternal(md.getPath(), md.getCollectionName());
-    }
-
-    private void resetExternal() {
-        mediaListExternal.mediaDbDataSetAll(this);
+        MediaDb.removeCollection(this, mediaPathData);
+        createMediaDbExternal(mediaPathData);
     }
 }

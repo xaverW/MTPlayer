@@ -31,7 +31,7 @@ import javafx.scene.layout.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class MediaConfigHistoryPaneController extends AnchorPane {
+public class MediaConfigPaneHistoryController extends AnchorPane {
 
     private final Daten daten;
     private final boolean history;
@@ -43,7 +43,7 @@ public class MediaConfigHistoryPaneController extends AnchorPane {
     private final BooleanProperty accordionProp = Config.MEDIA_CONFIG_DIALOG_ACCORDION.getBooleanProperty();
     private ScrollPane scrollPane = new ScrollPane();
 
-    public MediaConfigHistoryPaneController(boolean history) {
+    public MediaConfigPaneHistoryController(boolean history) {
         daten = Daten.getInstance();
         this.history = history;
 
@@ -143,7 +143,7 @@ public class MediaConfigHistoryPaneController extends AnchorPane {
                 if (historyDataArrayList.isEmpty()) {
                     new MTAlert().showInfoNoSelection();
                 } else {
-                    ContextMenu contextMenu = new MediaConfigHistoryPaneContextMenu(historyDataArrayList, history).getContextMenue();
+                    ContextMenu contextMenu = new MediaConfigPaneHistoryContextMenu(historyDataArrayList, history).getContextMenue();
                     tableView.setContextMenu(contextMenu);
 
                 }

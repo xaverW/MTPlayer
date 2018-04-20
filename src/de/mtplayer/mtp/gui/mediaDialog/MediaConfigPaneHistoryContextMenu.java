@@ -25,13 +25,13 @@ import javafx.scene.control.MenuItem;
 
 import java.util.ArrayList;
 
-public class MediaConfigHistoryPaneContextMenu {
+public class MediaConfigPaneHistoryContextMenu {
 
     private final Daten daten;
     private final ArrayList<HistoryData> historyDataArrayList;
     private final boolean history;
 
-    public MediaConfigHistoryPaneContextMenu(ArrayList<HistoryData> historyDataArrayList, boolean history) {
+    public MediaConfigPaneHistoryContextMenu(ArrayList<HistoryData> historyDataArrayList, boolean history) {
         this.daten = Daten.getInstance();
         this.historyDataArrayList = historyDataArrayList;
         this.history = history;

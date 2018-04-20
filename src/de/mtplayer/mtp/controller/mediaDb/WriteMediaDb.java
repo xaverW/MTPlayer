@@ -100,19 +100,19 @@ public class WriteMediaDb implements AutoCloseable {
         }
     }
 
-    private void xmlWrite(String xmlName, String[] xmlSpalten, String[] datenArray, boolean newLine) throws XMLStreamException {
-        final int xmlMax = datenArray.length;
+    private void xmlWrite(String xmlName, String[] xmlColumn, String[] dataArray, boolean newLine) throws XMLStreamException {
+        final int xmlMax = dataArray.length;
         writer.writeStartElement(xmlName);
         if (newLine) {
             writer.writeCharacters("\n"); // neue Zeile
         }
         for (int i = 0; i < xmlMax; ++i) {
-            if (!datenArray[i].isEmpty()) {
+            if (!dataArray[i].isEmpty()) {
                 if (newLine) {
                     writer.writeCharacters("\t"); // Tab
                 }
-                writer.writeStartElement(xmlSpalten[i]);
-                writer.writeCharacters(datenArray[i]);
+                writer.writeStartElement(xmlColumn[i]);
+                writer.writeCharacters(dataArray[i]);
                 writer.writeEndElement();
                 if (newLine) {
                     writer.writeCharacters("\n"); // neue Zeile

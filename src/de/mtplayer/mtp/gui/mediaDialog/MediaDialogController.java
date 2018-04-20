@@ -50,8 +50,8 @@ public class MediaDialogController extends MTDialog {
 
     private final StackPane stackPane = new StackPane();
 
-    private final MediaDialogMediaPane mediaDialogMediaPane = new MediaDialogMediaPane();
-    private final MediaDialogAboPane mediaDialogAboPane = new MediaDialogAboPane();
+    private final MediaDialogPaneMedia mediaDialogPaneMedia = new MediaDialogPaneMedia();
+    private final MediaDialogPaneAbo mediaDialogPaneAbo = new MediaDialogPaneAbo();
     private final Daten daten = Daten.getInstance();
     private final String searchStr;
     private final Listener listenerDbStart;
@@ -84,7 +84,7 @@ public class MediaDialogController extends MTDialog {
         Listener.removeListener(listenerDbStart);
         Listener.removeListener(listenerDbStop);
 
-        mediaDialogMediaPane.mediaPaneClose();
+        mediaDialogPaneMedia.mediaPaneClose();
 
         daten.erledigteAbos.filterdListClearPred();
         daten.mediaList.filterdListClearPred();
@@ -122,15 +122,15 @@ public class MediaDialogController extends MTDialog {
             vBoxCont.getChildren().add(hBox);
 
             // Stackpane
-            mediaDialogMediaPane.setFitToHeight(true);
-            mediaDialogMediaPane.setFitToWidth(true);
-            mediaDialogAboPane.setFitToHeight(true);
-            mediaDialogAboPane.setFitToWidth(true);
+            mediaDialogPaneMedia.setFitToHeight(true);
+            mediaDialogPaneMedia.setFitToWidth(true);
+            mediaDialogPaneAbo.setFitToHeight(true);
+            mediaDialogPaneAbo.setFitToWidth(true);
 
-            stackPane.getChildren().addAll(mediaDialogMediaPane, mediaDialogAboPane);
+            stackPane.getChildren().addAll(mediaDialogPaneMedia, mediaDialogPaneAbo);
             VBox.setVgrow(stackPane, Priority.ALWAYS);
             vBoxCont.getChildren().add(stackPane);
-            mediaDialogMediaPane.toFront();
+            mediaDialogPaneMedia.toFront();
 
             Region region = new Region();
             HBox.setHgrow(region, Priority.ALWAYS);
@@ -148,8 +148,8 @@ public class MediaDialogController extends MTDialog {
     @Override
     public void make() {
         initPanel();
-        mediaDialogMediaPane.make();
-        mediaDialogAboPane.make();
+        mediaDialogPaneMedia.make();
+        mediaDialogPaneAbo.make();
 
         final ToggleGroup tg = new ToggleGroup();
         rbMedien.setToggleGroup(tg);
@@ -179,11 +179,11 @@ public class MediaDialogController extends MTDialog {
 
         rbMedien.setSelected(true);
         rbMedien.setOnAction(a -> {
-            mediaDialogMediaPane.toFront();
+            mediaDialogPaneMedia.toFront();
             filter();
         });
         rbAbos.setOnAction(a -> {
-            mediaDialogAboPane.toFront();
+            mediaDialogPaneAbo.toFront();
             filter();
         });
 
@@ -193,9 +193,9 @@ public class MediaDialogController extends MTDialog {
     private void filter() {
         final String searchStr = txtSuchen.getText().toLowerCase().trim();
         if (rbMedien.isSelected()) {
-            mediaDialogMediaPane.filter(searchStr);
+            mediaDialogPaneMedia.filter(searchStr);
         } else {
-            mediaDialogAboPane.filter(searchStr);
+            mediaDialogPaneAbo.filter(searchStr);
         }
     }
 }

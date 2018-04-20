@@ -27,7 +27,7 @@ import javafx.scene.layout.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class MediaConfigMediaPaneController extends AnchorPane {
+public class MediaConfigPaneMediaController extends AnchorPane {
 
     private final Daten daten;
     VBox noaccordion = new VBox();
@@ -40,7 +40,7 @@ public class MediaConfigMediaPaneController extends AnchorPane {
     BooleanProperty prefSuff = Config.MEDIA_DB_WITH_OUT_SUFFIX.getBooleanProperty();
     StringProperty prefSuffStr = Config.MEDIA_DB_SUFFIX.getStringProperty();
 
-    public MediaConfigMediaPaneController() {
+    public MediaConfigPaneMediaController() {
         daten = Daten.getInstance();
 
         cbxAccordion.selectedProperty().bindBidirectional(accordionProp);
@@ -76,8 +76,8 @@ public class MediaConfigMediaPaneController extends AnchorPane {
     private Collection<TitledPane> createPanes() {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
         makeConfig(result);
-        new MediaConfigPathPane().makeTable(result);
-        new MediaConfigExternPane().make(result);
+        new MediaConfigPanePath().makeTable(result);
+        new MediaConfigPanePathExtern().make(result);
         return result;
     }
 

@@ -24,7 +24,7 @@ import de.mtplayer.mtp.gui.*;
 import de.mtplayer.mtp.gui.configDialog.ConfigDialogController;
 import de.mtplayer.mtp.gui.dialog.AboutDialogController;
 import de.mtplayer.mtp.gui.dialog.ResetDialogController;
-import de.mtplayer.mtp.gui.mediaDialog.MediaConfigDialogController;
+import de.mtplayer.mtp.gui.mediaDialog.MediaConfigController;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.geometry.Insets;
@@ -138,7 +138,7 @@ public class MTFxController extends StackPane {
             miConfig.setOnAction(e -> new ConfigDialogController());
 
             final MenuItem miMedia = new MenuItem("Mediensammlung");
-            miMedia.setOnAction(e -> new MediaConfigDialogController());
+            miMedia.setOnAction(e -> new MediaConfigController());
 
             final CheckMenuItem miMsg = new CheckMenuItem("Meldungen");
             miMsg.selectedProperty().bindBidirectional(msgVisProperty);

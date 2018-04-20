@@ -22,7 +22,8 @@ import de.mtplayer.mLib.tools.StringFormatters;
 import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.data.Icons;
-import de.mtplayer.mtp.controller.mediaDb.MediaDataExternal;
+import de.mtplayer.mtp.controller.mediaDb.MediaPathData;
+import de.mtplayer.mtp.controller.mediaDb.MediaPathList;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.dialog.PAlert;
@@ -40,12 +41,12 @@ import java.io.File;
 import java.util.Collection;
 import java.util.Date;
 
-public class MediaConfigExternPane {
+public class MediaConfigPanePathExtern {
 
     private final Daten daten;
-    private final TableView<MediaDataExternal> tableView = new TableView<>();
+    private final TableView<MediaPathData> tableView = new TableView<>();
 
-    public MediaConfigExternPane() {
+    public MediaConfigPanePathExtern() {
         this.daten = Daten.getInstance();
     }
 
@@ -93,8 +94,10 @@ public class MediaConfigExternPane {
                 .or(txtPath.textProperty().isEmpty())
                 .or(daten.mediaList.propSearchProperty()));
         btnAdd.setOnAction(a -> {
-            MediaDataExternal found = daten.mediaList.getMediaListExternal().stream()
-                    .filter(m -> m.getCollectionName().equals(txtName.getText())).findAny().orElse(null);
+            MediaPathList mediaPathList = daten.mediaPathList.getExternalList();
+            MediaPathData found = mediaPathList.stream().filter(m ->
+                    m.getCollectionName().equals(txtName.getText())).findAny().orElse(null);
+
             if (found == null ||
                     PAlert.showAlert_yes_no("Sammlung hinzufügen", "Sammlung: " + txtName.getText(),
                             "Eine Sammlung mit dem Namen existiert bereits.\n" +
@@ -124,7 +127,7 @@ public class MediaConfigExternPane {
         btnUpdate.setGraphic(new Icons().ICON_BUTTON_UPDATE);
         btnUpdate.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
         btnUpdate.setOnAction(a -> {
-            MediaDataExternal md = tableView.getSelectionModel().getSelectedItem();
+            MediaPathData md = tableView.getSelectionModel().getSelectedItem();
             File file = new File(md.getPath());
 
             if (!file.exists()) {
@@ -142,8 +145,8 @@ public class MediaConfigExternPane {
         btnDel.setGraphic(new Icons().ICON_BUTTON_REMOVE);
         btnDel.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
         btnDel.setOnAction(a -> {
-            MediaDataExternal md = tableView.getSelectionModel().getSelectedItem();
-            daten.mediaList.removeCollectionFromMediaDb(md.getCollectionName());
+            MediaPathData md = tableView.getSelectionModel().getSelectedItem();
+            daten.mediaList.removeCollectionFromMediaDb(md);
         });
 
         HBox hHelp = new HBox();
@@ -165,13 +168,13 @@ public class MediaConfigExternPane {
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-        final TableColumn<MediaDataExternal, String> nameColumn = new TableColumn<>("Name");
+        final TableColumn<MediaPathData, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("collectionName"));
 
-        final TableColumn<MediaDataExternal, String> pathColumn = new TableColumn<>("Pfad");
+        final TableColumn<MediaPathData, String> pathColumn = new TableColumn<>("Pfad");
         pathColumn.setCellValueFactory(new PropertyValueFactory<>("path"));
 
-        final TableColumn<MediaDataExternal, Integer> countColumn = new TableColumn<>("Anzahl");
+        final TableColumn<MediaPathData, Integer> countColumn = new TableColumn<>("Anzahl");
         countColumn.setCellValueFactory(new PropertyValueFactory<>("count"));
 
         tableView.getColumns().addAll(nameColumn, pathColumn, countColumn);
@@ -180,7 +183,7 @@ public class MediaConfigExternPane {
         pathColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(40.0 / 100));
         countColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(10.0 / 100));
 
-        SortedList<MediaDataExternal> sortedList = daten.mediaList.getSortedMediaListExternal();
+        SortedList<MediaPathData> sortedList = daten.mediaPathList.getSortedListExternal();
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
         tableView.setItems(sortedList);
 

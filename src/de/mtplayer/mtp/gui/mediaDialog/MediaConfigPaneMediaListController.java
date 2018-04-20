@@ -35,7 +35,7 @@ import javafx.scene.layout.VBox;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class MediaConfigMediaListPaneController extends AnchorPane {
+public class MediaConfigPaneMediaListController extends AnchorPane {
 
     private final Daten daten;
     private Label lblGesamtMedia = new Label();
@@ -46,7 +46,7 @@ public class MediaConfigMediaListPaneController extends AnchorPane {
     private final BooleanProperty accordionProp = Config.MEDIA_CONFIG_DIALOG_ACCORDION.getBooleanProperty();
     private ScrollPane scrollPane = new ScrollPane();
 
-    public MediaConfigMediaListPaneController() {
+    public MediaConfigPaneMediaListController() {
         daten = Daten.getInstance();
 
         cbxAccordion.selectedProperty().bindBidirectional(accordionProp);

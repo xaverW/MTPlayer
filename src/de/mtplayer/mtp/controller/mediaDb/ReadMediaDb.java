@@ -51,7 +51,7 @@ public class ReadMediaDb implements AutoCloseable {
             return list;
         }
 
-        Duration.counterStart("Konfig lesen");
+        Duration.counterStart("MediaDb lesen");
         XMLStreamReader parser = null;
 
         try (InputStream is = Files.newInputStream(xmlFilePath);
@@ -86,7 +86,7 @@ public class ReadMediaDb implements AutoCloseable {
             }
         }
 
-        Duration.counterStop("Konfig lesen");
+        Duration.counterStop("MediaDb lesen");
         return list;
     }
 

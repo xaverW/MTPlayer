@@ -35,7 +35,7 @@ import javafx.scene.layout.*;
 import java.util.Date;
 import java.util.regex.Pattern;
 
-public class MediaDialogMediaPane extends ScrollPane {
+public class MediaDialogPaneMedia extends ScrollPane {
 
     Button btnCreateMediaDB = new Button("Mediensammlung neu aufbauen");
     Button btnPlay = new Button();
@@ -53,7 +53,7 @@ public class MediaDialogMediaPane extends ScrollPane {
     private String searchStr = "";
     private final Listener listenerDbStop;
 
-    public MediaDialogMediaPane() {
+    public MediaDialogPaneMedia() {
         initPanel();
         listenerDbStop = new Listener(Listener.EREIGNIS_MEDIA_DB_STOP, MediaDialogController.class.getSimpleName()) {
             @Override
@@ -193,7 +193,7 @@ public class MediaDialogMediaPane extends ScrollPane {
 
     public void filter(String searchStr) {
         this.searchStr = searchStr;
-        daten.mediaList.filterdListSetPred(media -> {
+        daten.mediaList.filteredListSetPredicate(media -> {
             if (searchStr.isEmpty()) {
                 return false;
             }

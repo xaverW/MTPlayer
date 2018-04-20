@@ -34,7 +34,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 
-public class MediaConfigDialogController extends MTDialog {
+public class MediaConfigController extends MTDialog {
 
     private TabPane tabPane = new TabPane();
     private Button btnOk = new Button("Ok");
@@ -44,7 +44,7 @@ public class MediaConfigDialogController extends MTDialog {
 
     private final Daten daten;
 
-    public MediaConfigDialogController() {
+    public MediaConfigController() {
         super(Config.MEDIA_CONFIG_DIALOG_SIZE, "Mediensammlung", true);
 
         this.daten = Daten.getInstance();
@@ -87,26 +87,26 @@ public class MediaConfigDialogController extends MTDialog {
     private void initPanel() {
         try {
 
-            AnchorPane mediaConfigPaneController = new MediaConfigMediaPaneController();
+            AnchorPane mediaConfigPaneController = new MediaConfigPaneMediaController();
             Tab tab = new Tab("Einstellungen Mediensammlung");
             tab.setClosable(false);
             tab.setContent(mediaConfigPaneController);
             tabPane.getTabs().add(tab);
 
 
-            AnchorPane mediaListPaneController = new MediaConfigMediaListPaneController();
+            AnchorPane mediaListPaneController = new MediaConfigPaneMediaListController();
             tab = new Tab("Mediensammlung");
             tab.setClosable(false);
             tab.setContent(mediaListPaneController);
             tabPane.getTabs().add(tab);
 
-            AnchorPane historyListPaneController = new MediaConfigHistoryPaneController(true);
+            AnchorPane historyListPaneController = new MediaConfigPaneHistoryController(true);
             tab = new Tab("gesehene Filme");
             tab.setClosable(false);
             tab.setContent(historyListPaneController);
             tabPane.getTabs().add(tab);
 
-            AnchorPane aboListPaneController = new MediaConfigHistoryPaneController(false);
+            AnchorPane aboListPaneController = new MediaConfigPaneHistoryController(false);
             tab = new Tab("erledigte Abos");
             tab.setClosable(false);
             tab.setContent(aboListPaneController);
