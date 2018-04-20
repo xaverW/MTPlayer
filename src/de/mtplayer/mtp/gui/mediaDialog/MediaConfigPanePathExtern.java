@@ -23,7 +23,6 @@ import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.mediaDb.MediaPathData;
-import de.mtplayer.mtp.controller.mediaDb.MediaPathList;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.dialog.PAlert;
@@ -94,11 +93,7 @@ public class MediaConfigPanePathExtern {
                 .or(txtPath.textProperty().isEmpty())
                 .or(daten.mediaList.propSearchProperty()));
         btnAdd.setOnAction(a -> {
-            MediaPathList mediaPathList = daten.mediaPathList.getExternalList();
-            MediaPathData found = mediaPathList.stream().filter(m ->
-                    m.getCollectionName().equals(txtName.getText())).findAny().orElse(null);
-
-            if (found == null ||
+            if (!daten.mediaPathList.containExternal(txtName.getText()) ||
                     PAlert.showAlert_yes_no("Sammlung hinzufügen", "Sammlung: " + txtName.getText(),
                             "Eine Sammlung mit dem Namen existiert bereits.\n" +
                                     "Sollen weitere Filme in " +

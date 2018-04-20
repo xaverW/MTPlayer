@@ -114,8 +114,7 @@ public class MediaList extends SimpleListProperty<MediaData> {
             return;
         }
 
-        Thread th = new Thread(new CreateMediaDb(this,
-                path, collection));
+        Thread th = new Thread(new CreateMediaDb(this, path, collection));
         th.setName("createMediaDbExternal");
         th.start();
     }

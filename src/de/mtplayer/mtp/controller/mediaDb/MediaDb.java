@@ -40,6 +40,7 @@ public class MediaDb {
     final static Daten daten = Daten.getInstance();
 
     static void checkExternalMediaData(List<MediaData> mediaDataList) {
+        // checks duplicates in the mediaDataList and creates the counter in the pathList
         HashSet<String> hashSet = new HashSet<>(mediaDataList.size());
         Iterator<MediaData> it = mediaDataList.iterator();
         while (it.hasNext()) {
@@ -55,6 +56,8 @@ public class MediaDb {
         }
 
         final MediaPathList mediaPathList = Daten.getInstance().mediaPathList;
+        mediaPathList.stream().forEach(m -> m.setCount(0));
+        
         mediaDataList.stream().filter(md -> md.isExternal()).forEach(mediaData -> {
 
             if (!mediaPathList.containExternal(mediaData)) {
@@ -76,7 +79,7 @@ public class MediaDb {
         }
 
         Iterator<MediaPathData> itPath = daten.mediaPathList.iterator();
-        while (itMedia.hasNext()) {
+        while (itPath.hasNext()) {
             MediaPathData md = itPath.next();
             if (md.isExternal() && md.getCollectionName().equals(mediaPathData.getCollectionName())) {
                 itPath.remove();
