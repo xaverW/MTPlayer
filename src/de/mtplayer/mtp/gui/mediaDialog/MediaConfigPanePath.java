@@ -58,7 +58,7 @@ public class MediaConfigPanePath {
         pathColumn.setCellValueFactory(new PropertyValueFactory<>("path"));
 
         tableView.getColumns().addAll(expander, pathColumn);
-        tableView.setItems(daten.mediaPathList.getSortedList());
+        tableView.setItems(daten.mediaPathList.getSortedListInternal());
 
         VBox.setVgrow(tableView, Priority.ALWAYS);
         vBox.getChildren().addAll(tableView);

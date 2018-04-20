@@ -22,6 +22,7 @@ import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.dialog.MTDialog;
 import de.mtplayer.mtp.gui.tools.HelpText;
+import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -113,7 +114,7 @@ public class MediaConfigController extends MTDialog {
             tabPane.getTabs().add(tab);
 
         } catch (final Exception ex) {
-            System.out.println(ex.getMessage());
+            PLog.errorLog(962104652, ex);
         }
     }
 

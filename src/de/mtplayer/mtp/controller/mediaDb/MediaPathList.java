@@ -26,8 +26,8 @@ import java.util.stream.Collectors;
 @SuppressWarnings("serial")
 public class MediaPathList extends SimpleListProperty<MediaPathData> {
 
-    private FilteredList<MediaPathData> filteredList = null;
-    private SortedList<MediaPathData> sortedList = null;
+    private FilteredList<MediaPathData> filteredListInternal = null;
+    private SortedList<MediaPathData> sortedListInternal = null;
     private FilteredList<MediaPathData> filteredListExternal = null;
     private SortedList<MediaPathData> sortedListExternal = null;
 
@@ -36,19 +36,19 @@ public class MediaPathList extends SimpleListProperty<MediaPathData> {
     }
 
 
-    public FilteredList<MediaPathData> getFilteredList() {
-        if (filteredList == null) {
-            filteredList = new FilteredList<>(this, p -> !p.isExternal());
+    public FilteredList<MediaPathData> getFilteredListInternal() {
+        if (filteredListInternal == null) {
+            filteredListInternal = new FilteredList<>(this, p -> !p.isExternal());
         }
-        return filteredList;
+        return filteredListInternal;
     }
 
-    public SortedList<MediaPathData> getSortedList() {
-        filteredList = getFilteredList();
-        if (sortedList == null) {
-            sortedList = new SortedList<>(filteredList);
+    public SortedList<MediaPathData> getSortedListInternal() {
+        filteredListInternal = getFilteredListInternal();
+        if (sortedListInternal == null) {
+            sortedListInternal = new SortedList<>(filteredListInternal);
         }
-        return sortedList;
+        return sortedListInternal;
     }
 
     public FilteredList<MediaPathData> getFilteredListExternal() {
@@ -124,19 +124,22 @@ public class MediaPathList extends SimpleListProperty<MediaPathData> {
     }
 
     public boolean addInternal(MediaPathData dmp) {
-        if (contain(dmp)) {
+        if (containInternal(dmp)) {
             return false;
         }
         add(dmp);
         return true;
     }
 
-    private boolean contain(MediaPathData dm) {
-        for (final MediaPathData mediaPathData : this) {
-            if (mediaPathData.getPath().equals(dm.getPath())) {
-                return true;
-            }
+    public boolean containInternal(MediaPathData dm) {
+        MediaPathData md = this.stream()
+                .filter(m -> !m.isExternal())
+                .filter(m -> m.getCollectionName().equals(dm.getCollectionName()))
+                .findAny().orElse(null);
+        if (md != null) {
+            return true;
+        } else {
+            return false;
         }
-        return false;
     }
 }
