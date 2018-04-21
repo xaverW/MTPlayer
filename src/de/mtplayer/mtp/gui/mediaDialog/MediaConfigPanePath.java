@@ -24,9 +24,11 @@ import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.mediaDb.MediaPathData;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
+import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
@@ -76,9 +78,14 @@ public class MediaConfigPanePath {
             }
         });
 
+        final Button btnHelp = new Button("");
+        btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
+        btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
+        btnHelp.setOnAction(a -> new MTAlert().showHelpAlert("Mediensammlungen verwalten",
+                HelpText.INTERN_MEDIA_COLLECTION));
+
         TextField txtPath = new TextField();
         txtPath.setMaxWidth(Double.MAX_VALUE);
-        HBox.setHgrow(txtPath, Priority.ALWAYS);
 
         final Button btnFile = new Button();
         btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
@@ -113,8 +120,16 @@ public class MediaConfigPanePath {
 
         gridPane.getColumnConstraints().addAll(new ColumnConstraints(), PColumnConstraints.getCcComputedSize());
 
-        HBox.setHgrow(txtPath, Priority.ALWAYS);
-        vBox.getChildren().addAll(btnDel, gridPane);
+        HBox hHelp = new HBox();
+        hHelp.setAlignment(Pos.CENTER_RIGHT);
+        HBox.setHgrow(hHelp, Priority.ALWAYS);
+        hHelp.getChildren().add(btnHelp);
+
+        HBox hBox = new HBox(10);
+        hBox.setAlignment(Pos.CENTER_RIGHT);
+        hBox.getChildren().addAll(btnDel, hHelp);
+
+        vBox.getChildren().addAll(hBox, gridPane);
     }
 
 

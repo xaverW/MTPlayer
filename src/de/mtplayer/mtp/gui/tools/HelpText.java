@@ -343,9 +343,20 @@ public class HelpText {
             "kann damit ein Programm ausgewählt und " +
             "fest zugeordnet werden (z.B. der Browser \"Firefox\").";
 
+    public static final String MEDIA_COLLECTION = "Hier kann eine Mediensammlung angelegt werden. Vor dem " +
+            "Download eines Films, kann dieser mit der Mediensammlung abgeglichen werden. So können doppelte " +
+            "Downloads vermieden werden.\n" +
+            "Dazu werden Ordner mit Medien angegeben, die das Programm absucht. " +
+            "Die gefundenen Medien werden dann in die Sammlung integriert. Es können Ordner angegeben " +
+            "werden, die beim Programmstart jedes mal abgesucht werden. Auch ist es möglich, Ordner anzugeben, " +
+            "die dann nur einmal abgesucht werden. Deren Inhalt an Medien steht dauerhaft im Programm " +
+            "bei der Suche in der Mediensammlung zur Verfügung.";
+
     public static final String EXTERN_MEDIA_COLLECTION = "Externe Mediensammlungen werden nicht bei " +
             "jedem Programmstart neu eingelesen. Die können dadurch auf externen Medien liegen und " +
             "müssen nur einmal eingelesen werden. Hier können externe Mediensammlungen verwaltet werden:\n" +
             "Neue anlegen, aktualisieren oder auch wieder löschen." +
             "";
+    public static final String INTERN_MEDIA_COLLECTION = "Die hier angegebenen Ordner werden bei jedem Programmstart " +
+            "nach Medien abgesucht. Diese Ordner sind also immer aktuell mit dem Programm abgeglichen.";
 }

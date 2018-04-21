@@ -18,6 +18,10 @@ package de.mtplayer.mtp.gui.mediaDialog;
 
 import de.mtplayer.mtp.controller.config.Config;
 import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.data.Icons;
+import de.mtplayer.mtp.gui.dialog.MTAlert;
+import de.mtplayer.mtp.gui.tools.HelpText;
+import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
@@ -95,6 +99,13 @@ public class MediaConfigPaneMediaController extends AnchorPane {
         final RadioButton rbWithOutSuff = new RadioButton("Keine Dateien mit diesem Suffix (z.B.: txt,xml,jpg");
         final RadioButton rbWithSuff = new RadioButton("Nur Dateien mit diesem Suffix  (z.B.: mp4,flv,m4v");
 
+        final Button btnHelp = new Button("");
+        btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
+        btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
+        btnHelp.setOnAction(a -> new MTAlert().showHelpAlert("Mediensammlungen verwalten",
+                HelpText.MEDIA_COLLECTION));
+
+
         final ToggleGroup tg = new ToggleGroup();
         rbWithOutSuff.setToggleGroup(tg);
         rbWithSuff.setToggleGroup(tg);
@@ -107,8 +118,11 @@ public class MediaConfigPaneMediaController extends AnchorPane {
 
 
         gridPane.add(rbWithOutSuff, 0, 0);
+        gridPane.add(btnHelp, 1, 0);
         gridPane.add(rbWithSuff, 0, 1);
         gridPane.add(txtSuff, 0, 2);
+
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSize());
 
         vBox.getChildren().addAll(gridPane);
     }

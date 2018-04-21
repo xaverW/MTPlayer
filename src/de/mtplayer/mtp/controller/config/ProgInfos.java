@@ -143,7 +143,7 @@ public class ProgInfos {
      * @param xmlFilePath Path to file.
      */
     public void getMTPlayerXmlCopyFilePath(ArrayList<Path> xmlFilePath) {
-        for (int i = 1; i <= Const.MAX_COPY_BACKUPFILE; ++i) {
+        for (int i = 1; i <= Const.MAX_COPY_OF_BACKUPFILE; ++i) {
             final Path path = ProgInfos.getSettingsDirectory().resolve(Const.CONFIG_FILE_COPY + i);
             if (Files.exists(path)) {
                 xmlFilePath.add(path);

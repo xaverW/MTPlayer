@@ -79,10 +79,10 @@ public class MediaConfigPanePathExtern {
             }
         });
 
-        final Button btnHelpPath = new Button("");
-        btnHelpPath.setTooltip(new Tooltip("Hilfe anzeigen."));
-        btnHelpPath.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelpPath.setOnAction(a -> new MTAlert().showHelpAlert("Externe Mediensammlungen verwalten",
+        final Button btnHelp = new Button("");
+        btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
+        btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
+        btnHelp.setOnAction(a -> new MTAlert().showHelpAlert("Externe Mediensammlungen verwalten",
                 HelpText.EXTERN_MEDIA_COLLECTION));
 
         final Button btnAdd = new Button("");
@@ -147,7 +147,7 @@ public class MediaConfigPanePathExtern {
         HBox hHelp = new HBox();
         hHelp.setAlignment(Pos.CENTER_RIGHT);
         HBox.setHgrow(hHelp, Priority.ALWAYS);
-        hHelp.getChildren().add(btnHelpPath);
+        hHelp.getChildren().add(btnHelp);
 
         HBox hBox = new HBox(10);
         hBox.setAlignment(Pos.CENTER_RIGHT);

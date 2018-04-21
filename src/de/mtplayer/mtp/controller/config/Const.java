@@ -34,8 +34,12 @@ public class Const {
     public static final String FORMAT_XZ = ".xz";
     public static final String RTMP_PRTOKOLL = "rtmp";
     public static final String RTMP_FLVSTREAMER = "-r ";
-    public static final int ALTER_FILMLISTE_SEKUNDEN_FUER_AUTOUPDATE = 4 * 60 * 60; // beim Start des Programms wir die Liste geladen wenn sie älter ist als ..
-    public static final String TIME_MAX_AGE_FOR_DIFF = "09"; // Uhrzeit ab der die Diffliste alle Änderungen abdeckt, die Filmliste darf also nicht vor xx erstellt worden sein
+
+    // beim Programmstart wird die Liste geladen wenn sie älter ist als ..
+    public static final int ALTER_FILMLISTE_SEKUNDEN_FUER_AUTOUPDATE = 4 * 60 * 60;
+
+    // Uhrzeit ab der die Diffliste alle Änderungen abdeckt, die Filmliste darf also nicht vor xx erstellt worden sein
+    public static final String TIME_MAX_AGE_FOR_DIFF = "09";
 
     // MediathekView URLs
     public static final String ADRESSE_FILMLISTEN_SERVER_DIFF = "http://res.mediathekview.de/diff.xml";
@@ -43,8 +47,7 @@ public class Const {
 
 
     public static final String ADRESSE_MTPLAYER_CONFIGS = "https://www.p2tools.de/extra/mtplayer/v-" + Functions.getProgVersion() + "/";
-    //    public static final String ADRESSE_MTPLAYER_VERSION = "https://www.p2tools.de/extra/mtplayer/prog-version.xml";
-//    public static final String ADRESSE_MTPLAYER_VERSION = "http://p2.localhost:8080/extra/mtplayer-info.xml";
+    //    public static final String ADRESSE_MTPLAYER_VERSION = "http://p2.localhost:8080/extra/mtplayer-info.xml";
     public static final String ADRESSE_MTPLAYER_VERSION = "https://www.p2tools.de/extra/mtplayer-info.xml";
 
     public static final String ADRESSE_VORLAGE_PROGRAMMGRUPPEN = ADRESSE_MTPLAYER_CONFIGS + "pset-templates.xml";
@@ -61,9 +64,11 @@ public class Const {
     public static final String VERZEICHNIS_EINSTELLUNGEN = ".mtplayer"; // im Homeverzeichnis
     public static final String JSON_DATEI_FILME = "filme.json";
 
-    public static final int MIN_DATEI_GROESSE_FILM = 256 * 1000; // minimale Größe (256 kB) eines Films um nicht als Fehler zu gelten
+    // minimale Größe (256 kB) eines Films um nicht als Fehler zu gelten
+    public static final int MIN_DATEI_GROESSE_FILM = 256 * 1000;
     public static final String XML_START = "Mediathek";
-    public static final int MAX_SENDER_FILME_LADEN = 2; // es können maximal soviele Filme eines Senders/Servers gleichzeitig geladen werden
+    // es können maximal soviele Filme eines Senders/Servers gleichzeitig geladen werden
+    public static final int MAX_SENDER_FILME_LADEN = 2;
 
     public static final int MAX_PFADE_DIALOG_DOWNLOAD = 15;
 
@@ -82,7 +87,7 @@ public class Const {
 
     public static final int LAENGE_DATEINAME_MAX = 200; // Standardwert für die Länge des Zieldateinamens
     public static final int LAENGE_FELD_MAX = 100; // Standardwert für die Länge des Feldes des
-    public final static int MAX_COPY_BACKUPFILE = 5; // Maximum number of backup files to be stored.
+    public final static int MAX_COPY_OF_BACKUPFILE = 5; // Maximum number of backup files to be stored.
     public static final String LINE_SEPARATOR = System.getProperty("line.separator");
 
     public static final int MIN_TABLE_HEIGHT = 250;

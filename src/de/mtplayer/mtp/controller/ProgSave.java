@@ -119,7 +119,7 @@ public class ProgSave {
 
             if (creatTime == -1 || creatTime < getHeute_0Uhr()) {
                 // nur dann ist die letzte Kopie älter als einen Tag
-                for (int i = Const.MAX_COPY_BACKUPFILE; i > 1; --i) {
+                for (int i = Const.MAX_COPY_OF_BACKUPFILE; i > 1; --i) {
                     xmlFilePathCopy_1 = ProgInfos.getSettingsDirectory().resolve(Const.CONFIG_FILE_COPY + (i - 1));
                     final Path xmlFilePathCopy_2 = ProgInfos.getSettingsDirectory().resolve(Const.CONFIG_FILE_COPY + i);
                     if (Files.exists(xmlFilePathCopy_1)) {
