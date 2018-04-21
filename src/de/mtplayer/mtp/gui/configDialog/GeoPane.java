@@ -21,6 +21,7 @@ import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
+import de.p2tools.p2Lib.guiTools.PButton;
 import javafx.beans.property.BooleanProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -55,10 +56,8 @@ public class GeoPane {
         gridPane.add(tglGeo, 0, row);
 
 
-        final Button btnHelpGeo = new Button("");
-        btnHelpGeo.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelpGeo.setOnAction(a -> new MTAlert().showHelpAlert("Geogeblockte Filme",
-                HelpText.CONFIG_GEO));
+        final Button btnHelpGeo = new PButton().helpButton("Geogeblockte Filme",
+                HelpText.CONFIG_GEO);
         gridPane.add(btnHelpGeo, 1, row);
         GridPane.setHalignment(btnHelpGeo, HPos.RIGHT);
 

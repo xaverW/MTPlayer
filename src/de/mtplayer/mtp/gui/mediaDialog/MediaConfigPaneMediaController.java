@@ -21,6 +21,7 @@ import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
+import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.StringProperty;
@@ -99,11 +100,8 @@ public class MediaConfigPaneMediaController extends AnchorPane {
         final RadioButton rbWithOutSuff = new RadioButton("Keine Dateien mit diesem Suffix (z.B.: txt,xml,jpg");
         final RadioButton rbWithSuff = new RadioButton("Nur Dateien mit diesem Suffix  (z.B.: mp4,flv,m4v");
 
-        final Button btnHelp = new Button("");
-        btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
-        btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelp.setOnAction(a -> new MTAlert().showHelpAlert("Mediensammlungen verwalten",
-                HelpText.MEDIA_COLLECTION));
+        final Button btnHelp = new PButton().helpButton("Mediensammlungen verwalten",
+                HelpText.MEDIA_COLLECTION);
 
 
         final ToggleGroup tg = new ToggleGroup();

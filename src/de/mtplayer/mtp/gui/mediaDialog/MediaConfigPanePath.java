@@ -25,6 +25,7 @@ import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.mediaDb.MediaPathData;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
+import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -78,11 +79,8 @@ public class MediaConfigPanePath {
             }
         });
 
-        final Button btnHelp = new Button("");
-        btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
-        btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelp.setOnAction(a -> new MTAlert().showHelpAlert("Mediensammlungen verwalten",
-                HelpText.INTERN_MEDIA_COLLECTION));
+        final Button btnHelp = new PButton().helpButton("Mediensammlungen verwalten",
+                HelpText.INTERN_MEDIA_COLLECTION);
 
         TextField txtPath = new TextField();
         txtPath.setMaxWidth(Double.MAX_VALUE);

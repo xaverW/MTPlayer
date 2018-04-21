@@ -23,6 +23,7 @@ import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
 import de.mtplayer.mtp.tools.file.GetFile;
+import de.p2tools.p2Lib.guiTools.PButton;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.geometry.Insets;
@@ -211,11 +212,8 @@ public class SetPaneController extends AnchorPane {
         HBox.setHgrow(btnCheck, Priority.ALWAYS);
         btnCheck.setMaxWidth(Double.MAX_VALUE);
 
-        final Button btnHelp = new Button("");
-        btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
-        btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelp.setOnAction(a -> new MTAlert().showHelpAlert("Set",
-                new GetFile().getHilfeSuchen(GetFile.PFAD_HILFETEXT_PRGRAMME)));
+        final Button btnHelp = new PButton().helpButton("Set",
+                new GetFile().getHilfeSuchen(GetFile.PFAD_HILFETEXT_PRGRAMME));
 
 
         HBox hBox = new HBox();

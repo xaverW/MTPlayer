@@ -22,6 +22,7 @@ import de.mtplayer.mtp.controller.data.BlackData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
+import de.p2tools.p2Lib.guiTools.PButton;
 import javafx.beans.property.BooleanProperty;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -77,11 +78,8 @@ public class BlackPane {
 
         gridPane.add(rbBlack, 0, 1);
         gridPane.add(new Label("\"Sender / Thema / Titel\" werden nicht angezeigt (Blacklist)"), 1, 1);
-        final Button btnHelp = new Button("");
-        btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
-        btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelp.setOnAction(a -> new MTAlert().showHelpAlert("Blacklist / Whitelist",
-                HelpText.BLACKLIST_WHITELIST));
+        final Button btnHelp = new PButton().helpButton("Blacklist / Whitelist",
+                HelpText.BLACKLIST_WHITELIST);
         gridPane.add(btnHelp, 2, 1);
 
         rbWhite.selectedProperty().bindBidirectional(propWhite);

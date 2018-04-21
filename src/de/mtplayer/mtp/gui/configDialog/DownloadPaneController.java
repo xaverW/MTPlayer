@@ -21,6 +21,7 @@ import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
+import de.p2tools.p2Lib.guiTools.PButton;
 import javafx.beans.property.BooleanProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -108,33 +109,24 @@ public class DownloadPaneController extends AnchorPane {
         tglFinished.setMaxWidth(Double.MAX_VALUE);
         tglFinished.selectedProperty().bindBidirectional(propNotify);
 
-        final Button btnHelpFinished = new Button("");
-        btnHelpFinished.setTooltip(new Tooltip("Hilfe anzeigen."));
-        btnHelpFinished.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelpFinished.setOnAction(a -> new MTAlert().showHelpAlert("Download",
-                HelpText.DOWNLOAD_FINISHED));
+        final Button btnHelpFinished = new PButton().helpButton("Download",
+                HelpText.DOWNLOAD_FINISHED);
 
 
         final ToggleSwitch tglError = new ToggleSwitch("bei Downloadfehler, Fehlermeldung anzeigen");
         tglError.setMaxWidth(Double.MAX_VALUE);
         tglError.selectedProperty().bindBidirectional(propErr);
 
-        final Button btnHelpError = new Button("");
-        btnHelpError.setTooltip(new Tooltip("Hilfe anzeigen."));
-        btnHelpError.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelpError.setOnAction(a -> new MTAlert().showHelpAlert("Download",
-                HelpText.DOWNLOAD_ERROR));
+        final Button btnHelpError = new PButton().helpButton("Download",
+                HelpText.DOWNLOAD_ERROR);
 
 
         final ToggleSwitch tglOne = new ToggleSwitch("nur ein Download pro Downloadserver");
         tglOne.setMaxWidth(Double.MAX_VALUE);
         tglOne.selectedProperty().bindBidirectional(propOne);
 
-        final Button btnHelpOne = new Button("");
-        btnHelpOne.setTooltip(new Tooltip("Hilfe anzeigen."));
-        btnHelpOne.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelpOne.setOnAction(a -> new MTAlert().showHelpAlert("Download",
-                HelpText.DOWNLOAD_ONE_SERVER));
+        final Button btnHelpOne = new PButton().helpButton("Download",
+                HelpText.DOWNLOAD_ONE_SERVER);
 
 
         final ToggleSwitch tglBeep = new ToggleSwitch("nach jedem Download einen \"Beep\" ausgeben");

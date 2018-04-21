@@ -22,6 +22,7 @@ import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEven
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
+import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.tools.log.Duration;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
@@ -525,9 +526,7 @@ public class FilmFilterController extends FilterController {
         hBox.getChildren().add(cbFilter);
         vb.getChildren().add(hBox);
 
-        final Button btnHelp = new Button("");
-        btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelp.setOnAction(a -> new MTAlert().showHelpAlert("Filter", HelpText.GUI_FILM_FILTER));
+        final Button btnHelp = new PButton().helpButton("Filter", HelpText.GUI_FILM_FILTER);
 
         h = new HBox();
         h.setSpacing(10);

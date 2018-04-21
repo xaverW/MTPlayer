@@ -23,6 +23,7 @@ import de.mtplayer.mtp.controller.ProgStart;
 import de.mtplayer.mtp.controller.config.Config;
 import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.ListePsetVorlagen;
 import de.mtplayer.mtp.controller.data.SetList;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
@@ -32,6 +33,7 @@ import de.mtplayer.mtp.res.GetIcon;
 import de.mtplayer.mtp.tools.storedFilter.ProgInitFilter;
 import de.mtplayer.mtp.tools.update.SearchProgramUpdate;
 import de.p2tools.p2Lib.guiTools.GuiSize;
+import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.tools.log.Duration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Application;
@@ -110,8 +112,9 @@ public class MTFx extends Application {
 
     private void losGehts() {
         primaryStage.getIcons().add(GetIcon.getImage(ICON_NAME, ICON_PATH, ICON_WIDTH, ICON_HEIGHT));
-
         progStart.startMsg();
+
+        PButton.setImageView(new Icons().ICON_BUTTON_HELP);
 
         Duration.staticPing("Erster Start");
         setOrgTitel();

@@ -23,9 +23,9 @@ import de.mtplayer.mtp.controller.config.Const;
 import de.mtplayer.mtp.controller.config.Daten;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.mediaDb.MediaPathData;
-import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.dialog.PAlert;
+import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import javafx.beans.binding.Bindings;
 import javafx.collections.transformation.SortedList;
@@ -79,11 +79,8 @@ public class MediaConfigPanePathExtern {
             }
         });
 
-        final Button btnHelp = new Button("");
-        btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
-        btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelp.setOnAction(a -> new MTAlert().showHelpAlert("Externe Mediensammlungen verwalten",
-                HelpText.EXTERN_MEDIA_COLLECTION));
+        final Button btnHelp = new PButton().helpButton("Externe Mediensammlungen verwalten",
+                HelpText.EXTERN_MEDIA_COLLECTION);
 
         final Button btnAdd = new Button("");
         btnAdd.setTooltip(new Tooltip("Eine neue Sammlung wird angelegt und vom angegebenen Pfad eingelesen."));

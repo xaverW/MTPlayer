@@ -21,6 +21,7 @@ import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.dialog.MTDialog;
 import de.mtplayer.mtp.gui.tools.HelpText;
+import de.p2tools.p2Lib.guiTools.PButton;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -58,11 +59,8 @@ public class FilmFilterEditDialog extends MTDialog {
 
         init(vBoxCont);
 
-        final Button btnHelpAbo = new Button("");
-        btnHelpAbo.setTooltip(new Tooltip("Hilfe anzeigen."));
-        btnHelpAbo.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelpAbo.setOnAction(a -> new MTAlert().showHelpAlert("Filter ein- und ausschalten",
-                HelpText.GUI_FILME_EDIT_FILTER));
+        final Button btnHelpAbo = new PButton().helpButton("Filter ein- und ausschalten",
+                HelpText.GUI_FILME_EDIT_FILTER);
 
         HBox hBox = new HBox();
         hBox.setSpacing(10);

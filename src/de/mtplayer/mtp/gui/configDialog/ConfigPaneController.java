@@ -26,6 +26,7 @@ import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.gui.tools.MTOpen;
 import de.mtplayer.mtp.tools.update.SearchProgramUpdate;
+import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.tools.log.PLog;
 import de.p2tools.p2Lib.tools.log.PLogger;
 import javafx.beans.property.BooleanProperty;
@@ -124,21 +125,15 @@ public class ConfigPaneController extends AnchorPane {
         tglSearchAbo.setMaxWidth(Double.MAX_VALUE);
         tglSearchAbo.selectedProperty().bindBidirectional(propAbo);
 
-        final Button btnHelpAbo = new Button("");
-        btnHelpAbo.setTooltip(new Tooltip("Hilfe anzeigen."));
-        btnHelpAbo.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelpAbo.setOnAction(a -> new MTAlert().showHelpAlert("Abos automatisch suchen",
-                HelpText.ABOS_SOFRT_SUCHEN));
+        final Button btnHelpAbo =new PButton().helpButton("Abos automatisch suchen",
+                HelpText.ABOS_SOFRT_SUCHEN);
 
         final ToggleSwitch tglStartDownload = new ToggleSwitch("Downloads aus Abos sofort starten");
         tglStartDownload.setMaxWidth(Double.MAX_VALUE);
         tglStartDownload.selectedProperty().bindBidirectional(propDown);
 
-        final Button btnHelpDownload = new Button("");
-        btnHelpDownload.setTooltip(new Tooltip("Hilfe anzeigen."));
-        btnHelpDownload.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelpDownload.setOnAction(a -> new MTAlert().showHelpAlert("Downloads sofort starten",
-                HelpText.DOWNLOADS_AUS_ABOS_SOFORT_STARTEN));
+        final Button btnHelpDownload = new PButton().helpButton("Downloads sofort starten",
+                HelpText.DOWNLOADS_AUS_ABOS_SOFORT_STARTEN);
 
         gridPane.add(tglSearchAbo, 0, 0, 3, 1);
         gridPane.add(btnHelpAbo, 3, 0);
@@ -178,10 +173,7 @@ public class ConfigPaneController extends AnchorPane {
             }
         }));
 
-        final Button btnHelp = new Button("");
-        btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
-        btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelp.setOnAction(a -> new MTAlert().showHelpAlert("Logfile", HelpText.LOGFILE));
+        final Button btnHelp = new PButton().helpButton("Logfile", HelpText.LOGFILE);
 
         TextField txtFileManager = new TextField();
         txtFileManager.textProperty().bindBidirectional(propLogDir);

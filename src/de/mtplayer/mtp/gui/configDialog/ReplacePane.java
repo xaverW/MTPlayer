@@ -22,6 +22,7 @@ import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.ReplaceData;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
+import de.p2tools.p2Lib.guiTools.PButton;
 import javafx.beans.property.BooleanProperty;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
@@ -71,20 +72,16 @@ public class ReplacePane {
         tglAscii.setMaxWidth(Double.MAX_VALUE);
         tglAscii.selectedProperty().bindBidirectional(propAscii);
 
-        final Button btnHelpAscii = new Button("");
-        btnHelpAscii.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelpAscii.setOnAction(a -> new MTAlert().showHelpAlert("Nur ASCII-Zeichen",
-                HelpText.DOWNLOAD_ONLY_ASCII));
+        final Button btnHelpAscii = new PButton().helpButton("Nur ASCII-Zeichen",
+                HelpText.DOWNLOAD_ONLY_ASCII);
 
 
         final ToggleSwitch tglReplace = new ToggleSwitch("Ersetzungstabelle");
         tglReplace.setMaxWidth(Double.MAX_VALUE);
         tglReplace.selectedProperty().bindBidirectional(propReplace);
 
-        final Button btnHelpReplace = new Button("");
-        btnHelpReplace.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelpReplace.setOnAction(a -> new MTAlert().showHelpAlert("Ersetzungstabelle",
-                HelpText.DOWNLOAD_REPLACELIST));
+        final Button btnHelpReplace = new PButton().helpButton("Ersetzungstabelle",
+                HelpText.DOWNLOAD_REPLACELIST);
 
 
         gridPane.add(tglAscii, 0, 0);
