@@ -16,7 +16,7 @@
 
 package de.mtplayer.mtp.gui.mediaDialog;
 
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.HistoryData;
 import de.mtplayer.mtp.tools.storedFilter.Filter;
 import javafx.application.Platform;
@@ -37,7 +37,7 @@ public class MediaDialogPaneAbo extends ScrollPane {
     TextField txtTitleAbo = new TextField();
     TextField txtUrlAbo = new TextField();
 
-    Daten daten = Daten.getInstance();
+    ProgData progData = ProgData.getInstance();
     String searchStr = "";
 
     public MediaDialogPaneAbo() {
@@ -75,9 +75,9 @@ public class MediaDialogPaneAbo extends ScrollPane {
     }
 
     public void make() {
-        daten.erledigteAbos.addListener((observable, oldValue, newValue) -> {
+        progData.erledigteAbos.addListener((observable, oldValue, newValue) -> {
             Platform.runLater(() -> {
-                lblGesamtAbo.setText(daten.erledigteAbos.size() + "");
+                lblGesamtAbo.setText(progData.erledigteAbos.size() + "");
                 filter();
             });
         });
@@ -122,9 +122,9 @@ public class MediaDialogPaneAbo extends ScrollPane {
     }
 
     private void setTableDate() {
-        SortedList<HistoryData> sortedList = daten.erledigteAbos.getSortedList();
+        SortedList<HistoryData> sortedList = progData.erledigteAbos.getSortedList();
 
-        lblGesamtAbo.setText(daten.erledigteAbos.size() + "");
+        lblGesamtAbo.setText(progData.erledigteAbos.size() + "");
         tableAbo.setItems(sortedList);
         sortedList.comparatorProperty().bind(tableAbo.comparatorProperty());
     }
@@ -136,7 +136,7 @@ public class MediaDialogPaneAbo extends ScrollPane {
 
     public void filter(String searchStr) {
         this.searchStr = searchStr;
-        daten.erledigteAbos.filterdListSetPred(media -> {
+        progData.erledigteAbos.filterdListSetPred(media -> {
             if (searchStr.isEmpty()) {
                 return false;
             }
@@ -147,7 +147,7 @@ public class MediaDialogPaneAbo extends ScrollPane {
                 return filterAbo(media, searchStr);
             }
         });
-        lblTrefferAbo.setText(daten.erledigteAbos.getFilteredList().size() + "");
+        lblTrefferAbo.setText(progData.erledigteAbos.getFilteredList().size() + "");
     }
 
     private boolean filterAbo(HistoryData historyData, Pattern p) {

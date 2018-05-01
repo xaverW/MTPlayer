@@ -16,8 +16,8 @@
 
 package de.mtplayer.mtp.gui.configDialog;
 
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.dialog.MTDialog;
 import de.mtplayer.mtp.gui.tools.Listener;
 import javafx.geometry.Insets;
@@ -35,12 +35,12 @@ public class ConfigDialogController extends MTDialog {
 
     private TabPane tabPane = new TabPane();
     private Button btnOk = new Button("Ok");
-    private String geo = Config.SYSTEM_GEO_HOME_PLACE.get();
+    private String geo = ProgConfig.SYSTEM_GEO_HOME_PLACE.get();
 
-    private final Daten daten;
+    private final ProgData progData;
 
     public ConfigDialogController() {
-        super(null, Config.CONFIG_DIALOG_SIZE, "Einstellungen", true);
+        super(null, ProgConfig.CONFIG_DIALOG_SIZE, "Einstellungen", true);
 
         VBox vBox = new VBox();
         vBox.setPadding(new Insets(10));
@@ -54,7 +54,7 @@ public class ConfigDialogController extends MTDialog {
         hBox.getChildren().add(btnOk);
         vBox.getChildren().add(hBox);
 
-        this.daten = Daten.getInstance();
+        this.progData = ProgData.getInstance();
         init(vBox, true);
     }
 
@@ -65,15 +65,15 @@ public class ConfigDialogController extends MTDialog {
     }
 
     public void close() {
-        if (!geo.equals(Config.SYSTEM_GEO_HOME_PLACE.get())) {
+        if (!geo.equals(ProgConfig.SYSTEM_GEO_HOME_PLACE.get())) {
             // dann hat sich der Geo-Standort geändert
-            daten.filmlist.markGeoBlocked();
+            progData.filmlist.markGeoBlocked();
         }
 
         // todo nur wenn die Black und Geo wirklich geändert
-        if (!daten.loadFilmlist.getPropLoadFilmlist()) {
+        if (!progData.loadFilmlist.getPropLoadFilmlist()) {
             // wird sonst dann eh gemacht
-            daten.filmlist.filterList();
+            progData.filmlist.filterList();
             Listener.notify(Listener.EREIGNIS_BLACKLIST_GEAENDERT, ConfigDialogController.class.getSimpleName());
         }
         super.close();

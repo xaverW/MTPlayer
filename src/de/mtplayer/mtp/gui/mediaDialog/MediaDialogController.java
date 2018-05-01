@@ -16,8 +16,8 @@
 
 package de.mtplayer.mtp.gui.mediaDialog;
 
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.dialog.MTDialog;
@@ -52,14 +52,14 @@ public class MediaDialogController extends MTDialog {
 
     private final MediaDialogPaneMedia mediaDialogPaneMedia = new MediaDialogPaneMedia();
     private final MediaDialogPaneAbo mediaDialogPaneAbo = new MediaDialogPaneAbo();
-    private final Daten daten = Daten.getInstance();
+    private final ProgData progData = ProgData.getInstance();
     private final String searchStr;
     private final Listener listenerDbStart;
     private final Listener listenerDbStop;
 
 
     public MediaDialogController(String searchStr) {
-        super(Config.MEDIA_DIALOG_SIZE, "Mediensammlung", true);
+        super(ProgConfig.MEDIA_DIALOG_SIZE, "Mediensammlung", true);
         this.searchStr = searchStr;
         txtSuchen.setText(searchStr);
 
@@ -86,8 +86,8 @@ public class MediaDialogController extends MTDialog {
 
         mediaDialogPaneMedia.mediaPaneClose();
 
-        daten.erledigteAbos.filterdListClearPred();
-        daten.mediaList.filterdListClearPred();
+        progData.erledigteAbos.filterdListClearPred();
+        progData.mediaList.filterdListClearPred();
         super.close();
     }
 

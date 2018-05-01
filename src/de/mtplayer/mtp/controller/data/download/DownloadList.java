@@ -16,7 +16,7 @@
 
 package de.mtplayer.mtp.controller.data.download;
 
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.p2tools.p2Lib.tools.log.Duration;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -32,7 +32,7 @@ import java.util.LinkedList;
 
 public class DownloadList extends SimpleListProperty<Download> {
 
-    private final Daten daten;
+    private final ProgData progData;
     private final DownloadListAbo downloadListAbo;
     private final DownloadListStarts downloadListStarts;
     private final DownloadStartStop download_startStop;
@@ -41,13 +41,13 @@ public class DownloadList extends SimpleListProperty<Download> {
     private BooleanProperty downloadsChanged = new SimpleBooleanProperty(true);
 
 
-    public DownloadList(Daten daten) {
+    public DownloadList(ProgData progData) {
         super(FXCollections.observableArrayList());
-        this.daten = daten;
-        this.downloadListAbo = new DownloadListAbo(daten, this);
-        this.downloadListStarts = new DownloadListStarts(daten, this);
-        this.download_startStop = new DownloadStartStop(daten, this);
-        this.download_infosAll = new DownloadInfosAll(daten, this);
+        this.progData = progData;
+        this.downloadListAbo = new DownloadListAbo(progData, this);
+        this.downloadListStarts = new DownloadListStarts(progData, this);
+        this.download_startStop = new DownloadStartStop(progData, this);
+        this.download_infosAll = new DownloadInfosAll(progData, this);
     }
 
     public boolean getDownloadsChanged() {
@@ -108,7 +108,7 @@ public class DownloadList extends SimpleListProperty<Download> {
             if (counter < 0) {
                 break;
             }
-            d.setFilm(daten.filmlist.getFilmByUrl_klein_hoch_hd(d.getUrl())); //todo sollen da wirklich alle Filmfelder gesetzt werden??
+            d.setFilm(progData.filmlist.getFilmByUrl_klein_hoch_hd(d.getUrl())); //todo sollen da wirklich alle Filmfelder gesetzt werden??
             d.setSizeDownloadFromFilm();
         }
 //        parallelStream().filter(d -> {
@@ -189,17 +189,17 @@ public class DownloadList extends SimpleListProperty<Download> {
     // =========================
     // Abos
     public synchronized void abosSuchen() {
-        daten.mtFxController.setMasker();
+        progData.mtPlayerController.setMasker();
 
         final int count = getSize();
         Thread th = new Thread(() -> {
             downloadListAbo.abosAuffrischen();
             downloadListAbo.abosSuchen();
-            if (daten.downloadList.getSize() == count) {
+            if (progData.downloadList.getSize() == count) {
                 // dann wurden evtl. nur zurückgestellte Downloads wieder aktiviert
                 setDownloadsChanged();
             }
-            daten.mtFxController.resetMasker();
+            progData.mtPlayerController.resetMasker();
         });
         th.setName("abosSuchen");
         th.start();
@@ -295,7 +295,7 @@ public class DownloadList extends SimpleListProperty<Download> {
     public synchronized void initDownloads() {
         this.stream().forEach(download -> {
             //ist bei gespeiherten Downloads der Fall
-            SetData pSet = daten.setList.getPsetName(download.getSet());
+            SetData pSet = progData.setList.getPsetName(download.getSet());
             if (pSet != null) { //todo und dann??
                 download.setPset(pSet);
             }

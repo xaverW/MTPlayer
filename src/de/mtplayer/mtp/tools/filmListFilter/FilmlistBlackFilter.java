@@ -16,8 +16,8 @@
 
 package de.mtplayer.mtp.tools.filmListFilter;
 
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.BlackData;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.Filmlist;
@@ -37,14 +37,14 @@ public class FilmlistBlackFilter {
     private static long days = 0;
     private static boolean doNotShowFutureFilms, doNotShowGeoBlockedFilms;
     private static long filmlaengeSoll = 0;
-    private final static Daten daten = Daten.getInstance();
+    private final static ProgData PROG_DATA = ProgData.getInstance();
 
     public static synchronized void getFilmListBlackFiltered() {
         // hier wird die komplette Filmliste gegen die Blacklist gefilter
         // mit der Liste wird dannn im TabFilme weiter gearbeitet
 
-        final Filmlist filmlist = daten.filmlist;
-        final Filmlist listeRet = daten.filmlistFiltered;
+        final Filmlist filmlist = PROG_DATA.filmlist;
+        final Filmlist listeRet = PROG_DATA.filmlistFiltered;
 
         loadCurrentFilterSettings();
 
@@ -57,7 +57,7 @@ public class FilmlistBlackFilter {
             Stream<Film> initialStream = filmlist.parallelStream();
 
             filterList.clear();
-            if (daten.storedFilter.getSelectedFilter().isBlacklistOn()) {
+            if (PROG_DATA.storedFilter.getSelectedFilter().isBlacklistOn()) {
                 // add the filter predicates to the list
                 // only when blacklist in ON!
 
@@ -75,7 +75,7 @@ public class FilmlistBlackFilter {
                     filterList.add(FilmlistBlackFilter::checkFilmLength);
                 }
 
-                if (!daten.blackList.isEmpty()) {
+                if (!PROG_DATA.blackList.isEmpty()) {
                     filterList.add(FilmlistBlackFilter::applyBlacklistFilters);
                 }
 
@@ -122,7 +122,7 @@ public class FilmlistBlackFilter {
         }
 
         // wegen der Möglichkeit "Whiteliste" muss das extra geprüft werden
-        if (daten.blackList.isEmpty()) {
+        if (PROG_DATA.blackList.isEmpty()) {
             return true;
         }
 
@@ -134,22 +134,22 @@ public class FilmlistBlackFilter {
      */
     private static void loadCurrentFilterSettings() {
         try {
-            if (Config.SYSTEM_BLACKLIST_SHOW_ONLY_DAYS.getInt() == 0) {
+            if (ProgConfig.SYSTEM_BLACKLIST_SHOW_ONLY_DAYS.getInt() == 0) {
                 days = 0;
             } else {
-                final long max = 1000L * 60L * 60L * 24L * Config.SYSTEM_BLACKLIST_SHOW_ONLY_DAYS.getInt();
+                final long max = 1000L * 60L * 60L * 24L * ProgConfig.SYSTEM_BLACKLIST_SHOW_ONLY_DAYS.getInt();
                 days = System.currentTimeMillis() - max;
             }
         } catch (final Exception ex) {
             days = 0;
         }
         try {
-            filmlaengeSoll = Long.valueOf(Config.SYSTEM_BLACKLIST_FILMSIZE.get()) * 60; // Minuten
+            filmlaengeSoll = Long.valueOf(ProgConfig.SYSTEM_BLACKLIST_FILMSIZE.get()) * 60; // Minuten
         } catch (final Exception ex) {
             filmlaengeSoll = 0;
         }
-        doNotShowFutureFilms = Boolean.parseBoolean(Config.SYSTEM_BLACKLIST_SHOW_NO_FUTURE.get());
-        doNotShowGeoBlockedFilms = Boolean.parseBoolean(Config.SYSTEM_BLACKLIST_SHOW_NO_GEO.get());
+        doNotShowFutureFilms = Boolean.parseBoolean(ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_FUTURE.get());
+        doNotShowGeoBlockedFilms = Boolean.parseBoolean(ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_GEO.get());
     }
 
     /**
@@ -217,7 +217,7 @@ public class FilmlistBlackFilter {
      */
 
     private static boolean applyBlacklistFilters(Film film) {
-        for (final BlackData blackData : daten.blackList) {
+        for (final BlackData blackData : PROG_DATA.blackList) {
 
             if (FilmFilter.filterAufFilmPruefen(
                     blackData.fSender,
@@ -232,10 +232,10 @@ public class FilmlistBlackFilter {
                     film,
                     false /* auch die Länge prüfen */)) {
 
-                return Config.SYSTEM_BLACKLIST_IS_WHITELIST.getBool();
+                return ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST.getBool();
             }
         }
-        return !Config.SYSTEM_BLACKLIST_IS_WHITELIST.getBool();
+        return !ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST.getBool();
     }
 
 }

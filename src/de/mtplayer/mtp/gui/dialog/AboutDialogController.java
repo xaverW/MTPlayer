@@ -17,8 +17,8 @@
 package de.mtplayer.mtp.gui.dialog;
 
 import de.mtplayer.mLib.tools.Functions;
-import de.mtplayer.mtp.controller.config.Const;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConst;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.gui.tools.MTOpen;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -38,15 +38,15 @@ import java.nio.file.Path;
 
 public class AboutDialogController extends MTDialogExtra {
 
-    private final Daten daten;
+    private final ProgData progData;
     Button btnOk = new Button("Ok");
     private final Color GRAY = Color.DARKSLATEGRAY;
 
 
-    public AboutDialogController(Daten daten) {
+    public AboutDialogController(ProgData progData) {
         super(null, null, "Über das Programm", true);
 
-        this.daten = daten;
+        this.progData = progData;
 
         getTilePaneOk().getChildren().addAll(btnOk);
         init(getvBoxDialog(), true);
@@ -75,7 +75,7 @@ public class AboutDialogController extends MTDialogExtra {
         int row = 0;
 
         // top
-        Text text = new Text(Const.PROGRAMMNAME);
+        Text text = new Text(ProgConst.PROGRAMMNAME);
         text.setFont(Font.font(null, FontWeight.BOLD, 40));
         gridPane.add(text, 0, row, 2, 1);
 
@@ -105,11 +105,11 @@ public class AboutDialogController extends MTDialogExtra {
         text.setFont(Font.font(null, FontWeight.BOLD, 15));
         gridPane.add(text, 0, ++row, 2, 1);
 
-        Hyperlink hyperlink = new Hyperlink(Const.ADRESSE_WEBSITE);
+        Hyperlink hyperlink = new Hyperlink(ProgConst.ADRESSE_WEBSITE);
         hyperlink.setStyle("-fx-font-size: 15px;");
         hyperlink.setOnAction(a -> {
             try {
-                MTOpen.openURL(Const.ADRESSE_WEBSITE);
+                MTOpen.openURL(ProgConst.ADRESSE_WEBSITE);
             } catch (Exception e) {
                 PLog.errorLog(974125469, e);
             }

@@ -16,10 +16,8 @@
 
 package de.mtplayer.mtp.gui.configDialog;
 
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.data.Icons;
+import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
-import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.guiTools.PButton;
 import javafx.beans.property.BooleanProperty;
@@ -39,7 +37,7 @@ public class GeoPane {
     RadioButton rbEu = new RadioButton("EU (EUB - European Broadcasting Union");
     RadioButton rbSonst = new RadioButton("sonst");
 
-    BooleanProperty geoProperty = Config.SYSTEM_MARK_GEO.getBooleanProperty();
+    BooleanProperty geoProperty = ProgConfig.SYSTEM_MARK_GEO.getBooleanProperty();
 
     public TitledPane makeGeo() {
         int row = 0;
@@ -67,7 +65,7 @@ public class GeoPane {
         ToggleGroup tg = new ToggleGroup();
         tg.getToggles().addAll(rbDe, rbCh, rbAt, rbEu, rbSonst);
 
-        switch (Config.SYSTEM_GEO_HOME_PLACE.get()) {
+        switch (ProgConfig.SYSTEM_GEO_HOME_PLACE.get()) {
             case FilmXml.GEO_CH:
                 rbCh.setSelected(true);
                 break;
@@ -84,19 +82,19 @@ public class GeoPane {
                 rbDe.setSelected(true);
         }
         rbDe.setOnAction(e -> {
-            Config.SYSTEM_GEO_HOME_PLACE.setValue(FilmXml.GEO_DE);
+            ProgConfig.SYSTEM_GEO_HOME_PLACE.setValue(FilmXml.GEO_DE);
         });
         rbCh.setOnAction(e -> {
-            Config.SYSTEM_GEO_HOME_PLACE.setValue(FilmXml.GEO_CH);
+            ProgConfig.SYSTEM_GEO_HOME_PLACE.setValue(FilmXml.GEO_CH);
         });
         rbAt.setOnAction(e -> {
-            Config.SYSTEM_GEO_HOME_PLACE.setValue(FilmXml.GEO_AT);
+            ProgConfig.SYSTEM_GEO_HOME_PLACE.setValue(FilmXml.GEO_AT);
         });
         rbEu.setOnAction(e -> {
-            Config.SYSTEM_GEO_HOME_PLACE.setValue(FilmXml.GEO_EU);
+            ProgConfig.SYSTEM_GEO_HOME_PLACE.setValue(FilmXml.GEO_EU);
         });
         rbSonst.setOnAction(e -> {
-            Config.SYSTEM_GEO_HOME_PLACE.setValue(FilmXml.GEO_WELT);
+            ProgConfig.SYSTEM_GEO_HOME_PLACE.setValue(FilmXml.GEO_WELT);
         });
         gridPane.add(rbDe, 0, ++row);
         gridPane.add(rbCh, 0, ++row);

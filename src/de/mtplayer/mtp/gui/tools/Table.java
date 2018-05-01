@@ -18,8 +18,8 @@ package de.mtplayer.mtp.gui.tools;
 
 import de.mtplayer.mLib.tools.Data;
 import de.mtplayer.mLib.tools.MLConfigs;
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.abo.Abo;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.scene.control.TableColumn;
@@ -60,27 +60,27 @@ public class Table {
         switch (eTable) {
 
             case FILM:
-                confWidth = Config.FILM_GUI_TABLE_WIDTH;
-                confSort = Config.FILM_GUI_TABLE_SORT;
-                confUpDown = Config.FILM_GUI_TABLE_UP_DOWN;
-                confVis = Config.FILM_GUI_TABLE_VIS;
-                confOrder = Config.FILM_GUI_TABLE_ORDER;
+                confWidth = ProgConfig.FILM_GUI_TABLE_WIDTH;
+                confSort = ProgConfig.FILM_GUI_TABLE_SORT;
+                confUpDown = ProgConfig.FILM_GUI_TABLE_UP_DOWN;
+                confVis = ProgConfig.FILM_GUI_TABLE_VIS;
+                confOrder = ProgConfig.FILM_GUI_TABLE_ORDER;
                 break;
 
             case DOWNLOAD:
-                confWidth = Config.DOWNLOAD_GUI_TABLE_WIDTH;
-                confSort = Config.DOWNLOAD_GUI_TABLE_SORT;
-                confUpDown = Config.DOWNLOAD_GUI_TABLE_UP_DOWN;
-                confVis = Config.DOWNLOAD_GUI_TABLE_VIS;
-                confOrder = Config.DOWNLOAD_GUI_TABLE_ORDER;
+                confWidth = ProgConfig.DOWNLOAD_GUI_TABLE_WIDTH;
+                confSort = ProgConfig.DOWNLOAD_GUI_TABLE_SORT;
+                confUpDown = ProgConfig.DOWNLOAD_GUI_TABLE_UP_DOWN;
+                confVis = ProgConfig.DOWNLOAD_GUI_TABLE_VIS;
+                confOrder = ProgConfig.DOWNLOAD_GUI_TABLE_ORDER;
                 break;
 
             case ABO:
-                confWidth = Config.ABO_GUI_TABLE_WIDTH;
-                confSort = Config.ABO_GUI_TABLE_SORT;
-                confUpDown = Config.ABO_GUI_TABLE_UP_DOWN;
-                confVis = Config.ABO_GUI_TABLE_VIS;
-                confOrder = Config.ABO_GUI_TABLE_ORDER;
+                confWidth = ProgConfig.ABO_GUI_TABLE_WIDTH;
+                confSort = ProgConfig.ABO_GUI_TABLE_SORT;
+                confUpDown = ProgConfig.ABO_GUI_TABLE_UP_DOWN;
+                confVis = ProgConfig.ABO_GUI_TABLE_VIS;
+                confOrder = ProgConfig.ABO_GUI_TABLE_ORDER;
                 break;
         }
     }
@@ -88,7 +88,7 @@ public class Table {
     private void initColumn(TABLE eTable, TableView<Data> table) {
         switch (eTable) {
             case FILM:
-                tArray = new TableFilm(Daten.getInstance()).initFilmColumn(table);
+                tArray = new TableFilm(ProgData.getInstance()).initFilmColumn(table);
                 break;
 
             case DOWNLOAD:

@@ -17,8 +17,8 @@
 package de.mtplayer.mtp.controller.data.download;
 
 import de.mtplayer.mLib.tools.MDate;
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.abo.Abo;
 import de.mtplayer.mtp.controller.data.film.Film;
@@ -30,11 +30,11 @@ import java.util.*;
 
 public class DownloadListAbo {
 
-    private final Daten daten;
+    private final ProgData progData;
     private final DownloadList downloadList;
 
-    public DownloadListAbo(Daten daten, DownloadList downloadList) {
-        this.daten = daten;
+    public DownloadListAbo(ProgData progData, DownloadList downloadList) {
+        this.progData = progData;
         this.downloadList = downloadList;
     }
 
@@ -100,16 +100,16 @@ public class DownloadListAbo {
         downloadList.forEach((download) -> listeUrls.add(download.getUrl()));
 
         // prüfen ob in "alle Filme" oder nur "nach Blacklist" gesucht werden soll
-        final boolean checkWithBlackList = Config.SYSTEM_BLACKLIST_SHOW_ABO.getBool();
+        final boolean checkWithBlackList = ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.getBool();
 
-        if (daten.setList.getPsetAbo("") == null) {
+        if (progData.setList.getPsetAbo("") == null) {
             // dann fehlt ein Set für die Abos
-            new NoSetDialogController(daten, NoSetDialogController.TEXT.ABO);
+            new NoSetDialogController(progData, NoSetDialogController.TEXT.ABO);
             return;
         }
 
-        for (final Film film : daten.filmlist) {
-            abo = daten.aboList.getAboFuerFilm_schnell(film, true /* auch die Länge überprüfen */);
+        for (final Film film : progData.filmlist) {
+            abo = progData.aboList.getAboFuerFilm_schnell(film, true /* auch die Länge überprüfen */);
 
             if (abo == null) {
                 // dann gibts dafür kein Abo
@@ -128,12 +128,12 @@ public class DownloadListAbo {
                 }
             }
 
-            if (daten.erledigteAbos.checkIfExists(film.getUrlHistory())) {
+            if (progData.erledigteAbos.checkIfExists(film.getUrlHistory())) {
                 // ist schon mal geladen worden
                 continue;
             }
 
-            final SetData setData = daten.setList.getPsetAbo(abo.getPset());
+            final SetData setData = progData.setList.getPsetAbo(abo.getPset());
             if (setData != null) {
 
                 // mit der tatsächlichen URL prüfen, ob die URL schon in der Downloadliste ist

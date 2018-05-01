@@ -16,7 +16,7 @@
 
 package de.mtplayer.mtp.gui;
 
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgData;
 import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
@@ -28,11 +28,11 @@ public class FilterController extends AnchorPane {
     final VBox vbFilter = new VBox();
 
 
-    final Daten daten;
+    final ProgData progData;
 
 
     public FilterController() {
-        daten = Daten.getInstance();
+        progData = ProgData.getInstance();
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setFitToHeight(true);

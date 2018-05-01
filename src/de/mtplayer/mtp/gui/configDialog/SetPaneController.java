@@ -16,8 +16,8 @@
 
 package de.mtplayer.mtp.gui.configDialog;
 
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
@@ -42,7 +42,7 @@ import java.util.Collection;
 
 public class SetPaneController extends AnchorPane {
 
-    private final Daten daten;
+    private final ProgData progData;
 
     private final VBox noaccordion = new VBox();
     private final Accordion accordion = new Accordion();
@@ -60,11 +60,11 @@ public class SetPaneController extends AnchorPane {
     SetDataPane setDataPane;
     Collection<TitledPane> setDataPaneTitel;
 
-    BooleanProperty accordionProp = Config.CONFIG_DIALOG_ACCORDION.getBooleanProperty();
-    DoubleProperty split = Config.CONFIG_DIALOG_SET_DIVIDER.getDoubleProperty();
+    BooleanProperty accordionProp = ProgConfig.CONFIG_DIALOG_ACCORDION.getBooleanProperty();
+    DoubleProperty split = ProgConfig.CONFIG_DIALOG_SET_DIVIDER.getDoubleProperty();
 
     public SetPaneController() {
-        daten = Daten.getInstance();
+        progData = ProgData.getInstance();
 
         cbxAccordion.selectedProperty().bindBidirectional(accordionProp);
         cbxAccordion.selectedProperty().addListener((observable, oldValue, newValue) -> setAccordion());
@@ -156,7 +156,7 @@ public class SetPaneController extends AnchorPane {
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
         tableView.getColumns().addAll(nameColumn, playColumn);
-        tableView.setItems(daten.setList);
+        tableView.setItems(progData.setList);
 
         VBox.setVgrow(tableView, Priority.ALWAYS);
         vBox.getChildren().addAll(tableView);
@@ -166,7 +166,7 @@ public class SetPaneController extends AnchorPane {
         btnDel.setOnAction(event -> {
             SetData setData = getSel();
             if (setData != null) {
-                daten.setList.remove(setData);
+                progData.setList.remove(setData);
             }
         });
 
@@ -174,7 +174,7 @@ public class SetPaneController extends AnchorPane {
         btnNew.setGraphic(new Icons().ICON_BUTTON_ADD);
         btnNew.setOnAction(event -> {
             SetData setData = new SetData("Neu-" + ++newCounter);
-            daten.setList.add(setData);
+            progData.setList.add(setData);
         });
 
         Button btnUp = new Button("");
@@ -182,7 +182,7 @@ public class SetPaneController extends AnchorPane {
         btnUp.setOnAction(event -> {
             int sel = getSelLine();
             if (sel >= 0) {
-                int newSel = daten.setList.auf(sel, true);
+                int newSel = progData.setList.auf(sel, true);
                 tableView.getSelectionModel().select(newSel);
             }
         });
@@ -192,7 +192,7 @@ public class SetPaneController extends AnchorPane {
         btnDown.setOnAction(event -> {
             int sel = getSelLine();
             if (sel >= 0) {
-                int newSel = daten.setList.auf(sel, false);
+                int newSel = progData.setList.auf(sel, false);
                 tableView.getSelectionModel().select(newSel);
             }
         });
@@ -201,14 +201,14 @@ public class SetPaneController extends AnchorPane {
         btnDup.setOnAction(event -> {
             SetData setData = getSel();
             if (setData != null) {
-                daten.setList.add(setData.copy());
+                progData.setList.add(setData.copy());
             }
         });
         HBox.setHgrow(btnDup, Priority.ALWAYS);
         btnDup.setMaxWidth(Double.MAX_VALUE);
 
         Button btnCheck = new Button("Prüfen");
-        btnCheck.setOnAction(event -> SetsPrograms.programmePruefen(daten));
+        btnCheck.setOnAction(event -> SetsPrograms.programmePruefen(progData));
         HBox.setHgrow(btnCheck, Priority.ALWAYS);
         btnCheck.setMaxWidth(Double.MAX_VALUE);
 
@@ -280,7 +280,7 @@ public class SetPaneController extends AnchorPane {
                 radioButton.setToggleGroup(toggleGroup);
                 radioButton.setSelected(item.booleanValue());
 
-                radioButton.setOnAction(event -> daten.setList.setAbspielen(setData));
+                radioButton.setOnAction(event -> progData.setList.setAbspielen(setData));
 
                 hbox.getChildren().addAll(radioButton);
                 setGraphic(hbox);

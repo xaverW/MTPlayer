@@ -16,7 +16,7 @@
 
 package de.mtplayer.mtp.tools.storedFilter;
 
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgData;
 import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -30,7 +30,7 @@ public final class StoredFilter {
 
     private final BooleanProperty filterChange = new SimpleBooleanProperty(true);
 
-    private final Daten daten;
+    private final ProgData progData;
     private final ChangeListener<Boolean> filterChangeListener;
     private final ChangeListener<Boolean> blacklistChangeListener;
 
@@ -44,8 +44,8 @@ public final class StoredFilter {
     private final ObservableList<SelectedFilter> filterList =
             FXCollections.observableList(new ArrayList<>(), (SelectedFilter tp) -> new Observable[]{tp.nameProperty()});
 
-    public StoredFilter(Daten daten) {
-        this.daten = daten;
+    public StoredFilter(ProgData progData) {
+        this.progData = progData;
 
         filterChangeListener = (observable, oldValue, newValue) -> postFilterChange();
         blacklistChangeListener = (observable, oldValue, newValue) -> postBlacklistChange();
@@ -216,7 +216,7 @@ public final class StoredFilter {
 
     private void postBlacklistChange() {
         // dann hat sich auch Blacklist-ein/aus geändert
-        daten.filmlist.filterList();
+        progData.filmlist.filterList();
         setFilterChange(!isFilterChange());
     }
 

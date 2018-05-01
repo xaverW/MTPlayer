@@ -17,7 +17,7 @@
 package de.mtplayer.mtp.gui;
 
 import de.mtplayer.mLib.tools.MLBandwidthTokenBucket;
-import de.mtplayer.mtp.controller.config.Config;
+import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.data.download.DownloadInfos;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
@@ -43,8 +43,8 @@ public class DownloadFilterController extends FilterController {
     Label lblBandwidth = new Label();
 
     // funktioniert nur wenn hier angelegt, geht sonst die Ref verloren!
-    IntegerProperty bandwidthValue = Config.DOWNLOAD_MAX_BANDWITH_KBYTE.getIntegerProperty();
-    IntegerProperty anzValue = Config.DOWNLOAD_MAX_DOWNLOADS.getIntegerProperty();
+    IntegerProperty bandwidthValue = ProgConfig.DOWNLOAD_MAX_BANDWITH_KBYTE.getIntegerProperty();
+    IntegerProperty anzValue = ProgConfig.DOWNLOAD_MAX_DOWNLOADS.getIntegerProperty();
     IntegerProperty integerProperty;
 
     public DownloadFilterController() {
@@ -104,7 +104,7 @@ public class DownloadFilterController extends FilterController {
                 DownloadInfos.SRC_COMBO_DOWNLOAD,
                 DownloadInfos.SRC_COMBO_ABO);
 
-        Bindings.bindBidirectional(cbSrc.valueProperty(), Config.FILTER_DOWNLOAD_SOURCE.getStringProperty(),
+        Bindings.bindBidirectional(cbSrc.valueProperty(), ProgConfig.FILTER_DOWNLOAD_SOURCE.getStringProperty(),
                 new StringConverter<String>() {
 
                     public String fromString(String cb) {
@@ -138,7 +138,7 @@ public class DownloadFilterController extends FilterController {
                 DownloadInfos.ART_COMBO_DOWNLOAD,
                 DownloadInfos.ART_COMBO_PROGRAMM);
 
-        Bindings.bindBidirectional(cbArt.valueProperty(), Config.FILTER_DOWNLOAD_KIND.getStringProperty(),
+        Bindings.bindBidirectional(cbArt.valueProperty(), ProgConfig.FILTER_DOWNLOAD_KIND.getStringProperty(),
                 new StringConverter<String>() {
 
                     public String fromString(String cb) {
@@ -168,11 +168,11 @@ public class DownloadFilterController extends FilterController {
                     }
                 });
 
-        cbSender.valueProperty().bindBidirectional(Config.FILTER_DOWNLOAD_SENDER.getStringProperty());
-        cbSender.setItems(daten.nameLists.getObsAllSender());
+        cbSender.valueProperty().bindBidirectional(ProgConfig.FILTER_DOWNLOAD_SENDER.getStringProperty());
+        cbSender.setItems(progData.nameLists.getObsAllSender());
 
-        cbAbo.valueProperty().bindBidirectional(Config.FILTER_DOWNLOAD_ABO.getStringProperty());
-        cbAbo.setItems(daten.nameLists.getObsAllAbonames()); // todo evtl. nur die vorhandenen Abos
+        cbAbo.valueProperty().bindBidirectional(ProgConfig.FILTER_DOWNLOAD_ABO.getStringProperty());
+        cbAbo.setItems(progData.nameLists.getObsAllAbonames()); // todo evtl. nur die vorhandenen Abos
     }
 
     private void initAnzahl() {
@@ -201,7 +201,7 @@ public class DownloadFilterController extends FilterController {
     private void setTextBandwith() {
         int bandbreiteKByte;
         String ret;
-        bandbreiteKByte = Config.DOWNLOAD_MAX_BANDWITH_KBYTE.getInt();
+        bandbreiteKByte = ProgConfig.DOWNLOAD_MAX_BANDWITH_KBYTE.getInt();
         if (bandbreiteKByte == MLBandwidthTokenBucket.BANDWIDTH_MAX_KBYTE) {
             ret = "aus";
         } else {

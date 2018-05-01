@@ -17,8 +17,8 @@
 package de.mtplayer.mtp.gui.dialog;
 
 import de.mtplayer.mLib.tools.MLConfigs;
-import de.mtplayer.mtp.controller.config.Const;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConst;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.p2tools.p2Lib.guiTools.GuiSize;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
@@ -98,7 +98,7 @@ public class MTDialog {
 
     public void init(Pane pane, boolean show) {
         setSize(pane);
-        String css = this.getClass().getResource(Const.CSS_FILE).toExternalForm();
+        String css = this.getClass().getResource(ProgConst.CSS_FILE).toExternalForm();
         scene.getStylesheets().add(css);
 
         initDialog();
@@ -192,7 +192,7 @@ public class MTDialog {
         if (conf != null) {
             GuiSize.setPos(conf.getStringProperty(), stage);
         } else {
-            Stage parentStage = Daten.getInstance().primaryStage;
+            Stage parentStage = ProgData.getInstance().primaryStage;
             ChangeListener<Number> widthListener = (observable, oldValue, newValue) -> {
                 double stageWidth = newValue.doubleValue();
                 stage.setX(parentStage.getX() + parentStage.getWidth() / 2 - stageWidth / 2);

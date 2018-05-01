@@ -16,8 +16,8 @@
 
 package de.mtplayer.mtp.gui.configDialog;
 
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.ReplaceData;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
@@ -41,8 +41,8 @@ public class ReplacePane {
 
     TableView<ReplaceData> tableView = new TableView<>();
 
-    BooleanProperty propAscii = Config.SYSTEM_ONLY_ASCII.getBooleanProperty();
-    BooleanProperty propReplace = Config.SYSTEM_USE_REPLACETABLE.getBooleanProperty();
+    BooleanProperty propAscii = ProgConfig.SYSTEM_ONLY_ASCII.getBooleanProperty();
+    BooleanProperty propReplace = ProgConfig.SYSTEM_USE_REPLACETABLE.getBooleanProperty();
 
     public void makeReplaceListTable(Collection<TitledPane> result) {
         final VBox vBox = new VBox();
@@ -113,7 +113,7 @@ public class ReplacePane {
         tableView.setMinHeight(Region.USE_PREF_SIZE);
 
         tableView.getColumns().addAll(expander, fromColumn, toColumn);
-        tableView.setItems(Daten.getInstance().replaceList);
+        tableView.setItems(ProgData.getInstance().replaceList);
 
         VBox.setVgrow(tableView, Priority.ALWAYS);
         vBox.getChildren().addAll(tableView);
@@ -126,7 +126,7 @@ public class ReplacePane {
             if (sels == null || sels.isEmpty()) {
                 new MTAlert().showInfoNoSelection();
             } else {
-                Daten.getInstance().replaceList.removeAll(sels);
+                ProgData.getInstance().replaceList.removeAll(sels);
                 tableView.getSelectionModel().clearSelection();
             }
         });
@@ -135,7 +135,7 @@ public class ReplacePane {
         neu.setGraphic(new Icons().ICON_BUTTON_ADD);
         neu.setOnAction(event -> {
             ReplaceData replaceData = new ReplaceData();
-            Daten.getInstance().replaceList.add(replaceData);
+            ProgData.getInstance().replaceList.add(replaceData);
             tableView.getSelectionModel().select(replaceData);
             tableView.scrollTo(replaceData);
         });
@@ -148,7 +148,7 @@ public class ReplacePane {
             if (sel < 0) {
                 new MTAlert().showInfoNoSelection();
             } else {
-                int res = Daten.getInstance().replaceList.up(sel, true);
+                int res = ProgData.getInstance().replaceList.up(sel, true);
                 tableView.getSelectionModel().select(res);
             }
         });
@@ -161,14 +161,14 @@ public class ReplacePane {
             if (sel < 0) {
                 new MTAlert().showInfoNoSelection();
             } else {
-                int res = Daten.getInstance().replaceList.up(sel, false);
+                int res = ProgData.getInstance().replaceList.up(sel, false);
                 tableView.getSelectionModel().select(res);
             }
         });
 
         Button reset = new Button("Tabelle zurücksetzen");
         reset.setOnAction(event -> {
-            Daten.getInstance().replaceList.init();
+            ProgData.getInstance().replaceList.init();
         });
 
         HBox hBox = new HBox();
@@ -230,7 +230,7 @@ public class ReplacePane {
                 btnDel = new Button("x");
 
                 btnDel.setOnAction(event -> {
-                    Daten.getInstance().replaceList.remove(blackData);
+                    ProgData.getInstance().replaceList.remove(blackData);
                 });
                 hbox.getChildren().add(btnDel);
                 setGraphic(hbox);

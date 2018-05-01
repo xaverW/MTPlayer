@@ -16,16 +16,13 @@
 
 package de.mtplayer.mtp.gui;
 
-import de.mtplayer.mtp.controller.config.Daten;
-import de.mtplayer.mtp.controller.data.Icons;
-import de.mtplayer.mtp.gui.dialog.MTAlert;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.dialog.MTDialog;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.guiTools.PButton;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -34,14 +31,14 @@ import org.controlsfx.control.ToggleSwitch;
 
 public class FilmFilterEditDialog extends MTDialog {
 
-    final Daten daten;
+    final ProgData progData;
     final VBox vbox;
 
-    public FilmFilterEditDialog(Daten daten) {
+    public FilmFilterEditDialog(ProgData progData) {
         super("", null,
                 "Filter ein- und ausschalten", true);
 
-        this.daten = daten;
+        this.progData = progData;
         vbox = new VBox();
         vbox.setSpacing(20);
 
@@ -79,70 +76,70 @@ public class FilmFilterEditDialog extends MTDialog {
         VBox v = new VBox();
         ToggleSwitch tglSender = new ToggleSwitch("Sender");
         tglSender.setMaxWidth(Double.MAX_VALUE);
-        tglSender.selectedProperty().bindBidirectional(daten.storedFilter.getSelectedFilter().senderVisProperty());
+        tglSender.selectedProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().senderVisProperty());
         v.getChildren().add(tglSender);
 
         ToggleSwitch tglSenderExact = new ToggleSwitch("  -> exakt");
         tglSenderExact.setMaxWidth(Double.MAX_VALUE);
-        tglSenderExact.selectedProperty().bindBidirectional(daten.storedFilter.getSelectedFilter().senderExactProperty());
+        tglSenderExact.selectedProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().senderExactProperty());
         v.getChildren().add(tglSenderExact);
         vbox.getChildren().add(v);
 
         v = new VBox();
         ToggleSwitch tglTheme = new ToggleSwitch("Thema");
         tglTheme.setMaxWidth(Double.MAX_VALUE);
-        tglTheme.selectedProperty().bindBidirectional(daten.storedFilter.getSelectedFilter().themeVisProperty());
+        tglTheme.selectedProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().themeVisProperty());
         v.getChildren().add(tglTheme);
 
         ToggleSwitch tglThemeExact = new ToggleSwitch("  -> exakt");
         tglThemeExact.setMaxWidth(Double.MAX_VALUE);
-        tglThemeExact.selectedProperty().bindBidirectional(daten.storedFilter.getSelectedFilter().themeExactProperty());
+        tglThemeExact.selectedProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().themeExactProperty());
         v.getChildren().add(tglThemeExact);
         vbox.getChildren().add(v);
 
         ToggleSwitch tglThemeTitle = new ToggleSwitch("Thema oder Titel");
         tglThemeTitle.setMaxWidth(Double.MAX_VALUE);
-        tglThemeTitle.selectedProperty().bindBidirectional(daten.storedFilter.getSelectedFilter().themeTitleVisProperty());
+        tglThemeTitle.selectedProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().themeTitleVisProperty());
         vbox.getChildren().add(tglThemeTitle);
 
         ToggleSwitch tglTitle = new ToggleSwitch("Titel");
         tglTitle.setMaxWidth(Double.MAX_VALUE);
-        tglTitle.selectedProperty().bindBidirectional(daten.storedFilter.getSelectedFilter().titleVisProperty());
+        tglTitle.selectedProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().titleVisProperty());
         vbox.getChildren().add(tglTitle);
 
         ToggleSwitch tglSomewhere = new ToggleSwitch("Irgendwo");
         tglSomewhere.setMaxWidth(Double.MAX_VALUE);
-        tglSomewhere.selectedProperty().bindBidirectional(daten.storedFilter.getSelectedFilter().somewhereVisProperty());
+        tglSomewhere.selectedProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().somewhereVisProperty());
         vbox.getChildren().add(tglSomewhere);
 
         ToggleSwitch tglUrl = new ToggleSwitch("Url");
         tglUrl.setMaxWidth(Double.MAX_VALUE);
-        tglUrl.selectedProperty().bindBidirectional(daten.storedFilter.getSelectedFilter().urlVisProperty());
+        tglUrl.selectedProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().urlVisProperty());
         vbox.getChildren().add(tglUrl);
 
         ToggleSwitch tglDays = new ToggleSwitch("Zeitraum [Tage]");
         tglDays.setMaxWidth(Double.MAX_VALUE);
-        tglDays.selectedProperty().bindBidirectional(daten.storedFilter.getSelectedFilter().daysVisProperty());
+        tglDays.selectedProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().daysVisProperty());
         vbox.getChildren().add(tglDays);
 
         ToggleSwitch tglMinMax = new ToggleSwitch("Filmlänge Min/Max [Minuten]");
         tglMinMax.setMaxWidth(Double.MAX_VALUE);
-        tglMinMax.selectedProperty().bindBidirectional(daten.storedFilter.getSelectedFilter().minMaxDurVisProperty());
+        tglMinMax.selectedProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().minMaxDurVisProperty());
         vbox.getChildren().add(tglMinMax);
 
         ToggleSwitch tglMinMaxTime = new ToggleSwitch("Uhrzeit des Films");
         tglMinMaxTime.setMaxWidth(Double.MAX_VALUE);
-        tglMinMaxTime.selectedProperty().bindBidirectional(daten.storedFilter.getSelectedFilter().minMaxTimeVisProperty());
+        tglMinMaxTime.selectedProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().minMaxTimeVisProperty());
         vbox.getChildren().add(tglMinMaxTime);
 
         ToggleSwitch tglOnly = new ToggleSwitch("\"nur anzeigen\"");
         tglOnly.setMaxWidth(Double.MAX_VALUE);
-        tglOnly.selectedProperty().bindBidirectional(daten.storedFilter.getSelectedFilter().onlyVisProperty());
+        tglOnly.selectedProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().onlyVisProperty());
         vbox.getChildren().add(tglOnly);
 
         ToggleSwitch tglNot = new ToggleSwitch("\"nicht anzeigen\"");
         tglNot.setMaxWidth(Double.MAX_VALUE);
-        tglNot.selectedProperty().bindBidirectional(daten.storedFilter.getSelectedFilter().notVisProperty());
+        tglNot.selectedProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().notVisProperty());
         vbox.getChildren().add(tglNot);
     }
 }

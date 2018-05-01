@@ -20,10 +20,9 @@ import de.mtplayer.mLib.tools.StringFormatters;
 import de.mtplayer.mtp.controller.ProgQuitt;
 import de.mtplayer.mtp.controller.ProgSave;
 import de.mtplayer.mtp.controller.ProgStart;
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Const;
-import de.mtplayer.mtp.controller.config.Daten;
-import de.mtplayer.mtp.controller.data.Icons;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgConst;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ListePsetVorlagen;
 import de.mtplayer.mtp.controller.data.SetList;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
@@ -45,10 +44,10 @@ import java.util.Date;
 
 import static java.lang.Thread.sleep;
 
-public class MTFx extends Application {
+public class MTPlayer extends Application {
 
     private Stage primaryStage;
-    private MTFxController root;
+    private MTPlayerController root;
 
 
     private static final String ICON_NAME = "Icon.png";
@@ -61,7 +60,7 @@ public class MTFx extends Application {
     private static final String TITLE_TEXT_PROGRAMMVERSION_IST_AKTUELL = "Programmversion ist aktuell";
     private static final String TITLE_TEXT_EIN_PROGRAMMUPDATE_IST_VERFUEGBAR = "Ein Programmupdate ist verfügbar";
 
-    protected Daten daten;
+    protected ProgData progData;
     ProgStart progStart;
     Scene scene = null;
     private boolean onlyOne = false;
@@ -75,34 +74,67 @@ public class MTFx extends Application {
         this.primaryStage = primaryStage;
 
         Duration.counterStart(LOG_TEXT_PROGRAMMSTART);
-        daten = Daten.getInstance();
-        daten.primaryStage = primaryStage;
-        progStart = new ProgStart(daten);
+        progData = ProgData.getInstance();
+        progData.primaryStage = primaryStage;
+        progStart = new ProgStart(progData);
 
+        initP2();
         loadData();
         initRootLayout();
         losGehts();
         Duration.counterStop(LOG_TEXT_PROGRAMMSTART);
     }
 
+    private void initP2() {
+        PButton.setHlpImage(GetIcon.getImage("button-help.png", 16, 16));
+    }
+
+    private void loadData() {
+
+        if (!progStart.loadAll()) {
+
+            Duration.staticPing("Erster Start");
+
+            // einmal ein Muster anlegen, für Linux ist es bereits aktiv!
+            progData.replaceList.init();
+
+            new StartDialogController();
+
+            //todo das ist noch nicht ganz klar ob dahin
+            Duration.staticPing("Erster Start: PSet");
+            Platform.runLater(() -> {
+                // kann ein Dialog aufgehen
+                final SetList pSet = ListePsetVorlagen.getStandarset(true /*replaceMuster*/);
+                if (pSet != null) {
+                    progData.setList.addPset(pSet);
+                    ProgConfig.SYSTEM_UPDATE_PROGSET_VERSION.setValue(pSet.version);
+                }
+                Duration.staticPing("Erster Start: PSet geladen");
+            });
+
+            ProgInitFilter.setProgInitFilter();
+        }
+        progData.initDialogs();
+    }
+
     private void initRootLayout() {
         try {
-            root = new MTFxController();
-            daten.mtFxController = root;
+            root = new MTPlayerController();
+            progData.mtPlayerController = root;
             scene = new Scene(root,
-                    GuiSize.getWidth(Config.SYSTEM_SIZE_GUI.getStringProperty()),
-                    GuiSize.getHeight(Config.SYSTEM_SIZE_GUI.getStringProperty()));
+                    GuiSize.getWidth(ProgConfig.SYSTEM_SIZE_GUI.getStringProperty()),
+                    GuiSize.getHeight(ProgConfig.SYSTEM_SIZE_GUI.getStringProperty()));
 
-            String css = this.getClass().getResource(Const.CSS_FILE).toExternalForm();
+            String css = this.getClass().getResource(ProgConst.CSS_FILE).toExternalForm();
             scene.getStylesheets().add(css);
 
             primaryStage.setScene(scene);
             primaryStage.setOnCloseRequest(e -> {
                 e.consume();
-                new ProgQuitt().beenden(true, false);
+                new ProgQuitt().quitt(true, false);
             });
 
-            GuiSize.setPos(Config.SYSTEM_SIZE_GUI.getStringProperty(), primaryStage);
+            GuiSize.setPos(ProgConfig.SYSTEM_SIZE_GUI.getStringProperty(), primaryStage);
             primaryStage.show();
 
         } catch (final Exception e) {
@@ -112,9 +144,8 @@ public class MTFx extends Application {
 
     private void losGehts() {
         primaryStage.getIcons().add(GetIcon.getImage(ICON_NAME, ICON_PATH, ICON_WIDTH, ICON_HEIGHT));
-        progStart.startMsg();
 
-        PButton.setImageView(new Icons().ICON_BUTTON_HELP);
+        progStart.startMsg();
 
         Duration.staticPing("Erster Start");
         setOrgTitel();
@@ -124,37 +155,9 @@ public class MTFx extends Application {
         progStart.loadDataProgStart();
     }
 
-    private void loadData() {
-
-        if (!progStart.allesLaden()) {
-
-            Duration.staticPing("Erster Start");
-
-            // einmal ein Muster anlegen, für Linux ist es bereits aktiv!
-            daten.replaceList.init();
-
-            new StartDialogController();
-
-//            //todo das ist noch nicht ganz klar ob dahin
-            Duration.staticPing("Erster Start: PSet");
-            Platform.runLater(() -> {
-                // kann ein Dialog aufgehen
-                final SetList pSet = ListePsetVorlagen.getStandarset(true /*replaceMuster*/);
-                if (pSet != null) {
-                    daten.setList.addPset(pSet);
-                    Config.SYSTEM_UPDATE_PROGSET_VERSION.setValue(pSet.version);
-                }
-                Duration.staticPing("Erster Start: PSet geladen");
-            });
-
-            ProgInitFilter.setProgInitFilter();
-        }
-        daten.initDialogs();
-    }
-
 
     private void setOrgTitel() {
-        primaryStage.setTitle(Const.PROGRAMMNAME + " " + Functions.getProgVersion());
+        primaryStage.setTitle(ProgConst.PROGRAMMNAME + " " + Functions.getProgVersion());
     }
 
     private void setUpdateTitel() {
@@ -166,14 +169,14 @@ public class MTFx extends Application {
     }
 
     private void initProg() {
-        daten.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
+        progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
             @Override
             public void fertig(ListenerFilmlistLoadEvent event) {
-                new ProgSave().allesSpeichern(); // damit nichts verlorengeht
+                new ProgSave().saveAll(); // damit nichts verlorengeht
 
                 if (!onlyOne) {
                     onlyOne = true;
-                    daten.mediaList.createMediaDb();
+                    progData.mediaList.createMediaDb();
                     checkProgUpdate();
                 }
 
@@ -184,9 +187,9 @@ public class MTFx extends Application {
     private void checkProgUpdate() {
         // Prüfen obs ein Programmupdate gibt
         Duration.staticPing("check update");
-        if (!Boolean.parseBoolean(Config.SYSTEM_UPDATE_SEARCH.get()) ||
-                Config.SYSTEM_UPDATE_BUILD_NR.get().equals(Functions.getProgVersion() /*Start mit neuer Version*/)
-                        && Config.SYSTEM_UPDATE_DATE.get().equals(StringFormatters.FORMATTER_yyyyMMdd.format(new Date()))) {
+        if (!Boolean.parseBoolean(ProgConfig.SYSTEM_UPDATE_SEARCH.get()) ||
+                ProgConfig.SYSTEM_UPDATE_BUILD_NR.get().equals(Functions.getProgVersion() /*Start mit neuer Version*/)
+                        && ProgConfig.SYSTEM_UPDATE_DATE.get().equals(StringFormatters.FORMATTER_yyyyMMdd.format(new Date()))) {
             // will der User nicht --oder-- keine neue Version und heute schon gemacht
             PLog.sysLog("Kein Update-Check");
             return;

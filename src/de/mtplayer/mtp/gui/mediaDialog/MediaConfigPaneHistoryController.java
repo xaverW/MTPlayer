@@ -16,8 +16,8 @@
 
 package de.mtplayer.mtp.gui.mediaDialog;
 
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.HistoryData;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import javafx.application.Platform;
@@ -33,18 +33,18 @@ import java.util.Collection;
 
 public class MediaConfigPaneHistoryController extends AnchorPane {
 
-    private final Daten daten;
+    private final ProgData progData;
     private final boolean history;
     private Label lblGesamtMedia = new Label();
     private VBox noaccordion = new VBox();
     private final Accordion accordion = new Accordion();
     private final HBox hBox = new HBox(0);
     private final CheckBox cbxAccordion = new CheckBox("");
-    private final BooleanProperty accordionProp = Config.MEDIA_CONFIG_DIALOG_ACCORDION.getBooleanProperty();
+    private final BooleanProperty accordionProp = ProgConfig.MEDIA_CONFIG_DIALOG_ACCORDION.getBooleanProperty();
     private ScrollPane scrollPane = new ScrollPane();
 
     public MediaConfigPaneHistoryController(boolean history) {
-        daten = Daten.getInstance();
+        progData = ProgData.getInstance();
         this.history = history;
 
         cbxAccordion.selectedProperty().bindBidirectional(accordionProp);
@@ -81,17 +81,17 @@ public class MediaConfigPaneHistoryController extends AnchorPane {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
         makeTable(result);
         if (history) {
-            lblGesamtMedia.setText(daten.history.size() + "");
-            daten.history.addListener((ListChangeListener.Change<? extends HistoryData> c) -> {
+            lblGesamtMedia.setText(progData.history.size() + "");
+            progData.history.addListener((ListChangeListener.Change<? extends HistoryData> c) -> {
                 Platform.runLater(() -> {
-                    lblGesamtMedia.setText(daten.history.size() + "");
+                    lblGesamtMedia.setText(progData.history.size() + "");
                 });
             });
         } else {
-            lblGesamtMedia.setText(daten.erledigteAbos.size() + "");
-            daten.erledigteAbos.addListener((ListChangeListener.Change<? extends HistoryData> c) -> {
+            lblGesamtMedia.setText(progData.erledigteAbos.size() + "");
+            progData.erledigteAbos.addListener((ListChangeListener.Change<? extends HistoryData> c) -> {
                 Platform.runLater(() -> {
-                    lblGesamtMedia.setText(daten.erledigteAbos.size() + "");
+                    lblGesamtMedia.setText(progData.erledigteAbos.size() + "");
                 });
             });
         }
@@ -131,9 +131,9 @@ public class MediaConfigPaneHistoryController extends AnchorPane {
 
         tableView.getColumns().addAll(dateColumn, themeColumn, titleColumn, urlColumn);
         if (history) {
-            tableView.setItems(daten.history);
+            tableView.setItems(progData.history);
         } else {
-            tableView.setItems(daten.erledigteAbos);
+            tableView.setItems(progData.erledigteAbos);
         }
 
         tableView.setOnMousePressed(m -> {
@@ -154,9 +154,9 @@ public class MediaConfigPaneHistoryController extends AnchorPane {
         Button btnDel = new Button("Liste löschen");
         btnDel.setOnAction(event -> {
             if (history) {
-                daten.history.clearAll();
+                progData.history.clearAll();
             } else {
-                daten.erledigteAbos.clearAll();
+                progData.erledigteAbos.clearAll();
             }
         });
 

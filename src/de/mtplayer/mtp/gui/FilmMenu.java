@@ -16,8 +16,8 @@
 
 package de.mtplayer.mtp.gui;
 
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.control.CheckMenuItem;
@@ -28,15 +28,15 @@ import javafx.scene.layout.VBox;
 
 public class FilmMenu {
     final private VBox vbox;
-    final private Daten daten;
+    final private ProgData progData;
     private static final String FILM_ABSPIELEN_TEXT = "Film abspielen";
     private static final String FILM_RECORD_TEXT = "Film aufzeichnen";
-    BooleanProperty boolFilterOn = Config.FILM_GUI_FILTER_DIVIDER_ON.getBooleanProperty();
-    BooleanProperty boolInfoOn = Config.FILM_GUI_DIVIDER_ON.getBooleanProperty();
+    BooleanProperty boolFilterOn = ProgConfig.FILM_GUI_FILTER_DIVIDER_ON.getBooleanProperty();
+    BooleanProperty boolInfoOn = ProgConfig.FILM_GUI_DIVIDER_ON.getBooleanProperty();
 
     public FilmMenu(VBox vbox) {
         this.vbox = vbox;
-        daten = Daten.getInstance();
+        progData = ProgData.getInstance();
     }
 
 
@@ -55,8 +55,8 @@ public class FilmMenu {
         final ToolBarButton btSave =
                 new ToolBarButton(vbox, "Speichern", FILM_RECORD_TEXT, new Icons().FX_ICON_TOOLBAR_FILME_REC);
 
-        btPlay.setOnAction(a -> daten.filmGuiController.playFilmUrl());
-        btSave.setOnAction(a -> daten.filmGuiController.filmSpeichern());
+        btPlay.setOnAction(a -> progData.filmGuiController.playFilmUrl());
+        btSave.setOnAction(a -> progData.filmGuiController.filmSpeichern());
     }
 
     private void initFilmMenu() {
@@ -65,19 +65,19 @@ public class FilmMenu {
         mb.getStyleClass().add("btnFunction");
 
         final MenuItem mbPlay = new MenuItem("Film abspielen");
-        mbPlay.setOnAction(a -> daten.filmGuiController.playFilmUrl());
+        mbPlay.setOnAction(a -> progData.filmGuiController.playFilmUrl());
 
         final MenuItem mbSave = new MenuItem("Film aufzeichnen");
-        mbSave.setOnAction(e -> daten.filmGuiController.filmSpeichern());
+        mbSave.setOnAction(e -> progData.filmGuiController.filmSpeichern());
 
         final MenuItem miFilmeGesehen = new MenuItem("Filme als gesehen markieren");
-        miFilmeGesehen.setOnAction(a -> daten.filmGuiController.filmGesehen());
+        miFilmeGesehen.setOnAction(a -> progData.filmGuiController.filmGesehen());
 
         final MenuItem miFilmeUngesehen = new MenuItem("Filme als ungesehen markieren");
-        miFilmeUngesehen.setOnAction(a -> daten.filmGuiController.filmUngesehen());
+        miFilmeUngesehen.setOnAction(a -> progData.filmGuiController.filmUngesehen());
 
         final MenuItem miFilmeMediensammlung = new MenuItem("Titel in der Mediensammlung suchen");
-        miFilmeMediensammlung.setOnAction(a -> daten.filmGuiController.guiFilmMediensammlung());
+        miFilmeMediensammlung.setOnAction(a -> progData.filmGuiController.guiFilmMediensammlung());
 
         final CheckMenuItem miShowFilter = new CheckMenuItem("Filter anzeigen");
         miShowFilter.selectedProperty().bindBidirectional(boolFilterOn);

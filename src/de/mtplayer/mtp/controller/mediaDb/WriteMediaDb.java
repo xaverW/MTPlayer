@@ -16,7 +16,7 @@
 
 package de.mtplayer.mtp.controller.mediaDb;
 
-import de.mtplayer.mtp.controller.config.Const;
+import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
@@ -86,7 +86,7 @@ public class WriteMediaDb implements AutoCloseable {
         writer = outFactory.createXMLStreamWriter(out);
         writer.writeStartDocument(StandardCharsets.UTF_8.name(), "1.0");
         writer.writeCharacters("\n");// neue Zeile
-        writer.writeStartElement(Const.XML_START);
+        writer.writeStartElement(ProgConst.XML_START);
         writer.writeCharacters("\n");// neue Zeile
     }
 

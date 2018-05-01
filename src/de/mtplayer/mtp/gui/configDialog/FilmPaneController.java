@@ -17,8 +17,8 @@
 package de.mtplayer.mtp.gui.configDialog;
 
 import de.mtplayer.mLib.tools.DirFileChooser;
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
@@ -37,7 +37,7 @@ import java.util.Collection;
 
 public class FilmPaneController extends AnchorPane {
 
-    private final Daten daten;
+    private final ProgData progData;
     private final VBox noaccordion = new VBox();
     private final Accordion accordion = new Accordion();
     private final HBox hBox = new HBox(0);
@@ -47,13 +47,13 @@ public class FilmPaneController extends AnchorPane {
     private final Label lblDays = new Label("");
     private final int FILTER_DAYS_MAX = 150;
 
-    BooleanProperty accordionProp = Config.CONFIG_DIALOG_ACCORDION.getBooleanProperty();
-    IntegerProperty propDay = Config.SYSTEM_NUM_DAYS_FILMLIST.getIntegerProperty();
-    BooleanProperty propLoad = Config.SYSTEM_LOAD_FILMS_ON_START.getBooleanProperty();
-    StringProperty propUrl = Config.SYSTEM_LOAD_FILMS_MANUALLY.getStringProperty();
+    BooleanProperty accordionProp = ProgConfig.CONFIG_DIALOG_ACCORDION.getBooleanProperty();
+    IntegerProperty propDay = ProgConfig.SYSTEM_NUM_DAYS_FILMLIST.getIntegerProperty();
+    BooleanProperty propLoad = ProgConfig.SYSTEM_LOAD_FILMS_ON_START.getBooleanProperty();
+    StringProperty propUrl = ProgConfig.SYSTEM_LOAD_FILMS_MANUALLY.getStringProperty();
 
     public FilmPaneController() {
-        daten = Daten.getInstance();
+        progData = ProgData.getInstance();
 
         cbxAccordion.selectedProperty().bindBidirectional(accordionProp);
         cbxAccordion.selectedProperty().addListener((observable, oldValue, newValue) -> setAccordion());
@@ -116,7 +116,7 @@ public class FilmPaneController extends AnchorPane {
 
         Button btnLoad = new Button("Filmliste jetzt laden");
         btnLoad.setOnAction(event -> {
-            daten.loadFilmlist.loadFilmlist("", true);
+            progData.loadFilmlist.loadFilmlist("", true);
         });
 
         final ToggleSwitch tglLoad = new ToggleSwitch("Filmliste beim Programmstart laden");
@@ -187,7 +187,7 @@ public class FilmPaneController extends AnchorPane {
 
         final Button btnFile = new Button();
         btnFile.setOnAction(event -> {
-            DirFileChooser.FileChooser(Daten.getInstance().primaryStage, txtUrl);
+            DirFileChooser.FileChooser(ProgData.getInstance().primaryStage, txtUrl);
         });
         btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
 
@@ -199,7 +199,7 @@ public class FilmPaneController extends AnchorPane {
 
         Button btnLoad = new Button("Filmliste jetzt laden");
         btnLoad.disableProperty().bind(txtUrl.textProperty().isEmpty());
-        btnLoad.setOnAction(event -> daten.loadFilmlist.loadFilmlist(txtUrl.getText()));
+        btnLoad.setOnAction(event -> progData.loadFilmlist.loadFilmlist(txtUrl.getText()));
 
         GridPane.setMargin(btnLoad, new Insets(20, 0, 0, 0));
 

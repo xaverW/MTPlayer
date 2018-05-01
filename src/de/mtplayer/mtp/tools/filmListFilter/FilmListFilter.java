@@ -17,7 +17,7 @@
 
 package de.mtplayer.mtp.tools.filmListFilter;
 
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.mtplayer.mtp.gui.FilmGuiController;
@@ -27,17 +27,17 @@ import javafx.application.Platform;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class FilmListFilter {
-    private final Daten daten;
+    private final ProgData progData;
 
-    public FilmListFilter(Daten daten) {
-        this.daten = daten;
+    public FilmListFilter(ProgData progData) {
+        this.progData = progData;
 
-        daten.storedFilter.filterChangeProperty().addListener((observable, oldValue, newValue) ->
+        progData.storedFilter.filterChangeProperty().addListener((observable, oldValue, newValue) ->
                 Platform.runLater(() -> filterList()));
-        daten.aboList.listChangedProperty().addListener((observable, oldValue, newValue) ->
+        progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) ->
                 Platform.runLater(() -> filterList()));
 
-        daten.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
+        progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
             @Override
             public void fertig(ListenerFilmlistLoadEvent event) {
                 filterList();
@@ -64,7 +64,7 @@ public class FilmListFilter {
             Thread th = new Thread(() -> {
                 try {
                     Platform.runLater(() -> {
-                        daten.filmlistFiltered.filterdListSetPred(daten.storedFilter.getSelectedFilter().getPred());
+                        progData.filmlistFiltered.filterdListSetPred(progData.storedFilter.getSelectedFilter().getPred());
                         search.set(false);
                         if (research.get()) {
                             filterList();

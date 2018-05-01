@@ -16,7 +16,7 @@
 package de.mtplayer.mtp;
 
 import de.mtplayer.mLib.tools.SystemInfo;
-import de.mtplayer.mtp.controller.config.Const;
+import de.mtplayer.mtp.controller.config.ProgConst;
 import de.p2tools.p2Lib.guiTools.LinuxJavaFx;
 import de.p2tools.p2Lib.tools.net.Proxy;
 import javafx.application.Application;
@@ -59,10 +59,10 @@ public class Main {
         Platform.setImplicitExit(false);
 
         if (SystemInfo.isUnix()) {
-            LinuxJavaFx.setupX11WindowManagerClassName(Const.PROGRAMMNAME);
+            LinuxJavaFx.setupX11WindowManagerClassName(ProgConst.PROGRAMMNAME);
         }
 
-        Application.launch(MTFx.class, args);
+        Application.launch(MTPlayer.class, args);
     }
 
 }

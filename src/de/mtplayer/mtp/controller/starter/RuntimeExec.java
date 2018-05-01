@@ -17,7 +17,7 @@
 package de.mtplayer.mtp.controller.starter;
 
 import de.mtplayer.mLib.tools.MLProperty;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadInfos;
 import de.mtplayer.mtp.controller.data.download.DownloadSize;
@@ -147,7 +147,7 @@ public class RuntimeExec {
                 while ((inStr = buff.readLine()) != null) {
                     GetPercentageFromErrorStream(inStr);
                     // todo??
-                    Daten.getInstance().playerMsg.playerMsg(titel + ": " + inStr);
+                    ProgData.getInstance().playerMsg.playerMsg(titel + ": " + inStr);
                 }
             } catch (final IOException ignored) {
             } finally {

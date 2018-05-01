@@ -16,8 +16,8 @@
 
 package de.mtplayer.mtp.gui;
 
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.scene.control.SplitPane;
@@ -27,7 +27,7 @@ import javafx.scene.layout.Region;
 
 public class AboGuiPack {
 
-    Daten daten;
+    ProgData progData;
     private final SplitPane splitPane = new SplitPane();
     private final HBox hBox = new HBox();
     DoubleProperty doubleProperty;//sonst geht die Ref verloren
@@ -38,9 +38,9 @@ public class AboGuiPack {
 
 
     public AboGuiPack() {
-        daten = Daten.getInstance();
-        this.doubleProperty = Config.ABO_GUI_FILTER_DIVIDER.getDoubleProperty();
-        this.boolDivOn = Config.ABO_GUI_FILTER_DIVIDER_ON.getBooleanProperty();
+        progData = ProgData.getInstance();
+        this.doubleProperty = ProgConfig.ABO_GUI_FILTER_DIVIDER.getDoubleProperty();
+        this.boolDivOn = ProgConfig.ABO_GUI_FILTER_DIVIDER_ON.getBooleanProperty();
         aboFilterController = new AboFilterController();
         aboGuiController = new AboGuiController();
     }
@@ -71,7 +71,7 @@ public class AboGuiPack {
         menuController.setId("abo-menu-pane");
 
         // Abo Gui
-        daten.aboGuiController = aboGuiController;
+        progData.aboGuiController = aboGuiController;
 
         splitPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         SplitPane.setResizableWithParent(aboFilterController, Boolean.FALSE);

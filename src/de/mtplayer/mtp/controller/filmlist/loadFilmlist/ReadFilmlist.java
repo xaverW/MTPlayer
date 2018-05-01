@@ -22,8 +22,8 @@ import com.fasterxml.jackson.core.JsonToken;
 import de.mtplayer.mLib.tools.InputStreamProgressMonitor;
 import de.mtplayer.mLib.tools.MLHttpClient;
 import de.mtplayer.mLib.tools.ProgressMonitorInputStream;
-import de.mtplayer.mtp.controller.config.Const;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConst;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
@@ -76,7 +76,7 @@ public class ReadFilmlist {
                 processFromWeb(new URL(sourceFileUrl), filmlist);
             }
 
-            if (Daten.getInstance().loadFilmlist.getStop()) {
+            if (ProgData.getInstance().loadFilmlist.getStop()) {
                 list.add("Filme lesen --> Abbruch");
                 filmlist.clear();
             }
@@ -90,9 +90,9 @@ public class ReadFilmlist {
     }
 
     private InputStream selectDecompressor(String source, InputStream in) throws Exception {
-        if (source.endsWith(Const.FORMAT_XZ)) {
+        if (source.endsWith(ProgConst.FORMAT_XZ)) {
             in = new XZInputStream(in);
-        } else if (source.endsWith(Const.FORMAT_ZIP)) {
+        } else if (source.endsWith(ProgConst.FORMAT_ZIP)) {
             final ZipInputStream zipInputStream = new ZipInputStream(in);
             zipInputStream.getNextEntry();
             in = zipInputStream;
@@ -129,7 +129,7 @@ public class ReadFilmlist {
                 break;
             }
         }
-        while (!Daten.getInstance().loadFilmlist.getStop() && (jsonToken = jp.nextToken()) != null) {
+        while (!ProgData.getInstance().loadFilmlist.getStop() && (jsonToken = jp.nextToken()) != null) {
             if (jsonToken == JsonToken.END_OBJECT) {
                 break;
             }

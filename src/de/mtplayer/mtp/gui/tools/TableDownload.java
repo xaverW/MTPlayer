@@ -18,8 +18,8 @@ package de.mtplayer.mtp.gui.tools;
 
 import de.mtplayer.mLib.tools.CheckBoxCell;
 import de.mtplayer.mLib.tools.MDate;
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.controller.data.download.Download;
@@ -41,7 +41,7 @@ public class TableDownload {
     private final BooleanProperty geoMelden;
 
     public TableDownload() {
-        geoMelden = Config.SYSTEM_MARK_GEO.getBooleanProperty();
+        geoMelden = ProgConfig.SYSTEM_MARK_GEO.getBooleanProperty();
     }
 
     public TableColumn[] initDownloadColumn(TableView table) {
@@ -198,7 +198,7 @@ public class TableDownload {
 
                     btnDownStart.setOnAction((ActionEvent event) -> {
                         Download download = getTableView().getItems().get(getIndex());
-                        Daten.getInstance().downloadList.startDownloads(download);
+                        ProgData.getInstance().downloadList.startDownloads(download);
                     });
 
                     btnDownDel = new Button("");
@@ -206,7 +206,7 @@ public class TableDownload {
 
                     btnDownDel.setOnAction(event -> {
                         Download download = getTableView().getItems().get(getIndex());
-                        Daten.getInstance().downloadList.delDownloads(download);
+                        ProgData.getInstance().downloadList.delDownloads(download);
                     });
                     hbox.getChildren().addAll(btnDownStart, btnDownDel);
                     setGraphic(hbox);
@@ -224,7 +224,7 @@ public class TableDownload {
 
                     btnDownDel.setOnAction(event -> {
                         Download download = getTableView().getItems().get(getIndex());
-                        Daten.getInstance().downloadList.delDownloads(download);
+                        ProgData.getInstance().downloadList.delDownloads(download);
                     });
                     hbox.getChildren().addAll(btnDownStop, btnDownDel);
                     setGraphic(hbox);

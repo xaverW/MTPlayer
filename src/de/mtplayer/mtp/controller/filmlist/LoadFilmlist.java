@@ -18,8 +18,8 @@ package de.mtplayer.mtp.controller.filmlist;
 
 import de.mtplayer.mLib.tools.StringFormatters;
 import de.mtplayer.mtp.controller.ProgSave;
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.Filmlist;
@@ -46,14 +46,14 @@ public class LoadFilmlist {
     private final HashSet<String> hashSet = new HashSet<>();
     private final Filmlist diffListe;
 
-    private final Daten daten;
+    private final ProgData progData;
     private final ImportNewFilmlist importNewFilmliste;
     private final NotifyProgress notifyProgress = new NotifyProgress();
     private BooleanProperty propLoadFilmlist = new SimpleBooleanProperty(false);
     private static final AtomicBoolean stop = new AtomicBoolean(false); // damit kannn das Laden gestoppt werden kann
 
-    public LoadFilmlist(Daten daten) {
-        this.daten = daten;
+    public LoadFilmlist(ProgData progData) {
+        this.progData = progData;
         diffListe = new Filmlist();
         importNewFilmliste = new ImportNewFilmlist();
         importNewFilmliste.addAdListener(new ListenerFilmlistLoad() {
@@ -129,44 +129,44 @@ public class LoadFilmlist {
         if (!fileUrl.isEmpty()) {
             // der Benutzer hat eine Datei vorgegeben, es wird diese Liste NEU geladen
             alwaysLoadNew = true;
-        } else if (fileUrl.isEmpty() && !Config.SYSTEM_LOAD_FILMS_MANUALLY.get().isEmpty()) {
+        } else if (fileUrl.isEmpty() && !ProgConfig.SYSTEM_LOAD_FILMS_MANUALLY.get().isEmpty()) {
             // der Benutzer hat eine Datei vorgegeben, es wird diese Liste NEU geladen
-            fileUrl = Config.SYSTEM_LOAD_FILMS_MANUALLY.get();
+            fileUrl = ProgConfig.SYSTEM_LOAD_FILMS_MANUALLY.get();
             alwaysLoadNew = true;
         }
 
         Duration.staticPing("Filme laden, start");
         PLog.userLog("");
-        PLog.userLog("Alte Liste erstellt am: " + Daten.getInstance().filmlist.genDate());
-        PLog.userLog("  Anzahl Filme: " + daten.filmlist.size());
-        PLog.userLog("  Anzahl Neue: " + daten.filmlist.countNewFilms());
+        PLog.userLog("Alte Liste erstellt am: " + ProgData.getInstance().filmlist.genDate());
+        PLog.userLog("  Anzahl Filme: " + progData.filmlist.size());
+        PLog.userLog("  Anzahl Neue: " + progData.filmlist.countNewFilms());
 
         if (!getPropLoadFilmlist()) {
             // nicht doppelt starten
             setPropLoadFilmlist(true);
             // Hash mit URLs füllen
             hashSet.clear();
-            fillHash(daten.filmlist);
+            fillHash(progData.filmlist);
             if (alwaysLoadNew) {
                 // dann die alte löschen, damit immer komplett geladen wird, aber erst nach dem Hash!!
                 // sonst wird eine "zu kurze" Liste wieder nur mit einer Diff-Liste aufgefüllt, wenn das
                 // Alter noch passt
-                daten.filmlist.clear();
+                progData.filmlist.clear();
             }
-            daten.filmlistFiltered.clear();
+            progData.filmlistFiltered.clear();
             if (fileUrl.isEmpty()) {
                 // Filme als Liste importieren, Url automatisch ermitteln
                 PLog.userLog("Filmliste laden (auto)");
                 setStop(false);
-                importNewFilmliste.importFilmListAuto(daten.filmlist,
-                        diffListe, Config.SYSTEM_NUM_DAYS_FILMLIST.getInt());
+                importNewFilmliste.importFilmListAuto(progData.filmlist,
+                        diffListe, ProgConfig.SYSTEM_NUM_DAYS_FILMLIST.getInt());
             } else {
                 // Filme als Liste importieren, feste URL/Datei
                 PLog.userLog("Filmliste laden von: " + fileUrl);
-                daten.filmlist.clear();
+                progData.filmlist.clear();
                 setStop(false);
                 importNewFilmliste.importFilmlistFromFile(fileUrl,
-                        daten.filmlist, Config.SYSTEM_NUM_DAYS_FILMLIST.getInt());
+                        progData.filmlist, ProgConfig.SYSTEM_NUM_DAYS_FILMLIST.getInt());
             }
         }
     }
@@ -183,22 +183,22 @@ public class LoadFilmlist {
 
             Duration.staticPing("Programmstart Daten laden");
 
-            final Daten daten = Daten.getInstance();
+            final ProgData progData = ProgData.getInstance();
             ArrayList<String> list = new ArrayList<>();
 
             // gespeicherte Filmliste laden
-            Platform.runLater(() -> daten.mtFxController.getBtnFilmliste().setDisable(true));
+            Platform.runLater(() -> progData.mtPlayerController.getBtnFilmliste().setDisable(true));
             new ReadFilmlist().readFilmlist(ProgInfos.getFilmListFile(),
-                    daten.filmlist, Config.SYSTEM_NUM_DAYS_FILMLIST.getInt());
-            Platform.runLater(() -> daten.mtFxController.getBtnFilmliste().setDisable(false));
+                    progData.filmlist, ProgConfig.SYSTEM_NUM_DAYS_FILMLIST.getInt());
+            Platform.runLater(() -> progData.mtPlayerController.getBtnFilmliste().setDisable(false));
 
             list.add(PLog.LILNE3);
             list.add("Liste Filme gelesen am: " + StringFormatters.FORMATTER_ddMMyyyyHHmm.format(new Date()));
-            list.add("  erstellt am: " + daten.filmlist.genDate());
-            list.add("  Anzahl Filme: " + daten.filmlist.size());
-            list.add("  Anzahl Neue: " + daten.filmlist.countNewFilms());
+            list.add("  erstellt am: " + progData.filmlist.genDate());
+            list.add("  Anzahl Filme: " + progData.filmlist.size());
+            list.add("  Anzahl Neue: " + progData.filmlist.countNewFilms());
 
-            if (daten.filmlist.isTooOld() && Config.SYSTEM_LOAD_FILMS_ON_START.getBool()) {
+            if (progData.filmlist.isTooOld() && ProgConfig.SYSTEM_LOAD_FILMS_ON_START.getBool()) {
                 list.add("Filmliste zu alt, neue Filmliste laden");
                 setPropLoadFilmlist(false);
                 loadFilmlist("", false);
@@ -227,33 +227,33 @@ public class LoadFilmlist {
         notifyProgress.notifyEvent(NotifyProgress.NOTIFY.PROGRESS, new ListenerFilmlistLoadEvent("", "Filem markieren: Geo, Zukunft, Doppelt",
                 ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
         PLog.userLog("Filem markieren: Geo, Zukunft, Doppelt");
-        daten.filmlist.markFilms();
+        progData.filmlist.markFilms();
 
 
         notifyProgress.notifyEvent(NotifyProgress.NOTIFY.PROGRESS, new ListenerFilmlistLoadEvent("", "Themen suchen",
                 ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
         PLog.userLog("Themen suchen");
-        daten.filmlist.themenLaden();
+        progData.filmlist.themenLaden();
 
 
-        if (!daten.aboList.isEmpty()) {
+        if (!progData.aboList.isEmpty()) {
             notifyProgress.notifyEvent(NotifyProgress.NOTIFY.PROGRESS, new ListenerFilmlistLoadEvent("", "Abos eintragen",
                     ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
             PLog.userLog("Abos eintragen");
-            daten.aboList.setAboFuerFilm(daten.filmlist);
+            progData.aboList.setAboFuerFilm(progData.filmlist);
         }
 
 
         notifyProgress.notifyEvent(NotifyProgress.NOTIFY.PROGRESS, new ListenerFilmlistLoadEvent("", "Blacklist filtern",
                 ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
         PLog.userLog("Blacklist filtern");
-        daten.filmlist.filterList();
+        progData.filmlist.filterList();
 
 
         notifyProgress.notifyEvent(NotifyProgress.NOTIFY.PROGRESS, new ListenerFilmlistLoadEvent("", "Filme in Downloads eintragen",
                 ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
         PLog.userLog("Filme in Downloads eintragen");
-        daten.downloadList.filmEintragen();
+        progData.downloadList.filmEintragen();
 
         setPropLoadFilmlist(false);
     }
@@ -275,18 +275,18 @@ public class LoadFilmlist {
             PLog.userLog("  Liste Diff erstellt am: " + diffListe.genDate());
             PLog.userLog("  Anzahl Filme: " + diffListe.size());
 
-            daten.filmlist.updateListe(diffListe, true/* Vergleich über Index, sonst nur URL */, true /* ersetzen */);
-            daten.filmlist.metaDaten = diffListe.metaDaten;
-            daten.filmlist.sort(); // jetzt sollte alles passen
+            progData.filmlist.updateListe(diffListe, true/* Vergleich über Index, sonst nur URL */, true /* ersetzen */);
+            progData.filmlist.metaDaten = diffListe.metaDaten;
+            progData.filmlist.sort(); // jetzt sollte alles passen
             diffListe.clear();
 
         } else {
             PLog.userLog("Liste Kompl. gelesen am: " + StringFormatters.FORMATTER_ddMMyyyyHHmm.format(new Date()));
-            PLog.userLog("  Liste Kompl erstellt am: " + daten.filmlist.genDate());
-            PLog.userLog("  Anzahl Filme: " + daten.filmlist.size());
+            PLog.userLog("  Liste Kompl erstellt am: " + progData.filmlist.genDate());
+            PLog.userLog("  Anzahl Filme: " + progData.filmlist.size());
         }
 
-        findAndMarkNewFilms(daten.filmlist);
+        findAndMarkNewFilms(progData.filmlist);
 
         if (event.fehler) {
             PLog.userLog("");
@@ -294,20 +294,20 @@ public class LoadFilmlist {
             Platform.runLater(() -> new MTAlert().showErrorAlert("Filmliste laden", "Das Laden der Filmliste hat nicht geklappt!"));
 
             // dann die alte Liste wieder laden
-            daten.filmlist.clear();
+            progData.filmlist.clear();
             setStop(false);
             new ReadFilmlist().readFilmlist(ProgInfos.getFilmListFile(),
-                    daten.filmlist, Config.SYSTEM_NUM_DAYS_FILMLIST.getInt());
+                    progData.filmlist, ProgConfig.SYSTEM_NUM_DAYS_FILMLIST.getInt());
             PLog.userLog("");
 
         } else {
-            new ProgSave().filmlisteSpeichern();
+            new ProgSave().saveFilmlist();
         }
 
         PLog.userLog("");
-        PLog.userLog("Jetzige Liste erstellt am: " + daten.filmlist.genDate());
-        PLog.userLog("  Anzahl Filme: " + daten.filmlist.size());
-        PLog.userLog("  Anzahl Neue:  " + daten.filmlist.countNewFilms());
+        PLog.userLog("Jetzige Liste erstellt am: " + progData.filmlist.genDate());
+        PLog.userLog("  Anzahl Filme: " + progData.filmlist.size());
+        PLog.userLog("  Anzahl Neue:  " + progData.filmlist.countNewFilms());
         PLog.userLog("");
 
         afterLoadFilmlist();

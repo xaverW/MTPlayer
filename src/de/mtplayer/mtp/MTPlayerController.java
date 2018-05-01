@@ -17,8 +17,8 @@
 package de.mtplayer.mtp;
 
 import de.mtplayer.mtp.controller.ProgQuitt;
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.*;
 import de.mtplayer.mtp.gui.configDialog.ConfigDialogController;
@@ -33,7 +33,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import org.controlsfx.control.MaskerPane;
 
-public class MTFxController extends StackPane {
+public class MTPlayerController extends StackPane {
 
     Button btnFilmliste = new Button("Filmliste");
     Button btnFilm = new Button("Filme");
@@ -53,16 +53,16 @@ public class MTFxController extends StackPane {
     private SplitPane splitPaneAbo;
     private SplitPane splitPaneMsg;
 
-    private final Daten daten;
-    BooleanProperty msgVisProperty = Config.MSG_VISIBLE.getBooleanProperty();
+    private final ProgData progData;
+    BooleanProperty msgVisProperty = ProgConfig.MSG_VISIBLE.getBooleanProperty();
 
     FilmGuiPack filmGuiPack = new FilmGuiPack();
     DownloadGuiPack downloadGuiPack = new DownloadGuiPack();
     AboGuiPack aboGuiPack = new AboGuiPack();
 
 
-    public MTFxController() {
-        daten = Daten.getInstance();
+    public MTPlayerController() {
+        progData = ProgData.getInstance();
         init();
     }
 
@@ -98,7 +98,7 @@ public class MTFxController extends StackPane {
             splitPaneMsg.visibleProperty().bind(msgVisProperty);
             stackPaneCont.getChildren().addAll(splitPaneFilm, splitPaneDownoad, splitPaneAbo, splitPaneMsg);
 
-            statusBarController = new StatusBarController(daten);
+            statusBarController = new StatusBarController(progData);
 
             VBox.setVgrow(hBoxTop, Priority.NEVER);
             VBox.setVgrow(statusBarController, Priority.NEVER);
@@ -115,7 +115,7 @@ public class MTFxController extends StackPane {
             maskerPane.setVisible(false);
 
             btnFilmliste.getStyleClass().add("btnFilmlist");
-            btnFilmliste.setOnAction(e -> daten.loadFilmlist.loadFilmlist(""));
+            btnFilmliste.setOnAction(e -> progData.loadFilmlist.loadFilmlist(""));
 
             btnFilm.getStyleClass().add("btnFilm");
             btnFilm.setOnAction(e -> selPanelFilm());
@@ -152,13 +152,13 @@ public class MTFxController extends StackPane {
             });
 
             final MenuItem miQuitt = new MenuItem("Beenden");
-            miQuitt.setOnAction(e -> new ProgQuitt().beenden(true, false));
+            miQuitt.setOnAction(e -> new ProgQuitt().quitt(true, false));
 
             final MenuItem miAbout = new MenuItem("Über dieses Programm");
-            miAbout.setOnAction(event -> new AboutDialogController(daten));
+            miAbout.setOnAction(event -> new AboutDialogController(progData));
 
             final MenuItem miReset = new MenuItem("Einstellungen zurücksetzen");
-            miReset.setOnAction(event -> new ResetDialogController(daten));
+            miReset.setOnAction(event -> new ResetDialogController(progData));
 
             final Menu mHelp = new Menu("Hilfe");
             mHelp.getItems().addAll(miAbout, new SeparatorMenuItem(), miReset);
@@ -195,7 +195,7 @@ public class MTFxController extends StackPane {
         btnMsg.getStyleClass().add("btnTab");
 
         splitPaneFilm.toFront();
-        daten.filmGuiController.isShown();
+        progData.filmGuiController.isShown();
         statusBarController.setStatusbarIndex(StatusBarController.StatusbarIndex.FILME);
     }
 
@@ -219,7 +219,7 @@ public class MTFxController extends StackPane {
         btnAbo.getStyleClass().add("btnTab");
         btnMsg.getStyleClass().add("btnTab");
 
-        daten.downloadGuiController.isShown();
+        progData.downloadGuiController.isShown();
         splitPaneDownoad.toFront();
         statusBarController.setStatusbarIndex(StatusBarController.StatusbarIndex.DOWNLOAD);
     }
@@ -244,7 +244,7 @@ public class MTFxController extends StackPane {
         btnAbo.getStyleClass().add("btnTab-sel");
         btnMsg.getStyleClass().add("btnTab");
 
-        daten.aboGuiController.isShown();
+        progData.aboGuiController.isShown();
         splitPaneAbo.toFront();
         statusBarController.setStatusbarIndex(StatusBarController.StatusbarIndex.ABO);
     }

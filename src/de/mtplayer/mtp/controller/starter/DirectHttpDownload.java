@@ -19,8 +19,8 @@ package de.mtplayer.mtp.controller.starter;
 import de.mtplayer.mLib.tools.MLBandwidthTokenBucket;
 import de.mtplayer.mLib.tools.MLInputStream;
 import de.mtplayer.mLib.tools.MLProperty;
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadInfos;
@@ -45,7 +45,7 @@ import static de.mtplayer.mtp.controller.starter.StarterClass.startmeldung;
 
 public class DirectHttpDownload extends Thread {
 
-    private final Daten daten;
+    private final ProgData progData;
     private final Download download;
     private HttpURLConnection conn = null;
     private long downloaded = 0;
@@ -59,9 +59,9 @@ public class DirectHttpDownload extends Thread {
     private boolean retAbbrechen;
     private boolean dialogAbbrechenIsVis;
 
-    public DirectHttpDownload(Daten daten, Download d, java.util.Timer bandwidthCalculationTimer) {
+    public DirectHttpDownload(ProgData progData, Download d, java.util.Timer bandwidthCalculationTimer) {
         super();
-        this.daten = daten;
+        this.progData = progData;
         this.bandwidthCalculationTimer = bandwidthCalculationTimer;
         download = d;
         setName("DIRECT DL THREAD: " + d.getTitel());
@@ -131,7 +131,7 @@ public class DirectHttpDownload extends Thread {
         }
 
         download.getStart().setInputStream(new MLInputStream(conn.getInputStream(),
-                bandwidthCalculationTimer, Config.DOWNLOAD_MAX_BANDWITH_KBYTE.getIntegerProperty()));
+                bandwidthCalculationTimer, ProgConfig.DOWNLOAD_MAX_BANDWITH_KBYTE.getIntegerProperty()));
 
         fos = new FileOutputStream(file, (downloaded != 0));
 
@@ -197,7 +197,7 @@ public class DirectHttpDownload extends Thread {
             if (download.getSource().equals(DownloadInfos.SRC_BUTTON)) {
                 // direkter Start mit dem Button
                 download.setStateFinished();
-            } else if (pruefen(daten, download)) {
+            } else if (pruefen(progData, download)) {
                 // Anzeige ändern - fertig
                 download.setStateFinished();
             } else {
@@ -229,8 +229,8 @@ public class DirectHttpDownload extends Thread {
                     download.getDownloadSize().setSize(getContentLength(url));
                     download.getDownloadSize().setAktFileSize(0);
                     conn = (HttpURLConnection) url.openConnection();
-                    conn.setConnectTimeout(1000 * Config.SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getInt());
-                    conn.setReadTimeout(1000 * Config.SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getInt());
+                    conn.setConnectTimeout(1000 * ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getInt());
+                    conn.setReadTimeout(1000 * ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getInt());
 
                     setupHttpConnection(conn);
                     conn.connect();
@@ -266,7 +266,7 @@ public class DirectHttpDownload extends Thread {
                 }
             } catch (final Exception ex) {
                 if ((ex instanceof java.io.IOException)
-                        && restartCount < Config.SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP.getInt()) {
+                        && restartCount < ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP.getInt()) {
 
                     if (ex instanceof java.net.SocketTimeoutException) {
                         // Timeout Fehlermeldung für zxd :)
@@ -333,7 +333,7 @@ public class DirectHttpDownload extends Thread {
         boolean cancel = false;
         if (file.exists()) {
             final DownloadContinueDialogController downloadContinueDialogController =
-                    new DownloadContinueDialogController(daten, download, true /* weiterführen */);
+                    new DownloadContinueDialogController(progData, download, true /* weiterführen */);
 
             switch (downloadContinueDialogController.getResult()) {
                 case CANCEL_DOWNLOAD:

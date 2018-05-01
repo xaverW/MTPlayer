@@ -16,8 +16,8 @@
 
 package de.mtplayer.mtp.gui;
 
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.scene.control.SplitPane;
@@ -27,7 +27,7 @@ import javafx.scene.layout.Region;
 
 public class DownloadGuiPack {
 
-    Daten daten;
+    ProgData progData;
     private final SplitPane splitPane = new SplitPane();
     private final HBox hBox = new HBox();
     DoubleProperty doubleProperty; //sonst geht die Ref verloren
@@ -39,9 +39,9 @@ public class DownloadGuiPack {
 
 
     public DownloadGuiPack() {
-        daten = Daten.getInstance();
-        this.doubleProperty = Config.DOWNLOAD_GUI_FILTER_DIVIDER.getDoubleProperty();
-        this.boolDivOn = Config.DOWNLOAD_GUI_FILTER_DIVIDER_ON.getBooleanProperty();
+        progData = ProgData.getInstance();
+        this.doubleProperty = ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER.getDoubleProperty();
+        this.boolDivOn = ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER_ON.getBooleanProperty();
         downloadFilterController = new DownloadFilterController();
         guiController = new DownloadGuiController();
     }
@@ -71,7 +71,7 @@ public class DownloadGuiPack {
         menuController.setId("download-menu-pane");
 
         // Gui
-        daten.downloadGuiController = guiController;
+        progData.downloadGuiController = guiController;
 
         splitPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         SplitPane.setResizableWithParent(downloadFilterController, Boolean.FALSE);

@@ -16,7 +16,7 @@
 
 package de.mtplayer.mtp.controller.data.download;
 
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.p2tools.p2Lib.tools.log.Duration;
 
@@ -24,11 +24,11 @@ import java.util.ArrayList;
 
 public class DownloadStartStop {
 
-    private final Daten daten;
+    private final ProgData progData;
     private final DownloadList downloadList;
 
-    public DownloadStartStop(Daten daten, DownloadList downloadList) {
-        this.daten = daten;
+    public DownloadStartStop(ProgData progData, DownloadList downloadList) {
+        this.progData = progData;
         this.downloadList = downloadList;
     }
 
@@ -58,7 +58,7 @@ public class DownloadStartStop {
         }
 
         // das Starten von neuen Downloads etwas Pausieren
-        daten.starterClass.pause();
+        progData.starterClass.pause();
 
         for (final Download download : list) {
             if (download.isStateInit() || download.isStateStoped()) {
@@ -84,7 +84,7 @@ public class DownloadStartStop {
         }
 
         // das Starten von neuen Downloads etwas Pausieren
-        daten.starterClass.pause();
+        progData.starterClass.pause();
 
         final ArrayList<Download> aboHistoryList = new ArrayList<>();
 
@@ -96,7 +96,7 @@ public class DownloadStartStop {
         }
 
         if (!aboHistoryList.isEmpty()) {
-            daten.erledigteAbos.writeDownloadArray(aboHistoryList);
+            progData.erledigteAbos.writeDownloadArray(aboHistoryList);
         }
 
         list.stream().filter(download -> download.isStateStartedRun()).forEach(download -> download.stopDownload());
@@ -119,7 +119,7 @@ public class DownloadStartStop {
         }
 
         // das Starten von neuen Downloads etwas Pausieren
-        daten.starterClass.pause();
+        progData.starterClass.pause();
 
         for (Download download : list) {
             if (download.isStateStartedWaiting() || download.isStateStartedRun() || download.isStateError()) {
@@ -153,7 +153,7 @@ public class DownloadStartStop {
         }
         downloads.stream().forEach(download -> download.initStartDownload());
         downloadList.addNumber(downloads);
-        daten.history.writeDownloadArray(downloads);
+        progData.history.writeDownloadArray(downloads);
     }
 
     public void startDownloads(Download download) {
@@ -185,7 +185,7 @@ public class DownloadStartStop {
         }
 
         // das Starten von neuen Downloads etwas Pausieren
-        daten.starterClass.pause();
+        progData.starterClass.pause();
 
 
         // nicht gestartete einfach starten
@@ -240,7 +240,7 @@ public class DownloadStartStop {
         }
 
         //aus der AboHitory löschen
-        daten.erledigteAbos.removeDownloadListFromHistory(listeDownloadsRemoveAboHistory);
+        progData.erledigteAbos.removeDownloadListFromHistory(listeDownloadsRemoveAboHistory);
 
         // jetzt noch die Starts stoppen
         listeDownloadsLoeschen.stream().forEach(download -> download.stopDownload());

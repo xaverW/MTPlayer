@@ -19,7 +19,7 @@ package de.mtplayer.mtp.controller.data.download;
 import de.mtplayer.mLib.tools.FileNameUtils;
 import de.mtplayer.mLib.tools.FileUtils;
 import de.mtplayer.mLib.tools.StringFormatters;
-import de.mtplayer.mtp.controller.config.Config;
+import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.data.ProgData;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.abo.Abo;
@@ -136,8 +136,8 @@ public class DownloadProg {
 
             name = DownloadTools.replaceLeerDateiname(name,
                     false /* pfad */,
-                    Boolean.parseBoolean(Config.SYSTEM_USE_REPLACETABLE.get()),
-                    Boolean.parseBoolean(Config.SYSTEM_ONLY_ASCII.get()));
+                    Boolean.parseBoolean(ProgConfig.SYSTEM_USE_REPLACETABLE.get()),
+                    Boolean.parseBoolean(ProgConfig.SYSTEM_ONLY_ASCII.get()));
             name = name + suff;
 
             // prüfen ob das Suffix 2x vorkommt
@@ -185,8 +185,8 @@ public class DownloadProg {
                     path = FileUtils.addsPfad(path,
                             DownloadTools.replaceLeerDateiname(download.getThema(),
                                     true /* pfad */,
-                                    Boolean.parseBoolean(Config.SYSTEM_USE_REPLACETABLE.get()),
-                                    Boolean.parseBoolean(Config.SYSTEM_ONLY_ASCII.get())));
+                                    Boolean.parseBoolean(ProgConfig.SYSTEM_USE_REPLACETABLE.get()),
+                                    Boolean.parseBoolean(ProgConfig.SYSTEM_ONLY_ASCII.get())));
                 }
 
             path = replaceString(path, film); // %D ... ersetzen
@@ -280,8 +280,8 @@ public class DownloadProg {
     private String getField(String name, int length) {
         name = DownloadTools.replaceLeerDateiname(name,
                 false /* pfad */,
-                Boolean.parseBoolean(Config.SYSTEM_USE_REPLACETABLE.get()),
-                Boolean.parseBoolean(Config.SYSTEM_ONLY_ASCII.get()));
+                Boolean.parseBoolean(ProgConfig.SYSTEM_USE_REPLACETABLE.get()),
+                Boolean.parseBoolean(ProgConfig.SYSTEM_ONLY_ASCII.get()));
 
         if (length <= 0) {
             return name;

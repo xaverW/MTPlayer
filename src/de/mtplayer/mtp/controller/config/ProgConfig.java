@@ -30,7 +30,7 @@ import de.p2tools.p2Lib.tools.log.PLog;
 
 import java.util.ArrayList;
 
-public class Config extends MLConfig {
+public class ProgConfig extends MLConfig {
 
     public static final String SYSTEM = "system";
 
@@ -45,7 +45,7 @@ public class Config extends MLConfig {
     // Beim Dialog "Download weiterführen" wird in dieser Zeit der DownloadXml weitergeführt
     public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND = addNewKey("__system-parameter__download-errormsg-in-second_30__", "30");
     // Downloadfehlermeldung wird xx Sedunden lang angezeigt
-    public static MLConfigs SYSTEM_PARAMETER_USERAGENT = addNewKey("__system-parameter__useragent__", Const.USER_AGENT_DEFAULT);
+    public static MLConfigs SYSTEM_PARAMETER_USERAGENT = addNewKey("__system-parameter__useragent__", ProgConst.USER_AGENT_DEFAULT);
     // Useragent für direkte Downloads
     public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_PROGRESS = addNewKey("__system-parameter__download_progress_", Boolean.TRUE.toString());
 
@@ -100,9 +100,9 @@ public class Config extends MLConfig {
     public static MLConfigs DOWNLOAD_MAX_BANDWITH_KBYTE = addNewKey("download-max-bandwith-kbyte", String.valueOf(MLBandwidthTokenBucket.BANDWIDTH_MAX_KBYTE));
 
     // Gui Film
-    public static MLConfigs FILM_GUI_FILTER_DIVIDER = addNewKey("film-gui-filter-divider", Const.GUI_FILME_FILTER_DIVIDER_LOCATION);
+    public static MLConfigs FILM_GUI_FILTER_DIVIDER = addNewKey("film-gui-filter-divider", ProgConst.GUI_FILME_FILTER_DIVIDER_LOCATION);
     public static MLConfigs FILM_GUI_FILTER_DIVIDER_ON = addNewKey("film-gui-filter-divider-on", Boolean.TRUE.toString());
-    public static MLConfigs FILM_GUI_DIVIDER = addNewKey("film-gui-divider", Const.GUI_FILME_DIVIDER_LOCATION);
+    public static MLConfigs FILM_GUI_DIVIDER = addNewKey("film-gui-divider", ProgConst.GUI_FILME_DIVIDER_LOCATION);
     public static MLConfigs FILM_GUI_DIVIDER_ON = addNewKey("film-gui-divider-on", Boolean.TRUE.toString());
     public static MLConfigs FILM_GUI_TABLE_WIDTH = addNewKey("film-gui-table-width");
     public static MLConfigs FILM_GUI_TABLE_SORT = addNewKey("film-gui-table-sort");
@@ -118,9 +118,9 @@ public class Config extends MLConfig {
     public static MLConfigs DOWNLOAD_DIALOG_ADD_MORE_SIZE = addNewKey("download-dialog-add-more-size");
     public static MLConfigs DOWNLOAD_DIALOG_CONTINUE_SIZE = addNewKey("download-dialog-continue-size");
     public static MLConfigs DOWNLOAD_DIALOG_ERROR_SIZE = addNewKey("download-dialog-error-size", "");
-    public static MLConfigs DOWNLOAD_GUI_FILTER_DIVIDER = addNewKey("download-gui-filter-divider", Const.GUI_DOWNLOAD_FILTER_DIVIDER_LOCATION);
+    public static MLConfigs DOWNLOAD_GUI_FILTER_DIVIDER = addNewKey("download-gui-filter-divider", ProgConst.GUI_DOWNLOAD_FILTER_DIVIDER_LOCATION);
     public static MLConfigs DOWNLOAD_GUI_FILTER_DIVIDER_ON = addNewKey("download-gui-filter-divider-on", Boolean.TRUE.toString());
-    public static MLConfigs DOWNLOAD_GUI_DIVIDER = addNewKey("download-gui-divider", Const.GUI_DOWNLOAD_DIVIDER_LOCATION);
+    public static MLConfigs DOWNLOAD_GUI_DIVIDER = addNewKey("download-gui-divider", ProgConst.GUI_DOWNLOAD_DIVIDER_LOCATION);
     public static MLConfigs DOWNLOAD_GUI_DIVIDER_ON = addNewKey("download-gui-divider-on", Boolean.TRUE.toString());
     public static MLConfigs DOWNLOAD_GUI_TABLE_WIDTH = addNewKey("download-gui-table-width");
     public static MLConfigs DOWNLOAD_GUI_TABLE_SORT = addNewKey("download-gui-table-sort");
@@ -134,7 +134,7 @@ public class Config extends MLConfig {
     public static MLConfigs ABO_MINUTE_MIN_SIZE = addNewKey("abo-minute-min-size", 0); //Vorgabe beim Anlegen eines Abos
     public static MLConfigs ABO_MINUTE_MAX_SIZE = addNewKey("abo-minute-max-size", SelectedFilter.FILTER_DURATIION_MAX_MIN); //Vorgabe beim Anlegen eines Abos
     public static MLConfigs ABO_DIALOG_EDIT_SIZE = addNewKey("abo-dialog-edit-size");
-    public static MLConfigs ABO_GUI_FILTER_DIVIDER = addNewKey("abo-gui-filter-divider", Const.GUI_ABO_FILTER_DIVIDER_LOCATION);
+    public static MLConfigs ABO_GUI_FILTER_DIVIDER = addNewKey("abo-gui-filter-divider", ProgConst.GUI_ABO_FILTER_DIVIDER_LOCATION);
     public static MLConfigs ABO_GUI_FILTER_DIVIDER_ON = addNewKey("abo-gui-filter-divider-on", Boolean.TRUE.toString());
     public static MLConfigs ABO_GUI_TABLE_WIDTH = addNewKey("abo-gui-table-width");
     public static MLConfigs ABO_GUI_TABLE_SORT = addNewKey("abo-gui-table-sort");
@@ -144,13 +144,13 @@ public class Config extends MLConfig {
 
     // Meldungen
     public static MLConfigs MSG_VISIBLE = addNewKey("msg-visible", Boolean.FALSE.toString());
-    public static MLConfigs MSG_PANEL_LOGS_DIVIDER = addNewKey("msg-panel-logs-divider", Const.GUI_MSG_LOG_DIVIDER_LOCATION);
-    public static MLConfigs MSG_PANEL_DIVIDER = addNewKey("msg-panel-divider", Const.GUI_MSG_DIVIDER_LOCATION);
+    public static MLConfigs MSG_PANEL_LOGS_DIVIDER = addNewKey("msg-panel-logs-divider", ProgConst.GUI_MSG_LOG_DIVIDER_LOCATION);
+    public static MLConfigs MSG_PANEL_DIVIDER = addNewKey("msg-panel-divider", ProgConst.GUI_MSG_DIVIDER_LOCATION);
 
     // ConfigDialog
     public static MLConfigs CONFIG_DIALOG_SIZE = addNewKey("config-dialog-size");
     public static MLConfigs CONFIG_DIALOG_ACCORDION = addNewKey("config_dialog-accordion", Boolean.TRUE.toString());
-    public static MLConfigs CONFIG_DIALOG_SET_DIVIDER = addNewKey("config-dialog-set-divider", Const.CONFIG_DIALOG_SET_DIVIDER);
+    public static MLConfigs CONFIG_DIALOG_SET_DIVIDER = addNewKey("config-dialog-set-divider", ProgConst.CONFIG_DIALOG_SET_DIVIDER);
     public static MLConfigs CONFIG_DIALOG_IMPORT_SET_SIZE = addNewKey("config-dialog-import-set-size", "800:600");
 
     // StartDialog
@@ -238,7 +238,7 @@ public class Config extends MLConfig {
         list.add(PLog.LILNE2);
         list.add("Programmeinstellungen");
         list.add("===========================");
-        for (final String[] s : Config.getAll()) {
+        for (final String[] s : ProgConfig.getAll()) {
             if (!s[1].isEmpty()) {
                 list.add(s[0] + "\t\t" + s[1]);
             }
@@ -258,23 +258,5 @@ public class Config extends MLConfig {
         check(SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP, 0, 100);
         check(SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECOND, 5, 1000);
         check(SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND, 5, 1000);
-
-//        ArrayList<String> list = new ArrayList<>();
-//        list.add(PLog.LILNE2);
-//        list.add("Systemparameter");
-//        list.add("-----------------");
-//        list.add("Download-Timeout [s]: " + SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getInt());
-//        list.add("max. Download-Restart: " + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getInt());
-//        list.add("max. Download-Restart-Http: " + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP.getInt());
-//        list.add("Download weiterführen in [s]: " + SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECOND.getInt());
-//        list.add("Download Fehlermeldung anzeigen [s]: " + Config.SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getInt());
-//        list.add("Downoadprogress anzeigen: " + Config.SYSTEM_PARAMETER_DOWNLOAD_PROGRESS.get());
-//        list.add("Useragent: " + Config.SYSTEM_PARAMETER_USERAGENT.get());
-//        list.add(PLog.LILNE2);
-//        list.add("");
-//
-//        PLog.emptyLine();
-//        PLog.sysLog(list);
-//        PLog.emptyLine();
     }
 }

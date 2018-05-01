@@ -18,7 +18,7 @@ package de.mtplayer.mtp.gui.dialog;
 
 import de.mtplayer.mLib.tools.DirFileChooser;
 import de.mtplayer.mLib.tools.MLAlert;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -72,9 +72,9 @@ public class MTAlert extends MLAlert {
         btnDest.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
         btnDest.setOnAction(event -> {
             if (dir) {
-                DirFileChooser.DirChooser(Daten.getInstance().primaryStage, txtFile);
+                DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtFile);
             } else {
-                DirFileChooser.FileChooser(Daten.getInstance().primaryStage, txtFile);
+                DirFileChooser.FileChooser(ProgData.getInstance().primaryStage, txtFile);
             }
         });
 

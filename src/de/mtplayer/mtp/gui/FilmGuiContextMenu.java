@@ -16,7 +16,7 @@
 
 package de.mtplayer.mtp.gui;
 
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.BlackData;
 import de.mtplayer.mtp.controller.data.SetList;
 import de.mtplayer.mtp.controller.data.film.Film;
@@ -26,12 +26,12 @@ import javafx.scene.control.*;
 
 public class FilmGuiContextMenu {
 
-    private final Daten daten;
+    private final ProgData progData;
     private final FilmGuiController filmGuiController;
     private final TableView tableView;
 
-    public FilmGuiContextMenu(Daten daten, FilmGuiController filmGuiController, TableView tableView) {
-        this.daten = daten;
+    public FilmGuiContextMenu(ProgData progData, FilmGuiController filmGuiController, TableView tableView) {
+        this.progData = progData;
         this.filmGuiController = filmGuiController;
         this.tableView = tableView;
     }
@@ -56,19 +56,19 @@ public class FilmGuiContextMenu {
         // Filter
         Menu submenuFilter = new Menu("Filter");
         final MenuItem miFilterSender = new MenuItem("nach Sender filtern");
-        miFilterSender.setOnAction(event -> daten.storedFilter.getSelectedFilter().setSenderAndVis(film.getSender()));
+        miFilterSender.setOnAction(event -> progData.storedFilter.getSelectedFilter().setSenderAndVis(film.getSender()));
         final MenuItem miFilterThema = new MenuItem("nach Thema filtern");
-        miFilterThema.setOnAction(event -> daten.storedFilter.getSelectedFilter().setThemeAndVis(film.getThema()));
+        miFilterThema.setOnAction(event -> progData.storedFilter.getSelectedFilter().setThemeAndVis(film.getThema()));
         final MenuItem miFilterSenderThema = new MenuItem("nach Sender und Thema filtern");
         miFilterSenderThema.setOnAction(event -> {
-            daten.storedFilter.getSelectedFilter().setSenderAndVis(film.getSender());
-            daten.storedFilter.getSelectedFilter().setThemeAndVis(film.getThema());
+            progData.storedFilter.getSelectedFilter().setSenderAndVis(film.getSender());
+            progData.storedFilter.getSelectedFilter().setThemeAndVis(film.getThema());
         });
         final MenuItem miFilterSenderThemaTitle = new MenuItem("nach Sender, Thema und Titel filtern");
         miFilterSenderThemaTitle.setOnAction(event -> {
-            daten.storedFilter.getSelectedFilter().setSenderAndVis(film.getSender());
-            daten.storedFilter.getSelectedFilter().setThemeAndVis(film.getThema());
-            daten.storedFilter.getSelectedFilter().setTitleAndVis(film.getTitel());
+            progData.storedFilter.getSelectedFilter().setSenderAndVis(film.getSender());
+            progData.storedFilter.getSelectedFilter().setThemeAndVis(film.getThema());
+            progData.storedFilter.getSelectedFilter().setTitleAndVis(film.getTitel());
         });
         submenuFilter.getItems().addAll(miFilterSender, miFilterThema, miFilterSenderThema, miFilterSenderThemaTitle);
         contextMenu.getItems().add(submenuFilter);
@@ -84,22 +84,22 @@ public class FilmGuiContextMenu {
             miAboDel.setDisable(true);
             miAboChange.setDisable(true);
             miAboAddSenderThema.setOnAction(a ->
-                    daten.aboList.addAbo(film.getThema(), film.getSender(), film.getThema(), ""));
+                    progData.aboList.addAbo(film.getThema(), film.getSender(), film.getThema(), ""));
             miAboAddSenderThemaTitle.setOnAction(a ->
-                    daten.aboList.addAbo(film.getThema(), film.getSender(), film.getThema(), film.getTitel()));
+                    progData.aboList.addAbo(film.getThema(), film.getSender(), film.getThema(), film.getTitel()));
         } else {
             miAboAddSenderThema.setDisable(true);
             miAboAddSenderThemaTitle.setDisable(true);
             miAboDel.setOnAction(event ->
-                    daten.aboList.aboLoeschen(film.getAbo()));
+                    progData.aboList.aboLoeschen(film.getAbo()));
             miAboChange.setOnAction(event ->
-                    daten.aboList.changeAbo(film.getAbo()));
+                    progData.aboList.changeAbo(film.getAbo()));
         }
         submenuAbo.getItems().addAll(miAboDel, miAboAddSenderThema, miAboAddSenderThemaTitle, miAboChange);
         contextMenu.getItems().add(submenuAbo);
 
         // Film mit Set starten
-        final SetList liste = daten.setList.getListeButton();
+        final SetList liste = progData.setList.getListeButton();
         if (liste.size() > 1) {
 
             Menu submenuSet = new Menu("Film mit Set starten");
@@ -116,11 +116,11 @@ public class FilmGuiContextMenu {
         // Blacklist
         Menu submenuBlacklist = new Menu("Blacklist");
         final MenuItem miBlackSender = new MenuItem("Sender in die Blacklist einfügen");
-        miBlackSender.setOnAction(event -> daten.blackList.addAndNotify(new BlackData(film.getSender(), "", "", "")));
+        miBlackSender.setOnAction(event -> progData.blackList.addAndNotify(new BlackData(film.getSender(), "", "", "")));
         final MenuItem miBlackThema = new MenuItem("Thema in die Blacklist einfügen");
-        miBlackThema.setOnAction(event -> daten.blackList.addAndNotify(new BlackData("", film.getThema(), "", "")));
+        miBlackThema.setOnAction(event -> progData.blackList.addAndNotify(new BlackData("", film.getThema(), "", "")));
         final MenuItem miBlackSenderThema = new MenuItem("Sender und Thema in die Blacklist einfügen");
-        miBlackSenderThema.setOnAction(event -> daten.blackList.addAndNotify(new BlackData(film.getSender(), film.getThema(), "", "")));
+        miBlackSenderThema.setOnAction(event -> progData.blackList.addAndNotify(new BlackData(film.getSender(), film.getThema(), "", "")));
 
         submenuBlacklist.getItems().addAll(miBlackSender, miBlackThema, miBlackSenderThema);
         contextMenu.getItems().addAll(submenuBlacklist, new SeparatorMenuItem());

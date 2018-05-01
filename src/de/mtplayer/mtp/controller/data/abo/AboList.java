@@ -16,8 +16,8 @@
 
 package de.mtplayer.mtp.controller.data.abo;
 
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.download.DownloadTools;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
@@ -38,15 +38,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class AboList extends SimpleListProperty<Abo> {
-    private final Daten daten;
+    private final ProgData progData;
     private static final String[] LEER = {""};
     private static final GermanStringSorter sorter = GermanStringSorter.getInstance();
 
     private BooleanProperty listChanged = new SimpleBooleanProperty(true);
 
-    public AboList(Daten daten) {
+    public AboList(ProgData progData) {
         super(FXCollections.observableArrayList());
-        this.daten = daten;
+        this.progData = progData;
     }
 
     private int nr;
@@ -81,19 +81,19 @@ public class AboList extends SimpleListProperty<Abo> {
 
         int mindestdauer, maxdauer;
         try {
-            mindestdauer = Config.ABO_MINUTE_MIN_SIZE.getInt();
-            maxdauer = Config.ABO_MINUTE_MAX_SIZE.getInt();
+            mindestdauer = ProgConfig.ABO_MINUTE_MIN_SIZE.getInt();
+            maxdauer = ProgConfig.ABO_MINUTE_MAX_SIZE.getInt();
         } catch (final Exception ex) {
             mindestdauer = 0;
             maxdauer = SelectedFilter.FILTER_DURATIION_MAX_MIN;
-            Config.ABO_MINUTE_MIN_SIZE.setValue("0");
-            Config.ABO_MINUTE_MAX_SIZE.setValue(SelectedFilter.FILTER_DURATIION_MAX_MIN);
+            ProgConfig.ABO_MINUTE_MIN_SIZE.setValue("0");
+            ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(SelectedFilter.FILTER_DURATIION_MAX_MIN);
         }
 
         String namePfad = DownloadTools.replaceLeerDateiname(aboname,
                 false /* nur ein Ordner */,
-                Boolean.parseBoolean(Config.SYSTEM_USE_REPLACETABLE.get()),
-                Boolean.parseBoolean(Config.SYSTEM_ONLY_ASCII.get()));
+                Boolean.parseBoolean(ProgConfig.SYSTEM_USE_REPLACETABLE.get()),
+                Boolean.parseBoolean(ProgConfig.SYSTEM_ONLY_ASCII.get()));
 
         final Abo abo = new Abo(namePfad /* name */,
                 filmSender,
@@ -107,12 +107,12 @@ public class AboList extends SimpleListProperty<Abo> {
                 "" /* pset */);
 
 
-        final AboEditDialogController editAboController = new AboEditDialogController(daten, abo);
+        final AboEditDialogController editAboController = new AboEditDialogController(progData, abo);
         if (editAboController.getOk()) {
             if (!aboExistiertBereits(abo)) {
                 // als Vorgabe merken
-                Config.ABO_MINUTE_MIN_SIZE.setValue(abo.getMin());
-                Config.ABO_MINUTE_MAX_SIZE.setValue(abo.getMax());
+                ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(abo.getMin());
+                ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(abo.getMax());
                 addAbo(abo);
                 sort();
                 aenderungMelden();
@@ -133,7 +133,7 @@ public class AboList extends SimpleListProperty<Abo> {
 
     public synchronized void changeAbo(ObservableList<Abo> lAbo) {
         if (!lAbo.isEmpty()) {
-            final AboEditDialogController editAboController = new AboEditDialogController(daten, lAbo);
+            final AboEditDialogController editAboController = new AboEditDialogController(progData, lAbo);
             if (editAboController.getOk()) {
                 aenderungMelden();
             }
@@ -177,9 +177,9 @@ public class AboList extends SimpleListProperty<Abo> {
 
     public synchronized void aenderungMelden() {
         // Filmliste anpassen
-        if (!daten.loadFilmlist.getPropLoadFilmlist()) {
+        if (!progData.loadFilmlist.getPropLoadFilmlist()) {
             // wird danach eh gemacht
-            setAboFuerFilm(daten.filmlist);
+            setAboFuerFilm(progData.filmlist);
         }
         listChanged.setValue(!listChanged.get());
     }

@@ -17,8 +17,8 @@
 
 package de.mtplayer.mtp.controller.mediaDb;
 
-import de.mtplayer.mtp.controller.config.Const;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConst;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
 
 public class MediaDb {
 
-    final static Daten daten = Daten.getInstance();
+    final static ProgData PROG_DATA = ProgData.getInstance();
 
     static void checkExternalMediaData(List<MediaData> mediaDataList) {
         // checks duplicates in the mediaDataList and creates the counter in the pathList
@@ -60,7 +60,7 @@ public class MediaDb {
 
     static void countExternalMediaData(List<MediaData> mediaDataList) {
         // creates the counter in the pathList
-        final MediaPathList mediaPathList = Daten.getInstance().mediaPathList;
+        final MediaPathList mediaPathList = ProgData.getInstance().mediaPathList;
 
         mediaPathList.stream().forEach(m -> m.setCount(0));
         mediaDataList.stream().filter(md -> md.isExternal()).forEach(mediaData -> {
@@ -88,7 +88,7 @@ public class MediaDb {
         // remove collection AND all media of this collection
         removeCollectionMedia(mediaDataList, mediaPathData);
 
-        Iterator<MediaPathData> itPath = daten.mediaPathList.iterator();
+        Iterator<MediaPathData> itPath = PROG_DATA.mediaPathList.iterator();
         while (itPath.hasNext()) {
             MediaPathData md = itPath.next();
             if (md.isExternal() && md.getCollectionName().equals(mediaPathData.getCollectionName())) {
@@ -100,7 +100,7 @@ public class MediaDb {
     static Path getFilePath() {
         Path urlPath = null;
         try {
-            urlPath = Paths.get(ProgInfos.getSettingsDirectory_String()).resolve(Const.FILE_MEDIA_DB);
+            urlPath = Paths.get(ProgInfos.getSettingsDirectory_String()).resolve(ProgConst.FILE_MEDIA_DB);
             if (Files.notExists(urlPath)) {
                 urlPath = Files.createFile(urlPath);
             }
@@ -112,14 +112,14 @@ public class MediaDb {
 
     static List<MediaData> loadSavedList() {
         final Path urlPath = MediaDb.getFilePath();
-        return new ReadMediaDb(daten).read(urlPath);
+        return new ReadMediaDb(PROG_DATA).read(urlPath);
     }
 
     static synchronized void writeList(List<MediaData> mediaDataList) {
         final Path path = getFilePath();
 
         ArrayList<String> list = new ArrayList<>();
-        list.add("MediaDB schreiben (" + daten.mediaList.size() + " Dateien) :");
+        list.add("MediaDB schreiben (" + PROG_DATA.mediaList.size() + " Dateien) :");
         list.add("   --> Start Schreiben nach: " + path.toString());
 
         try {

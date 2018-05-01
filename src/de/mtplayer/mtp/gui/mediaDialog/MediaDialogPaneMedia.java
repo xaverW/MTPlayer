@@ -18,8 +18,8 @@ package de.mtplayer.mtp.gui.mediaDialog;
 
 import de.mtplayer.mLib.tools.CheckBoxCell;
 import de.mtplayer.mLib.tools.Functions;
-import de.mtplayer.mtp.controller.config.Const;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConst;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.mediaDb.MediaData;
 import de.mtplayer.mtp.gui.tools.Listener;
@@ -49,7 +49,7 @@ public class MediaDialogPaneMedia extends ScrollPane {
     TextField txtTitleMedia = new TextField();
     TextField txtPathMedia = new TextField();
 
-    Daten daten = Daten.getInstance();
+    ProgData progData = ProgData.getInstance();
     private String searchStr = "";
     private final Listener listenerDbStop;
 
@@ -103,7 +103,7 @@ public class MediaDialogPaneMedia extends ScrollPane {
         hBoxProgess.getChildren().addAll(progress, region, btnCreateMediaDB);
 
 
-        tableMedia.setMinHeight(Const.MIN_TABLE_HEIGHT);
+        tableMedia.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
 
         VBox vBoxMedia = new VBox();
         VBox.setVgrow(tableMedia, Priority.ALWAYS);
@@ -115,12 +115,12 @@ public class MediaDialogPaneMedia extends ScrollPane {
     public void make() {
         Listener.addListener(listenerDbStop);
 
-        daten.mediaList.sizeProperty().addListener((observable, oldValue, newValue) ->
-                Platform.runLater(() -> lblGesamtMedia.setText(daten.mediaList.size() + "")));
+        progData.mediaList.sizeProperty().addListener((observable, oldValue, newValue) ->
+                Platform.runLater(() -> lblGesamtMedia.setText(progData.mediaList.size() + "")));
 
-        progress.visibleProperty().bind(daten.mediaList.propSearchProperty());
-        btnCreateMediaDB.disableProperty().bind(daten.mediaList.propSearchProperty());
-        btnCreateMediaDB.setOnAction(e -> daten.mediaList.createMediaDb());
+        progress.visibleProperty().bind(progData.mediaList.propSearchProperty());
+        btnCreateMediaDB.disableProperty().bind(progData.mediaList.propSearchProperty());
+        btnCreateMediaDB.setOnAction(e -> progData.mediaList.createMediaDb());
 
         btnOpen.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
         btnOpen.setOnAction(e -> open());
@@ -148,8 +148,8 @@ public class MediaDialogPaneMedia extends ScrollPane {
     }
 
     private void setTableDate() {
-        SortedList<MediaData> sortedList = daten.mediaList.getSortedList();
-        lblGesamtMedia.setText(daten.mediaList.size() + "");
+        SortedList<MediaData> sortedList = progData.mediaList.getSortedList();
+        lblGesamtMedia.setText(progData.mediaList.size() + "");
         tableMedia.setItems(sortedList);
         sortedList.comparatorProperty().bind(tableMedia.comparatorProperty());
     }
@@ -193,7 +193,7 @@ public class MediaDialogPaneMedia extends ScrollPane {
 
     public void filter(String searchStr) {
         this.searchStr = searchStr;
-        daten.mediaList.filteredListSetPredicate(media -> {
+        progData.mediaList.filteredListSetPredicate(media -> {
             if (searchStr.isEmpty()) {
                 return false;
             }
@@ -204,7 +204,7 @@ public class MediaDialogPaneMedia extends ScrollPane {
                 return filterMedien(media, searchStr);
             }
         });
-        lblTrefferMedia.setText(daten.mediaList.getFilteredList().size() + "");
+        lblTrefferMedia.setText(progData.mediaList.getFilteredList().size() + "");
     }
 
     private boolean filterMedien(MediaData media, Pattern p) {

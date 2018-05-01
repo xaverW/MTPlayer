@@ -16,10 +16,8 @@
 
 package de.mtplayer.mtp.gui.configDialog;
 
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
-import de.mtplayer.mtp.controller.data.Icons;
-import de.mtplayer.mtp.gui.dialog.MTAlert;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.guiTools.PButton;
 import javafx.beans.property.BooleanProperty;
@@ -37,22 +35,22 @@ import java.util.Collection;
 
 public class DownloadPaneController extends AnchorPane {
 
-    private final Daten daten;
+    private final ProgData progData;
     private final VBox noaccordion = new VBox();
     private final Accordion accordion = new Accordion();
     private final HBox hBox = new HBox(0);
     private final CheckBox cbxAccordion = new CheckBox("");
 
-    BooleanProperty accordionProp = Config.CONFIG_DIALOG_ACCORDION.getBooleanProperty();
-    BooleanProperty propNotify = Config.DOWNLOAD_SHOW_NOTIFICATION.getBooleanProperty();
-    BooleanProperty propErr = Config.DOWNLOAD_ERROR_MSG.getBooleanProperty();
-    BooleanProperty propOne = Config.DOWNLOAD_MAX_ONE_PER_SERVER.getBooleanProperty();
-    BooleanProperty propBeep = Config.DOWNLOAD_BEEP.getBooleanProperty();
+    BooleanProperty accordionProp = ProgConfig.CONFIG_DIALOG_ACCORDION.getBooleanProperty();
+    BooleanProperty propNotify = ProgConfig.DOWNLOAD_SHOW_NOTIFICATION.getBooleanProperty();
+    BooleanProperty propErr = ProgConfig.DOWNLOAD_ERROR_MSG.getBooleanProperty();
+    BooleanProperty propOne = ProgConfig.DOWNLOAD_MAX_ONE_PER_SERVER.getBooleanProperty();
+    BooleanProperty propBeep = ProgConfig.DOWNLOAD_BEEP.getBooleanProperty();
 
     private final ScrollPane scrollPane = new ScrollPane();
 
     public DownloadPaneController() {
-        daten = Daten.getInstance();
+        progData = ProgData.getInstance();
 
         cbxAccordion.selectedProperty().bindBidirectional(accordionProp);
         cbxAccordion.selectedProperty().addListener((observable, oldValue, newValue) -> setAccordion());

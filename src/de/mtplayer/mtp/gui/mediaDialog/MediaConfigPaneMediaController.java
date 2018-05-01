@@ -16,10 +16,8 @@
 
 package de.mtplayer.mtp.gui.mediaDialog;
 
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
-import de.mtplayer.mtp.controller.data.Icons;
-import de.mtplayer.mtp.gui.dialog.MTAlert;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
@@ -34,19 +32,19 @@ import java.util.Collection;
 
 public class MediaConfigPaneMediaController extends AnchorPane {
 
-    private final Daten daten;
+    private final ProgData progData;
     VBox noaccordion = new VBox();
     private final Accordion accordion = new Accordion();
     private final HBox hBox = new HBox(0);
     private final CheckBox cbxAccordion = new CheckBox("");
-    private final BooleanProperty accordionProp = Config.MEDIA_CONFIG_DIALOG_ACCORDION.getBooleanProperty();
+    private final BooleanProperty accordionProp = ProgConfig.MEDIA_CONFIG_DIALOG_ACCORDION.getBooleanProperty();
     ScrollPane scrollPane = new ScrollPane();
 
-    BooleanProperty prefSuff = Config.MEDIA_DB_WITH_OUT_SUFFIX.getBooleanProperty();
-    StringProperty prefSuffStr = Config.MEDIA_DB_SUFFIX.getStringProperty();
+    BooleanProperty prefSuff = ProgConfig.MEDIA_DB_WITH_OUT_SUFFIX.getBooleanProperty();
+    StringProperty prefSuffStr = ProgConfig.MEDIA_DB_SUFFIX.getStringProperty();
 
     public MediaConfigPaneMediaController() {
-        daten = Daten.getInstance();
+        progData = ProgData.getInstance();
 
         cbxAccordion.selectedProperty().bindBidirectional(accordionProp);
         cbxAccordion.selectedProperty().addListener((observable, oldValue, newValue) -> setAccordion());

@@ -18,9 +18,9 @@ package de.mtplayer.mtp.controller;
 
 import de.mtplayer.mLib.MLInit;
 import de.mtplayer.mLib.tools.MLAlert;
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Const;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgConst;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.p2tools.p2Lib.tools.log.LogMsg;
@@ -32,17 +32,17 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class ProgStart {
-    Daten daten;
+    ProgData progData;
 
-    public ProgStart(Daten daten) {
-        this.daten = daten;
+    public ProgStart(ProgData progData) {
+        this.progData = progData;
     }
 
     // #########################################################
     // Filmliste beim Programmstart!! laden
     // #########################################################
     public void loadDataProgStart() {
-        daten.loadFilmlist.loadFilmlistProgStart();
+        progData.loadFilmlist.loadFilmlistProgStart();
     }
 
     public static void shortStartMsg() {
@@ -51,18 +51,18 @@ public class ProgStart {
         list.add("Programmpfad: " + ProgInfos.getPathJar());
         list.add("Verzeichnis Einstellungen: " + ProgInfos.getSettingsDirectory_String());
 
-        LogMsg.startMsg(Const.PROGRAMMNAME, list);
+        LogMsg.startMsg(ProgConst.PROGRAMMNAME, list);
 
         list = new ArrayList<>();
         list.add(PLog.LILNE2);
         list.add("|  Programmsets:");
-        list.addAll(Daten.getInstance().setList.getListProg());
+        list.addAll(ProgData.getInstance().setList.getListProg());
         PLog.sysLog(list);
     }
 
     public static void startMsg() {
         shortStartMsg();
-        Config.logAllConfigs();
+        ProgConfig.logAllConfigs();
     }
 
 
@@ -71,40 +71,40 @@ public class ProgStart {
      *
      * @return
      */
-    public boolean allesLaden() {
+    public boolean loadAll() {
         boolean load = load();
-        if (Config.SYSTEM_LOG_ON.getBool()) {
+        if (ProgConfig.SYSTEM_LOG_ON.getBool()) {
             PLogger.setFileHandler(ProgInfos.getLogDirectory_String());
         }
 
         if (!load) {
             PLog.userLog("Weder Konfig noch Backup konnte geladen werden!");
             // teils geladene Reste entfernen
-            clearKonfig();
+            clearConfig();
             return false;
         }
         PLog.userLog("Konfig wurde gelesen!");
-        MLInit.initLib(Daten.debug, Const.PROGRAMMNAME, ProgInfos.getUserAgent());
-        Daten.mTColor.load(); // Farben einrichten
+        MLInit.initLib(ProgData.debug, ProgConst.PROGRAMMNAME, ProgInfos.getUserAgent());
+        ProgData.mTColor.load(); // Farben einrichten
         return true;
     }
 
-    private void clearKonfig() {
-        Daten daten = Daten.getInstance();
-        daten.setList.clear();
-        daten.replaceList.clear();
-        daten.aboList.clear();
-        daten.downloadList.clear();
-        daten.blackList.clear();
+    private void clearConfig() {
+        ProgData progData = ProgData.getInstance();
+        progData.setList.clear();
+        progData.replaceList.clear();
+        progData.aboList.clear();
+        progData.downloadList.clear();
+        progData.blackList.clear();
     }
 
     private boolean load() {
-        Daten daten = Daten.getInstance();
+        ProgData progData = ProgData.getInstance();
 
         boolean ret = false;
         final Path xmlFilePath = new ProgInfos().getXmlFilePath();
 
-        try (IoXmlLesen reader = new IoXmlLesen(daten)) {
+        try (IoReadXml reader = new IoReadXml(progData)) {
             if (Files.exists(xmlFilePath)) {
                 if (reader.readConfiguration(xmlFilePath)) {
                     return true;
@@ -128,7 +128,7 @@ public class ProgStart {
     }
 
     private boolean loadBackup() {
-        Daten daten = Daten.getInstance();
+        ProgData progData = ProgData.getInstance();
         boolean ret = false;
         final ArrayList<Path> path = new ArrayList<>();
         new ProgInfos().getMTPlayerXmlCopyFilePath(path);
@@ -155,9 +155,9 @@ public class ProgStart {
 
         for (final Path p : path) {
             // teils geladene Reste entfernen
-            clearKonfig();
+            clearConfig();
             PLog.userLog(new String[]{"Versuch Backup zu laden:", p.toString()});
-            try (IoXmlLesen reader = new IoXmlLesen(daten)) {
+            try (IoReadXml reader = new IoReadXml(progData)) {
                 if (reader.readConfiguration(p)) {
                     PLog.userLog(new String[]{"Backup hat geklappt:", p.toString()});
                     ret = true;

@@ -17,7 +17,7 @@
 package de.mtplayer.mtp.gui.configDialog;
 
 import de.mtplayer.mLib.tools.MLC;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.gui.tools.Listener;
 import javafx.geometry.Insets;
@@ -45,7 +45,7 @@ public class ColorPane {
 
         Button button = new Button("Alle Farben zurücksetzen");
         button.setOnAction(event -> {
-            Daten.mTColor.reset();
+            ProgData.mTColor.reset();
             Listener.notify(Listener.EREIGNIS_GUI_COLOR_CHANGED, ColorPane.class.getSimpleName());
         });
 
@@ -116,7 +116,7 @@ public class ColorPane {
                 colorPicker.setOnAction(a -> {
                     Color fxColor = colorPicker.getValue();
                     MLC.setColor(fxColor);
-                    Daten.mTColor.save();
+                    ProgData.mTColor.save();
                     Listener.notify(Listener.EREIGNIS_GUI_COLOR_CHANGED, ColorPane.class.getSimpleName());
                 });
                 hbox.getChildren().addAll(colorPicker);
@@ -152,7 +152,7 @@ public class ColorPane {
                 final Button button = new Button("Reset");
                 button.setOnAction(a -> {
                     MLC.resetColor();
-                    Daten.mTColor.save();
+                    ProgData.mTColor.save();
                     Listener.notify(Listener.EREIGNIS_GUI_COLOR_CHANGED, ColorPane.class.getSimpleName());
                 });
 

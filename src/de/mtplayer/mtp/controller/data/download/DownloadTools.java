@@ -20,8 +20,8 @@ import de.mtplayer.mLib.tools.FileNameUtils;
 import de.mtplayer.mLib.tools.FileUtils;
 import de.mtplayer.mLib.tools.SizeTools;
 import de.mtplayer.mLib.tools.SystemInfo;
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.p2tools.p2Lib.tools.SysTools;
 import javafx.scene.control.Label;
 
@@ -69,8 +69,8 @@ public class DownloadTools {
     }
 
     public static String getDownloadPath() {
-        return Config.START_DIALOG_DOWNLOAD_PATH.get().isEmpty() ?
-                SysTools.getStandardDownloadPath() : Config.START_DIALOG_DOWNLOAD_PATH.get();
+        return ProgConfig.START_DIALOG_DOWNLOAD_PATH.get().isEmpty() ?
+                SysTools.getStandardDownloadPath() : ProgConfig.START_DIALOG_DOWNLOAD_PATH.get();
     }
 
     /**
@@ -93,7 +93,7 @@ public class DownloadTools {
 
         // zuerst die Ersetzungstabelle mit den Wünschen des Users
         if (userReplace) {
-            ret = Daten.getInstance().replaceList.replace(ret, isPath);
+            ret = ProgData.getInstance().replaceList.replace(ret, isPath);
         }
 
         // und wenn gewünscht: "NUR Ascii-Zeichen"

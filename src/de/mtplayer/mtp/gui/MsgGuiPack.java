@@ -16,22 +16,22 @@
 
 package de.mtplayer.mtp.gui;
 
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import javafx.beans.property.DoubleProperty;
 import javafx.geometry.Orientation;
 import javafx.scene.control.SplitPane;
 
 public class MsgGuiPack {
 
-    Daten daten;
+    ProgData progData;
     DoubleProperty doublePropertyMessage;
     DoubleProperty doublePropertyLogs;
 
     public MsgGuiPack() {
-        daten = Daten.getInstance();
-        this.doublePropertyLogs = Config.MSG_PANEL_LOGS_DIVIDER.getDoubleProperty();
-        this.doublePropertyMessage = Config.MSG_PANEL_DIVIDER.getDoubleProperty();
+        progData = ProgData.getInstance();
+        this.doublePropertyLogs = ProgConfig.MSG_PANEL_LOGS_DIVIDER.getDoubleProperty();
+        this.doublePropertyMessage = ProgConfig.MSG_PANEL_DIVIDER.getDoubleProperty();
     }
 
     public SplitPane pack() {
@@ -46,7 +46,7 @@ public class MsgGuiPack {
         splitPaneLog.getItems().addAll(logControllerLogs, logControllerProgs);
         splitPaneLog.getDividers().get(0).positionProperty().bindBidirectional(doublePropertyLogs);
 
-        if (Daten.debug) {
+        if (ProgData.debug) {
             final MsgMemController memController = new MsgMemController();
             splitPane.setOrientation(Orientation.VERTICAL);
             splitPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);

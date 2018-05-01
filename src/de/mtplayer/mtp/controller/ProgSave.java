@@ -16,8 +16,8 @@
 
 package de.mtplayer.mtp.controller;
 
-import de.mtplayer.mtp.controller.config.Const;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConst;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.filmlist.writeFilmlist.WriteFilmlistJson;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
@@ -38,27 +38,27 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class ProgSave {
-    final Daten daten;
+    final ProgData progData;
     private boolean alreadyMadeBackup = false;
     private boolean open = true;
 
     public ProgSave() {
-        daten = Daten.getInstance();
+        progData = ProgData.getInstance();
     }
 
-    public void filmlisteSpeichern() {
-        new WriteFilmlistJson().write(ProgInfos.getFilmListFile(), daten.filmlist);
+    public void saveFilmlist() {
+        new WriteFilmlistJson().write(ProgInfos.getFilmListFile(), progData.filmlist);
     }
 
-    public void allesSpeichern() {
-        konfigCopy();
-        try (IoXmlSchreiben writer = new IoXmlSchreiben(daten)) {
-            writer.datenSchreiben();
+    public void saveAll() {
+        copyConfig();
+        try (IoWriteXml writer = new IoWriteXml(progData)) {
+            writer.writeData();
         } catch (final Exception ex) {
             ex.printStackTrace();
         }
 
-        if (Daten.reset) {
+        if (ProgData.reset) {
             // das Programm soll beim nächsten Start mit den Standardeinstellungen gestartet werden
             // dazu wird den Ordner mit den Einstellungen umbenannt
             String dir1 = ProgInfos.getSettingsDirectory_String();
@@ -97,7 +97,7 @@ public class ProgSave {
     /**
      * Create backup copies of settings file.
      */
-    private void konfigCopy() {
+    private void copyConfig() {
         if (alreadyMadeBackup) {
             return;
         }
@@ -110,7 +110,7 @@ public class ProgSave {
             final Path xmlFilePath = new ProgInfos().getXmlFilePath();
             long creatTime = -1;
 
-            Path xmlFilePathCopy_1 = ProgInfos.getSettingsDirectory().resolve(Const.CONFIG_FILE_COPY + 1);
+            Path xmlFilePathCopy_1 = ProgInfos.getSettingsDirectory().resolve(ProgConst.CONFIG_FILE_COPY + 1);
             if (Files.exists(xmlFilePathCopy_1)) {
                 final BasicFileAttributes attrs = Files.readAttributes(xmlFilePathCopy_1, BasicFileAttributes.class);
                 final FileTime d = attrs.lastModifiedTime();
@@ -119,16 +119,16 @@ public class ProgSave {
 
             if (creatTime == -1 || creatTime < getHeute_0Uhr()) {
                 // nur dann ist die letzte Kopie älter als einen Tag
-                for (int i = Const.MAX_COPY_OF_BACKUPFILE; i > 1; --i) {
-                    xmlFilePathCopy_1 = ProgInfos.getSettingsDirectory().resolve(Const.CONFIG_FILE_COPY + (i - 1));
-                    final Path xmlFilePathCopy_2 = ProgInfos.getSettingsDirectory().resolve(Const.CONFIG_FILE_COPY + i);
+                for (int i = ProgConst.MAX_COPY_OF_BACKUPFILE; i > 1; --i) {
+                    xmlFilePathCopy_1 = ProgInfos.getSettingsDirectory().resolve(ProgConst.CONFIG_FILE_COPY + (i - 1));
+                    final Path xmlFilePathCopy_2 = ProgInfos.getSettingsDirectory().resolve(ProgConst.CONFIG_FILE_COPY + i);
                     if (Files.exists(xmlFilePathCopy_1)) {
                         Files.move(xmlFilePathCopy_1, xmlFilePathCopy_2, StandardCopyOption.REPLACE_EXISTING);
                     }
                 }
                 if (Files.exists(xmlFilePath)) {
                     Files.move(xmlFilePath,
-                            ProgInfos.getSettingsDirectory().resolve(Const.CONFIG_FILE_COPY + 1),
+                            ProgInfos.getSettingsDirectory().resolve(ProgConst.CONFIG_FILE_COPY + 1),
                             StandardCopyOption.REPLACE_EXISTING);
                 }
                 list.add("Einstellungen wurden gesichert");

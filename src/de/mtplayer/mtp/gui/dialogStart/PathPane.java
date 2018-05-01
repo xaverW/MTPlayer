@@ -17,9 +17,9 @@
 package de.mtplayer.mtp.gui.dialogStart;
 
 import de.mtplayer.mLib.tools.DirFileChooser;
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Const;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgConst;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
@@ -38,9 +38,9 @@ import java.io.File;
 import static de.mtplayer.mLib.tools.Functions.getOs;
 
 public class PathPane {
-    StringProperty vlcProp = Config.SYSTEM_PATH_VLC.getStringProperty();
-    StringProperty flvProp = Config.SYSTEM_PATH_FLVSTREAMER.getStringProperty();
-    StringProperty ffmpegProp = Config.SYSTEM_PATH_FFMPEG.getStringProperty();
+    StringProperty vlcProp = ProgConfig.SYSTEM_PATH_VLC.getStringProperty();
+    StringProperty flvProp = ProgConfig.SYSTEM_PATH_FLVSTREAMER.getStringProperty();
+    StringProperty ffmpegProp = ProgConfig.SYSTEM_PATH_FFMPEG.getStringProperty();
 
     private final ColumnConstraints ccTxt = new ColumnConstraints();
 
@@ -98,15 +98,15 @@ public class PathPane {
         switch (player) {
             case FLV:
                 text = new Text("Pfad zum flvstreamer-Player auswählen");
-                hyperlink = new Hyperlink(Const.ADRESSE_WEBSITE_FLVSTREAMER);
+                hyperlink = new Hyperlink(ProgConst.ADRESSE_WEBSITE_FLVSTREAMER);
                 property = flvProp;
                 btnFind.setOnAction(event -> {
-                    Config.SYSTEM_PATH_FLVSTREAMER.setValue("");
+                    ProgConfig.SYSTEM_PATH_FLVSTREAMER.setValue("");
                     txtPlayer.setText(SetsPrograms.getMusterPfadFlv());
                 });
                 hyperlink.setOnAction(a -> {
                     try {
-                        MTOpen.openURL(Const.ADRESSE_WEBSITE_FLVSTREAMER);
+                        MTOpen.openURL(ProgConst.ADRESSE_WEBSITE_FLVSTREAMER);
                     } catch (Exception e) {
                         PLog.errorLog(784125469, e);
                     }
@@ -114,15 +114,15 @@ public class PathPane {
                 break;
             case FFMPEG:
                 text = new Text("Pfad zum ffmpeg-Player auswählen");
-                hyperlink = new Hyperlink(Const.ADRESSE_WEBSITE_FFMPEG);
+                hyperlink = new Hyperlink(ProgConst.ADRESSE_WEBSITE_FFMPEG);
                 property = ffmpegProp;
                 btnFind.setOnAction(event -> {
-                    Config.SYSTEM_PATH_FFMPEG.setValue("");
+                    ProgConfig.SYSTEM_PATH_FFMPEG.setValue("");
                     txtPlayer.setText(SetsPrograms.getMusterPfadFFmpeg());
                 });
                 hyperlink.setOnAction(a -> {
                     try {
-                        MTOpen.openURL(Const.ADRESSE_WEBSITE_FFMPEG);
+                        MTOpen.openURL(ProgConst.ADRESSE_WEBSITE_FFMPEG);
                     } catch (Exception e) {
                         PLog.errorLog(976420301, e);
                     }
@@ -131,15 +131,15 @@ public class PathPane {
             case VLC:
             default:
                 text = new Text("Pfad zum VLC-Player auswählen");
-                hyperlink = new Hyperlink(Const.ADRESSE_WEBSITE_VLC);
+                hyperlink = new Hyperlink(ProgConst.ADRESSE_WEBSITE_VLC);
                 property = vlcProp;
                 btnFind.setOnAction(event -> {
-                    Config.SYSTEM_PATH_VLC.setValue("");
+                    ProgConfig.SYSTEM_PATH_VLC.setValue("");
                     txtPlayer.setText(SetsPrograms.getMusterPfadVlc());
                 });
                 hyperlink.setOnAction(a -> {
                     try {
-                        MTOpen.openURL(Const.ADRESSE_WEBSITE_VLC);
+                        MTOpen.openURL(ProgConst.ADRESSE_WEBSITE_VLC);
                     } catch (Exception e) {
                         PLog.errorLog(701010205, e);
                     }
@@ -162,7 +162,7 @@ public class PathPane {
 
         final Button btnFile = new Button();
         btnFile.setOnAction(event -> {
-            DirFileChooser.FileChooser(Daten.getInstance().primaryStage, txtPlayer);
+            DirFileChooser.FileChooser(ProgData.getInstance().primaryStage, txtPlayer);
         });
         btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
         gridPane.add(btnFile, 1, 1);

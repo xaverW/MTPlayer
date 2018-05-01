@@ -16,18 +16,18 @@
 
 package de.mtplayer.mtp.tools.storedFilter;
 
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgData;
 
 public class ProgInitFilter {
 
     public static void setProgInitFilter() {
-        Daten daten = Daten.getInstance();
+        ProgData progData = ProgData.getInstance();
 
         //========================================================
         SelectedFilter sf = new SelectedFilter();
         sf.setName("aktueller Filter");
         sf.initFilter();
-        daten.storedFilter.getStordeFilterList().add(sf);
+        progData.storedFilter.getStordeFilterList().add(sf);
 
         sf = new SelectedFilter();
         sf.setName("alle Filme");
@@ -69,7 +69,7 @@ public class ProgInitFilter {
         sf.setNotGeo(false);
         sf.setNotFuture(false);
 
-        daten.storedFilter.getStordeFilterList().add(sf);
+        progData.storedFilter.getStordeFilterList().add(sf);
 
 
         //========================================================
@@ -112,7 +112,7 @@ public class ProgInitFilter {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        daten.storedFilter.getStordeFilterList().add(sf);
+        progData.storedFilter.getStordeFilterList().add(sf);
 
 
         //========================================================
@@ -156,7 +156,7 @@ public class ProgInitFilter {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        daten.storedFilter.getStordeFilterList().add(sf);
+        progData.storedFilter.getStordeFilterList().add(sf);
 
 
         //========================================================
@@ -200,7 +200,7 @@ public class ProgInitFilter {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        daten.storedFilter.getStordeFilterList().add(sf);
+        progData.storedFilter.getStordeFilterList().add(sf);
 
 
         //========================================================
@@ -245,7 +245,7 @@ public class ProgInitFilter {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        daten.storedFilter.getStordeFilterList().add(sf);
+        progData.storedFilter.getStordeFilterList().add(sf);
 
 
         //========================================================
@@ -289,7 +289,7 @@ public class ProgInitFilter {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        daten.storedFilter.getStordeFilterList().add(sf);
+        progData.storedFilter.getStordeFilterList().add(sf);
 
 
         //========================================================
@@ -333,7 +333,7 @@ public class ProgInitFilter {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        daten.storedFilter.getStordeFilterList().add(sf);
+        progData.storedFilter.getStordeFilterList().add(sf);
 
 
         //========================================================
@@ -380,7 +380,7 @@ public class ProgInitFilter {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        daten.storedFilter.getStordeFilterList().add(sf);
+        progData.storedFilter.getStordeFilterList().add(sf);
 
 
         //========================================================
@@ -426,7 +426,7 @@ public class ProgInitFilter {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        daten.storedFilter.getStordeFilterList().add(sf);
+        progData.storedFilter.getStordeFilterList().add(sf);
 
 
     }

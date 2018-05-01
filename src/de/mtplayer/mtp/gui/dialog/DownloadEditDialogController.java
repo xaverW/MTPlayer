@@ -18,11 +18,10 @@ package de.mtplayer.mtp.gui.dialog;
 
 import de.mtplayer.mLib.tools.DirFileChooser;
 import de.mtplayer.mLib.tools.FileNameUtils;
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.MTColor;
-import de.mtplayer.mtp.controller.data.ProgData;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadInfos;
 import de.mtplayer.mtp.controller.data.download.DownloadTools;
@@ -69,13 +68,13 @@ public class DownloadEditDialogController extends MTDialogExtra {
     private final boolean isStarted;
     private final String orgProgArray;
     private final String orgPfad;
-    private final Daten daten;
+    private final ProgData progData;
 
-    public DownloadEditDialogController(Daten daten, Download download, boolean isStarted) {
-        super(null, Config.DOWNLOAD_DIALOG_EDIT_SIZE,
+    public DownloadEditDialogController(ProgData progData, Download download, boolean isStarted) {
+        super(null, ProgConfig.DOWNLOAD_DIALOG_EDIT_SIZE,
                 "Download ändern", true);
 
-        this.daten = daten;
+        this.progData = progData;
         this.download = download;
         this.isStarted = isStarted;
         orgProgArray = download.arr[DownloadXml.DOWNLOAD_PROGRAMM_AUFRUF_ARRAY];
@@ -169,7 +168,7 @@ public class DownloadEditDialogController extends MTDialogExtra {
     }
 
     private void getDestination() {
-        DirFileChooser.DirChooser(Daten.getInstance().primaryStage, cbPath);
+        DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, cbPath);
     }
 
     private void changeRes() {
@@ -307,7 +306,7 @@ public class DownloadEditDialogController extends MTDialogExtra {
                 // dann ist ein Array vorhanden -> Linux
                 txt[DownloadXml.DOWNLOAD_PROGRAMM_AUFRUF_ARRAY].textProperty().addListener((observable, oldValue, newValue) -> {
                     download.setProgrammAufrufArray(newValue.trim());
-                    download.setProgrammAufruf(ProgData.makeProgAufrufArray(download.getProgrammAufrufArray()));
+                    download.setProgrammAufruf(de.mtplayer.mtp.controller.data.ProgData.makeProgAufrufArray(download.getProgrammAufrufArray()));
                     txt[DownloadXml.DOWNLOAD_PROGRAMM_AUFRUF].setText(download.getProgrammAufruf());
                 });
 
@@ -354,7 +353,7 @@ public class DownloadEditDialogController extends MTDialogExtra {
         ++row;
 
         // gespeicherte Pfade eintragen
-        final String[] p = Config.DOWNLOAD_DIALOG_PATH_SAVING.get().split("<>");
+        final String[] p = ProgConfig.DOWNLOAD_DIALOG_PATH_SAVING.get().split("<>");
         cbPath.getItems().addAll(p);
 
         if (download.getZielPfad().isEmpty()) {

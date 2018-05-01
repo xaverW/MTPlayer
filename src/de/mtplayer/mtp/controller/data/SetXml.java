@@ -17,7 +17,7 @@
 package de.mtplayer.mtp.controller.data;
 
 import de.mtplayer.mLib.tools.Data;
-import de.mtplayer.mtp.controller.config.Const;
+import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 
 public class SetXml extends Data<SetXml> {
@@ -64,16 +64,16 @@ public class SetXml extends Data<SetXml> {
     @Override
     public String toString() {
         String ret = "";
-        ret += "================================================" + Const.LINE_SEPARATOR;
-        ret += "| Programmset" + Const.LINE_SEPARATOR;
+        ret += "================================================" + ProgConst.LINE_SEPARATOR;
+        ret += "| Programmset" + ProgConst.LINE_SEPARATOR;
         for (int i = 0; i < MAX_ELEM; ++i) {
-            ret += "| " + COLUMN_NAMES[i] + ": " + arr[i] + Const.LINE_SEPARATOR;
+            ret += "| " + COLUMN_NAMES[i] + ": " + arr[i] + ProgConst.LINE_SEPARATOR;
         }
         for (final Object aListeProg : progList) {
-            ret += "|" + Const.LINE_SEPARATOR;
+            ret += "|" + ProgConst.LINE_SEPARATOR;
             ret += aListeProg.toString();
         }
-        ret += "|_______________________________________________" + Const.LINE_SEPARATOR;
+        ret += "|_______________________________________________" + ProgConst.LINE_SEPARATOR;
         return ret;
     }
 

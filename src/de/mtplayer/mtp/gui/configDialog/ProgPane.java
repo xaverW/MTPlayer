@@ -17,9 +17,8 @@
 package de.mtplayer.mtp.gui.configDialog;
 
 import de.mtplayer.mLib.tools.DirFileChooser;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
-import de.mtplayer.mtp.controller.data.ProgData;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import javafx.collections.ObservableList;
@@ -34,7 +33,7 @@ import org.controlsfx.control.table.TableRowExpanderColumn;
 import java.util.Collection;
 
 public class ProgPane {
-    TableView<ProgData> tableView = new TableView<>();
+    TableView<de.mtplayer.mtp.controller.data.ProgData> tableView = new TableView<>();
     private SetData setData = null;
     private final VBox vBox = new VBox();
 
@@ -61,30 +60,30 @@ public class ProgPane {
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tableView.setMinHeight(Region.USE_PREF_SIZE);
 
-        final TableColumn<ProgData, String> nameColumn = new TableColumn<>("Name");
+        final TableColumn<de.mtplayer.mtp.controller.data.ProgData, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-        final TableColumn<ProgData, String> destNameColumn = new TableColumn<>("Zieldateiname");
+        final TableColumn<de.mtplayer.mtp.controller.data.ProgData, String> destNameColumn = new TableColumn<>("Zieldateiname");
         destNameColumn.setCellValueFactory(new PropertyValueFactory<>("destName"));
 
-        final TableColumn<ProgData, String> progColumn = new TableColumn<>("Programm");
+        final TableColumn<de.mtplayer.mtp.controller.data.ProgData, String> progColumn = new TableColumn<>("Programm");
         progColumn.setCellValueFactory(new PropertyValueFactory<>("progPath"));
 
-        final TableColumn<ProgData, String> switchColumn = new TableColumn<>("Schalter");
+        final TableColumn<de.mtplayer.mtp.controller.data.ProgData, String> switchColumn = new TableColumn<>("Schalter");
         switchColumn.setCellValueFactory(new PropertyValueFactory<>("progSwitch"));
 
-        final TableColumn<ProgData, String> praefixColumn = new TableColumn<>("Präfix");
+        final TableColumn<de.mtplayer.mtp.controller.data.ProgData, String> praefixColumn = new TableColumn<>("Präfix");
         praefixColumn.setCellValueFactory(new PropertyValueFactory<>("praefix"));
 
-        final TableColumn<ProgData, String> suffixColumn = new TableColumn<>("Suffix");
+        final TableColumn<de.mtplayer.mtp.controller.data.ProgData, String> suffixColumn = new TableColumn<>("Suffix");
         suffixColumn.setCellValueFactory(new PropertyValueFactory<>("suffix"));
 
-        final TableColumn<ProgData, Boolean> restartColumn = new TableColumn<>("Restart");
+        final TableColumn<de.mtplayer.mtp.controller.data.ProgData, Boolean> restartColumn = new TableColumn<>("Restart");
         restartColumn.setCellValueFactory(new PropertyValueFactory<>("restart"));
         restartColumn.setCellFactory(CheckBoxTableCell.forTableColumn(restartColumn));
         restartColumn.getStyleClass().add("center");
 
-        final TableColumn<ProgData, Boolean> downManagerColumn = new TableColumn<>("Downloadmanager");
+        final TableColumn<de.mtplayer.mtp.controller.data.ProgData, Boolean> downManagerColumn = new TableColumn<>("Downloadmanager");
         downManagerColumn.setCellValueFactory(new PropertyValueFactory<>("downManager"));
         downManagerColumn.setCellFactory(CheckBoxTableCell.forTableColumn(downManagerColumn));
         downManagerColumn.getStyleClass().add("center");
@@ -102,7 +101,7 @@ public class ProgPane {
         Button del = new Button("");
         del.setGraphic(new Icons().ICON_BUTTON_REMOVE);
         del.setOnAction(event -> {
-            final ObservableList<ProgData> sels = tableView.getSelectionModel().getSelectedItems();
+            final ObservableList<de.mtplayer.mtp.controller.data.ProgData> sels = tableView.getSelectionModel().getSelectedItems();
 
             if (sels == null || sels.isEmpty()) {
                 new MTAlert().showInfoNoSelection();
@@ -115,7 +114,7 @@ public class ProgPane {
         Button neu = new Button("");
         neu.setGraphic(new Icons().ICON_BUTTON_ADD);
         neu.setOnAction(event -> {
-            ProgData progData = new ProgData();
+            de.mtplayer.mtp.controller.data.ProgData progData = new de.mtplayer.mtp.controller.data.ProgData();
             setData.getProgList().add(progData);
             tableView.getSelectionModel().select(progData);
             tableView.scrollTo(progData);
@@ -158,7 +157,7 @@ public class ProgPane {
     }
 
 
-    TableRowExpanderColumn<ProgData> expander = new TableRowExpanderColumn<>(param -> {
+    TableRowExpanderColumn<de.mtplayer.mtp.controller.data.ProgData> expander = new TableRowExpanderColumn<>(param -> {
         VBox vBoxCont = new VBox();
         vBoxCont.setSpacing(5);
         vBoxCont.setStyle("-fx-background-color: #E0E0E0;");
@@ -192,7 +191,7 @@ public class ProgPane {
 
         final Button btnFile = new Button();
         btnFile.setOnAction(event -> {
-            DirFileChooser.FileChooser(Daten.getInstance().primaryStage, txtProgPath);
+            DirFileChooser.FileChooser(ProgData.getInstance().primaryStage, txtProgPath);
         });
         btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
 

@@ -16,22 +16,22 @@
 
 package de.mtplayer.mtp.controller;
 
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.dialog.QuittDialogController;
 import de.p2tools.p2Lib.guiTools.GuiSize;
 import de.p2tools.p2Lib.tools.log.LogMsg;
 import javafx.application.Platform;
 
 public class ProgQuitt {
-    final Daten daten;
+    final ProgData progData;
 
     public ProgQuitt() {
-        daten = Daten.getInstance();
+        progData = ProgData.getInstance();
     }
 
     private void stopAllDownloads() {
-        daten.downloadList.forEach(download ->
+        progData.downloadList.forEach(download ->
         {
             if (download.isStateStartedRun())
                 download.stopDownload();
@@ -40,14 +40,14 @@ public class ProgQuitt {
 
     private void writeWindowSizes() {
         // Hauptfenster
-        GuiSize.getSizeScene(Config.SYSTEM_SIZE_GUI.getStringProperty(), daten.primaryStage);
+        GuiSize.getSizeScene(ProgConfig.SYSTEM_SIZE_GUI.getStringProperty(), progData.primaryStage);
     }
 
     private void writeTabSettings() {
         // Tabelleneinstellungen merken
-        daten.filmGuiController.saveTable();
-        daten.downloadGuiController.saveTable();
-        daten.aboGuiController.saveTable();
+        progData.filmGuiController.saveTable();
+        progData.downloadGuiController.saveTable();
+        progData.aboGuiController.saveTable();
     }
 
     /**
@@ -56,8 +56,8 @@ public class ProgQuitt {
      * @param showOptionTerminate show options dialog when downloads are running
      * @param shutDown            try to shutdown the computer if requested
      */
-    public void beenden(boolean showOptionTerminate, boolean shutDown) {
-        if (beenden_(showOptionTerminate, shutDown)) {
+    public void quitt(boolean showOptionTerminate, boolean shutDown) {
+        if (quitt_(showOptionTerminate, shutDown)) {
 
             // dann jetzt beenden -> Thüss
             Platform.runLater(() -> {
@@ -68,12 +68,12 @@ public class ProgQuitt {
         }
     }
 
-    private boolean beenden_(boolean showOptionTerminate, boolean shutDown) {
-        if (daten.downloadList.countRunningDownloads() > 0) {
+    private boolean quitt_(boolean showOptionTerminate, boolean shutDown) {
+        if (progData.downloadList.countRunningDownloads() > 0) {
 
             // erst mal prüfen ob noch Downloads laufen
             if (showOptionTerminate) {
-                QuittDialogController quittDialogController = new QuittDialogController(daten);
+                QuittDialogController quittDialogController = new QuittDialogController(progData);
                 if (!quittDialogController.canTerminate()) {
                     return false;
                 }
@@ -84,7 +84,7 @@ public class ProgQuitt {
         stopAllDownloads();
         writeWindowSizes();
 
-        new ProgSave().allesSpeichern();
+        new ProgSave().saveAll();
 
         LogMsg.endMsg();
 

@@ -17,7 +17,7 @@
 package de.mtplayer.mtp.gui.dialogStart;
 
 
-import de.mtplayer.mtp.controller.config.Config;
+import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import javafx.beans.property.BooleanProperty;
@@ -33,7 +33,7 @@ import org.controlsfx.control.ToggleSwitch;
 
 public class UpdatePane {
 
-    BooleanProperty updateProp = Config.SYSTEM_UPDATE_SEARCH.getBooleanProperty();
+    BooleanProperty updateProp = ProgConfig.SYSTEM_UPDATE_SEARCH.getBooleanProperty();
 
     public TitledPane makeStart() {
         final GridPane gridPane = new GridPane();

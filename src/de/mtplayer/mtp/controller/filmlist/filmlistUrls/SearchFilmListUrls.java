@@ -17,7 +17,7 @@
 package de.mtplayer.mtp.controller.filmlist.filmlistUrls;
 
 import de.mtplayer.mLib.tools.Functions;
-import de.mtplayer.mtp.controller.config.Const;
+import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.p2tools.p2Lib.tools.log.PLog;
 
@@ -122,7 +122,7 @@ public class SearchFilmListUrls {
     public void updateURLsFilmlisten(final boolean updateFullList) {
         FilmlistUrlList tmp = new FilmlistUrlList();
         if (updateFullList) {
-            getDownloadUrlsFilmlisten(Const.ADRESSE_FILMLISTEN_SERVER_AKT, tmp, ProgInfos.getUserAgent(), FilmlistUrlData.SERVER_ART_AKT);
+            getDownloadUrlsFilmlisten(ProgConst.ADRESSE_FILMLISTEN_SERVER_AKT, tmp, ProgInfos.getUserAgent(), FilmlistUrlData.SERVER_ART_AKT);
             if (!tmp.isEmpty()) {
                 filmlistUrlList_akt = tmp;
             } else if (filmlistUrlList_akt.isEmpty()) {
@@ -130,7 +130,7 @@ public class SearchFilmListUrls {
             }
             filmlistUrlList_akt.sort();
         } else {
-            getDownloadUrlsFilmlisten(Const.ADRESSE_FILMLISTEN_SERVER_DIFF, tmp, ProgInfos.getUserAgent(), FilmlistUrlData.SERVER_ART_DIFF);
+            getDownloadUrlsFilmlisten(ProgConst.ADRESSE_FILMLISTEN_SERVER_DIFF, tmp, ProgInfos.getUserAgent(), FilmlistUrlData.SERVER_ART_DIFF);
             if (!tmp.isEmpty()) {
                 filmlistUrlList_diff = tmp;
             } else if (filmlistUrlList_diff.isEmpty()) {

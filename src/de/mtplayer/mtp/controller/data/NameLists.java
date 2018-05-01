@@ -16,7 +16,7 @@
 
 package de.mtplayer.mtp.controller.data;
 
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import javafx.collections.FXCollections;
@@ -35,11 +35,11 @@ public class NameLists {
 
     private ObservableList<String> obsAbonamesForDownloads = FXCollections.observableArrayList("");
 
-    final private Daten daten;
+    final private ProgData progData;
 
-    public NameLists(Daten daten) {
-        this.daten = daten;
-        daten.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
+    public NameLists(ProgData progData) {
+        this.progData = progData;
+        progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
             @Override
             public void start(ListenerFilmlistLoadEvent event) {
             }
@@ -52,39 +52,39 @@ public class NameLists {
         });
 
         getAbosnames();
-        daten.aboList.listChangedProperty().addListener((observable, oldValue, newValue) ->
+        progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) ->
                 getAbosnames());
 
-        daten.downloadList.downloadsChangedProperty().addListener((observable, oldValue, newValue) ->
+        progData.downloadList.downloadsChangedProperty().addListener((observable, oldValue, newValue) ->
                 getAbosnames());
-        daten.downloadList.sizeProperty().addListener((observable, oldValue, newValue) ->
+        progData.downloadList.sizeProperty().addListener((observable, oldValue, newValue) ->
                 getAbosnames());
     }
 
     private void getAllSender() {
-        obsAllSender.setAll(Arrays.asList(daten.filmlist.sender));
+        obsAllSender.setAll(Arrays.asList(progData.filmlist.sender));
     }
 
 
     private void getAbosnames() {
-        ArrayList<String> list = daten.aboList.generateAboSenderList();
+        ArrayList<String> list = progData.aboList.generateAboSenderList();
         obsSenderForAbos.setAll(list);
 
-        list = daten.aboList.generateAboNameList();
+        list = progData.aboList.generateAboNameList();
         obsAllAbonames.setAll(list);
 
-        list = daten.downloadList.generateAboNameList(list);
+        list = progData.downloadList.generateAboNameList(list);
         obsAbonamesForDownloads.setAll(list);
     }
 
     public void getThemen(String sender) {
         final ArrayList<String> thema = new ArrayList<>();
         if (sender.isEmpty()) {
-            thema.addAll(Arrays.asList(daten.filmlistFiltered.themenPerSender[0]));
+            thema.addAll(Arrays.asList(progData.filmlistFiltered.themenPerSender[0]));
         } else {
-            for (int i = 1; i < daten.filmlistFiltered.themenPerSender.length; ++i) {
-                if (daten.filmlistFiltered.sender[i].equalsIgnoreCase(sender)) {
-                    thema.addAll(Arrays.asList(daten.filmlistFiltered.themenPerSender[i]));
+            for (int i = 1; i < progData.filmlistFiltered.themenPerSender.length; ++i) {
+                if (progData.filmlistFiltered.sender[i].equalsIgnoreCase(sender)) {
+                    thema.addAll(Arrays.asList(progData.filmlistFiltered.themenPerSender[i]));
                     break;
                 }
             }

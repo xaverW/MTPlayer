@@ -17,11 +17,10 @@
 package de.mtplayer.mtp.gui.tools;
 
 import de.mtplayer.mLib.tools.FileUtils;
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Const;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgConst;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
-import de.mtplayer.mtp.controller.data.ProgData;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.SetList;
 import de.mtplayer.mtp.controller.starter.RuntimeExec;
@@ -190,8 +189,8 @@ public class SetsPrograms {
             }
         }
 
-        if (Daten.getInstance().setList.addPset(pSet)) {
-            Config.SYSTEM_UPDATE_PROGSET_VERSION.setValue(pSet.version);
+        if (ProgData.getInstance().setList.addPset(pSet)) {
+            ProgConfig.SYSTEM_UPDATE_PROGSET_VERSION.setValue(pSet.version);
             return true;
         } else {
             return false;
@@ -211,7 +210,7 @@ public class SetsPrograms {
                     // und Tschüss
                     return false;
                 }
-                if (datei.endsWith(Const.FORMAT_ZIP)) {
+                if (datei.endsWith(ProgConst.FORMAT_ZIP)) {
                     if (!entpacken(zipFile, new File(zielPfad))) {
                         // und Tschüss
                         return false;
@@ -230,7 +229,7 @@ public class SetsPrograms {
                 conn.setConnectTimeout(timeout);
                 conn.setReadTimeout(timeout);
                 conn.setRequestProperty("User-Agent", ProgInfos.getUserAgent());
-                if (datei.endsWith(Const.FORMAT_ZIP)) {
+                if (datei.endsWith(ProgConst.FORMAT_ZIP)) {
 
                     final File tmpFile = File.createTempFile("mtplayer", null);
                     tmpFile.deleteOnExit();
@@ -356,7 +355,7 @@ public class SetsPrograms {
         return ret;
     }
 
-    public static boolean programmePruefen(Daten daten) {
+    public static boolean programmePruefen(ProgData daten) {
         // prüfen ob die eingestellten Programmsets passen
         final String PIPE = "| ";
         final String LEER = "      ";
@@ -384,7 +383,7 @@ public class SetsPrograms {
                             text += PIPE + LEER + PFEIL + "Zielpfad \"" + zielPfad + "\" nicht beschreibbar!" + '\n';
                         }
                 }
-                for (final ProgData progData : psetData.getProgList()) {
+                for (final de.mtplayer.mtp.controller.data.ProgData progData : psetData.getProgList()) {
                     // Programmpfad prüfen
                     if (progData.getProgPath().isEmpty()) {
                         ret = false;

@@ -16,7 +16,7 @@
 
 package de.mtplayer.mtp.gui.mediaDialog;
 
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.HistoryData;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.p2tools.p2Lib.tools.SysTools;
@@ -27,12 +27,12 @@ import java.util.ArrayList;
 
 public class MediaConfigPaneHistoryContextMenu {
 
-    private final Daten daten;
+    private final ProgData progData;
     private final ArrayList<HistoryData> historyDataArrayList;
     private final boolean history;
 
     public MediaConfigPaneHistoryContextMenu(ArrayList<HistoryData> historyDataArrayList, boolean history) {
-        this.daten = Daten.getInstance();
+        this.progData = ProgData.getInstance();
         this.historyDataArrayList = historyDataArrayList;
         this.history = history;
     }
@@ -45,15 +45,15 @@ public class MediaConfigPaneHistoryContextMenu {
 
     private void getMenu(ContextMenu contextMenu) {
 
-        Film film = daten.filmlist.getFilmByUrl(historyDataArrayList.get(0).getUrl());
+        Film film = progData.filmlist.getFilmByUrl(historyDataArrayList.get(0).getUrl());
 
         // Start/Stop
         MenuItem miDelUrl = new MenuItem("Url aus der Liste löschen");
         miDelUrl.setOnAction(a -> {
             if (history) {
-                daten.history.removeListFromHistory(historyDataArrayList);
+                progData.history.removeListFromHistory(historyDataArrayList);
             } else {
-                daten.erledigteAbos.removeListFromHistory(historyDataArrayList);
+                progData.erledigteAbos.removeListFromHistory(historyDataArrayList);
             }
         });
 
@@ -69,13 +69,13 @@ public class MediaConfigPaneHistoryContextMenu {
         MenuItem miShowFilm = new MenuItem("Infos zum Film anzeigen");
         miShowFilm.setDisable(film == null);
         miShowFilm.setOnAction(a -> {
-            daten.filmInfosDialogController.set(film);
-            daten.filmInfosDialogController.showFilmInfo();
+            progData.filmInfosDialogController.set(film);
+            progData.filmInfosDialogController.showFilmInfo();
         });
 
         MenuItem miDownload = new MenuItem("Download noch einmal anlegen");
         miDownload.setDisable(film == null);
-        miDownload.setOnAction(a -> daten.filmlist.saveFilm(film, null));
+        miDownload.setOnAction(a -> progData.filmlist.saveFilm(film, null));
 
         contextMenu.getItems().addAll(miDelUrl, miCopyUrl, miShowFilm, miDownload);
 

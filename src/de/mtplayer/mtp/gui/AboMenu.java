@@ -16,8 +16,8 @@
 
 package de.mtplayer.mtp.gui;
 
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.control.CheckMenuItem;
@@ -28,16 +28,16 @@ import javafx.scene.layout.VBox;
 
 public class AboMenu {
     final private VBox vbox;
-    final private Daten daten;
+    final private ProgData progData;
     private static final String ABO_ON_TEXT = "Abos einschalten";
     private static final String ABO_OFF_TEXT = "Abos ausschalten";
     private static final String ABO_DELETE_TEXT = "Abos löschen";
     private static final String ABO_CHANGE_TEXT = "Abos ändern";
-    BooleanProperty boolDivOn = Config.ABO_GUI_FILTER_DIVIDER_ON.getBooleanProperty();
+    BooleanProperty boolDivOn = ProgConfig.ABO_GUI_FILTER_DIVIDER_ON.getBooleanProperty();
 
     public AboMenu(VBox vbox) {
         this.vbox = vbox;
-        daten = Daten.getInstance();
+        progData = ProgData.getInstance();
     }
 
 
@@ -56,10 +56,10 @@ public class AboMenu {
         final ToolBarButton btChange =
                 new ToolBarButton(vbox, "ändern", ABO_CHANGE_TEXT, new Icons().FX_ICON_TOOLBAR_ABO_CONFIG);
 
-        btOn.setOnAction(a -> daten.aboGuiController.einAus(true));
-        btOff.setOnAction(a -> daten.aboGuiController.einAus(false));
-        btDel.setOnAction(a -> daten.aboGuiController.loeschen());
-        btChange.setOnAction(a -> daten.aboGuiController.aendern());
+        btOn.setOnAction(a -> progData.aboGuiController.einAus(true));
+        btOff.setOnAction(a -> progData.aboGuiController.einAus(false));
+        btDel.setOnAction(a -> progData.aboGuiController.loeschen());
+        btChange.setOnAction(a -> progData.aboGuiController.aendern());
     }
 
     private void initMenu() {
@@ -69,22 +69,22 @@ public class AboMenu {
         mb.getStyleClass().add("btnFunction");
 
         final MenuItem mbOn = new MenuItem("einschalten");
-        mbOn.setOnAction(a -> daten.aboGuiController.einAus(true));
+        mbOn.setOnAction(a -> progData.aboGuiController.einAus(true));
 
         final MenuItem mbOff = new MenuItem("ausschalten");
-        mbOff.setOnAction(e -> daten.aboGuiController.einAus(false));
+        mbOff.setOnAction(e -> progData.aboGuiController.einAus(false));
 
         final MenuItem miDel = new MenuItem("löschen");
-        miDel.setOnAction(a -> daten.aboGuiController.loeschen());
+        miDel.setOnAction(a -> progData.aboGuiController.loeschen());
 
         final MenuItem miChange = new MenuItem("ändern");
-        miChange.setOnAction(a -> daten.aboGuiController.aendern());
+        miChange.setOnAction(a -> progData.aboGuiController.aendern());
 
         final MenuItem miNew = new MenuItem("neues Abo anlegen");
-        miNew.setOnAction(a -> daten.aboGuiController.neu());
+        miNew.setOnAction(a -> progData.aboGuiController.neu());
 
         final MenuItem miSelection = new MenuItem("Auswahl umkehren");
-        miSelection.setOnAction(a -> daten.aboGuiController.invertSelection());
+        miSelection.setOnAction(a -> progData.aboGuiController.invertSelection());
 
         final CheckMenuItem miShowFilter = new CheckMenuItem("Filter anzeigen");
         miShowFilter.selectedProperty().bindBidirectional(boolDivOn);

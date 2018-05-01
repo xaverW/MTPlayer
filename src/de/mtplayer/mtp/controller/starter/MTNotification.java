@@ -17,7 +17,7 @@
 package de.mtplayer.mtp.controller.starter;
 
 import de.mtplayer.mLib.tools.SizeTools;
-import de.mtplayer.mtp.controller.config.Config;
+import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.data.download.Download;
 import javafx.application.Platform;
 import org.controlsfx.control.Notifications;
@@ -35,7 +35,7 @@ public class MTNotification {
     }
 
     private static void add(String text, boolean error) {
-        if (Boolean.parseBoolean(Config.DOWNLOAD_SHOW_NOTIFICATION.get())) {
+        if (Boolean.parseBoolean(ProgConfig.DOWNLOAD_SHOW_NOTIFICATION.get())) {
 
             Platform.runLater(() -> {
                 if (error) {

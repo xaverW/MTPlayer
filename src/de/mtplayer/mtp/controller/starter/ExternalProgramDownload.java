@@ -16,7 +16,7 @@
 
 package de.mtplayer.mtp.controller.starter;
 
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadInfos;
 import de.mtplayer.mtp.gui.dialog.DownloadContinueDialogController;
@@ -38,7 +38,7 @@ import static de.mtplayer.mtp.controller.starter.StarterClass.*;
  */
 public class ExternalProgramDownload extends Thread {
 
-    private final Daten daten;
+    private final ProgData progData;
     private final Download download;
     private File file;
     private String exMessage = "";
@@ -58,11 +58,11 @@ public class ExternalProgramDownload extends Thread {
 
     private long filesize = -1;
 
-    public ExternalProgramDownload(Daten daten, Download d) {
+    public ExternalProgramDownload(ProgData progData, Download d) {
         super();
         setName("EXTERNAL PROGRAM DL THREAD: " + d.getTitel());
 
-        this.daten = daten;
+        this.progData = progData;
         download = d;
         download.setStateStartedRun();
         file = new File(download.getZielPfadDatei());
@@ -238,7 +238,7 @@ public class ExternalProgramDownload extends Thread {
         if (download.getSource().equals(DownloadInfos.SRC_BUTTON) || download.isProgrammDownloadmanager()) {
             // für die direkten Starts mit dem Button und die remote downloads wars das dann
             retStatus = stat_fertig_ok;
-        } else if (pruefen(daten, download)) {
+        } else if (pruefen(progData, download)) {
             // fertig und OK
             retStatus = stat_fertig_ok;
         } else {

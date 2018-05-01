@@ -18,8 +18,8 @@
 package de.mtplayer.mtp.tools.update;
 
 import de.mtplayer.mLib.tools.StringFormatters;
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ListePsetVorlagen;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.SetList;
@@ -31,10 +31,10 @@ import javafx.application.Platform;
 import java.util.Date;
 
 public class SearchPsetUpdate {
-    private final Daten daten;
+    private final ProgData progData;
 
-    public SearchPsetUpdate(Daten daten) {
-        this.daten = daten;
+    public SearchPsetUpdate(ProgData progData) {
+        this.progData = progData;
     }
 
     public void checkForPsetUpdates() {
@@ -42,12 +42,12 @@ public class SearchPsetUpdate {
             Platform.runLater(() -> {
 
                 final SetList listePsetStandard = ListePsetVorlagen.getStandarset(false /* replaceMuster */);
-                final String version = Config.SYSTEM_UPDATE_PROGSET_VERSION.get();
+                final String version = ProgConfig.SYSTEM_UPDATE_PROGSET_VERSION.get();
                 if (listePsetStandard == null) {
                     return;
                 }
 
-                if (!daten.setList.isEmpty()) {
+                if (!progData.setList.isEmpty()) {
                     // ansonsten ist die Liste leer und dann gibts immer was
                     if (listePsetStandard.version.isEmpty()) {
                         // dann hat das Laden der aktuellen Standardversion nicht geklappt
@@ -60,17 +60,17 @@ public class SearchPsetUpdate {
                     }
 
                     //todo PLog zusammenfassen
-                    final NewSetDialogController newSetDialogController = new NewSetDialogController(daten);
+                    final NewSetDialogController newSetDialogController = new NewSetDialogController(progData);
                     if (newSetDialogController.getReplaceSet()) {
                         // dann werden die Sets durch die Neuen ersetzt
-                        daten.setList.clear();
+                        progData.setList.clear();
                     } else if (!newSetDialogController.getAddNewSet()) {
                         // und wenn auch nicht "Anfügen" gewählt, dann halt nix
                         PLog.userLog("Setanlegen: Abbruch");
                         if (!newSetDialogController.getAskAgain()) {
                             // dann auch die Versionsnummer aktualisieren
                             PLog.userLog("Setanlegen: Nicht wieder nachfragen");
-                            Config.SYSTEM_UPDATE_PROGSET_VERSION.setValue(listePsetStandard.version);
+                            ProgConfig.SYSTEM_UPDATE_PROGSET_VERSION.setValue(listePsetStandard.version);
                         }
                         PLog.userLog("==========================================");
                         return;
@@ -82,10 +82,10 @@ public class SearchPsetUpdate {
                 // gibt keine Sets oder aktualisieren
                 // damit die Variablen ersetzt werden
                 SetList.progMusterErsetzen(listePsetStandard);
-                Config.SYSTEM_UPDATE_PROGSET_VERSION.setValue(listePsetStandard.version);
+                ProgConfig.SYSTEM_UPDATE_PROGSET_VERSION.setValue(listePsetStandard.version);
 
                 // die Zielpafade anpassen
-                final SetList listePsetOrgSpeichern = daten.setList.getListeSpeichern();
+                final SetList listePsetOrgSpeichern = progData.setList.getListeSpeichern();
 
                 if (!listePsetOrgSpeichern.isEmpty()) {
                     for (final SetData psNew : listePsetStandard.getListeSpeichern()) {
@@ -96,7 +96,7 @@ public class SearchPsetUpdate {
                     }
                 }
 
-                if (!daten.setList.isEmpty()) {
+                if (!progData.setList.isEmpty()) {
                     // wenn leer, dann gibts immer die neuen und die sind dann auch aktiv
                     for (final SetData psNew : listePsetStandard) {
                         // die bestehenden Sets sollen nicht gestört werden

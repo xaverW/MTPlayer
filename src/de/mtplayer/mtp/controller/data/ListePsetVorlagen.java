@@ -17,7 +17,7 @@
 package de.mtplayer.mtp.controller.data;
 
 import de.mtplayer.mLib.tools.FileUtils;
-import de.mtplayer.mtp.controller.config.Const;
+import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.tools.file.GetFile;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -108,7 +108,7 @@ public class ListePsetVorlagen extends LinkedList<String[]> {
             XMLStreamReader parser;
             InputStreamReader inReader;
             HttpURLConnection conn;
-            conn = (HttpURLConnection) new URL(Const.ADRESSE_VORLAGE_PROGRAMMGRUPPEN).openConnection();
+            conn = (HttpURLConnection) new URL(ProgConst.ADRESSE_VORLAGE_PROGRAMMGRUPPEN).openConnection();
             conn.setRequestProperty("User-Agent", ProgInfos.getUserAgent());
             conn.setReadTimeout(TIMEOUT);
             conn.setConnectTimeout(TIMEOUT);

@@ -16,8 +16,8 @@
 
 package de.mtplayer.mtp.gui.configDialog;
 
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.BlackData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
@@ -41,7 +41,7 @@ import java.util.Collection;
 public class BlackPane {
     TableView<BlackData> tableView = new TableView<>();
 
-    BooleanProperty propWhite = Config.SYSTEM_BLACKLIST_IS_WHITELIST.getBooleanProperty();
+    BooleanProperty propWhite = ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST.getBooleanProperty();
 
     public void makeBlackTable(Collection<TitledPane> result) {
         final VBox vBox = new VBox();
@@ -74,7 +74,7 @@ public class BlackPane {
         rbBlack.setToggleGroup(group);
         rbWhite.setToggleGroup(group);
 
-        rbBlack.setSelected(!Config.SYSTEM_BLACKLIST_IS_WHITELIST.getBool());
+        rbBlack.setSelected(!ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST.getBool());
 
         gridPane.add(rbBlack, 0, 1);
         gridPane.add(new Label("\"Sender / Thema / Titel\" werden nicht angezeigt (Blacklist)"), 1, 1);
@@ -126,7 +126,7 @@ public class BlackPane {
 
         tableView.getColumns().addAll(expander, nrColumn, senderColumn, senderExaktColumn, themaColumn, themaExaktColumn,
                 titelColumn, themaTitelColumn);
-        tableView.setItems(Daten.getInstance().blackList);
+        tableView.setItems(ProgData.getInstance().blackList);
 
 
         Button del = new Button("");
@@ -137,7 +137,7 @@ public class BlackPane {
             if (sels == null || sels.isEmpty()) {
                 new MTAlert().showInfoNoSelection();
             } else {
-                Daten.getInstance().blackList.removeAll(sels);
+                ProgData.getInstance().blackList.removeAll(sels);
                 tableView.getSelectionModel().clearSelection();
             }
         });
@@ -146,7 +146,7 @@ public class BlackPane {
         neu.setGraphic(new Icons().ICON_BUTTON_ADD);
         neu.setOnAction(event -> {
             BlackData blackData = new BlackData();
-            Daten.getInstance().blackList.add(blackData);
+            ProgData.getInstance().blackList.add(blackData);
             tableView.getSelectionModel().select(blackData);
             tableView.scrollTo(blackData);
         });
@@ -173,7 +173,7 @@ public class BlackPane {
         ComboBox<String> cSender = new ComboBox<>();
         cSender.setEditable(true);
         cSender.valueProperty().bindBidirectional(param.getValue().senderProperty());
-        cSender.setItems(Daten.getInstance().nameLists.getObsAllSender());
+        cSender.setItems(ProgData.getInstance().nameLists.getObsAllSender());
 
         ToggleSwitch tgSender = new ToggleSwitch("exakt:");
         tgSender.selectedProperty().bindBidirectional(param.getValue().senderExactProperty());
@@ -233,7 +233,7 @@ public class BlackPane {
                 btnDel = new Button("x");
 
                 btnDel.setOnAction(event -> {
-                    Daten.getInstance().blackList.remove(blackData);
+                    ProgData.getInstance().blackList.remove(blackData);
                 });
                 hbox.getChildren().add(btnDel);
                 setGraphic(hbox);

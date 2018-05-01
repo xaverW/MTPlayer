@@ -17,8 +17,8 @@
 package de.mtplayer.mtp.gui.configDialog;
 
 import de.mtplayer.mLib.tools.DirFileChooser;
-import de.mtplayer.mtp.controller.config.Const;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConst;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
@@ -81,7 +81,7 @@ public class SetDataPane {
         cl = new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                Daten.getInstance().setList.setListChanged();
+                ProgData.getInstance().setList.setListChanged();
             }
         };
 
@@ -261,7 +261,7 @@ public class SetDataPane {
 
         final Button btnFile = new Button();
         btnFile.setOnAction(event -> {
-            DirFileChooser.DirChooser(Daten.getInstance().primaryStage, txtDestPath);
+            DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtDestPath);
         });
         btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
         gridPane.add(btnFile, 2, 0);
@@ -281,7 +281,7 @@ public class SetDataPane {
 
         Label lblSizeAll = new Label();
         slCut.setMin(0);
-        slCut.setMax(Const.LAENGE_DATEINAME_MAX);
+        slCut.setMax(ProgConst.LAENGE_DATEINAME_MAX);
         slCut.setShowTickLabels(true);
         slCut.setMinorTickCount(50);
         slCut.setMajorTickUnit(100);
@@ -301,7 +301,7 @@ public class SetDataPane {
 
         Label lblSizeField = new Label();
         slCutField.setMin(0);
-        slCutField.setMax(Const.LAENGE_FELD_MAX);
+        slCutField.setMax(ProgConst.LAENGE_FELD_MAX);
         slCutField.setShowTickLabels(true);
         slCutField.setMinorTickCount(25);
         slCutField.setMajorTickUnit(50);

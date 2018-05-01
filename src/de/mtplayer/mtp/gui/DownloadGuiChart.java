@@ -16,9 +16,9 @@
 
 package de.mtplayer.mtp.gui;
 
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Const;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgConst;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadInfos;
 import de.mtplayer.mtp.gui.tools.Listener;
@@ -41,8 +41,8 @@ import java.util.LinkedList;
 
 public class DownloadGuiChart {
 
-    private BooleanProperty separatChartProp = Config.DOWNLOAD_CHART_SEPARAT.getBooleanProperty();
-    private final Daten daten;
+    private BooleanProperty separatChartProp = ProgConfig.DOWNLOAD_CHART_SEPARAT.getBooleanProperty();
+    private final ProgData progData;
 
     private int countSek = 0;
     private int scale = 1;
@@ -61,9 +61,9 @@ public class DownloadGuiChart {
 
     private AnchorPane anchorPane;
 
-    public DownloadGuiChart(Daten daten, AnchorPane anchorPane) {
+    public DownloadGuiChart(ProgData progData, AnchorPane anchorPane) {
         this.anchorPane = anchorPane;
-        this.daten = daten;
+        this.progData = progData;
 
         initList();
         initCharts();
@@ -155,7 +155,7 @@ public class DownloadGuiChart {
     }
 
     private void selectChartData() {
-        if (Config.DOWNLOAD_CHART_SEPARAT.getBool()) {
+        if (ProgConfig.DOWNLOAD_CHART_SEPARAT.getBool()) {
             lineChart.setData(listChartSerparat);
         } else {
             lineChart.setData(listChartSum);
@@ -175,7 +175,7 @@ public class DownloadGuiChart {
         boolean found;
         ++countSek; // Sekunden
         final double countMin = countSek / 60.0; // Minuten
-        startedDownloads = daten.downloadList.getListOfStartsNotFinished(DownloadInfos.SRC_ALL);
+        startedDownloads = progData.downloadList.getListOfStartsNotFinished(DownloadInfos.SRC_ALL);
 
         //Downloads in "Diagramm" eintragen
         for (final Download download : startedDownloads) {
@@ -193,13 +193,13 @@ public class DownloadGuiChart {
                         FXCollections.observableArrayList(new XYChart.Data<Number, Number>(countMin, download.getStart().getBandwidth() / scale))));
             }
         }
-        sumSeries.getData().add(new XYChart.Data<>(countMin, daten.downloadList.getDownload_infosAll().bandwidth / scale));
+        sumSeries.getData().add(new XYChart.Data<>(countMin, progData.downloadList.getDownload_infosAll().bandwidth / scale));
         zoomXAxis(countMin);
         zoomYAxis();
     }
 
     private synchronized void zoomXAxis(double count) {
-        final double MIN = count - Const.DOWNLOAD_CHART_MAX_TIME;
+        final double MIN = count - ProgConst.DOWNLOAD_CHART_MAX_TIME;
         if (MIN <= 0) {
             return;
         }
@@ -220,7 +220,7 @@ public class DownloadGuiChart {
         double max = 0;
         final ObservableList<XYChart.Series<Number, Number>> list;
 
-        if (Config.DOWNLOAD_CHART_SEPARAT.getBool()) {
+        if (ProgConfig.DOWNLOAD_CHART_SEPARAT.getBool()) {
             list = listChartSerparat;
         } else {
             list = listChartSum;

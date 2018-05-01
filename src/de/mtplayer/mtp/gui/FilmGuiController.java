@@ -16,8 +16,8 @@
 
 package de.mtplayer.mtp.gui;
 
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.SetList;
 import de.mtplayer.mtp.controller.data.film.Film;
@@ -48,17 +48,17 @@ public class FilmGuiController extends AnchorPane {
 
     private final AnchorPane filmInfoPane = new AnchorPane();
 
-    private final Daten daten;
+    private final ProgData progData;
     private FilmGuiInfoController filmGuiInfoController;
 
-    DoubleProperty splitPaneProperty = Config.FILM_GUI_DIVIDER.getDoubleProperty();
-    BooleanProperty boolInfoOn = Config.FILM_GUI_DIVIDER_ON.getBooleanProperty();
+    DoubleProperty splitPaneProperty = ProgConfig.FILM_GUI_DIVIDER.getDoubleProperty();
+    BooleanProperty boolInfoOn = ProgConfig.FILM_GUI_DIVIDER_ON.getBooleanProperty();
     private boolean bound = false;
 
     private final SortedList<Film> sortedList;
 
     public FilmGuiController() {
-        daten = Daten.getInstance();
+        progData = ProgData.getInstance();
 
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
@@ -73,7 +73,7 @@ public class FilmGuiController extends AnchorPane {
         splitPane.setOrientation(Orientation.VERTICAL);
         getChildren().addAll(splitPane);
 
-        sortedList = daten.filmlistFiltered.getSortedList();
+        sortedList = progData.filmlistFiltered.getSortedList();
 
         filmGuiInfoController = new FilmGuiInfoController(filmInfoPane);
 
@@ -119,12 +119,12 @@ public class FilmGuiController extends AnchorPane {
     private void setFilm() {
         Film film = table.getSelectionModel().getSelectedItem();
         filmGuiInfoController.setFilm(film);
-        daten.filmInfosDialogController.set(film);
+        progData.filmInfosDialogController.set(film);
         return;
     }
 
     public void showFilmInfo() {
-        daten.filmInfosDialogController.showFilmInfo();
+        progData.filmInfosDialogController.showFilmInfo();
     }
 
     public void playFilmUrl() {
@@ -149,7 +149,7 @@ public class FilmGuiController extends AnchorPane {
 
     public void filmGesehen() {
         final ArrayList<Film> liste = getSelList();
-        FilmTools.setFilmShown(daten, liste, true);
+        FilmTools.setFilmShown(progData, liste, true);
 
         Table.refresh_table(table);
     }
@@ -159,7 +159,7 @@ public class FilmGuiController extends AnchorPane {
         //todo-> ~1s Dauer
 
         final ArrayList<Film> liste = getSelList();
-        FilmTools.setFilmShown(daten, liste, false);
+        FilmTools.setFilmShown(progData, liste, false);
 
         Table.refresh_table(table);
         Duration.counterStop("filmUngesehen");
@@ -190,8 +190,8 @@ public class FilmGuiController extends AnchorPane {
     }
 
     private void initListener() {
-        daten.setList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
-            if (daten.setList.getListeButton().size() > 2) {
+        progData.setList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
+            if (progData.setList.getListeButton().size() > 2) {
                 boolInfoOn.set(true);
             }
             setSplit();
@@ -206,7 +206,7 @@ public class FilmGuiController extends AnchorPane {
     }
 
     private void setInfoTabPane() {
-        final SetList liste = daten.setList.getListeButton();
+        final SetList liste = progData.setList.getListeButton();
         splitPane.getItems().clear();
 
         if (liste.isEmpty()) {
@@ -256,7 +256,7 @@ public class FilmGuiController extends AnchorPane {
 
         table.setOnMouseClicked(m -> {
             if (m.getButton().equals(MouseButton.PRIMARY) && m.getClickCount() == 2) {
-                daten.filmInfosDialogController.showFilmInfo();
+                progData.filmInfosDialogController.showFilmInfo();
             }
         });
 
@@ -264,7 +264,7 @@ public class FilmGuiController extends AnchorPane {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
                 final Optional<Film> film = getSel();
                 if (film.isPresent()) {
-                    ContextMenu contextMenu = new FilmGuiContextMenu(daten, this, table).getContextMenue(film.get());
+                    ContextMenu contextMenu = new FilmGuiContextMenu(progData, this, table).getContextMenue(film.get());
                     table.setContextMenu(contextMenu);
                 }
             }
@@ -307,7 +307,7 @@ public class FilmGuiController extends AnchorPane {
 
     private synchronized void saveFilm(SetData pSet) {
         final ArrayList<Film> liste = getSelList();
-        daten.filmlist.saveFilm(liste, pSet);
+        progData.filmlist.saveFilm(liste, pSet);
     }
 
 }

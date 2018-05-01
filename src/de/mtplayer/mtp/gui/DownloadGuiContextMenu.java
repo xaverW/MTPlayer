@@ -16,20 +16,20 @@
 
 package de.mtplayer.mtp.gui;
 
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.gui.tools.Table;
 import javafx.scene.control.*;
 
 public class DownloadGuiContextMenu {
 
-    private final Daten daten;
+    private final ProgData progData;
     private final DownloadGuiController downloadGuiController;
     private final TableView tableView;
 
-    public DownloadGuiContextMenu(Daten daten, DownloadGuiController downloadGuiController, TableView tableView) {
+    public DownloadGuiContextMenu(ProgData progData, DownloadGuiController downloadGuiController, TableView tableView) {
 
-        this.daten = daten;
+        this.progData = progData;
         this.downloadGuiController = downloadGuiController;
         this.tableView = tableView;
 
@@ -95,8 +95,8 @@ public class DownloadGuiContextMenu {
             miDelAbo.setDisable(true);
         } else {
             miChangeAbo.setOnAction(event ->
-                    daten.aboList.changeAbo(download.getAbo()));
-            miDelAbo.setOnAction(event -> daten.aboList.aboLoeschen(download.getAbo()));
+                    progData.aboList.changeAbo(download.getAbo()));
+            miDelAbo.setOnAction(event -> progData.aboList.aboLoeschen(download.getAbo()));
         }
         submenueAbo.getItems().addAll(miChangeAbo, miDelAbo);
 

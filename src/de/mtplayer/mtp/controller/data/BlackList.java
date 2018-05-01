@@ -16,7 +16,7 @@
 
 package de.mtplayer.mtp.controller.data;
 
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.tools.Listener;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
@@ -25,11 +25,11 @@ import javafx.collections.FXCollections;
 public class BlackList extends SimpleListProperty<BlackData> {
 
     private int nr = 0;
-    private final Daten daten;
+    private final ProgData progData;
 
-    public BlackList(Daten daten) {
+    public BlackList(ProgData progData) {
         super(FXCollections.observableArrayList());
-        this.daten = daten;
+        this.progData = progData;
     }
 
     public synchronized boolean add(BlackData b) {
@@ -56,7 +56,7 @@ public class BlackList extends SimpleListProperty<BlackData> {
     }
 
     public synchronized void filterListAndNotifyListeners() {
-        daten.filmlist.filterList();
+        progData.filmlist.filterList();
         Listener.notify(Listener.EREIGNIS_BLACKLIST_GEAENDERT, BlackList.class.getSimpleName());
     }
 

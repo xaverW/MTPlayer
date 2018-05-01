@@ -17,7 +17,7 @@
 package de.mtplayer.mtp.gui;
 
 import de.mtplayer.mLib.tools.SizeTools;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.tools.Listener;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.WebView;
@@ -26,12 +26,12 @@ public class DownloadGuiInfo {
 
     final private AnchorPane anchorPane;
     final private WebView webView;
-    final private Daten daten;
+    final private ProgData progData;
 
     public DownloadGuiInfo(AnchorPane anchorPane) {
         this.anchorPane = anchorPane;
         this.webView = new WebView();
-        daten = Daten.getInstance();
+        progData = ProgData.getInstance();
 
         anchorPane.getChildren().add(webView);
 
@@ -51,7 +51,7 @@ public class DownloadGuiInfo {
     }
 
     private void setInfoText() {
-        final int[] starts = daten.downloadList.getDownload_infosAll().downloadStarts;
+        final int[] starts = progData.downloadList.getDownload_infosAll().downloadStarts;
         if (starts[0] == 0) {
             webView.getEngine().loadContent("");
             return;
@@ -66,33 +66,33 @@ public class DownloadGuiInfo {
         // Downloads
         info += getInfoText();
         // Größe
-        if (daten.downloadList.getDownload_infosAll().byteAlleDownloads > 0 || daten.downloadList.getDownload_infosAll().byteAktDownloads > 0) {
+        if (progData.downloadList.getDownload_infosAll().byteAlleDownloads > 0 || progData.downloadList.getDownload_infosAll().byteAktDownloads > 0) {
             info += "<br />";
             info += "<span class=\"sans\"><b>Größe:</b><br />";
-            if (daten.downloadList.getDownload_infosAll().byteAktDownloads > 0) {
-                info += SizeTools.getGroesse(daten.downloadList.getDownload_infosAll().byteAktDownloads) + " von "
-                        + SizeTools.getGroesse(daten.downloadList.getDownload_infosAll().byteAlleDownloads) + " MByte" + "</span>";
+            if (progData.downloadList.getDownload_infosAll().byteAktDownloads > 0) {
+                info += SizeTools.getGroesse(progData.downloadList.getDownload_infosAll().byteAktDownloads) + " von "
+                        + SizeTools.getGroesse(progData.downloadList.getDownload_infosAll().byteAlleDownloads) + " MByte" + "</span>";
             } else {
-                info += SizeTools.getGroesse(daten.downloadList.getDownload_infosAll().byteAlleDownloads) + " MByte" + "</span>";
+                info += SizeTools.getGroesse(progData.downloadList.getDownload_infosAll().byteAlleDownloads) + " MByte" + "</span>";
             }
         }
         // Restzeit
-        if (daten.downloadList.getDownload_infosAll().timeRestAktDownloads > 0 && daten.downloadList.getDownload_infosAll().timeRestAllDownloads > 0) {
+        if (progData.downloadList.getDownload_infosAll().timeRestAktDownloads > 0 && progData.downloadList.getDownload_infosAll().timeRestAllDownloads > 0) {
             info += "<br />";
             info += "<span class=\"sans\"><b>Restzeit:</b><br />" + "laufende: "
-                    + daten.downloadList.getDownload_infosAll().getRestzeit() + ",<br />alle: " + daten.downloadList.getDownload_infosAll().getGesamtRestzeit() + "</span>";
-        } else if (daten.downloadList.getDownload_infosAll().timeRestAktDownloads > 0) {
+                    + progData.downloadList.getDownload_infosAll().getRestzeit() + ",<br />alle: " + progData.downloadList.getDownload_infosAll().getGesamtRestzeit() + "</span>";
+        } else if (progData.downloadList.getDownload_infosAll().timeRestAktDownloads > 0) {
             info += "<br />";
-            info += "<span class=\"sans\"><b>Restzeit:</b><br />laufende: " + daten.downloadList.getDownload_infosAll().getRestzeit() + "</span>";
-        } else if (daten.downloadList.getDownload_infosAll().timeRestAllDownloads > 0) {
+            info += "<span class=\"sans\"><b>Restzeit:</b><br />laufende: " + progData.downloadList.getDownload_infosAll().getRestzeit() + "</span>";
+        } else if (progData.downloadList.getDownload_infosAll().timeRestAllDownloads > 0) {
             info += "<br />";
-            info += "<span class=\"sans\"><b>Restzeit:</b><br />alle: " + daten.downloadList.getDownload_infosAll().getGesamtRestzeit() + "</span>";
+            info += "<span class=\"sans\"><b>Restzeit:</b><br />alle: " + progData.downloadList.getDownload_infosAll().getGesamtRestzeit() + "</span>";
         }
         // Bandbreite
-        if (daten.downloadList.getDownload_infosAll().bandwidth > 0) {
+        if (progData.downloadList.getDownload_infosAll().bandwidth > 0) {
             info += "<br />";
             info += "<span class=\"sans\"><b>Bandbreite:</b><br />";
-            info += daten.downloadList.getDownload_infosAll().bandwidthStr + "</span>";
+            info += progData.downloadList.getDownload_infosAll().bandwidthStr + "</span>";
         }
         info += END;
 
@@ -103,7 +103,7 @@ public class DownloadGuiInfo {
         String textLinks;
         // Text links: Zeilen Tabelle
         // nicht gestarted, laufen, fertig OK, fertig fehler
-        final int[] starts = daten.downloadList.getDownload_infosAll().downloadStarts;
+        final int[] starts = progData.downloadList.getDownload_infosAll().downloadStarts;
         textLinks = "<span class=\"sans\"><b>Downloads:  </b>" + starts[0] + "<br />";
         boolean print = false;
         for (int ii = 1; ii < starts.length; ++ii) {

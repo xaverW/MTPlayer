@@ -19,8 +19,8 @@ package de.mtplayer.mtp.gui.mediaDialog;
 
 import de.mtplayer.mLib.tools.DirFileChooser;
 import de.mtplayer.mLib.tools.StringFormatters;
-import de.mtplayer.mtp.controller.config.Const;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConst;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.mediaDb.MediaPathData;
 import de.mtplayer.mtp.gui.tools.HelpText;
@@ -42,11 +42,11 @@ import java.util.Date;
 
 public class MediaConfigPanePathExtern {
 
-    private final Daten daten;
+    private final ProgData progData;
     private final TableView<MediaPathData> tableView = new TableView<>();
 
     public MediaConfigPanePathExtern() {
-        this.daten = Daten.getInstance();
+        this.progData = ProgData.getInstance();
     }
 
     public void make(Collection<TitledPane> result) {
@@ -73,7 +73,7 @@ public class MediaConfigPanePathExtern {
         btnPath.setTooltip(new Tooltip("Einen Pfad zum Einlesen einer neuen Sammlung auswählen."));
         btnPath.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
         btnPath.setOnAction(event -> {
-            DirFileChooser.DirChooser(Daten.getInstance().primaryStage, txtPath);
+            DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtPath);
             if (txtName.getText().isEmpty()) {
                 txtName.setText(txtPath.getText());
             }
@@ -88,15 +88,15 @@ public class MediaConfigPanePathExtern {
 
         btnAdd.disableProperty().bind(txtName.textProperty().isEmpty()
                 .or(txtPath.textProperty().isEmpty())
-                .or(daten.mediaList.propSearchProperty()));
+                .or(progData.mediaList.propSearchProperty()));
         btnAdd.setOnAction(a -> {
-            if (!daten.mediaPathList.containExternal(txtName.getText()) ||
+            if (!progData.mediaPathList.containExternal(txtName.getText()) ||
                     PAlert.showAlert_yes_no("Sammlung hinzufügen", "Sammlung: " + txtName.getText(),
                             "Eine Sammlung mit dem Namen existiert bereits.\n" +
                                     "Sollen weitere Filme in " +
                                     "die Sammlung integriert werden?").equals(PAlert.BUTTON.YES)) {
 
-                daten.mediaList.createCollection(txtPath.getText(), txtName.getText());
+                progData.mediaList.createCollection(txtPath.getText(), txtName.getText());
             }
         });
 
@@ -129,7 +129,7 @@ public class MediaConfigPanePathExtern {
                 return;
             }
 
-            daten.mediaList.updateCollection(mediaPathData);
+            progData.mediaList.updateCollection(mediaPathData);
         });
 
         Button btnDel = new Button("");
@@ -138,7 +138,7 @@ public class MediaConfigPanePathExtern {
         btnDel.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
         btnDel.setOnAction(a -> {
             MediaPathData md = tableView.getSelectionModel().getSelectedItem();
-            daten.mediaList.removeCollection(md);
+            progData.mediaList.removeCollection(md);
         });
 
         HBox hHelp = new HBox();
@@ -156,7 +156,7 @@ public class MediaConfigPanePathExtern {
 
     private void initTable(VBox vBox) {
 
-        tableView.setMinHeight(Const.MIN_TABLE_HEIGHT);
+        tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
@@ -175,7 +175,7 @@ public class MediaConfigPanePathExtern {
         pathColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(40.0 / 100));
         countColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(10.0 / 100));
 
-        SortedList<MediaPathData> sortedList = daten.mediaPathList.getSortedListExternal();
+        SortedList<MediaPathData> sortedList = progData.mediaPathList.getSortedListExternal();
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
         tableView.setItems(sortedList);
 

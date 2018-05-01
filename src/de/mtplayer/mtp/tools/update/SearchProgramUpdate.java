@@ -18,8 +18,8 @@ package de.mtplayer.mtp.tools.update;
 
 import de.mtplayer.mLib.tools.Functions;
 import de.mtplayer.mLib.tools.StringFormatters;
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Const;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgConst;
 import de.p2tools.p2Lib.checkForUpdates.SearchProgInfo;
 import javafx.beans.property.BooleanProperty;
 
@@ -30,7 +30,7 @@ public class SearchProgramUpdate {
     BooleanProperty updateProp;
 
     public SearchProgramUpdate() {
-        updateProp = Config.SYSTEM_UPDATE_SEARCH.getBooleanProperty();
+        updateProp = ProgConfig.SYSTEM_UPDATE_SEARCH.getBooleanProperty();
     }
 
     /**
@@ -40,11 +40,11 @@ public class SearchProgramUpdate {
      */
     public boolean checkVersion(boolean showError, boolean showProgramInformation) {
         // prüft auf neue Version,
-        Config.SYSTEM_UPDATE_BUILD_NR.setValue(Functions.getProgVersion());
-        Config.SYSTEM_UPDATE_DATE.setValue(StringFormatters.FORMATTER_yyyyMMdd.format(new Date()));
+        ProgConfig.SYSTEM_UPDATE_BUILD_NR.setValue(Functions.getProgVersion());
+        ProgConfig.SYSTEM_UPDATE_DATE.setValue(StringFormatters.FORMATTER_yyyyMMdd.format(new Date()));
 
-        return new SearchProgInfo().checkUpdate(Const.ADRESSE_MTPLAYER_VERSION, Config.SYSTEM_UPDATE_BUILD_NR.getInt(),
-                Config.SYSTEM_UPDATE_INFO_NR_SHOWN.getIntegerProperty(), updateProp,
+        return new SearchProgInfo().checkUpdate(ProgConst.ADRESSE_MTPLAYER_VERSION, ProgConfig.SYSTEM_UPDATE_BUILD_NR.getInt(),
+                ProgConfig.SYSTEM_UPDATE_INFO_NR_SHOWN.getIntegerProperty(), updateProp,
                 showProgramInformation, showError);
     }
 

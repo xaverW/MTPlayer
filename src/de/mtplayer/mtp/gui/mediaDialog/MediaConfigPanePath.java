@@ -19,8 +19,8 @@ package de.mtplayer.mtp.gui.mediaDialog;
 
 import de.mtplayer.mLib.tools.DirFileChooser;
 import de.mtplayer.mLib.tools.MLAlert;
-import de.mtplayer.mtp.controller.config.Const;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConst;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.mediaDb.MediaPathData;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
@@ -39,10 +39,10 @@ import java.util.Collection;
 
 public class MediaConfigPanePath {
 
-    private final Daten daten;
+    private final ProgData progData;
 
     public MediaConfigPanePath() {
-        this.daten = Daten.getInstance();
+        this.progData = ProgData.getInstance();
     }
 
     public void makeTable(Collection<TitledPane> result) {
@@ -53,7 +53,7 @@ public class MediaConfigPanePath {
         result.add(tpConfig);
 
         TableView<MediaPathData> tableView = new TableView<>();
-        tableView.setMinHeight(Const.MIN_TABLE_HEIGHT);
+        tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
@@ -61,7 +61,7 @@ public class MediaConfigPanePath {
         pathColumn.setCellValueFactory(new PropertyValueFactory<>("path"));
 
         tableView.getColumns().addAll(expander, pathColumn);
-        tableView.setItems(daten.mediaPathList.getSortedListInternal());
+        tableView.setItems(progData.mediaPathList.getSortedListInternal());
 
         VBox.setVgrow(tableView, Priority.ALWAYS);
         vBox.getChildren().addAll(tableView);
@@ -74,7 +74,7 @@ public class MediaConfigPanePath {
             if (sels == null || sels.isEmpty()) {
                 new MTAlert().showInfoNoSelection();
             } else {
-                daten.mediaPathList.removeAll(sels);
+                progData.mediaPathList.removeAll(sels);
                 tableView.getSelectionModel().clearSelection();
             }
         });
@@ -88,14 +88,14 @@ public class MediaConfigPanePath {
         final Button btnFile = new Button();
         btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
         btnFile.setOnAction(event -> {
-            DirFileChooser.DirChooser(Daten.getInstance().primaryStage, txtPath);
+            DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtPath);
         });
 
         Button btnAdd = new Button("");
         btnAdd.setGraphic(new Icons().ICON_BUTTON_ADD);
         btnAdd.setOnAction(event -> {
             MediaPathData mediaPathData = new MediaPathData(txtPath.getText());
-            if (daten.mediaPathList.addInternal(mediaPathData)) {
+            if (progData.mediaPathList.addInternal(mediaPathData)) {
                 tableView.getSelectionModel().select(mediaPathData);
                 tableView.scrollTo(mediaPathData);
             } else {
@@ -144,7 +144,7 @@ public class MediaConfigPanePath {
 
         final Button btnFile = new Button();
         btnFile.setOnAction(event -> {
-            DirFileChooser.DirChooser(Daten.getInstance().primaryStage, txtPath);
+            DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtPath);
         });
         btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
 

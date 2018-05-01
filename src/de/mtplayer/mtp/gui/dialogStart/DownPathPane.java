@@ -17,8 +17,8 @@
 package de.mtplayer.mtp.gui.dialogStart;
 
 import de.mtplayer.mLib.tools.DirFileChooser;
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import javafx.beans.property.StringProperty;
@@ -32,7 +32,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 
 public class DownPathPane {
-    StringProperty pathProp = Config.START_DIALOG_DOWNLOAD_PATH.getStringProperty();
+    StringProperty pathProp = ProgConfig.START_DIALOG_DOWNLOAD_PATH.getStringProperty();
 
 
     public TitledPane makePath() {
@@ -53,7 +53,7 @@ public class DownPathPane {
 
         final Button btnFile = new Button();
         btnFile.setOnAction(event -> {
-            DirFileChooser.DirChooser(Daten.getInstance().primaryStage, txtPath);
+            DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtPath);
         });
         btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
         gridPane.add(btnFile, 1, 1);

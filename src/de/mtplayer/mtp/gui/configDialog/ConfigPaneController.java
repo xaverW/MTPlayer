@@ -17,9 +17,9 @@
 package de.mtplayer.mtp.gui.configDialog;
 
 import de.mtplayer.mLib.tools.DirFileChooser;
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Const;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgConst;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
@@ -44,7 +44,7 @@ import java.util.Collection;
 
 public class ConfigPaneController extends AnchorPane {
 
-    private final Daten daten;
+    private final ProgData progData;
     VBox noaccordion = new VBox();
     private final Accordion accordion = new Accordion();
     private final HBox hBox = new HBox(0);
@@ -52,20 +52,20 @@ public class ConfigPaneController extends AnchorPane {
 
     BooleanProperty logfileChanged = new SimpleBooleanProperty(false);
 
-    BooleanProperty accordionProp = Config.CONFIG_DIALOG_ACCORDION.getBooleanProperty();
-    BooleanProperty propUpdateSearch = Config.SYSTEM_UPDATE_SEARCH.getBooleanProperty();
-    BooleanProperty propAbo = Config.ABO_SEARCH_NOW.getBooleanProperty();
-    BooleanProperty propDown = Config.DOWNLOAD_START_NOW.getBooleanProperty();
-    StringProperty propDir = Config.SYSTEM_PROG_OPEN_DIR.getStringProperty();
-    StringProperty propUrl = Config.SYSTEM_PROG_OPEN_URL.getStringProperty();
-    StringProperty propPlay = Config.SYSTEM_PROG_PLAY_FILE.getStringProperty();
-    BooleanProperty propLog = Config.SYSTEM_LOG_ON.getBooleanProperty();
-    StringProperty propLogDir = Config.SYSTEM_LOG_DIR.getStringProperty();
+    BooleanProperty accordionProp = ProgConfig.CONFIG_DIALOG_ACCORDION.getBooleanProperty();
+    BooleanProperty propUpdateSearch = ProgConfig.SYSTEM_UPDATE_SEARCH.getBooleanProperty();
+    BooleanProperty propAbo = ProgConfig.ABO_SEARCH_NOW.getBooleanProperty();
+    BooleanProperty propDown = ProgConfig.DOWNLOAD_START_NOW.getBooleanProperty();
+    StringProperty propDir = ProgConfig.SYSTEM_PROG_OPEN_DIR.getStringProperty();
+    StringProperty propUrl = ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty();
+    StringProperty propPlay = ProgConfig.SYSTEM_PROG_PLAY_FILE.getStringProperty();
+    BooleanProperty propLog = ProgConfig.SYSTEM_LOG_ON.getBooleanProperty();
+    StringProperty propLogDir = ProgConfig.SYSTEM_LOG_DIR.getStringProperty();
 
     ScrollPane scrollPane = new ScrollPane();
 
     public ConfigPaneController() {
-        daten = Daten.getInstance();
+        progData = ProgData.getInstance();
 
         cbxAccordion.selectedProperty().bindBidirectional(accordionProp);
         cbxAccordion.selectedProperty().addListener((observable, oldValue, newValue) -> setAccordion());
@@ -125,7 +125,7 @@ public class ConfigPaneController extends AnchorPane {
         tglSearchAbo.setMaxWidth(Double.MAX_VALUE);
         tglSearchAbo.selectedProperty().bindBidirectional(propAbo);
 
-        final Button btnHelpAbo =new PButton().helpButton("Abos automatisch suchen",
+        final Button btnHelpAbo = new PButton().helpButton("Abos automatisch suchen",
                 HelpText.ABOS_SOFRT_SUCHEN);
 
         final ToggleSwitch tglStartDownload = new ToggleSwitch("Downloads aus Abos sofort starten");
@@ -184,7 +184,7 @@ public class ConfigPaneController extends AnchorPane {
         final Button btnFile = new Button();
         btnFile.setTooltip(new Tooltip("Einen Ordner für das Logfile auswählen."));
         btnFile.setOnAction(event -> {
-            DirFileChooser.DirChooser(Daten.getInstance().primaryStage, txtFileManager);
+            DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtFileManager);
         });
         btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
 
@@ -260,7 +260,7 @@ public class ConfigPaneController extends AnchorPane {
 
         final Button btnFile = new Button();
         btnFile.setOnAction(event -> {
-            DirFileChooser.FileChooser(Daten.getInstance().primaryStage, txtFileManager);
+            DirFileChooser.FileChooser(ProgData.getInstance().primaryStage, txtFileManager);
         });
         btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
         gridPane.add(btnFile, 1, row + 1);
@@ -282,7 +282,7 @@ public class ConfigPaneController extends AnchorPane {
 
         final Button btnFile = new Button();
         btnFile.setOnAction(event -> {
-            DirFileChooser.FileChooser(Daten.getInstance().primaryStage, txtFileManager);
+            DirFileChooser.FileChooser(ProgData.getInstance().primaryStage, txtFileManager);
         });
         btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
         gridPane.add(btnFile, 1, row + 1);
@@ -303,7 +303,7 @@ public class ConfigPaneController extends AnchorPane {
 
         final Button btnFile = new Button();
         btnFile.setOnAction(event -> {
-            DirFileChooser.FileChooser(Daten.getInstance().primaryStage, txtFileManager);
+            DirFileChooser.FileChooser(ProgData.getInstance().primaryStage, txtFileManager);
         });
         btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
         gridPane.add(btnFile, 1, row + 1);
@@ -360,10 +360,10 @@ public class ConfigPaneController extends AnchorPane {
         gridPane.add(hBox, 0, 1);
 
 
-        Hyperlink hyperlink = new Hyperlink(Const.ADRESSE_WEBSITE);
+        Hyperlink hyperlink = new Hyperlink(ProgConst.ADRESSE_WEBSITE);
         hyperlink.setOnAction(a -> {
             try {
-                MTOpen.openURL(Const.ADRESSE_WEBSITE);
+                MTOpen.openURL(ProgConst.ADRESSE_WEBSITE);
             } catch (Exception e) {
                 PLog.errorLog(932012478, e);
             }

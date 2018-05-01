@@ -17,9 +17,9 @@
 package de.mtplayer.mtp.controller.starter;
 
 import de.mtplayer.mLib.tools.*;
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Const;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgConst;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadInfos;
@@ -34,15 +34,15 @@ import java.util.ArrayList;
 public class StarterClass {
     // Tags Filme
 
-    private final Daten daten;
+    private final ProgData progData;
     private Starten starten = null;
     private boolean pause = false;
 
     // ===================================
     // Public
     // ===================================
-    public StarterClass(Daten daten) {
-        this.daten = daten;
+    public StarterClass(ProgData progData) {
+        this.progData = progData;
         starten = new Starten();
         starten.start();
     }
@@ -54,12 +54,12 @@ public class StarterClass {
         final String url = ersterFilm.arr[FilmXml.FILM_URL];
         if (!url.isEmpty()) {
             final Download download = new Download(pSet, ersterFilm, DownloadInfos.SRC_BUTTON, null, "", "", aufloesung);
-            daten.downloadList.startDownloads(download);
+            progData.downloadList.startDownloads(download);
 
             starten.startStarten(download); // da nicht in der ListeDownloads
 
             // und jetzt noch in die Downloadliste damit die Farbe im Tab Filme passt
-            daten.downloadListButton.addWithNr(download);
+            progData.downloadListButton.addWithNr(download);
         }
     }
 
@@ -67,7 +67,7 @@ public class StarterClass {
         pause = true;
     }
 
-    static boolean pruefen(Daten daten, Download datenDownload) {
+    static boolean pruefen(ProgData progData, Download datenDownload) {
         // prüfen ob der Download geklappt hat und die Datei existiert und eine min. Größe hat
         boolean ret = false;
 
@@ -82,11 +82,11 @@ public class StarterClass {
         final File file = new File(datenDownload.getZielPfadDatei());
         if (!file.exists()) {
             PLog.errorLog(550236231, "Download fehlgeschlagen: Datei existiert nicht" + datenDownload.getZielPfadDatei());
-        } else if (file.length() < Const.MIN_DATEI_GROESSE_FILM) {
+        } else if (file.length() < ProgConst.MIN_DATEI_GROESSE_FILM) {
             PLog.errorLog(795632500, "Download fehlgeschlagen: Datei zu klein" + datenDownload.getZielPfadDatei());
         } else {
             if (datenDownload.isAbo()) {
-                daten.erledigteAbos.writeHistory(datenDownload.getThema(), datenDownload.getTitel(), datenDownload.getHistoryUrl());
+                progData.erledigteAbos.writeHistory(datenDownload.getThema(), datenDownload.getTitel(), datenDownload.getHistoryUrl());
             }
             ret = true;
         }
@@ -108,7 +108,7 @@ public class StarterClass {
                     if (!file.delete()) {
                         throw new Exception();
                     }
-                } else if (file.length() < Const.MIN_DATEI_GROESSE_FILM) {
+                } else if (file.length() < ProgConst.MIN_DATEI_GROESSE_FILM) {
                     PLog.userLog(new String[]{"Restart/Aufräumen: Zu kleine Datei löschen", file.getAbsolutePath()});
                     if (!file.delete()) {
                         throw new Exception();
@@ -155,7 +155,7 @@ public class StarterClass {
 
     private static void fertigmeldung(final Download download) {
         final Start start = download.getStart();
-        if (Boolean.parseBoolean(Config.DOWNLOAD_BEEP.get())) {
+        if (Boolean.parseBoolean(ProgConfig.DOWNLOAD_BEEP.get())) {
             try {
                 Toolkit.getDefaultToolkit().beep();
             } catch (final Exception ignored) {
@@ -296,7 +296,7 @@ public class StarterClass {
                         // alle 5 Sekunden einen Download starten
                         sleep(5 * 1000);
                     }
-                    daten.downloadListButton.buttonStartsPutzen(); // Button Starts aus der Liste
+                    progData.downloadListButton.buttonStartsPutzen(); // Button Starts aus der Liste
                     // löschen
                     sleep(3 * 1000);
                 } catch (final Exception ex) {
@@ -315,10 +315,10 @@ public class StarterClass {
                 pause = false;
             }
 
-            Download download = daten.downloadList.getNextStart();
+            Download download = progData.downloadList.getNextStart();
             if (download == null) {
                 // dann versuchen einen Fehlerhaften nochmal zu starten
-                download = daten.downloadList.getRestartDownload();
+                download = progData.downloadList.getRestartDownload();
                 if (download != null) {
                     reStartmeldung(download);
                 }
@@ -337,12 +337,12 @@ public class StarterClass {
 
             switch (datenDownload.getArt()) {
                 case DownloadInfos.ART_PROGRAMM:
-                    downloadThread = new ExternalProgramDownload(daten, datenDownload);
+                    downloadThread = new ExternalProgramDownload(progData, datenDownload);
                     downloadThread.start();
                     break;
                 case DownloadInfos.ART_DOWNLOAD:
                 default:
-                    downloadThread = new DirectHttpDownload(daten, datenDownload, bandwidthCalculationTimer);
+                    downloadThread = new DirectHttpDownload(progData, datenDownload, bandwidthCalculationTimer);
                     downloadThread.start();
                     break;
             }

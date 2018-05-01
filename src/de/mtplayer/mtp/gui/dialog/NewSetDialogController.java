@@ -18,7 +18,7 @@ package de.mtplayer.mtp.gui.dialog;
 
 
 import de.mtplayer.mLib.tools.BigButton;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
@@ -27,7 +27,7 @@ import org.controlsfx.control.ToggleSwitch;
 
 public class NewSetDialogController extends MTDialog {
 
-    final Daten daten;
+    final ProgData progData;
     final StackPane stackPane;
     final VBox vbox;
 
@@ -35,11 +35,11 @@ public class NewSetDialogController extends MTDialog {
     boolean replaceSet = false;
     boolean askAgain = true;
 
-    public NewSetDialogController(Daten daten) {
+    public NewSetDialogController(ProgData progData) {
         super("", null,
                 "Das Standardset wurde aktualisiert", true);
 
-        this.daten = daten;
+        this.progData = progData;
 
         stackPane = new StackPane();
         vbox = new VBox();

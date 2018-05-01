@@ -17,7 +17,7 @@
 package de.mtplayer.mtp.controller.data;
 
 import de.mtplayer.mLib.tools.Data;
-import de.mtplayer.mtp.controller.config.Const;
+import de.mtplayer.mtp.controller.config.ProgConst;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -158,9 +158,9 @@ public class ProgProps extends Data<ProgProps> {
         String ret = "";
         for (int i = 0; i < MAX_ELEM; ++i) {
             if (i == 0) {
-                ret += "| ***|" + COLUMN_NAMES[i] + ": " + arr[i] + Const.LINE_SEPARATOR;
+                ret += "| ***|" + COLUMN_NAMES[i] + ": " + arr[i] + ProgConst.LINE_SEPARATOR;
             } else {
-                ret += "|    |" + COLUMN_NAMES[i] + ": " + arr[i] + Const.LINE_SEPARATOR;
+                ret += "|    |" + COLUMN_NAMES[i] + ": " + arr[i] + ProgConst.LINE_SEPARATOR;
             }
         }
         return ret;

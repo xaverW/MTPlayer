@@ -16,7 +16,7 @@
 
 package de.mtplayer.mtp.gui;
 
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.abo.Abo;
 import de.mtplayer.mtp.controller.data.download.DownloadInfos;
@@ -80,12 +80,12 @@ public class StatusBarController extends AnchorPane {
     private StatusbarIndex statusbarIndex = StatusbarIndex.NONE;
     private boolean loadList = false;
 
-    private final Daten daten;
+    private final ProgData progData;
     private boolean stopTimer = false;
     private static final String TRENNER = "  ||  ";
 
-    public StatusBarController(Daten daten) {
-        this.daten = daten;
+    public StatusBarController(ProgData progData) {
+        this.progData = progData;
 
         getChildren().addAll(stackPane);
         AnchorPane.setLeftAnchor(stackPane, 0.0);
@@ -165,7 +165,7 @@ public class StatusBarController extends AnchorPane {
         lblSelDownload.setStyle(labelStyle);
         lblSelAbo.setStyle(labelStyle);
 
-        daten.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
+        progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
             @Override
             public void start(ListenerFilmlistLoadEvent event) {
                 loadList = true;
@@ -196,7 +196,7 @@ public class StatusBarController extends AnchorPane {
                 }
             }
         });
-        btnStop.setOnAction(a -> daten.loadFilmlist.setStop(true));
+        btnStop.setOnAction(a -> progData.loadFilmlist.setStop(true));
     }
 
     public void setStatusbar() {
@@ -243,15 +243,15 @@ public class StatusBarController extends AnchorPane {
 
 
     private void setTextNone() {
-        final int anzAll = daten.filmlist.size();
+        final int anzAll = progData.filmlist.size();
         lblLeftNone.setText("Anzahl Filme: " + anzAll);
     }
 
     private void setInfoFilme() {
         String textLinks;
-        final int gesamt = daten.filmlist.size();
-        final int anzListe = daten.filmGuiController.getFilmCount();
-        final int runs = daten.downloadListButton.getListOfStartsNotFinished(DownloadInfos.SRC_BUTTON).size();
+        final int gesamt = progData.filmlist.size();
+        final int anzListe = progData.filmGuiController.getFilmCount();
+        final int runs = progData.downloadListButton.getListOfStartsNotFinished(DownloadInfos.SRC_BUTTON).size();
 
         NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.GERMANY);
         String anzListeStr = numberFormat.format(anzListe);
@@ -286,7 +286,7 @@ public class StatusBarController extends AnchorPane {
         textLinks += getInfoTextDownloads(false);
         lblLeftFilm.setText(textLinks);
 
-        final int selCount = daten.filmGuiController.getSelCount();
+        final int selCount = progData.filmGuiController.getSelCount();
         lblSelFilm.setText(selCount > 0 ? selCount + "" : " ");
     }
 
@@ -294,7 +294,7 @@ public class StatusBarController extends AnchorPane {
         final String textLinks = getInfoTextDownloads(true /* mitAbo */);
         lblLeftDownload.setText(textLinks);
 
-        final int selCount = daten.downloadGuiController.getSelCount();
+        final int selCount = progData.downloadGuiController.getSelCount();
         lblSelDownload.setText(selCount > 0 ? selCount + "" : " ");
     }
 
@@ -303,8 +303,8 @@ public class StatusBarController extends AnchorPane {
         String textLinks;
         int ein = 0;
         int aus = 0;
-        final int gesamt = daten.aboList.size();
-        for (final Abo abo : daten.aboList) {
+        final int gesamt = progData.aboList.size();
+        for (final Abo abo : progData.aboList) {
             if (abo.getActive()) {
                 ++ein;
             } else {
@@ -320,7 +320,7 @@ public class StatusBarController extends AnchorPane {
 
         lblLeftAbo.setText(textLinks);
 
-        final int selCount = daten.aboGuiController.getSelCount();
+        final int selCount = progData.aboGuiController.getSelCount();
         lblSelAbo.setText(selCount > 0 ? selCount + "" : " ");
 
     }
@@ -329,8 +329,8 @@ public class StatusBarController extends AnchorPane {
         String textLinks;
         // Text links: Zeilen Tabelle
         // nicht gestarted, laufen, fertig OK, fertig fehler
-        final int[] starts = daten.downloadList.getDownload_infosAll().downloadStarts;
-        final int anz = daten.downloadList.size();
+        final int[] starts = progData.downloadList.getDownload_infosAll().downloadStarts;
+        final int anz = progData.downloadList.size();
         final int diff = anz - starts[0];
 
         boolean print = false;
@@ -376,7 +376,7 @@ public class StatusBarController extends AnchorPane {
             }
 
             if (starts[4] > 0) {
-                textLinks += " (" + daten.downloadList.getDownload_infosAll().bandwidthStr + ')';
+                textLinks += " (" + progData.downloadList.getDownload_infosAll().bandwidthStr + ')';
             }
 
             if (starts[3] == 1) {
@@ -406,10 +406,10 @@ public class StatusBarController extends AnchorPane {
     private void setTextForRightDisplay() {
         // Text rechts: alter/neuladenIn anzeigen
         String strText = "Filmliste erstellt: ";
-        strText += daten.filmlist.genDate();
+        strText += progData.filmlist.genDate();
         strText += " Uhr  ";
 
-        final int sekunden = daten.filmlist.getAge();
+        final int sekunden = progData.filmlist.getAge();
 
         if (sekunden != 0) {
             strText += "||  Alter: ";

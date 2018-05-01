@@ -18,8 +18,8 @@ package de.mtplayer.mtp.gui.tools;
 
 import de.mtplayer.mLib.tools.CheckBoxCell;
 import de.mtplayer.mLib.tools.MDate;
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.controller.data.film.Film;
@@ -37,12 +37,12 @@ import javafx.util.Callback;
 
 public class TableFilm {
 
-    private final Daten daten;
+    private final ProgData progData;
     private final BooleanProperty geoMelden;
 
-    public TableFilm(Daten daten) {
-        this.daten = daten;
-        geoMelden = Config.SYSTEM_MARK_GEO.getBooleanProperty();
+    public TableFilm(ProgData progData) {
+        this.progData = progData;
+        geoMelden = ProgConfig.SYSTEM_MARK_GEO.getBooleanProperty();
     }
 
     public TableColumn[] initFilmColumn(TableView table) {
@@ -245,7 +245,7 @@ public class TableFilm {
                     FilmTools.playFilm(film, null);
                 });
                 btnSave.setOnAction(event -> {
-                    Daten.getInstance().filmlist.saveFilm(film, null);
+                    ProgData.getInstance().filmlist.saveFilm(film, null);
                 });
                 hbox.getChildren().addAll(btnPlay, btnSave);
                 setGraphic(hbox);

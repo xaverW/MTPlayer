@@ -17,8 +17,8 @@
 package de.mtplayer.mtp.controller.data.download;
 
 import de.mtplayer.mLib.tools.SizeTools;
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.p2tools.p2Lib.tools.log.PLog;
 
 import java.text.DecimalFormat;
@@ -26,7 +26,7 @@ import java.util.LinkedList;
 
 public class DownloadInfosAll {
 
-    private final Daten daten;
+    private final ProgData progData;
     private final DownloadList downloadList;
 
     // Anzahl
@@ -48,8 +48,8 @@ public class DownloadInfosAll {
 
     private LinkedList<Download> aktivDownloads; // Liste gestarteter Downloads
 
-    public DownloadInfosAll(Daten daten, DownloadList downloadList) {
-        this.daten = daten;
+    public DownloadInfosAll(ProgData progData, DownloadList downloadList) {
+        this.progData = progData;
         this.downloadList = downloadList;
     }
 
@@ -144,7 +144,7 @@ public class DownloadInfosAll {
     }
 
     private void progressMsg() {
-        if (!Config.SYSTEM_PARAMETER_DOWNLOAD_PROGRESS.getBool()) {
+        if (!ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_PROGRESS.getBool()) {
             return;
         }
         final int progress = percent;

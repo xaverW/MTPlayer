@@ -19,8 +19,8 @@ package de.mtplayer.mtp.gui.dialog;
 import de.mtplayer.mLib.tools.DirFileChooser;
 import de.mtplayer.mLib.tools.FileNameUtils;
 import de.mtplayer.mLib.tools.Functions;
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.controller.data.download.Download;
@@ -66,21 +66,21 @@ public class DownloadContinueDialogController extends MTDialog {
     @FXML
     private GridPane gridPane;
 
-    private final Daten daten;
+    private final ProgData progData;
     private final Download download;
     private DownloadState.ContinueDownload result = DownloadState.ContinueDownload.CANCEL_DOWNLOAD;
     private final boolean direkterDownload;
     private String oldPathFile;
 
     private Timeline timeline = null;
-    private Integer timeSeconds = Config.SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECOND.getInt();
+    private Integer timeSeconds = ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECOND.getInt();
 
-    public DownloadContinueDialogController(Daten daten, Download download, boolean direkterDownload) {
+    public DownloadContinueDialogController(ProgData progData, Download download, boolean direkterDownload) {
         super("/de/mtplayer/mtp/gui/dialog/DownloadContinueDialog.fxml",
-                Config.DOWNLOAD_DIALOG_CONTINUE_SIZE,
+                ProgConfig.DOWNLOAD_DIALOG_CONTINUE_SIZE,
                 "Download weiterführen", true);
 
-        this.daten = daten;
+        this.progData = progData;
         this.download = download;
         this.direkterDownload = direkterDownload;
         this.oldPathFile = download.getZielPfadDatei();
@@ -203,7 +203,7 @@ public class DownloadContinueDialogController extends MTDialog {
 
     private void initPathAndName() {
         // gespeicherte Pfade eintragen
-        final String[] p = Config.DOWNLOAD_DIALOG_PATH_SAVING.get().split("<>");
+        final String[] p = ProgConfig.DOWNLOAD_DIALOG_PATH_SAVING.get().split("<>");
         cbPath.getItems().addAll(p);
 
         if (download.getZielPfad().isEmpty()) {
@@ -232,7 +232,7 @@ public class DownloadContinueDialogController extends MTDialog {
     }
 
     private void getDestination() {
-        DirFileChooser.DirChooser(Daten.getInstance().primaryStage, cbPath);
+        DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, cbPath);
     }
 
 }

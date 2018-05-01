@@ -19,7 +19,7 @@ package de.mtplayer.mtp.controller.data.download;
 import de.mtplayer.mLib.tools.FileUtils;
 import de.mtplayer.mLib.tools.MLProperty;
 import de.mtplayer.mLib.tools.StringFormatters;
-import de.mtplayer.mtp.controller.config.Config;
+import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.abo.Abo;
 import de.mtplayer.mtp.controller.data.film.Film;
@@ -168,7 +168,7 @@ public final class Download extends DownloadProps {
     public void stopDownload() {
         if (isStateError()) {
             // damit fehlerhafte nicht wieder starten
-            getStart().setRestartCounter(Config.SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getInt());
+            getStart().setRestartCounter(ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getInt());
         } else {
             MLProperty.setProperty(stateProperty(), DownloadInfos.STATE_STOPED);
             MLProperty.setProperty(progressProperty(), DownloadInfos.PROGRESS_NICHT_GESTARTET);

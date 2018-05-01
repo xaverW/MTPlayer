@@ -17,8 +17,8 @@
 package de.mtplayer.mtp.controller.data.film;
 
 import de.mtplayer.mLib.tools.FilmDate;
-import de.mtplayer.mtp.controller.config.Const;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConst;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.abo.Abo;
 import de.p2tools.p2Lib.tools.log.PLog;
 
@@ -38,7 +38,7 @@ public class Film extends FilmProps {
         setHd(!arr[FilmXml.FILM_URL_HD].isEmpty() || !arr[FilmXml.FILM_URL_RTMP_HD].isEmpty());
         setSmall(!arr[FilmXml.FILM_URL_KLEIN].isEmpty() || !arr[FilmXml.FILM_URL_RTMP_KLEIN].isEmpty());
         setUt(!arr[FilmXml.FILM_URL_SUBTITLE].isEmpty());
-        setShown(Daten.getInstance().history.checkIfExists(getUrlHistory()));
+        setShown(ProgData.getInstance().history.checkIfExists(getUrlHistory()));
         preserveMemory();
 
         // ================================
@@ -103,7 +103,7 @@ public class Film extends FilmProps {
     public String getUrlForHash() {
         // liefert die URL zum VERGLEICHEN!!
         String url = "";
-        if (arr[FilmXml.FILM_SENDER].equals(Const.ORF)) {
+        if (arr[FilmXml.FILM_SENDER].equals(ProgConst.ORF)) {
             final String uurl = arr[FilmXml.FILM_URL];
             try {
                 final String online = "/online/";
@@ -125,7 +125,7 @@ public class Film extends FilmProps {
             } catch (final Exception ex) {
                 PLog.errorLog(915230478, ex, "Url: " + uurl);
             }
-            return Const.ORF + "----" + url;
+            return ProgConst.ORF + "----" + url;
         } else {
             return arr[FilmXml.FILM_URL];
         }
@@ -244,8 +244,8 @@ public class Film extends FilmProps {
         String ret;
         if (!arr[FilmXml.FILM_URL_RTMP].isEmpty()) {
             ret = arr[FilmXml.FILM_URL_RTMP];
-        } else if (arr[FilmXml.FILM_URL].startsWith(Const.RTMP_PRTOKOLL)) {
-            ret = Const.RTMP_FLVSTREAMER + arr[FilmXml.FILM_URL];
+        } else if (arr[FilmXml.FILM_URL].startsWith(ProgConst.RTMP_PRTOKOLL)) {
+            ret = ProgConst.RTMP_FLVSTREAMER + arr[FilmXml.FILM_URL];
         } else {
             ret = arr[FilmXml.FILM_URL];
         }
@@ -273,8 +273,8 @@ public class Film extends FilmProps {
             // dann gibts überhaupt nur die normalen URLs
             ret = getUrlNormalKlein();
             // und jetzt noch "-r" davorsetzten wenn nötig
-            if (ret.startsWith(Const.RTMP_PRTOKOLL)) {
-                ret = Const.RTMP_FLVSTREAMER + ret;
+            if (ret.startsWith(ProgConst.RTMP_PRTOKOLL)) {
+                ret = ProgConst.RTMP_FLVSTREAMER + ret;
             }
         }
         return ret;

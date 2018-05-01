@@ -16,8 +16,8 @@
 
 package de.mtplayer.mtp.gui.dialog;
 
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.controller.data.abo.Abo;
@@ -63,13 +63,13 @@ public class AboEditDialogController extends MTDialogExtra {
 
     private final ObservableList<Abo> lAbo;
     private final Abo aboCopy;
-    private Daten daten;
+    private ProgData progData;
 
-    public AboEditDialogController(Daten daten, Abo abo) {
-        super(null, Config.ABO_DIALOG_EDIT_SIZE,
+    public AboEditDialogController(ProgData progData, Abo abo) {
+        super(null, ProgConfig.ABO_DIALOG_EDIT_SIZE,
                 "Abo ändern", true);
 
-        this.daten = daten;
+        this.progData = progData;
         lAbo = FXCollections.observableArrayList();
         lAbo.add(abo);
 
@@ -78,11 +78,11 @@ public class AboEditDialogController extends MTDialogExtra {
         initDialog();
     }
 
-    public AboEditDialogController(Daten daten, ObservableList<Abo> lAbo) {
-        super(null, Config.ABO_DIALOG_EDIT_SIZE,
+    public AboEditDialogController(ProgData progData, ObservableList<Abo> lAbo) {
+        super(null, ProgConfig.ABO_DIALOG_EDIT_SIZE,
                 "Abo ändern", true);
         this.lAbo = lAbo;
-        this.daten = daten;
+        this.progData = progData;
         aboCopy = lAbo.get(0).getCopy();
 
         initDialog();
@@ -340,7 +340,7 @@ public class AboEditDialogController extends MTDialogExtra {
                 break;
 
             case AboXml.ABO_PSET:
-                cbPset.getItems().addAll(daten.setList.getListeAbo().getPsetNameList());
+                cbPset.getItems().addAll(progData.setList.getListeAbo().getPsetNameList());
                 if (aboCopy.getPset().isEmpty()) {
                     cbPset.getSelectionModel().selectFirst();
                     aboCopy.setPset(cbPset.getSelectionModel().getSelectedItem());
@@ -353,7 +353,7 @@ public class AboEditDialogController extends MTDialogExtra {
                 break;
 
             case AboXml.ABO_SENDER:
-                cbSender.setItems(daten.nameLists.getObsAllSender());
+                cbSender.setItems(progData.nameLists.getObsAllSender());
                 cbSender.setEditable(true);
                 cbSender.valueProperty().bindBidirectional(aboCopy.senderProperty());
                 cbSender.valueProperty().addListener((observable, oldValue, newValue) -> cbxForAll[i].setSelected(true));
@@ -361,7 +361,7 @@ public class AboEditDialogController extends MTDialogExtra {
                 break;
 
             case AboXml.ABO_ZIELPFAD:
-                ArrayList<String> pfade = daten.aboList.getPfade();
+                ArrayList<String> pfade = progData.aboList.getPfade();
                 if (!pfade.contains(aboCopy.getDest())) {
                     pfade.add(0, aboCopy.getDest());
                 }

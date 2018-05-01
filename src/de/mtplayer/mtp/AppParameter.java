@@ -18,8 +18,8 @@
 package de.mtplayer.mtp;
 
 import de.mtplayer.mtp.controller.ProgStart;
-import de.mtplayer.mtp.controller.config.Const;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConst;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.p2tools.p2Lib.tools.log.LogMsg;
 import de.p2tools.p2Lib.tools.log.PLog;
 import org.apache.commons.cli.*;
@@ -38,7 +38,7 @@ public class AppParameter {
         }
 
         printArguments(arguments);
-        Daten.configDir = readPfadFromArguments(arguments);
+        ProgData.configDir = readPfadFromArguments(arguments);
 
         try {
             final Options allowed = new Options();
@@ -63,7 +63,7 @@ public class AppParameter {
             }
 
             if (hasOption(line, ProgParameter.DEBUG)) {
-                Daten.debug = true;
+                ProgData.debug = true;
             }
 
             if (hasOption(line, ProgParameter.PATH)) {
@@ -71,7 +71,7 @@ public class AppParameter {
                 if (!configDir.endsWith(File.separator)) {
                     configDir += File.separator;
                 }
-                Daten.configDir = configDir;
+                ProgData.configDir = configDir;
             }
 
         } catch (Exception ex) {
@@ -147,7 +147,7 @@ public class AppParameter {
 
     private static void printHelp(final Options allowed) {
         final HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp(Const.PROGRAMMNAME, allowed);
+        formatter.printHelp(ProgConst.PROGRAMMNAME, allowed);
 
     }
 

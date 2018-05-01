@@ -17,7 +17,7 @@
 
 package de.mtplayer.mtp.gui;
 
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.p2tools.p2Lib.tools.log.SysMsg;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
@@ -47,7 +47,7 @@ public class MsgLogController extends AnchorPane {
         if (logart == LOG_SYSTEM_MSG) {
             textList = SysMsg.textSystem;
         } else {
-            textList = Daten.getInstance().playerMsg.textProgramm;
+            textList = ProgData.getInstance().playerMsg.textProgramm;
         }
 
         vBoxCont.setSpacing(10);
@@ -118,7 +118,7 @@ public class MsgLogController extends AnchorPane {
             if (logart == LOG_SYSTEM_MSG) {
                 textArea.setText(SysMsg.getText());
             } else {
-                textArea.setText(Daten.getInstance().playerMsg.getText());
+                textArea.setText(ProgData.getInstance().playerMsg.getText());
             }
 
             textArea.selectPositionCaret(textArea.getLength());
@@ -129,7 +129,7 @@ public class MsgLogController extends AnchorPane {
             if (logart == LOG_SYSTEM_MSG) {
                 textArea.setText(SysMsg.getText());
             } else {
-                textArea.setText(Daten.getInstance().playerMsg.getText());
+                textArea.setText(ProgData.getInstance().playerMsg.getText());
             }
 
             textArea.setScrollTop(scrollPosition);
@@ -140,7 +140,7 @@ public class MsgLogController extends AnchorPane {
         if (logart == LOG_SYSTEM_MSG) {
             SysMsg.clearText();
         } else {
-            Daten.getInstance().playerMsg.clearText();
+            ProgData.getInstance().playerMsg.clearText();
         }
     }
 }

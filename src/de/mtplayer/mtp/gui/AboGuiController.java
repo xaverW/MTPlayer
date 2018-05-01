@@ -16,8 +16,8 @@
 
 package de.mtplayer.mtp.gui;
 
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.abo.Abo;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.Table;
@@ -36,10 +36,10 @@ public class AboGuiController extends AnchorPane {
     private final FilteredList<Abo> filteredAbos;
     private final SortedList<Abo> sortedAbos;
 
-    private final Daten daten;
+    private final ProgData progData;
 
     public AboGuiController() {
-        daten = Daten.getInstance();
+        progData = ProgData.getInstance();
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setFitToHeight(true);
@@ -54,7 +54,7 @@ public class AboGuiController extends AnchorPane {
 
         scrollPane.setContent(table);
 
-        filteredAbos = new FilteredList<>(daten.aboList, p -> true);
+        filteredAbos = new FilteredList<>(progData.aboList, p -> true);
         sortedAbos = new SortedList<>(filteredAbos);
         setFilterProperty();
 
@@ -62,7 +62,7 @@ public class AboGuiController extends AnchorPane {
     }
 
     public void isShown() {
-        daten.filmInfosDialogController.set(null);
+        progData.filmInfosDialogController.set(null);
     }
 
     public int getSelCount() {
@@ -71,22 +71,22 @@ public class AboGuiController extends AnchorPane {
 
     public void aendern() {
         ObservableList<Abo> lAbo = getSelList();
-        daten.aboList.changeAbo(lAbo);
+        progData.aboList.changeAbo(lAbo);
     }
 
     public void einAus(boolean on) {
         ObservableList<Abo> lAbo = getSelList();
-        daten.aboList.onOffAbo(lAbo, on);
+        progData.aboList.onOffAbo(lAbo, on);
     }
 
     public void loeschen() {
         ObservableList<Abo> lAbo = getSelList();
-        daten.aboList.aboLoeschen(lAbo);
+        progData.aboList.aboLoeschen(lAbo);
     }
 
 
     public void neu() {
-        daten.aboList.addAbo("Neu" /* Aboname */);
+        progData.aboList.addAbo("Neu" /* Aboname */);
     }
 
     public void invertSelection() {
@@ -181,7 +181,7 @@ public class AboGuiController extends AnchorPane {
     }
 
     private void setFilterProperty() {
-        Config.FILTER_ABO_SENDER.getStringProperty().addListener((observable, oldValue, newValue) -> {
+        ProgConfig.FILTER_ABO_SENDER.getStringProperty().addListener((observable, oldValue, newValue) -> {
             final String searchStr = newValue == null ? "" : newValue;
             filteredAbos.setPredicate(searchStr.isEmpty() ?
                     s -> true : s -> s.getSender().equals(searchStr));

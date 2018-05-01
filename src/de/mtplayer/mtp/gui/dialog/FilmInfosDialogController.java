@@ -16,8 +16,8 @@
 
 package de.mtplayer.mtp.gui.dialog;
 
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import javafx.application.Platform;
@@ -38,13 +38,13 @@ public class FilmInfosDialogController extends MTDialogExtra {
 
 
     final GridPane gridPane = new GridPane();
-    private final Daten daten;
+    private final ProgData progData;
 
-    public FilmInfosDialogController(Daten daten) {
-        super(null, Config.SYSTEM_SIZE_DIALOG_FILMINFO,
+    public FilmInfosDialogController(ProgData progData) {
+        super(null, ProgConfig.SYSTEM_SIZE_DIALOG_FILMINFO,
                 "Filminfos", false);
 
-        this.daten = daten;
+        this.progData = progData;
         getTilePaneOk().getChildren().addAll(btnOk);
         init(getvBoxDialog());
     }

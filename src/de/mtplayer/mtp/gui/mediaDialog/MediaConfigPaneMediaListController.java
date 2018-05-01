@@ -17,9 +17,9 @@
 package de.mtplayer.mtp.gui.mediaDialog;
 
 import de.mtplayer.mLib.tools.CheckBoxCell;
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Const;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgConst;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.mediaDb.MediaData;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -37,17 +37,17 @@ import java.util.Collection;
 
 public class MediaConfigPaneMediaListController extends AnchorPane {
 
-    private final Daten daten;
+    private final ProgData progData;
     private Label lblGesamtMedia = new Label();
     private VBox noaccordion = new VBox();
     private final Accordion accordion = new Accordion();
     private final HBox hBox = new HBox(0);
     private final CheckBox cbxAccordion = new CheckBox("");
-    private final BooleanProperty accordionProp = Config.MEDIA_CONFIG_DIALOG_ACCORDION.getBooleanProperty();
+    private final BooleanProperty accordionProp = ProgConfig.MEDIA_CONFIG_DIALOG_ACCORDION.getBooleanProperty();
     private ScrollPane scrollPane = new ScrollPane();
 
     public MediaConfigPaneMediaListController() {
-        daten = Daten.getInstance();
+        progData = ProgData.getInstance();
 
         cbxAccordion.selectedProperty().bindBidirectional(accordionProp);
         cbxAccordion.selectedProperty().addListener((observable, oldValue, newValue) -> setAccordion());
@@ -83,9 +83,9 @@ public class MediaConfigPaneMediaListController extends AnchorPane {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
         initTable(result);
 
-        lblGesamtMedia.setText(daten.mediaList.size() + "");
-        daten.mediaList.sizeProperty().addListener((observable, oldValue, newValue) ->
-                Platform.runLater(() -> lblGesamtMedia.setText(daten.mediaList.size() + "")));
+        lblGesamtMedia.setText(progData.mediaList.size() + "");
+        progData.mediaList.sizeProperty().addListener((observable, oldValue, newValue) ->
+                Platform.runLater(() -> lblGesamtMedia.setText(progData.mediaList.size() + "")));
 
         return result;
     }
@@ -105,7 +105,7 @@ public class MediaConfigPaneMediaListController extends AnchorPane {
         VBox.setVgrow(tpConfig, Priority.ALWAYS);
 
         TableView<MediaData> tableView = new TableView<>();
-        tableView.setMinHeight(Const.MIN_TABLE_HEIGHT);
+        tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
@@ -134,9 +134,9 @@ public class MediaConfigPaneMediaListController extends AnchorPane {
         colColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(20.0 / 100));
         externalColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(5.0 / 100));
 
-        SortedList<MediaData> sortedList = daten.mediaList.getSortedList();
+        SortedList<MediaData> sortedList = progData.mediaList.getSortedList();
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
-        daten.mediaList.filterdListClearPred(true);
+        progData.mediaList.filterdListClearPred(true);
         tableView.setItems(sortedList);
 
         VBox.setVgrow(tableView, Priority.ALWAYS);

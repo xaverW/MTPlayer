@@ -45,12 +45,12 @@ public class GetIcon {
         Image icon;
         icon = getStdImage(strIcon, path, w, h);
 
-//        if (Boolean.parseBoolean(Config.SYSTEM_ICON_STANDARD.get())) {
+//        if (Boolean.parseBoolean(ProgConfig.SYSTEM_ICON_STANDARD.get())) {
 //            icon = getStdImage(strIcon, path, w, h);
 //        } else {
 //            try {
 //                //todo das funzt nicht
-//                final String pfad = FileUtils.addsPfad(Config.SYSTEM_ICON_PFAD.get(), strIcon);
+//                final String pfad = FileUtils.addsPfad(ProgConfig.SYSTEM_ICON_PFAD.get(), strIcon);
 //                if (new File(pfad).exists()) {
 //                    icon = new javafx.scene.image.Image(path);
 //                } else {

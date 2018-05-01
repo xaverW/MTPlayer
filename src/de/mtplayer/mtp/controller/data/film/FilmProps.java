@@ -18,7 +18,7 @@ package de.mtplayer.mtp.controller.data.film;
 
 import de.mtplayer.mLib.tools.FilmDate;
 import de.mtplayer.mLib.tools.MDate;
-import de.mtplayer.mtp.controller.config.Config;
+import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -70,7 +70,7 @@ public class FilmProps extends FilmXml {
     }
 
     public void setGeoBlocked() {
-        geoBlocked = !getGeo().isEmpty() && !getGeo().contains(Config.SYSTEM_GEO_HOME_PLACE.get());
+        geoBlocked = !getGeo().isEmpty() && !getGeo().contains(ProgConfig.SYSTEM_GEO_HOME_PLACE.get());
     }
 
     public boolean isInFuture() {

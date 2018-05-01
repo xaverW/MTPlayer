@@ -19,7 +19,7 @@ package de.mtplayer.mtp.gui.dialog;
 
 import de.mtplayer.mLib.tools.BigButton;
 import de.mtplayer.mtp.controller.ProgQuitt;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.tools.file.GetFile;
 import javafx.application.Platform;
@@ -34,15 +34,15 @@ import javafx.scene.text.TextFlow;
 
 public class ResetDialogController extends MTDialog {
 
-    final Daten daten;
+    final ProgData progData;
     final StackPane stackPane;
     final VBox vbox;
 
-    public ResetDialogController(Daten daten) {
+    public ResetDialogController(ProgData progData) {
         super("", null,
                 "Programm zurücksetzen", true);
 
-        this.daten = daten;
+        this.progData = progData;
 
         stackPane = new StackPane();
         vbox = new VBox();
@@ -85,7 +85,7 @@ public class ResetDialogController extends MTDialog {
                         "\n\n" +
                         "Abos und Blacklist bleiben erhalten.");
         setButton.setOnAction(e -> {
-            Platform.runLater(() -> new ImportSetDialogController(daten));
+            Platform.runLater(() -> new ImportSetDialogController(progData));
             close();
         });
 
@@ -109,8 +109,8 @@ public class ResetDialogController extends MTDialog {
                     "alle Einstellungen zurücksetzen!", tf, false) == MTAlert.BUTTON.YES) {
                 // damit wird vor dem Beenden das Konfig-Verzeichnis umbenannt und so startet das
                 // Programm wie beim ersten Start
-                Daten.reset = true;
-                new ProgQuitt().beenden(false, false);
+                ProgData.reset = true;
+                new ProgQuitt().quitt(false, false);
             }
         });
 

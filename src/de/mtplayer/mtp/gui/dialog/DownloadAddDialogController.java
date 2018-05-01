@@ -19,9 +19,9 @@ package de.mtplayer.mtp.gui.dialog;
 import de.mtplayer.mLib.tools.DirFileChooser;
 import de.mtplayer.mLib.tools.FileNameUtils;
 import de.mtplayer.mLib.tools.SizeTools;
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Const;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgConst;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.controller.data.SetData;
@@ -118,11 +118,11 @@ public class DownloadAddDialogController extends MTDialog {
 
     private final ToggleGroup group = new ToggleGroup();
 
-    private final Daten daten;
+    private final ProgData progData;
     final private SetList setList;
     private SetData psetData;
     private String filterAufloesung;
-    final String[] storedPath = Config.DOWNLOAD_DIALOG_PATH_SAVING.get().split("<>");
+    final String[] storedPath = ProgConfig.DOWNLOAD_DIALOG_PATH_SAVING.get().split("<>");
 
 
     private int filmNr = 0;
@@ -204,17 +204,17 @@ public class DownloadAddDialogController extends MTDialog {
 
     }
 
-    public DownloadAddDialogController(Daten daten, ArrayList<Film> films, SetData psetData, String filterAufloesung) {
+    public DownloadAddDialogController(ProgData progData, ArrayList<Film> films, SetData psetData, String filterAufloesung) {
         super("/de/mtplayer/mtp/gui/dialog/DownloadAddDialog.fxml",
-                films.size() > 1 ? Config.DOWNLOAD_DIALOG_ADD_MORE_SIZE : Config.DOWNLOAD_DIALOG_ADD_SIZE,
+                films.size() > 1 ? ProgConfig.DOWNLOAD_DIALOG_ADD_MORE_SIZE : ProgConfig.DOWNLOAD_DIALOG_ADD_SIZE,
                 "Download anlegen", true);
 
-        this.daten = daten;
+        this.progData = progData;
         this.films = films;
         this.psetData = psetData;
         this.filterAufloesung = filterAufloesung;
 
-        setList = daten.setList.getListeSpeichern();
+        setList = progData.setList.getListeSpeichern();
 
         init(true);
 
@@ -226,7 +226,7 @@ public class DownloadAddDialogController extends MTDialog {
         vBoxAllDownloads.setStyle("-fx-background-color: gainsboro;");
         hBoxSize.setStyle("-fx-background-color: gainsboro;");
 
-        if (daten.setList.getListeSpeichern().isEmpty()) {
+        if (progData.setList.getListeSpeichern().isEmpty()) {
             // Satz mit x, war wohl nix
             ok = false;
             initCancel();
@@ -234,7 +234,7 @@ public class DownloadAddDialogController extends MTDialog {
             return;
         }
         if (psetData == null) {
-            psetData = daten.setList.getListeSpeichern().get(0);
+            psetData = progData.setList.getListeSpeichern().get(0);
         }
 
         if (films.size() == 0) {
@@ -443,10 +443,10 @@ public class DownloadAddDialogController extends MTDialog {
             download.setInfodatei(d.info);
             download.setSubtitle(d.subtitle);
 
-            daten.downloadList.addWithNr(download); // todo -> als Liste starten
+            progData.downloadList.addWithNr(download); // todo -> als Liste starten
             if (cbxStart.isSelected()) {
                 // und evtl. auch gleich starten
-                daten.downloadList.startDownloads(download);
+                progData.downloadList.startDownloads(download);
             }
         }
 
@@ -490,14 +490,14 @@ public class DownloadAddDialogController extends MTDialog {
         String s = "";
         if (!pfade2.isEmpty()) {
             s = pfade2.get(0);
-            for (int i = 1; i < Const.MAX_PFADE_DIALOG_DOWNLOAD && i < pfade2.size(); ++i) {
+            for (int i = 1; i < ProgConst.MAX_PFADE_DIALOG_DOWNLOAD && i < pfade2.size(); ++i) {
                 if (!pfade2.get(i).isEmpty()) {
                     s += "<>" + pfade2.get(i);
                 }
             }
         }
 
-        Config.DOWNLOAD_DIALOG_PATH_SAVING.setValue(s);
+        ProgConfig.DOWNLOAD_DIALOG_PATH_SAVING.setValue(s);
     }
 
     /**
@@ -584,7 +584,7 @@ public class DownloadAddDialogController extends MTDialog {
         downInfo = new DownInfo[anz];
 
         String aktPath = "";
-//        if (Config.SYSTEM_DIALOG_DOWNLOAD__LETZTEN_PFAD_ANZEIGEN.getBool() && storedPath.length > 0) {
+//        if (ProgConfig.SYSTEM_DIALOG_DOWNLOAD__LETZTEN_PFAD_ANZEIGEN.getBool() && storedPath.length > 0) {
 //            aktPath = storedPath[0];
 //        }
 
@@ -696,8 +696,8 @@ public class DownloadAddDialogController extends MTDialog {
 
     private void initCheckBox() {
         // und jetzt noch die Listener anhängen
-        cbxStart.selectedProperty().bindBidirectional(Config.DOWNLOAD_DIALOG_START_DOWNLOAD.getBooleanProperty());
-//        cbxPath.selectedProperty().bindBidirectional(Config.SYSTEM_DIALOG_DOWNLOAD__LETZTEN_PFAD_ANZEIGEN.getBooleanProperty());
+        cbxStart.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD.getBooleanProperty());
+//        cbxPath.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_DIALOG_DOWNLOAD__LETZTEN_PFAD_ANZEIGEN.getBooleanProperty());
 
         cbxSubtitle.setOnAction(event -> downInfo[filmNr].setSubtitle(cbxSubtitle.isSelected()));
         cbxInfo.setOnAction(event -> downInfo[filmNr].setInfo(cbxInfo.isSelected()));
@@ -746,7 +746,7 @@ public class DownloadAddDialogController extends MTDialog {
     }
 
     private void getDestination() {
-        DirFileChooser.DirChooser(Daten.getInstance().primaryStage, cbPath);
+        DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, cbPath);
     }
 
 }

@@ -16,7 +16,7 @@
 
 package de.mtplayer.mtp.controller.data.film;
 
-import de.mtplayer.mtp.controller.config.Const;
+import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.tools.filmListFilter.FilmlistBlackFilter;
 import de.p2tools.p2Lib.tools.log.Duration;
@@ -93,7 +93,7 @@ public class Filmlist extends SimpleListProperty<Film> {
     }
 
     private void addHash(Film f, HashSet<String> hash, boolean index) {
-        if (f.arr[FilmXml.FILM_SENDER].equals(Const.KIKA)) {
+        if (f.arr[FilmXml.FILM_SENDER].equals(ProgConst.KIKA)) {
             // beim KIKA ändern sich die URLs laufend
             hash.add(f.arr[FilmXml.FILM_THEMA] + f.arr[FilmXml.FILM_TITEL]);
         } else if (index) {
@@ -117,7 +117,7 @@ public class Filmlist extends SimpleListProperty<Film> {
             final Iterator<Film> it = iterator();
             while (it.hasNext()) {
                 final Film f = it.next();
-                if (f.arr[FilmXml.FILM_SENDER].equals(Const.KIKA)) {
+                if (f.arr[FilmXml.FILM_SENDER].equals(ProgConst.KIKA)) {
                     // beim KIKA ändern sich die URLs laufend
                     if (hash.contains(f.arr[FilmXml.FILM_THEMA] + f.arr[FilmXml.FILM_TITEL])) {
                         it.remove();
@@ -137,7 +137,7 @@ public class Filmlist extends SimpleListProperty<Film> {
             forEach(f -> addHash(f, hash, index));
 
             for (final Film f : listeEinsortieren) {
-                if (f.arr[FilmXml.FILM_SENDER].equals(Const.KIKA)) {
+                if (f.arr[FilmXml.FILM_SENDER].equals(ProgConst.KIKA)) {
                     if (!hash.contains(f.arr[FilmXml.FILM_THEMA] + f.arr[FilmXml.FILM_TITEL])) {
                         addInit(f);
                     }
@@ -323,7 +323,7 @@ public class Filmlist extends SimpleListProperty<Film> {
      * @return true if too old or if the list is empty.
      */
     public synchronized boolean isTooOld() {
-        return (isEmpty()) || (isOlderThan(Const.ALTER_FILMLISTE_SEKUNDEN_FUER_AUTOUPDATE));
+        return (isEmpty()) || (isOlderThan(ProgConst.ALTER_FILMLISTE_SEKUNDEN_FUER_AUTOUPDATE));
     }
 
     /**
@@ -337,7 +337,7 @@ public class Filmlist extends SimpleListProperty<Film> {
         }
         try {
             final String dateMaxDiff_str =
-                    new SimpleDateFormat("yyyy.MM.dd__").format(new Date()) + Const.TIME_MAX_AGE_FOR_DIFF + ":00:00";
+                    new SimpleDateFormat("yyyy.MM.dd__").format(new Date()) + ProgConst.TIME_MAX_AGE_FOR_DIFF + ":00:00";
             final Date dateMaxDiff = new SimpleDateFormat("yyyy.MM.dd__HH:mm:ss").parse(dateMaxDiff_str);
             final Date dateFilmliste = getAgeAsDate();
             if (dateFilmliste != null) {

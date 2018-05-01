@@ -18,7 +18,7 @@
 package de.mtplayer.mtp.controller.config;
 
 import de.mtplayer.mLib.tools.PlayerMsg;
-import de.mtplayer.mtp.MTFxController;
+import de.mtplayer.mtp.MTPlayerController;
 import de.mtplayer.mtp.controller.data.*;
 import de.mtplayer.mtp.controller.data.abo.AboList;
 import de.mtplayer.mtp.controller.data.download.DownloadList;
@@ -40,13 +40,9 @@ import javafx.animation.Timeline;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class Daten {
+public class ProgData {
 
-//    static {
-//        System.out.println("Test");
-//    }
-
-    private static Daten instance;
+    private static ProgData instance;
 
     // flags
     public static boolean debug = false; // Debugmodus
@@ -65,7 +61,7 @@ public class Daten {
 
     // Gui
     public Stage primaryStage = null;
-    public MTFxController mtFxController = null;
+    public MTPlayerController mtPlayerController = null;
     public FilmGuiController filmGuiController = null; // Tab mit den Filmen
     public DownloadGuiController downloadGuiController = null; // Tab mit den Downloads
     public AboGuiController aboGuiController = null; // Tab mit den Abos
@@ -87,7 +83,7 @@ public class Daten {
     public ReplaceList replaceList = null;
     public PlayerMsg playerMsg = null;
 
-    private Daten() {
+    private ProgData() {
         playerMsg = new PlayerMsg();
         replaceList = new ReplaceList();
         storedFilter = new StoredFilter(this);
@@ -106,10 +102,10 @@ public class Daten {
 
         filmListFilter = new FilmListFilter(this);
 
-        erledigteAbos = new HistoryList(Const.FILE_ERLEDIGTE_ABOS,
+        erledigteAbos = new HistoryList(ProgConst.FILE_ERLEDIGTE_ABOS,
                 ProgInfos.getSettingsDirectory_String());
 
-        history = new HistoryList(Const.FILE_HISTORY,
+        history = new HistoryList(ProgConst.FILE_HISTORY,
                 ProgInfos.getSettingsDirectory_String());
 
         mediaList = new MediaList();
@@ -123,22 +119,22 @@ public class Daten {
         Timeline timeline = new Timeline(new KeyFrame(
                 Duration.millis(1000), ae -> {
             downloadList.makeDownloadInfos();
-            Listener.notify(Listener.EREIGNIS_TIMER, Daten.class.getName());
+            Listener.notify(Listener.EREIGNIS_TIMER, ProgData.class.getName());
         }));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.setDelay(Duration.seconds(5));
         timeline.play();
     }
 
-    public synchronized static final Daten getInstance(String dir) {
+    public synchronized static final ProgData getInstance(String dir) {
         if (!dir.isEmpty()) {
             configDir = dir;
         }
         return getInstance();
     }
 
-    public synchronized static final Daten getInstance() {
-        return instance == null ? instance = new Daten() : instance;
+    public synchronized static final ProgData getInstance() {
+        return instance == null ? instance = new ProgData() : instance;
     }
 
 

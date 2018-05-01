@@ -16,8 +16,8 @@
 
 package de.mtplayer.mtp.controller.mediaDb;
 
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.p2tools.p2Lib.tools.log.Duration;
@@ -33,14 +33,14 @@ public class CreateMediaDb implements Runnable {
     private String error = "";
     private boolean more = false;
 
-    private final Daten daten;
+    private final ProgData progData;
     private final MediaList mediaList;
     private final String path;
     private final String collection;
     private String[] suffix;
     private List search = new ArrayList<MediaData>();
 
-    final boolean withoutSuffix = Boolean.parseBoolean(Config.MEDIA_DB_WITH_OUT_SUFFIX.get());
+    final boolean withoutSuffix = Boolean.parseBoolean(ProgConfig.MEDIA_DB_WITH_OUT_SUFFIX.get());
 
     /**
      * duchsucht die vom User angelegten Pfade für die Mediensammlung
@@ -49,7 +49,7 @@ public class CreateMediaDb implements Runnable {
      * @param mediaList
      */
     public CreateMediaDb(MediaList mediaList) {
-        daten = Daten.getInstance();
+        progData = ProgData.getInstance();
         this.mediaList = mediaList;
         this.path = "";
         this.collection = "";
@@ -64,7 +64,7 @@ public class CreateMediaDb implements Runnable {
      * @param mediaList
      */
     public CreateMediaDb(MediaList mediaList, String path, String collection) {
-        daten = Daten.getInstance();
+        progData = ProgData.getInstance();
         this.mediaList = mediaList;
         this.path = path;
         this.collection = collection;
@@ -85,7 +85,7 @@ public class CreateMediaDb implements Runnable {
                 // die gesamte MediaDB laden: gespeichert und lokale Filme
                 search.addAll(MediaDb.loadSavedList());
 
-                for (final MediaPathData mediaPathData : daten.mediaPathList.getInternalList()) {
+                for (final MediaPathData mediaPathData : progData.mediaPathList.getInternalList()) {
                     final File f = new File(mediaPathData.getPath());
                     if (!f.canRead()) {
                         if (!error.isEmpty()) {
@@ -99,7 +99,7 @@ public class CreateMediaDb implements Runnable {
                     // Verzeichnisse können nicht durchsucht werden
                     errorMsg();
                 }
-                daten.mediaPathList.getInternalList().stream().forEach((mp) ->
+                progData.mediaPathList.getInternalList().stream().forEach((mp) ->
                         searchFile(new File(mp.getPath()), false));
 
                 mediaList.setAll(search);
@@ -121,7 +121,7 @@ public class CreateMediaDb implements Runnable {
                 }
                 searchFile(new File(path), true);
 
-                daten.mediaPathList.addExternal(collection, path);
+                progData.mediaPathList.addExternal(collection, path);
                 mediaList.addAll(search);
                 mediaList.checkExternalMediaData();
                 MediaDb.writeList(mediaList);
@@ -161,7 +161,7 @@ public class CreateMediaDb implements Runnable {
     }
 
     private void getSuffix() {
-        suffix = Config.MEDIA_DB_SUFFIX.get().split(",");
+        suffix = ProgConfig.MEDIA_DB_SUFFIX.get().split(",");
         for (int i = 0; i < suffix.length; ++i) {
             suffix[i] = suffix[i].toLowerCase();
             if (!suffix[i].isEmpty() && !suffix[i].startsWith(".")) {

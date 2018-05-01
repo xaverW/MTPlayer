@@ -17,7 +17,7 @@
 
 package de.mtplayer.mtp.controller.mediaDb;
 
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.p2tools.p2Lib.tools.log.Duration;
 import de.p2tools.p2Lib.tools.log.PLog;
 
@@ -34,11 +34,11 @@ import java.util.ArrayList;
 public class ReadMediaDb implements AutoCloseable {
 
     private XMLInputFactory inFactory;
-    private Daten daten;
+    private ProgData progData;
     private ArrayList<MediaData> list;
 
-    public ReadMediaDb(Daten daten) {
-        this.daten = daten;
+    public ReadMediaDb(ProgData progData) {
+        this.progData = progData;
         this.list = new ArrayList<>();
 
         inFactory = XMLInputFactory.newInstance();

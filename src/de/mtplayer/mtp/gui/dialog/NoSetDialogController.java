@@ -16,7 +16,7 @@
 
 package de.mtplayer.mtp.gui.dialog;
 
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgData;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -30,7 +30,7 @@ import javafx.scene.text.Text;
 
 public class NoSetDialogController extends MTDialog {
 
-    final Daten daten;
+    final ProgData progData;
     final TEXT text;
     VBox vbox, vBoxCont;
     Button btnCancel = new Button("Abbrechen");
@@ -38,11 +38,11 @@ public class NoSetDialogController extends MTDialog {
 
     public enum TEXT {SAVE, PLAY, ABO}
 
-    public NoSetDialogController(Daten daten, TEXT text) {
+    public NoSetDialogController(ProgData progData, TEXT text) {
         super("", null,
                 text == TEXT.SAVE || text == TEXT.ABO ? "Set zum Speichern" : "Kein Videoplayer!", true);
 
-        this.daten = daten;
+        this.progData = progData;
         this.text = text;
 
         vbox = new VBox();
@@ -118,6 +118,6 @@ public class NoSetDialogController extends MTDialog {
     }
 
     private void importSet() {
-        Platform.runLater(() -> new ImportSetDialogController(daten));
+        Platform.runLater(() -> new ImportSetDialogController(progData));
     }
 }

@@ -17,7 +17,7 @@
 package de.mtplayer.mtp.controller.data.film;
 
 import de.mtplayer.mLib.tools.FileSizeUrl;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.gui.dialog.DownloadAddDialogController;
@@ -76,13 +76,13 @@ public class FilmTools {
         }
     }
 
-    public static void setFilmShown(Daten daten, ArrayList<Film> filmArrayList, boolean set) {
+    public static void setFilmShown(ProgData progData, ArrayList<Film> filmArrayList, boolean set) {
 
         filmArrayList.stream().forEach(film -> {
             if (set) {
-                daten.history.writeFilmArray(filmArrayList);
+                progData.history.writeFilmArray(filmArrayList);
             } else {
-                daten.history.removeFilmListFromHistory(filmArrayList);
+                progData.history.removeFilmListFromHistory(filmArrayList);
             }
         });
     }
@@ -95,20 +95,20 @@ public class FilmTools {
         if (psetData != null) {
             pset = psetData;
         } else {
-            pset = Daten.getInstance().setList.getPsetAbspielen();
+            pset = ProgData.getInstance().setList.getPsetAbspielen();
         }
 
         if (pset == null) {
-            new NoSetDialogController(Daten.getInstance(), NoSetDialogController.TEXT.PLAY);
+            new NoSetDialogController(ProgData.getInstance(), NoSetDialogController.TEXT.PLAY);
             return;
         }
 
-        if (Daten.getInstance().storedFilter.getSelectedFilter().isOnlyHd()) {
+        if (ProgData.getInstance().storedFilter.getSelectedFilter().isOnlyHd()) {
             auflösung = Film.AUFLOESUNG_HD;
         }
 
         // und starten
-        Daten.getInstance().starterClass.urlMitProgrammStarten(film, pset, auflösung);
+        ProgData.getInstance().starterClass.urlMitProgrammStarten(film, pset, auflösung);
     }
 
     public static void saveFilm(Film film, SetData pSet) {
@@ -123,22 +123,22 @@ public class FilmTools {
         }
 
         final SetData psetData = pSet;
-        Daten daten = Daten.getInstance();
+        ProgData progData = ProgData.getInstance();
         ArrayList<Film> filmsAddDownloadList = new ArrayList<>();
 
-        if (daten.setList.getListeSpeichern().isEmpty()) {
-            new NoSetDialogController(daten, NoSetDialogController.TEXT.SAVE);
+        if (progData.setList.getListeSpeichern().isEmpty()) {
+            new NoSetDialogController(progData, NoSetDialogController.TEXT.SAVE);
             return;
         }
 
         String aufloesung = "";
-        if (daten.storedFilter.getSelectedFilter().isOnlyHd()) {
+        if (progData.storedFilter.getSelectedFilter().isOnlyHd()) {
             aufloesung = Film.AUFLOESUNG_HD;
         }
 
         for (final Film datenFilm : liste) {
             // erst mal schauen obs den schon gibt
-            Download download = daten.downloadList.getDownloadUrlFilm(datenFilm.arr[Film.FILM_URL]);
+            Download download = progData.downloadList.getDownloadUrlFilm(datenFilm.arr[Film.FILM_URL]);
             if (download == null) {
                 filmsAddDownloadList.add(datenFilm);
             } else {
@@ -160,7 +160,7 @@ public class FilmTools {
             }
         }
         if (!filmsAddDownloadList.isEmpty()) {
-            new DownloadAddDialogController(daten, filmsAddDownloadList, psetData, aufloesung);
+            new DownloadAddDialogController(progData, filmsAddDownloadList, psetData, aufloesung);
         }
     }
 }

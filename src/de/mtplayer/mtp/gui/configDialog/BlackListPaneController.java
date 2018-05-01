@@ -16,8 +16,8 @@
 
 package de.mtplayer.mtp.gui.configDialog;
 
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
@@ -34,7 +34,7 @@ import java.util.Collection;
 
 public class BlackListPaneController extends AnchorPane {
 
-    private final Daten daten;
+    private final ProgData progData;
     private final VBox noaccordion = new VBox();
     private final Accordion accordion = new Accordion();
     private final HBox hBox = new HBox(0);
@@ -45,19 +45,19 @@ public class BlackListPaneController extends AnchorPane {
     private final Slider slDays = new Slider();
     private final Label lblDays = new Label("");
 
-    BooleanProperty accordionProp = Config.CONFIG_DIALOG_ACCORDION.getBooleanProperty();
-    IntegerProperty propSize = Config.SYSTEM_BLACKLIST_FILMSIZE.getIntegerProperty();
-    IntegerProperty propDay = Config.SYSTEM_BLACKLIST_SHOW_ONLY_DAYS.getIntegerProperty();
-    BooleanProperty propGeo = Config.SYSTEM_BLACKLIST_SHOW_NO_GEO.getBooleanProperty();
-    BooleanProperty propAbo = Config.SYSTEM_BLACKLIST_SHOW_ABO.getBooleanProperty();
-    BooleanProperty propFutur = Config.SYSTEM_BLACKLIST_SHOW_NO_FUTURE.getBooleanProperty();
+    BooleanProperty accordionProp = ProgConfig.CONFIG_DIALOG_ACCORDION.getBooleanProperty();
+    IntegerProperty propSize = ProgConfig.SYSTEM_BLACKLIST_FILMSIZE.getIntegerProperty();
+    IntegerProperty propDay = ProgConfig.SYSTEM_BLACKLIST_SHOW_ONLY_DAYS.getIntegerProperty();
+    BooleanProperty propGeo = ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_GEO.getBooleanProperty();
+    BooleanProperty propAbo = ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.getBooleanProperty();
+    BooleanProperty propFutur = ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_FUTURE.getBooleanProperty();
 
     private final int SIZE_MAX = 100;
     private final int FILTER_DAYS_MAX = 150;
 
 
     public BlackListPaneController() {
-        daten = Daten.getInstance();
+        progData = ProgData.getInstance();
 
         cbxAccordion.selectedProperty().bindBidirectional(accordionProp);
         cbxAccordion.selectedProperty().addListener((observable, oldValue, newValue) -> setAccordion());

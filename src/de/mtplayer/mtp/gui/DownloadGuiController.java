@@ -16,8 +16,8 @@
 
 package de.mtplayer.mtp.gui;
 
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmTools;
@@ -62,13 +62,13 @@ public class DownloadGuiController extends AnchorPane {
     private DownloadGuiChart downloadGuiChart;
     private DownloadGuiInfo downloadGuiInfo;
 
-    private final Daten daten;
-    DoubleProperty splitPaneProperty = Config.DOWNLOAD_GUI_DIVIDER.getDoubleProperty();
-    BooleanProperty boolInfoOn = Config.DOWNLOAD_GUI_DIVIDER_ON.getBooleanProperty();
+    private final ProgData progData;
+    DoubleProperty splitPaneProperty = ProgConfig.DOWNLOAD_GUI_DIVIDER.getDoubleProperty();
+    BooleanProperty boolInfoOn = ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.getBooleanProperty();
     private boolean bound = false;
 
     public DownloadGuiController() {
-        daten = Daten.getInstance();
+        progData = ProgData.getInstance();
 
 
         scrollPane.setFitToHeight(true);
@@ -100,10 +100,10 @@ public class DownloadGuiController extends AnchorPane {
         getChildren().addAll(splitPane);
 
         filmGuiInfoController = new FilmGuiInfoController(tabFilmInfo);
-        downloadGuiChart = new DownloadGuiChart(daten, tabBandwidth);
+        downloadGuiChart = new DownloadGuiChart(progData, tabBandwidth);
         downloadGuiInfo = new DownloadGuiInfo(tabDownloadInfos);
 
-        filteredDownloads = new FilteredList<>(daten.downloadList, p -> true);
+        filteredDownloads = new FilteredList<>(progData.downloadList, p -> true);
         sortedDownloads = new SortedList<>(filteredDownloads);
         setFilterProperty();
 
@@ -126,15 +126,15 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     public void aktualisieren() {
-        if (daten.loadFilmlist.getPropLoadFilmlist()) {
+        if (progData.loadFilmlist.getPropLoadFilmlist()) {
             // wird danach eh gemacht
             return;
         }
 
         // erledigte entfernen, nicht gestartete Abos entfernen und neu nach Abos suchen
-        daten.downloadList.abosSuchen();
+        progData.downloadList.abosSuchen();
 
-        if (Boolean.parseBoolean(Config.DOWNLOAD_START_NOW.get())) {
+        if (Boolean.parseBoolean(ProgConfig.DOWNLOAD_START_NOW.get())) {
             // und wenn gewollt auch gleich starten
             downloadStartenWiederholen(true /* alle */, false /* fertige wieder starten */);
         }
@@ -225,15 +225,15 @@ public class DownloadGuiController extends AnchorPane {
         Download download = table.getSelectionModel().getSelectedItem();
         if (download != null) {
             filmGuiInfoController.setFilm(download.getFilm());
-            daten.filmInfosDialogController.set(download.getFilm());
+            progData.filmInfosDialogController.set(download.getFilm());
         } else {
             filmGuiInfoController.setFilm(null);
-            daten.filmInfosDialogController.set(null);
+            progData.filmInfosDialogController.set(null);
         }
     }
 
     public void showFilmInfo() {
-        daten.filmInfosDialogController.showFilmInfo();
+        progData.filmInfosDialogController.showFilmInfo();
     }
 
     public void guiFilmMediensammlung() {
@@ -256,17 +256,17 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     public void vorziehen() {
-        daten.downloadList.downloadsVorziehen(getSelList());
+        progData.downloadList.downloadsVorziehen(getSelList());
     }
 
     public void zurueckstellen() {
-        daten.downloadList.putbackDownloads(getSelList());
+        progData.downloadList.putbackDownloads(getSelList());
     }
 
     public void loeschen() {
 
         int sel = table.getSelectionModel().getSelectedIndex();
-        daten.downloadList.delDownloads(getSelList());
+        progData.downloadList.delDownloads(getSelList());
         if (sel >= 0) {
             table.getSelectionModel().clearSelection();
             if (table.getItems().size() > sel) {
@@ -278,7 +278,7 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     public void aufraeumen() {
-        daten.downloadList.listePutzen();
+        progData.downloadList.listePutzen();
     }
 
     public void aendern() {
@@ -347,29 +347,29 @@ public class DownloadGuiController extends AnchorPane {
 
     private void initListener() {
 
-        daten.downloadList.downloadsChangedProperty().addListener((observable, oldValue, newValue) ->
+        progData.downloadList.downloadsChangedProperty().addListener((observable, oldValue, newValue) ->
                 Platform.runLater(() -> setfilter()));
         Listener.addListener(new Listener(Listener.EREIGNIS_BLACKLIST_GEAENDERT, DownloadGuiController.class.getSimpleName()) {
             @Override
             public void ping() {
-                if (Boolean.parseBoolean(Config.ABO_SEARCH_NOW.get())
-                        && Boolean.parseBoolean(Config.SYSTEM_BLACKLIST_SHOW_ABO.get())) {
+                if (Boolean.parseBoolean(ProgConfig.ABO_SEARCH_NOW.get())
+                        && Boolean.parseBoolean(ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.get())) {
                     // nur auf Blacklist reagieren, wenn auch für Abos eingeschaltet
                     aktualisieren();
                 }
             }
         });
-        Config.SYSTEM_BLACKLIST_SHOW_ABO.getBooleanProperty().addListener((observable, oldValue, newValue) -> {
-            if (Config.ABO_SEARCH_NOW.getBool()) {
+        ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.getBooleanProperty().addListener((observable, oldValue, newValue) -> {
+            if (ProgConfig.ABO_SEARCH_NOW.getBool()) {
                 aktualisieren();
             }
         });
-        daten.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
-            if (Config.ABO_SEARCH_NOW.getBool()) {
+        progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
+            if (ProgConfig.ABO_SEARCH_NOW.getBool()) {
                 aktualisieren();
             }
         });
-        daten.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
+        progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
             @Override
             public void start(ListenerFilmlistLoadEvent event) {
 
@@ -377,7 +377,7 @@ public class DownloadGuiController extends AnchorPane {
 
             @Override
             public void fertig(ListenerFilmlistLoadEvent event) {
-                if (Config.ABO_SEARCH_NOW.getBool()) {
+                if (ProgConfig.ABO_SEARCH_NOW.getBool()) {
                     aktualisieren();
                 }
             }
@@ -405,7 +405,7 @@ public class DownloadGuiController extends AnchorPane {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
                 final Optional<Download> download = getSel();
                 if (download.isPresent()) {
-                    table.setContextMenu(new DownloadGuiContextMenu(daten, this, table).getContextMenue(download.get()));
+                    table.setContextMenu(new DownloadGuiContextMenu(progData, this, table).getContextMenue(download.get()));
                 }
             }
         });
@@ -416,25 +416,25 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private void setFilterProperty() {
-        Config.FILTER_DOWNLOAD_SENDER.getStringProperty().addListener((observable, oldValue, newValue) -> {
+        ProgConfig.FILTER_DOWNLOAD_SENDER.getStringProperty().addListener((observable, oldValue, newValue) -> {
             setfilter();
         });
-        Config.FILTER_DOWNLOAD_ABO.getStringProperty().addListener((observable, oldValue, newValue) -> {
+        ProgConfig.FILTER_DOWNLOAD_ABO.getStringProperty().addListener((observable, oldValue, newValue) -> {
             setfilter();
         });
-        Config.FILTER_DOWNLOAD_SOURCE.getStringProperty().addListener((observable, oldValue, newValue) -> {
+        ProgConfig.FILTER_DOWNLOAD_SOURCE.getStringProperty().addListener((observable, oldValue, newValue) -> {
             setfilter();
         });
-        Config.FILTER_DOWNLOAD_KIND.getStringProperty().addListener((observable, oldValue, newValue) -> {
+        ProgConfig.FILTER_DOWNLOAD_KIND.getStringProperty().addListener((observable, oldValue, newValue) -> {
             setfilter();
         });
     }
 
     private void setfilter() {
-        final String sender = Config.FILTER_DOWNLOAD_SENDER.get();
-        final String abo = Config.FILTER_DOWNLOAD_ABO.get();
-        final String quelle = Config.FILTER_DOWNLOAD_SOURCE.get();
-        final String art = Config.FILTER_DOWNLOAD_KIND.get();
+        final String sender = ProgConfig.FILTER_DOWNLOAD_SENDER.get();
+        final String abo = ProgConfig.FILTER_DOWNLOAD_ABO.get();
+        final String quelle = ProgConfig.FILTER_DOWNLOAD_SOURCE.get();
+        final String art = ProgConfig.FILTER_DOWNLOAD_KIND.get();
 
         //System.out.println("Sender: " + sender + " Abo: " + abo + " Quelle: " + quelle + " Art: " + art);
         filteredDownloads.setPredicate(download -> (!download.isZurueckgestellt() &&
@@ -454,7 +454,7 @@ public class DownloadGuiController extends AnchorPane {
                 filmArrayList.add(download.getFilm());
             }
         });
-        FilmTools.setFilmShown(daten, filmArrayList, gesehen);
+        FilmTools.setFilmShown(progData, filmArrayList, gesehen);
     }
 
     private void wartendeDownloadsStoppen() {
@@ -463,7 +463,7 @@ public class DownloadGuiController extends AnchorPane {
         table.getItems().stream().filter(download -> download.isStateStartedWaiting()).forEach(download -> {
             listeStopDownload.add(download);
         });
-        daten.downloadList.stopDownloads(listeStopDownload);
+        progData.downloadList.stopDownloads(listeStopDownload);
     }
 
     private void downloadStartenWiederholen(boolean alle, boolean auchFertige /* auch fertige wieder starten */) {
@@ -476,7 +476,7 @@ public class DownloadGuiController extends AnchorPane {
         // die URLs sammeln
         listeDownloadsMarkiert.addAll(alle ? table.getItems() : getSelList());
 
-        daten.downloadList.startDownloads(listeDownloadsMarkiert, auchFertige);
+        progData.downloadList.startDownloads(listeDownloadsMarkiert, auchFertige);
     }
 
     private void downloadStoppen(boolean alle) {
@@ -486,7 +486,7 @@ public class DownloadGuiController extends AnchorPane {
 
         // die URLs sammeln
         listeDownloadsMarkiert.addAll(alle ? table.getItems() : getSelList());
-        daten.downloadList.stopDownloads(listeDownloadsMarkiert);
+        progData.downloadList.stopDownloads(listeDownloadsMarkiert);
         setfilter();
     }
 
@@ -497,7 +497,7 @@ public class DownloadGuiController extends AnchorPane {
 
             Download datenDownloadKopy = download.get().getCopy();
             DownloadEditDialogController downloadEditDialogController =
-                    new DownloadEditDialogController(daten, datenDownloadKopy, download.get().isStateStartedRun());
+                    new DownloadEditDialogController(progData, datenDownloadKopy, download.get().isStateStartedRun());
 
             if (downloadEditDialogController.isOk()) {
                 download.get().copyToMe(datenDownloadKopy);

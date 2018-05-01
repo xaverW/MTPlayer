@@ -16,7 +16,7 @@
 
 package de.mtplayer.mtp.gui.dialogStart;
 
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.configDialog.GeoPane;
 import de.mtplayer.mtp.gui.dialog.MTDialog;
@@ -65,13 +65,13 @@ public class StartDialogController extends MTDialog {
     private ScrollPane downPane;
     private ScrollPane pathPane;
 
-    private final Daten daten;
+    private final ProgData progData;
     private State aktState = State.START_1;
 
     public StartDialogController() {
         super("Starteinstellungen", true);
 
-        this.daten = Daten.getInstance();
+        this.progData = ProgData.getInstance();
         init(rootPane, true);
     }
 

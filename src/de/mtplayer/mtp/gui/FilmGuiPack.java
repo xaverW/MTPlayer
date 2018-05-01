@@ -16,8 +16,8 @@
 
 package de.mtplayer.mtp.gui;
 
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.scene.control.SplitPane;
@@ -27,7 +27,7 @@ import javafx.scene.layout.Region;
 
 public class FilmGuiPack {
 
-    Daten daten;
+    ProgData progData;
     private final SplitPane splitPane = new SplitPane();
     private final HBox hBox = new HBox();
     static DoubleProperty doubleProperty;//sonst geht die Ref verloren
@@ -37,9 +37,9 @@ public class FilmGuiPack {
     private boolean bound = false;
 
     public FilmGuiPack() {
-        daten = Daten.getInstance();
-        this.doubleProperty = Config.FILM_GUI_FILTER_DIVIDER.getDoubleProperty();
-        this.boolDivOn = Config.FILM_GUI_FILTER_DIVIDER_ON.getBooleanProperty();
+        progData = ProgData.getInstance();
+        this.doubleProperty = ProgConfig.FILM_GUI_FILTER_DIVIDER.getDoubleProperty();
+        this.boolDivOn = ProgConfig.FILM_GUI_FILTER_DIVIDER_ON.getBooleanProperty();
         filmFilterController = new FilmFilterController();
         guiController = new FilmGuiController();
     }
@@ -70,7 +70,7 @@ public class FilmGuiPack {
         menuController.setId("film-menu-pane");
 
         // Gui
-        daten.filmGuiController = guiController;
+        progData.filmGuiController = guiController;
 
         splitPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         SplitPane.setResizableWithParent(filmFilterController, Boolean.FALSE);

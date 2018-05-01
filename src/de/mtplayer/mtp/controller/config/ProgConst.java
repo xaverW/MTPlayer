@@ -18,7 +18,7 @@ package de.mtplayer.mtp.controller.config;
 
 import de.mtplayer.mLib.tools.Functions;
 
-public class Const {
+public class ProgConst {
 
     public static final String PROGRAMMNAME = "MTPlayer";
     public static final String USER_AGENT_DEFAULT = "";

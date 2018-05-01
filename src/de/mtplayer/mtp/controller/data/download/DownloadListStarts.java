@@ -16,9 +16,9 @@
 
 package de.mtplayer.mtp.controller.data.download;
 
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Const;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgConst;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.starter.Start;
 
 import java.net.URL;
@@ -27,12 +27,12 @@ import java.util.LinkedList;
 import java.util.stream.Collectors;
 
 public class DownloadListStarts {
-    private final Daten daten;
+    private final ProgData progData;
     private final DownloadList downloadList;
     private final LinkedList<Download> aktivDownloads = new LinkedList<>();
 
-    public DownloadListStarts(Daten daten, DownloadList downloadList) {
-        this.daten = daten;
+    public DownloadListStarts(ProgData progData, DownloadList downloadList) {
+        this.progData = progData;
         this.downloadList = downloadList;
     }
 
@@ -117,13 +117,13 @@ public class DownloadListStarts {
             }
 
             if (download.isStateError()
-                    && download.getStart().getRestartCounter() < Config.SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getInt()
+                    && download.getStart().getRestartCounter() < ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getInt()
                     && !maxSenderLaufen(download, 1)) {
 
                 int restarted = download.getStart().getRestartCounter();
                 if (download.getArt().equals(DownloadInfos.ART_DOWNLOAD)) {
                     download.restartDownload();
-                    daten.downloadList.startDownloads(download);
+                    progData.downloadList.startDownloads(download);
                     // UND jetzt den Restartcounter wieder setzen!!
                     download.getStart().setRestartCounter(++restarted);
                     return download;
@@ -171,7 +171,7 @@ public class DownloadListStarts {
         // erste passende Element der Liste zurückgeben oder null
         // und versuchen dass bei mehreren laufenden Downloads ein anderer Sender gesucht wird
         Download ret = null;
-        if (downloadList.size() > 0 && getDown(Config.DOWNLOAD_MAX_DOWNLOADS.getInt())) {
+        if (downloadList.size() > 0 && getDown(ProgConfig.DOWNLOAD_MAX_DOWNLOADS.getInt())) {
             final Download datenDownload = naechsterStart();
             if (datenDownload != null && datenDownload.isStateStartedWaiting()) {
                 ret = datenDownload;
@@ -200,8 +200,8 @@ public class DownloadListStarts {
 
         // zweiter Versuch, Start mit einem passenden Sender
         nr = -1;
-        int maxProSender = Const.MAX_SENDER_FILME_LADEN;
-        if (Boolean.parseBoolean(Config.DOWNLOAD_MAX_ONE_PER_SERVER.get())) {
+        int maxProSender = ProgConst.MAX_SENDER_FILME_LADEN;
+        if (Boolean.parseBoolean(ProgConfig.DOWNLOAD_MAX_ONE_PER_SERVER.get())) {
             // dann darf nur ein Download pro Server gestartet werden
             maxProSender = 1;
         }

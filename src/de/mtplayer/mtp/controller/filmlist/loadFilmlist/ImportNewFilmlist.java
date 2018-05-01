@@ -16,7 +16,7 @@
 
 package de.mtplayer.mtp.controller.filmlist.loadFilmlist;
 
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.film.Filmlist;
 import de.mtplayer.mtp.controller.filmlist.filmlistUrls.SearchFilmListUrls;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -160,7 +160,7 @@ public class ImportNewFilmlist {
 
                 versuchteUrls.add(updateUrl);
                 // nur wenn nicht abgebrochen, weitermachen
-                if (Daten.getInstance().loadFilmlist.getStop()) {
+                if (ProgData.getInstance().loadFilmlist.getStop()) {
                     break;
                 }
 

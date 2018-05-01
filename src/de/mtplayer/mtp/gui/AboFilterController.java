@@ -16,8 +16,8 @@
 
 package de.mtplayer.mtp.gui;
 
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -31,10 +31,10 @@ public class AboFilterController extends FilterController {
     ComboBox<String> cbSender = new ComboBox<>();
     Button btnClear = new Button("Filter löschen");
 
-    private final Daten daten;
+    private final ProgData progData;
 
     public AboFilterController() {
-        daten = Daten.getInstance();
+        progData = ProgData.getInstance();
 
         addCont("Abos für Sender", cbSender, vbFilter);
 
@@ -43,12 +43,12 @@ public class AboFilterController extends FilterController {
         hBox.getChildren().add(btnClear);
         vbFilter.getChildren().add(hBox);
 
-        cbSender.valueProperty().bindBidirectional(Config.FILTER_ABO_SENDER.getStringProperty());
-        cbSender.setItems(daten.nameLists.getObsSenderForAbos());
+        cbSender.valueProperty().bindBidirectional(ProgConfig.FILTER_ABO_SENDER.getStringProperty());
+        cbSender.setItems(progData.nameLists.getObsSenderForAbos());
         cbSender.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue != null && newValue != null) {
                 // wenn Änderung beim Sender -> Themen anpassen
-                Config.FILTER_ABO_SENDER.setValue(newValue);
+                ProgConfig.FILTER_ABO_SENDER.setValue(newValue);
             }
         });
 

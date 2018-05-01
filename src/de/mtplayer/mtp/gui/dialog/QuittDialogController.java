@@ -18,7 +18,7 @@ package de.mtplayer.mtp.gui.dialog;
 
 
 import de.mtplayer.mLib.tools.BigButton;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
@@ -29,7 +29,7 @@ import org.controlsfx.control.MaskerPane;
 
 public class QuittDialogController extends MTDialog {
 
-    final Daten daten;
+    final ProgData progData;
     final StackPane stackPane;
     final MaskerPane maskerPane;
     final WaitTask waitTask;
@@ -37,11 +37,11 @@ public class QuittDialogController extends MTDialog {
 
     boolean canQuitt = false;
 
-    public QuittDialogController(Daten daten) {
+    public QuittDialogController(ProgData progData) {
         super("", null,
                 "Programm beenden", true);
 
-        this.daten = daten;
+        this.progData = progData;
 
         stackPane = new StackPane();
         maskerPane = new MaskerPane();
@@ -119,7 +119,7 @@ public class QuittDialogController extends MTDialog {
 
         @Override
         protected Void call() throws Exception {
-            while ((Daten.getInstance().downloadList.countRunningDownloads() > 0) && !isCancelled()) {
+            while ((ProgData.getInstance().downloadList.countRunningDownloads() > 0) && !isCancelled()) {
                 try {
                     Thread.sleep(500);
                 } catch (Exception ignore) {

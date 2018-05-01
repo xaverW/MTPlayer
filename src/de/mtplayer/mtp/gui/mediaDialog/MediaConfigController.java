@@ -16,8 +16,8 @@
 
 package de.mtplayer.mtp.gui.mediaDialog;
 
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.dialog.MTDialog;
@@ -43,12 +43,12 @@ public class MediaConfigController extends MTDialog {
     Button btnCreateMediaDB = new Button("Mediensammlung neu aufbauen");
     ProgressBar progress = new ProgressBar();
 
-    private final Daten daten;
+    private final ProgData progData;
 
     public MediaConfigController() {
-        super(Config.MEDIA_CONFIG_DIALOG_SIZE, "Mediensammlung", true);
+        super(ProgConfig.MEDIA_CONFIG_DIALOG_SIZE, "Mediensammlung", true);
 
-        this.daten = Daten.getInstance();
+        this.progData = ProgData.getInstance();
 
         VBox vBox = new VBox();
         vBox.setPadding(new Insets(10));
@@ -74,9 +74,9 @@ public class MediaConfigController extends MTDialog {
     @Override
     public void make() {
         btnOk.setOnAction(a -> close());
-        progress.visibleProperty().bind(daten.mediaList.propSearchProperty());
-        btnCreateMediaDB.disableProperty().bind(daten.mediaList.propSearchProperty());
-        btnCreateMediaDB.setOnAction(event -> daten.mediaList.createMediaDb());
+        progress.visibleProperty().bind(progData.mediaList.propSearchProperty());
+        btnCreateMediaDB.disableProperty().bind(progData.mediaList.propSearchProperty());
+        btnCreateMediaDB.setOnAction(event -> progData.mediaList.createMediaDb());
 
         btnHlp.setText("");
         btnHlp.setGraphic(new Icons().ICON_BUTTON_HELP);

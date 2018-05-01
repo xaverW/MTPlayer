@@ -16,8 +16,8 @@
 
 package de.mtplayer.mtp.gui.dialog;
 
-import de.mtplayer.mtp.controller.config.Config;
-import de.mtplayer.mtp.controller.config.Daten;
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.ListePsetVorlagen;
 import de.mtplayer.mtp.gui.configDialog.SetPaneController;
@@ -33,7 +33,7 @@ import javafx.scene.layout.*;
 
 public class ImportSetDialogController extends MTDialog {
 
-    private final Daten daten;
+    private final ProgData progData;
     VBox vbox, vBoxCont;
     Button btnOk = new Button("Abbrechen");
     Button btnImport = new Button("Set importieren");
@@ -41,11 +41,11 @@ public class ImportSetDialogController extends MTDialog {
     private StackPane stackPane;
     private ScrollPane pathPane, setPane;
 
-    public ImportSetDialogController(Daten daten) {
-        super("", Config.CONFIG_DIALOG_IMPORT_SET_SIZE,
+    public ImportSetDialogController(ProgData progData) {
+        super("", ProgConfig.CONFIG_DIALOG_IMPORT_SET_SIZE,
                 "Set importieren", true);
 
-        this.daten = daten;
+        this.progData = progData;
 
         vbox = new VBox();
         vbox.setPadding(new Insets(10));
@@ -130,7 +130,7 @@ public class ImportSetDialogController extends MTDialog {
         btnOk.setText("Ok");
         btnImport.setDisable(true);
 
-        daten.setList.clear();
+        progData.setList.clear();
 
         if (SetsPrograms.addSetVorlagen(ListePsetVorlagen.getStandarset(true /*replaceMuster*/))) {
             new MTAlert().showInfoAlert("Set", "Set importieren", "Sets wurden importiert!", false);
