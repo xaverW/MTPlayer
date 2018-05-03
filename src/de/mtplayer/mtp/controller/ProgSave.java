@@ -107,7 +107,7 @@ public class ProgSave {
         list.add("Einstellungen sichern");
 
         try {
-            final Path xmlFilePath = new ProgInfos().getXmlFilePath();
+            final Path xmlFilePath = new ProgInfos().getSettingsFile();
             long creatTime = -1;
 
             Path xmlFilePathCopy_1 = ProgInfos.getSettingsDirectory().resolve(ProgConst.CONFIG_FILE_COPY + 1);

@@ -22,8 +22,13 @@ public class ProgConst {
 
     public static final String PROGRAMMNAME = "MTPlayer";
     public static final String USER_AGENT_DEFAULT = "";
+
+    // settings file
     public static final String CONFIG_FILE = "mtplayer.xml";
     public static final String CONFIG_FILE_COPY = "mtplayer.xml_copy_";
+    public static final String CONFIG_DIRECTORY = "p2Mtplayer"; // im Homeverzeichnis
+    public static final String XML_START = "Mediathek";
+
     public static final String FILE_ERLEDIGTE_ABOS = "downloads.txt";
     public static final String FILE_HISTORY = "history.txt";
     public static final String FILE_MEDIA_DB = "mediadb.txt";
@@ -59,14 +64,10 @@ public class ProgConst {
     public static final String ADRESSE_WEBSITE_FFMPEG = "http://ffmpeg.org";
 
     // Dateien/Verzeichnisse
-    public static final String VERZEICHNIS_PROGRAMM_ICONS = "Icons/Programm"; // Unterverzeichnis im Programmverzeichnis
-    public static final String VERZEICHNIS_SENDER_ICONS = "Icons/Sender"; // Unterverzeichnis im Programmverzeichnis
-    public static final String VERZEICHNIS_EINSTELLUNGEN = ".mtplayer"; // im Homeverzeichnis
     public static final String JSON_DATEI_FILME = "filme.json";
 
     // minimale Größe (256 kB) eines Films um nicht als Fehler zu gelten
     public static final int MIN_DATEI_GROESSE_FILM = 256 * 1000;
-    public static final String XML_START = "Mediathek";
     // es können maximal soviele Filme eines Senders/Servers gleichzeitig geladen werden
     public static final int MAX_SENDER_FILME_LADEN = 2;
 

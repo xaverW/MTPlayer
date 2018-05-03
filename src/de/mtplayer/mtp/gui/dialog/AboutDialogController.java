@@ -136,7 +136,7 @@ public class AboutDialogController extends MTDialogExtra {
         text.setFill(GRAY);
         gridPane.add(text, 0, ++row);
 
-        final Path xmlFilePath = new ProgInfos().getXmlFilePath();
+        final Path xmlFilePath = new ProgInfos().getSettingsFile();
         text = new Text(xmlFilePath.toAbsolutePath().toString());
         text.setFont(new Font(15));
         text.setFill(GRAY);

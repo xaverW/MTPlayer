@@ -102,7 +102,7 @@ public class ProgStart {
         ProgData progData = ProgData.getInstance();
 
         boolean ret = false;
-        final Path xmlFilePath = new ProgInfos().getXmlFilePath();
+        final Path xmlFilePath = new ProgInfos().getSettingsFile();
 
         try (IoReadXml reader = new IoReadXml(progData)) {
             if (Files.exists(xmlFilePath)) {
