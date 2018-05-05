@@ -246,6 +246,10 @@ public class Filmlist extends SimpleListProperty<Film> {
     }
 
     public synchronized String genDate() {
+        return genDate(metaDaten);
+    }
+
+    public static synchronized String genDate(String[] metaDaten) {
         // Tag, Zeit in lokaler Zeit wann die Filmliste erstellt wurde
         // in der Form "dd.MM.yyyy, HH:mm"
         String ret;

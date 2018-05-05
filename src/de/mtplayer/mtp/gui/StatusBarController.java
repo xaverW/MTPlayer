@@ -178,7 +178,7 @@ public class StatusBarController extends AnchorPane {
             }
 
             @Override
-            public void fertig(ListenerFilmlistLoadEvent event) {
+            public void finished(ListenerFilmlistLoadEvent event) {
                 stopTimer = false;
                 loadList = false;
                 setStatusbar();

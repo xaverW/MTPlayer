@@ -45,7 +45,7 @@ public class NameLists {
             }
 
             @Override
-            public void fertig(ListenerFilmlistLoadEvent event) {
+            public void finished(ListenerFilmlistLoadEvent event) {
                 getAllSender();
                 getThemen("");
             }

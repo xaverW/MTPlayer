@@ -23,23 +23,23 @@ public class ListenerFilmlistLoadEvent {
     public double max;
     public double progress;
     public boolean fehler;
-    public int count;
+    public int countFoundFilms;
 
-    public ListenerFilmlistLoadEvent(String senderUrl, String text, double max, double progress, int count, boolean fehler) {
+    public ListenerFilmlistLoadEvent(String senderUrl, String text, double max, double progress, int countFoundFilms, boolean fehler) {
         this.senderUrl = senderUrl;
         this.text = text;
         this.max = max;
         this.progress = progress;
-        this.count = count;
+        this.countFoundFilms = countFoundFilms;
         this.fehler = fehler;
     }
 
-    public ListenerFilmlistLoadEvent(String senderUrl, String text, double progress, int count, boolean fehler) {
+    public ListenerFilmlistLoadEvent(String senderUrl, String text, double progress, int countFoundFilms, boolean fehler) {
         this.senderUrl = senderUrl;
         this.text = text;
         max = 0;
         this.progress = progress;
-        this.count = count;
+        this.countFoundFilms = countFoundFilms;
         this.fehler = fehler;
     }
 }

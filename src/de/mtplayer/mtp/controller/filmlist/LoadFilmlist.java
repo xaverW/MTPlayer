@@ -68,7 +68,7 @@ public class LoadFilmlist {
             }
 
             @Override
-            public synchronized void fertig(ListenerFilmlistLoadEvent event) {
+            public synchronized void finished(ListenerFilmlistLoadEvent event) {
                 // Ergebnisliste listeFilme eintragen -> Feierabend!
                 Duration.staticPing("Filme laden, ende");
                 afterImportNewFilmlist(event);

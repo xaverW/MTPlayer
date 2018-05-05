@@ -39,7 +39,7 @@ public class FilmListFilter {
 
         progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
             @Override
-            public void fertig(ListenerFilmlistLoadEvent event) {
+            public void finished(ListenerFilmlistLoadEvent event) {
                 filterList();
             }
         });

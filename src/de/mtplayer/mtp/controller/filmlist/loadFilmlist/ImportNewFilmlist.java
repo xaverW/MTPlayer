@@ -51,7 +51,7 @@ public class ImportNewFilmlist {
             }
 
             @Override
-            public synchronized void fertig(ListenerFilmlistLoadEvent event) {
+            public synchronized void finished(ListenerFilmlistLoadEvent event) {
             }
         });
     }
@@ -220,7 +220,7 @@ public class ImportNewFilmlist {
 
     private synchronized void fertigMelden(boolean ok) {
         for (final ListenerFilmlistLoad l : eventListenerList.getListeners(ListenerFilmlistLoad.class)) {
-            l.fertig(new ListenerFilmlistLoadEvent("", "", 0, 0, !ok));
+            l.finished(new ListenerFilmlistLoadEvent("", "", 0, 0, !ok));
         }
     }
 }

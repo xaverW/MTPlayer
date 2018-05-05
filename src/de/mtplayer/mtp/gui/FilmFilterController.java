@@ -109,7 +109,7 @@ public class FilmFilterController extends FilterController {
             }
 
             @Override
-            public void fertig(ListenerFilmlistLoadEvent event) {
+            public void finished(ListenerFilmlistLoadEvent event) {
                 dis(false);
             }
         });

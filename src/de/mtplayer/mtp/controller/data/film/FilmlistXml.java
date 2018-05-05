@@ -19,6 +19,7 @@ package de.mtplayer.mtp.controller.data.film;
 public class FilmlistXml {
 
     public static final String FILMLISTE = "Filmliste";
+
     public static final String FILMLISTE_DATUM = "Filmliste-Datum";
     public static final int FILMLISTE_DATUM_NR = 0;
     public static final String FILMLISTE_DATUM_GMT = "Filmliste-Datum-GMT";
@@ -28,8 +29,9 @@ public class FilmlistXml {
     public static final String FILMLISTE_PROGRAMM = "Filmliste-Programm";
     public static final int FILMLISTE_PRGRAMM_NR = 3;
     public static final String FILMLISTE_ID = "Filmliste-Id";
-    public static final String[] COLUMN_NAMES = {FILMLISTE_DATUM, FILMLISTE_DATUM_GMT, FILMLISTE_VERSION, FILMLISTE_PROGRAMM, FILMLISTE_ID};
     public static final int FILMLISTE_ID_NR = 4;
     public static final int MAX_ELEM = 5;
+
+    public static final String[] COLUMN_NAMES = {FILMLISTE_DATUM, FILMLISTE_DATUM_GMT, FILMLISTE_VERSION, FILMLISTE_PROGRAMM, FILMLISTE_ID};
 
 }

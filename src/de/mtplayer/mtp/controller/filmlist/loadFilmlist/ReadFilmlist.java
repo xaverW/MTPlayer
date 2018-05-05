@@ -279,7 +279,7 @@ public class ReadFilmlist {
         list.add("  erstellt am: " + liste.genDate());
         list.add("  Anzahl Filme: " + liste.size());
         for (final ListenerFilmlistLoad l : listeners.getListeners(ListenerFilmlistLoad.class)) {
-            l.fertig(new ListenerFilmlistLoadEvent(url, "", progress, 0, false));
+            l.finished(new ListenerFilmlistLoadEvent(url, "", progress, 0, false));
         }
         list.add(PLog.LILNE3);
         PLog.userLog(list);

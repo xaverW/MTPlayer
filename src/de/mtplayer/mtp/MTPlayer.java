@@ -171,7 +171,7 @@ public class MTPlayer extends Application {
     private void initProg() {
         progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
             @Override
-            public void fertig(ListenerFilmlistLoadEvent event) {
+            public void finished(ListenerFilmlistLoadEvent event) {
                 new ProgSave().saveAll(); // damit nichts verlorengeht
 
                 if (!onlyOne) {

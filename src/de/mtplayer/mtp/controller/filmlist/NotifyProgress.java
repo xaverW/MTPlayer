@@ -42,7 +42,7 @@ public class NotifyProgress {
                             l.progress(event);
                             break;
                         case FINISHED:
-                            l.fertig(event);
+                            l.finished(event);
                             break;
                     }
                 }

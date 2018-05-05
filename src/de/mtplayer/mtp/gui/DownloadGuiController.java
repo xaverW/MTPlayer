@@ -376,7 +376,7 @@ public class DownloadGuiController extends AnchorPane {
             }
 
             @Override
-            public void fertig(ListenerFilmlistLoadEvent event) {
+            public void finished(ListenerFilmlistLoadEvent event) {
                 if (ProgConfig.ABO_SEARCH_NOW.getBool()) {
                     aktualisieren();
                 }
