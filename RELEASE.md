@@ -1,6 +1,19 @@
 ## MTPlayer
 
 
+
+**Release 2-0**
+
+* Mit dem Schalter "-h" lassen sich die möglichen Startparameter abfragen
+* Das Laden der Filmliste und die anschließenden Aktivitäten z.B. beim Suchen der Downloads wurde optimiert
+* Die History Liste speichert jetzt den ganzen Titel was das Suchen nach bereits gesehenen Beiträgen verbessert
+* Beim Filter "URL" gabs Probleme wenn die URL bestimmte Zeichen (,:) enthielt
+* Die Medienliste kann jetzt auch externe Medien verwalten. Es können Medien z.B. von USB-Laufwerken importiert werden. Es ist auch möglich diese Medien zu aktualisieren oder wieder zu löschen.
+* Der Pfad der Konfigurationsdatei hat sich geändert (wer eine bereits vorhandene Konfigurationsdatei behalten will, braucht nur den bisherigen Ordner ".mtplayer" umbenennen, bei Windows wurde der führende Punkt der Probleme machen kann, entfernt und der Ordner wird als versteckt angelegt):  
+Windows: p2Mtplayer  
+Linux: .p2Mtplayer
+
+
 **Release 1-81**
 
 * Zur Programmausgabe in der Konsole wird jetzt auch ein Logfile geschrieben (in den Einstellungen kann angegeben werden, ob und wo es geschrieben werden soll)
