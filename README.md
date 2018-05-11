@@ -10,7 +10,7 @@ Das Programm MTPlayer ist eine Alternative zu meinem früheren Programm Mediathe
 
 **Infos über das Programm**
 
-Das Programm nutzt den Ordner ".mtplayer" als Konfig-Ordner, es kann also parallel zu MediathekView benutzt werden. Man kann dem Programm auch einen Ordner für die Einstellungen mitgeben (und es z.B. auf einem USB-Stick verwenden):  
+Das Programm nutzt den Ordner ".p2Mtplayer" unter Linux und den versteckten Ordner "p2Mtplayer" unter Windows als Konfig-Ordner, es kann also parallel zu MediathekView benutzt werden. Man kann dem Programm auch einen Ordner für die Einstellungen mitgeben (und es z.B. auf einem USB-Stick verwenden):  
 java -jar MTPlayer.jar ORDNER 
 
 Ich habe einige Ideen die ich hatte oder bekam, damit umgesetzt. Die größten Änderungen haben die Filter und die interne Verarbeitung der Filme in der Filmliste und Blacklist erfahren.
