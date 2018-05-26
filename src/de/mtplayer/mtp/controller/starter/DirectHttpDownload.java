@@ -64,7 +64,7 @@ public class DirectHttpDownload extends Thread {
         this.progData = progData;
         this.bandwidthCalculationTimer = bandwidthCalculationTimer;
         download = d;
-        setName("DIRECT DL THREAD: " + d.getTitel());
+        setName("DIRECT DL THREAD: " + d.getTitle());
         download.setStateStartedRun();
     }
 

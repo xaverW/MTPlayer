@@ -60,7 +60,7 @@ public class ExternalProgramDownload extends Thread {
 
     public ExternalProgramDownload(ProgData progData, Download d) {
         super();
-        setName("EXTERNAL PROGRAM DL THREAD: " + d.getTitel());
+        setName("EXTERNAL PROGRAM DL THREAD: " + d.getTitle());
 
         this.progData = progData;
         download = d;

@@ -83,7 +83,7 @@ public class DownloadErrorDialogController extends MTDialog {
         lblHeader.setStyle("-fx-font-weight: bold;");
 
         lblFilmTitle.setStyle("-fx-font-weight: bold;");
-        lblFilmTitle.setText(download.getTitel());
+        lblFilmTitle.setText(download.getTitle());
 
         lblUrl.setText(download.getUrl());
 

@@ -64,19 +64,19 @@ public class WriteFilmlistJson {
                 jg.writeEndArray();
                 //Filme schreiben
                 for (Film datenFilm : filmlist) {
-                    datenFilm.arr[FilmXml.FILM_NEU] = Boolean.toString(datenFilm.isNewFilm()); // damit wirs beim nächsten Programmstart noch wissen
+                    datenFilm.arr[FilmXml.FILM_NEW] = Boolean.toString(datenFilm.isNewFilm()); // damit wirs beim nächsten Programmstart noch wissen
 
                     jg.writeArrayFieldStart(FilmXml.TAG_JSON_LIST);
                     for (int i = 0; i < FilmXml.JSON_NAMES.length; ++i) {
                         int m = FilmXml.JSON_NAMES[i];
-                        if (m == FilmXml.FILM_SENDER) {
+                        if (m == FilmXml.FILM_CHANNEL) {
                             if (datenFilm.arr[m].equals(sender)) {
                                 jg.writeString("");
                             } else {
                                 sender = datenFilm.arr[m];
                                 jg.writeString(datenFilm.arr[m]);
                             }
-                        } else if (m == FilmXml.FILM_THEMA) {
+                        } else if (m == FilmXml.FILM_THEME) {
                             if (datenFilm.arr[m].equals(thema)) {
                                 jg.writeString("");
                             } else {

@@ -34,7 +34,7 @@ public class DownloadFilterController extends FilterController {
 
     ComboBox<String> cbSrc = new ComboBox<>(); //Downloadquelle: Abo, manuell gestartet
     ComboBox<String> cbArt = new ComboBox<>(); //Download über Programm / direkter Downlaod, http
-    ComboBox<String> cbSender = new ComboBox<>();
+    ComboBox<String> cboChannel = new ComboBox<>();
     ComboBox<String> cbAbo = new ComboBox<>();
 
     Spinner<Integer> spinnerAnz = new Spinner<>();
@@ -60,7 +60,7 @@ public class DownloadFilterController extends FilterController {
         vBox.setSpacing(10);
         addCont("Quelle", cbSrc, vBox);
         addCont("Downloadart", cbArt, vBox);
-        addCont("Sender", cbSender, vBox);
+        addCont("Sender", cboChannel, vBox);
         addCont("Abo", cbAbo, vBox);
 
         HBox hBox = new HBox();
@@ -168,11 +168,11 @@ public class DownloadFilterController extends FilterController {
                     }
                 });
 
-        cbSender.valueProperty().bindBidirectional(ProgConfig.FILTER_DOWNLOAD_SENDER.getStringProperty());
-        cbSender.setItems(progData.nameLists.getObsAllSender());
+        cboChannel.valueProperty().bindBidirectional(ProgConfig.FILTER_DOWNLOAD_SENDER.getStringProperty());
+        cboChannel.setItems(progData.nameLists.getObsAllChannel());
 
         cbAbo.valueProperty().bindBidirectional(ProgConfig.FILTER_DOWNLOAD_ABO.getStringProperty());
-        cbAbo.setItems(progData.nameLists.getObsAllAbonames()); // todo evtl. nur die vorhandenen Abos
+        cbAbo.setItems(progData.nameLists.getObsAllAboNames()); // todo evtl. nur die vorhandenen Abos
     }
 
     private void initAnzahl() {
@@ -227,8 +227,8 @@ public class DownloadFilterController extends FilterController {
         if (cbArt.getSelectionModel() != null) {
             cbArt.getSelectionModel().selectFirst();
         }
-        if (cbSender.getSelectionModel() != null) {
-            cbSender.getSelectionModel().selectFirst();
+        if (cboChannel.getSelectionModel() != null) {
+            cboChannel.getSelectionModel().selectFirst();
         }
         if (cbAbo.getSelectionModel() != null) {
             cbAbo.getSelectionModel().selectFirst();

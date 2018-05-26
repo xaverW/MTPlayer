@@ -32,8 +32,8 @@ public class ProgInitFilter {
         sf = new SelectedFilter();
         sf.setName("alle Filme");
 
-        sf.setSenderVis(true);
-        sf.setSenderExact(true);
+        sf.setChannelVis(true);
+        sf.setChannelExact(true);
 
         sf.setThemeVis(false);
         sf.setThemeExact(true);
@@ -75,8 +75,8 @@ public class ProgInitFilter {
         //========================================================
         sf = new SelectedFilter();
         sf.setName("nur neue Filme");
-        sf.setSenderVis(true);
-        sf.setSenderExact(true);
+        sf.setChannelVis(true);
+        sf.setChannelExact(true);
 
         sf.setThemeVis(false);
         sf.setThemeExact(true);
@@ -118,8 +118,8 @@ public class ProgInitFilter {
         //========================================================
         sf = new SelectedFilter();
         sf.setName("aktuelle Nachrichten");
-        sf.setSenderVis(true);
-        sf.setSenderExact(true);
+        sf.setChannelVis(true);
+        sf.setChannelExact(true);
 
         sf.setThemeVis(false);
         sf.setThemeExact(true);
@@ -162,8 +162,8 @@ public class ProgInitFilter {
         //========================================================
         sf = new SelectedFilter();
         sf.setName("Nachrichten mit Europa UND Brexit");
-        sf.setSenderVis(true);
-        sf.setSenderExact(true);
+        sf.setChannelVis(true);
+        sf.setChannelExact(true);
 
         sf.setThemeVis(false);
         sf.setThemeExact(true);
@@ -206,9 +206,9 @@ public class ProgInitFilter {
         //========================================================
         sf = new SelectedFilter();
         sf.setName("nur ARD ODER ZDF");
-        sf.setSenderVis(true);
-        sf.setSenderExact(false);
-        sf.setSender("ard,zdf");
+        sf.setChannelVis(true);
+        sf.setChannelExact(false);
+        sf.setChannel("ard,zdf");
 
         sf.setThemeVis(false);
         sf.setThemeExact(true);
@@ -251,8 +251,8 @@ public class ProgInitFilter {
         //========================================================
         sf = new SelectedFilter();
         sf.setName("Sport");
-        sf.setSenderVis(true);
-        sf.setSenderExact(true);
+        sf.setChannelVis(true);
+        sf.setChannelExact(true);
 
         sf.setThemeVis(false);
         sf.setThemeExact(true);
@@ -295,8 +295,8 @@ public class ProgInitFilter {
         //========================================================
         sf = new SelectedFilter();
         sf.setName("Livestreams");
-        sf.setSenderVis(true);
-        sf.setSenderExact(true);
+        sf.setChannelVis(true);
+        sf.setChannelExact(true);
 
         sf.setThemeVis(false);
         sf.setThemeExact(true);
@@ -339,9 +339,9 @@ public class ProgInitFilter {
         //========================================================
         sf = new SelectedFilter();
         sf.setName("Abendkrimi");
-        sf.setSenderVis(true);
-        sf.setSenderExact(false);
-        sf.setSender("ard,zdf");
+        sf.setChannelVis(true);
+        sf.setChannelExact(false);
+        sf.setChannel("ard,zdf");
 
         sf.setThemeVis(false);
         sf.setThemeExact(true);
@@ -386,9 +386,9 @@ public class ProgInitFilter {
         //========================================================
         sf = new SelectedFilter();
         sf.setName("nur \"neue\" in HD");
-        sf.setSenderVis(true);
-        sf.setSenderExact(true);
-        sf.setSender("");
+        sf.setChannelVis(true);
+        sf.setChannelExact(true);
+        sf.setChannel("");
 
         sf.setThemeVis(false);
         sf.setThemeExact(true);

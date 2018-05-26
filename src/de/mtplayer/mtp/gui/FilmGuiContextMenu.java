@@ -55,47 +55,47 @@ public class FilmGuiContextMenu {
 
         // Filter
         Menu submenuFilter = new Menu("Filter");
-        final MenuItem miFilterSender = new MenuItem("nach Sender filtern");
-        miFilterSender.setOnAction(event -> progData.storedFilter.getSelectedFilter().setSenderAndVis(film.getSender()));
-        final MenuItem miFilterThema = new MenuItem("nach Thema filtern");
-        miFilterThema.setOnAction(event -> progData.storedFilter.getSelectedFilter().setThemeAndVis(film.getThema()));
-        final MenuItem miFilterSenderThema = new MenuItem("nach Sender und Thema filtern");
-        miFilterSenderThema.setOnAction(event -> {
-            progData.storedFilter.getSelectedFilter().setSenderAndVis(film.getSender());
-            progData.storedFilter.getSelectedFilter().setThemeAndVis(film.getThema());
+        final MenuItem miFilterChannel = new MenuItem("nach Sender filtern");
+        miFilterChannel.setOnAction(event -> progData.storedFilter.getSelectedFilter().setChannelAndVis(film.getChannel()));
+        final MenuItem miFilterTheme = new MenuItem("nach Thema filtern");
+        miFilterTheme.setOnAction(event -> progData.storedFilter.getSelectedFilter().setThemeAndVis(film.getTheme()));
+        final MenuItem miFilterChannelTheme = new MenuItem("nach Sender und Thema filtern");
+        miFilterChannelTheme.setOnAction(event -> {
+            progData.storedFilter.getSelectedFilter().setChannelAndVis(film.getChannel());
+            progData.storedFilter.getSelectedFilter().setThemeAndVis(film.getTheme());
         });
-        final MenuItem miFilterSenderThemaTitle = new MenuItem("nach Sender, Thema und Titel filtern");
-        miFilterSenderThemaTitle.setOnAction(event -> {
-            progData.storedFilter.getSelectedFilter().setSenderAndVis(film.getSender());
-            progData.storedFilter.getSelectedFilter().setThemeAndVis(film.getThema());
-            progData.storedFilter.getSelectedFilter().setTitleAndVis(film.getTitel());
+        final MenuItem miFilterChannelThemeTitle = new MenuItem("nach Sender, Thema und Titel filtern");
+        miFilterChannelThemeTitle.setOnAction(event -> {
+            progData.storedFilter.getSelectedFilter().setChannelAndVis(film.getChannel());
+            progData.storedFilter.getSelectedFilter().setThemeAndVis(film.getTheme());
+            progData.storedFilter.getSelectedFilter().setTitleAndVis(film.getTitle());
         });
-        submenuFilter.getItems().addAll(miFilterSender, miFilterThema, miFilterSenderThema, miFilterSenderThemaTitle);
+        submenuFilter.getItems().addAll(miFilterChannel, miFilterTheme, miFilterChannelTheme, miFilterChannelThemeTitle);
         contextMenu.getItems().add(submenuFilter);
 
         // Abo
         Menu submenuAbo = new Menu("Abo");
         final MenuItem miAboDel = new MenuItem("Abo Löschen");
-        final MenuItem miAboAddSenderThema = new MenuItem("Abo mit Sender und Thema anlegen");
-        final MenuItem miAboAddSenderThemaTitle = new MenuItem("Abo mit Sender und Thema und Titel anlegen");
+        final MenuItem miAboAddChannelTheme = new MenuItem("Abo mit Sender und Thema anlegen");
+        final MenuItem miAboAddChannelThemeTitle = new MenuItem("Abo mit Sender und Thema und Titel anlegen");
         final MenuItem miAboChange = new MenuItem("Abo ändern");
 
         if (film.getAbo() == null) {
             miAboDel.setDisable(true);
             miAboChange.setDisable(true);
-            miAboAddSenderThema.setOnAction(a ->
-                    progData.aboList.addAbo(film.getThema(), film.getSender(), film.getThema(), ""));
-            miAboAddSenderThemaTitle.setOnAction(a ->
-                    progData.aboList.addAbo(film.getThema(), film.getSender(), film.getThema(), film.getTitel()));
+            miAboAddChannelTheme.setOnAction(a ->
+                    progData.aboList.addAbo(film.getTheme(), film.getChannel(), film.getTheme(), ""));
+            miAboAddChannelThemeTitle.setOnAction(a ->
+                    progData.aboList.addAbo(film.getTheme(), film.getChannel(), film.getTheme(), film.getTitle()));
         } else {
-            miAboAddSenderThema.setDisable(true);
-            miAboAddSenderThemaTitle.setDisable(true);
+            miAboAddChannelTheme.setDisable(true);
+            miAboAddChannelThemeTitle.setDisable(true);
             miAboDel.setOnAction(event ->
-                    progData.aboList.aboLoeschen(film.getAbo()));
+                    progData.aboList.deleteAbo(film.getAbo()));
             miAboChange.setOnAction(event ->
                     progData.aboList.changeAbo(film.getAbo()));
         }
-        submenuAbo.getItems().addAll(miAboDel, miAboAddSenderThema, miAboAddSenderThemaTitle, miAboChange);
+        submenuAbo.getItems().addAll(miAboDel, miAboAddChannelTheme, miAboAddChannelThemeTitle, miAboChange);
         contextMenu.getItems().add(submenuAbo);
 
         // Film mit Set starten
@@ -115,20 +115,20 @@ public class FilmGuiContextMenu {
 
         // Blacklist
         Menu submenuBlacklist = new Menu("Blacklist");
-        final MenuItem miBlackSender = new MenuItem("Sender in die Blacklist einfügen");
-        miBlackSender.setOnAction(event -> progData.blackList.addAndNotify(new BlackData(film.getSender(), "", "", "")));
-        final MenuItem miBlackThema = new MenuItem("Thema in die Blacklist einfügen");
-        miBlackThema.setOnAction(event -> progData.blackList.addAndNotify(new BlackData("", film.getThema(), "", "")));
-        final MenuItem miBlackSenderThema = new MenuItem("Sender und Thema in die Blacklist einfügen");
-        miBlackSenderThema.setOnAction(event -> progData.blackList.addAndNotify(new BlackData(film.getSender(), film.getThema(), "", "")));
+        final MenuItem miBlackChannel = new MenuItem("Sender in die Blacklist einfügen");
+        miBlackChannel.setOnAction(event -> progData.blackList.addAndNotify(new BlackData(film.getChannel(), "", "", "")));
+        final MenuItem miBlackTheme = new MenuItem("Thema in die Blacklist einfügen");
+        miBlackTheme.setOnAction(event -> progData.blackList.addAndNotify(new BlackData("", film.getTheme(), "", "")));
+        final MenuItem miBlackChannelTheme = new MenuItem("Sender und Thema in die Blacklist einfügen");
+        miBlackChannelTheme.setOnAction(event -> progData.blackList.addAndNotify(new BlackData(film.getChannel(), film.getTheme(), "", "")));
 
-        submenuBlacklist.getItems().addAll(miBlackSender, miBlackThema, miBlackSenderThema);
+        submenuBlacklist.getItems().addAll(miBlackChannel, miBlackTheme, miBlackChannelTheme);
         contextMenu.getItems().addAll(submenuBlacklist, new SeparatorMenuItem());
 
         // URL kopieren
-        final String uNormal = film.getUrlFuerAufloesung(Film.AUFLOESUNG_NORMAL);
-        String uHd = film.getUrlFuerAufloesung(Film.AUFLOESUNG_HD);
-        String uLow = film.getUrlFuerAufloesung(Film.AUFLOESUNG_KLEIN);
+        final String uNormal = film.getUrlFuerAufloesung(Film.RESOLUTION_NORMAL);
+        String uHd = film.getUrlFuerAufloesung(Film.RESOLUTION_HD);
+        String uLow = film.getUrlFuerAufloesung(Film.RESOLUTION_SMALL);
         String uSub = film.getUrlSubtitle();
         MenuItem item;
         if (uHd.equals(uNormal)) {
@@ -144,19 +144,19 @@ public class FilmGuiContextMenu {
                 // HD
                 if (!uHd.isEmpty()) {
                     item = new MenuItem("in HD-Auflösung");
-                    item.setOnAction(a -> SysTools.copyToClipboard(film.getUrlFuerAufloesung(Film.AUFLOESUNG_HD)));
+                    item.setOnAction(a -> SysTools.copyToClipboard(film.getUrlFuerAufloesung(Film.RESOLUTION_HD)));
                     submenueURL.getItems().add(item);
                 }
 
                 // normale Auflösung, gibts immer
                 item = new MenuItem("in hoher Auflösung");
-                item.setOnAction(a -> SysTools.copyToClipboard(film.getUrlFuerAufloesung(Film.AUFLOESUNG_NORMAL)));
+                item.setOnAction(a -> SysTools.copyToClipboard(film.getUrlFuerAufloesung(Film.RESOLUTION_NORMAL)));
                 submenueURL.getItems().add(item);
 
                 // kleine Auflösung
                 if (!uLow.isEmpty()) {
                     item = new MenuItem("in geringer Auflösung");
-                    item.setOnAction(a -> SysTools.copyToClipboard(film.getUrlFuerAufloesung(Film.AUFLOESUNG_KLEIN)));
+                    item.setOnAction(a -> SysTools.copyToClipboard(film.getUrlFuerAufloesung(Film.RESOLUTION_SMALL)));
                     submenueURL.getItems().add(item);
                 }
 
@@ -169,7 +169,7 @@ public class FilmGuiContextMenu {
                 contextMenu.getItems().add(submenueURL);
             } else {
                 item = new MenuItem("Film-URL kopieren");
-                item.setOnAction(a -> SysTools.copyToClipboard(film.getUrlFuerAufloesung(Film.AUFLOESUNG_NORMAL)));
+                item.setOnAction(a -> SysTools.copyToClipboard(film.getUrlFuerAufloesung(Film.RESOLUTION_NORMAL)));
                 contextMenu.getItems().add(item);
             }
         }

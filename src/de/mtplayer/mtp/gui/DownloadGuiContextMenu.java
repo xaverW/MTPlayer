@@ -96,7 +96,7 @@ public class DownloadGuiContextMenu {
         } else {
             miChangeAbo.setOnAction(event ->
                     progData.aboList.changeAbo(download.getAbo()));
-            miDelAbo.setOnAction(event -> progData.aboList.aboLoeschen(download.getAbo()));
+            miDelAbo.setOnAction(event -> progData.aboList.deleteAbo(download.getAbo()));
         }
         submenueAbo.getItems().addAll(miChangeAbo, miDelAbo);
 

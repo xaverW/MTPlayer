@@ -118,7 +118,7 @@ public class DownloadListStarts {
 
             if (download.isStateError()
                     && download.getStart().getRestartCounter() < ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getInt()
-                    && !maxSenderLaufen(download, 1)) {
+                    && !maxChannelPlay(download, 1)) {
 
                 int restarted = download.getStart().getRestartCounter();
                 if (download.getArt().equals(DownloadInfos.ART_DOWNLOAD)) {
@@ -187,7 +187,7 @@ public class DownloadListStarts {
         // erster Versuch, Start mit einem anderen Sender
         for (Download download : downloadList) {
             if (download.isStateStartedWaiting() &&
-                    !maxSenderLaufen(download, 1) &&
+                    !maxChannelPlay(download, 1) &&
                     (nr == -1 || download.getNr() < nr)) {
                 tmpDownload = download;
                 nr = tmpDownload.getNr();
@@ -200,14 +200,14 @@ public class DownloadListStarts {
 
         // zweiter Versuch, Start mit einem passenden Sender
         nr = -1;
-        int maxProSender = ProgConst.MAX_SENDER_FILME_LADEN;
+        int maxProChannel = ProgConst.MAX_SENDER_FILME_LADEN;
         if (Boolean.parseBoolean(ProgConfig.DOWNLOAD_MAX_ONE_PER_SERVER.get())) {
             // dann darf nur ein Download pro Server gestartet werden
-            maxProSender = 1;
+            maxProChannel = 1;
         }
         for (Download download : downloadList) {
             if (download.isStateStartedWaiting() &&
-                    !maxSenderLaufen(download, maxProSender) &&
+                    !maxChannelPlay(download, maxProChannel) &&
                     (nr == -1 || download.getNr() < nr)) {
                 tmpDownload = download;
                 nr = tmpDownload.getNr();
@@ -217,7 +217,7 @@ public class DownloadListStarts {
         return tmpDownload;
     }
 
-    private boolean maxSenderLaufen(Download d, int max) {
+    private boolean maxChannelPlay(Download d, int max) {
         // true wenn bereits die maxAnzahl pro Sender läuft
         try {
             int counter = 0;

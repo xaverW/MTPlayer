@@ -130,14 +130,14 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
                      new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(getUrlFilePath(), StandardOpenOption.APPEND)))) {
 
             for (final Film film : arrayFilms) {
-                if (checkIfExists(film.getThema(), film.getUrlHistory())) {
+                if (checkIfExists(film.getTheme(), film.getUrlHistory())) {
                     continue;
                 }
 
                 film.setShown(true);
                 film.setActHist(true);
 
-                HistoryData historyData = new HistoryData(datum, film.arr[FilmXml.FILM_THEMA], film.arr[FilmXml.FILM_TITEL], film.getUrlHistory());
+                HistoryData historyData = new HistoryData(datum, film.arr[FilmXml.FILM_THEME], film.arr[FilmXml.FILM_TITLE], film.getUrlHistory());
                 addToList(historyData);
                 bufferedWriter.write(historyData.getLine());
             }
@@ -157,7 +157,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
                      new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(getUrlFilePath(), StandardOpenOption.APPEND)))) {
 
             for (final Download download : arrayDownloads) {
-                if (checkIfExists(download.getThema(), download.getHistoryUrl())) {
+                if (checkIfExists(download.getTheme(), download.getHistoryUrl())) {
                     continue;
                 }
 
@@ -166,7 +166,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
                     download.getFilm().setActHist(true);
                 }
 
-                HistoryData historyData = new HistoryData(datum, download.getThema(), download.getTitel(), download.getHistoryUrl());
+                HistoryData historyData = new HistoryData(datum, download.getTheme(), download.getTitle(), download.getHistoryUrl());
                 addToList(historyData);
                 bufferedWriter.write(historyData.getLine());
 

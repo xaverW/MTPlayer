@@ -46,10 +46,10 @@ public class TableAbo {
         resColumn.setCellValueFactory(new PropertyValueFactory<>("resolution"));
 
         final TableColumn<Abo, String> senderColumn = new TableColumn<>("Sender");
-        senderColumn.setCellValueFactory(new PropertyValueFactory<>("sender"));
+        senderColumn.setCellValueFactory(new PropertyValueFactory<>("channel"));
 
         final TableColumn<Abo, Boolean> senderExaktColumn = new TableColumn<>("Sender exakt");
-        senderExaktColumn.setCellValueFactory(new PropertyValueFactory<>("senderExact"));
+        senderExaktColumn.setCellValueFactory(new PropertyValueFactory<>("channelExact"));
         senderExaktColumn.setCellFactory(CheckBoxTableCell.forTableColumn(senderExaktColumn));
 
         final TableColumn<Abo, String> themaColumn = new TableColumn<>("Thema");
@@ -62,20 +62,20 @@ public class TableAbo {
         final TableColumn<Abo, String> titelColumn = new TableColumn<>("Titel");
         titelColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
 
-        final TableColumn<Abo, String> themaTitelColumn = new TableColumn<>("Thema-Titel");
-        themaTitelColumn.setCellValueFactory(new PropertyValueFactory<>("themeTitle"));
+        final TableColumn<Abo, String> themeTitleColumn = new TableColumn<>("Thema-Titel");
+        themeTitleColumn.setCellValueFactory(new PropertyValueFactory<>("themeTitle"));
 
-        final TableColumn<Abo, String> irgendwoColumn = new TableColumn<>("irgendwo");
-        irgendwoColumn.setCellValueFactory(new PropertyValueFactory<>("somewhere"));
+        final TableColumn<Abo, String> somewhereColumn = new TableColumn<>("irgendwo");
+        somewhereColumn.setCellValueFactory(new PropertyValueFactory<>("somewhere"));
 
         final TableColumn<Abo, Integer> minColumn = new TableColumn<>("min");
-        minColumn.setCellValueFactory(new PropertyValueFactory<>("min"));
+        minColumn.setCellValueFactory(new PropertyValueFactory<>("minDuration"));
 
         final TableColumn<Abo, Integer> maxColumn = new TableColumn<>("max");
-        maxColumn.setCellValueFactory(new PropertyValueFactory<>("max"));
+        maxColumn.setCellValueFactory(new PropertyValueFactory<>("maxDuration"));
 
-        final TableColumn<Abo, String> zielColumn = new TableColumn<>("Ziel");
-        zielColumn.setCellValueFactory(new PropertyValueFactory<>("dest"));
+        final TableColumn<Abo, String> destinationColumn = new TableColumn<>("Ziel");
+        destinationColumn.setCellValueFactory(new PropertyValueFactory<>("destination"));
 
         final TableColumn<Abo, MDate> datumColumn = new TableColumn<>("Datum");
         datumColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
@@ -85,8 +85,8 @@ public class TableAbo {
 
         return new TableColumn[]{
                 nrColumn, aktivColumn, nameColumn, resColumn, senderColumn, senderExaktColumn,
-                themaColumn, themaExaktColumn, titelColumn, themaTitelColumn,
-                irgendwoColumn, minColumn, maxColumn, zielColumn, datumColumn, psetColumn};
+                themaColumn, themaExaktColumn, titelColumn, themeTitleColumn,
+                somewhereColumn, minColumn, maxColumn, destinationColumn, datumColumn, psetColumn};
 
     }
 

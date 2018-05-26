@@ -46,10 +46,10 @@ public class FilmTools {
         }
 
         Text text1, text2;
-        text1 = new Text(film.arr[FilmXml.FILM_SENDER] + "  -  " + film.arr[FilmXml.FILM_TITEL] + "\n\n");
+        text1 = new Text(film.arr[FilmXml.FILM_CHANNEL] + "  -  " + film.arr[FilmXml.FILM_TITLE] + "\n\n");
         text1.setFont(Font.font(null, FontWeight.BOLD, -1));
 
-        text2 = new Text(film.arr[FilmXml.FILM_BESCHREIBUNG]);
+        text2 = new Text(film.arr[FilmXml.FILM_DESCRIPTION]);
         text2.setWrappingWidth(20);
 
         list.addAll(text1, text2);
@@ -70,7 +70,7 @@ public class FilmTools {
 
     public static String getSizeFromWeb(Film film, String url) {
         if (url.equals(film.arr[FilmXml.FILM_URL])) {
-            return film.arr[FilmXml.FILM_GROESSE];
+            return film.arr[FilmXml.FILM_SIZE];
         } else {
             return FileSizeUrl.getFileSizeFromUrl(url);
         }
@@ -90,7 +90,7 @@ public class FilmTools {
 
     public static void playFilm(Film film, SetData psetData) {
         SetData pset;
-        String auflösung = "";
+        String resolution = "";
 
         if (psetData != null) {
             pset = psetData;
@@ -104,11 +104,11 @@ public class FilmTools {
         }
 
         if (ProgData.getInstance().storedFilter.getSelectedFilter().isOnlyHd()) {
-            auflösung = Film.AUFLOESUNG_HD;
+            resolution = Film.RESOLUTION_HD;
         }
 
         // und starten
-        ProgData.getInstance().starterClass.urlMitProgrammStarten(film, pset, auflösung);
+        ProgData.getInstance().starterClass.urlMitProgrammStarten(film, pset, resolution);
     }
 
     public static void saveFilm(Film film, SetData pSet) {
@@ -133,7 +133,7 @@ public class FilmTools {
 
         String aufloesung = "";
         if (progData.storedFilter.getSelectedFilter().isOnlyHd()) {
-            aufloesung = Film.AUFLOESUNG_HD;
+            aufloesung = Film.RESOLUTION_HD;
         }
 
         for (final Film datenFilm : liste) {

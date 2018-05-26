@@ -111,7 +111,7 @@ public class FilmProps extends FilmXml {
     }
 
     public void setShown(boolean shown) {
-        if (!arr[FilmXml.FILM_THEMA].equals(FilmTools.THEMA_LIVE)) {
+        if (!arr[FilmXml.FILM_THEME].equals(FilmTools.THEMA_LIVE)) {
             this.shown.set(shown);
         }
     }
@@ -120,16 +120,16 @@ public class FilmProps extends FilmXml {
         return nr;
     }
 
-    public String getSender() {
-        return arr[FILM_SENDER];
+    public String getChannel() {
+        return arr[FILM_CHANNEL];
     }
 
-    public String getThema() {
-        return arr[FILM_THEMA];
+    public String getTheme() {
+        return arr[FILM_THEME];
     }
 
-    public String getTitel() {
-        return arr[FILM_TITEL];
+    public String getTitle() {
+        return arr[FILM_TITLE];
     }
 
     public MDate getDate() {
@@ -137,11 +137,11 @@ public class FilmProps extends FilmXml {
     }
 
     public String getTime() {
-        return arr[FILM_ZEIT];
+        return arr[FILM_TIME];
     }
 
-    public String getDauer() {
-        return arr[FILM_DAUER];
+    public String getDuration() {
+        return arr[FILM_DURATION];
     }
 
     public FilmSize getFilmSize() {
@@ -181,7 +181,7 @@ public class FilmProps extends FilmXml {
 //    }
 
     public String getDescription() {
-        return arr[FILM_BESCHREIBUNG];
+        return arr[FILM_DESCRIPTION];
     }
 
     public String getGeo() {
@@ -251,6 +251,6 @@ public class FilmProps extends FilmXml {
 
     public String getFilmDateLong() {
         // beschleunigt etwas das Laden der Filmliste
-        return arr[FILM_DATUM_LONG];
+        return arr[FILM_DATE_LONG];
     }
 }

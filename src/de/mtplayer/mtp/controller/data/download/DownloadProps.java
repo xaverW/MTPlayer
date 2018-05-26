@@ -26,20 +26,20 @@ public class DownloadProps extends DownloadXml {
     private final IntegerProperty filmNr = new SimpleIntegerProperty(DownloadInfos.FILM_NUMBER_NOT_FOUND);
 
     private final StringProperty aboName = new SimpleStringProperty("");
-    private final StringProperty sender = new SimpleStringProperty("");
-    private final StringProperty thema = new SimpleStringProperty("");
-    private final StringProperty titel = new SimpleStringProperty("");
+    private final StringProperty channel = new SimpleStringProperty("");
+    private final StringProperty theme = new SimpleStringProperty("");
+    private final StringProperty title = new SimpleStringProperty("");
 
     private final IntegerProperty state = new SimpleIntegerProperty(DownloadInfos.STATE_INIT);
     private final DoubleProperty progress = new SimpleDoubleProperty(DownloadInfos.PROGRESS_NICHT_GESTARTET);
-    private final StringProperty restzeit = new SimpleStringProperty("");
-    private final StringProperty bandbreite = new SimpleStringProperty("");
+    private final StringProperty remaining = new SimpleStringProperty("");
+    private final StringProperty bandwidth = new SimpleStringProperty("");
 
     private final DownloadSize downloadSize = new DownloadSize();
     private final ObjectProperty<MDate> filmDate = new SimpleObjectProperty<>(new MDate(0));
 
-    private final StringProperty zeit = new SimpleStringProperty("");
-    private final StringProperty dauer = new SimpleStringProperty("");
+    private final StringProperty time = new SimpleStringProperty("");
+    private final StringProperty duration = new SimpleStringProperty("");
     private final BooleanProperty hd = new SimpleBooleanProperty(false);
     private final BooleanProperty ut = new SimpleBooleanProperty(false);
     private final BooleanProperty geoBlocked = new SimpleBooleanProperty(false);
@@ -67,9 +67,9 @@ public class DownloadProps extends DownloadXml {
     private final BooleanProperty infodatei = new SimpleBooleanProperty(false);
     private final BooleanProperty subtitle = new SimpleBooleanProperty(false);
 
-    public final Property[] properties = {nr, filmNr, aboName, sender, thema, titel,
-            progress, restzeit, bandbreite, downloadSize,
-            filmDate, zeit, dauer,
+    public final Property[] properties = {nr, filmNr, aboName, channel, theme, title,
+            progress, remaining, bandwidth, downloadSize,
+            filmDate, time, duration,
             hd, ut, geoBlocked, filmUrl, historyUrl, url, urlRtmp, urlSubtitle,
             set, programm, programmAufruf, programmAufrufArray, programmRestart, programmDownloadmanager,
             zielDateiname, zielPfad, zielPfadDatei,
@@ -130,40 +130,40 @@ public class DownloadProps extends DownloadXml {
         this.aboName.set(aboName);
     }
 
-    public String getSender() {
-        return sender.get();
+    public String getChannel() {
+        return channel.get();
     }
 
-    public StringProperty senderProperty() {
-        return sender;
+    public StringProperty channelProperty() {
+        return channel;
     }
 
-    public void setSender(String sender) {
-        this.sender.set(sender);
+    public void setChannel(String channel) {
+        this.channel.set(channel);
     }
 
-    public String getThema() {
-        return thema.get();
+    public String getTheme() {
+        return theme.get();
     }
 
-    public StringProperty themaProperty() {
-        return thema;
+    public StringProperty themeProperty() {
+        return theme;
     }
 
-    public void setThema(String thema) {
-        this.thema.set(thema);
+    public void setTheme(String theme) {
+        this.theme.set(theme);
     }
 
-    public String getTitel() {
-        return titel.get();
+    public String getTitle() {
+        return title.get();
     }
 
-    public StringProperty titelProperty() {
-        return titel;
+    public StringProperty titleProperty() {
+        return title;
     }
 
-    public void setTitel(String titel) {
-        this.titel.set(titel);
+    public void setTitle(String title) {
+        this.title.set(title);
     }
 
     public int getState() {
@@ -190,28 +190,28 @@ public class DownloadProps extends DownloadXml {
         this.progress.setValue(progress);
     }
 
-    public String getRestzeit() {
-        return restzeit.get();
+    public String getRemaining() {
+        return remaining.get();
     }
 
-    public StringProperty restzeitProperty() {
-        return restzeit;
+    public StringProperty remainingProperty() {
+        return remaining;
     }
 
-    public void setRestzeit(String restzeit) {
-        this.restzeit.set(restzeit);
+    public void setRemaining(String remaining) {
+        this.remaining.set(remaining);
     }
 
-    public String getBandbreite() {
-        return bandbreite.get();
+    public String getBandwidth() {
+        return bandwidth.get();
     }
 
-    public StringProperty bandbreiteProperty() {
-        return bandbreite;
+    public StringProperty bandwidthProperty() {
+        return bandwidth;
     }
 
-    public void setBandbreite(String bandbreite) {
-        this.bandbreite.set(bandbreite);
+    public void setBandwidth(String bandwidth) {
+        this.bandwidth.set(bandwidth);
     }
 
     public DownloadSize getDownloadSize() {
@@ -227,28 +227,28 @@ public class DownloadProps extends DownloadXml {
 //    }
 
 
-    public String getZeit() {
-        return zeit.get();
+    public String getTime() {
+        return time.get();
     }
 
-    public StringProperty zeitProperty() {
-        return zeit;
+    public StringProperty timeProperty() {
+        return time;
     }
 
-    public void setZeit(String zeit) {
-        this.zeit.set(zeit);
+    public void setTime(String time) {
+        this.time.set(time);
     }
 
-    public String getDauer() {
-        return dauer.get();
+    public String getDuration() {
+        return duration.get();
     }
 
-    public StringProperty dauerProperty() {
-        return dauer;
+    public StringProperty durationProperty() {
+        return duration;
     }
 
-    public void setDauer(String dauer) {
-        this.dauer.set(dauer);
+    public void setDuration(String duration) {
+        this.duration.set(duration);
     }
 
     public boolean isHd() {
@@ -518,13 +518,13 @@ public class DownloadProps extends DownloadXml {
     public void setPropsFromXml() {
 
         setAboName(arr[DOWNLOAD_ABO]);
-        setSender(arr[DOWNLOAD_SENDER]);
-        setThema(arr[DOWNLOAD_THEMA]);
-        setTitel(arr[DOWNLOAD_TITEL]);
+        setChannel(arr[DOWNLOAD_SENDER]);
+        setTheme(arr[DOWNLOAD_THEMA]);
+        setTitle(arr[DOWNLOAD_TITEL]);
 
         setFilmDate(arr[DOWNLOAD_DATUM], arr[DOWNLOAD_ZEIT]);
-        setZeit(arr[DOWNLOAD_ZEIT]);
-        setDauer(arr[DOWNLOAD_DAUER]);
+        setTime(arr[DOWNLOAD_ZEIT]);
+        setDuration(arr[DOWNLOAD_DAUER]);
 
         setHd(Boolean.parseBoolean(arr[DOWNLOAD_HD]));
         setUt(Boolean.parseBoolean(arr[DOWNLOAD_UT]));
@@ -557,12 +557,12 @@ public class DownloadProps extends DownloadXml {
 
     public void setXmlFromProps() {
         arr[DOWNLOAD_ABO] = getAboName();
-        arr[DOWNLOAD_SENDER] = getSender();
-        arr[DOWNLOAD_THEMA] = getThema();
-        arr[DOWNLOAD_TITEL] = getTitel();
+        arr[DOWNLOAD_SENDER] = getChannel();
+        arr[DOWNLOAD_THEMA] = getTheme();
+        arr[DOWNLOAD_TITEL] = getTitle();
         arr[DOWNLOAD_DATUM] = getFilmDate().toString();
-        arr[DOWNLOAD_ZEIT] = getZeit();
-        arr[DOWNLOAD_DAUER] = getDauer();
+        arr[DOWNLOAD_ZEIT] = getTime();
+        arr[DOWNLOAD_DAUER] = getDuration();
         arr[DOWNLOAD_HD] = String.valueOf(isHd());
         arr[DOWNLOAD_UT] = String.valueOf(isUt());
         arr[DOWNLOAD_GEO] = String.valueOf(getGeoBlocked());
@@ -588,7 +588,7 @@ public class DownloadProps extends DownloadXml {
 
 
     public int compareTo(DownloadProps arg0) {
-        return Data.sorter.compare(getSender(), arg0.getSender());
+        return Data.sorter.compare(getChannel(), arg0.getChannel());
     }
 
 }

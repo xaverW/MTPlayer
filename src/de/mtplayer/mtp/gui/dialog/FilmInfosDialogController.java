@@ -90,21 +90,21 @@ public class FilmInfosDialogController extends MTDialogExtra {
             txt[i] = new TextField("");
             txt[i].setEditable(false);
             switch (i) {
-                case FilmXml.FILM_DATUM_LONG:
-                case FilmXml.FILM_ABSPIELEN:
-                case FilmXml.FILM_AUFZEICHNEN:
+                case FilmXml.FILM_DATE_LONG:
+                case FilmXml.FILM_PLAY:
+                case FilmXml.FILM_RECORD:
                 case FilmXml.FILM_URL_AUTH:
                 case FilmXml.FILM_URL_HD:
                 case FilmXml.FILM_URL_HISTORY:
-                case FilmXml.FILM_URL_KLEIN:
+                case FilmXml.FILM_URL_SMALL:
                 case FilmXml.FILM_URL_RTMP:
                 case FilmXml.FILM_URL_RTMP_HD:
-                case FilmXml.FILM_URL_RTMP_KLEIN:
+                case FilmXml.FILM_URL_RTMP_SMALL:
                 case FilmXml.FILM_URL_SUBTITLE:
-                case FilmXml.FILM_NEU:
+                case FilmXml.FILM_NEW:
                     // bis hier nicht anzeigen
                     break;
-                case FilmXml.FILM_BESCHREIBUNG:
+                case FilmXml.FILM_DESCRIPTION:
                     final TextArea ta = new TextArea();
                     ta.setEditable(false);
                     ta.setWrapText(true);

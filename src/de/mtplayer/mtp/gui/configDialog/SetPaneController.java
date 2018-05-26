@@ -58,7 +58,7 @@ public class SetPaneController extends AnchorPane {
     static int newCounter = 1;
 
     SetDataPane setDataPane;
-    Collection<TitledPane> setDataPaneTitel;
+    Collection<TitledPane> setDataPaneTitle;
 
     BooleanProperty accordionProp = ProgConfig.CONFIG_DIALOG_ACCORDION.getBooleanProperty();
     DoubleProperty split = ProgConfig.CONFIG_DIALOG_SET_DIVIDER.getDoubleProperty();
@@ -101,11 +101,11 @@ public class SetPaneController extends AnchorPane {
     private void setAccordion() {
         if (cbxAccordion.isSelected()) {
             noaccordion.getChildren().clear();
-            accordion.getPanes().addAll(setDataPaneTitel);
+            accordion.getPanes().addAll(setDataPaneTitle);
             scrollPane.setContent(accordion);
         } else {
             accordion.getPanes().clear();
-            noaccordion.getChildren().addAll(setDataPaneTitel);
+            noaccordion.getChildren().addAll(setDataPaneTitle);
             noaccordion.getChildren().stream().forEach(node -> ((TitledPane) node).setExpanded(true));
             scrollPane.setContent(noaccordion);
         }
@@ -118,9 +118,9 @@ public class SetPaneController extends AnchorPane {
     }
 
     private void createSetDataPane() {
-        setDataPaneTitel = new ArrayList<>();
+        setDataPaneTitle = new ArrayList<>();
         setDataPane = new SetDataPane();
-        setDataPane.makeSetPane(setDataPaneTitel);
+        setDataPane.makeSetPane(setDataPaneTitle);
     }
 
     private void makeSetListTable(Collection<TitledPane> result) {

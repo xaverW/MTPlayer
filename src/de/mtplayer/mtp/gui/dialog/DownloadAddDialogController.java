@@ -135,7 +135,7 @@ public class DownloadAddDialogController extends MTDialog {
         private String dateiGroesse_Hoch = "";
         private String dateiGroesse_Klein = "";
 
-        private String aufloesung = FilmXml.AUFLOESUNG_HD;
+        private String aufloesung = FilmXml.RESOLUTION_HD;
         private boolean info, subtitle, subDisable = false;
 
         private Film film;
@@ -152,14 +152,14 @@ public class DownloadAddDialogController extends MTDialog {
                     d.aufloesung = aufloesung;
 
                     switch (aufloesung) {
-                        case FilmXml.AUFLOESUNG_HD:
+                        case FilmXml.RESOLUTION_HD:
                             if (d.dateiGroesse_HD.isEmpty()) {
-                                d.aufloesung = FilmXml.AUFLOESUNG_NORMAL;
+                                d.aufloesung = FilmXml.RESOLUTION_NORMAL;
                             }
                             break;
-                        case FilmXml.AUFLOESUNG_KLEIN:
+                        case FilmXml.RESOLUTION_SMALL:
                             if (d.dateiGroesse_Klein.isEmpty()) {
-                                d.aufloesung = FilmXml.AUFLOESUNG_NORMAL;
+                                d.aufloesung = FilmXml.RESOLUTION_NORMAL;
                             }
                             break;
                     }
@@ -291,7 +291,7 @@ public class DownloadAddDialogController extends MTDialog {
             btnNext.setDisable(false);
         }
 
-        lblFilmTitle.setText(downInfo[filmNr].film.getSender() + "  -  " + downInfo[filmNr].film.getTitel());
+        lblFilmTitle.setText(downInfo[filmNr].film.getChannel() + "  -  " + downInfo[filmNr].film.getTitle());
         makeResolutionButtons();
         makeCheckBox();
         makeFilmName();
@@ -303,13 +303,13 @@ public class DownloadAddDialogController extends MTDialog {
         rbSmall.setDisable(!downInfo[filmNr].film.isSmall());
 
         switch (downInfo[filmNr].aufloesung) {
-            case FilmXml.AUFLOESUNG_HD:
+            case FilmXml.RESOLUTION_HD:
                 rbHd.setSelected(true);
                 break;
-            case FilmXml.AUFLOESUNG_KLEIN:
+            case FilmXml.RESOLUTION_SMALL:
                 rbSmall.setSelected(true);
                 break;
-            case FilmXml.AUFLOESUNG_NORMAL:
+            case FilmXml.RESOLUTION_NORMAL:
             default:
                 rbHigh.setSelected(true);
                 break;
@@ -361,7 +361,7 @@ public class DownloadAddDialogController extends MTDialog {
 
         downInfo.psetData = psetData;
 
-        downInfo.download = new Download(psetData, downInfo.film, DownloadInfos.SRC_DOWNLOAD, null, "", "", FilmXml.AUFLOESUNG_NORMAL);
+        downInfo.download = new Download(psetData, downInfo.film, DownloadInfos.SRC_DOWNLOAD, null, "", "", FilmXml.RESOLUTION_NORMAL);
 
         downInfo.path = downInfo.download.getZielPfad();
         downInfo.name = downInfo.download.getZielDateiname();
@@ -378,16 +378,16 @@ public class DownloadAddDialogController extends MTDialog {
         }
 
         // die Werte passend zum Film setzen
-        if (downInfo.psetData.getResolution().equals(FilmXml.AUFLOESUNG_HD)
+        if (downInfo.psetData.getResolution().equals(FilmXml.RESOLUTION_HD)
                 && downInfo.film.isHd()) {
-            downInfo.aufloesung = FilmXml.AUFLOESUNG_HD;
+            downInfo.aufloesung = FilmXml.RESOLUTION_HD;
 
-        } else if (downInfo.psetData.getResolution().equals(FilmXml.AUFLOESUNG_KLEIN)
+        } else if (downInfo.psetData.getResolution().equals(FilmXml.RESOLUTION_SMALL)
                 && downInfo.film.isSmall()) {
-            downInfo.aufloesung = FilmXml.AUFLOESUNG_KLEIN;
+            downInfo.aufloesung = FilmXml.RESOLUTION_SMALL;
 
         } else {
-            downInfo.aufloesung = FilmXml.AUFLOESUNG_NORMAL;
+            downInfo.aufloesung = FilmXml.RESOLUTION_NORMAL;
         }
 
     }
@@ -455,13 +455,13 @@ public class DownloadAddDialogController extends MTDialog {
 
     private String getFilmSize(DownInfo downInfo) {
         switch (downInfo.aufloesung) {
-            case FilmXml.AUFLOESUNG_HD:
+            case FilmXml.RESOLUTION_HD:
                 return downInfo.dateiGroesse_HD;
 
-            case FilmXml.AUFLOESUNG_KLEIN:
+            case FilmXml.RESOLUTION_SMALL:
                 return downInfo.dateiGroesse_Klein;
 
-            case FilmXml.AUFLOESUNG_NORMAL:
+            case FilmXml.RESOLUTION_NORMAL:
             default:
                 return downInfo.dateiGroesse_Hoch;
 
@@ -606,13 +606,13 @@ public class DownloadAddDialogController extends MTDialog {
             downInfo[i].name = downInfo[i].download.getZielDateiname();
 
             downInfo[i].dateiGroesse_HD = downInfo[i].film.isHd() ?
-                    FilmTools.getSizeFromWeb(downInfo[i].film, downInfo[i].film.getUrlFuerAufloesung(FilmXml.AUFLOESUNG_HD)) : "";
+                    FilmTools.getSizeFromWeb(downInfo[i].film, downInfo[i].film.getUrlFuerAufloesung(FilmXml.RESOLUTION_HD)) : "";
 
             downInfo[i].dateiGroesse_Hoch = FilmTools.getSizeFromWeb(downInfo[i].film,
-                    downInfo[i].film.getUrlFuerAufloesung(Film.AUFLOESUNG_NORMAL));
+                    downInfo[i].film.getUrlFuerAufloesung(Film.RESOLUTION_NORMAL));
 
             downInfo[i].dateiGroesse_Klein = downInfo[i].film.isSmall() ?
-                    FilmTools.getSizeFromWeb(downInfo[i].film, downInfo[i].film.getUrlFuerAufloesung(FilmXml.AUFLOESUNG_KLEIN)) : "";
+                    FilmTools.getSizeFromWeb(downInfo[i].film, downInfo[i].film.getUrlFuerAufloesung(FilmXml.RESOLUTION_SMALL)) : "";
 
             downInfo[i].info = downInfo[i].psetData.isInfoFile();
 
@@ -626,18 +626,18 @@ public class DownloadAddDialogController extends MTDialog {
             }
 
             // die Werte passend zum Film setzen
-            if ((filterAufloesung.equals(FilmXml.AUFLOESUNG_HD) || downInfo[i].psetData.getResolution().equals(FilmXml.AUFLOESUNG_HD))
+            if ((filterAufloesung.equals(FilmXml.RESOLUTION_HD) || downInfo[i].psetData.getResolution().equals(FilmXml.RESOLUTION_HD))
                     && downInfo[i].film.isHd()) {
 
                 //Dann wurde im Filter oder Set HD ausgewählt und wird voreingestellt
-                downInfo[i].aufloesung = FilmXml.AUFLOESUNG_HD;
+                downInfo[i].aufloesung = FilmXml.RESOLUTION_HD;
 
-            } else if (downInfo[i].psetData.getResolution().equals(FilmXml.AUFLOESUNG_KLEIN)
+            } else if (downInfo[i].psetData.getResolution().equals(FilmXml.RESOLUTION_SMALL)
                     && downInfo[i].film.isSmall()) {
-                downInfo[i].aufloesung = FilmXml.AUFLOESUNG_KLEIN;
+                downInfo[i].aufloesung = FilmXml.RESOLUTION_SMALL;
 
             } else {
-                downInfo[i].aufloesung = FilmXml.AUFLOESUNG_NORMAL;
+                downInfo[i].aufloesung = FilmXml.RESOLUTION_NORMAL;
             }
 
 
@@ -689,9 +689,9 @@ public class DownloadAddDialogController extends MTDialog {
         // und jetzt für den aktuellen Film das GUI setzen
         makeResolutionButtons();
 
-        rbHd.setOnAction(a -> downInfo[filmNr].setAufloesung(FilmXml.AUFLOESUNG_HD));
-        rbHigh.setOnAction(a -> downInfo[filmNr].setAufloesung(FilmXml.AUFLOESUNG_NORMAL));
-        rbSmall.setOnAction(a -> downInfo[filmNr].setAufloesung(FilmXml.AUFLOESUNG_KLEIN));
+        rbHd.setOnAction(a -> downInfo[filmNr].setAufloesung(FilmXml.RESOLUTION_HD));
+        rbHigh.setOnAction(a -> downInfo[filmNr].setAufloesung(FilmXml.RESOLUTION_NORMAL));
+        rbSmall.setOnAction(a -> downInfo[filmNr].setAufloesung(FilmXml.RESOLUTION_SMALL));
     }
 
     private void initCheckBox() {

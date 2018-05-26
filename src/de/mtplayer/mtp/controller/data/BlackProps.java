@@ -47,12 +47,12 @@ public class BlackProps extends Data<BlackProps> {
     public String[] arr;
 
     private int nr = 0;
-    private final StringProperty sender = new SimpleStringProperty("");
-    private final BooleanProperty senderExact = new SimpleBooleanProperty(true);
-    private final StringProperty thema = new SimpleStringProperty("");
-    private final BooleanProperty themaExact = new SimpleBooleanProperty(true);
-    private final StringProperty titel = new SimpleStringProperty("");
-    private final StringProperty themaTitel = new SimpleStringProperty("");
+    private final StringProperty channel = new SimpleStringProperty("");
+    private final BooleanProperty channelExact = new SimpleBooleanProperty(true);
+    private final StringProperty theme = new SimpleStringProperty("");
+    private final BooleanProperty themeExact = new SimpleBooleanProperty(true);
+    private final StringProperty title = new SimpleStringProperty("");
+    private final StringProperty themeTitle = new SimpleStringProperty("");
 
 
     public BlackProps() {
@@ -68,94 +68,94 @@ public class BlackProps extends Data<BlackProps> {
         this.nr = nr;
     }
 
-    public String getSender() {
-        return sender.get();
+    public String getChannel() {
+        return channel.get();
     }
 
-    public StringProperty senderProperty() {
-        return sender;
+    public StringProperty channelProperty() {
+        return channel;
     }
 
-    public void setSender(String sender) {
-        this.sender.set(sender);
+    public void setChannel(String channel) {
+        this.channel.set(channel);
     }
 
-    public boolean isSenderExact() {
-        return senderExact.get();
+    public boolean getChannelExact() {
+        return channelExact.get();
     }
 
-    public BooleanProperty senderExactProperty() {
-        return senderExact;
+    public BooleanProperty channelExactProperty() {
+        return channelExact;
     }
 
-    public void setSenderExact(boolean senderExact) {
-        this.senderExact.set(senderExact);
+    public void setChannelExact(boolean channelExact) {
+        this.channelExact.set(channelExact);
     }
 
-    public String getThema() {
-        return thema.get();
+    public String getTheme() {
+        return theme.get();
     }
 
-    public StringProperty themaProperty() {
-        return thema;
+    public StringProperty themeProperty() {
+        return theme;
     }
 
-    public void setThema(String thema) {
-        this.thema.set(thema);
+    public void setTheme(String theme) {
+        this.theme.set(theme);
     }
 
-    public boolean isThemaExact() {
-        return themaExact.get();
+    public boolean getThemeExact() {
+        return themeExact.get();
     }
 
-    public BooleanProperty themaExactProperty() {
-        return themaExact;
+    public BooleanProperty themeExactProperty() {
+        return themeExact;
     }
 
-    public void setThemaExact(boolean themaExact) {
-        this.themaExact.set(themaExact);
+    public void setThemeExact(boolean themeExact) {
+        this.themeExact.set(themeExact);
     }
 
-    public String getTitel() {
-        return titel.get();
+    public String getTitle() {
+        return title.get();
     }
 
-    public StringProperty titelProperty() {
-        return titel;
+    public StringProperty titleProperty() {
+        return title;
     }
 
-    public void setTitel(String titel) {
-        this.titel.set(titel);
+    public void setTitle(String title) {
+        this.title.set(title);
     }
 
-    public String getThemaTitel() {
-        return themaTitel.get();
+    public String getThemeTitle() {
+        return themeTitle.get();
     }
 
-    public StringProperty themaTitelProperty() {
-        return themaTitel;
+    public StringProperty themeTitleProperty() {
+        return themeTitle;
     }
 
-    public void setThemaTitel(String themaTitel) {
-        this.themaTitel.set(themaTitel);
+    public void setThemeTitle(String themeTitle) {
+        this.themeTitle.set(themeTitle);
     }
 
     public void setPropsFromXml() {
-        setSender(arr[BLACKLIST_SENDER]);
-        setSenderExact(arr[BLACKLIST_SENDER_EXAKT].isEmpty() ? true : Boolean.parseBoolean(arr[BLACKLIST_SENDER_EXAKT]));
-        setThema(arr[BLACKLIST_THEMA]);
-        setThemaExact(arr[BLACKLIST_THEMA_EXAKT].isEmpty() ? true : Boolean.parseBoolean(arr[BLACKLIST_THEMA_EXAKT]));
-        setTitel(arr[BLACKLIST_TITEL]);
-        setThemaTitel(arr[BLACKLIST_THEMA_TITEL]);
+        setChannel(arr[BLACKLIST_SENDER]);
+        setChannelExact(arr[BLACKLIST_SENDER_EXAKT].isEmpty() ? true : Boolean.parseBoolean(arr[BLACKLIST_SENDER_EXAKT]));
+        setTheme(arr[BLACKLIST_THEMA]);
+        setThemeExact(arr[BLACKLIST_THEMA_EXAKT].isEmpty() ? true : Boolean.parseBoolean(arr[BLACKLIST_THEMA_EXAKT]));
+        setTitle(arr[BLACKLIST_TITEL]);
+        setThemeTitle(arr[BLACKLIST_THEMA_TITEL]);
     }
 
     public void setXmlFromProps() {
         arr[BLACKLIST_NR] = getNr() + "";
-        arr[BLACKLIST_SENDER] = getSender();
-        arr[BLACKLIST_SENDER_EXAKT] = String.valueOf(isSenderExact());
-        arr[BLACKLIST_THEMA] = getThema();
-        arr[BLACKLIST_THEMA_EXAKT] = String.valueOf(isThemaExact());
-        arr[BLACKLIST_TITEL] = getTitel();
-        arr[BLACKLIST_THEMA_TITEL] = getThemaTitel();
+        arr[BLACKLIST_SENDER] = getChannel();
+        arr[BLACKLIST_SENDER_EXAKT] = String.valueOf(getChannelExact());
+        arr[BLACKLIST_THEMA] = getTheme();
+        arr[BLACKLIST_THEMA_EXAKT] = String.valueOf(getThemeExact());
+        arr[BLACKLIST_TITEL] = getTitle();
+        arr[BLACKLIST_THEMA_TITEL] = getThemeTitle();
     }
 }

@@ -33,7 +33,7 @@ public class SetProps extends SetXml {
 
     private StringProperty destPath = new SimpleStringProperty("");
     private StringProperty destName = new SimpleStringProperty("");
-    private BooleanProperty genThema = new SimpleBooleanProperty(true);
+    private BooleanProperty genTheme = new SimpleBooleanProperty(true);
     private BooleanProperty play = new SimpleBooleanProperty(false);
     private BooleanProperty save = new SimpleBooleanProperty(false);
     private BooleanProperty button = new SimpleBooleanProperty(false);
@@ -41,7 +41,7 @@ public class SetProps extends SetXml {
 
     private IntegerProperty maxSize = new SimpleIntegerProperty(0);
     private IntegerProperty maxField = new SimpleIntegerProperty(0);
-    private StringProperty resolution = new SimpleStringProperty(FilmXml.AUFLOESUNG_NORMAL);
+    private StringProperty resolution = new SimpleStringProperty(FilmXml.RESOLUTION_NORMAL);
     private StringProperty adOn = new SimpleStringProperty("");
     private StringProperty descripton = new SimpleStringProperty("");
     private StringProperty infoUrl = new SimpleStringProperty("");
@@ -121,16 +121,16 @@ public class SetProps extends SetXml {
         this.destName.set(destName);
     }
 
-    public boolean isGenThema() {
-        return genThema.get();
+    public boolean getGenTheme() {
+        return genTheme.get();
     }
 
-    public BooleanProperty genThemaProperty() {
-        return genThema;
+    public BooleanProperty genThemeProperty() {
+        return genTheme;
     }
 
-    public void setGenThema(boolean genThema) {
-        this.genThema.set(genThema);
+    public void setGenTheme(boolean genTheme) {
+        this.genTheme.set(genTheme);
     }
 
     public boolean isPlay() {
@@ -287,7 +287,7 @@ public class SetProps extends SetXml {
 
         setDestPath(arr[PROGRAMMSET_ZIEL_PFAD]);
         setDestName(arr[PROGRAMMSET_ZIEL_DATEINAME]);
-        setGenThema(Boolean.parseBoolean(arr[PROGRAMMSET_THEMA_ANLEGEN]));
+        setGenTheme(Boolean.parseBoolean(arr[PROGRAMMSET_THEMA_ANLEGEN]));
         setPlay(Boolean.parseBoolean(arr[PROGRAMMSET_IST_ABSPIELEN]));
         setSave(Boolean.parseBoolean(arr[PROGRAMMSET_IST_SPEICHERN]));
         setButton(Boolean.parseBoolean(arr[PROGRAMMSET_IST_BUTTON]));
@@ -335,7 +335,7 @@ public class SetProps extends SetXml {
         arr[PROGRAMMSET_ZIEL_PFAD] = getDestPath();
         arr[PROGRAMMSET_ZIEL_DATEINAME] = getDestName();
 
-        arr[PROGRAMMSET_THEMA_ANLEGEN] = String.valueOf(isGenThema());
+        arr[PROGRAMMSET_THEMA_ANLEGEN] = String.valueOf(getGenTheme());
         arr[PROGRAMMSET_IST_ABSPIELEN] = String.valueOf(isPlay());
         arr[PROGRAMMSET_IST_SPEICHERN] = String.valueOf(isSave());
         arr[PROGRAMMSET_IST_BUTTON] = String.valueOf(isButton());

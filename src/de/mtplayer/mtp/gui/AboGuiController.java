@@ -24,8 +24,6 @@ import de.mtplayer.mtp.gui.tools.Table;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
@@ -69,7 +67,7 @@ public class AboGuiController extends AnchorPane {
         return table.getSelectionModel().getSelectedItems().size();
     }
 
-    public void aendern() {
+    public void changeAbo() {
         ObservableList<Abo> lAbo = getSelList();
         progData.aboList.changeAbo(lAbo);
     }
@@ -79,9 +77,9 @@ public class AboGuiController extends AnchorPane {
         progData.aboList.onOffAbo(lAbo, on);
     }
 
-    public void loeschen() {
+    public void deleteAbo() {
         ObservableList<Abo> lAbo = getSelList();
-        progData.aboList.aboLoeschen(lAbo);
+        progData.aboList.deleteAbo(lAbo);
     }
 
 
@@ -126,7 +124,7 @@ public class AboGuiController extends AnchorPane {
 
         table.setOnMouseClicked(m -> {
             if (m.getButton().equals(MouseButton.PRIMARY) && m.getClickCount() == 2) {
-                aendern();
+                changeAbo();
             }
         });
 
@@ -157,10 +155,10 @@ public class AboGuiController extends AnchorPane {
             contextMenu.getItems().add(mbOn);
         }
         final MenuItem miDel = new MenuItem("löschen");
-        miDel.setOnAction(a -> loeschen());
+        miDel.setOnAction(a -> deleteAbo());
 
         final MenuItem miChange = new MenuItem("ändern");
-        miChange.setOnAction(a -> aendern());
+        miChange.setOnAction(a -> changeAbo());
 
         final MenuItem miNew = new MenuItem("neues Abo anlegen");
         miNew.setOnAction(a -> neu());
@@ -171,11 +169,7 @@ public class AboGuiController extends AnchorPane {
         contextMenu.getItems().addAll(miDel, miChange, miNew, new SeparatorMenuItem(), miSelection);
 
         MenuItem resetTable = new MenuItem("Tabelle zurücksetzen");
-        resetTable.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e) {
-                new Table().resetTable(table, Table.TABLE.ABO);
-            }
-        });
+        resetTable.setOnAction(e -> new Table().resetTable(table, Table.TABLE.ABO));
         contextMenu.getItems().add(resetTable);
 
     }
@@ -184,7 +178,7 @@ public class AboGuiController extends AnchorPane {
         ProgConfig.FILTER_ABO_SENDER.getStringProperty().addListener((observable, oldValue, newValue) -> {
             final String searchStr = newValue == null ? "" : newValue;
             filteredAbos.setPredicate(searchStr.isEmpty() ?
-                    s -> true : s -> s.getSender().equals(searchStr));
+                    s -> true : s -> s.getChannel().equals(searchStr));
         });
     }
 }

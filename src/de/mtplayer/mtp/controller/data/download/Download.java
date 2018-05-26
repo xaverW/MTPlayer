@@ -157,8 +157,8 @@ public final class Download extends DownloadProps {
 
         final DownloadSize downSize = getDownloadSize();
         downSize.reset();
-        setRestzeit("");
-        setBandbreite("");
+        setRemaining("");
+        setBandwidth("");
         setNr(DownloadInfos.DOWNLOAD_NUMBER_NOT_STARTED);
 
         MLProperty.setProperty(stateProperty(), DownloadInfos.STATE_INIT);
@@ -176,8 +176,8 @@ public final class Download extends DownloadProps {
 
         final DownloadSize downSize = getDownloadSize();
         downSize.reset();
-        setRestzeit("");
-        setBandbreite("");
+        setRemaining("");
+        setBandwidth("");
         setNr(DownloadInfos.DOWNLOAD_NUMBER_NOT_STARTED);
     }
 
@@ -205,7 +205,7 @@ public final class Download extends DownloadProps {
     public void setSizeDownloadFromFilm() {
         if (film != null) {
             if (film.arr[Film.FILM_URL].equals(getUrl())) {
-                getDownloadSize().setSize(film.arr[Film.FILM_GROESSE]);
+                getDownloadSize().setSize(film.arr[Film.FILM_SIZE]);
             } else {
                 getDownloadSize().setSize("");
             }
@@ -235,15 +235,15 @@ public final class Download extends DownloadProps {
         }
         this.film = film;
         setFilmNr(film.getNr());
-        setSender(film.arr[FilmXml.FILM_SENDER]);
-        setThema(film.arr[FilmXml.FILM_THEMA]);
-        setTitel(film.arr[FilmXml.FILM_TITEL]);
+        setChannel(film.arr[FilmXml.FILM_CHANNEL]);
+        setTheme(film.arr[FilmXml.FILM_THEME]);
+        setTitle(film.arr[FilmXml.FILM_TITLE]);
         setFilmUrl(film.arr[FilmXml.FILM_URL]);
         setUrlSubtitle(film.getUrlSubtitle());
 
-        setFilmDate(film.arr[FilmXml.FILM_DATUM], film.arr[FilmXml.FILM_ZEIT]);
-        setZeit(film.arr[FilmXml.FILM_ZEIT]);
-        setDauer(film.arr[FilmXml.FILM_DAUER]);
+        setFilmDate(film.arr[FilmXml.FILM_DATE], film.arr[FilmXml.FILM_TIME]);
+        setTime(film.arr[FilmXml.FILM_TIME]);
+        setDuration(film.arr[FilmXml.FILM_DURATION]);
 
         setUrlRtmp(film.arr[FilmXml.FILM_URL_RTMP]);
         setHd(film.isHd());
@@ -289,7 +289,7 @@ public final class Download extends DownloadProps {
             path = SysTools.getStandardDownloadPath();
         }
         if (name.isEmpty()) {
-            name = StringFormatters.FORMATTER_yyyyMMdd.format(new Date()) + '_' + getThema() + '-' + getTitel() + ".mp4";
+            name = StringFormatters.FORMATTER_yyyyMMdd.format(new Date()) + '_' + getTheme() + '-' + getTitle() + ".mp4";
         }
         final String[] pathName = {path, name};
         FileUtils.checkLengthPath(pathName);

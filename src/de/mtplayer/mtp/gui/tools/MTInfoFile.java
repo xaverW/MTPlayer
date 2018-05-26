@@ -37,17 +37,17 @@ public class MTInfoFile {
              OutputStreamWriter osw = new OutputStreamWriter(dos);
              BufferedWriter br = new BufferedWriter(osw)) {
             if (datenDownload.getFilm() != null) {
-                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_SENDER] + ":      " + datenDownload.getFilm().arr[FilmXml.FILM_SENDER]);
+                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_CHANNEL] + ":      " + datenDownload.getFilm().arr[FilmXml.FILM_CHANNEL]);
                 br.write("\n");
-                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_THEMA] + ":       " + datenDownload.getFilm().arr[FilmXml.FILM_THEMA]);
+                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_THEME] + ":       " + datenDownload.getFilm().arr[FilmXml.FILM_THEME]);
                 br.write("\n\n");
-                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_TITEL] + ":       " + datenDownload.getFilm().arr[FilmXml.FILM_TITEL]);
+                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_TITLE] + ":       " + datenDownload.getFilm().arr[FilmXml.FILM_TITLE]);
                 br.write("\n\n");
-                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_DATUM] + ":       " + datenDownload.getFilm().arr[FilmXml.FILM_DATUM]);
+                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_DATE] + ":       " + datenDownload.getFilm().arr[FilmXml.FILM_DATE]);
                 br.write("\n");
-                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_ZEIT] + ":        " + datenDownload.getFilm().arr[FilmXml.FILM_ZEIT]);
+                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_TIME] + ":        " + datenDownload.getFilm().arr[FilmXml.FILM_TIME]);
                 br.write("\n");
-                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_DAUER] + ":       " + datenDownload.getFilm().arr[FilmXml.FILM_DAUER]);
+                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_DURATION] + ":       " + datenDownload.getFilm().arr[FilmXml.FILM_DURATION]);
                 br.write("\n");
                 br.write(DownloadXml.COLUMN_NAMES[DownloadXml.DOWNLOAD_GROESSE] + ":  " + datenDownload.getDownloadSize());
                 br.write("\n\n");
@@ -69,7 +69,7 @@ public class MTInfoFile {
 
             if (datenDownload.getFilm() != null) {
                 int anz = 0;
-                for (final String s : datenDownload.getFilm().arr[FilmXml.FILM_BESCHREIBUNG].split(" ")) {
+                for (final String s : datenDownload.getFilm().arr[FilmXml.FILM_DESCRIPTION].split(" ")) {
                     anz += s.length();
                     br.write(s + ' ');
                     if (anz > 50) {

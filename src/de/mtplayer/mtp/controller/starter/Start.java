@@ -48,7 +48,7 @@ public class Start {
 
     public void setBandwidth(long bandwidth) {
         this.bandwidth = bandwidth;
-        download.setBandbreite(SizeTools.humanReadableBandwidth(bandwidth));
+        download.setBandwidth(SizeTools.humanReadableBandwidth(bandwidth));
     }
 
     public long getTimeLeft() {
@@ -58,9 +58,9 @@ public class Start {
     public void setTimeLeft(long timeLeft) {
         this.timeLeft = timeLeft;
         if (download.isStateStartedRun() && getTimeLeft() > 0) {
-            download.setRestzeit(DownloadInfos.getTextRestzeit(timeLeft));
+            download.setRemaining(DownloadInfos.getTextRestzeit(timeLeft));
         } else {
-            download.setRestzeit("");
+            download.setRemaining("");
         }
     }
 

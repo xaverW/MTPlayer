@@ -52,11 +52,11 @@ public class TableFilm {
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("nr"));
 
         final TableColumn<Film, String> senderColumn = new TableColumn<>("Sender");
-        senderColumn.setCellValueFactory(new PropertyValueFactory<>("sender"));
+        senderColumn.setCellValueFactory(new PropertyValueFactory<>("channel"));
         final TableColumn<Film, String> themaColumn = new TableColumn<>("Thema");
-        themaColumn.setCellValueFactory(new PropertyValueFactory<>("thema"));
+        themaColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
         final TableColumn<Film, String> titelColumn = new TableColumn<>("Titel");
-        titelColumn.setCellValueFactory(new PropertyValueFactory<>("titel"));
+        titelColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
 
         final TableColumn<Film, String> startColumn = new TableColumn<>("");
         startColumn.setCellFactory(cellFactoryStart);
@@ -67,7 +67,7 @@ public class TableFilm {
         final TableColumn<Film, String> zeitColumn = new TableColumn<>("Zeit");
         zeitColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
         final TableColumn<Film, Integer> dauerColumn = new TableColumn<>("Dauer");
-        dauerColumn.setCellValueFactory(new PropertyValueFactory<>("dauer"));
+        dauerColumn.setCellValueFactory(new PropertyValueFactory<>("duration"));
         final TableColumn<Film, FilmSize> groesseColumn = new TableColumn<>("Größe [MB]");
         groesseColumn.setCellValueFactory(new PropertyValueFactory<>("filmSize"));
 
@@ -137,7 +137,7 @@ public class TableFilm {
                 if (film == null || empty) {
                     setStyle("");
                 } else {
-                    if (film.getThema().equals(FilmTools.THEMA_LIVE)) {
+                    if (film.getTheme().equals(FilmTools.THEMA_LIVE)) {
                         // livestream
                         for (int i = 0; i < getChildren().size(); i++) {
                             getChildren().get(i).setStyle(MTColor.FILM_LIVESTREAM.getCssFontBold());

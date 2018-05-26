@@ -31,6 +31,7 @@ import de.mtplayer.mtp.gui.dialogStart.StartDialogController;
 import de.mtplayer.mtp.res.GetIcon;
 import de.mtplayer.mtp.tools.storedFilter.ProgInitFilter;
 import de.mtplayer.mtp.tools.update.SearchProgramUpdate;
+import de.p2tools.p2Lib.PInit;
 import de.p2tools.p2Lib.guiTools.GuiSize;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.tools.log.Duration;
@@ -87,6 +88,7 @@ public class MTPlayer extends Application {
 
     private void initP2() {
         PButton.setHlpImage(GetIcon.getImage("button-help.png", 16, 16));
+        PInit.initLib(primaryStage, ProgConst.PROGRAMMNAME, ProgConst.CSS_FILE, "", ProgData.debug);
     }
 
     private void loadData() {
@@ -148,7 +150,7 @@ public class MTPlayer extends Application {
         progStart.startMsg();
 
         Duration.staticPing("Erster Start");
-        setOrgTitel();
+        setOrgTitle();
         initProg();
 
         Duration.staticPing("Gui steht!");
@@ -156,15 +158,15 @@ public class MTPlayer extends Application {
     }
 
 
-    private void setOrgTitel() {
+    private void setOrgTitle() {
         primaryStage.setTitle(ProgConst.PROGRAMMNAME + " " + Functions.getProgVersion());
     }
 
-    private void setUpdateTitel() {
+    private void setUpdateTitle() {
         primaryStage.setTitle(TITLE_TEXT_EIN_PROGRAMMUPDATE_IST_VERFUEGBAR);
     }
 
-    private void setNoUpdateTitel() {
+    private void setNoUpdateTitle() {
         primaryStage.setTitle(TITLE_TEXT_PROGRAMMVERSION_IST_AKTUELL);
     }
 
@@ -198,14 +200,14 @@ public class MTPlayer extends Application {
         Thread th = new Thread(() -> {
             try {
                 if (new SearchProgramUpdate().checkVersion(false, false /* immer anzeigen */)) {
-                    Platform.runLater(() -> setUpdateTitel());
+                    Platform.runLater(() -> setUpdateTitle());
                 } else {
-                    Platform.runLater(() -> setNoUpdateTitel());
+                    Platform.runLater(() -> setNoUpdateTitle());
                 }
 
                 sleep(10_000);
 
-                Platform.runLater(() -> setOrgTitel());
+                Platform.runLater(() -> setOrgTitle());
 
             } catch (final Exception ex) {
                 PLog.errorLog(794612801, ex);

@@ -27,9 +27,9 @@ public class SelectedFilterProps {
 
     private final StringProperty name = new SimpleStringProperty();
 
-    private final BooleanProperty senderVis = new SimpleBooleanProperty(true);
-    private final BooleanProperty senderExact = new SimpleBooleanProperty(true);
-    private final StringProperty sender = new SimpleStringProperty();
+    private final BooleanProperty channelVis = new SimpleBooleanProperty(true);
+    private final BooleanProperty channelExact = new SimpleBooleanProperty(true);
+    private final StringProperty channel = new SimpleStringProperty();
     private final BooleanProperty themeVis = new SimpleBooleanProperty(false);
     private final BooleanProperty themeExact = new SimpleBooleanProperty(false);
     private final StringProperty theme = new SimpleStringProperty();
@@ -82,41 +82,41 @@ public class SelectedFilterProps {
         this.name.set(name);
     }
 
-    public boolean isSenderVis() {
-        return senderVis.get();
+    public boolean getChannelVis() {
+        return channelVis.get();
     }
 
-    public BooleanProperty senderVisProperty() {
-        return senderVis;
+    public BooleanProperty channelVisProperty() {
+        return channelVis;
     }
 
-    public void setSenderVis(boolean senderVis) {
-        this.senderVis.set(senderVis);
+    public void setChannelVis(boolean channelVis) {
+        this.channelVis.set(channelVis);
     }
 
-    public boolean isSenderExact() {
-        return senderExact.get();
+    public boolean getChannelExact() {
+        return channelExact.get();
     }
 
-    public BooleanProperty senderExactProperty() {
-        return senderExact;
+    public BooleanProperty channelExactProperty() {
+        return channelExact;
     }
 
-    public void setSenderExact(boolean senderExact) {
-        this.senderExact.set(senderExact);
+    public void setChannelExact(boolean channelExact) {
+        this.channelExact.set(channelExact);
     }
 
-    public String getSender() {
-        return sender.get() == null ? "" : sender.get();
+    public String getChannel() {
+        return channel.get() == null ? "" : channel.get();
     }
 
-    public StringProperty senderProperty() {
-        return sender;
+    public StringProperty channelProperty() {
+        return channel;
     }
 
-    public void setSender(String sender) {
-        this.sender.set(sender);
-        this.senderVis.set(true);
+    public void setChannel(String sender) {
+        this.channel.set(sender);
+        this.channelVis.set(true);
     }
 
     public boolean isThemeVis() {

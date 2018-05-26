@@ -116,7 +116,7 @@ public class DownloadProg {
             // ##############################
             // Name sinnvoll belegen
             if (name.equals("")) {
-                name = getHeute_yyyyMMdd() + "_" + download.getThema() + "-" + download.getTitel() + ".mp4";
+                name = getHeute_yyyyMMdd() + "_" + download.getTheme() + "-" + download.getTitle() + ".mp4";
             }
 
             // Tags ersetzen
@@ -175,15 +175,15 @@ public class DownloadProg {
             if (abo != null) {
                 // Abos: den Namen des Abos eintragen
                 download.setAboName(abo.getName());
-                if (pSet.isGenThema()) {
+                if (pSet.getGenTheme()) {
                     // und Abopfad an den Pfad anhängen
-                    path = FileUtils.addsPfad(path, FileNameUtils.removeIllegalCharacters(abo.arr[AboXml.ABO_ZIELPFAD], true));
+                    path = FileUtils.addsPfad(path, FileNameUtils.removeIllegalCharacters(abo.arr[AboXml.ABO_DEST_PATH], true));
                 }
             } else // Downloads
-                if (pSet.isGenThema()) {
+                if (pSet.getGenTheme()) {
                     // und den Namen des Themas an den Zielpfad anhängen
                     path = FileUtils.addsPfad(path,
-                            DownloadTools.replaceLeerDateiname(download.getThema(),
+                            DownloadTools.replaceLeerDateiname(download.getTheme(),
                                     true /* pfad */,
                                     Boolean.parseBoolean(ProgConfig.SYSTEM_USE_REPLACETABLE.get()),
                                     Boolean.parseBoolean(ProgConfig.SYSTEM_ONLY_ASCII.get())));
@@ -202,7 +202,7 @@ public class DownloadProg {
             path = SysTools.getStandardDownloadPath();
         }
         if (name.isEmpty()) {
-            name = getHeute_yyyyMMdd() + "_" + download.getThema() + "-" + download.getTitel() + ".mp4";
+            name = getHeute_yyyyMMdd() + "_" + download.getTheme() + "-" + download.getTitle() + ".mp4";
         }
 
         // in Win dürfen die Pfade nicht länger als 255 Zeichen haben (für die Infodatei kommen noch
@@ -221,49 +221,49 @@ public class DownloadProg {
 
         int laenge = pSet.getMaxField();
 
-        replStr = replStr.replace("%t", getField(film.arr[FilmXml.FILM_THEMA], laenge));
-        replStr = replStr.replace("%T", getField(film.arr[FilmXml.FILM_TITEL], laenge));
-        replStr = replStr.replace("%s", getField(film.arr[FilmXml.FILM_SENDER], laenge));
+        replStr = replStr.replace("%t", getField(film.arr[FilmXml.FILM_THEME], laenge));
+        replStr = replStr.replace("%T", getField(film.arr[FilmXml.FILM_TITLE], laenge));
+        replStr = replStr.replace("%s", getField(film.arr[FilmXml.FILM_CHANNEL], laenge));
         replStr = replStr.replace("%N", getField(FileUtils.getDateiName(download.getUrl()), laenge));
 
         // Felder mit fester Länge werden immer ganz geschrieben
         replStr = replStr.replace("%D",
-                film.arr[FilmXml.FILM_DATUM].equals("") ? getHeute_yyyyMMdd()
-                        : datumDatumZeitReinigen(datumDrehen(film.arr[FilmXml.FILM_DATUM])));
+                film.arr[FilmXml.FILM_DATE].equals("") ? getHeute_yyyyMMdd()
+                        : datumDatumZeitReinigen(datumDrehen(film.arr[FilmXml.FILM_DATE])));
         replStr = replStr.replace("%d",
-                film.arr[FilmXml.FILM_ZEIT].equals("") ? getJetzt_HHMMSS()
-                        : datumDatumZeitReinigen(film.arr[FilmXml.FILM_ZEIT]));
+                film.arr[FilmXml.FILM_TIME].equals("") ? getJetzt_HHMMSS()
+                        : datumDatumZeitReinigen(film.arr[FilmXml.FILM_TIME]));
         replStr = replStr.replace("%H", getHeute_yyyyMMdd());
         replStr = replStr.replace("%h", getJetzt_HHMMSS());
 
         replStr = replStr.replace("%1",
-                getDMY("%1", film.arr[FilmXml.FILM_DATUM].equals("") ? getHeute_yyyy_MM_dd() : film.arr[FilmXml.FILM_DATUM]));
+                getDMY("%1", film.arr[FilmXml.FILM_DATE].equals("") ? getHeute_yyyy_MM_dd() : film.arr[FilmXml.FILM_DATE]));
         replStr = replStr.replace("%2",
-                getDMY("%2", film.arr[FilmXml.FILM_DATUM].equals("") ? getHeute_yyyy_MM_dd() : film.arr[FilmXml.FILM_DATUM]));
+                getDMY("%2", film.arr[FilmXml.FILM_DATE].equals("") ? getHeute_yyyy_MM_dd() : film.arr[FilmXml.FILM_DATE]));
         replStr = replStr.replace("%3",
-                getDMY("%3", film.arr[FilmXml.FILM_DATUM].equals("") ? getHeute_yyyy_MM_dd() : film.arr[FilmXml.FILM_DATUM]));
+                getDMY("%3", film.arr[FilmXml.FILM_DATE].equals("") ? getHeute_yyyy_MM_dd() : film.arr[FilmXml.FILM_DATE]));
 
         replStr = replStr.replace("%4",
-                getHMS("%4", film.arr[FilmXml.FILM_ZEIT].equals("") ? getJetzt_HH_MM_SS() : film.arr[FilmXml.FILM_ZEIT]));
+                getHMS("%4", film.arr[FilmXml.FILM_TIME].equals("") ? getJetzt_HH_MM_SS() : film.arr[FilmXml.FILM_TIME]));
         replStr = replStr.replace("%5",
-                getHMS("%5", film.arr[FilmXml.FILM_ZEIT].equals("") ? getJetzt_HH_MM_SS() : film.arr[FilmXml.FILM_ZEIT]));
+                getHMS("%5", film.arr[FilmXml.FILM_TIME].equals("") ? getJetzt_HH_MM_SS() : film.arr[FilmXml.FILM_TIME]));
         replStr = replStr.replace("%6",
-                getHMS("%6", film.arr[FilmXml.FILM_ZEIT].equals("") ? getJetzt_HH_MM_SS() : film.arr[FilmXml.FILM_ZEIT]));
+                getHMS("%6", film.arr[FilmXml.FILM_TIME].equals("") ? getJetzt_HH_MM_SS() : film.arr[FilmXml.FILM_TIME]));
 
         replStr = replStr.replace("%i", String.valueOf(film.nr));
 
         String res = "";
-        if (download.getUrl().equals(film.getUrlFuerAufloesung(FilmXml.AUFLOESUNG_NORMAL))) {
+        if (download.getUrl().equals(film.getUrlFuerAufloesung(FilmXml.RESOLUTION_NORMAL))) {
             res = "H";
-        } else if (download.getUrl().equals(film.getUrlFuerAufloesung(FilmXml.AUFLOESUNG_HD))) {
+        } else if (download.getUrl().equals(film.getUrlFuerAufloesung(FilmXml.RESOLUTION_HD))) {
             res = "HD";
-        } else if (download.getUrl().equals(film.getUrlFuerAufloesung(FilmXml.AUFLOESUNG_KLEIN))) {
+        } else if (download.getUrl().equals(film.getUrlFuerAufloesung(FilmXml.RESOLUTION_SMALL))) {
             res = "L";
-        } else if (download.getUrl().equals(film.getUrlFlvstreamerFuerAufloesung(FilmXml.AUFLOESUNG_NORMAL))) {
+        } else if (download.getUrl().equals(film.getUrlFlvstreamerFuerAufloesung(FilmXml.RESOLUTION_NORMAL))) {
             res = "H";
-        } else if (download.getUrl().equals(film.getUrlFlvstreamerFuerAufloesung(FilmXml.AUFLOESUNG_HD))) {
+        } else if (download.getUrl().equals(film.getUrlFlvstreamerFuerAufloesung(FilmXml.RESOLUTION_HD))) {
             res = "HD";
-        } else if (download.getUrl().equals(film.getUrlFlvstreamerFuerAufloesung(FilmXml.AUFLOESUNG_KLEIN))) {
+        } else if (download.getUrl().equals(film.getUrlFlvstreamerFuerAufloesung(FilmXml.RESOLUTION_SMALL))) {
             res = "L";
         }
         replStr = replStr.replace("%q", res); // %q Qualität des Films ("HD", "H", "L")

@@ -26,8 +26,8 @@ import org.controlsfx.control.Notifications;
 public class MTNotification {
 
     public static void addNotification(Download download, boolean error) {
-        String text = ("Film:   " + download.getTitel() + "\n" +
-                "Sender: " + download.getSender() + "\n" +
+        String text = ("Film:   " + download.getTitle() + "\n" +
+                "Sender: " + download.getChannel() + "\n" +
                 "Größe:  " + SizeTools.humanReadableByteCount(download.getDownloadSize().getFilmSize(), true) + "\n" +
                 (error ? "Download war fehlerhaft" : "Download war erfolgreich"));
 

@@ -102,30 +102,30 @@ public class BlackPane {
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("nr"));
         nrColumn.getStyleClass().add("center");
 
-        final TableColumn<BlackData, String> senderColumn = new TableColumn<>("Sender");
-        senderColumn.setCellValueFactory(new PropertyValueFactory<>("sender"));
+        final TableColumn<BlackData, String> channelColumn = new TableColumn<>("Sender");
+        channelColumn.setCellValueFactory(new PropertyValueFactory<>("channel"));
 
-        final TableColumn<BlackData, Boolean> senderExaktColumn = new TableColumn<>("Sender exakt");
-        senderExaktColumn.setCellValueFactory(new PropertyValueFactory<>("senderExact"));
-        senderExaktColumn.setCellFactory(CheckBoxTableCell.forTableColumn(senderExaktColumn));
+        final TableColumn<BlackData, Boolean> channelExaktColumn = new TableColumn<>("Sender exakt");
+        channelExaktColumn.setCellValueFactory(new PropertyValueFactory<>("channelExact"));
+        channelExaktColumn.setCellFactory(CheckBoxTableCell.forTableColumn(channelExaktColumn));
 
         final TableColumn<BlackData, String> themaColumn = new TableColumn<>("Thema");
-        themaColumn.setCellValueFactory(new PropertyValueFactory<>("thema"));
+        themaColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
 
         final TableColumn<BlackData, Boolean> themaExaktColumn = new TableColumn<>("Thema exakt");
-        themaExaktColumn.setCellValueFactory(new PropertyValueFactory<>("themaExact"));
+        themaExaktColumn.setCellValueFactory(new PropertyValueFactory<>("themeExact"));
         themaExaktColumn.setCellFactory(CheckBoxTableCell.forTableColumn(themaExaktColumn));
 
         final TableColumn<BlackData, Color> titelColumn = new TableColumn<>("Titel");
-        titelColumn.setCellValueFactory(new PropertyValueFactory<>("titel"));
+        titelColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
 
-        final TableColumn<BlackData, Color> themaTitelColumn = new TableColumn<>("Thema-Titel");
-        themaTitelColumn.setCellValueFactory(new PropertyValueFactory<>("themaTitel"));
+        final TableColumn<BlackData, Color> themeTitleColumn = new TableColumn<>("Thema-Titel");
+        themeTitleColumn.setCellValueFactory(new PropertyValueFactory<>("themeTitle"));
 
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
-        tableView.getColumns().addAll(expander, nrColumn, senderColumn, senderExaktColumn, themaColumn, themaExaktColumn,
-                titelColumn, themaTitelColumn);
+        tableView.getColumns().addAll(expander, nrColumn, channelColumn, channelExaktColumn, themaColumn, themaExaktColumn,
+                titelColumn, themeTitleColumn);
         tableView.setItems(ProgData.getInstance().blackList);
 
 
@@ -170,38 +170,38 @@ public class BlackPane {
         gridPane.setMinWidth(Control.USE_PREF_SIZE);
         gridPane.setMaxWidth(Double.MAX_VALUE);
 
-        ComboBox<String> cSender = new ComboBox<>();
-        cSender.setEditable(true);
-        cSender.valueProperty().bindBidirectional(param.getValue().senderProperty());
-        cSender.setItems(ProgData.getInstance().nameLists.getObsAllSender());
+        ComboBox<String> cboChannel = new ComboBox<>();
+        cboChannel.setEditable(true);
+        cboChannel.valueProperty().bindBidirectional(param.getValue().channelProperty());
+        cboChannel.setItems(ProgData.getInstance().nameLists.getObsAllChannel());
 
-        ToggleSwitch tgSender = new ToggleSwitch("exakt:");
-        tgSender.selectedProperty().bindBidirectional(param.getValue().senderExactProperty());
+        ToggleSwitch tgChannel = new ToggleSwitch("exakt:");
+        tgChannel.selectedProperty().bindBidirectional(param.getValue().channelExactProperty());
 
-        TextField thema = new TextField();
-        thema.textProperty().bindBidirectional(param.getValue().themaProperty());
+        TextField theme = new TextField();
+        theme.textProperty().bindBidirectional(param.getValue().themeProperty());
 
-        ToggleSwitch tgThema = new ToggleSwitch("exakt:");
-        tgThema.selectedProperty().bindBidirectional(param.getValue().themaExactProperty());
+        ToggleSwitch tgTheme = new ToggleSwitch("exakt:");
+        tgTheme.selectedProperty().bindBidirectional(param.getValue().themeExactProperty());
 
-        TextField titel = new TextField();
-        titel.textProperty().bindBidirectional(param.getValue().titelProperty());
+        TextField title = new TextField();
+        title.textProperty().bindBidirectional(param.getValue().titleProperty());
 
-        TextField themaTitel = new TextField();
-        themaTitel.textProperty().bindBidirectional(param.getValue().themaTitelProperty());
+        TextField themeTitle = new TextField();
+        themeTitle.textProperty().bindBidirectional(param.getValue().themeTitleProperty());
 
         gridPane.add(new Label("Sender:"), 0, 0);
-        gridPane.add(cSender, 1, 0);
-        gridPane.add(tgSender, 2, 0);
+        gridPane.add(cboChannel, 1, 0);
+        gridPane.add(tgChannel, 2, 0);
 
         gridPane.add(new Label("Thema:"), 0, 1);
-        gridPane.add(thema, 1, 1);
-        gridPane.add(tgThema, 2, 1);
+        gridPane.add(theme, 1, 1);
+        gridPane.add(tgTheme, 2, 1);
 
         gridPane.add(new Label("Titel:"), 0, 2);
-        gridPane.add(titel, 1, 2);
+        gridPane.add(title, 1, 2);
         gridPane.add(new Label("Thema/Titel:"), 0, 3);
-        gridPane.add(themaTitel, 1, 3);
+        gridPane.add(themeTitle, 1, 3);
 
         return gridPane;
     });

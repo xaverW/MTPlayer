@@ -24,9 +24,9 @@ public class FilmXml extends Data<FilmXml> {
     static final FastDateFormat sdf_datum_zeit = FastDateFormat.getInstance("dd.MM.yyyyHH:mm:ss");
     static final FastDateFormat sdf_datum = FastDateFormat.getInstance("dd.MM.yyyy");
 
-    public static final String AUFLOESUNG_NORMAL = "normal";
-    public static final String AUFLOESUNG_HD = "hd";
-    public static final String AUFLOESUNG_KLEIN = "klein";
+    public static final String RESOLUTION_NORMAL = "normal";
+    public static final String RESOLUTION_HD = "hd";
+    public static final String RESOLUTION_SMALL = "klein";
 
     public static final int FILMTIME_EMPTY = -1;
 
@@ -38,18 +38,18 @@ public class FilmXml extends Data<FilmXml> {
 
 
     public static final int FILM_NR = 0;
-    public static final int FILM_SENDER = 1;
-    public static final int FILM_THEMA = 2;
-    public static final int FILM_TITEL = 3;
-    public static final int FILM_ABSPIELEN = 4;
-    public static final int FILM_AUFZEICHNEN = 5;
-    public static final int FILM_DATUM = 6;
-    public static final int FILM_ZEIT = 7;
-    public static final int FILM_DAUER = 8;
-    public static final int FILM_GROESSE = 9;
+    public static final int FILM_CHANNEL = 1;
+    public static final int FILM_THEME = 2;
+    public static final int FILM_TITLE = 3;
+    public static final int FILM_PLAY = 4;
+    public static final int FILM_RECORD = 5;
+    public static final int FILM_DATE = 6;
+    public static final int FILM_TIME = 7;
+    public static final int FILM_DURATION = 8;
+    public static final int FILM_SIZE = 9;
     public static final int FILM_HD = 10;
     public static final int FILM_UT = 11;
-    public static final int FILM_BESCHREIBUNG = 12;
+    public static final int FILM_DESCRIPTION = 12;
     public static final int FILM_GEO = 13;
     public static final int FILM_URL = 14;
     public static final int FILM_WEBSEITE = 15;
@@ -57,13 +57,13 @@ public class FilmXml extends Data<FilmXml> {
     public static final int FILM_URL_SUBTITLE = 17;
     public static final int FILM_URL_RTMP = 18;
     public static final int FILM_URL_AUTH = 19;
-    public static final int FILM_URL_KLEIN = 20;
-    public static final int FILM_URL_RTMP_KLEIN = 21;
+    public static final int FILM_URL_SMALL = 20;
+    public static final int FILM_URL_RTMP_SMALL = 21;
     public static final int FILM_URL_HD = 22;
     public static final int FILM_URL_RTMP_HD = 23;
     public static final int FILM_URL_HISTORY = 24;
-    public static final int FILM_NEU = 25;
-    public static final int FILM_DATUM_LONG = 26;
+    public static final int FILM_NEW = 25;
+    public static final int FILM_DATE_LONG = 26;
     public static final int MAX_ELEM = 27;
     public static final String TAG = "Filme";
     public static final String TAG_JSON_LIST = "X";
@@ -94,26 +94,26 @@ public class FilmXml extends Data<FilmXml> {
             "Url History",
             "neu",
             "DatumL"};
-    public static final int[] JSON_NAMES = {FILM_SENDER,
-            FILM_THEMA,
-            FILM_TITEL,
-            FILM_DATUM,
-            FILM_ZEIT,
-            FILM_DAUER,
-            FILM_GROESSE,
-            FILM_BESCHREIBUNG,
+    public static final int[] JSON_NAMES = {FILM_CHANNEL,
+            FILM_THEME,
+            FILM_TITLE,
+            FILM_DATE,
+            FILM_TIME,
+            FILM_DURATION,
+            FILM_SIZE,
+            FILM_DESCRIPTION,
             FILM_URL,
             FILM_WEBSEITE,
             FILM_URL_SUBTITLE,
             FILM_URL_RTMP,
-            FILM_URL_KLEIN,
-            FILM_URL_RTMP_KLEIN,
+            FILM_URL_SMALL,
+            FILM_URL_RTMP_SMALL,
             FILM_URL_HD,
             FILM_URL_RTMP_HD,
-            FILM_DATUM_LONG,
+            FILM_DATE_LONG,
             FILM_URL_HISTORY,
             FILM_GEO,
-            FILM_NEU};
+            FILM_NEW};
     public final String[] arr = new String[]{"",
             "",
             "",
@@ -149,8 +149,8 @@ public class FilmXml extends Data<FilmXml> {
     @Override
     public int compareTo(FilmXml arg0) {
         int ret;
-        if ((ret = sorter.compare(arr[FILM_SENDER], arg0.arr[FILM_SENDER])) == 0) {
-            return sorter.compare(arr[FILM_THEMA], arg0.arr[FILM_THEMA]);
+        if ((ret = sorter.compare(arr[FILM_CHANNEL], arg0.arr[FILM_CHANNEL])) == 0) {
+            return sorter.compare(arr[FILM_THEME], arg0.arr[FILM_THEME]);
         }
         return ret;
     }

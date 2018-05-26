@@ -28,7 +28,7 @@ import javafx.scene.layout.VBox;
 
 public class AboFilterController extends FilterController {
 
-    ComboBox<String> cbSender = new ComboBox<>();
+    ComboBox<String> cboChannel = new ComboBox<>();
     Button btnClear = new Button("Filter löschen");
 
     private final ProgData progData;
@@ -36,16 +36,16 @@ public class AboFilterController extends FilterController {
     public AboFilterController() {
         progData = ProgData.getInstance();
 
-        addCont("Abos für Sender", cbSender, vbFilter);
+        addCont("Abos für Sender", cboChannel, vbFilter);
 
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER_RIGHT);
         hBox.getChildren().add(btnClear);
         vbFilter.getChildren().add(hBox);
 
-        cbSender.valueProperty().bindBidirectional(ProgConfig.FILTER_ABO_SENDER.getStringProperty());
-        cbSender.setItems(progData.nameLists.getObsSenderForAbos());
-        cbSender.valueProperty().addListener((observable, oldValue, newValue) -> {
+        cboChannel.valueProperty().bindBidirectional(ProgConfig.FILTER_ABO_SENDER.getStringProperty());
+        cboChannel.setItems(progData.nameLists.getObsChannelsForAbos());
+        cboChannel.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue != null && newValue != null) {
                 // wenn Änderung beim Sender -> Themen anpassen
                 ProgConfig.FILTER_ABO_SENDER.setValue(newValue);
@@ -56,8 +56,8 @@ public class AboFilterController extends FilterController {
     }
 
     private void clearFilter() {
-        if (cbSender.getSelectionModel() != null) {
-            cbSender.getSelectionModel().selectFirst();
+        if (cboChannel.getSelectionModel() != null) {
+            cboChannel.getSelectionModel().selectFirst();
         }
     }
 

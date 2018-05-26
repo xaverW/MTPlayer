@@ -90,7 +90,7 @@ public class SearchPsetUpdate {
                 if (!listePsetOrgSpeichern.isEmpty()) {
                     for (final SetData psNew : listePsetStandard.getListeSpeichern()) {
                         psNew.setDestPath(listePsetOrgSpeichern.get(0).getDestPath());
-                        psNew.setGenThema(listePsetOrgSpeichern.get(0).isGenThema());
+                        psNew.setGenTheme(listePsetOrgSpeichern.get(0).getGenTheme());
                         psNew.setMaxSize(listePsetOrgSpeichern.get(0).getMaxSize());
                         psNew.setMaxField(listePsetOrgSpeichern.get(0).getMaxField());
                     }

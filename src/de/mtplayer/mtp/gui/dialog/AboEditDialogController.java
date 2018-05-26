@@ -43,13 +43,13 @@ public class AboEditDialogController extends MTDialogExtra {
     final GridPane gridPane = new GridPane();
     Button btnOk = new Button("Ok");
     Button btnCancel = new Button("Abbrechen");
-    ComboBox<String> cbPset = new ComboBox<>();
-    ComboBox<String> cbSender = new ComboBox<>();
-    ComboBox<String> cbZiel = new ComboBox<>();
+    ComboBox<String> cboPset = new ComboBox<>();
+    ComboBox<String> cboChannel = new ComboBox<>();
+    ComboBox<String> cboDestination = new ComboBox<>();
     RangeSlider slTime = new RangeSlider();
     Label lblTimeMin = new Label();
     Label lblTimeMax = new Label();
-    CheckBox cbxEin = new CheckBox();
+    CheckBox cbxOn = new CheckBox();
     Label[] lbl = new Label[AboXml.MAX_ELEM];
     TextField[] txt = new TextField[AboXml.MAX_ELEM];
     CheckBox[] cbx = new CheckBox[AboXml.MAX_ELEM];
@@ -58,7 +58,7 @@ public class AboEditDialogController extends MTDialogExtra {
     private RadioButton rbHigh = new RadioButton("hohe Auflösung");
     private RadioButton rbLow = new RadioButton("niedrige Auflösung");
 
-    final String ALLE = "Alles";
+    final String ALLES = "Alles";
     private boolean ok = false;
 
     private final ObservableList<Abo> lAbo;
@@ -196,31 +196,31 @@ public class AboEditDialogController extends MTDialogExtra {
         GridPane.setHgrow(lbl[i], Priority.NEVER);
 
         switch (i) {
-            case AboXml.ABO_AUFLOESUNG:
+            case AboXml.ABO_RESOLUTION:
                 ToggleGroup tg = new ToggleGroup();
                 rbHd.setToggleGroup(tg);
                 rbHigh.setToggleGroup(tg);
                 rbLow.setToggleGroup(tg);
                 switch (aboCopy.getResolution()) {
-                    case FilmXml.AUFLOESUNG_HD:
+                    case FilmXml.RESOLUTION_HD:
                         rbHd.setSelected(true);
                         break;
-                    case FilmXml.AUFLOESUNG_KLEIN:
+                    case FilmXml.RESOLUTION_SMALL:
                         rbLow.setSelected(true);
                         break;
                     default:
-                        aboCopy.setResolution(FilmXml.AUFLOESUNG_NORMAL);
+                        aboCopy.setResolution(FilmXml.RESOLUTION_NORMAL);
                         rbHigh.setSelected(true);
                 }
                 rbHd.setOnAction(event -> setAufloesung());
                 rbHigh.setOnAction(event -> setAufloesung());
                 rbLow.setOnAction(event -> setAufloesung());
                 break;
-            case AboXml.ABO_SENDER_EXAKT:
+            case AboXml.ABO_CHANNEL_EXACT:
                 cbx[i] = new CheckBox("");
-                cbx[i].setSelected(aboCopy.isSenderExact());
+                cbx[i].setSelected(aboCopy.getChannelExact());
                 break;
-            case AboXml.ABO_THEMA_EXAKT:
+            case AboXml.ABO_THEME_EXACT:
                 cbx[i] = new CheckBox("");
                 cbx[i].setSelected(aboCopy.isThemeExact());
                 break;
@@ -243,12 +243,12 @@ public class AboEditDialogController extends MTDialogExtra {
     private void addLabel(int i, int grid) {
 
         switch (i) {
-            case AboXml.ABO_SENDER_EXAKT:
-            case AboXml.ABO_THEMA_EXAKT:
+            case AboXml.ABO_CHANNEL_EXACT:
+            case AboXml.ABO_THEME_EXACT:
                 lbl[i].setText("  exakt:");
                 gridPane.add(lbl[i], 0, grid);
                 break;
-            case AboXml.ABO_MINDESTDAUER:
+            case AboXml.ABO_MIN_DURATION:
                 VBox vBox = new VBox();
                 vBox.setSpacing(5);
                 vBox.setAlignment(Pos.CENTER_LEFT);
@@ -257,7 +257,7 @@ public class AboEditDialogController extends MTDialogExtra {
                 vBox.getChildren().addAll(lbl[i], new Label("min / max"));
                 gridPane.add(vBox, 0, grid);
                 break;
-            case AboXml.ABO_MAXDESTDAUER:
+            case AboXml.ABO_MAX_DURATION:
                 break;
             default:
                 gridPane.add(lbl[i], 0, grid);
@@ -292,7 +292,7 @@ public class AboEditDialogController extends MTDialogExtra {
                 }
                 break;
 
-            case AboXml.ABO_AUFLOESUNG:
+            case AboXml.ABO_RESOLUTION:
                 GridPane g = new GridPane();
                 g.setHgap(10);
                 g.setVgap(10);
@@ -317,8 +317,8 @@ public class AboEditDialogController extends MTDialogExtra {
                 gridPane.add(g, 1, grid);
                 break;
 
-            case AboXml.ABO_SENDER_EXAKT:
-            case AboXml.ABO_THEMA_EXAKT:
+            case AboXml.ABO_CHANNEL_EXACT:
+            case AboXml.ABO_THEME_EXACT:
                 gridPane.add(cbx[i], 1, grid);
                 cbx[i].selectedProperty().bindBidirectional(aboCopy.properties[i]);
                 cbx[i].selectedProperty().addListener((observable, oldValue, newValue) -> {
@@ -326,54 +326,54 @@ public class AboEditDialogController extends MTDialogExtra {
                 });
                 break;
 
-            case AboXml.ABO_DOWN_DATUM:
+            case AboXml.ABO_DOWN_DATE:
                 txt[i].setEditable(false);
                 txt[i].setDisable(true);
                 break;
 
             case AboXml.ABO_ON:
-                cbxEin.selectedProperty().bindBidirectional(aboCopy.activeProperty());
-                cbxEin.setOnAction(a -> {
+                cbxOn.selectedProperty().bindBidirectional(aboCopy.activeProperty());
+                cbxOn.setOnAction(a -> {
                     cbxForAll[i].setSelected(true);
                 });
-                gridPane.add(cbxEin, 1, grid);
+                gridPane.add(cbxOn, 1, grid);
                 break;
 
             case AboXml.ABO_PSET:
-                cbPset.getItems().addAll(progData.setList.getListeAbo().getPsetNameList());
+                cboPset.getItems().addAll(progData.setList.getListeAbo().getPsetNameList());
                 if (aboCopy.getPset().isEmpty()) {
-                    cbPset.getSelectionModel().selectFirst();
-                    aboCopy.setPset(cbPset.getSelectionModel().getSelectedItem());
+                    cboPset.getSelectionModel().selectFirst();
+                    aboCopy.setPset(cboPset.getSelectionModel().getSelectedItem());
                 } else {
-                    cbPset.getSelectionModel().select(aboCopy.getPset());
+                    cboPset.getSelectionModel().select(aboCopy.getPset());
                 }
-                cbPset.valueProperty().bindBidirectional(aboCopy.psetProperty());
-                cbPset.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> cbxForAll[i].setSelected(true));
-                gridPane.add(cbPset, 1, grid);
+                cboPset.valueProperty().bindBidirectional(aboCopy.psetProperty());
+                cboPset.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> cbxForAll[i].setSelected(true));
+                gridPane.add(cboPset, 1, grid);
                 break;
 
-            case AboXml.ABO_SENDER:
-                cbSender.setItems(progData.nameLists.getObsAllSender());
-                cbSender.setEditable(true);
-                cbSender.valueProperty().bindBidirectional(aboCopy.senderProperty());
-                cbSender.valueProperty().addListener((observable, oldValue, newValue) -> cbxForAll[i].setSelected(true));
-                gridPane.add(cbSender, 1, grid);
+            case AboXml.ABO_CHANNEL:
+                cboChannel.setItems(progData.nameLists.getObsAllChannel());
+                cboChannel.setEditable(true);
+                cboChannel.valueProperty().bindBidirectional(aboCopy.channelProperty());
+                cboChannel.valueProperty().addListener((observable, oldValue, newValue) -> cbxForAll[i].setSelected(true));
+                gridPane.add(cboChannel, 1, grid);
                 break;
 
-            case AboXml.ABO_ZIELPFAD:
-                ArrayList<String> pfade = progData.aboList.getPfade();
-                if (!pfade.contains(aboCopy.getDest())) {
-                    pfade.add(0, aboCopy.getDest());
+            case AboXml.ABO_DEST_PATH:
+                ArrayList<String> pfade = progData.aboList.getPath();
+                if (!pfade.contains(aboCopy.getDestination())) {
+                    pfade.add(0, aboCopy.getDestination());
                 }
-                cbZiel.setMaxWidth(Double.MAX_VALUE);
-                cbZiel.setItems(FXCollections.observableArrayList(pfade));
-                cbZiel.setEditable(true);
-                cbZiel.valueProperty().bindBidirectional(aboCopy.destProperty());
-                cbZiel.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> cbxForAll[i].setSelected(true));
-                gridPane.add(cbZiel, 1, grid);
+                cboDestination.setMaxWidth(Double.MAX_VALUE);
+                cboDestination.setItems(FXCollections.observableArrayList(pfade));
+                cboDestination.setEditable(true);
+                cboDestination.valueProperty().bindBidirectional(aboCopy.destinationProperty());
+                cboDestination.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> cbxForAll[i].setSelected(true));
+                gridPane.add(cboDestination, 1, grid);
                 break;
 
-            case AboXml.ABO_MINDESTDAUER:
+            case AboXml.ABO_MIN_DURATION:
                 initDur();
                 HBox h1 = new HBox();
                 HBox h2 = new HBox();
@@ -388,7 +388,7 @@ public class AboEditDialogController extends MTDialogExtra {
                 gridPane.add(vBox, 1, grid);
                 break;
 
-            case AboXml.ABO_MAXDESTDAUER:
+            case AboXml.ABO_MAX_DURATION:
                 break;
 
             default:
@@ -398,15 +398,15 @@ public class AboEditDialogController extends MTDialogExtra {
     }
 
     private void setAufloesung() {
-        cbxForAll[AboXml.ABO_AUFLOESUNG].setSelected(true);
+        cbxForAll[AboXml.ABO_RESOLUTION].setSelected(true);
         if (rbHigh.isSelected()) {
-            aboCopy.setResolution(FilmXml.AUFLOESUNG_NORMAL);
+            aboCopy.setResolution(FilmXml.RESOLUTION_NORMAL);
         }
         if (rbHd.isSelected()) {
-            aboCopy.setResolution(FilmXml.AUFLOESUNG_HD);
+            aboCopy.setResolution(FilmXml.RESOLUTION_HD);
         }
         if (rbLow.isSelected()) {
-            aboCopy.setResolution(FilmXml.AUFLOESUNG_KLEIN);
+            aboCopy.setResolution(FilmXml.RESOLUTION_SMALL);
         }
     }
 
@@ -426,16 +426,16 @@ public class AboEditDialogController extends MTDialogExtra {
 
         switch (i) {
             case AboXml.ABO_ON:
-            case AboXml.ABO_AUFLOESUNG:
-            case AboXml.ABO_SENDER:
-            case AboXml.ABO_SENDER_EXAKT:
-            case AboXml.ABO_THEMA:
-            case AboXml.ABO_THEMA_EXAKT:
-            case AboXml.ABO_TITEL:
-            case AboXml.ABO_THEMA_TITEL:
-            case AboXml.ABO_IRGENDWO:
-            case AboXml.ABO_MINDESTDAUER:
-            case AboXml.ABO_ZIELPFAD:
+            case AboXml.ABO_RESOLUTION:
+            case AboXml.ABO_CHANNEL:
+            case AboXml.ABO_CHANNEL_EXACT:
+            case AboXml.ABO_THEME:
+            case AboXml.ABO_THEME_EXACT:
+            case AboXml.ABO_TITLE:
+            case AboXml.ABO_THEME_TITLE:
+            case AboXml.ABO_SOMEWHERE:
+            case AboXml.ABO_MIN_DURATION:
+            case AboXml.ABO_DEST_PATH:
             case AboXml.ABO_PSET:
                 gridPane.add(cbxForAll[i], 2, grid);
         }
@@ -451,17 +451,17 @@ public class AboEditDialogController extends MTDialogExtra {
         slTime.setSnapToTicks(true);
 
         // hightvalue
-        slTime.highValueProperty().bindBidirectional(aboCopy.maxProperty());
+        slTime.highValueProperty().bindBidirectional(aboCopy.maxDurationProperty());
         slTime.highValueProperty().addListener(l -> {
             setLabelSlider();
-            cbxForAll[AboXml.ABO_MAXDESTDAUER].setSelected(true);
+            cbxForAll[AboXml.ABO_MAX_DURATION].setSelected(true);
         });
 
         // lowvalue
-        slTime.lowValueProperty().bindBidirectional(aboCopy.minProperty());
+        slTime.lowValueProperty().bindBidirectional(aboCopy.minDurationProperty());
         slTime.lowValueProperty().addListener(l -> {
             setLabelSlider();
-            cbxForAll[AboXml.ABO_MINDESTDAUER].setSelected(true);
+            cbxForAll[AboXml.ABO_MIN_DURATION].setSelected(true);
         });
 
         setLabelSlider();
@@ -470,9 +470,9 @@ public class AboEditDialogController extends MTDialogExtra {
     private void setLabelSlider() {
         int i;
         i = (int) slTime.getLowValue();
-        lblTimeMin.setText(i == 0 ? ALLE : i + "");
+        lblTimeMin.setText(i == 0 ? ALLES : i + "");
 
         i = (int) slTime.getHighValue();
-        lblTimeMax.setText(i == SelectedFilter.FILTER_DURATIION_MAX_MIN ? ALLE : i + "");
+        lblTimeMax.setText(i == SelectedFilter.FILTER_DURATIION_MAX_MIN ? ALLES : i + "");
     }
 }

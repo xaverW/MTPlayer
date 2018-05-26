@@ -26,24 +26,24 @@ public class AboProps extends AboXml {
     private final IntegerProperty nr = new SimpleIntegerProperty(0);
     private final BooleanProperty active = new SimpleBooleanProperty(true);
     private final StringProperty name = new SimpleStringProperty("");
-    private final StringProperty resolution = new SimpleStringProperty(FilmXml.AUFLOESUNG_NORMAL);
-    private final StringProperty sender = new SimpleStringProperty("");
-    private final BooleanProperty senderExact = new SimpleBooleanProperty(true);
+    private final StringProperty resolution = new SimpleStringProperty(FilmXml.RESOLUTION_NORMAL);
+    private final StringProperty channel = new SimpleStringProperty("");
+    private final BooleanProperty channelExact = new SimpleBooleanProperty(true);
     private final StringProperty theme = new SimpleStringProperty("");
     private final BooleanProperty themeExact = new SimpleBooleanProperty(true);
     private final StringProperty title = new SimpleStringProperty("");
     private final StringProperty themeTitle = new SimpleStringProperty("");
     private final StringProperty somewhere = new SimpleStringProperty("");
-    private final IntegerProperty min = new SimpleIntegerProperty(0); // Minuten
-    private final IntegerProperty max = new SimpleIntegerProperty(SelectedFilter.FILTER_DURATIION_MAX_MIN); //Minuten
-    private final StringProperty dest = new SimpleStringProperty("");
+    private final IntegerProperty minDuration = new SimpleIntegerProperty(0); // Minuten
+    private final IntegerProperty maxDuration = new SimpleIntegerProperty(SelectedFilter.FILTER_DURATIION_MAX_MIN); //Minuten
+    private final StringProperty destination = new SimpleStringProperty("");
     private final ObjectProperty<MDate> date = new SimpleObjectProperty<>(new MDate(0));
     private final StringProperty pset = new SimpleStringProperty("");
 
 
     public final Property[] properties = {nr, active, name, resolution,
-            sender, senderExact, theme, themeExact, title, themeTitle, somewhere,
-            min, max, dest, date, pset};
+            channel, channelExact, theme, themeExact, title, themeTitle, somewhere,
+            minDuration, maxDuration, destination, date, pset};
 
     public String getStringOf(int i) {
         return String.valueOf(properties[i].getValue());
@@ -102,28 +102,28 @@ public class AboProps extends AboXml {
         this.resolution.set(resolution);
     }
 
-    public String getSender() {
-        return sender.get();
+    public String getChannel() {
+        return channel.get();
     }
 
-    public StringProperty senderProperty() {
-        return sender;
+    public StringProperty channelProperty() {
+        return channel;
     }
 
-    public void setSender(String sender) {
-        this.sender.set(sender);
+    public void setChannel(String channel) {
+        this.channel.set(channel);
     }
 
-    public boolean isSenderExact() {
-        return senderExact.get();
+    public boolean getChannelExact() {
+        return channelExact.get();
     }
 
-    public BooleanProperty senderExactProperty() {
-        return senderExact;
+    public BooleanProperty channelExactProperty() {
+        return channelExact;
     }
 
-    public void setSenderExact(boolean senderExact) {
-        this.senderExact.set(senderExact);
+    public void setChannelExact(boolean channelExact) {
+        this.channelExact.set(channelExact);
     }
 
     public String getTheme() {
@@ -186,48 +186,48 @@ public class AboProps extends AboXml {
         this.somewhere.set(somewhere);
     }
 
-    public int getMin() {
-        return min.get();
+    public int getMinDuration() {
+        return minDuration.get();
     }
 
     public int getMinSec() {
-        return min.get() * 60;
+        return minDuration.get() * 60;
     }
 
-    public IntegerProperty minProperty() {
-        return min;
+    public IntegerProperty minDurationProperty() {
+        return minDuration;
     }
 
-    public void setMin(int min) {
-        this.min.set(min);
+    public void setMinDuration(int minDuration) {
+        this.minDuration.set(minDuration);
     }
 
-    public int getMax() {
-        return max.get();
+    public int getMaxDuration() {
+        return maxDuration.get();
     }
 
     public int getMaxSec() {
-        return max.get() * 60;
+        return maxDuration.get() * 60;
     }
 
-    public IntegerProperty maxProperty() {
-        return max;
+    public IntegerProperty maxDurationProperty() {
+        return maxDuration;
     }
 
-    public void setMax(int max) {
-        this.max.set(max);
+    public void setMaxDuration(int maxDuration) {
+        this.maxDuration.set(maxDuration);
     }
 
-    public String getDest() {
-        return dest.get();
+    public String getDestination() {
+        return destination.get();
     }
 
-    public StringProperty destProperty() {
-        return dest;
+    public StringProperty destinationProperty() {
+        return destination;
     }
 
-    public void setDest(String dest) {
-        this.dest.set(dest);
+    public void setDestination(String destination) {
+        this.destination.set(destination);
     }
 
     public MDate getDate() {
@@ -262,56 +262,56 @@ public class AboProps extends AboXml {
 
     public void setPropsFromXml() {
         setActive(Boolean.parseBoolean(arr[ABO_ON]));
-        setResolution(arr[ABO_AUFLOESUNG]);
+        setResolution(arr[ABO_RESOLUTION]);
         setName(arr[ABO_NAME]);
-        setSender(arr[ABO_SENDER]);
-        setSenderExact(arr[ABO_SENDER_EXAKT].isEmpty() ? true : Boolean.parseBoolean(arr[ABO_SENDER_EXAKT]));
-        setTheme(arr[ABO_THEMA]);
-        setThemeExact(arr[ABO_THEMA_EXAKT].isEmpty() ? true : Boolean.parseBoolean(arr[ABO_THEMA_EXAKT]));
-        setTitle(arr[ABO_TITEL]);
-        setThemeTitle(arr[ABO_THEMA_TITEL]);
-        setSomewhere(arr[ABO_IRGENDWO]);
+        setChannel(arr[ABO_CHANNEL]);
+        setChannelExact(arr[ABO_CHANNEL_EXACT].isEmpty() ? true : Boolean.parseBoolean(arr[ABO_CHANNEL_EXACT]));
+        setTheme(arr[ABO_THEME]);
+        setThemeExact(arr[ABO_THEME_EXACT].isEmpty() ? true : Boolean.parseBoolean(arr[ABO_THEME_EXACT]));
+        setTitle(arr[ABO_TITLE]);
+        setThemeTitle(arr[ABO_THEME_TITLE]);
+        setSomewhere(arr[ABO_SOMEWHERE]);
 
-        setDauerFromXml();
+        setDurationFromXml();
 
-        setDest(arr[ABO_ZIELPFAD]);
-        setDatum(arr[ABO_DOWN_DATUM], "");
+        setDestination(arr[ABO_DEST_PATH]);
+        setDatum(arr[ABO_DOWN_DATE], "");
         setPset(arr[ABO_PSET]);
     }
 
     public void setXmlFromProps() {
         arr[ABO_NR] = getNr() + "";
         arr[ABO_ON] = String.valueOf(getActive());
-        arr[ABO_AUFLOESUNG] = getResolution();
+        arr[ABO_RESOLUTION] = getResolution();
         arr[ABO_NAME] = getName();
-        arr[ABO_SENDER] = getSender();
-        arr[ABO_SENDER_EXAKT] = String.valueOf(isSenderExact());
-        arr[ABO_THEMA] = getTheme();
-        arr[ABO_THEMA_EXAKT] = String.valueOf(isThemeExact());
-        arr[ABO_TITEL] = getTitle();
-        arr[ABO_THEMA_TITEL] = getThemeTitle();
-        arr[ABO_IRGENDWO] = getSomewhere();
+        arr[ABO_CHANNEL] = getChannel();
+        arr[ABO_CHANNEL_EXACT] = String.valueOf(getChannelExact());
+        arr[ABO_THEME] = getTheme();
+        arr[ABO_THEME_EXACT] = String.valueOf(isThemeExact());
+        arr[ABO_TITLE] = getTitle();
+        arr[ABO_THEME_TITLE] = getThemeTitle();
+        arr[ABO_SOMEWHERE] = getSomewhere();
 
-        arr[ABO_MINDESTDAUER] = String.valueOf(getMin());
-        arr[ABO_MAXDESTDAUER] = String.valueOf(getMax());
+        arr[ABO_MIN_DURATION] = String.valueOf(getMinDuration());
+        arr[ABO_MAX_DURATION] = String.valueOf(getMaxDuration());
 
-        arr[ABO_ZIELPFAD] = getDest();
-        arr[ABO_DOWN_DATUM] = getDate().toString();
+        arr[ABO_DEST_PATH] = getDestination();
+        arr[ABO_DOWN_DATE] = getDate().toString();
         arr[ABO_PSET] = getPset();
     }
 
-    private void setDauerFromXml() {
+    private void setDurationFromXml() {
         int min;
         int max;
         try {
-            min = Integer.parseInt(arr[ABO_MINDESTDAUER]);
-            max = Integer.parseInt(arr[ABO_MAXDESTDAUER]);
+            min = Integer.parseInt(arr[ABO_MIN_DURATION]);
+            max = Integer.parseInt(arr[ABO_MAX_DURATION]);
         } catch (final Exception ex) {
             min = 0;
             max = SelectedFilter.FILTER_DURATIION_MAX_MIN;
         }
-        setMin(min);
-        setMax(max);
+        setMinDuration(min);
+        setMaxDuration(max);
     }
 
 

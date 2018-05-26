@@ -48,9 +48,9 @@ public final class SelectedFilter extends SelectedFilterProps {
         return blacklistChange;
     }
 
-    public void setSenderAndVis(String set) {
-        setSender(set);
-        setSenderVis(true);
+    public void setChannelAndVis(String set) {
+        setChannel(set);
+        setChannelVis(true);
     }
 
     public void setThemeAndVis(String set) {
@@ -66,9 +66,9 @@ public final class SelectedFilter extends SelectedFilterProps {
     public static void copyFilter(SelectedFilter sfVon, SelectedFilter sfNach) {
         sfNach.setName(sfVon.getName());
 
-        sfNach.setSenderVis(sfVon.isSenderVis());
-        sfNach.setSenderExact(sfVon.isSenderExact());
-        sfNach.setSender(sfVon.getSender());
+        sfNach.setChannelVis(sfVon.getChannelVis());
+        sfNach.setChannelExact(sfVon.getChannelExact());
+        sfNach.setChannel(sfVon.getChannel());
         sfNach.setThemeVis(sfVon.isThemeVis());
         sfNach.setThemeExact(sfVon.isThemeExact());
         sfNach.setTheme(sfVon.getTheme());
@@ -113,8 +113,8 @@ public final class SelectedFilter extends SelectedFilterProps {
     public void initFilter() {
         clearFilter();
 
-        setSenderVis(true);
-        setSenderExact(true);
+        setChannelVis(true);
+        setChannelExact(true);
         setThemeVis(false);
         setThemeExact(false);
         setThemeTitleVis(true);
@@ -132,9 +132,9 @@ public final class SelectedFilter extends SelectedFilterProps {
 
         nameProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
 
-        senderVisProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
-        senderExactProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
-        senderProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
+        channelVisProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
+        channelExactProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
+        channelProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
 
         themeVisProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
         themeExactProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
@@ -184,7 +184,7 @@ public final class SelectedFilter extends SelectedFilterProps {
 
     public void clearFilter() {
         // alle Filter löschen, Button Black bleibt wie er ist
-        setSender("");
+        setChannel("");
         setTheme("");
         setThemeTitle("");
         setTitle("");
@@ -213,7 +213,7 @@ public final class SelectedFilter extends SelectedFilterProps {
     }
 
     public boolean txtFilterIsEmpty() {
-        return getSender().isEmpty() &&
+        return getChannel().isEmpty() &&
                 getTheme().isEmpty() &&
                 getThemeTitle().isEmpty() &&
                 getTitle().isEmpty() &&
@@ -224,9 +224,9 @@ public final class SelectedFilter extends SelectedFilterProps {
 
     public boolean clearTxtFilter() {
         boolean ret = false;
-        if (!getSender().isEmpty()) {
+        if (!getChannel().isEmpty()) {
             ret = true;
-            setSender("");
+            setChannel("");
         }
         if (!getTheme().isEmpty()) {
             ret = true;
@@ -254,37 +254,37 @@ public final class SelectedFilter extends SelectedFilterProps {
     public Predicate<Film> getPred() {
         SelectedFilter selectedFilter = this;
 
-        Filter fSender;
-        Filter fThema;
-        Filter fThemaTitel;
-        Filter fTitel;
+        Filter fChannel;
+        Filter fTheme;
+        Filter fThemeTitle;
+        Filter fTitle;
         Filter fSomewhere;
         Filter fUrl;
 
-        String filterSender = selectedFilter.isSenderVis() ? selectedFilter.getSender() : "";
+        String filterChannel = selectedFilter.getChannelVis() ? selectedFilter.getChannel() : "";
         String filterTheme = selectedFilter.isThemeVis() ? selectedFilter.getTheme() : "";
         String filterThemeTitle = selectedFilter.isThemeTitleVis() ? selectedFilter.getThemeTitle() : "";
         String filterTitle = selectedFilter.isTitleVis() ? selectedFilter.getTitle() : "";
         String filterSomwhere = selectedFilter.isSomewhereVis() ? selectedFilter.getSomewhere() : "";
         String filterUrl = selectedFilter.isUrlVis() ? selectedFilter.getUrl() : "";
 
-        final boolean senderExact = selectedFilter.isSenderExact();
+        final boolean channelExact = selectedFilter.getChannelExact();
         final boolean themaExact = selectedFilter.isThemeExact();
         // Sender
-        fSender = new Filter(filterSender, senderExact);
-        fSender.setArray();
+        fChannel = new Filter(filterChannel, channelExact);
+        fChannel.setArray();
 
         // Thema
-        fThema = new Filter(filterTheme, themaExact);
-        fThema.setArray();
+        fTheme = new Filter(filterTheme, themaExact);
+        fTheme.setArray();
 
         // ThemaTitel
-        fThemaTitel = new Filter(filterThemeTitle);
-        fThemaTitel.setArray();
+        fThemeTitle = new Filter(filterThemeTitle);
+        fThemeTitle.setArray();
 
         // Titel
-        fTitel = new Filter(filterTitle);
-        fTitel.setArray();
+        fTitle = new Filter(filterTitle);
+        fTitle.setArray();
 
         // Irgendwo
         fSomewhere = new Filter(filterSomwhere);
@@ -344,7 +344,7 @@ public final class SelectedFilter extends SelectedFilterProps {
             predicate = predicate.and(f -> f.isUt());
         }
         if (onlyLive) {
-            predicate = predicate.and(f -> f.arr[FilmXml.FILM_THEMA].equals(FilmTools.THEMA_LIVE));
+            predicate = predicate.and(f -> f.arr[FilmXml.FILM_THEME].equals(FilmTools.THEMA_LIVE));
         }
         if (onlyAktHist) {
             predicate = predicate.and(f -> f.getActHist());
@@ -390,20 +390,20 @@ public final class SelectedFilter extends SelectedFilterProps {
         }
 
 
-        if (!fSender.empty) {
-            predicate = predicate.and(f -> FilmFilter.checkSender(fSender, f));
+        if (!fChannel.empty) {
+            predicate = predicate.and(f -> FilmFilter.checkChannel(fChannel, f));
         }
 
-        if (!fThema.empty) {
-            predicate = predicate.and(f -> FilmFilter.checkTheme(fThema, f));
+        if (!fTheme.empty) {
+            predicate = predicate.and(f -> FilmFilter.checkTheme(fTheme, f));
         }
 
-        if (!fThemaTitel.empty) {
-            predicate = predicate.and(f -> FilmFilter.checkThemaTitle(fThemaTitel, f));
+        if (!fThemeTitle.empty) {
+            predicate = predicate.and(f -> FilmFilter.checkThemeTitle(fThemeTitle, f));
         }
 
-        if (!fTitel.empty) {
-            predicate = predicate.and(f -> FilmFilter.checkTitel(fTitel, f));
+        if (!fTitle.empty) {
+            predicate = predicate.and(f -> FilmFilter.checkTitle(fTitle, f));
         }
 
         if (!fSomewhere.empty) {

@@ -86,7 +86,7 @@ public class StarterClass {
             PLog.errorLog(795632500, "Download fehlgeschlagen: Datei zu klein" + datenDownload.getZielPfadDatei());
         } else {
             if (datenDownload.isAbo()) {
-                progData.erledigteAbos.writeHistory(datenDownload.getThema(), datenDownload.getTitel(), datenDownload.getHistoryUrl());
+                progData.erledigteAbos.writeHistory(datenDownload.getTheme(), datenDownload.getTitle(), datenDownload.getHistoryUrl());
             }
             ret = true;
         }
@@ -230,14 +230,14 @@ public class StarterClass {
             download.getDownloadSize().setAktFileSize(-1);
 
             if (start.getInputStream() != null) {
-                download.setBandbreite("Ø " + SizeTools.humanReadableBandwidth(start.getInputStream().getSumBandwidth()));
+                download.setBandwidth("Ø " + SizeTools.humanReadableBandwidth(start.getInputStream().getSumBandwidth()));
             }
 
             final long dauer = start.getStartTime().diffInMinuten();
             if (dauer == 0) {
-                download.setRestzeit("Dauer: " + start.getStartTime().diffInSekunden() + " s");
+                download.setRemaining("Dauer: " + start.getStartTime().diffInSekunden() + " s");
             } else {
-                download.setRestzeit("Dauer: " + start.getStartTime().diffInMinuten() + " Min");
+                download.setRemaining("Dauer: " + start.getStartTime().diffInMinuten() + " Min");
             }
         }
 

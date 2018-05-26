@@ -66,7 +66,7 @@ public class AboList extends SimpleListProperty<Abo> {
             abo.setName("Abo_" + nr);
         }
         if (abo.getResolution().isEmpty()) {
-            abo.setResolution(Film.AUFLOESUNG_NORMAL);
+            abo.setResolution(Film.RESOLUTION_NORMAL);
         }
         super.add(abo);
     }
@@ -75,7 +75,7 @@ public class AboList extends SimpleListProperty<Abo> {
         return addAbo(aboName, "", "", "");
     }
 
-    public synchronized boolean addAbo(String aboname, String filmSender, String filmThema, String filmTitel) {
+    public synchronized boolean addAbo(String aboName, String filmChannel, String filmTheme, String filmTitle) {
         // abo anlegen, oder false wenns schon existiert
         boolean ret = false;
 
@@ -90,17 +90,17 @@ public class AboList extends SimpleListProperty<Abo> {
             ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(SelectedFilter.FILTER_DURATIION_MAX_MIN);
         }
 
-        String namePfad = DownloadTools.replaceLeerDateiname(aboname,
+        String namePfad = DownloadTools.replaceLeerDateiname(aboName,
                 false /* nur ein Ordner */,
                 Boolean.parseBoolean(ProgConfig.SYSTEM_USE_REPLACETABLE.get()),
                 Boolean.parseBoolean(ProgConfig.SYSTEM_ONLY_ASCII.get()));
 
         final Abo abo = new Abo(namePfad /* name */,
-                filmSender,
-                filmThema,
+                filmChannel,
+                filmTheme,
                 "" /* filmThemaTitel */,
-                filmTitel,
-                "" /* irgendwo */,
+                filmTitle,
+                "",
                 mindestdauer,
                 maxdauer,
                 namePfad,
@@ -111,8 +111,8 @@ public class AboList extends SimpleListProperty<Abo> {
         if (editAboController.getOk()) {
             if (!aboExistiertBereits(abo)) {
                 // als Vorgabe merken
-                ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(abo.getMin());
-                ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(abo.getMax());
+                ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(abo.getMinDuration());
+                ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(abo.getMaxDuration());
                 addAbo(abo);
                 sort();
                 aenderungMelden();
@@ -147,15 +147,15 @@ public class AboList extends SimpleListProperty<Abo> {
         }
     }
 
-    public synchronized void aboLoeschen(Abo abo) {
+    public synchronized void deleteAbo(Abo abo) {
         if (abo == null) {
             return;
         }
         ObservableList<Abo> lAbo = FXCollections.observableArrayList(abo);
-        aboLoeschen(lAbo);
+        deleteAbo(lAbo);
     }
 
-    public synchronized void aboLoeschen(ObservableList<Abo> lAbo) {
+    public synchronized void deleteAbo(ObservableList<Abo> lAbo) {
         if (lAbo.isEmpty()) {
             return;
         }
@@ -179,7 +179,7 @@ public class AboList extends SimpleListProperty<Abo> {
         // Filmliste anpassen
         if (!progData.loadFilmlist.getPropLoadFilmlist()) {
             // wird danach eh gemacht
-            setAboFuerFilm(progData.filmlist);
+            setAboForFilm(progData.filmlist);
         }
         listChanged.setValue(!listChanged.get());
     }
@@ -188,28 +188,28 @@ public class AboList extends SimpleListProperty<Abo> {
         Collections.sort(this);
     }
 
-    public synchronized ArrayList<String> getPfade() {
+    public synchronized ArrayList<String> getPath() {
         // liefert eine Array mit allen Pfaden
-        final ArrayList<String> pfade = new ArrayList<>();
+        final ArrayList<String> path = new ArrayList<>();
         for (final Abo abo : this) {
-            final String s = abo.getDest();
-            if (!pfade.contains(s)) {
-                pfade.add(abo.getDest());
+            final String s = abo.getDestination();
+            if (!path.contains(s)) {
+                path.add(abo.getDestination());
             }
         }
         final GermanStringSorter sorter = GermanStringSorter.getInstance();
-        pfade.sort(sorter);
-        return pfade;
+        path.sort(sorter);
+        return path;
     }
 
-    public synchronized ArrayList<String> generateAboSenderList() {
+    public synchronized ArrayList<String> generateAboChannelList() {
         // liefert eine Array mit allen Sendern
         final ArrayList<String> sender = new ArrayList<>();
         sender.add("");
         for (final Abo abo : this) {
-            final String s = abo.getSender();
+            final String s = abo.getChannel();
             if (!sender.contains(s)) {
-                sender.add(abo.getSender());
+                sender.add(abo.getChannel());
             }
         }
         sender.sort(sorter);
@@ -270,10 +270,10 @@ public class AboList extends SimpleListProperty<Abo> {
      */
     private void assignAboToFilm(Film film) {
         final Abo foundAbo = stream().filter(abo -> FilmFilter.filterAufFilmPruefen(
-                abo.fSender,
-                abo.fThema,
-                abo.fThemaTitel,
-                abo.fTitel,
+                abo.fChannel,
+                abo.fTheme,
+                abo.fThemeTitle,
+                abo.fTitle,
                 abo.fSomewhere,
                 abo.getMinSec(),
                 abo.getMaxSec(),
@@ -300,7 +300,7 @@ public class AboList extends SimpleListProperty<Abo> {
         }
     }
 
-    public synchronized void setAboFuerFilm(Filmlist filmlist) {
+    public synchronized void setAboForFilm(Filmlist filmlist) {
         // hier wird tatsächlich für jeden Film die Liste der Abos durchsucht
         // braucht länger
 

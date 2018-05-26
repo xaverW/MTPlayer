@@ -38,7 +38,7 @@ public class AppParameter {
         }
 
         printArguments(arguments);
-        ProgData.configDir = readPfadFromArguments(arguments);
+        ProgData.configDir = readPathFromArguments(arguments);
 
         try {
             final Options allowed = new Options();
@@ -79,7 +79,7 @@ public class AppParameter {
         }
     }
 
-    private String readPfadFromArguments(final String[] arguments) {
+    private String readPathFromArguments(final String[] arguments) {
         String path = "";
 
         if (arguments == null || arguments.length == 0) {

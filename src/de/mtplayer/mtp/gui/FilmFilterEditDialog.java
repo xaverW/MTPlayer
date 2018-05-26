@@ -74,15 +74,15 @@ public class FilmFilterEditDialog extends MTDialog {
 
     public void init(VBox vbox) {
         VBox v = new VBox();
-        ToggleSwitch tglSender = new ToggleSwitch("Sender");
-        tglSender.setMaxWidth(Double.MAX_VALUE);
-        tglSender.selectedProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().senderVisProperty());
-        v.getChildren().add(tglSender);
+        ToggleSwitch tglChannel = new ToggleSwitch("Sender");
+        tglChannel.setMaxWidth(Double.MAX_VALUE);
+        tglChannel.selectedProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().channelVisProperty());
+        v.getChildren().add(tglChannel);
 
-        ToggleSwitch tglSenderExact = new ToggleSwitch("  -> exakt");
-        tglSenderExact.setMaxWidth(Double.MAX_VALUE);
-        tglSenderExact.selectedProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().senderExactProperty());
-        v.getChildren().add(tglSenderExact);
+        ToggleSwitch tglChannelExact = new ToggleSwitch("  -> exakt");
+        tglChannelExact.setMaxWidth(Double.MAX_VALUE);
+        tglChannelExact.selectedProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().channelExactProperty());
+        v.getChildren().add(tglChannelExact);
         vbox.getChildren().add(v);
 
         v = new VBox();

@@ -58,8 +58,8 @@ public class AboMenu {
 
         btOn.setOnAction(a -> progData.aboGuiController.einAus(true));
         btOff.setOnAction(a -> progData.aboGuiController.einAus(false));
-        btDel.setOnAction(a -> progData.aboGuiController.loeschen());
-        btChange.setOnAction(a -> progData.aboGuiController.aendern());
+        btDel.setOnAction(a -> progData.aboGuiController.deleteAbo());
+        btChange.setOnAction(a -> progData.aboGuiController.changeAbo());
     }
 
     private void initMenu() {
@@ -75,10 +75,10 @@ public class AboMenu {
         mbOff.setOnAction(e -> progData.aboGuiController.einAus(false));
 
         final MenuItem miDel = new MenuItem("löschen");
-        miDel.setOnAction(a -> progData.aboGuiController.loeschen());
+        miDel.setOnAction(a -> progData.aboGuiController.deleteAbo());
 
         final MenuItem miChange = new MenuItem("ändern");
-        miChange.setOnAction(a -> progData.aboGuiController.aendern());
+        miChange.setOnAction(a -> progData.aboGuiController.changeAbo());
 
         final MenuItem miNew = new MenuItem("neues Abo anlegen");
         miNew.setOnAction(a -> progData.aboGuiController.neu());

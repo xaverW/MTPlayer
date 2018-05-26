@@ -27,13 +27,13 @@ import java.util.Arrays;
 
 public class NameLists {
 
-    private ObservableList<String> obsAllSender = FXCollections.observableArrayList("");
-    private ObservableList<String> obsThemaForSelSender = FXCollections.observableArrayList("");
+    private ObservableList<String> obsAllChannel = FXCollections.observableArrayList("");
+    private ObservableList<String> obsThemeForSelChannel = FXCollections.observableArrayList("");
 
-    private ObservableList<String> obsSenderForAbos = FXCollections.observableArrayList("");
-    private ObservableList<String> obsAllAbonames = FXCollections.observableArrayList("");
+    private ObservableList<String> obsChannelsForAbos = FXCollections.observableArrayList("");
+    private ObservableList<String> obsAllAboNames = FXCollections.observableArrayList("");
 
-    private ObservableList<String> obsAbonamesForDownloads = FXCollections.observableArrayList("");
+    private ObservableList<String> obsAboNamesForDownloads = FXCollections.observableArrayList("");
 
     final private ProgData progData;
 
@@ -46,7 +46,7 @@ public class NameLists {
 
             @Override
             public void finished(ListenerFilmlistLoadEvent event) {
-                getAllSender();
+                getAllChannel();
                 getThemen("");
             }
         });
@@ -61,52 +61,52 @@ public class NameLists {
                 getAbosnames());
     }
 
-    private void getAllSender() {
-        obsAllSender.setAll(Arrays.asList(progData.filmlist.sender));
+    private void getAllChannel() {
+        obsAllChannel.setAll(Arrays.asList(progData.filmlist.sender));
     }
 
 
     private void getAbosnames() {
-        ArrayList<String> list = progData.aboList.generateAboSenderList();
-        obsSenderForAbos.setAll(list);
+        ArrayList<String> list = progData.aboList.generateAboChannelList();
+        obsChannelsForAbos.setAll(list);
 
         list = progData.aboList.generateAboNameList();
-        obsAllAbonames.setAll(list);
+        obsAllAboNames.setAll(list);
 
         list = progData.downloadList.generateAboNameList(list);
-        obsAbonamesForDownloads.setAll(list);
+        obsAboNamesForDownloads.setAll(list);
     }
 
     public void getThemen(String sender) {
         final ArrayList<String> thema = new ArrayList<>();
         if (sender.isEmpty()) {
-            thema.addAll(Arrays.asList(progData.filmlistFiltered.themenPerSender[0]));
+            thema.addAll(Arrays.asList(progData.filmlistFiltered.themenPerChannel[0]));
         } else {
-            for (int i = 1; i < progData.filmlistFiltered.themenPerSender.length; ++i) {
+            for (int i = 1; i < progData.filmlistFiltered.themenPerChannel.length; ++i) {
                 if (progData.filmlistFiltered.sender[i].equalsIgnoreCase(sender)) {
-                    thema.addAll(Arrays.asList(progData.filmlistFiltered.themenPerSender[i]));
+                    thema.addAll(Arrays.asList(progData.filmlistFiltered.themenPerChannel[i]));
                     break;
                 }
             }
         }
 
-        obsThemaForSelSender.setAll(thema);
+        obsThemeForSelChannel.setAll(thema);
     }
 
-    public ObservableList<String> getObsAllSender() {
-        return obsAllSender;
+    public ObservableList<String> getObsAllChannel() {
+        return obsAllChannel;
     }
 
-    public ObservableList<String> getObsThemaForSelSender() {
-        return obsThemaForSelSender;
+    public ObservableList<String> getObsThemeForSelChannel() {
+        return obsThemeForSelChannel;
     }
 
-    public ObservableList<String> getObsSenderForAbos() {
-        return obsSenderForAbos;
+    public ObservableList<String> getObsChannelsForAbos() {
+        return obsChannelsForAbos;
     }
 
-    public ObservableList<String> getObsAllAbonames() {
-        return obsAllAbonames;
+    public ObservableList<String> getObsAllAboNames() {
+        return obsAllAboNames;
     }
 
 }

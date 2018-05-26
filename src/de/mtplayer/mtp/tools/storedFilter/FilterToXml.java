@@ -123,9 +123,9 @@ public class FilterToXml {
 
         sf.setName(array[FILTER_NAME]);
 
-        sf.setSenderVis(Boolean.parseBoolean(array[FILTER_SENDER_VIS]));
-        sf.setSenderExact(Boolean.parseBoolean(array[FILTER_SENDER_EXACT]));
-        sf.setSender(array[FILTER_SENDER]);
+        sf.setChannelVis(Boolean.parseBoolean(array[FILTER_SENDER_VIS]));
+        sf.setChannelExact(Boolean.parseBoolean(array[FILTER_SENDER_EXACT]));
+        sf.setChannel(array[FILTER_SENDER]);
         sf.setThemeVis(Boolean.parseBoolean(array[FILTER_THEME_VIS]));
         sf.setThemeExact(Boolean.parseBoolean(array[FILTER_THEME_EXACT]));
         sf.setTheme(array[FILTER_THEME]);
@@ -190,9 +190,9 @@ public class FilterToXml {
 
         array[FILTER_NAME] = sf.getName();
 
-        array[FILTER_SENDER_VIS] = String.valueOf(sf.isSenderVis());
-        array[FILTER_SENDER_EXACT] = String.valueOf(sf.isSenderExact());
-        array[FILTER_SENDER] = sf.getSender();
+        array[FILTER_SENDER_VIS] = String.valueOf(sf.getChannelVis());
+        array[FILTER_SENDER_EXACT] = String.valueOf(sf.getChannelExact());
+        array[FILTER_SENDER] = sf.getChannel();
         array[FILTER_THEME_VIS] = String.valueOf(sf.isThemeVis());
         array[FILTER_THEME_EXACT] = String.valueOf(sf.isThemeExact());
         array[FILTER_THEME] = sf.getTheme();

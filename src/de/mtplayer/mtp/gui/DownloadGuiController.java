@@ -206,8 +206,8 @@ public class DownloadGuiController extends AnchorPane {
         // und jetzt die tatsächlichen URLs des Downloads eintragen
         film.arr[Film.FILM_URL] = download.get().getUrl();
         film.arr[Film.FILM_URL_RTMP] = download.get().getUrlRtmp();
-        film.arr[Film.FILM_URL_KLEIN] = "";
-        film.arr[Film.FILM_URL_RTMP_KLEIN] = "";
+        film.arr[Film.FILM_URL_SMALL] = "";
+        film.arr[Film.FILM_URL_RTMP_SMALL] = "";
         // und starten
         FilmTools.playFilm(film, null);
     }
@@ -239,7 +239,7 @@ public class DownloadGuiController extends AnchorPane {
     public void guiFilmMediensammlung() {
         final Optional<Download> download = getSel();
         if (download.isPresent()) {
-            new MediaDialogController(download.get().getTitel());
+            new MediaDialogController(download.get().getTitle());
         }
     }
 
@@ -438,7 +438,7 @@ public class DownloadGuiController extends AnchorPane {
 
         //System.out.println("Sender: " + sender + " Abo: " + abo + " Quelle: " + quelle + " Art: " + art);
         filteredDownloads.setPredicate(download -> (!download.isZurueckgestellt() &&
-                sender.isEmpty() ? true : download.getSender().equals(sender)) &&
+                sender.isEmpty() ? true : download.getChannel().equals(sender)) &&
                 (abo.isEmpty() ? true : download.getAboName().equals(abo)) &&
                 (quelle.isEmpty() ? true : download.getSource().equals(quelle)) &&
                 (art.isEmpty() ? true : download.getArt().equals(art)));

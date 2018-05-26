@@ -240,7 +240,7 @@ public class LoadFilmlist {
             notifyProgress.notifyEvent(NotifyProgress.NOTIFY.PROGRESS, new ListenerFilmlistLoadEvent("", "Abos eintragen",
                     ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
             PLog.userLog("Abos eintragen");
-            progData.aboList.setAboFuerFilm(progData.filmlist);
+            progData.aboList.setAboForFilm(progData.filmlist);
         }
 
 

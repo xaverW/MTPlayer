@@ -101,7 +101,7 @@ public class SetDataPane {
             tglAbo.selectedProperty().bindBidirectional(setData.aboProperty());
             colorPicker.valueProperty().bindBidirectional(setData.colorProperty());
 
-            tglSubdir.selectedProperty().bindBidirectional(setData.genThemaProperty());
+            tglSubdir.selectedProperty().bindBidirectional(setData.genThemeProperty());
             txtDestPath.textProperty().bindBidirectional(setData.destPathProperty());
             txtDestName.textProperty().bindBidirectional(setData.destNameProperty());
             slCut.valueProperty().bindBidirectional(setData.maxSizeProperty());
@@ -111,10 +111,10 @@ public class SetDataPane {
             txtSuffix.textProperty().bindBidirectional(setData.suffixProperty());
 
             switch (setData.getResolution()) {
-                case FilmXml.AUFLOESUNG_HD:
+                case FilmXml.RESOLUTION_HD:
                     rbHd.setSelected(true);
                     break;
-                case FilmXml.AUFLOESUNG_KLEIN:
+                case FilmXml.RESOLUTION_SMALL:
                     rbLow.setSelected(true);
                     break;
                 default:
@@ -140,7 +140,7 @@ public class SetDataPane {
             tglAbo.selectedProperty().unbindBidirectional(setData.aboProperty());
             colorPicker.valueProperty().unbindBidirectional(setData.colorProperty());
 
-            tglSubdir.selectedProperty().unbindBidirectional(setData.genThemaProperty());
+            tglSubdir.selectedProperty().unbindBidirectional(setData.genThemeProperty());
             txtDestPath.textProperty().unbindBidirectional(setData.destPathProperty());
             txtDestName.textProperty().unbindBidirectional(setData.destNameProperty());
             slCut.valueProperty().unbindBidirectional(setData.maxSizeProperty());
@@ -404,13 +404,13 @@ public class SetDataPane {
 
     private void setAufloesung() {
         if (rbHeight.isSelected()) {
-            setData.setResolution(FilmXml.AUFLOESUNG_NORMAL);
+            setData.setResolution(FilmXml.RESOLUTION_NORMAL);
         }
         if (rbHd.isSelected()) {
-            setData.setResolution(FilmXml.AUFLOESUNG_HD);
+            setData.setResolution(FilmXml.RESOLUTION_HD);
         }
         if (rbLow.isSelected()) {
-            setData.setResolution(FilmXml.AUFLOESUNG_KLEIN);
+            setData.setResolution(FilmXml.RESOLUTION_SMALL);
         }
     }
 

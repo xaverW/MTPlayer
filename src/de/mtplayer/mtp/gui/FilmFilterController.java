@@ -59,7 +59,7 @@ public class FilmFilterController extends FilterController {
     Label lblOnly = new Label("nur anzeigen");
     Label lblNot = new Label("nicht anzeigen");
 
-    private final ComboBox<String> cbxSender = new ComboBox<>();
+    private final ComboBox<String> cboChannel = new ComboBox<>();
     private final ComboBox<String> cbxTheme = new ComboBox<>();
     private final TextField txtThemeTitle = new TextField();
     private final TextField txtTitle = new TextField();
@@ -207,11 +207,11 @@ public class FilmFilterController extends FilterController {
     }
 
     private void initStringFiter() {
-        cbxSender.editableProperty().bind(progData.storedFilter.getSelectedFilter().senderExactProperty().not());
-        cbxSender.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        cbxSender.setVisibleRowCount(25);
-        cbxSender.valueProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().senderProperty());
-        cbxSender.valueProperty().addListener((observable, oldValue, newValue) -> {
+        cboChannel.editableProperty().bind(progData.storedFilter.getSelectedFilter().channelExactProperty().not());
+        cboChannel.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        cboChannel.setVisibleRowCount(25);
+        cboChannel.valueProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().channelProperty());
+        cboChannel.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue != null && newValue != null) {
                 // wenn Änderung beim Sender -> Themen anpassen
                 if (newValue.isEmpty()) {
@@ -221,7 +221,7 @@ public class FilmFilterController extends FilterController {
                 }
             }
         });
-        cbxSender.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+        cboChannel.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue != null && newValue != null) {
                 // wenn Änderung beim Sender -> Themen anpassen
                 if (newValue.isEmpty()) {
@@ -229,7 +229,7 @@ public class FilmFilterController extends FilterController {
                 } else {
                     progData.nameLists.getThemen(newValue);
                 }
-                progData.storedFilter.getSelectedFilter().setSender(newValue);
+                progData.storedFilter.getSelectedFilter().setChannel(newValue);
             }
         });
 
@@ -245,8 +245,8 @@ public class FilmFilterController extends FilterController {
         });
 
 
-        cbxSender.setItems(progData.nameLists.getObsAllSender());
-        cbxTheme.setItems(progData.nameLists.getObsThemaForSelSender());
+        cboChannel.setItems(progData.nameLists.getObsAllChannel());
+        cbxTheme.setItems(progData.nameLists.getObsThemeForSelChannel());
 
         txtThemeTitle.textProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().themeTitleProperty());
         txtTitle.textProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().titleProperty());
@@ -256,7 +256,7 @@ public class FilmFilterController extends FilterController {
 
         VBox vBox = new VBox();
         vBox.setSpacing(10);
-        addTxt("Sender", cbxSender, vBox, progData.storedFilter.getSelectedFilter().senderVisProperty());
+        addTxt("Sender", cboChannel, vBox, progData.storedFilter.getSelectedFilter().channelVisProperty());
         addTxt("Thema", cbxTheme, vBox, progData.storedFilter.getSelectedFilter().themeVisProperty());
         addTxt("Thema oder Titel", txtThemeTitle, vBox, progData.storedFilter.getSelectedFilter().themeTitleVisProperty());
         addTxt("Titel", txtTitle, vBox, progData.storedFilter.getSelectedFilter().titleVisProperty());

@@ -22,54 +22,54 @@ import de.mtplayer.mtp.tools.storedFilter.Filter;
 public class Abo extends AboProps {
     public int nr;
 
-    public Filter fSender = new Filter();
-    public Filter fThema = new Filter();
-    public Filter fThemaTitel = new Filter();
-    public Filter fTitel = new Filter();
+    public Filter fChannel = new Filter();
+    public Filter fTheme = new Filter();
+    public Filter fThemeTitle = new Filter();
+    public Filter fTitle = new Filter();
     public Filter fSomewhere = new Filter();
 
 
     public Abo() {
         // neue Abos sind immer ein
         setActive(true);
-        setResolution(Film.AUFLOESUNG_NORMAL);
+        setResolution(Film.RESOLUTION_NORMAL);
         initFilter();
     }
 
     public Abo(String name,
-               String sender,
-               String thema,
-               String themaTitel,
-               String titel,
-               String irgendwo,
-               int mmindestdauerMinuten,
-               int mmaxdestdauerMinuten,
-               String ziel,
+               String channel,
+               String theme,
+               String themeTitle,
+               String title,
+               String somewhere,
+               int minDurationMinute,
+               int maxDurationMinute,
+               String destination,
                String pset) {
 
         // neue Abos sind immer ein
         setActive(true);
-        setResolution(Film.AUFLOESUNG_NORMAL);
+        setResolution(Film.RESOLUTION_NORMAL);
         initFilter();
 
         setName(name);
 
-        setSender(sender);
-        setTheme(thema);
-        setThemeTitle(themaTitel);
-        setTitle(titel);
-        setSomewhere(irgendwo);
+        setChannel(channel);
+        setTheme(theme);
+        setThemeTitle(themeTitle);
+        setTitle(title);
+        setSomewhere(somewhere);
 
-        setMin(mmindestdauerMinuten);
-        setMax(mmaxdestdauerMinuten);
+        setMinDuration(minDurationMinute);
+        setMaxDuration(maxDurationMinute);
 
-        setDest(ziel);
+        setDestination(destination);
         setPset(pset);
     }
 
     private void initFilter() {
-        senderProperty().addListener(l -> createFilter());
-        senderExactProperty().addListener(l -> createFilter());
+        channelProperty().addListener(l -> createFilter());
+        channelExactProperty().addListener(l -> createFilter());
         themeProperty().addListener(l -> createFilter());
         themeExactProperty().addListener(l -> createFilter());
 
@@ -79,17 +79,17 @@ public class Abo extends AboProps {
     }
 
     private void createFilter() {
-        fSender = new Filter(getSender(), isSenderExact());
-        fSender.setArray();
+        fChannel = new Filter(getChannel(), getChannelExact());
+        fChannel.setArray();
 
-        fThema = new Filter(getTheme(), isThemeExact());
-        fThema.setArray();
+        fTheme = new Filter(getTheme(), isThemeExact());
+        fTheme.setArray();
 
-        fThemaTitel = new Filter(getThemeTitle());
-        fThemaTitel.setArray();
+        fThemeTitle = new Filter(getThemeTitle());
+        fThemeTitle.setArray();
 
-        fTitel = new Filter(getTitle());
-        fTitel.setArray();
+        fTitle = new Filter(getTitle());
+        fTitle.setArray();
 
         fSomewhere = new Filter(getSomewhere());
         fSomewhere.setArray();
@@ -98,7 +98,7 @@ public class Abo extends AboProps {
     public boolean isEmpty() {
         // liefert TRUE wenn das Abo leer ist, also bei jedem Film ansprechen würde
         // ist dann offensichtlich falsch!!
-        if (getSender().isEmpty()
+        if (getChannel().isEmpty()
                 && getTheme().isEmpty()
                 && getThemeTitle().isEmpty()
                 && getTitle().isEmpty()

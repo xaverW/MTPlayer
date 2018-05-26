@@ -36,7 +36,7 @@ public class Film extends FilmProps {
 
     public void init() {
         setHd(!arr[FilmXml.FILM_URL_HD].isEmpty() || !arr[FilmXml.FILM_URL_RTMP_HD].isEmpty());
-        setSmall(!arr[FilmXml.FILM_URL_KLEIN].isEmpty() || !arr[FilmXml.FILM_URL_RTMP_KLEIN].isEmpty());
+        setSmall(!arr[FilmXml.FILM_URL_SMALL].isEmpty() || !arr[FilmXml.FILM_URL_RTMP_SMALL].isEmpty());
         setUt(!arr[FilmXml.FILM_URL_SUBTITLE].isEmpty());
         setShown(ProgData.getInstance().history.checkIfExists(getUrlHistory()));
         preserveMemory();
@@ -64,9 +64,9 @@ public class Film extends FilmProps {
     }
 
     private void setFilmTime() {
-        if (!arr[FilmXml.FILM_ZEIT].isEmpty()) {
+        if (!arr[FilmXml.FILM_TIME].isEmpty()) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-            LocalTime time = LocalTime.parse(arr[FilmXml.FILM_ZEIT], formatter);
+            LocalTime time = LocalTime.parse(arr[FilmXml.FILM_TIME], formatter);
             setFilmtime(time.toSecondOfDay());
         } else {
             setFilmtime(FILMTIME_EMPTY);
@@ -74,20 +74,20 @@ public class Film extends FilmProps {
     }
 
     public String getUrlFuerAufloesung(String aufloesung) {
-        if (aufloesung.equals(AUFLOESUNG_KLEIN)) {
+        if (aufloesung.equals(RESOLUTION_SMALL)) {
             return getUrlNormalKlein();
         }
-        if (aufloesung.equals(AUFLOESUNG_HD)) {
+        if (aufloesung.equals(RESOLUTION_HD)) {
             return getUrlNormalHd();
         }
         return arr[FilmXml.FILM_URL];
     }
 
     public String getUrlFlvstreamerFuerAufloesung(String aufloesung) {
-        if (aufloesung.equals(AUFLOESUNG_KLEIN)) {
+        if (aufloesung.equals(RESOLUTION_SMALL)) {
             return getUrlFlvstreamerKlein();
         }
-        if (aufloesung.equals(AUFLOESUNG_HD)) {
+        if (aufloesung.equals(RESOLUTION_HD)) {
             return getUrlFlvstreamerHd();
         }
         return getUrlFlvstreamer();
@@ -96,14 +96,14 @@ public class Film extends FilmProps {
     public String getIndex() {
         // liefert einen eindeutigen Index für die Filmliste (update der Filmliste mit Diff-Liste)
         // URL beim KiKa und ORF ändern sich laufend!
-        return (arr[FILM_SENDER] + arr[FILM_THEMA]).toLowerCase() + getUrlForHash();
+        return (arr[FILM_CHANNEL] + arr[FILM_THEME]).toLowerCase() + getUrlForHash();
     }
 
 
     public String getUrlForHash() {
         // liefert die URL zum VERGLEICHEN!!
         String url = "";
-        if (arr[FilmXml.FILM_SENDER].equals(ProgConst.ORF)) {
+        if (arr[FilmXml.FILM_CHANNEL].equals(ProgConst.ORF)) {
             final String uurl = arr[FilmXml.FILM_URL];
             try {
                 final String online = "/online/";
@@ -135,15 +135,15 @@ public class Film extends FilmProps {
     private void preserveMemory() {
         // ================================
         // Speicher sparen
-        if (arr[FilmXml.FILM_GROESSE].length() < 3) { //todo brauchts das überhaupt??
-            arr[FilmXml.FILM_GROESSE] = arr[FilmXml.FILM_GROESSE].intern();
+        if (arr[FilmXml.FILM_SIZE].length() < 3) { //todo brauchts das überhaupt??
+            arr[FilmXml.FILM_SIZE] = arr[FilmXml.FILM_SIZE].intern();
         }
-        if (arr[FilmXml.FILM_URL_KLEIN].length() < 15) {
-            arr[FilmXml.FILM_URL_KLEIN] = arr[FilmXml.FILM_URL_KLEIN].intern();
+        if (arr[FilmXml.FILM_URL_SMALL].length() < 15) {
+            arr[FilmXml.FILM_URL_SMALL] = arr[FilmXml.FILM_URL_SMALL].intern();
         }
 
-        arr[FilmXml.FILM_DATUM] = arr[FilmXml.FILM_DATUM].intern();
-        arr[FilmXml.FILM_ZEIT] = arr[FilmXml.FILM_ZEIT].intern();
+        arr[FilmXml.FILM_DATE] = arr[FilmXml.FILM_DATE].intern();
+        arr[FilmXml.FILM_TIME] = arr[FilmXml.FILM_TIME].intern();
     }
 
     private String fuellen(int anz, String s) {
@@ -155,9 +155,9 @@ public class Film extends FilmProps {
 
     private void setFilmdauer() {
         try {
-            if (!arr[FilmXml.FILM_DAUER].contains(":") && !arr[FilmXml.FILM_DAUER].isEmpty()) {
+            if (!arr[FilmXml.FILM_DURATION].contains(":") && !arr[FilmXml.FILM_DURATION].isEmpty()) {
                 // nur als Übergang bis die Liste umgestellt ist
-                long l = Long.parseLong(arr[FilmXml.FILM_DAUER]);
+                long l = Long.parseLong(arr[FilmXml.FILM_DURATION]);
                 dauerL = l;
                 if (l > 0) {
                     final long hours = l / 3600;
@@ -165,17 +165,17 @@ public class Film extends FilmProps {
                     final long min = l / 60;
                     l = l - (min * 60);
                     final long seconds = l;
-                    arr[FilmXml.FILM_DAUER] = fuellen(2, String.valueOf(hours)) + ':'
+                    arr[FilmXml.FILM_DURATION] = fuellen(2, String.valueOf(hours)) + ':'
                             + fuellen(2, String.valueOf(min))
                             + ':'
                             + fuellen(2, String.valueOf(seconds));
                 } else {
-                    arr[FilmXml.FILM_DAUER] = "";
+                    arr[FilmXml.FILM_DURATION] = "";
                 }
             } else {
                 dauerL = 0;
-                if (!arr[FilmXml.FILM_DAUER].isEmpty()) {
-                    final String[] parts = arr[FilmXml.FILM_DAUER].split(":");
+                if (!arr[FilmXml.FILM_DURATION].isEmpty()) {
+                    final String[] parts = arr[FilmXml.FILM_DURATION].split(":");
                     long power = 1;
                     for (int i = parts.length - 1; i >= 0; i--) {
                         dauerL += Long.parseLong(parts[i]) * power;
@@ -185,30 +185,30 @@ public class Film extends FilmProps {
             }
         } catch (final Exception ex) {
             dauerL = 0;
-            PLog.errorLog(468912049, "Dauer: " + arr[FilmXml.FILM_DAUER]);
+            PLog.errorLog(468912049, "Dauer: " + arr[FilmXml.FILM_DURATION]);
         }
     }
 
     private void setDatum() {
-        if (!arr[FilmXml.FILM_DATUM].isEmpty()) {
+        if (!arr[FilmXml.FILM_DATE].isEmpty()) {
             // nur dann gibts ein Datum
             try {
-                if (arr[FilmXml.FILM_DATUM_LONG].isEmpty()) {
-                    if (arr[FilmXml.FILM_ZEIT].isEmpty()) {
-                        filmDate = new FilmDate(sdf_datum.parse(arr[FilmXml.FILM_DATUM]).getTime());
+                if (arr[FilmXml.FILM_DATE_LONG].isEmpty()) {
+                    if (arr[FilmXml.FILM_TIME].isEmpty()) {
+                        filmDate = new FilmDate(sdf_datum.parse(arr[FilmXml.FILM_DATE]).getTime());
                     } else {
-                        filmDate = new FilmDate(sdf_datum_zeit.parse(arr[FilmXml.FILM_DATUM] + arr[FilmXml.FILM_ZEIT]).getTime());
+                        filmDate = new FilmDate(sdf_datum_zeit.parse(arr[FilmXml.FILM_DATE] + arr[FilmXml.FILM_TIME]).getTime());
                     }
-                    arr[FILM_DATUM_LONG] = String.valueOf(filmDate.getTime() / 1000);
+                    arr[FILM_DATE_LONG] = String.valueOf(filmDate.getTime() / 1000);
                 } else {
-                    final long l = Long.parseLong(arr[FilmXml.FILM_DATUM_LONG]);
+                    final long l = Long.parseLong(arr[FilmXml.FILM_DATE_LONG]);
                     filmDate = new FilmDate(l * 1000 /* sind SEKUNDEN!! */);
                 }
             } catch (final Exception ex) {
-                PLog.errorLog(915236701, ex, new String[]{"Datum: " + arr[FilmXml.FILM_DATUM], "Zeit: " + arr[FilmXml.FILM_ZEIT]});
+                PLog.errorLog(915236701, ex, new String[]{"Datum: " + arr[FilmXml.FILM_DATE], "Zeit: " + arr[FilmXml.FILM_TIME]});
                 filmDate = new FilmDate(0);
-                arr[FilmXml.FILM_DATUM] = "";
-                arr[FilmXml.FILM_ZEIT] = "";
+                arr[FilmXml.FILM_DATE] = "";
+                arr[FilmXml.FILM_TIME] = "";
             }
         }
     }
@@ -216,11 +216,11 @@ public class Film extends FilmProps {
 
     private String getUrlNormalKlein() {
         // liefert die kleine normale URL
-        if (!arr[FilmXml.FILM_URL_KLEIN].isEmpty()) {
+        if (!arr[FilmXml.FILM_URL_SMALL].isEmpty()) {
             try {
-                final int i = Integer.parseInt(arr[FilmXml.FILM_URL_KLEIN].substring(0, arr[FilmXml.FILM_URL_KLEIN].indexOf('|')));
+                final int i = Integer.parseInt(arr[FilmXml.FILM_URL_SMALL].substring(0, arr[FilmXml.FILM_URL_SMALL].indexOf('|')));
                 return arr[FilmXml.FILM_URL].substring(0, i)
-                        + arr[FilmXml.FILM_URL_KLEIN].substring(arr[FilmXml.FILM_URL_KLEIN].indexOf('|') + 1);
+                        + arr[FilmXml.FILM_URL_SMALL].substring(arr[FilmXml.FILM_URL_SMALL].indexOf('|') + 1);
             } catch (final Exception ignored) {
             }
         }
@@ -255,13 +255,13 @@ public class Film extends FilmProps {
     private String getUrlFlvstreamerKlein() {
         // liefert die kleine flvstreamer URL
         String ret;
-        if (!arr[FilmXml.FILM_URL_RTMP_KLEIN].isEmpty()) {
+        if (!arr[FilmXml.FILM_URL_RTMP_SMALL].isEmpty()) {
             // es gibt eine kleine RTMP
             try {
                 final int i =
-                        Integer.parseInt(arr[FilmXml.FILM_URL_RTMP_KLEIN].substring(0, arr[FilmXml.FILM_URL_RTMP_KLEIN].indexOf('|')));
+                        Integer.parseInt(arr[FilmXml.FILM_URL_RTMP_SMALL].substring(0, arr[FilmXml.FILM_URL_RTMP_SMALL].indexOf('|')));
                 return arr[FilmXml.FILM_URL_RTMP].substring(0, i)
-                        + arr[FilmXml.FILM_URL_RTMP_KLEIN].substring(arr[FilmXml.FILM_URL_RTMP_KLEIN].indexOf('|') + 1);
+                        + arr[FilmXml.FILM_URL_RTMP_SMALL].substring(arr[FilmXml.FILM_URL_RTMP_SMALL].indexOf('|') + 1);
             } catch (final Exception ignored) {
             }
         }

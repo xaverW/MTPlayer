@@ -32,16 +32,16 @@ public class FilmSize implements Comparable<FilmSize> {
     }
 
     public FilmSize(Film film) {
-        if (film.arr[FilmXml.FILM_GROESSE].equals("<1")) {
-            film.arr[FilmXml.FILM_GROESSE] = "1";
+        if (film.arr[FilmXml.FILM_SIZE].equals("<1")) {
+            film.arr[FilmXml.FILM_SIZE] = "1";
         }
         try {
-            if (!film.arr[FilmXml.FILM_GROESSE].isEmpty()) {
-                l = Long.valueOf(film.arr[FilmXml.FILM_GROESSE]);
-                s = film.arr[FilmXml.FILM_GROESSE];
+            if (!film.arr[FilmXml.FILM_SIZE].isEmpty()) {
+                l = Long.valueOf(film.arr[FilmXml.FILM_SIZE]);
+                s = film.arr[FilmXml.FILM_SIZE];
             }
         } catch (final Exception ex) {
-            PLog.errorLog(649891025, ex, "String: " + film.arr[FilmXml.FILM_GROESSE]);
+            PLog.errorLog(649891025, ex, "String: " + film.arr[FilmXml.FILM_SIZE]);
             l = 0L;
             s = "";
         }

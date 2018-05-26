@@ -41,7 +41,7 @@ public class Filmlist extends SimpleListProperty<Film> {
     private final SimpleDateFormat sdf = new SimpleDateFormat(DATUM_ZEIT_FORMAT);
 
     public String[] sender = {""};
-    public String[][] themenPerSender = {{""}};
+    public String[][] themenPerChannel = {{""}};
 
     private FilteredList<Film> filteredList = null;
     private SortedList<Film> sortedList = null;
@@ -93,9 +93,9 @@ public class Filmlist extends SimpleListProperty<Film> {
     }
 
     private void addHash(Film f, HashSet<String> hash, boolean index) {
-        if (f.arr[FilmXml.FILM_SENDER].equals(ProgConst.KIKA)) {
+        if (f.arr[FilmXml.FILM_CHANNEL].equals(ProgConst.KIKA)) {
             // beim KIKA ändern sich die URLs laufend
-            hash.add(f.arr[FilmXml.FILM_THEMA] + f.arr[FilmXml.FILM_TITEL]);
+            hash.add(f.arr[FilmXml.FILM_THEME] + f.arr[FilmXml.FILM_TITLE]);
         } else if (index) {
             hash.add(f.getIndex());
         } else {
@@ -117,9 +117,9 @@ public class Filmlist extends SimpleListProperty<Film> {
             final Iterator<Film> it = iterator();
             while (it.hasNext()) {
                 final Film f = it.next();
-                if (f.arr[FilmXml.FILM_SENDER].equals(ProgConst.KIKA)) {
+                if (f.arr[FilmXml.FILM_CHANNEL].equals(ProgConst.KIKA)) {
                     // beim KIKA ändern sich die URLs laufend
-                    if (hash.contains(f.arr[FilmXml.FILM_THEMA] + f.arr[FilmXml.FILM_TITEL])) {
+                    if (hash.contains(f.arr[FilmXml.FILM_THEME] + f.arr[FilmXml.FILM_TITLE])) {
                         it.remove();
                     }
                 } else if (index) {
@@ -137,8 +137,8 @@ public class Filmlist extends SimpleListProperty<Film> {
             forEach(f -> addHash(f, hash, index));
 
             for (final Film f : listeEinsortieren) {
-                if (f.arr[FilmXml.FILM_SENDER].equals(ProgConst.KIKA)) {
-                    if (!hash.contains(f.arr[FilmXml.FILM_THEMA] + f.arr[FilmXml.FILM_TITEL])) {
+                if (f.arr[FilmXml.FILM_CHANNEL].equals(ProgConst.KIKA)) {
+                    if (!hash.contains(f.arr[FilmXml.FILM_THEME] + f.arr[FilmXml.FILM_TITLE])) {
                         addInit(f);
                     }
                 } else if (index) {
@@ -225,10 +225,10 @@ public class Filmlist extends SimpleListProperty<Film> {
         return opt.orElse(null);
     }
 
-    public synchronized void getThema(String sender, LinkedList<String> liste) {
-        stream().filter(film -> film.arr[FilmXml.FILM_SENDER].equals(sender))
-                .filter(film -> !liste.contains(film.arr[FilmXml.FILM_THEMA]))
-                .forEach(film -> liste.add(film.arr[FilmXml.FILM_THEMA]));
+    public synchronized void getTheme(String sender, LinkedList<String> liste) {
+        stream().filter(film -> film.arr[FilmXml.FILM_CHANNEL].equals(sender))
+                .filter(film -> !liste.contains(film.arr[FilmXml.FILM_THEME]))
+                .forEach(film -> liste.add(film.arr[FilmXml.FILM_THEME]));
     }
 
     public synchronized Film getFilmByUrl_klein_hoch_hd(String url) {
@@ -238,8 +238,8 @@ public class Filmlist extends SimpleListProperty<Film> {
         return parallelStream().filter(f ->
 
                 f.arr[FilmXml.FILM_URL].equals(url) ||
-                        f.getUrlFuerAufloesung(FilmXml.AUFLOESUNG_HD).equals(url) ||
-                        f.getUrlFuerAufloesung(FilmXml.AUFLOESUNG_KLEIN).equals(url)
+                        f.getUrlFuerAufloesung(FilmXml.RESOLUTION_HD).equals(url) ||
+                        f.getUrlFuerAufloesung(FilmXml.RESOLUTION_SMALL).equals(url)
 
         ).findFirst().orElse(null);
 
@@ -382,13 +382,13 @@ public class Filmlist extends SimpleListProperty<Film> {
         senderSet.add("");
 
         stream().forEach((film) -> {
-            senderSet.add(film.arr[FilmXml.FILM_SENDER]);
+            senderSet.add(film.arr[FilmXml.FILM_CHANNEL]);
         });
         sender = senderSet.toArray(new String[senderSet.size()]);
 
         // für den Sender "" sind alle Themen im themenPerSender[0]
         final int senderLength = sender.length;
-        themenPerSender = new String[senderLength][];
+        themenPerChannel = new String[senderLength][];
         final TreeSet<String>[] tree = (TreeSet<String>[]) new TreeSet<?>[senderLength];
         final HashSet<String>[] hashSet = (HashSet<String>[]) new HashSet<?>[senderLength];
         for (int i = 0; i < tree.length; ++i) {
@@ -402,26 +402,26 @@ public class Filmlist extends SimpleListProperty<Film> {
         }
 
         // alle Themen
-        String filmThema, filmSender;
+        String filmTheme, filmChannel;
         for (final Film film : this) {
-            filmSender = film.arr[FilmXml.FILM_SENDER];
-            filmThema = film.arr[FilmXml.FILM_THEMA];
+            filmChannel = film.arr[FilmXml.FILM_CHANNEL];
+            filmTheme = film.arr[FilmXml.FILM_THEME];
             // hinzufügen
-            if (!hashSet[0].contains(filmThema)) {
-                hashSet[0].add(filmThema);
-                tree[0].add(filmThema);
+            if (!hashSet[0].contains(filmTheme)) {
+                hashSet[0].add(filmTheme);
+                tree[0].add(filmTheme);
             }
             for (int i = 1; i < senderLength; ++i) {
-                if (filmSender.equals(sender[i])) {
-                    if (!hashSet[i].contains(filmThema)) {
-                        hashSet[i].add(filmThema);
-                        tree[i].add(filmThema);
+                if (filmChannel.equals(sender[i])) {
+                    if (!hashSet[i].contains(filmTheme)) {
+                        hashSet[i].add(filmTheme);
+                        tree[i].add(filmTheme);
                     }
                 }
             }
         }
-        for (int i = 0; i < themenPerSender.length; ++i) {
-            themenPerSender[i] = tree[i].toArray(new String[tree[i].size()]);
+        for (int i = 0; i < themenPerChannel.length; ++i) {
+            themenPerChannel[i] = tree[i].toArray(new String[tree[i].size()]);
             tree[i].clear();
             hashSet[i].clear();
         }

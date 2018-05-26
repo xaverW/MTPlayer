@@ -97,7 +97,7 @@ public class DownloadContinueDialogController extends MTDialog {
 
         lblHeader.setStyle("-fx-font-weight: bold;");
         lblFilmTitle.setStyle("-fx-font-weight: bold;");
-        lblFilmTitle.setText(download.getTitel());
+        lblFilmTitle.setText(download.getTitle());
 
         btnContinueDownload.setVisible(direkterDownload);
         btnContinueDownload.setManaged(direkterDownload);

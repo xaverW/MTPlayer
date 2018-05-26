@@ -21,10 +21,10 @@ import de.mtplayer.mtp.tools.storedFilter.Filter;
 public class BlackData extends BlackProps {
 
 
-    public Filter fSender = new Filter();
-    public Filter fThema = new Filter();
-    public Filter fThemaTitel = new Filter();
-    public Filter fTitel = new Filter();
+    public Filter fChannel = new Filter();
+    public Filter fTheme = new Filter();
+    public Filter fThemeTitle = new Filter();
+    public Filter fTitle = new Filter();
     public Filter fSomewhere = new Filter();
 
 
@@ -37,37 +37,37 @@ public class BlackData extends BlackProps {
         super();
         initFilter();
 
-        setSender(sender);
-        setThema(thema);
-        setTitel(titel);
-        setThemaTitel(themaTitel);
+        setChannel(sender);
+        setTheme(thema);
+        setTitle(titel);
+        setThemeTitle(themaTitel);
     }
 
     public void createFilter() {
-        fSender.filter = getSender();
-        fSender.exakt = isSenderExact();
-        fSender.setArray();
+        fChannel.filter = getChannel();
+        fChannel.exakt = getChannelExact();
+        fChannel.setArray();
 
-        fThema.filter = getThema();
-        fThema.exakt = isThemaExact();
-        fThema.setArray();
+        fTheme.filter = getTheme();
+        fTheme.exakt = getThemeExact();
+        fTheme.setArray();
 
-        fThemaTitel.filter = getThemaTitel();
-        fThemaTitel.setArray();
+        fThemeTitle.filter = getThemeTitle();
+        fThemeTitle.setArray();
 
-        fTitel.filter = getTitel();
-        fTitel.setArray();
+        fTitle.filter = getTitle();
+        fTitle.setArray();
     }
 
     private void initFilter() {
-        senderProperty().addListener(l -> createFilter());
-        senderExactProperty().addListener(l -> createFilter());
+        channelProperty().addListener(l -> createFilter());
+        channelExactProperty().addListener(l -> createFilter());
 
-        themaProperty().addListener(l -> createFilter());
-        themaExactProperty().addListener(l -> createFilter());
+        themeProperty().addListener(l -> createFilter());
+        themeExactProperty().addListener(l -> createFilter());
 
-        themaTitelProperty().addListener(l -> createFilter());
-        titelProperty().addListener(l -> createFilter());
+        themeTitleProperty().addListener(l -> createFilter());
+        titleProperty().addListener(l -> createFilter());
     }
 
 

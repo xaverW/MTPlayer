@@ -30,7 +30,7 @@ public class FilmFilter {
         // prüfen ob "aboExistiert" das "aboPrüfen" mit abdeckt, also die gleichen (oder mehr)
         // Filme findet, dann wäre das neue Abo hinfällig
 
-        if (!checkAboExistArr(aboExistiert.getSender(), aboPruefen.getSender(), true)) {
+        if (!checkAboExistArr(aboExistiert.getChannel(), aboPruefen.getChannel(), true)) {
             return false;
         }
 
@@ -82,7 +82,7 @@ public class FilmFilter {
                                                boolean mitLaenge) {
 
 
-        if (!sender.empty && !checkSender(sender, film)) {
+        if (!sender.empty && !checkChannel(sender, film)) {
             return false;
         }
 
@@ -90,11 +90,11 @@ public class FilmFilter {
             return false;
         }
 
-        if (!themaTitel.empty && !checkThemaTitle(themaTitel, film)) {
+        if (!themaTitel.empty && !checkThemeTitle(themaTitel, film)) {
             return false;
         }
 
-        if (!titel.empty && !checkTitel(titel, film)) {
+        if (!titel.empty && !checkTitle(titel, film)) {
             return false;
         }
 
@@ -109,13 +109,13 @@ public class FilmFilter {
         return true;
     }
 
-    public static boolean checkSender(Filter sender, Film film) {
+    public static boolean checkChannel(Filter sender, Film film) {
         if (sender.exakt) {
-            if (!sender.filter.equalsIgnoreCase(film.arr[FilmXml.FILM_SENDER])) {
+            if (!sender.filter.equalsIgnoreCase(film.arr[FilmXml.FILM_CHANNEL])) {
                 return false;
             }
         } else {
-            if (!pruefen(sender, film.arr[FilmXml.FILM_SENDER])) {
+            if (!pruefen(sender, film.arr[FilmXml.FILM_CHANNEL])) {
                 return false;
             }
         }
@@ -126,37 +126,37 @@ public class FilmFilter {
     public static boolean checkTheme(Filter thema, Film film) {
         if (thema.exakt) {
             // da ist keine Form optimal?? aber so passt es zur Sortierung der Themenliste
-            if (!thema.filter.equalsIgnoreCase(film.arr[FilmXml.FILM_THEMA])) {
+            if (!thema.filter.equalsIgnoreCase(film.arr[FilmXml.FILM_THEME])) {
                 return false;
             }
         } else {
-            if (!pruefen(thema, film.arr[FilmXml.FILM_THEMA])) {
+            if (!pruefen(thema, film.arr[FilmXml.FILM_THEME])) {
                 return false;
             }
         }
         return true;
     }
 
-    public static boolean checkThemaTitle(Filter themaTitel, Film film) {
-        if (!pruefen(themaTitel, film.arr[FilmXml.FILM_THEMA])
-                && !pruefen(themaTitel, film.arr[FilmXml.FILM_TITEL])) {
+    public static boolean checkThemeTitle(Filter themaTitel, Film film) {
+        if (!pruefen(themaTitel, film.arr[FilmXml.FILM_THEME])
+                && !pruefen(themaTitel, film.arr[FilmXml.FILM_TITLE])) {
             return false;
         }
         return true;
     }
 
-    public static boolean checkTitel(Filter titel, Film film) {
-        if (!pruefen(titel, film.arr[FilmXml.FILM_TITEL])) {
+    public static boolean checkTitle(Filter title, Film film) {
+        if (!pruefen(title, film.arr[FilmXml.FILM_TITLE])) {
             return false;
         }
         return true;
     }
 
     public static boolean checkSomewhere(Filter somewhere, Film film) {
-        if (!pruefen(somewhere, film.arr[FilmXml.FILM_DATUM])
-                && !pruefen(somewhere, film.arr[FilmXml.FILM_THEMA])
-                && !pruefen(somewhere, film.arr[FilmXml.FILM_TITEL])
-                && !pruefen(somewhere, film.arr[FilmXml.FILM_BESCHREIBUNG])) {
+        if (!pruefen(somewhere, film.arr[FilmXml.FILM_DATE])
+                && !pruefen(somewhere, film.arr[FilmXml.FILM_THEME])
+                && !pruefen(somewhere, film.arr[FilmXml.FILM_TITLE])
+                && !pruefen(somewhere, film.arr[FilmXml.FILM_DESCRIPTION])) {
             return false;
         }
         return true;

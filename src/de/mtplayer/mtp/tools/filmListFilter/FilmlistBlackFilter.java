@@ -220,10 +220,10 @@ public class FilmlistBlackFilter {
         for (final BlackData blackData : PROG_DATA.blackList) {
 
             if (FilmFilter.filterAufFilmPruefen(
-                    blackData.fSender,
-                    blackData.fThema,
-                    blackData.fThemaTitel,
-                    blackData.fTitel,
+                    blackData.fChannel,
+                    blackData.fTheme,
+                    blackData.fThemeTitle,
+                    blackData.fTitle,
                     blackData.fSomewhere,
 
                     0,

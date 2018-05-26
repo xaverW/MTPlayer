@@ -136,7 +136,7 @@ public class ReadFilmlist {
             if (jp.isExpectedStartArrayToken()) {
                 final Film film = new Film();
                 for (int i = 0; i < FilmXml.JSON_NAMES.length; ++i) {
-                    if (FilmXml.JSON_NAMES[i] == FilmXml.FILM_NEU) {
+                    if (FilmXml.JSON_NAMES[i] == FilmXml.FILM_NEW) {
                         final String value = jp.nextTextValue();
                         // This value is unused...
                         // datenFilm.arr[DatenFilm.FILM_NEU_NR] = value;
@@ -150,15 +150,15 @@ public class ReadFilmlist {
                         film.arr[FilmXml.JSON_NAMES[i]] = "";
                     }
                 }
-                if (film.arr[FilmXml.FILM_SENDER].isEmpty()) {
-                    film.arr[FilmXml.FILM_SENDER] = sender;
+                if (film.arr[FilmXml.FILM_CHANNEL].isEmpty()) {
+                    film.arr[FilmXml.FILM_CHANNEL] = sender;
                 } else {
-                    sender = film.arr[FilmXml.FILM_SENDER];
+                    sender = film.arr[FilmXml.FILM_CHANNEL];
                 }
-                if (film.arr[FilmXml.FILM_THEMA].isEmpty()) {
-                    film.arr[FilmXml.FILM_THEMA] = thema;
+                if (film.arr[FilmXml.FILM_THEME].isEmpty()) {
+                    film.arr[FilmXml.FILM_THEME] = thema;
                 } else {
-                    thema = film.arr[FilmXml.FILM_THEMA];
+                    thema = film.arr[FilmXml.FILM_THEME];
                 }
 
                 filmlist.importFilmliste(film);

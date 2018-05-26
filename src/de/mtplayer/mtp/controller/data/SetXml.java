@@ -93,6 +93,6 @@ public class SetXml extends Data<SetXml> {
 
         arr[PROGRAMMSET_INFODATEI] = Boolean.toString(false);
         arr[PROGRAMMSET_SUBTITLE] = Boolean.toString(false);
-        arr[PROGRAMMSET_AUFLOESUNG] = FilmXml.AUFLOESUNG_NORMAL;
+        arr[PROGRAMMSET_AUFLOESUNG] = FilmXml.RESOLUTION_NORMAL;
     }
 }

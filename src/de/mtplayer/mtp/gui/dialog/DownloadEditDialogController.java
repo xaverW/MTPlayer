@@ -62,7 +62,7 @@ public class DownloadEditDialogController extends MTDialogExtra {
     private String dateiGroesse_HD = "";
     private String dateiGroesse_Hoch = "";
     private String dateiGroesse_Klein = "";
-    private String resolution = FilmXml.AUFLOESUNG_NORMAL;
+    private String resolution = FilmXml.RESOLUTION_NORMAL;
 
     private final Download download;
     private final boolean isStarted;
@@ -156,9 +156,9 @@ public class DownloadEditDialogController extends MTDialogExtra {
         download.setPathName(cbPath.getSelectionModel().getSelectedItem(),
                 txt[DownloadXml.DOWNLOAD_ZIEL_DATEINAME].getText());
 
-        if ((rbHd.isSelected() && !resolution.equals(FilmXml.AUFLOESUNG_HD))
-                || (rbKlein.isSelected() && !resolution.equals(FilmXml.AUFLOESUNG_KLEIN))
-                || (rbHoch.isSelected() && !resolution.equals(FilmXml.AUFLOESUNG_NORMAL))) {
+        if ((rbHd.isSelected() && !resolution.equals(FilmXml.RESOLUTION_HD))
+                || (rbKlein.isSelected() && !resolution.equals(FilmXml.RESOLUTION_SMALL))
+                || (rbHoch.isSelected() && !resolution.equals(FilmXml.RESOLUTION_NORMAL))) {
             // dann wurde die Auflösung geändert -> Film kann nicht weitergeführt werden
             ok = downloadDateiLoeschen(download);
         } else {
@@ -175,11 +175,11 @@ public class DownloadEditDialogController extends MTDialogExtra {
         // RadioButton sind nur enabled wenn "datenDownload.film" vorhanden
         final String res;
         if (rbHd.isSelected()) {
-            res = FilmXml.AUFLOESUNG_HD;
+            res = FilmXml.RESOLUTION_HD;
         } else if (rbKlein.isSelected()) {
-            res = FilmXml.AUFLOESUNG_KLEIN;
+            res = FilmXml.RESOLUTION_SMALL;
         } else {
-            res = FilmXml.AUFLOESUNG_NORMAL;
+            res = FilmXml.RESOLUTION_NORMAL;
         }
         download.setUrl(download.getFilm().getUrlFuerAufloesung(res));
         download.setUrlRtmp(download.getFilm().getUrlFlvstreamerFuerAufloesung(res));
@@ -232,18 +232,18 @@ public class DownloadEditDialogController extends MTDialogExtra {
         if (download.getFilm() != null) {
 
             rbHoch.setDisable(isStarted);
-            rbHoch.setSelected(download.getUrl().equals(download.getFilm().getUrlFuerAufloesung(FilmXml.AUFLOESUNG_NORMAL)));
+            rbHoch.setSelected(download.getUrl().equals(download.getFilm().getUrlFuerAufloesung(FilmXml.RESOLUTION_NORMAL)));
             dateiGroesse_Hoch = FilmTools.getSizeFromWeb(download.getFilm(),
-                    download.getFilm().getUrlFuerAufloesung(FilmXml.AUFLOESUNG_NORMAL));
+                    download.getFilm().getUrlFuerAufloesung(FilmXml.RESOLUTION_NORMAL));
             if (!dateiGroesse_Hoch.isEmpty()) {
                 rbHoch.setText(rbHoch.getText() + "   [ " + dateiGroesse_Hoch + " MB ]");
             }
 
             if (download.getFilm().isHd()) {
                 rbHd.setDisable(isStarted);
-                rbHd.setSelected(download.getUrl().equals(download.getFilm().getUrlFuerAufloesung(FilmXml.AUFLOESUNG_HD)));
+                rbHd.setSelected(download.getUrl().equals(download.getFilm().getUrlFuerAufloesung(FilmXml.RESOLUTION_HD)));
                 dateiGroesse_HD = FilmTools.getSizeFromWeb(download.getFilm(),
-                        download.getFilm().getUrlFuerAufloesung(FilmXml.AUFLOESUNG_HD));
+                        download.getFilm().getUrlFuerAufloesung(FilmXml.RESOLUTION_HD));
                 if (!dateiGroesse_HD.isEmpty()) {
                     rbHd.setText(rbHd.getText() + "   [ " + dateiGroesse_HD + " MB ]");
                 }
@@ -251,9 +251,9 @@ public class DownloadEditDialogController extends MTDialogExtra {
 
             if (download.getFilm().isSmall()) {
                 rbKlein.setDisable(isStarted);
-                rbKlein.setSelected(download.getUrl().equals(download.getFilm().getUrlFuerAufloesung(FilmXml.AUFLOESUNG_KLEIN)));
+                rbKlein.setSelected(download.getUrl().equals(download.getFilm().getUrlFuerAufloesung(FilmXml.RESOLUTION_SMALL)));
                 dateiGroesse_Klein = FilmTools.getSizeFromWeb(download.getFilm(),
-                        download.getFilm().getUrlFuerAufloesung(FilmXml.AUFLOESUNG_KLEIN));
+                        download.getFilm().getUrlFuerAufloesung(FilmXml.RESOLUTION_SMALL));
                 if (!dateiGroesse_Klein.isEmpty()) {
                     rbKlein.setText(rbKlein.getText() + "   [ " + dateiGroesse_Klein + " MB ]");
                 }
@@ -261,19 +261,19 @@ public class DownloadEditDialogController extends MTDialogExtra {
 
         }
         if (rbHd.isSelected()) {
-            resolution = FilmXml.AUFLOESUNG_HD;
+            resolution = FilmXml.RESOLUTION_HD;
             if (!dateiGroesse_HD.isEmpty()) {
                 // ist wahrscheinlich leer
                 download.setSizeDownloadFromWeb(dateiGroesse_HD);
             }
         } else if (rbKlein.isSelected()) {
-            resolution = FilmXml.AUFLOESUNG_KLEIN;
+            resolution = FilmXml.RESOLUTION_SMALL;
             if (!dateiGroesse_Klein.isEmpty()) {
                 // ist wahrscheinlich leer
                 download.setSizeDownloadFromWeb(dateiGroesse_Klein);
             }
         } else {
-            resolution = FilmXml.AUFLOESUNG_NORMAL;
+            resolution = FilmXml.RESOLUTION_NORMAL;
             if (!dateiGroesse_Hoch.isEmpty()) {
                 // dann den auch noch
                 download.setSizeDownloadFromWeb(dateiGroesse_Hoch);
@@ -449,19 +449,19 @@ public class DownloadEditDialogController extends MTDialogExtra {
                 ++row;
                 break;
             case DownloadXml.DOWNLOAD_SENDER:
-                lblCont[i].textProperty().bind(download.senderProperty());
+                lblCont[i].textProperty().bind(download.channelProperty());
                 gridPane.add(lbl[i], 0, row);
                 gridPane.add(lblCont[i], 1, row);
                 ++row;
                 break;
             case DownloadXml.DOWNLOAD_THEMA:
-                lblCont[i].textProperty().bind(download.themaProperty());
+                lblCont[i].textProperty().bind(download.themeProperty());
                 gridPane.add(lbl[i], 0, row);
                 gridPane.add(lblCont[i], 1, row);
                 ++row;
                 break;
             case DownloadXml.DOWNLOAD_TITEL:
-                lblCont[i].textProperty().bind(download.titelProperty());
+                lblCont[i].textProperty().bind(download.titleProperty());
                 gridPane.add(lbl[i], 0, row);
                 gridPane.add(lblCont[i], 1, row);
                 ++row;
@@ -496,13 +496,13 @@ public class DownloadEditDialogController extends MTDialogExtra {
                 ++row;
                 break;
             case DownloadXml.DOWNLOAD_ZEIT:
-                lblCont[i].textProperty().bind(download.zeitProperty());
+                lblCont[i].textProperty().bind(download.timeProperty());
                 gridPane.add(lbl[i], 0, row);
                 gridPane.add(lblCont[i], 1, row);
                 ++row;
                 break;
             case DownloadXml.DOWNLOAD_DAUER:
-                lblCont[i].textProperty().bind(download.dauerProperty());
+                lblCont[i].textProperty().bind(download.durationProperty());
                 gridPane.add(lbl[i], 0, row);
                 gridPane.add(lblCont[i], 1, row);
                 ++row;

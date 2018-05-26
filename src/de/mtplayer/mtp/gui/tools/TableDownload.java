@@ -58,11 +58,11 @@ public class TableDownload {
         final TableColumn<Download, String> aboColumn = new TableColumn<>("Abo");
         aboColumn.setCellValueFactory(new PropertyValueFactory<>("aboName"));
         final TableColumn<Download, String> senderColumn = new TableColumn<>("Sender");
-        senderColumn.setCellValueFactory(new PropertyValueFactory<>("sender"));
+        senderColumn.setCellValueFactory(new PropertyValueFactory<>("channel"));
         final TableColumn<Download, String> themaColumn = new TableColumn<>("Thema");
-        themaColumn.setCellValueFactory(new PropertyValueFactory<>("thema"));
+        themaColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
         final TableColumn<Download, String> titelColumn = new TableColumn<>("Titel");
-        titelColumn.setCellValueFactory(new PropertyValueFactory<>("titel"));
+        titelColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
 
         final TableColumn<Download, Integer> startColumn = new TableColumn<>("");
         startColumn.setCellValueFactory(new PropertyValueFactory<>("state"));
@@ -74,18 +74,18 @@ public class TableDownload {
         fortschrittColumn.setCellFactory(cellFactoryProgress);
 
         final TableColumn<Download, Integer> restzeitColumn = new TableColumn<>("Restzeit");
-        restzeitColumn.setCellValueFactory(new PropertyValueFactory<>("restzeit"));
+        restzeitColumn.setCellValueFactory(new PropertyValueFactory<>("remaining"));
         final TableColumn<Download, Integer> geschwindigkeitColumn = new TableColumn<>("Geschwindigkeit");
-        geschwindigkeitColumn.setCellValueFactory(new PropertyValueFactory<>("bandbreite"));
+        geschwindigkeitColumn.setCellValueFactory(new PropertyValueFactory<>("bandwidth"));
 
         final TableColumn<Download, DownloadSizeData> groesseColumn = new TableColumn<>("Größe [MB]");
         groesseColumn.setCellValueFactory(new PropertyValueFactory<>("downloadSize"));
         final TableColumn<Download, MDate> datumColumn = new TableColumn<>("Datum");
         datumColumn.setCellValueFactory(new PropertyValueFactory<>("filmDate"));
         final TableColumn<Download, String> zeitColumn = new TableColumn<>("Zeit");
-        zeitColumn.setCellValueFactory(new PropertyValueFactory<>("zeit"));
+        zeitColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
         final TableColumn<Download, Integer> dauerColumn = new TableColumn<>("Dauer");
-        dauerColumn.setCellValueFactory(new PropertyValueFactory<>("dauer"));
+        dauerColumn.setCellValueFactory(new PropertyValueFactory<>("duration"));
 
         final TableColumn<Download, Boolean> hdColumn = new TableColumn<>("HD");
         hdColumn.setCellValueFactory(new PropertyValueFactory<>("hd"));
