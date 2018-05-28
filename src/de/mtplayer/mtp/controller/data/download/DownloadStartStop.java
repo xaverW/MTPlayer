@@ -50,8 +50,8 @@ public class DownloadStartStop {
      *
      * @param list
      */
-    public synchronized boolean putbackDownloads(ArrayList<Download> list) {
-        boolean gefunden = false;
+    public synchronized boolean putBackDownloads(ArrayList<Download> list) {
+        boolean found = false;
 
         if (list == null || list.isEmpty()) {
             return false;
@@ -63,11 +63,11 @@ public class DownloadStartStop {
         for (final Download download : list) {
             if (download.isStateInit() || download.isStateStoped()) {
                 download.putBack();
-                gefunden = true;
+                found = true;
             }
         }
 
-        return gefunden;
+        return found;
     }
 
     /**
@@ -100,10 +100,10 @@ public class DownloadStartStop {
         }
 
         list.stream().filter(download -> download.isStateStartedRun()).forEach(download -> download.stopDownload());
-        boolean gefunden = downloadList.removeAll(list);
+        boolean found = downloadList.removeAll(list);
 
         Duration.counterStop("DownloadStartStop.delDownloads");
-        return gefunden;
+        return found;
     }
 
     /**
@@ -112,7 +112,7 @@ public class DownloadStartStop {
      * @param list
      */
     public synchronized boolean stopDownloads(ArrayList<Download> list) {
-        boolean gefunden = false;
+        boolean found = false;
 
         if (list == null || list.isEmpty()) {
             return false;
@@ -125,16 +125,16 @@ public class DownloadStartStop {
             if (download.isStateStartedWaiting() || download.isStateStartedRun() || download.isStateError()) {
                 // nur dann läuft er
                 download.stopDownload();
-                gefunden = true;
+                found = true;
             }
         }
 
-        return gefunden;
+        return found;
     }
 
 
-    private MTAlert.BUTTON restartDownload(int size, String title, MTAlert.BUTTON antwort) {
-        if (antwort.equals(MTAlert.BUTTON.UNKNOWN)) {
+    private MTAlert.BUTTON restartDownload(int size, String title, MTAlert.BUTTON answer) {
+        if (answer.equals(MTAlert.BUTTON.UNKNOWN)) {
             // nur einmal fragen
             String text;
             if (size > 1) {
@@ -142,9 +142,9 @@ public class DownloadStartStop {
             } else {
                 text = "Film nochmal starten?  ==> " + title;
             }
-            antwort = new MTAlert().showAlert_yes_no_cancel("Download", "Fehlerhafte Downloads", text);
+            answer = new MTAlert().showAlert_yes_no_cancel("Download", "Fehlerhafte Downloads", text);
         }
-        return antwort;
+        return answer;
     }
 
     private void start(ArrayList<Download> downloads) {
@@ -168,19 +168,19 @@ public class DownloadStartStop {
     /**
      * eine Liste Downloads starten
      *
-     * @param liste
-     * @param auchFertige
+     * @param list
+     * @param alsoFinished
      */
 
-    public boolean startDownloads(ArrayList<Download> liste, boolean auchFertige) {
+    public boolean startDownloads(ArrayList<Download> list, boolean alsoFinished) {
         Duration.counterStart("DownloadStartStop.startDownloads");
 
-        MTAlert.BUTTON antwort = MTAlert.BUTTON.UNKNOWN;
-        final ArrayList<Download> listeDownloadsLoeschen = new ArrayList<>();
-        final ArrayList<Download> listeDownloadsStarten = new ArrayList<>();
-        final ArrayList<Download> listeDownloadsRemoveAboHistory = new ArrayList<>();
+        MTAlert.BUTTON answer = MTAlert.BUTTON.UNKNOWN;
+        final ArrayList<Download> listDelDownloads = new ArrayList<>();
+        final ArrayList<Download> listStartDownloads = new ArrayList<>();
+        final ArrayList<Download> listDownloadsRemoveAboHistory = new ArrayList<>();
 
-        if (liste == null || liste.isEmpty()) {
+        if (list == null || list.isEmpty()) {
             return false;
         }
 
@@ -189,31 +189,31 @@ public class DownloadStartStop {
 
 
         // nicht gestartete einfach starten
-        liste.stream().filter(download -> download.isStateInit()).forEach(download -> {
-            listeDownloadsStarten.add(download);
+        list.stream().filter(download -> download.isStateInit()).forEach(download -> {
+            listStartDownloads.add(download);
         });
 
         // bereits gestartete erst vorbehandeln: wenn er noch läuft/fertig ist gibts nix
         // fehlerhafte nur wenn gewollt
-        for (Download download : liste) {
+        for (Download download : list) {
 
             // abgebrochene starten
-            if (auchFertige && download.isStateStoped()) {
-                listeDownloadsLoeschen.add(download);
+            if (alsoFinished && download.isStateStoped()) {
+                listDelDownloads.add(download);
                 if (download.isAbo()) {
                     // wenn er schon feritg ist und ein Abos ist, Url auch aus dem Logfile löschen, der Film ist damit wieder auf "Anfang"
-                    listeDownloadsRemoveAboHistory.add(download);
+                    listDownloadsRemoveAboHistory.add(download);
                 }
-                listeDownloadsStarten.add(download);
+                listStartDownloads.add(download);
             }
 
             //fehlerhafte nur wenn gewollt wieder starten
-            if (auchFertige && download.isStateError()) {
-                if (antwort.equals(MTAlert.BUTTON.UNKNOWN)) {
-                    antwort = restartDownload(liste.size(), download.arr[Download.DOWNLOAD_TITEL], antwort);
+            if (alsoFinished && download.isStateError()) {
+                if (answer.equals(MTAlert.BUTTON.UNKNOWN)) {
+                    answer = restartDownload(list.size(), download.arr[Download.DOWNLOAD_TITLE], answer);
                 }
 
-                switch (antwort) {
+                switch (answer) {
                     case CANCEL:
                         break;
                     case NO:
@@ -221,12 +221,12 @@ public class DownloadStartStop {
                         continue;
                     case YES:
                     default:
-                        listeDownloadsLoeschen.add(download);
+                        listDelDownloads.add(download);
                         if (download.isAbo()) {
                             // wenn er schon feritg ist und ein Abos ist, Url auch aus dem Logfile löschen, der Film ist damit wieder auf "Anfang"
-                            listeDownloadsRemoveAboHistory.add(download);
+                            listDownloadsRemoveAboHistory.add(download);
                         }
-                        listeDownloadsStarten.add(download);
+                        listStartDownloads.add(download);
                 }
             }
         }
@@ -234,19 +234,19 @@ public class DownloadStartStop {
         Duration.counterStop("DownloadStartStop.startDownloads");
 
 
-        if (antwort.equals(MTAlert.BUTTON.CANCEL)) {
+        if (answer.equals(MTAlert.BUTTON.CANCEL)) {
             // dann machmer nix
             return false;
         }
 
         //aus der AboHitory löschen
-        progData.erledigteAbos.removeDownloadListFromHistory(listeDownloadsRemoveAboHistory);
+        progData.erledigteAbos.removeDownloadListFromHistory(listDownloadsRemoveAboHistory);
 
         // jetzt noch die Starts stoppen
-        listeDownloadsLoeschen.stream().forEach(download -> download.stopDownload());
+        listDelDownloads.stream().forEach(download -> download.stopDownload());
 
         // alle Downloads starten/wiederstarten
-        start(listeDownloadsStarten);
+        start(listStartDownloads);
         return true;
     }
 }

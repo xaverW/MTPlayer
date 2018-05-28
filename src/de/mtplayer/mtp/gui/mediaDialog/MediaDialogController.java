@@ -38,11 +38,11 @@ public class MediaDialogController extends MTDialog {
     private final VBox vBoxDialog = new VBox();
     private final VBox vBoxCont = new VBox();
 
-    private final TextField txtSuchen = new TextField();
+    private final TextField txtSearch = new TextField();
 
 
     private final Button btnOk = new Button("Ok");
-    private final Button btnHilfe = new Button();
+    private final Button btnHelp = new Button();
     private final Button btnReset = new Button("");
 
     private final RadioButton rbMedien = new RadioButton("Mediensammlung");
@@ -61,20 +61,20 @@ public class MediaDialogController extends MTDialog {
     public MediaDialogController(String searchStr) {
         super(ProgConfig.MEDIA_DIALOG_SIZE, "Mediensammlung", true);
         this.searchStr = searchStr;
-        txtSuchen.setText(searchStr);
+        txtSearch.setText(searchStr);
 
         listenerDbStart = new Listener(Listener.EREIGNIS_MEDIA_DB_START, MediaDialogController.class.getSimpleName()) {
             @Override
             public void ping() {
                 // neue DB suchen
-                txtSuchen.setDisable(true);
+                txtSearch.setDisable(true);
             }
         };
         listenerDbStop = new Listener(Listener.EREIGNIS_MEDIA_DB_STOP, MediaDialogController.class.getSimpleName()) {
             @Override
             public void ping() {
                 // neue DB liegt vor
-                txtSuchen.setDisable(false);
+                txtSearch.setDisable(false);
             }
         };
         init(rootPane, true);
@@ -109,8 +109,8 @@ public class MediaDialogController extends MTDialog {
 
             HBox hBox = new HBox();
             hBox.setSpacing(10);
-            HBox.setHgrow(txtSuchen, Priority.ALWAYS);
-            hBox.getChildren().addAll(txtSuchen, btnReset);
+            HBox.setHgrow(txtSearch, Priority.ALWAYS);
+            hBox.getChildren().addAll(txtSearch, btnReset);
             vBoxCont.getChildren().add(hBox);
 
             final ToggleGroup group = new ToggleGroup();
@@ -137,7 +137,7 @@ public class MediaDialogController extends MTDialog {
             hBox = new HBox();
             hBox.setSpacing(10);
             hBox.setAlignment(Pos.CENTER_RIGHT);
-            hBox.getChildren().addAll(btnHilfe, region, btnOk);
+            hBox.getChildren().addAll(btnHelp, region, btnOk);
 
             vBoxDialog.getChildren().addAll(vBoxCont, hBox);
         } catch (final Exception ex) {
@@ -158,24 +158,24 @@ public class MediaDialogController extends MTDialog {
         Listener.addListener(listenerDbStart);
         Listener.addListener(listenerDbStop);
 
-        txtSuchen.textProperty().addListener((observable, oldValue, newValue) -> {
-            Filter.checkPattern1(txtSuchen);
+        txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+            Filter.checkPattern1(txtSearch);
             filter();
         });
 
-        txtSuchen.setOnMouseClicked(event -> {
+        txtSearch.setOnMouseClicked(event -> {
             if (event.getClickCount() > 1) {
-                String sel = txtSuchen.getSelectedText();
-                txtSuchen.setText(sel);
+                String sel = txtSearch.getSelectedText();
+                txtSearch.setText(sel);
             }
         });
 
         btnReset.setGraphic(new Icons().ICON_BUTTON_RESET);
-        btnReset.setOnAction(a -> txtSuchen.setText(searchStr));
+        btnReset.setOnAction(a -> txtSearch.setText(searchStr));
         btnOk.setOnAction(a -> close());
-        btnHilfe.setText("");
-        btnHilfe.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHilfe.setOnAction(a -> new MTAlert().showHelpAlert("Suche in der Mediensammlung", HelpText.SEARCH_MEDIA_DIALOG));
+        btnHelp.setText("");
+        btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
+        btnHelp.setOnAction(a -> new MTAlert().showHelpAlert("Suche in der Mediensammlung", HelpText.SEARCH_MEDIA_DIALOG));
 
         rbMedien.setSelected(true);
         rbMedien.setOnAction(a -> {
@@ -191,7 +191,7 @@ public class MediaDialogController extends MTDialog {
     }
 
     private void filter() {
-        final String searchStr = txtSuchen.getText().toLowerCase().trim();
+        final String searchStr = txtSearch.getText().toLowerCase().trim();
         if (rbMedien.isSelected()) {
             mediaDialogPaneMedia.filter(searchStr);
         } else {

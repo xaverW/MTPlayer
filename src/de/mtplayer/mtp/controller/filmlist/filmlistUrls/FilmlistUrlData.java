@@ -34,17 +34,17 @@ public class FilmlistUrlData implements Comparable<FilmlistUrlData> {
     public static final int FILMLIST_UPDATE_SERVER_NR_NR = 0;
     public static final String FILMLIST_UPDATE_SERVER_URL = "filmlist-update-server-url";
     public static final int FILMLIST_UPDATE_SERVER_URL_NR = 1;
-    public static final String FILMLIST_UPDATE_SERVER_DATUM = "filmlist-update-server-datum"; // Datum in UTC
-    public static final int FILMLIST_UPDATE_SERVER_DATUM_NR = 2;
-    public static final String FILMLIST_UPDATE_SERVER_ZEIT = "filmlist-update-server-zeit"; // Zeit in UTC
-    public static final int FILMLIST_UPDATE_SERVER_ZEIT_NR = 3;
+    public static final String FILMLIST_UPDATE_SERVER_DATE = "filmlist-update-server-datum"; // Datum in UTC
+    public static final int FILMLIST_UPDATE_SERVER_DATE_NR = 2;
+    public static final String FILMLIST_UPDATE_SERVER_TIME = "filmlist-update-server-zeit"; // Zeit in UTC
+    public static final int FILMLIST_UPDATE_SERVER_TIME_NR = 3;
     public static final String FILMLIST_UPDATE_SERVER_PRIO = "filmlist-update-server-prio";
     public static final int FILMLIST_UPDATE_SERVER_PRIO_NR = 4;
-    public static final String FILMLIST_UPDATE_SERVER_ART = "filmlist-update-server-art";
-    public static final int FILMLIST_UPDATE_SERVER_ART_NR = 5;
+    public static final String FILMLIST_UPDATE_SERVER_SORT = "filmlist-update-server-art";
+    public static final int FILMLIST_UPDATE_SERVER_SORT_NR = 5;
     public static final int FILMLIST_UPDATE_SERVER_MAX_ELEM = 6;
     public static final String[] FILMLIST_UPDATE_SERVER_COLUMN_NAMES = {FILMLIST_UPDATE_SERVER_NR, FILMLIST_UPDATE_SERVER_URL,
-            FILMLIST_UPDATE_SERVER_DATUM, FILMLIST_UPDATE_SERVER_ZEIT, FILMLIST_UPDATE_SERVER_PRIO, FILMLIST_UPDATE_SERVER_ART};
+            FILMLIST_UPDATE_SERVER_DATE, FILMLIST_UPDATE_SERVER_TIME, FILMLIST_UPDATE_SERVER_PRIO, FILMLIST_UPDATE_SERVER_SORT};
 
     public String[] arr;
     private SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
@@ -54,24 +54,24 @@ public class FilmlistUrlData implements Comparable<FilmlistUrlData> {
         makeArr();
     }
 
-    FilmlistUrlData(String url, String prio, String art) {
+    FilmlistUrlData(String url, String prio, String sort) {
         sdf.setTimeZone(new SimpleTimeZone(SimpleTimeZone.UTC_TIME, "UTC"));
         makeArr();
         arr[FILMLIST_UPDATE_SERVER_URL_NR] = url;
         arr[FILMLIST_UPDATE_SERVER_PRIO_NR] = prio;
-        arr[FILMLIST_UPDATE_SERVER_DATUM_NR] = "";
-        arr[FILMLIST_UPDATE_SERVER_ZEIT_NR] = "";
-        arr[FILMLIST_UPDATE_SERVER_ART_NR] = art;
+        arr[FILMLIST_UPDATE_SERVER_DATE_NR] = "";
+        arr[FILMLIST_UPDATE_SERVER_TIME_NR] = "";
+        arr[FILMLIST_UPDATE_SERVER_SORT_NR] = sort;
     }
 
-    FilmlistUrlData(String url, String art) {
+    FilmlistUrlData(String url, String sort) {
         sdf.setTimeZone(new SimpleTimeZone(SimpleTimeZone.UTC_TIME, "UTC"));
         makeArr();
         arr[FILMLIST_UPDATE_SERVER_URL_NR] = url;
         arr[FILMLIST_UPDATE_SERVER_PRIO_NR] = FilmlistUrlData.FILMLIST_UPDATE_SERVER_PRIO_1;
-        arr[FILMLIST_UPDATE_SERVER_DATUM_NR] = "";
-        arr[FILMLIST_UPDATE_SERVER_ZEIT_NR] = "";
-        arr[FILMLIST_UPDATE_SERVER_ART_NR] = art;
+        arr[FILMLIST_UPDATE_SERVER_DATE_NR] = "";
+        arr[FILMLIST_UPDATE_SERVER_TIME_NR] = "";
+        arr[FILMLIST_UPDATE_SERVER_SORT_NR] = sort;
     }
 
 //    public Date getDate() {
@@ -90,8 +90,8 @@ public class FilmlistUrlData implements Comparable<FilmlistUrlData> {
         int ret = 0;
         try {
             //31.10.2010	16:54:17
-            String ich = arr[FILMLIST_UPDATE_SERVER_DATUM_NR] + " " + arr[FILMLIST_UPDATE_SERVER_ZEIT_NR];
-            String du = arg0.arr[FILMLIST_UPDATE_SERVER_DATUM_NR] + " " + arg0.arr[FILMLIST_UPDATE_SERVER_ZEIT_NR];
+            String ich = arr[FILMLIST_UPDATE_SERVER_DATE_NR] + " " + arr[FILMLIST_UPDATE_SERVER_TIME_NR];
+            String du = arg0.arr[FILMLIST_UPDATE_SERVER_DATE_NR] + " " + arg0.arr[FILMLIST_UPDATE_SERVER_TIME_NR];
             if (ich.equals(du)) {
                 return 0;
             }

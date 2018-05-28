@@ -47,7 +47,7 @@ public class MsgLogController extends AnchorPane {
         if (logart == LOG_SYSTEM_MSG) {
             textList = SysMsg.textSystem;
         } else {
-            textList = ProgData.getInstance().playerMsg.textProgramm;
+            textList = ProgData.getInstance().playerMsg.textProgram;
         }
 
         vBoxCont.setSpacing(10);

@@ -92,7 +92,7 @@ public class DownloadErrorDialogController extends MTDialog {
 
         btnOk.setOnAction(event -> {
             stopCounter();
-            beenden();
+            quit();
         });
 
         imageView.setImage(new Icons().IMAGE_ACHTUNG_32);
@@ -117,7 +117,7 @@ public class DownloadErrorDialogController extends MTDialog {
                 lblTime.setText(timeSeconds + "");
             } else {
                 stopCounter();
-                beenden();
+                quit();
             }
         }
     }
@@ -129,7 +129,7 @@ public class DownloadErrorDialogController extends MTDialog {
 
     }
 
-    private void beenden() {
+    private void quit() {
         close();
     }
 

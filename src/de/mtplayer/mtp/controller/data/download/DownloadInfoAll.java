@@ -24,7 +24,7 @@ import de.p2tools.p2Lib.tools.log.PLog;
 import java.text.DecimalFormat;
 import java.util.LinkedList;
 
-public class DownloadInfosAll {
+public class DownloadInfoAll {
 
     private final ProgData progData;
     private final DownloadList downloadList;
@@ -32,7 +32,7 @@ public class DownloadInfosAll {
     // Anzahl
     public int anzDownloadsRun = 0; //Anzahl gestarteter Downloads
     // Größe
-    public long byteAlleDownloads = 0; //anz. Bytes für alle gestarteten Downloads
+    public long byteAllDownloads = 0; //anz. Bytes für alle gestarteten Downloads
     public long byteAktDownloads = 0; //anz. Bytes bereits geladen für die gerade ladenden/laufenden Downloads
     // Zeit
     public long timeRestAktDownloads = 0; //Restzeit für die gerade ladenden/laufenden Downloads
@@ -46,9 +46,9 @@ public class DownloadInfosAll {
     // Anzahl, Anz-Abo, Anz-Down, nicht gestarted, laufen, fertig OK, fertig fehler
     public int[] downloadStarts = new int[]{0, 0, 0, 0, 0, 0, 0};
 
-    private LinkedList<Download> aktivDownloads; // Liste gestarteter Downloads
+    private LinkedList<Download> activeDownloads; // Liste gestarteter Downloads
 
-    public DownloadInfosAll(ProgData progData, DownloadList downloadList) {
+    public DownloadInfoAll(ProgData progData, DownloadList downloadList) {
         this.progData = progData;
         this.downloadList = downloadList;
     }
@@ -75,7 +75,7 @@ public class DownloadInfosAll {
         return bandwidthStr;
     }
 
-    public String getGesamtRestzeit() {
+    public String getSumeTimeLeft() {
         if (timeRestAllDownloads > 0) {
             if (timeRestAllDownloads < 60) {
                 return "< 1 Min";
@@ -86,7 +86,7 @@ public class DownloadInfosAll {
         return "";
     }
 
-    public String getRestzeit() {
+    public String getTimeLeft() {
         if (timeRestAktDownloads > 0) {
             if (timeRestAktDownloads < 60) {
                 return "< 1 Min";
@@ -97,15 +97,15 @@ public class DownloadInfosAll {
         return "";
     }
 
-    synchronized void makeDownloadInfos() {
+    synchronized void makeDownloadInfo() {
         clean();
 
         downloadStarts = downloadList.getStarts();
 
-        aktivDownloads = downloadList.getListOfStartsNotFinished(DownloadInfos.SRC_ALL);
-        for (final Download download : aktivDownloads) {
+        activeDownloads = downloadList.getListOfStartsNotFinished(DownloadInfos.SRC_ALL);
+        for (final Download download : activeDownloads) {
             ++anzDownloadsRun;
-            byteAlleDownloads += (download.getDownloadSize().getFilmSize() > 0 ? download.getDownloadSize().getFilmSize() : 0);
+            byteAllDownloads += (download.getDownloadSize().getFilmSize() > 0 ? download.getDownloadSize().getFilmSize() : 0);
             if (download.isStateStartedRun()) {
                 // die Downlaods laufen gerade
                 bandwidth += download.getStart().getBandwidth(); // bytes per second
@@ -123,7 +123,7 @@ public class DownloadInfosAll {
 
         if (bandwidth > 0) {
             // sonst macht die Restzeit keinen Sinn
-            final long b = byteAlleDownloads - byteAktDownloads;
+            final long b = byteAllDownloads - byteAktDownloads;
             if (b <= 0) {
                 timeRestAllDownloads = 0;
             } else {
@@ -136,8 +136,8 @@ public class DownloadInfosAll {
                 timeRestAllDownloads = 0; // gibt ja nur noch einen
             }
         }
-        if (byteAlleDownloads > 0) {
-            percent = (int) (byteAktDownloads * 100 / byteAlleDownloads);
+        if (byteAllDownloads > 0) {
+            percent = (int) (byteAktDownloads * 100 / byteAllDownloads);
             progressMsg();
         }
         roundBandwidth();
@@ -157,7 +157,7 @@ public class DownloadInfosAll {
             for (int i = 0; i < (10 - a); ++i) {
                 text += "-";
             }
-            text += " ]  " + SizeTools.getGroesse(byteAktDownloads) + " von " + SizeTools.getGroesse(byteAlleDownloads) + " MByte /";
+            text += " ]  " + SizeTools.getSize(byteAktDownloads) + " von " + SizeTools.getSize(byteAllDownloads) + " MByte /";
             text += " Downloads: " + anzDownloadsRun + " /";
             text += " Bandbreite: " + roundBandwidth();
             PLog.progress(text);
@@ -166,7 +166,7 @@ public class DownloadInfosAll {
 
     private void clean() {
         anzDownloadsRun = 0;
-        byteAlleDownloads = 0;
+        byteAllDownloads = 0;
         byteAktDownloads = 0;
         timeRestAktDownloads = 0;
         timeRestAllDownloads = 0;

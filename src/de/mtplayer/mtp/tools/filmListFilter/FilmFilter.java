@@ -26,27 +26,27 @@ import java.util.regex.Pattern;
 
 public class FilmFilter {
 
-    public static boolean aboExistiertBereits(Abo aboExistiert, Abo aboPruefen) {
+    public static boolean aboExistsAlready(Abo aboExits, Abo checkAbo) {
         // prüfen ob "aboExistiert" das "aboPrüfen" mit abdeckt, also die gleichen (oder mehr)
         // Filme findet, dann wäre das neue Abo hinfällig
 
-        if (!checkAboExistArr(aboExistiert.getChannel(), aboPruefen.getChannel(), true)) {
+        if (!checkAboExistArr(aboExits.getChannel(), checkAbo.getChannel(), true)) {
             return false;
         }
 
-        if (!checkAboExistArr(aboExistiert.getTheme(), aboPruefen.getTheme(), true)) {
+        if (!checkAboExistArr(aboExits.getTheme(), checkAbo.getTheme(), true)) {
             return false;
         }
 
-        if (!checkAboExistArr(aboExistiert.getTitle(), aboPruefen.getTitle(), true)) {
+        if (!checkAboExistArr(aboExits.getTitle(), checkAbo.getTitle(), true)) {
             return false;
         }
 
-        if (!checkAboExistArr(aboExistiert.getThemeTitle(), aboPruefen.getThemeTitle(), true)) {
+        if (!checkAboExistArr(aboExits.getThemeTitle(), checkAbo.getThemeTitle(), true)) {
             return false;
         }
 
-        if (!checkAboExistArr(aboExistiert.getSomewhere(), aboPruefen.getSomewhere(), true)) {
+        if (!checkAboExistArr(aboExits.getSomewhere(), checkAbo.getSomewhere(), true)) {
             return false;
         }
 
@@ -71,30 +71,30 @@ public class FilmFilter {
         return false;
     }
 
-    public static boolean filterAufFilmPruefen(Filter sender,
-                                               Filter thema,
-                                               Filter themaTitel,
-                                               Filter titel,
-                                               Filter somewhere,
-                                               int laengeSekundenSuchen_min,
-                                               int laengeSekundenSuchen_max,
-                                               Film film,
-                                               boolean mitLaenge) {
+    public static boolean checkFilmWithFilter(Filter sender,
+                                              Filter theme,
+                                              Filter themeTitle,
+                                              Filter title,
+                                              Filter somewhere,
+                                              int laengeSekundenSuchen_min,
+                                              int laengeSekundenSuchen_max,
+                                              Film film,
+                                              boolean withLength) {
 
 
         if (!sender.empty && !checkChannel(sender, film)) {
             return false;
         }
 
-        if (!thema.empty && !checkTheme(thema, film)) {
+        if (!theme.empty && !checkTheme(theme, film)) {
             return false;
         }
 
-        if (!themaTitel.empty && !checkThemeTitle(themaTitel, film)) {
+        if (!themeTitle.empty && !checkThemeTitle(themeTitle, film)) {
             return false;
         }
 
-        if (!titel.empty && !checkTitle(titel, film)) {
+        if (!title.empty && !checkTitle(title, film)) {
             return false;
         }
 
@@ -102,7 +102,7 @@ public class FilmFilter {
             return false;
         }
 
-        if (mitLaenge && !laengePruefen(laengeSekundenSuchen_min, laengeSekundenSuchen_max, film.dauerL)) {
+        if (withLength && !checkLength(laengeSekundenSuchen_min, laengeSekundenSuchen_max, film.dauerL)) {
             return false;
         }
 
@@ -110,12 +110,12 @@ public class FilmFilter {
     }
 
     public static boolean checkChannel(Filter sender, Film film) {
-        if (sender.exakt) {
+        if (sender.exact) {
             if (!sender.filter.equalsIgnoreCase(film.arr[FilmXml.FILM_CHANNEL])) {
                 return false;
             }
         } else {
-            if (!pruefen(sender, film.arr[FilmXml.FILM_CHANNEL])) {
+            if (!check(sender, film.arr[FilmXml.FILM_CHANNEL])) {
                 return false;
             }
         }
@@ -123,48 +123,48 @@ public class FilmFilter {
     }
 
 
-    public static boolean checkTheme(Filter thema, Film film) {
-        if (thema.exakt) {
+    public static boolean checkTheme(Filter theme, Film film) {
+        if (theme.exact) {
             // da ist keine Form optimal?? aber so passt es zur Sortierung der Themenliste
-            if (!thema.filter.equalsIgnoreCase(film.arr[FilmXml.FILM_THEME])) {
+            if (!theme.filter.equalsIgnoreCase(film.arr[FilmXml.FILM_THEME])) {
                 return false;
             }
         } else {
-            if (!pruefen(thema, film.arr[FilmXml.FILM_THEME])) {
+            if (!check(theme, film.arr[FilmXml.FILM_THEME])) {
                 return false;
             }
         }
         return true;
     }
 
-    public static boolean checkThemeTitle(Filter themaTitel, Film film) {
-        if (!pruefen(themaTitel, film.arr[FilmXml.FILM_THEME])
-                && !pruefen(themaTitel, film.arr[FilmXml.FILM_TITLE])) {
+    public static boolean checkThemeTitle(Filter themeTitle, Film film) {
+        if (!check(themeTitle, film.arr[FilmXml.FILM_THEME])
+                && !check(themeTitle, film.arr[FilmXml.FILM_TITLE])) {
             return false;
         }
         return true;
     }
 
     public static boolean checkTitle(Filter title, Film film) {
-        if (!pruefen(title, film.arr[FilmXml.FILM_TITLE])) {
+        if (!check(title, film.arr[FilmXml.FILM_TITLE])) {
             return false;
         }
         return true;
     }
 
     public static boolean checkSomewhere(Filter somewhere, Film film) {
-        if (!pruefen(somewhere, film.arr[FilmXml.FILM_DATE])
-                && !pruefen(somewhere, film.arr[FilmXml.FILM_THEME])
-                && !pruefen(somewhere, film.arr[FilmXml.FILM_TITLE])
-                && !pruefen(somewhere, film.arr[FilmXml.FILM_DESCRIPTION])) {
+        if (!check(somewhere, film.arr[FilmXml.FILM_DATE])
+                && !check(somewhere, film.arr[FilmXml.FILM_THEME])
+                && !check(somewhere, film.arr[FilmXml.FILM_TITLE])
+                && !check(somewhere, film.arr[FilmXml.FILM_DESCRIPTION])) {
             return false;
         }
         return true;
     }
 
     public static boolean checkUrl(Filter url, Film film) {
-        if (!pruefen(url, film.arr[FilmXml.FILM_WEBSEITE])
-                && !pruefen(url, film.arr[FilmXml.FILM_URL])) {
+        if (!check(url, film.arr[FilmXml.FILM_WEBSITE])
+                && !check(url, film.arr[FilmXml.FILM_URL])) {
             return false;
         }
         return true;
@@ -184,17 +184,17 @@ public class FilmFilter {
     }
 
 
-    public static boolean checkLengthMin(int filterLaengeInSekunden, long filmLaenge) {
-        return filterLaengeInSekunden == 0 || filmLaenge == 0 || filmLaenge >= filterLaengeInSekunden;
+    public static boolean checkLengthMin(int filterLaengeInSekunden, long filmLength) {
+        return filterLaengeInSekunden == 0 || filmLength == 0 || filmLength >= filterLaengeInSekunden;
     }
 
-    public static boolean checkLengthMax(int filterLaengeInSekunden, long filmLaenge) {
-        return filterLaengeInSekunden == SelectedFilter.FILTER_DURATIION_MAX_SEC || filmLaenge == 0
-                || filmLaenge <= filterLaengeInSekunden;
+    public static boolean checkLengthMax(int filterLaengeInSekunden, long filmLength) {
+        return filterLaengeInSekunden == SelectedFilter.FILTER_DURATION_MAX_SEC || filmLength == 0
+                || filmLength <= filterLaengeInSekunden;
     }
 
-    public static boolean checkFilmtime(int timeMin, int timeMax, boolean invert, int filmTime) {
-        if (filmTime == Film.FILMTIME_EMPTY) {
+    public static boolean checkFilmTime(int timeMin, int timeMax, boolean invert, int filmTime) {
+        if (filmTime == Film.FILM_TIME_EMPTY) {
             return true;
         }
 
@@ -208,15 +208,15 @@ public class FilmFilter {
         }
     }
 
-    public static boolean laengePruefen(int filterLaengeInSekunden_min, int filterLaengeInSekunden_max, long filmLaenge) {
-        return checkLengthMin(filterLaengeInSekunden_min, filmLaenge)
-                && checkLengthMax(filterLaengeInSekunden_max, filmLaenge);
+    public static boolean checkLength(int filterLaengeInSekunden_min, int filterLaengeInSekunden_max, long filmLength) {
+        return checkLengthMin(filterLaengeInSekunden_min, filmLength)
+                && checkLengthMax(filterLaengeInSekunden_max, filmLength);
     }
 
-    private static boolean pruefen(Filter filter, String im) {
+    private static boolean check(Filter filter, String im) {
         // wenn einer passt, dann ists gut
         if (filter.filterArr.length == 1) {
-            return pruefen(filter.filterArr[0], filter.pattern, im);
+            return check(filter.filterArr[0], filter.pattern, im);
         }
 
         if (filter.filterAnd) {
@@ -243,7 +243,7 @@ public class FilmFilter {
         return false;
     }
 
-    private static boolean pruefen(String filter, Pattern pattern, String im) {
+    private static boolean check(String filter, Pattern pattern, String im) {
         if (pattern != null) {
             // dann ists eine RegEx
             return (pattern.matcher(im).matches());

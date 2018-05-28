@@ -91,20 +91,20 @@ public class MediaDialogPaneAbo extends ScrollPane {
         txtUrlAbo.setText("");
         tableAbo.getColumns().clear();
 
-        final TableColumn<HistoryData, String> themaColumn = new TableColumn<>("Thema");
+        final TableColumn<HistoryData, String> themeColumn = new TableColumn<>("Thema");
         final TableColumn<HistoryData, String> titleColumn = new TableColumn<>("Titel");
         final TableColumn<HistoryData, Date> dateColumn = new TableColumn<>("Datum");
         final TableColumn<HistoryData, String> pathColumn = new TableColumn<>("Url");
 
-        themaColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
+        themeColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         pathColumn.setCellValueFactory(new PropertyValueFactory<>("url"));
 
-        tableAbo.getColumns().addAll(themaColumn, titleColumn, dateColumn, pathColumn);
+        tableAbo.getColumns().addAll(themeColumn, titleColumn, dateColumn, pathColumn);
         dateColumn.setSortType(TableColumn.SortType.DESCENDING);
 
-        themaColumn.prefWidthProperty().bind(tableAbo.widthProperty().multiply(20.0 / 100));
+        themeColumn.prefWidthProperty().bind(tableAbo.widthProperty().multiply(20.0 / 100));
         titleColumn.prefWidthProperty().bind(tableAbo.widthProperty().multiply(50.0 / 100));
         dateColumn.prefWidthProperty().bind(tableAbo.widthProperty().multiply(15.0 / 100));
         pathColumn.prefWidthProperty().bind(tableAbo.widthProperty().multiply(14.0 / 100));

@@ -37,7 +37,7 @@ public class DownloadList extends SimpleListProperty<Download> {
     private final DownloadListStarts downloadListStarts;
     private final DownloadStartStop download_startStop;
 
-    private final DownloadInfosAll download_infosAll;
+    private final DownloadInfoAll downloadInfoAll;
     private BooleanProperty downloadsChanged = new SimpleBooleanProperty(true);
 
 
@@ -47,7 +47,7 @@ public class DownloadList extends SimpleListProperty<Download> {
         this.downloadListAbo = new DownloadListAbo(progData, this);
         this.downloadListStarts = new DownloadListStarts(progData, this);
         this.download_startStop = new DownloadStartStop(progData, this);
-        this.download_infosAll = new DownloadInfosAll(progData, this);
+        this.downloadInfoAll = new DownloadInfoAll(progData, this);
     }
 
     public boolean getDownloadsChanged() {
@@ -76,13 +76,13 @@ public class DownloadList extends SimpleListProperty<Download> {
 
     public synchronized boolean addWithNr(Download e) {
         final boolean ret = super.add(e);
-        listeNummerieren();
+        setNumbersInList();
         return ret;
     }
 
 
-    public DownloadInfosAll getDownload_infosAll() {
-        return download_infosAll;
+    public DownloadInfoAll getDownloadInfoAll() {
+        return downloadInfoAll;
     }
 
     public synchronized int countRunningDownloads() {
@@ -98,7 +98,7 @@ public class DownloadList extends SimpleListProperty<Download> {
 
     private int counter = 50; //todo das dauert sonst viel zu lang
 
-    public synchronized void filmEintragen() {
+    public synchronized void addFilmInList() {
         // bei einmal Downloads nach einem Programmstart/Neuladen der Filmliste
         // den Film wieder eintragen
         Duration.counterStart("Filme eintragen");
@@ -108,7 +108,7 @@ public class DownloadList extends SimpleListProperty<Download> {
             if (counter < 0) {
                 break;
             }
-            d.setFilm(progData.filmlist.getFilmByUrl_klein_hoch_hd(d.getUrl())); //todo sollen da wirklich alle Filmfelder gesetzt werden??
+            d.setFilm(progData.filmlist.getFilmByUrl_small_high_hd(d.getUrl())); //todo sollen da wirklich alle Filmfelder gesetzt werden??
             d.setSizeDownloadFromFilm();
         }
 //        parallelStream().filter(d -> {
@@ -129,11 +129,11 @@ public class DownloadList extends SimpleListProperty<Download> {
     }
 
 
-    public synchronized void downloadsVorziehen(ArrayList<Download> download) {
+    public synchronized void prefereDownloads(ArrayList<Download> download) {
         renumberList(1 + download.size());
         int i = 1;
-        for (final Download datenDownload : download) {
-            datenDownload.setNr(i++);
+        for (final Download dataDownload : download) {
+            dataDownload.setNr(i++);
         }
     }
 
@@ -150,18 +150,18 @@ public class DownloadList extends SimpleListProperty<Download> {
 
 
     public synchronized Download getDownloadUrlFilm(String urlFilm) {
-        for (final Download datenDownload : this) {
-            if (datenDownload.getFilmUrl().equals(urlFilm)) {
-                return datenDownload;
+        for (final Download dataDownload : this) {
+            if (dataDownload.getFilmUrl().equals(urlFilm)) {
+                return dataDownload;
             }
         }
         return null;
     }
 
-    public synchronized void listePutzen() {
+    public synchronized void cleanUpList() {
         // fertige Downloads löschen, fehlerhafte zurücksetzen
 
-        boolean gefunden = false;
+        boolean found = false;
         Iterator<Download> it = this.iterator();
         while (it.hasNext()) {
             Download download = it.next();
@@ -172,15 +172,15 @@ public class DownloadList extends SimpleListProperty<Download> {
             if (download.isStateFinished()) {
                 // alles was fertig/fehlerhaft ist, kommt beim putzen weg
                 it.remove();
-                gefunden = true;
+                found = true;
             } else if (download.isStateError()) {
                 // fehlerhafte werden zurückgesetzt
                 download.resetDownload();
-                gefunden = true;
+                found = true;
             }
         }
 
-        if (gefunden) {
+        if (found) {
             setDownloadsChanged();
         }
     }
@@ -188,13 +188,13 @@ public class DownloadList extends SimpleListProperty<Download> {
 
     // =========================
     // Abos
-    public synchronized void abosSuchen() {
+    public synchronized void searchForAbos() {
         progData.mtPlayerController.setMasker();
 
         final int count = getSize();
         Thread th = new Thread(() -> {
-            downloadListAbo.abosAuffrischen();
-            downloadListAbo.abosSuchen();
+            downloadListAbo.refreshAbos();
+            downloadListAbo.searchForAbos();
             if (progData.downloadList.getSize() == count) {
                 // dann wurden evtl. nur zurückgestellte Downloads wieder aktiviert
                 setDownloadsChanged();
@@ -223,8 +223,8 @@ public class DownloadList extends SimpleListProperty<Download> {
         return downloadListStarts.getMaximumFinishTimeOfRunningStarts();
     }
 
-    public synchronized LinkedList<Download> getListOfStartsNotFinished(String quelle) {
-        return downloadListStarts.getListOfStartsNotFinished(quelle);
+    public synchronized LinkedList<Download> getListOfStartsNotFinished(String source) {
+        return downloadListStarts.getListOfStartsNotFinished(source);
     }
 
     public synchronized Download getRestartDownload() {
@@ -232,8 +232,8 @@ public class DownloadList extends SimpleListProperty<Download> {
     }
 
 
-    public synchronized void buttonStartsPutzen() {
-        downloadListStarts.buttonStartsPutzen();
+    public synchronized void cleanUpButtonStarts() {
+        downloadListStarts.cleanUpButtonStarts();
     }
 
     public synchronized Download getNextStart() {
@@ -253,8 +253,8 @@ public class DownloadList extends SimpleListProperty<Download> {
         download_startStop.delDownloads(download);
     }
 
-    public synchronized void putbackDownloads(ArrayList<Download> list) {
-        if (download_startStop.putbackDownloads(list)) {
+    public synchronized void putBackDownloads(ArrayList<Download> list) {
+        if (download_startStop.putBackDownloads(list)) {
             setDownloadsChanged();
         }
     }
@@ -278,16 +278,16 @@ public class DownloadList extends SimpleListProperty<Download> {
     }
 
 
-    public void startDownloads(ArrayList<Download> liste, boolean auchFertige) {
-        if (download_startStop.startDownloads(liste, auchFertige)) {
+    public void startDownloads(ArrayList<Download> list, boolean alsoFinished) {
+        if (download_startStop.startDownloads(list, alsoFinished)) {
             setDownloadsChanged();
         }
     }
 
     // ======================================
     // DownloadInfosAll
-    public synchronized void makeDownloadInfos() {
-        download_infosAll.makeDownloadInfos();
+    public synchronized void makeDownloadInfo() {
+        downloadInfoAll.makeDownloadInfo();
     }
 
 
@@ -302,7 +302,7 @@ public class DownloadList extends SimpleListProperty<Download> {
         });
     }
 
-    public synchronized void listeNummerieren() {
+    public synchronized void setNumbersInList() {
         int i = 1;
         for (final Download download : this) {
             if (download.isStarted()) {

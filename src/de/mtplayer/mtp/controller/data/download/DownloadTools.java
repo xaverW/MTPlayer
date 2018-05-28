@@ -82,7 +82,7 @@ public class DownloadTools {
      * @param onlyAscii
      * @return Bereinigte Fassung
      */
-    public static String replaceLeerDateiname(String name, boolean isPath, boolean userReplace, boolean onlyAscii) {
+    public static String replaceEmptyFileName(String name, boolean isPath, boolean userReplace, boolean onlyAscii) {
         String ret = name;
         boolean isWindowsPath = false;
         if (SystemInfo.isWindows() && isPath && ret.length() > 1 && ret.charAt(1) == ':') {

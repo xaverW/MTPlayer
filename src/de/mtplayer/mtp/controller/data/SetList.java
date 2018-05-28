@@ -33,11 +33,11 @@ import java.util.stream.Collectors;
 @SuppressWarnings("serial")
 public class SetList extends SimpleListProperty<SetData> {
     // Liste aller Programmsets
-    public static final String MUSTER_PFAD_ZIEL = "ZIELPFAD";
-    public static final String MUSTER_PFAD_VLC = "PFAD_VLC";
-    public static final String MUSTER_PFAD_FLV = "PFAD_FLVSTREAMER";
-    public static final String MUSTER_PFAD_FFMPEG = "PFAD_FFMPEG";
-    public static final String MUSTER_PFAD_SCRIPT = "PFAD_SCRIPT";
+    public static final String PATTERN_PATH_DEST = "ZIELPFAD";
+    public static final String PATTERN_PATH_VLC = "PFAD_VLC";
+    public static final String PATTERN_PATH_FLV = "PFAD_FLVSTREAMER";
+    public static final String PATTERN_PATH_FFMPEG = "PFAD_FFMPEG";
+    public static final String PATTERN_PATH_SCRIPT = "PFAD_SCRIPT";
     public String version = "";
     private BooleanProperty listChanged = new SimpleBooleanProperty(true);
 
@@ -46,10 +46,10 @@ public class SetList extends SimpleListProperty<SetData> {
         super(FXCollections.observableArrayList());
     }
 
-    public static boolean progMusterErsetzen(SetList liste) {
+    public static boolean progReplacePattern(SetList list) {
         boolean ret = true;
-        for (final SetData pSet : liste) {
-            if (!progMusterErsetzen(pSet)) {
+        for (final SetData pSet : list) {
+            if (!progReplacePattern(pSet)) {
                 ret = false;
             }
         }
@@ -68,54 +68,54 @@ public class SetList extends SimpleListProperty<SetData> {
         this.listChanged.set(!listChanged.get());
     }
 
-    private static boolean progMusterErsetzen(SetData pSet) {
+    private static boolean progReplacePattern(SetData pSet) {
         //todo da muss vorher der Downloadpfad abgefragt werden -> beim Update suchen??
-        pSet.setDestPath(pSet.getDestPath().replace(MUSTER_PFAD_ZIEL, DownloadTools.getDownloadPath()));
+        pSet.setDestPath(pSet.getDestPath().replace(PATTERN_PATH_DEST, DownloadTools.getDownloadPath()));
         String vlc = "";
         String flvstreamer = "";
         String ffmpeg = "";
-        final String skript = SetsPrograms.getPfadScript();
+        final String script = SetsPrograms.getPathScript();
         // damit nur die Variablen abgefragt werden, die auch verwendet werden
         for (int p = 0; p < pSet.getProgList().size(); ++p) {
             final ProgData prog = pSet.getProg(p);
-            if (prog.getProgPath().contains(MUSTER_PFAD_VLC) || prog.getProgSwitch().contains(MUSTER_PFAD_VLC)) {
-                vlc = getPfadVlc();
+            if (prog.getProgPath().contains(PATTERN_PATH_VLC) || prog.getProgSwitch().contains(PATTERN_PATH_VLC)) {
+                vlc = getPathVlc();
                 break;
             }
         }
         for (int p = 0; p < pSet.getProgList().size(); ++p) {
             final ProgData prog = pSet.getProg(p);
-            if (prog.getProgPath().contains(MUSTER_PFAD_FLV) || prog.getProgSwitch().contains(MUSTER_PFAD_FLV)) {
-                flvstreamer = getPfadFlv();
+            if (prog.getProgPath().contains(PATTERN_PATH_FLV) || prog.getProgSwitch().contains(PATTERN_PATH_FLV)) {
+                flvstreamer = getPathFlv();
                 break;
             }
         }
         for (int p = 0; p < pSet.getProgList().size(); ++p) {
             final ProgData prog = pSet.getProg(p);
-            if (prog.getProgPath().contains(MUSTER_PFAD_FFMPEG) || prog.getProgSwitch().contains(MUSTER_PFAD_FFMPEG)) {
-                ffmpeg = getPfadFFmpeg();
+            if (prog.getProgPath().contains(PATTERN_PATH_FFMPEG) || prog.getProgSwitch().contains(PATTERN_PATH_FFMPEG)) {
+                ffmpeg = getPathFFmpeg();
                 break;
             }
         }
         for (int p = 0; p < pSet.getProgList().size(); ++p) {
             final ProgData prog = pSet.getProg(p);
             // VLC
-            prog.setProgPath(prog.getProgPath().replaceAll(MUSTER_PFAD_VLC, Matcher.quoteReplacement(vlc)));
-            prog.setProgSwitch(prog.getProgSwitch().replaceAll(MUSTER_PFAD_VLC, Matcher.quoteReplacement(vlc)));
+            prog.setProgPath(prog.getProgPath().replaceAll(PATTERN_PATH_VLC, Matcher.quoteReplacement(vlc)));
+            prog.setProgSwitch(prog.getProgSwitch().replaceAll(PATTERN_PATH_VLC, Matcher.quoteReplacement(vlc)));
             // flvstreamer
-            prog.setProgPath(prog.getProgPath().replaceAll(MUSTER_PFAD_FLV, Matcher.quoteReplacement(flvstreamer)));
-            prog.setProgSwitch(prog.getProgSwitch().replaceAll(MUSTER_PFAD_FLV, Matcher.quoteReplacement(flvstreamer)));
+            prog.setProgPath(prog.getProgPath().replaceAll(PATTERN_PATH_FLV, Matcher.quoteReplacement(flvstreamer)));
+            prog.setProgSwitch(prog.getProgSwitch().replaceAll(PATTERN_PATH_FLV, Matcher.quoteReplacement(flvstreamer)));
             // ffmpeg
-            prog.setProgPath(prog.getProgPath().replaceAll(MUSTER_PFAD_FFMPEG, Matcher.quoteReplacement(ffmpeg)));
-            prog.setProgSwitch(prog.getProgSwitch().replaceAll(MUSTER_PFAD_FFMPEG, Matcher.quoteReplacement(ffmpeg)));
+            prog.setProgPath(prog.getProgPath().replaceAll(PATTERN_PATH_FFMPEG, Matcher.quoteReplacement(ffmpeg)));
+            prog.setProgSwitch(prog.getProgSwitch().replaceAll(PATTERN_PATH_FFMPEG, Matcher.quoteReplacement(ffmpeg)));
             // script
-            prog.setProgPath(prog.getProgPath().replaceAll(MUSTER_PFAD_SCRIPT, Matcher.quoteReplacement(skript)));
-            prog.setProgSwitch(prog.getProgSwitch().replaceAll(MUSTER_PFAD_SCRIPT, Matcher.quoteReplacement(skript)));
+            prog.setProgPath(prog.getProgPath().replaceAll(PATTERN_PATH_SCRIPT, Matcher.quoteReplacement(script)));
+            prog.setProgSwitch(prog.getProgSwitch().replaceAll(PATTERN_PATH_SCRIPT, Matcher.quoteReplacement(script)));
         }
         return true;
     }
 
-    private static String getPfadVlc() {
+    private static String getPathVlc() {
         // liefert den Pfad wenn vorhanden, wenn nicht wird er in einem Dialog abgefragt
         if (ProgConfig.SYSTEM_PATH_VLC.get().isEmpty()) {
             ProgConfig.SYSTEM_PATH_VLC.setValue(new MTAlert().showAlertFileCooser("VLC", "VLC wird nicht gefunden.",
@@ -125,7 +125,7 @@ public class SetList extends SimpleListProperty<SetData> {
         return ProgConfig.SYSTEM_PATH_VLC.get();
     }
 
-    private static String getPfadFlv() {
+    private static String getPathFlv() {
         // liefert den Pfad wenn vorhanden, wenn nicht wird er in einem Dialog abgefragt
         if (ProgConfig.SYSTEM_PATH_FLVSTREAMER.get().isEmpty()) {
             ProgConfig.SYSTEM_PATH_FLVSTREAMER.setValue(new MTAlert().showAlertFileCooser("flvstreamer", "flvstreamer wird nicht gefunden.",
@@ -135,7 +135,7 @@ public class SetList extends SimpleListProperty<SetData> {
         return ProgConfig.SYSTEM_PATH_FLVSTREAMER.get();
     }
 
-    private static String getPfadFFmpeg() {
+    private static String getPathFFmpeg() {
         // liefert den Pfad wenn vorhanden, wenn nicht wird er in einem Dialog abgefragt
         if (ProgConfig.SYSTEM_PATH_FFMPEG.get().isEmpty()) {
             ProgConfig.SYSTEM_PATH_FFMPEG.setValue(new MTAlert().showAlertFileCooser("ffmpeg", "ffmpeg wird nicht gefunden.",
@@ -145,7 +145,7 @@ public class SetList extends SimpleListProperty<SetData> {
         return ProgConfig.SYSTEM_PATH_FFMPEG.get();
     }
 
-    public SetData getPsetAbspielen() {
+    public SetData getPsetPlay() {
         //liefert die Programmgruppe zum Abspielen
         for (final SetData psetData : this) {
             if (psetData.isPlay()) {
@@ -173,7 +173,7 @@ public class SetList extends SimpleListProperty<SetData> {
             }
             if (ret == null) {
                 // die erste Pset der Abos
-                final SetList ps = getListeAbo();
+                final SetList ps = getListAbo();
                 if (ps.size() > 0) {
                     ret = ps.get(0);
                     if (ret == null) {
@@ -186,13 +186,13 @@ public class SetList extends SimpleListProperty<SetData> {
         return ret;
     }
 
-    public SetList getListeSpeichern() {
+    public SetList getListSave() {
         // liefert eine Liste Programmsets, die zum Speichern angelegt sind (ist meist nur eins)
         return stream().filter(datenPset -> datenPset.isSave())
                 .collect(Collectors.toCollection(SetList::new));
     }
 
-    public SetList getListeButton() {
+    public SetList getListButton() {
         // liefert eine Liste Programmsets, die als Button angelegt sind
         // "leere" Button  werden nicht mehr angezeigt
         // sind nur die 2 Standardsets in der Liste wird nichts geliefert
@@ -206,9 +206,9 @@ public class SetList extends SimpleListProperty<SetData> {
                 .collect(Collectors.toCollection(SetList::new));
     }
 
-    public SetList getListeAbo() {
+    public SetList getListAbo() {
         // liefert eine Liste Programmsets, die für Abos angelegt sind (ist meist nur eins)
-        return stream().filter(datenPset -> datenPset.isAbo())
+        return stream().filter(data -> data.isAbo())
                 .collect(Collectors.toCollection(SetList::new));
     }
 
@@ -223,7 +223,7 @@ public class SetList extends SimpleListProperty<SetData> {
         return list;
     }
 
-    public void setAbspielen(SetData setData) {
+    public void setPlay(SetData setData) {
         for (final SetData psetData : this) {
             psetData.setPlay(false);
         }
@@ -258,14 +258,14 @@ public class SetList extends SimpleListProperty<SetData> {
     }
 
     public boolean addPset(SetData psetData) {
-        boolean abspielen = false;
+        boolean play = false;
         for (final SetData psetData1 : this) {
             if (psetData1.isPlay()) {
-                abspielen = true;
+                play = true;
                 break;
             }
         }
-        if (abspielen) {
+        if (play) {
             psetData.setPlay(false);
         }
         final boolean ret = add(psetData);
@@ -273,9 +273,9 @@ public class SetList extends SimpleListProperty<SetData> {
         return ret;
     }
 
-    public boolean addPset(SetList liste) {
+    public boolean addPset(SetList list) {
         boolean ret = true;
-        for (final SetData entry : liste) {
+        for (final SetData entry : list) {
             if (!addPset(entry)) {
                 ret = false;
             }

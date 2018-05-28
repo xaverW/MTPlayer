@@ -126,14 +126,14 @@ public class ConfigPaneController extends AnchorPane {
         tglSearchAbo.selectedProperty().bindBidirectional(propAbo);
 
         final Button btnHelpAbo = new PButton().helpButton("Abos automatisch suchen",
-                HelpText.ABOS_SOFRT_SUCHEN);
+                HelpText.SEARCH_ABOS_IMMEDIATELY);
 
         final ToggleSwitch tglStartDownload = new ToggleSwitch("Downloads aus Abos sofort starten");
         tglStartDownload.setMaxWidth(Double.MAX_VALUE);
         tglStartDownload.selectedProperty().bindBidirectional(propDown);
 
         final Button btnHelpDownload = new PButton().helpButton("Downloads sofort starten",
-                HelpText.DOWNLOADS_AUS_ABOS_SOFORT_STARTEN);
+                HelpText.START_DOWNLOADS_FROM_ABOS_IMMEDIATELY);
 
         gridPane.add(tglSearchAbo, 0, 0, 3, 1);
         gridPane.add(btnHelpAbo, 3, 0);
@@ -245,13 +245,13 @@ public class ConfigPaneController extends AnchorPane {
         TitledPane tpConfig = new TitledPane("Programme", gridPane);
         result.add(tpConfig);
 
-        addDateimanager(gridPane, 0);
+        addFilemanager(gridPane, 0);
         addVideoPlayer(gridPane, 2);
         addWebbrowser(gridPane, 4);
 
     }
 
-    private void addDateimanager(GridPane gridPane, int row) {
+    private void addFilemanager(GridPane gridPane, int row) {
         gridPane.add(new Label("Dateimanager zum Öffnen des Downloadordners"), 0, row);
         TextField txtFileManager = new TextField();
         txtFileManager.textProperty().bindBidirectional(propDir);

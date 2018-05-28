@@ -195,7 +195,7 @@ public class FilmPaneController extends AnchorPane {
         btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
         btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
         btnHelp.setOnAction(a -> new MTAlert().showHelpAlert("Filmliste laden",
-                HelpText.LOAD_FILMLIST_MANUEL));
+                HelpText.LOAD_FILMLIST_MANUAL));
 
         Button btnLoad = new Button("Filmliste jetzt laden");
         btnLoad.disableProperty().bind(txtUrl.textProperty().isEmpty());

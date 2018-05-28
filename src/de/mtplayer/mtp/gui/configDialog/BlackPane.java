@@ -105,39 +105,39 @@ public class BlackPane {
         final TableColumn<BlackData, String> channelColumn = new TableColumn<>("Sender");
         channelColumn.setCellValueFactory(new PropertyValueFactory<>("channel"));
 
-        final TableColumn<BlackData, Boolean> channelExaktColumn = new TableColumn<>("Sender exakt");
-        channelExaktColumn.setCellValueFactory(new PropertyValueFactory<>("channelExact"));
-        channelExaktColumn.setCellFactory(CheckBoxTableCell.forTableColumn(channelExaktColumn));
+        final TableColumn<BlackData, Boolean> channelExactColumn = new TableColumn<>("Sender exakt");
+        channelExactColumn.setCellValueFactory(new PropertyValueFactory<>("channelExact"));
+        channelExactColumn.setCellFactory(CheckBoxTableCell.forTableColumn(channelExactColumn));
 
-        final TableColumn<BlackData, String> themaColumn = new TableColumn<>("Thema");
-        themaColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
+        final TableColumn<BlackData, String> themeColumn = new TableColumn<>("Thema");
+        themeColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
 
-        final TableColumn<BlackData, Boolean> themaExaktColumn = new TableColumn<>("Thema exakt");
-        themaExaktColumn.setCellValueFactory(new PropertyValueFactory<>("themeExact"));
-        themaExaktColumn.setCellFactory(CheckBoxTableCell.forTableColumn(themaExaktColumn));
+        final TableColumn<BlackData, Boolean> themeExactColumn = new TableColumn<>("Thema exakt");
+        themeExactColumn.setCellValueFactory(new PropertyValueFactory<>("themeExact"));
+        themeExactColumn.setCellFactory(CheckBoxTableCell.forTableColumn(themeExactColumn));
 
-        final TableColumn<BlackData, Color> titelColumn = new TableColumn<>("Titel");
-        titelColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        final TableColumn<BlackData, Color> titleColumn = new TableColumn<>("Titel");
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
 
         final TableColumn<BlackData, Color> themeTitleColumn = new TableColumn<>("Thema-Titel");
         themeTitleColumn.setCellValueFactory(new PropertyValueFactory<>("themeTitle"));
 
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
-        tableView.getColumns().addAll(expander, nrColumn, channelColumn, channelExaktColumn, themaColumn, themaExaktColumn,
-                titelColumn, themeTitleColumn);
+        tableView.getColumns().addAll(expander, nrColumn, channelColumn, channelExactColumn, themeColumn, themeExactColumn,
+                titleColumn, themeTitleColumn);
         tableView.setItems(ProgData.getInstance().blackList);
 
 
         Button del = new Button("");
         del.setGraphic(new Icons().ICON_BUTTON_REMOVE);
         del.setOnAction(event -> {
-            final ObservableList<BlackData> sels = tableView.getSelectionModel().getSelectedItems();
+            final ObservableList<BlackData> selected = tableView.getSelectionModel().getSelectedItems();
 
-            if (sels == null || sels.isEmpty()) {
+            if (selected == null || selected.isEmpty()) {
                 new MTAlert().showInfoNoSelection();
             } else {
-                ProgData.getInstance().blackList.removeAll(sels);
+                ProgData.getInstance().blackList.removeAll(selected);
                 tableView.getSelectionModel().clearSelection();
             }
         });

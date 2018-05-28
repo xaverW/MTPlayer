@@ -51,7 +51,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         this.fileName = fileName;
         this.settingsDir = settingsDir;
 
-        listeBauen();
+        createList();
     }
 
     public SortedList<HistoryData> getSortedList() {
@@ -94,26 +94,26 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
 
     public synchronized boolean checkIfExists(String theme, String urlFilm) {
         // live ist nie alt || oder url schon vorhanden
-        if (theme.equals(FilmTools.THEMA_LIVE) || checkIfExists(urlFilm)) {
+        if (theme.equals(FilmTools.THEME_LIVE) || checkIfExists(urlFilm)) {
             return true;
         }
         return false;
     }
 
-    public synchronized boolean writeHistory(String thema, String titel, String url) {
-        if (checkIfExists(thema, url)) {
+    public synchronized boolean writeHistory(String theme, String title, String url) {
+        if (checkIfExists(theme, url)) {
             return true;
         }
 
         boolean ret = false;
         String text;
         final String datum = StringFormatters.FORMATTER_ddMMyyyy.format(new Date());
-        HistoryData historyData = new HistoryData(datum, thema, titel, url);
+        HistoryData historyData = new HistoryData(datum, theme, title, url);
         addToList(historyData);
 
         try (BufferedWriter bufferedWriter =
                      new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(getUrlFilePath(), StandardOpenOption.APPEND)))) {
-            text = HistoryData.getLine(datum, thema, titel, url);
+            text = HistoryData.getLine(datum, theme, title, url);
             bufferedWriter.write(text);
             ret = true;
         } catch (final Exception ex) {
@@ -242,9 +242,9 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
     }
 
     private class Remove implements Runnable {
-        String zeile;
-        boolean gefunden = false, gef;
-        final LinkedList<String> newListe = new LinkedList<>();
+        String line;
+        boolean found = false, gef;
+        final LinkedList<String> newList = new LinkedList<>();
         LinkedList<String> urlList;
 
         public Remove(LinkedList<String> urlList) {
@@ -265,19 +265,19 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
             //todo-> ~1s Dauer
 
             try (LineNumberReader in = new LineNumberReader(new InputStreamReader(Files.newInputStream(urlPath)))) {
-                while ((zeile = in.readLine()) != null) {
+                while ((line = in.readLine()) != null) {
                     gef = false;
-                    final String url = HistoryData.getUrlAusZeile(zeile).getUrl();
+                    final String url = HistoryData.getUrlFromLine(line).getUrl();
 
                     for (final String histUrl : urlList) {
                         if (url.equals(histUrl)) {
-                            gefunden = true; // nur dann muss das Logfile auch geschrieben werden
+                            found = true; // nur dann muss das Logfile auch geschrieben werden
                             gef = true; // und die Zeile wird verworfen
                             break;
                         }
                     }
                     if (!gef) {
-                        newListe.add(zeile);
+                        newList.add(line);
                     }
 
                 }
@@ -287,17 +287,17 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
 
             // todo -> synchronize
             // und jetzt wieder schreiben, wenn nötig
-            writeTmpList(newListe, gefunden);
+            writeTmpList(newList, found);
             Duration.counterStop("removeDownloadListFromHistory");
         }
 
     }
 
-    private void writeTmpList(LinkedList<String> newListe, boolean found) {
+    private void writeTmpList(LinkedList<String> newList, boolean found) {
         if (found) {
             try (BufferedWriter bufferedWriter =
                          new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(getUrlFilePath())))) {
-                for (final String entry : newListe) {
+                for (final String entry : newList) {
                     bufferedWriter.write(entry + '\n');
                 }
             } catch (final Exception ex) {
@@ -306,7 +306,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         }
 
         clearList();
-        listeBauen();
+        createList();
     }
 
     private void clearList() {
@@ -337,15 +337,15 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         return urlPath;
     }
 
-    private void listeBauen() {
+    private void createList() {
         List<HistoryData> tmpList = new ArrayList<>();
         // LinkedList mit den URLs aus dem Logfile bauen
         final Path urlPath = getUrlFilePath();
         // use Automatic Resource Management
         try (LineNumberReader in = new LineNumberReader(new InputStreamReader(Files.newInputStream(urlPath)))) {
-            String zeile;
-            while ((zeile = in.readLine()) != null) {
-                final HistoryData historyData = HistoryData.getUrlAusZeile(zeile);
+            String line;
+            while ((line = in.readLine()) != null) {
+                final HistoryData historyData = HistoryData.getUrlFromLine(line);
                 tmpList.add(historyData);
             }
             if (!tmpList.isEmpty()) {

@@ -31,7 +31,7 @@ public class DownloadProps extends DownloadXml {
     private final StringProperty title = new SimpleStringProperty("");
 
     private final IntegerProperty state = new SimpleIntegerProperty(DownloadInfos.STATE_INIT);
-    private final DoubleProperty progress = new SimpleDoubleProperty(DownloadInfos.PROGRESS_NICHT_GESTARTET);
+    private final DoubleProperty progress = new SimpleDoubleProperty(DownloadInfos.PROGRESS_NOT_STARTED);
     private final StringProperty remaining = new SimpleStringProperty("");
     private final StringProperty bandwidth = new SimpleStringProperty("");
 
@@ -51,29 +51,29 @@ public class DownloadProps extends DownloadXml {
     private final StringProperty urlSubtitle = new SimpleStringProperty("");
 
     private final StringProperty set = new SimpleStringProperty("");
-    private final StringProperty programm = new SimpleStringProperty("");
-    private final StringProperty programmAufruf = new SimpleStringProperty("");
-    private final StringProperty programmAufrufArray = new SimpleStringProperty("");
-    private final BooleanProperty programmRestart = new SimpleBooleanProperty(false);
-    private final BooleanProperty programmDownloadmanager = new SimpleBooleanProperty(false);
+    private final StringProperty program = new SimpleStringProperty("");
+    private final StringProperty programCall = new SimpleStringProperty("");
+    private final StringProperty programCallArray = new SimpleStringProperty("");
+    private final BooleanProperty programRestart = new SimpleBooleanProperty(false);
+    private final BooleanProperty programDownloadmanager = new SimpleBooleanProperty(false);
 
-    private final StringProperty zielDateiname = new SimpleStringProperty("");
-    private final StringProperty zielPfad = new SimpleStringProperty("");
-    private final StringProperty zielPfadDatei = new SimpleStringProperty("");
+    private final StringProperty destFileName = new SimpleStringProperty("");
+    private final StringProperty destPath = new SimpleStringProperty("");
+    private final StringProperty destPathFile = new SimpleStringProperty("");
 
     private final StringProperty art = new SimpleStringProperty(DownloadInfos.ART_DOWNLOAD);
     private final StringProperty source = new SimpleStringProperty(DownloadInfos.SRC_ALL);
-    private final BooleanProperty zurueckgestellt = new SimpleBooleanProperty(false);
-    private final BooleanProperty infodatei = new SimpleBooleanProperty(false);
+    private final BooleanProperty placedBack = new SimpleBooleanProperty(false);
+    private final BooleanProperty infoFile = new SimpleBooleanProperty(false);
     private final BooleanProperty subtitle = new SimpleBooleanProperty(false);
 
     public final Property[] properties = {nr, filmNr, aboName, channel, theme, title,
             progress, remaining, bandwidth, downloadSize,
             filmDate, time, duration,
             hd, ut, geoBlocked, filmUrl, historyUrl, url, urlRtmp, urlSubtitle,
-            set, programm, programmAufruf, programmAufrufArray, programmRestart, programmDownloadmanager,
-            zielDateiname, zielPfad, zielPfadDatei,
-            art, source, zurueckgestellt, infodatei, subtitle};
+            set, program, programCall, programCallArray, programRestart, programDownloadmanager,
+            destFileName, destPath, destPathFile,
+            art, source, placedBack, infoFile, subtitle};
 
 
     public MDate getFilmDate() {
@@ -359,100 +359,100 @@ public class DownloadProps extends DownloadXml {
         this.set.set(set);
     }
 
-    public String getProgramm() {
-        return programm.get();
+    public String getProgram() {
+        return program.get();
     }
 
-    public StringProperty programmProperty() {
-        return programm;
+    public StringProperty programProperty() {
+        return program;
     }
 
-    public void setProgramm(String programm) {
-        this.programm.set(programm);
+    public void setProgram(String program) {
+        this.program.set(program);
     }
 
-    public String getProgrammAufruf() {
-        return programmAufruf.get();
+    public String getProgramCall() {
+        return programCall.get();
     }
 
-    public StringProperty programmAufrufProperty() {
-        return programmAufruf;
+    public StringProperty programCallProperty() {
+        return programCall;
     }
 
-    public void setProgrammAufruf(String programmAufruf) {
-        this.programmAufruf.set(programmAufruf);
+    public void setProgramCall(String programCall) {
+        this.programCall.set(programCall);
     }
 
-    public String getProgrammAufrufArray() {
-        return programmAufrufArray.get();
+    public String getProgramCallArray() {
+        return programCallArray.get();
     }
 
-    public StringProperty programmAufrufArrayProperty() {
-        return programmAufrufArray;
+    public StringProperty programCallArrayProperty() {
+        return programCallArray;
     }
 
-    public void setProgrammAufrufArray(String programmAufrufArray) {
-        this.programmAufrufArray.set(programmAufrufArray);
+    public void setProgramCallArray(String programCallArray) {
+        this.programCallArray.set(programCallArray);
     }
 
-    public boolean isProgrammRestart() {
-        return programmRestart.get();
+    public boolean getProgramRestart() {
+        return programRestart.get();
     }
 
-    public BooleanProperty programmRestartProperty() {
-        return programmRestart;
+    public BooleanProperty programRestartProperty() {
+        return programRestart;
     }
 
-    public void setProgrammRestart(boolean programmRestart) {
-        this.programmRestart.set(programmRestart);
+    public void setProgramRestart(boolean programRestart) {
+        this.programRestart.set(programRestart);
     }
 
-    public boolean isProgrammDownloadmanager() {
-        return programmDownloadmanager.get();
+    public boolean getProgramDownloadmanager() {
+        return programDownloadmanager.get();
     }
 
-    public BooleanProperty programmDownloadmanagerProperty() {
-        return programmDownloadmanager;
+    public BooleanProperty programDownloadmanagerProperty() {
+        return programDownloadmanager;
     }
 
-    public void setProgrammDownloadmanager(boolean programmDownloadmanager) {
-        this.programmDownloadmanager.set(programmDownloadmanager);
+    public void setProgramDownloadmanager(boolean programDownloadmanager) {
+        this.programDownloadmanager.set(programDownloadmanager);
     }
 
-    public String getZielDateiname() {
-        return zielDateiname.get();
+    public String getDestFileName() {
+        return destFileName.get();
     }
 
-    public StringProperty zielDateinameProperty() {
-        return zielDateiname;
+    public StringProperty destFileNameProperty() {
+        return destFileName;
     }
 
-    public void setZielDateiname(String zielDateiname) {
-        this.zielDateiname.set(zielDateiname);
+    public void setDestFileName(String destFileName) {
+        this.destFileName.set(destFileName);
     }
 
-    public String getZielPfad() {
-        return zielPfad.get();
+    public String getDestPath() {
+        return destPath.get();
     }
 
-    public StringProperty zielPfadProperty() {
-        return zielPfad;
+    public StringProperty destPathProperty() {
+        return destPath;
     }
 
-    public void setZielPfad(String zielPfad) {
-        this.zielPfad.set(zielPfad);
+    public void setDestPath(String destPath) {
+        this.destPath.set(destPath);
     }
 
-    public String getZielPfadDatei() {
-        return zielPfadDatei.get();
+    public String getDestPathFile() {
+        return destPathFile.get();
     }
 
-    public StringProperty zielPfadDateiProperty() {
-        return zielPfadDatei;
+    public StringProperty destPathFileProperty() {
+        return destPathFile;
     }
 
-    public void setZielPfadDatei(String zielPfadDatei) {
-        this.zielPfadDatei.set(zielPfadDatei);
+    public void setDestPathFile(String destPathFile) {
+        this.destPathFile.set(destPathFile);
     }
 
     public String getArt() {
@@ -479,28 +479,28 @@ public class DownloadProps extends DownloadXml {
         this.source.set(source);
     }
 
-    public boolean isZurueckgestellt() {
-        return zurueckgestellt.get();
+    public boolean getPlacedBack() {
+        return placedBack.get();
     }
 
-    public BooleanProperty zurueckgestelltProperty() {
-        return zurueckgestellt;
+    public BooleanProperty placedBackProperty() {
+        return placedBack;
     }
 
-    public void setZurueckgestellt(boolean zurueckgestellt) {
-        this.zurueckgestellt.set(zurueckgestellt);
+    public void setPlacedBack(boolean placedBack) {
+        this.placedBack.set(placedBack);
     }
 
-    public boolean isInfodatei() {
-        return infodatei.get();
+    public boolean getInfoFile() {
+        return infoFile.get();
     }
 
-    public BooleanProperty infodateiProperty() {
-        return infodatei;
+    public BooleanProperty infoFileProperty() {
+        return infoFile;
     }
 
-    public void setInfodatei(boolean infodatei) {
-        this.infodatei.set(infodatei);
+    public void setInfoFile(boolean infoFile) {
+        this.infoFile.set(infoFile);
     }
 
     public boolean isSubtitle() {
@@ -519,12 +519,12 @@ public class DownloadProps extends DownloadXml {
 
         setAboName(arr[DOWNLOAD_ABO]);
         setChannel(arr[DOWNLOAD_SENDER]);
-        setTheme(arr[DOWNLOAD_THEMA]);
-        setTitle(arr[DOWNLOAD_TITEL]);
+        setTheme(arr[DOWNLOAD_THEME]);
+        setTitle(arr[DOWNLOAD_TITLE]);
 
-        setFilmDate(arr[DOWNLOAD_DATUM], arr[DOWNLOAD_ZEIT]);
-        setTime(arr[DOWNLOAD_ZEIT]);
-        setDuration(arr[DOWNLOAD_DAUER]);
+        setFilmDate(arr[DOWNLOAD_DATE], arr[DOWNLOAD_TIME]);
+        setTime(arr[DOWNLOAD_TIME]);
+        setDuration(arr[DOWNLOAD_DURATION]);
 
         setHd(Boolean.parseBoolean(arr[DOWNLOAD_HD]));
         setUt(Boolean.parseBoolean(arr[DOWNLOAD_UT]));
@@ -534,35 +534,35 @@ public class DownloadProps extends DownloadXml {
         setUrl(arr[DOWNLOAD_URL]);
         setUrlRtmp(arr[DOWNLOAD_URL_RTMP]);
         setSubtitle(Boolean.parseBoolean(arr[DOWNLOAD_URL_SUBTITLE]));
-        setSet(arr[DOWNLOAD_PROGRAMMSET]);
-        setProgramm(arr[DOWNLOAD_PROGRAMM]);
-        setProgrammAufruf(arr[DOWNLOAD_PROGRAMM_AUFRUF]);
-        setProgrammAufrufArray(arr[DOWNLOAD_PROGRAMM_AUFRUF_ARRAY]);
-        setZielDateiname(arr[DOWNLOAD_ZIEL_DATEINAME]);
-        setZielPfad(arr[DOWNLOAD_ZIEL_PFAD]);
-        setZielPfadDatei(arr[DOWNLOAD_ZIEL_PFAD_DATEINAME]);
+        setSet(arr[DOWNLOAD_PROGRAM_SET]);
+        setProgram(arr[DOWNLOAD_PROGRAM]);
+        setProgramCall(arr[DOWNLOAD_PROGRAM_CALL]);
+        setProgramCallArray(arr[DOWNLOAD_PROGRAM_CALL_ARRAY]);
+        setDestFileName(arr[DOWNLOAD_DEST_FILE_NAME]);
+        setDestPath(arr[DOWNLOAD_DEST_PATH]);
+        setDestPathFile(arr[DOWNLOAD_DEST_PATH_FILE_NAME]);
 
-        setArt(arr[Download.DOWNLOAD_ART]);
-        if (!arr[Download.DOWNLOAD_QUELLE].equals(DownloadInfos.SRC_ABO)) {
+        setArt(arr[Download.DOWNLOAD_TYPE]);
+        if (!arr[Download.DOWNLOAD_SOURCE].equals(DownloadInfos.SRC_ABO)) {
             // bei gelöschten Abos kanns dazu kommen
-            arr[Download.DOWNLOAD_QUELLE] = DownloadInfos.SRC_DOWNLOAD;
+            arr[Download.DOWNLOAD_SOURCE] = DownloadInfos.SRC_DOWNLOAD;
         }
-        setSource(arr[DOWNLOAD_QUELLE]);
-        setZurueckgestellt(Boolean.parseBoolean(arr[DOWNLOAD_ZURUECKGESTELLT]));
-        setInfodatei(Boolean.parseBoolean(arr[DOWNLOAD_INFODATEI]));
+        setSource(arr[DOWNLOAD_SOURCE]);
+        setPlacedBack(Boolean.parseBoolean(arr[DOWNLOAD_PLACED_BACK]));
+        setInfoFile(Boolean.parseBoolean(arr[DOWNLOAD_INFO_FILE]));
         setSubtitle(Boolean.parseBoolean(arr[DOWNLOAD_SUBTITLE]));
-        setProgrammDownloadmanager(Boolean.parseBoolean(arr[DOWNLOAD_PROGRAMM_DOWNLOADMANAGER]));
+        setProgramDownloadmanager(Boolean.parseBoolean(arr[DOWNLOAD_PROGRAM_DOWNLOADMANAGER]));
     }
 
 
     public void setXmlFromProps() {
         arr[DOWNLOAD_ABO] = getAboName();
         arr[DOWNLOAD_SENDER] = getChannel();
-        arr[DOWNLOAD_THEMA] = getTheme();
-        arr[DOWNLOAD_TITEL] = getTitle();
-        arr[DOWNLOAD_DATUM] = getFilmDate().toString();
-        arr[DOWNLOAD_ZEIT] = getTime();
-        arr[DOWNLOAD_DAUER] = getDuration();
+        arr[DOWNLOAD_THEME] = getTheme();
+        arr[DOWNLOAD_TITLE] = getTitle();
+        arr[DOWNLOAD_DATE] = getFilmDate().toString();
+        arr[DOWNLOAD_TIME] = getTime();
+        arr[DOWNLOAD_DURATION] = getDuration();
         arr[DOWNLOAD_HD] = String.valueOf(isHd());
         arr[DOWNLOAD_UT] = String.valueOf(isUt());
         arr[DOWNLOAD_GEO] = String.valueOf(getGeoBlocked());
@@ -571,19 +571,19 @@ public class DownloadProps extends DownloadXml {
         arr[DOWNLOAD_URL] = getUrl();
         arr[DOWNLOAD_URL_RTMP] = getUrlRtmp();
         arr[DOWNLOAD_URL_SUBTITLE] = getUrlSubtitle();
-        arr[DOWNLOAD_PROGRAMMSET] = getSet();
-        arr[DOWNLOAD_PROGRAMM] = getProgramm();
-        arr[DOWNLOAD_PROGRAMM_AUFRUF] = getProgrammAufruf();
-        arr[DOWNLOAD_PROGRAMM_AUFRUF_ARRAY] = getProgrammAufrufArray();
-        arr[DOWNLOAD_ZIEL_DATEINAME] = getZielDateiname();
-        arr[DOWNLOAD_ZIEL_PFAD] = getZielPfad();
-        arr[DOWNLOAD_ZIEL_PFAD_DATEINAME] = getZielPfadDatei();
-        arr[DOWNLOAD_ART] = getArt();
-        arr[DOWNLOAD_QUELLE] = getSource();
-        arr[DOWNLOAD_ZURUECKGESTELLT] = String.valueOf(isZurueckgestellt());
-        arr[DOWNLOAD_INFODATEI] = String.valueOf(isInfodatei());
+        arr[DOWNLOAD_PROGRAM_SET] = getSet();
+        arr[DOWNLOAD_PROGRAM] = getProgram();
+        arr[DOWNLOAD_PROGRAM_CALL] = getProgramCall();
+        arr[DOWNLOAD_PROGRAM_CALL_ARRAY] = getProgramCallArray();
+        arr[DOWNLOAD_DEST_FILE_NAME] = getDestFileName();
+        arr[DOWNLOAD_DEST_PATH] = getDestPath();
+        arr[DOWNLOAD_DEST_PATH_FILE_NAME] = getDestPathFile();
+        arr[DOWNLOAD_TYPE] = getArt();
+        arr[DOWNLOAD_SOURCE] = getSource();
+        arr[DOWNLOAD_PLACED_BACK] = String.valueOf(getPlacedBack());
+        arr[DOWNLOAD_INFO_FILE] = String.valueOf(getInfoFile());
         arr[DOWNLOAD_SUBTITLE] = String.valueOf(isSubtitle());
-        arr[DOWNLOAD_PROGRAMM_DOWNLOADMANAGER] = String.valueOf(isProgrammDownloadmanager());
+        arr[DOWNLOAD_PROGRAM_DOWNLOADMANAGER] = String.valueOf(getProgramDownloadmanager());
     }
 
 

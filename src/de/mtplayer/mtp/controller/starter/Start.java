@@ -58,13 +58,13 @@ public class Start {
     public void setTimeLeft(long timeLeft) {
         this.timeLeft = timeLeft;
         if (download.isStateStartedRun() && getTimeLeft() > 0) {
-            download.setRemaining(DownloadInfos.getTextRestzeit(timeLeft));
+            download.setRemaining(DownloadInfos.getTimeLeft(timeLeft));
         } else {
             download.setRemaining("");
         }
     }
 
-    public void downloadStarten() {
+    public void startDownload() {
         setStartTime(new MDate());
     }
 

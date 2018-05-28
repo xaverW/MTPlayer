@@ -47,18 +47,18 @@ public class NameLists {
             @Override
             public void finished(ListenerFilmlistLoadEvent event) {
                 getAllChannel();
-                getThemen("");
+                getTheme("");
             }
         });
 
-        getAbosnames();
+        getAboNames();
         progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) ->
-                getAbosnames());
+                getAboNames());
 
         progData.downloadList.downloadsChangedProperty().addListener((observable, oldValue, newValue) ->
-                getAbosnames());
+                getAboNames());
         progData.downloadList.sizeProperty().addListener((observable, oldValue, newValue) ->
-                getAbosnames());
+                getAboNames());
     }
 
     private void getAllChannel() {
@@ -66,7 +66,7 @@ public class NameLists {
     }
 
 
-    private void getAbosnames() {
+    private void getAboNames() {
         ArrayList<String> list = progData.aboList.generateAboChannelList();
         obsChannelsForAbos.setAll(list);
 
@@ -77,20 +77,20 @@ public class NameLists {
         obsAboNamesForDownloads.setAll(list);
     }
 
-    public void getThemen(String sender) {
-        final ArrayList<String> thema = new ArrayList<>();
+    public void getTheme(String sender) {
+        final ArrayList<String> theme = new ArrayList<>();
         if (sender.isEmpty()) {
-            thema.addAll(Arrays.asList(progData.filmlistFiltered.themenPerChannel[0]));
+            theme.addAll(Arrays.asList(progData.filmlistFiltered.themePerChannel[0]));
         } else {
-            for (int i = 1; i < progData.filmlistFiltered.themenPerChannel.length; ++i) {
+            for (int i = 1; i < progData.filmlistFiltered.themePerChannel.length; ++i) {
                 if (progData.filmlistFiltered.sender[i].equalsIgnoreCase(sender)) {
-                    thema.addAll(Arrays.asList(progData.filmlistFiltered.themenPerChannel[i]));
+                    theme.addAll(Arrays.asList(progData.filmlistFiltered.themePerChannel[i]));
                     break;
                 }
             }
         }
 
-        obsThemeForSelChannel.setAll(thema);
+        obsThemeForSelChannel.setAll(theme);
     }
 
     public ObservableList<String> getObsAllChannel() {

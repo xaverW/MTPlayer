@@ -143,7 +143,7 @@ public class MediaConfigPaneHistoryController extends AnchorPane {
                 if (historyDataArrayList.isEmpty()) {
                     new MTAlert().showInfoNoSelection();
                 } else {
-                    ContextMenu contextMenu = new MediaConfigPaneHistoryContextMenu(historyDataArrayList, history).getContextMenue();
+                    ContextMenu contextMenu = new MediaConfigPaneHistoryContextMenu(historyDataArrayList, history).getContextMenu();
                     tableView.setContextMenu(contextMenu);
 
                 }

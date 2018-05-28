@@ -95,7 +95,7 @@ public class SetDataPane {
         if (setData != null) {
             txtName.textProperty().bindBidirectional(setData.nameProperty());
             txtName.textProperty().addListener(cl);
-            txtDescription.textProperty().bindBidirectional(setData.descriptonProperty());
+            txtDescription.textProperty().bindBidirectional(setData.descriptionProperty());
             tglSave.selectedProperty().bindBidirectional(setData.saveProperty());
             tglButton.selectedProperty().bindBidirectional(setData.buttonProperty());
             tglAbo.selectedProperty().bindBidirectional(setData.aboProperty());
@@ -134,7 +134,7 @@ public class SetDataPane {
         if (setData != null) {
             txtName.textProperty().unbindBidirectional(setData.nameProperty());
             txtName.textProperty().removeListener(cl);
-            txtDescription.textProperty().unbindBidirectional(setData.descriptonProperty());
+            txtDescription.textProperty().unbindBidirectional(setData.descriptionProperty());
             tglSave.selectedProperty().unbindBidirectional(setData.saveProperty());
             tglButton.selectedProperty().unbindBidirectional(setData.buttonProperty());
             tglAbo.selectedProperty().unbindBidirectional(setData.aboProperty());
@@ -365,9 +365,9 @@ public class SetDataPane {
         rbHd.setToggleGroup(tg);
         rbHeight.setToggleGroup(tg);
         rbLow.setToggleGroup(tg);
-        rbHd.setOnAction(event -> setAufloesung());
-        rbHeight.setOnAction(event -> setAufloesung());
-        rbLow.setOnAction(event -> setAufloesung());
+        rbHd.setOnAction(event -> setResolution());
+        rbHeight.setOnAction(event -> setResolution());
+        rbLow.setOnAction(event -> setResolution());
 
         gridPane = new GridPane();
         gridPane.setHgap(10);
@@ -402,7 +402,7 @@ public class SetDataPane {
         gridPane.add(tglSubtitle, 0, 1);
     }
 
-    private void setAufloesung() {
+    private void setResolution() {
         if (rbHeight.isSelected()) {
             setData.setResolution(FilmXml.RESOLUTION_NORMAL);
         }

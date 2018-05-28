@@ -47,29 +47,29 @@ public final class Download extends DownloadProps {
 
     public Download(SetData pSet,
                     Film film,
-                    String quelle,
+                    String source,
                     Abo abo,
                     String name,
-                    String pfad,
-                    String aufloesung) {
+                    String path,
+                    String resolution) {
 
         setFilm(film);
         setPset(pSet);
         setAbo(abo);
-        setSource(quelle);
+        setSource(source);
 
-        if (aufloesung.isEmpty()) {
-            setUrl(film.getUrlFuerAufloesung(abo != null ? abo.getResolution() : pSet.getResolution()));
-            setUrlRtmp(film.getUrlFlvstreamerFuerAufloesung(abo != null ? abo.getResolution() : pSet.getResolution()));
+        if (resolution.isEmpty()) {
+            setUrl(film.getUrlForResolution(abo != null ? abo.getResolution() : pSet.getResolution()));
+            setUrlRtmp(film.getUrlFlvstreamerForResolution(abo != null ? abo.getResolution() : pSet.getResolution()));
         } else {
-            setUrl(film.getUrlFuerAufloesung(aufloesung));
-            setUrlRtmp(film.getUrlFlvstreamerFuerAufloesung(aufloesung));
+            setUrl(film.getUrlForResolution(resolution));
+            setUrlRtmp(film.getUrlFlvstreamerForResolution(resolution));
         }
 
         // und jetzt noch die Dateigröße für die entsp. URL
         setSizeDownloadFromFilm();
         // und endlich Aufruf bauen :)
-        downloadProg.aufrufBauen(pSet, film, abo, name, pfad);
+        downloadProg.makeProgParameter(pSet, film, abo, name, path);
     }
 
 
@@ -82,7 +82,7 @@ public final class Download extends DownloadProps {
     }
 
     public boolean isStateStoped() {
-        return getState() == DownloadInfos.STATE_STOPED;
+        return getState() == DownloadInfos.STATE_STOPPED;
     }
 
     public boolean isStateStartedWaiting() {
@@ -120,7 +120,7 @@ public final class Download extends DownloadProps {
     //=======================================
 
     public boolean isStarted() {
-        return getState() > DownloadInfos.STATE_STOPED && !isStateFinished();
+        return getState() > DownloadInfos.STATE_STOPPED && !isStateFinished();
     }
 
     public boolean isFinishedOrError() {
@@ -142,7 +142,7 @@ public final class Download extends DownloadProps {
 
     public void putBack() {
         // download resetten, und als "zurückgestelt" markieren
-        setZurueckgestellt(true);
+        setPlacedBack(true);
         resetDownload();
     }
 
@@ -162,7 +162,7 @@ public final class Download extends DownloadProps {
         setNr(DownloadInfos.DOWNLOAD_NUMBER_NOT_STARTED);
 
         MLProperty.setProperty(stateProperty(), DownloadInfos.STATE_INIT);
-        MLProperty.setProperty(progressProperty(), DownloadInfos.PROGRESS_NICHT_GESTARTET);
+        MLProperty.setProperty(progressProperty(), DownloadInfos.PROGRESS_NOT_STARTED);
     }
 
     public void stopDownload() {
@@ -170,8 +170,8 @@ public final class Download extends DownloadProps {
             // damit fehlerhafte nicht wieder starten
             getStart().setRestartCounter(ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getInt());
         } else {
-            MLProperty.setProperty(stateProperty(), DownloadInfos.STATE_STOPED);
-            MLProperty.setProperty(progressProperty(), DownloadInfos.PROGRESS_NICHT_GESTARTET);
+            MLProperty.setProperty(stateProperty(), DownloadInfos.STATE_STOPPED);
+            MLProperty.setProperty(progressProperty(), DownloadInfos.PROGRESS_NOT_STARTED);
         }
 
         final DownloadSize downSize = getDownloadSize();
@@ -181,22 +181,22 @@ public final class Download extends DownloadProps {
         setNr(DownloadInfos.DOWNLOAD_NUMBER_NOT_STARTED);
     }
 
-    public void aufrufBauen() {
-        downloadProg.aufrufBauen(pSet, film, abo, getZielDateiname(), getZielPfad());
+    public void makeProgParameter() {
+        downloadProg.makeProgParameter(pSet, film, abo, getDestFileName(), getDestPath());
     }
 
     public String getFileNameWithoutSuffix() {
-        return FileUtils.getFileNameWithoutSuffix(getZielPfadDatei());
+        return FileUtils.getFileNameWithoutSuffix(getDestPathFile());
     }
 
 
     public String getFileNameSuffix() {
-        return FileUtils.getFileNameSuffix(getZielPfadDatei());
+        return FileUtils.getFileNameSuffix(getDestPathFile());
     }
 
-    public void setSizeDownloadFromWeb(String groesse) {
-        if (!groesse.isEmpty()) {
-            getDownloadSize().setSize(groesse);
+    public void setSizeDownloadFromWeb(String size) {
+        if (!size.isEmpty()) {
+            getDownloadSize().setSize(size);
         } else if (film != null) {
             getDownloadSize().setSize(FilmTools.getSizeFromWeb(film, getUrl()));
         }
@@ -270,7 +270,7 @@ public final class Download extends DownloadProps {
     public void setPset(SetData pSet) {
         this.pSet = pSet;
 
-        setInfodatei(pSet.isInfoFile());
+        setInfoFile(pSet.isInfoFile());
         setSubtitle(pSet.isSubtitle());
 
         setSet(pSet.getName());
@@ -303,9 +303,9 @@ public final class Download extends DownloadProps {
         }
         //=====================================================
 
-        setZielDateiname(name);
-        setZielPfad(path);
-        setZielPfadDatei(FileUtils.addsPfad(path, name));
+        setDestFileName(name);
+        setDestPath(path);
+        setDestPathFile(FileUtils.addsPath(path, name));
     }
 
     public Download getCopy() {

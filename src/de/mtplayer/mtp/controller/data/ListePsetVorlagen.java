@@ -41,8 +41,8 @@ public class ListePsetVorlagen extends LinkedList<String[]> {
     public static final String PGR = "Vorlage";
     public static final String PGR_NAME = "Name";
     public static final int PGR_NAME_NR = 0;
-    public static final String PGR_BESCHREIBUNG = "Beschreibung";
-    public static final int PGR_BESCHREIBUNG_NR = 1;
+    public static final String PGR_DESCRIPTION = "Beschreibung";
+    public static final int PGR_DESCRIOPTION_NR = 1;
     public static final String PGR_VERSION = "Version";
     public static final int PGR_VERSION_NR = 2;
     public static final String PGR_BS = "Bs";
@@ -52,26 +52,26 @@ public class ListePsetVorlagen extends LinkedList<String[]> {
     public static final String PGR_INFO = "Info";
     public static final int PGR_INFO_NR = 5;
     public static final int PGR_MAX_ELEM = 6;
-    public static final String[] PGR_COLUMN_NAMES = {PGR_NAME, PGR_BESCHREIBUNG, PGR_VERSION, PGR_BS, PGR_URL, PGR_INFO};
+    public static final String[] PGR_COLUMN_NAMES = {PGR_NAME, PGR_DESCRIPTION, PGR_VERSION, PGR_BS, PGR_URL, PGR_INFO};
     private final static int TIMEOUT = 10000;
 
     public static SetList getStandarset(boolean replaceMuster) {
         SetList setList = null;
-        String[] vorlage = null;
+        String[] template = null;
 
         final ListePsetVorlagen listePsetVorlagen = new ListePsetVorlagen();
         if (listePsetVorlagen.loadListOfSets()) {
             for (final String[] ar : listePsetVorlagen) {
                 if (ar[PGR_NAME_NR].equalsIgnoreCase("Standardset " + getOsString())) {
-                    vorlage = ar;
+                    template = ar;
                     break;
                 }
             }
-            if (vorlage != null) {
-                if (!vorlage[PGR_URL_NR].isEmpty()) {
-                    setList = ListePsetVorlagen.importPsetFile(vorlage[ListePsetVorlagen.PGR_URL_NR]);
+            if (template != null) {
+                if (!template[PGR_URL_NR].isEmpty()) {
+                    setList = ListePsetVorlagen.importPsetFile(template[ListePsetVorlagen.PGR_URL_NR]);
                     if (setList != null) {
-                        setList.version = vorlage[PGR_VERSION_NR];
+                        setList.version = template[PGR_VERSION_NR];
                     }
                 }
             }
@@ -83,10 +83,10 @@ public class ListePsetVorlagen extends LinkedList<String[]> {
             InputStreamReader inReader;
             switch (getOs()) {
                 case LINUX:
-                    inReader = new GetFile().getPsetVorlageLinux();
+                    inReader = new GetFile().getPsetTamplateLinux();
                     break;
                 default:
-                    inReader = new GetFile().getPsetVorlageWindows();
+                    inReader = new GetFile().getPsetTemplateWindows();
             }
             // Standardgruppen laden
             setList = ListePsetVorlagen.importPset(inReader);
@@ -94,7 +94,7 @@ public class ListePsetVorlagen extends LinkedList<String[]> {
 
         if (replaceMuster && setList != null) {
             // damit die Variablen ersetzt werden
-            SetList.progMusterErsetzen(setList);
+            SetList.progReplacePattern(setList);
         }
         return setList;
     }
@@ -133,18 +133,18 @@ public class ListePsetVorlagen extends LinkedList<String[]> {
         return true;
     }
 
-    public static SetList importPsetFile(String dateiUrl) {
+    public static SetList importPsetFile(String fileUrl) {
         final int timeout = 10_000; //10 Sekunden
         try {
-            if (FileUtils.istUrl(dateiUrl)) {
+            if (FileUtils.istUrl(fileUrl)) {
                 HttpURLConnection conn;
-                conn = (HttpURLConnection) new URL(dateiUrl).openConnection();
+                conn = (HttpURLConnection) new URL(fileUrl).openConnection();
                 conn.setConnectTimeout(timeout);
                 conn.setReadTimeout(timeout);
                 conn.setRequestProperty("User-Agent", ProgInfos.getUserAgent());
                 return ListePsetVorlagen.importPset(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8));
             } else {
-                return ListePsetVorlagen.importPset(new InputStreamReader(new FileInputStream(dateiUrl), StandardCharsets.UTF_8));
+                return ListePsetVorlagen.importPset(new InputStreamReader(new FileInputStream(fileUrl), StandardCharsets.UTF_8));
             }
         } catch (final Exception ex) {
             PLog.errorLog(630048926, ex);
@@ -154,7 +154,7 @@ public class ListePsetVorlagen extends LinkedList<String[]> {
 
     private static SetList importPset(InputStreamReader in) {
         SetData psetData = null;
-        final SetList liste = new SetList();
+        final SetList list = new SetList();
         try {
             int event;
             final XMLInputFactory inFactory = XMLInputFactory.newInstance();
@@ -173,7 +173,7 @@ public class ListePsetVorlagen extends LinkedList<String[]> {
                                 if (!psetData.isEmpty()) {
                                     //kann beim Einlesen der Konfigdatei vorkommen
                                     psetData.setPropsFromXml();
-                                    liste.add(psetData);
+                                    list.add(psetData);
                                 }
                             }
                             break;
@@ -195,10 +195,10 @@ public class ListePsetVorlagen extends LinkedList<String[]> {
 
             return null;
         }
-        if (liste.isEmpty()) {
+        if (list.isEmpty()) {
             return null;
         } else {
-            return liste;
+            return list;
         }
     }
 

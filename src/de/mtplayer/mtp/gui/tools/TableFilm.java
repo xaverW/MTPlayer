@@ -53,10 +53,10 @@ public class TableFilm {
 
         final TableColumn<Film, String> senderColumn = new TableColumn<>("Sender");
         senderColumn.setCellValueFactory(new PropertyValueFactory<>("channel"));
-        final TableColumn<Film, String> themaColumn = new TableColumn<>("Thema");
-        themaColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
-        final TableColumn<Film, String> titelColumn = new TableColumn<>("Titel");
-        titelColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        final TableColumn<Film, String> themeColumn = new TableColumn<>("Thema");
+        themeColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
+        final TableColumn<Film, String> titleColumn = new TableColumn<>("Titel");
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
 
         final TableColumn<Film, String> startColumn = new TableColumn<>("");
         startColumn.setCellFactory(cellFactoryStart);
@@ -64,12 +64,12 @@ public class TableFilm {
 
         final TableColumn<Film, MDate> datumColumn = new TableColumn<>("Datum");
         datumColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
-        final TableColumn<Film, String> zeitColumn = new TableColumn<>("Zeit");
-        zeitColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
-        final TableColumn<Film, Integer> dauerColumn = new TableColumn<>("Dauer");
-        dauerColumn.setCellValueFactory(new PropertyValueFactory<>("duration"));
-        final TableColumn<Film, FilmSize> groesseColumn = new TableColumn<>("Größe [MB]");
-        groesseColumn.setCellValueFactory(new PropertyValueFactory<>("filmSize"));
+        final TableColumn<Film, String> timeColumn = new TableColumn<>("Zeit");
+        timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
+        final TableColumn<Film, Integer> durationColumn = new TableColumn<>("Dauer");
+        durationColumn.setCellValueFactory(new PropertyValueFactory<>("duration"));
+        final TableColumn<Film, FilmSize> sizeColumn = new TableColumn<>("Größe [MB]");
+        sizeColumn.setCellValueFactory(new PropertyValueFactory<>("filmSize"));
 
         final TableColumn<Film, Boolean> hdColumn = new TableColumn<>("HD");
         hdColumn.setCellValueFactory(new PropertyValueFactory<>("hd"));
@@ -114,9 +114,9 @@ public class TableFilm {
 
         return new TableColumn[]{
                 nrColumn,
-                senderColumn, themaColumn, titelColumn,
+                senderColumn, themeColumn, titleColumn,
                 startColumn,
-                datumColumn, zeitColumn, dauerColumn, groesseColumn,
+                datumColumn, timeColumn, durationColumn, sizeColumn,
                 hdColumn, utColumn, descriptionColumn, geoColumn,
                 urlColumn, aboColumn,
 //                newColumn,
@@ -137,7 +137,7 @@ public class TableFilm {
                 if (film == null || empty) {
                     setStyle("");
                 } else {
-                    if (film.getTheme().equals(FilmTools.THEMA_LIVE)) {
+                    if (film.getTheme().equals(FilmTools.THEME_LIVE)) {
                         // livestream
                         for (int i = 0; i < getChildren().size(); i++) {
                             getChildren().get(i).setStyle(MTColor.FILM_LIVESTREAM.getCssFontBold());

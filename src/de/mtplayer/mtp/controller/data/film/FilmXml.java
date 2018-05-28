@@ -21,14 +21,14 @@ import org.apache.commons.lang3.time.FastDateFormat;
 
 public class FilmXml extends Data<FilmXml> {
 
-    static final FastDateFormat sdf_datum_zeit = FastDateFormat.getInstance("dd.MM.yyyyHH:mm:ss");
-    static final FastDateFormat sdf_datum = FastDateFormat.getInstance("dd.MM.yyyy");
+    static final FastDateFormat sdf_date_time = FastDateFormat.getInstance("dd.MM.yyyyHH:mm:ss");
+    static final FastDateFormat sdf_date = FastDateFormat.getInstance("dd.MM.yyyy");
 
     public static final String RESOLUTION_NORMAL = "normal";
     public static final String RESOLUTION_HD = "hd";
     public static final String RESOLUTION_SMALL = "klein";
 
-    public static final int FILMTIME_EMPTY = -1;
+    public static final int FILM_TIME_EMPTY = -1;
 
     public static final String GEO_DE = "DE";
     public static final String GEO_AT = "AT";
@@ -52,7 +52,7 @@ public class FilmXml extends Data<FilmXml> {
     public static final int FILM_DESCRIPTION = 12;
     public static final int FILM_GEO = 13;
     public static final int FILM_URL = 14;
-    public static final int FILM_WEBSEITE = 15;
+    public static final int FILM_WEBSITE = 15;
     public static final int FILM_ABO_NAME = 16;
     public static final int FILM_URL_SUBTITLE = 17;
     public static final int FILM_URL_RTMP = 18;
@@ -103,7 +103,7 @@ public class FilmXml extends Data<FilmXml> {
             FILM_SIZE,
             FILM_DESCRIPTION,
             FILM_URL,
-            FILM_WEBSEITE,
+            FILM_WEBSITE,
             FILM_URL_SUBTITLE,
             FILM_URL_RTMP,
             FILM_URL_SMALL,

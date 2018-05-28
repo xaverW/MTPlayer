@@ -18,20 +18,20 @@ package de.mtplayer.mtp.controller.data.film;
 
 public class FilmlistXml {
 
-    public static final String FILMLISTE = "Filmliste";
+    public static final String FILMLIST = "Filmliste";
 
-    public static final String FILMLISTE_DATUM = "Filmliste-Datum";
-    public static final int FILMLISTE_DATUM_NR = 0;
-    public static final String FILMLISTE_DATUM_GMT = "Filmliste-Datum-GMT";
-    public static final int FILMLISTE_DATUM_GMT_NR = 1;
-    public static final String FILMLISTE_VERSION = "Filmliste-Version";
-    public static final int FILMLISTE_VERSION_NR = 2;
-    public static final String FILMLISTE_PROGRAMM = "Filmliste-Programm";
-    public static final int FILMLISTE_PRGRAMM_NR = 3;
-    public static final String FILMLISTE_ID = "Filmliste-Id";
-    public static final int FILMLISTE_ID_NR = 4;
+    public static final String FILMLIST_DATE = "Filmliste-Datum";
+    public static final int FILMLIST_DATE_NR = 0;
+    public static final String FILMLIST_DATE_GMT = "Filmliste-Datum-GMT";
+    public static final int FILMLIST_DATE_GMT_NR = 1;
+    public static final String FILMLIST_VERSION = "Filmliste-Version";
+    public static final int FILMLIST_VERSION_NR = 2;
+    public static final String FILMLIST_PROGRAM = "Filmliste-Programm";
+    public static final int FILMLIST_PRGRAM_NR = 3;
+    public static final String FILMLIST_ID = "Filmliste-Id";
+    public static final int FILMLIST_ID_NR = 4;
     public static final int MAX_ELEM = 5;
 
-    public static final String[] COLUMN_NAMES = {FILMLISTE_DATUM, FILMLISTE_DATUM_GMT, FILMLISTE_VERSION, FILMLISTE_PROGRAMM, FILMLISTE_ID};
+    public static final String[] COLUMN_NAMES = {FILMLIST_DATE, FILMLIST_DATE_GMT, FILMLIST_VERSION, FILMLIST_PROGRAM, FILMLIST_ID};
 
 }

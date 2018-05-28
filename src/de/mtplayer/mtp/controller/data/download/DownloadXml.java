@@ -27,23 +27,23 @@ public class DownloadXml extends Data<Download> {
 
     public static final int DOWNLOAD_ABO = 2;
     public static final int DOWNLOAD_SENDER = 3;
-    public static final int DOWNLOAD_THEMA = 4;
-    public static final int DOWNLOAD_TITEL = 5;
+    public static final int DOWNLOAD_THEME = 4;
+    public static final int DOWNLOAD_TITLE = 5;
 
     public static final int DOWNLOAD_BUTTON1 = 6;
     public static final int DOWNLOAD_BUTTON2 = 7;
 
     public static final int DOWNLOAD_PROGRESS = 8;
-    public static final int DOWNLOAD_RESTZEIT = 9;
-    public static final int DOWNLOAD_BANDBREITE = 10;
-    public static final int DOWNLOAD_GROESSE = 11;
+    public static final int DOWNLOAD_REMAINING_TIME = 9;
+    public static final int DOWNLOAD_BANDWIDTH = 10;
+    public static final int DOWNLOAD_SIZE = 11;
 
-    public static final int DOWNLOAD_DATUM = 12;
-    public static final int DOWNLOAD_ZEIT = 13;
-    public static final int DOWNLOAD_DAUER = 14;
+    public static final int DOWNLOAD_DATE = 12;
+    public static final int DOWNLOAD_TIME = 13;
+    public static final int DOWNLOAD_DURATION = 14;
     public static final int DOWNLOAD_HD = 15;
     public static final int DOWNLOAD_UT = 16;
-    public static final int DOWNLOAD_UNTERBROCHEN = 17;
+    public static final int DOWNLOAD_INTERRUPTED = 17;
     public static final int DOWNLOAD_GEO = 18;
 
     public static final int DOWNLOAD_FILM_URL = 19;
@@ -52,23 +52,23 @@ public class DownloadXml extends Data<Download> {
     public static final int DOWNLOAD_URL_RTMP = 22;
     public static final int DOWNLOAD_URL_SUBTITLE = 23;
 
-    public static final int DOWNLOAD_PROGRAMMSET = 24;
-    public static final int DOWNLOAD_PROGRAMM = 25;
-    public static final int DOWNLOAD_PROGRAMM_AUFRUF = 26;
-    public static final int DOWNLOAD_PROGRAMM_AUFRUF_ARRAY = 27;
-    public static final int DOWNLOAD_PROGRAMM_RESTART = 28;
+    public static final int DOWNLOAD_PROGRAM_SET = 24;
+    public static final int DOWNLOAD_PROGRAM = 25;
+    public static final int DOWNLOAD_PROGRAM_CALL = 26;
+    public static final int DOWNLOAD_PROGRAM_CALL_ARRAY = 27;
+    public static final int DOWNLOAD_PROGRAM_RESTART = 28;
 
-    public static final int DOWNLOAD_ZIEL_DATEINAME = 29;
-    public static final int DOWNLOAD_ZIEL_PFAD = 30;
-    public static final int DOWNLOAD_ZIEL_PFAD_DATEINAME = 31;
+    public static final int DOWNLOAD_DEST_FILE_NAME = 29;
+    public static final int DOWNLOAD_DEST_PATH = 30;
+    public static final int DOWNLOAD_DEST_PATH_FILE_NAME = 31;
 
-    public static final int DOWNLOAD_ART = 32;
-    public static final int DOWNLOAD_QUELLE = 33;
-    public static final int DOWNLOAD_ZURUECKGESTELLT = 34;
-    public static final int DOWNLOAD_INFODATEI = 35;
+    public static final int DOWNLOAD_TYPE = 32;
+    public static final int DOWNLOAD_SOURCE = 33;
+    public static final int DOWNLOAD_PLACED_BACK = 34;
+    public static final int DOWNLOAD_INFO_FILE = 35;
     public static final int DOWNLOAD_SPOTLIGHT = 36;
     public static final int DOWNLOAD_SUBTITLE = 37;
-    public static final int DOWNLOAD_PROGRAMM_DOWNLOADMANAGER = 38;
+    public static final int DOWNLOAD_PROGRAM_DOWNLOADMANAGER = 38;
     public static final int DOWNLOAD_REF = 39;
     public static final String[] COLUMN_NAMES = {"Nr",
             "Filmnr",
@@ -164,7 +164,7 @@ public class DownloadXml extends Data<Download> {
     public int compareTo(Download arg0) {
         int ret;
         if ((ret = sorter.compare(arr[DownloadXml.DOWNLOAD_SENDER], arg0.arr[DownloadXml.DOWNLOAD_SENDER])) == 0) {
-            return sorter.compare(arr[DownloadXml.DOWNLOAD_THEMA], arg0.arr[DownloadXml.DOWNLOAD_THEMA]);
+            return sorter.compare(arr[DownloadXml.DOWNLOAD_THEME], arg0.arr[DownloadXml.DOWNLOAD_THEME]);
         }
         return ret;
     }

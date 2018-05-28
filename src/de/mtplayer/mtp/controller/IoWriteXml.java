@@ -252,7 +252,7 @@ public class IoWriteXml implements AutoCloseable {
         writer.writeCharacters("\n");
 
         for (final FilmlistUrlData datenUrlFilmliste : progData.loadFilmlist.getDownloadUrlsFilmlisten_akt()) {
-            datenUrlFilmliste.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_ART_NR] = FilmlistUrlData.SERVER_ART_AKT;
+            datenUrlFilmliste.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_SORT_NR] = FilmlistUrlData.SERVER_ART_AKT;
             xmlWriteData(FilmlistUrlData.FILMLIST_UPDATE_SERVER,
                     FilmlistUrlData.FILMLIST_UPDATE_SERVER_COLUMN_NAMES,
                     datenUrlFilmliste.arr,
@@ -263,7 +263,7 @@ public class IoWriteXml implements AutoCloseable {
         writer.writeComment("Diff-Filmliste");
         writer.writeCharacters("\n");
         for (final FilmlistUrlData datenUrlFilmliste : progData.loadFilmlist.getDownloadUrlsFilmlisten_diff()) {
-            datenUrlFilmliste.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_ART_NR] = FilmlistUrlData.SERVER_ART_DIFF;
+            datenUrlFilmliste.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_SORT_NR] = FilmlistUrlData.SERVER_ART_DIFF;
             xmlWriteData(FilmlistUrlData.FILMLIST_UPDATE_SERVER,
                     FilmlistUrlData.FILMLIST_UPDATE_SERVER_COLUMN_NAMES,
                     datenUrlFilmliste.arr,
@@ -271,20 +271,20 @@ public class IoWriteXml implements AutoCloseable {
         }
     }
 
-    private void xmlWriteData(String xmlName, String[] xmlSpalten, String[] datenArray, boolean newLine) {
-        final int xmlMax = datenArray.length;
+    private void xmlWriteData(String xmlName, String[] xmlArray, String[] dataArray, boolean newLine) {
+        final int xmlMax = dataArray.length;
         try {
             writer.writeStartElement(xmlName);
             if (newLine) {
                 writer.writeCharacters("\n"); // neue Zeile
             }
             for (int i = 0; i < xmlMax; ++i) {
-                if (!datenArray[i].isEmpty()) {
+                if (!dataArray[i].isEmpty()) {
                     if (newLine) {
                         writer.writeCharacters("\t"); // Tab
                     }
-                    writer.writeStartElement(xmlSpalten[i]);
-                    writer.writeCharacters(datenArray[i]);
+                    writer.writeStartElement(xmlArray[i]);
+                    writer.writeCharacters(dataArray[i]);
                     writer.writeEndElement();
                     if (newLine) {
                         writer.writeCharacters("\n"); // neue Zeile
@@ -298,12 +298,12 @@ public class IoWriteXml implements AutoCloseable {
         }
     }
 
-    private void xmlWriteConfig(String xmlName, String[][] xmlSpalten) {
+    private void xmlWriteConfig(String xmlName, String[][] xmlArray) {
         try {
             writer.writeStartElement(xmlName);
             writer.writeCharacters("\n"); // neue Zeile
 
-            for (final String[] xmlSpalte : xmlSpalten) {
+            for (final String[] xmlSpalte : xmlArray) {
                 writer.writeCharacters("\t"); // Tab
                 writer.writeStartElement(xmlSpalte[0]);
                 writer.writeCharacters(xmlSpalte[1]);

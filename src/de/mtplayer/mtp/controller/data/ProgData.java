@@ -27,9 +27,9 @@ public class ProgData extends ProgProps {
         setDownManager(false);
     }
 
-    public ProgData(String name, String programmpfad, String schalter, String restart, String downloadmanager) {
+    public ProgData(String name, String programmPath, String schalter, String restart, String downloadmanager) {
         setName(name);
-        setProgPath(programmpfad);
+        setProgPath(programmPath);
         setProgSwitch(schalter);
         setRestart(restart.equals("") ? false : Boolean.parseBoolean(restart));
         setDownManager(downloadmanager.equals("") ? false : Boolean.parseBoolean(downloadmanager));
@@ -50,8 +50,8 @@ public class ProgData extends ProgProps {
         boolean ret = false;
         if (url != null) {
             //Felder sind entweder leer oder passen
-            if (SetsPrograms.praefixTesten(getPraefix(), url, true)
-                    && SetsPrograms.praefixTesten(getSuffix(), url, false)) {
+            if (SetsPrograms.testPrefix(getPraefix(), url, true)
+                    && SetsPrograms.testPrefix(getSuffix(), url, false)) {
                 ret = true;
             }
         }

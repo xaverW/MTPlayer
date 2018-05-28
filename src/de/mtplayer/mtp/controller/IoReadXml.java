@@ -155,7 +155,7 @@ public class IoReadXml implements AutoCloseable {
                                         FilmlistUrlData.FILMLIST_UPDATE_SERVER,
                                         FilmlistUrlData.FILMLIST_UPDATE_SERVER_COLUMN_NAMES,
                                         filmlistUrlData.arr)) {
-                                    switch (filmlistUrlData.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_ART_NR]) {
+                                    switch (filmlistUrlData.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_SORT_NR]) {
                                         case FilmlistUrlData.SERVER_ART_AKT:
                                             this.progData.loadFilmlist.getDownloadUrlsFilmlisten_akt().addWithCheck(filmlistUrlData);
                                             break;

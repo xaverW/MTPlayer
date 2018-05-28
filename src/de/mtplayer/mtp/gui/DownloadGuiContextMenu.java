@@ -35,7 +35,7 @@ public class DownloadGuiContextMenu {
 
     }
 
-    public ContextMenu getContextMenue(Download download) {
+    public ContextMenu getContextMenu(Download download) {
         final ContextMenu contextMenu = new ContextMenu();
         getMenu(contextMenu, download);
         return contextMenu;
@@ -43,50 +43,50 @@ public class DownloadGuiContextMenu {
 
     private void getMenu(ContextMenu contextMenu, Download download) {
 
-        MenuItem miStarten = new MenuItem("Download starten");
-        miStarten.setOnAction(a -> downloadGuiController.starten(false));
+        MenuItem miStart = new MenuItem("Download starten");
+        miStart.setOnAction(a -> downloadGuiController.startDownload(false));
 
-        MenuItem miStoppen = new MenuItem("Download stoppen");
-        miStoppen.setOnAction(a -> downloadGuiController.stoppen(false));
+        MenuItem miStop = new MenuItem("Download stoppen");
+        miStop.setOnAction(a -> downloadGuiController.stopDownload(false));
 
         MenuItem miVorziehen = new MenuItem("Download vorziehen");
-        miVorziehen.setOnAction(a -> downloadGuiController.vorziehen());
+        miVorziehen.setOnAction(a -> downloadGuiController.preferDownload());
 
-        MenuItem miLoeschen = new MenuItem("Download zurückstellen");
-        miLoeschen.setOnAction(a -> downloadGuiController.zurueckstellen());
+        MenuItem miDelete = new MenuItem("Download zurückstellen");
+        miDelete.setOnAction(a -> downloadGuiController.moveDownloadBack());
 
-        MenuItem miDauerhaftLoeschen = new MenuItem("Download aus Liste entfernen");
-        miDauerhaftLoeschen.setOnAction(a -> downloadGuiController.loeschen());
+        MenuItem miDeletePermanent = new MenuItem("Download aus Liste entfernen");
+        miDeletePermanent.setOnAction(a -> downloadGuiController.deleteDownloads());
 
-        MenuItem miAendern = new MenuItem("Download ändern");
-        miAendern.setOnAction(a -> downloadGuiController.aendern());
+        MenuItem miChange = new MenuItem("Download ändern");
+        miChange.setOnAction(a -> downloadGuiController.changeDownload());
 
-        MenuItem miAlleStarten = new MenuItem("alle Downloads starten");
-        miAlleStarten.setOnAction(a -> downloadGuiController.starten(true /* alle */));
+        MenuItem miStartAll = new MenuItem("alle Downloads starten");
+        miStartAll.setOnAction(a -> downloadGuiController.startDownload(true /* alle */));
 
-        MenuItem miAlleStoppen = new MenuItem("alle Downloads stoppen");
-        miAlleStoppen.setOnAction(a -> downloadGuiController.stoppen(true /* alle */));
+        MenuItem miStopAll = new MenuItem("alle Downloads stoppen");
+        miStopAll.setOnAction(a -> downloadGuiController.stopDownload(true /* alle */));
 
-        MenuItem miWartendeStoppen = new MenuItem("wartende Downloads stoppen");
-        miWartendeStoppen.setOnAction(a -> downloadGuiController.wartendeStoppen());
+        MenuItem miStopWaiting = new MenuItem("wartende Downloads stoppen");
+        miStopWaiting.setOnAction(a -> downloadGuiController.stopWaitingDownloads());
 
-        MenuItem miAktualisieren = new MenuItem("Liste der Downloads aktualisieren");
-        miAktualisieren.setOnAction(e -> downloadGuiController.aktualisieren());
+        MenuItem miUpdate = new MenuItem("Liste der Downloads aktualisieren");
+        miUpdate.setOnAction(e -> downloadGuiController.update());
 
-        MenuItem miAufraeumen = new MenuItem("Liste der Downloads aufräumen");
-        miAufraeumen.setOnAction(e -> downloadGuiController.aufraeumen());
+        MenuItem miCleanUp = new MenuItem("Liste der Downloads aufräumen");
+        miCleanUp.setOnAction(e -> downloadGuiController.cleanUp());
 
         MenuItem miPlayerDownload = new MenuItem("gespeicherten Film (Datei) abspielen");
-        miPlayerDownload.setOnAction(a -> downloadGuiController.filmAbspielen());
+        miPlayerDownload.setOnAction(a -> downloadGuiController.playFilm());
 
         MenuItem miDeleteDownload = new MenuItem("gespeicherten Film (Datei) löschen");
-        miDeleteDownload.setOnAction(a -> downloadGuiController.filmDateiLoeschen());
+        miDeleteDownload.setOnAction(a -> downloadGuiController.deleteFilmFile());
 
-        MenuItem miOeffnen = new MenuItem("Zielordner öffnen");
-        miOeffnen.setOnAction(e -> downloadGuiController.openDestDir());
+        MenuItem miOpenDir = new MenuItem("Zielordner öffnen");
+        miOpenDir.setOnAction(e -> downloadGuiController.openDestDir());
 
         // Abo
-        Menu submenueAbo = new Menu("Abo");
+        Menu submenuAbo = new Menu("Abo");
         MenuItem miChangeAbo = new MenuItem("Abo ändern");
         MenuItem miDelAbo = new MenuItem("Abo löschen");
 
@@ -98,11 +98,11 @@ public class DownloadGuiContextMenu {
                     progData.aboList.changeAbo(download.getAbo()));
             miDelAbo.setOnAction(event -> progData.aboList.deleteAbo(download.getAbo()));
         }
-        submenueAbo.getItems().addAll(miChangeAbo, miDelAbo);
+        submenuAbo.getItems().addAll(miChangeAbo, miDelAbo);
 
         // MediaDB
         MenuItem miMediaDb = new MenuItem("Titel in der Mediensammlung suchen");
-        miMediaDb.setOnAction(a -> downloadGuiController.guiFilmMediensammlung());
+        miMediaDb.setOnAction(a -> downloadGuiController.guiFilmMediaCollection());
 
 
         MenuItem miPlayUrl = new MenuItem("Film (URL) abspielen");
@@ -120,15 +120,15 @@ public class DownloadGuiContextMenu {
         MenuItem resetTable = new MenuItem("Tabelle zurücksetzen");
         resetTable.setOnAction(a -> new Table().resetTable(tableView, Table.TABLE.DOWNLOAD));
 
-        contextMenu.getItems().addAll(miStarten, miStoppen,
+        contextMenu.getItems().addAll(miStart, miStop,
                 new SeparatorMenuItem(),
-                miVorziehen, miLoeschen, miDauerhaftLoeschen, miAendern,
+                miVorziehen, miDelete, miDeletePermanent, miChange,
                 new SeparatorMenuItem(),
-                miAlleStarten, miAlleStoppen, miWartendeStoppen, miAktualisieren, miAufraeumen,
+                miStartAll, miStopAll, miStopWaiting, miUpdate, miCleanUp,
                 new SeparatorMenuItem(),
-                miPlayerDownload, miDeleteDownload, miOeffnen,
+                miPlayerDownload, miDeleteDownload, miOpenDir,
                 new SeparatorMenuItem(),
-                submenueAbo,
+                submenuAbo,
                 new SeparatorMenuItem(),
                 miMediaDb, miPlayUrl, miCopyUrl, miFilmInfo,
                 new SeparatorMenuItem(),

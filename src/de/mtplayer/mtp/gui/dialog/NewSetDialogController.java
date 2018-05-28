@@ -72,11 +72,11 @@ public class NewSetDialogController extends MTDialog {
                 "für den Download und das Abspielen der Filme.");
         headerLabel.setStyle("-fx-font-size: 1.5em;");
 
-        BigButton cancelButton = new BigButton(new Icons().ICON_BUTTON_QUITT, "Nichts ändern",
+        BigButton cancelButton = new BigButton(new Icons().ICON_BUTTON_QUIT, "Nichts ändern",
                 "");
         cancelButton.setOnAction(e -> close());
 
-        BigButton addButton = new BigButton(new Icons().ICON_BUTTON_QUITT, "Neue Sets nur anfügen",
+        BigButton addButton = new BigButton(new Icons().ICON_BUTTON_QUIT, "Neue Sets nur anfügen",
                 "Die bestehenden Einstellungen werden nicht verändert.\n" +
                         "Das neue Set wird nur angefügt und muss dann\n" +
                         "erst noch in den Einstellungen aktiviert werden.\n" +
@@ -86,7 +86,7 @@ public class NewSetDialogController extends MTDialog {
             close();
         });
 
-        BigButton replaceButton = new BigButton(new Icons().ICON_BUTTON_QUITT, "Aktuelle Sets durch neue ersetzen",
+        BigButton replaceButton = new BigButton(new Icons().ICON_BUTTON_QUIT, "Aktuelle Sets durch neue ersetzen",
                 "Es werden alle Programmsets (auch eigene) gelöscht\n" +
                         "und die neuen Standardsets wieder angelegt.\n\n" +
                         "(Wenn Sie die Einstellungen nicht verändert haben\n" +
@@ -97,7 +97,7 @@ public class NewSetDialogController extends MTDialog {
         });
 
 
-        gridPane.add(new Icons().ICON_DIALOG_QUITT, 0, 0, 1, 1);
+        gridPane.add(new Icons().ICON_DIALOG_QUIT, 0, 0, 1, 1);
         gridPane.add(headerLabel, 1, 0);
         gridPane.add(cancelButton, 1, 1);
         gridPane.add(addButton, 1, 2);

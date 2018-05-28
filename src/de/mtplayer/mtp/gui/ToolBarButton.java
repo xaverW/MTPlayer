@@ -31,15 +31,15 @@ public class ToolBarButton extends Button {
     private String name = "";
     private final VBox vbox;
 
-    public ToolBarButton(VBox vbox, String name, String ttoolTip, ImageView iimageIcon) {
+    public ToolBarButton(VBox vbox, String name, String toolTip, ImageView imageIcon) {
 
         this.vbox = vbox;
         setName(name);
-        imageIcon = iimageIcon;
+        this.imageIcon = imageIcon;
 
         getStyleClass().add("btnFunction");
-        setTooltip(new Tooltip(ttoolTip));
-        setGraphic(imageIcon);
+        setTooltip(new Tooltip(toolTip));
+        setGraphic(this.imageIcon);
         this.vbox.getChildren().addAll(this);
     }
 

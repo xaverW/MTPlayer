@@ -58,17 +58,17 @@ public class HistoryData implements Comparable<HistoryData> {
 
     private static final FastDateFormat sdf_datum = FastDateFormat.getInstance("dd.MM.yyyy");
     private static final GermanStringSorter sorter = GermanStringSorter.getInstance();
-    private final static String TRENNER_2 = "  |###|  ";
-    private final static String TRENNER_1 = " |#| ";
+    private final static String SEPARATOR_1 = " |#| ";
+    private final static String SEPARATOR_2 = "  |###|  ";
 
     public String title = new String("");
     public String theme = new String("");
     public String url = new String("");
     public FilmDate date = new FilmDate();
 
-    public HistoryData(String date, String thema, String title, String url) {
+    public HistoryData(String date, String theme, String title, String url) {
         setTitle(title);
-        setTheme(thema);
+        setTheme(theme);
         setUrl(url);
         try {
             setDate(new FilmDate(sdf_datum.parse(date).getTime()));
@@ -77,17 +77,17 @@ public class HistoryData implements Comparable<HistoryData> {
         }
     }
 
-    public static String getLine(String date, String thema, String title, String url) {
+    public static String getLine(String date, String theme, String title, String url) {
         final int MAX_TITLE = 25;
-        if (thema.length() < MAX_TITLE) {
+        if (theme.length() < MAX_TITLE) {
             // nur wenn zu kurz, dann anpassen, so bleibt das Log ~lesbar
             // und Titel werden nicht abgeschnitten
-            thema = Functions.textLaenge(MAX_TITLE, thema, false /* mitte */, false /*addVorne*/);
+            theme = Functions.textLength(MAX_TITLE, theme, false /* mitte */, false /*addVorne*/);
         }
 
-        return date + TRENNER_1
-                + putzen(thema) + TRENNER_1
-                + putzen(title) + TRENNER_2
+        return date + SEPARATOR_1
+                + cleanUp(theme) + SEPARATOR_1
+                + cleanUp(title) + SEPARATOR_2
                 + url + '\n';
     }
 
@@ -95,34 +95,34 @@ public class HistoryData implements Comparable<HistoryData> {
         return getLine(getDate().toString(), getTheme(), getTitle(), getUrl());
     }
 
-    public static HistoryData getUrlAusZeile(String zeile) {
+    public static HistoryData getUrlFromLine(String line) {
         // 29.05.2014 |#| Abendschau                |#| Patenkind trifft Groß                     |###|  http://cdn-storage.br.de/iLCpbHJGNLT6NK9HsLo6s61luK4C_2rc5U1S/_-OS/5-8y9-NP/5bb33365-038d-46f7-914b-eb83fab91448_E.mp4
-        String url = "", thema = "", titel = "", datum = "";
+        String url = "", theme = "", title = "", date = "";
         int a1;
         try {
-            if (zeile.contains(TRENNER_2)) {
+            if (line.contains(SEPARATOR_2)) {
                 //neues Logfile-Format
-                a1 = zeile.lastIndexOf(TRENNER_2);
-                a1 += TRENNER_2.length();
-                url = zeile.substring(a1).trim();
+                a1 = line.lastIndexOf(SEPARATOR_2);
+                a1 += SEPARATOR_2.length();
+                url = line.substring(a1).trim();
                 // titel
-                titel = zeile.substring(zeile.lastIndexOf(TRENNER_1) + TRENNER_1.length(), zeile.lastIndexOf(TRENNER_2)).trim();
-                datum = zeile.substring(0, zeile.indexOf(TRENNER_1)).trim();
-                thema = zeile.substring(zeile.indexOf(TRENNER_1) + TRENNER_1.length(), zeile.lastIndexOf(TRENNER_1)).trim();
+                title = line.substring(line.lastIndexOf(SEPARATOR_1) + SEPARATOR_1.length(), line.lastIndexOf(SEPARATOR_2)).trim();
+                date = line.substring(0, line.indexOf(SEPARATOR_1)).trim();
+                theme = line.substring(line.indexOf(SEPARATOR_1) + SEPARATOR_1.length(), line.lastIndexOf(SEPARATOR_1)).trim();
             } else {
-                url = zeile;
+                url = line;
             }
         } catch (final Exception ex) {
             PLog.errorLog(398853224, ex);
         }
-        return new HistoryData(datum, thema, titel, url);
+        return new HistoryData(date, theme, title, url);
     }
 
-    private static String putzen(String s) {
+    private static String cleanUp(String s) {
         s = s.replace("\n", "");
         s = s.replace("|", "");
-        s = s.replace(TRENNER_1, "");
-        s = s.replace(TRENNER_2, "");
+        s = s.replace(SEPARATOR_1, "");
+        s = s.replace(SEPARATOR_2, "");
         return s;
     }
 

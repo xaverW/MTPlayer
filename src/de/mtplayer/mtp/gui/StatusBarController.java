@@ -74,7 +74,7 @@ public class StatusBarController extends AnchorPane {
 
     public enum StatusbarIndex {
 
-        NONE, FILME, DOWNLOAD, ABO
+        NONE, FILM, DOWNLOAD, ABO
     }
 
     private StatusbarIndex statusbarIndex = StatusbarIndex.NONE;
@@ -82,7 +82,7 @@ public class StatusBarController extends AnchorPane {
 
     private final ProgData progData;
     private boolean stopTimer = false;
-    private static final String TRENNER = "  ||  ";
+    private static final String SEPARATOR = "  ||  ";
 
     public StatusBarController(ProgData progData) {
         this.progData = progData;
@@ -211,9 +211,9 @@ public class StatusBarController extends AnchorPane {
         }
 
         switch (statusbarIndex) {
-            case FILME:
+            case FILM:
                 filmPane.toFront();
-                setInfoFilme();
+                setInfoFilm();
                 setTextForRightDisplay();
                 break;
             case DOWNLOAD:
@@ -247,7 +247,7 @@ public class StatusBarController extends AnchorPane {
         lblLeftNone.setText("Anzahl Filme: " + anzAll);
     }
 
-    private void setInfoFilme() {
+    private void setInfoFilm() {
         String textLinks;
         final int gesamt = progData.filmlist.size();
         final int anzListe = progData.filmGuiController.getFilmCount();
@@ -275,14 +275,14 @@ public class StatusBarController extends AnchorPane {
         }
         // laufende Programme
         if (runs == 1) {
-            textLinks += TRENNER;
+            textLinks += SEPARATOR;
             textLinks += (runs + " laufender Film");
         } else if (runs > 1) {
-            textLinks += TRENNER;
+            textLinks += SEPARATOR;
             textLinks += (runs + " laufende Filme");
         }
         // auch die Downloads anzeigen
-        textLinks += TRENNER;
+        textLinks += SEPARATOR;
         textLinks += getInfoTextDownloads(false);
         lblLeftFilm.setText(textLinks);
 
@@ -316,7 +316,7 @@ public class StatusBarController extends AnchorPane {
         } else {
             textLinks = gesamt + " Abos";
         }
-        textLinks += TRENNER + ein + " eingeschaltet, " + aus + " ausgeschaltet";
+        textLinks += SEPARATOR + ein + " eingeschaltet, " + aus + " ausgeschaltet";
 
         lblLeftAbo.setText(textLinks);
 
@@ -329,7 +329,7 @@ public class StatusBarController extends AnchorPane {
         String textLinks;
         // Text links: Zeilen Tabelle
         // nicht gestarted, laufen, fertig OK, fertig fehler
-        final int[] starts = progData.downloadList.getDownload_infosAll().downloadStarts;
+        final int[] starts = progData.downloadList.getDownloadInfoAll().downloadStarts;
         final int anz = progData.downloadList.size();
         final int diff = anz - starts[0];
 
@@ -352,7 +352,7 @@ public class StatusBarController extends AnchorPane {
             } else if (diff > 1) {
                 textLinks += " (" + diff + " zurückgestellt)";
             }
-            textLinks += TRENNER;
+            textLinks += SEPARATOR;
             if (starts[1] == 1) {
                 textLinks += "1 Abo, ";
             } else {
@@ -363,7 +363,7 @@ public class StatusBarController extends AnchorPane {
             } else {
                 textLinks += starts[2] + " Downloads";
             }
-            textLinks += TRENNER;
+            textLinks += SEPARATOR;
         } else if (print) {
             textLinks += ": ";
         }
@@ -376,7 +376,7 @@ public class StatusBarController extends AnchorPane {
             }
 
             if (starts[4] > 0) {
-                textLinks += " (" + progData.downloadList.getDownload_infosAll().bandwidthStr + ')';
+                textLinks += " (" + progData.downloadList.getDownloadInfoAll().bandwidthStr + ')';
             }
 
             if (starts[3] == 1) {
@@ -409,24 +409,24 @@ public class StatusBarController extends AnchorPane {
         strText += progData.filmlist.genDate();
         strText += " Uhr  ";
 
-        final int sekunden = progData.filmlist.getAge();
+        final int second = progData.filmlist.getAge();
 
-        if (sekunden != 0) {
+        if (second != 0) {
             strText += "||  Alter: ";
-            final int minuten = sekunden / 60;
-            String strSekunde = String.valueOf(sekunden % 60);
-            String strMinute = String.valueOf(minuten % 60);
-            String strStunde = String.valueOf(minuten / 60);
-            if (strSekunde.length() < 2) {
-                strSekunde = '0' + strSekunde;
+            final int minute = second / 60;
+            String strSecond = String.valueOf(second % 60);
+            String strMinute = String.valueOf(minute % 60);
+            String strHour = String.valueOf(minute / 60);
+            if (strSecond.length() < 2) {
+                strSecond = '0' + strSecond;
             }
             if (strMinute.length() < 2) {
                 strMinute = '0' + strMinute;
             }
-            if (strStunde.length() < 2) {
-                strStunde = '0' + strStunde;
+            if (strHour.length() < 2) {
+                strHour = '0' + strHour;
             }
-            strText += strStunde + ':' + strMinute + ':' + strSekunde + ' ';
+            strText += strHour + ':' + strMinute + ':' + strSecond + ' ';
         }
         // Infopanel setzen
         lblRightFilm.setText(strText);

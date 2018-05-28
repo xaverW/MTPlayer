@@ -69,21 +69,21 @@ public class DownloadContinueDialogController extends MTDialog {
     private final ProgData progData;
     private final Download download;
     private DownloadState.ContinueDownload result = DownloadState.ContinueDownload.CANCEL_DOWNLOAD;
-    private final boolean direkterDownload;
+    private final boolean directDownload;
     private String oldPathFile;
 
     private Timeline timeline = null;
     private Integer timeSeconds = ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECOND.getInt();
 
-    public DownloadContinueDialogController(ProgData progData, Download download, boolean direkterDownload) {
+    public DownloadContinueDialogController(ProgData progData, Download download, boolean directDownload) {
         super("/de/mtplayer/mtp/gui/dialog/DownloadContinueDialog.fxml",
                 ProgConfig.DOWNLOAD_DIALOG_CONTINUE_SIZE,
                 "Download weiterführen", true);
 
         this.progData = progData;
         this.download = download;
-        this.direkterDownload = direkterDownload;
-        this.oldPathFile = download.getZielPfadDatei();
+        this.directDownload = directDownload;
+        this.oldPathFile = download.getDestPathFile();
 
         init(true);
 
@@ -99,10 +99,10 @@ public class DownloadContinueDialogController extends MTDialog {
         lblFilmTitle.setStyle("-fx-font-weight: bold;");
         lblFilmTitle.setText(download.getTitle());
 
-        btnContinueDownload.setVisible(direkterDownload);
-        btnContinueDownload.setManaged(direkterDownload);
+        btnContinueDownload.setVisible(directDownload);
+        btnContinueDownload.setManaged(directDownload);
 
-        if (!direkterDownload && !checkAufrufBauen()) {
+        if (!directDownload && !checkDownload()) {
             // nur für Downloads mit Programm
             txtFileName.setDisable(true);
             cbPath.setDisable(true);
@@ -119,7 +119,7 @@ public class DownloadContinueDialogController extends MTDialog {
 
     }
 
-    private boolean checkAufrufBauen() {
+    private boolean checkDownload() {
         return (download.getpSet() != null && download.getFilm() != null);
     }
 
@@ -129,7 +129,7 @@ public class DownloadContinueDialogController extends MTDialog {
         public void handle(Event event) {
             timeSeconds--;
             if (timeSeconds > 0) {
-                if (!direkterDownload) {
+                if (!directDownload) {
                     btnRestartDownload.setText("neu Starten in " + timeSeconds + " s");
                 } else {
                     btnContinueDownload.setText("Weiterführen in " + timeSeconds + " s");
@@ -137,7 +137,7 @@ public class DownloadContinueDialogController extends MTDialog {
             } else {
                 timeline.stop();
                 result = DownloadState.ContinueDownload.CONTINUE_DOWNLOAD;
-                beenden();
+                quit();
             }
         }
     }
@@ -155,13 +155,13 @@ public class DownloadContinueDialogController extends MTDialog {
     }
 
 
-    private void beenden() {
+    private void quit() {
         close();
     }
 
 
     private void setButtonText() {
-        if (!direkterDownload) {
+        if (!directDownload) {
             btnRestartDownload.setText("neu Starten");
         } else {
             btnContinueDownload.setText("Weiterführen");
@@ -175,29 +175,29 @@ public class DownloadContinueDialogController extends MTDialog {
 
         btnCancel.setOnAction(event -> {
             result = DownloadState.ContinueDownload.CANCEL_DOWNLOAD;
-            beenden();
+            quit();
         });
 
         btnRestartDownload.setOnAction(event -> {
             result = DownloadState.ContinueDownload.RESTART_DOWNLOAD;
             download.setPathName(cbPath.getSelectionModel().getSelectedItem(), txtFileName.getText());
-            beenden();
+            quit();
         });
         setButtonText();
         btnContinueDownload.setOnAction(event -> {
             result = DownloadState.ContinueDownload.CONTINUE_DOWNLOAD;
-            beenden();
+            quit();
         });
     }
 
     public boolean isNewName() {
         switch (Functions.getOs()) {
             case LINUX:
-                return !oldPathFile.equals(download.getZielPfadDatei());
+                return !oldPathFile.equals(download.getDestPathFile());
             case WIN32:
             case WIN64:
             default:
-                return !oldPathFile.equalsIgnoreCase(download.getZielPfadDatei());
+                return !oldPathFile.equalsIgnoreCase(download.getDestPathFile());
         }
     }
 
@@ -206,10 +206,10 @@ public class DownloadContinueDialogController extends MTDialog {
         final String[] p = ProgConfig.DOWNLOAD_DIALOG_PATH_SAVING.get().split("<>");
         cbPath.getItems().addAll(p);
 
-        if (download.getZielPfad().isEmpty()) {
+        if (download.getDestPath().isEmpty()) {
             cbPath.getSelectionModel().selectFirst();
         } else {
-            cbPath.getSelectionModel().select(download.getZielPfad());
+            cbPath.getSelectionModel().select(download.getDestPath());
         }
 
         cbPath.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -219,11 +219,11 @@ public class DownloadContinueDialogController extends MTDialog {
             DownloadTools.calculateAndCheckDiskSpace(download, cbPath.getSelectionModel().getSelectedItem(), lblSizeFree);
         });
 
-        txtFileName.setText(download.getZielDateiname());
+        txtFileName.setText(download.getDestFileName());
         txtFileName.textProperty().addListener((observable, oldValue, newValue) -> {
             stopCounter();
 
-            if (!txtFileName.getText().equals(FileNameUtils.checkDateiname(txtFileName.getText(), false /* pfad */))) {
+            if (!txtFileName.getText().equals(FileNameUtils.checkFileName(txtFileName.getText(), false /* pfad */))) {
                 txtFileName.setStyle(MTColor.DOWNLOAD_NAME_ERROR.getCssBackground());
             } else {
                 txtFileName.setStyle("");

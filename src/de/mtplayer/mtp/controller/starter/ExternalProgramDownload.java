@@ -42,21 +42,21 @@ public class ExternalProgramDownload extends Thread {
     private final Download download;
     private File file;
     private String exMessage = "";
-    private boolean retAbbrechen;
-    private boolean dialogAbbrechenIsVis;
+    private boolean retAbort;
+    private boolean dialogAbortIsVis;
 
     private final int stat_start = 0;
-    private final int stat_laufen = 1;
+    private final int stat_running = 1;
     private final int stat_restart = 3;
-    private final int stat_pruefen = 4;
+    private final int stat_checking = 4;
 
     // ab hier ist schluss
-    private final int stat_fertig_ok = 10;
-    private final int stat_fertig_fehler = 11;
-    private final int stat_fertig_abbruch = 12;
-    private final int stat_ende = 99;
+    private final int stat_finished_ok = 10;
+    private final int stat_finished_error = 11;
+    private final int stat_finished_abort = 12;
+    private final int stat_end = 99;
 
-    private long filesize = -1;
+    private long fileSize = -1;
 
     public ExternalProgramDownload(ProgData progData, Download d) {
         super();
@@ -65,16 +65,16 @@ public class ExternalProgramDownload extends Thread {
         this.progData = progData;
         download = d;
         download.setStateStartedRun();
-        file = new File(download.getZielPfadDatei());
+        file = new File(download.getDestPathFile());
         try {
-            if (download.isInfodatei()) {
+            if (download.getInfoFile()) {
                 MTInfoFile.writeInfoFile(download);
             }
             if (download.isSubtitle()) {
                 new MTSubtitle().writeSubtitle(download);
             }
 
-            Files.createDirectories(Paths.get(download.getZielPfad()));
+            Files.createDirectories(Paths.get(download.getDestPath()));
         } catch (final IOException ignored) {
         } catch (final Exception ex) {
             PLog.errorLog(469365281, ex);
@@ -91,7 +91,7 @@ public class ExternalProgramDownload extends Thread {
         }
 
         try {
-            while (stat < stat_ende) {
+            while (stat < stat_end) {
                 stat = downloadLoop(stat);
             }
         } catch (final Exception ex) {
@@ -113,7 +113,7 @@ public class ExternalProgramDownload extends Thread {
                 stat = startDownload();
                 break;
 
-            case stat_laufen:
+            case stat_running:
                 // hier läuft der Download bis zum Abbruch oder Ende
                 stat = runDownload();
                 break;
@@ -122,22 +122,22 @@ public class ExternalProgramDownload extends Thread {
                 stat = restartDownload();
                 break;
 
-            case stat_pruefen:
+            case stat_checking:
                 stat = checkDownload();
                 break;
 
-            case stat_fertig_fehler:
+            case stat_finished_error:
                 download.setStateError();
-                stat = stat_ende;
+                stat = stat_end;
                 break;
 
-            case stat_fertig_ok:
+            case stat_finished_ok:
                 download.setStateFinished();
-                stat = stat_ende;
+                stat = stat_end;
                 break;
 
-            case stat_fertig_abbruch:
-                stat = stat_ende;
+            case stat_finished_abort:
+                stat = stat_end;
                 break;
         }
 
@@ -150,14 +150,14 @@ public class ExternalProgramDownload extends Thread {
 
         int retStat;
         download.getStart().setStartCounter(download.getStart().getStartCounter() + 1);
-        startmeldung(download);
+        startMsg(download);
         final RuntimeExec runtimeExec = new RuntimeExec(download);
         download.getStart().setProcess(runtimeExec.exec(true /* log */));
         if (download.getStart().getProcess() != null) {
-            if (download.isProgrammDownloadmanager()) {
-                retStat = stat_fertig_ok;
+            if (download.getProgramDownloadmanager()) {
+                retStat = stat_finished_ok;
             } else {
-                retStat = stat_laufen;
+                retStat = stat_running;
             }
         } else {
             retStat = stat_restart;
@@ -168,11 +168,11 @@ public class ExternalProgramDownload extends Thread {
     private int runDownload() {
         // hier läuft der Download bis zum Abbruch oder Ende
 
-        int retStatus = stat_laufen;
+        int retStatus = stat_running;
         try {
             if (download.isStateStoped()) {
                 // abbrechen
-                retStatus = stat_fertig_abbruch;
+                retStatus = stat_finished_abort;
                 if (download.getStart().getProcess() != null) {
                     download.getStart().getProcess().destroy();
                 }
@@ -181,7 +181,7 @@ public class ExternalProgramDownload extends Thread {
                 if (exitV != 0) {
                     retStatus = stat_restart;
                 } else {
-                    retStatus = stat_pruefen;
+                    retStatus = stat_checking;
                 }
             }
         } catch (final Exception ex) {
@@ -195,61 +195,61 @@ public class ExternalProgramDownload extends Thread {
 
     private int restartDownload() {
         int retStatus = stat_restart;
-        if (!download.isProgrammRestart()) {
+        if (!download.getProgramRestart()) {
             // dann wars das
-            retStatus = stat_fertig_fehler;
-        } else if (filesize == -1) {
+            retStatus = stat_finished_error;
+        } else if (fileSize == -1) {
             // noch nichts geladen
             deleteIfEmpty(file);
             if (file.exists()) {
                 // dann bestehende Datei weitermachen
-                filesize = file.length();
+                fileSize = file.length();
                 retStatus = stat_start;
             } else {
                 // counter prüfen und bei einem Maxwert checkIfCancelDownload, sonst endlos
-                if (download.getStart().getStartCounter() < DownloadInfos.STARTCOUNTER_MAX) {
+                if (download.getStart().getStartCounter() < DownloadInfos.START_COUNTER_MAX) {
                     // dann nochmal von vorne
                     retStatus = stat_start;
                 } else {
                     // dann wars das
-                    retStatus = stat_fertig_fehler;
+                    retStatus = stat_finished_error;
                 }
             }
         } else {
             // jetzt muss das File wachsen, sonst kein Restart
             if (!file.exists()) {
                 // dann wars das
-                retStatus = stat_fertig_fehler;
-            } else if (file.length() > filesize) {
+                retStatus = stat_finished_error;
+            } else if (file.length() > fileSize) {
                 // nur weitermachen wenn die Datei tasächlich wächst
-                filesize = file.length();
+                fileSize = file.length();
                 retStatus = stat_start;
             } else {
                 // dann wars das
-                retStatus = stat_fertig_fehler;
+                retStatus = stat_finished_error;
             }
         }
         return retStatus;
     }
 
     private int checkDownload() {
-        int retStatus = stat_pruefen;
+        int retStatus = stat_checking;
 
-        if (download.getSource().equals(DownloadInfos.SRC_BUTTON) || download.isProgrammDownloadmanager()) {
+        if (download.getSource().equals(DownloadInfos.SRC_BUTTON) || download.getProgramDownloadmanager()) {
             // für die direkten Starts mit dem Button und die remote downloads wars das dann
-            retStatus = stat_fertig_ok;
-        } else if (pruefen(progData, download)) {
+            retStatus = stat_finished_ok;
+        } else if (check(progData, download)) {
             // fertig und OK
-            retStatus = stat_fertig_ok;
+            retStatus = stat_finished_ok;
         } else {
             // fertig und fehlerhaft
-            retStatus = stat_fertig_fehler;
+            retStatus = stat_finished_error;
         }
         return retStatus;
     }
 
     private boolean checkIfCancelDownload() {
-        if (download.isProgrammDownloadmanager()) {
+        if (download.getProgramDownloadmanager()) {
             // da kümmert sich ein anderes Programm darum
             return false;
         }
@@ -258,19 +258,19 @@ public class ExternalProgramDownload extends Thread {
             return false;
         }
 
-        dialogAbbrechenIsVis = true;
-        retAbbrechen = true;
+        dialogAbortIsVis = true;
+        retAbort = true;
         Platform.runLater(() -> {
-            retAbbrechen = checkCancel();
-            dialogAbbrechenIsVis = false;
+            retAbort = checkCancel();
+            dialogAbortIsVis = false;
         });
-        while (dialogAbbrechenIsVis) {
+        while (dialogAbortIsVis) {
             try {
                 wait(100);
             } catch (final Exception ignored) {
             }
         }
-        return retAbbrechen;
+        return retAbort;
     }
 
     private boolean checkCancel() {
@@ -293,17 +293,17 @@ public class ExternalProgramDownload extends Thread {
                             Files.deleteIfExists(file.toPath());
                         } catch (final Exception ex) {
                             // kann nicht gelöscht werden, evtl. klappt ja das Überschreiben
-                            PLog.errorLog(945120398, ex, "file exists: " + download.getZielPfadDatei());
+                            PLog.errorLog(945120398, ex, "file exists: " + download.getDestPathFile());
                         }
                     } else {
                         // wenn Name geändert den Programmaufruf nochmal mit dem geänderten Dateinamen bauen
-                        download.aufrufBauen();
+                        download.makeProgParameter();
                         try {
-                            Files.createDirectories(Paths.get(download.getZielPfad()));
+                            Files.createDirectories(Paths.get(download.getDestPath()));
                         } catch (final IOException ignored) {
                         }
                     }
-                    file = new File(download.getZielPfadDatei());
+                    file = new File(download.getDestPathFile());
                     break;
 
             }

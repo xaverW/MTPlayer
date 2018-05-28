@@ -110,7 +110,7 @@ public class DownloadAddDialogController extends MTDialog {
 
     private boolean ok = false;
 
-    private boolean nameGeaendert = false;
+    private boolean nameChanged = false;
 
     private final String textHd = "HD";
     private final String textHeight = "hohe Auflösung";
@@ -121,7 +121,7 @@ public class DownloadAddDialogController extends MTDialog {
     private final ProgData progData;
     final private SetList setList;
     private SetData psetData;
-    private String filterAufloesung;
+    private String filterResolution;
     final String[] storedPath = ProgConfig.DOWNLOAD_DIALOG_PATH_SAVING.get().split("<>");
 
 
@@ -131,11 +131,11 @@ public class DownloadAddDialogController extends MTDialog {
     DownInfo downInfo[];
 
     class DownInfo {
-        private String dateiGroesse_HD = "";
-        private String dateiGroesse_Hoch = "";
-        private String dateiGroesse_Klein = "";
+        private String fileSize_HD = "";
+        private String fileSize_high = "";
+        private String fileSize_small = "";
 
-        private String aufloesung = FilmXml.RESOLUTION_HD;
+        private String resolution = FilmXml.RESOLUTION_HD;
         private boolean info, subtitle, subDisable = false;
 
         private Film film;
@@ -146,27 +146,27 @@ public class DownloadAddDialogController extends MTDialog {
         private String name = "";
 
 
-        private void setAufloesung(String aufloesung) {
+        private void setResolution(String resolution) {
             if (tglAll.isSelected()) {
                 Arrays.stream(downInfo).forEach(d -> {
-                    d.aufloesung = aufloesung;
+                    d.resolution = resolution;
 
-                    switch (aufloesung) {
+                    switch (resolution) {
                         case FilmXml.RESOLUTION_HD:
-                            if (d.dateiGroesse_HD.isEmpty()) {
-                                d.aufloesung = FilmXml.RESOLUTION_NORMAL;
+                            if (d.fileSize_HD.isEmpty()) {
+                                d.resolution = FilmXml.RESOLUTION_NORMAL;
                             }
                             break;
                         case FilmXml.RESOLUTION_SMALL:
-                            if (d.dateiGroesse_Klein.isEmpty()) {
-                                d.aufloesung = FilmXml.RESOLUTION_NORMAL;
+                            if (d.fileSize_small.isEmpty()) {
+                                d.resolution = FilmXml.RESOLUTION_NORMAL;
                             }
                             break;
                     }
 
                 });
             } else {
-                this.aufloesung = aufloesung;
+                this.resolution = resolution;
             }
         }
 
@@ -204,7 +204,7 @@ public class DownloadAddDialogController extends MTDialog {
 
     }
 
-    public DownloadAddDialogController(ProgData progData, ArrayList<Film> films, SetData psetData, String filterAufloesung) {
+    public DownloadAddDialogController(ProgData progData, ArrayList<Film> films, SetData psetData, String filterResolution) {
         super("/de/mtplayer/mtp/gui/dialog/DownloadAddDialog.fxml",
                 films.size() > 1 ? ProgConfig.DOWNLOAD_DIALOG_ADD_MORE_SIZE : ProgConfig.DOWNLOAD_DIALOG_ADD_SIZE,
                 "Download anlegen", true);
@@ -212,9 +212,9 @@ public class DownloadAddDialogController extends MTDialog {
         this.progData = progData;
         this.films = films;
         this.psetData = psetData;
-        this.filterAufloesung = filterAufloesung;
+        this.filterResolution = filterResolution;
 
-        setList = progData.setList.getListeSpeichern();
+        setList = progData.setList.getListSave();
 
         init(true);
 
@@ -226,22 +226,22 @@ public class DownloadAddDialogController extends MTDialog {
         vBoxAllDownloads.setStyle("-fx-background-color: gainsboro;");
         hBoxSize.setStyle("-fx-background-color: gainsboro;");
 
-        if (progData.setList.getListeSpeichern().isEmpty()) {
+        if (progData.setList.getListSave().isEmpty()) {
             // Satz mit x, war wohl nix
             ok = false;
             initCancel();
-            beenden();
+            quitt();
             return;
         }
         if (psetData == null) {
-            psetData = progData.setList.getListeSpeichern().get(0);
+            psetData = progData.setList.getListSave().get(0);
         }
 
         if (films.size() == 0) {
             // Satz mit x, war wohl nix
             ok = false;
             initCancel();
-            beenden();
+            quitt();
             return;
 
         } else if (films.size() == 1) {
@@ -302,7 +302,7 @@ public class DownloadAddDialogController extends MTDialog {
         rbHd.setDisable(!downInfo[filmNr].film.isHd());
         rbSmall.setDisable(!downInfo[filmNr].film.isSmall());
 
-        switch (downInfo[filmNr].aufloesung) {
+        switch (downInfo[filmNr].resolution) {
             case FilmXml.RESOLUTION_HD:
                 rbHd.setSelected(true);
                 break;
@@ -315,20 +315,20 @@ public class DownloadAddDialogController extends MTDialog {
                 break;
         }
 
-        if (!rbHd.isDisable() && !downInfo[filmNr].dateiGroesse_HD.isEmpty()) {
-            rbHd.setText(textHd + "   [ " + downInfo[filmNr].dateiGroesse_HD + " MB ]");
+        if (!rbHd.isDisable() && !downInfo[filmNr].fileSize_HD.isEmpty()) {
+            rbHd.setText(textHd + "   [ " + downInfo[filmNr].fileSize_HD + " MB ]");
         } else {
             rbHd.setText(textHd);
         }
 
-        if (!downInfo[filmNr].dateiGroesse_Hoch.isEmpty()) {
-            rbHigh.setText(textHeight + "   [ " + downInfo[filmNr].dateiGroesse_Hoch + " MB ]");
+        if (!downInfo[filmNr].fileSize_high.isEmpty()) {
+            rbHigh.setText(textHeight + "   [ " + downInfo[filmNr].fileSize_high + " MB ]");
         } else {
             rbHigh.setText(textHeight);
         }
 
-        if (!rbSmall.isDisable() && !downInfo[filmNr].dateiGroesse_Klein.isEmpty()) {
-            rbSmall.setText(textLow + "   [ " + downInfo[filmNr].dateiGroesse_Klein + " MB ]");
+        if (!rbSmall.isDisable() && !downInfo[filmNr].fileSize_small.isEmpty()) {
+            rbSmall.setText(textLow + "   [ " + downInfo[filmNr].fileSize_small + " MB ]");
         } else {
             rbSmall.setText(textLow);
         }
@@ -363,8 +363,8 @@ public class DownloadAddDialogController extends MTDialog {
 
         downInfo.download = new Download(psetData, downInfo.film, DownloadInfos.SRC_DOWNLOAD, null, "", "", FilmXml.RESOLUTION_NORMAL);
 
-        downInfo.path = downInfo.download.getZielPfad();
-        downInfo.name = downInfo.download.getZielDateiname();
+        downInfo.path = downInfo.download.getDestPath();
+        downInfo.name = downInfo.download.getDestFileName();
 
         downInfo.info = downInfo.psetData.isInfoFile();
 
@@ -380,14 +380,14 @@ public class DownloadAddDialogController extends MTDialog {
         // die Werte passend zum Film setzen
         if (downInfo.psetData.getResolution().equals(FilmXml.RESOLUTION_HD)
                 && downInfo.film.isHd()) {
-            downInfo.aufloesung = FilmXml.RESOLUTION_HD;
+            downInfo.resolution = FilmXml.RESOLUTION_HD;
 
         } else if (downInfo.psetData.getResolution().equals(FilmXml.RESOLUTION_SMALL)
                 && downInfo.film.isSmall()) {
-            downInfo.aufloesung = FilmXml.RESOLUTION_SMALL;
+            downInfo.resolution = FilmXml.RESOLUTION_SMALL;
 
         } else {
-            downInfo.aufloesung = FilmXml.RESOLUTION_NORMAL;
+            downInfo.resolution = FilmXml.RESOLUTION_NORMAL;
         }
 
     }
@@ -410,7 +410,7 @@ public class DownloadAddDialogController extends MTDialog {
                 if (!d.path.substring(d.path.length() - 1).equals(File.separator)) {
                     d.path += File.separator;
                 }
-                if (SetsPrograms.checkPfadBeschreibbar(d.path)) {
+                if (SetsPrograms.checkPathWritable(d.path)) {
                     ok = true;
                 } else {
                     new MTAlert().showErrorAlert("Fehlerhafter Pfad/Name!", "Fehlerhafter Pfad/Name!",
@@ -421,14 +421,14 @@ public class DownloadAddDialogController extends MTDialog {
         return ok;
     }
 
-    private void beenden() {
+    private void quitt() {
 
         if (!ok) {
             close();
             return;
         }
 
-        saveComboPfad(cbPath);
+        saveComboPath(cbPath);
         for (DownInfo d : downInfo) {
             // jetzt wird mit den angegebenen Pfaden gearbeitet
             Download download = new Download(d.psetData,
@@ -437,10 +437,10 @@ public class DownloadAddDialogController extends MTDialog {
                     null,
                     d.name,
                     d.path,
-                    d.aufloesung);
+                    d.resolution);
 
             download.setSizeDownloadFromWeb(getFilmSize(d));
-            download.setInfodatei(d.info);
+            download.setInfoFile(d.info);
             download.setSubtitle(d.subtitle);
 
             progData.downloadList.addWithNr(download); // todo -> als Liste starten
@@ -454,45 +454,45 @@ public class DownloadAddDialogController extends MTDialog {
     }
 
     private String getFilmSize(DownInfo downInfo) {
-        switch (downInfo.aufloesung) {
+        switch (downInfo.resolution) {
             case FilmXml.RESOLUTION_HD:
-                return downInfo.dateiGroesse_HD;
+                return downInfo.fileSize_HD;
 
             case FilmXml.RESOLUTION_SMALL:
-                return downInfo.dateiGroesse_Klein;
+                return downInfo.fileSize_small;
 
             case FilmXml.RESOLUTION_NORMAL:
             default:
-                return downInfo.dateiGroesse_Hoch;
+                return downInfo.fileSize_high;
 
         }
     }
 
 
-    private void saveComboPfad(ComboBox<String> jcb) {
-        final ArrayList<String> pfade = new ArrayList<>(jcb.getItems());
+    private void saveComboPath(ComboBox<String> jcb) {
+        final ArrayList<String> path = new ArrayList<>(jcb.getItems());
 
         for (DownInfo d : downInfo) {
-            if (pfade.contains(d.path)) {
-                pfade.remove(d.path);
+            if (path.contains(d.path)) {
+                path.remove(d.path);
             }
-            pfade.add(0, d.path);
+            path.add(0, d.path);
         }
 
-        final ArrayList<String> pfade2 = new ArrayList<>();
-        pfade.stream().forEach(s1 -> {
+        final ArrayList<String> path2 = new ArrayList<>();
+        path.stream().forEach(s1 -> {
             // um doppelte auszusortieren
-            if (!pfade2.contains(s1)) {
-                pfade2.add(s1);
+            if (!path2.contains(s1)) {
+                path2.add(s1);
             }
         });
 
         String s = "";
-        if (!pfade2.isEmpty()) {
-            s = pfade2.get(0);
-            for (int i = 1; i < ProgConst.MAX_PFADE_DIALOG_DOWNLOAD && i < pfade2.size(); ++i) {
-                if (!pfade2.get(i).isEmpty()) {
-                    s += "<>" + pfade2.get(i);
+        if (!path2.isEmpty()) {
+            s = path2.get(0);
+            for (int i = 1; i < ProgConst.MAX_PFADE_DIALOG_DOWNLOAD && i < path2.size(); ++i) {
+                if (!path2.get(i).isEmpty()) {
+                    s += "<>" + path2.get(i);
                 }
             }
         }
@@ -546,21 +546,21 @@ public class DownloadAddDialogController extends MTDialog {
             } else {
 
                 int size;
-                if (!downInfo[filmNr].dateiGroesse_HD.isEmpty()) {
-                    size = Integer.parseInt(downInfo[filmNr].dateiGroesse_HD);
+                if (!downInfo[filmNr].fileSize_HD.isEmpty()) {
+                    size = Integer.parseInt(downInfo[filmNr].fileSize_HD);
                     if (size > usableSpace) {
                         noSize = ", nicht genug für HD";
 
                     }
                 }
-                if (!downInfo[filmNr].dateiGroesse_Hoch.isEmpty()) {
-                    size = Integer.parseInt(downInfo[filmNr].dateiGroesse_Hoch);
+                if (!downInfo[filmNr].fileSize_high.isEmpty()) {
+                    size = Integer.parseInt(downInfo[filmNr].fileSize_high);
                     if (size > usableSpace) {
                         noSize = ", nicht genug für \"hoch\"";
                     }
                 }
-                if (!downInfo[filmNr].dateiGroesse_Klein.isEmpty()) {
-                    size = Integer.parseInt(downInfo[filmNr].dateiGroesse_Klein);
+                if (!downInfo[filmNr].fileSize_small.isEmpty()) {
+                    size = Integer.parseInt(downInfo[filmNr].fileSize_small);
                     if (size > usableSpace) {
                         noSize = ", nicht genug für \"klein\"";
                     }
@@ -602,17 +602,17 @@ public class DownloadAddDialogController extends MTDialog {
             downInfo[i].download = new Download(psetData, downInfo[i].film, DownloadInfos.SRC_DOWNLOAD,
                     null, "", aktPath, "");
 
-            downInfo[i].path = downInfo[i].download.getZielPfad();
-            downInfo[i].name = downInfo[i].download.getZielDateiname();
+            downInfo[i].path = downInfo[i].download.getDestPath();
+            downInfo[i].name = downInfo[i].download.getDestFileName();
 
-            downInfo[i].dateiGroesse_HD = downInfo[i].film.isHd() ?
-                    FilmTools.getSizeFromWeb(downInfo[i].film, downInfo[i].film.getUrlFuerAufloesung(FilmXml.RESOLUTION_HD)) : "";
+            downInfo[i].fileSize_HD = downInfo[i].film.isHd() ?
+                    FilmTools.getSizeFromWeb(downInfo[i].film, downInfo[i].film.getUrlForResolution(FilmXml.RESOLUTION_HD)) : "";
 
-            downInfo[i].dateiGroesse_Hoch = FilmTools.getSizeFromWeb(downInfo[i].film,
-                    downInfo[i].film.getUrlFuerAufloesung(Film.RESOLUTION_NORMAL));
+            downInfo[i].fileSize_high = FilmTools.getSizeFromWeb(downInfo[i].film,
+                    downInfo[i].film.getUrlForResolution(Film.RESOLUTION_NORMAL));
 
-            downInfo[i].dateiGroesse_Klein = downInfo[i].film.isSmall() ?
-                    FilmTools.getSizeFromWeb(downInfo[i].film, downInfo[i].film.getUrlFuerAufloesung(FilmXml.RESOLUTION_SMALL)) : "";
+            downInfo[i].fileSize_small = downInfo[i].film.isSmall() ?
+                    FilmTools.getSizeFromWeb(downInfo[i].film, downInfo[i].film.getUrlForResolution(FilmXml.RESOLUTION_SMALL)) : "";
 
             downInfo[i].info = downInfo[i].psetData.isInfoFile();
 
@@ -626,18 +626,18 @@ public class DownloadAddDialogController extends MTDialog {
             }
 
             // die Werte passend zum Film setzen
-            if ((filterAufloesung.equals(FilmXml.RESOLUTION_HD) || downInfo[i].psetData.getResolution().equals(FilmXml.RESOLUTION_HD))
+            if ((filterResolution.equals(FilmXml.RESOLUTION_HD) || downInfo[i].psetData.getResolution().equals(FilmXml.RESOLUTION_HD))
                     && downInfo[i].film.isHd()) {
 
                 //Dann wurde im Filter oder Set HD ausgewählt und wird voreingestellt
-                downInfo[i].aufloesung = FilmXml.RESOLUTION_HD;
+                downInfo[i].resolution = FilmXml.RESOLUTION_HD;
 
             } else if (downInfo[i].psetData.getResolution().equals(FilmXml.RESOLUTION_SMALL)
                     && downInfo[i].film.isSmall()) {
-                downInfo[i].aufloesung = FilmXml.RESOLUTION_SMALL;
+                downInfo[i].resolution = FilmXml.RESOLUTION_SMALL;
 
             } else {
-                downInfo[i].aufloesung = FilmXml.RESOLUTION_NORMAL;
+                downInfo[i].resolution = FilmXml.RESOLUTION_NORMAL;
             }
 
 
@@ -657,7 +657,7 @@ public class DownloadAddDialogController extends MTDialog {
         }
 
         cbPath.valueProperty().addListener((observable, oldValue, newValue) -> {
-            nameGeaendert = true;
+            nameChanged = true;
 
             final String s = cbPath.getSelectionModel().getSelectedItem();
             downInfo[filmNr].setPath(s);
@@ -667,11 +667,11 @@ public class DownloadAddDialogController extends MTDialog {
 
         txtName.setText(downInfo[filmNr].name);
         txtName.textProperty().addListener((observable, oldValue, newValue) -> {
-            nameGeaendert = true;
+            nameChanged = true;
 
             downInfo[filmNr].setName(txtName.getText());
 
-            if (!txtName.getText().equals(FileNameUtils.checkDateiname(txtName.getText(), false /* pfad */))) {
+            if (!txtName.getText().equals(FileNameUtils.checkFileName(txtName.getText(), false /* pfad */))) {
                 txtName.setStyle(MTColor.DOWNLOAD_NAME_ERROR.getCssBackground());
             } else {
                 txtName.setStyle("");
@@ -689,9 +689,9 @@ public class DownloadAddDialogController extends MTDialog {
         // und jetzt für den aktuellen Film das GUI setzen
         makeResolutionButtons();
 
-        rbHd.setOnAction(a -> downInfo[filmNr].setAufloesung(FilmXml.RESOLUTION_HD));
-        rbHigh.setOnAction(a -> downInfo[filmNr].setAufloesung(FilmXml.RESOLUTION_NORMAL));
-        rbSmall.setOnAction(a -> downInfo[filmNr].setAufloesung(FilmXml.RESOLUTION_SMALL));
+        rbHd.setOnAction(a -> downInfo[filmNr].setResolution(FilmXml.RESOLUTION_HD));
+        rbHigh.setOnAction(a -> downInfo[filmNr].setResolution(FilmXml.RESOLUTION_NORMAL));
+        rbSmall.setOnAction(a -> downInfo[filmNr].setResolution(FilmXml.RESOLUTION_SMALL));
     }
 
     private void initCheckBox() {
@@ -714,7 +714,7 @@ public class DownloadAddDialogController extends MTDialog {
         btnOk.setDisable(true);
         btnCancel.setOnAction(event -> {
             ok = false;
-            beenden();
+            quitt();
         });
 
     }
@@ -735,12 +735,12 @@ public class DownloadAddDialogController extends MTDialog {
 
         btnOk.setOnAction(event -> {
             if (check()) {
-                beenden();
+                quitt();
             }
         });
         btnCancel.setOnAction(event -> {
             ok = false;
-            beenden();
+            quitt();
         });
 
     }

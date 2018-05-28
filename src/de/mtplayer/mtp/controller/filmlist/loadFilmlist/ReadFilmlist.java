@@ -84,7 +84,7 @@ public class ReadFilmlist {
             ex.printStackTrace();
         }
 
-        notifyFertig(sourceFileUrl, filmlist);
+        notifyFinished(sourceFileUrl, filmlist);
         list.add("Filme lesen --> fertig");
         PLog.userLog(list);
     }
@@ -102,7 +102,7 @@ public class ReadFilmlist {
 
     private void readData(JsonParser jp, Filmlist filmlist) throws IOException {
         JsonToken jsonToken;
-        String sender = "", thema = "";
+        String sender = "", theme = "";
 
         if (jp.nextToken() != JsonToken.START_OBJECT) {
             throw new IllegalStateException("Expected data to start with an Object");
@@ -114,7 +114,7 @@ public class ReadFilmlist {
             }
             if (jp.isExpectedStartArrayToken()) {
                 for (int k = 0; k < FilmlistXml.MAX_ELEM; ++k) {
-                    filmlist.metaDaten[k] = jp.nextTextValue();
+                    filmlist.metaData[k] = jp.nextTextValue();
                 }
                 break;
             }
@@ -156,12 +156,12 @@ public class ReadFilmlist {
                     sender = film.arr[FilmXml.FILM_CHANNEL];
                 }
                 if (film.arr[FilmXml.FILM_THEME].isEmpty()) {
-                    film.arr[FilmXml.FILM_THEME] = thema;
+                    film.arr[FilmXml.FILM_THEME] = theme;
                 } else {
-                    thema = film.arr[FilmXml.FILM_THEME];
+                    theme = film.arr[FilmXml.FILM_THEME];
                 }
 
-                filmlist.importFilmliste(film);
+                filmlist.importFilmlist(film);
                 if (milliseconds > 0) {
                     // muss "rückwärts" laufen, da das Datum sonst 2x gebaut werden muss
                     // wenns drin bleibt, kann mans noch ändern
@@ -227,13 +227,15 @@ public class ReadFilmlist {
 
         try (Response response = MLHttpClient.getInstance().getHttpClient().newCall(builder.build()).execute();
              ResponseBody body = response.body()) {
-            if (response.isSuccessful()) {
+            if (response.isSuccessful() && body != null) {
+
                 try (InputStream input = new ProgressMonitorInputStream(body.byteStream(), body.contentLength(), monitor)) {
                     try (InputStream is = selectDecompressor(source.toString(), input);
                          JsonParser jp = new JsonFactory().createParser(is)) {
                         readData(jp, filmlist);
                     }
                 }
+
             }
         } catch (final Exception ex) {
             PLog.errorLog(945123641, ex, "FilmListe: " + source);
@@ -272,12 +274,12 @@ public class ReadFilmlist {
         }
     }
 
-    private void notifyFertig(String url, Filmlist liste) {
+    private void notifyFinished(String url, Filmlist filmlist) {
         ArrayList<String> list = new ArrayList<>();
         list.add(PLog.LILNE3);
         list.add("Liste Filme gelesen am: " + FastDateFormat.getInstance("dd.MM.yyyy, HH:mm").format(new Date()));
-        list.add("  erstellt am: " + liste.genDate());
-        list.add("  Anzahl Filme: " + liste.size());
+        list.add("  erstellt am: " + filmlist.genDate());
+        list.add("  Anzahl Filme: " + filmlist.size());
         for (final ListenerFilmlistLoad l : listeners.getListeners(ListenerFilmlistLoad.class)) {
             l.finished(new ListenerFilmlistLoadEvent(url, "", progress, 0, false));
         }

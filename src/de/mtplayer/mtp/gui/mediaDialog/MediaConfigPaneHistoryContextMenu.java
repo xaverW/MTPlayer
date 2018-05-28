@@ -37,7 +37,7 @@ public class MediaConfigPaneHistoryContextMenu {
         this.history = history;
     }
 
-    public ContextMenu getContextMenue() {
+    public ContextMenu getContextMenu() {
         final ContextMenu contextMenu = new ContextMenu();
         getMenu(contextMenu);
         return contextMenu;
@@ -69,8 +69,8 @@ public class MediaConfigPaneHistoryContextMenu {
         MenuItem miShowFilm = new MenuItem("Infos zum Film anzeigen");
         miShowFilm.setDisable(film == null);
         miShowFilm.setOnAction(a -> {
-            progData.filmInfosDialogController.set(film);
-            progData.filmInfosDialogController.showFilmInfo();
+            progData.filmInfoDialogController.set(film);
+            progData.filmInfoDialogController.showFilmInfo();
         });
 
         MenuItem miDownload = new MenuItem("Download noch einmal anlegen");

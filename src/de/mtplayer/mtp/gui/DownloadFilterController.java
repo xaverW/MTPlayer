@@ -51,7 +51,7 @@ public class DownloadFilterController extends FilterController {
         initLayout();
         initFilter();
 
-        initAnzahl();
+        initNumberDownloads();
         initBandwidth();
     }
 
@@ -136,7 +136,7 @@ public class DownloadFilterController extends FilterController {
 
         cbArt.getItems().addAll(DownloadInfos.ART_COMBO_ALL,
                 DownloadInfos.ART_COMBO_DOWNLOAD,
-                DownloadInfos.ART_COMBO_PROGRAMM);
+                DownloadInfos.ART_COMBO_PROGRAM);
 
         Bindings.bindBidirectional(cbArt.valueProperty(), ProgConfig.FILTER_DOWNLOAD_KIND.getStringProperty(),
                 new StringConverter<String>() {
@@ -147,8 +147,8 @@ public class DownloadFilterController extends FilterController {
                                 return DownloadInfos.ART_ALL;
                             case DownloadInfos.ART_COMBO_DOWNLOAD:
                                 return DownloadInfos.ART_DOWNLOAD;
-                            case DownloadInfos.ART_COMBO_PROGRAMM:
-                                return DownloadInfos.ART_PROGRAMM;
+                            case DownloadInfos.ART_COMBO_PROGRAM:
+                                return DownloadInfos.ART_PROGRAM;
                             default:
                                 return DownloadInfos.ART_ALL;
                         }
@@ -160,8 +160,8 @@ public class DownloadFilterController extends FilterController {
                                 return DownloadInfos.ART_COMBO_ALL;
                             case DownloadInfos.ART_DOWNLOAD:
                                 return DownloadInfos.ART_COMBO_DOWNLOAD;
-                            case DownloadInfos.ART_PROGRAMM:
-                                return DownloadInfos.ART_COMBO_PROGRAMM;
+                            case DownloadInfos.ART_PROGRAM:
+                                return DownloadInfos.ART_COMBO_PROGRAM;
                             default:
                                 return DownloadInfos.ART_COMBO_ALL;
                         }
@@ -175,7 +175,7 @@ public class DownloadFilterController extends FilterController {
         cbAbo.setItems(progData.nameLists.getObsAllAboNames()); // todo evtl. nur die vorhandenen Abos
     }
 
-    private void initAnzahl() {
+    private void initNumberDownloads() {
         spinnerAnz.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 9, 1));
         integerProperty = IntegerProperty.integerProperty(spinnerAnz.getValueFactory().valueProperty());
         integerProperty.bindBidirectional(anzValue);
@@ -199,16 +199,16 @@ public class DownloadFilterController extends FilterController {
     }
 
     private void setTextBandwith() {
-        int bandbreiteKByte;
+        int bandwidthKByte;
         String ret;
-        bandbreiteKByte = ProgConfig.DOWNLOAD_MAX_BANDWITH_KBYTE.getInt();
-        if (bandbreiteKByte == MLBandwidthTokenBucket.BANDWIDTH_MAX_KBYTE) {
+        bandwidthKByte = ProgConfig.DOWNLOAD_MAX_BANDWITH_KBYTE.getInt();
+        if (bandwidthKByte == MLBandwidthTokenBucket.BANDWIDTH_MAX_KBYTE) {
             ret = "aus";
         } else {
-            ret = bandbreiteKByte + " kByte/s";
+            ret = bandwidthKByte + " kByte/s";
         }
         lblBandwidth.setText(ret);
-        if (bandbreiteKByte > MLBandwidthTokenBucket.BANDWIDTH_MAX_RED_KBYTE) {
+        if (bandwidthKByte > MLBandwidthTokenBucket.BANDWIDTH_MAX_RED_KBYTE) {
             final Text amount = new Text(ret);
             amount.setFill(Color.RED);
             lblBandwidth.setText(amount.getText());

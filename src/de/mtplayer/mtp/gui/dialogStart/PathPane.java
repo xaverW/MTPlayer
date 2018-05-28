@@ -102,7 +102,7 @@ public class PathPane {
                 property = flvProp;
                 btnFind.setOnAction(event -> {
                     ProgConfig.SYSTEM_PATH_FLVSTREAMER.setValue("");
-                    txtPlayer.setText(SetsPrograms.getMusterPfadFlv());
+                    txtPlayer.setText(SetsPrograms.getTemplatePathFlv());
                 });
                 hyperlink.setOnAction(a -> {
                     try {
@@ -118,7 +118,7 @@ public class PathPane {
                 property = ffmpegProp;
                 btnFind.setOnAction(event -> {
                     ProgConfig.SYSTEM_PATH_FFMPEG.setValue("");
-                    txtPlayer.setText(SetsPrograms.getMusterPfadFFmpeg());
+                    txtPlayer.setText(SetsPrograms.getTemplatePathFFmpeg());
                 });
                 hyperlink.setOnAction(a -> {
                     try {
@@ -135,7 +135,7 @@ public class PathPane {
                 property = vlcProp;
                 btnFind.setOnAction(event -> {
                     ProgConfig.SYSTEM_PATH_VLC.setValue("");
-                    txtPlayer.setText(SetsPrograms.getMusterPfadVlc());
+                    txtPlayer.setText(SetsPrograms.getTemplatePathVlc());
                 });
                 hyperlink.setOnAction(a -> {
                     try {

@@ -40,8 +40,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-import static de.mtplayer.mtp.controller.starter.StarterClass.pruefen;
-import static de.mtplayer.mtp.controller.starter.StarterClass.startmeldung;
+import static de.mtplayer.mtp.controller.starter.StarterClass.check;
+import static de.mtplayer.mtp.controller.starter.StarterClass.startMsg;
 
 public class DirectHttpDownload extends Thread {
 
@@ -56,8 +56,8 @@ public class DirectHttpDownload extends Thread {
     private FileOutputStream fos = null;
 
     private final java.util.Timer bandwidthCalculationTimer;
-    private boolean retAbbrechen;
-    private boolean dialogAbbrechenIsVis;
+    private boolean retBreak;
+    private boolean dialogBreakIsVis;
 
     public DirectHttpDownload(ProgData progData, Download d, java.util.Timer bandwidthCalculationTimer) {
         super();
@@ -123,7 +123,7 @@ public class DirectHttpDownload extends Thread {
      * @throws Exception
      */
     private void downloadContent() throws Exception {
-        if (download.isInfodatei()) {
+        if (download.getInfoFile()) {
             MTInfoFile.writeInfoFile(download);
         }
         if (download.isSubtitle()) {
@@ -137,10 +137,10 @@ public class DirectHttpDownload extends Thread {
 
         download.getDownloadSize().addAktFileSize(downloaded);
         final byte[] buffer = new byte[MLBandwidthTokenBucket.DEFAULT_BUFFER_SIZE];
-        double p, pp = DownloadInfos.PROGRESS_WARTEN, startProzent = DownloadInfos.PROGRESS_NICHT_GESTARTET;
+        double p, pp = DownloadInfos.PROGRESS_WAITING, startPercent = DownloadInfos.PROGRESS_NOT_STARTED;
         int len;
         long aktBandwidth, aktSize = 0;
-        boolean melden = false;
+        boolean report = false;
 
         while ((len = download.getStart().getInputStream().read(buffer)) != -1 && (!download.isStateStoped())) {
             downloaded += len;
@@ -150,46 +150,46 @@ public class DirectHttpDownload extends Thread {
             // für die Anzeige prüfen ob sich was geändert hat
             if (aktSize != download.getDownloadSize().getAktFileSize()) {
                 aktSize = download.getDownloadSize().getAktFileSize();
-                melden = true;
+                report = true;
             }
             if (download.getDownloadSize().getFilmSize() > 0) {
                 p = 1.0 * aktSize / download.getDownloadSize().getFilmSize();
-                if (startProzent == DownloadInfos.PROGRESS_NICHT_GESTARTET) {
-                    startProzent = p;
+                if (startPercent == DownloadInfos.PROGRESS_NOT_STARTED) {
+                    startPercent = p;
                 }
                 // p muss zwischen 1 und 999 liegen
-                if (p == DownloadInfos.PROGRESS_WARTEN) {
-                    p = DownloadInfos.PROGRESS_GESTARTET;
-                } else if (p >= DownloadInfos.PROGRESS_FERTIG) {
-                    p = DownloadInfos.PROGRESS_FAST_FERTIG;
+                if (p == DownloadInfos.PROGRESS_WAITING) {
+                    p = DownloadInfos.PROGRESS_STARTED;
+                } else if (p >= DownloadInfos.PROGRESS_FINISHED) {
+                    p = DownloadInfos.PROGRESS_NEARLY_FINISHED;
                 }
                 MLProperty.setProperty(download.progressProperty(), p);
                 if (p != pp) {
                     pp = p;
 
                     // Restzeit ermitteln
-                    if (p > (DownloadInfos.PROGRESS_GESTARTET) &&
-                            p > startProzent) {
+                    if (p > (DownloadInfos.PROGRESS_STARTED) &&
+                            p > startPercent) {
                         // sonst macht es noch keinen Sinn
-                        final int diffZeit = download.getStart().getStartTime().diffInSekunden();
-                        final double restProzent = DownloadInfos.PROGRESS_FERTIG - p;
+                        final int diffTime = download.getStart().getStartTime().diffInSeconds();
+                        final double restPercent = DownloadInfos.PROGRESS_FINISHED - p;
 
-                        download.getStart().setTimeLeft((long) (diffZeit * restProzent / (p - startProzent)));
+                        download.getStart().setTimeLeft((long) (diffTime * restPercent / (p - startPercent)));
                         // anfangen zum Schauen kann man, wenn die Restzeit kürzer ist
                         // als die bereits geladene Speilzeit des Films
-                        bereitsAnschauen(download);
+                        canAlreadyStarted(download);
                     }
 
-                    melden = true;
+                    report = true;
                 }
             }
             aktBandwidth = download.getStart().getInputStream().getBandwidth(); // bytes per second
             if (aktBandwidth != download.getStart().getBandwidth()) {
                 download.getStart().setBandwidth(aktBandwidth);
-                melden = true;
+                report = true;
             }
-            if (melden) {
-                melden = false;
+            if (report) {
+                report = false;
             }
         }
 
@@ -197,7 +197,7 @@ public class DirectHttpDownload extends Thread {
             if (download.getSource().equals(DownloadInfos.SRC_BUTTON)) {
                 // direkter Start mit dem Button
                 download.setStateFinished();
-            } else if (pruefen(progData, download)) {
+            } else if (check(progData, download)) {
                 // Anzeige ändern - fertig
                 download.setStateFinished();
             } else {
@@ -209,10 +209,10 @@ public class DirectHttpDownload extends Thread {
 
     @Override
     public synchronized void run() {
-        startmeldung(download);
+        startMsg(download);
 
         try {
-            Files.createDirectories(Paths.get(download.getZielPfad()));
+            Files.createDirectories(Paths.get(download.getDestPath()));
         } catch (final IOException ignored) {
         }
 
@@ -222,7 +222,7 @@ public class DirectHttpDownload extends Thread {
             restart = false;
             try {
                 final URL url = new URL(download.getUrl());
-                file = new File(download.getZielPfadDatei());
+                file = new File(download.getDestPathFile());
 
                 if (!cancelDownload()) {
 
@@ -272,7 +272,7 @@ public class DirectHttpDownload extends Thread {
                         // Timeout Fehlermeldung für zxd :)
                         final ArrayList<String> text = new ArrayList<>();
                         text.add("Timeout, Download Restarts: " + restartCount);
-                        text.add("Ziel: " + download.getZielPfadDatei());
+                        text.add("Ziel: " + download.getDestPathFile());
                         text.add("URL: " + download.getUrl());
                         PLog.userLog(text.toArray(new String[text.size()]));
                     }
@@ -313,23 +313,23 @@ public class DirectHttpDownload extends Thread {
             // dann ist alles OK
             return false;
         }
-        dialogAbbrechenIsVis = true;
-        retAbbrechen = true;
+        dialogBreakIsVis = true;
+        retBreak = true;
         Platform.runLater(() -> {
-            retAbbrechen = abbrechen_();
-            dialogAbbrechenIsVis = false;
+            retBreak = break_();
+            dialogBreakIsVis = false;
         });
-        while (dialogAbbrechenIsVis) {
+        while (dialogBreakIsVis) {
             try {
                 wait(100);
             } catch (final Exception ignored) {
 
             }
         }
-        return retAbbrechen;
+        return retBreak;
     }
 
-    private boolean abbrechen_() {
+    private boolean break_() {
         boolean cancel = false;
         if (file.exists()) {
             final DownloadContinueDialogController downloadContinueDialogController =
@@ -351,19 +351,19 @@ public class DirectHttpDownload extends Thread {
                         // dann mit gleichem Namen und Datei vorher löschen
                         try {
                             Files.deleteIfExists(file.toPath());
-                            file = new File(download.getZielPfadDatei());
+                            file = new File(download.getDestPathFile());
                         } catch (final Exception ex) {
                             // kann nicht gelöscht werden, evtl. klappt ja das Überschreiben
                             PLog.errorLog(915263654, ex,
-                                    "file exists: " + download.getZielPfadDatei());
+                                    "file exists: " + download.getDestPathFile());
                         }
                     } else {
                         // dann mit neuem Namen
                         try {
-                            Files.createDirectories(Paths.get(download.getZielPfad()));
+                            Files.createDirectories(Paths.get(download.getDestPath()));
                         } catch (final IOException ignored) {
                         }
-                        file = new File(download.getZielPfadDatei());
+                        file = new File(download.getDestPathFile());
                     }
                     break;
             }
@@ -371,16 +371,16 @@ public class DirectHttpDownload extends Thread {
         return cancel;
     }
 
-    private void bereitsAnschauen(Download datenDownload) {
-        if (datenDownload.getFilm() != null && datenDownload.isStateStartedRun()) {
-            if (datenDownload.getFilm().dauerL > 0 && datenDownload.getStart().getTimeLeft() > 0
-                    && datenDownload.getDownloadSize().getAktFileSize() > 0
-                    && datenDownload.getDownloadSize().getFilmSize() > 0) {
+    private void canAlreadyStarted(Download dataDownload) {
+        if (dataDownload.getFilm() != null && dataDownload.isStateStartedRun()) {
+            if (dataDownload.getFilm().dauerL > 0 && dataDownload.getStart().getTimeLeft() > 0
+                    && dataDownload.getDownloadSize().getAktFileSize() > 0
+                    && dataDownload.getDownloadSize().getFilmSize() > 0) {
                 // macht nur dann Sinn
                 final long zeitGeladen =
-                        datenDownload.getFilm().dauerL * datenDownload.getDownloadSize().getAktFileSize() / datenDownload.getDownloadSize().getFilmSize();
-                if (zeitGeladen > (datenDownload.getStart().getTimeLeft() * 1.1 /* plus 10% zur Sicherheit */)) {
-                    datenDownload.getStart().setStartViewing(true);
+                        dataDownload.getFilm().dauerL * dataDownload.getDownloadSize().getAktFileSize() / dataDownload.getDownloadSize().getFilmSize();
+                if (zeitGeladen > (dataDownload.getStart().getTimeLeft() * 1.1 /* plus 10% zur Sicherheit */)) {
+                    dataDownload.getStart().setStartViewing(true);
                 }
             }
         }

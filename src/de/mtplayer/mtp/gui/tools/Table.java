@@ -200,7 +200,7 @@ public class Table {
 
             if (!confWidth.get().isEmpty()) {
                 width = confWidth.get();
-                if (arrLesen(width, breite)) {
+                if (readArr(width, breite)) {
                     for (int i = 0; i < breite.length; ++i) {
                         table.getColumns().get(i).setPrefWidth(breite[i]);
                     }
@@ -209,7 +209,7 @@ public class Table {
 
             if (!confVis.get().isEmpty()) {
                 vis = confVis.get();
-                if (arrLesen(vis, visAr)) {
+                if (readArr(vis, visAr)) {
                     for (int i = 0; i < visAr.length; ++i) {
                         table.getColumns().get(i).setVisible(visAr[i]);
                     }
@@ -239,7 +239,7 @@ public class Table {
 
     }
 
-    private boolean arrLesen(String s, double[] arr) {
+    private boolean readArr(String s, double[] arr) {
         String sub;
         String[] sarr = s.split(",");
         if (maxSpalten != sarr.length) {
@@ -257,7 +257,7 @@ public class Table {
         return true;
     }
 
-    private boolean arrLesen(String s, boolean[] arr) {
+    private boolean readArr(String s, boolean[] arr) {
         String sub;
         String[] sarr = s.split(",");
         if (maxSpalten != sarr.length) {
@@ -275,7 +275,7 @@ public class Table {
         return true;
     }
 
-    private boolean arrLesen(String s, String[] arr) {
+    private boolean readArr(String s, String[] arr) {
         arr = s.split(",");
         if (maxSpalten != arr.length) {
             // dann hat sich die Anzahl der Spalten der Tabelle geändert: Versionswechsel
@@ -294,16 +294,16 @@ public class Table {
         return ++ret;
     }
 
-    private double[] getDoubleArray(int anzahl) {
-        final double[] arr = new double[anzahl];
+    private double[] getDoubleArray(int count) {
+        final double[] arr = new double[count];
         for (int i = 0; i < arr.length; ++i) {
             arr[i] = -1;
         }
         return arr;
     }
 
-    private boolean[] getBoolArray(int anzahl) {
-        final boolean[] arr = new boolean[anzahl];
+    private boolean[] getBoolArray(int count) {
+        final boolean[] arr = new boolean[count];
         for (int i = 0; i < arr.length; ++i) {
             arr[i] = true;
         }

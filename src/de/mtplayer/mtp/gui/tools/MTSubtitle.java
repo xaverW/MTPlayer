@@ -76,45 +76,45 @@ public class MTSubtitle {
         }
     }
 
-    private void writeSrt(String strSubtitelFile, Download datenDownload) {
+    private void writeSrt(String strSubtitelFile, Download download) {
         final Path p = Paths.get(strSubtitelFile);
         final TimedTextMarkupLanguageParser ttmlp = new TimedTextMarkupLanguageParser();
         if (ttmlp.parse(p) || ttmlp.parseXmlFlash(p)) {
-            final Path srt = Paths.get(datenDownload.getFileNameWithoutSuffix() + SRT_FILETYPE);
+            final Path srt = Paths.get(download.getFileNameWithoutSuffix() + SRT_FILETYPE);
             ttmlp.toSrt(srt);
         }
         ttmlp.cleanup();
     }
 
-    public void writeSubtitle(Download datenDownload) {
+    public void writeSubtitle(Download download) {
         String suffix;
         String urlSubtitle = "";
         InputStream in = null;
 
-        if (datenDownload.getUrlSubtitle().isEmpty())
+        if (download.getUrlSubtitle().isEmpty())
             return;
 
         try {
-            PLog.sysLog(new String[]{"Untertitel: ", datenDownload.getUrlSubtitle(),
-                    "schreiben nach: ", datenDownload.getZielPfad()});
+            PLog.sysLog(new String[]{"Untertitel: ", download.getUrlSubtitle(),
+                    "schreiben nach: ", download.getDestPath()});
 
-            urlSubtitle = datenDownload.getUrlSubtitle();
+            urlSubtitle = download.getUrlSubtitle();
             suffix = FileUtils.getSuffixFromUrl(urlSubtitle);
             if (!suffix.endsWith(SUFFIX_SRT))
                 suffix = SUFFIX_TTML;
 
-            Files.createDirectories(Paths.get(datenDownload.getZielPfad()));
+            Files.createDirectories(Paths.get(download.getDestPath()));
 
             final HttpURLConnection conn = (HttpURLConnection) new URL(urlSubtitle).openConnection();
             setupConnection(conn);
             if ((conn.getResponseCode()) < HttpURLConnection.HTTP_BAD_REQUEST) {
                 in = getContentDecoder(conn.getContentEncoding(), conn.getInputStream());
 
-                final String strSubtitelFile = datenDownload.getFileNameWithoutSuffix() + '.' + suffix;
+                final String strSubtitelFile = download.getFileNameWithoutSuffix() + '.' + suffix;
                 downloadContent(in, strSubtitelFile);
 
                 if (!strSubtitelFile.endsWith(SRT_FILETYPE))
-                    writeSrt(strSubtitelFile, datenDownload);
+                    writeSrt(strSubtitelFile, download);
             } else
                 PLog.errorLog(752301248, "url: " + urlSubtitle);
         } catch (final Exception ignored) {

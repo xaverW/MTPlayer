@@ -16,7 +16,7 @@
 
 package de.mtplayer.mtp;
 
-import de.mtplayer.mtp.controller.ProgQuitt;
+import de.mtplayer.mtp.controller.ProgQuit;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
@@ -35,7 +35,7 @@ import org.controlsfx.control.MaskerPane;
 
 public class MTPlayerController extends StackPane {
 
-    Button btnFilmliste = new Button("Filmliste");
+    Button btnFilmlist = new Button("Filmliste");
     Button btnFilm = new Button("Filme");
     Button btnDownload = new Button("Downloads");
     Button btnAbo = new Button("Abos");
@@ -66,9 +66,9 @@ public class MTPlayerController extends StackPane {
         init();
     }
 
-    public Button getBtnFilmliste() {
+    public Button getBtnFilmlist() {
         // ist erst mal so bis "Filmliste laden" überarbeitet wird
-        return btnFilmliste;
+        return btnFilmlist;
     }
 
     private void init() {
@@ -88,7 +88,7 @@ public class MTPlayerController extends StackPane {
             HBox.setHgrow(tilePane, Priority.ALWAYS);
 
             tilePane.getChildren().addAll(btnFilm, btnDownload, btnAbo, btnMsg);
-            hBoxTop.getChildren().addAll(btnFilmliste, tilePane, menuButton);
+            hBoxTop.getChildren().addAll(btnFilmlist, tilePane, menuButton);
 
 
             splitPaneFilm = filmGuiPack.pack();
@@ -114,8 +114,8 @@ public class MTPlayerController extends StackPane {
             maskerPane.toFront();
             maskerPane.setVisible(false);
 
-            btnFilmliste.getStyleClass().add("btnFilmlist");
-            btnFilmliste.setOnAction(e -> progData.loadFilmlist.loadFilmlist(""));
+            btnFilmlist.getStyleClass().add("btnFilmlist");
+            btnFilmlist.setOnAction(e -> progData.loadFilmlist.loadFilmlist(""));
 
             btnFilm.getStyleClass().add("btnFilm");
             btnFilm.setOnAction(e -> selPanelFilm());
@@ -151,8 +151,8 @@ public class MTPlayerController extends StackPane {
                 }
             });
 
-            final MenuItem miQuitt = new MenuItem("Beenden");
-            miQuitt.setOnAction(e -> new ProgQuitt().quitt(true, false));
+            final MenuItem miQuit = new MenuItem("Beenden");
+            miQuit.setOnAction(e -> new ProgQuit().quit(true, false));
 
             final MenuItem miAbout = new MenuItem("Über dieses Programm");
             miAbout.setOnAction(event -> new AboutDialogController(progData));
@@ -165,8 +165,8 @@ public class MTPlayerController extends StackPane {
 
             menuButton.getStyleClass().add("btnFunction");
             menuButton.setText("");
-            menuButton.setGraphic(new Icons().FX_ICON_TOOLBAR_MENUE_TOP);
-            menuButton.getItems().addAll(miConfig, miMedia, miMsg, mHelp, new SeparatorMenuItem(), miQuitt);
+            menuButton.setGraphic(new Icons().FX_ICON_TOOLBAR_MENU_TOP);
+            menuButton.getItems().addAll(miConfig, miMedia, miMsg, mHelp, new SeparatorMenuItem(), miQuit);
 
             selPanelFilm();
         } catch (Exception ex) {
@@ -196,7 +196,7 @@ public class MTPlayerController extends StackPane {
 
         splitPaneFilm.toFront();
         progData.filmGuiController.isShown();
-        statusBarController.setStatusbarIndex(StatusBarController.StatusbarIndex.FILME);
+        statusBarController.setStatusbarIndex(StatusBarController.StatusbarIndex.FILM);
     }
 
     private void selPanelDownload() {

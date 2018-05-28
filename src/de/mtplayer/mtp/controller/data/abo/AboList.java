@@ -79,43 +79,43 @@ public class AboList extends SimpleListProperty<Abo> {
         // abo anlegen, oder false wenns schon existiert
         boolean ret = false;
 
-        int mindestdauer, maxdauer;
+        int minDuration, maxDuration;
         try {
-            mindestdauer = ProgConfig.ABO_MINUTE_MIN_SIZE.getInt();
-            maxdauer = ProgConfig.ABO_MINUTE_MAX_SIZE.getInt();
+            minDuration = ProgConfig.ABO_MINUTE_MIN_SIZE.getInt();
+            maxDuration = ProgConfig.ABO_MINUTE_MAX_SIZE.getInt();
         } catch (final Exception ex) {
-            mindestdauer = 0;
-            maxdauer = SelectedFilter.FILTER_DURATIION_MAX_MIN;
+            minDuration = 0;
+            maxDuration = SelectedFilter.FILTER_DURATION_MAX_MIN;
             ProgConfig.ABO_MINUTE_MIN_SIZE.setValue("0");
-            ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(SelectedFilter.FILTER_DURATIION_MAX_MIN);
+            ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(SelectedFilter.FILTER_DURATION_MAX_MIN);
         }
 
-        String namePfad = DownloadTools.replaceLeerDateiname(aboName,
+        String namePath = DownloadTools.replaceEmptyFileName(aboName,
                 false /* nur ein Ordner */,
                 Boolean.parseBoolean(ProgConfig.SYSTEM_USE_REPLACETABLE.get()),
                 Boolean.parseBoolean(ProgConfig.SYSTEM_ONLY_ASCII.get()));
 
-        final Abo abo = new Abo(namePfad /* name */,
+        final Abo abo = new Abo(namePath /* name */,
                 filmChannel,
                 filmTheme,
                 "" /* filmThemaTitel */,
                 filmTitle,
                 "",
-                mindestdauer,
-                maxdauer,
-                namePfad,
+                minDuration,
+                maxDuration,
+                namePath,
                 "" /* pset */);
 
 
         final AboEditDialogController editAboController = new AboEditDialogController(progData, abo);
         if (editAboController.getOk()) {
-            if (!aboExistiertBereits(abo)) {
+            if (!aboExistsAlready(abo)) {
                 // als Vorgabe merken
                 ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(abo.getMinDuration());
                 ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(abo.getMaxDuration());
                 addAbo(abo);
                 sort();
-                aenderungMelden();
+                notifyChanges();
                 ret = true;
             } else {
                 new MTAlert().showErrorAlert("Abo anlegen", "Abo existiert bereits");
@@ -135,7 +135,7 @@ public class AboList extends SimpleListProperty<Abo> {
         if (!lAbo.isEmpty()) {
             final AboEditDialogController editAboController = new AboEditDialogController(progData, lAbo);
             if (editAboController.getOk()) {
-                aenderungMelden();
+                notifyChanges();
             }
         }
     }
@@ -143,7 +143,7 @@ public class AboList extends SimpleListProperty<Abo> {
     public synchronized void onOffAbo(ObservableList<Abo> lAbo, boolean on) {
         if (!lAbo.isEmpty()) {
             lAbo.stream().forEach(abo -> abo.setActive(on));
-            aenderungMelden();
+            notifyChanges();
         }
     }
 
@@ -169,13 +169,13 @@ public class AboList extends SimpleListProperty<Abo> {
 
         if (new MTAlert().showAlert("Löschen", "Abo löschen", text)) {
             this.removeAll(lAbo);
-            aenderungMelden();
+            notifyChanges();
         }
     }
 
     int i = 0;
 
-    public synchronized void aenderungMelden() {
+    public synchronized void notifyChanges() {
         // Filmliste anpassen
         if (!progData.loadFilmlist.getPropLoadFilmlist()) {
             // wird danach eh gemacht
@@ -230,25 +230,25 @@ public class AboList extends SimpleListProperty<Abo> {
         return name;
     }
 
-    private boolean aboExistiertBereits(Abo abo) {
+    private boolean aboExistsAlready(Abo abo) {
         // true wenn es das Abo schon gibt
-        for (final Abo datenAbo : this) {
-            if (FilmFilter.aboExistiertBereits(datenAbo, abo)) {
+        for (final Abo dataAbo : this) {
+            if (FilmFilter.aboExistsAlready(dataAbo, abo)) {
                 return true;
             }
         }
         return false;
     }
 
-    public synchronized Abo getAboFuerFilm_schnell(Film film, boolean laengePruefen) {
+    public synchronized Abo getAboForFilm_quick(Film film, boolean checkLength) {
         // da wird nur in der Filmliste geschaut, ob in "DatenFilm" ein Abo eingetragen ist
         // geht schneller, "getAboFuerFilm" muss aber vorher schon gelaufen sein!!
         Abo abo = film.getAbo();
         if (abo == null) {
             return null;
         } else {
-            if (laengePruefen) {
-                if (!FilmFilter.laengePruefen(abo.getMinSec(), abo.getMaxSec(), film.dauerL)) {
+            if (checkLength) {
+                if (!FilmFilter.checkLength(abo.getMinSec(), abo.getMaxSec(), film.dauerL)) {
                     return null;
                 }
             }
@@ -269,7 +269,7 @@ public class AboList extends SimpleListProperty<Abo> {
      * @param film assignee
      */
     private void assignAboToFilm(Film film) {
-        final Abo foundAbo = stream().filter(abo -> FilmFilter.filterAufFilmPruefen(
+        final Abo foundAbo = stream().filter(abo -> FilmFilter.checkFilmWithFilter(
                 abo.fChannel,
                 abo.fTheme,
                 abo.fThemeTitle,
@@ -307,7 +307,7 @@ public class AboList extends SimpleListProperty<Abo> {
         Duration.counterStart("Abo in Filmliste eintragen");
 
         // leere Abos löschen, die sind Fehler
-        stream().filter((datenAbo) -> (datenAbo.isEmpty())).forEach(this::remove);
+        stream().filter((abo) -> (abo.isEmpty())).forEach(this::remove);
 
         if (isEmpty()) {
             // dann nur die Abos in der Filmliste löschen

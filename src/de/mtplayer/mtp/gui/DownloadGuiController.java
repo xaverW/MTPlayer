@@ -109,7 +109,7 @@ public class DownloadGuiController extends AnchorPane {
 
         initTable();
         initListener();
-        setfilter();
+        setFilter();
     }
 
 
@@ -125,29 +125,29 @@ public class DownloadGuiController extends AnchorPane {
         return table.getSelectionModel().getSelectedItems().size();
     }
 
-    public void aktualisieren() {
+    public void update() {
         if (progData.loadFilmlist.getPropLoadFilmlist()) {
             // wird danach eh gemacht
             return;
         }
 
         // erledigte entfernen, nicht gestartete Abos entfernen und neu nach Abos suchen
-        progData.downloadList.abosSuchen();
+        progData.downloadList.searchForAbos();
 
         if (Boolean.parseBoolean(ProgConfig.DOWNLOAD_START_NOW.get())) {
             // und wenn gewollt auch gleich starten
-            downloadStartenWiederholen(true /* alle */, false /* fertige wieder starten */);
+            downloadStartAgain(true /* alle */, false /* fertige wieder starten */);
         }
     }
 
-    public void filmAbspielen() {
+    public void playFilm() {
         final Optional<Download> download = getSel();
         if (download.isPresent()) {
-            MTOpen.playStoredFilm(download.get().getZielPfadDatei());
+            MTOpen.playStoredFilm(download.get().getDestPathFile());
         }
     }
 
-    public void filmDateiLoeschen() {
+    public void deleteFilmFile() {
         // Download nur löschen wenn er nicht läuft
 
         final Optional<Download> download = getSel();
@@ -159,13 +159,13 @@ public class DownloadGuiController extends AnchorPane {
             new MTAlert().showErrorAlert("Film löschen", "Download läuft noch", "Download erst stoppen!");
         }
         try {
-            File file = new File(download.get().getZielPfadDatei());
+            File file = new File(download.get().getDestPathFile());
             if (!file.exists()) {
                 new MTAlert().showErrorAlert("Film löschen", "", "Die Datei existiert nicht!");
                 return;
             }
 
-            if (new MTAlert().showAlert("Film Löschen?", "", "Die Datei löschen:\n\n" + download.get().getZielPfadDatei())) {
+            if (new MTAlert().showAlert("Film Löschen?", "", "Die Datei löschen:\n\n" + download.get().getDestPathFile())) {
 
                 // und jetzt die Datei löschen
                 PLog.sysLog(new String[]{"Datei löschen: ", file.getAbsolutePath()});
@@ -175,8 +175,8 @@ public class DownloadGuiController extends AnchorPane {
             }
         } catch (Exception ex) {
             new MTAlert().showErrorAlert("Film löschen", "Konnte die Datei nicht löschen!", "Fehler beim löschen von:\n\n" +
-                    download.get().getZielPfadDatei());
-            PLog.errorLog(915236547, "Fehler beim löschen: " + download.get().getZielPfadDatei());
+                    download.get().getDestPathFile());
+            PLog.errorLog(915236547, "Fehler beim löschen: " + download.get().getDestPathFile());
         }
     }
 
@@ -186,7 +186,7 @@ public class DownloadGuiController extends AnchorPane {
             return;
         }
 
-        String s = download.get().getZielPfad();
+        String s = download.get().getDestPath();
         MTOpen.openDestDir(s);
     }
 
@@ -225,45 +225,45 @@ public class DownloadGuiController extends AnchorPane {
         Download download = table.getSelectionModel().getSelectedItem();
         if (download != null) {
             filmGuiInfoController.setFilm(download.getFilm());
-            progData.filmInfosDialogController.set(download.getFilm());
+            progData.filmInfoDialogController.set(download.getFilm());
         } else {
             filmGuiInfoController.setFilm(null);
-            progData.filmInfosDialogController.set(null);
+            progData.filmInfoDialogController.set(null);
         }
     }
 
     public void showFilmInfo() {
-        progData.filmInfosDialogController.showFilmInfo();
+        progData.filmInfoDialogController.showFilmInfo();
     }
 
-    public void guiFilmMediensammlung() {
+    public void guiFilmMediaCollection() {
         final Optional<Download> download = getSel();
         if (download.isPresent()) {
             new MediaDialogController(download.get().getTitle());
         }
     }
 
-    public void starten(boolean alle) {
-        downloadStartenWiederholen(alle, true /* auch fertige */);
+    public void startDownload(boolean all) {
+        downloadStartAgain(all, true /* auch fertige */);
     }
 
-    public void stoppen(boolean alle) {
-        downloadStoppen(alle);
+    public void stopDownload(boolean all) {
+        stopDownloads(all);
     }
 
-    public void wartendeStoppen() {
-        wartendeDownloadsStoppen();
+    public void stopWaitingDownloads() {
+        stopWaiting();
     }
 
-    public void vorziehen() {
-        progData.downloadList.downloadsVorziehen(getSelList());
+    public void preferDownload() {
+        progData.downloadList.prefereDownloads(getSelList());
     }
 
-    public void zurueckstellen() {
-        progData.downloadList.putbackDownloads(getSelList());
+    public void moveDownloadBack() {
+        progData.downloadList.putBackDownloads(getSelList());
     }
 
-    public void loeschen() {
+    public void deleteDownloads() {
 
         int sel = table.getSelectionModel().getSelectedIndex();
         progData.downloadList.delDownloads(getSelList());
@@ -277,20 +277,20 @@ public class DownloadGuiController extends AnchorPane {
         }
     }
 
-    public void aufraeumen() {
-        progData.downloadList.listePutzen();
+    public void cleanUp() {
+        progData.downloadList.cleanUpList();
     }
 
-    public void aendern() {
-        downloadAendern();
+    public void changeDownload() {
+        change();
     }
 
-    public void filmGesehen() {
-        setFilmGesehen(true);
+    public void setFilmShown() {
+        setFilmShown(true);
     }
 
-    public void filmUngesehen() {
-        setFilmGesehen(false);
+    public void setFilmNotShown() {
+        setFilmShown(false);
     }
 
     public void invertSelection() {
@@ -348,25 +348,25 @@ public class DownloadGuiController extends AnchorPane {
     private void initListener() {
 
         progData.downloadList.downloadsChangedProperty().addListener((observable, oldValue, newValue) ->
-                Platform.runLater(() -> setfilter()));
+                Platform.runLater(() -> setFilter()));
         Listener.addListener(new Listener(Listener.EREIGNIS_BLACKLIST_GEAENDERT, DownloadGuiController.class.getSimpleName()) {
             @Override
             public void ping() {
                 if (Boolean.parseBoolean(ProgConfig.ABO_SEARCH_NOW.get())
                         && Boolean.parseBoolean(ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.get())) {
                     // nur auf Blacklist reagieren, wenn auch für Abos eingeschaltet
-                    aktualisieren();
+                    update();
                 }
             }
         });
         ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.getBooleanProperty().addListener((observable, oldValue, newValue) -> {
             if (ProgConfig.ABO_SEARCH_NOW.getBool()) {
-                aktualisieren();
+                update();
             }
         });
         progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
             if (ProgConfig.ABO_SEARCH_NOW.getBool()) {
-                aktualisieren();
+                update();
             }
         });
         progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
@@ -378,7 +378,7 @@ public class DownloadGuiController extends AnchorPane {
             @Override
             public void finished(ListenerFilmlistLoadEvent event) {
                 if (ProgConfig.ABO_SEARCH_NOW.getBool()) {
-                    aktualisieren();
+                    update();
                 }
             }
         });
@@ -397,7 +397,7 @@ public class DownloadGuiController extends AnchorPane {
 
         table.setOnMouseClicked(m -> {
             if (m.getButton().equals(MouseButton.PRIMARY) && m.getClickCount() == 2) {
-                aendern();
+                changeDownload();
             }
         });
 
@@ -405,7 +405,7 @@ public class DownloadGuiController extends AnchorPane {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
                 final Optional<Download> download = getSel();
                 if (download.isPresent()) {
-                    table.setContextMenu(new DownloadGuiContextMenu(progData, this, table).getContextMenue(download.get()));
+                    table.setContextMenu(new DownloadGuiContextMenu(progData, this, table).getContextMenu(download.get()));
                 }
             }
         });
@@ -417,35 +417,35 @@ public class DownloadGuiController extends AnchorPane {
 
     private void setFilterProperty() {
         ProgConfig.FILTER_DOWNLOAD_SENDER.getStringProperty().addListener((observable, oldValue, newValue) -> {
-            setfilter();
+            setFilter();
         });
         ProgConfig.FILTER_DOWNLOAD_ABO.getStringProperty().addListener((observable, oldValue, newValue) -> {
-            setfilter();
+            setFilter();
         });
         ProgConfig.FILTER_DOWNLOAD_SOURCE.getStringProperty().addListener((observable, oldValue, newValue) -> {
-            setfilter();
+            setFilter();
         });
         ProgConfig.FILTER_DOWNLOAD_KIND.getStringProperty().addListener((observable, oldValue, newValue) -> {
-            setfilter();
+            setFilter();
         });
     }
 
-    private void setfilter() {
+    private void setFilter() {
         final String sender = ProgConfig.FILTER_DOWNLOAD_SENDER.get();
         final String abo = ProgConfig.FILTER_DOWNLOAD_ABO.get();
-        final String quelle = ProgConfig.FILTER_DOWNLOAD_SOURCE.get();
+        final String source = ProgConfig.FILTER_DOWNLOAD_SOURCE.get();
         final String art = ProgConfig.FILTER_DOWNLOAD_KIND.get();
 
         //System.out.println("Sender: " + sender + " Abo: " + abo + " Quelle: " + quelle + " Art: " + art);
-        filteredDownloads.setPredicate(download -> (!download.isZurueckgestellt() &&
+        filteredDownloads.setPredicate(download -> (!download.getPlacedBack() &&
                 sender.isEmpty() ? true : download.getChannel().equals(sender)) &&
                 (abo.isEmpty() ? true : download.getAboName().equals(abo)) &&
-                (quelle.isEmpty() ? true : download.getSource().equals(quelle)) &&
+                (source.isEmpty() ? true : download.getSource().equals(source)) &&
                 (art.isEmpty() ? true : download.getArt().equals(art)));
 
     }
 
-    private void setFilmGesehen(boolean gesehen) {
+    private void setFilmShown(boolean shown) {
         final ArrayList<Download> arrayDownloads = getSelList();
         final ArrayList<Film> filmArrayList = new ArrayList<>();
 
@@ -454,53 +454,53 @@ public class DownloadGuiController extends AnchorPane {
                 filmArrayList.add(download.getFilm());
             }
         });
-        FilmTools.setFilmShown(progData, filmArrayList, gesehen);
+        FilmTools.setFilmShown(progData, filmArrayList, shown);
     }
 
-    private void wartendeDownloadsStoppen() {
+    private void stopWaiting() {
         // es werden alle noch nicht gestarteten Downloads gelöscht
-        final ArrayList<Download> listeStopDownload = new ArrayList<>();
+        final ArrayList<Download> listStopDownload = new ArrayList<>();
         table.getItems().stream().filter(download -> download.isStateStartedWaiting()).forEach(download -> {
-            listeStopDownload.add(download);
+            listStopDownload.add(download);
         });
-        progData.downloadList.stopDownloads(listeStopDownload);
+        progData.downloadList.stopDownloads(listStopDownload);
     }
 
-    private void downloadStartenWiederholen(boolean alle, boolean auchFertige /* auch fertige wieder starten */) {
+    private void downloadStartAgain(boolean all, boolean alsoFinished /* auch fertige wieder starten */) {
         // bezieht sich auf "alle" oder nur die markierten Filme
         // der/die noch nicht gestartet sind, werden gestartet
         // Filme dessen Start schon auf fehler steht wirden wieder gestartet
 
-        final ArrayList<Download> listeDownloadsMarkiert = new ArrayList<>();
+        final ArrayList<Download> listDownloadsSelected = new ArrayList<>();
 
         // die URLs sammeln
-        listeDownloadsMarkiert.addAll(alle ? table.getItems() : getSelList());
+        listDownloadsSelected.addAll(all ? table.getItems() : getSelList());
 
-        progData.downloadList.startDownloads(listeDownloadsMarkiert, auchFertige);
+        progData.downloadList.startDownloads(listDownloadsSelected, alsoFinished);
     }
 
-    private void downloadStoppen(boolean alle) {
+    private void stopDownloads(boolean all) {
         // bezieht sich auf "alle" oder nur die markierten Filme
 
-        final ArrayList<Download> listeDownloadsMarkiert = new ArrayList<>();
+        final ArrayList<Download> listDownloadsSelected = new ArrayList<>();
 
         // die URLs sammeln
-        listeDownloadsMarkiert.addAll(alle ? table.getItems() : getSelList());
-        progData.downloadList.stopDownloads(listeDownloadsMarkiert);
-        setfilter();
+        listDownloadsSelected.addAll(all ? table.getItems() : getSelList());
+        progData.downloadList.stopDownloads(listDownloadsSelected);
+        setFilter();
     }
 
 
-    private synchronized void downloadAendern() {
+    private synchronized void change() {
         final Optional<Download> download = getSel();
         if (download.isPresent()) {
 
-            Download datenDownloadKopy = download.get().getCopy();
+            Download downloadCopy = download.get().getCopy();
             DownloadEditDialogController downloadEditDialogController =
-                    new DownloadEditDialogController(progData, datenDownloadKopy, download.get().isStateStartedRun());
+                    new DownloadEditDialogController(progData, downloadCopy, download.get().isStateStartedRun());
 
             if (downloadEditDialogController.isOk()) {
-                download.get().copyToMe(datenDownloadKopy);
+                download.get().copyToMe(downloadCopy);
             }
         }
     }

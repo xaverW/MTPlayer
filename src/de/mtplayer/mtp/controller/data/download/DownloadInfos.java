@@ -19,15 +19,15 @@ package de.mtplayer.mtp.controller.data.download;
 public class DownloadInfos {
 
     // Fortschritt
-    public static final double PROGRESS_1_PROZENT = 0.01; // 1%
+    public static final double PROGRESS_1_PERCENT = 0.01; // 1%
 
-    public static final double PROGRESS_NICHT_GESTARTET = -1;
-    public static final double PROGRESS_WARTEN = 0;
-    public static final double PROGRESS_GESTARTET = 0.001; // 0,1%
+    public static final double PROGRESS_NOT_STARTED = -1;
+    public static final double PROGRESS_WAITING = 0;
+    public static final double PROGRESS_STARTED = 0.001; // 0,1%
 
 
-    public static final double PROGRESS_FAST_FERTIG = 0.995; //99,5%
-    public static final double PROGRESS_FERTIG = 1; //100%
+    public static final double PROGRESS_NEARLY_FINISHED = 0.995; //99,5%
+    public static final double PROGRESS_FINISHED = 1; //100%
 
     // Startnummer (Reihenfolge) der Downloads
     public static final int DOWNLOAD_NUMBER_NOT_STARTED = Integer.MAX_VALUE;
@@ -36,7 +36,7 @@ public class DownloadInfos {
 
     // Stati
     public static final int STATE_INIT = 0; // noch nicht gestart
-    public static final int STATE_STOPED = 1; // gestartet und wieder abgebrochen
+    public static final int STATE_STOPPED = 1; // gestartet und wieder abgebrochen
     public static final int STATE_STARTED_WAITING = 2; // gestartet, warten auf das Downloaden
     public static final int STATE_STARTED_RUN = 3; //Download läuft
     public static final int STATE_FINISHED = 4; // fertig, Ok
@@ -53,40 +53,40 @@ public class DownloadInfos {
 
     public static final String ART_ALL = "";
     public static final String ART_DOWNLOAD = "direkter Download";
-    public static final String ART_PROGRAMM = "Programm";
+    public static final String ART_PROGRAM = "Programm";
 
     public static final String ART_COMBO_ALL = "";
     public static final String ART_COMBO_DOWNLOAD = "nur direkte Downloads";
-    public static final String ART_COMBO_PROGRAMM = "nur Programme";
+    public static final String ART_COMBO_PROGRAM = "nur Programme";
 
     //Download wird so oft gestartet, falls er beim ersten Mal nicht anspringt
-    public static final int STARTCOUNTER_MAX = 3;
+    public static final int START_COUNTER_MAX = 3;
 
 
     public static String getTextProgress(boolean dManager, int status, double progress) {
         String ret = "";
 
-        if (progress == PROGRESS_NICHT_GESTARTET) {
-            if (status == STATE_STOPED) {
+        if (progress == PROGRESS_NOT_STARTED) {
+            if (status == STATE_STOPPED) {
                 ret = "abgebrochen";
             } else {
                 ret = "nicht gestartet";
             }
-        } else if (progress == PROGRESS_WARTEN) {
+        } else if (progress == PROGRESS_WAITING) {
             ret = dManager ? "extern" : "warten";
 
-        } else if (progress == PROGRESS_GESTARTET) {
+        } else if (progress == PROGRESS_STARTED) {
             ret = dManager ? "extern" : "gestartet";
-        } else if (progress > PROGRESS_GESTARTET && progress < PROGRESS_FERTIG) {
+        } else if (progress > PROGRESS_STARTED && progress < PROGRESS_FINISHED) {
             if (dManager) {
                 ret = "extern";
             } else {
                 ret = Double.toString(progress / 10.0) + '%';
             }
 
-        } else if (progress == PROGRESS_FERTIG && status == STATE_ERROR) {
+        } else if (progress == PROGRESS_FINISHED && status == STATE_ERROR) {
             ret = dManager ? "extern:fehler" : "fehlerhaft";
-        } else if (progress == PROGRESS_FERTIG) {
+        } else if (progress == PROGRESS_FINISHED) {
             ret = dManager ? "extern:fertig" : "fertig";
         }
 
@@ -94,24 +94,24 @@ public class DownloadInfos {
     }
 
 
-    public static String getTextRestzeit(long restSekunden) {
-        if (restSekunden > 300) {
-            return Long.toString(Math.round(restSekunden / 60.0)) + " Min.";
-        } else if (restSekunden > 230) {
+    public static String getTimeLeft(long timeLeftSeconds) {
+        if (timeLeftSeconds > 300) {
+            return Long.toString(Math.round(timeLeftSeconds / 60.0)) + " Min.";
+        } else if (timeLeftSeconds > 230) {
             return "5 Min.";
-        } else if (restSekunden > 170) {
+        } else if (timeLeftSeconds > 170) {
             return "4 Min.";
-        } else if (restSekunden > 110) {
+        } else if (timeLeftSeconds > 110) {
             return "3 Min.";
-        } else if (restSekunden > 60) {
+        } else if (timeLeftSeconds > 60) {
             return "2 Min.";
-        } else if (restSekunden > 30) {
+        } else if (timeLeftSeconds > 30) {
             return "1 Min.";
-        } else if (restSekunden > 20) {
+        } else if (timeLeftSeconds > 20) {
             return "30 s";
-        } else if (restSekunden > 10) {
+        } else if (timeLeftSeconds > 10) {
             return "20 s";
-        } else if (restSekunden > 0) {
+        } else if (timeLeftSeconds > 0) {
             return "10 s";
         } else {
             return "";

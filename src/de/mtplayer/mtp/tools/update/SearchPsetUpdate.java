@@ -41,20 +41,20 @@ public class SearchPsetUpdate {
         try {
             Platform.runLater(() -> {
 
-                final SetList listePsetStandard = ListePsetVorlagen.getStandarset(false /* replaceMuster */);
+                final SetList listPsetStandard = ListePsetVorlagen.getStandarset(false /* replaceMuster */);
                 final String version = ProgConfig.SYSTEM_UPDATE_PROGSET_VERSION.get();
-                if (listePsetStandard == null) {
+                if (listPsetStandard == null) {
                     return;
                 }
 
                 if (!progData.setList.isEmpty()) {
                     // ansonsten ist die Liste leer und dann gibts immer was
-                    if (listePsetStandard.version.isEmpty()) {
+                    if (listPsetStandard.version.isEmpty()) {
                         // dann hat das Laden der aktuellen Standardversion nicht geklappt
                         return;
                     }
 
-                    if (version.equals(listePsetStandard.version)) {
+                    if (version.equals(listPsetStandard.version)) {
                         // dann passt alles
                         return;
                     }
@@ -70,7 +70,7 @@ public class SearchPsetUpdate {
                         if (!newSetDialogController.getAskAgain()) {
                             // dann auch die Versionsnummer aktualisieren
                             PLog.userLog("Setanlegen: Nicht wieder nachfragen");
-                            ProgConfig.SYSTEM_UPDATE_PROGSET_VERSION.setValue(listePsetStandard.version);
+                            ProgConfig.SYSTEM_UPDATE_PROGSET_VERSION.setValue(listPsetStandard.version);
                         }
                         PLog.userLog("==========================================");
                         return;
@@ -81,24 +81,24 @@ public class SearchPsetUpdate {
                 // ========================================
                 // gibt keine Sets oder aktualisieren
                 // damit die Variablen ersetzt werden
-                SetList.progMusterErsetzen(listePsetStandard);
-                ProgConfig.SYSTEM_UPDATE_PROGSET_VERSION.setValue(listePsetStandard.version);
+                SetList.progReplacePattern(listPsetStandard);
+                ProgConfig.SYSTEM_UPDATE_PROGSET_VERSION.setValue(listPsetStandard.version);
 
                 // die Zielpafade anpassen
-                final SetList listePsetOrgSpeichern = progData.setList.getListeSpeichern();
+                final SetList listPsetOrgSave = progData.setList.getListSave();
 
-                if (!listePsetOrgSpeichern.isEmpty()) {
-                    for (final SetData psNew : listePsetStandard.getListeSpeichern()) {
-                        psNew.setDestPath(listePsetOrgSpeichern.get(0).getDestPath());
-                        psNew.setGenTheme(listePsetOrgSpeichern.get(0).getGenTheme());
-                        psNew.setMaxSize(listePsetOrgSpeichern.get(0).getMaxSize());
-                        psNew.setMaxField(listePsetOrgSpeichern.get(0).getMaxField());
+                if (!listPsetOrgSave.isEmpty()) {
+                    for (final SetData psNew : listPsetStandard.getListSave()) {
+                        psNew.setDestPath(listPsetOrgSave.get(0).getDestPath());
+                        psNew.setGenTheme(listPsetOrgSave.get(0).getGenTheme());
+                        psNew.setMaxSize(listPsetOrgSave.get(0).getMaxSize());
+                        psNew.setMaxField(listPsetOrgSave.get(0).getMaxField());
                     }
                 }
 
                 if (!progData.setList.isEmpty()) {
                     // wenn leer, dann gibts immer die neuen und die sind dann auch aktiv
-                    for (final SetData psNew : listePsetStandard) {
+                    for (final SetData psNew : listPsetStandard) {
                         // die bestehenden Sets sollen nicht gestört werden
                         psNew.setPlay(false);
                         psNew.setAbo(false);
@@ -108,11 +108,11 @@ public class SearchPsetUpdate {
 
                     // damit man sie auch findet :)
                     final String date = StringFormatters.FORMATTER_ddMMyyyy.format(new Date());
-                    listePsetStandard.forEach((psNew) -> psNew.setName(psNew.getName() + ", neu: " + date));
+                    listPsetStandard.forEach((psNew) -> psNew.setName(psNew.getName() + ", neu: " + date));
 
                 }
 
-                SetsPrograms.addSetVorlagen(listePsetStandard); // damit auch AddOns
+                SetsPrograms.addSetTemplate(listPsetStandard); // damit auch AddOns
                 // geladen werden
                 PLog.userLog("Setanlegen: OK");
                 PLog.userLog("==========================================");

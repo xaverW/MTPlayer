@@ -38,11 +38,11 @@ public class RuntimeExec {
     Thread clearIn;
     Thread clearOut;
     private Process process = null;
-    private static int procnr = 0;
+    private static int procNr = 0;
     private static final Pattern patternFlvstreamer = Pattern.compile("([0-9]*.[0-9]{1}%)");
     private static final Pattern patternFlvstreamerComplete = Pattern.compile("Download complete");
     private static final Pattern patternFfmpeg = Pattern.compile("(?<=  Duration: )[^,]*"); // Duration: 00:00:30.28, start: 0.000000, bitrate: N/A
-    private static final Pattern patternZeit = Pattern.compile("(?<=time=)[^ ]*");  // frame=  147 fps= 17 q=-1.0 size=    1588kB time=00:00:05.84 bitrate=2226.0kbits/s
+    private static final Pattern patternTime = Pattern.compile("(?<=time=)[^ ]*");  // frame=  147 fps= 17 q=-1.0 size=    1588kB time=00:00:05.84 bitrate=2226.0kbits/s
     private static final Pattern patternSize = Pattern.compile("(?<=size=)[^k]*");  // frame=  147 fps= 17 q=-1.0 size=    1588kB time=00:00:05.84 bitrate=2226.0kbits/s
 
     private double totalSecs = 0;
@@ -58,9 +58,9 @@ public class RuntimeExec {
         this.download = download;
 
         this.mVFilmSize = download.getDownloadSize();
-        this.strProgCall = download.getProgrammAufruf();
+        this.strProgCall = download.getProgramCall();
         arrProgCallArray = strProgCallArray.split(TRENNER_PROG_ARRAY);
-        this.strProgCallArray = download.getProgrammAufrufArray();
+        this.strProgCallArray = download.getProgramCallArray();
         if (arrProgCallArray.length <= 1) {
             arrProgCallArray = null;
         }
@@ -117,8 +117,8 @@ public class RuntimeExec {
         private BufferedReader buff;
         private InputStream in;
         private final Process process;
-        private double percent = DownloadInfos.PROGRESS_WARTEN;
-        private double percent_start = DownloadInfos.PROGRESS_NICHT_GESTARTET;
+        private double percent = DownloadInfos.PROGRESS_WAITING;
+        private double percent_start = DownloadInfos.PROGRESS_NOT_STARTED;
 
         public ClearInOut(int a, Process p) {
             art = a;
@@ -127,18 +127,18 @@ public class RuntimeExec {
 
         @Override
         public void run() {
-            String titel = "";
+            String title = "";
             try {
                 switch (art) {
                     case INPUT:
                         in = process.getInputStream();
-                        titel = "INPUTSTREAM";
+                        title = "INPUTSTREAM";
                         break;
                     case ERROR:
                         in = process.getErrorStream();
                         //TH
                         synchronized (this) {
-                            titel = "ERRORSTREAM [" + (++procnr) + ']';
+                            title = "ERRORSTREAM [" + (++procNr) + ']';
                         }
                         break;
                 }
@@ -147,7 +147,7 @@ public class RuntimeExec {
                 while ((inStr = buff.readLine()) != null) {
                     GetPercentageFromErrorStream(inStr);
                     // todo??
-                    ProgData.getInstance().playerMsg.playerMsg(titel + ": " + inStr);
+                    ProgData.getInstance().playerMsg.playerMsg(title + ": " + inStr);
                 }
             } catch (final IOException ignored) {
             } finally {
@@ -164,10 +164,10 @@ public class RuntimeExec {
             matcher = patternFlvstreamer.matcher(input);
             if (matcher.find()) {
                 try {
-                    String prozent = matcher.group();
-                    prozent = prozent.substring(0, prozent.length() - 1);
-                    final double d = Double.parseDouble(prozent);
-                    meldenDouble(d);
+                    String percent = matcher.group();
+                    percent = percent.substring(0, percent.length() - 1);
+                    final double d = Double.parseDouble(percent);
+                    notifyDouble(d);
                 } catch (final Exception ex) {
                     PLog.errorLog(912036780, input);
                 }
@@ -176,7 +176,7 @@ public class RuntimeExec {
             matcher = patternFlvstreamerComplete.matcher(input);
             if (matcher.find()) {
                 // dann ist der Download fertig, zur sicheren Erkennung von 100%
-                meldenDouble(100);
+                notifyDouble(100);
                 return;
             }
 
@@ -188,8 +188,8 @@ public class RuntimeExec {
                 matcher = patternFfmpeg.matcher(input);
                 if (matcher.find()) {
                     // Find duration
-                    final String dauer = matcher.group().trim();
-                    final String[] hms = dauer.split(":");
+                    final String duration = matcher.group().trim();
+                    final String[] hms = duration.split(":");
                     totalSecs = Integer.parseInt(hms[0]) * 3600
                             + Integer.parseInt(hms[1]) * 60
                             + Double.parseDouble(hms[2]);
@@ -202,7 +202,7 @@ public class RuntimeExec {
                         try {
                             final long aktSize = Integer.parseInt(s.replace("kB", ""));
                             mVFilmSize.setAktFileSize(aktSize * 1_000);
-                            final long akt = download.getStart().getStartTime().diffInSekunden();
+                            final long akt = download.getStart().getStartTime().diffInSeconds();
                             if (oldSecs < akt - 5) {
                                 download.getStart().setBandwidth((aktSize - oldSize) * 1_000 / (akt - oldSecs));
                                 oldSecs = akt;
@@ -213,22 +213,22 @@ public class RuntimeExec {
                     }
                 }
                 // Fortschritt
-                matcher = patternZeit.matcher(input);
+                matcher = patternTime.matcher(input);
                 if (totalSecs > 0 && matcher.find()) {
                     // ffmpeg    1611kB time=00:00:06.73 bitrate=1959.7kbits/s   
                     // avconv    size=   26182kB time=100.96 bitrate=2124.5kbits/s 
-                    final String zeit = matcher.group();
-                    if (zeit.contains(":")) {
-                        final String[] hms = zeit.split(":");
+                    final String time = matcher.group();
+                    if (time.contains(":")) {
+                        final String[] hms = time.split(":");
                         final double aktSecs = Integer.parseInt(hms[0]) * 3600
                                 + Integer.parseInt(hms[1]) * 60
                                 + Double.parseDouble(hms[2]);
                         final double d = aktSecs / totalSecs * 100;
-                        meldenDouble(d);
+                        notifyDouble(d);
                     } else {
-                        final double aktSecs = Double.parseDouble(zeit);
+                        final double aktSecs = Double.parseDouble(time);
                         final double d = aktSecs / totalSecs * 100;
-                        meldenDouble(d);
+                        notifyDouble(d);
                     }
                 }
             } catch (final Exception ex) {
@@ -236,22 +236,22 @@ public class RuntimeExec {
             }
         }
 
-        private void meldenDouble(double d) {
+        private void notifyDouble(double d) {
             // d = 0 - 100%
             final double pNeu = d / 100;
             MLProperty.setProperty(download.progressProperty(), pNeu);
             if (pNeu != percent) {
                 percent = pNeu;
-                if (percent_start == DownloadInfos.PROGRESS_NICHT_GESTARTET) {
+                if (percent_start == DownloadInfos.PROGRESS_NOT_STARTED) {
                     // für wiedergestartete Downloads
                     percent_start = percent;
                 }
-                if (percent > (percent_start + 5 * DownloadInfos.PROGRESS_1_PROZENT)) {
+                if (percent > (percent_start + 5 * DownloadInfos.PROGRESS_1_PERCENT)) {
                     // sonst macht es noch keinen Sinn
-                    final int diffZeit = download.getStart().getStartTime().diffInSekunden();
-                    final double diffProzent = percent - percent_start;
-                    final double restProzent = DownloadInfos.PROGRESS_FERTIG - percent;
-                    download.getStart().setTimeLeft((long) (diffZeit * restProzent / diffProzent));
+                    final int diffTime = download.getStart().getStartTime().diffInSeconds();
+                    final double diffPercent = percent - percent_start;
+                    final double restPercent = DownloadInfos.PROGRESS_FINISHED - percent;
+                    download.getStart().setTimeLeft((long) (diffTime * restPercent / diffPercent));
                 }
             }
         }

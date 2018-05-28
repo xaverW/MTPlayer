@@ -43,7 +43,7 @@ public class DownloadProg {
         this.download = download;
     }
 
-    public boolean aufrufBauen(SetData pSet, Film film, Abo abo, String nname, String ppfad) {
+    public boolean makeProgParameter(SetData pSet, Film film, Abo abo, String name, String path) {
         this.pSet = pSet;
         // zieldatei und pfad bauen und eintragen
         try {
@@ -58,49 +58,49 @@ public class DownloadProg {
 
             // Direkter Download nur wenn url passt und wenn im Programm ein Zielpfad ist sonst Abspielen
             //legt fest, dass NICHT Abspielen, Abspielen immer über Programm!
-            download.setArt((pSet.checkDownloadDirekt(download.getUrl()) && pSet.progsContainPath()) ?
-                    DownloadInfos.ART_DOWNLOAD : DownloadInfos.ART_PROGRAMM);
+            download.setArt((pSet.checkDownloadDirect(download.getUrl()) && pSet.progsContainPath()) ?
+                    DownloadInfos.ART_DOWNLOAD : DownloadInfos.ART_PROGRAM);
             if (download.getArt().equals(DownloadInfos.ART_DOWNLOAD)) {
-                download.setProgramm(DownloadInfos.ART_DOWNLOAD);
+                download.setProgram(DownloadInfos.ART_DOWNLOAD);
             } else {
-                download.setProgramm(progData.getName());
+                download.setProgram(progData.getName());
             }
 
-            download.setProgrammRestart(progData.isRestart());
-            download.setProgrammDownloadmanager(progData.isDownManager());
-            dateinamePfadBauen(pSet, film, abo, nname, ppfad);
-            programmaufrufBauen(progData);
+            download.setProgramRestart(progData.isRestart());
+            download.setProgramDownloadmanager(progData.isDownManager());
+            buildFileNamePath(pSet, film, abo, name, path);
+            buildProgParameter(progData);
         } catch (final Exception ex) {
             PLog.errorLog(825600145, ex);
         }
         return true;
     }
 
-    private void programmaufrufBauen(ProgData programm) {
+    private void buildProgParameter(ProgData program) {
         if (download.getArt().equals(DownloadInfos.ART_DOWNLOAD)) {
-            download.setProgrammAufruf("");
-            download.setProgrammAufrufArray("");
+            download.setProgramCall("");
+            download.setProgramCallArray("");
         } else {
-            String befehlsString = programm.getProgrammAufruf();
+            String befehlsString = program.getProgrammAufruf();
             befehlsString = replaceExec(befehlsString);
-            download.setProgrammAufruf(befehlsString);
+            download.setProgramCall(befehlsString);
 
-            String progArray = programm.getProgrammAufrufArray();
+            String progArray = program.getProgrammAufrufArray();
             progArray = replaceExec(progArray);
-            download.setProgrammAufrufArray(progArray);
+            download.setProgramCallArray(progArray);
         }
     }
 
 
-    private void dateinamePfadBauen(SetData pSet, Film film, Abo abo, String nname, String ppfad) {
+    private void buildFileNamePath(SetData pSet, Film film, Abo abo, String nname, String ppath) {
         // nname und ppfad sind nur belegt, wenn der Download über den DialogAddDownload gestartet wurde
         // (aus TabFilme)
         String name;
         String path;
         if (!pSet.progsContainPath()) {
             // dann können wir uns das sparen
-            download.setZielDateiname("");
-            download.setZielPfad("");
+            download.setDestFileName("");
+            download.setDestPath("");
             return;
         }
 
@@ -111,12 +111,12 @@ public class DownloadProg {
             // wenn vorgegeben, dann den nehmen
             name = nname;
         } else {
-            name = pSet.getZielDateiname(download.getUrl());
-            download.setZielDateiname(name);
+            name = pSet.getDestFileName(download.getUrl());
+            download.setDestFileName(name);
             // ##############################
             // Name sinnvoll belegen
             if (name.equals("")) {
-                name = getHeute_yyyyMMdd() + "_" + download.getTheme() + "-" + download.getTitle() + ".mp4";
+                name = getToday_yyyyMMdd() + "_" + download.getTheme() + "-" + download.getTitle() + ".mp4";
             }
 
             // Tags ersetzen
@@ -134,7 +134,7 @@ public class DownloadProg {
                 }
             }
 
-            name = DownloadTools.replaceLeerDateiname(name,
+            name = DownloadTools.replaceEmptyFileName(name,
                     false /* pfad */,
                     Boolean.parseBoolean(ProgConfig.SYSTEM_USE_REPLACETABLE.get()),
                     Boolean.parseBoolean(ProgConfig.SYSTEM_ONLY_ASCII.get()));
@@ -153,17 +153,17 @@ public class DownloadProg {
 
             // Kürzen
             if (pSet.getMaxSize() > 0) {
-                int laenge = pSet.getMaxSize();
-                name = FileUtils.cutName(name, laenge);
+                int length = pSet.getMaxSize();
+                name = FileUtils.cutName(name, length);
             }
         }
 
         // ##############################################
         // Pfad
         // ##############################################
-        if (!ppfad.isEmpty()) {
+        if (!ppath.isEmpty()) {
             // wenn vorgegeben, dann den nehmen
-            path = ppfad;
+            path = ppath;
         } else {
             // Pfad sinnvoll belegen
             if (pSet.getDestPath().isEmpty()) {
@@ -177,13 +177,13 @@ public class DownloadProg {
                 download.setAboName(abo.getName());
                 if (pSet.getGenTheme()) {
                     // und Abopfad an den Pfad anhängen
-                    path = FileUtils.addsPfad(path, FileNameUtils.removeIllegalCharacters(abo.arr[AboXml.ABO_DEST_PATH], true));
+                    path = FileUtils.addsPath(path, FileNameUtils.removeIllegalCharacters(abo.arr[AboXml.ABO_DEST_PATH], true));
                 }
             } else // Downloads
                 if (pSet.getGenTheme()) {
                     // und den Namen des Themas an den Zielpfad anhängen
-                    path = FileUtils.addsPfad(path,
-                            DownloadTools.replaceLeerDateiname(download.getTheme(),
+                    path = FileUtils.addsPath(path,
+                            DownloadTools.replaceEmptyFileName(download.getTheme(),
                                     true /* pfad */,
                                     Boolean.parseBoolean(ProgConfig.SYSTEM_USE_REPLACETABLE.get()),
                                     Boolean.parseBoolean(ProgConfig.SYSTEM_ONLY_ASCII.get())));
@@ -202,7 +202,7 @@ public class DownloadProg {
             path = SysTools.getStandardDownloadPath();
         }
         if (name.isEmpty()) {
-            name = getHeute_yyyyMMdd() + "_" + download.getTheme() + "-" + download.getTitle() + ".mp4";
+            name = getToday_yyyyMMdd() + "_" + download.getTheme() + "-" + download.getTitle() + ".mp4";
         }
 
         // in Win dürfen die Pfade nicht länger als 255 Zeichen haben (für die Infodatei kommen noch
@@ -210,60 +210,60 @@ public class DownloadProg {
         final String[] pathName = {path, name};
         FileUtils.checkLengthPath(pathName);
 
-        download.setZielDateiname(pathName[1]);
-        download.setZielPfad(pathName[0]);
-        download.setZielPfadDatei(FileUtils.addsPfad(pathName[0], pathName[1]));
+        download.setDestFileName(pathName[1]);
+        download.setDestPath(pathName[0]);
+        download.setDestPathFile(FileUtils.addsPath(pathName[0], pathName[1]));
     }
 
     private String replaceString(String replStr, Film film) {
         // hier wird nur ersetzt!
         // Felder mit variabler Länge, evtl. vorher kürzen
 
-        int laenge = pSet.getMaxField();
+        int length = pSet.getMaxField();
 
-        replStr = replStr.replace("%t", getField(film.arr[FilmXml.FILM_THEME], laenge));
-        replStr = replStr.replace("%T", getField(film.arr[FilmXml.FILM_TITLE], laenge));
-        replStr = replStr.replace("%s", getField(film.arr[FilmXml.FILM_CHANNEL], laenge));
-        replStr = replStr.replace("%N", getField(FileUtils.getDateiName(download.getUrl()), laenge));
+        replStr = replStr.replace("%t", getField(film.arr[FilmXml.FILM_THEME], length));
+        replStr = replStr.replace("%T", getField(film.arr[FilmXml.FILM_TITLE], length));
+        replStr = replStr.replace("%s", getField(film.arr[FilmXml.FILM_CHANNEL], length));
+        replStr = replStr.replace("%N", getField(FileUtils.getFileName(download.getUrl()), length));
 
         // Felder mit fester Länge werden immer ganz geschrieben
         replStr = replStr.replace("%D",
-                film.arr[FilmXml.FILM_DATE].equals("") ? getHeute_yyyyMMdd()
-                        : datumDatumZeitReinigen(datumDrehen(film.arr[FilmXml.FILM_DATE])));
+                film.arr[FilmXml.FILM_DATE].equals("") ? getToday_yyyyMMdd()
+                        : cleanDate(turnDate(film.arr[FilmXml.FILM_DATE])));
         replStr = replStr.replace("%d",
-                film.arr[FilmXml.FILM_TIME].equals("") ? getJetzt_HHMMSS()
-                        : datumDatumZeitReinigen(film.arr[FilmXml.FILM_TIME]));
-        replStr = replStr.replace("%H", getHeute_yyyyMMdd());
-        replStr = replStr.replace("%h", getJetzt_HHMMSS());
+                film.arr[FilmXml.FILM_TIME].equals("") ? getNow_HHMMSS()
+                        : cleanDate(film.arr[FilmXml.FILM_TIME]));
+        replStr = replStr.replace("%H", getToday_yyyyMMdd());
+        replStr = replStr.replace("%h", getNow_HHMMSS());
 
         replStr = replStr.replace("%1",
-                getDMY("%1", film.arr[FilmXml.FILM_DATE].equals("") ? getHeute_yyyy_MM_dd() : film.arr[FilmXml.FILM_DATE]));
+                getDMY("%1", film.arr[FilmXml.FILM_DATE].equals("") ? getToday_yyyy_MM_dd() : film.arr[FilmXml.FILM_DATE]));
         replStr = replStr.replace("%2",
-                getDMY("%2", film.arr[FilmXml.FILM_DATE].equals("") ? getHeute_yyyy_MM_dd() : film.arr[FilmXml.FILM_DATE]));
+                getDMY("%2", film.arr[FilmXml.FILM_DATE].equals("") ? getToday_yyyy_MM_dd() : film.arr[FilmXml.FILM_DATE]));
         replStr = replStr.replace("%3",
-                getDMY("%3", film.arr[FilmXml.FILM_DATE].equals("") ? getHeute_yyyy_MM_dd() : film.arr[FilmXml.FILM_DATE]));
+                getDMY("%3", film.arr[FilmXml.FILM_DATE].equals("") ? getToday_yyyy_MM_dd() : film.arr[FilmXml.FILM_DATE]));
 
         replStr = replStr.replace("%4",
-                getHMS("%4", film.arr[FilmXml.FILM_TIME].equals("") ? getJetzt_HH_MM_SS() : film.arr[FilmXml.FILM_TIME]));
+                getHMS("%4", film.arr[FilmXml.FILM_TIME].equals("") ? getNow_HH_MM_SS() : film.arr[FilmXml.FILM_TIME]));
         replStr = replStr.replace("%5",
-                getHMS("%5", film.arr[FilmXml.FILM_TIME].equals("") ? getJetzt_HH_MM_SS() : film.arr[FilmXml.FILM_TIME]));
+                getHMS("%5", film.arr[FilmXml.FILM_TIME].equals("") ? getNow_HH_MM_SS() : film.arr[FilmXml.FILM_TIME]));
         replStr = replStr.replace("%6",
-                getHMS("%6", film.arr[FilmXml.FILM_TIME].equals("") ? getJetzt_HH_MM_SS() : film.arr[FilmXml.FILM_TIME]));
+                getHMS("%6", film.arr[FilmXml.FILM_TIME].equals("") ? getNow_HH_MM_SS() : film.arr[FilmXml.FILM_TIME]));
 
         replStr = replStr.replace("%i", String.valueOf(film.nr));
 
         String res = "";
-        if (download.getUrl().equals(film.getUrlFuerAufloesung(FilmXml.RESOLUTION_NORMAL))) {
+        if (download.getUrl().equals(film.getUrlForResolution(FilmXml.RESOLUTION_NORMAL))) {
             res = "H";
-        } else if (download.getUrl().equals(film.getUrlFuerAufloesung(FilmXml.RESOLUTION_HD))) {
+        } else if (download.getUrl().equals(film.getUrlForResolution(FilmXml.RESOLUTION_HD))) {
             res = "HD";
-        } else if (download.getUrl().equals(film.getUrlFuerAufloesung(FilmXml.RESOLUTION_SMALL))) {
+        } else if (download.getUrl().equals(film.getUrlForResolution(FilmXml.RESOLUTION_SMALL))) {
             res = "L";
-        } else if (download.getUrl().equals(film.getUrlFlvstreamerFuerAufloesung(FilmXml.RESOLUTION_NORMAL))) {
+        } else if (download.getUrl().equals(film.getUrlFlvstreamerForResolution(FilmXml.RESOLUTION_NORMAL))) {
             res = "H";
-        } else if (download.getUrl().equals(film.getUrlFlvstreamerFuerAufloesung(FilmXml.RESOLUTION_HD))) {
+        } else if (download.getUrl().equals(film.getUrlFlvstreamerForResolution(FilmXml.RESOLUTION_HD))) {
             res = "HD";
-        } else if (download.getUrl().equals(film.getUrlFlvstreamerFuerAufloesung(FilmXml.RESOLUTION_SMALL))) {
+        } else if (download.getUrl().equals(film.getUrlFlvstreamerForResolution(FilmXml.RESOLUTION_SMALL))) {
             res = "L";
         }
         replStr = replStr.replace("%q", res); // %q Qualität des Films ("HD", "H", "L")
@@ -278,7 +278,7 @@ public class DownloadProg {
     }
 
     private String getField(String name, int length) {
-        name = DownloadTools.replaceLeerDateiname(name,
+        name = DownloadTools.replaceEmptyFileName(name,
                 false /* pfad */,
                 Boolean.parseBoolean(ProgConfig.SYSTEM_USE_REPLACETABLE.get()),
                 Boolean.parseBoolean(ProgConfig.SYSTEM_ONLY_ASCII.get()));
@@ -293,19 +293,19 @@ public class DownloadProg {
         return name;
     }
 
-    private String getJetzt_HHMMSS() {
+    private String getNow_HHMMSS() {
         return FastDateFormat.getInstance("HHmmss").format(new Date());
     }
 
-    private String getJetzt_HH_MM_SS() {
+    private String getNow_HH_MM_SS() {
         return StringFormatters.FORMATTER_HHmmss.format(new Date());
     }
 
-    private String getHeute_yyyyMMdd() {
+    private String getToday_yyyyMMdd() {
         return StringFormatters.FORMATTER_yyyyMMdd.format(new Date());
     }
 
-    private String getHeute_yyyy_MM_dd() {
+    private String getToday_yyyy_MM_dd() {
         return StringFormatters.FORMATTER_ddMMyyyy.format(new Date());
     }
 
@@ -367,40 +367,40 @@ public class DownloadProg {
         return ret;
     }
 
-    private static String datumDrehen(String datum) {
+    private static String turnDate(String date) {
         String ret = "";
-        if (!datum.equals("")) {
+        if (!date.equals("")) {
             try {
-                if (datum.length() == 10) {
-                    String tmp = datum.substring(6); // Jahr
-                    tmp += "." + datum.substring(3, 5); // Monat
-                    tmp += "." + datum.substring(0, 2); // Tag
+                if (date.length() == 10) {
+                    String tmp = date.substring(6); // Jahr
+                    tmp += "." + date.substring(3, 5); // Monat
+                    tmp += "." + date.substring(0, 2); // Tag
                     ret = tmp;
                 }
             } catch (final Exception ex) {
-                PLog.errorLog(775421006, ex, datum);
+                PLog.errorLog(775421006, ex, date);
             }
         }
         return ret;
     }
 
-    private static String datumDatumZeitReinigen(String datum) {
+    private static String cleanDate(String date) {
         String ret;
-        ret = datum;
+        ret = date;
         ret = ret.replace(":", "");
         ret = ret.replace(".", "");
         return ret;
     }
 
 
-    private String replaceExec(String befehlsString) {
-        befehlsString = befehlsString.replace("**", download.getZielPfadDatei());
-        befehlsString = befehlsString.replace("%f", download.getUrl());
-        befehlsString = befehlsString.replace("%F", download.getUrlRtmp());
+    private String replaceExec(String execString) {
+        execString = execString.replace("**", download.getDestPathFile());
+        execString = execString.replace("%f", download.getUrl());
+        execString = execString.replace("%F", download.getUrlRtmp());
 
-        befehlsString = befehlsString.replace("%a", download.getZielPfad());
-        befehlsString = befehlsString.replace("%b", download.getZielDateiname());
+        execString = execString.replace("%a", download.getDestPath());
+        execString = execString.replace("%b", download.getDestFileName());
 
-        return befehlsString;
+        return execString;
     }
 }

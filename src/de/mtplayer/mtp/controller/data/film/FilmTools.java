@@ -35,7 +35,7 @@ import java.util.ArrayList;
 
 public class FilmTools {
 
-    public static final String THEMA_LIVE = "Livestream";
+    public static final String THEME_LIVE = "Livestream";
 
     public static void getInfoText(Film film, ObservableList list) {
 
@@ -54,13 +54,13 @@ public class FilmTools {
 
         list.addAll(text1, text2);
 
-        if (!film.arr[FilmXml.FILM_WEBSEITE].isEmpty()) {
-            Hyperlink hyperlink = new Hyperlink(film.arr[FilmXml.FILM_WEBSEITE]);
+        if (!film.arr[FilmXml.FILM_WEBSITE].isEmpty()) {
+            Hyperlink hyperlink = new Hyperlink(film.arr[FilmXml.FILM_WEBSITE]);
             list.addAll(new Text("\n\n zur Website: "), hyperlink);
 
             hyperlink.setOnAction(a -> {
                 try {
-                    MTOpen.openURL(film.arr[FilmXml.FILM_WEBSEITE]);
+                    MTOpen.openURL(film.arr[FilmXml.FILM_WEBSITE]);
                 } catch (Exception e) {
                     PLog.errorLog(975421021, e);
                 }
@@ -95,7 +95,7 @@ public class FilmTools {
         if (psetData != null) {
             pset = psetData;
         } else {
-            pset = ProgData.getInstance().setList.getPsetAbspielen();
+            pset = ProgData.getInstance().setList.getPsetPlay();
         }
 
         if (pset == null) {
@@ -108,7 +108,7 @@ public class FilmTools {
         }
 
         // und starten
-        ProgData.getInstance().starterClass.urlMitProgrammStarten(film, pset, resolution);
+        ProgData.getInstance().starterClass.startUrlWithProgram(film, pset, resolution);
     }
 
     public static void saveFilm(Film film, SetData pSet) {
@@ -117,8 +117,8 @@ public class FilmTools {
         saveFilm(list, pSet);
     }
 
-    public static void saveFilm(ArrayList<Film> liste, SetData pSet) {
-        if (liste.isEmpty()) {
+    public static void saveFilm(ArrayList<Film> list, SetData pSet) {
+        if (list.isEmpty()) {
             return;
         }
 
@@ -126,41 +126,41 @@ public class FilmTools {
         ProgData progData = ProgData.getInstance();
         ArrayList<Film> filmsAddDownloadList = new ArrayList<>();
 
-        if (progData.setList.getListeSpeichern().isEmpty()) {
+        if (progData.setList.getListSave().isEmpty()) {
             new NoSetDialogController(progData, NoSetDialogController.TEXT.SAVE);
             return;
         }
 
-        String aufloesung = "";
+        String resolution = "";
         if (progData.storedFilter.getSelectedFilter().isOnlyHd()) {
-            aufloesung = Film.RESOLUTION_HD;
+            resolution = Film.RESOLUTION_HD;
         }
 
-        for (final Film datenFilm : liste) {
+        for (final Film dateFilm : list) {
             // erst mal schauen obs den schon gibt
-            Download download = progData.downloadList.getDownloadUrlFilm(datenFilm.arr[Film.FILM_URL]);
+            Download download = progData.downloadList.getDownloadUrlFilm(dateFilm.arr[Film.FILM_URL]);
             if (download == null) {
-                filmsAddDownloadList.add(datenFilm);
+                filmsAddDownloadList.add(dateFilm);
             } else {
                 // dann ist der Film schon in der Downloadliste
 
                 //todo wenn nur einer in der Liste macht "no" keinen Sinn
-                MTAlert.BUTTON antwort = new MTAlert().showAlert_yes_no_cancel("Anlegen?", "Nochmal anlegen?",
+                MTAlert.BUTTON answer = new MTAlert().showAlert_yes_no_cancel("Anlegen?", "Nochmal anlegen?",
                         "Download für den Film existiert bereits.\n" + "Nochmal anlegen?");
-                switch (antwort) {
+                switch (answer) {
                     case CANCEL:
                         // alles Abbrechen
                         return;
                     case NO:
                         continue;
                     case YES:
-                        filmsAddDownloadList.add(datenFilm);
+                        filmsAddDownloadList.add(dateFilm);
                         break;
                 }
             }
         }
         if (!filmsAddDownloadList.isEmpty()) {
-            new DownloadAddDialogController(progData, filmsAddDownloadList, psetData, aufloesung);
+            new DownloadAddDialogController(progData, filmsAddDownloadList, psetData, resolution);
         }
     }
 }

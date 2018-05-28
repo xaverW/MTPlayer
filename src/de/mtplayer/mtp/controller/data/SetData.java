@@ -21,7 +21,7 @@ import de.mtplayer.mtp.gui.tools.SetsPrograms;
 public class SetData extends SetProps {
 
     private final ProgList progList = new ProgList();
-    public static boolean[] spaltenAnzeigen = new boolean[MAX_ELEM];
+//    public static boolean[] spaltenAnzeigen = new boolean[MAX_ELEM];
 
     public SetData() {
     }
@@ -111,11 +111,11 @@ public class SetData extends SetProps {
         return ret;
     }
 
-    public String getZielDateiname(String url) {
+    public String getDestFileName(String url) {
         //gibt den Zieldateinamen für den Film zurück
         final ProgData progData = getProgUrl(url);
         String ret = getDestName();
-        if (!checkDownloadDirekt(url) && progData != null) {
+        if (!checkDownloadDirect(url) && progData != null) {
             // nur wenn kein direkter Download und ein passendes Programm
             if (!progData.getDestName().isEmpty()) {
                 ret = progData.getDestName();
@@ -124,11 +124,11 @@ public class SetData extends SetProps {
         return ret;
     }
 
-    public boolean checkDownloadDirekt(String url) {
+    public boolean checkDownloadDirect(String url) {
         //auf direkte prüfen, pref oder suf: wenn angegeben dann muss es stimmen
         if (!getPraefix().isEmpty() || !getSuffix().isEmpty()) {
-            if (SetsPrograms.praefixTesten(getPraefix(), url, true)
-                    && SetsPrograms.praefixTesten(getSuffix(), url, false)) {
+            if (SetsPrograms.testPrefix(getPraefix(), url, true)
+                    && SetsPrograms.testPrefix(getSuffix(), url, false)) {
                 return true;
             }
         }

@@ -50,8 +50,8 @@ public class AboMenu {
 
     private void initButton() {
         // Button
-        final ToolBarButton btOn = new ToolBarButton(vbox, "einschalten", ABO_ON_TEXT, new Icons().FX_ICON_TOOLBAR_ABO_EIN);
-        final ToolBarButton btOff = new ToolBarButton(vbox, "ausschalten", ABO_OFF_TEXT, new Icons().FX_ICON_TOOLBAR_ABO_AUS);
+        final ToolBarButton btOn = new ToolBarButton(vbox, "einschalten", ABO_ON_TEXT, new Icons().FX_ICON_TOOLBAR_ABO_ON);
+        final ToolBarButton btOff = new ToolBarButton(vbox, "ausschalten", ABO_OFF_TEXT, new Icons().FX_ICON_TOOLBAR_ABO_OUT);
         final ToolBarButton btDel = new ToolBarButton(vbox, "löschen", ABO_DELETE_TEXT, new Icons().FX_ICON_TOOLBAR_ABO_DEL);
         final ToolBarButton btChange =
                 new ToolBarButton(vbox, "ändern", ABO_CHANGE_TEXT, new Icons().FX_ICON_TOOLBAR_ABO_CONFIG);
@@ -65,7 +65,7 @@ public class AboMenu {
     private void initMenu() {
         // MenuButton
         final MenuButton mb = new MenuButton("");
-        mb.setGraphic(new Icons().FX_ICON_TOOLBAR_MENUE);
+        mb.setGraphic(new Icons().FX_ICON_TOOLBAR_MENU);
         mb.getStyleClass().add("btnFunction");
 
         final MenuItem mbOn = new MenuItem("einschalten");

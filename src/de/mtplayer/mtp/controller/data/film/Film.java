@@ -47,7 +47,7 @@ public class Film extends FilmProps {
 
         // ================================
         // Filmdauer
-        setFilmdauer();
+        setFilmLength();
 
         // ================================
         // Datum
@@ -67,27 +67,27 @@ public class Film extends FilmProps {
         if (!arr[FilmXml.FILM_TIME].isEmpty()) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
             LocalTime time = LocalTime.parse(arr[FilmXml.FILM_TIME], formatter);
-            setFilmtime(time.toSecondOfDay());
+            setFilmTime(time.toSecondOfDay());
         } else {
-            setFilmtime(FILMTIME_EMPTY);
+            setFilmTime(FILM_TIME_EMPTY);
         }
     }
 
-    public String getUrlFuerAufloesung(String aufloesung) {
-        if (aufloesung.equals(RESOLUTION_SMALL)) {
+    public String getUrlForResolution(String resolution) {
+        if (resolution.equals(RESOLUTION_SMALL)) {
             return getUrlNormalKlein();
         }
-        if (aufloesung.equals(RESOLUTION_HD)) {
+        if (resolution.equals(RESOLUTION_HD)) {
             return getUrlNormalHd();
         }
         return arr[FilmXml.FILM_URL];
     }
 
-    public String getUrlFlvstreamerFuerAufloesung(String aufloesung) {
-        if (aufloesung.equals(RESOLUTION_SMALL)) {
-            return getUrlFlvstreamerKlein();
+    public String getUrlFlvstreamerForResolution(String resolution) {
+        if (resolution.equals(RESOLUTION_SMALL)) {
+            return getUrlFlvstreamerSmall();
         }
-        if (aufloesung.equals(RESOLUTION_HD)) {
+        if (resolution.equals(RESOLUTION_HD)) {
             return getUrlFlvstreamerHd();
         }
         return getUrlFlvstreamer();
@@ -146,14 +146,14 @@ public class Film extends FilmProps {
         arr[FilmXml.FILM_TIME] = arr[FilmXml.FILM_TIME].intern();
     }
 
-    private String fuellen(int anz, String s) {
+    private String fillString(int anz, String s) {
         while (s.length() < anz) {
             s = '0' + s;
         }
         return s;
     }
 
-    private void setFilmdauer() {
+    private void setFilmLength() {
         try {
             if (!arr[FilmXml.FILM_DURATION].contains(":") && !arr[FilmXml.FILM_DURATION].isEmpty()) {
                 // nur als Übergang bis die Liste umgestellt ist
@@ -165,10 +165,10 @@ public class Film extends FilmProps {
                     final long min = l / 60;
                     l = l - (min * 60);
                     final long seconds = l;
-                    arr[FilmXml.FILM_DURATION] = fuellen(2, String.valueOf(hours)) + ':'
-                            + fuellen(2, String.valueOf(min))
+                    arr[FilmXml.FILM_DURATION] = fillString(2, String.valueOf(hours)) + ':'
+                            + fillString(2, String.valueOf(min))
                             + ':'
-                            + fuellen(2, String.valueOf(seconds));
+                            + fillString(2, String.valueOf(seconds));
                 } else {
                     arr[FilmXml.FILM_DURATION] = "";
                 }
@@ -195,9 +195,9 @@ public class Film extends FilmProps {
             try {
                 if (arr[FilmXml.FILM_DATE_LONG].isEmpty()) {
                     if (arr[FilmXml.FILM_TIME].isEmpty()) {
-                        filmDate = new FilmDate(sdf_datum.parse(arr[FilmXml.FILM_DATE]).getTime());
+                        filmDate = new FilmDate(sdf_date.parse(arr[FilmXml.FILM_DATE]).getTime());
                     } else {
-                        filmDate = new FilmDate(sdf_datum_zeit.parse(arr[FilmXml.FILM_DATE] + arr[FilmXml.FILM_TIME]).getTime());
+                        filmDate = new FilmDate(sdf_date_time.parse(arr[FilmXml.FILM_DATE] + arr[FilmXml.FILM_TIME]).getTime());
                     }
                     arr[FILM_DATE_LONG] = String.valueOf(filmDate.getTime() / 1000);
                 } else {
@@ -252,7 +252,7 @@ public class Film extends FilmProps {
         return ret;
     }
 
-    private String getUrlFlvstreamerKlein() {
+    private String getUrlFlvstreamerSmall() {
         // liefert die kleine flvstreamer URL
         String ret;
         if (!arr[FilmXml.FILM_URL_RTMP_SMALL].isEmpty()) {

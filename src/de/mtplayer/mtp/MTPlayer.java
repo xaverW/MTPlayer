@@ -17,7 +17,7 @@ package de.mtplayer.mtp;
 
 import de.mtplayer.mLib.tools.Functions;
 import de.mtplayer.mLib.tools.StringFormatters;
-import de.mtplayer.mtp.controller.ProgQuitt;
+import de.mtplayer.mtp.controller.ProgQuit;
 import de.mtplayer.mtp.controller.ProgSave;
 import de.mtplayer.mtp.controller.ProgStart;
 import de.mtplayer.mtp.controller.config.ProgConfig;
@@ -56,10 +56,10 @@ public class MTPlayer extends Application {
     private static final int ICON_WIDTH = 58;
     private static final int ICON_HEIGHT = 58;
 
-    private static final String LOG_TEXT_PROGRAMMSTART = "Dauer Programmstart";
+    private static final String LOG_TEXT_PROGRAMSTART = "Dauer Programmstart";
 
-    private static final String TITLE_TEXT_PROGRAMMVERSION_IST_AKTUELL = "Programmversion ist aktuell";
-    private static final String TITLE_TEXT_EIN_PROGRAMMUPDATE_IST_VERFUEGBAR = "Ein Programmupdate ist verfügbar";
+    private static final String TITLE_TEXT_PROGRAM_VERSION_IS_UPTODATE = "Programmversion ist aktuell";
+    private static final String TITLE_TEXT_PROGRAMMUPDATE_EXISTS = "Ein Programmupdate ist verfügbar";
 
     protected ProgData progData;
     ProgStart progStart;
@@ -74,7 +74,7 @@ public class MTPlayer extends Application {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
 
-        Duration.counterStart(LOG_TEXT_PROGRAMMSTART);
+        Duration.counterStart(LOG_TEXT_PROGRAMSTART);
         progData = ProgData.getInstance();
         progData.primaryStage = primaryStage;
         progStart = new ProgStart(progData);
@@ -83,7 +83,7 @@ public class MTPlayer extends Application {
         loadData();
         initRootLayout();
         losGehts();
-        Duration.counterStop(LOG_TEXT_PROGRAMMSTART);
+        Duration.counterStop(LOG_TEXT_PROGRAMSTART);
     }
 
     private void initP2() {
@@ -133,7 +133,7 @@ public class MTPlayer extends Application {
             primaryStage.setScene(scene);
             primaryStage.setOnCloseRequest(e -> {
                 e.consume();
-                new ProgQuitt().quitt(true, false);
+                new ProgQuit().quit(true, false);
             });
 
             GuiSize.setPos(ProgConfig.SYSTEM_SIZE_GUI.getStringProperty(), primaryStage);
@@ -163,11 +163,11 @@ public class MTPlayer extends Application {
     }
 
     private void setUpdateTitle() {
-        primaryStage.setTitle(TITLE_TEXT_EIN_PROGRAMMUPDATE_IST_VERFUEGBAR);
+        primaryStage.setTitle(TITLE_TEXT_PROGRAMMUPDATE_EXISTS);
     }
 
     private void setNoUpdateTitle() {
-        primaryStage.setTitle(TITLE_TEXT_PROGRAMMVERSION_IST_AKTUELL);
+        primaryStage.setTitle(TITLE_TEXT_PROGRAM_VERSION_IS_UPTODATE);
     }
 
     private void initProg() {

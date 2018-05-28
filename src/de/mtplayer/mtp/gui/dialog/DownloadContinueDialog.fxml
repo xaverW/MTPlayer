@@ -48,7 +48,7 @@
                                 <Button fx:id="btnPath" mnemonicParsing="false" text="Button"/>
                             </children>
                         </HBox>
-                        <Label fx:id="lblSizeFree" text="" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                        <Label fx:id="lblSizeFree" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
                     </children>
                 </GridPane>
                 <HBox alignment="BOTTOM_RIGHT" spacing="10.0">

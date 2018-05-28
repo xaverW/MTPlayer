@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 public class DownloadListStarts {
     private final ProgData progData;
     private final DownloadList downloadList;
-    private final LinkedList<Download> aktivDownloads = new LinkedList<>();
+    private final LinkedList<Download> activeDownloads = new LinkedList<>();
 
     public DownloadListStarts(ProgData progData, DownloadList downloadList) {
         this.progData = progData;
@@ -43,7 +43,7 @@ public class DownloadListStarts {
 
         final int[] ret = new int[]{0, 0, 0, 0, 0, 0, 0};
         for (final Download download : downloadList) {
-            if (!download.isZurueckgestellt()) {
+            if (!download.getPlacedBack()) {
                 ++ret[0];
             }
             if (download.isAbo()) {
@@ -76,9 +76,9 @@ public class DownloadListStarts {
      */
     public synchronized int getNumberOfStartsNotFinished() {
         // todo?? wird aber nicht benutzt
-        for (final Download datenDownload : downloadList) {
-            final Start s = datenDownload.getStart();
-            if (datenDownload.isStarted()) {
+        for (final Download dataDownload : downloadList) {
+            final Start s = dataDownload.getStart();
+            if (dataDownload.isStarted()) {
                 return downloadList.size();
             }
         }
@@ -136,21 +136,21 @@ public class DownloadListStarts {
     /**
      * Return a List of all not yet finished downloads.
      *
-     * @param quelle Use QUELLE_XXX constants from {@link de.mtplayer.mtp.controller.starter.Start}.
+     * @param source Use QUELLE_XXX constants from {@link de.mtplayer.mtp.controller.starter.Start}.
      * @return A list with all download objects.
      */
-    public synchronized LinkedList<Download> getListOfStartsNotFinished(String quelle) {
+    public synchronized LinkedList<Download> getListOfStartsNotFinished(String source) {
 
-        aktivDownloads.clear();
-        aktivDownloads.addAll(downloadList.stream().filter(download -> download.isStateStartedRun())
-                .filter(download -> quelle.equals(DownloadInfos.SRC_ALL) || download.getSource().equals(quelle))
+        activeDownloads.clear();
+        activeDownloads.addAll(downloadList.stream().filter(download -> download.isStateStartedRun())
+                .filter(download -> source.equals(DownloadInfos.SRC_ALL) || download.getSource().equals(source))
                 .collect(Collectors.toList()));
-        return aktivDownloads;
+        return activeDownloads;
     }
 
-    public synchronized void buttonStartsPutzen() {
+    public synchronized void cleanUpButtonStarts() {
         // Starts durch Button die fertig sind, löschen
-        boolean gefunden = false;
+        boolean found = false;
         final Iterator<Download> it = downloadList.iterator();
         while (it.hasNext()) {
             final Download d = it.next();
@@ -158,11 +158,11 @@ public class DownloadListStarts {
                 if (d.getSource().equals(DownloadInfos.SRC_BUTTON)) {
                     // dann ist er fertig oder abgebrochen
                     it.remove();
-                    gefunden = true;
+                    found = true;
                 }
             }
         }
-        if (gefunden) {
+        if (found) {
 //            Listener.notify(Listener.EREIGNIS_START_EVENT_BUTTON, this.getClass().getSimpleName());
         }
     }
@@ -172,15 +172,15 @@ public class DownloadListStarts {
         // und versuchen dass bei mehreren laufenden Downloads ein anderer Sender gesucht wird
         Download ret = null;
         if (downloadList.size() > 0 && getDown(ProgConfig.DOWNLOAD_MAX_DOWNLOADS.getInt())) {
-            final Download datenDownload = naechsterStart();
-            if (datenDownload != null && datenDownload.isStateStartedWaiting()) {
-                ret = datenDownload;
+            final Download dataDownload = nextStart();
+            if (dataDownload != null && dataDownload.isStateStartedWaiting()) {
+                ret = dataDownload;
             }
         }
         return ret;
     }
 
-    private Download naechsterStart() {
+    private Download nextStart() {
         int nr = -1;
         Download tmpDownload = null;
 
@@ -236,11 +236,11 @@ public class DownloadListStarts {
         }
     }
 
-    private String getHost(Download datenDownload) {
+    private String getHost(Download download) {
         String host = "";
         try {
             try {
-                String uurl = datenDownload.getUrl();
+                String uurl = download.getUrl();
                 // die funktion "getHost()" kann nur das Protokoll "http" ??!??
                 if (uurl.startsWith("rtmpt:")) {
                     uurl = uurl.toLowerCase().replace("rtmpt:", "http:");
@@ -283,8 +283,8 @@ public class DownloadListStarts {
 
     private boolean getDown(int max) {
         int count = 0;
-        for (final Download datenDownload : downloadList) {
-            if (datenDownload.isStateStartedRun()) {
+        for (final Download download : downloadList) {
+            if (download.isStateStartedRun()) {
                 ++count;
                 if (count >= max) {
                     return false;

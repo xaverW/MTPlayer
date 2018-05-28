@@ -29,7 +29,7 @@ import javafx.scene.layout.Priority;
 /**
  * FXML Controller class
  */
-public class FilmInfosDialogController extends MTDialogExtra {
+public class FilmInfoDialogController extends MTDialogExtra {
 
     Button btnOk = new Button("Ok");
 
@@ -40,7 +40,7 @@ public class FilmInfosDialogController extends MTDialogExtra {
     final GridPane gridPane = new GridPane();
     private final ProgData progData;
 
-    public FilmInfosDialogController(ProgData progData) {
+    public FilmInfoDialogController(ProgData progData) {
         super(null, ProgConfig.SYSTEM_SIZE_DIALOG_FILMINFO,
                 "Filminfos", false);
 

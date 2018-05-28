@@ -54,7 +54,7 @@ public class FilterToXml {
     public static final int FILTER_ONLY_NEW = 26;
     public static final int FILTER_ONLY_UT = 27;
     public static final int FILTER_ONLY_LIVE = 28;
-    public static final int FILTER_ONLY_AKT_HISTOR = 29;
+    public static final int FILTER_ONLY_ACT_HISTORY = 29;
 
     public static final int FILTER_NOT_VIS = 30;
     public static final int FILTER_NOT_ABO = 31;
@@ -148,7 +148,7 @@ public class FilterToXml {
         sf.setOnlyVis(Boolean.parseBoolean(array[FILTER_ONLY_VIS]));
         sf.setOnlyHd(Boolean.parseBoolean(array[FILTER_ONLY_HD]));
         sf.setOnlyLive(Boolean.parseBoolean(array[FILTER_ONLY_LIVE]));
-        sf.setOnlyAktHistory(Boolean.parseBoolean(array[FILTER_ONLY_AKT_HISTOR]));
+        sf.setOnlyAktHistory(Boolean.parseBoolean(array[FILTER_ONLY_ACT_HISTORY]));
         sf.setOnlyNew(Boolean.parseBoolean(array[FILTER_ONLY_NEW]));
         sf.setOnlyUt(Boolean.parseBoolean(array[FILTER_ONLY_UT]));
 
@@ -177,7 +177,7 @@ public class FilterToXml {
             sf.setDays(SelectedFilter.FILTER_DAYS_MAX);
 
             sf.setMinDur(0);
-            sf.setMaxDur(SelectedFilter.FILTER_DURATIION_MAX_MIN);
+            sf.setMaxDur(SelectedFilter.FILTER_DURATION_MAX_MIN);
 
             sf.setMinTime(0);
             sf.setMaxTime(SelectedFilter.FILTER_FILMTIME_MAX_SEC);
@@ -220,7 +220,7 @@ public class FilterToXml {
         array[FILTER_ONLY_VIS] = String.valueOf(sf.isOnlyVis());
         array[FILTER_ONLY_HD] = String.valueOf(sf.isOnlyHd());
         array[FILTER_ONLY_LIVE] = String.valueOf(sf.isOnlyLive());
-        array[FILTER_ONLY_AKT_HISTOR] = String.valueOf(sf.isOnlyAktHistory());
+        array[FILTER_ONLY_ACT_HISTORY] = String.valueOf(sf.isOnlyAktHistory());
         array[FILTER_ONLY_NEW] = String.valueOf(sf.isOnlyNew());
         array[FILTER_ONLY_UT] = String.valueOf(sf.isOnlyUt());
 

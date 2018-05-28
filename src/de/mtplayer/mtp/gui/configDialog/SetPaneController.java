@@ -208,12 +208,12 @@ public class SetPaneController extends AnchorPane {
         btnDup.setMaxWidth(Double.MAX_VALUE);
 
         Button btnCheck = new Button("Prüfen");
-        btnCheck.setOnAction(event -> SetsPrograms.programmePruefen(progData));
+        btnCheck.setOnAction(event -> SetsPrograms.checkPrograms(progData));
         HBox.setHgrow(btnCheck, Priority.ALWAYS);
         btnCheck.setMaxWidth(Double.MAX_VALUE);
 
         final Button btnHelp = new PButton().helpButton("Set",
-                new GetFile().getHilfeSuchen(GetFile.PFAD_HILFETEXT_PRGRAMME));
+                new GetFile().getHelpSearch(GetFile.PATH_HELPTEXT_PRGRAM));
 
 
         HBox hBox = new HBox();
@@ -280,7 +280,7 @@ public class SetPaneController extends AnchorPane {
                 radioButton.setToggleGroup(toggleGroup);
                 radioButton.setSelected(item.booleanValue());
 
-                radioButton.setOnAction(event -> progData.setList.setAbspielen(setData));
+                radioButton.setOnAction(event -> progData.setList.setPlay(setData));
 
                 hbox.getChildren().addAll(radioButton);
                 setGraphic(hbox);

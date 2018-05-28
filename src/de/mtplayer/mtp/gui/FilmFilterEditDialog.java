@@ -57,7 +57,7 @@ public class FilmFilterEditDialog extends MTDialog {
         init(vBoxCont);
 
         final Button btnHelpAbo = new PButton().helpButton("Filter ein- und ausschalten",
-                HelpText.GUI_FILME_EDIT_FILTER);
+                HelpText.GUI_FILMS_EDIT_FILTER);
 
         HBox hBox = new HBox();
         hBox.setSpacing(10);

@@ -130,7 +130,7 @@ public class MediaDialogPaneMedia extends ScrollPane {
         btnPlay.setOnAction(e -> play());
         btnPlay.disableProperty().bind(txtPathMedia.textProperty().isEmpty().and(txtTitleMedia.textProperty().isEmpty()));
 
-        initTableMedien();
+        initTableMedia();
         setTableDate();
     }
 
@@ -138,7 +138,7 @@ public class MediaDialogPaneMedia extends ScrollPane {
         String file = txtTitleMedia.getText();
         String dir = txtPathMedia.getText();
         if (!file.isEmpty() && !dir.isEmpty()) {
-            MTOpen.playStoredFilm(Functions.addsPfad(dir, file));
+            MTOpen.playStoredFilm(Functions.addsPath(dir, file));
         }
     }
 
@@ -155,7 +155,7 @@ public class MediaDialogPaneMedia extends ScrollPane {
     }
 
 
-    private void initTableMedien() {
+    private void initTableMedia() {
         txtTitleMedia.setText("");
         txtPathMedia.setText("");
 
@@ -199,19 +199,19 @@ public class MediaDialogPaneMedia extends ScrollPane {
             }
             final Pattern p = Filter.makePattern(searchStr);
             if (p != null) {
-                return filterMedien(media, p);
+                return filterMedia(media, p);
             } else {
-                return filterMedien(media, searchStr);
+                return filterMedia(media, searchStr);
             }
         });
         lblTrefferMedia.setText(progData.mediaList.getFilteredList().size() + "");
     }
 
-    private boolean filterMedien(MediaData media, Pattern p) {
+    private boolean filterMedia(MediaData media, Pattern p) {
         return p.matcher(media.getName()).matches();
     }
 
-    private boolean filterMedien(MediaData media, String search) {
+    private boolean filterMedia(MediaData media, String search) {
         return media.getName().toLowerCase().contains(search);
     }
 

@@ -35,9 +35,9 @@ public class TableAbo {
         final TableColumn<Abo, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("nr"));
 
-        final TableColumn<Abo, Boolean> aktivColumn = new TableColumn<>("Aktiv");
-        aktivColumn.setCellValueFactory(new PropertyValueFactory<>("active"));
-        aktivColumn.setCellFactory(callbackAktiv);
+        final TableColumn<Abo, Boolean> activColumn = new TableColumn<>("Aktiv");
+        activColumn.setCellValueFactory(new PropertyValueFactory<>("active"));
+        activColumn.setCellFactory(callbackAktiv);
 
         final TableColumn<Abo, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -48,19 +48,19 @@ public class TableAbo {
         final TableColumn<Abo, String> senderColumn = new TableColumn<>("Sender");
         senderColumn.setCellValueFactory(new PropertyValueFactory<>("channel"));
 
-        final TableColumn<Abo, Boolean> senderExaktColumn = new TableColumn<>("Sender exakt");
-        senderExaktColumn.setCellValueFactory(new PropertyValueFactory<>("channelExact"));
-        senderExaktColumn.setCellFactory(CheckBoxTableCell.forTableColumn(senderExaktColumn));
+        final TableColumn<Abo, Boolean> senderExactColumn = new TableColumn<>("Sender exakt");
+        senderExactColumn.setCellValueFactory(new PropertyValueFactory<>("channelExact"));
+        senderExactColumn.setCellFactory(CheckBoxTableCell.forTableColumn(senderExactColumn));
 
-        final TableColumn<Abo, String> themaColumn = new TableColumn<>("Thema");
-        themaColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
+        final TableColumn<Abo, String> themeColumn = new TableColumn<>("Thema");
+        themeColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
 
-        final TableColumn<Abo, Boolean> themaExaktColumn = new TableColumn<>("Thema exakt");
-        themaExaktColumn.setCellValueFactory(new PropertyValueFactory<>("themeExact"));
-        themaExaktColumn.setCellFactory(CheckBoxTableCell.forTableColumn(themaExaktColumn));
+        final TableColumn<Abo, Boolean> themeExactColumn = new TableColumn<>("Thema exakt");
+        themeExactColumn.setCellValueFactory(new PropertyValueFactory<>("themeExact"));
+        themeExactColumn.setCellFactory(CheckBoxTableCell.forTableColumn(themeExactColumn));
 
-        final TableColumn<Abo, String> titelColumn = new TableColumn<>("Titel");
-        titelColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        final TableColumn<Abo, String> titleColumn = new TableColumn<>("Titel");
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
 
         final TableColumn<Abo, String> themeTitleColumn = new TableColumn<>("Thema-Titel");
         themeTitleColumn.setCellValueFactory(new PropertyValueFactory<>("themeTitle"));
@@ -84,8 +84,8 @@ public class TableAbo {
         psetColumn.setCellValueFactory(new PropertyValueFactory<>("pset"));
 
         return new TableColumn[]{
-                nrColumn, aktivColumn, nameColumn, resColumn, senderColumn, senderExaktColumn,
-                themaColumn, themaExaktColumn, titelColumn, themeTitleColumn,
+                nrColumn, activColumn, nameColumn, resColumn, senderColumn, senderExactColumn,
+                themeColumn, themeExactColumn, titleColumn, themeTitleColumn,
                 somewhereColumn, minColumn, maxColumn, destinationColumn, datumColumn, psetColumn};
 
     }

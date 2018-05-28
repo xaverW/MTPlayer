@@ -21,24 +21,24 @@ import javafx.scene.image.ImageView;
 
 public class GetIcon {
 
-    private final static String PFAD_PROGRAMM = "/de/mtplayer/mtp/res/programm/";
-    private final static String PFAD_SENDER = "/de/mtplayer/mtp/res/sender/";
-    private final static String PFAD_RES = "/de/mtplayer/mtp/res/";
+    private final static String PATH_PROGRAM = "/de/mtplayer/mtp/res/programm/";
+    private final static String PATH_SENDER = "/de/mtplayer/mtp/res/sender/";
+    private final static String PATH_RES = "/de/mtplayer/mtp/res/";
 
     public static ImageView getImageView(String strIcon, int w, int h) {
-        return new ImageView(getImage(strIcon, PFAD_PROGRAMM, w, h));
+        return new ImageView(getImage(strIcon, PATH_PROGRAM, w, h));
     }
 
     public static ImageView getImageView(String strIcon) {
-        return new ImageView(getImage(strIcon, PFAD_PROGRAMM, 0, 0));
+        return new ImageView(getImage(strIcon, PATH_PROGRAM, 0, 0));
     }
 
     public static Image getImage(String strIcon, int w, int h) {
-        return getImage(strIcon, PFAD_PROGRAMM, w, h);
+        return getImage(strIcon, PATH_PROGRAM, w, h);
     }
 
     public static Image getImage(String strIcon) {
-        return getImage(strIcon, PFAD_PROGRAMM, 0, 0);
+        return getImage(strIcon, PATH_PROGRAM, 0, 0);
     }
 
     public static Image getImage(String strIcon, String path, int w, int h) {

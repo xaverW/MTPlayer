@@ -30,7 +30,7 @@ import de.mtplayer.mtp.controller.starter.StarterClass;
 import de.mtplayer.mtp.gui.AboGuiController;
 import de.mtplayer.mtp.gui.DownloadGuiController;
 import de.mtplayer.mtp.gui.FilmGuiController;
-import de.mtplayer.mtp.gui.dialog.FilmInfosDialogController;
+import de.mtplayer.mtp.gui.dialog.FilmInfoDialogController;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.tools.filmListFilter.FilmListFilter;
 import de.mtplayer.mtp.tools.storedFilter.StoredFilter;
@@ -66,7 +66,7 @@ public class ProgData {
     public DownloadGuiController downloadGuiController = null; // Tab mit den Downloads
     public AboGuiController aboGuiController = null; // Tab mit den Abos
 
-    public FilmInfosDialogController filmInfosDialogController = null;
+    public FilmInfoDialogController filmInfoDialogController = null;
 
     // Programmdaten
     public Filmlist filmlist = null; // ist die komplette Filmliste
@@ -118,7 +118,7 @@ public class ProgData {
 
         Timeline timeline = new Timeline(new KeyFrame(
                 Duration.millis(1000), ae -> {
-            downloadList.makeDownloadInfos();
+            downloadList.makeDownloadInfo();
             Listener.notify(Listener.EREIGNIS_TIMER, ProgData.class.getName());
         }));
         timeline.setCycleCount(Animation.INDEFINITE);
@@ -139,7 +139,7 @@ public class ProgData {
 
 
     public void initDialogs() {
-        filmInfosDialogController = new FilmInfosDialogController(this);
+        filmInfoDialogController = new FilmInfoDialogController(this);
     }
 
 

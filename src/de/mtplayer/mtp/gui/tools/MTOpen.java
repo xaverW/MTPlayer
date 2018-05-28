@@ -28,28 +28,28 @@ import java.net.URI;
 
 public class MTOpen {
 
-    public static void openDestDir(String ordner) {
+    public static void openDestDir(String path) {
         File directory;
 
-        if (ordner.isEmpty()) {
+        if (path.isEmpty()) {
             return;
         }
-        if (!ordner.endsWith(File.separator)) {
-            ordner += File.separator;
+        if (!path.endsWith(File.separator)) {
+            path += File.separator;
         }
 
-        if (new File(ordner).exists()) {
-            directory = new File(ordner);
+        if (new File(path).exists()) {
+            directory = new File(path);
         } else {
-            directory = new File(ordner).getParentFile();
+            directory = new File(path).getParentFile();
         }
 
 
         if (!ProgConfig.SYSTEM_PROG_OPEN_DIR.get().isEmpty()) {
             Exception exception;
             try {
-                final String programm = ProgConfig.SYSTEM_PROG_OPEN_DIR.get();
-                final String[] arrProgCallArray = {programm, directory.getAbsolutePath()};
+                final String program = ProgConfig.SYSTEM_PROG_OPEN_DIR.get();
+                final String[] arrProgCallArray = {program, directory.getAbsolutePath()};
                 Runtime.getRuntime().exec(arrProgCallArray);
             } catch (final Exception ex) {
                 afterPlay(directory.getAbsolutePath(), TEXT.DIR, ex);
@@ -75,13 +75,13 @@ public class MTOpen {
         }
     }
 
-    public static void playStoredFilm(String datei) {
+    public static void playStoredFilm(String file) {
 
         File filmFile;
-        if (datei.isEmpty()) {
+        if (file.isEmpty()) {
             return;
         }
-        filmFile = new File(datei);
+        filmFile = new File(file);
 
         if (!filmFile.exists()) {
             new MTAlert().showErrorAlert("Fehler", "Kein Film", "Film existiert noch nicht!");
@@ -92,8 +92,8 @@ public class MTOpen {
         if (!ProgConfig.SYSTEM_PROG_PLAY_FILE.get().isEmpty()) {
             // dann mit dem vorgegebenen Player starten
             try {
-                final String programm = ProgConfig.SYSTEM_PROG_PLAY_FILE.get();
-                final String[] cmd = {programm, filmFile.getAbsolutePath()};
+                final String program = ProgConfig.SYSTEM_PROG_PLAY_FILE.get();
+                final String[] cmd = {program, filmFile.getAbsolutePath()};
                 Runtime.getRuntime().exec(cmd);
             } catch (final Exception ex) {
                 afterPlay(filmFile.getAbsolutePath(), TEXT.FILE, ex);
@@ -130,8 +130,8 @@ public class MTOpen {
         if (!ProgConfig.SYSTEM_PROG_OPEN_URL.get().isEmpty()) {
             // dann mit dem vorgegebenen Player starten
             try {
-                final String programm = ProgConfig.SYSTEM_PROG_OPEN_URL.get();
-                final String[] cmd = {programm, url};
+                final String program = ProgConfig.SYSTEM_PROG_OPEN_URL.get();
+                final String[] cmd = {program, url};
                 Runtime.getRuntime().exec(cmd);
             } catch (final Exception ex) {
                 afterPlay(url, TEXT.URL, ex);
@@ -161,7 +161,7 @@ public class MTOpen {
     enum TEXT {FILE, DIR, URL}
 
     private static void afterPlay(String directory, TEXT t, Exception exception) {
-        String programm = "";
+        String program = "";
         boolean ok;
         String title, header, cont;
         MLConfigs conf;
@@ -192,11 +192,11 @@ public class MTOpen {
 
 
         try {
-            programm = new MTAlert().showAlertFileCooser(title, header, cont, false);
-            if (!programm.isEmpty()) {
-                final String[] cmd = {programm, directory};
+            program = new MTAlert().showAlertFileCooser(title, header, cont, false);
+            if (!program.isEmpty()) {
+                final String[] cmd = {program, directory};
                 Runtime.getRuntime().exec(cmd);
-                conf.setValue(programm);
+                conf.setValue(program);
                 ok = true;
             } else {
                 // abgebrochen
@@ -205,7 +205,7 @@ public class MTOpen {
 
         } catch (final Exception eex) {
             ok = false;
-            PLog.errorLog(959632369, eex, new String[]{"Kann nicht öffnen,", "Programm: " + programm,
+            PLog.errorLog(959632369, eex, new String[]{"Kann nicht öffnen,", "Programm: " + program,
                     "File/Url: " + directory});
         }
 

@@ -25,14 +25,14 @@ import javafx.beans.property.StringProperty;
 
 public class ProgProps extends Data<ProgProps> {
 
-    public static final int PROGRAMM_NAME = 0;
-    public static final int PROGRAMM_ZIEL_DATEINAME = 1;
-    public static final int PROGRAMM_PROGRAMMPFAD = 2;
-    public static final int PROGRAMM_SCHALTER = 3;
-    public static final int PROGRAMM_PRAEFIX = 4;
-    public static final int PROGRAMM_SUFFIX = 5;
-    public static final int PROGRAMM_RESTART = 6;
-    public static final int PROGRAMM_DOWNLOADMANAGER = 7;
+    public static final int PROGRAM_NAME = 0;
+    public static final int PROGRAM_DEST_FILENAME = 1;
+    public static final int PROGRAM_PROGRAMPATH = 2;
+    public static final int PROGRAM_SCHALTER = 3;
+    public static final int PROGRAM_PRAEFIX = 4;
+    public static final int PROGRAM_SUFFIX = 5;
+    public static final int PROGRAM_RESTART = 6;
+    public static final int PROGRAM_DOWNLOADMANAGER = 7;
 
     public static final int MAX_ELEM = 8;
     public static final String TAG = "Programm";
@@ -177,25 +177,25 @@ public class ProgProps extends Data<ProgProps> {
     }
 
     public void setPropsFromXml() {
-        setName(arr[PROGRAMM_NAME]);
-        setDestName(arr[PROGRAMM_ZIEL_DATEINAME]);
-        setProgPath(arr[PROGRAMM_PROGRAMMPFAD]);
-        setProgSwitch(arr[PROGRAMM_SCHALTER]);
-        setPraefix(arr[PROGRAMM_PRAEFIX]);
-        setSuffix(arr[PROGRAMM_SUFFIX]);
-        setRestart(Boolean.parseBoolean(arr[PROGRAMM_RESTART]));
-        setDownManager(Boolean.parseBoolean(arr[PROGRAMM_DOWNLOADMANAGER]));
+        setName(arr[PROGRAM_NAME]);
+        setDestName(arr[PROGRAM_DEST_FILENAME]);
+        setProgPath(arr[PROGRAM_PROGRAMPATH]);
+        setProgSwitch(arr[PROGRAM_SCHALTER]);
+        setPraefix(arr[PROGRAM_PRAEFIX]);
+        setSuffix(arr[PROGRAM_SUFFIX]);
+        setRestart(Boolean.parseBoolean(arr[PROGRAM_RESTART]));
+        setDownManager(Boolean.parseBoolean(arr[PROGRAM_DOWNLOADMANAGER]));
     }
 
     public void setXmlFromProps() {
-        arr[PROGRAMM_NAME] = getName();
-        arr[PROGRAMM_ZIEL_DATEINAME] = getDestName();
-        arr[PROGRAMM_PROGRAMMPFAD] = getProgPath();
-        arr[PROGRAMM_SCHALTER] = getProgSwitch();
-        arr[PROGRAMM_PRAEFIX] = getPraefix();
-        arr[PROGRAMM_SUFFIX] = getSuffix();
-        arr[PROGRAMM_RESTART] = String.valueOf(isRestart());
-        arr[PROGRAMM_DOWNLOADMANAGER] = String.valueOf(isDownManager());
+        arr[PROGRAM_NAME] = getName();
+        arr[PROGRAM_DEST_FILENAME] = getDestName();
+        arr[PROGRAM_PROGRAMPATH] = getProgPath();
+        arr[PROGRAM_SCHALTER] = getProgSwitch();
+        arr[PROGRAM_PRAEFIX] = getPraefix();
+        arr[PROGRAM_SUFFIX] = getSuffix();
+        arr[PROGRAM_RESTART] = String.valueOf(isRestart());
+        arr[PROGRAM_DOWNLOADMANAGER] = String.valueOf(isDownManager());
     }
 
 }

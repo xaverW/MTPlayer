@@ -39,52 +39,52 @@ public class WriteFilmlistJson {
         return jg;
     }
 
-    public void write(String datei, Filmlist filmlist) {
+    public void write(String file, Filmlist filmlist) {
         try {
             PLog.userLog("Filme schreiben (" + filmlist.size() + " Filme) :");
 
-            PLog.userLog("   --> Start Schreiben nach: " + datei);
-            String sender = "", thema = "";
+            PLog.userLog("   --> Start Schreiben nach: " + file);
+            String sender = "", theme = "";
 
-            try (FileOutputStream fos = new FileOutputStream(datei);
+            try (FileOutputStream fos = new FileOutputStream(file);
                  JsonGenerator jg = getJsonGenerator(fos)) {
 
                 jg.writeStartObject();
                 // Infos zur Filmliste
-                jg.writeArrayFieldStart(FilmlistXml.FILMLISTE);
+                jg.writeArrayFieldStart(FilmlistXml.FILMLIST);
                 for (int i = 0; i < FilmlistXml.MAX_ELEM; ++i) {
-                    jg.writeString(filmlist.metaDaten[i]);
+                    jg.writeString(filmlist.metaData[i]);
                 }
                 jg.writeEndArray();
                 // Infos der Felder in der Filmliste
-                jg.writeArrayFieldStart(FilmlistXml.FILMLISTE);
+                jg.writeArrayFieldStart(FilmlistXml.FILMLIST);
                 for (int i = 0; i < FilmXml.JSON_NAMES.length; ++i) {
                     jg.writeString(FilmXml.COLUMN_NAMES[FilmXml.JSON_NAMES[i]]);
                 }
                 jg.writeEndArray();
                 //Filme schreiben
-                for (Film datenFilm : filmlist) {
-                    datenFilm.arr[FilmXml.FILM_NEW] = Boolean.toString(datenFilm.isNewFilm()); // damit wirs beim nächsten Programmstart noch wissen
+                for (Film film : filmlist) {
+                    film.arr[FilmXml.FILM_NEW] = Boolean.toString(film.isNewFilm()); // damit wirs beim nächsten Programmstart noch wissen
 
                     jg.writeArrayFieldStart(FilmXml.TAG_JSON_LIST);
                     for (int i = 0; i < FilmXml.JSON_NAMES.length; ++i) {
                         int m = FilmXml.JSON_NAMES[i];
                         if (m == FilmXml.FILM_CHANNEL) {
-                            if (datenFilm.arr[m].equals(sender)) {
+                            if (film.arr[m].equals(sender)) {
                                 jg.writeString("");
                             } else {
-                                sender = datenFilm.arr[m];
-                                jg.writeString(datenFilm.arr[m]);
+                                sender = film.arr[m];
+                                jg.writeString(film.arr[m]);
                             }
                         } else if (m == FilmXml.FILM_THEME) {
-                            if (datenFilm.arr[m].equals(thema)) {
+                            if (film.arr[m].equals(theme)) {
                                 jg.writeString("");
                             } else {
-                                thema = datenFilm.arr[m];
-                                jg.writeString(datenFilm.arr[m]);
+                                theme = film.arr[m];
+                                jg.writeString(film.arr[m]);
                             }
                         } else {
-                            jg.writeString(datenFilm.arr[m]);
+                            jg.writeString(film.arr[m]);
                         }
                     }
                     jg.writeEndArray();
@@ -93,7 +93,7 @@ public class WriteFilmlistJson {
                 PLog.userLog("   --> geschrieben!");
             }
         } catch (Exception ex) {
-            PLog.errorLog(846930145, ex, "nach: " + datei);
+            PLog.errorLog(846930145, ex, "nach: " + file);
         }
     }
 }

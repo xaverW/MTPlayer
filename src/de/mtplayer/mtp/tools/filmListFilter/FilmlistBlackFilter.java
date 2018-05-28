@@ -44,15 +44,15 @@ public class FilmlistBlackFilter {
         // mit der Liste wird dannn im TabFilme weiter gearbeitet
 
         final Filmlist filmlist = PROG_DATA.filmlist;
-        final Filmlist listeRet = PROG_DATA.filmlistFiltered;
+        final Filmlist listRet = PROG_DATA.filmlistFiltered;
 
         loadCurrentFilterSettings();
 
         Duration.counterStart("FilmlistBlackFilter.getFilmListBlackFiltered");
-        listeRet.clear();
+        listRet.clear();
 
         if (filmlist != null) {
-            listeRet.setMeta(filmlist);
+            listRet.setMeta(filmlist);
 
             Stream<Film> initialStream = filmlist.parallelStream();
 
@@ -86,11 +86,11 @@ public class FilmlistBlackFilter {
 
             final List<Film> col = initialStream.collect(Collectors.toList());
 
-            listeRet.addAll(col);
+            listRet.addAll(col);
             col.clear();
 
             // Array mit Sendernamen/Themen füllen
-            listeRet.themenLaden();
+            listRet.loadTheme();
         }
         Duration.counterStop("FilmlistBlackFilter.getFilmListBlackFiltered");
     }
@@ -219,7 +219,7 @@ public class FilmlistBlackFilter {
     private static boolean applyBlacklistFilters(Film film) {
         for (final BlackData blackData : PROG_DATA.blackList) {
 
-            if (FilmFilter.filterAufFilmPruefen(
+            if (FilmFilter.checkFilmWithFilter(
                     blackData.fChannel,
                     blackData.fTheme,
                     blackData.fThemeTitle,
@@ -227,7 +227,7 @@ public class FilmlistBlackFilter {
                     blackData.fSomewhere,
 
                     0,
-                    SelectedFilter.FILTER_DURATIION_MAX_SEC,
+                    SelectedFilter.FILTER_DURATION_MAX_SEC,
 
                     film,
                     false /* auch die Länge prüfen */)) {

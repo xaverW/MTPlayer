@@ -35,7 +35,7 @@ public class AboProps extends AboXml {
     private final StringProperty themeTitle = new SimpleStringProperty("");
     private final StringProperty somewhere = new SimpleStringProperty("");
     private final IntegerProperty minDuration = new SimpleIntegerProperty(0); // Minuten
-    private final IntegerProperty maxDuration = new SimpleIntegerProperty(SelectedFilter.FILTER_DURATIION_MAX_MIN); //Minuten
+    private final IntegerProperty maxDuration = new SimpleIntegerProperty(SelectedFilter.FILTER_DURATION_MAX_MIN); //Minuten
     private final StringProperty destination = new SimpleStringProperty("");
     private final ObjectProperty<MDate> date = new SimpleObjectProperty<>(new MDate(0));
     private final StringProperty pset = new SimpleStringProperty("");
@@ -146,8 +146,8 @@ public class AboProps extends AboXml {
         return themeExact;
     }
 
-    public void setThemeExact(boolean themaExact) {
-        this.themeExact.set(themaExact);
+    public void setThemeExact(boolean themeExact) {
+        this.themeExact.set(themeExact);
     }
 
     public String getTitle() {
@@ -308,7 +308,7 @@ public class AboProps extends AboXml {
             max = Integer.parseInt(arr[ABO_MAX_DURATION]);
         } catch (final Exception ex) {
             min = 0;
-            max = SelectedFilter.FILTER_DURATIION_MAX_MIN;
+            max = SelectedFilter.FILTER_DURATION_MAX_MIN;
         }
         setMinDuration(min);
         setMaxDuration(max);

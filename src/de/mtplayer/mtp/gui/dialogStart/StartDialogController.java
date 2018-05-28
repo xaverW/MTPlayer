@@ -47,9 +47,9 @@ public class StartDialogController extends MTDialog {
     private static final String STR_GEO = "Geo";
     private static final String STR_DOWN = "Zielverzeichnis";
     private static final String STR_PATH = "Programmpfade";
-    private static final String STR_QUITT = "Quitt";
+    private static final String STR_QUIT = "Quitt";
 
-    private enum State {START_1, START_2, UPDATE, GEO, DOWN, PATH, QUITT}
+    private enum State {START_1, START_2, UPDATE, GEO, DOWN, PATH, QUIT}
 
     private TreeItem<String> tiStart_1 = new TreeItem<>(STR_START_1);
     private TreeItem<String> tiStart_2 = new TreeItem<>(STR_START_2);
@@ -124,7 +124,7 @@ public class StartDialogController extends MTDialog {
                 bread.setSelectedCrumb(tiPath);
                 pathPane.toFront();
                 break;
-            case QUITT:
+            case QUIT:
             default:
                 btnOk.setDisable(false);
 
@@ -164,9 +164,9 @@ public class StartDialogController extends MTDialog {
                 case STR_PATH:
                     aktState = State.PATH;
                     break;
-                case STR_QUITT:
+                case STR_QUIT:
                 default:
-                    aktState = State.QUITT;
+                    aktState = State.QUIT;
                     break;
             }
             setState();

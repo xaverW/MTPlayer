@@ -28,48 +28,48 @@ import java.nio.file.Paths;
 
 public class MTInfoFile {
 
-    public static void writeInfoFile(Download datenDownload) {
-        PLog.sysLog(new String[]{"Infofile schreiben nach: ", datenDownload.getZielPfad()});
+    public static void writeInfoFile(Download download) {
+        PLog.sysLog(new String[]{"Infofile schreiben nach: ", download.getDestPath()});
 
-        new File(datenDownload.getZielPfad()).mkdirs();
-        final Path path = Paths.get(datenDownload.getFileNameWithoutSuffix() + ".txt");
+        new File(download.getDestPath()).mkdirs();
+        final Path path = Paths.get(download.getFileNameWithoutSuffix() + ".txt");
         try (DataOutputStream dos = new DataOutputStream(Files.newOutputStream(path));
              OutputStreamWriter osw = new OutputStreamWriter(dos);
              BufferedWriter br = new BufferedWriter(osw)) {
-            if (datenDownload.getFilm() != null) {
-                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_CHANNEL] + ":      " + datenDownload.getFilm().arr[FilmXml.FILM_CHANNEL]);
+            if (download.getFilm() != null) {
+                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_CHANNEL] + ":      " + download.getFilm().arr[FilmXml.FILM_CHANNEL]);
                 br.write("\n");
-                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_THEME] + ":       " + datenDownload.getFilm().arr[FilmXml.FILM_THEME]);
+                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_THEME] + ":       " + download.getFilm().arr[FilmXml.FILM_THEME]);
                 br.write("\n\n");
-                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_TITLE] + ":       " + datenDownload.getFilm().arr[FilmXml.FILM_TITLE]);
+                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_TITLE] + ":       " + download.getFilm().arr[FilmXml.FILM_TITLE]);
                 br.write("\n\n");
-                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_DATE] + ":       " + datenDownload.getFilm().arr[FilmXml.FILM_DATE]);
+                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_DATE] + ":       " + download.getFilm().arr[FilmXml.FILM_DATE]);
                 br.write("\n");
-                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_TIME] + ":        " + datenDownload.getFilm().arr[FilmXml.FILM_TIME]);
+                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_TIME] + ":        " + download.getFilm().arr[FilmXml.FILM_TIME]);
                 br.write("\n");
-                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_DURATION] + ":       " + datenDownload.getFilm().arr[FilmXml.FILM_DURATION]);
+                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_DURATION] + ":       " + download.getFilm().arr[FilmXml.FILM_DURATION]);
                 br.write("\n");
-                br.write(DownloadXml.COLUMN_NAMES[DownloadXml.DOWNLOAD_GROESSE] + ":  " + datenDownload.getDownloadSize());
+                br.write(DownloadXml.COLUMN_NAMES[DownloadXml.DOWNLOAD_SIZE] + ":  " + download.getDownloadSize());
                 br.write("\n\n");
 
-                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_WEBSEITE] + '\n');
-                br.write(datenDownload.getFilm().arr[FilmXml.FILM_WEBSEITE]);
+                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_WEBSITE] + '\n');
+                br.write(download.getFilm().arr[FilmXml.FILM_WEBSITE]);
                 br.write("\n\n");
             }
 
             br.write(DownloadXml.COLUMN_NAMES[DownloadXml.DOWNLOAD_URL] + '\n');
-            br.write(datenDownload.getUrl());
+            br.write(download.getUrl());
             br.write("\n\n");
-            if (!datenDownload.getUrlRtmp().isEmpty()
-                    && !datenDownload.getUrlRtmp().equals(datenDownload.getUrl())) {
+            if (!download.getUrlRtmp().isEmpty()
+                    && !download.getUrlRtmp().equals(download.getUrl())) {
                 br.write(DownloadXml.COLUMN_NAMES[DownloadXml.DOWNLOAD_URL_RTMP] + '\n');
-                br.write(datenDownload.getUrlRtmp());
+                br.write(download.getUrlRtmp());
                 br.write("\n\n");
             }
 
-            if (datenDownload.getFilm() != null) {
+            if (download.getFilm() != null) {
                 int anz = 0;
-                for (final String s : datenDownload.getFilm().arr[FilmXml.FILM_DESCRIPTION].split(" ")) {
+                for (final String s : download.getFilm().arr[FilmXml.FILM_DESCRIPTION].split(" ")) {
                     anz += s.length();
                     br.write(s + ' ');
                     if (anz > 50) {
@@ -82,7 +82,7 @@ public class MTInfoFile {
             br.flush();
             PLog.userLog(new String[]{"Infofile", "  geschrieben"});
         } catch (final IOException ex) {
-            PLog.errorLog(975410369, datenDownload.getZielPfadDatei());
+            PLog.errorLog(975410369, download.getDestPathFile());
         }
     }
 

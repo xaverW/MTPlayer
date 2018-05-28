@@ -63,51 +63,51 @@ public final class SelectedFilter extends SelectedFilterProps {
         setTitleVis(true);
     }
 
-    public static void copyFilter(SelectedFilter sfVon, SelectedFilter sfNach) {
-        sfNach.setName(sfVon.getName());
+    public static void copyFilter(SelectedFilter sfFrom, SelectedFilter sfTo) {
+        sfTo.setName(sfFrom.getName());
 
-        sfNach.setChannelVis(sfVon.getChannelVis());
-        sfNach.setChannelExact(sfVon.getChannelExact());
-        sfNach.setChannel(sfVon.getChannel());
-        sfNach.setThemeVis(sfVon.isThemeVis());
-        sfNach.setThemeExact(sfVon.isThemeExact());
-        sfNach.setTheme(sfVon.getTheme());
-        sfNach.setThemeTitleVis(sfVon.isThemeTitleVis());
-        sfNach.setThemeTitle(sfVon.getThemeTitle());
-        sfNach.setTitleVis(sfVon.isTitleVis());
-        sfNach.setTitle(sfVon.getTitle());
-        sfNach.setSomewhereVis(sfVon.isSomewhereVis());
-        sfNach.setSomewhere(sfVon.getSomewhere());
-        sfNach.setUrlVis(sfVon.isUrlVis());
-        sfNach.setUrl(sfVon.getUrl());
+        sfTo.setChannelVis(sfFrom.getChannelVis());
+        sfTo.setChannelExact(sfFrom.getChannelExact());
+        sfTo.setChannel(sfFrom.getChannel());
+        sfTo.setThemeVis(sfFrom.isThemeVis());
+        sfTo.setThemeExact(sfFrom.isThemeExact());
+        sfTo.setTheme(sfFrom.getTheme());
+        sfTo.setThemeTitleVis(sfFrom.isThemeTitleVis());
+        sfTo.setThemeTitle(sfFrom.getThemeTitle());
+        sfTo.setTitleVis(sfFrom.isTitleVis());
+        sfTo.setTitle(sfFrom.getTitle());
+        sfTo.setSomewhereVis(sfFrom.isSomewhereVis());
+        sfTo.setSomewhere(sfFrom.getSomewhere());
+        sfTo.setUrlVis(sfFrom.isUrlVis());
+        sfTo.setUrl(sfFrom.getUrl());
 
-        sfNach.setDaysVis(sfVon.isDaysVis());
-        sfNach.setDays(sfVon.getDays());
+        sfTo.setDaysVis(sfFrom.isDaysVis());
+        sfTo.setDays(sfFrom.getDays());
 
-        sfNach.setMinMaxDurVis(sfVon.getMinMaxDurVis());
-        sfNach.setMinDur(sfVon.getMinDur());
-        sfNach.setMaxDur(sfVon.getMaxDur());
+        sfTo.setMinMaxDurVis(sfFrom.getMinMaxDurVis());
+        sfTo.setMinDur(sfFrom.getMinDur());
+        sfTo.setMaxDur(sfFrom.getMaxDur());
 
-        sfNach.setMinMaxTimeVis(sfVon.isMinMaxTimeVis());
-        sfNach.setMinMaxTimeInvert(sfVon.getMinMaxTimeInvert());
-        sfNach.setMinTime(sfVon.getMinTime());
-        sfNach.setMaxTime(sfVon.getMaxTime());
+        sfTo.setMinMaxTimeVis(sfFrom.isMinMaxTimeVis());
+        sfTo.setMinMaxTimeInvert(sfFrom.getMinMaxTimeInvert());
+        sfTo.setMinTime(sfFrom.getMinTime());
+        sfTo.setMaxTime(sfFrom.getMaxTime());
 
-        sfNach.setOnlyVis(sfVon.isOnlyVis());
-        sfNach.setOnlyHd(sfVon.isOnlyHd());
-        sfNach.setOnlyNew(sfVon.isOnlyNew());
-        sfNach.setOnlyUt(sfVon.isOnlyUt());
-        sfNach.setOnlyLive(sfVon.isOnlyLive());
-        sfNach.setOnlyAktHistory(sfVon.isOnlyAktHistory());
+        sfTo.setOnlyVis(sfFrom.isOnlyVis());
+        sfTo.setOnlyHd(sfFrom.isOnlyHd());
+        sfTo.setOnlyNew(sfFrom.isOnlyNew());
+        sfTo.setOnlyUt(sfFrom.isOnlyUt());
+        sfTo.setOnlyLive(sfFrom.isOnlyLive());
+        sfTo.setOnlyAktHistory(sfFrom.isOnlyAktHistory());
 
-        sfNach.setNotVis(sfVon.isNotVis());
-        sfNach.setNotAbo(sfVon.isNotAbo());
-        sfNach.setNotHistory(sfVon.isNotHistory());
-        sfNach.setNotDouble(sfVon.isNotDouble());
-        sfNach.setNotGeo(sfVon.isNotGeo());
-        sfNach.setNotFuture(sfVon.isNotFuture());
+        sfTo.setNotVis(sfFrom.isNotVis());
+        sfTo.setNotAbo(sfFrom.isNotAbo());
+        sfTo.setNotHistory(sfFrom.isNotHistory());
+        sfTo.setNotDouble(sfFrom.isNotDouble());
+        sfTo.setNotGeo(sfFrom.isNotGeo());
+        sfTo.setNotFuture(sfFrom.isNotFuture());
 
-        sfNach.setBlacklistOn(sfVon.isBlacklistOn());
+        sfTo.setBlacklistOn(sfFrom.isBlacklistOn());
     }
 
     public void initFilter() {
@@ -194,7 +194,7 @@ public final class SelectedFilter extends SelectedFilterProps {
         setDays(FILTER_DAYS_MAX);
 
         setMinDur(0);
-        setMaxDur(FILTER_DURATIION_MAX_MIN);
+        setMaxDur(FILTER_DURATION_MAX_MIN);
 
         setMinTime(0);
         setMaxTime(FILTER_FILMTIME_MAX_SEC);
@@ -265,17 +265,17 @@ public final class SelectedFilter extends SelectedFilterProps {
         String filterTheme = selectedFilter.isThemeVis() ? selectedFilter.getTheme() : "";
         String filterThemeTitle = selectedFilter.isThemeTitleVis() ? selectedFilter.getThemeTitle() : "";
         String filterTitle = selectedFilter.isTitleVis() ? selectedFilter.getTitle() : "";
-        String filterSomwhere = selectedFilter.isSomewhereVis() ? selectedFilter.getSomewhere() : "";
+        String filterSomewhere = selectedFilter.isSomewhereVis() ? selectedFilter.getSomewhere() : "";
         String filterUrl = selectedFilter.isUrlVis() ? selectedFilter.getUrl() : "";
 
         final boolean channelExact = selectedFilter.getChannelExact();
-        final boolean themaExact = selectedFilter.isThemeExact();
+        final boolean themeExact = selectedFilter.isThemeExact();
         // Sender
         fChannel = new Filter(filterChannel, channelExact);
         fChannel.setArray();
 
         // Thema
-        fTheme = new Filter(filterTheme, themaExact);
+        fTheme = new Filter(filterTheme, themeExact);
         fTheme.setArray();
 
         // ThemaTitel
@@ -287,7 +287,7 @@ public final class SelectedFilter extends SelectedFilterProps {
         fTitle.setArray();
 
         // Irgendwo
-        fSomewhere = new Filter(filterSomwhere);
+        fSomewhere = new Filter(filterSomewhere);
         fSomewhere.setArray();
 
         // URL
@@ -308,7 +308,7 @@ public final class SelectedFilter extends SelectedFilterProps {
 
         // Länge am Slider in Min, im Film Sekunden
         final int minLaengeSec = selectedFilter.getMinMaxDurVis() ? selectedFilter.getMinDur() * 60 : 0;
-        final int maxLaengeSec = selectedFilter.getMinMaxDurVis() ? selectedFilter.getMaxDur() * 60 : FILTER_DURATIION_MAX_SEC;
+        final int maxLaengeSec = selectedFilter.getMinMaxDurVis() ? selectedFilter.getMaxDur() * 60 : FILTER_DURATION_MAX_SEC;
 
         // Filmzeit in Sek. von 0:00 Uhr
         final int minTimeSec = selectedFilter.isMinMaxTimeVis() ? selectedFilter.getMinTime() : 0;
@@ -344,7 +344,7 @@ public final class SelectedFilter extends SelectedFilterProps {
             predicate = predicate.and(f -> f.isUt());
         }
         if (onlyLive) {
-            predicate = predicate.and(f -> f.arr[FilmXml.FILM_THEME].equals(FilmTools.THEMA_LIVE));
+            predicate = predicate.and(f -> f.arr[FilmXml.FILM_THEME].equals(FilmTools.THEME_LIVE));
         }
         if (onlyAktHist) {
             predicate = predicate.and(f -> f.getActHist());
@@ -380,13 +380,13 @@ public final class SelectedFilter extends SelectedFilterProps {
         if (minLaengeSec != 0) {
             predicate = predicate.and(f -> FilmFilter.checkLengthMin(minLaengeSec, f.dauerL));
         }
-        if (maxLaengeSec != FILTER_DURATIION_MAX_SEC) {
+        if (maxLaengeSec != FILTER_DURATION_MAX_SEC) {
             predicate = predicate.and(f -> FilmFilter.checkLengthMax(maxLaengeSec, f.dauerL));
         }
 
         // Film-Uhrzeit
         if (minTimeSec != 0 || maxTimeSec != FILTER_FILMTIME_MAX_SEC) {
-            predicate = predicate.and(f -> FilmFilter.checkFilmtime(minTimeSec, maxTimeSec, minMaxTimeInvert, f.filmtime));
+            predicate = predicate.and(f -> FilmFilter.checkFilmTime(minTimeSec, maxTimeSec, minMaxTimeInvert, f.filmTime));
         }
 
 

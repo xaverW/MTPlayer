@@ -98,11 +98,11 @@ public class AboEditDialogController extends MTDialogExtra {
         init(getvBoxDialog(), true);
     }
 
-    private void quitt() {
+    private void quit() {
 
         ok = true; //Änderungen übernehmen
         if (lAbo.size() == 1) {
-            lAbo.get(0).aufMichKopieren(aboCopy);
+            lAbo.get(0).copyToMe(aboCopy);
 
         } else {
             updateAboList();
@@ -130,7 +130,7 @@ public class AboEditDialogController extends MTDialogExtra {
 
     @Override
     public void make() {
-        btnOk.setOnAction(a -> quitt());
+        btnOk.setOnAction(a -> quit());
         btnOk.disableProperty().bind(aboCopy.nameProperty().isEmpty());
         btnCancel.setOnAction(a -> close());
 
@@ -212,9 +212,9 @@ public class AboEditDialogController extends MTDialogExtra {
                         aboCopy.setResolution(FilmXml.RESOLUTION_NORMAL);
                         rbHigh.setSelected(true);
                 }
-                rbHd.setOnAction(event -> setAufloesung());
-                rbHigh.setOnAction(event -> setAufloesung());
-                rbLow.setOnAction(event -> setAufloesung());
+                rbHd.setOnAction(event -> setResolution());
+                rbHigh.setOnAction(event -> setResolution());
+                rbLow.setOnAction(event -> setResolution());
                 break;
             case AboXml.ABO_CHANNEL_EXACT:
                 cbx[i] = new CheckBox("");
@@ -340,7 +340,7 @@ public class AboEditDialogController extends MTDialogExtra {
                 break;
 
             case AboXml.ABO_PSET:
-                cboPset.getItems().addAll(progData.setList.getListeAbo().getPsetNameList());
+                cboPset.getItems().addAll(progData.setList.getListAbo().getPsetNameList());
                 if (aboCopy.getPset().isEmpty()) {
                     cboPset.getSelectionModel().selectFirst();
                     aboCopy.setPset(cboPset.getSelectionModel().getSelectedItem());
@@ -361,12 +361,12 @@ public class AboEditDialogController extends MTDialogExtra {
                 break;
 
             case AboXml.ABO_DEST_PATH:
-                ArrayList<String> pfade = progData.aboList.getPath();
-                if (!pfade.contains(aboCopy.getDestination())) {
-                    pfade.add(0, aboCopy.getDestination());
+                ArrayList<String> path = progData.aboList.getPath();
+                if (!path.contains(aboCopy.getDestination())) {
+                    path.add(0, aboCopy.getDestination());
                 }
                 cboDestination.setMaxWidth(Double.MAX_VALUE);
-                cboDestination.setItems(FXCollections.observableArrayList(pfade));
+                cboDestination.setItems(FXCollections.observableArrayList(path));
                 cboDestination.setEditable(true);
                 cboDestination.valueProperty().bindBidirectional(aboCopy.destinationProperty());
                 cboDestination.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> cbxForAll[i].setSelected(true));
@@ -397,7 +397,7 @@ public class AboEditDialogController extends MTDialogExtra {
         }
     }
 
-    private void setAufloesung() {
+    private void setResolution() {
         cbxForAll[AboXml.ABO_RESOLUTION].setSelected(true);
         if (rbHigh.isSelected()) {
             aboCopy.setResolution(FilmXml.RESOLUTION_NORMAL);
@@ -443,7 +443,7 @@ public class AboEditDialogController extends MTDialogExtra {
 
     private void initDur() {
         slTime.setMin(0);
-        slTime.setMax(SelectedFilter.FILTER_DURATIION_MAX_MIN);
+        slTime.setMax(SelectedFilter.FILTER_DURATION_MAX_MIN);
         slTime.setShowTickLabels(true);
         slTime.setMinorTickCount(9);
         slTime.setMajorTickUnit(50);
@@ -473,6 +473,6 @@ public class AboEditDialogController extends MTDialogExtra {
         lblTimeMin.setText(i == 0 ? ALLES : i + "");
 
         i = (int) slTime.getHighValue();
-        lblTimeMax.setText(i == SelectedFilter.FILTER_DURATIION_MAX_MIN ? ALLES : i + "");
+        lblTimeMax.setText(i == SelectedFilter.FILTER_DURATION_MAX_MIN ? ALLES : i + "");
     }
 }

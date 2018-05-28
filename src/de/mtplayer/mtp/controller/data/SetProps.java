@@ -43,7 +43,7 @@ public class SetProps extends SetXml {
     private IntegerProperty maxField = new SimpleIntegerProperty(0);
     private StringProperty resolution = new SimpleStringProperty(FilmXml.RESOLUTION_NORMAL);
     private StringProperty adOn = new SimpleStringProperty("");
-    private StringProperty descripton = new SimpleStringProperty("");
+    private StringProperty description = new SimpleStringProperty("");
     private StringProperty infoUrl = new SimpleStringProperty("");
     private BooleanProperty infoFile = new SimpleBooleanProperty(false);
     private BooleanProperty subtitle = new SimpleBooleanProperty(false);
@@ -229,16 +229,16 @@ public class SetProps extends SetXml {
         this.adOn.set(adOn);
     }
 
-    public String getDescripton() {
-        return descripton.get();
+    public String getDescription() {
+        return description.get();
     }
 
-    public StringProperty descriptonProperty() {
-        return descripton;
+    public StringProperty descriptionProperty() {
+        return description;
     }
 
-    public void setDescripton(String descripton) {
-        this.descripton.set(descripton);
+    public void setDescription(String description) {
+        this.description.set(description);
     }
 
     public String getInfoUrl() {
@@ -279,37 +279,37 @@ public class SetProps extends SetXml {
 
 
     public void setPropsFromXml() {
-        setName(arr[PROGRAMMSET_NAME]);
-        setPraefix(arr[PROGRAMMSET_PRAEFIX_DIREKT]);
-        setSuffix(arr[PROGRAMMSET_SUFFIX_DIREKT]);
+        setName(arr[PROGRAMSET_NAME]);
+        setPraefix(arr[PROGRAMSET_PRAEFIX_DIRECT]);
+        setSuffix(arr[PROGRAMSET_SUFFIX_DIRECT]);
 
-        setColorFromHex(arr[PROGRAMMSET_FARBE]);
+        setColorFromHex(arr[PROGRAMSET_COLOR]);
 
-        setDestPath(arr[PROGRAMMSET_ZIEL_PFAD]);
-        setDestName(arr[PROGRAMMSET_ZIEL_DATEINAME]);
-        setGenTheme(Boolean.parseBoolean(arr[PROGRAMMSET_THEMA_ANLEGEN]));
-        setPlay(Boolean.parseBoolean(arr[PROGRAMMSET_IST_ABSPIELEN]));
-        setSave(Boolean.parseBoolean(arr[PROGRAMMSET_IST_SPEICHERN]));
-        setButton(Boolean.parseBoolean(arr[PROGRAMMSET_IST_BUTTON]));
-        setAbo(Boolean.parseBoolean(arr[PROGRAMMSET_IST_ABO]));
+        setDestPath(arr[PROGRAMSET_ZIEL_PFAD]);
+        setDestName(arr[PROGRAMSET_ZIEL_DATEINAME]);
+        setGenTheme(Boolean.parseBoolean(arr[PROGRAMSET_THEMA_ANLEGEN]));
+        setPlay(Boolean.parseBoolean(arr[PROGRAMSET_IST_ABSPIELEN]));
+        setSave(Boolean.parseBoolean(arr[PROGRAMSET_IST_SPEICHERN]));
+        setButton(Boolean.parseBoolean(arr[PROGRAMSET_IST_BUTTON]));
+        setAbo(Boolean.parseBoolean(arr[PROGRAMSET_IST_ABO]));
 
         setMaxFromXml();
 
-        setResolution(arr[PROGRAMMSET_AUFLOESUNG]);
-        setAdOn(arr[PROGRAMMSET_ADD_ON]);
-        setDescripton(arr[PROGRAMMSET_BESCHREIBUNG]);
-        setInfoUrl(arr[PROGRAMMSET_INFO_URL]);
+        setResolution(arr[PROGRAMSET_AUFLOESUNG]);
+        setAdOn(arr[PROGRAMSET_ADD_ON]);
+        setDescription(arr[PROGRAMSET_BESCHREIBUNG]);
+        setInfoUrl(arr[PROGRAMSET_INFO_URL]);
 
-        setInfoFile(Boolean.parseBoolean(arr[PROGRAMMSET_INFODATEI]));
-        setSubtitle(Boolean.parseBoolean(arr[PROGRAMMSET_SUBTITLE]));
+        setInfoFile(Boolean.parseBoolean(arr[PROGRAMSET_INFODATEI]));
+        setSubtitle(Boolean.parseBoolean(arr[PROGRAMSET_SUBTITLE]));
     }
 
     private void setMaxFromXml() {
         int maxSize;
         int maxField;
         try {
-            maxSize = Integer.parseInt(arr[PROGRAMMSET_MAX_LAENGE]);
-            maxField = Integer.parseInt(arr[PROGRAMMSET_MAX_LAENGE_FIELD]);
+            maxSize = Integer.parseInt(arr[PROGRAMSET_MAX_LAENGE]);
+            maxField = Integer.parseInt(arr[PROGRAMSET_MAX_LAENGE_FIELD]);
         } catch (final Exception ex) {
             maxSize = 0;
             maxField = 0;
@@ -327,30 +327,30 @@ public class SetProps extends SetXml {
     }
 
     public void setXmlFromProps() {
-        arr[PROGRAMMSET_NAME] = getName();
-        arr[PROGRAMMSET_PRAEFIX_DIREKT] = getPraefix();
-        arr[PROGRAMMSET_SUFFIX_DIREKT] = getSuffix();
+        arr[PROGRAMSET_NAME] = getName();
+        arr[PROGRAMSET_PRAEFIX_DIRECT] = getPraefix();
+        arr[PROGRAMSET_SUFFIX_DIRECT] = getSuffix();
 
-        arr[PROGRAMMSET_FARBE] = MLC.getColorToHex(color.getValue());
-        arr[PROGRAMMSET_ZIEL_PFAD] = getDestPath();
-        arr[PROGRAMMSET_ZIEL_DATEINAME] = getDestName();
+        arr[PROGRAMSET_COLOR] = MLC.getColorToHex(color.getValue());
+        arr[PROGRAMSET_ZIEL_PFAD] = getDestPath();
+        arr[PROGRAMSET_ZIEL_DATEINAME] = getDestName();
 
-        arr[PROGRAMMSET_THEMA_ANLEGEN] = String.valueOf(getGenTheme());
-        arr[PROGRAMMSET_IST_ABSPIELEN] = String.valueOf(isPlay());
-        arr[PROGRAMMSET_IST_SPEICHERN] = String.valueOf(isSave());
-        arr[PROGRAMMSET_IST_BUTTON] = String.valueOf(isButton());
-        arr[PROGRAMMSET_IST_ABO] = String.valueOf(isAbo());
+        arr[PROGRAMSET_THEMA_ANLEGEN] = String.valueOf(getGenTheme());
+        arr[PROGRAMSET_IST_ABSPIELEN] = String.valueOf(isPlay());
+        arr[PROGRAMSET_IST_SPEICHERN] = String.valueOf(isSave());
+        arr[PROGRAMSET_IST_BUTTON] = String.valueOf(isButton());
+        arr[PROGRAMSET_IST_ABO] = String.valueOf(isAbo());
 
-        arr[PROGRAMMSET_MAX_LAENGE] = String.valueOf(getMaxSize());
-        arr[PROGRAMMSET_MAX_LAENGE_FIELD] = String.valueOf(getMaxField());
+        arr[PROGRAMSET_MAX_LAENGE] = String.valueOf(getMaxSize());
+        arr[PROGRAMSET_MAX_LAENGE_FIELD] = String.valueOf(getMaxField());
 
-        arr[PROGRAMMSET_AUFLOESUNG] = getResolution();
-        arr[PROGRAMMSET_ADD_ON] = getAdOn();
-        arr[PROGRAMMSET_BESCHREIBUNG] = getDescripton();
-        arr[PROGRAMMSET_INFO_URL] = getInfoUrl();
+        arr[PROGRAMSET_AUFLOESUNG] = getResolution();
+        arr[PROGRAMSET_ADD_ON] = getAdOn();
+        arr[PROGRAMSET_BESCHREIBUNG] = getDescription();
+        arr[PROGRAMSET_INFO_URL] = getInfoUrl();
 
-        arr[PROGRAMMSET_INFODATEI] = String.valueOf(isInfoFile());
-        arr[PROGRAMMSET_SUBTITLE] = String.valueOf(isSubtitle());
+        arr[PROGRAMSET_INFODATEI] = String.valueOf(isInfoFile());
+        arr[PROGRAMSET_SUBTITLE] = String.valueOf(isSubtitle());
     }
 
 }

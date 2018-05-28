@@ -28,15 +28,15 @@ import java.nio.charset.StandardCharsets;
  */
 public class GetFile {
 
-    public static final String PFAD_PSET_LINUX = "/de/mtplayer/mtp/tools/file/pset_linux.xml";
-    public static final String PFAD_PSET_WINDOWS = "/de/mtplayer/mtp/tools/file/pset_windows.xml";
-    public static final String PFAD_HILFETEXT_PRGRAMME = "/de/mtplayer/mtp/tools/file/hilfetext_pset.txt";
-    public static final String PFAD_HILFETEXT_EDIT_DOWNLOAD_PROG = "hilfetext_editDownloadProg.txt";
-    public static final String PFAD_HILFETEXT_RESET = "hilfetext_reset.txt";
+    public static final String PATH_PSET_LINUX = "/de/mtplayer/mtp/tools/file/pset_linux.xml";
+    public static final String PATH_PSET_WINDOWS = "/de/mtplayer/mtp/tools/file/pset_windows.xml";
+    public static final String PATH_HELPTEXT_PRGRAM = "/de/mtplayer/mtp/tools/file/hilfetext_pset.txt";
+    public static final String PATH_HELPTEXT_EDIT_DOWNLOAD_PROG = "hilfetext_editDownloadProg.txt";
+    public static final String PATH_HELPTEXT_RESET = "hilfetext_reset.txt";
 
-    public String getHilfeSuchen(String pfad) {
+    public String getHelpSearch(String path) {
         String ret = "";
-        try (InputStreamReader in = new InputStreamReader(getClass().getResource(pfad).openStream(), StandardCharsets.UTF_8);
+        try (InputStreamReader in = new InputStreamReader(getClass().getResource(path).openStream(), StandardCharsets.UTF_8);
              BufferedReader br = new BufferedReader(in)) {
             String strLine;
             while ((strLine = br.readLine()) != null) {
@@ -48,18 +48,18 @@ public class GetFile {
         return ret;
     }
 
-    public InputStreamReader getPsetVorlageLinux() {
+    public InputStreamReader getPsetTamplateLinux() {
         try {
-            return new InputStreamReader(getClass().getResource(PFAD_PSET_LINUX).openStream(), StandardCharsets.UTF_8);
+            return new InputStreamReader(getClass().getResource(PATH_PSET_LINUX).openStream(), StandardCharsets.UTF_8);
         } catch (final IOException ex) {
             PLog.errorLog(469691002, ex);
         }
         return null;
     }
 
-    public InputStreamReader getPsetVorlageWindows() {
+    public InputStreamReader getPsetTemplateWindows() {
         try {
-            return new InputStreamReader(getClass().getResource(PFAD_PSET_WINDOWS).openStream(), StandardCharsets.UTF_8);
+            return new InputStreamReader(getClass().getResource(PATH_PSET_WINDOWS).openStream(), StandardCharsets.UTF_8);
         } catch (final IOException ex) {
             PLog.errorLog(842306087, ex);
         }

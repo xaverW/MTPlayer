@@ -119,14 +119,14 @@ public class DownloadSize extends ObjectPropertyBase<DownloadSizeData> implement
         String sizeStr;
         if (aktFileSize <= 0) {
             if (fileSize > 0) {
-                sizeStr = SizeTools.getGroesse(fileSize);
+                sizeStr = SizeTools.getSize(fileSize);
             } else {
                 sizeStr = "";
             }
         } else if (fileSize > 0) {
-            sizeStr = SizeTools.getGroesse(aktFileSize) + " von " + SizeTools.getGroesse(fileSize);
+            sizeStr = SizeTools.getSize(aktFileSize) + " von " + SizeTools.getSize(fileSize);
         } else {
-            sizeStr = SizeTools.getGroesse(aktFileSize);
+            sizeStr = SizeTools.getSize(aktFileSize);
         }
         downloadSizeData = new DownloadSizeData(fileSize, sizeStr);
         return sizeStr;

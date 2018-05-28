@@ -27,11 +27,11 @@ public class BlackProps extends Data<BlackProps> {
 
     public static final int BLACKLIST_NR = 0;
     public static final int BLACKLIST_SENDER = 1;
-    public static final int BLACKLIST_SENDER_EXAKT = 2;
-    public static final int BLACKLIST_THEMA = 3;
-    public static final int BLACKLIST_THEMA_EXAKT = 4;
-    public static final int BLACKLIST_TITEL = 5;
-    public static final int BLACKLIST_THEMA_TITEL = 6;
+    public static final int BLACKLIST_SENDER_EXACT = 2;
+    public static final int BLACKLIST_THEME = 3;
+    public static final int BLACKLIST_THEME_EXACT = 4;
+    public static final int BLACKLIST_TITLE = 5;
+    public static final int BLACKLIST_THEME_TITLE = 6;
 
     public static final String TAG = "Blacklist";
     public static final String[] XML_NAMES = {
@@ -142,20 +142,20 @@ public class BlackProps extends Data<BlackProps> {
 
     public void setPropsFromXml() {
         setChannel(arr[BLACKLIST_SENDER]);
-        setChannelExact(arr[BLACKLIST_SENDER_EXAKT].isEmpty() ? true : Boolean.parseBoolean(arr[BLACKLIST_SENDER_EXAKT]));
-        setTheme(arr[BLACKLIST_THEMA]);
-        setThemeExact(arr[BLACKLIST_THEMA_EXAKT].isEmpty() ? true : Boolean.parseBoolean(arr[BLACKLIST_THEMA_EXAKT]));
-        setTitle(arr[BLACKLIST_TITEL]);
-        setThemeTitle(arr[BLACKLIST_THEMA_TITEL]);
+        setChannelExact(arr[BLACKLIST_SENDER_EXACT].isEmpty() ? true : Boolean.parseBoolean(arr[BLACKLIST_SENDER_EXACT]));
+        setTheme(arr[BLACKLIST_THEME]);
+        setThemeExact(arr[BLACKLIST_THEME_EXACT].isEmpty() ? true : Boolean.parseBoolean(arr[BLACKLIST_THEME_EXACT]));
+        setTitle(arr[BLACKLIST_TITLE]);
+        setThemeTitle(arr[BLACKLIST_THEME_TITLE]);
     }
 
     public void setXmlFromProps() {
         arr[BLACKLIST_NR] = getNr() + "";
         arr[BLACKLIST_SENDER] = getChannel();
-        arr[BLACKLIST_SENDER_EXAKT] = String.valueOf(getChannelExact());
-        arr[BLACKLIST_THEMA] = getTheme();
-        arr[BLACKLIST_THEMA_EXAKT] = String.valueOf(getThemeExact());
-        arr[BLACKLIST_TITEL] = getTitle();
-        arr[BLACKLIST_THEMA_TITEL] = getThemeTitle();
+        arr[BLACKLIST_SENDER_EXACT] = String.valueOf(getChannelExact());
+        arr[BLACKLIST_THEME] = getTheme();
+        arr[BLACKLIST_THEME_EXACT] = String.valueOf(getThemeExact());
+        arr[BLACKLIST_TITLE] = getTitle();
+        arr[BLACKLIST_THEME_TITLE] = getThemeTitle();
     }
 }

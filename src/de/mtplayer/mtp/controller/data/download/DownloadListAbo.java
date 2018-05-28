@@ -38,7 +38,7 @@ public class DownloadListAbo {
         this.downloadList = downloadList;
     }
 
-    public synchronized void abosAuffrischen() {
+    public synchronized void refreshAbos() {
         // fehlerhafte und nicht gestartete löschen, wird nicht gemeldet ob was gefunden wurde
         Duration.counterStart("DownloadListAbo.abosAuffrischen");
         List<Download> remove = new ArrayList<>();
@@ -82,22 +82,22 @@ public class DownloadListAbo {
             }
         }
         downloadList.removeAll(remove);
-        downloadList.forEach(d -> d.setZurueckgestellt(false));
+        downloadList.forEach(d -> d.setPlacedBack(false));
         Duration.counterStop("DownloadListAbo.abosAuffrischen");
     }
 
-    synchronized void abosSuchen() {
+    synchronized void searchForAbos() {
         // in der Filmliste nach passenden Filmen suchen und
         // in die Liste der Downloads eintragen
         Duration.counterStart("DownloadListAbo.abosSuchen");
 
-        boolean gefunden = false;
+        boolean found = false;
         Abo abo;
         ArrayList<Download> dl = new ArrayList<>();
 
         // mit den bereits enthaltenen Download-URLs füllen
-        final HashSet<String> listeUrls = new HashSet<>(downloadList.size());
-        downloadList.forEach((download) -> listeUrls.add(download.getUrl()));
+        final HashSet<String> listUrls = new HashSet<>(downloadList.size());
+        downloadList.forEach((download) -> listUrls.add(download.getUrl()));
 
         // prüfen ob in "alle Filme" oder nur "nach Blacklist" gesucht werden soll
         final boolean checkWithBlackList = ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.getBool();
@@ -109,7 +109,7 @@ public class DownloadListAbo {
         }
 
         for (final Film film : progData.filmlist) {
-            abo = progData.aboList.getAboFuerFilm_schnell(film, true /* auch die Länge überprüfen */);
+            abo = progData.aboList.getAboForFilm_quick(film, true /* auch die Länge überprüfen */);
 
             if (abo == null) {
                 // dann gibts dafür kein Abo
@@ -137,13 +137,13 @@ public class DownloadListAbo {
             if (setData != null) {
 
                 // mit der tatsächlichen URL prüfen, ob die URL schon in der Downloadliste ist
-                final String urlDownload = film.getUrlFuerAufloesung(abo.getResolution());
-                if (listeUrls.contains(urlDownload)) {
+                final String urlDownload = film.getUrlForResolution(abo.getResolution());
+                if (listUrls.contains(urlDownload)) {
                     continue;
                 }
 
                 // diesen Film in die Downloadliste eintragen
-                listeUrls.add(urlDownload);
+                listUrls.add(urlDownload);
 
                 abo.setDate(new MDate());
 
@@ -152,14 +152,14 @@ public class DownloadListAbo {
 
                 // dann in die Liste schreiben
                 dl.add(new Download(setData, film, DownloadInfos.SRC_ABO, abo, "", "", "" /* Aufloesung */));
-                gefunden = true;
+                found = true;
             }
         }
-        if (gefunden) {
+        if (found) {
             downloadList.addAll(dl);
-            downloadList.listeNummerieren();
+            downloadList.setNumbersInList();
         }
-        listeUrls.clear();
+        listUrls.clear();
         Duration.counterStop("DownloadListAbo.abosSuchen");
     }
 

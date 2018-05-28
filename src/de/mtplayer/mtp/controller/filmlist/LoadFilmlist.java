@@ -187,10 +187,10 @@ public class LoadFilmlist {
             ArrayList<String> list = new ArrayList<>();
 
             // gespeicherte Filmliste laden
-            Platform.runLater(() -> progData.mtPlayerController.getBtnFilmliste().setDisable(true));
+            Platform.runLater(() -> progData.mtPlayerController.getBtnFilmlist().setDisable(true));
             new ReadFilmlist().readFilmlist(ProgInfos.getFilmListFile(),
                     progData.filmlist, ProgConfig.SYSTEM_NUM_DAYS_FILMLIST.getInt());
-            Platform.runLater(() -> progData.mtPlayerController.getBtnFilmliste().setDisable(false));
+            Platform.runLater(() -> progData.mtPlayerController.getBtnFilmlist().setDisable(false));
 
             list.add(PLog.LILNE3);
             list.add("Liste Filme gelesen am: " + StringFormatters.FORMATTER_ddMMyyyyHHmm.format(new Date()));
@@ -233,7 +233,7 @@ public class LoadFilmlist {
         notifyProgress.notifyEvent(NotifyProgress.NOTIFY.PROGRESS, new ListenerFilmlistLoadEvent("", "Themen suchen",
                 ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
         PLog.userLog("Themen suchen");
-        progData.filmlist.themenLaden();
+        progData.filmlist.loadTheme();
 
 
         if (!progData.aboList.isEmpty()) {
@@ -253,7 +253,7 @@ public class LoadFilmlist {
         notifyProgress.notifyEvent(NotifyProgress.NOTIFY.PROGRESS, new ListenerFilmlistLoadEvent("", "Filme in Downloads eintragen",
                 ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
         PLog.userLog("Filme in Downloads eintragen");
-        progData.downloadList.filmEintragen();
+        progData.downloadList.addFilmInList();
 
         setPropLoadFilmlist(false);
     }
@@ -275,8 +275,8 @@ public class LoadFilmlist {
             PLog.userLog("  Liste Diff erstellt am: " + diffListe.genDate());
             PLog.userLog("  Anzahl Filme: " + diffListe.size());
 
-            progData.filmlist.updateListe(diffListe, true/* Vergleich über Index, sonst nur URL */, true /* ersetzen */);
-            progData.filmlist.metaDaten = diffListe.metaDaten;
+            progData.filmlist.updateList(diffListe, true/* Vergleich über Index, sonst nur URL */, true /* ersetzen */);
+            progData.filmlist.metaData = diffListe.metaData;
             progData.filmlist.sort(); // jetzt sollte alles passen
             diffListe.clear();
 
@@ -288,7 +288,7 @@ public class LoadFilmlist {
 
         findAndMarkNewFilms(progData.filmlist);
 
-        if (event.fehler) {
+        if (event.error) {
             PLog.userLog("");
             PLog.userLog("Filmliste laden war fehlerhaft, alte Liste wird wieder geladen");
             Platform.runLater(() -> new MTAlert().showErrorAlert("Filmliste laden", "Das Laden der Filmliste hat nicht geklappt!"));

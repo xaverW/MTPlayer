@@ -91,7 +91,7 @@ public class FilmFilterController extends FilterController {
         initButton();
         filterProfiles();
 
-        initStringFiter();
+        initStringFilter();
 
         initDaysFilter();
         initDurFilter();
@@ -194,7 +194,7 @@ public class FilmFilterController extends FilterController {
         delAll.setOnAction(e -> delAllFilter());
         delAll.disableProperty().bind(Bindings.size(cbFilter.getItems()).isEqualTo(0));
 
-        mbFilterTools.setGraphic(new Icons().ICON_BUTTON_MENUE);
+        mbFilterTools.setGraphic(new Icons().ICON_BUTTON_MENU);
         mbFilterTools.getItems().addAll(load, save, neu, rename, del, delAll);
         mbFilterTools.setTooltip(new Tooltip("gespeicherte Filter bearbeiten"));
 
@@ -206,7 +206,7 @@ public class FilmFilterController extends FilterController {
 
     }
 
-    private void initStringFiter() {
+    private void initStringFilter() {
         cboChannel.editableProperty().bind(progData.storedFilter.getSelectedFilter().channelExactProperty().not());
         cboChannel.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         cboChannel.setVisibleRowCount(25);
@@ -215,9 +215,9 @@ public class FilmFilterController extends FilterController {
             if (oldValue != null && newValue != null) {
                 // wenn Änderung beim Sender -> Themen anpassen
                 if (newValue.isEmpty()) {
-                    progData.nameLists.getThemen("");
+                    progData.nameLists.getTheme("");
                 } else {
-                    progData.nameLists.getThemen(newValue);
+                    progData.nameLists.getTheme(newValue);
                 }
             }
         });
@@ -225,9 +225,9 @@ public class FilmFilterController extends FilterController {
             if (oldValue != null && newValue != null) {
                 // wenn Änderung beim Sender -> Themen anpassen
                 if (newValue.isEmpty()) {
-                    progData.nameLists.getThemen("");
+                    progData.nameLists.getTheme("");
                 } else {
-                    progData.nameLists.getThemen(newValue);
+                    progData.nameLists.getTheme(newValue);
                 }
                 progData.storedFilter.getSelectedFilter().setChannel(newValue);
             }
@@ -313,7 +313,7 @@ public class FilmFilterController extends FilterController {
 
     private void initDurFilter() {
         slDur.setMin(0);
-        slDur.setMax(SelectedFilter.FILTER_DURATIION_MAX_MIN);
+        slDur.setMax(SelectedFilter.FILTER_DURATION_MAX_MIN);
 
         slDur.setShowTickLabels(true);
         slDur.setMinorTickCount(3);
@@ -562,11 +562,11 @@ public class FilmFilterController extends FilterController {
         String tMin = min + "";
         String tMax = max + "";
 
-        if (min == 0 && max == SelectedFilter.FILTER_DURATIION_MAX_MIN) {
+        if (min == 0 && max == SelectedFilter.FILTER_DURATION_MAX_MIN) {
             lblDur.setText("Filmlänge: " + txtAll);
         } else if (min == 0) {
             lblDur.setText("Filmlänge: weniger als " + tMax + " Minuten");
-        } else if (max == SelectedFilter.FILTER_DURATIION_MAX_MIN) {
+        } else if (max == SelectedFilter.FILTER_DURATION_MAX_MIN) {
             lblDur.setText("Filmlänge: mehr als " + tMin + " Minuten");
         } else {
             lblDur.setText("Filmlänge: von " + tMin + " bis " + tMax + " Minuten");

@@ -30,7 +30,7 @@ public class FilmProps extends FilmXml {
     public FilmDate filmDate = new FilmDate(0);
 
     public long dauerL = 0; // Sekunden
-    public int filmtime = 0; // Zeit -> Minuten ab 0:00 Uhr
+    public int filmTime = 0; // Zeit -> Minuten ab 0:00 Uhr
 
     private boolean small = false; // Film hat "small"-URL
     private boolean hd = false; // Film hat HD-URL
@@ -45,12 +45,12 @@ public class FilmProps extends FilmXml {
     private final BooleanProperty shown = new SimpleBooleanProperty(false);
     private final BooleanProperty actHist = new SimpleBooleanProperty(false);
 
-    public int getFilmtime() {
-        return filmtime;
+    public int getFilmTime() {
+        return filmTime;
     }
 
-    public void setFilmtime(int filmtime) {
-        this.filmtime = filmtime;
+    public void setFilmTime(int filmTime) {
+        this.filmTime = filmTime;
     }
 
     public boolean getActHist() {
@@ -111,7 +111,7 @@ public class FilmProps extends FilmXml {
     }
 
     public void setShown(boolean shown) {
-        if (!arr[FilmXml.FILM_THEME].equals(FilmTools.THEMA_LIVE)) {
+        if (!arr[FilmXml.FILM_THEME].equals(FilmTools.THEME_LIVE)) {
             this.shown.set(shown);
         }
     }
@@ -193,7 +193,7 @@ public class FilmProps extends FilmXml {
     }
 
     public String getWebsite() {
-        return arr[FILM_WEBSEITE];
+        return arr[FILM_WEBSITE];
     }
 
     public String getAboName() {

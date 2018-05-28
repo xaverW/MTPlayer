@@ -18,15 +18,15 @@ package de.mtplayer.mtp.controller;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.gui.dialog.QuittDialogController;
+import de.mtplayer.mtp.gui.dialog.QuitDialogController;
 import de.p2tools.p2Lib.guiTools.GuiSize;
 import de.p2tools.p2Lib.tools.log.LogMsg;
 import javafx.application.Platform;
 
-public class ProgQuitt {
+public class ProgQuit {
     final ProgData progData;
 
-    public ProgQuitt() {
+    public ProgQuit() {
         progData = ProgData.getInstance();
     }
 
@@ -56,8 +56,8 @@ public class ProgQuitt {
      * @param showOptionTerminate show options dialog when downloads are running
      * @param shutDown            try to shutdown the computer if requested
      */
-    public void quitt(boolean showOptionTerminate, boolean shutDown) {
-        if (quitt_(showOptionTerminate, shutDown)) {
+    public void quit(boolean showOptionTerminate, boolean shutDown) {
+        if (quit_(showOptionTerminate, shutDown)) {
 
             // dann jetzt beenden -> Thüss
             Platform.runLater(() -> {
@@ -68,13 +68,13 @@ public class ProgQuitt {
         }
     }
 
-    private boolean quitt_(boolean showOptionTerminate, boolean shutDown) {
+    private boolean quit_(boolean showOptionTerminate, boolean shutDown) {
         if (progData.downloadList.countRunningDownloads() > 0) {
 
             // erst mal prüfen ob noch Downloads laufen
             if (showOptionTerminate) {
-                QuittDialogController quittDialogController = new QuittDialogController(progData);
-                if (!quittDialogController.canTerminate()) {
+                QuitDialogController quitDialogController = new QuitDialogController(progData);
+                if (!quitDialogController.canTerminate()) {
                     return false;
                 }
             }

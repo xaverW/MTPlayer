@@ -36,7 +36,7 @@ public class FilmGuiContextMenu {
         this.tableView = tableView;
     }
 
-    public ContextMenu getContextMenue(Film film) {
+    public ContextMenu getContextMenu(Film film) {
         final ContextMenu contextMenu = new ContextMenu();
         getMenu(contextMenu, film);
         return contextMenu;
@@ -49,7 +49,7 @@ public class FilmGuiContextMenu {
         miStart.setOnAction(a -> filmGuiController.playFilmUrl());
 
         MenuItem miSave = new MenuItem("Film speichern");
-        miSave.setOnAction(a -> filmGuiController.filmSpeichern());
+        miSave.setOnAction(a -> filmGuiController.saveTheFilm());
 
         contextMenu.getItems().addAll(miStart, miSave, new SeparatorMenuItem());
 
@@ -99,14 +99,14 @@ public class FilmGuiContextMenu {
         contextMenu.getItems().add(submenuAbo);
 
         // Film mit Set starten
-        final SetList liste = progData.setList.getListeButton();
-        if (liste.size() > 1) {
+        final SetList list = progData.setList.getListButton();
+        if (list.size() > 1) {
 
             Menu submenuSet = new Menu("Film mit Set starten");
-            liste.stream().forEach(datenPset -> {
+            list.stream().forEach(dataPset -> {
 
-                final MenuItem item = new MenuItem(datenPset.getName());
-                item.setOnAction(event -> filmGuiController.playFilmUrlWithSet(datenPset));
+                final MenuItem item = new MenuItem(dataPset.getName());
+                item.setOnAction(event -> filmGuiController.playFilmUrlWithSet(dataPset));
                 submenuSet.getItems().add(item);
 
             });
@@ -126,9 +126,9 @@ public class FilmGuiContextMenu {
         contextMenu.getItems().addAll(submenuBlacklist, new SeparatorMenuItem());
 
         // URL kopieren
-        final String uNormal = film.getUrlFuerAufloesung(Film.RESOLUTION_NORMAL);
-        String uHd = film.getUrlFuerAufloesung(Film.RESOLUTION_HD);
-        String uLow = film.getUrlFuerAufloesung(Film.RESOLUTION_SMALL);
+        final String uNormal = film.getUrlForResolution(Film.RESOLUTION_NORMAL);
+        String uHd = film.getUrlForResolution(Film.RESOLUTION_HD);
+        String uLow = film.getUrlForResolution(Film.RESOLUTION_SMALL);
         String uSub = film.getUrlSubtitle();
         MenuItem item;
         if (uHd.equals(uNormal)) {
@@ -139,43 +139,43 @@ public class FilmGuiContextMenu {
         }
         if (!uNormal.isEmpty()) {
             if (!uHd.isEmpty() || !uLow.isEmpty() || !uSub.isEmpty()) {
-                final Menu submenueURL = new Menu("Film-URL kopieren");
+                final Menu subMenuURL = new Menu("Film-URL kopieren");
 
                 // HD
                 if (!uHd.isEmpty()) {
                     item = new MenuItem("in HD-Auflösung");
-                    item.setOnAction(a -> SysTools.copyToClipboard(film.getUrlFuerAufloesung(Film.RESOLUTION_HD)));
-                    submenueURL.getItems().add(item);
+                    item.setOnAction(a -> SysTools.copyToClipboard(film.getUrlForResolution(Film.RESOLUTION_HD)));
+                    subMenuURL.getItems().add(item);
                 }
 
                 // normale Auflösung, gibts immer
                 item = new MenuItem("in hoher Auflösung");
-                item.setOnAction(a -> SysTools.copyToClipboard(film.getUrlFuerAufloesung(Film.RESOLUTION_NORMAL)));
-                submenueURL.getItems().add(item);
+                item.setOnAction(a -> SysTools.copyToClipboard(film.getUrlForResolution(Film.RESOLUTION_NORMAL)));
+                subMenuURL.getItems().add(item);
 
                 // kleine Auflösung
                 if (!uLow.isEmpty()) {
                     item = new MenuItem("in geringer Auflösung");
-                    item.setOnAction(a -> SysTools.copyToClipboard(film.getUrlFuerAufloesung(Film.RESOLUTION_SMALL)));
-                    submenueURL.getItems().add(item);
+                    item.setOnAction(a -> SysTools.copyToClipboard(film.getUrlForResolution(Film.RESOLUTION_SMALL)));
+                    subMenuURL.getItems().add(item);
                 }
 
                 if (!film.getUrlSubtitle().isEmpty()) {
                     item = new MenuItem("Untertitel-URL kopieren");
                     item.setOnAction(a -> SysTools.copyToClipboard(film.getUrlSubtitle()));
-                    submenueURL.getItems().addAll(new SeparatorMenuItem(), item);
+                    subMenuURL.getItems().addAll(new SeparatorMenuItem(), item);
                 }
 
-                contextMenu.getItems().add(submenueURL);
+                contextMenu.getItems().add(subMenuURL);
             } else {
                 item = new MenuItem("Film-URL kopieren");
-                item.setOnAction(a -> SysTools.copyToClipboard(film.getUrlFuerAufloesung(Film.RESOLUTION_NORMAL)));
+                item.setOnAction(a -> SysTools.copyToClipboard(film.getUrlForResolution(Film.RESOLUTION_NORMAL)));
                 contextMenu.getItems().add(item);
             }
         }
 
         MenuItem miMediaDb = new MenuItem("Titel in der Mediensammlung suchen");
-        miMediaDb.setOnAction(a -> filmGuiController.guiFilmMediensammlung());
+        miMediaDb.setOnAction(a -> filmGuiController.guiFilmMediaCollection());
         contextMenu.getItems().addAll(new SeparatorMenuItem(), miMediaDb);
 
         MenuItem miFilmInfo = new MenuItem("Filminformation anzeigen");
@@ -183,13 +183,13 @@ public class FilmGuiContextMenu {
         contextMenu.getItems().add(miFilmInfo);
 
         if (film.isShown()) {
-            final MenuItem miFilmeUngesehen = new MenuItem("Filme als ungesehen markieren");
-            miFilmeUngesehen.setOnAction(a -> filmGuiController.filmUngesehen());
-            contextMenu.getItems().add(miFilmeUngesehen);
+            final MenuItem miFilmsNotShown = new MenuItem("Filme als ungesehen markieren");
+            miFilmsNotShown.setOnAction(a -> filmGuiController.setFilmNotShown());
+            contextMenu.getItems().add(miFilmsNotShown);
         } else {
-            final MenuItem miFilmeGesehen = new MenuItem("Filme als gesehen markieren");
-            miFilmeGesehen.setOnAction(a -> filmGuiController.filmGesehen());
-            contextMenu.getItems().add(miFilmeGesehen);
+            final MenuItem miFilmsShown = new MenuItem("Filme als gesehen markieren");
+            miFilmsShown.setOnAction(a -> filmGuiController.setFilmShown());
+            contextMenu.getItems().add(miFilmsShown);
         }
 
         MenuItem resetTable = new MenuItem("Tabelle zurücksetzen");

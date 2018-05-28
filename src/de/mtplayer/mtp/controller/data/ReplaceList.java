@@ -33,14 +33,14 @@ public final class ReplaceList extends SimpleListProperty<ReplaceData> {
         add(new ReplaceData("?", "_"));
     }
 
-    public String replace(String strCheck, boolean pfad) {
+    public String replace(String strCheck, boolean path) {
 
         // hat der Nutzer als Suchbegriff "leer" eingegeben, dann weg damit
         this.removeIf(replaceData -> replaceData.getFrom().isEmpty());
 
         for (ReplaceData replaceData : this) {
 
-            if (pfad && replaceData.getFrom().equals(File.separator)) {
+            if (path && replaceData.getFrom().equals(File.separator)) {
                 // bei Pfaden darf / oder \ natürlich nicht entfernt werden
                 continue;
             } else {

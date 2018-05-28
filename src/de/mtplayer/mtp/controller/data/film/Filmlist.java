@@ -36,12 +36,12 @@ import java.util.function.Predicate;
 public class Filmlist extends SimpleListProperty<Film> {
 
     public int nr = 1;
-    public String[] metaDaten = new String[]{"", "", "", "", ""};
-    private final static String DATUM_ZEIT_FORMAT = "dd.MM.yyyy, HH:mm";
-    private final SimpleDateFormat sdf = new SimpleDateFormat(DATUM_ZEIT_FORMAT);
+    public String[] metaData = new String[]{"", "", "", "", ""};
+    private final static String DATE_TIME_FORMAT = "dd.MM.yyyy, HH:mm";
+    private final SimpleDateFormat sdf = new SimpleDateFormat(DATE_TIME_FORMAT);
 
     public String[] sender = {""};
-    public String[][] themenPerChannel = {{""}};
+    public String[][] themePerChannel = {{""}};
 
     private FilteredList<Film> filteredList = null;
     private SortedList<Film> sortedList = null;
@@ -80,12 +80,12 @@ public class Filmlist extends SimpleListProperty<Film> {
         FilmTools.saveFilm(film, pSet);
     }
 
-    public synchronized void saveFilm(ArrayList<Film> liste, SetData pSet) {
-        FilmTools.saveFilm(liste, pSet);
+    public synchronized void saveFilm(ArrayList<Film> list, SetData pSet) {
+        FilmTools.saveFilm(list, pSet);
     }
 
 
-    public synchronized boolean importFilmliste(Film film) {
+    public synchronized boolean importFilmlist(Film film) {
         // hier nur beim Laden aus einer fertigen Filmliste mit der GUI
         // die Filme sind schon sortiert, nur die Nummer muss noch ergänzt werden
         film.nr = nr++;
@@ -103,16 +103,16 @@ public class Filmlist extends SimpleListProperty<Film> {
         }
     }
 
-    public synchronized void updateListe(Filmlist listeEinsortieren,
-                                         boolean index /* Vergleich über Index, sonst nur URL */,
-                                         boolean ersetzen) {
+    public synchronized void updateList(Filmlist addList,
+                                        boolean index /* Vergleich über Index, sonst nur URL */,
+                                        boolean replace) {
         // in eine vorhandene Liste soll eine andere Filmliste einsortiert werden
         // es werden nur Filme die noch nicht vorhanden sind, einsortiert
         // "ersetzen": true: dann werden gleiche (index/URL) in der Liste durch neue ersetzt
-        final HashSet<String> hash = new HashSet<>(listeEinsortieren.size() + 1, 0.75F);
+        final HashSet<String> hash = new HashSet<>(addList.size() + 1, 0.75F);
 
-        if (ersetzen) {
-            listeEinsortieren.forEach((Film f) -> addHash(f, hash, index));
+        if (replace) {
+            addList.forEach((Film f) -> addHash(f, hash, index));
 
             final Iterator<Film> it = iterator();
             while (it.hasNext()) {
@@ -131,12 +131,12 @@ public class Filmlist extends SimpleListProperty<Film> {
                 }
             }
 
-            listeEinsortieren.forEach(this::addInit);
+            addList.forEach(this::addInit);
         } else {
             // ==============================================
             forEach(f -> addHash(f, hash, index));
 
-            for (final Film f : listeEinsortieren) {
+            for (final Film f : addList) {
                 if (f.arr[FilmXml.FILM_CHANNEL].equals(ProgConst.KIKA)) {
                     if (!hash.contains(f.arr[FilmXml.FILM_THEME] + f.arr[FilmXml.FILM_TITLE])) {
                         addInit(f);
@@ -216,7 +216,7 @@ public class Filmlist extends SimpleListProperty<Film> {
     }
 
     public synchronized void setMeta(Filmlist filmlist) {
-        System.arraycopy(filmlist.metaDaten, 0, metaDaten, 0, FilmlistXml.MAX_ELEM);
+        System.arraycopy(filmlist.metaData, 0, metaData, 0, FilmlistXml.MAX_ELEM);
     }
 
     public synchronized Film getFilmByUrl(final String url) {
@@ -225,41 +225,41 @@ public class Filmlist extends SimpleListProperty<Film> {
         return opt.orElse(null);
     }
 
-    public synchronized void getTheme(String sender, LinkedList<String> liste) {
+    public synchronized void getTheme(String sender, LinkedList<String> list) {
         stream().filter(film -> film.arr[FilmXml.FILM_CHANNEL].equals(sender))
-                .filter(film -> !liste.contains(film.arr[FilmXml.FILM_THEME]))
-                .forEach(film -> liste.add(film.arr[FilmXml.FILM_THEME]));
+                .filter(film -> !list.contains(film.arr[FilmXml.FILM_THEME]))
+                .forEach(film -> list.add(film.arr[FilmXml.FILM_THEME]));
     }
 
-    public synchronized Film getFilmByUrl_klein_hoch_hd(String url) {
+    public synchronized Film getFilmByUrl_small_high_hd(String url) {
         // Problem wegen gleicher URLs
         // wird versucht, einen Film mit einer kleinen/Hoher/HD-URL zu finden
         Film ret = null;
         return parallelStream().filter(f ->
 
                 f.arr[FilmXml.FILM_URL].equals(url) ||
-                        f.getUrlFuerAufloesung(FilmXml.RESOLUTION_HD).equals(url) ||
-                        f.getUrlFuerAufloesung(FilmXml.RESOLUTION_SMALL).equals(url)
+                        f.getUrlForResolution(FilmXml.RESOLUTION_HD).equals(url) ||
+                        f.getUrlForResolution(FilmXml.RESOLUTION_SMALL).equals(url)
 
         ).findFirst().orElse(null);
 
     }
 
     public synchronized String genDate() {
-        return genDate(metaDaten);
+        return genDate(metaData);
     }
 
-    public static synchronized String genDate(String[] metaDaten) {
+    public static synchronized String genDate(String[] metaData) {
         // Tag, Zeit in lokaler Zeit wann die Filmliste erstellt wurde
         // in der Form "dd.MM.yyyy, HH:mm"
         String ret;
         String date;
-        if (metaDaten[FilmlistXml.FILMLISTE_DATUM_GMT_NR].isEmpty()) {
+        if (metaData[FilmlistXml.FILMLIST_DATE_GMT_NR].isEmpty()) {
             // noch eine alte Filmliste
-            ret = metaDaten[FilmlistXml.FILMLISTE_DATUM_NR];
+            ret = metaData[FilmlistXml.FILMLIST_DATE_NR];
         } else {
-            date = metaDaten[FilmlistXml.FILMLISTE_DATUM_GMT_NR];
-            final SimpleDateFormat sdf_ = new SimpleDateFormat(DATUM_ZEIT_FORMAT);
+            date = metaData[FilmlistXml.FILMLIST_DATE_GMT_NR];
+            final SimpleDateFormat sdf_ = new SimpleDateFormat(DATE_TIME_FORMAT);
             sdf_.setTimeZone(new SimpleTimeZone(SimpleTimeZone.UTC_TIME, "UTC"));
             Date filmDate = null;
             try {
@@ -267,9 +267,9 @@ public class Filmlist extends SimpleListProperty<Film> {
             } catch (final ParseException ignored) {
             }
             if (filmDate == null) {
-                ret = metaDaten[FilmlistXml.FILMLISTE_DATUM_GMT_NR];
+                ret = metaData[FilmlistXml.FILMLIST_DATE_GMT_NR];
             } else {
-                final FastDateFormat formatter = FastDateFormat.getInstance(DATUM_ZEIT_FORMAT);
+                final FastDateFormat formatter = FastDateFormat.getInstance(DATE_TIME_FORMAT);
                 ret = formatter.format(filmDate);
             }
         }
@@ -301,11 +301,11 @@ public class Filmlist extends SimpleListProperty<Film> {
      */
     public Date getAgeAsDate() {
         String date;
-        if (!metaDaten[FilmlistXml.FILMLISTE_DATUM_GMT_NR].isEmpty()) {
-            date = metaDaten[FilmlistXml.FILMLISTE_DATUM_GMT_NR];
+        if (!metaData[FilmlistXml.FILMLIST_DATE_GMT_NR].isEmpty()) {
+            date = metaData[FilmlistXml.FILMLIST_DATE_GMT_NR];
             sdf.setTimeZone(new SimpleTimeZone(SimpleTimeZone.UTC_TIME, "UTC"));
         } else {
-            date = metaDaten[FilmlistXml.FILMLISTE_DATUM_NR];
+            date = metaData[FilmlistXml.FILMLIST_DATE_NR];
         }
         if (date.isEmpty()) {
             // dann ist die Filmliste noch nicht geladen
@@ -343,9 +343,9 @@ public class Filmlist extends SimpleListProperty<Film> {
             final String dateMaxDiff_str =
                     new SimpleDateFormat("yyyy.MM.dd__").format(new Date()) + ProgConst.TIME_MAX_AGE_FOR_DIFF + ":00:00";
             final Date dateMaxDiff = new SimpleDateFormat("yyyy.MM.dd__HH:mm:ss").parse(dateMaxDiff_str);
-            final Date dateFilmliste = getAgeAsDate();
-            if (dateFilmliste != null) {
-                return dateFilmliste.getTime() < dateMaxDiff.getTime();
+            final Date dateFilmlist = getAgeAsDate();
+            if (dateFilmlist != null) {
+                return dateFilmlist.getTime() < dateMaxDiff.getTime();
             }
         } catch (final Exception ignored) {
         }
@@ -355,15 +355,15 @@ public class Filmlist extends SimpleListProperty<Film> {
     /**
      * Check if list is older than specified parameter.
      *
-     * @param sekunden The age in seconds.
+     * @param second The age in seconds.
      * @return true if older.
      */
-    public boolean isOlderThan(int sekunden) {
+    public boolean isOlderThan(int second) {
         final int ret = getAge();
         if (ret != 0) {
             PLog.sysLog("Die Filmliste ist " + ret / 60 + " Minuten alt");
         }
-        return ret > sekunden;
+        return ret > second;
     }
 
     public synchronized long countNewFilms() {
@@ -375,7 +375,7 @@ public class Filmlist extends SimpleListProperty<Film> {
      * für die Filterfelder in GuiFilme.
      */
     @SuppressWarnings("unchecked")
-    public synchronized void themenLaden() {
+    public synchronized void loadTheme() {
         Duration.counterStart("Themen in Filmliste suchen");
         final LinkedHashSet<String> senderSet = new LinkedHashSet<>(21);
         // der erste Sender ist ""
@@ -388,7 +388,7 @@ public class Filmlist extends SimpleListProperty<Film> {
 
         // für den Sender "" sind alle Themen im themenPerSender[0]
         final int senderLength = sender.length;
-        themenPerChannel = new String[senderLength][];
+        themePerChannel = new String[senderLength][];
         final TreeSet<String>[] tree = (TreeSet<String>[]) new TreeSet<?>[senderLength];
         final HashSet<String>[] hashSet = (HashSet<String>[]) new HashSet<?>[senderLength];
         for (int i = 0; i < tree.length; ++i) {
@@ -420,8 +420,8 @@ public class Filmlist extends SimpleListProperty<Film> {
                 }
             }
         }
-        for (int i = 0; i < themenPerChannel.length; ++i) {
-            themenPerChannel[i] = tree[i].toArray(new String[tree[i].size()]);
+        for (int i = 0; i < themePerChannel.length; ++i) {
+            themePerChannel[i] = tree[i].toArray(new String[tree[i].size()]);
             tree[i].clear();
             hashSet[i].clear();
         }

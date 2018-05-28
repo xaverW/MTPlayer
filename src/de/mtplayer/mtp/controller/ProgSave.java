@@ -117,7 +117,7 @@ public class ProgSave {
                 creatTime = d.toMillis();
             }
 
-            if (creatTime == -1 || creatTime < getHeute_0Uhr()) {
+            if (creatTime == -1 || creatTime < getToday_0_0()) {
                 // nur dann ist die letzte Kopie älter als einen Tag
                 for (int i = ProgConst.MAX_COPY_OF_BACKUPFILE; i > 1; --i) {
                     xmlFilePathCopy_1 = ProgInfos.getSettingsDirectory().resolve(ProgConst.CONFIG_FILE_COPY + (i - 1));
@@ -151,7 +151,7 @@ public class ProgSave {
      *
      * @return Number of milliseconds from today´s midnight.
      */
-    private long getHeute_0Uhr() {
+    private long getToday_0_0() {
         final Calendar cal = Calendar.getInstance();
         cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.MINUTE, 0);

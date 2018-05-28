@@ -42,48 +42,48 @@ public class SearchFilmListUrls {
     public FilmlistUrlList filmlistUrlList_diff = new FilmlistUrlList();
     private static boolean firstSearchAkt = true;
     private static boolean firstSearchDiff = true;
-    private final int UPDATE_LISTE_MAX = 10; // die Downloadliste für die Filmlisten nur jeden 10. Programmstart aktualisieren
+    private final int UPDATE_LIST_MAX = 10; // die Downloadliste für die Filmlisten nur jeden 10. Programmstart aktualisieren
 
-    public String searchCompleteListUrl(ArrayList<String> bereitsVersucht) {
+    public String searchCompleteListUrl(ArrayList<String> alreadyTried) {
         // passende URL zum Laden der Filmliste suchen
         String retUrl;
         if (filmlistUrlList_akt.isEmpty()) {
             // bei leerer Liste immer aktualisieren
-            updateURLsFilmlisten(true);
+            updateURLsFilmlists(true);
         } else if (firstSearchAkt) {
             // nach dem Programmstart wird die Liste einmal aktualisiert aber
             // da sich die Listen nicht ändern, nur jeden xx Start
-            int nr = new Random().nextInt(UPDATE_LISTE_MAX);
+            int nr = new Random().nextInt(UPDATE_LIST_MAX);
             if (nr == 0) {
-                updateURLsFilmlisten(true);
+                updateURLsFilmlists(true);
             }
         }
         firstSearchAkt = false;
-        retUrl = (filmlistUrlList_akt.getRand(bereitsVersucht)); //eine Zufällige Adresse wählen
-        if (bereitsVersucht != null) {
-            bereitsVersucht.add(retUrl);
+        retUrl = (filmlistUrlList_akt.getRand(alreadyTried)); //eine Zufällige Adresse wählen
+        if (alreadyTried != null) {
+            alreadyTried.add(retUrl);
         }
         return retUrl;
     }
 
-    public String searchDiffListUrl(ArrayList<String> bereitsVersucht) {
+    public String searchDiffListUrl(ArrayList<String> alreadyTried) {
         // passende URL zum Laden der Filmliste suchen
         String retUrl;
         if (filmlistUrlList_diff.isEmpty()) {
             // bei leerer Liste immer aktualisieren
-            updateURLsFilmlisten(false);
+            updateURLsFilmlists(false);
         } else if (firstSearchDiff) {
             // nach dem Programmstart wird die Liste einmal aktualisiert aber
             // da sich die Listen nicht ändern, nur jeden xx Start
-            int nr = new Random().nextInt(UPDATE_LISTE_MAX);
+            int nr = new Random().nextInt(UPDATE_LIST_MAX);
             if (nr == 0) {
-                updateURLsFilmlisten(false);
+                updateURLsFilmlists(false);
             }
         }
         firstSearchDiff = false;
-        retUrl = (filmlistUrlList_diff.getRand(bereitsVersucht)); //eine Zufällige Adresse wählen
-        if (bereitsVersucht != null) {
-            bereitsVersucht.add(retUrl);
+        retUrl = (filmlistUrlList_diff.getRand(alreadyTried)); //eine Zufällige Adresse wählen
+        if (alreadyTried != null) {
+            alreadyTried.add(retUrl);
         }
         return retUrl;
     }
@@ -119,10 +119,10 @@ public class SearchFilmListUrls {
      *
      * @param updateFullList if true, update full list server, otherwise diff servers.
      **/
-    public void updateURLsFilmlisten(final boolean updateFullList) {
+    public void updateURLsFilmlists(final boolean updateFullList) {
         FilmlistUrlList tmp = new FilmlistUrlList();
         if (updateFullList) {
-            getDownloadUrlsFilmlisten(ProgConst.ADRESSE_FILMLISTEN_SERVER_AKT, tmp, ProgInfos.getUserAgent(), FilmlistUrlData.SERVER_ART_AKT);
+            getDownloadUrlsFilmlists(ProgConst.ADRESSE_FILMLISTEN_SERVER_AKT, tmp, ProgInfos.getUserAgent(), FilmlistUrlData.SERVER_ART_AKT);
             if (!tmp.isEmpty()) {
                 filmlistUrlList_akt = tmp;
             } else if (filmlistUrlList_akt.isEmpty()) {
@@ -130,7 +130,7 @@ public class SearchFilmListUrls {
             }
             filmlistUrlList_akt.sort();
         } else {
-            getDownloadUrlsFilmlisten(ProgConst.ADRESSE_FILMLISTEN_SERVER_DIFF, tmp, ProgInfos.getUserAgent(), FilmlistUrlData.SERVER_ART_DIFF);
+            getDownloadUrlsFilmlists(ProgConst.ADRESSE_FILMLISTEN_SERVER_DIFF, tmp, ProgInfos.getUserAgent(), FilmlistUrlData.SERVER_ART_DIFF);
             if (!tmp.isEmpty()) {
                 filmlistUrlList_diff = tmp;
             } else if (filmlistUrlList_diff.isEmpty()) {
@@ -145,7 +145,7 @@ public class SearchFilmListUrls {
         }
     }
 
-    private void getDownloadUrlsFilmlisten(String dateiUrl, FilmlistUrlList filmlistUrlList, String userAgent, String art) {
+    private void getDownloadUrlsFilmlists(String dateiUrl, FilmlistUrlList filmlistUrlList, String userAgent, String art) {
         //String[] ret = new String[]{""/* version */, ""/* release */, ""/* updateUrl */};
         try {
             int event;
@@ -174,8 +174,8 @@ public class SearchFilmListUrls {
             while (parser.hasNext()) {
                 event = parser.next();
                 if (event == XMLStreamConstants.START_ELEMENT) {
-                    String parsername = parser.getLocalName();
-                    if (parsername.equals("Server")) {
+                    String parserName = parser.getLocalName();
+                    if (parserName.equals("Server")) {
                         //wieder ein neuer Server, toll
                         parseServerEntry(parser, filmlistUrlList, art);
                     }

@@ -78,9 +78,9 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs SYSTEM_LOAD_FILMS_ON_START = addNewKey("system-load-films-on-start", Boolean.TRUE.toString());
     public static MLConfigs SYSTEM_LOAD_FILMS_MANUALLY = addNewKey("system-load-films-manually", "");
     public static MLConfigs SYSTEM_NUM_DAYS_FILMLIST = addNewKey("system-num-days-filmilst", "0"); //es werden nur die x letzten Tage geladen
-    public static MLConfigs SYSTEM_PATH_VLC = addNewKey("path-vlc", SetsPrograms.getMusterPfadVlc());
-    public static MLConfigs SYSTEM_PATH_FLVSTREAMER = addNewKey("path-flvstreamer", SetsPrograms.getMusterPfadFlv());
-    public static MLConfigs SYSTEM_PATH_FFMPEG = addNewKey("path-ffmpeg", SetsPrograms.getMusterPfadFFmpeg());
+    public static MLConfigs SYSTEM_PATH_VLC = addNewKey("path-vlc", SetsPrograms.getTemplatePathVlc());
+    public static MLConfigs SYSTEM_PATH_FLVSTREAMER = addNewKey("path-flvstreamer", SetsPrograms.getTemplatePathFlv());
+    public static MLConfigs SYSTEM_PATH_FFMPEG = addNewKey("path-ffmpeg", SetsPrograms.getTemplatePathFFmpeg());
 
     // Blacklist
     public static MLConfigs SYSTEM_BLACKLIST_SHOW_NO_FUTURE = addNewKey("blacklist-show-no-future");
@@ -132,7 +132,7 @@ public class ProgConfig extends MLConfig {
     // Gui Abo
     public static MLConfigs ABO_SEARCH_NOW = addNewKey("abo-search-now", Boolean.TRUE.toString());
     public static MLConfigs ABO_MINUTE_MIN_SIZE = addNewKey("abo-minute-min-size", 0); //Vorgabe beim Anlegen eines Abos
-    public static MLConfigs ABO_MINUTE_MAX_SIZE = addNewKey("abo-minute-max-size", SelectedFilter.FILTER_DURATIION_MAX_MIN); //Vorgabe beim Anlegen eines Abos
+    public static MLConfigs ABO_MINUTE_MAX_SIZE = addNewKey("abo-minute-max-size", SelectedFilter.FILTER_DURATION_MAX_MIN); //Vorgabe beim Anlegen eines Abos
     public static MLConfigs ABO_DIALOG_EDIT_SIZE = addNewKey("abo-dialog-edit-size");
     public static MLConfigs ABO_GUI_FILTER_DIVIDER = addNewKey("abo-gui-filter-divider", ProgConst.GUI_ABO_FILTER_DIVIDER_LOCATION);
     public static MLConfigs ABO_GUI_FILTER_DIVIDER_ON = addNewKey("abo-gui-filter-divider-on", Boolean.TRUE.toString());

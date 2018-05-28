@@ -40,15 +40,15 @@ public class MediaData extends Data<MediaData> {
         makeArr();
     }
 
-    public MediaData(String name, String pfad, long size, String sammlung, boolean external) {
+    public MediaData(String name, String path, long size, String collection, boolean external) {
         makeArr();
-        arr[MEDIA_DB_NAME] = putzen(name);
-        arr[MEDIA_DB_PATH] = putzen(pfad);
+        arr[MEDIA_DB_NAME] = cleanUp(name);
+        arr[MEDIA_DB_PATH] = cleanUp(path);
 
         mediaFileSize = new MediaFileSize(size);
         arr[MEDIA_DB_SIZE] = mediaFileSize.toString();
 
-        arr[MEDIA_DB_COLLECTION_NAME] = putzen(sammlung);
+        arr[MEDIA_DB_COLLECTION_NAME] = cleanUp(collection);
         setExternal(external);
         arr[MEDIA_DB_EXTERN] = Boolean.toString(external);
     }
@@ -81,8 +81,8 @@ public class MediaData extends Data<MediaData> {
         return arr[MEDIA_DB_COLLECTION_NAME];
     }
 
-    public void setCollectionName(String sammlung) {
-        arr[MEDIA_DB_COLLECTION_NAME] = sammlung;
+    public void setCollectionName(String collectionName) {
+        arr[MEDIA_DB_COLLECTION_NAME] = collectionName;
     }
 
 
@@ -133,7 +133,7 @@ public class MediaData extends Data<MediaData> {
         this.external = external;
     }
 
-    private static String putzen(String s) {
+    private static String cleanUp(String s) {
         s = s.replace("\n", "");
         s = s.replace("|", "");
         return s;

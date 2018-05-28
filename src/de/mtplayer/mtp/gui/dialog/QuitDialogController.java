@@ -27,7 +27,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import org.controlsfx.control.MaskerPane;
 
-public class QuittDialogController extends MTDialog {
+public class QuitDialogController extends MTDialog {
 
     final ProgData progData;
     final StackPane stackPane;
@@ -35,9 +35,9 @@ public class QuittDialogController extends MTDialog {
     final WaitTask waitTask;
     final VBox vbox;
 
-    boolean canQuitt = false;
+    boolean canQuit = false;
 
-    public QuittDialogController(ProgData progData) {
+    public QuitDialogController(ProgData progData) {
         super("", null,
                 "Programm beenden", true);
 
@@ -62,7 +62,7 @@ public class QuittDialogController extends MTDialog {
         gridPane.setVgap(25);
 
         waitTask.setOnSucceeded(event -> {
-            canQuitt = true;
+            canQuit = true;
             close();
         });
 
@@ -71,28 +71,28 @@ public class QuittDialogController extends MTDialog {
         Label headerLabel = new Label("Es laufen noch Downloads!");
         headerLabel.setStyle("-fx-font-size: 1.5em;");
 
-        BigButton cancelButton = new BigButton(new Icons().ICON_BUTTON_QUITT, "Nicht beenden",
+        BigButton cancelButton = new BigButton(new Icons().ICON_BUTTON_QUIT, "Nicht beenden",
                 "");
         cancelButton.setOnAction(e -> close());
 
-        BigButton quittButton = new BigButton(new Icons().ICON_BUTTON_QUITT, "Beenden",
+        BigButton quitButton = new BigButton(new Icons().ICON_BUTTON_QUIT, "Beenden",
                 "Alle Downloads abbrechen und das Programm beenden.");
-        quittButton.setOnAction(e -> {
-            canQuitt = true;
+        quitButton.setOnAction(e -> {
+            canQuit = true;
             close();
         });
 
-        BigButton waitButton = new BigButton(new Icons().ICON_BUTTON_QUITT, "Warten",
+        BigButton waitButton = new BigButton(new Icons().ICON_BUTTON_QUIT, "Warten",
                 "Alle Downloads abwarten und dann das Programm beenden.");
         waitButton.setOnAction(e -> {
             startWaiting();
         });
 
 
-        gridPane.add(new Icons().ICON_DIALOG_QUITT, 0, 0, 1, 1);
+        gridPane.add(new Icons().ICON_DIALOG_QUIT, 0, 0, 1, 1);
         gridPane.add(headerLabel, 1, 0);
         gridPane.add(cancelButton, 1, 1);
-        gridPane.add(quittButton, 1, 2);
+        gridPane.add(quitButton, 1, 2);
         gridPane.add(waitButton, 1, 3);
 
         ColumnConstraints ccTxt = new ColumnConstraints();
@@ -151,7 +151,7 @@ public class QuittDialogController extends MTDialog {
     }
 
     public boolean canTerminate() {
-        return canQuitt;
+        return canQuit;
     }
 
 }

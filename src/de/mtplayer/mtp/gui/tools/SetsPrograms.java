@@ -38,147 +38,147 @@ import static de.mtplayer.mLib.tools.Functions.getOs;
 
 public class SetsPrograms {
 
-    private static final ArrayList<String> winPfade = new ArrayList<>();
+    private static final ArrayList<String> winPath = new ArrayList<>();
 
-    private static void setWinProgPfade() {
+    private static void setWinProgPath() {
         String pfad;
         if (System.getenv("ProgramFiles") != null) {
             pfad = System.getenv("ProgramFiles");
-            if (new File(pfad).exists() && !winPfade.contains(pfad)) {
-                winPfade.add(pfad);
+            if (new File(pfad).exists() && !winPath.contains(pfad)) {
+                winPath.add(pfad);
             }
         }
         if (System.getenv("ProgramFiles(x86)") != null) {
             pfad = System.getenv("ProgramFiles(x86)");
-            if (new File(pfad).exists() && !winPfade.contains(pfad)) {
-                winPfade.add(pfad);
+            if (new File(pfad).exists() && !winPath.contains(pfad)) {
+                winPath.add(pfad);
             }
         }
-        final String[] PFAD = {"C:\\Program Files", "C:\\Programme", "C:\\Program Files (x86)"};
-        for (final String s : PFAD) {
-            if (new File(s).exists() && !winPfade.contains(s)) {
-                winPfade.add(s);
+        final String[] PATH = {"C:\\Program Files", "C:\\Programme", "C:\\Program Files (x86)"};
+        for (final String s : PATH) {
+            if (new File(s).exists() && !winPath.contains(s)) {
+                winPath.add(s);
             }
         }
     }
 
-    public static String getMusterPfadVlc() {
-        // liefert den Standardpfad für das entsprechende BS 
+    public static String getTemplatePathVlc() {
+        // liefert den Standardpfad für das entsprechende BS
         // Programm muss auf dem Rechner instelliert sein
-        final String PFAD_LINUX_VLC = "/usr/bin/vlc";
-        final String PFAD_FREEBSD = "/usr/local/bin/vlc";
-        final String PFAD_WIN = "\\VideoLAN\\VLC\\vlc.exe";
-        String pfad = "";
+        final String PATH_LINUX_VLC = "/usr/bin/vlc";
+        final String PATH_FREEBSD = "/usr/local/bin/vlc";
+        final String PATH_WIN = "\\VideoLAN\\VLC\\vlc.exe";
+        String path = "";
         try {
             switch (getOs()) {
                 case LINUX:
                     if (System.getProperty("os.name").toLowerCase().contains("freebsd")) {
-                        pfad = PFAD_FREEBSD;
+                        path = PATH_FREEBSD;
                     } else {
-                        pfad = PFAD_LINUX_VLC;
+                        path = PATH_LINUX_VLC;
                     }
                     break;
                 default:
-                    setWinProgPfade();
-                    for (final String s : winPfade) {
-                        pfad = s + PFAD_WIN;
-                        if (new File(pfad).exists()) {
+                    setWinProgPath();
+                    for (final String s : winPath) {
+                        path = s + PATH_WIN;
+                        if (new File(path).exists()) {
                             break;
                         }
                     }
             }
-            if (!new File(pfad).exists() && System.getenv("PATH_VLC") != null) {
-                pfad = System.getenv("PATH_VLC");
+            if (!new File(path).exists() && System.getenv("PATH_VLC") != null) {
+                path = System.getenv("PATH_VLC");
             }
-            if (!new File(pfad).exists()) {
-                pfad = "";
+            if (!new File(path).exists()) {
+                path = "";
             }
         } catch (final Exception ignore) {
         }
-        return pfad;
+        return path;
     }
 
-    public static String getMusterPfadFlv() {
-        // liefert den Standardpfad für das entsprechende BS 
-        // bei Win+Mac wird das Programm mitgeliefert und liegt 
+    public static String getTemplatePathFlv() {
+        // liefert den Standardpfad für das entsprechende BS
+        // bei Win+Mac wird das Programm mitgeliefert und liegt
         // im Ordner "bin" der mit dem Programm mitgeliefert wird
         // bei Linux muss das Programm auf dem Rechner instelliert sein
-        final String PFAD_LINUX_FLV = "/usr/bin/flvstreamer";
-        final String PFAD_FREEBSD = "/usr/local/bin/flvstreamer";
-        final String PFAD_WINDOWS_FLV = "bin\\flvstreamer_win32_latest.exe";
-        String pfad = "";
+        final String PATH_LINUX_FLV = "/usr/bin/flvstreamer";
+        final String PATH_FREEBSD = "/usr/local/bin/flvstreamer";
+        final String PATH_WINDOWS_FLV = "bin\\flvstreamer_win32_latest.exe";
+        String path = "";
         try {
             switch (getOs()) {
                 case LINUX:
                     if (System.getProperty("os.name").toLowerCase().contains("freebsd")) {
-                        pfad = PFAD_FREEBSD;
+                        path = PATH_FREEBSD;
                     } else {
-                        pfad = PFAD_LINUX_FLV;
+                        path = PATH_LINUX_FLV;
                     }
                     break;
                 default:
-                    pfad = PFAD_WINDOWS_FLV;
+                    path = PATH_WINDOWS_FLV;
             }
-            if (!new File(pfad).exists() && System.getenv("PATH_FLVSTREAMER") != null) {
-                pfad = System.getenv("PATH_FLVSTREAMER");
+            if (!new File(path).exists() && System.getenv("PATH_FLVSTREAMER") != null) {
+                path = System.getenv("PATH_FLVSTREAMER");
             }
-            if (!new File(pfad).exists()) {
-                pfad = "";
+            if (!new File(path).exists()) {
+                path = "";
             }
         } catch (final Exception ignore) {
         }
-        return pfad;
+        return path;
     }
 
-    public static String getMusterPfadFFmpeg() {
-        // liefert den Standardpfad für das entsprechende BS 
-        // bei Win+Mac wird das Programm mitgeliefert und liegt 
+    public static String getTemplatePathFFmpeg() {
+        // liefert den Standardpfad für das entsprechende BS
+        // bei Win+Mac wird das Programm mitgeliefert und liegt
         // im Ordner "bin" der mit dem Programm mitgeliefert wird
         // bei Linux muss das Programm auf dem Rechner installiert sein
-        final String PFAD_LINUX_FFMPEG = "/usr/bin/ffmpeg";
-        final String PFAD_FREEBSD_FFMPEG = "/usr/local/bin/ffmpeg";
-        final String PFAD_WINDOWS_FFMPEG = "bin\\ffmpeg.exe";
-        String pfad = "";
+        final String PATH_LINUX_FFMPEG = "/usr/bin/ffmpeg";
+        final String PATH_FREEBSD_FFMPEG = "/usr/local/bin/ffmpeg";
+        final String PATH_WINDOWS_FFMPEG = "bin\\ffmpeg.exe";
+        String path = "";
         try {
             switch (getOs()) {
                 case LINUX:
                     if (System.getProperty("os.name").toLowerCase().contains("freebsd")) {
-                        pfad = PFAD_FREEBSD_FFMPEG;
+                        path = PATH_FREEBSD_FFMPEG;
                     } else {
-                        pfad = PFAD_LINUX_FFMPEG;
+                        path = PATH_LINUX_FFMPEG;
                     }
                     break;
                 default:
-                    pfad = PFAD_WINDOWS_FFMPEG;
+                    path = PATH_WINDOWS_FFMPEG;
             }
-            if (!new File(pfad).exists() && System.getenv("PATH_FFMPEG") != null) {
-                pfad = System.getenv("PATH_FFMPEG");
+            if (!new File(path).exists() && System.getenv("PATH_FFMPEG") != null) {
+                path = System.getenv("PATH_FFMPEG");
             }
-            if (!new File(pfad).exists()) {
-                pfad = "";
+            if (!new File(path).exists()) {
+                path = "";
             }
         } catch (final Exception ignore) {
         }
-        return pfad;
+        return path;
     }
 
-    public static String getPfadScript() {
-        // liefert den Standardpfad zum Script "Ansehen" für das entsprechende BS 
+    public static String getPathScript() {
+        // liefert den Standardpfad zum Script "Ansehen" für das entsprechende BS
         // liegt im Ordner "bin" der mit dem Programm mitgeliefert wird
-        String pfadScript;
-        final String PFAD_LINUX_SCRIPT = "bin/flv.sh";
-        final String PFAD_WINDOWS_SCRIPT = "bin\\flv.bat";
+        String path;
+        final String PATH_LINUX_SCRIPT = "bin/flv.sh";
+        final String PATH_WINDOWS_SCRIPT = "bin\\flv.bat";
         switch (getOs()) {
             case LINUX:
-                pfadScript = ProgInfos.getPathJar() + PFAD_LINUX_SCRIPT;
+                path = ProgInfos.getPathJar() + PATH_LINUX_SCRIPT;
                 break;
             default:
-                pfadScript = PFAD_WINDOWS_SCRIPT;
+                path = PATH_WINDOWS_SCRIPT;
         }
-        return pfadScript;
+        return path;
     }
 
-    public static boolean addSetVorlagen(SetList pSet) {
+    public static boolean addSetTemplate(SetList pSet) {
         if (pSet == null) {
             return false;
         }
@@ -197,27 +197,27 @@ public class SetsPrograms {
         }
     }
 
-    private static boolean addOnZip(String datei) {
-        final String zielPfad = FileUtils.addsPfad(ProgInfos.getPathJar(), "bin");
+    private static boolean addOnZip(String file) {
+        final String destPath = FileUtils.addsPath(ProgInfos.getPathJar(), "bin");
         File zipFile;
         final int timeout = 10_000; //10 Sekunden
         int n;
         HttpURLConnection conn;
         try {
-            if (!FileUtils.istUrl(datei)) {
-                zipFile = new File(datei);
+            if (!FileUtils.istUrl(file)) {
+                zipFile = new File(file);
                 if (!zipFile.exists()) {
                     // und Tschüss
                     return false;
                 }
-                if (datei.endsWith(ProgConst.FORMAT_ZIP)) {
-                    if (!entpacken(zipFile, new File(zielPfad))) {
+                if (file.endsWith(ProgConst.FORMAT_ZIP)) {
+                    if (!unpack(zipFile, new File(destPath))) {
                         // und Tschüss
                         return false;
                     }
                 } else {
-                    try (FileInputStream in = new FileInputStream(datei);
-                         FileOutputStream fOut = new FileOutputStream(FileUtils.addsPfad(zielPfad, datei))) {
+                    try (FileInputStream in = new FileInputStream(file);
+                         FileOutputStream fOut = new FileOutputStream(FileUtils.addsPath(destPath, file))) {
                         final byte[] buffer = new byte[1024];
                         while ((n = in.read(buffer)) != -1) {
                             fOut.write(buffer, 0, n);
@@ -225,11 +225,11 @@ public class SetsPrograms {
                     }
                 }
             } else {
-                conn = (HttpURLConnection) new URL(datei).openConnection();
+                conn = (HttpURLConnection) new URL(file).openConnection();
                 conn.setConnectTimeout(timeout);
                 conn.setReadTimeout(timeout);
                 conn.setRequestProperty("User-Agent", ProgInfos.getUserAgent());
-                if (datei.endsWith(ProgConst.FORMAT_ZIP)) {
+                if (file.endsWith(ProgConst.FORMAT_ZIP)) {
 
                     final File tmpFile = File.createTempFile("mtplayer", null);
                     tmpFile.deleteOnExit();
@@ -240,14 +240,14 @@ public class SetsPrograms {
                             fOut.write(buffer, 0, n);
                         }
                     }
-                    if (!entpacken(tmpFile, new File(zielPfad))) {
+                    if (!unpack(tmpFile, new File(destPath))) {
                         // und Tschüss
                         return false;
                     }
 
                 } else {
-                    final String file = FileUtils.getDateiName(datei);
-                    final File f = new File(FileUtils.addsPfad(zielPfad, file));
+                    final String fileName = FileUtils.getFileName(file);
+                    final File f = new File(FileUtils.addsPath(destPath, fileName));
                     try (BufferedInputStream in = new BufferedInputStream(conn.getInputStream());
                          FileOutputStream fOut = new FileOutputStream(f)) {
                         final byte[] buffer = new byte[1024];
@@ -262,7 +262,7 @@ public class SetsPrograms {
         return true;
     }
 
-    private static boolean entpacken(File archive, File destDir) throws Exception {
+    private static boolean unpack(File archive, File destDir) throws Exception {
         if (!destDir.exists()) {
             return false;
         }
@@ -304,7 +304,7 @@ public class SetsPrograms {
         return new File(destDir, internalPathToEntry);
     }
 
-    public static boolean praefixTesten(String str, String uurl, boolean praefix) {
+    public static boolean testPrefix(String str, String uurl, boolean prefix) {
         //prüfen ob url beginnt/endet mit einem Argument in str
         //wenn str leer dann true
         boolean ret = false;
@@ -318,7 +318,7 @@ public class SetsPrograms {
                     s1 += str.charAt(i);
                 }
                 if (str.charAt(i) == ',' || i >= str.length() - 1) {
-                    if (praefix) {
+                    if (prefix) {
                         //Präfix prüfen
                         if (url.startsWith(s1.toLowerCase())) {
                             ret = true;
@@ -336,17 +336,17 @@ public class SetsPrograms {
         return ret;
     }
 
-    public static boolean checkPfadBeschreibbar(String pfad) {
+    public static boolean checkPathWritable(String path) {
         boolean ret = false;
-        final File testPfad = new File(pfad);
+        final File testPath = new File(path);
         try {
-            if (!testPfad.exists()) {
-                testPfad.mkdirs();
+            if (!testPath.exists()) {
+                testPath.mkdirs();
             }
-            if (pfad.isEmpty()) {
-            } else if (!testPfad.isDirectory()) {
-            } else if (testPfad.canWrite()) {
-                final File tmpFile = File.createTempFile("mtplayer", "tmp", testPfad);
+            if (path.isEmpty()) {
+            } else if (!testPath.isDirectory()) {
+            } else if (testPath.canWrite()) {
+                final File tmpFile = File.createTempFile("mtplayer", "tmp", testPath);
                 tmpFile.delete();
                 ret = true;
             }
@@ -355,7 +355,7 @@ public class SetsPrograms {
         return ret;
     }
 
-    public static boolean programmePruefen(ProgData daten) {
+    public static boolean checkPrograms(ProgData data) {
         // prüfen ob die eingestellten Programmsets passen
         final String PIPE = "| ";
         final String LEER = "      ";
@@ -363,24 +363,24 @@ public class SetsPrograms {
         boolean ret = true;
         String text = "";
 
-        for (final SetData psetData : daten.setList) {
+        for (final SetData psetData : data.setList) {
             ret = true;
             if (!psetData.isFreeLine() && !psetData.isLable()) {
                 // nur wenn kein Lable oder freeline
                 text += "++++++++++++++++++++++++++++++++++++++++++++" + '\n';
                 text += PIPE + "Programmgruppe: " + psetData.getName() + '\n';
-                final String zielPfad = psetData.getDestPath();
+                final String destPath = psetData.getDestPath();
                 if (psetData.progsContainPath()) {
                     // beim nur Abspielen wird er nicht gebraucht
-                    if (zielPfad.isEmpty()) {
+                    if (destPath.isEmpty()) {
                         ret = false;
                         text += PIPE + LEER + "Zielpfad fehlt!\n";
                     } else // Pfad beschreibbar?
-                        if (!checkPfadBeschreibbar(zielPfad)) {
+                        if (!checkPathWritable(destPath)) {
                             //da Pfad-leer und "kein" Pfad schon abgeprüft
                             ret = false;
                             text += PIPE + LEER + "Falscher Zielpfad!\n";
-                            text += PIPE + LEER + PFEIL + "Zielpfad \"" + zielPfad + "\" nicht beschreibbar!" + '\n';
+                            text += PIPE + LEER + PFEIL + "Zielpfad \"" + destPath + "\" nicht beschreibbar!" + '\n';
                         }
                 }
                 for (final de.mtplayer.mtp.controller.data.ProgData progData : psetData.getProgList()) {

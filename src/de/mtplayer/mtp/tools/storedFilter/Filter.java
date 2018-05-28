@@ -28,7 +28,7 @@ public class Filter {
     public String filter = "";
     public String[] filterArr = {""};
     public boolean filterAnd = false;
-    public boolean exakt = false;
+    public boolean exact = false;
     public Pattern pattern = null;
     public boolean empty = true;
 
@@ -40,10 +40,10 @@ public class Filter {
         this.filterArr = new String[]{filter};
     }
 
-    public Filter(String filter, boolean exakt) {
+    public Filter(String filter, boolean exact) {
         this.filter = filter;
         this.filterArr = new String[]{filter};
-        this.exakt = exakt;
+        this.exact = exact;
     }
 
     public void set() {
@@ -58,7 +58,7 @@ public class Filter {
         empty = false;
         pattern = makePattern(filter);
 
-        if (exakt || pattern != null) {
+        if (exact || pattern != null) {
             filterArr = new String[]{filter};
 
         } else {
@@ -79,7 +79,7 @@ public class Filter {
         empty = false;
         pattern = makePattern(filter);
 
-        if (exakt || pattern != null) {
+        if (exact || pattern != null) {
             filterArr = new String[]{filter};
 
         } else {
@@ -119,8 +119,8 @@ public class Filter {
         return p;
     }
 
-    public static boolean isPattern(String textSuchen) {
-        return textSuchen.startsWith("#:");
+    public static boolean isPattern(String searchText) {
+        return searchText.startsWith("#:");
     }
 
     public static void checkPattern1(TextField tf) {

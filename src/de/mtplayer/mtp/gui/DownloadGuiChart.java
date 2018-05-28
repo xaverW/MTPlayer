@@ -193,7 +193,7 @@ public class DownloadGuiChart {
                         FXCollections.observableArrayList(new XYChart.Data<Number, Number>(countMin, download.getStart().getBandwidth() / scale))));
             }
         }
-        sumSeries.getData().add(new XYChart.Data<>(countMin, progData.downloadList.getDownload_infosAll().bandwidth / scale));
+        sumSeries.getData().add(new XYChart.Data<>(countMin, progData.downloadList.getDownloadInfoAll().bandwidth / scale));
         zoomXAxis(countMin);
         zoomYAxis();
     }

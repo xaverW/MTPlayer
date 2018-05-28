@@ -51,41 +51,41 @@ public class TableDownload {
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("nr"));
         nrColumn.setCellFactory(cellFactoryNr);
 
-        final TableColumn<Download, Integer> filmnrColumn = new TableColumn<>("Filmnr");
-        filmnrColumn.setCellValueFactory(new PropertyValueFactory<>("filmNr"));
-        filmnrColumn.setCellFactory(cellFactoryFilmNr);
+        final TableColumn<Download, Integer> filmNrColumn = new TableColumn<>("Filmnr");
+        filmNrColumn.setCellValueFactory(new PropertyValueFactory<>("filmNr"));
+        filmNrColumn.setCellFactory(cellFactoryFilmNr);
 
         final TableColumn<Download, String> aboColumn = new TableColumn<>("Abo");
         aboColumn.setCellValueFactory(new PropertyValueFactory<>("aboName"));
         final TableColumn<Download, String> senderColumn = new TableColumn<>("Sender");
         senderColumn.setCellValueFactory(new PropertyValueFactory<>("channel"));
-        final TableColumn<Download, String> themaColumn = new TableColumn<>("Thema");
-        themaColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
-        final TableColumn<Download, String> titelColumn = new TableColumn<>("Titel");
-        titelColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        final TableColumn<Download, String> themeColumn = new TableColumn<>("Thema");
+        themeColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
+        final TableColumn<Download, String> titleColumn = new TableColumn<>("Titel");
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
 
         final TableColumn<Download, Integer> startColumn = new TableColumn<>("");
         startColumn.setCellValueFactory(new PropertyValueFactory<>("state"));
         startColumn.setCellFactory(cellFactoryStart);
         startColumn.getStyleClass().add("center");
 
-        final TableColumn<Download, Double> fortschrittColumn = new TableColumn<>("Fortschritt"); //müssen sich unterscheiden!!
-        fortschrittColumn.setCellValueFactory(new PropertyValueFactory<>("progress"));
-        fortschrittColumn.setCellFactory(cellFactoryProgress);
+        final TableColumn<Download, Double> progressColumn = new TableColumn<>("Fortschritt"); //müssen sich unterscheiden!!
+        progressColumn.setCellValueFactory(new PropertyValueFactory<>("progress"));
+        progressColumn.setCellFactory(cellFactoryProgress);
 
-        final TableColumn<Download, Integer> restzeitColumn = new TableColumn<>("Restzeit");
-        restzeitColumn.setCellValueFactory(new PropertyValueFactory<>("remaining"));
-        final TableColumn<Download, Integer> geschwindigkeitColumn = new TableColumn<>("Geschwindigkeit");
-        geschwindigkeitColumn.setCellValueFactory(new PropertyValueFactory<>("bandwidth"));
+        final TableColumn<Download, Integer> remainingColumn = new TableColumn<>("Restzeit");
+        remainingColumn.setCellValueFactory(new PropertyValueFactory<>("remaining"));
+        final TableColumn<Download, Integer> speedColumn = new TableColumn<>("Geschwindigkeit");
+        speedColumn.setCellValueFactory(new PropertyValueFactory<>("bandwidth"));
 
-        final TableColumn<Download, DownloadSizeData> groesseColumn = new TableColumn<>("Größe [MB]");
-        groesseColumn.setCellValueFactory(new PropertyValueFactory<>("downloadSize"));
+        final TableColumn<Download, DownloadSizeData> sizeColumn = new TableColumn<>("Größe [MB]");
+        sizeColumn.setCellValueFactory(new PropertyValueFactory<>("downloadSize"));
         final TableColumn<Download, MDate> datumColumn = new TableColumn<>("Datum");
         datumColumn.setCellValueFactory(new PropertyValueFactory<>("filmDate"));
-        final TableColumn<Download, String> zeitColumn = new TableColumn<>("Zeit");
-        zeitColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
-        final TableColumn<Download, Integer> dauerColumn = new TableColumn<>("Dauer");
-        dauerColumn.setCellValueFactory(new PropertyValueFactory<>("duration"));
+        final TableColumn<Download, String> timeColumn = new TableColumn<>("Zeit");
+        timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
+        final TableColumn<Download, Integer> durationColumn = new TableColumn<>("Dauer");
+        durationColumn.setCellValueFactory(new PropertyValueFactory<>("duration"));
 
         final TableColumn<Download, Boolean> hdColumn = new TableColumn<>("HD");
         hdColumn.setCellValueFactory(new PropertyValueFactory<>("hd"));
@@ -109,9 +109,9 @@ public class TableDownload {
         final TableColumn<Download, String> srcColumn = new TableColumn<>("Quelle");
         srcColumn.setCellValueFactory(new PropertyValueFactory<>("source"));
 
-        final TableColumn<Download, Boolean> zurueckgestelltColumn = new TableColumn<>("Zurückgestellt");
-        zurueckgestelltColumn.setCellValueFactory(new PropertyValueFactory<>("zurueckgestellt"));
-        zurueckgestelltColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
+        final TableColumn<Download, Boolean> placedBackColumn = new TableColumn<>("Zurückgestellt");
+        placedBackColumn.setCellValueFactory(new PropertyValueFactory<>("zurueckgestellt"));
+        placedBackColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
 
         final TableColumn<Download, String> programColumn = new TableColumn<>("Programm");
         programColumn.setCellValueFactory(new PropertyValueFactory<>("programm"));
@@ -119,20 +119,20 @@ public class TableDownload {
         setColumn.setCellValueFactory(new PropertyValueFactory<>("set"));
         final TableColumn<Download, String> urlColumn = new TableColumn<>("URL");
         urlColumn.setCellValueFactory(new PropertyValueFactory<>("url"));
-        final TableColumn<Download, String> dateinameColumn = new TableColumn<>("Dateiname");
-        dateinameColumn.setCellValueFactory(new PropertyValueFactory<>("zielDateiname"));
-        final TableColumn<Download, String> pfadColumn = new TableColumn<>("Pfad");
-        pfadColumn.setCellValueFactory(new PropertyValueFactory<>("zielPfad"));
+        final TableColumn<Download, String> fileNameColumn = new TableColumn<>("Dateiname");
+        fileNameColumn.setCellValueFactory(new PropertyValueFactory<>("zielDateiname"));
+        final TableColumn<Download, String> pathColumn = new TableColumn<>("Pfad");
+        pathColumn.setCellValueFactory(new PropertyValueFactory<>("zielPfad"));
 
         addRowFact(table);
 
         return new TableColumn[]{
-                nrColumn, filmnrColumn,
-                aboColumn, senderColumn, themaColumn, titelColumn, startColumn,
-                fortschrittColumn, restzeitColumn, geschwindigkeitColumn, groesseColumn,
-                datumColumn, zeitColumn, dauerColumn,
-                hdColumn, utColumn, pauseColumn, geoColumn, artColumn, srcColumn, zurueckgestelltColumn,
-                programColumn, setColumn, urlColumn, dateinameColumn, pfadColumn
+                nrColumn, filmNrColumn,
+                aboColumn, senderColumn, themeColumn, titleColumn, startColumn,
+                progressColumn, remainingColumn, speedColumn, sizeColumn,
+                datumColumn, timeColumn, durationColumn,
+                hdColumn, utColumn, pauseColumn, geoColumn, artColumn, srcColumn, placedBackColumn,
+                programColumn, setColumn, urlColumn, fileNameColumn, pathColumn
         };
 
     }
@@ -192,7 +192,7 @@ public class TableDownload {
                 final Button btnDownStop;
                 final Button btnFilmStart;
 
-                if (item <= DownloadInfos.STATE_STOPED) {
+                if (item <= DownloadInfos.STATE_STOPPED) {
                     btnDownStart = new Button("");
                     btnDownStart.setGraphic(new ImageView(Icons.IMAGE_TABLE_DOWNLOAD_START));
 
@@ -234,7 +234,7 @@ public class TableDownload {
 
                     btnFilmStart.setOnAction((ActionEvent event) -> {
                         Download download = getTableView().getItems().get(getIndex());
-                        MTOpen.playStoredFilm(download.getZielPfadDatei());
+                        MTOpen.playStoredFilm(download.getDestPathFile());
                     });
                     hbox.getChildren().addAll(btnFilmStart);
                     setGraphic(hbox);
@@ -257,7 +257,7 @@ public class TableDownload {
         }
         switch (item) {
             case DownloadInfos.STATE_INIT:
-            case DownloadInfos.STATE_STOPED:
+            case DownloadInfos.STATE_STOPPED:
                 currentRow.setStyle("");
                 break;
             case DownloadInfos.STATE_STARTED_WAITING:
@@ -342,11 +342,11 @@ public class TableDownload {
 
                 if (item != null) {
                     Download download = getTableView().getItems().get(getIndex());
-                    if (download.isProgrammDownloadmanager()) {
+                    if (download.getProgramDownloadmanager()) {
                         final String text = DownloadInfos.getTextProgress(true, download.getState(), item.doubleValue());
                         Label label = new Label(text);
                         setGraphic(label);
-                    } else if (item <= DownloadInfos.PROGRESS_GESTARTET || item >= DownloadInfos.PROGRESS_FERTIG) {
+                    } else if (item <= DownloadInfos.PROGRESS_STARTED || item >= DownloadInfos.PROGRESS_FINISHED) {
                         String text = DownloadInfos.getTextProgress(false, download.getState(), item.doubleValue());
                         Label label = new Label(text);
                         if (geoMelden.get() && download.getGeoBlocked()) {

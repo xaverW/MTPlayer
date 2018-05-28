@@ -110,7 +110,7 @@ public class Abo extends AboProps {
     }
 
 
-    public void aufMichKopieren(Abo abo) {
+    public void copyToMe(Abo abo) {
         for (int i = 0; i < AboXml.MAX_ELEM; ++i) {
             this.properties[i].setValue(abo.properties[i].getValue());
         }

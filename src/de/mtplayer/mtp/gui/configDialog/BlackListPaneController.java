@@ -50,7 +50,7 @@ public class BlackListPaneController extends AnchorPane {
     IntegerProperty propDay = ProgConfig.SYSTEM_BLACKLIST_SHOW_ONLY_DAYS.getIntegerProperty();
     BooleanProperty propGeo = ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_GEO.getBooleanProperty();
     BooleanProperty propAbo = ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.getBooleanProperty();
-    BooleanProperty propFutur = ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_FUTURE.getBooleanProperty();
+    BooleanProperty propFuture = ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_FUTURE.getBooleanProperty();
 
     private final int SIZE_MAX = 100;
     private final int FILTER_DAYS_MAX = 150;
@@ -122,7 +122,7 @@ public class BlackListPaneController extends AnchorPane {
 
         final ToggleSwitch tglFuture = new ToggleSwitch("Filme mit Datum in der Zukunft nicht anzeigen");
         tglFuture.setMaxWidth(Double.MAX_VALUE);
-        tglFuture.selectedProperty().bindBidirectional(propFutur);
+        tglFuture.selectedProperty().bindBidirectional(propFuture);
 
         final Button btnHelpFuture = new Button("");
         btnHelpFuture.setTooltip(new Tooltip("Hilfe anzeigen."));

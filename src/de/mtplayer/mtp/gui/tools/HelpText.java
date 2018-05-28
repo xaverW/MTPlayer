@@ -108,7 +108,7 @@ public class HelpText {
             "\n";
 
 
-    public static final String FILTER_FELDER =
+    public static final String FILTER_FIELD =
             "\n" +
                     "\"Sender\" und \"Thema\" können exakt verglichen werden. " +
                     "Das heißt, der im Feld \"Sender\\Thema\" angegebene Text muss " +
@@ -123,7 +123,7 @@ public class HelpText {
                     "Beim Feld \"Thema/Titel\" muss der Filter im " +
                     "\"Thema\" ODER \"Titel\" enthalten sein." +
                     "\n";
-    public static final String FILTER_EXAKT =
+    public static final String FILTER_EXACT =
             "\n" +
                     "\"exakt\" bedeutet, dass z.B. \"Abend\" im Feld Thema nur die Filme " +
                     "findet, die genau das Thema \"Abend\" haben. " +
@@ -162,7 +162,7 @@ public class HelpText {
                     "\n";
 
     public static final String GUI_FILM_FILTER =
-            FILTER_FELDER +
+            FILTER_FIELD +
                     "\n" +
                     "Im Filter \"Irgendwo\" wird zum Titel und Thema " +
                     "auch die Beschreibung geprüft." +
@@ -171,7 +171,7 @@ public class HelpText {
                     "Beim Feld \"URL\" muss der Filter in der URL " +
                     "des Films ODER der Website des Films enthalten sein." +
                     "\n" +
-                    FILTER_EXAKT +
+                    FILTER_EXACT +
                     "\n" +
                     "\n" +
                     "Filterprofile:\n" +
@@ -191,8 +191,8 @@ public class HelpText {
                     "Beim Umschalten \"Blacklist - Whitelist\" werden genau " +
                     "die vorher nicht angezeigten Filme jetzt angezeigt." +
                     "\n\n" +
-                    FILTER_FELDER +
-                    FILTER_EXAKT;
+                    FILTER_FIELD +
+                    FILTER_EXACT;
 
     public static final String CONFIG_GEO = "Nicht alle Filme lassen sich im Ausland abrufen.\n" +
             "Wenn geblockte Filme markiert werden sollen, kann man hier seinen Standort angeben.\n" +
@@ -207,7 +207,7 @@ public class HelpText {
             "abgespielt werden kann, liegt fast immer " +
             "Geoblocking vor.";
 
-    public static final String GUI_FILME_EDIT_FILTER = "Hier können die Filter\n" +
+    public static final String GUI_FILMS_EDIT_FILTER = "Hier können die Filter\n" +
             "die angezeigt werden sollen, ein- und ausgeschaltet werden.\n" +
             "\n" +
             "Ausgeschaltete Filter werden beim Suchen der Filme\n" +
@@ -307,16 +307,16 @@ public class HelpText {
             "Differenzlisten geladen (enthalten " +
             "die neuen Filme).";
 
-    public static final String LOAD_FILMLIST_MANUEL = "Die angegebene Datei/URL wird beim " +
+    public static final String LOAD_FILMLIST_MANUAL = "Die angegebene Datei/URL wird beim " +
             "Neuladen einer Filmliste verwendet. Ist nichts angegeben, wird die Filmliste auf herkömmliche " +
             "Art geladen und die URL dafür wird automatisch gewählt.";
 
-    public static final String ABOS_SOFRT_SUCHEN = "Nach dem Neuladen einer Filmliste wird dann " +
+    public static final String SEARCH_ABOS_IMMEDIATELY = "Nach dem Neuladen einer Filmliste wird dann " +
             "sofort nach neuen Abos gesucht. Ansonsten muss man " +
             "im Tab Download auf \"Downloads aktualisieren\" klicken.";
 
 
-    public static final String DOWNLOADS_AUS_ABOS_SOFORT_STARTEN = "Neu angelegte Downloads (aus Abos) werden " +
+    public static final String START_DOWNLOADS_FROM_ABOS_IMMEDIATELY = "Neu angelegte Downloads (aus Abos) werden " +
             "sofort gestartet. Ansonsten muss man sie selbst starten.";
 
 

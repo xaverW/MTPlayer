@@ -60,7 +60,7 @@ public class AboGuiController extends AnchorPane {
     }
 
     public void isShown() {
-        progData.filmInfosDialogController.set(null);
+        progData.filmInfoDialogController.set(null);
     }
 
     public int getSelCount() {
@@ -130,13 +130,13 @@ public class AboGuiController extends AnchorPane {
 
         table.setOnMousePressed(m -> {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
-                makeContextMenue();
+                makeContextMenu();
             }
         });
 
     }
 
-    private void makeContextMenue() {
+    private void makeContextMenu() {
         final ContextMenu contextMenu = new ContextMenu();
         getMenu(contextMenu);
         table.setContextMenu(contextMenu);

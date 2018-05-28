@@ -119,12 +119,12 @@ public class FilmGuiController extends AnchorPane {
     private void setFilm() {
         Film film = table.getSelectionModel().getSelectedItem();
         filmGuiInfoController.setFilm(film);
-        progData.filmInfosDialogController.set(film);
+        progData.filmInfoDialogController.set(film);
         return;
     }
 
     public void showFilmInfo() {
-        progData.filmInfosDialogController.showFilmInfo();
+        progData.filmInfoDialogController.showFilmInfo();
     }
 
     public void playFilmUrl() {
@@ -136,30 +136,30 @@ public class FilmGuiController extends AnchorPane {
         startFilmUrlWithSet(psetData);
     }
 
-    public void filmSpeichern() {
+    public void saveTheFilm() {
         saveFilm();
     }
 
-    public void guiFilmMediensammlung() {
+    public void guiFilmMediaCollection() {
         final Optional<Film> film = getSel();
         if (film.isPresent()) {
             new MediaDialogController(film.get().getTitle());
         }
     }
 
-    public void filmGesehen() {
-        final ArrayList<Film> liste = getSelList();
-        FilmTools.setFilmShown(progData, liste, true);
+    public void setFilmShown() {
+        final ArrayList<Film> list = getSelList();
+        FilmTools.setFilmShown(progData, list, true);
 
         Table.refresh_table(table);
     }
 
-    public void filmUngesehen() {
+    public void setFilmNotShown() {
         Duration.counterStart("filmUngesehen");
         //todo-> ~1s Dauer
 
-        final ArrayList<Film> liste = getSelList();
-        FilmTools.setFilmShown(progData, liste, false);
+        final ArrayList<Film> list = getSelList();
+        FilmTools.setFilmShown(progData, list, false);
 
         Table.refresh_table(table);
         Duration.counterStop("filmUngesehen");
@@ -191,7 +191,7 @@ public class FilmGuiController extends AnchorPane {
 
     private void initListener() {
         progData.setList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
-            if (progData.setList.getListeButton().size() > 2) {
+            if (progData.setList.getListButton().size() > 2) {
                 boolInfoOn.set(true);
             }
             setSplit();
@@ -206,10 +206,10 @@ public class FilmGuiController extends AnchorPane {
     }
 
     private void setInfoTabPane() {
-        final SetList liste = progData.setList.getListeButton();
+        final SetList list = progData.setList.getListButton();
         splitPane.getItems().clear();
 
-        if (liste.isEmpty()) {
+        if (list.isEmpty()) {
             // dann brauchen wir den Tab mit den Button nicht
             splitPane.getItems().addAll(scrollPane, filmInfoPane);
             return;
@@ -219,7 +219,7 @@ public class FilmGuiController extends AnchorPane {
         tilePane.setVgap(15);
         tilePane.setHgap(15);
         tilePane.setPadding(new Insets(20));
-        liste.stream().forEach(setData -> {
+        list.stream().forEach(setData -> {
             Button btn = new Button(setData.getName());
             btn.setMaxWidth(Double.MAX_VALUE);
             tilePane.getChildren().add(btn);
@@ -256,7 +256,7 @@ public class FilmGuiController extends AnchorPane {
 
         table.setOnMouseClicked(m -> {
             if (m.getButton().equals(MouseButton.PRIMARY) && m.getClickCount() == 2) {
-                progData.filmInfosDialogController.showFilmInfo();
+                progData.filmInfoDialogController.showFilmInfo();
             }
         });
 
@@ -264,7 +264,7 @@ public class FilmGuiController extends AnchorPane {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
                 final Optional<Film> film = getSel();
                 if (film.isPresent()) {
-                    ContextMenu contextMenu = new FilmGuiContextMenu(progData, this, table).getContextMenue(film.get());
+                    ContextMenu contextMenu = new FilmGuiContextMenu(progData, this, table).getContextMenu(film.get());
                     table.setContextMenu(contextMenu);
                 }
             }
@@ -306,8 +306,8 @@ public class FilmGuiController extends AnchorPane {
     }
 
     private synchronized void saveFilm(SetData pSet) {
-        final ArrayList<Film> liste = getSelList();
-        progData.filmlist.saveFilm(liste, pSet);
+        final ArrayList<Film> list = getSelList();
+        progData.filmlist.saveFilm(list, pSet);
     }
 
 }

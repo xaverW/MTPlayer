@@ -33,23 +33,23 @@ public class BlackData extends BlackProps {
         initFilter();
     }
 
-    public BlackData(String sender, String thema, String titel, String themaTitel) {
+    public BlackData(String sender, String theme, String title, String themeTitle) {
         super();
         initFilter();
 
         setChannel(sender);
-        setTheme(thema);
-        setTitle(titel);
-        setThemeTitle(themaTitel);
+        setTheme(theme);
+        setTitle(title);
+        setThemeTitle(themeTitle);
     }
 
     public void createFilter() {
         fChannel.filter = getChannel();
-        fChannel.exakt = getChannelExact();
+        fChannel.exact = getChannelExact();
         fChannel.setArray();
 
         fTheme.filter = getTheme();
-        fTheme.exakt = getThemeExact();
+        fTheme.exact = getThemeExact();
         fTheme.setArray();
 
         fThemeTitle.filter = getThemeTitle();

@@ -23,25 +23,25 @@ import de.mtplayer.mtp.controller.data.film.FilmXml;
 public class SetXml extends Data<SetXml> {
 
     //Tags Programmgruppen
-    public static final int PROGRAMMSET_NAME = 0;
-    public static final int PROGRAMMSET_PRAEFIX_DIREKT = 1;
-    public static final int PROGRAMMSET_SUFFIX_DIREKT = 2;
-    public static final int PROGRAMMSET_FARBE = 3;
-    public static final int PROGRAMMSET_ZIEL_PFAD = 4;
-    public static final int PROGRAMMSET_ZIEL_DATEINAME = 5;
-    public static final int PROGRAMMSET_THEMA_ANLEGEN = 6;
-    public static final int PROGRAMMSET_IST_ABSPIELEN = 7;
-    public static final int PROGRAMMSET_IST_SPEICHERN = 8;
-    public static final int PROGRAMMSET_IST_BUTTON = 9;
-    public static final int PROGRAMMSET_IST_ABO = 10;
-    public static final int PROGRAMMSET_MAX_LAENGE = 11;
-    public static final int PROGRAMMSET_MAX_LAENGE_FIELD = 12;
-    public static final int PROGRAMMSET_AUFLOESUNG = 13;
-    public static final int PROGRAMMSET_ADD_ON = 14;
-    public static final int PROGRAMMSET_BESCHREIBUNG = 15;
-    public static final int PROGRAMMSET_INFO_URL = 16;
-    public static final int PROGRAMMSET_INFODATEI = 17;
-    public static final int PROGRAMMSET_SUBTITLE = 18;
+    public static final int PROGRAMSET_NAME = 0;
+    public static final int PROGRAMSET_PRAEFIX_DIRECT = 1;
+    public static final int PROGRAMSET_SUFFIX_DIRECT = 2;
+    public static final int PROGRAMSET_COLOR = 3;
+    public static final int PROGRAMSET_ZIEL_PFAD = 4;
+    public static final int PROGRAMSET_ZIEL_DATEINAME = 5;
+    public static final int PROGRAMSET_THEMA_ANLEGEN = 6;
+    public static final int PROGRAMSET_IST_ABSPIELEN = 7;
+    public static final int PROGRAMSET_IST_SPEICHERN = 8;
+    public static final int PROGRAMSET_IST_BUTTON = 9;
+    public static final int PROGRAMSET_IST_ABO = 10;
+    public static final int PROGRAMSET_MAX_LAENGE = 11;
+    public static final int PROGRAMSET_MAX_LAENGE_FIELD = 12;
+    public static final int PROGRAMSET_AUFLOESUNG = 13;
+    public static final int PROGRAMSET_ADD_ON = 14;
+    public static final int PROGRAMSET_BESCHREIBUNG = 15;
+    public static final int PROGRAMSET_INFO_URL = 16;
+    public static final int PROGRAMSET_INFODATEI = 17;
+    public static final int PROGRAMSET_SUBTITLE = 18;
 
     public static final String TAG = "Programmset";
     public static final int MAX_ELEM = 19;
@@ -82,17 +82,17 @@ public class SetXml extends Data<SetXml> {
         for (int i = 0; i < arr.length; ++i) {
             arr[i] = "";
         }
-        arr[PROGRAMMSET_THEMA_ANLEGEN] = Boolean.toString(true);
-        arr[PROGRAMMSET_IST_ABSPIELEN] = Boolean.toString(false);
-        arr[PROGRAMMSET_IST_SPEICHERN] = Boolean.toString(false);
-        arr[PROGRAMMSET_IST_BUTTON] = Boolean.toString(false);
-        arr[PROGRAMMSET_IST_ABO] = Boolean.toString(false);
+        arr[PROGRAMSET_THEMA_ANLEGEN] = Boolean.toString(true);
+        arr[PROGRAMSET_IST_ABSPIELEN] = Boolean.toString(false);
+        arr[PROGRAMSET_IST_SPEICHERN] = Boolean.toString(false);
+        arr[PROGRAMSET_IST_BUTTON] = Boolean.toString(false);
+        arr[PROGRAMSET_IST_ABO] = Boolean.toString(false);
 
-        arr[PROGRAMMSET_MAX_LAENGE] = "0";
-        arr[PROGRAMMSET_MAX_LAENGE_FIELD] = "0";
+        arr[PROGRAMSET_MAX_LAENGE] = "0";
+        arr[PROGRAMSET_MAX_LAENGE_FIELD] = "0";
 
-        arr[PROGRAMMSET_INFODATEI] = Boolean.toString(false);
-        arr[PROGRAMMSET_SUBTITLE] = Boolean.toString(false);
-        arr[PROGRAMMSET_AUFLOESUNG] = FilmXml.RESOLUTION_NORMAL;
+        arr[PROGRAMSET_INFODATEI] = Boolean.toString(false);
+        arr[PROGRAMSET_SUBTITLE] = Boolean.toString(false);
+        arr[PROGRAMSET_AUFLOESUNG] = FilmXml.RESOLUTION_NORMAL;
     }
 }

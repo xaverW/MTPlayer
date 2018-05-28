@@ -132,7 +132,7 @@ public class ImportSetDialogController extends MTDialog {
 
         progData.setList.clear();
 
-        if (SetsPrograms.addSetVorlagen(ListePsetVorlagen.getStandarset(true /*replaceMuster*/))) {
+        if (SetsPrograms.addSetTemplate(ListePsetVorlagen.getStandarset(true /*replaceMuster*/))) {
             new MTAlert().showInfoAlert("Set", "Set importieren", "Sets wurden importiert!", false);
         } else {
             new MTAlert().showErrorAlert("Set importieren", "Set wurde nicht importiert!");

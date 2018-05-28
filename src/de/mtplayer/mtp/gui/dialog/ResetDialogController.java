@@ -18,7 +18,7 @@ package de.mtplayer.mtp.gui.dialog;
 
 
 import de.mtplayer.mLib.tools.BigButton;
-import de.mtplayer.mtp.controller.ProgQuitt;
+import de.mtplayer.mtp.controller.ProgQuit;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.tools.file.GetFile;
@@ -68,16 +68,16 @@ public class ResetDialogController extends MTDialog {
 
 
         // Set zurücksetzen
-        BigButton cancelButton = new BigButton(new Icons().ICON_BUTTON_QUITT,
+        BigButton cancelButton = new BigButton(new Icons().ICON_BUTTON_QUIT,
                 "Nichts ändern", "");
         cancelButton.setOnAction(e -> close());
 
         final Button btnHelp = new Button("");
         btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
         btnHelp.setOnAction(a -> new MTAlert().showHelpAlert("Programm zurücksetzen",
-                new GetFile().getHilfeSuchen(GetFile.PFAD_HILFETEXT_RESET)));
+                new GetFile().getHelpSearch(GetFile.PATH_HELPTEXT_RESET)));
 
-        BigButton setButton = new BigButton(new Icons().ICON_BUTTON_QUITT,
+        BigButton setButton = new BigButton(new Icons().ICON_BUTTON_QUIT,
                 "Einstellungen zum Abspielen/Aufzeichnen zurücksetzen",
                 "Es werden alle Programmsets (auch eigene)\n" +
                         "zum Abspielen und Aufzeichnen gelöscht\n" +
@@ -91,7 +91,7 @@ public class ResetDialogController extends MTDialog {
 
 
         // alle Einstellungen
-        BigButton allButton = new BigButton(new Icons().ICON_BUTTON_QUITT, "" +
+        BigButton allButton = new BigButton(new Icons().ICON_BUTTON_QUIT, "" +
                 "Alle Einstellungen zurücksetzen!",
                 "Alle Einstellungen gehen verloren.\n\n" +
                         "ACHTUNG\n" +
@@ -110,12 +110,12 @@ public class ResetDialogController extends MTDialog {
                 // damit wird vor dem Beenden das Konfig-Verzeichnis umbenannt und so startet das
                 // Programm wie beim ersten Start
                 ProgData.reset = true;
-                new ProgQuitt().quitt(false, false);
+                new ProgQuit().quit(false, false);
             }
         });
 
 
-        gridPane.add(new Icons().ICON_DIALOG_QUITT, 0, 0, 1, 1);
+        gridPane.add(new Icons().ICON_DIALOG_QUIT, 0, 0, 1, 1);
         gridPane.add(headerLabel, 1, 0);
         gridPane.add(cancelButton, 1, 1);
         gridPane.add(btnHelp, 2, 1);
