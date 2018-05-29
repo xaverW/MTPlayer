@@ -230,7 +230,7 @@ public class DownloadAddDialogController extends MTDialog {
             // Satz mit x, war wohl nix
             ok = false;
             initCancel();
-            quitt();
+            quit();
             return;
         }
         if (psetData == null) {
@@ -241,7 +241,7 @@ public class DownloadAddDialogController extends MTDialog {
             // Satz mit x, war wohl nix
             ok = false;
             initCancel();
-            quitt();
+            quit();
             return;
 
         } else if (films.size() == 1) {
@@ -421,7 +421,7 @@ public class DownloadAddDialogController extends MTDialog {
         return ok;
     }
 
-    private void quitt() {
+    private void quit() {
 
         if (!ok) {
             close();
@@ -714,7 +714,7 @@ public class DownloadAddDialogController extends MTDialog {
         btnOk.setDisable(true);
         btnCancel.setOnAction(event -> {
             ok = false;
-            quitt();
+            quit();
         });
 
     }
@@ -735,12 +735,12 @@ public class DownloadAddDialogController extends MTDialog {
 
         btnOk.setOnAction(event -> {
             if (check()) {
-                quitt();
+                quit();
             }
         });
         btnCancel.setOnAction(event -> {
             ok = false;
-            quitt();
+            quit();
         });
 
     }
