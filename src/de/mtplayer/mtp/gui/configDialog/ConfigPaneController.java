@@ -359,7 +359,7 @@ public class ConfigPaneController extends AnchorPane {
         gridPane.add(hBox, 0, 1);
 
         PHyperlink hyperlink = new PHyperlink(ProgConst.ADRESSE_WEBSITE,
-                ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty());
+                ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new Icons().ICON_BUTTON_FILE_OPEN);
 
         hBox = new HBox();
         hBox.setAlignment(Pos.CENTER_LEFT);

@@ -21,6 +21,7 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
+import de.mtplayer.mtp.controller.data.Icons;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -106,7 +107,7 @@ public class AboutDialogController extends MTDialogExtra {
 
 
         PHyperlink hyperlink = new PHyperlink(ProgConst.ADRESSE_WEBSITE,
-                ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty());
+                ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new Icons().ICON_BUTTON_FILE_OPEN);
 
         text = new Text("Website:");
         text.setFont(new Font(15));

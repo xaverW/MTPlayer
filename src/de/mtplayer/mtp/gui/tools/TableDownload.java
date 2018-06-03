@@ -235,7 +235,8 @@ public class TableDownload {
 
                     btnFilmStart.setOnAction((ActionEvent event) -> {
                         Download download = getTableView().getItems().get(getIndex());
-                        POpen.playStoredFilm(download.getDestPathFile(), ProgConfig.SYSTEM_PROG_PLAY_FILME.getStringProperty());
+                        POpen.playStoredFilm(download.getDestPathFile(),
+                                ProgConfig.SYSTEM_PROG_PLAY_FILME.getStringProperty(), new Icons().ICON_BUTTON_FILE_OPEN);
                     });
                     hbox.getChildren().addAll(btnFilmStart);
                     setGraphic(hbox);

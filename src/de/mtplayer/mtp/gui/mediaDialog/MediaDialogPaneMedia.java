@@ -139,13 +139,14 @@ public class MediaDialogPaneMedia extends ScrollPane {
         String file = txtTitleMedia.getText();
         String dir = txtPathMedia.getText();
         if (!file.isEmpty() && !dir.isEmpty()) {
-            POpen.playStoredFilm(Functions.addsPath(dir, file), ProgConfig.SYSTEM_PROG_PLAY_FILME.getStringProperty());
+            POpen.playStoredFilm(Functions.addsPath(dir, file),
+                    ProgConfig.SYSTEM_PROG_PLAY_FILME.getStringProperty(), new Icons().ICON_BUTTON_FILE_OPEN);
         }
     }
 
     private void open() {
         String s = txtPathMedia.getText();
-        POpen.openDir(s, ProgConfig.SYSTEM_PROG_OPEN_DIR.getStringProperty());
+        POpen.openDir(s, ProgConfig.SYSTEM_PROG_OPEN_DIR.getStringProperty(), new Icons().ICON_BUTTON_FILE_OPEN);
     }
 
     private void setTableDate() {

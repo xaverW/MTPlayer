@@ -18,6 +18,7 @@ package de.mtplayer.mtp.gui.dialog;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
+import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
@@ -105,11 +106,11 @@ public class FilmInfoDialogController extends MTDialog {
                             break;
                         case FilmXml.FILM_URL:
                             hBoxUrl.getChildren().add(new PHyperlink(film.arr[FilmXml.FILM_URL],
-                                    ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty()));
+                                    ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new Icons().ICON_BUTTON_FILE_OPEN));
                             break;
                         case FilmXml.FILM_WEBSITE:
                             hBoxWebsite.getChildren().add(new PHyperlink(film.arr[FilmXml.FILM_WEBSITE],
-                                    ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty()));
+                                    ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new Icons().ICON_BUTTON_FILE_OPEN));
                             break;
                         default:
                             textCont[i].setText(film.arr[i]);

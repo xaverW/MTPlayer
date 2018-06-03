@@ -104,7 +104,8 @@ public class PathPane {
                     txtPlayer.setText(SetsPrograms.getTemplatePathFlv());
                 });
 
-                hyperlink = new PHyperlink(ProgConst.ADRESSE_WEBSITE_FLVSTREAMER, ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty());
+                hyperlink = new PHyperlink(ProgConst.ADRESSE_WEBSITE_FLVSTREAMER,
+                        ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new Icons().ICON_BUTTON_FILE_OPEN);
                 break;
             case FFMPEG:
                 text = new Text("Pfad zum ffmpeg-Player auswählen");
@@ -114,7 +115,8 @@ public class PathPane {
                     txtPlayer.setText(SetsPrograms.getTemplatePathFFmpeg());
                 });
 
-                hyperlink = new PHyperlink(ProgConst.ADRESSE_WEBSITE_FFMPEG, ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty());
+                hyperlink = new PHyperlink(ProgConst.ADRESSE_WEBSITE_FFMPEG,
+                        ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new Icons().ICON_BUTTON_FILE_OPEN);
                 break;
             case VLC:
             default:
@@ -125,7 +127,8 @@ public class PathPane {
                     txtPlayer.setText(SetsPrograms.getTemplatePathVlc());
                 });
 
-                hyperlink = new PHyperlink(ProgConst.ADRESSE_WEBSITE_VLC, ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty());
+                hyperlink = new PHyperlink(ProgConst.ADRESSE_WEBSITE_VLC,
+                        ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new Icons().ICON_BUTTON_FILE_OPEN);
                 break;
         }
         text.setStyle("-fx-font-weight: bold");

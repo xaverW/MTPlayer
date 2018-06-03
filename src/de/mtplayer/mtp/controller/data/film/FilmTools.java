@@ -19,6 +19,7 @@ package de.mtplayer.mtp.controller.data.film;
 import de.mtplayer.mLib.tools.FileSizeUrl;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
+import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.gui.dialog.DownloadAddDialogController;
@@ -56,7 +57,7 @@ public class FilmTools {
         if (!film.arr[FilmXml.FILM_WEBSITE].isEmpty()) {
 
             PHyperlink hyperlink = new PHyperlink(film.arr[FilmXml.FILM_WEBSITE],
-                    ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty());
+                    ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new Icons().ICON_BUTTON_FILE_OPEN);
 
             list.addAll(new Text("\n\n zur Website: "), hyperlink);
 

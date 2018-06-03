@@ -18,6 +18,7 @@ package de.mtplayer.mtp.gui;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
+import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmTools;
@@ -143,7 +144,8 @@ public class DownloadGuiController extends AnchorPane {
     public void playFilm() {
         final Optional<Download> download = getSel();
         if (download.isPresent()) {
-            POpen.playStoredFilm(download.get().getDestPathFile(), ProgConfig.SYSTEM_PROG_PLAY_FILME.getStringProperty());
+            POpen.playStoredFilm(download.get().getDestPathFile(),
+                    ProgConfig.SYSTEM_PROG_PLAY_FILME.getStringProperty(), new Icons().ICON_BUTTON_FILE_OPEN);
         }
     }
 
@@ -187,7 +189,7 @@ public class DownloadGuiController extends AnchorPane {
         }
 
         String s = download.get().getDestPath();
-        POpen.openDir(s, ProgConfig.SYSTEM_PROG_OPEN_DIR.getStringProperty());
+        POpen.openDir(s, ProgConfig.SYSTEM_PROG_OPEN_DIR.getStringProperty(), new Icons().ICON_BUTTON_FILE_OPEN);
     }
 
     public void playUrl() {
