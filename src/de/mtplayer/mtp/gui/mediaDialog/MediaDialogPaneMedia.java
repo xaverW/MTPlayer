@@ -18,13 +18,14 @@ package de.mtplayer.mtp.gui.mediaDialog;
 
 import de.mtplayer.mLib.tools.CheckBoxCell;
 import de.mtplayer.mLib.tools.Functions;
+import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.mediaDb.MediaData;
 import de.mtplayer.mtp.gui.tools.Listener;
-import de.mtplayer.mtp.gui.tools.MTOpen;
 import de.mtplayer.mtp.tools.storedFilter.Filter;
+import de.p2tools.p2Lib.guiTools.POpen;
 import javafx.application.Platform;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
@@ -138,13 +139,13 @@ public class MediaDialogPaneMedia extends ScrollPane {
         String file = txtTitleMedia.getText();
         String dir = txtPathMedia.getText();
         if (!file.isEmpty() && !dir.isEmpty()) {
-            MTOpen.playStoredFilm(Functions.addsPath(dir, file));
+            POpen.playStoredFilm(Functions.addsPath(dir, file), ProgConfig.SYSTEM_PROG_PLAY_FILME.getStringProperty());
         }
     }
 
     private void open() {
         String s = txtPathMedia.getText();
-        MTOpen.openDestDir(s);
+        POpen.openDir(s, ProgConfig.SYSTEM_PROG_OPEN_DIR.getStringProperty());
     }
 
     private void setTableDate() {

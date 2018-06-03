@@ -17,14 +17,13 @@
 package de.mtplayer.mtp.gui.dialog;
 
 import de.mtplayer.mLib.tools.Functions;
+import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
-import de.mtplayer.mtp.gui.tools.MTOpen;
-import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2Lib.guiTools.PHyperlink;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -105,15 +104,9 @@ public class AboutDialogController extends MTDialogExtra {
         text.setFont(Font.font(null, FontWeight.BOLD, 15));
         gridPane.add(text, 0, ++row, 2, 1);
 
-        Hyperlink hyperlink = new Hyperlink(ProgConst.ADRESSE_WEBSITE);
-        hyperlink.setStyle("-fx-font-size: 15px;");
-        hyperlink.setOnAction(a -> {
-            try {
-                MTOpen.openURL(ProgConst.ADRESSE_WEBSITE);
-            } catch (Exception e) {
-                PLog.errorLog(974125469, e);
-            }
-        });
+
+        PHyperlink hyperlink = new PHyperlink(ProgConst.ADRESSE_WEBSITE,
+                ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty());
 
         text = new Text("Website:");
         text.setFont(new Font(15));

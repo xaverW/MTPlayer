@@ -24,10 +24,9 @@ import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
-import de.mtplayer.mtp.gui.tools.MTOpen;
 import de.mtplayer.mtp.tools.update.SearchProgramUpdate;
 import de.p2tools.p2Lib.guiTools.PButton;
-import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2Lib.guiTools.PHyperlink;
 import de.p2tools.p2Lib.tools.log.PLogger;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -58,7 +57,7 @@ public class ConfigPaneController extends AnchorPane {
     BooleanProperty propDown = ProgConfig.DOWNLOAD_START_NOW.getBooleanProperty();
     StringProperty propDir = ProgConfig.SYSTEM_PROG_OPEN_DIR.getStringProperty();
     StringProperty propUrl = ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty();
-    StringProperty propPlay = ProgConfig.SYSTEM_PROG_PLAY_FILE.getStringProperty();
+    StringProperty propPlay = ProgConfig.SYSTEM_PROG_PLAY_FILME.getStringProperty();
     BooleanProperty propLog = ProgConfig.SYSTEM_LOG_ON.getBooleanProperty();
     StringProperty propLogDir = ProgConfig.SYSTEM_LOG_DIR.getStringProperty();
 
@@ -359,15 +358,9 @@ public class ConfigPaneController extends AnchorPane {
         hBox.getChildren().addAll(btnNow);
         gridPane.add(hBox, 0, 1);
 
+        PHyperlink hyperlink = new PHyperlink(ProgConst.ADRESSE_WEBSITE,
+                ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty());
 
-        Hyperlink hyperlink = new Hyperlink(ProgConst.ADRESSE_WEBSITE);
-        hyperlink.setOnAction(a -> {
-            try {
-                MTOpen.openURL(ProgConst.ADRESSE_WEBSITE);
-            } catch (Exception e) {
-                PLog.errorLog(932012478, e);
-            }
-        });
         hBox = new HBox();
         hBox.setAlignment(Pos.CENTER_LEFT);
         hBox.setPadding(new Insets(10, 0, 0, 0));

@@ -64,7 +64,7 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs SYSTEM_ONLY_ASCII = addNewKey("system-only-ascii", Boolean.FALSE.toString());
     public static MLConfigs SYSTEM_PROG_OPEN_DIR = addNewKey("system-prog-open-dir");
     public static MLConfigs SYSTEM_PROG_OPEN_URL = addNewKey("system-prog-open-url");
-    public static MLConfigs SYSTEM_PROG_PLAY_FILE = addNewKey("system-prog-play-file");
+    public static MLConfigs SYSTEM_PROG_PLAY_FILME = addNewKey("system-prog-play-filme");
     public static MLConfigs SYSTEM_MARK_GEO = addNewKey("system-mark-geo", Boolean.TRUE.toString());
     public static MLConfigs SYSTEM_GEO_HOME_PLACE = addNewKey("system-geo-home-place", FilmXml.GEO_DE);
     public static MLConfigs SYSTEM_LOG_DIR = addNewKey("system-log-dir", "");

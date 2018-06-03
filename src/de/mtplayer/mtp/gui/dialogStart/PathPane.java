@@ -24,9 +24,8 @@ import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
-import de.mtplayer.mtp.gui.tools.MTOpen;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
-import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2Lib.guiTools.PHyperlink;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -91,59 +90,42 @@ public class PathPane {
         gridPane.setVgap(15);
 
         Text text;
-        Hyperlink hyperlink;
+        PHyperlink hyperlink;
         StringProperty property;
         TextField txtPlayer = new TextField();
         final Button btnFind = new Button("suchen");
         switch (player) {
             case FLV:
                 text = new Text("Pfad zum flvstreamer-Player auswählen");
-                hyperlink = new Hyperlink(ProgConst.ADRESSE_WEBSITE_FLVSTREAMER);
+
                 property = flvProp;
                 btnFind.setOnAction(event -> {
                     ProgConfig.SYSTEM_PATH_FLVSTREAMER.setValue("");
                     txtPlayer.setText(SetsPrograms.getTemplatePathFlv());
                 });
-                hyperlink.setOnAction(a -> {
-                    try {
-                        MTOpen.openURL(ProgConst.ADRESSE_WEBSITE_FLVSTREAMER);
-                    } catch (Exception e) {
-                        PLog.errorLog(784125469, e);
-                    }
-                });
+
+                hyperlink = new PHyperlink(ProgConst.ADRESSE_WEBSITE_FLVSTREAMER, ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty());
                 break;
             case FFMPEG:
                 text = new Text("Pfad zum ffmpeg-Player auswählen");
-                hyperlink = new Hyperlink(ProgConst.ADRESSE_WEBSITE_FFMPEG);
                 property = ffmpegProp;
                 btnFind.setOnAction(event -> {
                     ProgConfig.SYSTEM_PATH_FFMPEG.setValue("");
                     txtPlayer.setText(SetsPrograms.getTemplatePathFFmpeg());
                 });
-                hyperlink.setOnAction(a -> {
-                    try {
-                        MTOpen.openURL(ProgConst.ADRESSE_WEBSITE_FFMPEG);
-                    } catch (Exception e) {
-                        PLog.errorLog(976420301, e);
-                    }
-                });
+
+                hyperlink = new PHyperlink(ProgConst.ADRESSE_WEBSITE_FFMPEG, ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty());
                 break;
             case VLC:
             default:
                 text = new Text("Pfad zum VLC-Player auswählen");
-                hyperlink = new Hyperlink(ProgConst.ADRESSE_WEBSITE_VLC);
                 property = vlcProp;
                 btnFind.setOnAction(event -> {
                     ProgConfig.SYSTEM_PATH_VLC.setValue("");
                     txtPlayer.setText(SetsPrograms.getTemplatePathVlc());
                 });
-                hyperlink.setOnAction(a -> {
-                    try {
-                        MTOpen.openURL(ProgConst.ADRESSE_WEBSITE_VLC);
-                    } catch (Exception e) {
-                        PLog.errorLog(701010205, e);
-                    }
-                });
+
+                hyperlink = new PHyperlink(ProgConst.ADRESSE_WEBSITE_VLC, ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty());
                 break;
         }
         text.setStyle("-fx-font-weight: bold");

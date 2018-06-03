@@ -17,16 +17,15 @@
 package de.mtplayer.mtp.controller.data.film;
 
 import de.mtplayer.mLib.tools.FileSizeUrl;
+import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.gui.dialog.DownloadAddDialogController;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.dialog.NoSetDialogController;
-import de.mtplayer.mtp.gui.tools.MTOpen;
-import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2Lib.guiTools.PHyperlink;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -55,16 +54,12 @@ public class FilmTools {
         list.addAll(text1, text2);
 
         if (!film.arr[FilmXml.FILM_WEBSITE].isEmpty()) {
-            Hyperlink hyperlink = new Hyperlink(film.arr[FilmXml.FILM_WEBSITE]);
+
+            PHyperlink hyperlink = new PHyperlink(film.arr[FilmXml.FILM_WEBSITE],
+                    ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty());
+
             list.addAll(new Text("\n\n zur Website: "), hyperlink);
 
-            hyperlink.setOnAction(a -> {
-                try {
-                    MTOpen.openURL(film.arr[FilmXml.FILM_WEBSITE]);
-                } catch (Exception e) {
-                    PLog.errorLog(975421021, e);
-                }
-            });
         }
     }
 

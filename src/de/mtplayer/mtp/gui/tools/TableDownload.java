@@ -25,6 +25,7 @@ import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadInfos;
 import de.mtplayer.mtp.controller.data.download.DownloadSizeData;
+import de.p2tools.p2Lib.guiTools.POpen;
 import javafx.beans.property.BooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -234,7 +235,7 @@ public class TableDownload {
 
                     btnFilmStart.setOnAction((ActionEvent event) -> {
                         Download download = getTableView().getItems().get(getIndex());
-                        MTOpen.playStoredFilm(download.getDestPathFile());
+                        POpen.playStoredFilm(download.getDestPathFile(), ProgConfig.SYSTEM_PROG_PLAY_FILME.getStringProperty());
                     });
                     hbox.getChildren().addAll(btnFilmStart);
                     setGraphic(hbox);

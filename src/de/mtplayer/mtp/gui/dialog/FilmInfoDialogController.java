@@ -31,38 +31,33 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 
 /**
  * FXML Controller class
  */
 public class FilmInfoDialogController extends MTDialog {
 
-    final private TextFlow textFlow;
-    final private Text[] lbl = new Text[FilmXml.MAX_ELEM];
-    final private Text[] txt = new Text[FilmXml.MAX_ELEM];
+    private final Text[] textTitle = new Text[FilmXml.MAX_ELEM];
+    private final Text[] textCont = new Text[FilmXml.MAX_ELEM];
 
-    final GridPane gridPane = new GridPane();
-    Button btnOk = new Button("Ok");
+    private final GridPane gridPane = new GridPane();
+    private final Button btnOk = new Button("Ok");
     private final ProgData progData;
 
 
-    private VBox vBoxDialog = new VBox();
-    private VBox vboxCont = new VBox();
-    private TilePane tilePaneOk = new TilePane();
-    ScrollPane scrollPane = new ScrollPane();
-    HBox hBoxUrl = new HBox();
-    HBox hBoxWebsite = new HBox();
+    private final VBox vBoxDialog = new VBox();
+    private final VBox vBoxCont = new VBox();
+    private final TilePane tilePaneOk = new TilePane();
+    private final HBox hBoxUrl = new HBox();
+    private final HBox hBoxWebsite = new HBox();
 
 
     public FilmInfoDialogController(ProgData progData) {
         super(null, ProgConfig.SYSTEM_SIZE_DIALOG_FILMINFO,
                 "Filminfos", false);
-        initDialog();
-
         this.progData = progData;
-        this.textFlow = new TextFlow();
 
+        initDialog();
         tilePaneOk.getChildren().addAll(btnOk);
         init(vBoxDialog);
     }
@@ -72,30 +67,26 @@ public class FilmInfoDialogController extends MTDialog {
         vBoxDialog.setPadding(new Insets(10));
 
 
+        ScrollPane scrollPane = new ScrollPane();
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
-
-        VBox.setVgrow(vboxCont, Priority.ALWAYS);
-        scrollPane.setContent(vboxCont);
+        scrollPane.setContent(vBoxCont);
 
         tilePaneOk.setHgap(10);
         tilePaneOk.setAlignment(Pos.CENTER_RIGHT);
 
         VBox vBox = new VBox();
+        VBox.setVgrow(vBox, Priority.ALWAYS);
         vBox.getStyleClass().add("dialog-filminfo");
         VBox.setVgrow(scrollPane, Priority.ALWAYS);
         vBox.getChildren().add(scrollPane);
-//        vBox.getChildren().add(vboxCont);
 
-
-        VBox.setVgrow(vBox, Priority.ALWAYS);
         vBoxDialog.getChildren().addAll(vBox, tilePaneOk);
     }
 
 
     public void showFilmInfo() {
         showDialog();
-//        scrollPane.setHvalue(0.01);
     }
 
 
@@ -106,11 +97,11 @@ public class FilmInfoDialogController extends MTDialog {
             hBoxWebsite.getChildren().clear();
             for (int i = 0; i < FilmXml.MAX_ELEM; ++i) {
                 if (film == null) {
-                    txt[i].setText("");
+                    textCont[i].setText("");
                 } else {
                     switch (i) {
                         case FilmXml.FILM_NR:
-                            txt[i].setText(film.getNr() + "");
+                            textCont[i].setText(film.getNr() + "");
                             break;
                         case FilmXml.FILM_URL:
                             hBoxUrl.getChildren().add(new PHyperlink(film.arr[FilmXml.FILM_URL],
@@ -121,20 +112,18 @@ public class FilmInfoDialogController extends MTDialog {
                                     ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty()));
                             break;
                         default:
-                            txt[i].setText(film.arr[i]);
+                            textCont[i].setText(film.arr[i]);
                     }
                 }
             }
-
-//            scrollPane.setHvalue(0.01);
         });
     }
 
     @Override
     public void make() {
         btnOk.setOnAction(a -> close());
+        vBoxCont.getChildren().add(gridPane);
 
-        vboxCont.getChildren().add(gridPane);
         gridPane.setHgap(10);
         gridPane.setVgap(10);
         gridPane.setMinWidth(Control.USE_PREF_SIZE);
@@ -144,10 +133,9 @@ public class FilmInfoDialogController extends MTDialog {
         int row = 0;
         for (int i = 0; i < FilmXml.MAX_ELEM; ++i) {
 
-            lbl[i] = new Text(FilmXml.COLUMN_NAMES[i]);
-            lbl[i].setFont(Font.font(null, FontWeight.BOLD, -1));
-//            GridPane.setValignment(lbl[i], VPos.CENTER);
-            txt[i] = new Text("");
+            textTitle[i] = new Text(FilmXml.COLUMN_NAMES[i]);
+            textTitle[i].setFont(Font.font(null, FontWeight.BOLD, -1));
+            textCont[i] = new Text("");
 
             switch (i) {
                 case FilmXml.FILM_DATE_LONG:
@@ -165,43 +153,27 @@ public class FilmInfoDialogController extends MTDialog {
                     // bis hier nicht anzeigen
                     break;
                 case FilmXml.FILM_URL:
-                    gridPane.add(lbl[i], 0, row);
+                    gridPane.add(textTitle[i], 0, row);
                     gridPane.add(hBoxUrl, 1, row++);
-//                    hBoxUrl.setMinWidth(0);
-//                    hBoxUrl.setMaxWidth(Region.USE_COMPUTED_SIZE);
                     break;
                 case FilmXml.FILM_WEBSITE:
-                    gridPane.add(lbl[i], 0, row);
+                    gridPane.add(textTitle[i], 0, row);
                     gridPane.add(hBoxWebsite, 1, row++);
-//                    hBoxWebsite.setMinWidth(0);
                     break;
-                case FilmXml.FILM_DESCRIPTION:
-//                    final TextArea ta = new TextArea();
-//                    ta.setMinWidth(0);
-//                    ta.setEditable(false);
-//                    ta.setWrapText(true);
-//                    txt[i] = ta;
                 default:
-                    gridPane.add(lbl[i], 0, row);
+                    gridPane.add(textTitle[i], 0, row);
 
                     HBox hBox = new HBox();
-                    hBox.getChildren().add(txt[i]);
-                    GridPane.setHgrow(txt[i], Priority.ALWAYS);
-                    txt[i].wrappingWidthProperty().bind(vBoxDialog.widthProperty().subtract(250));
+                    hBox.getChildren().add(textCont[i]);
+                    GridPane.setHgrow(textCont[i], Priority.ALWAYS);
+                    textCont[i].wrappingWidthProperty().bind(vBoxDialog.widthProperty().subtract(250));
                     gridPane.add(hBox, 1, row++);
 
                     final int ii = i;
-                    txt[i].setOnContextMenuRequested(event -> getMenu(txt[ii].getText()).show(txt[ii], event.getScreenX(), event.getScreenY()));
+                    textCont[i].setOnContextMenuRequested(event -> getMenu(textCont[ii].getText()).show(textCont[ii], event.getScreenX(), event.getScreenY()));
 
             }
         }
-//        scrollPane.setHvalue(0.01);
-//        scrollPane.hvalueProperty().addListener(new ChangeListener<Number>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-//                System.out.println("     " + scrollPane.getHvalue());
-//            }
-//        });
     }
 
     private ContextMenu getMenu(String url) {

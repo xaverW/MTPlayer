@@ -27,8 +27,8 @@ import de.mtplayer.mtp.gui.dialog.DownloadEditDialogController;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.mediaDialog.MediaDialogController;
 import de.mtplayer.mtp.gui.tools.Listener;
-import de.mtplayer.mtp.gui.tools.MTOpen;
 import de.mtplayer.mtp.gui.tools.Table;
+import de.p2tools.p2Lib.guiTools.POpen;
 import de.p2tools.p2Lib.tools.SysTools;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
@@ -143,7 +143,7 @@ public class DownloadGuiController extends AnchorPane {
     public void playFilm() {
         final Optional<Download> download = getSel();
         if (download.isPresent()) {
-            MTOpen.playStoredFilm(download.get().getDestPathFile());
+            POpen.playStoredFilm(download.get().getDestPathFile(), ProgConfig.SYSTEM_PROG_PLAY_FILME.getStringProperty());
         }
     }
 
@@ -187,7 +187,7 @@ public class DownloadGuiController extends AnchorPane {
         }
 
         String s = download.get().getDestPath();
-        MTOpen.openDestDir(s);
+        POpen.openDir(s, ProgConfig.SYSTEM_PROG_OPEN_DIR.getStringProperty());
     }
 
     public void playUrl() {
