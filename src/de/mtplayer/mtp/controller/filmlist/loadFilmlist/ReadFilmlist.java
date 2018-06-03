@@ -100,9 +100,10 @@ public class ReadFilmlist {
         return in;
     }
 
+    String channel = "", theme = "";
+
     private void readData(JsonParser jp, Filmlist filmlist) throws IOException {
         JsonToken jsonToken;
-        String sender = "", theme = "";
 
         if (jp.nextToken() != JsonToken.START_OBJECT) {
             throw new IllegalStateException("Expected data to start with an Object");
@@ -129,37 +130,18 @@ public class ReadFilmlist {
                 break;
             }
         }
+
         while (!ProgData.getInstance().loadFilmlist.getStop() && (jsonToken = jp.nextToken()) != null) {
             if (jsonToken == JsonToken.END_OBJECT) {
                 break;
             }
             if (jp.isExpectedStartArrayToken()) {
                 final Film film = new Film();
-                for (int i = 0; i < FilmXml.JSON_NAMES.length; ++i) {
-                    if (FilmXml.JSON_NAMES[i] == FilmXml.FILM_NEW) {
-                        final String value = jp.nextTextValue();
-                        // This value is unused...
-                        // datenFilm.arr[DatenFilm.FILM_NEU_NR] = value;
-                        film.setNewFilm(Boolean.parseBoolean(value));
-                    } else {
-                        film.arr[FilmXml.JSON_NAMES[i]] = jp.nextTextValue();
-                    }
 
-                    /// für die Entwicklungszeit
-                    if (film.arr[FilmXml.JSON_NAMES[i]] == null) {
-                        film.arr[FilmXml.JSON_NAMES[i]] = "";
-                    }
-                }
-                if (film.arr[FilmXml.FILM_CHANNEL].isEmpty()) {
-                    film.arr[FilmXml.FILM_CHANNEL] = sender;
-                } else {
-                    sender = film.arr[FilmXml.FILM_CHANNEL];
-                }
-                if (film.arr[FilmXml.FILM_THEME].isEmpty()) {
-                    film.arr[FilmXml.FILM_THEME] = theme;
-                } else {
-                    theme = film.arr[FilmXml.FILM_THEME];
-                }
+                //todo
+//                addValue_(film, jp);
+                addValue(film, jp);
+
 
                 filmlist.importFilmlist(film);
                 if (milliseconds > 0) {
@@ -170,6 +152,77 @@ public class ReadFilmlist {
                     }
                 }
             }
+        }
+    }
+
+//    private void addValue_(Film film, JsonParser jp) throws IOException {
+//        for (int i = 0; i < FilmXml.JSON_NAMES.length; ++i) {
+//
+//            if (FilmXml.JSON_NAMES[i] == FilmXml.FILM_NEW) {
+//                final String value = jp.nextTextValue();
+//                // This value is unused...
+//                // datenFilm.arr[DatenFilm.FILM_NEU_NR] = value;
+//                film.setNewFilm(Boolean.parseBoolean(value));
+//            } else {
+//                film.arr[FilmXml.JSON_NAMES[i]] = jp.nextTextValue();
+//            }
+//
+//            /// für die Entwicklungszeit
+//            if (film.arr[FilmXml.JSON_NAMES[i]] == null) {
+//                film.arr[FilmXml.JSON_NAMES[i]] = "";
+//            }
+//
+//        }
+//
+//        if (film.arr[FilmXml.FILM_CHANNEL].isEmpty()) {
+//            film.arr[FilmXml.FILM_CHANNEL] = channel;
+//        } else {
+//            channel = film.arr[FilmXml.FILM_CHANNEL];
+//        }
+//
+//        if (film.arr[FilmXml.FILM_THEME].isEmpty()) {
+//            film.arr[FilmXml.FILM_THEME] = theme;
+//        } else {
+//            theme = film.arr[FilmXml.FILM_THEME];
+//        }
+//
+//    }
+
+    private void addValue(Film film, JsonParser jp) throws IOException {
+        for (int i = 0; i < FilmXml.JSON_NAMES.length; ++i) {
+            String str = jp.nextTextValue();
+
+            switch (FilmXml.JSON_NAMES[i]) {
+                case FilmXml.FILM_NEW:
+                    // This value is unused...
+                    // datenFilm.arr[DatenFilm.FILM_NEU_NR] = value;
+                    film.setNewFilm(Boolean.parseBoolean(str));
+                    break;
+
+                case FilmXml.FILM_CHANNEL:
+                    if (!str.isEmpty()) {
+                        channel = str.intern();
+                    }
+                    film.arr[FilmXml.FILM_CHANNEL] = channel;
+                    break;
+
+                case FilmXml.FILM_THEME:
+                    if (!str.isEmpty()) {
+                        theme = str.intern();
+                    }
+                    film.arr[FilmXml.FILM_THEME] = theme;
+                    break;
+
+                default:
+                    film.arr[FilmXml.JSON_NAMES[i]] = str;
+                    break;
+            }
+
+            /// für die Entwicklungszeit
+            if (film.arr[FilmXml.JSON_NAMES[i]] == null) {
+                film.arr[FilmXml.JSON_NAMES[i]] = "";
+            }
+
         }
     }
 

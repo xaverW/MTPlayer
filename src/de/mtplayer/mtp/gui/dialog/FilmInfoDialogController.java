@@ -20,33 +20,79 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
+import de.p2tools.p2Lib.guiTools.PHyperlink;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.layout.*;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 /**
  * FXML Controller class
  */
-public class FilmInfoDialogController extends MTDialogExtra {
+public class FilmInfoDialogController extends MTDialog {
 
-    Button btnOk = new Button("Ok");
-
-    Label[] lbl = new Label[FilmXml.MAX_ELEM];
-    TextInputControl[] txt = new TextInputControl[FilmXml.MAX_ELEM];
-
+    final private TextFlow textFlow;
+    final private Text[] lbl = new Text[FilmXml.MAX_ELEM];
+    final private Text[] txt = new Text[FilmXml.MAX_ELEM];
 
     final GridPane gridPane = new GridPane();
+    Button btnOk = new Button("Ok");
     private final ProgData progData;
+
+
+    private VBox vBoxDialog = new VBox();
+    private VBox vboxCont = new VBox();
+    private TilePane tilePaneOk = new TilePane();
+    ScrollPane scrollPane = new ScrollPane();
+    HBox hBoxUrl = new HBox();
+    HBox hBoxWebsite = new HBox();
+    private PHyperlink hyperLinkUrl = new PHyperlink("", ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty());
+    private PHyperlink hyperLinkWebsite = new PHyperlink("", ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty());
+
 
     public FilmInfoDialogController(ProgData progData) {
         super(null, ProgConfig.SYSTEM_SIZE_DIALOG_FILMINFO,
                 "Filminfos", false);
+        initDialog();
 
         this.progData = progData;
-        getTilePaneOk().getChildren().addAll(btnOk);
-        init(getvBoxDialog());
+        this.textFlow = new TextFlow();
+
+        tilePaneOk.getChildren().addAll(btnOk);
+        init(vBoxDialog);
+    }
+
+    private void initDialog() {
+        vBoxDialog.setSpacing(10);
+        vBoxDialog.setPadding(new Insets(10));
+
+
+        scrollPane.setFitToHeight(true);
+        scrollPane.setFitToWidth(true);
+
+        vboxCont.setPadding(new Insets(5));
+        VBox.setVgrow(vboxCont, Priority.ALWAYS);
+        scrollPane.setContent(vboxCont);
+
+        tilePaneOk.setHgap(10);
+        tilePaneOk.setAlignment(Pos.CENTER_RIGHT);
+
+        VBox vBox = new VBox();
+        vBox.getStyleClass().add("dialog-border");
+        VBox.setVgrow(scrollPane, Priority.ALWAYS);
+//        vBox.getChildren().add(scrollPane);
+        vBox.getChildren().add(vboxCont);
+
+        VBox.setVgrow(vBox, Priority.ALWAYS);
+        vBoxDialog.getChildren().addAll(vBox, tilePaneOk);
     }
 
 
@@ -57,38 +103,55 @@ public class FilmInfoDialogController extends MTDialogExtra {
 
     public void set(Film film) {
         Platform.runLater(() -> {
+
             for (int i = 0; i < FilmXml.MAX_ELEM; ++i) {
                 if (film == null) {
                     txt[i].setText("");
+                    hBoxUrl.getChildren().clear();
+                    hBoxWebsite.getChildren().clear();
                 } else {
                     switch (i) {
                         case FilmXml.FILM_NR:
                             txt[i].setText(film.getNr() + "");
                             break;
+//                        case FilmXml.FILM_URL:
+//                            hBoxUrl.getChildren().clear();
+//                            hBoxUrl.getChildren().add(new PHyperlink(film.arr[FilmXml.FILM_URL],
+//                                    ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty()));
+//                            break;
+//                        case FilmXml.FILM_WEBSITE:
+//                            hBoxWebsite.getChildren().clear();
+//                            hBoxWebsite.getChildren().add(new PHyperlink(film.arr[FilmXml.FILM_WEBSITE],
+//                                    ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty()));
+//                            break;
                         default:
                             txt[i].setText(film.arr[i]);
                     }
                 }
             }
+
         });
     }
 
     @Override
     public void make() {
         btnOk.setOnAction(a -> close());
-        int row = 0;
-        getVboxCont().getChildren().add(gridPane);
 
-        gridPane.setHgap(5);
+        vboxCont.getChildren().add(gridPane);
+        gridPane.setHgap(10);
         gridPane.setVgap(10);
         gridPane.setMinWidth(Control.USE_PREF_SIZE);
         gridPane.setMaxWidth(Double.MAX_VALUE);
         gridPane.setPadding(new Insets(10, 10, 10, 10));
 
+        int row = 0;
         for (int i = 0; i < FilmXml.MAX_ELEM; ++i) {
-            lbl[i] = new Label(FilmXml.COLUMN_NAMES[i]);
-            txt[i] = new TextField("");
-            txt[i].setEditable(false);
+
+            lbl[i] = new Text(FilmXml.COLUMN_NAMES[i]);
+            lbl[i].setFont(Font.font(null, FontWeight.BOLD, -1));
+            GridPane.setValignment(lbl[i], VPos.TOP);
+            txt[i] = new Text("");
+
             switch (i) {
                 case FilmXml.FILM_DATE_LONG:
                 case FilmXml.FILM_PLAY:
@@ -104,19 +167,53 @@ public class FilmInfoDialogController extends MTDialogExtra {
                 case FilmXml.FILM_NEW:
                     // bis hier nicht anzeigen
                     break;
+//                case FilmXml.FILM_URL:
+//                    gridPane.add(lbl[i], 0, row);
+//                    gridPane.add(hBoxUrl, 1, row++);
+//                    hBoxUrl.setMinWidth(0);
+//                    hBoxUrl.setMaxWidth(Region.USE_COMPUTED_SIZE);
+//                    break;
+//                case FilmXml.FILM_WEBSITE:
+//                    gridPane.add(lbl[i], 0, row);
+//                    ScrollPane scWebsite = new ScrollPane();
+//                    scWebsite.setContent(hBoxWebsite);
+//
+//                    gridPane.add(scWebsite, 1, row++);
+//                    hBoxWebsite.setMinWidth(0);
+//                    break;
                 case FilmXml.FILM_DESCRIPTION:
-                    final TextArea ta = new TextArea();
-                    ta.setEditable(false);
-                    ta.setWrapText(true);
-                    txt[i] = ta;
+//                    final TextArea ta = new TextArea();
+//                    ta.setMinWidth(0);
+//                    ta.setEditable(false);
+//                    ta.setWrapText(true);
+//                    txt[i] = ta;
                 default:
-                    GridPane.setHgrow(txt[i], Priority.ALWAYS);
                     gridPane.add(lbl[i], 0, row);
-                    gridPane.add(txt[i], 1, row);
-                    ++row;
+
+                    HBox hBox = new HBox();
+                    hBox.getChildren().add(txt[i]);
+                    GridPane.setHgrow(txt[i], Priority.ALWAYS);
+                    txt[i].wrappingWidthProperty().bind(vboxCont.widthProperty().subtract(150));
+                    gridPane.add(hBox, 1, row++);
+
+                    final int ii = i;
+//                    txt[i].setOnContextMenuRequested(event -> getMenu(txt[ii].getText()).show(txt[ii], event.getScreenX(), event.getScreenY()));
 
             }
         }
     }
 
+    private ContextMenu getMenu(String url) {
+        final ContextMenu contextMenu = new ContextMenu();
+
+        MenuItem resetTable = new MenuItem("kopieren");
+        resetTable.setOnAction(a -> {
+            final Clipboard clipboard = Clipboard.getSystemClipboard();
+            final ClipboardContent content = new ClipboardContent();
+            content.putString(url);
+            clipboard.setContent(content);
+        });
+        contextMenu.getItems().addAll(resetTable);
+        return contextMenu;
+    }
 }
