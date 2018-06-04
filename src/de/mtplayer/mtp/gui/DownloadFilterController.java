@@ -32,10 +32,11 @@ import javafx.util.StringConverter;
 
 public class DownloadFilterController extends FilterController {
 
-    ComboBox<String> cbSrc = new ComboBox<>(); //Downloadquelle: Abo, manuell gestartet
-    ComboBox<String> cbArt = new ComboBox<>(); //Download über Programm / direkter Downlaod, http
+    ComboBox<String> cboSrc = new ComboBox<>(); //Downloadquelle: Abo, manuell gestartet
+    ComboBox<String> cboArt = new ComboBox<>(); //Download über Programm / direkter Downlaod, http
     ComboBox<String> cboChannel = new ComboBox<>();
-    ComboBox<String> cbAbo = new ComboBox<>();
+    ComboBox<String> cboAbo = new ComboBox<>();
+    ComboBox<String> cboState = new ComboBox<>();
 
     Spinner<Integer> spinnerAnz = new Spinner<>();
     Slider sliderBandwidth = new Slider();
@@ -58,10 +59,11 @@ public class DownloadFilterController extends FilterController {
     private void initLayout() {
         VBox vBox = new VBox();
         vBox.setSpacing(10);
-        addCont("Quelle", cbSrc, vBox);
-        addCont("Downloadart", cbArt, vBox);
+        addCont("Quelle", cboSrc, vBox);
+        addCont("Downloadart", cboArt, vBox);
         addCont("Sender", cboChannel, vBox);
-        addCont("Abo", cbAbo, vBox);
+        addCont("Abo", cboAbo, vBox);
+        addCont("Status", cboState, vBox);
 
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER_RIGHT);
@@ -86,7 +88,6 @@ public class DownloadFilterController extends FilterController {
         Label label = new Label("max. Bandbreite je Download");
         v.getChildren().addAll(label, sliderBandwidth, hBox);
         vbFilter.getChildren().add(v);
-
     }
 
     private void addCont(String txt, Control control, VBox vBox) {
@@ -100,79 +101,85 @@ public class DownloadFilterController extends FilterController {
     private void initFilter() {
         btnClear.setOnAction(a -> clearFilter());
 
-        cbSrc.getItems().addAll(DownloadInfos.SRC_COMBO_ALL,
+        cboSrc.getItems().addAll(DownloadInfos.ALL,
                 DownloadInfos.SRC_COMBO_DOWNLOAD,
                 DownloadInfos.SRC_COMBO_ABO);
 
-        Bindings.bindBidirectional(cbSrc.valueProperty(), ProgConfig.FILTER_DOWNLOAD_SOURCE.getStringProperty(),
+        Bindings.bindBidirectional(cboSrc.valueProperty(), ProgConfig.FILTER_DOWNLOAD_SOURCE.getStringProperty(),
                 new StringConverter<String>() {
 
                     public String fromString(String cb) {
                         switch (cb) {
-                            case DownloadInfos.SRC_COMBO_ALL:
-                                return DownloadInfos.SRC_ALL;
+                            case DownloadInfos.ALL:
+                                return DownloadInfos.ALL;
                             case DownloadInfos.SRC_COMBO_ABO:
                                 return DownloadInfos.SRC_ABO;
                             case DownloadInfos.SRC_COMBO_DOWNLOAD:
                                 return DownloadInfos.SRC_DOWNLOAD;
                             default:
-                                return DownloadInfos.SRC_ALL;
+                                return DownloadInfos.ALL;
                         }
                     }
 
                     public String toString(String prop) {
                         switch (prop) {
-                            case DownloadInfos.SRC_ALL:
-                                return DownloadInfos.SRC_COMBO_ALL;
+                            case DownloadInfos.ALL:
+                                return DownloadInfos.ALL;
                             case DownloadInfos.SRC_ABO:
                                 return DownloadInfos.SRC_COMBO_ABO;
                             case DownloadInfos.SRC_DOWNLOAD:
                                 return DownloadInfos.SRC_COMBO_DOWNLOAD;
                             default:
-                                return DownloadInfos.SRC_COMBO_ALL;
+                                return DownloadInfos.ALL;
                         }
                     }
                 });
 
-        cbArt.getItems().addAll(DownloadInfos.ART_COMBO_ALL,
+        cboArt.getItems().addAll(DownloadInfos.ALL,
                 DownloadInfos.ART_COMBO_DOWNLOAD,
                 DownloadInfos.ART_COMBO_PROGRAM);
 
-        Bindings.bindBidirectional(cbArt.valueProperty(), ProgConfig.FILTER_DOWNLOAD_KIND.getStringProperty(),
+        Bindings.bindBidirectional(cboArt.valueProperty(), ProgConfig.FILTER_DOWNLOAD_KIND.getStringProperty(),
                 new StringConverter<String>() {
 
                     public String fromString(String cb) {
                         switch (cb) {
-                            case DownloadInfos.ART_COMBO_ALL:
-                                return DownloadInfos.ART_ALL;
+                            case DownloadInfos.ALL:
+                                return DownloadInfos.ALL;
                             case DownloadInfos.ART_COMBO_DOWNLOAD:
                                 return DownloadInfos.ART_DOWNLOAD;
                             case DownloadInfos.ART_COMBO_PROGRAM:
                                 return DownloadInfos.ART_PROGRAM;
                             default:
-                                return DownloadInfos.ART_ALL;
+                                return DownloadInfos.ALL;
                         }
                     }
 
                     public String toString(String prop) {
                         switch (prop) {
-                            case DownloadInfos.ART_ALL:
-                                return DownloadInfos.ART_COMBO_ALL;
+                            case DownloadInfos.ALL:
+                                return DownloadInfos.ALL;
                             case DownloadInfos.ART_DOWNLOAD:
                                 return DownloadInfos.ART_COMBO_DOWNLOAD;
                             case DownloadInfos.ART_PROGRAM:
                                 return DownloadInfos.ART_COMBO_PROGRAM;
                             default:
-                                return DownloadInfos.ART_COMBO_ALL;
+                                return DownloadInfos.ALL;
                         }
                     }
                 });
 
+        cboState.getItems().addAll(DownloadInfos.ALL,
+                DownloadInfos.STATE_COMBO_NOT_STARTED,
+                DownloadInfos.STATE_COMBO_WAITING,
+                DownloadInfos.STATE_COMBO_LOADING);
+        cboState.valueProperty().bindBidirectional(ProgConfig.FILTER_DOWNLOAD_STATE.getStringProperty());
+
         cboChannel.valueProperty().bindBidirectional(ProgConfig.FILTER_DOWNLOAD_SENDER.getStringProperty());
         cboChannel.setItems(progData.nameLists.getObsAllChannel());
 
-        cbAbo.valueProperty().bindBidirectional(ProgConfig.FILTER_DOWNLOAD_ABO.getStringProperty());
-        cbAbo.setItems(progData.nameLists.getObsAllAboNames()); // todo evtl. nur die vorhandenen Abos
+        cboAbo.valueProperty().bindBidirectional(ProgConfig.FILTER_DOWNLOAD_ABO.getStringProperty());
+        cboAbo.setItems(progData.nameLists.getObsAllAboNames()); // todo evtl. nur die vorhandenen Abos
     }
 
     private void initNumberDownloads() {
@@ -221,17 +228,20 @@ public class DownloadFilterController extends FilterController {
     }
 
     private void clearFilter() {
-        if (cbSrc.getSelectionModel() != null) {
-            cbSrc.getSelectionModel().selectFirst();
+        if (cboSrc.getSelectionModel() != null) {
+            cboSrc.getSelectionModel().selectFirst();
         }
-        if (cbArt.getSelectionModel() != null) {
-            cbArt.getSelectionModel().selectFirst();
+        if (cboArt.getSelectionModel() != null) {
+            cboArt.getSelectionModel().selectFirst();
         }
         if (cboChannel.getSelectionModel() != null) {
             cboChannel.getSelectionModel().selectFirst();
         }
-        if (cbAbo.getSelectionModel() != null) {
-            cbAbo.getSelectionModel().selectFirst();
+        if (cboAbo.getSelectionModel() != null) {
+            cboAbo.getSelectionModel().selectFirst();
+        }
+        if (cboState.getSelectionModel() != null) {
+            cboState.getSelectionModel().selectFirst();
         }
     }
 

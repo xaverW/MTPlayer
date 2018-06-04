@@ -42,22 +42,31 @@ public class DownloadInfos {
     public static final int STATE_FINISHED = 4; // fertig, Ok
     public static final int STATE_ERROR = 5; // fertig, fehlerhaft
 
-    public static final String SRC_ALL = "";
+//    public static final String STATE_INIT_STR = "0"; // noch nicht gestart
+//    public static final String STATE_STOPPED_STR = "1"; // gestartet und wieder abgebrochen
+//    public static final String STATE_STARTED_WAITING_STR = "2"; // gestartet, warten auf das Downloaden
+//    public static final String STATE_STARTED_RUN_STR = "3"; //Download läuft
+//    public static final String STATE_FINISHED_STR = "4"; // fertig, Ok
+//    public static final String STATE_ERROR_STR = "5"; // fertig, fehlerhaft
+
+    public static final String ALL = "";
+
     public static final String SRC_BUTTON = "Button";
     public static final String SRC_DOWNLOAD = "Download";
     public static final String SRC_ABO = "Abo";
 
-    public static final String SRC_COMBO_ALL = "";
     public static final String SRC_COMBO_DOWNLOAD = "nur Downloads";
     public static final String SRC_COMBO_ABO = "nur Abos";
 
-    public static final String ART_ALL = "";
     public static final String ART_DOWNLOAD = "direkter Download";
     public static final String ART_PROGRAM = "Programm";
 
-    public static final String ART_COMBO_ALL = "";
     public static final String ART_COMBO_DOWNLOAD = "nur direkte Downloads";
     public static final String ART_COMBO_PROGRAM = "nur Programme";
+
+    public static final String STATE_COMBO_NOT_STARTED = "noch nicht gestartet";
+    public static final String STATE_COMBO_WAITING = "gestartet und wartet noch";
+    public static final String STATE_COMBO_LOADING = "läuft";
 
     //Download wird so oft gestartet, falls er beim ersten Mal nicht anspringt
     public static final int START_COUNTER_MAX = 3;

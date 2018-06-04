@@ -20,6 +20,7 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.download.Download;
+import de.mtplayer.mtp.controller.data.download.DownloadInfos;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmTools;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
@@ -348,7 +349,16 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private void initListener() {
-
+        Listener.addListener(new Listener(Listener.EREIGNIS_TIMER, StatusBarController.class.getSimpleName()) {
+            @Override
+            public void ping() {
+                if (!ProgConfig.FILTER_DOWNLOAD_STATE.get().isEmpty()) {
+                    // dann den Filter aktualisieren
+                    // todo?? bei vielen Downloads kann das sonst die ganze Tabelle ausbremsen
+                    setFilter();
+                }
+            }
+        });
         progData.downloadList.downloadsChangedProperty().addListener((observable, oldValue, newValue) ->
                 Platform.runLater(() -> setFilter()));
         Listener.addListener(new Listener(Listener.EREIGNIS_BLACKLIST_GEAENDERT, DownloadGuiController.class.getSimpleName()) {
@@ -430,6 +440,9 @@ public class DownloadGuiController extends AnchorPane {
         ProgConfig.FILTER_DOWNLOAD_KIND.getStringProperty().addListener((observable, oldValue, newValue) -> {
             setFilter();
         });
+        ProgConfig.FILTER_DOWNLOAD_STATE.getStringProperty().addListener((observable, oldValue, newValue) -> {
+            setFilter();
+        });
     }
 
     private void setFilter() {
@@ -437,13 +450,22 @@ public class DownloadGuiController extends AnchorPane {
         final String abo = ProgConfig.FILTER_DOWNLOAD_ABO.get();
         final String source = ProgConfig.FILTER_DOWNLOAD_SOURCE.get();
         final String art = ProgConfig.FILTER_DOWNLOAD_KIND.get();
+        final String state = ProgConfig.FILTER_DOWNLOAD_STATE.get();
 
         //System.out.println("Sender: " + sender + " Abo: " + abo + " Quelle: " + quelle + " Art: " + art);
-        filteredDownloads.setPredicate(download -> (!download.getPlacedBack() &&
-                sender.isEmpty() ? true : download.getChannel().equals(sender)) &&
+        filteredDownloads.setPredicate(download -> !download.getPlacedBack() &&
+
+                (sender.isEmpty() ? true : download.getChannel().equals(sender)) &&
                 (abo.isEmpty() ? true : download.getAboName().equals(abo)) &&
                 (source.isEmpty() ? true : download.getSource().equals(source)) &&
-                (art.isEmpty() ? true : download.getArt().equals(art)));
+                (art.isEmpty() ? true : download.getArt().equals(art)) &&
+
+                (state.isEmpty() ? true : (
+                        state.equals(DownloadInfos.STATE_COMBO_NOT_STARTED) && !download.isStarted() ||
+                                state.equals(DownloadInfos.STATE_COMBO_WAITING) && download.isStateStartedWaiting() ||
+                                state.equals(DownloadInfos.STATE_COMBO_LOADING) && download.isStateStartedRun()
+                ))
+        );
 
     }
 

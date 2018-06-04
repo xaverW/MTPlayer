@@ -169,6 +169,7 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs FILTER_DOWNLOAD_SOURCE = addNewKey("filter-download-source");
     public static MLConfigs FILTER_DOWNLOAD_KIND = addNewKey("filter-download-kind");
     public static MLConfigs FILTER_DOWNLOAD_ABO = addNewKey("filter-download-abo");
+    public static MLConfigs FILTER_DOWNLOAD_STATE = addNewKey("filter-download-state");
 
     // Farben
     public static MLConfigs COLOR__FILM_LIVESTREAM = addNewKey("COLOR_FILM_LIVESTREAM");

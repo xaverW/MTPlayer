@@ -62,7 +62,7 @@ public class DownloadProps extends DownloadXml {
     private final StringProperty destPathFile = new SimpleStringProperty("");
 
     private final StringProperty art = new SimpleStringProperty(DownloadInfos.ART_DOWNLOAD);
-    private final StringProperty source = new SimpleStringProperty(DownloadInfos.SRC_ALL);
+    private final StringProperty source = new SimpleStringProperty(DownloadInfos.ALL);
     private final BooleanProperty placedBack = new SimpleBooleanProperty(false);
     private final BooleanProperty infoFile = new SimpleBooleanProperty(false);
     private final BooleanProperty subtitle = new SimpleBooleanProperty(false);

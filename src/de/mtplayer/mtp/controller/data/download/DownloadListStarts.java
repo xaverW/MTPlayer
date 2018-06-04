@@ -143,7 +143,7 @@ public class DownloadListStarts {
 
         activeDownloads.clear();
         activeDownloads.addAll(downloadList.stream().filter(download -> download.isStateStartedRun())
-                .filter(download -> source.equals(DownloadInfos.SRC_ALL) || download.getSource().equals(source))
+                .filter(download -> source.equals(DownloadInfos.ALL) || download.getSource().equals(source))
                 .collect(Collectors.toList()));
         return activeDownloads;
     }

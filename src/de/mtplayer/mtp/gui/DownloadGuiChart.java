@@ -175,7 +175,7 @@ public class DownloadGuiChart {
         boolean found;
         ++countSek; // Sekunden
         final double countMin = countSek / 60.0; // Minuten
-        startedDownloads = progData.downloadList.getListOfStartsNotFinished(DownloadInfos.SRC_ALL);
+        startedDownloads = progData.downloadList.getListOfStartsNotFinished(DownloadInfos.ALL);
 
         //Downloads in "Diagramm" eintragen
         for (final Download download : startedDownloads) {

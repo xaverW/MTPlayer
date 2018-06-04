@@ -102,7 +102,7 @@ public class DownloadInfoAll {
 
         downloadStarts = downloadList.getStarts();
 
-        activeDownloads = downloadList.getListOfStartsNotFinished(DownloadInfos.SRC_ALL);
+        activeDownloads = downloadList.getListOfStartsNotFinished(DownloadInfos.ALL);
         for (final Download download : activeDownloads) {
             ++anzDownloadsRun;
             byteAllDownloads += (download.getDownloadSize().getFilmSize() > 0 ? download.getDownloadSize().getFilmSize() : 0);
