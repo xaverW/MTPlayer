@@ -44,7 +44,7 @@ import java.util.Optional;
 public class FilmGuiController extends AnchorPane {
     SplitPane splitPane = new SplitPane();
     ScrollPane scrollPane = new ScrollPane();
-    TableView<Film> table = new TableView<>();
+    TableView<Film> tableView = new TableView<>();
 
     private final AnchorPane filmInfoPane = new AnchorPane();
 
@@ -62,7 +62,7 @@ public class FilmGuiController extends AnchorPane {
 
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
-        scrollPane.setContent(table);
+        scrollPane.setContent(tableView);
 
         setInfoTabPane();
 
@@ -89,11 +89,11 @@ public class FilmGuiController extends AnchorPane {
     }
 
     public int getFilmCount() {
-        return table.getItems().size();
+        return tableView.getItems().size();
     }
 
     public int getSelCount() {
-        return table.getSelectionModel().getSelectedItems().size();
+        return tableView.getSelectionModel().getSelectedItems().size();
     }
 
     private void setSplit() {
@@ -117,7 +117,7 @@ public class FilmGuiController extends AnchorPane {
     }
 
     private void setFilm() {
-        Film film = table.getSelectionModel().getSelectedItem();
+        Film film = tableView.getSelectionModel().getSelectedItem();
         filmGuiInfoController.setFilm(film);
         progData.filmInfoDialogController.set(film);
         return;
@@ -151,7 +151,7 @@ public class FilmGuiController extends AnchorPane {
         final ArrayList<Film> list = getSelList();
         FilmTools.setFilmShown(progData, list, true);
 
-        Table.refresh_table(table);
+        Table.refresh_table(tableView);
     }
 
     public void setFilmNotShown() {
@@ -161,18 +161,18 @@ public class FilmGuiController extends AnchorPane {
         final ArrayList<Film> list = getSelList();
         FilmTools.setFilmShown(progData, list, false);
 
-        Table.refresh_table(table);
+        Table.refresh_table(tableView);
         Duration.counterStop("filmUngesehen");
     }
 
 
     public void saveTable() {
-        new Table().saveTable(table, Table.TABLE.FILM);
+        new Table().saveTable(tableView, Table.TABLE.FILM);
     }
 
     public ArrayList<Film> getSelList() {
         final ArrayList<Film> ret = new ArrayList<>();
-        ret.addAll(table.getSelectionModel().getSelectedItems());
+        ret.addAll(tableView.getSelectionModel().getSelectedItems());
         if (ret.isEmpty()) {
             new MTAlert().showInfoNoSelection();
         }
@@ -180,9 +180,9 @@ public class FilmGuiController extends AnchorPane {
     }
 
     public Optional<Film> getSel() {
-        final int selectedTableRow = table.getSelectionModel().getSelectedIndex();
+        final int selectedTableRow = tableView.getSelectionModel().getSelectedIndex();
         if (selectedTableRow >= 0) {
-            return Optional.of(table.getSelectionModel().getSelectedItem());
+            return Optional.of(tableView.getSelectionModel().getSelectedItem());
         } else {
             new MTAlert().showInfoNoSelection();
             return Optional.empty();
@@ -199,7 +199,7 @@ public class FilmGuiController extends AnchorPane {
         Listener.addListener(new Listener(Listener.EREIGNIS_GUI_COLOR_CHANGED, FilmGuiController.class.getSimpleName()) {
             @Override
             public void ping() {
-                table.refresh();
+                tableView.refresh();
 //                Table.refresh_table(table);
             }
         });
@@ -244,33 +244,33 @@ public class FilmGuiController extends AnchorPane {
     }
 
     private void initTable() {
-        table.setTableMenuButtonVisible(true);
-        table.setEditable(false);
-        table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        table.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+        tableView.setTableMenuButtonVisible(true);
+        tableView.setEditable(false);
+        tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
-        new Table().setTable(table, Table.TABLE.FILM);
+        new Table().setTable(tableView, Table.TABLE.FILM);
 
-        table.setItems(sortedList);
-        sortedList.comparatorProperty().bind(table.comparatorProperty());
+        tableView.setItems(sortedList);
+        sortedList.comparatorProperty().bind(tableView.comparatorProperty());
 
-        table.setOnMouseClicked(m -> {
+        tableView.setOnMouseClicked(m -> {
             if (m.getButton().equals(MouseButton.PRIMARY) && m.getClickCount() == 2) {
                 progData.filmInfoDialogController.showFilmInfo();
             }
         });
 
-        table.setOnMousePressed(m -> {
+        tableView.setOnMousePressed(m -> {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
                 final Optional<Film> film = getSel();
                 if (film.isPresent()) {
-                    ContextMenu contextMenu = new FilmGuiContextMenu(progData, this, table).getContextMenu(film.get());
-                    table.setContextMenu(contextMenu);
+                    ContextMenu contextMenu = new FilmGuiContextMenu(progData, this, tableView).getContextMenu(film.get());
+                    tableView.setContextMenu(contextMenu);
                 }
             }
         });
 
-        table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
+        tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
                 Platform.runLater(this::setFilm));
 
     }

@@ -190,6 +190,8 @@ public class Film extends FilmProps {
     }
 
     private void setDatum() {
+        filmDate.setTime(0);
+
         if (!arr[FilmXml.FILM_DATE].isEmpty()) {
             // nur dann gibts ein Datum
             try {
@@ -211,6 +213,7 @@ public class Film extends FilmProps {
                 arr[FilmXml.FILM_TIME] = "";
             }
         }
+
     }
 
 

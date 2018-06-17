@@ -357,7 +357,7 @@ public class DownloadGuiController extends AnchorPane {
                     // todo?? bei vielen Downloads kann das sonst die ganze Tabelle ausbremsen
                     setFilter();
                 }
-            }
+             }
         });
         progData.downloadList.downloadsChangedProperty().addListener((observable, oldValue, newValue) ->
                 Platform.runLater(() -> setFilter()));

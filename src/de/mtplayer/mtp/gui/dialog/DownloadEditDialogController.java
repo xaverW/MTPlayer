@@ -543,11 +543,19 @@ public class DownloadEditDialogController extends MTDialogExtra {
                 ++row;
                 break;
             case DownloadXml.DOWNLOAD_URL:
-                lblCont[i].textProperty().bind(download.urlProperty());
+                //todo ORF
+                txt[i].setEditable(true);
+                txt[i].textProperty().bindBidirectional(download.urlProperty());
                 gridPane.add(lbl[i], 0, row);
-                gridPane.add(lblCont[i], 1, row);
+                gridPane.add(txt[i], 1, row);
                 ++row;
                 break;
+
+//                lblCont[i].textProperty().bind(download.urlProperty());
+//                gridPane.add(lbl[i], 0, row);
+//                gridPane.add(lblCont[i], 1, row);
+//                ++row;
+//                break;
 
             case DownloadXml.DOWNLOAD_PROGRAM_SET:
                 lblCont[i].textProperty().bind(download.setProperty());
