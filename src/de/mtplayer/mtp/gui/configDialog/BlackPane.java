@@ -17,11 +17,14 @@
 package de.mtplayer.mtp.gui.configDialog;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.BlackData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
+import de.mtplayer.mtp.gui.tools.Table;
+import de.mtplayer.mtp.tools.filmListFilter.FilmlistBlackFilterCountHits;
 import de.p2tools.p2Lib.guiTools.PButton;
 import javafx.beans.property.BooleanProperty;
 import javafx.collections.ObservableList;
@@ -31,7 +34,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import org.controlsfx.control.ToggleSwitch;
 import org.controlsfx.control.table.TableRowExpanderColumn;
@@ -96,7 +98,7 @@ public class BlackPane {
 
     private void initTable(VBox vBox) {
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        tableView.setMinHeight(Region.USE_PREF_SIZE);
+        tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
 
         final TableColumn<BlackData, String> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("nr"));
@@ -116,22 +118,25 @@ public class BlackPane {
         themeExactColumn.setCellValueFactory(new PropertyValueFactory<>("themeExact"));
         themeExactColumn.setCellFactory(CheckBoxTableCell.forTableColumn(themeExactColumn));
 
-        final TableColumn<BlackData, Color> titleColumn = new TableColumn<>("Titel");
+        final TableColumn<BlackData, String> titleColumn = new TableColumn<>("Titel");
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
 
-        final TableColumn<BlackData, Color> themeTitleColumn = new TableColumn<>("Thema-Titel");
+        final TableColumn<BlackData, String> themeTitleColumn = new TableColumn<>("Thema-Titel");
         themeTitleColumn.setCellValueFactory(new PropertyValueFactory<>("themeTitle"));
+
+        final TableColumn<BlackData, Integer> hitsColumn = new TableColumn<>("Treffer");
+        hitsColumn.setCellValueFactory(new PropertyValueFactory<>("countHits"));
 
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
         tableView.getColumns().addAll(expander, nrColumn, channelColumn, channelExactColumn, themeColumn, themeExactColumn,
-                titleColumn, themeTitleColumn);
+                titleColumn, themeTitleColumn, hitsColumn);
         tableView.setItems(ProgData.getInstance().blackList);
 
 
-        Button del = new Button("");
-        del.setGraphic(new Icons().ICON_BUTTON_REMOVE);
-        del.setOnAction(event -> {
+        Button btnDel = new Button("");
+        btnDel.setGraphic(new Icons().ICON_BUTTON_REMOVE);
+        btnDel.setOnAction(event -> {
             final ObservableList<BlackData> selected = tableView.getSelectionModel().getSelectedItems();
 
             if (selected == null || selected.isEmpty()) {
@@ -142,18 +147,29 @@ public class BlackPane {
             }
         });
 
-        Button neu = new Button("");
-        neu.setGraphic(new Icons().ICON_BUTTON_ADD);
-        neu.setOnAction(event -> {
+        Button btnNew = new Button("");
+        btnNew.setGraphic(new Icons().ICON_BUTTON_ADD);
+        btnNew.setOnAction(event -> {
             BlackData blackData = new BlackData();
             ProgData.getInstance().blackList.add(blackData);
             tableView.getSelectionModel().select(blackData);
             tableView.scrollTo(blackData);
         });
 
+        Button btnCountHits = new Button("Treffer zählen");
+        btnCountHits.setOnAction(a -> {
+            FilmlistBlackFilterCountHits.countHits();
+            Table.refresh_table(tableView);
+        });
+
+        HBox hBoxCount = new HBox();
+        hBoxCount.setAlignment(Pos.CENTER_RIGHT);
+        HBox.setHgrow(hBoxCount, Priority.ALWAYS);
+        hBoxCount.getChildren().add(btnCountHits);
+
         HBox hBox = new HBox();
         hBox.setSpacing(10);
-        hBox.getChildren().addAll(neu, del);
+        hBox.getChildren().addAll(btnNew, btnDel, hBoxCount);
 
         VBox.setVgrow(tableView, Priority.ALWAYS);
         vBox.getChildren().addAll(tableView, hBox);

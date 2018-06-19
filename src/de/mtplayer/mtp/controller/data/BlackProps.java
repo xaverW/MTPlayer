@@ -46,6 +46,7 @@ public class BlackProps extends Data<BlackProps> {
 
     public String[] arr;
 
+    private int countHits = 0;
     private int nr = 0;
     private final StringProperty channel = new SimpleStringProperty("");
     private final BooleanProperty channelExact = new SimpleBooleanProperty(true);
@@ -59,6 +60,17 @@ public class BlackProps extends Data<BlackProps> {
         arr = super.makeArr(MAX_ELEM);
     }
 
+    public int getCountHits() {
+        return countHits;
+    }
+
+    public void setCountHits(int countHits) {
+        this.countHits = countHits;
+    }
+
+    public synchronized void incCountHits() {
+        ++this.countHits;
+    }
 
     public int getNr() {
         return nr;

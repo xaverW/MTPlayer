@@ -191,6 +191,12 @@ public class HelpText {
                     "Beim Umschalten \"Blacklist - Whitelist\" werden genau " +
                     "die vorher nicht angezeigten Filme jetzt angezeigt." +
                     "\n\n" +
+                    "Mit \"Treffer zählen\" kann überprüft werden, wieviele Filme " +
+                    "in der Filmliste jeder Eintrag in der Blacklist findet. Damit lässt " +
+                    "sich die Blacklist optimieren. Eine kürzere Blacklist führt zu schnelleren " +
+                    "Ergebnissen." +
+                    "\n\n" +
+
                     FILTER_FIELD +
                     FILTER_EXACT;
 
