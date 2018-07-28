@@ -19,12 +19,10 @@ package de.mtplayer.mtp.controller.starter;
 import de.mtplayer.mLib.tools.SizeTools;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.data.download.Download;
-import javafx.application.Platform;
-import org.controlsfx.control.Notifications;
+import de.p2tools.p2Lib.guiTools.pNotification.PNotification;
 
 
 public class MTNotification {
-
     public static void addNotification(Download download, boolean error) {
         String text = ("Film:   " + download.getTitle() + "\n" +
                 "Sender: " + download.getChannel() + "\n" +
@@ -34,24 +32,27 @@ public class MTNotification {
         add(text, error);
     }
 
-    private static void add(String text, boolean error) {
-        if (Boolean.parseBoolean(ProgConfig.DOWNLOAD_SHOW_NOTIFICATION.get())) {
+    public static void addNotification(boolean error) {
+        String text = ("Film:   " + "Test" + "\n" +
+                "Sender: " + "Test" + "\n" +
+                "Größe:  " + "Test" + "\n" +
+                (error ? "Download war fehlerhaft" : "Download war erfolgreich"));
 
-            Platform.runLater(() -> {
-                if (error) {
-                    Notifications.create()
-                            .title("Download beendet")
-                            .text(text).darkStyle().showError();
-                } else {
-                    Notifications.create()
-                            .title("Download beendet")
-                            .text(text).darkStyle().showInformation();
-                }
-            });
-
-        }
+        add(text, error);
     }
+
+
+    private static void add(String text, boolean error) {
+        if (!ProgConfig.DOWNLOAD_SHOW_NOTIFICATION.getBool()) {
+            return;
+        }
+
+        PNotification.addNotification("Download beendet", text, error);
+    }
+
 }
+
+
 
 
 
