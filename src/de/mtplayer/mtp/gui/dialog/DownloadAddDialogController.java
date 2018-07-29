@@ -37,7 +37,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import org.controlsfx.control.ToggleSwitch;
 
 import java.io.File;
 import java.nio.file.FileStore;
@@ -68,7 +67,7 @@ public class DownloadAddDialogController extends MTDialog {
     private Label lblSum;
 
     @FXML
-    ToggleSwitch tglAll;
+    CheckBox tglAll;
     @FXML
     private Label lblSet;
     @FXML

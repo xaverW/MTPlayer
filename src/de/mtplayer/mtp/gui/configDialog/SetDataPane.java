@@ -24,6 +24,7 @@ import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
+import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
@@ -31,7 +32,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import org.controlsfx.control.ToggleSwitch;
 
 import java.util.Collection;
 
@@ -41,12 +41,12 @@ public class SetDataPane {
     //name
     private final TextField txtName = new TextField("");
     private final TextArea txtDescription = new TextArea("");
-    private final ToggleSwitch tglSave = new ToggleSwitch("Speichern");
-    private final ToggleSwitch tglButton = new ToggleSwitch("Button");
-    private final ToggleSwitch tglAbo = new ToggleSwitch("Abo");
+    private final PToggleSwitch tglSave = new PToggleSwitch("Speichern");
+    private final PToggleSwitch tglButton = new PToggleSwitch("Button");
+    private final PToggleSwitch tglAbo = new PToggleSwitch("Abo");
     private final ColorPicker colorPicker = new ColorPicker();
     //destination
-    private final ToggleSwitch tglSubdir = new ToggleSwitch("Unterordner anlegen");
+    private final PToggleSwitch tglSubdir = new PToggleSwitch("Unterordner anlegen");
     private final TextField txtDestPath = new TextField();
     private final TextField txtDestName = new TextField();
     private final Slider slCut = new Slider();
@@ -57,8 +57,8 @@ public class SetDataPane {
     private final RadioButton rbHd = new RadioButton("Film in HD laden");
     private final RadioButton rbHeight = new RadioButton("Film in hoher Auflösung laden");
     private final RadioButton rbLow = new RadioButton("Film in kleiner Auflösung laden");
-    private final ToggleSwitch tglInfo = new ToggleSwitch("Infodatei anlegen: \"Filmname.txt\"");
-    private final ToggleSwitch tglSubtitle = new ToggleSwitch("Untertitel speichern: \"Filmname.xxx\"");
+    private final PToggleSwitch tglInfo = new PToggleSwitch("Infodatei anlegen: \"Filmname.txt\"");
+    private final PToggleSwitch tglSubtitle = new PToggleSwitch("Untertitel speichern: \"Filmname.xxx\"");
 
     private SetData setData = null;
     private Collection<TitledPane> result;

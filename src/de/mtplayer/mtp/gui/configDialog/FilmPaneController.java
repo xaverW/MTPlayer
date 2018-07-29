@@ -22,6 +22,7 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
+import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
@@ -30,7 +31,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import org.controlsfx.control.ToggleSwitch;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -119,7 +119,7 @@ public class FilmPaneController extends AnchorPane {
             progData.loadFilmlist.loadFilmlist("", true);
         });
 
-        final ToggleSwitch tglLoad = new ToggleSwitch("Filmliste beim Programmstart laden");
+        final PToggleSwitch tglLoad = new PToggleSwitch("Filmliste beim Programmstart laden");
         tglLoad.selectedProperty().bindBidirectional(propLoad);
 
         final Button btnHelpLoad = new Button("");

@@ -21,13 +21,13 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
+import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
-import org.controlsfx.control.ToggleSwitch;
 import org.controlsfx.control.table.TableRowExpanderColumn;
 
 import java.util.Collection;
@@ -184,9 +184,9 @@ public class ProgPane {
         TextField txtSuffix = new TextField();
         txtSuffix.textProperty().bindBidirectional(param.getValue().suffixProperty());
 
-        ToggleSwitch tglRestart = new ToggleSwitch("Restart:");
+        PToggleSwitch tglRestart = new PToggleSwitch("Restart:");
         tglRestart.selectedProperty().bindBidirectional(param.getValue().restartProperty());
-        ToggleSwitch tglDown = new ToggleSwitch("Downloadmanager: ");
+        PToggleSwitch tglDown = new PToggleSwitch("Downloadmanager: ");
         tglDown.selectedProperty().bindBidirectional(param.getValue().downManagerProperty());
 
         final Button btnFile = new Button();

@@ -25,13 +25,13 @@ import de.mtplayer.mtp.gui.configDialog.ConfigDialogController;
 import de.mtplayer.mtp.gui.dialog.AboutDialogController;
 import de.mtplayer.mtp.gui.dialog.ResetDialogController;
 import de.mtplayer.mtp.gui.mediaDialog.MediaConfigController;
+import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import org.controlsfx.control.MaskerPane;
 
 public class MTPlayerController extends StackPane {
 
@@ -45,7 +45,7 @@ public class MTPlayerController extends StackPane {
 
     BorderPane borderPane = new BorderPane();
     StackPane stackPaneCont = new StackPane();
-    private MaskerPane maskerPane = new MaskerPane();
+    private PMaskerPane maskerPane = new PMaskerPane();
     private StatusBarController statusBarController;
 
     private SplitPane splitPaneFilm;
@@ -108,7 +108,7 @@ public class MTPlayerController extends StackPane {
             borderPane.setBottom(statusBarController);
 
             this.setPadding(new Insets(0));
-            maskerPane.setPadding(new Insets(3, 1, 1, 1));
+            maskerPane.setPadding(new Insets(4, 1, 1, 1));
             this.getChildren().addAll(borderPane, maskerPane);
             StackPane.setAlignment(maskerPane, Pos.CENTER);
             maskerPane.toFront();

@@ -23,6 +23,7 @@ import de.mtplayer.mtp.controller.data.ReplaceData;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.guiTools.PButton;
+import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.property.BooleanProperty;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
@@ -32,7 +33,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.util.Callback;
-import org.controlsfx.control.ToggleSwitch;
 import org.controlsfx.control.table.TableRowExpanderColumn;
 
 import java.util.Collection;
@@ -68,7 +68,7 @@ public class ReplacePane {
 
         vBox.getChildren().add(gridPane);
 
-        final ToggleSwitch tglAscii = new ToggleSwitch("nur ASCII-Zeichen erlauben");
+        final PToggleSwitch tglAscii = new PToggleSwitch("nur ASCII-Zeichen erlauben");
         tglAscii.setMaxWidth(Double.MAX_VALUE);
         tglAscii.selectedProperty().bindBidirectional(propAscii);
 
@@ -76,7 +76,7 @@ public class ReplacePane {
                 HelpText.DOWNLOAD_ONLY_ASCII);
 
 
-        final ToggleSwitch tglReplace = new ToggleSwitch("Ersetzungstabelle");
+        final PToggleSwitch tglReplace = new PToggleSwitch("Ersetzungstabelle");
         tglReplace.setMaxWidth(Double.MAX_VALUE);
         tglReplace.selectedProperty().bindBidirectional(propReplace);
 

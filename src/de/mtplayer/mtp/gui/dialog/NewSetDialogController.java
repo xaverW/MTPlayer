@@ -20,10 +20,10 @@ package de.mtplayer.mtp.gui.dialog;
 import de.mtplayer.mLib.tools.BigButton;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
+import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
-import org.controlsfx.control.ToggleSwitch;
 
 public class NewSetDialogController extends MTDialog {
 
@@ -103,7 +103,7 @@ public class NewSetDialogController extends MTDialog {
         gridPane.add(addButton, 1, 2);
         gridPane.add(replaceButton, 1, 3);
 
-        ToggleSwitch tg = new ToggleSwitch();
+        PToggleSwitch tg = new PToggleSwitch();
         tg.setSelected(askAgain);
         tg.selectedProperty().addListener((observable, oldValue, newValue) -> askAgain = newValue);
 

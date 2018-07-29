@@ -28,6 +28,7 @@ import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.tools.update.SearchProgramUpdate;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
+import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import de.p2tools.p2Lib.tools.log.PLogger;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -37,7 +38,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import org.controlsfx.control.ToggleSwitch;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -121,14 +121,14 @@ public class ConfigPaneController extends AnchorPane {
         TitledPane tpConfig = new TitledPane("Allgemein", gridPane);
         result.add(tpConfig);
 
-        final ToggleSwitch tglSearchAbo = new ToggleSwitch("Abos automatisch suchen");
+        final PToggleSwitch tglSearchAbo = new PToggleSwitch("Abos automatisch suchen");
         tglSearchAbo.setMaxWidth(Double.MAX_VALUE);
         tglSearchAbo.selectedProperty().bindBidirectional(propAbo);
 
         final Button btnHelpAbo = new PButton().helpButton("Abos automatisch suchen",
                 HelpText.SEARCH_ABOS_IMMEDIATELY);
 
-        final ToggleSwitch tglStartDownload = new ToggleSwitch("Downloads aus Abos sofort starten");
+        final PToggleSwitch tglStartDownload = new PToggleSwitch("Downloads aus Abos sofort starten");
         tglStartDownload.setMaxWidth(Double.MAX_VALUE);
         tglStartDownload.selectedProperty().bindBidirectional(propDown);
 
@@ -172,7 +172,7 @@ public class ConfigPaneController extends AnchorPane {
         gridPane.setPadding(new Insets(20, 20, 20, 20));
         vBox.getChildren().add(gridPane);
 
-        final ToggleSwitch tglEnableLog = new ToggleSwitch("Ein Logfile anlegen");
+        final PToggleSwitch tglEnableLog = new PToggleSwitch("Ein Logfile anlegen");
         tglEnableLog.setMaxWidth(Double.MAX_VALUE);
         tglEnableLog.selectedProperty().bindBidirectional(propLog);
         tglEnableLog.selectedProperty().addListener(((observable, oldValue, newValue) -> {
@@ -341,7 +341,7 @@ public class ConfigPaneController extends AnchorPane {
         vBox.getChildren().add(gridPane);
 
         //einmal am Tag Update suchen
-        final ToggleSwitch tglSearch = new ToggleSwitch("einmal am Tag nach einer neuen Programmversion suchen");
+        final PToggleSwitch tglSearch = new PToggleSwitch("einmal am Tag nach einer neuen Programmversion suchen");
         tglSearch.selectedProperty().bindBidirectional(propUpdateSearch);
         gridPane.add(tglSearch, 0, 0);
 

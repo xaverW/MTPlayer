@@ -21,13 +21,13 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
+import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import org.controlsfx.control.ToggleSwitch;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -109,7 +109,7 @@ public class BlackListPaneController extends AnchorPane {
         TitledPane tpConfig = new TitledPane("Blacklist allgemein", gridPane);
         result.add(tpConfig);
 
-        final ToggleSwitch tglAbo = new ToggleSwitch("die Blacklist beim Suchen der Abos berücksichtigen");
+        final PToggleSwitch tglAbo = new PToggleSwitch("die Blacklist beim Suchen der Abos berücksichtigen");
         tglAbo.setMaxWidth(Double.MAX_VALUE);
         tglAbo.selectedProperty().bindBidirectional(propAbo);
 
@@ -120,7 +120,7 @@ public class BlackListPaneController extends AnchorPane {
                 HelpText.BLACKLIST_ABO));
 
 
-        final ToggleSwitch tglFuture = new ToggleSwitch("Filme mit Datum in der Zukunft nicht anzeigen");
+        final PToggleSwitch tglFuture = new PToggleSwitch("Filme mit Datum in der Zukunft nicht anzeigen");
         tglFuture.setMaxWidth(Double.MAX_VALUE);
         tglFuture.selectedProperty().bindBidirectional(propFuture);
 
@@ -131,7 +131,7 @@ public class BlackListPaneController extends AnchorPane {
                 HelpText.BLACKLIST_FUTURE));
 
 
-        final ToggleSwitch tglGeo = new ToggleSwitch("Filme, die per Geoblocking gesperrt sind, nicht anzeigen");
+        final PToggleSwitch tglGeo = new PToggleSwitch("Filme, die per Geoblocking gesperrt sind, nicht anzeigen");
         tglGeo.setMaxWidth(Double.MAX_VALUE);
         tglGeo.selectedProperty().bindBidirectional(propGeo);
 

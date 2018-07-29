@@ -20,6 +20,7 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.guiTools.PButton;
+import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.property.BooleanProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -28,7 +29,6 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
-import org.controlsfx.control.ToggleSwitch;
 
 public class GeoPane {
     RadioButton rbDe = new RadioButton("DE - Deutschland");
@@ -49,7 +49,7 @@ public class GeoPane {
 
         TitledPane tpConfig = new TitledPane("Geogeblockte Filme", gridPane);
 
-        final ToggleSwitch tglGeo = new ToggleSwitch("geblockte Sendungen gelb markieren");
+        final PToggleSwitch tglGeo = new PToggleSwitch("geblockte Sendungen gelb markieren");
         tglGeo.selectedProperty().bindBidirectional(geoProperty);
         gridPane.add(tglGeo, 0, row);
 

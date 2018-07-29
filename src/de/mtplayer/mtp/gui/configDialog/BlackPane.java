@@ -26,6 +26,7 @@ import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.gui.tools.Table;
 import de.mtplayer.mtp.tools.filmListFilter.FilmlistBlackFilterCountHits;
 import de.p2tools.p2Lib.guiTools.PButton;
+import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.property.BooleanProperty;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -35,7 +36,6 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.util.Callback;
-import org.controlsfx.control.ToggleSwitch;
 import org.controlsfx.control.table.TableRowExpanderColumn;
 
 import java.util.Collection;
@@ -191,13 +191,13 @@ public class BlackPane {
         cboChannel.valueProperty().bindBidirectional(param.getValue().channelProperty());
         cboChannel.setItems(ProgData.getInstance().nameLists.getObsAllChannel());
 
-        ToggleSwitch tgChannel = new ToggleSwitch("exakt:");
+        PToggleSwitch tgChannel = new PToggleSwitch("exakt:");
         tgChannel.selectedProperty().bindBidirectional(param.getValue().channelExactProperty());
 
         TextField theme = new TextField();
         theme.textProperty().bindBidirectional(param.getValue().themeProperty());
 
-        ToggleSwitch tgTheme = new ToggleSwitch("exakt:");
+        PToggleSwitch tgTheme = new PToggleSwitch("exakt:");
         tgTheme.selectedProperty().bindBidirectional(param.getValue().themeExactProperty());
 
         TextField title = new TextField();

@@ -20,6 +20,7 @@ package de.mtplayer.mtp.gui.dialogStart;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
+import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.property.BooleanProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -29,7 +30,6 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
-import org.controlsfx.control.ToggleSwitch;
 
 public class UpdatePane {
 
@@ -44,7 +44,7 @@ public class UpdatePane {
         TitledPane tpConfig = new TitledPane("Erster Programmstart", gridPane);
 
         //einmal am Tag Update suchen
-        final ToggleSwitch tglSearch = new ToggleSwitch("einmal am Tag nach einer neuen Programmversion suchen");
+        final PToggleSwitch tglSearch = new PToggleSwitch("einmal am Tag nach einer neuen Programmversion suchen");
         tglSearch.selectedProperty().bindBidirectional(updateProp);
         GridPane.setFillWidth(tglSearch, false);
         gridPane.add(tglSearch, 0, 0);

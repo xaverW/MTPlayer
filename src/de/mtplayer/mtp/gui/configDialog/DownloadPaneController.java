@@ -20,6 +20,7 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.guiTools.PButton;
+import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.property.BooleanProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -27,7 +28,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
-import org.controlsfx.control.ToggleSwitch;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -103,7 +103,7 @@ public class DownloadPaneController extends AnchorPane {
         result.add(tpConfig);
 
 
-        final ToggleSwitch tglFinished = new ToggleSwitch("Benachrichtigung wenn abgeschlossen");
+        final PToggleSwitch tglFinished = new PToggleSwitch("Benachrichtigung wenn abgeschlossen");
         tglFinished.setMaxWidth(Double.MAX_VALUE);
         tglFinished.selectedProperty().bindBidirectional(propNotify);
 
@@ -111,7 +111,7 @@ public class DownloadPaneController extends AnchorPane {
                 HelpText.DOWNLOAD_FINISHED);
 
 
-        final ToggleSwitch tglError = new ToggleSwitch("bei Downloadfehler, Fehlermeldung anzeigen");
+        final PToggleSwitch tglError = new PToggleSwitch("bei Downloadfehler, Fehlermeldung anzeigen");
         tglError.setMaxWidth(Double.MAX_VALUE);
         tglError.selectedProperty().bindBidirectional(propErr);
 
@@ -119,7 +119,7 @@ public class DownloadPaneController extends AnchorPane {
                 HelpText.DOWNLOAD_ERROR);
 
 
-        final ToggleSwitch tglOne = new ToggleSwitch("nur ein Download pro Downloadserver");
+        final PToggleSwitch tglOne = new PToggleSwitch("nur ein Download pro Downloadserver");
         tglOne.setMaxWidth(Double.MAX_VALUE);
         tglOne.selectedProperty().bindBidirectional(propOne);
 
@@ -127,7 +127,7 @@ public class DownloadPaneController extends AnchorPane {
                 HelpText.DOWNLOAD_ONE_SERVER);
 
 
-        final ToggleSwitch tglBeep = new ToggleSwitch("nach jedem Download einen \"Beep\" ausgeben");
+        final PToggleSwitch tglBeep = new PToggleSwitch("nach jedem Download einen \"Beep\" ausgeben");
         tglBeep.setMaxWidth(Double.MAX_VALUE);
         tglBeep.selectedProperty().bindBidirectional(propBeep);
 

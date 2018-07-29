@@ -23,6 +23,7 @@ import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
 import de.p2tools.p2Lib.guiTools.PButton;
+import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import de.p2tools.p2Lib.tools.log.Duration;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
@@ -35,7 +36,6 @@ import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 import org.controlsfx.control.CheckComboBox;
 import org.controlsfx.control.RangeSlider;
-import org.controlsfx.control.ToggleSwitch;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -51,7 +51,7 @@ public class FilmFilterController extends FilterController {
     private final Label lblDur = new Label();
 
     private final RangeSlider slFilmTime = new RangeSlider();
-    private final ToggleSwitch tglFilmTime = new ToggleSwitch("Zeitraum \"ausschließen\"");
+    private final PToggleSwitch tglFilmTime = new PToggleSwitch("Zeitraum \"ausschließen\"");
     private final Label lblFilmTime = new Label();
 
     CheckComboBox<String> checkOnly = new CheckComboBox<>();
@@ -66,7 +66,7 @@ public class FilmFilterController extends FilterController {
     private final TextField txtSomewhere = new TextField();
     private final TextField txtUrl = new TextField();
 
-    private final ToggleSwitch tglBlacklist = new ToggleSwitch("Blacklist einschalten:");
+    private final PToggleSwitch tglBlacklist = new PToggleSwitch("Blacklist einschalten:");
     private final Button btnClearFilter = new Button("Filter löschen");
     private final Button btnEditFilter = new Button("");
     private final ComboBox<SelectedFilter> cbFilter = new ComboBox<>();
