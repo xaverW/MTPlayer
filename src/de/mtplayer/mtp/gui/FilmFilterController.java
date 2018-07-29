@@ -43,6 +43,8 @@ import java.util.Optional;
 
 public class FilmFilterController extends FilterController {
 
+    final String pattern = "HH:mm";
+    final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
 
     private final Slider slDays = new Slider();
     private final Label lblDays = new Label();
@@ -91,14 +93,17 @@ public class FilmFilterController extends FilterController {
         initButton();
         filterProfiles();
 
+        // Sender, Thema, ..
         initStringFilter();
 
+        // Slider
         initDaysFilter();
         initDurFilter();
         initFilmTimeFilter();
-
         setSlider();
+        setLabelSlider();
 
+        // CheckOnOff
         initCheckFilter();
 
         initRest();
@@ -267,23 +272,29 @@ public class FilmFilterController extends FilterController {
         sp.setMinHeight(20);
         vBox.getChildren().add(sp);
 
+        vBox.visibleProperty().bind(progData.storedFilter.getSelectedFilter().channelVisProperty()
+                .or(progData.storedFilter.getSelectedFilter().themeVisProperty()
+                        .or(progData.storedFilter.getSelectedFilter().themeTitleVisProperty()
+                                .or(progData.storedFilter.getSelectedFilter().titleVisProperty()
+                                        .or(progData.storedFilter.getSelectedFilter().somewhereVisProperty()
+                                                .or(progData.storedFilter.getSelectedFilter().urlVisProperty())
+                                        )
+                                )
+                        )
+                ));
+        vBox.managedProperty().bind(vBox.visibleProperty());
+
         vbFilter.getChildren().add(vBox);
     }
 
-    private void addTxt(String txt, Control control, VBox vBox, BooleanProperty booleanProperty) {
-        VBox v = new VBox();
+    private void addTxt(String txt, Control control, VBox vBoxComplete, BooleanProperty booleanProperty) {
+        VBox vBox = new VBox();
         Label label = new Label(txt);
-        v.getChildren().addAll(label, control);
-        vBox.getChildren().add(v);
+        vBox.getChildren().addAll(label, control);
+        vBoxComplete.getChildren().add(vBox);
 
-        v.visibleProperty().bind(booleanProperty);
-        v.managedProperty().bind(booleanProperty);
-
-        control.visibleProperty().bind(booleanProperty);
-        control.managedProperty().bind(booleanProperty);
-
-        label.visibleProperty().bind(booleanProperty);
-        label.managedProperty().bind(booleanProperty);
+        vBox.visibleProperty().bind(booleanProperty);
+        vBox.managedProperty().bind(booleanProperty);
     }
 
     private void initDaysFilter() {
@@ -403,43 +414,23 @@ public class FilmFilterController extends FilterController {
         // Tage
         VBox vBox = new VBox(5);
         vBox.getChildren().addAll(lblDays, slDays);
+        vBox.visibleProperty().bind(progData.storedFilter.getSelectedFilter().daysVisProperty());
+        vBox.managedProperty().bind(progData.storedFilter.getSelectedFilter().daysVisProperty());
         vbFilter.getChildren().addAll(vBox);
-
-        slDays.visibleProperty().bind(progData.storedFilter.getSelectedFilter().daysVisProperty());
-        slDays.managedProperty().bind(progData.storedFilter.getSelectedFilter().daysVisProperty());
-
-        lblDays.visibleProperty().bind(progData.storedFilter.getSelectedFilter().daysVisProperty());
-        lblDays.managedProperty().bind(progData.storedFilter.getSelectedFilter().daysVisProperty());
-
 
         // MinMax Dauer
         vBox = new VBox(5);
         vBox.getChildren().addAll(lblDur, slDur);
+        vBox.visibleProperty().bind(progData.storedFilter.getSelectedFilter().minMaxDurVisProperty());
+        vBox.managedProperty().bind(progData.storedFilter.getSelectedFilter().minMaxDurVisProperty());
         vbFilter.getChildren().addAll(vBox);
-
-        slDur.visibleProperty().bind(progData.storedFilter.getSelectedFilter().minMaxDurVisProperty());
-        slDur.managedProperty().bind(progData.storedFilter.getSelectedFilter().minMaxDurVisProperty());
-
-        lblDur.visibleProperty().bind(progData.storedFilter.getSelectedFilter().minMaxDurVisProperty());
-        lblDur.managedProperty().bind(progData.storedFilter.getSelectedFilter().minMaxDurVisProperty());
-
 
         // MinMax Uhrzeit
         vBox = new VBox(5);
         vBox.getChildren().addAll(lblFilmTime, slFilmTime, tglFilmTime);
+        vBox.visibleProperty().bind(progData.storedFilter.getSelectedFilter().minMaxTimeVisProperty());
+        vBox.managedProperty().bind(progData.storedFilter.getSelectedFilter().minMaxTimeVisProperty());
         vbFilter.getChildren().addAll(vBox);
-
-        slFilmTime.visibleProperty().bind(progData.storedFilter.getSelectedFilter().minMaxTimeVisProperty());
-        slFilmTime.managedProperty().bind(progData.storedFilter.getSelectedFilter().minMaxTimeVisProperty());
-
-        lblFilmTime.visibleProperty().bind(progData.storedFilter.getSelectedFilter().minMaxTimeVisProperty());
-        lblFilmTime.managedProperty().bind(progData.storedFilter.getSelectedFilter().minMaxTimeVisProperty());
-
-        tglFilmTime.visibleProperty().bind(progData.storedFilter.getSelectedFilter().minMaxTimeVisProperty());
-        tglFilmTime.managedProperty().bind(progData.storedFilter.getSelectedFilter().minMaxTimeVisProperty());
-
-
-        setLabelSlider();
     }
 
     private void initCheckFilter() {
@@ -470,26 +461,17 @@ public class FilmFilterController extends FilterController {
         checkOnly.setMaxWidth(Double.MAX_VALUE);
         checkNot.setMaxWidth(Double.MAX_VALUE);
 
-        VBox v = new VBox();
-        v.getChildren().addAll(lblOnly, checkOnly);
-        vbFilter.getChildren().add(v);
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(lblOnly, checkOnly);
+        vBox.visibleProperty().bind(progData.storedFilter.getSelectedFilter().onlyVisProperty());
+        vBox.managedProperty().bind(progData.storedFilter.getSelectedFilter().onlyVisProperty());
+        vbFilter.getChildren().add(vBox);
 
-        v = new VBox();
-        v.getChildren().addAll(lblNot, checkNot);
-        vbFilter.getChildren().add(v);
-
-
-        lblOnly.visibleProperty().bind(progData.storedFilter.getSelectedFilter().onlyVisProperty());
-        checkOnly.visibleProperty().bind(progData.storedFilter.getSelectedFilter().onlyVisProperty());
-
-        lblOnly.managedProperty().bind(progData.storedFilter.getSelectedFilter().onlyVisProperty());
-        checkOnly.managedProperty().bind(progData.storedFilter.getSelectedFilter().onlyVisProperty());
-
-        lblNot.visibleProperty().bind(progData.storedFilter.getSelectedFilter().notVisProperty());
-        checkNot.visibleProperty().bind(progData.storedFilter.getSelectedFilter().notVisProperty());
-
-        lblNot.managedProperty().bind(progData.storedFilter.getSelectedFilter().notVisProperty());
-        checkNot.managedProperty().bind(progData.storedFilter.getSelectedFilter().notVisProperty());
+        vBox = new VBox();
+        vBox.getChildren().addAll(lblNot, checkNot);
+        vBox.visibleProperty().bind(progData.storedFilter.getSelectedFilter().notVisProperty());
+        vBox.managedProperty().bind(progData.storedFilter.getSelectedFilter().notVisProperty());
+        vbFilter.getChildren().add(vBox);
     }
 
     private void initRest() {
@@ -537,9 +519,6 @@ public class FilmFilterController extends FilterController {
         vbFilter.getChildren().add(vb);
     }
 
-    final String pattern = "HH:mm";
-    final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
-
     private void setLabelSlider() {
         String txtAll;
 
@@ -554,7 +533,6 @@ public class FilmFilterController extends FilterController {
         } else {
             lblDays.setText("Zeitraum: " + tNr + (i == 1 ? " Tag" : " Tage"));
         }
-
 
         // Filmlänge
         int min = (int) slDur.getLowValue();
@@ -587,10 +565,6 @@ public class FilmFilterController extends FilterController {
             lblFilmTime.setText("Sendezeit: von " + timeL + " bis " + timeH);
         }
     }
-
-    /*
-     * VBox mit den FilterStrings
-     */
 
     private void loadFilter() {
         progData.storedFilter.loadStoredFilter(cbFilter.getSelectionModel().getSelectedItem());
