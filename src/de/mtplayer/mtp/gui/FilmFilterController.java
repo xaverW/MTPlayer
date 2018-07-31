@@ -23,6 +23,7 @@ import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
 import de.p2tools.p2Lib.guiTools.PButton;
+import de.p2tools.p2Lib.guiTools.pCheckComboBox.PCheckComboBox;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import de.p2tools.p2Lib.tools.log.Duration;
 import javafx.beans.binding.Bindings;
@@ -34,7 +35,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
-import org.controlsfx.control.CheckComboBox;
 import org.controlsfx.control.RangeSlider;
 
 import java.time.LocalTime;
@@ -56,8 +56,8 @@ public class FilmFilterController extends FilterController {
     private final PToggleSwitch tglFilmTime = new PToggleSwitch("Zeitraum \"ausschließen\"");
     private final Label lblFilmTime = new Label();
 
-    CheckComboBox<String> checkOnly = new CheckComboBox<>();
-    CheckComboBox<String> checkNot = new CheckComboBox<>();
+    PCheckComboBox checkOnly = new PCheckComboBox();
+    PCheckComboBox checkNot = new PCheckComboBox();
     Label lblOnly = new Label("nur anzeigen");
     Label lblNot = new Label("nicht anzeigen");
 
@@ -434,32 +434,17 @@ public class FilmFilterController extends FilterController {
     }
 
     private void initCheckFilter() {
-        checkOnly.getItems().addAll(ONLY_HD, ONLY_UT, ONLY_NEW, ONLY_LIVE, ONLY_AKT_HISTORY);
-        checkNot.getItems().addAll(NOT_ABO, NOT_HISTORY, NOT_DOUBLE, NOT_GEO, NOT_FUTURE);
+        checkOnly.addItem(ONLY_HD, progData.storedFilter.getSelectedFilter().onlyHdProperty());
+        checkOnly.addItem(ONLY_UT, progData.storedFilter.getSelectedFilter().onlyUtProperty());
+        checkOnly.addItem(ONLY_NEW, progData.storedFilter.getSelectedFilter().onlyNewProperty());
+        checkOnly.addItem(ONLY_LIVE, progData.storedFilter.getSelectedFilter().onlyLiveProperty());
+        checkOnly.addItem(ONLY_AKT_HISTORY, progData.storedFilter.getSelectedFilter().onlyAktHistoryProperty());
 
-        checkOnly.getItemBooleanProperty(ONLY_HD)
-                .bindBidirectional(progData.storedFilter.getSelectedFilter().onlyHdProperty());
-        checkOnly.getItemBooleanProperty(ONLY_UT)
-                .bindBidirectional(progData.storedFilter.getSelectedFilter().onlyUtProperty());
-        checkOnly.getItemBooleanProperty(ONLY_NEW)
-                .bindBidirectional(progData.storedFilter.getSelectedFilter().onlyNewProperty());
-        checkOnly.getItemBooleanProperty(ONLY_LIVE)
-                .bindBidirectional(progData.storedFilter.getSelectedFilter().onlyLiveProperty());
-        checkOnly.getItemBooleanProperty(ONLY_AKT_HISTORY)
-                .bindBidirectional(progData.storedFilter.getSelectedFilter().onlyAktHistoryProperty());
-        checkNot.getItemBooleanProperty(NOT_ABO)
-                .bindBidirectional(progData.storedFilter.getSelectedFilter().notAboProperty());
-        checkNot.getItemBooleanProperty(NOT_HISTORY)
-                .bindBidirectional(progData.storedFilter.getSelectedFilter().notHistoryProperty());
-        checkNot.getItemBooleanProperty(NOT_DOUBLE)
-                .bindBidirectional(progData.storedFilter.getSelectedFilter().notDoubleProperty());
-        checkNot.getItemBooleanProperty(NOT_GEO)
-                .bindBidirectional(progData.storedFilter.getSelectedFilter().notGeoProperty());
-        checkNot.getItemBooleanProperty(NOT_FUTURE)
-                .bindBidirectional(progData.storedFilter.getSelectedFilter().notFutureProperty());
-
-        checkOnly.setMaxWidth(Double.MAX_VALUE);
-        checkNot.setMaxWidth(Double.MAX_VALUE);
+        checkNot.addItem(NOT_ABO, progData.storedFilter.getSelectedFilter().notAboProperty());
+        checkNot.addItem(NOT_HISTORY, progData.storedFilter.getSelectedFilter().notHistoryProperty());
+        checkNot.addItem(NOT_DOUBLE, progData.storedFilter.getSelectedFilter().notDoubleProperty());
+        checkNot.addItem(NOT_GEO, progData.storedFilter.getSelectedFilter().notGeoProperty());
+        checkNot.addItem(NOT_FUTURE, progData.storedFilter.getSelectedFilter().notFutureProperty());
 
         VBox vBox = new VBox();
         vBox.getChildren().addAll(lblOnly, checkOnly);

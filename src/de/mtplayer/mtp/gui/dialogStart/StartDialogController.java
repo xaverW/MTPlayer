@@ -21,12 +21,11 @@ import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.configDialog.GeoPane;
 import de.mtplayer.mtp.gui.dialog.MTDialog;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TitledPane;
-import javafx.scene.control.TreeItem;
 import javafx.scene.layout.*;
-import org.controlsfx.control.BreadCrumbBar;
 
 
 public class StartDialogController extends MTDialog {
@@ -35,10 +34,14 @@ public class StartDialogController extends MTDialog {
     private VBox vBoxDialog = new VBox();
     private VBox vBoxCont = new VBox();
 
-    private BreadCrumbBar<String> bread;
+    private TilePane tilePane = new TilePane();
     private StackPane stackpane;
     private Button btnOk;
     private Button btnPrev, btnNext;
+    private Button btnStart1 = new Button("Start 1"), btnStart2 = new Button("Start 2"),
+            btnUpdate = new Button("Update"), btnGeo = new Button("Geo"),
+            btnDown = new Button("Zielverzeichnis"),
+            btnPath = new Button("Programmpfade");
 
 
     private static final String STR_START_1 = "Start 1";
@@ -47,16 +50,8 @@ public class StartDialogController extends MTDialog {
     private static final String STR_GEO = "Geo";
     private static final String STR_DOWN = "Zielverzeichnis";
     private static final String STR_PATH = "Programmpfade";
-    private static final String STR_QUIT = "Quitt";
 
-    private enum State {START_1, START_2, UPDATE, GEO, DOWN, PATH, QUIT}
-
-    private TreeItem<String> tiStart_1 = new TreeItem<>(STR_START_1);
-    private TreeItem<String> tiStart_2 = new TreeItem<>(STR_START_2);
-    private TreeItem<String> tiUpdate = new TreeItem<>(STR_UPDATE);
-    private TreeItem<String> tiGeo = new TreeItem<>(STR_GEO);
-    private TreeItem<String> tiDown = new TreeItem<>(STR_DOWN);
-    private TreeItem<String> tiPath = new TreeItem<>(STR_PATH);
+    private enum State {START_1, START_2, UPDATE, GEO, DOWN, PATH}
 
     private ScrollPane startPane_1;
     private ScrollPane startPane_2;
@@ -78,98 +73,60 @@ public class StartDialogController extends MTDialog {
     @Override
     public void make() {
         initPanel();
-        setState();
+        addButton();
+        initStack();
+        initButton();
+        selectActPane();
     }
 
     public void close() {
         super.close();
     }
 
-    private void setState() {
-        switch (aktState) {
-            case START_1:
-                btnPrev.setDisable(true);
-                btnNext.setDisable(false);
-                bread.setSelectedCrumb(tiStart_1);
-                startPane_1.toFront();
-                break;
-            case START_2:
-                btnPrev.setDisable(false);
-                btnNext.setDisable(false);
-                bread.setSelectedCrumb(tiStart_2);
-                startPane_2.toFront();
-                break;
-            case UPDATE:
-                btnPrev.setDisable(false);
-                btnNext.setDisable(false);
-                bread.setSelectedCrumb(tiUpdate);
-                updatePane.toFront();
-                break;
-            case GEO:
-                btnPrev.setDisable(false);
-                btnNext.setDisable(false);
-                bread.setSelectedCrumb(tiGeo);
-                geoPane.toFront();
-                break;
-            case DOWN:
-                btnPrev.setDisable(false);
-                btnNext.setDisable(false);
-                bread.setSelectedCrumb(tiDown);
-                downPane.toFront();
-                break;
-            case PATH:
-                btnPrev.setDisable(false);
-                btnNext.setDisable(true);
-                btnOk.setDisable(false);
-                bread.setSelectedCrumb(tiPath);
-                pathPane.toFront();
-                break;
-            case QUIT:
-            default:
-                btnOk.setDisable(false);
+    private void initPanel() {
+        try {
+            vBoxDialog.setPadding(new Insets(20));
+            vBoxDialog.setSpacing(20);
 
+            vBoxCont.getStyleClass().add("dialog-border");
+            vBoxCont.setSpacing(10);
+            VBox.setVgrow(vBoxCont, Priority.ALWAYS);
+
+            rootPane.getChildren().addAll(vBoxDialog);
+            AnchorPane.setLeftAnchor(vBoxDialog, 0.0);
+            AnchorPane.setBottomAnchor(vBoxDialog, 0.0);
+            AnchorPane.setRightAnchor(vBoxDialog, 0.0);
+            AnchorPane.setTopAnchor(vBoxDialog, 0.0);
+
+            vBoxDialog.getChildren().add(vBoxCont);
+
+
+        } catch (final Exception ex) {
+            System.out.println(ex.getMessage());
         }
     }
 
-    private void initBread() {
-        HBox hBox = new HBox();
-        bread = new BreadCrumbBar<>();
-        hBox.getChildren().addAll(bread);
-        vBoxDialog.getChildren().add(hBox);
+    private void addButton() {
+        vBoxCont.getChildren().add(tilePane);
+        tilePane.getChildren().addAll(btnStart1, btnStart2, btnUpdate, btnGeo, btnDown, btnPath);
+        tilePane.setAlignment(Pos.CENTER);
+        tilePane.setPadding(new Insets(10));
+        tilePane.setHgap(10);
+        tilePane.setVgap(10);
+        setButton(btnStart1, State.START_1);
+        setButton(btnStart2, State.START_2);
+        setButton(btnUpdate, State.UPDATE);
+        setButton(btnGeo, State.GEO);
+        setButton(btnDown, State.DOWN);
+        setButton(btnPath, State.PATH);
+    }
 
-        tiStart_1.getChildren().add(tiStart_2);
-        tiStart_2.getChildren().add(tiUpdate);
-        tiUpdate.getChildren().add(tiGeo);
-        tiGeo.getChildren().add(tiDown);
-        tiDown.getChildren().add(tiPath);
-
-        bread.setSelectedCrumb(tiStart_1);
-        bread.setOnCrumbAction(bae -> {
-            switch (bae.getSelectedCrumb().getValue()) {
-                case STR_START_1:
-                    aktState = State.START_1;
-                    break;
-                case STR_START_2:
-                    aktState = State.START_2;
-                    break;
-                case STR_UPDATE:
-                    aktState = State.UPDATE;
-                    break;
-                case STR_GEO:
-                    aktState = State.GEO;
-                    break;
-                case STR_DOWN:
-                    aktState = State.DOWN;
-                    break;
-                case STR_PATH:
-                    aktState = State.PATH;
-                    break;
-                case STR_QUIT:
-                default:
-                    aktState = State.QUIT;
-                    break;
-            }
-            setState();
+    private void setButton(Button btn, State state) {
+        btn.getStyleClass().add("btnStartDialog");
+        btn.setMaxWidth(Double.MAX_VALUE);
+        btn.setOnAction(a -> {
+            aktState = state;
+            selectActPane();
         });
     }
 
@@ -274,7 +231,7 @@ public class StartDialogController extends MTDialog {
                 case PATH:
                     break;
             }
-            setState();
+            selectActPane();
         });
         btnPrev = new Button("");
         btnPrev.setGraphic(new Icons().ICON_BUTTON_PREV);
@@ -298,8 +255,12 @@ public class StartDialogController extends MTDialog {
                     aktState = State.DOWN;
                     break;
             }
-            setState();
+            selectActPane();
         });
+
+        btnOk.getStyleClass().add("btnStartDialog");
+        btnNext.getStyleClass().add("btnStartDialog");
+        btnPrev.getStyleClass().add("btnStartDialog");
 
         HBox hBox1 = new HBox();
         hBox1.setSpacing(10);
@@ -312,33 +273,41 @@ public class StartDialogController extends MTDialog {
         vBoxDialog.getChildren().add(hBox2);
     }
 
-    private void initPanel() {
-        try {
-            vBoxDialog.setPadding(new Insets(20));
-            vBoxDialog.setSpacing(20);
-
-            vBoxCont.getStyleClass().add("dialog-border");
-            vBoxCont.setSpacing(10);
-            VBox.setVgrow(vBoxCont, Priority.ALWAYS);
-
-            rootPane.getChildren().addAll(vBoxDialog);
-            AnchorPane.setLeftAnchor(vBoxDialog, 0.0);
-            AnchorPane.setBottomAnchor(vBoxDialog, 0.0);
-            AnchorPane.setRightAnchor(vBoxDialog, 0.0);
-            AnchorPane.setTopAnchor(vBoxDialog, 0.0);
-
-            //Bread
-            initBread();
-
-            vBoxDialog.getChildren().add(vBoxCont);
-
-            //Stackpane
-            initStack();
-
-            //Button OK
-            initButton();
-        } catch (final Exception ex) {
-            System.out.println(ex.getMessage());
+    private void selectActPane() {
+        switch (aktState) {
+            case START_1:
+                btnPrev.setDisable(true);
+                btnNext.setDisable(false);
+                startPane_1.toFront();
+                break;
+            case START_2:
+                btnPrev.setDisable(false);
+                btnNext.setDisable(false);
+                startPane_2.toFront();
+                break;
+            case UPDATE:
+                btnPrev.setDisable(false);
+                btnNext.setDisable(false);
+                updatePane.toFront();
+                break;
+            case GEO:
+                btnPrev.setDisable(false);
+                btnNext.setDisable(false);
+                geoPane.toFront();
+                break;
+            case DOWN:
+                btnPrev.setDisable(false);
+                btnNext.setDisable(false);
+                downPane.toFront();
+                break;
+            case PATH:
+                btnPrev.setDisable(false);
+                btnNext.setDisable(true);
+                btnOk.setDisable(false);
+                pathPane.toFront();
+                break;
+            default:
+                btnOk.setDisable(false);
         }
     }
 

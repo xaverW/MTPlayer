@@ -20,18 +20,18 @@ package de.mtplayer.mtp.gui.dialog;
 import de.mtplayer.mLib.tools.BigButton;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
+import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
-import org.controlsfx.control.MaskerPane;
 
 public class QuitDialogController extends MTDialog {
 
     final ProgData progData;
     final StackPane stackPane;
-    final MaskerPane maskerPane;
+    final PMaskerPane maskerPane;
     final WaitTask waitTask;
     final VBox vbox;
 
@@ -44,7 +44,7 @@ public class QuitDialogController extends MTDialog {
         this.progData = progData;
 
         stackPane = new StackPane();
-        maskerPane = new MaskerPane();
+        maskerPane = new PMaskerPane();
         waitTask = new WaitTask();
         vbox = new VBox();
 
