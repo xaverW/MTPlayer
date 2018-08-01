@@ -364,5 +364,5 @@ public class HelpText {
             "Neue anlegen, aktualisieren oder auch wieder löschen." +
             "";
     public static final String INTERN_MEDIA_COLLECTION = "Die hier angegebenen Ordner werden bei jedem Programmstart " +
-            "nach Medien abgesucht. Diese Ordner sind also immer aktuell mit dem Programm abgeglichen.";
+            "nach Medien abgesucht. Diese Ordner werden also immer aktuell mit dem Programm abgeglichen.";
 }

@@ -40,8 +40,8 @@ import javafx.scene.layout.*;
 import java.util.Collection;
 
 public class BlackPane {
-    private final TableView<BlackData> tableView = new TableView<>();
 
+    private final TableView<BlackData> tableView = new TableView<>();
     private final GridPane gridPane = new GridPane();
     private final ComboBox<String> cboChannel = new ComboBox<>();
     private final PToggleSwitch tgChannel = new PToggleSwitch("exakt:");
@@ -190,7 +190,6 @@ public class BlackPane {
 
     private void addConfigs(VBox vBox) {
         gridPane.setStyle("-fx-background-color: #E0E0E0;");
-
         gridPane.setHgap(10);
         gridPane.setVgap(10);
         gridPane.setPadding(new Insets(20));

@@ -134,7 +134,7 @@ public class MediaPathList extends SimpleListProperty<MediaPathData> {
     public boolean containInternal(MediaPathData dm) {
         MediaPathData md = this.stream()
                 .filter(m -> !m.isExternal())
-                .filter(m -> m.getCollectionName().equals(dm.getCollectionName()))
+                .filter(m -> m.getPath().equals(dm.getPath()))
                 .findAny().orElse(null);
         if (md != null) {
             return true;

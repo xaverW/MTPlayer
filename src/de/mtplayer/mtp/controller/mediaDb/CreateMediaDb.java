@@ -78,6 +78,7 @@ public class CreateMediaDb implements Runnable {
         mediaList.setPropSearch(true);
         Listener.notify(Listener.EREIGNIS_MEDIA_DB_START, MediaList.class.getSimpleName());
 
+        //todo mediaPathList erst mal putzen: gleiche, leere, ..
         try {
 
             if (path.isEmpty()) {
