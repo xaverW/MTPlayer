@@ -245,6 +245,7 @@ public class FilmGuiController extends AnchorPane {
 
     private void initTable() {
         tableView.setTableMenuButtonVisible(true);
+
         tableView.setEditable(false);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);

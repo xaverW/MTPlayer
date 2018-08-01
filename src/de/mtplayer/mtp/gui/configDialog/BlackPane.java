@@ -27,6 +27,7 @@ import de.mtplayer.mtp.gui.tools.Table;
 import de.mtplayer.mtp.tools.filmListFilter.FilmlistBlackFilterCountHits;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -36,12 +37,20 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.util.Callback;
-import org.controlsfx.control.table.TableRowExpanderColumn;
 
 import java.util.Collection;
 
 public class BlackPane {
-    TableView<BlackData> tableView = new TableView<>();
+    private final TableView<BlackData> tableView = new TableView<>();
+
+    private final GridPane gridPane = new GridPane();
+    private final ComboBox<String> cboChannel = new ComboBox<>();
+    private final PToggleSwitch tgChannel = new PToggleSwitch("exakt:");
+    private final TextField theme = new TextField();
+    private final PToggleSwitch tgTheme = new PToggleSwitch("exakt:");
+    private final TextField title = new TextField();
+    private final TextField themeTitle = new TextField();
+    private BlackData blackData = null;
 
     BooleanProperty propWhite = ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST.getBooleanProperty();
 
@@ -52,6 +61,7 @@ public class BlackPane {
 
         makeConfig(vBox);
         initTable(vBox);
+        addConfigs(vBox);
 
         TitledPane tpBlack = new TitledPane("Blacklist", vBox);
         result.add(tpBlack);
@@ -129,10 +139,12 @@ public class BlackPane {
 
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
-        tableView.getColumns().addAll(expander, nrColumn, channelColumn, channelExactColumn, themeColumn, themeExactColumn,
+        tableView.getColumns().addAll(nrColumn, channelColumn, channelExactColumn, themeColumn, themeExactColumn,
                 titleColumn, themeTitleColumn, hitsColumn);
         tableView.setItems(ProgData.getInstance().blackList);
 
+        tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
+                Platform.runLater(this::setActBlackData));
 
         Button btnDel = new Button("");
         btnDel.setGraphic(new Icons().ICON_BUTTON_REMOVE);
@@ -152,11 +164,15 @@ public class BlackPane {
         btnNew.setOnAction(event -> {
             BlackData blackData = new BlackData();
             ProgData.getInstance().blackList.add(blackData);
+            tableView.getSelectionModel().clearSelection();
             tableView.getSelectionModel().select(blackData);
             tableView.scrollTo(blackData);
         });
 
         Button btnCountHits = new Button("Treffer zählen");
+        btnCountHits.setTooltip(new Tooltip("Damit kann man die Filmliste nach Treffern durchsuchen.\n" +
+                "Für jeden Eintrag in der Blacklist wird gezählt,\n" +
+                "wieviele Filme damit geblockt werden."));
         btnCountHits.setOnAction(a -> {
             FilmlistBlackFilterCountHits.countHits();
             Table.refresh_table(tableView);
@@ -176,8 +192,8 @@ public class BlackPane {
 
     }
 
-    TableRowExpanderColumn<BlackData> expander = new TableRowExpanderColumn<>(param -> {
-        final GridPane gridPane = new GridPane();
+    private void addConfigs(VBox vBox) {
+
         gridPane.setStyle("-fx-background-color: #E0E0E0;");
 
         gridPane.setHgap(10);
@@ -186,25 +202,8 @@ public class BlackPane {
         gridPane.setMinWidth(Control.USE_PREF_SIZE);
         gridPane.setMaxWidth(Double.MAX_VALUE);
 
-        ComboBox<String> cboChannel = new ComboBox<>();
         cboChannel.setEditable(true);
-        cboChannel.valueProperty().bindBidirectional(param.getValue().channelProperty());
         cboChannel.setItems(ProgData.getInstance().nameLists.getObsAllChannel());
-
-        PToggleSwitch tgChannel = new PToggleSwitch("exakt:");
-        tgChannel.selectedProperty().bindBidirectional(param.getValue().channelExactProperty());
-
-        TextField theme = new TextField();
-        theme.textProperty().bindBidirectional(param.getValue().themeProperty());
-
-        PToggleSwitch tgTheme = new PToggleSwitch("exakt:");
-        tgTheme.selectedProperty().bindBidirectional(param.getValue().themeExactProperty());
-
-        TextField title = new TextField();
-        title.textProperty().bindBidirectional(param.getValue().titleProperty());
-
-        TextField themeTitle = new TextField();
-        themeTitle.textProperty().bindBidirectional(param.getValue().themeTitleProperty());
 
         gridPane.add(new Label("Sender:"), 0, 0);
         gridPane.add(cboChannel, 1, 0);
@@ -219,8 +218,37 @@ public class BlackPane {
         gridPane.add(new Label("Thema/Titel:"), 0, 3);
         gridPane.add(themeTitle, 1, 3);
 
-        return gridPane;
-    });
+        vBox.getChildren().add(gridPane);
+        gridPane.setDisable(true);
+    }
+
+    private void setActBlackData() {
+        BlackData blackDataAct = tableView.getSelectionModel().getSelectedItem();
+        if (blackDataAct == blackData) {
+            return;
+        }
+
+        if (blackData != null) {
+            cboChannel.valueProperty().unbindBidirectional(blackData.channelProperty());
+            tgChannel.selectedProperty().unbindBidirectional(blackData.channelExactProperty());
+            theme.textProperty().unbindBidirectional(blackData.themeProperty());
+            tgTheme.selectedProperty().unbindBidirectional(blackData.themeExactProperty());
+            title.textProperty().unbindBidirectional(blackData.titleProperty());
+            themeTitle.textProperty().unbindBidirectional(blackData.themeTitleProperty());
+        }
+
+        blackData = blackDataAct;
+        gridPane.setDisable(blackData == null);
+        if (blackData != null) {
+            cboChannel.valueProperty().bindBidirectional(blackData.channelProperty());
+            tgChannel.selectedProperty().bindBidirectional(blackData.channelExactProperty());
+            theme.textProperty().bindBidirectional(blackData.themeProperty());
+            tgTheme.selectedProperty().bindBidirectional(blackData.themeExactProperty());
+            title.textProperty().bindBidirectional(blackData.titleProperty());
+            themeTitle.textProperty().bindBidirectional(blackData.themeTitleProperty());
+        }
+
+    }
 
     private Callback<TableColumn<BlackData, String>, TableCell<BlackData, String>> cellFactoryDel
             = (final TableColumn<BlackData, String> param) -> {

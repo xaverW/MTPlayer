@@ -79,8 +79,8 @@ public class TableFilm {
         utColumn.setCellValueFactory(new PropertyValueFactory<>("ut"));
         utColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
 
-        final TableColumn<Film, String> descriptionColumn = new TableColumn<>("Beschreibung");
-        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+//        final TableColumn<Film, String> descriptionColumn = new TableColumn<>("Beschreibung");
+//        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
 
         final TableColumn<Film, String> geoColumn = new TableColumn<>("Geo");
         geoColumn.setCellValueFactory(new PropertyValueFactory<>("geo"));
@@ -117,7 +117,9 @@ public class TableFilm {
                 senderColumn, themeColumn, titleColumn,
                 startColumn,
                 datumColumn, timeColumn, durationColumn, sizeColumn,
-                hdColumn, utColumn, descriptionColumn, geoColumn,
+                hdColumn, utColumn,
+//                descriptionColumn,
+                geoColumn,
                 urlColumn, aboColumn,
 //                newColumn,
 //                shownColumn,

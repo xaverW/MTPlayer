@@ -24,6 +24,7 @@ import de.mtplayer.mtp.controller.data.abo.Abo;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Tooltip;
 
 public class Table {
     public static enum TABLE {
@@ -86,6 +87,10 @@ public class Table {
     }
 
     private void initColumn(TABLE eTable, TableView<Data> table) {
+        table.setTooltip(new Tooltip("In der Tabelle können mit dem \"+\"-Button\n" +
+                "Spalten ein- und ausgeblendet werden.\n" +
+                "Mit einem Klick auf den Titel einer Spalte\n" +
+                "wird die Tabelle nach der Spalte sortiert."));
         switch (eTable) {
             case FILM:
                 tArray = new TableFilm(ProgData.getInstance()).initFilmColumn(table);

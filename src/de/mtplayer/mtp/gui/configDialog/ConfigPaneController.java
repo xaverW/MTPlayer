@@ -22,7 +22,6 @@ import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.Icons;
-import de.mtplayer.mtp.controller.starter.MTNotification;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.tools.update.SearchProgramUpdate;
@@ -139,19 +138,6 @@ public class ConfigPaneController extends AnchorPane {
         gridPane.add(btnHelpAbo, 3, 0);
         gridPane.add(tglStartDownload, 0, 1, 3, 1);
         gridPane.add(btnHelpDownload, 3, 1);
-
-        // todo
-        Button btnOk = new Button("Test-Ok");
-
-        btnOk.setOnAction(a -> {
-            MTNotification.addNotification(false);
-        });
-        gridPane.add(btnOk, 0, 2);
-        Button btnFalse = new Button("Test-False");
-        btnFalse.setOnAction(a -> {
-            MTNotification.addNotification(true);
-        });
-        gridPane.add(btnFalse, 0, 3);
 
         final ColumnConstraints ccTxt = new ColumnConstraints();
         ccTxt.setFillWidth(true);
