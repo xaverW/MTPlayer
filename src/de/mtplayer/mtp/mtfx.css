@@ -160,6 +160,8 @@
 }
 
 .btnStartDialog{
+    -fx-font-weight: bold;
+    -fx-alignment: center ;
     -fx-background-color: #c3c4c4,
         linear-gradient(from 0% 0% to 100% 100%, #d6d6d6 50%, white 100%),
         radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
@@ -169,6 +171,13 @@
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
     -fx-padding: 5 10;
     -fx-border: 5;
+}
+
+.btnStartDialogSel{
+    -fx-background-color: blue,
+            linear-gradient(from 0% 0% to 100% 100%, #d6d6d6 50%, white 100%),
+            radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+    -fx-text-fill: blue;
 }
 
 /*Pfeil ausblenden*/

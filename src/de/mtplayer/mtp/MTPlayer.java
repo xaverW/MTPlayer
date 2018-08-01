@@ -100,7 +100,12 @@ public class MTPlayer extends Application {
             // einmal ein Muster anlegen, für Linux ist es bereits aktiv!
             progData.replaceList.init();
 
-            new StartDialogController();
+            StartDialogController startDialogController = new StartDialogController();
+            if (!startDialogController.isOk()) {
+                // dann jetzt beenden -> Thüss
+                Platform.exit();
+                System.exit(0);
+            }
 
             //todo das ist noch nicht ganz klar ob dahin
             Duration.staticPing("Erster Start: PSet");

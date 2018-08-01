@@ -30,6 +30,7 @@ import javafx.scene.layout.*;
 
 public class StartDialogController extends MTDialog {
 
+    private boolean ok = false;
     private AnchorPane rootPane = new AnchorPane();
     private VBox vBoxDialog = new VBox();
     private VBox vBoxCont = new VBox();
@@ -38,14 +39,13 @@ public class StartDialogController extends MTDialog {
     private StackPane stackpane;
     private Button btnOk;
     private Button btnPrev, btnNext;
-    private Button btnStart1 = new Button("Start 1"), btnStart2 = new Button("Start 2"),
-            btnUpdate = new Button("Update"), btnGeo = new Button("Geo"),
-            btnDown = new Button("Zielverzeichnis"),
-            btnPath = new Button("Programmpfade");
+    private Button btnStart1 = new Button(STR_START_1), btnStart2 = new Button(STR_START_2),
+            btnUpdate = new Button(STR_UPDATE), btnGeo = new Button(STR_GEO),
+            btnDown = new Button(STR_DOWN),
+            btnPath = new Button(STR_PATH);
 
-
-    private static final String STR_START_1 = "Start 1";
-    private static final String STR_START_2 = "Start 2";
+    private static final String STR_START_1 = "Infos 1";
+    private static final String STR_START_2 = "Infos 2";
     private static final String STR_UPDATE = "Update";
     private static final String STR_GEO = "Geo";
     private static final String STR_DOWN = "Zielverzeichnis";
@@ -81,6 +81,10 @@ public class StartDialogController extends MTDialog {
 
     public void close() {
         super.close();
+    }
+
+    public boolean isOk() {
+        return ok;
     }
 
     private void initPanel() {
@@ -119,6 +123,7 @@ public class StartDialogController extends MTDialog {
         setButton(btnGeo, State.GEO);
         setButton(btnDown, State.DOWN);
         setButton(btnPath, State.PATH);
+        btnStart1.getStyleClass().add("btnStartDialogSel");
     }
 
     private void setButton(Button btn, State state) {
@@ -126,8 +131,26 @@ public class StartDialogController extends MTDialog {
         btn.setMaxWidth(Double.MAX_VALUE);
         btn.setOnAction(a -> {
             aktState = state;
+            btnStart1.getStyleClass().retainAll("btnStartDialog");
+            btnStart2.getStyleClass().retainAll("btnStartDialog");
+            btnUpdate.getStyleClass().retainAll("btnStartDialog");
+            btnGeo.getStyleClass().retainAll("btnStartDialog");
+            btnDown.getStyleClass().retainAll("btnStartDialog");
+            btnPath.getStyleClass().retainAll("btnStartDialog");
+            btn.getStyleClass().add("btnStartDialogSel");
+            setButtonStyle(btnStart1);
             selectActPane();
         });
+    }
+
+    private void setButtonStyle(Button btnSel) {
+        btnStart1.getStyleClass().retainAll("btnStartDialog");
+        btnStart2.getStyleClass().retainAll("btnStartDialog");
+        btnUpdate.getStyleClass().retainAll("btnStartDialog");
+        btnGeo.getStyleClass().retainAll("btnStartDialog");
+        btnDown.getStyleClass().retainAll("btnStartDialog");
+        btnPath.getStyleClass().retainAll("btnStartDialog");
+        btnSel.getStyleClass().add("btnStartDialogSel");
     }
 
     private void initStack() {
@@ -207,7 +230,10 @@ public class StartDialogController extends MTDialog {
         btnOk = new Button("");
         btnOk.setText("Ok");
         btnOk.setDisable(true);
-        btnOk.setOnAction(a -> close());
+        btnOk.setOnAction(a -> {
+            ok = true;
+            close();
+        });
 
         btnNext = new Button("");
         btnNext.setGraphic(new Icons().ICON_BUTTON_NEXT);
@@ -279,32 +305,38 @@ public class StartDialogController extends MTDialog {
                 btnPrev.setDisable(true);
                 btnNext.setDisable(false);
                 startPane_1.toFront();
+                setButtonStyle(btnStart1);
                 break;
             case START_2:
                 btnPrev.setDisable(false);
                 btnNext.setDisable(false);
                 startPane_2.toFront();
+                setButtonStyle(btnStart2);
                 break;
             case UPDATE:
                 btnPrev.setDisable(false);
                 btnNext.setDisable(false);
                 updatePane.toFront();
+                setButtonStyle(btnUpdate);
                 break;
             case GEO:
                 btnPrev.setDisable(false);
                 btnNext.setDisable(false);
                 geoPane.toFront();
+                setButtonStyle(btnGeo);
                 break;
             case DOWN:
                 btnPrev.setDisable(false);
                 btnNext.setDisable(false);
                 downPane.toFront();
+                setButtonStyle(btnDown);
                 break;
             case PATH:
                 btnPrev.setDisable(false);
                 btnNext.setDisable(true);
                 btnOk.setDisable(false);
                 pathPane.toFront();
+                setButtonStyle(btnPath);
                 break;
             default:
                 btnOk.setDisable(false);
