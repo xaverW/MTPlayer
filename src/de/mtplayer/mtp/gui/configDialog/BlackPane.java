@@ -193,8 +193,6 @@ public class BlackPane {
         gridPane.setHgap(10);
         gridPane.setVgap(10);
         gridPane.setPadding(new Insets(20));
-//        gridPane.setMinWidth(Control.USE_PREF_SIZE);
-//        gridPane.setMaxWidth(Double.MAX_VALUE);
 
         cboChannel.setEditable(true);
         cboChannel.setItems(ProgData.getInstance().nameLists.getObsAllChannel());
