@@ -22,6 +22,7 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.MTColor;
+import de.mtplayer.mtp.controller.data.ProgramData;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadInfos;
 import de.mtplayer.mtp.controller.data.download.DownloadTools;
@@ -306,7 +307,7 @@ public class DownloadEditDialogController extends MTDialogExtra {
                 // dann ist ein Array vorhanden -> Linux
                 txt[DownloadXml.DOWNLOAD_PROGRAM_CALL_ARRAY].textProperty().addListener((observable, oldValue, newValue) -> {
                     download.setProgramCallArray(newValue.trim());
-                    download.setProgramCall(de.mtplayer.mtp.controller.data.ProgData.makeProgAufrufArray(download.getProgramCallArray()));
+                    download.setProgramCall(ProgramData.makeProgAufrufArray(download.getProgramCallArray()));
                     txt[DownloadXml.DOWNLOAD_PROGRAM_CALL].setText(download.getProgramCall());
                 });
 

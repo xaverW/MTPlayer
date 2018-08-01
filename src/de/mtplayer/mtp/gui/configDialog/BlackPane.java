@@ -36,7 +36,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
-import javafx.util.Callback;
 
 import java.util.Collection;
 
@@ -187,18 +186,16 @@ public class BlackPane {
 
         VBox.setVgrow(tableView, Priority.ALWAYS);
         vBox.getChildren().addAll(tableView, hBox);
-
     }
 
     private void addConfigs(VBox vBox) {
-
         gridPane.setStyle("-fx-background-color: #E0E0E0;");
 
         gridPane.setHgap(10);
         gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(20, 20, 20, 20));
-        gridPane.setMinWidth(Control.USE_PREF_SIZE);
-        gridPane.setMaxWidth(Double.MAX_VALUE);
+        gridPane.setPadding(new Insets(20));
+//        gridPane.setMinWidth(Control.USE_PREF_SIZE);
+//        gridPane.setMaxWidth(Double.MAX_VALUE);
 
         cboChannel.setEditable(true);
         cboChannel.setItems(ProgData.getInstance().nameLists.getObsAllChannel());
@@ -245,44 +242,5 @@ public class BlackPane {
             title.textProperty().bindBidirectional(blackData.titleProperty());
             themeTitle.textProperty().bindBidirectional(blackData.themeTitleProperty());
         }
-
     }
-
-    private Callback<TableColumn<BlackData, String>, TableCell<BlackData, String>> cellFactoryDel
-            = (final TableColumn<BlackData, String> param) -> {
-
-        final TableCell<BlackData, String> cell = new TableCell<BlackData, String>() {
-
-            @Override
-            public void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (empty) {
-                    setGraphic(null);
-                    setText(null);
-                    return;
-                }
-
-                BlackData blackData = tableView.getItems().get(getIndex());
-
-                final HBox hbox = new HBox();
-                hbox.setSpacing(5);
-                hbox.setAlignment(Pos.CENTER);
-                hbox.setPadding(new Insets(0, 2, 0, 2));
-
-                final Button btnDel;
-
-                btnDel = new Button("x");
-
-                btnDel.setOnAction(event -> {
-                    ProgData.getInstance().blackList.remove(blackData);
-                });
-                hbox.getChildren().add(btnDel);
-                setGraphic(hbox);
-            }
-        };
-        return cell;
-    };
-
-
 }

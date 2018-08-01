@@ -177,10 +177,10 @@ public class ListePsetVorlagen extends LinkedList<String[]> {
                                 }
                             }
                             break;
-                        case ProgData.TAG:
+                        case ProgramData.TAG:
                             if (psetData != null) {
-                                final ProgData progData = new ProgData();
-                                if (get(parser, ProgData.TAG, ProgData.XML_NAMES, progData.arr)) {
+                                final ProgramData progData = new ProgramData();
+                                if (get(parser, ProgramData.TAG, ProgramData.XML_NAMES, progData.arr)) {
                                     progData.setPropsFromXml();
                                     psetData.addProg(progData);
                                 }

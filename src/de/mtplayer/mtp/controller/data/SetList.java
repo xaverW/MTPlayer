@@ -76,29 +76,29 @@ public class SetList extends SimpleListProperty<SetData> {
         String ffmpeg = "";
         final String script = SetsPrograms.getPathScript();
         // damit nur die Variablen abgefragt werden, die auch verwendet werden
-        for (int p = 0; p < pSet.getProgList().size(); ++p) {
-            final ProgData prog = pSet.getProg(p);
+        for (int p = 0; p < pSet.getProgramList().size(); ++p) {
+            final ProgramData prog = pSet.getProg(p);
             if (prog.getProgPath().contains(PATTERN_PATH_VLC) || prog.getProgSwitch().contains(PATTERN_PATH_VLC)) {
                 vlc = getPathVlc();
                 break;
             }
         }
-        for (int p = 0; p < pSet.getProgList().size(); ++p) {
-            final ProgData prog = pSet.getProg(p);
+        for (int p = 0; p < pSet.getProgramList().size(); ++p) {
+            final ProgramData prog = pSet.getProg(p);
             if (prog.getProgPath().contains(PATTERN_PATH_FLV) || prog.getProgSwitch().contains(PATTERN_PATH_FLV)) {
                 flvstreamer = getPathFlv();
                 break;
             }
         }
-        for (int p = 0; p < pSet.getProgList().size(); ++p) {
-            final ProgData prog = pSet.getProg(p);
+        for (int p = 0; p < pSet.getProgramList().size(); ++p) {
+            final ProgramData prog = pSet.getProg(p);
             if (prog.getProgPath().contains(PATTERN_PATH_FFMPEG) || prog.getProgSwitch().contains(PATTERN_PATH_FFMPEG)) {
                 ffmpeg = getPathFFmpeg();
                 break;
             }
         }
-        for (int p = 0; p < pSet.getProgList().size(); ++p) {
-            final ProgData prog = pSet.getProg(p);
+        for (int p = 0; p < pSet.getProgramList().size(); ++p) {
+            final ProgramData prog = pSet.getProg(p);
             // VLC
             prog.setProgPath(prog.getProgPath().replaceAll(PATTERN_PATH_VLC, Matcher.quoteReplacement(vlc)));
             prog.setProgSwitch(prog.getProgSwitch().replaceAll(PATTERN_PATH_VLC, Matcher.quoteReplacement(vlc)));
@@ -202,7 +202,7 @@ public class SetList extends SimpleListProperty<SetData> {
         }
 
         return stream().filter(datenPset ->
-                datenPset.isButton() && !datenPset.getProgList().isEmpty() && !datenPset.getName().isEmpty())
+                datenPset.isButton() && !datenPset.getProgramList().isEmpty() && !datenPset.getName().isEmpty())
                 .collect(Collectors.toCollection(SetList::new));
     }
 

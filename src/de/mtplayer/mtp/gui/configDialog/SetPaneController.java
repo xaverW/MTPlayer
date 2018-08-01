@@ -139,7 +139,6 @@ public class SetPaneController extends AnchorPane {
 
 
     private void initTable(VBox vBox) {
-        tableView.setEditable(true);
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             setDataPane.bindProgData(newValue);
         });

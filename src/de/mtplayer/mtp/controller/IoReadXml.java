@@ -21,6 +21,7 @@ import de.mtplayer.mLib.tools.MLConfigs;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.BlackData;
+import de.mtplayer.mtp.controller.data.ProgramData;
 import de.mtplayer.mtp.controller.data.ReplaceData;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.abo.Abo;
@@ -83,9 +84,9 @@ public class IoReadXml implements AutoCloseable {
                                     progData.setList.add(psetData);
                                 }
                                 break;
-                            case de.mtplayer.mtp.controller.data.ProgData.TAG:
-                                final de.mtplayer.mtp.controller.data.ProgData progData = new de.mtplayer.mtp.controller.data.ProgData();
-                                if (get(parser, de.mtplayer.mtp.controller.data.ProgData.TAG, de.mtplayer.mtp.controller.data.ProgData.XML_NAMES, progData.arr)) {
+                            case ProgramData.TAG:
+                                final ProgramData progData = new ProgramData();
+                                if (get(parser, ProgramData.TAG, ProgramData.XML_NAMES, progData.arr)) {
                                     if (psetData != null) {
                                         progData.setPropsFromXml();
                                         psetData.addProg(progData);

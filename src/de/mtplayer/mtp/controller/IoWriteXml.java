@@ -21,6 +21,7 @@ import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.BlackData;
+import de.mtplayer.mtp.controller.data.ProgramData;
 import de.mtplayer.mtp.controller.data.ReplaceData;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.abo.Abo;
@@ -162,9 +163,9 @@ public class IoWriteXml implements AutoCloseable {
         for (final SetData psetData : progData.setList) {
             psetData.setXmlFromProps();
             xmlWriteData(SetData.TAG, SetData.XML_NAMES, psetData.arr, false);
-            for (final de.mtplayer.mtp.controller.data.ProgData progData : psetData.getProgList()) {
+            for (final ProgramData progData : psetData.getProgramList()) {
                 progData.setXmlFromProps();
-                xmlWriteData(de.mtplayer.mtp.controller.data.ProgData.TAG, de.mtplayer.mtp.controller.data.ProgData.XML_NAMES, progData.arr, false);
+                xmlWriteData(ProgramData.TAG, ProgramData.XML_NAMES, progData.arr, false);
             }
         }
     }
@@ -175,9 +176,9 @@ public class IoWriteXml implements AutoCloseable {
         for (final SetData pset : psetArray) {
             pset.setXmlFromProps();
             xmlWriteData(SetData.TAG, SetData.XML_NAMES, pset.arr, true);
-            for (final de.mtplayer.mtp.controller.data.ProgData progData : pset.getProgList()) {
+            for (final ProgramData progData : pset.getProgramList()) {
                 progData.setXmlFromProps();
-                xmlWriteData(de.mtplayer.mtp.controller.data.ProgData.TAG, de.mtplayer.mtp.controller.data.ProgData.XML_NAMES, progData.arr, true);
+                xmlWriteData(ProgramData.TAG, ProgramData.XML_NAMES, progData.arr, true);
             }
             writer.writeCharacters("\n\n");
         }

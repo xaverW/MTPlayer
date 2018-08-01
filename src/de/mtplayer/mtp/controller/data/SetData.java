@@ -20,7 +20,7 @@ import de.mtplayer.mtp.gui.tools.SetsPrograms;
 
 public class SetData extends SetProps {
 
-    private final ProgList progList = new ProgList();
+    private final ProgramList programList = new ProgramList();
 //    public static boolean[] spaltenAnzeigen = new boolean[MAX_ELEM];
 
     public SetData() {
@@ -33,16 +33,16 @@ public class SetData extends SetProps {
     }
 
     // public
-    public boolean addProg(ProgData prog) {
-        return progList.add(prog);
+    public boolean addProg(ProgramData prog) {
+        return programList.add(prog);
     }
 
-    public ProgList getProgList() {
-        return progList;
+    public ProgramList getProgramList() {
+        return programList;
     }
 
-    public ProgData getProg(int i) {
-        return progList.get(i);
+    public ProgramData getProg(int i) {
+        return programList.get(i);
     }
 
     public boolean progsContainPath() {
@@ -51,7 +51,7 @@ public class SetData extends SetProps {
         // damit ist es ein Set zum Speichern
         boolean ret = false;
 
-        for (ProgData progData : progList) {
+        for (ProgramData progData : programList) {
             if (progData.getProgSwitch().contains("**")
                     || progData.getProgSwitch().contains("%a")
                     || progData.getProgSwitch().contains("%b")) {
@@ -69,7 +69,7 @@ public class SetData extends SetProps {
                 ret = false;
             }
         }
-        if (!progList.isEmpty()) {
+        if (!programList.isEmpty()) {
             ret = false;
         }
         return ret;
@@ -77,7 +77,7 @@ public class SetData extends SetProps {
 
     public boolean isLable() {
         // wenn die Programmliste leer ist und einen Namen hat, ist es ein Lable
-        return progList.isEmpty() && !getName().isEmpty();
+        return programList.isEmpty() && !getName().isEmpty();
     }
 
     public boolean isFreeLine() {
@@ -86,26 +86,26 @@ public class SetData extends SetProps {
     }
 
 
-    public ProgData getProgUrl(String url) {
+    public ProgramData getProgUrl(String url) {
         //mit einer Url das Passende Programm finden
         //passt nichts, wird das letzte Programm genommen
         //ist nur ein Programm in der Liste wird dieses genommen
-        ProgData ret = null;
-        if (progList.isEmpty()) {
+        ProgramData ret = null;
+        if (programList.isEmpty()) {
             // todo bei vielen Downloads beim Start kommt das für jeden Download
 //            new MTAlert().showInfoAlert("Kein Programm", "Programme einrichten!",
 //                    "Es ist kein Programm zum Download eingerichtet");
-        } else if (progList.size() == 1) {
-            ret = progList.get(0);
+        } else if (programList.size() == 1) {
+            ret = programList.get(0);
         } else {
-            for (ProgData progData : progList) {
+            for (ProgramData progData : programList) {
                 if (progData.urlTesten(url)) {
                     ret = progData;
                     break;
                 }
             }
-            if (!progList.isEmpty() && ret == null) {
-                ret = progList.get(progList.size() - 1);
+            if (!programList.isEmpty() && ret == null) {
+                ret = programList.get(programList.size() - 1);
             }
         }
         return ret;
@@ -113,7 +113,7 @@ public class SetData extends SetProps {
 
     public String getDestFileName(String url) {
         //gibt den Zieldateinamen für den Film zurück
-        final ProgData progData = getProgUrl(url);
+        final ProgramData progData = getProgUrl(url);
         String ret = getDestName();
         if (!checkDownloadDirect(url) && progData != null) {
             // nur wenn kein direkter Download und ein passendes Programm
@@ -146,7 +146,7 @@ public class SetData extends SetProps {
         ret.setName("Kopie-" + getName());
         ret.setPlay(false);
 
-        for (final ProgData prog : getProgList()) {
+        for (final ProgramData prog : getProgramList()) {
             ret.addProg(prog.copy());
         }
 

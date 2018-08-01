@@ -20,7 +20,7 @@ import de.mtplayer.mLib.tools.FileNameUtils;
 import de.mtplayer.mLib.tools.FileUtils;
 import de.mtplayer.mLib.tools.StringFormatters;
 import de.mtplayer.mtp.controller.config.ProgConfig;
-import de.mtplayer.mtp.controller.data.ProgData;
+import de.mtplayer.mtp.controller.data.ProgramData;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.abo.Abo;
 import de.mtplayer.mtp.controller.data.abo.AboXml;
@@ -47,7 +47,7 @@ public class DownloadProg {
         this.pSet = pSet;
         // zieldatei und pfad bauen und eintragen
         try {
-            final ProgData progData = pSet.getProgUrl(download.getUrl());
+            final ProgramData progData = pSet.getProgUrl(download.getUrl());
             if (progData == null) {
                 return false; //todo ist das gut da wenn kein Set zum Download???
             }
@@ -76,7 +76,7 @@ public class DownloadProg {
         return true;
     }
 
-    private void buildProgParameter(ProgData program) {
+    private void buildProgParameter(ProgramData program) {
         if (download.getArt().equals(DownloadInfos.ART_DOWNLOAD)) {
             download.setProgramCall("");
             download.setProgramCallArray("");

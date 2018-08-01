@@ -62,7 +62,7 @@ public class SetDataPane {
 
     private SetData setData = null;
     private Collection<TitledPane> result;
-    private ProgPane progPane = new ProgPane();
+    private ProgramPane programPane = new ProgramPane();
     private final ColumnConstraints ccTxt = new ColumnConstraints();
     private ChangeListener cl;
 
@@ -76,7 +76,7 @@ public class SetDataPane {
         makeConfig(result);
         makeDest(result);
         makeDownload(result);
-        progPane.makeProgs(result);
+        programPane.makeProgs(result);
 
         cl = new ChangeListener() {
             @Override
@@ -125,7 +125,7 @@ public class SetDataPane {
             tglInfo.selectedProperty().bindBidirectional(setData.infoFileProperty());
             tglSubtitle.selectedProperty().bindBidirectional(setData.subtitleProperty());
 
-            progPane.setSetDate(setData);
+            programPane.setSetDate(setData);
         }
         setDisable();
     }

@@ -53,7 +53,7 @@ public class SetXml extends Data<SetXml> {
             "Abspielen", "Speichern", "Button", "Abo", "maxLaenge", "maxLaengeFeld", "Aufloesung", "AddOn",
             "Beschreibung", "Info-URL", "Infodatei", "Untertitel"};
 
-    private final ProgList progList = new ProgList();
+    private final ProgramList programList = new ProgramList();
     public String[] arr;
 
 
@@ -69,7 +69,7 @@ public class SetXml extends Data<SetXml> {
         for (int i = 0; i < MAX_ELEM; ++i) {
             ret += "| " + COLUMN_NAMES[i] + ": " + arr[i] + ProgConst.LINE_SEPARATOR;
         }
-        for (final Object aListeProg : progList) {
+        for (final Object aListeProg : programList) {
             ret += "|" + ProgConst.LINE_SEPARATOR;
             ret += aListeProg.toString();
         }
