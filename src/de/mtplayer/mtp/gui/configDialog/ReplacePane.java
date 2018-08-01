@@ -17,6 +17,7 @@
 package de.mtplayer.mtp.gui.configDialog;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.ReplaceData;
@@ -24,16 +25,14 @@ import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
-import javafx.util.Callback;
-import org.controlsfx.control.table.TableRowExpanderColumn;
 
 import java.util.Collection;
 
@@ -43,6 +42,10 @@ public class ReplacePane {
 
     BooleanProperty propAscii = ProgConfig.SYSTEM_ONLY_ASCII.getBooleanProperty();
     BooleanProperty propReplace = ProgConfig.SYSTEM_USE_REPLACETABLE.getBooleanProperty();
+    private final TextField txtFrom = new TextField();
+    private final TextField txtTo = new TextField();
+    private final GridPane gridPane = new GridPane();
+    private ReplaceData replaceData = null;
 
     public void makeReplaceListTable(Collection<TitledPane> result) {
         final VBox vBox = new VBox();
@@ -51,6 +54,7 @@ public class ReplacePane {
 
         makeAscii(vBox);
         initTable(vBox);
+        addConfigs(vBox);
 
         TitledPane tpReplace = new TitledPane("Ersetzungstabelle", vBox);
         result.add(tpReplace);
@@ -102,25 +106,28 @@ public class ReplacePane {
 
 
     private void initTable(VBox vBox) {
-
         final TableColumn<ReplaceData, String> fromColumn = new TableColumn<>("Von");
+        fromColumn.setEditable(true);
         fromColumn.setCellValueFactory(new PropertyValueFactory<>("from"));
 
         final TableColumn<ReplaceData, String> toColumn = new TableColumn<>("Nach");
         toColumn.setCellValueFactory(new PropertyValueFactory<>("to"));
 
+        tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-        tableView.setMinHeight(Region.USE_PREF_SIZE);
 
-        tableView.getColumns().addAll(expander, fromColumn, toColumn);
+        tableView.getColumns().addAll(fromColumn, toColumn);
         tableView.setItems(ProgData.getInstance().replaceList);
+        tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
+                Platform.runLater(this::setActReplaceData));
 
         VBox.setVgrow(tableView, Priority.ALWAYS);
         vBox.getChildren().addAll(tableView);
 
-        Button del = new Button("");
-        del.setGraphic(new Icons().ICON_BUTTON_REMOVE);
-        del.setOnAction(event -> {
+        Button btnDel = new Button("");
+        btnDel.setGraphic(new Icons().ICON_BUTTON_REMOVE);
+        btnDel.setOnAction(event -> {
             final ObservableList<ReplaceData> sels = tableView.getSelectionModel().getSelectedItems();
 
             if (sels == null || sels.isEmpty()) {
@@ -131,11 +138,13 @@ public class ReplacePane {
             }
         });
 
-        Button neu = new Button("");
-        neu.setGraphic(new Icons().ICON_BUTTON_ADD);
-        neu.setOnAction(event -> {
+        Button btnNew = new Button("");
+        btnNew.setGraphic(new Icons().ICON_BUTTON_ADD);
+        btnNew.setOnAction(event -> {
             ReplaceData replaceData = new ReplaceData();
             ProgData.getInstance().replaceList.add(replaceData);
+
+            tableView.getSelectionModel().clearSelection();
             tableView.getSelectionModel().select(replaceData);
             tableView.scrollTo(replaceData);
         });
@@ -173,71 +182,43 @@ public class ReplacePane {
 
         HBox hBox = new HBox();
         hBox.setSpacing(10);
-        hBox.getChildren().addAll(neu, del, up, down, reset);
+        hBox.getChildren().addAll(btnNew, btnDel, up, down, reset);
         vBox.getChildren().addAll(hBox);
 
     }
 
-    TableRowExpanderColumn<ReplaceData> expander = new TableRowExpanderColumn<>(param -> {
-        final GridPane gridPane = new GridPane();
+    private void addConfigs(VBox vBox) {
         gridPane.setStyle("-fx-background-color: #E0E0E0;");
         gridPane.setHgap(10);
         gridPane.setVgap(10);
         gridPane.setPadding(new Insets(20, 20, 20, 20));
-        gridPane.setMinWidth(Control.USE_PREF_SIZE);
-        gridPane.setMaxWidth(Double.MAX_VALUE);
-
-        TextField txtFrom = new TextField();
-        txtFrom.textProperty().bindBidirectional(param.getValue().fromProperty());
-
-        TextField txtTo = new TextField();
-        txtTo.textProperty().bindBidirectional(param.getValue().toProperty());
-
 
         gridPane.add(new Label("Von: "), 0, 0);
         gridPane.add(txtFrom, 1, 0);
         gridPane.add(new Label("Nach: "), 0, 1);
         gridPane.add(txtTo, 1, 1);
 
-        return gridPane;
-    });
+        vBox.getChildren().add(gridPane);
+        gridPane.setDisable(true);
+    }
 
-    private Callback<TableColumn<ReplaceData, String>, TableCell<ReplaceData, String>> cellFactoryDel
-            = (final TableColumn<ReplaceData, String> param) -> {
+    private void setActReplaceData() {
+        ReplaceData replaceDataAct = tableView.getSelectionModel().getSelectedItem();
+        if (replaceDataAct == replaceData) {
+            return;
+        }
 
+        if (replaceData != null) {
+            txtFrom.textProperty().unbindBidirectional(replaceData.fromProperty());
+            txtTo.textProperty().unbindBidirectional(replaceData.toProperty());
+        }
 
-        final TableCell<ReplaceData, String> cell = new TableCell<ReplaceData, String>() {
-
-            @Override
-            public void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (empty) {
-                    setGraphic(null);
-                    setText(null);
-                    return;
-                }
-
-                ReplaceData blackData = tableView.getItems().get(getIndex());
-
-                final HBox hbox = new HBox();
-                hbox.setSpacing(5);
-                hbox.setAlignment(Pos.CENTER);
-                hbox.setPadding(new Insets(0, 2, 0, 2));
-
-                final Button btnDel;
-
-                btnDel = new Button("x");
-
-                btnDel.setOnAction(event -> {
-                    ProgData.getInstance().replaceList.remove(blackData);
-                });
-                hbox.getChildren().add(btnDel);
-                setGraphic(hbox);
-            }
-        };
-        return cell;
-    };
-
+        replaceData = replaceDataAct;
+        gridPane.setDisable(replaceData == null);
+        if (replaceData != null) {
+            txtFrom.textProperty().bindBidirectional(replaceData.fromProperty());
+            txtTo.textProperty().bindBidirectional(replaceData.toProperty());
+        }
+    }
 
 }

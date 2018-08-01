@@ -107,9 +107,6 @@ public class BlackPane {
 
 
     private void initTable(VBox vBox) {
-        tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
-
         final TableColumn<BlackData, String> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("nr"));
         nrColumn.getStyleClass().add("center");
@@ -137,12 +134,13 @@ public class BlackPane {
         final TableColumn<BlackData, Integer> hitsColumn = new TableColumn<>("Treffer");
         hitsColumn.setCellValueFactory(new PropertyValueFactory<>("countHits"));
 
+        tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
         tableView.getColumns().addAll(nrColumn, channelColumn, channelExactColumn, themeColumn, themeExactColumn,
                 titleColumn, themeTitleColumn, hitsColumn);
         tableView.setItems(ProgData.getInstance().blackList);
-
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
                 Platform.runLater(this::setActBlackData));
 
