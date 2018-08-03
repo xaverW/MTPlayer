@@ -25,6 +25,7 @@ import de.mtplayer.mtp.controller.data.abo.AboXml;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
+import de.p2tools.p2Lib.guiTools.pRange.PRangeBox;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -34,7 +35,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import org.controlsfx.control.RangeSlider;
 
 import java.util.ArrayList;
 
@@ -46,9 +46,9 @@ public class AboEditDialogController extends MTDialogExtra {
     ComboBox<String> cboPset = new ComboBox<>();
     ComboBox<String> cboChannel = new ComboBox<>();
     ComboBox<String> cboDestination = new ComboBox<>();
-    RangeSlider slTime = new RangeSlider();
-    Label lblTimeMin = new Label();
-    Label lblTimeMax = new Label();
+    PRangeBox pRangeBoxTime = new PRangeBox(0, SelectedFilter.FILTER_DURATION_MAX_MIN);
+    //    Label lblTimeMin = new Label();
+//    Label lblTimeMax = new Label();
     CheckBox cbxOn = new CheckBox();
     Label[] lbl = new Label[AboXml.MAX_ELEM];
     TextField[] txt = new TextField[AboXml.MAX_ELEM];
@@ -249,13 +249,8 @@ public class AboEditDialogController extends MTDialogExtra {
                 gridPane.add(lbl[i], 0, grid);
                 break;
             case AboXml.ABO_MIN_DURATION:
-                VBox vBox = new VBox();
-                vBox.setSpacing(5);
-                vBox.setAlignment(Pos.CENTER_LEFT);
-
-                lbl[i].setText("Dauer [Min]:");
-                vBox.getChildren().addAll(lbl[i], new Label("min / max"));
-                gridPane.add(vBox, 0, grid);
+                lbl[i].setText("Dauer:");
+                gridPane.add(lbl[i], 0, grid);
                 break;
             case AboXml.ABO_MAX_DURATION:
                 break;
@@ -375,17 +370,17 @@ public class AboEditDialogController extends MTDialogExtra {
 
             case AboXml.ABO_MIN_DURATION:
                 initDur();
-                HBox h1 = new HBox();
-                HBox h2 = new HBox();
-                h1.getChildren().add(lblTimeMin);
-                HBox.setHgrow(h1, Priority.ALWAYS);
-                h2.getChildren().addAll(h1, lblTimeMax);
-
-                VBox vBox = new VBox();
-                vBox.setSpacing(5);
-                vBox.getChildren().addAll(slTime, h2);
-                slTime.setShowTickLabels(false);
-                gridPane.add(vBox, 1, grid);
+//                HBox h1 = new HBox();
+//                HBox h2 = new HBox();
+//                h1.getChildren().add(lblTimeMin);
+//                HBox.setHgrow(h1, Priority.ALWAYS);
+//                h2.getChildren().addAll(h1, lblTimeMax);
+//
+//                VBox vBox = new VBox();
+//                vBox.setSpacing(5);
+//                vBox.getChildren().addAll(pRangeBoxTime, h2);
+//                slTime.setShowTickLabels(false);
+                gridPane.add(pRangeBoxTime, 1, grid);
                 break;
 
             case AboXml.ABO_MAX_DURATION:
@@ -442,37 +437,42 @@ public class AboEditDialogController extends MTDialogExtra {
     }
 
     private void initDur() {
-        slTime.setMin(0);
-        slTime.setMax(SelectedFilter.FILTER_DURATION_MAX_MIN);
-        slTime.setShowTickLabels(true);
-        slTime.setMinorTickCount(9);
-        slTime.setMajorTickUnit(50);
-        slTime.setBlockIncrement(10);
-        slTime.setSnapToTicks(true);
+        pRangeBoxTime.minValueProperty().bindBidirectional(aboCopy.minDurationProperty());
+        pRangeBoxTime.maxValueProperty().bindBidirectional(aboCopy.maxDurationProperty());
+        pRangeBoxTime.setVluePrefix("");
+
+
+//        slTime.setMin(0);
+//        slTime.setMax(SelectedFilter.FILTER_DURATION_MAX_MIN);
+//        slTime.setShowTickLabels(true);
+//        slTime.setMinorTickCount(9);
+//        slTime.setMajorTickUnit(50);
+//        slTime.setBlockIncrement(10);
+//        slTime.setSnapToTicks(true);
 
         // hightvalue
-        slTime.highValueProperty().bindBidirectional(aboCopy.maxDurationProperty());
-        slTime.highValueProperty().addListener(l -> {
-            setLabelSlider();
-            cbxForAll[AboXml.ABO_MAX_DURATION].setSelected(true);
-        });
+//        slTime.highValueProperty().bindBidirectional(aboCopy.maxDurationProperty());
+//        slTime.highValueProperty().addListener(l -> {
+//            setLabelSlider();
+//            cbxForAll[AboXml.ABO_MAX_DURATION].setSelected(true);
+//        });
 
         // lowvalue
-        slTime.lowValueProperty().bindBidirectional(aboCopy.minDurationProperty());
-        slTime.lowValueProperty().addListener(l -> {
-            setLabelSlider();
-            cbxForAll[AboXml.ABO_MIN_DURATION].setSelected(true);
-        });
+//        slTime.lowValueProperty().bindBidirectional(aboCopy.minDurationProperty());
+//        slTime.lowValueProperty().addListener(l -> {
+//            setLabelSlider();
+//            cbxForAll[AboXml.ABO_MIN_DURATION].setSelected(true);
+//        });
 
-        setLabelSlider();
+//        setLabelSlider();
     }
 
-    private void setLabelSlider() {
-        int i;
-        i = (int) slTime.getLowValue();
-        lblTimeMin.setText(i == 0 ? ALLES : i + "");
-
-        i = (int) slTime.getHighValue();
-        lblTimeMax.setText(i == SelectedFilter.FILTER_DURATION_MAX_MIN ? ALLES : i + "");
-    }
+//    private void setLabelSlider() {
+//        int i;
+//        i = (int) pRangeBoxTime.getLowValue();
+//        lblTimeMin.setText(i == 0 ? ALLES : i + "");
+//
+//        i = (int) pRangeBoxTime.getHighValue();
+//        lblTimeMax.setText(i == SelectedFilter.FILTER_DURATION_MAX_MIN ? ALLES : i + "");
+//    }
 }

@@ -24,6 +24,8 @@ import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.pCheckComboBox.PCheckComboBox;
+import de.p2tools.p2Lib.guiTools.pRange.PRangeBox;
+import de.p2tools.p2Lib.guiTools.pRange.PTimePeriodBox;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import de.p2tools.p2Lib.tools.log.Duration;
 import javafx.beans.binding.Bindings;
@@ -35,9 +37,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
-import org.controlsfx.control.RangeSlider;
 
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
@@ -49,12 +49,12 @@ public class FilmFilterController extends FilterController {
     private final Slider slDays = new Slider();
     private final Label lblDays = new Label();
 
-    private final RangeSlider slDur = new RangeSlider();
-    private final Label lblDur = new Label();
+    private final PRangeBox slDur = new PRangeBox(0, SelectedFilter.FILTER_DURATION_MAX_MIN);
+    private final Label lblDur = new Label("Filmlänge:");
 
-    private final RangeSlider slFilmTime = new RangeSlider();
+    private final PTimePeriodBox slFilmTime = new PTimePeriodBox();
     private final PToggleSwitch tglFilmTime = new PToggleSwitch("Zeitraum \"ausschließen\"");
-    private final Label lblFilmTime = new Label();
+    private final Label lblFilmTime = new Label("Sendezeit:");
 
     PCheckComboBox checkOnly = new PCheckComboBox();
     PCheckComboBox checkNot = new PCheckComboBox();
@@ -87,6 +87,8 @@ public class FilmFilterController extends FilterController {
     private final String NOT_DOUBLE = "doppelte";
     private final String NOT_GEO = "Geo geblockt";
     private final String NOT_FUTURE = "Zukunft";
+
+    private final SplitMenuButton menuItem = new SplitMenuButton();
 
 
     public FilmFilterController() {
@@ -323,91 +325,31 @@ public class FilmFilterController extends FilterController {
     }
 
     private void initDurFilter() {
-        slDur.setMin(0);
-        slDur.setMax(SelectedFilter.FILTER_DURATION_MAX_MIN);
+        slDur.minValueProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().minDurProperty());
+        slDur.maxValueProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().maxDurProperty());
+        slDur.setMinValue(0);
+        slDur.setMaxValue(SelectedFilter.FILTER_DURATION_MAX_MIN);
+        slDur.setVluePrefix("");
 
-        slDur.setShowTickLabels(true);
-        slDur.setMinorTickCount(3);
-        slDur.setMajorTickUnit(50);
-        slDur.setBlockIncrement(5);
-        slDur.setSnapToTicks(false);
-
-        // kein direktes binding wegen: valueChangingProperty, nur melden wenn "steht"
-        slDur.setHighValue(progData.storedFilter.getSelectedFilter().getMaxDur());
-        slDur.setLowValue(progData.storedFilter.getSelectedFilter().getMinDur());
-
-        // lowvalue
-        progData.storedFilter.getSelectedFilter().minDurProperty().addListener(l -> {
-            slDur.setLowValue(progData.storedFilter.getSelectedFilter().getMinDur());
-        });
-        slDur.lowValueProperty().addListener(l -> setLabelSlider());
-        slDur.lowValueChangingProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue) {
-                progData.storedFilter.getSelectedFilter().setMinDur((int) slDur.getLowValue());
-            }
-        });
-
-        // hightvalue
-        progData.storedFilter.getSelectedFilter().maxDurProperty().addListener(l -> slDur.setHighValue(progData.storedFilter.getSelectedFilter().getMaxDur()));
-        slDur.highValueProperty().addListener(l -> setLabelSlider());
-        slDur.highValueChangingProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue) {
-                progData.storedFilter.getSelectedFilter().setMaxDur((int) slDur.getHighValue());
-            }
-        });
+        progData.storedFilter.getSelectedFilter().minDurProperty().addListener((observable, oldValue, newValue) ->
+                System.out.println("getSelectedFilter().getMinDur " + progData.storedFilter.getSelectedFilter().getMinDur()));
+        progData.storedFilter.getSelectedFilter().maxDurProperty().addListener((observable, oldValue, newValue) ->
+                System.out.println("getSelectedFilter().getMaxDur " + progData.storedFilter.getSelectedFilter().getMaxDur()));
     }
 
     private void initFilmTimeFilter() {
-        slFilmTime.setMin(0);
-        slFilmTime.setMax(SelectedFilter.FILTER_FILMTIME_MAX_SEC);
+        slFilmTime.minValueProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().minTimeProperty());
+        slFilmTime.maxValueProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().maxTimeProperty());
+        slFilmTime.setVluePrefix("");
 
-        slFilmTime.setShowTickLabels(true);
-        slFilmTime.setMinorTickCount(2);
-        slFilmTime.setMajorTickUnit(4 * 60 * 60);
-        slFilmTime.setBlockIncrement(20 * 60);
-        slFilmTime.setSnapToTicks(false);
-
-        slFilmTime.setLabelFormatter(new StringConverter<Number>() {
-            @Override
-            public String toString(Number x) {
-                int i = x.intValue();
-                i = i / (60 * 60 - 1);
-                return i + "";
-            }
-
-            @Override
-            public Double fromString(String string) {
-                return null;
-            }
-        });
+        progData.storedFilter.getSelectedFilter().minTimeProperty().addListener((observable, oldValue, newValue) ->
+                System.out.println("getSelectedFilter().getMinTime " + progData.storedFilter.getSelectedFilter().getMinTime()));
+        progData.storedFilter.getSelectedFilter().maxTimeProperty().addListener((observable, oldValue, newValue) ->
+                System.out.println("getSelectedFilter().getMaxTime " + progData.storedFilter.getSelectedFilter().getMaxTime()));
 
         tglFilmTime.selectedProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().minMaxTimeInvertProperty());
         GridPane.setFillWidth(tglFilmTime, false);
 
-        // kein direktes binding wegen: valueChangingProperty, nur melden wenn "steht"
-        slFilmTime.setHighValue(progData.storedFilter.getSelectedFilter().getMaxTime());
-        slFilmTime.setLowValue(progData.storedFilter.getSelectedFilter().getMinTime());
-
-        // lowvalue
-        progData.storedFilter.getSelectedFilter().minTimeProperty().addListener(l -> {
-            slFilmTime.setLowValue(progData.storedFilter.getSelectedFilter().getMinTime());
-        });
-        slFilmTime.lowValueProperty().addListener(l -> setLabelSlider());
-        slFilmTime.lowValueChangingProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue) {
-                progData.storedFilter.getSelectedFilter().setMinTime((int) slFilmTime.getLowValue());
-            }
-        });
-
-        // hightvalue
-        progData.storedFilter.getSelectedFilter().maxTimeProperty().addListener(l ->
-                slFilmTime.setHighValue(progData.storedFilter.getSelectedFilter().getMaxTime()));
-        slFilmTime.highValueProperty().addListener(l -> setLabelSlider());
-        slFilmTime.highValueChangingProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue) {
-                progData.storedFilter.getSelectedFilter().setMaxTime((int) slFilmTime.getHighValue());
-            }
-        });
     }
 
     private void setSlider() {
@@ -505,10 +447,7 @@ public class FilmFilterController extends FilterController {
     }
 
     private void setLabelSlider() {
-        String txtAll;
-
-        // Tag
-        txtAll = "alles";
+        final String txtAll = "alles";
 
         int i = (int) slDays.getValue();
         String tNr = i + "";
@@ -517,37 +456,6 @@ public class FilmFilterController extends FilterController {
             lblDays.setText("Zeitraum: " + txtAll);
         } else {
             lblDays.setText("Zeitraum: " + tNr + (i == 1 ? " Tag" : " Tage"));
-        }
-
-        // Filmlänge
-        int min = (int) slDur.getLowValue();
-        int max = (int) slDur.getHighValue();
-        String tMin = min + "";
-        String tMax = max + "";
-
-        if (min == 0 && max == SelectedFilter.FILTER_DURATION_MAX_MIN) {
-            lblDur.setText("Filmlänge: " + txtAll);
-        } else if (min == 0) {
-            lblDur.setText("Filmlänge: weniger als " + tMax + " Minuten");
-        } else if (max == SelectedFilter.FILTER_DURATION_MAX_MIN) {
-            lblDur.setText("Filmlänge: mehr als " + tMin + " Minuten");
-        } else {
-            lblDur.setText("Filmlänge: von " + tMin + " bis " + tMax + " Minuten");
-        }
-
-        // Film-Uhrzeit
-        int iLow = (int) slFilmTime.getLowValue();
-        LocalTime lt = LocalTime.ofSecondOfDay(iLow);
-        String timeL = lt.format(formatter);
-
-        int iHi = (int) slFilmTime.getHighValue();
-        lt = LocalTime.ofSecondOfDay(iHi);
-        String timeH = iHi == SelectedFilter.FILTER_FILMTIME_MAX_SEC ? "24:00" : lt.format(formatter);
-
-        if (iLow == 0 && iHi == SelectedFilter.FILTER_FILMTIME_MAX_SEC) {
-            lblFilmTime.setText("Sendezeit: " + txtAll);
-        } else {
-            lblFilmTime.setText("Sendezeit: von " + timeL + " bis " + timeH);
         }
     }
 
