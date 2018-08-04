@@ -24,6 +24,7 @@ import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.gui.dialog.DownloadAddDialogController;
 import de.mtplayer.mtp.gui.dialog.NoSetDialogController;
+import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
 import javafx.collections.ObservableList;
@@ -46,7 +47,7 @@ public class FilmTools {
         }
 
         Text text1, text2;
-        text1 = new Text(film.arr[FilmXml.FILM_CHANNEL] + "  -  " + film.arr[FilmXml.FILM_TITLE] + "\n\n");
+        text1 = new Text(film.arr[FilmXml.FILM_CHANNEL] + "  -  " + film.arr[FilmXml.FILM_TITLE] + PConst.LINE_SEPARATORx2);
         text1.setFont(Font.font(null, FontWeight.BOLD, -1));
 
         text2 = new Text(film.arr[FilmXml.FILM_DESCRIPTION]);
@@ -59,7 +60,7 @@ public class FilmTools {
             PHyperlink hyperlink = new PHyperlink(film.arr[FilmXml.FILM_WEBSITE],
                     ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new Icons().ICON_BUTTON_FILE_OPEN);
 
-            list.addAll(new Text("\n\n zur Website: "), hyperlink);
+            list.addAll(new Text(PConst.LINE_SEPARATORx2 + " zur Website: "), hyperlink);
 
         }
     }
@@ -142,8 +143,8 @@ public class FilmTools {
 
                 if (list.size() <= 1) {
                     PAlert.BUTTON answer = PAlert.showAlert_yes_no("Anlegen?", "Nochmal anlegen?",
-                            "Download für den Film existiert bereits:\n\n" +
-                                    dateFilm.getTitle() + "\n\n" +
+                            "Download für den Film existiert bereits:" + PConst.LINE_SEPARATORx2 +
+                                    dateFilm.getTitle() + PConst.LINE_SEPARATORx2 +
                                     "Nochmal anlegen?");
                     switch (answer) {
                         case NO:
@@ -156,9 +157,9 @@ public class FilmTools {
 
                 } else {
                     PAlert.BUTTON answer = PAlert.showAlert_yes_no_cancel("Anlegen?", "Nochmal anlegen?",
-                            "Download für den Film existiert bereits:\n\n" +
-                                    dateFilm.getTitle() + "\n\n" +
-                                    "Nochmal anlegen (Ja / Nein)?\n" +
+                            "Download für den Film existiert bereits:" + PConst.LINE_SEPARATORx2 +
+                                    dateFilm.getTitle() + PConst.LINE_SEPARATORx2 +
+                                    "Nochmal anlegen (Ja / Nein)?" + PConst.LINE_SEPARATOR +
                                     "Oder alles Abbrechen?");
                     switch (answer) {
                         case CANCEL:

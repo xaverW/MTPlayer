@@ -33,6 +33,7 @@ import de.mtplayer.mtp.controller.mediaDb.MediaPathData;
 import de.mtplayer.mtp.tools.storedFilter.FilterToXml;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
 import de.mtplayer.mtp.tools.storedFilter.StoredFilter;
+import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.tools.log.PLog;
 
 import javax.xml.stream.XMLOutputFactory;
@@ -83,55 +84,55 @@ public class IoWriteXml implements AutoCloseable {
         try {
             xmlWriteStart();
 
-            writer.writeCharacters("\n\n");
+            writer.writeCharacters(PConst.LINE_SEPARATORx2);
             writer.writeComment("Abos");
-            writer.writeCharacters("\n");
+            writer.writeCharacters(PConst.LINE_SEPARATOR);
             xmlWriteAbo();
 
-            writer.writeCharacters("\n\n");
+            writer.writeCharacters(PConst.LINE_SEPARATORx2);
             writer.writeComment("Blacklist");
-            writer.writeCharacters("\n");
+            writer.writeCharacters(PConst.LINE_SEPARATOR);
             xmlWriteBlackList();
 
-            writer.writeCharacters("\n\n");
+            writer.writeCharacters(PConst.LINE_SEPARATORx2);
             writer.writeComment("Filter-Film");
-            writer.writeCharacters("\n");
+            writer.writeCharacters(PConst.LINE_SEPARATOR);
             xmlWriteFilterFilm();
 
-            writer.writeCharacters("\n\n");
+            writer.writeCharacters(PConst.LINE_SEPARATORx2);
             writer.writeComment(ProgConfig.PARAMETER_INFO);
-            writer.writeCharacters("\n\n");
+            writer.writeCharacters(PConst.LINE_SEPARATORx2);
             writer.writeComment("Programmeinstellungen");
-            writer.writeCharacters("\n");
+            writer.writeCharacters(PConst.LINE_SEPARATOR);
             xmlWriteConfig(ProgConfig.SYSTEM, ProgConfig.getAll());
-            writer.writeCharacters("\n");
+            writer.writeCharacters(PConst.LINE_SEPARATOR);
 
-            writer.writeCharacters("\n\n");
+            writer.writeCharacters(PConst.LINE_SEPARATORx2);
             writer.writeComment("Programmsets");
-            writer.writeCharacters("\n");
+            writer.writeCharacters(PConst.LINE_SEPARATOR);
             xmlWriteProg();
 
-            writer.writeCharacters("\n\n");
+            writer.writeCharacters(PConst.LINE_SEPARATORx2);
             writer.writeComment("Ersetzungstabelle");
-            writer.writeCharacters("\n");
+            writer.writeCharacters(PConst.LINE_SEPARATOR);
             xmlWriteReplaceData();
 
-            writer.writeCharacters("\n\n");
+            writer.writeCharacters(PConst.LINE_SEPARATORx2);
             writer.writeComment("Downloads");
-            writer.writeCharacters("\n");
+            writer.writeCharacters(PConst.LINE_SEPARATOR);
             xmlWriteDownloads();
 
-            writer.writeCharacters("\n\n");
+            writer.writeCharacters(PConst.LINE_SEPARATORx2);
             writer.writeComment("Pfade MedienDB");
-            writer.writeCharacters("\n");
+            writer.writeCharacters(PConst.LINE_SEPARATOR);
             xmlWriteMediaPath();
 
-            writer.writeCharacters("\n\n");
+            writer.writeCharacters(PConst.LINE_SEPARATORx2);
             writer.writeComment("Update Filmliste");
-            writer.writeCharacters("\n");
+            writer.writeCharacters(PConst.LINE_SEPARATOR);
             xmlWriteFilmUpdateServer();
 
-            writer.writeCharacters("\n\n");
+            writer.writeCharacters(PConst.LINE_SEPARATORx2);
             xmlWriteEnd();
         } catch (final Exception ex) {
             PLog.errorLog(656328109, ex);
@@ -146,9 +147,9 @@ public class IoWriteXml implements AutoCloseable {
         final XMLOutputFactory outFactory = XMLOutputFactory.newInstance();
         writer = outFactory.createXMLStreamWriter(out);
         writer.writeStartDocument(StandardCharsets.UTF_8.name(), "1.0");
-        writer.writeCharacters("\n");// neue Zeile
+        writer.writeCharacters(PConst.LINE_SEPARATOR);// neue Zeile
         writer.writeStartElement(ProgConst.XML_START);
-        writer.writeCharacters("\n");// neue Zeile
+        writer.writeCharacters(PConst.LINE_SEPARATOR);// neue Zeile
     }
 
     private void xmlWriteReplaceData() {
@@ -172,7 +173,7 @@ public class IoWriteXml implements AutoCloseable {
 
     private void xmlWritePset(SetData[] psetArray) throws XMLStreamException {
         // wird beim Export Sets verwendete
-        writer.writeCharacters("\n\n");
+        writer.writeCharacters(PConst.LINE_SEPARATORx2);
         for (final SetData pset : psetArray) {
             pset.setXmlFromProps();
             xmlWriteData(SetData.TAG, SetData.XML_NAMES, pset.arr, true);
@@ -180,7 +181,7 @@ public class IoWriteXml implements AutoCloseable {
                 progData.setXmlFromProps();
                 xmlWriteData(ProgramData.TAG, ProgramData.XML_NAMES, progData.arr, true);
             }
-            writer.writeCharacters("\n\n");
+            writer.writeCharacters(PConst.LINE_SEPARATORx2);
         }
     }
 
@@ -230,16 +231,16 @@ public class IoWriteXml implements AutoCloseable {
         akt_sf.setName(StoredFilter.SELECTED_FILTER_NAME);
 
         writer.writeComment("aktuelle Filtereinstellungen");
-        writer.writeCharacters("\n");
+        writer.writeCharacters(PConst.LINE_SEPARATOR);
 
         xmlWriteData(FilterToXml.TAG,
                 FilterToXml.getXmlArray(),
                 FilterToXml.getValueArray(progData.storedFilter.getSelectedFilter()),
                 true);
 
-        writer.writeCharacters("\n");
+        writer.writeCharacters(PConst.LINE_SEPARATOR);
         writer.writeComment("gespeicherte Filter");
-        writer.writeCharacters("\n");
+        writer.writeCharacters(PConst.LINE_SEPARATOR);
         // Liste der Filterprofile
         progData.storedFilter.getStordeFilterList().stream().forEach((sf) -> {
             xmlWriteData(FilterToXml.TAG, FilterToXml.getXmlArray(), FilterToXml.getValueArray(sf), true);
@@ -248,9 +249,9 @@ public class IoWriteXml implements AutoCloseable {
 
     private void xmlWriteFilmUpdateServer() throws XMLStreamException {
         // FilmUpdate schreiben
-        writer.writeCharacters("\n");
+        writer.writeCharacters(PConst.LINE_SEPARATOR);
         writer.writeComment("Akt-Filmliste");
-        writer.writeCharacters("\n");
+        writer.writeCharacters(PConst.LINE_SEPARATOR);
 
         for (final FilmlistUrlData datenUrlFilmliste : progData.loadFilmlist.getDownloadUrlsFilmlisten_akt()) {
             datenUrlFilmliste.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_SORT_NR] = FilmlistUrlData.SERVER_ART_AKT;
@@ -260,9 +261,9 @@ public class IoWriteXml implements AutoCloseable {
                     false);
         }
 
-        writer.writeCharacters("\n");
+        writer.writeCharacters(PConst.LINE_SEPARATOR);
         writer.writeComment("Diff-Filmliste");
-        writer.writeCharacters("\n");
+        writer.writeCharacters(PConst.LINE_SEPARATOR);
         for (final FilmlistUrlData datenUrlFilmliste : progData.loadFilmlist.getDownloadUrlsFilmlisten_diff()) {
             datenUrlFilmliste.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_SORT_NR] = FilmlistUrlData.SERVER_ART_DIFF;
             xmlWriteData(FilmlistUrlData.FILMLIST_UPDATE_SERVER,
@@ -277,7 +278,7 @@ public class IoWriteXml implements AutoCloseable {
         try {
             writer.writeStartElement(xmlName);
             if (newLine) {
-                writer.writeCharacters("\n"); // neue Zeile
+                writer.writeCharacters(PConst.LINE_SEPARATOR); // neue Zeile
             }
             for (int i = 0; i < xmlMax; ++i) {
                 if (!dataArray[i].isEmpty()) {
@@ -288,12 +289,12 @@ public class IoWriteXml implements AutoCloseable {
                     writer.writeCharacters(dataArray[i]);
                     writer.writeEndElement();
                     if (newLine) {
-                        writer.writeCharacters("\n"); // neue Zeile
+                        writer.writeCharacters(PConst.LINE_SEPARATOR); // neue Zeile
                     }
                 }
             }
             writer.writeEndElement();
-            writer.writeCharacters("\n"); // neue Zeile
+            writer.writeCharacters(PConst.LINE_SEPARATOR); // neue Zeile
         } catch (final Exception ex) {
             PLog.errorLog(198325017, ex);
         }
@@ -302,17 +303,17 @@ public class IoWriteXml implements AutoCloseable {
     private void xmlWriteConfig(String xmlName, String[][] xmlArray) {
         try {
             writer.writeStartElement(xmlName);
-            writer.writeCharacters("\n"); // neue Zeile
+            writer.writeCharacters(PConst.LINE_SEPARATOR); // neue Zeile
 
             for (final String[] xmlSpalte : xmlArray) {
                 writer.writeCharacters("\t"); // Tab
                 writer.writeStartElement(xmlSpalte[0]);
                 writer.writeCharacters(xmlSpalte[1]);
                 writer.writeEndElement();
-                writer.writeCharacters("\n"); // neue Zeile
+                writer.writeCharacters(PConst.LINE_SEPARATOR); // neue Zeile
             }
             writer.writeEndElement();
-            writer.writeCharacters("\n"); // neue Zeile
+            writer.writeCharacters(PConst.LINE_SEPARATOR); // neue Zeile
         } catch (final Exception ex) {
             PLog.errorLog(951230478, ex);
         }

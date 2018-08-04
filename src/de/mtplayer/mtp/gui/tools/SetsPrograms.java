@@ -25,6 +25,7 @@ import de.mtplayer.mtp.controller.data.ProgramData;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.SetList;
 import de.mtplayer.mtp.controller.starter.RuntimeExec;
+import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlert;
 
 import java.io.*;
@@ -368,29 +369,29 @@ public class SetsPrograms {
             ret = true;
             if (!psetData.isFreeLine() && !psetData.isLable()) {
                 // nur wenn kein Lable oder freeline
-                text += "++++++++++++++++++++++++++++++++++++++++++++" + '\n';
-                text += PIPE + "Programmgruppe: " + psetData.getName() + '\n';
+                text += "++++++++++++++++++++++++++++++++++++++++++++" + PConst.LINE_SEPARATOR;
+                text += PIPE + "Programmgruppe: " + psetData.getName() + PConst.LINE_SEPARATOR;
                 final String destPath = psetData.getDestPath();
                 if (psetData.progsContainPath()) {
                     // beim nur Abspielen wird er nicht gebraucht
                     if (destPath.isEmpty()) {
                         ret = false;
-                        text += PIPE + LEER + "Zielpfad fehlt!\n";
+                        text += PIPE + LEER + "Zielpfad fehlt!" + PConst.LINE_SEPARATOR;
                     } else // Pfad beschreibbar?
                         if (!checkPathWritable(destPath)) {
                             //da Pfad-leer und "kein" Pfad schon abgeprüft
                             ret = false;
-                            text += PIPE + LEER + "Falscher Zielpfad!\n";
-                            text += PIPE + LEER + PFEIL + "Zielpfad \"" + destPath + "\" nicht beschreibbar!" + '\n';
+                            text += PIPE + LEER + "Falscher Zielpfad!" + PConst.LINE_SEPARATOR;
+                            text += PIPE + LEER + PFEIL + "Zielpfad \"" + destPath + "\" nicht beschreibbar!" + PConst.LINE_SEPARATOR;
                         }
                 }
                 for (final ProgramData progData : psetData.getProgramList()) {
                     // Programmpfad prüfen
                     if (progData.getProgPath().isEmpty()) {
                         ret = false;
-                        text += PIPE + LEER + "Kein Programm angegeben!\n";
-                        text += PIPE + LEER + PFEIL + "Programmname: " + progData.getName() + '\n';
-                        text += PIPE + LEER + LEER + "Pfad: " + progData.getProgPath() + '\n';
+                        text += PIPE + LEER + "Kein Programm angegeben!" + PConst.LINE_SEPARATOR;
+                        text += PIPE + LEER + PFEIL + "Programmname: " + progData.getName() + PConst.LINE_SEPARATOR;
+                        text += PIPE + LEER + LEER + "Pfad: " + progData.getProgPath() + PConst.LINE_SEPARATOR;
                     } else if (!new File(progData.getProgPath()).canExecute()) {
                         // dann noch mit RuntimeExec versuchen
                         final RuntimeExec r = new RuntimeExec(progData.getProgPath());
@@ -401,21 +402,21 @@ public class SetsPrograms {
                         } else {
                             // läßt sich nicht starten
                             ret = false;
-                            text += PIPE + LEER + "Falscher Programmpfad!\n";
-                            text += PIPE + LEER + PFEIL + "Programmname: " + progData.getName() + '\n';
-                            text += PIPE + LEER + LEER + "Pfad: " + progData.getProgPath() + '\n';
+                            text += PIPE + LEER + "Falscher Programmpfad!" + PConst.LINE_SEPARATOR;
+                            text += PIPE + LEER + PFEIL + "Programmname: " + progData.getName() + PConst.LINE_SEPARATOR;
+                            text += PIPE + LEER + LEER + "Pfad: " + progData.getProgPath() + PConst.LINE_SEPARATOR;
                             if (!progData.getProgPath().contains(File.separator)) {
-                                text += PIPE + LEER + PFEIL + "Wenn das Programm nicht im Systempfad liegt, " + '\n';
-                                text += PIPE + LEER + LEER + "wird der Start nicht klappen!" + '\n';
+                                text += PIPE + LEER + PFEIL + "Wenn das Programm nicht im Systempfad liegt, " + PConst.LINE_SEPARATOR;
+                                text += PIPE + LEER + LEER + "wird der Start nicht klappen!" + PConst.LINE_SEPARATOR;
                             }
                         }
                     }
                 }
                 if (ret) {
                     //sollte alles passen
-                    text += PIPE + PFEIL + "Ok!" + '\n';
+                    text += PIPE + PFEIL + "Ok!" + PConst.LINE_SEPARATOR;
                 }
-                text += "++++++++++++++++++++++++++++++++++++++++++++" + "\n\n\n";
+                text += "++++++++++++++++++++++++++++++++++++++++++++" + "" + PConst.LINE_SEPARATORx3;
             }
         }
         PAlert.showInfoAlert("Set", "Sets prüfen", text);

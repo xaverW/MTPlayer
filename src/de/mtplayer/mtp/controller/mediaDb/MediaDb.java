@@ -20,6 +20,7 @@ package de.mtplayer.mtp.controller.mediaDb;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
+import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
@@ -128,7 +129,7 @@ public class MediaDb {
             if (!dir.exists() && !dir.mkdirs()) {
                 PLog.errorLog(932102478, "Kann den Pfad nicht anlegen: " + dir.toString());
                 Platform.runLater(() -> PAlert.showErrorAlert("Fehler beim Schreiben",
-                        "Der Pfad zum Schreiben der Mediensammlung kann nicht angelegt werden: \n" +
+                        "Der Pfad zum Schreiben der Mediensammlung kann nicht angelegt werden: " + PConst.LINE_SEPARATOR +
                                 path.toString()));
                 return;
             }
@@ -141,7 +142,7 @@ public class MediaDb {
             list.add("   --> Fehler, nicht geschrieben!");
             PLog.errorLog(931201478, ex, "nach: " + path.toString());
             Platform.runLater(() -> PAlert.showErrorAlert("Fehler beim Schreiben",
-                    "Die Mediensammlung konnte nicht geschrieben werden:\n" +
+                    "Die Mediensammlung konnte nicht geschrieben werden:" + PConst.LINE_SEPARATOR +
                             path.toString()));
         }
 

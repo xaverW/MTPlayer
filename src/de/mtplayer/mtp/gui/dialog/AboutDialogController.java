@@ -22,6 +22,7 @@ import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.Icons;
+import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
 import javafx.geometry.Insets;
@@ -81,7 +82,7 @@ public class AboutDialogController extends PDialogExtra {
         gridPane.add(text, 0, row, 2, 1);
 
 
-        text = new Text("\nVersion: " + Functions.getProgVersion());
+        text = new Text(PConst.LINE_SEPARATOR + "Version: " + Functions.getProgVersion());
         text.setFont(new Font(18));
         gridPane.add(text, 0, ++row, 2, 1);
 
@@ -91,18 +92,18 @@ public class AboutDialogController extends PDialogExtra {
         gridPane.add(text, 0, ++row, 2, 1);
 
 
-        text = new Text("\n\nAutoren");
+        text = new Text(PConst.LINE_SEPARATORx2 + "Autoren");
         text.setFont(Font.font(null, FontWeight.BOLD, 15));
         gridPane.add(text, 0, ++row, 2, 1);
 
-        text = new Text("Xaver W. (xaverW)\n" +
+        text = new Text("Xaver W. (xaverW)" + PConst.LINE_SEPARATOR +
                 "Christian F. (derreisende77)");
         text.setFont(new Font(15));
         gridPane.add(text, 0, ++row, 2, 1);
 
 
         // Pfade
-        text = new Text("\n\nProgramm Informationen");
+        text = new Text(PConst.LINE_SEPARATORx2 + "Programm Informationen");
         text.setFont(Font.font(null, FontWeight.BOLD, 15));
         gridPane.add(text, 0, ++row, 2, 1);
 
@@ -139,7 +140,7 @@ public class AboutDialogController extends PDialogExtra {
 
 
         // Java
-        text = new Text("\n\nJava Informationen");
+        text = new Text(PConst.LINE_SEPARATORx2 + "Java Informationen");
         text.setFont(Font.font(null, FontWeight.BOLD, 15));
         gridPane.add(text, 0, ++row, 2, 1);
 
@@ -165,7 +166,7 @@ public class AboutDialogController extends PDialogExtra {
         text.setFill(GRAY);
         gridPane.add(text, 1, row);
 
-        text = new Text("\n\nEin Dankeschön an alle,\ndie zu dieser Software beigetragen haben.");
+        text = new Text(PConst.LINE_SEPARATORx2 + "Ein Dankeschön an alle," + PConst.LINE_SEPARATOR + "die zu dieser Software beigetragen haben.");
         text.setFont(Font.font(null, FontWeight.BOLD, 15));
         gridPane.add(text, 0, ++row, 2, 1);
 

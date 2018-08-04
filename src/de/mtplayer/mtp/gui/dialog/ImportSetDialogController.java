@@ -24,6 +24,7 @@ import de.mtplayer.mtp.gui.configDialog.SetPaneController;
 import de.mtplayer.mtp.gui.dialogStart.DownPathPane;
 import de.mtplayer.mtp.gui.dialogStart.PathPane;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
+import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.dialog.PDialog;
 import javafx.geometry.Insets;
@@ -68,11 +69,11 @@ public class ImportSetDialogController extends PDialog {
         btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
         btnHelp.setOnAction(a -> PAlert.showHelpAlert("Set zurücksetzen",
                 "\"Bestehende Sets durch die neuen ersetzen\"" +
-                        "\n\n" +
-                        "Damit werden alle Sets (auch eigene), die zum Abspielen\n" +
-                        "und Aufzeichnen der Filme gebraucht werden, gelöscht.\n" +
-                        "Anschließend werden die aktuellen Standardsets\n" +
-                        "eingerichtet.\n" +
+                        PConst.LINE_SEPARATORx2 +
+                        "Damit werden alle Sets (auch eigene), die zum Abspielen" + PConst.LINE_SEPARATOR +
+                        "und Aufzeichnen der Filme gebraucht werden, gelöscht." + PConst.LINE_SEPARATOR +
+                        "Anschließend werden die aktuellen Standardsets" + PConst.LINE_SEPARATOR +
+                        "eingerichtet." + PConst.LINE_SEPARATOR +
                         "Es kann dann direkt damit weitergearbeitet werden."));
 
         btnImport.setOnAction(event -> {

@@ -20,6 +20,7 @@ import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.filmlist.writeFilmlist.WriteFilmlistJson;
+import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
@@ -76,10 +77,10 @@ public class ProgSave {
                 PLog.userLog("Die Einstellungen konnten nicht zurückgesetzt werden.");
                 Platform.runLater(() -> {
                     PAlert.showErrorAlert("Fehler", "Einstellungen zurückgesetzen",
-                            "Die Einstellungen konnten nicht zurückgesetzt werden.\n\n"
-                                    + "Sie müssen jetzt das Programm beenden, dann den Ordner:\n\n"
+                            "Die Einstellungen konnten nicht zurückgesetzt werden." + PConst.LINE_SEPARATORx2
+                                    + "Sie müssen jetzt das Programm beenden, dann den Ordner:" + PConst.LINE_SEPARATORx2
                                     + ProgInfos.getSettingsDirectory_String()
-                                    + "\n\n"
+                                    + PConst.LINE_SEPARATORx2
                                     + "von Hand löschen und das Programm wieder starten.");
                     open = false;
                 });

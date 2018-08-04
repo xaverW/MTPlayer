@@ -16,6 +16,8 @@
 
 package de.mtplayer.mtp.gui.tools;
 
+import de.p2tools.p2Lib.PConst;
+
 public class HelpText {
 
     public static final String SEARCH_MEDIA_DIALOG = "Ein Filterwort kann auch Leerzeichen enthalten, " +
@@ -24,158 +26,160 @@ public class HelpText {
             "Stelle enthalten. Man sollte den Suchbegriff " +
             "also so formulieren, dass die eigenen Vorgaben " +
             "für Dateinamen erfüllt sind." +
-            "\n" +
-            "\n" +
+            PConst.LINE_SEPARATOR +
+            PConst.LINE_SEPARATOR +
             "Groß- und Kleinschreibung wird beim Suchen " +
             "nicht beachtet." +
-            "\n" +
-            "\n" +
+            PConst.LINE_SEPARATOR +
+            PConst.LINE_SEPARATOR +
             "In dem Filter kann auch mit regulären Ausdrücken (RegExp)  " +
             "gesucht werden. Diese müssen mit \"#:\" eingeleitet " +
             "werden." +
-            "\n" +
-            "\n" +
-            "#:Abend.*\n" +
+            PConst.LINE_SEPARATOR +
+            PConst.LINE_SEPARATOR +
+            "#:Abend.*" + PConst.LINE_SEPARATOR +
             "Das bedeutet z.B.: Es werden alle Dateien gefunden, die " +
             "mit \"Abend\" beginnen." +
-            "\n" +
-            "\n" +
+            PConst.LINE_SEPARATOR +
+            PConst.LINE_SEPARATOR +
             "Auch bei den regulären Ausdrücken spielt Groß- und " +
             "Kleinschreibung keine Rolle." +
-            "\n" +
-            "\n" +
+            PConst.LINE_SEPARATOR +
+            PConst.LINE_SEPARATOR +
             "https://de.wikipedia.org/wiki/Regul%C3%A4rer_Ausdruck";
 
     public static final String PROG_PATHS = "Hiermit können die Standardprogramme zum \"Ansehen\" und \"Aufzeichnen\" " +
             "der Filme eingetragen werden. Werden die Pfade nicht automatisch erkannt, " +
             "kann man sie auch per Hand auswählen." +
-            "\n" +
-            "\n" +
+            PConst.LINE_SEPARATOR +
+            PConst.LINE_SEPARATOR +
             "Um alle Filme ansehen und aufzeichnen zu können, müssen mindestens " +
             "diese Programme installiert sein:" +
-            "\n" +
-            "\n" +
-            "VLC\n" +
+            PConst.LINE_SEPARATOR +
+            PConst.LINE_SEPARATOR +
+            "VLC" + PConst.LINE_SEPARATOR +
             "Dieses Programm dient zum Ansehen und teilweise auch zum Aufzeichnen der Filme." +
-            "\n" +
-            "\n" +
-            "flvstreamer\n" +
+            PConst.LINE_SEPARATOR +
+            PConst.LINE_SEPARATOR +
+            "flvstreamer" + PConst.LINE_SEPARATOR +
             "Damit können Flashfilme (die URL beginnt mit \"rtmp\") aufgezeichnet werden." +
-            "\n" +
-            "\n" +
-            "ffmpeg\n" +
+            PConst.LINE_SEPARATOR +
+            PConst.LINE_SEPARATOR +
+            "ffmpeg" + PConst.LINE_SEPARATOR +
             "Zum Aufzeichnen von Playlisten (URL endet mit \"m3u8\")" +
-            "\n" +
-            "\n" +
-            "\n" +
-            "Linux:\n" +
-            "Die Programme können über die Paketverwaltung eingespielt werden.\n" +
-            "\n" +
-            "\n" +
-            "Windows, OS X:\n" +
+            PConst.LINE_SEPARATOR +
+            PConst.LINE_SEPARATOR +
+            PConst.LINE_SEPARATOR +
+            "Linux:" + PConst.LINE_SEPARATOR +
+            "Die Programme können über die Paketverwaltung eingespielt werden." + PConst.LINE_SEPARATOR +
+            PConst.LINE_SEPARATOR +
+            PConst.LINE_SEPARATOR +
+            "Windows, OS X:" + PConst.LINE_SEPARATOR +
             "Die Programme \"flvstreamer\" und \"ffmpeg\" sind bereits im Programm " +
             "integriert. Es muss bloss noch \"VLC\" aus dem Internet geladen werden:" +
-            "\n" +
-            "\n" +
-            "\n" +
-            "http://www.videolan.org\n" +
-            "https://savannah.nongnu.org/projects/flvstreamer/\n" +
-            "http://ffmpeg.org\n";
+            PConst.LINE_SEPARATOR +
+            PConst.LINE_SEPARATOR +
+            PConst.LINE_SEPARATOR +
+            "http://www.videolan.org" + PConst.LINE_SEPARATOR +
+            "https://savannah.nongnu.org/projects/flvstreamer/" + PConst.LINE_SEPARATOR +
+            "http://ffmpeg.org" + PConst.LINE_SEPARATOR;
 
     public static final String MEDIA_DIALOG = "Die Mediensammlung kann im Tab \"Filme\" und Tab \"Download\" " +
-            "mit der rechten Maustaste auf einen Film:\n" +
-            "\"Titel in der Mediensammlung suchen\"\n" +
+            "mit der rechten Maustaste auf einen Film:"
+            + PConst.LINE_SEPARATOR +
+            "\"Titel in der Mediensammlung suchen\""
+            + PConst.LINE_SEPARATOR +
             "nach einem Filmtitel durchsucht werden. " +
-            "\n" +
-            "\n" +
+            PConst.LINE_SEPARATOR +
+            PConst.LINE_SEPARATOR +
             "\"Keine Dateien mit diesem Suffix\": Dateien mit einem dort " +
             "angegebenen Suffix werden nicht in den Index aufgenommen." +
-            "\n" +
-            "\n" +
+            PConst.LINE_SEPARATOR +
+            PConst.LINE_SEPARATOR +
             "\"Nur Dateien mit diesem Suffix\": Da werden dann genau die Dateien " +
             "genommen, auf die das zutrifft." +
-            "\n" +
-            "\n" +
+            PConst.LINE_SEPARATOR +
+            PConst.LINE_SEPARATOR +
             "Suffixe können durch \"Komma\" getrennt angegeben werden: " +
             "\"txt,xml\" besagt, Dateien die mit \".txt\" oder \".xml\" enden " +
             "werden nicht - oder nur diese werden - in den Index " +
             "aufgenommen." +
-            "\n" +
-            "\n" +
+            PConst.LINE_SEPARATOR +
+            PConst.LINE_SEPARATOR +
             "Die angegebenen Pfade zum Durchsuchen, werden beim Programmstart " +
             "abgesucht, die müssen also verfügbar sein. Dafür ist der aktuelle " +
             "Bestand an Filmen auch in der MedienDB enthalten." +
-            "\n";
+            PConst.LINE_SEPARATOR;
 
 
     public static final String FILTER_FIELD =
-            "\n" +
+            PConst.LINE_SEPARATOR +
                     "\"Sender\" und \"Thema\" können exakt verglichen werden. " +
                     "Das heißt, der im Feld \"Sender\\Thema\" angegebene Text muss " +
                     "genau dem \"Sender\\Thema\" des Films entsprechen. " +
-                    "\n" +
-                    "\n" +
+                    PConst.LINE_SEPARATOR +
+                    PConst.LINE_SEPARATOR +
                     "Bei den anderen Feldern (oder wenn exakt ausgeschaltet ist) " +
                     "muss die Eingabe im " +
                     "entsprechendem Feld des Films nur enthalten sein." +
-                    "\n" +
-                    "\n" +
+                    PConst.LINE_SEPARATOR +
+                    PConst.LINE_SEPARATOR +
                     "Beim Feld \"Thema/Titel\" muss der Filter im " +
                     "\"Thema\" ODER \"Titel\" enthalten sein." +
-                    "\n";
+                    PConst.LINE_SEPARATOR;
     public static final String FILTER_EXACT =
-            "\n" +
+            PConst.LINE_SEPARATOR +
                     "\"exakt\" bedeutet, dass z.B. \"Abend\" im Feld Thema nur die Filme " +
                     "findet, die genau das Thema \"Abend\" haben. " +
                     "Ist \"exakt\" ausgeschaltet und steht im Feld \"Sender\" z.B. \"a\" " +
                     "dann werden alle Sender die ein \"a\" enthalten gefunden!" +
-                    "\n" +
-                    "\n" +
+                    PConst.LINE_SEPARATOR +
+                    PConst.LINE_SEPARATOR +
                     "Groß- und Kleinschreibung wird beim Filtern " +
                     "nicht beachtet." +
-                    "\n" +
-                    "\n" +
+                    PConst.LINE_SEPARATOR +
+                    PConst.LINE_SEPARATOR +
                     "In allen Feldern (wenn nicht \"exakt\" eingestellt ist) " +
                     "kann auch nach mehreren Begriffen gesucht werden (diese " +
                     "werden durch \"Komma\" oder \"Doppelpunkt\" getrennt angegeben " +
                     "und können auch Leerzeichen enthalten)." +
-                    "\n" +
+                    PConst.LINE_SEPARATOR +
                     "\"Sport,Fussball\" sucht nach Filmen die im jeweiligen Feld den " +
                     "Begriff \"Sport\" ODER \"Fussball\" haben." +
-                    "\n" +
+                    PConst.LINE_SEPARATOR +
                     "\"Sport:Fussball\" sucht nach Filmen die im jeweiligen Feld den " +
                     "Begriff \"Sport\" UND \"Fussball\" haben." +
-                    "\n" +
-                    "\n" +
+                    PConst.LINE_SEPARATOR +
+                    PConst.LINE_SEPARATOR +
                     "In allen Feldern (wenn nicht \"exakt\" eingestellt ist) " +
                     "kann auch mit regulären Ausdrücken gesucht " +
                     "werden. Diese müssen mit \"#:\" eingeleitet werden. " +
                     "Auch bei den regulären Ausdrücken wird nicht zwischen " +
                     "Groß- und Kleinschreibung unterschieden. " +
-                    "\n" +
-                    "#:Abend.*\n" +
-                    "Das bedeutet z.B.: Es werden alle Filme gefunden, die \n" +
-                    "im jeweiligen Feld mit \"Abend\" beginnen.\n" +
-                    "\n" +
-                    "\n" +
-                    "https://de.wikipedia.org/wiki/Regul%C3%A4rer_Ausdruck\n" +
-                    "\n";
+                    PConst.LINE_SEPARATOR +
+                    "#:Abend.*" + PConst.LINE_SEPARATOR +
+                    "Das bedeutet z.B.: Es werden alle Filme gefunden, die " + PConst.LINE_SEPARATOR +
+                    "im jeweiligen Feld mit \"Abend\" beginnen." + PConst.LINE_SEPARATOR +
+                    PConst.LINE_SEPARATOR +
+                    PConst.LINE_SEPARATOR +
+                    "https://de.wikipedia.org/wiki/Regul%C3%A4rer_Ausdruck" + PConst.LINE_SEPARATOR +
+                    PConst.LINE_SEPARATOR;
 
     public static final String GUI_FILM_FILTER =
             FILTER_FIELD +
-                    "\n" +
+                    PConst.LINE_SEPARATOR +
                     "Im Filter \"Irgendwo\" wird zum Titel und Thema " +
                     "auch die Beschreibung geprüft." +
-                    "\n" +
-                    "\n" +
+                    PConst.LINE_SEPARATOR +
+                    PConst.LINE_SEPARATOR +
                     "Beim Feld \"URL\" muss der Filter in der URL " +
                     "des Films ODER der Website des Films enthalten sein." +
-                    "\n" +
+                    PConst.LINE_SEPARATOR +
                     FILTER_EXACT +
-                    "\n" +
-                    "\n" +
-                    "Filterprofile:\n" +
-                    "==================\n" +
+                    PConst.LINE_SEPARATOR +
+                    PConst.LINE_SEPARATOR +
+                    "Filterprofile:" + PConst.LINE_SEPARATOR +
+                    "==================" + PConst.LINE_SEPARATOR +
                     "Mit den Buttons unten, kann man eingestellte Filter speichern " +
                     "und auch wieder abrufen. So wird der gespeicherte Zustand genau " +
                     "wieder hergestellt.";
@@ -184,26 +188,26 @@ public class HelpText {
             "Bei der Funktion \"Blacklist\" werden Filme, die den " +
                     "Angaben in einer Zeile in der Tabelle entsprechen, " +
                     "nicht angezeigt." +
-                    "\n\n" +
+                    PConst.LINE_SEPARATORx2 +
                     "Die Funktion \"Whitelist\" zeigt nur die Filme an, die " +
                     "den Angaben in einer Zeile in der Tabelle entsprechen." +
-                    "\n\n" +
+                    PConst.LINE_SEPARATORx2 +
                     "Beim Umschalten \"Blacklist - Whitelist\" werden genau " +
                     "die vorher nicht angezeigten Filme jetzt angezeigt." +
-                    "\n\n" +
+                    PConst.LINE_SEPARATORx2 +
                     "Mit \"Treffer zählen\" kann überprüft werden, wieviele Filme " +
                     "in der Filmliste jeder Eintrag in der Blacklist findet. Damit lässt " +
                     "sich die Blacklist optimieren. Eine kürzere Blacklist führt zu schnelleren " +
                     "Ergebnissen." +
-                    "\n\n" +
+                    PConst.LINE_SEPARATORx2 +
 
                     FILTER_FIELD +
                     FILTER_EXACT;
 
-    public static final String CONFIG_GEO = "Nicht alle Filme lassen sich im Ausland abrufen.\n" +
-            "Wenn geblockte Filme markiert werden sollen, kann man hier seinen Standort angeben.\n" +
-            "\n" +
-            "Der Download geogeblockter Sendungen bricht im Ausland sofort ab (Download \"fehlerhaft\").\n" +
+    public static final String CONFIG_GEO = "Nicht alle Filme lassen sich im Ausland abrufen." + PConst.LINE_SEPARATOR +
+            "Wenn geblockte Filme markiert werden sollen, kann man hier seinen Standort angeben." + PConst.LINE_SEPARATOR +
+            PConst.LINE_SEPARATOR +
+            "Der Download geogeblockter Sendungen bricht im Ausland sofort ab (Download \"fehlerhaft\")." + PConst.LINE_SEPARATOR +
             "MTPlayer kennt nicht alle Muster für geogeblockte Sendungen. Ob ein " +
             "fehlerhafter Download auf Geoblocking " +
             "zurückzuführen ist, zeigt sich beim Klick auf " +
@@ -213,28 +217,28 @@ public class HelpText {
             "abgespielt werden kann, liegt fast immer " +
             "Geoblocking vor.";
 
-    public static final String GUI_FILMS_EDIT_FILTER = "Hier können die Filter\n" +
-            "die angezeigt werden sollen, ein- und ausgeschaltet werden.\n" +
-            "\n" +
-            "Ausgeschaltete Filter werden beim Suchen der Filme\n" +
-            "auch nicht berücksichtigt.\n\n" +
+    public static final String GUI_FILMS_EDIT_FILTER = "Hier können die Filter" + PConst.LINE_SEPARATOR +
+            "die angezeigt werden sollen, ein- und ausgeschaltet werden." + PConst.LINE_SEPARATOR +
+            PConst.LINE_SEPARATOR +
+            "Ausgeschaltete Filter werden beim Suchen der Filme" + PConst.LINE_SEPARATOR +
+            "auch nicht berücksichtigt." + PConst.LINE_SEPARATORx2 +
             "Mit weniger Filtern ist auch der Suchvorgang schneller";
 
     public static final String SET = "" +
-            "\n\n" +
+            PConst.LINE_SEPARATORx2 +
             "Mehrere Einträge können mit \"Komma\" getrennt, angegeben werden";
 
     public static final String SETDATA_PRAEFIX = "Filme, deren URL mit \"Präfix\" beginnt und mit \"Suffix\" endet, " +
             "werden nicht mit einem Hilfsprogramm gespeichert, " +
             "sondern direkt geladen." +
-            "\n\n" +
+            PConst.LINE_SEPARATORx2 +
             "Mehrere Einträge können mit \"Komma\" getrennt, angegeben werden";
 
     public static final String SETDATA_RES = "Nicht jede Auflösung ist bei jedem Sender möglich und ist die " +
             "gewünschte Auflösung nicht verfügbar, " +
-            "wird in \"hoher\" Auflösung geladen.\n\n" +
-            "Die Auflösung gilt nur für manuell gestartete Downloads\n" +
-            "und zum Abspielen von Filmen. Für Abos wird die\n" +
+            "wird in \"hoher\" Auflösung geladen." + PConst.LINE_SEPARATORx2 +
+            "Die Auflösung gilt nur für manuell gestartete Downloads" + PConst.LINE_SEPARATOR +
+            "und zum Abspielen von Filmen. Für Abos wird die" + PConst.LINE_SEPARATOR +
             "im Abo vorgegebene Auflösung verwendet.";
 
     public static final String ABO_RES = "Nicht jede Auflösung ist bei jedem Sender möglich und ist die " +
@@ -243,7 +247,7 @@ public class HelpText {
 
     public static final String SETDATA_SUBDIR = "Es wird ein Unterordner mit dem Thema oder " +
             "Abozielpfad angelegt." +
-            "\n" +
+            PConst.LINE_SEPARATOR +
             "Ist der Abozielpfad leer, wird das Thema verwendete";
 
     public static final String SETDATA_RESET_COLOR = "Wird das Set als Button verwendet, " +
@@ -255,20 +259,20 @@ public class HelpText {
 
     public static final String DOWNLOAD_ONLY_ASCII = "Es werden alle Zeichen \"über 127\" ersetzt. " +
             "Auch Umlaute wie \"ö -> oe\" werden ersetzt." +
-            "\n\n" +
+            PConst.LINE_SEPARATORx2 +
             "Wenn die Ersetzungstabelle aktiv ist, wird sie vorher abgearbeitet.";
 
     public static final String DOWNLOAD_ONE_SERVER = "Es gibt eine Begrenzung auf " +
             "2 Downloads pro Server " +
             "die nicht überschritten wird. " +
-            "\n" +
-            "\n" +
+            PConst.LINE_SEPARATOR +
+            PConst.LINE_SEPARATOR +
             "Das kann auch noch " +
             "auf 1 Download pro Server " +
             "(z.B. nur ein Download von \"www.zdf.de\") " +
             "weiter begrenzt werden." +
-            "\n" +
-            "\n" +
+            PConst.LINE_SEPARATOR +
+            PConst.LINE_SEPARATOR +
             "Das kann bei Downloadproblemen helfen.";
 
     public static final String DOWNLOAD_FINISHED = "Wird ein Download beendet, wird man mit einem Fenster informiert.";
@@ -278,7 +282,7 @@ public class HelpText {
 
 
     public static final String BLACKLIST_GEO = "Geogeblockte Filme können im jeweiligen \"Ausland\" nicht abgerufen werden. " +
-            "\n\n" +
+            PConst.LINE_SEPARATORx2 +
             "(Dazu muss die eigene Position in den Einstellungen angegeben werden)";
 
     public static final String BLACKLIST_SIZE = "Kurze Filme sind oft nur Trailer. Filme, die keine " +
@@ -297,11 +301,11 @@ public class HelpText {
     public static final String LOAD_FILM_ONLY_DAYS = "Es werden nur Filme der letzten " +
             "xx Tage geladen. " +
             "Bei \"Alle\" werden alle Filme geladen. " +
-            "\n" +
+            PConst.LINE_SEPARATOR +
             "(Eine kleinere Filmliste " +
             "kann bei Rechnern mit wenig " +
             "Speicher hilfreich sein.) " +
-            "\n" +
+            PConst.LINE_SEPARATOR +
             "Auswirkung hat das erst nach dem " +
             "Neuladen der kompletten Filmliste.";
 
@@ -328,7 +332,7 @@ public class HelpText {
 
     public static final String LOGFILE = "Hier kann ein Ordner angegeben werden " +
             "in dem ein Logfile erstellt wird. Darin wird der Programmverlauf skizziert. " +
-            "Das kann hilfreich sein, wenn das Programm nicht wie erwartet funktioniert.\n";
+            "Das kann hilfreich sein, wenn das Programm nicht wie erwartet funktioniert." + PConst.LINE_SEPARATOR;
 
     public static final String FILEMANAGER = "Im Tab \"Downloads\" kann man mit der rechten " +
             "Maustaste den Downloadordner (Zielordner) " +
@@ -351,7 +355,7 @@ public class HelpText {
 
     public static final String MEDIA_COLLECTION = "Hier kann eine Mediensammlung angelegt werden. Vor dem " +
             "Download eines Films, kann dieser mit der Mediensammlung abgeglichen werden. So können doppelte " +
-            "Downloads vermieden werden.\n" +
+            "Downloads vermieden werden." + PConst.LINE_SEPARATOR +
             "Dazu werden Ordner mit Medien angegeben, die das Programm absucht. " +
             "Die gefundenen Medien werden dann in die Sammlung integriert. Es können Ordner angegeben " +
             "werden, die beim Programmstart jedes mal abgesucht werden. Auch ist es möglich, Ordner anzugeben, " +
@@ -360,7 +364,7 @@ public class HelpText {
 
     public static final String EXTERN_MEDIA_COLLECTION = "Externe Mediensammlungen werden nicht bei " +
             "jedem Programmstart neu eingelesen. Die können dadurch auf externen Medien liegen und " +
-            "müssen nur einmal eingelesen werden. Hier können externe Mediensammlungen verwaltet werden:\n" +
+            "müssen nur einmal eingelesen werden. Hier können externe Mediensammlungen verwaltet werden:" + PConst.LINE_SEPARATOR +
             "Neue anlegen, aktualisieren oder auch wieder löschen." +
             "";
     public static final String INTERN_MEDIA_COLLECTION = "Die hier angegebenen Ordner werden bei jedem Programmstart " +

@@ -20,6 +20,7 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.download.DownloadTools;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
+import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlertFileChosser;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -120,7 +121,7 @@ public class SetList extends SimpleListProperty<SetData> {
         // liefert den Pfad wenn vorhanden, wenn nicht wird er in einem Dialog abgefragt
         if (ProgConfig.SYSTEM_PATH_VLC.get().isEmpty()) {
             ProgConfig.SYSTEM_PATH_VLC.setValue(PAlertFileChosser.showAlertFileChooser("VLC", "VLC wird nicht gefunden.",
-                    "Bitte den Pfad zum\n" +
+                    "Bitte den Pfad zum" + PConst.LINE_SEPARATOR +
                             "VLC-Player angeben.", false, ProgData.getInstance().primaryStage, new Icons().ICON_BUTTON_FILE_OPEN));
         }
         return ProgConfig.SYSTEM_PATH_VLC.get();
@@ -130,7 +131,7 @@ public class SetList extends SimpleListProperty<SetData> {
         // liefert den Pfad wenn vorhanden, wenn nicht wird er in einem Dialog abgefragt
         if (ProgConfig.SYSTEM_PATH_FLVSTREAMER.get().isEmpty()) {
             ProgConfig.SYSTEM_PATH_FLVSTREAMER.setValue(PAlertFileChosser.showAlertFileChooser("flvstreamer", "flvstreamer wird nicht gefunden.",
-                    "Bitte den Pfad zum\n" +
+                    "Bitte den Pfad zum" + PConst.LINE_SEPARATOR +
                             "flvstreamer angeben.", false, ProgData.getInstance().primaryStage, new Icons().ICON_BUTTON_FILE_OPEN));
         }
         return ProgConfig.SYSTEM_PATH_FLVSTREAMER.get();
@@ -140,7 +141,7 @@ public class SetList extends SimpleListProperty<SetData> {
         // liefert den Pfad wenn vorhanden, wenn nicht wird er in einem Dialog abgefragt
         if (ProgConfig.SYSTEM_PATH_FFMPEG.get().isEmpty()) {
             ProgConfig.SYSTEM_PATH_FFMPEG.setValue(PAlertFileChosser.showAlertFileChooser("ffmpeg", "ffmpeg wird nicht gefunden.",
-                    "Bitte den Pfad zu\n" +
+                    "Bitte den Pfad zu" + PConst.LINE_SEPARATOR +
                             "ffmpeg angeben.", false, ProgData.getInstance().primaryStage, new Icons().ICON_BUTTON_FILE_OPEN));
         }
         return ProgConfig.SYSTEM_PATH_FFMPEG.get();

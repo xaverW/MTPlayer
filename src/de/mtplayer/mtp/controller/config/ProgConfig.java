@@ -24,6 +24,7 @@ import de.mtplayer.mLib.tools.SystemInfo;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
+import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.tools.PStringUtils;
 import de.p2tools.p2Lib.tools.SysTools;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -198,40 +199,40 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs COLOR__DOWNLOAD_NAME_ERROR = addNewKey("COLOR_DOWNLOAD_NAME_ERROR");
 
 
-    public static String PARAMETER_INFO = "\n" + "\t"
-            + "\"__system-parameter__xxx\" können nur im Konfigfile geändert werden\n"
-            + "\t" + "und sind auch nicht für ständige Änderungen gedacht.\n"
-            + "\t" + "Wird eine Zeile gelöscht, wird der Parameter wieder mit dem Standardwert angelegt.\n"
-            + "\n"
-            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getKey() + "\n"
+    public static String PARAMETER_INFO = PConst.LINE_SEPARATOR + "\t"
+            + "\"__system-parameter__xxx\" können nur im Konfigfile geändert werden" + PConst.LINE_SEPARATOR
+            + "\t" + "und sind auch nicht für ständige Änderungen gedacht." + PConst.LINE_SEPARATOR
+            + "\t" + "Wird eine Zeile gelöscht, wird der Parameter wieder mit dem Standardwert angelegt." + PConst.LINE_SEPARATOR
+            + PConst.LINE_SEPARATOR
+            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getKey() + PConst.LINE_SEPARATOR
             + "\t" + "Timeout für direkte Downloads, Standardwert: "
-            + SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getInitValue() + "\n" +
-            "\n"
-            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getKey() + "\n"
-            + "\t" + "max. Startversuche für fehlgeschlagene Downloads, am Ende aller Downloads\n"
+            + SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getInitValue() + PConst.LINE_SEPARATOR +
+            PConst.LINE_SEPARATOR
+            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getKey() + PConst.LINE_SEPARATOR
+            + "\t" + "max. Startversuche für fehlgeschlagene Downloads, am Ende aller Downloads" + PConst.LINE_SEPARATOR
             + "\t" + "(Versuche insgesamt: DOWNLOAD_MAX_RESTART * DOWNLOAD_MAX_RESTART_HTTP), Standardwert: " +
-            SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getInitValue() + "\n" +
-            "\n"
-            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP.getKey() + "\n"
-            + "\t" + "max. Startversuche für fehlgeschlagene Downloads, direkt beim Download,\n"
+            SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getInitValue() + PConst.LINE_SEPARATOR +
+            PConst.LINE_SEPARATOR
+            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP.getKey() + PConst.LINE_SEPARATOR
+            + "\t" + "max. Startversuche für fehlgeschlagene Downloads, direkt beim Download," + PConst.LINE_SEPARATOR
             + "\t" + "(Versuche insgesamt: DOWNLOAD_MAX_RESTART * DOWNLOAD_MAX_RESTART_HTTP), Standardwert: "
-            + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP.getInitValue() + "\n" +
-            "\n"
-            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECOND.getKey() + "\n"
+            + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP.getInitValue() + PConst.LINE_SEPARATOR +
+            PConst.LINE_SEPARATOR
+            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECOND.getKey() + PConst.LINE_SEPARATOR
             + "\t" + "Beim Dialog \"Download weiterführen\" wird nach dieser Zeit der DownloadXml weitergeführt, Standardwert: "
-            + SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECOND.getInitValue() + "\n" +
-            "\n"
-            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getKey() + "\n"
+            + SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECOND.getInitValue() + PConst.LINE_SEPARATOR +
+            PConst.LINE_SEPARATOR
+            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getKey() + PConst.LINE_SEPARATOR
             + "\t" + "Downloadfehlermeldung wird xx Sedunden lang angezeigt, Standardwert: "
-            + SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getInitValue() + "\n" +
-            "\n"
-            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_PROGRESS.getKey() + "\n"
+            + SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getInitValue() + PConst.LINE_SEPARATOR +
+            PConst.LINE_SEPARATOR
+            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_PROGRESS.getKey() + PConst.LINE_SEPARATOR
             + "\t" + "Downloadprogress im Terminal (-auto) anzeigen: "
-            + SYSTEM_PARAMETER_DOWNLOAD_PROGRESS.getInitValue() + "\n" +
-            "\n"
-            + "\t" + SYSTEM_PARAMETER_USERAGENT.getKey() + "\n"
+            + SYSTEM_PARAMETER_DOWNLOAD_PROGRESS.getInitValue() + PConst.LINE_SEPARATOR +
+            PConst.LINE_SEPARATOR
+            + "\t" + SYSTEM_PARAMETER_USERAGENT.getKey() + PConst.LINE_SEPARATOR
             + "\t" + "Useragent für direkte Downloads, Standardwert: "
-            + SYSTEM_PARAMETER_USERAGENT.get() + "\n";
+            + SYSTEM_PARAMETER_USERAGENT.get() + PConst.LINE_SEPARATOR;
 
     public static void logAllConfigs() {
         ArrayList<String> list = new ArrayList<>();

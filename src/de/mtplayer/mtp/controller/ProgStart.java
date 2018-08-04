@@ -21,6 +21,7 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
+import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.tools.log.LogMsg;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -141,11 +142,11 @@ public class ProgStart {
 
 
         if (PAlert.BUTTON.YES != PAlert.showAlert_yes_no("Gesicherte Einstellungen laden?",
-                "Die Einstellungen sind beschädigt\n" +
+                "Die Einstellungen sind beschädigt" + PConst.LINE_SEPARATOR +
                         "und können nicht geladen werden.",
-                "Soll versucht werden, mit gesicherten\n"
-                        + "Einstellungen zu starten?\n\n"
-                        + "(ansonsten startet das Programm mit\n"
+                "Soll versucht werden, mit gesicherten" + PConst.LINE_SEPARATOR
+                        + "Einstellungen zu starten?" + PConst.LINE_SEPARATORx2
+                        + "(ansonsten startet das Programm mit" + PConst.LINE_SEPARATOR
                         + "Standardeinstellungen)")) {
 
             PLog.userLog("User will kein Backup laden.");

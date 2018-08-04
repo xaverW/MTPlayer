@@ -18,6 +18,7 @@ package de.mtplayer.mtp.controller.mediaDb;
 
 import de.mtplayer.mLib.tools.Data;
 import de.mtplayer.mtp.controller.config.ProgConst;
+import de.p2tools.p2Lib.PConst;
 
 public class MediaData extends Data<MediaData> {
 
@@ -134,7 +135,7 @@ public class MediaData extends Data<MediaData> {
     }
 
     private static String cleanUp(String s) {
-        s = s.replace("\n", "");
+        s = s.replace(PConst.LINE_SEPARATOR, "");
         s = s.replace("|", "");
         return s;
     }

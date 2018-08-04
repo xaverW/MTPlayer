@@ -16,6 +16,7 @@
 
 package de.mtplayer.mtp.tools.file;
 
+import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.tools.log.PLog;
 
 import java.io.BufferedReader;
@@ -40,7 +41,7 @@ public class GetFile {
              BufferedReader br = new BufferedReader(in)) {
             String strLine;
             while ((strLine = br.readLine()) != null) {
-                ret = ret + '\n' + strLine;
+                ret = ret + PConst.LINE_SEPARATOR + strLine;
             }
         } catch (final IOException ex) {
             PLog.errorLog(885692213, ex);

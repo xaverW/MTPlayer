@@ -19,6 +19,7 @@ package de.mtplayer.mtp.gui;
 import de.mtplayer.mLib.tools.SizeTools;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.tools.Listener;
+import de.p2tools.p2Lib.PConst;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.WebView;
 
@@ -56,9 +57,9 @@ public class DownloadGuiInfo {
             webView.getEngine().loadContent("");
             return;
         }
-        final String HEAD = "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n"
-                + "<head><style type=\"text/css\"> .sans { font-family: Verdana, Geneva, sans-serif; }</style></head>\n"
-                + "<body>\n";
+        final String HEAD = "<html xmlns=\"http://www.w3.org/1999/xhtml\">" + PConst.LINE_SEPARATOR
+                + "<head><style type=\"text/css\"> .sans { font-family: Verdana, Geneva, sans-serif; }</style></head>" + PConst.LINE_SEPARATOR
+                + "<body>" + PConst.LINE_SEPARATOR;
         final String END = "</body></html>";
 
         String info = HEAD;

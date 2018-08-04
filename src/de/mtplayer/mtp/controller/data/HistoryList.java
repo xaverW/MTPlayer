@@ -21,6 +21,7 @@ import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmTools;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
+import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.tools.log.Duration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.beans.property.SimpleListProperty;
@@ -298,7 +299,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
             try (BufferedWriter bufferedWriter =
                          new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(getUrlFilePath())))) {
                 for (final String entry : newList) {
-                    bufferedWriter.write(entry + '\n');
+                    bufferedWriter.write(entry + PConst.LINE_SEPARATOR);
                 }
             } catch (final Exception ex) {
                 PLog.errorLog(784512067, ex);

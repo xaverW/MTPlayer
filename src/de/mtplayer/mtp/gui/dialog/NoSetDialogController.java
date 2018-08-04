@@ -17,6 +17,7 @@
 package de.mtplayer.mtp.gui.dialog;
 
 import de.mtplayer.mtp.controller.config.ProgData;
+import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PDialog;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -75,26 +76,26 @@ public class NoSetDialogController extends PDialog {
         textHeaderAbo.setFont(Font.font(null, FontWeight.BOLD, -1));
 
         Text textContSave = new Text(
-                "Ein Set von Programmen zum Aufzeichnen\n" +
-                        "wurde nicht angelegt.\n\n" +
-                        "Im Menü unter:\n" +
-                        "    ->Einstellungen->Aufzeichnen und Abspielen\n\n" +
-                        "ein Programm zum Aufzeichnen festlegen.\n\n\n" +
+                "Ein Set von Programmen zum Aufzeichnen" + PConst.LINE_SEPARATOR +
+                        "wurde nicht angelegt." + PConst.LINE_SEPARATORx2 +
+                        "Im Menü unter:" + PConst.LINE_SEPARATOR +
+                        "    ->Einstellungen->Aufzeichnen und Abspielen" + PConst.LINE_SEPARATORx2 +
+                        "ein Programm zum Aufzeichnen festlegen." + PConst.LINE_SEPARATORx3 +
                         "Oder jetzt die Standardsets importieren.");
         Text textContPlay = new Text(
-                "Ein Videoplayer zum Abspielen\n" +
-                        "wurde nicht angelegt.\n\n" +
-                        "Im Menü unter:\n" +
-                        "    ->Einstellungen->Aufzeichnen und Abspielen\n\n" +
-                        "einen Videoplayer zum Abspielen festlegen.\n\n\n" +
+                "Ein Videoplayer zum Abspielen" + PConst.LINE_SEPARATOR +
+                        "wurde nicht angelegt." + PConst.LINE_SEPARATORx2 +
+                        "Im Menü unter:" + PConst.LINE_SEPARATOR +
+                        "    ->Einstellungen->Aufzeichnen und Abspielen" + PConst.LINE_SEPARATORx2 +
+                        "einen Videoplayer zum Abspielen festlegen." + PConst.LINE_SEPARATORx3 +
                         "Oder jetzt die Standardsets importieren.");
 
         Text textContAbo = new Text(
-                "Ein Set von Programmen zum Aufzeichnen\n" +
-                        "der Abos wurde nicht angelegt.\n\n" +
-                        "Im Menü unter:\n" +
-                        "    ->Einstellungen->Aufzeichnen und Abspielen\n\n" +
-                        "ein Programm zum Aufzeichnen von Abos festlegen.\n\n\n" +
+                "Ein Set von Programmen zum Aufzeichnen" + PConst.LINE_SEPARATOR +
+                        "der Abos wurde nicht angelegt." + PConst.LINE_SEPARATORx2 +
+                        "Im Menü unter:" + PConst.LINE_SEPARATOR +
+                        "    ->Einstellungen->Aufzeichnen und Abspielen" + PConst.LINE_SEPARATORx2 +
+                        "ein Programm zum Aufzeichnen von Abos festlegen." + PConst.LINE_SEPARATORx3 +
                         "Oder jetzt die Standardsets importieren.");
 
         switch (text) {

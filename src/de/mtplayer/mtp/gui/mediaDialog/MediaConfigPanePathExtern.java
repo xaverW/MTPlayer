@@ -24,6 +24,7 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.mediaDb.MediaPathData;
 import de.mtplayer.mtp.gui.tools.HelpText;
+import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
@@ -92,7 +93,7 @@ public class MediaConfigPanePathExtern {
         btnAdd.setOnAction(a -> {
             if (!progData.mediaPathList.containExternal(txtName.getText()) ||
                     PAlert.showAlert_yes_no("Sammlung hinzufügen", "Sammlung: " + txtName.getText(),
-                            "Eine Sammlung mit dem Namen existiert bereits.\n" +
+                            "Eine Sammlung mit dem Namen existiert bereits." + PConst.LINE_SEPARATOR +
                                     "Sollen weitere Filme in " +
                                     "die Sammlung integriert werden?").equals(PAlert.BUTTON.YES)) {
 
@@ -123,8 +124,8 @@ public class MediaConfigPanePathExtern {
 
             File file = new File(mediaPathData.getPath());
             if (!file.exists()) {
-                PAlert.showErrorAlert("Pfad existiert nicht!", "Der Pfad der Sammlung:\n" +
-                        mediaPathData.getPath() + "\n" +
+                PAlert.showErrorAlert("Pfad existiert nicht!", "Der Pfad der Sammlung:" + PConst.LINE_SEPARATOR +
+                        mediaPathData.getPath() + PConst.LINE_SEPARATOR +
                         "existiert nicht. Die Sammlung kann nicht eingelesen werden");
                 return;
             }

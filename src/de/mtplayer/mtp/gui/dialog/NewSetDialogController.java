@@ -20,6 +20,7 @@ package de.mtplayer.mtp.gui.dialog;
 import de.mtplayer.mLib.tools.BigButton;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
+import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PDialog;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.geometry.Insets;
@@ -69,7 +70,7 @@ public class NewSetDialogController extends PDialog {
         gridPane.setHgap(15);
         gridPane.setVgap(25);
 
-        Label headerLabel = new Label("Es gibt ein neues Standardset der Videoplayer\n" +
+        Label headerLabel = new Label("Es gibt ein neues Standardset der Videoplayer" + PConst.LINE_SEPARATOR +
                 "für den Download und das Abspielen der Filme.");
         headerLabel.setStyle("-fx-font-size: 1.5em;");
 
@@ -78,9 +79,9 @@ public class NewSetDialogController extends PDialog {
         cancelButton.setOnAction(e -> close());
 
         BigButton addButton = new BigButton(new Icons().ICON_BUTTON_QUIT, "Neue Sets nur anfügen",
-                "Die bestehenden Einstellungen werden nicht verändert.\n" +
-                        "Das neue Set wird nur angefügt und muss dann\n" +
-                        "erst noch in den Einstellungen aktiviert werden.\n" +
+                "Die bestehenden Einstellungen werden nicht verändert." + PConst.LINE_SEPARATOR +
+                        "Das neue Set wird nur angefügt und muss dann" + PConst.LINE_SEPARATOR +
+                        "erst noch in den Einstellungen aktiviert werden." + PConst.LINE_SEPARATOR +
                         "  \"->Einstellungen->Set bearbeiten\"");
         addButton.setOnAction(e -> {
             addNewSet = true;
@@ -88,9 +89,9 @@ public class NewSetDialogController extends PDialog {
         });
 
         BigButton replaceButton = new BigButton(new Icons().ICON_BUTTON_QUIT, "Aktuelle Sets durch neue ersetzen",
-                "Es werden alle Programmsets (auch eigene) gelöscht\n" +
-                        "und die neuen Standardsets wieder angelegt.\n\n" +
-                        "(Wenn Sie die Einstellungen nicht verändert haben\n" +
+                "Es werden alle Programmsets (auch eigene) gelöscht" + PConst.LINE_SEPARATOR +
+                        "und die neuen Standardsets wieder angelegt." + PConst.LINE_SEPARATORx2 +
+                        "(Wenn Sie die Einstellungen nicht verändert haben" + PConst.LINE_SEPARATOR +
                         "ist das die Empfehlung)");
         replaceButton.setOnAction(e -> {
             replaceSet = true;

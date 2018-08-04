@@ -19,23 +19,24 @@ package de.mtplayer.mtp.controller.starter;
 import de.mtplayer.mLib.tools.SizeTools;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.data.download.Download;
+import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.guiTools.pNotification.PNotification;
 
 
 public class MTNotification {
     public static void addNotification(Download download, boolean error) {
-        String text = ("Film:   " + download.getTitle() + "\n" +
-                "Sender: " + download.getChannel() + "\n" +
-                "Größe:  " + SizeTools.humanReadableByteCount(download.getDownloadSize().getFilmSize(), true) + "\n" +
+        String text = ("Film:   " + download.getTitle() + PConst.LINE_SEPARATOR +
+                "Sender: " + download.getChannel() + PConst.LINE_SEPARATOR +
+                "Größe:  " + SizeTools.humanReadableByteCount(download.getDownloadSize().getFilmSize(), true) + PConst.LINE_SEPARATOR +
                 (error ? "Download war fehlerhaft" : "Download war erfolgreich"));
 
         add(text, error);
     }
 
     public static void addNotification(boolean error) {
-        String text = ("Film:   " + "Test" + "\n" +
-                "Sender: " + "Test" + "\n" +
-                "Größe:  " + "Test" + "\n" +
+        String text = ("Film:   " + "Test" + PConst.LINE_SEPARATOR +
+                "Sender: " + "Test" + PConst.LINE_SEPARATOR +
+                "Größe:  " + "Test" + PConst.LINE_SEPARATOR +
                 (error ? "Download war fehlerhaft" : "Download war erfolgreich"));
 
         add(text, error);

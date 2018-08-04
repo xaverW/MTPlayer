@@ -24,6 +24,7 @@ import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.tools.update.SearchProgramUpdate;
+import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
@@ -336,7 +337,7 @@ public class ConfigPaneController extends AnchorPane {
         btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
         btnHelp.setOnAction(a -> PAlert.showHelpAlert("Programmupdate suchen",
                 "Beim Programmstart wird geprüft, ob es eine neue Version des Programms gibt. " +
-                        "Ist eine aktualisierte Version vorhanden, wird das dann gemeldet.\n" +
+                        "Ist eine aktualisierte Version vorhanden, wird das dann gemeldet." + PConst.LINE_SEPARATOR +
                         "Das Programm wird aber nicht ungefragt ersetzt."));
         GridPane.setHalignment(btnHelp, HPos.RIGHT);
         gridPane.add(btnHelp, 1, 0);

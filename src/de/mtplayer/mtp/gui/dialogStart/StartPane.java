@@ -16,6 +16,7 @@
 
 package de.mtplayer.mtp.gui.dialogStart;
 
+import de.p2tools.p2Lib.PConst;
 import javafx.geometry.Insets;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
@@ -43,17 +44,17 @@ public class StartPane {
         iv.setImage(im);
 
         hBox.getChildren().addAll(iv);
-        Text text = new Text("1 -> Hier kann die Filmliste\n" +
+        Text text = new Text("1 -> Hier kann die Filmliste" + PConst.LINE_SEPARATOR +
                 "aktualisiert werden." +
-                "\n\n" +
-                "2 -> Hier kann man die\n" +
-                "Ansicht zwischen Filmen, Downloads\n" +
+                PConst.LINE_SEPARATORx2 +
+                "2 -> Hier kann man die" + PConst.LINE_SEPARATOR +
+                "Ansicht zwischen Filmen, Downloads" + PConst.LINE_SEPARATOR +
                 "und angelegten Abos umschalten" +
-                "\n\n" +
-                "3 -> Hier befinden sich\n" +
+                PConst.LINE_SEPARATORx2 +
+                "3 -> Hier befinden sich" + PConst.LINE_SEPARATOR +
                 "die Programmeinstellungen." +
-                "\n\n" +
-                "4 -> Damit kann man Filme ansehen\n" +
+                PConst.LINE_SEPARATORx2 +
+                "4 -> Damit kann man Filme ansehen" + PConst.LINE_SEPARATOR +
                 "und speichern.");
         hBox.getChildren().add(text);
 
@@ -77,18 +78,18 @@ public class StartPane {
         iv.setImage(im);
 
         hBox.getChildren().addAll(iv);
-        Text text = new Text("1 -> Damit kann ein (darunter)\n" +
-                "ausgewähltes Filterprofil wieder\n" +
+        Text text = new Text("1 -> Damit kann ein (darunter)" + PConst.LINE_SEPARATOR +
+                "ausgewähltes Filterprofil wieder" + PConst.LINE_SEPARATOR +
                 "eingestellt werden." +
-                "\n\n" +
-                "2 -> Damit werden die oben eingestellten\n" +
-                "Filter in dem darunter ausgewählten\n" +
+                PConst.LINE_SEPARATORx2 +
+                "2 -> Damit werden die oben eingestellten" + PConst.LINE_SEPARATOR +
+                "Filter in dem darunter ausgewählten" + PConst.LINE_SEPARATOR +
                 "Filterprofil gespeichert." +
-                "\n\n" +
-                "3 -> Damit können die eingestellten\n" +
+                PConst.LINE_SEPARATORx2 +
+                "3 -> Damit können die eingestellten" + PConst.LINE_SEPARATOR +
                 "Filter als neues Profil gespeichert werden." +
-                "\n\n" +
-                "4 -> Hier können die angezeigten\n" +
+                PConst.LINE_SEPARATORx2 +
+                "4 -> Hier können die angezeigten" + PConst.LINE_SEPARATOR +
                 "Filter ein- und ausgeblendet werden.");
         hBox.getChildren().add(text);
 

@@ -24,6 +24,7 @@ import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.gui.tools.Table;
 import de.mtplayer.mtp.tools.filmListFilter.FilmlistBlackFilterCountHits;
+import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
@@ -167,8 +168,8 @@ public class BlackPane {
         });
 
         Button btnCountHits = new Button("Treffer zählen");
-        btnCountHits.setTooltip(new Tooltip("Damit kann man die Filmliste nach Treffern durchsuchen.\n" +
-                "Für jeden Eintrag in der Blacklist wird gezählt,\n" +
+        btnCountHits.setTooltip(new Tooltip("Damit kann man die Filmliste nach Treffern durchsuchen." + PConst.LINE_SEPARATOR +
+                "Für jeden Eintrag in der Blacklist wird gezählt," + PConst.LINE_SEPARATOR +
                 "wieviele Filme damit geblockt werden."));
         btnCountHits.setOnAction(a -> {
             FilmlistBlackFilterCountHits.countHits();

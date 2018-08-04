@@ -18,6 +18,7 @@ package de.mtplayer.mtp.controller.data;
 
 import de.mtplayer.mLib.tools.FilmDate;
 import de.mtplayer.mLib.tools.Functions;
+import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.tools.GermanStringSorter;
 import de.p2tools.p2Lib.tools.log.PLog;
 import org.apache.commons.lang3.time.FastDateFormat;
@@ -88,7 +89,7 @@ public class HistoryData implements Comparable<HistoryData> {
         return date + SEPARATOR_1
                 + cleanUp(theme) + SEPARATOR_1
                 + cleanUp(title) + SEPARATOR_2
-                + url + '\n';
+                + url + PConst.LINE_SEPARATOR;
     }
 
     public String getLine() {
@@ -119,7 +120,7 @@ public class HistoryData implements Comparable<HistoryData> {
     }
 
     private static String cleanUp(String s) {
-        s = s.replace("\n", "");
+        s = s.replace(PConst.LINE_SEPARATOR, "");
         s = s.replace("|", "");
         s = s.replace(SEPARATOR_1, "");
         s = s.replace(SEPARATOR_2, "");

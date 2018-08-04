@@ -21,6 +21,7 @@ import de.mtplayer.mLib.tools.MLConfigs;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.abo.Abo;
+import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -87,9 +88,9 @@ public class Table {
     }
 
     private void initColumn(TABLE eTable, TableView<Data> table) {
-        table.setTooltip(new Tooltip("In der Tabelle können mit dem \"+\"-Button\n" +
-                "Spalten ein- und ausgeblendet werden.\n" +
-                "Mit einem Klick auf den Titel einer Spalte\n" +
+        table.setTooltip(new Tooltip("In der Tabelle können mit dem \"+\"-Button" + PConst.LINE_SEPARATOR +
+                "Spalten ein- und ausgeblendet werden." + PConst.LINE_SEPARATOR +
+                "Mit einem Klick auf den Titel einer Spalte" + PConst.LINE_SEPARATOR +
                 "wird die Tabelle nach der Spalte sortiert."));
         switch (eTable) {
             case FILM:

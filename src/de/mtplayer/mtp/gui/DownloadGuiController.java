@@ -29,6 +29,7 @@ import de.mtplayer.mtp.gui.dialog.DownloadEditDialogController;
 import de.mtplayer.mtp.gui.mediaDialog.MediaDialogController;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.gui.tools.Table;
+import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.POpen;
 import de.p2tools.p2Lib.tools.SysTools;
@@ -168,7 +169,7 @@ public class DownloadGuiController extends AnchorPane {
                 return;
             }
 
-            if (PAlert.showAlert("Film Löschen?", "", "Die Datei löschen:\n\n" + download.get().getDestPathFile())) {
+            if (PAlert.showAlert("Film Löschen?", "", "Die Datei löschen:" + PConst.LINE_SEPARATORx2 + download.get().getDestPathFile())) {
 
                 // und jetzt die Datei löschen
                 PLog.sysLog(new String[]{"Datei löschen: ", file.getAbsolutePath()});
@@ -177,7 +178,7 @@ public class DownloadGuiController extends AnchorPane {
                 }
             }
         } catch (Exception ex) {
-            PAlert.showErrorAlert("Film löschen", "Konnte die Datei nicht löschen!", "Fehler beim löschen von:\n\n" +
+            PAlert.showErrorAlert("Film löschen", "Konnte die Datei nicht löschen!", "Fehler beim löschen von:" + PConst.LINE_SEPARATORx2 +
                     download.get().getDestPathFile());
             PLog.errorLog(915236547, "Fehler beim löschen: " + download.get().getDestPathFile());
         }

@@ -22,6 +22,7 @@ import de.mtplayer.mtp.controller.ProgQuit;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.tools.file.GetFile;
+import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.dialog.PDialog;
 import javafx.application.Platform;
@@ -63,8 +64,8 @@ public class ResetDialogController extends PDialog {
         gridPane.setVgap(25);
 
 
-        Label headerLabel = new Label("Einstellungen können komplett oder\n" +
-                "nur die Sets zum Abspielen/Speichern\n" +
+        Label headerLabel = new Label("Einstellungen können komplett oder" + PConst.LINE_SEPARATOR +
+                "nur die Sets zum Abspielen/Speichern" + PConst.LINE_SEPARATOR +
                 "zurückgesetzt werden!");
         headerLabel.setStyle("-fx-font-size: 1.5em;");
 
@@ -81,10 +82,10 @@ public class ResetDialogController extends PDialog {
 
         BigButton setButton = new BigButton(new Icons().ICON_BUTTON_QUIT,
                 "Einstellungen zum Abspielen/Aufzeichnen zurücksetzen",
-                "Es werden alle Programmsets (auch eigene)\n" +
-                        "zum Abspielen und Aufzeichnen gelöscht\n" +
+                "Es werden alle Programmsets (auch eigene)" + PConst.LINE_SEPARATOR +
+                        "zum Abspielen und Aufzeichnen gelöscht" + PConst.LINE_SEPARATOR +
                         "und die Standardsets wieder angelegt." +
-                        "\n\n" +
+                        PConst.LINE_SEPARATORx2 +
                         "Abos und Blacklist bleiben erhalten.");
         setButton.setOnAction(e -> {
             Platform.runLater(() -> new ImportSetDialogController(progData));
@@ -95,16 +96,16 @@ public class ResetDialogController extends PDialog {
         // alle Einstellungen
         BigButton allButton = new BigButton(new Icons().ICON_BUTTON_QUIT, "" +
                 "Alle Einstellungen zurücksetzen!",
-                "Alle Einstellungen gehen verloren.\n\n" +
-                        "ACHTUNG\n" +
-                        "es werden auch eigene Buttons, Abos\n" +
+                "Alle Einstellungen gehen verloren." + PConst.LINE_SEPARATORx2 +
+                        "ACHTUNG" + PConst.LINE_SEPARATOR +
+                        "es werden auch eigene Buttons, Abos" + PConst.LINE_SEPARATOR +
                         "und die Blacklist gelöscht.");
         allButton.setOnAction(e -> {
             Text t = new Text("ALLE");
             t.setFont(Font.font(null, FontWeight.BOLD, -1));
 
             TextFlow tf = new TextFlow();
-            tf.getChildren().addAll(new Text("Es werden "), t, new Text(" von Ihnen erzeugten Änderungen gelöscht.\n\n" +
+            tf.getChildren().addAll(new Text("Es werden "), t, new Text(" von Ihnen erzeugten Änderungen gelöscht." + PConst.LINE_SEPARATORx2 +
                     "Möchten Sie wirklich alle Einstellungen zurücksetzen?"));
 
             if (PAlert.showAlert_yes_no_cancel("Einstellungen zurücksetzen",

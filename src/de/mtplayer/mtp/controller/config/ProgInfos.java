@@ -17,7 +17,9 @@
 package de.mtplayer.mtp.controller.config;
 
 import de.mtplayer.mtp.Main;
+import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.configFile.SettingsDirectory;
+import de.p2tools.p2Lib.tools.PException;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -28,7 +30,7 @@ import java.util.ArrayList;
 
 public class ProgInfos {
 
-    private static final String ERROR_CANT_CREATE_FOLDER = "Der Ordner konnte nicht angelegt werden.\n" +
+    private static final String ERROR_CANT_CREATE_FOLDER = "Der Ordner konnte nicht angelegt werden." + PConst.LINE_SEPARATOR +
             "Bitte prüfen Sie die Dateirechte.";
 
     public static String getUserAgent() {
@@ -106,7 +108,7 @@ public class ProgInfos {
      * @throws IllegalStateException Will be thrown if settings directory don't exist and if there is
      *                               an error on creating it.
      */
-    public static Path getSettingsDirectory() throws IllegalStateException {
+    public static Path getSettingsDirectory() throws PException {
         return SettingsDirectory.getSettingsDirectory(ProgData.configDir,
                 ProgConst.CONFIG_DIRECTORY);
     }
