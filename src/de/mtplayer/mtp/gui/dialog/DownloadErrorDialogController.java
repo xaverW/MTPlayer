@@ -19,6 +19,7 @@ package de.mtplayer.mtp.gui.dialog;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.download.Download;
+import de.p2tools.p2Lib.dialog.MTDialog;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.Event;
@@ -65,7 +66,7 @@ public class DownloadErrorDialogController extends MTDialog {
 
     public DownloadErrorDialogController(Download download, String message) {
         super("/de/mtplayer/mtp/gui/dialog/DownloadErrorDialog.fxml",
-                ProgConfig.DOWNLOAD_DIALOG_ERROR_SIZE,
+                ProgConfig.DOWNLOAD_DIALOG_ERROR_SIZE.getStringProperty(),
                 "Fehler", true);
 
         this.download = download;

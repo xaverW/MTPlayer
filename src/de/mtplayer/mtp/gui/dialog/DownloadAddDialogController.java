@@ -32,6 +32,7 @@ import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmTools;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
+import de.p2tools.p2Lib.dialog.MTDialog;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -205,7 +206,8 @@ public class DownloadAddDialogController extends MTDialog {
 
     public DownloadAddDialogController(ProgData progData, ArrayList<Film> films, SetData psetData, String filterResolution) {
         super("/de/mtplayer/mtp/gui/dialog/DownloadAddDialog.fxml",
-                films.size() > 1 ? ProgConfig.DOWNLOAD_DIALOG_ADD_MORE_SIZE : ProgConfig.DOWNLOAD_DIALOG_ADD_SIZE,
+                films.size() > 1 ? ProgConfig.DOWNLOAD_DIALOG_ADD_MORE_SIZE.getStringProperty() :
+                        ProgConfig.DOWNLOAD_DIALOG_ADD_SIZE.getStringProperty(),
                 "Download anlegen", true);
 
         this.progData = progData;

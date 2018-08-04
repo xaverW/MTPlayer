@@ -374,7 +374,6 @@ public class Filmlist extends SimpleListProperty<Film> {
      * Erstellt ein StringArray der Themen eines Senders oder wenn "sender" leer, aller Sender. Ist
      * für die Filterfelder in GuiFilme.
      */
-    @SuppressWarnings("unchecked")
     public synchronized void loadTheme() {
         Duration.counterStart("Themen in Filmliste suchen");
         final LinkedHashSet<String> senderSet = new LinkedHashSet<>(21);

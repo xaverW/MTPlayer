@@ -20,6 +20,7 @@ package de.mtplayer.mtp.gui.dialog;
 import de.mtplayer.mLib.tools.BigButton;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
+import de.p2tools.p2Lib.dialog.MTDialog;
 import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;

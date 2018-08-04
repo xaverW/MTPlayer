@@ -21,6 +21,7 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
+import de.p2tools.p2Lib.dialog.MTDialog;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -54,7 +55,7 @@ public class FilmInfoDialogController extends MTDialog {
 
 
     public FilmInfoDialogController(ProgData progData) {
-        super(null, ProgConfig.SYSTEM_SIZE_DIALOG_FILMINFO,
+        super(null, ProgConfig.SYSTEM_SIZE_DIALOG_FILMINFO.getStringProperty(),
                 "Filminfos", false);
         this.progData = progData;
 

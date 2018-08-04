@@ -18,8 +18,8 @@ package de.mtplayer.mtp.gui.configDialog;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.gui.dialog.MTDialog;
 import de.mtplayer.mtp.gui.tools.Listener;
+import de.p2tools.p2Lib.dialog.MTDialog;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -40,7 +40,7 @@ public class ConfigDialogController extends MTDialog {
     private final ProgData progData;
 
     public ConfigDialogController() {
-        super(null, ProgConfig.CONFIG_DIALOG_SIZE, "Einstellungen", true);
+        super(null, ProgConfig.CONFIG_DIALOG_SIZE.getStringProperty(), "Einstellungen", true);
 
         VBox vBox = new VBox();
         vBox.setPadding(new Insets(10));

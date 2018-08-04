@@ -24,6 +24,7 @@ import de.mtplayer.mtp.gui.configDialog.SetPaneController;
 import de.mtplayer.mtp.gui.dialogStart.DownPathPane;
 import de.mtplayer.mtp.gui.dialogStart.PathPane;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
+import de.p2tools.p2Lib.dialog.MTDialog;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -42,7 +43,7 @@ public class ImportSetDialogController extends MTDialog {
     private ScrollPane pathPane, setPane;
 
     public ImportSetDialogController(ProgData progData) {
-        super("", ProgConfig.CONFIG_DIALOG_IMPORT_SET_SIZE,
+        super("", ProgConfig.CONFIG_DIALOG_IMPORT_SET_SIZE.getStringProperty(),
                 "Set importieren", true);
 
         this.progData = progData;

@@ -23,8 +23,8 @@ import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.gui.dialog.DownloadAddDialogController;
-import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.dialog.NoSetDialogController;
+import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
 import javafx.collections.ObservableList;
 import javafx.scene.text.Font;
@@ -140,18 +140,36 @@ public class FilmTools {
             } else {
                 // dann ist der Film schon in der Downloadliste
 
-                //todo wenn nur einer in der Liste macht "no" keinen Sinn
-                MTAlert.BUTTON answer = new MTAlert().showAlert_yes_no_cancel("Anlegen?", "Nochmal anlegen?",
-                        "Download für den Film existiert bereits.\n" + "Nochmal anlegen?");
-                switch (answer) {
-                    case CANCEL:
-                        // alles Abbrechen
-                        return;
-                    case NO:
-                        continue;
-                    case YES:
-                        filmsAddDownloadList.add(dateFilm);
-                        break;
+                if (list.size() <= 1) {
+                    PAlert.BUTTON answer = PAlert.showAlert_yes_no("Anlegen?", "Nochmal anlegen?",
+                            "Download für den Film existiert bereits:\n\n" +
+                                    dateFilm.getTitle() + "\n\n" +
+                                    "Nochmal anlegen?");
+                    switch (answer) {
+                        case NO:
+                            // alles Abbrechen
+                            return;
+                        case YES:
+                            filmsAddDownloadList.add(dateFilm);
+                            break;
+                    }
+
+                } else {
+                    PAlert.BUTTON answer = PAlert.showAlert_yes_no_cancel("Anlegen?", "Nochmal anlegen?",
+                            "Download für den Film existiert bereits:\n\n" +
+                                    dateFilm.getTitle() + "\n\n" +
+                                    "Nochmal anlegen (Ja / Nein)?\n" +
+                                    "Oder alles Abbrechen?");
+                    switch (answer) {
+                        case CANCEL:
+                            // alles Abbrechen
+                            return;
+                        case NO:
+                            continue;
+                        case YES:
+                            filmsAddDownloadList.add(dateFilm);
+                            break;
+                    }
                 }
             }
         }

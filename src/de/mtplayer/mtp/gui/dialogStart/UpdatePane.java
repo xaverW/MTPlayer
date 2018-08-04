@@ -37,9 +37,9 @@ public class UpdatePane {
 
     public TitledPane makeStart() {
         final GridPane gridPane = new GridPane();
-        gridPane.setHgap(15);
-        gridPane.setVgap(15);
-        gridPane.setPadding(new Insets(20, 20, 20, 20));
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        gridPane.setPadding(new Insets(20));
 
         TitledPane tpConfig = new TitledPane("Erster Programmstart", gridPane);
 

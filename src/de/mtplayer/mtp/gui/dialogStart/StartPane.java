@@ -30,7 +30,7 @@ public class StartPane {
 
         HBox hBox = new HBox();
         hBox.setSpacing(25);
-        hBox.setPadding(new Insets(10, 10, 10, 10));
+        hBox.setPadding(new Insets(20));
 
         TitledPane tpConfig = new TitledPane("Erster Programmstart", hBox);
 
@@ -64,7 +64,7 @@ public class StartPane {
 
         HBox hBox = new HBox();
         hBox.setSpacing(25);
-        hBox.setPadding(new Insets(10, 10, 10, 10));
+        hBox.setPadding(new Insets(20));
 
         TitledPane tpConfig = new TitledPane("Erster Programmstart", hBox);
 

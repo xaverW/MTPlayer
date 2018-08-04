@@ -25,11 +25,16 @@ import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
+import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
 import javafx.beans.property.StringProperty;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 import java.io.File;
@@ -41,18 +46,13 @@ public class PathPane {
     StringProperty flvProp = ProgConfig.SYSTEM_PATH_FLVSTREAMER.getStringProperty();
     StringProperty ffmpegProp = ProgConfig.SYSTEM_PATH_FFMPEG.getStringProperty();
 
-    private final ColumnConstraints ccTxt = new ColumnConstraints();
 
     private enum PLAYER {VLC, FLV, FFMPEG}
 
     public TitledPane makePath() {
-
-        ccTxt.setFillWidth(true);
-        ccTxt.setMinWidth(Region.USE_COMPUTED_SIZE);
-        ccTxt.setHgrow(Priority.ALWAYS);
-
         VBox vBox = new VBox();
         vBox.setSpacing(20);
+        vBox.setPadding(new Insets(20));
 
         TitledPane tpConfig = new TitledPane("Programmpfade", vBox);
 
@@ -86,8 +86,8 @@ public class PathPane {
 
     private GridPane addPlayer(PLAYER player) {
         GridPane gridPane = new GridPane();
-        gridPane.setHgap(15);
-        gridPane.setVgap(15);
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
 
         Text text;
         PHyperlink hyperlink;
@@ -162,7 +162,7 @@ public class PathPane {
         hBox.getChildren().addAll(new Label("Website"), hyperlink);
         gridPane.add(hBox, 0, 2, 3, 1);
 
-        gridPane.getColumnConstraints().addAll(ccTxt);
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSize());
 
         return gridPane;
     }

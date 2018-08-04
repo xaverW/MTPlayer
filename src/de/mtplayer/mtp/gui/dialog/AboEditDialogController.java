@@ -25,6 +25,7 @@ import de.mtplayer.mtp.controller.data.abo.AboXml;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
+import de.p2tools.p2Lib.dialog.MTDialogExtra;
 import de.p2tools.p2Lib.guiTools.pRange.PRangeBox;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -66,7 +67,7 @@ public class AboEditDialogController extends MTDialogExtra {
     private ProgData progData;
 
     public AboEditDialogController(ProgData progData, Abo abo) {
-        super(null, ProgConfig.ABO_DIALOG_EDIT_SIZE,
+        super(null, ProgConfig.ABO_DIALOG_EDIT_SIZE.getStringProperty(),
                 "Abo ändern", true);
 
         this.progData = progData;
@@ -79,7 +80,7 @@ public class AboEditDialogController extends MTDialogExtra {
     }
 
     public AboEditDialogController(ProgData progData, ObservableList<Abo> lAbo) {
-        super(null, ProgConfig.ABO_DIALOG_EDIT_SIZE,
+        super(null, ProgConfig.ABO_DIALOG_EDIT_SIZE.getStringProperty(),
                 "Abo ändern", true);
         this.lAbo = lAbo;
         this.progData = progData;
@@ -93,7 +94,7 @@ public class AboEditDialogController extends MTDialogExtra {
 
         btnOk.setMaxWidth(Double.MAX_VALUE);
         btnCancel.setMaxWidth(Double.MAX_VALUE);
-        getTilePaneOk().getChildren().addAll(btnOk, btnCancel);
+        getHboxOk().getChildren().addAll(btnOk, btnCancel);
 
         init(getvBoxDialog(), true);
     }

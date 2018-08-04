@@ -21,14 +21,13 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
+import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import javafx.beans.property.StringProperty;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 
 public class DownPathPane {
@@ -38,8 +37,9 @@ public class DownPathPane {
     public TitledPane makePath() {
 
         GridPane gridPane = new GridPane();
-        gridPane.setHgap(15);
-        gridPane.setVgap(15);
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        gridPane.setPadding(new Insets(20));
 
         TitledPane tpConfig = new TitledPane("Zielverzeichnis", gridPane);
 
@@ -65,11 +65,7 @@ public class DownPathPane {
                         "in dem die Downloads gespeichert werden."));
         gridPane.add(btnHelp, 2, 1);
 
-        ColumnConstraints ccTxt = new ColumnConstraints();
-        ccTxt.setFillWidth(true);
-        ccTxt.setMinWidth(Region.USE_COMPUTED_SIZE);
-        ccTxt.setHgrow(Priority.ALWAYS);
-        gridPane.getColumnConstraints().addAll(ccTxt);
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSize());
 
         return tpConfig;
     }

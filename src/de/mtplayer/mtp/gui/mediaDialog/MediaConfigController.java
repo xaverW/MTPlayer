@@ -20,8 +20,8 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
-import de.mtplayer.mtp.gui.dialog.MTDialog;
 import de.mtplayer.mtp.gui.tools.HelpText;
+import de.p2tools.p2Lib.dialog.MTDialog;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -46,7 +46,7 @@ public class MediaConfigController extends MTDialog {
     private final ProgData progData;
 
     public MediaConfigController() {
-        super(ProgConfig.MEDIA_CONFIG_DIALOG_SIZE, "Mediensammlung", true);
+        super(ProgConfig.MEDIA_CONFIG_DIALOG_SIZE.getStringProperty(), "Mediensammlung", true);
 
         this.progData = ProgData.getInstance();
 

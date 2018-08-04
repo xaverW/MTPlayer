@@ -68,7 +68,7 @@ public class DownloadProps extends DownloadXml {
     private final BooleanProperty subtitle = new SimpleBooleanProperty(false);
 
     public final Property[] properties = {nr, filmNr, aboName, channel, theme, title,
-            progress, remaining, bandwidth, downloadSize,
+            state, progress, remaining, bandwidth, downloadSize,
             filmDate, time, duration,
             hd, ut, geoBlocked, filmUrl, historyUrl, url, urlRtmp, urlSubtitle,
             set, program, programCall, programCallArray, programRestart, programDownloadmanager,

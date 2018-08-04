@@ -96,9 +96,9 @@ public class TableDownload {
         utColumn.setCellValueFactory(new PropertyValueFactory<>("ut"));
         utColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
 
-        final TableColumn<Download, Boolean> pauseColumn = new TableColumn<>("Pause");
-        pauseColumn.setCellValueFactory(new PropertyValueFactory<>("pause"));
-        pauseColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
+//        final TableColumn<Download, Boolean> pauseColumn = new TableColumn<>("Pause");
+//        pauseColumn.setCellValueFactory(new PropertyValueFactory<>("pause"));
+//        pauseColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
 
         final TableColumn<Download, Boolean> geoColumn = new TableColumn<>("Geo");
         geoColumn.setCellValueFactory(new PropertyValueFactory<>("geoBlocked"));
@@ -111,19 +111,19 @@ public class TableDownload {
         srcColumn.setCellValueFactory(new PropertyValueFactory<>("source"));
 
         final TableColumn<Download, Boolean> placedBackColumn = new TableColumn<>("Zurückgestellt");
-        placedBackColumn.setCellValueFactory(new PropertyValueFactory<>("zurueckgestellt"));
+        placedBackColumn.setCellValueFactory(new PropertyValueFactory<>("placedBack"));
         placedBackColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
 
         final TableColumn<Download, String> programColumn = new TableColumn<>("Programm");
-        programColumn.setCellValueFactory(new PropertyValueFactory<>("programm"));
+        programColumn.setCellValueFactory(new PropertyValueFactory<>("program"));
         final TableColumn<Download, Integer> setColumn = new TableColumn<>("Programmset");
         setColumn.setCellValueFactory(new PropertyValueFactory<>("set"));
         final TableColumn<Download, String> urlColumn = new TableColumn<>("URL");
         urlColumn.setCellValueFactory(new PropertyValueFactory<>("url"));
         final TableColumn<Download, String> fileNameColumn = new TableColumn<>("Dateiname");
-        fileNameColumn.setCellValueFactory(new PropertyValueFactory<>("zielDateiname"));
+        fileNameColumn.setCellValueFactory(new PropertyValueFactory<>("destFileName"));
         final TableColumn<Download, String> pathColumn = new TableColumn<>("Pfad");
-        pathColumn.setCellValueFactory(new PropertyValueFactory<>("zielPfad"));
+        pathColumn.setCellValueFactory(new PropertyValueFactory<>("destPath"));
 
         addRowFact(table);
 
@@ -132,7 +132,7 @@ public class TableDownload {
                 aboColumn, senderColumn, themeColumn, titleColumn, startColumn,
                 progressColumn, remainingColumn, speedColumn, sizeColumn,
                 datumColumn, timeColumn, durationColumn,
-                hdColumn, utColumn, pauseColumn, geoColumn, artColumn, srcColumn, placedBackColumn,
+                hdColumn, utColumn, geoColumn, artColumn, srcColumn, placedBackColumn,
                 programColumn, setColumn, urlColumn, fileNameColumn, pathColumn
         };
 

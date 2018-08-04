@@ -22,6 +22,7 @@ import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.Icons;
+import de.p2tools.p2Lib.dialog.MTDialogExtra;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -48,7 +49,7 @@ public class AboutDialogController extends MTDialogExtra {
 
         this.progData = progData;
 
-        getTilePaneOk().getChildren().addAll(btnOk);
+        getHboxOk().getChildren().addAll(btnOk);
         init(getvBoxDialog(), true);
     }
 

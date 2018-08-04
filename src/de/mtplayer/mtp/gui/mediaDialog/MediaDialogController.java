@@ -20,10 +20,10 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
-import de.mtplayer.mtp.gui.dialog.MTDialog;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.tools.storedFilter.Filter;
+import de.p2tools.p2Lib.dialog.MTDialog;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -59,7 +59,7 @@ public class MediaDialogController extends MTDialog {
 
 
     public MediaDialogController(String searchStr) {
-        super(ProgConfig.MEDIA_DIALOG_SIZE, "Mediensammlung", true);
+        super(ProgConfig.MEDIA_DIALOG_SIZE.getStringProperty(), "Mediensammlung", true);
         this.searchStr = searchStr;
         txtSearch.setText(searchStr);
 

@@ -30,6 +30,7 @@ import de.mtplayer.mtp.controller.data.download.DownloadXml;
 import de.mtplayer.mtp.controller.data.film.FilmTools;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.mtplayer.mtp.tools.file.GetFile;
+import de.p2tools.p2Lib.dialog.MTDialogExtra;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -72,7 +73,7 @@ public class DownloadEditDialogController extends MTDialogExtra {
     private final ProgData progData;
 
     public DownloadEditDialogController(ProgData progData, Download download, boolean isStarted) {
-        super(null, ProgConfig.DOWNLOAD_DIALOG_EDIT_SIZE,
+        super(null, ProgConfig.DOWNLOAD_DIALOG_EDIT_SIZE.getStringProperty(),
                 "Download ändern", true);
 
         this.progData = progData;
@@ -91,7 +92,7 @@ public class DownloadEditDialogController extends MTDialogExtra {
 
         btnOk.setMaxWidth(Double.MAX_VALUE);
         btnCancel.setMaxWidth(Double.MAX_VALUE);
-        getTilePaneOk().getChildren().addAll(btnOk, btnCancel);
+        getHboxOk().getChildren().addAll(btnOk, btnCancel);
         init(getvBoxDialog(), true);
     }
 

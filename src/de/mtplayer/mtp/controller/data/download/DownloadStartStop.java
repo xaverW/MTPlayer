@@ -58,7 +58,7 @@ public class DownloadStartStop {
         }
 
         // das Starten von neuen Downloads etwas Pausieren
-        progData.starterClass.pause();
+        progData.starterClass.setPaused();
 
         for (final Download download : list) {
             if (download.isStateInit() || download.isStateStoped()) {
@@ -84,7 +84,7 @@ public class DownloadStartStop {
         }
 
         // das Starten von neuen Downloads etwas Pausieren
-        progData.starterClass.pause();
+        progData.starterClass.setPaused();
 
         final ArrayList<Download> aboHistoryList = new ArrayList<>();
 
@@ -119,7 +119,7 @@ public class DownloadStartStop {
         }
 
         // das Starten von neuen Downloads etwas Pausieren
-        progData.starterClass.pause();
+        progData.starterClass.setPaused();
 
         for (Download download : list) {
             if (download.isStateStartedWaiting() || download.isStateStartedRun() || download.isStateError()) {
@@ -185,7 +185,7 @@ public class DownloadStartStop {
         }
 
         // das Starten von neuen Downloads etwas Pausieren
-        progData.starterClass.pause();
+        progData.starterClass.setPaused();
 
 
         // nicht gestartete einfach starten

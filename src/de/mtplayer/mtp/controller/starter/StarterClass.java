@@ -36,7 +36,7 @@ public class StarterClass {
 
     private final ProgData progData;
     private Start start = null;
-    private boolean pause = false;
+    private boolean paused = false;
 
     // ===================================
     // Public
@@ -63,8 +63,8 @@ public class StarterClass {
         }
     }
 
-    public void pause() {
-        pause = true;
+    public void setPaused() {
+        paused = true;
     }
 
     static boolean check(ProgData progData, Download download) {
@@ -308,11 +308,11 @@ public class StarterClass {
         private synchronized Download getNextStart() throws InterruptedException {
             // erstes passende Element der Liste zurückgeben oder null
             // und versuchen dass bei mehreren laufenden Downloads ein anderer Sender gesucht wird
-            if (pause) {
+            if (paused) {
                 // beim Löschen der Downloads, kann das Starten etwas "pausiert" werden
                 // damit ein zu Löschender Download nicht noch schnell gestartet wird
                 sleep(5 * 1000);
-                pause = false;
+                paused = false;
             }
 
             Download download = progData.downloadList.getNextStart();

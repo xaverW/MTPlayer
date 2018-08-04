@@ -26,6 +26,7 @@ import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadTools;
 import de.mtplayer.mtp.controller.starter.DownloadState;
+import de.p2tools.p2Lib.dialog.MTDialog;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.Event;
@@ -77,7 +78,7 @@ public class DownloadContinueDialogController extends MTDialog {
 
     public DownloadContinueDialogController(ProgData progData, Download download, boolean directDownload) {
         super("/de/mtplayer/mtp/gui/dialog/DownloadContinueDialog.fxml",
-                ProgConfig.DOWNLOAD_DIALOG_CONTINUE_SIZE,
+                ProgConfig.DOWNLOAD_DIALOG_CONTINUE_SIZE.getStringProperty(),
                 "Download weiterführen", true);
 
         this.progData = progData;
