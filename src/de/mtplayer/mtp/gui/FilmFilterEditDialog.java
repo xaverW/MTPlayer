@@ -18,7 +18,7 @@ package de.mtplayer.mtp.gui;
 
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.tools.HelpText;
-import de.p2tools.p2Lib.dialog.MTDialog;
+import de.p2tools.p2Lib.dialog.PDialog;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.geometry.Insets;
@@ -29,7 +29,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 
-public class FilmFilterEditDialog extends MTDialog {
+public class FilmFilterEditDialog extends PDialog {
 
     final ProgData progData;
     final VBox vbox;

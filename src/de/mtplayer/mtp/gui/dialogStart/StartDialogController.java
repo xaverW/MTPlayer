@@ -19,7 +19,7 @@ package de.mtplayer.mtp.gui.dialogStart;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.configDialog.GeoPane;
-import de.p2tools.p2Lib.dialog.MTDialog;
+import de.p2tools.p2Lib.dialog.PDialog;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -28,7 +28,7 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.layout.*;
 
 
-public class StartDialogController extends MTDialog {
+public class StartDialogController extends PDialog {
 
     private boolean ok = false;
     private AnchorPane rootPane = new AnchorPane();

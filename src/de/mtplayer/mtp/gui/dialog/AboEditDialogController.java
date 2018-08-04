@@ -25,7 +25,7 @@ import de.mtplayer.mtp.controller.data.abo.AboXml;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
-import de.p2tools.p2Lib.dialog.MTDialogExtra;
+import de.p2tools.p2Lib.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.pRange.PRangeBox;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -39,7 +39,7 @@ import javafx.scene.layout.*;
 
 import java.util.ArrayList;
 
-public class AboEditDialogController extends MTDialogExtra {
+public class AboEditDialogController extends PDialogExtra {
 
     final GridPane gridPane = new GridPane();
     Button btnOk = new Button("Ok");

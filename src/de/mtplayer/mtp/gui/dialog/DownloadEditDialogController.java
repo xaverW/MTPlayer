@@ -30,7 +30,7 @@ import de.mtplayer.mtp.controller.data.download.DownloadXml;
 import de.mtplayer.mtp.controller.data.film.FilmTools;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.mtplayer.mtp.tools.file.GetFile;
-import de.p2tools.p2Lib.dialog.MTDialogExtra;
+import de.p2tools.p2Lib.dialog.PDialogExtra;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -40,7 +40,7 @@ import javafx.scene.paint.Color;
 
 import java.io.File;
 
-public class DownloadEditDialogController extends MTDialogExtra {
+public class DownloadEditDialogController extends PDialogExtra {
 
     private Button btnOk = new Button("Ok");
     private Button btnCancel = new Button("Abbrechen");

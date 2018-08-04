@@ -22,7 +22,7 @@ import de.mtplayer.mtp.controller.ProgQuit;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.tools.file.GetFile;
-import de.p2tools.p2Lib.dialog.MTDialog;
+import de.p2tools.p2Lib.dialog.PDialog;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -33,7 +33,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
-public class ResetDialogController extends MTDialog {
+public class ResetDialogController extends PDialog {
 
     final ProgData progData;
     final StackPane stackPane;

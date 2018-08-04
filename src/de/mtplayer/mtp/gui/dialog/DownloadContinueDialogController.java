@@ -26,7 +26,7 @@ import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadTools;
 import de.mtplayer.mtp.controller.starter.DownloadState;
-import de.p2tools.p2Lib.dialog.MTDialog;
+import de.p2tools.p2Lib.dialog.PDialog;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.Event;
@@ -40,7 +40,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.util.Duration;
 
-public class DownloadContinueDialogController extends MTDialog {
+public class DownloadContinueDialogController extends PDialog {
 
     @FXML
     private HBox hboxTitle;

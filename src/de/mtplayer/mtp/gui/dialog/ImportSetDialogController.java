@@ -24,7 +24,7 @@ import de.mtplayer.mtp.gui.configDialog.SetPaneController;
 import de.mtplayer.mtp.gui.dialogStart.DownPathPane;
 import de.mtplayer.mtp.gui.dialogStart.PathPane;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
-import de.p2tools.p2Lib.dialog.MTDialog;
+import de.p2tools.p2Lib.dialog.PDialog;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -32,7 +32,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.*;
 
-public class ImportSetDialogController extends MTDialog {
+public class ImportSetDialogController extends PDialog {
 
     private final ProgData progData;
     VBox vbox, vBoxCont;

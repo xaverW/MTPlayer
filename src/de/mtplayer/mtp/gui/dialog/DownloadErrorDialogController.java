@@ -19,7 +19,7 @@ package de.mtplayer.mtp.gui.dialog;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.download.Download;
-import de.p2tools.p2Lib.dialog.MTDialog;
+import de.p2tools.p2Lib.dialog.PDialog;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.Event;
@@ -33,7 +33,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.util.Duration;
 
-public class DownloadErrorDialogController extends MTDialog {
+public class DownloadErrorDialogController extends PDialog {
 
     @FXML
     private HBox hboxTitle;

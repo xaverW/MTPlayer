@@ -32,7 +32,7 @@ import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmTools;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
-import de.p2tools.p2Lib.dialog.MTDialog;
+import de.p2tools.p2Lib.dialog.PDialog;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -47,7 +47,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class DownloadAddDialogController extends MTDialog {
+public class DownloadAddDialogController extends PDialog {
 
     @FXML
     private VBox vBoxCont;

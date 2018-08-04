@@ -23,7 +23,7 @@ import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.tools.storedFilter.Filter;
-import de.p2tools.p2Lib.dialog.MTDialog;
+import de.p2tools.p2Lib.dialog.PDialog;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -32,7 +32,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.*;
 
-public class MediaDialogController extends MTDialog {
+public class MediaDialogController extends PDialog {
 
     private final AnchorPane rootPane = new AnchorPane();
     private final VBox vBoxDialog = new VBox();

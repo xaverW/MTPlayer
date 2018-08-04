@@ -20,13 +20,13 @@ package de.mtplayer.mtp.gui.dialog;
 import de.mtplayer.mLib.tools.BigButton;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
-import de.p2tools.p2Lib.dialog.MTDialog;
+import de.p2tools.p2Lib.dialog.PDialog;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 
-public class NewSetDialogController extends MTDialog {
+public class NewSetDialogController extends PDialog {
 
     final ProgData progData;
     final StackPane stackPane;

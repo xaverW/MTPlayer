@@ -17,7 +17,7 @@
 package de.mtplayer.mtp.gui.dialog;
 
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.p2tools.p2Lib.dialog.MTDialog;
+import de.p2tools.p2Lib.dialog.PDialog;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -29,7 +29,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-public class NoSetDialogController extends MTDialog {
+public class NoSetDialogController extends PDialog {
 
     final ProgData progData;
     final TEXT text;

@@ -22,7 +22,7 @@ import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.Icons;
-import de.p2tools.p2Lib.dialog.MTDialogExtra;
+import de.p2tools.p2Lib.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -37,7 +37,7 @@ import javafx.scene.text.Text;
 
 import java.nio.file.Path;
 
-public class AboutDialogController extends MTDialogExtra {
+public class AboutDialogController extends PDialogExtra {
 
     private final ProgData progData;
     Button btnOk = new Button("Ok");

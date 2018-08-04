@@ -21,7 +21,7 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
-import de.p2tools.p2Lib.dialog.MTDialog;
+import de.p2tools.p2Lib.dialog.PDialog;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -37,7 +37,7 @@ import javafx.scene.text.Text;
 /**
  * FXML Controller class
  */
-public class FilmInfoDialogController extends MTDialog {
+public class FilmInfoDialogController extends PDialog {
 
     private final Text[] textTitle = new Text[FilmXml.MAX_ELEM];
     private final Text[] textCont = new Text[FilmXml.MAX_ELEM];

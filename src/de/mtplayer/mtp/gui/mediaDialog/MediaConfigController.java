@@ -21,7 +21,7 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
-import de.p2tools.p2Lib.dialog.MTDialog;
+import de.p2tools.p2Lib.dialog.PDialog;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -35,7 +35,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 
-public class MediaConfigController extends MTDialog {
+public class MediaConfigController extends PDialog {
 
     private TabPane tabPane = new TabPane();
     private Button btnOk = new Button("Ok");
