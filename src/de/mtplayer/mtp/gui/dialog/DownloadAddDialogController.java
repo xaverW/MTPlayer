@@ -32,6 +32,7 @@ import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmTools;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
+import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.dialog.PDialog;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -400,11 +401,11 @@ public class DownloadAddDialogController extends PDialog {
         for (DownInfo d : downInfo) {
 
             if (d.download == null) {
-                new MTAlert().showErrorAlert("Fehlerhafter Download!", "Fehlerhafter Download!",
+                PAlert.showErrorAlert("Fehlerhafter Download!", "Fehlerhafter Download!",
                         "Download konnte nicht erstellt werden.");
 
             } else if (d.path.isEmpty() || d.name.isEmpty()) {
-                new MTAlert().showErrorAlert("Fehlerhafter Pfad/Name!", "Fehlerhafter Pfad/Name!",
+                PAlert.showErrorAlert("Fehlerhafter Pfad/Name!", "Fehlerhafter Pfad/Name!",
                         "Pfad oder Name ist leer.");
 
             } else {
@@ -414,7 +415,7 @@ public class DownloadAddDialogController extends PDialog {
                 if (SetsPrograms.checkPathWritable(d.path)) {
                     ok = true;
                 } else {
-                    new MTAlert().showErrorAlert("Fehlerhafter Pfad/Name!", "Fehlerhafter Pfad/Name!",
+                    PAlert.showErrorAlert("Fehlerhafter Pfad/Name!", "Fehlerhafter Pfad/Name!",
                             "Pfad ist nicht beschreibbar.");
                 }
             }

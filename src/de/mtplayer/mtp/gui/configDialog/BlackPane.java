@@ -21,10 +21,10 @@ import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.BlackData;
 import de.mtplayer.mtp.controller.data.Icons;
-import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.gui.tools.Table;
 import de.mtplayer.mtp.tools.filmListFilter.FilmlistBlackFilterCountHits;
+import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.application.Platform;
@@ -149,7 +149,7 @@ public class BlackPane {
             final ObservableList<BlackData> selected = tableView.getSelectionModel().getSelectedItems();
 
             if (selected == null || selected.isEmpty()) {
-                new MTAlert().showInfoNoSelection();
+                PAlert.showInfoNoSelection();
             } else {
                 ProgData.getInstance().blackList.removeAll(selected);
                 tableView.getSelectionModel().clearSelection();

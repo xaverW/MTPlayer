@@ -21,8 +21,8 @@ import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.ReplaceData;
-import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
+import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.application.Platform;
@@ -131,7 +131,7 @@ public class ReplacePane {
             final ObservableList<ReplaceData> sels = tableView.getSelectionModel().getSelectedItems();
 
             if (sels == null || sels.isEmpty()) {
-                new MTAlert().showInfoNoSelection();
+                PAlert.showInfoNoSelection();
             } else {
                 ProgData.getInstance().replaceList.removeAll(sels);
                 tableView.getSelectionModel().clearSelection();
@@ -155,7 +155,7 @@ public class ReplacePane {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
 
             if (sel < 0) {
-                new MTAlert().showInfoNoSelection();
+                PAlert.showInfoNoSelection();
             } else {
                 int res = ProgData.getInstance().replaceList.up(sel, true);
                 tableView.getSelectionModel().select(res);
@@ -168,7 +168,7 @@ public class ReplacePane {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
 
             if (sel < 0) {
-                new MTAlert().showInfoNoSelection();
+                PAlert.showInfoNoSelection();
             } else {
                 int res = ProgData.getInstance().replaceList.up(sel, false);
                 tableView.getSelectionModel().select(res);

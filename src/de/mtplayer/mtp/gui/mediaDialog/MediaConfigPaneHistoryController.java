@@ -19,7 +19,7 @@ package de.mtplayer.mtp.gui.mediaDialog;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.HistoryData;
-import de.mtplayer.mtp.gui.dialog.MTAlert;
+import de.p2tools.p2Lib.dialog.PAlert;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.collections.ListChangeListener;
@@ -141,7 +141,7 @@ public class MediaConfigPaneHistoryController extends AnchorPane {
                 ArrayList<HistoryData> historyDataArrayList = new ArrayList<>();
                 historyDataArrayList.addAll(tableView.getSelectionModel().getSelectedItems());
                 if (historyDataArrayList.isEmpty()) {
-                    new MTAlert().showInfoNoSelection();
+                    PAlert.showInfoNoSelection();
                 } else {
                     ContextMenu contextMenu = new MediaConfigPaneHistoryContextMenu(historyDataArrayList, history).getContextMenu();
                     tableView.setContextMenu(contextMenu);

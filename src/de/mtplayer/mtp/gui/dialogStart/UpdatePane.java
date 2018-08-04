@@ -19,7 +19,7 @@ package de.mtplayer.mtp.gui.dialogStart;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.data.Icons;
-import de.mtplayer.mtp.gui.dialog.MTAlert;
+import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.property.BooleanProperty;
 import javafx.geometry.Insets;
@@ -52,7 +52,7 @@ public class UpdatePane {
         final Button btnHelp = new Button("");
         btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
         btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelp.setOnAction(a -> new MTAlert().showHelpAlert("Programmupdate suchen",
+        btnHelp.setOnAction(a -> new PAlert().showHelpAlert("Programmupdate suchen",
                 "Beim Programmstart wird geprüft, ob es eine neue Version des Programms gibt. Wenn es " +
                         "eine neue Version gibt, wird das mit einer Nachricht mitgeteilt. Es wird nicht " +
                         "automatisch das Programm verändert."));

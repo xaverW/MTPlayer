@@ -26,10 +26,10 @@ import de.mtplayer.mtp.controller.data.film.FilmTools;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.mtplayer.mtp.gui.dialog.DownloadEditDialogController;
-import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.mediaDialog.MediaDialogController;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.gui.tools.Table;
+import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.POpen;
 import de.p2tools.p2Lib.tools.SysTools;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -159,16 +159,16 @@ public class DownloadGuiController extends AnchorPane {
         }
 
         if (download.get().isStateStartedRun()) {
-            new MTAlert().showErrorAlert("Film löschen", "Download läuft noch", "Download erst stoppen!");
+            PAlert.showErrorAlert("Film löschen", "Download läuft noch", "Download erst stoppen!");
         }
         try {
             File file = new File(download.get().getDestPathFile());
             if (!file.exists()) {
-                new MTAlert().showErrorAlert("Film löschen", "", "Die Datei existiert nicht!");
+                PAlert.showErrorAlert("Film löschen", "", "Die Datei existiert nicht!");
                 return;
             }
 
-            if (new MTAlert().showAlert("Film Löschen?", "", "Die Datei löschen:\n\n" + download.get().getDestPathFile())) {
+            if (PAlert.showAlert("Film Löschen?", "", "Die Datei löschen:\n\n" + download.get().getDestPathFile())) {
 
                 // und jetzt die Datei löschen
                 PLog.sysLog(new String[]{"Datei löschen: ", file.getAbsolutePath()});
@@ -177,7 +177,7 @@ public class DownloadGuiController extends AnchorPane {
                 }
             }
         } catch (Exception ex) {
-            new MTAlert().showErrorAlert("Film löschen", "Konnte die Datei nicht löschen!", "Fehler beim löschen von:\n\n" +
+            PAlert.showErrorAlert("Film löschen", "Konnte die Datei nicht löschen!", "Fehler beim löschen von:\n\n" +
                     download.get().getDestPathFile());
             PLog.errorLog(915236547, "Fehler beim löschen: " + download.get().getDestPathFile());
         }
@@ -333,7 +333,7 @@ public class DownloadGuiController extends AnchorPane {
         final ArrayList<Download> ret = new ArrayList<>();
         ret.addAll(table.getSelectionModel().getSelectedItems());
         if (ret.isEmpty()) {
-            new MTAlert().showInfoNoSelection();
+            PAlert.showInfoNoSelection();
         }
         return ret;
     }
@@ -343,7 +343,7 @@ public class DownloadGuiController extends AnchorPane {
         if (selectedTableRow >= 0) {
             return Optional.of(table.getSelectionModel().getSelectedItem());
         } else {
-            new MTAlert().showInfoNoSelection();
+            PAlert.showInfoNoSelection();
             return Optional.empty();
         }
     }
@@ -357,7 +357,7 @@ public class DownloadGuiController extends AnchorPane {
                     // todo?? bei vielen Downloads kann das sonst die ganze Tabelle ausbremsen
                     setFilter();
                 }
-             }
+            }
         });
         progData.downloadList.downloadsChangedProperty().addListener((observable, oldValue, newValue) ->
                 Platform.runLater(() -> setFilter()));

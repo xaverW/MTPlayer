@@ -19,9 +19,9 @@ package de.mtplayer.mtp.gui;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
-import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
+import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.pCheckComboBox.PCheckComboBox;
 import de.p2tools.p2Lib.guiTools.pRange.PRangeBox;
@@ -141,7 +141,7 @@ public class FilmFilterController extends FilterController {
 
         btnSaveFilter.setOnAction(a -> {
             if (cbFilter.getSelectionModel().getSelectedItem() == null
-                    || new MTAlert().showAlert("Speichern", "Filter speichern", "Soll der Filter überschrieben werden?")) {
+                    || PAlert.showAlert("Speichern", "Filter speichern", "Soll der Filter überschrieben werden?")) {
                 saveFilter();
             }
         });
@@ -477,7 +477,7 @@ public class FilmFilterController extends FilterController {
     }
 
     private void delAllFilter() {
-        if (new MTAlert().showAlert("Löschen", "Filter löschen", "Sollen alle Filter gelöscht werden?")) {
+        if (PAlert.showAlert("Löschen", "Filter löschen", "Sollen alle Filter gelöscht werden?")) {
             progData.storedFilter.removeAllStoredFilter();
         }
     }

@@ -17,7 +17,7 @@
 package de.mtplayer.mtp.controller.data.download;
 
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.gui.dialog.MTAlert;
+import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.tools.log.Duration;
 
 import java.util.ArrayList;
@@ -133,8 +133,8 @@ public class DownloadStartStop {
     }
 
 
-    private MTAlert.BUTTON restartDownload(int size, String title, MTAlert.BUTTON answer) {
-        if (answer.equals(MTAlert.BUTTON.UNKNOWN)) {
+    private PAlert.BUTTON restartDownload(int size, String title, PAlert.BUTTON answer) {
+        if (answer.equals(PAlert.BUTTON.UNKNOWN)) {
             // nur einmal fragen
             String text;
             if (size > 1) {
@@ -142,7 +142,7 @@ public class DownloadStartStop {
             } else {
                 text = "Film nochmal starten?  ==> " + title;
             }
-            answer = new MTAlert().showAlert_yes_no_cancel("Download", "Fehlerhafte Downloads", text);
+            answer = new PAlert().showAlert_yes_no_cancel("Download", "Fehlerhafte Downloads", text);
         }
         return answer;
     }
@@ -175,7 +175,7 @@ public class DownloadStartStop {
     public boolean startDownloads(ArrayList<Download> list, boolean alsoFinished) {
         Duration.counterStart("DownloadStartStop.startDownloads");
 
-        MTAlert.BUTTON answer = MTAlert.BUTTON.UNKNOWN;
+        PAlert.BUTTON answer = PAlert.BUTTON.UNKNOWN;
         final ArrayList<Download> listDelDownloads = new ArrayList<>();
         final ArrayList<Download> listStartDownloads = new ArrayList<>();
         final ArrayList<Download> listDownloadsRemoveAboHistory = new ArrayList<>();
@@ -209,7 +209,7 @@ public class DownloadStartStop {
 
             //fehlerhafte nur wenn gewollt wieder starten
             if (alsoFinished && download.isStateError()) {
-                if (answer.equals(MTAlert.BUTTON.UNKNOWN)) {
+                if (answer.equals(PAlert.BUTTON.UNKNOWN)) {
                     answer = restartDownload(list.size(), download.arr[Download.DOWNLOAD_TITLE], answer);
                 }
 
@@ -234,7 +234,7 @@ public class DownloadStartStop {
         Duration.counterStop("DownloadStartStop.startDownloads");
 
 
-        if (answer.equals(MTAlert.BUTTON.CANCEL)) {
+        if (answer.equals(PAlert.BUTTON.CANCEL)) {
             // dann machmer nix
             return false;
         }

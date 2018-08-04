@@ -28,7 +28,7 @@ import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ImportNewFilmlist;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ReadFilmlist;
-import de.mtplayer.mtp.gui.dialog.MTAlert;
+import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.tools.log.Duration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
@@ -291,7 +291,7 @@ public class LoadFilmlist {
         if (event.error) {
             PLog.userLog("");
             PLog.userLog("Filmliste laden war fehlerhaft, alte Liste wird wieder geladen");
-            Platform.runLater(() -> new MTAlert().showErrorAlert("Filmliste laden", "Das Laden der Filmliste hat nicht geklappt!"));
+            Platform.runLater(() -> PAlert.showErrorAlert("Filmliste laden", "Das Laden der Filmliste hat nicht geklappt!"));
 
             // dann die alte Liste wieder laden
             progData.filmlist.clear();

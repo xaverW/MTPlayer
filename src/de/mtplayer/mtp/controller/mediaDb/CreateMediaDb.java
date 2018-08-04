@@ -18,8 +18,8 @@ package de.mtplayer.mtp.controller.mediaDb;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.Listener;
+import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.tools.log.Duration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
@@ -139,7 +139,7 @@ public class CreateMediaDb implements Runnable {
 
 
     private void errorMsg() {
-        Platform.runLater(() -> new MTAlert().showErrorAlert("Fehler beim Erstellen der Mediensammlung",
+        Platform.runLater(() -> PAlert.showErrorAlert("Fehler beim Erstellen der Mediensammlung",
                 (more ? "Die Pfade der Mediensammlung können nicht alle gelesen werden:\n"
                         : "Der Pfad der Mediensammlung kann nicht gelesen werden:\n") + error));
     }

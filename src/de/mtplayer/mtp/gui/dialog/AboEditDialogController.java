@@ -25,6 +25,7 @@ import de.mtplayer.mtp.controller.data.abo.AboXml;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
+import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.pRange.PRangeBox;
 import javafx.beans.value.ChangeListener;
@@ -295,7 +296,7 @@ public class AboEditDialogController extends PDialogExtra {
 
                 final Button btnHelpRes = new Button("");
                 btnHelpRes.setGraphic(new Icons().ICON_BUTTON_HELP);
-                btnHelpRes.setOnAction(a -> new MTAlert().showHelpAlert("Auflösung",
+                btnHelpRes.setOnAction(a -> PAlert.showHelpAlert("Auflösung",
                         HelpText.ABO_RES));
 
                 g.add(rbHd, 0, 0);

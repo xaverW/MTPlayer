@@ -20,7 +20,7 @@ import de.mtplayer.mLib.tools.DirFileChooser;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
-import de.mtplayer.mtp.gui.dialog.MTAlert;
+import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
@@ -60,7 +60,7 @@ public class DownPathPane {
 
         final Button btnHelp = new Button("");
         btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelp.setOnAction(a -> new MTAlert().showHelpAlert("Zielverzeichnis",
+        btnHelp.setOnAction(a -> PAlert.showHelpAlert("Zielverzeichnis",
                 "Hier kann das Verzeichnis angegeben werden, " +
                         "in dem die Downloads gespeichert werden."));
         gridPane.add(btnHelp, 2, 1);

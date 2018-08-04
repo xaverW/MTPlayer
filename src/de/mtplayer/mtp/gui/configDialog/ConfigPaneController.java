@@ -22,9 +22,9 @@ import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.Icons;
-import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.tools.update.SearchProgramUpdate;
+import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
@@ -267,7 +267,7 @@ public class ConfigPaneController extends AnchorPane {
         final Button btnHelp = new Button("");
         btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
         btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelp.setOnAction(a -> new MTAlert().showHelpAlert("Dateimanager", HelpText.FILEMANAGER));
+        btnHelp.setOnAction(a -> PAlert.showHelpAlert("Dateimanager", HelpText.FILEMANAGER));
         gridPane.add(btnHelp, 2, row + 1);
 
     }
@@ -289,7 +289,7 @@ public class ConfigPaneController extends AnchorPane {
         final Button btnHelp = new Button("");
         btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
         btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelp.setOnAction(a -> new MTAlert().showHelpAlert("Videoplayer", HelpText.VIDEOPLAYER));
+        btnHelp.setOnAction(a -> PAlert.showHelpAlert("Videoplayer", HelpText.VIDEOPLAYER));
         gridPane.add(btnHelp, 2, row + 1);
     }
 
@@ -310,7 +310,7 @@ public class ConfigPaneController extends AnchorPane {
         final Button btnHelp = new Button("");
         btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
         btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelp.setOnAction(a -> new MTAlert().showHelpAlert("Webbrowser", HelpText.WEBBROWSER));
+        btnHelp.setOnAction(a -> PAlert.showHelpAlert("Webbrowser", HelpText.WEBBROWSER));
         gridPane.add(btnHelp, 2, row + 1);
     }
 
@@ -334,7 +334,7 @@ public class ConfigPaneController extends AnchorPane {
         final Button btnHelp = new Button("");
         btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
         btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelp.setOnAction(a -> new MTAlert().showHelpAlert("Programmupdate suchen",
+        btnHelp.setOnAction(a -> PAlert.showHelpAlert("Programmupdate suchen",
                 "Beim Programmstart wird geprüft, ob es eine neue Version des Programms gibt. " +
                         "Ist eine aktualisierte Version vorhanden, wird das dann gemeldet.\n" +
                         "Das Programm wird aber nicht ungefragt ersetzt."));

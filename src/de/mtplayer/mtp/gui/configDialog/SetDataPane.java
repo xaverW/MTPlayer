@@ -22,8 +22,8 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
-import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
+import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -215,7 +215,7 @@ public class SetDataPane {
         gridPane.add(btnResetColor, 2, 0);
         final Button btnHelpColor = new Button("");
         btnHelpColor.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelpColor.setOnAction(a -> new MTAlert().showHelpAlert("Schriftfarbe auswählen",
+        btnHelpColor.setOnAction(a -> PAlert.showHelpAlert("Schriftfarbe auswählen",
                 HelpText.SETDATA_RESET_COLOR));
         gridPane.add(btnHelpColor, 3, 0);
 
@@ -242,7 +242,7 @@ public class SetDataPane {
         gridPane.add(tglSubdir, 0, 0);
         final Button btnHelpColor = new Button("");
         btnHelpColor.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelpColor.setOnAction(a -> new MTAlert().showHelpAlert("Unterordner anlegen",
+        btnHelpColor.setOnAction(a -> PAlert.showHelpAlert("Unterordner anlegen",
                 HelpText.SETDATA_SUBDIR));
 
         GridPane.setHalignment(btnHelpColor, HPos.RIGHT);
@@ -339,7 +339,7 @@ public class SetDataPane {
 
         final Button btnHelpPraefix = new Button("");
         btnHelpPraefix.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelpPraefix.setOnAction(a -> new MTAlert().showHelpAlert("Direkt speichern",
+        btnHelpPraefix.setOnAction(a -> PAlert.showHelpAlert("Direkt speichern",
                 HelpText.SETDATA_PRAEFIX));
 
         Label lbl = new Label("direkt Speichern (vom Programm selbst):");
@@ -377,7 +377,7 @@ public class SetDataPane {
 
         final Button btnHelpRes = new Button("");
         btnHelpRes.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelpRes.setOnAction(a -> new MTAlert().showHelpAlert("Auflösung",
+        btnHelpRes.setOnAction(a -> PAlert.showHelpAlert("Auflösung",
                 HelpText.SETDATA_RES));
 
         gridPane.add(rbHd, 0, 0);

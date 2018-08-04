@@ -19,8 +19,8 @@ package de.mtplayer.mtp.gui;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.abo.Abo;
-import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.Table;
+import de.p2tools.p2Lib.dialog.PAlert;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -105,7 +105,7 @@ public class AboGuiController extends AnchorPane {
         final ObservableList<Abo> ret;
         ret = table.getSelectionModel().getSelectedItems();
         if (ret == null || ret.isEmpty()) {
-            new MTAlert().showInfoNoSelection();
+            PAlert.showInfoNoSelection();
         }
         return ret;
     }

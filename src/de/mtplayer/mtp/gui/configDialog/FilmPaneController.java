@@ -20,8 +20,8 @@ import de.mtplayer.mLib.tools.DirFileChooser;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
-import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
+import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
@@ -111,7 +111,7 @@ public class FilmPaneController extends AnchorPane {
         final Button btnHelpDays = new Button("");
         btnHelpDays.setTooltip(new Tooltip("Hilfe anzeigen."));
         btnHelpDays.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelpDays.setOnAction(a -> new MTAlert().showHelpAlert("nur Filme der letzten Tage laden",
+        btnHelpDays.setOnAction(a -> new PAlert().showHelpAlert("nur Filme der letzten Tage laden",
                 HelpText.LOAD_FILM_ONLY_DAYS));
 
         Button btnLoad = new Button("Filmliste jetzt laden");
@@ -125,7 +125,7 @@ public class FilmPaneController extends AnchorPane {
         final Button btnHelpLoad = new Button("");
         btnHelpLoad.setTooltip(new Tooltip("Hilfe anzeigen."));
         btnHelpLoad.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelpLoad.setOnAction(a -> new MTAlert().showHelpAlert("Filmliste laden",
+        btnHelpLoad.setOnAction(a -> new PAlert().showHelpAlert("Filmliste laden",
                 HelpText.LOAD_FILMLIST_PROGRAMSTART));
 
 
@@ -194,7 +194,7 @@ public class FilmPaneController extends AnchorPane {
         final Button btnHelp = new Button("");
         btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
         btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelp.setOnAction(a -> new MTAlert().showHelpAlert("Filmliste laden",
+        btnHelp.setOnAction(a -> new PAlert().showHelpAlert("Filmliste laden",
                 HelpText.LOAD_FILMLIST_MANUAL));
 
         Button btnLoad = new Button("Filmliste jetzt laden");

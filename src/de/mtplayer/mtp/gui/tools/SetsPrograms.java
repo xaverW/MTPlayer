@@ -25,7 +25,7 @@ import de.mtplayer.mtp.controller.data.ProgramData;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.SetList;
 import de.mtplayer.mtp.controller.starter.RuntimeExec;
-import de.mtplayer.mtp.gui.dialog.MTAlert;
+import de.p2tools.p2Lib.dialog.PAlert;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -418,7 +418,7 @@ public class SetsPrograms {
                 text += "++++++++++++++++++++++++++++++++++++++++++++" + "\n\n\n";
             }
         }
-        new MTAlert().showInfoAlert("Set", "Sets prüfen", text);
+        PAlert.showInfoAlert("Set", "Sets prüfen", text);
         return ret;
     }
 }

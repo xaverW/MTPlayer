@@ -22,10 +22,10 @@ import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.SetList;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmTools;
-import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.mediaDialog.MediaDialogController;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.gui.tools.Table;
+import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.tools.log.Duration;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -174,7 +174,7 @@ public class FilmGuiController extends AnchorPane {
         final ArrayList<Film> ret = new ArrayList<>();
         ret.addAll(tableView.getSelectionModel().getSelectedItems());
         if (ret.isEmpty()) {
-            new MTAlert().showInfoNoSelection();
+            PAlert.showInfoNoSelection();
         }
         return ret;
     }
@@ -184,7 +184,7 @@ public class FilmGuiController extends AnchorPane {
         if (selectedTableRow >= 0) {
             return Optional.of(tableView.getSelectionModel().getSelectedItem());
         } else {
-            new MTAlert().showInfoNoSelection();
+            PAlert.showInfoNoSelection();
             return Optional.empty();
         }
     }

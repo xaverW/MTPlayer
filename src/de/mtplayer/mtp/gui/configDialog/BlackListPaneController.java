@@ -19,8 +19,8 @@ package de.mtplayer.mtp.gui.configDialog;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
-import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
+import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
@@ -116,7 +116,7 @@ public class BlackListPaneController extends AnchorPane {
         final Button btnHelp = new Button("");
         btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
         btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelp.setOnAction(a -> new MTAlert().showHelpAlert("Blacklist",
+        btnHelp.setOnAction(a -> PAlert.showHelpAlert("Blacklist",
                 HelpText.BLACKLIST_ABO));
 
 
@@ -127,7 +127,7 @@ public class BlackListPaneController extends AnchorPane {
         final Button btnHelpFuture = new Button("");
         btnHelpFuture.setTooltip(new Tooltip("Hilfe anzeigen."));
         btnHelpFuture.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelpFuture.setOnAction(a -> new MTAlert().showHelpAlert("Blacklist",
+        btnHelpFuture.setOnAction(a -> PAlert.showHelpAlert("Blacklist",
                 HelpText.BLACKLIST_FUTURE));
 
 
@@ -138,7 +138,7 @@ public class BlackListPaneController extends AnchorPane {
         final Button btnHelpGeo = new Button("");
         btnHelpGeo.setTooltip(new Tooltip("Hilfe anzeigen."));
         btnHelpGeo.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelpGeo.setOnAction(a -> new MTAlert().showHelpAlert("Blacklist",
+        btnHelpGeo.setOnAction(a -> PAlert.showHelpAlert("Blacklist",
                 HelpText.BLACKLIST_GEO));
 
 
@@ -147,14 +147,14 @@ public class BlackListPaneController extends AnchorPane {
         final Button btnHelpSize = new Button("");
         btnHelpSize.setTooltip(new Tooltip("Hilfe anzeigen."));
         btnHelpSize.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelpSize.setOnAction(a -> new MTAlert().showHelpAlert("Blacklist",
+        btnHelpSize.setOnAction(a -> PAlert.showHelpAlert("Blacklist",
                 HelpText.BLACKLIST_SIZE));
 
 
         final Button btnHelpDays = new Button("");
         btnHelpDays.setTooltip(new Tooltip("Hilfe anzeigen."));
         btnHelpDays.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelpDays.setOnAction(a -> new MTAlert().showHelpAlert("Blacklist",
+        btnHelpDays.setOnAction(a -> PAlert.showHelpAlert("Blacklist",
                 HelpText.BLACKLIST_DAYS));
 
 

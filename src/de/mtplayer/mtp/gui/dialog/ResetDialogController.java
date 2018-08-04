@@ -22,6 +22,7 @@ import de.mtplayer.mtp.controller.ProgQuit;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.tools.file.GetFile;
+import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.dialog.PDialog;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -75,7 +76,7 @@ public class ResetDialogController extends PDialog {
 
         final Button btnHelp = new Button("");
         btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelp.setOnAction(a -> new MTAlert().showHelpAlert("Programm zurücksetzen",
+        btnHelp.setOnAction(a -> PAlert.showHelpAlert("Programm zurücksetzen",
                 new GetFile().getHelpSearch(GetFile.PATH_HELPTEXT_RESET)));
 
         BigButton setButton = new BigButton(new Icons().ICON_BUTTON_QUIT,
@@ -106,8 +107,8 @@ public class ResetDialogController extends PDialog {
             tf.getChildren().addAll(new Text("Es werden "), t, new Text(" von Ihnen erzeugten Änderungen gelöscht.\n\n" +
                     "Möchten Sie wirklich alle Einstellungen zurücksetzen?"));
 
-            if (new MTAlert().showAlert_yes_no_cancel("Einstellungen zurücksetzen",
-                    "alle Einstellungen zurücksetzen!", tf, false) == MTAlert.BUTTON.YES) {
+            if (PAlert.showAlert_yes_no_cancel("Einstellungen zurücksetzen",
+                    "alle Einstellungen zurücksetzen!", tf, false) == PAlert.BUTTON.YES) {
                 // damit wird vor dem Beenden das Konfig-Verzeichnis umbenannt und so startet das
                 // Programm wie beim ersten Start
                 ProgData.reset = true;

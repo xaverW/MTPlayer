@@ -19,8 +19,8 @@ package de.mtplayer.mtp.gui.mediaDialog;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
-import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
+import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.dialog.PDialog;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.geometry.Insets;
@@ -80,7 +80,7 @@ public class MediaConfigController extends PDialog {
 
         btnHlp.setText("");
         btnHlp.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHlp.setOnAction(a -> new MTAlert().showHelpAlert("Medien", HelpText.MEDIA_DIALOG));
+        btnHlp.setOnAction(a -> PAlert.showHelpAlert("Medien", HelpText.MEDIA_DIALOG));
 
         initPanel();
     }

@@ -20,7 +20,7 @@ import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.filmlist.writeFilmlist.WriteFilmlistJson;
-import de.mtplayer.mtp.gui.dialog.MTAlert;
+import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
 import org.apache.commons.lang3.time.FastDateFormat;
@@ -75,7 +75,7 @@ public class ProgSave {
             } catch (final IOException e) {
                 PLog.userLog("Die Einstellungen konnten nicht zurückgesetzt werden.");
                 Platform.runLater(() -> {
-                    new MTAlert().showErrorAlert("Fehler", "Einstellungen zurückgesetzen",
+                    PAlert.showErrorAlert("Fehler", "Einstellungen zurückgesetzen",
                             "Die Einstellungen konnten nicht zurückgesetzt werden.\n\n"
                                     + "Sie müssen jetzt das Programm beenden, dann den Ordner:\n\n"
                                     + ProgInfos.getSettingsDirectory_String()

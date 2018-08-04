@@ -30,6 +30,7 @@ import de.mtplayer.mtp.controller.data.download.DownloadXml;
 import de.mtplayer.mtp.controller.data.film.FilmTools;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.mtplayer.mtp.tools.file.GetFile;
+import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.dialog.PDialogExtra;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.geometry.Insets;
@@ -134,7 +135,7 @@ public class DownloadEditDialogController extends PDialogExtra {
                 return true; // gibt nichts zu löschen
             }
 
-            if (!new MTAlert().showAlert("Film Löschen?", "Auflösung wurde geändert",
+            if (!PAlert.showAlert("Film Löschen?", "Auflösung wurde geändert",
                     "Die Auflösung wurde geändert, der Film kann nicht weitergeführt werden.\n " +
                             "Datei muss zuerst gelöscht werden.")) {
                 return false; // user will nicht
@@ -146,7 +147,7 @@ public class DownloadEditDialogController extends PDialogExtra {
                 throw new Exception();
             }
         } catch (final Exception ex) {
-            new MTAlert().showErrorAlert("Film löschen",
+            PAlert.showErrorAlert("Film löschen",
                     "Konnte die Datei nicht löschen!",
                     "Fehler beim löschen: " + dataDownload.getDestPathFile());
             PLog.errorLog(812036789, "Fehler beim löschen: " + dataDownload.arr[DownloadXml.DOWNLOAD_DEST_PATH_FILE_NAME]);
@@ -320,7 +321,7 @@ public class DownloadEditDialogController extends PDialogExtra {
                 final Button btnHelp = new Button("");
                 btnHelp.setTooltip(new Tooltip("Hilfe"));
                 btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
-                btnHelp.setOnAction(event -> new MTAlert().showHelpAlert("Den Programmaufruf ändern",
+                btnHelp.setOnAction(event -> PAlert.showHelpAlert("Den Programmaufruf ändern",
                         new GetFile().getHelpSearch(GetFile.PATH_HELPTEXT_EDIT_DOWNLOAD_PROG)));
 
                 VBox vBox = new VBox(5);

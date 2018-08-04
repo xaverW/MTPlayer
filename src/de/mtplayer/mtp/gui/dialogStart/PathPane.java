@@ -22,9 +22,9 @@ import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.MTColor;
-import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
+import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
 import javafx.beans.property.StringProperty;
@@ -72,7 +72,7 @@ public class PathPane {
         final Button btnHelp = new Button("");
         btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
         btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelp.setOnAction(a -> new MTAlert().showHelpAlert("Videoplayer", HelpText.PROG_PATHS));
+        btnHelp.setOnAction(a -> PAlert.showHelpAlert("Videoplayer", HelpText.PROG_PATHS));
 
         HBox hBox = new HBox();
         VBox.setVgrow(hBox, Priority.ALWAYS);

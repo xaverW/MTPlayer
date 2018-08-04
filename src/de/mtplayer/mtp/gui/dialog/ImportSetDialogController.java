@@ -24,6 +24,7 @@ import de.mtplayer.mtp.gui.configDialog.SetPaneController;
 import de.mtplayer.mtp.gui.dialogStart.DownPathPane;
 import de.mtplayer.mtp.gui.dialogStart.PathPane;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
+import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.dialog.PDialog;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -65,7 +66,7 @@ public class ImportSetDialogController extends PDialog {
 
         final Button btnHelp = new Button("");
         btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelp.setOnAction(a -> new MTAlert().showHelpAlert("Set zurücksetzen",
+        btnHelp.setOnAction(a -> PAlert.showHelpAlert("Set zurücksetzen",
                 "\"Bestehende Sets durch die neuen ersetzen\"" +
                         "\n\n" +
                         "Damit werden alle Sets (auch eigene), die zum Abspielen\n" +
@@ -134,9 +135,9 @@ public class ImportSetDialogController extends PDialog {
         progData.setList.clear();
 
         if (SetsPrograms.addSetTemplate(ListePsetVorlagen.getStandarset(true /*replaceMuster*/))) {
-            new MTAlert().showInfoAlert("Set", "Set importieren", "Sets wurden importiert!", false);
+            PAlert.showInfoAlert("Set", "Set importieren", "Sets wurden importiert!", false);
         } else {
-            new MTAlert().showErrorAlert("Set importieren", "Set wurde nicht importiert!");
+            PAlert.showErrorAlert("Set importieren", "Set wurde nicht importiert!");
         }
 
         setPane.toFront();

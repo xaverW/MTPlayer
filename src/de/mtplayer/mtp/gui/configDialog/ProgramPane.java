@@ -22,7 +22,7 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.ProgramData;
 import de.mtplayer.mtp.controller.data.SetData;
-import de.mtplayer.mtp.gui.dialog.MTAlert;
+import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.application.Platform;
@@ -115,7 +115,7 @@ public class ProgramPane {
             final ObservableList<ProgramData> sels = tableView.getSelectionModel().getSelectedItems();
 
             if (sels == null || sels.isEmpty()) {
-                new MTAlert().showInfoNoSelection();
+                PAlert.showInfoNoSelection();
             } else {
                 setData.getProgramList().removeAll(sels);
                 tableView.getSelectionModel().clearSelection();
@@ -234,7 +234,7 @@ public class ProgramPane {
     private int getSelLine() {
         final int sel = tableView.getSelectionModel().getSelectedIndex();
         if (sel < 0) {
-            new MTAlert().showInfoNoSelection();
+            PAlert.showInfoNoSelection();
         }
         return sel;
     }

@@ -17,12 +17,11 @@
 package de.mtplayer.mtp.controller;
 
 import de.mtplayer.mLib.MLInit;
-import de.mtplayer.mLib.tools.MLAlert;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
-import de.mtplayer.mtp.gui.dialog.MTAlert;
+import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.tools.log.LogMsg;
 import de.p2tools.p2Lib.tools.log.PLog;
 import de.p2tools.p2Lib.tools.log.PLogger;
@@ -141,7 +140,7 @@ public class ProgStart {
         PLog.userLog("Es gibt ein Backup");
 
 
-        if (MLAlert.BUTTON.YES != new MTAlert().showAlert_yes_no("Gesicherte Einstellungen laden?",
+        if (PAlert.BUTTON.YES != PAlert.showAlert_yes_no("Gesicherte Einstellungen laden?",
                 "Die Einstellungen sind beschädigt\n" +
                         "und können nicht geladen werden.",
                 "Soll versucht werden, mit gesicherten\n"

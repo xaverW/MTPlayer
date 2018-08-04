@@ -19,10 +19,10 @@ package de.mtplayer.mtp.gui.mediaDialog;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
-import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.tools.storedFilter.Filter;
+import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.dialog.PDialog;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -175,7 +175,7 @@ public class MediaDialogController extends PDialog {
         btnOk.setOnAction(a -> close());
         btnHelp.setText("");
         btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelp.setOnAction(a -> new MTAlert().showHelpAlert("Suche in der Mediensammlung", HelpText.SEARCH_MEDIA_DIALOG));
+        btnHelp.setOnAction(a -> PAlert.showHelpAlert("Suche in der Mediensammlung", HelpText.SEARCH_MEDIA_DIALOG));
 
         rbMedien.setSelected(true);
         rbMedien.setOnAction(a -> {

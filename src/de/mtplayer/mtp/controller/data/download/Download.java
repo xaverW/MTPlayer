@@ -26,7 +26,7 @@ import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmTools;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.mtplayer.mtp.controller.starter.Start;
-import de.mtplayer.mtp.gui.dialog.MTAlert;
+import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.tools.SysTools;
 import javafx.application.Platform;
 
@@ -295,7 +295,7 @@ public final class Download extends DownloadProps {
         FileUtils.checkLengthPath(pathName);
         if (!pathName[0].equals(path) || !pathName[1].equals(name)) {
             Platform.runLater(() ->
-                    new MTAlert().showInfoAlert("Pfad zu lang!", "Pfad zu lang!",
+                    new PAlert().showInfoAlert("Pfad zu lang!", "Pfad zu lang!",
                             "Dateiname war zu lang und wurde gekürzt!")
             );
             path = pathName[0];

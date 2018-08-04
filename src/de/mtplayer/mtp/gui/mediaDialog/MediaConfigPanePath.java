@@ -22,8 +22,8 @@ import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.mediaDb.MediaPathData;
-import de.mtplayer.mtp.gui.dialog.MTAlert;
 import de.mtplayer.mtp.gui.tools.HelpText;
+import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import javafx.application.Platform;
@@ -83,7 +83,7 @@ public class MediaConfigPanePath {
         btnDel.setOnAction(event -> {
             final ObservableList<MediaPathData> sels = tableView.getSelectionModel().getSelectedItems();
             if (sels == null || sels.isEmpty()) {
-                new MTAlert().showInfoNoSelection();
+                PAlert.showInfoNoSelection();
             } else {
                 progData.mediaPathList.removeAll(sels);
                 tableView.getSelectionModel().clearSelection();

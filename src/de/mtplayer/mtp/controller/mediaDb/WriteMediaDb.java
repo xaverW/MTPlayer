@@ -17,7 +17,7 @@
 package de.mtplayer.mtp.controller.mediaDb;
 
 import de.mtplayer.mtp.controller.config.ProgConst;
-import de.mtplayer.mtp.gui.dialog.MTAlert;
+import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
 
@@ -57,7 +57,7 @@ public class WriteMediaDb implements AutoCloseable {
         } catch (final Exception ex) {
             list.add("Fehler, nicht geschrieben!");
             PLog.errorLog(656328109, ex);
-            Platform.runLater(() -> new MTAlert().showErrorAlert("Fehler beim Schreiben",
+            Platform.runLater(() -> PAlert.showErrorAlert("Fehler beim Schreiben",
                     "Die Mediensammlung konnte nicht geschrieben werden:\n" +
                             file.toString()));
         }
