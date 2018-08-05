@@ -327,8 +327,6 @@ public class FilmFilterController extends FilterController {
     private void initDurFilter() {
         slDur.minValueProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().minDurProperty());
         slDur.maxValueProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().maxDurProperty());
-        slDur.setMinValue(0);
-        slDur.setMaxValue(SelectedFilter.FILTER_DURATION_MAX_MIN);
         slDur.setVluePrefix("");
 
         progData.storedFilter.getSelectedFilter().minDurProperty().addListener((observable, oldValue, newValue) ->
@@ -349,7 +347,6 @@ public class FilmFilterController extends FilterController {
 
         tglFilmTime.selectedProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().minMaxTimeInvertProperty());
         GridPane.setFillWidth(tglFilmTime, false);
-
     }
 
     private void setSlider() {
