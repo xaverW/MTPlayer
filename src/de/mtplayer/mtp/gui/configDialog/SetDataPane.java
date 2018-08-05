@@ -21,7 +21,7 @@ import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.SetData;
-import de.mtplayer.mtp.controller.data.film.FilmXml;
+import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
@@ -111,10 +111,10 @@ public class SetDataPane {
             txtSuffix.textProperty().bindBidirectional(setData.suffixProperty());
 
             switch (setData.getResolution()) {
-                case FilmXml.RESOLUTION_HD:
+                case Film.RESOLUTION_HD:
                     rbHd.setSelected(true);
                     break;
-                case FilmXml.RESOLUTION_SMALL:
+                case Film.RESOLUTION_SMALL:
                     rbLow.setSelected(true);
                     break;
                 default:
@@ -404,13 +404,13 @@ public class SetDataPane {
 
     private void setResolution() {
         if (rbHeight.isSelected()) {
-            setData.setResolution(FilmXml.RESOLUTION_NORMAL);
+            setData.setResolution(Film.RESOLUTION_NORMAL);
         }
         if (rbHd.isSelected()) {
-            setData.setResolution(FilmXml.RESOLUTION_HD);
+            setData.setResolution(Film.RESOLUTION_HD);
         }
         if (rbLow.isSelected()) {
-            setData.setResolution(FilmXml.RESOLUTION_SMALL);
+            setData.setResolution(Film.RESOLUTION_SMALL);
         }
     }
 

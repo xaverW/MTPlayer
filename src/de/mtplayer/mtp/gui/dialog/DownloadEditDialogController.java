@@ -27,8 +27,8 @@ import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadInfos;
 import de.mtplayer.mtp.controller.data.download.DownloadTools;
 import de.mtplayer.mtp.controller.data.download.DownloadXml;
+import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmTools;
-import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.mtplayer.mtp.tools.file.GetFile;
 import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlert;
@@ -66,7 +66,7 @@ public class DownloadEditDialogController extends PDialogExtra {
     private String fileSize_HD = "";
     private String fileSize_high = "";
     private String fileSize_small = "";
-    private String resolution = FilmXml.RESOLUTION_NORMAL;
+    private String resolution = Film.RESOLUTION_NORMAL;
 
     private final Download download;
     private final boolean isStarted;
@@ -160,9 +160,9 @@ public class DownloadEditDialogController extends PDialogExtra {
         download.setPathName(cbPath.getSelectionModel().getSelectedItem(),
                 txt[DownloadXml.DOWNLOAD_DEST_FILE_NAME].getText());
 
-        if ((rbHd.isSelected() && !resolution.equals(FilmXml.RESOLUTION_HD))
-                || (rbSmall.isSelected() && !resolution.equals(FilmXml.RESOLUTION_SMALL))
-                || (rbHigh.isSelected() && !resolution.equals(FilmXml.RESOLUTION_NORMAL))) {
+        if ((rbHd.isSelected() && !resolution.equals(Film.RESOLUTION_HD))
+                || (rbSmall.isSelected() && !resolution.equals(Film.RESOLUTION_SMALL))
+                || (rbHigh.isSelected() && !resolution.equals(Film.RESOLUTION_NORMAL))) {
             // dann wurde die Auflösung geändert -> Film kann nicht weitergeführt werden
             ok = downloadDeleteFile(download);
         } else {
@@ -179,11 +179,11 @@ public class DownloadEditDialogController extends PDialogExtra {
         // RadioButton sind nur enabled wenn "datenDownload.film" vorhanden
         final String res;
         if (rbHd.isSelected()) {
-            res = FilmXml.RESOLUTION_HD;
+            res = Film.RESOLUTION_HD;
         } else if (rbSmall.isSelected()) {
-            res = FilmXml.RESOLUTION_SMALL;
+            res = Film.RESOLUTION_SMALL;
         } else {
-            res = FilmXml.RESOLUTION_NORMAL;
+            res = Film.RESOLUTION_NORMAL;
         }
         download.setUrl(download.getFilm().getUrlForResolution(res));
         download.setUrlRtmp(download.getFilm().getUrlFlvstreamerForResolution(res));
@@ -236,18 +236,18 @@ public class DownloadEditDialogController extends PDialogExtra {
         if (download.getFilm() != null) {
 
             rbHigh.setDisable(isStarted);
-            rbHigh.setSelected(download.getUrl().equals(download.getFilm().getUrlForResolution(FilmXml.RESOLUTION_NORMAL)));
+            rbHigh.setSelected(download.getUrl().equals(download.getFilm().getUrlForResolution(Film.RESOLUTION_NORMAL)));
             fileSize_high = FilmTools.getSizeFromWeb(download.getFilm(),
-                    download.getFilm().getUrlForResolution(FilmXml.RESOLUTION_NORMAL));
+                    download.getFilm().getUrlForResolution(Film.RESOLUTION_NORMAL));
             if (!fileSize_high.isEmpty()) {
                 rbHigh.setText(rbHigh.getText() + "   [ " + fileSize_high + " MB ]");
             }
 
             if (download.getFilm().isHd()) {
                 rbHd.setDisable(isStarted);
-                rbHd.setSelected(download.getUrl().equals(download.getFilm().getUrlForResolution(FilmXml.RESOLUTION_HD)));
+                rbHd.setSelected(download.getUrl().equals(download.getFilm().getUrlForResolution(Film.RESOLUTION_HD)));
                 fileSize_HD = FilmTools.getSizeFromWeb(download.getFilm(),
-                        download.getFilm().getUrlForResolution(FilmXml.RESOLUTION_HD));
+                        download.getFilm().getUrlForResolution(Film.RESOLUTION_HD));
                 if (!fileSize_HD.isEmpty()) {
                     rbHd.setText(rbHd.getText() + "   [ " + fileSize_HD + " MB ]");
                 }
@@ -255,9 +255,9 @@ public class DownloadEditDialogController extends PDialogExtra {
 
             if (download.getFilm().isSmall()) {
                 rbSmall.setDisable(isStarted);
-                rbSmall.setSelected(download.getUrl().equals(download.getFilm().getUrlForResolution(FilmXml.RESOLUTION_SMALL)));
+                rbSmall.setSelected(download.getUrl().equals(download.getFilm().getUrlForResolution(Film.RESOLUTION_SMALL)));
                 fileSize_small = FilmTools.getSizeFromWeb(download.getFilm(),
-                        download.getFilm().getUrlForResolution(FilmXml.RESOLUTION_SMALL));
+                        download.getFilm().getUrlForResolution(Film.RESOLUTION_SMALL));
                 if (!fileSize_small.isEmpty()) {
                     rbSmall.setText(rbSmall.getText() + "   [ " + fileSize_small + " MB ]");
                 }
@@ -265,19 +265,19 @@ public class DownloadEditDialogController extends PDialogExtra {
 
         }
         if (rbHd.isSelected()) {
-            resolution = FilmXml.RESOLUTION_HD;
+            resolution = Film.RESOLUTION_HD;
             if (!fileSize_HD.isEmpty()) {
                 // ist wahrscheinlich leer
                 download.setSizeDownloadFromWeb(fileSize_HD);
             }
         } else if (rbSmall.isSelected()) {
-            resolution = FilmXml.RESOLUTION_SMALL;
+            resolution = Film.RESOLUTION_SMALL;
             if (!fileSize_small.isEmpty()) {
                 // ist wahrscheinlich leer
                 download.setSizeDownloadFromWeb(fileSize_small);
             }
         } else {
-            resolution = FilmXml.RESOLUTION_NORMAL;
+            resolution = Film.RESOLUTION_NORMAL;
             if (!fileSize_high.isEmpty()) {
                 // dann den auch noch
                 download.setSizeDownloadFromWeb(fileSize_high);

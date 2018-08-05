@@ -29,16 +29,17 @@ import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadInfos;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmTools;
-import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
 import de.p2tools.p2Lib.dialog.PAlert;
-import de.p2tools.p2Lib.dialog.PDialog;
+import de.p2tools.p2Lib.dialog.PDialogExtra;
 import de.p2tools.p2Lib.tools.PStringUtils;
 import de.p2tools.p2Lib.tools.log.PLog;
-import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.FastDateFormat;
@@ -52,76 +53,46 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
-public class DownloadAddDialogController extends PDialog {
+public class DownloadAddDialogController extends PDialogExtra {
 
-    @FXML
     private VBox vBoxCont;
-    @FXML
-    private VBox vBoxAllDownloads;
-    @FXML
-    private HBox hBoxTop;
-    @FXML
-    private HBox hBoxAll;
-    @FXML
-    private HBox hBoxSize;
+    private HBox hBoxOk;
 
-    @FXML
-    private Button btnPrev;
-    @FXML
-    private Button btnNext;
-    @FXML
-    private Label lblSum;
+    private final VBox vBoxAllDownloads = new VBox();
+    private final HBox hBoxTop = new HBox();
+    private final HBox hBoxAll = new HBox();
+    private final HBox hBoxSize = new HBox();
 
-    @FXML
-    CheckBox tglAll;
-    @FXML
-    private Label lblSet;
-    @FXML
-    private ComboBox<String> cbSet;
-    @FXML
-    private ComboBox<String> cbPath;
-    @FXML
-    private Button btnDest;
-    @FXML
-    private Button btnPropose;
-    @FXML
-    private Button btnOk;
-    @FXML
-    private Button btnCancel;
-    @FXML
-    private TextField txtName;
-    @FXML
-    private CheckBox cbxStart;
-    @FXML
-    private CheckBox cbxInfo;
-    @FXML
-    private CheckBox cbxSubtitle;
+    private final Button btnPrev = new Button("<");
+    private final Button btnNext = new Button(">");
+    private final Label lblSum = new Label("");
 
-    @FXML
-    private RadioButton rbHd;
-    @FXML
-    private RadioButton rbHigh;
-    @FXML
-    private RadioButton rbSmall;
+    private final CheckBox chkAll = new CheckBox("Änderungen auf alle Filme anwenden");
+    private final Label lblSet = new Label("Set:");
+    private final ComboBox<String> cbSet = new ComboBox<>();
+    private final ComboBox<String> cbPath = new ComboBox<>();
+    private final Button btnDest = new Button("Pfad");
+    private final Button btnPropose = new Button("Vorschlag");
+    private final Button btnOk = new Button("Ok");
+    private final Button btnCancel = new Button("Abbrechen");
+    private final TextField txtName = new TextField();
+    private final CheckBox cbxStart = new CheckBox("Download sofort starten");
+    private final CheckBox cbxInfo = new CheckBox("Infodatei anlegen: \"Filmname.txt\"");
+    private final CheckBox cbxSubtitle = new CheckBox("Untertitel speichern: \"Filmname.xxx\"");
 
-    @FXML
-    private Label lblFree;
-    @FXML
-    private Label lblFilm;
-    @FXML
-    private Label lblFilmTitle;
-    @FXML
-    private GridPane gridPane;
+    private final RadioButton rbHd = new RadioButton("HD");
+    private final RadioButton rbHigh = new RadioButton("Hoch");
+    private final RadioButton rbSmall = new RadioButton("Klein");
+    private final ToggleGroup group = new ToggleGroup();
 
-    private boolean ok = false;
-
-    private boolean nameChanged = false;
+    private final Label lblFree = new Label("4M noch frei");
+    private final Label lblFilm = new Label("Film:");
+    private final Label lblFilmTitle = new Label("ARD: Tatort, ..");
+    private final GridPane gridPane = new GridPane();
 
     private final String textHd = "HD";
     private final String textHeight = "hohe Auflösung";
     private final String textLow = "niedrige Auflösung";
-
-    private final ToggleGroup group = new ToggleGroup();
 
     private final ProgData progData;
     final private SetList setList;
@@ -129,18 +100,22 @@ public class DownloadAddDialogController extends PDialog {
     private String filterResolution;
     final String[] storedPath = ProgConfig.DOWNLOAD_DIALOG_PATH_SAVING.get().split("<>");
 
+    private static final String SEPARATOR = File.separator;
+    private static final String FORMATTER_ddMMyyyy_str = "yyyyMMdd";
+    private static final FastDateFormat FORMATTER_ddMMyyyy = FastDateFormat.getInstance(FORMATTER_ddMMyyyy_str);
 
-    private int filmNr = 0;
-    private ArrayList<Film> films;
+    //    private boolean nameChanged = false;
+    private boolean ok = false;
+    private int actFilmIsShown = 0;
+    private ArrayList<Film> filmsToDownloadList;
+    private DownInfo downInfo[];
 
-    DownInfo downInfo[];
-
-    class DownInfo {
+    private class DownInfo {
         private String fileSize_HD = "";
         private String fileSize_high = "";
         private String fileSize_small = "";
 
-        private String resolution = FilmXml.RESOLUTION_HD;
+        private String resolution = Film.RESOLUTION_HD;
         private boolean info, subtitle, subDisable = false;
 
         private Film film;
@@ -152,31 +127,27 @@ public class DownloadAddDialogController extends PDialog {
 
 
         private void setResolution(String resolution) {
-            if (tglAll.isSelected()) {
+            if (chkAll.isSelected()) {
+
                 Arrays.stream(downInfo).forEach(d -> {
-                    d.resolution = resolution;
+                    if (resolution.equals(Film.RESOLUTION_HD) && d.film.isHd()) {
+                        d.resolution = Film.RESOLUTION_HD;
 
-                    switch (resolution) {
-                        case FilmXml.RESOLUTION_HD:
-                            if (d.fileSize_HD.isEmpty()) {
-                                d.resolution = FilmXml.RESOLUTION_NORMAL;
-                            }
-                            break;
-                        case FilmXml.RESOLUTION_SMALL:
-                            if (d.fileSize_small.isEmpty()) {
-                                d.resolution = FilmXml.RESOLUTION_NORMAL;
-                            }
-                            break;
+                    } else if (resolution.equals(Film.RESOLUTION_SMALL) && film.isSmall()) {
+                        d.resolution = Film.RESOLUTION_SMALL;
+
+                    } else {
+                        d.resolution = Film.RESOLUTION_NORMAL;
                     }
-
                 });
+
             } else {
                 this.resolution = resolution;
             }
         }
 
         private void setInfo(boolean info) {
-            if (tglAll.isSelected()) {
+            if (chkAll.isSelected()) {
                 Arrays.stream(downInfo).forEach(d -> d.info = info);
             } else {
                 this.info = info;
@@ -184,7 +155,7 @@ public class DownloadAddDialogController extends PDialog {
         }
 
         private void setSubtitle(boolean subtitle) {
-            if (tglAll.isSelected()) {
+            if (chkAll.isSelected()) {
                 Arrays.stream(downInfo).forEach(d -> {
                     if (!d.subDisable) {
                         d.subtitle = subtitle;
@@ -200,7 +171,7 @@ public class DownloadAddDialogController extends PDialog {
         }
 
         private void setPath(String path) {
-            if (tglAll.isSelected()) {
+            if (chkAll.isSelected()) {
                 Arrays.stream(downInfo).forEach(d -> d.path = path);
             } else {
                 this.path = path;
@@ -209,32 +180,103 @@ public class DownloadAddDialogController extends PDialog {
 
     }
 
-    public DownloadAddDialogController(ProgData progData, ArrayList<Film> films, SetData psetData, String filterResolution) {
-        super("/de/mtplayer/mtp/gui/dialog/DownloadAddDialog.fxml",
-                films.size() > 1 ? ProgConfig.DOWNLOAD_DIALOG_ADD_MORE_SIZE.getStringProperty() :
+    public DownloadAddDialogController(ProgData progData, ArrayList<Film> filmsToDownloadList, SetData psetData, String filterResolution) {
+        super(filmsToDownloadList.size() > 1 ? ProgConfig.DOWNLOAD_DIALOG_ADD_MORE_SIZE.getStringProperty() :
                         ProgConfig.DOWNLOAD_DIALOG_ADD_SIZE.getStringProperty(),
                 "Download anlegen", true);
 
         this.progData = progData;
-        this.films = films;
+        this.filmsToDownloadList = filmsToDownloadList;
         this.psetData = psetData;
         this.filterResolution = filterResolution;
+        this.setList = progData.setList.getListSave();
 
-        setList = progData.setList.getListSave();
+        vBoxCont = getVboxCont();
+        hBoxOk = getHboxOk();
+        init(getvBoxDialog(), true);
+    }
 
-        init(true);
+    private void initCont() {
+        vBoxAllDownloads.setStyle("-fx-background-color: gainsboro;");
+        hBoxSize.setStyle("-fx-background-color: gainsboro;");
+        lblFilm.setStyle("-fx-font-weight: bold;");
+        lblFilmTitle.setStyle("-fx-font-weight: bold;");
+
+        // Top
+        hBoxTop.setSpacing(20);
+        hBoxTop.setAlignment(Pos.CENTER);
+        hBoxTop.setPadding(new Insets(10));
+        hBoxTop.getChildren().addAll(btnPrev, lblSum, btnNext);
+
+        hBoxAll.setAlignment(Pos.CENTER);
+        hBoxAll.setPadding(new Insets(10));
+        hBoxAll.getChildren().add(chkAll);
+        vBoxAllDownloads.getChildren().addAll(hBoxTop, hBoxAll);
+
+
+        // Gridpane
+        gridPane.setMaxWidth(Double.MAX_VALUE);
+        gridPane.setPadding(new Insets(10, 10, 10, 10));
+        VBox.setVgrow(gridPane, Priority.ALWAYS);
+        gridPane.setHgap(15);
+        gridPane.setVgap(15);
+        int row = 0;
+        gridPane.add(lblFilm, 0, row);
+        gridPane.add(lblFilmTitle, 1, row);
+
+        gridPane.add(lblSet, 0, ++row);
+        cbSet.setMaxWidth(Double.MAX_VALUE);
+        GridPane.setHgrow(cbSet, Priority.ALWAYS);
+        gridPane.add(cbSet, 1, row);
+
+        gridPane.add(new Label("Auflösung:"), 0, ++row);
+        hBoxSize.setMaxWidth(Double.MAX_VALUE);
+        hBoxSize.setSpacing(20);
+        GridPane.setHgrow(hBoxSize, Priority.ALWAYS);
+        hBoxSize.setPadding(new Insets(10, 5, 10, 5));
+        hBoxSize.getChildren().addAll(rbHd, rbHigh, rbSmall);
+        gridPane.add(hBoxSize, 1, row, 3, 1);
+
+        gridPane.add(new Label("Dateiname:"), 0, ++row);
+        txtName.setMaxWidth(Double.MAX_VALUE);
+        GridPane.setHgrow(txtName, Priority.ALWAYS);
+        gridPane.add(txtName, 1, row);
+
+        gridPane.add(new Label("Zielpfad:"), 0, ++row);
+        cbPath.setMaxWidth(Double.MAX_VALUE);
+        GridPane.setHgrow(cbPath, Priority.ALWAYS);
+        gridPane.add(cbPath, 1, row);
+        gridPane.add(btnDest, 2, row);
+        gridPane.add(btnPropose, 3, row);
+
+        HBox hBox2 = new HBox();
+        GridPane.setHgrow(hBox2, Priority.ALWAYS);
+        hBox2.getChildren().add(lblFree);
+        hBox2.setAlignment(Pos.CENTER_RIGHT);
+        gridPane.add(hBox2, 1, ++row, 3, 1);
+
+        gridPane.add(cbxSubtitle, 1, ++row);
+        gridPane.add(cbxInfo, 1, ++row);
+
+
+        vBoxCont.setSpacing(20);
+        vBoxCont.getChildren().addAll(vBoxAllDownloads, gridPane);
+
+
+        // Bottom
+        HBox hBox = new HBox();
+        HBox.setHgrow(hBox, Priority.ALWAYS);
+        hBox.getChildren().add(cbxStart);
+        hBoxOk.getChildren().addAll(hBox, btnOk, btnCancel);
     }
 
     @Override
     public void make() {
-        vBoxCont.getStyleClass().add("dialog-border");
-        vBoxAllDownloads.setStyle("-fx-background-color: gainsboro;");
-        hBoxSize.setStyle("-fx-background-color: gainsboro;");
+        initCont();
 
         if (progData.setList.getListSave().isEmpty()) {
             // Satz mit x, war wohl nix
             ok = false;
-            initCancel();
             quit();
             return;
         }
@@ -242,14 +284,13 @@ public class DownloadAddDialogController extends PDialog {
             psetData = progData.setList.getListSave().get(0);
         }
 
-        if (films.size() == 0) {
+        if (filmsToDownloadList.size() == 0) {
             // Satz mit x, war wohl nix
             ok = false;
-            initCancel();
             quit();
             return;
 
-        } else if (films.size() == 1) {
+        } else if (filmsToDownloadList.size() == 1) {
             hBoxTop.setVisible(false);
             hBoxTop.setManaged(false);
             hBoxAll.setVisible(false);
@@ -268,9 +309,6 @@ public class DownloadAddDialogController extends PDialog {
             cbSet.setOnAction(a -> makePsetChange());
         }
 
-        lblFilm.setStyle("-fx-font-weight: bold;");
-        lblFilmTitle.setStyle("-fx-font-weight: bold;");
-
         initArrays();
         initButton();
         initPathAndName();
@@ -281,14 +319,158 @@ public class DownloadAddDialogController extends PDialog {
     }
 
 
-    private void changeFilmNr() {
-        final int nr = filmNr + 1;
-        lblSum.setText("Film " + nr + " von " + films.size() + " Filmen");
+    private void initArrays() {
+        final int anz = filmsToDownloadList.size();
+        downInfo = new DownInfo[anz];
 
-        if (filmNr == 0) {
+        String aktPath = "";
+        if (storedPath.length > 0) {
+            aktPath = storedPath[0];
+        }
+
+        for (int i = 0; i < anz; ++i) {
+            downInfo[i] = new DownInfo();
+            downInfo[i].psetData = psetData;
+            downInfo[i].film = filmsToDownloadList.get(i);
+            downInfo[i].download = new Download(psetData, downInfo[i].film, DownloadInfos.SRC_DOWNLOAD,
+                    null, "", aktPath, "");
+
+            downInfo[i].path = downInfo[i].download.getDestPath();
+            downInfo[i].name = downInfo[i].download.getDestFileName();
+            downInfo[i].fileSize_HD = downInfo[i].film.isHd() ?
+                    FilmTools.getSizeFromWeb(downInfo[i].film, downInfo[i].film.getUrlForResolution(Film.RESOLUTION_HD)) : "";
+            downInfo[i].fileSize_high = FilmTools.getSizeFromWeb(downInfo[i].film,
+                    downInfo[i].film.getUrlForResolution(Film.RESOLUTION_NORMAL));
+            downInfo[i].fileSize_small = downInfo[i].film.isSmall() ?
+                    FilmTools.getSizeFromWeb(downInfo[i].film, downInfo[i].film.getUrlForResolution(Film.RESOLUTION_SMALL)) : "";
+
+            downInfo[i].info = downInfo[i].psetData.isInfoFile();
+
+            if (downInfo[i].film.getUrlSubtitle().isEmpty()) {
+                // dann gibts keinen Subtitle
+                downInfo[i].subDisable = true;
+                downInfo[i].subtitle = false;
+            } else {
+                downInfo[i].subDisable = false;
+                downInfo[i].subtitle = downInfo[i].psetData.isSubtitle();
+            }
+
+            // die Werte passend zum Film setzen
+            if ((filterResolution.equals(Film.RESOLUTION_HD) || downInfo[i].psetData.getResolution().equals(Film.RESOLUTION_HD))
+                    && downInfo[i].film.isHd()) {
+
+                //Dann wurde im Filter oder Set HD ausgewählt und wird voreingestellt
+                downInfo[i].resolution = Film.RESOLUTION_HD;
+
+            } else if (downInfo[i].psetData.getResolution().equals(Film.RESOLUTION_SMALL)
+                    && downInfo[i].film.isSmall()) {
+                downInfo[i].resolution = Film.RESOLUTION_SMALL;
+
+            } else {
+                downInfo[i].resolution = Film.RESOLUTION_NORMAL;
+            }
+
+
+        }
+    }
+
+    private void initButton() {
+        btnDest.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
+        btnDest.setText("");
+        btnDest.setOnAction(event -> getDestination());
+
+        btnPropose.setGraphic(new Icons().ICON_BUTTON_PROPOSE);
+        btnPropose.setText("");
+        btnPropose.setOnAction(event -> proposeDestination());
+
+
+        btnPrev.setOnAction(event -> {
+            --actFilmIsShown;
+            changeFilmNr();
+        });
+        btnNext.setOnAction(event -> {
+            ++actFilmIsShown;
+            changeFilmNr();
+        });
+
+        btnOk.setOnAction(event -> {
+            if (check()) {
+                quit();
+            }
+        });
+        btnCancel.setOnAction(event -> {
+            ok = false;
+            quit();
+        });
+
+    }
+
+    private void initPathAndName() {
+        // gespeicherte Pfade eintragen
+        cbPath.setEditable(true);
+        cbPath.getItems().addAll(storedPath);
+
+        if (downInfo[actFilmIsShown].path.isEmpty()) {
+            cbPath.getSelectionModel().selectFirst();
+            downInfo[actFilmIsShown].setPath(cbPath.getSelectionModel().getSelectedItem());
+        } else {
+            cbPath.getSelectionModel().select(downInfo[actFilmIsShown].path);
+        }
+
+        cbPath.valueProperty().addListener((observable, oldValue, newValue) -> {
+//            nameChanged = true;
+
+            final String s = cbPath.getSelectionModel().getSelectedItem();
+            downInfo[actFilmIsShown].setPath(s);
+
+            calculateAndCheckDiskSpace();
+        });
+
+        txtName.setText(downInfo[actFilmIsShown].name);
+        txtName.textProperty().addListener((observable, oldValue, newValue) -> {
+//            nameChanged = true;
+
+            downInfo[actFilmIsShown].setName(txtName.getText());
+
+            if (!txtName.getText().equals(FileNameUtils.checkFileName(txtName.getText(), false /* pfad */))) {
+                txtName.setStyle(MTColor.DOWNLOAD_NAME_ERROR.getCssBackground());
+            } else {
+                txtName.setStyle("");
+            }
+        });
+
+        txtName.disableProperty().bind(chkAll.selectedProperty());
+    }
+
+    private void initResolutionButton() {
+        rbHd.setToggleGroup(group);
+        rbHigh.setToggleGroup(group);
+        rbSmall.setToggleGroup(group);
+
+        // und jetzt für den aktuellen Film das GUI setzen
+        makeResolutionButtons();
+
+        rbHd.setOnAction(a -> downInfo[actFilmIsShown].setResolution(Film.RESOLUTION_HD));
+        rbHigh.setOnAction(a -> downInfo[actFilmIsShown].setResolution(Film.RESOLUTION_NORMAL));
+        rbSmall.setOnAction(a -> downInfo[actFilmIsShown].setResolution(Film.RESOLUTION_SMALL));
+    }
+
+    private void initCheckBox() {
+        // und jetzt noch die Listener anhängen
+        cbxStart.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD.getBooleanProperty());
+
+        cbxSubtitle.setOnAction(event -> downInfo[actFilmIsShown].setSubtitle(cbxSubtitle.isSelected()));
+        cbxInfo.setOnAction(event -> downInfo[actFilmIsShown].setInfo(cbxInfo.isSelected()));
+    }
+
+    private void changeFilmNr() {
+        final int nr = actFilmIsShown + 1;
+        lblSum.setText("Film " + nr + " von " + filmsToDownloadList.size() + " Filmen");
+
+        if (actFilmIsShown == 0) {
             btnPrev.setDisable(true);
             btnNext.setDisable(false);
-        } else if (filmNr == films.size() - 1) {
+        } else if (actFilmIsShown == filmsToDownloadList.size() - 1) {
             btnPrev.setDisable(false);
             btnNext.setDisable(true);
         } else {
@@ -296,65 +478,66 @@ public class DownloadAddDialogController extends PDialog {
             btnNext.setDisable(false);
         }
 
-        lblFilmTitle.setText(downInfo[filmNr].film.getChannel() + "  -  " + downInfo[filmNr].film.getTitle());
+        lblFilmTitle.setText(downInfo[actFilmIsShown].film.getChannel() + "  -  " + downInfo[actFilmIsShown].film.getTitle());
         makeResolutionButtons();
         makeCheckBox();
         makeFilmName();
         calculateAndCheckDiskSpace();
     }
 
-    private void makeResolutionButtons() {
-        rbHd.setDisable(!downInfo[filmNr].film.isHd());
-        rbSmall.setDisable(!downInfo[filmNr].film.isSmall());
 
-        switch (downInfo[filmNr].resolution) {
-            case FilmXml.RESOLUTION_HD:
+    private void makeResolutionButtons() {
+        rbHd.setDisable(!downInfo[actFilmIsShown].film.isHd());
+        rbSmall.setDisable(!downInfo[actFilmIsShown].film.isSmall());
+
+        switch (downInfo[actFilmIsShown].resolution) {
+            case Film.RESOLUTION_HD:
                 rbHd.setSelected(true);
                 break;
-            case FilmXml.RESOLUTION_SMALL:
+            case Film.RESOLUTION_SMALL:
                 rbSmall.setSelected(true);
                 break;
-            case FilmXml.RESOLUTION_NORMAL:
+            case Film.RESOLUTION_NORMAL:
             default:
                 rbHigh.setSelected(true);
                 break;
         }
 
-        if (!rbHd.isDisable() && !downInfo[filmNr].fileSize_HD.isEmpty()) {
-            rbHd.setText(textHd + "   [ " + downInfo[filmNr].fileSize_HD + " MB ]");
+        if (!rbHd.isDisable() && !downInfo[actFilmIsShown].fileSize_HD.isEmpty()) {
+            rbHd.setText(textHd + "   [ " + downInfo[actFilmIsShown].fileSize_HD + " MB ]");
         } else {
             rbHd.setText(textHd);
         }
 
-        if (!downInfo[filmNr].fileSize_high.isEmpty()) {
-            rbHigh.setText(textHeight + "   [ " + downInfo[filmNr].fileSize_high + " MB ]");
+        if (!downInfo[actFilmIsShown].fileSize_high.isEmpty()) {
+            rbHigh.setText(textHeight + "   [ " + downInfo[actFilmIsShown].fileSize_high + " MB ]");
         } else {
             rbHigh.setText(textHeight);
         }
 
-        if (!rbSmall.isDisable() && !downInfo[filmNr].fileSize_small.isEmpty()) {
-            rbSmall.setText(textLow + "   [ " + downInfo[filmNr].fileSize_small + " MB ]");
+        if (!rbSmall.isDisable() && !downInfo[actFilmIsShown].fileSize_small.isEmpty()) {
+            rbSmall.setText(textLow + "   [ " + downInfo[actFilmIsShown].fileSize_small + " MB ]");
         } else {
             rbSmall.setText(textLow);
         }
     }
 
     private void makeCheckBox() {
-        cbxInfo.setSelected(downInfo[filmNr].info);
-        cbxSubtitle.setDisable(downInfo[filmNr].subDisable);
-        cbxSubtitle.setSelected(downInfo[filmNr].subtitle);
+        cbxInfo.setSelected(downInfo[actFilmIsShown].info);
+        cbxSubtitle.setDisable(downInfo[actFilmIsShown].subDisable);
+        cbxSubtitle.setSelected(downInfo[actFilmIsShown].subtitle);
     }
 
     private void makeFilmName() {
-        txtName.setText(downInfo[filmNr].name);
-        cbPath.getSelectionModel().select(downInfo[filmNr].path);
+        txtName.setText(downInfo[actFilmIsShown].name);
+        cbPath.getSelectionModel().select(downInfo[actFilmIsShown].path);
     }
 
     private void makePsetChange() {
-        if (tglAll.isSelected()) {
+        if (chkAll.isSelected()) {
             Arrays.stream(downInfo).forEach(d -> makePsetChange(d));
         } else {
-            makePsetChange(downInfo[filmNr]);
+            makePsetChange(downInfo[actFilmIsShown]);
         }
 
         changeFilmNr();
@@ -364,7 +547,7 @@ public class DownloadAddDialogController extends PDialog {
         SetData psetData = setList.get(cbSet.getSelectionModel().getSelectedIndex());
 
         downInfo.psetData = psetData;
-        downInfo.download = new Download(psetData, downInfo.film, DownloadInfos.SRC_DOWNLOAD, null, "", "", FilmXml.RESOLUTION_NORMAL);
+        downInfo.download = new Download(psetData, downInfo.film, DownloadInfos.SRC_DOWNLOAD, null, "", "", Film.RESOLUTION_NORMAL);
         downInfo.path = downInfo.download.getDestPath();
         downInfo.name = downInfo.download.getDestFileName();
         downInfo.info = downInfo.psetData.isInfoFile();
@@ -379,16 +562,16 @@ public class DownloadAddDialogController extends PDialog {
         }
 
         // die Werte passend zum Film setzen
-        if (downInfo.psetData.getResolution().equals(FilmXml.RESOLUTION_HD)
+        if (downInfo.psetData.getResolution().equals(Film.RESOLUTION_HD)
                 && downInfo.film.isHd()) {
-            downInfo.resolution = FilmXml.RESOLUTION_HD;
+            downInfo.resolution = Film.RESOLUTION_HD;
 
-        } else if (downInfo.psetData.getResolution().equals(FilmXml.RESOLUTION_SMALL)
+        } else if (downInfo.psetData.getResolution().equals(Film.RESOLUTION_SMALL)
                 && downInfo.film.isSmall()) {
-            downInfo.resolution = FilmXml.RESOLUTION_SMALL;
+            downInfo.resolution = Film.RESOLUTION_SMALL;
 
         } else {
-            downInfo.resolution = FilmXml.RESOLUTION_NORMAL;
+            downInfo.resolution = Film.RESOLUTION_NORMAL;
         }
 
     }
@@ -456,13 +639,13 @@ public class DownloadAddDialogController extends PDialog {
 
     private String getFilmSize(DownInfo downInfo) {
         switch (downInfo.resolution) {
-            case FilmXml.RESOLUTION_HD:
+            case Film.RESOLUTION_HD:
                 return downInfo.fileSize_HD;
 
-            case FilmXml.RESOLUTION_SMALL:
+            case Film.RESOLUTION_SMALL:
                 return downInfo.fileSize_small;
 
-            case FilmXml.RESOLUTION_NORMAL:
+            case Film.RESOLUTION_NORMAL:
             default:
                 return downInfo.fileSize_high;
 
@@ -485,7 +668,7 @@ public class DownloadAddDialogController extends PDialog {
         final ArrayList<String> path2 = new ArrayList<>();
         path1.stream().forEach(s1 -> {
             // um doppelte auszusortieren
-            final String s2 = StringUtils.removeEnd(s1, STR);
+            final String s2 = StringUtils.removeEnd(s1, SEPARATOR);
             if (!path2.contains(s1) && !path2.contains(s2)) {
                 path2.add(s2);
             }
@@ -541,21 +724,21 @@ public class DownloadAddDialogController extends PDialog {
             } else {
 
                 int size;
-                if (!downInfo[filmNr].fileSize_HD.isEmpty()) {
-                    size = Integer.parseInt(downInfo[filmNr].fileSize_HD);
+                if (!downInfo[actFilmIsShown].fileSize_HD.isEmpty()) {
+                    size = Integer.parseInt(downInfo[actFilmIsShown].fileSize_HD);
                     if (size > usableSpace) {
                         noSize = ", nicht genug für HD";
 
                     }
                 }
-                if (!downInfo[filmNr].fileSize_high.isEmpty()) {
-                    size = Integer.parseInt(downInfo[filmNr].fileSize_high);
+                if (!downInfo[actFilmIsShown].fileSize_high.isEmpty()) {
+                    size = Integer.parseInt(downInfo[actFilmIsShown].fileSize_high);
                     if (size > usableSpace) {
                         noSize = ", nicht genug für \"hoch\"";
                     }
                 }
-                if (!downInfo[filmNr].fileSize_small.isEmpty()) {
-                    size = Integer.parseInt(downInfo[filmNr].fileSize_small);
+                if (!downInfo[actFilmIsShown].fileSize_small.isEmpty()) {
+                    size = Integer.parseInt(downInfo[actFilmIsShown].fileSize_small);
                     if (size > usableSpace) {
                         noSize = ", nicht genug für \"klein\"";
                     }
@@ -574,169 +757,25 @@ public class DownloadAddDialogController extends PDialog {
         }
     }
 
-    private void initArrays() {
-        final int anz = films.size();
-        downInfo = new DownInfo[anz];
-
-        String aktPath = "";
-        if (storedPath.length > 0) {
-            aktPath = storedPath[0];
-        }
-
-        for (int i = 0; i < anz; ++i) {
-            downInfo[i] = new DownInfo();
-            downInfo[i].psetData = psetData;
-            downInfo[i].film = films.get(i);
-            downInfo[i].download = new Download(psetData, downInfo[i].film, DownloadInfos.SRC_DOWNLOAD,
-                    null, "", aktPath, "");
-
-            downInfo[i].path = downInfo[i].download.getDestPath();
-            downInfo[i].name = downInfo[i].download.getDestFileName();
-            downInfo[i].fileSize_HD = downInfo[i].film.isHd() ?
-                    FilmTools.getSizeFromWeb(downInfo[i].film, downInfo[i].film.getUrlForResolution(FilmXml.RESOLUTION_HD)) : "";
-            downInfo[i].fileSize_high = FilmTools.getSizeFromWeb(downInfo[i].film,
-                    downInfo[i].film.getUrlForResolution(Film.RESOLUTION_NORMAL));
-            downInfo[i].fileSize_small = downInfo[i].film.isSmall() ?
-                    FilmTools.getSizeFromWeb(downInfo[i].film, downInfo[i].film.getUrlForResolution(FilmXml.RESOLUTION_SMALL)) : "";
-
-            downInfo[i].info = downInfo[i].psetData.isInfoFile();
-
-            if (downInfo[i].film.getUrlSubtitle().isEmpty()) {
-                // dann gibts keinen Subtitle
-                downInfo[i].subDisable = true;
-                downInfo[i].subtitle = false;
-            } else {
-                downInfo[i].subDisable = false;
-                downInfo[i].subtitle = downInfo[i].psetData.isSubtitle();
-            }
-
-            // die Werte passend zum Film setzen
-            if ((filterResolution.equals(FilmXml.RESOLUTION_HD) || downInfo[i].psetData.getResolution().equals(FilmXml.RESOLUTION_HD))
-                    && downInfo[i].film.isHd()) {
-
-                //Dann wurde im Filter oder Set HD ausgewählt und wird voreingestellt
-                downInfo[i].resolution = FilmXml.RESOLUTION_HD;
-
-            } else if (downInfo[i].psetData.getResolution().equals(FilmXml.RESOLUTION_SMALL)
-                    && downInfo[i].film.isSmall()) {
-                downInfo[i].resolution = FilmXml.RESOLUTION_SMALL;
-
-            } else {
-                downInfo[i].resolution = FilmXml.RESOLUTION_NORMAL;
-            }
-
-
-        }
-    }
-
-    private void initPathAndName() {
-        // gespeicherte Pfade eintragen
-        cbPath.setEditable(true);
-        cbPath.getItems().addAll(storedPath);
-
-        if (downInfo[filmNr].path.isEmpty()) {
-            cbPath.getSelectionModel().selectFirst();
-            downInfo[filmNr].setPath(cbPath.getSelectionModel().getSelectedItem());
-        } else {
-            cbPath.getSelectionModel().select(downInfo[filmNr].path);
-        }
-
-        cbPath.valueProperty().addListener((observable, oldValue, newValue) -> {
-            nameChanged = true;
-
-            final String s = cbPath.getSelectionModel().getSelectedItem();
-            downInfo[filmNr].setPath(s);
-
-            calculateAndCheckDiskSpace();
-        });
-
-        txtName.setText(downInfo[filmNr].name);
-        txtName.textProperty().addListener((observable, oldValue, newValue) -> {
-            nameChanged = true;
-
-            downInfo[filmNr].setName(txtName.getText());
-
-            if (!txtName.getText().equals(FileNameUtils.checkFileName(txtName.getText(), false /* pfad */))) {
-                txtName.setStyle(MTColor.DOWNLOAD_NAME_ERROR.getCssBackground());
-            } else {
-                txtName.setStyle("");
-            }
-        });
-
-        txtName.disableProperty().bind(tglAll.selectedProperty());
-    }
-
-    private void initResolutionButton() {
-        rbHd.setToggleGroup(group);
-        rbHigh.setToggleGroup(group);
-        rbSmall.setToggleGroup(group);
-
-        // und jetzt für den aktuellen Film das GUI setzen
-        makeResolutionButtons();
-
-        rbHd.setOnAction(a -> downInfo[filmNr].setResolution(FilmXml.RESOLUTION_HD));
-        rbHigh.setOnAction(a -> downInfo[filmNr].setResolution(FilmXml.RESOLUTION_NORMAL));
-        rbSmall.setOnAction(a -> downInfo[filmNr].setResolution(FilmXml.RESOLUTION_SMALL));
-    }
-
-    private void initCheckBox() {
-        // und jetzt noch die Listener anhängen
-        cbxStart.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD.getBooleanProperty());
-
-        cbxSubtitle.setOnAction(event -> downInfo[filmNr].setSubtitle(cbxSubtitle.isSelected()));
-        cbxInfo.setOnAction(event -> downInfo[filmNr].setInfo(cbxInfo.isSelected()));
-    }
-
-    private void initCancel() {
-        btnDest.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
-        btnDest.setText("");
-        btnDest.setDisable(true);
-
-        btnPropose.setGraphic(new Icons().ICON_BUTTON_PROPOSE);
-        btnPropose.setText("");
-        btnPropose.setDisable(true);
-
-        btnPrev.setDisable(true);
-        btnNext.setDisable(true);
-
-        btnOk.setDisable(true);
-        btnCancel.setOnAction(event -> {
-            ok = false;
-            quit();
-        });
-
-    }
-
-    private void initButton() {
-        btnDest.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
-        btnDest.setText("");
-        btnDest.setOnAction(event -> getDestination());
-
-        btnPropose.setGraphic(new Icons().ICON_BUTTON_PROPOSE);
-        btnPropose.setText("");
-        btnPropose.setOnAction(event -> proposeDestination());
-
-
-        btnPrev.setOnAction(event -> {
-            --filmNr;
-            changeFilmNr();
-        });
-        btnNext.setOnAction(event -> {
-            ++filmNr;
-            changeFilmNr();
-        });
-
-        btnOk.setOnAction(event -> {
-            if (check()) {
-                quit();
-            }
-        });
-        btnCancel.setOnAction(event -> {
-            ok = false;
-            quit();
-        });
-
-    }
+//    private void initCancel() {
+//        btnDest.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
+//        btnDest.setText("");
+//        btnDest.setDisable(true);
+//
+//        btnPropose.setGraphic(new Icons().ICON_BUTTON_PROPOSE);
+//        btnPropose.setText("");
+//        btnPropose.setDisable(true);
+//
+//        btnPrev.setDisable(true);
+//        btnNext.setDisable(true);
+//
+//        btnOk.setDisable(true);
+//        btnCancel.setOnAction(event -> {
+//            ok = false;
+//            quit();
+//        });
+//
+//    }
 
     private void getDestination() {
         DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, cbPath);
@@ -744,21 +783,17 @@ public class DownloadAddDialogController extends PDialog {
 
     private void proposeDestination() {
         String path = cbPath.getSelectionModel().getSelectedItem();
-        path = getNextName(path, downInfo[filmNr].download.getTheme());
+        path = getNextName(path, downInfo[actFilmIsShown].download.getTheme());
         if (!cbPath.getItems().contains(path)) {
             cbPath.getItems().add(path);
         }
         cbPath.getSelectionModel().select(path);
     }
 
-    private static final String STR = File.separator;
-    private static final String FORMATTER_ddMMyyyy_str = "yyyyMMdd";
-    private static final FastDateFormat FORMATTER_ddMMyyyy = FastDateFormat.getInstance(FORMATTER_ddMMyyyy_str);
-
     private String getNextName(String name, String theme) {
         String ret = name;
-        if (name.endsWith(STR)) {
-            ret = name.substring(0, name.length() - STR.length());
+        if (name.endsWith(SEPARATOR)) {
+            ret = name.substring(0, name.length() - SEPARATOR.length());
         }
 
         try {
@@ -790,7 +825,7 @@ public class DownloadAddDialogController extends PDialog {
         String ret = "";
         Date d;
         try {
-            ret = name.substring(name.lastIndexOf(STR) + 1);
+            ret = name.substring(name.lastIndexOf(SEPARATOR) + 1);
             d = new Date(format.parse(ret).getTime());
         } catch (Exception ignore) {
             d = null;

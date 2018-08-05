@@ -27,6 +27,15 @@ import java.time.format.DateTimeFormatter;
 
 public class Film extends FilmProps {
 
+    public static final String RESOLUTION_NORMAL = "normal";
+    public static final String RESOLUTION_HD = "hd";
+    public static final String RESOLUTION_SMALL = "klein";
+    public static final int FILM_TIME_EMPTY = -1;
+    public static final String GEO_DE = "DE";
+    public static final String GEO_AT = "AT";
+    public static final String GEO_CH = "CH";
+    public static final String GEO_EU = "EU";
+    public static final String GEO_WELT = "WELT";
     private Abo abo = null;
 
 

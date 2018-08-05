@@ -21,7 +21,7 @@ import de.mtplayer.mLib.tools.MLBandwidthTokenBucket;
 import de.mtplayer.mLib.tools.MLConfig;
 import de.mtplayer.mLib.tools.MLConfigs;
 import de.mtplayer.mLib.tools.SystemInfo;
-import de.mtplayer.mtp.controller.data.film.FilmXml;
+import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
 import de.p2tools.p2Lib.PConst;
@@ -67,7 +67,7 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs SYSTEM_PROG_OPEN_URL = addNewKey("system-prog-open-url");
     public static MLConfigs SYSTEM_PROG_PLAY_FILME = addNewKey("system-prog-play-filme");
     public static MLConfigs SYSTEM_MARK_GEO = addNewKey("system-mark-geo", Boolean.TRUE.toString());
-    public static MLConfigs SYSTEM_GEO_HOME_PLACE = addNewKey("system-geo-home-place", FilmXml.GEO_DE);
+    public static MLConfigs SYSTEM_GEO_HOME_PLACE = addNewKey("system-geo-home-place", Film.GEO_DE);
     public static MLConfigs SYSTEM_LOG_DIR = addNewKey("system-log-dir", "");
     public static MLConfigs SYSTEM_LOG_ON = addNewKey("system-log-on", Boolean.TRUE.toString());
 

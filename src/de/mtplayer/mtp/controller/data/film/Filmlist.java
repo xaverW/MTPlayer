@@ -238,8 +238,8 @@ public class Filmlist extends SimpleListProperty<Film> {
         return parallelStream().filter(f ->
 
                 f.arr[FilmXml.FILM_URL].equals(url) ||
-                        f.getUrlForResolution(FilmXml.RESOLUTION_HD).equals(url) ||
-                        f.getUrlForResolution(FilmXml.RESOLUTION_SMALL).equals(url)
+                        f.getUrlForResolution(Film.RESOLUTION_HD).equals(url) ||
+                        f.getUrlForResolution(Film.RESOLUTION_SMALL).equals(url)
 
         ).findFirst().orElse(null);
 

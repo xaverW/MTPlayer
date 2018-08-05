@@ -24,18 +24,6 @@ public class FilmXml extends Data<FilmXml> {
     static final FastDateFormat sdf_date_time = FastDateFormat.getInstance("dd.MM.yyyyHH:mm:ss");
     static final FastDateFormat sdf_date = FastDateFormat.getInstance("dd.MM.yyyy");
 
-    public static final String RESOLUTION_NORMAL = "normal";
-    public static final String RESOLUTION_HD = "hd";
-    public static final String RESOLUTION_SMALL = "klein";
-
-    public static final int FILM_TIME_EMPTY = -1;
-
-    public static final String GEO_DE = "DE";
-    public static final String GEO_AT = "AT";
-    public static final String GEO_CH = "CH";
-    public static final String GEO_EU = "EU";
-    public static final String GEO_WELT = "WELT";
-
 
     public static final int FILM_NR = 0;
     public static final int FILM_CHANNEL = 1;

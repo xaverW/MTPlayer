@@ -18,7 +18,7 @@ package de.mtplayer.mtp.controller.data;
 
 import de.mtplayer.mLib.tools.Data;
 import de.mtplayer.mtp.controller.config.ProgConst;
-import de.mtplayer.mtp.controller.data.film.FilmXml;
+import de.mtplayer.mtp.controller.data.film.Film;
 
 public class SetXml extends Data<SetXml> {
 
@@ -93,6 +93,6 @@ public class SetXml extends Data<SetXml> {
 
         arr[PROGRAMSET_INFODATEI] = Boolean.toString(false);
         arr[PROGRAMSET_SUBTITLE] = Boolean.toString(false);
-        arr[PROGRAMSET_AUFLOESUNG] = FilmXml.RESOLUTION_NORMAL;
+        arr[PROGRAMSET_AUFLOESUNG] = Film.RESOLUTION_NORMAL;
     }
 }

@@ -18,7 +18,7 @@ package de.mtplayer.mtp.controller.data.abo;
 
 import de.mtplayer.mLib.tools.Data;
 import de.mtplayer.mLib.tools.MDate;
-import de.mtplayer.mtp.controller.data.film.FilmXml;
+import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
 import javafx.beans.property.*;
 
@@ -26,7 +26,7 @@ public class AboProps extends AboXml {
     private final IntegerProperty nr = new SimpleIntegerProperty(0);
     private final BooleanProperty active = new SimpleBooleanProperty(true);
     private final StringProperty name = new SimpleStringProperty("");
-    private final StringProperty resolution = new SimpleStringProperty(FilmXml.RESOLUTION_NORMAL);
+    private final StringProperty resolution = new SimpleStringProperty(Film.RESOLUTION_NORMAL);
     private final StringProperty channel = new SimpleStringProperty("");
     private final BooleanProperty channelExact = new SimpleBooleanProperty(true);
     private final StringProperty theme = new SimpleStringProperty("");

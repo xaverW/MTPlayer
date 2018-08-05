@@ -17,7 +17,7 @@
 package de.mtplayer.mtp.gui.configDialog;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
-import de.mtplayer.mtp.controller.data.film.FilmXml;
+import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
@@ -66,35 +66,35 @@ public class GeoPane {
         tg.getToggles().addAll(rbDe, rbCh, rbAt, rbEu, rbSonst);
 
         switch (ProgConfig.SYSTEM_GEO_HOME_PLACE.get()) {
-            case FilmXml.GEO_CH:
+            case Film.GEO_CH:
                 rbCh.setSelected(true);
                 break;
-            case FilmXml.GEO_AT:
+            case Film.GEO_AT:
                 rbAt.setSelected(true);
                 break;
-            case FilmXml.GEO_EU:
+            case Film.GEO_EU:
                 rbEu.setSelected(true);
                 break;
-            case FilmXml.GEO_WELT:
+            case Film.GEO_WELT:
                 rbSonst.setSelected(true);
                 break;
             default:
                 rbDe.setSelected(true);
         }
         rbDe.setOnAction(e -> {
-            ProgConfig.SYSTEM_GEO_HOME_PLACE.setValue(FilmXml.GEO_DE);
+            ProgConfig.SYSTEM_GEO_HOME_PLACE.setValue(Film.GEO_DE);
         });
         rbCh.setOnAction(e -> {
-            ProgConfig.SYSTEM_GEO_HOME_PLACE.setValue(FilmXml.GEO_CH);
+            ProgConfig.SYSTEM_GEO_HOME_PLACE.setValue(Film.GEO_CH);
         });
         rbAt.setOnAction(e -> {
-            ProgConfig.SYSTEM_GEO_HOME_PLACE.setValue(FilmXml.GEO_AT);
+            ProgConfig.SYSTEM_GEO_HOME_PLACE.setValue(Film.GEO_AT);
         });
         rbEu.setOnAction(e -> {
-            ProgConfig.SYSTEM_GEO_HOME_PLACE.setValue(FilmXml.GEO_EU);
+            ProgConfig.SYSTEM_GEO_HOME_PLACE.setValue(Film.GEO_EU);
         });
         rbSonst.setOnAction(e -> {
-            ProgConfig.SYSTEM_GEO_HOME_PLACE.setValue(FilmXml.GEO_WELT);
+            ProgConfig.SYSTEM_GEO_HOME_PLACE.setValue(Film.GEO_WELT);
         });
         gridPane.add(rbDe, 0, ++row);
         gridPane.add(rbCh, 0, ++row);

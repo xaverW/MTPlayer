@@ -253,17 +253,17 @@ public class DownloadProg {
         replStr = replStr.replace("%i", String.valueOf(film.nr));
 
         String res = "";
-        if (download.getUrl().equals(film.getUrlForResolution(FilmXml.RESOLUTION_NORMAL))) {
+        if (download.getUrl().equals(film.getUrlForResolution(Film.RESOLUTION_NORMAL))) {
             res = "H";
-        } else if (download.getUrl().equals(film.getUrlForResolution(FilmXml.RESOLUTION_HD))) {
+        } else if (download.getUrl().equals(film.getUrlForResolution(Film.RESOLUTION_HD))) {
             res = "HD";
-        } else if (download.getUrl().equals(film.getUrlForResolution(FilmXml.RESOLUTION_SMALL))) {
+        } else if (download.getUrl().equals(film.getUrlForResolution(Film.RESOLUTION_SMALL))) {
             res = "L";
-        } else if (download.getUrl().equals(film.getUrlFlvstreamerForResolution(FilmXml.RESOLUTION_NORMAL))) {
+        } else if (download.getUrl().equals(film.getUrlFlvstreamerForResolution(Film.RESOLUTION_NORMAL))) {
             res = "H";
-        } else if (download.getUrl().equals(film.getUrlFlvstreamerForResolution(FilmXml.RESOLUTION_HD))) {
+        } else if (download.getUrl().equals(film.getUrlFlvstreamerForResolution(Film.RESOLUTION_HD))) {
             res = "HD";
-        } else if (download.getUrl().equals(film.getUrlFlvstreamerForResolution(FilmXml.RESOLUTION_SMALL))) {
+        } else if (download.getUrl().equals(film.getUrlFlvstreamerForResolution(Film.RESOLUTION_SMALL))) {
             res = "L";
         }
         replStr = replStr.replace("%q", res); // %q Qualität des Films ("HD", "H", "L")

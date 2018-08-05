@@ -17,7 +17,7 @@
 package de.mtplayer.mtp.controller.data;
 
 import de.mtplayer.mLib.tools.MLC;
-import de.mtplayer.mtp.controller.data.film.FilmXml;
+import de.mtplayer.mtp.controller.data.film.Film;
 import javafx.beans.property.*;
 import javafx.scene.paint.Color;
 
@@ -41,7 +41,7 @@ public class SetProps extends SetXml {
 
     private IntegerProperty maxSize = new SimpleIntegerProperty(0);
     private IntegerProperty maxField = new SimpleIntegerProperty(0);
-    private StringProperty resolution = new SimpleStringProperty(FilmXml.RESOLUTION_NORMAL);
+    private StringProperty resolution = new SimpleStringProperty(Film.RESOLUTION_NORMAL);
     private StringProperty adOn = new SimpleStringProperty("");
     private StringProperty description = new SimpleStringProperty("");
     private StringProperty infoUrl = new SimpleStringProperty("");

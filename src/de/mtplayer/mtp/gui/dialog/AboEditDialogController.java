@@ -22,7 +22,7 @@ import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.controller.data.abo.Abo;
 import de.mtplayer.mtp.controller.data.abo.AboXml;
-import de.mtplayer.mtp.controller.data.film.FilmXml;
+import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
 import de.p2tools.p2Lib.dialog.PAlert;
@@ -204,14 +204,14 @@ public class AboEditDialogController extends PDialogExtra {
                 rbHigh.setToggleGroup(tg);
                 rbLow.setToggleGroup(tg);
                 switch (aboCopy.getResolution()) {
-                    case FilmXml.RESOLUTION_HD:
+                    case Film.RESOLUTION_HD:
                         rbHd.setSelected(true);
                         break;
-                    case FilmXml.RESOLUTION_SMALL:
+                    case Film.RESOLUTION_SMALL:
                         rbLow.setSelected(true);
                         break;
                     default:
-                        aboCopy.setResolution(FilmXml.RESOLUTION_NORMAL);
+                        aboCopy.setResolution(Film.RESOLUTION_NORMAL);
                         rbHigh.setSelected(true);
                 }
                 rbHd.setOnAction(event -> setResolution());
@@ -397,13 +397,13 @@ public class AboEditDialogController extends PDialogExtra {
     private void setResolution() {
         cbxForAll[AboXml.ABO_RESOLUTION].setSelected(true);
         if (rbHigh.isSelected()) {
-            aboCopy.setResolution(FilmXml.RESOLUTION_NORMAL);
+            aboCopy.setResolution(Film.RESOLUTION_NORMAL);
         }
         if (rbHd.isSelected()) {
-            aboCopy.setResolution(FilmXml.RESOLUTION_HD);
+            aboCopy.setResolution(Film.RESOLUTION_HD);
         }
         if (rbLow.isSelected()) {
-            aboCopy.setResolution(FilmXml.RESOLUTION_SMALL);
+            aboCopy.setResolution(Film.RESOLUTION_SMALL);
         }
     }
 
