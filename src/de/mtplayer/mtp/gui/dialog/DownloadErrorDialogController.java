@@ -19,66 +19,109 @@ package de.mtplayer.mtp.gui.dialog;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.download.Download;
-import de.p2tools.p2Lib.dialog.PDialog;
+import de.p2tools.p2Lib.dialog.PDialogExtra;
+import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
-public class DownloadErrorDialogController extends PDialog {
+public class DownloadErrorDialogController extends PDialogExtra {
 
-    @FXML
-    private HBox hboxTitle;
-    @FXML
-    private Label lblHeader;
-    @FXML
-    private Button btnOk;
+    private VBox vBoxCont;
+    private HBox hBoxOk;
 
-    @FXML
-    private Label lblFilmTitle;
-    @FXML
-    private Label lblUrl;
-    @FXML
-    private TextArea txtCont;
+    private HBox hboxTitle = new HBox();
+    private Label lblHeader = new Label("Downloadfehler");
+    private Button btnOk = new Button("Ok");
 
-    @FXML
-    private Label lblTime;
+    private Label lblFilmTitle = new Label("ARD: Tatort, ..");
+    private Label lblUrl = new Label();
+    private TextArea txtCont = new TextArea();
 
-    @FXML
-    private ImageView imageView;
-    @FXML
-    private GridPane gridPane;
+    private Label lblTime = new Label("");
+
+    private ImageView imageView = new ImageView();
+    private GridPane gridPane = new GridPane();
 
 
     private Timeline timeline = null;
-    private Integer timeSeconds = ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getInt();
+    //    private Integer timeSeconds = ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getInt();
+    private Integer timeSeconds = 500000;
 
     private final String message;
     private final Download download;
 
     public DownloadErrorDialogController(Download download, String message) {
-        super("/de/mtplayer/mtp/gui/dialog/DownloadErrorDialog.fxml",
-                ProgConfig.DOWNLOAD_DIALOG_ERROR_SIZE.getStringProperty(),
+        super(ProgConfig.DOWNLOAD_DIALOG_ERROR_SIZE.getStringProperty(),
                 "Fehler", true);
 
         this.download = download;
         this.message = message;
 
-        init(true);
+        vBoxCont = getVboxCont();
+        hBoxOk = getHboxOk();
 
+        init(getvBoxDialog(), true);
+    }
+
+    private void initCont() {
+        hboxTitle.setAlignment(Pos.CENTER);
+        hboxTitle.setPadding(new Insets(10));
+        hboxTitle.getChildren().add(lblHeader);
+
+        VBox vBox = new VBox();
+        vBox.setPadding(new Insets(20));
+        vBox.getChildren().add(imageView);
+
+
+        gridPane.setMaxWidth(Double.MAX_VALUE);
+        gridPane.setPadding(new Insets(10, 10, 10, 10));
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+
+        int row = 0;
+        gridPane.add(new Label("Film:"), 0, row);
+        gridPane.add(lblFilmTitle, 1, row);
+
+        gridPane.add(new Label("URL:"), 0, ++row);
+        gridPane.add(lblUrl, 1, row);
+
+        GridPane.setHgrow(txtCont, Priority.ALWAYS);
+        GridPane.setVgrow(txtCont, Priority.ALWAYS);
+        gridPane.add(new Label("Fehler:"), 0, ++row);
+        gridPane.add(txtCont, 1, row);
+
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcComputedSizeAndHgrow());
+
+        HBox hBox = new HBox(10);
+        VBox.setVgrow(hBox, Priority.ALWAYS);
+        hBox.getChildren().addAll(vBox, gridPane);
+
+        vBoxCont.setPadding(new Insets(5));
+        vBoxCont.setSpacing(10);
+        vBoxCont.getChildren().addAll(hboxTitle, hBox);
+
+        HBox hboxOk = getHboxOk();
+        hboxOk.setAlignment(Pos.CENTER_RIGHT);
+        hboxOk.getChildren().addAll(lblTime, btnOk);
     }
 
     @Override
     public void make() {
-        gridPane.getStyleClass().add("dialog-border");
+        initCont();
 
         hboxTitle.getStyleClass().add("dialog-title-border");
         lblHeader.setStyle("-fx-font-weight: bold;");
@@ -96,7 +139,7 @@ public class DownloadErrorDialogController extends PDialog {
             quit();
         });
 
-        imageView.setImage(new Icons().IMAGE_ACHTUNG_32);
+        imageView.setImage(new Icons().IMAGE_ACHTUNG_64);
 
         //start the countdown...
         lblTime.setText("");
@@ -107,7 +150,6 @@ public class DownloadErrorDialogController extends PDialog {
         timeline.playFromStart();
 
     }
-
 
     private class CountdownAction implements EventHandler {
 

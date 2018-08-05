@@ -194,7 +194,7 @@ public class ProgramPane {
         gridPane.add(tglRestart, 0, ++row, 2, 1);
         gridPane.add(tglDown, 0, ++row, 2, 1);
 
-        gridPane.getColumnConstraints().addAll(new ColumnConstraints(), PColumnConstraints.getCcComputedSize());
+        gridPane.getColumnConstraints().addAll(new ColumnConstraints(), PColumnConstraints.getCcComputedSizeAndHgrow());
 
         vBox.getChildren().add(gridPane);
         gridPane.setDisable(true);

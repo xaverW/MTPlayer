@@ -162,7 +162,7 @@ public class PathPane {
         hBox.getChildren().addAll(new Label("Website"), hyperlink);
         gridPane.add(hBox, 0, 2, 3, 1);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSize());
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow());
 
         return gridPane;
     }

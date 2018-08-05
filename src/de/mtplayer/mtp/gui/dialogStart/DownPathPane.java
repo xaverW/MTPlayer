@@ -65,7 +65,7 @@ public class DownPathPane {
                         "in dem die Downloads gespeichert werden."));
         gridPane.add(btnHelp, 2, 1);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSize());
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow());
 
         return tpConfig;
     }

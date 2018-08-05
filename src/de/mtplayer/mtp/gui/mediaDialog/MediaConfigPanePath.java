@@ -132,7 +132,7 @@ public class MediaConfigPanePath {
         gridPane.add(new Label("Pfad: "), 0, 0);
         gridPane.add(txtPath, 1, 0);
         gridPane.add(btnFile, 2, 0);
-        gridPane.getColumnConstraints().addAll(new ColumnConstraints(), PColumnConstraints.getCcComputedSize());
+        gridPane.getColumnConstraints().addAll(new ColumnConstraints(), PColumnConstraints.getCcComputedSizeAndHgrow());
 
         vBox.getChildren().add(gridPane);
         gridPane.setDisable(true);

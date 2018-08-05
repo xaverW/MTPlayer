@@ -24,7 +24,8 @@ import javafx.scene.image.ImageView;
 public class Icons {
 
     public final Image ICON_DIALOG_EIN_SW = GetIcon.getImage("dialog-ein-sw.png");
-    public final Image IMAGE_ACHTUNG_32 = GetIcon.getImage("achtung.png");
+    public final Image IMAGE_ACHTUNG_32 = GetIcon.getImage("achtung_32.png");
+    public final Image IMAGE_ACHTUNG_64 = GetIcon.getImage("achtung_64.png");
 
 
     public final ImageView ICON_BUTTON_RESET = GetIcon.getImageView("button-reset.png", 16, 16);

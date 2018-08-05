@@ -193,6 +193,7 @@ public class DownloadAddDialogController extends PDialogExtra {
 
         vBoxCont = getVboxCont();
         hBoxOk = getHboxOk();
+
         init(getvBoxDialog(), true);
     }
 
@@ -217,7 +218,7 @@ public class DownloadAddDialogController extends PDialogExtra {
         // Gridpane
         gridPane.setMaxWidth(Double.MAX_VALUE);
         gridPane.setPadding(new Insets(10, 10, 10, 10));
-        VBox.setVgrow(gridPane, Priority.ALWAYS);
+        VBox.setVgrow(gridPane, Priority.ALWAYS); //todo???
         gridPane.setHgap(15);
         gridPane.setVgap(15);
         int row = 0;

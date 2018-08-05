@@ -118,7 +118,7 @@ public class MediaConfigPaneMediaController extends AnchorPane {
         gridPane.add(rbWithSuff, 0, 1);
         gridPane.add(txtSuff, 0, 2);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSize());
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow());
 
         vBox.getChildren().addAll(gridPane);
     }

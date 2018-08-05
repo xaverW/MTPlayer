@@ -111,7 +111,7 @@ public class MediaConfigPanePathExtern {
         gridPane.add(txtPath, 1, row);
         gridPane.add(btnPath, 2, row);
 
-        gridPane.getColumnConstraints().addAll(new ColumnConstraints(), PColumnConstraints.getCcComputedSize());
+        gridPane.getColumnConstraints().addAll(new ColumnConstraints(), PColumnConstraints.getCcComputedSizeAndHgrow());
 
         initTable(vBox);
 
