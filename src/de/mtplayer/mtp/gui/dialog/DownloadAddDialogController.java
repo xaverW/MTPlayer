@@ -20,7 +20,6 @@ import de.mtplayer.mLib.tools.DirFileChooser;
 import de.mtplayer.mLib.tools.FileNameUtils;
 import de.mtplayer.mLib.tools.SizeTools;
 import de.mtplayer.mtp.controller.config.ProgConfig;
-import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.MTColor;
@@ -34,11 +33,15 @@ import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.dialog.PDialog;
+import de.p2tools.p2Lib.tools.PStringUtils;
+import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.FastDateFormat;
 
 import java.io.File;
 import java.nio.file.FileStore;
@@ -47,6 +50,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 
 public class DownloadAddDialogController extends PDialog {
 
@@ -79,6 +83,8 @@ public class DownloadAddDialogController extends PDialog {
     @FXML
     private Button btnDest;
     @FXML
+    private Button btnPropose;
+    @FXML
     private Button btnOk;
     @FXML
     private Button btnCancel;
@@ -91,8 +97,6 @@ public class DownloadAddDialogController extends PDialog {
     @FXML
     private CheckBox cbxSubtitle;
 
-    //    @FXML
-//    private CheckBox cbxPath;
     @FXML
     private RadioButton rbHd;
     @FXML
@@ -219,7 +223,6 @@ public class DownloadAddDialogController extends PDialog {
         setList = progData.setList.getListSave();
 
         init(true);
-
     }
 
     @Override
@@ -355,19 +358,15 @@ public class DownloadAddDialogController extends PDialog {
         }
 
         changeFilmNr();
-
     }
 
     private void makePsetChange(DownInfo downInfo) {
         SetData psetData = setList.get(cbSet.getSelectionModel().getSelectedIndex());
 
         downInfo.psetData = psetData;
-
         downInfo.download = new Download(psetData, downInfo.film, DownloadInfos.SRC_DOWNLOAD, null, "", "", FilmXml.RESOLUTION_NORMAL);
-
         downInfo.path = downInfo.download.getDestPath();
         downInfo.name = downInfo.download.getDestFileName();
-
         downInfo.info = downInfo.psetData.isInfoFile();
 
         if (downInfo.film.getUrlSubtitle().isEmpty()) {
@@ -472,34 +471,28 @@ public class DownloadAddDialogController extends PDialog {
 
 
     private void saveComboPath(ComboBox<String> jcb) {
-        final ArrayList<String> path = new ArrayList<>(jcb.getItems());
+        final ArrayList<String> path1 = new ArrayList<>(jcb.getItems());
 
+        // und die eingestellten Downloadpafade an den Anfang zu stellen
         for (DownInfo d : downInfo) {
-            if (path.contains(d.path)) {
-                path.remove(d.path);
+            if (path1.contains(d.path)) {
+                path1.remove(d.path);
             }
-            path.add(0, d.path);
+            path1.add(0, d.path);
         }
 
+        // jetzt alle gesammelten Pfade speichern
         final ArrayList<String> path2 = new ArrayList<>();
-        path.stream().forEach(s1 -> {
+        path1.stream().forEach(s1 -> {
             // um doppelte auszusortieren
-            if (!path2.contains(s1)) {
-                path2.add(s1);
+            final String s2 = StringUtils.removeEnd(s1, STR);
+            if (!path2.contains(s1) && !path2.contains(s2)) {
+                path2.add(s2);
             }
         });
 
-        String s = "";
-        if (!path2.isEmpty()) {
-            s = path2.get(0);
-            for (int i = 1; i < ProgConst.MAX_PFADE_DIALOG_DOWNLOAD && i < path2.size(); ++i) {
-                if (!path2.get(i).isEmpty()) {
-                    s += "<>" + path2.get(i);
-                }
-            }
-        }
-
-        ProgConfig.DOWNLOAD_DIALOG_PATH_SAVING.setValue(s);
+        String savePath = PStringUtils.appendList(path2, "<>", true);
+        ProgConfig.DOWNLOAD_DIALOG_PATH_SAVING.setValue(savePath);
     }
 
     /**
@@ -586,33 +579,23 @@ public class DownloadAddDialogController extends PDialog {
         downInfo = new DownInfo[anz];
 
         String aktPath = "";
-//        if (ProgConfig.SYSTEM_DIALOG_DOWNLOAD__LETZTEN_PFAD_ANZEIGEN.getBool() && storedPath.length > 0) {
-//            aktPath = storedPath[0];
-//        }
-
         if (storedPath.length > 0) {
             aktPath = storedPath[0];
         }
 
         for (int i = 0; i < anz; ++i) {
             downInfo[i] = new DownInfo();
-
             downInfo[i].psetData = psetData;
-
             downInfo[i].film = films.get(i);
-
             downInfo[i].download = new Download(psetData, downInfo[i].film, DownloadInfos.SRC_DOWNLOAD,
                     null, "", aktPath, "");
 
             downInfo[i].path = downInfo[i].download.getDestPath();
             downInfo[i].name = downInfo[i].download.getDestFileName();
-
             downInfo[i].fileSize_HD = downInfo[i].film.isHd() ?
                     FilmTools.getSizeFromWeb(downInfo[i].film, downInfo[i].film.getUrlForResolution(FilmXml.RESOLUTION_HD)) : "";
-
             downInfo[i].fileSize_high = FilmTools.getSizeFromWeb(downInfo[i].film,
                     downInfo[i].film.getUrlForResolution(Film.RESOLUTION_NORMAL));
-
             downInfo[i].fileSize_small = downInfo[i].film.isSmall() ?
                     FilmTools.getSizeFromWeb(downInfo[i].film, downInfo[i].film.getUrlForResolution(FilmXml.RESOLUTION_SMALL)) : "";
 
@@ -699,7 +682,6 @@ public class DownloadAddDialogController extends PDialog {
     private void initCheckBox() {
         // und jetzt noch die Listener anhängen
         cbxStart.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD.getBooleanProperty());
-//        cbxPath.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_DIALOG_DOWNLOAD__LETZTEN_PFAD_ANZEIGEN.getBooleanProperty());
 
         cbxSubtitle.setOnAction(event -> downInfo[filmNr].setSubtitle(cbxSubtitle.isSelected()));
         cbxInfo.setOnAction(event -> downInfo[filmNr].setInfo(cbxInfo.isSelected()));
@@ -709,6 +691,10 @@ public class DownloadAddDialogController extends PDialog {
         btnDest.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
         btnDest.setText("");
         btnDest.setDisable(true);
+
+        btnPropose.setGraphic(new Icons().ICON_BUTTON_PROPOSE);
+        btnPropose.setText("");
+        btnPropose.setDisable(true);
 
         btnPrev.setDisable(true);
         btnNext.setDisable(true);
@@ -725,6 +711,11 @@ public class DownloadAddDialogController extends PDialog {
         btnDest.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
         btnDest.setText("");
         btnDest.setOnAction(event -> getDestination());
+
+        btnPropose.setGraphic(new Icons().ICON_BUTTON_PROPOSE);
+        btnPropose.setText("");
+        btnPropose.setOnAction(event -> proposeDestination());
+
 
         btnPrev.setOnAction(event -> {
             --filmNr;
@@ -749,6 +740,67 @@ public class DownloadAddDialogController extends PDialog {
 
     private void getDestination() {
         DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, cbPath);
+    }
+
+    private void proposeDestination() {
+        String path = cbPath.getSelectionModel().getSelectedItem();
+        path = getNextName(path, downInfo[filmNr].download.getTheme());
+        if (!cbPath.getItems().contains(path)) {
+            cbPath.getItems().add(path);
+        }
+        cbPath.getSelectionModel().select(path);
+    }
+
+    private static final String STR = File.separator;
+    private static final String FORMATTER_ddMMyyyy_str = "yyyyMMdd";
+    private static final FastDateFormat FORMATTER_ddMMyyyy = FastDateFormat.getInstance(FORMATTER_ddMMyyyy_str);
+
+    private String getNextName(String name, String theme) {
+        String ret = name;
+        if (name.endsWith(STR)) {
+            ret = name.substring(0, name.length() - STR.length());
+        }
+
+        try {
+            final String date1 = FORMATTER_ddMMyyyy.format(new Date());
+            final boolean s1 = getTime(ret, FORMATTER_ddMMyyyy);
+
+            if (theme.isEmpty() && !s1 ||
+                    !theme.isEmpty() && ret.endsWith(theme)) {
+                ret = ret.substring(0, ret.lastIndexOf(theme));
+                Path path = Paths.get(ret, date1);
+                ret = path.toString();
+
+            } else if (s1) {
+                ret = ret.substring(0, ret.length() - date1.length());
+
+            } else if (!theme.isEmpty()) {
+                Path path = Paths.get(ret, theme);
+                ret = path.toString();
+            }
+
+        } catch (Exception ex) {
+            PLog.errorLog(978451203, ex);
+            ret = name;
+        }
+        return ret;
+    }
+
+    private boolean getTime(String name, FastDateFormat format) {
+        String ret = "";
+        Date d;
+        try {
+            ret = name.substring(name.lastIndexOf(STR) + 1);
+            d = new Date(format.parse(ret).getTime());
+        } catch (Exception ignore) {
+            d = null;
+        }
+
+        if (d != null && format.getPattern().length() == ret.length()) {
+            return true;
+        }
+
+        return false;
     }
 
 }

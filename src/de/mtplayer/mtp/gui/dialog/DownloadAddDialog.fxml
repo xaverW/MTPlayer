@@ -1,18 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import java.net.URL?>
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-            xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8.0.162-ea" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
-        <URL value="@/de/mtplayer/mtp/mtfx.css"/>
+        <URL value="@/de/mtplayer/mtp/mtfx.css" />
     </stylesheets>
 
     <children>
-        <VBox spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-              AnchorPane.topAnchor="0.0">
+        <VBox spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <VBox fx:id="vBoxCont" spacing="10.0" VBox.vgrow="ALWAYS">
                     <children>
@@ -20,114 +29,102 @@
                             <children>
                                 <HBox fx:id="hBoxTop" alignment="CENTER" fillHeight="false" spacing="20.0">
                                     <children>
-                                        <Button fx:id="btnPrev" mnemonicParsing="false" text="&lt;"/>
-                                        <Label fx:id="lblSum" text="Label"/>
-                                        <Button fx:id="btnNext" mnemonicParsing="false" text="&gt;"/>
+                                        <Button fx:id="btnPrev" mnemonicParsing="false" text="&lt;" />
+                                        <Label fx:id="lblSum" text="Label" />
+                                        <Button fx:id="btnNext" mnemonicParsing="false" text="&gt;" />
                                     </children>
                                     <padding>
-                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                     </padding>
                                 </HBox>
                                 <HBox fx:id="hBoxAll" alignment="CENTER" fillHeight="false">
                                     <children>
-                                        <CheckBox text="Änderungen auf alle Filme anwenden" fx:id="tglAll"/>
+                                        <CheckBox fx:id="tglAll" text="Änderungen auf alle Filme anwenden" />
                                     </children>
                                     <padding>
-                                        <Insets bottom="10.0" top="10.0"/>
+                                        <Insets bottom="10.0" top="10.0" />
                                     </padding>
                                 </HBox>
                             </children>
                         </VBox>
                         <GridPane fx:id="gridPane" hgap="15.0" maxWidth="1.7976931348623157E308" vgap="15.0">
                             <columnConstraints>
-                                <ColumnConstraints fillWidth="false" hgrow="NEVER" minWidth="-Infinity"/>
-                                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308"/>
+                                <ColumnConstraints fillWidth="false" hgrow="NEVER" minWidth="-Infinity" />
+                                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
                             </columnConstraints>
                             <rowConstraints>
-                                <RowConstraints valignment="CENTER" vgrow="SOMETIMES"/>
-                                <RowConstraints valignment="CENTER" vgrow="SOMETIMES"/>
-                                <RowConstraints valignment="CENTER" vgrow="SOMETIMES"/>
-                                <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" valignment="CENTER"
-                                                vgrow="SOMETIMES"/>
-                                <RowConstraints valignment="CENTER" vgrow="SOMETIMES"/>
-                                <RowConstraints valignment="CENTER" vgrow="SOMETIMES"/>
-                                <RowConstraints valignment="CENTER" vgrow="SOMETIMES"/>
-                                <RowConstraints valignment="CENTER" vgrow="SOMETIMES"/>
-                                <RowConstraints valignment="CENTER" vgrow="SOMETIMES"/>
+                                <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                                <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                                <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
+                                <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                                <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                                <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                                <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                                <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <Label text="Zielpfad:" GridPane.rowIndex="5" GridPane.valignment="CENTER"/>
-                                <Label text="Dateiname:" GridPane.rowIndex="4" GridPane.valignment="CENTER"/>
-                                <HBox alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" spacing="10.0"
-                                      GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7">
+                                <Label text="Zielpfad:" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+                                <Label text="Dateiname:" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                                <HBox alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" spacing="10.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7">
                                     <children>
-                                        <CheckBox fx:id="cbxInfo" maxWidth="1.7976931348623157E308"
-                                                  mnemonicParsing="false"
-                                                  text="Infodatei anlegen: &quot;Filmname.txt&quot;"
-                                                  HBox.hgrow="ALWAYS"/>
+                                        <CheckBox fx:id="cbxInfo" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Infodatei anlegen: &quot;Filmname.txt&quot;" HBox.hgrow="ALWAYS" />
                                     </children>
                                 </HBox>
-                                <CheckBox fx:id="cbxSubtitle" mnemonicParsing="false"
-                                          text="Untertitel speichern: &quot;Filmname.xxx&quot;" GridPane.columnIndex="1"
-                                          GridPane.rowIndex="8"/>
-                                <HBox maxWidth="1.7976931348623157E308" spacing="10.0" GridPane.columnIndex="1"
-                                      GridPane.rowIndex="5">
+                                <CheckBox fx:id="cbxSubtitle" mnemonicParsing="false" text="Untertitel speichern: &quot;Filmname.xxx&quot;" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                <HBox maxWidth="1.7976931348623157E308" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                     <children>
-                                        <ComboBox fx:id="cbPath" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS"/>
-                                        <Button fx:id="btnDest" mnemonicParsing="false" text="File"/>
+                                        <ComboBox fx:id="cbPath" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+                                        <Button fx:id="btnDest" mnemonicParsing="false" text="File" />
+                              <Button fx:id="btnPropose" mnemonicParsing="false" text="Vorschlag" />
                                     </children>
                                 </HBox>
-                                <TextField fx:id="txtName" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
-                                <HBox fx:id="hBoxSize" maxWidth="1.7976931348623157E308" spacing="10.0"
-                                      GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+                                <TextField fx:id="txtName" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                <HBox fx:id="hBoxSize" maxWidth="1.7976931348623157E308" spacing="10.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
                                     <children>
-                                        <RadioButton fx:id="rbHd" mnemonicParsing="false" text="HD"/>
-                                        <RadioButton fx:id="rbHigh" mnemonicParsing="false" text="Hoch"/>
-                                        <RadioButton fx:id="rbSmall" mnemonicParsing="false" text="Klein"/>
+                                        <RadioButton fx:id="rbHd" mnemonicParsing="false" text="HD" />
+                                        <RadioButton fx:id="rbHigh" mnemonicParsing="false" text="Hoch" />
+                                        <RadioButton fx:id="rbSmall" mnemonicParsing="false" text="Klein" />
                                     </children>
                                     <padding>
-                                        <Insets bottom="10.0" left="5.0" right="5.0" top="10.0"/>
+                                        <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
                                     </padding>
                                 </HBox>
-                                <HBox alignment="CENTER_RIGHT" fillHeight="false" maxWidth="1.7976931348623157E308"
-                                      spacing="10.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS"
-                                      GridPane.rowIndex="6">
+                                <HBox alignment="CENTER_RIGHT" fillHeight="false" maxWidth="1.7976931348623157E308" spacing="10.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6">
                                     <children>
                                         <HBox alignment="CENTER_RIGHT" fillHeight="false" HBox.hgrow="ALWAYS">
                                             <children>
-                                                <Label fx:id="lblFree" text="4M noch frei"/>
+                                                <Label fx:id="lblFree" text="4M noch frei" />
                                             </children>
                                         </HBox>
                                     </children>
                                 </HBox>
-                                <Label text="Auflösung:" GridPane.rowIndex="2" GridPane.valignment="CENTER"/>
-                                <Label fx:id="lblFilm" text="Film:" GridPane.valignment="CENTER"/>
-                                <Label fx:id="lblFilmTitle" text="ARD: Tatort, .." GridPane.columnIndex="1"/>
-                                <Label fx:id="lblSet" text="Set:" GridPane.rowIndex="1" GridPane.valignment="CENTER"/>
-                                <ComboBox fx:id="cbSet" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1"
-                                          GridPane.rowIndex="1"/>
+                                <Label text="Auflösung:" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                                <Label fx:id="lblFilm" text="Film:" GridPane.valignment="CENTER" />
+                                <Label fx:id="lblFilmTitle" text="ARD: Tatort, .." GridPane.columnIndex="1" />
+                                <Label fx:id="lblSet" text="Set:" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                                <ComboBox fx:id="cbSet" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                             </children>
                         </GridPane>
                     </children>
                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </padding>
                 </VBox>
                 <HBox alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308">
                     <children>
-                        <CheckBox fx:id="cbxStart" mnemonicParsing="false" text="Download sofort starten"/>
-                        <HBox alignment="BOTTOM_RIGHT" maxWidth="1.7976931348623157E308" spacing="10.0"
-                              HBox.hgrow="ALWAYS">
+                        <CheckBox fx:id="cbxStart" mnemonicParsing="false" text="Download sofort starten" />
+                        <HBox alignment="BOTTOM_RIGHT" maxWidth="1.7976931348623157E308" spacing="10.0" HBox.hgrow="ALWAYS">
                             <children>
-                                <Button fx:id="btnOk" mnemonicParsing="false" text="Ok"/>
-                                <Button fx:id="btnCancel" mnemonicParsing="false" text="Abbrechen"/>
+                                <Button fx:id="btnOk" mnemonicParsing="false" text="Ok" />
+                                <Button fx:id="btnCancel" mnemonicParsing="false" text="Abbrechen" />
                             </children>
                         </HBox>
                     </children>
                 </HBox>
             </children>
             <padding>
-                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
             </padding>
         </VBox>
     </children>
