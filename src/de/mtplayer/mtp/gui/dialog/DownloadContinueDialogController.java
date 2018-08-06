@@ -26,46 +26,40 @@ import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadTools;
 import de.mtplayer.mtp.controller.starter.DownloadState;
-import de.p2tools.p2Lib.dialog.PDialog;
+import de.p2tools.p2Lib.dialog.PDialogExtra;
+import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
 import javafx.util.Duration;
 
-public class DownloadContinueDialogController extends PDialog {
+public class DownloadContinueDialogController extends PDialogExtra {
 
-    @FXML
-    private HBox hboxTitle;
-    @FXML
-    private Label lblHeader;
-    @FXML
-    private Button btnRestartDownload;
-    @FXML
-    private Button btnCancel;
-    @FXML
-    private Button btnContinueDownload;
+    private final VBox vBoxCont;
+    private final HBox hBoxOk;
 
-    @FXML
-    private Label lblFilmTitle;
-    @FXML
-    private TextField txtFileName;
-    @FXML
-    private ComboBox<String> cbPath;
-    @FXML
-    private Label lblSizeFree;
+    private HBox hboxTitle = new HBox();
+    private Label lblHeader = new Label("Die Filmdatei existiert bereits.");
+    private Button btnRestartDownload = new Button("neu Starten");
+    private Button btnCancel = new Button("Abbrechen");
+    private Button btnContinueDownload = new Button("Weiterführen in XXX");
 
-    @FXML
-    private Button btnPath;
-    @FXML
-    private GridPane gridPane;
+    private Label lblFilmTitle = new Label("ARD: Tatort, ..");
+    private TextField txtFileName = new TextField("");
+    private ComboBox<String> cbPath = new ComboBox<>();
+    private Label lblSizeFree = new Label("");
+
+    private Button btnPath = new Button("Button");
+    private GridPane gridPane = new GridPane();
 
     private final ProgData progData;
     private final Download download;
@@ -77,8 +71,7 @@ public class DownloadContinueDialogController extends PDialog {
     private Integer timeSeconds = ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECOND.getInt();
 
     public DownloadContinueDialogController(ProgData progData, Download download, boolean directDownload) {
-        super("/de/mtplayer/mtp/gui/dialog/DownloadContinueDialog.fxml",
-                ProgConfig.DOWNLOAD_DIALOG_CONTINUE_SIZE.getStringProperty(),
+        super(ProgConfig.DOWNLOAD_DIALOG_CONTINUE_SIZE.getStringProperty(),
                 "Download weiterführen", true);
 
         this.progData = progData;
@@ -86,14 +79,15 @@ public class DownloadContinueDialogController extends PDialog {
         this.directDownload = directDownload;
         this.oldPathFile = download.getDestPathFile();
 
-        init(true);
+        vBoxCont = getVboxCont();
+        hBoxOk = getHboxOk();
 
+        init(getvBoxDialog(), true);
     }
 
     @Override
     public void make() {
-        gridPane.getStyleClass().add("dialog-border");
-
+        initCont();
         hboxTitle.getStyleClass().add("dialog-title-border");
 
         lblHeader.setStyle("-fx-font-weight: bold;");
@@ -118,6 +112,50 @@ public class DownloadContinueDialogController extends PDialog {
         timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), new CountdownAction()));
         timeline.playFromStart();
 
+    }
+
+    private void initCont() {
+        hboxTitle.setSpacing(10);
+        hboxTitle.setAlignment(Pos.CENTER);
+        hboxTitle.setPadding(new Insets(10));
+        hboxTitle.getChildren().add(lblHeader);
+
+        // Gridpane
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        VBox.setVgrow(gridPane, Priority.ALWAYS);
+        gridPane.setPadding(new Insets(10, 10, 10, 10));
+
+        int row = 0;
+        gridPane.add(new Label("Film:"), 0, row);
+        gridPane.add(lblFilmTitle, 1, row, 2, 1);
+
+        gridPane.add(new Label("Dateiname:"), 0, ++row);
+        gridPane.add(txtFileName, 1, row, 2, 1);
+
+        cbPath.setMaxWidth(Double.MAX_VALUE);
+
+        gridPane.add(new Label("Zielpfad:"), 0, ++row);
+        gridPane.add(cbPath, 1, row);
+        gridPane.add(btnPath, 2, row);
+
+        GridPane.setHalignment(lblSizeFree, HPos.RIGHT);
+        gridPane.add(lblSizeFree, 1, ++row, 2, 1);
+
+        gridPane.getColumnConstraints().addAll(new ColumnConstraints(), PColumnConstraints.getCcComputedSizeAndHgrow());
+
+        vBoxCont.setPadding(new Insets(5));
+        vBoxCont.setSpacing(20);
+        vBoxCont.getChildren().addAll(hboxTitle, gridPane);
+
+
+        hBoxOk.setAlignment(Pos.BOTTOM_RIGHT);
+        hBoxOk.setSpacing(10);
+        HBox hBox = new HBox();
+        HBox.setHgrow(hBox, Priority.ALWAYS);
+        hBox.setAlignment(Pos.CENTER_LEFT);
+        hBox.getChildren().add(new Label("Wie möchten Sie forfahren?"));
+        hBoxOk.getChildren().addAll(hBox, btnRestartDownload, btnContinueDownload, btnCancel);
     }
 
     private boolean checkDownload() {
@@ -179,12 +217,12 @@ public class DownloadContinueDialogController extends PDialog {
             quit();
         });
 
+        setButtonText();
         btnRestartDownload.setOnAction(event -> {
             result = DownloadState.ContinueDownload.RESTART_DOWNLOAD;
             download.setPathName(cbPath.getSelectionModel().getSelectedItem(), txtFileName.getText());
             quit();
         });
-        setButtonText();
         btnContinueDownload.setOnAction(event -> {
             result = DownloadState.ContinueDownload.CONTINUE_DOWNLOAD;
             quit();
@@ -215,14 +253,20 @@ public class DownloadContinueDialogController extends PDialog {
 
         cbPath.valueProperty().addListener((observable, oldValue, newValue) -> {
             stopCounter();
+            if (newValue != null) {
+                btnContinueDownload.setDisable(!download.getDestPath().equals(newValue));
+            }
 
-            final String s = cbPath.getSelectionModel().getSelectedItem();
             DownloadTools.calculateAndCheckDiskSpace(download, cbPath.getSelectionModel().getSelectedItem(), lblSizeFree);
         });
+        DownloadTools.calculateAndCheckDiskSpace(download, cbPath.getSelectionModel().getSelectedItem(), lblSizeFree);
 
         txtFileName.setText(download.getDestFileName());
         txtFileName.textProperty().addListener((observable, oldValue, newValue) -> {
             stopCounter();
+            if (newValue != null) {
+                btnContinueDownload.setDisable(!download.getDestFileName().equals(newValue));
+            }
 
             if (!txtFileName.getText().equals(FileNameUtils.checkFileName(txtFileName.getText(), false /* pfad */))) {
                 txtFileName.setStyle(MTColor.DOWNLOAD_NAME_ERROR.getCssBackground());

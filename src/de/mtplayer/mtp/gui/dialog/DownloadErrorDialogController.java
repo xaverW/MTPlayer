@@ -57,8 +57,8 @@ public class DownloadErrorDialogController extends PDialogExtra {
 
 
     private Timeline timeline = null;
-    //    private Integer timeSeconds = ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getInt();
-    private Integer timeSeconds = 500000;
+    private Integer timeSeconds = ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getInt();
+//    private Integer timeSeconds = 500000;
 
     private final String message;
     private final Download download;
