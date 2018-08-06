@@ -128,6 +128,7 @@ public class MediaConfigPanePath {
             DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtPath);
         });
         btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
+        btnFile.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen."));
 
         gridPane.add(new Label("Pfad: "), 0, 0);
         gridPane.add(txtPath, 1, 0);

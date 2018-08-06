@@ -190,6 +190,7 @@ public class FilmPaneController extends AnchorPane {
             DirFileChooser.FileChooser(ProgData.getInstance().primaryStage, txtUrl);
         });
         btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
+        btnFile.setTooltip(new Tooltip("Eine Filmliste die geladen werden soll, manuell auswählen."));
 
         final Button btnHelp = new Button("");
         btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));

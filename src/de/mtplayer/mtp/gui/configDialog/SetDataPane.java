@@ -264,6 +264,7 @@ public class SetDataPane {
             DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtDestPath);
         });
         btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
+        btnFile.setTooltip(new Tooltip("Einen Ordner zum Speichern der Filme auswählen."));
         gridPane.add(btnFile, 2, 0);
 
         gridPane.add(new Label("Zieldateiname:"), 0, 1);

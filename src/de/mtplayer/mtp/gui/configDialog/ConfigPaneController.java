@@ -263,6 +263,7 @@ public class ConfigPaneController extends AnchorPane {
             DirFileChooser.FileChooser(ProgData.getInstance().primaryStage, txtFileManager);
         });
         btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
+        btnFile.setTooltip(new Tooltip("Einen Dateimanager manuell auswählen"));
         gridPane.add(btnFile, 1, row + 1);
 
         final Button btnHelp = new Button("");
@@ -285,6 +286,7 @@ public class ConfigPaneController extends AnchorPane {
             DirFileChooser.FileChooser(ProgData.getInstance().primaryStage, txtFileManager);
         });
         btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
+        btnFile.setTooltip(new Tooltip("Einen Videoplayer zum Abspielen der gespeicherten Filme auswählen."));
         gridPane.add(btnFile, 1, row + 1);
 
         final Button btnHelp = new Button("");
@@ -306,6 +308,7 @@ public class ConfigPaneController extends AnchorPane {
             DirFileChooser.FileChooser(ProgData.getInstance().primaryStage, txtFileManager);
         });
         btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
+        btnFile.setTooltip(new Tooltip("Einen Webbrowser zum Öffnen von URLs auswählen."));
         gridPane.add(btnFile, 1, row + 1);
 
         final Button btnHelp = new Button("");

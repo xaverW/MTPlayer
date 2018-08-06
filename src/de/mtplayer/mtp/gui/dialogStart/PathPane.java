@@ -150,6 +150,7 @@ public class PathPane {
             DirFileChooser.FileChooser(ProgData.getInstance().primaryStage, txtPlayer);
         });
         btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
+        btnFile.setTooltip(new Tooltip("Programmdatei auswählen."));
         gridPane.add(btnFile, 1, 1);
 
         gridPane.add(btnFind, 2, 1);

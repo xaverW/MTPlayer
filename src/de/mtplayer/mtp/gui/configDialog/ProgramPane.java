@@ -174,6 +174,7 @@ public class ProgramPane {
             DirFileChooser.FileChooser(ProgData.getInstance().primaryStage, txtProgPath);
         });
         btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
+        btnFile.setTooltip(new Tooltip("Ein Programm zum verarbeiten der URL auswählen."));
 
         int row = 0;
         gridPane.add(new Label("Name: "), 0, row);

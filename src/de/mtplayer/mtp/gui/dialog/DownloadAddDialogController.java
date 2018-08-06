@@ -32,6 +32,7 @@ import de.mtplayer.mtp.controller.data.film.FilmTools;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.dialog.PDialogExtra;
+import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.tools.PStringUtils;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.geometry.Insets;
@@ -197,80 +198,6 @@ public class DownloadAddDialogController extends PDialogExtra {
         init(getvBoxDialog(), true);
     }
 
-    private void initCont() {
-        vBoxAllDownloads.setStyle("-fx-background-color: gainsboro;");
-        hBoxSize.setStyle("-fx-background-color: gainsboro;");
-        lblFilm.setStyle("-fx-font-weight: bold;");
-        lblFilmTitle.setStyle("-fx-font-weight: bold;");
-
-        // Top
-        hBoxTop.setSpacing(20);
-        hBoxTop.setAlignment(Pos.CENTER);
-        hBoxTop.setPadding(new Insets(10));
-        hBoxTop.getChildren().addAll(btnPrev, lblSum, btnNext);
-
-        hBoxAll.setAlignment(Pos.CENTER);
-        hBoxAll.setPadding(new Insets(10));
-        hBoxAll.getChildren().add(chkAll);
-        vBoxAllDownloads.getChildren().addAll(hBoxTop, hBoxAll);
-
-
-        // Gridpane
-//        gridPane.setMaxWidth(Double.MAX_VALUE);
-        gridPane.setPadding(new Insets(10, 10, 10, 10));
-        VBox.setVgrow(gridPane, Priority.ALWAYS);
-        gridPane.setHgap(15);
-        gridPane.setVgap(15);
-        int row = 0;
-        gridPane.add(lblFilm, 0, row);
-        gridPane.add(lblFilmTitle, 1, row);
-
-        gridPane.add(lblSet, 0, ++row);
-        cbSet.setMaxWidth(Double.MAX_VALUE);
-        GridPane.setHgrow(cbSet, Priority.ALWAYS);
-        gridPane.add(cbSet, 1, row);
-
-        gridPane.add(new Label("Auflösung:"), 0, ++row);
-        hBoxSize.setMaxWidth(Double.MAX_VALUE);
-        hBoxSize.setSpacing(20);
-        GridPane.setHgrow(hBoxSize, Priority.ALWAYS);
-        hBoxSize.setPadding(new Insets(10, 5, 10, 5));
-        hBoxSize.getChildren().addAll(rbHd, rbHigh, rbSmall);
-        gridPane.add(hBoxSize, 1, row, 3, 1);
-
-        gridPane.add(new Label("Dateiname:"), 0, ++row);
-        txtName.setMaxWidth(Double.MAX_VALUE);
-        GridPane.setHgrow(txtName, Priority.ALWAYS);
-        gridPane.add(txtName, 1, row);
-
-        gridPane.add(new Label("Zielpfad:"), 0, ++row);
-        cbPath.setMaxWidth(Double.MAX_VALUE);
-        GridPane.setHgrow(cbPath, Priority.ALWAYS);
-        gridPane.add(cbPath, 1, row);
-        gridPane.add(btnDest, 2, row);
-        gridPane.add(btnPropose, 3, row);
-
-        HBox hBox2 = new HBox();
-        GridPane.setHgrow(hBox2, Priority.ALWAYS);
-        hBox2.getChildren().add(lblFree);
-        hBox2.setAlignment(Pos.CENTER_RIGHT);
-        gridPane.add(hBox2, 1, ++row, 3, 1);
-
-        gridPane.add(cbxSubtitle, 1, ++row);
-        gridPane.add(cbxInfo, 1, ++row);
-
-
-        vBoxCont.setSpacing(20);
-        vBoxCont.getChildren().addAll(vBoxAllDownloads, gridPane);
-
-
-        // Bottom
-        HBox hBox = new HBox();
-        HBox.setHgrow(hBox, Priority.ALWAYS);
-        hBox.getChildren().add(cbxStart);
-        hBoxOk.getChildren().addAll(hBox, btnOk, btnCancel);
-    }
-
     @Override
     public void make() {
         initCont();
@@ -317,6 +244,75 @@ public class DownloadAddDialogController extends PDialogExtra {
         initCheckBox();
 
         changeFilmNr();
+    }
+
+    private void initCont() {
+        vBoxAllDownloads.setStyle("-fx-background-color: gainsboro;");
+        hBoxSize.setStyle("-fx-background-color: gainsboro;");
+        lblFilm.setStyle("-fx-font-weight: bold;");
+        lblFilmTitle.setStyle("-fx-font-weight: bold;");
+
+        // Top
+        hBoxTop.setSpacing(20);
+        hBoxTop.setAlignment(Pos.CENTER);
+        hBoxTop.setPadding(new Insets(10));
+        hBoxTop.getChildren().addAll(btnPrev, lblSum, btnNext);
+
+        hBoxAll.setAlignment(Pos.CENTER);
+        hBoxAll.setPadding(new Insets(10));
+        hBoxAll.getChildren().add(chkAll);
+        vBoxAllDownloads.getChildren().addAll(hBoxTop, hBoxAll);
+
+
+        // Gridpane
+        gridPane.setHgap(15);
+        gridPane.setVgap(15);
+        gridPane.setPadding(new Insets(10, 10, 10, 10));
+        VBox.setVgrow(gridPane, Priority.ALWAYS);
+
+        int row = 0;
+        gridPane.add(lblFilm, 0, row);
+        gridPane.add(lblFilmTitle, 1, row);
+
+        gridPane.add(lblSet, 0, ++row);
+        cbSet.setMaxWidth(Double.MAX_VALUE);
+        gridPane.add(cbSet, 1, row);
+
+        gridPane.add(new Label("Auflösung:"), 0, ++row);
+        hBoxSize.setSpacing(20);
+        hBoxSize.setPadding(new Insets(10, 5, 10, 5));
+        hBoxSize.getChildren().addAll(rbHd, rbHigh, rbSmall);
+        gridPane.add(hBoxSize, 1, row, 3, 1);
+
+        gridPane.add(new Label("Dateiname:"), 0, ++row);
+        gridPane.add(txtName, 1, row, 3, 1);
+
+        gridPane.add(new Label("Zielpfad:"), 0, ++row);
+        cbPath.setMaxWidth(Double.MAX_VALUE);
+        gridPane.add(cbPath, 1, row);
+        gridPane.add(btnDest, 2, row);
+        gridPane.add(btnPropose, 3, row);
+
+        HBox hBox2 = new HBox();
+        hBox2.getChildren().add(lblFree);
+        hBox2.setAlignment(Pos.CENTER_RIGHT);
+        gridPane.add(hBox2, 1, ++row, 3, 1);
+
+        gridPane.add(cbxSubtitle, 1, ++row);
+        gridPane.add(cbxInfo, 1, ++row);
+
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcComputedSizeAndHgrow());
+
+        vBoxCont.setSpacing(20);
+        vBoxCont.getChildren().addAll(vBoxAllDownloads, gridPane);
+
+
+        // Bottom
+        HBox hBox = new HBox();
+        HBox.setHgrow(hBox, Priority.ALWAYS);
+        hBox.getChildren().add(cbxStart);
+        hBoxOk.getChildren().addAll(hBox, btnOk, btnCancel);
     }
 
 
@@ -378,10 +374,12 @@ public class DownloadAddDialogController extends PDialogExtra {
     private void initButton() {
         btnDest.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
         btnDest.setText("");
+        btnDest.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen."));
         btnDest.setOnAction(event -> getDestination());
 
         btnPropose.setGraphic(new Icons().ICON_BUTTON_PROPOSE);
         btnPropose.setText("");
+        btnPropose.setTooltip(new Tooltip("Einen Pfad zum Speichern vorschlagen lassen."));
         btnPropose.setOnAction(event -> proposeDestination());
 
 

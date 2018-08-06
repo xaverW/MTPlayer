@@ -27,6 +27,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
@@ -56,6 +57,7 @@ public class DownPathPane {
             DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtPath);
         });
         btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
+        btnFile.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen."));
         gridPane.add(btnFile, 1, 1);
 
         final Button btnHelp = new Button("");
