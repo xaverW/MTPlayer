@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.mtplayer.mtp.gui.dialogStart;
+package de.mtplayer.mtp.gui.startDialog;
 
 import de.p2tools.p2Lib.PConst;
 import javafx.geometry.Insets;

@@ -21,7 +21,7 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.tools.HelpText;
-import de.p2tools.p2Lib.dialog.PAlert;
+import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
@@ -108,11 +108,8 @@ public class FilmPaneController extends AnchorPane {
 
         initDays();
 
-        final Button btnHelpDays = new Button("");
-        btnHelpDays.setTooltip(new Tooltip("Hilfe anzeigen."));
-        btnHelpDays.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelpDays.setOnAction(a -> new PAlert().showHelpAlert("nur Filme der letzten Tage laden",
-                HelpText.LOAD_FILM_ONLY_DAYS));
+        final Button btnHelpDays = new PButton().helpButton("nur Filme der letzten Tage laden",
+                HelpText.LOAD_FILM_ONLY_DAYS);
 
         Button btnLoad = new Button("Filmliste jetzt laden");
         btnLoad.setOnAction(event -> {
@@ -122,11 +119,8 @@ public class FilmPaneController extends AnchorPane {
         final PToggleSwitch tglLoad = new PToggleSwitch("Filmliste beim Programmstart laden");
         tglLoad.selectedProperty().bindBidirectional(propLoad);
 
-        final Button btnHelpLoad = new Button("");
-        btnHelpLoad.setTooltip(new Tooltip("Hilfe anzeigen."));
-        btnHelpLoad.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelpLoad.setOnAction(a -> new PAlert().showHelpAlert("Filmliste laden",
-                HelpText.LOAD_FILMLIST_PROGRAMSTART));
+        final Button btnHelpLoad = new PButton().helpButton("Filmliste laden",
+                HelpText.LOAD_FILMLIST_PROGRAMSTART);
 
 
         gridPane.add(tglLoad, 0, 0);
@@ -192,11 +186,8 @@ public class FilmPaneController extends AnchorPane {
         btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
         btnFile.setTooltip(new Tooltip("Eine Filmliste die geladen werden soll, manuell auswählen."));
 
-        final Button btnHelp = new Button("");
-        btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
-        btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelp.setOnAction(a -> new PAlert().showHelpAlert("Filmliste laden",
-                HelpText.LOAD_FILMLIST_MANUAL));
+        final Button btnHelp = new PButton().helpButton("Filmliste laden",
+                HelpText.LOAD_FILMLIST_MANUAL);
 
         Button btnLoad = new Button("Filmliste jetzt laden");
         btnLoad.disableProperty().bind(txtUrl.textProperty().isEmpty());

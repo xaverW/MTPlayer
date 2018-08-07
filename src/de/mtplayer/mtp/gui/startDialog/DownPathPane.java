@@ -14,13 +14,12 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.mtplayer.mtp.gui.dialogStart;
+package de.mtplayer.mtp.gui.startDialog;
 
 import de.mtplayer.mLib.tools.DirFileChooser;
 import de.mtplayer.mtp.controller.config.ProgConfig;
-import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
-import de.p2tools.p2Lib.dialog.PAlert;
+import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
@@ -54,17 +53,16 @@ public class DownPathPane {
 
         final Button btnFile = new Button();
         btnFile.setOnAction(event -> {
-            DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtPath);
+            DirFileChooser.DirChooser(StartDialogController.stage, txtPath);
         });
         btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
         btnFile.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen."));
         gridPane.add(btnFile, 1, 1);
 
-        final Button btnHelp = new Button("");
-        btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelp.setOnAction(a -> PAlert.showHelpAlert("Zielverzeichnis",
+        final Button btnHelp = new PButton().helpButton(StartDialogController.stage,
+                "Zielverzeichnis",
                 "Hier kann das Verzeichnis angegeben werden, " +
-                        "in dem die Downloads gespeichert werden."));
+                        "in dem die Downloads gespeichert werden.");
         gridPane.add(btnHelp, 2, 1);
 
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow());

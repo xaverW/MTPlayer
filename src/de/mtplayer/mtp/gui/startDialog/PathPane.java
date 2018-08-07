@@ -14,17 +14,16 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.mtplayer.mtp.gui.dialogStart;
+package de.mtplayer.mtp.gui.startDialog;
 
 import de.mtplayer.mLib.tools.DirFileChooser;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
-import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
-import de.p2tools.p2Lib.dialog.PAlert;
+import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
 import javafx.beans.property.StringProperty;
@@ -69,10 +68,8 @@ public class PathPane {
                 vBox.getChildren().add(addPlayer(PLAYER.FFMPEG));
         }
 
-        final Button btnHelp = new Button("");
-        btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
-        btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelp.setOnAction(a -> PAlert.showHelpAlert("Videoplayer", HelpText.PROG_PATHS));
+        final Button btnHelp = new PButton().helpButton(StartDialogController.stage,
+                "Videoplayer", HelpText.PROG_PATHS);
 
         HBox hBox = new HBox();
         VBox.setVgrow(hBox, Priority.ALWAYS);
@@ -104,7 +101,8 @@ public class PathPane {
                     txtPlayer.setText(SetsPrograms.getTemplatePathFlv());
                 });
 
-                hyperlink = new PHyperlink(ProgConst.ADRESSE_WEBSITE_FLVSTREAMER,
+                hyperlink = new PHyperlink(StartDialogController.stage,
+                        ProgConst.ADRESSE_WEBSITE_FLVSTREAMER,
                         ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new Icons().ICON_BUTTON_FILE_OPEN);
                 break;
             case FFMPEG:
@@ -115,7 +113,8 @@ public class PathPane {
                     txtPlayer.setText(SetsPrograms.getTemplatePathFFmpeg());
                 });
 
-                hyperlink = new PHyperlink(ProgConst.ADRESSE_WEBSITE_FFMPEG,
+                hyperlink = new PHyperlink(StartDialogController.stage,
+                        ProgConst.ADRESSE_WEBSITE_FFMPEG,
                         ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new Icons().ICON_BUTTON_FILE_OPEN);
                 break;
             case VLC:
@@ -127,7 +126,8 @@ public class PathPane {
                     txtPlayer.setText(SetsPrograms.getTemplatePathVlc());
                 });
 
-                hyperlink = new PHyperlink(ProgConst.ADRESSE_WEBSITE_VLC,
+                hyperlink = new PHyperlink(StartDialogController.stage,
+                        ProgConst.ADRESSE_WEBSITE_VLC,
                         ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new Icons().ICON_BUTTON_FILE_OPEN);
                 break;
         }
@@ -147,7 +147,7 @@ public class PathPane {
 
         final Button btnFile = new Button();
         btnFile.setOnAction(event -> {
-            DirFileChooser.FileChooser(ProgData.getInstance().primaryStage, txtPlayer);
+            DirFileChooser.FileChooser(StartDialogController.stage, txtPlayer);
         });
         btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
         btnFile.setTooltip(new Tooltip("Programmdatei auswählen."));

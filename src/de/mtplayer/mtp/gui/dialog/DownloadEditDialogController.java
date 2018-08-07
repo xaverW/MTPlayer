@@ -33,6 +33,7 @@ import de.mtplayer.mtp.tools.file.GetFile;
 import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.dialog.PDialogExtra;
+import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -320,11 +321,8 @@ public class DownloadEditDialogController extends PDialogExtra {
                 btnReset.setGraphic(new Icons().ICON_BUTTON_RESET);
                 btnReset.setOnAction(e -> txt[DownloadXml.DOWNLOAD_PROGRAM_CALL_ARRAY].setText(orgProgArray));
 
-                final Button btnHelp = new Button("");
-                btnHelp.setTooltip(new Tooltip("Hilfe"));
-                btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
-                btnHelp.setOnAction(event -> PAlert.showHelpAlert("Den Programmaufruf ändern",
-                        new GetFile().getHelpSearch(GetFile.PATH_HELPTEXT_EDIT_DOWNLOAD_PROG)));
+                final Button btnHelp = new PButton().helpButton("Den Programmaufruf ändern",
+                        new GetFile().getHelpSearch(GetFile.PATH_HELPTEXT_EDIT_DOWNLOAD_PROG));
 
                 VBox vBox = new VBox(5);
                 HBox hBoxArray1 = new HBox(10);

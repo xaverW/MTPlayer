@@ -22,8 +22,8 @@ import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.tools.storedFilter.Filter;
-import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.dialog.PDialog;
+import de.p2tools.p2Lib.guiTools.PButton;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -42,7 +42,6 @@ public class MediaDialogController extends PDialog {
 
 
     private final Button btnOk = new Button("Ok");
-    private final Button btnHelp = new Button();
     private final Button btnReset = new Button("");
 
     private final RadioButton rbMedien = new RadioButton("Mediensammlung");
@@ -91,6 +90,48 @@ public class MediaDialogController extends PDialog {
         super.close();
     }
 
+    @Override
+    public void make() {
+        initPanel();
+        mediaDialogPaneMedia.make();
+        mediaDialogPaneAbo.make();
+
+        final ToggleGroup tg = new ToggleGroup();
+        rbMedien.setToggleGroup(tg);
+        rbAbos.setToggleGroup(tg);
+
+        Listener.addListener(listenerDbStart);
+        Listener.addListener(listenerDbStop);
+
+        txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+            Filter.checkPattern1(txtSearch);
+            filter();
+        });
+
+        txtSearch.setOnMouseClicked(event -> {
+            if (event.getClickCount() > 1) {
+                String sel = txtSearch.getSelectedText();
+                txtSearch.setText(sel);
+            }
+        });
+
+        btnReset.setGraphic(new Icons().ICON_BUTTON_RESET);
+        btnReset.setOnAction(a -> txtSearch.setText(searchStr));
+        btnOk.setOnAction(a -> close());
+
+        rbMedien.setSelected(true);
+        rbMedien.setOnAction(a -> {
+            mediaDialogPaneMedia.toFront();
+            filter();
+        });
+        rbAbos.setOnAction(a -> {
+            mediaDialogPaneAbo.toFront();
+            filter();
+        });
+
+        filter();
+    }
+
     private void initPanel() {
         try {
             vBoxDialog.setPadding(new Insets(10));
@@ -132,62 +173,21 @@ public class MediaDialogController extends PDialog {
             vBoxCont.getChildren().add(stackPane);
             mediaDialogPaneMedia.toFront();
 
+            Button btnHelp = new PButton().helpButton("Suche in der Mediensammlung",
+                    HelpText.SEARCH_MEDIA_DIALOG);
+
             Region region = new Region();
             HBox.setHgrow(region, Priority.ALWAYS);
             hBox = new HBox();
             hBox.setSpacing(10);
             hBox.setAlignment(Pos.CENTER_RIGHT);
+
             hBox.getChildren().addAll(btnHelp, region, btnOk);
 
             vBoxDialog.getChildren().addAll(vBoxCont, hBox);
         } catch (final Exception ex) {
             System.out.println(ex.getMessage());
         }
-    }
-
-    @Override
-    public void make() {
-        initPanel();
-        mediaDialogPaneMedia.make();
-        mediaDialogPaneAbo.make();
-
-        final ToggleGroup tg = new ToggleGroup();
-        rbMedien.setToggleGroup(tg);
-        rbAbos.setToggleGroup(tg);
-
-        Listener.addListener(listenerDbStart);
-        Listener.addListener(listenerDbStop);
-
-        txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
-            Filter.checkPattern1(txtSearch);
-            filter();
-        });
-
-        txtSearch.setOnMouseClicked(event -> {
-            if (event.getClickCount() > 1) {
-                String sel = txtSearch.getSelectedText();
-                txtSearch.setText(sel);
-            }
-        });
-
-        btnReset.setGraphic(new Icons().ICON_BUTTON_RESET);
-        btnReset.setOnAction(a -> txtSearch.setText(searchStr));
-        btnOk.setOnAction(a -> close());
-        btnHelp.setText("");
-        btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelp.setOnAction(a -> PAlert.showHelpAlert("Suche in der Mediensammlung", HelpText.SEARCH_MEDIA_DIALOG));
-
-        rbMedien.setSelected(true);
-        rbMedien.setOnAction(a -> {
-            mediaDialogPaneMedia.toFront();
-            filter();
-        });
-        rbAbos.setOnAction(a -> {
-            mediaDialogPaneAbo.toFront();
-            filter();
-        });
-
-        filter();
     }
 
     private void filter() {

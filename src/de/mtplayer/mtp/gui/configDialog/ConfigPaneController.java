@@ -25,7 +25,6 @@ import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.tools.update.SearchProgramUpdate;
 import de.p2tools.p2Lib.PConst;
-import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
@@ -106,7 +105,7 @@ public class ConfigPaneController extends AnchorPane {
         makeConfig(result);
         makeLogfile(result);
         new ColorPane().makeColor(result);
-        result.add(new GeoPane().makeGeo());
+        result.add(new GeoPane().makeGeo(ProgData.getInstance().primaryStage));
         makeProg(result);
         makeUpdate(result);
         return result;
@@ -266,10 +265,7 @@ public class ConfigPaneController extends AnchorPane {
         btnFile.setTooltip(new Tooltip("Einen Dateimanager manuell auswählen"));
         gridPane.add(btnFile, 1, row + 1);
 
-        final Button btnHelp = new Button("");
-        btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
-        btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelp.setOnAction(a -> PAlert.showHelpAlert("Dateimanager", HelpText.FILEMANAGER));
+        final Button btnHelp = new PButton().helpButton("Dateimanager", HelpText.FILEMANAGER);
         gridPane.add(btnHelp, 2, row + 1);
 
     }
@@ -289,10 +285,7 @@ public class ConfigPaneController extends AnchorPane {
         btnFile.setTooltip(new Tooltip("Einen Videoplayer zum Abspielen der gespeicherten Filme auswählen."));
         gridPane.add(btnFile, 1, row + 1);
 
-        final Button btnHelp = new Button("");
-        btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
-        btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelp.setOnAction(a -> PAlert.showHelpAlert("Videoplayer", HelpText.VIDEOPLAYER));
+        final Button btnHelp = new PButton().helpButton("Videoplayer", HelpText.VIDEOPLAYER);
         gridPane.add(btnHelp, 2, row + 1);
     }
 
@@ -311,10 +304,7 @@ public class ConfigPaneController extends AnchorPane {
         btnFile.setTooltip(new Tooltip("Einen Webbrowser zum Öffnen von URLs auswählen."));
         gridPane.add(btnFile, 1, row + 1);
 
-        final Button btnHelp = new Button("");
-        btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
-        btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelp.setOnAction(a -> PAlert.showHelpAlert("Webbrowser", HelpText.WEBBROWSER));
+        final Button btnHelp = new PButton().helpButton("Webbrowser", HelpText.WEBBROWSER);
         gridPane.add(btnHelp, 2, row + 1);
     }
 
@@ -335,13 +325,10 @@ public class ConfigPaneController extends AnchorPane {
         tglSearch.selectedProperty().bindBidirectional(propUpdateSearch);
         gridPane.add(tglSearch, 0, 0);
 
-        final Button btnHelp = new Button("");
-        btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
-        btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelp.setOnAction(a -> PAlert.showHelpAlert("Programmupdate suchen",
+        final Button btnHelp = new PButton().helpButton("Programmupdate suchen",
                 "Beim Programmstart wird geprüft, ob es eine neue Version des Programms gibt. " +
                         "Ist eine aktualisierte Version vorhanden, wird das dann gemeldet." + PConst.LINE_SEPARATOR +
-                        "Das Programm wird aber nicht ungefragt ersetzt."));
+                        "Das Programm wird aber nicht ungefragt ersetzt.");
         GridPane.setHalignment(btnHelp, HPos.RIGHT);
         gridPane.add(btnHelp, 1, 0);
 

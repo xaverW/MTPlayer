@@ -18,15 +18,15 @@ package de.mtplayer.mtp.gui.dialog;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.ListePsetVorlagen;
 import de.mtplayer.mtp.gui.configDialog.SetPaneController;
-import de.mtplayer.mtp.gui.dialogStart.DownPathPane;
-import de.mtplayer.mtp.gui.dialogStart.PathPane;
+import de.mtplayer.mtp.gui.startDialog.DownPathPane;
+import de.mtplayer.mtp.gui.startDialog.PathPane;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
 import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.dialog.PDialog;
+import de.p2tools.p2Lib.guiTools.PButton;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -65,16 +65,14 @@ public class ImportSetDialogController extends PDialog {
     public void make() {
         btnOk.setOnAction(a -> close());
 
-        final Button btnHelp = new Button("");
-        btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelp.setOnAction(a -> PAlert.showHelpAlert("Set zurücksetzen",
+        final Button btnHelp = new PButton().helpButton("Set zurücksetzen",
                 "\"Bestehende Sets durch die neuen ersetzen\"" +
                         PConst.LINE_SEPARATORx2 +
                         "Damit werden alle Sets (auch eigene), die zum Abspielen" + PConst.LINE_SEPARATOR +
                         "und Aufzeichnen der Filme gebraucht werden, gelöscht." + PConst.LINE_SEPARATOR +
                         "Anschließend werden die aktuellen Standardsets" + PConst.LINE_SEPARATOR +
                         "eingerichtet." + PConst.LINE_SEPARATOR +
-                        "Es kann dann direkt damit weitergearbeitet werden."));
+                        "Es kann dann direkt damit weitergearbeitet werden.");
 
         btnImport.setOnAction(event -> {
             importSet();

@@ -25,6 +25,7 @@ import de.mtplayer.mtp.tools.file.GetFile;
 import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.dialog.PDialog;
+import de.p2tools.p2Lib.guiTools.PButton;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -75,10 +76,8 @@ public class ResetDialogController extends PDialog {
                 "Nichts ändern", "");
         cancelButton.setOnAction(e -> close());
 
-        final Button btnHelp = new Button("");
-        btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelp.setOnAction(a -> PAlert.showHelpAlert("Programm zurücksetzen",
-                new GetFile().getHelpSearch(GetFile.PATH_HELPTEXT_RESET)));
+        final Button btnHelp = new PButton().helpButton("Programm zurücksetzen",
+                new GetFile().getHelpSearch(GetFile.PATH_HELPTEXT_RESET));
 
         BigButton setButton = new BigButton(new Icons().ICON_BUTTON_QUIT,
                 "Einstellungen zum Abspielen/Aufzeichnen zurücksetzen",

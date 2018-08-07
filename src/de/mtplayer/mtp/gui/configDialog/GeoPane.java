@@ -20,6 +20,7 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.guiTools.PButton;
+import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.property.BooleanProperty;
 import javafx.geometry.HPos;
@@ -27,8 +28,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
+import javafx.stage.Stage;
 
 public class GeoPane {
     RadioButton rbDe = new RadioButton("DE - Deutschland");
@@ -38,8 +38,10 @@ public class GeoPane {
     RadioButton rbSonst = new RadioButton("sonst");
 
     BooleanProperty geoProperty = ProgConfig.SYSTEM_MARK_GEO.getBooleanProperty();
+    Stage stage = null;
 
-    public TitledPane makeGeo() {
+    public TitledPane makeGeo(Stage stage) {
+        this.stage = stage;
         int row = 0;
 
         final GridPane gridPane = new GridPane();
@@ -54,7 +56,8 @@ public class GeoPane {
         gridPane.add(tglGeo, 0, row);
 
 
-        final Button btnHelpGeo = new PButton().helpButton("Geogeblockte Filme",
+        final Button btnHelpGeo = new PButton().helpButton(stage,
+                "Geogeblockte Filme",
                 HelpText.CONFIG_GEO);
         gridPane.add(btnHelpGeo, 1, row);
         GridPane.setHalignment(btnHelpGeo, HPos.RIGHT);
@@ -102,11 +105,7 @@ public class GeoPane {
         gridPane.add(rbEu, 0, ++row);
         gridPane.add(rbSonst, 0, ++row);
 
-        final ColumnConstraints ccTxt = new ColumnConstraints();
-        ccTxt.setFillWidth(true);
-        ccTxt.setMinWidth(Region.USE_COMPUTED_SIZE);
-        ccTxt.setHgrow(Priority.ALWAYS);
-        gridPane.getColumnConstraints().addAll(new ColumnConstraints(), ccTxt);
+        gridPane.getColumnConstraints().addAll(new ColumnConstraints(), PColumnConstraints.getCcComputedSizeAndHgrow());
 
         return tpConfig;
     }

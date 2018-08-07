@@ -120,9 +120,9 @@ public class SetList extends SimpleListProperty<SetData> {
     private static String getPathVlc() {
         // liefert den Pfad wenn vorhanden, wenn nicht wird er in einem Dialog abgefragt
         if (ProgConfig.SYSTEM_PATH_VLC.get().isEmpty()) {
-            ProgConfig.SYSTEM_PATH_VLC.setValue(PAlertFileChosser.showAlertFileChooser("VLC", "VLC wird nicht gefunden.",
-                    "Bitte den Pfad zum" + PConst.LINE_SEPARATOR +
-                            "VLC-Player angeben.", false, ProgData.getInstance().primaryStage, new Icons().ICON_BUTTON_FILE_OPEN));
+            ProgConfig.SYSTEM_PATH_VLC.setValue(PAlertFileChosser.showAlertFileChooser(ProgData.getInstance().primaryStage, "VLC",
+                    "VLC wird nicht gefunden.", "Bitte den Pfad zum" + PConst.LINE_SEPARATOR +
+                            "VLC-Player angeben.", false, new Icons().ICON_BUTTON_FILE_OPEN));
         }
         return ProgConfig.SYSTEM_PATH_VLC.get();
     }
@@ -130,9 +130,9 @@ public class SetList extends SimpleListProperty<SetData> {
     private static String getPathFlv() {
         // liefert den Pfad wenn vorhanden, wenn nicht wird er in einem Dialog abgefragt
         if (ProgConfig.SYSTEM_PATH_FLVSTREAMER.get().isEmpty()) {
-            ProgConfig.SYSTEM_PATH_FLVSTREAMER.setValue(PAlertFileChosser.showAlertFileChooser("flvstreamer", "flvstreamer wird nicht gefunden.",
-                    "Bitte den Pfad zum" + PConst.LINE_SEPARATOR +
-                            "flvstreamer angeben.", false, ProgData.getInstance().primaryStage, new Icons().ICON_BUTTON_FILE_OPEN));
+            ProgConfig.SYSTEM_PATH_FLVSTREAMER.setValue(PAlertFileChosser.showAlertFileChooser(ProgData.getInstance().primaryStage, "flvstreamer",
+                    "flvstreamer wird nicht gefunden.", "Bitte den Pfad zum" + PConst.LINE_SEPARATOR +
+                            "flvstreamer angeben.", false, new Icons().ICON_BUTTON_FILE_OPEN));
         }
         return ProgConfig.SYSTEM_PATH_FLVSTREAMER.get();
     }
@@ -140,9 +140,9 @@ public class SetList extends SimpleListProperty<SetData> {
     private static String getPathFFmpeg() {
         // liefert den Pfad wenn vorhanden, wenn nicht wird er in einem Dialog abgefragt
         if (ProgConfig.SYSTEM_PATH_FFMPEG.get().isEmpty()) {
-            ProgConfig.SYSTEM_PATH_FFMPEG.setValue(PAlertFileChosser.showAlertFileChooser("ffmpeg", "ffmpeg wird nicht gefunden.",
-                    "Bitte den Pfad zu" + PConst.LINE_SEPARATOR +
-                            "ffmpeg angeben.", false, ProgData.getInstance().primaryStage, new Icons().ICON_BUTTON_FILE_OPEN));
+            ProgConfig.SYSTEM_PATH_FFMPEG.setValue(PAlertFileChosser.showAlertFileChooser(ProgData.getInstance().primaryStage, "ffmpeg",
+                    "ffmpeg wird nicht gefunden.", "Bitte den Pfad zu" + PConst.LINE_SEPARATOR +
+                            "ffmpeg angeben.", false, new Icons().ICON_BUTTON_FILE_OPEN));
         }
         return ProgConfig.SYSTEM_PATH_FFMPEG.get();
     }

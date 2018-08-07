@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.mtplayer.mtp.gui.dialogStart;
+package de.mtplayer.mtp.gui.startDialog;
 
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
@@ -25,11 +25,14 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TitledPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 
 
 public class StartDialogController extends PDialog {
 
+    public static Stage stage = null;
     private boolean ok = false;
     private AnchorPane rootPane = new AnchorPane();
     private VBox vBoxDialog = new VBox();
@@ -37,7 +40,7 @@ public class StartDialogController extends PDialog {
 
     private TilePane tilePane = new TilePane();
     private StackPane stackpane;
-    private Button btnOk;
+    private Button btnOk, btnCancel;
     private Button btnPrev, btnNext;
     private Button btnStart1 = new Button(STR_START_1), btnStart2 = new Button(STR_START_2),
             btnUpdate = new Button(STR_UPDATE), btnGeo = new Button(STR_GEO),
@@ -72,11 +75,13 @@ public class StartDialogController extends PDialog {
 
     @Override
     public void make() {
+        stage = getStage();
         initPanel();
         addButton();
         initStack();
         initButton();
         selectActPane();
+        initTooltip();
     }
 
     public void close() {
@@ -103,7 +108,6 @@ public class StartDialogController extends PDialog {
             AnchorPane.setTopAnchor(vBoxDialog, 0.0);
 
             vBoxDialog.getChildren().add(vBoxCont);
-
 
         } catch (final Exception ex) {
             System.out.println(ex.getMessage());
@@ -196,7 +200,7 @@ public class StartDialogController extends PDialog {
         geoPane.setFitToHeight(true);
         geoPane.setFitToWidth(true);
 
-        TitledPane tGeo = new GeoPane().makeGeo();
+        TitledPane tGeo = new GeoPane().makeGeo(StartDialogController.stage);
         tGeo.setMaxHeight(Double.MAX_VALUE);
         tGeo.setCollapsible(false);
         tGeo.setText(STR_GEO);
@@ -227,13 +231,15 @@ public class StartDialogController extends PDialog {
     }
 
     private void initButton() {
-        btnOk = new Button("");
-        btnOk.setText("Ok");
+        btnOk = new Button("Ok");
         btnOk.setDisable(true);
         btnOk.setOnAction(a -> {
             ok = true;
             close();
         });
+
+        btnCancel = new Button("Abbrechen");
+        btnCancel.setOnAction(a -> close());
 
         btnNext = new Button("");
         btnNext.setGraphic(new Icons().ICON_BUTTON_NEXT);
@@ -285,6 +291,7 @@ public class StartDialogController extends PDialog {
         });
 
         btnOk.getStyleClass().add("btnStartDialog");
+        btnCancel.getStyleClass().add("btnStartDialog");
         btnNext.getStyleClass().add("btnStartDialog");
         btnPrev.getStyleClass().add("btnStartDialog");
 
@@ -294,7 +301,8 @@ public class StartDialogController extends PDialog {
         HBox.setHgrow(hBox1, Priority.ALWAYS);
 
         HBox hBox2 = new HBox();
-        hBox2.getChildren().addAll(hBox1, btnOk);
+        hBox2.setSpacing(10);
+        hBox2.getChildren().addAll(hBox1, btnOk, btnCancel);
 
         vBoxDialog.getChildren().add(hBox2);
     }
@@ -343,4 +351,20 @@ public class StartDialogController extends PDialog {
         }
     }
 
+    private void initTooltip() {
+        btnStart1.setTooltip(new Tooltip("Infos über das Programm."));
+        btnStart2.setTooltip(new Tooltip("Infos über das Programm."));
+        btnUpdate.setTooltip(new Tooltip("Soll das Programm nach Updates suchen!"));
+        btnGeo.setTooltip(new Tooltip("Einstellung des eigenen Standorts\n" +
+                "und der Markierung geblockter Filme."));
+        btnDown.setTooltip(new Tooltip("Auswahl des Verzeichniss zum Speichern der Filme."));
+        btnPath.setTooltip(new Tooltip("Angabe von Programmen zum Ansehen\n" +
+                "und Speichern der Filme."));
+
+        btnOk.setTooltip(new Tooltip("Programm mit den gewählten Einstellungen starten."));
+        btnCancel.setTooltip(new Tooltip("Das Programm nicht einrichten\n" +
+                "und starten sondern Dialog wieder beenden."));
+        btnNext.setTooltip(new Tooltip("Nächste Einstellmöglichkeit."));
+        btnPrev.setTooltip(new Tooltip("Vorherige Einstellmöglichkeit."));
+    }
 }

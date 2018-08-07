@@ -27,7 +27,7 @@ import de.mtplayer.mtp.controller.data.ListePsetVorlagen;
 import de.mtplayer.mtp.controller.data.SetList;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
-import de.mtplayer.mtp.gui.dialogStart.StartDialogController;
+import de.mtplayer.mtp.gui.startDialog.StartDialogController;
 import de.mtplayer.mtp.res.GetIcon;
 import de.mtplayer.mtp.tools.storedFilter.ProgInitFilter;
 import de.mtplayer.mtp.tools.update.SearchProgramUpdate;
@@ -100,6 +100,7 @@ public class MTPlayer extends Application {
             // einmal ein Muster anlegen, für Linux ist es bereits aktiv!
             progData.replaceList.init();
 
+            // damit die stage passt
             StartDialogController startDialogController = new StartDialogController();
             if (!startDialogController.isOk()) {
                 // dann jetzt beenden -> Thüss

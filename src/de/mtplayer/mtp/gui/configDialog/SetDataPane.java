@@ -23,7 +23,7 @@ import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.gui.tools.HelpText;
-import de.p2tools.p2Lib.dialog.PAlert;
+import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -213,10 +213,8 @@ public class SetDataPane {
             setData.setColor(SetData.RESET_COLOR);
         });
         gridPane.add(btnResetColor, 2, 0);
-        final Button btnHelpColor = new Button("");
-        btnHelpColor.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelpColor.setOnAction(a -> PAlert.showHelpAlert("Schriftfarbe auswählen",
-                HelpText.SETDATA_RESET_COLOR));
+        final Button btnHelpColor = new PButton().helpButton("Schriftfarbe auswählen",
+                HelpText.SETDATA_RESET_COLOR);
         gridPane.add(btnHelpColor, 3, 0);
 
         gridPane.getColumnConstraints().addAll(new ColumnConstraints(), new ColumnConstraints(), ccTxt);
@@ -240,10 +238,8 @@ public class SetDataPane {
         vBox.getChildren().add(gridPane);
 
         gridPane.add(tglSubdir, 0, 0);
-        final Button btnHelpColor = new Button("");
-        btnHelpColor.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelpColor.setOnAction(a -> PAlert.showHelpAlert("Unterordner anlegen",
-                HelpText.SETDATA_SUBDIR));
+        final Button btnHelpColor = new PButton().helpButton("Unterordner anlegen",
+                HelpText.SETDATA_SUBDIR);
 
         GridPane.setHalignment(btnHelpColor, HPos.RIGHT);
         gridPane.add(btnHelpColor, 1, 0);
@@ -338,10 +334,8 @@ public class SetDataPane {
         gridPane.setPadding(new Insets(20, 20, 20, 20));
         vBox.getChildren().add(gridPane);
 
-        final Button btnHelpPraefix = new Button("");
-        btnHelpPraefix.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelpPraefix.setOnAction(a -> PAlert.showHelpAlert("Direkt speichern",
-                HelpText.SETDATA_PRAEFIX));
+        final Button btnHelpPraefix = new PButton().helpButton("Direkt speichern",
+                HelpText.SETDATA_PRAEFIX);
 
         Label lbl = new Label("direkt Speichern (vom Programm selbst):");
         lbl.setMaxWidth(Double.MAX_VALUE);
@@ -376,10 +370,8 @@ public class SetDataPane {
         gridPane.setPadding(new Insets(20, 20, 20, 20));
         vBox.getChildren().add(gridPane);
 
-        final Button btnHelpRes = new Button("");
-        btnHelpRes.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelpRes.setOnAction(a -> PAlert.showHelpAlert("Auflösung",
-                HelpText.SETDATA_RES));
+        final Button btnHelpRes = new PButton().helpButton("Auflösung",
+                HelpText.SETDATA_RES);
 
         gridPane.add(rbHd, 0, 0);
         gridPane.add(btnHelpRes, 1, 0);

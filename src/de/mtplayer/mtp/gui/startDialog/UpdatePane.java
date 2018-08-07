@@ -14,22 +14,18 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.mtplayer.mtp.gui.dialogStart;
+package de.mtplayer.mtp.gui.startDialog;
 
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
-import de.mtplayer.mtp.controller.data.Icons;
-import de.p2tools.p2Lib.dialog.PAlert;
+import de.p2tools.p2Lib.guiTools.PButton;
+import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.property.BooleanProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.TitledPane;
-import javafx.scene.control.Tooltip;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
 
 public class UpdatePane {
 
@@ -49,20 +45,13 @@ public class UpdatePane {
         GridPane.setFillWidth(tglSearch, false);
         gridPane.add(tglSearch, 0, 0);
 
-        final Button btnHelp = new Button("");
-        btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
-        btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelp.setOnAction(a -> new PAlert().showHelpAlert("Programmupdate suchen",
+        final Button btnHelp = new PButton().helpButton(StartDialogController.stage, "Programmupdate suchen",
                 "Beim Programmstart wird geprüft, ob es eine neue Version des Programms gibt. Wenn es " +
                         "eine neue Version gibt, wird das mit einer Nachricht mitgeteilt. Es wird nicht " +
-                        "automatisch das Programm verändert."));
+                        "automatisch das Programm verändert.");
         gridPane.add(btnHelp, 1, 0);
 
-        final ColumnConstraints ccTxt = new ColumnConstraints();
-        ccTxt.setFillWidth(true);
-        ccTxt.setMinWidth(Region.USE_COMPUTED_SIZE);
-        ccTxt.setHgrow(Priority.ALWAYS);
-        gridPane.getColumnConstraints().addAll(ccTxt);
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow());
 
         return tpConfig;
     }

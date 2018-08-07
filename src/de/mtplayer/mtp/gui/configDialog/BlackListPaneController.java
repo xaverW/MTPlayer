@@ -18,9 +18,8 @@ package de.mtplayer.mtp.gui.configDialog;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.tools.HelpText;
-import de.p2tools.p2Lib.dialog.PAlert;
+import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
@@ -113,49 +112,34 @@ public class BlackListPaneController extends AnchorPane {
         tglAbo.setMaxWidth(Double.MAX_VALUE);
         tglAbo.selectedProperty().bindBidirectional(propAbo);
 
-        final Button btnHelp = new Button("");
-        btnHelp.setTooltip(new Tooltip("Hilfe anzeigen."));
-        btnHelp.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelp.setOnAction(a -> PAlert.showHelpAlert("Blacklist",
-                HelpText.BLACKLIST_ABO));
+        final Button btnHelp = new PButton().helpButton("Blacklist",
+                HelpText.BLACKLIST_ABO);
 
 
         final PToggleSwitch tglFuture = new PToggleSwitch("Filme mit Datum in der Zukunft nicht anzeigen");
         tglFuture.setMaxWidth(Double.MAX_VALUE);
         tglFuture.selectedProperty().bindBidirectional(propFuture);
 
-        final Button btnHelpFuture = new Button("");
-        btnHelpFuture.setTooltip(new Tooltip("Hilfe anzeigen."));
-        btnHelpFuture.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelpFuture.setOnAction(a -> PAlert.showHelpAlert("Blacklist",
-                HelpText.BLACKLIST_FUTURE));
+        final Button btnHelpFuture = new PButton().helpButton("Blacklist",
+                HelpText.BLACKLIST_FUTURE);
 
 
         final PToggleSwitch tglGeo = new PToggleSwitch("Filme, die per Geoblocking gesperrt sind, nicht anzeigen");
         tglGeo.setMaxWidth(Double.MAX_VALUE);
         tglGeo.selectedProperty().bindBidirectional(propGeo);
 
-        final Button btnHelpGeo = new Button("");
-        btnHelpGeo.setTooltip(new Tooltip("Hilfe anzeigen."));
-        btnHelpGeo.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelpGeo.setOnAction(a -> PAlert.showHelpAlert("Blacklist",
-                HelpText.BLACKLIST_GEO));
+        final Button btnHelpGeo = new PButton().helpButton("Blacklist",
+                HelpText.BLACKLIST_GEO);
 
 
         initDays();
 
-        final Button btnHelpSize = new Button("");
-        btnHelpSize.setTooltip(new Tooltip("Hilfe anzeigen."));
-        btnHelpSize.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelpSize.setOnAction(a -> PAlert.showHelpAlert("Blacklist",
-                HelpText.BLACKLIST_SIZE));
+        final Button btnHelpSize = new PButton().helpButton("Blacklist",
+                HelpText.BLACKLIST_SIZE);
 
 
-        final Button btnHelpDays = new Button("");
-        btnHelpDays.setTooltip(new Tooltip("Hilfe anzeigen."));
-        btnHelpDays.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHelpDays.setOnAction(a -> PAlert.showHelpAlert("Blacklist",
-                HelpText.BLACKLIST_DAYS));
+        final Button btnHelpDays = new PButton().helpButton("Blacklist",
+                HelpText.BLACKLIST_DAYS);
 
 
         gridPane.add(tglAbo, 0, 0);

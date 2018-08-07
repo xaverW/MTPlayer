@@ -195,7 +195,7 @@ public class DownloadList extends SimpleListProperty<Download> {
         Thread th = new Thread(() -> {
             downloadListAbo.refreshAbos();
             downloadListAbo.searchForAbos();
-            if (progData.downloadList.getSize() == count) {
+            if (getSize() == count) {
                 // dann wurden evtl. nur zurückgestellte Downloads wieder aktiviert
                 setDownloadsChanged();
             }

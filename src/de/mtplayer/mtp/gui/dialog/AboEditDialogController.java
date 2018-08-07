@@ -18,15 +18,14 @@ package de.mtplayer.mtp.gui.dialog;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.controller.data.abo.Abo;
 import de.mtplayer.mtp.controller.data.abo.AboXml;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
-import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.dialog.PDialogExtra;
+import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.pRange.PRangeBox;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -294,10 +293,8 @@ public class AboEditDialogController extends PDialogExtra {
                 g.setHgap(10);
                 g.setVgap(10);
 
-                final Button btnHelpRes = new Button("");
-                btnHelpRes.setGraphic(new Icons().ICON_BUTTON_HELP);
-                btnHelpRes.setOnAction(a -> PAlert.showHelpAlert("Auflösung",
-                        HelpText.ABO_RES));
+                final Button btnHelpRes = new PButton().helpButton("Auflösung",
+                        HelpText.ABO_RES);
 
                 g.add(rbHd, 0, 0);
                 g.add(btnHelpRes, 1, 0);
