@@ -83,8 +83,8 @@ public class PathPane {
 
     private GridPane addPlayer(PLAYER player) {
         GridPane gridPane = new GridPane();
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
+        gridPane.setHgap(15);
+        gridPane.setVgap(15);
 
         Text text;
         PHyperlink hyperlink;

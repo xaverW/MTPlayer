@@ -67,7 +67,7 @@ public class StartDialogController extends PDialog {
     private State aktState = State.START_1;
 
     public StartDialogController() {
-        super("Starteinstellungen", true);
+        super(null, null, "Starteinstellungen", true);
 
         this.progData = ProgData.getInstance();
         init(rootPane, true);

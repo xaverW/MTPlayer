@@ -33,8 +33,8 @@ public class UpdatePane {
 
     public TitledPane makeStart() {
         final GridPane gridPane = new GridPane();
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
+        gridPane.setHgap(15);
+        gridPane.setVgap(15);
         gridPane.setPadding(new Insets(20));
 
         TitledPane tpConfig = new TitledPane("Erster Programmstart", gridPane);
@@ -42,7 +42,6 @@ public class UpdatePane {
         //einmal am Tag Update suchen
         final PToggleSwitch tglSearch = new PToggleSwitch("einmal am Tag nach einer neuen Programmversion suchen");
         tglSearch.selectedProperty().bindBidirectional(updateProp);
-        GridPane.setFillWidth(tglSearch, false);
         gridPane.add(tglSearch, 0, 0);
 
         final Button btnHelp = new PButton().helpButton(StartDialogController.stage, "Programmupdate suchen",

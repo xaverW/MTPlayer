@@ -48,8 +48,7 @@ import static java.lang.Thread.sleep;
 public class MTPlayer extends Application {
 
     private Stage primaryStage;
-    private MTPlayerController root;
-
+    private MTPlayerController mtPlayerController;
 
     private static final String ICON_NAME = "Icon.png";
     private static final String ICON_PATH = "/de/mtplayer/mtp/res/";
@@ -57,7 +56,6 @@ public class MTPlayer extends Application {
     private static final int ICON_HEIGHT = 58;
 
     private static final String LOG_TEXT_PROGRAMSTART = "Dauer Programmstart";
-
     private static final String TITLE_TEXT_PROGRAM_VERSION_IS_UPTODATE = "Programmversion ist aktuell";
     private static final String TITLE_TEXT_PROGRAMMUPDATE_EXISTS = "Ein Programmupdate ist verfügbar";
 
@@ -92,15 +90,12 @@ public class MTPlayer extends Application {
     }
 
     private void loadData() {
-
         if (!progStart.loadAll()) {
-
             Duration.staticPing("Erster Start");
 
             // einmal ein Muster anlegen, für Linux ist es bereits aktiv!
             progData.replaceList.init();
 
-            // damit die stage passt
             StartDialogController startDialogController = new StartDialogController();
             if (!startDialogController.isOk()) {
                 // dann jetzt beenden -> Thüss
@@ -127,9 +122,9 @@ public class MTPlayer extends Application {
 
     private void initRootLayout() {
         try {
-            root = new MTPlayerController();
-            progData.mtPlayerController = root;
-            scene = new Scene(root,
+            mtPlayerController = new MTPlayerController();
+            progData.mtPlayerController = mtPlayerController;
+            scene = new Scene(mtPlayerController,
                     GuiSize.getWidth(ProgConfig.SYSTEM_SIZE_GUI.getStringProperty()),
                     GuiSize.getHeight(ProgConfig.SYSTEM_SIZE_GUI.getStringProperty()));
 
@@ -142,7 +137,9 @@ public class MTPlayer extends Application {
                 new ProgQuit().quit(true, false);
             });
 
-            GuiSize.setPos(ProgConfig.SYSTEM_SIZE_GUI.getStringProperty(), primaryStage);
+            if (!GuiSize.setPos(ProgConfig.SYSTEM_SIZE_GUI.getStringProperty(), primaryStage)) {
+                primaryStage.centerOnScreen();
+            }
             primaryStage.show();
 
         } catch (final Exception e) {

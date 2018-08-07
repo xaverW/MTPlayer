@@ -37,8 +37,8 @@ public class DownPathPane {
     public TitledPane makePath() {
 
         GridPane gridPane = new GridPane();
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
+        gridPane.setHgap(15);
+        gridPane.setVgap(15);
         gridPane.setPadding(new Insets(20));
 
         TitledPane tpConfig = new TitledPane("Zielverzeichnis", gridPane);
