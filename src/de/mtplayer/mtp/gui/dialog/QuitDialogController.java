@@ -39,7 +39,7 @@ public class QuitDialogController extends PDialog {
     boolean canQuit = false;
 
     public QuitDialogController(ProgData progData) {
-        super("", null,
+        super(null,
                 "Programm beenden", true);
 
         this.progData = progData;

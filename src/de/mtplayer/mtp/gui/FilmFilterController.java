@@ -520,7 +520,6 @@ public class FilmFilterController extends FilterController {
 
     private void editFilter() {
         final FilmFilterEditDialog editFilterDialog = new FilmFilterEditDialog(progData);
-        editFilterDialog.init();
     }
 
 }

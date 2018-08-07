@@ -45,7 +45,7 @@ public class ImportSetDialogController extends PDialog {
     private ScrollPane pathPane, setPane;
 
     public ImportSetDialogController(ProgData progData) {
-        super("", ProgConfig.CONFIG_DIALOG_IMPORT_SET_SIZE.getStringProperty(),
+        super(ProgConfig.CONFIG_DIALOG_IMPORT_SET_SIZE.getStringProperty(),
                 "Set importieren", true);
 
         this.progData = progData;

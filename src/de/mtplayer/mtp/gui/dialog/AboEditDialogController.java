@@ -67,7 +67,7 @@ public class AboEditDialogController extends PDialogExtra {
     private ProgData progData;
 
     public AboEditDialogController(ProgData progData, Abo abo) {
-        super(null, ProgConfig.ABO_DIALOG_EDIT_SIZE.getStringProperty(),
+        super(ProgConfig.ABO_DIALOG_EDIT_SIZE.getStringProperty(),
                 "Abo ändern", true);
 
         this.progData = progData;
@@ -80,7 +80,7 @@ public class AboEditDialogController extends PDialogExtra {
     }
 
     public AboEditDialogController(ProgData progData, ObservableList<Abo> lAbo) {
-        super(null, ProgConfig.ABO_DIALOG_EDIT_SIZE.getStringProperty(),
+        super(ProgConfig.ABO_DIALOG_EDIT_SIZE.getStringProperty(),
                 "Abo ändern", true);
         this.lAbo = lAbo;
         this.progData = progData;

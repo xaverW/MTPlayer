@@ -38,7 +38,7 @@ public class NewSetDialogController extends PDialog {
     boolean askAgain = true;
 
     public NewSetDialogController(ProgData progData) {
-        super("", null,
+        super(null,
                 "Das Standardset wurde aktualisiert", true);
 
         this.progData = progData;

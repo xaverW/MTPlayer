@@ -17,6 +17,7 @@
 package de.mtplayer.mtp.controller.data.film;
 
 import de.mtplayer.mtp.controller.config.ProgConst;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.tools.filmListFilter.FilmlistBlackFilter;
 import de.p2tools.p2Lib.tools.log.Duration;
@@ -327,6 +328,11 @@ public class Filmlist extends SimpleListProperty<Film> {
      * @return true if too old or if the list is empty.
      */
     public synchronized boolean isTooOld() {
+        if (ProgData.debug) {
+            // im Debugmodus nie automatisch laden
+            return false;
+        }
+
         return (isEmpty()) || (isOlderThan(ProgConst.ALTER_FILMLISTE_SEKUNDEN_FUER_AUTOUPDATE));
     }
 

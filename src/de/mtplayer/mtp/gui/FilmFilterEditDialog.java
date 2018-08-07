@@ -35,8 +35,7 @@ public class FilmFilterEditDialog extends PDialog {
     final VBox vbox;
 
     public FilmFilterEditDialog(ProgData progData) {
-        super("", null,
-                "Filter ein- und ausschalten", true);
+        super(null, "Filter ein- und ausschalten", true);
 
         this.progData = progData;
         vbox = new VBox();

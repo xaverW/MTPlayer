@@ -40,7 +40,7 @@ public class ConfigDialogController extends PDialog {
     private final ProgData progData;
 
     public ConfigDialogController() {
-        super(null, ProgConfig.CONFIG_DIALOG_SIZE.getStringProperty(), "Einstellungen", true);
+        super(ProgConfig.CONFIG_DIALOG_SIZE.getStringProperty(), "Einstellungen", true);
 
         VBox vBox = new VBox();
         vBox.setPadding(new Insets(10));
@@ -82,7 +82,6 @@ public class ConfigDialogController extends PDialog {
 
     private void initPanel() {
         try {
-
             AnchorPane configPane = new ConfigPaneController();
             Tab tab = new Tab("Allgemein");
             tab.setClosable(false);

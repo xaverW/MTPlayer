@@ -43,7 +43,7 @@ public class ResetDialogController extends PDialog {
     final VBox vbox;
 
     public ResetDialogController(ProgData progData) {
-        super("", null,
+        super(null,
                 "Programm zurücksetzen", true);
 
         this.progData = progData;

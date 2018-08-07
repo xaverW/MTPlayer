@@ -76,7 +76,7 @@ public class DownloadEditDialogController extends PDialogExtra {
     private final ProgData progData;
 
     public DownloadEditDialogController(ProgData progData, Download download, boolean isStarted) {
-        super(null, ProgConfig.DOWNLOAD_DIALOG_EDIT_SIZE.getStringProperty(),
+        super(ProgConfig.DOWNLOAD_DIALOG_EDIT_SIZE.getStringProperty(),
                 "Download ändern", true);
 
         this.progData = progData;
