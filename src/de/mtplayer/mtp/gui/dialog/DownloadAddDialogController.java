@@ -276,7 +276,7 @@ public class DownloadAddDialogController extends PDialogExtra {
 
         gridPane.add(lblSet, 0, ++row);
         cbSet.setMaxWidth(Double.MAX_VALUE);
-        gridPane.add(cbSet, 1, row);
+        gridPane.add(cbSet, 1, row, 3, 1);
 
         gridPane.add(new Label("Auflösung:"), 0, ++row);
         hBoxSize.setSpacing(20);

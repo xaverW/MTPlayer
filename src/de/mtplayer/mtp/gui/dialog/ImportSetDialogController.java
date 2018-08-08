@@ -87,11 +87,11 @@ public class ImportSetDialogController extends PDialog {
         pathPane.setFitToHeight(true);
         pathPane.setFitToWidth(true);
 
-        TitledPane tpDownPath = new DownPathPane().makePath();
+        TitledPane tpDownPath = new DownPathPane(progData.primaryStage).makePath();
         tpDownPath.setMaxHeight(Double.MAX_VALUE);
         tpDownPath.setCollapsible(false);
 
-        TitledPane tpPath = new PathPane().makePath();
+        TitledPane tpPath = new PathPane(progData.primaryStage).makePath();
         tpPath.setMaxHeight(Double.MAX_VALUE);
         tpPath.setCollapsible(false);
 
@@ -106,7 +106,7 @@ public class ImportSetDialogController extends PDialog {
         setPane.setFitToHeight(true);
         setPane.setFitToWidth(true);
 
-        AnchorPane setP = new SetPaneController();
+        AnchorPane setP = new SetPaneController(PConst.primaryStage);
         setP.setMaxWidth(Double.MAX_VALUE);
         setP.setMaxHeight(Double.MAX_VALUE);
         setPane.setContent(setP);

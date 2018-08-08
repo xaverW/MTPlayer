@@ -20,13 +20,14 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.guiTools.PButton;
+import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Insets;
-import javafx.geometry.VPos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -54,8 +55,10 @@ public class BlackListPaneController extends AnchorPane {
     private final int SIZE_MAX = 100;
     private final int FILTER_DAYS_MAX = 150;
 
+    private final Stage stage;
 
-    public BlackListPaneController() {
+    public BlackListPaneController(Stage stage) {
+        this.stage = stage;
         progData = ProgData.getInstance();
 
         cbxAccordion.selectedProperty().bindBidirectional(accordionProp);
@@ -95,7 +98,7 @@ public class BlackListPaneController extends AnchorPane {
     private Collection<TitledPane> createPanes() {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
         makeBlack(result);
-        new BlackPane().makeBlackTable(result);
+        new BlackPane(stage).makeBlackTable(result);
         return result;
     }
 
@@ -103,77 +106,65 @@ public class BlackListPaneController extends AnchorPane {
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
         gridPane.setVgap(15);
-        gridPane.setPadding(new Insets(20, 20, 20, 20));
+        gridPane.setPadding(new Insets(20));
 
         TitledPane tpConfig = new TitledPane("Blacklist allgemein", gridPane);
         result.add(tpConfig);
 
         final PToggleSwitch tglAbo = new PToggleSwitch("die Blacklist beim Suchen der Abos berücksichtigen");
-        tglAbo.setMaxWidth(Double.MAX_VALUE);
         tglAbo.selectedProperty().bindBidirectional(propAbo);
 
-        final Button btnHelp = new PButton().helpButton("Blacklist",
+        final Button btnHelp = new PButton().helpButton(stage, "Blacklist",
                 HelpText.BLACKLIST_ABO);
 
 
         final PToggleSwitch tglFuture = new PToggleSwitch("Filme mit Datum in der Zukunft nicht anzeigen");
-        tglFuture.setMaxWidth(Double.MAX_VALUE);
         tglFuture.selectedProperty().bindBidirectional(propFuture);
 
-        final Button btnHelpFuture = new PButton().helpButton("Blacklist",
+        final Button btnHelpFuture = new PButton().helpButton(stage, "Blacklist",
                 HelpText.BLACKLIST_FUTURE);
 
 
         final PToggleSwitch tglGeo = new PToggleSwitch("Filme, die per Geoblocking gesperrt sind, nicht anzeigen");
-        tglGeo.setMaxWidth(Double.MAX_VALUE);
         tglGeo.selectedProperty().bindBidirectional(propGeo);
 
-        final Button btnHelpGeo = new PButton().helpButton("Blacklist",
+        final Button btnHelpGeo = new PButton().helpButton(stage, "Blacklist",
                 HelpText.BLACKLIST_GEO);
 
 
         initDays();
 
-        final Button btnHelpSize = new PButton().helpButton("Blacklist",
+        final Button btnHelpSize = new PButton().helpButton(stage, "Blacklist",
                 HelpText.BLACKLIST_SIZE);
 
-
-        final Button btnHelpDays = new PButton().helpButton("Blacklist",
+        final Button btnHelpDays = new PButton().helpButton(stage, "Blacklist",
                 HelpText.BLACKLIST_DAYS);
 
 
-        gridPane.add(tglAbo, 0, 0);
-        gridPane.add(btnHelp, 2, 0);
+        int row = 0;
+        gridPane.add(tglAbo, 0, row);
+        gridPane.add(btnHelp, 2, row);
+
+        gridPane.add(tglFuture, 0, ++row);
+        gridPane.add(btnHelpFuture, 2, row);
+
+        gridPane.add(tglGeo, 0, ++row);
+        gridPane.add(btnHelpGeo, 2, row);
 
 
-        gridPane.add(tglFuture, 0, 1);
-        gridPane.add(btnHelpFuture, 2, 1);
-        gridPane.add(tglGeo, 0, 2);
-        gridPane.add(btnHelpGeo, 2, 2);
+        gridPane.add(new Label(" "), 0, ++row);
+        gridPane.add(new Label("kurze Filme laden:"), 0, ++row);
+        gridPane.add(slSize, 0, ++row);
+        gridPane.add(lblSize, 1, row);
+        gridPane.add(btnHelpSize, 2, row);
 
-        VBox vBox = new VBox();
-        vBox.setSpacing(10);
-        vBox.getChildren().addAll(new Label("kurze Filme laden:"), slSize);
-        gridPane.add(vBox, 0, 3);
-        GridPane.setValignment(lblSize, VPos.BOTTOM);
-        gridPane.add(lblSize, 1, 3);
+        gridPane.add(new Label(" "), 0, ++row);
+        gridPane.add(new Label("nur aktuelle Filme laden:"), 0, ++row);
+        gridPane.add(slDays, 0, ++row);
+        gridPane.add(lblDays, 1, row);
+        gridPane.add(btnHelpDays, 2, row);
 
-        gridPane.add(btnHelpSize, 2, 3);
-
-        vBox = new VBox();
-        vBox.setSpacing(10);
-        vBox.getChildren().addAll(new Label("nur aktuelle Filme laden:"), slDays);
-        gridPane.add(vBox, 0, 4);
-        GridPane.setValignment(lblDays, VPos.BOTTOM);
-        gridPane.add(lblDays, 1, 4);
-
-        gridPane.add(btnHelpDays, 2, 4);
-
-        final ColumnConstraints ccTxt = new ColumnConstraints();
-        ccTxt.setFillWidth(true);
-        ccTxt.setMinWidth(Region.USE_COMPUTED_SIZE);
-        ccTxt.setHgrow(Priority.ALWAYS);
-        gridPane.getColumnConstraints().addAll(new ColumnConstraints(), ccTxt);
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(), PColumnConstraints.getCcComputedSizeAndHgrow());
     }
 
     private void initDays() {

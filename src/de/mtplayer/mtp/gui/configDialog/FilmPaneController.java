@@ -22,15 +22,16 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.guiTools.PButton;
+import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.VPos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -51,8 +52,10 @@ public class FilmPaneController extends AnchorPane {
     IntegerProperty propDay = ProgConfig.SYSTEM_NUM_DAYS_FILMLIST.getIntegerProperty();
     BooleanProperty propLoad = ProgConfig.SYSTEM_LOAD_FILMS_ON_START.getBooleanProperty();
     StringProperty propUrl = ProgConfig.SYSTEM_LOAD_FILMS_MANUALLY.getStringProperty();
+    private final Stage stage;
 
-    public FilmPaneController() {
+    public FilmPaneController(Stage stage) {
+        this.stage = stage;
         progData = ProgData.getInstance();
 
         cbxAccordion.selectedProperty().bindBidirectional(accordionProp);
@@ -101,51 +104,44 @@ public class FilmPaneController extends AnchorPane {
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
         gridPane.setVgap(15);
-        gridPane.setPadding(new Insets(20, 20, 20, 20));
+        gridPane.setPadding(new Insets(20));
 
         TitledPane tpConfig = new TitledPane("Filme laden", gridPane);
         result.add(tpConfig);
 
         initDays();
 
-        final Button btnHelpDays = new PButton().helpButton("nur Filme der letzten Tage laden",
+        final PToggleSwitch tglLoad = new PToggleSwitch("Filmliste beim Programmstart laden");
+        tglLoad.setHGrow(false);
+        tglLoad.selectedProperty().bindBidirectional(propLoad);
+        HBox hBoxTgl = new HBox(10);
+        hBoxTgl.getChildren().add(tglLoad);
+
+        final Button btnHelpLoad = new PButton().helpButton(stage, "Filmliste laden",
+                HelpText.LOAD_FILMLIST_PROGRAMSTART);
+        GridPane.setHalignment(btnHelpLoad, HPos.RIGHT);
+
+        HBox hBoxLoad = new HBox(10);
+        hBoxLoad.getChildren().addAll(new Label("Filme laden:"), slDays, lblDays);
+
+        final Button btnHelpDays = new PButton().helpButton(stage, "nur Filme der letzten Tage laden",
                 HelpText.LOAD_FILM_ONLY_DAYS);
+        GridPane.setHalignment(btnHelpDays, HPos.RIGHT);
 
         Button btnLoad = new Button("Filmliste jetzt laden");
         btnLoad.setOnAction(event -> {
             progData.loadFilmlist.loadFilmlist("", true);
         });
 
-        final PToggleSwitch tglLoad = new PToggleSwitch("Filmliste beim Programmstart laden");
-        tglLoad.selectedProperty().bindBidirectional(propLoad);
+        int row = 0;
+        gridPane.add(hBoxTgl, 0, row);
+        gridPane.add(btnHelpLoad, 1, row);
+        gridPane.add(new Label(" "), 0, ++row);
 
-        final Button btnHelpLoad = new PButton().helpButton("Filmliste laden",
-                HelpText.LOAD_FILMLIST_PROGRAMSTART);
-
-
-        gridPane.add(tglLoad, 0, 0);
-        GridPane.setHalignment(btnHelpLoad, HPos.RIGHT);
-        gridPane.add(btnHelpLoad, 2, 0);
-
-
-        VBox vBox = new VBox();
-        vBox.setSpacing(10);
-        vBox.getChildren().addAll(new Label("nur aktuelle Filme laden:"), slDays);
-        gridPane.add(vBox, 0, 1);
-        GridPane.setValignment(lblDays, VPos.BOTTOM);
-        gridPane.add(lblDays, 1, 1);
-        GridPane.setHalignment(btnHelpDays, HPos.RIGHT);
-        gridPane.add(btnHelpDays, 2, 1);
-
-
-        GridPane.setMargin(btnLoad, new Insets(20, 0, 0, 0));
-        gridPane.add(btnLoad, 0, 2);
-
-        final ColumnConstraints ccTxt = new ColumnConstraints();
-        ccTxt.setFillWidth(true);
-        ccTxt.setMinWidth(Region.USE_COMPUTED_SIZE);
-        ccTxt.setHgrow(Priority.ALWAYS);
-        gridPane.getColumnConstraints().addAll(new ColumnConstraints(), ccTxt);
+        gridPane.add(hBoxLoad, 0, ++row);
+        gridPane.add(btnHelpDays, 1, row);
+        gridPane.add(btnLoad, 0, ++row);
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(), PColumnConstraints.getCcPrefSize());
     }
 
 
@@ -171,7 +167,7 @@ public class FilmPaneController extends AnchorPane {
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
         gridPane.setVgap(15);
-        gridPane.setPadding(new Insets(20, 20, 20, 20));
+        gridPane.setPadding(new Insets(20));
 
         TitledPane tpConfig = new TitledPane("Filmliste manuell auswählen", gridPane);
         result.add(tpConfig);
@@ -186,29 +182,23 @@ public class FilmPaneController extends AnchorPane {
         btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
         btnFile.setTooltip(new Tooltip("Eine Filmliste die geladen werden soll, manuell auswählen."));
 
-        final Button btnHelp = new PButton().helpButton("Filmliste laden",
+        final Button btnHelp = new PButton().helpButton(stage, "Filmliste laden",
                 HelpText.LOAD_FILMLIST_MANUAL);
 
         Button btnLoad = new Button("Filmliste jetzt laden");
         btnLoad.disableProperty().bind(txtUrl.textProperty().isEmpty());
         btnLoad.setOnAction(event -> progData.loadFilmlist.loadFilmlist(txtUrl.getText()));
 
-        GridPane.setMargin(btnLoad, new Insets(20, 0, 0, 0));
+        int row = 0;
+        gridPane.add(new Label("Adresse (Datei oder URL) zum Laden der Filmliste:"), 0, row, 2, 1);
 
-        gridPane.add(new Label("URL/Datei:"), 0, 0);
-        gridPane.add(txtUrl, 1, 0);
+        gridPane.add(txtUrl, 0, ++row);
+        gridPane.add(btnFile, 1, row);
+        gridPane.add(btnHelp, 2, row);
 
-        gridPane.add(btnFile, 2, 0);
-        gridPane.add(btnHelp, 3, 0);
+        gridPane.add(btnLoad, 0, ++row);
 
-        GridPane.setMargin(btnLoad, new Insets(20, 0, 0, 0));
-        gridPane.add(btnLoad, 0, 1, 3, 1);
-
-        final ColumnConstraints ccTxt = new ColumnConstraints();
-        ccTxt.setFillWidth(true);
-        ccTxt.setMinWidth(Region.USE_COMPUTED_SIZE);
-        ccTxt.setHgrow(Priority.ALWAYS);
-        gridPane.getColumnConstraints().addAll(new ColumnConstraints(), ccTxt);
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow());
     }
 
 }

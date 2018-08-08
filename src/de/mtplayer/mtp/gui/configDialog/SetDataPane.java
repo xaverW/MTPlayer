@@ -24,14 +24,16 @@ import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.guiTools.PButton;
+import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.util.Collection;
 
@@ -62,29 +64,24 @@ public class SetDataPane {
 
     private SetData setData = null;
     private Collection<TitledPane> result;
-    private ProgramPane programPane = new ProgramPane();
-    private final ColumnConstraints ccTxt = new ColumnConstraints();
-    private ChangeListener cl;
+    private ProgramPane programPane;
+    private ChangeListener changeListener;
+    private final Stage stage;
+
+    public SetDataPane(Stage stage) {
+        this.stage = stage;
+        programPane = new ProgramPane(stage);
+    }
 
     public void makeSetPane(Collection<TitledPane> result) {
         this.result = result;
-
-        ccTxt.setFillWidth(true);
-        ccTxt.setMinWidth(Region.USE_COMPUTED_SIZE);
-        ccTxt.setHgrow(Priority.ALWAYS);
 
         makeConfig(result);
         makeDest(result);
         makeDownload(result);
         programPane.makeProgs(result);
 
-        cl = new ChangeListener() {
-            @Override
-            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                ProgData.getInstance().setList.setListChanged();
-            }
-        };
-
+        changeListener = (observable, oldValue, newValue) -> ProgData.getInstance().setList.setListChanged();
         setDisable();
     }
 
@@ -94,7 +91,7 @@ public class SetDataPane {
         this.setData = setData;
         if (setData != null) {
             txtName.textProperty().bindBidirectional(setData.nameProperty());
-            txtName.textProperty().addListener(cl);
+            txtName.textProperty().addListener(changeListener);
             txtDescription.textProperty().bindBidirectional(setData.descriptionProperty());
             tglSave.selectedProperty().bindBidirectional(setData.saveProperty());
             tglButton.selectedProperty().bindBidirectional(setData.buttonProperty());
@@ -133,7 +130,7 @@ public class SetDataPane {
     private void unBindProgData() {
         if (setData != null) {
             txtName.textProperty().unbindBidirectional(setData.nameProperty());
-            txtName.textProperty().removeListener(cl);
+            txtName.textProperty().removeListener(changeListener);
             txtDescription.textProperty().unbindBidirectional(setData.descriptionProperty());
             tglSave.selectedProperty().unbindBidirectional(setData.saveProperty());
             tglButton.selectedProperty().unbindBidirectional(setData.buttonProperty());
@@ -161,20 +158,18 @@ public class SetDataPane {
     }
 
     private void makeConfig(Collection<TitledPane> result) {
-
-        VBox vBox = new VBox();
+        VBox vBox = new VBox(10);
         vBox.setFillWidth(true);
-        vBox.setSpacing(10);
-        vBox.setPadding(new Insets(10, 10, 10, 10));
+        vBox.setPadding(new Insets(10));
 
         TitledPane tpConfig = new TitledPane("Set Einstellungen", vBox);
         result.add(tpConfig);
 
         // Name, Beschreibung
         GridPane gridPane = new GridPane();
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(20, 20, 20, 20));
+        gridPane.setHgap(15);
+        gridPane.setVgap(15);
+        gridPane.setPadding(new Insets(20));
         vBox.getChildren().add(gridPane);
 
         gridPane.add(new Label("Set Name:"), 0, 0);
@@ -182,18 +177,18 @@ public class SetDataPane {
 
         gridPane.add(new Label("Beschreibung:"), 0, 1);
         gridPane.add(txtDescription, 1, 1);
-        gridPane.getColumnConstraints().addAll(new ColumnConstraints(), ccTxt);
+
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcComputedSizeAndHgrow());
+
 
         //Speichern, Button, Abo
         gridPane = new GridPane();
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(20, 20, 20, 20));
+        gridPane.setHgap(15);
+        gridPane.setVgap(15);
+        gridPane.setPadding(new Insets(20));
         vBox.getChildren().add(gridPane);
 
-        tglSave.setMaxWidth(Double.MAX_VALUE);
-        tglButton.setMaxWidth(Double.MAX_VALUE);
-        tglAbo.setMaxWidth(Double.MAX_VALUE);
         gridPane.add(tglSave, 0, 0);
         gridPane.add(tglButton, 0, 1);
         gridPane.add(tglAbo, 0, 2);
@@ -201,82 +196,83 @@ public class SetDataPane {
 
         //Farbe
         gridPane = new GridPane();
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(20, 20, 20, 20));
+        gridPane.setHgap(15);
+        gridPane.setVgap(15);
+        gridPane.setPadding(new Insets(20));
         vBox.getChildren().add(gridPane);
 
-        gridPane.add(new Label("Farbe des Button:"), 0, 0);
-        gridPane.add(colorPicker, 1, 0);
         Button btnResetColor = new Button("Standardfarbe");
         btnResetColor.setOnAction(event -> {
             setData.setColor(SetData.RESET_COLOR);
         });
-        gridPane.add(btnResetColor, 2, 0);
-        final Button btnHelpColor = new PButton().helpButton("Schriftfarbe auswählen",
+        final Button btnHelpColor = new PButton().helpButton(stage, "Schriftfarbe auswählen",
                 HelpText.SETDATA_RESET_COLOR);
+
+        gridPane.add(new Label("Farbe des Button:"), 0, 0);
+        gridPane.add(colorPicker, 1, 0);
+        gridPane.add(btnResetColor, 2, 0);
         gridPane.add(btnHelpColor, 3, 0);
 
-        gridPane.getColumnConstraints().addAll(new ColumnConstraints(), new ColumnConstraints(), ccTxt);
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcPrefSize(), PColumnConstraints.getCcComputedSizeAndHgrow());
     }
 
     private void makeDest(Collection<TitledPane> result) {
-
-        VBox vBox = new VBox();
+        VBox vBox = new VBox(10);
         vBox.setFillWidth(true);
-        vBox.setSpacing(10);
-        vBox.setPadding(new Insets(10, 10, 10, 10));
+        vBox.setPadding(new Insets(10));
 
         TitledPane tpConfig = new TitledPane("Speicherziel", vBox);
         result.add(tpConfig);
 
         // Unterordner
         GridPane gridPane = new GridPane();
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(20, 20, 20, 20));
+        gridPane.setHgap(15);
+        gridPane.setVgap(15);
+        gridPane.setPadding(new Insets(20));
         vBox.getChildren().add(gridPane);
 
-        gridPane.add(tglSubdir, 0, 0);
-        final Button btnHelpColor = new PButton().helpButton("Unterordner anlegen",
+        final Button btnHelpColor = new PButton().helpButton(stage, "Unterordner anlegen",
                 HelpText.SETDATA_SUBDIR);
-
         GridPane.setHalignment(btnHelpColor, HPos.RIGHT);
+
+        gridPane.add(tglSubdir, 0, 0);
         gridPane.add(btnHelpColor, 1, 0);
-        gridPane.getColumnConstraints().addAll(new ColumnConstraints(), ccTxt);
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcComputedSizeAndHgrow());
 
         // path/name
         gridPane = new GridPane();
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(20, 20, 20, 20));
+        gridPane.setHgap(15);
+        gridPane.setVgap(15);
+        gridPane.setPadding(new Insets(20));
         vBox.getChildren().add(gridPane);
+
+
+        final Button btnFile = new Button();
+        btnFile.setOnAction(event -> DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtDestPath));
+        btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
+        btnFile.setTooltip(new Tooltip("Einen Ordner zum Speichern der Filme auswählen."));
+
 
         gridPane.add(new Label("Zielpfad:"), 0, 0);
         gridPane.add(txtDestPath, 1, 0);
-
-        final Button btnFile = new Button();
-        btnFile.setOnAction(event -> {
-            DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtDestPath);
-        });
-        btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
-        btnFile.setTooltip(new Tooltip("Einen Ordner zum Speichern der Filme auswählen."));
         gridPane.add(btnFile, 2, 0);
 
         gridPane.add(new Label("Zieldateiname:"), 0, 1);
         gridPane.add(txtDestName, 1, 1);
 
-        gridPane.getColumnConstraints().addAll(new ColumnConstraints(), ccTxt);
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcComputedSizeAndHgrow());
 
 
         // cut
         gridPane = new GridPane();
         gridPane.setHgap(25);
-        gridPane.setVgap(25);
-        gridPane.setPadding(new Insets(20, 20, 20, 20));
+        gridPane.setVgap(15);
+        gridPane.setPadding(new Insets(20));
         vBox.getChildren().add(gridPane);
 
-        Label lblSizeAll = new Label();
         slCut.setMin(0);
         slCut.setMax(ProgConst.LAENGE_DATEINAME_MAX);
         slCut.setShowTickLabels(true);
@@ -285,18 +281,12 @@ public class SetDataPane {
         slCut.setBlockIncrement(10);
         slCut.setSnapToTicks(true);
 
+        Label lblTxtAll = new Label("Länge des ganzen Dateinamen:");
+        Label lblSizeAll = new Label();
         slCut.valueProperty().addListener((observable, oldValue, newValue) -> setValueSlider(slCut, lblSizeAll, ""));
         setValueSlider(slCut, lblSizeAll, "");
 
-        Label lblTxtAll = new Label("Länge des ganzen Dateinamen:");
-        GridPane.setValignment(lblTxtAll, VPos.CENTER);
-        gridPane.add(lblTxtAll, 0, 0);
-        gridPane.add(slCut, 1, 0);
-        GridPane.setValignment(lblSizeAll, VPos.CENTER);
-        gridPane.add(lblSizeAll, 2, 0);
 
-
-        Label lblSizeField = new Label();
         slCutField.setMin(0);
         slCutField.setMax(ProgConst.LAENGE_FELD_MAX);
         slCutField.setShowTickLabels(true);
@@ -305,55 +295,59 @@ public class SetDataPane {
         slCutField.setBlockIncrement(10);
         slCutField.setSnapToTicks(true);
 
+        Label lblTxtField = new Label("Länge einzelner Felder:");
+        Label lblSizeField = new Label();
         slCutField.valueProperty().addListener((observable, oldValue, newValue) -> setValueSlider(slCutField, lblSizeField, ""));
         setValueSlider(slCutField, lblSizeField, "");
 
-        Label lblTxtField = new Label("Länge einzelner Felder:");
+        GridPane.setValignment(lblTxtAll, VPos.CENTER);
+        GridPane.setValignment(lblSizeAll, VPos.CENTER);
+        GridPane.setValignment(slCutField, VPos.CENTER);
         GridPane.setValignment(lblTxtField, VPos.CENTER);
+        GridPane.setValignment(lblSizeField, VPos.CENTER);
+        GridPane.setValignment(slCutField, VPos.CENTER);
+
+        gridPane.add(lblTxtAll, 0, 0);
+        gridPane.add(slCut, 1, 0);
+        gridPane.add(lblSizeAll, 2, 0);
+
         gridPane.add(lblTxtField, 0, 1);
         gridPane.add(slCutField, 1, 1);
-        GridPane.setValignment(lblSizeField, VPos.CENTER);
         gridPane.add(lblSizeField, 2, 1);
-
     }
 
     private void makeDownload(Collection<TitledPane> result) {
-
-        VBox vBox = new VBox();
+        VBox vBox = new VBox(10);
         vBox.setFillWidth(true);
-        vBox.setSpacing(10);
-        vBox.setPadding(new Insets(10, 10, 10, 10));
+        vBox.setPadding(new Insets(10));
 
         TitledPane tpConfig = new TitledPane("Download", vBox);
         result.add(tpConfig);
 
         // praefix/suffix
         GridPane gridPane = new GridPane();
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(20, 20, 20, 20));
+        gridPane.setHgap(15);
+        gridPane.setVgap(15);
+        gridPane.setPadding(new Insets(20));
         vBox.getChildren().add(gridPane);
 
-        final Button btnHelpPraefix = new PButton().helpButton("Direkt speichern",
+        final Button btnHelpPraefix = new PButton().helpButton(stage, "Direkt speichern",
                 HelpText.SETDATA_PRAEFIX);
-
+        GridPane.setHalignment(btnHelpPraefix, HPos.RIGHT);
         Label lbl = new Label("direkt Speichern (vom Programm selbst):");
-        lbl.setMaxWidth(Double.MAX_VALUE);
 
-        HBox hBox1 = new HBox();
-        hBox1.setMaxWidth(Double.MAX_VALUE);
-        hBox1.getChildren().addAll(lbl, btnHelpPraefix);
-        HBox.setHgrow(lbl, Priority.ALWAYS);
+        int row = 0;
+        gridPane.add(lbl, 0, row, 2, 1);
+        gridPane.add(btnHelpPraefix, 2, row);
 
-        gridPane.add(hBox1, 0, 0, 2, 1);
+        gridPane.add(new Label("Präfix (z.B. http):"), 0, ++row);
+        gridPane.add(txtPraefix, 1, row, 2, 1);
 
-        gridPane.add(new Label("Präfix (z.B. http):"), 0, 1);
-        gridPane.add(txtPraefix, 1, 1);
+        gridPane.add(new Label("Suffix (z.B. mp4,mp3):"), 0, ++row);
+        gridPane.add(txtSuffix, 1, row, 2, 1);
 
-        gridPane.add(new Label("Suffix (z.B. mp4,mp3):"), 0, 2);
-        gridPane.add(txtSuffix, 1, 2);
-
-        gridPane.getColumnConstraints().addAll(new ColumnConstraints(), ccTxt);
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(), PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcComputedSizeAndHgrow());
 
         // Auflösung
         ToggleGroup tg = new ToggleGroup();
@@ -365,32 +359,30 @@ public class SetDataPane {
         rbLow.setOnAction(event -> setResolution());
 
         gridPane = new GridPane();
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(20, 20, 20, 20));
+        gridPane.setHgap(15);
+        gridPane.setVgap(15);
+        gridPane.setPadding(new Insets(20));
         vBox.getChildren().add(gridPane);
 
-        final Button btnHelpRes = new PButton().helpButton("Auflösung",
+        final Button btnHelpRes = new PButton().helpButton(stage, "Auflösung",
                 HelpText.SETDATA_RES);
+        GridPane.setHalignment(btnHelpRes, HPos.RIGHT);
 
         gridPane.add(rbHd, 0, 0);
         gridPane.add(btnHelpRes, 1, 0);
         gridPane.add(rbHeight, 0, 1);
         gridPane.add(rbLow, 0, 2);
 
-        gridPane.getColumnConstraints().addAll(ccTxt);
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcComputedSizeAndHgrow());
 
         // Infodateien
         gridPane = new GridPane();
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(20, 20, 20, 20));
-        gridPane.setMinWidth(Control.USE_PREF_SIZE);
-        gridPane.setMaxWidth(Double.MAX_VALUE);
+        gridPane.setHgap(15);
+        gridPane.setVgap(15);
+        gridPane.setPadding(new Insets(20));
         vBox.getChildren().add(gridPane);
 
-        tglInfo.setMaxWidth(Double.MAX_VALUE);
-        tglSubtitle.setMaxWidth(Double.MAX_VALUE);
         gridPane.add(tglInfo, 0, 0);
         gridPane.add(tglSubtitle, 0, 1);
     }

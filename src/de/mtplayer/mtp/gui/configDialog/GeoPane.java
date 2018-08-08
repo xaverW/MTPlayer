@@ -23,46 +23,42 @@ import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.property.BooleanProperty;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 public class GeoPane {
-    RadioButton rbDe = new RadioButton("DE - Deutschland");
-    RadioButton rbCh = new RadioButton("CH - Schweiz");
-    RadioButton rbAt = new RadioButton("AT - Österreich");
-    RadioButton rbEu = new RadioButton("EU (EUB - European Broadcasting Union");
-    RadioButton rbSonst = new RadioButton("sonst");
+    private final RadioButton rbDe = new RadioButton("DE - Deutschland");
+    private final RadioButton rbCh = new RadioButton("CH - Schweiz");
+    private final RadioButton rbAt = new RadioButton("AT - Österreich");
+    private final RadioButton rbEu = new RadioButton("EU (EUB - European Broadcasting Union");
+    private final RadioButton rbSonst = new RadioButton("sonst");
 
     BooleanProperty geoProperty = ProgConfig.SYSTEM_MARK_GEO.getBooleanProperty();
-    Stage stage = null;
+    private final Stage stage;
 
-    public TitledPane makeGeo(Stage stage) {
+    public GeoPane(Stage stage) {
         this.stage = stage;
+    }
+
+    public TitledPane makeGeo() {
         int row = 0;
 
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
         gridPane.setVgap(15);
-        gridPane.setPadding(new Insets(20, 20, 20, 20));
+        gridPane.setPadding(new Insets(20));
 
         TitledPane tpConfig = new TitledPane("Geogeblockte Filme", gridPane);
 
-        final PToggleSwitch tglGeo = new PToggleSwitch("geblockte Sendungen gelb markieren");
+        final PToggleSwitch tglGeo = new PToggleSwitch("geblockte Sendungen gelb markieren:");
         tglGeo.selectedProperty().bindBidirectional(geoProperty);
-        gridPane.add(tglGeo, 0, row);
+        HBox hBoxTgl = new HBox(10);
+        hBoxTgl.getChildren().add(tglGeo);
 
-
-        final Button btnHelpGeo = new PButton().helpButton(stage,
-                "Geogeblockte Filme",
-                HelpText.CONFIG_GEO);
-        gridPane.add(btnHelpGeo, 1, row);
-        GridPane.setHalignment(btnHelpGeo, HPos.RIGHT);
-
-        // eigener Standort angeben
-        gridPane.add(new Label("Mein Standort:"), 0, ++row);
+        final Button btnHelpGeo = new PButton().helpButton(stage, "Geogeblockte Filme", HelpText.CONFIG_GEO);
 
         ToggleGroup tg = new ToggleGroup();
         tg.getToggles().addAll(rbDe, rbCh, rbAt, rbEu, rbSonst);
@@ -98,13 +94,21 @@ public class GeoPane {
         rbSonst.setOnAction(e -> {
             ProgConfig.SYSTEM_GEO_HOME_PLACE.setValue(Film.GEO_WELT);
         });
-        gridPane.add(rbDe, 0, ++row);
-        gridPane.add(rbCh, 0, ++row);
-        gridPane.add(rbAt, 0, ++row);
-        gridPane.add(rbEu, 0, ++row);
-        gridPane.add(rbSonst, 0, ++row);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow());
+
+        gridPane.add(hBoxTgl, 0, row, 2, 1);
+        gridPane.add(btnHelpGeo, 2, row);
+        gridPane.add(new Label(" "), 0, ++row);
+        // eigener Standort angeben
+        gridPane.add(new Label("Mein Standort:"), 0, ++row);
+
+        gridPane.add(rbDe, 1, row);
+        gridPane.add(rbCh, 1, ++row);
+        gridPane.add(rbAt, 1, ++row);
+        gridPane.add(rbEu, 1, ++row);
+        gridPane.add(rbSonst, 1, ++row);
+
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(), PColumnConstraints.getCcComputedSizeAndHgrow());
 
         return tpConfig;
     }

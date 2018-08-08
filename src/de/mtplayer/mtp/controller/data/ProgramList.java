@@ -43,10 +43,10 @@ public class ProgramList extends SimpleListProperty<ProgramData> {
         return ret;
     }
 
-    public int auf(int idx, boolean auf) {
+    public int moveUp(int idx, boolean moveUp) {
         final ProgramData prog = this.remove(idx);
         int neu = idx;
-        if (auf) {
+        if (moveUp) {
             if (neu > 0) {
                 --neu;
             }

@@ -32,13 +32,14 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 
 import java.util.Collection;
 
 public class ProgramPane {
     TableView<ProgramData> tableView = new TableView<>();
     private SetData setData = null;
-    private final VBox vBox = new VBox();
+    private final VBox vBox = new VBox(10);
 
     private final GridPane gridPane = new GridPane();
     private final TextField txtName = new TextField();
@@ -50,6 +51,11 @@ public class ProgramPane {
     private final PToggleSwitch tglRestart = new PToggleSwitch("Restart:");
     private final PToggleSwitch tglDown = new PToggleSwitch("Downloadmanager: ");
     private ProgramData programData = null;
+    private final Stage stage;
+
+    public ProgramPane(Stage stage) {
+        this.stage = stage;
+    }
 
     public void setSetDate(SetData setData) {
         this.setData = setData;
@@ -58,8 +64,7 @@ public class ProgramPane {
 
     public void makeProgs(Collection<TitledPane> result) {
         vBox.setFillWidth(true);
-        vBox.setSpacing(10);
-        vBox.setPadding(new Insets(10, 10, 10, 10));
+        vBox.setPadding(new Insets(10));
 
         initTable();
         addConfigs(vBox);
@@ -99,13 +104,12 @@ public class ProgramPane {
         downManagerColumn.setCellFactory(CheckBoxTableCell.forTableColumn(downManagerColumn));
         downManagerColumn.getStyleClass().add("center");
 
-        tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+        tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         tableView.getColumns().addAll(nameColumn, destNameColumn, progColumn, switchColumn,
                 praefixColumn, suffixColumn, restartColumn, downManagerColumn);
-        tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
                 Platform.runLater(this::setActProgramData));
 
@@ -136,9 +140,9 @@ public class ProgramPane {
         Button btnUp = new Button("");
         btnUp.setGraphic(new Icons().ICON_BUTTON_MOVE_UP);
         btnUp.setOnAction(event -> {
-            int sel = getSelLine();
+            int sel = getSelectedLine();
             if (sel >= 0) {
-                int newSel = setData.getProgramList().auf(sel, true);
+                int newSel = setData.getProgramList().moveUp(sel, true);
                 tableView.getSelectionModel().clearSelection();
                 tableView.getSelectionModel().select(newSel);
             }
@@ -147,16 +151,15 @@ public class ProgramPane {
         Button btnDown = new Button("");
         btnDown.setGraphic(new Icons().ICON_BUTTON_MOVE_DOWN);
         btnDown.setOnAction(event -> {
-            int sel = getSelLine();
+            int sel = getSelectedLine();
             if (sel >= 0) {
-                int newSel = setData.getProgramList().auf(sel, false);
+                int newSel = setData.getProgramList().moveUp(sel, false);
                 tableView.getSelectionModel().clearSelection();
                 tableView.getSelectionModel().select(newSel);
             }
         });
 
-        HBox hBox = new HBox();
-        hBox.setSpacing(10);
+        HBox hBox = new HBox(10);
         hBox.getChildren().addAll(btnNew, btnDel, btnUp, btnDown);
 
         VBox.setVgrow(tableView, Priority.ALWAYS);
@@ -165,14 +168,12 @@ public class ProgramPane {
 
     private void addConfigs(VBox vBox) {
         gridPane.setStyle("-fx-background-color: #E0E0E0;");
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
+        gridPane.setHgap(15);
+        gridPane.setVgap(5);
         gridPane.setPadding(new Insets(20));
 
         final Button btnFile = new Button();
-        btnFile.setOnAction(event -> {
-            DirFileChooser.FileChooser(ProgData.getInstance().primaryStage, txtProgPath);
-        });
+        btnFile.setOnAction(event -> DirFileChooser.FileChooser(ProgData.getInstance().primaryStage, txtProgPath));
         btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
         btnFile.setTooltip(new Tooltip("Ein Programm zum verarbeiten der URL auswählen."));
 
@@ -192,6 +193,7 @@ public class ProgramPane {
         gridPane.add(txtPraefix, 1, row, 2, 1);
         gridPane.add(new Label("Suffix: "), 0, ++row);
         gridPane.add(txtSuffix, 1, row, 2, 1);
+
         gridPane.add(tglRestart, 0, ++row, 2, 1);
         gridPane.add(tglDown, 0, ++row, 2, 1);
 
@@ -232,89 +234,12 @@ public class ProgramPane {
         }
     }
 
-    private int getSelLine() {
+    private int getSelectedLine() {
         final int sel = tableView.getSelectionModel().getSelectedIndex();
         if (sel < 0) {
             PAlert.showInfoNoSelection();
         }
         return sel;
     }
-
-
-//    TableRowExpanderColumn<ProgramData> expander = new TableRowExpanderColumn<>(param -> {
-//        VBox vBoxCont = new VBox();
-//        vBoxCont.setSpacing(5);
-//        vBoxCont.setStyle("-fx-background-color: #E0E0E0;");
-//
-//        GridPane gridPane = new GridPane();
-//        gridPane.setHgap(5);
-//        gridPane.setVgap(5);
-//        gridPane.setPadding(new Insets(10, 10, 10, 10));
-//        // todo evtl besser: width gridpane an den "sichtbaren" Teil der Scrollpane binden??
-//
-//        TextField txtName = new TextField();
-//        txtName.textProperty().bindBidirectional(param.getValue().nameProperty());
-//        TextField txtDestName = new TextField();
-//        txtDestName.textProperty().bindBidirectional(param.getValue().destNameProperty());
-//
-//        TextField txtProgPath = new TextField();
-//        txtProgPath.textProperty().bindBidirectional(param.getValue().progPathProperty());
-//
-//        TextField txtProgSwitch = new TextField();
-//        txtProgSwitch.textProperty().bindBidirectional(param.getValue().progSwitchProperty());
-//
-//        TextField txtPraefix = new TextField();
-//        txtPraefix.textProperty().bindBidirectional(param.getValue().praefixProperty());
-//        TextField txtSuffix = new TextField();
-//        txtSuffix.textProperty().bindBidirectional(param.getValue().suffixProperty());
-//
-//        PToggleSwitch tglRestart = new PToggleSwitch("Restart:");
-//        tglRestart.selectedProperty().bindBidirectional(param.getValue().restartProperty());
-//        PToggleSwitch tglDown = new PToggleSwitch("Downloadmanager: ");
-//        tglDown.selectedProperty().bindBidirectional(param.getValue().downManagerProperty());
-//
-//        final Button btnFile = new Button();
-//        btnFile.setOnAction(event -> {
-//            DirFileChooser.FileChooser(ProgData.getInstance().primaryStage, txtProgPath);
-//        });
-//        btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
-//
-//
-//        gridPane.add(new Label("Name: "), 0, 0);
-//        gridPane.add(txtName, 1, 0, 2, 1);
-//        gridPane.add(new Label("Zieldateiname: "), 0, 1);
-//        gridPane.add(txtDestName, 1, 1, 2, 1);
-//
-//        gridPane.add(new Label("Programm: "), 0, 2);
-//        gridPane.add(txtProgPath, 1, 2);
-//        gridPane.add(btnFile, 2, 2);
-//        gridPane.add(new Label("Schalter: "), 0, 3);
-//        gridPane.add(txtProgSwitch, 1, 3, 2, 1);
-//
-//        gridPane.add(new Label("Präfix: "), 0, 4);
-//        gridPane.add(txtPraefix, 1, 4, 2, 1);
-//        gridPane.add(new Label("Suffix: "), 0, 5);
-//        gridPane.add(txtSuffix, 1, 5, 2, 1);
-//
-//        final ColumnConstraints ccTxt = new ColumnConstraints();
-//        ccTxt.setFillWidth(true);
-//        ccTxt.setMinWidth(Region.USE_COMPUTED_SIZE);
-//        ccTxt.setHgrow(Priority.SOMETIMES);
-//        gridPane.getColumnConstraints().addAll(new ColumnConstraints(), ccTxt);
-//
-//        GridPane gp = new GridPane();
-//        gp.setHgap(5);
-//        gp.setVgap(5);
-//        gp.setPadding(new Insets(10, 10, 10, 10));
-//
-//        tglRestart.setMaxWidth(Double.MAX_VALUE);
-//        tglDown.setMaxWidth(Double.MAX_VALUE);
-//        gp.add(tglRestart, 0, 0);
-//        gp.add(tglDown, 0, 1);
-//
-//        vBoxCont.getChildren().addAll(gridPane, gp);
-//        return vBoxCont;
-//    });
-
 
 }

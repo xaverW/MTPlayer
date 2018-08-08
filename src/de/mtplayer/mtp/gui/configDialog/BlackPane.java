@@ -27,6 +27,7 @@ import de.mtplayer.mtp.tools.filmListFilter.FilmlistBlackFilterCountHits;
 import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
+import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -36,7 +37,11 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.util.Collection;
 
@@ -53,6 +58,11 @@ public class BlackPane {
     private BlackData blackData = null;
 
     BooleanProperty propWhite = ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST.getBooleanProperty();
+    private final Stage stage;
+
+    public BlackPane(Stage stage) {
+        this.stage = stage;
+    }
 
     public void makeBlackTable(Collection<TitledPane> result) {
         final VBox vBox = new VBox();
@@ -71,11 +81,9 @@ public class BlackPane {
 
     private void makeConfig(VBox vBox) {
         final GridPane gridPane = new GridPane();
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(20, 20, 20, 20));
-        gridPane.setMinWidth(Control.USE_PREF_SIZE);
-        gridPane.setMaxWidth(Double.MAX_VALUE);
+        gridPane.setHgap(15);
+        gridPane.setVgap(15);
+        gridPane.setPadding(new Insets(20));
 
         vBox.getChildren().add(gridPane);
 
@@ -88,21 +96,18 @@ public class BlackPane {
 
         rbBlack.setSelected(!ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST.getBool());
 
-        gridPane.add(rbBlack, 0, 1);
-        gridPane.add(new Label("\"Sender / Thema / Titel\" werden nicht angezeigt (Blacklist)"), 1, 1);
-        final Button btnHelp = new PButton().helpButton("Blacklist / Whitelist",
+        int row = 0;
+        gridPane.add(rbBlack, 0, row);
+        gridPane.add(new Label("\"Sender / Thema / Titel\" werden nicht angezeigt (Blacklist)"), 1, row);
+        final Button btnHelp = new PButton().helpButton(stage, "Blacklist / Whitelist",
                 HelpText.BLACKLIST_WHITELIST);
-        gridPane.add(btnHelp, 2, 1);
+        gridPane.add(btnHelp, 2, row);
 
         rbWhite.selectedProperty().bindBidirectional(propWhite);
-        gridPane.add(rbWhite, 0, 2);
-        gridPane.add(new Label("nur diese \"Sender / Thema / Titel\" anzeigen (Whitelist)"), 1, 2);
+        gridPane.add(rbWhite, 0, ++row);
+        gridPane.add(new Label("nur diese \"Sender / Thema / Titel\" anzeigen (Whitelist)"), 1, row);
 
-        final ColumnConstraints ccTxt = new ColumnConstraints();
-        ccTxt.setFillWidth(true);
-        ccTxt.setMinWidth(Region.USE_COMPUTED_SIZE);
-        ccTxt.setHgrow(Priority.ALWAYS);
-        gridPane.getColumnConstraints().addAll(new ColumnConstraints(), ccTxt);
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(), PColumnConstraints.getCcComputedSizeAndHgrow());
     }
 
 
@@ -181,8 +186,7 @@ public class BlackPane {
         HBox.setHgrow(hBoxCount, Priority.ALWAYS);
         hBoxCount.getChildren().add(btnCountHits);
 
-        HBox hBox = new HBox();
-        hBox.setSpacing(10);
+        HBox hBox = new HBox(10);
         hBox.getChildren().addAll(btnNew, btnDel, hBoxCount);
 
         VBox.setVgrow(tableView, Priority.ALWAYS);
@@ -191,25 +195,27 @@ public class BlackPane {
 
     private void addConfigs(VBox vBox) {
         gridPane.setStyle("-fx-background-color: #E0E0E0;");
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
+        gridPane.setHgap(15);
+        gridPane.setVgap(5);
         gridPane.setPadding(new Insets(20));
 
         cboChannel.setEditable(true);
         cboChannel.setItems(ProgData.getInstance().nameLists.getObsAllChannel());
 
-        gridPane.add(new Label("Sender:"), 0, 0);
-        gridPane.add(cboChannel, 1, 0);
-        gridPane.add(tgChannel, 2, 0);
+        int row = 0;
+        gridPane.add(new Label("Sender:"), 0, row);
+        gridPane.add(cboChannel, 1, row);
+        gridPane.add(tgChannel, 2, row);
 
-        gridPane.add(new Label("Thema:"), 0, 1);
-        gridPane.add(theme, 1, 1);
-        gridPane.add(tgTheme, 2, 1);
+        gridPane.add(new Label("Thema:"), 0, ++row);
+        gridPane.add(theme, 1, row);
+        gridPane.add(tgTheme, 2, row);
 
-        gridPane.add(new Label("Titel:"), 0, 2);
-        gridPane.add(title, 1, 2);
-        gridPane.add(new Label("Thema/Titel:"), 0, 3);
-        gridPane.add(themeTitle, 1, 3);
+        gridPane.add(new Label("Titel:"), 0, ++row);
+        gridPane.add(title, 1, row);
+
+        gridPane.add(new Label("Thema/Titel:"), 0, ++row);
+        gridPane.add(themeTitle, 1, row);
 
         vBox.getChildren().add(gridPane);
         gridPane.setDisable(true);

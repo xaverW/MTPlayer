@@ -26,8 +26,14 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 public class UpdatePane {
+    private final Stage stage;
+
+    public UpdatePane(Stage stage) {
+        this.stage = stage;
+    }
 
     BooleanProperty updateProp = ProgConfig.SYSTEM_UPDATE_SEARCH.getBooleanProperty();
 
@@ -44,7 +50,7 @@ public class UpdatePane {
         tglSearch.selectedProperty().bindBidirectional(updateProp);
         gridPane.add(tglSearch, 0, 0);
 
-        final Button btnHelp = new PButton().helpButton(StartDialogController.stage, "Programmupdate suchen",
+        final Button btnHelp = new PButton().helpButton(stage, "Programmupdate suchen",
                 "Beim Programmstart wird geprüft, ob es eine neue Version des Programms gibt. Wenn es " +
                         "eine neue Version gibt, wird das mit einer Nachricht mitgeteilt. Es wird nicht " +
                         "automatisch das Programm verändert.");

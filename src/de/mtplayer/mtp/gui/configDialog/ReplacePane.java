@@ -24,6 +24,7 @@ import de.mtplayer.mtp.controller.data.ReplaceData;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
+import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -32,7 +33,11 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.util.Collection;
 
@@ -46,6 +51,11 @@ public class ReplacePane {
     private final TextField txtTo = new TextField();
     private final GridPane gridPane = new GridPane();
     private ReplaceData replaceData = null;
+    private final Stage stage;
+
+    public ReplacePane(Stage stage) {
+        this.stage = stage;
+    }
 
     public void makeReplaceListTable(Collection<TitledPane> result) {
         final VBox vBox = new VBox();
@@ -66,25 +76,23 @@ public class ReplacePane {
     private void makeAscii(VBox vBox) {
 
         final GridPane gridPane = new GridPane();
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(20, 20, 20, 20));
+        gridPane.setHgap(15);
+        gridPane.setVgap(15);
+        gridPane.setPadding(new Insets(20));
 
         vBox.getChildren().add(gridPane);
 
         final PToggleSwitch tglAscii = new PToggleSwitch("nur ASCII-Zeichen erlauben");
-        tglAscii.setMaxWidth(Double.MAX_VALUE);
         tglAscii.selectedProperty().bindBidirectional(propAscii);
 
-        final Button btnHelpAscii = new PButton().helpButton("Nur ASCII-Zeichen",
+        final Button btnHelpAscii = new PButton().helpButton(stage, "Nur ASCII-Zeichen",
                 HelpText.DOWNLOAD_ONLY_ASCII);
 
 
         final PToggleSwitch tglReplace = new PToggleSwitch("Ersetzungstabelle");
-        tglReplace.setMaxWidth(Double.MAX_VALUE);
         tglReplace.selectedProperty().bindBidirectional(propReplace);
 
-        final Button btnHelpReplace = new PButton().helpButton("Ersetzungstabelle",
+        final Button btnHelpReplace = new PButton().helpButton(stage, "Ersetzungstabelle",
                 HelpText.DOWNLOAD_REPLACELIST);
 
 
@@ -96,12 +104,7 @@ public class ReplacePane {
         GridPane.setHalignment(btnHelpReplace, HPos.RIGHT);
         gridPane.add(btnHelpReplace, 2, 1);
 
-
-        final ColumnConstraints ccTxt = new ColumnConstraints();
-        ccTxt.setFillWidth(true);
-        ccTxt.setMinWidth(Region.USE_COMPUTED_SIZE);
-        ccTxt.setHgrow(Priority.ALWAYS);
-        gridPane.getColumnConstraints().addAll(new ColumnConstraints(), ccTxt);
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(), PColumnConstraints.getCcComputedSizeAndHgrow());
     }
 
 
@@ -189,15 +192,16 @@ public class ReplacePane {
 
     private void addConfigs(VBox vBox) {
         gridPane.setStyle("-fx-background-color: #E0E0E0;");
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(20, 20, 20, 20));
+        gridPane.setHgap(15);
+        gridPane.setVgap(5);
+        gridPane.setPadding(new Insets(20));
 
         gridPane.add(new Label("Von: "), 0, 0);
         gridPane.add(txtFrom, 1, 0);
         gridPane.add(new Label("Nach: "), 0, 1);
         gridPane.add(txtTo, 1, 1);
 
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(), PColumnConstraints.getCcComputedSizeAndHgrow());
         vBox.getChildren().add(gridPane);
         gridPane.setDisable(true);
     }

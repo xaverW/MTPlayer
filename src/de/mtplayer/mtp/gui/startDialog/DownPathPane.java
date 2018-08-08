@@ -29,10 +29,16 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class DownPathPane {
     StringProperty pathProp = ProgConfig.START_DIALOG_DOWNLOAD_PATH.getStringProperty();
 
+    private final Stage stage;
+
+    public DownPathPane(Stage stage) {
+        this.stage = stage;
+    }
 
     public TitledPane makePath() {
 
@@ -53,13 +59,13 @@ public class DownPathPane {
 
         final Button btnFile = new Button();
         btnFile.setOnAction(event -> {
-            DirFileChooser.DirChooser(StartDialogController.stage, txtPath);
+            DirFileChooser.DirChooser(stage, txtPath);
         });
         btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
         btnFile.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen."));
         gridPane.add(btnFile, 1, 1);
 
-        final Button btnHelp = new PButton().helpButton(StartDialogController.stage,
+        final Button btnHelp = new PButton().helpButton(stage,
                 "Zielverzeichnis",
                 "Hier kann das Verzeichnis angegeben werden, " +
                         "in dem die Downloads gespeichert werden.");

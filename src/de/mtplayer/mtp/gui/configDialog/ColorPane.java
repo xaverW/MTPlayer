@@ -28,11 +28,17 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.util.Collection;
 
 public class ColorPane {
+    private final Stage stage;
+
+    public ColorPane(Stage stage) {
+        this.stage = stage;
+    }
 
     public void makeColor(Collection<TitledPane> result) {
         final VBox vBox = new VBox();

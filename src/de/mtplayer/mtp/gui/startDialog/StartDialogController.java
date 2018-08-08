@@ -32,7 +32,7 @@ import javafx.stage.Stage;
 
 public class StartDialogController extends PDialog {
 
-    public static Stage stage = null;
+    private Stage stage = null;
     private boolean ok = false;
     private AnchorPane rootPane = new AnchorPane();
     private VBox vBoxDialog = new VBox();
@@ -167,7 +167,7 @@ public class StartDialogController extends PDialog {
         startPane_1.setFitToHeight(true);
         startPane_1.setFitToWidth(true);
 
-        TitledPane tStart1 = new StartPane().makeStart1();
+        TitledPane tStart1 = new StartPane(stage).makeStart1();
         tStart1.setMaxHeight(Double.MAX_VALUE);
         tStart1.setCollapsible(false);
         tStart1.setText(STR_START_1);
@@ -178,7 +178,7 @@ public class StartDialogController extends PDialog {
         startPane_2.setFitToHeight(true);
         startPane_2.setFitToWidth(true);
 
-        TitledPane tStart2 = new StartPane().makeStart2();
+        TitledPane tStart2 = new StartPane(stage).makeStart2();
         tStart2.setMaxHeight(Double.MAX_VALUE);
         tStart2.setCollapsible(false);
         tStart2.setText(STR_START_2);
@@ -189,7 +189,7 @@ public class StartDialogController extends PDialog {
         updatePane.setFitToHeight(true);
         updatePane.setFitToWidth(true);
 
-        TitledPane tUpdate = new UpdatePane().makeStart();
+        TitledPane tUpdate = new UpdatePane(stage).makeStart();
         tUpdate.setMaxHeight(Double.MAX_VALUE);
         tUpdate.setCollapsible(false);
         tUpdate.setText(STR_UPDATE);
@@ -200,7 +200,7 @@ public class StartDialogController extends PDialog {
         geoPane.setFitToHeight(true);
         geoPane.setFitToWidth(true);
 
-        TitledPane tGeo = new GeoPane().makeGeo(StartDialogController.stage);
+        TitledPane tGeo = new GeoPane(stage).makeGeo();
         tGeo.setMaxHeight(Double.MAX_VALUE);
         tGeo.setCollapsible(false);
         tGeo.setText(STR_GEO);
@@ -211,7 +211,7 @@ public class StartDialogController extends PDialog {
         downPane.setFitToHeight(true);
         downPane.setFitToWidth(true);
 
-        TitledPane tDown = new DownPathPane().makePath();
+        TitledPane tDown = new DownPathPane(stage).makePath();
         tDown.setMaxHeight(Double.MAX_VALUE);
         tDown.setCollapsible(false);
         tDown.setText(STR_DOWN);
@@ -222,7 +222,7 @@ public class StartDialogController extends PDialog {
         pathPane.setFitToHeight(true);
         pathPane.setFitToWidth(true);
 
-        TitledPane tPath = new PathPane().makePath();
+        TitledPane tPath = new PathPane(stage).makePath();
         tPath.setMaxHeight(Double.MAX_VALUE);
         tPath.setCollapsible(false);
         tPath.setText(STR_PATH);

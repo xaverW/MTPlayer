@@ -20,6 +20,7 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.guiTools.PButton;
+import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.property.BooleanProperty;
 import javafx.geometry.HPos;
@@ -28,6 +29,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -48,8 +50,10 @@ public class DownloadPaneController extends AnchorPane {
     BooleanProperty propBeep = ProgConfig.DOWNLOAD_BEEP.getBooleanProperty();
 
     private final ScrollPane scrollPane = new ScrollPane();
+    private final Stage stage;
 
-    public DownloadPaneController() {
+    public DownloadPaneController(Stage stage) {
+        this.stage = stage;
         progData = ProgData.getInstance();
 
         cbxAccordion.selectedProperty().bindBidirectional(accordionProp);
@@ -89,7 +93,7 @@ public class DownloadPaneController extends AnchorPane {
     private Collection<TitledPane> createPanes() {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
         makeDownload(result);
-        new ReplacePane().makeReplaceListTable(result);
+        new ReplacePane(stage).makeReplaceListTable(result);
         return result;
     }
 
@@ -97,38 +101,34 @@ public class DownloadPaneController extends AnchorPane {
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
         gridPane.setVgap(15);
-        gridPane.setPadding(new Insets(20, 20, 20, 20));
+        gridPane.setPadding(new Insets(20));
 
         TitledPane tpConfig = new TitledPane("Download", gridPane);
         result.add(tpConfig);
 
 
         final PToggleSwitch tglFinished = new PToggleSwitch("Benachrichtigung wenn abgeschlossen");
-        tglFinished.setMaxWidth(Double.MAX_VALUE);
         tglFinished.selectedProperty().bindBidirectional(propNotify);
 
-        final Button btnHelpFinished = new PButton().helpButton("Download",
+        final Button btnHelpFinished = new PButton().helpButton(stage, "Download",
                 HelpText.DOWNLOAD_FINISHED);
 
 
         final PToggleSwitch tglError = new PToggleSwitch("bei Downloadfehler, Fehlermeldung anzeigen");
-        tglError.setMaxWidth(Double.MAX_VALUE);
         tglError.selectedProperty().bindBidirectional(propErr);
 
-        final Button btnHelpError = new PButton().helpButton("Download",
+        final Button btnHelpError = new PButton().helpButton(stage, "Download",
                 HelpText.DOWNLOAD_ERROR);
 
 
         final PToggleSwitch tglOne = new PToggleSwitch("nur ein Download pro Downloadserver");
-        tglOne.setMaxWidth(Double.MAX_VALUE);
         tglOne.selectedProperty().bindBidirectional(propOne);
 
-        final Button btnHelpOne = new PButton().helpButton("Download",
+        final Button btnHelpOne = new PButton().helpButton(stage, "Download",
                 HelpText.DOWNLOAD_ONE_SERVER);
 
 
         final PToggleSwitch tglBeep = new PToggleSwitch("nach jedem Download einen \"Beep\" ausgeben");
-        tglBeep.setMaxWidth(Double.MAX_VALUE);
         tglBeep.selectedProperty().bindBidirectional(propBeep);
 
         final Button btnBeep = new Button("Testen");
@@ -139,23 +139,20 @@ public class DownloadPaneController extends AnchorPane {
         GridPane.setHalignment(btnHelpError, HPos.RIGHT);
         GridPane.setHalignment(btnHelpOne, HPos.RIGHT);
 
-        gridPane.add(tglFinished, 0, 0);
-        gridPane.add(btnHelpFinished, 2, 0);
+        int row = 0;
+        gridPane.add(tglFinished, 0, row);
+        gridPane.add(btnHelpFinished, 2, row);
 
-        gridPane.add(tglError, 0, 1);
-        gridPane.add(btnHelpError, 2, 1);
+        gridPane.add(tglError, 0, ++row);
+        gridPane.add(btnHelpError, 2, row);
 
-        gridPane.add(tglOne, 0, 2);
-        gridPane.add(btnHelpOne, 2, 2);
+        gridPane.add(tglOne, 0, ++row);
+        gridPane.add(btnHelpOne, 2, row);
 
-        gridPane.add(tglBeep, 0, 3);
-        gridPane.add(btnBeep, 2, 3);
+        gridPane.add(tglBeep, 0, ++row);
+        gridPane.add(btnBeep, 2, row);
 
-        final ColumnConstraints ccTxt = new ColumnConstraints();
-        ccTxt.setFillWidth(true);
-        ccTxt.setMinWidth(Region.USE_COMPUTED_SIZE);
-        ccTxt.setHgrow(Priority.ALWAYS);
-        gridPane.getColumnConstraints().addAll(new ColumnConstraints(), ccTxt);
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(), PColumnConstraints.getCcComputedSizeAndHgrow());
     }
 
 

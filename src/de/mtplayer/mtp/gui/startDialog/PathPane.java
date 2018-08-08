@@ -35,6 +35,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.io.File;
 
@@ -45,8 +46,13 @@ public class PathPane {
     StringProperty flvProp = ProgConfig.SYSTEM_PATH_FLVSTREAMER.getStringProperty();
     StringProperty ffmpegProp = ProgConfig.SYSTEM_PATH_FFMPEG.getStringProperty();
 
+    private final Stage stage;
 
     private enum PLAYER {VLC, FLV, FFMPEG}
+
+    public PathPane(Stage stage) {
+        this.stage = stage;
+    }
 
     public TitledPane makePath() {
         VBox vBox = new VBox();
@@ -68,7 +74,7 @@ public class PathPane {
                 vBox.getChildren().add(addPlayer(PLAYER.FFMPEG));
         }
 
-        final Button btnHelp = new PButton().helpButton(StartDialogController.stage,
+        final Button btnHelp = new PButton().helpButton(stage,
                 "Videoplayer", HelpText.PROG_PATHS);
 
         HBox hBox = new HBox();
@@ -101,7 +107,7 @@ public class PathPane {
                     txtPlayer.setText(SetsPrograms.getTemplatePathFlv());
                 });
 
-                hyperlink = new PHyperlink(StartDialogController.stage,
+                hyperlink = new PHyperlink(stage,
                         ProgConst.ADRESSE_WEBSITE_FLVSTREAMER,
                         ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new Icons().ICON_BUTTON_FILE_OPEN);
                 break;
@@ -113,7 +119,7 @@ public class PathPane {
                     txtPlayer.setText(SetsPrograms.getTemplatePathFFmpeg());
                 });
 
-                hyperlink = new PHyperlink(StartDialogController.stage,
+                hyperlink = new PHyperlink(stage,
                         ProgConst.ADRESSE_WEBSITE_FFMPEG,
                         ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new Icons().ICON_BUTTON_FILE_OPEN);
                 break;
@@ -126,7 +132,7 @@ public class PathPane {
                     txtPlayer.setText(SetsPrograms.getTemplatePathVlc());
                 });
 
-                hyperlink = new PHyperlink(StartDialogController.stage,
+                hyperlink = new PHyperlink(stage,
                         ProgConst.ADRESSE_WEBSITE_VLC,
                         ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new Icons().ICON_BUTTON_FILE_OPEN);
                 break;
@@ -147,7 +153,7 @@ public class PathPane {
 
         final Button btnFile = new Button();
         btnFile.setOnAction(event -> {
-            DirFileChooser.FileChooser(StartDialogController.stage, txtPlayer);
+            DirFileChooser.FileChooser(stage, txtPlayer);
         });
         btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
         btnFile.setTooltip(new Tooltip("Programmdatei auswählen."));

@@ -35,6 +35,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.util.ArrayList;
@@ -62,8 +63,10 @@ public class SetPaneController extends AnchorPane {
 
     BooleanProperty accordionProp = ProgConfig.CONFIG_DIALOG_ACCORDION.getBooleanProperty();
     DoubleProperty split = ProgConfig.CONFIG_DIALOG_SET_DIVIDER.getDoubleProperty();
+    private final Stage stage;
 
-    public SetPaneController() {
+    public SetPaneController(Stage stage) {
+        this.stage = stage;
         progData = ProgData.getInstance();
 
         cbxAccordion.selectedProperty().bindBidirectional(accordionProp);
@@ -119,14 +122,13 @@ public class SetPaneController extends AnchorPane {
 
     private void createSetDataPane() {
         setDataPaneTitle = new ArrayList<>();
-        setDataPane = new SetDataPane();
+        setDataPane = new SetDataPane(stage);
         setDataPane.makeSetPane(setDataPaneTitle);
     }
 
     private void makeSetListTable(Collection<TitledPane> result) {
-        final VBox vBox = new VBox();
+        final VBox vBox = new VBox(10);
         vBox.setFillWidth(true);
-        vBox.setSpacing(10);
 
         initTable(vBox);
 
@@ -153,7 +155,6 @@ public class SetPaneController extends AnchorPane {
         playColumn.getStyleClass().add("center");
 
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-
         tableView.getColumns().addAll(nameColumn, playColumn);
         tableView.setItems(progData.setList);
 
@@ -163,7 +164,7 @@ public class SetPaneController extends AnchorPane {
         Button btnDel = new Button("");
         btnDel.setGraphic(new Icons().ICON_BUTTON_REMOVE);
         btnDel.setOnAction(event -> {
-            SetData setData = getSel();
+            SetData setData = getSelectedSelData();
             if (setData != null) {
                 progData.setList.remove(setData);
             }
@@ -179,7 +180,7 @@ public class SetPaneController extends AnchorPane {
         Button btnUp = new Button("");
         btnUp.setGraphic(new Icons().ICON_BUTTON_MOVE_UP);
         btnUp.setOnAction(event -> {
-            int sel = getSelLine();
+            int sel = getSelectedLine();
             if (sel >= 0) {
                 int newSel = progData.setList.auf(sel, true);
                 tableView.getSelectionModel().select(newSel);
@@ -189,7 +190,7 @@ public class SetPaneController extends AnchorPane {
         Button btnDown = new Button("");
         btnDown.setGraphic(new Icons().ICON_BUTTON_MOVE_DOWN);
         btnDown.setOnAction(event -> {
-            int sel = getSelLine();
+            int sel = getSelectedLine();
             if (sel >= 0) {
                 int newSel = progData.setList.auf(sel, false);
                 tableView.getSelectionModel().select(newSel);
@@ -198,7 +199,7 @@ public class SetPaneController extends AnchorPane {
 
         Button btnDup = new Button("Duplizieren");
         btnDup.setOnAction(event -> {
-            SetData setData = getSel();
+            SetData setData = getSelectedSelData();
             if (setData != null) {
                 progData.setList.add(setData.copy());
             }
@@ -211,33 +212,23 @@ public class SetPaneController extends AnchorPane {
         HBox.setHgrow(btnCheck, Priority.ALWAYS);
         btnCheck.setMaxWidth(Double.MAX_VALUE);
 
-        final Button btnHelp = new PButton().helpButton("Set",
+        final Button btnHelp = new PButton().helpButton(stage, "Set",
                 new GetFile().getHelpSearch(GetFile.PATH_HELPTEXT_PRGRAM));
 
 
-        HBox hBox = new HBox();
-        hBox.setSpacing(10);
-        hBox.getChildren().addAll(btnNew, btnDel, btnUp, btnDown, btnHelp);
+        HBox hBox = new HBox(10);
+        hBox.getChildren().addAll(btnNew, btnDel, btnUp, btnDown);
         HBox.setHgrow(hBox, Priority.ALWAYS);
 
-        HBox hBoxHlp = new HBox();
+        HBox hBoxHlp = new HBox(10);
         hBoxHlp.getChildren().addAll(hBox, btnHelp);
 
         vBox.getChildren().addAll(hBoxHlp);
-
-        hBox = new HBox();
-        hBox.setSpacing(10);
-        hBox.getChildren().addAll(btnDup);
-        vBox.getChildren().addAll(hBox);
-
-        hBox = new HBox();
-        hBox.setSpacing(10);
-        hBox.getChildren().addAll(btnCheck);
-        vBox.getChildren().addAll(hBox);
-
+        vBox.getChildren().addAll(btnDup);
+        vBox.getChildren().addAll(btnCheck);
     }
 
-    private SetData getSel() {
+    private SetData getSelectedSelData() {
         final SetData sel = tableView.getSelectionModel().getSelectedItem();
         if (sel == null) {
             PAlert.showInfoNoSelection();
@@ -245,7 +236,7 @@ public class SetPaneController extends AnchorPane {
         return sel;
     }
 
-    private int getSelLine() {
+    private int getSelectedLine() {
         final int sel = tableView.getSelectionModel().getSelectedIndex();
         if (sel < 0) {
             PAlert.showInfoNoSelection();
@@ -268,8 +259,7 @@ public class SetPaneController extends AnchorPane {
                     return;
                 }
 
-                final HBox hbox = new HBox();
-                hbox.setSpacing(5);
+                final HBox hbox = new HBox(5);
                 hbox.setAlignment(Pos.CENTER);
                 hbox.setPadding(new Insets(0, 2, 0, 2));
 

@@ -29,6 +29,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 
 public class ConfigDialogController extends PDialog {
@@ -36,6 +37,7 @@ public class ConfigDialogController extends PDialog {
     private TabPane tabPane = new TabPane();
     private Button btnOk = new Button("Ok");
     private String geo = ProgConfig.SYSTEM_GEO_HOME_PLACE.get();
+    private Stage stage;
 
     private final ProgData progData;
 
@@ -60,6 +62,7 @@ public class ConfigDialogController extends PDialog {
 
     @Override
     public void make() {
+        stage = getStage();
         btnOk.setOnAction(a -> close());
         initPanel();
     }
@@ -82,31 +85,31 @@ public class ConfigDialogController extends PDialog {
 
     private void initPanel() {
         try {
-            AnchorPane configPane = new ConfigPaneController();
+            AnchorPane configPane = new ConfigPaneController(stage);
             Tab tab = new Tab("Allgemein");
             tab.setClosable(false);
             tab.setContent(configPane);
             tabPane.getTabs().add(tab);
 
-            AnchorPane filmPane = new FilmPaneController();
+            AnchorPane filmPane = new FilmPaneController(stage);
             tab = new Tab("Filme laden");
             tab.setClosable(false);
             tab.setContent(filmPane);
             tabPane.getTabs().add(tab);
 
-            AnchorPane blackPane = new BlackListPaneController();
+            AnchorPane blackPane = new BlackListPaneController(stage);
             tab = new Tab("Blacklist");
             tab.setClosable(false);
             tab.setContent(blackPane);
             tabPane.getTabs().add(tab);
 
-            AnchorPane downloadPane = new DownloadPaneController();
+            AnchorPane downloadPane = new DownloadPaneController(stage);
             tab = new Tab("Download");
             tab.setClosable(false);
             tab.setContent(downloadPane);
             tabPane.getTabs().add(tab);
 
-            AnchorPane setPane = new SetPaneController();
+            AnchorPane setPane = new SetPaneController(stage);
             tab = new Tab("Aufzeichnen/Abspielen");
             tab.setClosable(false);
             tab.setContent(setPane);
