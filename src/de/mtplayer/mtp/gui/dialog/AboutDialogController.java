@@ -47,10 +47,9 @@ public class AboutDialogController extends PDialogExtra {
 
     public AboutDialogController(ProgData progData) {
         super(null, "Über das Programm", true);
-
         this.progData = progData;
 
-        getHboxOk().getChildren().addAll(btnOk);
+        addOkButtons(btnOk);
         init(getvBoxDialog(), true);
     }
 

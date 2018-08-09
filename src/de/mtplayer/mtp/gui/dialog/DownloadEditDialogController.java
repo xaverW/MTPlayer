@@ -34,11 +34,14 @@ import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
+import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 import java.io.File;
@@ -82,21 +85,14 @@ public class DownloadEditDialogController extends PDialogExtra {
         this.progData = progData;
         this.download = download;
         this.isStarted = isStarted;
+
         orgProgArray = download.arr[DownloadXml.DOWNLOAD_PROGRAM_CALL_ARRAY];
         orgPath = download.getDestPathFile();
 
-        final ColumnConstraints ccTxt = new ColumnConstraints();
-        ccTxt.setFillWidth(true);
-        ccTxt.setMinWidth(Region.USE_COMPUTED_SIZE);
-        ccTxt.setHgrow(Priority.ALWAYS);
-        gridPane.getColumnConstraints().addAll(new ColumnConstraints(), ccTxt);
+        addOkButtons(btnOk, btnCancel);
 
         getVboxCont().getChildren().add(gridPane);
-
-        btnOk.setMaxWidth(Double.MAX_VALUE);
-        btnCancel.setMaxWidth(Double.MAX_VALUE);
-        getHboxOk().getChildren().addAll(btnOk, btnCancel);
-        init(getvBoxDialog(), true);
+        init(true);
     }
 
 
@@ -348,7 +344,7 @@ public class DownloadEditDialogController extends PDialogExtra {
 
         VBox vBox = new VBox(5);
         HBox hBoxPath = new HBox(10);
-        HBox.setHgrow(cbPath, Priority.ALWAYS);
+//        HBox.setHgrow(cbPath, Priority.ALWAYS); // Kompromiss
         cbPath.setMaxWidth(Double.MAX_VALUE);
         hBoxPath.getChildren().addAll(cbPath, btnPath);
         vBox.getChildren().addAll(hBoxPath, lblSizeFree);
@@ -398,14 +394,17 @@ public class DownloadEditDialogController extends PDialogExtra {
     }
 
     private void initGridPane() {
-        int row = 0;
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcComputedSizeAndHgrow());
 
         gridPane.setMinWidth(Control.USE_PREF_SIZE);
-        gridPane.setMaxWidth(Double.MAX_VALUE);
-
+//        gridPane.setMinWidth(Control.USE_COMPUTED_SIZE);
+//        gridPane.setPrefWidth(Control.USE_COMPUTED_SIZE);
+//        gridPane.setMaxWidth(Double.MAX_VALUE);
         gridPane.setHgap(5);
         gridPane.setVgap(15);
 
+        int row = 0;
         for (int i = 0; i < DownloadXml.MAX_ELEM; ++i) {
             lbl[i] = new Label(DownloadXml.COLUMN_NAMES[i] + ":");
             lbl[i].setPadding(new Insets(2, 0, 2, 0));
@@ -413,8 +412,8 @@ public class DownloadEditDialogController extends PDialogExtra {
 
             txt[i] = new TextField("");
             txt[i].setEditable(false);
-            txt[i].prefColumnCountProperty().bind(txt[i].textProperty().length());
             txt[i].setMaxWidth(Double.MAX_VALUE);
+            txt[i].setPrefWidth(Control.USE_COMPUTED_SIZE);
 
             cbx[i] = new CheckBox();
             cbx[i].setDisable(true);
@@ -476,8 +475,7 @@ public class DownloadEditDialogController extends PDialogExtra {
                     // ansonsten müsste erst der Programmaufruf neu gebaut werden
                     break;
                 }
-                HBox hBox = new HBox();
-                hBox.setSpacing(20);
+                HBox hBox = new HBox(20);
                 hBox.getChildren().addAll(rbHd, rbHigh, rbSmall);
 
                 gridPane.add(new Label("Auflösung:"), 0, row);

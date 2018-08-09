@@ -91,10 +91,7 @@ public class AboEditDialogController extends PDialogExtra {
 
     private void initDialog() {
         getVboxCont().getChildren().add(gridPane);
-
-        btnOk.setMaxWidth(Double.MAX_VALUE);
-        btnCancel.setMaxWidth(Double.MAX_VALUE);
-        getHboxOk().getChildren().addAll(btnOk, btnCancel);
+        addOkButtons(btnOk, btnCancel);
 
         init(getvBoxDialog(), true);
     }

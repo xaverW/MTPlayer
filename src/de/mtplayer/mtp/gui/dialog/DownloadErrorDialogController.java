@@ -114,9 +114,7 @@ public class DownloadErrorDialogController extends PDialogExtra {
         vBoxCont.setSpacing(10);
         vBoxCont.getChildren().addAll(hboxTitle, hBox);
 
-        HBox hboxOk = getHboxOk();
-        hboxOk.setAlignment(Pos.CENTER_RIGHT);
-        hboxOk.getChildren().addAll(lblTime, btnOk);
+        hBoxOk.getChildren().addAll(lblTime, btnOk);
     }
 
     @Override
