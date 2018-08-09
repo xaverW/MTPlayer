@@ -345,7 +345,7 @@ public class DownloadEditDialogController extends PDialogExtra {
         VBox vBox = new VBox(5);
         HBox hBoxPath = new HBox(10);
 //        HBox.setHgrow(cbPath, Priority.ALWAYS); // Kompromiss
-        cbPath.setMaxWidth(Double.MAX_VALUE);
+//        cbPath.setMaxWidth(Double.MAX_VALUE);
         hBoxPath.getChildren().addAll(cbPath, btnPath);
         vBox.getChildren().addAll(hBoxPath, lblSizeFree);
         gridPane.add(vBox, 1, row);
@@ -397,12 +397,13 @@ public class DownloadEditDialogController extends PDialogExtra {
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcComputedSizeAndHgrow());
 
-        gridPane.setMinWidth(Control.USE_PREF_SIZE);
+//        gridPane.setMinWidth(Control.USE_PREF_SIZE);
 //        gridPane.setMinWidth(Control.USE_COMPUTED_SIZE);
 //        gridPane.setPrefWidth(Control.USE_COMPUTED_SIZE);
 //        gridPane.setMaxWidth(Double.MAX_VALUE);
         gridPane.setHgap(5);
         gridPane.setVgap(15);
+        gridPane.setPadding(new Insets(10));
 
         int row = 0;
         for (int i = 0; i < DownloadXml.MAX_ELEM; ++i) {
