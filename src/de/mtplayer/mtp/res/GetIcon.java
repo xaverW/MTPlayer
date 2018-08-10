@@ -50,7 +50,7 @@ public class GetIcon {
 //        } else {
 //            try {
 //                //todo das funzt nicht
-//                final String pfad = FileUtils.addsPfad(ProgConfig.SYSTEM_ICON_PFAD.get(), strIcon);
+//                final String pfad = PFileUtils.addsPfad(ProgConfig.SYSTEM_ICON_PFAD.get(), strIcon);
 //                if (new File(pfad).exists()) {
 //                    icon = new javafx.scene.image.Image(path);
 //                } else {

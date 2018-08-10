@@ -326,7 +326,7 @@ public class ConfigPaneController extends AnchorPane {
 
         //jetzt suchen
         Button btnNow = new Button("Jetzt suchen");
-        btnNow.setOnAction(event -> new SearchProgramUpdate().checkVersion(true, true /* anzeigen */));
+        btnNow.setOnAction(event -> new SearchProgramUpdate(stage).checkVersion(true, true /* anzeigen */));
 
         PHyperlink hyperlink = new PHyperlink(ProgConst.ADRESSE_WEBSITE,
                 ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new Icons().ICON_BUTTON_FILE_OPEN);

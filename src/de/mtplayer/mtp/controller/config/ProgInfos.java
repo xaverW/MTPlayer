@@ -17,7 +17,6 @@
 package de.mtplayer.mtp.controller.config;
 
 import de.mtplayer.mtp.Main;
-import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.configFile.SettingsDirectory;
 import de.p2tools.p2Lib.tools.PException;
 
@@ -29,9 +28,6 @@ import java.security.CodeSource;
 import java.util.ArrayList;
 
 public class ProgInfos {
-
-    private static final String ERROR_CANT_CREATE_FOLDER = "Der Ordner konnte nicht angelegt werden." + PConst.LINE_SEPARATOR +
-            "Bitte prüfen Sie die Dateirechte.";
 
     public static String getUserAgent() {
         return ProgConfig.SYSTEM_PARAMETER_USERAGENT.get();

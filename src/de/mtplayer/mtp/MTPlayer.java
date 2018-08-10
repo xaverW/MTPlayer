@@ -202,7 +202,7 @@ public class MTPlayer extends Application {
 
         Thread th = new Thread(() -> {
             try {
-                if (new SearchProgramUpdate().checkVersion(false, false /* immer anzeigen */)) {
+                if (new SearchProgramUpdate(primaryStage).checkVersion(false, false /* immer anzeigen */)) {
                     Platform.runLater(() -> setUpdateTitle());
                 } else {
                     Platform.runLater(() -> setNoUpdateTitle());

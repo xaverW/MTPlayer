@@ -22,14 +22,17 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.p2tools.p2Lib.checkForUpdates.SearchProgInfo;
 import javafx.beans.property.BooleanProperty;
+import javafx.stage.Stage;
 
 import java.util.Date;
 
 public class SearchProgramUpdate {
 
     BooleanProperty updateProp;
+    private final Stage stage;
 
-    public SearchProgramUpdate() {
+    public SearchProgramUpdate(Stage stage) {
+        this.stage = stage;
         updateProp = ProgConfig.SYSTEM_UPDATE_SEARCH.getBooleanProperty();
     }
 
@@ -43,7 +46,7 @@ public class SearchProgramUpdate {
         ProgConfig.SYSTEM_UPDATE_BUILD_NR.setValue(Functions.getProgVersion());
         ProgConfig.SYSTEM_UPDATE_DATE.setValue(StringFormatters.FORMATTER_yyyyMMdd.format(new Date()));
 
-        return new SearchProgInfo().checkUpdate(ProgConst.ADRESSE_MTPLAYER_VERSION, ProgConfig.SYSTEM_UPDATE_BUILD_NR.getInt(),
+        return new SearchProgInfo(stage).checkUpdate(ProgConst.ADRESSE_MTPLAYER_VERSION, ProgConfig.SYSTEM_UPDATE_BUILD_NR.getInt(),
                 ProgConfig.SYSTEM_UPDATE_INFO_NR_SHOWN.getIntegerProperty(), updateProp,
                 showProgramInformation, showError);
     }
