@@ -59,12 +59,10 @@
     -fx-border-width: 0px;
 }
 
-
 .contPanel {
     -fx-border-color: blue;
     -fx-background-color: white;
 }
-
 
 .btnTab{
     -fx-font-weight: bold;
@@ -147,18 +145,6 @@
          radial-gradient(center 80% -70%, radius 200%, #e6e6e6 35%, rgba(230,230,230,0) 40%);
 }
 
-.btnFunction{
-    -fx-background-color: #c3c4c4,
-        linear-gradient(from 0% 0% to 100% 100%, #d6d6d6 50%, white 100%),
-        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
-    -fx-background-radius: 30;
-    -fx-background-insets: 0,1,1;
-    -fx-text-fill: black;
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
-    -fx-padding: 5;
-    -fx-border: 5;
-}
-
 .btnStartDialog{
     -fx-font-weight: bold;
     -fx-alignment: center ;
@@ -178,6 +164,18 @@
             linear-gradient(from 0% 0% to 100% 100%, #d6d6d6 50%, white 100%),
             radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
     -fx-text-fill: blue;
+}
+
+.btnFunction{
+    -fx-background-color: #c3c4c4,
+        linear-gradient(from 0% 0% to 100% 100%, #d6d6d6 50%, white 100%),
+        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,1;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+    -fx-padding: 5;
+    -fx-border: 5;
 }
 
 /*Pfeil ausblenden*/
@@ -201,3 +199,12 @@
          radial-gradient(center 80% -70%, radius 200%, #e6e6e6 35%, rgba(230,230,230,0) 40%);
 }
 
+.lblSelectedLines {
+    -fx-background-color: #c4c4c4,
+        linear-gradient(from 0% 0% to 100% 100%, #d6d6d6 50%, white 100%),
+        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+    -fx-background-insets: 0,1,1;
+    -fx-background-radius: 5;
+    -fx-text-fill: black;
+    -fx-padding: 4 14 4 14;
+}

@@ -84,34 +84,6 @@ public class HelpText {
             "https://savannah.nongnu.org/projects/flvstreamer/" + PConst.LINE_SEPARATOR +
             "http://ffmpeg.org" + PConst.LINE_SEPARATOR;
 
-    public static final String MEDIA_DIALOG = "Die Mediensammlung kann im Tab \"Filme\" und Tab \"Download\" " +
-            "mit der rechten Maustaste auf einen Film:"
-            + PConst.LINE_SEPARATOR +
-            "\"Titel in der Mediensammlung suchen\""
-            + PConst.LINE_SEPARATOR +
-            "nach einem Filmtitel durchsucht werden. " +
-            PConst.LINE_SEPARATOR +
-            PConst.LINE_SEPARATOR +
-            "\"Keine Dateien mit diesem Suffix\": Dateien mit einem dort " +
-            "angegebenen Suffix werden nicht in den Index aufgenommen." +
-            PConst.LINE_SEPARATOR +
-            PConst.LINE_SEPARATOR +
-            "\"Nur Dateien mit diesem Suffix\": Da werden dann genau die Dateien " +
-            "genommen, auf die das zutrifft." +
-            PConst.LINE_SEPARATOR +
-            PConst.LINE_SEPARATOR +
-            "Suffixe können durch \"Komma\" getrennt angegeben werden: " +
-            "\"txt,xml\" besagt, Dateien die mit \".txt\" oder \".xml\" enden " +
-            "werden nicht - oder nur diese werden - in den Index " +
-            "aufgenommen." +
-            PConst.LINE_SEPARATOR +
-            PConst.LINE_SEPARATOR +
-            "Die angegebenen Pfade zum Durchsuchen, werden beim Programmstart " +
-            "abgesucht, die müssen also verfügbar sein. Dafür ist der aktuelle " +
-            "Bestand an Filmen auch in der MedienDB enthalten." +
-            PConst.LINE_SEPARATOR;
-
-
     public static final String FILTER_FIELD =
             PConst.LINE_SEPARATOR +
                     "\"Sender\" und \"Thema\" können exakt verglichen werden. " +
@@ -127,6 +99,7 @@ public class HelpText {
                     "Beim Feld \"Thema/Titel\" muss der Filter im " +
                     "\"Thema\" ODER \"Titel\" enthalten sein." +
                     PConst.LINE_SEPARATOR;
+
     public static final String FILTER_EXACT =
             PConst.LINE_SEPARATOR +
                     "\"exakt\" bedeutet, dass z.B. \"Abend\" im Feld Thema nur die Filme " +
@@ -232,23 +205,25 @@ public class HelpText {
             "werden nicht mit einem Hilfsprogramm gespeichert, " +
             "sondern direkt geladen." +
             PConst.LINE_SEPARATORx2 +
-            "Mehrere Einträge können mit \"Komma\" getrennt, angegeben werden";
+            "Mehrere Einträge können mit \"Komma\" getrennt, angegeben werden." +
+            PConst.LINE_SEPARATOR +
+            "z.B.: mp4,mp3,m4v,flv,m4a";
 
     public static final String SETDATA_RES = "Nicht jede Auflösung ist bei jedem Sender möglich und ist die " +
             "gewünschte Auflösung nicht verfügbar, " +
-            "wird in \"hoher\" Auflösung geladen." + PConst.LINE_SEPARATORx2 +
-            "Die Auflösung gilt nur für manuell gestartete Downloads" + PConst.LINE_SEPARATOR +
-            "und zum Abspielen von Filmen. Für Abos wird die" + PConst.LINE_SEPARATOR +
+            "wird in \"hoher\" Auflösung geladen." +
+            PConst.LINE_SEPARATORx2 +
+            "Die Auflösung gilt nur für manuell gestartete Downloads " +
+            "und zum Abspielen von Filmen. Für Abos wird die " +
             "im Abo vorgegebene Auflösung verwendet.";
 
     public static final String ABO_RES = "Nicht jede Auflösung ist bei jedem Sender möglich und ist die " +
             "gewünschte Auflösung nicht verfügbar, " +
             "wird in \"hoher\" Auflösung geladen.";
 
-    public static final String SETDATA_SUBDIR = "Es wird ein Unterordner mit dem Thema oder " +
-            "Abozielpfad angelegt." +
-            PConst.LINE_SEPARATOR +
-            "Ist der Abozielpfad leer, wird das Thema verwendete";
+    public static final String SETDATA_SUBDIR = "Bei Downloads aus Abos wird ein Unterordner mit dem " +
+            "Abozielpfad angelegt. Ist der Abozielpfad leer, " +
+            "wird das Thema des Films verwendete";
 
     public static final String SETDATA_RESET_COLOR = "Wird das Set als Button verwendet, " +
             "kann damit die Schriftfarbe verändert werden.";
@@ -353,14 +328,32 @@ public class HelpText {
             "kann damit ein Programm ausgewählt und " +
             "fest zugeordnet werden (z.B. der Browser \"Firefox\").";
 
-    public static final String MEDIA_COLLECTION = "Hier kann eine Mediensammlung angelegt werden. Vor dem " +
+    public static final String MEDIA_DIALOG = "Hier kann eine Mediensammlung angelegt werden. Vor dem " +
             "Download eines Films, kann dieser mit der Mediensammlung abgeglichen werden. So können doppelte " +
-            "Downloads vermieden werden." + PConst.LINE_SEPARATOR +
+            "Downloads vermieden werden. Im Tab \"Filme\" und Tab \"Download\" kann " +
+            "mit der rechten Maustaste auf einen Film: \"Titel in der Mediensammlung suchen\" " +
+            "nach dem Filmtitel gesucht werden." +
+            PConst.LINE_SEPARATORx3 +
             "Dazu werden Ordner mit Medien angegeben, die das Programm absucht. " +
-            "Die gefundenen Medien werden dann in die Sammlung integriert. Es können Ordner angegeben " +
-            "werden, die beim Programmstart jedes mal abgesucht werden. Auch ist es möglich, Ordner anzugeben, " +
-            "die dann nur einmal abgesucht werden. Deren Inhalt an Medien steht dauerhaft im Programm " +
-            "bei der Suche in der Mediensammlung zur Verfügung.";
+            "Die angegebenen Pfade zum Durchsuchen, werden beim Programmstart " +
+            "abgesucht, diese müssen also verfügbar sein. Dafür ist der aktuelle " +
+            "Bestand an Filmen auch in der MedienDB enthalten." +
+            PConst.LINE_SEPARATOR +
+            "Externe Medien werden nur beim Anlegen abgesucht. " +
+            "Deren Inhalt an Medien steht dauerhaft im Programm  und " +
+            "bei der Suche in der Mediensammlung zur Verfügung. " +
+            "Diese müssen also beim Programmstart nicht vorhanden sein.";
+
+    public static final String MEDIA_COLLECTION = "\"Keine Dateien mit diesem Suffix\": Dateien mit einem dort " +
+            "angegebenen Suffix werden nicht in den Index aufgenommen." +
+            PConst.LINE_SEPARATORx2 +
+            "\"Nur Dateien mit diesem Suffix\": Da werden dann genau die Dateien " +
+            "genommen, auf die das zutrifft." +
+            PConst.LINE_SEPARATORx2 +
+            "Suffixe können durch \"Komma\" getrennt angegeben werden: " +
+            "\"txt,xml\" besagt, Dateien die mit \".txt\" oder \".xml\" enden " +
+            "werden nicht - oder nur diese werden - in den Index " +
+            "aufgenommen.";
 
     public static final String EXTERN_MEDIA_COLLECTION = "Externe Mediensammlungen werden nicht bei " +
             "jedem Programmstart neu eingelesen. Die können dadurch auf externen Medien liegen und " +

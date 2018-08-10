@@ -48,7 +48,7 @@ public class SetDataPane {
     private final PToggleSwitch tglAbo = new PToggleSwitch("Abo");
     private final ColorPicker colorPicker = new ColorPicker();
     //destination
-    private final PToggleSwitch tglSubdir = new PToggleSwitch("Unterordner anlegen");
+    private final PToggleSwitch tglSubdir = new PToggleSwitch("Bei Abos Unterordner anlegen");
     private final TextField txtDestPath = new TextField();
     private final TextField txtDestName = new TextField();
     private final Slider slCut = new Slider();

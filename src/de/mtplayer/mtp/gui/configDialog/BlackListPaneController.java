@@ -153,13 +153,13 @@ public class BlackListPaneController extends AnchorPane {
 
 
         gridPane.add(new Label(" "), 0, ++row);
-        gridPane.add(new Label("kurze Filme laden:"), 0, ++row);
+        gridPane.add(new Label("keine kurzen Filme anzeigen:"), 0, ++row);
         gridPane.add(slSize, 0, ++row);
         gridPane.add(lblSize, 1, row);
         gridPane.add(btnHelpSize, 2, row);
 
         gridPane.add(new Label(" "), 0, ++row);
-        gridPane.add(new Label("nur aktuelle Filme laden:"), 0, ++row);
+        gridPane.add(new Label("nur aktuelle Filme anzeigen:"), 0, ++row);
         gridPane.add(slDays, 0, ++row);
         gridPane.add(lblDays, 1, row);
         gridPane.add(btnHelpDays, 2, row);
@@ -190,9 +190,9 @@ public class BlackListPaneController extends AnchorPane {
 
     private void setValueSlider() {
         int min = (int) slSize.getValue();
-        lblSize.setText(min == 0 ? "alles laden" : "nur Filme, länger als " + min + " Minuten laden");
+        lblSize.setText(min == 0 ? "alles anzeigen" : "nur Filme, länger als " + min + " Minuten anzeigen");
 
         min = (int) slDays.getValue();
-        lblDays.setText(min == 0 ? "alles laden" : "nur Filme der letzten " + min + " Tage laden");
+        lblDays.setText(min == 0 ? "alles anzeigen" : "nur Filme der letzten " + min + " Tage anzeigen");
     }
 }

@@ -149,21 +149,13 @@ public class StatusBarController extends AnchorPane {
         stackPane.getChildren().addAll(nonePane, loadPane, filmPane, downloadPane, aboPane);
         nonePane.toFront();
 
-        final String labelStyle = " -fx-background-color:" +
-                "        linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%)," +
-                "        linear-gradient(#020b02, #3a3a3a)," +
-                "        linear-gradient(#9d9e9d 0%, #6b6a6b 20%, #343534 80%, #242424 100%)," +
-                "        linear-gradient(#8a8a8a 0%, #6b6a6b 20%, #343534 80%, #262626 100%)," +
-                "        linear-gradient(#777777 0%, #606060 50%, #505250 51%, #2a2b2a 100%);" +
-                "    -fx-background-radius: 5;" +
-                "    -fx-padding: 5 10 5 10;" +
-                "    -fx-font-weight: bold;" +
-                "    -fx-text-fill: white;" +
-                "    -fx-effect: dropshadow( three-pass-box , rgba(255,255,255,0.2) , 1, 0.0 , 0 , 1);";
+        lblSelFilm.getStyleClass().add("lblSelectedLines");
+        lblSelDownload.getStyleClass().add("lblSelectedLines");
+        lblSelAbo.getStyleClass().add("lblSelectedLines");
 
-        lblSelFilm.setStyle(labelStyle);
-        lblSelDownload.setStyle(labelStyle);
-        lblSelAbo.setStyle(labelStyle);
+//        lblSelFilm.setStyle(labelStyle);
+//        lblSelDownload.setStyle(labelStyle);
+//        lblSelAbo.setStyle(labelStyle);
 
         progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
             @Override
