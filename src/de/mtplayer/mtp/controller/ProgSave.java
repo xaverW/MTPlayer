@@ -23,7 +23,7 @@ import de.mtplayer.mtp.controller.filmlist.writeFilmlist.WriteFilmlistJson;
 import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.tools.log.PLog;
-import javafx.application.Platform;
+import de.p2tools.p2Lib.tools.log.PLogger;
 import org.apache.commons.lang3.time.FastDateFormat;
 
 import java.io.File;
@@ -56,43 +56,56 @@ public class ProgSave {
         try (IoWriteXml writer = new IoWriteXml(progData)) {
             writer.writeData();
         } catch (final Exception ex) {
-            ex.printStackTrace();
+            PLog.errorLog(951201478, ex);
         }
 
         if (ProgData.reset) {
-            // das Programm soll beim nächsten Start mit den Standardeinstellungen gestartet werden
-            // dazu wird den Ordner mit den Einstellungen umbenannt
+            reset();
+        }
+    }
+
+    private void reset() {
+        // das Programm soll beim nächsten Start mit den Standardeinstellungen gestartet werden
+        // dazu wird den Ordner mit den Einstellungen umbenannt
+        try {
+            PLog.sysLog("Programm reset: Start Pfad umbenennen");
+            PLogger.removeFileHandler(); // sonst mault Windows
+
             String dir1 = ProgInfos.getSettingsDirectory_String();
             if (dir1.endsWith(File.separator)) {
                 dir1 = dir1.substring(0, dir1.length() - 1);
             }
 
-            try {
-                final Path path1 = Paths.get(dir1);
-                final String dir2 = dir1 + "--" + FastDateFormat.getInstance("yyyy.MM.dd__HH.mm.ss").format(new Date());
+            final Path path1 = Paths.get(dir1);
+            final String dir2 = dir1 + "--" + FastDateFormat.getInstance("yyyy.MM.dd__HH.mm.ss").format(new Date());
+            PLog.sysLog("Pfad verschieben: " + dir1);
+            PLog.sysLog("  nach: " + dir2);
 
-                Files.move(path1, Paths.get(dir2), StandardCopyOption.REPLACE_EXISTING);
-                Files.deleteIfExists(path1);
-            } catch (final IOException e) {
-                PLog.userLog("Die Einstellungen konnten nicht zurückgesetzt werden.");
-                Platform.runLater(() -> {
-                    PAlert.showErrorAlert("Fehler", "Einstellungen zurückgesetzen",
-                            "Die Einstellungen konnten nicht zurückgesetzt werden." + PConst.LINE_SEPARATORx2
-                                    + "Sie müssen jetzt das Programm beenden, dann den Ordner:" + PConst.LINE_SEPARATORx2
-                                    + ProgInfos.getSettingsDirectory_String()
-                                    + PConst.LINE_SEPARATORx2
-                                    + "von Hand löschen und das Programm wieder starten.");
-                    open = false;
-                });
-                while (open) {
-                    try {
-                        wait(100);
-                    } catch (final Exception ignored) {
-                    }
+            Files.move(path1, Paths.get(dir2), StandardCopyOption.REPLACE_EXISTING);
+            Files.deleteIfExists(path1);
+            PLog.sysLog("  moved :)");
+
+        } catch (final Exception ex) {
+            PLog.errorLog(912012014, ex, "Die Einstellungen konnten nicht zurückgesetzt werden.");
+            try {
+                PAlert.showErrorAlert("Fehler", "Einstellungen zurückgesetzen",
+                        "Die Einstellungen konnten nicht zurückgesetzt werden." + PConst.LINE_SEPARATORx2
+                                + "Sie müssen jetzt das Programm beenden, dann den Ordner:" + PConst.LINE_SEPARATORx2
+                                + ProgInfos.getSettingsDirectory_String()
+                                + PConst.LINE_SEPARATORx2
+                                + "von Hand löschen und das Programm wieder starten.");
+                open = false;
+            } catch (Exception ignore) {
+                open = false;
+            }
+            while (open) {
+                try {
+                    wait(100);
+                } catch (final Exception ignored) {
                 }
-                PLog.errorLog(465690123, e);
             }
         }
+
     }
 
     /**
