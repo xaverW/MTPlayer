@@ -31,6 +31,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -45,17 +46,18 @@ public class MediaConfigPaneMediaListController extends AnchorPane {
     private final CheckBox cbxAccordion = new CheckBox("");
     private final BooleanProperty accordionProp = ProgConfig.MEDIA_CONFIG_DIALOG_ACCORDION.getBooleanProperty();
     private ScrollPane scrollPane = new ScrollPane();
+    private final Stage stage;
 
-    public MediaConfigPaneMediaListController() {
+    public MediaConfigPaneMediaListController(Stage stage) {
+        this.stage = stage;
         progData = ProgData.getInstance();
 
         cbxAccordion.selectedProperty().bindBidirectional(accordionProp);
         cbxAccordion.selectedProperty().addListener((observable, oldValue, newValue) -> setAccordion());
 
-        HBox.setHgrow(scrollPane, Priority.ALWAYS);
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
-
+        HBox.setHgrow(scrollPane, Priority.ALWAYS);
         hBox.getChildren().addAll(cbxAccordion, scrollPane);
         getChildren().addAll(hBox);
 
@@ -91,13 +93,11 @@ public class MediaConfigPaneMediaListController extends AnchorPane {
     }
 
     private void initTable(Collection<TitledPane> result) {
-        HBox hBoxSum = new HBox();
+        HBox hBoxSum = new HBox(10);
         hBoxSum.setPadding(new Insets(10));
-        hBoxSum.setSpacing(10);
         hBoxSum.getChildren().addAll(new Label("Anzahl Medien gesamt:"), lblGesamtMedia);
 
-        VBox vBox = new VBox();
-        vBox.setSpacing(10);
+        VBox vBox = new VBox(10);
 
         TitledPane tpConfig = new TitledPane("Mediensammlung", vBox);
         result.add(tpConfig);
@@ -126,7 +126,6 @@ public class MediaConfigPaneMediaListController extends AnchorPane {
         externalColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
 
         tableView.getColumns().addAll(nameColumn, pathColumn, sizeColumn, colColumn, externalColumn);
-
 
         nameColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(40.0 / 100));
         pathColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(20.0 / 100));

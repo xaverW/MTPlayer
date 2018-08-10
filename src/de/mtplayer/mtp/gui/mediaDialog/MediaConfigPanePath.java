@@ -33,6 +33,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 
 import java.util.Collection;
 
@@ -43,14 +44,15 @@ public class MediaConfigPanePath {
     private final TextField txtPath = new TextField();
     private MediaPathData mediaPathData = null;
     private final ProgData progData;
+    private final Stage stage;
 
-    public MediaConfigPanePath() {
+    public MediaConfigPanePath(Stage stage) {
+        this.stage = stage;
         this.progData = ProgData.getInstance();
     }
 
     public void makeTable(Collection<TitledPane> result) {
-        VBox vBox = new VBox();
-        vBox.setSpacing(10);
+        VBox vBox = new VBox(10);
 
         initTable(vBox);
         makeConfig(vBox);
@@ -90,8 +92,8 @@ public class MediaConfigPanePath {
             }
         });
 
-        final Button btnHelp = new PButton().helpButton("Mediensammlungen verwalten",
-                HelpText.INTERN_MEDIA_COLLECTION);
+        final Button btnHelp = new PButton().helpButton(stage,
+                "Mediensammlungen verwalten", HelpText.INTERN_MEDIA_COLLECTION);
 
         Button btnNew = new Button("");
         btnNew.setGraphic(new Icons().ICON_BUTTON_ADD);

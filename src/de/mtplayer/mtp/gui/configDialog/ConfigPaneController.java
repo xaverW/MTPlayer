@@ -129,28 +129,24 @@ public class ConfigPaneController extends AnchorPane {
 
         final Button btnHelpAbo = new PButton().helpButton(stage, "Abos automatisch suchen",
                 HelpText.SEARCH_ABOS_IMMEDIATELY);
-        HBox hBoxAbo = new HBox(10);
-        hBoxAbo.getChildren().add(btnHelpAbo);
-        hBoxAbo.setAlignment(Pos.CENTER_RIGHT);
-        HBox.setHgrow(hBoxAbo, Priority.ALWAYS);
-
-        gridPane.add(tglSearchAbo, 0, 0);
-        gridPane.add(hBoxAbo, 1, 0);
+        GridPane.setHalignment(btnHelpAbo, HPos.RIGHT);
 
 
         final PToggleSwitch tglStartDownload = new PToggleSwitch("Downloads aus Abos sofort starten:");
         tglStartDownload.selectedProperty().bindBidirectional(propDown);
+
         final Button btnHelpDownload = new PButton().helpButton(stage, "Downloads sofort starten",
                 HelpText.START_DOWNLOADS_FROM_ABOS_IMMEDIATELY);
-        HBox hBoxDownload = new HBox(10);
-        hBoxDownload.getChildren().add(btnHelpDownload);
-        HBox.setHgrow(hBoxDownload, Priority.ALWAYS);
-        hBoxDownload.setAlignment(Pos.CENTER_RIGHT);
+        GridPane.setHalignment(btnHelpDownload, HPos.RIGHT);
 
+
+        gridPane.add(tglSearchAbo, 0, 0);
+        gridPane.add(btnHelpAbo, 1, 0);
         gridPane.add(tglStartDownload, 0, 1);
-        gridPane.add(hBoxDownload, 1, 1);
+        gridPane.add(btnHelpDownload, 1, 1);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(), PColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcComputedSizeAndHgrow());
     }
 
     private void makeLogfile(Collection<TitledPane> result) {
@@ -165,7 +161,7 @@ public class ConfigPaneController extends AnchorPane {
         gridPane.setPadding(new Insets(20));
         vBox.getChildren().add(gridPane);
 
-        final PToggleSwitch tglEnableLog = new PToggleSwitch("Ein Logfile anlegen:");
+        final PToggleSwitch tglEnableLog = new PToggleSwitch("Ein Logfile anlegen:", false, false);
         tglEnableLog.selectedProperty().bindBidirectional(propLog);
         tglEnableLog.selectedProperty().addListener(((observable, oldValue, newValue) -> {
             if (newValue == null) {
@@ -177,8 +173,6 @@ public class ConfigPaneController extends AnchorPane {
                 PLogger.removeFileHandler();
             }
         }));
-        HBox hBoxTgl = new HBox(10);
-        hBoxTgl.getChildren().add(tglEnableLog);
 
         final Button btnHelp = new PButton().helpButton(stage, "Logfile", HelpText.LOGFILE);
 
@@ -210,7 +204,7 @@ public class ConfigPaneController extends AnchorPane {
         });
 
         int row = 0;
-        gridPane.add(hBoxTgl, 0, row, 2, 1);
+        gridPane.add(tglEnableLog, 0, row, 2, 1);
         gridPane.add(btnHelp, 3, row);
 
         gridPane.add(new Label(""), 0, ++row);
@@ -221,7 +215,8 @@ public class ConfigPaneController extends AnchorPane {
         gridPane.add(btnReset, 3, row);
 
         gridPane.add(btnChange, 0, ++row, 2, 1);
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(), PColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcComputedSizeAndHgrow());
 
         txtFileManager.disableProperty().bind(tglEnableLog.selectedProperty().not());
         btnFile.disableProperty().bind(tglEnableLog.selectedProperty().not());
@@ -349,7 +344,8 @@ public class ConfigPaneController extends AnchorPane {
 
         gridPane.add(btnNow, 0, ++row);
         gridPane.add(hBoxHyper, 0, ++row);
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(), PColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcComputedSizeAndHgrow());
     }
 
 }

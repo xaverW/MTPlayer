@@ -25,13 +25,19 @@ import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.mediaDb.MediaData;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.tools.storedFilter.Filter;
+import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.POpen;
+import de.p2tools.p2Lib.guiTools.pToggleSwitch.GuiTools;
 import javafx.application.Platform;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.util.Date;
 import java.util.regex.Pattern;
@@ -53,8 +59,10 @@ public class MediaDialogPaneMedia extends ScrollPane {
     ProgData progData = ProgData.getInstance();
     private String searchStr = "";
     private final Listener listenerDbStop;
+    private final Stage stage;
 
-    public MediaDialogPaneMedia() {
+    public MediaDialogPaneMedia(Stage stage) {
+        this.stage = stage;
         initPanel();
         listenerDbStop = new Listener(Listener.EREIGNIS_MEDIA_DB_STOP, MediaDialogController.class.getSimpleName()) {
             @Override
@@ -69,45 +77,41 @@ public class MediaDialogPaneMedia extends ScrollPane {
     }
 
     private void initPanel() {
-        HBox hBoxSum = new HBox();
+        HBox hBoxSum = new HBox(10);
         hBoxSum.setPadding(new Insets(10));
-        hBoxSum.setSpacing(10);
-        Region region = new Region();
-        HBox.setHgrow(region, Priority.ALWAYS);
         hBoxSum.getChildren().addAll(new Label("Treffer:"), lblTrefferMedia,
-                region, new Label("Anzahl Medien gesamt:"), lblGesamtMedia);
+                GuiTools.getRegionHgrow(), new Label("Anzahl Medien gesamt:"), lblGesamtMedia);
 
 
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(10));
         gridPane.setHgap(10);
         gridPane.setVgap(10);
-        gridPane.add(new Label("Titel:"), 0, 0);
-        GridPane.setHgrow(txtTitleMedia, Priority.ALWAYS);
+
         txtTitleMedia.setEditable(false);
+        txtPathMedia.setEditable(false);
+
+        gridPane.add(new Label("Titel:"), 0, 0);
         gridPane.add(txtTitleMedia, 1, 0);
         gridPane.add(btnPlay, 2, 0);
-
         gridPane.add(new Label("Pfad:"), 0, 1);
-        txtPathMedia.setEditable(false);
-        GridPane.setHgrow(txtPathMedia, Priority.ALWAYS);
         gridPane.add(txtPathMedia, 1, 1);
         gridPane.add(btnOpen, 2, 1);
 
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcComputedSizeAndHgrow());
 
-        region = new Region();
-        HBox.setHgrow(region, Priority.ALWAYS);
         HBox hBoxProgess = new HBox();
         hBoxProgess.setSpacing(10);
         hBoxProgess.setPadding(new Insets(10));
         progress.setVisible(false);
-        hBoxProgess.getChildren().addAll(progress, region, btnCreateMediaDB);
+        hBoxProgess.getChildren().addAll(progress, GuiTools.getRegionHgrow(), btnCreateMediaDB);
 
 
         tableMedia.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
+        VBox.setVgrow(tableMedia, Priority.ALWAYS);
 
         VBox vBoxMedia = new VBox();
-        VBox.setVgrow(tableMedia, Priority.ALWAYS);
         vBoxMedia.getChildren().addAll(hBoxSum, tableMedia, gridPane, hBoxProgess);
 
         this.setContent(vBoxMedia);
@@ -133,7 +137,7 @@ public class MediaDialogPaneMedia extends ScrollPane {
         btnPlay.disableProperty().bind(txtPathMedia.textProperty().isEmpty().and(txtTitleMedia.textProperty().isEmpty()));
 
         initTableMedia();
-        setTableDate();
+        setTableMedia();
     }
 
     private void play() {
@@ -148,13 +152,6 @@ public class MediaDialogPaneMedia extends ScrollPane {
     private void open() {
         String s = txtPathMedia.getText();
         POpen.openDir(s, ProgConfig.SYSTEM_PROG_OPEN_DIR.getStringProperty(), new Icons().ICON_BUTTON_FILE_OPEN);
-    }
-
-    private void setTableDate() {
-        SortedList<MediaData> sortedList = progData.mediaList.getSortedList();
-        lblGesamtMedia.setText(progData.mediaList.size() + "");
-        tableMedia.setItems(sortedList);
-        sortedList.comparatorProperty().bind(tableMedia.comparatorProperty());
     }
 
 
@@ -193,6 +190,14 @@ public class MediaDialogPaneMedia extends ScrollPane {
         });
     }
 
+    private void setTableMedia() {
+        SortedList<MediaData> sortedList = progData.mediaList.getSortedList();
+        sortedList.comparatorProperty().bind(tableMedia.comparatorProperty());
+        tableMedia.setItems(sortedList);
+
+        lblGesamtMedia.setText(progData.mediaList.size() + "");
+    }
+
 
     public void filter(String searchStr) {
         this.searchStr = searchStr;
@@ -217,5 +222,4 @@ public class MediaDialogPaneMedia extends ScrollPane {
     private boolean filterMedia(MediaData media, String search) {
         return media.getName().toLowerCase().contains(search);
     }
-
 }

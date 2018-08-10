@@ -27,6 +27,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -42,18 +43,19 @@ public class MediaConfigPaneHistoryController extends AnchorPane {
     private final CheckBox cbxAccordion = new CheckBox("");
     private final BooleanProperty accordionProp = ProgConfig.MEDIA_CONFIG_DIALOG_ACCORDION.getBooleanProperty();
     private ScrollPane scrollPane = new ScrollPane();
+    private final Stage stage;
 
-    public MediaConfigPaneHistoryController(boolean history) {
-        progData = ProgData.getInstance();
+    public MediaConfigPaneHistoryController(Stage stage, boolean history) {
+        this.stage = stage;
         this.history = history;
+        progData = ProgData.getInstance();
 
         cbxAccordion.selectedProperty().bindBidirectional(accordionProp);
         cbxAccordion.selectedProperty().addListener((observable, oldValue, newValue) -> setAccordion());
 
-        HBox.setHgrow(scrollPane, Priority.ALWAYS);
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
-
+        HBox.setHgrow(scrollPane, Priority.ALWAYS);
         hBox.getChildren().addAll(cbxAccordion, scrollPane);
         getChildren().addAll(hBox);
 
@@ -100,8 +102,7 @@ public class MediaConfigPaneHistoryController extends AnchorPane {
     }
 
     private void makeTable(Collection<TitledPane> result) {
-        VBox vBox = new VBox();
-        vBox.setSpacing(10);
+        VBox vBox = new VBox(10);
 
         TitledPane tpConfig = new TitledPane(history ? "History" : "Downloads", vBox);
         result.add(tpConfig);
@@ -143,7 +144,8 @@ public class MediaConfigPaneHistoryController extends AnchorPane {
                 if (historyDataArrayList.isEmpty()) {
                     PAlert.showInfoNoSelection();
                 } else {
-                    ContextMenu contextMenu = new MediaConfigPaneHistoryContextMenu(historyDataArrayList, history).getContextMenu();
+                    ContextMenu contextMenu =
+                            new MediaConfigPaneHistoryContextMenu(stage, historyDataArrayList, history).getContextMenu();
                     tableView.setContextMenu(contextMenu);
 
                 }

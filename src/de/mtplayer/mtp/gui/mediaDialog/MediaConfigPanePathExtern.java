@@ -30,12 +30,15 @@ import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import javafx.beans.binding.Bindings;
 import javafx.collections.transformation.SortedList;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.util.Collection;
@@ -45,14 +48,15 @@ public class MediaConfigPanePathExtern {
 
     private final ProgData progData;
     private final TableView<MediaPathData> tableView = new TableView<>();
+    private final Stage stage;
 
-    public MediaConfigPanePathExtern() {
+    public MediaConfigPanePathExtern(Stage stage) {
+        this.stage = stage;
         this.progData = ProgData.getInstance();
     }
 
     public void make(Collection<TitledPane> result) {
-        VBox vBox = new VBox();
-        vBox.setSpacing(10);
+        VBox vBox = new VBox(10);
 
         TitledPane tpConfig = new TitledPane("Externe Medien", vBox);
         result.add(tpConfig);
@@ -80,8 +84,8 @@ public class MediaConfigPanePathExtern {
             }
         });
 
-        final Button btnHelp = new PButton().helpButton("Externe Mediensammlungen verwalten",
-                HelpText.EXTERN_MEDIA_COLLECTION);
+        final Button btnHelp = new PButton().helpButton(stage,
+                "Externe Mediensammlungen verwalten", HelpText.EXTERN_MEDIA_COLLECTION);
 
         final Button btnAdd = new Button("");
         btnAdd.setTooltip(new Tooltip("Eine neue Sammlung wird angelegt und vom angegebenen Pfad eingelesen."));
@@ -102,7 +106,6 @@ public class MediaConfigPanePathExtern {
         });
 
         int row = 0;
-        GridPane.setHalignment(btnAdd, HPos.RIGHT);
         gridPane.add(new Label("Name der Sammlung:"), 0, row);
         gridPane.add(txtName, 1, row);
         gridPane.add(btnAdd, 2, row);
@@ -111,7 +114,8 @@ public class MediaConfigPanePathExtern {
         gridPane.add(txtPath, 1, row);
         gridPane.add(btnPath, 2, row);
 
-        gridPane.getColumnConstraints().addAll(new ColumnConstraints(), PColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcComputedSizeAndHgrow());
 
         initTable(vBox);
 
@@ -148,11 +152,9 @@ public class MediaConfigPanePathExtern {
         hHelp.getChildren().add(btnHelp);
 
         HBox hBox = new HBox(10);
-        hBox.setAlignment(Pos.CENTER_RIGHT);
-
         hBox.getChildren().addAll(btnUpdate, btnDel, hHelp);
-        vBox.getChildren().add(hBox);
-        vBox.getChildren().addAll(gridPane);
+
+        vBox.getChildren().addAll(hBox, gridPane);
     }
 
     private void initTable(VBox vBox) {

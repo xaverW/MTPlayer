@@ -19,12 +19,17 @@ package de.mtplayer.mtp.gui.mediaDialog;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.HistoryData;
 import de.mtplayer.mtp.tools.storedFilter.Filter;
+import de.p2tools.p2Lib.guiTools.pToggleSwitch.GuiTools;
 import javafx.application.Platform;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.util.Date;
 import java.util.regex.Pattern;
@@ -39,32 +44,33 @@ public class MediaDialogPaneAbo extends ScrollPane {
 
     ProgData progData = ProgData.getInstance();
     String searchStr = "";
+    private final Stage stage;
 
-    public MediaDialogPaneAbo() {
+    public MediaDialogPaneAbo(Stage stage) {
+        this.stage = stage;
         initPanel();
     }
 
     private void initPanel() {
-        HBox hBox = new HBox();
+        HBox hBox = new HBox(10);
         hBox.setPadding(new Insets(10));
-        hBox.setSpacing(10);
-        Region region = new Region();
-        HBox.setHgrow(region, Priority.ALWAYS);
-        hBox.getChildren().addAll(new Label("Treffer:"), lblTrefferAbo, region,
+        hBox.getChildren().addAll(new Label("Treffer:"), lblTrefferAbo, GuiTools.getRegionHgrow(),
                 new Label("Anzahl Medien gesamt:"), lblGesamtAbo);
 
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(10));
         gridPane.setHgap(10);
         gridPane.setVgap(10);
-        gridPane.add(new Label("Titel:"), 0, 0);
+
         GridPane.setHgrow(txtTitleAbo, Priority.ALWAYS);
         txtTitleAbo.setEditable(false);
-        gridPane.add(txtTitleAbo, 1, 0);
 
-        gridPane.add(new Label("Url:"), 0, 1);
-        txtUrlAbo.setEditable(false);
         GridPane.setHgrow(txtUrlAbo, Priority.ALWAYS);
+        txtUrlAbo.setEditable(false);
+
+        gridPane.add(new Label("Titel:"), 0, 0);
+        gridPane.add(txtTitleAbo, 1, 0);
+        gridPane.add(new Label("Url:"), 0, 1);
         gridPane.add(txtUrlAbo, 1, 1);
 
         VBox vBoxAbo = new VBox();
@@ -83,7 +89,7 @@ public class MediaDialogPaneAbo extends ScrollPane {
         });
 
         initTableAbo();
-        setTableDate();
+        setTableAbo();
     }
 
     private void initTableAbo() {
@@ -121,12 +127,12 @@ public class MediaDialogPaneAbo extends ScrollPane {
 
     }
 
-    private void setTableDate() {
+    private void setTableAbo() {
         SortedList<HistoryData> sortedList = progData.erledigteAbos.getSortedList();
-
-        lblGesamtAbo.setText(progData.erledigteAbos.size() + "");
         tableAbo.setItems(sortedList);
         sortedList.comparatorProperty().bind(tableAbo.comparatorProperty());
+
+        lblGesamtAbo.setText(progData.erledigteAbos.size() + "");
     }
 
 

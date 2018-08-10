@@ -18,13 +18,11 @@ package de.mtplayer.mtp.gui.mediaDialog;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.gui.tools.HelpText;
-import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.dialog.PDialog;
+import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Tab;
@@ -33,81 +31,75 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 
 public class MediaConfigController extends PDialog {
 
+    private final VBox vBoxDialog = new VBox(10);
     private TabPane tabPane = new TabPane();
     private Button btnOk = new Button("Ok");
-    Button btnHlp = new Button("");
-    Button btnCreateMediaDB = new Button("Mediensammlung neu aufbauen");
-    ProgressBar progress = new ProgressBar();
+    private Button btnCreateMediaDB = new Button("Mediensammlung neu aufbauen");
+    private ProgressBar progress = new ProgressBar();
 
     private final ProgData progData;
+    private Stage stage;
 
     public MediaConfigController() {
         super(ProgConfig.MEDIA_CONFIG_DIALOG_SIZE.getStringProperty(), "Mediensammlung", true);
-
         this.progData = ProgData.getInstance();
 
-        VBox vBox = new VBox();
-        vBox.setPadding(new Insets(10));
-        vBox.setSpacing(10);
-
-        vBox.getChildren().add(tabPane);
+        vBoxDialog.setPadding(new Insets(10));
         VBox.setVgrow(tabPane, Priority.ALWAYS);
-
-        HBox hBoxHlp = new HBox();
-        hBoxHlp.setSpacing(10);
-        hBoxHlp.setAlignment(Pos.CENTER_LEFT);
-        HBox.setHgrow(hBoxHlp, Priority.ALWAYS);
-        hBoxHlp.getChildren().addAll(btnHlp, btnCreateMediaDB, progress);
-
-        HBox hBox = new HBox();
-        hBox.setPadding(new Insets(5));
-        hBox.getChildren().addAll(hBoxHlp, btnOk);
-        vBox.getChildren().add(hBox);
-
-        init(vBox, true);
+        vBoxDialog.getChildren().addAll(tabPane);
+        init(vBoxDialog, true);
     }
 
     @Override
     public void make() {
+        stage = getStage();
+
+        final Button btnHelp = new PButton().helpButton(stage, "Medien", HelpText.MEDIA_DIALOG);
+        HBox hBoxHlp = new HBox(10);
+        HBox.setHgrow(hBoxHlp, Priority.ALWAYS);
+        hBoxHlp.getChildren().addAll(btnHelp, btnCreateMediaDB, progress);
+
+        HBox hBoxOk = new HBox();
+        hBoxOk.setPadding(new Insets(5));
+        hBoxOk.getChildren().addAll(hBoxHlp, btnOk);
+
+        vBoxDialog.getChildren().addAll(hBoxOk);
+
         btnOk.setOnAction(a -> close());
         progress.visibleProperty().bind(progData.mediaList.propSearchProperty());
         btnCreateMediaDB.disableProperty().bind(progData.mediaList.propSearchProperty());
         btnCreateMediaDB.setOnAction(event -> progData.mediaList.createMediaDb());
-
-        btnHlp.setText("");
-        btnHlp.setGraphic(new Icons().ICON_BUTTON_HELP);
-        btnHlp.setOnAction(a -> PAlert.showHelpAlert("Medien", HelpText.MEDIA_DIALOG));
 
         initPanel();
     }
 
     private void initPanel() {
         try {
-
-            AnchorPane mediaConfigPaneController = new MediaConfigPaneMediaController();
+            AnchorPane mediaConfigPaneController = new MediaConfigPaneMediaController(stage);
             Tab tab = new Tab("Einstellungen Mediensammlung");
             tab.setClosable(false);
             tab.setContent(mediaConfigPaneController);
             tabPane.getTabs().add(tab);
 
 
-            AnchorPane mediaListPaneController = new MediaConfigPaneMediaListController();
+            AnchorPane mediaListPaneController = new MediaConfigPaneMediaListController(stage);
             tab = new Tab("Mediensammlung");
             tab.setClosable(false);
             tab.setContent(mediaListPaneController);
             tabPane.getTabs().add(tab);
 
-            AnchorPane historyListPaneController = new MediaConfigPaneHistoryController(true);
+            AnchorPane historyListPaneController = new MediaConfigPaneHistoryController(stage, true);
             tab = new Tab("gesehene Filme");
             tab.setClosable(false);
             tab.setContent(historyListPaneController);
             tabPane.getTabs().add(tab);
 
-            AnchorPane aboListPaneController = new MediaConfigPaneHistoryController(false);
+            AnchorPane aboListPaneController = new MediaConfigPaneHistoryController(stage, false);
             tab = new Tab("erledigte Abos");
             tab.setClosable(false);
             tab.setContent(aboListPaneController);

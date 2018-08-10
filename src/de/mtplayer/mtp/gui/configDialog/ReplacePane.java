@@ -88,7 +88,6 @@ public class ReplacePane {
         final Button btnHelpAscii = new PButton().helpButton(stage, "Nur ASCII-Zeichen",
                 HelpText.DOWNLOAD_ONLY_ASCII);
 
-
         final PToggleSwitch tglReplace = new PToggleSwitch("Ersetzungstabelle");
         tglReplace.selectedProperty().bindBidirectional(propReplace);
 

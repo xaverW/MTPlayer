@@ -24,13 +24,14 @@ import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.tools.storedFilter.Filter;
 import de.p2tools.p2Lib.dialog.PDialog;
 import de.p2tools.p2Lib.guiTools.PButton;
+import de.p2tools.p2Lib.guiTools.pToggleSwitch.GuiTools;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 
 public class MediaDialogController extends PDialog {
 
@@ -39,8 +40,6 @@ public class MediaDialogController extends PDialog {
     private final VBox vBoxCont = new VBox();
 
     private final TextField txtSearch = new TextField();
-
-
     private final Button btnOk = new Button("Ok");
     private final Button btnReset = new Button("");
 
@@ -49,12 +48,14 @@ public class MediaDialogController extends PDialog {
 
     private final StackPane stackPane = new StackPane();
 
-    private final MediaDialogPaneMedia mediaDialogPaneMedia = new MediaDialogPaneMedia();
-    private final MediaDialogPaneAbo mediaDialogPaneAbo = new MediaDialogPaneAbo();
-    private final ProgData progData = ProgData.getInstance();
-    private final String searchStr;
+    private MediaDialogPaneMedia mediaDialogPaneMedia;
+    private MediaDialogPaneAbo mediaDialogPaneAbo;
     private final Listener listenerDbStart;
     private final Listener listenerDbStop;
+    private final String searchStr;
+
+    private final ProgData progData = ProgData.getInstance();
+    private Stage stage;
 
 
     public MediaDialogController(String searchStr) {
@@ -79,22 +80,16 @@ public class MediaDialogController extends PDialog {
         init(rootPane, true);
     }
 
-    public void close() {
-        Listener.removeListener(listenerDbStart);
-        Listener.removeListener(listenerDbStop);
-
-        mediaDialogPaneMedia.mediaPaneClose();
-
-        progData.erledigteAbos.filterdListClearPred();
-        progData.mediaList.filterdListClearPred();
-        super.close();
-    }
-
     @Override
     public void make() {
-        initPanel();
+        stage = getStage();
+
+        mediaDialogPaneMedia = new MediaDialogPaneMedia(stage);
+        mediaDialogPaneAbo = new MediaDialogPaneAbo(stage);
         mediaDialogPaneMedia.make();
         mediaDialogPaneAbo.make();
+
+        initPanel();
 
         final ToggleGroup tg = new ToggleGroup();
         rbMedien.setToggleGroup(tg);
@@ -132,24 +127,33 @@ public class MediaDialogController extends PDialog {
         filter();
     }
 
+    public void close() {
+        Listener.removeListener(listenerDbStart);
+        Listener.removeListener(listenerDbStop);
+
+        mediaDialogPaneMedia.mediaPaneClose();
+
+        progData.erledigteAbos.filterdListClearPred();
+        progData.mediaList.filterdListClearPred();
+        super.close();
+    }
+
     private void initPanel() {
         try {
             vBoxDialog.setPadding(new Insets(10));
             vBoxDialog.setSpacing(20);
-
-            vBoxCont.getStyleClass().add("dialog-border");
-            vBoxCont.setSpacing(10);
-            VBox.setVgrow(vBoxCont, Priority.ALWAYS);
-
             rootPane.getChildren().addAll(vBoxDialog);
+
             AnchorPane.setLeftAnchor(vBoxDialog, 0.0);
             AnchorPane.setBottomAnchor(vBoxDialog, 0.0);
             AnchorPane.setRightAnchor(vBoxDialog, 0.0);
             AnchorPane.setTopAnchor(vBoxDialog, 0.0);
 
+            VBox.setVgrow(vBoxCont, Priority.ALWAYS);
+            vBoxCont.getStyleClass().add("dialog-border");
+            vBoxCont.setSpacing(10);
 
-            HBox hBox = new HBox();
-            hBox.setSpacing(10);
+            HBox hBox = new HBox(10);
             HBox.setHgrow(txtSearch, Priority.ALWAYS);
             hBox.getChildren().addAll(txtSearch, btnReset);
             vBoxCont.getChildren().add(hBox);
@@ -157,8 +161,7 @@ public class MediaDialogController extends PDialog {
             final ToggleGroup group = new ToggleGroup();
             rbMedien.setToggleGroup(group);
             rbAbos.setToggleGroup(group);
-            hBox = new HBox();
-            hBox.setSpacing(10);
+            hBox = new HBox(20);
             hBox.getChildren().addAll(rbMedien, rbAbos);
             vBoxCont.getChildren().add(hBox);
 
@@ -173,16 +176,11 @@ public class MediaDialogController extends PDialog {
             vBoxCont.getChildren().add(stackPane);
             mediaDialogPaneMedia.toFront();
 
-            Button btnHelp = new PButton().helpButton("Suche in der Mediensammlung",
-                    HelpText.SEARCH_MEDIA_DIALOG);
+            Button btnHelp = new PButton().helpButton(stage,
+                    "Suche in der Mediensammlung", HelpText.SEARCH_MEDIA_DIALOG);
 
-            Region region = new Region();
-            HBox.setHgrow(region, Priority.ALWAYS);
-            hBox = new HBox();
-            hBox.setSpacing(10);
-            hBox.setAlignment(Pos.CENTER_RIGHT);
-
-            hBox.getChildren().addAll(btnHelp, region, btnOk);
+            hBox = new HBox(10);
+            hBox.getChildren().addAll(btnHelp, GuiTools.getRegionHgrow(), btnOk);
 
             vBoxDialog.getChildren().addAll(vBoxCont, hBox);
         } catch (final Exception ex) {

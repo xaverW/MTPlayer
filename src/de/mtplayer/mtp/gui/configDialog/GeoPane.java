@@ -26,7 +26,6 @@ import javafx.beans.property.BooleanProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 public class GeoPane {
@@ -53,10 +52,8 @@ public class GeoPane {
 
         TitledPane tpConfig = new TitledPane("Geogeblockte Filme", gridPane);
 
-        final PToggleSwitch tglGeo = new PToggleSwitch("geblockte Sendungen gelb markieren:");
+        final PToggleSwitch tglGeo = new PToggleSwitch("geblockte Sendungen gelb markieren:", false, false);
         tglGeo.selectedProperty().bindBidirectional(geoProperty);
-        HBox hBoxTgl = new HBox(10);
-        hBoxTgl.getChildren().add(tglGeo);
 
         final Button btnHelpGeo = new PButton().helpButton(stage, "Geogeblockte Filme", HelpText.CONFIG_GEO);
 
@@ -96,7 +93,7 @@ public class GeoPane {
         });
 
 
-        gridPane.add(hBoxTgl, 0, row, 2, 1);
+        gridPane.add(tglGeo, 0, row, 2, 1);
         gridPane.add(btnHelpGeo, 2, row);
         gridPane.add(new Label(" "), 0, ++row);
         // eigener Standort angeben
@@ -108,7 +105,8 @@ public class GeoPane {
         gridPane.add(rbEu, 1, ++row);
         gridPane.add(rbSonst, 1, ++row);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(), PColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcComputedSizeAndHgrow());
 
         return tpConfig;
     }

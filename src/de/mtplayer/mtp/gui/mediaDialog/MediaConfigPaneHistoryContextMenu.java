@@ -23,6 +23,7 @@ import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.tools.SysTools;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
@@ -31,11 +32,13 @@ public class MediaConfigPaneHistoryContextMenu {
     private final ProgData progData;
     private final ArrayList<HistoryData> historyDataArrayList;
     private final boolean history;
+    private final Stage stage;
 
-    public MediaConfigPaneHistoryContextMenu(ArrayList<HistoryData> historyDataArrayList, boolean history) {
-        this.progData = ProgData.getInstance();
+    public MediaConfigPaneHistoryContextMenu(Stage stage, ArrayList<HistoryData> historyDataArrayList, boolean history) {
+        this.stage = stage;
         this.historyDataArrayList = historyDataArrayList;
         this.history = history;
+        this.progData = ProgData.getInstance();
     }
 
     public ContextMenu getContextMenu() {
@@ -45,7 +48,6 @@ public class MediaConfigPaneHistoryContextMenu {
     }
 
     private void getMenu(ContextMenu contextMenu) {
-
         Film film = progData.filmlist.getFilmByUrl(historyDataArrayList.get(0).getUrl());
 
         // Start/Stop
@@ -79,7 +81,6 @@ public class MediaConfigPaneHistoryContextMenu {
         miDownload.setOnAction(a -> progData.filmlist.saveFilm(film, null));
 
         contextMenu.getItems().addAll(miDelUrl, miCopyUrl, miShowFilm, miDownload);
-
     }
 
 }

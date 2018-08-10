@@ -26,6 +26,7 @@ import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -42,8 +43,10 @@ public class MediaConfigPaneMediaController extends AnchorPane {
 
     BooleanProperty prefSuff = ProgConfig.MEDIA_DB_WITH_OUT_SUFFIX.getBooleanProperty();
     StringProperty prefSuffStr = ProgConfig.MEDIA_DB_SUFFIX.getStringProperty();
+    private final Stage stage;
 
-    public MediaConfigPaneMediaController() {
+    public MediaConfigPaneMediaController(Stage stage) {
+        this.stage = stage;
         progData = ProgData.getInstance();
 
         cbxAccordion.selectedProperty().bindBidirectional(accordionProp);
@@ -79,8 +82,8 @@ public class MediaConfigPaneMediaController extends AnchorPane {
     private Collection<TitledPane> createPanes() {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
         makeConfig(result);
-        new MediaConfigPanePath().makeTable(result);
-        new MediaConfigPanePathExtern().make(result);
+        new MediaConfigPanePath(stage).makeTable(result);
+        new MediaConfigPanePathExtern(stage).make(result);
         return result;
     }
 
@@ -90,7 +93,7 @@ public class MediaConfigPaneMediaController extends AnchorPane {
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
         gridPane.setVgap(15);
-        gridPane.setPadding(new Insets(20, 20, 20, 20));
+        gridPane.setPadding(new Insets(20));
 
         TitledPane tpConfig = new TitledPane("Allgemein", vBox);
         result.add(tpConfig);
@@ -98,9 +101,8 @@ public class MediaConfigPaneMediaController extends AnchorPane {
         final RadioButton rbWithOutSuff = new RadioButton("Keine Dateien mit diesem Suffix (z.B.: txt,xml,jpg");
         final RadioButton rbWithSuff = new RadioButton("Nur Dateien mit diesem Suffix  (z.B.: mp4,flv,m4v");
 
-        final Button btnHelp = new PButton().helpButton("Mediensammlungen verwalten",
-                HelpText.MEDIA_COLLECTION);
-
+        final Button btnHelp = new PButton().helpButton(stage,
+                "Mediensammlungen verwalten", HelpText.MEDIA_COLLECTION);
 
         final ToggleGroup tg = new ToggleGroup();
         rbWithOutSuff.setToggleGroup(tg);
@@ -111,7 +113,6 @@ public class MediaConfigPaneMediaController extends AnchorPane {
 
         TextField txtSuff = new TextField();
         txtSuff.textProperty().bindBidirectional(prefSuffStr);
-
 
         gridPane.add(rbWithOutSuff, 0, 0);
         gridPane.add(btnHelp, 1, 0);
