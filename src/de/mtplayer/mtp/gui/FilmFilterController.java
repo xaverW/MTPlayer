@@ -21,7 +21,9 @@ import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.mtplayer.mtp.gui.tools.HelpText;
+import de.mtplayer.mtp.tools.storedFilter.ProgInitFilter;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
+import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PGuiTools;
@@ -169,6 +171,8 @@ public class FilmFilterController extends FilterController {
         // Filterprofile einrichten
         cbFilter.setItems(progData.storedFilter.getStordeFilterList());
         cbFilter.getSelectionModel().selectFirst();
+        cbFilter.setTooltip(new Tooltip("Gespeicherte Filterprofile können" + PConst.LINE_SEPARATOR +
+                "hier geladen werden"));
 
         final StringConverter<SelectedFilter> converter = new StringConverter<SelectedFilter>() {
             @Override
@@ -184,31 +188,35 @@ public class FilmFilterController extends FilterController {
         };
         cbFilter.setConverter(converter);
 
-        final MenuItem load = new MenuItem("anwenden");
-        load.setOnAction(e -> loadFilter());
-        load.disableProperty().bind(cbFilter.getSelectionModel().selectedItemProperty().isNull());
+        final MenuItem miLoad = new MenuItem("Filter wieder laden");
+        miLoad.setOnAction(e -> loadFilter());
+        miLoad.disableProperty().bind(cbFilter.getSelectionModel().selectedItemProperty().isNull());
 
-        final MenuItem save = new MenuItem("speichern");
-        save.setOnAction(e -> saveFilter());
-        save.disableProperty().bind(cbFilter.getSelectionModel().selectedItemProperty().isNull());
+        final MenuItem miSave = new MenuItem("aktuelle Einstellungen als Filter speichern");
+        miSave.setOnAction(e -> saveFilter());
+        miSave.disableProperty().bind(cbFilter.getSelectionModel().selectedItemProperty().isNull());
 
-        final MenuItem neu = new MenuItem("neu");
-        neu.setOnAction(e -> newFilter());
+        final MenuItem miNew = new MenuItem("neuen Filter erstellen");
+        miNew.setOnAction(e -> newFilter());
 
-        final MenuItem rename = new MenuItem("umbenennen");
-        rename.setOnAction(e -> renameFilter());
-        rename.disableProperty().bind(cbFilter.getSelectionModel().selectedItemProperty().isNull());
+        final MenuItem miRename = new MenuItem("Filter umbenennen");
+        miRename.setOnAction(e -> renameFilter());
+        miRename.disableProperty().bind(cbFilter.getSelectionModel().selectedItemProperty().isNull());
 
-        final MenuItem del = new MenuItem("löschen");
-        del.setOnAction(e -> delFilter());
-        del.disableProperty().bind(cbFilter.getSelectionModel().selectedItemProperty().isNull());
+        final MenuItem miDel = new MenuItem("Filter löschen");
+        miDel.setOnAction(e -> delFilter());
+        miDel.disableProperty().bind(cbFilter.getSelectionModel().selectedItemProperty().isNull());
 
-        final MenuItem delAll = new MenuItem("alle löschen");
-        delAll.setOnAction(e -> delAllFilter());
-        delAll.disableProperty().bind(Bindings.size(cbFilter.getItems()).isEqualTo(0));
+        final MenuItem miDelAll = new MenuItem("alle Filter löschen");
+        miDelAll.setOnAction(e -> delAllFilter());
+        miDelAll.disableProperty().bind(Bindings.size(cbFilter.getItems()).isEqualTo(0));
+
+        final MenuItem miReset = new MenuItem("Filterprofile wieder herstellen");
+        miReset.setOnAction(e -> resetFilter());
+
 
         mbFilterTools.setGraphic(new Icons().ICON_BUTTON_MENU);
-        mbFilterTools.getItems().addAll(load, save, neu, rename, del, delAll);
+        mbFilterTools.getItems().addAll(miLoad, miSave, miNew, miRename, miDel, miDelAll, miReset);
         mbFilterTools.setTooltip(new Tooltip("gespeicherte Filter bearbeiten"));
 
         cbFilter.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -432,7 +440,9 @@ public class FilmFilterController extends FilterController {
         vbController.getChildren().add(hBox);
 
         cbFilter.setMaxWidth(Double.MAX_VALUE);
-        vbController.getChildren().add(cbFilter);
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(new Label("gespeicherte Filter:"), cbFilter);
+        vbController.getChildren().add(vBox);
 
         final Button btnHelp = new PButton().helpButton("Filter", HelpText.GUI_FILM_FILTER);
         hBox = new HBox(10);
@@ -467,7 +477,11 @@ public class FilmFilterController extends FilterController {
 
     private void delFilter() {
         progData.storedFilter.removeStoredFilter(cbFilter.getSelectionModel().getSelectedItem());
-        cbFilter.getSelectionModel().clearSelection();
+        cbFilter.getSelectionModel().selectFirst();
+    }
+
+    private void resetFilter() {
+        ProgInitFilter.setProgInitFilter();
     }
 
     private void delAllFilter() {

@@ -25,9 +25,9 @@ public class ProgInitFilter {
 
         //========================================================
         SelectedFilter sf = new SelectedFilter();
-        sf.setName("aktueller Filter");
-        sf.initFilter();
-        progData.storedFilter.getStordeFilterList().add(sf);
+//        sf.setName("aktueller Filter");
+//        sf.initFilter();
+//        progData.storedFilter.getStordeFilterList().add(sf);
 
         sf = new SelectedFilter();
         sf.setName("alle Filme");
@@ -69,6 +69,7 @@ public class ProgInitFilter {
         sf.setNotGeo(false);
         sf.setNotFuture(false);
 
+        sf.initFilter();
         progData.storedFilter.getStordeFilterList().add(sf);
 
 
@@ -366,7 +367,7 @@ public class ProgInitFilter {
         sf.setMinTime(64800);
         sf.setMaxTime(SelectedFilter.FILTER_FILMTIME_MAX_SEC);
 
-        sf.setOnlyVis(true);
+        sf.setOnlyVis(false);
         sf.setOnlyHd(false);
         sf.setOnlyNew(false);
         sf.setOnlyUt(false);

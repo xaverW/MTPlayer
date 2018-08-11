@@ -126,6 +126,7 @@ public final class StoredFilter {
             return;
         }
         filterList.remove(sf);
+        checkFilterIfEmpty();
     }
 
 
@@ -134,6 +135,16 @@ public final class StoredFilter {
      */
     public void removeAllStoredFilter() {
         filterList.clear();
+        checkFilterIfEmpty();
+    }
+
+    private void checkFilterIfEmpty() {
+        if (filterList.isEmpty()) {
+            SelectedFilter sf = new SelectedFilter();
+            sf.setName("aktueller Filter");
+            sf.initFilter();
+            filterList.add(sf);
+        }
     }
 
     /**
