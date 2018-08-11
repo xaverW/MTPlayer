@@ -31,17 +31,20 @@ public class AboFilterController extends FilterController {
     ComboBox<String> cboChannel = new ComboBox<>();
     Button btnClear = new Button("Filter löschen");
 
+    private final VBox vBoxFilter;
     private final ProgData progData;
 
     public AboFilterController() {
+        super();
+        vBoxFilter = getVBoxFilter(true);
         progData = ProgData.getInstance();
 
-        addCont("Abos für Sender", cboChannel, vbFilter);
+        addCont("Abos für Sender", cboChannel, vBoxFilter);
 
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER_RIGHT);
         hBox.getChildren().add(btnClear);
-        vbFilter.getChildren().add(hBox);
+        vBoxFilter.getChildren().add(hBox);
 
         cboChannel.valueProperty().bindBidirectional(ProgConfig.FILTER_ABO_SENDER.getStringProperty());
         cboChannel.setItems(progData.nameLists.getObsChannelsForAbos());

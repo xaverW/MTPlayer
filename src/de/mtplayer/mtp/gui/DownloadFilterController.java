@@ -18,6 +18,7 @@ package de.mtplayer.mtp.gui;
 
 import de.mtplayer.mLib.tools.MLBandwidthTokenBucket;
 import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.download.DownloadInfos;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
@@ -48,7 +49,14 @@ public class DownloadFilterController extends FilterController {
     IntegerProperty anzValue = ProgConfig.DOWNLOAD_MAX_DOWNLOADS.getIntegerProperty();
     IntegerProperty integerProperty;
 
+    private final VBox vBoxFilter;
+    private final ProgData progData;
+
     public DownloadFilterController() {
+        super();
+        vBoxFilter = getVBoxFilter(true);
+        progData = ProgData.getInstance();
+
         initLayout();
         initFilter();
 
@@ -74,10 +82,10 @@ public class DownloadFilterController extends FilterController {
         sp.setMinHeight(20);
 
         vBox.getChildren().addAll(hBox, sp);
-        vbFilter.getChildren().addAll(vBox);
+        vBoxFilter.getChildren().addAll(vBox);
 
 
-        addCont("gleichzeitige Downloads", spinnerAnz, vbFilter);
+        addCont("gleichzeitige Downloads", spinnerAnz, vBoxFilter);
 
 
         hBox = new HBox();
@@ -87,7 +95,7 @@ public class DownloadFilterController extends FilterController {
         VBox v = new VBox();
         Label label = new Label("max. Bandbreite je Download");
         v.getChildren().addAll(label, sliderBandwidth, hBox);
-        vbFilter.getChildren().add(v);
+        vBoxFilter.getChildren().add(v);
     }
 
     private void addCont(String txt, Control control, VBox vBox) {

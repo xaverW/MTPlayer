@@ -32,8 +32,8 @@ import de.mtplayer.mtp.res.GetIcon;
 import de.mtplayer.mtp.tools.storedFilter.ProgInitFilter;
 import de.mtplayer.mtp.tools.update.SearchProgramUpdate;
 import de.p2tools.p2Lib.PInit;
-import de.p2tools.p2Lib.guiTools.GuiSize;
 import de.p2tools.p2Lib.guiTools.PButton;
+import de.p2tools.p2Lib.guiTools.PGuiSize;
 import de.p2tools.p2Lib.tools.log.Duration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Application;
@@ -125,8 +125,8 @@ public class MTPlayer extends Application {
             mtPlayerController = new MTPlayerController();
             progData.mtPlayerController = mtPlayerController;
             scene = new Scene(mtPlayerController,
-                    GuiSize.getWidth(ProgConfig.SYSTEM_SIZE_GUI.getStringProperty()),
-                    GuiSize.getHeight(ProgConfig.SYSTEM_SIZE_GUI.getStringProperty()));
+                    PGuiSize.getWidth(ProgConfig.SYSTEM_SIZE_GUI.getStringProperty()),
+                    PGuiSize.getHeight(ProgConfig.SYSTEM_SIZE_GUI.getStringProperty()));
 
             String css = this.getClass().getResource(ProgConst.CSS_FILE).toExternalForm();
             scene.getStylesheets().add(css);
@@ -137,7 +137,7 @@ public class MTPlayer extends Application {
                 new ProgQuit().quit(true, false);
             });
 
-            if (!GuiSize.setPos(ProgConfig.SYSTEM_SIZE_GUI.getStringProperty(), primaryStage)) {
+            if (!PGuiSize.setPos(ProgConfig.SYSTEM_SIZE_GUI.getStringProperty(), primaryStage)) {
                 primaryStage.centerOnScreen();
             }
             primaryStage.show();

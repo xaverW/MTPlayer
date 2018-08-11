@@ -17,19 +17,18 @@
 package de.mtplayer.mtp.gui;
 
 import de.mtplayer.mtp.controller.config.ProgData;
+import de.p2tools.p2Lib.PConst;
+import de.p2tools.p2Lib.guiTools.PGuiTools;
 import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Region;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 public class FilterController extends AnchorPane {
 
-    final VBox vbFilter = new VBox();
-
-
-    final ProgData progData;
-
+    private final VBox vBoxAll = new VBox(20);
+    private final ProgData progData;
 
     public FilterController() {
         progData = ProgData.getInstance();
@@ -45,12 +44,37 @@ public class FilterController extends AnchorPane {
         AnchorPane.setRightAnchor(scrollPane, 0.0);
         AnchorPane.setTopAnchor(scrollPane, 0.0);
 
+        scrollPane.setContent(vBoxAll);
+    }
+
+    public VBox getVBoxAll() {
+        return vBoxAll;
+    }
+
+    public void addVgrowVboxAll() {
+        vBoxAll.getChildren().add(PGuiTools.getVBoxGrower());
+    }
+
+    public VBox getVBoxFilter(boolean vgrow) {
+        VBox vbFilter = new VBox();
         vbFilter.setPadding(new Insets(15, 15, 15, 15));
         vbFilter.setSpacing(20);
-        vbFilter.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        vbFilter.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
+        if (vgrow) {
+            VBox.setVgrow(vbFilter, Priority.ALWAYS);
+        }
 
-        scrollPane.setContent(vbFilter);
+        vBoxAll.getChildren().addAll(vbFilter);
+        return vbFilter;
+    }
+
+    public VBox getVBoxBotton() {
+        VBox vBox = new VBox();
+        vBox.setStyle(PConst.CSS_BACKGROUND_COLOR_GREY);
+        vBox.setPadding(new Insets(15, 15, 15, 15));
+        vBox.setSpacing(20);
+        vBox.setMaxWidth(Double.MAX_VALUE);
+        vBoxAll.getChildren().addAll(vBox);
+        return vBox;
     }
 
 }

@@ -26,8 +26,8 @@ import de.mtplayer.mtp.controller.mediaDb.MediaData;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.tools.storedFilter.Filter;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
+import de.p2tools.p2Lib.guiTools.PGuiTools;
 import de.p2tools.p2Lib.guiTools.POpen;
-import de.p2tools.p2Lib.guiTools.pToggleSwitch.GuiTools;
 import javafx.application.Platform;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
@@ -80,7 +80,7 @@ public class MediaDialogPaneMedia extends ScrollPane {
         HBox hBoxSum = new HBox(10);
         hBoxSum.setPadding(new Insets(10));
         hBoxSum.getChildren().addAll(new Label("Treffer:"), lblTrefferMedia,
-                GuiTools.getRegionHgrow(), new Label("Anzahl Medien gesamt:"), lblGesamtMedia);
+                PGuiTools.getHBoxGrower(), new Label("Anzahl Medien gesamt:"), lblGesamtMedia);
 
 
         GridPane gridPane = new GridPane();
@@ -105,7 +105,7 @@ public class MediaDialogPaneMedia extends ScrollPane {
         hBoxProgess.setSpacing(10);
         hBoxProgess.setPadding(new Insets(10));
         progress.setVisible(false);
-        hBoxProgess.getChildren().addAll(progress, GuiTools.getRegionHgrow(), btnCreateMediaDB);
+        hBoxProgess.getChildren().addAll(progress, PGuiTools.getHBoxGrower(), btnCreateMediaDB);
 
 
         tableMedia.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);

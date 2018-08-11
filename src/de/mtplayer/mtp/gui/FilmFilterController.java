@@ -16,6 +16,7 @@
 
 package de.mtplayer.mtp.gui;
 
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
@@ -23,6 +24,7 @@ import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
+import de.p2tools.p2Lib.guiTools.PGuiTools;
 import de.p2tools.p2Lib.guiTools.pCheckComboBox.PCheckComboBox;
 import de.p2tools.p2Lib.guiTools.pRange.PRangeBox;
 import de.p2tools.p2Lib.guiTools.pRange.PTimePeriodBox;
@@ -30,7 +32,6 @@ import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import de.p2tools.p2Lib.tools.log.Duration;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -38,13 +39,12 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 public class FilmFilterController extends FilterController {
 
     final String pattern = "HH:mm";
-    final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+//    final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
 
     private final Slider slDays = new Slider();
     private final Label lblDays = new Label();
@@ -89,9 +89,15 @@ public class FilmFilterController extends FilterController {
     private final String NOT_FUTURE = "Zukunft";
 
     private final SplitMenuButton menuItem = new SplitMenuButton();
+    private final VBox vBoxFilter;
+    private final ProgData progData;
 
 
     public FilmFilterController() {
+        super();
+        vBoxFilter = getVBoxFilter(false);
+        progData = ProgData.getInstance();
+
         initButton();
         filterProfiles();
 
@@ -261,8 +267,7 @@ public class FilmFilterController extends FilterController {
         txtUrl.textProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().urlProperty());
 
 
-        VBox vBox = new VBox();
-        vBox.setSpacing(10);
+        VBox vBox = new VBox(10);
         addTxt("Sender", cboChannel, vBox, progData.storedFilter.getSelectedFilter().channelVisProperty());
         addTxt("Thema", cbxTheme, vBox, progData.storedFilter.getSelectedFilter().themeVisProperty());
         addTxt("Thema oder Titel", txtThemeTitle, vBox, progData.storedFilter.getSelectedFilter().themeTitleVisProperty());
@@ -271,6 +276,7 @@ public class FilmFilterController extends FilterController {
         addTxt("URL", txtUrl, vBox, progData.storedFilter.getSelectedFilter().urlVisProperty());
 
         Separator sp = new Separator();
+//        sp.getStyleClass().add("pseperator1");
         sp.setMinHeight(20);
         vBox.getChildren().add(sp);
 
@@ -286,7 +292,11 @@ public class FilmFilterController extends FilterController {
                 ));
         vBox.managedProperty().bind(vBox.visibleProperty());
 
-        vbFilter.getChildren().add(vBox);
+        sp.visibleProperty().bind(vBox.visibleProperty());
+        sp.managedProperty().bind(vBox.visibleProperty());
+
+
+        vBoxFilter.getChildren().add(vBox);
     }
 
     private void addTxt(String txt, Control control, VBox vBoxComplete, BooleanProperty booleanProperty) {
@@ -355,21 +365,21 @@ public class FilmFilterController extends FilterController {
         vBox.getChildren().addAll(lblDays, slDays);
         vBox.visibleProperty().bind(progData.storedFilter.getSelectedFilter().daysVisProperty());
         vBox.managedProperty().bind(progData.storedFilter.getSelectedFilter().daysVisProperty());
-        vbFilter.getChildren().addAll(vBox);
+        vBoxFilter.getChildren().addAll(vBox);
 
         // MinMax Dauer
         vBox = new VBox(5);
         vBox.getChildren().addAll(lblDur, slDur);
         vBox.visibleProperty().bind(progData.storedFilter.getSelectedFilter().minMaxDurVisProperty());
         vBox.managedProperty().bind(progData.storedFilter.getSelectedFilter().minMaxDurVisProperty());
-        vbFilter.getChildren().addAll(vBox);
+        vBoxFilter.getChildren().addAll(vBox);
 
         // MinMax Uhrzeit
         vBox = new VBox(5);
         vBox.getChildren().addAll(lblFilmTime, slFilmTime, tglFilmTime);
         vBox.visibleProperty().bind(progData.storedFilter.getSelectedFilter().minMaxTimeVisProperty());
         vBox.managedProperty().bind(progData.storedFilter.getSelectedFilter().minMaxTimeVisProperty());
-        vbFilter.getChildren().addAll(vBox);
+        vBoxFilter.getChildren().addAll(vBox);
     }
 
     private void initCheckFilter() {
@@ -389,58 +399,45 @@ public class FilmFilterController extends FilterController {
         vBox.getChildren().addAll(lblOnly, checkOnly);
         vBox.visibleProperty().bind(progData.storedFilter.getSelectedFilter().onlyVisProperty());
         vBox.managedProperty().bind(progData.storedFilter.getSelectedFilter().onlyVisProperty());
-        vbFilter.getChildren().add(vBox);
+        vBoxFilter.getChildren().add(vBox);
 
         vBox = new VBox();
         vBox.getChildren().addAll(lblNot, checkNot);
         vBox.visibleProperty().bind(progData.storedFilter.getSelectedFilter().notVisProperty());
         vBox.managedProperty().bind(progData.storedFilter.getSelectedFilter().notVisProperty());
-        vbFilter.getChildren().add(vBox);
+        vBoxFilter.getChildren().add(vBox);
     }
 
     private void initRest() {
+        addVgrowVboxAll();
+        VBox vbController = getVBoxBotton();
+
         tglBlacklist.setMaxWidth(Double.MAX_VALUE);
-        vbFilter.getChildren().add(tglBlacklist);
-
-        HBox h = new HBox();
-        HBox.setHgrow(h, Priority.ALWAYS);
-        h.setAlignment(Pos.BOTTOM_RIGHT);
-        h.getChildren().add(btnClearFilter);
-
         HBox hBox = new HBox();
-        hBox.getChildren().addAll(btnEditFilter, h);
-        vbFilter.getChildren().add(hBox);
+        hBox.getChildren().addAll(btnEditFilter, PGuiTools.getHBoxGrower(), btnClearFilter);
+
+        Separator sp = new Separator();
+        sp.getStyleClass().add("pseperator3");
+        sp.setMinHeight(10);
+        vbController.getChildren().addAll(tglBlacklist, hBox, sp);
 
 
-        VBox vb = new VBox();
-        vb.setSpacing(10);
-        vb.setAlignment(Pos.BOTTOM_LEFT);
-        VBox.setVgrow(vb, Priority.ALWAYS);
-
-        hBox = new HBox();
-        hBox.setSpacing(10);
+        // Filterprofile
+        hBox = new HBox(10);
         btnLoadFilter.setMaxWidth(Double.MAX_VALUE);
         btnSaveFilter.setMaxWidth(Double.MAX_VALUE);
         HBox.setHgrow(btnLoadFilter, Priority.ALWAYS);
         HBox.setHgrow(btnSaveFilter, Priority.ALWAYS);
         hBox.getChildren().addAll(btnLoadFilter, btnNewFilter, btnSaveFilter);
-        vb.getChildren().add(hBox);
+        vbController.getChildren().add(hBox);
 
-        hBox = new HBox();
-        HBox.setHgrow(cbFilter, Priority.ALWAYS);
         cbFilter.setMaxWidth(Double.MAX_VALUE);
-        hBox.getChildren().add(cbFilter);
-        vb.getChildren().add(hBox);
+        vbController.getChildren().add(cbFilter);
 
         final Button btnHelp = new PButton().helpButton("Filter", HelpText.GUI_FILM_FILTER);
-
-        h = new HBox();
-        h.setSpacing(10);
-        h.setAlignment(Pos.CENTER_RIGHT);
-        HBox.setHgrow(h, Priority.ALWAYS);
-        h.getChildren().addAll(mbFilterTools, btnHelp);
-        vb.getChildren().add(h);
-        vbFilter.getChildren().add(vb);
+        hBox = new HBox(10);
+        hBox.getChildren().addAll(mbFilterTools, PGuiTools.getHBoxGrower(), btnHelp);
+        vbController.getChildren().add(hBox);
     }
 
     private void setLabelSlider() {

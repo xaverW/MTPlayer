@@ -18,6 +18,23 @@
     -fx-background-color: black;
 }
 
+.pseperator1 .line {
+    -fx-border-style: solid;
+    -fx-border-width: 0 0 1 0; /* its make really one-pixel-border */
+    -fx-border-color: steelblue;
+}
+
+.pseperator2 .line {
+    -fx-border-style: solid;
+    -fx-border-width: 0 0 2 0; /* its make really one-pixel-border */
+    -fx-border-color: steelblue;
+}
+
+.pseperator3 .line {
+    -fx-border-style: solid;
+    -fx-border-width: 0 0 3 0; /* its make really one-pixel-border */
+    -fx-border-color: steelblue;
+}
 
 /* Rahmen */
 .dialog-title-border {

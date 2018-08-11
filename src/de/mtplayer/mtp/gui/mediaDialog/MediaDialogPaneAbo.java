@@ -19,7 +19,7 @@ package de.mtplayer.mtp.gui.mediaDialog;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.HistoryData;
 import de.mtplayer.mtp.tools.storedFilter.Filter;
-import de.p2tools.p2Lib.guiTools.pToggleSwitch.GuiTools;
+import de.p2tools.p2Lib.guiTools.PGuiTools;
 import javafx.application.Platform;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
@@ -54,7 +54,7 @@ public class MediaDialogPaneAbo extends ScrollPane {
     private void initPanel() {
         HBox hBox = new HBox(10);
         hBox.setPadding(new Insets(10));
-        hBox.getChildren().addAll(new Label("Treffer:"), lblTrefferAbo, GuiTools.getRegionHgrow(),
+        hBox.getChildren().addAll(new Label("Treffer:"), lblTrefferAbo, PGuiTools.getHBoxGrower(),
                 new Label("Anzahl Medien gesamt:"), lblGesamtAbo);
 
         GridPane gridPane = new GridPane();

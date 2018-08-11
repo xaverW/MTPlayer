@@ -92,7 +92,7 @@ public class TableFilm {
 
 //        final TableColumn<Film, Boolean> newColumn = new TableColumn<>("Neu");
 //        newColumn.setCellValueFactory(new PropertyValueFactory<>("newFilm"));
-//        newColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
+//        newColumn.setCellFactory(new PCheckBoxCell().cellFactoryBool);
 
 //        final TableColumn<Film, Boolean> shownColumn = new TableColumn<>("Gesehen");
 //        shownColumn.setCellValueFactory(new PropertyValueFactory<>("shown"));
@@ -108,7 +108,7 @@ public class TableFilm {
 
 //        final TableColumn<Film, Boolean> futureColumn = new TableColumn<>("Zukunft");
 //        futureColumn.setCellValueFactory(new PropertyValueFactory<>("inFuture"));
-//        futureColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
+//        futureColumn.setCellFactory(new PCheckBoxCell().cellFactoryBool);
 
         addRowFact(table);
 

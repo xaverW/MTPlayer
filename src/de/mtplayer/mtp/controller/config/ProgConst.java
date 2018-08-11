@@ -40,6 +40,7 @@ public class ProgConst {
     public static final String RTMP_PRTOKOLL = "rtmp";
     public static final String RTMP_FLVSTREAMER = "-r ";
 
+
     // beim Programmstart wird die Liste geladen wenn sie älter ist als ..
     public static final int ALTER_FILMLISTE_SEKUNDEN_FUER_AUTOUPDATE = 4 * 60 * 60;
 

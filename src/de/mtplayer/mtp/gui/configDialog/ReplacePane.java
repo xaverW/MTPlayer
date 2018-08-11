@@ -22,6 +22,7 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
 import de.mtplayer.mtp.controller.data.ReplaceData;
 import de.mtplayer.mtp.gui.tools.HelpText;
+import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
@@ -190,7 +191,7 @@ public class ReplacePane {
     }
 
     private void addConfigs(VBox vBox) {
-        gridPane.setStyle("-fx-background-color: #E0E0E0;");
+        gridPane.setStyle(PConst.CSS_BACKGROUND_COLOR_GREY);
         gridPane.setHgap(15);
         gridPane.setVgap(5);
         gridPane.setPadding(new Insets(20));

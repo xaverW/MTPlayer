@@ -24,7 +24,7 @@ import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.tools.storedFilter.Filter;
 import de.p2tools.p2Lib.dialog.PDialog;
 import de.p2tools.p2Lib.guiTools.PButton;
-import de.p2tools.p2Lib.guiTools.pToggleSwitch.GuiTools;
+import de.p2tools.p2Lib.guiTools.PGuiTools;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
@@ -60,8 +60,8 @@ public class MediaDialogController extends PDialog {
 
     public MediaDialogController(String searchStr) {
         super(ProgConfig.MEDIA_DIALOG_SIZE.getStringProperty(), "Mediensammlung", true);
-        this.searchStr = searchStr;
-        txtSearch.setText(searchStr);
+        this.searchStr = searchStr.trim();
+        txtSearch.setText(this.searchStr);
 
         listenerDbStart = new Listener(Listener.EREIGNIS_MEDIA_DB_START, MediaDialogController.class.getSimpleName()) {
             @Override
@@ -180,7 +180,7 @@ public class MediaDialogController extends PDialog {
                     "Suche in der Mediensammlung", HelpText.SEARCH_MEDIA_DIALOG);
 
             hBox = new HBox(10);
-            hBox.getChildren().addAll(btnHelp, GuiTools.getRegionHgrow(), btnOk);
+            hBox.getChildren().addAll(btnHelp, PGuiTools.getHBoxGrower(), btnOk);
 
             vBoxDialog.getChildren().addAll(vBoxCont, hBox);
         } catch (final Exception ex) {

@@ -98,7 +98,7 @@ public class TableDownload {
 
 //        final TableColumn<Download, Boolean> pauseColumn = new TableColumn<>("Pause");
 //        pauseColumn.setCellValueFactory(new PropertyValueFactory<>("pause"));
-//        pauseColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
+//        pauseColumn.setCellFactory(new PCheckBoxCell().cellFactoryBool);
 
         final TableColumn<Download, Boolean> geoColumn = new TableColumn<>("Geo");
         geoColumn.setCellValueFactory(new PropertyValueFactory<>("geoBlocked"));

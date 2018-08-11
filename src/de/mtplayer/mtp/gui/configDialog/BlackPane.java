@@ -194,7 +194,7 @@ public class BlackPane {
     }
 
     private void addConfigs(VBox vBox) {
-        gridPane.setStyle("-fx-background-color: #E0E0E0;");
+        gridPane.setStyle(PConst.CSS_BACKGROUND_COLOR_GREY);
         gridPane.setHgap(15);
         gridPane.setVgap(5);
         gridPane.setPadding(new Insets(20));
