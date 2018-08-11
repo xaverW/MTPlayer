@@ -20,28 +20,35 @@ import de.mtplayer.mLib.tools.SizeTools;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.p2tools.p2Lib.PConst;
+import javafx.geometry.Insets;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.web.WebView;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 
 public class DownloadGuiInfo {
 
-    final private AnchorPane anchorPane;
-    final private WebView webView;
-    final private ProgData progData;
+    private final GridPane gridPane = new GridPane();
+    private final ProgData progData;
+    private int row = 0;
+
 
     public DownloadGuiInfo(AnchorPane anchorPane) {
-        this.anchorPane = anchorPane;
-        this.webView = new WebView();
         progData = ProgData.getInstance();
 
-        anchorPane.getChildren().add(webView);
+        gridPane.setHgap(5);
+        gridPane.setVgap(10);
+        gridPane.setPadding(new Insets(10, 10, 10, 10));
 
-        AnchorPane.setLeftAnchor(webView, 10.0);
-        AnchorPane.setBottomAnchor(webView, 10.0);
-        AnchorPane.setRightAnchor(webView, 10.0);
-        AnchorPane.setTopAnchor(webView, 10.0);
+        anchorPane.getChildren().add(gridPane);
 
-        webView.getEngine().loadContent("");
+        AnchorPane.setLeftAnchor(gridPane, 10.0);
+        AnchorPane.setBottomAnchor(gridPane, 10.0);
+        AnchorPane.setRightAnchor(gridPane, 10.0);
+        AnchorPane.setTopAnchor(gridPane, 10.0);
+
         Listener.addListener(new Listener(Listener.EREIGNIS_TIMER, StatusBarController.class.getSimpleName()) {
             @Override
             public void ping() {
@@ -53,59 +60,82 @@ public class DownloadGuiInfo {
 
     private void setInfoText() {
         final int[] starts = progData.downloadList.getDownloadInfoAll().downloadStarts;
+        Text text1, text2;
+        gridPane.getChildren().clear();
+        row = 0;
+
         if (starts[0] == 0) {
-            webView.getEngine().loadContent("");
             return;
         }
-        final String HEAD = "<html xmlns=\"http://www.w3.org/1999/xhtml\">" + PConst.LINE_SEPARATOR
-                + "<head><style type=\"text/css\"> .sans { font-family: Verdana, Geneva, sans-serif; }</style></head>" + PConst.LINE_SEPARATOR
-                + "<body>" + PConst.LINE_SEPARATOR;
-        final String END = "</body></html>";
-
-        String info = HEAD;
 
         // Downloads
-        info += getInfoText();
+        getInfoText();
+
         // Größe
         if (progData.downloadList.getDownloadInfoAll().byteAllDownloads > 0 || progData.downloadList.getDownloadInfoAll().byteAktDownloads > 0) {
-            info += "<br />";
-            info += "<span class=\"sans\"><b>Größe:</b><br />";
+            text1 = new Text("Größe: ");
+            text1.setFont(Font.font(null, FontWeight.BOLD, -1));
+
             if (progData.downloadList.getDownloadInfoAll().byteAktDownloads > 0) {
-                info += SizeTools.getSize(progData.downloadList.getDownloadInfoAll().byteAktDownloads) + " von "
-                        + SizeTools.getSize(progData.downloadList.getDownloadInfoAll().byteAllDownloads) + " MByte" + "</span>";
+
+                text2 = new Text(SizeTools.getSize(progData.downloadList.getDownloadInfoAll().byteAktDownloads) + " von "
+                        + SizeTools.getSize(progData.downloadList.getDownloadInfoAll().byteAllDownloads) + " MByte");
             } else {
-                info += SizeTools.getSize(progData.downloadList.getDownloadInfoAll().byteAllDownloads) + " MByte" + "</span>";
+                text2 = new Text(SizeTools.getSize(progData.downloadList.getDownloadInfoAll().byteAllDownloads) + " MByte");
             }
+            ++row;
+            gridPane.add(text1, 0, ++row);
+            gridPane.add(text2, 1, row);
         }
+
         // Restzeit
         if (progData.downloadList.getDownloadInfoAll().timeRestAktDownloads > 0 && progData.downloadList.getDownloadInfoAll().timeRestAllDownloads > 0) {
-            info += "<br />";
-            info += "<span class=\"sans\"><b>Restzeit:</b><br />" + "laufende: "
-                    + progData.downloadList.getDownloadInfoAll().getTimeLeft() + ",<br />alle: " + progData.downloadList.getDownloadInfoAll().getSumeTimeLeft() + "</span>";
+            text1 = new Text("Restzeit: ");
+            text1.setFont(Font.font(null, FontWeight.BOLD, -1));
+            text2 = new Text("laufende: "
+                    + progData.downloadList.getDownloadInfoAll().getTimeLeft() + "," +
+                    PConst.LINE_SEPARATOR +
+                    "alle: " + progData.downloadList.getDownloadInfoAll().getSumeTimeLeft());
+            gridPane.add(text1, 0, ++row);
+            gridPane.add(text2, 1, row);
+
         } else if (progData.downloadList.getDownloadInfoAll().timeRestAktDownloads > 0) {
-            info += "<br />";
-            info += "<span class=\"sans\"><b>Restzeit:</b><br />laufende: " + progData.downloadList.getDownloadInfoAll().getTimeLeft() + "</span>";
+            text1 = new Text("Restzeit: ");
+            text1.setFont(Font.font(null, FontWeight.BOLD, -1));
+            text2 = new Text("laufende: " + progData.downloadList.getDownloadInfoAll().getTimeLeft());
+            gridPane.add(text1, 0, ++row);
+            gridPane.add(text2, 1, row);
+
         } else if (progData.downloadList.getDownloadInfoAll().timeRestAllDownloads > 0) {
-            info += "<br />";
-            info += "<span class=\"sans\"><b>Restzeit:</b><br />alle: " + progData.downloadList.getDownloadInfoAll().getSumeTimeLeft() + "</span>";
+            text1 = new Text("Restzeit: ");
+            text1.setFont(Font.font(null, FontWeight.BOLD, -1));
+            text2 = new Text("alle: " + progData.downloadList.getDownloadInfoAll().getSumeTimeLeft());
+            gridPane.add(text1, 0, ++row);
+            gridPane.add(text2, 1, row);
         }
+
         // Bandbreite
         if (progData.downloadList.getDownloadInfoAll().bandwidth > 0) {
-            info += "<br />";
-            info += "<span class=\"sans\"><b>Bandbreite:</b><br />";
-            info += progData.downloadList.getDownloadInfoAll().bandwidthStr + "</span>";
+            text1 = new Text("Bandbreite: ");
+            text1.setFont(Font.font(null, FontWeight.BOLD, -1));
+            text2 = new Text(progData.downloadList.getDownloadInfoAll().bandwidthStr);
+            gridPane.add(text1, 0, ++row);
+            gridPane.add(text2, 1, row);
         }
-        info += END;
-
-        webView.getEngine().loadContent(info);
     }
 
-    private String getInfoText() {
+    private void getInfoText() {
         String textLinks;
         // Text links: Zeilen Tabelle
         // nicht gestarted, laufen, fertig OK, fertig fehler
         final int[] starts = progData.downloadList.getDownloadInfoAll().downloadStarts;
-        textLinks = "<span class=\"sans\"><b>Downloads:  </b>" + starts[0] + "<br />";
+
+        VBox vBox = new VBox(2);
+        Text text1 = new Text("Downloads: " + starts[0]);
+        text1.setFont(Font.font(null, FontWeight.BOLD, -1));
+        vBox.getChildren().add(text1);
+        gridPane.add(vBox, 0, row, 2, 1);
+
         boolean print = false;
         for (int ii = 1; ii < starts.length; ++ii) {
             if (starts[ii] > 0) {
@@ -114,35 +144,38 @@ public class DownloadGuiInfo {
             }
         }
         if (print) {
-            textLinks += "( ";
+            String txt;
+            txt = "( ";
             if (starts[4] == 1) {
-                textLinks += "1 läuft";
+                txt += "1 läuft";
             } else {
-                textLinks += starts[4] + " laufen";
+                txt += starts[4] + " laufen";
             }
             if (starts[3] == 1) {
-                textLinks += ", 1 wartet";
+                txt += ", 1 wartet";
             } else {
-                textLinks += ", " + starts[3] + " warten";
+                txt += ", " + starts[3] + " warten";
             }
             if (starts[5] > 0) {
                 if (starts[5] == 1) {
-                    textLinks += ", 1 fertig";
+                    txt += ", 1 fertig";
                 } else {
-                    textLinks += ", " + starts[5] + " fertig";
+                    txt += ", " + starts[5] + " fertig";
                 }
             }
             if (starts[6] > 0) {
                 if (starts[6] == 1) {
-                    textLinks += ", 1 fehlerhaft";
+                    txt += ", 1 fehlerhaft";
                 } else {
-                    textLinks += ", " + starts[6] + " fehlerhaft";
+                    txt += ", " + starts[6] + " fehlerhaft";
                 }
             }
-            textLinks += " )";
+            txt += " )";
+            Text text2 = new Text(txt);
+            vBox.getChildren().add(text2);
         }
-        textLinks += "<br /></span>";
-        return textLinks;
+
+
     }
 
 }
