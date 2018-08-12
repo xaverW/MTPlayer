@@ -39,7 +39,7 @@ public class PlayerMessage {
         final String noStr = getNr(lineNo);
 
         for (int i = 0; i < texte.length; ++i) {
-            final String z = "  >>" + "[" + noStr + "]   " + texte[0];
+            final String z = "[" + noStr + "] >> " + texte[0];
             PLog.extToolLog(z);
         }
     }

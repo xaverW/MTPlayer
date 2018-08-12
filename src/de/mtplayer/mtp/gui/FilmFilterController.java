@@ -347,10 +347,10 @@ public class FilmFilterController extends FilterController {
         slDur.maxValueProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().maxDurProperty());
         slDur.setVluePrefix("");
 
-        progData.storedFilter.getSelectedFilter().minDurProperty().addListener((observable, oldValue, newValue) ->
-                System.out.println("getSelectedFilter().getMinDur " + progData.storedFilter.getSelectedFilter().getMinDur()));
-        progData.storedFilter.getSelectedFilter().maxDurProperty().addListener((observable, oldValue, newValue) ->
-                System.out.println("getSelectedFilter().getMaxDur " + progData.storedFilter.getSelectedFilter().getMaxDur()));
+//        progData.storedFilter.getSelectedFilter().minDurProperty().addListener((observable, oldValue, newValue) ->
+//                System.out.println("getSelectedFilter().getMinDur " + progData.storedFilter.getSelectedFilter().getMinDur()));
+//        progData.storedFilter.getSelectedFilter().maxDurProperty().addListener((observable, oldValue, newValue) ->
+//                System.out.println("getSelectedFilter().getMaxDur " + progData.storedFilter.getSelectedFilter().getMaxDur()));
     }
 
     private void initFilmTimeFilter() {
@@ -358,10 +358,10 @@ public class FilmFilterController extends FilterController {
         slFilmTime.maxValueProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().maxTimeProperty());
         slFilmTime.setVluePrefix("");
 
-        progData.storedFilter.getSelectedFilter().minTimeProperty().addListener((observable, oldValue, newValue) ->
-                System.out.println("getSelectedFilter().getMinTime " + progData.storedFilter.getSelectedFilter().getMinTime()));
-        progData.storedFilter.getSelectedFilter().maxTimeProperty().addListener((observable, oldValue, newValue) ->
-                System.out.println("getSelectedFilter().getMaxTime " + progData.storedFilter.getSelectedFilter().getMaxTime()));
+//        progData.storedFilter.getSelectedFilter().minTimeProperty().addListener((observable, oldValue, newValue) ->
+//                System.out.println("getSelectedFilter().getMinTime " + progData.storedFilter.getSelectedFilter().getMinTime()));
+//        progData.storedFilter.getSelectedFilter().maxTimeProperty().addListener((observable, oldValue, newValue) ->
+//                System.out.println("getSelectedFilter().getMaxTime " + progData.storedFilter.getSelectedFilter().getMaxTime()));
 
         tglFilmTime.selectedProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().minMaxTimeInvertProperty());
         GridPane.setFillWidth(tglFilmTime, false);
@@ -440,7 +440,7 @@ public class FilmFilterController extends FilterController {
         vbController.getChildren().add(hBox);
 
         cbFilter.setMaxWidth(Double.MAX_VALUE);
-        VBox vBox = new VBox();
+        VBox vBox = new VBox(1);
         vBox.getChildren().addAll(new Label("gespeicherte Filter:"), cbFilter);
         vbController.getChildren().add(vBox);
 
@@ -480,13 +480,20 @@ public class FilmFilterController extends FilterController {
         cbFilter.getSelectionModel().selectFirst();
     }
 
-    private void resetFilter() {
-        ProgInitFilter.setProgInitFilter();
-    }
-
     private void delAllFilter() {
         if (PAlert.showAlert("Löschen", "Filter löschen", "Sollen alle Filter gelöscht werden?")) {
             progData.storedFilter.removeAllStoredFilter();
+            cbFilter.getSelectionModel().selectFirst();
+        }
+    }
+
+    private void resetFilter() {
+        if (PAlert.showAlert("Zurücksetzen", "Filter zurücksetzen", "Sollen alle Filter gelöscht werden " +
+                "und durch die Filter vom ersten Programmstart " +
+                "ersetzt werden?")) {
+            progData.storedFilter.getStordeFilterList().clear();
+            ProgInitFilter.setProgInitFilter();
+            cbFilter.getSelectionModel().selectFirst();
         }
     }
 

@@ -50,8 +50,8 @@ public final class StoredFilter {
         filterChangeListener = (observable, oldValue, newValue) -> postFilterChange();
         blacklistChangeListener = (observable, oldValue, newValue) -> postBlacklistChange();
 
-        getSelectedFilter().filterChangeProperty().addListener(filterChangeListener);
-        getSelectedFilter().blacklistChangeProperty().addListener(blacklistChangeListener);
+        selectedFilter.filterChangeProperty().addListener(filterChangeListener);
+        selectedFilter.blacklistChangeProperty().addListener(blacklistChangeListener);
     }
 
     public BooleanProperty filterChangeProperty() {
@@ -126,7 +126,6 @@ public final class StoredFilter {
             return;
         }
         filterList.remove(sf);
-        checkFilterIfEmpty();
     }
 
 
@@ -135,16 +134,6 @@ public final class StoredFilter {
      */
     public void removeAllStoredFilter() {
         filterList.clear();
-        checkFilterIfEmpty();
-    }
-
-    private void checkFilterIfEmpty() {
-        if (filterList.isEmpty()) {
-            SelectedFilter sf = new SelectedFilter();
-            sf.setName("aktueller Filter");
-            sf.initFilter();
-            filterList.add(sf);
-        }
     }
 
     /**
@@ -170,8 +159,8 @@ public final class StoredFilter {
         if (sf == null) {
             return;
         }
-        getSelectedFilter().filterChangeProperty().removeListener(filterChangeListener);
-        getSelectedFilter().blacklistChangeProperty().removeListener(blacklistChangeListener);
+        selectedFilter.filterChangeProperty().removeListener(filterChangeListener);
+        selectedFilter.blacklistChangeProperty().removeListener(blacklistChangeListener);
         Boolean black = selectedFilter.blacklistOnProperty().getValue();
         SelectedFilter.copyFilter(sf, selectedFilter);
         if (selectedFilter.blacklistOnProperty().getValue() == black) {
@@ -180,8 +169,8 @@ public final class StoredFilter {
         } else {
             postBlacklistChange();
         }
-        getSelectedFilter().filterChangeProperty().addListener(filterChangeListener);
-        getSelectedFilter().blacklistChangeProperty().addListener(blacklistChangeListener);
+        selectedFilter.filterChangeProperty().addListener(filterChangeListener);
+        selectedFilter.blacklistChangeProperty().addListener(blacklistChangeListener);
     }
 
     public synchronized boolean txtFilterIsEmpty() {
@@ -198,12 +187,12 @@ public final class StoredFilter {
 
     public synchronized boolean clearTxtFilter(SelectedFilter sf) {
         boolean ret;
-        getSelectedFilter().filterChangeProperty().removeListener(filterChangeListener);
-        getSelectedFilter().blacklistChangeProperty().removeListener(blacklistChangeListener);
+        selectedFilter.filterChangeProperty().removeListener(filterChangeListener);
+        selectedFilter.blacklistChangeProperty().removeListener(blacklistChangeListener);
         ret = sf.clearTxtFilter();
         postFilterChange();
-        getSelectedFilter().filterChangeProperty().addListener(filterChangeListener);
-        getSelectedFilter().blacklistChangeProperty().addListener(blacklistChangeListener);
+        selectedFilter.filterChangeProperty().addListener(filterChangeListener);
+        selectedFilter.blacklistChangeProperty().addListener(blacklistChangeListener);
         return ret;
     }
 
@@ -212,12 +201,12 @@ public final class StoredFilter {
     }
 
     public synchronized void clearFilter(SelectedFilter sf) {
-        getSelectedFilter().filterChangeProperty().removeListener(filterChangeListener);
-        getSelectedFilter().blacklistChangeProperty().removeListener(blacklistChangeListener);
+        selectedFilter.filterChangeProperty().removeListener(filterChangeListener);
+        selectedFilter.blacklistChangeProperty().removeListener(blacklistChangeListener);
         sf.clearFilter(); // Button Black wird nicht verändert
         postFilterChange();
-        getSelectedFilter().filterChangeProperty().addListener(filterChangeListener);
-        getSelectedFilter().blacklistChangeProperty().addListener(blacklistChangeListener);
+        selectedFilter.filterChangeProperty().addListener(filterChangeListener);
+        selectedFilter.blacklistChangeProperty().addListener(blacklistChangeListener);
     }
 
 
