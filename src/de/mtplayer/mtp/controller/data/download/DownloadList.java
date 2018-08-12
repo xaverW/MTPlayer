@@ -102,7 +102,7 @@ public class DownloadList extends SimpleListProperty<Download> {
         // bei einmal Downloads nach einem Programmstart/Neuladen der Filmliste
         // den Film wieder eintragen
         Duration.counterStart("Filme eintragen");
-        PLog.userLog("Filme in Downloads eintragen");
+        PLog.sysLog("Filme in Downloads eintragen");
         for (Download d : this) {
             --counter;
             if (counter < 0) {
@@ -124,7 +124,7 @@ public class DownloadList extends SimpleListProperty<Download> {
 //            d.setSizeDownloadFromFilm();
 //
 //        });
-        PLog.userLog("  -> Filme in Downloads eingetragen");
+        PLog.sysLog("  -> Filme in Downloads eingetragen");
         Duration.counterStop("Filme eintragen");
     }
 

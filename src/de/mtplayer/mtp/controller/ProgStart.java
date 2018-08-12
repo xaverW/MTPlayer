@@ -23,7 +23,7 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlert;
-import de.p2tools.p2Lib.tools.log.LogMsg;
+import de.p2tools.p2Lib.tools.log.LogMessage;
 import de.p2tools.p2Lib.tools.log.PLog;
 import de.p2tools.p2Lib.tools.log.PLogger;
 
@@ -51,7 +51,7 @@ public class ProgStart {
         list.add("Programmpfad: " + ProgInfos.getPathJar());
         list.add("Verzeichnis Einstellungen: " + ProgInfos.getSettingsDirectory_String());
 
-        LogMsg.startMsg(ProgConst.PROGRAMMNAME, list);
+        LogMessage.startMsg(ProgConst.PROGRAMMNAME, list);
 
         list = new ArrayList<>();
         list.add(PLog.LILNE2);
@@ -78,12 +78,12 @@ public class ProgStart {
         }
 
         if (!load) {
-            PLog.userLog("Weder Konfig noch Backup konnte geladen werden!");
+            PLog.sysLog("Weder Konfig noch Backup konnte geladen werden!");
             // teils geladene Reste entfernen
             clearConfig();
             return false;
         }
-        PLog.userLog("Konfig wurde gelesen!");
+        PLog.sysLog("Konfig wurde gelesen!");
         MLInit.initLib(ProgData.debug, ProgConst.PROGRAMMNAME, ProgInfos.getUserAgent());
         ProgData.mTColor.load(); // Farben einrichten
         return true;
@@ -110,11 +110,11 @@ public class ProgStart {
                     return true;
                 } else {
                     // dann hat das Laden nicht geklappt
-                    PLog.userLog("Konfig konnte nicht gelesen werden!");
+                    PLog.sysLog("Konfig konnte nicht gelesen werden!");
                 }
             } else {
                 // dann hat das Laden nicht geklappt
-                PLog.userLog("Konfig existiert nicht!");
+                PLog.sysLog("Konfig existiert nicht!");
             }
         } catch (final Exception ex) {
             ex.printStackTrace();
@@ -133,12 +133,12 @@ public class ProgStart {
         final ArrayList<Path> path = new ArrayList<>();
         new ProgInfos().getMTPlayerXmlCopyFilePath(path);
         if (path.isEmpty()) {
-            PLog.userLog("Es gibt kein Backup");
+            PLog.sysLog("Es gibt kein Backup");
             return false;
         }
 
         // dann gibts ein Backup
-        PLog.userLog("Es gibt ein Backup");
+        PLog.sysLog("Es gibt ein Backup");
 
 
         if (PAlert.BUTTON.YES != PAlert.showAlert_yes_no("Gesicherte Einstellungen laden?",
@@ -149,17 +149,17 @@ public class ProgStart {
                         + "(ansonsten startet das Programm mit" + PConst.LINE_SEPARATOR
                         + "Standardeinstellungen)")) {
 
-            PLog.userLog("User will kein Backup laden.");
+            PLog.sysLog("User will kein Backup laden.");
             return false;
         }
 
         for (final Path p : path) {
             // teils geladene Reste entfernen
             clearConfig();
-            PLog.userLog(new String[]{"Versuch Backup zu laden:", p.toString()});
+            PLog.sysLog(new String[]{"Versuch Backup zu laden:", p.toString()});
             try (IoReadXml reader = new IoReadXml(progData)) {
                 if (reader.readConfiguration(p)) {
-                    PLog.userLog(new String[]{"Backup hat geklappt:", p.toString()});
+                    PLog.sysLog(new String[]{"Backup hat geklappt:", p.toString()});
                     ret = true;
                     break;
                 }

@@ -66,13 +66,13 @@ public class SearchPsetUpdate {
                         progData.setList.clear();
                     } else if (!newSetDialogController.getAddNewSet()) {
                         // und wenn auch nicht "Anfügen" gewählt, dann halt nix
-                        PLog.userLog("Setanlegen: Abbruch");
+                        PLog.sysLog("Setanlegen: Abbruch");
                         if (!newSetDialogController.getAskAgain()) {
                             // dann auch die Versionsnummer aktualisieren
-                            PLog.userLog("Setanlegen: Nicht wieder nachfragen");
+                            PLog.sysLog("Setanlegen: Nicht wieder nachfragen");
                             ProgConfig.SYSTEM_UPDATE_PROGSET_VERSION.setValue(listPsetStandard.version);
                         }
-                        PLog.userLog("==========================================");
+                        PLog.sysLog("==========================================");
                         return;
                     }
                 }
@@ -114,8 +114,8 @@ public class SearchPsetUpdate {
 
                 SetsPrograms.addSetTemplate(listPsetStandard); // damit auch AddOns
                 // geladen werden
-                PLog.userLog("Setanlegen: OK");
-                PLog.userLog("==========================================");
+                PLog.sysLog("Setanlegen: OK");
+                PLog.sysLog("==========================================");
             });
 
         } catch (final Exception ignored) {

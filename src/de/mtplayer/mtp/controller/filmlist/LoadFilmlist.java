@@ -136,10 +136,10 @@ public class LoadFilmlist {
         }
 
         Duration.staticPing("Filme laden, start");
-        PLog.userLog("");
-        PLog.userLog("Alte Liste erstellt am: " + ProgData.getInstance().filmlist.genDate());
-        PLog.userLog("  Anzahl Filme: " + progData.filmlist.size());
-        PLog.userLog("  Anzahl Neue: " + progData.filmlist.countNewFilms());
+        PLog.sysLog("");
+        PLog.sysLog("Alte Liste erstellt am: " + ProgData.getInstance().filmlist.genDate());
+        PLog.sysLog("  Anzahl Filme: " + progData.filmlist.size());
+        PLog.sysLog("  Anzahl Neue: " + progData.filmlist.countNewFilms());
 
         if (!getPropLoadFilmlist()) {
             // nicht doppelt starten
@@ -156,13 +156,13 @@ public class LoadFilmlist {
             progData.filmlistFiltered.clear();
             if (fileUrl.isEmpty()) {
                 // Filme als Liste importieren, Url automatisch ermitteln
-                PLog.userLog("Filmliste laden (auto)");
+                PLog.sysLog("Filmliste laden (auto)");
                 setStop(false);
                 importNewFilmliste.importFilmListAuto(progData.filmlist,
                         diffListe, ProgConfig.SYSTEM_NUM_DAYS_FILMLIST.getInt());
             } else {
                 // Filme als Liste importieren, feste URL/Datei
-                PLog.userLog("Filmliste laden von: " + fileUrl);
+                PLog.sysLog("Filmliste laden von: " + fileUrl);
                 progData.filmlist.clear();
                 setStop(false);
                 importNewFilmliste.importFilmlistFromFile(fileUrl,
@@ -210,7 +210,7 @@ public class LoadFilmlist {
                 notifyProgress.notifyEvent(NotifyProgress.NOTIFY.FINISHED, new ListenerFilmlistLoadEvent("", "", 0, 0, false/* Fehler */));
             }
             list.add(PLog.LILNE3);
-            PLog.userLog(list);
+            PLog.sysLog(list);
 
         });
         th.setName("loadFilmlistProgStart");
@@ -226,33 +226,33 @@ public class LoadFilmlist {
     private void afterLoadFilmlist() {
         notifyProgress.notifyEvent(NotifyProgress.NOTIFY.PROGRESS, new ListenerFilmlistLoadEvent("", "Filem markieren: Geo, Zukunft, Doppelt",
                 ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
-        PLog.userLog("Filem markieren: Geo, Zukunft, Doppelt");
+        PLog.sysLog("Filem markieren: Geo, Zukunft, Doppelt");
         progData.filmlist.markFilms();
 
 
         notifyProgress.notifyEvent(NotifyProgress.NOTIFY.PROGRESS, new ListenerFilmlistLoadEvent("", "Themen suchen",
                 ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
-        PLog.userLog("Themen suchen");
+        PLog.sysLog("Themen suchen");
         progData.filmlist.loadTheme();
 
 
         if (!progData.aboList.isEmpty()) {
             notifyProgress.notifyEvent(NotifyProgress.NOTIFY.PROGRESS, new ListenerFilmlistLoadEvent("", "Abos eintragen",
                     ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
-            PLog.userLog("Abos eintragen");
+            PLog.sysLog("Abos eintragen");
             progData.aboList.setAboForFilm(progData.filmlist);
         }
 
 
         notifyProgress.notifyEvent(NotifyProgress.NOTIFY.PROGRESS, new ListenerFilmlistLoadEvent("", "Blacklist filtern",
                 ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
-        PLog.userLog("Blacklist filtern");
+        PLog.sysLog("Blacklist filtern");
         progData.filmlist.filterList();
 
 
         notifyProgress.notifyEvent(NotifyProgress.NOTIFY.PROGRESS, new ListenerFilmlistLoadEvent("", "Filme in Downloads eintragen",
                 ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
-        PLog.userLog("Filme in Downloads eintragen");
+        PLog.sysLog("Filme in Downloads eintragen");
         progData.downloadList.addFilmInList();
 
         setPropLoadFilmlist(false);
@@ -267,13 +267,13 @@ public class LoadFilmlist {
         // Abos eintragen in der gesamten Liste vor Blacklist da das nur beim Ändern der Filmliste oder
         // beim Ändern von Abos gemacht wird
 
-        PLog.userLog("");
+        PLog.sysLog("");
 
         // wenn nur ein Update
         if (!diffListe.isEmpty()) {
-            PLog.userLog("Liste Diff gelesen am: " + StringFormatters.FORMATTER_ddMMyyyyHHmm.format(new Date()));
-            PLog.userLog("  Liste Diff erstellt am: " + diffListe.genDate());
-            PLog.userLog("  Anzahl Filme: " + diffListe.size());
+            PLog.sysLog("Liste Diff gelesen am: " + StringFormatters.FORMATTER_ddMMyyyyHHmm.format(new Date()));
+            PLog.sysLog("  Liste Diff erstellt am: " + diffListe.genDate());
+            PLog.sysLog("  Anzahl Filme: " + diffListe.size());
 
             progData.filmlist.updateList(diffListe, true/* Vergleich über Index, sonst nur URL */, true /* ersetzen */);
             progData.filmlist.metaData = diffListe.metaData;
@@ -281,16 +281,16 @@ public class LoadFilmlist {
             diffListe.clear();
 
         } else {
-            PLog.userLog("Liste Kompl. gelesen am: " + StringFormatters.FORMATTER_ddMMyyyyHHmm.format(new Date()));
-            PLog.userLog("  Liste Kompl erstellt am: " + progData.filmlist.genDate());
-            PLog.userLog("  Anzahl Filme: " + progData.filmlist.size());
+            PLog.sysLog("Liste Kompl. gelesen am: " + StringFormatters.FORMATTER_ddMMyyyyHHmm.format(new Date()));
+            PLog.sysLog("  Liste Kompl erstellt am: " + progData.filmlist.genDate());
+            PLog.sysLog("  Anzahl Filme: " + progData.filmlist.size());
         }
 
         findAndMarkNewFilms(progData.filmlist);
 
         if (event.error) {
-            PLog.userLog("");
-            PLog.userLog("Filmliste laden war fehlerhaft, alte Liste wird wieder geladen");
+            PLog.sysLog("");
+            PLog.sysLog("Filmliste laden war fehlerhaft, alte Liste wird wieder geladen");
             Platform.runLater(() -> PAlert.showErrorAlert("Filmliste laden", "Das Laden der Filmliste hat nicht geklappt!"));
 
             // dann die alte Liste wieder laden
@@ -298,17 +298,17 @@ public class LoadFilmlist {
             setStop(false);
             new ReadFilmlist().readFilmlist(ProgInfos.getFilmListFile(),
                     progData.filmlist, ProgConfig.SYSTEM_NUM_DAYS_FILMLIST.getInt());
-            PLog.userLog("");
+            PLog.sysLog("");
 
         } else {
             new ProgSave().saveFilmlist();
         }
 
-        PLog.userLog("");
-        PLog.userLog("Jetzige Liste erstellt am: " + progData.filmlist.genDate());
-        PLog.userLog("  Anzahl Filme: " + progData.filmlist.size());
-        PLog.userLog("  Anzahl Neue:  " + progData.filmlist.countNewFilms());
-        PLog.userLog("");
+        PLog.sysLog("");
+        PLog.sysLog("Jetzige Liste erstellt am: " + progData.filmlist.genDate());
+        PLog.sysLog("  Anzahl Filme: " + progData.filmlist.size());
+        PLog.sysLog("  Anzahl Neue:  " + progData.filmlist.countNewFilms());
+        PLog.sysLog("");
 
         afterLoadFilmlist();
 

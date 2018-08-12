@@ -78,18 +78,18 @@ public class RuntimeExec {
         try {
             if (arrProgCallArray != null) {
                 if (log) {
-                    PLog.userLog("=====================");
-                    PLog.userLog("Starte Array: ");
-                    PLog.userLog(" -> " + strProgCallArray);
-                    PLog.userLog("=====================");
+                    PLog.sysLog("=====================");
+                    PLog.sysLog("Starte Array: ");
+                    PLog.sysLog(" -> " + strProgCallArray);
+                    PLog.sysLog("=====================");
                 }
                 process = Runtime.getRuntime().exec(arrProgCallArray);
             } else {
                 if (log) {
-                    PLog.userLog("=====================");
-                    PLog.userLog("Starte nicht als Array:");
-                    PLog.userLog(" -> " + strProgCall);
-                    PLog.userLog("=====================");
+                    PLog.sysLog("=====================");
+                    PLog.sysLog("Starte nicht als Array:");
+                    PLog.sysLog(" -> " + strProgCall);
+                    PLog.sysLog("=====================");
                 }
                 process = Runtime.getRuntime().exec(strProgCall);
             }

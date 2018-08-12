@@ -63,7 +63,7 @@ public class WriteMediaDb implements AutoCloseable {
                             file.toString()));
         }
 
-        PLog.userLog(list);
+        PLog.sysLog(list);
     }
 
     private void writeXmlData() throws XMLStreamException, IOException {

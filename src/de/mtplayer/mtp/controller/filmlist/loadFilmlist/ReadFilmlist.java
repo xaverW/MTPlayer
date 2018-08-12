@@ -86,7 +86,7 @@ public class ReadFilmlist {
 
         notifyFinished(sourceFileUrl, filmlist);
         list.add("Filme lesen --> fertig");
-        PLog.userLog(list);
+        PLog.sysLog(list);
     }
 
     private InputStream selectDecompressor(String source, InputStream in) throws Exception {
@@ -337,7 +337,7 @@ public class ReadFilmlist {
             l.finished(new ListenerFilmlistLoadEvent(url, "", progress, 0, false));
         }
         list.add(PLog.LILNE3);
-        PLog.userLog(list);
+        PLog.sysLog(list);
     }
 
 }

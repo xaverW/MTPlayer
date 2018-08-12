@@ -18,7 +18,7 @@
 package de.mtplayer.mtp.gui;
 
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.p2tools.p2Lib.tools.log.SysMsg;
+import de.p2tools.p2Lib.tools.log.UserMessage;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -45,7 +45,7 @@ public class MsgLogController extends AnchorPane {
     public MsgLogController(int logart) {
         this.logart = logart;
         if (logart == LOG_SYSTEM_MSG) {
-            textList = SysMsg.textSystem;
+            textList = UserMessage.msgList;
         } else {
             textList = ProgData.getInstance().playerMsg.textProgram;
         }
@@ -116,7 +116,7 @@ public class MsgLogController extends AnchorPane {
     private void setTextToArea() {
         if (cbxScroll.isSelected()) {
             if (logart == LOG_SYSTEM_MSG) {
-                textArea.setText(SysMsg.getText());
+                textArea.setText(UserMessage.getText());
             } else {
                 textArea.setText(ProgData.getInstance().playerMsg.getText());
             }
@@ -127,7 +127,7 @@ public class MsgLogController extends AnchorPane {
             double scrollPosition = textArea.getScrollTop();
 
             if (logart == LOG_SYSTEM_MSG) {
-                textArea.setText(SysMsg.getText());
+                textArea.setText(UserMessage.getText());
             } else {
                 textArea.setText(ProgData.getInstance().playerMsg.getText());
             }
@@ -138,7 +138,7 @@ public class MsgLogController extends AnchorPane {
 
     private void clearLog() {
         if (logart == LOG_SYSTEM_MSG) {
-            SysMsg.clearText();
+            UserMessage.clearText();
         } else {
             ProgData.getInstance().playerMsg.clearText();
         }

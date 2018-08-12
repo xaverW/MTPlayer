@@ -141,7 +141,7 @@ public class DownloadEditDialogController extends PDialogExtra {
             }
 
             // und jetzt die Datei löschen
-            PLog.userLog(new String[]{"Datei löschen: ", file.getAbsolutePath()});
+            PLog.sysLog(new String[]{"Datei löschen: ", file.getAbsolutePath()});
             if (!file.delete()) {
                 throw new Exception();
             }

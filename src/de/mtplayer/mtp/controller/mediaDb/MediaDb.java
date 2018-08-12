@@ -146,7 +146,7 @@ public class MediaDb {
                             path.toString()));
         }
 
-        PLog.userLog(list);
+        PLog.sysLog(list);
     }
 
 

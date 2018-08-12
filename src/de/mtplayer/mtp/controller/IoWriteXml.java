@@ -65,13 +65,13 @@ public class IoWriteXml implements AutoCloseable {
         xmlFilePath = new ProgInfos().getSettingsFile();
         list.add("Daten schreiben nach: " + xmlFilePath.toString());
         xmlWriteData();
-        PLog.userLog(list);
+        PLog.sysLog(list);
     }
 
     public synchronized void exportPset(SetData[] pSet, String datei) {
         try {
             xmlFilePath = Paths.get(datei);
-            PLog.userLog("Pset exportieren nach: " + xmlFilePath.toString());
+            PLog.sysLog("Pset exportieren nach: " + xmlFilePath.toString());
             xmlWriteStart();
             xmlWritePset(pSet);
             xmlWriteEnd();

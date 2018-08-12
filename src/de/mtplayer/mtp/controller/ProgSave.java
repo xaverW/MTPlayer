@@ -156,7 +156,7 @@ public class ProgSave {
 
         alreadyMadeBackup = true;
         list.add(PLog.LILNE3);
-        PLog.userLog(list);
+        PLog.sysLog(list);
     }
 
 

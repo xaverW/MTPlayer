@@ -104,12 +104,12 @@ public class StarterClass {
                 // zum Wiederstarten/Aufräumen die leer/zu kleine Datei löschen, alles auf Anfang
                 if (file.length() == 0) {
                     // zum Wiederstarten/Aufräumen die leer/zu kleine Datei löschen, alles auf Anfang
-                    PLog.userLog(new String[]{"Restart/Aufräumen: leere Datei löschen", file.getAbsolutePath()});
+                    PLog.sysLog(new String[]{"Restart/Aufräumen: leere Datei löschen", file.getAbsolutePath()});
                     if (!file.delete()) {
                         throw new Exception();
                     }
                 } else if (file.length() < ProgConst.MIN_DATEI_GROESSE_FILM) {
-                    PLog.userLog(new String[]{"Restart/Aufräumen: Zu kleine Datei löschen", file.getAbsolutePath()});
+                    PLog.sysLog(new String[]{"Restart/Aufräumen: Zu kleine Datei löschen", file.getAbsolutePath()});
                     if (!file.delete()) {
                         throw new Exception();
                     }
@@ -142,7 +142,7 @@ public class StarterClass {
             text.add("Programmaufruf: " + download.getProgramCall());
             text.add("Programmaufruf[]: " + download.getProgramCallArray());
         }
-        PLog.userLog(text.toArray(new String[text.size()]));
+        PLog.sysLog(text.toArray(new String[text.size()]));
     }
 
     private void restartMsg(Download download) {
@@ -150,7 +150,7 @@ public class StarterClass {
         text.add("Fehlerhaften Download neu starten - Restart (Summe Starts: " + download.getStart().getRestartCounter() + ')');
         text.add("Ziel: " + download.getDestPathFile());
         text.add("URL: " + download.getUrl());
-        PLog.userLog(text.toArray(new String[text.size()]));
+        PLog.sysLog(text.toArray(new String[text.size()]));
     }
 
     private static void finishedMsg(final Download download) {
@@ -204,7 +204,7 @@ public class StarterClass {
             list.add("Programmaufruf[]: " + download.getProgramCallArray());
         }
         list.add(PLog.LILNE3);
-        PLog.userLog(list);
+        PLog.sysLog(list);
 
         if (!download.getSource().equals(DownloadInfos.SRC_BUTTON) && !download.isStateStoped()) {
             //war ein Abo und wurde nicht abgebrochen

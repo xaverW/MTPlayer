@@ -81,7 +81,7 @@ public class MTInfoFile {
             }
             br.write(PConst.LINE_SEPARATORx2);
             br.flush();
-            PLog.userLog(new String[]{"Infofile", "  geschrieben"});
+            PLog.sysLog(new String[]{"Infofile", "  geschrieben"});
         } catch (final IOException ex) {
             PLog.errorLog(975410369, download.getDestPathFile());
         }

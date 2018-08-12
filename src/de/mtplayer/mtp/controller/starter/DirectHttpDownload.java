@@ -275,7 +275,7 @@ public class DirectHttpDownload extends Thread {
                         text.add("Timeout, Download Restarts: " + restartCount);
                         text.add("Ziel: " + download.getDestPathFile());
                         text.add("URL: " + download.getUrl());
-                        PLog.userLog(text.toArray(new String[text.size()]));
+                        PLog.sysLog(text.toArray(new String[text.size()]));
                     }
 
                     restartCount++;
