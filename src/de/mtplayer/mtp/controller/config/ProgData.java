@@ -17,7 +17,6 @@
 
 package de.mtplayer.mtp.controller.config;
 
-import de.mtplayer.mLib.tools.PlayerMsg;
 import de.mtplayer.mtp.MTPlayerController;
 import de.mtplayer.mtp.controller.data.*;
 import de.mtplayer.mtp.controller.data.abo.AboList;
@@ -81,10 +80,8 @@ public class ProgData {
     public HistoryList history = null; // alle angesehenen Filme
     public HistoryList erledigteAbos = null; // erfolgreich geladenen Abos
     public ReplaceList replaceList = null;
-    public PlayerMsg playerMsg = null;
 
     private ProgData() {
-        playerMsg = new PlayerMsg();
         replaceList = new ReplaceList();
         storedFilter = new StoredFilter(this);
         filmlist = new Filmlist();
