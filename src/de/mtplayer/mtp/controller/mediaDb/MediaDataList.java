@@ -117,7 +117,7 @@ public class MediaDataList extends SimpleListProperty<MediaData> {
             return;
         }
 
-        Thread th = new Thread(new CreateMediaDb(this));
+        Thread th = new Thread(new CreateMediaDb());
         th.setName("createInternalMediaDb");
         th.start();
     }
@@ -136,7 +136,7 @@ public class MediaDataList extends SimpleListProperty<MediaData> {
             return;
         }
 
-        Thread th = new Thread(new CreateMediaDb(this, path, collection));
+        Thread th = new Thread(new CreateMediaDb(path, collection));
         th.setName("createExternalCollection");
         th.start();
     }
@@ -175,8 +175,7 @@ public class MediaDataList extends SimpleListProperty<MediaData> {
 
     private void removeMediaOfExternalCollection(String collectionName) {
         // remove all media of this collection
-        final MediaDataList mediaDataList = ProgData.getInstance().mediaDataList;
-        final Iterator<MediaData> iterator = mediaDataList.iterator();
+        final Iterator<MediaData> iterator = iterator();
         while (iterator.hasNext()) {
             MediaData mediaData = iterator.next();
             if (mediaData.isExternal() && mediaData.getCollectionName().equals(collectionName)) {
@@ -210,15 +209,15 @@ public class MediaDataList extends SimpleListProperty<MediaData> {
 
     private void countExternalMediaData() {
         // creates the counter in the MediaPathDataList
-        final MediaPathDataList mediaPathList = ProgData.getInstance().mediaPathDataList;
+        final MediaPathDataList mediaPathDataList = ProgData.getInstance().mediaPathDataList;
 
-        mediaPathList.stream().forEach(m -> m.setCount(0));
+        mediaPathDataList.stream().forEach(m -> m.setCount(0));
         this.stream()
                 .filter(md -> md.isExternal())
                 .forEach(mediaData -> {
-                    MediaPathData mediaPathData = mediaPathList.getExternalMediaPathData(mediaData.getCollectionName());
+                    MediaPathData mediaPathData = mediaPathDataList.getExternalMediaPathData(mediaData.getCollectionName());
                     if (mediaPathData == null) {
-                        mediaPathData = mediaPathList.addExternalMediaPathData(mediaData.getCollectionName(), mediaData.getPath());
+                        mediaPathData = mediaPathDataList.addExternalMediaPathData(mediaData.getPath(), mediaData.getCollectionName());
                     }
                     if (mediaPathData != null) {
                         mediaPathData.setCount(mediaPathData.getCount() + 1);

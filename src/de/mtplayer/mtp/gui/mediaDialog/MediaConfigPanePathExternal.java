@@ -29,6 +29,7 @@ import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.PGuiTools;
 import javafx.beans.binding.Bindings;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -67,7 +68,7 @@ public class MediaConfigPanePathExternal {
     private void initTable(VBox vBox) {
         tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-        tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         final TableColumn<MediaPathData, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("collectionName"));
@@ -119,8 +120,16 @@ public class MediaConfigPanePathExternal {
         btnDel.setGraphic(new Icons().ICON_BUTTON_REMOVE);
         btnDel.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
         btnDel.setOnAction(a -> {
-            MediaPathData mediaPathData = tableView.getSelectionModel().getSelectedItem();
-            progData.mediaDataList.removeExternalCollection(mediaPathData.getCollectionName());
+            final ObservableList<MediaPathData> sels = tableView.getSelectionModel().getSelectedItems();
+            if (sels == null || sels.isEmpty()) {
+                PAlert.showInfoNoSelection();
+            } else {
+                sels.stream().forEach(mediaPathData -> {
+                    // todo geht besser
+                    progData.mediaDataList.removeExternalCollection(mediaPathData.getCollectionName());
+                });
+                progData.mediaPathDataList.removeAll(sels);
+            }
         });
 
         HBox hBox = new HBox(10);
@@ -162,6 +171,7 @@ public class MediaConfigPanePathExternal {
                 PAlert.showErrorAlert("Sammlung hinzufügen", "Sammlung: " + txtCollectionName.getText(),
                         "Eine Sammlung mit dem **Namen** existiert bereits.");
             } else {
+                progData.mediaDataList.createExternalCollection(mediaPathData.getPath(), mediaPathData.getCollectionName());
                 tableView.getSelectionModel().clearSelection();
                 tableView.getSelectionModel().select(mediaPathData);
                 tableView.scrollTo(mediaPathData);

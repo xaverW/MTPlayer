@@ -46,12 +46,10 @@ public class CreateMediaDb implements Runnable {
     /**
      * duchsucht die vom User angelegten Pfade für die interne Mediensammlung
      * -> bei jedem Start
-     *
-     * @param mediaDataList
      */
-    public CreateMediaDb(MediaDataList mediaDataList) {
+    public CreateMediaDb() {
         progData = ProgData.getInstance();
-        this.mediaDataList = mediaDataList;
+        this.mediaDataList = progData.mediaDataList;
         this.path = "";
         this.collection = "";
         getSuffix();
@@ -62,11 +60,11 @@ public class CreateMediaDb implements Runnable {
      * -> wird nur manuell vom User gestartet und löscht nicht die MediaDB
      *
      * @param path
-     * @param mediaDataList
+     * @param collection
      */
-    public CreateMediaDb(MediaDataList mediaDataList, String path, String collection) {
+    public CreateMediaDb(String path, String collection) {
         progData = ProgData.getInstance();
-        this.mediaDataList = mediaDataList;
+        this.mediaDataList = progData.mediaDataList;
         this.path = path;
         this.collection = collection;
         getSuffix();
@@ -79,7 +77,6 @@ public class CreateMediaDb implements Runnable {
         mediaDataList.setSearching(true);
         Listener.notify(Listener.EREIGNIS_MEDIA_DB_START, MediaDataList.class.getSimpleName());
 
-        //todo mediaPathDataList erst mal putzen: gleiche, leere, ..
         try {
 
             if (path.isEmpty()) {
@@ -126,7 +123,7 @@ public class CreateMediaDb implements Runnable {
                 }
                 searchFile(new File(path), true);
 
-                progData.mediaPathDataList.addExternalMediaPathData(collection, path);
+                progData.mediaPathDataList.addExternalMediaPathData(path, collection);
                 mediaDataList.addAll(mediaDataArrayList);
                 mediaDataList.checkExternalMediaData();
                 mediaDataList.writeExternalMediaData();

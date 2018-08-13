@@ -119,7 +119,7 @@ public class MediaPathDataList extends SimpleListProperty<MediaPathData> {
         Iterator<MediaPathData> it = iterator();
         while (it.hasNext()) {
             MediaPathData mediaPathData = it.next();
-            if (!mediaPathData.isExternal()) {
+            if (mediaPathData.isExternal()) {
                 continue;
             }
 
