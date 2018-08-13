@@ -132,7 +132,7 @@ public class IoReadXml implements AutoCloseable {
                                 final MediaPathData mp = new MediaPathData();
                                 if (get(parser, MediaPathData.TAG, MediaPathData.XML_NAMES, mp.arr)) {
                                     mp.setPropsFromXml();
-                                    this.progData.mediaPathList.add(mp);
+                                    this.progData.mediaPathDataList.add(mp);
                                 }
                                 break;
                             case FilterToXml.TAG:

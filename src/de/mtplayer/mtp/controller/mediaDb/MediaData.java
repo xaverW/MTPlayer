@@ -91,15 +91,16 @@ public class MediaData extends Data<MediaData> {
         return external;
     }
 
+    private void setExternal(boolean external) {
+        this.external = external;
+    }
+
 
     public boolean equal(MediaData m) {
         return m.arr[MEDIA_DB_NAME].equals(arr[MEDIA_DB_NAME])
+                && m.arr[MEDIA_DB_COLLECTION_NAME].equals(arr[MEDIA_DB_COLLECTION_NAME])
                 && m.arr[MEDIA_DB_PATH].equals(arr[MEDIA_DB_PATH])
                 && m.arr[MEDIA_DB_SIZE].equals(arr[MEDIA_DB_SIZE]);
-    }
-
-    public String getEqual() {
-        return arr[MEDIA_DB_NAME] + arr[MEDIA_DB_PATH] + arr[MEDIA_DB_SIZE];
     }
 
     @Override
@@ -128,10 +129,6 @@ public class MediaData extends Data<MediaData> {
             ex = false;
         }
         setExternal(ex);
-    }
-
-    private void setExternal(boolean external) {
-        this.external = external;
     }
 
     private static String cleanUp(String s) {

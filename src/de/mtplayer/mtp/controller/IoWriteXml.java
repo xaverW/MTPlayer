@@ -210,7 +210,7 @@ public class IoWriteXml implements AutoCloseable {
 
     private void xmlWriteMediaPath() {
         // Pfade der MedienDB schreiben
-        for (final MediaPathData mp : progData.mediaPathList) {
+        for (final MediaPathData mp : progData.mediaPathDataList) {
             mp.setXmlFromProps();
             xmlWriteData(MediaPathData.TAG, MediaPathData.XML_NAMES, mp.arr, false);
         }

@@ -71,9 +71,9 @@ public class MediaConfigController extends PDialog {
         vBoxDialog.getChildren().addAll(hBoxOk);
 
         btnOk.setOnAction(a -> close());
-        progress.visibleProperty().bind(progData.mediaList.propSearchProperty());
-        btnCreateMediaDB.disableProperty().bind(progData.mediaList.propSearchProperty());
-        btnCreateMediaDB.setOnAction(event -> progData.mediaList.createMediaDb());
+        progress.visibleProperty().bind(progData.mediaDataList.searchingProperty());
+        btnCreateMediaDB.disableProperty().bind(progData.mediaDataList.searchingProperty());
+        btnCreateMediaDB.setOnAction(event -> progData.mediaDataList.createInternalMediaDb());
 
         initPanel();
     }

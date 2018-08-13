@@ -85,9 +85,9 @@ public class MediaConfigPaneMediaListController extends AnchorPane {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
         initTable(result);
 
-        lblGesamtMedia.setText(progData.mediaList.size() + "");
-        progData.mediaList.sizeProperty().addListener((observable, oldValue, newValue) ->
-                Platform.runLater(() -> lblGesamtMedia.setText(progData.mediaList.size() + "")));
+        lblGesamtMedia.setText(progData.mediaDataList.size() + "");
+        progData.mediaDataList.sizeProperty().addListener((observable, oldValue, newValue) ->
+                Platform.runLater(() -> lblGesamtMedia.setText(progData.mediaDataList.size() + "")));
 
         return result;
     }
@@ -133,9 +133,9 @@ public class MediaConfigPaneMediaListController extends AnchorPane {
         colColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(20.0 / 100));
         externalColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(5.0 / 100));
 
-        SortedList<MediaData> sortedList = progData.mediaList.getSortedList();
+        SortedList<MediaData> sortedList = progData.mediaDataList.getSortedList();
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
-        progData.mediaList.filterdListClearPred(true);
+        progData.mediaDataList.filterdListClearPred(true);
         tableView.setItems(sortedList);
 
         VBox.setVgrow(tableView, Priority.ALWAYS);

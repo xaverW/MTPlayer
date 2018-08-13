@@ -120,12 +120,12 @@ public class MediaDialogPaneMedia extends ScrollPane {
     public void make() {
         Listener.addListener(listenerDbStop);
 
-        progData.mediaList.sizeProperty().addListener((observable, oldValue, newValue) ->
-                Platform.runLater(() -> lblGesamtMedia.setText(progData.mediaList.size() + "")));
+        progData.mediaDataList.sizeProperty().addListener((observable, oldValue, newValue) ->
+                Platform.runLater(() -> lblGesamtMedia.setText(progData.mediaDataList.size() + "")));
 
-        progress.visibleProperty().bind(progData.mediaList.propSearchProperty());
-        btnCreateMediaDB.disableProperty().bind(progData.mediaList.propSearchProperty());
-        btnCreateMediaDB.setOnAction(e -> progData.mediaList.createMediaDb());
+        progress.visibleProperty().bind(progData.mediaDataList.searchingProperty());
+        btnCreateMediaDB.disableProperty().bind(progData.mediaDataList.searchingProperty());
+        btnCreateMediaDB.setOnAction(e -> progData.mediaDataList.createInternalMediaDb());
 
         btnOpen.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
         btnOpen.setTooltip(new Tooltip("Ausgewählten Pfad im Dateimanager öffnen."));
@@ -191,17 +191,17 @@ public class MediaDialogPaneMedia extends ScrollPane {
     }
 
     private void setTableMedia() {
-        SortedList<MediaData> sortedList = progData.mediaList.getSortedList();
+        SortedList<MediaData> sortedList = progData.mediaDataList.getSortedList();
         sortedList.comparatorProperty().bind(tableMedia.comparatorProperty());
         tableMedia.setItems(sortedList);
 
-        lblGesamtMedia.setText(progData.mediaList.size() + "");
+        lblGesamtMedia.setText(progData.mediaDataList.size() + "");
     }
 
 
     public void filter(String searchStr) {
         this.searchStr = searchStr;
-        progData.mediaList.filteredListSetPredicate(media -> {
+        progData.mediaDataList.filteredListSetPredicate(media -> {
             if (searchStr.isEmpty()) {
                 return false;
             }
@@ -212,7 +212,7 @@ public class MediaDialogPaneMedia extends ScrollPane {
                 return filterMedia(media, searchStr);
             }
         });
-        lblTrefferMedia.setText(progData.mediaList.getFilteredList().size() + "");
+        lblTrefferMedia.setText(progData.mediaDataList.getFilteredList().size() + "");
     }
 
     private boolean filterMedia(MediaData media, Pattern p) {

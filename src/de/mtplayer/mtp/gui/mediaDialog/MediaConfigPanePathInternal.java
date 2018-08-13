@@ -27,18 +27,22 @@ import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
-import javafx.application.Platform;
+import de.p2tools.p2Lib.guiTools.PGuiTools;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.*;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.Collection;
 
-public class MediaConfigPanePath {
+public class MediaConfigPanePathInternal {
 
     private final TableView<MediaPathData> tableView = new TableView<>();
     private final GridPane gridPane = new GridPane();
@@ -47,7 +51,7 @@ public class MediaConfigPanePath {
     private final ProgData progData;
     private final Stage stage;
 
-    public MediaConfigPanePath(Stage stage) {
+    public MediaConfigPanePathInternal(Stage stage) {
         this.stage = stage;
         this.progData = ProgData.getInstance();
     }
@@ -56,71 +60,58 @@ public class MediaConfigPanePath {
         VBox vBox = new VBox(10);
 
         initTable(vBox);
-        makeConfig(vBox);
-        addConfigs(vBox);
+        makeButton(vBox);
+        makeGrid(vBox);
 
-        TitledPane tpConfig = new TitledPane("Pfade", vBox);
+        TitledPane tpConfig = new TitledPane("Interne Medien", vBox);
         result.add(tpConfig);
     }
 
     private void initTable(VBox vBox) {
         final TableColumn<MediaPathData, String> pathColumn = new TableColumn<>("Pfad");
         pathColumn.setCellValueFactory(new PropertyValueFactory<>("path"));
+        pathColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        pathColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(80.0 / 100));
 
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
         tableView.getColumns().addAll(pathColumn);
-        tableView.setItems(progData.mediaPathList.getSortedListInternal());
-        tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
-                Platform.runLater(this::setActMediaData));
+
+        SortedList<MediaPathData> list = progData.mediaPathDataList.getSortedListInternal();
+        list.comparatorProperty().bind(tableView.comparatorProperty());
+        tableView.setItems(list);
 
         VBox.setVgrow(tableView, Priority.ALWAYS);
         vBox.getChildren().addAll(tableView);
     }
 
-    private void makeConfig(VBox vBox) {
+    private void makeButton(VBox vBox) {
+        final Button btnHelp = new PButton().helpButton(stage,
+                "Mediensammlungen verwalten", HelpText.INTERN_MEDIA_COLLECTION);
+
         Button btnDel = new Button("");
         btnDel.setGraphic(new Icons().ICON_BUTTON_REMOVE);
+        btnDel.setTooltip(new Tooltip("Markierten Pfad löschen"));
         btnDel.setOnAction(event -> {
             final ObservableList<MediaPathData> sels = tableView.getSelectionModel().getSelectedItems();
             if (sels == null || sels.isEmpty()) {
                 PAlert.showInfoNoSelection();
             } else {
-                progData.mediaPathList.removeAll(sels);
+                progData.mediaPathDataList.removeAll(sels);
                 tableView.getSelectionModel().clearSelection();
             }
         });
-
-        final Button btnHelp = new PButton().helpButton(stage,
-                "Mediensammlungen verwalten", HelpText.INTERN_MEDIA_COLLECTION);
-
-        Button btnNew = new Button("");
-        btnNew.setGraphic(new Icons().ICON_BUTTON_ADD);
-        btnNew.setOnAction(event -> {
-            MediaPathData mediaPathData = new MediaPathData();
-            if (progData.mediaPathList.add(mediaPathData)) {
-                tableView.getSelectionModel().clearSelection();
-                tableView.getSelectionModel().select(mediaPathData);
-                tableView.scrollTo(mediaPathData);
-            }
-        });
-
-
-        HBox hBoxHlp = new HBox();
-        hBoxHlp.setAlignment(Pos.CENTER_RIGHT);
-        HBox.setHgrow(hBoxHlp, Priority.ALWAYS);
-        hBoxHlp.getChildren().add(btnHelp);
 
         HBox hBox = new HBox();
         hBox.setSpacing(10);
-        hBox.getChildren().addAll(btnNew, btnDel, hBoxHlp);
+        hBox.getChildren().addAll(btnDel, PGuiTools.getHBoxGrower(), btnHelp);
 
         vBox.getChildren().addAll(hBox);
     }
 
-    private void addConfigs(VBox vBox) {
+    private void makeGrid(VBox vBox) {
         gridPane.setStyle(PConst.CSS_BACKGROUND_COLOR_GREY);
         gridPane.setHgap(10);
         gridPane.setVgap(10);
@@ -131,31 +122,33 @@ public class MediaConfigPanePath {
             DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtPath);
         });
         btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
-        btnFile.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen."));
+        btnFile.setTooltip(new Tooltip("Einen Pfad mit Medien auswählen."));
 
-        gridPane.add(new Label("Pfad: "), 0, 0);
-        gridPane.add(txtPath, 1, 0);
-        gridPane.add(btnFile, 2, 0);
-        gridPane.getColumnConstraints().addAll(new ColumnConstraints(), PColumnConstraints.getCcComputedSizeAndHgrow());
+        Button btnNew = new Button("");
+        btnNew.setGraphic(new Icons().ICON_BUTTON_ADD);
+        btnNew.setTooltip(new Tooltip("Den Pfad zur Mediensammlung hinzufügen."));
+        btnNew.setOnAction(event -> {
+            MediaPathData mediaPathData = progData.mediaPathDataList.addInternalMediaPathData(txtPath.getText());
+
+            if (mediaPathData == null) {
+                PAlert.showErrorAlert("Sammlung hinzufügen", "Sammlung: " + txtPath.getText(),
+                        "Eine Sammlung mit dem **Pfad** existiert bereits.");
+            } else {
+                tableView.getSelectionModel().clearSelection();
+                tableView.getSelectionModel().select(mediaPathData);
+                tableView.scrollTo(mediaPathData);
+            }
+        });
+        btnNew.disableProperty().bind(txtPath.textProperty().isEmpty());
+
+        gridPane.add(new Label("Eine neuen Pfad mit Medien hinzufügen:"), 0, 0, 2, 1);
+        gridPane.add(new Label("Pfad:"), 0, 1);
+        gridPane.add(txtPath, 1, 1);
+        gridPane.add(btnFile, 2, 1);
+        gridPane.add(btnNew, 3, 1);
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcComputedSizeAndHgrow());
 
         vBox.getChildren().add(gridPane);
-        gridPane.setDisable(true);
-    }
-
-    private void setActMediaData() {
-        MediaPathData mediaPathDataAct = tableView.getSelectionModel().getSelectedItem();
-        if (mediaPathDataAct == mediaPathData) {
-            return;
-        }
-
-        if (mediaPathData != null) {
-            txtPath.textProperty().unbindBidirectional(mediaPathData.pathProperty());
-        }
-
-        mediaPathData = mediaPathDataAct;
-        gridPane.setDisable(mediaPathData == null);
-        if (mediaPathData != null) {
-            txtPath.textProperty().bindBidirectional(mediaPathData.pathProperty());
-        }
     }
 }

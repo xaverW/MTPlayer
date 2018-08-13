@@ -90,11 +90,6 @@ public class MediaPathData extends Data<MediaPathData> {
         makeArr();
     }
 
-    public MediaPathData(String path) {
-        makeArr();
-        setPath(path);
-    }
-
     public MediaPathData(String path, String collectionName, boolean external) {
         makeArr();
         setPath(path);
@@ -114,11 +109,14 @@ public class MediaPathData extends Data<MediaPathData> {
         arr[MEDIA_PATH_EXTERNAL] = String.valueOf(isExternal());
     }
 
+    public String getHash() {
+        return getPath() + "##" + getCollectionName();
+    }
+
     private void makeArr() {
         arr = new String[MAX_ELEM];
         for (int i = 0; i < arr.length; ++i) {
             arr[i] = "";
         }
     }
-
 }

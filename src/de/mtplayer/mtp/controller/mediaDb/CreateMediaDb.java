@@ -35,23 +35,23 @@ public class CreateMediaDb implements Runnable {
     private boolean more = false;
 
     private final ProgData progData;
-    private final MediaList mediaList;
+    private final MediaDataList mediaDataList;
     private final String path;
     private final String collection;
     private String[] suffix;
-    private List search = new ArrayList<MediaData>();
+    private List mediaDataArrayList = new ArrayList<MediaData>();
 
     final boolean withoutSuffix = Boolean.parseBoolean(ProgConfig.MEDIA_DB_WITH_OUT_SUFFIX.get());
 
     /**
-     * duchsucht die vom User angelegten Pfade für die Mediensammlung
+     * duchsucht die vom User angelegten Pfade für die interne Mediensammlung
      * -> bei jedem Start
      *
-     * @param mediaList
+     * @param mediaDataList
      */
-    public CreateMediaDb(MediaList mediaList) {
+    public CreateMediaDb(MediaDataList mediaDataList) {
         progData = ProgData.getInstance();
-        this.mediaList = mediaList;
+        this.mediaDataList = mediaDataList;
         this.path = "";
         this.collection = "";
         getSuffix();
@@ -62,11 +62,11 @@ public class CreateMediaDb implements Runnable {
      * -> wird nur manuell vom User gestartet und löscht nicht die MediaDB
      *
      * @param path
-     * @param mediaList
+     * @param mediaDataList
      */
-    public CreateMediaDb(MediaList mediaList, String path, String collection) {
+    public CreateMediaDb(MediaDataList mediaDataList, String path, String collection) {
         progData = ProgData.getInstance();
-        this.mediaList = mediaList;
+        this.mediaDataList = mediaDataList;
         this.path = path;
         this.collection = collection;
         getSuffix();
@@ -76,18 +76,21 @@ public class CreateMediaDb implements Runnable {
     public synchronized void run() {
 
         Duration.counterStart("Mediensammlung erstellen");
-        mediaList.setPropSearch(true);
-        Listener.notify(Listener.EREIGNIS_MEDIA_DB_START, MediaList.class.getSimpleName());
+        mediaDataList.setSearching(true);
+        Listener.notify(Listener.EREIGNIS_MEDIA_DB_START, MediaDataList.class.getSimpleName());
 
-        //todo mediaPathList erst mal putzen: gleiche, leere, ..
+        //todo mediaPathDataList erst mal putzen: gleiche, leere, ..
         try {
 
             if (path.isEmpty()) {
                 // ===================================
                 // die gesamte MediaDB laden: gespeichert und lokale Filme
-                search.addAll(MediaDb.loadSavedList());
+                mediaDataArrayList.addAll(mediaDataList.loadSavedExternalMediaData());
 
-                for (final MediaPathData mediaPathData : progData.mediaPathList.getInternalList()) {
+                // und die Pfade "putzen"
+                progData.mediaPathDataList.cleanUpMediaPathData();
+
+                for (final MediaPathData mediaPathData : progData.mediaPathDataList.getInternalMediaPathDataList()) {
                     final File f = new File(mediaPathData.getPath());
                     if (!f.canRead()) {
                         if (!error.isEmpty()) {
@@ -101,11 +104,11 @@ public class CreateMediaDb implements Runnable {
                     // Verzeichnisse können nicht durchsucht werden
                     errorMsg();
                 }
-                progData.mediaPathList.getInternalList().stream().forEach((mp) ->
-                        searchFile(new File(mp.getPath()), false));
+                progData.mediaPathDataList.getInternalMediaPathDataList().stream().forEach((mediaPathData) ->
+                        searchFile(new File(mediaPathData.getPath()), false));
 
-                mediaList.setAll(search);
-                mediaList.checkExternalMediaData();
+                mediaDataList.setAll(mediaDataArrayList);
+                mediaDataList.checkExternalMediaData();
 
             } else {
                 // ===================================
@@ -123,18 +126,18 @@ public class CreateMediaDb implements Runnable {
                 }
                 searchFile(new File(path), true);
 
-                progData.mediaPathList.addExternal(collection, path);
-                mediaList.addAll(search);
-                mediaList.checkExternalMediaData();
-                MediaDb.writeList(mediaList);
+                progData.mediaPathDataList.addExternalMediaPathData(collection, path);
+                mediaDataList.addAll(mediaDataArrayList);
+                mediaDataList.checkExternalMediaData();
+                mediaDataList.writeExternalMediaData();
             }
 
         } catch (final Exception ex) {
             PLog.errorLog(120321254, ex);
         }
 
-        mediaList.setPropSearch(false);
-        Listener.notify(Listener.EREIGNIS_MEDIA_DB_STOP, MediaList.class.getSimpleName());
+        mediaDataList.setSearching(false);
+        Listener.notify(Listener.EREIGNIS_MEDIA_DB_STOP, MediaDataList.class.getSimpleName());
         Duration.counterStop("Mediensammlung erstellen");
     }
 
@@ -155,7 +158,7 @@ public class CreateMediaDb implements Runnable {
                 if (file.isDirectory()) {
                     searchFile(file, external);
                 } else if (checkSuffix(suffix, file.getName())) {
-                    search.add(new MediaData(file.getName(), file.getParent().intern(),
+                    mediaDataArrayList.add(new MediaData(file.getName(), file.getParent().intern(),
                             file.length(), collection.intern(), external));
                 }
             }
