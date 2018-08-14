@@ -67,55 +67,64 @@ public class MediaPathDataList extends SimpleListProperty<MediaPathData> {
         return list;
     }
 
-    public String getNextExternCollectionName() {
-        String name = "Sammlung ";
-        int count = this.getExternalMediaPathDataList().size();
+    public String getNextCollectionName(boolean external) {
+        String name;
+        int count;
 
-        while (getExternalMediaPathData(name + count) != null) {
+        if (external) {
+            name = "Extern ";
+            count = this.getExternalMediaPathDataList().size();
+
+        } else {
+            name = "Intern ";
+            count = this.getInternalMediaPathDataList().size();
+        }
+
+        while (getMediaPathData(name + count) != null) {
             ++count;
         }
 
         return name + count;
     }
 
-    public MediaPathData addInternalMediaPathData(String path) {
-        MediaPathData mediaPathData = new MediaPathData(path, "", false);
-        if (getInternalMediaPathData(mediaPathData.getPath()) != null) {
-            return null;
+    public MediaPathData addMediaPathData(String path, String collectionName, boolean external) {
+        MediaPathData mediaPathData = new MediaPathData(path, collectionName, external);
+
+        if (external) {
+            if (getMediaPathData(mediaPathData.getCollectionName(), external) != null) {
+                return null;
+            }
+
+        } else {
+            if (getMediaPathData(mediaPathData.getPath(), mediaPathData.getCollectionName(), external) != null) {
+                return null;
+            }
         }
+
         add(mediaPathData);
         return mediaPathData;
     }
 
-    public MediaPathData addExternalMediaPathData(String path, String collectionName) {
-        MediaPathData mediaPathData = new MediaPathData(path, collectionName, true);
-        if (getExternalMediaPathData(mediaPathData.getCollectionName()) != null) {
-            return null;
-        }
-        add(mediaPathData);
-        return mediaPathData;
-    }
 
-    public MediaPathData getMediaPathData(String collectionName) {
-        MediaPathData mediaPathData;
-        mediaPathData = this.stream()
+    public MediaPathData getMediaPathData(String path, String collectionName, boolean external) {
+        MediaPathData mediaPathData = this.stream()
+                .filter(m -> (m.equals(external)))
+                .filter(m -> m.getPath().equals(path))
                 .filter(m -> m.getCollectionName().equals(collectionName))
                 .findAny().orElse(null);
         return mediaPathData;
     }
 
-    public MediaPathData getInternalMediaPathData(String path) {
-        MediaPathData md = this.stream()
-                .filter(m -> (!m.isExternal()))
-                .filter(m -> m.getPath().equals(path))
+    public MediaPathData getMediaPathData(String collectionName, boolean external) {
+        MediaPathData mediaPathData = this.stream()
+                .filter(m -> (m.equals(external)))
+                .filter(m -> m.getCollectionName().equals(collectionName))
                 .findAny().orElse(null);
-        return md;
+        return mediaPathData;
     }
 
-    public MediaPathData getExternalMediaPathData(String collectionName) {
-        MediaPathData mediaPathData;
-        mediaPathData = this.stream()
-                .filter(m -> m.isExternal())
+    public MediaPathData getMediaPathData(String collectionName) {
+        MediaPathData mediaPathData = this.stream()
                 .filter(m -> m.getCollectionName().equals(collectionName))
                 .findAny().orElse(null);
         return mediaPathData;
@@ -139,12 +148,12 @@ public class MediaPathDataList extends SimpleListProperty<MediaPathData> {
         hashSet.clear();
     }
 
-    public synchronized void removeExternalMediaPathData(String collectionName) {
+    public synchronized void removeMediaPathData(String collectionName) {
         // remove collection
         Iterator<MediaPathData> iterator = iterator();
         while (iterator.hasNext()) {
             MediaPathData mediaPathData = iterator.next();
-            if (mediaPathData.isExternal() && mediaPathData.getCollectionName().equals(collectionName)) {
+            if (mediaPathData.getCollectionName().equals(collectionName)) {
                 iterator.remove();
             }
         }

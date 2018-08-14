@@ -105,9 +105,10 @@ public class CreateMediaDb implements Runnable {
                     errorMsg();
                 }
                 progData.mediaPathDataList.getInternalMediaPathDataList().stream().forEach((mediaPathData) -> {
-//                    final String name = PIndex.getIndex("Intern-" + ++count + "--");
-                    final String name = "Intern " + ++count + ": " + mediaPathData.getPath();
-                    mediaPathData.setCollectionName(name.intern());
+                    if (mediaPathData.getCollectionName().isEmpty()) {
+                        final String name = "Intern " + ++count + ": ";
+                        mediaPathData.setCollectionName(name.intern());
+                    }
                     searchFile(new File(mediaPathData.getPath()), mediaPathData.getCollectionName(), false);
                 });
 
