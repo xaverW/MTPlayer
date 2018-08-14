@@ -181,7 +181,7 @@ public class MTPlayer extends Application {
 
                 if (!onlyOne) {
                     onlyOne = true;
-                    progData.mediaDataList.createInternalMediaDb();
+                    progData.mediaDataList.createMediaDb();
                     checkProgUpdate();
                 }
 

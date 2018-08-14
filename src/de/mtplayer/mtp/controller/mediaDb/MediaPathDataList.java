@@ -87,12 +87,20 @@ public class MediaPathDataList extends SimpleListProperty<MediaPathData> {
         return mediaPathData;
     }
 
-    public MediaPathData addExternalMediaPathData(String path, String collection) {
-        MediaPathData mediaPathData = new MediaPathData(path, collection, true);
+    public MediaPathData addExternalMediaPathData(String path, String collectionName) {
+        MediaPathData mediaPathData = new MediaPathData(path, collectionName, true);
         if (getExternalMediaPathData(mediaPathData.getCollectionName()) != null) {
             return null;
         }
         add(mediaPathData);
+        return mediaPathData;
+    }
+
+    public MediaPathData getMediaPathData(String collectionName) {
+        MediaPathData mediaPathData;
+        mediaPathData = this.stream()
+                .filter(m -> m.getCollectionName().equals(collectionName))
+                .findAny().orElse(null);
         return mediaPathData;
     }
 
@@ -113,7 +121,7 @@ public class MediaPathDataList extends SimpleListProperty<MediaPathData> {
         return mediaPathData;
     }
 
-    public void cleanUpMediaPathData() {
+    public void cleanUpInternalMediaPathData() {
         // checks duplicates in the INTERN mediaPathDataList
         final HashSet<String> hashSet = new HashSet<>(size());
         Iterator<MediaPathData> it = iterator();
@@ -128,6 +136,17 @@ public class MediaPathDataList extends SimpleListProperty<MediaPathData> {
                 it.remove();
             }
         }
+        hashSet.clear();
     }
 
+    public synchronized void removeExternalMediaPathData(String collectionName) {
+        // remove collection
+        Iterator<MediaPathData> iterator = iterator();
+        while (iterator.hasNext()) {
+            MediaPathData mediaPathData = iterator.next();
+            if (mediaPathData.isExternal() && mediaPathData.getCollectionName().equals(collectionName)) {
+                iterator.remove();
+            }
+        }
+    }
 }

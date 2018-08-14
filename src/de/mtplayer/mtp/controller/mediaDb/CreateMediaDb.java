@@ -37,21 +37,23 @@ public class CreateMediaDb implements Runnable {
     private final ProgData progData;
     private final MediaDataList mediaDataList;
     private final String path;
-    private final String collection;
+    private final String collectionName;
     private String[] suffix;
     private List mediaDataArrayList = new ArrayList<MediaData>();
+    private int count = 0;
 
     final boolean withoutSuffix = Boolean.parseBoolean(ProgConfig.MEDIA_DB_WITH_OUT_SUFFIX.get());
 
     /**
      * duchsucht die vom User angelegten Pfade für die interne Mediensammlung
+     * und fügt die gespeicherten externen Medien hinzu
      * -> bei jedem Start
      */
     public CreateMediaDb() {
         progData = ProgData.getInstance();
         this.mediaDataList = progData.mediaDataList;
         this.path = "";
-        this.collection = "";
+        this.collectionName = "";
         getSuffix();
     }
 
@@ -60,13 +62,13 @@ public class CreateMediaDb implements Runnable {
      * -> wird nur manuell vom User gestartet und löscht nicht die MediaDB
      *
      * @param path
-     * @param collection
+     * @param collectionName
      */
-    public CreateMediaDb(String path, String collection) {
+    public CreateMediaDb(String path, String collectionName) {
         progData = ProgData.getInstance();
         this.mediaDataList = progData.mediaDataList;
         this.path = path;
-        this.collection = collection;
+        this.collectionName = collectionName;
         getSuffix();
     }
 
@@ -85,7 +87,8 @@ public class CreateMediaDb implements Runnable {
                 mediaDataArrayList.addAll(mediaDataList.loadSavedExternalMediaData());
 
                 // und die Pfade "putzen"
-                progData.mediaPathDataList.cleanUpMediaPathData();
+                progData.mediaPathDataList.cleanUpInternalMediaPathData();
+
 
                 for (final MediaPathData mediaPathData : progData.mediaPathDataList.getInternalMediaPathDataList()) {
                     final File f = new File(mediaPathData.getPath());
@@ -101,11 +104,16 @@ public class CreateMediaDb implements Runnable {
                     // Verzeichnisse können nicht durchsucht werden
                     errorMsg();
                 }
-                progData.mediaPathDataList.getInternalMediaPathDataList().stream().forEach((mediaPathData) ->
-                        searchFile(new File(mediaPathData.getPath()), false));
+                progData.mediaPathDataList.getInternalMediaPathDataList().stream().forEach((mediaPathData) -> {
+//                    final String name = PIndex.getIndex("Intern-" + ++count + "--");
+                    final String name = "Intern " + ++count + ": " + mediaPathData.getPath();
+                    mediaPathData.setCollectionName(name.intern());
+                    searchFile(new File(mediaPathData.getPath()), mediaPathData.getCollectionName(), false);
+                });
 
                 mediaDataList.setAll(mediaDataArrayList);
                 mediaDataList.checkExternalMediaData();
+                mediaDataList.countMediaData();
 
             } else {
                 // ===================================
@@ -121,11 +129,11 @@ public class CreateMediaDb implements Runnable {
                     // Verzeichnisse können nicht durchsucht werden
                     errorMsg();
                 }
-                searchFile(new File(path), true);
+                searchFile(new File(path), collectionName, true);
 
-                progData.mediaPathDataList.addExternalMediaPathData(path, collection);
                 mediaDataList.addAll(mediaDataArrayList);
                 mediaDataList.checkExternalMediaData();
+                mediaDataList.countMediaData();
                 mediaDataList.writeExternalMediaData();
             }
 
@@ -145,7 +153,7 @@ public class CreateMediaDb implements Runnable {
                         : "Der Pfad der Mediensammlung kann nicht gelesen werden:" + PConst.LINE_SEPARATOR) + error));
     }
 
-    private void searchFile(File dir, boolean external) {
+    private void searchFile(File dir, String collName, boolean external) {
         if (dir == null) {
             return;
         }
@@ -153,10 +161,10 @@ public class CreateMediaDb implements Runnable {
         if (files != null) {
             for (final File file : files) {
                 if (file.isDirectory()) {
-                    searchFile(file, external);
+                    searchFile(file, collName, external);
                 } else if (checkSuffix(suffix, file.getName())) {
                     mediaDataArrayList.add(new MediaData(file.getName(), file.getParent().intern(),
-                            file.length(), collection.intern(), external));
+                            file.length(), collName.intern(), external));
                 }
             }
         }

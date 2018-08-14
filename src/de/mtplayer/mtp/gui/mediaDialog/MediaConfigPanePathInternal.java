@@ -33,7 +33,6 @@ import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -68,14 +67,17 @@ public class MediaConfigPanePathInternal {
     }
 
     private void initTable(VBox vBox) {
+        tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
+        tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+
         final TableColumn<MediaPathData, String> pathColumn = new TableColumn<>("Pfad");
         pathColumn.setCellValueFactory(new PropertyValueFactory<>("path"));
-        pathColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        pathColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(80.0 / 100));
 
-        tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
-        tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+        final TableColumn<MediaPathData, Integer> countColumn = new TableColumn<>("Anzahl");
+        countColumn.setCellValueFactory(new PropertyValueFactory<>("count"));
+
+        pathColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(80.0 / 100));
 
         tableView.getColumns().addAll(pathColumn);
 

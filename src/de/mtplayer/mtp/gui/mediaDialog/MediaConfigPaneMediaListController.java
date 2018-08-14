@@ -118,24 +118,24 @@ public class MediaConfigPaneMediaListController extends AnchorPane {
         final TableColumn<MediaData, String> sizeColumn = new TableColumn<>("Größe [MB]");
         sizeColumn.setCellValueFactory(new PropertyValueFactory<>("size"));
 
-        final TableColumn<MediaData, String> colColumn = new TableColumn<>("Sammlung");
-        colColumn.setCellValueFactory(new PropertyValueFactory<>("collectionName"));
+        final TableColumn<MediaData, String> collectionNameColumn = new TableColumn<>("Sammlung");
+        collectionNameColumn.setCellValueFactory(new PropertyValueFactory<>("collectionName"));
 
         final TableColumn<MediaData, Boolean> externalColumn = new TableColumn<>("extern");
         externalColumn.setCellValueFactory(new PropertyValueFactory<>("external"));
         externalColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
 
-        tableView.getColumns().addAll(nameColumn, pathColumn, sizeColumn, colColumn, externalColumn);
+        tableView.getColumns().addAll(nameColumn, pathColumn, sizeColumn, collectionNameColumn, externalColumn);
 
-        nameColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(40.0 / 100));
-        pathColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(20.0 / 100));
+        nameColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(30.0 / 100));
+        pathColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(30.0 / 100));
         sizeColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(10.0 / 100));
-        colColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(20.0 / 100));
-        externalColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(5.0 / 100));
+        collectionNameColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(15.0 / 100));
+        externalColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(10.0 / 100));
 
         SortedList<MediaData> sortedList = progData.mediaDataList.getSortedList();
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
-        progData.mediaDataList.filterdListClearPred(true);
+        progData.mediaDataList.filterdListSetPredTrue();
         tableView.setItems(sortedList);
 
         VBox.setVgrow(tableView, Priority.ALWAYS);

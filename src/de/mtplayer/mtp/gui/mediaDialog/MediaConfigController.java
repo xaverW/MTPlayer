@@ -73,7 +73,7 @@ public class MediaConfigController extends PDialog {
         btnOk.setOnAction(a -> close());
         progress.visibleProperty().bind(progData.mediaDataList.searchingProperty());
         btnCreateMediaDB.disableProperty().bind(progData.mediaDataList.searchingProperty());
-        btnCreateMediaDB.setOnAction(event -> progData.mediaDataList.createInternalMediaDb());
+        btnCreateMediaDB.setOnAction(event -> progData.mediaDataList.createMediaDb());
 
         initPanel();
     }

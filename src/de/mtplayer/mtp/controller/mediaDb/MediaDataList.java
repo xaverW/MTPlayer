@@ -87,12 +87,12 @@ public class MediaDataList extends SimpleListProperty<MediaData> {
         filteredList.setPredicate(predicate);
     }
 
-    public synchronized void filterdListClearPred() {
+    public synchronized void filterdListSetPredFalse() {
         filteredList.setPredicate(p -> false);
     }
 
-    public synchronized void filterdListClearPred(boolean pred) {
-        filteredList.setPredicate(p -> pred);
+    public synchronized void filterdListSetPredTrue() {
+        filteredList.setPredicate(p -> true);
     }
 
 //    public synchronized boolean setAll(Collection<? extends MediaData> mediaData) {
@@ -110,8 +110,8 @@ public class MediaDataList extends SimpleListProperty<MediaData> {
 
     // **************************************************************
     // INTERNAL
-    // MediaDataList INTERN anlegen
-    public synchronized void createInternalMediaDb() {
+    // MediaDataList INTERN anlegen und die gespeicherten EXTERNEN anfügen
+    public synchronized void createMediaDb() {
         if (getSearching()) {
             // dann mach mers gerade schon :)
             return;
@@ -130,13 +130,18 @@ public class MediaDataList extends SimpleListProperty<MediaData> {
     // **************************************************************
     // EXTERNAL
     // MediaDataList EXTERN: eine collection anlegen
-    public synchronized void createExternalCollection(String path, String collection) {
+    public synchronized void createExternalCollection(String path, String collectionName) {
+        // evtl. erst mal die Collection anlegen
+        ProgData.getInstance().mediaPathDataList.addExternalMediaPathData(path, collectionName);
+
         if (getSearching()) {
             // dann mach mers gerade schon :)
             return;
         }
 
-        Thread th = new Thread(new CreateMediaDb(path, collection));
+
+        // und jetzt Medien suchen
+        Thread th = new Thread(new CreateMediaDb(path, collectionName));
         th.setName("createExternalCollection");
         th.start();
     }
@@ -162,14 +167,7 @@ public class MediaDataList extends SimpleListProperty<MediaData> {
         }
 
         removeMediaOfExternalCollection(collectionName);
-
-        Iterator<MediaPathData> iterator = ProgData.getInstance().mediaPathDataList.iterator();
-        while (iterator.hasNext()) {
-            MediaPathData mediaPathData = iterator.next();
-            if (mediaPathData.isExternal() && mediaPathData.getCollectionName().equals(collectionName)) {
-                iterator.remove();
-            }
-        }
+        ProgData.getInstance().mediaPathDataList.removeExternalMediaPathData(collectionName);
         writeExternalMediaData();
     }
 
@@ -204,26 +202,38 @@ public class MediaDataList extends SimpleListProperty<MediaData> {
             }
         }
 
-        countExternalMediaData();
+//        countExternalMediaData();
     }
 
-    private void countExternalMediaData() {
+    public void countMediaData() {
         // creates the counter in the MediaPathDataList
         final MediaPathDataList mediaPathDataList = ProgData.getInstance().mediaPathDataList;
 
         mediaPathDataList.stream().forEach(m -> m.setCount(0));
         this.stream()
-                .filter(md -> md.isExternal())
                 .forEach(mediaData -> {
-                    MediaPathData mediaPathData = mediaPathDataList.getExternalMediaPathData(mediaData.getCollectionName());
-                    if (mediaPathData == null) {
-                        mediaPathData = mediaPathDataList.addExternalMediaPathData(mediaData.getPath(), mediaData.getCollectionName());
-                    }
+                    MediaPathData mediaPathData = mediaPathDataList.getMediaPathData(mediaData.getCollectionName());
                     if (mediaPathData != null) {
                         mediaPathData.setCount(mediaPathData.getCount() + 1);
                     }
                 });
     }
+
+//    private void countExternalMediaData() {
+//        // creates the counter in the MediaPathDataList
+//        final MediaPathDataList mediaPathDataList = ProgData.getInstance().mediaPathDataList;
+//
+//        mediaPathDataList.stream().forEach(m -> m.setCount(0));
+//        this.stream()
+//                .filter(md -> md.isExternal())
+//                .forEach(mediaData -> {
+//                    MediaPathData mediaPathData = mediaPathDataList.getExternalMediaPathData(mediaData.getCollectionName());
+//                    if (mediaPathData == null) {
+//                        mediaPathData = mediaPathDataList.addExternalMediaPathData(mediaData.getPath(), mediaData.getCollectionName());
+//                    }
+//                    mediaPathData.setCount(mediaPathData.getCount() + 1);
+//                });
+//    }
 
 
     // ******************************************************

@@ -48,16 +48,21 @@ public class MediaConfigPanePathExternal {
     private final ProgData progData;
     private final TableView<MediaPathData> tableView = new TableView<>();
     private final Stage stage;
+    private final boolean extern;
+    private final TextField txtPath = new TextField();
+    private final TextField txtCollectionName = new TextField();
 
-    public MediaConfigPanePathExternal(Stage stage) {
+
+    public MediaConfigPanePathExternal(Stage stage, boolean extern) {
         this.stage = stage;
+        this.extern = extern;
         this.progData = ProgData.getInstance();
     }
 
     public void make(Collection<TitledPane> result) {
         VBox vBox = new VBox(10);
 
-        TitledPane tpConfig = new TitledPane("Externe Medien", vBox);
+        TitledPane tpConfig = new TitledPane(extern ? "Externe Medien" : "Interne Medien", vBox);
         result.add(tpConfig);
 
         initTable(vBox);
@@ -67,8 +72,8 @@ public class MediaConfigPanePathExternal {
 
     private void initTable(VBox vBox) {
         tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
-        tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
         final TableColumn<MediaPathData, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("collectionName"));
@@ -79,13 +84,22 @@ public class MediaConfigPanePathExternal {
         final TableColumn<MediaPathData, Integer> countColumn = new TableColumn<>("Anzahl");
         countColumn.setCellValueFactory(new PropertyValueFactory<>("count"));
 
-        nameColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(30.0 / 100));
-        pathColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(40.0 / 100));
-        countColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(20.0 / 100));
+        SortedList<MediaPathData> sortedList;
+        if (extern) {
+            nameColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(30.0 / 100));
+            pathColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(40.0 / 100));
+            countColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(20.0 / 100));
 
-        tableView.getColumns().addAll(nameColumn, pathColumn, countColumn);
+            tableView.getColumns().addAll(nameColumn, pathColumn, countColumn);
+            sortedList = progData.mediaPathDataList.getSortedListExternal();
+        } else {
+            pathColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(60.0 / 100));
+            countColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(20.0 / 100));
 
-        SortedList<MediaPathData> sortedList = progData.mediaPathDataList.getSortedListExternal();
+            tableView.getColumns().addAll(pathColumn, countColumn);
+            sortedList = progData.mediaPathDataList.getSortedListInternal();
+        }
+
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
         tableView.setItems(sortedList);
 
@@ -95,7 +109,8 @@ public class MediaConfigPanePathExternal {
 
     private void makeButton(VBox vBox) {
         final Button btnHelp = new PButton().helpButton(stage,
-                "Externe Mediensammlungen verwalten", HelpText.EXTERN_MEDIA_COLLECTION);
+                extern ? "Externe Mediensammlungen verwalten" : "Interne Mediensammlungen verwalten",
+                extern ? HelpText.EXTERN_MEDIA_COLLECTION : HelpText.INTERN_MEDIA_COLLECTION);
 
         Button btnUpdate = new Button("");
         btnUpdate.setTooltip(new Tooltip("Die markierte Sammlung wird neu eingelesen."));
@@ -120,22 +135,35 @@ public class MediaConfigPanePathExternal {
         btnDel.setGraphic(new Icons().ICON_BUTTON_REMOVE);
         btnDel.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
         btnDel.setOnAction(a -> {
-            final ObservableList<MediaPathData> sels = tableView.getSelectionModel().getSelectedItems();
-            if (sels == null || sels.isEmpty()) {
-                PAlert.showInfoNoSelection();
-            } else {
-                sels.stream().forEach(mediaPathData -> {
-                    // todo geht besser
-                    progData.mediaDataList.removeExternalCollection(mediaPathData.getCollectionName());
-                });
-                progData.mediaPathDataList.removeAll(sels);
-            }
+            delete();
         });
 
         HBox hBox = new HBox(10);
-        hBox.getChildren().addAll(btnUpdate, btnDel, PGuiTools.getHBoxGrower(), btnHelp);
-
+        if (extern) {
+            hBox.getChildren().addAll(btnUpdate);
+        }
+        hBox.getChildren().addAll(btnDel, PGuiTools.getHBoxGrower(), btnHelp);
         vBox.getChildren().addAll(hBox);
+    }
+
+    private void delete() {
+        final ObservableList<MediaPathData> sels = tableView.getSelectionModel().getSelectedItems();
+        if (sels == null || sels.isEmpty()) {
+            PAlert.showInfoNoSelection();
+            return;
+        }
+
+        if (extern) {
+            sels.stream().forEach(mediaPathData -> {
+                // todo geht besser
+                progData.mediaDataList.removeExternalCollection(mediaPathData.getCollectionName());
+            });
+            progData.mediaPathDataList.removeAll(sels);
+
+        } else {
+            progData.mediaPathDataList.removeAll(sels);
+        }
+        tableView.getSelectionModel().clearSelection();
     }
 
     private void makeGrid(VBox vBox) {
@@ -145,44 +173,45 @@ public class MediaConfigPanePathExternal {
         gridPane.setVgap(10);
         gridPane.setPadding(new Insets(20));
 
-        final TextField txtPath = new TextField();
-        final TextField txtCollectionName = new TextField(progData.mediaPathDataList.getNextExternCollectionName());
+        if (extern) {
+            txtCollectionName.setText(progData.mediaPathDataList.getNextExternCollectionName());
+        }
 
         final Button btnPath = new Button("");
         btnPath.setTooltip(new Tooltip("Einen Pfad zum Einlesen einer neuen Sammlung auswählen."));
         btnPath.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
         btnPath.setOnAction(event -> {
             DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtPath);
-            if (txtCollectionName.getText().isEmpty()) {
+            if (extern && txtCollectionName.getText().isEmpty()) {
                 txtCollectionName.setText(txtPath.getText());
             }
         });
 
         final Button btnAdd = new Button("");
-        btnAdd.setTooltip(new Tooltip("Eine neue Sammlung wird angelegt und vom angegebenen Pfad eingelesen."));
         btnAdd.setGraphic(new Icons().ICON_BUTTON_ADD);
-        btnAdd.disableProperty().bind(txtCollectionName.textProperty().isEmpty()
-                .or(txtPath.textProperty().isEmpty())
-                .or(progData.mediaDataList.searchingProperty()));
+        if (extern) {
+            btnAdd.setTooltip(new Tooltip("Eine neue Sammlung wird angelegt und vom angegebenen Pfad eingelesen."));
+            btnAdd.disableProperty().bind(txtCollectionName.textProperty().isEmpty()
+                    .or(txtPath.textProperty().isEmpty())
+                    .or(progData.mediaDataList.searchingProperty()));
+        } else {
+            btnAdd.setTooltip(new Tooltip("Eine neue Sammlung wird angelegt."));
+            btnAdd.disableProperty().bind(txtPath.textProperty().isEmpty()
+                    .or(progData.mediaDataList.searchingProperty()));
+        }
         btnAdd.setOnAction(a -> {
-            MediaPathData mediaPathData = progData.mediaPathDataList.addExternalMediaPathData(txtPath.getText(), txtCollectionName.getText());
-
-            if (mediaPathData == null) {
-                PAlert.showErrorAlert("Sammlung hinzufügen", "Sammlung: " + txtCollectionName.getText(),
-                        "Eine Sammlung mit dem **Namen** existiert bereits.");
-            } else {
-                progData.mediaDataList.createExternalCollection(mediaPathData.getPath(), mediaPathData.getCollectionName());
-                tableView.getSelectionModel().clearSelection();
-                tableView.getSelectionModel().select(mediaPathData);
-                tableView.scrollTo(mediaPathData);
-                txtCollectionName.setText(progData.mediaPathDataList.getNextExternCollectionName());
-            }
+            add();
         });
 
         int row = 0;
-        gridPane.add(new Label("Eine neue externe Sammlung hinzufügen:"), 0, row, 2, 1);
-        gridPane.add(new Label("Name:"), 0, ++row);
-        gridPane.add(txtCollectionName, 1, row);
+
+        if (extern) {
+            gridPane.add(new Label("Eine neue externe Sammlung hinzufügen:"), 0, row, 2, 1);
+            gridPane.add(new Label("Name:"), 0, ++row);
+            gridPane.add(txtCollectionName, 1, row);
+        } else {
+            gridPane.add(new Label("Eine neue interne Sammlung hinzufügen:"), 0, row, 2, 1);
+        }
 
         gridPane.add(new Label("Pfad:"), 0, ++row);
         gridPane.add(txtPath, 1, row);
@@ -193,6 +222,36 @@ public class MediaConfigPanePathExternal {
                 PColumnConstraints.getCcComputedSizeAndHgrow());
 
         vBox.getChildren().addAll(gridPane);
+    }
+
+    private void add() {
+        final MediaPathData mediaPathData;
+        final String header;
+        final String text;
+
+        if (extern) {
+            mediaPathData = progData.mediaPathDataList.addExternalMediaPathData(txtPath.getText(), txtCollectionName.getText());
+            header = "Sammlung: " + txtCollectionName.getText();
+            text = "Eine Sammlung mit dem **Namen** existiert bereits.";
+        } else {
+            mediaPathData = progData.mediaPathDataList.addInternalMediaPathData(txtPath.getText());
+            header = "Sammlung: " + txtPath.getText();
+            text = "Eine Sammlung mit dem **Pfad** existiert bereits.";
+        }
+
+        if (mediaPathData == null) {
+            PAlert.showErrorAlert("Sammlung hinzufügen", header, text);
+            return;
+        }
+
+        if (extern) {
+            progData.mediaDataList.createExternalCollection(mediaPathData.getPath(), mediaPathData.getCollectionName());
+            txtCollectionName.setText(progData.mediaPathDataList.getNextExternCollectionName());
+        }
+
+        tableView.getSelectionModel().clearSelection();
+        tableView.getSelectionModel().select(mediaPathData);
+        tableView.scrollTo(mediaPathData);
     }
 
 }

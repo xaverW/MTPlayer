@@ -82,8 +82,9 @@ public class MediaConfigPaneMediaController extends AnchorPane {
     private Collection<TitledPane> createPanes() {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
         makeConfig(result);
-        new MediaConfigPanePathInternal(stage).makeTable(result);
-        new MediaConfigPanePathExternal(stage).make(result);
+//        new MediaConfigPanePathInternal(stage).makeTable(result);
+        new MediaConfigPanePathExternal(stage, false).make(result);
+        new MediaConfigPanePathExternal(stage, true).make(result);
         return result;
     }
 
