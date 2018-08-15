@@ -164,7 +164,7 @@ public class MediaConfigPanePath {
         gridPane.setVgap(10);
         gridPane.setPadding(new Insets(20));
 
-        txtCollectionName.setText(progData.mediaCollectionDataList.getNextCollectionName(external));
+        txtCollectionName.setText(progData.mediaCollectionDataList.getNextMediaCollectionName(external));
 
         final Button btnPath = new Button("");
         btnPath.setTooltip(new Tooltip("Einen Pfad zum Einlesen einer neuen Sammlung auswählen."));
@@ -223,7 +223,7 @@ public class MediaConfigPanePath {
             progData.mediaDataList.createExternalCollection(mediaCollectionData);
         }
 
-        txtCollectionName.setText(progData.mediaCollectionDataList.getNextCollectionName(external));
+        txtCollectionName.setText(progData.mediaCollectionDataList.getNextMediaCollectionName(external));
 
         tableView.getSelectionModel().clearSelection();
         tableView.getSelectionModel().select(mediaCollectionData);

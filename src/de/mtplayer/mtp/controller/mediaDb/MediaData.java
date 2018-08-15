@@ -45,15 +45,6 @@ public class MediaData extends Data<MediaData> {
         makeArr();
     }
 
-    public MediaData(String name, String path, long size, long collectionId) {
-        makeArr();
-        arr[MEDIA_DATA_NAME] = cleanUp(name);
-        arr[MEDIA_DATA_PATH] = cleanUp(path);
-
-        setSize(size);
-        this.collectionId = collectionId;
-    }
-
     public MediaData(String name, String path, long size, MediaCollectionData mediaCollectionData) {
         makeArr();
         this.mediaCollectionData = mediaCollectionData;
@@ -63,18 +54,6 @@ public class MediaData extends Data<MediaData> {
 
         setSize(size);
     }
-
-    public MediaCollectionData getMediaCollectionData() {
-        return mediaCollectionData;
-    }
-
-//    public void setMediaPathData(MediaCollectionData mediaCollectionData) {
-//        this.mediaCollectionData = mediaCollectionData;
-//        if (mediaCollectionData == null) {
-//            return;
-//        }
-//        this.collectionId = mediaCollectionData.getId();
-//    }
 
     public String getName() {
         return arr[MEDIA_DATA_NAME];

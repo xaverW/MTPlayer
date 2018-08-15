@@ -52,11 +52,6 @@ public class MediaDataList extends SimpleListProperty<MediaData> {
         super(FXCollections.observableArrayList());
     }
 
-    @Override
-    public boolean add(MediaData mediaData) {
-        return super.add(mediaData);
-    }
-
     // searching-property
     public boolean getSearching() {
         return searching.get();
@@ -189,8 +184,6 @@ public class MediaDataList extends SimpleListProperty<MediaData> {
                 it.remove();
             }
         }
-
-//        countExternalMediaData();
     }
 
     public void countMediaData() {
@@ -205,22 +198,6 @@ public class MediaDataList extends SimpleListProperty<MediaData> {
             }
         });
     }
-
-//    private void countExternalMediaData() {
-//        // creates the counter in the MediaCollectionDataList
-//        final MediaCollectionDataList mediaCollectionDataList = ProgData.getInstance().mediaCollectionDataList;
-//
-//        mediaCollectionDataList.stream().forEach(m -> m.setCount(0));
-//        this.stream()
-//                .filter(md -> md.isExternal())
-//                .forEach(mediaData -> {
-//                    MediaCollectionData mediaPathData = mediaCollectionDataList.getExternalMediaPathData(mediaData.getCollectionName());
-//                    if (mediaPathData == null) {
-//                        mediaPathData = mediaCollectionDataList.addExternalMediaPathData(mediaData.getPath(), mediaData.getCollectionName());
-//                    }
-//                    mediaPathData.setCount(mediaPathData.getCount() + 1);
-//                });
-//    }
 
 
     // ******************************************************

@@ -82,8 +82,8 @@ public class CreateMediaDb implements Runnable {
                 mediaDataArrayList.addAll(mediaDataList.loadSavedExternalMediaData());
 
                 // und die Pfade "putzen" und dann auf lesbarkeit prüfen
-                progData.mediaCollectionDataList.cleanUpInternalMediaPathData();
-                for (final MediaCollectionData mediaCollectionData : progData.mediaCollectionDataList.getInternalMediaPathDataList()) {
+                progData.mediaCollectionDataList.cleanUpInternalMediaCollectionData();
+                for (final MediaCollectionData mediaCollectionData : progData.mediaCollectionDataList.getMediaCollectionDataList(false)) {
                     final File f = new File(mediaCollectionData.getPath());
                     if (!f.canRead()) {
                         if (!error.isEmpty()) {
@@ -99,9 +99,9 @@ public class CreateMediaDb implements Runnable {
                 }
 
                 // und jetzt abarbeiten
-                progData.mediaCollectionDataList.getInternalMediaPathDataList().stream().forEach((mediaPathData) -> {
+                progData.mediaCollectionDataList.getMediaCollectionDataList(false).stream().forEach((mediaPathData) -> {
                     if (mediaPathData.getCollectionName().isEmpty()) {
-                        final String name = progData.mediaCollectionDataList.getNextCollectionName(false);
+                        final String name = progData.mediaCollectionDataList.getNextMediaCollectionName(false);
                         mediaPathData.setCollectionName(name.intern());
                     }
                     searchFile(new File(mediaPathData.getPath()), mediaPathData);
