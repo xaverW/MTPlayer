@@ -69,8 +69,8 @@ public class MediaDataList extends SimpleListProperty<MediaData> {
     public void setSearching(boolean searching) {
         this.searching.set(searching);
     }
-    // sorted/filtered list
 
+    // sorted/filtered list
     public SortedList<MediaData> getSortedList() {
         filteredList = getFilteredList();
         if (sortedList == null) {
@@ -196,7 +196,7 @@ public class MediaDataList extends SimpleListProperty<MediaData> {
     public void countMediaData() {
         // creates the counter in the MediaCollectionDataList
         final MediaCollectionDataList mediaCollectionDataList = ProgData.getInstance().mediaCollectionDataList;
-        mediaCollectionDataList.stream().forEach(pathData -> pathData.setCount(0));
+        mediaCollectionDataList.stream().forEach(collectionData -> collectionData.setCount(0));
 
         this.stream().forEach(mediaData -> {
             MediaCollectionData mediaCollectionData = mediaCollectionDataList.getMediaCollectionData(mediaData.getCollectionId());

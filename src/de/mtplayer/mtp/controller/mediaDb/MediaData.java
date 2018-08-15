@@ -57,12 +57,11 @@ public class MediaData extends Data<MediaData> {
     public MediaData(String name, String path, long size, MediaCollectionData mediaCollectionData) {
         makeArr();
         this.mediaCollectionData = mediaCollectionData;
-        collectionId = mediaCollectionData.getId();
+        this.collectionId = mediaCollectionData.getId();
         arr[MEDIA_DATA_NAME] = cleanUp(name);
         arr[MEDIA_DATA_PATH] = cleanUp(path);
 
         setSize(size);
-        this.collectionId = mediaCollectionData.getId();
     }
 
     public MediaCollectionData getMediaCollectionData() {
@@ -162,6 +161,11 @@ public class MediaData extends Data<MediaData> {
 
     public void setPropsFromXml() {
         setSize(arr[MEDIA_DATA_SIZE]);
+        try {
+            setCollectionId(Long.parseLong(arr[MEDIA_DATA_COLLECTION_ID]));
+        } catch (Exception ex) {
+            setCollectionId(0);
+        }
     }
 
     public void setXmlFromProps() {

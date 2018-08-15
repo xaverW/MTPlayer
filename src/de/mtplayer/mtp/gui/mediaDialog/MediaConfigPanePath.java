@@ -75,6 +75,7 @@ public class MediaConfigPanePath {
         tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+        tableView.setEditable(true);
 
         final TableColumn<MediaCollectionData, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("collectionName"));
