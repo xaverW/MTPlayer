@@ -93,7 +93,7 @@ public class DownloadListAbo {
 
         boolean found = false;
         Abo abo;
-        ArrayList<Download> dl = new ArrayList<>();
+        ArrayList<Download> downloadArrayList = new ArrayList<>();
 
         // mit den bereits enthaltenen Download-URLs füllen
         final HashSet<String> listUrls = new HashSet<>(downloadList.size());
@@ -151,12 +151,12 @@ public class DownloadListAbo {
                 abo.setPset(setData.getName());
 
                 // dann in die Liste schreiben
-                dl.add(new Download(setData, film, DownloadInfos.SRC_ABO, abo, "", "", "" /* Aufloesung */));
+                downloadArrayList.add(new Download(setData, film, DownloadInfos.SRC_ABO, abo, "", "", "" /* Aufloesung */));
                 found = true;
             }
         }
         if (found) {
-            downloadList.addAll(dl);
+            downloadList.addAll(downloadArrayList);
             downloadList.setNumbersInList();
         }
         listUrls.clear();

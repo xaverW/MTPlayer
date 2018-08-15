@@ -27,6 +27,7 @@ import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.SetList;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadInfos;
+import de.mtplayer.mtp.controller.data.download.DownloadTools;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmTools;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
@@ -776,7 +777,12 @@ public class DownloadAddDialogController extends PDialogExtra {
 
     private String getNextName(String stdPath, String actDownPath, String theme) {
         String ret = actDownPath;
-        theme = theme.replaceAll(SEPARATOR, "-");
+
+        theme = DownloadTools.replaceEmptyFileName(theme,
+                false /* pfad */,
+                Boolean.parseBoolean(ProgConfig.SYSTEM_USE_REPLACETABLE.get()),
+                Boolean.parseBoolean(ProgConfig.SYSTEM_ONLY_ASCII.get()));
+
         if (actDownPath.endsWith(SEPARATOR)) {
             ret = actDownPath.substring(0, actDownPath.length() - SEPARATOR.length());
         }

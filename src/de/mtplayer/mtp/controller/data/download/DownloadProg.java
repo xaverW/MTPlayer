@@ -23,7 +23,6 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.data.ProgramData;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.abo.Abo;
-import de.mtplayer.mtp.controller.data.abo.AboXml;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.p2tools.p2Lib.tools.SysTools;
@@ -173,21 +172,29 @@ public class DownloadProg {
             }
 
             if (abo != null) {
-                // Abos: den Namen des Abos eintragen
+                // bei Abos: den Namen des Abos eintragen und evtl. den Pfad erweitern
                 download.setAboName(abo.getName());
                 if (setData.getGenTheme()) {
                     // und Abopfad an den Pfad anhängen
-                    path = FileUtils.addsPath(path, FileNameUtils.removeIllegalCharacters(abo.arr[AboXml.ABO_DEST_PATH], true));
+                    String addPpath;
+                    if (!abo.getDestination().trim().isEmpty()) {
+                        addPpath = abo.getDestination();
+                    } else {
+                        addPpath = download.getTheme();
+                    }
+                    path = FileUtils.addsPath(path, FileNameUtils.removeIllegalCharacters(addPpath, false));
                 }
-            } else // Downloads
-                if (setData.getGenTheme()) {
-                    // und den Namen des Themas an den Zielpfad anhängen
-                    path = FileUtils.addsPath(path,
-                            DownloadTools.replaceEmptyFileName(download.getTheme(),
-                                    true /* pfad */,
-                                    Boolean.parseBoolean(ProgConfig.SYSTEM_USE_REPLACETABLE.get()),
-                                    Boolean.parseBoolean(ProgConfig.SYSTEM_ONLY_ASCII.get())));
-                }
+            } else if (setData.getGenTheme()) {
+                // Downloads
+                // und den Namen des Themas an den Zielpfad anhängen
+                // --> das wird aber nur beim ersten mal klappen, dann wird im
+                // Downloaddialog immer der letzte Pfad zuerst angeboten
+                path = FileUtils.addsPath(path,
+                        DownloadTools.replaceEmptyFileName(download.getTheme(),
+                                true /* pfad */,
+                                Boolean.parseBoolean(ProgConfig.SYSTEM_USE_REPLACETABLE.get()),
+                                Boolean.parseBoolean(ProgConfig.SYSTEM_ONLY_ASCII.get())));
+            }
 
             path = replaceString(path, film); // %D ... ersetzen
         }
