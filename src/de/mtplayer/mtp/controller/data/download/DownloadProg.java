@@ -92,12 +92,12 @@ public class DownloadProg {
     }
 
 
-    private void buildFileNamePath(SetData pSet, Film film, Abo abo, String nname, String ppath) {
+    private void buildFileNamePath(SetData setData, Film film, Abo abo, String nname, String ppath) {
         // nname und ppfad sind nur belegt, wenn der Download über den DialogAddDownload gestartet wurde
         // (aus TabFilme)
         String name;
         String path;
-        if (!pSet.progsContainPath()) {
+        if (!setData.progsContainPath()) {
             // dann können wir uns das sparen
             download.setDestFileName("");
             download.setDestPath("");
@@ -111,7 +111,7 @@ public class DownloadProg {
             // wenn vorgegeben, dann den nehmen
             name = nname;
         } else {
-            name = pSet.getDestFileName(download.getUrl());
+            name = setData.getDestFileName(download.getUrl());
             download.setDestFileName(name);
             // ##############################
             // Name sinnvoll belegen
@@ -152,8 +152,8 @@ public class DownloadProg {
             }
 
             // Kürzen
-            if (pSet.getMaxSize() > 0) {
-                int length = pSet.getMaxSize();
+            if (setData.getMaxSize() > 0) {
+                int length = setData.getMaxSize();
                 name = FileUtils.cutName(name, length);
             }
         }
@@ -166,21 +166,21 @@ public class DownloadProg {
             path = ppath;
         } else {
             // Pfad sinnvoll belegen
-            if (pSet.getDestPath().isEmpty()) {
+            if (setData.getDestPath().isEmpty()) {
                 path = SysTools.getStandardDownloadPath();
             } else {
-                path = pSet.getDestPath();
+                path = setData.getDestPath();
             }
 
             if (abo != null) {
                 // Abos: den Namen des Abos eintragen
                 download.setAboName(abo.getName());
-                if (pSet.getGenTheme()) {
+                if (setData.getGenTheme()) {
                     // und Abopfad an den Pfad anhängen
                     path = FileUtils.addsPath(path, FileNameUtils.removeIllegalCharacters(abo.arr[AboXml.ABO_DEST_PATH], true));
                 }
             } else // Downloads
-                if (pSet.getGenTheme()) {
+                if (setData.getGenTheme()) {
                     // und den Namen des Themas an den Zielpfad anhängen
                     path = FileUtils.addsPath(path,
                             DownloadTools.replaceEmptyFileName(download.getTheme(),
