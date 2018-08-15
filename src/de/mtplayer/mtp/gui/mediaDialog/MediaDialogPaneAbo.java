@@ -89,7 +89,6 @@ public class MediaDialogPaneAbo extends ScrollPane {
         });
 
         initTableAbo();
-        setTableAbo();
     }
 
     private void initTableAbo() {
@@ -125,9 +124,6 @@ public class MediaDialogPaneAbo extends ScrollPane {
             }
         });
 
-    }
-
-    private void setTableAbo() {
         SortedList<HistoryData> sortedList = progData.erledigteAbos.getSortedList();
         tableAbo.setItems(sortedList);
         sortedList.comparatorProperty().bind(tableAbo.comparatorProperty());

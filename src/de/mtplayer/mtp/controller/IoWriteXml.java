@@ -29,7 +29,7 @@ import de.mtplayer.mtp.controller.data.abo.AboXml;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadXml;
 import de.mtplayer.mtp.controller.filmlist.filmlistUrls.FilmlistUrlData;
-import de.mtplayer.mtp.controller.mediaDb.MediaPathData;
+import de.mtplayer.mtp.controller.mediaDb.MediaCollectionData;
 import de.mtplayer.mtp.tools.storedFilter.FilterToXml;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
 import de.mtplayer.mtp.tools.storedFilter.StoredFilter;
@@ -210,9 +210,9 @@ public class IoWriteXml implements AutoCloseable {
 
     private void xmlWriteMediaPath() {
         // Pfade der MedienDB schreiben
-        for (final MediaPathData mp : progData.mediaPathDataList) {
+        for (final MediaCollectionData mp : progData.mediaCollectionDataList) {
             mp.setXmlFromProps();
-            xmlWriteData(MediaPathData.TAG, MediaPathData.XML_NAMES, mp.arr, false);
+            xmlWriteData(MediaCollectionData.TAG, MediaCollectionData.XML_NAMES, mp.arr, false);
         }
     }
 

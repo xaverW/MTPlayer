@@ -17,25 +17,36 @@
 package de.mtplayer.mtp.controller.mediaDb;
 
 import de.mtplayer.mLib.tools.Data;
+import de.p2tools.p2Lib.tools.PIndex;
 import javafx.beans.property.*;
 
-public class MediaPathData extends Data<MediaPathData> {
+public class MediaCollectionData extends Data<MediaCollectionData> {
 
-    private final static int MEDIA_PATH_PATH = 0;
-    private final static int MEDIA_PATH_COLLECTION = 1;
-    private final static int MEDIA_PATH_EXTERNAL = 2;
 
-    public final static String[] COLUMN_NAMES = {"Pfad", "Sammlung", "Extern"};
+    private final static int MEDIA_PATH_ID = 0;
+    private final static int MEDIA_PATH_PATH = 1;
+    private final static int MEDIA_PATH_COLLECTION_NAME = 2;
+    private final static int MEDIA_PATH_EXTERNAL = 3;
+
+    public final static String[] COLUMN_NAMES = {"Id", "Pfad", "Sammlung", "Extern"};
     public final static String[] XML_NAMES = COLUMN_NAMES;
     public static final String TAG = "MediaPath";
-    public final static int MAX_ELEM = 3;
+    public final static int MAX_ELEM = 4;
     public String[] arr;
 
+    private long id = 0;
     private StringProperty path = new SimpleStringProperty("");
     private StringProperty collectionName = new SimpleStringProperty("");
     private BooleanProperty external = new SimpleBooleanProperty(false);
     private IntegerProperty count = new SimpleIntegerProperty(0);
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getPath() {
         return path.get();
@@ -86,31 +97,38 @@ public class MediaPathData extends Data<MediaPathData> {
         this.count.set(count);
     }
 
-    public MediaPathData() {
+    public MediaCollectionData() {
         makeArr();
     }
 
-    public MediaPathData(String path, String collectionName, boolean external) {
+    public MediaCollectionData(String path, String collectionName, boolean external) {
         makeArr();
         setPath(path);
         setCollectionName(collectionName);
         setExternal(external);
+        setId(PIndex.getIndex());
     }
 
     public void setPropsFromXml() {
+        try {
+            id = Long.parseLong(arr[MEDIA_PATH_ID]);
+        } catch (final Exception ex) {
+            id = 0;
+        }
         setPath(arr[MEDIA_PATH_PATH]);
-        setCollectionName(arr[MEDIA_PATH_COLLECTION]);
+        setCollectionName(arr[MEDIA_PATH_COLLECTION_NAME]);
         setExternal(Boolean.valueOf(arr[MEDIA_PATH_EXTERNAL]));
     }
 
     public void setXmlFromProps() {
+        arr[MEDIA_PATH_ID] = String.valueOf(id);
         arr[MEDIA_PATH_PATH] = getPath();
-        arr[MEDIA_PATH_COLLECTION] = getCollectionName();
+        arr[MEDIA_PATH_COLLECTION_NAME] = getCollectionName();
         arr[MEDIA_PATH_EXTERNAL] = String.valueOf(isExternal());
     }
 
     public String getHash() {
-        return getPath() + "##" + getCollectionName();
+        return getPath();
     }
 
     private void makeArr() {

@@ -133,6 +133,7 @@ public class MediaDialogPaneMedia extends ScrollPane {
         btnOpen.disableProperty().bind(txtPathMedia.textProperty().isEmpty().and(txtTitleMedia.textProperty().isEmpty()));
 
         btnPlay.setGraphic(new Icons().ICON_BUTTON_PLAY);
+        btnPlay.setTooltip(new Tooltip("Ausgewählten Film abspielen."));
         btnPlay.setOnAction(e -> play());
         btnPlay.disableProperty().bind(txtPathMedia.textProperty().isEmpty().and(txtTitleMedia.textProperty().isEmpty()));
 

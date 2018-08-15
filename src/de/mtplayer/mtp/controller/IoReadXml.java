@@ -29,7 +29,7 @@ import de.mtplayer.mtp.controller.data.abo.AboXml;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadXml;
 import de.mtplayer.mtp.controller.filmlist.filmlistUrls.FilmlistUrlData;
-import de.mtplayer.mtp.controller.mediaDb.MediaPathData;
+import de.mtplayer.mtp.controller.mediaDb.MediaCollectionData;
 import de.mtplayer.mtp.tools.storedFilter.FilterToXml;
 import de.mtplayer.mtp.tools.storedFilter.ProgInitFilter;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
@@ -127,12 +127,12 @@ public class IoReadXml implements AutoCloseable {
                                     this.progData.blackList.add(blackData);
                                 }
                                 break;
-                            case MediaPathData.TAG:
+                            case MediaCollectionData.TAG:
                                 //
-                                final MediaPathData mp = new MediaPathData();
-                                if (get(parser, MediaPathData.TAG, MediaPathData.XML_NAMES, mp.arr)) {
+                                final MediaCollectionData mp = new MediaCollectionData();
+                                if (get(parser, MediaCollectionData.TAG, MediaCollectionData.XML_NAMES, mp.arr)) {
                                     mp.setPropsFromXml();
-                                    this.progData.mediaPathDataList.add(mp);
+                                    this.progData.mediaCollectionDataList.add(mp);
                                 }
                                 break;
                             case FilterToXml.TAG:

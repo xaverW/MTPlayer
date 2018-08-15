@@ -21,7 +21,7 @@ import de.mtplayer.mLib.tools.DirFileChooser;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.Icons;
-import de.mtplayer.mtp.controller.mediaDb.MediaPathData;
+import de.mtplayer.mtp.controller.mediaDb.MediaCollectionData;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlert;
@@ -34,6 +34,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -46,7 +47,7 @@ import java.util.Collection;
 public class MediaConfigPanePath {
 
     private final ProgData progData;
-    private final TableView<MediaPathData> tableView = new TableView<>();
+    private final TableView<MediaCollectionData> tableView = new TableView<>();
     private final Stage stage;
     private final boolean external;
     private final TextField txtPath = new TextField();
@@ -75,32 +76,29 @@ public class MediaConfigPanePath {
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
-        final TableColumn<MediaPathData, String> nameColumn = new TableColumn<>("Name");
+        final TableColumn<MediaCollectionData, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("collectionName"));
+        nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        final TableColumn<MediaPathData, String> pathColumn = new TableColumn<>("Pfad");
+        final TableColumn<MediaCollectionData, String> pathColumn = new TableColumn<>("Pfad");
         pathColumn.setCellValueFactory(new PropertyValueFactory<>("path"));
 
-        final TableColumn<MediaPathData, Integer> countColumn = new TableColumn<>("Anzahl");
+        final TableColumn<MediaCollectionData, Integer> countColumn = new TableColumn<>("Anzahl");
         countColumn.setCellValueFactory(new PropertyValueFactory<>("count"));
 
-        SortedList<MediaPathData> sortedList;
+        nameColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(30.0 / 100));
+        pathColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(40.0 / 100));
+        countColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(20.0 / 100));
+
+        tableView.getColumns().addAll(nameColumn, pathColumn, countColumn);
+
+
+        SortedList<MediaCollectionData> sortedList;
         if (external) {
-            nameColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(30.0 / 100));
-            pathColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(40.0 / 100));
-            countColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(20.0 / 100));
-
-            tableView.getColumns().addAll(nameColumn, pathColumn, countColumn);
-            sortedList = progData.mediaPathDataList.getSortedListExternal();
+            sortedList = progData.mediaCollectionDataList.getSortedListExternal();
         } else {
-            nameColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(30.0 / 100));
-            pathColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(40.0 / 100));
-            countColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(20.0 / 100));
-
-            tableView.getColumns().addAll(nameColumn, pathColumn, countColumn);
-            sortedList = progData.mediaPathDataList.getSortedListInternal();
+            sortedList = progData.mediaCollectionDataList.getSortedListInternal();
         }
-
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
         tableView.setItems(sortedList);
 
@@ -118,26 +116,24 @@ public class MediaConfigPanePath {
         btnUpdate.setGraphic(new Icons().ICON_BUTTON_UPDATE);
         btnUpdate.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
         btnUpdate.setOnAction(a -> {
-            MediaPathData mediaPathData = tableView.getSelectionModel().getSelectedItem();
+            MediaCollectionData mediaCollectionData = tableView.getSelectionModel().getSelectedItem();
 
-            File file = new File(mediaPathData.getPath());
+            File file = new File(mediaCollectionData.getPath());
             if (!file.exists()) {
                 PAlert.showErrorAlert("Pfad existiert nicht!", "Der Pfad der Sammlung:" + PConst.LINE_SEPARATOR +
-                        mediaPathData.getPath() + PConst.LINE_SEPARATOR +
+                        mediaCollectionData.getPath() + PConst.LINE_SEPARATOR +
                         "existiert nicht. Die Sammlung kann nicht eingelesen werden");
                 return;
             }
 
-            progData.mediaDataList.updateExternalCollection(mediaPathData);
+            progData.mediaDataList.updateExternalCollection(mediaCollectionData);
         });
 
         Button btnDel = new Button("");
         btnDel.setTooltip(new Tooltip("Die markierte Sammlung wird gelöscht."));
         btnDel.setGraphic(new Icons().ICON_BUTTON_REMOVE);
         btnDel.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
-        btnDel.setOnAction(a -> {
-            delete();
-        });
+        btnDel.setOnAction(a -> delete());
 
         HBox hBox = new HBox(10);
         if (external) {
@@ -148,14 +144,14 @@ public class MediaConfigPanePath {
     }
 
     private void delete() {
-        final ObservableList<MediaPathData> sels = tableView.getSelectionModel().getSelectedItems();
+        final ObservableList<MediaCollectionData> sels = tableView.getSelectionModel().getSelectedItems();
         if (sels == null || sels.isEmpty()) {
             PAlert.showInfoNoSelection();
             return;
         }
 
         sels.stream().forEach(mediaPathData -> {
-            progData.mediaDataList.removeCollection(mediaPathData.getCollectionName());
+            progData.mediaDataList.removeMediaAndCollection(mediaPathData.getId());
         });
         tableView.getSelectionModel().clearSelection();
     }
@@ -167,14 +163,14 @@ public class MediaConfigPanePath {
         gridPane.setVgap(10);
         gridPane.setPadding(new Insets(20));
 
-        txtCollectionName.setText(progData.mediaPathDataList.getNextCollectionName(external));
+        txtCollectionName.setText(progData.mediaCollectionDataList.getNextCollectionName(external));
 
         final Button btnPath = new Button("");
         btnPath.setTooltip(new Tooltip("Einen Pfad zum Einlesen einer neuen Sammlung auswählen."));
         btnPath.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
         btnPath.setOnAction(event -> {
             DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtPath);
-            if (external && txtCollectionName.getText().isEmpty()) {
+            if (txtCollectionName.getText().isEmpty()) {
                 txtCollectionName.setText(txtPath.getText());
             }
         });
@@ -183,26 +179,18 @@ public class MediaConfigPanePath {
         btnAdd.setGraphic(new Icons().ICON_BUTTON_ADD);
         if (external) {
             btnAdd.setTooltip(new Tooltip("Eine neue Sammlung wird angelegt und vom angegebenen Pfad eingelesen."));
-            btnAdd.disableProperty().bind(txtCollectionName.textProperty().isEmpty()
-                    .or(txtPath.textProperty().isEmpty())
-                    .or(progData.mediaDataList.searchingProperty()));
         } else {
             btnAdd.setTooltip(new Tooltip("Eine neue Sammlung wird angelegt."));
-            btnAdd.disableProperty().bind(txtPath.textProperty().isEmpty()
-                    .or(progData.mediaDataList.searchingProperty()));
         }
-        btnAdd.setOnAction(a -> {
-            add();
-        });
+        btnAdd.disableProperty().bind(txtPath.textProperty().isEmpty().or(progData.mediaDataList.searchingProperty()));
+        btnAdd.setOnAction(a -> add());
 
         int row = 0;
-
         if (external) {
             gridPane.add(new Label("Eine neue externe Sammlung hinzufügen:"), 0, row, 2, 1);
         } else {
             gridPane.add(new Label("Eine neue interne Sammlung hinzufügen:"), 0, row, 2, 1);
         }
-
         gridPane.add(new Label("Name:"), 0, ++row);
         gridPane.add(txtCollectionName, 1, row);
         gridPane.add(new Label("Pfad:"), 0, ++row);
@@ -217,32 +205,28 @@ public class MediaConfigPanePath {
     }
 
     private void add() {
-        final MediaPathData mediaPathData;
+        final MediaCollectionData mediaCollectionData;
         final String header;
         final String text;
 
-        mediaPathData = progData.mediaPathDataList.addMediaPathData(txtPath.getText(), txtCollectionName.getText(), external);
-        if (external) {
-            header = "Sammlung: " + txtCollectionName.getText();
-            text = "Eine Sammlung mit dem **Namen** existiert bereits.";
-        } else {
+        if (!external && null != progData.mediaCollectionDataList.getMediaCollectionData(txtPath.getText(), external)) {
             header = "Sammlung: " + txtPath.getText();
             text = "Eine Sammlung mit dem **Pfad** existiert bereits.";
-        }
-
-        if (mediaPathData == null) {
             PAlert.showErrorAlert("Sammlung hinzufügen", header, text);
             return;
         }
 
+        mediaCollectionData = progData.mediaCollectionDataList.addNewMediaCollectionData(txtPath.getText(), txtCollectionName.getText(), external);
+
         if (external) {
-            progData.mediaDataList.createExternalCollection(mediaPathData.getPath(), mediaPathData.getCollectionName());
+            progData.mediaDataList.createExternalCollection(mediaCollectionData);
         }
-        txtCollectionName.setText(progData.mediaPathDataList.getNextCollectionName(external));
+
+        txtCollectionName.setText(progData.mediaCollectionDataList.getNextCollectionName(external));
 
         tableView.getSelectionModel().clearSelection();
-        tableView.getSelectionModel().select(mediaPathData);
-        tableView.scrollTo(mediaPathData);
+        tableView.getSelectionModel().select(mediaCollectionData);
+        tableView.scrollTo(mediaCollectionData);
     }
 
 }

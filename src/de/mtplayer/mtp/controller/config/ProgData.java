@@ -23,8 +23,8 @@ import de.mtplayer.mtp.controller.data.abo.AboList;
 import de.mtplayer.mtp.controller.data.download.DownloadList;
 import de.mtplayer.mtp.controller.data.film.Filmlist;
 import de.mtplayer.mtp.controller.filmlist.LoadFilmlist;
+import de.mtplayer.mtp.controller.mediaDb.MediaCollectionDataList;
 import de.mtplayer.mtp.controller.mediaDb.MediaDataList;
-import de.mtplayer.mtp.controller.mediaDb.MediaPathDataList;
 import de.mtplayer.mtp.controller.starter.StarterClass;
 import de.mtplayer.mtp.gui.AboGuiController;
 import de.mtplayer.mtp.gui.DownloadGuiController;
@@ -76,7 +76,7 @@ public class ProgData {
     public BlackList blackList = null;
     public SetList setList = null;
     public MediaDataList mediaDataList = null;
-    public MediaPathDataList mediaPathDataList = null;
+    public MediaCollectionDataList mediaCollectionDataList = null;
     public HistoryList history = null; // alle angesehenen Filme
     public HistoryList erledigteAbos = null; // erfolgreich geladenen Abos
     public ReplaceList replaceList = null;
@@ -106,7 +106,7 @@ public class ProgData {
                 ProgInfos.getSettingsDirectory_String());
 
         mediaDataList = new MediaDataList();
-        mediaPathDataList = new MediaPathDataList();
+        mediaCollectionDataList = new MediaCollectionDataList();
 
         starterClass = new StarterClass(this);
 
