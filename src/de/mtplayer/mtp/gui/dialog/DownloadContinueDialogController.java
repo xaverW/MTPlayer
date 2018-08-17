@@ -36,7 +36,10 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 public class DownloadContinueDialogController extends PDialogExtra {
@@ -139,7 +142,8 @@ public class DownloadContinueDialogController extends PDialogExtra {
         GridPane.setHalignment(lblSizeFree, HPos.RIGHT);
         gridPane.add(lblSizeFree, 1, ++row, 2, 1);
 
-        gridPane.getColumnConstraints().addAll(new ColumnConstraints(), PColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcComputedSizeAndHgrow());
 
         vBoxCont.setPadding(new Insets(5));
         vBoxCont.setSpacing(20);
