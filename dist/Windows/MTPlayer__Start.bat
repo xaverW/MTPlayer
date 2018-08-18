@@ -1,10 +1,10 @@
 :: Wenn man in den Einstellungen (nicht im Filter!!), das
 :: Laden der Filmliste auf die letzten 14 Tage reduziert,
 :: bekommt man eine Filmliste mit weniger als 18.000 
-:: Einträgen. Damit läßt sich MV leicht mit nur wenig
+:: Einträgen. Damit läßt sich das Programm leicht mit nur wenig
 :: Speicher starten, und ohne Einschränkung anwenden.
 :: Nachdem die Einstellungen geändert wurden, und
-:: MV neu gestartet wird, versuch es hiermit:
+:: MTPlayer neu gestartet wird, versuch es hiermit:
  
 :: java -Xms128M -Xmx256M -jar ./MTPlayer.jar
 

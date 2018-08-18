@@ -2,6 +2,15 @@
 
 
 
+**Release 3-0**
+
+* Das Programm ist nun auf Java >8 (also Java8, Java9, Java10) lauffähig. Dazu musste einiges umgebaut werden und einige Gui-Elemente ausgetauscht werden. Die Optik hat sich desswegen etwas geändert, die Funktion ist aber erhalten geblieben.
+* Bei den Downloads gibt es einen neuen Filter: "Download nicht gestartet", "Download wartet", "Download läuft"
+* In der Blacklist können jetzt die Anzahl der Filme auf die ein Eintrag zutrifft, gezählt werden: In den Einstellungen
+* Beim manuellem Anlegen eines Downloads, kann man sich jetzt einen Namen für den Downloadordner (Thema, Datum) vorschlagen lassen
+* Viele kleinere Verbesserungen: Anzeige der Dialoge, Zeilenumbruch im Logfile unter Windows, Hilfetexte, Filterprofile, Mediensammlung (Anzeige der Filme pro Pfad jetzt auch bei den Internen Medien), ...
+* Auch ein paar Probleme beim Anlegen des Downloadpfads und beim Reset der Programmsets wurden behoben
+
 **Release 2-0**
 
 * Mit dem Schalter "-h" lassen sich die möglichen Startparameter abfragen

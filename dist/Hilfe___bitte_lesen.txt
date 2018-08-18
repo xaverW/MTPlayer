@@ -10,8 +10,8 @@ im Ordner "Info" in der Datei: README.txt
 MTPlayer startet nicht:
 -------------------------------
 
-* Java ist nicht oder nicht in der richtigen Version installiert (Java8). Zum 
-  Java-Download: http://java.com/de/
+* Java ist nicht oder nicht in der richtigen Version installiert (Java8, Java9, Java10).
+  Zum Java-Download: http://java.com/de/
   Unter Linux müssen dazu 2 Pakete installiert werden!
   bei arch: java-openjfx und jre8-openjdk,
   bei Ubuntu 16.04: default-jre (entspricht openjdk-8-jre) und openjfx

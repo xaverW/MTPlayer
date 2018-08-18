@@ -32,9 +32,9 @@ angelegt und für den Download verwendet.
 Die Einstellungen werden im Ordner "Einstellungen" im MTPlayer-Programmordner
 gesichert. Sollen die Einstellungen von einer bestehenden
 Installation übernommen werden, muss vorher der Ordner "Einstellungen" im
-MTPlayer-Programmordner angelegt werden. Die Dateien im Ordner ".mtplayer" im
-Home-Verzeichnis (die alten Einstellungen) müssen dann in den neu angelegten 
-Ordner "Einstellungen" kopiert werden.
+MTPlayer-Programmordner angelegt werden. Die Dateien im Ordner "p2Mtplayer" oder 
+bei Linux: ".p2Mtplayer" im Home-Verzeichnis (die alten Einstellungen) 
+müssen dann in den neu angelegten Ordner "Einstellungen" kopiert werden.
 (evtl. müssen dann die Pfade für den Download angepasst werden!)
 
 
