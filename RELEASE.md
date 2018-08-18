@@ -4,7 +4,7 @@
 
 **Release 3-0**
 
-* Das Programm ist nun auf Java >=8 (also Java8, Java9, Java10) lauffähig. Dazu musste einiges umgebaut werden und einige Gui-Elemente ausgetauscht werden. Die Optik hat sich desswegen etwas geändert, die Funktion ist aber erhalten geblieben.
+* Das Programm ist nun unter Java >=8 (also Java8, Java9, Java10) lauffähig. Dazu musste einiges umgebaut werden und einige Gui-Elemente ausgetauscht werden. Die Optik hat sich desswegen etwas geändert, die Funktion ist aber erhalten geblieben.
 * Bei den Downloads gibt es einen neuen Filter: "Download nicht gestartet", "Download wartet", "Download läuft"
 * In der Blacklist können jetzt die Anzahl der Filme auf die ein Eintrag zutrifft, gezählt werden und so die Blacklist optimiert werden.
 * Beim manuellem Anlegen eines Downloads, kann man sich jetzt einen Namen für den Downloadordner (Thema, Datum) vorschlagen lassen
