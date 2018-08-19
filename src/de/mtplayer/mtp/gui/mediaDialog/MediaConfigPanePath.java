@@ -28,6 +28,7 @@ import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.PGuiTools;
+import de.p2tools.p2Lib.tools.PFileUtils;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -210,15 +211,19 @@ public class MediaConfigPanePath {
         final String header;
         final String text;
 
+        header = "Sammlung: " + txtPath.getText();
         if (!external && null != progData.mediaCollectionDataList.getMediaCollectionData(txtPath.getText(), external)) {
-            header = "Sammlung: " + txtPath.getText();
             text = "Eine Sammlung mit dem **Pfad** existiert bereits.";
-            PAlert.showErrorAlert("Sammlung hinzufügen", header, text);
+            PAlert.showErrorAlert(stage, "Sammlung hinzufügen", header, text);
+            return;
+        }
+
+        if (!PFileUtils.fileIsDirectoryExist(txtPath.getText())) {
+            PAlert.showErrorAlert(stage, header, "Das angegebene Verzeichnis existiert nicht.");
             return;
         }
 
         mediaCollectionData = progData.mediaCollectionDataList.addNewMediaCollectionData(txtPath.getText(), txtCollectionName.getText(), external);
-
         if (external) {
             progData.mediaDataList.createExternalCollection(mediaCollectionData);
         }
