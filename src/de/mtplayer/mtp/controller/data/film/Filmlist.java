@@ -77,6 +77,10 @@ public class Filmlist extends SimpleListProperty<Film> {
         filteredList.setPredicate(predicate);
     }
 
+    public String getFilmlistId() {
+        return metaData[FilmlistXml.FILMLIST_ID_NR];
+    }
+
     public synchronized void saveFilm(Film film, SetData pSet) {
         FilmTools.saveFilm(film, pSet);
     }

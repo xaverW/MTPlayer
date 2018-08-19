@@ -74,6 +74,10 @@ public class MTPlayerController extends StackPane {
         return btnFilmlist;
     }
 
+    public void setButtonFilmlistUpdate() {
+        btnFilmlist.getStyleClass().add("btnFilmlist_");
+    }
+
     private void init() {
         try {
             // Top
@@ -121,14 +125,28 @@ public class MTPlayerController extends StackPane {
             maskerPane.setVisible(false);
 
             btnFilmlist.getStyleClass().add("btnFilmlist");
-            btnFilmlist.setOnAction(e -> progData.loadFilmlist.loadFilmlist(""));
+
+            btnFilmlist.setOnAction(e -> {
+                btnFilmlist.getStyleClass().clear();
+                btnFilmlist.getStyleClass().add("btnFilmlist");
+                progData.loadFilmlist.loadFilmlist("");
+            });
 
             btnFilm.getStyleClass().add("btnFilm");
             btnFilm.setOnAction(e -> selPanelFilm());
+//            btnFilm.setOnAction(e -> {
+//                btnFilmlist.getStyleClass().add("btnFilmlist_");
+//                System.out.println(btnFilmlist.getStyleClass());
+//            });
             btnFilm.setMaxWidth(Double.MAX_VALUE);
 
             btnDownload.getStyleClass().add("btnDownlad");
             btnDownload.setOnAction(e -> selPanelDownload());
+//            btnDownload.setOnAction(e -> {
+//                btnFilmlist.getStyleClass().clear();
+//                btnFilmlist.getStyleClass().add("btnFilmlist");
+//
+//            });
             btnDownload.setMaxWidth(Double.MAX_VALUE);
 
             btnAbo.getStyleClass().add("btnAbo");

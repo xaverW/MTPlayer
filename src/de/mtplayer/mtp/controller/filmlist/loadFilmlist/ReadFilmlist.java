@@ -155,39 +155,6 @@ public class ReadFilmlist {
         }
     }
 
-//    private void addValue_(Film film, JsonParser jp) throws IOException {
-//        for (int i = 0; i < FilmXml.JSON_NAMES.length; ++i) {
-//
-//            if (FilmXml.JSON_NAMES[i] == FilmXml.FILM_NEW) {
-//                final String value = jp.nextTextValue();
-//                // This value is unused...
-//                // datenFilm.arr[DatenFilm.FILM_NEU_NR] = value;
-//                film.setNewFilm(Boolean.parseBoolean(value));
-//            } else {
-//                film.arr[FilmXml.JSON_NAMES[i]] = jp.nextTextValue();
-//            }
-//
-//            /// für die Entwicklungszeit
-//            if (film.arr[FilmXml.JSON_NAMES[i]] == null) {
-//                film.arr[FilmXml.JSON_NAMES[i]] = "";
-//            }
-//
-//        }
-//
-//        if (film.arr[FilmXml.FILM_CHANNEL].isEmpty()) {
-//            film.arr[FilmXml.FILM_CHANNEL] = channel;
-//        } else {
-//            channel = film.arr[FilmXml.FILM_CHANNEL];
-//        }
-//
-//        if (film.arr[FilmXml.FILM_THEME].isEmpty()) {
-//            film.arr[FilmXml.FILM_THEME] = theme;
-//        } else {
-//            theme = film.arr[FilmXml.FILM_THEME];
-//        }
-//
-//    }
-
     private void addValue(Film film, JsonParser jp) throws IOException {
         for (int i = 0; i < FilmXml.JSON_NAMES.length; ++i) {
             String str = jp.nextTextValue();
@@ -280,7 +247,7 @@ public class ReadFilmlist {
 
         try (Response response = MLHttpClient.getInstance().getHttpClient().newCall(builder.build()).execute();
              ResponseBody body = response.body()) {
-            if (response.isSuccessful() && body != null) {
+            if (body != null && response.isSuccessful()) {
 
                 try (InputStream input = new ProgressMonitorInputStream(body.byteStream(), body.contentLength(), monitor)) {
                     try (InputStream is = selectDecompressor(source.toString(), input);
