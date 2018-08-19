@@ -44,6 +44,10 @@ public class SearchFilmListUrls {
     private static boolean firstSearchDiff = true;
     private final int UPDATE_LIST_MAX = 10; // die Downloadliste für die Filmlisten nur jeden 10. Programmstart aktualisieren
 
+    public String searchCompleteListUrl() {
+        return searchCompleteListUrl(new ArrayList<>());
+    }
+
     public String searchCompleteListUrl(ArrayList<String> alreadyTried) {
         // passende URL zum Laden der Filmliste suchen
         String retUrl;

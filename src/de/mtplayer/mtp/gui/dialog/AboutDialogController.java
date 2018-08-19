@@ -76,7 +76,7 @@ public class AboutDialogController extends PDialogExtra {
         int row = 0;
 
         // top
-        Text text = new Text(ProgConst.PROGRAMMNAME);
+        Text text = new Text(ProgConst.PROGRAMNAME);
         text.setFont(Font.font(null, FontWeight.BOLD, 40));
         gridPane.add(text, 0, row, 2, 1);
 

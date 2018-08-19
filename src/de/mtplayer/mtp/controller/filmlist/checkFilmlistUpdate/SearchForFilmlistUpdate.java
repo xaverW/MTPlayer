@@ -15,13 +15,13 @@
  */
 
 
-package de.mtplayer.mtp.controller.filmlist.loadFilmlist;
+package de.mtplayer.mtp.controller.filmlist.checkFilmlistUpdate;
 
 import de.mtplayer.mtp.controller.config.ProgConst;
 
-public class SearchForFilmlistDate {
+public class SearchForFilmlistUpdate {
 
-    private int counter = 0;
+    private int counter = ProgConst.CHECK_FILMLIST_UPDATE_PROGRAMSTART;
     private String dateOfFilmlistFromLastCheck = "";
     private boolean checkedListWasNewer = false;
 
@@ -42,8 +42,8 @@ public class SearchForFilmlistDate {
             checkedListWasNewer = false;
 
             // dann Filmliste prüfen
-//            if (new CheckNewListExists().hasNewRemoteFilmlist()) { //todo wenn drin dann das
-            if (new CheckDateOfFilmlist().hasNewRemoteFilmlist(source, date)) {
+//            if (new SearchUpdateWithId().hasNewRemoteFilmlist()) { //todo wenn drin und source ist URL!! dann das
+            if (new SearchUpdateWithDate().hasNewRemoteFilmlist(source, date)) {
                 checkedListWasNewer = true;
                 ret = true;
             }

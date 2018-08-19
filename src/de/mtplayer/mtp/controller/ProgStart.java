@@ -51,7 +51,7 @@ public class ProgStart {
         list.add("Programmpfad: " + ProgInfos.getPathJar());
         list.add("Verzeichnis Einstellungen: " + ProgInfos.getSettingsDirectory_String());
 
-        LogMessage.startMsg(ProgConst.PROGRAMMNAME, list);
+        LogMessage.startMsg(ProgConst.PROGRAMNAME, list);
 
         list = new ArrayList<>();
         list.add(PLog.LILNE2);
@@ -84,7 +84,7 @@ public class ProgStart {
             return false;
         }
         PLog.sysLog("Konfig wurde gelesen!");
-        MLInit.initLib(ProgData.debug, ProgConst.PROGRAMMNAME, ProgInfos.getUserAgent());
+        MLInit.initLib(ProgData.debug, ProgConst.PROGRAMNAME, ProgInfos.getUserAgent());
         ProgData.mTColor.load(); // Farben einrichten
         return true;
     }

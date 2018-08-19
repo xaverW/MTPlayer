@@ -20,7 +20,7 @@ import de.mtplayer.mLib.tools.Functions;
 
 public class ProgConst {
 
-    public static final String PROGRAMMNAME = "MTPlayer";
+    public static final String PROGRAMNAME = "MTPlayer";
     public static final String USER_AGENT_DEFAULT = "";
 
     // settings file
@@ -41,6 +41,7 @@ public class ProgConst {
     public static final String RTMP_FLVSTREAMER = "-r ";
 
     public static final int CHECK_FILMLIST_UPDATE = 10 * 60; // 10 Minuten
+    public static final int CHECK_FILMLIST_UPDATE_PROGRAMSTART = CHECK_FILMLIST_UPDATE - 60; // 1 Minuten
 
 
     // beim Programmstart wird die Liste geladen wenn sie älter ist als ..

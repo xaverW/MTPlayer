@@ -15,7 +15,7 @@
  */
 
 
-package de.mtplayer.mtp.controller.filmlist.loadFilmlist;
+package de.mtplayer.mtp.controller.filmlist.checkFilmlistUpdate;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
@@ -28,12 +28,15 @@ import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.film.Filmlist;
 import de.mtplayer.mtp.controller.data.film.FilmlistXml;
 import de.mtplayer.mtp.controller.filmlist.filmlistUrls.SearchFilmListUrls;
+import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.tools.log.PLog;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import org.tukaani.xz.XZInputStream;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -42,7 +45,7 @@ import java.util.ArrayList;
 import java.util.zip.ZipInputStream;
 
 
-public class CheckDateOfFilmlist {
+public class SearchUpdateWithDate {
 
     private String genDateLocalTime = "";
     private String aktDate = "";
@@ -56,24 +59,39 @@ public class CheckDateOfFilmlist {
 
     private boolean readWrite(String source) {
         boolean ret = false;
-
         try {
-            if (source.isEmpty() || !source.startsWith("http")) {
-                source = new SearchFilmListUrls().searchCompleteListUrl(new ArrayList<>());
-            }
             if (source.isEmpty()) {
-                return false;
+                if ((source = new SearchFilmListUrls().searchCompleteListUrl()).isEmpty()) {
+                    return false;
+                }
+            }
+
+            if (source.startsWith("http")) {
+                ret = processFromWeb(new URL(source));
+            } else {
+                ret = processFromFile(source);
             }
 
             list.add("Alter der Filmliste laden von: " + source);
-            ret = processFromWeb(new URL(source));
-
         } catch (final MalformedURLException ex) {
             ex.printStackTrace();
         }
 
         list.add("Alter der Filmliste laden --> fertig");
         PLog.sysLog(list);
+        return ret;
+    }
+
+    private boolean processFromFile(String source) {
+        boolean ret = false;
+        try (InputStream in = selectDecompressor(source, new FileInputStream(source));
+             JsonParser jp = new JsonFactory().createParser(in)) {
+            ret = startReadingData(jp);
+        } catch (final FileNotFoundException ex) {
+            list.add(912020214, "FilmListe existiert nicht: " + source);
+        } catch (final Exception ex) {
+            list.add(963214587, "FilmListe: " + source + PConst.LINE_SEPARATOR + ex.getMessage());
+        }
         return ret;
     }
 

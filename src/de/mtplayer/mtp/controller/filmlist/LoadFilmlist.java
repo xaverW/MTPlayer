@@ -23,8 +23,12 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.Filmlist;
+import de.mtplayer.mtp.controller.filmlist.checkFilmlistUpdate.SearchForFilmlistUpdate;
 import de.mtplayer.mtp.controller.filmlist.filmlistUrls.FilmlistUrlList;
-import de.mtplayer.mtp.controller.filmlist.loadFilmlist.*;
+import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ImportNewFilmlist;
+import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
+import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
+import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ReadFilmlist;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.tools.log.Duration;
@@ -46,7 +50,7 @@ public class LoadFilmlist {
 
     private final ProgData progData;
     private final ImportNewFilmlist importNewFilmliste;
-    private final SearchForFilmlistDate searchForFilmlistDate;
+    private final SearchForFilmlistUpdate searchForFilmlistUpdate;
 
     private final NotifyProgress notifyProgress = new NotifyProgress();
     private BooleanProperty propLoadFilmlist = new SimpleBooleanProperty(false);
@@ -74,7 +78,7 @@ public class LoadFilmlist {
                 afterImportNewFilmlist(event);
             }
         });
-        searchForFilmlistDate = new SearchForFilmlistDate();
+        searchForFilmlistUpdate = new SearchForFilmlistUpdate();
         checkForFilmlistUpdate();
     }
 
@@ -341,7 +345,7 @@ public class LoadFilmlist {
                         // dann laden wir gerade
                         return;
                     }
-                    if (searchForFilmlistDate.doCheck(ProgConfig.SYSTEM_LOAD_FILMS_MANUALLY.get(),
+                    if (searchForFilmlistUpdate.doCheck(ProgConfig.SYSTEM_LOAD_FILMS_MANUALLY.get(),
                             progData.filmlist.genDate())) {
                         Platform.runLater(() ->
                                 ProgData.getInstance().mtPlayerController.setButtonFilmlistUpdate()

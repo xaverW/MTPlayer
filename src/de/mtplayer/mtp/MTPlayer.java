@@ -86,7 +86,7 @@ public class MTPlayer extends Application {
 
     private void initP2() {
         PButton.setHlpImage(GetIcon.getImage("button-help.png", 16, 16));
-        PInit.initLib(primaryStage, ProgConst.PROGRAMMNAME, ProgConst.CSS_FILE, "", ProgData.debug);
+        PInit.initLib(primaryStage, ProgConst.PROGRAMNAME, ProgConst.CSS_FILE, "", ProgData.debug);
     }
 
     private void loadData() {
@@ -162,7 +162,7 @@ public class MTPlayer extends Application {
 
 
     private void setOrgTitle() {
-        primaryStage.setTitle(ProgConst.PROGRAMMNAME + " " + Functions.getProgVersion());
+        primaryStage.setTitle(ProgConst.PROGRAMNAME + " " + Functions.getProgVersion());
     }
 
     private void setUpdateTitle() {

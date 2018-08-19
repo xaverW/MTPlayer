@@ -59,7 +59,7 @@ public class Main {
         Platform.setImplicitExit(false);
 
         if (SystemInfo.isUnix()) {
-            LinuxJavaFx.setupX11WindowManagerClassName(ProgConst.PROGRAMMNAME);
+            LinuxJavaFx.setupX11WindowManagerClassName(ProgConst.PROGRAMNAME);
         }
 
         Application.launch(MTPlayer.class, args);

@@ -15,7 +15,7 @@
  */
 
 
-package de.mtplayer.mtp.controller.filmlist.loadFilmlist;
+package de.mtplayer.mtp.controller.filmlist.checkFilmlistUpdate;
 
 import de.mtplayer.mLib.tools.MLHttpClient;
 import de.mtplayer.mtp.controller.config.ProgData;
@@ -29,10 +29,10 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.UnknownHostException;
 
-public class CheckNewListExists {
+public class SearchUpdateWithId {
 
     /**
-     * Check if a newer filmlist id is available on the remote server in order to prevent unnecessary filmlist downloads...
+     * Check if a newer filmlist id is available on the remote server
      * "Filmliste" : [ "19.08.2018, 13:17", "19.08.2018, 11:17", "3", "MSearch [Vers.: 3.1.62]", "3ca1dcb332f78296ba002d8f28918205" ],
      *
      * @return true if newer is availble, otherwise false.
