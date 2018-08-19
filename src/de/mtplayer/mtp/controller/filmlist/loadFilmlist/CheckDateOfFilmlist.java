@@ -24,7 +24,6 @@ import de.mtplayer.mLib.tools.InputStreamProgressMonitor;
 import de.mtplayer.mLib.tools.MLHttpClient;
 import de.mtplayer.mLib.tools.ProgressMonitorInputStream;
 import de.mtplayer.mtp.controller.config.ProgConst;
-import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.film.Filmlist;
 import de.mtplayer.mtp.controller.data.film.FilmlistXml;
@@ -46,17 +45,17 @@ import java.util.zip.ZipInputStream;
 public class CheckDateOfFilmlist {
 
     private String genDateLocalTime = "";
-    String aktDate = "";
+    private String aktDate = "";
+    private ArrayList<String> list = new ArrayList<>();
 
-    public boolean hasNewRemoteFilmlist(String source) {
-        aktDate = ProgData.getInstance().filmlist.genDate();
+    public boolean hasNewRemoteFilmlist(String source, String aktDate) {
+        this.aktDate = aktDate;
+        list.add("Filmliste auf Update prüfen");
         return readWrite(source);
     }
 
     private boolean readWrite(String source) {
         boolean ret = false;
-        ArrayList<String> list = new ArrayList<>();
-        list.add("Alter der Filmliste laden von: " + source);
 
         try {
             if (source.isEmpty() || !source.startsWith("http")) {
@@ -66,6 +65,7 @@ public class CheckDateOfFilmlist {
                 return false;
             }
 
+            list.add("Alter der Filmliste laden von: " + source);
             ret = processFromWeb(new URL(source));
 
         } catch (final MalformedURLException ex) {
@@ -149,6 +149,7 @@ public class CheckDateOfFilmlist {
 
         // jetzt ist das Datum der Filmliste gesetzt und kann geprüft werden
         genDateLocalTime = Filmlist.genDate(metaData.toArray(new String[]{}));
+        list.add("Alter der Filmliste ist: " + genDateLocalTime);
 
         return isTheListNewer();
     }
@@ -156,10 +157,11 @@ public class CheckDateOfFilmlist {
     private boolean isTheListNewer() {
         if (aktDate.equals(genDateLocalTime)) {
             // dann gibts nur die gleiche Liste
-            PLog.sysLog("Gibt noch keine aktuellere Filmliste: " + genDateLocalTime);
+            list.add("Gibt noch keine aktuellere Filmliste: " + genDateLocalTime);
             return false;
         }
 
+        list.add("Gibt eine aktuellere Filmliste: " + genDateLocalTime);
         return true;
     }
 

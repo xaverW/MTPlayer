@@ -19,14 +19,12 @@ package de.mtplayer.mtp.controller.filmlist;
 import de.mtplayer.mLib.tools.StringFormatters;
 import de.mtplayer.mtp.controller.ProgSave;
 import de.mtplayer.mtp.controller.config.ProgConfig;
-import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.Filmlist;
 import de.mtplayer.mtp.controller.filmlist.filmlistUrls.FilmlistUrlList;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.*;
-import de.mtplayer.mtp.gui.StatusBarController;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.tools.log.Duration;
@@ -48,6 +46,8 @@ public class LoadFilmlist {
 
     private final ProgData progData;
     private final ImportNewFilmlist importNewFilmliste;
+    private final SearchForFilmlistDate searchForFilmlistDate;
+
     private final NotifyProgress notifyProgress = new NotifyProgress();
     private BooleanProperty propLoadFilmlist = new SimpleBooleanProperty(false);
     private static final AtomicBoolean stop = new AtomicBoolean(false); // damit kannn das Laden gestoppt werden kann
@@ -74,6 +74,7 @@ public class LoadFilmlist {
                 afterImportNewFilmlist(event);
             }
         });
+        searchForFilmlistDate = new SearchForFilmlistDate();
         checkForFilmlistUpdate();
     }
 
@@ -331,35 +332,26 @@ public class LoadFilmlist {
         hashSet.clear();
     }
 
-    private int counter = 0;
-
     private void checkForFilmlistUpdate() {
-        Listener.addListener(new Listener(Listener.EREIGNIS_TIMER, StatusBarController.class.getSimpleName()) {
+        Listener.addListener(new Listener(Listener.EREIGNIS_TIMER, LoadFilmlist.class.getSimpleName()) {
             @Override
             public void ping() {
                 try {
-                    doCheck();
+                    if (getPropLoadFilmlist()) {
+                        // dann laden wir gerade
+                        return;
+                    }
+                    if (searchForFilmlistDate.doCheck(ProgConfig.SYSTEM_LOAD_FILMS_MANUALLY.get(),
+                            progData.filmlist.genDate())) {
+                        Platform.runLater(() ->
+                                ProgData.getInstance().mtPlayerController.setButtonFilmlistUpdate()
+                        );
+                    }
                 } catch (final Exception ex) {
                     PLog.errorLog(963014785, ex);
                 }
             }
         });
-    }
-
-    private void doCheck() {
-        ++counter;
-        if (counter > ProgConst.CHECK_FILMLIST_UPDATE) {
-            PLog.sysLog("Filmliste auf Update prüfen");
-            counter = 0;
-            // dann Filmliste prüfen
-//            if (new CheckNewListExists().hasNewRemoteFilmlist()) {
-            if (new CheckDateOfFilmlist().hasNewRemoteFilmlist("")) {
-                Platform.runLater(() ->
-                        ProgData.getInstance().mtPlayerController.setButtonFilmlistUpdate()
-                );
-            }
-        }
-
     }
 
 }
