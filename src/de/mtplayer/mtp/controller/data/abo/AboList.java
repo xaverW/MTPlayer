@@ -28,7 +28,7 @@ import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
 import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.tools.GermanStringSorter;
-import de.p2tools.p2Lib.tools.log.Duration;
+import de.p2tools.p2Lib.tools.log.PDuration;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -305,7 +305,7 @@ public class AboList extends SimpleListProperty<Abo> {
         // hier wird tatsächlich für jeden Film die Liste der Abos durchsucht
         // braucht länger
 
-        Duration.counterStart("Abo in Filmliste eintragen");
+        PDuration.counterStart("Abo in Filmliste eintragen");
 
         // leere Abos löschen, die sind Fehler
         stream().filter((abo) -> (abo.isEmpty())).forEach(this::remove);
@@ -319,6 +319,6 @@ public class AboList extends SimpleListProperty<Abo> {
         // das kostet die Zeit!!
         filmlist.parallelStream().forEach(this::assignAboToFilm);
 
-        Duration.counterStop("Abo in Filmliste eintragen");
+        PDuration.counterStop("Abo in Filmliste eintragen");
     }
 }

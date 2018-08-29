@@ -21,7 +21,7 @@ import de.mtplayer.mtp.controller.data.BlackData;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.Filmlist;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
-import de.p2tools.p2Lib.tools.log.Duration;
+import de.p2tools.p2Lib.tools.log.PDuration;
 
 public class FilmlistBlackFilterCountHits {
 
@@ -32,7 +32,7 @@ public class FilmlistBlackFilterCountHits {
         // für jeden Blacklisteintrag ermittelt
         final Filmlist filmlist = PROG_DATA.filmlist;
 
-        Duration.counterStart("FilmlistBlackFilterCountHits.countHits");
+        PDuration.counterStart("FilmlistBlackFilterCountHits.countHits");
         for (final BlackData blackData : PROG_DATA.blackList) {
             blackData.setCountHits(0);
         }
@@ -41,7 +41,7 @@ public class FilmlistBlackFilterCountHits {
             filmlist.parallelStream().forEach(film -> applyBlacklistFilters(film));
         }
 
-        Duration.counterStop("FilmlistBlackFilterCountHits.countHits");
+        PDuration.counterStop("FilmlistBlackFilterCountHits.countHits");
     }
 
 

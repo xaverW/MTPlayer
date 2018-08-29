@@ -33,7 +33,7 @@ import de.mtplayer.mtp.controller.mediaDb.MediaCollectionData;
 import de.mtplayer.mtp.tools.storedFilter.FilterToXml;
 import de.mtplayer.mtp.tools.storedFilter.ProgInitFilter;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
-import de.p2tools.p2Lib.tools.log.Duration;
+import de.p2tools.p2Lib.tools.log.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 
 import javax.xml.stream.XMLInputFactory;
@@ -58,7 +58,7 @@ public class IoReadXml implements AutoCloseable {
     }
 
     public boolean readConfiguration(Path xmlFilePath) {
-        Duration.counterStart("Konfig lesen");
+        PDuration.counterStart("Konfig lesen");
         boolean ret = false;
         int filtercount = 0;
 
@@ -191,7 +191,7 @@ public class IoReadXml implements AutoCloseable {
             }
         }
 
-        Duration.counterStop("Konfig lesen");
+        PDuration.counterStop("Konfig lesen");
         return ret;
     }
 

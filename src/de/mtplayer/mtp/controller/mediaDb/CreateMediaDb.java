@@ -21,7 +21,7 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlert;
-import de.p2tools.p2Lib.tools.log.Duration;
+import de.p2tools.p2Lib.tools.log.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
 
@@ -70,7 +70,7 @@ public class CreateMediaDb implements Runnable {
     @Override
     public synchronized void run() {
 
-        Duration.counterStart("Mediensammlung erstellen");
+        PDuration.counterStart("Mediensammlung erstellen");
         mediaDataList.setSearching(true);
         Listener.notify(Listener.EREIGNIS_MEDIA_DB_START, MediaDataList.class.getSimpleName());
 
@@ -139,7 +139,7 @@ public class CreateMediaDb implements Runnable {
 
         mediaDataList.setSearching(false);
         Listener.notify(Listener.EREIGNIS_MEDIA_DB_STOP, MediaDataList.class.getSimpleName());
-        Duration.counterStop("Mediensammlung erstellen");
+        PDuration.counterStop("Mediensammlung erstellen");
     }
 
 

@@ -17,7 +17,7 @@
 
 package de.mtplayer.mtp.controller.mediaDb;
 
-import de.p2tools.p2Lib.tools.log.Duration;
+import de.p2tools.p2Lib.tools.log.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 
 import javax.xml.stream.XMLInputFactory;
@@ -48,7 +48,7 @@ public class ReadMediaDb implements AutoCloseable {
             return list;
         }
 
-        Duration.counterStart("MediaDb lesen");
+        PDuration.counterStart("MediaDb lesen");
         XMLStreamReader parser = null;
 
         try (InputStream is = Files.newInputStream(xmlFilePath);
@@ -83,7 +83,7 @@ public class ReadMediaDb implements AutoCloseable {
             }
         }
 
-        Duration.counterStop("MediaDb lesen");
+        PDuration.counterStop("MediaDb lesen");
         return list;
     }
 

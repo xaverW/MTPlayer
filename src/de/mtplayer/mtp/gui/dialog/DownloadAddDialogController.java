@@ -670,7 +670,7 @@ public class DownloadAddDialogController extends PDialogExtra {
             }
         });
 
-        String savePath = PStringUtils.appendList(path2, "<>", true);
+        String savePath = PStringUtils.appendList(path2, "<>", true, false);
         ProgConfig.DOWNLOAD_DIALOG_PATH_SAVING.setValue(savePath);
     }
 

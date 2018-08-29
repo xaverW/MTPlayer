@@ -31,7 +31,7 @@ import de.p2tools.p2Lib.guiTools.pCheckComboBox.PCheckComboBox;
 import de.p2tools.p2Lib.guiTools.pRange.PRangeBox;
 import de.p2tools.p2Lib.guiTools.pRange.PTimePeriodBox;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
-import de.p2tools.p2Lib.tools.log.Duration;
+import de.p2tools.p2Lib.tools.log.PDuration;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.control.*;
@@ -528,7 +528,7 @@ public class FilmFilterController extends FilterController {
     }
 
     private void clearFilter() {
-        Duration.staticPing("Filter löschen");
+        PDuration.onlyPing("Filter löschen");
         if (progData.storedFilter.txtFilterIsEmpty()) {
             progData.storedFilter.clearFilter();
         } else {

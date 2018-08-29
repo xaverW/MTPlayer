@@ -18,7 +18,7 @@ package de.mtplayer.mtp.controller.data.download;
 
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.SetData;
-import de.p2tools.p2Lib.tools.log.Duration;
+import de.p2tools.p2Lib.tools.log.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -101,7 +101,7 @@ public class DownloadList extends SimpleListProperty<Download> {
     public synchronized void addFilmInList() {
         // bei einmal Downloads nach einem Programmstart/Neuladen der Filmliste
         // den Film wieder eintragen
-        Duration.counterStart("Filme eintragen");
+        PDuration.counterStart("Filme eintragen");
         PLog.sysLog("Filme in Downloads eintragen");
         for (Download d : this) {
             --counter;
@@ -125,7 +125,7 @@ public class DownloadList extends SimpleListProperty<Download> {
 //
 //        });
         PLog.sysLog("  -> Filme in Downloads eingetragen");
-        Duration.counterStop("Filme eintragen");
+        PDuration.counterStop("Filme eintragen");
     }
 
 

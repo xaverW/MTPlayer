@@ -26,7 +26,7 @@ import de.mtplayer.mtp.gui.mediaDialog.MediaDialogController;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.gui.tools.Table;
 import de.p2tools.p2Lib.dialog.PAlert;
-import de.p2tools.p2Lib.tools.log.Duration;
+import de.p2tools.p2Lib.tools.log.PDuration;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
@@ -155,14 +155,14 @@ public class FilmGuiController extends AnchorPane {
     }
 
     public void setFilmNotShown() {
-        Duration.counterStart("filmUngesehen");
+        PDuration.counterStart("filmUngesehen");
         //todo-> ~1s Dauer
 
         final ArrayList<Film> list = getSelList();
         FilmTools.setFilmShown(progData, list, false);
 
         Table.refresh_table(tableView);
-        Duration.counterStop("filmUngesehen");
+        PDuration.counterStop("filmUngesehen");
     }
 
 

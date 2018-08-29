@@ -24,7 +24,7 @@ import de.mtplayer.mtp.controller.data.abo.Abo;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.gui.dialog.NoSetDialogController;
 import de.mtplayer.mtp.tools.filmListFilter.FilmlistBlackFilter;
-import de.p2tools.p2Lib.tools.log.Duration;
+import de.p2tools.p2Lib.tools.log.PDuration;
 
 import java.util.*;
 
@@ -40,7 +40,7 @@ public class DownloadListAbo {
 
     public synchronized void refreshAbos() {
         // fehlerhafte und nicht gestartete löschen, wird nicht gemeldet ob was gefunden wurde
-        Duration.counterStart("DownloadListAbo.abosAuffrischen");
+        PDuration.counterStart("DownloadListAbo.abosAuffrischen");
         List<Download> remove = new ArrayList<>();
         final Iterator<Download> it = downloadList.iterator();
 
@@ -83,13 +83,13 @@ public class DownloadListAbo {
         }
         downloadList.removeAll(remove);
         downloadList.forEach(d -> d.setPlacedBack(false));
-        Duration.counterStop("DownloadListAbo.abosAuffrischen");
+        PDuration.counterStop("DownloadListAbo.abosAuffrischen");
     }
 
     synchronized void searchForAbos() {
         // in der Filmliste nach passenden Filmen suchen und
         // in die Liste der Downloads eintragen
-        Duration.counterStart("DownloadListAbo.abosSuchen");
+        PDuration.counterStart("DownloadListAbo.abosSuchen");
 
         boolean found = false;
         Abo abo;
@@ -160,7 +160,7 @@ public class DownloadListAbo {
             downloadList.setNumbersInList();
         }
         listUrls.clear();
-        Duration.counterStop("DownloadListAbo.abosSuchen");
+        PDuration.counterStop("DownloadListAbo.abosSuchen");
     }
 
     public synchronized ArrayList<String> generateAboNameList(ArrayList<String> nameList) {

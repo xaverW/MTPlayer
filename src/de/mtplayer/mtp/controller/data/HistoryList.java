@@ -22,7 +22,7 @@ import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmTools;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.p2tools.p2Lib.PConst;
-import de.p2tools.p2Lib.tools.log.Duration;
+import de.p2tools.p2Lib.tools.log.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
@@ -260,7 +260,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
             }
 
 
-            Duration.counterStart("removeDownloadListFromHistory");
+            PDuration.counterStart("removeDownloadListFromHistory");
             PLog.sysLog(String.format("Urls aus der History: %s löschen: " + urlList.size(), fileName));
 
             //todo-> ~1s Dauer
@@ -289,7 +289,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
             // todo -> synchronize
             // und jetzt wieder schreiben, wenn nötig
             writeTmpList(newList, found);
-            Duration.counterStop("removeDownloadListFromHistory");
+            PDuration.counterStop("removeDownloadListFromHistory");
         }
 
     }

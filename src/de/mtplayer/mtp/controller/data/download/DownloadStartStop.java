@@ -19,7 +19,7 @@ package de.mtplayer.mtp.controller.data.download;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlert;
-import de.p2tools.p2Lib.tools.log.Duration;
+import de.p2tools.p2Lib.tools.log.PDuration;
 
 import java.util.ArrayList;
 
@@ -79,7 +79,7 @@ public class DownloadStartStop {
 
     public synchronized boolean delDownloads(ArrayList<Download> list) {
 
-        Duration.counterStart("DownloadStartStop.delDownloads");
+        PDuration.counterStart("DownloadStartStop.delDownloads");
         if (list == null || list.isEmpty()) {
             return false;
         }
@@ -103,7 +103,7 @@ public class DownloadStartStop {
         list.stream().filter(download -> download.isStateStartedRun()).forEach(download -> download.stopDownload());
         boolean found = downloadList.removeAll(list);
 
-        Duration.counterStop("DownloadStartStop.delDownloads");
+        PDuration.counterStop("DownloadStartStop.delDownloads");
         return found;
     }
 
@@ -174,7 +174,7 @@ public class DownloadStartStop {
      */
 
     public boolean startDownloads(ArrayList<Download> list, boolean alsoFinished) {
-        Duration.counterStart("DownloadStartStop.startDownloads");
+        PDuration.counterStart("DownloadStartStop.startDownloads");
 
         PAlert.BUTTON answer = PAlert.BUTTON.UNKNOWN;
         final ArrayList<Download> listDelDownloads = new ArrayList<>();
@@ -232,7 +232,7 @@ public class DownloadStartStop {
             }
         }
 
-        Duration.counterStop("DownloadStartStop.startDownloads");
+        PDuration.counterStop("DownloadStartStop.startDownloads");
 
 
         if (answer.equals(PAlert.BUTTON.CANCEL)) {

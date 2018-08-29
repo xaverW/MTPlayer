@@ -20,7 +20,7 @@ import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.tools.filmListFilter.FilmlistBlackFilter;
-import de.p2tools.p2Lib.tools.log.Duration;
+import de.p2tools.p2Lib.tools.log.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
@@ -174,7 +174,7 @@ public class Filmlist extends SimpleListProperty<Film> {
         final HashSet<String> set = new HashSet<>(size(), 0.75F);
 
         // todo exception parallel?? Unterschied ~10ms (bei Gesamt: 110ms)
-        Duration.counterStart("Filme markieren");
+        PDuration.counterStart("Filme markieren");
         try {
 
             this.stream().forEach((Film f) -> {
@@ -194,7 +194,7 @@ public class Filmlist extends SimpleListProperty<Film> {
         } catch (Exception ex) {
             System.out.println(ex.getStackTrace());
         }
-        Duration.counterStop("Filme markieren");
+        PDuration.counterStop("Filme markieren");
 
         PLog.sysLog("Anzahl doppelte Filme: " + countDouble);
         set.clear();
@@ -385,7 +385,7 @@ public class Filmlist extends SimpleListProperty<Film> {
      * für die Filterfelder in GuiFilme.
      */
     public synchronized void loadTheme() {
-        Duration.counterStart("Themen in Filmliste suchen");
+        PDuration.counterStart("Themen in Filmliste suchen");
         final LinkedHashSet<String> senderSet = new LinkedHashSet<>(21);
         // der erste Sender ist ""
         senderSet.add("");
@@ -435,7 +435,7 @@ public class Filmlist extends SimpleListProperty<Film> {
             hashSet[i].clear();
         }
 
-        Duration.counterStop("Themen in Filmliste suchen");
+        PDuration.counterStop("Themen in Filmliste suchen");
     }
 
 }

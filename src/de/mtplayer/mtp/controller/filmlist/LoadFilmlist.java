@@ -31,7 +31,7 @@ import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEven
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ReadFilmlist;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.p2tools.p2Lib.dialog.PAlert;
-import de.p2tools.p2Lib.tools.log.Duration;
+import de.p2tools.p2Lib.tools.log.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -74,7 +74,7 @@ public class LoadFilmlist {
             @Override
             public synchronized void finished(ListenerFilmlistLoadEvent event) {
                 // Ergebnisliste listeFilme eintragen -> Feierabend!
-                Duration.staticPing("Filme laden, ende");
+                PDuration.onlyPing("Filme laden, ende");
                 afterImportNewFilmlist(event);
             }
         });
@@ -141,7 +141,7 @@ public class LoadFilmlist {
             alwaysLoadNew = true;
         }
 
-        Duration.staticPing("Filme laden, start");
+        PDuration.onlyPing("Filme laden, start");
         PLog.sysLog("");
         PLog.sysLog("Alte Liste erstellt am: " + ProgData.getInstance().filmlist.genDate());
         PLog.sysLog("  Anzahl Filme: " + progData.filmlist.size());
@@ -187,7 +187,7 @@ public class LoadFilmlist {
         // Gui startet ein wenig flüssiger
         Thread th = new Thread(() -> {
 
-            Duration.staticPing("Programmstart Daten laden");
+            PDuration.onlyPing("Programmstart Daten laden");
 
             final ProgData progData = ProgData.getInstance();
             ArrayList<String> list = new ArrayList<>();

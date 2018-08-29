@@ -34,7 +34,7 @@ import de.mtplayer.mtp.tools.update.SearchProgramUpdate;
 import de.p2tools.p2Lib.PInit;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PGuiSize;
-import de.p2tools.p2Lib.tools.log.Duration;
+import de.p2tools.p2Lib.tools.log.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -72,7 +72,7 @@ public class MTPlayer extends Application {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
 
-        Duration.counterStart(LOG_TEXT_PROGRAMSTART);
+        PDuration.counterStart(LOG_TEXT_PROGRAMSTART);
         progData = ProgData.getInstance();
         progData.primaryStage = primaryStage;
         progStart = new ProgStart(progData);
@@ -81,7 +81,7 @@ public class MTPlayer extends Application {
         loadData();
         initRootLayout();
         losGehts();
-        Duration.counterStop(LOG_TEXT_PROGRAMSTART);
+        PDuration.counterStop(LOG_TEXT_PROGRAMSTART);
     }
 
     private void initP2() {
@@ -91,7 +91,7 @@ public class MTPlayer extends Application {
 
     private void loadData() {
         if (!progStart.loadAll()) {
-            Duration.staticPing("Erster Start");
+            PDuration.onlyPing("Erster Start");
 
             // einmal ein Muster anlegen, für Linux ist es bereits aktiv!
             progData.replaceList.init();
@@ -104,7 +104,7 @@ public class MTPlayer extends Application {
             }
 
             //todo das ist noch nicht ganz klar ob dahin
-            Duration.staticPing("Erster Start: PSet");
+            PDuration.onlyPing("Erster Start: PSet");
             Platform.runLater(() -> {
                 // kann ein Dialog aufgehen
                 final SetList pSet = ListePsetVorlagen.getStandarset(true /*replaceMuster*/);
@@ -112,7 +112,7 @@ public class MTPlayer extends Application {
                     progData.setList.addPset(pSet);
                     ProgConfig.SYSTEM_UPDATE_PROGSET_VERSION.setValue(pSet.version);
                 }
-                Duration.staticPing("Erster Start: PSet geladen");
+                PDuration.onlyPing("Erster Start: PSet geladen");
             });
 
             ProgInitFilter.setProgInitFilter();
@@ -152,11 +152,11 @@ public class MTPlayer extends Application {
 
         progStart.startMsg();
 
-        Duration.staticPing("Erster Start");
+        PDuration.onlyPing("Erster Start");
         setOrgTitle();
         initProg();
 
-        Duration.staticPing("Gui steht!");
+        PDuration.onlyPing("Gui steht!");
         progStart.loadDataProgStart();
     }
 
@@ -191,7 +191,7 @@ public class MTPlayer extends Application {
 
     private void checkProgUpdate() {
         // Prüfen obs ein Programmupdate gibt
-        Duration.staticPing("check update");
+        PDuration.onlyPing("check update");
         if (!Boolean.parseBoolean(ProgConfig.SYSTEM_UPDATE_SEARCH.get()) ||
                 ProgConfig.SYSTEM_UPDATE_BUILD_NR.get().equals(Functions.getProgVersion() /*Start mit neuer Version*/)
                         && ProgConfig.SYSTEM_UPDATE_DATE.get().equals(StringFormatters.FORMATTER_yyyyMMdd.format(new Date()))) {
