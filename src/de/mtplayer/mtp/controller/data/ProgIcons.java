@@ -21,7 +21,7 @@ import de.mtplayer.mtp.res.GetIcon;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class Icons {
+public class ProgIcons {
 
     public final Image ICON_DIALOG_EIN_SW = GetIcon.getImage("dialog-ein-sw.png");
     public final Image IMAGE_ACHTUNG_32 = GetIcon.getImage("achtung_32.png");

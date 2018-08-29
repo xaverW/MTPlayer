@@ -21,7 +21,7 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
-import de.mtplayer.mtp.controller.data.Icons;
+import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
@@ -108,7 +108,7 @@ public class AboutDialogController extends PDialogExtra {
 
 
         PHyperlink hyperlink = new PHyperlink(ProgConst.ADRESSE_WEBSITE,
-                ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new Icons().ICON_BUTTON_FILE_OPEN);
+                ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
 
         text = new Text("Website:");
         text.setFont(new Font(15));

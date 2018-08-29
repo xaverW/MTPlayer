@@ -19,7 +19,7 @@ package de.mtplayer.mtp.gui.configDialog;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.Icons;
+import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.ReplaceData;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.PConst;
@@ -129,7 +129,7 @@ public class ReplacePane {
         vBox.getChildren().addAll(tableView);
 
         Button btnDel = new Button("");
-        btnDel.setGraphic(new Icons().ICON_BUTTON_REMOVE);
+        btnDel.setGraphic(new ProgIcons().ICON_BUTTON_REMOVE);
         btnDel.setOnAction(event -> {
             final ObservableList<ReplaceData> sels = tableView.getSelectionModel().getSelectedItems();
 
@@ -142,7 +142,7 @@ public class ReplacePane {
         });
 
         Button btnNew = new Button("");
-        btnNew.setGraphic(new Icons().ICON_BUTTON_ADD);
+        btnNew.setGraphic(new ProgIcons().ICON_BUTTON_ADD);
         btnNew.setOnAction(event -> {
             ReplaceData replaceData = new ReplaceData();
             ProgData.getInstance().replaceList.add(replaceData);
@@ -153,7 +153,7 @@ public class ReplacePane {
         });
 
         Button up = new Button("");
-        up.setGraphic(new Icons().ICON_BUTTON_MOVE_UP);
+        up.setGraphic(new ProgIcons().ICON_BUTTON_MOVE_UP);
         up.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
 
@@ -166,7 +166,7 @@ public class ReplacePane {
         });
 
         Button down = new Button("");
-        down.setGraphic(new Icons().ICON_BUTTON_MOVE_DOWN);
+        down.setGraphic(new ProgIcons().ICON_BUTTON_MOVE_DOWN);
         down.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
 

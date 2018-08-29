@@ -19,7 +19,7 @@ package de.mtplayer.mtp.gui.dialog;
 
 import de.mtplayer.mLib.tools.BigButton;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.Icons;
+import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.p2tools.p2Lib.dialog.PDialog;
 import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
 import javafx.concurrent.Task;
@@ -72,25 +72,25 @@ public class QuitDialogController extends PDialog {
         Label headerLabel = new Label("Es laufen noch Downloads!");
         headerLabel.setStyle("-fx-font-size: 1.5em;");
 
-        BigButton cancelButton = new BigButton(new Icons().ICON_BUTTON_QUIT, "Nicht beenden",
+        BigButton cancelButton = new BigButton(new ProgIcons().ICON_BUTTON_QUIT, "Nicht beenden",
                 "");
         cancelButton.setOnAction(e -> close());
 
-        BigButton quitButton = new BigButton(new Icons().ICON_BUTTON_QUIT, "Beenden",
+        BigButton quitButton = new BigButton(new ProgIcons().ICON_BUTTON_QUIT, "Beenden",
                 "Alle Downloads abbrechen und das Programm beenden.");
         quitButton.setOnAction(e -> {
             canQuit = true;
             close();
         });
 
-        BigButton waitButton = new BigButton(new Icons().ICON_BUTTON_QUIT, "Warten",
+        BigButton waitButton = new BigButton(new ProgIcons().ICON_BUTTON_QUIT, "Warten",
                 "Alle Downloads abwarten und dann das Programm beenden.");
         waitButton.setOnAction(e -> {
             startWaiting();
         });
 
 
-        gridPane.add(new Icons().ICON_DIALOG_QUIT, 0, 0, 1, 1);
+        gridPane.add(new ProgIcons().ICON_DIALOG_QUIT, 0, 0, 1, 1);
         gridPane.add(headerLabel, 1, 0);
         gridPane.add(cancelButton, 1, 1);
         gridPane.add(quitButton, 1, 2);

@@ -21,7 +21,7 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
-import de.mtplayer.mtp.controller.data.Icons;
+import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.tools.update.SearchProgramUpdate;
 import de.p2tools.p2Lib.PConst;
@@ -187,10 +187,10 @@ public class ConfigPaneController extends AnchorPane {
         btnFile.setOnAction(event -> {
             DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtFileManager);
         });
-        btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
+        btnFile.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
 
         final Button btnReset = new Button();
-        btnReset.setGraphic(new Icons().ICON_BUTTON_RESET);
+        btnReset.setGraphic(new ProgIcons().ICON_BUTTON_RESET);
         btnReset.setTooltip(new Tooltip("Standardpfad für das Logfile wieder herstellen."));
         btnReset.setOnAction(event -> {
             txtFileManager.setText(ProgInfos.getStandardLogDirectory_String());
@@ -253,7 +253,7 @@ public class ConfigPaneController extends AnchorPane {
         btnFile.setOnAction(event -> {
             DirFileChooser.FileChooser(ProgData.getInstance().primaryStage, txtFileManager);
         });
-        btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
+        btnFile.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
         btnFile.setTooltip(new Tooltip("Einen Dateimanager manuell auswählen"));
 
         final Button btnHelp = new PButton().helpButton(stage, "Dateimanager", HelpText.FILEMANAGER);
@@ -272,7 +272,7 @@ public class ConfigPaneController extends AnchorPane {
         btnFile.setOnAction(event -> {
             DirFileChooser.FileChooser(ProgData.getInstance().primaryStage, txtFileManager);
         });
-        btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
+        btnFile.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
         btnFile.setTooltip(new Tooltip("Einen Videoplayer zum Abspielen der gespeicherten Filme auswählen."));
 
         final Button btnHelp = new PButton().helpButton(stage, "Videoplayer", HelpText.VIDEOPLAYER);
@@ -291,7 +291,7 @@ public class ConfigPaneController extends AnchorPane {
         btnFile.setOnAction(event -> {
             DirFileChooser.FileChooser(ProgData.getInstance().primaryStage, txtFileManager);
         });
-        btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
+        btnFile.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
         btnFile.setTooltip(new Tooltip("Einen Webbrowser zum Öffnen von URLs auswählen."));
 
         final Button btnHelp = new PButton().helpButton(stage, "Webbrowser", HelpText.WEBBROWSER);
@@ -329,7 +329,7 @@ public class ConfigPaneController extends AnchorPane {
         btnNow.setOnAction(event -> new SearchProgramUpdate(stage).checkVersion(true, true /* anzeigen */));
 
         PHyperlink hyperlink = new PHyperlink(ProgConst.ADRESSE_WEBSITE,
-                ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new Icons().ICON_BUTTON_FILE_OPEN);
+                ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
 
         HBox hBoxHyper = new HBox();
         hBoxHyper.setAlignment(Pos.CENTER_LEFT);

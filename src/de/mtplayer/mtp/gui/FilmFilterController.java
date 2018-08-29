@@ -17,7 +17,7 @@
 package de.mtplayer.mtp.gui;
 
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.Icons;
+import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.mtplayer.mtp.gui.tools.HelpText;
@@ -137,13 +137,13 @@ public class FilmFilterController extends FilterController {
     private void initButton() {
         btnClearFilter.setOnAction(a -> clearFilter());
 
-        btnEditFilter.setGraphic(new Icons().ICON_BUTTON_EDIT_FILTER);
+        btnEditFilter.setGraphic(new ProgIcons().ICON_BUTTON_EDIT_FILTER);
         btnEditFilter.setOnAction(a -> editFilter());
         btnEditFilter.setTooltip(new Tooltip("Filter ein/ausschalten"));
 
         btnLoadFilter.setOnAction(a -> loadFilter());
         btnLoadFilter.disableProperty().bind(cbFilter.getSelectionModel().selectedItemProperty().isNull());
-        btnLoadFilter.setGraphic(new Icons().FX_ICON_FILTER_FILM_LOAD);
+        btnLoadFilter.setGraphic(new ProgIcons().FX_ICON_FILTER_FILM_LOAD);
         btnLoadFilter.setText("");
         btnLoadFilter.setTooltip(new Tooltip("Filter wieder laden"));
 
@@ -153,12 +153,12 @@ public class FilmFilterController extends FilterController {
                 saveFilter();
             }
         });
-        btnSaveFilter.setGraphic(new Icons().FX_ICON_FILTER_FILM_SAVE);
+        btnSaveFilter.setGraphic(new ProgIcons().FX_ICON_FILTER_FILM_SAVE);
         btnSaveFilter.setText("");
         btnSaveFilter.setTooltip(new Tooltip("aktuelle Filtereinstellung als Filter speichern"));
 
         btnNewFilter.setOnAction(a -> newFilter());
-        btnNewFilter.setGraphic(new Icons().FX_ICON_FILTER_FILM_NEW);
+        btnNewFilter.setGraphic(new ProgIcons().FX_ICON_FILTER_FILM_NEW);
         btnNewFilter.setText("");
         btnNewFilter.setTooltip(new Tooltip("aktuelle Filtereinstellung als neuen Filter anlegen"));
 
@@ -215,7 +215,7 @@ public class FilmFilterController extends FilterController {
         miReset.setOnAction(e -> resetFilter());
 
 
-        mbFilterTools.setGraphic(new Icons().ICON_BUTTON_MENU);
+        mbFilterTools.setGraphic(new ProgIcons().ICON_BUTTON_MENU);
         mbFilterTools.getItems().addAll(miLoad, miSave, miNew, miRename, miDel, miDelAll, miReset);
         mbFilterTools.setTooltip(new Tooltip("gespeicherte Filter bearbeiten"));
 

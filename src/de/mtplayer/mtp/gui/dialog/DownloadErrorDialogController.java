@@ -17,7 +17,7 @@
 package de.mtplayer.mtp.gui.dialog;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
-import de.mtplayer.mtp.controller.data.Icons;
+import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.p2tools.p2Lib.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
@@ -137,7 +137,7 @@ public class DownloadErrorDialogController extends PDialogExtra {
             quit();
         });
 
-        imageView.setImage(new Icons().IMAGE_ACHTUNG_64);
+        imageView.setImage(new ProgIcons().IMAGE_ACHTUNG_64);
 
         //start the countdown...
         lblTime.setText("");

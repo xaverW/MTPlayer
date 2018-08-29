@@ -19,7 +19,7 @@ package de.mtplayer.mtp.gui.startDialog;
 import de.mtplayer.mLib.tools.DirFileChooser;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
-import de.mtplayer.mtp.controller.data.Icons;
+import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
@@ -109,7 +109,7 @@ public class PathPane {
 
                 hyperlink = new PHyperlink(stage,
                         ProgConst.ADRESSE_WEBSITE_FLVSTREAMER,
-                        ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new Icons().ICON_BUTTON_FILE_OPEN);
+                        ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
                 break;
             case FFMPEG:
                 text = new Text("Pfad zum ffmpeg-Player auswählen");
@@ -121,7 +121,7 @@ public class PathPane {
 
                 hyperlink = new PHyperlink(stage,
                         ProgConst.ADRESSE_WEBSITE_FFMPEG,
-                        ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new Icons().ICON_BUTTON_FILE_OPEN);
+                        ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
                 break;
             case VLC:
             default:
@@ -134,7 +134,7 @@ public class PathPane {
 
                 hyperlink = new PHyperlink(stage,
                         ProgConst.ADRESSE_WEBSITE_VLC,
-                        ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new Icons().ICON_BUTTON_FILE_OPEN);
+                        ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
                 break;
         }
         text.setStyle("-fx-font-weight: bold");
@@ -155,7 +155,7 @@ public class PathPane {
         btnFile.setOnAction(event -> {
             DirFileChooser.FileChooser(stage, txtPlayer);
         });
-        btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
+        btnFile.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
         btnFile.setTooltip(new Tooltip("Programmdatei auswählen."));
         gridPane.add(btnFile, 1, 1);
 

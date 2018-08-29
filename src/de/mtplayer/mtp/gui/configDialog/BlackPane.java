@@ -20,7 +20,7 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.BlackData;
-import de.mtplayer.mtp.controller.data.Icons;
+import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.gui.tools.Table;
 import de.mtplayer.mtp.tools.filmListFilter.FilmlistBlackFilterCountHits;
@@ -150,7 +150,7 @@ public class BlackPane {
                 Platform.runLater(this::setActBlackData));
 
         Button btnDel = new Button("");
-        btnDel.setGraphic(new Icons().ICON_BUTTON_REMOVE);
+        btnDel.setGraphic(new ProgIcons().ICON_BUTTON_REMOVE);
         btnDel.setOnAction(event -> {
             final ObservableList<BlackData> selected = tableView.getSelectionModel().getSelectedItems();
 
@@ -163,7 +163,7 @@ public class BlackPane {
         });
 
         Button btnNew = new Button("");
-        btnNew.setGraphic(new Icons().ICON_BUTTON_ADD);
+        btnNew.setGraphic(new ProgIcons().ICON_BUTTON_ADD);
         btnNew.setOnAction(event -> {
             BlackData blackData = new BlackData();
             ProgData.getInstance().blackList.add(blackData);

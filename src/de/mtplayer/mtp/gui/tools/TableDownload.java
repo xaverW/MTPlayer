@@ -20,7 +20,7 @@ import de.mtplayer.mLib.tools.CheckBoxCell;
 import de.mtplayer.mLib.tools.MDate;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.Icons;
+import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadInfos;
@@ -195,7 +195,7 @@ public class TableDownload {
 
                 if (item <= DownloadInfos.STATE_STOPPED) {
                     btnDownStart = new Button("");
-                    btnDownStart.setGraphic(new ImageView(Icons.IMAGE_TABLE_DOWNLOAD_START));
+                    btnDownStart.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_DOWNLOAD_START));
 
                     btnDownStart.setOnAction((ActionEvent event) -> {
                         Download download = getTableView().getItems().get(getIndex());
@@ -203,7 +203,7 @@ public class TableDownload {
                     });
 
                     btnDownDel = new Button("");
-                    btnDownDel.setGraphic(new ImageView(Icons.IMAGE_TABLE_DOWNLOAD_DEL));
+                    btnDownDel.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_DOWNLOAD_DEL));
 
                     btnDownDel.setOnAction(event -> {
                         Download download = getTableView().getItems().get(getIndex());
@@ -213,7 +213,7 @@ public class TableDownload {
                     setGraphic(hbox);
                 } else if (item < DownloadInfos.STATE_FINISHED) {
                     btnDownStop = new Button("");
-                    btnDownStop.setGraphic(new ImageView(Icons.IMAGE_TABLE_DOWNLOAD_STOP));
+                    btnDownStop.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_DOWNLOAD_STOP));
 
                     btnDownStop.setOnAction((ActionEvent event) -> {
                         Download download = getTableView().getItems().get(getIndex());
@@ -221,7 +221,7 @@ public class TableDownload {
                     });
 
                     btnDownDel = new Button("");
-                    btnDownDel.setGraphic(new ImageView(Icons.IMAGE_TABLE_DOWNLOAD_DEL));
+                    btnDownDel.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_DOWNLOAD_DEL));
 
                     btnDownDel.setOnAction(event -> {
                         Download download = getTableView().getItems().get(getIndex());
@@ -231,12 +231,12 @@ public class TableDownload {
                     setGraphic(hbox);
                 } else if (item == DownloadInfos.STATE_FINISHED) {
                     btnFilmStart = new Button("");
-                    btnFilmStart.setGraphic(new ImageView(Icons.IMAGE_TABLE_FILM_PLAY));
+                    btnFilmStart.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_FILM_PLAY));
 
                     btnFilmStart.setOnAction((ActionEvent event) -> {
                         Download download = getTableView().getItems().get(getIndex());
                         POpen.playStoredFilm(download.getDestPathFile(),
-                                ProgConfig.SYSTEM_PROG_PLAY_FILME.getStringProperty(), new Icons().ICON_BUTTON_FILE_OPEN);
+                                ProgConfig.SYSTEM_PROG_PLAY_FILME.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
                     });
                     hbox.getChildren().addAll(btnFilmStart);
                     setGraphic(hbox);

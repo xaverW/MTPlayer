@@ -20,7 +20,7 @@ import de.mtplayer.mLib.tools.CheckBoxCell;
 import de.mtplayer.mLib.tools.MDate;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.Icons;
+import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmSize;
@@ -238,10 +238,10 @@ public class TableFilm {
                 final Button btnSave;
 
                 btnPlay = new Button("");
-                btnPlay.setGraphic(new ImageView(Icons.IMAGE_TABLE_FILM_PLAY));
+                btnPlay.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_FILM_PLAY));
 
                 btnSave = new Button("");
-                btnSave.setGraphic(new ImageView(Icons.IMAGE_TABLE_FILM_SAVE));
+                btnSave.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_FILM_SAVE));
 
                 btnPlay.setOnAction((ActionEvent event) -> {
                     FilmTools.playFilm(film, null);

@@ -20,7 +20,7 @@ import de.mtplayer.mLib.tools.DirFileChooser;
 import de.mtplayer.mLib.tools.FileNameUtils;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.Icons;
+import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.controller.data.ProgramData;
 import de.mtplayer.mtp.controller.data.download.Download;
@@ -97,7 +97,7 @@ public class DownloadEditDialogController extends PDialogExtra {
 
 
     public void make() {
-        btnPath.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
+        btnPath.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
         btnPath.setText("");
         btnPath.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen."));
         btnPath.setOnAction(event -> getDestination());
@@ -314,7 +314,7 @@ public class DownloadEditDialogController extends PDialogExtra {
 
                 final Button btnReset = new Button("");
                 btnReset.setTooltip(new Tooltip("Reset"));
-                btnReset.setGraphic(new Icons().ICON_BUTTON_RESET);
+                btnReset.setGraphic(new ProgIcons().ICON_BUTTON_RESET);
                 btnReset.setOnAction(e -> txt[DownloadXml.DOWNLOAD_PROGRAM_CALL_ARRAY].setText(orgProgArray));
 
                 final Button btnHelp = new PButton().helpButton("Den Programmaufruf ändern",
@@ -513,7 +513,7 @@ public class DownloadEditDialogController extends PDialogExtra {
             case DownloadXml.DOWNLOAD_GEO:
                 if (download.getGeoBlocked()) {
                     ImageView imageView = new ImageView();
-                    imageView.setImage(new Icons().ICON_DIALOG_EIN_SW);
+                    imageView.setImage(new ProgIcons().ICON_DIALOG_EIN_SW);
                     gridPane.add(imageView, 1, row);
                 }
                 gridPane.add(lbl[i], 0, row);
@@ -522,7 +522,7 @@ public class DownloadEditDialogController extends PDialogExtra {
             case DownloadXml.DOWNLOAD_HD:
                 if (download.isHd()) {
                     ImageView imageView = new ImageView();
-                    imageView.setImage(new Icons().ICON_DIALOG_EIN_SW);
+                    imageView.setImage(new ProgIcons().ICON_DIALOG_EIN_SW);
                     gridPane.add(imageView, 1, row);
                 }
                 gridPane.add(lbl[i], 0, row);
@@ -531,7 +531,7 @@ public class DownloadEditDialogController extends PDialogExtra {
             case DownloadXml.DOWNLOAD_UT:
                 if (download.isUt()) {
                     ImageView imageView = new ImageView();
-                    imageView.setImage(new Icons().ICON_DIALOG_EIN_SW);
+                    imageView.setImage(new ProgIcons().ICON_DIALOG_EIN_SW);
                     gridPane.add(imageView, 1, row);
                 }
                 gridPane.add(lbl[i], 0, row);

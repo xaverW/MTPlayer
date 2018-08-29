@@ -17,7 +17,7 @@
 package de.mtplayer.mtp.gui.startDialog;
 
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.Icons;
+import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.gui.configDialog.GeoPane;
 import de.p2tools.p2Lib.dialog.PDialog;
 import javafx.geometry.Insets;
@@ -242,7 +242,7 @@ public class StartDialogController extends PDialog {
         btnCancel.setOnAction(a -> close());
 
         btnNext = new Button("");
-        btnNext.setGraphic(new Icons().ICON_BUTTON_NEXT);
+        btnNext.setGraphic(new ProgIcons().ICON_BUTTON_NEXT);
         btnNext.setOnAction(event -> {
             switch (aktState) {
                 case START_1:
@@ -266,7 +266,7 @@ public class StartDialogController extends PDialog {
             selectActPane();
         });
         btnPrev = new Button("");
-        btnPrev.setGraphic(new Icons().ICON_BUTTON_PREV);
+        btnPrev.setGraphic(new ProgIcons().ICON_BUTTON_PREV);
         btnPrev.setOnAction(event -> {
             switch (aktState) {
                 case START_1:

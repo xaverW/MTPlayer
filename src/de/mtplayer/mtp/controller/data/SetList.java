@@ -122,7 +122,7 @@ public class SetList extends SimpleListProperty<SetData> {
         if (ProgConfig.SYSTEM_PATH_VLC.get().isEmpty()) {
             ProgConfig.SYSTEM_PATH_VLC.setValue(PAlertFileChosser.showAlertFileChooser(ProgData.getInstance().primaryStage, "VLC",
                     "VLC wird nicht gefunden.", "Bitte den Pfad zum" + PConst.LINE_SEPARATOR +
-                            "VLC-Player angeben.", false, new Icons().ICON_BUTTON_FILE_OPEN));
+                            "VLC-Player angeben.", false, new ProgIcons().ICON_BUTTON_FILE_OPEN));
         }
         return ProgConfig.SYSTEM_PATH_VLC.get();
     }
@@ -132,7 +132,7 @@ public class SetList extends SimpleListProperty<SetData> {
         if (ProgConfig.SYSTEM_PATH_FLVSTREAMER.get().isEmpty()) {
             ProgConfig.SYSTEM_PATH_FLVSTREAMER.setValue(PAlertFileChosser.showAlertFileChooser(ProgData.getInstance().primaryStage, "flvstreamer",
                     "flvstreamer wird nicht gefunden.", "Bitte den Pfad zum" + PConst.LINE_SEPARATOR +
-                            "flvstreamer angeben.", false, new Icons().ICON_BUTTON_FILE_OPEN));
+                            "flvstreamer angeben.", false, new ProgIcons().ICON_BUTTON_FILE_OPEN));
         }
         return ProgConfig.SYSTEM_PATH_FLVSTREAMER.get();
     }
@@ -142,7 +142,7 @@ public class SetList extends SimpleListProperty<SetData> {
         if (ProgConfig.SYSTEM_PATH_FFMPEG.get().isEmpty()) {
             ProgConfig.SYSTEM_PATH_FFMPEG.setValue(PAlertFileChosser.showAlertFileChooser(ProgData.getInstance().primaryStage, "ffmpeg",
                     "ffmpeg wird nicht gefunden.", "Bitte den Pfad zu" + PConst.LINE_SEPARATOR +
-                            "ffmpeg angeben.", false, new Icons().ICON_BUTTON_FILE_OPEN));
+                            "ffmpeg angeben.", false, new ProgIcons().ICON_BUTTON_FILE_OPEN));
         }
         return ProgConfig.SYSTEM_PATH_FFMPEG.get();
     }

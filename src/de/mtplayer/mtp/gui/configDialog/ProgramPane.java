@@ -19,7 +19,7 @@ package de.mtplayer.mtp.gui.configDialog;
 import de.mtplayer.mLib.tools.DirFileChooser;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.Icons;
+import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.ProgramData;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.p2tools.p2Lib.PConst;
@@ -115,7 +115,7 @@ public class ProgramPane {
                 Platform.runLater(this::setActProgramData));
 
         Button btnDel = new Button("");
-        btnDel.setGraphic(new Icons().ICON_BUTTON_REMOVE);
+        btnDel.setGraphic(new ProgIcons().ICON_BUTTON_REMOVE);
         btnDel.setOnAction(event -> {
             final ObservableList<ProgramData> sels = tableView.getSelectionModel().getSelectedItems();
 
@@ -128,7 +128,7 @@ public class ProgramPane {
         });
 
         Button btnNew = new Button("");
-        btnNew.setGraphic(new Icons().ICON_BUTTON_ADD);
+        btnNew.setGraphic(new ProgIcons().ICON_BUTTON_ADD);
         btnNew.setOnAction(event -> {
             ProgramData progData = new ProgramData();
             setData.getProgramList().add(progData);
@@ -139,7 +139,7 @@ public class ProgramPane {
         });
 
         Button btnUp = new Button("");
-        btnUp.setGraphic(new Icons().ICON_BUTTON_MOVE_UP);
+        btnUp.setGraphic(new ProgIcons().ICON_BUTTON_MOVE_UP);
         btnUp.setOnAction(event -> {
             int sel = getSelectedLine();
             if (sel >= 0) {
@@ -150,7 +150,7 @@ public class ProgramPane {
         });
 
         Button btnDown = new Button("");
-        btnDown.setGraphic(new Icons().ICON_BUTTON_MOVE_DOWN);
+        btnDown.setGraphic(new ProgIcons().ICON_BUTTON_MOVE_DOWN);
         btnDown.setOnAction(event -> {
             int sel = getSelectedLine();
             if (sel >= 0) {
@@ -175,7 +175,7 @@ public class ProgramPane {
 
         final Button btnFile = new Button();
         btnFile.setOnAction(event -> DirFileChooser.FileChooser(ProgData.getInstance().primaryStage, txtProgPath));
-        btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
+        btnFile.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
         btnFile.setTooltip(new Tooltip("Ein Programm zum verarbeiten der URL auswählen."));
 
         int row = 0;

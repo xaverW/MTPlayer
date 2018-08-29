@@ -18,7 +18,7 @@ package de.mtplayer.mtp.gui;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.Icons;
+import de.mtplayer.mtp.controller.data.ProgIcons;
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.MenuButton;
@@ -50,10 +50,10 @@ public class FilmMenu {
     private void initButton() {
         // Button
         final ToolBarButton btPlay =
-                new ToolBarButton(vbox, "Abspielen", FILM_PLAY_TEXT, new Icons().FX_ICON_TOOLBAR_FILM_START);
+                new ToolBarButton(vbox, "Abspielen", FILM_PLAY_TEXT, new ProgIcons().FX_ICON_TOOLBAR_FILM_START);
 
         final ToolBarButton btSave =
-                new ToolBarButton(vbox, "Speichern", FILM_RECORD_TEXT, new Icons().FX_ICON_TOOLBAR_FILM_REC);
+                new ToolBarButton(vbox, "Speichern", FILM_RECORD_TEXT, new ProgIcons().FX_ICON_TOOLBAR_FILM_REC);
 
         btPlay.setOnAction(a -> progData.filmGuiController.playFilmUrl());
         btSave.setOnAction(a -> progData.filmGuiController.saveTheFilm());
@@ -61,7 +61,7 @@ public class FilmMenu {
 
     private void initFilmMenu() {
         final MenuButton mb = new MenuButton("");
-        mb.setGraphic(new Icons().FX_ICON_TOOLBAR_MENU);
+        mb.setGraphic(new ProgIcons().FX_ICON_TOOLBAR_MENU);
         mb.getStyleClass().add("btnFunction");
 
         final MenuItem mbPlay = new MenuItem("Film abspielen");

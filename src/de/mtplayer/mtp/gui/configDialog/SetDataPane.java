@@ -19,7 +19,7 @@ package de.mtplayer.mtp.gui.configDialog;
 import de.mtplayer.mLib.tools.DirFileChooser;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.Icons;
+import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.gui.tools.HelpText;
@@ -251,7 +251,7 @@ public class SetDataPane {
 
         final Button btnFile = new Button();
         btnFile.setOnAction(event -> DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtDestPath));
-        btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
+        btnFile.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
         btnFile.setTooltip(new Tooltip("Einen Ordner zum Speichern der Filme auswählen."));
 
 

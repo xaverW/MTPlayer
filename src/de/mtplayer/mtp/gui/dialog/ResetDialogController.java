@@ -20,7 +20,7 @@ package de.mtplayer.mtp.gui.dialog;
 import de.mtplayer.mLib.tools.BigButton;
 import de.mtplayer.mtp.controller.ProgQuit;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.Icons;
+import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.tools.file.GetFile;
 import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlert;
@@ -72,14 +72,14 @@ public class ResetDialogController extends PDialog {
 
 
         // Set zurücksetzen
-        BigButton cancelButton = new BigButton(new Icons().ICON_BUTTON_QUIT,
+        BigButton cancelButton = new BigButton(new ProgIcons().ICON_BUTTON_QUIT,
                 "Nichts ändern", "");
         cancelButton.setOnAction(e -> close());
 
         final Button btnHelp = new PButton().helpButton("Programm zurücksetzen",
                 new GetFile().getHelpSearch(GetFile.PATH_HELPTEXT_RESET));
 
-        BigButton setButton = new BigButton(new Icons().ICON_BUTTON_QUIT,
+        BigButton setButton = new BigButton(new ProgIcons().ICON_BUTTON_QUIT,
                 "Einstellungen zum Abspielen/Aufzeichnen zurücksetzen",
                 "Es werden alle Programmsets (auch eigene)" + PConst.LINE_SEPARATOR +
                         "zum Abspielen und Aufzeichnen gelöscht" + PConst.LINE_SEPARATOR +
@@ -93,7 +93,7 @@ public class ResetDialogController extends PDialog {
 
 
         // alle Einstellungen
-        BigButton allButton = new BigButton(new Icons().ICON_BUTTON_QUIT, "" +
+        BigButton allButton = new BigButton(new ProgIcons().ICON_BUTTON_QUIT, "" +
                 "Alle Einstellungen zurücksetzen!",
                 "Alle Einstellungen gehen verloren." + PConst.LINE_SEPARATORx2 +
                         "ACHTUNG" + PConst.LINE_SEPARATOR +
@@ -117,7 +117,7 @@ public class ResetDialogController extends PDialog {
         });
 
 
-        gridPane.add(new Icons().ICON_DIALOG_QUIT, 0, 0, 1, 1);
+        gridPane.add(new ProgIcons().ICON_DIALOG_QUIT, 0, 0, 1, 1);
         gridPane.add(headerLabel, 1, 0);
         gridPane.add(cancelButton, 1, 1);
         gridPane.add(btnHelp, 2, 1);

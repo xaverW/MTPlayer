@@ -21,7 +21,7 @@ import de.mtplayer.mLib.tools.FileNameUtils;
 import de.mtplayer.mLib.tools.SizeTools;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.Icons;
+import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.SetList;
@@ -373,12 +373,12 @@ public class DownloadAddDialogController extends PDialogExtra {
     }
 
     private void initButton() {
-        btnDest.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
+        btnDest.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
         btnDest.setText("");
         btnDest.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen."));
         btnDest.setOnAction(event -> getDestination());
 
-        btnPropose.setGraphic(new Icons().ICON_BUTTON_PROPOSE);
+        btnPropose.setGraphic(new ProgIcons().ICON_BUTTON_PROPOSE);
         btnPropose.setText("");
         btnPropose.setTooltip(new Tooltip("Einen Pfad zum Speichern vorschlagen lassen."));
         btnPropose.setOnAction(event -> proposeDestination());

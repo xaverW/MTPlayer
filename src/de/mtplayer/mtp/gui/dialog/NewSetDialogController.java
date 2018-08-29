@@ -19,7 +19,7 @@ package de.mtplayer.mtp.gui.dialog;
 
 import de.mtplayer.mLib.tools.BigButton;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.Icons;
+import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PDialog;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
@@ -74,11 +74,11 @@ public class NewSetDialogController extends PDialog {
                 "für den Download und das Abspielen der Filme.");
         headerLabel.setStyle("-fx-font-size: 1.5em;");
 
-        BigButton cancelButton = new BigButton(new Icons().ICON_BUTTON_QUIT, "Nichts ändern",
+        BigButton cancelButton = new BigButton(new ProgIcons().ICON_BUTTON_QUIT, "Nichts ändern",
                 "");
         cancelButton.setOnAction(e -> close());
 
-        BigButton addButton = new BigButton(new Icons().ICON_BUTTON_QUIT, "Neue Sets nur anfügen",
+        BigButton addButton = new BigButton(new ProgIcons().ICON_BUTTON_QUIT, "Neue Sets nur anfügen",
                 "Die bestehenden Einstellungen werden nicht verändert." + PConst.LINE_SEPARATOR +
                         "Das neue Set wird nur angefügt und muss dann" + PConst.LINE_SEPARATOR +
                         "erst noch in den Einstellungen aktiviert werden." + PConst.LINE_SEPARATOR +
@@ -88,7 +88,7 @@ public class NewSetDialogController extends PDialog {
             close();
         });
 
-        BigButton replaceButton = new BigButton(new Icons().ICON_BUTTON_QUIT, "Aktuelle Sets durch neue ersetzen",
+        BigButton replaceButton = new BigButton(new ProgIcons().ICON_BUTTON_QUIT, "Aktuelle Sets durch neue ersetzen",
                 "Es werden alle Programmsets (auch eigene) gelöscht" + PConst.LINE_SEPARATOR +
                         "und die neuen Standardsets wieder angelegt." + PConst.LINE_SEPARATORx2 +
                         "(Wenn Sie die Einstellungen nicht verändert haben" + PConst.LINE_SEPARATOR +
@@ -99,7 +99,7 @@ public class NewSetDialogController extends PDialog {
         });
 
 
-        gridPane.add(new Icons().ICON_DIALOG_QUIT, 0, 0, 1, 1);
+        gridPane.add(new ProgIcons().ICON_DIALOG_QUIT, 0, 0, 1, 1);
         gridPane.add(headerLabel, 1, 0);
         gridPane.add(cancelButton, 1, 1);
         gridPane.add(addButton, 1, 2);

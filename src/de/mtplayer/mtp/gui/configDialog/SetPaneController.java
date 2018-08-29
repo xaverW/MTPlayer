@@ -18,7 +18,7 @@ package de.mtplayer.mtp.gui.configDialog;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.Icons;
+import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
 import de.mtplayer.mtp.tools.file.GetFile;
@@ -162,7 +162,7 @@ public class SetPaneController extends AnchorPane {
         vBox.getChildren().addAll(tableView);
 
         Button btnDel = new Button("");
-        btnDel.setGraphic(new Icons().ICON_BUTTON_REMOVE);
+        btnDel.setGraphic(new ProgIcons().ICON_BUTTON_REMOVE);
         btnDel.setOnAction(event -> {
             SetData setData = getSelectedSelData();
             if (setData != null) {
@@ -171,14 +171,14 @@ public class SetPaneController extends AnchorPane {
         });
 
         Button btnNew = new Button("");
-        btnNew.setGraphic(new Icons().ICON_BUTTON_ADD);
+        btnNew.setGraphic(new ProgIcons().ICON_BUTTON_ADD);
         btnNew.setOnAction(event -> {
             SetData setData = new SetData("Neu-" + ++newCounter);
             progData.setList.add(setData);
         });
 
         Button btnUp = new Button("");
-        btnUp.setGraphic(new Icons().ICON_BUTTON_MOVE_UP);
+        btnUp.setGraphic(new ProgIcons().ICON_BUTTON_MOVE_UP);
         btnUp.setOnAction(event -> {
             int sel = getSelectedLine();
             if (sel >= 0) {
@@ -188,7 +188,7 @@ public class SetPaneController extends AnchorPane {
         });
 
         Button btnDown = new Button("");
-        btnDown.setGraphic(new Icons().ICON_BUTTON_MOVE_DOWN);
+        btnDown.setGraphic(new ProgIcons().ICON_BUTTON_MOVE_DOWN);
         btnDown.setOnAction(event -> {
             int sel = getSelectedLine();
             if (sel >= 0) {

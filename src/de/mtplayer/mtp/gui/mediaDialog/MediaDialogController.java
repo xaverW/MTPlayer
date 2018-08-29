@@ -18,7 +18,7 @@ package de.mtplayer.mtp.gui.mediaDialog;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.Icons;
+import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.tools.storedFilter.Filter;
@@ -110,7 +110,7 @@ public class MediaDialogController extends PDialog {
             }
         });
 
-        btnReset.setGraphic(new Icons().ICON_BUTTON_RESET);
+        btnReset.setGraphic(new ProgIcons().ICON_BUTTON_RESET);
         btnReset.setOnAction(a -> txtSearch.setText(searchStr));
         btnOk.setOnAction(a -> close());
 

@@ -17,7 +17,7 @@
 package de.mtplayer.mtp.gui;
 
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.Icons;
+import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.abo.Abo;
 import de.mtplayer.mtp.controller.data.download.DownloadInfos;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
@@ -102,7 +102,7 @@ public class StatusBarController extends AnchorPane {
         nonePane.setStyle("-fx-background-color: -fx-background ;");
 
         hBox = getHbox();
-        btnStop.setGraphic(new Icons().ICON_BUTTON_STOP);
+        btnStop.setGraphic(new ProgIcons().ICON_BUTTON_STOP);
         hBox.getChildren().addAll(lblProgress, progress, btnStop);
         progress.setPrefWidth(200);
         loadPane.getChildren().add(hBox);

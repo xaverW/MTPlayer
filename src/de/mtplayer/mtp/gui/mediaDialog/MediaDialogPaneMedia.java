@@ -21,7 +21,7 @@ import de.mtplayer.mLib.tools.Functions;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.Icons;
+import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.mediaDb.MediaData;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.tools.storedFilter.Filter;
@@ -127,12 +127,12 @@ public class MediaDialogPaneMedia extends ScrollPane {
         btnCreateMediaDB.disableProperty().bind(progData.mediaDataList.searchingProperty());
         btnCreateMediaDB.setOnAction(e -> progData.mediaDataList.createMediaDb());
 
-        btnOpen.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
+        btnOpen.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
         btnOpen.setTooltip(new Tooltip("Ausgewählten Pfad im Dateimanager öffnen."));
         btnOpen.setOnAction(e -> open());
         btnOpen.disableProperty().bind(txtPathMedia.textProperty().isEmpty().and(txtTitleMedia.textProperty().isEmpty()));
 
-        btnPlay.setGraphic(new Icons().ICON_BUTTON_PLAY);
+        btnPlay.setGraphic(new ProgIcons().ICON_BUTTON_PLAY);
         btnPlay.setTooltip(new Tooltip("Ausgewählten Film abspielen."));
         btnPlay.setOnAction(e -> play());
         btnPlay.disableProperty().bind(txtPathMedia.textProperty().isEmpty().and(txtTitleMedia.textProperty().isEmpty()));
@@ -146,13 +146,13 @@ public class MediaDialogPaneMedia extends ScrollPane {
         String dir = txtPathMedia.getText();
         if (!file.isEmpty() && !dir.isEmpty()) {
             POpen.playStoredFilm(Functions.addsPath(dir, file),
-                    ProgConfig.SYSTEM_PROG_PLAY_FILME.getStringProperty(), new Icons().ICON_BUTTON_FILE_OPEN);
+                    ProgConfig.SYSTEM_PROG_PLAY_FILME.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
         }
     }
 
     private void open() {
         String s = txtPathMedia.getText();
-        POpen.openDir(s, ProgConfig.SYSTEM_PROG_OPEN_DIR.getStringProperty(), new Icons().ICON_BUTTON_FILE_OPEN);
+        POpen.openDir(s, ProgConfig.SYSTEM_PROG_OPEN_DIR.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
     }
 
 

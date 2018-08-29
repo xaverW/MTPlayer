@@ -19,7 +19,7 @@ package de.mtplayer.mtp.gui.configDialog;
 import de.mtplayer.mLib.tools.DirFileChooser;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.Icons;
+import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
@@ -179,7 +179,7 @@ public class FilmPaneController extends AnchorPane {
         btnFile.setOnAction(event -> {
             DirFileChooser.FileChooser(ProgData.getInstance().primaryStage, txtUrl);
         });
-        btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
+        btnFile.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
         btnFile.setTooltip(new Tooltip("Eine Filmliste die geladen werden soll, manuell auswählen."));
 
         final Button btnHelp = new PButton().helpButton(stage, "Filmliste laden",

@@ -18,7 +18,7 @@ package de.mtplayer.mtp.gui.startDialog;
 
 import de.mtplayer.mLib.tools.DirFileChooser;
 import de.mtplayer.mtp.controller.config.ProgConfig;
-import de.mtplayer.mtp.controller.data.Icons;
+import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import javafx.beans.property.StringProperty;
@@ -61,7 +61,7 @@ public class DownPathPane {
         btnFile.setOnAction(event -> {
             DirFileChooser.DirChooser(stage, txtPath);
         });
-        btnFile.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
+        btnFile.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
         btnFile.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen."));
         gridPane.add(btnFile, 1, 1);
 

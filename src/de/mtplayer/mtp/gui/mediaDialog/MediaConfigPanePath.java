@@ -20,7 +20,7 @@ package de.mtplayer.mtp.gui.mediaDialog;
 import de.mtplayer.mLib.tools.DirFileChooser;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.Icons;
+import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.mediaDb.MediaCollectionData;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.PConst;
@@ -115,7 +115,7 @@ public class MediaConfigPanePath {
 
         Button btnUpdate = new Button("");
         btnUpdate.setTooltip(new Tooltip("Die markierte Sammlung wird neu eingelesen."));
-        btnUpdate.setGraphic(new Icons().ICON_BUTTON_UPDATE);
+        btnUpdate.setGraphic(new ProgIcons().ICON_BUTTON_UPDATE);
         btnUpdate.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
         btnUpdate.setOnAction(a -> {
             MediaCollectionData mediaCollectionData = tableView.getSelectionModel().getSelectedItem();
@@ -133,7 +133,7 @@ public class MediaConfigPanePath {
 
         Button btnDel = new Button("");
         btnDel.setTooltip(new Tooltip("Die markierte Sammlung wird gelöscht."));
-        btnDel.setGraphic(new Icons().ICON_BUTTON_REMOVE);
+        btnDel.setGraphic(new ProgIcons().ICON_BUTTON_REMOVE);
         btnDel.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
         btnDel.setOnAction(a -> delete());
 
@@ -169,7 +169,7 @@ public class MediaConfigPanePath {
 
         final Button btnPath = new Button("");
         btnPath.setTooltip(new Tooltip("Einen Pfad zum Einlesen einer neuen Sammlung auswählen."));
-        btnPath.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
+        btnPath.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
         btnPath.setOnAction(event -> {
             DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtPath);
             if (txtCollectionName.getText().isEmpty()) {
@@ -178,7 +178,7 @@ public class MediaConfigPanePath {
         });
 
         final Button btnAdd = new Button("");
-        btnAdd.setGraphic(new Icons().ICON_BUTTON_ADD);
+        btnAdd.setGraphic(new ProgIcons().ICON_BUTTON_ADD);
         if (external) {
             btnAdd.setTooltip(new Tooltip("Eine neue Sammlung wird angelegt und vom angegebenen Pfad eingelesen."));
         } else {

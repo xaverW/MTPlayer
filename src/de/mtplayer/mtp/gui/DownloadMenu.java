@@ -18,7 +18,7 @@ package de.mtplayer.mtp.gui;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.Icons;
+import de.mtplayer.mtp.controller.data.ProgIcons;
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.MenuButton;
@@ -53,29 +53,29 @@ public class DownloadMenu {
     private void initButton() {
         // Button
         final ToolBarButton btDownloadRefresh =
-                new ToolBarButton(vbox, UPDATE_DOWNLOADS_TEXT, UPDATE_DOWNLOADS_TEXT, new Icons().FX_ICON_TOOLBAR_DOWNLOAD_REFRESH);
+                new ToolBarButton(vbox, UPDATE_DOWNLOADS_TEXT, UPDATE_DOWNLOADS_TEXT, new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_REFRESH);
 
         final ToolBarButton btDownloadAll = new ToolBarButton(vbox,
                 START_ALL_DOWNLOADS_TEXT,
                 START_ALL_DOWNLOADS_TEXT,
-                new Icons().FX_ICON_TOOLBAR_DOWNLOAD_START_ALL);
+                new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_START_ALL);
 
         final ToolBarButton btStartDownloads = new ToolBarButton(vbox,
                 "Downloads Starten",
                 "markierte Downloads starten",
-                new Icons().FX_ICON_TOOLBAR_DOWNLOAD_START);
+                new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_START);
 
         final ToolBarButton btDownloadFilm = new ToolBarButton(vbox,
                 "Film Starten",
                 "gespeicherten Film abspielen",
-                new Icons().FX_ICON_TOOLBAR_DOWNLOAD_FILM_START);
+                new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_FILM_START);
 
         final ToolBarButton btDownloadBack =
-                new ToolBarButton(vbox, PUTBACK_DL_TEXT, PUTBACK_DL_TEXT, new Icons().FX_ICON_TOOLBAR_DOWNLOAD_UNDO);
+                new ToolBarButton(vbox, PUTBACK_DL_TEXT, PUTBACK_DL_TEXT, new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_UNDO);
         final ToolBarButton btDownloadDel =
-                new ToolBarButton(vbox, REMOVE_DOWNLOADS_TEXT, REMOVE_DOWNLOADS_TEXT, new Icons().FX_ICON_TOOLBAR_DOWNLOAD_DEL);
+                new ToolBarButton(vbox, REMOVE_DOWNLOADS_TEXT, REMOVE_DOWNLOADS_TEXT, new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_DEL);
         final ToolBarButton btDownloadClear =
-                new ToolBarButton(vbox, CLEANUP_DL_LIST_TEXT, CLEANUP_DL_LIST_TEXT, new Icons().FX_ICON_TOOLBAR_DOWNLOAD_CLEAR);
+                new ToolBarButton(vbox, CLEANUP_DL_LIST_TEXT, CLEANUP_DL_LIST_TEXT, new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_CLEAR);
         btDownloadRefresh.setOnAction(a -> progData.downloadGuiController.update());
         btDownloadAll.setOnAction(a -> progData.downloadGuiController.startDownload(true));
         btStartDownloads.setOnAction(a -> progData.downloadGuiController.startDownload(false));
@@ -90,7 +90,7 @@ public class DownloadMenu {
 
         // MenuButton
         final MenuButton mb = new MenuButton("");
-        mb.setGraphic(new Icons().FX_ICON_TOOLBAR_MENU);
+        mb.setGraphic(new ProgIcons().FX_ICON_TOOLBAR_MENU);
         mb.getStyleClass().add("btnFunction");
 
         final MenuItem mbStartAll = new MenuItem("alle Downloads starten");

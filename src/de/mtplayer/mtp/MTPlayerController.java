@@ -19,7 +19,7 @@ package de.mtplayer.mtp;
 import de.mtplayer.mtp.controller.ProgQuit;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.Icons;
+import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.gui.AboGuiPack;
 import de.mtplayer.mtp.gui.DownloadGuiPack;
 import de.mtplayer.mtp.gui.FilmGuiPack;
@@ -189,7 +189,7 @@ public class MTPlayerController extends StackPane {
 
             menuButton.getStyleClass().add("btnFunction");
             menuButton.setText("");
-            menuButton.setGraphic(new Icons().FX_ICON_TOOLBAR_MENU_TOP);
+            menuButton.setGraphic(new ProgIcons().FX_ICON_TOOLBAR_MENU_TOP);
 //            menuButton.getItems().addAll(miConfig, miMedia, miMsg, mHelp, new SeparatorMenuItem(), miQuit);
             menuButton.getItems().addAll(miConfig, miMedia, mHelp, new SeparatorMenuItem(), miQuit);
 

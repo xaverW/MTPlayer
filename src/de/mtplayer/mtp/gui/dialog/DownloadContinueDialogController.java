@@ -21,7 +21,7 @@ import de.mtplayer.mLib.tools.FileNameUtils;
 import de.mtplayer.mLib.tools.Functions;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.Icons;
+import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadTools;
@@ -209,7 +209,7 @@ public class DownloadContinueDialogController extends PDialogExtra {
     }
 
     private void initButton() {
-        btnPath.setGraphic(new Icons().ICON_BUTTON_FILE_OPEN);
+        btnPath.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
         btnPath.setText("");
         btnPath.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen."));
         btnPath.setOnAction(event -> getDestination());
