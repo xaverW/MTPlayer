@@ -229,10 +229,10 @@ public class DownloadGuiController extends AnchorPane {
         Download download = table.getSelectionModel().getSelectedItem();
         if (download != null) {
             filmGuiInfoController.setFilm(download.getFilm());
-            progData.filmInfoDialogController.set(download.getFilm());
+            progData.filmInfoDialogController.setFilm(download.getFilm());
         } else {
             filmGuiInfoController.setFilm(null);
-            progData.filmInfoDialogController.set(null);
+            progData.filmInfoDialogController.setFilm(null);
         }
     }
 

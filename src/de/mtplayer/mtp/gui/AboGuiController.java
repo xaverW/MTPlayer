@@ -60,7 +60,7 @@ public class AboGuiController extends AnchorPane {
     }
 
     public void isShown() {
-        progData.filmInfoDialogController.set(null);
+        progData.filmInfoDialogController.setFilm(null);
     }
 
     public int getSelCount() {

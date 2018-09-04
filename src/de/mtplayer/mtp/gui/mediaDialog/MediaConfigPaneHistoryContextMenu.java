@@ -72,7 +72,7 @@ public class MediaConfigPaneHistoryContextMenu {
         MenuItem miShowFilm = new MenuItem("Infos zum Film anzeigen");
         miShowFilm.setDisable(film == null);
         miShowFilm.setOnAction(a -> {
-            progData.filmInfoDialogController.set(film);
+            progData.filmInfoDialogController.setFilm(film);
             progData.filmInfoDialogController.showFilmInfo();
         });
 

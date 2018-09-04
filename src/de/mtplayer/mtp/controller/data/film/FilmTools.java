@@ -17,20 +17,13 @@
 package de.mtplayer.mtp.controller.data.film;
 
 import de.mtplayer.mLib.tools.FileSizeUrl;
-import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.gui.dialog.DownloadAddDialogController;
 import de.mtplayer.mtp.gui.dialog.NoSetDialogController;
 import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlert;
-import de.p2tools.p2Lib.guiTools.PHyperlink;
-import javafx.collections.ObservableList;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 
@@ -38,32 +31,32 @@ public class FilmTools {
 
     public static final String THEME_LIVE = "Livestream";
 
-    public static void getInfoText(Film film, ObservableList list) {
-
-        list.clear();
-
-        if (film == null) {
-            return;
-        }
-
-        Text text1, text2;
-        text1 = new Text(film.arr[FilmXml.FILM_CHANNEL] + "  -  " + film.arr[FilmXml.FILM_TITLE] + PConst.LINE_SEPARATORx2);
-        text1.setFont(Font.font(null, FontWeight.BOLD, -1));
-
-        text2 = new Text(film.arr[FilmXml.FILM_DESCRIPTION]);
-        text2.setWrappingWidth(20);
-
-        list.addAll(text1, text2);
-
-        if (!film.arr[FilmXml.FILM_WEBSITE].isEmpty()) {
-
-            PHyperlink hyperlink = new PHyperlink(film.arr[FilmXml.FILM_WEBSITE],
-                    ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
-
-            list.addAll(new Text(PConst.LINE_SEPARATORx2 + " zur Website: "), hyperlink);
-
-        }
-    }
+//    public static void getInfoText(Film film, ObservableList list) {
+//
+//        list.clear();
+//
+//        if (film == null) {
+//            return;
+//        }
+//
+//        Text text1, text2;
+//        text1 = new Text(film.arr[FilmXml.FILM_CHANNEL] + "  -  " + film.arr[FilmXml.FILM_TITLE] + PConst.LINE_SEPARATORx2);
+//        text1.setFont(Font.font(null, FontWeight.BOLD, -1));
+//
+//        text2 = new Text(film.arr[FilmXml.FILM_DESCRIPTION]);
+//        text2.setWrappingWidth(20);
+//
+//        list.addAll(text1, text2);
+//
+//        if (!film.arr[FilmXml.FILM_WEBSITE].isEmpty()) {
+//
+//            PHyperlink hyperlink = new PHyperlink(film.arr[FilmXml.FILM_WEBSITE],
+//                    ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
+//
+//            list.addAll(new Text(PConst.LINE_SEPARATORx2 + " zur Website: "), hyperlink);
+//
+//        }
+//    }
 
     public static String getSizeFromWeb(Film film, String url) {
         if (url.equals(film.arr[FilmXml.FILM_URL])) {

@@ -119,7 +119,7 @@ public class FilmGuiController extends AnchorPane {
     private void setFilm() {
         Film film = tableView.getSelectionModel().getSelectedItem();
         filmGuiInfoController.setFilm(film);
-        progData.filmInfoDialogController.set(film);
+        progData.filmInfoDialogController.setFilm(film);
         return;
     }
 

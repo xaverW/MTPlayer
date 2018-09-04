@@ -184,6 +184,10 @@ public class FilmProps extends FilmXml {
         return arr[FILM_DESCRIPTION];
     }
 
+    public void setDescription(String text) {
+        arr[FILM_DESCRIPTION] = text;
+    }
+
     public String getGeo() {
         return arr[FILM_GEO];
     }

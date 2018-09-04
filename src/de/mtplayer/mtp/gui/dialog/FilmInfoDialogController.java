@@ -92,7 +92,7 @@ public class FilmInfoDialogController extends PDialog {
     }
 
 
-    public void set(Film film) {
+    public void setFilm(Film film) {
         Platform.runLater(() -> {
 
             hBoxUrl.getChildren().clear();
