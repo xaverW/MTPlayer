@@ -36,9 +36,9 @@ import javafx.scene.text.Text;
 
 public class FilmGuiInfoController {
     private final TextArea textArea = new TextArea();
-    private final HBox hBox = new HBox(10);
     private final Button btnReset = new Button("@");
-    Text textTitle = new Text("");
+    private final Text textTitle = new Text("");
+    private final HBox hBox = new HBox(10);
 
     private Film film = null;
     private String oldDescription = "";
@@ -72,19 +72,11 @@ public class FilmGuiInfoController {
 
     public void setFilm(Film film) {
         if (film == null) {
-            this.film = film;
+            this.film = null;
             textTitle.setText("");
             textArea.setText("");
             oldDescription = "";
             btnReset.setVisible(false);
-            return;
-        }
-
-        if (this.film == film) {
-            // dann wurde der Film nicht geändert, nur die Tabs umgeschaltet
-            // aber evtl. Text im anderen Tab geändert
-            textArea.setText(film.getDescription());
-            btnReset.setVisible(!oldDescription.isEmpty() && !film.getDescription().equals(oldDescription));
             return;
         }
 
