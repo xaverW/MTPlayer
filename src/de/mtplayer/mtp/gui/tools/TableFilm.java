@@ -20,8 +20,8 @@ import de.mtplayer.mLib.tools.CheckBoxCell;
 import de.mtplayer.mLib.tools.MDate;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.MTColor;
+import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmSize;
 import de.mtplayer.mtp.controller.data.film.FilmTools;
@@ -176,41 +176,41 @@ public class TableFilm {
 
     }
 
-    private Callback<TableColumn<Film, Boolean>, TableCell<Film, Boolean>> cellFactoryShown
-            = (final TableColumn<Film, Boolean> param) -> {
-
-        final TableCell<Film, Boolean> cell = new TableCell<Film, Boolean>() {
-
-            @Override
-            public void updateItem(Boolean item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (item == null || empty) {
-                    setGraphic(null);
-                    setText(null);
-                    return;
-                }
-
-                TableRow<Film> currentRow = getTableRow();
-                if (currentRow != null) {
-                    if (item.booleanValue()) {
-                        currentRow.setStyle(MTColor.FILM_HISTORY.getCssBackground());
-                    } else {
-                        currentRow.setStyle("");
-                    }
-                }
-
-                setAlignment(Pos.CENTER);
-                CheckBox box = new CheckBox();
-                box.setDisable(true);
-                box.getStyleClass().add("checkbox-table");
-                box.setSelected(item.booleanValue());
-                setGraphic(box);
-
-            }
-        };
-        return cell;
-    };
+//    private Callback<TableColumn<Film, Boolean>, TableCell<Film, Boolean>> cellFactoryShown
+//            = (final TableColumn<Film, Boolean> param) -> {
+//
+//        final TableCell<Film, Boolean> cell = new TableCell<Film, Boolean>() {
+//
+//            @Override
+//            public void updateItem(Boolean item, boolean empty) {
+//                super.updateItem(item, empty);
+//
+//                if (item == null || empty) {
+//                    setGraphic(null);
+//                    setText(null);
+//                    return;
+//                }
+//
+//                TableRow<Film> currentRow = getTableRow();
+//                if (currentRow != null) {
+//                    if (item.booleanValue()) {
+//                        currentRow.setStyle(MTColor.FILM_HISTORY.getCssBackground());
+//                    } else {
+//                        currentRow.setStyle("");
+//                    }
+//                }
+//
+//                setAlignment(Pos.CENTER);
+//                CheckBox box = new CheckBox();
+//                box.setDisable(true);
+//                box.getStyleClass().add("checkbox-table");
+//                box.setSelected(item.booleanValue());
+//                setGraphic(box);
+//
+//            }
+//        };
+//        return cell;
+//    };
 
     private Callback<TableColumn<Film, String>, TableCell<Film, String>> cellFactoryStart
             = (final TableColumn<Film, String> param) -> {

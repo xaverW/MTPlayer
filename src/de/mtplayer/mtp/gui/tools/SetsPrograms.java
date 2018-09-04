@@ -16,7 +16,6 @@
 
 package de.mtplayer.mtp.gui.tools;
 
-import de.mtplayer.mLib.tools.FileUtils;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
@@ -27,6 +26,8 @@ import de.mtplayer.mtp.controller.data.SetList;
 import de.mtplayer.mtp.controller.starter.RuntimeExec;
 import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlert;
+import de.p2tools.p2Lib.tools.PFileUtils;
+import de.p2tools.p2Lib.tools.net.PUrlTools;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -200,13 +201,13 @@ public class SetsPrograms {
     }
 
     private static boolean addOnZip(String file) {
-        final String destPath = FileUtils.addsPath(ProgInfos.getPathJar(), "bin");
+        final String destPath = PFileUtils.addsPath(ProgInfos.getPathJar(), "bin");
         File zipFile;
         final int timeout = 10_000; //10 Sekunden
         int n;
         HttpURLConnection conn;
         try {
-            if (!FileUtils.istUrl(file)) {
+            if (!PUrlTools.isUrl(file)) {
                 zipFile = new File(file);
                 if (!zipFile.exists()) {
                     // und Tschüss
@@ -219,7 +220,7 @@ public class SetsPrograms {
                     }
                 } else {
                     try (FileInputStream in = new FileInputStream(file);
-                         FileOutputStream fOut = new FileOutputStream(FileUtils.addsPath(destPath, file))) {
+                         FileOutputStream fOut = new FileOutputStream(PFileUtils.addsPath(destPath, file))) {
                         final byte[] buffer = new byte[1024];
                         while ((n = in.read(buffer)) != -1) {
                             fOut.write(buffer, 0, n);
@@ -248,8 +249,8 @@ public class SetsPrograms {
                     }
 
                 } else {
-                    final String fileName = FileUtils.getFileName(file);
-                    final File f = new File(FileUtils.addsPath(destPath, fileName));
+                    final String fileName = PUrlTools.getFileName(file);
+                    final File f = new File(PFileUtils.addsPath(destPath, fileName));
                     try (BufferedInputStream in = new BufferedInputStream(conn.getInputStream());
                          FileOutputStream fOut = new FileOutputStream(f)) {
                         final byte[] buffer = new byte[1024];

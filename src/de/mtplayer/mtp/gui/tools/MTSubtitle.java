@@ -17,11 +17,11 @@
 
 package de.mtplayer.mtp.gui.tools;
 
-import de.mtplayer.mLib.tools.FileUtils;
 import de.mtplayer.mLib.tools.TimedTextMarkupLanguageParser;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2Lib.tools.net.PUrlTools;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -99,7 +99,7 @@ public class MTSubtitle {
                     "schreiben nach: ", download.getDestPath()});
 
             urlSubtitle = download.getUrlSubtitle();
-            suffix = FileUtils.getSuffixFromUrl(urlSubtitle);
+            suffix = PUrlTools.getSuffixFromUrl(urlSubtitle);
             if (!suffix.endsWith(SUFFIX_SRT))
                 suffix = SUFFIX_TTML;
 

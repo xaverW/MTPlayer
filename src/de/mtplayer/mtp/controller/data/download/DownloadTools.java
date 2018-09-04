@@ -17,12 +17,12 @@
 package de.mtplayer.mtp.controller.data.download;
 
 import de.mtplayer.mLib.tools.FileNameUtils;
-import de.mtplayer.mLib.tools.FileUtils;
 import de.mtplayer.mLib.tools.SizeTools;
 import de.mtplayer.mLib.tools.SystemInfo;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.p2tools.p2Lib.tools.SysTools;
+import de.p2tools.p2Lib.tools.PFileUtils;
+import de.p2tools.p2Lib.tools.PSystemUtils;
 import javafx.scene.control.Label;
 
 public class DownloadTools {
@@ -37,7 +37,7 @@ public class DownloadTools {
         }
         try {
             String noSize = "";
-            long usableSpace = FileUtils.getFreeDiskSpace(path);
+            long usableSpace = PFileUtils.getFreeDiskSpace(path);
             String sizeFree = "";
             if (usableSpace == 0) {
                 lblSizeFree.setText("");
@@ -70,7 +70,7 @@ public class DownloadTools {
 
     public static String getDownloadPath() {
         return ProgConfig.START_DIALOG_DOWNLOAD_PATH.get().isEmpty() ?
-                SysTools.getStandardDownloadPath() : ProgConfig.START_DIALOG_DOWNLOAD_PATH.get();
+                PSystemUtils.getStandardDownloadPath() : ProgConfig.START_DIALOG_DOWNLOAD_PATH.get();
     }
 
     /**

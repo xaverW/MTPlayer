@@ -17,7 +17,6 @@
 package de.mtplayer.mtp.controller.data.download;
 
 import de.mtplayer.mLib.tools.FileNameUtils;
-import de.mtplayer.mLib.tools.FileUtils;
 import de.mtplayer.mLib.tools.StringFormatters;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.data.ProgramData;
@@ -25,8 +24,10 @@ import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.abo.Abo;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
-import de.p2tools.p2Lib.tools.SysTools;
+import de.p2tools.p2Lib.tools.PFileUtils;
+import de.p2tools.p2Lib.tools.PSystemUtils;
 import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2Lib.tools.net.PUrlTools;
 import org.apache.commons.lang3.time.FastDateFormat;
 
 import java.io.File;
@@ -153,7 +154,7 @@ public class DownloadProg {
             // Kürzen
             if (setData.getMaxSize() > 0) {
                 int length = setData.getMaxSize();
-                name = FileUtils.cutName(name, length);
+                name = PFileUtils.cutName(name, length);
             }
         }
 
@@ -166,7 +167,7 @@ public class DownloadProg {
         } else {
             // Pfad sinnvoll belegen
             if (setData.getDestPath().isEmpty()) {
-                path = SysTools.getStandardDownloadPath();
+                path = PSystemUtils.getStandardDownloadPath();
             } else {
                 path = setData.getDestPath();
             }
@@ -182,14 +183,14 @@ public class DownloadProg {
                     } else {
                         addPpath = download.getTheme();
                     }
-                    path = FileUtils.addsPath(path, FileNameUtils.removeIllegalCharacters(addPpath, false));
+                    path = PFileUtils.addsPath(path, FileNameUtils.removeIllegalCharacters(addPpath, false));
                 }
             } else if (setData.getGenTheme()) {
                 // Downloads
                 // und den Namen des Themas an den Zielpfad anhängen
                 // --> das wird aber nur beim ersten mal klappen, dann wird im
                 // Downloaddialog immer der letzte Pfad zuerst angeboten
-                path = FileUtils.addsPath(path,
+                path = PFileUtils.addsPath(path,
                         DownloadTools.replaceEmptyFileName(download.getTheme(),
                                 true /* pfad */,
                                 Boolean.parseBoolean(ProgConfig.SYSTEM_USE_REPLACETABLE.get()),
@@ -206,7 +207,7 @@ public class DownloadProg {
         // ###########################################################
         // zur Sicherheit bei Unsinn im Set
         if (path.isEmpty()) {
-            path = SysTools.getStandardDownloadPath();
+            path = PSystemUtils.getStandardDownloadPath();
         }
         if (name.isEmpty()) {
             name = getToday_yyyyMMdd() + "_" + download.getTheme() + "-" + download.getTitle() + ".mp4";
@@ -215,11 +216,11 @@ public class DownloadProg {
         // in Win dürfen die Pfade nicht länger als 255 Zeichen haben (für die Infodatei kommen noch
         // ".txt" dazu)
         final String[] pathName = {path, name};
-        FileUtils.checkLengthPath(pathName);
+        PFileUtils.checkLengthPath(pathName);
 
         download.setDestFileName(pathName[1]);
         download.setDestPath(pathName[0]);
-        download.setDestPathFile(FileUtils.addsPath(pathName[0], pathName[1]));
+        download.setDestPathFile(PFileUtils.addsPath(pathName[0], pathName[1]));
     }
 
     private String replaceString(String replStr, Film film) {
@@ -231,7 +232,7 @@ public class DownloadProg {
         replStr = replStr.replace("%t", getField(film.arr[FilmXml.FILM_THEME], length));
         replStr = replStr.replace("%T", getField(film.arr[FilmXml.FILM_TITLE], length));
         replStr = replStr.replace("%s", getField(film.arr[FilmXml.FILM_CHANNEL], length));
-        replStr = replStr.replace("%N", getField(FileUtils.getFileName(download.getUrl()), length));
+        replStr = replStr.replace("%N", getField(PUrlTools.getFileName(download.getUrl()), length));
 
         // Felder mit fester Länge werden immer ganz geschrieben
         replStr = replStr.replace("%D",
@@ -275,11 +276,11 @@ public class DownloadProg {
         }
         replStr = replStr.replace("%q", res); // %q Qualität des Films ("HD", "H", "L")
 
-        replStr = replStr.replace("%S", FileUtils.getSuffixFromUrl(download.getUrl()));
-        replStr = replStr.replace("%Z", FileUtils.getHash(download.getUrl()));
+        replStr = replStr.replace("%S", PUrlTools.getSuffixFromUrl(download.getUrl()));
+        replStr = replStr.replace("%Z", PFileUtils.getHash(download.getUrl()));
         replStr = replStr.replace("%z",
-                FileUtils.getHash(download.getUrl()) + "."
-                        + FileUtils.getSuffixFromUrl(download.getUrl()));
+                PFileUtils.getHash(download.getUrl()) + "."
+                        + PUrlTools.getSuffixFromUrl(download.getUrl()));
 
         return replStr;
     }

@@ -16,7 +16,6 @@
 
 package de.mtplayer.mtp.controller.data.download;
 
-import de.mtplayer.mLib.tools.FileUtils;
 import de.mtplayer.mLib.tools.MLProperty;
 import de.mtplayer.mLib.tools.StringFormatters;
 import de.mtplayer.mtp.controller.config.ProgConfig;
@@ -27,7 +26,9 @@ import de.mtplayer.mtp.controller.data.film.FilmTools;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.mtplayer.mtp.controller.starter.Start;
 import de.p2tools.p2Lib.dialog.PAlert;
-import de.p2tools.p2Lib.tools.SysTools;
+import de.p2tools.p2Lib.tools.PFileUtils;
+import de.p2tools.p2Lib.tools.PSystemUtils;
+import de.p2tools.p2Lib.tools.net.PUrlTools;
 import javafx.application.Platform;
 
 import java.io.File;
@@ -186,12 +187,12 @@ public final class Download extends DownloadProps {
     }
 
     public String getFileNameWithoutSuffix() {
-        return FileUtils.getFileNameWithoutSuffix(getDestPathFile());
+        return PUrlTools.getFileNameWithoutSuffix(getDestPathFile());
     }
 
 
     public String getFileNameSuffix() {
-        return FileUtils.getFileNameSuffix(getDestPathFile());
+        return PFileUtils.getFileNameSuffix(getDestPathFile());
     }
 
     public void setSizeDownloadFromWeb(String size) {
@@ -286,13 +287,13 @@ public final class Download extends DownloadProps {
         //=====================================================
         // zur Sicherheit
         if (path.isEmpty()) {
-            path = SysTools.getStandardDownloadPath();
+            path = PSystemUtils.getStandardDownloadPath();
         }
         if (name.isEmpty()) {
             name = StringFormatters.FORMATTER_yyyyMMdd.format(new Date()) + '_' + getTheme() + '-' + getTitle() + ".mp4";
         }
         final String[] pathName = {path, name};
-        FileUtils.checkLengthPath(pathName);
+        PFileUtils.checkLengthPath(pathName);
         if (!pathName[0].equals(path) || !pathName[1].equals(name)) {
             Platform.runLater(() ->
                     new PAlert().showInfoAlert("Pfad zu lang!", "Pfad zu lang!",
@@ -305,7 +306,7 @@ public final class Download extends DownloadProps {
 
         setDestFileName(name);
         setDestPath(path);
-        setDestPathFile(FileUtils.addsPath(path, name));
+        setDestPathFile(PFileUtils.addsPath(path, name));
     }
 
     public Download getCopy() {

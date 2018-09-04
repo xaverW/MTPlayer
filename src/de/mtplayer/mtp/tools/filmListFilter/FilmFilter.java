@@ -199,7 +199,7 @@ public class FilmFilter {
         }
 
         boolean ret = (timeMin == 0 || filmTime >= timeMin) &&
-                (timeMax == SelectedFilter.FILTER_FILMTIME_MAX_SEC || filmTime <= timeMax);
+                (timeMax == SelectedFilter.FILTER_FILMTIME_MAX_SEC || filmTime < timeMax);
 
         if (invert) {
             return !ret;

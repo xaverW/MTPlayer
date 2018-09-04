@@ -32,7 +32,7 @@ import de.mtplayer.mtp.gui.tools.Table;
 import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.POpen;
-import de.p2tools.p2Lib.tools.SysTools;
+import de.p2tools.p2Lib.tools.PSystemUtils;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -222,7 +222,7 @@ public class DownloadGuiController extends AnchorPane {
         if (!download.isPresent()) {
             return;
         }
-        SysTools.copyToClipboard(download.get().getUrl());
+        PSystemUtils.copyToClipboard(download.get().getUrl());
     }
 
     private void setFilm() {

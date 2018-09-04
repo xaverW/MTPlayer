@@ -20,7 +20,7 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.HistoryData;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.p2tools.p2Lib.PConst;
-import de.p2tools.p2Lib.tools.SysTools;
+import de.p2tools.p2Lib.tools.PSystemUtils;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
@@ -66,7 +66,7 @@ public class MediaConfigPaneHistoryContextMenu {
             for (HistoryData historyData : historyDataArrayList) {
                 str += str.isEmpty() ? historyData.getUrl() : PConst.LINE_SEPARATOR + historyData.getUrl();
             }
-            SysTools.copyToClipboard(str);
+            PSystemUtils.copyToClipboard(str);
         });
 
         MenuItem miShowFilm = new MenuItem("Infos zum Film anzeigen");

@@ -21,7 +21,7 @@ import de.mtplayer.mtp.controller.data.BlackData;
 import de.mtplayer.mtp.controller.data.SetList;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.gui.tools.Table;
-import de.p2tools.p2Lib.tools.SysTools;
+import de.p2tools.p2Lib.tools.PSystemUtils;
 import javafx.scene.control.*;
 
 public class FilmGuiContextMenu {
@@ -144,32 +144,32 @@ public class FilmGuiContextMenu {
                 // HD
                 if (!uHd.isEmpty()) {
                     item = new MenuItem("in HD-Auflösung");
-                    item.setOnAction(a -> SysTools.copyToClipboard(film.getUrlForResolution(Film.RESOLUTION_HD)));
+                    item.setOnAction(a -> PSystemUtils.copyToClipboard(film.getUrlForResolution(Film.RESOLUTION_HD)));
                     subMenuURL.getItems().add(item);
                 }
 
                 // normale Auflösung, gibts immer
                 item = new MenuItem("in hoher Auflösung");
-                item.setOnAction(a -> SysTools.copyToClipboard(film.getUrlForResolution(Film.RESOLUTION_NORMAL)));
+                item.setOnAction(a -> PSystemUtils.copyToClipboard(film.getUrlForResolution(Film.RESOLUTION_NORMAL)));
                 subMenuURL.getItems().add(item);
 
                 // kleine Auflösung
                 if (!uLow.isEmpty()) {
                     item = new MenuItem("in geringer Auflösung");
-                    item.setOnAction(a -> SysTools.copyToClipboard(film.getUrlForResolution(Film.RESOLUTION_SMALL)));
+                    item.setOnAction(a -> PSystemUtils.copyToClipboard(film.getUrlForResolution(Film.RESOLUTION_SMALL)));
                     subMenuURL.getItems().add(item);
                 }
 
                 if (!film.getUrlSubtitle().isEmpty()) {
                     item = new MenuItem("Untertitel-URL kopieren");
-                    item.setOnAction(a -> SysTools.copyToClipboard(film.getUrlSubtitle()));
+                    item.setOnAction(a -> PSystemUtils.copyToClipboard(film.getUrlSubtitle()));
                     subMenuURL.getItems().addAll(new SeparatorMenuItem(), item);
                 }
 
                 contextMenu.getItems().add(subMenuURL);
             } else {
                 item = new MenuItem("Film-URL kopieren");
-                item.setOnAction(a -> SysTools.copyToClipboard(film.getUrlForResolution(Film.RESOLUTION_NORMAL)));
+                item.setOnAction(a -> PSystemUtils.copyToClipboard(film.getUrlForResolution(Film.RESOLUTION_NORMAL)));
                 contextMenu.getItems().add(item);
             }
         }

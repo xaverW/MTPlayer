@@ -16,11 +16,11 @@
 
 package de.mtplayer.mtp.controller.data;
 
-import de.mtplayer.mLib.tools.FileUtils;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.tools.file.GetFile;
 import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2Lib.tools.net.PUrlTools;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -136,7 +136,7 @@ public class ListePsetVorlagen extends LinkedList<String[]> {
     public static SetList importPsetFile(String fileUrl) {
         final int timeout = 10_000; //10 Sekunden
         try {
-            if (FileUtils.istUrl(fileUrl)) {
+            if (PUrlTools.isUrl(fileUrl)) {
                 HttpURLConnection conn;
                 conn = (HttpURLConnection) new URL(fileUrl).openConnection();
                 conn.setConnectTimeout(timeout);

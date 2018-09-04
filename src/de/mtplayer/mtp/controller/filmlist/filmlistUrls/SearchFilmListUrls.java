@@ -16,10 +16,10 @@
 
 package de.mtplayer.mtp.controller.filmlist.filmlistUrls;
 
-import de.mtplayer.mLib.tools.Functions;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2Lib.tools.net.PUrlTools;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -157,7 +157,7 @@ public class SearchFilmListUrls {
             inFactory.setProperty(XMLInputFactory.IS_COALESCING, Boolean.FALSE);
             XMLStreamReader parser;
             InputStreamReader inReader;
-            if (Functions.istUrl(dateiUrl)) {
+            if (PUrlTools.isUrl(dateiUrl)) {
                 // eine URL verarbeiten
                 int timeout = 20000; //ms
                 HttpURLConnection conn;

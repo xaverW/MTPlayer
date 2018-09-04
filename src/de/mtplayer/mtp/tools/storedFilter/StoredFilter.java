@@ -185,6 +185,12 @@ public final class StoredFilter {
         return clearTxtFilter(selectedFilter);
     }
 
+    /**
+     * clear all top filter (textfilter)
+     *
+     * @param sf
+     * @return
+     */
     public synchronized boolean clearTxtFilter(SelectedFilter sf) {
         boolean ret;
         selectedFilter.filterChangeProperty().removeListener(filterChangeListener);
@@ -200,6 +206,11 @@ public final class StoredFilter {
         clearFilter(selectedFilter);
     }
 
+    /**
+     * clear all filter
+     *
+     * @param sf
+     */
     public synchronized void clearFilter(SelectedFilter sf) {
         selectedFilter.filterChangeProperty().removeListener(filterChangeListener);
         selectedFilter.blacklistChangeProperty().removeListener(blacklistChangeListener);
