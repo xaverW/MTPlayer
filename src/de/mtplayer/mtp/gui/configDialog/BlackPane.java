@@ -138,6 +138,7 @@ public class BlackPane {
 
         final TableColumn<BlackData, Integer> hitsColumn = new TableColumn<>("Treffer");
         hitsColumn.setCellValueFactory(new PropertyValueFactory<>("countHits"));
+        hitsColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
 
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
