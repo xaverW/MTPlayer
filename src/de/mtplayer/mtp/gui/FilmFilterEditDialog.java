@@ -55,7 +55,7 @@ public class FilmFilterEditDialog extends PDialog {
 
         init(vBoxCont);
 
-        final Button btnHelpAbo = new PButton().helpButton("Filter ein- und ausschalten",
+        final Button btnHelpAbo = new PButton().helpButton(getStage(), "Filter ein- und ausschalten",
                 HelpText.GUI_FILMS_EDIT_FILTER);
 
         HBox hBox = new HBox();

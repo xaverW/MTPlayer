@@ -21,7 +21,7 @@ import de.mtplayer.mLib.tools.BigButton;
 import de.mtplayer.mtp.controller.ProgQuit;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
-import de.mtplayer.mtp.tools.file.GetFile;
+import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.dialog.PDialog;
@@ -76,8 +76,8 @@ public class ResetDialogController extends PDialog {
                 "Nichts ändern", "");
         cancelButton.setOnAction(e -> close());
 
-        final Button btnHelp = new PButton().helpButton("Programm zurücksetzen",
-                new GetFile().getHelpSearch(GetFile.PATH_HELPTEXT_RESET));
+        final Button btnHelp = new PButton().helpButton(this.getStage(), "Programm zurücksetzen",
+                HelpText.RESET_DIALOG);
 
         BigButton setButton = new BigButton(new ProgIcons().ICON_BUTTON_QUIT,
                 "Einstellungen zum Abspielen/Aufzeichnen zurücksetzen",

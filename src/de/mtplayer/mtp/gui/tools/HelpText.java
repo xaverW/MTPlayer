@@ -190,11 +190,12 @@ public class HelpText {
             "abgespielt werden kann, liegt fast immer " +
             "Geoblocking vor.";
 
-    public static final String GUI_FILMS_EDIT_FILTER = "Hier können die Filter" + PConst.LINE_SEPARATOR +
-            "die angezeigt werden sollen, ein- und ausgeschaltet werden." + PConst.LINE_SEPARATOR +
-            PConst.LINE_SEPARATOR +
-            "Ausgeschaltete Filter werden beim Suchen der Filme" + PConst.LINE_SEPARATOR +
-            "auch nicht berücksichtigt." + PConst.LINE_SEPARATORx2 +
+    public static final String GUI_FILMS_EDIT_FILTER = "Hier können die Filter " +
+            "die angezeigt werden sollen, ein- und ausgeschaltet werden." +
+            PConst.LINE_SEPARATORx2 +
+            "Ausgeschaltete Filter werden beim Suchen der Filme " +
+            "auch nicht berücksichtigt." +
+            PConst.LINE_SEPARATORx2 +
             "Mit weniger Filtern ist auch der Suchvorgang schneller";
 
     public static final String SET = "" +
@@ -362,4 +363,26 @@ public class HelpText {
             "";
     public static final String INTERN_MEDIA_COLLECTION = "Die hier angegebenen Ordner werden bei jedem Programmstart " +
             "nach Medien abgesucht. Diese Ordner werden also immer aktuell mit dem Programm abgeglichen.";
+
+    public static final String RESET_DIALOG =
+            "==> Einstellungen zum Abspielen und Aufzeichnen zurücksetzen" +
+
+                    PConst.LINE_SEPARATORx2 +
+                    "Damit werden alle Sets (auch eigene), die zum Abspielen und Aufzeichnen der " +
+                    "Filme gebraucht werden, gelöscht. Anschließend werden die aktuellen Standardsets eingerichtet. " +
+                    "Es kann dann direkt damit weitergearbeitet werden. Abos und Blacklist bleiben erhalten." +
+                    PConst.LINE_SEPARATORx2 +
+                    "Das sollte vor dem kompletten Zurücksetzen des Programms versucht werden. " +
+
+                    PConst.LINE_SEPARATORx3 +
+                    "=====   ODER   =====" +
+                    PConst.LINE_SEPARATORx3 +
+
+                    "==> Alle Einstellungen zurücksetzen" +
+                    PConst.LINE_SEPARATORx2 +
+                    "Damit wird das Programm in den Ursprungszustand zurückgesetzt. Es gehen " +
+                    "ALLE Einstellungen verloren. Das Programm beendet sich " +
+                    "und muss neu gestartet werden. Der neue Start beginnt " +
+                    "mit dem Einrichtungsdialog." +
+                    PConst.LINE_SEPARATOR;
 }

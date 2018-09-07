@@ -33,7 +33,6 @@ public class GetFile {
     public static final String PATH_PSET_WINDOWS = "/de/mtplayer/mtp/tools/file/pset_windows.xml";
     public static final String PATH_HELPTEXT_PRGRAM = "/de/mtplayer/mtp/tools/file/hilfetext_pset.txt";
     public static final String PATH_HELPTEXT_EDIT_DOWNLOAD_PROG = "hilfetext_editDownloadProg.txt";
-    public static final String PATH_HELPTEXT_RESET = "hilfetext_reset.txt";
 
     public String getHelpSearch(String path) {
         String ret = "";
