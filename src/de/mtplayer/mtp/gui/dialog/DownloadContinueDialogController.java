@@ -30,8 +30,6 @@ import de.p2tools.p2Lib.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -51,7 +49,7 @@ public class DownloadContinueDialogController extends PDialogExtra {
     private Label lblHeader = new Label("Die Filmdatei existiert bereits.");
     private Button btnRestartDownload = new Button("neu Starten");
     private Button btnCancel = new Button("Abbrechen");
-    private Button btnContinueDownload = new Button("Weiterführen in XXX");
+    private Button btnContinueDownload = new Button("Weiterführen in xxxx s");
 
     private Label lblFilmTitle = new Label("ARD: Tatort, ..");
     private TextField txtFileName = new TextField("");
@@ -105,11 +103,13 @@ public class DownloadContinueDialogController extends PDialogExtra {
 
         initButton();
         initPathAndName();
+        handleCountDownAction(); // damit die Dialoggröße stimmt
 
         //start the countdown...
         timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), new CountdownAction()));
+//        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), new CountdownAction()));
+        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), event -> handleCountDownAction()));
         timeline.playFromStart();
 
     }
@@ -163,22 +163,18 @@ public class DownloadContinueDialogController extends PDialogExtra {
         return (download.getpSet() != null && download.getFilm() != null);
     }
 
-    private class CountdownAction implements EventHandler {
-
-        @Override
-        public void handle(Event event) {
-            timeSeconds--;
-            if (timeSeconds > 0) {
-                if (!directDownload) {
-                    btnRestartDownload.setText("neu Starten in " + timeSeconds + " s");
-                } else {
-                    btnContinueDownload.setText("Weiterführen in " + timeSeconds + " s");
-                }
+    private void handleCountDownAction() {
+        timeSeconds--;
+        if (timeSeconds > 0) {
+            if (!directDownload) {
+                btnRestartDownload.setText("neu Starten in " + timeSeconds + " s");
             } else {
-                timeline.stop();
-                result = DownloadState.ContinueDownload.CONTINUE_DOWNLOAD;
-                quit();
+                btnContinueDownload.setText("Weiterführen in " + timeSeconds + " s");
             }
+        } else {
+            timeline.stop();
+            result = DownloadState.ContinueDownload.CONTINUE_DOWNLOAD;
+            quit();
         }
     }
 
