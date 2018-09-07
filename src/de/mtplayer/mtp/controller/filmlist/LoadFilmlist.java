@@ -180,7 +180,7 @@ public class LoadFilmlist {
     /**
      * Filmliste beim Programmstart laden
      */
-    public void loadFilmlistProgStart() {
+    public void loadFilmlistProgStart(boolean firstProgramStart) {
 
         setPropLoadFilmlist(true);
 
@@ -192,17 +192,19 @@ public class LoadFilmlist {
             final ProgData progData = ProgData.getInstance();
             ArrayList<String> list = new ArrayList<>();
 
-            // gespeicherte Filmliste laden
-            Platform.runLater(() -> progData.mtPlayerController.getBtnFilmlist().setDisable(true));
-            new ReadFilmlist().readFilmlist(ProgInfos.getFilmListFile(),
-                    progData.filmlist, ProgConfig.SYSTEM_NUM_DAYS_FILMLIST.getInt());
-            Platform.runLater(() -> progData.mtPlayerController.getBtnFilmlist().setDisable(false));
+            if (!firstProgramStart) {
+                // gespeicherte Filmliste laden, macht beim ersten Programmstart keinen Sinn
+                Platform.runLater(() -> progData.mtPlayerController.getBtnFilmlist().setDisable(true));
+                new ReadFilmlist().readFilmlist(ProgInfos.getFilmListFile(),
+                        progData.filmlist, ProgConfig.SYSTEM_NUM_DAYS_FILMLIST.getInt());
+                Platform.runLater(() -> progData.mtPlayerController.getBtnFilmlist().setDisable(false));
 
-            list.add(PLog.LILNE3);
-            list.add("Liste Filme gelesen am: " + StringFormatters.FORMATTER_ddMMyyyyHHmm.format(new Date()));
-            list.add("  erstellt am: " + progData.filmlist.genDate());
-            list.add("  Anzahl Filme: " + progData.filmlist.size());
-            list.add("  Anzahl Neue: " + progData.filmlist.countNewFilms());
+                list.add(PLog.LILNE3);
+                list.add("Liste Filme gelesen am: " + StringFormatters.FORMATTER_ddMMyyyyHHmm.format(new Date()));
+                list.add("  erstellt am: " + progData.filmlist.genDate());
+                list.add("  Anzahl Filme: " + progData.filmlist.size());
+                list.add("  Anzahl Neue: " + progData.filmlist.countNewFilms());
+            }
 
             if (progData.filmlist.isTooOld() && ProgConfig.SYSTEM_LOAD_FILMS_ON_START.getBool()) {
                 list.add("Filmliste zu alt, neue Filmliste laden");

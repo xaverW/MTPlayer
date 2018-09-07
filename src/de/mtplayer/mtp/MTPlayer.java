@@ -63,6 +63,7 @@ public class MTPlayer extends Application {
     ProgStart progStart;
     Scene scene = null;
     private boolean onlyOne = false;
+    private boolean firstProgramStart = false;
 
     @Override
     public void init() throws Exception {
@@ -92,6 +93,7 @@ public class MTPlayer extends Application {
     private void loadData() {
         if (!progStart.loadAll()) {
             PDuration.onlyPing("Erster Start");
+            firstProgramStart = true;
 
             // einmal ein Muster anlegen, für Linux ist es bereits aktiv!
             progData.replaceList.init();
@@ -157,7 +159,7 @@ public class MTPlayer extends Application {
         initProg();
 
         PDuration.onlyPing("Gui steht!");
-        progStart.loadDataProgStart();
+        progStart.loadDataProgStart(firstProgramStart);
     }
 
 

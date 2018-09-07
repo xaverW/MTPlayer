@@ -41,8 +41,8 @@ public class ProgStart {
     // #########################################################
     // Filmliste beim Programmstart!! laden
     // #########################################################
-    public void loadDataProgStart() {
-        progData.loadFilmlist.loadFilmlistProgStart();
+    public void loadDataProgStart(boolean firstProgramStart) {
+        progData.loadFilmlist.loadFilmlistProgStart(firstProgramStart);
     }
 
     public static void shortStartMsg() {
