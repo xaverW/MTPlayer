@@ -120,17 +120,17 @@ public class FilmFilterController extends FilterController {
         progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
             @Override
             public void start(ListenerFilmlistLoadEvent event) {
-                dis(true);
+                disableFilterPane(true);
             }
 
             @Override
             public void finished(ListenerFilmlistLoadEvent event) {
-                dis(false);
+                disableFilterPane(false);
             }
         });
     }
 
-    private void dis(boolean dis) {
+    private void disableFilterPane(boolean dis) {
         this.setDisable(dis);
     }
 

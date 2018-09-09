@@ -30,6 +30,7 @@ import de.mtplayer.mtp.gui.tools.Table;
 import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.POpen;
+import de.p2tools.p2Lib.guiTools.PTableViewTools;
 import de.p2tools.p2Lib.tools.PSystemUtils;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
@@ -126,21 +127,6 @@ public class DownloadGuiController extends AnchorPane {
         return table.getSelectionModel().getSelectedItems().size();
     }
 
-//    public void update() {
-//        if (progData.loadFilmlist.getPropLoadFilmlist()) {
-//            // wird danach eh gemacht
-//            return;
-//        }
-//
-//        // erledigte entfernen, nicht gestartete Abos entfernen und neu nach Abos suchen
-//        progData.downloadList.searchForAbos();
-//
-//        if (Boolean.parseBoolean(ProgConfig.DOWNLOAD_START_NOW.get())) {
-//            // und wenn gewollt auch gleich starten
-//            downloadStartAgain(true /* alle */, false /* fertige wieder starten */);
-//        }
-//    }
-
     public void playFilm() {
         final Optional<Download> download = getSel();
         if (download.isPresent()) {
@@ -182,7 +168,7 @@ public class DownloadGuiController extends AnchorPane {
         }
     }
 
-    public void openDestDir() {
+    public void openDestinationDir() {
         final Optional<Download> download = getSel();
         if (!download.isPresent()) {
             return;
@@ -245,12 +231,26 @@ public class DownloadGuiController extends AnchorPane {
         }
     }
 
+    public void startDownload(boolean all) {
+        downloadStartAgain(all, true);
+    }
+
     public void startDownload(boolean all, boolean alsoFinished) {
         downloadStartAgain(all, alsoFinished);
     }
 
-    public void startDownload(boolean all) {
-        downloadStartAgain(all, true);
+    public void searchForAbosAndMaybeStart() {
+        if (progData.loadFilmlist.getPropLoadFilmlist()) {
+            // wird danach eh gemacht
+            return;
+        }
+
+        // erledigte entfernen, nicht gestartete Abos entfernen und neu nach Abos suchen
+        progData.downloadList.searchForAbos();
+        if (Boolean.parseBoolean(ProgConfig.DOWNLOAD_START_NOW.get())) {
+            // und wenn gewollt auch gleich starten
+            progData.downloadGuiController.startDownload(true, false);
+        }
     }
 
     public void stopDownload(boolean all) {
@@ -270,7 +270,6 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     public void deleteDownloads() {
-
         int sel = table.getSelectionModel().getSelectedIndex();
         progData.downloadList.delDownloads(getSelList());
         if (sel >= 0) {
@@ -300,12 +299,7 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     public void invertSelection() {
-        for (int i = 0; i < table.getItems().size(); ++i)
-            if (table.getSelectionModel().isSelected(i)) {
-                table.getSelectionModel().clearSelection(i);
-            } else {
-                table.getSelectionModel().select(i);
-            }
+        PTableViewTools.invertSelection(table);
     }
 
     public void saveTable() {
@@ -362,41 +356,30 @@ public class DownloadGuiController extends AnchorPane {
                 }
             }
         });
+
         progData.downloadList.downloadsChangedProperty().addListener((observable, oldValue, newValue) ->
                 Platform.runLater(() -> setFilter()));
+
         Listener.addListener(new Listener(Listener.EREIGNIS_BLACKLIST_GEAENDERT, DownloadGuiController.class.getSimpleName()) {
             @Override
             public void ping() {
                 if (Boolean.parseBoolean(ProgConfig.ABO_SEARCH_NOW.get())
                         && Boolean.parseBoolean(ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.get())) {
                     // nur auf Blacklist reagieren, wenn auch für Abos eingeschaltet
-                    progData.worker.searchForAbosAndMaybeStart();
+                    searchForAbosAndMaybeStart();
                 }
             }
         });
         ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.getBooleanProperty().addListener((observable, oldValue, newValue) -> {
             if (ProgConfig.ABO_SEARCH_NOW.getBool()) {
-                progData.worker.searchForAbosAndMaybeStart();
+                searchForAbosAndMaybeStart();
             }
         });
         progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
             if (ProgConfig.ABO_SEARCH_NOW.getBool()) {
-                progData.worker.searchForAbosAndMaybeStart();
+                searchForAbosAndMaybeStart();
             }
         });
-//        progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
-//            @Override
-//            public void start(ListenerFilmlistLoadEvent event) {
-//
-//            }
-//
-//            @Override
-//            public void finished(ListenerFilmlistLoadEvent event) {
-//                if (ProgConfig.ABO_SEARCH_NOW.getBool()) {
-//                    progData.worker.update();
-//                }
-//            }
-//        });
     }
 
     private void initTable() {
@@ -493,17 +476,16 @@ public class DownloadGuiController extends AnchorPane {
         progData.downloadList.stopDownloads(listStopDownload);
     }
 
+
     private void downloadStartAgain(boolean all, boolean alsoFinished /* auch fertige wieder starten */) {
         // bezieht sich auf "alle" oder nur die markierten Filme
         // der/die noch nicht gestartet sind, werden gestartet
-        // Filme dessen Start schon auf fehler steht wirden wieder gestartet
+        // Filme dessen Start schon auf fehler steht werden wieder gestartet
 
-        final ArrayList<Download> listDownloadsSelected = new ArrayList<>();
+        final ArrayList<Download> startDownloadsList = new ArrayList<>();
+        startDownloadsList.addAll(all ? table.getItems() : getSelList());
 
-        // die URLs sammeln
-        listDownloadsSelected.addAll(all ? table.getItems() : getSelList());
-
-        progData.downloadList.startDownloads(listDownloadsSelected, alsoFinished);
+        progData.downloadList.startDownloads(startDownloadsList, alsoFinished);
     }
 
     private void stopDownloads(boolean all) {

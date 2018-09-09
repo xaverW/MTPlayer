@@ -293,7 +293,7 @@ public class StatusBarController extends AnchorPane {
         int aus = 0;
         final int gesamt = progData.aboList.size();
         for (final Abo abo : progData.aboList) {
-            if (abo.getActive()) {
+            if (abo.isActive()) {
                 ++ein;
             } else {
                 ++aus;

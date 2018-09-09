@@ -174,10 +174,7 @@ public class AboList extends SimpleListProperty<Abo> {
         }
     }
 
-    int i = 0;
-
     public synchronized void notifyChanges() {
-        // Filmliste anpassen
         if (!progData.loadFilmlist.getPropLoadFilmlist()) {
             // wird danach eh gemacht
             setAboForFilm(progData.filmlist);
@@ -189,8 +186,8 @@ public class AboList extends SimpleListProperty<Abo> {
         Collections.sort(this);
     }
 
-    public synchronized ArrayList<String> getPath() {
-        // liefert eine Array mit allen Pfaden
+    public synchronized ArrayList<String> getAboDestinationPathList() {
+        // liefert ein Array mit allen Pfaden
         final ArrayList<String> path = new ArrayList<>();
         for (final Abo abo : this) {
             final String s = abo.getDestination();
@@ -203,7 +200,7 @@ public class AboList extends SimpleListProperty<Abo> {
         return path;
     }
 
-    public synchronized ArrayList<String> generateAboChannelList() {
+    public synchronized ArrayList<String> getAboChannelList() {
         // liefert ein Array mit allen Sendern
         final ArrayList<String> sender = new ArrayList<>();
         sender.add("");
@@ -217,7 +214,7 @@ public class AboList extends SimpleListProperty<Abo> {
         return sender;
     }
 
-    public synchronized ArrayList<String> generateAboNameList() {
+    public synchronized ArrayList<String> getAboNameList() {
         // liefert ein Array mit allen Abonamen
         final ArrayList<String> name = new ArrayList<>();
         name.add("");

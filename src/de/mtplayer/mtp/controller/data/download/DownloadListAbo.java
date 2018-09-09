@@ -24,6 +24,7 @@ import de.mtplayer.mtp.controller.data.abo.Abo;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.gui.dialog.NoSetDialogController;
 import de.mtplayer.mtp.tools.filmListFilter.FilmlistBlackFilter;
+import de.p2tools.p2Lib.tools.PException;
 import de.p2tools.p2Lib.tools.log.PDuration;
 
 import java.util.ArrayList;
@@ -85,7 +86,7 @@ public class DownloadListAbo {
             }
         }
         downloadList.removeAll(remove);
-        downloadList.forEach(d -> d.setPlacedBack(false));
+        downloadList.forEach(d -> d.setPlacedBack(false)); // zurückgestellte wieder aktivieren
         PDuration.counterStop("DownloadListAbo.abosAuffrischen");
     }
 
@@ -99,8 +100,8 @@ public class DownloadListAbo {
         ArrayList<Download> downloadArrayList = new ArrayList<>();
 
         // mit den bereits enthaltenen Download-URLs füllen
-        final HashSet<String> listUrls = new HashSet<>(downloadList.size());
-        downloadList.forEach((download) -> listUrls.add(download.getUrl()));
+        final HashSet<String> downloadsAlreadyInTheListHash = new HashSet<>(downloadList.size());
+        downloadList.forEach((download) -> downloadsAlreadyInTheListHash.add(download.getUrl()));
 
         // prüfen ob in "alle Filme" oder nur "nach Blacklist" gesucht werden soll
         final boolean checkWithBlackList = ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.getBool();
@@ -119,16 +120,14 @@ public class DownloadListAbo {
                 continue;
             }
 
-            if (!abo.getActive()) {
+            if (!abo.isActive()) {
                 // oder es ist ausgeschaltet
                 continue;
             }
 
-            if (checkWithBlackList) {
+            if (checkWithBlackList && !FilmlistBlackFilter.checkBlacklistForDownloads(film)) {
                 // Blacklist auch bei Abos anwenden
-                if (!FilmlistBlackFilter.checkBlacklistForDownloads(film)) {
-                    continue;
-                }
+                continue;
             }
 
             if (progData.erledigteAbos.checkIfExists(film.getUrlHistory())) {
@@ -137,48 +136,33 @@ public class DownloadListAbo {
             }
 
             final SetData setData = progData.setList.getPsetAbo(abo.getPset());
-            if (setData != null) {
-
-                // mit der tatsächlichen URL prüfen, ob die URL schon in der Downloadliste ist
-                final String urlDownload = film.getUrlForResolution(abo.getResolution());
-                if (listUrls.contains(urlDownload)) {
-                    continue;
-                }
-
-                // diesen Film in die Downloadliste eintragen
-                listUrls.add(urlDownload);
-
-                abo.setDate(new MDate());
-
-                // nur den Namen anpassen, falls geändert oder altes Set nicht mehr existiert
-                abo.setPset(setData.getName());
-
-                // dann in die Liste schreiben
-                downloadArrayList.add(new Download(setData, film, DownloadInfos.SRC_ABO, abo, "", "", "" /* Aufloesung */));
-                found = true;
+            if (setData == null) {
+                PException.throwPException(941202365, "searchForAbos: setData == null");
             }
+
+            // mit der tatsächlichen URL prüfen, ob die URL schon in der Downloadliste ist
+            final String urlDownload = film.getUrlForResolution(abo.getResolution());
+            if (downloadsAlreadyInTheListHash.contains(urlDownload)) {
+                continue;
+            }
+
+            // diesen Film in die Downloadliste eintragen
+            downloadsAlreadyInTheListHash.add(urlDownload);
+            abo.setDate(new MDate());
+
+            // nur den Namen anpassen, falls geändert oder altes Set nicht mehr existiert
+            abo.setPset(setData.getName());
+
+            // dann in die Liste schreiben
+            downloadArrayList.add(new Download(setData, film, DownloadInfos.SRC_ABO, abo, "", "", "" /* Aufloesung */));
+            found = true;
         }
         if (found) {
             downloadList.addAll(downloadArrayList);
             downloadList.setNumbersInList();
         }
-        listUrls.clear();
+        downloadsAlreadyInTheListHash.clear();
         PDuration.counterStop("DownloadListAbo.abosSuchen");
     }
 
-//    synchronized ArrayList<String> generateAboNameList(ArrayList<String> nameList) {
-//        final ArrayList<String> ret = new ArrayList<>();
-//        ret.add("");
-//        for (final String name : nameList) {
-//            if (name.isEmpty()) {
-//                continue;
-//            }
-//            final Optional<Download> opt =
-//                    downloadList.stream().filter(d -> d.getAboName().equals(name)).findFirst();
-//            if (!opt.isPresent()) {
-//                ret.add(name);
-//            }
-//        }
-//        return ret;
-//    }
 }

@@ -76,7 +76,7 @@ public class DownloadMenu {
                 new ToolBarButton(vbox, REMOVE_DOWNLOADS_TEXT, REMOVE_DOWNLOADS_TEXT, new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_DEL);
         final ToolBarButton btDownloadClear =
                 new ToolBarButton(vbox, CLEANUP_DL_LIST_TEXT, CLEANUP_DL_LIST_TEXT, new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_CLEAR);
-        btDownloadRefresh.setOnAction(a -> progData.worker.searchForAbosAndMaybeStart());
+        btDownloadRefresh.setOnAction(a -> progData.downloadGuiController.searchForAbosAndMaybeStart());
         btDownloadAll.setOnAction(a -> progData.downloadGuiController.startDownload(true));
         btStartDownloads.setOnAction(a -> progData.downloadGuiController.startDownload(false));
         btDownloadFilm.setOnAction(a -> progData.downloadGuiController.playFilm());
@@ -103,7 +103,7 @@ public class DownloadMenu {
         mbStopWait.setOnAction(a -> progData.downloadGuiController.stopWaitingDownloads());
 
         final MenuItem mbAct = new MenuItem("Liste der Downloads aktualisieren");
-        mbAct.setOnAction(e -> progData.worker.searchForAbosAndMaybeStart());
+        mbAct.setOnAction(e -> progData.downloadGuiController.searchForAbosAndMaybeStart());
 
         final MenuItem mbClean = new MenuItem("Liste der Downloads aufräumen");
         mbClean.setOnAction(e -> progData.downloadGuiController.cleanUp());

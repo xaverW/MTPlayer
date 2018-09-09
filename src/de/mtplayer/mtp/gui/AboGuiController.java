@@ -21,6 +21,7 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.abo.Abo;
 import de.mtplayer.mtp.gui.tools.Table;
 import de.p2tools.p2Lib.dialog.PAlert;
+import de.p2tools.p2Lib.guiTools.PTableViewTools;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -88,12 +89,7 @@ public class AboGuiController extends AnchorPane {
     }
 
     public void invertSelection() {
-        for (int i = 0; i < table.getItems().size(); ++i)
-            if (table.getSelectionModel().isSelected(i)) {
-                table.getSelectionModel().clearSelection(i);
-            } else {
-                table.getSelectionModel().select(i);
-            }
+        PTableViewTools.invertSelection(table);
     }
 
 
@@ -145,7 +141,7 @@ public class AboGuiController extends AnchorPane {
 
     private void getMenu(ContextMenu contextMenu) {
         Abo abo = table.getSelectionModel().getSelectedItem();
-        if (abo != null && abo.getActive()) {
+        if (abo != null && abo.isActive()) {
             final MenuItem mbOff = new MenuItem("ausschalten");
             mbOff.setOnAction(e -> einAus(false));
             contextMenu.getItems().add(mbOff);

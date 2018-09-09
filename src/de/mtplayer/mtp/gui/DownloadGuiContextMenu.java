@@ -71,7 +71,7 @@ public class DownloadGuiContextMenu {
         miStopWaiting.setOnAction(a -> downloadGuiController.stopWaitingDownloads());
 
         MenuItem miUpdate = new MenuItem("Liste der Downloads aktualisieren");
-        miUpdate.setOnAction(e -> progData.worker.searchForAbosAndMaybeStart());
+        miUpdate.setOnAction(e -> progData.downloadGuiController.searchForAbosAndMaybeStart());
 
         MenuItem miCleanUp = new MenuItem("Liste der Downloads aufräumen");
         miCleanUp.setOnAction(e -> downloadGuiController.cleanUp());
@@ -83,7 +83,7 @@ public class DownloadGuiContextMenu {
         miDeleteDownload.setOnAction(a -> downloadGuiController.deleteFilmFile());
 
         MenuItem miOpenDir = new MenuItem("Zielordner öffnen");
-        miOpenDir.setOnAction(e -> downloadGuiController.openDestDir());
+        miOpenDir.setOnAction(e -> downloadGuiController.openDestinationDir());
 
         // Abo
         Menu submenuAbo = new Menu("Abo");

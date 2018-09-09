@@ -371,5 +371,4 @@ public class Table {
         confUpDown.setValue("");
         confOrder.setValue("");
     }
-
 }

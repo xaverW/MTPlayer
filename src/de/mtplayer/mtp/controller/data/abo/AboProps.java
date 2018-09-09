@@ -65,7 +65,7 @@ public class AboProps extends AboXml {
         this.nr.set(nr);
     }
 
-    public boolean getActive() {
+    public boolean isActive() {
         return active.get();
     }
 
@@ -281,7 +281,7 @@ public class AboProps extends AboXml {
 
     public void setXmlFromProps() {
         arr[ABO_NR] = getNr() + "";
-        arr[ABO_ON] = String.valueOf(getActive());
+        arr[ABO_ON] = String.valueOf(isActive());
         arr[ABO_RESOLUTION] = getResolution();
         arr[ABO_NAME] = getName();
         arr[ABO_CHANNEL] = getChannel();

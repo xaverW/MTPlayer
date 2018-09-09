@@ -352,7 +352,7 @@ public class AboEditDialogController extends PDialogExtra {
                 break;
 
             case AboXml.ABO_DEST_PATH:
-                ArrayList<String> path = progData.aboList.getPath();
+                ArrayList<String> path = progData.aboList.getAboDestinationPathList();
                 if (!path.contains(aboCopy.getDestination())) {
                     path.add(0, aboCopy.getDestination());
                 }

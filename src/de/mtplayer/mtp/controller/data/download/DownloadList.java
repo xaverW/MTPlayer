@@ -188,17 +188,12 @@ public class DownloadList extends SimpleListProperty<Download> {
 
     // =========================
     // Abos
-    int count = 0;
-
     public synchronized void searchForAbos() {
-        ++count;
-        PDuration.onlyPing("===>searchForAbos in " + count);
         progData.mtPlayerController.setMasker();
 
         final int count = getSize();
 //        Thread th = new Thread(() -> {
         downloadListAbo.refreshAbos();
-        PDuration.onlyPing("===>searchForAbos out1 " + count);
         downloadListAbo.searchForAbos();
         if (getSize() == count) {
             // dann wurden evtl. nur zurückgestellte Downloads wieder aktiviert
@@ -208,12 +203,8 @@ public class DownloadList extends SimpleListProperty<Download> {
 //        });
 //        th.setName("abosSuchen");
 //        th.start();
-        PDuration.onlyPing("===>searchForAbos out2 " + count);
     }
 
-//    public synchronized ArrayList<String> generateAboNameList(ArrayList<String> nameList) {
-//        return downloadListAbo.generateAboNameList(nameList);
-//    }
 
     // =========================
     // Starts
