@@ -54,7 +54,7 @@ public class DownloadList extends SimpleListProperty<Download> {
         return downloadsChanged.get();
     }
 
-    public void setDownloadsChanged() {
+    synchronized void setDownloadsChanged() {
         downloadsChanged.set(!downloadsChanged.get());
     }
 
@@ -129,7 +129,7 @@ public class DownloadList extends SimpleListProperty<Download> {
     }
 
 
-    public synchronized void prefereDownloads(ArrayList<Download> download) {
+    public synchronized void preferDownloads(ArrayList<Download> download) {
         renumberList(1 + download.size());
         int i = 1;
         for (final Download dataDownload : download) {
@@ -188,21 +188,27 @@ public class DownloadList extends SimpleListProperty<Download> {
 
     // =========================
     // Abos
+    int count = 0;
+
     public synchronized void searchForAbos() {
+        ++count;
+        PDuration.onlyPing("===>searchForAbos in " + count);
         progData.mtPlayerController.setMasker();
 
         final int count = getSize();
-        Thread th = new Thread(() -> {
-            downloadListAbo.refreshAbos();
-            downloadListAbo.searchForAbos();
-            if (getSize() == count) {
-                // dann wurden evtl. nur zurückgestellte Downloads wieder aktiviert
-                setDownloadsChanged();
-            }
-            progData.mtPlayerController.resetMasker();
-        });
-        th.setName("abosSuchen");
-        th.start();
+//        Thread th = new Thread(() -> {
+        downloadListAbo.refreshAbos();
+        PDuration.onlyPing("===>searchForAbos out1 " + count);
+        downloadListAbo.searchForAbos();
+        if (getSize() == count) {
+            // dann wurden evtl. nur zurückgestellte Downloads wieder aktiviert
+            setDownloadsChanged();
+        }
+        progData.mtPlayerController.resetMasker();
+//        });
+//        th.setName("abosSuchen");
+//        th.start();
+        PDuration.onlyPing("===>searchForAbos out2 " + count);
     }
 
     public synchronized ArrayList<String> generateAboNameList(ArrayList<String> nameList) {

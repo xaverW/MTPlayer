@@ -128,7 +128,10 @@ public class DownloadGuiController extends AnchorPane {
         return table.getSelectionModel().getSelectedItems().size();
     }
 
+    int count = 0;
+
     public void update() {
+        ++count;
         if (progData.loadFilmlist.getPropLoadFilmlist()) {
             // wird danach eh gemacht
             return;
@@ -260,7 +263,7 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     public void preferDownload() {
-        progData.downloadList.prefereDownloads(getSelList());
+        progData.downloadList.preferDownloads(getSelList());
     }
 
     public void moveDownloadBack() {

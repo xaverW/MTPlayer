@@ -162,7 +162,30 @@ public class TableDownload {
                             getChildren().get(i).setStyle("");
                         }
                     }
+
+
+                    int item = download.getState();
+                    switch (item) {
+                        case DownloadInfos.STATE_INIT:
+                        case DownloadInfos.STATE_STOPPED:
+                            setStyle("");
+                            break;
+                        case DownloadInfos.STATE_STARTED_WAITING:
+                            setStyle(MTColor.DOWNLOAD_WAIT.getCssBackground());
+                            break;
+                        case DownloadInfos.STATE_STARTED_RUN:
+                            setStyle(MTColor.DOWNLOAD_RUN.getCssBackground());
+                            break;
+                        case DownloadInfos.STATE_FINISHED:
+                            setStyle(MTColor.DOWNLOAD_FINISHED.getCssBackground());
+                            break;
+                        case DownloadInfos.STATE_ERROR:
+                            setStyle(MTColor.DOWNLOAD_ERROR.getCssBackground());
+                            break;
+                    }
+
                 }
+
             }
         });
 

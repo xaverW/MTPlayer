@@ -38,7 +38,7 @@ public class DownloadListAbo {
         this.downloadList = downloadList;
     }
 
-    public synchronized void refreshAbos() {
+    synchronized void refreshAbos() {
         // fehlerhafte und nicht gestartete löschen, wird nicht gemeldet ob was gefunden wurde
         PDuration.counterStart("DownloadListAbo.abosAuffrischen");
         List<Download> remove = new ArrayList<>();
@@ -163,7 +163,7 @@ public class DownloadListAbo {
         PDuration.counterStop("DownloadListAbo.abosSuchen");
     }
 
-    public synchronized ArrayList<String> generateAboNameList(ArrayList<String> nameList) {
+    synchronized ArrayList<String> generateAboNameList(ArrayList<String> nameList) {
         final ArrayList<String> ret = new ArrayList<>();
         ret.add("");
         for (final String name : nameList) {
