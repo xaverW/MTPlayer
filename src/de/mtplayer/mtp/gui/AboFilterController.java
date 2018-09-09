@@ -47,7 +47,7 @@ public class AboFilterController extends FilterController {
         vBoxFilter.getChildren().add(hBox);
 
         cboChannel.valueProperty().bindBidirectional(ProgConfig.FILTER_ABO_SENDER.getStringProperty());
-        cboChannel.setItems(progData.nameLists.getObsChannelsForAbos());
+        cboChannel.setItems(progData.worker.getChannelsForAbosList());
         cboChannel.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue != null && newValue != null) {
                 // wenn Änderung beim Sender -> Themen anpassen

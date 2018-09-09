@@ -211,9 +211,9 @@ public class DownloadList extends SimpleListProperty<Download> {
         PDuration.onlyPing("===>searchForAbos out2 " + count);
     }
 
-    public synchronized ArrayList<String> generateAboNameList(ArrayList<String> nameList) {
-        return downloadListAbo.generateAboNameList(nameList);
-    }
+//    public synchronized ArrayList<String> generateAboNameList(ArrayList<String> nameList) {
+//        return downloadListAbo.generateAboNameList(nameList);
+//    }
 
     // =========================
     // Starts

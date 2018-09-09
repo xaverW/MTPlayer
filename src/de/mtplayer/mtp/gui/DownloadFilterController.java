@@ -183,10 +183,10 @@ public class DownloadFilterController extends FilterController {
                 DownloadInfos.STATE_COMBO_LOADING);
         cboState.valueProperty().bindBidirectional(ProgConfig.FILTER_DOWNLOAD_STATE.getStringProperty());
 
-        cboChannel.setItems(progData.nameLists.getObsAllChannel());
+        cboChannel.setItems(progData.worker.getAllChannelList());
         cboChannel.valueProperty().bindBidirectional(ProgConfig.FILTER_DOWNLOAD_SENDER.getStringProperty());
 
-        cboAbo.setItems(progData.nameLists.getObsAllAboNames()); // todo evtl. nur die vorhandenen Abos
+        cboAbo.setItems(progData.worker.getAllAboNamesList()); // todo evtl. nur die vorhandenen Abos
         cboAbo.valueProperty().bindBidirectional(ProgConfig.FILTER_DOWNLOAD_ABO.getStringProperty());
     }
 
@@ -198,7 +198,7 @@ public class DownloadFilterController extends FilterController {
 
     private void initBandwidth() {
         sliderBandwidth.setMin(50);
-        sliderBandwidth.setMax(1_000);
+        sliderBandwidth.setMax(MLBandwidthTokenBucket.BANDWIDTH_MAX_KBYTE);
         sliderBandwidth.setShowTickLabels(true);
         sliderBandwidth.setMinorTickCount(9);
         sliderBandwidth.setMajorTickUnit(250);

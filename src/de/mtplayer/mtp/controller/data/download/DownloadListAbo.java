@@ -26,7 +26,10 @@ import de.mtplayer.mtp.gui.dialog.NoSetDialogController;
 import de.mtplayer.mtp.tools.filmListFilter.FilmlistBlackFilter;
 import de.p2tools.p2Lib.tools.log.PDuration;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 
 public class DownloadListAbo {
 
@@ -163,19 +166,19 @@ public class DownloadListAbo {
         PDuration.counterStop("DownloadListAbo.abosSuchen");
     }
 
-    synchronized ArrayList<String> generateAboNameList(ArrayList<String> nameList) {
-        final ArrayList<String> ret = new ArrayList<>();
-        ret.add("");
-        for (final String name : nameList) {
-            if (name.isEmpty()) {
-                continue;
-            }
-            final Optional<Download> opt =
-                    downloadList.parallelStream().filter(d -> d.getAboName().equals(name)).findFirst();
-            if (!opt.isPresent()) {
-                ret.add(name);
-            }
-        }
-        return ret;
-    }
+//    synchronized ArrayList<String> generateAboNameList(ArrayList<String> nameList) {
+//        final ArrayList<String> ret = new ArrayList<>();
+//        ret.add("");
+//        for (final String name : nameList) {
+//            if (name.isEmpty()) {
+//                continue;
+//            }
+//            final Optional<Download> opt =
+//                    downloadList.stream().filter(d -> d.getAboName().equals(name)).findFirst();
+//            if (!opt.isPresent()) {
+//                ret.add(name);
+//            }
+//        }
+//        return ret;
+//    }
 }

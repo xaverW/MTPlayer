@@ -204,7 +204,7 @@ public class AboList extends SimpleListProperty<Abo> {
     }
 
     public synchronized ArrayList<String> generateAboChannelList() {
-        // liefert eine Array mit allen Sendern
+        // liefert ein Array mit allen Sendern
         final ArrayList<String> sender = new ArrayList<>();
         sender.add("");
         for (final Abo abo : this) {
@@ -218,7 +218,7 @@ public class AboList extends SimpleListProperty<Abo> {
     }
 
     public synchronized ArrayList<String> generateAboNameList() {
-        // liefert eine Array mit allen Abonamen
+        // liefert ein Array mit allen Abonamen
         final ArrayList<String> name = new ArrayList<>();
         name.add("");
         for (final Abo abo : this) {

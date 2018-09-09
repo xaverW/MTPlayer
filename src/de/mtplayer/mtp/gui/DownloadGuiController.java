@@ -23,8 +23,6 @@ import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadInfos;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmTools;
-import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
-import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.mtplayer.mtp.gui.dialog.DownloadEditDialogController;
 import de.mtplayer.mtp.gui.mediaDialog.MediaDialogController;
 import de.mtplayer.mtp.gui.tools.Listener;
@@ -128,23 +126,20 @@ public class DownloadGuiController extends AnchorPane {
         return table.getSelectionModel().getSelectedItems().size();
     }
 
-    int count = 0;
-
-    public void update() {
-        ++count;
-        if (progData.loadFilmlist.getPropLoadFilmlist()) {
-            // wird danach eh gemacht
-            return;
-        }
-
-        // erledigte entfernen, nicht gestartete Abos entfernen und neu nach Abos suchen
-        progData.downloadList.searchForAbos();
-
-        if (Boolean.parseBoolean(ProgConfig.DOWNLOAD_START_NOW.get())) {
-            // und wenn gewollt auch gleich starten
-            downloadStartAgain(true /* alle */, false /* fertige wieder starten */);
-        }
-    }
+//    public void update() {
+//        if (progData.loadFilmlist.getPropLoadFilmlist()) {
+//            // wird danach eh gemacht
+//            return;
+//        }
+//
+//        // erledigte entfernen, nicht gestartete Abos entfernen und neu nach Abos suchen
+//        progData.downloadList.searchForAbos();
+//
+//        if (Boolean.parseBoolean(ProgConfig.DOWNLOAD_START_NOW.get())) {
+//            // und wenn gewollt auch gleich starten
+//            downloadStartAgain(true /* alle */, false /* fertige wieder starten */);
+//        }
+//    }
 
     public void playFilm() {
         final Optional<Download> download = getSel();
@@ -250,8 +245,12 @@ public class DownloadGuiController extends AnchorPane {
         }
     }
 
+    public void startDownload(boolean all, boolean alsoFinished) {
+        downloadStartAgain(all, alsoFinished);
+    }
+
     public void startDownload(boolean all) {
-        downloadStartAgain(all, true /* auch fertige */);
+        downloadStartAgain(all, true);
     }
 
     public void stopDownload(boolean all) {
@@ -371,33 +370,33 @@ public class DownloadGuiController extends AnchorPane {
                 if (Boolean.parseBoolean(ProgConfig.ABO_SEARCH_NOW.get())
                         && Boolean.parseBoolean(ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.get())) {
                     // nur auf Blacklist reagieren, wenn auch für Abos eingeschaltet
-                    update();
+                    progData.worker.searchForAbosAndMaybeStart();
                 }
             }
         });
         ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.getBooleanProperty().addListener((observable, oldValue, newValue) -> {
             if (ProgConfig.ABO_SEARCH_NOW.getBool()) {
-                update();
+                progData.worker.searchForAbosAndMaybeStart();
             }
         });
         progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
             if (ProgConfig.ABO_SEARCH_NOW.getBool()) {
-                update();
+                progData.worker.searchForAbosAndMaybeStart();
             }
         });
-        progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
-            @Override
-            public void start(ListenerFilmlistLoadEvent event) {
-
-            }
-
-            @Override
-            public void finished(ListenerFilmlistLoadEvent event) {
-                if (ProgConfig.ABO_SEARCH_NOW.getBool()) {
-                    update();
-                }
-            }
-        });
+//        progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
+//            @Override
+//            public void start(ListenerFilmlistLoadEvent event) {
+//
+//            }
+//
+//            @Override
+//            public void finished(ListenerFilmlistLoadEvent event) {
+//                if (ProgConfig.ABO_SEARCH_NOW.getBool()) {
+//                    progData.worker.update();
+//                }
+//            }
+//        });
     }
 
     private void initTable() {

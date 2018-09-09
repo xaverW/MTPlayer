@@ -71,7 +71,7 @@ public class DownloadGuiContextMenu {
         miStopWaiting.setOnAction(a -> downloadGuiController.stopWaitingDownloads());
 
         MenuItem miUpdate = new MenuItem("Liste der Downloads aktualisieren");
-        miUpdate.setOnAction(e -> downloadGuiController.update());
+        miUpdate.setOnAction(e -> progData.worker.searchForAbosAndMaybeStart());
 
         MenuItem miCleanUp = new MenuItem("Liste der Downloads aufräumen");
         miCleanUp.setOnAction(e -> downloadGuiController.cleanUp());

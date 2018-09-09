@@ -26,6 +26,7 @@ import de.mtplayer.mtp.controller.filmlist.LoadFilmlist;
 import de.mtplayer.mtp.controller.mediaDb.MediaCollectionDataList;
 import de.mtplayer.mtp.controller.mediaDb.MediaDataList;
 import de.mtplayer.mtp.controller.starter.StarterClass;
+import de.mtplayer.mtp.controller.worker.Worker;
 import de.mtplayer.mtp.gui.AboGuiController;
 import de.mtplayer.mtp.gui.DownloadGuiController;
 import de.mtplayer.mtp.gui.FilmGuiController;
@@ -49,7 +50,6 @@ public class ProgData {
 
     // Infos
     public static String configDir = ""; // Verzeichnis zum Speichern der Programmeinstellungen
-    public NameLists nameLists = null; // Liste aller Sender, Themen, ...
 
     // zentrale Klassen
     public StarterClass starterClass = null; // Klasse zum Ausführen der Programme (für die Downloads): VLC, flvstreamer, ...
@@ -64,12 +64,15 @@ public class ProgData {
     public FilmGuiController filmGuiController = null; // Tab mit den Filmen
     public DownloadGuiController downloadGuiController = null; // Tab mit den Downloads
     public AboGuiController aboGuiController = null; // Tab mit den Abos
-
     public FilmInfoDialogController filmInfoDialogController = null;
+
+    // Worker
+    public Worker worker = null; // Liste aller Sender, Themen, ...
 
     // Programmdaten
     public Filmlist filmlist = null; // ist die komplette Filmliste
     public Filmlist filmlistFiltered = null; // Filmliste, wie im TabFilme angezeigt
+
     public DownloadList downloadList = null; // Filme die als "Download" geladen werden sollen
     public DownloadList downloadListButton = null; // Filme die über "Tab Filme" als Button/Film abspielen gestartet werden
     public AboList aboList = null;
@@ -110,7 +113,7 @@ public class ProgData {
 
         starterClass = new StarterClass(this);
 
-        nameLists = new NameLists(this);
+        worker = new Worker(this);
 
 
         Timeline timeline = new Timeline(new KeyFrame(

@@ -236,9 +236,9 @@ public class FilmFilterController extends FilterController {
             if (oldValue != null && newValue != null) {
                 // wenn Änderung beim Sender -> Themen anpassen
                 if (newValue.isEmpty()) {
-                    progData.nameLists.getTheme("");
+                    progData.worker.getTheme("");
                 } else {
-                    progData.nameLists.getTheme(newValue);
+                    progData.worker.getTheme(newValue);
                 }
             }
         });
@@ -246,9 +246,9 @@ public class FilmFilterController extends FilterController {
             if (oldValue != null && newValue != null) {
                 // wenn Änderung beim Sender -> Themen anpassen
                 if (newValue.isEmpty()) {
-                    progData.nameLists.getTheme("");
+                    progData.worker.getTheme("");
                 } else {
-                    progData.nameLists.getTheme(newValue);
+                    progData.worker.getTheme(newValue);
                 }
                 progData.storedFilter.getSelectedFilter().setChannel(newValue);
             }
@@ -266,8 +266,8 @@ public class FilmFilterController extends FilterController {
         });
 
 
-        cboChannel.setItems(progData.nameLists.getObsAllChannel());
-        cbxTheme.setItems(progData.nameLists.getObsThemeForSelChannel());
+        cboChannel.setItems(progData.worker.getAllChannelList());
+        cbxTheme.setItems(progData.worker.getThemeForChannelList());
 
         txtThemeTitle.textProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().themeTitleProperty());
         txtTitle.textProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().titleProperty());

@@ -201,7 +201,7 @@ public class BlackPane {
         gridPane.setPadding(new Insets(20));
 
         cboChannel.setEditable(true);
-        cboChannel.setItems(ProgData.getInstance().nameLists.getObsAllChannel());
+        cboChannel.setItems(ProgData.getInstance().worker.getAllChannelList());
 
         int row = 0;
         gridPane.add(new Label("Sender:"), 0, row);

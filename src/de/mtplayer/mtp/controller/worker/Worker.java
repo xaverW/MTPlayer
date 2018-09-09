@@ -14,8 +14,9 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.mtplayer.mtp.controller.data;
+package de.mtplayer.mtp.controller.worker;
 
+import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
@@ -26,20 +27,17 @@ import javafx.collections.ObservableList;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class NameLists {
+public class Worker {
 
-    private ObservableList<String> obsAllChannel = FXCollections.observableArrayList("");
-    private ObservableList<String> obsThemeForSelChannel = FXCollections.observableArrayList("");
-
-    private ObservableList<String> obsChannelsForAbos = FXCollections.observableArrayList("");
-    private ObservableList<String> obsAllAboNames = FXCollections.observableArrayList("");
-
-    private ObservableList<String> obsAboNamesForDownloads = FXCollections.observableArrayList("");
+    private ObservableList<String> allChannelList = FXCollections.observableArrayList("");
+    private ObservableList<String> themeForChannelList = FXCollections.observableArrayList("");
+    private ObservableList<String> channelsForAbosList = FXCollections.observableArrayList("");
+    private ObservableList<String> allAboNamesList = FXCollections.observableArrayList("");
+//    private ObservableList<String> aboNamesForDownloadsList = FXCollections.observableArrayList("");
 
     private final ProgData progData;
-    private ArrayList<String> list;
 
-    public NameLists(ProgData progData) {
+    public Worker(ProgData progData) {
         this.progData = progData;
         progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
             @Override
@@ -48,8 +46,10 @@ public class NameLists {
 
             @Override
             public void finished(ListenerFilmlistLoadEvent event) {
-                getAllChannel();
-                getTheme("");
+                getChannelAndTheme();
+                if (ProgConfig.ABO_SEARCH_NOW.getBool()) {
+                    searchForAbosAndMaybeStart();
+                }
             }
         });
 
@@ -64,20 +64,35 @@ public class NameLists {
                 getAboNames());
     }
 
-    private void getAllChannel() {
-        Platform.runLater(() -> obsAllChannel.setAll(Arrays.asList(progData.filmlist.sender)));
+    private void getChannelAndTheme() {
+        Platform.runLater(() -> allChannelList.setAll(Arrays.asList(progData.filmlist.sender)));
+        getTheme("");
+    }
+
+    public void searchForAbosAndMaybeStart() {
+        if (progData.loadFilmlist.getPropLoadFilmlist()) {
+            // wird danach eh gemacht
+            return;
+        }
+
+        // erledigte entfernen, nicht gestartete Abos entfernen und neu nach Abos suchen
+        progData.downloadList.searchForAbos();
+        if (Boolean.parseBoolean(ProgConfig.DOWNLOAD_START_NOW.get())) {
+            // und wenn gewollt auch gleich starten
+            progData.downloadGuiController.startDownload(true, false);
+        }
     }
 
 
     private void getAboNames() {
-        final ArrayList<String> listAbo = progData.aboList.generateAboChannelList();
+        final ArrayList<String> listAboChannel = progData.aboList.generateAboChannelList();
         final ArrayList<String> listAboName = progData.aboList.generateAboNameList();
-        final ArrayList<String> listDownAboName = progData.downloadList.generateAboNameList(listAboName);
+//        final ArrayList<String> listDownAboName = progData.downloadList.generateAboNameList(listAboName);
 
         Platform.runLater(() -> {
-            obsChannelsForAbos.setAll(listAbo);
-            obsAllAboNames.setAll(listAboName);
-            obsAboNamesForDownloads.setAll(listDownAboName);
+            channelsForAbosList.setAll(listAboChannel);
+            allAboNamesList.setAll(listAboName);
+//            aboNamesForDownloadsList.setAll(listDownAboName);
         });
 
 //        list = progData.aboList.generateAboChannelList();
@@ -103,23 +118,23 @@ public class NameLists {
             }
         }
 
-        Platform.runLater(() -> obsThemeForSelChannel.setAll(theme));
+        Platform.runLater(() -> themeForChannelList.setAll(theme));
     }
 
-    public ObservableList<String> getObsAllChannel() {
-        return obsAllChannel;
+    public ObservableList<String> getAllChannelList() {
+        return allChannelList;
     }
 
-    public ObservableList<String> getObsThemeForSelChannel() {
-        return obsThemeForSelChannel;
+    public ObservableList<String> getThemeForChannelList() {
+        return themeForChannelList;
     }
 
-    public ObservableList<String> getObsChannelsForAbos() {
-        return obsChannelsForAbos;
+    public ObservableList<String> getChannelsForAbosList() {
+        return channelsForAbosList;
     }
 
-    public ObservableList<String> getObsAllAboNames() {
-        return obsAllAboNames;
+    public ObservableList<String> getAllAboNamesList() {
+        return allAboNamesList;
     }
 
 }

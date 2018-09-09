@@ -344,7 +344,7 @@ public class AboEditDialogController extends PDialogExtra {
                 break;
 
             case AboXml.ABO_CHANNEL:
-                cboChannel.setItems(progData.nameLists.getObsAllChannel());
+                cboChannel.setItems(progData.worker.getAllChannelList());
                 cboChannel.setEditable(true);
                 cboChannel.valueProperty().bindBidirectional(aboCopy.channelProperty());
                 cboChannel.valueProperty().addListener((observable, oldValue, newValue) -> cbxForAll[i].setSelected(true));
