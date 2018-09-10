@@ -18,11 +18,11 @@ package de.mtplayer.mtp.gui.startDialog;
 
 import de.p2tools.p2Lib.PConst;
 import javafx.geometry.Insets;
+import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class StartPane {
@@ -42,24 +42,26 @@ public class StartPane {
 
         ImageView iv = new ImageView();
         Image im = getHelpScreen1();
-
         iv.setSmooth(true);
-        iv.setCache(true);
-
+//        iv.setCache(true);
         iv.setImage(im);
 
         hBox.getChildren().addAll(iv);
-        Text text = new Text("1 -> Hier kann die Filmliste" + PConst.LINE_SEPARATOR +
+        Label text = new Label("1 -> Hier kann die Filmliste" + PConst.LINE_SEPARATOR +
                 "aktualisiert werden." +
                 PConst.LINE_SEPARATORx2 +
                 "2 -> Hier kann man die" + PConst.LINE_SEPARATOR +
                 "Ansicht zwischen Filmen, Downloads" + PConst.LINE_SEPARATOR +
-                "und angelegten Abos umschalten" +
+                "und angelegten Abos umschalten." +
                 PConst.LINE_SEPARATORx2 +
                 "3 -> Hier befinden sich" + PConst.LINE_SEPARATOR +
                 "die Programmeinstellungen." +
                 PConst.LINE_SEPARATORx2 +
-                "4 -> Damit kann man Filme ansehen" + PConst.LINE_SEPARATOR +
+                "4 -> Mit dem Pluszeichen können" + PConst.LINE_SEPARATOR +
+                "Spalten in der Tabelle" + PConst.LINE_SEPARATOR +
+                "ein- und ausgeblendet werden." +
+                PConst.LINE_SEPARATORx2 +
+                "5 -> Damit kann man Filme ansehen" + PConst.LINE_SEPARATOR +
                 "und speichern.");
         hBox.getChildren().add(text);
 
@@ -76,40 +78,40 @@ public class StartPane {
 
         ImageView iv = new ImageView();
         Image im = getHelpScreen2();
-
         iv.setSmooth(true);
-        iv.setCache(true);
-
+//        iv.setCache(true);
         iv.setImage(im);
 
         hBox.getChildren().addAll(iv);
-        Text text = new Text("1 -> Damit kann ein (darunter)" + PConst.LINE_SEPARATOR +
-                "ausgewähltes Filterprofil wieder" + PConst.LINE_SEPARATOR +
-                "eingestellt werden." +
+
+        Label text = new Label("1 -> In dem Bereich sind" + PConst.LINE_SEPARATOR +
+                "die Filter angeordnet." +
                 PConst.LINE_SEPARATORx2 +
-                "2 -> Damit werden die oben eingestellten" + PConst.LINE_SEPARATOR +
+                "2 -> Hier können die oben angezeigten" + PConst.LINE_SEPARATOR +
+                "Filter ein- und ausgeblendet werden." +
+                PConst.LINE_SEPARATORx2 +
+                "3 -> Damit werden die oben eingestellten" + PConst.LINE_SEPARATOR +
                 "Filter in dem darunter ausgewählten" + PConst.LINE_SEPARATOR +
-                "Filterprofil gespeichert." +
+                "Filterprofil gespeichert oder wieder" + PConst.LINE_SEPARATOR +
+                "hergestellt (oder ein neues Profil" + PConst.LINE_SEPARATOR +
+                "kann damit angelegt werden)." +
                 PConst.LINE_SEPARATORx2 +
-                "3 -> Damit können die eingestellten" + PConst.LINE_SEPARATOR +
-                "Filter als neues Profil gespeichert werden." +
-                PConst.LINE_SEPARATORx2 +
-                "4 -> Hier können die angezeigten" + PConst.LINE_SEPARATOR +
-                "Filter ein- und ausgeblendet werden.");
+                "4 -> Hier können die gespeicherten" + PConst.LINE_SEPARATOR +
+                "Filterprofile verwaltet werden.");
         hBox.getChildren().add(text);
 
         return tpConfig;
     }
 
     private javafx.scene.image.Image getHelpScreen1() {
-        final String path = "/de/mtplayer/mtp/res/prog-help-1.png";
+        final String path = "/de/mtplayer/mtp/res/mtplayer-startpage-1.jpg";
         return new javafx.scene.image.Image(path, 600,
                 600,
                 true, true);
     }
 
     private javafx.scene.image.Image getHelpScreen2() {
-        final String path = "/de/mtplayer/mtp/res/prog-help-2.png";
+        final String path = "/de/mtplayer/mtp/res/mtplayer-startpage-2.jpg";
         return new javafx.scene.image.Image(path, 600,
                 600,
                 true, true);

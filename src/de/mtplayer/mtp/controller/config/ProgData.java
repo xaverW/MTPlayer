@@ -34,6 +34,7 @@ import de.mtplayer.mtp.gui.dialog.FilmInfoDialogController;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.tools.filmListFilter.FilmListFilter;
 import de.mtplayer.mtp.tools.storedFilter.StoredFilter;
+import de.p2tools.p2Lib.tools.log.PDuration;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -116,14 +117,23 @@ public class ProgData {
         worker = new Worker(this);
 
 
+    }
+
+    public void startTimer() {
+        // extra starten, damit er im Einrichtungsdialog nicht dazwischen funkt
         Timeline timeline = new Timeline(new KeyFrame(
                 Duration.millis(1000), ae -> {
-            downloadList.makeDownloadInfo();
-            Listener.notify(Listener.EREIGNIS_TIMER, ProgData.class.getName());
+            doTimerWork();
         }));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.setDelay(Duration.seconds(5));
         timeline.play();
+        PDuration.onlyPing("Timer gestartet");
+    }
+
+    private void doTimerWork() {
+        downloadList.makeDownloadInfo();
+        Listener.notify(Listener.EREIGNIS_TIMER, ProgData.class.getName());
     }
 
     public synchronized static final ProgData getInstance(String dir) {
