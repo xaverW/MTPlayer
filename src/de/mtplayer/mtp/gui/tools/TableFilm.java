@@ -50,45 +50,64 @@ public class TableFilm {
 
         final TableColumn<Film, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("nr"));
+        nrColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Film, String> senderColumn = new TableColumn<>("Sender");
         senderColumn.setCellValueFactory(new PropertyValueFactory<>("channel"));
+        senderColumn.getStyleClass().add("alignCenterLeft");
+
         final TableColumn<Film, String> themeColumn = new TableColumn<>("Thema");
         themeColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
+        themeColumn.getStyleClass().add("alignCenterLeft");
+
         final TableColumn<Film, String> titleColumn = new TableColumn<>("Titel");
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        titleColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Film, String> startColumn = new TableColumn<>("");
         startColumn.setCellFactory(cellFactoryStart);
-        startColumn.getStyleClass().add("center");
+        startColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<Film, MDate> datumColumn = new TableColumn<>("Datum");
         datumColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        datumColumn.getStyleClass().add("alignCenter");
+
         final TableColumn<Film, String> timeColumn = new TableColumn<>("Zeit");
         timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
+        timeColumn.getStyleClass().add("alignCenter");
+
         final TableColumn<Film, Integer> durationColumn = new TableColumn<>("Dauer");
         durationColumn.setCellValueFactory(new PropertyValueFactory<>("duration"));
+        durationColumn.getStyleClass().add("alignCenter");
+
         final TableColumn<Film, FilmSize> sizeColumn = new TableColumn<>("Größe [MB]");
         sizeColumn.setCellValueFactory(new PropertyValueFactory<>("filmSize"));
+        sizeColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Film, Boolean> hdColumn = new TableColumn<>("HD");
         hdColumn.setCellValueFactory(new PropertyValueFactory<>("hd"));
         hdColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
+        hdColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<Film, Boolean> utColumn = new TableColumn<>("UT");
         utColumn.setCellValueFactory(new PropertyValueFactory<>("ut"));
         utColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
+        utColumn.getStyleClass().add("alignCenter");
 
 //        final TableColumn<Film, String> descriptionColumn = new TableColumn<>("Beschreibung");
 //        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
 
         final TableColumn<Film, String> geoColumn = new TableColumn<>("Geo");
         geoColumn.setCellValueFactory(new PropertyValueFactory<>("geo"));
+        geoColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<Film, String> urlColumn = new TableColumn<>("URL");
         urlColumn.setCellValueFactory(new PropertyValueFactory<>("url"));
+        urlColumn.getStyleClass().add("alignCenterLeft");
+
         final TableColumn<Film, String> aboColumn = new TableColumn<>("Abo");
         aboColumn.setCellValueFactory(new PropertyValueFactory<>("aboName"));
+        aboColumn.getStyleClass().add("alignCenterLeft");
 
 //        final TableColumn<Film, Boolean> newColumn = new TableColumn<>("Neu");
 //        newColumn.setCellValueFactory(new PropertyValueFactory<>("newFilm"));
@@ -101,10 +120,12 @@ public class TableFilm {
         final TableColumn<Film, Boolean> doubleColumn = new TableColumn<>("Doppelt");
         doubleColumn.setCellValueFactory(new PropertyValueFactory<>("doubleUrl"));
         doubleColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
+        doubleColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<Film, Boolean> actHistColumn = new TableColumn<>("akt. gesehen");
         actHistColumn.setCellValueFactory(new PropertyValueFactory<>("actHist"));
         actHistColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
+        actHistColumn.getStyleClass().add("alignCenter");
 
 //        final TableColumn<Film, Boolean> futureColumn = new TableColumn<>("Zukunft");
 //        futureColumn.setCellValueFactory(new PropertyValueFactory<>("inFuture"));
@@ -231,6 +252,7 @@ public class TableFilm {
 
                 final HBox hbox = new HBox();
                 hbox.setSpacing(5);
+                hbox.setMaxHeight(5);
                 hbox.setAlignment(Pos.CENTER);
                 hbox.setPadding(new Insets(0, 2, 0, 2));
 
@@ -238,9 +260,13 @@ public class TableFilm {
                 final Button btnSave;
 
                 btnPlay = new Button("");
+                btnPlay.setMaxHeight(5);
+                btnPlay.setPrefHeight(5);
                 btnPlay.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_FILM_PLAY));
 
                 btnSave = new Button("");
+                btnSave.setMaxHeight(5);
+                btnSave.setPrefHeight(5);
                 btnSave.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_FILM_SAVE));
 
                 btnPlay.setOnAction((ActionEvent event) -> {

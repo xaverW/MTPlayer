@@ -237,3 +237,13 @@
     -fx-text-fill: black;
     -fx-padding: 4 14 4 14;
 }
+
+.alignCenter {
+  -fx-alignment: center;
+}
+.alignCenterRight {
+  -fx-alignment: center-right;
+}
+.alignCenterLeft {
+  -fx-alignment: center-left;
+}

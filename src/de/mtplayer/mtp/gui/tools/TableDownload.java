@@ -51,50 +51,76 @@ public class TableDownload {
         final TableColumn<Download, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("nr"));
         nrColumn.setCellFactory(cellFactoryNr);
+        nrColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Download, Integer> filmNrColumn = new TableColumn<>("Filmnr");
         filmNrColumn.setCellValueFactory(new PropertyValueFactory<>("filmNr"));
         filmNrColumn.setCellFactory(cellFactoryFilmNr);
+        filmNrColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Download, String> aboColumn = new TableColumn<>("Abo");
         aboColumn.setCellValueFactory(new PropertyValueFactory<>("aboName"));
+        aboColumn.getStyleClass().add("alignCenterLeft");
+
         final TableColumn<Download, String> senderColumn = new TableColumn<>("Sender");
         senderColumn.setCellValueFactory(new PropertyValueFactory<>("channel"));
+        senderColumn.getStyleClass().add("alignCenterLeft");
+
         final TableColumn<Download, String> themeColumn = new TableColumn<>("Thema");
         themeColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
+        themeColumn.getStyleClass().add("alignCenterLeft");
+
         final TableColumn<Download, String> titleColumn = new TableColumn<>("Titel");
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        titleColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Download, Integer> startColumn = new TableColumn<>("");
         startColumn.setCellValueFactory(new PropertyValueFactory<>("state"));
         startColumn.setCellFactory(cellFactoryStart);
-        startColumn.getStyleClass().add("center");
+        startColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<Download, Double> progressColumn = new TableColumn<>("Fortschritt"); //müssen sich unterscheiden!!
         progressColumn.setCellValueFactory(new PropertyValueFactory<>("progress"));
         progressColumn.setCellFactory(cellFactoryProgress);
+        progressColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Download, Integer> remainingColumn = new TableColumn<>("Restzeit");
         remainingColumn.setCellValueFactory(new PropertyValueFactory<>("remaining"));
+        remainingColumn.getStyleClass().add("alignCenterLeft");
+
         final TableColumn<Download, Integer> speedColumn = new TableColumn<>("Geschwindigkeit");
         speedColumn.setCellValueFactory(new PropertyValueFactory<>("bandwidth"));
+        speedColumn.getStyleClass().add("alignCenterLeft");
+
 
         final TableColumn<Download, DownloadSizeData> sizeColumn = new TableColumn<>("Größe [MB]");
         sizeColumn.setCellValueFactory(new PropertyValueFactory<>("downloadSize"));
+        sizeColumn.getStyleClass().add("alignCenterLeft");
+
         final TableColumn<Download, MDate> datumColumn = new TableColumn<>("Datum");
         datumColumn.setCellValueFactory(new PropertyValueFactory<>("filmDate"));
+        datumColumn.getStyleClass().add("alignCenter");
+
         final TableColumn<Download, String> timeColumn = new TableColumn<>("Zeit");
         timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
+        timeColumn.getStyleClass().add("alignCenter");
+
         final TableColumn<Download, Integer> durationColumn = new TableColumn<>("Dauer");
         durationColumn.setCellValueFactory(new PropertyValueFactory<>("duration"));
+        durationColumn.getStyleClass().add("alignCenterLeft");
+
 
         final TableColumn<Download, Boolean> hdColumn = new TableColumn<>("HD");
         hdColumn.setCellValueFactory(new PropertyValueFactory<>("hd"));
         hdColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
+        hdColumn.getStyleClass().add("alignCenter");
+
 
         final TableColumn<Download, Boolean> utColumn = new TableColumn<>("UT");
         utColumn.setCellValueFactory(new PropertyValueFactory<>("ut"));
         utColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
+        utColumn.getStyleClass().add("alignCenter");
+
 
 //        final TableColumn<Download, Boolean> pauseColumn = new TableColumn<>("Pause");
 //        pauseColumn.setCellValueFactory(new PropertyValueFactory<>("pause"));
@@ -103,27 +129,41 @@ public class TableDownload {
         final TableColumn<Download, Boolean> geoColumn = new TableColumn<>("Geo");
         geoColumn.setCellValueFactory(new PropertyValueFactory<>("geoBlocked"));
         geoColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
+        geoColumn.getStyleClass().add("alignCenter");
+
 
         final TableColumn<Download, String> artColumn = new TableColumn<>("Art");
         artColumn.setCellValueFactory(new PropertyValueFactory<>("art"));
+        artColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Download, String> srcColumn = new TableColumn<>("Quelle");
         srcColumn.setCellValueFactory(new PropertyValueFactory<>("source"));
+        srcColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Download, Boolean> placedBackColumn = new TableColumn<>("Zurückgestellt");
         placedBackColumn.setCellValueFactory(new PropertyValueFactory<>("placedBack"));
         placedBackColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
+        placedBackColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<Download, String> programColumn = new TableColumn<>("Programm");
         programColumn.setCellValueFactory(new PropertyValueFactory<>("program"));
+        programColumn.getStyleClass().add("alignCenterLeft");
+
         final TableColumn<Download, Integer> setColumn = new TableColumn<>("Programmset");
         setColumn.setCellValueFactory(new PropertyValueFactory<>("set"));
+        setColumn.getStyleClass().add("alignCenterLeft");
+
         final TableColumn<Download, String> urlColumn = new TableColumn<>("URL");
         urlColumn.setCellValueFactory(new PropertyValueFactory<>("url"));
+        urlColumn.getStyleClass().add("alignCenterLeft");
+
         final TableColumn<Download, String> fileNameColumn = new TableColumn<>("Dateiname");
         fileNameColumn.setCellValueFactory(new PropertyValueFactory<>("destFileName"));
+        fileNameColumn.getStyleClass().add("alignCenterLeft");
+
         final TableColumn<Download, String> pathColumn = new TableColumn<>("Pfad");
         pathColumn.setCellValueFactory(new PropertyValueFactory<>("destPath"));
+        pathColumn.getStyleClass().add("alignCenterLeft");
 
         addRowFact(table);
 

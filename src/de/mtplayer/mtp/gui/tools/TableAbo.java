@@ -34,54 +34,70 @@ public class TableAbo {
 
         final TableColumn<Abo, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("nr"));
+        nrColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Abo, Boolean> activColumn = new TableColumn<>("Aktiv");
         activColumn.setCellValueFactory(new PropertyValueFactory<>("active"));
         activColumn.setCellFactory(callbackAktiv);
+        activColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<Abo, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        nameColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Abo, String> resColumn = new TableColumn<>("Auflösung");
         resColumn.setCellValueFactory(new PropertyValueFactory<>("resolution"));
+        resColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Abo, String> senderColumn = new TableColumn<>("Sender");
         senderColumn.setCellValueFactory(new PropertyValueFactory<>("channel"));
+        senderColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Abo, Boolean> senderExactColumn = new TableColumn<>("Sender exakt");
         senderExactColumn.setCellValueFactory(new PropertyValueFactory<>("channelExact"));
         senderExactColumn.setCellFactory(CheckBoxTableCell.forTableColumn(senderExactColumn));
+        senderExactColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<Abo, String> themeColumn = new TableColumn<>("Thema");
         themeColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
+        themeColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Abo, Boolean> themeExactColumn = new TableColumn<>("Thema exakt");
         themeExactColumn.setCellValueFactory(new PropertyValueFactory<>("themeExact"));
         themeExactColumn.setCellFactory(CheckBoxTableCell.forTableColumn(themeExactColumn));
+        themeExactColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<Abo, String> titleColumn = new TableColumn<>("Titel");
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        titleColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Abo, String> themeTitleColumn = new TableColumn<>("Thema-Titel");
         themeTitleColumn.setCellValueFactory(new PropertyValueFactory<>("themeTitle"));
+        themeTitleColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Abo, String> somewhereColumn = new TableColumn<>("irgendwo");
         somewhereColumn.setCellValueFactory(new PropertyValueFactory<>("somewhere"));
+        somewhereColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Abo, Integer> minColumn = new TableColumn<>("min");
         minColumn.setCellValueFactory(new PropertyValueFactory<>("minDuration"));
+        minColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Abo, Integer> maxColumn = new TableColumn<>("max");
         maxColumn.setCellValueFactory(new PropertyValueFactory<>("maxDuration"));
+        maxColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Abo, String> destinationColumn = new TableColumn<>("Ziel");
         destinationColumn.setCellValueFactory(new PropertyValueFactory<>("destination"));
+        destinationColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Abo, MDate> datumColumn = new TableColumn<>("Datum");
         datumColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        datumColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<Abo, String> psetColumn = new TableColumn<>("Set");
         psetColumn.setCellValueFactory(new PropertyValueFactory<>("pset"));
+        psetColumn.getStyleClass().add("alignCenterLeft");
 
         return new TableColumn[]{
                 nrColumn, activColumn, nameColumn, resColumn, senderColumn, senderExactColumn,
