@@ -32,6 +32,7 @@ import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.POpen;
 import de.p2tools.p2Lib.guiTools.PTableViewTools;
 import de.p2tools.p2Lib.tools.PSystemUtils;
+import de.p2tools.p2Lib.tools.log.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -245,12 +246,17 @@ public class DownloadGuiController extends AnchorPane {
             return;
         }
 
+        PDuration.counterStart("DownloadGuiController.searchForAbosAndMaybeStart");
+        progData.mtPlayerController.setMasker();
+
         // erledigte entfernen, nicht gestartete Abos entfernen und neu nach Abos suchen
         progData.downloadList.searchForAbos();
         if (Boolean.parseBoolean(ProgConfig.DOWNLOAD_START_NOW.get())) {
             // und wenn gewollt auch gleich starten
             progData.downloadGuiController.startDownload(true, false);
         }
+        progData.mtPlayerController.resetMasker();
+        PDuration.counterStop("DownloadGuiController.searchForAbosAndMaybeStart");
     }
 
     public void stopDownload(boolean all) {
@@ -352,7 +358,7 @@ public class DownloadGuiController extends AnchorPane {
                 if (!ProgConfig.FILTER_DOWNLOAD_STATE.get().isEmpty()) {
                     // dann den Filter aktualisieren
                     // todo?? bei vielen Downloads kann das sonst die ganze Tabelle ausbremsen
-                    setFilter();
+                    Platform.runLater(() -> setFilter());
                 }
             }
         });
@@ -366,18 +372,18 @@ public class DownloadGuiController extends AnchorPane {
                 if (Boolean.parseBoolean(ProgConfig.ABO_SEARCH_NOW.get())
                         && Boolean.parseBoolean(ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.get())) {
                     // nur auf Blacklist reagieren, wenn auch für Abos eingeschaltet
-                    searchForAbosAndMaybeStart();
+                    Platform.runLater(() -> searchForAbosAndMaybeStart());
                 }
             }
         });
         ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.getBooleanProperty().addListener((observable, oldValue, newValue) -> {
             if (ProgConfig.ABO_SEARCH_NOW.getBool()) {
-                searchForAbosAndMaybeStart();
+                Platform.runLater(() -> searchForAbosAndMaybeStart());
             }
         });
         progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
             if (ProgConfig.ABO_SEARCH_NOW.getBool()) {
-                searchForAbosAndMaybeStart();
+                Platform.runLater(() -> searchForAbosAndMaybeStart());
             }
         });
     }

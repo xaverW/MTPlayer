@@ -64,9 +64,9 @@ public class MTPlayerController extends StackPane {
         init();
     }
 
-    public Button getBtnFilmlist() {
+    public void disableBtnFilmlist(boolean disable) {
         // ist erst mal so bis "Filmliste laden" überarbeitet wird
-        return btnFilmlist;
+        btnFilmlist.setDisable(disable);
     }
 
     public void setButtonFilmlistUpdate() {

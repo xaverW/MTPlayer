@@ -200,7 +200,7 @@ public class FilmGuiController extends AnchorPane {
             @Override
             public void ping() {
                 tableView.refresh();
-//                Table.refresh_table(table);
+//                Table.refresh_table(tableView);
             }
         });
     }

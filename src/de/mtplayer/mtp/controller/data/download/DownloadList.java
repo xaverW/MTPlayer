@@ -189,8 +189,6 @@ public class DownloadList extends SimpleListProperty<Download> {
     // =========================
     // Abos
     public synchronized void searchForAbos() {
-        progData.mtPlayerController.setMasker();
-
         final int count = getSize();
 //        Thread th = new Thread(() -> {
         downloadListAbo.refreshAbos();
@@ -199,7 +197,6 @@ public class DownloadList extends SimpleListProperty<Download> {
             // dann wurden evtl. nur zurückgestellte Downloads wieder aktiviert
             setDownloadsChanged();
         }
-        progData.mtPlayerController.resetMasker();
 //        });
 //        th.setName("abosSuchen");
 //        th.start();

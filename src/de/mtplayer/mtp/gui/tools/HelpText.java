@@ -74,9 +74,9 @@ public class HelpText {
             "Die Programme können über die Paketverwaltung eingespielt werden." + PConst.LINE_SEPARATOR +
             PConst.LINE_SEPARATOR +
             PConst.LINE_SEPARATOR +
-            "Windows, OS X:" + PConst.LINE_SEPARATOR +
+            "Windows:" + PConst.LINE_SEPARATOR +
             "Die Programme \"flvstreamer\" und \"ffmpeg\" sind bereits im Programm " +
-            "integriert. Es muss bloss noch \"VLC\" aus dem Internet geladen werden:" +
+            "integriert. Es muss nur noch \"VLC\" aus dem Internet geladen werden:" +
             PConst.LINE_SEPARATOR +
             PConst.LINE_SEPARATOR +
             PConst.LINE_SEPARATOR +

@@ -47,21 +47,20 @@ public class StartPane {
         iv.setImage(im);
 
         hBox.getChildren().addAll(iv);
-        Label text = new Label("1 -> Hier kann die Filmliste" + PConst.LINE_SEPARATOR +
+        Label text = new Label("1) Hier kann die Filmliste" + PConst.LINE_SEPARATOR +
                 "aktualisiert werden." +
                 PConst.LINE_SEPARATORx2 +
-                "2 -> Hier kann man die" + PConst.LINE_SEPARATOR +
-                "Ansicht zwischen Filmen, Downloads" + PConst.LINE_SEPARATOR +
-                "und angelegten Abos umschalten." +
+                "2) Die Ansicht der Filme, Downloads" + PConst.LINE_SEPARATOR +
+                "oder Abos wird hier umgeschaltet." +
                 PConst.LINE_SEPARATORx2 +
-                "3 -> Hier befinden sich" + PConst.LINE_SEPARATOR +
+                "3) Hier befinden sich" + PConst.LINE_SEPARATOR +
                 "die Programmeinstellungen." +
                 PConst.LINE_SEPARATORx2 +
-                "4 -> Mit dem Pluszeichen können" + PConst.LINE_SEPARATOR +
+                "4) Mit dem Pluszeichen können" + PConst.LINE_SEPARATOR +
                 "Spalten in der Tabelle" + PConst.LINE_SEPARATOR +
                 "ein- und ausgeblendet werden." +
                 PConst.LINE_SEPARATORx2 +
-                "5 -> Damit kann man Filme ansehen" + PConst.LINE_SEPARATOR +
+                "5) Damit kann man Filme ansehen" + PConst.LINE_SEPARATOR +
                 "und speichern.");
         hBox.getChildren().add(text);
 
@@ -84,19 +83,19 @@ public class StartPane {
 
         hBox.getChildren().addAll(iv);
 
-        Label text = new Label("1 -> In dem Bereich sind" + PConst.LINE_SEPARATOR +
-                "die Filter angeordnet." +
+        Label text = new Label("1) In dem Bereich sind die" + PConst.LINE_SEPARATOR +
+                "Filter angeordnet." +
                 PConst.LINE_SEPARATORx2 +
-                "2 -> Hier können die oben angezeigten" + PConst.LINE_SEPARATOR +
+                "2) Hier können die oben angezeigten" + PConst.LINE_SEPARATOR +
                 "Filter ein- und ausgeblendet werden." +
                 PConst.LINE_SEPARATORx2 +
-                "3 -> Damit werden die oben eingestellten" + PConst.LINE_SEPARATOR +
+                "3) Damit werden die oben eingestellten" + PConst.LINE_SEPARATOR +
                 "Filter in dem darunter ausgewählten" + PConst.LINE_SEPARATOR +
                 "Filterprofil gespeichert oder wieder" + PConst.LINE_SEPARATOR +
                 "hergestellt (oder ein neues Profil" + PConst.LINE_SEPARATOR +
                 "kann damit angelegt werden)." +
                 PConst.LINE_SEPARATORx2 +
-                "4 -> Hier können die gespeicherten" + PConst.LINE_SEPARATOR +
+                "4) Hier können die gespeicherten" + PConst.LINE_SEPARATOR +
                 "Filterprofile verwaltet werden.");
         hBox.getChildren().add(text);
 

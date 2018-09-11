@@ -20,8 +20,8 @@ Linux:
 Die Programme können über die Paketverwaltung eingespielt werden.
 
 
-Windows, OS X:
-Die Programme "flvstreamer" und "ffmpeg" sind bereits in MTPlayer integriert. Es muss bloss noch "VLC" aus dem Internet geladen werden:
+Windows:
+Die Programme "flvstreamer" und "ffmpeg" sind bereits in MTPlayer integriert. Es muss nur noch "VLC" aus dem Internet geladen werden:
 
 
 http://www.videolan.org

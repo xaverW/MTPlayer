@@ -73,9 +73,9 @@ public class AboGuiController extends AnchorPane {
         progData.aboList.changeAbo(lAbo);
     }
 
-    public void einAus(boolean on) {
+    public void setAboActive(boolean on) {
         ObservableList<Abo> lAbo = getSelList();
-        progData.aboList.onOffAbo(lAbo, on);
+        progData.aboList.setAboActive(lAbo, on);
     }
 
     public void deleteAbo() {
@@ -143,11 +143,11 @@ public class AboGuiController extends AnchorPane {
         Abo abo = table.getSelectionModel().getSelectedItem();
         if (abo != null && abo.isActive()) {
             final MenuItem mbOff = new MenuItem("ausschalten");
-            mbOff.setOnAction(e -> einAus(false));
+            mbOff.setOnAction(e -> setAboActive(false));
             contextMenu.getItems().add(mbOff);
         } else {
             final MenuItem mbOn = new MenuItem("einschalten");
-            mbOn.setOnAction(a -> einAus(true));
+            mbOn.setOnAction(a -> setAboActive(true));
             contextMenu.getItems().add(mbOn);
         }
         final MenuItem miDel = new MenuItem("löschen");

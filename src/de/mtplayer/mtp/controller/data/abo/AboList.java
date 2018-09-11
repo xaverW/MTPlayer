@@ -141,7 +141,7 @@ public class AboList extends SimpleListProperty<Abo> {
         }
     }
 
-    public synchronized void onOffAbo(ObservableList<Abo> lAbo, boolean on) {
+    public synchronized void setAboActive(ObservableList<Abo> lAbo, boolean on) {
         if (!lAbo.isEmpty()) {
             lAbo.stream().forEach(abo -> abo.setActive(on));
             notifyChanges();

@@ -25,11 +25,6 @@ public class ProgInitFilter {
 
         //========================================================
         SelectedFilter sf = new SelectedFilter();
-//        sf.setName("aktueller Filter");
-//        sf.initFilter();
-//        progData.storedFilter.getStordeFilterList().add(sf);
-
-        sf = new SelectedFilter();
         sf.setName("alle Filme");
 
         sf.setChannelVis(true);

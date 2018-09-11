@@ -194,10 +194,10 @@ public class LoadFilmlist {
 
             if (!firstProgramStart) {
                 // gespeicherte Filmliste laden, macht beim ersten Programmstart keinen Sinn
-                Platform.runLater(() -> progData.mtPlayerController.getBtnFilmlist().setDisable(true));
+                Platform.runLater(() -> progData.mtPlayerController.disableBtnFilmlist(true));
                 new ReadFilmlist().readFilmlist(ProgInfos.getFilmListFile(),
                         progData.filmlist, ProgConfig.SYSTEM_NUM_DAYS_FILMLIST.getInt());
-                Platform.runLater(() -> progData.mtPlayerController.getBtnFilmlist().setDisable(false));
+                Platform.runLater(() -> progData.mtPlayerController.disableBtnFilmlist(false));
 
                 list.add(PLog.LILNE3);
                 list.add("Liste Filme gelesen am: " + StringFormatters.FORMATTER_ddMMyyyyHHmm.format(new Date()));

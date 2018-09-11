@@ -50,11 +50,6 @@ public class MTPlayer extends Application {
     private Stage primaryStage;
     private MTPlayerController mtPlayerController;
 
-    private static final String ICON_NAME = "Icon.png";
-    private static final String ICON_PATH = "/de/mtplayer/mtp/res/";
-    private static final int ICON_WIDTH = 58;
-    private static final int ICON_HEIGHT = 58;
-
     private static final String LOG_TEXT_PROGRAMSTART = "Dauer Programmstart";
     private static final String TITLE_TEXT_PROGRAM_VERSION_IS_UPTODATE = "Programmversion ist aktuell";
     private static final String TITLE_TEXT_PROGRAMMUPDATE_EXISTS = "Ein Programmupdate ist verfügbar";
@@ -119,11 +114,11 @@ public class MTPlayer extends Application {
 
             ProgInitFilter.setProgInitFilter();
         }
-        progData.initDialogs();
     }
 
     private void initRootLayout() {
         try {
+            progData.initDialogs();
             mtPlayerController = new MTPlayerController();
             progData.mtPlayerController = mtPlayerController;
             scene = new Scene(mtPlayerController,
@@ -150,13 +145,30 @@ public class MTPlayer extends Application {
     }
 
     private void losGehts() {
+        final String ICON_NAME = "Icon.png";
+        final String ICON_PATH = "/de/mtplayer/mtp/res/";
+        final int ICON_WIDTH = 58;
+        final int ICON_HEIGHT = 58;
         primaryStage.getIcons().add(GetIcon.getImage(ICON_NAME, ICON_PATH, ICON_WIDTH, ICON_HEIGHT));
 
         progStart.startMsg();
 
-        PDuration.onlyPing("Erster Start");
         setOrgTitle();
-        initProg();
+
+        progData.startTimer();
+        progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
+            @Override
+            public void finished(ListenerFilmlistLoadEvent event) {
+                new ProgSave().saveAll(); // damit nichts verlorengeht
+
+                if (!onlyOne) {
+                    onlyOne = true;
+                    progData.mediaDataList.createMediaDb();
+                    checkProgUpdate();
+                }
+
+            }
+        });
 
         PDuration.onlyPing("Gui steht!");
         progStart.loadDataProgStart(firstProgramStart);
@@ -175,26 +187,9 @@ public class MTPlayer extends Application {
         primaryStage.setTitle(TITLE_TEXT_PROGRAM_VERSION_IS_UPTODATE);
     }
 
-    private void initProg() {
-        progData.startTimer();
-        progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
-            @Override
-            public void finished(ListenerFilmlistLoadEvent event) {
-                new ProgSave().saveAll(); // damit nichts verlorengeht
-
-                if (!onlyOne) {
-                    onlyOne = true;
-                    progData.mediaDataList.createMediaDb();
-                    checkProgUpdate();
-                }
-
-            }
-        });
-    }
-
     private void checkProgUpdate() {
         // Prüfen obs ein Programmupdate gibt
-        PDuration.onlyPing("check update");
+        PDuration.onlyPing("checkProgUpdate");
         if (!Boolean.parseBoolean(ProgConfig.SYSTEM_UPDATE_SEARCH.get()) ||
                 ProgConfig.SYSTEM_UPDATE_BUILD_NR.get().equals(Functions.getProgVersion() /*Start mit neuer Version*/)
                         && ProgConfig.SYSTEM_UPDATE_DATE.get().equals(StringFormatters.FORMATTER_yyyyMMdd.format(new Date()))) {
@@ -212,14 +207,13 @@ public class MTPlayer extends Application {
                 }
 
                 sleep(10_000);
-
                 Platform.runLater(() -> setOrgTitle());
 
             } catch (final Exception ex) {
                 PLog.errorLog(794612801, ex);
             }
         });
-        th.setName("check");
+        th.setName("checkProgUpdate");
         th.start();
     }
 

@@ -56,8 +56,8 @@ public class AboMenu {
         final ToolBarButton btChange =
                 new ToolBarButton(vbox, "ändern", ABO_CHANGE_TEXT, new ProgIcons().FX_ICON_TOOLBAR_ABO_CONFIG);
 
-        btOn.setOnAction(a -> progData.aboGuiController.einAus(true));
-        btOff.setOnAction(a -> progData.aboGuiController.einAus(false));
+        btOn.setOnAction(a -> progData.aboGuiController.setAboActive(true));
+        btOff.setOnAction(a -> progData.aboGuiController.setAboActive(false));
         btDel.setOnAction(a -> progData.aboGuiController.deleteAbo());
         btChange.setOnAction(a -> progData.aboGuiController.changeAbo());
     }
@@ -69,10 +69,10 @@ public class AboMenu {
         mb.getStyleClass().add("btnFunction");
 
         final MenuItem mbOn = new MenuItem("einschalten");
-        mbOn.setOnAction(a -> progData.aboGuiController.einAus(true));
+        mbOn.setOnAction(a -> progData.aboGuiController.setAboActive(true));
 
         final MenuItem mbOff = new MenuItem("ausschalten");
-        mbOff.setOnAction(e -> progData.aboGuiController.einAus(false));
+        mbOff.setOnAction(e -> progData.aboGuiController.setAboActive(false));
 
         final MenuItem miDel = new MenuItem("löschen");
         miDel.setOnAction(a -> progData.aboGuiController.deleteAbo());
