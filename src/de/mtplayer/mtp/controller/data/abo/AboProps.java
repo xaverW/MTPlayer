@@ -38,12 +38,12 @@ public class AboProps extends AboXml {
     private final IntegerProperty maxDuration = new SimpleIntegerProperty(SelectedFilter.FILTER_DURATION_MAX_MIN); //Minuten
     private final StringProperty destination = new SimpleStringProperty("");
     private final ObjectProperty<MDate> date = new SimpleObjectProperty<>(new MDate(0));
-    private final StringProperty pset = new SimpleStringProperty("");
+    private final StringProperty psetName = new SimpleStringProperty("");
 
 
     public final Property[] properties = {nr, active, name, resolution,
             channel, channelExact, theme, themeExact, title, themeTitle, somewhere,
-            minDuration, maxDuration, destination, date, pset};
+            minDuration, maxDuration, destination, date, psetName};
 
     public String getStringOf(int i) {
         return String.valueOf(properties[i].getValue());
@@ -248,16 +248,16 @@ public class AboProps extends AboXml {
         this.date.setValue(d);
     }
 
-    public String getPset() {
-        return pset.get();
+    public String getPsetName() {
+        return psetName.get();
     }
 
-    public StringProperty psetProperty() {
-        return pset;
+    public StringProperty psetNameProperty() {
+        return psetName;
     }
 
-    public void setPset(String pset) {
-        this.pset.set(pset);
+    public void setPsetName(String psetName) {
+        this.psetName.set(psetName);
     }
 
     public void setPropsFromXml() {
@@ -276,7 +276,7 @@ public class AboProps extends AboXml {
 
         setDestination(arr[ABO_DEST_PATH]);
         setDatum(arr[ABO_DOWN_DATE], "");
-        setPset(arr[ABO_PSET]);
+        setPsetName(arr[ABO_PSET_NAME]);
     }
 
     public void setXmlFromProps() {
@@ -297,7 +297,7 @@ public class AboProps extends AboXml {
 
         arr[ABO_DEST_PATH] = getDestination();
         arr[ABO_DOWN_DATE] = getDate().toString();
-        arr[ABO_PSET] = getPset();
+        arr[ABO_PSET_NAME] = getPsetName();
     }
 
     private void setDurationFromXml() {

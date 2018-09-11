@@ -20,6 +20,8 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
+import de.p2tools.p2Lib.tools.log.PDuration;
+import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -47,7 +49,7 @@ public class Worker {
             public void finished(ListenerFilmlistLoadEvent event) {
                 getChannelAndTheme();
                 if (ProgConfig.ABO_SEARCH_NOW.getBool()) {
-                    progData.downloadGuiController.searchForAbosAndMaybeStart();
+                    searchForAbosAndMaybeStart();
                 }
             }
         });
@@ -61,6 +63,35 @@ public class Worker {
 
         progData.downloadList.sizeProperty().addListener((observable, oldValue, newValue) ->
                 getAboNames());
+    }
+
+    public void searchForAbosAndMaybeStart() {
+        if (progData.loadFilmlist.getPropLoadFilmlist()) {
+            // wird danach eh gemacht
+            return;
+        }
+
+        PDuration.counterStart("DownloadGuiController.searchForAbosAndMaybeStart");
+        progData.mtPlayerController.setMasker();
+
+        Thread th = new Thread(() -> {
+            try {
+
+                // erledigte entfernen, nicht gestartete Abos entfernen und neu nach Abos suchen
+                progData.downloadList.searchForAbos();
+                if (Boolean.parseBoolean(ProgConfig.DOWNLOAD_START_NOW.get())) {
+                    // und wenn gewollt auch gleich starten
+                    progData.downloadGuiController.startDownload(true, false);
+                }
+                progData.mtPlayerController.resetMasker();
+                PDuration.counterStop("DownloadGuiController.searchForAbosAndMaybeStart");
+
+            } catch (Exception ex) {
+                PLog.errorLog(951241204, ex);
+            }
+        });
+        th.setName("searchForAbosAndMaybeStart");
+        th.start();
     }
 
     private void getChannelAndTheme() {

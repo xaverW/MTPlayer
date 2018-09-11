@@ -330,15 +330,15 @@ public class AboEditDialogController extends PDialogExtra {
                 gridPane.add(cbxOn, 1, grid);
                 break;
 
-            case AboXml.ABO_PSET:
+            case AboXml.ABO_PSET_NAME:
                 cboPset.getItems().addAll(progData.setList.getListAbo().getPsetNameList());
-                if (aboCopy.getPset().isEmpty()) {
+                if (aboCopy.getPsetName().isEmpty()) {
                     cboPset.getSelectionModel().selectFirst();
-                    aboCopy.setPset(cboPset.getSelectionModel().getSelectedItem());
+                    aboCopy.setPsetName(cboPset.getSelectionModel().getSelectedItem());
                 } else {
-                    cboPset.getSelectionModel().select(aboCopy.getPset());
+                    cboPset.getSelectionModel().select(aboCopy.getPsetName());
                 }
-                cboPset.valueProperty().bindBidirectional(aboCopy.psetProperty());
+                cboPset.valueProperty().bindBidirectional(aboCopy.psetNameProperty());
                 cboPset.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> cbxForAll[i].setSelected(true));
                 gridPane.add(cboPset, 1, grid);
                 break;
@@ -427,7 +427,7 @@ public class AboEditDialogController extends PDialogExtra {
             case AboXml.ABO_SOMEWHERE:
             case AboXml.ABO_MIN_DURATION:
             case AboXml.ABO_DEST_PATH:
-            case AboXml.ABO_PSET:
+            case AboXml.ABO_PSET_NAME:
                 gridPane.add(cbxForAll[i], 2, grid);
         }
     }

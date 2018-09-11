@@ -283,15 +283,24 @@ public class DownloadListStarts {
 
     private boolean getDown(int max) {
         int count = 0;
-        for (final Download download : downloadList) {
-            if (download.isStateStartedRun()) {
-                ++count;
-                if (count >= max) {
-                    return false;
+        try {
+            for (final Download download : downloadList) {
+                if (download == null) {
+                    System.out.println("null");
+                    continue;
+                }
+                if (download.isStateStartedRun()) {
+                    ++count;
+                    if (count >= max) {
+                        return false;
+                    }
                 }
             }
+            return true;
+        } catch (Exception ex) {
+            System.out.println(ex.getStackTrace());
         }
-        return true;
+        return false;
     }
 
 }

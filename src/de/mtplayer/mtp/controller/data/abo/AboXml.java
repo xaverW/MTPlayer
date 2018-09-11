@@ -35,7 +35,7 @@ public class AboXml extends Data<AboXml> {
     public static final int ABO_MAX_DURATION = 12;
     public static final int ABO_DEST_PATH = 13;
     public static final int ABO_DOWN_DATE = 14;
-    public static final int ABO_PSET = 15;
+    public static final int ABO_PSET_NAME = 15;
 
     public static final String[] COLUMN_NAMES = {"Nr",
             "aktiv",

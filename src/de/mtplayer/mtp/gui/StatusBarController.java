@@ -70,6 +70,7 @@ public class StatusBarController extends AnchorPane {
     AnchorPane filmPane = new AnchorPane();
     AnchorPane downloadPane = new AnchorPane();
     AnchorPane aboPane = new AnchorPane();
+    private final NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.GERMANY);
 
 
     public enum StatusbarIndex {
@@ -241,7 +242,6 @@ public class StatusBarController extends AnchorPane {
         final int anzListe = progData.filmGuiController.getFilmCount();
         final int runs = progData.downloadListButton.getListOfStartsNotFinished(DownloadInfos.SRC_BUTTON).size();
 
-        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.GERMANY);
         String anzListeStr = numberFormat.format(anzListe);
         String gesamtStr = numberFormat.format(gesamt);
 
@@ -318,8 +318,13 @@ public class StatusBarController extends AnchorPane {
         // Text links: Zeilen Tabelle
         // nicht gestarted, laufen, fertig OK, fertig fehler
         final int[] starts = progData.downloadList.getDownloadInfoAll().downloadStarts;
-        final int anz = progData.downloadList.size();
-        final int diff = anz - starts[0];
+
+        final int gesamt = progData.downloadList.size();
+        final int anzListe = progData.downloadGuiController.getDownloadCount();
+
+        String gesamtStr = numberFormat.format(gesamt);
+        String anzListeStr = numberFormat.format(anzListe);
+        final int diff = gesamt - starts[0];
 
         boolean print = false;
         for (int ii = 1; ii < starts.length; ++ii) {
@@ -329,17 +334,46 @@ public class StatusBarController extends AnchorPane {
             }
         }
 
-        if (anz == 1) {
-            textLinks = "1 Download";
-        } else {
-            textLinks = anz + " Downloads";
-        }
         if (download) {
-            if (diff == 1) {
-                textLinks += " (1 zurückgestellt)";
-            } else if (diff > 1) {
-                textLinks += " (" + diff + " zurückgestellt)";
+            // Anzahl der Downloads
+            if (gesamt == anzListe) {
+                if (anzListe == 1) {
+                    textLinks = "1 Download";
+                } else {
+                    textLinks = anzListeStr + " Downloads";
+                }
+            } else {
+                if (anzListe == 1) {
+                    textLinks = "1 Download";
+                } else {
+                    textLinks = anzListeStr + " Downloads";
+                }
+                textLinks += " (Insgesamt: " + gesamtStr;
+                if (diff >= 1) {
+                    textLinks += ", zurückgestellt: " + diff;
+                }
+                textLinks += ")";
             }
+        } else {
+            // Anzahl der Downloads
+            if (gesamt == 1) {
+                textLinks = "1 Download";
+            } else {
+                textLinks = gesamt + " Downloads";
+            }
+        }
+
+//        if (gesamt == 1) {
+//            textLinks = "1 Download";
+//        } else {
+//            textLinks = gesamt + " Downloads";
+//        }
+        if (download) {
+//            if (diff == 1) {
+//                textLinks += " (1 zurückgestellt)";
+//            } else if (diff > 1) {
+//                textLinks += " (" + diff + " zurückgestellt)";
+//            }
             textLinks += SEPARATOR;
             if (starts[1] == 1) {
                 textLinks += "1 Abo, ";

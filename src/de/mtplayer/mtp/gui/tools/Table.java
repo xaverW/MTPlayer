@@ -359,7 +359,7 @@ public class Table {
         for (int i = 0; i < maxSpalten; ++i) {
             visArray[i] = Boolean.TRUE.toString();
         }
-        visArray[Abo.ABO_PSET] = Boolean.FALSE.toString();
+        visArray[Abo.ABO_PSET_NAME] = Boolean.FALSE.toString();
 
         for (int i = 0; i < maxSpalten; ++i) {
             set += visArray[i] + ",";

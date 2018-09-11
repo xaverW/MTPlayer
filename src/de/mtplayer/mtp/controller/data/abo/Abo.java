@@ -64,7 +64,7 @@ public class Abo extends AboProps {
         setMaxDuration(maxDurationMinute);
 
         setDestination(destination);
-        setPset(pset);
+        setPsetName(pset);
     }
 
     private void initFilter() {

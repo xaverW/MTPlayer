@@ -25,10 +25,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.*;
 
 public class DownloadList extends SimpleListProperty<Download> {
 
@@ -70,8 +67,13 @@ public class DownloadList extends SimpleListProperty<Download> {
         return super.add(d);
     }
 
-    public synchronized boolean addAll(ArrayList<Download> d) {
-        return super.addAll(d);
+//    public synchronized boolean addAll(ArrayList<Download> d) {
+//        return super.addAll(d);
+//    }
+
+    @Override
+    public synchronized boolean addAll(Collection<? extends Download> elements) {
+        return super.addAll(elements);
     }
 
     public synchronized boolean addWithNr(Download e) {
@@ -79,7 +81,11 @@ public class DownloadList extends SimpleListProperty<Download> {
         setNumbersInList();
         return ret;
     }
-
+    
+    @Override
+    public synchronized boolean removeAll(Collection<?> objects) {
+        return super.removeAll(objects);
+    }
 
     public DownloadInfoAll getDownloadInfoAll() {
         return downloadInfoAll;
@@ -232,6 +238,11 @@ public class DownloadList extends SimpleListProperty<Download> {
 
     public synchronized Download getNextStart() {
         return downloadListStarts.getNextStart();
+    }
+
+    public synchronized void resetPlacedBack() {
+        // zurückgestellte wieder aktivieren
+        forEach(d -> d.setPlacedBack(false));
     }
 
     // ==============================
