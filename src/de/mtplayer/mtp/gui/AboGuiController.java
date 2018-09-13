@@ -64,6 +64,10 @@ public class AboGuiController extends AnchorPane {
         progData.filmInfoDialogController.setFilm(null);
     }
 
+    public int getAboCount() {
+        return table.getItems().size();
+    }
+
     public int getSelCount() {
         return table.getSelectionModel().getSelectedItems().size();
     }

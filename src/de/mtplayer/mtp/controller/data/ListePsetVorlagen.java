@@ -108,7 +108,7 @@ public class ListePsetVorlagen extends LinkedList<String[]> {
             XMLStreamReader parser;
             InputStreamReader inReader;
             HttpURLConnection conn;
-            conn = (HttpURLConnection) new URL(ProgConst.ADRESSE_VORLAGE_PROGRAMMGRUPPEN).openConnection();
+            conn = (HttpURLConnection) new URL(ProgConst.URL_MTPLAYER_PROGRAM_SETS).openConnection();
             conn.setRequestProperty("User-Agent", ProgInfos.getUserAgent());
             conn.setReadTimeout(TIMEOUT);
             conn.setConnectTimeout(TIMEOUT);

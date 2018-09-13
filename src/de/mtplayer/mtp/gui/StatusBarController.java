@@ -238,28 +238,22 @@ public class StatusBarController extends AnchorPane {
 
     private void setInfoFilm() {
         String textLinks;
-        final int gesamt = progData.filmlist.size();
-        final int anzListe = progData.filmGuiController.getFilmCount();
+        final int sumFilmlist = progData.filmlist.size();
+        final int sumFilmShown = progData.filmGuiController.getFilmCount();
         final int runs = progData.downloadListButton.getListOfStartsNotFinished(DownloadInfos.SRC_BUTTON).size();
 
-        String anzListeStr = numberFormat.format(anzListe);
-        String gesamtStr = numberFormat.format(gesamt);
+        String sumFilmlistStr = numberFormat.format(sumFilmShown);
+        String sumFilmShownStr = numberFormat.format(sumFilmlist);
 
 
         // Anzahl der Filme
-        if (gesamt == anzListe) {
-            if (anzListe == 1) {
-                textLinks = "1 Film";
-            } else {
-                textLinks = anzListeStr + " Filme";
-            }
+        if (sumFilmShown == 1) {
+            textLinks = "1 Film";
         } else {
-            if (anzListe == 1) {
-                textLinks = "1 Film";
-            } else {
-                textLinks = anzListeStr + " Filme";
-            }
-            textLinks += " (Insgesamt: " + gesamtStr + " )";
+            textLinks = sumFilmlistStr + " Filme";
+        }
+        if (sumFilmlist != sumFilmShown) {
+            textLinks += " (Insgesamt: " + sumFilmShownStr + " )";
         }
         // laufende Programme
         if (runs == 1) {
@@ -286,94 +280,42 @@ public class StatusBarController extends AnchorPane {
         lblSelDownload.setText(selCount > 0 ? selCount + "" : " ");
     }
 
-    private void setInfoAbo() {
-
-        String textLinks;
-        int ein = 0;
-        int aus = 0;
-        final int gesamt = progData.aboList.size();
-        for (final Abo abo : progData.aboList) {
-            if (abo.isActive()) {
-                ++ein;
-            } else {
-                ++aus;
-            }
-        }
-        if (gesamt == 1) {
-            textLinks = "1 Abo";
-        } else {
-            textLinks = gesamt + " Abos";
-        }
-        textLinks += SEPARATOR + ein + " eingeschaltet, " + aus + " ausgeschaltet";
-
-        lblLeftAbo.setText(textLinks);
-
-        final int selCount = progData.aboGuiController.getSelCount();
-        lblSelAbo.setText(selCount > 0 ? selCount + "" : " ");
-
-    }
-
-    private String getInfoTextDownloads(boolean download) {
+    private String getInfoTextDownloads(boolean downloadInfo) {
         String textLinks;
         // Text links: Zeilen Tabelle
         // nicht gestarted, laufen, fertig OK, fertig fehler
         final int[] starts = progData.downloadList.getDownloadInfoAll().downloadStarts;
 
-        final int gesamt = progData.downloadList.size();
-        final int anzListe = progData.downloadGuiController.getDownloadCount();
+        final int sumDownloadList = progData.downloadList.size();
+        final int sumDownloadsShown = progData.downloadGuiController.getDownloadCount();
 
-        String gesamtStr = numberFormat.format(gesamt);
-        String anzListeStr = numberFormat.format(anzListe);
-        final int diff = gesamt - starts[0];
+        String gesamtStr = numberFormat.format(sumDownloadList);
+        String anzListeStr = numberFormat.format(sumDownloadsShown);
+        final int diff = sumDownloadList - starts[0];
 
-        boolean print = false;
+        boolean printDownloadStatus = false;
         for (int ii = 1; ii < starts.length; ++ii) {
             if (starts[ii] > 0) {
-                print = true;
+                printDownloadStatus = true;
                 break;
             }
         }
 
-        if (download) {
-            // Anzahl der Downloads
-            if (gesamt == anzListe) {
-                if (anzListe == 1) {
-                    textLinks = "1 Download";
-                } else {
-                    textLinks = anzListeStr + " Downloads";
-                }
-            } else {
-                if (anzListe == 1) {
-                    textLinks = "1 Download";
-                } else {
-                    textLinks = anzListeStr + " Downloads";
-                }
-                textLinks += " (Insgesamt: " + gesamtStr;
-                if (diff >= 1) {
-                    textLinks += ", zurückgestellt: " + diff;
-                }
-                textLinks += ")";
-            }
+        // Anzahl der Downloads
+        if (sumDownloadsShown == 1) {
+            textLinks = "1 Download";
         } else {
-            // Anzahl der Downloads
-            if (gesamt == 1) {
-                textLinks = "1 Download";
-            } else {
-                textLinks = gesamt + " Downloads";
+            textLinks = anzListeStr + " Downloads";
+        }
+        if (downloadInfo && sumDownloadList != sumDownloadsShown) {
+            textLinks += " (Insgesamt: " + gesamtStr;
+            if (diff >= 1) {
+                textLinks += ", zurückgestellt: " + diff;
             }
+            textLinks += ")";
         }
 
-//        if (gesamt == 1) {
-//            textLinks = "1 Download";
-//        } else {
-//            textLinks = gesamt + " Downloads";
-//        }
-        if (download) {
-//            if (diff == 1) {
-//                textLinks += " (1 zurückgestellt)";
-//            } else if (diff > 1) {
-//                textLinks += " (" + diff + " zurückgestellt)";
-//            }
+        if (downloadInfo) {
             textLinks += SEPARATOR;
             if (starts[1] == 1) {
                 textLinks += "1 Abo, ";
@@ -386,11 +328,11 @@ public class StatusBarController extends AnchorPane {
                 textLinks += starts[2] + " Downloads";
             }
             textLinks += SEPARATOR;
-        } else if (print) {
+        } else if (printDownloadStatus) {
             textLinks += ": ";
         }
 
-        if (print) {
+        if (printDownloadStatus) {
             if (starts[4] == 1) {
                 textLinks += "1 läuft";
             } else {
@@ -423,6 +365,45 @@ public class StatusBarController extends AnchorPane {
         }
 
         return textLinks;
+    }
+
+    private void setInfoAbo() {
+        String textLinks;
+        int countOn = 0;
+        int countOff = 0;
+        final int sumAboList = progData.aboList.size();
+        final int sumAboShown = progData.aboGuiController.getAboCount();
+
+        for (final Abo abo : progData.aboList) {
+            if (abo.isActive()) {
+                ++countOn;
+            } else {
+                ++countOff;
+            }
+        }
+
+        String sumAboListStr = numberFormat.format(sumAboList);
+        String sumAboShownStr = numberFormat.format(sumAboShown);
+
+        // Anzahl der Abos
+        if (sumAboShown == 1) {
+            textLinks = "1 Abo";
+        } else {
+            textLinks = sumAboShownStr + " Abos";
+        }
+        if (sumAboList != sumAboShown) {
+            textLinks += " (Insgesamt: " + sumAboListStr;
+            textLinks += ")";
+        }
+
+        textLinks += SEPARATOR + countOn + " eingeschaltet, " + countOff + " ausgeschaltet";
+
+        lblLeftAbo.setText(textLinks);
+
+
+        final int selCount = progData.aboGuiController.getSelCount();
+        lblSelAbo.setText(selCount > 0 ? selCount + "" : " ");
+
     }
 
     private void setTextForRightDisplay() {

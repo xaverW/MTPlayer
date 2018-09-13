@@ -16,8 +16,6 @@
 
 package de.mtplayer.mtp.controller.config;
 
-import de.mtplayer.mLib.tools.Functions;
-
 public class ProgConst {
 
     public static final String PROGRAMNAME = "MTPlayer";
@@ -40,7 +38,7 @@ public class ProgConst {
     public static final String RTMP_PRTOKOLL = "rtmp";
     public static final String RTMP_FLVSTREAMER = "-r ";
 
-    public static final int CHECK_FILMLIST_UPDATE = 15 * 60; // 10 Minuten
+    public static final int CHECK_FILMLIST_UPDATE = 15 * 60; // 15 Minuten
     public static final int CHECK_FILMLIST_UPDATE_PROGRAMSTART = CHECK_FILMLIST_UPDATE - 60; // 1 Minuten
 
 
@@ -55,12 +53,16 @@ public class ProgConst {
     public static final String ADRESSE_FILMLISTEN_SERVER_AKT = "http://res.mediathekview.de/akt.xml";
 
 
-    public static final String ADRESSE_MTPLAYER_CONFIGS = "https://www.p2tools.de/extra/mtplayer/v-" + Functions.getProgVersion() + "/";
+    // Website MTPlayer
+    public static final String ADRESSE_WEBSITE = "https://www.p2tools.de/mtplayer/";
     //    public static final String ADRESSE_MTPLAYER_VERSION = "http://p2.localhost:8080/extra/mtplayer-info.xml";
     public static final String ADRESSE_MTPLAYER_VERSION = "https://www.p2tools.de/extra/mtplayer-info.xml";
 
-    public static final String ADRESSE_VORLAGE_PROGRAMMGRUPPEN = ADRESSE_MTPLAYER_CONFIGS + "pset-templates.xml";
-    public static final String ADRESSE_WEBSITE = "https://www.p2tools.de/mtplayer/";
+
+    // die URL der Sets, nicht mehr mit jeder Programmversion hochzählen, nur noch wenn notwendig
+    // public static final String URL_MTPLAYER_CONFIG_DIRECTORY = "https://www.p2tools.de/extra/mtplayer/v-" + Functions.getProgVersion() + "/";
+    public static final String URL_MTPLAYER_CONFIG_DIRECTORY = "https://www.p2tools.de/extra/mtplayer/v-3/";
+    public static final String URL_MTPLAYER_PROGRAM_SETS = URL_MTPLAYER_CONFIG_DIRECTORY + "pset-templates.xml";
 
     // ProgrammUrls
     public static final String ADRESSE_WEBSITE_VLC = "http://www.videolan.org";
