@@ -166,7 +166,7 @@ public class SetPaneController extends AnchorPane {
         btnDel.setOnAction(event -> {
             SetData setData = getSelectedSelData();
             if (setData != null) {
-                progData.setList.remove(setData);
+                progData.setList.removePset(setData);
             }
         });
 
@@ -174,7 +174,7 @@ public class SetPaneController extends AnchorPane {
         btnNew.setGraphic(new ProgIcons().ICON_BUTTON_ADD);
         btnNew.setOnAction(event -> {
             SetData setData = new SetData("Neu-" + ++newCounter);
-            progData.setList.add(setData);
+            progData.setList.addPset(setData);
         });
 
         Button btnUp = new Button("");
@@ -201,7 +201,7 @@ public class SetPaneController extends AnchorPane {
         btnDup.setOnAction(event -> {
             SetData setData = getSelectedSelData();
             if (setData != null) {
-                progData.setList.add(setData.copy());
+                progData.setList.addPset(setData.copy());
             }
         });
         HBox.setHgrow(btnDup, Priority.ALWAYS);

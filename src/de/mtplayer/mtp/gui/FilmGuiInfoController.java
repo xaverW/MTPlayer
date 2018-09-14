@@ -26,10 +26,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Tooltip;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -47,6 +44,8 @@ public class FilmGuiInfoController {
         StackPane stackPane = new StackPane();
         stackPane.getChildren().addAll(textArea, btnReset);
         StackPane.setAlignment(btnReset, Pos.BOTTOM_RIGHT);
+        stackPane.setMaxHeight(Double.MAX_VALUE);
+        VBox.setVgrow(stackPane, Priority.ALWAYS);
 
         btnReset.setOnAction(a -> resetFilmDescription());
         btnReset.setTooltip(new Tooltip("Beschreibung zurücksetzen"));
@@ -62,11 +61,11 @@ public class FilmGuiInfoController {
         vBox.getChildren().add(textTitle);
         vBox.getChildren().add(stackPane);
         vBox.getChildren().add(hBox);
+
         AnchorPane.setLeftAnchor(vBox, 10.0);
         AnchorPane.setBottomAnchor(vBox, 10.0);
         AnchorPane.setRightAnchor(vBox, 10.0);
         AnchorPane.setTopAnchor(vBox, 10.0);
-
         anchorPane.getChildren().add(vBox);
     }
 

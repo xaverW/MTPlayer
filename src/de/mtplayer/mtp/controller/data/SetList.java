@@ -43,7 +43,6 @@ public class SetList extends SimpleListProperty<SetData> {
     public String version = "";
     private BooleanProperty listChanged = new SimpleBooleanProperty(true);
 
-
     public SetList() {
         super(FXCollections.observableArrayList());
     }
@@ -69,6 +68,43 @@ public class SetList extends SimpleListProperty<SetData> {
     public void setListChanged() {
         this.listChanged.set(!listChanged.get());
     }
+
+    public boolean removePset(Object obj) {
+        // remove and notify
+        boolean ret = super.remove(obj);
+        setListChanged();
+        return ret;
+    }
+
+    public boolean addPset(SetData psetData) {
+        // add and notify
+        boolean play = false;
+        for (final SetData psetData1 : this) {
+            if (psetData1.isPlay()) {
+                play = true;
+                break;
+            }
+        }
+        if (play) {
+            psetData.setPlay(false);
+        }
+        final boolean ret = super.add(psetData);
+        setListChanged();
+        return ret;
+    }
+
+    public boolean addPset(SetList list) {
+        // add and notify
+        boolean ret = true;
+        for (final SetData entry : list) {
+            if (!addPset(entry)) {
+                ret = false;
+            }
+        }
+        setListChanged();
+        return ret;
+    }
+
 
     private static boolean progReplacePattern(SetData pSet) {
         //todo da muss vorher der Downloadpfad abgefragt werden -> beim Update suchen??
@@ -203,8 +239,10 @@ public class SetList extends SimpleListProperty<SetData> {
             return new SetList();
         }
 
-        return stream().filter(datenPset ->
-                datenPset.isButton() && !datenPset.getProgramList().isEmpty() && !datenPset.getName().isEmpty())
+        return stream()
+                .filter(datenPset -> datenPset.isButton())
+                .filter(datenPset -> !datenPset.getProgramList().isEmpty())
+                .filter(datenPset -> !datenPset.getName().isEmpty())
                 .collect(Collectors.toCollection(SetList::new));
     }
 
@@ -258,34 +296,6 @@ public class SetList extends SimpleListProperty<SetData> {
         setListChanged();
         return neu;
     }
-
-    public boolean addPset(SetData psetData) {
-        boolean play = false;
-        for (final SetData psetData1 : this) {
-            if (psetData1.isPlay()) {
-                play = true;
-                break;
-            }
-        }
-        if (play) {
-            psetData.setPlay(false);
-        }
-        final boolean ret = add(psetData);
-        setListChanged();
-        return ret;
-    }
-
-    public boolean addPset(SetList list) {
-        boolean ret = true;
-        for (final SetData entry : list) {
-            if (!addPset(entry)) {
-                ret = false;
-            }
-        }
-        setListChanged();
-        return ret;
-    }
-
 
     public ArrayList<String> getListProg() {
         return stream().map(SetData::toString).collect(Collectors.toCollection(ArrayList::new));

@@ -26,6 +26,7 @@ import de.mtplayer.mtp.gui.mediaDialog.MediaDialogController;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.gui.tools.Table;
 import de.p2tools.p2Lib.dialog.PAlert;
+import de.p2tools.p2Lib.guiTools.PColor;
 import de.p2tools.p2Lib.tools.log.PDuration;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -42,11 +43,14 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 public class FilmGuiController extends AnchorPane {
-    SplitPane splitPane = new SplitPane();
-    ScrollPane scrollPane = new ScrollPane();
-    TableView<Film> tableView = new TableView<>();
+    private final SplitPane splitPane = new SplitPane();
+    private final ScrollPane scrollPane = new ScrollPane();
+    private final TableView<Film> tableView = new TableView<>();
 
-    private final AnchorPane filmInfoPane = new AnchorPane();
+    private final TabPane infoTab = new TabPane();
+    private final AnchorPane infoPane = new AnchorPane();
+    private final AnchorPane filmPane = new AnchorPane();
+    private final TilePane tilePaneButton = new TilePane();
 
     private final ProgData progData;
     private FilmGuiInfoController filmGuiInfoController;
@@ -59,12 +63,7 @@ public class FilmGuiController extends AnchorPane {
 
     public FilmGuiController() {
         progData = ProgData.getInstance();
-
-        scrollPane.setFitToHeight(true);
-        scrollPane.setFitToWidth(true);
-        scrollPane.setContent(tableView);
-
-        setInfoTabPane();
+        sortedList = progData.filmlistFiltered.getSortedList();
 
         AnchorPane.setLeftAnchor(splitPane, 0.0);
         AnchorPane.setBottomAnchor(splitPane, 0.0);
@@ -73,12 +72,12 @@ public class FilmGuiController extends AnchorPane {
         splitPane.setOrientation(Orientation.VERTICAL);
         getChildren().addAll(splitPane);
 
-        sortedList = progData.filmlistFiltered.getSortedList();
+        scrollPane.setFitToHeight(true);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setContent(tableView);
 
-        filmGuiInfoController = new FilmGuiInfoController(filmInfoPane);
-
-        boolInfoOn.addListener((observable, oldValue, newValue) -> setSplit());
-        setSplit();
+        initInfoPane();
+        setInfoPane();
 
         initTable();
         initListener();
@@ -96,23 +95,93 @@ public class FilmGuiController extends AnchorPane {
         return tableView.getSelectionModel().getSelectedItems().size();
     }
 
-    private void setSplit() {
-        //     splitPane.getItems().addAll(scrollPane, filmInfoPane);
-        filmInfoPane.setVisible(boolInfoOn.getValue());
-        filmInfoPane.setManaged(boolInfoOn.getValue());
-        if (!boolInfoOn.getValue()) {
+    private void initInfoPane() {
+        filmGuiInfoController = new FilmGuiInfoController(filmPane);
+        boolInfoOn.addListener((observable, oldValue, newValue) -> setInfoPane());
 
+        tilePaneButton.setVgap(15);
+        tilePaneButton.setHgap(15);
+        tilePaneButton.setPadding(new Insets(10));
+        tilePaneButton.setStyle("-fx-border-color: -fx-text-box-border; " +
+                "-fx-border-radius: 5px; " +
+                "-fx-border-width: 1;");
+
+//        filmPane.setMinHeight(10);
+    }
+
+    private void setInfoPane() {
+        infoPane.setVisible(boolInfoOn.getValue());
+        infoPane.setManaged(boolInfoOn.getValue());
+
+        if (boolInfoOn.getValue()) {
+            bound = true;
+            setInfoTabPane();
+            splitPane.getDividers().get(0).positionProperty().bindBidirectional(splitPaneProperty);
+
+        } else {
             if (bound) {
                 splitPane.getDividers().get(0).positionProperty().unbindBidirectional(splitPaneProperty);
             }
 
-            splitPane.getItems().clear();
-            splitPane.getItems().add(scrollPane);
+            if (splitPane.getItems().size() != 1) {
+                splitPane.getItems().clear();
+                splitPane.getItems().add(scrollPane);
+            }
+        }
+    }
 
-        } else {
-            bound = true;
-            setInfoTabPane();
-            splitPane.getDividers().get(0).positionProperty().bindBidirectional(splitPaneProperty);
+    private void setInfoTabPane() {
+        final SetList setList = progData.setList.getListButton();
+
+        if (setList.isEmpty()) {
+            // dann brauchen wir den Tab mit den Button nicht
+            if (splitPane.getItems().size() != 2 || splitPane.getItems().get(1) != filmPane) {
+                splitPane.getItems().clear();
+                splitPane.getItems().addAll(scrollPane, filmPane);
+            }
+            return;
+        }
+
+
+        // Button wieder aufbauen
+        tilePaneButton.getChildren().clear();
+        setList.stream().forEach(setData -> {
+            Button btn = new Button(setData.getName());
+            btn.setMaxWidth(Double.MAX_VALUE);
+            if (!setData.getColor().equals(SetData.RESET_COLOR)) {
+                final String c = PColor.getCssColor(setData.getColor());
+                final String css = "-fx-border-color: #" + c + "; " +
+                        "-fx-border-radius: 3px; " +
+                        "-fx-border-width: 2; ";
+
+                btn.setStyle(css);
+            }
+
+            btn.setOnAction(a -> playFilmUrlWithSet(setData));
+            tilePaneButton.getChildren().add(btn);
+        });
+
+
+        if (splitPane.getItems().size() != 2 || splitPane.getItems().get(1) != infoTab) {
+            splitPane.getItems().clear();
+            splitPane.getItems().addAll(scrollPane, infoTab);
+
+            ScrollPane scrollPane = new ScrollPane();
+            scrollPane.setFitToWidth(true);
+            scrollPane.setFitToHeight(true);
+            scrollPane.setPadding(new Insets(10));
+            scrollPane.setContent(tilePaneButton);
+
+            Tab filmInfoTab = new Tab("Filminfo");
+            filmInfoTab.setClosable(false);
+            filmInfoTab.setContent(filmPane);
+
+            Tab setTab = new Tab("Startbutton");
+            setTab.setClosable(false);
+            setTab.setContent(scrollPane);
+
+            infoTab.getTabs().clear();
+            infoTab.getTabs().addAll(filmInfoTab, setTab);
         }
     }
 
@@ -194,7 +263,7 @@ public class FilmGuiController extends AnchorPane {
             if (progData.setList.getListButton().size() > 2) {
                 boolInfoOn.set(true);
             }
-            setSplit();
+            setInfoPane();
         });
         Listener.addListener(new Listener(Listener.EREIGNIS_GUI_COLOR_CHANGED, FilmGuiController.class.getSimpleName()) {
             @Override
@@ -203,44 +272,6 @@ public class FilmGuiController extends AnchorPane {
 //                Table.refresh_table(tableView);
             }
         });
-    }
-
-    private void setInfoTabPane() {
-        final SetList list = progData.setList.getListButton();
-        splitPane.getItems().clear();
-
-        if (list.isEmpty()) {
-            // dann brauchen wir den Tab mit den Button nicht
-            splitPane.getItems().addAll(scrollPane, filmInfoPane);
-            return;
-        }
-
-        TilePane tilePane = new TilePane();
-        tilePane.setVgap(15);
-        tilePane.setHgap(15);
-        tilePane.setPadding(new Insets(20));
-        list.stream().forEach(setData -> {
-            Button btn = new Button(setData.getName());
-            btn.setMaxWidth(Double.MAX_VALUE);
-            tilePane.getChildren().add(btn);
-            btn.setOnAction(a -> playFilmUrlWithSet(setData));
-        });
-
-        ScrollPane sc = new ScrollPane();
-        sc.setFitToWidth(true);
-        sc.setContent(tilePane);
-
-        Tab filmInfoTab = new Tab("Filminfo");
-        filmInfoTab.setClosable(false);
-        filmInfoTab.setContent(filmInfoPane);
-
-        Tab setTab = new Tab("Startbutton");
-        setTab.setClosable(false);
-        setTab.setContent(sc);
-
-        final TabPane tabPane = new TabPane();
-        tabPane.getTabs().addAll(filmInfoTab, setTab);
-        splitPane.getItems().addAll(scrollPane, tabPane);
     }
 
     private void initTable() {

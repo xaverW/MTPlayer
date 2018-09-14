@@ -92,11 +92,17 @@ public class SetDataPane {
         if (setData != null) {
             txtName.textProperty().bindBidirectional(setData.nameProperty());
             txtName.textProperty().addListener(changeListener);
+
             txtDescription.textProperty().bindBidirectional(setData.descriptionProperty());
+
             tglSave.selectedProperty().bindBidirectional(setData.saveProperty());
-            tglButton.selectedProperty().bindBidirectional(setData.buttonProperty());
             tglAbo.selectedProperty().bindBidirectional(setData.aboProperty());
+
+            tglButton.selectedProperty().bindBidirectional(setData.buttonProperty());
+            tglButton.selectedProperty().addListener(changeListener);
+
             colorPicker.valueProperty().bindBidirectional(setData.colorProperty());
+            colorPicker.valueProperty().addListener(changeListener);
 
             tglSubdir.selectedProperty().bindBidirectional(setData.genThemeProperty());
             txtDestPath.textProperty().bindBidirectional(setData.destPathProperty());
@@ -131,11 +137,17 @@ public class SetDataPane {
         if (setData != null) {
             txtName.textProperty().unbindBidirectional(setData.nameProperty());
             txtName.textProperty().removeListener(changeListener);
+
             txtDescription.textProperty().unbindBidirectional(setData.descriptionProperty());
+
             tglSave.selectedProperty().unbindBidirectional(setData.saveProperty());
-            tglButton.selectedProperty().unbindBidirectional(setData.buttonProperty());
             tglAbo.selectedProperty().unbindBidirectional(setData.aboProperty());
+
+            tglButton.selectedProperty().unbindBidirectional(setData.buttonProperty());
+            tglButton.selectedProperty().removeListener(changeListener);
+
             colorPicker.valueProperty().unbindBidirectional(setData.colorProperty());
+            colorPicker.valueProperty().removeListener(changeListener);
 
             tglSubdir.selectedProperty().unbindBidirectional(setData.genThemeProperty());
             txtDestPath.textProperty().unbindBidirectional(setData.destPathProperty());
