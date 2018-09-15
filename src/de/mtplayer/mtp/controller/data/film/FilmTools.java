@@ -31,33 +31,6 @@ public class FilmTools {
 
     public static final String THEME_LIVE = "Livestream";
 
-//    public static void getInfoText(Film film, ObservableList list) {
-//
-//        list.clear();
-//
-//        if (film == null) {
-//            return;
-//        }
-//
-//        Text text1, text2;
-//        text1 = new Text(film.arr[FilmXml.FILM_CHANNEL] + "  -  " + film.arr[FilmXml.FILM_TITLE] + PConst.LINE_SEPARATORx2);
-//        text1.setFont(Font.font(null, FontWeight.BOLD, -1));
-//
-//        text2 = new Text(film.arr[FilmXml.FILM_DESCRIPTION]);
-//        text2.setWrappingWidth(20);
-//
-//        list.addAll(text1, text2);
-//
-//        if (!film.arr[FilmXml.FILM_WEBSITE].isEmpty()) {
-//
-//            PHyperlink hyperlink = new PHyperlink(film.arr[FilmXml.FILM_WEBSITE],
-//                    ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
-//
-//            list.addAll(new Text(PConst.LINE_SEPARATORx2 + " zur Website: "), hyperlink);
-//
-//        }
-//    }
-
     public static String getSizeFromWeb(Film film, String url) {
         if (url.equals(film.arr[FilmXml.FILM_URL])) {
             return film.arr[FilmXml.FILM_SIZE];
@@ -68,13 +41,18 @@ public class FilmTools {
 
     public static void setFilmShown(ProgData progData, ArrayList<Film> filmArrayList, boolean set) {
 
-        filmArrayList.stream().forEach(film -> {
-            if (set) {
-                progData.history.writeFilmArray(filmArrayList);
-            } else {
-                progData.history.removeFilmListFromHistory(filmArrayList);
+        Thread th = new Thread(() -> {
+            try {
+                if (set) {
+                    progData.history.writeFilmListToHistory(filmArrayList);
+                } else {
+                    progData.history.removeFilmListFromHistory(filmArrayList);
+                }
+            } catch (Exception ex) {
             }
         });
+        th.setName("setFilmShown");
+        th.start();
     }
 
 

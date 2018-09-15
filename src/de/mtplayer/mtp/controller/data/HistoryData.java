@@ -120,6 +120,9 @@ public class HistoryData implements Comparable<HistoryData> {
     }
 
     private static String cleanUp(String s) {
+        if (s.contains("\n")) {
+            System.out.println(s);
+        }
         s = s.replace(PConst.LINE_SEPARATOR, "");
         s = s.replace("|", "");
         s = s.replace(SEPARATOR_1, "");

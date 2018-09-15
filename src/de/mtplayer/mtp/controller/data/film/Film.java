@@ -47,7 +47,7 @@ public class Film extends FilmProps {
         setHd(!arr[FilmXml.FILM_URL_HD].isEmpty() || !arr[FilmXml.FILM_URL_RTMP_HD].isEmpty());
         setSmall(!arr[FilmXml.FILM_URL_SMALL].isEmpty() || !arr[FilmXml.FILM_URL_RTMP_SMALL].isEmpty());
         setUt(!arr[FilmXml.FILM_URL_SUBTITLE].isEmpty());
-        setShown(ProgData.getInstance().history.checkIfExists(getUrlHistory()));
+        setShown(ProgData.getInstance().history.checkIfUrlExists(getUrlHistory()));
         preserveMemory();
 
         // ================================

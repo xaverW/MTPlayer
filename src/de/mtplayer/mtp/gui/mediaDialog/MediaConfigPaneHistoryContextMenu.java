@@ -54,9 +54,9 @@ public class MediaConfigPaneHistoryContextMenu {
         MenuItem miDelUrl = new MenuItem("Url aus der Liste löschen");
         miDelUrl.setOnAction(a -> {
             if (history) {
-                progData.history.removeListFromHistory(historyDataArrayList);
+                progData.history.removeHistoryListFromHistory(historyDataArrayList);
             } else {
-                progData.erledigteAbos.removeListFromHistory(historyDataArrayList);
+                progData.erledigteAbos.removeHistoryListFromHistory(historyDataArrayList);
             }
         });
 
