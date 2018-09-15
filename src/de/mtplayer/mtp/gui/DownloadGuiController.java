@@ -239,25 +239,6 @@ public class DownloadGuiController extends AnchorPane {
         downloadStartAgain(all, alsoFinished);
     }
 
-//    public void searchForAbosAndMaybeStart() {
-//        if (progData.loadFilmlist.getPropLoadFilmlist()) {
-//            // wird danach eh gemacht
-//            return;
-//        }
-//
-//        PDuration.counterStart("DownloadGuiController.searchForAbosAndMaybeStart");
-//        progData.mtPlayerController.setMasker();
-//
-//        // erledigte entfernen, nicht gestartete Abos entfernen und neu nach Abos suchen
-//        progData.downloadList.searchForAbos();
-//        if (Boolean.parseBoolean(ProgConfig.DOWNLOAD_START_NOW.get())) {
-//            // und wenn gewollt auch gleich starten
-//            progData.downloadGuiController.startDownload(true, false);
-//        }
-//        progData.mtPlayerController.resetMasker();
-//        PDuration.counterStop("DownloadGuiController.searchForAbosAndMaybeStart");
-//    }
-
     public void stopDownload(boolean all) {
         stopDownloads(all);
     }

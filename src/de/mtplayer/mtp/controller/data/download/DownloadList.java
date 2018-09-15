@@ -67,10 +67,6 @@ public class DownloadList extends SimpleListProperty<Download> {
         return super.add(d);
     }
 
-//    public synchronized boolean addAll(ArrayList<Download> d) {
-//        return super.addAll(d);
-//    }
-
     @Override
     public synchronized boolean addAll(Collection<? extends Download> elements) {
         return super.addAll(elements);

@@ -92,7 +92,7 @@ public class DownloadListAbo {
 
         if (progData.setList.getPsetAbo("") == null) {
             // dann fehlt ein Set für die Abos
-            new NoSetDialogController(progData, NoSetDialogController.TEXT.ABO);
+            Platform.runLater(() -> new NoSetDialogController(progData, NoSetDialogController.TEXT.ABO));
             return;
         }
 

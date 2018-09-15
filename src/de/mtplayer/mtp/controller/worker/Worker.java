@@ -76,20 +76,21 @@ public class Worker {
 
         Thread th = new Thread(() -> {
             try {
-
                 // erledigte entfernen, nicht gestartete Abos entfernen und neu nach Abos suchen
                 progData.downloadList.searchForAbos();
+
                 if (Boolean.parseBoolean(ProgConfig.DOWNLOAD_START_NOW.get())) {
-                    // und wenn gewollt auch gleich starten
+                    // und wenn gewollt auch gleich starten, kann kein Dialog aufgehen: false!
                     progData.downloadGuiController.startDownload(true, false);
                 }
+
                 progData.mtPlayerController.resetMasker();
                 PDuration.counterStop("DownloadGuiController.searchForAbosAndMaybeStart");
-
             } catch (Exception ex) {
                 PLog.errorLog(951241204, ex);
             }
         });
+
         th.setName("searchForAbosAndMaybeStart");
         th.start();
     }
