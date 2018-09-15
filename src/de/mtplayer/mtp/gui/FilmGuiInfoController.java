@@ -36,6 +36,7 @@ public class FilmGuiInfoController {
     private final Button btnReset = new Button("@");
     private final Text textTitle = new Text("");
     private final HBox hBox = new HBox(10);
+    private final Label lblUrl = new Label("zur Website: ");
 
     private Film film = null;
     private String oldDescription = "";
@@ -53,6 +54,8 @@ public class FilmGuiInfoController {
 
         textTitle.setFont(Font.font(null, FontWeight.BOLD, -1));
         hBox.setAlignment(Pos.CENTER_LEFT);
+        lblUrl.setMinWidth(Region.USE_PREF_SIZE);
+
         textArea.setWrapText(true);
         textArea.setPrefRowCount(4);
         textArea.textProperty().addListener((a, b, c) -> setFilmDescription());
@@ -70,6 +73,8 @@ public class FilmGuiInfoController {
     }
 
     public void setFilm(Film film) {
+        hBox.getChildren().clear();
+
         if (film == null) {
             this.film = null;
             textTitle.setText("");
@@ -80,7 +85,6 @@ public class FilmGuiInfoController {
         }
 
         this.film = film;
-        hBox.getChildren().clear();
 
         textTitle.setText(film.arr[FilmXml.FILM_CHANNEL] + "  -  " + film.arr[FilmXml.FILM_TITLE]);
         textArea.setText(film.getDescription());
@@ -90,7 +94,7 @@ public class FilmGuiInfoController {
         if (!film.arr[FilmXml.FILM_WEBSITE].isEmpty()) {
             PHyperlink hyperlink = new PHyperlink(film.arr[FilmXml.FILM_WEBSITE],
                     ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
-            hBox.getChildren().addAll(new Label(" zur Website: "), hyperlink);
+            hBox.getChildren().addAll(lblUrl, hyperlink);
         }
     }
 
