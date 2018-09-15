@@ -24,6 +24,7 @@ import de.mtplayer.mtp.controller.data.abo.Abo;
 import de.mtplayer.mtp.gui.dialog.NoSetDialogController;
 import de.mtplayer.mtp.tools.filmListFilter.FilmlistBlackFilter;
 import de.p2tools.p2Lib.tools.log.PDuration;
+import javafx.application.Platform;
 
 import java.util.*;
 
@@ -62,32 +63,8 @@ public class DownloadListAbo {
             // das kostet Zeit
             downloadList.removeAll(syncRemove);
         }
+
         downloadList.resetPlacedBack();// zurückgestellte wieder aktivieren
-
-
-//        final Iterator<Download> it = downloadList.iterator();
-//        while (it.hasNext()) {
-//            final Download d = it.next();
-//            if (d.isStateStoped()) {
-//                // guter Rat teuer was da besser wäre??
-//                // wird auch nach dem Neuladen der Filmliste aufgerufen: also Finger weg
-//                continue;
-//            }
-//            if (!d.isAbo()) {
-//                continue;
-//            }
-//            if (d.isStateInit()) {
-//                // noch nicht gestartet
-////                it.remove();
-//                remove.add(d); // braucht genauso lang :(
-//            } else if (d.isStateError()) {
-//                // fehlerhafte
-//                d.resetDownload();
-//            }
-//        }
-//        downloadList.removeAll(remove);
-//        downloadList.forEach(d -> d.setPlacedBack(false)); // zurückgestellte wieder aktivieren
-//
 
         PDuration.counterStop("DownloadListAbo.refreshAbos");
     }
@@ -99,7 +76,7 @@ public class DownloadListAbo {
         // in die Liste der Downloads eintragen
         PDuration.counterStart("DownloadListAbo.searchForAbos");
 
-        progData.aboList.stream().forEach(abo -> abo.setHit(0)); // den Trefferzähler zurücksetzen
+        progData.aboList.stream().forEach(abo -> abo.clearCountHit()); // den Trefferzähler zurücksetzen
 
         ArrayList<Download> downloadArrayList = new ArrayList<>();
         List<Download> syncDownloadArrayList = Collections.synchronizedList(downloadArrayList);
@@ -123,12 +100,18 @@ public class DownloadListAbo {
         progData.filmlist.parallelStream().forEach(film -> {
             final Abo aboForFilm = progData.aboList.getAboForFilm_quick(film, true);
 
-            if (aboForFilm == null || !aboForFilm.isActive()) {
-                // dann gibts dafür kein Abo oder es ist ausgeschaltet
+            if (aboForFilm == null) {
+                // dann gibts dafür kein Abo
                 return;
             }
 
-            aboForFilm.incrementHit();
+            aboForFilm.incrementCountHit();
+
+            if (!aboForFilm.isActive()) {
+                // oder es ist ausgeschaltet
+                return;
+            }
+
 
             if (checkWithBlackList && !FilmlistBlackFilter.checkBlacklistForDownloads(film)) {
                 // Blacklist auch bei Abos anwenden und Film wird blockiert
@@ -157,61 +140,19 @@ public class DownloadListAbo {
             found = true;
         });
 
-//        boolean found = false;
-//        Abo abo;
-//        for (final Film film : progData.filmlist) {
-//            abo = progData.aboList.getAboForFilm_quick(film, true /* auch die Länge überprüfen */);
-//
-//            if (abo == null) {
-//                // dann gibts dafür kein Abo
-//                continue;
-//            }
-//
-//            if (!abo.isActive()) {
-//                // oder es ist ausgeschaltet
-//                continue;
-//            }
-//
-//            if (checkWithBlackList && !FilmlistBlackFilter.checkBlacklistForDownloads(film)) {
-//                // Blacklist auch bei Abos anwenden
-//                continue;
-//            }
-//
-//            if (progData.erledigteAbos.checkIfExists(film.getUrlHistory())) {
-//                // ist schon mal geladen worden
-//                continue;
-//            }
-//
-//            final SetData setData = progData.setList.getPsetAbo(abo.getPsetName());
-//            if (setData == null) {
-//                PException.throwPException(941202365, "searchForAbos: setData == null");
-//            }
-//
-//            // mit der tatsächlichen URL prüfen, ob die URL schon in der Downloadliste ist
-//            final String urlDownload = film.getUrlForResolution(abo.getResolution());
-//            if (downloadsAlreadyInTheListHash.contains(urlDownload)) {
-//                continue;
-//            }
-//
-//            // diesen Film in die Downloadliste eintragen
-//            downloadsAlreadyInTheListHash.add(urlDownload);
-//            abo.setDate(new MDate());
-//
-//            // nur den Namen anpassen, falls geändert oder altes Set nicht mehr existiert
-//            abo.setName(setData.getName());
-//
-//            // dann in die Liste schreiben
-//            downloadArrayList.add(new Download(setData, film, DownloadInfos.SRC_ABO, abo, "", "", "" /* Aufloesung */));
-//            found = true;
-//        }
 
-        if (found) {
-            downloadList.addAll(syncDownloadArrayList);
-            downloadList.setNumbersInList();
-        }
+        Platform.runLater(() -> {
+            if (found) {
+                downloadList.addAll(syncDownloadArrayList);
+                downloadList.setNumbersInList();
+            }
+            syncDownloadArrayList.clear();
+            syncDownloadsAlreadyInTheListHash.clear();
 
-        syncDownloadArrayList.clear();
-        syncDownloadsAlreadyInTheListHash.clear();
+            // und jetzt die hits eintragen (gesamt, damit nicht bei jedem die Tabelle geändert werden muss)
+            progData.aboList.stream().forEach(abo -> abo.setCountedHits());
+        });
+
         PDuration.counterStop("DownloadListAbo.searchForAbos");
     }
 

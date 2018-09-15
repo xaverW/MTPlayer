@@ -41,6 +41,7 @@ public class AboProps extends AboXml {
     private final StringProperty psetName = new SimpleStringProperty("");
 
     private final IntegerProperty hit = new SimpleIntegerProperty(0);
+    private int countHit = 0;
 
     public final Property[] properties = {nr, active, name, resolution,
             channel, channelExact, theme, themeExact, title, themeTitle, somewhere,
@@ -273,8 +274,16 @@ public class AboProps extends AboXml {
         this.hit.set(hit);
     }
 
-    public synchronized void incrementHit() {
-        this.hit.set(hit.getValue() + 1);
+    public synchronized void clearCountHit() {
+        countHit = 0;
+    }
+
+    public synchronized void incrementCountHit() {
+        this.countHit = ++countHit;
+    }
+
+    public void setCountedHits() {
+        this.setHit(countHit);
     }
 
     public void setPropsFromXml() {

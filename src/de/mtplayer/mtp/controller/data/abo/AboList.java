@@ -325,4 +325,9 @@ public class AboList extends SimpleListProperty<Abo> {
 
         PDuration.counterStop("Abo in Filmliste eintragen");
     }
+
+//    public synchronized void setHitCount() {
+//        stream().forEach(abo -> abo.setCountedHits());
+//        listChanged.setValue(!listChanged.get());
+//    }
 }

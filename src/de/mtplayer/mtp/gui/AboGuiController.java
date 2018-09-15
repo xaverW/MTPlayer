@@ -57,6 +57,7 @@ public class AboGuiController extends AnchorPane {
         sortedAbos = new SortedList<>(filteredAbos);
         setFilterProperty();
 
+        initListener();
         initTable();
     }
 
@@ -110,6 +111,11 @@ public class AboGuiController extends AnchorPane {
         return ret;
     }
 
+    private void initListener() {
+        progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
+            table.refresh();
+        });
+    }
 
     private void initTable() {
         table.setTableMenuButtonVisible(true);
