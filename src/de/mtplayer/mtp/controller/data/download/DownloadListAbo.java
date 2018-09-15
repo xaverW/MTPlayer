@@ -141,17 +141,17 @@ public class DownloadListAbo {
         });
 
 
-        Platform.runLater(() -> {
-            if (found) {
-                downloadList.addAll(syncDownloadArrayList);
-                downloadList.setNumbersInList();
-            }
-            syncDownloadArrayList.clear();
-            syncDownloadsAlreadyInTheListHash.clear();
+//        Platform.runLater(() -> {
+        if (found) {
+            downloadList.addAll(syncDownloadArrayList);
+            downloadList.setNumbersInList();
+        }
+        syncDownloadArrayList.clear();
+        syncDownloadsAlreadyInTheListHash.clear();
 
-            // und jetzt die hits eintragen (gesamt, damit nicht bei jedem die Tabelle geändert werden muss)
-            progData.aboList.stream().forEach(abo -> abo.setCountedHits());
-        });
+        // und jetzt die hits eintragen (gesamt, damit nicht bei jedem die Tabelle geändert werden muss)
+        progData.aboList.stream().forEach(abo -> abo.setCountedHits());
+//        });
 
         PDuration.counterStop("DownloadListAbo.searchForAbos");
     }

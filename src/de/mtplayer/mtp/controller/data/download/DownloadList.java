@@ -275,7 +275,11 @@ public class DownloadList extends SimpleListProperty<Download> {
     }
 
 
-    public void startDownloads(ArrayList<Download> list, boolean alsoFinished) {
+    public void startDownloads() {
+        startDownloads(this, false);
+    }
+
+    public void startDownloads(Collection<Download> list, boolean alsoFinished) {
         if (download_startStop.startDownloads(list, alsoFinished)) {
             setDownloadsChanged();
         }

@@ -81,7 +81,7 @@ public class Worker {
 
                 if (Boolean.parseBoolean(ProgConfig.DOWNLOAD_START_NOW.get())) {
                     // und wenn gewollt auch gleich starten, kann kein Dialog aufgehen: false!
-                    progData.downloadGuiController.startDownload(true, false);
+                    progData.downloadList.startDownloads();
                 }
 
                 progData.mtPlayerController.resetMasker();

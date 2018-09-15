@@ -235,10 +235,6 @@ public class DownloadGuiController extends AnchorPane {
         downloadStartAgain(all, true);
     }
 
-    public void startDownload(boolean all, boolean alsoFinished) {
-        downloadStartAgain(all, alsoFinished);
-    }
-
     public void stopDownload(boolean all) {
         stopDownloads(all);
     }

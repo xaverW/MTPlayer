@@ -22,6 +22,7 @@ import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.tools.log.PDuration;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class DownloadStartStop {
 
@@ -173,7 +174,7 @@ public class DownloadStartStop {
      * @param alsoFinished
      */
 
-    public boolean startDownloads(ArrayList<Download> list, boolean alsoFinished) {
+    public boolean startDownloads(Collection<Download> list, boolean alsoFinished) {
         PDuration.counterStart("DownloadStartStop.startDownloads");
 
         PAlert.BUTTON answer = PAlert.BUTTON.UNKNOWN;
