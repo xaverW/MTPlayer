@@ -40,6 +40,7 @@ public class AboProps extends AboXml {
     private final ObjectProperty<MDate> date = new SimpleObjectProperty<>(new MDate(0));
     private final StringProperty psetName = new SimpleStringProperty("");
 
+    private final IntegerProperty hit = new SimpleIntegerProperty(0);
 
     public final Property[] properties = {nr, active, name, resolution,
             channel, channelExact, theme, themeExact, title, themeTitle, somewhere,
@@ -258,6 +259,22 @@ public class AboProps extends AboXml {
 
     public void setPsetName(String psetName) {
         this.psetName.set(psetName);
+    }
+
+    public int getHit() {
+        return hit.get();
+    }
+
+    public IntegerProperty hitProperty() {
+        return hit;
+    }
+
+    public void setHit(int hit) {
+        this.hit.set(hit);
+    }
+
+    public synchronized void incrementHit() {
+        this.hit.set(hit.getValue() + 1);
     }
 
     public void setPropsFromXml() {

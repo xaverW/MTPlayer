@@ -41,6 +41,10 @@ public class TableAbo {
         activColumn.setCellFactory(callbackAktiv);
         activColumn.getStyleClass().add("alignCenter");
 
+        final TableColumn<Abo, Integer> hitColumn = new TableColumn<>("Treffer");
+        hitColumn.setCellValueFactory(new PropertyValueFactory<>("hit"));
+        hitColumn.getStyleClass().add("alignCenterLeft");
+
         final TableColumn<Abo, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         nameColumn.getStyleClass().add("alignCenterLeft");
@@ -100,7 +104,7 @@ public class TableAbo {
         psetColumn.getStyleClass().add("alignCenterLeft");
 
         return new TableColumn[]{
-                nrColumn, activColumn, nameColumn, resColumn, senderColumn, senderExactColumn,
+                nrColumn, activColumn, hitColumn, nameColumn, resColumn, senderColumn, senderExactColumn,
                 themeColumn, themeExactColumn, titleColumn, themeTitleColumn,
                 somewhereColumn, minColumn, maxColumn, destinationColumn, datumColumn, psetColumn};
 

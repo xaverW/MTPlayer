@@ -99,6 +99,8 @@ public class DownloadListAbo {
         // in die Liste der Downloads eintragen
         PDuration.counterStart("DownloadListAbo.searchForAbos");
 
+        progData.aboList.stream().forEach(abo -> abo.setHit(0)); // den Trefferzähler zurücksetzen
+
         ArrayList<Download> downloadArrayList = new ArrayList<>();
         List<Download> syncDownloadArrayList = Collections.synchronizedList(downloadArrayList);
 
@@ -125,6 +127,8 @@ public class DownloadListAbo {
                 // dann gibts dafür kein Abo oder es ist ausgeschaltet
                 return;
             }
+
+            aboForFilm.incrementHit();
 
             if (checkWithBlackList && !FilmlistBlackFilter.checkBlacklistForDownloads(film)) {
                 // Blacklist auch bei Abos anwenden und Film wird blockiert
