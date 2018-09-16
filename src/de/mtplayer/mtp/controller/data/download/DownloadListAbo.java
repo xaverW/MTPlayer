@@ -125,7 +125,7 @@ public class DownloadListAbo {
                 return;
             }
 
-            if (progData.erledigteAbos.checkIfUrlExists(film.getUrlHistory())) {
+            if (progData.erledigteAbos.checkIfUrlAlreadyIn(film.getUrlHistory())) {
                 // ist schon mal geladen worden
                 return;
             }

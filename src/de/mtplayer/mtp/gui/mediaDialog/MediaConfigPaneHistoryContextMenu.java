@@ -50,7 +50,6 @@ public class MediaConfigPaneHistoryContextMenu {
     private void getMenu(ContextMenu contextMenu) {
         Film film = progData.filmlist.getFilmByUrl(historyDataArrayList.get(0).getUrl());
 
-        // Start/Stop
         MenuItem miDelUrl = new MenuItem("Url aus der Liste löschen");
         miDelUrl.setOnAction(a -> {
             if (history) {

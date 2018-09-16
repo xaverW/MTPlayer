@@ -17,11 +17,11 @@
 package de.mtplayer.mtp.controller.data;
 
 import de.mtplayer.mLib.tools.StringFormatters;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmTools;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
-import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.tools.log.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.beans.property.SimpleListProperty;
@@ -34,10 +34,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 import java.util.function.Predicate;
 
-@SuppressWarnings("serial")
 public class HistoryList extends SimpleListProperty<HistoryData> {
 
     private final HashSet<String> urlHash = new HashSet<>();
@@ -52,7 +54,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         this.fileName = fileName;
         this.settingsDir = settingsDir;
 
-        createList();
+        readHistoryDataFromFile();
     }
 
     public SortedList<HistoryData> getSortedList() {
@@ -81,251 +83,244 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
 
     public synchronized void clearAll() {
         clearList();
-        final Path urlPath = getUrlFilePath();
         try {
+            final Path urlPath = getUrlFilePath();
             Files.deleteIfExists(urlPath);
         } catch (final IOException ignored) {
         }
     }
 
-    public synchronized boolean checkIfUrlExists(String urlFilm) {
+    public synchronized boolean checkIfUrlAlreadyIn(String urlFilm) {
         // wenn url gefunden, dann true zurück
         return urlHash.contains(urlFilm);
     }
 
-    public synchronized boolean checkIfItsLiveStream(String theme) {
+    public synchronized boolean checkIfLiveStream(String theme) {
         // live ist nie alt
-        if (theme.equals(FilmTools.THEME_LIVE)) {
-            return true;
-        }
-        return false;
+        return theme.equals(FilmTools.THEME_LIVE);
     }
 
     public synchronized boolean writeHistoryDataToHistory(String theme, String title, String url) {
-        if (checkIfUrlExists(url) || checkIfItsLiveStream(theme)) {
+        if (checkIfUrlAlreadyIn(url) || checkIfLiveStream(theme)) {
             return true;
         }
 
-        boolean ret = false;
-        String text;
+        final ArrayList<HistoryData> list = new ArrayList<>();
         final String datum = StringFormatters.FORMATTER_ddMMyyyy.format(new Date());
         HistoryData historyData = new HistoryData(datum, theme, title, url);
-        addToList(historyData);
+        addToThisList(historyData);
+        list.add(historyData);
 
-        try (BufferedWriter bufferedWriter =
-                     new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(getUrlFilePath(), StandardOpenOption.APPEND)))) {
-            text = HistoryData.getLine(datum, theme, title, url);
-            bufferedWriter.write(text);
-            ret = true;
-        } catch (final Exception ex) {
-            PLog.errorLog(945258023, ex);
-        }
-        return ret;
+        return writeHistoryDataToFile(list, true);
     }
 
     public synchronized boolean writeFilmListToHistory(ArrayList<Film> filmList) {
-        boolean ret = false;
+        final ArrayList<HistoryData> list = new ArrayList<>(filmList.size());
         final String datum = StringFormatters.FORMATTER_ddMMyyyy.format(new Date());
 
-        try (BufferedWriter bufferedWriter =
-                     new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(getUrlFilePath(), StandardOpenOption.APPEND)))) {
-
-            for (final Film film : filmList) {
-                if (checkIfItsLiveStream(film.getTheme())) {
-                    continue;
-                }
-
-                // auch wenn schon in der History, dann doch den Film als gesehen markieren
-                film.setShown(true);
-                film.setActHist(true);
-
-                if (checkIfUrlExists(film.getUrlHistory())) {
-                    continue;
-                }
-
-                HistoryData historyData = new HistoryData(datum, film.arr[FilmXml.FILM_THEME], film.arr[FilmXml.FILM_TITLE], film.getUrlHistory());
-                addToList(historyData);
-                bufferedWriter.write(historyData.getLine());
+        for (final Film film : filmList) {
+            if (checkIfLiveStream(film.getTheme())) {
+                continue;
             }
 
+            // auch wenn schon in der History, dann doch den Film als gesehen markieren
+            film.setShown(true);
+            film.setActHist(true);
+
+            if (checkIfUrlAlreadyIn(film.getUrlHistory())) {
+                continue;
+            }
+
+            HistoryData historyData = new HistoryData(datum, film.arr[FilmXml.FILM_THEME], film.arr[FilmXml.FILM_TITLE], film.getUrlHistory());
+            addToThisList(historyData);
+            list.add(historyData);
+        }
+
+        return writeHistoryDataToFile(list, true);
+    }
+
+    public synchronized boolean writeDownloadListToHistory(ArrayList<Download> downloadList) {
+        final ArrayList<HistoryData> list = new ArrayList<>(downloadList.size());
+        final String datum = StringFormatters.FORMATTER_ddMMyyyy.format(new Date());
+
+        for (final Download download : downloadList) {
+            if (checkIfLiveStream(download.getTheme())) {
+                continue;
+            }
+
+            // auch wenn schon in der History, dann doch den Film als gesehen markieren
+            if (download.getFilm() != null) {
+                download.getFilm().setShown(true);
+                download.getFilm().setActHist(true);
+            }
+
+            if (checkIfUrlAlreadyIn(download.getHistoryUrl())) {
+                continue;
+            }
+
+            HistoryData historyData = new HistoryData(datum, download.getTheme(), download.getTitle(), download.getHistoryUrl());
+            addToThisList(historyData);
+            list.add(historyData);
+        }
+
+        return writeHistoryDataToFile(list, true);
+    }
+
+    public synchronized void removeHistoryListFromHistory(ArrayList<HistoryData> historyDataList) {
+        // Logfile einlesen, entsprechende Zeile Filtern und dann Logfile überschreiben
+
+        if (historyDataList == null || historyDataList.isEmpty()) {
+            return;
+        }
+
+        final HashSet<String> hash = new HashSet<>(historyDataList.size() + 1, 0.75F);
+        for (HistoryData historyData : historyDataList) {
+            hash.add(historyData.getUrl());
+        }
+        setFilmNotShown(hash);
+
+        Thread th = new Thread(new Remove(hash));
+        th.setName("removeHistoryListFromHistory");
+        th.start();
+    }
+
+    public synchronized void removeFilmListFromHistory(ArrayList<Film> filmList) {
+        // Logfile einlesen, entsprechende Zeile Filtern und dann Logfile überschreiben
+
+        if (filmList == null || filmList.isEmpty()) {
+            return;
+        }
+
+        final HashSet<String> hash = new HashSet<>(filmList.size() + 1, 0.75F);
+        filmList.stream().forEach(film -> {
+            film.setShown(false); // todo mal vormerken ob evtl. die ganze Filmliste nach dieser URL durchsucht werden soll, wird sonst erst beim nächsten Start angezeigt
+            film.setActHist(false);
+            hash.add(film.getUrlHistory());
+        });
+
+        Thread th = new Thread(new Remove(hash));
+        th.setName("removeFilmListFromHistory");
+        th.start();
+    }
+
+    public synchronized void removeDownloadListFromHistory(ArrayList<Download> downloadList) {
+        // Logfile einlesen, entsprechende Zeile Filtern und dann Logfile überschreiben
+
+        if (downloadList == null || downloadList.isEmpty()) {
+            return;
+        }
+
+        final HashSet<String> hash = new HashSet<>(downloadList.size() + 1, 0.75F);
+        downloadList.stream().forEach(download -> {
+            if (download.getFilm() != null) {
+                download.getFilm().setShown(false);
+                download.getFilm().setActHist(false);
+            }
+            hash.add(download.getHistoryUrl());
+        });
+
+        Thread th = new Thread(new Remove(hash));
+        th.setName("removeDownloadListFromHistory");
+        th.start();
+    }
+
+    private void setFilmNotShown(HashSet<String> hashHistoryUrls) {
+        // in den Filmen für die zu löschenden URLs history löschen
+        ProgData.getInstance().filmlist.stream().forEach(film -> {
+            if (hashHistoryUrls.contains(film.getUrlForHash())) {
+                film.setShown(false);
+                film.setActHist(false);
+            }
+        });
+    }
+
+    private class Remove implements Runnable {
+        private boolean found = false;
+        private final ArrayList<HistoryData> newHistoryList = new ArrayList<>();
+        private final HashSet<String> urlHash;
+
+        public Remove(HashSet<String> urlHash) {
+            this.urlHash = urlHash;
+        }
+
+        public void run() {
+            final Path urlPath = getUrlFilePath();
+            if (Files.notExists(urlPath)) {
+                return;
+            }
+
+            PDuration.counterStart("removeUrlsFromHistory");
+            PLog.sysLog(String.format("Urls aus der History: %s löschen: " + urlHash.size(), fileName));
+
+            HistoryList.super.stream().forEach(historyData -> {
+                if (urlHash.contains(historyData.getUrl())) {
+                    found = true; // nur dann muss das Logfile auch geschrieben werden
+                } else {
+                    // kommt wieder in die history
+                    newHistoryList.add(historyData);
+                }
+            });
+
+            if (found) {
+                // und jetzt wieder schreiben, wenn nötig
+                writeHistoryDataToFile(newHistoryList, false);
+            }
+
+            replaceThisList(newHistoryList);
+            PDuration.counterStop("removeUrlsFromHistory");
+        }
+    }
+
+    private boolean writeHistoryDataToFile(ArrayList<HistoryData> list, boolean append) {
+        boolean ret = false;
+        try (BufferedWriter bufferedWriter = (append ?
+                new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(getUrlFilePath(), StandardOpenOption.APPEND))) :
+                new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(getUrlFilePath()))))
+        ) {
+
+            for (final HistoryData historyData : list) {
+                bufferedWriter.write(historyData.getLine());
+            }
             ret = true;
+
         } catch (final Exception ex) {
             PLog.errorLog(420312459, ex);
         }
         return ret;
     }
 
-    public synchronized boolean writeDownloadListToHistory(ArrayList<Download> downloadList) {
-        boolean ret = false;
-        final String datum = StringFormatters.FORMATTER_ddMMyyyy.format(new Date());
+    private void readHistoryDataFromFile() {
+        // neue Liste mit den URLs aus dem Logfile bauen
+        List<HistoryData> tmpList = new ArrayList<>();
+        final Path urlPath = getUrlFilePath();
 
-        try (BufferedWriter bufferedWriter =
-                     new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(getUrlFilePath(), StandardOpenOption.APPEND)))) {
-
-            for (final Download download : downloadList) {
-                if (checkIfItsLiveStream(download.getTheme())) {
-                    continue;
-                }
-
-                // auch wenn schon in der History, dann doch den Film als gesehen markieren
-                if (download.getFilm() != null) {
-                    download.getFilm().setShown(true);
-                    download.getFilm().setActHist(true);
-                }
-
-                if (checkIfUrlExists(download.getHistoryUrl())) {
-                    continue;
-                }
-
-                HistoryData historyData = new HistoryData(datum, download.getTheme(), download.getTitle(), download.getHistoryUrl());
-                addToList(historyData);
-                bufferedWriter.write(historyData.getLine());
+        try (LineNumberReader in = new LineNumberReader(new InputStreamReader(Files.newInputStream(urlPath)))) {
+            String line;
+            while ((line = in.readLine()) != null) {
+                final HistoryData historyData = HistoryData.getHistoryDataFromLine(line);
+                tmpList.add(historyData);
             }
 
-            ret = true;
+            if (!tmpList.isEmpty()) {
+                replaceThisList(tmpList);
+            }
+
         } catch (final Exception ex) {
-            PLog.errorLog(940120459, ex);
-        }
-        return ret;
-    }
-
-    public synchronized void removeFilmListFromHistory(ArrayList<Film> filmList) {
-        // Logfile einlesen, entsprechende Zeile Filtern und dann Logfile überschreiben
-        // wenn die URL im Logfiel ist, dann true zurück
-
-        if (filmList == null || filmList.isEmpty()) {
-            return;
-        }
-
-        final LinkedList<String> urlList = new LinkedList<>();
-        filmList.stream().forEach(film -> {
-            film.setShown(false);
-            film.setActHist(false);
-            urlList.add(film.getUrlHistory());
-        });
-
-        Thread th = new Thread(new Remove(urlList));
-        th.setName("removeFilmListFromHistory");
-        th.start();
-    }
-
-    public synchronized void removeHistoryListFromHistory(ArrayList<HistoryData> historyDataList) {
-        // Logfile einlesen, entsprechende Zeile Filtern und dann Logfile überschreiben
-        // wenn die URL im Logfiel ist, dann true zurück
-
-        if (historyDataList == null || historyDataList.isEmpty()) {
-            return;
-        }
-
-        final LinkedList<String> urlList = new LinkedList<>();
-        for (HistoryData historyData : historyDataList) {
-            urlList.add(historyData.getUrl());
-        }
-
-        Thread th = new Thread(new Remove(urlList));
-        th.setName("removeHistoryListFromHistory");
-        th.start();
-    }
-
-    public synchronized void removeDownloadListFromHistory(ArrayList<Download> downloadList) {
-        // Logfile einlesen, entsprechende Zeile Filtern und dann Logfile überschreiben
-        // wenn die URL im Logfiel ist, dann true zurück
-
-        if (downloadList == null || downloadList.isEmpty()) {
-            return;
-        }
-
-        final LinkedList<String> urlList = new LinkedList<>();
-        downloadList.stream().forEach(download -> {
-            if (download.getFilm() != null) {
-                download.getFilm().setShown(false);
-                download.getFilm().setActHist(false);
-            }
-            urlList.add(download.getHistoryUrl());
-        });
-
-        Thread th = new Thread(new Remove(urlList));
-        th.setName("removeDownloadListFromHistory");
-        th.start();
-    }
-
-    private class Remove implements Runnable {
-        String line;
-        boolean found = false, gef;
-        final LinkedList<String> newList = new LinkedList<>();
-        LinkedList<String> urlList;
-
-        public Remove(LinkedList<String> urlList) {
-            this.urlList = urlList;
-        }
-
-        public void run() {
-
-            final Path urlPath = getUrlFilePath();
-            if (Files.notExists(urlPath)) {
-                return;
-            }
-
-
-            PDuration.counterStart("removeDownloadListFromHistory");
-            PLog.sysLog(String.format("Urls aus der History: %s löschen: " + urlList.size(), fileName));
-
-            //todo-> ~1s Dauer
-
-            try (LineNumberReader in = new LineNumberReader(new InputStreamReader(Files.newInputStream(urlPath)))) {
-                while ((line = in.readLine()) != null) {
-                    gef = false;
-                    final String url = HistoryData.getUrlFromLine(line).getUrl();
-
-                    for (final String histUrl : urlList) {
-                        if (url.equals(histUrl)) {
-                            found = true; // nur dann muss das Logfile auch geschrieben werden
-                            gef = true; // und die Zeile wird verworfen
-                            break;
-                        }
-                    }
-                    if (!gef) {
-                        newList.add(line);
-                    }
-
-                }
-            } catch (final Exception ex) {
-                PLog.errorLog(401020398, ex);
-            }
-
-            // todo -> synchronize
-
-            if (found) {
-                // und jetzt wieder schreiben, wenn nötig
-                writeTmpList(newList);
-            }
-
-            clearList();
-            createList();
-            PDuration.counterStop("removeDownloadListFromHistory");
-        }
-
-    }
-
-    private void writeTmpList(LinkedList<String> newList) {
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(getUrlFilePath())))) {
-            for (final String entry : newList) {
-                bufferedWriter.write(entry + PConst.LINE_SEPARATOR);
-            }
-        } catch (final Exception ex) {
-            PLog.errorLog(784512067, ex);
+            PLog.errorLog(926362547, ex);
         }
     }
 
     private Path getUrlFilePath() {
         Path urlPath = null;
         try {
+
             urlPath = Paths.get(settingsDir).resolve(fileName);
             if (Files.notExists(urlPath)) {
                 urlPath = Files.createFile(urlPath);
             }
+
         } catch (final IOException ex) {
-            ex.printStackTrace();
+            PLog.errorLog(915478960, ex);
         }
         return urlPath;
     }
@@ -335,35 +330,13 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         this.clear();
     }
 
-    private void createList() {
-        List<HistoryData> tmpList = new ArrayList<>();
-        // LinkedList mit den URLs aus dem Logfile bauen
-        final Path urlPath = getUrlFilePath();
-        try (LineNumberReader in = new LineNumberReader(new InputStreamReader(Files.newInputStream(urlPath)))) {
-            String line;
-            int i = 0;
-            while ((line = in.readLine()) != null) {
-                ++i;
-                if (i == 8345) {
-                    System.out.println("8345");
-                }
-                final HistoryData historyData = HistoryData.getUrlFromLine(line);
-                tmpList.add(historyData);
-            }
-            if (!tmpList.isEmpty()) {
-                addToList(tmpList);
-            }
-        } catch (final Exception ex) {
-            PLog.errorLog(926362547, ex);
-        }
-    }
-
-    private void addToList(HistoryData historyData) {
+    private void addToThisList(HistoryData historyData) {
         this.add(historyData);
         urlHash.add(historyData.getUrl());
     }
 
-    private void addToList(List<HistoryData> historyData) {
+    private void replaceThisList(List<HistoryData> historyData) {
+        clearList();
         historyData.stream().forEach(h -> urlHash.add(h.getUrl()));
         this.addAll(historyData);
     }
