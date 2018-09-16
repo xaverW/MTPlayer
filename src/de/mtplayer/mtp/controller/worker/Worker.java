@@ -77,7 +77,7 @@ public class Worker {
         Thread th = new Thread(() -> {
             try {
                 // erledigte entfernen, nicht gestartete Abos entfernen und neu nach Abos suchen
-                progData.downloadList.searchForAbos();
+                progData.downloadList.searchForDownloadsFromAbos();
 
                 if (Boolean.parseBoolean(ProgConfig.DOWNLOAD_START_NOW.get())) {
                     // und wenn gewollt auch gleich starten, kann kein Dialog aufgehen: false!

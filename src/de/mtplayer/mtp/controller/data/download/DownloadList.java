@@ -189,11 +189,10 @@ public class DownloadList extends SimpleListProperty<Download> {
 
 
     // =========================
-    // Abos
-    public synchronized void searchForAbos() {
+    // Downloads für Abos suchen
+    public synchronized void searchForDownloadsFromAbos() {
         final int count = getSize();
-        downloadListAbo.refreshAbos();
-        downloadListAbo.searchForAbos();
+        downloadListAbo.searchDownloadsFromAbos();
         if (getSize() == count) {
             // dann wurden evtl. nur zurückgestellte Downloads wieder aktiviert
             setDownloadsChanged();

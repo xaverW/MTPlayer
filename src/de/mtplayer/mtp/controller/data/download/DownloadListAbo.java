@@ -32,17 +32,25 @@ public class DownloadListAbo {
 
     private final ProgData progData;
     private final DownloadList downloadList;
+    private boolean found = false;
+
 
     public DownloadListAbo(ProgData progData, DownloadList downloadList) {
         this.progData = progData;
         this.downloadList = downloadList;
     }
 
-    synchronized void refreshAbos() {
+    synchronized void searchDownloadsFromAbos() {
+        refreshDownloads();
+        searchForNewDownloads();
+    }
+
+    private void refreshDownloads() {
         // fehlerhafte und nicht gestartete löschen, wird nicht gemeldet ob was gefunden wurde
-        PDuration.counterStart("DownloadListAbo.refreshAbos");
-        List<Download> remove = new ArrayList<>();
-        List<Download> syncRemove = Collections.synchronizedList(remove);
+        PDuration.counterStart("DownloadListAbo.refreshDownloads");
+
+        List<Download> removeList = new ArrayList<>();
+        List<Download> syncRemoveLisst = Collections.synchronizedList(removeList);
 
         downloadList.stream()
                 .filter(d -> !d.isStateStoped())
@@ -50,33 +58,32 @@ public class DownloadListAbo {
                 .forEach(download -> {
                     if (download.isStateInit()) {
                         // noch nicht gestartet
-                        syncRemove.add(download);
+                        syncRemoveLisst.add(download);
                     } else if (download.isStateError()) {
                         // fehlerhafte
                         download.resetDownload();
                     }
                 });
 
-        if (syncRemove.size() == downloadList.size()) {
+        // Downloads löschen
+        if (syncRemoveLisst.size() == downloadList.size()) {
             downloadList.clear();
         } else {
             // das kostet Zeit
-            downloadList.removeAll(syncRemove);
+            downloadList.removeAll(syncRemoveLisst);
         }
+        // und zurückgestellte wieder aktivieren
+        downloadList.resetPlacedBack();
 
-        downloadList.resetPlacedBack();// zurückgestellte wieder aktivieren
-
-        PDuration.counterStop("DownloadListAbo.refreshAbos");
+        PDuration.counterStop("DownloadListAbo.refreshDownloads");
     }
 
-    boolean found = false;
+    private void searchForNewDownloads() {
+        // in der Filmliste nach passenden Filmen suchen und Downloads anlegen
+        PDuration.counterStart("DownloadListAbo.searchForNewDownloads");
 
-    synchronized void searchForAbos() {
-        // in der Filmliste nach passenden Filmen suchen und
-        // in die Liste der Downloads eintragen
-        PDuration.counterStart("DownloadListAbo.searchForAbos");
-
-        progData.aboList.stream().forEach(abo -> abo.clearCountHit()); // den Trefferzähler zurücksetzen
+        // den Abo-Trefferzähler zurücksetzen
+        progData.aboList.stream().forEach(abo -> abo.clearCountHit());
 
         ArrayList<Download> downloadArrayList = new ArrayList<>();
         List<Download> syncDownloadArrayList = Collections.synchronizedList(downloadArrayList);
@@ -130,7 +137,7 @@ public class DownloadListAbo {
             }
 
             aboForFilm.setDate(new MDate());
-            final SetData setData = progData.setList.getPsetAbo(aboForFilm.getPsetName());
+            final SetData setData = progData.setList.getPsetAbo(aboForFilm.getPsetName()); // todo eine ID dafür verwenden
 
             // nur den Namen anpassen, falls geändert oder altes Set nicht mehr existiert
             aboForFilm.setPsetName(setData.getName()); // todo das machmer beim ProgStart 1x
@@ -141,7 +148,6 @@ public class DownloadListAbo {
         });
 
 
-//        Platform.runLater(() -> {
         if (found) {
             downloadList.addAll(syncDownloadArrayList);
             downloadList.setNumbersInList();
@@ -149,11 +155,10 @@ public class DownloadListAbo {
         syncDownloadArrayList.clear();
         syncDownloadsAlreadyInTheListHash.clear();
 
-        // und jetzt die hits eintragen (gesamt, damit nicht bei jedem die Tabelle geändert werden muss)
+        // und jetzt die hits eintragen (hier, damit nicht bei jedem die Tabelle geändert werden muss)
         progData.aboList.stream().forEach(abo -> abo.setCountedHits());
-//        });
 
-        PDuration.counterStop("DownloadListAbo.searchForAbos");
+        PDuration.counterStop("DownloadListAbo.searchForNewDownloads");
     }
 
 }
