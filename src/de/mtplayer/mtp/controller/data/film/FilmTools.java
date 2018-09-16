@@ -39,20 +39,20 @@ public class FilmTools {
         }
     }
 
-    public static void setFilmShown(ProgData progData, ArrayList<Film> filmArrayList, boolean set) {
+    public static void setFilmShown(ProgData progData, ArrayList<Film> filmArrayList, boolean setShown) {
 
-        Thread th = new Thread(() -> {
-            try {
-                if (set) {
-                    progData.history.writeFilmListToHistory(filmArrayList);
-                } else {
-                    progData.history.removeFilmListFromHistory(filmArrayList);
-                }
-            } catch (Exception ex) {
-            }
-        });
-        th.setName("setFilmShown");
-        th.start();
+//        Thread th = new Thread(() -> {
+//            try {
+        if (setShown) {
+            progData.history.writeFilmListToHistory(filmArrayList);
+        } else {
+            progData.history.removeFilmListFromHistory(filmArrayList);
+        }
+//            } catch (Exception ex) {
+//            }
+//        });
+//        th.setName("setFilmShown");
+//        th.start();
     }
 
 
