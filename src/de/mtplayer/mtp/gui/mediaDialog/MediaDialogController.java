@@ -25,6 +25,7 @@ import de.mtplayer.mtp.tools.storedFilter.Filter;
 import de.p2tools.p2Lib.dialog.PDialog;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PGuiTools;
+import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
@@ -184,7 +185,7 @@ public class MediaDialogController extends PDialog {
 
             vBoxDialog.getChildren().addAll(vBoxCont, hBox);
         } catch (final Exception ex) {
-            System.out.println(ex.getMessage());
+            PLog.errorLog(951203030, ex);
         }
     }
 

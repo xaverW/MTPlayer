@@ -20,6 +20,7 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.starter.Start;
+import de.p2tools.p2Lib.tools.log.PLog;
 
 import java.net.URL;
 import java.util.Iterator;
@@ -285,10 +286,6 @@ public class DownloadListStarts {
         int count = 0;
         try {
             for (final Download download : downloadList) {
-                if (download == null) {
-                    System.out.println("null");
-                    continue;
-                }
                 if (download.isStateStartedRun()) {
                     ++count;
                     if (count >= max) {
@@ -298,7 +295,7 @@ public class DownloadListStarts {
             }
             return true;
         } catch (Exception ex) {
-            System.out.println(ex.getStackTrace());
+            PLog.errorLog(794519083, ex);
         }
         return false;
     }

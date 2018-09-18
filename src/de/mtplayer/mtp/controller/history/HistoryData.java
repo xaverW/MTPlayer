@@ -92,9 +92,8 @@ public class HistoryData implements Comparable<HistoryData> {
             return url + PConst.LINE_SEPARATOR;
         }
 
-        if (dateStr.contains(".2018")) {
-            System.out.println("--> 2018");
-            String s = getDate().toString();
+        String s = getDate().toString();
+        if (!s.equals(dateStr)) {
             System.out.println(s);
         }
 

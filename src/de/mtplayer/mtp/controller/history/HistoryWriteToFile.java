@@ -45,10 +45,8 @@ public class HistoryWriteToFile implements Runnable {
     }
 
     public void run() {
-        System.out.println("----> in");
         doWork();
         isWorking.setValue(false);
-        System.out.println("----> out");
     }
 
     private void doWork() {
@@ -80,9 +78,6 @@ public class HistoryWriteToFile implements Runnable {
 
             for (final HistoryData historyData : list) {
                 final String line = historyData.getLine();
-                if (line.contains(".2018")) {
-                    System.out.println("--> 2018");
-                }
                 bufferedWriter.write(line);
             }
             ret = true;

@@ -192,7 +192,7 @@ public class Filmlist extends SimpleListProperty<Film> {
             });
 
         } catch (Exception ex) {
-            System.out.println(ex.getStackTrace());
+            PLog.errorLog(951024789, ex);
         }
         PDuration.counterStop("Filme markieren");
 

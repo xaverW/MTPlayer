@@ -20,6 +20,7 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.gui.configDialog.GeoPane;
 import de.p2tools.p2Lib.dialog.PDialog;
+import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -110,7 +111,7 @@ public class StartDialogController extends PDialog {
             vBoxDialog.getChildren().add(vBoxCont);
 
         } catch (final Exception ex) {
-            System.out.println(ex.getMessage());
+            PLog.errorLog(912031210, ex);
         }
     }
 

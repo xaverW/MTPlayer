@@ -167,9 +167,6 @@ public class DownloadProps extends DownloadXml {
     }
 
     public int getState() {
-        if (state == null) {
-            System.out.println("Mist");
-        }
         return state.get();
     }
 

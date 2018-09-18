@@ -20,6 +20,7 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.p2tools.p2Lib.dialog.PDialog;
+import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -116,7 +117,7 @@ public class ConfigDialogController extends PDialog {
             tabPane.getTabs().add(tab);
 
         } catch (final Exception ex) {
-            System.out.println(ex.getMessage());
+            PLog.errorLog(784459510, ex);
         }
     }
 

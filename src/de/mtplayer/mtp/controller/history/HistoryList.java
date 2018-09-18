@@ -28,8 +28,6 @@ import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -88,6 +86,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
     public synchronized void clearAll() {
         clearList();
         historyWorker.deleteHistoryFile();
+        Listener.notify(Listener.EREIGNIS_GUI_HISTORY_CHANGED, HistoryList.class.getSimpleName());
     }
 
     public synchronized boolean checkIfUrlAlreadyIn(String urlFilm) {
@@ -313,14 +312,6 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         if (found) {
             // und nur dann wurde was gelöscht und muss geschreiben werden
             replaceThisList(newHistoryList);
-            ChangeListener cl = new ChangeListener() {
-                @Override
-                public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                    System.out.println("-------> ACHTUNG");
-                }
-            };
-            this.addListener(cl);
-
             writeToFile(newHistoryList, false);
             Listener.notify(Listener.EREIGNIS_GUI_HISTORY_CHANGED, HistoryList.class.getSimpleName());
         }

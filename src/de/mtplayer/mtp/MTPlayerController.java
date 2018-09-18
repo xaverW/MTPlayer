@@ -28,6 +28,7 @@ import de.mtplayer.mtp.gui.dialog.AboutDialogController;
 import de.mtplayer.mtp.gui.dialog.ResetDialogController;
 import de.mtplayer.mtp.gui.mediaDialog.MediaConfigController;
 import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
+import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -159,7 +160,7 @@ public class MTPlayerController extends StackPane {
 
             selPanelFilm();
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            PLog.errorLog(597841023, ex);
         }
     }
 
