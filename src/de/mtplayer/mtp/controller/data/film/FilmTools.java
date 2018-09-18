@@ -40,19 +40,11 @@ public class FilmTools {
     }
 
     public static void setFilmShown(ProgData progData, ArrayList<Film> filmArrayList, boolean setShown) {
-
-//        Thread th = new Thread(() -> {
-//            try {
         if (setShown) {
-            progData.history.writeFilmListToHistory(filmArrayList);
+            progData.history.addFilmDataToHistory(filmArrayList);
         } else {
-            progData.history.removeFilmListFromHistory(filmArrayList);
+            progData.history.removeFilmDataFromHistory(filmArrayList);
         }
-//            } catch (Exception ex) {
-//            }
-//        });
-//        th.setName("setFilmShown");
-//        th.start();
     }
 
 

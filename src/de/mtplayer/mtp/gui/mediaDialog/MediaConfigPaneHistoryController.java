@@ -18,7 +18,7 @@ package de.mtplayer.mtp.gui.mediaDialog;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.HistoryData;
+import de.mtplayer.mtp.controller.history.HistoryData;
 import de.p2tools.p2Lib.dialog.PAlert;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;

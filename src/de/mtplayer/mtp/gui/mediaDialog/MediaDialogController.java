@@ -133,7 +133,7 @@ public class MediaDialogController extends PDialog {
 
         mediaDialogPaneMedia.mediaPaneClose();
 
-        progData.erledigteAbos.filterdListClearPred();
+        progData.erledigteAbos.filteredListClearPred();
         progData.mediaDataList.filterdListSetPredFalse();
         super.close();
     }

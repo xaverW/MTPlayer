@@ -27,7 +27,6 @@ import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.gui.tools.Table;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.PColor;
-import de.p2tools.p2Lib.tools.log.PDuration;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
@@ -105,8 +104,6 @@ public class FilmGuiController extends AnchorPane {
         tilePaneButton.setStyle("-fx-border-color: -fx-text-box-border; " +
                 "-fx-border-radius: 5px; " +
                 "-fx-border-width: 1;");
-
-//        filmPane.setMinHeight(10);
     }
 
     private void setInfoPane() {
@@ -189,7 +186,6 @@ public class FilmGuiController extends AnchorPane {
         Film film = tableView.getSelectionModel().getSelectedItem();
         filmGuiInfoController.setFilm(film);
         progData.filmInfoDialogController.setFilm(film);
-        return;
     }
 
     public void showFilmInfo() {
@@ -219,24 +215,21 @@ public class FilmGuiController extends AnchorPane {
     public void setFilmShown() {
         final ArrayList<Film> list = getSelList();
         FilmTools.setFilmShown(progData, list, true);
-
         Table.refresh_table(tableView);
     }
 
     public void setFilmNotShown() {
-        PDuration.counterStart("filmUngesehen");
-        //todo-> ~1s Dauer
-
         final ArrayList<Film> list = getSelList();
         FilmTools.setFilmShown(progData, list, false);
-
         Table.refresh_table(tableView);
-        PDuration.counterStop("filmUngesehen");
     }
-
 
     public void saveTable() {
         new Table().saveTable(tableView, Table.TABLE.FILM);
+    }
+
+    public void refreshTable() {
+        Table.refresh_table(tableView);
     }
 
     public ArrayList<Film> getSelList() {
@@ -265,7 +258,8 @@ public class FilmGuiController extends AnchorPane {
             }
             setInfoPane();
         });
-        Listener.addListener(new Listener(Listener.EREIGNIS_GUI_COLOR_CHANGED, FilmGuiController.class.getSimpleName()) {
+        Listener.addListener(new Listener(new int[]{Listener.EREIGNIS_GUI_COLOR_CHANGED, Listener.EREIGNIS_GUI_HISTORY_CHANGED},
+                FilmGuiController.class.getSimpleName()) {
             @Override
             public void ping() {
                 tableView.refresh();

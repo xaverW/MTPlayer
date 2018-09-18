@@ -17,8 +17,8 @@
 package de.mtplayer.mtp.gui.mediaDialog;
 
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.HistoryData;
 import de.mtplayer.mtp.controller.data.film.Film;
+import de.mtplayer.mtp.controller.history.HistoryData;
 import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.tools.PSystemUtils;
 import javafx.scene.control.ContextMenu;
@@ -53,9 +53,9 @@ public class MediaConfigPaneHistoryContextMenu {
         MenuItem miDelUrl = new MenuItem("Url aus der Liste löschen");
         miDelUrl.setOnAction(a -> {
             if (history) {
-                progData.history.removeHistoryListFromHistory(historyDataArrayList);
+                progData.history.removeHistoryDataFromHistory(historyDataArrayList);
             } else {
-                progData.erledigteAbos.removeHistoryListFromHistory(historyDataArrayList);
+                progData.erledigteAbos.removeHistoryDataFromHistory(historyDataArrayList);
             }
         });
 

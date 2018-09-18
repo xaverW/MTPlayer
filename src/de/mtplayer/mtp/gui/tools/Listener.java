@@ -35,6 +35,7 @@ public class Listener implements EventListener {
 
     public static final int EREIGNIS_REPLACELIST_CHANGED = count++;
     public static final int EREIGNIS_GUI_COLOR_CHANGED = count++;
+    public static final int EREIGNIS_GUI_HISTORY_CHANGED = count++;
 
     public int[] event = {-1};
     public String eventClass = "";

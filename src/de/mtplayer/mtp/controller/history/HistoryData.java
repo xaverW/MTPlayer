@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.mtplayer.mtp.controller.data;
+package de.mtplayer.mtp.controller.history;
 
 import de.mtplayer.mLib.tools.FilmDate;
 import de.mtplayer.mLib.tools.Functions;
@@ -78,15 +78,25 @@ public class HistoryData implements Comparable<HistoryData> {
         }
     }
 
-    public static String getLine(String date, String theme, String title, String url) {
+    public String getLine() {
+        String dateStr = getDate().toString();
+        String theme = getTheme();
+        String title = getTitle();
+        String url = getUrl();
+
         final int MAX_THEME = 25;
         final int MAX_TITLE = 40;
 
-        if (date.isEmpty() && theme.isEmpty() && title.isEmpty()) {
+        if (dateStr.isEmpty() && theme.isEmpty() && title.isEmpty()) {
             // ist das alte Format
             return url + PConst.LINE_SEPARATOR;
         }
 
+        if (dateStr.contains(".2018")) {
+            System.out.println("--> 2018");
+            String s = getDate().toString();
+            System.out.println(s);
+        }
 
         if (theme.length() < MAX_THEME) {
             // nur wenn zu kurz, dann anpassen, so bleibt das Log ~lesbar
@@ -99,15 +109,15 @@ public class HistoryData implements Comparable<HistoryData> {
             title = Functions.textLength(MAX_TITLE, title, false /* mitte */, false /*addVorne*/);
         }
 
-        return date + SEPARATOR_1
+        return dateStr + SEPARATOR_1
                 + cleanUp(theme) + SEPARATOR_1
                 + cleanUp(title) + SEPARATOR_2
                 + url + PConst.LINE_SEPARATOR;
     }
 
-    public String getLine() {
-        return getLine(getDate().toString(), getTheme(), getTitle(), getUrl());
-    }
+//    public String getLine() {
+//        return getLine(getDate().toString(), getTheme(), getTitle(), getUrl());
+//    }
 
     public static HistoryData getHistoryDataFromLine(String line) {
         // 29.05.2014 |#| Abendschau                |#| Patenkind trifft Groß                     |###|  http://cdn-storage.br.de/iLCpbHJGNLT6NK9HsLo6s61luK4C_2rc5U1S/_-OS/5-8y9-NP/5bb33365-038d-46f7-914b-eb83fab91448_E.mp4
@@ -133,9 +143,8 @@ public class HistoryData implements Comparable<HistoryData> {
     }
 
     private static String cleanUp(String s) {
-        if (s.contains("\n")) {
-            System.out.println(s);
-        }
+        s = s.replace("\n", ""); // zur Vorsicht bei Win
+        s = s.replace("\r\n", ""); // zur Vorsicht bei Ux
         s = s.replace(PConst.LINE_SEPARATOR, "");
         s = s.replace("|", "");
         s = s.replace(SEPARATOR_1, "");

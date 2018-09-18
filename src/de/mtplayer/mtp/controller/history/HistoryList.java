@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.mtplayer.mtp.controller.data;
+package de.mtplayer.mtp.controller.history;
 
 import de.mtplayer.mLib.tools.StringFormatters;
 import de.mtplayer.mtp.controller.config.ProgData;
@@ -22,18 +22,18 @@ import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmTools;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
+import de.mtplayer.mtp.gui.tools.Listener;
 import de.p2tools.p2Lib.tools.log.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -47,15 +47,18 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
     private final String settingsDir;
     private FilteredList<HistoryData> filteredList = null;
     private SortedList<HistoryData> sortedList = null;
-    private boolean inRemove = false;
+    private BooleanProperty isWorking = new SimpleBooleanProperty(false);
+    public final HistoryWorker historyWorker;
 
     public HistoryList(String fileName, String settingsDir) {
         super(FXCollections.observableArrayList());
 
         this.fileName = fileName;
         this.settingsDir = settingsDir;
+        this.historyWorker = new HistoryWorker(fileName, settingsDir);
 
-        readHistoryDataFromFile();
+        historyWorker.readHistoryDataFromFile(this);
+        fillUrlHash();
     }
 
     public SortedList<HistoryData> getSortedList() {
@@ -74,21 +77,17 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         return filteredList;
     }
 
-    public synchronized void filterdListSetPred(Predicate<HistoryData> predicate) {
+    public synchronized void filteredListSetPred(Predicate<HistoryData> predicate) {
         filteredList.setPredicate(predicate);
     }
 
-    public synchronized void filterdListClearPred() {
+    public synchronized void filteredListClearPred() {
         filteredList.setPredicate(p -> false);
     }
 
     public synchronized void clearAll() {
         clearList();
-        try {
-            final Path urlPath = getUrlFilePath();
-            Files.deleteIfExists(urlPath);
-        } catch (final IOException ignored) {
-        }
+        historyWorker.deleteHistoryFile();
     }
 
     public synchronized boolean checkIfUrlAlreadyIn(String urlFilm) {
@@ -101,28 +100,35 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         return theme.equals(FilmTools.THEME_LIVE);
     }
 
-    public synchronized boolean writeHistoryDataToHistory(String theme, String title, String url) {
+    public synchronized void addHistoryDataToHistory(String theme, String title, String url) {
+        // einen Film in die History schreiben
+
         if (checkIfUrlAlreadyIn(url) || checkIfLiveStream(theme)) {
-            return true;
+            return;
         }
 
-        PDuration.counterStart("writeDataToHistoryFile");
+        PDuration.counterStart("History: addDataToHistory");
         final ArrayList<HistoryData> list = new ArrayList<>();
         final String datum = StringFormatters.FORMATTER_ddMMyyyy.format(new Date());
         HistoryData historyData = new HistoryData(datum, theme, title, url);
         addToThisList(historyData);
         list.add(historyData);
 
-        boolean ret = writeHistoryDataToFile(list, true);
-        PDuration.counterStop("writeDataToHistoryFile");
-        return ret;
+        writeToFile(list, true);
+        PDuration.counterStop("History: addDataToHistory");
     }
 
-    public synchronized boolean writeFilmListToHistory(ArrayList<Film> filmList) {
+    public synchronized void addFilmDataToHistory(ArrayList<Film> filmList) {
+        // eine Liste Filme in die History schreiben
+
+        if (filmList == null || filmList.isEmpty()) {
+            return;
+        }
+
         final ArrayList<HistoryData> list = new ArrayList<>(filmList.size());
         final String datum = StringFormatters.FORMATTER_ddMMyyyy.format(new Date());
 
-        PDuration.counterStart("writeDataToHistoryFile");
+        PDuration.counterStart("History: addDataToHistory");
         for (final Film film : filmList) {
             if (checkIfLiveStream(film.getTheme())) {
                 continue;
@@ -141,16 +147,21 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
             list.add(historyData);
         }
 
-        boolean ret = writeHistoryDataToFile(list, true);
-        PDuration.counterStop("writeDataToHistoryFile");
-        return ret;
+        writeToFile(list, true);
+        PDuration.counterStop("History: addDataToHistory");
     }
 
-    public synchronized boolean writeDownloadListToHistory(ArrayList<Download> downloadList) {
+    public synchronized void addDownloadDataListToHistory(ArrayList<Download> downloadList) {
+        // eine Liste Downloads in die Hitory schreiben
+
+        if (downloadList == null || downloadList.isEmpty()) {
+            return;
+        }
+
         final ArrayList<HistoryData> list = new ArrayList<>(downloadList.size());
         final String datum = StringFormatters.FORMATTER_ddMMyyyy.format(new Date());
 
-        PDuration.counterStart("writeDataToHistoryFile");
+        PDuration.counterStart("History: addDataToHistory");
         for (final Download download : downloadList) {
             if (checkIfLiveStream(download.getTheme())) {
                 continue;
@@ -171,18 +182,53 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
             list.add(historyData);
         }
 
-        boolean ret = writeHistoryDataToFile(list, true);
-        PDuration.counterStop("writeDataToHistoryFile");
-        return ret;
+        writeToFile(list, true);
+        PDuration.counterStop("History: addDataToHistory");
     }
 
-    public synchronized void removeHistoryListFromHistory(ArrayList<HistoryData> historyDataList) {
-        // Logfile einlesen, entsprechende Zeile Filtern und dann Logfile überschreiben
+
+    private void writeToFile(List<HistoryData> list, boolean append) {
+        waitWhileWorkingAndSetWorking();
+
+        try {
+            Thread th = new Thread(new HistoryWriteToFile(list, append, isWorking, historyWorker));
+            th.setName("HistoryWriteToFile");
+            th.start();
+            // th.run();
+        } catch (Exception ex) {
+            PLog.errorLog(912030254, ex, "writeToFile");
+            isWorking.setValue(false);
+        }
+    }
+
+    private void waitWhileWorking() {
+        while (isWorking.get()) {
+            // sollte nicht passieren, aber wenn ..
+            PLog.errorLog(741025896, "waitWhileWorking");
+
+            try {
+                wait(100);
+            } catch (final Exception ex) {
+                PLog.errorLog(915236547, ex, "waitWhileWorking");
+                isWorking.setValue(false);
+            }
+        }
+
+    }
+
+    private void waitWhileWorkingAndSetWorking() {
+        waitWhileWorking();
+        isWorking.setValue(true);
+    }
+
+    public synchronized void removeHistoryDataFromHistory(ArrayList<HistoryData> historyDataList) {
+        // Historydaten aus der History löschen und File wieder schreiben
 
         if (historyDataList == null || historyDataList.isEmpty()) {
             return;
         }
 
+        PDuration.counterStart("History: removeDataFromHistory");
         final HashSet<String> hash = new HashSet<>(historyDataList.size() + 1, 0.75F);
         for (HistoryData historyData : historyDataList) {
             hash.add(historyData.getUrl());
@@ -196,16 +242,18 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
             }
         });
 
-        remove(hash);
+        removeFromHistory(hash);
+        PDuration.counterStop("History: removeDataFromHistory");
     }
 
-    public synchronized void removeFilmListFromHistory(ArrayList<Film> filmList) {
-        // Logfile einlesen, entsprechende Zeile Filtern und dann Logfile überschreiben
+    public synchronized void removeFilmDataFromHistory(ArrayList<Film> filmList) {
+        // eine Liste Filme aus der History löschen und File wieder schreiben
 
         if (filmList == null || filmList.isEmpty()) {
             return;
         }
 
+        PDuration.counterStart("History: removeDataFromHistory");
         final HashSet<String> hash = new HashSet<>(filmList.size() + 1, 0.75F);
         filmList.stream().forEach(film -> {
             film.setShown(false); // todo mal vormerken ob evtl. die ganze Filmliste nach dieser URL durchsucht werden soll, wird sonst erst beim nächsten Start angezeigt
@@ -213,16 +261,18 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
             hash.add(film.getUrlHistory());
         });
 
-        remove(hash);
+        removeFromHistory(hash);
+        PDuration.counterStop("History: removeDataFromHistory");
     }
 
-    public synchronized void removeDownloadListFromHistory(ArrayList<Download> downloadList) {
-        // Logfile einlesen, entsprechende Zeile Filtern und dann Logfile überschreiben
+    public synchronized void removeDownloadDataFromHistory(ArrayList<Download> downloadList) {
+        // eine Liste Downloads aus der History löschen und File wieder schreiben
 
         if (downloadList == null || downloadList.isEmpty()) {
             return;
         }
 
+        PDuration.counterStart("History: removeDataFromHistory");
         final HashSet<String> hash = new HashSet<>(downloadList.size() + 1, 0.75F);
         downloadList.stream().forEach(download -> {
             if (download.getFilm() != null) {
@@ -232,134 +282,50 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
             hash.add(download.getHistoryUrl());
         });
 
-        remove(hash);
+        removeFromHistory(hash);
+        PDuration.counterStop("History: removeDataFromHistory");
     }
 
-    private void remove(HashSet<String> urlHash) {
-        waitToRemove();
+    private boolean found = false;
 
-        try {
-            inRemove = true;
-            Thread th = new Thread(new Remove(urlHash));
-            th.setName("remove(HashSet<String> urlHash)");
-            th.start();
-            // th.run();
-        } catch (Exception ex) {
-            PLog.errorLog(912030254, ex, "waitToRemove");
-            inRemove = false;
-        }
-    }
+    private void removeFromHistory(HashSet<String> urlHash) {
+        final ArrayList<HistoryData> newHistoryList = new ArrayList<>();
 
-    private void waitToRemove() {
-        while (inRemove) {
-            // sollte nicht passieren, aber wenn ..
-            PLog.errorLog(741025896, "waitToRemove");
+        found = false;
 
-            try {
-                wait(100);
-            } catch (final Exception ex) {
-                PLog.errorLog(915236547, ex, "waitToRemove");
-                inRemove = false;
+        PDuration.counterStart("History: removeFromHistory");
+        PLog.sysLog("Aus Historyliste löschen: " + urlHash.size() + ", löschen aus: " + fileName);
+
+        waitWhileWorking(); // wird diese Liste abgesucht
+
+        this.stream().forEach(historyData -> {
+
+            if (urlHash.contains(historyData.getUrl())) {
+                // nur dann muss das Logfile auch geschrieben werden
+                found = true;
+            } else {
+                // kommt wieder in die history
+                newHistoryList.add(historyData);
             }
 
-        }
-    }
+        });
 
-    private class Remove implements Runnable {
-        private boolean found = false;
-        private final ArrayList<HistoryData> newHistoryList = new ArrayList<>();
-        private final HashSet<String> urlHash;
-
-        public Remove(HashSet<String> urlHash) {
-            this.urlHash = urlHash;
-        }
-
-        public void run() {
-            doWork();
-            inRemove = false;
-        }
-
-        private void doWork() {
-            final Path urlPath = getUrlFilePath();
-            if (Files.notExists(urlPath)) {
-                return;
-            }
-
-            PDuration.counterStart("removeUrlsFromHistory");
-            PLog.sysLog("Anzahl Urls: " + urlHash.size() + ", löschen aus: " + fileName);
-
-            HistoryList.super.stream().forEach(historyData -> {
-                if (urlHash.contains(historyData.getUrl())) {
-                    found = true; // nur dann muss das Logfile auch geschrieben werden
-                } else {
-                    // kommt wieder in die history
-                    newHistoryList.add(historyData);
-                }
-            });
-
-            if (found) {
-                // und jetzt wieder schreiben, wenn nötig
-                writeHistoryDataToFile(newHistoryList, false);
-            }
-
+        if (found) {
+            // und nur dann wurde was gelöscht und muss geschreiben werden
             replaceThisList(newHistoryList);
-            PDuration.counterStop("removeUrlsFromHistory");
-        }
-    }
+            ChangeListener cl = new ChangeListener() {
+                @Override
+                public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                    System.out.println("-------> ACHTUNG");
+                }
+            };
+            this.addListener(cl);
 
-    private boolean writeHistoryDataToFile(ArrayList<HistoryData> list, boolean append) {
-        boolean ret = false;
-        try (BufferedWriter bufferedWriter = (append ?
-                new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(getUrlFilePath(), StandardOpenOption.APPEND))) :
-                new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(getUrlFilePath()))))
-        ) {
-
-            for (final HistoryData historyData : list) {
-                bufferedWriter.write(historyData.getLine());
-            }
-            ret = true;
-
-        } catch (final Exception ex) {
-            PLog.errorLog(420312459, ex);
+            writeToFile(newHistoryList, false);
+            Listener.notify(Listener.EREIGNIS_GUI_HISTORY_CHANGED, HistoryList.class.getSimpleName());
         }
 
-        return ret;
-    }
-
-    private void readHistoryDataFromFile() {
-        // neue Liste mit den URLs aus dem Logfile bauen
-        List<HistoryData> tmpList = new ArrayList<>();
-        final Path urlPath = getUrlFilePath();
-
-        try (LineNumberReader in = new LineNumberReader(new InputStreamReader(Files.newInputStream(urlPath)))) {
-            String line;
-            while ((line = in.readLine()) != null) {
-                final HistoryData historyData = HistoryData.getHistoryDataFromLine(line);
-                tmpList.add(historyData);
-            }
-
-            if (!tmpList.isEmpty()) {
-                replaceThisList(tmpList);
-            }
-
-        } catch (final Exception ex) {
-            PLog.errorLog(926362547, ex);
-        }
-    }
-
-    private Path getUrlFilePath() {
-        Path urlPath = null;
-        try {
-
-            urlPath = Paths.get(settingsDir).resolve(fileName);
-            if (Files.notExists(urlPath)) {
-                urlPath = Files.createFile(urlPath);
-            }
-
-        } catch (final IOException ex) {
-            PLog.errorLog(915478960, ex);
-        }
-        return urlPath;
+        PDuration.counterStop("History: removeFromHistory");
     }
 
     private void clearList() {
@@ -374,8 +340,13 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
 
     private void replaceThisList(List<HistoryData> historyData) {
         clearList();
-        historyData.stream().forEach(h -> urlHash.add(h.getUrl()));
         this.addAll(historyData);
+        fillUrlHash();
+    }
+
+    private void fillUrlHash() {
+        urlHash.clear();
+        this.stream().forEach(h -> urlHash.add(h.getUrl()));
     }
 
 }

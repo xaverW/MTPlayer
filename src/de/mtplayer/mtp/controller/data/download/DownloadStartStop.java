@@ -98,7 +98,7 @@ public class DownloadStartStop {
         }
 
         if (!aboHistoryList.isEmpty()) {
-            progData.erledigteAbos.writeDownloadListToHistory(aboHistoryList);
+            progData.erledigteAbos.addDownloadDataListToHistory(aboHistoryList);
         }
 
         list.stream().filter(download -> download.isStateStartedRun()).forEach(download -> download.stopDownload());
@@ -155,7 +155,7 @@ public class DownloadStartStop {
         }
         downloads.stream().forEach(download -> download.initStartDownload());
         downloadList.addNumber(downloads);
-        progData.history.writeDownloadListToHistory(downloads);
+        progData.history.addDownloadDataListToHistory(downloads);
     }
 
     public void startDownloads(Download download) {
@@ -242,7 +242,7 @@ public class DownloadStartStop {
         }
 
         //aus der AboHistory löschen
-        progData.erledigteAbos.removeDownloadListFromHistory(listDownloadsRemoveAboHistory);
+        progData.erledigteAbos.removeDownloadDataFromHistory(listDownloadsRemoveAboHistory);
 
         // jetzt noch die Starts stoppen
         listDelDownloads.stream().forEach(download -> download.stopDownload());
