@@ -41,6 +41,7 @@ public class MTSubtitle {
     private static final String SUFFIX_TTML = "ttml";
     private static final String SUFFIX_SRT = "srt";
     private static final String SRT_FILETYPE = ".srt";
+    private static final String SUFFIX_VTT = "vtt";
 
     private InputStream getContentDecoder(final String encoding, InputStream in) throws IOException {
         if (encoding != null) {
@@ -67,7 +68,7 @@ public class MTSubtitle {
 
     private void downloadContent(InputStream in, String strSubtitelFile) throws IOException {
         try (FileOutputStream fos = new FileOutputStream(strSubtitelFile)) {
-            final byte[] buffer = new byte[65536];
+            final byte[] buffer = new byte[64 * 1024];
             int n;
             while ((n = in.read(buffer)) != -1) {
                 fos.write(buffer, 0, n);
@@ -91,8 +92,9 @@ public class MTSubtitle {
         String urlSubtitle = "";
         InputStream in = null;
 
-        if (download.getUrlSubtitle().isEmpty())
+        if (download.getUrlSubtitle().isEmpty()) {
             return;
+        }
 
         try {
             PLog.sysLog(new String[]{"Untertitel: ", download.getUrlSubtitle(),
@@ -100,23 +102,27 @@ public class MTSubtitle {
 
             urlSubtitle = download.getUrlSubtitle();
             suffix = PUrlTools.getSuffixFromUrl(urlSubtitle);
-            if (!suffix.endsWith(SUFFIX_SRT))
+            if (!suffix.endsWith(SUFFIX_SRT) && !suffix.endsWith(SUFFIX_VTT)) {
                 suffix = SUFFIX_TTML;
+            }
 
             Files.createDirectories(Paths.get(download.getDestPath()));
 
             final HttpURLConnection conn = (HttpURLConnection) new URL(urlSubtitle).openConnection();
             setupConnection(conn);
+
             if ((conn.getResponseCode()) < HttpURLConnection.HTTP_BAD_REQUEST) {
                 in = getContentDecoder(conn.getContentEncoding(), conn.getInputStream());
 
                 final String strSubtitelFile = download.getFileNameWithoutSuffix() + '.' + suffix;
                 downloadContent(in, strSubtitelFile);
 
-                if (!strSubtitelFile.endsWith(SRT_FILETYPE))
+                if (!strSubtitelFile.endsWith('.' + SUFFIX_SRT) && !strSubtitelFile.endsWith("." + SUFFIX_VTT)) {
                     writeSrt(strSubtitelFile, download);
-            } else
+                }
+            } else {
                 PLog.errorLog(752301248, "url: " + urlSubtitle);
+            }
         } catch (final Exception ignored) {
             PLog.errorLog(461203210, ignored, "SubtitelUrl: " + urlSubtitle);
         } finally {
