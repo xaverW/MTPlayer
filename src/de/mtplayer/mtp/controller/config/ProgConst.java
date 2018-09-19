@@ -55,6 +55,8 @@ public class ProgConst {
 
     // Website MTPlayer
     public static final String ADRESSE_WEBSITE = "https://www.p2tools.de/mtplayer/";
+    public static final String ADRESSE_WEBSITE_HELP = "https://www.p2tools.de/mtplayer/manual/";
+
     //    public static final String ADRESSE_MTPLAYER_VERSION = "http://p2.localhost:8080/extra/mtplayer-info.xml";
     public static final String ADRESSE_MTPLAYER_VERSION = "https://www.p2tools.de/extra/mtplayer-info.xml";
 

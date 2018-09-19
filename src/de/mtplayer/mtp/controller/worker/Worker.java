@@ -43,6 +43,12 @@ public class Worker {
         progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
             @Override
             public void start(ListenerFilmlistLoadEvent event) {
+                progData.mtPlayerController.setMasker();
+            }
+
+            @Override
+            public void progress(ListenerFilmlistLoadEvent event) {
+                progData.maskerPane.setProgress(event.progress, event.text);
             }
 
             @Override
@@ -50,6 +56,8 @@ public class Worker {
                 getChannelAndTheme();
                 if (ProgConfig.ABO_SEARCH_NOW.getBool()) {
                     searchForAbosAndMaybeStart();
+                } else {
+                    progData.mtPlayerController.resetMasker();
                 }
             }
         });

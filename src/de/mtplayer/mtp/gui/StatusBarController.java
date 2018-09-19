@@ -157,22 +157,24 @@ public class StatusBarController extends AnchorPane {
         progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
             @Override
             public void start(ListenerFilmlistLoadEvent event) {
-                loadList = true;
-                setStatusbar();
+//                loadList = true;
+//                setStatusbar();
+                stopTimer = true;
             }
 
-            @Override
-            public void progress(ListenerFilmlistLoadEvent event) {
-                updateProgressBar(event);
-            }
+//            @Override
+//            public void progress(ListenerFilmlistLoadEvent event) {
+//                updateProgressBar(event);
+//            }
 
             @Override
             public void finished(ListenerFilmlistLoadEvent event) {
                 stopTimer = false;
-                loadList = false;
+//                loadList = false;
                 setStatusbar();
             }
         });
+
         Listener.addListener(new Listener(Listener.EREIGNIS_TIMER, StatusBarController.class.getSimpleName()) {
             @Override
             public void ping() {
@@ -195,6 +197,7 @@ public class StatusBarController extends AnchorPane {
     public void setStatusbarIndex(StatusbarIndex statusbarIndex) {
         this.statusbarIndex = statusbarIndex;
         if (loadList) {
+            lblProgress.setText("");
             loadPane.toFront();
             return;
         }

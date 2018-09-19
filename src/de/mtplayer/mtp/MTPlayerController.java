@@ -46,6 +46,7 @@ public class MTPlayerController extends StackPane {
 
     BorderPane borderPane = new BorderPane();
     StackPane stackPaneCont = new StackPane();
+
     private PMaskerPane maskerPane = new PMaskerPane();
     private StatusBarController statusBarController;
 
@@ -109,11 +110,15 @@ public class MTPlayerController extends StackPane {
             borderPane.setBottom(statusBarController);
 
             this.setPadding(new Insets(0));
+            progData.maskerPane = maskerPane;
             maskerPane.setPadding(new Insets(4, 1, 1, 1));
             this.getChildren().addAll(borderPane, maskerPane);
             StackPane.setAlignment(maskerPane, Pos.CENTER);
             maskerPane.toFront();
             maskerPane.setVisible(false);
+            Button btnStop = maskerPane.initButton("");
+            btnStop.setGraphic(new ProgIcons().ICON_BUTTON_STOP);
+            btnStop.setOnAction(a -> progData.loadFilmlist.setStop(true));
 
             btnFilmlist.getStyleClass().add("btnFilmlist");
 
@@ -233,13 +238,19 @@ public class MTPlayerController extends StackPane {
         statusBarController.setStatusbarIndex(StatusBarController.StatusbarIndex.ABO);
     }
 
+
     public void setMasker() {
-        maskerPane.setVisible(true);
+        Platform.runLater(() -> {
+            maskerPane.setVisible(true);
+            maskerPane.resetProgress();
+        });
+//        maskerPane.setVisible(true);
     }
 
     public void resetMasker() {
         Platform.runLater(() -> {
             maskerPane.setVisible(false);
+            maskerPane.resetProgress();
         });
     }
 }

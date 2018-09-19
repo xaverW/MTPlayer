@@ -38,6 +38,7 @@ import de.mtplayer.mtp.gui.dialog.FilmInfoDialogController;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.tools.filmListFilter.FilmListFilter;
 import de.mtplayer.mtp.tools.storedFilter.StoredFilter;
+import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
 import de.p2tools.p2Lib.tools.log.PDuration;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -65,6 +66,7 @@ public class ProgData {
 
     // Gui
     public Stage primaryStage = null;
+    public PMaskerPane maskerPane = null;
     public MTPlayerController mtPlayerController = null;
     public FilmGuiController filmGuiController = null; // Tab mit den Filmen
     public DownloadGuiController downloadGuiController = null; // Tab mit den Downloads

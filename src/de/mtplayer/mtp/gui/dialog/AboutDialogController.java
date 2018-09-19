@@ -91,12 +91,11 @@ public class AboutDialogController extends PDialogExtra {
         gridPane.add(text, 0, ++row, 2, 1);
 
 
-        text = new Text(PConst.LINE_SEPARATORx2 + "Autoren");
+        text = new Text(PConst.LINE_SEPARATORx2 + "Autor");
         text.setFont(Font.font(null, FontWeight.BOLD, 15));
         gridPane.add(text, 0, ++row, 2, 1);
 
-        text = new Text("Xaver W. (xaverW)" + PConst.LINE_SEPARATOR +
-                "Christian F. (derreisende77)");
+        text = new Text("Xaver W. (xaverW)");
         text.setFont(new Font(15));
         gridPane.add(text, 0, ++row, 2, 1);
 
@@ -107,14 +106,23 @@ public class AboutDialogController extends PDialogExtra {
         gridPane.add(text, 0, ++row, 2, 1);
 
 
-        PHyperlink hyperlink = new PHyperlink(ProgConst.ADRESSE_WEBSITE,
+        PHyperlink hyperlinkWeb = new PHyperlink(ProgConst.ADRESSE_WEBSITE,
+                ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
+
+        PHyperlink hyperlinkHelp = new PHyperlink(ProgConst.ADRESSE_WEBSITE_HELP,
                 ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
 
         text = new Text("Website:");
         text.setFont(new Font(15));
         text.setFill(GRAY);
         gridPane.add(text, 0, ++row);
-        gridPane.add(hyperlink, 1, row);
+        gridPane.add(hyperlinkWeb, 1, row);
+
+        text = new Text("Anleitung:");
+        text.setFont(new Font(15));
+        text.setFill(GRAY);
+        gridPane.add(text, 0, ++row);
+        gridPane.add(hyperlinkHelp, 1, row);
 
         text = new Text("Filmliste:");
         text.setFont(new Font(15));
@@ -165,7 +173,9 @@ public class AboutDialogController extends PDialogExtra {
         text.setFill(GRAY);
         gridPane.add(text, 1, row);
 
-        text = new Text(PConst.LINE_SEPARATORx2 + "Ein Dankeschön an alle," + PConst.LINE_SEPARATOR + "die zu dieser Software beigetragen haben.");
+        text = new Text(PConst.LINE_SEPARATORx2 + "Ein Dankeschön an alle," + PConst.LINE_SEPARATOR +
+                "die mit Vorschlägen oder Quelltext" + PConst.LINE_SEPARATOR +
+                "zu diesem Programm beigetragen haben.");
         text.setFont(Font.font(null, FontWeight.BOLD, 15));
         gridPane.add(text, 0, ++row, 2, 1);
 
