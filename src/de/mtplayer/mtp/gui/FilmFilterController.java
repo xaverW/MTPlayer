@@ -18,8 +18,6 @@ package de.mtplayer.mtp.gui;
 
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
-import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
-import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.tools.storedFilter.ProgInitFilter;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
@@ -117,17 +115,18 @@ public class FilmFilterController extends FilterController {
         initCheckFilter();
 
         initRest();
-        progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
-            @Override
-            public void start(ListenerFilmlistLoadEvent event) {
-                disableFilterPane(true);
-            }
-
-            @Override
-            public void finished(ListenerFilmlistLoadEvent event) {
-                disableFilterPane(false);
-            }
-        });
+        // gibt ja jetzt die maskerPane
+//        progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
+//            @Override
+//            public void start(ListenerFilmlistLoadEvent event) {
+//                disableFilterPane(true);
+//            }
+//
+//            @Override
+//            public void finished(ListenerFilmlistLoadEvent event) {
+//                disableFilterPane(false);
+//            }
+//        });
     }
 
     private void disableFilterPane(boolean dis) {

@@ -21,6 +21,7 @@ import java.util.EventListener;
 public class ListenerFilmlistLoad implements EventListener {
 
     public static final double PROGRESS_MAX = 1.0;
+    public static final double PROGRESS_INDETERMINATE = -1.0;
 
     public void start(ListenerFilmlistLoadEvent e) {
     }

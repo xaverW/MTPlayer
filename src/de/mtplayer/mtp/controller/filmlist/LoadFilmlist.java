@@ -59,27 +59,41 @@ public class LoadFilmlist {
     public LoadFilmlist(ProgData progData) {
         this.progData = progData;
         diffListe = new Filmlist();
+
+        searchForFilmlistUpdate = new SearchForFilmlistUpdate();
+        checkForFilmlistUpdate();
+
         importNewFilmliste = new ImportNewFilmlist();
         importNewFilmliste.addAdListener(new ListenerFilmlistLoad() {
             @Override
             public synchronized void start(ListenerFilmlistLoadEvent event) {
+                // Start des Ladens
+                progData.maskerPane.setMaskerVisible(true);
+
+                // Start ans Prog melden
                 notifyProgress.notifyEvent(NotifyProgress.NOTIFY.START, event);
             }
 
             @Override
             public synchronized void progress(ListenerFilmlistLoadEvent event) {
+                System.out.println("Progress: " + event.progress);
                 notifyProgress.notifyEvent(NotifyProgress.NOTIFY.PROGRESS, event);
             }
 
             @Override
             public synchronized void finished(ListenerFilmlistLoadEvent event) {
+                // Laden ist durch
+                System.out.println("==================> aus");
+                progData.maskerPane.setMaskerVisible(true, false);
+
                 // Ergebnisliste listeFilme eintragen -> Feierabend!
                 PDuration.onlyPing("Filme laden, ende");
                 afterImportNewFilmlist(event);
+
+                // alles fertig ans Prog melden
+                notifyProgress.notifyEvent(NotifyProgress.NOTIFY.FINISHED, event);
             }
         });
-        searchForFilmlistUpdate = new SearchForFilmlistUpdate();
-        checkForFilmlistUpdate();
     }
 
     public boolean getPropLoadFilmlist() {
@@ -107,10 +121,12 @@ public class LoadFilmlist {
     }
 
     public FilmlistUrlList getDownloadUrlsFilmlisten_akt() {
+        // nur zum Schreiben/Lesen aus dem ConfigFile
         return importNewFilmliste.searchFilmListUrls.filmlistUrlList_akt;
     }
 
     public FilmlistUrlList getDownloadUrlsFilmlisten_diff() {
+        // nur zum Schreiben/Lesen aus dem ConfigFile
         return importNewFilmliste.searchFilmListUrls.filmlistUrlList_diff;
     }
 
@@ -183,6 +199,8 @@ public class LoadFilmlist {
     public void loadFilmlistProgStart(boolean firstProgramStart) {
 
         setPropLoadFilmlist(true);
+        // Start des Ladens, gibt keine Vortschrittsanzeige und keine Abbrechen
+        notifyProgress.notifyEvent(NotifyProgress.NOTIFY.START, new ListenerFilmlistLoadEvent("", "", 0, 0, false/* Fehler */));
 
         // Gui startet ein wenig flüssiger
         Thread th = new Thread(() -> {
@@ -194,10 +212,10 @@ public class LoadFilmlist {
 
             if (!firstProgramStart) {
                 // gespeicherte Filmliste laden, macht beim ersten Programmstart keinen Sinn
-                Platform.runLater(() -> progData.mtPlayerController.disableBtnFilmlist(true));
+//                Platform.runLater(() -> progData.mtPlayerController.disableBtnFilmlist(true));
                 new ReadFilmlist().readFilmlist(ProgInfos.getFilmListFile(),
                         progData.filmlist, ProgConfig.SYSTEM_NUM_DAYS_FILMLIST.getInt());
-                Platform.runLater(() -> progData.mtPlayerController.disableBtnFilmlist(false));
+//                Platform.runLater(() -> progData.mtPlayerController.disableBtnFilmlist(false));
 
                 list.add(PLog.LILNE3);
                 list.add("Liste Filme gelesen am: " + StringFormatters.FORMATTER_ddMMyyyyHHmm.format(new Date()));
@@ -213,7 +231,7 @@ public class LoadFilmlist {
 
             } else {
                 // beim Neuladen wird es dann erst gemacht
-                notifyProgress.notifyEvent(NotifyProgress.NOTIFY.START, new ListenerFilmlistLoadEvent("", "", 0, 0, false/* Fehler */));
+//                notifyProgress.notifyEvent(NotifyProgress.NOTIFY.START, new ListenerFilmlistLoadEvent("", "", 0, 0, false/* Fehler */));
                 afterLoadFilmlist();
                 notifyProgress.notifyEvent(NotifyProgress.NOTIFY.FINISHED, new ListenerFilmlistLoadEvent("", "", 0, 0, false/* Fehler */));
             }
@@ -233,33 +251,33 @@ public class LoadFilmlist {
      */
     private void afterLoadFilmlist() {
         notifyProgress.notifyEvent(NotifyProgress.NOTIFY.PROGRESS, new ListenerFilmlistLoadEvent("", "Filem markieren: Geo, Zukunft, Doppelt",
-                ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
+                ListenerFilmlistLoad.PROGRESS_INDETERMINATE, 0, false/* Fehler */));
         PLog.sysLog("Filem markieren: Geo, Zukunft, Doppelt");
         progData.filmlist.markFilms();
 
 
         notifyProgress.notifyEvent(NotifyProgress.NOTIFY.PROGRESS, new ListenerFilmlistLoadEvent("", "Themen suchen",
-                ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
+                ListenerFilmlistLoad.PROGRESS_INDETERMINATE, 0, false/* Fehler */));
         PLog.sysLog("Themen suchen");
         progData.filmlist.loadTheme();
 
 
         if (!progData.aboList.isEmpty()) {
             notifyProgress.notifyEvent(NotifyProgress.NOTIFY.PROGRESS, new ListenerFilmlistLoadEvent("", "Abos eintragen",
-                    ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
+                    ListenerFilmlistLoad.PROGRESS_INDETERMINATE, 0, false/* Fehler */));
             PLog.sysLog("Abos eintragen");
             progData.aboList.setAboForFilm(progData.filmlist);
         }
 
 
         notifyProgress.notifyEvent(NotifyProgress.NOTIFY.PROGRESS, new ListenerFilmlistLoadEvent("", "Blacklist filtern",
-                ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
+                ListenerFilmlistLoad.PROGRESS_INDETERMINATE, 0, false/* Fehler */));
         PLog.sysLog("Blacklist filtern");
         progData.filmlist.filterList();
 
 
         notifyProgress.notifyEvent(NotifyProgress.NOTIFY.PROGRESS, new ListenerFilmlistLoadEvent("", "Filme in Downloads eintragen",
-                ListenerFilmlistLoad.PROGRESS_MAX, 0, false/* Fehler */));
+                ListenerFilmlistLoad.PROGRESS_INDETERMINATE, 0, false/* Fehler */));
         PLog.sysLog("Filme in Downloads eintragen");
         progData.downloadList.addFilmInList();
 
@@ -319,8 +337,6 @@ public class LoadFilmlist {
         PLog.sysLog("");
 
         afterLoadFilmlist();
-
-        notifyProgress.notifyEvent(NotifyProgress.NOTIFY.FINISHED, event);
     }
 
     private void fillHash(Filmlist filmlist) {
@@ -349,9 +365,9 @@ public class LoadFilmlist {
                     }
                     if (searchForFilmlistUpdate.doCheck(ProgConfig.SYSTEM_LOAD_FILMS_MANUALLY.get(),
                             progData.filmlist.genDate())) {
-                        Platform.runLater(() ->
-                                ProgData.getInstance().mtPlayerController.setButtonFilmlistUpdate()
-                        );
+
+                        Platform.runLater(() -> ProgData.getInstance().mtPlayerController.setButtonFilmlistUpdate());
+
                     }
                 } catch (final Exception ex) {
                     PLog.errorLog(963014785, ex);

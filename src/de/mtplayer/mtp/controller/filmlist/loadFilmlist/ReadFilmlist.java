@@ -200,7 +200,7 @@ public class ReadFilmlist {
      * @param filmlist the list to read to
      */
     private void processFromFile(String source, Filmlist filmlist) {
-        notifyProgress(source, ListenerFilmlistLoad.PROGRESS_MAX);
+        notifyProgress(source, ListenerFilmlistLoad.PROGRESS_INDETERMINATE);
         try (InputStream in = selectDecompressor(source, new FileInputStream(source));
              JsonParser jp = new JsonFactory().createParser(in)) {
             readData(jp, filmlist);

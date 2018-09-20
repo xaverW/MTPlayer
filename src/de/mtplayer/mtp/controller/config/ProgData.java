@@ -153,10 +153,4 @@ public class ProgData {
         return instance == null ? instance = new ProgData() : instance;
     }
 
-
-    public void initDialogs() {
-        filmInfoDialogController = new FilmInfoDialogController(this);
-    }
-
-
 }

@@ -29,7 +29,6 @@ import de.mtplayer.mtp.gui.dialog.ResetDialogController;
 import de.mtplayer.mtp.gui.mediaDialog.MediaConfigController;
 import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
 import de.p2tools.p2Lib.tools.log.PLog;
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -66,10 +65,10 @@ public class MTPlayerController extends StackPane {
         init();
     }
 
-    public void disableBtnFilmlist(boolean disable) {
-        // ist erst mal so bis "Filmliste laden" überarbeitet wird
-        btnFilmlist.setDisable(disable);
-    }
+//    public void disableBtnFilmlist(boolean disable) {
+//        // ist erst mal so bis "Filmliste laden" überarbeitet wird
+//        btnFilmlist.setDisable(disable);
+//    }
 
     public void setButtonFilmlistUpdate() {
         btnFilmlist.getStyleClass().add("btnFilmlist_");
@@ -77,96 +76,96 @@ public class MTPlayerController extends StackPane {
 
     private void init() {
         try {
-            // Top
-            this.setPadding(new Insets(0));
-
+            // Toolbar
             HBox hBoxTop = new HBox();
             hBoxTop.setPadding(new Insets(10));
             hBoxTop.setSpacing(20);
             hBoxTop.setAlignment(Pos.CENTER);
-            HBox.setHgrow(hBoxTop, Priority.ALWAYS);
 
-            TilePane tilePane = new TilePane();
-            tilePane.setHgap(20);
-            tilePane.setAlignment(Pos.CENTER);
-            HBox.setHgrow(tilePane, Priority.ALWAYS);
-
-            tilePane.getChildren().addAll(btnFilm, btnDownload, btnAbo);
-            hBoxTop.getChildren().addAll(btnFilmlist, tilePane, menuButton);
+            TilePane tilePaneFilmDownloadAbo = new TilePane();
+            tilePaneFilmDownloadAbo.setHgap(20);
+            tilePaneFilmDownloadAbo.setAlignment(Pos.CENTER);
+            tilePaneFilmDownloadAbo.getChildren().addAll(btnFilm, btnDownload, btnAbo);
+            HBox.setHgrow(tilePaneFilmDownloadAbo, Priority.ALWAYS);
+            hBoxTop.getChildren().addAll(btnFilmlist, tilePaneFilmDownloadAbo, menuButton);
 
 
+            // Center
             splitPaneFilm = filmGuiPack.pack();
             splitPaneDownoad = downloadGuiPack.pack();
             splitPaneAbo = aboGuiPack.pack();
             stackPaneCont.getChildren().addAll(splitPaneFilm, splitPaneDownoad, splitPaneAbo);
 
+            // Statusbar
             statusBarController = new StatusBarController(progData);
 
-            VBox.setVgrow(hBoxTop, Priority.NEVER);
-            VBox.setVgrow(statusBarController, Priority.NEVER);
-
+            // Gui zusammenbauen
             borderPane.setTop(hBoxTop);
             borderPane.setCenter(stackPaneCont);
             borderPane.setBottom(statusBarController);
-
             this.setPadding(new Insets(0));
-            progData.maskerPane = maskerPane;
-            maskerPane.setPadding(new Insets(4, 1, 1, 1));
             this.getChildren().addAll(borderPane, maskerPane);
-            StackPane.setAlignment(maskerPane, Pos.CENTER);
-            maskerPane.toFront();
-            maskerPane.setVisible(false);
-            Button btnStop = maskerPane.initButton("");
-            btnStop.setGraphic(new ProgIcons().ICON_BUTTON_STOP);
-            btnStop.setOnAction(a -> progData.loadFilmlist.setStop(true));
 
-            btnFilmlist.getStyleClass().add("btnFilmlist");
-
-            btnFilmlist.setOnAction(e -> {
-                btnFilmlist.getStyleClass().clear();
-                btnFilmlist.getStyleClass().add("btnFilmlist");
-                progData.loadFilmlist.loadFilmlist("");
-            });
-
-            btnFilm.getStyleClass().add("btnFilm");
-            btnFilm.setOnAction(e -> selPanelFilm());
-            btnFilm.setMaxWidth(Double.MAX_VALUE);
-
-            btnDownload.getStyleClass().add("btnDownlad");
-            btnDownload.setOnAction(e -> selPanelDownload());
-            btnDownload.setMaxWidth(Double.MAX_VALUE);
-
-            btnAbo.getStyleClass().add("btnAbo");
-            btnAbo.setOnAction(e -> selPanelAbo());
-            btnAbo.setMaxWidth(Double.MAX_VALUE);
-
-            final MenuItem miConfig = new MenuItem("Einstellungen");
-            miConfig.setOnAction(e -> new ConfigDialogController());
-
-            final MenuItem miMedia = new MenuItem("Mediensammlung");
-            miMedia.setOnAction(e -> new MediaConfigController());
-
-            final MenuItem miQuit = new MenuItem("Beenden");
-            miQuit.setOnAction(e -> new ProgQuit().quit(true, false));
-
-            final MenuItem miAbout = new MenuItem("Über dieses Programm");
-            miAbout.setOnAction(event -> new AboutDialogController(progData));
-
-            final MenuItem miReset = new MenuItem("Einstellungen zurücksetzen");
-            miReset.setOnAction(event -> new ResetDialogController(progData));
-
-            final Menu mHelp = new Menu("Hilfe");
-            mHelp.getItems().addAll(miAbout, new SeparatorMenuItem(), miReset);
-
-            menuButton.getStyleClass().add("btnFunction");
-            menuButton.setText("");
-            menuButton.setGraphic(new ProgIcons().FX_ICON_TOOLBAR_MENU_TOP);
-            menuButton.getItems().addAll(miConfig, miMedia, mHelp, new SeparatorMenuItem(), miQuit);
-
+            initMaskerPane();
+            initButton();
             selPanelFilm();
         } catch (Exception ex) {
             PLog.errorLog(597841023, ex);
         }
+    }
+
+    private void initMaskerPane() {
+        StackPane.setAlignment(maskerPane, Pos.CENTER);
+        progData.maskerPane = maskerPane;
+        maskerPane.setPadding(new Insets(4, 1, 1, 1));
+        maskerPane.toFront();
+        Button btnStop = maskerPane.initButton("");
+        btnStop.setGraphic(new ProgIcons().ICON_BUTTON_STOP);
+        btnStop.setOnAction(a -> progData.loadFilmlist.setStop(true));
+
+    }
+
+    private void initButton() {
+        btnFilmlist.getStyleClass().add("btnFilmlist");
+        btnFilmlist.setOnAction(e -> {
+            // falls "neue Filmliste" aktiv ist
+            btnFilmlist.getStyleClass().clear();
+            btnFilmlist.getStyleClass().add("btnFilmlist");
+            progData.loadFilmlist.loadFilmlist("");
+        });
+
+        btnFilm.setOnAction(e -> selPanelFilm());
+        btnFilm.setMaxWidth(Double.MAX_VALUE);
+
+        btnDownload.setOnAction(e -> selPanelDownload());
+        btnDownload.setMaxWidth(Double.MAX_VALUE);
+
+        btnAbo.setOnAction(e -> selPanelAbo());
+        btnAbo.setMaxWidth(Double.MAX_VALUE);
+
+        // Menü
+        final MenuItem miConfig = new MenuItem("Einstellungen");
+        miConfig.setOnAction(e -> new ConfigDialogController());
+
+        final MenuItem miMedia = new MenuItem("Mediensammlung");
+        miMedia.setOnAction(e -> new MediaConfigController());
+
+        final MenuItem miQuit = new MenuItem("Beenden");
+        miQuit.setOnAction(e -> new ProgQuit().quit(true, false));
+
+        final MenuItem miAbout = new MenuItem("Über dieses Programm");
+        miAbout.setOnAction(event -> new AboutDialogController(progData));
+
+        final MenuItem miReset = new MenuItem("Einstellungen zurücksetzen");
+        miReset.setOnAction(event -> new ResetDialogController(progData));
+
+        final Menu mHelp = new Menu("Hilfe");
+        mHelp.getItems().addAll(miAbout, new SeparatorMenuItem(), miReset);
+
+        menuButton.getStyleClass().add("btnFunction");
+        menuButton.setText("");
+        menuButton.setGraphic(new ProgIcons().FX_ICON_TOOLBAR_MENU_TOP);
+        menuButton.getItems().addAll(miConfig, miMedia, mHelp, new SeparatorMenuItem(), miQuit);
     }
 
     private void selPanelFilm() {
@@ -175,17 +174,12 @@ public class MTPlayerController extends StackPane {
         }
 
         if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneFilm)) {
+            // dann ist der 2. Klick
             filmGuiPack.closeSplit();
             return;
         }
 
-        btnFilm.getStyleClass().clear();
-        btnDownload.getStyleClass().clear();
-        btnAbo.getStyleClass().clear();
-
-        btnFilm.getStyleClass().add("btnTab-sel");
-        btnDownload.getStyleClass().add("btnTab");
-        btnAbo.getStyleClass().add("btnTab");
+        setButtonStyle(btnFilm);
 
         splitPaneFilm.toFront();
         progData.filmGuiController.isShown();
@@ -198,17 +192,12 @@ public class MTPlayerController extends StackPane {
         }
 
         if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneDownoad)) {
+            // dann ist der 2. Klick
             downloadGuiPack.closeSplit();
             return;
         }
 
-        btnFilm.getStyleClass().clear();
-        btnDownload.getStyleClass().clear();
-        btnAbo.getStyleClass().clear();
-
-        btnFilm.getStyleClass().add("btnTab");
-        btnDownload.getStyleClass().add("btnTab-sel");
-        btnAbo.getStyleClass().add("btnTab");
+        setButtonStyle(btnDownload);
 
         progData.downloadGuiController.isShown();
         splitPaneDownoad.toFront();
@@ -221,36 +210,64 @@ public class MTPlayerController extends StackPane {
         }
 
         if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneAbo)) {
+            // dann ist der 2. Klick
             aboGuiPack.closeSplit();
             return;
         }
 
-        btnFilm.getStyleClass().clear();
-        btnDownload.getStyleClass().clear();
-        btnAbo.getStyleClass().clear();
-
-        btnFilm.getStyleClass().add("btnTab");
-        btnDownload.getStyleClass().add("btnTab");
-        btnAbo.getStyleClass().add("btnTab-sel");
+        setButtonStyle(btnAbo);
 
         progData.aboGuiController.isShown();
         splitPaneAbo.toFront();
         statusBarController.setStatusbarIndex(StatusBarController.StatusbarIndex.ABO);
     }
 
+    private void setButtonStyle(Button btnSel) {
+        btnFilm.getStyleClass().clear();
+        btnDownload.getStyleClass().clear();
+        btnAbo.getStyleClass().clear();
 
-    public void setMasker() {
-        Platform.runLater(() -> {
-            maskerPane.setVisible(true);
-            maskerPane.resetProgress();
-        });
-//        maskerPane.setVisible(true);
+        if (btnSel.equals(btnFilm)) {
+            btnFilm.getStyleClass().add("btnTab-sel");
+        } else {
+            btnFilm.getStyleClass().add("btnTab");
+        }
+        if (btnSel.equals(btnDownload)) {
+            btnDownload.getStyleClass().add("btnTab-sel");
+        } else {
+            btnDownload.getStyleClass().add("btnTab");
+        }
+        if (btnSel.equals(btnAbo)) {
+            btnAbo.getStyleClass().add("btnTab-sel");
+        } else {
+            btnAbo.getStyleClass().add("btnTab");
+        }
     }
 
-    public void resetMasker() {
-        Platform.runLater(() -> {
-            maskerPane.setVisible(false);
-            maskerPane.resetProgress();
-        });
-    }
+//    public void setMaskerProgress(double progress, String text) {
+//        Platform.runLater(() -> {
+//            maskerPane.setProgress(progress, text);
+//        });
+//    }
+//
+//    public void setMaskerProgress(String text) {
+//        Platform.runLater(() -> {
+//            maskerPane.setProgress(-1, text);
+//        });
+//    }
+//
+//    public void setMaskerVisible(boolean buttonVisible) {
+//        Platform.runLater(() -> {
+//            maskerPane.setVisible(true);
+//            maskerPane.setButtonVisible(buttonVisible);
+////            maskerPane.resetProgress();
+//        });
+//    }
+//
+//    public void setMaskerIndicator() {
+//        Platform.runLater(() -> {
+//            maskerPane.setVisible(false);
+//            maskerPane.resetProgress();
+//        });
+//    }
 }

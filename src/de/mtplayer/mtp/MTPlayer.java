@@ -15,49 +15,37 @@
  */
 package de.mtplayer.mtp;
 
-import de.mtplayer.mLib.tools.Functions;
-import de.mtplayer.mLib.tools.StringFormatters;
 import de.mtplayer.mtp.controller.ProgQuit;
-import de.mtplayer.mtp.controller.ProgSave;
 import de.mtplayer.mtp.controller.ProgStart;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ListePsetVorlagen;
 import de.mtplayer.mtp.controller.data.SetList;
-import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
-import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
+import de.mtplayer.mtp.gui.dialog.FilmInfoDialogController;
 import de.mtplayer.mtp.gui.startDialog.StartDialogController;
 import de.mtplayer.mtp.res.GetIcon;
 import de.mtplayer.mtp.tools.storedFilter.ProgInitFilter;
-import de.mtplayer.mtp.tools.update.SearchProgramUpdate;
 import de.p2tools.p2Lib.PInit;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PGuiSize;
 import de.p2tools.p2Lib.tools.log.PDuration;
-import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.util.Date;
-
-import static java.lang.Thread.sleep;
-
 public class MTPlayer extends Application {
 
     private Stage primaryStage;
-    private MTPlayerController mtPlayerController;
 
     private static final String LOG_TEXT_PROGRAMSTART = "Dauer Programmstart";
-    private static final String TITLE_TEXT_PROGRAM_VERSION_IS_UPTODATE = "Programmversion ist aktuell";
-    private static final String TITLE_TEXT_PROGRAMMUPDATE_EXISTS = "Ein Programmupdate ist verfügbar";
+//    private static final String TITLE_TEXT_PROGRAM_VERSION_IS_UPTODATE = "Programmversion ist aktuell";
+//    private static final String TITLE_TEXT_PROGRAMMUPDATE_EXISTS = "Ein Programmupdate ist verfügbar";
 
     protected ProgData progData;
     ProgStart progStart;
     Scene scene = null;
-    private boolean onlyOne = false;
     private boolean firstProgramStart = false;
 
     @Override
@@ -73,23 +61,25 @@ public class MTPlayer extends Application {
         progData.primaryStage = primaryStage;
         progStart = new ProgStart(progData);
 
-        initP2();
-        loadData();
+        initP2lib();
+        workBeforeGui();
+
         initRootLayout();
-        losGehts();
+
+        workAfterGui();
         PDuration.counterStop(LOG_TEXT_PROGRAMSTART);
     }
 
-    private void initP2() {
+    private void initP2lib() {
         PButton.setHlpImage(GetIcon.getImage("button-help.png", 16, 16));
         PInit.initLib(primaryStage, ProgConst.PROGRAMNAME, ProgConst.CSS_FILE, "", ProgData.debug);
     }
 
-    private void loadData() {
+    private void workBeforeGui() {
         if (!progStart.loadAll()) {
             PDuration.onlyPing("Erster Start");
-            firstProgramStart = true;
 
+            firstProgramStart = true;
             // einmal ein Muster anlegen, für Linux ist es bereits aktiv!
             progData.replaceList.init();
 
@@ -100,15 +90,18 @@ public class MTPlayer extends Application {
                 System.exit(0);
             }
 
+
             //todo das ist noch nicht ganz klar ob dahin
-            PDuration.onlyPing("Erster Start: PSet");
             Platform.runLater(() -> {
+                PDuration.onlyPing("Erster Start: PSet");
+
                 // kann ein Dialog aufgehen
                 final SetList pSet = ListePsetVorlagen.getStandarset(true /*replaceMuster*/);
                 if (pSet != null) {
                     progData.setList.addPset(pSet);
                     ProgConfig.SYSTEM_UPDATE_PROGSET_VERSION.setValue(pSet.version);
                 }
+
                 PDuration.onlyPing("Erster Start: PSet geladen");
             });
 
@@ -118,10 +111,10 @@ public class MTPlayer extends Application {
 
     private void initRootLayout() {
         try {
-            progData.initDialogs();
-            mtPlayerController = new MTPlayerController();
-            progData.mtPlayerController = mtPlayerController;
-            scene = new Scene(mtPlayerController,
+            progData.filmInfoDialogController = new FilmInfoDialogController();
+            progData.mtPlayerController = new MTPlayerController();
+
+            scene = new Scene(progData.mtPlayerController,
                     PGuiSize.getWidth(ProgConfig.SYSTEM_SIZE_GUI.getStringProperty()),
                     PGuiSize.getHeight(ProgConfig.SYSTEM_SIZE_GUI.getStringProperty()));
 
@@ -144,77 +137,9 @@ public class MTPlayer extends Application {
         }
     }
 
-    private void losGehts() {
-        final String ICON_NAME = "Icon.png";
-        final String ICON_PATH = "/de/mtplayer/mtp/res/";
-        final int ICON_WIDTH = 58;
-        final int ICON_HEIGHT = 58;
-        primaryStage.getIcons().add(GetIcon.getImage(ICON_NAME, ICON_PATH, ICON_WIDTH, ICON_HEIGHT));
-
-        progStart.startMsg();
-
-        setOrgTitle();
-
-        progData.startTimer();
-        progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
-            @Override
-            public void finished(ListenerFilmlistLoadEvent event) {
-                new ProgSave().saveAll(); // damit nichts verlorengeht
-
-                if (!onlyOne) {
-                    onlyOne = true;
-                    progData.mediaDataList.createMediaDb();
-                    checkProgUpdate();
-                }
-
-            }
-        });
-
+    private void workAfterGui() {
+        progStart.doWorkAfterGui(firstProgramStart);
         PDuration.onlyPing("Gui steht!");
-        progStart.loadDataProgStart(firstProgramStart);
-    }
-
-
-    private void setOrgTitle() {
-        primaryStage.setTitle(ProgConst.PROGRAMNAME + " " + Functions.getProgVersion());
-    }
-
-    private void setUpdateTitle() {
-        primaryStage.setTitle(TITLE_TEXT_PROGRAMMUPDATE_EXISTS);
-    }
-
-    private void setNoUpdateTitle() {
-        primaryStage.setTitle(TITLE_TEXT_PROGRAM_VERSION_IS_UPTODATE);
-    }
-
-    private void checkProgUpdate() {
-        // Prüfen obs ein Programmupdate gibt
-        PDuration.onlyPing("checkProgUpdate");
-        if (!Boolean.parseBoolean(ProgConfig.SYSTEM_UPDATE_SEARCH.get()) ||
-                ProgConfig.SYSTEM_UPDATE_BUILD_NR.get().equals(Functions.getProgVersion() /*Start mit neuer Version*/)
-                        && ProgConfig.SYSTEM_UPDATE_DATE.get().equals(StringFormatters.FORMATTER_yyyyMMdd.format(new Date()))) {
-            // will der User nicht --oder-- keine neue Version und heute schon gemacht
-            PLog.sysLog("Kein Update-Check");
-            return;
-        }
-
-        Thread th = new Thread(() -> {
-            try {
-                if (new SearchProgramUpdate(primaryStage).checkVersion(false, false /* immer anzeigen */)) {
-                    Platform.runLater(() -> setUpdateTitle());
-                } else {
-                    Platform.runLater(() -> setNoUpdateTitle());
-                }
-
-                sleep(10_000);
-                Platform.runLater(() -> setOrgTitle());
-
-            } catch (final Exception ex) {
-                PLog.errorLog(794612801, ex);
-            }
-        });
-        th.setName("checkProgUpdate");
-        th.start();
     }
 
 }

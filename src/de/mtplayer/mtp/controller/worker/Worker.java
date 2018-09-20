@@ -16,6 +16,7 @@
 
 package de.mtplayer.mtp.controller.worker;
 
+import de.mtplayer.mtp.controller.ProgSave;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
@@ -43,21 +44,25 @@ public class Worker {
         progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
             @Override
             public void start(ListenerFilmlistLoadEvent event) {
-                progData.mtPlayerController.setMasker();
+                progData.maskerPane.setMaskerVisible(true);
             }
 
             @Override
             public void progress(ListenerFilmlistLoadEvent event) {
-                progData.maskerPane.setProgress(event.progress, event.text);
+                progData.maskerPane.setMaskerProgress(event.progress, event.text);
             }
 
             @Override
             public void finished(ListenerFilmlistLoadEvent event) {
+                System.out.println("==================> aus");
+
+                new ProgSave().saveAll(); // damit nichts verlorengeht
+
                 getChannelAndTheme();
                 if (ProgConfig.ABO_SEARCH_NOW.getBool()) {
                     searchForAbosAndMaybeStart();
                 } else {
-                    progData.mtPlayerController.resetMasker();
+                    progData.maskerPane.setMaskerVisible(false);
                 }
             }
         });
@@ -80,7 +85,7 @@ public class Worker {
         }
 
         PDuration.counterStart("DownloadGuiController.searchForAbosAndMaybeStart");
-        progData.mtPlayerController.setMasker();
+        progData.maskerPane.setMaskerVisible(true, false);
 
         Thread th = new Thread(() -> {
             try {
@@ -92,7 +97,7 @@ public class Worker {
                     progData.downloadList.startDownloads();
                 }
 
-                progData.mtPlayerController.resetMasker();
+                progData.maskerPane.setMaskerVisible(false);
                 PDuration.counterStop("DownloadGuiController.searchForAbosAndMaybeStart");
             } catch (Exception ex) {
                 PLog.errorLog(951241204, ex);

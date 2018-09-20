@@ -17,7 +17,6 @@
 package de.mtplayer.mtp.gui.dialog;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
-import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
@@ -44,7 +43,6 @@ public class FilmInfoDialogController extends PDialog {
 
     private final GridPane gridPane = new GridPane();
     private final Button btnOk = new Button("Ok");
-    private final ProgData progData;
 
 
     private final VBox vBoxDialog = new VBox();
@@ -54,10 +52,9 @@ public class FilmInfoDialogController extends PDialog {
     private final HBox hBoxWebsite = new HBox();
 
 
-    public FilmInfoDialogController(ProgData progData) {
+    public FilmInfoDialogController() {
         super(null, ProgConfig.SYSTEM_SIZE_DIALOG_FILMINFO.getStringProperty(),
                 "Filminfos", false);
-        this.progData = progData;
 
         initDialog();
         tilePaneOk.getChildren().addAll(btnOk);

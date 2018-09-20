@@ -17,31 +17,70 @@
 package de.mtplayer.mtp.controller;
 
 import de.mtplayer.mLib.MLInit;
+import de.mtplayer.mLib.tools.Functions;
+import de.mtplayer.mLib.tools.StringFormatters;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
+import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
+import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
+import de.mtplayer.mtp.res.GetIcon;
+import de.mtplayer.mtp.tools.update.SearchProgramUpdate;
 import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.tools.log.LogMessage;
+import de.p2tools.p2Lib.tools.log.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import de.p2tools.p2Lib.tools.log.PLogger;
+import javafx.application.Platform;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Date;
+
+import static java.lang.Thread.sleep;
 
 public class ProgStart {
-    ProgData progData;
+    private static final String TITLE_TEXT_PROGRAM_VERSION_IS_UPTODATE = "Programmversion ist aktuell";
+    private static final String TITLE_TEXT_PROGRAMMUPDATE_EXISTS = "Ein Programmupdate ist verfügbar";
+    private ProgData progData;
+    private boolean onlyOne = false;
 
     public ProgStart(ProgData progData) {
         this.progData = progData;
     }
 
-    // #########################################################
-    // Filmliste beim Programmstart!! laden
-    // #########################################################
-    public void loadDataProgStart(boolean firstProgramStart) {
+    /**
+     * alles was nach der GUI gemacht werden soll z.B.
+     * Filmliste beim Programmstart!! laden
+     *
+     * @param firstProgramStart
+     */
+    public void doWorkAfterGui(boolean firstProgramStart) {
+        final String ICON_NAME = "Icon.png";
+        final String ICON_PATH = "/de/mtplayer/mtp/res/";
+        final int ICON_WIDTH = 58;
+        final int ICON_HEIGHT = 58;
+        progData.primaryStage.getIcons().add(GetIcon.getImage(ICON_NAME, ICON_PATH, ICON_WIDTH, ICON_HEIGHT));
+
+        startMsg();
+        setOrgTitle();
+
+        progData.startTimer();
+        progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
+            @Override
+            public void finished(ListenerFilmlistLoadEvent event) {
+                if (!onlyOne) {
+                    onlyOne = true;
+                    progData.mediaDataList.createMediaDb();
+                    checkProgUpdate();
+                }
+
+            }
+        });
+
         progData.loadFilmlist.loadFilmlistProgStart(firstProgramStart);
     }
 
@@ -169,5 +208,47 @@ public class ProgStart {
 
         }
         return ret;
+    }
+
+    private void setOrgTitle() {
+        progData.primaryStage.setTitle(ProgConst.PROGRAMNAME + " " + Functions.getProgVersion());
+    }
+
+    private void setUpdateTitle() {
+        progData.primaryStage.setTitle(TITLE_TEXT_PROGRAMMUPDATE_EXISTS);
+    }
+
+    private void setNoUpdateTitle() {
+        progData.primaryStage.setTitle(TITLE_TEXT_PROGRAM_VERSION_IS_UPTODATE);
+    }
+
+    private void checkProgUpdate() {
+        // Prüfen obs ein Programmupdate gibt
+        PDuration.onlyPing("checkProgUpdate");
+        if (!Boolean.parseBoolean(ProgConfig.SYSTEM_UPDATE_SEARCH.get()) ||
+                ProgConfig.SYSTEM_UPDATE_BUILD_NR.get().equals(Functions.getProgVersion() /*Start mit neuer Version*/)
+                        && ProgConfig.SYSTEM_UPDATE_DATE.get().equals(StringFormatters.FORMATTER_yyyyMMdd.format(new Date()))) {
+            // will der User nicht --oder-- keine neue Version und heute schon gemacht
+            PLog.sysLog("Kein Update-Check");
+            return;
+        }
+
+        Thread th = new Thread(() -> {
+            try {
+                if (new SearchProgramUpdate(progData.primaryStage).checkVersion(false, false /* immer anzeigen */)) {
+                    Platform.runLater(() -> setUpdateTitle());
+                } else {
+                    Platform.runLater(() -> setNoUpdateTitle());
+                }
+
+                sleep(10_000);
+                Platform.runLater(() -> setOrgTitle());
+
+            } catch (final Exception ex) {
+                PLog.errorLog(794612801, ex);
+            }
+        });
+        th.setName("checkProgUpdate");
+        th.start();
     }
 }
