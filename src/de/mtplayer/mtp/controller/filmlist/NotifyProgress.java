@@ -25,7 +25,7 @@ import javafx.application.Platform;
 import javax.swing.event.EventListenerList;
 
 public class NotifyProgress {
-    public enum NOTIFY {START, PROGRESS, FINISHED}
+    public enum NOTIFY {START, PROGRESS, LOADED, FINISHED}
 
     public final EventListenerList listeners = new EventListenerList();
 
@@ -44,6 +44,9 @@ public class NotifyProgress {
                             break;
                         case PROGRESS:
                             l.progress(event);
+                            break;
+                        case LOADED:
+                            l.loaded(event);
                             break;
                         case FINISHED:
                             l.finished(event);

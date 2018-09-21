@@ -30,6 +30,9 @@ public class ListenerFilmlistLoad implements EventListener {
     public void progress(ListenerFilmlistLoadEvent e) {
     }
 
+    public void loaded(ListenerFilmlistLoadEvent e) {
+    }
+
     public void finished(ListenerFilmlistLoadEvent e) {
     }
 }

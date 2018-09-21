@@ -67,35 +67,27 @@ public class LoadFilmlist {
         importNewFilmliste.addAdListener(new ListenerFilmlistLoad() {
             @Override
             public synchronized void start(ListenerFilmlistLoadEvent event) {
-                // Start des Ladens
-//                progData.maskerPane.setMaskerVisible(true, true);
-//                progData.maskerPane.setMaskerProgress(ListenerFilmlistLoad.PROGRESS_MIN, "Filmliste laden");
-
                 // Start ans Prog melden
                 notifyProgress.notifyEvent(NotifyProgress.NOTIFY.START, event);
             }
 
             @Override
             public synchronized void progress(ListenerFilmlistLoadEvent event) {
-                System.out.println("Progress: " + event.progress);
                 notifyProgress.notifyEvent(NotifyProgress.NOTIFY.PROGRESS, event);
             }
 
             @Override
             public synchronized void finished(ListenerFilmlistLoadEvent event) {
                 // Laden ist durch
-                System.out.println("==================> aus");
-                progData.maskerPane.setMaskerVisible(true, false);
-                notifyProgress.notifyEvent(NotifyProgress.NOTIFY.PROGRESS,
+                notifyProgress.notifyEvent(NotifyProgress.NOTIFY.LOADED,
                         new ListenerFilmlistLoadEvent("", "Filme verarbeiten",
                                 ListenerFilmlistLoad.PROGRESS_INDETERMINATE, 0, false/* Fehler */));
 
-//                progData.maskerPane.setMaskerVisible(true, false);
-//                progData.maskerPane.setMaskerText("Filmliste verarbeiten");
 
                 // Ergebnisliste listeFilme eintragen -> Feierabend!
-                PDuration.onlyPing("Filme laden, ende");
+                PDuration.onlyPing("Filme laden: Ende");
                 afterImportNewFilmlist(event);
+                PDuration.onlyPing("Filme nachbearbeiten: Ende");
 
                 // alles fertig ans Prog melden
                 notifyProgress.notifyEvent(NotifyProgress.NOTIFY.FINISHED, event);
@@ -208,13 +200,12 @@ public class LoadFilmlist {
 
         setPropLoadFilmlist(true);
         // Start des Ladens, gibt keine Vortschrittsanzeige und keine Abbrechen
-        progData.maskerPane.setButtonVisible(false);
         notifyProgress.notifyEvent(NotifyProgress.NOTIFY.START,
-                new ListenerFilmlistLoadEvent("", "gespeicherte Filmliste laden", ListenerFilmlistLoad.PROGRESS_INDETERMINATE, 0, false));
+                new ListenerFilmlistLoadEvent("", "gespeicherte Filmliste laden",
+                        ListenerFilmlistLoad.PROGRESS_INDETERMINATE, 0, false));
 
         // Gui startet ein wenig flüssiger
         Thread th = new Thread(() -> {
-
             PDuration.onlyPing("Programmstart Daten laden");
 
             final ProgData progData = ProgData.getInstance();
@@ -238,17 +229,24 @@ public class LoadFilmlist {
                 notifyProgress.notifyEvent(NotifyProgress.NOTIFY.PROGRESS,
                         new ListenerFilmlistLoadEvent("", "Filmliste ist zu alt, eine neue downloaden",
                                 ListenerFilmlistLoad.PROGRESS_INDETERMINATE, 0, false/* Fehler */));
+
                 loadFilmlist("", false);
 
             } else {
+                notifyProgress.notifyEvent(NotifyProgress.NOTIFY.LOADED,
+                        new ListenerFilmlistLoadEvent("", "Filme verarbeiten",
+                                ListenerFilmlistLoad.PROGRESS_INDETERMINATE, 0, false/* Fehler */));
+
                 // beim Neuladen wird es dann erst gemacht
                 afterLoadFilmlist();
                 notifyProgress.notifyFinishedOk();
             }
+
             list.add(PLog.LILNE3);
             PLog.sysLog(list);
 
         });
+
         th.setName("loadFilmlistProgStart");
         th.start();
     }
@@ -260,7 +258,7 @@ public class LoadFilmlist {
      * alles was nach einem Neuladen oder Einlesen einer gespeicherten Filmliste ansteht
      */
     private void afterLoadFilmlist() {
-        notifyProgress.notifyEvent(NotifyProgress.NOTIFY.PROGRESS,
+        notifyProgress.notifyEvent(NotifyProgress.NOTIFY.LOADED,
                 new ListenerFilmlistLoadEvent("", "Filme markieren, Themen suchen",
                         ListenerFilmlistLoad.PROGRESS_INDETERMINATE, 0, false/* Fehler */));
 
@@ -271,7 +269,7 @@ public class LoadFilmlist {
         progData.filmlist.loadTheme();
 
 
-        notifyProgress.notifyEvent(NotifyProgress.NOTIFY.PROGRESS,
+        notifyProgress.notifyEvent(NotifyProgress.NOTIFY.LOADED,
                 new ListenerFilmlistLoadEvent("", "Abos eintragen, Blacklist filtern",
                         ListenerFilmlistLoad.PROGRESS_INDETERMINATE, 0, false/* Fehler */));
 
@@ -284,7 +282,7 @@ public class LoadFilmlist {
         progData.filmlist.filterList();
 
 
-        notifyProgress.notifyEvent(NotifyProgress.NOTIFY.PROGRESS,
+        notifyProgress.notifyEvent(NotifyProgress.NOTIFY.LOADED,
                 new ListenerFilmlistLoadEvent("", "neue Downloads suchen",
                         ListenerFilmlistLoad.PROGRESS_INDETERMINATE, 0, false/* Fehler */));
 

@@ -44,7 +44,12 @@ public class Worker {
         progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
             @Override
             public void start(ListenerFilmlistLoadEvent event) {
-                progData.maskerPane.setMaskerVisible(true, true);
+                if (event.progress == ListenerFilmlistLoad.PROGRESS_INDETERMINATE) {
+                    // ist dann die gespeicherte Filmliste
+                    progData.maskerPane.setMaskerVisible(true, false);
+                } else {
+                    progData.maskerPane.setMaskerVisible(true, true);
+                }
                 progData.maskerPane.setMaskerProgress(event.progress, event.text);
             }
 
@@ -54,9 +59,15 @@ public class Worker {
             }
 
             @Override
-            public void finished(ListenerFilmlistLoadEvent event) {
+            public void loaded(ListenerFilmlistLoadEvent event) {
                 progData.maskerPane.setMaskerVisible(true, false);
                 progData.maskerPane.setMaskerProgress(ListenerFilmlistLoad.PROGRESS_INDETERMINATE, "Filmliste verarbeiten");
+            }
+
+            @Override
+            public void finished(ListenerFilmlistLoadEvent event) {
+//                progData.maskerPane.setMaskerVisible(true, false);
+//                progData.maskerPane.setMaskerProgress(ListenerFilmlistLoad.PROGRESS_INDETERMINATE, "Filmliste verarbeiten");
 
                 new ProgSave().saveAll(); // damit nichts verlorengeht
                 getChannelAndTheme();
