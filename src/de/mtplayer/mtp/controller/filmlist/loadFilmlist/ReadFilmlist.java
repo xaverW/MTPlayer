@@ -280,7 +280,7 @@ public class ReadFilmlist {
     private void notifyStart(String url) {
         progress = 0;
         for (final ListenerFilmlistLoad l : listeners.getListeners(ListenerFilmlistLoad.class)) {
-            l.start(new ListenerFilmlistLoadEvent(url, "", 0, 0, false));
+            l.start(new ListenerFilmlistLoadEvent(url, "Filmliste downloaden", 0, 0, false));
         }
     }
 
@@ -290,7 +290,7 @@ public class ReadFilmlist {
             progress = ListenerFilmlistLoad.PROGRESS_MAX;
         }
         for (final ListenerFilmlistLoad l : listeners.getListeners(ListenerFilmlistLoad.class)) {
-            l.progress(new ListenerFilmlistLoadEvent(url, "Download", progress, 0, false));
+            l.progress(new ListenerFilmlistLoadEvent(url, "Filmliste downloaden", progress, 0, false));
         }
     }
 
@@ -301,7 +301,7 @@ public class ReadFilmlist {
         list.add("  erstellt am: " + filmlist.genDate());
         list.add("  Anzahl Filme: " + filmlist.size());
         for (final ListenerFilmlistLoad l : listeners.getListeners(ListenerFilmlistLoad.class)) {
-            l.finished(new ListenerFilmlistLoadEvent(url, "", progress, 0, false));
+            l.finished(new ListenerFilmlistLoadEvent(url, "Filmliste geladen", progress, 0, false));
         }
         list.add(PLog.LILNE3);
         PLog.sysLog(list);

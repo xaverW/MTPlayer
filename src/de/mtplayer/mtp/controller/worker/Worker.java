@@ -44,7 +44,8 @@ public class Worker {
         progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
             @Override
             public void start(ListenerFilmlistLoadEvent event) {
-                progData.maskerPane.setMaskerVisible(true);
+                progData.maskerPane.setMaskerVisible(true, true);
+                progData.maskerPane.setMaskerProgress(event.progress, event.text);
             }
 
             @Override
@@ -54,10 +55,10 @@ public class Worker {
 
             @Override
             public void finished(ListenerFilmlistLoadEvent event) {
-                System.out.println("==================> aus");
+                progData.maskerPane.setMaskerVisible(true, false);
+                progData.maskerPane.setMaskerProgress(ListenerFilmlistLoad.PROGRESS_INDETERMINATE, "Filmliste verarbeiten");
 
                 new ProgSave().saveAll(); // damit nichts verlorengeht
-
                 getChannelAndTheme();
                 if (ProgConfig.ABO_SEARCH_NOW.getBool()) {
                     searchForAbosAndMaybeStart();
@@ -78,17 +79,20 @@ public class Worker {
                 getAboNames());
     }
 
+
     public void searchForAbosAndMaybeStart() {
         if (progData.loadFilmlist.getPropLoadFilmlist()) {
             // wird danach eh gemacht
             return;
         }
 
-        PDuration.counterStart("DownloadGuiController.searchForAbosAndMaybeStart");
+        PDuration.counterStart("Worker.searchForAbosAndMaybeStart");
         progData.maskerPane.setMaskerVisible(true, false);
+        progData.maskerPane.setMaskerProgress(ListenerFilmlistLoad.PROGRESS_INDETERMINATE, "Downloads suchen");
 
         Thread th = new Thread(() -> {
             try {
+
                 // erledigte entfernen, nicht gestartete Abos entfernen und neu nach Abos suchen
                 progData.downloadList.searchForDownloadsFromAbos();
 
@@ -97,8 +101,12 @@ public class Worker {
                     progData.downloadList.startDownloads();
                 }
 
-                progData.maskerPane.setMaskerVisible(false);
-                PDuration.counterStop("DownloadGuiController.searchForAbosAndMaybeStart");
+                Platform.runLater(() ->
+                        progData.maskerPane.setMaskerVisible(false)
+                );
+
+                PDuration.counterStop("Worker.searchForAbosAndMaybeStart");
+
             } catch (Exception ex) {
                 PLog.errorLog(951241204, ex);
             }

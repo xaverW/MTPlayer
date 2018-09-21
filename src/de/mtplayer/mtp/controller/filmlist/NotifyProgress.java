@@ -29,6 +29,10 @@ public class NotifyProgress {
 
     public final EventListenerList listeners = new EventListenerList();
 
+    public void notifyFinishedOk() {
+        notifyEvent(NotifyProgress.NOTIFY.FINISHED, ListenerFilmlistLoadEvent.getEmptyEvent());
+    }
+
     public void notifyEvent(NOTIFY notify, ListenerFilmlistLoadEvent event) {
         try {
             Platform.runLater(() -> {

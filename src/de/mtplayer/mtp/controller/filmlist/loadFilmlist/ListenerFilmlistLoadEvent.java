@@ -42,4 +42,8 @@ public class ListenerFilmlistLoadEvent {
         this.countFoundFilms = countFoundFilms;
         this.error = error;
     }
+
+    public static ListenerFilmlistLoadEvent getEmptyEvent() {
+        return new ListenerFilmlistLoadEvent("", "", 0, 0, false);
+    }
 }

@@ -119,7 +119,8 @@ public class MTPlayerController extends StackPane {
         progData.maskerPane = maskerPane;
         maskerPane.setPadding(new Insets(4, 1, 1, 1));
         maskerPane.toFront();
-        Button btnStop = maskerPane.initButton("");
+        Button btnStop = maskerPane.getButton();
+        maskerPane.setButtonText("");
         btnStop.setGraphic(new ProgIcons().ICON_BUTTON_STOP);
         btnStop.setOnAction(a -> progData.loadFilmlist.setStop(true));
 
