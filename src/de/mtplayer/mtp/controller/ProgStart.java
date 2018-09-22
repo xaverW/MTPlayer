@@ -180,7 +180,8 @@ public class ProgStart {
         PLog.sysLog("Es gibt ein Backup");
 
 
-        if (PAlert.BUTTON.YES != PAlert.showAlert_yes_no("Gesicherte Einstellungen laden?",
+        // stage bzw. scene gibts noch nicht
+        if (PAlert.BUTTON.YES != PAlert.showAlert_yes_no(null, "Gesicherte Einstellungen laden?",
                 "Die Einstellungen sind beschädigt" + PConst.LINE_SEPARATOR +
                         "und können nicht geladen werden.",
                 "Soll versucht werden, mit gesicherten" + PConst.LINE_SEPARATOR

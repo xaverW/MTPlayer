@@ -25,7 +25,6 @@ import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 
 public class QuitDialogController extends PDialog {
@@ -67,7 +66,9 @@ public class QuitDialogController extends PDialog {
             close();
         });
 
-        maskerPane.setVisible(false);
+        maskerPane.setMaskerVisible(false, false, false);
+        maskerPane.setButtonText("Abbrechen");
+        maskerPane.getButton().setOnAction(a -> close());
 
         Label headerLabel = new Label("Es laufen noch Downloads!");
         headerLabel.setStyle("-fx-font-size: 1.5em;");
@@ -110,7 +111,7 @@ public class QuitDialogController extends PDialog {
 
 
     private void startWaiting() {
-        maskerPane.setVisible(true);
+        maskerPane.setMaskerVisible(true, false, true);
         Thread th = new Thread(waitTask);
         th.setName("startWaiting");
         th.start();
@@ -135,14 +136,14 @@ public class QuitDialogController extends PDialog {
         }
     }
 
-    public boolean escEvent(KeyEvent keyEvent) {
-        if (maskerPane.isVisible()) {
-            maskerPane.setVisible(false);
-            waitTask.cancel();
-            return false;
-        }
-        return true;
-    }
+//    public boolean escEvent(KeyEvent keyEvent) {
+//        if (maskerPane.isVisible()) {
+//            maskerPane.setVisible(false);
+//            waitTask.cancel();
+//            return false;
+//        }
+//        return true;
+//    }
 
     public void close() {
         if (waitTask.isRunning()) {
