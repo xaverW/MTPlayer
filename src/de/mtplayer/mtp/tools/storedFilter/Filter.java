@@ -46,8 +46,9 @@ public class Filter {
         this.exact = exact;
     }
 
-    public void set() {
+    public void makeFilter() {
         // keine Auftrennung mit ":" oder "," für z.B. URLs
+
         if (filter.isEmpty()) {
             filterArr = new String[]{""};
             pattern = null;
@@ -68,7 +69,7 @@ public class Filter {
         checkArray();
     }
 
-    public void setArray() {
+    public void makeFilterArray() {
         if (filter.isEmpty()) {
             filterArr = new String[]{""};
             pattern = null;

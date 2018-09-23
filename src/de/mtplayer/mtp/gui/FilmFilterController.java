@@ -344,7 +344,7 @@ public class FilmFilterController extends FilterController {
     private void initDurFilter() {
         slDur.minValueProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().minDurProperty());
         slDur.maxValueProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().maxDurProperty());
-        slDur.setVluePrefix("");
+        slDur.setValuePrefix("");
 
 //        progData.storedFilter.getSelectedFilter().minDurProperty().addListener((observable, oldValue, newValue) ->
 //                System.out.println("getSelectedFilter().getMinDur " + progData.storedFilter.getSelectedFilter().getMinDur()));

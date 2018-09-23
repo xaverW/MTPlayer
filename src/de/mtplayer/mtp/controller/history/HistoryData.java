@@ -92,10 +92,10 @@ public class HistoryData implements Comparable<HistoryData> {
             return url + PConst.LINE_SEPARATOR;
         }
 
-        String s = getDate().toString();
-        if (!s.equals(dateStr)) {
-            System.out.println(s);
-        }
+//        String s = getDate().toString();
+//        if (!s.equals(dateStr)) {
+//            System.out.println(s);
+//        }
 
         if (theme.length() < MAX_THEME) {
             // nur wenn zu kurz, dann anpassen, so bleibt das Log ~lesbar

@@ -27,8 +27,6 @@ import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
 import de.p2tools.p2Lib.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.pRange.PRangeBox;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
@@ -48,8 +46,6 @@ public class AboEditDialogController extends PDialogExtra {
     ComboBox<String> cboChannel = new ComboBox<>();
     ComboBox<String> cboDestination = new ComboBox<>();
     PRangeBox pRangeBoxTime = new PRangeBox(0, SelectedFilter.FILTER_DURATION_MAX_MIN);
-    //    Label lblTimeMin = new Label();
-//    Label lblTimeMax = new Label();
     CheckBox cbxOn = new CheckBox();
     Label[] lbl = new Label[AboXml.MAX_ELEM];
     TextField[] txt = new TextField[AboXml.MAX_ELEM];
@@ -59,7 +55,6 @@ public class AboEditDialogController extends PDialogExtra {
     private RadioButton rbHigh = new RadioButton("hohe Auflösung");
     private RadioButton rbLow = new RadioButton("niedrige Auflösung");
 
-    final String ALLES = "Alles";
     private boolean ok = false;
 
     private final ObservableList<Abo> lAbo;
@@ -107,6 +102,13 @@ public class AboEditDialogController extends PDialogExtra {
         }
 
         close();
+    }
+
+    @Override
+    public void close() {
+        // WICHTIG!!
+        cboChannel.valueProperty().unbindBidirectional(aboCopy.channelProperty());
+        super.close();
     }
 
     private void updateAboList() {
@@ -324,9 +326,7 @@ public class AboEditDialogController extends PDialogExtra {
 
             case AboXml.ABO_ON:
                 cbxOn.selectedProperty().bindBidirectional(aboCopy.activeProperty());
-                cbxOn.setOnAction(a -> {
-                    cbxForAll[i].setSelected(true);
-                });
+                cbxOn.setOnAction(a -> cbxForAll[i].setSelected(true));
                 gridPane.add(cbxOn, 1, grid);
                 break;
 
@@ -366,16 +366,6 @@ public class AboEditDialogController extends PDialogExtra {
 
             case AboXml.ABO_MIN_DURATION:
                 initDur();
-//                HBox h1 = new HBox();
-//                HBox h2 = new HBox();
-//                h1.getChildren().add(lblTimeMin);
-//                HBox.setHgrow(h1, Priority.ALWAYS);
-//                h2.getChildren().addAll(h1, lblTimeMax);
-//
-//                VBox vBox = new VBox();
-//                vBox.setSpacing(5);
-//                vBox.getChildren().addAll(pRangeBoxTime, h2);
-//                slTime.setShowTickLabels(false);
                 gridPane.add(pRangeBoxTime, 1, grid);
                 break;
 
@@ -386,6 +376,12 @@ public class AboEditDialogController extends PDialogExtra {
                 setDefaultTxt(i, grid);
                 break;
         }
+    }
+
+    private void initDur() {
+        pRangeBoxTime.minValueProperty().bindBidirectional(aboCopy.minDurationProperty());
+        pRangeBoxTime.maxValueProperty().bindBidirectional(aboCopy.maxDurationProperty());
+        pRangeBoxTime.setValuePrefix("");
     }
 
     private void setResolution() {
@@ -403,12 +399,7 @@ public class AboEditDialogController extends PDialogExtra {
 
     private void setDefaultTxt(int i, int grid) {
         txt[i].textProperty().bindBidirectional(aboCopy.properties[i]);
-        txt[i].textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                cbxForAll[i].setSelected(true);
-            }
-        });
+        txt[i].textProperty().addListener((observable, oldValue, newValue) -> cbxForAll[i].setSelected(true));
         gridPane.add(txt[i], 1, grid);
 
     }
@@ -431,44 +422,4 @@ public class AboEditDialogController extends PDialogExtra {
                 gridPane.add(cbxForAll[i], 2, grid);
         }
     }
-
-    private void initDur() {
-        pRangeBoxTime.minValueProperty().bindBidirectional(aboCopy.minDurationProperty());
-        pRangeBoxTime.maxValueProperty().bindBidirectional(aboCopy.maxDurationProperty());
-        pRangeBoxTime.setVluePrefix("");
-
-
-//        slTime.setMin(0);
-//        slTime.setMax(SelectedFilter.FILTER_DURATION_MAX_MIN);
-//        slTime.setShowTickLabels(true);
-//        slTime.setMinorTickCount(9);
-//        slTime.setMajorTickUnit(50);
-//        slTime.setBlockIncrement(10);
-//        slTime.setSnapToTicks(true);
-
-        // hightvalue
-//        slTime.highValueProperty().bindBidirectional(aboCopy.maxDurationProperty());
-//        slTime.highValueProperty().addListener(l -> {
-//            setLabelSlider();
-//            cbxForAll[AboXml.ABO_MAX_DURATION].setSelected(true);
-//        });
-
-        // lowvalue
-//        slTime.lowValueProperty().bindBidirectional(aboCopy.minDurationProperty());
-//        slTime.lowValueProperty().addListener(l -> {
-//            setLabelSlider();
-//            cbxForAll[AboXml.ABO_MIN_DURATION].setSelected(true);
-//        });
-
-//        setLabelSlider();
-    }
-
-//    private void setLabelSlider() {
-//        int i;
-//        i = (int) pRangeBoxTime.getLowValue();
-//        lblTimeMin.setText(i == 0 ? ALLES : i + "");
-//
-//        i = (int) pRangeBoxTime.getHighValue();
-//        lblTimeMax.setText(i == SelectedFilter.FILTER_DURATION_MAX_MIN ? ALLES : i + "");
-//    }
 }

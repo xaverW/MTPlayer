@@ -272,27 +272,27 @@ public final class SelectedFilter extends SelectedFilterProps {
         final boolean themeExact = selectedFilter.isThemeExact();
         // Sender
         fChannel = new Filter(filterChannel, channelExact);
-        fChannel.setArray();
+        fChannel.makeFilterArray();
 
         // Thema
         fTheme = new Filter(filterTheme, themeExact);
-        fTheme.setArray();
+        fTheme.makeFilterArray();
 
         // ThemaTitel
         fThemeTitle = new Filter(filterThemeTitle);
-        fThemeTitle.setArray();
+        fThemeTitle.makeFilterArray();
 
         // Titel
         fTitle = new Filter(filterTitle);
-        fTitle.setArray();
+        fTitle.makeFilterArray();
 
         // Irgendwo
         fSomewhere = new Filter(filterSomewhere);
-        fSomewhere.setArray();
+        fSomewhere.makeFilterArray();
 
         // URL
         fUrl = new Filter(filterUrl);
-        fUrl.set();// gibt URLs mit ",", das also nicht trennen
+        fUrl.makeFilter();// gibt URLs mit ",", das also nicht trennen
 
         final boolean noAbos = selectedFilter.isNotVis() ? selectedFilter.isNotAbo() : false;
         final boolean noShown = selectedFilter.isNotVis() ? selectedFilter.isNotHistory() : false;

@@ -80,19 +80,19 @@ public class Abo extends AboProps {
 
     private void createFilter() {
         fChannel = new Filter(getChannel(), getChannelExact());
-        fChannel.setArray();
+        fChannel.makeFilterArray();
 
         fTheme = new Filter(getTheme(), isThemeExact());
-        fTheme.setArray();
+        fTheme.makeFilterArray();
 
         fThemeTitle = new Filter(getThemeTitle());
-        fThemeTitle.setArray();
+        fThemeTitle.makeFilterArray();
 
         fTitle = new Filter(getTitle());
-        fTitle.setArray();
+        fTitle.makeFilterArray();
 
         fSomewhere = new Filter(getSomewhere());
-        fSomewhere.setArray();
+        fSomewhere.makeFilterArray();
     }
 
     public boolean isEmpty() {

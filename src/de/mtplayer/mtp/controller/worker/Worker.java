@@ -66,9 +66,6 @@ public class Worker {
 
             @Override
             public void finished(ListenerFilmlistLoadEvent event) {
-//                progData.maskerPane.setMaskerVisible(true, false);
-//                progData.maskerPane.setMaskerProgress(ListenerFilmlistLoad.PROGRESS_INDETERMINATE, "Filmliste verarbeiten");
-
                 new ProgSave().saveAll(); // damit nichts verlorengeht
                 getChannelAndTheme();
                 if (ProgConfig.ABO_SEARCH_NOW.getBool()) {
@@ -128,18 +125,9 @@ public class Worker {
     }
 
     private void getChannelAndTheme() {
-        Platform.runLater(() -> allChannelList.setAll(Arrays.asList(progData.filmlist.sender)));
+//        Platform.runLater(() -> allChannelList.setAll(Arrays.asList(progData.filmlist.sender)));
+        allChannelList.setAll(Arrays.asList(progData.filmlist.sender));
         getTheme("");
-    }
-
-    private void getAboNames() {
-        final ArrayList<String> listAboChannel = progData.aboList.getAboChannelList();
-        final ArrayList<String> listAboName = progData.aboList.getAboNameList();
-
-        Platform.runLater(() -> {
-            channelsForAbosList.setAll(listAboChannel);
-            allAboNamesList.setAll(listAboName);
-        });
     }
 
     public void getTheme(String sender) {
@@ -156,6 +144,16 @@ public class Worker {
         }
 
         Platform.runLater(() -> themeForChannelList.setAll(theme));
+    }
+
+    private void getAboNames() {
+        final ArrayList<String> listAboChannel = progData.aboList.getAboChannelList();
+        final ArrayList<String> listAboName = progData.aboList.getAboNameList();
+
+        Platform.runLater(() -> {
+            channelsForAbosList.setAll(listAboChannel);
+            allAboNamesList.setAll(listAboName);
+        });
     }
 
     public ObservableList<String> getAllChannelList() {

@@ -262,8 +262,8 @@ public class FilmGuiController extends AnchorPane {
                 FilmGuiController.class.getSimpleName()) {
             @Override
             public void ping() {
-                tableView.refresh();
-//                Table.refresh_table(tableView);
+//                tableView.refresh();
+                Table.refresh_table(tableView);
             }
         });
     }

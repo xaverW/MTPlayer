@@ -66,7 +66,7 @@ public class QuitDialogController extends PDialog {
             close();
         });
 
-        maskerPane.setMaskerVisible(false, false, false);
+        maskerPane.setMaskerVisible(false);
         maskerPane.setButtonText("Abbrechen");
         maskerPane.getButton().setOnAction(a -> close());
 

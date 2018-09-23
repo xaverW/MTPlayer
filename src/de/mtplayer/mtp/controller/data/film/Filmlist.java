@@ -390,9 +390,7 @@ public class Filmlist extends SimpleListProperty<Film> {
         // der erste Sender ist ""
         senderSet.add("");
 
-        stream().forEach((film) -> {
-            senderSet.add(film.arr[FilmXml.FILM_CHANNEL]);
-        });
+        stream().forEach((film) -> senderSet.add(film.getChannel()));
         sender = senderSet.toArray(new String[senderSet.size()]);
 
         // für den Sender "" sind alle Themen im themenPerSender[0]

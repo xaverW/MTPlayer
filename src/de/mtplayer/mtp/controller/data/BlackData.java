@@ -46,17 +46,17 @@ public class BlackData extends BlackProps {
     public void createFilter() {
         fChannel.filter = getChannel();
         fChannel.exact = getChannelExact();
-        fChannel.setArray();
+        fChannel.makeFilterArray();
 
         fTheme.filter = getTheme();
         fTheme.exact = getThemeExact();
-        fTheme.setArray();
+        fTheme.makeFilterArray();
 
         fThemeTitle.filter = getThemeTitle();
-        fThemeTitle.setArray();
+        fThemeTitle.makeFilterArray();
 
         fTitle.filter = getTitle();
-        fTitle.setArray();
+        fTitle.makeFilterArray();
     }
 
     private void initFilter() {
