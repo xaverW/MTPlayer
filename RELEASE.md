@@ -1,6 +1,17 @@
 ## MTPlayer
 
+**Release 4-0**
 
+* Das Programm prüft und zeigt an, wenn es eine neue Filmliste gibt (alle 1/2h)
+* Filminfo (unter dem Filmtab) ist beschreibbar (und damit kann die Infodatei die parallel zu einem Film gespeichert wird, angepasst werden). Die Änderungen gehen mit dem Neuladen einer Filmliste wieder verloren.
+* Der Startdialog (beim ersten Programmstart) wurde überarbeitet
+* Im Tab Abo (Spalte: Treffer) wird die Anzahl Filme die auf dieses Abo passen angezeigt (damit kann man seine Abos optimieren)
+* Die Verarbeitung für die Dateien History und erledigte Abos wurde überarbeitet
+* Einige weitere optische Veränderungen und einige interne Verbesserungen und Fehler bereinigt
+* Habs geschafft auch eine Anleitung zu schreiben: https://www.p2tools.de/mtplayer/manual/
+
+
+<br />
 
 **Release 3-0**
 
@@ -10,6 +21,9 @@
 * Beim manuellem Anlegen eines Downloads, kann man sich jetzt einen Namen für den Downloadordner (Thema, Datum) vorschlagen lassen
 * Viele kleinere Verbesserungen: Anzeige der Dialoge, Zeilenumbruch im Logfile unter Windows, Hilfetexte, Filterprofile, Mediensammlung (Anzeige der Filme pro Pfad jetzt auch bei den Internen Medien), ...
 * Auch ein paar Probleme beim Anlegen des Downloadpfads und beim Reset der Programmsets wurden behoben
+
+
+<br />
 
 **Release 2-0**
 
@@ -23,12 +37,16 @@ Windows: p2Mtplayer
 Linux: .p2Mtplayer
 
 
+<br />
+
 **Release 1-81**
 
 * Zur Programmausgabe in der Konsole wird jetzt auch ein Logfile geschrieben (in den Einstellungen kann angegeben werden, ob und wo es geschrieben werden soll)
 * Das Format des Log (Konsole und Logfile) wurde übersichtlicher gestaltet
 * Die Suche nach einem Programmupdate wurde geändert und auf die neue Website umgestellt
 
+
+<br />
 
 **Release 1-55**
 
@@ -71,7 +89,6 @@ https://de.wikipedia.org/wiki/Java_Cryptography_Extension
 * Die Filmauflösung (HD, Hoch, Klein) für Abos kann jetzt direkt im Abo ausgewählt werden. Die Vorgabe im Set ist nur noch fürs Abspielen von Filmen oder für manuell gestartete Downloads zuständig.
 
 * An allen wichtigen Einstellungen oder Schaltern ist ein "Hilfebutton" mit Erklärungen zu der Funktion.
-
 
 
 <br />

@@ -38,8 +38,8 @@ public class ProgConst {
     public static final String RTMP_PRTOKOLL = "rtmp";
     public static final String RTMP_FLVSTREAMER = "-r ";
 
-    public static final int CHECK_FILMLIST_UPDATE = 15 * 60; // 15 Minuten
-    public static final int CHECK_FILMLIST_UPDATE_PROGRAMSTART = CHECK_FILMLIST_UPDATE - 60; // 1 Minuten
+    public static final int CHECK_FILMLIST_UPDATE = 30 * 60; // 30 Minuten
+    public static final int CHECK_FILMLIST_UPDATE_PROGRAMSTART = CHECK_FILMLIST_UPDATE - 5 * 60; // 5 Minuten
 
 
     // beim Programmstart wird die Liste geladen wenn sie älter ist als ..
