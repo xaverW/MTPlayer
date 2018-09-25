@@ -2,7 +2,7 @@
 
 **Release 4-0**
 
-* Das Programm prüft und zeigt an, wenn es eine neue Filmliste gibt (alle 1/2h)
+* Das Programm prüft und zeigt an, wenn es eine neue Filmliste gibt (alle 1/2h, Button "Filmliste" wird dann blau umrandet)
 * Filminfo (unter dem Filmtab) ist beschreibbar (und damit kann die Infodatei die parallel zu einem Film gespeichert wird, angepasst werden). Die Änderungen gehen mit dem Neuladen einer Filmliste wieder verloren.
 * Der Startdialog (beim ersten Programmstart) wurde überarbeitet
 * Im Tab Abo (Spalte: Treffer) wird die Anzahl Filme die auf dieses Abo passen, angezeigt (damit kann man seine Abos optimieren)
