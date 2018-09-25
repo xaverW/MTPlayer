@@ -7,7 +7,7 @@
 * Der Startdialog (beim ersten Programmstart) wurde überarbeitet
 * Im Tab Abo (Spalte: Treffer) wird die Anzahl Filme die auf dieses Abo passen, angezeigt (damit kann man seine Abos optimieren)
 * Die Verarbeitung für die Dateien History und erledigte Abos wurde überarbeitet
-* Einige weitere optische Veränderungen und einige interne Verbesserungen und Fehler bereinigt
+* Das Programm bekam einige optische Veränderungen und einige interne Verbesserungen und auch ein paar Fehler wurden bereinigt
 * Habs geschafft auch eine Anleitung zu schreiben: https://www.p2tools.de/mtplayer/manual/
 
 
