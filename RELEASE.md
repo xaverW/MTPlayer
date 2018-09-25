@@ -5,7 +5,7 @@
 * Das Programm prüft und zeigt an, wenn es eine neue Filmliste gibt (alle 1/2h)
 * Filminfo (unter dem Filmtab) ist beschreibbar (und damit kann die Infodatei die parallel zu einem Film gespeichert wird, angepasst werden). Die Änderungen gehen mit dem Neuladen einer Filmliste wieder verloren.
 * Der Startdialog (beim ersten Programmstart) wurde überarbeitet
-* Im Tab Abo (Spalte: Treffer) wird die Anzahl Filme die auf dieses Abo passen angezeigt (damit kann man seine Abos optimieren)
+* Im Tab Abo (Spalte: Treffer) wird die Anzahl Filme die auf dieses Abo passen, angezeigt (damit kann man seine Abos optimieren)
 * Die Verarbeitung für die Dateien History und erledigte Abos wurde überarbeitet
 * Einige weitere optische Veränderungen und einige interne Verbesserungen und Fehler bereinigt
 * Habs geschafft auch eine Anleitung zu schreiben: https://www.p2tools.de/mtplayer/manual/
