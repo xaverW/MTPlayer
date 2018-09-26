@@ -17,7 +17,6 @@
 package de.mtplayer.mtp.gui;
 
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.abo.Abo;
 import de.mtplayer.mtp.controller.data.download.DownloadInfos;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
@@ -26,9 +25,7 @@ import de.mtplayer.mtp.gui.tools.Listener;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -40,11 +37,6 @@ import java.util.Locale;
 public class StatusBarController extends AnchorPane {
 
     StackPane stackPane = new StackPane();
-
-    // loadPane
-    Label lblProgress = new Label();
-    ProgressBar progress = new ProgressBar();
-    Button btnStop = new Button("");
 
     //Film
     Label lblSelFilm = new Label();
@@ -65,7 +57,6 @@ public class StatusBarController extends AnchorPane {
     Label lblLeftNone = new Label();
     Label lblRightNone = new Label();
 
-    AnchorPane loadPane = new AnchorPane();
     AnchorPane nonePane = new AnchorPane();
     AnchorPane filmPane = new AnchorPane();
     AnchorPane downloadPane = new AnchorPane();
@@ -101,13 +92,6 @@ public class StatusBarController extends AnchorPane {
         hBox.getChildren().addAll(lblLeftNone, lblRightNone);
         nonePane.getChildren().add(hBox);
         nonePane.setStyle("-fx-background-color: -fx-background ;");
-
-        hBox = getHbox();
-        btnStop.setGraphic(new ProgIcons().ICON_BUTTON_STOP);
-        hBox.getChildren().addAll(lblProgress, progress, btnStop);
-        progress.setPrefWidth(200);
-        loadPane.getChildren().add(hBox);
-        loadPane.setStyle("-fx-background-color: -fx-background ;");
 
         hBox = getHbox();
         lblLeftFilm.setMaxWidth(Double.MAX_VALUE);
@@ -147,7 +131,7 @@ public class StatusBarController extends AnchorPane {
 
 
     private void make() {
-        stackPane.getChildren().addAll(nonePane, loadPane, filmPane, downloadPane, aboPane);
+        stackPane.getChildren().addAll(nonePane, filmPane, downloadPane, aboPane);
         nonePane.toFront();
 
         lblSelFilm.getStyleClass().add("lblSelectedLines");
@@ -157,20 +141,12 @@ public class StatusBarController extends AnchorPane {
         progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
             @Override
             public void start(ListenerFilmlistLoadEvent event) {
-//                loadList = true;
-//                setStatusbar();
                 stopTimer = true;
             }
-
-//            @Override
-//            public void progress(ListenerFilmlistLoadEvent event) {
-//                updateProgressBar(event);
-//            }
 
             @Override
             public void finished(ListenerFilmlistLoadEvent event) {
                 stopTimer = false;
-//                loadList = false;
                 setStatusbar();
             }
         });
@@ -187,7 +163,6 @@ public class StatusBarController extends AnchorPane {
                 }
             }
         });
-        btnStop.setOnAction(a -> progData.loadFilmlist.setStop(true));
     }
 
     public void setStatusbar() {
@@ -197,8 +172,7 @@ public class StatusBarController extends AnchorPane {
     public void setStatusbarIndex(StatusbarIndex statusbarIndex) {
         this.statusbarIndex = statusbarIndex;
         if (loadList) {
-            lblProgress.setText("");
-            loadPane.toFront();
+            nonePane.toFront();
             return;
         }
 
@@ -226,13 +200,6 @@ public class StatusBarController extends AnchorPane {
                 break;
         }
     }
-
-    private void updateProgressBar(ListenerFilmlistLoadEvent event) {
-        stopTimer = true;
-        progress.setProgress(event.progress);
-        lblProgress.setText(event.text);
-    }
-
 
     private void setTextNone() {
         final int anzAll = progData.filmlist.size();
