@@ -64,7 +64,7 @@ public class MediaDialogPaneMedia extends ScrollPane {
     public MediaDialogPaneMedia(Stage stage) {
         this.stage = stage;
         initPanel();
-        listenerDbStop = new Listener(Listener.EREIGNIS_MEDIA_DB_STOP, MediaDialogController.class.getSimpleName()) {
+        listenerDbStop = new Listener(Listener.EREIGNIS_MEDIA_DB_STOP, MediaDialogPaneMedia.class.getSimpleName()) {
             @Override
             public void ping() {
                 filter(searchStr);

@@ -328,7 +328,7 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private void initListener() {
-        Listener.addListener(new Listener(Listener.EREIGNIS_TIMER, StatusBarController.class.getSimpleName()) {
+        Listener.addListener(new Listener(Listener.EREIGNIS_TIMER, DownloadGuiController.class.getSimpleName()) {
             @Override
             public void ping() {
                 if (!ProgConfig.FILTER_DOWNLOAD_STATE.get().isEmpty()) {

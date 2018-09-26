@@ -72,7 +72,7 @@ public class CreateMediaDb implements Runnable {
 
         PDuration.counterStart("Mediensammlung erstellen");
         mediaDataList.setSearching(true);
-        Listener.notify(Listener.EREIGNIS_MEDIA_DB_START, MediaDataList.class.getSimpleName());
+        Listener.notify(Listener.EREIGNIS_MEDIA_DB_START, CreateMediaDb.class.getSimpleName());
 
         try {
             if (mediaCollectionData == null) {
@@ -138,7 +138,7 @@ public class CreateMediaDb implements Runnable {
         }
 
         mediaDataList.setSearching(false);
-        Listener.notify(Listener.EREIGNIS_MEDIA_DB_STOP, MediaDataList.class.getSimpleName());
+        Listener.notify(Listener.EREIGNIS_MEDIA_DB_STOP, CreateMediaDb.class.getSimpleName());
         PDuration.counterStop("Mediensammlung erstellen");
     }
 

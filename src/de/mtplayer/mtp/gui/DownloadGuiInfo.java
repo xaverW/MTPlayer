@@ -49,7 +49,7 @@ public class DownloadGuiInfo {
         AnchorPane.setRightAnchor(gridPane, 10.0);
         AnchorPane.setTopAnchor(gridPane, 10.0);
 
-        Listener.addListener(new Listener(Listener.EREIGNIS_TIMER, StatusBarController.class.getSimpleName()) {
+        Listener.addListener(new Listener(Listener.EREIGNIS_TIMER, DownloadGuiInfo.class.getSimpleName()) {
             @Override
             public void ping() {
                 setInfoText();

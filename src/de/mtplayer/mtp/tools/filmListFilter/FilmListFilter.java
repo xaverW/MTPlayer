@@ -20,7 +20,6 @@ package de.mtplayer.mtp.tools.filmListFilter;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
-import de.mtplayer.mtp.gui.FilmGuiController;
 import de.mtplayer.mtp.gui.tools.Listener;
 import javafx.application.Platform;
 
@@ -44,7 +43,7 @@ public class FilmListFilter {
             }
         });
 
-        Listener.addListener(new Listener(Listener.EREIGNIS_BLACKLIST_GEAENDERT, FilmGuiController.class.getSimpleName()) {
+        Listener.addListener(new Listener(Listener.EREIGNIS_BLACKLIST_GEAENDERT, FilmListFilter.class.getSimpleName()) {
             @Override
             public void ping() {
                 filterList();

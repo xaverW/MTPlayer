@@ -68,7 +68,7 @@ public class DownloadGuiChart {
         initList();
         initCharts();
 
-        Listener.addListener(new Listener(Listener.EREIGNIS_TIMER, StatusBarController.class.getSimpleName()) {
+        Listener.addListener(new Listener(Listener.EREIGNIS_TIMER, DownloadGuiChart.class.getSimpleName()) {
             @Override
             public void ping() {
                 search();
