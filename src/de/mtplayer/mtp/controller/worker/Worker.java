@@ -91,6 +91,7 @@ public class Worker {
     public void searchForAbosAndMaybeStart() {
         if (progData.loadFilmlist.getPropLoadFilmlist()) {
             // wird danach eh gemacht
+            progData.maskerPane.switchOffMasker();
             return;
         }
 
@@ -109,10 +110,7 @@ public class Worker {
                     progData.downloadList.startDownloads();
                 }
 
-                Platform.runLater(() ->
-                        progData.maskerPane.setMaskerVisible(false)
-                );
-
+                progData.maskerPane.switchOffMasker();
                 PDuration.counterStop("Worker.searchForAbosAndMaybeStart");
 
             } catch (Exception ex) {

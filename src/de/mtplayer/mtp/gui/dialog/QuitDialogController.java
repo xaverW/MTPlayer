@@ -136,19 +136,11 @@ public class QuitDialogController extends PDialog {
         }
     }
 
-//    public boolean escEvent(KeyEvent keyEvent) {
-//        if (maskerPane.isVisible()) {
-//            maskerPane.setVisible(false);
-//            waitTask.cancel();
-//            return false;
-//        }
-//        return true;
-//    }
-
     public void close() {
         if (waitTask.isRunning()) {
             waitTask.cancel();
         }
+        maskerPane.switchOffMasker();
         super.close();
     }
 
