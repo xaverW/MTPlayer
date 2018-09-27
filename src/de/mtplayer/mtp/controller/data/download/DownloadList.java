@@ -32,9 +32,9 @@ public class DownloadList extends SimpleListProperty<Download> {
     private final ProgData progData;
     private final DownloadListAbo downloadListAbo;
     private final DownloadListStarts downloadListStarts;
-    private final DownloadStartStop download_startStop;
+    private final DownloadListStartStop downloadListStartStop;
+    private final DownloadListInfoAll downloadListInfoAll;
 
-    private final DownloadInfoAll downloadInfoAll;
     private BooleanProperty downloadsChanged = new SimpleBooleanProperty(true);
 
 
@@ -43,8 +43,8 @@ public class DownloadList extends SimpleListProperty<Download> {
         this.progData = progData;
         this.downloadListAbo = new DownloadListAbo(progData, this);
         this.downloadListStarts = new DownloadListStarts(progData, this);
-        this.download_startStop = new DownloadStartStop(progData, this);
-        this.downloadInfoAll = new DownloadInfoAll(progData, this);
+        this.downloadListStartStop = new DownloadListStartStop(progData, this);
+        this.downloadListInfoAll = new DownloadListInfoAll(progData, this);
     }
 
     public boolean getDownloadsChanged() {
@@ -83,8 +83,8 @@ public class DownloadList extends SimpleListProperty<Download> {
         return super.removeAll(objects);
     }
 
-    public DownloadInfoAll getDownloadInfoAll() {
-        return downloadInfoAll;
+    public DownloadListInfoAll getDownloadListInfoAll() {
+        return downloadListInfoAll;
     }
 
     public synchronized int countRunningDownloads() {
@@ -237,39 +237,39 @@ public class DownloadList extends SimpleListProperty<Download> {
     }
 
     // ==============================
-    // DownloadStartStop
+    // DownloadListStartStop
 
     public synchronized void stopDownloads(ArrayList<Download> list) {
-        if (download_startStop.stopDownloads(list)) {
+        if (downloadListStartStop.stopDownloads(list)) {
             setDownloadsChanged();
         }
     }
 
     public synchronized void delDownloads(Download download) {
-        download_startStop.delDownloads(download);
+        downloadListStartStop.delDownloads(download);
     }
 
     public synchronized void putBackDownloads(ArrayList<Download> list) {
-        if (download_startStop.putBackDownloads(list)) {
+        if (downloadListStartStop.putBackDownloads(list)) {
             setDownloadsChanged();
         }
     }
 
     public synchronized void resetDownloads(ArrayList<Download> list) {
-        if (download_startStop.delDownloads(list)) {
+        if (downloadListStartStop.delDownloads(list)) {
             setDownloadsChanged();
         }
     }
 
     public synchronized void delDownloads(ArrayList<Download> list) {
-        if (download_startStop.delDownloads(list)) {
+        if (downloadListStartStop.delDownloads(list)) {
             setDownloadsChanged();
         }
     }
 
 
     public void startDownloads(Download download) {
-        download_startStop.startDownloads(download);
+        downloadListStartStop.startDownloads(download);
         setDownloadsChanged();
     }
 
@@ -279,7 +279,7 @@ public class DownloadList extends SimpleListProperty<Download> {
     }
 
     public void startDownloads(Collection<Download> list, boolean alsoFinished) {
-        if (download_startStop.startDownloads(list, alsoFinished)) {
+        if (downloadListStartStop.startDownloads(list, alsoFinished)) {
             setDownloadsChanged();
         }
     }
@@ -287,7 +287,7 @@ public class DownloadList extends SimpleListProperty<Download> {
     // ======================================
     // DownloadInfosAll
     public synchronized void makeDownloadInfo() {
-        downloadInfoAll.makeDownloadInfo();
+        downloadListInfoAll.makeDownloadInfo();
     }
 
 
@@ -308,7 +308,7 @@ public class DownloadList extends SimpleListProperty<Download> {
             if (download.isStarted()) {
                 download.setNr(i++);
             } else {
-                download.setNr(DownloadInfos.DOWNLOAD_NUMBER_NOT_STARTED);
+                download.setNr(DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED);
             }
         }
     }
@@ -316,20 +316,20 @@ public class DownloadList extends SimpleListProperty<Download> {
     public synchronized void renumberList(int addNr) {
         for (final Download download : this) {
             final int i = download.getNr();
-            if (i < DownloadInfos.DOWNLOAD_NUMBER_NOT_STARTED) {
+            if (i < DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED) {
                 download.setNr(i + addNr);
             }
         }
     }
 
     public synchronized void numberStoppedDownloads() {
-        this.stream().filter(download -> download.isStateInit()).forEach(download -> download.setNr(DownloadInfos.DOWNLOAD_NUMBER_NOT_STARTED));
+        this.stream().filter(download -> download.isStateInit()).forEach(download -> download.setNr(DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED));
     }
 
     private int getNextNumber() {
         int i = 1;
         for (final Download download : this) {
-            if (download.getNr() < DownloadInfos.DOWNLOAD_NUMBER_NOT_STARTED && download.getNr() >= i) {
+            if (download.getNr() < DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED && download.getNr() >= i) {
                 i = download.getNr() + 1;
             }
         }

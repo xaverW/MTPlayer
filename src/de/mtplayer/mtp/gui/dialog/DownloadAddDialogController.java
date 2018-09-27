@@ -26,7 +26,7 @@ import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.SetList;
 import de.mtplayer.mtp.controller.data.download.Download;
-import de.mtplayer.mtp.controller.data.download.DownloadInfos;
+import de.mtplayer.mtp.controller.data.download.DownloadConstants;
 import de.mtplayer.mtp.controller.data.download.DownloadTools;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmTools;
@@ -330,7 +330,7 @@ public class DownloadAddDialogController extends PDialogExtra {
             downInfo[i] = new DownInfo();
             downInfo[i].psetData = setData;
             downInfo[i].film = filmsToDownloadList.get(i);
-            downInfo[i].download = new Download(setData, downInfo[i].film, DownloadInfos.SRC_DOWNLOAD,
+            downInfo[i].download = new Download(setData, downInfo[i].film, DownloadConstants.SRC_DOWNLOAD,
                     null, "", aktPath, "");
 
             downInfo[i].path = downInfo[i].download.getDestPath();
@@ -543,7 +543,7 @@ public class DownloadAddDialogController extends PDialogExtra {
         SetData psetData = setList.get(cbSet.getSelectionModel().getSelectedIndex());
 
         downInfo.psetData = psetData;
-        downInfo.download = new Download(psetData, downInfo.film, DownloadInfos.SRC_DOWNLOAD, null, "", "", Film.RESOLUTION_NORMAL);
+        downInfo.download = new Download(psetData, downInfo.film, DownloadConstants.SRC_DOWNLOAD, null, "", "", Film.RESOLUTION_NORMAL);
         downInfo.path = downInfo.download.getDestPath();
         downInfo.name = downInfo.download.getDestFileName();
         downInfo.info = downInfo.psetData.isInfoFile();
@@ -613,7 +613,7 @@ public class DownloadAddDialogController extends PDialogExtra {
             // jetzt wird mit den angegebenen Pfaden gearbeitet
             Download download = new Download(d.psetData,
                     d.film,
-                    DownloadInfos.SRC_DOWNLOAD,
+                    DownloadConstants.SRC_DOWNLOAD,
                     null,
                     d.name,
                     d.path,

@@ -24,7 +24,7 @@ import de.p2tools.p2Lib.tools.log.PLog;
 import java.text.DecimalFormat;
 import java.util.LinkedList;
 
-public class DownloadInfoAll {
+public class DownloadListInfoAll {
 
     private final ProgData progData;
     private final DownloadList downloadList;
@@ -48,7 +48,7 @@ public class DownloadInfoAll {
 
     private LinkedList<Download> activeDownloads; // Liste gestarteter Downloads
 
-    public DownloadInfoAll(ProgData progData, DownloadList downloadList) {
+    public DownloadListInfoAll(ProgData progData, DownloadList downloadList) {
         this.progData = progData;
         this.downloadList = downloadList;
     }
@@ -102,7 +102,7 @@ public class DownloadInfoAll {
 
         downloadStarts = downloadList.getStarts();
 
-        activeDownloads = downloadList.getListOfStartsNotFinished(DownloadInfos.ALL);
+        activeDownloads = downloadList.getListOfStartsNotFinished(DownloadConstants.ALL);
         for (final Download download : activeDownloads) {
             ++anzDownloadsRun;
             byteAllDownloads += (download.getDownloadSize().getFilmSize() > 0 ? download.getDownloadSize().getFilmSize() : 0);

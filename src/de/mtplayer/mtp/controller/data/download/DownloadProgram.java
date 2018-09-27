@@ -34,12 +34,12 @@ import java.io.File;
 import java.util.Date;
 
 
-public class DownloadProg {
+public class DownloadProgram {
 
     private final Download download;
     private SetData pSet = null;
 
-    public DownloadProg(Download download) {
+    public DownloadProgram(Download download) {
         this.download = download;
     }
 
@@ -59,9 +59,9 @@ public class DownloadProg {
             // Direkter Download nur wenn url passt und wenn im Programm ein Zielpfad ist sonst Abspielen
             //legt fest, dass NICHT Abspielen, Abspielen immer über Programm!
             download.setArt((pSet.checkDownloadDirect(download.getUrl()) && pSet.progsContainPath()) ?
-                    DownloadInfos.ART_DOWNLOAD : DownloadInfos.ART_PROGRAM);
-            if (download.getArt().equals(DownloadInfos.ART_DOWNLOAD)) {
-                download.setProgram(DownloadInfos.ART_DOWNLOAD);
+                    DownloadConstants.ART_DOWNLOAD : DownloadConstants.ART_PROGRAM);
+            if (download.getArt().equals(DownloadConstants.ART_DOWNLOAD)) {
+                download.setProgram(DownloadConstants.ART_DOWNLOAD);
             } else {
                 download.setProgram(progData.getName());
             }
@@ -77,7 +77,7 @@ public class DownloadProg {
     }
 
     private void buildProgParameter(ProgramData program) {
-        if (download.getArt().equals(DownloadInfos.ART_DOWNLOAD)) {
+        if (download.getArt().equals(DownloadConstants.ART_DOWNLOAD)) {
             download.setProgramCall("");
             download.setProgramCallArray("");
         } else {

@@ -23,7 +23,7 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.download.Download;
-import de.mtplayer.mtp.controller.data.download.DownloadInfos;
+import de.mtplayer.mtp.controller.data.download.DownloadConstants;
 import de.mtplayer.mtp.gui.dialog.DownloadContinueDialogController;
 import de.mtplayer.mtp.gui.dialog.DownloadErrorDialogController;
 import de.mtplayer.mtp.gui.tools.MTInfoFile;
@@ -138,7 +138,7 @@ public class DirectHttpDownload extends Thread {
 
         download.getDownloadSize().addAktFileSize(downloaded);
         final byte[] buffer = new byte[MLBandwidthTokenBucket.DEFAULT_BUFFER_SIZE];
-        double p, pp = DownloadInfos.PROGRESS_WAITING, startPercent = DownloadInfos.PROGRESS_NOT_STARTED;
+        double p, pp = DownloadConstants.PROGRESS_WAITING, startPercent = DownloadConstants.PROGRESS_NOT_STARTED;
         int len;
         long aktBandwidth, aktSize = 0;
         boolean report = false;
@@ -155,25 +155,25 @@ public class DirectHttpDownload extends Thread {
             }
             if (download.getDownloadSize().getFilmSize() > 0) {
                 p = 1.0 * aktSize / download.getDownloadSize().getFilmSize();
-                if (startPercent == DownloadInfos.PROGRESS_NOT_STARTED) {
+                if (startPercent == DownloadConstants.PROGRESS_NOT_STARTED) {
                     startPercent = p;
                 }
                 // p muss zwischen 1 und 999 liegen
-                if (p == DownloadInfos.PROGRESS_WAITING) {
-                    p = DownloadInfos.PROGRESS_STARTED;
-                } else if (p >= DownloadInfos.PROGRESS_FINISHED) {
-                    p = DownloadInfos.PROGRESS_NEARLY_FINISHED;
+                if (p == DownloadConstants.PROGRESS_WAITING) {
+                    p = DownloadConstants.PROGRESS_STARTED;
+                } else if (p >= DownloadConstants.PROGRESS_FINISHED) {
+                    p = DownloadConstants.PROGRESS_NEARLY_FINISHED;
                 }
                 MLProperty.setProperty(download.progressProperty(), p);
                 if (p != pp) {
                     pp = p;
 
                     // Restzeit ermitteln
-                    if (p > (DownloadInfos.PROGRESS_STARTED) &&
+                    if (p > (DownloadConstants.PROGRESS_STARTED) &&
                             p > startPercent) {
                         // sonst macht es noch keinen Sinn
                         final int diffTime = download.getStart().getStartTime().diffInSeconds();
-                        final double restPercent = DownloadInfos.PROGRESS_FINISHED - p;
+                        final double restPercent = DownloadConstants.PROGRESS_FINISHED - p;
 
                         download.getStart().setTimeLeft((long) (diffTime * restPercent / (p - startPercent)));
                         // anfangen zum Schauen kann man, wenn die Restzeit kürzer ist
@@ -195,7 +195,7 @@ public class DirectHttpDownload extends Thread {
         }
 
         if (!download.isStateStoped()) {
-            if (download.getSource().equals(DownloadInfos.SRC_BUTTON)) {
+            if (download.getSource().equals(DownloadConstants.SRC_BUTTON)) {
                 // direkter Start mit dem Button
                 download.setStateFinished();
             } else if (check(progData, download)) {

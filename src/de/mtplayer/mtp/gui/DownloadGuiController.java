@@ -20,7 +20,7 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.download.Download;
-import de.mtplayer.mtp.controller.data.download.DownloadInfos;
+import de.mtplayer.mtp.controller.data.download.DownloadConstants;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmTools;
 import de.mtplayer.mtp.gui.dialog.DownloadEditDialogController;
@@ -429,9 +429,9 @@ public class DownloadGuiController extends AnchorPane {
                 (art.isEmpty() ? true : download.getArt().equals(art)) &&
 
                 (state.isEmpty() ? true : (
-                        state.equals(DownloadInfos.STATE_COMBO_NOT_STARTED) && !download.isStarted() ||
-                                state.equals(DownloadInfos.STATE_COMBO_WAITING) && download.isStateStartedWaiting() ||
-                                state.equals(DownloadInfos.STATE_COMBO_LOADING) && download.isStateStartedRun()
+                        state.equals(DownloadConstants.STATE_COMBO_NOT_STARTED) && !download.isStarted() ||
+                                state.equals(DownloadConstants.STATE_COMBO_WAITING) && download.isStateStartedWaiting() ||
+                                state.equals(DownloadConstants.STATE_COMBO_LOADING) && download.isStateStartedRun()
                 ))
         );
 

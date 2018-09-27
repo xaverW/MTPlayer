@@ -24,12 +24,12 @@ import de.p2tools.p2Lib.tools.log.PDuration;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class DownloadStartStop {
+public class DownloadListStartStop {
 
     private final ProgData progData;
     private final DownloadList downloadList;
 
-    public DownloadStartStop(ProgData progData, DownloadList downloadList) {
+    public DownloadListStartStop(ProgData progData, DownloadList downloadList) {
         this.progData = progData;
         this.downloadList = downloadList;
     }
@@ -80,7 +80,7 @@ public class DownloadStartStop {
 
     public synchronized boolean delDownloads(ArrayList<Download> list) {
 
-        PDuration.counterStart("DownloadStartStop.delDownloads");
+        PDuration.counterStart("DownloadListStartStop.delDownloads");
         if (list == null || list.isEmpty()) {
             return false;
         }
@@ -104,7 +104,7 @@ public class DownloadStartStop {
         list.stream().filter(download -> download.isStateStartedRun()).forEach(download -> download.stopDownload());
         boolean found = downloadList.removeAll(list);
 
-        PDuration.counterStop("DownloadStartStop.delDownloads");
+        PDuration.counterStop("DownloadListStartStop.delDownloads");
         return found;
     }
 
@@ -175,7 +175,7 @@ public class DownloadStartStop {
      */
 
     public boolean startDownloads(Collection<Download> list, boolean alsoFinished) {
-        PDuration.counterStart("DownloadStartStop.startDownloads");
+        PDuration.counterStart("DownloadListStartStop.startDownloads");
 
         PAlert.BUTTON answer = PAlert.BUTTON.UNKNOWN;
         final ArrayList<Download> listDelDownloads = new ArrayList<>();
@@ -233,7 +233,7 @@ public class DownloadStartStop {
             }
         }
 
-        PDuration.counterStop("DownloadStartStop.startDownloads");
+        PDuration.counterStop("DownloadListStartStop.startDownloads");
 
 
         if (answer.equals(PAlert.BUTTON.CANCEL)) {

@@ -18,7 +18,7 @@ package de.mtplayer.mtp.gui;
 
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.abo.Abo;
-import de.mtplayer.mtp.controller.data.download.DownloadInfos;
+import de.mtplayer.mtp.controller.data.download.DownloadConstants;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.mtplayer.mtp.gui.tools.Listener;
@@ -210,7 +210,7 @@ public class StatusBarController extends AnchorPane {
         String textLinks;
         final int sumFilmlist = progData.filmlist.size();
         final int sumFilmShown = progData.filmGuiController.getFilmCount();
-        final int runs = progData.downloadListButton.getListOfStartsNotFinished(DownloadInfos.SRC_BUTTON).size();
+        final int runs = progData.downloadListButton.getListOfStartsNotFinished(DownloadConstants.SRC_BUTTON).size();
 
         String sumFilmlistStr = numberFormat.format(sumFilmShown);
         String sumFilmShownStr = numberFormat.format(sumFilmlist);
@@ -254,7 +254,7 @@ public class StatusBarController extends AnchorPane {
         String textLinks;
         // Text links: Zeilen Tabelle
         // nicht gestarted, laufen, fertig OK, fertig fehler
-        final int[] starts = progData.downloadList.getDownloadInfoAll().downloadStarts;
+        final int[] starts = progData.downloadList.getDownloadListInfoAll().downloadStarts;
 
         final int sumDownloadList = progData.downloadList.size();
         final int sumDownloadsShown = progData.downloadGuiController.getDownloadCount();
@@ -310,7 +310,7 @@ public class StatusBarController extends AnchorPane {
             }
 
             if (starts[4] > 0) {
-                textLinks += " (" + progData.downloadList.getDownloadInfoAll().bandwidthStr + ')';
+                textLinks += " (" + progData.downloadList.getDownloadListInfoAll().bandwidthStr + ')';
             }
 
             if (starts[3] == 1) {

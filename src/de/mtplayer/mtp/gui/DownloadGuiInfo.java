@@ -59,7 +59,7 @@ public class DownloadGuiInfo {
     }
 
     private void setInfoText() {
-        final int[] starts = progData.downloadList.getDownloadInfoAll().downloadStarts;
+        final int[] starts = progData.downloadList.getDownloadListInfoAll().downloadStarts;
         Text text1, text2;
         gridPane.getChildren().clear();
         row = 0;
@@ -72,16 +72,16 @@ public class DownloadGuiInfo {
         getInfoText();
 
         // Größe
-        if (progData.downloadList.getDownloadInfoAll().byteAllDownloads > 0 || progData.downloadList.getDownloadInfoAll().byteAktDownloads > 0) {
+        if (progData.downloadList.getDownloadListInfoAll().byteAllDownloads > 0 || progData.downloadList.getDownloadListInfoAll().byteAktDownloads > 0) {
             text1 = new Text("Größe: ");
             text1.setFont(Font.font(null, FontWeight.BOLD, -1));
 
-            if (progData.downloadList.getDownloadInfoAll().byteAktDownloads > 0) {
+            if (progData.downloadList.getDownloadListInfoAll().byteAktDownloads > 0) {
 
-                text2 = new Text(SizeTools.getSize(progData.downloadList.getDownloadInfoAll().byteAktDownloads) + " von "
-                        + SizeTools.getSize(progData.downloadList.getDownloadInfoAll().byteAllDownloads) + " MByte");
+                text2 = new Text(SizeTools.getSize(progData.downloadList.getDownloadListInfoAll().byteAktDownloads) + " von "
+                        + SizeTools.getSize(progData.downloadList.getDownloadListInfoAll().byteAllDownloads) + " MByte");
             } else {
-                text2 = new Text(SizeTools.getSize(progData.downloadList.getDownloadInfoAll().byteAllDownloads) + " MByte");
+                text2 = new Text(SizeTools.getSize(progData.downloadList.getDownloadListInfoAll().byteAllDownloads) + " MByte");
             }
             ++row;
             gridPane.add(text1, 0, ++row);
@@ -89,36 +89,36 @@ public class DownloadGuiInfo {
         }
 
         // Restzeit
-        if (progData.downloadList.getDownloadInfoAll().timeRestAktDownloads > 0 && progData.downloadList.getDownloadInfoAll().timeRestAllDownloads > 0) {
+        if (progData.downloadList.getDownloadListInfoAll().timeRestAktDownloads > 0 && progData.downloadList.getDownloadListInfoAll().timeRestAllDownloads > 0) {
             text1 = new Text("Restzeit: ");
             text1.setFont(Font.font(null, FontWeight.BOLD, -1));
             text2 = new Text("laufende: "
-                    + progData.downloadList.getDownloadInfoAll().getTimeLeft() + "," +
+                    + progData.downloadList.getDownloadListInfoAll().getTimeLeft() + "," +
                     PConst.LINE_SEPARATOR +
-                    "alle: " + progData.downloadList.getDownloadInfoAll().getSumeTimeLeft());
+                    "alle: " + progData.downloadList.getDownloadListInfoAll().getSumeTimeLeft());
             gridPane.add(text1, 0, ++row);
             gridPane.add(text2, 1, row);
 
-        } else if (progData.downloadList.getDownloadInfoAll().timeRestAktDownloads > 0) {
+        } else if (progData.downloadList.getDownloadListInfoAll().timeRestAktDownloads > 0) {
             text1 = new Text("Restzeit: ");
             text1.setFont(Font.font(null, FontWeight.BOLD, -1));
-            text2 = new Text("laufende: " + progData.downloadList.getDownloadInfoAll().getTimeLeft());
+            text2 = new Text("laufende: " + progData.downloadList.getDownloadListInfoAll().getTimeLeft());
             gridPane.add(text1, 0, ++row);
             gridPane.add(text2, 1, row);
 
-        } else if (progData.downloadList.getDownloadInfoAll().timeRestAllDownloads > 0) {
+        } else if (progData.downloadList.getDownloadListInfoAll().timeRestAllDownloads > 0) {
             text1 = new Text("Restzeit: ");
             text1.setFont(Font.font(null, FontWeight.BOLD, -1));
-            text2 = new Text("alle: " + progData.downloadList.getDownloadInfoAll().getSumeTimeLeft());
+            text2 = new Text("alle: " + progData.downloadList.getDownloadListInfoAll().getSumeTimeLeft());
             gridPane.add(text1, 0, ++row);
             gridPane.add(text2, 1, row);
         }
 
         // Bandbreite
-        if (progData.downloadList.getDownloadInfoAll().bandwidth > 0) {
+        if (progData.downloadList.getDownloadListInfoAll().bandwidth > 0) {
             text1 = new Text("Bandbreite: ");
             text1.setFont(Font.font(null, FontWeight.BOLD, -1));
-            text2 = new Text(progData.downloadList.getDownloadInfoAll().bandwidthStr);
+            text2 = new Text(progData.downloadList.getDownloadListInfoAll().bandwidthStr);
             gridPane.add(text1, 0, ++row);
             gridPane.add(text2, 1, row);
         }
@@ -128,7 +128,7 @@ public class DownloadGuiInfo {
         String textLinks;
         // Text links: Zeilen Tabelle
         // nicht gestarted, laufen, fertig OK, fertig fehler
-        final int[] starts = progData.downloadList.getDownloadInfoAll().downloadStarts;
+        final int[] starts = progData.downloadList.getDownloadListInfoAll().downloadStarts;
 
         VBox vBox = new VBox(2);
         Text text1 = new Text("Downloads: " + starts[0]);

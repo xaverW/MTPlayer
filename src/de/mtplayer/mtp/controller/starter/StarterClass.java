@@ -22,7 +22,7 @@ import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.download.Download;
-import de.mtplayer.mtp.controller.data.download.DownloadInfos;
+import de.mtplayer.mtp.controller.data.download.DownloadConstants;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -53,7 +53,7 @@ public class StarterClass {
 
         final String url = ersterFilm.arr[FilmXml.FILM_URL];
         if (!url.isEmpty()) {
-            final Download download = new Download(pSet, ersterFilm, DownloadInfos.SRC_BUTTON, null, "", "", resolution);
+            final Download download = new Download(pSet, ersterFilm, DownloadConstants.SRC_BUTTON, null, "", "", resolution);
             progData.downloadList.startDownloads(download);
 
             start.startDownload(download); // da nicht in der ListeDownloads
@@ -73,7 +73,7 @@ public class StarterClass {
 
         final double progress = download.getProgress();
 
-        if (progress > DownloadInfos.PROGRESS_NOT_STARTED && progress < DownloadInfos.PROGRESS_NEARLY_FINISHED) {
+        if (progress > DownloadConstants.PROGRESS_NOT_STARTED && progress < DownloadConstants.PROGRESS_NEARLY_FINISHED) {
             // *progress* Prozent werden berechnet und es wurde vor 99,5% abgebrochen
             PLog.errorLog(696510258, "Download fehlgeschlagen: 99,5% wurden nicht erreicht" + download.getDestPathFile());
             return false;
@@ -122,7 +122,7 @@ public class StarterClass {
 
     static void startMsg(Download download) {
         final ArrayList<String> text = new ArrayList<>();
-        final boolean play = download.getSource().equals(DownloadInfos.SRC_BUTTON);
+        final boolean play = download.getSource().equals(DownloadConstants.SRC_BUTTON);
         if (play) {
             text.add("Film abspielen");
         } else {
@@ -136,8 +136,8 @@ public class StarterClass {
         }
         text.add("URL: " + download.getUrl());
         text.add("Startzeit: " + StringFormatters.FORMATTER_HHmmss.format(download.getStart().getStartTime()));
-        if (download.getArt().equals(DownloadInfos.ART_DOWNLOAD)) {
-            text.add(DownloadInfos.ART_DOWNLOAD);
+        if (download.getArt().equals(DownloadConstants.ART_DOWNLOAD)) {
+            text.add(DownloadConstants.ART_DOWNLOAD);
         } else {
             text.add("Programmaufruf: " + download.getProgramCall());
             text.add("Programmaufruf[]: " + download.getProgramCallArray());
@@ -165,7 +165,7 @@ public class StarterClass {
         list.add(PLog.LILNE3);
         if (download.isStateStoped()) {
             list.add("Download wurde abgebrochen");
-        } else if (download.getSource().equals(DownloadInfos.SRC_BUTTON)) {
+        } else if (download.getSource().equals(DownloadConstants.SRC_BUTTON)) {
             list.add("Film fertig");
         } else {
             if (download.isStateFinished()) {
@@ -190,15 +190,15 @@ public class StarterClass {
         } else {
             list.add("Dauer: " + start.getStartTime().diffInMinutes() + " Min");
         }
-        if (download.getArt().equals(DownloadInfos.ART_DOWNLOAD)) {
+        if (download.getArt().equals(DownloadConstants.ART_DOWNLOAD)) {
             if (start.getInputStream() != null) {
                 list.add("Bytes gelesen: " + SizeTools.humanReadableByteCount(start.getInputStream().getSumByte(), true));
                 list.add("Bandbreite: " + SizeTools.humanReadableBandwidth(start.getInputStream().getSumBandwidth()));
             }
         }
         list.add("URL: " + download.getUrl());
-        if (download.getArt().equals(DownloadInfos.ART_DOWNLOAD)) {
-            list.add(DownloadInfos.ART_DOWNLOAD);
+        if (download.getArt().equals(DownloadConstants.ART_DOWNLOAD)) {
+            list.add(DownloadConstants.ART_DOWNLOAD);
         } else {
             list.add("Programmaufruf: " + download.getProgramCall());
             list.add("Programmaufruf[]: " + download.getProgramCallArray());
@@ -206,7 +206,7 @@ public class StarterClass {
         list.add(PLog.LILNE3);
         PLog.sysLog(list);
 
-        if (!download.getSource().equals(DownloadInfos.SRC_BUTTON) && !download.isStateStoped()) {
+        if (!download.getSource().equals(DownloadConstants.SRC_BUTTON) && !download.isStateStoped()) {
             //war ein Abo und wurde nicht abgebrochen
             MTNotification.addNotification(download, download.isStateError());
         }
@@ -222,11 +222,11 @@ public class StarterClass {
         finishedMsg(download);
 
         if (download.isStateError()) {
-            MLProperty.setProperty(download.progressProperty(), DownloadInfos.PROGRESS_NOT_STARTED);
+            MLProperty.setProperty(download.progressProperty(), DownloadConstants.PROGRESS_NOT_STARTED);
         } else if (!download.isStateStoped()) {
             //dann ist er gelaufen
             start.setTimeLeft(0);
-            MLProperty.setProperty(download.progressProperty(), DownloadInfos.PROGRESS_FINISHED);
+            MLProperty.setProperty(download.progressProperty(), DownloadConstants.PROGRESS_FINISHED);
             download.getDownloadSize().setAktFileSize(-1);
 
             if (start.getInputStream() != null) {
@@ -336,11 +336,11 @@ public class StarterClass {
             Thread downloadThread;
 
             switch (download.getArt()) {
-                case DownloadInfos.ART_PROGRAM:
+                case DownloadConstants.ART_PROGRAM:
                     downloadThread = new ExternalProgramDownload(progData, download);
                     downloadThread.start();
                     break;
-                case DownloadInfos.ART_DOWNLOAD:
+                case DownloadConstants.ART_DOWNLOAD:
                 default:
                     downloadThread = new DirectHttpDownload(progData, download, bandwidthCalculationTimer);
                     downloadThread.start();

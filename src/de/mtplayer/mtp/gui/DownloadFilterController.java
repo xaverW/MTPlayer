@@ -19,7 +19,7 @@ package de.mtplayer.mtp.gui;
 import de.mtplayer.mLib.tools.MLBandwidthTokenBucket;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.download.DownloadInfos;
+import de.mtplayer.mtp.controller.data.download.DownloadConstants;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Insets;
@@ -109,78 +109,78 @@ public class DownloadFilterController extends FilterController {
     private void initFilter() {
         btnClear.setOnAction(a -> clearFilter());
 
-        cboSrc.getItems().addAll(DownloadInfos.ALL,
-                DownloadInfos.SRC_COMBO_DOWNLOAD,
-                DownloadInfos.SRC_COMBO_ABO);
+        cboSrc.getItems().addAll(DownloadConstants.ALL,
+                DownloadConstants.SRC_COMBO_DOWNLOAD,
+                DownloadConstants.SRC_COMBO_ABO);
 
         Bindings.bindBidirectional(cboSrc.valueProperty(), ProgConfig.FILTER_DOWNLOAD_SOURCE.getStringProperty(),
                 new StringConverter<String>() {
 
                     public String fromString(String cb) {
                         switch (cb) {
-                            case DownloadInfos.ALL:
-                                return DownloadInfos.ALL;
-                            case DownloadInfos.SRC_COMBO_ABO:
-                                return DownloadInfos.SRC_ABO;
-                            case DownloadInfos.SRC_COMBO_DOWNLOAD:
-                                return DownloadInfos.SRC_DOWNLOAD;
+                            case DownloadConstants.ALL:
+                                return DownloadConstants.ALL;
+                            case DownloadConstants.SRC_COMBO_ABO:
+                                return DownloadConstants.SRC_ABO;
+                            case DownloadConstants.SRC_COMBO_DOWNLOAD:
+                                return DownloadConstants.SRC_DOWNLOAD;
                             default:
-                                return DownloadInfos.ALL;
+                                return DownloadConstants.ALL;
                         }
                     }
 
                     public String toString(String prop) {
                         switch (prop) {
-                            case DownloadInfos.ALL:
-                                return DownloadInfos.ALL;
-                            case DownloadInfos.SRC_ABO:
-                                return DownloadInfos.SRC_COMBO_ABO;
-                            case DownloadInfos.SRC_DOWNLOAD:
-                                return DownloadInfos.SRC_COMBO_DOWNLOAD;
+                            case DownloadConstants.ALL:
+                                return DownloadConstants.ALL;
+                            case DownloadConstants.SRC_ABO:
+                                return DownloadConstants.SRC_COMBO_ABO;
+                            case DownloadConstants.SRC_DOWNLOAD:
+                                return DownloadConstants.SRC_COMBO_DOWNLOAD;
                             default:
-                                return DownloadInfos.ALL;
+                                return DownloadConstants.ALL;
                         }
                     }
                 });
 
-        cboArt.getItems().addAll(DownloadInfos.ALL,
-                DownloadInfos.ART_COMBO_DOWNLOAD,
-                DownloadInfos.ART_COMBO_PROGRAM);
+        cboArt.getItems().addAll(DownloadConstants.ALL,
+                DownloadConstants.ART_COMBO_DOWNLOAD,
+                DownloadConstants.ART_COMBO_PROGRAM);
 
         Bindings.bindBidirectional(cboArt.valueProperty(), ProgConfig.FILTER_DOWNLOAD_KIND.getStringProperty(),
                 new StringConverter<String>() {
 
                     public String fromString(String cb) {
                         switch (cb) {
-                            case DownloadInfos.ALL:
-                                return DownloadInfos.ALL;
-                            case DownloadInfos.ART_COMBO_DOWNLOAD:
-                                return DownloadInfos.ART_DOWNLOAD;
-                            case DownloadInfos.ART_COMBO_PROGRAM:
-                                return DownloadInfos.ART_PROGRAM;
+                            case DownloadConstants.ALL:
+                                return DownloadConstants.ALL;
+                            case DownloadConstants.ART_COMBO_DOWNLOAD:
+                                return DownloadConstants.ART_DOWNLOAD;
+                            case DownloadConstants.ART_COMBO_PROGRAM:
+                                return DownloadConstants.ART_PROGRAM;
                             default:
-                                return DownloadInfos.ALL;
+                                return DownloadConstants.ALL;
                         }
                     }
 
                     public String toString(String prop) {
                         switch (prop) {
-                            case DownloadInfos.ALL:
-                                return DownloadInfos.ALL;
-                            case DownloadInfos.ART_DOWNLOAD:
-                                return DownloadInfos.ART_COMBO_DOWNLOAD;
-                            case DownloadInfos.ART_PROGRAM:
-                                return DownloadInfos.ART_COMBO_PROGRAM;
+                            case DownloadConstants.ALL:
+                                return DownloadConstants.ALL;
+                            case DownloadConstants.ART_DOWNLOAD:
+                                return DownloadConstants.ART_COMBO_DOWNLOAD;
+                            case DownloadConstants.ART_PROGRAM:
+                                return DownloadConstants.ART_COMBO_PROGRAM;
                             default:
-                                return DownloadInfos.ALL;
+                                return DownloadConstants.ALL;
                         }
                     }
                 });
 
-        cboState.getItems().addAll(DownloadInfos.ALL,
-                DownloadInfos.STATE_COMBO_NOT_STARTED,
-                DownloadInfos.STATE_COMBO_WAITING,
-                DownloadInfos.STATE_COMBO_LOADING);
+        cboState.getItems().addAll(DownloadConstants.ALL,
+                DownloadConstants.STATE_COMBO_NOT_STARTED,
+                DownloadConstants.STATE_COMBO_WAITING,
+                DownloadConstants.STATE_COMBO_LOADING);
         cboState.valueProperty().bindBidirectional(ProgConfig.FILTER_DOWNLOAD_STATE.getStringProperty());
 
         cboChannel.setItems(progData.worker.getAllChannelList());

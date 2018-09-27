@@ -54,7 +54,7 @@ public class DownloadListStarts {
             }
             if (download.isStarted() || download.isFinishedOrError()) {
                 // final int quelle = download.getSource();
-                if (download.getSource().equals(DownloadInfos.SRC_ABO) || download.getSource().equals(DownloadInfos.SRC_DOWNLOAD)) {
+                if (download.getSource().equals(DownloadConstants.SRC_ABO) || download.getSource().equals(DownloadConstants.SRC_DOWNLOAD)) {
                     if (download.isStateStartedWaiting()) {
                         ++ret[3];
                     } else if (download.isStateStartedRun()) {
@@ -122,7 +122,7 @@ public class DownloadListStarts {
                     && !maxChannelPlay(download, 1)) {
 
                 int restarted = download.getStart().getRestartCounter();
-                if (download.getArt().equals(DownloadInfos.ART_DOWNLOAD)) {
+                if (download.getArt().equals(DownloadConstants.ART_DOWNLOAD)) {
                     download.restartDownload();
                     progData.downloadList.startDownloads(download);
                     // UND jetzt den Restartcounter wieder setzen!!
@@ -144,7 +144,7 @@ public class DownloadListStarts {
 
         activeDownloads.clear();
         activeDownloads.addAll(downloadList.stream().filter(download -> download.isStateStartedRun())
-                .filter(download -> source.equals(DownloadInfos.ALL) || download.getSource().equals(source))
+                .filter(download -> source.equals(DownloadConstants.ALL) || download.getSource().equals(source))
                 .collect(Collectors.toList()));
         return activeDownloads;
     }
@@ -156,7 +156,7 @@ public class DownloadListStarts {
         while (it.hasNext()) {
             final Download d = it.next();
             if (d.isStateFinished()) {
-                if (d.getSource().equals(DownloadInfos.SRC_BUTTON)) {
+                if (d.getSource().equals(DownloadConstants.SRC_BUTTON)) {
                     // dann ist er fertig oder abgebrochen
                     it.remove();
                     found = true;

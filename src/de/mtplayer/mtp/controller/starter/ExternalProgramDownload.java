@@ -18,7 +18,7 @@ package de.mtplayer.mtp.controller.starter;
 
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.download.Download;
-import de.mtplayer.mtp.controller.data.download.DownloadInfos;
+import de.mtplayer.mtp.controller.data.download.DownloadConstants;
 import de.mtplayer.mtp.gui.dialog.DownloadContinueDialogController;
 import de.mtplayer.mtp.gui.dialog.DownloadErrorDialogController;
 import de.mtplayer.mtp.gui.tools.MTInfoFile;
@@ -207,7 +207,7 @@ public class ExternalProgramDownload extends Thread {
                 retStatus = stat_start;
             } else {
                 // counter prüfen und bei einem Maxwert checkIfCancelDownload, sonst endlos
-                if (download.getStart().getStartCounter() < DownloadInfos.START_COUNTER_MAX) {
+                if (download.getStart().getStartCounter() < DownloadConstants.START_COUNTER_MAX) {
                     // dann nochmal von vorne
                     retStatus = stat_start;
                 } else {
@@ -235,7 +235,7 @@ public class ExternalProgramDownload extends Thread {
     private int checkDownload() {
         int retStatus = stat_checking;
 
-        if (download.getSource().equals(DownloadInfos.SRC_BUTTON) || download.getProgramDownloadmanager()) {
+        if (download.getSource().equals(DownloadConstants.SRC_BUTTON) || download.getProgramDownloadmanager()) {
             // für die direkten Starts mit dem Button und die remote downloads wars das dann
             retStatus = stat_finished_ok;
         } else if (check(progData, download)) {

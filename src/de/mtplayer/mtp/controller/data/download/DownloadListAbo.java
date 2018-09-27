@@ -143,7 +143,7 @@ public class DownloadListAbo {
             aboForFilm.setPsetName(setData.getName()); // todo das machmer beim ProgStart 1x
 
             // dann in die Liste schreiben
-            syncDownloadArrayList.add(new Download(setData, film, DownloadInfos.SRC_ABO, aboForFilm, "", "", ""));
+            syncDownloadArrayList.add(new Download(setData, film, DownloadConstants.SRC_ABO, aboForFilm, "", "", ""));
             found = true;
         });
 

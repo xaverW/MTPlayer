@@ -22,16 +22,16 @@ import javafx.beans.property.*;
 
 public class DownloadProps extends DownloadXml {
 
-    private final IntegerProperty nr = new SimpleIntegerProperty(DownloadInfos.DOWNLOAD_NUMBER_NOT_STARTED);
-    private final IntegerProperty filmNr = new SimpleIntegerProperty(DownloadInfos.FILM_NUMBER_NOT_FOUND);
+    private final IntegerProperty nr = new SimpleIntegerProperty(DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED);
+    private final IntegerProperty filmNr = new SimpleIntegerProperty(DownloadConstants.FILM_NUMBER_NOT_FOUND);
 
     private final StringProperty aboName = new SimpleStringProperty("");
     private final StringProperty channel = new SimpleStringProperty("");
     private final StringProperty theme = new SimpleStringProperty("");
     private final StringProperty title = new SimpleStringProperty("");
 
-    private final IntegerProperty state = new SimpleIntegerProperty(DownloadInfos.STATE_INIT);
-    private final DoubleProperty progress = new SimpleDoubleProperty(DownloadInfos.PROGRESS_NOT_STARTED);
+    private final IntegerProperty state = new SimpleIntegerProperty(DownloadConstants.STATE_INIT);
+    private final DoubleProperty progress = new SimpleDoubleProperty(DownloadConstants.PROGRESS_NOT_STARTED);
     private final StringProperty remaining = new SimpleStringProperty("");
     private final StringProperty bandwidth = new SimpleStringProperty("");
 
@@ -61,8 +61,8 @@ public class DownloadProps extends DownloadXml {
     private final StringProperty destPath = new SimpleStringProperty("");
     private final StringProperty destPathFile = new SimpleStringProperty("");
 
-    private final StringProperty art = new SimpleStringProperty(DownloadInfos.ART_DOWNLOAD);
-    private final StringProperty source = new SimpleStringProperty(DownloadInfos.ALL);
+    private final StringProperty art = new SimpleStringProperty(DownloadConstants.ART_DOWNLOAD);
+    private final StringProperty source = new SimpleStringProperty(DownloadConstants.ALL);
     private final BooleanProperty placedBack = new SimpleBooleanProperty(false);
     private final BooleanProperty infoFile = new SimpleBooleanProperty(false);
     private final BooleanProperty subtitle = new SimpleBooleanProperty(false);
@@ -543,9 +543,9 @@ public class DownloadProps extends DownloadXml {
         setDestPathFile(arr[DOWNLOAD_DEST_PATH_FILE_NAME]);
 
         setArt(arr[Download.DOWNLOAD_TYPE]);
-        if (!arr[Download.DOWNLOAD_SOURCE].equals(DownloadInfos.SRC_ABO)) {
+        if (!arr[Download.DOWNLOAD_SOURCE].equals(DownloadConstants.SRC_ABO)) {
             // bei gelöschten Abos kanns dazu kommen
-            arr[Download.DOWNLOAD_SOURCE] = DownloadInfos.SRC_DOWNLOAD;
+            arr[Download.DOWNLOAD_SOURCE] = DownloadConstants.SRC_DOWNLOAD;
         }
         setSource(arr[DOWNLOAD_SOURCE]);
         setPlacedBack(Boolean.parseBoolean(arr[DOWNLOAD_PLACED_BACK]));

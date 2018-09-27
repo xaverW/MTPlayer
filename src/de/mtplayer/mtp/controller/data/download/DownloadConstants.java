@@ -16,7 +16,7 @@
 
 package de.mtplayer.mtp.controller.data.download;
 
-public class DownloadInfos {
+public class DownloadConstants {
 
     // Fortschritt
     public static final double PROGRESS_1_PERCENT = 0.01; // 1%

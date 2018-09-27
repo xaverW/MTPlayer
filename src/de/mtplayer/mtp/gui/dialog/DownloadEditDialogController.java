@@ -24,7 +24,7 @@ import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.ProgramData;
 import de.mtplayer.mtp.controller.data.download.Download;
-import de.mtplayer.mtp.controller.data.download.DownloadInfos;
+import de.mtplayer.mtp.controller.data.download.DownloadConstants;
 import de.mtplayer.mtp.controller.data.download.DownloadTools;
 import de.mtplayer.mtp.controller.data.download.DownloadXml;
 import de.mtplayer.mtp.controller.data.film.Film;
@@ -197,7 +197,7 @@ public class DownloadEditDialogController extends PDialogExtra {
             size = fileSize_high;
         }
 
-        if (download.getArt().equals(DownloadInfos.ART_PROGRAM) && download.getpSet() != null) {
+        if (download.getArt().equals(DownloadConstants.ART_PROGRAM) && download.getpSet() != null) {
             // muss noch der Programmaufruf neu gebaut werden
             final Download d = new Download(download.getpSet(), download.getFilm(), download.getSource(), download.getAbo(),
                     download.getDestFileName(),
@@ -290,7 +290,7 @@ public class DownloadEditDialogController extends PDialogExtra {
         txt[DownloadXml.DOWNLOAD_PROGRAM_CALL_ARRAY].setText(download.getProgramCallArray());
         txt[DownloadXml.DOWNLOAD_PROGRAM_CALL].setText(download.getProgramCall());
 
-        if (download.getArt().equals(DownloadInfos.ART_PROGRAM)) {
+        if (download.getArt().equals(DownloadConstants.ART_PROGRAM)) {
             // nur bei Downloads über ein Programm
 
             gridPane.add(lbl[DownloadXml.DOWNLOAD_PROGRAM_CALL_ARRAY], 0, row);
@@ -472,7 +472,7 @@ public class DownloadEditDialogController extends PDialogExtra {
 
             case DownloadXml.DOWNLOAD_BUTTON1:
                 //die Auflösung an der Stelle anzgeigen
-                if (!download.getArt().equals(DownloadInfos.ART_DOWNLOAD) && download.getpSet() == null) {
+                if (!download.getArt().equals(DownloadConstants.ART_DOWNLOAD) && download.getpSet() == null) {
                     // ansonsten müsste erst der Programmaufruf neu gebaut werden
                     break;
                 }
@@ -595,7 +595,7 @@ public class DownloadEditDialogController extends PDialogExtra {
             case DownloadXml.DOWNLOAD_REMAINING_TIME:
                 if (download.isStateStartedRun() &&
                         download.getStart().getTimeLeft() > 0) {
-                    lblCont[i].setText(DownloadInfos.getTimeLeft(download.getStart().getTimeLeft()));
+                    lblCont[i].setText(DownloadConstants.getTimeLeft(download.getStart().getTimeLeft()));
                 }
 
                 gridPane.add(lbl[i], 0, row);
@@ -603,7 +603,7 @@ public class DownloadEditDialogController extends PDialogExtra {
                 ++row;
                 break;
             case DownloadXml.DOWNLOAD_PROGRESS:
-                lblCont[i].setText(DownloadInfos.getTextProgress(
+                lblCont[i].setText(DownloadConstants.getTextProgress(
                         download.getProgramDownloadmanager(),
                         download.getState(),
                         download.getProgress()));

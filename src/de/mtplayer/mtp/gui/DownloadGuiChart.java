@@ -20,7 +20,7 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.download.Download;
-import de.mtplayer.mtp.controller.data.download.DownloadInfos;
+import de.mtplayer.mtp.controller.data.download.DownloadConstants;
 import de.mtplayer.mtp.gui.tools.Listener;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -175,7 +175,7 @@ public class DownloadGuiChart {
         boolean found;
         ++countSek; // Sekunden
         final double countMin = countSek / 60.0; // Minuten
-        startedDownloads = progData.downloadList.getListOfStartsNotFinished(DownloadInfos.ALL);
+        startedDownloads = progData.downloadList.getListOfStartsNotFinished(DownloadConstants.ALL);
 
         //Downloads in "Diagramm" eintragen
         for (final Download download : startedDownloads) {
@@ -193,7 +193,7 @@ public class DownloadGuiChart {
                         FXCollections.observableArrayList(new XYChart.Data<Number, Number>(countMin, download.getStart().getBandwidth() / scale))));
             }
         }
-        sumSeries.getData().add(new XYChart.Data<>(countMin, progData.downloadList.getDownloadInfoAll().bandwidth / scale));
+        sumSeries.getData().add(new XYChart.Data<>(countMin, progData.downloadList.getDownloadListInfoAll().bandwidth / scale));
         zoomXAxis(countMin);
         zoomYAxis();
     }

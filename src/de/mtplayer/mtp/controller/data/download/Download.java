@@ -37,7 +37,7 @@ import java.util.Date;
 public final class Download extends DownloadProps {
 
     private Start start = new Start(this);
-    private final DownloadProg downloadProg = new DownloadProg(this);
+    private final DownloadProgram downloadProgram = new DownloadProgram(this);
 
     private Film film = null;
     private SetData pSet = null;
@@ -70,7 +70,7 @@ public final class Download extends DownloadProps {
         // und jetzt noch die Dateigröße für die entsp. URL
         setSizeDownloadFromFilm();
         // und endlich Aufruf bauen :)
-        downloadProg.makeProgParameter(pSet, film, abo, name, path);
+        downloadProgram.makeProgParameter(pSet, film, abo, name, path);
     }
 
 
@@ -79,53 +79,53 @@ public final class Download extends DownloadProps {
     //==============================================
 
     public boolean isStateInit() {
-        return getState() == DownloadInfos.STATE_INIT;
+        return getState() == DownloadConstants.STATE_INIT;
     }
 
     public boolean isStateStoped() {
-        return getState() == DownloadInfos.STATE_STOPPED;
+        return getState() == DownloadConstants.STATE_STOPPED;
     }
 
     public boolean isStateStartedWaiting() {
-        return getState() == DownloadInfos.STATE_STARTED_WAITING;
+        return getState() == DownloadConstants.STATE_STARTED_WAITING;
     }
 
     public boolean isStateStartedRun() {
-        return getState() == DownloadInfos.STATE_STARTED_RUN;
+        return getState() == DownloadConstants.STATE_STARTED_RUN;
     }
 
     public boolean isStateFinished() {
-        return getState() == DownloadInfos.STATE_FINISHED;
+        return getState() == DownloadConstants.STATE_FINISHED;
     }
 
     public boolean isStateError() {
-        return getState() == DownloadInfos.STATE_ERROR;
+        return getState() == DownloadConstants.STATE_ERROR;
     }
 
     public void setStateStartedWaiting() {
-        MLProperty.setProperty(stateProperty(), DownloadInfos.STATE_STARTED_WAITING);
+        MLProperty.setProperty(stateProperty(), DownloadConstants.STATE_STARTED_WAITING);
     }
 
     public void setStateStartedRun() {
-        MLProperty.setProperty(stateProperty(), DownloadInfos.STATE_STARTED_RUN);
+        MLProperty.setProperty(stateProperty(), DownloadConstants.STATE_STARTED_RUN);
     }
 
     public void setStateFinished() {
-        MLProperty.setProperty(stateProperty(), DownloadInfos.STATE_FINISHED);
+        MLProperty.setProperty(stateProperty(), DownloadConstants.STATE_FINISHED);
     }
 
     public void setStateError() {
-        MLProperty.setProperty(stateProperty(), DownloadInfos.STATE_ERROR);
+        MLProperty.setProperty(stateProperty(), DownloadConstants.STATE_ERROR);
     }
 
     //=======================================
 
     public boolean isStarted() {
-        return getState() > DownloadInfos.STATE_STOPPED && !isStateFinished();
+        return getState() > DownloadConstants.STATE_STOPPED && !isStateFinished();
     }
 
     public boolean isFinishedOrError() {
-        return getState() >= DownloadInfos.STATE_FINISHED;
+        return getState() >= DownloadConstants.STATE_FINISHED;
     }
 
 
@@ -150,7 +150,7 @@ public final class Download extends DownloadProps {
     public void resetDownload() {
         // stoppen und alles zurücksetzen
         stopDownload();
-        MLProperty.setProperty(stateProperty(), DownloadInfos.STATE_INIT);
+        MLProperty.setProperty(stateProperty(), DownloadConstants.STATE_INIT);
     }
 
     public void restartDownload() {
@@ -160,10 +160,10 @@ public final class Download extends DownloadProps {
         downSize.reset();
         setRemaining("");
         setBandwidth("");
-        setNr(DownloadInfos.DOWNLOAD_NUMBER_NOT_STARTED);
+        setNr(DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED);
 
-        MLProperty.setProperty(stateProperty(), DownloadInfos.STATE_INIT);
-        MLProperty.setProperty(progressProperty(), DownloadInfos.PROGRESS_NOT_STARTED);
+        MLProperty.setProperty(stateProperty(), DownloadConstants.STATE_INIT);
+        MLProperty.setProperty(progressProperty(), DownloadConstants.PROGRESS_NOT_STARTED);
     }
 
     public void stopDownload() {
@@ -171,19 +171,19 @@ public final class Download extends DownloadProps {
             // damit fehlerhafte nicht wieder starten
             getStart().setRestartCounter(ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getInt());
         } else {
-            MLProperty.setProperty(stateProperty(), DownloadInfos.STATE_STOPPED);
-            MLProperty.setProperty(progressProperty(), DownloadInfos.PROGRESS_NOT_STARTED);
+            MLProperty.setProperty(stateProperty(), DownloadConstants.STATE_STOPPED);
+            MLProperty.setProperty(progressProperty(), DownloadConstants.PROGRESS_NOT_STARTED);
         }
 
         final DownloadSize downSize = getDownloadSize();
         downSize.reset();
         setRemaining("");
         setBandwidth("");
-        setNr(DownloadInfos.DOWNLOAD_NUMBER_NOT_STARTED);
+        setNr(DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED);
     }
 
     public void makeProgParameter() {
-        downloadProg.makeProgParameter(pSet, film, abo, getDestFileName(), getDestPath());
+        downloadProgram.makeProgParameter(pSet, film, abo, getDestFileName(), getDestPath());
     }
 
     public String getFileNameWithoutSuffix() {
@@ -231,7 +231,7 @@ public final class Download extends DownloadProps {
     public void setFilm(Film film) {
         if (film == null) {
             // bei gespeicherten Downloads kann es den Film nicht mehr geben
-            setFilmNr(DownloadInfos.FILM_NUMBER_NOT_FOUND);
+            setFilmNr(DownloadConstants.FILM_NUMBER_NOT_FOUND);
             return;
         }
         this.film = film;

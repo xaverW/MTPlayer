@@ -18,7 +18,7 @@ package de.mtplayer.mtp.controller.starter;
 
 import de.mtplayer.mLib.tools.MLProperty;
 import de.mtplayer.mtp.controller.data.download.Download;
-import de.mtplayer.mtp.controller.data.download.DownloadInfos;
+import de.mtplayer.mtp.controller.data.download.DownloadConstants;
 import de.mtplayer.mtp.controller.data.download.DownloadSize;
 import de.p2tools.p2Lib.tools.log.PLog;
 
@@ -117,8 +117,8 @@ public class RuntimeExec {
         private BufferedReader buff;
         private InputStream in;
         private final Process process;
-        private double percent = DownloadInfos.PROGRESS_WAITING;
-        private double percent_start = DownloadInfos.PROGRESS_NOT_STARTED;
+        private double percent = DownloadConstants.PROGRESS_WAITING;
+        private double percent_start = DownloadConstants.PROGRESS_NOT_STARTED;
 
         public ClearInOut(int a, Process p) {
             art = a;
@@ -241,15 +241,15 @@ public class RuntimeExec {
             MLProperty.setProperty(download.progressProperty(), pNeu);
             if (pNeu != percent) {
                 percent = pNeu;
-                if (percent_start == DownloadInfos.PROGRESS_NOT_STARTED) {
+                if (percent_start == DownloadConstants.PROGRESS_NOT_STARTED) {
                     // für wiedergestartete Downloads
                     percent_start = percent;
                 }
-                if (percent > (percent_start + 5 * DownloadInfos.PROGRESS_1_PERCENT)) {
+                if (percent > (percent_start + 5 * DownloadConstants.PROGRESS_1_PERCENT)) {
                     // sonst macht es noch keinen Sinn
                     final int diffTime = download.getStart().getStartTime().diffInSeconds();
                     final double diffPercent = percent - percent_start;
-                    final double restPercent = DownloadInfos.PROGRESS_FINISHED - percent;
+                    final double restPercent = DownloadConstants.PROGRESS_FINISHED - percent;
                     download.getStart().setTimeLeft((long) (diffTime * restPercent / diffPercent));
                 }
             }

@@ -23,7 +23,7 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.download.Download;
-import de.mtplayer.mtp.controller.data.download.DownloadInfos;
+import de.mtplayer.mtp.controller.data.download.DownloadConstants;
 import de.mtplayer.mtp.controller.data.download.DownloadSizeData;
 import de.p2tools.p2Lib.guiTools.POpen;
 import javafx.beans.property.BooleanProperty;
@@ -206,20 +206,20 @@ public class TableDownload {
 
                     int item = download.getState();
                     switch (item) {
-                        case DownloadInfos.STATE_INIT:
-                        case DownloadInfos.STATE_STOPPED:
+                        case DownloadConstants.STATE_INIT:
+                        case DownloadConstants.STATE_STOPPED:
                             setStyle("");
                             break;
-                        case DownloadInfos.STATE_STARTED_WAITING:
+                        case DownloadConstants.STATE_STARTED_WAITING:
                             setStyle(MTColor.DOWNLOAD_WAIT.getCssBackground());
                             break;
-                        case DownloadInfos.STATE_STARTED_RUN:
+                        case DownloadConstants.STATE_STARTED_RUN:
                             setStyle(MTColor.DOWNLOAD_RUN.getCssBackground());
                             break;
-                        case DownloadInfos.STATE_FINISHED:
+                        case DownloadConstants.STATE_FINISHED:
                             setStyle(MTColor.DOWNLOAD_FINISHED.getCssBackground());
                             break;
-                        case DownloadInfos.STATE_ERROR:
+                        case DownloadConstants.STATE_ERROR:
                             setStyle(MTColor.DOWNLOAD_ERROR.getCssBackground());
                             break;
                     }
@@ -256,7 +256,7 @@ public class TableDownload {
                 final Button btnDownStop;
                 final Button btnFilmStart;
 
-                if (item <= DownloadInfos.STATE_STOPPED) {
+                if (item <= DownloadConstants.STATE_STOPPED) {
                     btnDownStart = new Button("");
                     btnDownStart.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_DOWNLOAD_START));
 
@@ -274,7 +274,7 @@ public class TableDownload {
                     });
                     hbox.getChildren().addAll(btnDownStart, btnDownDel);
                     setGraphic(hbox);
-                } else if (item < DownloadInfos.STATE_FINISHED) {
+                } else if (item < DownloadConstants.STATE_FINISHED) {
                     btnDownStop = new Button("");
                     btnDownStop.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_DOWNLOAD_STOP));
 
@@ -292,7 +292,7 @@ public class TableDownload {
                     });
                     hbox.getChildren().addAll(btnDownStop, btnDownDel);
                     setGraphic(hbox);
-                } else if (item == DownloadInfos.STATE_FINISHED) {
+                } else if (item == DownloadConstants.STATE_FINISHED) {
                     btnFilmStart = new Button("");
                     btnFilmStart.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_FILM_PLAY));
 
@@ -321,20 +321,20 @@ public class TableDownload {
             return;
         }
         switch (item) {
-            case DownloadInfos.STATE_INIT:
-            case DownloadInfos.STATE_STOPPED:
+            case DownloadConstants.STATE_INIT:
+            case DownloadConstants.STATE_STOPPED:
                 currentRow.setStyle("");
                 break;
-            case DownloadInfos.STATE_STARTED_WAITING:
+            case DownloadConstants.STATE_STARTED_WAITING:
                 currentRow.setStyle(MTColor.DOWNLOAD_WAIT.getCssBackground());
                 break;
-            case DownloadInfos.STATE_STARTED_RUN:
+            case DownloadConstants.STATE_STARTED_RUN:
                 currentRow.setStyle(MTColor.DOWNLOAD_RUN.getCssBackground());
                 break;
-            case DownloadInfos.STATE_FINISHED:
+            case DownloadConstants.STATE_FINISHED:
                 currentRow.setStyle(MTColor.DOWNLOAD_FINISHED.getCssBackground());
                 break;
-            case DownloadInfos.STATE_ERROR:
+            case DownloadConstants.STATE_ERROR:
                 currentRow.setStyle(MTColor.DOWNLOAD_ERROR.getCssBackground());
                 break;
         }
@@ -355,7 +355,7 @@ public class TableDownload {
                     return;
                 }
 
-                if (item == DownloadInfos.DOWNLOAD_NUMBER_NOT_STARTED) {
+                if (item == DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED) {
                     setGraphic(null);
                     setText(null);
                 } else {
@@ -383,7 +383,7 @@ public class TableDownload {
                     return;
                 }
 
-                if (item == DownloadInfos.FILM_NUMBER_NOT_FOUND) {
+                if (item == DownloadConstants.FILM_NUMBER_NOT_FOUND) {
                     setGraphic(null);
                     setText(null);
                 } else {
@@ -408,11 +408,11 @@ public class TableDownload {
                 if (item != null) {
                     Download download = getTableView().getItems().get(getIndex());
                     if (download.getProgramDownloadmanager()) {
-                        final String text = DownloadInfos.getTextProgress(true, download.getState(), item.doubleValue());
+                        final String text = DownloadConstants.getTextProgress(true, download.getState(), item.doubleValue());
                         Label label = new Label(text);
                         setGraphic(label);
-                    } else if (item <= DownloadInfos.PROGRESS_STARTED || item >= DownloadInfos.PROGRESS_FINISHED) {
-                        String text = DownloadInfos.getTextProgress(false, download.getState(), item.doubleValue());
+                    } else if (item <= DownloadConstants.PROGRESS_STARTED || item >= DownloadConstants.PROGRESS_FINISHED) {
+                        String text = DownloadConstants.getTextProgress(false, download.getState(), item.doubleValue());
                         Label label = new Label(text);
                         if (geoMelden.get() && download.getGeoBlocked()) {
                             // geogeblockt

@@ -20,7 +20,7 @@ import de.mtplayer.mLib.tools.MDate;
 import de.mtplayer.mLib.tools.MLInputStream;
 import de.mtplayer.mLib.tools.SizeTools;
 import de.mtplayer.mtp.controller.data.download.Download;
-import de.mtplayer.mtp.controller.data.download.DownloadInfos;
+import de.mtplayer.mtp.controller.data.download.DownloadConstants;
 
 public class Start {
 
@@ -58,7 +58,7 @@ public class Start {
     public void setTimeLeft(long timeLeft) {
         this.timeLeft = timeLeft;
         if (download.isStateStartedRun() && getTimeLeft() > 0) {
-            download.setRemaining(DownloadInfos.getTimeLeft(timeLeft));
+            download.setRemaining(DownloadConstants.getTimeLeft(timeLeft));
         } else {
             download.setRemaining("");
         }
