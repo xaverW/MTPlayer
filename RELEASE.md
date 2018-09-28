@@ -1,5 +1,12 @@
 ## MTPlayer
 
+**Release 4-1**
+
+* In bestimmten Kon­s­tel­la­ti­onen kam es zu hoher Prozessorlast
+
+
+<br />
+
 **Release 4-0**
 
 * Das Programm prüft und zeigt an, wenn es eine neue Filmliste gibt (alle 1/2h, Button "Filmliste" wird dann blau umrandet)
