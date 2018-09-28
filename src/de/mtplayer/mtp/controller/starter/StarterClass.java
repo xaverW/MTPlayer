@@ -25,6 +25,8 @@ import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadConstants;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
+import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
+import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.p2tools.p2Lib.tools.log.PLog;
 
 import java.awt.*;
@@ -37,6 +39,7 @@ public class StarterClass {
     private final ProgData progData;
     private Start start = null;
     private boolean paused = false;
+    private boolean searchFilms = false;
 
     // ===================================
     // Public
@@ -45,6 +48,18 @@ public class StarterClass {
         this.progData = progData;
         start = new Start();
         start.start();
+
+        progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
+            @Override
+            public void start(ListenerFilmlistLoadEvent event) {
+                searchFilms = true;
+            }
+
+            @Override
+            public void finished(ListenerFilmlistLoadEvent event) {
+                searchFilms = false;
+            }
+        });
     }
 
     public synchronized void startUrlWithProgram(Film ersterFilm, SetData pSet, String resolution) {
@@ -291,10 +306,25 @@ public class StarterClass {
         public synchronized void run() {
             while (!isInterrupted()) {
                 try {
+                    if (searchFilms) {
+                        // da machmer nix
+                        sleep(5 * 1000);
+                        continue;
+                    }
+
+
                     while ((download = getNextStart()) != null) {
+                        if (searchFilms) {
+                            break;
+                        }
+
                         startDownload(download);
                         // alle 5 Sekunden einen Download starten
                         sleep(5 * 1000);
+                    }
+
+                    if (searchFilms) {
+                        continue;
                     }
                     progData.downloadListButton.cleanUpButtonStarts(); // Button Starts aus der Liste
                     // löschen

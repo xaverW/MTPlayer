@@ -23,6 +23,7 @@ import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.p2tools.p2Lib.tools.log.PLog;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -166,7 +167,7 @@ public class StatusBarController extends AnchorPane {
     }
 
     public void setStatusbar() {
-        setStatusbarIndex(statusbarIndex);
+        Platform.runLater(() -> setStatusbarIndex(statusbarIndex));
     }
 
     public void setStatusbarIndex(StatusbarIndex statusbarIndex) {

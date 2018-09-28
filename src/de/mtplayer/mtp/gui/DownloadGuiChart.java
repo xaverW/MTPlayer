@@ -166,9 +166,7 @@ public class DownloadGuiChart {
     // Daten generieren
     // ============================
     private synchronized void search() {
-        Platform.runLater(() -> {
-            searchInfos();
-        });
+        Platform.runLater(() -> searchInfos());
     }
 
     private synchronized void searchInfos() {

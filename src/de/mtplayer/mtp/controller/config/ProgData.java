@@ -43,6 +43,7 @@ import de.p2tools.p2Lib.tools.log.PDuration;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -138,7 +139,7 @@ public class ProgData {
     }
 
     private void doTimerWork() {
-        downloadList.makeDownloadInfo();
+        Platform.runLater(() -> downloadList.makeDownloadInfo());
         Listener.notify(Listener.EREIGNIS_TIMER, ProgData.class.getName());
     }
 

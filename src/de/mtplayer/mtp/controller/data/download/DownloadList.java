@@ -27,6 +27,12 @@ import javafx.collections.FXCollections;
 
 import java.util.*;
 
+
+//de.mtplayer.mtp.controller.data.download.DownloadList.getNextStart(DownloadList.java:231)
+//de.mtplayer.mtp.controller.data.download.DownloadList.searchForDownloadsFromAbos(DownloadList.java:195)
+//de.mtplayer.mtp.controller.data.download.DownloadList.getListOfStartsNotFinished(DownloadList.java:218)
+
+
 public class DownloadList extends SimpleListProperty<Download> {
 
     private final ProgData progData;
@@ -34,6 +40,10 @@ public class DownloadList extends SimpleListProperty<Download> {
     private final DownloadListStarts downloadListStarts;
     private final DownloadListStartStop downloadListStartStop;
     private final DownloadListInfoAll downloadListInfoAll;
+
+//    private final ReadWriteLock lock = new ReentrantReadWriteLock(true);
+//    private final Lock readLock = lock.readLock();
+//    private final Lock writeLock = lock.writeLock();
 
     private BooleanProperty downloadsChanged = new SimpleBooleanProperty(true);
 
@@ -191,12 +201,19 @@ public class DownloadList extends SimpleListProperty<Download> {
     // =========================
     // Downloads für Abos suchen
     public synchronized void searchForDownloadsFromAbos() {
+//        System.out.println("writeLock 0");
+//        writeLock.lock();
+//        try {
         final int count = getSize();
         downloadListAbo.searchDownloadsFromAbos();
         if (getSize() == count) {
             // dann wurden evtl. nur zurückgestellte Downloads wieder aktiviert
             setDownloadsChanged();
         }
+//        } finally {
+//            System.out.println("writeLock 1");
+//            writeLock.unlock();
+//        }
     }
 
 
@@ -215,7 +232,18 @@ public class DownloadList extends SimpleListProperty<Download> {
     }
 
     public synchronized LinkedList<Download> getListOfStartsNotFinished(String source) {
-        return downloadListStarts.getListOfStartsNotFinished(source);
+        LinkedList<Download> ret;
+
+//        System.out.println("readLock 0");
+//        readLock.lock();
+//        try {
+        ret = downloadListStarts.getListOfStartsNotFinished(source);
+//        } finally {
+//            readLock.unlock();
+//            System.out.println("readLock 1");
+//        }
+
+        return ret;
     }
 
     public synchronized Download getRestartDownload() {
@@ -228,7 +256,17 @@ public class DownloadList extends SimpleListProperty<Download> {
     }
 
     public synchronized Download getNextStart() {
-        return downloadListStarts.getNextStart();
+        Download download = null;
+
+//        System.out.println("readLock 0");
+//        readLock.lock();
+//        try {
+        download = downloadListStarts.getNextStart();
+//        } finally {
+//            readLock.unlock();
+//            System.out.println("readLock 1");
+//        }
+        return download;
     }
 
     public synchronized void resetPlacedBack() {
