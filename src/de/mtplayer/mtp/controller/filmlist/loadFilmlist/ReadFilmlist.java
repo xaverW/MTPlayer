@@ -53,6 +53,7 @@ public class ReadFilmlist {
     private final EventListenerList listeners = new EventListenerList();
     private double progress = 0;
     private long milliseconds = 0;
+    private boolean checkDateBeforeLoading = false;
 
     public void addAdListener(ListenerFilmlistLoad listener) {
         listeners.add(ListenerFilmlistLoad.class, listener);
@@ -62,6 +63,11 @@ public class ReadFilmlist {
     Hier wird die Filmliste tatsächlich geladen (von Datei/URL)
      */
     public void readFilmlist(String sourceFileUrl, final Filmlist filmlist, int days) {
+        readFilmlist(sourceFileUrl, filmlist, days, false);
+    }
+
+    public void readFilmlist(String sourceFileUrl, final Filmlist filmlist, int days, boolean checkDateBeforeLoading) {
+        this.checkDateBeforeLoading = checkDateBeforeLoading;
         ArrayList<String> list = new ArrayList<>();
         try {
             list.add("Liste Filme lesen von: " + sourceFileUrl);
@@ -131,6 +137,11 @@ public class ReadFilmlist {
             }
         }
 
+        // Datum checken, wenn gewollt und dann abbrechen
+        if (checkDateBeforeLoading && filmlist.isOlderThan(ProgConst.ALTER_FILMLISTE_SEKUNDEN_FUER_AUTOUPDATE)) {
+            return;
+        }
+
         while (!ProgData.getInstance().loadFilmlist.getStop() && (jsonToken = jp.nextToken()) != null) {
             if (jsonToken == JsonToken.END_OBJECT) {
                 break;
@@ -143,7 +154,7 @@ public class ReadFilmlist {
                 addValue(film, jp);
 
 
-                filmlist.importFilmlist(film);
+                filmlist.importFilm(film);
                 if (milliseconds > 0) {
                     // muss "rückwärts" laufen, da das Datum sonst 2x gebaut werden muss
                     // wenns drin bleibt, kann mans noch ändern

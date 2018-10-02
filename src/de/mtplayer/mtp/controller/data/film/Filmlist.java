@@ -90,7 +90,7 @@ public class Filmlist extends SimpleListProperty<Film> {
     }
 
 
-    public synchronized boolean importFilmlist(Film film) {
+    public synchronized boolean importFilm(Film film) {
         // hier nur beim Laden aus einer fertigen Filmliste mit der GUI
         // die Filme sind schon sortiert, nur die Nummer muss noch ergänzt werden
         film.nr = nr++;
