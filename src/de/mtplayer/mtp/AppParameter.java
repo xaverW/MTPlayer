@@ -66,6 +66,10 @@ public class AppParameter {
                 ProgData.debug = true;
             }
 
+            if (hasOption(line, ProgParameter.DURATION)) {
+                ProgData.duration = true;
+            }
+
             if (hasOption(line, ProgParameter.PATH)) {
                 String configDir = line.getOptionValue(ProgParameter.PATH.name);
                 if (!configDir.endsWith(File.separator)) {
@@ -119,7 +123,8 @@ public class AppParameter {
         HELP("h", "help", false, "show help"),
         VERSION("v", "version", false, "show version"),
         PATH("p", "path", true, "path of configuration file"),
-        DEBUG("d", "debug", false, "show debug info");
+        DEBUG("d", "debug", false, "show debug info"),
+        DURATION("t", "time", false, "show timekeeping info");
 
         final String shortname;
         final String name;

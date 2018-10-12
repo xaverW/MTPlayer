@@ -72,7 +72,9 @@ public class MTPlayer extends Application {
 
     private void initP2lib() {
         PButton.setHlpImage(GetIcon.getImage("button-help.png", 16, 16));
-        PInit.initLib(primaryStage, ProgConst.PROGRAMNAME, ProgConst.CSS_FILE, "", ProgData.debug);
+        PInit.initLib(primaryStage, ProgConst.PROGRAMNAME,
+                ProgConst.CSS_FILE, "",
+                ProgData.debug, ProgData.duration);
     }
 
     private void workBeforeGui() {

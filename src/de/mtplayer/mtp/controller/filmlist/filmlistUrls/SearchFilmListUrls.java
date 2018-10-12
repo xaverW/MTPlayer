@@ -32,7 +32,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class SearchFilmListUrls {
 
@@ -53,14 +52,16 @@ public class SearchFilmListUrls {
         String retUrl;
         if (filmlistUrlList_akt.isEmpty()) {
             // bei leerer Liste immer aktualisieren
-            updateURLsFilmlists(true);
+            updateURLsFilmlists();
         } else if (firstSearchAkt) {
             // nach dem Programmstart wird die Liste einmal aktualisiert aber
             // da sich die Listen nicht ändern, nur jeden xx Start
-            int nr = new Random().nextInt(UPDATE_LIST_MAX);
-            if (nr == 0) {
-                updateURLsFilmlists(true);
-            }
+            updateURLsFilmlists();
+
+//            int nr = new Random().nextInt(UPDATE_LIST_MAX);
+//            if (nr == 0) {
+//                updateURLsFilmlists(true);
+//            }
         }
         firstSearchAkt = false;
         retUrl = (filmlistUrlList_akt.getRand(alreadyTried)); //eine Zufällige Adresse wählen
@@ -75,14 +76,16 @@ public class SearchFilmListUrls {
         String retUrl;
         if (filmlistUrlList_diff.isEmpty()) {
             // bei leerer Liste immer aktualisieren
-            updateURLsFilmlists(false);
+            updateURLsFilmlists();
         } else if (firstSearchDiff) {
             // nach dem Programmstart wird die Liste einmal aktualisiert aber
             // da sich die Listen nicht ändern, nur jeden xx Start
-            int nr = new Random().nextInt(UPDATE_LIST_MAX);
-            if (nr == 0) {
-                updateURLsFilmlists(false);
-            }
+            updateURLsFilmlists();
+
+//            int nr = new Random().nextInt(UPDATE_LIST_MAX);
+//            if (nr == 0) {
+//                updateURLsFilmlists(false);
+//            }
         }
         firstSearchDiff = false;
         retUrl = (filmlistUrlList_diff.getRand(alreadyTried)); //eine Zufällige Adresse wählen
@@ -120,28 +123,29 @@ public class SearchFilmListUrls {
 
     /**
      * Update the download server URLs.
-     *
-     * @param updateFullList if true, update full list server, otherwise diff servers.
+     * immer gleich beide (akt und diff) laden
      **/
-    public void updateURLsFilmlists(final boolean updateFullList) {
+    public void updateURLsFilmlists() {
+        PLog.sysLog("URLs der Filmlisten aktualisieren");
         FilmlistUrlList tmp = new FilmlistUrlList();
-        if (updateFullList) {
-            getDownloadUrlsFilmlists(ProgConst.ADRESSE_FILMLISTEN_SERVER_AKT, tmp, ProgInfos.getUserAgent(), FilmlistUrlData.SERVER_ART_AKT);
-            if (!tmp.isEmpty()) {
-                filmlistUrlList_akt = tmp;
-            } else if (filmlistUrlList_akt.isEmpty()) {
-                insertDefaultCompleteListServers();
-            }
-            filmlistUrlList_akt.sort();
-        } else {
-            getDownloadUrlsFilmlists(ProgConst.ADRESSE_FILMLISTEN_SERVER_DIFF, tmp, ProgInfos.getUserAgent(), FilmlistUrlData.SERVER_ART_DIFF);
-            if (!tmp.isEmpty()) {
-                filmlistUrlList_diff = tmp;
-            } else if (filmlistUrlList_diff.isEmpty()) {
-                insertDefaultDifferentialListServers();
-            }
-            filmlistUrlList_diff.sort();
+
+        getDownloadUrlsFilmlists(ProgConst.ADRESSE_FILMLISTEN_SERVER_AKT, tmp, ProgInfos.getUserAgent(), FilmlistUrlData.SERVER_ART_AKT);
+        if (!tmp.isEmpty()) {
+            filmlistUrlList_akt.addAll(tmp);
+        } else if (filmlistUrlList_akt.isEmpty()) {
+            insertDefaultCompleteListServers();
         }
+        filmlistUrlList_akt.sort();
+
+        tmp.clear();
+        getDownloadUrlsFilmlists(ProgConst.ADRESSE_FILMLISTEN_SERVER_DIFF, tmp, ProgInfos.getUserAgent(), FilmlistUrlData.SERVER_ART_DIFF);
+        if (!tmp.isEmpty()) {
+            filmlistUrlList_diff.addAll(tmp);
+        } else if (filmlistUrlList_diff.isEmpty()) {
+            insertDefaultDifferentialListServers();
+        }
+        filmlistUrlList_diff.sort();
+
         if (tmp.isEmpty()) {
             PLog.errorLog(491203216, new String[]{"Es ist ein Fehler aufgetreten!",
                     "Es konnten keine Updateserver zum aktualisieren der Filme",

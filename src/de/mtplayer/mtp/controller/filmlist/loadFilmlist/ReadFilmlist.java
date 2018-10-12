@@ -137,7 +137,7 @@ public class ReadFilmlist {
             }
         }
 
-        // Datum checken, wenn gewollt und dann abbrechen
+        // Datum checken, wenn gewollt und dann abbrechen todo
         if (checkDateBeforeLoading && filmlist.isOlderThan(ProgConst.ALTER_FILMLISTE_SEKUNDEN_FUER_AUTOUPDATE)) {
             return;
         }
