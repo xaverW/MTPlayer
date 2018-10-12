@@ -216,7 +216,8 @@ public class LoadFilmlist {
                 new ReadFilmlist().readFilmlist(ProgInfos.getFilmListFile(),
                         progData.filmlist, ProgConfig.SYSTEM_NUM_DAYS_FILMLIST.getInt(),
                         // Datumcheck macht nur Sinn, wenn beim Programmstart auch ein Update gemacht werden soll
-                        ProgConfig.SYSTEM_LOAD_FILMS_ON_START.getBool());
+//                        ProgConfig.SYSTEM_LOAD_FILMS_ON_START.getBool());
+                        false);
 
                 list.add(PLog.LILNE3);
                 list.add("Liste Filme gelesen am: " + StringFormatters.FORMATTER_ddMMyyyyHHmm.format(new Date()));

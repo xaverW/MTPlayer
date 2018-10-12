@@ -141,7 +141,7 @@ public class DirectHttpDownload extends Thread {
         double p, pp = DownloadConstants.PROGRESS_WAITING, startPercent = DownloadConstants.PROGRESS_NOT_STARTED;
         int len;
         long aktBandwidth, aktSize = 0;
-        boolean report = false;
+        boolean report = false; //todo? kann entfallen??
 
         while ((len = download.getStart().getInputStream().read(buffer)) != -1 && (!download.isStateStoped())) {
             downloaded += len;
@@ -164,13 +164,12 @@ public class DirectHttpDownload extends Thread {
                 } else if (p >= DownloadConstants.PROGRESS_FINISHED) {
                     p = DownloadConstants.PROGRESS_NEARLY_FINISHED;
                 }
-                MLProperty.setProperty(download.progressProperty(), p);
+                MLProperty.setProperty(download.progressProperty(), p); // todo-> das kann dazu führen, dass der check (99,5%) nicht klappt
                 if (p != pp) {
                     pp = p;
 
                     // Restzeit ermitteln
-                    if (p > (DownloadConstants.PROGRESS_STARTED) &&
-                            p > startPercent) {
+                    if (p > (DownloadConstants.PROGRESS_STARTED) && p > startPercent) {
                         // sonst macht es noch keinen Sinn
                         final int diffTime = download.getStart().getStartTime().diffInSeconds();
                         final double restPercent = DownloadConstants.PROGRESS_FINISHED - p;

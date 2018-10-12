@@ -90,15 +90,15 @@ public class StarterClass {
 
         if (progress > DownloadConstants.PROGRESS_NOT_STARTED && progress < DownloadConstants.PROGRESS_NEARLY_FINISHED) {
             // *progress* Prozent werden berechnet und es wurde vor 99,5% abgebrochen
-            PLog.errorLog(696510258, "Download fehlgeschlagen: 99,5% wurden nicht erreicht" + download.getDestPathFile());
+            PLog.errorLog(696510258, "Download fehlgeschlagen: 99,5% wurden nicht erreicht: " + download.getDestPathFile());
             return false;
         }
 
         final File file = new File(download.getDestPathFile());
         if (!file.exists()) {
-            PLog.errorLog(550236231, "Download fehlgeschlagen: Datei existiert nicht" + download.getDestPathFile());
+            PLog.errorLog(550236231, "Download fehlgeschlagen: Datei existiert nicht: " + download.getDestPathFile());
         } else if (file.length() < ProgConst.MIN_DATEI_GROESSE_FILM) {
-            PLog.errorLog(795632500, "Download fehlgeschlagen: Datei zu klein" + download.getDestPathFile());
+            PLog.errorLog(795632500, "Download fehlgeschlagen: Datei zu klein: " + download.getDestPathFile());
         } else {
             if (download.isAbo()) {
                 progData.erledigteAbos.addHistoryDataToHistory(download.getTheme(), download.getTitle(), download.getHistoryUrl());

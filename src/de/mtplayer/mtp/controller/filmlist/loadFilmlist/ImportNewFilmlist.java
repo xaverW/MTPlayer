@@ -65,7 +65,7 @@ public class ImportNewFilmlist {
     // #########################################################
     public void importFilmListAuto(Filmlist filmlist, Filmlist filmlistDiff, int days) {
 //        Daten.getInstance().loadFilmlist.setStop(false);
-        Thread th = new Thread(new importAutoThread(filmlist, filmlistDiff, days));
+        Thread th = new Thread(new ImportAutoThread(filmlist, filmlistDiff, days));
         th.setName("importFilmListAuto");
         th.start();
     }
@@ -74,13 +74,13 @@ public class ImportNewFilmlist {
         COMPLETE, DIFF
     }
 
-    private class importAutoThread implements Runnable {
+    private class ImportAutoThread implements Runnable {
         private final Filmlist filmlist;
         private final Filmlist filmlistDiff;
         private STATE state;
         private final int days;
 
-        public importAutoThread(Filmlist filmlist, Filmlist filmlistDiff, int days) {
+        public ImportAutoThread(Filmlist filmlist, Filmlist filmlistDiff, int days) {
             this.filmlist = filmlist;
             this.filmlistDiff = filmlistDiff;
             this.days = days;
