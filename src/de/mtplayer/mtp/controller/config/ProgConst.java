@@ -49,8 +49,8 @@ public class ProgConst {
     public static final String TIME_MAX_AGE_FOR_DIFF = "09";
 
     // MediathekView URLs
-    public static final String ADRESSE_FILMLISTEN_SERVER_DIFF = "http://res.mediathekview.de/diff.xml";
-    public static final String ADRESSE_FILMLISTEN_SERVER_AKT = "http://res.mediathekview.de/akt.xml";
+    public static final String ADRESSE_FILMLISTEN_SERVER_DIFF = "http://res.mediathekview.de/diff.xml--";
+    public static final String ADRESSE_FILMLISTEN_SERVER_AKT = "http://res.mediathekview.de/akt.xml--";
 
 
     // Website MTPlayer

@@ -119,10 +119,10 @@ public class ImportNewFilmlist {
 
             switch (state) {
                 case COMPLETE:
-                    updateUrl = searchFilmListUrls.searchCompleteListUrl(usedUrls);
+                    updateUrl = searchFilmListUrls.getFilmlistUrlForCompleteList(usedUrls);
                     break;
                 case DIFF:
-                    updateUrl = searchFilmListUrls.searchDiffListUrl(usedUrls);
+                    updateUrl = searchFilmListUrls.getFilmlistUrlForDiffList(usedUrls);
                     break;
             }
 

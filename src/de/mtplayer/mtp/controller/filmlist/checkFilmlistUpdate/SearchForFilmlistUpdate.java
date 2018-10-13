@@ -29,7 +29,6 @@ public class SearchForFilmlistUpdate {
         boolean ret = false;
         ++counter;
         if (counter > ProgConst.CHECK_FILMLIST_UPDATE) {
-//        if (counter > 10) {
             counter = 0;
 
             if (date.equals(dateOfFilmlistFromLastCheck) && checkedListWasNewer) {

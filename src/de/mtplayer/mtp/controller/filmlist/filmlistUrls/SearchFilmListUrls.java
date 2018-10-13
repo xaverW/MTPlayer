@@ -33,37 +33,38 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
+/**
+ * damit können die Download-URLs der Filmliste gesucht werden
+ */
 public class SearchFilmListUrls {
 
-    // damit werden die DownloadURLs zum Laden einer Filmliste gesucht
-    // Liste mit den URLs zum Download der Filmliste
-    public FilmlistUrlList filmlistUrlList_akt = new FilmlistUrlList();
-    public FilmlistUrlList filmlistUrlList_diff = new FilmlistUrlList();
-    private static boolean firstSearchAkt = true;
-    private static boolean firstSearchDiff = true;
-    private final int UPDATE_LIST_MAX = 10; // die Downloadliste für die Filmlisten nur jeden 10. Programmstart aktualisieren
+    public FilmlistUrlList filmlistUrlList_akt = new FilmlistUrlList(); // urls der kompletten Liste
+    public FilmlistUrlList filmlistUrlList_diff = new FilmlistUrlList(); // urls der diff-Liste
 
-    public String searchCompleteListUrl() {
-        return searchCompleteListUrl(new ArrayList<>());
+    private static boolean updateFilmlistUrls = true; // beim nächsten Abruf einer URL wird vorher neu geladen
+
+    public synchronized static void setUpdateFilmlistUrls() {
+        updateFilmlistUrls = true;
     }
 
-    public String searchCompleteListUrl(ArrayList<String> alreadyTried) {
+    public String getFilmlistUrlForCompleteList() {
+        return getFilmlistUrlForCompleteList(new ArrayList<>());
+    }
+
+    public String getFilmlistUrlForCompleteList(ArrayList<String> alreadyTried) {
         // passende URL zum Laden der Filmliste suchen
         String retUrl;
         if (filmlistUrlList_akt.isEmpty()) {
             // bei leerer Liste immer aktualisieren
-            updateURLsFilmlists();
-        } else if (firstSearchAkt) {
-            // nach dem Programmstart wird die Liste einmal aktualisiert aber
-            // da sich die Listen nicht ändern, nur jeden xx Start
-            updateURLsFilmlists();
+            updateDownloadUrlsForFilmlists();
+        } else if (updateFilmlistUrls) {
+            // nach dem Programmstart wird die Liste einmal aktualisiert
+            // oder wenn es zu einem Downloadfehler kam
+            updateDownloadUrlsForFilmlists();
 
-//            int nr = new Random().nextInt(UPDATE_LIST_MAX);
-//            if (nr == 0) {
-//                updateURLsFilmlists(true);
-//            }
         }
-        firstSearchAkt = false;
+
+        updateFilmlistUrls = false;
         retUrl = (filmlistUrlList_akt.getRand(alreadyTried)); //eine Zufällige Adresse wählen
         if (alreadyTried != null) {
             alreadyTried.add(retUrl);
@@ -71,23 +72,19 @@ public class SearchFilmListUrls {
         return retUrl;
     }
 
-    public String searchDiffListUrl(ArrayList<String> alreadyTried) {
+    public String getFilmlistUrlForDiffList(ArrayList<String> alreadyTried) {
         // passende URL zum Laden der Filmliste suchen
         String retUrl;
         if (filmlistUrlList_diff.isEmpty()) {
             // bei leerer Liste immer aktualisieren
-            updateURLsFilmlists();
-        } else if (firstSearchDiff) {
-            // nach dem Programmstart wird die Liste einmal aktualisiert aber
-            // da sich die Listen nicht ändern, nur jeden xx Start
-            updateURLsFilmlists();
-
-//            int nr = new Random().nextInt(UPDATE_LIST_MAX);
-//            if (nr == 0) {
-//                updateURLsFilmlists(false);
-//            }
+            updateDownloadUrlsForFilmlists();
+        } else if (updateFilmlistUrls) {
+            // nach dem Programmstart wird die Liste einmal aktualisiert
+            // oder wenn es zu einem Downloadfehler kam
+            updateDownloadUrlsForFilmlists();
         }
-        firstSearchDiff = false;
+
+        updateFilmlistUrls = false;
         retUrl = (filmlistUrlList_diff.getRand(alreadyTried)); //eine Zufällige Adresse wählen
         if (alreadyTried != null) {
             alreadyTried.add(retUrl);
@@ -98,62 +95,68 @@ public class SearchFilmListUrls {
     /**
      * Add our default full list servers.
      */
-    private void insertDefaultCompleteListServers() {
+    private void insertDefaultUrlForCompleteList() {
         filmlistUrlList_akt.add(new FilmlistUrlData("http://verteiler1.mediathekview.de/Filmliste-akt.xz", FilmlistUrlData.SERVER_ART_AKT));
         filmlistUrlList_akt.add(new FilmlistUrlData("http://verteiler2.mediathekview.de/Filmliste-akt.xz", FilmlistUrlData.SERVER_ART_AKT));
         filmlistUrlList_akt.add(new FilmlistUrlData("http://verteiler3.mediathekview.de/Filmliste-akt.xz", FilmlistUrlData.SERVER_ART_AKT));
         filmlistUrlList_akt.add(new FilmlistUrlData("http://verteiler4.mediathekview.de/Filmliste-akt.xz", FilmlistUrlData.SERVER_ART_AKT));
         filmlistUrlList_akt.add(new FilmlistUrlData("http://verteiler5.mediathekview.de/Filmliste-akt.xz", FilmlistUrlData.SERVER_ART_AKT));
         filmlistUrlList_akt.add(new FilmlistUrlData("http://verteiler6.mediathekview.de/Filmliste-akt.xz", FilmlistUrlData.SERVER_ART_AKT));
-        filmlistUrlList_akt.add(new FilmlistUrlData("hhttps://archiv.mediathekviewweb.de/Filmliste-akt.xz", FilmlistUrlData.SERVER_ART_AKT));
     }
 
     /**
      * Add our default diff list servers.
      */
-    private void insertDefaultDifferentialListServers() {
+    private void insertDefaultUrlForDiffList() {
         filmlistUrlList_diff.add(new FilmlistUrlData("http://verteiler1.mediathekview.de/Filmliste-diff.xz", FilmlistUrlData.SERVER_ART_DIFF));
         filmlistUrlList_diff.add(new FilmlistUrlData("http://verteiler2.mediathekview.de/Filmliste-diff.xz", FilmlistUrlData.SERVER_ART_DIFF));
         filmlistUrlList_diff.add(new FilmlistUrlData("http://verteiler3.mediathekview.de/Filmliste-diff.xz", FilmlistUrlData.SERVER_ART_DIFF));
         filmlistUrlList_diff.add(new FilmlistUrlData("http://verteiler4.mediathekview.de/Filmliste-diff.xz", FilmlistUrlData.SERVER_ART_DIFF));
         filmlistUrlList_diff.add(new FilmlistUrlData("http://verteiler5.mediathekview.de/Filmliste-diff.xz", FilmlistUrlData.SERVER_ART_DIFF));
         filmlistUrlList_diff.add(new FilmlistUrlData("http://verteiler6.mediathekview.de/Filmliste-diff.xz", FilmlistUrlData.SERVER_ART_DIFF));
-        filmlistUrlList_diff.add(new FilmlistUrlData("https://archiv.mediathekviewweb.de/Filmliste-diff.xz", FilmlistUrlData.SERVER_ART_DIFF));
     }
 
     /**
      * Update the download server URLs.
      * immer gleich beide (akt und diff) laden
      **/
-    public void updateURLsFilmlists() {
+    public void updateDownloadUrlsForFilmlists() {
         PLog.sysLog("URLs der Filmlisten aktualisieren");
+
+        filmlistUrlList_akt.clear();
+        filmlistUrlList_diff.clear();
         FilmlistUrlList tmp = new FilmlistUrlList();
 
-        getDownloadUrlsFilmlists(ProgConst.ADRESSE_FILMLISTEN_SERVER_AKT, tmp, ProgInfos.getUserAgent(), FilmlistUrlData.SERVER_ART_AKT);
+        getDownloadUrlsForFilmlists(ProgConst.ADRESSE_FILMLISTEN_SERVER_AKT, tmp, ProgInfos.getUserAgent(), FilmlistUrlData.SERVER_ART_AKT);
         if (!tmp.isEmpty()) {
             filmlistUrlList_akt.addAll(tmp);
-        } else if (filmlistUrlList_akt.isEmpty()) {
-            insertDefaultCompleteListServers();
+
+        } else {
+            insertDefaultUrlForCompleteList();
+            callError();
         }
         filmlistUrlList_akt.sort();
 
         tmp.clear();
-        getDownloadUrlsFilmlists(ProgConst.ADRESSE_FILMLISTEN_SERVER_DIFF, tmp, ProgInfos.getUserAgent(), FilmlistUrlData.SERVER_ART_DIFF);
+        getDownloadUrlsForFilmlists(ProgConst.ADRESSE_FILMLISTEN_SERVER_DIFF, tmp, ProgInfos.getUserAgent(), FilmlistUrlData.SERVER_ART_DIFF);
         if (!tmp.isEmpty()) {
             filmlistUrlList_diff.addAll(tmp);
-        } else if (filmlistUrlList_diff.isEmpty()) {
-            insertDefaultDifferentialListServers();
+
+        } else {
+            insertDefaultUrlForDiffList();
+            callError();
         }
         filmlistUrlList_diff.sort();
 
-        if (tmp.isEmpty()) {
-            PLog.errorLog(491203216, new String[]{"Es ist ein Fehler aufgetreten!",
-                    "Es konnten keine Updateserver zum aktualisieren der Filme",
-                    "gefunden werden."});
-        }
     }
 
-    private void getDownloadUrlsFilmlists(String dateiUrl, FilmlistUrlList filmlistUrlList, String userAgent, String art) {
+    private void callError() {
+        PLog.errorLog(491203216, new String[]{"Es ist ein Fehler aufgetreten!",
+                "Es konnten keine Updateserver zum aktualisieren der Filme",
+                "gefunden werden."});
+    }
+
+    private void getDownloadUrlsForFilmlists(String dateiUrl, FilmlistUrlList filmlistUrlList, String userAgent, String art) {
         //String[] ret = new String[]{""/* version */, ""/* release */, ""/* updateUrl */};
         try {
             int event;
@@ -190,7 +193,8 @@ public class SearchFilmListUrls {
                 }
             }
         } catch (Exception ex) {
-            PLog.errorLog(821069874, ex, "Die URL-Filmlisten konnte nicht geladen werden: " + dateiUrl);
+            PLog.errorLog(821069874, ex, new String[]{"Die Download-URLs der Filmlisten konnten nicht " +
+                    "ermittelt werden: ", dateiUrl});
         }
     }
 

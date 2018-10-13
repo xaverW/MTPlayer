@@ -61,7 +61,7 @@ public class SearchUpdateWithDate {
         boolean ret = false;
         try {
             if (source.isEmpty()) {
-                if ((source = new SearchFilmListUrls().searchCompleteListUrl()).isEmpty()) {
+                if ((source = new SearchFilmListUrls().getFilmlistUrlForCompleteList()).isEmpty()) {
                     return false;
                 }
             }

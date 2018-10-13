@@ -29,6 +29,7 @@ import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.mtplayer.mtp.controller.data.film.Filmlist;
 import de.mtplayer.mtp.controller.data.film.FilmlistXml;
+import de.mtplayer.mtp.controller.filmlist.filmlistUrls.SearchFilmListUrls;
 import de.p2tools.p2Lib.tools.log.PLog;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -269,6 +270,8 @@ public class ReadFilmlist {
 
             }
         } catch (final Exception ex) {
+            // dann hat das Laden nicht geklappt
+            SearchFilmListUrls.setUpdateFilmlistUrls(); // die DownloadURLs nochmal laden
             PLog.errorLog(945123641, ex, "FilmListe: " + source);
             filmlist.clear();
         }
