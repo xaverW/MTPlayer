@@ -17,9 +17,7 @@
 package de.mtplayer.mtp;
 
 import de.mtplayer.mtp.controller.ProgQuit;
-import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.gui.AboGuiPack;
 import de.mtplayer.mtp.gui.DownloadGuiPack;
@@ -29,9 +27,9 @@ import de.mtplayer.mtp.gui.configDialog.ConfigDialogController;
 import de.mtplayer.mtp.gui.dialog.AboutDialogController;
 import de.mtplayer.mtp.gui.dialog.ResetDialogController;
 import de.mtplayer.mtp.gui.mediaDialog.MediaConfigController;
-import de.p2tools.p2Lib.guiTools.POpen;
 import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
 import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2Lib.tools.log.PLogger;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -162,8 +160,9 @@ public class MTPlayerController extends StackPane {
 
         final MenuItem miLog = new MenuItem("Logdateien öffnen");
         miLog.setOnAction(event -> {
-            POpen.openDir(ProgInfos.getLogDirectory_String(),
-                    ProgConfig.SYSTEM_PROG_OPEN_DIR.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
+            PLogger.openLogFile();
+//            POpen.openDir(ProgInfos.getLogDirectory_String(),
+//                    ProgConfig.SYSTEM_PROG_OPEN_DIR.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
         });
 
         final MenuItem miReset = new MenuItem("Einstellungen zurücksetzen");
