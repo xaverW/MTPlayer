@@ -255,9 +255,11 @@ public class TableDownload {
                 final Button btnDownDel;
                 final Button btnDownStop;
                 final Button btnFilmStart;
+                final Button btnOpenDirectory;
 
                 if (item <= DownloadConstants.STATE_STOPPED) {
                     btnDownStart = new Button("");
+                    btnDownStart.setTooltip(new Tooltip("Download starten"));
                     btnDownStart.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_DOWNLOAD_START));
 
                     btnDownStart.setOnAction((ActionEvent event) -> {
@@ -266,6 +268,7 @@ public class TableDownload {
                     });
 
                     btnDownDel = new Button("");
+                    btnDownDel.setTooltip(new Tooltip("Download löschen"));
                     btnDownDel.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_DOWNLOAD_DEL));
 
                     btnDownDel.setOnAction(event -> {
@@ -276,6 +279,7 @@ public class TableDownload {
                     setGraphic(hbox);
                 } else if (item < DownloadConstants.STATE_FINISHED) {
                     btnDownStop = new Button("");
+                    btnDownStop.setTooltip(new Tooltip("Download stoppen"));
                     btnDownStop.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_DOWNLOAD_STOP));
 
                     btnDownStop.setOnAction((ActionEvent event) -> {
@@ -284,6 +288,7 @@ public class TableDownload {
                     });
 
                     btnDownDel = new Button("");
+                    btnDownDel.setTooltip(new Tooltip("Download löschen"));
                     btnDownDel.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_DOWNLOAD_DEL));
 
                     btnDownDel.setOnAction(event -> {
@@ -294,14 +299,24 @@ public class TableDownload {
                     setGraphic(hbox);
                 } else if (item == DownloadConstants.STATE_FINISHED) {
                     btnFilmStart = new Button("");
+                    btnFilmStart.setTooltip(new Tooltip("gespeicherten Film abspielen"));
                     btnFilmStart.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_FILM_PLAY));
-
                     btnFilmStart.setOnAction((ActionEvent event) -> {
                         Download download = getTableView().getItems().get(getIndex());
                         POpen.playStoredFilm(download.getDestPathFile(),
                                 ProgConfig.SYSTEM_PROG_PLAY_FILME.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
                     });
-                    hbox.getChildren().addAll(btnFilmStart);
+
+                    btnOpenDirectory = new Button();
+                    btnOpenDirectory.setTooltip(new Tooltip("Ordner mit gespeichertem Film öffnen"));
+                    btnOpenDirectory.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_DOWNLOAD_OPEN_DIR));
+                    btnOpenDirectory.setOnAction((ActionEvent event) -> {
+                        Download download = getTableView().getItems().get(getIndex());
+                        POpen.openDir(download.getDestPath(),
+                                ProgConfig.SYSTEM_PROG_OPEN_DIR.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
+                    });
+
+                    hbox.getChildren().addAll(btnFilmStart, btnOpenDirectory);
                     setGraphic(hbox);
                 } else {
                     setGraphic(null);
