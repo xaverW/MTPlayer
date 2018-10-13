@@ -17,7 +17,9 @@
 package de.mtplayer.mtp;
 
 import de.mtplayer.mtp.controller.ProgQuit;
+import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
+import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.gui.AboGuiPack;
 import de.mtplayer.mtp.gui.DownloadGuiPack;
@@ -27,6 +29,7 @@ import de.mtplayer.mtp.gui.configDialog.ConfigDialogController;
 import de.mtplayer.mtp.gui.dialog.AboutDialogController;
 import de.mtplayer.mtp.gui.dialog.ResetDialogController;
 import de.mtplayer.mtp.gui.mediaDialog.MediaConfigController;
+import de.p2tools.p2Lib.guiTools.POpen;
 import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.geometry.Insets;
@@ -157,11 +160,17 @@ public class MTPlayerController extends StackPane {
         final MenuItem miAbout = new MenuItem("Über dieses Programm");
         miAbout.setOnAction(event -> new AboutDialogController(progData));
 
+        final MenuItem miLog = new MenuItem("Logdateien öffnen");
+        miLog.setOnAction(event -> {
+            POpen.openDir(ProgInfos.getLogDirectory_String(),
+                    ProgConfig.SYSTEM_PROG_OPEN_DIR.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
+        });
+
         final MenuItem miReset = new MenuItem("Einstellungen zurücksetzen");
         miReset.setOnAction(event -> new ResetDialogController(progData));
 
         final Menu mHelp = new Menu("Hilfe");
-        mHelp.getItems().addAll(miAbout, new SeparatorMenuItem(), miReset);
+        mHelp.getItems().addAll(miAbout, miLog, new SeparatorMenuItem(), miReset);
 
         menuButton.getStyleClass().add("btnFunction");
         menuButton.setText("");
