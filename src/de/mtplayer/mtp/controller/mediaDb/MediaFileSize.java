@@ -22,22 +22,48 @@ public class MediaFileSize implements Comparable<MediaFileSize> {
     private String sizeStr = "";
 
     public MediaFileSize(long size) {
-        sizeL = size;
-        sizeStr = setSize(size);
+        setSize(size);
     }
 
     public MediaFileSize(String size) {
+        setSize(size);
+    }
+
+    public void setSize(long size) {
+        sizeL = size;
+        setSizeFromLong();
+    }
+
+    public void setSize(String size) {
         try {
             sizeL = Long.parseLong(size);
         } catch (Exception ignore) {
             sizeL = 0L;
         }
-        sizeStr = setSize(sizeL);
+        setSizeFromLong();
     }
 
-    @Override
-    public int compareTo(MediaFileSize ll) {
-        return (sizeL.compareTo(ll.sizeL));
+    public long getSizeLong() {
+        return sizeL;
+    }
+
+    public String getSizeAsStr() {
+        return sizeL + "";
+    }
+
+    private void setSizeFromLong() {
+        // l: Anzahl Bytes
+        if (sizeL > 1000 * 1000) {
+            // größer als 1MB sonst kann ich mirs sparen
+            sizeStr = String.valueOf(sizeL / (1000 * 1000));
+
+        } else if (sizeL > 0) {
+            //0<....<1M
+            sizeStr = "< 1";
+
+        } else if (sizeL == 0) {
+            sizeStr = "";
+        }
     }
 
     @Override
@@ -45,18 +71,8 @@ public class MediaFileSize implements Comparable<MediaFileSize> {
         return sizeStr;
     }
 
-    private String setSize(long l) {
-        // l: Anzahl Bytes
-        String ret = "";
-        if (l > 1000 * 1000) {
-            // größer als 1MB sonst kann ich mirs sparen
-            ret = String.valueOf(l / (1000 * 1000));
-        } else if (l > 0) {
-            //0<....<1M
-            ret = "< 1";
-        } else if (l == 0) {
-            ret = "0";
-        }
-        return ret;
+    @Override
+    public int compareTo(MediaFileSize ll) {
+        return (sizeL.compareTo(ll.sizeL));
     }
 }

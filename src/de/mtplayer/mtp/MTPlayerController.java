@@ -158,7 +158,7 @@ public class MTPlayerController extends StackPane {
         final MenuItem miAbout = new MenuItem("Über dieses Programm");
         miAbout.setOnAction(event -> new AboutDialogController(progData));
 
-        final MenuItem miLog = new MenuItem("Logdateien öffnen");
+        final MenuItem miLog = new MenuItem("Logdatei öffnen");
         miLog.setOnAction(event -> {
             PLogger.openLogFile();
 //            POpen.openDir(ProgInfos.getLogDirectory_String(),

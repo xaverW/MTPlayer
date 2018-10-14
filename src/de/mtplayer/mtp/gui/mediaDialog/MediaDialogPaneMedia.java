@@ -23,6 +23,7 @@ import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.mediaDb.MediaData;
+import de.mtplayer.mtp.controller.mediaDb.MediaFileSize;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.tools.storedFilter.Filter;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
@@ -39,7 +40,6 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.util.Date;
 import java.util.regex.Pattern;
 
 public class MediaDialogPaneMedia extends ScrollPane {
@@ -164,7 +164,7 @@ public class MediaDialogPaneMedia extends ScrollPane {
 
         final TableColumn<MediaData, String> nameColumn = new TableColumn<>("Name");
         final TableColumn<MediaData, String> pathColumn = new TableColumn<>("Pfad");
-        final TableColumn<MediaData, Date> sizeColumn = new TableColumn<>("Größe [MB]");
+        final TableColumn<MediaData, MediaFileSize> sizeColumn = new TableColumn<>("Größe [MB]");
         final TableColumn<MediaData, Boolean> externalColumn = new TableColumn<>("extern");
 
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));

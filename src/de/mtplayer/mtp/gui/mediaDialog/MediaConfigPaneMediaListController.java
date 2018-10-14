@@ -21,6 +21,7 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.mediaDb.MediaData;
+import de.mtplayer.mtp.controller.mediaDb.MediaFileSize;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.collections.transformation.SortedList;
@@ -115,7 +116,7 @@ public class MediaConfigPaneMediaListController extends AnchorPane {
         final TableColumn<MediaData, String> pathColumn = new TableColumn<>("Pfad");
         pathColumn.setCellValueFactory(new PropertyValueFactory<>("path"));
 
-        final TableColumn<MediaData, String> sizeColumn = new TableColumn<>("Größe [MB]");
+        final TableColumn<MediaData, MediaFileSize> sizeColumn = new TableColumn<>("Größe [MB]");
         sizeColumn.setCellValueFactory(new PropertyValueFactory<>("size"));
 
         final TableColumn<MediaData, String> collectionNameColumn = new TableColumn<>("Sammlung");

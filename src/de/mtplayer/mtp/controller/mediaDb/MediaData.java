@@ -38,6 +38,7 @@ public class MediaData extends Data<MediaData> {
     public String[] arr;
 
     private MediaCollectionData mediaCollectionData;
+    private MediaFileSize mediaFileSize = new MediaFileSize(0);
     private long collectionId = 0;
 
 
@@ -47,12 +48,12 @@ public class MediaData extends Data<MediaData> {
 
     public MediaData(String name, String path, long size, MediaCollectionData mediaCollectionData) {
         makeArr();
-        this.mediaCollectionData = mediaCollectionData;
-        this.collectionId = mediaCollectionData.getId();
-        arr[MEDIA_DATA_NAME] = cleanUp(name);
-        arr[MEDIA_DATA_PATH] = cleanUp(path);
+        this.mediaCollectionData = mediaCollectionData; // todo brauchts das
 
+        setName(cleanUp(name));
+        setPath(cleanUp(path));
         setSize(size);
+        setCollectionId(mediaCollectionData.getId());
     }
 
     public String getName() {
@@ -71,16 +72,16 @@ public class MediaData extends Data<MediaData> {
         arr[MEDIA_DATA_PATH] = path;
     }
 
-    public String getSize() {
-        return arr[MEDIA_DATA_SIZE];
+    public MediaFileSize getSize() {
+        return mediaFileSize;
     }
 
     public void setSize(String size) {
-        arr[MEDIA_DATA_SIZE] = new MediaFileSize(size).toString();
+        mediaFileSize.setSize(size);
     }
 
     public void setSize(long size) {
-        arr[MEDIA_DATA_SIZE] = new MediaFileSize(size).toString();
+        mediaFileSize.setSize(size);
     }
 
     public long getCollectionId() {
@@ -148,6 +149,7 @@ public class MediaData extends Data<MediaData> {
     }
 
     public void setXmlFromProps() {
+        arr[MEDIA_DATA_SIZE] = getSize().getSizeAsStr();
         arr[MEDIA_DATA_COLLECTION_NAME] = getCollectionName();
         arr[MEDIA_DATA_COLLECTION_ID] = String.valueOf(getCollectionId());
         arr[MEDIA_DATA_EXTERN] = String.valueOf(isExternal());
