@@ -1,5 +1,14 @@
 /*  Programmweites style sheet */
 
+.root {
+    -style-border-color-1: royalblue;
+    -style-border-color-2: royalblue;
+    -style-text-color-1: mediumblue;
+    -style-border-color-lbl: royalblue;
+    -style-border-color-tab: cornflowerblue;
+}
+
+
 /* CheckBoxCell */
 .checkbox-table * {
     -fx-background-color: transparent;
@@ -66,6 +75,49 @@
      -fx-border-width: 20 5, 10 3;
      -fx-padding: 0px;
 }
+
+.tab .tab-label {
+    -fx-text-alignment: center;
+    -fx-alignment: center ;
+}
+.tab-pane {
+    -fx-border-width: 1;
+    -fx-border-color: -style-border-color-tab;
+ }
+.tab-pane > .tab-header-area > .headers-region > .tab {
+    -fx-padding: 0 10 0 10;
+    -fx-border-width: 1, 2;
+    -fx-border-radius: 12 12 0 0, 10 10 0 0;
+    -fx-border-insets: 0, 4;
+    -fx-border-color: -style-border-color-1, transparent;
+    -fx-background-radius: 12 12 0 0, 10 10 0 0;
+    -fx-background-insets: 0;
+    -fx-background-color:
+             linear-gradient(from 0% 0% to 100% 100%, #d6d6d6 50%, white 100%),
+             radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+    -fx-text-fill: black;
+ }
+.tab-pane > .tab-header-area > .headers-region > .tab:selected {
+    -fx-border-width: 2, 1, 2;
+    -fx-border-color: -style-border-color-1, transparent, transparent;
+ }
+.tab-pane > .tab-header-area > .headers-region > .tab:hover {
+    -fx-border-width: 2, 1, 2;
+    -fx-border-color: -style-border-color-2, -style-border-color-1, transparent;
+ }
+.tab-pane > .tab-header-area > .headers-region > .tab:pressed {
+    -fx-border-width: 1, 2, 2;
+    -fx-border-color: -style-border-color-1, -style-border-color-2, transparent;
+ }
+
+.tab:selected .tab-label {
+     -fx-text-fill: -style-text-color-1;
+}
+.tab-pane > .tab-header-area > .headers-region > .tab:selected  .focus-indicator {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
 
 /* damit leere Tabellenzeilen nicht angezeigt werden */
 .table-row-cell:empty {
