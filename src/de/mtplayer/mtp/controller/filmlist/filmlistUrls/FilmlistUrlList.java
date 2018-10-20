@@ -17,33 +17,22 @@
 package de.mtplayer.mtp.controller.filmlist.filmlistUrls;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Random;
 
-@SuppressWarnings("serial")
 public class FilmlistUrlList extends LinkedList<FilmlistUrlData> {
     // ist die Liste mit den URLs zum Download einer Filmliste
-    public boolean addWithCheck(FilmlistUrlData filmlist) {
+
+    public boolean addWithCheck(FilmlistUrlData addFilmlist) {
         for (FilmlistUrlData dataUrlFilmlist : this) {
+
             if (dataUrlFilmlist.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_URL_NR]
-                    .equals(filmlist.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_URL_NR])) {
+                    .equals(addFilmlist.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_URL_NR])) {
                 return false;
             }
         }
-        return add(filmlist);
-    }
 
-    public void sort() {
-        int nr = 0;
-        Collections.sort(this);
-        for (FilmlistUrlData dataUrlFilmlist : this) {
-            String str = String.valueOf(nr++);
-            while (str.length() < 3) {
-                str = "0" + str;
-            }
-            dataUrlFilmlist.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_NR_NR] = str;
-        }
+        return add(addFilmlist);
     }
 
     public ArrayList<String> getUrls() {
@@ -53,14 +42,14 @@ public class FilmlistUrlList extends LinkedList<FilmlistUrlData> {
     }
 
     public String getRand(ArrayList<String> alreadyUsed) {
-        // gibt nur noch akt.xml und diff.xml und da sind alle Listen
-        // aktuell, Prio: momentan sind alle Listen gleich gewichtet
+        // Prio: momentan sind alle Listen gleich gewichtet
         if (this.isEmpty()) {
             return "";
         }
 
         LinkedList<FilmlistUrlData> listPrio = new LinkedList<>();
-        //nach prio gewichten
+
+        // unbenutze URLs nach prio gewichten
         for (FilmlistUrlData filmlistUrlData : this) {
             if (alreadyUsed != null) {
                 if (alreadyUsed.contains(filmlistUrlData.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_URL_NR])) {
@@ -87,6 +76,7 @@ public class FilmlistUrlList extends LinkedList<FilmlistUrlData> {
             int nr = new Random().nextInt(this.size());
             filmlistUrlData = this.get(nr);
         }
+
         return filmlistUrlData.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_URL_NR];
     }
 

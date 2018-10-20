@@ -63,7 +63,7 @@ public class LoadFilmlist {
         searchForFilmlistUpdate = new SearchForFilmlistUpdate();
         checkForFilmlistUpdate();
 
-        importNewFilmliste = new ImportNewFilmlist();
+        importNewFilmliste = new ImportNewFilmlist(progData);
         importNewFilmliste.addAdListener(new ListenerFilmlistLoad() {
             @Override
             public synchronized void start(ListenerFilmlistLoadEvent event) {
@@ -121,12 +121,12 @@ public class LoadFilmlist {
 
     public FilmlistUrlList getDownloadUrlsFilmlisten_akt() {
         // nur zum Schreiben/Lesen aus dem ConfigFile
-        return importNewFilmliste.searchFilmListUrls.filmlistUrlList_akt;
+        return progData.searchFilmListUrls.getFilmlistUrlList_akt();
     }
 
     public FilmlistUrlList getDownloadUrlsFilmlisten_diff() {
         // nur zum Schreiben/Lesen aus dem ConfigFile
-        return importNewFilmliste.searchFilmListUrls.filmlistUrlList_diff;
+        return progData.searchFilmListUrls.getFilmlistUrlList_diff();
     }
 
     /**
@@ -328,7 +328,8 @@ public class LoadFilmlist {
         if (event.error) {
             PLog.sysLog("");
             PLog.sysLog("Filmliste laden war fehlerhaft, alte Liste wird wieder geladen");
-            Platform.runLater(() -> PAlert.showErrorAlert("Filmliste laden", "Das Laden der Filmliste hat nicht geklappt!"));
+            Platform.runLater(() -> PAlert.showErrorAlert("Filmliste laden",
+                    "Das Laden einer neuen Filmliste hat nicht geklappt!"));
 
             // dann die alte Liste wieder laden
             progData.filmlist.clear();

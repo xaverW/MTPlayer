@@ -253,7 +253,7 @@ public class IoWriteXml implements AutoCloseable {
         writer.writeComment("Akt-Filmliste");
         writer.writeCharacters(PConst.LINE_SEPARATOR);
 
-        for (final FilmlistUrlData datenUrlFilmliste : progData.loadFilmlist.getDownloadUrlsFilmlisten_akt()) {
+        for (final FilmlistUrlData datenUrlFilmliste : progData.searchFilmListUrls.getFilmlistUrlList_akt()) {
             datenUrlFilmliste.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_SORT_NR] = FilmlistUrlData.SERVER_ART_AKT;
             xmlWriteData(FilmlistUrlData.FILMLIST_UPDATE_SERVER,
                     FilmlistUrlData.FILMLIST_UPDATE_SERVER_COLUMN_NAMES,
@@ -264,7 +264,7 @@ public class IoWriteXml implements AutoCloseable {
         writer.writeCharacters(PConst.LINE_SEPARATOR);
         writer.writeComment("Diff-Filmliste");
         writer.writeCharacters(PConst.LINE_SEPARATOR);
-        for (final FilmlistUrlData datenUrlFilmliste : progData.loadFilmlist.getDownloadUrlsFilmlisten_diff()) {
+        for (final FilmlistUrlData datenUrlFilmliste : progData.searchFilmListUrls.getFilmlistUrlList_diff()) {
             datenUrlFilmliste.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_SORT_NR] = FilmlistUrlData.SERVER_ART_DIFF;
             xmlWriteData(FilmlistUrlData.FILMLIST_UPDATE_SERVER,
                     FilmlistUrlData.FILMLIST_UPDATE_SERVER_COLUMN_NAMES,

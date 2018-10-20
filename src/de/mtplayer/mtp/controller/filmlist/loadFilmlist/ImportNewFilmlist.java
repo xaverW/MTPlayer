@@ -28,12 +28,14 @@ public class ImportNewFilmlist {
 
     private final EventListenerList eventListenerList;
     private final ReadFilmlist readFilmlist;
-    public SearchFilmListUrls searchFilmListUrls;
+    private final ProgData progData;
+//    public SearchFilmListUrls searchFilmListUrls;
 
-    public ImportNewFilmlist() {
+    public ImportNewFilmlist(ProgData progData) {
+        this.progData = progData;
         eventListenerList = new EventListenerList();
         readFilmlist = new ReadFilmlist();
-        searchFilmListUrls = new SearchFilmListUrls();
+//        searchFilmListUrls = new SearchFilmListUrls();
         readFilmlist.addAdListener(new ListenerFilmlistLoad() {
             @Override
             public synchronized void start(ListenerFilmlistLoadEvent event) {
@@ -116,24 +118,15 @@ public class ImportNewFilmlist {
             boolean ret = false;
             final ArrayList<String> usedUrls = new ArrayList<>();
             String updateUrl = "";
+            final int maxRetries = state == STATE.DIFF ? 2 : 5; // 5x (bei diff nur 2x) probieren, eine Liste zu laden
 
-            switch (state) {
-                case COMPLETE:
-                    updateUrl = searchFilmListUrls.getFilmlistUrlForCompleteList(usedUrls);
-                    break;
-                case DIFF:
-                    updateUrl = searchFilmListUrls.getFilmlistUrlForDiffList(usedUrls);
-                    break;
-            }
 
+            updateUrl = getUpdateUrl(state, usedUrls);
             if (updateUrl.isEmpty()) {
                 return false;
             }
 
-            // 5 mal mit einem anderen Server probieren, wenns nicht klappt
-            final int maxRetries = state == STATE.DIFF ? 2 : 5; // bei diff nur 2x probieren, dann eine
 
-            // liste laden
             for (int i = 0; i < maxRetries; ++i) {
                 ret = loadFileUrl(updateUrl, list, days);
                 if (ret && i < 1 && list.isOlderThan(5 * 60 * 60 /* sekunden */)) {
@@ -147,18 +140,10 @@ public class ImportNewFilmlist {
                     return true;
                 }
 
-                switch (state) {
-                    case COMPLETE:
-                        // nächste Adresse in der Liste wählen
-                        updateUrl = searchFilmListUrls.filmlistUrlList_akt.getRand(usedUrls);
-                        break;
-                    case DIFF:
-                        // nächste Adresse in der Liste wählen
-                        updateUrl = searchFilmListUrls.filmlistUrlList_diff.getRand(usedUrls);
-                        break;
-                }
+                // dann hat das Laden schon mal nicht geklappt
+                SearchFilmListUrls.setUpdateFilmlistUrls(); // für die DownloadURLs "aktualisieren" setzen
+                updateUrl = getUpdateUrl(state, usedUrls);
 
-                usedUrls.add(updateUrl);
                 // nur wenn nicht abgebrochen, weitermachen
                 if (ProgData.getInstance().loadFilmlist.getStop()) {
                     break;
@@ -167,6 +152,23 @@ public class ImportNewFilmlist {
             }
             return ret;
         }
+    }
+
+    private String getUpdateUrl(STATE state, ArrayList<String> usedUrls) {
+        // nächste Adresse in der Liste wählen
+        final String updateUrl;
+
+        switch (state) {
+            case DIFF:
+                updateUrl = progData.searchFilmListUrls.getFilmlistUrlForDiffList(usedUrls);
+                break;
+            case COMPLETE:
+            default:
+                updateUrl = progData.searchFilmListUrls.getFilmlistUrlForCompleteList(usedUrls);
+                break;
+        }
+
+        return updateUrl;
     }
 
     // #######################################

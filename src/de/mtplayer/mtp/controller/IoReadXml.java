@@ -158,10 +158,10 @@ public class IoReadXml implements AutoCloseable {
                                         filmlistUrlData.arr)) {
                                     switch (filmlistUrlData.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_SORT_NR]) {
                                         case FilmlistUrlData.SERVER_ART_AKT:
-                                            this.progData.loadFilmlist.getDownloadUrlsFilmlisten_akt().addWithCheck(filmlistUrlData);
+                                            this.progData.searchFilmListUrls.getFilmlistUrlList_akt().addWithCheck(filmlistUrlData);
                                             break;
                                         case FilmlistUrlData.SERVER_ART_DIFF:
-                                            this.progData.loadFilmlist.getDownloadUrlsFilmlisten_diff().addWithCheck(filmlistUrlData);
+                                            this.progData.searchFilmListUrls.getFilmlistUrlList_diff().addWithCheck(filmlistUrlData);
                                             break;
                                     }
                                 }
@@ -184,8 +184,6 @@ public class IoReadXml implements AutoCloseable {
             progData.downloadList.initDownloads();
             progData.aboList.sort();
             // ListeFilmUpdateServer aufbauen
-            progData.loadFilmlist.getDownloadUrlsFilmlisten_akt().sort();
-            progData.loadFilmlist.getDownloadUrlsFilmlisten_diff().sort();
             if (progData.storedFilter.getStordeFilterList().isEmpty()) {
                 ProgInitFilter.setProgInitFilter();
             }
