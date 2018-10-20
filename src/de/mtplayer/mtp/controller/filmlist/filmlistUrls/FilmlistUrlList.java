@@ -50,8 +50,8 @@ public class FilmlistUrlList extends LinkedList<FilmlistUrlData> {
         LinkedList<FilmlistUrlData> listPrio = new LinkedList<>();
 
         // unbenutze URLs nach prio gewichten
-        for (FilmlistUrlData filmlistUrlData : this) {
-            if (alreadyUsed != null) {
+        if (alreadyUsed != null) {
+            for (FilmlistUrlData filmlistUrlData : this) {
                 if (alreadyUsed.contains(filmlistUrlData.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_URL_NR])) {
                     // wurde schon versucht
                     continue;
@@ -71,6 +71,7 @@ public class FilmlistUrlList extends LinkedList<FilmlistUrlData> {
         if (!listPrio.isEmpty()) {
             int nr = new Random().nextInt(listPrio.size());
             filmlistUrlData = listPrio.get(nr);
+
         } else {
             // dann wird irgendeine Versucht
             int nr = new Random().nextInt(this.size());

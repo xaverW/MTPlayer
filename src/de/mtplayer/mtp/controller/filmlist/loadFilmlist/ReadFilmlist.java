@@ -82,7 +82,7 @@ public class ReadFilmlist {
                 processFromWeb(new URL(sourceFileUrl), filmlist);
             }
 
-            if (ProgData.getInstance().loadFilmlist.getStop()) {
+            if (ProgData.getInstance().loadFilmlist.isStop()) {
                 list.add("Filme lesen --> Abbruch");
                 filmlist.clear();
             }
@@ -142,7 +142,7 @@ public class ReadFilmlist {
             return;
         }
 
-        while (!ProgData.getInstance().loadFilmlist.getStop() && (jsonToken = jp.nextToken()) != null) {
+        while (!ProgData.getInstance().loadFilmlist.isStop() && (jsonToken = jp.nextToken()) != null) {
             if (jsonToken == JsonToken.END_OBJECT) {
                 break;
             }

@@ -29,13 +29,11 @@ public class ImportNewFilmlist {
     private final EventListenerList eventListenerList;
     private final ReadFilmlist readFilmlist;
     private final ProgData progData;
-//    public SearchFilmListUrls searchFilmListUrls;
 
     public ImportNewFilmlist(ProgData progData) {
         this.progData = progData;
         eventListenerList = new EventListenerList();
         readFilmlist = new ReadFilmlist();
-//        searchFilmListUrls = new SearchFilmListUrls();
         readFilmlist.addAdListener(new ListenerFilmlistLoad() {
             @Override
             public synchronized void start(ListenerFilmlistLoadEvent event) {
@@ -66,7 +64,6 @@ public class ImportNewFilmlist {
     // Filmeliste importieren, URL automatisch wählen
     // #########################################################
     public void importFilmListAuto(Filmlist filmlist, Filmlist filmlistDiff, int days) {
-//        Daten.getInstance().loadFilmlist.setStop(false);
         Thread th = new Thread(new ImportAutoThread(filmlist, filmlistDiff, days));
         th.setName("importFilmListAuto");
         th.start();
@@ -117,8 +114,8 @@ public class ImportNewFilmlist {
         private boolean loadList(Filmlist list) {
             boolean ret = false;
             final ArrayList<String> usedUrls = new ArrayList<>();
-            String updateUrl = "";
-            final int maxRetries = state == STATE.DIFF ? 2 : 5; // 5x (bei diff nur 2x) probieren, eine Liste zu laden
+            String updateUrl;
+            final int maxRetries = (state == STATE.DIFF ? 2 : 3); // 3x (bei diff nur 2x) probieren, eine Liste zu laden
 
 
             updateUrl = getUpdateUrl(state, usedUrls);
@@ -140,16 +137,17 @@ public class ImportNewFilmlist {
                     return true;
                 }
 
+                if (ProgData.getInstance().loadFilmlist.isStop()) {
+                    // wenn abgebrochen wurde, nicht weitermachen
+                    return false;
+                }
+
                 // dann hat das Laden schon mal nicht geklappt
                 SearchFilmListUrls.setUpdateFilmlistUrls(); // für die DownloadURLs "aktualisieren" setzen
                 updateUrl = getUpdateUrl(state, usedUrls);
 
-                // nur wenn nicht abgebrochen, weitermachen
-                if (ProgData.getInstance().loadFilmlist.getStop()) {
-                    break;
-                }
-
             }
+
             return ret;
         }
     }
@@ -175,7 +173,6 @@ public class ImportNewFilmlist {
     // Filmeliste importieren, mit fester URL/Pfad
     // #######################################
     public void importFilmlistFromFile(String path, Filmlist filmlist, int days) {
-//        Daten.getInstance().loadFilmlist.setStop(false);
         Thread th = new Thread(new FilmImportFileThread(path, filmlist, days));
         th.setName("importFilmlistFromFile");
         th.start();
@@ -196,7 +193,8 @@ public class ImportNewFilmlist {
 
         @Override
         public void run() {
-            reportFinished(loadFileUrl(path, filmlist, days));
+            final boolean ok = loadFileUrl(path, filmlist, days);
+            reportFinished(ok);
         }
     }
 

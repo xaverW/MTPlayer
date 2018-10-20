@@ -27,7 +27,6 @@ import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.film.Filmlist;
 import de.mtplayer.mtp.controller.data.film.FilmlistXml;
-import de.mtplayer.mtp.controller.filmlist.filmlistUrls.SearchFilmListUrls;
 import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.tools.log.PLog;
 import okhttp3.Request;
@@ -61,9 +60,10 @@ public class SearchUpdateWithDate {
         boolean ret = false;
         try {
             if (source.isEmpty()) {
-                if ((source = new SearchFilmListUrls().getFilmlistUrlForCompleteList()).isEmpty()) {
-                    return false;
-                }
+                list.add("Es wurde keine URL zum Laden angegeben");
+                list.add("Alter der Filmliste laden --> nicht möglich");
+                PLog.sysLog(list);
+                return false;
             }
 
             if (source.startsWith("http")) {

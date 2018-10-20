@@ -24,7 +24,6 @@ import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.Filmlist;
 import de.mtplayer.mtp.controller.filmlist.checkFilmlistUpdate.SearchForFilmlistUpdate;
-import de.mtplayer.mtp.controller.filmlist.filmlistUrls.FilmlistUrlList;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ImportNewFilmlist;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
@@ -115,18 +114,8 @@ public class LoadFilmlist {
         stop.set(set);
     }
 
-    public synchronized boolean getStop() {
+    public synchronized boolean isStop() {
         return stop.get();
-    }
-
-    public FilmlistUrlList getDownloadUrlsFilmlisten_akt() {
-        // nur zum Schreiben/Lesen aus dem ConfigFile
-        return progData.searchFilmListUrls.getFilmlistUrlList_akt();
-    }
-
-    public FilmlistUrlList getDownloadUrlsFilmlisten_diff() {
-        // nur zum Schreiben/Lesen aus dem ConfigFile
-        return progData.searchFilmListUrls.getFilmlistUrlList_diff();
     }
 
     /**
@@ -328,8 +317,11 @@ public class LoadFilmlist {
         if (event.error) {
             PLog.sysLog("");
             PLog.sysLog("Filmliste laden war fehlerhaft, alte Liste wird wieder geladen");
+            final boolean stopped = isStop();
             Platform.runLater(() -> PAlert.showErrorAlert("Filmliste laden",
-                    "Das Laden einer neuen Filmliste hat nicht geklappt!"));
+                    stopped ? "Das Laden einer neuen Filmliste wurde abgebrochen!" :
+                            "Das Laden einer neuen Filmliste hat nicht geklappt!")
+            );
 
             // dann die alte Liste wieder laden
             progData.filmlist.clear();
@@ -371,16 +363,21 @@ public class LoadFilmlist {
             @Override
             public void ping() {
                 try {
+
                     if (getPropLoadFilmlist()) {
                         // dann laden wir gerade
                         return;
                     }
-                    if (searchForFilmlistUpdate.doCheck(ProgConfig.SYSTEM_LOAD_FILMS_MANUALLY.get(),
-                            progData.filmlist.genDate())) {
 
+                    // URL direkt aus der Liste holen, sonst wird minütlich! die URL-Liste aktualisiert!!
+                    final String url = ProgConfig.SYSTEM_LOAD_FILMS_MANUALLY.get().isEmpty() ?
+                            progData.searchFilmListUrls.getFilmlistUrlList_akt().getRand(null) :
+                            ProgConfig.SYSTEM_LOAD_FILMS_MANUALLY.get();
+
+                    if (searchForFilmlistUpdate.doCheck(url, progData.filmlist.genDate())) {
                         Platform.runLater(() -> ProgData.getInstance().mtPlayerController.setButtonFilmlistUpdate());
-
                     }
+
                 } catch (final Exception ex) {
                     PLog.errorLog(963014785, ex);
                 }
