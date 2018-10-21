@@ -3,7 +3,7 @@
 dir=`dirname "$0"`
 cd "$dir"
 
-mtdir=~/.mtplayer
+mtdir=~/.p2Mtplayer
 mvdir=~/.mediathek3
 
 date=$(date +%y.%m.%d-%H:%M:%S)
