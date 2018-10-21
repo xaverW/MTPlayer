@@ -18,6 +18,7 @@ package de.mtplayer.mtp.controller.filmlist.filmlistUrls;
 
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgInfos;
+import de.p2tools.p2Lib.tools.log.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import de.p2tools.p2Lib.tools.net.PUrlTools;
 
@@ -107,6 +108,7 @@ public class SearchFilmListUrls {
      **/
     public void updateDownloadUrlsForFilmlists() {
         PLog.sysLog("URLs der Filmlisten aktualisieren");
+        PDuration.counterStart("URLs der Filmlisten aktualisieren");
 
         filmlistUrlList_akt.clear();
         filmlistUrlList_diff.clear();
@@ -131,6 +133,7 @@ public class SearchFilmListUrls {
             insertDefaultUrlForDiffList();
             callError();
         }
+        PDuration.counterStop("URLs der Filmlisten aktualisieren");
     }
 
     private void insertDefaultUrlForCompleteList() {

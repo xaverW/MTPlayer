@@ -203,7 +203,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
     private void waitWhileWorking() {
         while (isWorking.get()) {
             // sollte nicht passieren, aber wenn ..
-            PLog.errorLog(741025896, "waitWhileWorking");
+            PLog.errorLog(741025896, "waitWhileWorking: write to history file");
 
             try {
                 wait(100);

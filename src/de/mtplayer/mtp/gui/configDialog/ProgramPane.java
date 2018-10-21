@@ -22,8 +22,10 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.ProgramData;
 import de.mtplayer.mtp.controller.data.SetData;
+import de.mtplayer.mtp.gui.tools.HelpTextPset;
 import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlert;
+import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.application.Platform;
@@ -178,11 +180,15 @@ public class ProgramPane {
         btnFile.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
         btnFile.setTooltip(new Tooltip("Ein Programm zum verarbeiten der URL auswählen."));
 
+        final Button btnHelpDest = new PButton().helpButton(stage, "Zieldateiname",
+                HelpTextPset.PSET_FILE_NAME);
+
         int row = 0;
         gridPane.add(new Label("Name: "), 0, row);
         gridPane.add(txtName, 1, row, 2, 1);
         gridPane.add(new Label("Zieldateiname: "), 0, ++row);
-        gridPane.add(txtDestName, 1, row, 2, 1);
+        gridPane.add(txtDestName, 1, row);
+        gridPane.add(btnHelpDest, 2, row);
 
         gridPane.add(new Label("Programm: "), 0, ++row);
         gridPane.add(txtProgPath, 1, row);

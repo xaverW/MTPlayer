@@ -23,6 +23,7 @@ import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.gui.tools.HelpText;
+import de.mtplayer.mtp.gui.tools.HelpTextPset;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
@@ -266,6 +267,9 @@ public class SetDataPane {
         btnFile.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
         btnFile.setTooltip(new Tooltip("Einen Ordner zum Speichern der Filme auswählen."));
 
+        final Button btnHelpDest = new PButton().helpButton(stage, "Zieldateiname",
+                HelpTextPset.PSET_FILE_NAME);
+
 
         gridPane.add(new Label("Zielpfad:"), 0, 0);
         gridPane.add(txtDestPath, 1, 0);
@@ -273,6 +277,7 @@ public class SetDataPane {
 
         gridPane.add(new Label("Zieldateiname:"), 0, 1);
         gridPane.add(txtDestName, 1, 1);
+        gridPane.add(btnHelpDest, 2, 1);
 
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcComputedSizeAndHgrow());

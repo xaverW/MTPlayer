@@ -20,8 +20,8 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.SetData;
+import de.mtplayer.mtp.gui.tools.HelpTextPset;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
-import de.mtplayer.mtp.tools.file.GetFile;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
 import javafx.beans.property.BooleanProperty;
@@ -212,8 +212,7 @@ public class SetPaneController extends AnchorPane {
         HBox.setHgrow(btnCheck, Priority.ALWAYS);
         btnCheck.setMaxWidth(Double.MAX_VALUE);
 
-        final Button btnHelp = new PButton().helpButton(stage, "Set",
-                new GetFile().getHelpSearch(GetFile.PATH_HELPTEXT_PRGRAM));
+        final Button btnHelp = new PButton().helpButton(stage, "Set", HelpTextPset.HELP_PSET);
 
 
         HBox hBox = new HBox(10);

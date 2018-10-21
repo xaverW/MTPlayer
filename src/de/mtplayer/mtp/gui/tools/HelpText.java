@@ -210,7 +210,7 @@ public class HelpText {
             PConst.LINE_SEPARATOR +
             "z.B.: mp4,mp3,m4v,flv,m4a";
 
-    public static final String SETDATA_RES = "Nicht jede Auflösung ist bei jedem Sender möglich und ist die " +
+    public static final String SETDATA_RES = "Nicht jede Auflösung ist bei jedem Sender möglich. Ist die " +
             "gewünschte Auflösung nicht verfügbar, " +
             "wird in \"hoher\" Auflösung geladen." +
             PConst.LINE_SEPARATORx2 +
@@ -218,7 +218,7 @@ public class HelpText {
             "und zum Abspielen von Filmen. Für Abos wird die " +
             "im Abo vorgegebene Auflösung verwendet.";
 
-    public static final String ABO_RES = "Nicht jede Auflösung ist bei jedem Sender möglich und ist die " +
+    public static final String ABO_RES = "Nicht jede Auflösung ist bei jedem Sender möglich. Ist die " +
             "gewünschte Auflösung nicht verfügbar, " +
             "wird in \"hoher\" Auflösung geladen.";
 

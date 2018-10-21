@@ -182,6 +182,7 @@ public class StarterClass {
             list.add("Download wurde abgebrochen");
         } else if (download.getSource().equals(DownloadConstants.SRC_BUTTON)) {
             list.add("Film fertig");
+
         } else {
             if (download.isStateFinished()) {
                 // dann ists gut
@@ -195,16 +196,22 @@ public class StarterClass {
             list.add("Programmset: " + download.getSet());
             list.add("Ziel: " + download.getDestPathFile());
         }
+
         list.add("Startzeit: " + StringFormatters.FORMATTER_HHmmss.format(start.getStartTime()));
         list.add("Endzeit: " + StringFormatters.FORMATTER_HHmmss.format(new MDate().getTime()));
-        list.add("Restarts: " + start.getRestartCounter());
-        list.add("Dauer: " + start.getStartTime().diffInSeconds() + " s");
+
+        if (start.getRestartCounter() > 0) {
+            list.add("Restarts: " + start.getRestartCounter());
+        }
+
         final long dauer = start.getStartTime().diffInMinutes();
         if (dauer == 0) {
-            list.add("Dauer: <1 Min.");
+            list.add("Dauer: " + start.getStartTime().diffInSeconds() + " s");
+            //list.add("Dauer: <1 Min.");
         } else {
             list.add("Dauer: " + start.getStartTime().diffInMinutes() + " Min");
         }
+
         if (download.getArt().equals(DownloadConstants.ART_DOWNLOAD)) {
             if (start.getInputStream() != null) {
                 list.add("Bytes gelesen: " + SizeTools.humanReadableByteCount(start.getInputStream().getSumByte(), true));
