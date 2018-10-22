@@ -69,11 +69,6 @@ public class MTPlayerController extends StackPane {
         init();
     }
 
-//    public void disableBtnFilmlist(boolean disable) {
-//        // ist erst mal so bis "Filmliste laden" überarbeitet wird
-//        btnFilmlist.setDisable(disable);
-//    }
-
     public void setButtonFilmlistUpdate() {
         btnFilmlist.getStyleClass().add("btnFilmlist_");
     }
@@ -260,30 +255,4 @@ public class MTPlayerController extends StackPane {
         }
     }
 
-//    public void setMaskerProgress(double progress, String text) {
-//        Platform.runLater(() -> {
-//            maskerPane.setProgress(progress, text);
-//        });
-//    }
-//
-//    public void setMaskerProgress(String text) {
-//        Platform.runLater(() -> {
-//            maskerPane.setProgress(-1, text);
-//        });
-//    }
-//
-//    public void setMaskerVisible(boolean buttonVisible) {
-//        Platform.runLater(() -> {
-//            maskerPane.setVisible(true);
-//            maskerPane.setButtonVisible(buttonVisible);
-////            maskerPane.resetProgress();
-//        });
-//    }
-//
-//    public void setMaskerIndicator() {
-//        Platform.runLater(() -> {
-//            maskerPane.setVisible(false);
-//            maskerPane.resetProgress();
-//        });
-//    }
 }
