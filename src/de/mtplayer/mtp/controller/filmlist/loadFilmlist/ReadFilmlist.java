@@ -22,6 +22,7 @@ import com.fasterxml.jackson.core.JsonToken;
 import de.mtplayer.mLib.tools.InputStreamProgressMonitor;
 import de.mtplayer.mLib.tools.MLHttpClient;
 import de.mtplayer.mLib.tools.ProgressMonitorInputStream;
+import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
@@ -44,6 +45,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import java.util.zip.ZipInputStream;
@@ -110,6 +112,8 @@ public class ReadFilmlist {
 
     private void readData(JsonParser jp, Filmlist filmlist) throws IOException {
         JsonToken jsonToken;
+        ArrayList listChannel = new ArrayList(Arrays.asList(ProgConfig.SYSTEM_LOAD_NOT_SENDER.getStringProperty().getValue().split(",")));
+
 
         if (jp.nextToken() != JsonToken.START_OBJECT) {
             throw new IllegalStateException("Expected data to start with an Object");
@@ -153,14 +157,17 @@ public class ReadFilmlist {
 //                addValue_(film, jp);
                 addValue(film, jp);
 
-
-                filmlist.importFilm(film);
-                if (milliseconds > 0) {
-                    // muss "rückwärts" laufen, da das Datum sonst 2x gebaut werden muss
-                    // wenns drin bleibt, kann mans noch ändern
-                    if (!checkDate(film)) {
-                        filmlist.remove(film);
+                if (listChannel.isEmpty() || !listChannel.contains(film.arr[FilmXml.FILM_CHANNEL])) {
+                    filmlist.importFilm(film);
+                    if (milliseconds > 0) {
+                        // muss "rückwärts" laufen, da das Datum sonst 2x gebaut werden muss
+                        // wenns drin bleibt, kann mans noch ändern
+                        if (!checkDate(film)) {
+                            filmlist.remove(film);
+                        }
                     }
+                } else {
+                    System.out.println(film.arr[FilmXml.FILM_CHANNEL]);
                 }
             }
         }

@@ -25,7 +25,6 @@ import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -44,14 +43,12 @@ public class FilmPaneController extends AnchorPane {
     private final HBox hBox = new HBox(0);
     private final CheckBox cbxAccordion = new CheckBox("");
     private final ScrollPane scrollPane = new ScrollPane();
-    private final Slider slDays = new Slider();
-    private final Label lblDays = new Label("");
     private final int FILTER_DAYS_MAX = 150;
 
     BooleanProperty accordionProp = ProgConfig.CONFIG_DIALOG_ACCORDION.getBooleanProperty();
-    IntegerProperty propDay = ProgConfig.SYSTEM_NUM_DAYS_FILMLIST.getIntegerProperty();
     BooleanProperty propLoad = ProgConfig.SYSTEM_LOAD_FILMS_ON_START.getBooleanProperty();
     StringProperty propUrl = ProgConfig.SYSTEM_LOAD_FILMS_MANUALLY.getStringProperty();
+
     private final Stage stage;
 
     public FilmPaneController(Stage stage) {
@@ -95,6 +92,7 @@ public class FilmPaneController extends AnchorPane {
     private Collection<TitledPane> createPanes() {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
         makeConfig(result);
+        result.add(new LoadFilmsPane(stage, progData).make());
         makeLoadManuel(result);
 
         return result;
@@ -106,10 +104,9 @@ public class FilmPaneController extends AnchorPane {
         gridPane.setVgap(15);
         gridPane.setPadding(new Insets(20));
 
-        TitledPane tpConfig = new TitledPane("Filme laden", gridPane);
+        TitledPane tpConfig = new TitledPane("Filmliste laden", gridPane);
         result.add(tpConfig);
 
-        initDays();
 
         final PToggleSwitch tglLoad = new PToggleSwitch("Filmliste beim Programmstart laden");
         tglLoad.setHGrow(false);
@@ -121,46 +118,11 @@ public class FilmPaneController extends AnchorPane {
                 HelpText.LOAD_FILMLIST_PROGRAMSTART);
         GridPane.setHalignment(btnHelpLoad, HPos.RIGHT);
 
-        HBox hBoxLoad = new HBox(10);
-        hBoxLoad.getChildren().addAll(new Label("Filme laden:"), slDays, lblDays);
-
-        final Button btnHelpDays = new PButton().helpButton(stage, "nur Filme der letzten Tage laden",
-                HelpText.LOAD_FILM_ONLY_DAYS);
-        GridPane.setHalignment(btnHelpDays, HPos.RIGHT);
-
-        Button btnLoad = new Button("Filmliste jetzt laden");
-        btnLoad.setOnAction(event -> {
-            progData.loadFilmlist.loadFilmlist("", true);
-        });
-
         int row = 0;
         gridPane.add(hBoxTgl, 0, row);
         gridPane.add(btnHelpLoad, 1, row);
-        gridPane.add(new Label(" "), 0, ++row);
 
-        gridPane.add(hBoxLoad, 0, ++row);
-        gridPane.add(btnHelpDays, 1, row);
-        gridPane.add(btnLoad, 0, ++row);
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(), PColumnConstraints.getCcPrefSize());
-    }
-
-
-    private void initDays() {
-        slDays.setMin(0);
-        slDays.setMax(FILTER_DAYS_MAX);
-        slDays.setShowTickLabels(false);
-        slDays.setMajorTickUnit(10);
-        slDays.setBlockIncrement(10);
-
-        slDays.valueProperty().bindBidirectional(propDay);
-        slDays.valueProperty().addListener((observable, oldValue, newValue) -> setValueSlider());
-
-        setValueSlider();
-    }
-
-    private void setValueSlider() {
-        int days = (int) slDays.getValue();
-        lblDays.setText(days == 0 ? "alles laden" : "nur Filme der letzten " + days + " Tage laden");
     }
 
     private void makeLoadManuel(Collection<TitledPane> result) {

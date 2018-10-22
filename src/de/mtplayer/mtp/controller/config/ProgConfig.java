@@ -78,6 +78,7 @@ public class ProgConfig extends MLConfig {
     // Einstellungen Filmliste
     public static MLConfigs SYSTEM_LOAD_FILMS_ON_START = addNewKey("system-load-films-on-start", Boolean.TRUE.toString());
     public static MLConfigs SYSTEM_LOAD_FILMS_MANUALLY = addNewKey("system-load-films-manually", "");
+    public static MLConfigs SYSTEM_LOAD_NOT_SENDER = addNewKey("system-load-not-sender", "");
     public static MLConfigs SYSTEM_NUM_DAYS_FILMLIST = addNewKey("system-num-days-filmilst", "0"); //es werden nur die x letzten Tage geladen
     public static MLConfigs SYSTEM_PATH_VLC = addNewKey("path-vlc", SetsPrograms.getTemplatePathVlc());
     public static MLConfigs SYSTEM_PATH_FLVSTREAMER = addNewKey("path-flvstreamer", SetsPrograms.getTemplatePathFlv());

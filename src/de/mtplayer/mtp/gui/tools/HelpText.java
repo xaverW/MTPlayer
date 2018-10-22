@@ -285,6 +285,9 @@ public class HelpText {
             "Auswirkung hat das erst nach dem " +
             "Neuladen der kompletten Filmliste.";
 
+    public static final String LOAD_FILMLIST_SENDER = "Filme der markierten Sender " +
+            "werden beim Neuladen der Filmliste nicht geladen.";
+
     public static final String LOAD_FILMLIST_PROGRAMSTART = "Die Filmliste wird beim Programmstart " +
             "automatisch geladen (wenn sie " +
             "älter als 3h ist). Zusätzlich kann sie über den " +

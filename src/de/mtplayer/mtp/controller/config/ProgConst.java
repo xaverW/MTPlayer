@@ -123,6 +123,8 @@ public class ProgConst {
     public static final String ZDF = "ZDF";
     public static final String ZDF_TIVI = "ZDF-tivi";
 
-    public static final String[] SENDER = {DREISAT, ARD, ARTE_DE, ARTE_FR, BR, DW, HR, KIKA, MDR, NDR, ORF, PHOENIX, RBB, SR, SRF, SRF_PODCAST, SWR, WDR, ZDF, ZDF_TIVI};
+    public static final String[] SENDER = {DREISAT, ARD, ARTE_DE, ARTE_FR,
+            BR, DW, HR, KIKA, MDR, NDR, ORF, PHOENIX, RBB, SR,
+            SRF, SRF_PODCAST, SWR, WDR, ZDF, ZDF_TIVI};
 
 }
