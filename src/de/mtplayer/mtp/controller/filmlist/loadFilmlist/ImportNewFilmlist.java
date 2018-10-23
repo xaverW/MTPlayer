@@ -105,7 +105,7 @@ public class ImportNewFilmlist {
                     ret = loadList(filmlist);
                 }
             }
-            if (!ret /* filmlist ist schon wieder null -> "FilmeLaden" */) {
+            if (!ret) {
                 PLog.errorLog(951235497, "Es konnten keine Filme geladen werden!");
             }
             reportFinished(ret);
@@ -205,7 +205,6 @@ public class ImportNewFilmlist {
         boolean ret = false;
         try {
             if (!fileUrl.isEmpty()) {
-                PLog.sysLog("Filmliste laden von: " + fileUrl);
                 readFilmlist.readFilmlist(fileUrl, filmlist, days);
                 if (!filmlist.isEmpty()) {
                     ret = true;

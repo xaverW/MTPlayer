@@ -275,18 +275,20 @@ public class HelpText {
             "die Blacklist geblockt werden.";
 
     public static final String LOAD_FILM_ONLY_DAYS = "Es werden nur Filme der letzten " +
-            "xx Tage geladen. " +
-            "Bei \"Alle\" werden alle Filme geladen. " +
-            PConst.LINE_SEPARATOR +
-            "(Eine kleinere Filmliste " +
-            "kann bei Rechnern mit wenig " +
-            "Speicher hilfreich sein.) " +
-            PConst.LINE_SEPARATOR +
-            "Auswirkung hat das erst nach dem " +
+            "xx Tage geladen. Filme ohne Datum werden immer geladen. " +
+            PConst.LINE_SEPARATORx2 +
+            "Bei \"Alle\" werden alle Filme geladen. Bei \"250 Tagen\" ist die Filmliste nur " +
+            "etwa halb so groß: ~ 130.000 Filme. (Eine kleinere Filmliste kann bei älteren " +
+            "Rechnern mit wenig Speicher hilfreich sein.) " +
+            PConst.LINE_SEPARATORx2 +
+            "Auswirkung hat das erst nach dem Neustart des Programms oder dem " +
             "Neuladen der kompletten Filmliste.";
 
     public static final String LOAD_FILMLIST_SENDER = "Filme der markierten Sender " +
-            "werden beim Neuladen der Filmliste nicht geladen.";
+            "werden beim Neuladen der Filmliste nicht geladen." +
+            PConst.LINE_SEPARATORx2 +
+            "Auswirkung hat das erst nach dem Neustart des Programms oder dem " +
+            "Neuladen der kompletten Filmliste.";
 
     public static final String LOAD_FILMLIST_PROGRAMSTART = "Die Filmliste wird beim Programmstart " +
             "automatisch geladen (wenn sie " +

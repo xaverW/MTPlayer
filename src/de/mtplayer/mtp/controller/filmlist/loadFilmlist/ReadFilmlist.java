@@ -30,6 +30,7 @@ import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.mtplayer.mtp.controller.data.film.Filmlist;
 import de.mtplayer.mtp.controller.data.film.FilmlistXml;
+import de.p2tools.p2Lib.tools.PStringUtils;
 import de.p2tools.p2Lib.tools.log.PLog;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -44,9 +45,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.zip.ZipInputStream;
 
@@ -54,8 +53,13 @@ public class ReadFilmlist {
 
     private final EventListenerList listeners = new EventListenerList();
     private double progress = 0;
-    private long milliseconds = 0;
+    private long millisecondsToLoadFilms = 0;
     private boolean checkDateBeforeLoading = false;
+    private Map<String, Integer> filmsPerSenderFound = new TreeMap<>();
+    private Map<String, Integer> filmsPerSenderBlocked = new TreeMap<>();
+    private Map<String, Integer> filmsPerSenderBlockedDate = new TreeMap<>();
+
+    private final String LINE = "============================================================";
 
     public void addAdListener(ListenerFilmlistLoad listener) {
         listeners.add(ListenerFilmlistLoad.class, listener);
@@ -64,19 +68,25 @@ public class ReadFilmlist {
     /*
     Hier wird die Filmliste tatsächlich geladen (von Datei/URL)
      */
-    public void readFilmlist(String sourceFileUrl, final Filmlist filmlist, int days) {
-        readFilmlist(sourceFileUrl, filmlist, days, false);
+    public void readFilmlist(String sourceFileUrl, final Filmlist filmlist, int loadFilmsNumberDays) {
+        readFilmlist(sourceFileUrl, filmlist, loadFilmsNumberDays, false);
     }
 
-    public void readFilmlist(String sourceFileUrl, final Filmlist filmlist, int days, boolean checkDateBeforeLoading) {
+    public void readFilmlist(String sourceFileUrl, final Filmlist filmlist, int loadFilmsNumberDays, boolean checkDateBeforeLoading) {
+        filmsPerSenderFound.clear();
+        filmsPerSenderBlocked.clear();
+        filmsPerSenderBlockedDate.clear();
+
         this.checkDateBeforeLoading = checkDateBeforeLoading;
         ArrayList<String> list = new ArrayList<>();
+        list.add(LINE);
+        list.add("Filmliste lesen von: " + sourceFileUrl);
+
         try {
-            list.add("Liste Filme lesen von: " + sourceFileUrl);
             filmlist.clear();
             notifyStart(sourceFileUrl); // für die Progressanzeige
 
-            checkDays(days);
+            checkDaysLoadingFilms(loadFilmsNumberDays);
 
             if (!sourceFileUrl.startsWith("http")) {
                 processFromFile(sourceFileUrl, filmlist);
@@ -92,9 +102,67 @@ public class ReadFilmlist {
             ex.printStackTrace();
         }
 
-        notifyFinished(sourceFileUrl, filmlist);
+        list.add(PLog.LILNE3);
+        list.add("Filmliste gelesen am: " + FastDateFormat.getInstance("dd.MM.yyyy, HH:mm").format(new Date()));
+        list.add("          erstellt am: " + filmlist.genDate());
+        list.add("          Anzahl Filme: " + filmlist.size());
+        list.add(PLog.LILNE3);
+
+        addFoundSender(list);
+
         list.add("Filme lesen --> fertig");
+        list.add(LINE);
         PLog.sysLog(list);
+
+        notifyFinished(sourceFileUrl);
+    }
+
+    int sumFilms = 0;
+
+    private void addFoundSender(ArrayList<String> list) {
+        final int KEYSIZE = 12;
+        if (!filmsPerSenderFound.isEmpty()) {
+            list.add("== Filme pro Sender in der Gesamtliste ==");
+
+            sumFilms = 0;
+            filmsPerSenderFound.keySet().stream().forEach(key -> {
+                int found = filmsPerSenderFound.get(key);
+                sumFilms += found;
+                list.add(PStringUtils.increaseString(KEYSIZE, key) + ": " + found);
+            });
+            list.add("--");
+            list.add(PStringUtils.increaseString(KEYSIZE, "=> Summe") + ": " + sumFilms);
+            list.add(PLog.LILNE3);
+
+        }
+        if (!filmsPerSenderBlocked.isEmpty()) {
+            list.add("== nach Sender geblockte Filme ==");
+
+            sumFilms = 0;
+            filmsPerSenderBlocked.keySet().stream().forEach(key -> {
+                int found = filmsPerSenderBlocked.get(key);
+                sumFilms += found;
+                list.add(PStringUtils.increaseString(KEYSIZE, key) + ": " + found);
+            });
+            list.add("--");
+            list.add(PStringUtils.increaseString(KEYSIZE, "=> Summe") + ": " + sumFilms);
+            list.add(PLog.LILNE3);
+
+        }
+        if (!filmsPerSenderBlockedDate.isEmpty()) {
+            list.add("== nach Datum geblockte Filme ==");
+
+            sumFilms = 0;
+            filmsPerSenderBlockedDate.keySet().stream().forEach(key -> {
+                int found = filmsPerSenderBlockedDate.get(key);
+                sumFilms += found;
+                list.add(PStringUtils.increaseString(KEYSIZE, key) + ": " + found);
+            });
+            list.add("--");
+            list.add(PStringUtils.increaseString(KEYSIZE, "=> Summe") + ": " + sumFilms);
+            list.add(PLog.LILNE3);
+
+        }
     }
 
     private InputStream selectDecompressor(String source, InputStream in) throws Exception {
@@ -146,30 +214,41 @@ public class ReadFilmlist {
             return;
         }
 
+        final boolean listChannelIsEmpty = listChannel.isEmpty();
         while (!ProgData.getInstance().loadFilmlist.isStop() && (jsonToken = jp.nextToken()) != null) {
             if (jsonToken == JsonToken.END_OBJECT) {
                 break;
             }
+
             if (jp.isExpectedStartArrayToken()) {
                 final Film film = new Film();
-
-                //todo
-//                addValue_(film, jp);
                 addValue(film, jp);
+                countFilm(filmsPerSenderFound, film);
 
-                if (listChannel.isEmpty() || !listChannel.contains(film.arr[FilmXml.FILM_CHANNEL])) {
-                    filmlist.importFilm(film);
-                    if (milliseconds > 0) {
-                        // muss "rückwärts" laufen, da das Datum sonst 2x gebaut werden muss
-                        // wenns drin bleibt, kann mans noch ändern
-                        if (!checkDate(film)) {
-                            filmlist.remove(film);
-                        }
-                    }
-                } else {
-                    System.out.println(film.arr[FilmXml.FILM_CHANNEL]);
+                if (!listChannelIsEmpty && listChannel.contains(film.arr[FilmXml.FILM_CHANNEL])) {
+                    // diesen Sender nicht laden
+                    countFilm(filmsPerSenderBlocked, film);
+                    continue;
                 }
+
+                film.init(); // damit wird auch das Datum! gesetzt
+                if (millisecondsToLoadFilms > 0 && !checkDate(film)) {
+                    // wenn das Datum nicht passt, nicht laden
+                    countFilm(filmsPerSenderBlockedDate, film);
+                    continue;
+                }
+
+                filmlist.importFilmOnlyWithNr(film);
             }
+
+        }
+    }
+
+    private void countFilm(Map<String, Integer> map, Film film) {
+        if (map.containsKey(film.arr[Film.FILM_CHANNEL])) {
+            map.put(film.arr[Film.FILM_CHANNEL], 1 + map.get(film.arr[Film.FILM_CHANNEL]));
+        } else {
+            map.put(film.arr[Film.FILM_CHANNEL], 1);
         }
     }
 
@@ -231,11 +310,11 @@ public class ReadFilmlist {
         }
     }
 
-    private void checkDays(long days) {
+    private void checkDaysLoadingFilms(long days) {
         if (days > 0) {
-            milliseconds = System.currentTimeMillis() - TimeUnit.MILLISECONDS.convert(days, TimeUnit.DAYS);
+            millisecondsToLoadFilms = System.currentTimeMillis() - TimeUnit.MILLISECONDS.convert(days, TimeUnit.DAYS);
         } else {
-            milliseconds = 0;
+            millisecondsToLoadFilms = 0;
         }
     }
 
@@ -285,7 +364,7 @@ public class ReadFilmlist {
         // true wenn der Film angezeigt werden kann!
         try {
             if (film.filmDate.getTime() != 0) {
-                if (film.filmDate.getTime() < milliseconds) {
+                if (film.filmDate.getTime() < millisecondsToLoadFilms) {
                     return false;
                 }
             }
@@ -312,17 +391,10 @@ public class ReadFilmlist {
         }
     }
 
-    private void notifyFinished(String url, Filmlist filmlist) {
-        ArrayList<String> list = new ArrayList<>();
-        list.add(PLog.LILNE3);
-        list.add("Liste Filme gelesen am: " + FastDateFormat.getInstance("dd.MM.yyyy, HH:mm").format(new Date()));
-        list.add("  erstellt am: " + filmlist.genDate());
-        list.add("  Anzahl Filme: " + filmlist.size());
+    private void notifyFinished(String url) {
         for (final ListenerFilmlistLoad l : listeners.getListeners(ListenerFilmlistLoad.class)) {
             l.finished(new ListenerFilmlistLoadEvent(url, "Filmliste geladen", progress, 0, false));
         }
-        list.add(PLog.LILNE3);
-        PLog.sysLog(list);
     }
 
 }

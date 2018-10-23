@@ -173,7 +173,7 @@ public class LoadFilmlist {
                         diffListe, ProgConfig.SYSTEM_NUM_DAYS_FILMLIST.getInt());
             } else {
                 // Filme als Liste importieren, feste URL/Datei
-                PLog.sysLog("Filmliste laden von: " + fileUrl);
+                PLog.sysLog("Filmliste mit fester URL/Datei laden");
                 progData.filmlist.clear();
                 setStop(false);
                 importNewFilmliste.importFilmlistFromFile(fileUrl,
@@ -202,11 +202,13 @@ public class LoadFilmlist {
 
             if (!firstProgramStart) {
                 // gespeicherte Filmliste laden, macht beim ersten Programmstart keinen Sinn
+                PDuration.counterStart("Programmstart Filmliste laden");
                 new ReadFilmlist().readFilmlist(ProgInfos.getFilmListFile(),
                         progData.filmlist, ProgConfig.SYSTEM_NUM_DAYS_FILMLIST.getInt(),
                         // Datumcheck macht nur Sinn, wenn beim Programmstart auch ein Update gemacht werden soll
 //                        ProgConfig.SYSTEM_LOAD_FILMS_ON_START.getBool());
                         false);
+                PDuration.counterStop("Programmstart Filmliste laden");
 
                 list.add(PLog.LILNE3);
                 list.add("Liste Filme gelesen am: " + StringFormatters.FORMATTER_ddMMyyyyHHmm.format(new Date()));

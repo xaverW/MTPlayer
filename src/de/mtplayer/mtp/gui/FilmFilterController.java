@@ -390,17 +390,17 @@ public class FilmFilterController extends FilterController {
     }
 
     private void initCheckFilter() {
-        checkOnly.addItem(ONLY_HD, progData.storedFilter.getSelectedFilter().onlyHdProperty());
-        checkOnly.addItem(ONLY_UT, progData.storedFilter.getSelectedFilter().onlyUtProperty());
-        checkOnly.addItem(ONLY_NEW, progData.storedFilter.getSelectedFilter().onlyNewProperty());
-        checkOnly.addItem(ONLY_LIVE, progData.storedFilter.getSelectedFilter().onlyLiveProperty());
-        checkOnly.addItem(ONLY_AKT_HISTORY, progData.storedFilter.getSelectedFilter().onlyAktHistoryProperty());
+        checkOnly.addItem(ONLY_HD, "nur HD-Filme anzeigen", progData.storedFilter.getSelectedFilter().onlyHdProperty());
+        checkOnly.addItem(ONLY_UT, "nur Filme mit Untertitel anzeigen", progData.storedFilter.getSelectedFilter().onlyUtProperty());
+        checkOnly.addItem(ONLY_NEW, "nur neue Filme anzeigen", progData.storedFilter.getSelectedFilter().onlyNewProperty());
+        checkOnly.addItem(ONLY_LIVE, "nur Livestreams anzeigen", progData.storedFilter.getSelectedFilter().onlyLiveProperty());
+        checkOnly.addItem(ONLY_AKT_HISTORY, "nur die aktuelle History anzeigen", progData.storedFilter.getSelectedFilter().onlyAktHistoryProperty());
 
-        checkNot.addItem(NOT_ABO, progData.storedFilter.getSelectedFilter().notAboProperty());
-        checkNot.addItem(NOT_HISTORY, progData.storedFilter.getSelectedFilter().notHistoryProperty());
-        checkNot.addItem(NOT_DOUBLE, progData.storedFilter.getSelectedFilter().notDoubleProperty());
-        checkNot.addItem(NOT_GEO, progData.storedFilter.getSelectedFilter().notGeoProperty());
-        checkNot.addItem(NOT_FUTURE, progData.storedFilter.getSelectedFilter().notFutureProperty());
+        checkNot.addItem(NOT_ABO, "keine Filme für die es ein Abo gibt, anzeigen", progData.storedFilter.getSelectedFilter().notAboProperty());
+        checkNot.addItem(NOT_HISTORY, "bereits gesehene Filme nicht anzeigen", progData.storedFilter.getSelectedFilter().notHistoryProperty());
+        checkNot.addItem(NOT_DOUBLE, "doppelte Filme nur einmal anzeigen", progData.storedFilter.getSelectedFilter().notDoubleProperty());
+        checkNot.addItem(NOT_GEO, "geo-geblockte Filme nicht anzeigen", progData.storedFilter.getSelectedFilter().notGeoProperty());
+        checkNot.addItem(NOT_FUTURE, "keine Filme mit Datum in der Zukunft anzeigen", progData.storedFilter.getSelectedFilter().notFutureProperty());
 
         VBox vBox = new VBox();
         vBox.getChildren().addAll(lblOnly, checkOnly);

@@ -97,6 +97,13 @@ public class Filmlist extends SimpleListProperty<Film> {
         return addInit(film);
     }
 
+    public synchronized boolean importFilmOnlyWithNr(Film film) {
+        // hier nur beim Laden aus einer fertigen Filmliste mit der GUI
+        // die Filme sind schon sortiert, nur die Nummer muss noch ergänzt werden
+        film.nr = nr++;
+        return add(film);
+    }
+
     private void addHash(Film f, HashSet<String> hash, boolean index) {
         if (f.arr[FilmXml.FILM_CHANNEL].equals(ProgConst.KIKA)) {
             // beim KIKA ändern sich die URLs laufend
