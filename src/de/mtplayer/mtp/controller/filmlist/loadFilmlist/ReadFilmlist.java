@@ -31,6 +31,7 @@ import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.mtplayer.mtp.controller.data.film.Filmlist;
 import de.mtplayer.mtp.controller.data.film.FilmlistXml;
 import de.p2tools.p2Lib.tools.PStringUtils;
+import de.p2tools.p2Lib.tools.log.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -54,10 +55,12 @@ public class ReadFilmlist {
     private final EventListenerList listeners = new EventListenerList();
     private double progress = 0;
     private long millisecondsToLoadFilms = 0;
-    private boolean checkDateBeforeLoading = false;
+    HashSet<String> hashSet;
     private Map<String, Integer> filmsPerSenderFound = new TreeMap<>();
     private Map<String, Integer> filmsPerSenderBlocked = new TreeMap<>();
     private Map<String, Integer> filmsPerSenderBlockedDate = new TreeMap<>();
+
+    List<String> logList = new ArrayList<>();
 
     private final String LINE = "============================================================";
 
@@ -69,18 +72,23 @@ public class ReadFilmlist {
     Hier wird die Filmliste tatsächlich geladen (von Datei/URL)
      */
     public void readFilmlist(String sourceFileUrl, final Filmlist filmlist, int loadFilmsNumberDays) {
-        readFilmlist(sourceFileUrl, filmlist, loadFilmsNumberDays, false);
+        readFilmlist(sourceFileUrl, filmlist, loadFilmsNumberDays, null);
     }
 
-    public void readFilmlist(String sourceFileUrl, final Filmlist filmlist, int loadFilmsNumberDays, boolean checkDateBeforeLoading) {
+    public void readFilmlist(String sourceFileUrl, final Filmlist filmlist, int loadFilmsNumberDays, HashSet<String> hashSet) {
         filmsPerSenderFound.clear();
         filmsPerSenderBlocked.clear();
         filmsPerSenderBlockedDate.clear();
 
-        this.checkDateBeforeLoading = checkDateBeforeLoading;
-        ArrayList<String> list = new ArrayList<>();
-        list.add(LINE);
-        list.add("Filmliste lesen von: " + sourceFileUrl);
+        logList.clear();
+
+        this.hashSet = hashSet;
+        if (hashSet != null) {
+            hashSet.clear();
+        }
+
+        logList.add(LINE);
+        logList.add("Filmliste lesen von: " + sourceFileUrl);
 
         try {
             filmlist.clear();
@@ -88,38 +96,42 @@ public class ReadFilmlist {
 
             checkDaysLoadingFilms(loadFilmsNumberDays);
 
-            if (!sourceFileUrl.startsWith("http")) {
-                processFromFile(sourceFileUrl, filmlist);
-            } else {
+            if (sourceFileUrl.startsWith("http")) {
+                // URL laden
                 processFromWeb(new URL(sourceFileUrl), filmlist);
+            } else {
+                // lokale Datei laden
+                processFromFile(sourceFileUrl, filmlist);
             }
 
             if (ProgData.getInstance().loadFilmlist.isStop()) {
-                list.add("Filme lesen --> Abbruch");
+                logList.add("Filme lesen --> Abbruch");
                 filmlist.clear();
             }
         } catch (final MalformedURLException ex) {
             ex.printStackTrace();
         }
 
-        list.add(PLog.LILNE3);
-        list.add("Filmliste gelesen am: " + FastDateFormat.getInstance("dd.MM.yyyy, HH:mm").format(new Date()));
-        list.add("          erstellt am: " + filmlist.genDate());
-        list.add("          Anzahl Filme: " + filmlist.size());
-        list.add(PLog.LILNE3);
+        logList.add(PLog.LILNE3);
+        logList.add("Filmliste gelesen am: " + FastDateFormat.getInstance("dd.MM.yyyy, HH:mm").format(new Date()));
+        logList.add("          erstellt am: " + filmlist.genDate());
+        logList.add("          Anzahl Filme: " + filmlist.size());
+        logList.add(PLog.LILNE3);
 
-        addFoundSender(list);
+        addFoundSender(logList);
 
-        list.add("Filme lesen --> fertig");
-        list.add(LINE);
-        PLog.sysLog(list);
+        logList.add("Filme lesen --> fertig");
+        logList.add(LINE);
+
+        PLog.sysLog(logList);
+        logList.clear();
 
         notifyFinished(sourceFileUrl);
     }
 
     int sumFilms = 0;
 
-    private void addFoundSender(ArrayList<String> list) {
+    private void addFoundSender(List<String> list) {
         final int KEYSIZE = 12;
         if (!filmsPerSenderFound.isEmpty()) {
             list.add("== Filme pro Sender in der Gesamtliste ==");
@@ -182,6 +194,7 @@ public class ReadFilmlist {
         JsonToken jsonToken;
         ArrayList listChannel = new ArrayList(Arrays.asList(ProgConfig.SYSTEM_LOAD_NOT_SENDER.getStringProperty().getValue().split(",")));
 
+        PDuration.counterStart("=====> readData");
 
         if (jp.nextToken() != JsonToken.START_OBJECT) {
             throw new IllegalStateException("Expected data to start with an Object");
@@ -210,11 +223,9 @@ public class ReadFilmlist {
         }
 
         // Datum checken, wenn gewollt und dann abbrechen todo
-        if (checkDateBeforeLoading && filmlist.isOlderThan(ProgConst.ALTER_FILMLISTE_SEKUNDEN_FUER_AUTOUPDATE)) {
-            return;
-        }
-
+        final boolean isToOld = hashSet != null && filmlist.isOlderThan(ProgConst.ALTER_FILMLISTE_SEKUNDEN_FUER_AUTOUPDATE);
         final boolean listChannelIsEmpty = listChannel.isEmpty();
+
         while (!ProgData.getInstance().loadFilmlist.isStop() && (jsonToken = jp.nextToken()) != null) {
             if (jsonToken == JsonToken.END_OBJECT) {
                 break;
@@ -223,6 +234,13 @@ public class ReadFilmlist {
             if (jp.isExpectedStartArrayToken()) {
                 final Film film = new Film();
                 addValue(film, jp);
+
+                if (isToOld) {
+                    // dann kanns schneller gehen, aber der Hash wird für "gesehen" gebraucht
+                    hashSet.add(film.getUrlHistory());
+                    continue;
+                }
+
                 countFilm(filmsPerSenderFound, film);
 
                 if (!listChannelIsEmpty && listChannel.contains(film.arr[FilmXml.FILM_CHANNEL])) {
@@ -242,6 +260,8 @@ public class ReadFilmlist {
             }
 
         }
+        PDuration.counterStop("=====> readData");
+
     }
 
     private void countFilm(Map<String, Integer> map, Film film) {

@@ -56,8 +56,8 @@ public class LoadFilmsPane {
     }
 
     public TitledPane make() {
-        final VBox vBox = new VBox(10);
-        vBox.setPadding(new Insets(20));
+        final VBox vBox = new VBox(20);
+        vBox.setPadding(new Insets(25, 20, 20, 20));
 
         initDays();
         final Button btnHelpDays = new PButton().helpButton(stage, "nur Filme der letzten Tage laden",
@@ -71,6 +71,7 @@ public class LoadFilmsPane {
         HBox hBoxLoad2 = new HBox(10);
         hBoxLoad2.setAlignment(Pos.CENTER);
         hBoxLoad2.getChildren().addAll(new Label("Filme laden:"), slDays, hBoxLoad1, btnHelpDays);
+
         vBox.getChildren().addAll(new Label("nur aktuelle Filme laden"), hBoxLoad2);
 
 
@@ -112,7 +113,7 @@ public class LoadFilmsPane {
             // im Startdialog brauchts das noch nicht
             Button btnLoad = new Button("Filmliste jetzt laden");
             btnLoad.setOnAction(event -> {
-                progData.loadFilmlist.loadFilmlist("", true);
+                progData.loadFilmlist.loadFilmlist(true);
             });
 
             HBox hBoxLoadBtn = new HBox();
@@ -126,7 +127,7 @@ public class LoadFilmsPane {
             vBox.getChildren().add(vBoxLoadBtn);
         }
 
-        TitledPane tpConfig = new TitledPane("nicht alle Filme laden", vBox);
+        TitledPane tpConfig = new TitledPane("Filme und Sender laden", vBox);
         return tpConfig;
     }
 

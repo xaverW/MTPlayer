@@ -131,7 +131,7 @@ public class MTPlayerController extends StackPane {
             // falls "neue Filmliste" aktiv ist
             btnFilmlist.getStyleClass().clear();
             btnFilmlist.getStyleClass().add("btnFilmlist");
-            progData.loadFilmlist.loadFilmlist("");
+            progData.loadFilmlist.loadFilmlist();
         });
 
         btnFilm.setOnAction(e -> selPanelFilm());

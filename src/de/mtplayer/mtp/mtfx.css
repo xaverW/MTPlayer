@@ -299,3 +299,10 @@
 .alignCenterLeft {
   -fx-alignment: center-left;
 }
+
+.titled-pane > .title {
+    -fx-font-weight: bold;
+}
+.titled-pane:collapsed > .title {
+    -fx-font-weight: normal;
+}

@@ -165,35 +165,32 @@ public class Filmlist extends SimpleListProperty<Film> {
         hash.clear();
     }
 
-    int countDouble = 0;
-
     public synchronized void markGeoBlocked() {
         // geblockte Filme markieren
         this.parallelStream().forEach((Film f) -> f.setGeoBlocked());
     }
 
+    int countDouble = 0;
 
-    public synchronized void markFilms() {
+    public synchronized int markFilms() {
         // läuft direkt nach dem Laden der Filmliste!
         // doppelte Filme (URL), Geo, InFuture markieren
         // viele Filme sind bei mehreren Sendern vorhanden
 
-        final HashSet<String> set = new HashSet<>(size(), 0.75F);
+        final HashSet<String> urlHashSet = new HashSet<>(size(), 0.75F);
 
         // todo exception parallel?? Unterschied ~10ms (bei Gesamt: 110ms)
         PDuration.counterStart("Filme markieren");
         try {
-
+            countDouble = 0;
             this.stream().forEach((Film f) -> {
 
                 f.setGeoBlocked();
                 f.setInFuture();
 
-                if (!set.add(f.getUrl())) {
+                if (!urlHashSet.add(f.getUrl())) {
                     ++countDouble;
                     f.setDoubleUrl(true);
-//                } else {
-//                    f.setDoubleUrl(false);
                 }
 
             });
@@ -203,8 +200,8 @@ public class Filmlist extends SimpleListProperty<Film> {
         }
         PDuration.counterStop("Filme markieren");
 
-        PLog.sysLog("Anzahl doppelte Filme: " + countDouble);
-        set.clear();
+        urlHashSet.clear();
+        return countDouble;
     }
 
     private boolean addInit(Film film) {

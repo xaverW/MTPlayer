@@ -149,7 +149,7 @@ public class FilmPaneController extends AnchorPane {
 
         Button btnLoad = new Button("Filmliste jetzt laden");
         btnLoad.disableProperty().bind(txtUrl.textProperty().isEmpty());
-        btnLoad.setOnAction(event -> progData.loadFilmlist.loadFilmlist(txtUrl.getText()));
+        btnLoad.setOnAction(event -> progData.loadFilmlist.loadFilmlist());
 
         int row = 0;
         gridPane.add(new Label("Adresse (Datei oder URL) zum Laden der Filmliste:"), 0, row, 2, 1);

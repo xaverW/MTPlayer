@@ -38,8 +38,6 @@ public class StartPane {
         hBox.setSpacing(25);
         hBox.setPadding(new Insets(20));
 
-        TitledPane tpConfig = new TitledPane("Erster Programmstart", hBox);
-
         ImageView iv = new ImageView();
         Image im = getHelpScreen1();
         iv.setSmooth(true);
@@ -64,6 +62,7 @@ public class StartPane {
                 "und speichern.");
         hBox.getChildren().add(text);
 
+        TitledPane tpConfig = new TitledPane("Infos zur Programmoberfläche", hBox);
         return tpConfig;
     }
 
@@ -72,8 +71,6 @@ public class StartPane {
         HBox hBox = new HBox();
         hBox.setSpacing(25);
         hBox.setPadding(new Insets(20));
-
-        TitledPane tpConfig = new TitledPane("Erster Programmstart", hBox);
 
         ImageView iv = new ImageView();
         Image im = getHelpScreen2();
@@ -99,6 +96,7 @@ public class StartPane {
                 "Filterprofile verwaltet werden.");
         hBox.getChildren().add(text);
 
+        TitledPane tpConfig = new TitledPane("Infos zum Filmfilter", hBox);
         return tpConfig;
     }
 

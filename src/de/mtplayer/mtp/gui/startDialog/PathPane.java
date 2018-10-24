@@ -57,9 +57,7 @@ public class PathPane {
     public TitledPane makePath() {
         VBox vBox = new VBox();
         vBox.setSpacing(20);
-        vBox.setPadding(new Insets(20));
-
-        TitledPane tpConfig = new TitledPane("Programmpfade", vBox);
+        vBox.setPadding(new Insets(25, 20, 20, 20));
 
         switch (getOs()) {
             case WIN32:
@@ -84,6 +82,7 @@ public class PathPane {
         hBox.getChildren().add(btnHelp);
         vBox.getChildren().add(hBox);
 
+        TitledPane tpConfig = new TitledPane("Programmpfade", vBox);
         return tpConfig;
     }
 

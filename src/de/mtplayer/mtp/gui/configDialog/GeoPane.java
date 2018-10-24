@@ -43,14 +43,6 @@ public class GeoPane {
     }
 
     public TitledPane makeGeo() {
-        int row = 0;
-
-        final GridPane gridPane = new GridPane();
-        gridPane.setHgap(15);
-        gridPane.setVgap(15);
-        gridPane.setPadding(new Insets(20));
-
-        TitledPane tpConfig = new TitledPane("Geogeblockte Filme", gridPane);
 
         final PToggleSwitch tglGeo = new PToggleSwitch("geblockte Sendungen gelb markieren:", false, false);
         tglGeo.selectedProperty().bindBidirectional(geoProperty);
@@ -92,8 +84,13 @@ public class GeoPane {
             ProgConfig.SYSTEM_GEO_HOME_PLACE.setValue(Film.GEO_WELT);
         });
 
+        final GridPane gridPane = new GridPane();
+        gridPane.setHgap(15);
+        gridPane.setVgap(15);
+        gridPane.setPadding(new Insets(20));
 
-        gridPane.add(tglGeo, 0, row, 2, 1);
+        int row = 0;
+        gridPane.add(tglGeo, 0, ++row, 2, 1);
         gridPane.add(btnHelpGeo, 2, row);
         gridPane.add(new Label(" "), 0, ++row);
         // eigener Standort angeben
@@ -108,6 +105,7 @@ public class GeoPane {
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcComputedSizeAndHgrow());
 
+        TitledPane tpConfig = new TitledPane("Geogeblockte Filme", gridPane);
         return tpConfig;
     }
 

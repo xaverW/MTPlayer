@@ -23,12 +23,8 @@ import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TitledPane;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class DownPathPane {
@@ -47,15 +43,9 @@ public class DownPathPane {
         gridPane.setVgap(15);
         gridPane.setPadding(new Insets(20));
 
-        TitledPane tpConfig = new TitledPane("Zielverzeichnis", gridPane);
-
-        Text text = new Text("Pfad für die Downloads auswählen");
-        text.setStyle("-fx-font-weight: bold");
-        gridPane.add(text, 0, 0);
 
         TextField txtPath = new TextField();
         txtPath.textProperty().bindBidirectional(pathProp);
-        gridPane.add(txtPath, 0, 1);
 
         final Button btnFile = new Button();
         btnFile.setOnAction(event -> {
@@ -63,16 +53,21 @@ public class DownPathPane {
         });
         btnFile.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
         btnFile.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen."));
-        gridPane.add(btnFile, 1, 1);
 
         final Button btnHelp = new PButton().helpButton(stage,
                 "Zielverzeichnis",
                 "Hier kann das Verzeichnis angegeben werden, " +
                         "in dem die Downloads gespeichert werden.");
-        gridPane.add(btnHelp, 2, 1);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow());
+        int row = 0;
+        gridPane.add(new Label("Pfad:"), 0, ++row);
+        gridPane.add(txtPath, 1, row);
+        gridPane.add(btnFile, 2, row);
+        gridPane.add(btnHelp, 3, row);
 
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(), PColumnConstraints.getCcComputedSizeAndHgrow());
+
+        TitledPane tpConfig = new TitledPane("Pfad für die Downloads", gridPane);
         return tpConfig;
     }
 

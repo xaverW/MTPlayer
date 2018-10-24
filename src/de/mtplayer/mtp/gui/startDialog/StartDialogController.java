@@ -50,13 +50,13 @@ public class StartDialogController extends PDialog {
             btnDown = new Button(STR_DOWN),
             btnPath = new Button(STR_PATH);
 
-    private static final String STR_START_1 = "Infos 1";
-    private static final String STR_START_2 = "Infos 2";
+    private static final String STR_START_1 = "Infos";
+    private static final String STR_START_2 = "Infos";
     private static final String STR_UPDATE = "Update";
     private static final String STR_GEO = "Geo";
-    private static final String STR_FILM = "Filmliste";
-    private static final String STR_DOWN = "Zielverzeichnis";
-    private static final String STR_PATH = "Programmpfade";
+    private static final String STR_FILM = "Filme";
+    private static final String STR_DOWN = "Ziel";
+    private static final String STR_PATH = "Pfade";
 
     private enum State {START_1, START_2, UPDATE, GEO, FILM, DOWN, PATH}
 
@@ -178,7 +178,7 @@ public class StartDialogController extends PDialog {
         TitledPane tStart1 = new StartPane(stage).makeStart1();
         tStart1.setMaxHeight(Double.MAX_VALUE);
         tStart1.setCollapsible(false);
-        tStart1.setText(STR_START_1);
+//        tStart1.setText(STR_START_1);
         startPane_1.setContent(tStart1);
 
         //startPane 2
@@ -189,7 +189,7 @@ public class StartDialogController extends PDialog {
         TitledPane tStart2 = new StartPane(stage).makeStart2();
         tStart2.setMaxHeight(Double.MAX_VALUE);
         tStart2.setCollapsible(false);
-        tStart2.setText(STR_START_2);
+//        tStart2.setText(STR_START_2);
         startPane_2.setContent(tStart2);
 
         //updatePane
@@ -200,7 +200,7 @@ public class StartDialogController extends PDialog {
         TitledPane tUpdate = new UpdatePane(stage).makeStart();
         tUpdate.setMaxHeight(Double.MAX_VALUE);
         tUpdate.setCollapsible(false);
-        tUpdate.setText(STR_UPDATE);
+//        tUpdate.setText(STR_UPDATE);
         updatePane.setContent(tUpdate);
 
         //geoPane
@@ -211,7 +211,7 @@ public class StartDialogController extends PDialog {
         TitledPane tGeo = new GeoPane(stage).makeGeo();
         tGeo.setMaxHeight(Double.MAX_VALUE);
         tGeo.setCollapsible(false);
-        tGeo.setText(STR_GEO);
+//        tGeo.setText(STR_GEO);
         geoPane.setContent(tGeo);
 
         //filmPane
@@ -222,7 +222,7 @@ public class StartDialogController extends PDialog {
         TitledPane tFilm = new LoadFilmsPane(stage).make();
         tFilm.setMaxHeight(Double.MAX_VALUE);
         tFilm.setCollapsible(false);
-        tFilm.setText(STR_FILM);
+//        tFilm.setText(STR_FILM);
         filmPane.setContent(tFilm);
 
         //downPane
@@ -233,7 +233,7 @@ public class StartDialogController extends PDialog {
         TitledPane tDown = new DownPathPane(stage).makePath();
         tDown.setMaxHeight(Double.MAX_VALUE);
         tDown.setCollapsible(false);
-        tDown.setText(STR_DOWN);
+//        tDown.setText(STR_DOWN);
         downPane.setContent(tDown);
 
         //pathPane
@@ -244,7 +244,7 @@ public class StartDialogController extends PDialog {
         TitledPane tPath = new PathPane(stage).makePath();
         tPath.setMaxHeight(Double.MAX_VALUE);
         tPath.setCollapsible(false);
-        tPath.setText(STR_PATH);
+//        tPath.setText(STR_PATH);
         pathPane.setContent(tPath);
         stackpane.getChildren().addAll(startPane_1, startPane_2, updatePane, geoPane, filmPane, downPane, pathPane);
     }

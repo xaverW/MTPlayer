@@ -43,21 +43,23 @@ public class UpdatePane {
         gridPane.setVgap(15);
         gridPane.setPadding(new Insets(20));
 
-        TitledPane tpConfig = new TitledPane("Erster Programmstart", gridPane);
 
         //einmal am Tag Update suchen
         final PToggleSwitch tglSearch = new PToggleSwitch("einmal am Tag nach einer neuen Programmversion suchen");
         tglSearch.selectedProperty().bindBidirectional(updateProp);
-        gridPane.add(tglSearch, 0, 0);
+
+        int row = 0;
+        gridPane.add(tglSearch, 0, ++row);
 
         final Button btnHelp = new PButton().helpButton(stage, "Programmupdate suchen",
                 "Beim Programmstart wird geprüft, ob es eine neue Version des Programms gibt. Wenn es " +
                         "eine neue Version gibt, wird das mit einer Nachricht mitgeteilt. Es wird nicht " +
                         "automatisch das Programm verändert.");
-        gridPane.add(btnHelp, 1, 0);
+        gridPane.add(btnHelp, 1, row);
 
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow());
 
+        TitledPane tpConfig = new TitledPane("Programmupdate", gridPane);
         return tpConfig;
     }
 
