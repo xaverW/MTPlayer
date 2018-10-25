@@ -19,7 +19,6 @@ package de.mtplayer.mtp.controller;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
-import de.mtplayer.mtp.controller.filmlist.writeFilmlist.WriteFilmlistJson;
 import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -45,10 +44,6 @@ public class ProgSave {
 
     public ProgSave() {
         progData = ProgData.getInstance();
-    }
-
-    public void saveFilmlist() {
-        new WriteFilmlistJson().write(ProgInfos.getFilmListFile(), progData.filmlist);
     }
 
     public void saveAll() {

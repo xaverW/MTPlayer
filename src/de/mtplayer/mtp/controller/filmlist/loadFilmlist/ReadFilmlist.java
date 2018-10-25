@@ -60,10 +60,6 @@ public class ReadFilmlist {
     private Map<String, Integer> filmsPerSenderBlocked = new TreeMap<>();
     private Map<String, Integer> filmsPerSenderBlockedDate = new TreeMap<>();
 
-    List<String> logList = new ArrayList<>();
-
-    private final String LINE = "============================================================";
-
     public void addAdListener(ListenerFilmlistLoad listener) {
         listeners.add(ListenerFilmlistLoad.class, listener);
     }
@@ -80,52 +76,53 @@ public class ReadFilmlist {
         filmsPerSenderBlocked.clear();
         filmsPerSenderBlockedDate.clear();
 
-        logList.clear();
+        List<String> logList = new ArrayList<>();
+        logList.add("");
+        logList.add(PLog.LILNE2);
 
         this.hashSet = hashSet;
         if (hashSet != null) {
             hashSet.clear();
         }
 
-        logList.add(LINE);
-        logList.add("Filmliste lesen von: " + sourceFileUrl);
-
+        PDuration.counterStart("Filmliste laden: Daten lesen");
         try {
             filmlist.clear();
             notifyStart(sourceFileUrl); // für die Progressanzeige
 
             checkDaysLoadingFilms(loadFilmsNumberDays);
-
             if (sourceFileUrl.startsWith("http")) {
                 // URL laden
+                logList.add("Filmliste von URL laden: " + sourceFileUrl);
                 processFromWeb(new URL(sourceFileUrl), filmlist);
             } else {
                 // lokale Datei laden
+                logList.add("Filmliste von Datei laden: " + sourceFileUrl);
                 processFromFile(sourceFileUrl, filmlist);
             }
 
+
             if (ProgData.getInstance().loadFilmlist.isStop()) {
-                logList.add("Filme lesen --> Abbruch");
+                logList.add(" -> Filmliste laden abgebrochen");
                 filmlist.clear();
+
+            } else {
+                logList.add(PLog.LILNE3);
+                logList.add("Filmliste geladen   am: " + FastDateFormat.getInstance("dd.MM.yyyy, HH:mm").format(new Date()));
+                logList.add("          erstellt  am: " + filmlist.genDate());
+                logList.add("          Anzahl Filme: " + filmlist.size());
+                logList.add("          Anzahl  Neue: " + filmlist.countNewFilms());
+
+                addFoundSender(logList);
             }
         } catch (final MalformedURLException ex) {
-            ex.printStackTrace();
+            PLog.errorLog(945120201, ex);
         }
+        PDuration.counterStop("Filmliste laden: Daten lesen");
 
-        logList.add(PLog.LILNE3);
-        logList.add("Filmliste gelesen am: " + FastDateFormat.getInstance("dd.MM.yyyy, HH:mm").format(new Date()));
-        logList.add("          erstellt am: " + filmlist.genDate());
-        logList.add("          Anzahl Filme: " + filmlist.size());
-        logList.add(PLog.LILNE3);
-
-        addFoundSender(logList);
-
-        logList.add("Filme lesen --> fertig");
-        logList.add(LINE);
-
-        PLog.sysLog(logList);
-        logList.clear();
-
+        logList.add(PLog.LILNE2);
+        logList.add("");
+        PLog.addSysLog(logList);
         notifyFinished(sourceFileUrl);
     }
 
@@ -133,7 +130,9 @@ public class ReadFilmlist {
 
     private void addFoundSender(List<String> list) {
         final int KEYSIZE = 12;
+
         if (!filmsPerSenderFound.isEmpty()) {
+            list.add(PLog.LILNE3);
             list.add("== Filme pro Sender in der Gesamtliste ==");
 
             sumFilms = 0;
@@ -144,10 +143,10 @@ public class ReadFilmlist {
             });
             list.add("--");
             list.add(PStringUtils.increaseString(KEYSIZE, "=> Summe") + ": " + sumFilms);
-            list.add(PLog.LILNE3);
-
         }
+
         if (!filmsPerSenderBlocked.isEmpty()) {
+            list.add(PLog.LILNE3);
             list.add("== nach Sender geblockte Filme ==");
 
             sumFilms = 0;
@@ -158,10 +157,10 @@ public class ReadFilmlist {
             });
             list.add("--");
             list.add(PStringUtils.increaseString(KEYSIZE, "=> Summe") + ": " + sumFilms);
-            list.add(PLog.LILNE3);
-
         }
+
         if (!filmsPerSenderBlockedDate.isEmpty()) {
+            list.add(PLog.LILNE3);
             list.add("== nach Datum geblockte Filme ==");
 
             sumFilms = 0;
@@ -172,8 +171,6 @@ public class ReadFilmlist {
             });
             list.add("--");
             list.add(PStringUtils.increaseString(KEYSIZE, "=> Summe") + ": " + sumFilms);
-            list.add(PLog.LILNE3);
-
         }
     }
 
@@ -193,8 +190,6 @@ public class ReadFilmlist {
     private void readData(JsonParser jp, Filmlist filmlist) throws IOException {
         JsonToken jsonToken;
         ArrayList listChannel = new ArrayList(Arrays.asList(ProgConfig.SYSTEM_LOAD_NOT_SENDER.getStringProperty().getValue().split(",")));
-
-        PDuration.counterStart("=====> readData");
 
         if (jp.nextToken() != JsonToken.START_OBJECT) {
             throw new IllegalStateException("Expected data to start with an Object");
@@ -260,7 +255,6 @@ public class ReadFilmlist {
             }
 
         }
-        PDuration.counterStop("=====> readData");
 
     }
 

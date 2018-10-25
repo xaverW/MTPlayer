@@ -92,16 +92,19 @@ public class ImportNewFilmlist {
                 // dann eine komplette Liste laden
                 state = STATE.COMPLETE;
                 filmlist.clear();
+                PLog.addSysLog("komplette Filmliste laden");
                 ret = loadList(filmlist);
             } else {
                 // nur ein Update laden
                 state = STATE.DIFF;
+                PLog.addSysLog("Diffliste laden");
                 ret = loadList(filmlistDiff);
                 if (!ret || filmlistDiff.isEmpty()) {
                     // wenn diff, dann nochmal mit einer kompletten Liste versuchen
                     state = STATE.COMPLETE;
                     filmlist.clear();
                     filmlistDiff.clear();
+                    PLog.addSysLog("Diffliste war leer, komplette Filmliste laden");
                     ret = loadList(filmlist);
                 }
             }
@@ -128,7 +131,7 @@ public class ImportNewFilmlist {
                 ret = loadFileUrl(updateUrl, list, days);
                 if (ret && i < 1 && list.isOlderThan(5 * 60 * 60 /* sekunden */)) {
                     // Laden hat geklappt ABER: Liste zu alt, dann gibts einen 2. Versuch
-                    PLog.sysLog("Filmliste zu alt, neuer Versuch");
+                    PLog.addSysLog("Filmliste zu alt, neuer Versuch");
                     ret = false;
                 }
 

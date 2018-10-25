@@ -375,7 +375,7 @@ public class Filmlist extends SimpleListProperty<Film> {
     public boolean isOlderThan(int second) {
         final int ret = getAge();
         if (ret != 0) {
-            PLog.sysLog("Die Filmliste ist " + ret / 60 + " Minuten alt");
+            PLog.addSysLog("Die Filmliste ist " + ret / 60 + " Minuten alt");
         }
         return ret > second;
     }
