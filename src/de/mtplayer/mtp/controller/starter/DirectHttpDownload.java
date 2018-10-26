@@ -18,7 +18,6 @@ package de.mtplayer.mtp.controller.starter;
 
 import de.mtplayer.mLib.tools.MLBandwidthTokenBucket;
 import de.mtplayer.mLib.tools.MLInputStream;
-import de.mtplayer.mLib.tools.MLProperty;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
@@ -164,7 +163,8 @@ public class DirectHttpDownload extends Thread {
                 } else if (p >= DownloadConstants.PROGRESS_FINISHED) {
                     p = DownloadConstants.PROGRESS_NEARLY_FINISHED;
                 }
-                MLProperty.setProperty(download.progressProperty(), p); // todo-> das kann dazu führen, dass der check (99,5%) nicht klappt
+                download.setProgress(p);
+//                MLProperty.setProperty(download.progressProperty(), p); // todo-> das kann dazu führen, dass der check (99,5%) nicht klappt
                 if (p != pp) {
                     pp = p;
 

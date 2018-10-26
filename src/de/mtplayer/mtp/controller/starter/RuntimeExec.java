@@ -16,7 +16,6 @@
 
 package de.mtplayer.mtp.controller.starter;
 
-import de.mtplayer.mLib.tools.MLProperty;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadConstants;
 import de.mtplayer.mtp.controller.data.download.DownloadSize;
@@ -238,7 +237,8 @@ public class RuntimeExec {
         private void notifyDouble(double d) {
             // d = 0 - 100%
             final double pNeu = d / 100;
-            MLProperty.setProperty(download.progressProperty(), pNeu);
+            download.setProgress(pNeu);
+//            MLProperty.setProperty(download.progressProperty(), pNeu);
             if (pNeu != percent) {
                 percent = pNeu;
                 if (percent_start == DownloadConstants.PROGRESS_NOT_STARTED) {

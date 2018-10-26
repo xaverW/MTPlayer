@@ -54,7 +54,19 @@ public class DownloadList extends SimpleListProperty<Download> {
         this.downloadListStarts = new DownloadListStarts(progData, this);
         this.downloadListStartStop = new DownloadListStartStop(progData, this);
         this.downloadListInfoAll = new DownloadListInfoAll(progData, this);
+
+//        Listener.addListener(new Listener(Listener.EREIGNIS_TIMER, MsgMemController.class.getSimpleName()) {
+//            @Override
+//            public void ping() {
+//                setGuiProps();
+//            }
+//        });
+
     }
+
+//    private void setGuiProps() {
+//        this.stream().forEach(download -> download.setGuiPropertys());
+//    }
 
     public boolean getDownloadsChanged() {
         return downloadsChanged.get();

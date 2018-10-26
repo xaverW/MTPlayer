@@ -16,7 +16,6 @@
 
 package de.mtplayer.mtp.controller.data.download;
 
-import de.mtplayer.mLib.tools.MLProperty;
 import de.mtplayer.mLib.tools.StringFormatters;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.data.SetData;
@@ -103,19 +102,23 @@ public final class Download extends DownloadProps {
     }
 
     public void setStateStartedWaiting() {
-        MLProperty.setProperty(stateProperty(), DownloadConstants.STATE_STARTED_WAITING);
+        setState(DownloadConstants.STATE_STARTED_WAITING);
+//        MLProperty.setProperty(stateProperty(), DownloadConstants.STATE_STARTED_WAITING);
     }
 
     public void setStateStartedRun() {
-        MLProperty.setProperty(stateProperty(), DownloadConstants.STATE_STARTED_RUN);
+        setState(DownloadConstants.STATE_STARTED_RUN);
+//        MLProperty.setProperty(stateProperty(), DownloadConstants.STATE_STARTED_RUN);
     }
 
     public void setStateFinished() {
-        MLProperty.setProperty(stateProperty(), DownloadConstants.STATE_FINISHED);
+        setState(DownloadConstants.STATE_FINISHED);
+//        MLProperty.setProperty(stateProperty(), DownloadConstants.STATE_FINISHED);
     }
 
     public void setStateError() {
-        MLProperty.setProperty(stateProperty(), DownloadConstants.STATE_ERROR);
+        setState(DownloadConstants.STATE_ERROR);
+//        MLProperty.setProperty(stateProperty(), DownloadConstants.STATE_ERROR);
     }
 
     //=======================================
@@ -150,7 +153,8 @@ public final class Download extends DownloadProps {
     public void resetDownload() {
         // stoppen und alles zurücksetzen
         stopDownload();
-        MLProperty.setProperty(stateProperty(), DownloadConstants.STATE_INIT);
+        setState(DownloadConstants.STATE_INIT);
+//        MLProperty.setProperty(stateProperty(), DownloadConstants.STATE_INIT);
     }
 
     public void restartDownload() {
@@ -162,8 +166,11 @@ public final class Download extends DownloadProps {
         setBandwidth("");
         setNr(DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED);
 
-        MLProperty.setProperty(stateProperty(), DownloadConstants.STATE_INIT);
-        MLProperty.setProperty(progressProperty(), DownloadConstants.PROGRESS_NOT_STARTED);
+        setState(DownloadConstants.STATE_INIT);
+        setProgress(DownloadConstants.PROGRESS_NOT_STARTED);
+
+//        MLProperty.setProperty(stateProperty(), DownloadConstants.STATE_INIT);
+//        MLProperty.setProperty(progressProperty(), DownloadConstants.PROGRESS_NOT_STARTED);
     }
 
     public void stopDownload() {
@@ -171,8 +178,11 @@ public final class Download extends DownloadProps {
             // damit fehlerhafte nicht wieder starten
             getStart().setRestartCounter(ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getInt());
         } else {
-            MLProperty.setProperty(stateProperty(), DownloadConstants.STATE_STOPPED);
-            MLProperty.setProperty(progressProperty(), DownloadConstants.PROGRESS_NOT_STARTED);
+            setState(DownloadConstants.STATE_STOPPED);
+            setProgress(DownloadConstants.PROGRESS_NOT_STARTED);
+
+//            MLProperty.setProperty(stateProperty(), DownloadConstants.STATE_STOPPED);
+//            MLProperty.setProperty(progressProperty(), DownloadConstants.PROGRESS_NOT_STARTED);
         }
 
         final DownloadSize downSize = getDownloadSize();
@@ -314,10 +324,10 @@ public final class Download extends DownloadProps {
         for (int i = 0; i < properties.length; ++i) {
             ret.properties[i].setValue(this.properties[i].getValue());
         }
+
         ret.setXmlFromProps();
 
         ret.film = film;
-
         ret.setStart(getStart());
         ret.pSet = pSet;
         ret.abo = abo;

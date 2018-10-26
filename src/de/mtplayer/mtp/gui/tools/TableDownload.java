@@ -75,12 +75,12 @@ public class TableDownload {
         titleColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Download, Integer> startColumn = new TableColumn<>("");
-        startColumn.setCellValueFactory(new PropertyValueFactory<>("state"));
+        startColumn.setCellValueFactory(new PropertyValueFactory<>("guiState"));
         startColumn.setCellFactory(cellFactoryStart);
         startColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<Download, Double> progressColumn = new TableColumn<>("Fortschritt"); //müssen sich unterscheiden!!
-        progressColumn.setCellValueFactory(new PropertyValueFactory<>("progress"));
+        progressColumn.setCellValueFactory(new PropertyValueFactory<>("guiProgress"));
         progressColumn.setCellFactory(cellFactoryProgress);
         progressColumn.getStyleClass().add("alignCenterLeft");
 

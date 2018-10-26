@@ -29,6 +29,7 @@ public class Listener implements EventListener {
 
     public static final int EREIGNIS_BLACKLIST_GEAENDERT = count++;
     public static final int EREIGNIS_TIMER = count++;
+    public static final int EREIGNIS_TIMER_HALF_SECOND = count++;
 
     public static final int EREIGNIS_MEDIA_DB_START = count++;
     public static final int EREIGNIS_MEDIA_DB_STOP = count++;

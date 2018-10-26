@@ -16,7 +16,10 @@
 
 package de.mtplayer.mtp.controller.starter;
 
-import de.mtplayer.mLib.tools.*;
+import de.mtplayer.mLib.tools.MDate;
+import de.mtplayer.mLib.tools.MLInputStream;
+import de.mtplayer.mLib.tools.SizeTools;
+import de.mtplayer.mLib.tools.StringFormatters;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
@@ -244,11 +247,13 @@ public class StarterClass {
         finishedMsg(download);
 
         if (download.isStateError()) {
-            MLProperty.setProperty(download.progressProperty(), DownloadConstants.PROGRESS_NOT_STARTED);
+            download.setProgress(DownloadConstants.PROGRESS_NOT_STARTED);
+//            MLProperty.setProperty(download.progressProperty(), DownloadConstants.PROGRESS_NOT_STARTED);
         } else if (!download.isStateStoped()) {
             //dann ist er gelaufen
             start.setTimeLeft(0);
-            MLProperty.setProperty(download.progressProperty(), DownloadConstants.PROGRESS_FINISHED);
+            download.setProgress(DownloadConstants.PROGRESS_FINISHED);
+//            MLProperty.setProperty(download.progressProperty(), DownloadConstants.PROGRESS_FINISHED);
             download.getDownloadSize().setAktFileSize(-1);
 
             if (start.getInputStream() != null) {

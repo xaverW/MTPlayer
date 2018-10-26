@@ -17,10 +17,14 @@
 package de.mtplayer.mtp.controller.data.download;
 
 import de.mtplayer.mLib.tools.Data;
+import de.mtplayer.mLib.tools.GuiProperty;
 import de.mtplayer.mLib.tools.MDate;
 import javafx.beans.property.*;
 
 public class DownloadProps extends DownloadXml {
+
+    private final IntegerProperty guiState = new SimpleIntegerProperty(DownloadConstants.STATE_INIT);
+    private final DoubleProperty guiProgress = new SimpleDoubleProperty(DownloadConstants.PROGRESS_NOT_STARTED);
 
     private final IntegerProperty nr = new SimpleIntegerProperty(DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED);
     private final IntegerProperty filmNr = new SimpleIntegerProperty(DownloadConstants.FILM_NUMBER_NOT_FOUND);
@@ -75,6 +79,9 @@ public class DownloadProps extends DownloadXml {
             destFileName, destPath, destPathFile,
             art, source, placedBack, infoFile, subtitle};
 
+//    public DownloadProps() {
+//        addGuiListener();
+//    }
 
     public MDate getFilmDate() {
         return filmDate.get();
@@ -93,6 +100,56 @@ public class DownloadProps extends DownloadXml {
         d.setDatum(date, time);
         this.filmDate.setValue(d);
     }
+
+//    // gui-property
+//
+//    boolean guiPropertyStateChanged = false;
+//    boolean guiPropertyProgressChanged = false;
+//
+//    private void addGuiListener() {
+//        // das ist so, oder so nicht optimal. Sofort setzen ist "flüssiger" aber bei zig laufenden Downloads
+//        // kommst dann zu hängern
+//
+//        state.addListener((observable, oldValue, newValue) -> {
+//            guiPropertyStateChanged = true;
+//            setGuiPropertys();
+//        });
+//        progress.addListener((observable, oldValue, newValue) -> {
+//            guiPropertyProgressChanged = true;
+//            setGuiPropertys();
+//        });
+//
+//    }
+//
+//    void setGuiPropertys() {
+//        if (guiPropertyStateChanged) {
+//            guiPropertyStateChanged = false;
+//            GuiProperty.setProperty(guiState, getState());
+//        }
+//        if (guiPropertyProgressChanged) {
+//            guiPropertyProgressChanged = false;
+//            GuiProperty.setProperty(guiProgress, getProgress());
+//        }
+//    }
+
+    public int getGuiState() {
+        return guiState.get();
+    }
+
+    public IntegerProperty guiStateProperty() {
+        return guiState;
+    }
+
+    public double getGuiProgress() {
+        return guiProgress.get();
+    }
+
+    public DoubleProperty guiProgressProperty() {
+        return guiProgress;
+    }
+
+
+    // property
 
     public int getNr() {
         return nr.get();
@@ -170,24 +227,26 @@ public class DownloadProps extends DownloadXml {
         return state.get();
     }
 
-    public IntegerProperty stateProperty() {
-        return state;
-    }
+//    public IntegerProperty stateProperty() {
+//        return state;
+//    }
 
     public void setState(int state) {
         this.state.set(state);
+        GuiProperty.setProperty(guiState, getState());
     }
 
     public Double getProgress() {
         return progress.getValue();
     }
 
-    public DoubleProperty progressProperty() {
-        return progress;
-    }
+//    public DoubleProperty progressProperty() {
+//        return progress;
+//    }
 
-    public void setProgress(Double progress) {
+    public synchronized void setProgress(Double progress) {
         this.progress.setValue(progress);
+        GuiProperty.setProperty(guiProgress, getProgress());
     }
 
     public String getRemaining() {

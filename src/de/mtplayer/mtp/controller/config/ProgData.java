@@ -130,11 +130,19 @@ public class ProgData {
 
     }
 
+    boolean oneSecond = false;
+
     public void startTimer() {
         // extra starten, damit er im Einrichtungsdialog nicht dazwischen funkt
         Timeline timeline = new Timeline(new KeyFrame(
-                Duration.millis(1000), ae -> {
-            doTimerWork();
+                Duration.millis(500), ae -> {
+
+            oneSecond = !oneSecond;
+            if (oneSecond) {
+                doTimerWorkOneSecond();
+            }
+            doTimerWorkHalfSecond();
+
         }));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.setDelay(Duration.seconds(5));
@@ -142,9 +150,13 @@ public class ProgData {
         PDuration.onlyPing("Timer gestartet");
     }
 
-    private void doTimerWork() {
+    private void doTimerWorkOneSecond() {
         Platform.runLater(() -> downloadList.makeDownloadInfo());
         Listener.notify(Listener.EREIGNIS_TIMER, ProgData.class.getName());
+    }
+
+    private void doTimerWorkHalfSecond() {
+        Listener.notify(Listener.EREIGNIS_TIMER_HALF_SECOND, ProgData.class.getName());
     }
 
     public synchronized static final ProgData getInstance(String dir) {
