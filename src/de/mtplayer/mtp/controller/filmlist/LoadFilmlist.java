@@ -82,11 +82,11 @@ public class LoadFilmlist {
                                 ListenerFilmlistLoad.PROGRESS_INDETERMINATE, 0, false/* Fehler */));
 
 
-                PDuration.onlyPing("Filme laden: Ende");
+                PDuration.onlyPing("Filme geladen: Nachbearbeiten");
                 afterImportNewFilmlist(event);
-                PDuration.onlyPing("Filme nachbearbeiten: Ende");
+                stopMsg();
 
-                PLog.addSysLog("Filmliste laden, fertig");
+                PDuration.onlyPing("Filme nachbearbeiten: Ende");
 
                 // alles fertig ans Prog melden
                 notifyProgress.notifyEvent(NotifyProgress.NOTIFY.FINISHED, event);
@@ -130,9 +130,9 @@ public class LoadFilmlist {
             setPropLoadFilmlist(true);
             // nicht doppelt starten
 
+            PDuration.onlyPing("Filmliste laden: start");
             final List<String> logList = new ArrayList<>();
 
-            PDuration.onlyPing("Filmliste laden: start");
             startMsg();
             logList.add("");
             logList.add("Alte Liste erstellt  am: " + ProgData.getInstance().filmlist.genDate());
@@ -155,28 +155,24 @@ public class LoadFilmlist {
                 progData.filmlist.clear();
             }
 
+            progData.filmlistFiltered.clear();
+            setStop(false);
+
+            if (fileUrl.isEmpty()) {
+                // Filmeliste laden und Url automatisch ermitteln
+                logList.add("Filmliste laden (auto)");
+                importNewFilmliste.importFilmListAuto(progData.filmlist,
+                        diffListe, ProgConfig.SYSTEM_NUM_DAYS_FILMLIST.getInt());
+
+            } else {
+                // Filmeliste laden von URL/Datei
+                logList.add("Filmliste mit fester URL/Datei laden");
+                progData.filmlist.clear();
+                importNewFilmliste.importFilmlistFromFile(fileUrl,
+                        progData.filmlist, ProgConfig.SYSTEM_NUM_DAYS_FILMLIST.getInt());
+            }
+
             PLog.addSysLog(logList);
-            loadList(fileUrl);
-        }
-    }
-
-
-    private void loadList(String fileUrl) {
-        progData.filmlistFiltered.clear();
-        setStop(false);
-
-        if (fileUrl.isEmpty()) {
-            // Filmeliste laden und Url automatisch ermitteln
-            PLog.addSysLog("Filmliste laden (auto)");
-            importNewFilmliste.importFilmListAuto(progData.filmlist,
-                    diffListe, ProgConfig.SYSTEM_NUM_DAYS_FILMLIST.getInt());
-
-        } else {
-            // Filmeliste laden von URL/Datei
-            PLog.addSysLog("Filmliste mit fester URL/Datei laden");
-            progData.filmlist.clear();
-            importNewFilmliste.importFilmlistFromFile(fileUrl,
-                    progData.filmlist, ProgConfig.SYSTEM_NUM_DAYS_FILMLIST.getInt());
         }
     }
 
@@ -202,9 +198,7 @@ public class LoadFilmlist {
             if (!firstProgramStart) {
                 // gespeicherte Filmliste laden, macht beim ersten Programmstart keinen Sinn
                 new ReadFilmlist().readFilmlist(ProgInfos.getFilmListFile(),
-                        progData.filmlist, ProgConfig.SYSTEM_NUM_DAYS_FILMLIST.getInt(),
-                        // Datumcheck macht nur Sinn, wenn beim Programmstart auch ein Update gemacht werden soll
-                        ProgConfig.SYSTEM_LOAD_FILMS_ON_START.getBool() ? hashSet : null);
+                        progData.filmlist, ProgConfig.SYSTEM_NUM_DAYS_FILMLIST.getInt());
 
                 PDuration.onlyPing("Programmstart Filmliste laden: geladen");
             }
@@ -219,7 +213,8 @@ public class LoadFilmlist {
                                 ListenerFilmlistLoad.PROGRESS_INDETERMINATE, 0, false/* Fehler */));
 
                 PDuration.onlyPing("Programmstart Filmliste laden: neue Liste laden");
-                loadList("");
+                setPropLoadFilmlist(false);
+                loadFilmlist(false);
                 PDuration.onlyPing("Programmstart Filmliste laden: neue Liste geladen");
 
             } else {
@@ -302,10 +297,10 @@ public class LoadFilmlist {
         // beim Ändern von Abos gemacht wird
 
         final List<String> logList = new ArrayList<>();
-
         logList.add(PLog.LILNE3);
-        // wenn nur ein Update
+
         if (!diffListe.isEmpty()) {
+            // wenn nur ein Update
             progData.filmlist.updateList(diffListe, true/* Vergleich über Index, sonst nur URL */, true /* ersetzen */);
             progData.filmlist.metaData = diffListe.metaData;
             progData.filmlist.sort(); // jetzt sollte alles passen
