@@ -175,32 +175,46 @@ public class DownloadListStartStop {
      */
 
     public boolean startDownloads(Collection<Download> list, boolean alsoFinished) {
-        PDuration.counterStart("DownloadListStartStop.startDownloads");
-
-        PAlert.BUTTON answer = PAlert.BUTTON.UNKNOWN;
-        final ArrayList<Download> listDelDownloads = new ArrayList<>();
-        final ArrayList<Download> listStartDownloads = new ArrayList<>();
-        final ArrayList<Download> listDownloadsRemoveAboHistory = new ArrayList<>();
 
         if (list == null || list.isEmpty()) {
             return false;
         }
 
+        PDuration.counterStart("DownloadListStartStop.startDownloads");
+        final ArrayList<Download> listStartDownloads = new ArrayList<>();
+
         // das Starten von neuen Downloads etwas Pausieren
         progData.starterClass.setPaused();
 
-
         // nicht gestartete einfach starten
-        list.stream().filter(download -> download.isStateInit()).forEach(download -> {
-            listStartDownloads.add(download);
-        });
+        list.stream().filter(download -> download.isStateInit()).forEach(download ->
+                listStartDownloads.add(download));
+
+        if (alsoFinished) {
+            if (!startAlsoFinishedDownloads(list, listStartDownloads)) {
+                return false;
+            }
+        }
+
+        // alle Downloads starten/wiederstarten
+        start(listStartDownloads);
+
+        PDuration.counterStop("DownloadListStartStop.startDownloads");
+        return true;
+    }
+
+    private boolean startAlsoFinishedDownloads(Collection<Download> list, ArrayList<Download> listStartDownloads) {
+
+        PAlert.BUTTON answer = PAlert.BUTTON.UNKNOWN;
+        final ArrayList<Download> listDelDownloads = new ArrayList<>();
+        final ArrayList<Download> listDownloadsRemoveAboHistory = new ArrayList<>();
 
         // bereits gestartete erst vorbehandeln: wenn er noch läuft/fertig ist gibts nix
         // fehlerhafte nur wenn gewollt
         for (Download download : list) {
 
             // abgebrochene starten
-            if (alsoFinished && download.isStateStoped()) {
+            if (download.isStateStoped()) {
                 listDelDownloads.add(download);
                 if (download.isAbo()) {
                     // wenn er schon feritg ist und ein Abos ist, Url auch aus dem Logfile löschen, der Film ist damit wieder auf "Anfang"
@@ -210,7 +224,7 @@ public class DownloadListStartStop {
             }
 
             //fehlerhafte nur wenn gewollt wieder starten
-            if (alsoFinished && download.isStateError()) {
+            if (download.isStateError()) {
                 if (answer.equals(PAlert.BUTTON.UNKNOWN)) {
                     answer = restartDownload(list.size(), download.arr[Download.DOWNLOAD_TITLE], answer);
                 }
@@ -233,9 +247,6 @@ public class DownloadListStartStop {
             }
         }
 
-        PDuration.counterStop("DownloadListStartStop.startDownloads");
-
-
         if (answer.equals(PAlert.BUTTON.CANCEL)) {
             // dann machmer nix
             return false;
@@ -247,8 +258,7 @@ public class DownloadListStartStop {
         // jetzt noch die Starts stoppen
         listDelDownloads.stream().forEach(download -> download.stopDownload());
 
-        // alle Downloads starten/wiederstarten
-        start(listStartDownloads);
         return true;
     }
+
 }

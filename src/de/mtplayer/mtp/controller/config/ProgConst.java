@@ -41,6 +41,7 @@ public class ProgConst {
     public static final int CHECK_FILMLIST_UPDATE = 30 * 60; // 30 Minuten
     public static final int CHECK_FILMLIST_UPDATE_PROGRAMSTART = CHECK_FILMLIST_UPDATE - 5 * 60; // 5 Minuten
 
+    public static final int DOWNLOAD_DIALOG_LOAD_MAX_FILESIZE_FROM_WEB = 10;
 
     // beim Programmstart wird die Liste geladen wenn sie älter ist als ..
     public static final int ALTER_FILMLISTE_SEKUNDEN_FUER_AUTOUPDATE = 4 * 60 * 60;

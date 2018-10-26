@@ -20,6 +20,7 @@ import de.mtplayer.mLib.tools.DirFileChooser;
 import de.mtplayer.mLib.tools.FileNameUtils;
 import de.mtplayer.mLib.tools.SizeTools;
 import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.controller.data.ProgIcons;
@@ -55,6 +56,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class DownloadAddDialogController extends PDialogExtra {
 
@@ -335,12 +337,23 @@ public class DownloadAddDialogController extends PDialogExtra {
 
             downInfo[i].path = downInfo[i].download.getDestPath();
             downInfo[i].name = downInfo[i].download.getDestFileName();
-            downInfo[i].fileSize_HD = downInfo[i].film.isHd() ?
-                    FilmTools.getSizeFromWeb(downInfo[i].film, downInfo[i].film.getUrlForResolution(Film.RESOLUTION_HD)) : "";
-            downInfo[i].fileSize_high = FilmTools.getSizeFromWeb(downInfo[i].film,
-                    downInfo[i].film.getUrlForResolution(Film.RESOLUTION_NORMAL));
-            downInfo[i].fileSize_small = downInfo[i].film.isSmall() ?
-                    FilmTools.getSizeFromWeb(downInfo[i].film, downInfo[i].film.getUrlForResolution(Film.RESOLUTION_SMALL)) : "";
+
+            if (i < ProgConst.DOWNLOAD_DIALOG_LOAD_MAX_FILESIZE_FROM_WEB) {
+                downInfo[i].fileSize_HD = downInfo[i].film.isHd() ?
+                        FilmTools.getSizeFromWeb(downInfo[i].film, downInfo[i].film.getUrlForResolution(Film.RESOLUTION_HD)) : "";
+                downInfo[i].fileSize_high = FilmTools.getSizeFromWeb(downInfo[i].film,
+                        downInfo[i].film.getUrlForResolution(Film.RESOLUTION_NORMAL));
+                downInfo[i].fileSize_small = downInfo[i].film.isSmall() ?
+                        FilmTools.getSizeFromWeb(downInfo[i].film, downInfo[i].film.getUrlForResolution(Film.RESOLUTION_SMALL)) : "";
+
+            } else {
+                // filesize->wenn die Liste länger als ~10 ist, dauert das viel zu lang
+                downInfo[i].fileSize_HD = "";
+                downInfo[i].fileSize_high = FilmTools.getSizeFromWeb(downInfo[i].film,
+                        downInfo[i].film.getUrlForResolution(Film.RESOLUTION_NORMAL));
+                downInfo[i].fileSize_small = "";
+            }
+
 
             downInfo[i].info = downInfo[i].psetData.isInfoFile();
 
@@ -609,6 +622,8 @@ public class DownloadAddDialogController extends PDialogExtra {
         }
 
         saveComboPath(cbPath);
+        List<Download> list = new ArrayList<>();
+
         for (DownInfo d : downInfo) {
             // jetzt wird mit den angegebenen Pfaden gearbeitet
             Download download = new Download(d.psetData,
@@ -623,11 +638,13 @@ public class DownloadAddDialogController extends PDialogExtra {
             download.setInfoFile(d.info);
             download.setSubtitle(d.subtitle);
 
-            progData.downloadList.addWithNr(download); // todo -> als Liste starten
-            if (cbxStart.isSelected()) {
-                // und evtl. auch gleich starten
-                progData.downloadList.startDownloads(download);
-            }
+            list.add(download);
+        }
+
+        progData.downloadList.addWithNr(list);
+        if (cbxStart.isSelected()) {
+            // und evtl. auch gleich starten
+            progData.downloadList.startDownloads(list);
         }
 
         close();

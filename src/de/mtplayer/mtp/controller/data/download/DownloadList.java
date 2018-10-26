@@ -99,6 +99,11 @@ public class DownloadList extends SimpleListProperty<Download> {
         return ret;
     }
 
+    public synchronized void addWithNr(List<Download> list) {
+        list.stream().forEach(download -> super.add(download));
+        setNumbersInList();
+    }
+
     @Override
     public synchronized boolean removeAll(Collection<?> objects) {
         return super.removeAll(objects);
@@ -324,6 +329,12 @@ public class DownloadList extends SimpleListProperty<Download> {
 
     public void startDownloads() {
         startDownloads(this, false);
+    }
+
+    public void startDownloads(Collection<Download> list) {
+        if (downloadListStartStop.startDownloads(list, false)) {
+            setDownloadsChanged();
+        }
     }
 
     public void startDownloads(Collection<Download> list, boolean alsoFinished) {
