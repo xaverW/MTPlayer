@@ -55,7 +55,12 @@ public class Listener implements EventListener {
         this.eventClass = eventClass;
     }
 
+    public void pingFx() {
+        // das passiert im application thread
+    }
+
     public void ping() {
+        // das ist asynchron zum application thread
     }
 
     public static synchronized void addListener(Listener listener) {
@@ -72,15 +77,9 @@ public class Listener implements EventListener {
         listeners.stream().forEach(listener -> {
 
             for (final int event : listener.event) {
-
+                // um einen Kreislauf zu verhindern
                 if (event == eventNotify && !listener.eventClass.equals(eventClass)) {
-                    // um einen Kreislauf zu verhindern
-                    try {
-                        //System.out.println("Ping: " + ereignis);
-                        listener.pingen();
-                    } catch (final Exception ex) {
-                        PLog.errorLog(512021043, ex);
-                    }
+                    listener.pingen();
                 }
 
             }
@@ -91,8 +90,10 @@ public class Listener implements EventListener {
     }
 
     private void pingen() {
+        //System.out.println("Ping: " + ereignis);
         try {
-            Platform.runLater(() -> ping());
+            ping();
+            Platform.runLater(() -> pingFx());
         } catch (final Exception ex) {
             PLog.errorLog(698989743, ex);
         }

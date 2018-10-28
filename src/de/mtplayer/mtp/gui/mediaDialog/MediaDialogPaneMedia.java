@@ -66,7 +66,7 @@ public class MediaDialogPaneMedia extends ScrollPane {
         initPanel();
         listenerDbStop = new Listener(Listener.EREIGNIS_MEDIA_DB_STOP, MediaDialogPaneMedia.class.getSimpleName()) {
             @Override
-            public void ping() {
+            public void pingFx() {
                 filter(searchStr);
             }
         };

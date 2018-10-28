@@ -148,26 +148,22 @@ public class StatusBarController extends AnchorPane {
             @Override
             public void finished(ListenerFilmlistLoadEvent event) {
                 stopTimer = false;
-                setStatusbar();
+                Platform.runLater(() -> setStatusbarIndex(statusbarIndex));
             }
         });
 
         Listener.addListener(new Listener(Listener.EREIGNIS_TIMER, StatusBarController.class.getSimpleName()) {
             @Override
-            public void ping() {
+            public void pingFx() {
                 try {
                     if (!stopTimer) {
-                        setStatusbar();
+                        setStatusbarIndex(statusbarIndex);
                     }
                 } catch (final Exception ex) {
                     PLog.errorLog(936251087, ex);
                 }
             }
         });
-    }
-
-    public void setStatusbar() {
-        Platform.runLater(() -> setStatusbarIndex(statusbarIndex));
     }
 
     public void setStatusbarIndex(StatusbarIndex statusbarIndex) {

@@ -273,10 +273,12 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     public void setFilmShown() {
+        // Filme als gesehen markieren
         setFilmShown(true);
     }
 
     public void setFilmNotShown() {
+        // Filme als ungesehen markieren
         setFilmShown(false);
     }
 
@@ -328,13 +330,24 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private void initListener() {
+
+//        Listener.addListener(new Listener(Listener.EREIGNIS_TIMER_HALF_SECOND, DownloadGuiController.class.getSimpleName()) {
+//            public void pingFx() {
+//                // todo?? unschön, aber bei vielen Downloads/großer Bandbreite wird ständig das GUI aktualisiert
+//                if (sceneProperty().get() != null) {
+//                    System.out.println("refrashTable");
+//                    table.refresh();
+//                }
+//            }
+//        });
+
         Listener.addListener(new Listener(Listener.EREIGNIS_TIMER, DownloadGuiController.class.getSimpleName()) {
             @Override
-            public void ping() {
+            public void pingFx() {
                 if (!ProgConfig.FILTER_DOWNLOAD_STATE.get().isEmpty()) {
                     // dann den Filter aktualisieren
                     // todo?? bei vielen Downloads kann das sonst die ganze Tabelle ausbremsen
-                    Platform.runLater(() -> setFilter());
+                    setFilter();
                 }
             }
         });
@@ -344,11 +357,11 @@ public class DownloadGuiController extends AnchorPane {
 
         Listener.addListener(new Listener(Listener.EREIGNIS_BLACKLIST_GEAENDERT, DownloadGuiController.class.getSimpleName()) {
             @Override
-            public void ping() {
+            public void pingFx() {
                 if (Boolean.parseBoolean(ProgConfig.ABO_SEARCH_NOW.get())
                         && Boolean.parseBoolean(ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.get())) {
                     // nur auf Blacklist reagieren, wenn auch für Abos eingeschaltet
-                    Platform.runLater(() -> progData.worker.searchForAbosAndMaybeStart());
+                    progData.worker.searchForAbosAndMaybeStart();
                 }
             }
         });
@@ -438,6 +451,7 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private void setFilmShown(boolean shown) {
+        // Filme als (un)gesehen markieren
         final ArrayList<Download> arrayDownloads = getSelList();
         final ArrayList<Film> filmArrayList = new ArrayList<>();
 

@@ -75,12 +75,12 @@ public class TableDownload {
         titleColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Download, Integer> startColumn = new TableColumn<>("");
-        startColumn.setCellValueFactory(new PropertyValueFactory<>("guiState"));
-        startColumn.setCellFactory(cellFactoryStart);
+        startColumn.setCellValueFactory(new PropertyValueFactory<>("state"));
+        startColumn.setCellFactory(cellFactoryState);
         startColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<Download, Double> progressColumn = new TableColumn<>("Fortschritt"); //müssen sich unterscheiden!!
-        progressColumn.setCellValueFactory(new PropertyValueFactory<>("guiProgress"));
+        progressColumn.setCellValueFactory(new PropertyValueFactory<>("progress"));
         progressColumn.setCellFactory(cellFactoryProgress);
         progressColumn.getStyleClass().add("alignCenterLeft");
 
@@ -231,7 +231,7 @@ public class TableDownload {
 
     }
 
-    private Callback<TableColumn<Download, Integer>, TableCell<Download, Integer>> cellFactoryStart
+    private Callback<TableColumn<Download, Integer>, TableCell<Download, Integer>> cellFactoryState
             = (final TableColumn<Download, Integer> param) -> {
 
         final TableCell<Download, Integer> cell = new TableCell<Download, Integer>() {

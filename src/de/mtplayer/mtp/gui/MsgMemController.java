@@ -19,7 +19,6 @@ package de.mtplayer.mtp.gui;
 
 import de.mtplayer.mLib.tools.Functions;
 import de.mtplayer.mtp.gui.tools.Listener;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -61,8 +60,8 @@ public class MsgMemController extends AnchorPane {
 
         Listener.addListener(new Listener(Listener.EREIGNIS_TIMER, MsgMemController.class.getSimpleName()) {
             @Override
-            public void ping() {
-                search();
+            public void pingFx() {
+                searchInfos();
             }
         });
     }
@@ -107,12 +106,6 @@ public class MsgMemController extends AnchorPane {
         lineChart.getYAxis().setLabel("[MByte]");
         lineChart.setAnimated(false);
         lineChart.setCreateSymbols(false);
-    }
-
-    private synchronized void search() {
-        Platform.runLater(() -> {
-            searchInfos();
-        });
     }
 
     private synchronized void searchInfos() {

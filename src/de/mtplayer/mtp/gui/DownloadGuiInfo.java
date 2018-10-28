@@ -51,7 +51,7 @@ public class DownloadGuiInfo {
 
         Listener.addListener(new Listener(Listener.EREIGNIS_TIMER, DownloadGuiInfo.class.getSimpleName()) {
             @Override
-            public void ping() {
+            public void pingFx() {
                 setInfoText();
             }
         });

@@ -261,7 +261,7 @@ public class FilmGuiController extends AnchorPane {
         Listener.addListener(new Listener(new int[]{Listener.EREIGNIS_GUI_COLOR_CHANGED, Listener.EREIGNIS_GUI_HISTORY_CHANGED},
                 FilmGuiController.class.getSimpleName()) {
             @Override
-            public void ping() {
+            public void pingFx() {
 //                tableView.refresh();
                 Table.refresh_table(tableView);
             }

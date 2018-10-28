@@ -66,14 +66,14 @@ public class MediaDialogController extends PDialog {
 
         listenerDbStart = new Listener(Listener.EREIGNIS_MEDIA_DB_START, MediaDialogController.class.getSimpleName()) {
             @Override
-            public void ping() {
+            public void pingFx() {
                 // neue DB suchen
                 txtSearch.setDisable(true);
             }
         };
         listenerDbStop = new Listener(Listener.EREIGNIS_MEDIA_DB_STOP, MediaDialogController.class.getSimpleName()) {
             @Override
-            public void ping() {
+            public void pingFx() {
                 // neue DB liegt vor
                 txtSearch.setDisable(false);
             }

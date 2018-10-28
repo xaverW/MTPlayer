@@ -22,7 +22,6 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadConstants;
 import de.mtplayer.mtp.gui.tools.Listener;
-import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -70,8 +69,8 @@ public class DownloadGuiChart {
 
         Listener.addListener(new Listener(Listener.EREIGNIS_TIMER, DownloadGuiChart.class.getSimpleName()) {
             @Override
-            public void ping() {
-                search();
+            public void pingFx() {
+                searchInfos();
             }
         });
 
@@ -165,9 +164,6 @@ public class DownloadGuiChart {
     // ============================
     // Daten generieren
     // ============================
-    private synchronized void search() {
-        Platform.runLater(() -> searchInfos());
-    }
 
     private synchronized void searchInfos() {
         boolean found;

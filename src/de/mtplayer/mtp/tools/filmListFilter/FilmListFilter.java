@@ -45,7 +45,7 @@ public class FilmListFilter {
 
         Listener.addListener(new Listener(Listener.EREIGNIS_BLACKLIST_GEAENDERT, FilmListFilter.class.getSimpleName()) {
             @Override
-            public void ping() {
+            public void pingFx() {
                 filterList();
             }
         });
