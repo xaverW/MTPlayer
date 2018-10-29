@@ -21,6 +21,7 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
+import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
@@ -41,8 +42,10 @@ public class MediaConfigPaneMediaController extends AnchorPane {
     private final BooleanProperty accordionProp = ProgConfig.MEDIA_CONFIG_DIALOG_ACCORDION.getBooleanProperty();
     ScrollPane scrollPane = new ScrollPane();
 
-    BooleanProperty prefSuff = ProgConfig.MEDIA_DB_WITH_OUT_SUFFIX.getBooleanProperty();
-    StringProperty prefSuffStr = ProgConfig.MEDIA_DB_SUFFIX.getStringProperty();
+    BooleanProperty propSuff = ProgConfig.MEDIA_DB_WITH_OUT_SUFFIX.getBooleanProperty();
+    StringProperty propSuffStr = ProgConfig.MEDIA_DB_SUFFIX.getStringProperty();
+    BooleanProperty propNoHiddenFiles = ProgConfig.MEDIA_DB_NO_HIDDEN_FILES.getBooleanProperty();
+
     private final Stage stage;
 
     public MediaConfigPaneMediaController(Stage stage) {
@@ -108,16 +111,24 @@ public class MediaConfigPaneMediaController extends AnchorPane {
         rbWithOutSuff.setToggleGroup(tg);
         rbWithSuff.setToggleGroup(tg);
 
-        rbWithSuff.setSelected(!prefSuff.getValue());
-        rbWithOutSuff.selectedProperty().bindBidirectional(prefSuff);
+        rbWithSuff.setSelected(!propSuff.getValue());
+        rbWithOutSuff.selectedProperty().bindBidirectional(propSuff);
 
         TextField txtSuff = new TextField();
-        txtSuff.textProperty().bindBidirectional(prefSuffStr);
+        txtSuff.textProperty().bindBidirectional(propSuffStr);
 
-        gridPane.add(rbWithOutSuff, 0, 0);
-        gridPane.add(btnHelp, 1, 0);
-        gridPane.add(rbWithSuff, 0, 1);
-        gridPane.add(txtSuff, 0, 2);
+
+        final PToggleSwitch tglNoHiddenFiles = new PToggleSwitch("keine versteckten Dateien suchen:", false, false);
+        tglNoHiddenFiles.selectedProperty().bindBidirectional(propNoHiddenFiles);
+
+        int row = 0;
+        gridPane.add(rbWithOutSuff, 0, row);
+        gridPane.add(btnHelp, 1, row);
+        gridPane.add(rbWithSuff, 0, ++row);
+        gridPane.add(txtSuff, 0, ++row, 2, 1);
+
+        gridPane.add(new Label(" "), 0, ++row);
+        gridPane.add(tglNoHiddenFiles, 0, ++row);
 
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow());
 

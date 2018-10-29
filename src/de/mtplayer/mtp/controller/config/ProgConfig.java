@@ -164,6 +164,7 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs MEDIA_DIALOG_SIZE = addNewKey("media-dialog-size", "800:700");
     public static MLConfigs MEDIA_DB_SUFFIX = addNewKey("media-db-suffix");
     public static MLConfigs MEDIA_DB_WITH_OUT_SUFFIX = addNewKey("media-db-with-out-suffix");
+    public static MLConfigs MEDIA_DB_NO_HIDDEN_FILES = addNewKey("media-db-no-hidden-files");
 
     // Filter
     public static MLConfigs FILTER_ABO_SENDER = addNewKey("filter-abo-sender");

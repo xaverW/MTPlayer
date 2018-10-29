@@ -359,7 +359,11 @@ public class HelpText {
             "Suffixe können durch \"Komma\" getrennt angegeben werden: " +
             "\"txt,xml\" besagt, Dateien die mit \".txt\" oder \".xml\" enden " +
             "werden nicht - oder nur diese werden - in den Index " +
-            "aufgenommen.";
+            "aufgenommen." +
+            PConst.LINE_SEPARATORx2 +
+            "\"keine versteckten Dateien suchen\" besagt, dass eben diese Dateien nicht in die Mediensammlung " +
+            "aufgenommen werden, unabhängig davon ob die Datei in das Schema oben passen würde.";
+
 
     public static final String EXTERN_MEDIA_COLLECTION = "Externe Mediensammlungen werden nicht bei " +
             "jedem Programmstart neu eingelesen. Die können dadurch auf externen Medien liegen und " +

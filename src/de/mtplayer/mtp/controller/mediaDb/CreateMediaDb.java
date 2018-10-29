@@ -40,7 +40,8 @@ public class CreateMediaDb implements Runnable {
     private String[] suffix;
     private List mediaDataArrayList = new ArrayList<MediaData>();
 
-    final boolean withoutSuffix = Boolean.parseBoolean(ProgConfig.MEDIA_DB_WITH_OUT_SUFFIX.get());
+    final boolean withoutSuffix = ProgConfig.MEDIA_DB_WITH_OUT_SUFFIX.getBool();
+    final boolean noHiddenFiles = ProgConfig.MEDIA_DB_NO_HIDDEN_FILES.getBool();
 
     /**
      * duchsucht die vom User angelegten Pfade für die interne Mediensammlung
@@ -153,12 +154,20 @@ public class CreateMediaDb implements Runnable {
         if (dir == null) {
             return;
         }
+
         final File[] files = dir.listFiles();
         if (files != null) {
             for (final File file : files) {
                 if (file.isDirectory()) {
                     searchFile(file, mediaCollectionData);
-                } else if (checkSuffix(suffix, file.getName())) {
+                } else {
+                    if (noHiddenFiles && file.isHidden()) {
+                        continue;
+                    }
+                    if (!checkSuffix(suffix, file.getName())) {
+                        continue;
+                    }
+
                     mediaDataArrayList.add(new MediaData(file.getName(), file.getParent().intern(),
                             file.length(), mediaCollectionData));
                 }
@@ -167,20 +176,28 @@ public class CreateMediaDb implements Runnable {
     }
 
     private void getSuffix() {
-        suffix = ProgConfig.MEDIA_DB_SUFFIX.get().split(",");
-        for (int i = 0; i < suffix.length; ++i) {
-            suffix[i] = suffix[i].toLowerCase();
-            if (!suffix[i].isEmpty() && !suffix[i].startsWith(".")) {
-                suffix[i] = '.' + suffix[i];
+        String[] arr = ProgConfig.MEDIA_DB_SUFFIX.get().split(",");
+        ArrayList<String> list = new ArrayList<>();
+        for (int i = 0; i < arr.length; ++i) {
+            String str = arr[i].trim().toLowerCase();
+            if (str.isEmpty()) {
+                continue;
             }
+
+            if (!str.startsWith(".")) {
+                str = "." + str;
+            }
+
+            list.add(str);
         }
+        suffix = list.toArray(new String[]{});
     }
 
     private boolean checkSuffix(String[] str, String url) {
         // liefert TRUE wenn die Datei in die Mediensammlung kommt
         // prüfen ob url mit einem Argument in str endet
         // wenn str leer dann true
-        if (str.length == 1 && str[0].isEmpty()) {
+        if (str.length == 0) {
             return true;
         }
 
