@@ -96,6 +96,24 @@ public class DownloadProps extends DownloadXml {
         this.filmDate.setValue(d);
     }
 
+    // GuiProps
+
+
+    public int getGuiState() {
+        return guiState.get();
+    }
+
+    public IntegerProperty guiStateProperty() {
+        return guiState;
+    }
+
+    public double getGioProgress() {
+        return gioProgress.get();
+    }
+
+    public DoubleProperty gioProgressProperty() {
+        return gioProgress;
+    }
 
     public int getNr() {
         return nr.get();
@@ -192,7 +210,7 @@ public class DownloadProps extends DownloadXml {
 
     public void setProgress(Double progress) {
         this.progress.setValue(progress);
-        this.gioProgress.setValue(progress);
+        Platform.runLater(() -> gioProgress.setValue(progress));
     }
 
     public String getRemaining() {

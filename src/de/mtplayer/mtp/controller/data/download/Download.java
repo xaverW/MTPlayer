@@ -150,6 +150,7 @@ public final class Download extends DownloadProps {
         resetDownload();
     }
 
+    // todo: reset, restart, stop????
     public void resetDownload() {
         // stoppen und alles zurücksetzen
         stopDownload();

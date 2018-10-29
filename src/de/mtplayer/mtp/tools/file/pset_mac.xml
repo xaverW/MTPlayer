@@ -2,7 +2,7 @@
 <Mediathek>
 
     <Programmset>
-        <Name>Linux Speichern</Name>
+        <Name>Mac Speichern</Name>
         <Praefix>http</Praefix>
         <Suffix>mp4,mp3,m4v,flv,m4a</Suffix>
         <Zielpfad>ZIELPFAD</Zielpfad>
@@ -17,15 +17,15 @@
     <Programm>
         <Programmname>flvstreamer</Programmname>
         <Zieldateiname>%t-%T-%Z.flv</Zieldateiname>
-        <Programmpfad>PFAD_FLVSTREAMER</Programmpfad>
-        <Programmschalter>%F --resume -o **</Programmschalter>
+        <Programmpfad>/Applications/MediathekView.app/Contents/Resources/flvstreamer_macosx_intel_32bit_latest</Programmpfad>
+	<Programmschalter>%F --resume -o **</Programmschalter>
         <Praefix>rtmp</Praefix>
         <Restart>true</Restart>
     </Programm>
     <Programm>
         <Programmname>ffmpeg</Programmname>
         <Zieldateiname>%t-%T-%Z.mp4</Zieldateiname>
-        <Programmpfad>PFAD_FFMPEG</Programmpfad>
+        <Programmpfad>/Applications/MediathekView.app/Contents/Resources/ffmpeg</Programmpfad>
         <Programmschalter>-user_agent "Mozilla/5.0" -i %f -c copy -bsf:a aac_adtstoasc **</Programmschalter>
         <Praefix>http</Praefix>
         <Suffix>m3u8</Suffix>
@@ -39,7 +39,7 @@
     </Programm>
 
     <Programmset>
-        <Name>Linux Abspielen</Name>
+        <Name>Mac Abspielen</Name>
         <Abspielen>true</Abspielen>
         <Speichern>false</Speichern>
         <Button>true</Button>

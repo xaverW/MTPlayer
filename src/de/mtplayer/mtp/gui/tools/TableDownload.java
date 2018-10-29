@@ -37,6 +37,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TableDownload {
 
     private final BooleanProperty geoMelden;
@@ -74,15 +77,18 @@ public class TableDownload {
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         titleColumn.getStyleClass().add("alignCenterLeft");
 
+
+        // die zwei Spalten mit eigenen propertys
         final TableColumn<Download, Integer> startColumn = new TableColumn<>("");
-        startColumn.setCellValueFactory(new PropertyValueFactory<>("state"));
+        startColumn.setCellValueFactory(new PropertyValueFactory<>("guiState"));
         startColumn.setCellFactory(cellFactoryState);
         startColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<Download, Double> progressColumn = new TableColumn<>("Fortschritt"); //müssen sich unterscheiden!!
-        progressColumn.setCellValueFactory(new PropertyValueFactory<>("progress"));
+        progressColumn.setCellValueFactory(new PropertyValueFactory<>("gioProgress"));
         progressColumn.setCellFactory(cellFactoryProgress);
         progressColumn.getStyleClass().add("alignCenterLeft");
+
 
         final TableColumn<Download, Integer> remainingColumn = new TableColumn<>("Restzeit");
         remainingColumn.setCellValueFactory(new PropertyValueFactory<>("remaining"));
@@ -317,6 +323,29 @@ public class TableDownload {
                     });
 
                     hbox.getChildren().addAll(btnFilmStart, btnOpenDirectory);
+                    setGraphic(hbox);
+                } else if (item == DownloadConstants.STATE_ERROR) {
+                    btnDownDel = new Button("");
+                    btnDownDel.setTooltip(new Tooltip("Download löschen"));
+                    btnDownDel.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_DOWNLOAD_DEL));
+
+                    btnDownDel.setOnAction(event -> {
+                        Download download = getTableView().getItems().get(getIndex());
+                        ProgData.getInstance().downloadList.delDownloads(download);
+                    });
+
+                    btnDownStart = new Button("");
+                    btnDownStart.setTooltip(new Tooltip("Download wider starten"));
+                    btnDownStart.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_DOWNLOAD_START));
+
+                    btnDownStart.setOnAction((ActionEvent event) -> {
+                        Download download = getTableView().getItems().get(getIndex());
+                        List<Download> list = new ArrayList<>();
+                        list.add(download);
+                        ProgData.getInstance().downloadList.startDownloads(list, true);
+                    });
+
+                    hbox.getChildren().addAll(btnDownStart, btnDownDel);
                     setGraphic(hbox);
                 } else {
                     setGraphic(null);
