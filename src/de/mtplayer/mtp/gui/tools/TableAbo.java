@@ -19,6 +19,7 @@ package de.mtplayer.mtp.gui.tools;
 import de.mtplayer.mLib.tools.MDate;
 import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.controller.data.abo.Abo;
+import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
@@ -84,10 +85,12 @@ public class TableAbo {
         somewhereColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Abo, Integer> minColumn = new TableColumn<>("min");
+        minColumn.setCellFactory(cellFactoryMin);
         minColumn.setCellValueFactory(new PropertyValueFactory<>("minDuration"));
         minColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Abo, Integer> maxColumn = new TableColumn<>("max");
+        maxColumn.setCellFactory(cellFactoryMax);
         maxColumn.setCellValueFactory(new PropertyValueFactory<>("maxDuration"));
         maxColumn.getStyleClass().add("alignCenterLeft");
 
@@ -139,5 +142,50 @@ public class TableAbo {
                 return cell;
             };
 
+    private static Callback<TableColumn<Abo, Integer>, TableCell<Abo, Integer>> cellFactoryMin
+            = (final TableColumn<Abo, Integer> param) -> {
+
+        final TableCell<Abo, Integer> cell = new TableCell<Abo, Integer>() {
+
+            @Override
+            public void updateItem(Integer item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (item != null) {
+                    setGraphic(null);
+
+                    if (item == 0) {
+                        setText("alles");
+                    } else {
+                        setText(item + "");
+                    }
+                }
+            }
+        };
+        return cell;
+    };
+
+    private static Callback<TableColumn<Abo, Integer>, TableCell<Abo, Integer>> cellFactoryMax
+            = (final TableColumn<Abo, Integer> param) -> {
+
+        final TableCell<Abo, Integer> cell = new TableCell<Abo, Integer>() {
+
+            @Override
+            public void updateItem(Integer item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (item != null) {
+                    setGraphic(null);
+
+                    if (item == SelectedFilter.FILTER_DURATION_MAX_MIN) {
+                        setText("alles");
+                    } else {
+                        setText(item + "");
+                    }
+                }
+            }
+        };
+        return cell;
+    };
 
 }
