@@ -18,6 +18,7 @@ package de.mtplayer.mtp.gui.configDialog;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
+import de.mtplayer.mtp.controller.data.ListePsetVorlagen;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.gui.tools.HelpTextPset;
@@ -162,6 +163,7 @@ public class SetPaneController extends AnchorPane {
         vBox.getChildren().addAll(tableView);
 
         Button btnDel = new Button("");
+        btnDel.setTooltip(new Tooltip("markiertes Set löschen"));
         btnDel.setGraphic(new ProgIcons().ICON_BUTTON_REMOVE);
         btnDel.setOnAction(event -> {
             SetData setData = getSelectedSelData();
@@ -171,6 +173,7 @@ public class SetPaneController extends AnchorPane {
         });
 
         Button btnNew = new Button("");
+        btnNew.setTooltip(new Tooltip("ein neues Set anlegen"));
         btnNew.setGraphic(new ProgIcons().ICON_BUTTON_ADD);
         btnNew.setOnAction(event -> {
             SetData setData = new SetData("Neu-" + ++newCounter);
@@ -178,6 +181,7 @@ public class SetPaneController extends AnchorPane {
         });
 
         Button btnUp = new Button("");
+        btnUp.setTooltip(new Tooltip("markiertes Set nach oben schieben"));
         btnUp.setGraphic(new ProgIcons().ICON_BUTTON_MOVE_UP);
         btnUp.setOnAction(event -> {
             int sel = getSelectedLine();
@@ -188,6 +192,7 @@ public class SetPaneController extends AnchorPane {
         });
 
         Button btnDown = new Button("");
+        btnDown.setTooltip(new Tooltip("markiertes Set nach unten schieben"));
         btnDown.setGraphic(new ProgIcons().ICON_BUTTON_MOVE_DOWN);
         btnDown.setOnAction(event -> {
             int sel = getSelectedLine();
@@ -198,6 +203,7 @@ public class SetPaneController extends AnchorPane {
         });
 
         Button btnDup = new Button("Duplizieren");
+        btnDup.setTooltip(new Tooltip("eine Kopie des markierten Sets erstellen"));
         btnDup.setOnAction(event -> {
             SetData setData = getSelectedSelData();
             if (setData != null) {
@@ -207,7 +213,18 @@ public class SetPaneController extends AnchorPane {
         HBox.setHgrow(btnDup, Priority.ALWAYS);
         btnDup.setMaxWidth(Double.MAX_VALUE);
 
+        Button btnNewSet = new Button("Standardsets anfügen");
+        btnNewSet.setTooltip(new Tooltip("Standardsets erstellen und der Liste anfügen"));
+        btnNewSet.setOnAction(event -> {
+            if (!SetsPrograms.addSetTemplate(ListePsetVorlagen.getStandarset(true /*replaceMuster*/))) {
+                PAlert.showErrorAlert("Set importieren", "Set konnten nicht importiert werden!");
+            }
+        });
+        HBox.setHgrow(btnNewSet, Priority.ALWAYS);
+        btnNewSet.setMaxWidth(Double.MAX_VALUE);
+
         Button btnCheck = new Button("Prüfen");
+        btnCheck.setTooltip(new Tooltip("die angelegten Sets überprüfen"));
         btnCheck.setOnAction(event -> SetsPrograms.checkPrograms(progData));
         HBox.setHgrow(btnCheck, Priority.ALWAYS);
         btnCheck.setMaxWidth(Double.MAX_VALUE);
@@ -222,9 +239,7 @@ public class SetPaneController extends AnchorPane {
         HBox hBoxHlp = new HBox(10);
         hBoxHlp.getChildren().addAll(hBox, btnHelp);
 
-        vBox.getChildren().addAll(hBoxHlp);
-        vBox.getChildren().addAll(btnDup);
-        vBox.getChildren().addAll(btnCheck);
+        vBox.getChildren().addAll(hBoxHlp, btnDup, btnNewSet, btnCheck);
     }
 
     private SetData getSelectedSelData() {
