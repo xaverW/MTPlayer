@@ -26,14 +26,17 @@ import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
 import de.p2tools.p2Lib.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
+import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pRange.PRangeBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 
@@ -140,25 +143,9 @@ public class AboEditDialogController extends PDialogExtra {
         gridPane.setMaxWidth(Double.MAX_VALUE);
         gridPane.setPadding(new Insets(10, 10, 10, 10));
 
-        final ColumnConstraints ccLabel = new ColumnConstraints();
-        ccLabel.setFillWidth(true);
-        ccLabel.setMinWidth(Region.USE_COMPUTED_SIZE);
-        ccLabel.setHgrow(Priority.NEVER);
-
-        final ColumnConstraints ccTxt = new ColumnConstraints();
-        ccTxt.setFillWidth(true);
-        ccTxt.setMinWidth(Region.USE_COMPUTED_SIZE);
-        ccTxt.setHgrow(Priority.ALWAYS);
-
-        final ColumnConstraints ccCbx = new ColumnConstraints();
-        ccCbx.setHalignment(HPos.CENTER);
-        ccCbx.setFillWidth(true);
-        ccCbx.setMinWidth(Region.USE_COMPUTED_SIZE);
-        ccCbx.setHgrow(Priority.NEVER);
-
-        gridPane.getColumnConstraints().add(ccLabel);
-        gridPane.getColumnConstraints().add(ccTxt);
-        gridPane.getColumnConstraints().add(ccCbx);
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcComputedSizeAndHgrow(),
+                PColumnConstraints.getCcPrefSize());
 
         if (lAbo.size() > 1) {
             Label l1 = new Label("bei allen");
@@ -288,31 +275,27 @@ public class AboEditDialogController extends PDialogExtra {
                 break;
 
             case AboXml.ABO_RESOLUTION:
-                GridPane g = new GridPane();
-                g.setHgap(10);
-                g.setVgap(10);
+                GridPane gridPane = new GridPane();
+                gridPane.setHgap(10);
+                gridPane.setVgap(10);
 
-                final Button btnHelpRes = new PButton().helpButton("Auflösung",
-                        HelpText.ABO_RES);
+                final Button btnHelpRes = new PButton().helpButton(this.getStage(),
+                        "Auflösung", HelpText.ABO_RES);
 
-                g.add(rbHd, 0, 0);
-                g.add(btnHelpRes, 1, 0);
-                g.add(rbHigh, 0, 1);
-                g.add(rbLow, 0, 2);
+                gridPane.add(rbHd, 0, 0);
+                gridPane.add(btnHelpRes, 1, 0);
+                gridPane.add(rbHigh, 0, 1);
+                gridPane.add(rbLow, 0, 2);
 
-                final ColumnConstraints ccTxt = new ColumnConstraints();
-                ccTxt.setFillWidth(true);
-                ccTxt.setMinWidth(Region.USE_COMPUTED_SIZE);
-                ccTxt.setHgrow(Priority.ALWAYS);
-                g.getColumnConstraints().add(ccTxt);
-                GridPane.setHgrow(g, Priority.ALWAYS);
+                gridPane.getColumnConstraints().add(PColumnConstraints.getCcComputedSizeAndHgrow());
+                GridPane.setHgrow(gridPane, Priority.ALWAYS);
 
-                gridPane.add(g, 1, grid);
+                this.gridPane.add(gridPane, 1, grid);
                 break;
 
             case AboXml.ABO_CHANNEL_EXACT:
             case AboXml.ABO_THEME_EXACT:
-                gridPane.add(cbx[i], 1, grid);
+                this.gridPane.add(cbx[i], 1, grid);
                 cbx[i].selectedProperty().bindBidirectional(aboCopy.properties[i]);
                 cbx[i].selectedProperty().addListener((observable, oldValue, newValue) -> {
                     cbxForAll[i].setSelected(true);
@@ -327,7 +310,7 @@ public class AboEditDialogController extends PDialogExtra {
             case AboXml.ABO_ON:
                 cbxOn.selectedProperty().bindBidirectional(aboCopy.activeProperty());
                 cbxOn.setOnAction(a -> cbxForAll[i].setSelected(true));
-                gridPane.add(cbxOn, 1, grid);
+                this.gridPane.add(cbxOn, 1, grid);
                 break;
 
             case AboXml.ABO_PSET_NAME:
@@ -340,7 +323,7 @@ public class AboEditDialogController extends PDialogExtra {
                 }
                 cboPset.valueProperty().bindBidirectional(aboCopy.psetNameProperty());
                 cboPset.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> cbxForAll[i].setSelected(true));
-                gridPane.add(cboPset, 1, grid);
+                this.gridPane.add(cboPset, 1, grid);
                 break;
 
             case AboXml.ABO_CHANNEL:
@@ -348,7 +331,7 @@ public class AboEditDialogController extends PDialogExtra {
                 cboChannel.setEditable(true);
                 cboChannel.valueProperty().bindBidirectional(aboCopy.channelProperty());
                 cboChannel.valueProperty().addListener((observable, oldValue, newValue) -> cbxForAll[i].setSelected(true));
-                gridPane.add(cboChannel, 1, grid);
+                this.gridPane.add(cboChannel, 1, grid);
                 break;
 
             case AboXml.ABO_DEST_PATH:
@@ -361,12 +344,12 @@ public class AboEditDialogController extends PDialogExtra {
                 cboDestination.setEditable(true);
                 cboDestination.valueProperty().bindBidirectional(aboCopy.destinationProperty());
                 cboDestination.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> cbxForAll[i].setSelected(true));
-                gridPane.add(cboDestination, 1, grid);
+                this.gridPane.add(cboDestination, 1, grid);
                 break;
 
             case AboXml.ABO_MIN_DURATION:
                 initDur();
-                gridPane.add(pRangeBoxTime, 1, grid);
+                this.gridPane.add(pRangeBoxTime, 1, grid);
                 break;
 
             case AboXml.ABO_MAX_DURATION:
