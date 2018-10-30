@@ -32,7 +32,7 @@ public class GeoPane {
     private final RadioButton rbDe = new RadioButton("DE - Deutschland");
     private final RadioButton rbCh = new RadioButton("CH - Schweiz");
     private final RadioButton rbAt = new RadioButton("AT - Österreich");
-    private final RadioButton rbEu = new RadioButton("EU (EUB - European Broadcasting Union");
+    private final RadioButton rbEu = new RadioButton("EU (EUB - European Broadcasting Union)");
     private final RadioButton rbSonst = new RadioButton("sonst");
 
     BooleanProperty geoProperty = ProgConfig.SYSTEM_MARK_GEO.getBooleanProperty();

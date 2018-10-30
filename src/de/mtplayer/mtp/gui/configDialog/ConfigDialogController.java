@@ -93,7 +93,7 @@ public class ConfigDialogController extends PDialog {
             tabPane.getTabs().add(tab);
 
             AnchorPane filmPane = new FilmPaneController(stage);
-            tab = new Tab("Filme laden");
+            tab = new Tab("Filmliste laden");
             tab.setClosable(false);
             tab.setContent(filmPane);
             tabPane.getTabs().add(tab);
