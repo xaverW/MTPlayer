@@ -35,32 +35,33 @@ public class ProgConfig extends MLConfig {
 
     public static final String SYSTEM = "system";
 
-    // ============================================
-    public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND = addNewKey("__system-parameter__download-timeout-second_250__", "250");
-    // 250 Sekunden, wie bei Firefox
-    public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART = addNewKey("__system-parameter__download-max-restart_5__", "5");
-    // max. Startversuche für fehlgeschlagene Downloads (insgesamt: restart * restart_http Versuche)
-    public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP = addNewKey("__system-parameter__download-max-restart-http_10__", "10");
-    // max. Startversuche für fehlgeschlagene Downloads, direkt beim Download
-    public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECOND = addNewKey("__system-parameter__download-continue-second_60__", "60");
-    // Beim Dialog "Download weiterführen" wird in dieser Zeit der DownloadXml weitergeführt
-    public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND = addNewKey("__system-parameter__download-errormsg-in-second_30__", "30");
-    // Downloadfehlermeldung wird xx Sedunden lang angezeigt
-    public static MLConfigs SYSTEM_PARAMETER_USERAGENT = addNewKey("__system-parameter__useragent__", ProgConst.USER_AGENT_DEFAULT);
-    // Useragent für direkte Downloads
-    public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_PROGRESS = addNewKey("__system-parameter__download_progress_", Boolean.TRUE.toString());
-
-    // Downloadprogress im Terminal (-auto) anzeigen
-    public static MLConfigs SYSTEM_UPDATE_BUILD_NR = addNewKey("system-update-build-nr");
-    // ============================================
-    public static MLConfigs SYSTEM_UPDATE_SEARCH = addNewKey("system-update-search", Boolean.TRUE.toString());
-    // ============================================
-    public static MLConfigs SYSTEM_UPDATE_DATE = addNewKey("system-update-date");
     // Programm-Configs, änderbar nur im Konfig-File
+    // ============================================
+    // 250 Sekunden, wie bei Firefox
+    public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND = addNewKey("__system-parameter__download-timeout-second_250__", "250");
+    // max. Startversuche für fehlgeschlagene Downloads (insgesamt: restart * restart_http Versuche)
+    public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART = addNewKey("__system-parameter__download-max-restart_5__", "5");
+    // max. Startversuche für fehlgeschlagene Downloads, direkt beim Download
+    public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP = addNewKey("__system-parameter__download-max-restart-http_10__", "10");
+    // Beim Dialog "Download weiterführen" wird in dieser Zeit der DownloadXml weitergeführt
+    public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECOND = addNewKey("__system-parameter__download-continue-second_60__", "60");
+    // Downloadfehlermeldung wird xx Sedunden lang angezeigt
+    public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND = addNewKey("__system-parameter__download-errormsg-in-second_30__", "30");
+    // Downloadprogress im Terminal anzeigen
+    public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_PROGRESS = addNewKey("__system-parameter__download_progress_", Boolean.TRUE.toString());
+    // ===========================================
+
+
+    // Configs zur Programmupdatesuche
+    public static MLConfigs SYSTEM_UPDATE_PROGRAM_VERSION = addNewKey("system-update-program-version");
+    public static MLConfigs SYSTEM_UPDATE_SEARCH = addNewKey("system-update-search", Boolean.TRUE.toString());
+    public static MLConfigs SYSTEM_UPDATE_DATE = addNewKey("system-update-date");
     public static MLConfigs SYSTEM_UPDATE_INFO_NR_SHOWN = addNewKey("system-update-info-nr-shown");
     public static MLConfigs SYSTEM_UPDATE_PROGSET_VERSION = addNewKey("system-update-progset-version");
 
-    // wegen des Problems mit ext. Programmaufrufen und Leerzeichen
+
+    // Configs
+    public static MLConfigs SYSTEM_USERAGENT = addNewKey("system-useragent", ProgConst.USER_AGENT_DEFAULT);    // Useragent für direkte Downloads
     public static MLConfigs SYSTEM_USE_REPLACETABLE = addNewKey("system-use-replacetable", SystemInfo.isLinux() ? Boolean.TRUE.toString() : Boolean.FALSE.toString());
     public static MLConfigs SYSTEM_ONLY_ASCII = addNewKey("system-only-ascii", Boolean.FALSE.toString());
     public static MLConfigs SYSTEM_PROG_OPEN_DIR = addNewKey("system-prog-open-dir");
@@ -230,11 +231,7 @@ public class ProgConfig extends MLConfig {
             PConst.LINE_SEPARATOR
             + "\t" + SYSTEM_PARAMETER_DOWNLOAD_PROGRESS.getKey() + PConst.LINE_SEPARATOR
             + "\t" + "Downloadprogress im Terminal (-auto) anzeigen: "
-            + SYSTEM_PARAMETER_DOWNLOAD_PROGRESS.getInitValue() + PConst.LINE_SEPARATOR +
-            PConst.LINE_SEPARATOR
-            + "\t" + SYSTEM_PARAMETER_USERAGENT.getKey() + PConst.LINE_SEPARATOR
-            + "\t" + "Useragent für direkte Downloads, Standardwert: "
-            + SYSTEM_PARAMETER_USERAGENT.get() + PConst.LINE_SEPARATOR;
+            + SYSTEM_PARAMETER_DOWNLOAD_PROGRESS.getInitValue() + PConst.LINE_SEPARATOR;
 
     public static void logAllConfigs() {
         ArrayList<String> list = new ArrayList<>();

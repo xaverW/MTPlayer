@@ -43,10 +43,10 @@ public class SearchProgramUpdate {
      */
     public boolean checkVersion(boolean showError, boolean showProgramInformation) {
         // prüft auf neue Version,
-        ProgConfig.SYSTEM_UPDATE_BUILD_NR.setValue(Functions.getProgVersion());
+        ProgConfig.SYSTEM_UPDATE_PROGRAM_VERSION.setValue(Functions.getProgVersion());
         ProgConfig.SYSTEM_UPDATE_DATE.setValue(StringFormatters.FORMATTER_yyyyMMdd.format(new Date()));
 
-        return new SearchProgInfo(stage).checkUpdate(ProgConst.ADRESSE_MTPLAYER_VERSION, ProgConfig.SYSTEM_UPDATE_BUILD_NR.getInt(),
+        return new SearchProgInfo(stage).checkUpdate(ProgConst.ADRESSE_MTPLAYER_VERSION, ProgConfig.SYSTEM_UPDATE_PROGRAM_VERSION.getInt(),
                 ProgConfig.SYSTEM_UPDATE_INFO_NR_SHOWN.getIntegerProperty(), updateProp,
                 showProgramInformation, showError);
     }

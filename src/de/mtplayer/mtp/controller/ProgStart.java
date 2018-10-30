@@ -227,8 +227,10 @@ public class ProgStart {
         // Prüfen obs ein Programmupdate gibt
         PDuration.onlyPing("checkProgUpdate");
         if (!Boolean.parseBoolean(ProgConfig.SYSTEM_UPDATE_SEARCH.get()) ||
-                ProgConfig.SYSTEM_UPDATE_BUILD_NR.get().equals(Functions.getProgVersion() /*Start mit neuer Version*/)
+
+                ProgConfig.SYSTEM_UPDATE_PROGRAM_VERSION.get().equals(Functions.getProgVersion() /*Start mit neuer Version*/)
                         && ProgConfig.SYSTEM_UPDATE_DATE.get().equals(StringFormatters.FORMATTER_yyyyMMdd.format(new Date()))) {
+
             // will der User nicht --oder-- keine neue Version und heute schon gemacht
             PLog.sysLog("Kein Update-Check");
             return;

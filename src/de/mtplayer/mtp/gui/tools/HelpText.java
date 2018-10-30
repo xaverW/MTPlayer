@@ -306,10 +306,17 @@ public class HelpText {
             "sofort nach neuen Abos gesucht. Ansonsten muss man " +
             "im Tab Download auf \"Downloads aktualisieren\" klicken.";
 
+    public static final String USER_AGENT = "Hier kann ein User Agent angegeben werden. " +
+            "Bei Downloads wird er dann als Absender verwendet. Bleibt das Feld leer, wird kein User Agent " +
+            "verwendet. Solange alles funktioniert, kann das Feld leer bleiben. Ansonsten wäre das z.B. eine " +
+            "Möglichkeit: " +
+            PConst.LINE_SEPARATORx2 +
+            "\"Mozilla/5.0\"" +
+            PConst.LINE_SEPARATORx2 +
+            "(Es sind nur ASCII-Zeichen erlaubt und die Textlänge ist begrenzt auf 100 Zeichen)";
 
     public static final String START_DOWNLOADS_FROM_ABOS_IMMEDIATELY = "Neu angelegte Downloads (aus Abos) werden " +
             "sofort gestartet. Ansonsten muss man sie selbst starten.";
-
 
     public static final String LOGFILE = "Hier kann ein Ordner angegeben werden " +
             "in dem ein Logfile erstellt wird. Darin wird der Programmverlauf skizziert. " +

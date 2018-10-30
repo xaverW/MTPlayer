@@ -45,6 +45,7 @@ public class ProgConst {
 
     // beim Programmstart wird die Liste geladen wenn sie älter ist als ..
     public static final int ALTER_FILMLISTE_SEKUNDEN_FUER_AUTOUPDATE = 4 * 60 * 60;
+    public static final int MAX_USER_AGENT_SIZE = 100;
 
     // Uhrzeit ab der die Diffliste alle Änderungen abdeckt, die Filmliste darf also nicht vor xx erstellt worden sein
     public static final String TIME_MAX_AGE_FOR_DIFF = "09";

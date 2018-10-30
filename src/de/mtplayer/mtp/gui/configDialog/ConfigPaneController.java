@@ -29,6 +29,7 @@ import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
+import de.p2tools.p2Lib.tools.PStringUtils;
 import de.p2tools.p2Lib.tools.log.PLogger;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -140,12 +141,53 @@ public class ConfigPaneController extends AnchorPane {
         GridPane.setHalignment(btnHelpDownload, HPos.RIGHT);
 
 
-        gridPane.add(tglSearchAbo, 0, 0);
-        gridPane.add(btnHelpAbo, 1, 0);
-        gridPane.add(tglStartDownload, 0, 1);
-        gridPane.add(btnHelpDownload, 1, 1);
+        final Button btnHelpUserAgent = new PButton().helpButton(stage, "User Agent festlegen",
+                HelpText.USER_AGENT);
+        GridPane.setHalignment(btnHelpUserAgent, HPos.RIGHT);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
+
+        TextField txtUserAgent = new TextField() {
+
+            @Override
+            public void replaceText(int start, int end, String text) {
+                if (check(text)) {
+                    super.replaceText(start, end, text);
+                }
+            }
+
+            @Override
+            public void replaceSelection(String text) {
+                if (check(text)) {
+                    super.replaceSelection(text);
+                }
+            }
+
+            private boolean check(String text) {
+                String str = PStringUtils.convertToASCIIEncoding(text);
+                final int size = getText().length() + text.length();
+
+                if (text.isEmpty() || (size < ProgConst.MAX_USER_AGENT_SIZE) && text.equals(str)) {
+                    return true;
+                }
+                return false;
+            }
+        };
+
+        txtUserAgent.textProperty().bindBidirectional(ProgConfig.SYSTEM_USERAGENT.getStringProperty());
+
+
+        int row = 0;
+        gridPane.add(tglSearchAbo, 0, row, 2, 1);
+        gridPane.add(btnHelpAbo, 3, row);
+        gridPane.add(tglStartDownload, 0, ++row, 2, 1);
+        gridPane.add(btnHelpDownload, 3, row);
+
+        gridPane.add(new Label(" "), 0, ++row);
+        gridPane.add(new Label("User Agent:"), 0, ++row);
+        gridPane.add(txtUserAgent, 1, row, 2, 1);
+        gridPane.add(btnHelpUserAgent, 3, row);
+
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(), PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcComputedSizeAndHgrow());
     }
 
