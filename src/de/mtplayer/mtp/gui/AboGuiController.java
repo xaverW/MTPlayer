@@ -182,9 +182,20 @@ public class AboGuiController extends AnchorPane {
 
     private void setFilterProperty() {
         ProgConfig.FILTER_ABO_SENDER.getStringProperty().addListener((observable, oldValue, newValue) -> {
-            final String searchStr = newValue == null ? "" : newValue;
-            filteredAbos.setPredicate(searchStr.isEmpty() ?
-                    s -> true : s -> s.getChannel().equals(searchStr));
+            setFilter();
         });
+        ProgConfig.FILTER_ABO_INFO.getStringProperty().addListener((observable, oldValue, newValue) -> {
+            setFilter();
+        });
+    }
+
+    private void setFilter() {
+        final String sender = ProgConfig.FILTER_ABO_SENDER.get();
+        final String info = ProgConfig.FILTER_ABO_INFO.get().toLowerCase();
+
+        filteredAbos.setPredicate(abo -> (sender.isEmpty() ? true : abo.getChannel().equals(sender)) &&
+                (info.isEmpty() ? true : abo.getInfo().toLowerCase().contains(info))
+        );
+
     }
 }

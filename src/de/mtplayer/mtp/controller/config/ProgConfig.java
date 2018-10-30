@@ -169,6 +169,7 @@ public class ProgConfig extends MLConfig {
 
     // Filter
     public static MLConfigs FILTER_ABO_SENDER = addNewKey("filter-abo-sender");
+    public static MLConfigs FILTER_ABO_INFO = addNewKey("filter-abo-info");
     public static MLConfigs FILTER_DOWNLOAD_SENDER = addNewKey("filter-download-sender");
     public static MLConfigs FILTER_DOWNLOAD_SOURCE = addNewKey("filter-download-source");
     public static MLConfigs FILTER_DOWNLOAD_KIND = addNewKey("filter-download-kind");

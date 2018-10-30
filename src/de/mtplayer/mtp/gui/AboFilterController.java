@@ -19,16 +19,14 @@ package de.mtplayer.mtp.gui;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Control;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class AboFilterController extends FilterController {
 
     ComboBox<String> cboChannel = new ComboBox<>();
+    TextField txtInfo = new TextField();
     Button btnClear = new Button("Filter löschen");
 
     private final VBox vBoxFilter;
@@ -40,11 +38,14 @@ public class AboFilterController extends FilterController {
         progData = ProgData.getInstance();
 
         addCont("Abos für Sender", cboChannel, vBoxFilter);
+        addCont("Infos", txtInfo, vBoxFilter);
 
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER_RIGHT);
         hBox.getChildren().add(btnClear);
         vBoxFilter.getChildren().add(hBox);
+
+        txtInfo.textProperty().bindBidirectional(ProgConfig.FILTER_ABO_INFO.getStringProperty());
 
         cboChannel.valueProperty().bindBidirectional(ProgConfig.FILTER_ABO_SENDER.getStringProperty());
         cboChannel.setItems(progData.worker.getChannelsForAbosList());
@@ -59,6 +60,7 @@ public class AboFilterController extends FilterController {
     }
 
     private void clearFilter() {
+        txtInfo.setText("");
         if (cboChannel.getSelectionModel() != null) {
             cboChannel.getSelectionModel().selectFirst();
         }
@@ -71,5 +73,4 @@ public class AboFilterController extends FilterController {
         v.getChildren().addAll(label, control);
         vBox.getChildren().add(v);
     }
-
 }

@@ -23,23 +23,25 @@ public class AboXml extends Data<AboXml> {
     public static final int ABO_NR = 0;
     public static final int ABO_ON = 1;
     public static final int ABO_NAME = 2;
-    public static final int ABO_RESOLUTION = 3;
-    public static final int ABO_CHANNEL = 4;
-    public static final int ABO_CHANNEL_EXACT = 5;
-    public static final int ABO_THEME = 6;
-    public static final int ABO_THEME_EXACT = 7;
-    public static final int ABO_TITLE = 8;
-    public static final int ABO_THEME_TITLE = 9;
-    public static final int ABO_SOMEWHERE = 10;
-    public static final int ABO_MIN_DURATION = 11;
-    public static final int ABO_MAX_DURATION = 12;
-    public static final int ABO_DEST_PATH = 13;
-    public static final int ABO_DOWN_DATE = 14;
-    public static final int ABO_PSET_NAME = 15;
+    public static final int ABO_INFOS = 3;
+    public static final int ABO_RESOLUTION = 4;
+    public static final int ABO_CHANNEL = 5;
+    public static final int ABO_CHANNEL_EXACT = 6;
+    public static final int ABO_THEME = 7;
+    public static final int ABO_THEME_EXACT = 8;
+    public static final int ABO_TITLE = 9;
+    public static final int ABO_THEME_TITLE = 10;
+    public static final int ABO_SOMEWHERE = 11;
+    public static final int ABO_MIN_DURATION = 12;
+    public static final int ABO_MAX_DURATION = 13;
+    public static final int ABO_DEST_PATH = 14;
+    public static final int ABO_DOWN_DATE = 15;
+    public static final int ABO_PSET_NAME = 16;
 
     public static final String[] COLUMN_NAMES = {"Nr",
             "aktiv",
             "Name",
+            "Infos",
             "Auflösung",
             "Sender",
             "exakt",
@@ -57,6 +59,7 @@ public class AboXml extends Data<AboXml> {
     public static final String[] XML_NAMES = {"Nr",
             "aktiv",
             "Name",
+            "Infox",
             "Aufloesung",
             "Sender",
             "Sender-exakt",
