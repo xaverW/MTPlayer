@@ -22,43 +22,57 @@ import de.mtplayer.mtp.controller.data.abo.Abo;
 import de.mtplayer.mtp.gui.tools.Table;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.PTableViewTools;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.DoubleProperty;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.geometry.Orientation;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 
 public class AboGuiController extends AnchorPane {
-    TableView<Abo> table = new TableView<>();
 
+    private final SplitPane splitPane = new SplitPane();
+    private final ScrollPane scrollPane = new ScrollPane();
+    private final AnchorPane infoPane = new AnchorPane();
+
+    private AboGuiInfoController aboGuiInfoController;
+    private final TableView<Abo> tableView = new TableView<>();
+
+    private final ProgData progData;
+    private boolean bound = false;
     private final FilteredList<Abo> filteredAbos;
     private final SortedList<Abo> sortedAbos;
 
-    private final ProgData progData;
+    DoubleProperty splitPaneProperty = ProgConfig.ABO_GUI_DIVIDER.getDoubleProperty();
+    BooleanProperty boolInfoOn = ProgConfig.ABO_GUI_DIVIDER_ON.getBooleanProperty();
 
     public AboGuiController() {
         progData = ProgData.getInstance();
 
-        ScrollPane scrollPane = new ScrollPane();
+        AnchorPane.setLeftAnchor(splitPane, 0.0);
+        AnchorPane.setBottomAnchor(splitPane, 0.0);
+        AnchorPane.setRightAnchor(splitPane, 0.0);
+        AnchorPane.setTopAnchor(splitPane, 0.0);
+        splitPane.setOrientation(Orientation.VERTICAL);
+        getChildren().addAll(splitPane);
+
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
+        scrollPane.setContent(tableView);
 
-        getChildren().addAll(scrollPane);
-
-        AnchorPane.setLeftAnchor(scrollPane, 0.0);
-        AnchorPane.setBottomAnchor(scrollPane, 0.0);
-        AnchorPane.setRightAnchor(scrollPane, 0.0);
-        AnchorPane.setTopAnchor(scrollPane, 0.0);
-
-        scrollPane.setContent(table);
-
+        aboGuiInfoController = new AboGuiInfoController(infoPane);
+        boolInfoOn.addListener((observable, oldValue, newValue) -> setInfoPane());
         filteredAbos = new FilteredList<>(progData.aboList, p -> true);
         sortedAbos = new SortedList<>(filteredAbos);
-        setFilterProperty();
 
-        initListener();
+        setInfoPane();
         initTable();
+        initListener();
+        setFilterProperty();
+        setFilter();
     }
 
     public void isShown() {
@@ -66,11 +80,11 @@ public class AboGuiController extends AnchorPane {
     }
 
     public int getAboCount() {
-        return table.getItems().size();
+        return tableView.getItems().size();
     }
 
     public int getSelCount() {
-        return table.getSelectionModel().getSelectedItems().size();
+        return tableView.getSelectionModel().getSelectedItems().size();
     }
 
     public void changeAbo() {
@@ -94,17 +108,17 @@ public class AboGuiController extends AnchorPane {
     }
 
     public void invertSelection() {
-        PTableViewTools.invertSelection(table);
+        PTableViewTools.invertSelection(tableView);
     }
 
 
     public void saveTable() {
-        new Table().saveTable(table, Table.TABLE.ABO);
+        new Table().saveTable(tableView, Table.TABLE.ABO);
     }
 
     private ObservableList<Abo> getSelList() {
         final ObservableList<Abo> ret;
-        ret = table.getSelectionModel().getSelectedItems();
+        ret = tableView.getSelectionModel().getSelectedItems();
         if (ret == null || ret.isEmpty()) {
             PAlert.showInfoNoSelection();
         }
@@ -113,44 +127,68 @@ public class AboGuiController extends AnchorPane {
 
     private void initListener() {
         progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
-            table.refresh();
+            tableView.refresh();
         });
     }
 
+    private void setInfoPane() {
+        infoPane.setVisible(boolInfoOn.getValue());
+        infoPane.setManaged(boolInfoOn.getValue());
+
+        if (!boolInfoOn.getValue()) {
+            if (bound) {
+                splitPane.getDividers().get(0).positionProperty().unbindBidirectional(splitPaneProperty);
+            }
+
+            splitPane.getItems().clear();
+            splitPane.getItems().add(scrollPane);
+
+        } else {
+            bound = true;
+            splitPane.getItems().clear();
+            splitPane.getItems().addAll(scrollPane, infoPane);
+            splitPane.getDividers().get(0).positionProperty().bindBidirectional(splitPaneProperty);
+        }
+    }
+
     private void initTable() {
-        table.setTableMenuButtonVisible(true);
-        table.setEditable(false);
-        table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        table.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+        tableView.setTableMenuButtonVisible(true);
+        tableView.setEditable(false);
+        tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
-        new Table().setTable(table, Table.TABLE.ABO);
+        new Table().setTable(tableView, Table.TABLE.ABO);
 
-        table.setItems(sortedAbos);
-        sortedAbos.comparatorProperty().bind(table.comparatorProperty());
+        tableView.setItems(sortedAbos);
+        sortedAbos.comparatorProperty().bind(tableView.comparatorProperty());
 
-        table.setOnMouseClicked(m -> {
+        tableView.setOnMouseClicked(m -> {
             if (m.getButton().equals(MouseButton.PRIMARY) && m.getClickCount() == 2) {
                 changeAbo();
             }
         });
 
-        table.setOnMousePressed(m -> {
+        tableView.setOnMousePressed(m -> {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
                 makeContextMenu();
             }
         });
-
+        tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            final Abo abo = tableView.getSelectionModel().getSelectedItem();
+            aboGuiInfoController.setAbo(abo);
+        });
     }
+
 
     private void makeContextMenu() {
         final ContextMenu contextMenu = new ContextMenu();
         getMenu(contextMenu);
-        table.setContextMenu(contextMenu);
+        tableView.setContextMenu(contextMenu);
 
     }
 
     private void getMenu(ContextMenu contextMenu) {
-        Abo abo = table.getSelectionModel().getSelectedItem();
+        Abo abo = tableView.getSelectionModel().getSelectedItem();
         if (abo != null && abo.isActive()) {
             final MenuItem mbOff = new MenuItem("ausschalten");
             mbOff.setOnAction(e -> setAboActive(false));
@@ -175,7 +213,7 @@ public class AboGuiController extends AnchorPane {
         contextMenu.getItems().addAll(miDel, miChange, miNew, new SeparatorMenuItem(), miSelection);
 
         MenuItem resetTable = new MenuItem("Tabelle zurücksetzen");
-        resetTable.setOnAction(e -> new Table().resetTable(table, Table.TABLE.ABO));
+        resetTable.setOnAction(e -> new Table().resetTable(tableView, Table.TABLE.ABO));
         contextMenu.getItems().add(resetTable);
 
     }
@@ -184,17 +222,17 @@ public class AboGuiController extends AnchorPane {
         ProgConfig.FILTER_ABO_SENDER.getStringProperty().addListener((observable, oldValue, newValue) -> {
             setFilter();
         });
-        ProgConfig.FILTER_ABO_INFO.getStringProperty().addListener((observable, oldValue, newValue) -> {
+        ProgConfig.FILTER_ABO_DESCRIPTION.getStringProperty().addListener((observable, oldValue, newValue) -> {
             setFilter();
         });
     }
 
     private void setFilter() {
         final String sender = ProgConfig.FILTER_ABO_SENDER.get();
-        final String info = ProgConfig.FILTER_ABO_INFO.get().toLowerCase();
+        final String info = ProgConfig.FILTER_ABO_DESCRIPTION.get().toLowerCase();
 
         filteredAbos.setPredicate(abo -> (sender.isEmpty() ? true : abo.getChannel().equals(sender)) &&
-                (info.isEmpty() ? true : abo.getInfo().toLowerCase().contains(info))
+                (info.isEmpty() ? true : abo.getDescription().toLowerCase().contains(info))
         );
 
     }

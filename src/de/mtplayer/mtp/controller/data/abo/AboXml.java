@@ -23,7 +23,7 @@ public class AboXml extends Data<AboXml> {
     public static final int ABO_NR = 0;
     public static final int ABO_ON = 1;
     public static final int ABO_NAME = 2;
-    public static final int ABO_INFOS = 3;
+    public static final int ABO_DESCRIPTION = 3;
     public static final int ABO_RESOLUTION = 4;
     public static final int ABO_CHANNEL = 5;
     public static final int ABO_CHANNEL_EXACT = 6;
@@ -41,7 +41,7 @@ public class AboXml extends Data<AboXml> {
     public static final String[] COLUMN_NAMES = {"Nr",
             "aktiv",
             "Name",
-            "Infos",
+            "Beschreibung",
             "Auflösung",
             "Sender",
             "exakt",
@@ -59,7 +59,7 @@ public class AboXml extends Data<AboXml> {
     public static final String[] XML_NAMES = {"Nr",
             "aktiv",
             "Name",
-            "Infox",
+            "Beschreibung",
             "Aufloesung",
             "Sender",
             "Sender-exakt",

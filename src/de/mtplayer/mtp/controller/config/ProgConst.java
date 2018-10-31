@@ -89,6 +89,7 @@ public class ProgConst {
 
     public static final String GUI_FILME_DIVIDER_LOCATION = "0.7";
     public static final String GUI_DOWNLOAD_DIVIDER_LOCATION = "0.7";
+    public static final String GUI_ABO_DIVIDER_LOCATION = "0.7";
     public static final String GUI_MSG_DIVIDER_LOCATION = "0.7";
     public static final String GUI_MSG_LOG_DIVIDER_LOCATION = "0.5";
 

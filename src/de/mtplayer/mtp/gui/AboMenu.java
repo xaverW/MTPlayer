@@ -34,6 +34,7 @@ public class AboMenu {
     private static final String ABO_DELETE_TEXT = "Abos löschen";
     private static final String ABO_CHANGE_TEXT = "Abos ändern";
     BooleanProperty boolDivOn = ProgConfig.ABO_GUI_FILTER_DIVIDER_ON.getBooleanProperty();
+    BooleanProperty boolInfoOn = ProgConfig.ABO_GUI_DIVIDER_ON.getBooleanProperty();
 
     public AboMenu(VBox vbox) {
         this.vbox = vbox;
@@ -89,9 +90,12 @@ public class AboMenu {
         final CheckMenuItem miShowFilter = new CheckMenuItem("Filter anzeigen");
         miShowFilter.selectedProperty().bindBidirectional(boolDivOn);
 
+        final CheckMenuItem miShowInfo = new CheckMenuItem("Infos anzeigen");
+        miShowInfo.selectedProperty().bindBidirectional(boolInfoOn);
+
         mb.getItems().addAll(mbOn, mbOff, miDel, miChange, miNew,
                 new SeparatorMenuItem(), miSelection,
-                new SeparatorMenuItem(), miShowFilter);
+                new SeparatorMenuItem(), miShowFilter, miShowInfo);
 
         vbox.getChildren().add(mb);
 

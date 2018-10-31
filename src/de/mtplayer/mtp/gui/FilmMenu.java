@@ -82,7 +82,7 @@ public class FilmMenu {
         final CheckMenuItem miShowFilter = new CheckMenuItem("Filter anzeigen");
         miShowFilter.selectedProperty().bindBidirectional(boolFilterOn);
 
-        final CheckMenuItem miShowInfo = new CheckMenuItem("Filminfos anzeigen");
+        final CheckMenuItem miShowInfo = new CheckMenuItem("Infos anzeigen");
         miShowInfo.selectedProperty().bindBidirectional(boolInfoOn);
 
         mb.getItems().addAll(mbPlay, mbSave);

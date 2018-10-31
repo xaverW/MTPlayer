@@ -50,9 +50,9 @@ public class TableAbo {
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         nameColumn.getStyleClass().add("alignCenterLeft");
 
-        final TableColumn<Abo, String> infoColumn = new TableColumn<>("Infos");
-        infoColumn.setCellValueFactory(new PropertyValueFactory<>("info"));
-        infoColumn.getStyleClass().add("alignCenterLeft");
+        final TableColumn<Abo, String> descriptionColumn = new TableColumn<>("Beschreibung");
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        descriptionColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Abo, String> resColumn = new TableColumn<>("Auflösung");
         resColumn.setCellValueFactory(new PropertyValueFactory<>("resolution"));
@@ -111,7 +111,7 @@ public class TableAbo {
         psetColumn.getStyleClass().add("alignCenterLeft");
 
         return new TableColumn[]{
-                nrColumn, activColumn, hitColumn, nameColumn, infoColumn, resColumn, senderColumn, senderExactColumn,
+                nrColumn, activColumn, hitColumn, nameColumn, descriptionColumn, resColumn, senderColumn, senderExactColumn,
                 themeColumn, themeExactColumn, titleColumn, themeTitleColumn,
                 somewhereColumn, minColumn, maxColumn, destinationColumn, datumColumn, psetColumn};
 

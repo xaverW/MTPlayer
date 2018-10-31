@@ -139,6 +139,8 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs ABO_DIALOG_EDIT_SIZE = addNewKey("abo-dialog-edit-size");
     public static MLConfigs ABO_GUI_FILTER_DIVIDER = addNewKey("abo-gui-filter-divider", ProgConst.GUI_ABO_FILTER_DIVIDER_LOCATION);
     public static MLConfigs ABO_GUI_FILTER_DIVIDER_ON = addNewKey("abo-gui-filter-divider-on", Boolean.TRUE.toString());
+    public static MLConfigs ABO_GUI_DIVIDER = addNewKey("abo-gui-divider", ProgConst.GUI_ABO_DIVIDER_LOCATION);
+    public static MLConfigs ABO_GUI_DIVIDER_ON = addNewKey("abo-gui-divider-on", Boolean.TRUE.toString());
     public static MLConfigs ABO_GUI_TABLE_WIDTH = addNewKey("abo-gui-table-width");
     public static MLConfigs ABO_GUI_TABLE_SORT = addNewKey("abo-gui-table-sort");
     public static MLConfigs ABO_GUI_TABLE_UP_DOWN = addNewKey("abo-gui-table-up-down");
@@ -169,7 +171,7 @@ public class ProgConfig extends MLConfig {
 
     // Filter
     public static MLConfigs FILTER_ABO_SENDER = addNewKey("filter-abo-sender");
-    public static MLConfigs FILTER_ABO_INFO = addNewKey("filter-abo-info");
+    public static MLConfigs FILTER_ABO_DESCRIPTION = addNewKey("filter-abo-beschreibung");
     public static MLConfigs FILTER_DOWNLOAD_SENDER = addNewKey("filter-download-sender");
     public static MLConfigs FILTER_DOWNLOAD_SOURCE = addNewKey("filter-download-source");
     public static MLConfigs FILTER_DOWNLOAD_KIND = addNewKey("filter-download-kind");

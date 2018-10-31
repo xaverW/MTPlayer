@@ -50,28 +50,35 @@ import java.util.Optional;
 public class DownloadGuiController extends AnchorPane {
 
     private final SplitPane splitPane = new SplitPane();
-    private final TableView<Download> table = new TableView<>();
+    private final ScrollPane scrollPane = new ScrollPane();
 
     private final TabPane tabPane = new TabPane();
     private final AnchorPane tabFilmInfo = new AnchorPane();
     private final AnchorPane tabBandwidth = new AnchorPane();
     private final AnchorPane tabDownloadInfos = new AnchorPane();
-    private final ScrollPane scrollPane = new ScrollPane();
+    private final TableView<Download> table = new TableView<>();
 
-    private final FilteredList<Download> filteredDownloads;
-    private final SortedList<Download> sortedDownloads;
     private FilmGuiInfoController filmGuiInfoController;
     private DownloadGuiChart downloadGuiChart;
     private DownloadGuiInfo downloadGuiInfo;
 
     private final ProgData progData;
+    private boolean bound = false;
+    private final FilteredList<Download> filteredDownloads;
+    private final SortedList<Download> sortedDownloads;
+
     DoubleProperty splitPaneProperty = ProgConfig.DOWNLOAD_GUI_DIVIDER.getDoubleProperty();
     BooleanProperty boolInfoOn = ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.getBooleanProperty();
-    private boolean bound = false;
 
     public DownloadGuiController() {
         progData = ProgData.getInstance();
 
+        AnchorPane.setLeftAnchor(splitPane, 0.0);
+        AnchorPane.setBottomAnchor(splitPane, 0.0);
+        AnchorPane.setRightAnchor(splitPane, 0.0);
+        AnchorPane.setTopAnchor(splitPane, 0.0);
+        splitPane.setOrientation(Orientation.VERTICAL);
+        getChildren().addAll(splitPane);
 
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
@@ -90,16 +97,7 @@ public class DownloadGuiController extends AnchorPane {
         tabDown.setContent(tabDownloadInfos);
 
         tabPane.getTabs().addAll(tabFilm, tabBand, tabDown);
-
-        splitPane.setOrientation(Orientation.VERTICAL);
-        AnchorPane.setLeftAnchor(splitPane, 0.0);
-        AnchorPane.setBottomAnchor(splitPane, 0.0);
-        AnchorPane.setRightAnchor(splitPane, 0.0);
-        AnchorPane.setTopAnchor(splitPane, 0.0);
-
-        boolInfoOn.addListener((observable, oldValue, newValue) -> setSplit());
-        setSplit();
-        getChildren().addAll(splitPane);
+        boolInfoOn.addListener((observable, oldValue, newValue) -> setInfoPane());
 
         filmGuiInfoController = new FilmGuiInfoController(tabFilmInfo);
         downloadGuiChart = new DownloadGuiChart(progData, tabBandwidth);
@@ -107,10 +105,11 @@ public class DownloadGuiController extends AnchorPane {
 
         filteredDownloads = new FilteredList<>(progData.downloadList, p -> true);
         sortedDownloads = new SortedList<>(filteredDownloads);
-        setFilterProperty();
 
+        setInfoPane();
         initTable();
         initListener();
+        setFilterProperty();
         setFilter();
     }
 
@@ -290,26 +289,6 @@ public class DownloadGuiController extends AnchorPane {
         new Table().saveTable(table, Table.TABLE.DOWNLOAD);
     }
 
-    private void setSplit() {
-        tabPane.setVisible(boolInfoOn.getValue());
-        tabPane.setManaged(boolInfoOn.getValue());
-        if (!boolInfoOn.getValue()) {
-
-            if (bound) {
-                splitPane.getDividers().get(0).positionProperty().unbindBidirectional(splitPaneProperty);
-            }
-
-            splitPane.getItems().clear();
-            splitPane.getItems().add(scrollPane);
-
-        } else {
-            bound = true;
-            splitPane.getItems().clear();
-            splitPane.getItems().addAll(scrollPane, tabPane);
-            splitPane.getDividers().get(0).positionProperty().bindBidirectional(splitPaneProperty);
-        }
-    }
-
     private ArrayList<Download> getSelList() {
         final ArrayList<Download> ret = new ArrayList<>();
         ret.addAll(table.getSelectionModel().getSelectedItems());
@@ -330,17 +309,6 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private void initListener() {
-
-//        Listener.addListener(new Listener(Listener.EREIGNIS_TIMER_HALF_SECOND, DownloadGuiController.class.getSimpleName()) {
-//            public void pingFx() {
-//                // todo?? unschön, aber bei vielen Downloads/großer Bandbreite wird ständig das GUI aktualisiert
-//                if (sceneProperty().get() != null) {
-//                    System.out.println("refrashTable");
-//                    table.refresh();
-//                }
-//            }
-//        });
-
         Listener.addListener(new Listener(Listener.EREIGNIS_TIMER, DownloadGuiController.class.getSimpleName()) {
             @Override
             public void pingFx() {
@@ -375,6 +343,26 @@ public class DownloadGuiController extends AnchorPane {
                 Platform.runLater(() -> progData.worker.searchForAbosAndMaybeStart());
             }
         });
+    }
+
+    private void setInfoPane() {
+        tabPane.setVisible(boolInfoOn.getValue());
+        tabPane.setManaged(boolInfoOn.getValue());
+
+        if (!boolInfoOn.getValue()) {
+            if (bound) {
+                splitPane.getDividers().get(0).positionProperty().unbindBidirectional(splitPaneProperty);
+            }
+
+            splitPane.getItems().clear();
+            splitPane.getItems().add(scrollPane);
+
+        } else {
+            bound = true;
+            splitPane.getItems().clear();
+            splitPane.getItems().addAll(scrollPane, tabPane);
+            splitPane.getDividers().get(0).positionProperty().bindBidirectional(splitPaneProperty);
+        }
     }
 
     private void initTable() {

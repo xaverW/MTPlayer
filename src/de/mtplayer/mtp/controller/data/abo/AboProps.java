@@ -26,7 +26,7 @@ public class AboProps extends AboXml {
     private final IntegerProperty nr = new SimpleIntegerProperty(0);
     private final BooleanProperty active = new SimpleBooleanProperty(true);
     private final StringProperty name = new SimpleStringProperty("");
-    private final StringProperty info = new SimpleStringProperty("");
+    private final StringProperty description = new SimpleStringProperty("");
     private final StringProperty resolution = new SimpleStringProperty(Film.RESOLUTION_NORMAL);
     private final StringProperty channel = new SimpleStringProperty("");
     private final BooleanProperty channelExact = new SimpleBooleanProperty(true);
@@ -44,7 +44,7 @@ public class AboProps extends AboXml {
     private final IntegerProperty hit = new SimpleIntegerProperty(0);
     private int countHit = 0;
 
-    public final Property[] properties = {nr, active, name, info, resolution,
+    public final Property[] properties = {nr, active, name, description, resolution,
             channel, channelExact, theme, themeExact, title, themeTitle, somewhere,
             minDuration, maxDuration, destination, date, psetName};
 
@@ -92,16 +92,16 @@ public class AboProps extends AboXml {
         this.name.set(name);
     }
 
-    public String getInfo() {
-        return info.get();
+    public String getDescription() {
+        return description.get();
     }
 
-    public StringProperty infoProperty() {
-        return info;
+    public StringProperty descriptionProperty() {
+        return description;
     }
 
-    public void setInfo(String info) {
-        this.info.set(info);
+    public void setDescription(String description) {
+        this.description.set(description);
     }
 
     public String getResolution() {
@@ -302,7 +302,7 @@ public class AboProps extends AboXml {
         setActive(Boolean.parseBoolean(arr[ABO_ON]));
         setResolution(arr[ABO_RESOLUTION]);
         setName(arr[ABO_NAME]);
-        setInfo(arr[ABO_INFOS]);
+        setDescription(arr[ABO_DESCRIPTION]);
         setChannel(arr[ABO_CHANNEL]);
         setChannelExact(arr[ABO_CHANNEL_EXACT].isEmpty() ? true : Boolean.parseBoolean(arr[ABO_CHANNEL_EXACT]));
         setTheme(arr[ABO_THEME]);
@@ -323,7 +323,7 @@ public class AboProps extends AboXml {
         arr[ABO_ON] = String.valueOf(isActive());
         arr[ABO_RESOLUTION] = getResolution();
         arr[ABO_NAME] = getName();
-        arr[ABO_INFOS] = getInfo();
+        arr[ABO_DESCRIPTION] = getDescription();
         arr[ABO_CHANNEL] = getChannel();
         arr[ABO_CHANNEL_EXACT] = String.valueOf(getChannelExact());
         arr[ABO_THEME] = getTheme();

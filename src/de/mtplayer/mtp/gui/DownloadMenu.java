@@ -144,7 +144,7 @@ public class DownloadMenu {
         final CheckMenuItem miShowFilter = new CheckMenuItem("Filter anzeigen");
         miShowFilter.selectedProperty().bindBidirectional(boolDivOn);
 
-        final CheckMenuItem miShowInfo = new CheckMenuItem("Downloadinfos anzeigen");
+        final CheckMenuItem miShowInfo = new CheckMenuItem("Infos anzeigen");
         miShowInfo.selectedProperty().bindBidirectional(boolInfoOn);
 
 

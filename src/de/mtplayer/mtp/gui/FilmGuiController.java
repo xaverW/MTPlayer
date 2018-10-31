@@ -42,23 +42,23 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 public class FilmGuiController extends AnchorPane {
+
     private final SplitPane splitPane = new SplitPane();
     private final ScrollPane scrollPane = new ScrollPane();
-    private final TableView<Film> tableView = new TableView<>();
 
     private final TabPane infoTab = new TabPane();
     private final AnchorPane infoPane = new AnchorPane();
     private final AnchorPane filmPane = new AnchorPane();
     private final TilePane tilePaneButton = new TilePane();
+    private FilmGuiInfoController filmGuiInfoController;
+    private final TableView<Film> tableView = new TableView<>();
 
     private final ProgData progData;
-    private FilmGuiInfoController filmGuiInfoController;
+    private boolean bound = false;
+    private final SortedList<Film> sortedList;
 
     DoubleProperty splitPaneProperty = ProgConfig.FILM_GUI_DIVIDER.getDoubleProperty();
     BooleanProperty boolInfoOn = ProgConfig.FILM_GUI_DIVIDER_ON.getBooleanProperty();
-    private boolean bound = false;
-
-    private final SortedList<Film> sortedList;
 
     public FilmGuiController() {
         progData = ProgData.getInstance();
@@ -77,7 +77,6 @@ public class FilmGuiController extends AnchorPane {
 
         initInfoPane();
         setInfoPane();
-
         initTable();
         initListener();
     }
@@ -92,6 +91,93 @@ public class FilmGuiController extends AnchorPane {
 
     public int getSelCount() {
         return tableView.getSelectionModel().getSelectedItems().size();
+    }
+
+
+    private void setFilm() {
+        Film film = tableView.getSelectionModel().getSelectedItem();
+        filmGuiInfoController.setFilm(film);
+        progData.filmInfoDialogController.setFilm(film);
+    }
+
+    public void showFilmInfo() {
+        progData.filmInfoDialogController.showFilmInfo();
+    }
+
+    public void playFilmUrl() {
+        // Menü/Button Film (URL) abspielen
+        startFilmUrl();
+    }
+
+    public void playFilmUrlWithSet(SetData psetData) {
+        startFilmUrlWithSet(psetData);
+    }
+
+    public void saveTheFilm() {
+        saveFilm();
+    }
+
+    public void guiFilmMediaCollection() {
+        final Optional<Film> film = getSel();
+        if (film.isPresent()) {
+            new MediaDialogController(film.get().getTitle());
+        }
+    }
+
+    public void setFilmShown() {
+        final ArrayList<Film> list = getSelList();
+        FilmTools.setFilmShown(progData, list, true);
+        Table.refresh_table(tableView);
+    }
+
+    public void setFilmNotShown() {
+        final ArrayList<Film> list = getSelList();
+        FilmTools.setFilmShown(progData, list, false);
+        Table.refresh_table(tableView);
+    }
+
+    public void saveTable() {
+        new Table().saveTable(tableView, Table.TABLE.FILM);
+    }
+
+    public void refreshTable() {
+        Table.refresh_table(tableView);
+    }
+
+    public ArrayList<Film> getSelList() {
+        final ArrayList<Film> ret = new ArrayList<>();
+        ret.addAll(tableView.getSelectionModel().getSelectedItems());
+        if (ret.isEmpty()) {
+            PAlert.showInfoNoSelection();
+        }
+        return ret;
+    }
+
+    public Optional<Film> getSel() {
+        final int selectedTableRow = tableView.getSelectionModel().getSelectedIndex();
+        if (selectedTableRow >= 0) {
+            return Optional.of(tableView.getSelectionModel().getSelectedItem());
+        } else {
+            PAlert.showInfoNoSelection();
+            return Optional.empty();
+        }
+    }
+
+    private void initListener() {
+        progData.setList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
+            if (progData.setList.getListButton().size() > 2) {
+                boolInfoOn.set(true);
+            }
+            setInfoPane();
+        });
+        Listener.addListener(new Listener(new int[]{Listener.EREIGNIS_GUI_COLOR_CHANGED, Listener.EREIGNIS_GUI_HISTORY_CHANGED},
+                FilmGuiController.class.getSimpleName()) {
+            @Override
+            public void pingFx() {
+//                tableView.refresh();
+                Table.refresh_table(tableView);
+            }
+        });
     }
 
     private void initInfoPane() {
@@ -180,92 +266,6 @@ public class FilmGuiController extends AnchorPane {
             infoTab.getTabs().clear();
             infoTab.getTabs().addAll(filmInfoTab, setTab);
         }
-    }
-
-    private void setFilm() {
-        Film film = tableView.getSelectionModel().getSelectedItem();
-        filmGuiInfoController.setFilm(film);
-        progData.filmInfoDialogController.setFilm(film);
-    }
-
-    public void showFilmInfo() {
-        progData.filmInfoDialogController.showFilmInfo();
-    }
-
-    public void playFilmUrl() {
-        // Menü/Button Film (URL) abspielen
-        startFilmUrl();
-    }
-
-    public void playFilmUrlWithSet(SetData psetData) {
-        startFilmUrlWithSet(psetData);
-    }
-
-    public void saveTheFilm() {
-        saveFilm();
-    }
-
-    public void guiFilmMediaCollection() {
-        final Optional<Film> film = getSel();
-        if (film.isPresent()) {
-            new MediaDialogController(film.get().getTitle());
-        }
-    }
-
-    public void setFilmShown() {
-        final ArrayList<Film> list = getSelList();
-        FilmTools.setFilmShown(progData, list, true);
-        Table.refresh_table(tableView);
-    }
-
-    public void setFilmNotShown() {
-        final ArrayList<Film> list = getSelList();
-        FilmTools.setFilmShown(progData, list, false);
-        Table.refresh_table(tableView);
-    }
-
-    public void saveTable() {
-        new Table().saveTable(tableView, Table.TABLE.FILM);
-    }
-
-    public void refreshTable() {
-        Table.refresh_table(tableView);
-    }
-
-    public ArrayList<Film> getSelList() {
-        final ArrayList<Film> ret = new ArrayList<>();
-        ret.addAll(tableView.getSelectionModel().getSelectedItems());
-        if (ret.isEmpty()) {
-            PAlert.showInfoNoSelection();
-        }
-        return ret;
-    }
-
-    public Optional<Film> getSel() {
-        final int selectedTableRow = tableView.getSelectionModel().getSelectedIndex();
-        if (selectedTableRow >= 0) {
-            return Optional.of(tableView.getSelectionModel().getSelectedItem());
-        } else {
-            PAlert.showInfoNoSelection();
-            return Optional.empty();
-        }
-    }
-
-    private void initListener() {
-        progData.setList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
-            if (progData.setList.getListButton().size() > 2) {
-                boolInfoOn.set(true);
-            }
-            setInfoPane();
-        });
-        Listener.addListener(new Listener(new int[]{Listener.EREIGNIS_GUI_COLOR_CHANGED, Listener.EREIGNIS_GUI_HISTORY_CHANGED},
-                FilmGuiController.class.getSimpleName()) {
-            @Override
-            public void pingFx() {
-//                tableView.refresh();
-                Table.refresh_table(tableView);
-            }
-        });
     }
 
     private void initTable() {

@@ -26,7 +26,7 @@ import javafx.scene.layout.VBox;
 public class AboFilterController extends FilterController {
 
     ComboBox<String> cboChannel = new ComboBox<>();
-    TextField txtInfo = new TextField();
+    TextField txtDescription = new TextField();
     Button btnClear = new Button("Filter löschen");
 
     private final VBox vBoxFilter;
@@ -38,14 +38,14 @@ public class AboFilterController extends FilterController {
         progData = ProgData.getInstance();
 
         addCont("Abos für Sender", cboChannel, vBoxFilter);
-        addCont("Infos", txtInfo, vBoxFilter);
+        addCont("Beschreibung", txtDescription, vBoxFilter);
 
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER_RIGHT);
         hBox.getChildren().add(btnClear);
         vBoxFilter.getChildren().add(hBox);
 
-        txtInfo.textProperty().bindBidirectional(ProgConfig.FILTER_ABO_INFO.getStringProperty());
+        txtDescription.textProperty().bindBidirectional(ProgConfig.FILTER_ABO_DESCRIPTION.getStringProperty());
 
         cboChannel.valueProperty().bindBidirectional(ProgConfig.FILTER_ABO_SENDER.getStringProperty());
         cboChannel.setItems(progData.worker.getChannelsForAbosList());
@@ -60,7 +60,7 @@ public class AboFilterController extends FilterController {
     }
 
     private void clearFilter() {
-        txtInfo.setText("");
+        txtDescription.setText("");
         if (cboChannel.getSelectionModel() != null) {
             cboChannel.getSelectionModel().selectFirst();
         }
