@@ -290,6 +290,19 @@
     -fx-padding: 4 14 4 14;
 }
 
+/*Checkbox edit all abo*/
+.chk-edit-all > .box {
+    -fx-border-color: cornflowerblue;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+ }
+.chk-edit-all-text {
+    -fx-border-color: cornflowerblue;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-padding: 5;
+}
+
 .alignCenter {
   -fx-alignment: center;
 }

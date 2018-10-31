@@ -30,6 +30,7 @@ import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pRange.PRangeBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -152,6 +153,7 @@ public class AboEditDialogController extends PDialogExtra {
             Label l1 = new Label("bei allen");
             Label l2 = new Label("ändern");
             VBox vBox = new VBox();
+            vBox.getStyleClass().add("chk-edit-all-text");
             vBox.setAlignment(Pos.CENTER);
             vBox.getChildren().addAll(l1, l2);
             gridPane.add(vBox, 2, 0);
@@ -230,7 +232,9 @@ public class AboEditDialogController extends PDialogExtra {
 
         cbxEditAll[i] = new CheckBox();
         cbxEditAll[i].setSelected(false);
+        cbxEditAll[i].getStyleClass().add("chk-edit-all");
         GridPane.setHgrow(cbxEditAll[i], Priority.NEVER);
+        GridPane.setHalignment(cbxEditAll[i], HPos.CENTER);
     }
 
     private void addLabel(int i, int grid) {
@@ -431,8 +435,14 @@ public class AboEditDialogController extends PDialogExtra {
             case AboXml.ABO_SOMEWHERE:
             case AboXml.ABO_MIN_DURATION:
             case AboXml.ABO_DEST_PATH:
-            case AboXml.ABO_PSET_NAME:
                 gridPane.add(cbxEditAll[i], 2, grid);
+                break;
+            case AboXml.ABO_PSET_NAME:
+                if (progData.setList.getListAbo().getPsetNameList().size() > 1) {
+                    // nur dann kann man was ändern
+                    gridPane.add(cbxEditAll[i], 2, grid);
+                }
+                break;
         }
     }
 }
