@@ -33,6 +33,10 @@ public class TableAbo {
     public static TableColumn[] initAboColumn(TableView table) {
         table.getColumns().clear();
 
+        MTColor.ABO_SWITCHED_OFF.colorProperty().addListener((a, b, c) -> {
+            table.refresh();
+        });
+
         final TableColumn<Abo, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("nr"));
         nrColumn.getStyleClass().add("alignCenterLeft");
@@ -136,7 +140,7 @@ public class TableAbo {
                         TableRow<Abo> currentRow = getTableRow();
                         if (currentRow != null) {
                             if (!item.booleanValue()) {
-                                currentRow.setStyle(MTColor.ABO_SWITCHED_OFF.getCssBackground());
+                                currentRow.setStyle(MTColor.ABO_SWITCHED_OFF.getCssBackgroundSel());
                             } else {
                                 currentRow.setStyle("");
                             }

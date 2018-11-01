@@ -48,6 +48,19 @@ public class TableFilm {
     public TableColumn[] initFilmColumn(TableView table) {
         table.getColumns().clear();
 
+        MTColor.FILM_LIVESTREAM.colorProperty().addListener((a, b, c) -> {
+            table.refresh();
+        });
+        MTColor.FILM_GEOBLOCK.colorProperty().addListener((a, b, c) -> {
+            table.refresh();
+        });
+        MTColor.FILM_NEW.colorProperty().addListener((a, b, c) -> {
+            table.refresh();
+        });
+        MTColor.FILM_HISTORY.colorProperty().addListener((a, b, c) -> {
+            table.refresh();
+        });
+
         final TableColumn<Film, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("nr"));
         nrColumn.getStyleClass().add("alignCenterLeft");
@@ -186,7 +199,7 @@ public class TableFilm {
                     }
 
                     if (film.isShown()) {
-                        setStyle(MTColor.FILM_HISTORY.getCssBackground());
+                        setStyle(MTColor.FILM_HISTORY.getCssBackgroundSel());
                     } else {
                         setStyle("");
                     }

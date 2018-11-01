@@ -51,6 +51,23 @@ public class TableDownload {
     public TableColumn[] initDownloadColumn(TableView table) {
         table.getColumns().clear();
 
+        MTColor.FILM_GEOBLOCK.colorProperty().addListener((a, b, c) -> {
+            table.refresh();
+        });
+        MTColor.DOWNLOAD_WAIT.colorProperty().addListener((a, b, c) -> {
+            table.refresh();
+        });
+        MTColor.DOWNLOAD_RUN.colorProperty().addListener((a, b, c) -> {
+            table.refresh();
+        });
+        MTColor.DOWNLOAD_FINISHED.colorProperty().addListener((a, b, c) -> {
+            table.refresh();
+        });
+        MTColor.DOWNLOAD_ERROR.colorProperty().addListener((a, b, c) -> {
+            table.refresh();
+        });
+
+
         final TableColumn<Download, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("nr"));
         nrColumn.setCellFactory(cellFactoryNr);
@@ -98,7 +115,6 @@ public class TableDownload {
         speedColumn.setCellValueFactory(new PropertyValueFactory<>("bandwidth"));
         speedColumn.getStyleClass().add("alignCenterLeft");
 
-
         final TableColumn<Download, DownloadSizeData> sizeColumn = new TableColumn<>("Größe [MB]");
         sizeColumn.setCellValueFactory(new PropertyValueFactory<>("downloadSize"));
         sizeColumn.getStyleClass().add("alignCenterLeft");
@@ -115,28 +131,20 @@ public class TableDownload {
         durationColumn.setCellValueFactory(new PropertyValueFactory<>("duration"));
         durationColumn.getStyleClass().add("alignCenterLeft");
 
-
         final TableColumn<Download, Boolean> hdColumn = new TableColumn<>("HD");
         hdColumn.setCellValueFactory(new PropertyValueFactory<>("hd"));
         hdColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
         hdColumn.getStyleClass().add("alignCenter");
-
 
         final TableColumn<Download, Boolean> utColumn = new TableColumn<>("UT");
         utColumn.setCellValueFactory(new PropertyValueFactory<>("ut"));
         utColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
         utColumn.getStyleClass().add("alignCenter");
 
-
-//        final TableColumn<Download, Boolean> pauseColumn = new TableColumn<>("Pause");
-//        pauseColumn.setCellValueFactory(new PropertyValueFactory<>("pause"));
-//        pauseColumn.setCellFactory(new PCheckBoxCell().cellFactoryBool);
-
         final TableColumn<Download, Boolean> geoColumn = new TableColumn<>("Geo");
         geoColumn.setCellValueFactory(new PropertyValueFactory<>("geoBlocked"));
         geoColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
         geoColumn.getStyleClass().add("alignCenter");
-
 
         final TableColumn<Download, String> artColumn = new TableColumn<>("Art");
         artColumn.setCellValueFactory(new PropertyValueFactory<>("art"));
@@ -210,25 +218,25 @@ public class TableDownload {
                     }
 
 
-                    int item = download.getState();
-                    switch (item) {
-                        case DownloadConstants.STATE_INIT:
-                        case DownloadConstants.STATE_STOPPED:
-                            setStyle("");
-                            break;
-                        case DownloadConstants.STATE_STARTED_WAITING:
-                            setStyle(MTColor.DOWNLOAD_WAIT.getCssBackground());
-                            break;
-                        case DownloadConstants.STATE_STARTED_RUN:
-                            setStyle(MTColor.DOWNLOAD_RUN.getCssBackground());
-                            break;
-                        case DownloadConstants.STATE_FINISHED:
-                            setStyle(MTColor.DOWNLOAD_FINISHED.getCssBackground());
-                            break;
-                        case DownloadConstants.STATE_ERROR:
-                            setStyle(MTColor.DOWNLOAD_ERROR.getCssBackground());
-                            break;
-                    }
+//                    int item = download.getState();
+//                    switch (item) {
+//                        case DownloadConstants.STATE_INIT:
+//                        case DownloadConstants.STATE_STOPPED:
+//                            setStyle("");
+//                            break;
+//                        case DownloadConstants.STATE_STARTED_WAITING:
+//                            setStyle(MTColor.DOWNLOAD_WAIT.getCssBackground());
+//                            break;
+//                        case DownloadConstants.STATE_STARTED_RUN:
+//                            setStyle(MTColor.DOWNLOAD_RUN.getCssBackground());
+//                            break;
+//                        case DownloadConstants.STATE_FINISHED:
+//                            setStyle(MTColor.DOWNLOAD_FINISHED.getCssBackground());
+//                            break;
+//                        case DownloadConstants.STATE_ERROR:
+//                            setStyle(MTColor.DOWNLOAD_ERROR.getCssBackground());
+//                            break;
+//                    }
 
                 }
 
@@ -370,16 +378,17 @@ public class TableDownload {
                 currentRow.setStyle("");
                 break;
             case DownloadConstants.STATE_STARTED_WAITING:
-                currentRow.setStyle(MTColor.DOWNLOAD_WAIT.getCssBackground());
+                currentRow.setStyle(MTColor.DOWNLOAD_WAIT.getCssBackgroundSel());
+//                currentRow.setStyle("-fx-selection-bar: red;");
                 break;
             case DownloadConstants.STATE_STARTED_RUN:
-                currentRow.setStyle(MTColor.DOWNLOAD_RUN.getCssBackground());
+                currentRow.setStyle(MTColor.DOWNLOAD_RUN.getCssBackgroundSel());
                 break;
             case DownloadConstants.STATE_FINISHED:
-                currentRow.setStyle(MTColor.DOWNLOAD_FINISHED.getCssBackground());
+                currentRow.setStyle(MTColor.DOWNLOAD_FINISHED.getCssBackgroundSel());
                 break;
             case DownloadConstants.STATE_ERROR:
-                currentRow.setStyle(MTColor.DOWNLOAD_ERROR.getCssBackground());
+                currentRow.setStyle(MTColor.DOWNLOAD_ERROR.getCssBackgroundSel());
                 break;
         }
     }

@@ -67,26 +67,28 @@ public class MTColor {
         colorList.add(FILM_LIVESTREAM);
         colorList.add(FILM_HISTORY);
         colorList.add(FILM_NEW);
-        colorList.add(FILM_GEOBLOCK_BACKGROUND);
-        colorList.add(FILM_GEOBLOCK_BACKGROUND_SEL);
-        colorList.add(DOWNLOAD_IS_ABO);
-        colorList.add(DOWNLOAD_IS_DIREKT_DOWNLOAD);
-        colorList.add(DOWNLOAD_SHOW);
+        colorList.add(FILM_GEOBLOCK);
+//        colorList.add(FILM_GEOBLOCK_BACKGROUND);
+//        colorList.add(FILM_GEOBLOCK_BACKGROUND_SEL);
+//        colorList.add(DOWNLOAD_IS_ABO);
+//        colorList.add(DOWNLOAD_IS_DIREKT_DOWNLOAD);
+//        colorList.add(DOWNLOAD_SHOW);
         colorList.add(DOWNLOAD_WAIT);
-        colorList.add(DOWNLOAD_WAIT_SEL);
+//        colorList.add(DOWNLOAD_WAIT_SEL);
         colorList.add(DOWNLOAD_RUN);
-        colorList.add(DOWNLOAD_RUN_SEL);
+//        colorList.add(DOWNLOAD_RUN_SEL);
         colorList.add(DOWNLOAD_FINISHED);
-        colorList.add(DOWNLOAD_FINISHED_SEL);
+//        colorList.add(DOWNLOAD_FINISHED_SEL);
         colorList.add(DOWNLOAD_ERROR);
-        colorList.add(DOWNLOAD_ERROR_SEL);
+//        colorList.add(DOWNLOAD_ERROR_SEL);
         colorList.add(ABO_SWITCHED_OFF);
-        colorList.add(ABO_SWITCHED_OFF_SEL);
+//        colorList.add(ABO_SWITCHED_OFF_SEL);
         colorList.add(FILTER_REGEX);
         colorList.add(FILTER_REGEX_ERROR);
-        colorList.add(DOWNLOAD_NAME_EXISTS);
-        colorList.add(DOWNLOAD_NAME_NEW);
-        colorList.add(DOWNLOAD_NAME_OLD);
+        colorList.add(DOWNLOAD_NAME_ERROR);
+//        colorList.add(DOWNLOAD_NAME_EXISTS);
+//        colorList.add(DOWNLOAD_NAME_NEW);
+//        colorList.add(DOWNLOAD_NAME_OLD);
     }
 
     public static synchronized ObservableList<MLC> getColorList() {
