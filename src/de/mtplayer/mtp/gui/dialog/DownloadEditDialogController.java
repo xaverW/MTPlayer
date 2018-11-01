@@ -41,6 +41,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
@@ -170,7 +171,7 @@ public class DownloadEditDialogController extends PDialogExtra {
     }
 
     private void getDestination() {
-        DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, cbPath);
+        DirFileChooser.DirChooser(getStage(), cbPath);
     }
 
     private void changeRes() {
@@ -344,8 +345,10 @@ public class DownloadEditDialogController extends PDialogExtra {
 
         VBox vBox = new VBox(5);
         HBox hBoxPath = new HBox(10);
-//        HBox.setHgrow(cbPath, Priority.ALWAYS); // Kompromiss
-//        cbPath.setMaxWidth(Double.MAX_VALUE);
+
+        HBox.setHgrow(cbPath, Priority.ALWAYS); // Kompromiss
+        cbPath.setMaxWidth(Double.MAX_VALUE);
+
         hBoxPath.getChildren().addAll(cbPath, btnPath);
         vBox.getChildren().addAll(hBoxPath, lblSizeFree);
         gridPane.add(vBox, 1, row);
