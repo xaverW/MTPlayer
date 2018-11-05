@@ -123,6 +123,10 @@ public class AboEditDialogController extends PDialogExtra {
                 if (cbxEditAll[i] == null || !cbxEditAll[i].isSelected()) {
                     continue;
                 }
+                if (i == AboXml.ABO_MIN_DURATION) {
+                    // duration, dann min UND max
+                    abo.properties[AboXml.ABO_MAX_DURATION].setValue(aboCopy.properties[AboXml.ABO_MAX_DURATION].getValue());
+                }
                 abo.properties[i].setValue(aboCopy.properties[i].getValue());
             }
 
@@ -398,6 +402,8 @@ public class AboEditDialogController extends PDialogExtra {
     private void initDur() {
         pRangeBoxTime.minValueProperty().bindBidirectional(aboCopy.minDurationProperty());
         pRangeBoxTime.maxValueProperty().bindBidirectional(aboCopy.maxDurationProperty());
+        pRangeBoxTime.maxValueProperty().addListener((observable, oldValue, newValue) -> cbxEditAll[AboXml.ABO_MIN_DURATION].setSelected(true));
+        pRangeBoxTime.minValueProperty().addListener((observable, oldValue, newValue) -> cbxEditAll[AboXml.ABO_MIN_DURATION].setSelected(true));
         pRangeBoxTime.setValuePrefix("");
     }
 

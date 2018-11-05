@@ -28,11 +28,11 @@ public class Main {
      * Aufruf: java -jar mtplayer [Pfad zur Konfigdatei, sonst homeverzeichnis] [Schalter]
      *
      * Programmschalter:
-     *
-     * -h print help
-     * -d debug
-     * -v programversion
-     * -p config file path
+     * -d,  --debug         show debug info
+     * -h,  --help          show help
+     * -t,  --time          show timekeeping info
+     * -p,  --path <arg>    path of configuration file
+     * -v,  --version       show version
      *
      */
 

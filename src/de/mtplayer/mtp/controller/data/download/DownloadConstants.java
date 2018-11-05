@@ -16,6 +16,8 @@
 
 package de.mtplayer.mtp.controller.data.download;
 
+import java.text.DecimalFormat;
+
 public class DownloadConstants {
 
     // Fortschritt
@@ -72,6 +74,8 @@ public class DownloadConstants {
     public static final int START_COUNTER_MAX = 3;
 
 
+    private static final DecimalFormat df = new DecimalFormat("###,##0.0");
+
     public static String getTextProgress(boolean dManager, int status, double progress) {
         String ret = "";
 
@@ -90,7 +94,8 @@ public class DownloadConstants {
             if (dManager) {
                 ret = "extern";
             } else {
-                ret = Double.toString(progress / 10.0) + '%';
+                ret = df.format(progress / 10) + " %";
+//                ret = Double.toString(progress / 10.0) + '%';
             }
 
         } else if (progress == PROGRESS_FINISHED && status == STATE_ERROR) {

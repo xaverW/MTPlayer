@@ -323,9 +323,11 @@ public class DownloadEditDialogController extends PDialogExtra {
 
                 VBox vBox = new VBox(5);
                 HBox hBoxArray1 = new HBox(10);
+                HBox.setHgrow(txt[DownloadXml.DOWNLOAD_PROGRAM_CALL], Priority.ALWAYS);
                 hBoxArray1.getChildren().addAll(btnHelp, txt[DownloadXml.DOWNLOAD_PROGRAM_CALL]);
 
                 HBox hBoxArray2 = new HBox(10);
+                HBox.setHgrow(txt[DownloadXml.DOWNLOAD_PROGRAM_CALL_ARRAY], Priority.ALWAYS);
                 hBoxArray2.getChildren().addAll(btnReset, txt[DownloadXml.DOWNLOAD_PROGRAM_CALL_ARRAY]);
 
                 vBox.getChildren().addAll(hBoxArray1, hBoxArray2);
