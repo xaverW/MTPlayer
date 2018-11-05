@@ -102,7 +102,7 @@ public class TableDownload {
         startColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<Download, Double> progressColumn = new TableColumn<>("Fortschritt"); //müssen sich unterscheiden!!
-        progressColumn.setCellValueFactory(new PropertyValueFactory<>("gioProgress"));
+        progressColumn.setCellValueFactory(new PropertyValueFactory<>("guiProgress"));
         progressColumn.setCellFactory(cellFactoryProgress);
         progressColumn.getStyleClass().add("alignCenterLeft");
 
@@ -464,6 +464,7 @@ public class TableDownload {
                         final String text = DownloadConstants.getTextProgress(true, download.getState(), item.doubleValue());
                         Label label = new Label(text);
                         setGraphic(label);
+
                     } else if (item <= DownloadConstants.PROGRESS_STARTED || item >= DownloadConstants.PROGRESS_FINISHED) {
                         String text = DownloadConstants.getTextProgress(false, download.getState(), item.doubleValue());
                         Label label = new Label(text);

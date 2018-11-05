@@ -44,13 +44,6 @@ public class DownloadConstants {
     public static final int STATE_FINISHED = 4; // fertig, Ok
     public static final int STATE_ERROR = 5; // fertig, fehlerhaft
 
-//    public static final String STATE_INIT_STR = "0"; // noch nicht gestart
-//    public static final String STATE_STOPPED_STR = "1"; // gestartet und wieder abgebrochen
-//    public static final String STATE_STARTED_WAITING_STR = "2"; // gestartet, warten auf das Downloaden
-//    public static final String STATE_STARTED_RUN_STR = "3"; //Download läuft
-//    public static final String STATE_FINISHED_STR = "4"; // fertig, Ok
-//    public static final String STATE_ERROR_STR = "5"; // fertig, fehlerhaft
-
     public static final String ALL = "";
 
     public static final String SRC_BUTTON = "Button";
@@ -82,10 +75,15 @@ public class DownloadConstants {
         if (progress == PROGRESS_NOT_STARTED) {
             if (status == STATE_STOPPED) {
                 ret = "abgebrochen";
+            } else if (status == STATE_STARTED_WAITING) {
+//                ret = "wartend";
+                ret = "wartet";
             } else {
                 ret = "nicht gestartet";
             }
+
         } else if (progress == PROGRESS_WAITING) {
+            //todo tritt eigentlich  nie auf??
             ret = dManager ? "extern" : "warten";
 
         } else if (progress == PROGRESS_STARTED) {

@@ -34,7 +34,7 @@ public class DownloadProps extends DownloadXml {
     private final IntegerProperty state = new SimpleIntegerProperty(DownloadConstants.STATE_INIT);
     private final IntegerProperty guiState = new SimpleIntegerProperty(DownloadConstants.STATE_INIT);
     private final DoubleProperty progress = new SimpleDoubleProperty(DownloadConstants.PROGRESS_NOT_STARTED);
-    private final DoubleProperty gioProgress = new SimpleDoubleProperty(DownloadConstants.PROGRESS_NOT_STARTED);
+    private final DoubleProperty guiProgress = new SimpleDoubleProperty(DownloadConstants.PROGRESS_NOT_STARTED);
     private final StringProperty remaining = new SimpleStringProperty("");
     private final StringProperty bandwidth = new SimpleStringProperty("");
 
@@ -107,12 +107,12 @@ public class DownloadProps extends DownloadXml {
         return guiState;
     }
 
-    public double getGioProgress() {
-        return gioProgress.get();
+    public double getGuiProgress() {
+        return guiProgress.get();
     }
 
-    public DoubleProperty gioProgressProperty() {
-        return gioProgress;
+    public DoubleProperty guiProgressProperty() {
+        return guiProgress;
     }
 
     public int getNr() {
@@ -210,7 +210,7 @@ public class DownloadProps extends DownloadXml {
 
     public void setProgress(Double progress) {
         this.progress.setValue(progress);
-        Platform.runLater(() -> gioProgress.setValue(progress));
+        Platform.runLater(() -> guiProgress.setValue(progress));
     }
 
     public String getRemaining() {
