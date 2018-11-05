@@ -17,6 +17,7 @@
 package de.mtplayer.mtp.gui.configDialog;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.guiTools.PButton;
@@ -53,7 +54,6 @@ public class BlackListPaneController extends AnchorPane {
     BooleanProperty propFuture = ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_FUTURE.getBooleanProperty();
 
     private final int SIZE_MAX = 100;
-    private final int FILTER_DAYS_MAX = 150;
 
     private final Stage stage;
 
@@ -178,7 +178,7 @@ public class BlackListPaneController extends AnchorPane {
         slSize.valueProperty().addListener((observable, oldValue, newValue) -> setValueSlider());
 
         slDays.setMin(0);
-        slDays.setMax(FILTER_DAYS_MAX);
+        slDays.setMax(ProgConst.LOAD_FILMS_MAX_DAYS_MAX);
         slDays.setShowTickLabels(false);
         slDays.setMajorTickUnit(10);
         slDays.setBlockIncrement(10);

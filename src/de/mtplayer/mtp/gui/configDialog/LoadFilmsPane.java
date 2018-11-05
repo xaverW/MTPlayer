@@ -39,7 +39,6 @@ public class LoadFilmsPane {
 
     private final Slider slDays = new Slider();
     private final Label lblDays = new Label("");
-    private final int FILTER_DAYS_MAX = 300;
     private final Stage stage;
     private final ProgData progData;
     StringProperty propChannel = ProgConfig.SYSTEM_LOAD_NOT_SENDER.getStringProperty();
@@ -133,7 +132,7 @@ public class LoadFilmsPane {
 
     private void initDays() {
         slDays.setMin(0);
-        slDays.setMax(FILTER_DAYS_MAX);
+        slDays.setMax(ProgConst.LOAD_FILMS_MAX_DAYS_MAX);
         slDays.setShowTickLabels(false);
         slDays.setMajorTickUnit(10);
         slDays.setBlockIncrement(10);
