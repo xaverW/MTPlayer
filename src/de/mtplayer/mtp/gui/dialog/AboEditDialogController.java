@@ -24,6 +24,7 @@ import de.mtplayer.mtp.controller.data.abo.AboXml;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
+import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
@@ -65,11 +66,14 @@ public class AboEditDialogController extends PDialogExtra {
     private final ObservableList<Abo> lAbo;
     private final Abo aboCopy;
     private ProgData progData;
+    private final boolean addNewAbo;
 
     public AboEditDialogController(ProgData progData, Abo abo) {
+        // hier wird ein neues Abo angelegt!
         super(ProgConfig.ABO_DIALOG_EDIT_SIZE.getStringProperty(),
-                "Abo ändern", true);
+                "Abo anlegen", true);
 
+        this.addNewAbo = true;
         this.progData = progData;
         lAbo = FXCollections.observableArrayList();
         lAbo.add(abo);
@@ -80,8 +84,11 @@ public class AboEditDialogController extends PDialogExtra {
     }
 
     public AboEditDialogController(ProgData progData, ObservableList<Abo> lAbo) {
+        // hier werden Abos geändert
         super(ProgConfig.ABO_DIALOG_EDIT_SIZE.getStringProperty(),
                 "Abo ändern", true);
+
+        this.addNewAbo = false;
         this.lAbo = lAbo;
         this.progData = progData;
         aboCopy = lAbo.get(0).getCopy();
@@ -97,8 +104,16 @@ public class AboEditDialogController extends PDialogExtra {
     }
 
     private void quit() {
+        ok = true;
 
-        ok = true; //Änderungen übernehmen
+        if (addNewAbo && progData.aboList.aboExistsAlready(aboCopy)) {
+            // dann gibts das Abo schon
+            PAlert.showErrorAlert(getStage(), "Fehler", "Abo anlegen",
+                    "Ein Abo mit den Einstellungen existiert bereits");
+            ok = false;
+            return;
+        }
+
         if (lAbo.size() == 1) {
             lAbo.get(0).copyToMe(aboCopy);
 
@@ -123,10 +138,12 @@ public class AboEditDialogController extends PDialogExtra {
                 if (cbxEditAll[i] == null || !cbxEditAll[i].isSelected()) {
                     continue;
                 }
+
                 if (i == AboXml.ABO_MIN_DURATION) {
                     // duration, dann min UND max
                     abo.properties[AboXml.ABO_MAX_DURATION].setValue(aboCopy.properties[AboXml.ABO_MAX_DURATION].getValue());
                 }
+
                 abo.properties[i].setValue(aboCopy.properties[i].getValue());
             }
 

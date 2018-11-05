@@ -103,7 +103,7 @@ public class AboGuiController extends AnchorPane {
     }
 
 
-    public void neu() {
+    public void addNewAbo() {
         progData.aboList.addAbo("Neu" /* Aboname */);
     }
 
@@ -205,7 +205,7 @@ public class AboGuiController extends AnchorPane {
         miChange.setOnAction(a -> changeAbo());
 
         final MenuItem miNew = new MenuItem("neues Abo anlegen");
-        miNew.setOnAction(a -> neu());
+        miNew.setOnAction(a -> addNewAbo());
 
         final MenuItem miSelection = new MenuItem("Auswahl umkehren");
         miSelection.setOnAction(a -> invertSelection());

@@ -109,19 +109,14 @@ public class AboList extends SimpleListProperty<Abo> {
                 "" /* pset */);
 
 
-        final AboEditDialogController editAboController = new AboEditDialogController(progData, abo);
-        if (editAboController.getOk()) {
-            if (!aboExistsAlready(abo)) {
-                // als Vorgabe merken
-                ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(abo.getMinDuration());
-                ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(abo.getMaxDuration());
-                addAbo(abo);
-                sort();
-                notifyChanges();
-                ret = true;
-            } else {
-                PAlert.showErrorAlert("Abo anlegen", "Abo existiert bereits");
-            }
+        if (new AboEditDialogController(progData, abo).getOk()) {
+            // als Vorgabe merken
+            ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(abo.getMinDuration());
+            ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(abo.getMaxDuration());
+            addAbo(abo);
+            sort();
+            notifyChanges();
+            ret = true;
         }
         return ret;
     }
@@ -229,7 +224,7 @@ public class AboList extends SimpleListProperty<Abo> {
         return name;
     }
 
-    private boolean aboExistsAlready(Abo abo) {
+    public boolean aboExistsAlready(Abo abo) {
         // true wenn es das Abo schon gibt
         for (final Abo dataAbo : this) {
             if (FilmFilter.aboExistsAlready(dataAbo, abo)) {
@@ -274,16 +269,18 @@ public class AboList extends SimpleListProperty<Abo> {
             return;
         }
 
-        final Abo foundAbo = stream().filter(abo -> FilmFilter.checkFilmWithFilter(
-                abo.fChannel,
-                abo.fTheme,
-                abo.fThemeTitle,
-                abo.fTitle,
-                abo.fSomewhere,
-                abo.getMinSec(),
-                abo.getMaxSec(),
-                film,
-                false))
+        final Abo foundAbo = stream()
+                .filter(abo -> abo.isActive())
+                .filter(abo -> FilmFilter.checkFilmWithFilter(
+                        abo.fChannel,
+                        abo.fTheme,
+                        abo.fThemeTitle,
+                        abo.fTitle,
+                        abo.fSomewhere,
+                        abo.getMinSec(),
+                        abo.getMaxSec(),
+                        film,
+                        false))
                 .findFirst()
                 .orElse(null);
 
@@ -326,8 +323,4 @@ public class AboList extends SimpleListProperty<Abo> {
         PDuration.counterStop("Abo in Filmliste eintragen");
     }
 
-//    public synchronized void setHitCount() {
-//        stream().forEach(abo -> abo.setCountedHits());
-//        listChanged.setValue(!listChanged.get());
-//    }
 }

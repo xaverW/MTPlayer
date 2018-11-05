@@ -82,7 +82,7 @@ public class AboMenu {
         miChange.setOnAction(a -> progData.aboGuiController.changeAbo());
 
         final MenuItem miNew = new MenuItem("neues Abo anlegen");
-        miNew.setOnAction(a -> progData.aboGuiController.neu());
+        miNew.setOnAction(a -> progData.aboGuiController.addNewAbo());
 
         final MenuItem miSelection = new MenuItem("Auswahl umkehren");
         miSelection.setOnAction(a -> progData.aboGuiController.invertSelection());

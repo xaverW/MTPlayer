@@ -48,6 +48,7 @@ public class TableAbo {
 
         final TableColumn<Abo, Integer> hitColumn = new TableColumn<>("Treffer");
         hitColumn.setCellValueFactory(new PropertyValueFactory<>("hit"));
+        hitColumn.setCellFactory(callbackHits);
         hitColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Abo, String> nameColumn = new TableColumn<>("Name");
@@ -144,6 +145,33 @@ public class TableAbo {
                             } else {
                                 currentRow.setStyle("");
                             }
+                        }
+                    }
+                };
+                return cell;
+            };
+
+    private static Callback<TableColumn<Abo, Integer>, TableCell<Abo, Integer>> callbackHits =
+            (final TableColumn<Abo, Integer> param) -> {
+
+                final CheckBoxTableCell<Abo, Integer> cell = new CheckBoxTableCell<Abo, Integer>() {
+
+                    @Override
+                    public void updateItem(Integer item, boolean empty) {
+
+                        super.updateItem(item, empty);
+
+                        if (item == null || empty) {
+                            setGraphic(null);
+                            setText(null);
+                            return;
+                        }
+
+                        Abo abo = getTableView().getItems().get(getIndex());
+                        if (abo.isActive()) {
+                            setText(item.toString());
+                        } else {
+                            setText("");
                         }
                     }
                 };
