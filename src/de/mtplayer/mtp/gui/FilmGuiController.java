@@ -292,6 +292,8 @@ public class FilmGuiController extends AnchorPane {
                 if (film.isPresent()) {
                     ContextMenu contextMenu = new FilmGuiContextMenu(progData, this, tableView).getContextMenu(film.get());
                     tableView.setContextMenu(contextMenu);
+                } else {
+                    tableView.setContextMenu(null);
                 }
             }
         });
