@@ -132,10 +132,10 @@ public class HelpTextPset {
             "%f ist die URL des Films (Original-URL)\n" +
             "%F ist die URL des Films für den flvstreamer vorbereitet\n" +
             "\n" +
-            "Zwei Sterne \"**\" werden durch den Zieldateinamen mit Pfad ersetzt.\n" +
+            "Zwei Sterne \"**\" werden durch den Zielpfad (Zielverzeichnis mit Dateinamen) ersetzt.\n" +
             "\n" +
             "Zusätzlich ist im Schalter:\n" +
-            "%a  für den Pfad und\n" +
+            "%a  für das Zielverzeichnis und\n" +
             "%b  für den Dateinamen\n" +
             "des Films möglich. Statt \"**\" wäre also auch \"%a/%b\" möglich.\n" +
             "\n" +

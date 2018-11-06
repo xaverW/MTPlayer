@@ -17,15 +17,15 @@
     <Programm>
         <Programmname>flvstreamer</Programmname>
         <Zieldateiname>%t-%T-%Z.flv</Zieldateiname>
-        <Programmpfad>/Applications/MediathekView.app/Contents/Resources/flvstreamer_macosx_intel_32bit_latest</Programmpfad>
-	<Programmschalter>%F --resume -o **</Programmschalter>
+        <Programmpfad>PFAD_FLVSTREAMER</Programmpfad>
+        <Programmschalter>%F --resume -o **</Programmschalter>
         <Praefix>rtmp</Praefix>
         <Restart>true</Restart>
     </Programm>
     <Programm>
         <Programmname>ffmpeg</Programmname>
         <Zieldateiname>%t-%T-%Z.mp4</Zieldateiname>
-        <Programmpfad>/Applications/MediathekView.app/Contents/Resources/ffmpeg</Programmpfad>
+        <Programmpfad>PFAD_FFMPEG</Programmpfad>
         <Programmschalter>-user_agent "Mozilla/5.0" -i %f -c copy -bsf:a aac_adtstoasc **</Programmschalter>
         <Praefix>http</Praefix>
         <Suffix>m3u8</Suffix>
@@ -35,7 +35,9 @@
         <Programmname>VLC</Programmname>
         <Zieldateiname>%t-%T-%Z.ts</Zieldateiname>
         <Programmpfad>PFAD_VLC</Programmpfad>
-        <Programmschalter>%f :sout=#standard{access=file,mux=ts,dst=**} -I dummy --play-and-exit</Programmschalter>
+        <Programmschalter>%f :sout=#standard{access=file,mux=ts,dst=**} -I dummy --play-and-exit
+            :http-user-agent="Mozilla/5.0"
+        </Programmschalter>
     </Programm>
 
     <Programmset>

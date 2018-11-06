@@ -35,7 +35,9 @@
         <Programmname>VLC</Programmname>
         <Zieldateiname>%t-%T-%Z.ts</Zieldateiname>
         <Programmpfad>PFAD_VLC</Programmpfad>
-        <Programmschalter>%f :sout=#standard{access=file,mux=ts,dst=**} -I dummy --play-and-exit</Programmschalter>
+        <Programmschalter>%f :sout=#standard{access=file,mux=ts,dst=**} -I dummy --play-and-exit
+            :http-user-agent="Mozilla/5.0"
+        </Programmschalter>
     </Programm>
 
     <Programmset>
