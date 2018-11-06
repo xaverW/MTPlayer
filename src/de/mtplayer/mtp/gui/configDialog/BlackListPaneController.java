@@ -190,9 +190,9 @@ public class BlackListPaneController extends AnchorPane {
 
     private void setValueSlider() {
         int min = (int) slSize.getValue();
-        lblSize.setText(min == 0 ? "alles anzeigen" : "nur Filme, länger als " + min + " Minuten anzeigen");
+        lblSize.setText(min == 0 ? "alles anzeigen" : "Länge des Films mindestens " + min + " Minuten");
 
         min = (int) slDays.getValue();
-        lblDays.setText(min == 0 ? "alles anzeigen" : "nur Filme der letzten " + min + " Tage anzeigen");
+        lblDays.setText(min == 0 ? "alles anzeigen" : "Alter des Filmes höchstens " + min + " Tage");
     }
 }

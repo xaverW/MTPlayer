@@ -106,7 +106,7 @@ public class FilmlistBlackFilter {
         // und wenn die Blacklist bei den Abos berücksichtigt werden soll,
         // wird damit geprüft
 
-        loadCurrentFilterSettings();
+        loadCurrentFilterSettings(); // todo das muss nur beim ersten mal gemacht werden
 
         if (days > 0 && !checkDate(film)) {
             return false;
@@ -143,11 +143,13 @@ public class FilmlistBlackFilter {
         } catch (final Exception ex) {
             days = 0;
         }
+
         try {
             filmlaengeSoll = Long.valueOf(ProgConfig.SYSTEM_BLACKLIST_FILMSIZE.get()) * 60; // Minuten
         } catch (final Exception ex) {
             filmlaengeSoll = 0;
         }
+
         doNotShowFutureFilms = Boolean.parseBoolean(ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_FUTURE.get());
         doNotShowGeoBlockedFilms = Boolean.parseBoolean(ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_GEO.get());
     }
@@ -164,7 +166,7 @@ public class FilmlistBlackFilter {
         }
 
         final long filmTime = film.filmDate.getTime();
-        if (filmTime != 0 && filmTime < days) {
+        if (filmTime != 0 && filmTime <= days) {
             return false;
         }
 
@@ -205,7 +207,7 @@ public class FilmlistBlackFilter {
      * @return true if film should be displayed
      */
     private static boolean checkFilmLength(Film film) {
-        return film.dauerL == 0 || filmlaengeSoll < film.dauerL;
+        return film.dauerL == 0 || filmlaengeSoll <= film.dauerL;
 
     }
 
