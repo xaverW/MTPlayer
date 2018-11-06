@@ -28,9 +28,14 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Orientation;
-import javafx.scene.control.*;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.SplitPane;
+import javafx.scene.control.TableView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
+
+import java.util.Optional;
 
 public class AboGuiController extends AnchorPane {
 
@@ -116,15 +121,6 @@ public class AboGuiController extends AnchorPane {
         new Table().saveTable(tableView, Table.TABLE.ABO);
     }
 
-    private ObservableList<Abo> getSelList() {
-        final ObservableList<Abo> ret;
-        ret = tableView.getSelectionModel().getSelectedItems();
-        if (ret == null || ret.isEmpty()) {
-            PAlert.showInfoNoSelection();
-        }
-        return ret;
-    }
-
     private void initListener() {
         progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
             tableView.refresh();
@@ -170,52 +166,37 @@ public class AboGuiController extends AnchorPane {
 
         tableView.setOnMousePressed(m -> {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
-                makeContextMenu();
+                final Optional<Abo> abo = getSel();
+                if (abo.isPresent()) {
+                    tableView.setContextMenu(new AboGuiContextMenue(progData, this, tableView).getContextMenu(abo.get()));
+                } else {
+                    tableView.setContextMenu(null);
+                }
             }
         });
+
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             final Abo abo = tableView.getSelectionModel().getSelectedItem();
             aboGuiInfoController.setAbo(abo);
         });
     }
-
-
-    private void makeContextMenu() {
-        final ContextMenu contextMenu = new ContextMenu();
-        getMenu(contextMenu);
-        tableView.setContextMenu(contextMenu);
-
+    
+    private ObservableList<Abo> getSelList() {
+        final ObservableList<Abo> ret = tableView.getSelectionModel().getSelectedItems();
+        if (ret == null || ret.isEmpty()) {
+            PAlert.showInfoNoSelection();
+        }
+        return ret;
     }
 
-    private void getMenu(ContextMenu contextMenu) {
-        Abo abo = tableView.getSelectionModel().getSelectedItem();
-        if (abo != null && abo.isActive()) {
-            final MenuItem mbOff = new MenuItem("ausschalten");
-            mbOff.setOnAction(e -> setAboActive(false));
-            contextMenu.getItems().add(mbOff);
+    private Optional<Abo> getSel() {
+        final int selectedTableRow = tableView.getSelectionModel().getSelectedIndex();
+        if (selectedTableRow >= 0) {
+            return Optional.of(tableView.getSelectionModel().getSelectedItem());
         } else {
-            final MenuItem mbOn = new MenuItem("einschalten");
-            mbOn.setOnAction(a -> setAboActive(true));
-            contextMenu.getItems().add(mbOn);
+            PAlert.showInfoNoSelection();
+            return Optional.empty();
         }
-        final MenuItem miDel = new MenuItem("löschen");
-        miDel.setOnAction(a -> deleteAbo());
-
-        final MenuItem miChange = new MenuItem("ändern");
-        miChange.setOnAction(a -> changeAbo());
-
-        final MenuItem miNew = new MenuItem("neues Abo anlegen");
-        miNew.setOnAction(a -> addNewAbo());
-
-        final MenuItem miSelection = new MenuItem("Auswahl umkehren");
-        miSelection.setOnAction(a -> invertSelection());
-
-        contextMenu.getItems().addAll(miDel, miChange, miNew, new SeparatorMenuItem(), miSelection);
-
-        MenuItem resetTable = new MenuItem("Tabelle zurücksetzen");
-        resetTable.setOnAction(e -> new Table().resetTable(tableView, Table.TABLE.ABO));
-        contextMenu.getItems().add(resetTable);
-
     }
 
     private void setFilterProperty() {

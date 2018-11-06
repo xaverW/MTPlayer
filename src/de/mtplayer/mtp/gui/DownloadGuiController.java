@@ -56,7 +56,7 @@ public class DownloadGuiController extends AnchorPane {
     private final AnchorPane tabFilmInfo = new AnchorPane();
     private final AnchorPane tabBandwidth = new AnchorPane();
     private final AnchorPane tabDownloadInfos = new AnchorPane();
-    private final TableView<Download> table = new TableView<>();
+    private final TableView<Download> tableView = new TableView<>();
 
     private FilmGuiInfoController filmGuiInfoController;
     private DownloadGuiChart downloadGuiChart;
@@ -82,7 +82,7 @@ public class DownloadGuiController extends AnchorPane {
 
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
-        scrollPane.setContent(table);
+        scrollPane.setContent(tableView);
 
         Tab tabFilm = new Tab("Filminfo");
         tabFilm.setClosable(false);
@@ -119,11 +119,11 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     public int getDownloadCount() {
-        return table.getItems().size();
+        return tableView.getItems().size();
     }
 
     public int getSelCount() {
-        return table.getSelectionModel().getSelectedItems().size();
+        return tableView.getSelectionModel().getSelectedItems().size();
     }
 
     public void playFilm() {
@@ -209,7 +209,7 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private void setFilm() {
-        Download download = table.getSelectionModel().getSelectedItem();
+        Download download = tableView.getSelectionModel().getSelectedItem();
         if (download != null) {
             filmGuiInfoController.setFilm(download.getFilm());
             progData.filmInfoDialogController.setFilm(download.getFilm());
@@ -251,14 +251,14 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     public void deleteDownloads() {
-        int sel = table.getSelectionModel().getSelectedIndex();
+        int sel = tableView.getSelectionModel().getSelectedIndex();
         progData.downloadList.delDownloads(getSelList());
         if (sel >= 0) {
-            table.getSelectionModel().clearSelection();
-            if (table.getItems().size() > sel) {
-                table.getSelectionModel().select(sel);
+            tableView.getSelectionModel().clearSelection();
+            if (tableView.getItems().size() > sel) {
+                tableView.getSelectionModel().select(sel);
             } else {
-                table.getSelectionModel().selectLast();
+                tableView.getSelectionModel().selectLast();
             }
         }
     }
@@ -282,16 +282,17 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     public void invertSelection() {
-        PTableViewTools.invertSelection(table);
+        PTableViewTools.invertSelection(tableView);
     }
 
     public void saveTable() {
-        new Table().saveTable(table, Table.TABLE.DOWNLOAD);
+        new Table().saveTable(tableView, Table.TABLE.DOWNLOAD);
     }
 
     private ArrayList<Download> getSelList() {
+        // todo observableList -> abo
         final ArrayList<Download> ret = new ArrayList<>();
-        ret.addAll(table.getSelectionModel().getSelectedItems());
+        ret.addAll(tableView.getSelectionModel().getSelectedItems());
         if (ret.isEmpty()) {
             PAlert.showInfoNoSelection();
         }
@@ -299,9 +300,9 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private Optional<Download> getSel() {
-        final int selectedTableRow = table.getSelectionModel().getSelectedIndex();
+        final int selectedTableRow = tableView.getSelectionModel().getSelectedIndex();
         if (selectedTableRow >= 0) {
-            return Optional.of(table.getSelectionModel().getSelectedItem());
+            return Optional.of(tableView.getSelectionModel().getSelectedItem());
         } else {
             PAlert.showInfoNoSelection();
             return Optional.empty();
@@ -366,32 +367,34 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private void initTable() {
-        table.setTableMenuButtonVisible(true);
-        table.setEditable(false);
-        table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        table.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+        tableView.setTableMenuButtonVisible(true);
+        tableView.setEditable(false);
+        tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
-        new Table().setTable(table, Table.TABLE.DOWNLOAD);
+        new Table().setTable(tableView, Table.TABLE.DOWNLOAD);
 
-        table.setItems(sortedDownloads);
-        sortedDownloads.comparatorProperty().bind(table.comparatorProperty());
+        tableView.setItems(sortedDownloads);
+        sortedDownloads.comparatorProperty().bind(tableView.comparatorProperty());
 
-        table.setOnMouseClicked(m -> {
+        tableView.setOnMouseClicked(m -> {
             if (m.getButton().equals(MouseButton.PRIMARY) && m.getClickCount() == 2) {
                 changeDownload();
             }
         });
 
-        table.setOnMousePressed(m -> {
+        tableView.setOnMousePressed(m -> {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
                 final Optional<Download> download = getSel();
                 if (download.isPresent()) {
-                    table.setContextMenu(new DownloadGuiContextMenu(progData, this, table).getContextMenu(download.get()));
+                    tableView.setContextMenu(new DownloadGuiContextMenu(progData, this, tableView).getContextMenu(download.get()));
+                } else {
+                    tableView.setContextMenu(null);
                 }
             }
         });
 
-        table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             Platform.runLater(() -> setFilm());
         });
     }
@@ -454,7 +457,7 @@ public class DownloadGuiController extends AnchorPane {
     private void stopWaiting() {
         // es werden alle noch nicht gestarteten Downloads gelöscht
         final ArrayList<Download> listStopDownload = new ArrayList<>();
-        table.getItems().stream().filter(download -> download.isStateStartedWaiting()).forEach(download -> {
+        tableView.getItems().stream().filter(download -> download.isStateStartedWaiting()).forEach(download -> {
             listStopDownload.add(download);
         });
         progData.downloadList.stopDownloads(listStopDownload);
@@ -467,7 +470,7 @@ public class DownloadGuiController extends AnchorPane {
         // Filme dessen Start schon auf fehler steht werden wieder gestartet
 
         final ArrayList<Download> startDownloadsList = new ArrayList<>();
-        startDownloadsList.addAll(all ? table.getItems() : getSelList());
+        startDownloadsList.addAll(all ? tableView.getItems() : getSelList());
 
         progData.downloadList.startDownloads(startDownloadsList, alsoFinished);
     }
@@ -478,7 +481,7 @@ public class DownloadGuiController extends AnchorPane {
         final ArrayList<Download> listDownloadsSelected = new ArrayList<>();
 
         // die URLs sammeln
-        listDownloadsSelected.addAll(all ? table.getItems() : getSelList());
+        listDownloadsSelected.addAll(all ? tableView.getItems() : getSelList());
         progData.downloadList.stopDownloads(listDownloadsSelected);
         setFilter();
     }

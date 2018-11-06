@@ -114,6 +114,14 @@ public class AboEditDialogController extends PDialogExtra {
             return;
         }
 
+        if (addNewAbo && aboCopy.isEmpty()) {
+            // dann gibts das Abo schon
+            PAlert.showErrorAlert(getStage(), "Fehler", "Abo anlegen",
+                    "Das Abo ist \"leer\", es enthält keine Filter.");
+            ok = false;
+            return;
+        }
+
         if (lAbo.size() == 1) {
             lAbo.get(0).copyToMe(aboCopy);
 
