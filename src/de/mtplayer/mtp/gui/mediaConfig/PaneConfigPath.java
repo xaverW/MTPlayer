@@ -15,7 +15,7 @@
  */
 
 
-package de.mtplayer.mtp.gui.mediaDialog;
+package de.mtplayer.mtp.gui.mediaConfig;
 
 import de.mtplayer.mLib.tools.DirFileChooser;
 import de.mtplayer.mtp.controller.config.ProgConst;
@@ -45,17 +45,17 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.util.Collection;
 
-public class MediaConfigPanePath {
+public class PaneConfigPath {
 
-    private final ProgData progData;
     private final TableView<MediaCollectionData> tableView = new TableView<>();
-    private final Stage stage;
     private final boolean external;
     private final TextField txtPath = new TextField();
     private final TextField txtCollectionName = new TextField();
 
+    private final ProgData progData;
+    private final Stage stage;
 
-    public MediaConfigPanePath(Stage stage, boolean external) {
+    public PaneConfigPath(Stage stage, boolean external) {
         this.stage = stage;
         this.external = external;
         this.progData = ProgData.getInstance();

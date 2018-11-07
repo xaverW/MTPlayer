@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.mtplayer.mtp.gui.mediaDialog;
+package de.mtplayer.mtp.gui.mediaConfig;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
@@ -22,6 +22,7 @@ import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.dialog.PDialog;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.tools.log.PLog;
+import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
@@ -34,7 +35,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 
-public class MediaConfigController extends PDialog {
+public class MediaConfigDialogController extends PDialog {
 
     private final VBox vBoxDialog = new VBox(10);
     private TabPane tabPane = new TabPane();
@@ -42,10 +43,11 @@ public class MediaConfigController extends PDialog {
     private Button btnCreateMediaDB = new Button("Mediensammlung neu aufbauen");
     private ProgressBar progress = new ProgressBar();
 
+    IntegerProperty propSelectedTab = ProgConfig.SYSTEM_MEDIA_DIALOG_TAB;
     private final ProgData progData;
     private Stage stage;
 
-    public MediaConfigController() {
+    public MediaConfigDialogController() {
         super(ProgConfig.MEDIA_CONFIG_DIALOG_SIZE.getStringProperty(), "Mediensammlung", true);
         this.progData = ProgData.getInstance();
 
@@ -80,30 +82,35 @@ public class MediaConfigController extends PDialog {
 
     private void initPanel() {
         try {
-            AnchorPane mediaConfigPaneController = new MediaConfigPaneMediaController(stage);
+            AnchorPane mediaConfigPaneController = new PaneConfigController(stage);
             Tab tab = new Tab("Einstellungen Mediensammlung");
             tab.setClosable(false);
             tab.setContent(mediaConfigPaneController);
             tabPane.getTabs().add(tab);
 
 
-            AnchorPane mediaListPaneController = new MediaConfigPaneMediaListController(stage);
+            AnchorPane mediaListPaneController = new PaneMediaListController(stage);
             tab = new Tab("Mediensammlung");
             tab.setClosable(false);
             tab.setContent(mediaListPaneController);
             tabPane.getTabs().add(tab);
 
-            AnchorPane historyListPaneController = new MediaConfigPaneHistoryController(stage, true);
+            AnchorPane historyListPaneController = new PaneHistoryController(stage, true);
             tab = new Tab("gesehene Filme");
             tab.setClosable(false);
             tab.setContent(historyListPaneController);
             tabPane.getTabs().add(tab);
 
-            AnchorPane aboListPaneController = new MediaConfigPaneHistoryController(stage, false);
+            AnchorPane aboListPaneController = new PaneHistoryController(stage, false);
             tab = new Tab("erledigte Abos");
             tab.setClosable(false);
             tab.setContent(aboListPaneController);
             tabPane.getTabs().add(tab);
+
+            tabPane.getSelectionModel().select(propSelectedTab.get());
+            tabPane.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) ->
+                    // readOnlyBinding!!
+                    propSelectedTab.setValue(newValue));
 
         } catch (final Exception ex) {
             PLog.errorLog(962104652, ex);

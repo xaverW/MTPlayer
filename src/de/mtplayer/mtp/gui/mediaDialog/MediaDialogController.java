@@ -49,8 +49,8 @@ public class MediaDialogController extends PDialog {
 
     private final StackPane stackPane = new StackPane();
 
-    private MediaDialogPaneMedia mediaDialogPaneMedia;
-    private MediaDialogPaneAbo mediaDialogPaneAbo;
+    private PaneMedia paneMedia;
+    private PaneAbo paneAbo;
     private final Listener listenerDbStart;
     private final Listener listenerDbStop;
     private final String searchStr;
@@ -85,10 +85,10 @@ public class MediaDialogController extends PDialog {
     public void make() {
         stage = getStage();
 
-        mediaDialogPaneMedia = new MediaDialogPaneMedia(stage);
-        mediaDialogPaneAbo = new MediaDialogPaneAbo(stage);
-        mediaDialogPaneMedia.make();
-        mediaDialogPaneAbo.make();
+        paneMedia = new PaneMedia(stage);
+        paneAbo = new PaneAbo(stage);
+        paneMedia.make();
+        paneAbo.make();
 
         initPanel();
 
@@ -117,11 +117,11 @@ public class MediaDialogController extends PDialog {
 
         rbMedien.setSelected(true);
         rbMedien.setOnAction(a -> {
-            mediaDialogPaneMedia.toFront();
+            paneMedia.toFront();
             filter();
         });
         rbAbos.setOnAction(a -> {
-            mediaDialogPaneAbo.toFront();
+            paneAbo.toFront();
             filter();
         });
 
@@ -132,7 +132,7 @@ public class MediaDialogController extends PDialog {
         Listener.removeListener(listenerDbStart);
         Listener.removeListener(listenerDbStop);
 
-        mediaDialogPaneMedia.mediaPaneClose();
+        paneMedia.mediaPaneClose();
 
         progData.erledigteAbos.filteredListClearPred();
         progData.mediaDataList.filterdListSetPredFalse();
@@ -167,15 +167,15 @@ public class MediaDialogController extends PDialog {
             vBoxCont.getChildren().add(hBox);
 
             // Stackpane
-            mediaDialogPaneMedia.setFitToHeight(true);
-            mediaDialogPaneMedia.setFitToWidth(true);
-            mediaDialogPaneAbo.setFitToHeight(true);
-            mediaDialogPaneAbo.setFitToWidth(true);
+            paneMedia.setFitToHeight(true);
+            paneMedia.setFitToWidth(true);
+            paneAbo.setFitToHeight(true);
+            paneAbo.setFitToWidth(true);
 
-            stackPane.getChildren().addAll(mediaDialogPaneMedia, mediaDialogPaneAbo);
+            stackPane.getChildren().addAll(paneMedia, paneAbo);
             VBox.setVgrow(stackPane, Priority.ALWAYS);
             vBoxCont.getChildren().add(stackPane);
-            mediaDialogPaneMedia.toFront();
+            paneMedia.toFront();
 
             Button btnHelp = new PButton().helpButton(stage,
                     "Suche in der Mediensammlung", HelpText.SEARCH_MEDIA_DIALOG);
@@ -192,9 +192,9 @@ public class MediaDialogController extends PDialog {
     private void filter() {
         final String searchStr = txtSearch.getText().toLowerCase().trim();
         if (rbMedien.isSelected()) {
-            mediaDialogPaneMedia.filter(searchStr);
+            paneMedia.filter(searchStr);
         } else {
-            mediaDialogPaneAbo.filter(searchStr);
+            paneAbo.filter(searchStr);
         }
     }
 }

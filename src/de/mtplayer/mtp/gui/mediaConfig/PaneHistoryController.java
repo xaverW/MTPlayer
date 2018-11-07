@@ -14,14 +14,16 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.mtplayer.mtp.gui.mediaDialog;
+package de.mtplayer.mtp.gui.mediaConfig;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.history.HistoryData;
 import de.p2tools.p2Lib.dialog.PAlert;
+import de.p2tools.p2Lib.guiTools.PAccordion;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.collections.ListChangeListener;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -32,20 +34,23 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class MediaConfigPaneHistoryController extends AnchorPane {
+public class PaneHistoryController extends AnchorPane {
 
-    private final ProgData progData;
-    private final boolean history;
+    private ScrollPane scrollPane = new ScrollPane();
     private Label lblGesamtMedia = new Label();
     private VBox noaccordion = new VBox();
     private final Accordion accordion = new Accordion();
     private final HBox hBox = new HBox(0);
     private final CheckBox cbxAccordion = new CheckBox("");
-    private final BooleanProperty accordionProp = ProgConfig.MEDIA_CONFIG_DIALOG_ACCORDION.getBooleanProperty();
-    private ScrollPane scrollPane = new ScrollPane();
+
+    BooleanProperty accordionProp = ProgConfig.MEDIA_CONFIG_DIALOG_ACCORDION.getBooleanProperty();
+    IntegerProperty selectedTab = ProgConfig.SYSTEM_MEDIA_DIALOG_HISTORY;
+
+    private final boolean history;
+    private final ProgData progData;
     private final Stage stage;
 
-    public MediaConfigPaneHistoryController(Stage stage, boolean history) {
+    public PaneHistoryController(Stage stage, boolean history) {
         this.stage = stage;
         this.history = history;
         progData = ProgData.getInstance();
@@ -64,6 +69,7 @@ public class MediaConfigPaneHistoryController extends AnchorPane {
         AnchorPane.setRightAnchor(hBox, 10.0);
         AnchorPane.setTopAnchor(hBox, 10.0);
 
+        PAccordion.initAccordionPane(accordion, selectedTab);
         setAccordion();
     }
 
@@ -72,6 +78,9 @@ public class MediaConfigPaneHistoryController extends AnchorPane {
             noaccordion.getChildren().clear();
             accordion.getPanes().addAll(createPanes());
             scrollPane.setContent(accordion);
+
+            PAccordion.setAccordionPane(accordion, selectedTab);
+
         } else {
             accordion.getPanes().clear();
             noaccordion.getChildren().addAll(createPanes());
@@ -145,7 +154,7 @@ public class MediaConfigPaneHistoryController extends AnchorPane {
                     PAlert.showInfoNoSelection();
                 } else {
                     ContextMenu contextMenu =
-                            new MediaConfigPaneHistoryContextMenu(stage, historyDataArrayList, history).getContextMenu();
+                            new PaneHistoryContextMenu(stage, historyDataArrayList, history).getContextMenu();
                     tableView.setContextMenu(contextMenu);
 
                 }

@@ -19,10 +19,12 @@ package de.mtplayer.mtp.gui.configDialog;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.tools.HelpText;
+import de.p2tools.p2Lib.guiTools.PAccordion;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -48,6 +50,7 @@ public class DownloadPaneController extends AnchorPane {
     BooleanProperty propErr = ProgConfig.DOWNLOAD_ERROR_MSG.getBooleanProperty();
     BooleanProperty propOne = ProgConfig.DOWNLOAD_MAX_ONE_PER_SERVER.getBooleanProperty();
     BooleanProperty propBeep = ProgConfig.DOWNLOAD_BEEP.getBooleanProperty();
+    IntegerProperty selectedTab = ProgConfig.SYSTEM_CONFIG_DIALOG_DOWNLOAD;
 
     private final ScrollPane scrollPane = new ScrollPane();
     private final Stage stage;
@@ -75,6 +78,7 @@ public class DownloadPaneController extends AnchorPane {
         AnchorPane.setRightAnchor(hBox, 10.0);
         AnchorPane.setTopAnchor(hBox, 10.0);
 
+        PAccordion.initAccordionPane(accordion, selectedTab);
         setAccordion();
     }
 
@@ -83,6 +87,9 @@ public class DownloadPaneController extends AnchorPane {
             noaccordion.getChildren().clear();
             accordion.getPanes().addAll(createPanes());
             scrollPane.setContent(accordion);
+
+            PAccordion.setAccordionPane(accordion, selectedTab);
+
         } else {
             accordion.getPanes().clear();
             noaccordion.getChildren().addAll(createPanes());

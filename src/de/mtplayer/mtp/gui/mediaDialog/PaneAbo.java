@@ -34,20 +34,18 @@ import javafx.stage.Stage;
 import java.util.Date;
 import java.util.regex.Pattern;
 
-public class MediaDialogPaneAbo extends ScrollPane {
+public class PaneAbo extends ScrollPane {
 
-    Label lblGesamtAbo = new Label();
-    Label lblTrefferAbo = new Label();
-    TableView<HistoryData> tableAbo = new TableView();
-    TextField txtTitleAbo = new TextField();
-    TextField txtUrlAbo = new TextField();
+    private Label lblGesamtAbo = new Label();
+    private  Label lblTrefferAbo = new Label();
+    private  TableView<HistoryData> tableAbo = new TableView();
+    private  TextField txtTitleAbo = new TextField();
+    private   TextField txtUrlAbo = new TextField();
 
-    ProgData progData = ProgData.getInstance();
-    String searchStr = "";
-    private final Stage stage;
+    private  ProgData progData = ProgData.getInstance();
+    private  String searchStr = "";
 
-    public MediaDialogPaneAbo(Stage stage) {
-        this.stage = stage;
+    public PaneAbo(Stage stage) {
         initPanel();
     }
 

@@ -58,6 +58,7 @@ public class BlackPane {
     private BlackData blackData = null;
 
     BooleanProperty propWhite = ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST.getBooleanProperty();
+
     private final Stage stage;
 
     public BlackPane(Stage stage) {

@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.mtplayer.mtp.gui.mediaDialog;
+package de.mtplayer.mtp.gui.mediaConfig;
 
 import de.mtplayer.mLib.tools.CheckBoxCell;
 import de.mtplayer.mtp.controller.config.ProgConfig;
@@ -22,8 +22,10 @@ import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.mediaDb.MediaData;
 import de.mtplayer.mtp.controller.mediaDb.MediaFileSize;
+import de.p2tools.p2Lib.guiTools.PAccordion;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -37,19 +39,22 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class MediaConfigPaneMediaListController extends AnchorPane {
+public class PaneMediaListController extends AnchorPane {
 
-    private final ProgData progData;
+    private ScrollPane scrollPane = new ScrollPane();
     private Label lblGesamtMedia = new Label();
     private VBox noaccordion = new VBox();
     private final Accordion accordion = new Accordion();
     private final HBox hBox = new HBox(0);
     private final CheckBox cbxAccordion = new CheckBox("");
-    private final BooleanProperty accordionProp = ProgConfig.MEDIA_CONFIG_DIALOG_ACCORDION.getBooleanProperty();
-    private ScrollPane scrollPane = new ScrollPane();
+
+    BooleanProperty accordionProp = ProgConfig.MEDIA_CONFIG_DIALOG_ACCORDION.getBooleanProperty();
+    IntegerProperty selectedTab = ProgConfig.SYSTEM_MEDIA_DIALOG_MEDIA;
+
+    private final ProgData progData;
     private final Stage stage;
 
-    public MediaConfigPaneMediaListController(Stage stage) {
+    public PaneMediaListController(Stage stage) {
         this.stage = stage;
         progData = ProgData.getInstance();
 
@@ -67,6 +72,7 @@ public class MediaConfigPaneMediaListController extends AnchorPane {
         AnchorPane.setRightAnchor(hBox, 10.0);
         AnchorPane.setTopAnchor(hBox, 10.0);
 
+        PAccordion.initAccordionPane(accordion, selectedTab);
         setAccordion();
     }
 
@@ -75,6 +81,9 @@ public class MediaConfigPaneMediaListController extends AnchorPane {
             noaccordion.getChildren().clear();
             accordion.getPanes().addAll(createPanes());
             scrollPane.setContent(accordion);
+
+            PAccordion.setAccordionPane(accordion, selectedTab);
+
         } else {
             accordion.getPanes().clear();
             noaccordion.getChildren().addAll(createPanes());

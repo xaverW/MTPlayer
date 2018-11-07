@@ -21,10 +21,12 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.gui.tools.HelpText;
+import de.p2tools.p2Lib.guiTools.PAccordion;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -48,6 +50,7 @@ public class FilmPaneController extends AnchorPane {
     BooleanProperty accordionProp = ProgConfig.CONFIG_DIALOG_ACCORDION.getBooleanProperty();
     BooleanProperty propLoad = ProgConfig.SYSTEM_LOAD_FILMS_ON_START.getBooleanProperty();
     StringProperty propUrl = ProgConfig.SYSTEM_LOAD_FILMS_MANUALLY.getStringProperty();
+    IntegerProperty selectedTab = ProgConfig.SYSTEM_CONFIG_DIALOG_FILM;
 
     private final Stage stage;
 
@@ -74,6 +77,7 @@ public class FilmPaneController extends AnchorPane {
         AnchorPane.setRightAnchor(hBox, 10.0);
         AnchorPane.setTopAnchor(hBox, 10.0);
 
+        PAccordion.initAccordionPane(accordion, selectedTab);
         setAccordion();
     }
 
@@ -82,6 +86,9 @@ public class FilmPaneController extends AnchorPane {
             noaccordion.getChildren().clear();
             accordion.getPanes().addAll(createPanes());
             scrollPane.setContent(accordion);
+
+            PAccordion.setAccordionPane(accordion, selectedTab);
+
         } else {
             accordion.getPanes().clear();
             noaccordion.getChildren().addAll(createPanes());

@@ -28,7 +28,7 @@ import de.mtplayer.mtp.gui.StatusBarController;
 import de.mtplayer.mtp.gui.configDialog.ConfigDialogController;
 import de.mtplayer.mtp.gui.dialog.AboutDialogController;
 import de.mtplayer.mtp.gui.dialog.ResetDialogController;
-import de.mtplayer.mtp.gui.mediaDialog.MediaConfigController;
+import de.mtplayer.mtp.gui.mediaConfig.MediaConfigDialogController;
 import de.p2tools.p2Lib.guiTools.POpen;
 import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -148,7 +148,7 @@ public class MTPlayerController extends StackPane {
         miConfig.setOnAction(e -> new ConfigDialogController());
 
         final MenuItem miMedia = new MenuItem("Mediensammlung");
-        miMedia.setOnAction(e -> new MediaConfigController());
+        miMedia.setOnAction(e -> new MediaConfigDialogController());
 
         final MenuItem miQuit = new MenuItem("Beenden");
         miQuit.setOnAction(e -> new ProgQuit().quit(true, false));

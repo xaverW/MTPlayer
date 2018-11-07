@@ -21,6 +21,7 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.p2tools.p2Lib.dialog.PDialog;
 import de.p2tools.p2Lib.tools.log.PLog;
+import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -40,6 +41,7 @@ public class ConfigDialogController extends PDialog {
     private String geo = ProgConfig.SYSTEM_GEO_HOME_PLACE.get();
     private Stage stage;
 
+    IntegerProperty propSelectedTab = ProgConfig.SYSTEM_CONFIG_DIALOG_TAB;
     private final ProgData progData;
 
     public ConfigDialogController() {
@@ -83,7 +85,6 @@ public class ConfigDialogController extends PDialog {
         super.close();
     }
 
-
     private void initPanel() {
         try {
             AnchorPane configPane = new ConfigPaneController(stage);
@@ -115,6 +116,11 @@ public class ConfigDialogController extends PDialog {
             tab.setClosable(false);
             tab.setContent(setPane);
             tabPane.getTabs().add(tab);
+
+            tabPane.getSelectionModel().select(propSelectedTab.get());
+            tabPane.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) ->
+                    // readOnlyBinding!!
+                    propSelectedTab.setValue(newValue));
 
         } catch (final Exception ex) {
             PLog.errorLog(784459510, ex);

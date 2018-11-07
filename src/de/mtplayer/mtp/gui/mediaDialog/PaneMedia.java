@@ -42,29 +42,27 @@ import javafx.stage.Stage;
 
 import java.util.regex.Pattern;
 
-public class MediaDialogPaneMedia extends ScrollPane {
+public class PaneMedia extends ScrollPane {
 
-    Button btnCreateMediaDB = new Button("Mediensammlung neu aufbauen");
-    Button btnPlay = new Button();
-    Button btnOpen = new Button();
+    private Button btnCreateMediaDB = new Button("Mediensammlung neu aufbauen");
+    private Button btnPlay = new Button();
+    private Button btnOpen = new Button();
 
-    ProgressBar progress = new ProgressBar();
+    private ProgressBar progress = new ProgressBar();
 
-    Label lblGesamtMedia = new Label();
-    Label lblTrefferMedia = new Label();
-    TableView<MediaData> tableMedia = new TableView();
-    TextField txtTitleMedia = new TextField();
-    TextField txtPathMedia = new TextField();
+    private Label lblGesamtMedia = new Label();
+    private Label lblTrefferMedia = new Label();
+    private TableView<MediaData> tableMedia = new TableView();
+    private TextField txtTitleMedia = new TextField();
+    private TextField txtPathMedia = new TextField();
 
-    ProgData progData = ProgData.getInstance();
+    private ProgData progData = ProgData.getInstance();
     private String searchStr = "";
     private final Listener listenerDbStop;
-    private final Stage stage;
 
-    public MediaDialogPaneMedia(Stage stage) {
-        this.stage = stage;
+    public PaneMedia(Stage stage) {
         initPanel();
-        listenerDbStop = new Listener(Listener.EREIGNIS_MEDIA_DB_STOP, MediaDialogPaneMedia.class.getSimpleName()) {
+        listenerDbStop = new Listener(Listener.EREIGNIS_MEDIA_DB_STOP, PaneMedia.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 filter(searchStr);
@@ -72,7 +70,7 @@ public class MediaDialogPaneMedia extends ScrollPane {
         };
     }
 
-    public void mediaPaneClose() {
+    void mediaPaneClose() {
         Listener.removeListener(listenerDbStop);
     }
 

@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.mtplayer.mtp.gui.mediaDialog;
+package de.mtplayer.mtp.gui.mediaConfig;
 
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.film.Film;
@@ -27,14 +27,14 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
-public class MediaConfigPaneHistoryContextMenu {
+public class PaneHistoryContextMenu {
 
     private final ProgData progData;
     private final ArrayList<HistoryData> historyDataArrayList;
     private final boolean history;
     private final Stage stage;
 
-    public MediaConfigPaneHistoryContextMenu(Stage stage, ArrayList<HistoryData> historyDataArrayList, boolean history) {
+    public PaneHistoryContextMenu(Stage stage, ArrayList<HistoryData> historyDataArrayList, boolean history) {
         this.stage = stage;
         this.historyDataArrayList = historyDataArrayList;
         this.history = history;

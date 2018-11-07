@@ -25,6 +25,7 @@ import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.tools.update.SearchProgramUpdate;
 import de.p2tools.p2Lib.PConst;
+import de.p2tools.p2Lib.guiTools.PAccordion;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
@@ -32,6 +33,7 @@ import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import de.p2tools.p2Lib.tools.PStringUtils;
 import de.p2tools.p2Lib.tools.log.PLogger;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.HPos;
@@ -64,6 +66,8 @@ public class ConfigPaneController extends AnchorPane {
     BooleanProperty propLog = ProgConfig.SYSTEM_LOG_ON.getBooleanProperty();
     StringProperty propLogDir = ProgConfig.SYSTEM_LOG_DIR.getStringProperty();
 
+    IntegerProperty selectedTab = ProgConfig.SYSTEM_CONFIG_DIALOG_CONFIG;
+
     ScrollPane scrollPane = new ScrollPane();
     private final Stage stage;
 
@@ -90,6 +94,7 @@ public class ConfigPaneController extends AnchorPane {
         AnchorPane.setRightAnchor(hBox, 10.0);
         AnchorPane.setTopAnchor(hBox, 10.0);
 
+        PAccordion.initAccordionPane(accordion, selectedTab);
         setAccordion();
     }
 
@@ -98,6 +103,9 @@ public class ConfigPaneController extends AnchorPane {
             noaccordion.getChildren().clear();
             accordion.getPanes().addAll(createPanes());
             scrollPane.setContent(accordion);
+
+            PAccordion.setAccordionPane(accordion, selectedTab);
+
         } else {
             accordion.getPanes().clear();
             noaccordion.getChildren().addAll(createPanes());

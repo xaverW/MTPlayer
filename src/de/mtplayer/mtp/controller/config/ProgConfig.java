@@ -28,6 +28,8 @@ import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.tools.PStringUtils;
 import de.p2tools.p2Lib.tools.PSystemUtils;
 import de.p2tools.p2Lib.tools.log.PLog;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 import java.util.ArrayList;
 
@@ -59,6 +61,20 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs SYSTEM_UPDATE_INFO_NR_SHOWN = addNewKey("system-update-info-nr-shown");
     public static MLConfigs SYSTEM_UPDATE_PROGSET_VERSION = addNewKey("system-update-progset-version");
 
+
+    // ConfigDialog, Dialog nach Start immer gleich öffnen
+    public static IntegerProperty SYSTEM_CONFIG_DIALOG_TAB = new SimpleIntegerProperty(0);
+    public static IntegerProperty SYSTEM_CONFIG_DIALOG_CONFIG = new SimpleIntegerProperty(-1);
+    public static IntegerProperty SYSTEM_CONFIG_DIALOG_FILM = new SimpleIntegerProperty(-1);
+    public static IntegerProperty SYSTEM_CONFIG_DIALOG_BLACKLIST = new SimpleIntegerProperty(-1);
+    public static IntegerProperty SYSTEM_CONFIG_DIALOG_DOWNLOAD = new SimpleIntegerProperty(-1);
+    public static IntegerProperty SYSTEM_CONFIG_DIALOG_PLAY = new SimpleIntegerProperty(-1);
+
+    // MediaDialog, Dialog nach Start immer gleich öffnen
+    public static IntegerProperty SYSTEM_MEDIA_DIALOG_TAB = new SimpleIntegerProperty(0);
+    public static IntegerProperty SYSTEM_MEDIA_DIALOG_CONFIG = new SimpleIntegerProperty(-1);
+    public static IntegerProperty SYSTEM_MEDIA_DIALOG_MEDIA = new SimpleIntegerProperty(-1);
+    public static IntegerProperty SYSTEM_MEDIA_DIALOG_HISTORY = new SimpleIntegerProperty(-1);
 
     // Configs
     public static MLConfigs SYSTEM_USERAGENT = addNewKey("system-useragent", ProgConst.USER_AGENT_DEFAULT);    // Useragent für direkte Downloads

@@ -24,9 +24,11 @@ import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.gui.tools.HelpTextPset;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
 import de.p2tools.p2Lib.dialog.PAlert;
+import de.p2tools.p2Lib.guiTools.PAccordion;
 import de.p2tools.p2Lib.guiTools.PButton;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -64,6 +66,8 @@ public class SetPaneController extends AnchorPane {
 
     BooleanProperty accordionProp = ProgConfig.CONFIG_DIALOG_ACCORDION.getBooleanProperty();
     DoubleProperty split = ProgConfig.CONFIG_DIALOG_SET_DIVIDER.getDoubleProperty();
+    IntegerProperty selectedTab = ProgConfig.SYSTEM_CONFIG_DIALOG_PLAY;
+
     private final Stage stage;
 
     public SetPaneController(Stage stage) {
@@ -97,6 +101,7 @@ public class SetPaneController extends AnchorPane {
         createSetDataPane();
         tableView.getSelectionModel().selectFirst();
 
+        PAccordion.initAccordionPane(accordion, selectedTab);
         setAccordion();
 
         splitPane.getDividers().get(0).positionProperty().bindBidirectional(split);
@@ -107,6 +112,9 @@ public class SetPaneController extends AnchorPane {
             noaccordion.getChildren().clear();
             accordion.getPanes().addAll(setDataPaneTitle);
             scrollPane.setContent(accordion);
+
+            PAccordion.setAccordionPane(accordion, selectedTab);
+
         } else {
             accordion.getPanes().clear();
             noaccordion.getChildren().addAll(setDataPaneTitle);
