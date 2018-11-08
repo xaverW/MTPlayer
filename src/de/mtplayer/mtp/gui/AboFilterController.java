@@ -18,6 +18,7 @@ package de.mtplayer.mtp.gui;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
+import de.mtplayer.mtp.controller.data.abo.AboConstants;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -26,6 +27,7 @@ import javafx.scene.layout.VBox;
 public class AboFilterController extends FilterController {
 
     ComboBox<String> cboChannel = new ComboBox<>();
+    ComboBox<String> cboArt = new ComboBox<>(); // Abo ein-/ausgeschaltet
     TextField txtDescription = new TextField();
     Button btnClear = new Button("Filter löschen");
 
@@ -38,6 +40,7 @@ public class AboFilterController extends FilterController {
         progData = ProgData.getInstance();
 
         addCont("Abos für Sender", cboChannel, vBoxFilter);
+        addCont("Status", cboArt, vBoxFilter);
         addCont("Beschreibung", txtDescription, vBoxFilter);
 
         HBox hBox = new HBox();
@@ -45,24 +48,29 @@ public class AboFilterController extends FilterController {
         hBox.getChildren().add(btnClear);
         vBoxFilter.getChildren().add(hBox);
 
+        initFilter();
+        btnClear.setOnAction(a -> clearFilter());
+    }
+
+    private void initFilter() {
         txtDescription.textProperty().bindBidirectional(ProgConfig.FILTER_ABO_DESCRIPTION.getStringProperty());
 
-        cboChannel.valueProperty().bindBidirectional(ProgConfig.FILTER_ABO_SENDER.getStringProperty());
         cboChannel.setItems(progData.worker.getChannelsForAbosList());
-        cboChannel.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (oldValue != null && newValue != null) {
-                // wenn Änderung beim Sender -> Themen anpassen
-                ProgConfig.FILTER_ABO_SENDER.setValue(newValue);
-            }
-        });
+        cboChannel.valueProperty().bindBidirectional(ProgConfig.FILTER_ABO_SENDER.getStringProperty());
 
-        btnClear.setOnAction(a -> clearFilter());
+        cboArt.getItems().addAll(AboConstants.ALL,
+                AboConstants.ABO_ON,
+                AboConstants.ABO_OFF);
+        cboArt.valueProperty().bindBidirectional(ProgConfig.FILTER_ABO_KIND.getStringProperty());
     }
 
     private void clearFilter() {
         txtDescription.setText("");
         if (cboChannel.getSelectionModel() != null) {
             cboChannel.getSelectionModel().selectFirst();
+        }
+        if (cboArt.getSelectionModel() != null) {
+            cboArt.getSelectionModel().selectFirst();
         }
     }
 

@@ -1,7 +1,8 @@
 Das Programm MTPlayer verwendet als Config-Ordner
 im Homeverzeichnis des Benutzers den Ordner
 
-.p2Mtplayer
+Windows:	p2Mtplayer
+Linux: 		.p2Mtplayer
 
 
 Wer Einstellungen von MediathekView übernehmen will,
@@ -19,5 +20,5 @@ mediathek.xml
 
 Alle Einstellungen können nicht übernommen werden 
 da sich einiges geändert hat, nach dem Start bitte die 
-Einstellungen durchgehen und überprüfen.
+Einstellungen und Abos durchgehen und überprüfen.
 

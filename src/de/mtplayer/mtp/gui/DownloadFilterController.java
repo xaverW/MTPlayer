@@ -33,16 +33,16 @@ import javafx.util.StringConverter;
 
 public class DownloadFilterController extends FilterController {
 
-    ComboBox<String> cboSrc = new ComboBox<>(); //Downloadquelle: Abo, manuell gestartet
-    ComboBox<String> cboArt = new ComboBox<>(); //Download über Programm / direkter Downlaod, http
-    ComboBox<String> cboChannel = new ComboBox<>();
-    ComboBox<String> cboAbo = new ComboBox<>();
-    ComboBox<String> cboState = new ComboBox<>();
+    private ComboBox<String> cboSrc = new ComboBox<>(); //Downloadquelle: Abo, manuell gestartet
+    private ComboBox<String> cboArt = new ComboBox<>(); //Download über Programm / direkter Downlaod, http
+    private ComboBox<String> cboChannel = new ComboBox<>();
+    private ComboBox<String> cboAbo = new ComboBox<>();
+    private ComboBox<String> cboState = new ComboBox<>();
 
-    Spinner<Integer> spinnerAnz = new Spinner<>();
-    Slider sliderBandwidth = new Slider();
-    Button btnClear = new Button("Filter löschen");
-    Label lblBandwidth = new Label();
+    private Spinner<Integer> spinnerAnz = new Spinner<>();
+    private Slider sliderBandwidth = new Slider();
+    private Button btnClear = new Button("Filter löschen");
+    private Label lblBandwidth = new Label();
 
     // funktioniert nur wenn hier angelegt, geht sonst die Ref verloren!
     IntegerProperty bandwidthValue = ProgConfig.DOWNLOAD_MAX_BANDWITH_KBYTE.getIntegerProperty();

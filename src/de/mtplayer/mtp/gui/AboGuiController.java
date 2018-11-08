@@ -19,6 +19,7 @@ package de.mtplayer.mtp.gui;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.abo.Abo;
+import de.mtplayer.mtp.controller.data.abo.AboConstants;
 import de.mtplayer.mtp.gui.tools.Table;
 import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.PTableViewTools;
@@ -180,7 +181,7 @@ public class AboGuiController extends AnchorPane {
             aboGuiInfoController.setAbo(abo);
         });
     }
-    
+
     private ObservableList<Abo> getSelList() {
         final ObservableList<Abo> ret = tableView.getSelectionModel().getSelectedItems();
         if (ret == null || ret.isEmpty()) {
@@ -203,6 +204,9 @@ public class AboGuiController extends AnchorPane {
         ProgConfig.FILTER_ABO_SENDER.getStringProperty().addListener((observable, oldValue, newValue) -> {
             setFilter();
         });
+        ProgConfig.FILTER_ABO_KIND.getStringProperty().addListener((observable, oldValue, newValue) -> {
+            setFilter();
+        });
         ProgConfig.FILTER_ABO_DESCRIPTION.getStringProperty().addListener((observable, oldValue, newValue) -> {
             setFilter();
         });
@@ -210,11 +214,15 @@ public class AboGuiController extends AnchorPane {
 
     private void setFilter() {
         final String sender = ProgConfig.FILTER_ABO_SENDER.get();
+        final String kind = ProgConfig.FILTER_ABO_KIND.get();
         final String description = ProgConfig.FILTER_ABO_DESCRIPTION.get().trim().toLowerCase();
 
-        filteredAbos.setPredicate(abo -> (sender.isEmpty() ? true : abo.getChannel().equals(sender)) &&
-                (description.isEmpty() ? true : abo.getDescription().toLowerCase().contains(description))
+        filteredAbos.setPredicate(abo ->
+                (sender.isEmpty() || abo.getChannel().equals(sender)) &&
+                        (description.isEmpty() || abo.getDescription().toLowerCase().contains(description)) &&
+                        (kind.isEmpty() ||
+                                kind.equals(AboConstants.ABO_ON) && abo.isActive() ||
+                                kind.equals(AboConstants.ABO_OFF) && !abo.isActive())
         );
-
     }
 }
