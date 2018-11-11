@@ -1,13 +1,36 @@
 ## MTPlayer
 
-**Release 5-0**
+
+
+**Release 6**
+
+* Tabelle Filme/Downloads/Abos: Die angezeigten Farben wurden überarbeitet
+* Tabelle Download: Neuer Button zum Öffnen des Speicherordners
+* Tabelle Download: Fehlerhafte Downloads können jetzt direkt aus der Tabelle neu gestartet werden
+* Tabelle Abo: Es gibt eine weitere Suche über den Status: "eingeschaltet/ausgeschaltet"
+* Abo: Es gibt jetzt ein neues Feld: "Beschreibung", auch eine Suche damit ist möglich, gedacht um Abos zu  strukturieren oder mit Tags zu versehen
+* in der Mediensammlung kann man versteckte Dateien ausschließen
+* Einstellungen: Möglichkeit beim Laden der Filmliste Sender auszuschließen
+* Einstellungen: Ein UserAgent kann angegeben werden
+* Einstellungen: Im Tab Sets kann man jetzt die Standardsets direkt hier hinzufügen
+* Hilfemenü: Möglichkeit zum Öffnen der Anleitung auf der Website
+* Hilfemenü: Möglichkeit zum Öffnen der Logdatei
+* Logdatei wurde übersichtlicher gestaltet und mit weiteren Informationen angereichert
+* einige Fehler konnten beseitigt werden
+* viele kleinere Änderungen die die Übersichtlichkeit und die Bedienung verbessern sollen (Danke für die vielen Vorschläge dazu)
+
+
+<br />
+
+
+**Release 5**
 
 * In bestimmten Kon­s­tel­la­ti­onen kam es zu hoher Prozessorlast
 
 
 <br />
 
-**Release 4-0**
+**Release 4**
 
 * Das Programm prüft und zeigt an, wenn es eine neue Filmliste gibt (alle 1/2h, Button "Filmliste" wird dann blau umrandet)
 * Filminfo (unter dem Filmtab) ist beschreibbar (und damit kann die Infodatei die parallel zu einem Film gespeichert wird, angepasst werden). Die Änderungen gehen mit dem Neuladen einer Filmliste wieder verloren.
@@ -20,7 +43,7 @@
 
 <br />
 
-**Release 3-0**
+**Release 3**
 
 * Das Programm ist nun unter Java >=8 (also Java8, Java9, Java10) lauffähig. Dazu musste einiges umgebaut werden und einige Gui-Elemente ausgetauscht werden. Die Optik hat sich desswegen etwas geändert, die Funktion ist aber erhalten geblieben.
 * Bei den Downloads gibt es einen neuen Filter: "Download nicht gestartet", "Download wartet", "Download läuft"
@@ -32,7 +55,7 @@
 
 <br />
 
-**Release 2-0**
+**Release 2**
 
 * Mit dem Schalter "-h" lassen sich die möglichen Startparameter abfragen
 * Das Laden der Filmliste und die anschließenden Aktivitäten z.B. beim Suchen der Downloads wurde optimiert
