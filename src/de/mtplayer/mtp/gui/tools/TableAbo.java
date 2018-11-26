@@ -154,11 +154,10 @@ public class TableAbo {
     private static Callback<TableColumn<Abo, Integer>, TableCell<Abo, Integer>> callbackHits =
             (final TableColumn<Abo, Integer> param) -> {
 
-                final CheckBoxTableCell<Abo, Integer> cell = new CheckBoxTableCell<Abo, Integer>() {
+                final TableCell<Abo, Integer> cell = new TableCell<Abo, Integer>() {
 
                     @Override
                     public void updateItem(Integer item, boolean empty) {
-
                         super.updateItem(item, empty);
 
                         if (item == null || empty) {
@@ -187,14 +186,16 @@ public class TableAbo {
             public void updateItem(Integer item, boolean empty) {
                 super.updateItem(item, empty);
 
-                if (item != null) {
+                if (item == null || empty) {
                     setGraphic(null);
+                    setText(null);
+                    return;
+                }
 
-                    if (item == 0) {
-                        setText("alles");
-                    } else {
-                        setText(item + "");
-                    }
+                if (item == 0) {
+                    setText("alles");
+                } else {
+                    setText(item + "");
                 }
             }
         };
@@ -210,14 +211,16 @@ public class TableAbo {
             public void updateItem(Integer item, boolean empty) {
                 super.updateItem(item, empty);
 
-                if (item != null) {
+                if (item == null || empty) {
                     setGraphic(null);
+                    setText(null);
+                    return;
+                }
 
-                    if (item == SelectedFilter.FILTER_DURATION_MAX_MIN) {
-                        setText("alles");
-                    } else {
-                        setText(item + "");
-                    }
+                if (item == SelectedFilter.FILTER_DURATION_MAX_MIN) {
+                    setText("alles");
+                } else {
+                    setText(item + "");
                 }
             }
         };
