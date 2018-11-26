@@ -88,7 +88,6 @@ public class MTPlayerController extends StackPane {
             HBox.setHgrow(tilePaneFilmDownloadAbo, Priority.ALWAYS);
             hBoxTop.getChildren().addAll(btnFilmlist, tilePaneFilmDownloadAbo, menuButton);
 
-
             // Center
             splitPaneFilm = filmGuiPack.pack();
             splitPaneDownoad = downloadGuiPack.pack();
@@ -126,6 +125,7 @@ public class MTPlayerController extends StackPane {
     }
 
     private void initButton() {
+        btnFilmlist.setMinWidth(Region.USE_PREF_SIZE);
         btnFilmlist.getStyleClass().add("btnFilmlist");
         btnFilmlist.setOnAction(e -> {
             // falls "neue Filmliste" aktiv ist
@@ -142,6 +142,7 @@ public class MTPlayerController extends StackPane {
 
         btnAbo.setOnAction(e -> selPanelAbo());
         btnAbo.setMaxWidth(Double.MAX_VALUE);
+
 
         // Menü
         final MenuItem miConfig = new MenuItem("Einstellungen");
@@ -173,6 +174,7 @@ public class MTPlayerController extends StackPane {
         final Menu mHelp = new Menu("Hilfe");
         mHelp.getItems().addAll(miUrlHelp, miLog, miReset, new SeparatorMenuItem(), miAbout);
 
+        menuButton.setMinWidth(Region.USE_PREF_SIZE);
         menuButton.getStyleClass().add("btnFunction");
         menuButton.setText("");
         menuButton.setGraphic(new ProgIcons().FX_ICON_TOOLBAR_MENU_TOP);
