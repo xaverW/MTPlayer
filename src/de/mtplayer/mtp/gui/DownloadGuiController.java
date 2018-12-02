@@ -363,6 +363,7 @@ public class DownloadGuiController extends AnchorPane {
             splitPane.getItems().clear();
             splitPane.getItems().addAll(scrollPane, tabPane);
             splitPane.getDividers().get(0).positionProperty().bindBidirectional(splitPaneProperty);
+            SplitPane.setResizableWithParent(tabPane, false);
         }
     }
 

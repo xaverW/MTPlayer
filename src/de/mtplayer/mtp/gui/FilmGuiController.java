@@ -221,6 +221,7 @@ public class FilmGuiController extends AnchorPane {
             if (splitPane.getItems().size() != 2 || splitPane.getItems().get(1) != filmPane) {
                 splitPane.getItems().clear();
                 splitPane.getItems().addAll(scrollPane, filmPane);
+                SplitPane.setResizableWithParent(filmPane, false);
             }
             return;
         }
@@ -248,6 +249,7 @@ public class FilmGuiController extends AnchorPane {
         if (splitPane.getItems().size() != 2 || splitPane.getItems().get(1) != infoTab) {
             splitPane.getItems().clear();
             splitPane.getItems().addAll(scrollPane, infoTab);
+            SplitPane.setResizableWithParent(infoTab, false);
 
             ScrollPane scrollPane = new ScrollPane();
             scrollPane.setFitToWidth(true);

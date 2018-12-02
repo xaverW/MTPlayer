@@ -145,6 +145,7 @@ public class AboGuiController extends AnchorPane {
             splitPane.getItems().clear();
             splitPane.getItems().addAll(scrollPane, infoPane);
             splitPane.getDividers().get(0).positionProperty().bindBidirectional(splitPaneProperty);
+            SplitPane.setResizableWithParent(infoPane, false);
         }
     }
 
