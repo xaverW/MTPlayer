@@ -18,37 +18,43 @@ package de.mtplayer.mtp.gui;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
-public class MenuController extends VBox {
+public class MenuController extends ScrollPane {
 
     public enum StartupMode {
-
         Film, DOWNLOAD, ABO
     }
-
 
     private final StartupMode startupMode;
 
     public MenuController(StartupMode sm) {
         startupMode = sm;
 
-        setPadding(new Insets(20, 10, 10, 10));
-        setSpacing(20);
-        setAlignment(Pos.TOP_CENTER);
+        VBox vb = new VBox();
+
+        setMinWidth(Region.USE_PREF_SIZE);
+        setFitToHeight(true);
+        setFitToWidth(true);
+        setContent(vb);
+
+        vb.setPadding(new Insets(20, 10, 10, 10));
+        vb.setSpacing(20);
+        vb.setAlignment(Pos.TOP_CENTER);
 
         switch (startupMode) {
             case Film:
-                new FilmMenu(this).init();
+                new FilmMenu(vb).init();
                 break;
             case DOWNLOAD:
-                new DownloadMenu(this).init();
+                new DownloadMenu(vb).init();
                 break;
             case ABO:
-                new AboMenu(this).init();
+                new AboMenu(vb).init();
                 break;
         }
     }
-
 
 }
