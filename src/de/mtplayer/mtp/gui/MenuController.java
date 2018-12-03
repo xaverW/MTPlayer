@@ -38,6 +38,8 @@ public class MenuController extends ScrollPane {
         setMinWidth(Region.USE_PREF_SIZE);
         setFitToHeight(true);
         setFitToWidth(true);
+        setHbarPolicy(ScrollBarPolicy.NEVER);
+        setVbarPolicy(ScrollBarPolicy.NEVER);
         setContent(vb);
 
         vb.setPadding(new Insets(20, 10, 10, 10));
