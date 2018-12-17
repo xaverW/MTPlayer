@@ -51,7 +51,7 @@ public class UpdatePane {
         int row = 0;
         gridPane.add(tglSearch, 0, ++row);
 
-        final Button btnHelp = new PButton().helpButton(stage, "Programmupdate suchen",
+        final Button btnHelp = PButton.helpButton(stage, "Programmupdate suchen",
                 "Beim Programmstart wird geprüft, ob es eine neue Version des Programms gibt. Wenn es " +
                         "eine neue Version gibt, wird das mit einer Nachricht mitgeteilt. Es wird nicht " +
                         "automatisch das Programm verändert.");

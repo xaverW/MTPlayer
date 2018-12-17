@@ -28,7 +28,7 @@ import de.p2tools.p2Lib.dialog.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.PGuiTools;
-import de.p2tools.p2Lib.tools.PFileUtils;
+import de.p2tools.p2Lib.tools.file.PFileUtils;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -109,7 +109,7 @@ public class PaneConfigPath {
     }
 
     private void makeButton(VBox vBox) {
-        final Button btnHelp = new PButton().helpButton(stage,
+        final Button btnHelp = PButton.helpButton(stage,
                 external ? "Externe Mediensammlungen verwalten" : "Interne Mediensammlungen verwalten",
                 external ? HelpText.EXTERN_MEDIA_COLLECTION : HelpText.INTERN_MEDIA_COLLECTION);
 

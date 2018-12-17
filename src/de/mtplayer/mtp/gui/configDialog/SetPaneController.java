@@ -237,7 +237,7 @@ public class SetPaneController extends AnchorPane {
         HBox.setHgrow(btnCheck, Priority.ALWAYS);
         btnCheck.setMaxWidth(Double.MAX_VALUE);
 
-        final Button btnHelp = new PButton().helpButton(stage, "Set", HelpTextPset.HELP_PSET);
+        final Button btnHelp = PButton.helpButton(stage, "Set", HelpTextPset.HELP_PSET);
 
 
         HBox hBox = new HBox(10);

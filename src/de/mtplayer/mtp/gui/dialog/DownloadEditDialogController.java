@@ -318,7 +318,7 @@ public class DownloadEditDialogController extends PDialogExtra {
                 btnReset.setGraphic(new ProgIcons().ICON_BUTTON_RESET);
                 btnReset.setOnAction(e -> txt[DownloadXml.DOWNLOAD_PROGRAM_CALL_ARRAY].setText(orgProgArray));
 
-                final Button btnHelp = new PButton().helpButton("Den Programmaufruf ändern",
+                final Button btnHelp = PButton.helpButton("Den Programmaufruf ändern",
                         new GetFile().getHelpSearch(GetFile.PATH_HELPTEXT_EDIT_DOWNLOAD_PROG));
 
                 VBox vBox = new VBox(5);

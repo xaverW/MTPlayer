@@ -136,7 +136,7 @@ public class ConfigPaneController extends AnchorPane {
         final PToggleSwitch tglSearchAbo = new PToggleSwitch("Abos automatisch suchen:");
         tglSearchAbo.selectedProperty().bindBidirectional(propAbo);
 
-        final Button btnHelpAbo = new PButton().helpButton(stage, "Abos automatisch suchen",
+        final Button btnHelpAbo = PButton.helpButton(stage, "Abos automatisch suchen",
                 HelpText.SEARCH_ABOS_IMMEDIATELY);
         GridPane.setHalignment(btnHelpAbo, HPos.RIGHT);
 
@@ -144,12 +144,12 @@ public class ConfigPaneController extends AnchorPane {
         final PToggleSwitch tglStartDownload = new PToggleSwitch("Downloads aus Abos sofort starten:");
         tglStartDownload.selectedProperty().bindBidirectional(propDown);
 
-        final Button btnHelpDownload = new PButton().helpButton(stage, "Downloads sofort starten",
+        final Button btnHelpDownload = PButton.helpButton(stage, "Downloads sofort starten",
                 HelpText.START_DOWNLOADS_FROM_ABOS_IMMEDIATELY);
         GridPane.setHalignment(btnHelpDownload, HPos.RIGHT);
 
 
-        final Button btnHelpUserAgent = new PButton().helpButton(stage, "User Agent festlegen",
+        final Button btnHelpUserAgent = PButton.helpButton(stage, "User Agent festlegen",
                 HelpText.USER_AGENT);
         GridPane.setHalignment(btnHelpUserAgent, HPos.RIGHT);
 
@@ -224,7 +224,7 @@ public class ConfigPaneController extends AnchorPane {
             }
         }));
 
-        final Button btnHelp = new PButton().helpButton(stage, "Logfile", HelpText.LOGFILE);
+        final Button btnHelp = PButton.helpButton(stage, "Logfile", HelpText.LOGFILE);
 
         TextField txtFileManager = new TextField();
         txtFileManager.textProperty().bindBidirectional(propLogDir);
@@ -306,7 +306,7 @@ public class ConfigPaneController extends AnchorPane {
         btnFile.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
         btnFile.setTooltip(new Tooltip("Einen Dateimanager manuell auswählen"));
 
-        final Button btnHelp = new PButton().helpButton(stage, "Dateimanager", HelpText.FILEMANAGER);
+        final Button btnHelp = PButton.helpButton(stage, "Dateimanager", HelpText.FILEMANAGER);
 
         gridPane.add(txtFileManager, 0, row + 1);
         gridPane.add(btnFile, 1, row + 1);
@@ -325,7 +325,7 @@ public class ConfigPaneController extends AnchorPane {
         btnFile.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
         btnFile.setTooltip(new Tooltip("Einen Videoplayer zum Abspielen der gespeicherten Filme auswählen."));
 
-        final Button btnHelp = new PButton().helpButton(stage, "Videoplayer", HelpText.VIDEOPLAYER);
+        final Button btnHelp = PButton.helpButton(stage, "Videoplayer", HelpText.VIDEOPLAYER);
 
         gridPane.add(txtFileManager, 0, row + 1);
         gridPane.add(btnFile, 1, row + 1);
@@ -344,7 +344,7 @@ public class ConfigPaneController extends AnchorPane {
         btnFile.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
         btnFile.setTooltip(new Tooltip("Einen Webbrowser zum Öffnen von URLs auswählen."));
 
-        final Button btnHelp = new PButton().helpButton(stage, "Webbrowser", HelpText.WEBBROWSER);
+        final Button btnHelp = PButton.helpButton(stage, "Webbrowser", HelpText.WEBBROWSER);
 
         gridPane.add(txtFileManager, 0, row + 1);
         gridPane.add(btnFile, 1, row + 1);
@@ -368,7 +368,7 @@ public class ConfigPaneController extends AnchorPane {
         tglSearch.selectedProperty().bindBidirectional(propUpdateSearch);
         tglSearch.setHGrow(false);
 
-        final Button btnHelp = new PButton().helpButton(stage, "Programmupdate suchen",
+        final Button btnHelp = PButton.helpButton(stage, "Programmupdate suchen",
                 "Beim Programmstart wird geprüft, ob es eine neue Version des Programms gibt. " +
                         "Ist eine aktualisierte Version vorhanden, wird das dann gemeldet." + PConst.LINE_SEPARATOR +
                         "Das Programm wird aber nicht ungefragt ersetzt.");

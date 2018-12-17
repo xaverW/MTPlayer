@@ -180,7 +180,7 @@ public class ProgramPane {
         btnFile.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
         btnFile.setTooltip(new Tooltip("Ein Programm zum verarbeiten der URL auswählen."));
 
-        final Button btnHelpDest = new PButton().helpButton(stage, "Zieldateiname",
+        final Button btnHelpDest = PButton.helpButton(stage, "Zieldateiname",
                 HelpTextPset.PSET_FILE_NAME);
 
         int row = 0;

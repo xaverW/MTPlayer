@@ -21,8 +21,8 @@ import de.mtplayer.mLib.tools.SizeTools;
 import de.mtplayer.mLib.tools.SystemInfo;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.p2tools.p2Lib.tools.PFileUtils;
 import de.p2tools.p2Lib.tools.PSystemUtils;
+import de.p2tools.p2Lib.tools.file.PFileUtils;
 import javafx.scene.control.Label;
 
 public class DownloadTools {

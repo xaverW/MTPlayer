@@ -54,7 +54,7 @@ public class DownPathPane {
         btnFile.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
         btnFile.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen."));
 
-        final Button btnHelp = new PButton().helpButton(stage,
+        final Button btnHelp = PButton.helpButton(stage,
                 "Zielverzeichnis",
                 "Hier kann das Verzeichnis angegeben werden, " +
                         "in dem die Downloads gespeichert werden.");

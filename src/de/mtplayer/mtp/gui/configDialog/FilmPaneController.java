@@ -121,7 +121,7 @@ public class FilmPaneController extends AnchorPane {
         HBox hBoxTgl = new HBox(10);
         hBoxTgl.getChildren().add(tglLoad);
 
-        final Button btnHelpLoad = new PButton().helpButton(stage, "Filmliste laden",
+        final Button btnHelpLoad = PButton.helpButton(stage, "Filmliste laden",
                 HelpText.LOAD_FILMLIST_PROGRAMSTART);
         GridPane.setHalignment(btnHelpLoad, HPos.RIGHT);
 
@@ -151,7 +151,7 @@ public class FilmPaneController extends AnchorPane {
         btnFile.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
         btnFile.setTooltip(new Tooltip("Eine Filmliste die geladen werden soll, manuell auswählen."));
 
-        final Button btnHelp = new PButton().helpButton(stage, "Filmliste laden",
+        final Button btnHelp = PButton.helpButton(stage, "Filmliste laden",
                 HelpText.LOAD_FILMLIST_MANUAL);
 
         Button btnLoad = new Button("Filmliste jetzt laden");

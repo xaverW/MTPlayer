@@ -177,7 +177,7 @@ public class MediaDialogController extends PDialog {
             vBoxCont.getChildren().add(stackPane);
             paneMedia.toFront();
 
-            Button btnHelp = new PButton().helpButton(stage,
+            Button btnHelp = PButton.helpButton(stage,
                     "Suche in der Mediensammlung", HelpText.SEARCH_MEDIA_DIALOG);
 
             hBox = new HBox(10);

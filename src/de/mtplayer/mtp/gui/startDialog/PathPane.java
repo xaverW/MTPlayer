@@ -72,7 +72,7 @@ public class PathPane {
                 vBox.getChildren().add(addPlayer(PLAYER.FFMPEG));
         }
 
-        final Button btnHelp = new PButton().helpButton(stage,
+        final Button btnHelp = PButton.helpButton(stage,
                 "Videoplayer", HelpText.PROG_PATHS);
 
         HBox hBox = new HBox();

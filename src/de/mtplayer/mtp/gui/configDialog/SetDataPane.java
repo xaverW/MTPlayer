@@ -218,7 +218,7 @@ public class SetDataPane {
         btnResetColor.setOnAction(event -> {
             setData.setColor(SetData.RESET_COLOR);
         });
-        final Button btnHelpColor = new PButton().helpButton(stage, "Schriftfarbe auswählen",
+        final Button btnHelpColor = PButton.helpButton(stage, "Schriftfarbe auswählen",
                 HelpText.SETDATA_RESET_COLOR);
 
         gridPane.add(new Label("Farbe des Button:"), 0, 0);
@@ -245,7 +245,7 @@ public class SetDataPane {
         gridPane.setPadding(new Insets(20));
         vBox.getChildren().add(gridPane);
 
-        final Button btnHelpColor = new PButton().helpButton(stage, "Unterordner anlegen",
+        final Button btnHelpColor = PButton.helpButton(stage, "Unterordner anlegen",
                 HelpText.SETDATA_SUBDIR);
         GridPane.setHalignment(btnHelpColor, HPos.RIGHT);
 
@@ -267,7 +267,7 @@ public class SetDataPane {
         btnFile.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
         btnFile.setTooltip(new Tooltip("Einen Ordner zum Speichern der Filme auswählen."));
 
-        final Button btnHelpDest = new PButton().helpButton(stage, "Zieldateiname",
+        final Button btnHelpDest = PButton.helpButton(stage, "Zieldateiname",
                 HelpTextPset.PSET_FILE_NAME);
 
 
@@ -348,7 +348,7 @@ public class SetDataPane {
         gridPane.setPadding(new Insets(20));
         vBox.getChildren().add(gridPane);
 
-        final Button btnHelpPraefix = new PButton().helpButton(stage, "Direkt speichern",
+        final Button btnHelpPraefix = PButton.helpButton(stage, "Direkt speichern",
                 HelpText.SETDATA_PRAEFIX);
         GridPane.setHalignment(btnHelpPraefix, HPos.RIGHT);
         Label lbl = new Label("direkt Speichern (vom Programm selbst):");
@@ -381,7 +381,7 @@ public class SetDataPane {
         gridPane.setPadding(new Insets(20));
         vBox.getChildren().add(gridPane);
 
-        final Button btnHelpRes = new PButton().helpButton(stage, "Auflösung",
+        final Button btnHelpRes = PButton.helpButton(stage, "Auflösung",
                 HelpText.SETDATA_RES);
         GridPane.setHalignment(btnHelpRes, HPos.RIGHT);
 

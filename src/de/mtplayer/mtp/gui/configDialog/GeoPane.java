@@ -47,7 +47,7 @@ public class GeoPane {
         final PToggleSwitch tglGeo = new PToggleSwitch("geblockte Sendungen gelb markieren:", false, false);
         tglGeo.selectedProperty().bindBidirectional(geoProperty);
 
-        final Button btnHelpGeo = new PButton().helpButton(stage, "Geogeblockte Filme", HelpText.CONFIG_GEO);
+        final Button btnHelpGeo = PButton.helpButton(stage, "Geogeblockte Filme", HelpText.CONFIG_GEO);
 
         ToggleGroup tg = new ToggleGroup();
         tg.getToggles().addAll(rbDe, rbCh, rbAt, rbEu, rbSonst);

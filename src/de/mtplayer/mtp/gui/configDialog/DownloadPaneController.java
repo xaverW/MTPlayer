@@ -27,9 +27,9 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
@@ -117,21 +117,21 @@ public class DownloadPaneController extends AnchorPane {
         final PToggleSwitch tglFinished = new PToggleSwitch("Benachrichtigung wenn abgeschlossen");
         tglFinished.selectedProperty().bindBidirectional(propNotify);
 
-        final Button btnHelpFinished = new PButton().helpButton(stage, "Download",
+        final Button btnHelpFinished = PButton.helpButton(stage, "Download",
                 HelpText.DOWNLOAD_FINISHED);
 
 
         final PToggleSwitch tglError = new PToggleSwitch("bei Downloadfehler, Fehlermeldung anzeigen");
         tglError.selectedProperty().bindBidirectional(propErr);
 
-        final Button btnHelpError = new PButton().helpButton(stage, "Download",
+        final Button btnHelpError = PButton.helpButton(stage, "Download",
                 HelpText.DOWNLOAD_ERROR);
 
 
         final PToggleSwitch tglOne = new PToggleSwitch("nur ein Download pro Downloadserver");
         tglOne.selectedProperty().bindBidirectional(propOne);
 
-        final Button btnHelpOne = new PButton().helpButton(stage, "Download",
+        final Button btnHelpOne = PButton.helpButton(stage, "Download",
                 HelpText.DOWNLOAD_ONE_SERVER);
 
 

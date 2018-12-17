@@ -76,7 +76,7 @@ public class ResetDialogController extends PDialog {
                 "Nichts ändern", "");
         cancelButton.setOnAction(e -> close());
 
-        final Button btnHelp = new PButton().helpButton(this.getStage(), "Programm zurücksetzen",
+        final Button btnHelp = PButton.helpButton(this.getStage(), "Programm zurücksetzen",
                 HelpText.RESET_DIALOG);
 
         BigButton setButton = new BigButton(new ProgIcons().ICON_BUTTON_QUIT,

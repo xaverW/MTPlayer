@@ -100,7 +100,7 @@ public class BlackPane {
         int row = 0;
         gridPane.add(rbBlack, 0, row);
         gridPane.add(new Label("\"Sender / Thema / Titel\" werden nicht angezeigt (Blacklist)"), 1, row);
-        final Button btnHelp = new PButton().helpButton(stage, "Blacklist / Whitelist",
+        final Button btnHelp = PButton.helpButton(stage, "Blacklist / Whitelist",
                 HelpText.BLACKLIST_WHITELIST);
         gridPane.add(btnHelp, 2, row);
 

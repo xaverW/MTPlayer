@@ -120,30 +120,30 @@ public class BlackListPaneController extends AnchorPane {
         final PToggleSwitch tglAbo = new PToggleSwitch("die Blacklist beim Suchen der Abos berücksichtigen");
         tglAbo.selectedProperty().bindBidirectional(propAbo);
 
-        final Button btnHelp = new PButton().helpButton(stage, "Blacklist",
+        final Button btnHelp = PButton.helpButton(stage, "Blacklist",
                 HelpText.BLACKLIST_ABO);
 
 
         final PToggleSwitch tglFuture = new PToggleSwitch("Filme mit Datum in der Zukunft nicht anzeigen");
         tglFuture.selectedProperty().bindBidirectional(propFuture);
 
-        final Button btnHelpFuture = new PButton().helpButton(stage, "Blacklist",
+        final Button btnHelpFuture = PButton.helpButton(stage, "Blacklist",
                 HelpText.BLACKLIST_FUTURE);
 
 
         final PToggleSwitch tglGeo = new PToggleSwitch("Filme, die per Geoblocking gesperrt sind, nicht anzeigen");
         tglGeo.selectedProperty().bindBidirectional(propGeo);
 
-        final Button btnHelpGeo = new PButton().helpButton(stage, "Blacklist",
+        final Button btnHelpGeo = PButton.helpButton(stage, "Blacklist",
                 HelpText.BLACKLIST_GEO);
 
 
         initDays();
 
-        final Button btnHelpSize = new PButton().helpButton(stage, "Blacklist",
+        final Button btnHelpSize = PButton.helpButton(stage, "Blacklist",
                 HelpText.BLACKLIST_SIZE);
 
-        final Button btnHelpDays = new PButton().helpButton(stage, "Blacklist",
+        final Button btnHelpDays = PButton.helpButton(stage, "Blacklist",
                 HelpText.BLACKLIST_DAYS);
 
 

@@ -59,7 +59,7 @@ public class LoadFilmsPane {
         vBox.setPadding(new Insets(25, 20, 20, 20));
 
         initDays();
-        final Button btnHelpDays = new PButton().helpButton(stage, "nur Filme der letzten Tage laden",
+        final Button btnHelpDays = PButton.helpButton(stage, "nur Filme der letzten Tage laden",
                 HelpText.LOAD_FILM_ONLY_DAYS);
 
         HBox hBoxLoad1 = new HBox();
@@ -92,7 +92,7 @@ public class LoadFilmsPane {
         }
 
 
-        final Button btnHelpSender = new PButton().helpButton(stage, "Filmliste laden",
+        final Button btnHelpSender = PButton.helpButton(stage, "Filmliste laden",
                 HelpText.LOAD_FILMLIST_SENDER);
 
         HBox hBoxSender1 = new HBox(10);

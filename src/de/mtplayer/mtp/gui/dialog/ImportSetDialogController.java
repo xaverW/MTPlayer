@@ -65,7 +65,7 @@ public class ImportSetDialogController extends PDialog {
     public void make() {
         btnOk.setOnAction(a -> close());
 
-        final Button btnHelp = new PButton().helpButton("Set zurücksetzen",
+        final Button btnHelp = PButton.helpButton("Set zurücksetzen",
                 "\"Bestehende Sets durch die neuen ersetzen\"" +
                         PConst.LINE_SEPARATORx2 +
                         "Damit werden alle Sets (auch eigene), die zum Abspielen" + PConst.LINE_SEPARATOR +

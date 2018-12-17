@@ -443,7 +443,7 @@ public class FilmFilterController extends FilterController {
         vBox.getChildren().addAll(new Label("gespeicherte Filter:"), cbFilter);
         vbController.getChildren().add(vBox);
 
-        final Button btnHelp = new PButton().helpButton("Filter", HelpText.GUI_FILM_FILTER);
+        final Button btnHelp = PButton.helpButton("Filter", HelpText.GUI_FILM_FILTER);
         hBox = new HBox(10);
         hBox.getChildren().addAll(mbFilterTools, PGuiTools.getHBoxGrower(), btnHelp);
         vbController.getChildren().add(hBox);

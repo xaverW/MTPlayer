@@ -61,7 +61,7 @@ public class MediaConfigDialogController extends PDialog {
     public void make() {
         stage = getStage();
 
-        final Button btnHelp = new PButton().helpButton(stage, "Medien", HelpText.MEDIA_DIALOG);
+        final Button btnHelp = PButton.helpButton(stage, "Medien", HelpText.MEDIA_DIALOG);
         HBox hBoxHlp = new HBox(10);
         HBox.setHgrow(hBoxHlp, Priority.ALWAYS);
         hBoxHlp.getChildren().addAll(btnHelp, btnCreateMediaDB, progress);

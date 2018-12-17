@@ -323,7 +323,7 @@ public class AboEditDialogController extends PDialogExtra {
                 resGrid.setHgap(10);
                 resGrid.setVgap(10);
 
-                final Button btnHelpRes = new PButton().helpButton(this.getStage(),
+                final Button btnHelpRes = PButton.helpButton(this.getStage(),
                         "Auflösung", HelpText.ABO_RES);
 
                 resGrid.add(rbHd, 0, 0);

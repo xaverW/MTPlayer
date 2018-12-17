@@ -112,7 +112,7 @@ public class PaneConfigController extends AnchorPane {
         final RadioButton rbWithOutSuff = new RadioButton("Keine Dateien mit diesem Suffix (z.B.: txt,xml,jpg");
         final RadioButton rbWithSuff = new RadioButton("Nur Dateien mit diesem Suffix  (z.B.: mp4,flv,m4v");
 
-        final Button btnHelp = new PButton().helpButton(stage,
+        final Button btnHelp = PButton.helpButton(stage,
                 "Mediensammlungen verwalten", HelpText.MEDIA_COLLECTION);
 
         final ToggleGroup tg = new ToggleGroup();
