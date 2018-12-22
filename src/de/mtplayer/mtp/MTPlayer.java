@@ -122,7 +122,8 @@ public class MTPlayer extends Application {
 
             String css = this.getClass().getResource(ProgConst.CSS_FILE).toExternalForm();
             scene.getStylesheets().add(css);
-
+            PInit.addP2LibCss(scene);
+        
             primaryStage.setScene(scene);
             primaryStage.setOnCloseRequest(e -> {
                 e.consume();
