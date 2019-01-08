@@ -20,5 +20,6 @@ mediathek.xml
 
 Alle Einstellungen können nicht übernommen werden 
 da sich einiges geändert hat, nach dem Start bitte die 
-Einstellungen und Abos durchgehen und überprüfen.
+Einstellungen und Abos (z.B. Mindestdauer der Abos) 
+durchgehen und überprüfen.
 
