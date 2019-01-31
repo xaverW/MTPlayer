@@ -24,7 +24,7 @@ import de.mtplayer.mtp.gui.startDialog.DownPathPane;
 import de.mtplayer.mtp.gui.startDialog.PathPane;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
 import de.p2tools.p2Lib.PConst;
-import de.p2tools.p2Lib.dialog.PAlert;
+import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.dialog.PDialog;
 import de.p2tools.p2Lib.guiTools.PButton;
 import javafx.geometry.Insets;

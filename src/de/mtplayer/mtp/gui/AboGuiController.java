@@ -21,7 +21,7 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.abo.Abo;
 import de.mtplayer.mtp.controller.data.abo.AboConstants;
 import de.mtplayer.mtp.gui.tools.Table;
-import de.p2tools.p2Lib.dialog.PAlert;
+import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PTableViewTools;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;

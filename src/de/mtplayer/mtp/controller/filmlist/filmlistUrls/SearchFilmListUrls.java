@@ -18,7 +18,7 @@ package de.mtplayer.mtp.controller.filmlist.filmlistUrls;
 
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgInfos;
-import de.p2tools.p2Lib.tools.log.PDuration;
+import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import de.p2tools.p2Lib.tools.net.PUrlTools;
 

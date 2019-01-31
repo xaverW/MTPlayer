@@ -22,14 +22,14 @@ import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.tools.storedFilter.ProgInitFilter;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
 import de.p2tools.p2Lib.PConst;
-import de.p2tools.p2Lib.dialog.PAlert;
+import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PGuiTools;
 import de.p2tools.p2Lib.guiTools.pCheckComboBox.PCheckComboBox;
 import de.p2tools.p2Lib.guiTools.pRange.PRangeBox;
 import de.p2tools.p2Lib.guiTools.pRange.PTimePeriodBox;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
-import de.p2tools.p2Lib.tools.log.PDuration;
+import de.p2tools.p2Lib.tools.duration.PDuration;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.control.*;
@@ -148,7 +148,7 @@ public class FilmFilterController extends FilterController {
 
         btnSaveFilter.setOnAction(a -> {
             if (cbFilter.getSelectionModel().getSelectedItem() == null
-                    || PAlert.showAlert("Speichern", "Filter speichern", "Soll der Filter überschrieben werden?")) {
+                    || PAlert.showAlertOkCancel("Speichern", "Filter speichern", "Soll der Filter überschrieben werden?")) {
                 saveFilter();
             }
         });
@@ -480,14 +480,14 @@ public class FilmFilterController extends FilterController {
     }
 
     private void delAllFilter() {
-        if (PAlert.showAlert("Löschen", "Filter löschen", "Sollen alle Filter gelöscht werden?")) {
+        if (PAlert.showAlertOkCancel("Löschen", "Filter löschen", "Sollen alle Filter gelöscht werden?")) {
             progData.storedFilter.removeAllStoredFilter();
             cbFilter.getSelectionModel().selectFirst();
         }
     }
 
     private void resetFilter() {
-        if (PAlert.showAlert("Zurücksetzen", "Filter zurücksetzen", "Sollen alle Filter gelöscht werden " +
+        if (PAlert.showAlertOkCancel("Zurücksetzen", "Filter zurücksetzen", "Sollen alle Filter gelöscht werden " +
                 "und durch die Filter vom ersten Programmstart " +
                 "ersetzt werden?")) {
             progData.storedFilter.getStordeFilterList().clear();

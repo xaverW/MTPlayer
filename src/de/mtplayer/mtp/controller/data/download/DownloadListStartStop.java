@@ -18,8 +18,8 @@ package de.mtplayer.mtp.controller.data.download;
 
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.p2tools.p2Lib.PConst;
-import de.p2tools.p2Lib.dialog.PAlert;
-import de.p2tools.p2Lib.tools.log.PDuration;
+import de.p2tools.p2Lib.alert.PAlert;
+import de.p2tools.p2Lib.tools.duration.PDuration;
 
 import java.util.ArrayList;
 import java.util.Collection;

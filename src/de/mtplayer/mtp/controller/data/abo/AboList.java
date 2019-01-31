@@ -27,9 +27,9 @@ import de.mtplayer.mtp.gui.dialog.AboEditDialogController;
 import de.mtplayer.mtp.tools.filmListFilter.FilmFilter;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
 import de.p2tools.p2Lib.PConst;
-import de.p2tools.p2Lib.dialog.PAlert;
+import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.tools.GermanStringSorter;
-import de.p2tools.p2Lib.tools.log.PDuration;
+import de.p2tools.p2Lib.tools.duration.PDuration;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -164,7 +164,7 @@ public class AboList extends SimpleListProperty<Abo> {
             text = "Sollen die " + lAbo.size() + " markierten Abos gelöscht werden?";
         }
 
-        if (PAlert.showAlert("Löschen", "Abo löschen", text)) {
+        if (PAlert.showAlertOkCancel("Löschen", "Abo löschen", text)) {
             this.removeAll(lAbo);
             notifyChanges();
         }

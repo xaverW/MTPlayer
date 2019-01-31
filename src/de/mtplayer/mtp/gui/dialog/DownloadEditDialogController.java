@@ -31,7 +31,7 @@ import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmTools;
 import de.mtplayer.mtp.tools.file.GetFile;
 import de.p2tools.p2Lib.PConst;
-import de.p2tools.p2Lib.dialog.PAlert;
+import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
@@ -135,7 +135,7 @@ public class DownloadEditDialogController extends PDialogExtra {
                 return true; // gibt nichts zu löschen
             }
 
-            if (!PAlert.showAlert("Film Löschen?", "Auflösung wurde geändert",
+            if (!PAlert.showAlertOkCancel("Film Löschen?", "Auflösung wurde geändert",
                     "Die Auflösung wurde geändert, der Film kann nicht weitergeführt werden." + PConst.LINE_SEPARATOR +
                             "Datei muss zuerst gelöscht werden.")) {
                 return false; // user will nicht

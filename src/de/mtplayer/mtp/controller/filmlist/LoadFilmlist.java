@@ -28,8 +28,8 @@ import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEven
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ReadFilmlist;
 import de.mtplayer.mtp.controller.filmlist.writeFilmlist.WriteFilmlistJson;
 import de.mtplayer.mtp.gui.tools.Listener;
-import de.p2tools.p2Lib.dialog.PAlert;
-import de.p2tools.p2Lib.tools.log.PDuration;
+import de.p2tools.p2Lib.alert.PAlert;
+import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -345,8 +345,17 @@ public class LoadFilmlist {
     }
 
     private void fillHash(Filmlist filmlist) {
-        hashSet.clear();
+//        hashSet.clear();
+        final List<String> logList = new ArrayList<>();
+        logList.add("");
+        logList.add(PLog.LILNE3);
+        logList.add("Hash füllen");
+        logList.add("Größe vorher:  " + hashSet.size());
         hashSet.addAll(filmlist.stream().map(Film::getUrlHistory).collect(Collectors.toList()));
+        logList.add("Größe nachher: " + hashSet.size());
+        logList.add(PLog.LILNE3);
+        PLog.sysLog(logList);
+
     }
 
 
@@ -357,7 +366,7 @@ public class LoadFilmlist {
                 .filter(film -> !hashSet.contains(film.getUrlHistory()))
                 .forEach(film -> film.setNewFilm(true));
 
-        hashSet.clear();
+//        hashSet.clear();
     }
 
     private void checkForFilmlistUpdate() {

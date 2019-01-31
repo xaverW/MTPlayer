@@ -29,7 +29,7 @@ import de.mtplayer.mtp.tools.storedFilter.ProgInitFilter;
 import de.p2tools.p2Lib.PInit;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PGuiSize;
-import de.p2tools.p2Lib.tools.log.PDuration;
+import de.p2tools.p2Lib.tools.duration.PDuration;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -123,7 +123,7 @@ public class MTPlayer extends Application {
             String css = this.getClass().getResource(ProgConst.CSS_FILE).toExternalForm();
             scene.getStylesheets().add(css);
             PInit.addP2LibCss(scene);
-        
+
             primaryStage.setScene(scene);
             primaryStage.setOnCloseRequest(e -> {
                 e.consume();

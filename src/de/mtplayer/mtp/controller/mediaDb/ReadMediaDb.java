@@ -17,7 +17,7 @@
 
 package de.mtplayer.mtp.controller.mediaDb;
 
-import de.p2tools.p2Lib.tools.log.PDuration;
+import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 
 import javax.xml.stream.XMLInputFactory;

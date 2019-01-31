@@ -28,7 +28,7 @@ import de.mtplayer.mtp.gui.mediaDialog.MediaDialogController;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.gui.tools.Table;
 import de.p2tools.p2Lib.PConst;
-import de.p2tools.p2Lib.dialog.PAlert;
+import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.POpen;
 import de.p2tools.p2Lib.guiTools.PTableViewTools;
 import de.p2tools.p2Lib.tools.PSystemUtils;
@@ -152,7 +152,7 @@ public class DownloadGuiController extends AnchorPane {
                 return;
             }
 
-            if (PAlert.showAlert("Film Löschen?", "", "Die Datei löschen:" + PConst.LINE_SEPARATORx2 + download.get().getDestPathFile())) {
+            if (PAlert.showAlertOkCancel("Film Löschen?", "", "Die Datei löschen:" + PConst.LINE_SEPARATORx2 + download.get().getDestPathFile())) {
 
                 // und jetzt die Datei löschen
                 PLog.sysLog(new String[]{"Datei löschen: ", file.getAbsolutePath()});

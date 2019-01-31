@@ -18,7 +18,7 @@
 package de.mtplayer.mtp.controller.history;
 
 import de.mtplayer.mtp.gui.tools.Listener;
-import de.p2tools.p2Lib.tools.log.PDuration;
+import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.beans.property.BooleanProperty;
 
