@@ -174,6 +174,14 @@ public class MTPlayerController extends StackPane {
         final Menu mHelp = new Menu("Hilfe");
         mHelp.getItems().addAll(miUrlHelp, miLog, miReset, new SeparatorMenuItem(), miAbout);
 
+        // ProgInfoDialog
+        if (ProgData.debug) {
+            MTPTester mtpTester = new MTPTester(progData);
+            final MenuItem miDebug = new MenuItem("Debugtools");
+            miDebug.setOnAction(event -> mtpTester.showDialog());
+            mHelp.getItems().addAll(new SeparatorMenuItem(), miDebug);
+        }
+
         menuButton.setMinWidth(Region.USE_PREF_SIZE);
         menuButton.getStyleClass().add("btnFunction");
         menuButton.setText("");

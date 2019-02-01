@@ -148,7 +148,7 @@ public class LoadFilmlist {
             }
 
             // Hash mit URLs füllen
-            fillHash(progData.filmlist);
+            fillHash(logList, progData.filmlist);
 
             if (alwaysLoadNew) {
                 // dann die alte Filmliste löschen, damit immer komplett geladen wird, aber erst nach dem Hash!!
@@ -307,7 +307,7 @@ public class LoadFilmlist {
             diffListe.clear();
         }
 
-        findAndMarkNewFilms(progData.filmlist);
+        findAndMarkNewFilms(logList, progData.filmlist);
 
         if (event.error) {
             logList.add("");
@@ -344,29 +344,33 @@ public class LoadFilmlist {
         PLog.addSysLog(logList);
     }
 
-    private void fillHash(Filmlist filmlist) {
+    private void fillHash(List<String> logList, Filmlist filmlist) {
 //        hashSet.clear();
-        final List<String> logList = new ArrayList<>();
-        logList.add("");
         logList.add(PLog.LILNE3);
-        logList.add("Hash füllen");
-        logList.add("Größe vorher:  " + hashSet.size());
-        hashSet.addAll(filmlist.stream().map(Film::getUrlHistory).collect(Collectors.toList()));
-        logList.add("Größe nachher: " + hashSet.size());
-        logList.add(PLog.LILNE3);
-        PLog.sysLog(logList);
+        logList.add("Hash füllen, Größe vorher: " + hashSet.size());
 
+        hashSet.addAll(filmlist.stream().map(Film::getUrlHistory).collect(Collectors.toList()));
+        logList.add("                  nachher: " + hashSet.size());
+        logList.add(PLog.LILNE3);
     }
 
-
-    private void findAndMarkNewFilms(Filmlist filmlist) {
-
+    private void findAndMarkNewFilms(List<String> logList, Filmlist filmlist) {
         filmlist.stream() //genauso schnell wie "parallel": ~90ms
                 .peek(film -> film.setNewFilm(false))
                 .filter(film -> !hashSet.contains(film.getUrlHistory()))
                 .forEach(film -> film.setNewFilm(true));
 
+        cleanHash(logList, filmlist);
 //        hashSet.clear();
+    }
+
+    private void cleanHash(List<String> logList, Filmlist filmlist) {
+        logList.add(PLog.LILNE3);
+        logList.add("Hash bereinigen, Größe vorher: " + hashSet.size());
+
+        filmlist.stream().forEach(film -> hashSet.remove(film.getUrlHistory()));
+        logList.add("                      nachher: " + hashSet.size());
+        logList.add(PLog.LILNE3);
     }
 
     private void checkForFilmlistUpdate() {
