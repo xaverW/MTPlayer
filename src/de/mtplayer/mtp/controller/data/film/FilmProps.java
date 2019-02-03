@@ -26,7 +26,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 public class FilmProps extends FilmXml {
 
     public int nr;
-    public FilmSize filmSize = new FilmSize(); // Dateigröße in MByte
+    FilmSize filmSize = new FilmSize(); // Dateigröße in MByte
     public FilmDate filmDate = new FilmDate(0);
 
     public long dauerL = 0; // Sekunden

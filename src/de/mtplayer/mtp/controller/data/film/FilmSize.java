@@ -20,25 +20,28 @@ import de.p2tools.p2Lib.tools.log.PLog;
 
 public class FilmSize implements Comparable<FilmSize> {
 
-    public Long l = 0L;
+    public long l = 0L;
     public String s = "";
 
     public FilmSize() {
     }
 
-    public FilmSize(long ll) {
-        l = ll;
-        s = l.toString();
-    }
+//    public FilmSize(long ll) {
+//        l = ll;
+//        s = l.toString();
+//    }
 
-    public FilmSize(Film film) {
+    void setFilmSize(Film film) {
         if (film.arr[FilmXml.FILM_SIZE].equals("<1")) {
             film.arr[FilmXml.FILM_SIZE] = "1";
         }
+
         try {
-            if (!film.arr[FilmXml.FILM_SIZE].isEmpty()) {
+            s = film.arr[FilmXml.FILM_SIZE];
+            if (film.arr[FilmXml.FILM_SIZE].isEmpty()) {
+                l = 0L;
+            } else {
                 l = Long.valueOf(film.arr[FilmXml.FILM_SIZE]);
-                s = film.arr[FilmXml.FILM_SIZE];
             }
         } catch (final Exception ex) {
             PLog.errorLog(649891025, ex, "String: " + film.arr[FilmXml.FILM_SIZE]);
@@ -49,11 +52,12 @@ public class FilmSize implements Comparable<FilmSize> {
 
     @Override
     public String toString() {
+//     return    l == 0 ? "" : Long.toString(l);
         return s;
     }
 
     @Override
-    public int compareTo(FilmSize ll) {
-        return (l.compareTo(ll.l));
+    public int compareTo(FilmSize compareWith) {
+        return (l < compareWith.l) ? -1 : ((l == compareWith.l) ? 0 : 1);
     }
 }

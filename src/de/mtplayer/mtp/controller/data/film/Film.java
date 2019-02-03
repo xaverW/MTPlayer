@@ -40,19 +40,37 @@ public class Film extends FilmProps {
 
 
     public Film() {
-        filmSize = new FilmSize(0); // Dateigröße in MByte
+//        filmSize = new FilmSize(0); // Dateigröße in MByte
     }
 
     public void init() {
         setHd(!arr[FilmXml.FILM_URL_HD].isEmpty() || !arr[FilmXml.FILM_URL_RTMP_HD].isEmpty());
         setSmall(!arr[FilmXml.FILM_URL_SMALL].isEmpty() || !arr[FilmXml.FILM_URL_RTMP_SMALL].isEmpty());
         setUt(!arr[FilmXml.FILM_URL_SUBTITLE].isEmpty());
+
+//        if (!arr[FilmXml.FILM_URL_HD].isEmpty() || !arr[FilmXml.FILM_URL_RTMP_HD].isEmpty()) {
+//            setHd(Boolean.TRUE);
+//        } else {
+//            setHd(Boolean.FALSE);
+//        }
+//        if (!arr[FilmXml.FILM_URL_SMALL].isEmpty() || !arr[FilmXml.FILM_URL_RTMP_SMALL].isEmpty()) {
+//            setSmall(Boolean.TRUE);
+//        } else {
+//            setSmall(Boolean.FALSE);
+//        }
+//        if (!arr[FilmXml.FILM_URL_SUBTITLE].isEmpty()) {
+//            setUt(Boolean.TRUE);
+//        } else {
+//            setUt(Boolean.FALSE);
+//        }
+
         setShown(ProgData.getInstance().history.checkIfUrlAlreadyIn(getUrlHistory()));
         preserveMemory();
 
         // ================================
         // Dateigröße
-        filmSize = new FilmSize(this);
+//        filmSize = new FilmSize(this);
+        filmSize.setFilmSize(this);
 
         // ================================
         // Filmdauer

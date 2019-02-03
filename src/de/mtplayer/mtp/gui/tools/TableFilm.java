@@ -48,18 +48,10 @@ public class TableFilm {
     public TableColumn[] initFilmColumn(TableView table) {
         table.getColumns().clear();
 
-        MTColor.FILM_LIVESTREAM.colorProperty().addListener((a, b, c) -> {
-            table.refresh();
-        });
-        MTColor.FILM_GEOBLOCK.colorProperty().addListener((a, b, c) -> {
-            table.refresh();
-        });
-        MTColor.FILM_NEW.colorProperty().addListener((a, b, c) -> {
-            table.refresh();
-        });
-        MTColor.FILM_HISTORY.colorProperty().addListener((a, b, c) -> {
-            table.refresh();
-        });
+        MTColor.FILM_LIVESTREAM.colorProperty().addListener((a, b, c) -> table.refresh());
+        MTColor.FILM_GEOBLOCK.colorProperty().addListener((a, b, c) -> table.refresh());
+        MTColor.FILM_NEW.colorProperty().addListener((a, b, c) -> table.refresh());
+        MTColor.FILM_HISTORY.colorProperty().addListener((a, b, c) -> table.refresh());
 
         final TableColumn<Film, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("nr"));
@@ -94,6 +86,7 @@ public class TableFilm {
         durationColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<Film, FilmSize> sizeColumn = new TableColumn<>("Größe [MB]");
+//        sizeColumn.setCellFactory(cellFactorySize);
         sizeColumn.setCellValueFactory(new PropertyValueFactory<>("filmSize"));
         sizeColumn.getStyleClass().add("alignCenterLeft");
 
@@ -210,13 +203,13 @@ public class TableFilm {
 
     }
 
-//    private Callback<TableColumn<Film, Boolean>, TableCell<Film, Boolean>> cellFactoryShown
-//            = (final TableColumn<Film, Boolean> param) -> {
+//    private Callback<TableColumn<Film, FilmSize>, TableCell<Film, FilmSize>> cellFactorySize
+//            = (final TableColumn<Film, FilmSize> param) -> {
 //
-//        final TableCell<Film, Boolean> cell = new TableCell<Film, Boolean>() {
+//        final TableCell<Film, FilmSize> cell = new TableCell<Film, FilmSize>() {
 //
 //            @Override
-//            public void updateItem(Boolean item, boolean empty) {
+//            public void updateItem(FilmSize item, boolean empty) {
 //                super.updateItem(item, empty);
 //
 //                if (item == null || empty) {
@@ -225,22 +218,12 @@ public class TableFilm {
 //                    return;
 //                }
 //
-//                TableRow<Film> currentRow = getTableRow();
-//                if (currentRow != null) {
-//                    if (item.booleanValue()) {
-//                        currentRow.setStyle(MTColor.FILM_HISTORY.getCssBackground());
-//                    } else {
-//                        currentRow.setStyle("");
-//                    }
+//                if (item.l == 0) {
+//                    setText("");
+//                } else {
+////                    Film film = getTableView().getItems().get(getIndex());
+//                    setText(item.l + "");
 //                }
-//
-//                setAlignment(Pos.CENTER);
-//                CheckBox box = new CheckBox();
-//                box.setDisable(true);
-//                box.getStyleClass().add("checkbox-table");
-//                box.setSelected(item.booleanValue());
-//                setGraphic(box);
-//
 //            }
 //        };
 //        return cell;

@@ -54,7 +54,7 @@ public class Filmlist extends SimpleListProperty<Film> {
     public synchronized void filterList() {
         // damit wird die Filmlist gegen die Blacklist geprüft:
         // Filmliste geladen, add Black, ConfigDialog, Filter blkBtn
-        FilmlistBlackFilter.getFilmListBlackFiltered();
+        FilmlistBlackFilter.getBlackFiltered();
     }
 
     public SortedList<Film> getSortedList() {

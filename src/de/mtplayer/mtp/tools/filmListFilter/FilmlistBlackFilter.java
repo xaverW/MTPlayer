@@ -39,7 +39,7 @@ public class FilmlistBlackFilter {
     private static long filmlaengeSoll = 0;
     private final static ProgData PROG_DATA = ProgData.getInstance();
 
-    public static synchronized void getFilmListBlackFiltered() {
+    public static synchronized void getBlackFiltered() {
         // hier wird die komplette Filmliste gegen die Blacklist gefilter
         // mit der Liste wird dannn im TabFilme weiter gearbeitet
 
@@ -48,7 +48,7 @@ public class FilmlistBlackFilter {
 
         loadCurrentFilterSettings();
 
-        PDuration.counterStart("FilmlistBlackFilter.getFilmListBlackFiltered");
+        PDuration.counterStart("FilmlistBlackFilter.getBlackFiltered");
         listRet.clear();
 
         if (filmlist != null) {
@@ -92,7 +92,7 @@ public class FilmlistBlackFilter {
             // Array mit Sendernamen/Themen füllen
             listRet.loadTheme();
         }
-        PDuration.counterStop("FilmlistBlackFilter.getFilmListBlackFiltered");
+        PDuration.counterStop("FilmlistBlackFilter.getBlackFiltered");
     }
 
     /**
