@@ -23,7 +23,6 @@ import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.Filmlist;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
 import de.p2tools.p2Lib.tools.duration.PDuration;
-import de.p2tools.p2Lib.tools.log.PLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,10 +65,12 @@ public class FilmlistBlackFilter {
                 }
 
                 if (doNotShowGeoBlockedFilms) {
-                    filterList.add(FilmlistBlackFilter::checkGeoBlockedFilm);
+//                    filterList.add(FilmlistBlackFilter::checkFilmNotGeoBlocked);
+                    filterList.add(film -> !film.isGeoBlocked());
                 }
                 if (doNotShowFutureFilms) {
-                    filterList.add(FilmlistBlackFilter::checkIfFilmIsInFuture);
+//                    filterList.add(FilmlistBlackFilter::checkFilmNotInFuture);
+                    filterList.add(film -> !film.isInFuture());
                 }
                 if (filmlaengeSoll != 0) {
                     filterList.add(FilmlistBlackFilter::checkFilmLength);
@@ -111,10 +112,16 @@ public class FilmlistBlackFilter {
         if (days > 0 && !checkDate(film)) {
             return false;
         }
-        if (doNotShowGeoBlockedFilms && !film.isGeoBlocked()) {
+//        if (doNotShowGeoBlockedFilms && !checkFilmNotGeoBlocked(film)) {
+//            return false;
+//        }
+//        if (doNotShowFutureFilms && !checkFilmNotInFuture(film)) {
+//            return false;
+//        }
+        if (doNotShowGeoBlockedFilms && film.isGeoBlocked()) {
             return false;
         }
-        if (doNotShowFutureFilms && !checkIfFilmIsInFuture(film)) {
+        if (doNotShowFutureFilms && film.isInFuture()) {
             return false;
         }
         if (filmlaengeSoll != 0 && !checkFilmLength(film)) {
@@ -173,32 +180,40 @@ public class FilmlistBlackFilter {
         return true;
     }
 
-    /**
-     * Check if film would be geoblocked for user
-     *
-     * @param film item to be checked
-     * @return true if it is NOT blocked, false if it IS blocked
-     */
-    private static boolean checkGeoBlockedFilm(Film film) {
-        return !film.isGeoBlocked();
-    }
-
-    /**
-     * Check if a future film should be displayed.
-     *
-     * @param film item to be checked.
-     * @return true if it should be displayed.
-     */
-    private static boolean checkIfFilmIsInFuture(Film film) {
-        try {
-            if (film.filmDate.getTime() > System.currentTimeMillis()) {
-                return false;
-            }
-        } catch (final Exception ex) {
-            PLog.errorLog(696987123, ex);
-        }
-        return true;
-    }
+//    /**
+//     * Check if film would be geoblocked for user
+//     *
+//     * @param film item to be checked
+//     * @return true if it is NOT blocked, false if it IS blocked
+//     */
+//    private static boolean checkFilmNotGeoBlocked(Film film) {
+//        return !film.isGeoBlocked();
+//    }
+//
+//    /**
+//     * Check if a future film should be displayed.
+//     *
+//     * @param film item to be checked.
+//     * @return true if it should be displayed (not in future).
+//     */
+//    private static boolean checkFilmNotInFuture(Film film) {
+////        if (film.isInFuture()) {
+////            return false;
+////        }
+//
+//// todo ??
+//
+//        try {
+//            if (film.filmDate.getTime() > System.currentTimeMillis()) {
+//                // Film in Zukunft, filtern
+//                return false;
+//            }
+//        } catch (final Exception ex) {
+//            PLog.errorLog(696987123, ex);
+//        }
+//
+//        return true;
+//    }
 
     /**
      * Filter based on film length.

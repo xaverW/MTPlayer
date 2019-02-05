@@ -17,6 +17,7 @@
 package de.mtplayer.mtp.gui.configDialog;
 
 import de.mtplayer.mLib.tools.MLC;
+import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.gui.tools.Listener;
@@ -87,6 +88,7 @@ public class ColorPane {
         colorOrgColumn.setCellValueFactory(new PropertyValueFactory<>("colorReset"));
         colorOrgColumn.setCellFactory(cellFactoryColorReset);
 
+        tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
         tableView.getColumns().addAll(textColumn, changeColumn, colorColumn, colorOrgColumn, resetColumn);
