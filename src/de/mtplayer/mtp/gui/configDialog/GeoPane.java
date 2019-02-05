@@ -92,7 +92,9 @@ public class GeoPane {
         int row = 0;
         gridPane.add(tglGeo, 0, ++row, 2, 1);
         gridPane.add(btnHelpGeo, 2, row);
+
         gridPane.add(new Label(" "), 0, ++row);
+
         // eigener Standort angeben
         gridPane.add(new Label("Mein Standort:"), 0, ++row);
 

@@ -45,6 +45,7 @@ public class ColorPane {
         final VBox vBox = new VBox();
         vBox.setFillWidth(true);
         vBox.setSpacing(10);
+        vBox.setPadding(new Insets(20));
 
         TableView<MLC> tableView = new TableView<>();
         VBox.setVgrow(tableView, Priority.ALWAYS);
@@ -58,7 +59,7 @@ public class ColorPane {
 
         HBox hBox = new HBox();
         hBox.getChildren().add(button);
-        hBox.setPadding(new Insets(5, 5, 5, 5));
+        hBox.setPadding(new Insets(0));
         hBox.setAlignment(Pos.CENTER_RIGHT);
 
         vBox.getChildren().addAll(tableView, hBox);
