@@ -49,16 +49,16 @@ public class FilmTools {
 
 
     public static void playFilm(Film film, SetData psetData) {
-        SetData pset;
+        SetData setData;
         String resolution = "";
 
         if (psetData != null) {
-            pset = psetData;
+            setData = psetData;
         } else {
-            pset = ProgData.getInstance().setList.getPsetPlay();
+            setData = ProgData.getInstance().setDataList.getSetDataPlay();
         }
 
-        if (pset == null) {
+        if (setData == null) {
             new NoSetDialogController(ProgData.getInstance(), NoSetDialogController.TEXT.PLAY);
             return;
         }
@@ -68,7 +68,7 @@ public class FilmTools {
         }
 
         // und starten
-        ProgData.getInstance().starterClass.startUrlWithProgram(film, pset, resolution);
+        ProgData.getInstance().starterClass.startUrlWithProgram(film, setData, resolution);
     }
 
     public static void saveFilm(Film film, SetData pSet) {
@@ -86,7 +86,7 @@ public class FilmTools {
         ProgData progData = ProgData.getInstance();
         ArrayList<Film> filmsAddDownloadList = new ArrayList<>();
 
-        if (progData.setList.getListSave().isEmpty()) {
+        if (progData.setDataList.getSetDataListSave().isEmpty()) {
             new NoSetDialogController(progData, NoSetDialogController.TEXT.SAVE);
             return;
         }

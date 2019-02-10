@@ -18,7 +18,7 @@ package de.mtplayer.mtp.gui;
 
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.BlackData;
-import de.mtplayer.mtp.controller.data.SetList;
+import de.mtplayer.mtp.controller.data.SetDataList;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.gui.tools.Table;
 import de.p2tools.p2Lib.tools.PSystemUtils;
@@ -99,14 +99,14 @@ public class FilmGuiContextMenu {
         contextMenu.getItems().add(submenuAbo);
 
         // Film mit Set starten
-        final SetList list = progData.setList.getListButton();
+        final SetDataList list = progData.setDataList.getSetDataListButton();
         if (list.size() > 1) {
 
             Menu submenuSet = new Menu("Film mit Set starten");
-            list.stream().forEach(dataPset -> {
+            list.stream().forEach(setData -> {
 
-                final MenuItem item = new MenuItem(dataPset.getName());
-                item.setOnAction(event -> filmGuiController.playFilmUrlWithSet(dataPset));
+                final MenuItem item = new MenuItem(setData.getVisibleName());
+                item.setOnAction(event -> filmGuiController.playFilmUrlWithSet(setData));
                 submenuSet.getItems().add(item);
 
             });

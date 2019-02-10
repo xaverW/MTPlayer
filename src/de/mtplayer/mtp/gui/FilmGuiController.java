@@ -19,7 +19,7 @@ package de.mtplayer.mtp.gui;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.SetData;
-import de.mtplayer.mtp.controller.data.SetList;
+import de.mtplayer.mtp.controller.data.SetDataList;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmTools;
 import de.mtplayer.mtp.gui.mediaDialog.MediaDialogController;
@@ -164,8 +164,8 @@ public class FilmGuiController extends AnchorPane {
     }
 
     private void initListener() {
-        progData.setList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
-            if (progData.setList.getListButton().size() > 2) {
+        progData.setDataList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
+            if (progData.setDataList.getSetDataListButton().size() > 2) {
                 boolInfoOn.set(true);
             }
             setInfoPane();
@@ -214,9 +214,9 @@ public class FilmGuiController extends AnchorPane {
     }
 
     private void setInfoTabPane() {
-        final SetList setList = progData.setList.getListButton();
+        final SetDataList setDataList = progData.setDataList.getSetDataListButton();
 
-        if (setList.isEmpty()) {
+        if (setDataList.isEmpty()) {
             // dann brauchen wir den Tab mit den Button nicht
             if (splitPane.getItems().size() != 2 || splitPane.getItems().get(1) != filmPane) {
                 splitPane.getItems().clear();
@@ -229,8 +229,8 @@ public class FilmGuiController extends AnchorPane {
 
         // Button wieder aufbauen
         tilePaneButton.getChildren().clear();
-        setList.stream().forEach(setData -> {
-            Button btn = new Button(setData.getName());
+        setDataList.stream().forEach(setData -> {
+            Button btn = new Button(setData.getVisibleName());
             btn.setMaxWidth(Double.MAX_VALUE);
             if (!setData.getColor().equals(SetData.RESET_COLOR)) {
                 final String c = PColor.getCssColor(setData.getColor());

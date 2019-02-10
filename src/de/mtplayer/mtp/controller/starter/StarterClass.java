@@ -149,7 +149,7 @@ public class StarterClass {
             } else {
                 text.add("Download starten");
             }
-            text.add("Programmset: " + download.getSet());
+            text.add("Programmset: " + download.getSetData() == null ? "" : download.getSetData().getVisibleName());
             text.add("Ziel: " + download.getDestPathFile());
         }
         text.add("URL: " + download.getUrl());
@@ -196,7 +196,7 @@ public class StarterClass {
             if (download.getProgramDownloadmanager()) {
                 list.add("Programm ist ein Downloadmanager");
             }
-            list.add("Programmset: " + download.getSet());
+            list.add("Programmset: " + download.getSetData() == null ? "" : download.getSetData().getVisibleName());
             list.add("Ziel: " + download.getDestPathFile());
         }
 

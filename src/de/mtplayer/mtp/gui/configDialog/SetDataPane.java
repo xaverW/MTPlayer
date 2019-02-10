@@ -42,7 +42,7 @@ public class SetDataPane {
 
 
     //name
-    private final TextField txtName = new TextField("");
+    private final TextField txtVisibleName = new TextField("");
     private final TextArea txtDescription = new TextArea("");
     private final PToggleSwitch tglSave = new PToggleSwitch("Speichern");
     private final PToggleSwitch tglButton = new PToggleSwitch("Button");
@@ -55,7 +55,7 @@ public class SetDataPane {
     private final Slider slCut = new Slider();
     private final Slider slCutField = new Slider();
     //download
-    private final TextField txtPraefix = new TextField();
+    private final TextField txtPrefix = new TextField();
     private final TextField txtSuffix = new TextField();
     private final RadioButton rbHd = new RadioButton("Film in HD laden");
     private final RadioButton rbHeight = new RadioButton("Film in hoher Auflösung laden");
@@ -82,7 +82,7 @@ public class SetDataPane {
         makeDownload(result);
         programPane.makeProgs(result);
 
-        changeListener = (observable, oldValue, newValue) -> ProgData.getInstance().setList.setListChanged();
+        changeListener = (observable, oldValue, newValue) -> ProgData.getInstance().setDataList.setListChanged();
         setDisable();
     }
 
@@ -91,8 +91,8 @@ public class SetDataPane {
 
         this.setData = setData;
         if (setData != null) {
-            txtName.textProperty().bindBidirectional(setData.nameProperty());
-            txtName.textProperty().addListener(changeListener);
+            txtVisibleName.textProperty().bindBidirectional(setData.visibleNameProperty());
+            txtVisibleName.textProperty().addListener(changeListener);
 
             txtDescription.textProperty().bindBidirectional(setData.descriptionProperty());
 
@@ -111,7 +111,7 @@ public class SetDataPane {
             slCut.valueProperty().bindBidirectional(setData.maxSizeProperty());
             slCutField.valueProperty().bindBidirectional(setData.maxFieldProperty());
 
-            txtPraefix.textProperty().bindBidirectional(setData.praefixProperty());
+            txtPrefix.textProperty().bindBidirectional(setData.prefixProperty());
             txtSuffix.textProperty().bindBidirectional(setData.suffixProperty());
 
             switch (setData.getResolution()) {
@@ -136,8 +136,8 @@ public class SetDataPane {
 
     private void unBindProgData() {
         if (setData != null) {
-            txtName.textProperty().unbindBidirectional(setData.nameProperty());
-            txtName.textProperty().removeListener(changeListener);
+            txtVisibleName.textProperty().unbindBidirectional(setData.visibleNameProperty());
+            txtVisibleName.textProperty().removeListener(changeListener);
 
             txtDescription.textProperty().unbindBidirectional(setData.descriptionProperty());
 
@@ -156,7 +156,7 @@ public class SetDataPane {
             slCut.valueProperty().unbindBidirectional(setData.maxSizeProperty());
             slCutField.valueProperty().unbindBidirectional(setData.maxFieldProperty());
 
-            txtPraefix.textProperty().unbindBidirectional(setData.praefixProperty());
+            txtPrefix.textProperty().unbindBidirectional(setData.prefixProperty());
             txtSuffix.textProperty().unbindBidirectional(setData.suffixProperty());
 
             tglInfo.selectedProperty().unbindBidirectional(setData.infoFileProperty());
@@ -186,7 +186,7 @@ public class SetDataPane {
         vBox.getChildren().add(gridPane);
 
         gridPane.add(new Label("Set Name:"), 0, 0);
-        gridPane.add(txtName, 1, 0);
+        gridPane.add(txtVisibleName, 1, 0);
 
         gridPane.add(new Label("Beschreibung:"), 0, 1);
         gridPane.add(txtDescription, 1, 1);
@@ -358,7 +358,7 @@ public class SetDataPane {
         gridPane.add(btnHelpPraefix, 2, row);
 
         gridPane.add(new Label("Präfix (z.B. http):"), 0, ++row);
-        gridPane.add(txtPraefix, 1, row, 2, 1);
+        gridPane.add(txtPrefix, 1, row, 2, 1);
 
         gridPane.add(new Label("Suffix (z.B. mp4,mp3):"), 0, ++row);
         gridPane.add(txtSuffix, 1, row, 2, 1);

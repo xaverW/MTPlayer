@@ -18,6 +18,8 @@ package de.mtplayer.mtp.controller.data.abo;
 
 import de.mtplayer.mLib.tools.Data;
 import de.mtplayer.mLib.tools.MDate;
+import de.mtplayer.mtp.controller.config.ProgData;
+import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
 import javafx.beans.property.*;
@@ -39,14 +41,16 @@ public class AboProps extends AboXml {
     private final IntegerProperty maxDuration = new SimpleIntegerProperty(SelectedFilter.FILTER_DURATION_MAX_MIN); //Minuten
     private final StringProperty destination = new SimpleStringProperty("");
     private final ObjectProperty<MDate> date = new SimpleObjectProperty<>(new MDate(0));
-    private final StringProperty psetName = new SimpleStringProperty("");
+    private final StringProperty setDataId = new SimpleStringProperty("");
+
+    private final ObjectProperty<SetData> setData = new SimpleObjectProperty<>();
 
     private final IntegerProperty hit = new SimpleIntegerProperty(0);
     private int countHit = 0;
 
     public final Property[] properties = {nr, active, name, description, resolution,
             channel, channelExact, theme, themeExact, title, themeTitle, somewhere,
-            minDuration, maxDuration, destination, date, psetName};
+            minDuration, maxDuration, destination, date, setDataId};
 
     public String getStringOf(int i) {
         return String.valueOf(properties[i].getValue());
@@ -54,6 +58,26 @@ public class AboProps extends AboXml {
 
     public AboProps() {
         super();
+    }
+
+    public SetData getSetData(ProgData progData) {
+        // wenn das Set noch nicht vorhanden ist, wird es vorher gesetzt
+        if (setData.getValue() == null) {
+            setSetData(progData.setDataList.getSetDataForAbo());
+        }
+        return setData.get();
+    }
+
+    public SetData getSetData() {
+        return setData.get();
+    }
+
+    public ObjectProperty<SetData> setDataProperty() {
+        return setData;
+    }
+
+    public void setSetData(SetData setData) {
+        this.setData.set(setData);
     }
 
     public int getNr() {
@@ -262,16 +286,16 @@ public class AboProps extends AboXml {
         this.date.setValue(d);
     }
 
-    public String getPsetName() {
-        return psetName.get();
+    public String getSetDataId() {
+        return setDataId.get();
     }
 
-    public StringProperty psetNameProperty() {
-        return psetName;
+    public StringProperty setDataIdProperty() {
+        return setDataId;
     }
 
-    public void setPsetName(String psetName) {
-        this.psetName.set(psetName);
+    public void setSetDataId(String setDataId) {
+        this.setDataId.set(setDataId);
     }
 
     public int getHit() {
@@ -315,7 +339,7 @@ public class AboProps extends AboXml {
 
         setDestination(arr[ABO_DEST_PATH]);
         setDatum(arr[ABO_DOWN_DATE], "");
-        setPsetName(arr[ABO_PSET_NAME]);
+        setSetDataId(arr[ABO_SET_DATA_ID]);
     }
 
     public void setXmlFromProps() {
@@ -337,7 +361,7 @@ public class AboProps extends AboXml {
 
         arr[ABO_DEST_PATH] = getDestination();
         arr[ABO_DOWN_DATE] = getDate().toString();
-        arr[ABO_PSET_NAME] = getPsetName();
+        arr[ABO_SET_DATA_ID] = getSetData() == null ? "" : getSetData().getId();
     }
 
     private void setDurationFromXml() {

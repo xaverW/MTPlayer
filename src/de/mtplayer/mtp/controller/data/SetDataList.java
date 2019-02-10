@@ -22,32 +22,15 @@ import de.mtplayer.mtp.controller.data.download.DownloadTools;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
 import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.dialog.PDialogFileChosser;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleListProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("serial")
-public class SetList extends SimpleListProperty<SetData> {
-    // Liste aller Programmsets
-    public static final String PATTERN_PATH_DEST = "ZIELPFAD";
-    public static final String PATTERN_PATH_VLC = "PFAD_VLC";
-    public static final String PATTERN_PATH_FLV = "PFAD_FLVSTREAMER";
-    public static final String PATTERN_PATH_FFMPEG = "PFAD_FFMPEG";
-    public static final String PATTERN_PATH_SCRIPT = "PFAD_SCRIPT";
-    public String version = "";
-    private BooleanProperty listChanged = new SimpleBooleanProperty(true);
+public class SetDataList extends SetDataListWorker {
 
-    public SetList() {
-        super(FXCollections.observableArrayList());
-    }
-
-    public static boolean progReplacePattern(SetList list) {
+    public static boolean progReplacePattern(SetDataList list) {
         boolean ret = true;
         for (final SetData pSet : list) {
             if (!progReplacePattern(pSet)) {
@@ -57,30 +40,18 @@ public class SetList extends SimpleListProperty<SetData> {
         return ret;
     }
 
-    public boolean isListChanged() {
-        return listChanged.get();
-    }
-
-    public BooleanProperty listChangedProperty() {
-        return listChanged;
-    }
-
-    public void setListChanged() {
-        this.listChanged.set(!listChanged.get());
-    }
-
-    public boolean removePset(Object obj) {
+    public boolean removeSetData(Object obj) {
         // remove and notify
         boolean ret = super.remove(obj);
         setListChanged();
         return ret;
     }
 
-    public boolean addPset(SetData psetData) {
+    public boolean addSetData(SetData psetData) {
         // add and notify
         boolean play = false;
-        for (final SetData psetData1 : this) {
-            if (psetData1.isPlay()) {
+        for (final SetData sd : this) {
+            if (sd.isPlay()) {
                 play = true;
                 break;
             }
@@ -93,11 +64,11 @@ public class SetList extends SimpleListProperty<SetData> {
         return ret;
     }
 
-    public boolean addPset(SetList list) {
+    public boolean addSetData(SetDataList list) {
         // add and notify
         boolean ret = true;
         for (final SetData entry : list) {
-            if (!addPset(entry)) {
+            if (!addSetData(entry)) {
                 ret = false;
             }
         }
@@ -183,7 +154,7 @@ public class SetList extends SimpleListProperty<SetData> {
         return ProgConfig.SYSTEM_PATH_FFMPEG.get();
     }
 
-    public SetData getPsetPlay() {
+    public SetData getSetDataPlay() {
         //liefert die Programmgruppe zum Abspielen
         for (final SetData psetData : this) {
             if (psetData.isPlay()) {
@@ -193,111 +164,165 @@ public class SetList extends SimpleListProperty<SetData> {
         return null;
     }
 
-    public SetData getPsetAbo(String name) {
-        // liefert mit dem Namen eines Abos das passende Set zurück
+    public SetData getSetDataForAbo() {
+        return getSetDataForAbo("");
+    }
+
+    public SetData getSetDataForAbo(String id) {
+        // liefert mit dem SetNamen das passende Set zurück
         // wird nichts gefunden, wird das erste Set (der Abos) genommen
-        SetData ret = null;
+
         if (isEmpty()) {
-            ret = null;
-        } else if (size() == 1) {
-            ret = this.get(0);
-        } else {
-            for (final SetData pset : this) {
-                if (pset.isAbo()) {
-                    if (pset.getName().equals(name)) {
-                        ret = pset;
-                    }
-                }
-            }
-            if (ret == null) {
-                // die erste Pset der Abos
-                final SetList ps = getListAbo();
-                if (ps.size() > 0) {
-                    ret = ps.get(0);
-                    if (ret == null) {
-                        // dann die erste Prgruppe
-                        ret = get(0);
-                    }
-                }
+            return null;
+        }
+
+        if (size() == 1) {
+            // gibt nur eins
+            return this.get(0);
+        }
+
+        // das Set mit dem Namen
+        for (final SetData pset : this) {
+            if (pset.isAbo() && pset.getId().equals(id)) {
+                return pset;
             }
         }
-        return ret;
+
+        // das erste Set der Abos
+        for (final SetData pset : this) {
+            if (pset.isAbo()) {
+                return pset;
+            }
+        }
+
+        // das erste Set der Downloads
+        for (final SetData pset : this) {
+            if (pset.isSave()) {
+                // wenns keins gibt, wird das "ABO"
+                pset.setAbo(true);
+                return pset;
+            }
+        }
+
+        // dann eben das erste Set
+        return get(0);
     }
 
-    public SetList getListSave() {
+    public SetData getSetDataForDownloads(String id) {
+        // liefert mit dem SetNamen das passende Set zurück
+        // wird nichts gefunden, wird das erste Set (der Abos/Downloads) genommen
+
+        if (isEmpty()) {
+            return null;
+        }
+
+        if (size() == 1) {
+            // gibt nur eins
+            return this.get(0);
+        }
+
+        // das Set mit dem Namen
+        for (final SetData pset : this) {
+            if (pset.isSave() && pset.getId().equals(id)) {
+                return pset;
+            }
+        }
+
+
+        // das erste Set der Downloads
+        for (final SetData pset : this) {
+            if (pset.isSave()) {
+                return pset;
+            }
+        }
+
+        // das erste Set der Abos
+        for (final SetData pset : this) {
+            if (pset.isAbo()) {
+                // wenns keins gibt, wird das "SAVE"
+                pset.setSave(true);
+                return pset;
+            }
+        }
+
+        // dann eben das erste Set
+        return get(0);
+    }
+
+    public SetDataList getSetDataListSave() {
         // liefert eine Liste Programmsets, die zum Speichern angelegt sind (ist meist nur eins)
-        return stream().filter(datenPset -> datenPset.isSave())
-                .collect(Collectors.toCollection(SetList::new));
+        return stream().filter(setData -> setData.isSave())
+                .collect(Collectors.toCollection(SetDataList::new));
     }
 
-    public SetList getListButton() {
+    public SetDataList getSetDataListButton() {
         // liefert eine Liste Programmsets, die als Button angelegt sind
         // "leere" Button  werden nicht mehr angezeigt
         // sind nur die 2 Standardsets in der Liste wird nichts geliefert
 
         if (this.size() <= 2) {
-            return new SetList();
+            return new SetDataList();
         }
 
         return stream()
-                .filter(datenPset -> datenPset.isButton())
-                .filter(datenPset -> !datenPset.getProgramList().isEmpty())
-                .filter(datenPset -> !datenPset.getName().isEmpty())
-                .collect(Collectors.toCollection(SetList::new));
+                .filter(setData -> setData.isButton())
+                .filter(setData -> !setData.getProgramList().isEmpty())
+                .filter(setData -> !setData.getVisibleName().isEmpty())
+                .collect(Collectors.toCollection(SetDataList::new));
     }
 
-    public SetList getListAbo() {
+    public SetDataList getSetDataListAbo() {
         // liefert eine Liste Programmsets, die für Abos angelegt sind (ist meist nur eins)
         return stream().filter(data -> data.isAbo())
-                .collect(Collectors.toCollection(SetList::new));
+                .collect(Collectors.toCollection(SetDataList::new));
     }
 
-    public ObservableList<String> getPsetNameList() {
-        //liefert eine Liste aller Psetnamen
-        ObservableList<String> list = FXCollections.observableArrayList();
-
-        for (final SetData psetData : this) {
-            list.add(psetData.getName());
-        }
-
-        return list;
-    }
+//    public ObservableList<String> getSetDataVisibleNameList() {
+//        //liefert eine Liste aller SetDataNamen
+//        ObservableList<String> list = FXCollections.observableArrayList();
+//
+//        for (final SetData psetData : this) {
+//            list.add(psetData.getVisibleName());
+//        }
+//
+//        return list;
+//    }
 
     public void setPlay(SetData setData) {
-        for (final SetData psetData : this) {
-            psetData.setPlay(false);
+        for (final SetData sData : this) {
+            sData.setPlay(false);
         }
         setData.setPlay(true);
         setListChanged();
     }
 
-    public SetData getPsetName(String name) {
-        //liefert das PSet mit dem Namen oder null
-        for (final SetData psetData : this) {
-            if (psetData.getName().equals(name)) {
-                return psetData;
+    public SetData getSetDataWithId(String id) {
+        //liefert das PSet mit ID oder null
+        for (final SetData setData : this) {
+            if (setData.getId().equals(id)) {
+                return setData;
             }
         }
 
         return null;
     }
 
-    public int auf(int idx, boolean auf) {
+    public int up(int idx, boolean up) {
         final SetData prog = this.remove(idx);
-        int neu = idx;
-        if (auf) {
-            if (neu > 0) {
-                --neu;
+        int newIdx = idx;
+        if (up) {
+            if (newIdx > 0) {
+                --newIdx;
             }
-        } else if (neu < size()) {
-            ++neu;
+        } else if (newIdx < size()) {
+            ++newIdx;
         }
-        this.add(neu, prog);
+        this.add(newIdx, prog);
         setListChanged();
-        return neu;
+        return newIdx;
     }
 
-    public ArrayList<String> getListProg() {
-        return stream().map(SetData::toString).collect(Collectors.toCollection(ArrayList::new));
+    public ArrayList<String> getStringListSetData() {
+        return stream().map(SetData::setDataToString).collect(Collectors.toCollection(ArrayList::new));
     }
 }

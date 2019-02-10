@@ -21,7 +21,7 @@ import de.mtplayer.mtp.MTPlayerController;
 import de.mtplayer.mtp.controller.data.BlackList;
 import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.controller.data.ReplaceList;
-import de.mtplayer.mtp.controller.data.SetList;
+import de.mtplayer.mtp.controller.data.SetDataList;
 import de.mtplayer.mtp.controller.data.abo.AboList;
 import de.mtplayer.mtp.controller.data.download.DownloadList;
 import de.mtplayer.mtp.controller.data.film.Filmlist;
@@ -88,7 +88,7 @@ public class ProgData {
     public DownloadList downloadListButton = null; // Filme die über "Tab Filme" als Button/Film abspielen gestartet werden
     public AboList aboList = null;
     public BlackList blackList = null;
-    public SetList setList = null;
+    public SetDataList setDataList = null;
     public MediaDataList mediaDataList = null;
     public MediaCollectionDataList mediaCollectionDataList = null;
     public HistoryList history = null; // alle angesehenen Filme
@@ -105,7 +105,7 @@ public class ProgData {
         filmlistFiltered = new Filmlist();
         blackList = new BlackList(this);
 
-        setList = new SetList();
+        setDataList = new SetDataList();
 
         aboList = new AboList(this);
 

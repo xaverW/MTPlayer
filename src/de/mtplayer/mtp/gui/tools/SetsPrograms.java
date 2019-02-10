@@ -22,7 +22,7 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.ProgramData;
 import de.mtplayer.mtp.controller.data.SetData;
-import de.mtplayer.mtp.controller.data.SetList;
+import de.mtplayer.mtp.controller.data.SetDataList;
 import de.mtplayer.mtp.controller.starter.RuntimeExec;
 import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.alert.PAlert;
@@ -181,7 +181,7 @@ public class SetsPrograms {
         return path;
     }
 
-    public static boolean addSetTemplate(SetList pSet) {
+    public static boolean addSetTemplate(SetDataList pSet) {
         if (pSet == null) {
             return false;
         }
@@ -192,7 +192,7 @@ public class SetsPrograms {
             }
         }
 
-        if (ProgData.getInstance().setList.addPset(pSet)) {
+        if (ProgData.getInstance().setDataList.addSetData(pSet)) {
             ProgConfig.SYSTEM_UPDATE_PROGSET_VERSION.setValue(pSet.version);
             return true;
         } else {
@@ -366,14 +366,14 @@ public class SetsPrograms {
         boolean ret = true;
         String text = "";
 
-        for (final SetData psetData : data.setList) {
+        for (final SetData setData : data.setDataList) {
             ret = true;
-            if (!psetData.isFreeLine() && !psetData.isLable()) {
+            if (!setData.isFreeLine() && !setData.isLable()) {
                 // nur wenn kein Lable oder freeline
                 text += "++++++++++++++++++++++++++++++++++++++++++++" + PConst.LINE_SEPARATOR;
-                text += PIPE + "Programmgruppe: " + psetData.getName() + PConst.LINE_SEPARATOR;
-                final String destPath = psetData.getDestPath();
-                if (psetData.progsContainPath()) {
+                text += PIPE + "Programmgruppe: " + setData.getVisibleName() + PConst.LINE_SEPARATOR;
+                final String destPath = setData.getDestPath();
+                if (setData.progsContainPath()) {
                     // beim nur Abspielen wird er nicht gebraucht
                     if (destPath.isEmpty()) {
                         ret = false;
@@ -386,7 +386,7 @@ public class SetsPrograms {
                             text += PIPE + LEER + PFEIL + "Zielpfad \"" + destPath + "\" nicht beschreibbar!" + PConst.LINE_SEPARATOR;
                         }
                 }
-                for (final ProgramData progData : psetData.getProgramList()) {
+                for (final ProgramData progData : setData.getProgramList()) {
                     // Programmpfad prüfen
                     if (progData.getProgPath().isEmpty()) {
                         ret = false;

@@ -96,7 +96,7 @@ public class ProgStart {
         list = new ArrayList<>();
         list.add(PLog.LILNE2);
         list.add("|  Programmsets:");
-        list.addAll(ProgData.getInstance().setList.getListProg());
+        list.addAll(ProgData.getInstance().setDataList.getStringListSetData());
         PLog.sysLog(list);
     }
 
@@ -131,7 +131,7 @@ public class ProgStart {
 
     private void clearConfig() {
         ProgData progData = ProgData.getInstance();
-        progData.setList.clear();
+        progData.setDataList.clear();
         progData.replaceList.clear();
         progData.aboList.clear();
         progData.downloadList.clear();

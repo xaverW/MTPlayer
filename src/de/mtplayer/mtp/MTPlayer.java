@@ -21,7 +21,7 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ListePsetVorlagen;
-import de.mtplayer.mtp.controller.data.SetList;
+import de.mtplayer.mtp.controller.data.SetDataList;
 import de.mtplayer.mtp.gui.dialog.FilmInfoDialogController;
 import de.mtplayer.mtp.gui.startDialog.StartDialogController;
 import de.mtplayer.mtp.res.GetIcon;
@@ -98,9 +98,9 @@ public class MTPlayer extends Application {
                 PDuration.onlyPing("Erster Start: PSet");
 
                 // kann ein Dialog aufgehen
-                final SetList pSet = ListePsetVorlagen.getStandarset(true /*replaceMuster*/);
+                final SetDataList pSet = ListePsetVorlagen.getStandarset(true /*replaceMuster*/);
                 if (pSet != null) {
-                    progData.setList.addPset(pSet);
+                    progData.setDataList.addSetData(pSet);
                     ProgConfig.SYSTEM_UPDATE_PROGSET_VERSION.setValue(pSet.version);
                 }
 
@@ -109,6 +109,7 @@ public class MTPlayer extends Application {
 
             ProgInitFilter.setProgInitFilter();
         }
+
     }
 
     private void initRootLayout() {

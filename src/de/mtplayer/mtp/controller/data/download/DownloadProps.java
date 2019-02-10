@@ -53,7 +53,7 @@ public class DownloadProps extends DownloadXml {
     private final StringProperty urlRtmp = new SimpleStringProperty("");
     private final StringProperty urlSubtitle = new SimpleStringProperty("");
 
-    private final StringProperty set = new SimpleStringProperty("");
+    private final StringProperty setDataId = new SimpleStringProperty("");
     private final StringProperty program = new SimpleStringProperty("");
     private final StringProperty programCall = new SimpleStringProperty("");
     private final StringProperty programCallArray = new SimpleStringProperty("");
@@ -74,7 +74,7 @@ public class DownloadProps extends DownloadXml {
             state, progress, remaining, bandwidth, downloadSize,
             filmDate, time, duration,
             hd, ut, geoBlocked, filmUrl, historyUrl, url, urlRtmp, urlSubtitle,
-            set, program, programCall, programCallArray, programRestart, programDownloadmanager,
+            setDataId, program, programCall, programCallArray, programRestart, programDownloadmanager,
             destFileName, destPath, destPathFile,
             art, source, placedBack, infoFile, subtitle};
 
@@ -370,16 +370,16 @@ public class DownloadProps extends DownloadXml {
         this.urlSubtitle.set(urlSubtitle);
     }
 
-    public String getSet() {
-        return set.get();
+    public String getSetDataId() {
+        return setDataId.get();
     }
 
-    public StringProperty setProperty() {
-        return set;
+    public StringProperty setDataIdProperty() {
+        return setDataId;
     }
 
-    public void setSet(String set) {
-        this.set.set(set);
+    public void setSetDataId(String setDataId) {
+        this.setDataId.set(setDataId);
     }
 
     public String getProgram() {
@@ -557,7 +557,7 @@ public class DownloadProps extends DownloadXml {
         setUrl(arr[DOWNLOAD_URL]);
         setUrlRtmp(arr[DOWNLOAD_URL_RTMP]);
         setSubtitle(Boolean.parseBoolean(arr[DOWNLOAD_URL_SUBTITLE]));
-        setSet(arr[DOWNLOAD_PROGRAM_SET]);
+        setSetDataId(arr[DOWNLOAD_SET_DATA]);
         setProgram(arr[DOWNLOAD_PROGRAM]);
         setProgramCall(arr[DOWNLOAD_PROGRAM_CALL]);
         setProgramCallArray(arr[DOWNLOAD_PROGRAM_CALL_ARRAY]);
@@ -594,7 +594,7 @@ public class DownloadProps extends DownloadXml {
         arr[DOWNLOAD_URL] = getUrl();
         arr[DOWNLOAD_URL_RTMP] = getUrlRtmp();
         arr[DOWNLOAD_URL_SUBTITLE] = getUrlSubtitle();
-        arr[DOWNLOAD_PROGRAM_SET] = getSet();
+        arr[DOWNLOAD_SET_DATA] = getSetDataId();
         arr[DOWNLOAD_PROGRAM] = getProgram();
         arr[DOWNLOAD_PROGRAM_CALL] = getProgramCall();
         arr[DOWNLOAD_PROGRAM_CALL_ARRAY] = getProgramCallArray();

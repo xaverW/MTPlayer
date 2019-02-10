@@ -57,6 +57,16 @@ public class DownloadList extends SimpleListProperty<Download> {
         return downloadsChanged;
     }
 
+    public synchronized void initDownloads() {
+        this.stream().forEach(download -> {
+            //ist bei gespeiherten Downloads der Fall
+            SetData setData = progData.setDataList.getSetDataForDownloads(download.getSetDataId());
+            if (setData != null) { //todo und dann??
+                download.setSetData(setData);
+            }
+        });
+    }
+
     public void sort() {
         Collections.sort(this);
     }
@@ -298,17 +308,6 @@ public class DownloadList extends SimpleListProperty<Download> {
         downloadListInfoAll.makeDownloadInfo();
     }
 
-
-    //==========================================================
-    public synchronized void initDownloads() {
-        this.stream().forEach(download -> {
-            //ist bei gespeiherten Downloads der Fall
-            SetData pSet = progData.setList.getPsetName(download.getSet());
-            if (pSet != null) { //todo und dann??
-                download.setPset(pSet);
-            }
-        });
-    }
 
     public synchronized void setNumbersInList() {
         int i = 1;

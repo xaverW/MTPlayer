@@ -97,7 +97,7 @@ public class DownloadListAbo {
         // prüfen ob in "alle Filme" oder nur "nach Blacklist" gesucht werden soll
         final boolean checkWithBlackList = ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.getBool();
 
-        if (progData.setList.getPsetAbo("") == null) {
+        if (progData.setDataList.getSetDataForAbo("") == null) {
             // dann fehlt ein Set für die Abos
             Platform.runLater(() -> new NoSetDialogController(progData, NoSetDialogController.TEXT.ABO));
             return;
@@ -105,16 +105,16 @@ public class DownloadListAbo {
 
         // und jetzt die Filmliste ablaufen
         progData.filmlist.parallelStream().forEach(film -> {
-            final Abo aboForFilm = progData.aboList.getAboForFilm_quick(film, true);
+            final Abo abo = progData.aboList.getAboForFilm_quick(film, true);
 
-            if (aboForFilm == null) {
+            if (abo == null) {
                 // dann gibts dafür kein Abo
                 return;
             }
 
-            aboForFilm.incrementCountHit();
+            abo.incrementCountHit();
 
-            if (!aboForFilm.isActive()) {
+            if (!abo.isActive()) {
                 // oder es ist ausgeschaltet
                 return;
             }
@@ -131,19 +131,16 @@ public class DownloadListAbo {
             }
 
             // mit der tatsächlichen URL prüfen, ob die URL schon in der Downloadliste ist
-            final String urlDownload = film.getUrlForResolution(aboForFilm.getResolution());
+            final String urlDownload = film.getUrlForResolution(abo.getResolution());
             if (!syncDownloadsAlreadyInTheListHash.add(urlDownload)) {
                 return;
             }
 
-            aboForFilm.setDate(new MDate());
-            final SetData setData = progData.setList.getPsetAbo(aboForFilm.getPsetName()); // todo eine ID dafür verwenden
-
-            // nur den Namen anpassen, falls geändert oder altes Set nicht mehr existiert
-            aboForFilm.setPsetName(setData.getName()); // todo das machmer beim ProgStart 1x
+            abo.setDate(new MDate());
+            final SetData setData = abo.getSetData(progData);
 
             // dann in die Liste schreiben
-            syncDownloadArrayList.add(new Download(setData, film, DownloadConstants.SRC_ABO, aboForFilm, "", "", ""));
+            syncDownloadArrayList.add(new Download(setData, film, DownloadConstants.SRC_ABO, abo, "", "", ""));
             found = true;
         });
 

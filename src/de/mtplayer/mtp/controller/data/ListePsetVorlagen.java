@@ -55,8 +55,8 @@ public class ListePsetVorlagen extends LinkedList<String[]> {
     public static final String[] PGR_COLUMN_NAMES = {PGR_NAME, PGR_DESCRIPTION, PGR_VERSION, PGR_BS, PGR_URL, PGR_INFO};
     private final static int TIMEOUT = 10000;
 
-    public static SetList getStandarset(boolean replaceMuster) {
-        SetList setList = null;
+    public static SetDataList getStandarset(boolean replaceMuster) {
+        SetDataList setDataList = null;
         String[] template = null;
 
         final ListePsetVorlagen listePsetVorlagen = new ListePsetVorlagen();
@@ -69,15 +69,15 @@ public class ListePsetVorlagen extends LinkedList<String[]> {
             }
             if (template != null) {
                 if (!template[PGR_URL_NR].isEmpty()) {
-                    setList = ListePsetVorlagen.importPsetFile(template[ListePsetVorlagen.PGR_URL_NR]);
-                    if (setList != null) {
-                        setList.version = template[PGR_VERSION_NR];
+                    setDataList = ListePsetVorlagen.importPsetFile(template[ListePsetVorlagen.PGR_URL_NR]);
+                    if (setDataList != null) {
+                        setDataList.version = template[PGR_VERSION_NR];
                     }
                 }
             }
         }
 
-        if (setList == null) {
+        if (setDataList == null) {
             // dann nehmen wir halt die im jar-File
             // liefert das Standard Programmset für das entsprechende BS
             InputStreamReader inReader;
@@ -89,14 +89,14 @@ public class ListePsetVorlagen extends LinkedList<String[]> {
                     inReader = new GetFile().getPsetTemplateWindows();
             }
             // Standardgruppen laden
-            setList = ListePsetVorlagen.importPset(inReader);
+            setDataList = ListePsetVorlagen.importPset(inReader);
         }
 
-        if (replaceMuster && setList != null) {
+        if (replaceMuster && setDataList != null) {
             // damit die Variablen ersetzt werden
-            SetList.progReplacePattern(setList);
+            SetDataList.progReplacePattern(setDataList);
         }
-        return setList;
+        return setDataList;
     }
 
     public boolean loadListOfSets() {
@@ -133,7 +133,7 @@ public class ListePsetVorlagen extends LinkedList<String[]> {
         return true;
     }
 
-    public static SetList importPsetFile(String fileUrl) {
+    public static SetDataList importPsetFile(String fileUrl) {
         final int timeout = 10_000; //10 Sekunden
         try {
             if (PUrlTools.isUrl(fileUrl)) {
@@ -152,9 +152,9 @@ public class ListePsetVorlagen extends LinkedList<String[]> {
         }
     }
 
-    private static SetList importPset(InputStreamReader in) {
+    private static SetDataList importPset(InputStreamReader in) {
         SetData psetData = null;
-        final SetList list = new SetList();
+        final SetDataList list = new SetDataList();
         try {
             int event;
             final XMLInputFactory inFactory = XMLInputFactory.newInstance();

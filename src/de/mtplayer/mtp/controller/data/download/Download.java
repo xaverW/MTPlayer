@@ -39,13 +39,13 @@ public final class Download extends DownloadProps {
     private final DownloadProgram downloadProgram = new DownloadProgram(this);
 
     private Film film = null;
-    private SetData pSet = null;
+    private SetData setData = null;
     private Abo abo = null;
 
     public Download() {
     }
 
-    public Download(SetData pSet,
+    public Download(SetData setData,
                     Film film,
                     String source,
                     Abo abo,
@@ -54,13 +54,13 @@ public final class Download extends DownloadProps {
                     String resolution) {
 
         setFilm(film);
-        setPset(pSet);
+        setSetData(setData);
         setAbo(abo);
         setSource(source);
 
         if (resolution.isEmpty()) {
-            setUrl(film.getUrlForResolution(abo != null ? abo.getResolution() : pSet.getResolution()));
-            setUrlRtmp(film.getUrlFlvstreamerForResolution(abo != null ? abo.getResolution() : pSet.getResolution()));
+            setUrl(film.getUrlForResolution(abo != null ? abo.getResolution() : setData.getResolution()));
+            setUrlRtmp(film.getUrlFlvstreamerForResolution(abo != null ? abo.getResolution() : setData.getResolution()));
         } else {
             setUrl(film.getUrlForResolution(resolution));
             setUrlRtmp(film.getUrlFlvstreamerForResolution(resolution));
@@ -69,7 +69,7 @@ public final class Download extends DownloadProps {
         // und jetzt noch die Dateigröße für die entsp. URL
         setSizeDownloadFromFilm();
         // und endlich Aufruf bauen :)
-        downloadProgram.makeProgParameter(pSet, film, abo, name, path);
+        downloadProgram.makeProgParameter(film, abo, name, path);
     }
 
 
@@ -194,7 +194,7 @@ public final class Download extends DownloadProps {
     }
 
     public void makeProgParameter() {
-        downloadProgram.makeProgParameter(pSet, film, abo, getDestFileName(), getDestPath());
+        downloadProgram.makeProgParameter(film, abo, getDestFileName(), getDestPath());
     }
 
     public String getFileNameWithoutSuffix() {
@@ -275,17 +275,17 @@ public final class Download extends DownloadProps {
         }
     }
 
-    public SetData getpSet() {
-        return pSet;
+    public SetData getSetData() {
+        return setData;
     }
 
-    public void setPset(SetData pSet) {
-        this.pSet = pSet;
+    public void setSetData(SetData setData) {
+        this.setData = setData;
 
-        setInfoFile(pSet.isInfoFile());
-        setSubtitle(pSet.isSubtitle());
+        setInfoFile(setData.isInfoFile());
+        setSubtitle(setData.isSubtitle());
 
-        setSet(pSet.getName());
+        setSetDataId(setData.getId());
     }
 
     public void setPathName(String path, String name) {
@@ -313,8 +313,8 @@ public final class Download extends DownloadProps {
             path = pathName[0];
             name = pathName[1];
         }
-        //=====================================================
 
+        //=====================================================
         setDestFileName(name);
         setDestPath(path);
         setDestPathFile(PFileUtils.addsPath(path, name));
@@ -325,12 +325,11 @@ public final class Download extends DownloadProps {
         for (int i = 0; i < properties.length; ++i) {
             ret.properties[i].setValue(this.properties[i].getValue());
         }
-
         ret.setXmlFromProps();
 
         ret.film = film;
         ret.setStart(getStart());
-        ret.pSet = pSet;
+        ret.setData = setData;
         ret.abo = abo;
 
         return ret;
@@ -346,7 +345,7 @@ public final class Download extends DownloadProps {
         getDownloadSize().setSize(download.getDownloadSize().getFilmSize());// die Auflösung des Films kann sich ändern
 
         setStart(download.getStart());
-        pSet = download.pSet;
+        setData = download.setData;
         abo = download.abo;
     }
 }

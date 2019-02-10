@@ -16,6 +16,8 @@
 
 package de.mtplayer.mtp.controller.data.abo;
 
+import de.mtplayer.mtp.controller.config.ProgData;
+import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.tools.storedFilter.Filter;
 
@@ -36,7 +38,8 @@ public class Abo extends AboProps {
         initFilter();
     }
 
-    public Abo(String name,
+    public Abo(ProgData progData,
+               String name,
                String channel,
                String theme,
                String themeTitle,
@@ -44,8 +47,7 @@ public class Abo extends AboProps {
                String somewhere,
                int minDurationMinute,
                int maxDurationMinute,
-               String destination,
-               String pset) {
+               String destination) {
 
         // neue Abos sind immer ein
         setActive(true);
@@ -64,7 +66,15 @@ public class Abo extends AboProps {
         setMaxDuration(maxDurationMinute);
 
         setDestination(destination);
-        setPsetName(pset);
+        setSetData(progData.setDataList.getSetDataForAbo());
+    }
+
+    void initAbo(ProgData progData) {
+        // init beim Programmstart,
+        // kann ein anderes Set notwendig sein (wenn es gelöscht wurde)
+        SetData setData = progData.setDataList.getSetDataForAbo(getSetDataId());
+        setSetData(setData);
+        setSetDataId(setData == null ? "" : setData.getId());
     }
 
     private void initFilter() {
@@ -114,6 +124,7 @@ public class Abo extends AboProps {
         for (int i = 0; i < AboXml.MAX_ELEM; ++i) {
             this.properties[i].setValue(abo.properties[i].getValue());
         }
+        this.setSetData(abo.getSetData());
         this.setXmlFromProps();
     }
 
@@ -122,7 +133,9 @@ public class Abo extends AboProps {
         for (int i = 0; i < AboXml.MAX_ELEM; ++i) {
             ret.properties[i].setValue(this.properties[i].getValue());
         }
+        ret.setSetData(getSetData());
         ret.setXmlFromProps();
+
         return ret;
     }
 

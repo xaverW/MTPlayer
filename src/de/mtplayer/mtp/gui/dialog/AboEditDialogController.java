@@ -19,6 +19,7 @@ package de.mtplayer.mtp.gui.dialog;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.MTColor;
+import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.abo.Abo;
 import de.mtplayer.mtp.controller.data.abo.AboXml;
 import de.mtplayer.mtp.controller.data.film.Film;
@@ -29,6 +30,7 @@ import de.p2tools.p2Lib.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pRange.PRangeBox;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
@@ -47,7 +49,7 @@ public class AboEditDialogController extends PDialogExtra {
     private final GridPane gridPane = new GridPane();
     private final Button btnOk = new Button("Ok");
     private final Button btnCancel = new Button("Abbrechen");
-    private final ComboBox<String> cboPset = new ComboBox<>();
+    private final ComboBox<SetData> cboSetData = new ComboBox<>();
     private final ComboBox<String> cboChannel = new ComboBox<>();
     private final ComboBox<String> cboDestination = new ComboBox<>();
     private final PRangeBox pRangeBoxTime = new PRangeBox(0, SelectedFilter.FILTER_DURATION_MAX_MIN);
@@ -100,7 +102,12 @@ public class AboEditDialogController extends PDialogExtra {
         getVboxCont().getChildren().add(gridPane);
         addOkButtons(btnOk, btnCancel);
 
-        init(getvBoxDialog(), true);
+        SetData setData = aboCopy.getSetData(progData);
+        if (setData == null) {
+            Platform.runLater(() -> new NoSetDialogController(progData, NoSetDialogController.TEXT.ABO));
+        } else {
+            init(getvBoxDialog(), true);
+        }
     }
 
     private void quit() {
@@ -359,33 +366,22 @@ public class AboEditDialogController extends PDialogExtra {
                 this.gridPane.add(cbxOn, 1, grid);
                 break;
 
-            case AboXml.ABO_PSET_NAME:
-                if (progData.setList.getListAbo().getPsetNameList().size() == 1) {
+            case AboXml.ABO_SET_DATA_ID:
+                // mind. 1 Set gibts immer, Kontrolle oben bereits
+                if (progData.setDataList.getSetDataListAbo().size() <= 1) {
                     // gibt nur ein Set: brauchts keine Auswahl
-                    String str = progData.setList.getListAbo().getPsetNameList().get(0);
-                    if (!aboCopy.getPsetName().equals(str)) {
-                        aboCopy.setPsetName(str);
-                    }
-
                     txt[i].setEditable(false);
                     txt[i].setDisable(true);
-                    txt[i].setText(aboCopy.getPsetName());
+                    txt[i].setText(aboCopy.getSetData(progData).getVisibleName());
                     this.gridPane.add(txt[i], 1, grid);
-                    break;
-                }
 
-                cboPset.getItems().addAll(progData.setList.getListAbo().getPsetNameList());
-                if (aboCopy.getPsetName().isEmpty()) {
-                    cboPset.getSelectionModel().selectFirst();
-                    aboCopy.setPsetName(cboPset.getSelectionModel().getSelectedItem());
                 } else {
-                    cboPset.getSelectionModel().select(aboCopy.getPsetName());
+                    cboSetData.setMaxWidth(Double.MAX_VALUE);
+                    cboSetData.getItems().addAll(progData.setDataList.getSetDataListAbo());
+                    cboSetData.valueProperty().bindBidirectional(aboCopy.setDataProperty());
+                    cboSetData.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> cbxEditAll[i].setSelected(true));
+                    this.gridPane.add(cboSetData, 1, grid);
                 }
-
-                cboPset.setMaxWidth(Double.MAX_VALUE);
-                cboPset.valueProperty().bindBidirectional(aboCopy.psetNameProperty());
-                cboPset.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> cbxEditAll[i].setSelected(true));
-                this.gridPane.add(cboPset, 1, grid);
                 break;
 
             case AboXml.ABO_CHANNEL:
@@ -468,8 +464,8 @@ public class AboEditDialogController extends PDialogExtra {
             case AboXml.ABO_DEST_PATH:
                 gridPane.add(cbxEditAll[i], 2, grid);
                 break;
-            case AboXml.ABO_PSET_NAME:
-                if (progData.setList.getListAbo().getPsetNameList().size() > 1) {
+            case AboXml.ABO_SET_DATA_ID:
+                if (progData.setDataList.getSetDataListAbo().size() > 1) {
                     // nur dann kann man was ändern
                     gridPane.add(cbxEditAll[i], 2, grid);
                 }

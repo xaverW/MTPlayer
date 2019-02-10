@@ -25,7 +25,7 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.SetData;
-import de.mtplayer.mtp.controller.data.SetList;
+import de.mtplayer.mtp.controller.data.SetDataList;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadConstants;
 import de.mtplayer.mtp.controller.data.download.DownloadTools;
@@ -74,7 +74,7 @@ public class DownloadAddDialogController extends PDialogExtra {
 
     private final CheckBox chkAll = new CheckBox("Änderungen auf alle Filme anwenden");
     private final Label lblSet = new Label("Set:");
-    private final ComboBox<String> cbSet = new ComboBox<>();
+    private final ComboBox<SetData> cbSet = new ComboBox<>();
     private final ComboBox<String> cbPath = new ComboBox<>();
     private final Button btnDest = new Button("Pfad");
     private final Button btnPropose = new Button("Vorschlag");
@@ -100,7 +100,7 @@ public class DownloadAddDialogController extends PDialogExtra {
     private final String textLow = "niedrige Auflösung";
 
     private final ProgData progData;
-    final private SetList setList;
+    final private SetDataList setDataList;
     private SetData setData;
     private String filterResolution;
     final String[] storedPath = ProgConfig.DOWNLOAD_DIALOG_PATH_SAVING.get().split("<>");
@@ -193,7 +193,7 @@ public class DownloadAddDialogController extends PDialogExtra {
         this.filmsToDownloadList = filmsToDownloadList;
         this.setData = setData;
         this.filterResolution = filterResolution;
-        this.setList = progData.setList.getListSave();
+        this.setDataList = progData.setDataList.getSetDataListSave();
 
         vBoxCont = getVboxCont();
         hBoxOk = getHboxOk();
@@ -205,14 +205,14 @@ public class DownloadAddDialogController extends PDialogExtra {
     public void make() {
         initCont();
 
-        if (progData.setList.getListSave().isEmpty()) {
+        if (progData.setDataList.getSetDataListSave().isEmpty()) {
             // Satz mit x, war wohl nix
             ok = false;
             quit();
             return;
         }
         if (setData == null) {
-            setData = progData.setList.getListSave().get(0);
+            setData = progData.setDataList.getSetDataListSave().get(0);
         }
 
         if (filmsToDownloadList.size() == 0) {
@@ -228,15 +228,15 @@ public class DownloadAddDialogController extends PDialogExtra {
             hBoxAll.setManaged(false);
         }
 
-        if (setList.size() == 1) {
+        if (setDataList.size() == 1) {
             // macht dann keinen Sinn
             lblSet.setVisible(false);
             lblSet.setManaged(false);
             cbSet.setVisible(false);
             cbSet.setManaged(false);
         } else {
-            cbSet.getItems().addAll(setList.getPsetNameList());
-            cbSet.getSelectionModel().select(setData.getName());
+            cbSet.getItems().addAll(setDataList);
+            cbSet.getSelectionModel().select(setData);
             cbSet.setOnAction(a -> makePsetChange());
         }
 
@@ -553,7 +553,7 @@ public class DownloadAddDialogController extends PDialogExtra {
     }
 
     private void makePsetChange(DownInfo downInfo) {
-        SetData psetData = setList.get(cbSet.getSelectionModel().getSelectedIndex());
+        SetData psetData = cbSet.getSelectionModel().getSelectedItem();
 
         downInfo.psetData = psetData;
         downInfo.download = new Download(psetData, downInfo.film, DownloadConstants.SRC_DOWNLOAD, null, "", "", Film.RESOLUTION_NORMAL);

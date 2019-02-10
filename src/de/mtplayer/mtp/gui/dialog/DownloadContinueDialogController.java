@@ -160,7 +160,7 @@ public class DownloadContinueDialogController extends PDialogExtra {
     }
 
     private boolean checkDownload() {
-        return (download.getpSet() != null && download.getFilm() != null);
+        return (download.getSetData() != null && download.getFilm() != null);
     }
 
     private void handleCountDownAction() {

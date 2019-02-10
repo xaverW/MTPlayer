@@ -21,6 +21,7 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
+import de.mtplayer.mtp.gui.dialog.NoSetDialogController;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
@@ -95,6 +96,12 @@ public class Worker {
             return;
         }
 
+        if (progData.setDataList.getSetDataForAbo() == null) {
+            // SetData sind nicht eingerichtet
+            Platform.runLater(() -> new NoSetDialogController(progData, NoSetDialogController.TEXT.ABO));
+            return;
+        }
+
         PDuration.counterStart("Worker.searchForAbosAndMaybeStart");
         progData.maskerPane.setMaskerVisible(true, false);
         progData.maskerPane.setMaskerProgress(ListenerFilmlistLoad.PROGRESS_INDETERMINATE, "Downloads suchen");
@@ -103,7 +110,7 @@ public class Worker {
             try {
 
                 PLog.sysLog("Downloads aus Abos suchen");
-                // erledigte entfernen, nicht gestartete Abos entfernen und neu nach Abos suchen
+                // erledigte entfernen, nicht gestartete Abos entfernen und nach neu Abos suchen
                 progData.downloadList.searchForDownloadsFromAbos();
 
                 if (Boolean.parseBoolean(ProgConfig.DOWNLOAD_START_NOW.get())) {

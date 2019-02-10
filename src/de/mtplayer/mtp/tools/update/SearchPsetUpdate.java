@@ -22,9 +22,10 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ListePsetVorlagen;
 import de.mtplayer.mtp.controller.data.SetData;
-import de.mtplayer.mtp.controller.data.SetList;
+import de.mtplayer.mtp.controller.data.SetDataList;
 import de.mtplayer.mtp.gui.dialog.NewSetDialogController;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
+import de.p2tools.p2Lib.tools.PIndex;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
 
@@ -41,13 +42,13 @@ public class SearchPsetUpdate {
         try {
             Platform.runLater(() -> {
 
-                final SetList listPsetStandard = ListePsetVorlagen.getStandarset(false /* replaceMuster */);
+                final SetDataList listPsetStandard = ListePsetVorlagen.getStandarset(false /* replaceMuster */);
                 final String version = ProgConfig.SYSTEM_UPDATE_PROGSET_VERSION.get();
                 if (listPsetStandard == null) {
                     return;
                 }
 
-                if (!progData.setList.isEmpty()) {
+                if (!progData.setDataList.isEmpty()) {
                     // ansonsten ist die Liste leer und dann gibts immer was
                     if (listPsetStandard.version.isEmpty()) {
                         // dann hat das Laden der aktuellen Standardversion nicht geklappt
@@ -63,7 +64,7 @@ public class SearchPsetUpdate {
                     final NewSetDialogController newSetDialogController = new NewSetDialogController(progData);
                     if (newSetDialogController.getReplaceSet()) {
                         // dann werden die Sets durch die Neuen ersetzt
-                        progData.setList.clear();
+                        progData.setDataList.clear();
                     } else if (!newSetDialogController.getAddNewSet()) {
                         // und wenn auch nicht "Anfügen" gewählt, dann halt nix
                         PLog.sysLog("Setanlegen: Abbruch");
@@ -81,22 +82,22 @@ public class SearchPsetUpdate {
                 // ========================================
                 // gibt keine Sets oder aktualisieren
                 // damit die Variablen ersetzt werden
-                SetList.progReplacePattern(listPsetStandard);
+                SetDataList.progReplacePattern(listPsetStandard);
                 ProgConfig.SYSTEM_UPDATE_PROGSET_VERSION.setValue(listPsetStandard.version);
 
                 // die Zielpafade anpassen
-                final SetList listPsetOrgSave = progData.setList.getListSave();
+                final SetDataList listPsetOrgSave = progData.setDataList.getSetDataListSave();
 
                 if (!listPsetOrgSave.isEmpty()) {
-                    for (final SetData psNew : listPsetStandard.getListSave()) {
+                    for (final SetData psNew : listPsetStandard.getSetDataListSave()) {
                         psNew.setDestPath(listPsetOrgSave.get(0).getDestPath());
-                        psNew.setGenTheme(listPsetOrgSave.get(0).getGenTheme());
+                        psNew.setGenTheme(listPsetOrgSave.get(0).isGenTheme());
                         psNew.setMaxSize(listPsetOrgSave.get(0).getMaxSize());
                         psNew.setMaxField(listPsetOrgSave.get(0).getMaxField());
                     }
                 }
 
-                if (!progData.setList.isEmpty()) {
+                if (!progData.setDataList.isEmpty()) {
                     // wenn leer, dann gibts immer die neuen und die sind dann auch aktiv
                     for (final SetData psNew : listPsetStandard) {
                         // die bestehenden Sets sollen nicht gestört werden
@@ -108,7 +109,10 @@ public class SearchPsetUpdate {
 
                     // damit man sie auch findet :)
                     final String date = StringFormatters.FORMATTER_ddMMyyyy.format(new Date());
-                    listPsetStandard.forEach((psNew) -> psNew.setName(psNew.getName() + ", neu: " + date));
+                    listPsetStandard.forEach((psNew) -> {
+                        psNew.setId(PIndex.getIndexStr());
+                        psNew.setVisibleName(psNew.getVisibleName() + ", neu: " + date);
+                    });
 
                 }
 

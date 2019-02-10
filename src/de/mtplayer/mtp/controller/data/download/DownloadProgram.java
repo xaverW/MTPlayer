@@ -37,39 +37,33 @@ import java.util.Date;
 public class DownloadProgram {
 
     private final Download download;
-    private SetData pSet = null;
 
     public DownloadProgram(Download download) {
         this.download = download;
     }
 
-    public boolean makeProgParameter(SetData pSet, Film film, Abo abo, String name, String path) {
-        this.pSet = pSet;
+    public boolean makeProgParameter(Film film, Abo abo, String name, String path) {
         // zieldatei und pfad bauen und eintragen
         try {
-            final ProgramData progData = pSet.getProgUrl(download.getUrl());
-            if (progData == null) {
+            final ProgramData programData = download.getSetData().getProgUrl(download.getUrl());
+            if (programData == null) {
                 return false; //todo ist das gut da wenn kein Set zum Download???
             }
 
-            // ##############################################
-            // pSet und ... eintragen
-            download.setSet(pSet.getName());
-
             // Direkter Download nur wenn url passt und wenn im Programm ein Zielpfad ist sonst Abspielen
             //legt fest, dass NICHT Abspielen, Abspielen immer über Programm!
-            download.setArt((pSet.checkDownloadDirect(download.getUrl()) && pSet.progsContainPath()) ?
+            download.setArt((download.getSetData().checkDownloadDirect(download.getUrl()) && download.getSetData().progsContainPath()) ?
                     DownloadConstants.ART_DOWNLOAD : DownloadConstants.ART_PROGRAM);
             if (download.getArt().equals(DownloadConstants.ART_DOWNLOAD)) {
                 download.setProgram(DownloadConstants.ART_DOWNLOAD);
             } else {
-                download.setProgram(progData.getName());
+                download.setProgram(programData.getName());
             }
 
-            download.setProgramRestart(progData.isRestart());
-            download.setProgramDownloadmanager(progData.isDownManager());
-            buildFileNamePath(pSet, film, abo, name, path);
-            buildProgParameter(progData);
+            download.setProgramRestart(programData.isRestart());
+            download.setProgramDownloadmanager(programData.isDownManager());
+            buildFileNamePath(download.getSetData(), film, abo, name, path);
+            buildProgParameter(programData);
         } catch (final Exception ex) {
             PLog.errorLog(825600145, ex);
         }
@@ -175,7 +169,7 @@ public class DownloadProgram {
             if (abo != null) {
                 // bei Abos: den Namen des Abos eintragen und evtl. den Pfad erweitern
                 download.setAboName(abo.getName());
-                if (setData.getGenTheme()) {
+                if (setData.isGenTheme()) {
                     // und Abopfad an den Pfad anhängen
                     String addPpath;
                     if (!abo.getDestination().trim().isEmpty()) {
@@ -185,7 +179,7 @@ public class DownloadProgram {
                     }
                     path = PFileUtils.addsPath(path, FileNameUtils.removeIllegalCharacters(addPpath, false));
                 }
-            } else if (setData.getGenTheme()) {
+            } else if (setData.isGenTheme()) {
                 // Downloads
                 // und den Namen des Themas an den Zielpfad anhängen
                 // --> das wird aber nur beim ersten mal klappen, dann wird im
@@ -227,7 +221,7 @@ public class DownloadProgram {
         // hier wird nur ersetzt!
         // Felder mit variabler Länge, evtl. vorher kürzen
 
-        int length = pSet.getMaxField();
+        int length = download.getSetData().getMaxField();
 
         replStr = replStr.replace("%t", getField(film.arr[FilmXml.FILM_THEME], length));
         replStr = replStr.replace("%T", getField(film.arr[FilmXml.FILM_TITLE], length));

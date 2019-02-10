@@ -45,7 +45,6 @@ import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class IoWriteXml implements AutoCloseable {
@@ -68,17 +67,17 @@ public class IoWriteXml implements AutoCloseable {
         PLog.sysLog(list);
     }
 
-    public synchronized void exportPset(SetData[] pSet, String datei) {
-        try {
-            xmlFilePath = Paths.get(datei);
-            PLog.sysLog("Pset exportieren nach: " + xmlFilePath.toString());
-            xmlWriteStart();
-            xmlWritePset(pSet);
-            xmlWriteEnd();
-        } catch (final Exception ex) {
-            PLog.errorLog(392846204, ex, "nach: " + datei);
-        }
-    }
+//    public synchronized void exportPset(SetData[] pSet, String datei) {
+//        try {
+//            xmlFilePath = Paths.get(datei);
+//            PLog.sysLog("Pset exportieren nach: " + xmlFilePath.toString());
+//            xmlWriteStart();
+//            xmlWritePset(pSet);
+//            xmlWriteEnd();
+//        } catch (final Exception ex) {
+//            PLog.errorLog(392846204, ex, "nach: " + datei);
+//        }
+//    }
 
     private void xmlWriteData() {
         try {
@@ -110,7 +109,7 @@ public class IoWriteXml implements AutoCloseable {
             writer.writeCharacters(PConst.LINE_SEPARATORx2);
             writer.writeComment("Programmsets");
             writer.writeCharacters(PConst.LINE_SEPARATOR);
-            xmlWriteProg();
+            xmlWriteSetData();
 
             writer.writeCharacters(PConst.LINE_SEPARATORx2);
             writer.writeComment("Ersetzungstabelle");
@@ -159,31 +158,31 @@ public class IoWriteXml implements AutoCloseable {
         });
     }
 
-    private void xmlWriteProg() {
+    private void xmlWriteSetData() {
         // Proggruppen schreiben, bei Konfig-Datei
-        for (final SetData psetData : progData.setList) {
-            psetData.setXmlFromProps();
-            xmlWriteData(SetData.TAG, SetData.XML_NAMES, psetData.arr, false);
-            for (final ProgramData progData : psetData.getProgramList()) {
-                progData.setXmlFromProps();
-                xmlWriteData(ProgramData.TAG, ProgramData.XML_NAMES, progData.arr, false);
+        for (final SetData setData : progData.setDataList) {
+            setData.setXmlFromProps();
+            xmlWriteData(SetData.TAG, SetData.XML_NAMES, setData.arr, false);
+            for (final ProgramData programData : setData.getProgramList()) {
+                programData.setXmlFromProps();
+                xmlWriteData(ProgramData.TAG, ProgramData.XML_NAMES, programData.arr, false);
             }
         }
     }
 
-    private void xmlWritePset(SetData[] psetArray) throws XMLStreamException {
-        // wird beim Export Sets verwendete
-        writer.writeCharacters(PConst.LINE_SEPARATORx2);
-        for (final SetData pset : psetArray) {
-            pset.setXmlFromProps();
-            xmlWriteData(SetData.TAG, SetData.XML_NAMES, pset.arr, true);
-            for (final ProgramData progData : pset.getProgramList()) {
-                progData.setXmlFromProps();
-                xmlWriteData(ProgramData.TAG, ProgramData.XML_NAMES, progData.arr, true);
-            }
-            writer.writeCharacters(PConst.LINE_SEPARATORx2);
-        }
-    }
+//    private void xmlWritePset(SetData[] psetArray) throws XMLStreamException {
+//        // wird beim Export Sets verwendete
+//        writer.writeCharacters(PConst.LINE_SEPARATORx2);
+//        for (final SetData pset : psetArray) {
+//            pset.setXmlFromProps();
+//            xmlWriteData(SetData.TAG, SetData.XML_NAMES, pset.arr, true);
+//            for (final ProgramData progData : pset.getProgramList()) {
+//                progData.setXmlFromProps();
+//                xmlWriteData(ProgramData.TAG, ProgramData.XML_NAMES, progData.arr, true);
+//            }
+//            writer.writeCharacters(PConst.LINE_SEPARATORx2);
+//        }
+//    }
 
     private void xmlWriteDownloads() {
         // Downloads schreiben

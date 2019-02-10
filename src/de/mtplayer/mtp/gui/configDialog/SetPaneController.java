@@ -154,9 +154,9 @@ public class SetPaneController extends AnchorPane {
             setDataPane.bindProgData(newValue);
         });
 
-        final TableColumn<SetData, String> nameColumn = new TableColumn<>("Name");
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        nameColumn.setCellFactory(TextFieldTableCell.forTableColumn()); //todo muss eindeutig sein
+        final TableColumn<SetData, String> visibleNameColumn = new TableColumn<>("Name");
+        visibleNameColumn.setCellValueFactory(new PropertyValueFactory<>("visibleName"));
+        visibleNameColumn.setCellFactory(TextFieldTableCell.forTableColumn()); //todo muss eindeutig sein
 
         final TableColumn<SetData, Boolean> playColumn = new TableColumn<>("Abspielen");
         playColumn.setCellValueFactory(new PropertyValueFactory<>("play"));
@@ -164,8 +164,8 @@ public class SetPaneController extends AnchorPane {
         playColumn.getStyleClass().add("center");
 
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-        tableView.getColumns().addAll(nameColumn, playColumn);
-        tableView.setItems(progData.setList);
+        tableView.getColumns().addAll(visibleNameColumn, playColumn);
+        tableView.setItems(progData.setDataList);
 
         VBox.setVgrow(tableView, Priority.ALWAYS);
         vBox.getChildren().addAll(tableView);
@@ -176,7 +176,7 @@ public class SetPaneController extends AnchorPane {
         btnDel.setOnAction(event -> {
             SetData setData = getSelectedSelData();
             if (setData != null) {
-                progData.setList.removePset(setData);
+                progData.setDataList.removeSetData(setData);
             }
         });
 
@@ -185,7 +185,7 @@ public class SetPaneController extends AnchorPane {
         btnNew.setGraphic(new ProgIcons().ICON_BUTTON_ADD);
         btnNew.setOnAction(event -> {
             SetData setData = new SetData("Neu-" + ++newCounter);
-            progData.setList.addPset(setData);
+            progData.setDataList.addSetData(setData);
         });
 
         Button btnUp = new Button("");
@@ -194,7 +194,7 @@ public class SetPaneController extends AnchorPane {
         btnUp.setOnAction(event -> {
             int sel = getSelectedLine();
             if (sel >= 0) {
-                int newSel = progData.setList.auf(sel, true);
+                int newSel = progData.setDataList.up(sel, true);
                 tableView.getSelectionModel().select(newSel);
             }
         });
@@ -205,7 +205,7 @@ public class SetPaneController extends AnchorPane {
         btnDown.setOnAction(event -> {
             int sel = getSelectedLine();
             if (sel >= 0) {
-                int newSel = progData.setList.auf(sel, false);
+                int newSel = progData.setDataList.up(sel, false);
                 tableView.getSelectionModel().select(newSel);
             }
         });
@@ -215,7 +215,7 @@ public class SetPaneController extends AnchorPane {
         btnDup.setOnAction(event -> {
             SetData setData = getSelectedSelData();
             if (setData != null) {
-                progData.setList.addPset(setData.copy());
+                progData.setDataList.addSetData(setData.copy());
             }
         });
         HBox.setHgrow(btnDup, Priority.ALWAYS);
@@ -291,7 +291,7 @@ public class SetPaneController extends AnchorPane {
                 radioButton.setToggleGroup(toggleGroup);
                 radioButton.setSelected(item.booleanValue());
 
-                radioButton.setOnAction(event -> progData.setList.setPlay(setData));
+                radioButton.setOnAction(event -> progData.setDataList.setPlay(setData));
 
                 hbox.getChildren().addAll(radioButton);
                 setGraphic(hbox);

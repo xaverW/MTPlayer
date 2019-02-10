@@ -23,6 +23,7 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.ProgramData;
+import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadConstants;
 import de.mtplayer.mtp.controller.data.download.DownloadTools;
@@ -36,6 +37,7 @@ import de.p2tools.p2Lib.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.tools.log.PLog;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -78,6 +80,7 @@ public class DownloadEditDialogController extends PDialogExtra {
     private final String orgProgArray;
     private final String orgPath;
     private final ProgData progData;
+    private final SetData setData;
 
     public DownloadEditDialogController(ProgData progData, Download download, boolean isStarted) {
         super(ProgConfig.DOWNLOAD_DIALOG_EDIT_SIZE.getStringProperty(),
@@ -93,7 +96,14 @@ public class DownloadEditDialogController extends PDialogExtra {
         addOkButtons(btnOk, btnCancel);
 
         getVboxCont().getChildren().add(gridPane);
-        init(true);
+
+        setData = download.getSetData();
+        if (setData == null) {
+            Platform.runLater(() -> new NoSetDialogController(progData, NoSetDialogController.TEXT.ABO));
+        } else {
+            init(true);
+        }
+
     }
 
 
@@ -129,16 +139,21 @@ public class DownloadEditDialogController extends PDialogExtra {
     }
 
     private boolean downloadDeleteFile(Download dataDownload) {
+        boolean ret = false;
         try {
             final File file = new File(dataDownload.getDestPathFile());
+
             if (!file.exists()) {
-                return true; // gibt nichts zu löschen
+                // gibt nichts zu löschen
+                return true;
             }
+
 
             if (!PAlert.showAlertOkCancel("Film Löschen?", "Auflösung wurde geändert",
                     "Die Auflösung wurde geändert, der Film kann nicht weitergeführt werden." + PConst.LINE_SEPARATOR +
                             "Datei muss zuerst gelöscht werden.")) {
-                return false; // user will nicht
+                // user will nicht
+                return false;
             }
 
             // und jetzt die Datei löschen
@@ -146,13 +161,16 @@ public class DownloadEditDialogController extends PDialogExtra {
             if (!file.delete()) {
                 throw new Exception();
             }
+            ret = true;
+
         } catch (final Exception ex) {
             PAlert.showErrorAlert("Film löschen",
                     "Konnte die Datei nicht löschen!",
                     "Fehler beim löschen: " + dataDownload.getDestPathFile());
             PLog.errorLog(812036789, "Fehler beim löschen: " + dataDownload.arr[DownloadXml.DOWNLOAD_DEST_PATH_FILE_NAME]);
         }
-        return true;
+
+        return ret;
     }
 
     private boolean check() {
@@ -198,9 +216,9 @@ public class DownloadEditDialogController extends PDialogExtra {
             size = fileSize_high;
         }
 
-        if (download.getArt().equals(DownloadConstants.ART_PROGRAM) && download.getpSet() != null) {
+        if (download.getArt().equals(DownloadConstants.ART_PROGRAM) && download.getSetData() != null) {
             // muss noch der Programmaufruf neu gebaut werden
-            final Download d = new Download(download.getpSet(), download.getFilm(), download.getSource(), download.getAbo(),
+            final Download d = new Download(download.getSetData(), download.getFilm(), download.getSource(), download.getAbo(),
                     download.getDestFileName(),
                     download.getDestPath(), res);
 
@@ -402,10 +420,6 @@ public class DownloadEditDialogController extends PDialogExtra {
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcComputedSizeAndHgrow());
 
-//        gridPane.setMinWidth(Control.USE_PREF_SIZE);
-//        gridPane.setMinWidth(Control.USE_COMPUTED_SIZE);
-//        gridPane.setPrefWidth(Control.USE_COMPUTED_SIZE);
-//        gridPane.setMaxWidth(Double.MAX_VALUE);
         gridPane.setHgap(5);
         gridPane.setVgap(15);
         gridPane.setPadding(new Insets(10));
@@ -477,7 +491,7 @@ public class DownloadEditDialogController extends PDialogExtra {
 
             case DownloadXml.DOWNLOAD_BUTTON1:
                 //die Auflösung an der Stelle anzgeigen
-                if (!download.getArt().equals(DownloadConstants.ART_DOWNLOAD) && download.getpSet() == null) {
+                if (!download.getArt().equals(DownloadConstants.ART_DOWNLOAD) && download.getSetData() == null) {
                     // ansonsten müsste erst der Programmaufruf neu gebaut werden
                     break;
                 }
@@ -564,8 +578,8 @@ public class DownloadEditDialogController extends PDialogExtra {
 //                ++row;
 //                break;
 
-            case DownloadXml.DOWNLOAD_PROGRAM_SET:
-                lblCont[i].textProperty().bind(download.setProperty());
+            case DownloadXml.DOWNLOAD_SET_DATA:
+                lblCont[i].textProperty().bind(setData.visibleNameProperty());
                 gridPane.add(lbl[i], 0, row);
                 gridPane.add(lblCont[i], 1, row);
                 ++row;

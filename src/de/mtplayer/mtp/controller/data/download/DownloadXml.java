@@ -52,7 +52,7 @@ public class DownloadXml extends Data<Download> {
     public static final int DOWNLOAD_URL_RTMP = 22;
     public static final int DOWNLOAD_URL_SUBTITLE = 23;
 
-    public static final int DOWNLOAD_PROGRAM_SET = 24;
+    public static final int DOWNLOAD_SET_DATA = 24;
     public static final int DOWNLOAD_PROGRAM = 25;
     public static final int DOWNLOAD_PROGRAM_CALL = 26;
     public static final int DOWNLOAD_PROGRAM_CALL_ARRAY = 27;

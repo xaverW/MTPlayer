@@ -131,7 +131,7 @@ public class ImportSetDialogController extends PDialog {
         btnOk.setText("Ok");
         btnImport.setDisable(true);
 
-        progData.setList.clear();
+        progData.setDataList.clear();
 
         if (SetsPrograms.addSetTemplate(ListePsetVorlagen.getStandarset(true /*replaceMuster*/))) {
             PAlert.showInfoAlert("Set", "Set importieren", "Sets wurden importiert!", false);

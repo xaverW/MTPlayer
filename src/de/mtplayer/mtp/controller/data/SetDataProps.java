@@ -21,12 +21,13 @@ import de.mtplayer.mtp.controller.data.film.Film;
 import javafx.beans.property.*;
 import javafx.scene.paint.Color;
 
-public class SetProps extends SetXml {
+public class SetDataProps extends SetDataXml {
 
     public static final Color RESET_COLOR = Color.BLACK;
 
-    private StringProperty name = new SimpleStringProperty("");
-    private StringProperty praefix = new SimpleStringProperty("");
+    private StringProperty id = new SimpleStringProperty("");
+    private StringProperty visibleName = new SimpleStringProperty("");
+    private StringProperty prefix = new SimpleStringProperty("");
     private StringProperty suffix = new SimpleStringProperty("");
 
     private final ObjectProperty<Color> color = new SimpleObjectProperty<>(this, "color", RESET_COLOR);
@@ -48,29 +49,40 @@ public class SetProps extends SetXml {
     private BooleanProperty infoFile = new SimpleBooleanProperty(false);
     private BooleanProperty subtitle = new SimpleBooleanProperty(false);
 
-
-    public String getName() {
-        return name.get();
+    public String getId() {
+        return id.get();
     }
 
-    public StringProperty nameProperty() {
-        return name;
+    public StringProperty idProperty() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name.set(name);
+    public void setId(String id) {
+        this.id.set(id);
     }
 
-    public String getPraefix() {
-        return praefix.get();
+    public String getVisibleName() {
+        return visibleName.get();
     }
 
-    public StringProperty praefixProperty() {
-        return praefix;
+    public StringProperty visibleNameProperty() {
+        return visibleName;
     }
 
-    public void setPraefix(String praefix) {
-        this.praefix.set(praefix);
+    public void setVisibleName(String visibleName) {
+        this.visibleName.set(visibleName);
+    }
+
+    public String getPrefix() {
+        return prefix.get();
+    }
+
+    public StringProperty prefixProperty() {
+        return prefix;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix.set(prefix);
     }
 
     public String getSuffix() {
@@ -121,7 +133,7 @@ public class SetProps extends SetXml {
         this.destName.set(destName);
     }
 
-    public boolean getGenTheme() {
+    public boolean isGenTheme() {
         return genTheme.get();
     }
 
@@ -279,8 +291,9 @@ public class SetProps extends SetXml {
 
 
     public void setPropsFromXml() {
-        setName(arr[PROGRAMSET_NAME]);
-        setPraefix(arr[PROGRAMSET_PRAEFIX_DIRECT]);
+        setId(arr[PROGRAMSET_ID]);
+        setVisibleName(arr[PROGRAMSET_VISIBLE_NAME]);
+        setPrefix(arr[PROGRAMSET_PRAEFIX_DIRECT]);
         setSuffix(arr[PROGRAMSET_SUFFIX_DIRECT]);
 
         setColorFromHex(arr[PROGRAMSET_COLOR]);
@@ -327,15 +340,16 @@ public class SetProps extends SetXml {
     }
 
     public void setXmlFromProps() {
-        arr[PROGRAMSET_NAME] = getName();
-        arr[PROGRAMSET_PRAEFIX_DIRECT] = getPraefix();
+        arr[PROGRAMSET_ID] = getId();
+        arr[PROGRAMSET_VISIBLE_NAME] = getVisibleName();
+        arr[PROGRAMSET_PRAEFIX_DIRECT] = getPrefix();
         arr[PROGRAMSET_SUFFIX_DIRECT] = getSuffix();
 
         arr[PROGRAMSET_COLOR] = MLC.getColorToHex(color.getValue());
         arr[PROGRAMSET_ZIEL_PFAD] = getDestPath();
         arr[PROGRAMSET_ZIEL_DATEINAME] = getDestName();
 
-        arr[PROGRAMSET_THEMA_ANLEGEN] = String.valueOf(getGenTheme());
+        arr[PROGRAMSET_THEMA_ANLEGEN] = String.valueOf(isGenTheme());
         arr[PROGRAMSET_IST_ABSPIELEN] = String.valueOf(isPlay());
         arr[PROGRAMSET_IST_SPEICHERN] = String.valueOf(isSave());
         arr[PROGRAMSET_IST_BUTTON] = String.valueOf(isButton());
@@ -353,4 +367,13 @@ public class SetProps extends SetXml {
         arr[PROGRAMSET_SUBTITLE] = String.valueOf(isSubtitle());
     }
 
+    @Override
+    public String toString() {
+        return getVisibleName();
+    }
+
+    @Override
+    public int compareTo(SetData setData) {
+        return this.getVisibleName().compareTo(setData.getVisibleName());
+    }
 }

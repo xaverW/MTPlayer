@@ -16,19 +16,23 @@
 
 package de.mtplayer.mtp.controller.data;
 
+import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
+import de.p2tools.p2Lib.tools.PIndex;
 
-public class SetData extends SetProps {
+public class SetData extends SetDataProps {
 
     private final ProgramList programList = new ProgramList();
 //    public static boolean[] spaltenAnzeigen = new boolean[MAX_ELEM];
 
     public SetData() {
+        setId(PIndex.getIndexStr());
     }
 
     public SetData(String name) {
         // neue Pset sind immer gleich Button
-        setName(name);
+        setId(PIndex.getIndexStr());
+        setVisibleName(name);
         setButton(true);
     }
 
@@ -77,12 +81,12 @@ public class SetData extends SetProps {
 
     public boolean isLable() {
         // wenn die Programmliste leer ist und einen Namen hat, ist es ein Lable
-        return programList.isEmpty() && !getName().isEmpty();
+        return programList.isEmpty() && !getVisibleName().isEmpty();
     }
 
     public boolean isFreeLine() {
         //Wenn die Programmgruppe keinen Namen hat, leere Zeile
-        return getName().isEmpty();
+        return getVisibleName().isEmpty();
     }
 
 
@@ -126,8 +130,8 @@ public class SetData extends SetProps {
 
     public boolean checkDownloadDirect(String url) {
         //auf direkte prüfen, pref oder suf: wenn angegeben dann muss es stimmen
-        if (!getPraefix().isEmpty() || !getSuffix().isEmpty()) {
-            if (SetsPrograms.testPrefix(getPraefix(), url, true)
+        if (!getPrefix().isEmpty() || !getSuffix().isEmpty()) {
+            if (SetsPrograms.testPrefix(getPrefix(), url, true)
                     && SetsPrograms.testPrefix(getSuffix(), url, false)) {
                 return true;
             }
@@ -137,19 +141,35 @@ public class SetData extends SetProps {
 
     public SetData copy() {
         final SetData ret = new SetData();
+
         setXmlFromProps();
-
         System.arraycopy(arr, 0, ret.arr, 0, arr.length);
-
         ret.setPropsFromXml();
+
         //es darf nur einen geben!
-        ret.setName("Kopie-" + getName());
+        ret.setId(PIndex.getIndexStr());
+        ret.setVisibleName("Kopie-" + getVisibleName());
         ret.setPlay(false);
 
-        for (final ProgramData prog : getProgramList()) {
-            ret.addProg(prog.copy());
+        for (final ProgramData programData : getProgramList()) {
+            ret.addProg(programData.copy());
         }
 
+        return ret;
+    }
+
+    public String setDataToString() {
+        String ret = "";
+        ret += "================================================" + ProgConst.LINE_SEPARATOR;
+        ret += "| Programmset" + ProgConst.LINE_SEPARATOR;
+        for (int i = 0; i < MAX_ELEM; ++i) {
+            ret += "| " + COLUMN_NAMES[i] + ": " + arr[i] + ProgConst.LINE_SEPARATOR;
+        }
+        for (final Object aListeProg : programList) {
+            ret += "|" + ProgConst.LINE_SEPARATOR;
+            ret += aListeProg.toString();
+        }
+        ret += "|_______________________________________________" + ProgConst.LINE_SEPARATOR;
         return ret;
     }
 

@@ -57,6 +57,10 @@ public class AboList extends SimpleListProperty<Abo> {
         return listChanged;
     }
 
+    public synchronized void initAboList() {
+        this.stream().forEach(abo -> abo.initAbo(progData));
+    }
+
     public synchronized void addAbo(Abo abo) {
         // die Änderung an der Liste wird nicht gemeldet!!
         // für das Lesen der Konfig-Datei beim Programmstart
@@ -97,7 +101,8 @@ public class AboList extends SimpleListProperty<Abo> {
                 Boolean.parseBoolean(ProgConfig.SYSTEM_USE_REPLACETABLE.get()),
                 Boolean.parseBoolean(ProgConfig.SYSTEM_ONLY_ASCII.get()));
 
-        final Abo abo = new Abo(namePath /* name */,
+        final Abo abo = new Abo(progData,
+                namePath /* name */,
                 filmChannel,
                 filmTheme,
                 "" /* filmThemaTitel */,
@@ -105,8 +110,7 @@ public class AboList extends SimpleListProperty<Abo> {
                 "",
                 minDuration,
                 maxDuration,
-                namePath,
-                "" /* pset */);
+                namePath);
 
 
         if (new AboEditDialogController(progData, abo).getOk()) {

@@ -58,6 +58,13 @@ public class IoReadXml implements AutoCloseable {
     }
 
     public boolean readConfiguration(Path xmlFilePath) {
+        boolean ret = readConfig(xmlFilePath);
+        initAfterLoad();
+
+        return ret;
+    }
+
+    private boolean readConfig(Path xmlFilePath) {
         PDuration.counterStart("Konfig lesen");
         boolean ret = false;
         int filtercount = 0;
@@ -81,7 +88,7 @@ public class IoReadXml implements AutoCloseable {
                                 psetData = new SetData();
                                 if (get(parser, SetData.TAG, SetData.XML_NAMES, psetData.arr)) {
                                     psetData.setPropsFromXml();
-                                    progData.setList.add(psetData);
+                                    progData.setDataList.add(psetData);
                                 }
                                 break;
                             case ProgramData.TAG:
@@ -170,9 +177,11 @@ public class IoReadXml implements AutoCloseable {
                     }
                 }
                 ret = true;
+
             } catch (final Exception ex) {
                 ret = false;
                 PLog.errorLog(392840096, ex);
+
             } finally {
                 try {
                     if (parser != null) {
@@ -181,16 +190,22 @@ public class IoReadXml implements AutoCloseable {
                 } catch (final Exception ignored) {
                 }
             }
-            progData.downloadList.initDownloads();
-            progData.aboList.sort();
-            // ListeFilmUpdateServer aufbauen
-            if (progData.storedFilter.getStordeFilterList().isEmpty()) {
-                ProgInitFilter.setProgInitFilter();
-            }
         }
 
         PDuration.counterStop("Konfig lesen");
         return ret;
+    }
+
+
+    private void initAfterLoad() {
+        progData.downloadList.initDownloads();
+        progData.aboList.initAboList();
+        progData.aboList.sort();
+
+        // ListeFilmUpdateServer aufbauen
+        if (progData.storedFilter.getStordeFilterList().isEmpty()) {
+            ProgInitFilter.setProgInitFilter();
+        }
     }
 
     private boolean get(XMLStreamReader parser, String xmlElem, String[] xmlNames, String[] strRet) {
@@ -254,21 +269,5 @@ public class IoReadXml implements AutoCloseable {
 
     @Override
     public void close() throws Exception {
-
-    }
-
-    public class ImportStatistics {
-
-        public int foundAbos = 0;
-        public int foundBlacklist = 0;
-        public int foundReplacements = 0;
-    }
-
-    private String[] getArr(int i) {
-        String[] str = new String[i];
-        for (int ii = 0; ii < i; ++ii) {
-            str[ii] = "";
-        }
-        return str;
     }
 }
