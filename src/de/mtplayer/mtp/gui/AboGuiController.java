@@ -20,7 +20,8 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.abo.Abo;
 import de.mtplayer.mtp.controller.data.abo.AboConstants;
-import de.mtplayer.mtp.gui.tools.Table;
+import de.mtplayer.mtp.gui.tools.Listener;
+import de.mtplayer.mtp.gui.tools.table.Table;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PTableViewTools;
 import javafx.beans.property.BooleanProperty;
@@ -125,6 +126,12 @@ public class AboGuiController extends AnchorPane {
     private void initListener() {
         progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
             tableView.refresh();
+        });
+        Listener.addListener(new Listener(Listener.EREIGNIS_SETDATA_CHANGED, AboGuiController.class.getSimpleName()) {
+            @Override
+            public void pingFx() {
+                tableView.refresh();
+            }
         });
     }
 

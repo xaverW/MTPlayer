@@ -23,6 +23,7 @@ import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -34,9 +35,9 @@ public class NoSetDialogController extends PDialog {
 
     final ProgData progData;
     final TEXT text;
-    VBox vbox, vBoxCont;
+    VBox vbox;
     Button btnCancel = new Button("Abbrechen");
-    Button btnImport = new Button("Set importieren");
+    Button btnImport = new Button("Standarsets wieder herstellen");
 
     public enum TEXT {SAVE, PLAY, ABO}
 
@@ -50,10 +51,6 @@ public class NoSetDialogController extends PDialog {
         vbox = new VBox();
         vbox.setPadding(new Insets(10));
         vbox.setSpacing(30);
-
-        vBoxCont = new VBox();
-        vBoxCont.setSpacing(20);
-        vBoxCont.getStyleClass().add("dialog-only-border");
 
         init(vbox, true);
     }
@@ -70,46 +67,57 @@ public class NoSetDialogController extends PDialog {
 
         Text textHeaderSave = new Text("Kein Set zum Aufzeichnen!");
         textHeaderSave.setFont(Font.font(null, FontWeight.BOLD, -1));
+
         Text textHeaderPlay = new Text("Kein Videoplayer zum Abspielen!");
         textHeaderPlay.setFont(Font.font(null, FontWeight.BOLD, -1));
+
         Text textHeaderAbo = new Text("Kein Set zum Aufzeichnen der Abos!");
         textHeaderAbo.setFont(Font.font(null, FontWeight.BOLD, -1));
 
-        Text textContSave = new Text(
-                "Ein Set von Programmen zum Aufzeichnen" + PConst.LINE_SEPARATOR +
-                        "wurde nicht angelegt." + PConst.LINE_SEPARATORx2 +
-                        "Im Menü unter:" + PConst.LINE_SEPARATOR +
-                        "    ->Einstellungen->Aufzeichnen und Abspielen" + PConst.LINE_SEPARATORx2 +
-                        "ein Programm zum Aufzeichnen festlegen." + PConst.LINE_SEPARATORx3 +
-                        "Oder jetzt die Standardsets importieren.");
-        Text textContPlay = new Text(
-                "Ein Videoplayer zum Abspielen" + PConst.LINE_SEPARATOR +
-                        "wurde nicht angelegt." + PConst.LINE_SEPARATORx2 +
-                        "Im Menü unter:" + PConst.LINE_SEPARATOR +
-                        "    ->Einstellungen->Aufzeichnen und Abspielen" + PConst.LINE_SEPARATORx2 +
-                        "einen Videoplayer zum Abspielen festlegen." + PConst.LINE_SEPARATORx3 +
-                        "Oder jetzt die Standardsets importieren.");
+        final String txtAdd = "Im Menü Einstellungen unter" + PConst.LINE_SEPARATOR +
 
-        Text textContAbo = new Text(
-                "Ein Set von Programmen zum Aufzeichnen" + PConst.LINE_SEPARATOR +
-                        "der Abos wurde nicht angelegt." + PConst.LINE_SEPARATORx2 +
-                        "Im Menü unter:" + PConst.LINE_SEPARATOR +
-                        "    ->Einstellungen->Aufzeichnen und Abspielen" + PConst.LINE_SEPARATORx2 +
-                        "ein Programm zum Aufzeichnen von Abos festlegen." + PConst.LINE_SEPARATORx3 +
-                        "Oder jetzt die Standardsets importieren.");
+                "   ->Aufzeichnen und Abspielen" + PConst.LINE_SEPARATOR +
+
+                "die Programme zum Abspielen von Filmen und " + PConst.LINE_SEPARATOR +
+                "Aufzeichnen von Abos korrigieren." + PConst.LINE_SEPARATORx3 +
+
+                "Oder die Einstellungen zurücksetzen und" + PConst.LINE_SEPARATOR +
+                "die Standardsets wieder herstellen.";
+
+        VBox vBoxCont = new VBox();
+        vBoxCont.setSpacing(20);
+        vBoxCont.getStyleClass().add("dialog-only-border");
+        VBox.setVgrow(vBoxCont, Priority.ALWAYS);
+
+        final int prefRowCount = 14;
+        TextArea textArea = new TextArea();
+        textArea.setEditable(false);
+        textArea.setMaxHeight(Double.MAX_VALUE);
+        textArea.setPrefRowCount(prefRowCount);
+        VBox.setVgrow(textArea, Priority.ALWAYS);
+        vBoxCont.getChildren().addAll(textHeaderSave, textArea);
+
 
         switch (text) {
             case SAVE:
-                vBoxCont.getChildren().addAll(textHeaderSave, textContSave);
+                textArea.setText(
+                        "Es ist kein Set von Programmen zum" + PConst.LINE_SEPARATOR +
+                                "Aufzeichnen der Filme angelegt." + PConst.LINE_SEPARATORx2 +
+                                txtAdd);
                 break;
             case PLAY:
-                vBoxCont.getChildren().addAll(textHeaderPlay, textContPlay);
+                textArea.setText(
+                        "Es ist kein Videoplayer zum Abspielen" + PConst.LINE_SEPARATOR +
+                                "der Filme angelegt." + PConst.LINE_SEPARATORx2 +
+                                txtAdd);
                 break;
             case ABO:
-                vBoxCont.getChildren().addAll(textHeaderAbo, textContAbo);
+                textArea.setText(
+                        "Es ist kein Set von Programmen zum" + PConst.LINE_SEPARATOR +
+                                "Aufzeichnen der Abos angelegt." + PConst.LINE_SEPARATORx2 +
+                                txtAdd);
         }
 
-        VBox.setVgrow(vBoxCont, Priority.ALWAYS);
 
         HBox hBox = new HBox();
         hBox.setSpacing(10);

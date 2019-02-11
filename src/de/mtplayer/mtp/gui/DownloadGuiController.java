@@ -26,7 +26,7 @@ import de.mtplayer.mtp.controller.data.film.FilmTools;
 import de.mtplayer.mtp.gui.dialog.DownloadEditDialogController;
 import de.mtplayer.mtp.gui.mediaDialog.MediaDialogController;
 import de.mtplayer.mtp.gui.tools.Listener;
-import de.mtplayer.mtp.gui.tools.Table;
+import de.mtplayer.mtp.gui.tools.table.Table;
 import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.POpen;
@@ -320,10 +320,6 @@ public class DownloadGuiController extends AnchorPane {
                 }
             }
         });
-
-        progData.downloadList.downloadsChangedProperty().addListener((observable, oldValue, newValue) ->
-                Platform.runLater(() -> setFilter()));
-
         Listener.addListener(new Listener(Listener.EREIGNIS_BLACKLIST_GEAENDERT, DownloadGuiController.class.getSimpleName()) {
             @Override
             public void pingFx() {
@@ -334,6 +330,16 @@ public class DownloadGuiController extends AnchorPane {
                 }
             }
         });
+        Listener.addListener(new Listener(Listener.EREIGNIS_SETDATA_CHANGED, DownloadGuiController.class.getSimpleName()) {
+            @Override
+            public void pingFx() {
+                tableView.refresh();
+            }
+        });
+
+        progData.downloadList.downloadsChangedProperty().addListener((observable, oldValue, newValue) ->
+                Platform.runLater(() -> setFilter()));
+
         ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.getBooleanProperty().addListener((observable, oldValue, newValue) -> {
             if (ProgConfig.ABO_SEARCH_NOW.getBool()) {
                 Platform.runLater(() -> progData.worker.searchForAbosAndMaybeStart());

@@ -99,12 +99,16 @@ public class SetPaneController extends AnchorPane {
         AnchorPane.setTopAnchor(hBox, 10.0);
 
         createSetDataPane();
-        tableView.getSelectionModel().selectFirst();
+        selectTableFirst();
 
         PAccordion.initAccordionPane(accordion, selectedTab);
         setAccordion();
 
         splitPane.getDividers().get(0).positionProperty().bindBidirectional(split);
+    }
+
+    public void selectTableFirst() {
+        tableView.getSelectionModel().selectFirst();
     }
 
     private void setAccordion() {

@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.mtplayer.mtp.gui.tools;
+package de.mtplayer.mtp.gui.tools.table;
 
 import de.mtplayer.mLib.tools.CheckBoxCell;
 import de.mtplayer.mLib.tools.MDate;
@@ -164,7 +164,7 @@ public class TableDownload {
         programColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Download, Integer> setColumn = new TableColumn<>("Programmset");
-        setColumn.setCellValueFactory(new PropertyValueFactory<>("set"));
+        setColumn.setCellValueFactory(new PropertyValueFactory<>("setData"));
         setColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Download, String> urlColumn = new TableColumn<>("URL");

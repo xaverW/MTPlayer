@@ -19,7 +19,7 @@ package de.mtplayer.mtp.gui;
 
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.abo.Abo;
-import de.mtplayer.mtp.gui.tools.Table;
+import de.mtplayer.mtp.gui.tools.table.Table;
 import de.p2tools.p2Lib.tools.PException;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;

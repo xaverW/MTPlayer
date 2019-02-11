@@ -18,7 +18,7 @@ package de.mtplayer.mtp.gui;
 
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.download.Download;
-import de.mtplayer.mtp.gui.tools.Table;
+import de.mtplayer.mtp.gui.tools.table.Table;
 import javafx.scene.control.*;
 
 public class DownloadGuiContextMenu {

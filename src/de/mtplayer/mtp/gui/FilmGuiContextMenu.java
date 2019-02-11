@@ -20,7 +20,7 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.BlackData;
 import de.mtplayer.mtp.controller.data.SetDataList;
 import de.mtplayer.mtp.controller.data.film.Film;
-import de.mtplayer.mtp.gui.tools.Table;
+import de.mtplayer.mtp.gui.tools.table.Table;
 import de.p2tools.p2Lib.tools.PSystemUtils;
 import javafx.scene.control.*;
 

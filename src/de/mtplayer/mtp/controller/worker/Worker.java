@@ -96,11 +96,14 @@ public class Worker {
             return;
         }
 
+
         if (progData.setDataList.getSetDataForAbo() == null) {
             // SetData sind nicht eingerichtet
             Platform.runLater(() -> new NoSetDialogController(progData, NoSetDialogController.TEXT.ABO));
+            progData.maskerPane.switchOffMasker();
             return;
         }
+
 
         PDuration.counterStart("Worker.searchForAbosAndMaybeStart");
         progData.maskerPane.setMaskerVisible(true, false);
@@ -119,11 +122,11 @@ public class Worker {
                     progData.downloadList.startDownloads();
                 }
 
-                progData.maskerPane.switchOffMasker();
-                PDuration.counterStop("Worker.searchForAbosAndMaybeStart");
-
             } catch (Exception ex) {
                 PLog.errorLog(951241204, ex);
+            } finally {
+                progData.maskerPane.switchOffMasker();
+                PDuration.counterStop("Worker.searchForAbosAndMaybeStart");
             }
         });
 

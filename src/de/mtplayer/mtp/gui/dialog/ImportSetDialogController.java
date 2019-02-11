@@ -32,7 +32,10 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TitledPane;
-import javafx.scene.layout.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 public class ImportSetDialogController extends PDialog {
 
@@ -43,10 +46,13 @@ public class ImportSetDialogController extends PDialog {
     private boolean im = false;
     private StackPane stackPane;
     private ScrollPane pathPane, setPane;
+    private SetPaneController setPaneController;
+
 
     public ImportSetDialogController(ProgData progData) {
         super(ProgConfig.CONFIG_DIALOG_IMPORT_SET_SIZE.getStringProperty(),
                 "Set importieren", true);
+//        super("Set importieren", true);
 
         this.progData = progData;
 
@@ -66,13 +72,12 @@ public class ImportSetDialogController extends PDialog {
         btnOk.setOnAction(a -> close());
 
         final Button btnHelp = PButton.helpButton("Set zurücksetzen",
-                "\"Bestehende Sets durch die neuen ersetzen\"" +
+                "\"Bestehende Sets durch neue ersetzen\"" +
                         PConst.LINE_SEPARATORx2 +
                         "Damit werden alle Sets (auch eigene), die zum Abspielen" + PConst.LINE_SEPARATOR +
                         "und Aufzeichnen der Filme gebraucht werden, gelöscht." + PConst.LINE_SEPARATOR +
-                        "Anschließend werden die aktuellen Standardsets" + PConst.LINE_SEPARATOR +
-                        "eingerichtet." + PConst.LINE_SEPARATOR +
-                        "Es kann dann direkt damit weitergearbeitet werden.");
+                        "Anschließend werden die aktuellen Standardsets eingerichtet." + PConst.LINE_SEPARATOR +
+                        "Damit kann dann direkt weitergearbeitet werden.");
 
         btnImport.setOnAction(event -> {
             importSet();
@@ -106,10 +111,10 @@ public class ImportSetDialogController extends PDialog {
         setPane.setFitToHeight(true);
         setPane.setFitToWidth(true);
 
-        AnchorPane setP = new SetPaneController(PConst.primaryStage);
-        setP.setMaxWidth(Double.MAX_VALUE);
-        setP.setMaxHeight(Double.MAX_VALUE);
-        setPane.setContent(setP);
+        setPaneController = new SetPaneController(PConst.primaryStage);
+        setPaneController.setMaxWidth(Double.MAX_VALUE);
+        setPaneController.setMaxHeight(Double.MAX_VALUE);
+        setPane.setContent(setPaneController);
 
 
         stackPane.getChildren().addAll(pathPane, setPane);
@@ -136,9 +141,10 @@ public class ImportSetDialogController extends PDialog {
         if (SetsPrograms.addSetTemplate(ListePsetVorlagen.getStandarset(true /*replaceMuster*/))) {
             PAlert.showInfoAlert("Set", "Set importieren", "Sets wurden importiert!", false);
         } else {
-            PAlert.showErrorAlert("Set importieren", "Set wurde nicht importiert!");
+            PAlert.showErrorAlert("Set importieren", "Sets konnten nicht importiert werden!");
         }
 
         setPane.toFront();
+        setPaneController.selectTableFirst();
     }
 }

@@ -284,7 +284,6 @@ public final class Download extends DownloadProps {
 
         setInfoFile(setData.isInfoFile());
         setSubtitle(setData.isSubtitle());
-
         setSetDataId(setData.getId());
     }
 
