@@ -19,6 +19,7 @@ package de.mtplayer.mtp.gui.configDialog;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
+import de.mtplayer.mtp.controller.filmlist.LoadFactory;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.guiTools.PButton;
 import javafx.beans.property.IntegerProperty;
@@ -33,12 +34,12 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class LoadFilmsPane {
 
     private final Slider slDays = new Slider();
     private final Label lblDays = new Label("");
+    final Button btnClearall = new Button("wieder alle Sender laden");
     private final Stage stage;
     private final ProgData progData;
     StringProperty propChannel = ProgConfig.SYSTEM_LOAD_NOT_SENDER.getStringProperty();
@@ -78,14 +79,17 @@ public class LoadFilmsPane {
         tilePane.setHgap(10);
         tilePane.setVgap(10);
 
-        ArrayList aListChannel = new ArrayList(Arrays.asList(propChannel.getValue().split(",")));
+        ArrayList aListChannel = LoadFactory.getSenderListNotToLoad();
         ArrayList<CheckBox> aListCb = new ArrayList<>();
 
         for (String s : ProgConst.SENDER) {
             final CheckBox cb = new CheckBox(s);
             aListCb.add(cb);
             cb.setSelected(aListChannel.contains(s));
-            cb.setOnAction(a -> makePropSender(aListCb));
+            cb.setOnAction(a -> {
+                makePropSender(aListCb);
+                LoadFactory.checkAllSenderSelectedNotToLoad(stage);
+            });
 
             tilePane.getChildren().add(cb);
             TilePane.setAlignment(cb, Pos.CENTER_LEFT);
@@ -95,14 +99,20 @@ public class LoadFilmsPane {
         final Button btnHelpSender = PButton.helpButton(stage, "Filmliste laden",
                 HelpText.LOAD_FILMLIST_SENDER);
 
+        btnClearall.setOnAction(a -> {
+            aListCb.stream().forEach(checkBox -> checkBox.setSelected(false));
+            makePropSender(aListCb);
+        });
+        checkPropSender(aListCb);
+
         HBox hBoxSender1 = new HBox(10);
         hBoxSender1.setAlignment(Pos.CENTER_RIGHT);
         HBox.setHgrow(hBoxSender1, Priority.ALWAYS);
-        hBoxSender1.getChildren().add(btnHelpSender);
+        hBoxSender1.getChildren().addAll(btnClearall, btnHelpSender);
 
         HBox hBoxSender2 = new HBox(10);
         hBoxSender2.setAlignment(Pos.CENTER);
-        hBoxSender2.getChildren().addAll(new Label("diese Sender nicht laden"), hBoxSender1);
+        hBoxSender2.getChildren().addAll(new Label("diese Sender  _nicht_  laden"), hBoxSender1);
 
         vBox.getChildren().addAll(new Label(" "), hBoxSender2);
         vBox.getChildren().add(tilePane);
@@ -148,6 +158,18 @@ public class LoadFilmsPane {
         lblDays.setText(days == 0 ? "alles laden" : "nur Filme der letzten " + days + " Tage laden");
     }
 
+    private void checkPropSender(ArrayList<CheckBox> aListCb) {
+        boolean noneChecked = true;
+        for (CheckBox cb : aListCb) {
+            if (cb.isSelected()) {
+                noneChecked = false;
+                break;
+            }
+        }
+
+        btnClearall.setDisable(noneChecked);
+    }
+
     private void makePropSender(ArrayList<CheckBox> aListCb) {
         String str = "";
         for (CheckBox cb : aListCb) {
@@ -159,5 +181,7 @@ public class LoadFilmsPane {
             str = str.isEmpty() ? s : str + "," + s;
         }
         propChannel.setValue(str);
+        checkPropSender(aListCb);
     }
+
 }

@@ -124,6 +124,12 @@ public class LoadFilmlist {
 
     public void loadFilmlist(boolean alwaysLoadNew) {
         // damit wird die Filmliste geladen UND auch gleich im Konfig-Ordner gespeichert
+
+        if (LoadFactory.checkAllSenderSelectedNotToLoad(progData.primaryStage)) {
+            // alle Sender sind vom Laden ausgenommen
+            return;
+        }
+
         progData.maskerPane.setButtonVisible(true);
 
         if (!getPropLoadFilmlist()) {
@@ -181,6 +187,11 @@ public class LoadFilmlist {
      */
     public void loadFilmlistProgStart(boolean firstProgramStart) {
         // Start des Ladens, gibt keine Vortschrittsanzeige und keine Abbrechen
+
+        if (LoadFactory.checkAllSenderSelectedNotToLoad(progData.primaryStage)) {
+            // alle Sender sind vom Laden ausgenommen
+            return;
+        }
 
         setPropLoadFilmlist(true);
         PDuration.onlyPing("Programmstart Filmliste laden: start");

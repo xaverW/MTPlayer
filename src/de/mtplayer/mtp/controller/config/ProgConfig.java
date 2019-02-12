@@ -173,7 +173,6 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs CONFIG_DIALOG_ACCORDION = addNewKey("config_dialog-accordion", Boolean.TRUE.toString());
     public static MLConfigs CONFIG_DIALOG_SET_DIVIDER = addNewKey("config-dialog-set-divider", ProgConst.CONFIG_DIALOG_SET_DIVIDER);
     public static MLConfigs CONFIG_DIALOG_IMPORT_SET_SIZE = addNewKey("config-dialog-import-set-size", "800:700");
-//    public static MLConfigs CONFIG_DIALOG_IMPORT_SET_SIZE = addNewKey("config-dialog-import-set-size");
 
     // StartDialog
     public static MLConfigs START_DIALOG_DOWNLOAD_PATH = addNewKey("start-dialog-download-path", PSystemUtils.getStandardDownloadPath());

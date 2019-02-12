@@ -285,7 +285,7 @@ public class HelpText {
             "Neuladen der kompletten Filmliste.";
 
     public static final String LOAD_FILMLIST_SENDER = "Filme der markierten Sender " +
-            "werden beim Neuladen der Filmliste nicht geladen." +
+            "werden beim Neuladen der Filmliste  _nicht_  geladen." +
             PConst.LINE_SEPARATORx2 +
             "Auswirkung hat das erst nach dem Neustart des Programms oder dem " +
             "Neuladen der kompletten Filmliste.";

@@ -22,7 +22,6 @@ import com.fasterxml.jackson.core.JsonToken;
 import de.mtplayer.mLib.tools.InputStreamProgressMonitor;
 import de.mtplayer.mLib.tools.MLHttpClient;
 import de.mtplayer.mLib.tools.ProgressMonitorInputStream;
-import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
@@ -30,6 +29,7 @@ import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.mtplayer.mtp.controller.data.film.Filmlist;
 import de.mtplayer.mtp.controller.data.film.FilmlistXml;
+import de.mtplayer.mtp.controller.filmlist.LoadFactory;
 import de.p2tools.p2Lib.tools.PStringUtils;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -180,7 +180,7 @@ public class ReadFilmlist {
 
     private void readData(JsonParser jp, Filmlist filmlist) throws IOException {
         JsonToken jsonToken;
-        ArrayList listChannel = new ArrayList(Arrays.asList(ProgConfig.SYSTEM_LOAD_NOT_SENDER.getStringProperty().getValue().split(",")));
+        ArrayList listChannel = LoadFactory.getSenderListNotToLoad();
 
         if (jp.nextToken() != JsonToken.START_OBJECT) {
             throw new IllegalStateException("Expected data to start with an Object");
