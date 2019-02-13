@@ -111,7 +111,7 @@ public class TableAbo {
         datumColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         datumColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<Abo, String> psetColumn = new TableColumn<>("Set");
+        final TableColumn<Abo, String> psetColumn = new TableColumn<>("Programmset");
         psetColumn.setCellValueFactory(new PropertyValueFactory<>("setData"));
         psetColumn.getStyleClass().add("alignCenterLeft");
 

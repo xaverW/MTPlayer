@@ -41,7 +41,6 @@ public class Table {
     private int maxSpalten;
     private double[] breite;
     private boolean[] visAr;
-    private TableColumn[] tArray;
 
     private MLConfigs confWidth; //Spaltenbreite
     private MLConfigs confSort; //"Sortieren"  der Tabelle nach Spalte
@@ -90,6 +89,8 @@ public class Table {
 //                "Spalten ein- und ausgeblendet werden." + PConst.LINE_SEPARATOR +
 //                "Mit einem Klick auf den Titel einer Spalte" + PConst.LINE_SEPARATOR +
 //                "wird die Tabelle nach der Spalte sortiert."));
+
+        TableColumn[] tArray;
         switch (eTable) {
             case FILM:
                 tArray = new TableFilm(ProgData.getInstance()).initFilmColumn(table);
@@ -100,32 +101,46 @@ public class Table {
                 break;
 
             case ABO:
+            default:
                 tArray = TableAbo.initAboColumn(table);
                 break;
         }
-        String order = confOrder.get();
+
+        final String order = confOrder.get();
         String[] arOrder = order.split(",");
+
         if (confOrder.get().isEmpty() || arOrder.length != tArray.length) {
             // dann gibts keine Einstellungen oder die Anzahl der Spalten hat sich geändert
             for (TableColumn tc : tArray) {
                 table.getColumns().add(tc);
             }
+
         } else {
-            for (int i = 0; i < arOrder.length; ++i) {
-                String s = arOrder[i];
-                for (TableColumn tc : tArray) {
-                    if (s.equals(tc.getText())) {
-                        if (!table.getColumns().contains(tc)) {
-                            //aus Fehlern wird man klug :(
-                            table.getColumns().add(tc);
-                        }
-                    }
-                }
-            }
+            addColumn(arOrder, table, tArray);
         }
+
         table.getColumns().stream().forEach(c -> c.setSortable(true));
         table.getColumns().stream().forEach(c -> c.setVisible(true));
+    }
 
+    private void addColumn(String[] arOrder, TableView<Data> table, TableColumn[] tArray) {
+        for (String s : arOrder) {
+            for (TableColumn tc : tArray) {
+
+                if (s.equals(tc.getText()) && !table.getColumns().contains(tc)) {
+                    table.getColumns().add(tc);
+                }
+
+            }
+        }
+
+        // Spalten deren Name sich geändert hat, wurden nicht gefunden
+        // (beim Versionswechsel kann das vorkommen)
+        for (TableColumn tc : tArray) {
+            if (!table.getColumns().contains(tc)) {
+                table.getColumns().add(tc);
+            }
+        }
     }
 
     public void saveTable(TableView ta, TABLE eTable) {
