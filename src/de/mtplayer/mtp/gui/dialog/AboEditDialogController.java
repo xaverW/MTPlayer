@@ -39,7 +39,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
@@ -130,9 +129,11 @@ public class AboEditDialogController extends PDialogExtra {
         }
 
         if (lAbo.size() == 1) {
+            // entweder nur ein Abo
             lAbo.get(0).copyToMe(aboCopy);
 
         } else {
+            // oder nur die markierten Felder bei ALLEN Abos
             updateAboList();
         }
 
@@ -147,16 +148,22 @@ public class AboEditDialogController extends PDialogExtra {
     }
 
     private void updateAboList() {
-        for (final Abo abo : lAbo) {
+        for (int i = 0; i < cbxEditAll.length; ++i) {
 
-            for (int i = 0; i < cbxEditAll.length; ++i) {
-                if (cbxEditAll[i] == null || !cbxEditAll[i].isSelected()) {
-                    continue;
-                }
+            if (cbxEditAll[i] == null || !cbxEditAll[i].isSelected()) {
+                continue;
+            }
+
+            // dann wird das Feld bei allen Abos geändert
+            for (final Abo abo : lAbo) {
 
                 if (i == AboXml.ABO_MIN_DURATION) {
-                    // duration, dann min UND max
+                    // duration MIN dann AUCH max
                     abo.properties[AboXml.ABO_MAX_DURATION].setValue(aboCopy.properties[AboXml.ABO_MAX_DURATION].getValue());
+
+                } else if (i == AboXml.ABO_SET_DATA_ID) {
+                    // dann auch SetData
+                    abo.setSetData(aboCopy.getSetData());
                 }
 
                 abo.properties[i].setValue(aboCopy.properties[i].getValue());
@@ -196,11 +203,6 @@ public class AboEditDialogController extends PDialogExtra {
         }
 
         for (int i = 0; i < AboXml.MAX_ELEM; ++i) {
-
-            if (i == AboXml.ABO_NAME && lAbo.size() > 1) {
-                continue;
-            }
-
             initControl(i);
             addLabel(i, i + 1);
             addTextField(i, i + 1);
@@ -215,11 +217,11 @@ public class AboEditDialogController extends PDialogExtra {
 
     private void initControl(int i) {
         lbl[i] = new Label(AboXml.COLUMN_NAMES[i] + ":");
-        lbl[i].setMinHeight(Region.USE_COMPUTED_SIZE);
-        lbl[i].setMinWidth(Region.USE_COMPUTED_SIZE);
-        lbl[i].setPrefHeight(Region.USE_COMPUTED_SIZE);
-        lbl[i].setPrefWidth(Region.USE_COMPUTED_SIZE);
-        GridPane.setHgrow(lbl[i], Priority.NEVER);
+//        lbl[i].setMinHeight(Region.USE_COMPUTED_SIZE);
+//        lbl[i].setMinWidth(Region.USE_COMPUTED_SIZE);
+//        lbl[i].setPrefHeight(Region.USE_COMPUTED_SIZE);
+//        lbl[i].setPrefWidth(Region.USE_COMPUTED_SIZE);
+//        GridPane.setHgrow(lbl[i], Priority.NEVER);
 
         switch (i) {
             case AboXml.ABO_DESCRIPTION:
@@ -258,18 +260,18 @@ public class AboEditDialogController extends PDialogExtra {
 
             default:
                 txt[i] = new TextField("");
-                txt[i].setMinHeight(Region.USE_COMPUTED_SIZE);
-                txt[i].setMinWidth(Region.USE_COMPUTED_SIZE);
-                txt[i].setPrefHeight(Region.USE_COMPUTED_SIZE);
-                txt[i].setPrefWidth(Region.USE_COMPUTED_SIZE);
+//                txt[i].setMinHeight(Region.USE_COMPUTED_SIZE);
+//                txt[i].setMinWidth(Region.USE_COMPUTED_SIZE);
+//                txt[i].setPrefHeight(Region.USE_COMPUTED_SIZE);
+//                txt[i].setPrefWidth(Region.USE_COMPUTED_SIZE);
                 txt[i].setText(aboCopy.getStringOf(i));
-                GridPane.setHgrow(txt[i], Priority.ALWAYS);
+//                GridPane.setHgrow(txt[i], Priority.ALWAYS);
         }
 
         cbxEditAll[i] = new CheckBox();
         cbxEditAll[i].setSelected(false);
         cbxEditAll[i].getStyleClass().add("chk-edit-all");
-        GridPane.setHgrow(cbxEditAll[i], Priority.NEVER);
+//        GridPane.setHgrow(cbxEditAll[i], Priority.NEVER);
         GridPane.setHalignment(cbxEditAll[i], HPos.CENTER);
     }
 
@@ -379,7 +381,8 @@ public class AboEditDialogController extends PDialogExtra {
                     cboSetData.setMaxWidth(Double.MAX_VALUE);
                     cboSetData.getItems().addAll(progData.setDataList.getSetDataListAbo());
                     cboSetData.valueProperty().bindBidirectional(aboCopy.setDataProperty());
-                    cboSetData.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> cbxEditAll[i].setSelected(true));
+                    cboSetData.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
+                            cbxEditAll[i].setSelected(true));
                     this.gridPane.add(cboSetData, 1, grid);
                 }
                 break;
@@ -389,7 +392,8 @@ public class AboEditDialogController extends PDialogExtra {
                 cboChannel.setItems(progData.worker.getAllChannelList());
                 cboChannel.setEditable(true);
                 cboChannel.valueProperty().bindBidirectional(aboCopy.channelProperty());
-                cboChannel.valueProperty().addListener((observable, oldValue, newValue) -> cbxEditAll[i].setSelected(true));
+                cboChannel.valueProperty().addListener((observable, oldValue, newValue) ->
+                        cbxEditAll[i].setSelected(true));
                 this.gridPane.add(cboChannel, 1, grid);
                 break;
 
@@ -402,7 +406,8 @@ public class AboEditDialogController extends PDialogExtra {
                 cboDestination.setItems(FXCollections.observableArrayList(path));
                 cboDestination.setEditable(true);
                 cboDestination.valueProperty().bindBidirectional(aboCopy.destinationProperty());
-                cboDestination.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> cbxEditAll[i].setSelected(true));
+                cboDestination.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
+                        cbxEditAll[i].setSelected(true));
                 this.gridPane.add(cboDestination, 1, grid);
                 break;
 
@@ -423,8 +428,10 @@ public class AboEditDialogController extends PDialogExtra {
     private void initDur() {
         pRangeBoxTime.minValueProperty().bindBidirectional(aboCopy.minDurationProperty());
         pRangeBoxTime.maxValueProperty().bindBidirectional(aboCopy.maxDurationProperty());
-        pRangeBoxTime.maxValueProperty().addListener((observable, oldValue, newValue) -> cbxEditAll[AboXml.ABO_MIN_DURATION].setSelected(true));
-        pRangeBoxTime.minValueProperty().addListener((observable, oldValue, newValue) -> cbxEditAll[AboXml.ABO_MIN_DURATION].setSelected(true));
+        pRangeBoxTime.maxValueProperty().addListener((observable, oldValue, newValue) ->
+                cbxEditAll[AboXml.ABO_MIN_DURATION].setSelected(true));
+        pRangeBoxTime.minValueProperty().addListener((observable, oldValue, newValue) ->
+                cbxEditAll[AboXml.ABO_MIN_DURATION].setSelected(true));
         pRangeBoxTime.setValuePrefix("");
     }
 
@@ -451,6 +458,7 @@ public class AboEditDialogController extends PDialogExtra {
 
         switch (i) {
             case AboXml.ABO_ON:
+            case AboXml.ABO_NAME:
             case AboXml.ABO_DESCRIPTION:
             case AboXml.ABO_RESOLUTION:
             case AboXml.ABO_CHANNEL:
