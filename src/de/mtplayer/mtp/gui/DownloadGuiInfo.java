@@ -59,7 +59,7 @@ public class DownloadGuiInfo {
     }
 
     private void setInfoText() {
-        final int[] starts = progData.downloadList.getDownloadListInfoAll().downloadStarts;
+        final int[] starts = progData.downloadList.getDownloadListInfoAll().downloadInfos;
         Text text1, text2;
         gridPane.getChildren().clear();
         row = 0;
@@ -128,7 +128,7 @@ public class DownloadGuiInfo {
         String textLinks;
         // Text links: Zeilen Tabelle
         // nicht gestarted, laufen, fertig OK, fertig fehler
-        final int[] starts = progData.downloadList.getDownloadListInfoAll().downloadStarts;
+        final int[] starts = progData.downloadList.getDownloadListInfoAll().downloadInfos;
 
         VBox vBox = new VBox(2);
         Text text1 = new Text("Downloads: " + starts[0]);

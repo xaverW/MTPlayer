@@ -45,24 +45,24 @@ public class DownloadListStarts {
         final int[] ret = new int[]{0, 0, 0, 0, 0, 0, 0};
         for (final Download download : downloadList) {
             if (!download.getPlacedBack()) {
-                ++ret[0];
+                ++ret[DownloadFactory.INFO.AMOUNT.getI()];
             }
             if (download.isAbo()) {
-                ++ret[1];
+                ++ret[DownloadFactory.INFO.AMOUNT_ABO.getI()];
             } else {
-                ++ret[2];
+                ++ret[DownloadFactory.INFO.AMOUNT_DOWNLOAD.getI()];
             }
             if (download.isStarted() || download.isFinishedOrError()) {
                 // final int quelle = download.getSource();
                 if (download.getSource().equals(DownloadConstants.SRC_ABO) || download.getSource().equals(DownloadConstants.SRC_DOWNLOAD)) {
                     if (download.isStateStartedWaiting()) {
-                        ++ret[3];
+                        ++ret[DownloadFactory.INFO.NOT_STARTED.getI()];
                     } else if (download.isStateStartedRun()) {
-                        ++ret[4];
+                        ++ret[DownloadFactory.INFO.LOADING.getI()];
                     } else if (download.isStateFinished()) {
-                        ++ret[5];
+                        ++ret[DownloadFactory.INFO.FINISHED_OK.getI()];
                     } else if (download.isStateError()) {
-                        ++ret[6];
+                        ++ret[DownloadFactory.INFO.FINISHED_NOT_OK.getI()];
                     }
                 }
             }

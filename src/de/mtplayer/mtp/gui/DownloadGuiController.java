@@ -118,7 +118,7 @@ public class DownloadGuiController extends AnchorPane {
         setFilm();
     }
 
-    public int getDownloadCount() {
+    public int getDownloadsShown() {
         return tableView.getItems().size();
     }
 

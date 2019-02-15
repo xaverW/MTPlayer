@@ -43,8 +43,7 @@ public class DownloadListInfoAll {
     // Prozent fertig (alle)
     public int percent = -1;
 
-    // Anzahl, Anz-Abo, Anz-Down, nicht gestarted, laufen, fertig OK, fertig fehler
-    public int[] downloadStarts = new int[]{0, 0, 0, 0, 0, 0, 0};
+    public int[] downloadInfos = new int[]{0, 0, 0, 0, 0, 0, 0};
 
     private LinkedList<Download> activeDownloads; // Liste gestarteter Downloads
 
@@ -100,7 +99,7 @@ public class DownloadListInfoAll {
     synchronized void makeDownloadInfo() {
         clean();
 
-        downloadStarts = downloadList.getStarts();
+        downloadInfos = downloadList.getStarts();
 
         activeDownloads = downloadList.getListOfStartsNotFinished(DownloadConstants.ALL);
         for (final Download download : activeDownloads) {

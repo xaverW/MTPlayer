@@ -19,6 +19,7 @@ package de.mtplayer.mtp.gui;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.abo.Abo;
 import de.mtplayer.mtp.controller.data.download.DownloadConstants;
+import de.mtplayer.mtp.controller.data.download.DownloadFactory;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.mtplayer.mtp.gui.tools.Listener;
@@ -27,48 +28,39 @@ import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 
 import java.text.NumberFormat;
 import java.util.Locale;
 
 public class StatusBarController extends AnchorPane {
 
-    StackPane stackPane = new StackPane();
+    private final StackPane stackPane = new StackPane();
 
     //Film
-    Label lblSelFilm = new Label();
-    Label lblLeftFilm = new Label();
-    Label lblRightFilm = new Label();
+    private final Label lblSelFilm = new Label();
+    private final Label lblLeftFilm = new Label();
+    private final Label lblRightFilm = new Label();
 
     //Download
-    Label lblSelDownload = new Label();
-    Label lblLeftDownload = new Label();
-    Label lblRightDownload = new Label();
+    private final Label lblSelDownload = new Label();
+    private final Label lblLeftDownload = new Label();
+    private final Label lblRightDownload = new Label();
 
     //Abo
-    Label lblSelAbo = new Label();
-    Label lblLeftAbo = new Label();
-    Label lblRightAbo = new Label();
+    private final Label lblSelAbo = new Label();
+    private final Label lblLeftAbo = new Label();
+    private final Label lblRightAbo = new Label();
 
-    //nonePane
-    Label lblLeftNone = new Label();
-    Label lblRightNone = new Label();
+    private final Pane nonePane;
+    private final Pane filmPane;
+    private final Pane downloadPane;
+    private final Pane aboPane;
 
-    AnchorPane nonePane = new AnchorPane();
-    AnchorPane filmPane = new AnchorPane();
-    AnchorPane downloadPane = new AnchorPane();
-    AnchorPane aboPane = new AnchorPane();
     private final NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.GERMANY);
 
 
-    public enum StatusbarIndex {
-
-        NONE, FILM, DOWNLOAD, ABO
-    }
+    public enum StatusbarIndex {NONE, FILM, DOWNLOAD, ABO}
 
     private StatusbarIndex statusbarIndex = StatusbarIndex.NONE;
     private boolean loadList = false;
@@ -86,47 +78,26 @@ public class StatusBarController extends AnchorPane {
         AnchorPane.setRightAnchor(stackPane, 0.0);
         AnchorPane.setTopAnchor(stackPane, 0.0);
 
-
-        HBox hBox = getHbox();
-        lblLeftNone.setMaxWidth(Double.MAX_VALUE);
-        HBox.setHgrow(lblLeftNone, Priority.ALWAYS);
-        hBox.getChildren().addAll(lblLeftNone, lblRightNone);
-        nonePane.getChildren().add(hBox);
-        nonePane.setStyle("-fx-background-color: -fx-background ;");
-
-        hBox = getHbox();
-        lblLeftFilm.setMaxWidth(Double.MAX_VALUE);
-        HBox.setHgrow(lblLeftFilm, Priority.ALWAYS);
-        hBox.getChildren().addAll(lblSelFilm, lblLeftFilm, lblRightFilm);
-        filmPane.getChildren().add(hBox);
-        filmPane.setStyle("-fx-background-color: -fx-background ;");
-
-        hBox = getHbox();
-        lblLeftDownload.setMaxWidth(Double.MAX_VALUE);
-        HBox.setHgrow(lblLeftDownload, Priority.ALWAYS);
-        hBox.getChildren().addAll(lblSelDownload, lblLeftDownload, lblRightDownload);
-        downloadPane.getChildren().add(hBox);
-        downloadPane.setStyle("-fx-background-color: -fx-background ;");
-
-        hBox = getHbox();
-        lblLeftAbo.setMaxWidth(Double.MAX_VALUE);
-        HBox.setHgrow(lblLeftAbo, Priority.ALWAYS);
-        hBox.getChildren().addAll(lblSelAbo, lblLeftAbo, lblRightAbo);
-        aboPane.getChildren().add(hBox);
-        aboPane.setStyle("-fx-background-color: -fx-background ;");
+        nonePane = new HBox();
+        filmPane = getHbox(lblSelFilm, lblLeftFilm, lblRightFilm);
+        downloadPane = getHbox(lblSelDownload, lblLeftDownload, lblRightDownload);
+        aboPane = getHbox(lblSelAbo, lblLeftAbo, lblRightAbo);
 
         make();
     }
 
-    private HBox getHbox() {
+    private HBox getHbox(Label lblSel, Label lblLeft, Label lblRight) {
         HBox hBox = new HBox();
         hBox.setPadding(new Insets(2, 5, 2, 5));
         hBox.setSpacing(10);
         hBox.setAlignment(Pos.CENTER_RIGHT);
-        AnchorPane.setLeftAnchor(hBox, 0.0);
-        AnchorPane.setBottomAnchor(hBox, 0.0);
-        AnchorPane.setRightAnchor(hBox, 0.0);
-        AnchorPane.setTopAnchor(hBox, 0.0);
+
+        lblLeft.setMaxWidth(Double.MAX_VALUE);
+        HBox.setHgrow(lblLeft, Priority.ALWAYS);
+        hBox.getChildren().addAll(lblSel, lblLeft, lblRight);
+        hBox.setStyle("-fx-background-color: -fx-background ;");
+        lblSel.getStyleClass().add("lblSelectedLines");
+
         return hBox;
     }
 
@@ -135,9 +106,9 @@ public class StatusBarController extends AnchorPane {
         stackPane.getChildren().addAll(nonePane, filmPane, downloadPane, aboPane);
         nonePane.toFront();
 
-        lblSelFilm.getStyleClass().add("lblSelectedLines");
-        lblSelDownload.getStyleClass().add("lblSelectedLines");
-        lblSelAbo.getStyleClass().add("lblSelectedLines");
+//        lblSelFilm.getStyleClass().add("lblSelectedLines");
+//        lblSelDownload.getStyleClass().add("lblSelectedLines");
+//        lblSelAbo.getStyleClass().add("lblSelectedLines");
 
         progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
             @Override
@@ -168,10 +139,6 @@ public class StatusBarController extends AnchorPane {
 
     public void setStatusbarIndex(StatusbarIndex statusbarIndex) {
         this.statusbarIndex = statusbarIndex;
-        if (loadList) {
-            nonePane.toFront();
-            return;
-        }
 
         switch (statusbarIndex) {
             case FILM:
@@ -192,16 +159,10 @@ public class StatusBarController extends AnchorPane {
             case NONE:
             default:
                 nonePane.toFront();
-                setTextNone();
-                setTextForRightDisplay();
                 break;
         }
     }
 
-    private void setTextNone() {
-        final int anzAll = progData.filmlist.size();
-        lblLeftNone.setText("Anzahl Filme: " + anzAll);
-    }
 
     private void setInfoFilm() {
         String textLinks;
@@ -247,93 +208,6 @@ public class StatusBarController extends AnchorPane {
         lblSelDownload.setText(selCount > 0 ? selCount + "" : " ");
     }
 
-    private String getInfoTextDownloads(boolean downloadInfo) {
-        String textLinks;
-        // Text links: Zeilen Tabelle
-        // nicht gestarted, laufen, fertig OK, fertig fehler
-        final int[] starts = progData.downloadList.getDownloadListInfoAll().downloadStarts;
-
-        final int sumDownloadList = progData.downloadList.size();
-        final int sumDownloadsShown = progData.downloadGuiController.getDownloadCount();
-
-        String gesamtStr = numberFormat.format(sumDownloadList);
-        String anzListeStr = numberFormat.format(sumDownloadsShown);
-        final int diff = sumDownloadList - starts[0];
-
-        boolean printDownloadStatus = false;
-        for (int ii = 1; ii < starts.length; ++ii) {
-            if (starts[ii] > 0) {
-                printDownloadStatus = true;
-                break;
-            }
-        }
-
-        // Anzahl der Downloads
-        if (sumDownloadsShown == 1) {
-            textLinks = "1 Download";
-        } else {
-            textLinks = anzListeStr + " Downloads";
-        }
-        if (downloadInfo && sumDownloadList != sumDownloadsShown) {
-            textLinks += " (Insgesamt: " + gesamtStr;
-            if (diff >= 1) {
-                textLinks += ", zurückgestellt: " + diff;
-            }
-            textLinks += ")";
-        }
-
-        if (downloadInfo) {
-            textLinks += SEPARATOR;
-            if (starts[1] == 1) {
-                textLinks += "1 Abo, ";
-            } else {
-                textLinks += "" + starts[1] + " Abos, ";
-            }
-            if (starts[2] == 1) {
-                textLinks += "1 Download";
-            } else {
-                textLinks += starts[2] + " Downloads";
-            }
-            textLinks += SEPARATOR;
-        } else if (printDownloadStatus) {
-            textLinks += ": ";
-        }
-
-        if (printDownloadStatus) {
-            if (starts[4] == 1) {
-                textLinks += "1 läuft";
-            } else {
-                textLinks += starts[4] + " laufen";
-            }
-
-            if (starts[4] > 0) {
-                textLinks += " (" + progData.downloadList.getDownloadListInfoAll().bandwidthStr + ')';
-            }
-
-            if (starts[3] == 1) {
-                textLinks += ", 1 wartet";
-            } else {
-                textLinks += ", " + starts[3] + " warten";
-            }
-            if (starts[5] > 0) {
-                if (starts[5] == 1) {
-                    textLinks += ", 1 fertig";
-                } else {
-                    textLinks += ", " + starts[5] + " fertig";
-                }
-            }
-            if (starts[6] > 0) {
-                if (starts[6] == 1) {
-                    textLinks += ", 1 fehlerhaft";
-                } else {
-                    textLinks += ", " + starts[6] + " fehlerhaft";
-                }
-            }
-        }
-
-        return textLinks;
-    }
-
     private void setInfoAbo() {
         String textLinks;
         int countOn = 0;
@@ -373,6 +247,122 @@ public class StatusBarController extends AnchorPane {
 
     }
 
+    private String getInfoTextDownloads(boolean showMoreInfos) {
+        String textLinks;
+        // Text links: Zeilen Tabelle
+        // nicht gestarted, laufen, fertig OK, fertig fehler
+        final int[] downloadInfos = progData.downloadList.getDownloadListInfoAll().downloadInfos;
+
+        final int sumDownloadList = progData.downloadList.size();
+        final int sumDownloadsShown = progData.downloadGuiController.getDownloadsShown();
+
+        String sumDownloadListStr = numberFormat.format(sumDownloadList);
+        String sumDownloadsShownStr = numberFormat.format(sumDownloadsShown);
+        final int diff = sumDownloadList - downloadInfos[DownloadFactory.INFO.AMOUNT.getI()];
+
+        boolean printDownloadStatus = false;
+        for (int ii = 1; ii < downloadInfos.length; ++ii) {
+            // nur wenn ein Download läuft, wartet, ..
+            if (downloadInfos[ii] > 0) {
+                printDownloadStatus = true;
+                break;
+            }
+        }
+
+        // Anzahl der Downloads
+        if (sumDownloadsShown == 1) {
+            textLinks = "1 Download";
+        } else {
+            textLinks = sumDownloadsShownStr + " Downloads";
+        }
+
+        // weitere Infos anzeigen, wenn gewünscht
+        if (showMoreInfos && sumDownloadList != sumDownloadsShown) {
+            textLinks += " (Insgesamt: " + sumDownloadListStr;
+            if (diff >= 1) {
+                textLinks += ", zurückgestellt: " + numberFormat.format(diff);
+            }
+            textLinks += ")";
+        }
+
+        if (!showMoreInfos) {
+            // Filmtab
+            textLinks += ": ";
+
+        } else {
+            if (downloadInfos[DownloadFactory.INFO.AMOUNT_ABO.getI()] > 0
+                    && downloadInfos[DownloadFactory.INFO.AMOUNT_DOWNLOAD.getI()] == 0) {
+                // nur Abos
+                textLinks += SEPARATOR;
+                textLinks += "nur Abos";
+                textLinks += SEPARATOR;
+
+            } else if (downloadInfos[DownloadFactory.INFO.AMOUNT_ABO.getI()] == 0 &&
+                    downloadInfos[DownloadFactory.INFO.AMOUNT_DOWNLOAD.getI()] > 0) {
+                // keine Abos
+                textLinks += SEPARATOR;
+                textLinks += "nur direkte Downloads";
+                textLinks += SEPARATOR;
+
+            } else if (downloadInfos[DownloadFactory.INFO.AMOUNT_ABO.getI()] > 0
+                    && downloadInfos[DownloadFactory.INFO.AMOUNT_DOWNLOAD.getI()] > 0) {
+
+                textLinks += SEPARATOR;
+
+                // Abos
+                if (downloadInfos[DownloadFactory.INFO.AMOUNT_ABO.getI()] == 1) {
+                    textLinks += " 1 Abo, ";
+                } else {
+                    textLinks += numberFormat.format(downloadInfos[DownloadFactory.INFO.AMOUNT_ABO.getI()]) + " Abos, ";
+                }
+
+                // Downloads
+                if (downloadInfos[DownloadFactory.INFO.AMOUNT_DOWNLOAD.getI()] == 1) {
+                    textLinks += "1 Download";
+                } else if (downloadInfos[DownloadFactory.INFO.AMOUNT_DOWNLOAD.getI()] > 1) {
+                    textLinks += numberFormat.format(downloadInfos[DownloadFactory.INFO.AMOUNT_DOWNLOAD.getI()]) + " Downloads";
+                }
+
+                textLinks += SEPARATOR;
+            }
+
+        }
+
+        if (printDownloadStatus) {
+            if (downloadInfos[DownloadFactory.INFO.LOADING.getI()] == 1) {
+                textLinks += "1 läuft";
+            } else {
+                textLinks += downloadInfos[DownloadFactory.INFO.LOADING.getI()] + " laufen";
+            }
+
+            if (downloadInfos[DownloadFactory.INFO.LOADING.getI()] > 0) {
+                textLinks += " (" + progData.downloadList.getDownloadListInfoAll().bandwidthStr + ')';
+            }
+
+            if (downloadInfos[DownloadFactory.INFO.NOT_STARTED.getI()] == 1) {
+                textLinks += ", 1 wartet";
+            } else {
+                textLinks += ", " + numberFormat.format(downloadInfos[DownloadFactory.INFO.NOT_STARTED.getI()]) + " warten";
+            }
+            if (downloadInfos[DownloadFactory.INFO.FINISHED_OK.getI()] > 0) {
+                if (downloadInfos[DownloadFactory.INFO.FINISHED_OK.getI()] == 1) {
+                    textLinks += ", 1 fertig";
+                } else {
+                    textLinks += ", " + numberFormat.format(downloadInfos[DownloadFactory.INFO.FINISHED_OK.getI()]) + " fertig";
+                }
+            }
+            if (downloadInfos[DownloadFactory.INFO.FINISHED_NOT_OK.getI()] > 0) {
+                if (downloadInfos[DownloadFactory.INFO.FINISHED_NOT_OK.getI()] == 1) {
+                    textLinks += ", 1 fehlerhaft";
+                } else {
+                    textLinks += ", " + numberFormat.format(downloadInfos[DownloadFactory.INFO.FINISHED_NOT_OK.getI()]) + " fehlerhaft";
+                }
+            }
+        }
+
+        return textLinks;
+    }
+
     private void setTextForRightDisplay() {
         // Text rechts: alter/neuladenIn anzeigen
         String strText = "Filmliste erstellt: ";
@@ -402,7 +392,6 @@ public class StatusBarController extends AnchorPane {
         lblRightFilm.setText(strText);
         lblRightDownload.setText(strText);
         lblRightAbo.setText(strText);
-        lblRightNone.setText(strText);
     }
 
 
