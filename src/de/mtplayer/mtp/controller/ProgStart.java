@@ -25,10 +25,10 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
-import de.mtplayer.mtp.res.GetIcon;
 import de.mtplayer.mtp.tools.update.SearchProgramUpdate;
 import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.alert.PAlert;
+import de.p2tools.p2Lib.icon.GetIcon;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.LogMessage;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -59,13 +59,7 @@ public class ProgStart {
      * @param firstProgramStart
      */
     public void doWorkAfterGui(boolean firstProgramStart) {
-        final String P2_ICON_32 = "P2_32.png";
-        final String P2_ICON_PATH = "/de/mtplayer/mtp/res/";
-
-        final int ICON_WIDTH = 58;
-        final int ICON_HEIGHT = 58;
-        progData.primaryStage.getIcons().add(GetIcon.getImage(P2_ICON_32, P2_ICON_PATH, ICON_WIDTH, ICON_HEIGHT));
-
+        GetIcon.addWindowP2Icon(progData.primaryStage);
         startMsg();
         setOrgTitle();
 

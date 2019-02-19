@@ -21,11 +21,13 @@ import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.p2tools.p2Lib.dialog.PDialog;
+import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.*;
@@ -38,8 +40,10 @@ import javafx.scene.text.Text;
  */
 public class FilmInfoDialogController extends PDialog {
 
+    private final ScrollPane scrollPane = new ScrollPane();
     private final Text[] textTitle = new Text[FilmXml.MAX_ELEM];
-    private final Text[] textCont = new Text[FilmXml.MAX_ELEM];
+    private final Label[] lblCont = new Label[FilmXml.MAX_ELEM];
+    private final TextArea textArea = new TextArea();
 
     private final GridPane gridPane = new GridPane();
     private final Button btnOk = new Button("Ok");
@@ -51,22 +55,91 @@ public class FilmInfoDialogController extends PDialog {
     private final HBox hBoxUrl = new HBox();
     private final HBox hBoxWebsite = new HBox();
 
+    private final ImageView ivHD = new ImageView();
+    private final ImageView ivUT = new ImageView();
+    private final ImageView ivNew = new ImageView();
+
+    private final PHyperlink pHyperlinkUrl = new PHyperlink("",
+            ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
+
+    private final PHyperlink pHyperlinkWebsite = new PHyperlink("",
+            ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
 
     public FilmInfoDialogController() {
         super(null, ProgConfig.SYSTEM_SIZE_DIALOG_FILMINFO.getStringProperty(),
                 "Filminfos", false);
 
-        initDialog();
-        tilePaneOk.getChildren().addAll(btnOk);
         init(vBoxDialog);
     }
 
+
+    public void showFilmInfo() {
+        showDialog();
+    }
+
+
+    public void setFilm(Film film) {
+        Platform.runLater(() -> {
+
+            for (int i = 0; i < FilmXml.MAX_ELEM; ++i) {
+                if (film == null) {
+                    lblCont[i].setText("");
+                    textArea.setText("");
+                    ivHD.setImage(null);
+                    ivUT.setImage(null);
+                    ivNew.setImage(null);
+                    pHyperlinkUrl.setUrl("");
+                    pHyperlinkWebsite.setUrl("");
+                } else {
+                    switch (i) {
+                        case FilmXml.FILM_NR:
+                            lblCont[i].setText(film.getNr() + "");
+                            break;
+                        case FilmXml.FILM_URL:
+                            pHyperlinkUrl.setUrl(film.arr[FilmXml.FILM_URL]);
+                            break;
+                        case FilmXml.FILM_WEBSITE:
+                            pHyperlinkWebsite.setUrl(film.arr[FilmXml.FILM_WEBSITE]);
+                            break;
+                        case FilmXml.FILM_DESCRIPTION:
+                            textArea.setText(film.arr[i]);
+                            break;
+                        case FilmXml.FILM_HD:
+                            if (film.isHd()) {
+                                ivHD.setImage(new ProgIcons().ICON_DIALOG_EIN_SW);
+                            } else {
+                                ivHD.setImage(null);
+                            }
+                            break;
+                        case FilmXml.FILM_UT:
+                            if (film.isUt()) {
+                                ivUT.setImage(new ProgIcons().ICON_DIALOG_EIN_SW);
+                            } else {
+                                ivUT.setImage(null);
+                            }
+                            break;
+                        case FilmXml.FILM_NEW:
+                            if (film.isNewFilm()) {
+                                ivNew.setImage(new ProgIcons().ICON_DIALOG_EIN_SW);
+                            } else {
+                                ivNew.setImage(null);
+                            }
+                            break;
+
+                        default:
+                            lblCont[i].setText(film.arr[i]);
+                    }
+                }
+            }
+        });
+    }
+
     private void initDialog() {
+        tilePaneOk.getChildren().addAll(btnOk);
+
         vBoxDialog.setSpacing(10);
         vBoxDialog.setPadding(new Insets(10));
 
-
-        ScrollPane scrollPane = new ScrollPane();
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
         scrollPane.setContent(vBoxCont);
@@ -83,58 +156,31 @@ public class FilmInfoDialogController extends PDialog {
         vBoxDialog.getChildren().addAll(vBox, tilePaneOk);
     }
 
-
-    public void showFilmInfo() {
-        showDialog();
-    }
-
-
-    public void setFilm(Film film) {
-        Platform.runLater(() -> {
-
-            hBoxUrl.getChildren().clear();
-            hBoxWebsite.getChildren().clear();
-            for (int i = 0; i < FilmXml.MAX_ELEM; ++i) {
-                if (film == null) {
-                    textCont[i].setText("");
-                } else {
-                    switch (i) {
-                        case FilmXml.FILM_NR:
-                            textCont[i].setText(film.getNr() + "");
-                            break;
-                        case FilmXml.FILM_URL:
-                            hBoxUrl.getChildren().add(new PHyperlink(film.arr[FilmXml.FILM_URL],
-                                    ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN));
-                            break;
-                        case FilmXml.FILM_WEBSITE:
-                            hBoxWebsite.getChildren().add(new PHyperlink(film.arr[FilmXml.FILM_WEBSITE],
-                                    ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN));
-                            break;
-                        default:
-                            textCont[i].setText(film.arr[i]);
-                    }
-                }
-            }
-        });
-    }
-
     @Override
     public void make() {
+        initDialog();
+
         btnOk.setOnAction(a -> close());
         vBoxCont.getChildren().add(gridPane);
 
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
+        gridPane.setHgap(5);
+        gridPane.setVgap(5);
         gridPane.setMinWidth(Control.USE_PREF_SIZE);
         gridPane.setMaxWidth(Double.MAX_VALUE);
         gridPane.setPadding(new Insets(10, 10, 10, 10));
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcComputedSizeAndHgrow());
 
+
+        final int FREE = 190;
         int row = 0;
         for (int i = 0; i < FilmXml.MAX_ELEM; ++i) {
 
-            textTitle[i] = new Text(FilmXml.COLUMN_NAMES[i]);
+            textTitle[i] = new Text(FilmXml.COLUMN_NAMES[i] + ":");
             textTitle[i].setFont(Font.font(null, FontWeight.BOLD, -1));
-            textCont[i] = new Text("");
+            lblCont[i] = new Label("");
+            lblCont[i].setWrapText(true);
+            lblCont[i].maxWidthProperty().bind(vBoxDialog.widthProperty().subtract(FREE));
 
             switch (i) {
                 case FilmXml.FILM_DATE_LONG:
@@ -148,31 +194,60 @@ public class FilmInfoDialogController extends PDialog {
                 case FilmXml.FILM_URL_RTMP_HD:
                 case FilmXml.FILM_URL_RTMP_SMALL:
                 case FilmXml.FILM_URL_SUBTITLE:
-                case FilmXml.FILM_NEW:
                     // bis hier nicht anzeigen
                     break;
+
+
+                case FilmXml.FILM_HD:
+                    gridPane.add(textTitle[i], 0, row);
+                    gridPane.add(ivHD, 1, row++);
+                    break;
+                case FilmXml.FILM_UT:
+                    gridPane.add(textTitle[i], 0, row);
+                    gridPane.add(ivUT, 1, row++);
+                    break;
+                case FilmXml.FILM_NEW:
+                    gridPane.add(textTitle[i], 0, row);
+                    gridPane.add(ivNew, 1, row++);
+                    break;
+
                 case FilmXml.FILM_URL:
+                    pHyperlinkUrl.setWrapText(true);
+                    hBoxUrl.getChildren().add(pHyperlinkUrl);
+                    hBoxUrl.maxWidthProperty().bind(vBoxDialog.widthProperty().subtract(FREE));
+
                     gridPane.add(textTitle[i], 0, row);
                     gridPane.add(hBoxUrl, 1, row++);
                     break;
                 case FilmXml.FILM_WEBSITE:
+                    pHyperlinkWebsite.setWrapText(true);
+                    hBoxWebsite.getChildren().add(pHyperlinkWebsite);
+                    hBoxWebsite.maxWidthProperty().bind(vBoxDialog.widthProperty().subtract(FREE));
+
                     gridPane.add(textTitle[i], 0, row);
                     gridPane.add(hBoxWebsite, 1, row++);
                     break;
+
+                case FilmXml.FILM_DESCRIPTION:
+                    textArea.setPrefRowCount(6);
+                    textArea.setWrapText(true);
+                    textArea.setEditable(false);
+                    textArea.maxWidthProperty().bind(vBoxDialog.widthProperty().subtract(FREE));
+
+                    gridPane.add(textTitle[i], 0, row);
+                    gridPane.add(textArea, 1, row++);
+                    break;
+
                 default:
                     gridPane.add(textTitle[i], 0, row);
-
-                    HBox hBox = new HBox();
-                    hBox.getChildren().add(textCont[i]);
-                    GridPane.setHgrow(textCont[i], Priority.ALWAYS);
-                    textCont[i].wrappingWidthProperty().bind(vBoxDialog.widthProperty().subtract(250));
-                    gridPane.add(hBox, 1, row++);
+                    gridPane.add(lblCont[i], 1, row++);
 
                     final int ii = i;
-                    textCont[i].setOnContextMenuRequested(event -> getMenu(textCont[ii].getText()).show(textCont[ii], event.getScreenX(), event.getScreenY()));
-
+                    lblCont[i].setOnContextMenuRequested(event ->
+                            getMenu(lblCont[ii].getText()).show(lblCont[ii], event.getScreenX(), event.getScreenY()));
             }
         }
+
     }
 
     private ContextMenu getMenu(String url) {
