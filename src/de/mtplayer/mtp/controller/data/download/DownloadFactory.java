@@ -17,6 +17,16 @@
 
 package de.mtplayer.mtp.controller.data.download;
 
+import de.mtplayer.mtp.gui.dialog.DeleteFilmFileDialogController;
+import de.mtplayer.mtp.gui.tools.MTInfoFile;
+import de.mtplayer.mtp.gui.tools.MTSubtitle;
+import de.p2tools.p2Lib.PConst;
+import de.p2tools.p2Lib.alert.PAlert;
+import de.p2tools.p2Lib.tools.log.PLog;
+
+import java.io.File;
+import java.nio.file.Path;
+
 public class DownloadFactory {
 
     private DownloadFactory() {
@@ -36,4 +46,62 @@ public class DownloadFactory {
             return i;
         }
     }
+
+
+    public static void deleteFilmFile(Download download) {
+        // Download nur löschen wenn er nicht läuft
+
+        if (download == null) {
+            return;
+        }
+
+        if (download.isStateStartedRun()) {
+            PAlert.showErrorAlert("Film löschen", "Download läuft noch", "Download erst stoppen!");
+        }
+
+
+        try {
+            // Film
+            File filmFile = new File(download.getDestPathFile());
+            if (!filmFile.exists()) {
+                PAlert.showErrorAlert("Film löschen", "", "Die Datei existiert nicht!");
+                return;
+            }
+
+            // Infofile
+            File infoFile = null;
+            if (download.getInfoFile()) {
+                Path infoPath = MTInfoFile.getInfoFilePath(download);
+                if (infoPath != null) {
+                    infoFile = infoPath.toFile();
+                }
+            }
+
+            // Unteritel
+            File subtitleFile = null;
+            if (download.isSubtitle()) {
+                Path subtitlePath = MTSubtitle.getSubtitlePath(download);
+                if (subtitlePath != null) {
+                    subtitleFile = subtitlePath.toFile();
+                }
+            }
+            File subtitleFileSrt = null;
+            if (download.isSubtitle()) {
+                Path subtitlePathSrt = MTSubtitle.getSrtPath(download);
+                if (subtitlePathSrt != null) {
+                    subtitleFileSrt = subtitlePathSrt.toFile();
+                }
+            }
+
+            String downloadPath = download.getDestPath();
+            new DeleteFilmFileDialogController(downloadPath, filmFile, infoFile, subtitleFile, subtitleFileSrt);
+
+
+        } catch (Exception ex) {
+            PAlert.showErrorAlert("Film löschen", "Konnte die Datei nicht löschen!", "Fehler beim löschen von:" + PConst.LINE_SEPARATORx2 +
+                    download.getDestPathFile());
+            PLog.errorLog(915236547, "Fehler beim löschen: " + download.getDestPathFile());
+        }
+    }
+
 }

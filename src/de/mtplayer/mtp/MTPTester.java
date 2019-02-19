@@ -26,6 +26,7 @@ import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -34,12 +35,15 @@ import javafx.scene.text.Text;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class MTPTester {
     private final ProgInfoDialog progInfoDialog;
     private final HashSet<String> hashSet = new HashSet<>();
     private final ProgData progData;
+    private final TextArea textArea = new TextArea();
+    private String text = "";
 
     public MTPTester(ProgData progData) {
         this.progData = progData;
@@ -67,27 +71,23 @@ public class MTPTester {
 
             Button btnAddToHash = new Button("fillHash");
             btnAddToHash.setMaxWidth(Double.MAX_VALUE);
-            btnAddToHash.setOnAction(a -> {
-                fillHash(progData.filmlist);
-            });
+            btnAddToHash.setOnAction(a -> fillHash(progData.filmlist));
 
             Button btnCleanHash = new Button("cleanHash");
             btnCleanHash.setMaxWidth(Double.MAX_VALUE);
-            btnCleanHash.setOnAction(a -> {
-                cleanHash(progData.filmlist);
-            });
+            btnCleanHash.setOnAction(a -> cleanHash(progData.filmlist));
 
             Button btnFind = new Button("findAndMark");
             btnFind.setMaxWidth(Double.MAX_VALUE);
-            btnFind.setOnAction(a -> {
-                findAndMarkNewFilms(progData.filmlist);
-            });
+            btnFind.setOnAction(a -> findAndMarkNewFilms(progData.filmlist));
 
             Button btnClear = new Button("clearHash");
             btnClear.setMaxWidth(Double.MAX_VALUE);
-            btnClear.setOnAction(a -> {
-                clearHash();
-            });
+            btnClear.setOnAction(a -> clearHash());
+
+            Button btnClearDescription = new Button("Beschreibung löschen");
+            btnClearDescription.setMaxWidth(Double.MAX_VALUE);
+            btnClearDescription.setOnAction(a -> clearDescription());
 
             int row = 0;
             gridPane.add(text, 0, row, 2, 1);
@@ -95,6 +95,8 @@ public class MTPTester {
             gridPane.add(btnCleanHash, 0, ++row);
             gridPane.add(btnFind, 0, ++row);
             gridPane.add(btnClear, 0, ++row);
+            gridPane.add(btnClearDescription, 0, ++row);
+            gridPane.add(textArea, 0, ++row, 2, 1);
         }
     }
 
@@ -178,4 +180,40 @@ public class MTPTester {
         PLog.sysLog(logList);
     }
 
+    private void clearDescription() {
+        final long description = System.currentTimeMillis() - TimeUnit.MILLISECONDS.convert(50, TimeUnit.DAYS);
+        final String DESCRIPTION = "*****";
+        int count = 0;
+        int countDesc = 0;
+        for (Film film : ProgData.getInstance().filmlist) {
+
+            if (!checkDate(film, description)) {
+                ++count;
+                if (!film.getDescription().isEmpty() && !film.getDescription().equals(DESCRIPTION)) {
+                    ++countDesc;
+                }
+                film.setDescription(DESCRIPTION);
+            }
+        }
+
+        text += count + " Filme\n";
+        text += countDesc + " Beschreibungen gelöscht\n\n";
+        textArea.setText(text);
+
+
+    }
+
+    private boolean checkDate(Film film, long mSeconds) {
+        // true wenn der Film jünger ist und angezeigt werden kann!
+        try {
+            if (film.filmDate.getTime() != 0) {
+                if (film.filmDate.getTime() < mSeconds) {
+                    return false;
+                }
+            }
+        } catch (final Exception ex) {
+            PLog.errorLog(951202147, ex);
+        }
+        return true;
+    }
 }

@@ -21,13 +21,13 @@ import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.gui.tools.table.Table;
 import javafx.scene.control.*;
 
-public class DownloadGuiContextMenu {
+public class DownloadGuiTableContextMenu {
 
     private final ProgData progData;
     private final DownloadGuiController downloadGuiController;
     private final TableView tableView;
 
-    public DownloadGuiContextMenu(ProgData progData, DownloadGuiController downloadGuiController, TableView tableView) {
+    public DownloadGuiTableContextMenu(ProgData progData, DownloadGuiController downloadGuiController, TableView tableView) {
 
         this.progData = progData;
         this.downloadGuiController = downloadGuiController;

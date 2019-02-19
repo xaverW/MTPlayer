@@ -26,13 +26,13 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TableView;
 
-public class AboGuiContextMenue {
+public class AboGuiTableContextMenue {
 
     private final ProgData progData;
     private final AboGuiController aboGuiController;
     private final TableView tableView;
 
-    public AboGuiContextMenue(ProgData progData, AboGuiController aboGuiController, TableView tableView) {
+    public AboGuiTableContextMenue(ProgData progData, AboGuiController aboGuiController, TableView tableView) {
 
         this.progData = progData;
         this.aboGuiController = aboGuiController;
@@ -42,7 +42,7 @@ public class AboGuiContextMenue {
 
     public ContextMenu getContextMenu(Abo abo) {
         if (abo == null) {
-            PException.throwPException(97420202, AboGuiContextMenue.class.toString());
+            PException.throwPException(97420202, AboGuiTableContextMenue.class.toString());
         }
 
         final ContextMenu contextMenu = new ContextMenu();

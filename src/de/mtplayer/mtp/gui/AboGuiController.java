@@ -177,7 +177,7 @@ public class AboGuiController extends AnchorPane {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
                 final Optional<Abo> abo = getSel();
                 if (abo.isPresent()) {
-                    tableView.setContextMenu(new AboGuiContextMenue(progData, this, tableView).getContextMenu(abo.get()));
+                    tableView.setContextMenu(new AboGuiTableContextMenue(progData, this, tableView).getContextMenu(abo.get()));
                 } else {
                     tableView.setContextMenu(null);
                 }

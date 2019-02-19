@@ -292,7 +292,7 @@ public class FilmGuiController extends AnchorPane {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
                 final Optional<Film> film = getSel();
                 if (film.isPresent()) {
-                    ContextMenu contextMenu = new FilmGuiContextMenu(progData, this, tableView).getContextMenu(film.get());
+                    ContextMenu contextMenu = new FilmGuiTableContextMenu(progData, this, tableView).getContextMenu(film.get());
                     tableView.setContextMenu(contextMenu);
                 } else {
                     tableView.setContextMenu(null);

@@ -33,7 +33,12 @@ public class MTInfoFile {
         PLog.sysLog(new String[]{"Infofile schreiben nach: ", download.getDestPath()});
 
         new File(download.getDestPath()).mkdirs();
-        final Path path = Paths.get(download.getFileNameWithoutSuffix() + ".txt");
+        // final Path path = Paths.get(download.getFileNameWithoutSuffix() + ".txt");
+        final Path path = getInfoFilePath(download);
+        if (path == null) {
+            return;
+        }
+
         try (DataOutputStream dos = new DataOutputStream(Files.newOutputStream(path));
              OutputStreamWriter osw = new OutputStreamWriter(dos);
              BufferedWriter br = new BufferedWriter(osw)) {
@@ -70,7 +75,7 @@ public class MTInfoFile {
 
             if (download.getFilm() != null) {
                 int anz = 0;
-                for (final String s : download.getFilm().arr[FilmXml.FILM_DESCRIPTION].split(" ")) {
+                for (final String s : download.getFilm().getDescription().split(" ")) {
                     anz += s.length();
                     br.write(s + ' ');
                     if (anz > 50) {
@@ -87,4 +92,18 @@ public class MTInfoFile {
         }
     }
 
+    private static String getInfoFileStr(Download download) {
+        return download.getFileNameWithoutSuffix() + ".txt";
+    }
+
+    public static Path getInfoFilePath(Download download) {
+        Path path;
+        try {
+            path = Paths.get(getInfoFileStr(download));
+        } catch (Exception ex) {
+            path = null;
+            PLog.errorLog(987451202, "InfofilePath");
+        }
+        return path;
+    }
 }

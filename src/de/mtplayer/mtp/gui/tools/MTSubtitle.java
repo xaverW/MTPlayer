@@ -81,18 +81,18 @@ public class MTSubtitle {
         final Path p = Paths.get(strSubtitelFile);
         final TimedTextMarkupLanguageParser ttmlp = new TimedTextMarkupLanguageParser();
         if (ttmlp.parse(p) || ttmlp.parseXmlFlash(p)) {
-            final Path srt = Paths.get(download.getFileNameWithoutSuffix() + SRT_FILETYPE);
+            Path srt = getSrtPath(download);
             ttmlp.toSrt(srt);
         }
         ttmlp.cleanup();
     }
 
     public void writeSubtitle(Download download) {
-        String suffix;
-        String urlSubtitle = "";
+//        String suffix;
+        String urlSubtitle = download.getUrlSubtitle();
         InputStream in = null;
 
-        if (download.getUrlSubtitle().isEmpty()) {
+        if (urlSubtitle.isEmpty()) {
             return;
         }
 
@@ -100,29 +100,34 @@ public class MTSubtitle {
             PLog.sysLog(new String[]{"Untertitel: ", download.getUrlSubtitle(),
                     "schreiben nach: ", download.getDestPath()});
 
-            urlSubtitle = download.getUrlSubtitle();
-            suffix = PUrlTools.getSuffixFromUrl(urlSubtitle);
-            if (!suffix.endsWith(SUFFIX_SRT) && !suffix.endsWith(SUFFIX_VTT)) {
-                suffix = SUFFIX_TTML;
-            }
+//            suffix = PUrlTools.getSuffixFromUrl(urlSubtitle);
+//            if (!suffix.endsWith(SUFFIX_SRT) && !suffix.endsWith(SUFFIX_VTT)) {
+//                suffix = SUFFIX_TTML;
+//            }
 
             Files.createDirectories(Paths.get(download.getDestPath()));
 
+//            urlSubtitle = download.getUrlSubtitle();
             final HttpURLConnection conn = (HttpURLConnection) new URL(urlSubtitle).openConnection();
             setupConnection(conn);
 
             if ((conn.getResponseCode()) < HttpURLConnection.HTTP_BAD_REQUEST) {
+
                 in = getContentDecoder(conn.getContentEncoding(), conn.getInputStream());
 
-                final String strSubtitelFile = download.getFileNameWithoutSuffix() + '.' + suffix;
+//                final String strSubtitelFile = download.getFileNameWithoutSuffix() + '.' + suffix;
+                final String strSubtitelFile = getSubtitleStr(download);
                 downloadContent(in, strSubtitelFile);
 
                 if (!strSubtitelFile.endsWith('.' + SUFFIX_SRT) && !strSubtitelFile.endsWith("." + SUFFIX_VTT)) {
                     writeSrt(strSubtitelFile, download);
                 }
+
             } else {
+                // keine Verbindung
                 PLog.errorLog(752301248, "url: " + urlSubtitle);
             }
+
         } catch (final Exception ignored) {
             PLog.errorLog(461203210, ignored, "SubtitelUrl: " + urlSubtitle);
         } finally {
@@ -133,5 +138,29 @@ public class MTSubtitle {
             } catch (final Exception ignored) {
             }
         }
+    }
+
+    private static String getSubtitleStr(Download download) {
+        String suffix = PUrlTools.getSuffixFromUrl(download.getUrlSubtitle());
+        if (!suffix.endsWith(SUFFIX_SRT) && !suffix.endsWith(SUFFIX_VTT)) {
+            suffix = SUFFIX_TTML;
+        }
+
+        return download.getFileNameWithoutSuffix() + '.' + suffix;
+    }
+
+    public static Path getSubtitlePath(Download download) {
+        Path path;
+        try {
+            path = Paths.get(getSubtitleStr(download));
+        } catch (Exception ex) {
+            path = null;
+            PLog.errorLog(951245412, "SubtitlePath");
+        }
+        return path;
+    }
+
+    public static Path getSrtPath(Download download) {
+        return Paths.get(download.getFileNameWithoutSuffix() + SRT_FILETYPE);
     }
 }

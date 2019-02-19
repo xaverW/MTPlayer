@@ -24,13 +24,13 @@ import de.mtplayer.mtp.gui.tools.table.Table;
 import de.p2tools.p2Lib.tools.PSystemUtils;
 import javafx.scene.control.*;
 
-public class FilmGuiContextMenu {
+public class FilmGuiTableContextMenu {
 
     private final ProgData progData;
     private final FilmGuiController filmGuiController;
     private final TableView tableView;
 
-    public FilmGuiContextMenu(ProgData progData, FilmGuiController filmGuiController, TableView tableView) {
+    public FilmGuiTableContextMenu(ProgData progData, FilmGuiController filmGuiController, TableView tableView) {
         this.progData = progData;
         this.filmGuiController = filmGuiController;
         this.tableView = tableView;
