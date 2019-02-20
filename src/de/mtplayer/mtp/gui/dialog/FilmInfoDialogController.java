@@ -23,14 +23,18 @@ import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.p2tools.p2Lib.dialog.PDialog;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
+import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -39,6 +43,8 @@ import javafx.scene.text.Text;
  * FXML Controller class
  */
 public class FilmInfoDialogController extends PDialog {
+
+    private final int FREE = 190;
 
     private final ScrollPane scrollPane = new ScrollPane();
     private final Text[] textTitle = new Text[FilmXml.MAX_ELEM];
@@ -51,19 +57,22 @@ public class FilmInfoDialogController extends PDialog {
 
     private final VBox vBoxDialog = new VBox();
     private final VBox vBoxCont = new VBox();
-    private final TilePane tilePaneOk = new TilePane();
     private final HBox hBoxUrl = new HBox();
     private final HBox hBoxWebsite = new HBox();
 
     private final ImageView ivHD = new ImageView();
     private final ImageView ivUT = new ImageView();
     private final ImageView ivNew = new ImageView();
+    private final PToggleSwitch tglUrl = new PToggleSwitch("URL");
 
     private final PHyperlink pHyperlinkUrl = new PHyperlink("",
             ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
 
     private final PHyperlink pHyperlinkWebsite = new PHyperlink("",
             ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
+
+    BooleanProperty urlProperty = ProgConfig.FILM_INFO_DIALOG_SHOW_URL.getBooleanProperty();
+    BooleanProperty urlIndeterminateProperty = ProgConfig.FILM_INFO_DIALOG_SHOW_URL_INDERTERMINATE.getBooleanProperty();
 
     public FilmInfoDialogController() {
         super(null, ProgConfig.SYSTEM_SIZE_DIALOG_FILMINFO.getStringProperty(),
@@ -135,7 +144,13 @@ public class FilmInfoDialogController extends PDialog {
     }
 
     private void initDialog() {
-        tilePaneOk.getChildren().addAll(btnOk);
+        final HBox hBoxUrl = new HBox();
+        HBox.setHgrow(hBoxUrl, Priority.ALWAYS);
+        hBoxUrl.getChildren().add(tglUrl);
+
+        final HBox hBoxOk = new HBox();
+        hBoxOk.getChildren().addAll(hBoxUrl, btnOk);
+
 
         vBoxDialog.setSpacing(10);
         vBoxDialog.setPadding(new Insets(10));
@@ -144,8 +159,6 @@ public class FilmInfoDialogController extends PDialog {
         scrollPane.setFitToWidth(true);
         scrollPane.setContent(vBoxCont);
 
-        tilePaneOk.setHgap(10);
-        tilePaneOk.setAlignment(Pos.CENTER_RIGHT);
 
         VBox vBox = new VBox();
         VBox.setVgrow(vBox, Priority.ALWAYS);
@@ -153,12 +166,21 @@ public class FilmInfoDialogController extends PDialog {
         VBox.setVgrow(scrollPane, Priority.ALWAYS);
         vBox.getChildren().add(scrollPane);
 
-        vBoxDialog.getChildren().addAll(vBox, tilePaneOk);
+        vBoxDialog.getChildren().addAll(vBox, hBoxOk);
     }
 
     @Override
     public void make() {
         initDialog();
+
+        tglUrl.setTooltip(new Tooltip("URL anzeigen"));
+        tglUrl.setAllowIndeterminate(true);
+
+        tglUrl.selectedProperty().bindBidirectional(urlProperty);
+        tglUrl.selectedProperty().addListener((observable, oldValue, newValue) -> setUrl());
+
+        tglUrl.indeterminateProperty().bindBidirectional(urlIndeterminateProperty);
+        tglUrl.indeterminateProperty().addListener((observable, oldValue, newValue) -> setUrl());
 
         btnOk.setOnAction(a -> close());
         vBoxCont.getChildren().add(gridPane);
@@ -172,7 +194,6 @@ public class FilmInfoDialogController extends PDialog {
                 PColumnConstraints.getCcComputedSizeAndHgrow());
 
 
-        final int FREE = 190;
         int row = 0;
         for (int i = 0; i < FilmXml.MAX_ELEM; ++i) {
 
@@ -212,20 +233,14 @@ public class FilmInfoDialogController extends PDialog {
                     break;
 
                 case FilmXml.FILM_URL:
-                    pHyperlinkUrl.setWrapText(true);
-                    hBoxUrl.getChildren().add(pHyperlinkUrl);
-                    hBoxUrl.maxWidthProperty().bind(vBoxDialog.widthProperty().subtract(FREE));
-
+//                    hBoxUrl.getChildren().add(pHyperlinkUrl);
                     gridPane.add(textTitle[i], 0, row);
-                    gridPane.add(hBoxUrl, 1, row++);
+                    gridPane.add(pHyperlinkUrl, 1, row++);
                     break;
                 case FilmXml.FILM_WEBSITE:
-                    pHyperlinkWebsite.setWrapText(true);
-                    hBoxWebsite.getChildren().add(pHyperlinkWebsite);
-                    hBoxWebsite.maxWidthProperty().bind(vBoxDialog.widthProperty().subtract(FREE));
-
+//                    hBoxWebsite.getChildren().add(pHyperlinkWebsite);
                     gridPane.add(textTitle[i], 0, row);
-                    gridPane.add(hBoxWebsite, 1, row++);
+                    gridPane.add(pHyperlinkWebsite, 1, row++);
                     break;
 
                 case FilmXml.FILM_DESCRIPTION:
@@ -248,6 +263,39 @@ public class FilmInfoDialogController extends PDialog {
             }
         }
 
+        setUrl();
+    }
+
+    private void setUrl() {
+        System.out.println("Inter " + urlIndeterminateProperty.get());
+        System.out.println("Url   " + urlProperty.get());
+        System.out.println(" ");
+
+        if (urlProperty.get()) {
+            pHyperlinkUrl.setWrapText(true);
+            pHyperlinkUrl.maxWidthProperty().bind(vBoxDialog.widthProperty().subtract(FREE));
+
+            pHyperlinkWebsite.setWrapText(true);
+            pHyperlinkWebsite.maxWidthProperty().bind(vBoxDialog.widthProperty().subtract(FREE));
+        } else {
+            pHyperlinkUrl.setWrapText(false);
+            pHyperlinkUrl.maxWidthProperty().unbind();
+            pHyperlinkUrl.setMaxWidth(Double.MAX_VALUE);
+
+            pHyperlinkWebsite.setWrapText(false);
+            pHyperlinkWebsite.maxWidthProperty().unbind();
+            pHyperlinkWebsite.setMaxWidth(Double.MAX_VALUE);
+        }
+
+        textTitle[FilmXml.FILM_URL].setVisible(!urlIndeterminateProperty.get());
+        textTitle[FilmXml.FILM_URL].setManaged(!urlIndeterminateProperty.get());
+        pHyperlinkUrl.setVisible(!urlIndeterminateProperty.get());
+        pHyperlinkUrl.setManaged(!urlIndeterminateProperty.get());
+
+        textTitle[FilmXml.FILM_WEBSITE].setVisible(!urlIndeterminateProperty.get());
+        textTitle[FilmXml.FILM_WEBSITE].setManaged(!urlIndeterminateProperty.get());
+        pHyperlinkWebsite.setVisible(!urlIndeterminateProperty.get());
+        pHyperlinkWebsite.setManaged(!urlIndeterminateProperty.get());
     }
 
     private ContextMenu getMenu(String url) {

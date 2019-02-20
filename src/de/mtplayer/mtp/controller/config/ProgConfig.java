@@ -177,6 +177,10 @@ public class ProgConfig extends MLConfig {
     // StartDialog
     public static MLConfigs START_DIALOG_DOWNLOAD_PATH = addNewKey("start-dialog-download-path", PSystemUtils.getStandardDownloadPath());
 
+    // FilmInfoDialog
+    public static MLConfigs FILM_INFO_DIALOG_SHOW_URL = addNewKey("film-info-dialog-show-url", Boolean.TRUE.toString());
+    public static MLConfigs FILM_INFO_DIALOG_SHOW_URL_INDERTERMINATE = addNewKey("film-info-dialog-show-url-indeterminate", Boolean.TRUE.toString());
+
     // MediaDB
     public static MLConfigs MEDIA_CONFIG_DIALOG_SIZE = addNewKey("media-config-dialog-size", "800:700");
     public static MLConfigs MEDIA_CONFIG_DIALOG_ACCORDION = addNewKey("media-config-dialog-accordion", Boolean.TRUE.toString());
