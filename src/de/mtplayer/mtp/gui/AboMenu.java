@@ -29,6 +29,7 @@ import javafx.scene.layout.VBox;
 public class AboMenu {
     final private VBox vbox;
     final private ProgData progData;
+    private static final String ABO_NEW_TEXT = "neus Abo anlegen";
     private static final String ABO_ON_TEXT = "Abos einschalten";
     private static final String ABO_OFF_TEXT = "Abos ausschalten";
     private static final String ABO_DELETE_TEXT = "Abos löschen";
@@ -51,12 +52,14 @@ public class AboMenu {
 
     private void initButton() {
         // Button
+        final ToolBarButton btNew = new ToolBarButton(vbox, "neues Abo", ABO_NEW_TEXT, new ProgIcons().FX_ICON_TOOLBAR_ABO_NEW);
         final ToolBarButton btOn = new ToolBarButton(vbox, "einschalten", ABO_ON_TEXT, new ProgIcons().FX_ICON_TOOLBAR_ABO_ON);
         final ToolBarButton btOff = new ToolBarButton(vbox, "ausschalten", ABO_OFF_TEXT, new ProgIcons().FX_ICON_TOOLBAR_ABO_OFF);
         final ToolBarButton btDel = new ToolBarButton(vbox, "löschen", ABO_DELETE_TEXT, new ProgIcons().FX_ICON_TOOLBAR_ABO_DEL);
         final ToolBarButton btChange =
                 new ToolBarButton(vbox, "ändern", ABO_CHANGE_TEXT, new ProgIcons().FX_ICON_TOOLBAR_ABO_CONFIG);
 
+        btNew.setOnAction(a -> progData.aboGuiController.addNewAbo());
         btOn.setOnAction(a -> progData.aboGuiController.setAboActive(true));
         btOff.setOnAction(a -> progData.aboGuiController.setAboActive(false));
         btDel.setOnAction(a -> progData.aboGuiController.deleteAbo());
