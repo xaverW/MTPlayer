@@ -31,11 +31,8 @@ public class FilmListFilter {
     public FilmListFilter(ProgData progData) {
         this.progData = progData;
 
-        progData.storedFilter.filterChangeProperty().addListener((observable, oldValue, newValue) ->
-                Platform.runLater(() -> filterList()));
-        progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) ->
-                Platform.runLater(() -> filterList()));
-
+        progData.storedFilter.filterChangeProperty().addListener((observable, oldValue, newValue) -> filter());
+        progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> filterList());
         progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
             @Override
             public void finished(ListenerFilmlistLoadEvent event) {
@@ -49,6 +46,10 @@ public class FilmListFilter {
                 filterList();
             }
         });
+    }
+
+    private void filter() {
+        Platform.runLater(() -> filterList());
     }
 
     private static final AtomicBoolean search = new AtomicBoolean(false);

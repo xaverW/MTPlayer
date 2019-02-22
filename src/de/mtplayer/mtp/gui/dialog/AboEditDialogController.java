@@ -69,12 +69,12 @@ public class AboEditDialogController extends PDialogExtra {
     private ProgData progData;
     private final boolean addNewAbo;
 
-    public AboEditDialogController(ProgData progData, Abo abo) {
+    public AboEditDialogController(ProgData progData, Abo abo, boolean addNewAbo) {
         // hier wird ein neues Abo angelegt!
         super(ProgConfig.ABO_DIALOG_EDIT_SIZE.getStringProperty(),
                 "Abo anlegen", true);
 
-        this.addNewAbo = true;
+        this.addNewAbo = addNewAbo;
         this.progData = progData;
         lAbo = FXCollections.observableArrayList();
         lAbo.add(abo);
@@ -251,7 +251,7 @@ public class AboEditDialogController extends PDialogExtra {
                 break;
             case AboXml.ABO_CHANNEL_EXACT:
                 cbx[i] = new CheckBox("");
-                cbx[i].setSelected(aboCopy.getChannelExact());
+                cbx[i].setSelected(aboCopy.isChannelExact());
                 break;
             case AboXml.ABO_THEME_EXACT:
                 cbx[i] = new CheckBox("");

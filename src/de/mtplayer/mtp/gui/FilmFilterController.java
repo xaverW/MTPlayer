@@ -213,9 +213,14 @@ public class FilmFilterController extends FilterController {
         final MenuItem miReset = new MenuItem("Filterprofile wieder herstellen");
         miReset.setOnAction(e -> resetFilter());
 
+        final MenuItem miAbo = new MenuItem("aus dem Filter ein Abo erstellen");
+        miAbo.setOnAction(a -> {
+            SelectedFilter selectedFilter = progData.storedFilter.getSelectedFilter();
+            progData.aboList.addNewAbo(selectedFilter);
+        });
 
         mbFilterTools.setGraphic(new ProgIcons().ICON_BUTTON_MENU);
-        mbFilterTools.getItems().addAll(miLoad, miSave, miNew, miRename, miDel, miDelAll, miReset);
+        mbFilterTools.getItems().addAll(miLoad, miSave, miNew, miRename, miDel, miDelAll, miReset, new SeparatorMenuItem(), miAbo);
         mbFilterTools.setTooltip(new Tooltip("gespeicherte Filter bearbeiten"));
 
         cbFilter.valueProperty().addListener((observable, oldValue, newValue) -> {

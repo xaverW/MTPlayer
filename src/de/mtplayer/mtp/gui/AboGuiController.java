@@ -99,6 +99,16 @@ public class AboGuiController extends AnchorPane {
         progData.aboList.changeAbo(lAbo);
     }
 
+    public void setFilmFilterFromAbo() {
+        Optional<Abo> abo = getSel();
+        progData.storedFilter.loadStoredFilterFromAbo(abo);
+    }
+
+    public void setAboFromFilmFilter() {
+        Optional<Abo> abo = getSel();
+        progData.aboList.changeAboFromFilter(abo, progData.storedFilter.getSelectedFilter());
+    }
+
     public void setAboActive(boolean on) {
         ObservableList<Abo> lAbo = getSelList();
         progData.aboList.setAboActive(lAbo, on);
@@ -111,7 +121,7 @@ public class AboGuiController extends AnchorPane {
 
 
     public void addNewAbo() {
-        progData.aboList.addAbo("Neu" /* Aboname */);
+        progData.aboList.addNewAbo("Neu" /* Aboname */);
     }
 
     public void invertSelection() {

@@ -34,8 +34,8 @@ public class AboProps extends AboXml {
     private final BooleanProperty channelExact = new SimpleBooleanProperty(true);
     private final StringProperty theme = new SimpleStringProperty("");
     private final BooleanProperty themeExact = new SimpleBooleanProperty(true);
-    private final StringProperty title = new SimpleStringProperty("");
     private final StringProperty themeTitle = new SimpleStringProperty("");
+    private final StringProperty title = new SimpleStringProperty("");
     private final StringProperty somewhere = new SimpleStringProperty("");
     private final IntegerProperty minDuration = new SimpleIntegerProperty(0); // Minuten
     private final IntegerProperty maxDuration = new SimpleIntegerProperty(SelectedFilter.FILTER_DURATION_MAX_MIN); //Minuten
@@ -49,7 +49,7 @@ public class AboProps extends AboXml {
     private int countHit = 0;
 
     public final Property[] properties = {nr, active, name, description, resolution,
-            channel, channelExact, theme, themeExact, title, themeTitle, somewhere,
+            channel, channelExact, theme, themeExact, themeTitle, title, somewhere,
             minDuration, maxDuration, destination, date, setDataId};
 
     public String getStringOf(int i) {
@@ -152,7 +152,7 @@ public class AboProps extends AboXml {
         this.channel.set(channel);
     }
 
-    public boolean getChannelExact() {
+    public boolean isChannelExact() {
         return channelExact.get();
     }
 
@@ -188,18 +188,6 @@ public class AboProps extends AboXml {
         this.themeExact.set(themeExact);
     }
 
-    public String getTitle() {
-        return title.get();
-    }
-
-    public StringProperty titleProperty() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title.set(title);
-    }
-
     public String getThemeTitle() {
         return themeTitle.get();
     }
@@ -210,6 +198,18 @@ public class AboProps extends AboXml {
 
     public void setThemeTitle(String themeTitle) {
         this.themeTitle.set(themeTitle);
+    }
+
+    public String getTitle() {
+        return title.get();
+    }
+
+    public StringProperty titleProperty() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title.set(title);
     }
 
     public String getSomewhere() {
@@ -331,8 +331,8 @@ public class AboProps extends AboXml {
         setChannelExact(arr[ABO_CHANNEL_EXACT].isEmpty() ? true : Boolean.parseBoolean(arr[ABO_CHANNEL_EXACT]));
         setTheme(arr[ABO_THEME]);
         setThemeExact(arr[ABO_THEME_EXACT].isEmpty() ? true : Boolean.parseBoolean(arr[ABO_THEME_EXACT]));
-        setTitle(arr[ABO_TITLE]);
         setThemeTitle(arr[ABO_THEME_TITLE]);
+        setTitle(arr[ABO_TITLE]);
         setSomewhere(arr[ABO_SOMEWHERE]);
 
         setDurationFromXml();
@@ -349,11 +349,11 @@ public class AboProps extends AboXml {
         arr[ABO_NAME] = getName();
         arr[ABO_DESCRIPTION] = getDescription();
         arr[ABO_CHANNEL] = getChannel();
-        arr[ABO_CHANNEL_EXACT] = String.valueOf(getChannelExact());
+        arr[ABO_CHANNEL_EXACT] = String.valueOf(isChannelExact());
         arr[ABO_THEME] = getTheme();
         arr[ABO_THEME_EXACT] = String.valueOf(isThemeExact());
-        arr[ABO_TITLE] = getTitle();
         arr[ABO_THEME_TITLE] = getThemeTitle();
+        arr[ABO_TITLE] = getTitle();
         arr[ABO_SOMEWHERE] = getSomewhere();
 
         arr[ABO_MIN_DURATION] = String.valueOf(getMinDuration());

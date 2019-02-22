@@ -81,13 +81,13 @@ public class TableAbo {
         themeExactColumn.setCellFactory(CheckBoxTableCell.forTableColumn(themeExactColumn));
         themeExactColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<Abo, String> titleColumn = new TableColumn<>("Titel");
-        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        titleColumn.getStyleClass().add("alignCenterLeft");
-
         final TableColumn<Abo, String> themeTitleColumn = new TableColumn<>("Thema-Titel");
         themeTitleColumn.setCellValueFactory(new PropertyValueFactory<>("themeTitle"));
         themeTitleColumn.getStyleClass().add("alignCenterLeft");
+
+        final TableColumn<Abo, String> titleColumn = new TableColumn<>("Titel");
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        titleColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Abo, String> somewhereColumn = new TableColumn<>("irgendwo");
         somewhereColumn.setCellValueFactory(new PropertyValueFactory<>("somewhere"));
@@ -117,7 +117,7 @@ public class TableAbo {
 
         return new TableColumn[]{
                 nrColumn, activColumn, hitColumn, nameColumn, descriptionColumn, resColumn, senderColumn, senderExactColumn,
-                themeColumn, themeExactColumn, titleColumn, themeTitleColumn,
+                themeColumn, themeExactColumn, themeTitleColumn, titleColumn,
                 somewhereColumn, minColumn, maxColumn, destinationColumn, datumColumn, psetColumn};
 
     }

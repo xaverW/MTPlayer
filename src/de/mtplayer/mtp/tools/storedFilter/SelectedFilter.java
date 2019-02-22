@@ -58,6 +58,11 @@ public final class SelectedFilter extends SelectedFilterProps {
         setThemeVis(true);
     }
 
+    public void setThemeTitleAndVis(String set) {
+        setThemeTitle(set);
+        setThemeTitleVis(true);
+    }
+
     public void setTitleAndVis(String set) {
         setTitle(set);
         setTitleVis(true);
@@ -66,8 +71,8 @@ public final class SelectedFilter extends SelectedFilterProps {
     public static void copyFilter(SelectedFilter sfFrom, SelectedFilter sfTo) {
         sfTo.setName(sfFrom.getName());
 
-        sfTo.setChannelVis(sfFrom.getChannelVis());
-        sfTo.setChannelExact(sfFrom.getChannelExact());
+        sfTo.setChannelVis(sfFrom.isChannelVis());
+        sfTo.setChannelExact(sfFrom.isChannelExact());
         sfTo.setChannel(sfFrom.getChannel());
         sfTo.setThemeVis(sfFrom.isThemeVis());
         sfTo.setThemeExact(sfFrom.isThemeExact());
@@ -84,12 +89,12 @@ public final class SelectedFilter extends SelectedFilterProps {
         sfTo.setDaysVis(sfFrom.isDaysVis());
         sfTo.setDays(sfFrom.getDays());
 
-        sfTo.setMinMaxDurVis(sfFrom.getMinMaxDurVis());
+        sfTo.setMinMaxDurVis(sfFrom.isMinMaxDurVis());
         sfTo.setMinDur(sfFrom.getMinDur());
         sfTo.setMaxDur(sfFrom.getMaxDur());
 
         sfTo.setMinMaxTimeVis(sfFrom.isMinMaxTimeVis());
-        sfTo.setMinMaxTimeInvert(sfFrom.getMinMaxTimeInvert());
+        sfTo.setMinMaxTimeInvert(sfFrom.isMinMaxTimeInvert());
         sfTo.setMinTime(sfFrom.getMinTime());
         sfTo.setMaxTime(sfFrom.getMaxTime());
 
@@ -130,56 +135,60 @@ public final class SelectedFilter extends SelectedFilterProps {
         setNotVis(false);
         setOnlyVis(false);
 
-        nameProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
+        nameProperty().addListener(l -> changeFilterProperty());
 
-        channelVisProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
-        channelExactProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
-        channelProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
+        channelVisProperty().addListener(l -> changeFilterProperty());
+        channelExactProperty().addListener(l -> changeFilterProperty());
+        channelProperty().addListener(l -> changeFilterProperty());
 
-        themeVisProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
-        themeExactProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
-        themeProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
+        themeVisProperty().addListener(l -> changeFilterProperty());
+        themeExactProperty().addListener(l -> changeFilterProperty());
+        themeProperty().addListener(l -> changeFilterProperty());
 
-        themeTitleVisProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
-        themeTitleProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
+        themeTitleVisProperty().addListener(l -> changeFilterProperty());
+        themeTitleProperty().addListener(l -> changeFilterProperty());
 
-        titleVisProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
-        titleProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
+        titleVisProperty().addListener(l -> changeFilterProperty());
+        titleProperty().addListener(l -> changeFilterProperty());
 
-        somewhereVisProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
-        somewhereProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
+        somewhereVisProperty().addListener(l -> changeFilterProperty());
+        somewhereProperty().addListener(l -> changeFilterProperty());
 
-        urlVisProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
-        urlProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
+        urlVisProperty().addListener(l -> changeFilterProperty());
+        urlProperty().addListener(l -> changeFilterProperty());
 
-        daysVisProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
-        daysProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
+        daysVisProperty().addListener(l -> changeFilterProperty());
+        daysProperty().addListener(l -> changeFilterProperty());
 
-        minMaxDurVisProperty().addListener((observable, oldValue, newValue) -> filterChange.setValue(!filterChange.getValue()));
-        minDurProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
-        maxDurProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
+        minMaxDurVisProperty().addListener((observable, oldValue, newValue) -> changeFilterProperty());
+        minDurProperty().addListener(l -> changeFilterProperty());
+        maxDurProperty().addListener(l -> changeFilterProperty());
 
-        minMaxTimeVisProperty().addListener((observable, oldValue, newValue) -> filterChange.setValue(!filterChange.getValue()));
-        minMaxTimeInvertProperty().addListener((observable, oldValue, newValue) -> filterChange.setValue(!filterChange.getValue()));
-        minTimeProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
-        maxTimeProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
+        minMaxTimeVisProperty().addListener((observable, oldValue, newValue) -> changeFilterProperty());
+        minMaxTimeInvertProperty().addListener((observable, oldValue, newValue) -> changeFilterProperty());
+        minTimeProperty().addListener(l -> changeFilterProperty());
+        maxTimeProperty().addListener(l -> changeFilterProperty());
 
-        onlyVisProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
-        onlyHdProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
-        onlyNewProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
-        onlyUtProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
-        onlyLiveProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
-        onlyAktHistoryProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
+        onlyVisProperty().addListener(l -> changeFilterProperty());
+        onlyHdProperty().addListener(l -> changeFilterProperty());
+        onlyNewProperty().addListener(l -> changeFilterProperty());
+        onlyUtProperty().addListener(l -> changeFilterProperty());
+        onlyLiveProperty().addListener(l -> changeFilterProperty());
+        onlyAktHistoryProperty().addListener(l -> changeFilterProperty());
 
-        notVisProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
-        notAboProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
-        notHistoryProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
-        notDoubleProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
-        notGeoProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
-        notFutureProperty().addListener(l -> filterChange.setValue(!filterChange.getValue()));
+        notVisProperty().addListener(l -> changeFilterProperty());
+        notAboProperty().addListener(l -> changeFilterProperty());
+        notHistoryProperty().addListener(l -> changeFilterProperty());
+        notDoubleProperty().addListener(l -> changeFilterProperty());
+        notGeoProperty().addListener(l -> changeFilterProperty());
+        notFutureProperty().addListener(l -> changeFilterProperty());
 
         blacklistOnProperty().addListener(l -> blacklistChange.setValue(!blacklistChange.getValue()));
 
+    }
+
+    private void changeFilterProperty() {
+        filterChange.setValue(!filterChange.getValue());
     }
 
     public void clearFilter() {
@@ -210,6 +219,25 @@ public final class SelectedFilter extends SelectedFilterProps {
         setNotDouble(false);
         setNotGeo(false);
         setNotFuture(false);
+    }
+
+    public void turnOffFilter() {
+        // alle Filter "abschalten" und löschen
+        clearFilter();
+
+        setChannelVis(false);
+        setThemeVis(false);
+        setThemeTitleVis(false);
+        setTitleVis(false);
+        setSomewhereVis(false);
+        setUrlVis(false);
+
+        setDaysVis(false);
+        setMinMaxDurVis(false);
+        setMinMaxTimeVis(false);
+
+        setOnlyVis(false);
+        setNotVis(false);
     }
 
     public boolean txtFilterIsEmpty() {
@@ -261,14 +289,14 @@ public final class SelectedFilter extends SelectedFilterProps {
         Filter fSomewhere;
         Filter fUrl;
 
-        String filterChannel = selectedFilter.getChannelVis() ? selectedFilter.getChannel() : "";
+        String filterChannel = selectedFilter.isChannelVis() ? selectedFilter.getChannel() : "";
         String filterTheme = selectedFilter.isThemeVis() ? selectedFilter.getTheme() : "";
         String filterThemeTitle = selectedFilter.isThemeTitleVis() ? selectedFilter.getThemeTitle() : "";
         String filterTitle = selectedFilter.isTitleVis() ? selectedFilter.getTitle() : "";
         String filterSomewhere = selectedFilter.isSomewhereVis() ? selectedFilter.getSomewhere() : "";
         String filterUrl = selectedFilter.isUrlVis() ? selectedFilter.getUrl() : "";
 
-        final boolean channelExact = selectedFilter.getChannelExact();
+        final boolean channelExact = selectedFilter.isChannelExact();
         final boolean themeExact = selectedFilter.isThemeExact();
         // Sender
         fChannel = new Filter(filterChannel, channelExact);
@@ -307,13 +335,13 @@ public final class SelectedFilter extends SelectedFilterProps {
         final boolean onlyAktHist = selectedFilter.isOnlyVis() ? selectedFilter.isOnlyAktHistory() : false;
 
         // Länge am Slider in Min, im Film Sekunden
-        final int minLaengeSec = selectedFilter.getMinMaxDurVis() ? selectedFilter.getMinDur() * 60 : 0;
-        final int maxLaengeSec = selectedFilter.getMinMaxDurVis() ? selectedFilter.getMaxDur() * 60 : FILTER_DURATION_MAX_SEC;
+        final int minLaengeSec = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMinDur() * 60 : 0;
+        final int maxLaengeSec = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMaxDur() * 60 : FILTER_DURATION_MAX_SEC;
 
         // Filmzeit in Sek. von 0:00 Uhr
         final int minTimeSec = selectedFilter.isMinMaxTimeVis() ? selectedFilter.getMinTime() : 0;
         final int maxTimeSec = selectedFilter.isMinMaxTimeVis() ? selectedFilter.getMaxTime() : FILTER_FILMTIME_MAX_SEC;
-        final boolean minMaxTimeInvert = selectedFilter.getMinMaxTimeInvert();
+        final boolean minMaxTimeInvert = selectedFilter.isMinMaxTimeInvert();
 
         long days = 0;
         try {

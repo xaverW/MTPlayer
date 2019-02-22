@@ -29,8 +29,8 @@ public class AboXml extends Data<AboXml> {
     public static final int ABO_CHANNEL_EXACT = 6;
     public static final int ABO_THEME = 7;
     public static final int ABO_THEME_EXACT = 8;
-    public static final int ABO_TITLE = 9;
-    public static final int ABO_THEME_TITLE = 10;
+    public static final int ABO_THEME_TITLE = 9;
+    public static final int ABO_TITLE = 10;
     public static final int ABO_SOMEWHERE = 11;
     public static final int ABO_MIN_DURATION = 12;
     public static final int ABO_MAX_DURATION = 13;
@@ -47,8 +47,8 @@ public class AboXml extends Data<AboXml> {
             "exakt",
             "Thema",
             "exakt",
-            "Titel",
             "Thema-Titel",
+            "Titel",
             "Irgendwo",
             "min Dauer",
             "max Dauer",
@@ -65,8 +65,8 @@ public class AboXml extends Data<AboXml> {
             "Sender-exakt",
             "Thema",
             "Thema-exakt",
-            "Titel",
             "Thema-Titel",
+            "Titel",
             "Irgendwo",
             "Mindestdauer",
             "Maxdauer",

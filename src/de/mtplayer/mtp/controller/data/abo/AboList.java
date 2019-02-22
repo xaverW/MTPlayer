@@ -38,6 +38,7 @@ import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Optional;
 
 public class AboList extends SimpleListProperty<Abo> {
     private final ProgData progData;
@@ -77,11 +78,109 @@ public class AboList extends SimpleListProperty<Abo> {
         super.add(abo);
     }
 
-    public synchronized boolean addAbo(String aboName) {
-        return addAbo(aboName, "", "", "");
+    public synchronized boolean addNewAbo(SelectedFilter selectedFilter) {
+        // abo anlegen, oder false wenns schon existiert
+        boolean ret = false;
+
+        String channel = selectedFilter.isChannelVis() ? selectedFilter.getChannel() : "";
+        boolean channelExact = selectedFilter.isChannelExact();
+        String theme = selectedFilter.isThemeVis() ? selectedFilter.getTheme() : "";
+        boolean themeExact = selectedFilter.isThemeExact();
+        String title = selectedFilter.isTitleVis() ? selectedFilter.getTitle() : "";
+        String themeTitle = selectedFilter.isThemeTitleVis() ? selectedFilter.getThemeTitle() : "";
+        String somewhere = selectedFilter.isSomewhereVis() ? selectedFilter.getSomewhere() : "";
+        int minDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMinDur() : 0;
+        int maxDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMaxDur() : SelectedFilter.FILTER_DURATION_MAX_MIN;
+
+
+        String namePath = channel + (theme.isEmpty() ? "" : " - " + theme) + (title.isEmpty() ? "" : " - " + title);
+        if (namePath.isEmpty()) {
+            namePath = "Abo aus Filter";
+        }
+        namePath = DownloadTools.replaceEmptyFileName(namePath,
+                false /* nur ein Ordner */,
+                Boolean.parseBoolean(ProgConfig.SYSTEM_USE_REPLACETABLE.get()),
+                Boolean.parseBoolean(ProgConfig.SYSTEM_ONLY_ASCII.get()));
+
+        final Abo abo = new Abo(progData,
+                namePath /* name */,
+                channel,
+                theme,
+                themeTitle,
+                title,
+                somewhere,
+                minDuration,
+                maxDuration,
+                namePath);
+
+        if (!channel.isEmpty()) {
+            abo.setChannelExact(channelExact);
+        }
+        if (!theme.isEmpty()) {
+            abo.setThemeExact(themeExact);
+        }
+
+        if (new AboEditDialogController(progData, abo, true).getOk()) {
+            // als Vorgabe merken
+            ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(abo.getMinDuration());
+            ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(abo.getMaxDuration());
+            addAbo(abo);
+            sort();
+            notifyChanges();
+            ret = true;
+        }
+        return ret;
     }
 
-    public synchronized boolean addAbo(String aboName, String filmChannel, String filmTheme, String filmTitle) {
+    public synchronized boolean changeAboFromFilter(Optional<Abo> oAbo, SelectedFilter selectedFilter) {
+        // abo nach dem Filter einstellen
+        if (!oAbo.isPresent()) {
+            return false;
+        }
+
+        boolean ret = false;
+        final Abo abo = oAbo.get();
+        Abo aboCopy = abo.getCopy();
+
+        final String channel = selectedFilter.isChannelVis() ? selectedFilter.getChannel() : "";
+        final boolean channelExact = selectedFilter.isChannelExact();
+        final String theme = selectedFilter.isThemeVis() ? selectedFilter.getTheme() : "";
+        final boolean themeExact = selectedFilter.isThemeExact();
+        final String title = selectedFilter.isTitleVis() ? selectedFilter.getTitle() : "";
+        final String themeTitle = selectedFilter.isThemeTitleVis() ? selectedFilter.getThemeTitle() : "";
+        final String somewhere = selectedFilter.isSomewhereVis() ? selectedFilter.getSomewhere() : "";
+        final int minDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMinDur() : 0;
+        final int maxDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMaxDur() : SelectedFilter.FILTER_DURATION_MAX_MIN;
+
+        aboCopy.setChannel(channel);
+        aboCopy.setChannelExact(channelExact);
+        aboCopy.setTheme(theme);
+        aboCopy.setThemeExact(themeExact);
+        aboCopy.setTitle(title);
+        aboCopy.setThemeTitle(themeTitle);
+        aboCopy.setSomewhere(somewhere);
+        aboCopy.setMinDuration(minDuration);
+        aboCopy.setMaxDuration(maxDuration);
+
+        if (new AboEditDialogController(progData, aboCopy, false).getOk()) {
+            abo.copyToMe(aboCopy);
+
+            // als Vorgabe merken
+            ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(abo.getMinDuration());
+            ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(abo.getMaxDuration());
+            sort();
+            notifyChanges();
+            ret = true;
+        }
+
+        return ret;
+    }
+
+    public synchronized boolean addNewAbo(String aboName) {
+        return addNewAbo(aboName, "", "", "");
+    }
+
+    public synchronized boolean addNewAbo(String aboName, String filmChannel, String filmTheme, String filmTitle) {
         // abo anlegen, oder false wenns schon existiert
         boolean ret = false;
 
@@ -113,7 +212,7 @@ public class AboList extends SimpleListProperty<Abo> {
                 namePath);
 
 
-        if (new AboEditDialogController(progData, abo).getOk()) {
+        if (new AboEditDialogController(progData, abo, true).getOk()) {
             // als Vorgabe merken
             ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(abo.getMinDuration());
             ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(abo.getMaxDuration());

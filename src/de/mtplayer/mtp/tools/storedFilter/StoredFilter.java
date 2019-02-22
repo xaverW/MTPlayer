@@ -17,6 +17,7 @@
 package de.mtplayer.mtp.tools.storedFilter;
 
 import de.mtplayer.mtp.controller.config.ProgData;
+import de.mtplayer.mtp.controller.data.abo.Abo;
 import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -25,6 +26,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public final class StoredFilter {
 
@@ -169,6 +171,47 @@ public final class StoredFilter {
         } else {
             postBlacklistChange();
         }
+        selectedFilter.filterChangeProperty().addListener(filterChangeListener);
+        selectedFilter.blacklistChangeProperty().addListener(blacklistChangeListener);
+    }
+
+    /**
+     * Filter nach einem Abo einstellen
+     *
+     * @param oAbo
+     */
+    public synchronized void loadStoredFilterFromAbo(Optional<Abo> oAbo) {
+        if (!oAbo.isPresent()) {
+            return;
+        }
+
+        final Abo abo = oAbo.get();
+        selectedFilter.filterChangeProperty().removeListener(filterChangeListener);
+        selectedFilter.blacklistChangeProperty().removeListener(blacklistChangeListener);
+
+        // Filter erstmal löschen und dann alle abschalten
+        selectedFilter.turnOffFilter();
+
+
+        selectedFilter.setChannelAndVis(abo.getChannel());
+        selectedFilter.setChannelExact(abo.isChannelExact());
+
+        selectedFilter.setThemeAndVis(abo.getTheme());
+        selectedFilter.setThemeExact(abo.isThemeExact());
+
+        selectedFilter.setThemeTitleAndVis(abo.getThemeTitle());
+
+        selectedFilter.setTitleAndVis(abo.getTitle());
+
+        selectedFilter.setSomewhere(abo.getSomewhere());
+        selectedFilter.setSomewhereVis(true);
+
+        selectedFilter.setMinDur(abo.getMinDuration());
+        selectedFilter.setMaxDur(abo.getMaxDuration());
+        selectedFilter.setMinMaxDurVis(true);
+
+
+        postFilterChange();
         selectedFilter.filterChangeProperty().addListener(filterChangeListener);
         selectedFilter.blacklistChangeProperty().addListener(blacklistChangeListener);
     }

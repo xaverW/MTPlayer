@@ -190,8 +190,8 @@ public class FilterToXml {
 
         array[FILTER_NAME] = sf.getName();
 
-        array[FILTER_SENDER_VIS] = String.valueOf(sf.getChannelVis());
-        array[FILTER_SENDER_EXACT] = String.valueOf(sf.getChannelExact());
+        array[FILTER_SENDER_VIS] = String.valueOf(sf.isChannelVis());
+        array[FILTER_SENDER_EXACT] = String.valueOf(sf.isChannelExact());
         array[FILTER_SENDER] = sf.getChannel();
         array[FILTER_THEME_VIS] = String.valueOf(sf.isThemeVis());
         array[FILTER_THEME_EXACT] = String.valueOf(sf.isThemeExact());
@@ -208,12 +208,12 @@ public class FilterToXml {
         array[FILTER_DAYS_VIS] = String.valueOf(sf.isDaysVis());
         array[FILTER_DAYS] = String.valueOf(sf.getDays());
 
-        array[FILTER_MIN_MAX_VIS] = String.valueOf(sf.getMinMaxDurVis());
+        array[FILTER_MIN_MAX_VIS] = String.valueOf(sf.isMinMaxDurVis());
         array[FILTER_MIN_DUR] = String.valueOf(sf.getMinDur());
         array[FILTER_MAX_DUR] = String.valueOf(sf.getMaxDur());
 
         array[FILTER_MIN_MAX_TIME_VIS] = String.valueOf(sf.isMinMaxTimeVis());
-        array[FILTER_MIN_MAX_TIME_ON] = String.valueOf(sf.getMinMaxTimeInvert());
+        array[FILTER_MIN_MAX_TIME_ON] = String.valueOf(sf.isMinMaxTimeInvert());
         array[FILTER_MIN_TIME] = String.valueOf(sf.getMinTime());
         array[FILTER_MAX_TIME] = String.valueOf(sf.getMaxTime());
 

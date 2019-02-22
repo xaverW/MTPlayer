@@ -29,12 +29,11 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 
 public class FilmGuiInfoController {
     private final TextArea textArea = new TextArea();
     private final Button btnReset = new Button("@");
-    private final Text textTitle = new Text("");
+    private final Label lblTitle = new Label("");
     private final HBox hBox = new HBox(10);
     private final Label lblUrl = new Label("zur Website: ");
 
@@ -52,7 +51,7 @@ public class FilmGuiInfoController {
         btnReset.setTooltip(new Tooltip("Beschreibung zurücksetzen"));
         btnReset.setVisible(false);
 
-        textTitle.setFont(Font.font(null, FontWeight.BOLD, -1));
+        lblTitle.setFont(Font.font(null, FontWeight.BOLD, -1));
         hBox.setAlignment(Pos.CENTER_LEFT);
         lblUrl.setMinWidth(Region.USE_PREF_SIZE);
 
@@ -61,7 +60,7 @@ public class FilmGuiInfoController {
         textArea.textProperty().addListener((a, b, c) -> setFilmDescription());
 
         VBox vBox = new VBox(10);
-        vBox.getChildren().add(textTitle);
+        vBox.getChildren().add(lblTitle);
         vBox.getChildren().add(stackPane);
         vBox.getChildren().add(hBox);
 
@@ -77,7 +76,7 @@ public class FilmGuiInfoController {
 
         if (film == null) {
             this.film = null;
-            textTitle.setText("");
+            lblTitle.setText("");
             textArea.setText("");
             oldDescription = "";
             btnReset.setVisible(false);
@@ -86,7 +85,7 @@ public class FilmGuiInfoController {
 
         this.film = film;
 
-        textTitle.setText(film.arr[FilmXml.FILM_CHANNEL] + "  -  " + film.arr[FilmXml.FILM_TITLE]);
+        lblTitle.setText(film.arr[FilmXml.FILM_CHANNEL] + "  -  " + film.arr[FilmXml.FILM_TITLE]);
         textArea.setText(film.getDescription());
         oldDescription = film.getDescription();
         btnReset.setVisible(false);

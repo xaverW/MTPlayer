@@ -82,7 +82,7 @@ public class SelectedFilterProps {
         this.name.set(name);
     }
 
-    public boolean getChannelVis() {
+    public boolean isChannelVis() {
         return channelVis.get();
     }
 
@@ -94,7 +94,7 @@ public class SelectedFilterProps {
         this.channelVis.set(channelVis);
     }
 
-    public boolean getChannelExact() {
+    public boolean isChannelExact() {
         return channelExact.get();
     }
 
@@ -276,7 +276,7 @@ public class SelectedFilterProps {
         this.days.set(days);
     }
 
-    public boolean getMinMaxDurVis() {
+    public boolean isMinMaxDurVis() {
         return minMaxDurVis.get();
     }
 
@@ -321,7 +321,11 @@ public class SelectedFilterProps {
         return minMaxTimeVis;
     }
 
-    public boolean getMinMaxTimeInvert() {
+    public void setMinMaxTimeVis(boolean minMaxTimeVis) {
+        this.minMaxTimeVis.set(minMaxTimeVis);
+    }
+
+    public boolean isMinMaxTimeInvert() {
         return minMaxTimeInvert.get();
     }
 
@@ -331,10 +335,6 @@ public class SelectedFilterProps {
 
     public void setMinMaxTimeInvert(boolean minMaxTimeInvert) {
         this.minMaxTimeInvert.set(minMaxTimeInvert);
-    }
-
-    public void setMinMaxTimeVis(boolean minMaxTimeVis) {
-        this.minMaxTimeVis.set(minMaxTimeVis);
     }
 
     public int getMinTime() {

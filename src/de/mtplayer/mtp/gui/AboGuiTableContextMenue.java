@@ -72,10 +72,21 @@ public class AboGuiTableContextMenue {
         final MenuItem miNew = new MenuItem("neues Abo anlegen");
         miNew.setOnAction(a -> aboGuiController.addNewAbo());
 
+        // Filter
+        final MenuItem miAboToFilter = new MenuItem("Abo  ->  Filmfilter (Filmfilter aus Abo setzen)");
+        miAboToFilter.setOnAction(a -> aboGuiController.setFilmFilterFromAbo());
+
+        final MenuItem miFilterToAbo = new MenuItem("Filmfilter  ->  Abo (Abo aus Filmfilter setzen)");
+        miFilterToAbo.setOnAction(a -> aboGuiController.setAboFromFilmFilter());
+
+        // Auswahl
         final MenuItem miSelection = new MenuItem("Auswahl umkehren");
         miSelection.setOnAction(a -> aboGuiController.invertSelection());
 
-        contextMenu.getItems().addAll(miDel, miChange, miNew, new SeparatorMenuItem(), miSelection);
+
+        contextMenu.getItems().addAll(miDel, miChange, miNew,
+                new SeparatorMenuItem(), miAboToFilter, miFilterToAbo,
+                new SeparatorMenuItem(), miSelection);
 
         MenuItem resetTable = new MenuItem("Tabelle zurücksetzen");
         resetTable.setOnAction(e -> new Table().resetTable(tableView, Table.TABLE.ABO));

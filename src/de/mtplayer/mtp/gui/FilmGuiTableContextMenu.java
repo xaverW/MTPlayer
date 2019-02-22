@@ -21,6 +21,7 @@ import de.mtplayer.mtp.controller.data.BlackData;
 import de.mtplayer.mtp.controller.data.SetDataList;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.gui.tools.table.Table;
+import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
 import de.p2tools.p2Lib.tools.PSystemUtils;
 import javafx.scene.control.*;
 
@@ -76,26 +77,38 @@ public class FilmGuiTableContextMenu {
         // Abo
         Menu submenuAbo = new Menu("Abo");
         final MenuItem miAboDel = new MenuItem("Abo Löschen");
+        final MenuItem miAboAddFilter = new MenuItem("aus dem Filter ein Abo erstellen");
         final MenuItem miAboAddChannelTheme = new MenuItem("Abo mit Sender und Thema anlegen");
         final MenuItem miAboAddChannelThemeTitle = new MenuItem("Abo mit Sender und Thema und Titel anlegen");
         final MenuItem miAboChange = new MenuItem("Abo ändern");
 
+
         if (film.getAbo() == null) {
-            miAboDel.setDisable(true);
-            miAboChange.setDisable(true);
+            // neues Abo anlegen
+            miAboAddFilter.setOnAction(a -> {
+                SelectedFilter selectedFilter = progData.storedFilter.getSelectedFilter();
+                progData.aboList.addNewAbo(selectedFilter);
+            });
             miAboAddChannelTheme.setOnAction(a ->
-                    progData.aboList.addAbo(film.getTheme(), film.getChannel(), film.getTheme(), ""));
+                    progData.aboList.addNewAbo(film.getTheme(), film.getChannel(), film.getTheme(), ""));
             miAboAddChannelThemeTitle.setOnAction(a ->
-                    progData.aboList.addAbo(film.getTheme(), film.getChannel(), film.getTheme(), film.getTitle()));
+                    progData.aboList.addNewAbo(film.getTheme(), film.getChannel(), film.getTheme(), film.getTitle()));
+            // Abo löschen/ändern
+            miAboChange.setDisable(true);
+            miAboDel.setDisable(true);
         } else {
+            // Abo gibts schon
+            miAboAddFilter.setDisable(true);
             miAboAddChannelTheme.setDisable(true);
             miAboAddChannelThemeTitle.setDisable(true);
-            miAboDel.setOnAction(event ->
-                    progData.aboList.deleteAbo(film.getAbo()));
+            // Abo löschen/ändern
             miAboChange.setOnAction(event ->
                     progData.aboList.changeAbo(film.getAbo()));
+            miAboDel.setOnAction(event ->
+                    progData.aboList.deleteAbo(film.getAbo()));
         }
-        submenuAbo.getItems().addAll(miAboDel, miAboAddChannelTheme, miAboAddChannelThemeTitle, miAboChange);
+
+        submenuAbo.getItems().addAll(miAboAddFilter, miAboAddChannelTheme, miAboAddChannelThemeTitle, miAboChange, miAboDel);
         contextMenu.getItems().add(submenuAbo);
 
         // Film mit Set starten
