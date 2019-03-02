@@ -50,6 +50,7 @@ public class TableFilm {
     public TableColumn[] initFilmColumn(TableView table) {
         table.getColumns().clear();
 
+        ProgConfig.SYSTEM_SMALL_TABLE_ROW.getStringProperty().addListener((observableValue, s, t1) -> table.refresh());
         MTColor.FILM_LIVESTREAM.colorProperty().addListener((a, b, c) -> table.refresh());
         MTColor.FILM_GEOBLOCK.colorProperty().addListener((a, b, c) -> table.refresh());
         MTColor.FILM_NEW.colorProperty().addListener((a, b, c) -> table.refresh());

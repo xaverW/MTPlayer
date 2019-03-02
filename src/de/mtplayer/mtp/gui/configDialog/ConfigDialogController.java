@@ -46,7 +46,6 @@ public class ConfigDialogController extends PDialog {
     BooleanProperty propSize = ProgConfig.SYSTEM_SMALL_TABLE_ROW.getBooleanProperty();
 
     private final ProgData progData;
-    private boolean tableRowSizeChanged = false;
 
     public ConfigDialogController() {
         super(ProgConfig.CONFIG_DIALOG_SIZE.getStringProperty(), "Einstellungen", true);
@@ -72,7 +71,6 @@ public class ConfigDialogController extends PDialog {
         stage = getStage();
         btnOk.setOnAction(a -> close());
         initPanel();
-        propSize.addListener((observableValue, aBoolean, t1) -> tableRowSizeChanged = true);
     }
 
     public void close() {
@@ -88,9 +86,6 @@ public class ConfigDialogController extends PDialog {
             Listener.notify(Listener.EREIGNIS_BLACKLIST_GEAENDERT, ConfigDialogController.class.getSimpleName());
         }
         Listener.notify(Listener.EREIGNIS_SETDATA_CHANGED, ConfigDialogController.class.getSimpleName());
-        if (tableRowSizeChanged) {
-            Listener.notify(Listener.EREIGNIS_TABLE_ROW_SIZE_CHANGED, ConfigDialogController.class.getSimpleName());
-        }
         super.close();
     }
 

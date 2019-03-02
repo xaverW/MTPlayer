@@ -53,21 +53,13 @@ public class TableDownload {
     public TableColumn[] initDownloadColumn(TableView table) {
         table.getColumns().clear();
 
-        MTColor.FILM_GEOBLOCK.colorProperty().addListener((a, b, c) -> {
-            table.refresh();
-        });
-        MTColor.DOWNLOAD_WAIT.colorProperty().addListener((a, b, c) -> {
-            table.refresh();
-        });
-        MTColor.DOWNLOAD_RUN.colorProperty().addListener((a, b, c) -> {
-            table.refresh();
-        });
-        MTColor.DOWNLOAD_FINISHED.colorProperty().addListener((a, b, c) -> {
-            table.refresh();
-        });
-        MTColor.DOWNLOAD_ERROR.colorProperty().addListener((a, b, c) -> {
-            table.refresh();
-        });
+        ProgConfig.SYSTEM_SMALL_TABLE_ROW.getStringProperty().addListener((observableValue, s, t1) -> table.refresh());
+
+        MTColor.FILM_GEOBLOCK.colorProperty().addListener((a, b, c) -> table.refresh());
+        MTColor.DOWNLOAD_WAIT.colorProperty().addListener((a, b, c) -> table.refresh());
+        MTColor.DOWNLOAD_RUN.colorProperty().addListener((a, b, c) -> table.refresh());
+        MTColor.DOWNLOAD_FINISHED.colorProperty().addListener((a, b, c) -> table.refresh());
+        MTColor.DOWNLOAD_ERROR.colorProperty().addListener((a, b, c) -> table.refresh());
 
 
         final TableColumn<Download, Integer> nrColumn = new TableColumn<>("Nr");

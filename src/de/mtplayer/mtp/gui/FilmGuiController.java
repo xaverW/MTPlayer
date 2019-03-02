@@ -179,12 +179,6 @@ public class FilmGuiController extends AnchorPane {
                 Table.refresh_table(tableView);
             }
         });
-        Listener.addListener(new Listener(Listener.EREIGNIS_TABLE_ROW_SIZE_CHANGED, FilmGuiController.class.getSimpleName()) {
-            @Override
-            public void pingFx() {
-                tableView.refresh();
-            }
-        });
 
     }
 

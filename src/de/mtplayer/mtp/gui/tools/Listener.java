@@ -38,7 +38,6 @@ public class Listener implements EventListener {
     public static final int EREIGNIS_GUI_COLOR_CHANGED = count++;
     public static final int EREIGNIS_GUI_HISTORY_CHANGED = count++;
     public static final int EREIGNIS_SETDATA_CHANGED = count++;
-    public static final int EREIGNIS_TABLE_ROW_SIZE_CHANGED = count++;
 
     public int[] event = {-1};
     public String eventClass = "";

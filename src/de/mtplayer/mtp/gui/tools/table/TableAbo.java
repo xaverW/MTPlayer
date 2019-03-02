@@ -141,17 +141,6 @@ public class TableAbo {
                             return;
                         }
 
-//                        setAlignment(Pos.CENTER);
-//                        CheckBox box = new CheckBox();
-//                        box.setMaxHeight(6);
-//                        box.setMinHeight(6);
-//                        box.setPrefSize(6, 6);
-//                        box.setDisable(true);
-//                        box.getStyleClass().add("checkbox-table");
-//
-//                        box.setSelected(item.booleanValue());
-//                        setGraphic(box);
-
                         initCell(item);
 
                         TableRow<Abo> currentRow = getTableRow();

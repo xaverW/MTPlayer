@@ -360,12 +360,6 @@ public class DownloadGuiController extends AnchorPane {
                 tableView.refresh();
             }
         });
-        Listener.addListener(new Listener(Listener.EREIGNIS_TABLE_ROW_SIZE_CHANGED, DownloadGuiController.class.getSimpleName()) {
-            @Override
-            public void pingFx() {
-                tableView.refresh();
-            }
-        });
 
         progData.downloadList.downloadsChangedProperty().addListener((observable, oldValue, newValue) ->
                 Platform.runLater(() -> setFilter()));
