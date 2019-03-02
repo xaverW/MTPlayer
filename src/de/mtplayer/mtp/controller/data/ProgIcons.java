@@ -42,12 +42,13 @@ public class ProgIcons {
 
 
     // table
-    public static final Image IMAGE_TABLE_FILM_PLAY = GetIcon.getImage("table-film-play.png", 16, 16);
-    public static final Image IMAGE_TABLE_FILM_SAVE = GetIcon.getImage("table-film-save.png", 16, 16);
-    public static final Image IMAGE_TABLE_DOWNLOAD_START = GetIcon.getImage("table-download-start.png", 16, 16);
-    public static final Image IMAGE_TABLE_DOWNLOAD_DEL = GetIcon.getImage("table-download-del.png", 16, 16);
-    public static final Image IMAGE_TABLE_DOWNLOAD_STOP = GetIcon.getImage("table-download-stop.png", 16, 16);
-    public static final Image IMAGE_TABLE_DOWNLOAD_OPEN_DIR = GetIcon.getImage("table-download-open-dir.png", 16, 16);
+    public static final Image IMAGE_TABLE_FILM_PLAY = GetIcon.getImage("table-film-play.png", 14, 14);
+    public static final Image IMAGE_TABLE_FILM_SAVE = GetIcon.getImage("table-film-save.png", 14, 14);
+    public static final Image IMAGE_TABLE_FILM_RESERVE = GetIcon.getImage("table-film-reserve.png", 14, 14);
+    public static final Image IMAGE_TABLE_DOWNLOAD_START = GetIcon.getImage("table-download-start.png", 14, 14);
+    public static final Image IMAGE_TABLE_DOWNLOAD_DEL = GetIcon.getImage("table-download-del.png", 14, 14);
+    public static final Image IMAGE_TABLE_DOWNLOAD_STOP = GetIcon.getImage("table-download-stop.png", 14, 14);
+    public static final Image IMAGE_TABLE_DOWNLOAD_OPEN_DIR = GetIcon.getImage("table-download-open-dir.png", 14, 14);
 
     public final ImageView ICON_BUTTON_STOP = GetIcon.getImageView("button-stop.png", 16, 16);
     public final ImageView ICON_BUTTON_NEXT = GetIcon.getImageView("button-next.png", 16, 16);

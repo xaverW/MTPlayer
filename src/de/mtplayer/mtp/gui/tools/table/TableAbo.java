@@ -16,6 +16,7 @@
 
 package de.mtplayer.mtp.gui.tools.table;
 
+import de.mtplayer.mLib.tools.CheckBoxCell;
 import de.mtplayer.mLib.tools.MDate;
 import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.controller.data.abo.Abo;
@@ -24,7 +25,6 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
@@ -43,6 +43,7 @@ public class TableAbo {
 
         final TableColumn<Abo, Boolean> activColumn = new TableColumn<>("Aktiv");
         activColumn.setCellValueFactory(new PropertyValueFactory<>("active"));
+        activColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
         activColumn.setCellFactory(callbackAktiv);
         activColumn.getStyleClass().add("alignCenter");
 
@@ -69,7 +70,8 @@ public class TableAbo {
 
         final TableColumn<Abo, Boolean> senderExactColumn = new TableColumn<>("Sender exakt");
         senderExactColumn.setCellValueFactory(new PropertyValueFactory<>("channelExact"));
-        senderExactColumn.setCellFactory(CheckBoxTableCell.forTableColumn(senderExactColumn));
+        senderExactColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
+//        senderExactColumn.setCellFactory(CheckBoxTableCell.forTableColumn(senderExactColumn));
         senderExactColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<Abo, String> themeColumn = new TableColumn<>("Thema");
@@ -78,7 +80,8 @@ public class TableAbo {
 
         final TableColumn<Abo, Boolean> themeExactColumn = new TableColumn<>("Thema exakt");
         themeExactColumn.setCellValueFactory(new PropertyValueFactory<>("themeExact"));
-        themeExactColumn.setCellFactory(CheckBoxTableCell.forTableColumn(themeExactColumn));
+        themeExactColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
+//        themeExactColumn.setCellFactory(CheckBoxTableCell.forTableColumn(themeExactColumn));
         themeExactColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<Abo, String> themeTitleColumn = new TableColumn<>("Thema-Titel");
@@ -125,7 +128,7 @@ public class TableAbo {
     private static Callback<TableColumn<Abo, Boolean>, TableCell<Abo, Boolean>> callbackAktiv =
             (final TableColumn<Abo, Boolean> param) -> {
 
-                final CheckBoxTableCell<Abo, Boolean> cell = new CheckBoxTableCell<Abo, Boolean>() {
+                final CheckBoxCell<Abo, Boolean> cell = new CheckBoxCell<Abo, Boolean>() {
 
                     @Override
                     public void updateItem(Boolean item, boolean empty) {
@@ -137,6 +140,19 @@ public class TableAbo {
                             setText(null);
                             return;
                         }
+
+//                        setAlignment(Pos.CENTER);
+//                        CheckBox box = new CheckBox();
+//                        box.setMaxHeight(6);
+//                        box.setMinHeight(6);
+//                        box.setPrefSize(6, 6);
+//                        box.setDisable(true);
+//                        box.getStyleClass().add("checkbox-table");
+//
+//                        box.setSelected(item.booleanValue());
+//                        setGraphic(box);
+
+                        initCell(item);
 
                         TableRow<Abo> currentRow = getTableRow();
                         if (currentRow != null) {

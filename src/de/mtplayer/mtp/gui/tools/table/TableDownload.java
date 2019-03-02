@@ -43,9 +43,11 @@ import java.util.List;
 public class TableDownload {
 
     private final BooleanProperty geoMelden;
+    private final BooleanProperty small;
 
     public TableDownload() {
         geoMelden = ProgConfig.SYSTEM_MARK_GEO.getBooleanProperty();
+        small = ProgConfig.SYSTEM_SMALL_TABLE_ROW.getBooleanProperty();
     }
 
     public TableColumn[] initDownloadColumn(TableView table) {
@@ -275,7 +277,6 @@ public class TableDownload {
                     btnDownStart = new Button("");
                     btnDownStart.setTooltip(new Tooltip("Download starten"));
                     btnDownStart.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_DOWNLOAD_START));
-
                     btnDownStart.setOnAction((ActionEvent event) -> {
                         Download download = getTableView().getItems().get(getIndex());
                         ProgData.getInstance().downloadList.startDownloads(download);
@@ -284,18 +285,24 @@ public class TableDownload {
                     btnDownDel = new Button("");
                     btnDownDel.setTooltip(new Tooltip("Download löschen"));
                     btnDownDel.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_DOWNLOAD_DEL));
-
                     btnDownDel.setOnAction(event -> {
                         Download download = getTableView().getItems().get(getIndex());
                         ProgData.getInstance().downloadList.delDownloads(download);
                     });
+
+                    if (small.get()) {
+                        btnDownStart.setMinHeight(18);
+                        btnDownStart.setMaxHeight(18);
+                        btnDownDel.setMinHeight(18);
+                        btnDownDel.setMaxHeight(18);
+                    }
                     hbox.getChildren().addAll(btnDownStart, btnDownDel);
                     setGraphic(hbox);
+
                 } else if (item < DownloadConstants.STATE_FINISHED) {
                     btnDownStop = new Button("");
                     btnDownStop.setTooltip(new Tooltip("Download stoppen"));
                     btnDownStop.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_DOWNLOAD_STOP));
-
                     btnDownStop.setOnAction((ActionEvent event) -> {
                         Download download = getTableView().getItems().get(getIndex());
                         download.stopDownload();
@@ -304,13 +311,20 @@ public class TableDownload {
                     btnDownDel = new Button("");
                     btnDownDel.setTooltip(new Tooltip("Download löschen"));
                     btnDownDel.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_DOWNLOAD_DEL));
-
                     btnDownDel.setOnAction(event -> {
                         Download download = getTableView().getItems().get(getIndex());
                         ProgData.getInstance().downloadList.delDownloads(download);
                     });
+
+                    if (small.get()) {
+                        btnDownStop.setMinHeight(18);
+                        btnDownStop.setMaxHeight(18);
+                        btnDownDel.setMinHeight(18);
+                        btnDownDel.setMaxHeight(18);
+                    }
                     hbox.getChildren().addAll(btnDownStop, btnDownDel);
                     setGraphic(hbox);
+
                 } else if (item == DownloadConstants.STATE_FINISHED) {
                     btnFilmStart = new Button("");
                     btnFilmStart.setTooltip(new Tooltip("gespeicherten Film abspielen"));
@@ -330,22 +344,19 @@ public class TableDownload {
                                 ProgConfig.SYSTEM_PROG_OPEN_DIR.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
                     });
 
+                    if (small.get()) {
+                        btnFilmStart.setMinHeight(18);
+                        btnFilmStart.setMaxHeight(18);
+                        btnOpenDirectory.setMinHeight(18);
+                        btnOpenDirectory.setMaxHeight(18);
+                    }
                     hbox.getChildren().addAll(btnFilmStart, btnOpenDirectory);
                     setGraphic(hbox);
+
                 } else if (item == DownloadConstants.STATE_ERROR) {
-                    btnDownDel = new Button("");
-                    btnDownDel.setTooltip(new Tooltip("Download löschen"));
-                    btnDownDel.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_DOWNLOAD_DEL));
-
-                    btnDownDel.setOnAction(event -> {
-                        Download download = getTableView().getItems().get(getIndex());
-                        ProgData.getInstance().downloadList.delDownloads(download);
-                    });
-
                     btnDownStart = new Button("");
                     btnDownStart.setTooltip(new Tooltip("Download wider starten"));
                     btnDownStart.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_DOWNLOAD_START));
-
                     btnDownStart.setOnAction((ActionEvent event) -> {
                         Download download = getTableView().getItems().get(getIndex());
                         List<Download> list = new ArrayList<>();
@@ -353,8 +364,23 @@ public class TableDownload {
                         ProgData.getInstance().downloadList.startDownloads(list, true);
                     });
 
+                    btnDownDel = new Button("");
+                    btnDownDel.setTooltip(new Tooltip("Download löschen"));
+                    btnDownDel.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_DOWNLOAD_DEL));
+                    btnDownDel.setOnAction(event -> {
+                        Download download = getTableView().getItems().get(getIndex());
+                        ProgData.getInstance().downloadList.delDownloads(download);
+                    });
+
+                    if (small.get()) {
+                        btnDownStart.setMinHeight(18);
+                        btnDownStart.setMaxHeight(18);
+                        btnDownDel.setMinHeight(18);
+                        btnDownDel.setMaxHeight(18);
+                    }
                     hbox.getChildren().addAll(btnDownStart, btnDownDel);
                     setGraphic(hbox);
+
                 } else {
                     setGraphic(null);
                     setText(null);

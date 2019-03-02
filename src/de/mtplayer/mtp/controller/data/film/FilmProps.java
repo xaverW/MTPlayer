@@ -44,6 +44,7 @@ public class FilmProps extends FilmXml {
     private final BooleanProperty newFilm = new SimpleBooleanProperty(false);
     private final BooleanProperty shown = new SimpleBooleanProperty(false);
     private final BooleanProperty actHist = new SimpleBooleanProperty(false);
+    private final BooleanProperty reserve = new SimpleBooleanProperty(false);
 
     public int getFilmTime() {
         return filmTime;
@@ -51,18 +52,6 @@ public class FilmProps extends FilmXml {
 
     public void setFilmTime(int filmTime) {
         this.filmTime = filmTime;
-    }
-
-    public boolean getActHist() {
-        return actHist.get();
-    }
-
-    public BooleanProperty actHistProperty() {
-        return actHist;
-    }
-
-    public void setActHist(boolean actHist) {
-        this.actHist.set(actHist);
     }
 
     public boolean isGeoBlocked() {
@@ -100,20 +89,6 @@ public class FilmProps extends FilmXml {
 
     public void setDoubleUrl(boolean doubleUrl) {
         this.doubleUrl = doubleUrl;
-    }
-
-    public boolean isShown() {
-        return shown.get();
-    }
-
-    public BooleanProperty shownProperty() {
-        return shown;
-    }
-
-    public void setShown(boolean shown) {
-        if (!arr[FilmXml.FILM_THEME].equals(FilmTools.THEME_LIVE)) {
-            this.shown.set(shown);
-        }
     }
 
     public int getNr() {
@@ -156,7 +131,8 @@ public class FilmProps extends FilmXml {
         hd = b;
     }
 
-//    public BooleanProperty hdProperty() {
+
+    //    public BooleanProperty hdProperty() {
 //        return hd;
 //    }
 
@@ -176,7 +152,8 @@ public class FilmProps extends FilmXml {
         ut = b;
     }
 
-//    public BooleanProperty utProperty() {
+
+    //    public BooleanProperty utProperty() {
 //        return ut;
 //    }
 
@@ -216,7 +193,8 @@ public class FilmProps extends FilmXml {
         return arr[FILM_URL_AUTH];
     }
 
-//    das macht keinen Sinn da, da die URLs erst "zusammengebaut" werden müssen
+
+    //    das macht keinen Sinn da, da die URLs erst "zusammengebaut" werden müssen
 //    public String getUrlKlein() {
 //        return arr[FILM_URL_KLEIN];
 //    }
@@ -251,6 +229,44 @@ public class FilmProps extends FilmXml {
 
     public BooleanProperty newFilmProperty() {
         return newFilm;
+    }
+
+    public boolean isShown() {
+        return shown.get();
+    }
+
+    public BooleanProperty shownProperty() {
+        return shown;
+    }
+
+    public void setShown(boolean shown) {
+        if (!arr[FilmXml.FILM_THEME].equals(FilmTools.THEME_LIVE)) {
+            this.shown.set(shown);
+        }
+    }
+
+    public boolean getActHist() {
+        return actHist.get();
+    }
+
+    public BooleanProperty actHistProperty() {
+        return actHist;
+    }
+
+    public void setActHist(boolean actHist) {
+        this.actHist.set(actHist);
+    }
+
+    public boolean isReserve() {
+        return reserve.get();
+    }
+
+    public BooleanProperty reserveProperty() {
+        return reserve;
+    }
+
+    public void setReserve(boolean reserve) {
+        this.reserve.set(reserve);
     }
 
     public String getFilmDateLong() {

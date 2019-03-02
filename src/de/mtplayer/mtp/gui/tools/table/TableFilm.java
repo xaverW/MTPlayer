@@ -39,10 +39,12 @@ public class TableFilm {
 
     private final ProgData progData;
     private final BooleanProperty geoMelden;
+    private final BooleanProperty small;
 
     public TableFilm(ProgData progData) {
         this.progData = progData;
         geoMelden = ProgConfig.SYSTEM_MARK_GEO.getBooleanProperty();
+        small = ProgConfig.SYSTEM_SMALL_TABLE_ROW.getBooleanProperty();
     }
 
     public TableColumn[] initFilmColumn(TableView table) {
@@ -247,23 +249,32 @@ public class TableFilm {
                 Film film = getTableView().getItems().get(getIndex());
 
                 final HBox hbox = new HBox();
-                hbox.setSpacing(5);
-                hbox.setMaxHeight(5);
+                hbox.setSpacing(4);
                 hbox.setAlignment(Pos.CENTER);
                 hbox.setPadding(new Insets(0, 2, 0, 2));
 
                 final Button btnPlay;
                 final Button btnSave;
+                final Button btnReserve;
+
 
                 btnPlay = new Button("");
-                btnPlay.setMaxHeight(5);
-                btnPlay.setPrefHeight(5);
                 btnPlay.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_FILM_PLAY));
 
                 btnSave = new Button("");
-                btnSave.setMaxHeight(5);
-                btnSave.setPrefHeight(5);
                 btnSave.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_FILM_SAVE));
+
+                btnReserve = new Button("");
+                btnReserve.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_FILM_RESERVE));
+
+                if (small.get()) {
+                    btnPlay.setMaxHeight(18);
+                    btnPlay.setMinHeight(18);
+                    btnSave.setMaxHeight(18);
+                    btnSave.setMinHeight(18);
+                    btnReserve.setMaxHeight(18);
+                    btnReserve.setMinHeight(18);
+                }
 
                 btnPlay.setOnAction((ActionEvent event) -> {
                     FilmTools.playFilm(film, null);
@@ -271,7 +282,10 @@ public class TableFilm {
                 btnSave.setOnAction(event -> {
                     ProgData.getInstance().filmlist.saveFilm(film, null);
                 });
-                hbox.getChildren().addAll(btnPlay, btnSave);
+                btnReserve.setOnAction(event -> {
+
+                });
+                hbox.getChildren().addAll(btnPlay, btnSave, btnReserve);
                 setGraphic(hbox);
             }
         };
