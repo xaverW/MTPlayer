@@ -267,9 +267,9 @@ public class FilmInfoDialogController extends PDialog {
     }
 
     private void setUrl() {
-        System.out.println("Inter " + urlIndeterminateProperty.get());
-        System.out.println("Url   " + urlProperty.get());
-        System.out.println(" ");
+//        System.out.println("Inter " + urlIndeterminateProperty.get());
+//        System.out.println("Url   " + urlProperty.get());
+//        System.out.println(" ");
 
         if (urlProperty.get()) {
             pHyperlinkUrl.setWrapText(true);
