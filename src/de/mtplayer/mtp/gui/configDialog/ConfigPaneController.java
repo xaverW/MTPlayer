@@ -65,7 +65,8 @@ public class ConfigPaneController extends AnchorPane {
     StringProperty propPlay = ProgConfig.SYSTEM_PROG_PLAY_FILME.getStringProperty();
     BooleanProperty propLog = ProgConfig.SYSTEM_LOG_ON.getBooleanProperty();
     StringProperty propLogDir = ProgConfig.SYSTEM_LOG_DIR.getStringProperty();
-    BooleanProperty propSize = ProgConfig.SYSTEM_SMALL_TABLE_ROW.getBooleanProperty();
+    BooleanProperty propSizeFilm = ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM.getBooleanProperty();
+    BooleanProperty propSizeDownload = ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD.getBooleanProperty();
 
     IntegerProperty selectedTab = ProgConfig.SYSTEM_CONFIG_DIALOG_CONFIG;
 
@@ -141,8 +142,11 @@ public class ConfigPaneController extends AnchorPane {
                 HelpText.SEARCH_ABOS_IMMEDIATELY);
         GridPane.setHalignment(btnHelpAbo, HPos.RIGHT);
 
-        final PToggleSwitch tglSmallSize = new PToggleSwitch("In den Tabellen nur kleine Button anzeigen:");
-        tglSmallSize.selectedProperty().bindBidirectional(propSize);
+        final PToggleSwitch tglSmallFilm = new PToggleSwitch("In der Tabelle \"Film\" nur kleine Button anzeigen:");
+        tglSmallFilm.selectedProperty().bindBidirectional(propSizeFilm);
+
+        final PToggleSwitch tglSmallDownload = new PToggleSwitch("In der Tabelle \"Download\" nur kleine Button anzeigen:");
+        tglSmallDownload.selectedProperty().bindBidirectional(propSizeDownload);
 
         final Button btnHelpSize = PButton.helpButton(stage, "Nur kleine Button anzeigen",
                 HelpText.SMALL_BUTTON);
@@ -198,8 +202,9 @@ public class ConfigPaneController extends AnchorPane {
         gridPane.add(tglStartDownload, 0, ++row, 2, 1);
         gridPane.add(btnHelpDownload, 2, row);
 
-        gridPane.add(tglSmallSize, 0, ++row, 2, 1);
+        gridPane.add(tglSmallFilm, 0, ++row, 2, 1);
         gridPane.add(btnHelpSize, 2, row);
+        gridPane.add(tglSmallDownload, 0, ++row, 2, 1);
 
         gridPane.add(new Label(" "), 0, ++row);
         gridPane.add(new Label("User Agent:"), 0, ++row);

@@ -47,13 +47,13 @@ public class TableDownload {
 
     public TableDownload() {
         geoMelden = ProgConfig.SYSTEM_MARK_GEO.getBooleanProperty();
-        small = ProgConfig.SYSTEM_SMALL_TABLE_ROW.getBooleanProperty();
+        small = ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD.getBooleanProperty();
     }
 
     public TableColumn[] initDownloadColumn(TableView table) {
         table.getColumns().clear();
 
-        ProgConfig.SYSTEM_SMALL_TABLE_ROW.getStringProperty().addListener((observableValue, s, t1) -> table.refresh());
+        ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD.getStringProperty().addListener((observableValue, s, t1) -> table.refresh());
 
         MTColor.FILM_GEOBLOCK.colorProperty().addListener((a, b, c) -> table.refresh());
         MTColor.DOWNLOAD_WAIT.colorProperty().addListener((a, b, c) -> table.refresh());

@@ -306,8 +306,8 @@ public class HelpText {
             "sofort nach neuen Abos gesucht. Ansonsten muss man " +
             "im Tab Download auf \"Downloads aktualisieren\" klicken.";
 
-    public static final String SMALL_BUTTON = "In der Tabelle Filme und Download werden nur " +
-            "kleine Button angezeigt. Die Zeilenhöhe ist dadurch kleiner.";
+    public static final String SMALL_BUTTON = "In der Tabelle Filme und Downloads können auch " +
+            "kleine Buttons angezeigt werden. Die Zeilenhöhe wird dadurch kleiner.";
 
     public static final String USER_AGENT = "Hier kann ein User Agent angegeben werden. " +
             "Bei Downloads wird er dann als Absender verwendet. Bleibt das Feld leer, wird kein User Agent " +

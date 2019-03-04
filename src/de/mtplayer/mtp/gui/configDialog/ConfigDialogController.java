@@ -21,7 +21,6 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.p2tools.p2Lib.dialog.PDialog;
 import de.p2tools.p2Lib.tools.log.PLog;
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -43,7 +42,6 @@ public class ConfigDialogController extends PDialog {
     private Stage stage;
 
     IntegerProperty propSelectedTab = ProgConfig.SYSTEM_CONFIG_DIALOG_TAB;
-    BooleanProperty propSize = ProgConfig.SYSTEM_SMALL_TABLE_ROW.getBooleanProperty();
 
     private final ProgData progData;
 

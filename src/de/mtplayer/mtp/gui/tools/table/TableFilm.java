@@ -44,13 +44,13 @@ public class TableFilm {
     public TableFilm(ProgData progData) {
         this.progData = progData;
         geoMelden = ProgConfig.SYSTEM_MARK_GEO.getBooleanProperty();
-        small = ProgConfig.SYSTEM_SMALL_TABLE_ROW.getBooleanProperty();
+        small = ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM.getBooleanProperty();
     }
 
     public TableColumn[] initFilmColumn(TableView table) {
         table.getColumns().clear();
 
-        ProgConfig.SYSTEM_SMALL_TABLE_ROW.getStringProperty().addListener((observableValue, s, t1) -> table.refresh());
+        ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM.getStringProperty().addListener((observableValue, s, t1) -> table.refresh());
         MTColor.FILM_LIVESTREAM.colorProperty().addListener((a, b, c) -> table.refresh());
         MTColor.FILM_GEOBLOCK.colorProperty().addListener((a, b, c) -> table.refresh());
         MTColor.FILM_NEW.colorProperty().addListener((a, b, c) -> table.refresh());
