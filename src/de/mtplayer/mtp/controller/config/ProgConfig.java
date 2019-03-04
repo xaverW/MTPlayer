@@ -207,6 +207,7 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs COLOR__FILM_LIVESTREAM = addNewKey("COLOR_FILM_LIVESTREAM");
     public static MLConfigs COLOR__FILM_HISTORY = addNewKey("COLOR_FILM_HISTORY");
     public static MLConfigs COLOR__FILM_NEW = addNewKey("COLOR_FILM_NEW");
+    public static MLConfigs COLOR__FILM_RESERVED = addNewKey("COLOR_FILM_RESERVED");
     public static MLConfigs COLOR__FILM_GEOBLOCK_BACKGROUND = addNewKey("COLOR_FILM_GEOBLOCK_BACKGROUND");
     public static MLConfigs COLOR__FILM_GEOBLOCK_BACKGROUND_SEL = addNewKey("COLOR_FILM_GEOBLOCK_BACKGROUND_SEL");
     public static MLConfigs COLOR__DOWNLOAD_IS_ABO = addNewKey("COLOR_DOWNLOAD_IS_ABO");

@@ -55,6 +55,7 @@ public class SelectedFilterProps {
     private final IntegerProperty maxTime = new SimpleIntegerProperty(FILTER_FILMTIME_MAX_SEC); // Tageszeit in Sekunden
 
     private final BooleanProperty onlyVis = new SimpleBooleanProperty(false);
+    private final BooleanProperty onlyReserved = new SimpleBooleanProperty(false);
     private final BooleanProperty onlyHd = new SimpleBooleanProperty(false);
     private final BooleanProperty onlyNew = new SimpleBooleanProperty(false);
     private final BooleanProperty onlyUt = new SimpleBooleanProperty(false);
@@ -371,6 +372,18 @@ public class SelectedFilterProps {
 
     public void setOnlyVis(boolean onlyVis) {
         this.onlyVis.set(onlyVis);
+    }
+
+    public boolean isOnlyReserved() {
+        return onlyReserved.get();
+    }
+
+    public BooleanProperty onlyReservedProperty() {
+        return onlyReserved;
+    }
+
+    public void setOnlyReserved(boolean onlyReserved) {
+        this.onlyReserved.set(onlyReserved);
     }
 
     public boolean isOnlyHd() {

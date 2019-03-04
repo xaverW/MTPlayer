@@ -75,6 +75,7 @@ public class TableFilm {
         final TableColumn<Film, String> startColumn = new TableColumn<>("");
         startColumn.setCellFactory(cellFactoryStart);
         startColumn.getStyleClass().add("alignCenter");
+        startColumn.setPrefWidth(150);
 
         final TableColumn<Film, MDate> datumColumn = new TableColumn<>("Datum");
         datumColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
@@ -126,15 +127,15 @@ public class TableFilm {
 //        shownColumn.setCellValueFactory(new PropertyValueFactory<>("shown"));
 //        shownColumn.setCellFactory(cellFactoryShown);
 
-        final TableColumn<Film, Boolean> doubleColumn = new TableColumn<>("Doppelt");
-        doubleColumn.setCellValueFactory(new PropertyValueFactory<>("doubleUrl"));
-        doubleColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
-        doubleColumn.getStyleClass().add("alignCenter");
-
-        final TableColumn<Film, Boolean> actHistColumn = new TableColumn<>("akt. gesehen");
-        actHistColumn.setCellValueFactory(new PropertyValueFactory<>("actHist"));
-        actHistColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
-        actHistColumn.getStyleClass().add("alignCenter");
+//        final TableColumn<Film, Boolean> doubleColumn = new TableColumn<>("Doppelt");
+//        doubleColumn.setCellValueFactory(new PropertyValueFactory<>("doubleUrl"));
+//        doubleColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
+//        doubleColumn.getStyleClass().add("alignCenter");
+//
+//        final TableColumn<Film, Boolean> actHistColumn = new TableColumn<>("akt. gesehen");
+//        actHistColumn.setCellValueFactory(new PropertyValueFactory<>("actHist"));
+//        actHistColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
+//        actHistColumn.getStyleClass().add("alignCenter");
 
 //        final TableColumn<Film, Boolean> futureColumn = new TableColumn<>("Zukunft");
 //        futureColumn.setCellValueFactory(new PropertyValueFactory<>("inFuture"));
@@ -153,7 +154,7 @@ public class TableFilm {
                 urlColumn, aboColumn,
 //                newColumn,
 //                shownColumn,
-                doubleColumn, actHistColumn,
+//                doubleColumn, actHistColumn,
 //                futureColumn
         };
 
@@ -188,14 +189,24 @@ public class TableFilm {
                             getChildren().get(i).setStyle(MTColor.FILM_NEW.getCssFont());
                         }
 
+//                    } else if (film.isReserve()) {
+//                        // vorgemerkte Filme
+//                        for (int i = 0; i < getChildren().size(); i++) {
+//                            getChildren().get(i).setStyle(MTColor.FILM_RESERVED.getCssFont());
+//                        }
+//
                     } else {
                         for (int i = 0; i < getChildren().size(); i++) {
                             getChildren().get(i).setStyle("");
                         }
                     }
 
-                    if (film.isShown()) {
+                    if (film.isReserve()) {
+                        setStyle(MTColor.FILM_RESERVED.getCssBackgroundSel());
+
+                    } else if (film.isShown()) {
                         setStyle(MTColor.FILM_HISTORY.getCssBackgroundSel());
+
                     } else {
                         setStyle("");
                     }
@@ -284,7 +295,7 @@ public class TableFilm {
                     ProgData.getInstance().filmlist.saveFilm(film, null);
                 });
                 btnReserve.setOnAction(event -> {
-
+                    FilmTools.reserveFilm(film);
                 });
                 hbox.getChildren().addAll(btnPlay, btnSave, btnReserve);
                 setGraphic(hbox);

@@ -48,6 +48,11 @@ public class FilmTools {
     }
 
 
+    public static void reserveFilm(Film film) {
+        film.setReserve(!film.isReserve());
+        ProgData.getInstance().filmGuiController.refreshTable();
+    }
+
     public static void playFilm(Film film, SetData psetData) {
         SetData setData;
         String resolution = "";

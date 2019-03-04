@@ -43,9 +43,6 @@ import java.util.Optional;
 
 public class FilmFilterController extends FilterController {
 
-    final String pattern = "HH:mm";
-//    final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
-
     private final Slider slDays = new Slider();
     private final Label lblDays = new Label();
 
@@ -77,11 +74,13 @@ public class FilmFilterController extends FilterController {
     private final Button btnSaveFilter = new Button("speichern");
     private final Button btnNewFilter = new Button("neu anlegen");
 
+    private final String ONLY_RESERVED = "markierte";
     private final String ONLY_HD = "HD";
     private final String ONLY_UT = "UT";
-    private final String ONLY_NEW = "Neue";
+    private final String ONLY_NEW = "neue";
     private final String ONLY_LIVE = "Livestreams";
     private final String ONLY_AKT_HISTORY = "aktuelle History";
+
     private final String NOT_ABO = "Abos";
     private final String NOT_HISTORY = "gesehene";
     private final String NOT_DOUBLE = "doppelte";
@@ -115,22 +114,6 @@ public class FilmFilterController extends FilterController {
         initCheckFilter();
 
         initRest();
-        // gibt ja jetzt die maskerPane
-//        progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
-//            @Override
-//            public void start(ListenerFilmlistLoadEvent event) {
-//                disableFilterPane(true);
-//            }
-//
-//            @Override
-//            public void finished(ListenerFilmlistLoadEvent event) {
-//                disableFilterPane(false);
-//            }
-//        });
-    }
-
-    private void disableFilterPane(boolean dis) {
-        this.setDisable(dis);
     }
 
     private void initButton() {
@@ -395,6 +378,7 @@ public class FilmFilterController extends FilterController {
     }
 
     private void initCheckFilter() {
+        checkOnly.addItem(ONLY_RESERVED, "nur markierte Filme anzeigen", progData.storedFilter.getSelectedFilter().onlyReservedProperty());
         checkOnly.addItem(ONLY_HD, "nur HD-Filme anzeigen", progData.storedFilter.getSelectedFilter().onlyHdProperty());
         checkOnly.addItem(ONLY_UT, "nur Filme mit Untertitel anzeigen", progData.storedFilter.getSelectedFilter().onlyUtProperty());
         checkOnly.addItem(ONLY_NEW, "nur neue Filme anzeigen", progData.storedFilter.getSelectedFilter().onlyNewProperty());

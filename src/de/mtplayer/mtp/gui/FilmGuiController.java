@@ -170,12 +170,10 @@ public class FilmGuiController extends AnchorPane {
             }
             setInfoPane();
         });
-        Listener.addListener(new Listener(new int[]{Listener.EREIGNIS_GUI_COLOR_CHANGED, Listener.EREIGNIS_GUI_HISTORY_CHANGED/*,
-                Listener.EREIGNIS_TABLE_ROW_SIZE_CHANGED*/},
+        Listener.addListener(new Listener(new int[]{Listener.EREIGNIS_GUI_COLOR_CHANGED, Listener.EREIGNIS_GUI_HISTORY_CHANGED},
                 FilmGuiController.class.getSimpleName()) {
             @Override
             public void pingFx() {
-//                tableView.refresh();
                 Table.refresh_table(tableView);
             }
         });

@@ -99,6 +99,7 @@ public final class SelectedFilter extends SelectedFilterProps {
         sfTo.setMaxTime(sfFrom.getMaxTime());
 
         sfTo.setOnlyVis(sfFrom.isOnlyVis());
+        sfTo.setOnlyReserved(sfFrom.isOnlyReserved());
         sfTo.setOnlyHd(sfFrom.isOnlyHd());
         sfTo.setOnlyNew(sfFrom.isOnlyNew());
         sfTo.setOnlyUt(sfFrom.isOnlyUt());
@@ -170,6 +171,7 @@ public final class SelectedFilter extends SelectedFilterProps {
         maxTimeProperty().addListener(l -> changeFilterProperty());
 
         onlyVisProperty().addListener(l -> changeFilterProperty());
+        onlyReservedProperty().addListener(l -> changeFilterProperty());
         onlyHdProperty().addListener(l -> changeFilterProperty());
         onlyNewProperty().addListener(l -> changeFilterProperty());
         onlyUtProperty().addListener(l -> changeFilterProperty());
@@ -208,6 +210,7 @@ public final class SelectedFilter extends SelectedFilterProps {
         setMinTime(0);
         setMaxTime(FILTER_FILMTIME_MAX_SEC);
 
+        setOnlyReserved(false);
         setOnlyHd(false);
         setOnlyNew(false);
         setOnlyUt(false);
@@ -322,17 +325,18 @@ public final class SelectedFilter extends SelectedFilterProps {
         fUrl = new Filter(filterUrl);
         fUrl.makeFilter();// gibt URLs mit ",", das also nicht trennen
 
-        final boolean noAbos = selectedFilter.isNotVis() ? selectedFilter.isNotAbo() : false;
-        final boolean noShown = selectedFilter.isNotVis() ? selectedFilter.isNotHistory() : false;
-        final boolean noDouble = selectedFilter.isNotVis() ? selectedFilter.isNotDouble() : false;
-        final boolean noGeo = selectedFilter.isNotGeo() ? selectedFilter.isNotGeo() : false;
-        final boolean noFuture = selectedFilter.isNotFuture() ? selectedFilter.isNotFuture() : false;
-
+        final boolean onlyReserved = selectedFilter.isOnlyVis() ? selectedFilter.isOnlyReserved() : false;
         final boolean onlyHd = selectedFilter.isOnlyVis() ? selectedFilter.isOnlyHd() : false;
         final boolean onlyUt = selectedFilter.isOnlyVis() ? selectedFilter.isOnlyUt() : false;
         final boolean onlyLive = selectedFilter.isOnlyVis() ? selectedFilter.isOnlyLive() : false;
         final boolean onlyNew = selectedFilter.isOnlyVis() ? selectedFilter.isOnlyNew() : false;
         final boolean onlyAktHist = selectedFilter.isOnlyVis() ? selectedFilter.isOnlyAktHistory() : false;
+
+        final boolean noAbos = selectedFilter.isNotVis() ? selectedFilter.isNotAbo() : false;
+        final boolean noShown = selectedFilter.isNotVis() ? selectedFilter.isNotHistory() : false;
+        final boolean noDouble = selectedFilter.isNotVis() ? selectedFilter.isNotDouble() : false;
+        final boolean noGeo = selectedFilter.isNotVis() ? selectedFilter.isNotGeo() : false;
+        final boolean noFuture = selectedFilter.isNotVis() ? selectedFilter.isNotFuture() : false;
 
         // Länge am Slider in Min, im Film Sekunden
         final int minLaengeSec = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMinDur() * 60 : 0;
@@ -365,6 +369,9 @@ public final class SelectedFilter extends SelectedFilterProps {
             }
         };
 
+        if (onlyReserved) {
+            predicate = predicate.and(f -> f.isReserve());
+        }
         if (onlyHd) {
             predicate = predicate.and(f -> f.isHd());
         }
