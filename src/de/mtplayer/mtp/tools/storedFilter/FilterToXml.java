@@ -95,7 +95,7 @@ public class FilterToXml {
             "Zeit-max",
 
             "nur-vis",
-            "nur-markiert",
+            "nur-bookmark",
             "nur-hd",
             "nur-neu",
             "nur-ut",

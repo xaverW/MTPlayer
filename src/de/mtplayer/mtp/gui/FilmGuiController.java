@@ -117,6 +117,20 @@ public class FilmGuiController extends AnchorPane {
         saveFilm();
     }
 
+    public void bookmarkFilm(boolean bookmark) {
+        final ArrayList<Film> list = getSelList();
+        if (!list.isEmpty()) {
+            FilmTools.bookmarkFilm(progData, list, bookmark);
+        }
+    }
+
+    public void bookmarkFilm() {
+        final ArrayList<Film> list = getSelList();
+        if (!list.isEmpty()) {
+            FilmTools.bookmarkFilm(progData, list, !list.get(0).isBookmark());
+        }
+    }
+
     public void guiFilmMediaCollection() {
         final Optional<Film> film = getSel();
         if (film.isPresent()) {
@@ -339,5 +353,6 @@ public class FilmGuiController extends AnchorPane {
         final ArrayList<Film> list = getSelList();
         progData.filmlist.saveFilm(list, pSet);
     }
+
 
 }

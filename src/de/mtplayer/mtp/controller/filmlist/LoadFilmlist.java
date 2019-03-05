@@ -21,6 +21,7 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.Filmlist;
+import de.mtplayer.mtp.controller.data.film.FilmlistFactory;
 import de.mtplayer.mtp.controller.filmlist.checkFilmlistUpdate.SearchForFilmlistUpdate;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ImportNewFilmlist;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
@@ -282,6 +283,11 @@ public class LoadFilmlist {
         if (!progData.aboList.isEmpty()) {
             logList.add("Abos eintragen");
             progData.aboList.setAboForFilm(progData.filmlist);
+        }
+
+        if (!progData.bookmarks.isEmpty()) {
+            logList.add("Bookmarks eintragen");
+            FilmlistFactory.markBookmarks();
         }
 
         logList.add("Blacklist filtern");

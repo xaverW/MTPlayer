@@ -92,9 +92,12 @@ public class ProgData {
     public MediaDataList mediaDataList = null;
     public MediaCollectionDataList mediaCollectionDataList = null;
 
+    public ReplaceList replaceList = null;
+
     public HistoryList history = null; // alle angesehenen Filme
     public HistoryList erledigteAbos = null; // erfolgreich geladenen Abos
-    public ReplaceList replaceList = null;
+    public HistoryList bookmarks = null; // markierte Filme
+
 
     private ProgData() {
         replaceList = new ReplaceList();
@@ -115,11 +118,14 @@ public class ProgData {
 
         filmListFilter = new FilmListFilter(this);
 
-        erledigteAbos = new HistoryList(ProgConst.FILE_ERLEDIGTE_ABOS,
-                ProgInfos.getSettingsDirectory_String());
 
         history = new HistoryList(ProgConst.FILE_HISTORY,
-                ProgInfos.getSettingsDirectory_String());
+                ProgInfos.getSettingsDirectory_String(), false);
+        erledigteAbos = new HistoryList(ProgConst.FILE_ERLEDIGTE_ABOS,
+                ProgInfos.getSettingsDirectory_String(), false);
+        bookmarks = new HistoryList(ProgConst.FILE_BOOKMARKS,
+                ProgInfos.getSettingsDirectory_String(), true);
+
 
         mediaDataList = new MediaDataList();
         mediaCollectionDataList = new MediaCollectionDataList();
@@ -127,8 +133,6 @@ public class ProgData {
         starterClass = new StarterClass(this);
 
         worker = new Worker(this);
-
-
     }
 
     boolean oneSecond = false;

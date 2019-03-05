@@ -22,7 +22,9 @@ import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmTools;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
+import de.mtplayer.mtp.controller.data.film.FilmlistFactory;
 import de.mtplayer.mtp.gui.tools.Listener;
+import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.beans.property.BooleanProperty;
@@ -31,6 +33,7 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,12 +49,14 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
     private SortedList<HistoryData> sortedList = null;
     private BooleanProperty isWorking = new SimpleBooleanProperty(false);
     public final HistoryWorker historyWorker;
+    private final boolean bookmark;
 
-    public HistoryList(String fileName, String settingsDir) {
+    public HistoryList(String fileName, String settingsDir, boolean bookmark) {
         super(FXCollections.observableArrayList());
 
         this.fileName = fileName;
         this.historyWorker = new HistoryWorker(fileName, settingsDir);
+        this.bookmark = bookmark;
 
         historyWorker.readHistoryDataFromFile(this);
         fillUrlHash();
@@ -81,10 +86,27 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         filteredList.setPredicate(p -> false);
     }
 
-    public synchronized void clearAll() {
-        clearList();
-        historyWorker.deleteHistoryFile();
-        Listener.notify(Listener.EREIGNIS_GUI_HISTORY_CHANGED, HistoryList.class.getSimpleName());
+    public synchronized void clearAll(Stage stage) {
+        final int size = this.size();
+        final String title;
+        if (bookmark) {
+            title = "Bookmarks";
+        } else {
+            title = "Filme";
+        }
+
+        if (size <= 1 || PAlert.showAlertOkCancel(stage, "Löschen", title + " löschen",
+                "Soll die gesamte Liste " +
+                        "(" + size + " " + title + ")" +
+                        " gelöscht werden?")) {
+            clearList();
+            historyWorker.deleteHistoryFile();
+            if (bookmark) {
+                FilmlistFactory.clearAllBookmarks();
+            }
+            Listener.notify(Listener.EREIGNIS_GUI_HISTORY_CHANGED, HistoryList.class.getSimpleName());
+
+        }
     }
 
     public synchronized boolean checkIfUrlAlreadyIn(String urlFilm) {
@@ -131,9 +153,13 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
                 continue;
             }
 
-            // auch wenn schon in der History, dann doch den Film als gesehen markieren
-            film.setShown(true);
-            film.setActHist(true);
+            if (bookmark) {
+                film.setBookmark(true);
+            } else {
+                // auch wenn schon in der History, dann doch den Film als gesehen markieren
+                film.setShown(true);
+                film.setActHist(true);
+            }
 
             if (checkIfUrlAlreadyIn(film.getUrlHistory())) {
                 continue;
@@ -165,7 +191,10 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
             }
 
             // auch wenn schon in der History, dann doch den Film als gesehen markieren
-            if (download.getFilm() != null) {
+            if (bookmark && download.getFilm() != null) {
+                download.getFilm().setBookmark(true);
+
+            } else if (download.getFilm() != null) {
                 download.getFilm().setShown(true);
                 download.getFilm().setActHist(true);
             }
@@ -253,8 +282,14 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         PDuration.counterStart("History: removeDataFromHistory");
         final HashSet<String> hash = new HashSet<>(filmList.size() + 1, 0.75F);
         filmList.stream().forEach(film -> {
-            film.setShown(false); // todo mal vormerken ob evtl. die ganze Filmliste nach dieser URL durchsucht werden soll, wird sonst erst beim nächsten Start angezeigt
-            film.setActHist(false);
+            if (bookmark) {
+                film.setBookmark(false);
+
+            } else {
+                film.setShown(false); // todo mal vormerken ob evtl. die ganze Filmliste nach dieser URL durchsucht werden soll, wird sonst erst beim nächsten Start angezeigt
+                film.setActHist(false);
+            }
+
             hash.add(film.getUrlHistory());
         });
 
@@ -272,10 +307,14 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         PDuration.counterStart("History: removeDataFromHistory");
         final HashSet<String> hash = new HashSet<>(downloadList.size() + 1, 0.75F);
         downloadList.stream().forEach(download -> {
-            if (download.getFilm() != null) {
+            if (bookmark && download.getFilm() != null) {
+                download.getFilm().setBookmark(false);
+
+            } else if (download.getFilm() != null) {
                 download.getFilm().setShown(false);
                 download.getFilm().setActHist(false);
             }
+
             hash.add(download.getHistoryUrl());
         });
 

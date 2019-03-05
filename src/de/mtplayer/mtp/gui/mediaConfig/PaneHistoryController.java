@@ -165,9 +165,9 @@ public class PaneHistoryController extends AnchorPane {
         Button btnDel = new Button("Liste löschen");
         btnDel.setOnAction(event -> {
             if (history) {
-                progData.history.clearAll();
+                progData.history.clearAll(stage);
             } else {
-                progData.erledigteAbos.clearAll();
+                progData.erledigteAbos.clearAll(stage);
             }
         });
 

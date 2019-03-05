@@ -48,9 +48,23 @@ public class FilmTools {
     }
 
 
-    public static void bookmarkFilm(Film film) {
-        film.setBookmark(!film.isBookmark());
-        ProgData.getInstance().filmGuiController.refreshTable();
+    public static void bookmarkFilm(ProgData progData, Film film, boolean bookmark) {
+        ArrayList<Film> filmArrayList = new ArrayList<>(1);
+        filmArrayList.add(film);
+
+        if (bookmark) {
+            progData.bookmarks.addFilmDataToHistory(filmArrayList);
+        } else {
+            progData.bookmarks.removeFilmDataFromHistory(filmArrayList);
+        }
+    }
+
+    public static void bookmarkFilm(ProgData progData, ArrayList<Film> filmArrayList, boolean bookmark) {
+        if (bookmark) {
+            progData.bookmarks.addFilmDataToHistory(filmArrayList);
+        } else {
+            progData.bookmarks.removeFilmDataFromHistory(filmArrayList);
+        }
     }
 
     public static void playFilm(Film film, SetData psetData) {

@@ -295,7 +295,7 @@ public class TableFilm {
                     ProgData.getInstance().filmlist.saveFilm(film, null);
                 });
                 btnBookmark.setOnAction(event -> {
-                    FilmTools.bookmarkFilm(film);
+                    FilmTools.bookmarkFilm(progData, film, !film.isBookmark());
                 });
                 hbox.getChildren().addAll(btnPlay, btnSave, btnBookmark);
                 setGraphic(hbox);
