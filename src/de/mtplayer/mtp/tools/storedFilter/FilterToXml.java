@@ -50,7 +50,7 @@ public class FilterToXml {
     public static final int FILTER_MAX_TIME = 23;
 
     public static final int FILTER_ONLY_VIS = 24;
-    public static final int FILTER_ONLY_RESERVED = 25;
+    public static final int FILTER_ONLY_BOOKMARK = 25;
     public static final int FILTER_ONLY_HD = 26;
     public static final int FILTER_ONLY_NEW = 27;
     public static final int FILTER_ONLY_UT = 28;
@@ -148,7 +148,7 @@ public class FilterToXml {
         sf.setMinMaxTimeInvert(Boolean.parseBoolean(array[FILTER_MIN_MAX_TIME_ON]));
 
         sf.setOnlyVis(Boolean.parseBoolean(array[FILTER_ONLY_VIS]));
-        sf.setOnlyReserved(Boolean.parseBoolean(array[FILTER_ONLY_RESERVED]));
+        sf.setOnlyBookmark(Boolean.parseBoolean(array[FILTER_ONLY_BOOKMARK]));
         sf.setOnlyHd(Boolean.parseBoolean(array[FILTER_ONLY_HD]));
         sf.setOnlyLive(Boolean.parseBoolean(array[FILTER_ONLY_LIVE]));
         sf.setOnlyAktHistory(Boolean.parseBoolean(array[FILTER_ONLY_ACT_HISTORY]));
@@ -221,7 +221,7 @@ public class FilterToXml {
         array[FILTER_MAX_TIME] = String.valueOf(sf.getMaxTime());
 
         array[FILTER_ONLY_VIS] = String.valueOf(sf.isOnlyVis());
-        array[FILTER_ONLY_RESERVED] = String.valueOf(sf.isOnlyReserved());
+        array[FILTER_ONLY_BOOKMARK] = String.valueOf(sf.isOnlyBookmark());
         array[FILTER_ONLY_HD] = String.valueOf(sf.isOnlyHd());
         array[FILTER_ONLY_LIVE] = String.valueOf(sf.isOnlyLive());
         array[FILTER_ONLY_ACT_HISTORY] = String.valueOf(sf.isOnlyAktHistory());

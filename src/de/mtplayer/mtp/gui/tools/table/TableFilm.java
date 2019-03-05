@@ -189,10 +189,10 @@ public class TableFilm {
                             getChildren().get(i).setStyle(MTColor.FILM_NEW.getCssFont());
                         }
 
-//                    } else if (film.isReserve()) {
+//                    } else if (film.isBookmarked()) {
 //                        // vorgemerkte Filme
 //                        for (int i = 0; i < getChildren().size(); i++) {
-//                            getChildren().get(i).setStyle(MTColor.FILM_RESERVED.getCssFont());
+//                            getChildren().get(i).setStyle(MTColor.FILM_BOOKMARK.getCssFont());
 //                        }
 //
                     } else {
@@ -201,8 +201,8 @@ public class TableFilm {
                         }
                     }
 
-                    if (film.isReserve()) {
-                        setStyle(MTColor.FILM_RESERVED.getCssBackgroundSel());
+                    if (film.isBookmark()) {
+                        setStyle(MTColor.FILM_BOOKMARK.getCssBackgroundSel());
 
                     } else if (film.isShown()) {
                         setStyle(MTColor.FILM_HISTORY.getCssBackgroundSel());
@@ -267,7 +267,7 @@ public class TableFilm {
 
                 final Button btnPlay;
                 final Button btnSave;
-                final Button btnReserve;
+                final Button btnBookmark;
 
 
                 btnPlay = new Button("");
@@ -276,16 +276,16 @@ public class TableFilm {
                 btnSave = new Button("");
                 btnSave.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_FILM_SAVE));
 
-                btnReserve = new Button("");
-                btnReserve.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_FILM_RESERVE));
+                btnBookmark = new Button("");
+                btnBookmark.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_FILM_BOOKMARK));
 
                 if (small.get()) {
                     btnPlay.setMaxHeight(18);
                     btnPlay.setMinHeight(18);
                     btnSave.setMaxHeight(18);
                     btnSave.setMinHeight(18);
-                    btnReserve.setMaxHeight(18);
-                    btnReserve.setMinHeight(18);
+                    btnBookmark.setMaxHeight(18);
+                    btnBookmark.setMinHeight(18);
                 }
 
                 btnPlay.setOnAction((ActionEvent event) -> {
@@ -294,10 +294,10 @@ public class TableFilm {
                 btnSave.setOnAction(event -> {
                     ProgData.getInstance().filmlist.saveFilm(film, null);
                 });
-                btnReserve.setOnAction(event -> {
-                    FilmTools.reserveFilm(film);
+                btnBookmark.setOnAction(event -> {
+                    FilmTools.bookmarkFilm(film);
                 });
-                hbox.getChildren().addAll(btnPlay, btnSave, btnReserve);
+                hbox.getChildren().addAll(btnPlay, btnSave, btnBookmark);
                 setGraphic(hbox);
             }
         };

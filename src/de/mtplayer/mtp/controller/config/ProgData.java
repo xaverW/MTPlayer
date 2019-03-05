@@ -91,6 +91,7 @@ public class ProgData {
     public SetDataList setDataList = null;
     public MediaDataList mediaDataList = null;
     public MediaCollectionDataList mediaCollectionDataList = null;
+
     public HistoryList history = null; // alle angesehenen Filme
     public HistoryList erledigteAbos = null; // erfolgreich geladenen Abos
     public ReplaceList replaceList = null;

@@ -62,9 +62,9 @@ public class HistoryData implements Comparable<HistoryData> {
     private final static String SEPARATOR_1 = " |#| ";
     private final static String SEPARATOR_2 = "  |###|  ";
 
-    public String title = new String("");
-    public String theme = new String("");
-    public String url = new String("");
+    public String title = "";
+    public String theme = "";
+    public String url = "";
     public FilmDate date = new FilmDate();
 
     public HistoryData(String date, String theme, String title, String url) {
@@ -92,11 +92,6 @@ public class HistoryData implements Comparable<HistoryData> {
             return url + PConst.LINE_SEPARATOR;
         }
 
-//        String s = getDate().toString();
-//        if (!s.equals(dateStr)) {
-//            System.out.println(s);
-//        }
-
         if (theme.length() < MAX_THEME) {
             // nur wenn zu kurz, dann anpassen, so bleibt das Log ~lesbar
             // und Titel werden nicht abgeschnitten
@@ -113,10 +108,6 @@ public class HistoryData implements Comparable<HistoryData> {
                 + cleanUp(title) + SEPARATOR_2
                 + url + PConst.LINE_SEPARATOR;
     }
-
-//    public String getLine() {
-//        return getLine(getDate().toString(), getTheme(), getTitle(), getUrl());
-//    }
 
     public static HistoryData getHistoryDataFromLine(String line) {
         // 29.05.2014 |#| Abendschau                |#| Patenkind trifft Groß                     |###|  http://cdn-storage.br.de/iLCpbHJGNLT6NK9HsLo6s61luK4C_2rc5U1S/_-OS/5-8y9-NP/5bb33365-038d-46f7-914b-eb83fab91448_E.mp4

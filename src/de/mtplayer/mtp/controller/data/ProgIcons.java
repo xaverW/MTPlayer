@@ -44,7 +44,7 @@ public class ProgIcons {
     // table
     public static final Image IMAGE_TABLE_FILM_PLAY = GetIcon.getImage("table-film-play.png", 14, 14);
     public static final Image IMAGE_TABLE_FILM_SAVE = GetIcon.getImage("table-film-save.png", 14, 14);
-    public static final Image IMAGE_TABLE_FILM_RESERVE = GetIcon.getImage("table-film-reserve.png", 14, 14);
+    public static final Image IMAGE_TABLE_FILM_BOOKMARK = GetIcon.getImage("table-film-bookmark.png", 14, 14);
     public static final Image IMAGE_TABLE_DOWNLOAD_START = GetIcon.getImage("table-download-start.png", 14, 14);
     public static final Image IMAGE_TABLE_DOWNLOAD_DEL = GetIcon.getImage("table-download-del.png", 14, 14);
     public static final Image IMAGE_TABLE_DOWNLOAD_STOP = GetIcon.getImage("table-download-stop.png", 14, 14);

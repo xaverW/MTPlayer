@@ -44,7 +44,7 @@ public class FilmProps extends FilmXml {
     private final BooleanProperty newFilm = new SimpleBooleanProperty(false);
     private final BooleanProperty shown = new SimpleBooleanProperty(false);
     private final BooleanProperty actHist = new SimpleBooleanProperty(false);
-    private final BooleanProperty reserve = new SimpleBooleanProperty(false);
+    private final BooleanProperty bookmark = new SimpleBooleanProperty(false);
 
     public int getFilmTime() {
         return filmTime;
@@ -257,16 +257,16 @@ public class FilmProps extends FilmXml {
         this.actHist.set(actHist);
     }
 
-    public boolean isReserve() {
-        return reserve.get();
+    public boolean isBookmark() {
+        return bookmark.get();
     }
 
-    public BooleanProperty reserveProperty() {
-        return reserve;
+    public BooleanProperty bookmarkProperty() {
+        return bookmark;
     }
 
-    public void setReserve(boolean reserve) {
-        this.reserve.set(reserve);
+    public void setBookmark(boolean bookmark) {
+        this.bookmark.set(bookmark);
     }
 
     public String getFilmDateLong() {

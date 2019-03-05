@@ -51,7 +51,7 @@ public class ProgInitFilter {
         sf.setMaxTime(SelectedFilter.FILTER_FILMTIME_MAX_SEC);
 
         sf.setOnlyVis(true);
-        sf.setOnlyReserved(false);
+        sf.setOnlyBookmark(false);
         sf.setOnlyHd(false);
         sf.setOnlyNew(false);
         sf.setOnlyUt(false);
@@ -96,7 +96,7 @@ public class ProgInitFilter {
         sf.setMaxTime(SelectedFilter.FILTER_FILMTIME_MAX_SEC);
 
         sf.setOnlyVis(true);
-        sf.setOnlyReserved(false);
+        sf.setOnlyBookmark(false);
         sf.setOnlyHd(false);
         sf.setOnlyNew(true);
         sf.setOnlyUt(false);
@@ -140,7 +140,7 @@ public class ProgInitFilter {
         sf.setMaxTime(SelectedFilter.FILTER_FILMTIME_MAX_SEC);
 
         sf.setOnlyVis(true);
-        sf.setOnlyReserved(true);
+        sf.setOnlyBookmark(true);
         sf.setOnlyHd(false);
         sf.setOnlyNew(false);
         sf.setOnlyUt(false);
@@ -185,7 +185,7 @@ public class ProgInitFilter {
         sf.setMaxTime(SelectedFilter.FILTER_FILMTIME_MAX_SEC);
 
         sf.setOnlyVis(true);
-        sf.setOnlyReserved(false);
+        sf.setOnlyBookmark(false);
         sf.setOnlyHd(false);
         sf.setOnlyNew(false);
         sf.setOnlyUt(false);
@@ -230,7 +230,7 @@ public class ProgInitFilter {
         sf.setMaxTime(SelectedFilter.FILTER_FILMTIME_MAX_SEC);
 
         sf.setOnlyVis(true);
-        sf.setOnlyReserved(false);
+        sf.setOnlyBookmark(false);
         sf.setOnlyHd(false);
         sf.setOnlyNew(false);
         sf.setOnlyUt(false);
@@ -276,7 +276,7 @@ public class ProgInitFilter {
         sf.setMaxTime(SelectedFilter.FILTER_FILMTIME_MAX_SEC);
 
         sf.setOnlyVis(true);
-        sf.setOnlyReserved(false);
+        sf.setOnlyBookmark(false);
         sf.setOnlyHd(false);
         sf.setOnlyNew(false);
         sf.setOnlyUt(false);
@@ -321,7 +321,7 @@ public class ProgInitFilter {
         sf.setMaxTime(SelectedFilter.FILTER_FILMTIME_MAX_SEC);
 
         sf.setOnlyVis(true);
-        sf.setOnlyReserved(false);
+        sf.setOnlyBookmark(false);
         sf.setOnlyHd(false);
         sf.setOnlyNew(false);
         sf.setOnlyUt(false);
@@ -366,7 +366,7 @@ public class ProgInitFilter {
         sf.setMaxTime(SelectedFilter.FILTER_FILMTIME_MAX_SEC);
 
         sf.setOnlyVis(true);
-        sf.setOnlyReserved(false);
+        sf.setOnlyBookmark(false);
         sf.setOnlyHd(false);
         sf.setOnlyNew(false);
         sf.setOnlyUt(false);
@@ -414,7 +414,7 @@ public class ProgInitFilter {
         sf.setMaxTime(SelectedFilter.FILTER_FILMTIME_MAX_SEC);
 
         sf.setOnlyVis(false);
-        sf.setOnlyReserved(false);
+        sf.setOnlyBookmark(false);
         sf.setOnlyHd(false);
         sf.setOnlyNew(false);
         sf.setOnlyUt(false);
@@ -461,7 +461,7 @@ public class ProgInitFilter {
         sf.setMaxTime(SelectedFilter.FILTER_FILMTIME_MAX_SEC);
 
         sf.setOnlyVis(true);
-        sf.setOnlyReserved(false);
+        sf.setOnlyBookmark(false);
         sf.setOnlyHd(true);
         sf.setOnlyNew(true);
         sf.setOnlyUt(false);

@@ -48,8 +48,8 @@ public class FilmTools {
     }
 
 
-    public static void reserveFilm(Film film) {
-        film.setReserve(!film.isReserve());
+    public static void bookmarkFilm(Film film) {
+        film.setBookmark(!film.isBookmark());
         ProgData.getInstance().filmGuiController.refreshTable();
     }
 

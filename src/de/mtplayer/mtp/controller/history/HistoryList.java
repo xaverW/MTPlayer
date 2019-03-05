@@ -42,7 +42,6 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
 
     private final HashSet<String> urlHash = new HashSet<>();
     private final String fileName;
-    private final String settingsDir;
     private FilteredList<HistoryData> filteredList = null;
     private SortedList<HistoryData> sortedList = null;
     private BooleanProperty isWorking = new SimpleBooleanProperty(false);
@@ -52,7 +51,6 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         super(FXCollections.observableArrayList());
 
         this.fileName = fileName;
-        this.settingsDir = settingsDir;
         this.historyWorker = new HistoryWorker(fileName, settingsDir);
 
         historyWorker.readHistoryDataFromFile(this);

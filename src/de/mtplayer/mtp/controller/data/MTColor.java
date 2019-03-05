@@ -29,7 +29,7 @@ public class MTColor {
     public static final MLC FILM_LIVESTREAM = new MLC(ProgConfig.COLOR__FILM_LIVESTREAM, Color.rgb(130, 0, 0), "Filme, Livestreams");
     public static final MLC FILM_HISTORY = new MLC(ProgConfig.COLOR__FILM_HISTORY, Color.rgb(223, 223, 223), "Filme, gesehen");
     public static final MLC FILM_NEW = new MLC(ProgConfig.COLOR__FILM_NEW, Color.rgb(0, 0, 240), "Filme, neue");
-    public static final MLC FILM_RESERVED = new MLC(ProgConfig.COLOR__FILM_RESERVED, Color.rgb(230, 204, 255), "Filme, vorgemerkt");
+    public static final MLC FILM_BOOKMARK = new MLC(ProgConfig.COLOR__FILM_BOOKMARK, Color.rgb(230, 204, 255), "Filme, vorgemerkt");
     public static final MLC FILM_GEOBLOCK = new MLC(ProgConfig.COLOR__FILM_GEOBLOCK_BACKGROUND, Color.rgb(255, 168, 0), "Film, geogeblockt");
     public static final MLC FILM_GEOBLOCK_BACKGROUND = new MLC(ProgConfig.COLOR__FILM_GEOBLOCK_BACKGROUND, Color.rgb(255, 254, 230), "Film, geogeblockt");
     public static final MLC FILM_GEOBLOCK_BACKGROUND_SEL = new MLC(ProgConfig.COLOR__FILM_GEOBLOCK_BACKGROUND_SEL, Color.rgb(255, 251, 179), "Film, geogeblockt, selektiert");
@@ -68,7 +68,7 @@ public class MTColor {
         colorList.add(FILM_LIVESTREAM);
         colorList.add(FILM_HISTORY);
         colorList.add(FILM_NEW);
-        colorList.add(FILM_RESERVED);
+        colorList.add(FILM_BOOKMARK);
         colorList.add(FILM_GEOBLOCK);
 //        colorList.add(FILM_GEOBLOCK_BACKGROUND);
 //        colorList.add(FILM_GEOBLOCK_BACKGROUND_SEL);

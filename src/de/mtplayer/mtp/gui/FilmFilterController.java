@@ -74,7 +74,7 @@ public class FilmFilterController extends FilterController {
     private final Button btnSaveFilter = new Button("speichern");
     private final Button btnNewFilter = new Button("neu anlegen");
 
-    private final String ONLY_RESERVED = "markierte";
+    private final String ONLY_BOOKMARK = "markierte";
     private final String ONLY_HD = "HD";
     private final String ONLY_UT = "UT";
     private final String ONLY_NEW = "neue";
@@ -378,7 +378,7 @@ public class FilmFilterController extends FilterController {
     }
 
     private void initCheckFilter() {
-        checkOnly.addItem(ONLY_RESERVED, "nur markierte Filme anzeigen", progData.storedFilter.getSelectedFilter().onlyReservedProperty());
+        checkOnly.addItem(ONLY_BOOKMARK, "nur markierte Filme anzeigen", progData.storedFilter.getSelectedFilter().onlyBookmarkProperty());
         checkOnly.addItem(ONLY_HD, "nur HD-Filme anzeigen", progData.storedFilter.getSelectedFilter().onlyHdProperty());
         checkOnly.addItem(ONLY_UT, "nur Filme mit Untertitel anzeigen", progData.storedFilter.getSelectedFilter().onlyUtProperty());
         checkOnly.addItem(ONLY_NEW, "nur neue Filme anzeigen", progData.storedFilter.getSelectedFilter().onlyNewProperty());

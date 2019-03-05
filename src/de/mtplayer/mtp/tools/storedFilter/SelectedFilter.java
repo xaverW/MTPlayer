@@ -99,7 +99,7 @@ public final class SelectedFilter extends SelectedFilterProps {
         sfTo.setMaxTime(sfFrom.getMaxTime());
 
         sfTo.setOnlyVis(sfFrom.isOnlyVis());
-        sfTo.setOnlyReserved(sfFrom.isOnlyReserved());
+        sfTo.setOnlyBookmark(sfFrom.isOnlyBookmark());
         sfTo.setOnlyHd(sfFrom.isOnlyHd());
         sfTo.setOnlyNew(sfFrom.isOnlyNew());
         sfTo.setOnlyUt(sfFrom.isOnlyUt());
@@ -171,7 +171,7 @@ public final class SelectedFilter extends SelectedFilterProps {
         maxTimeProperty().addListener(l -> changeFilterProperty());
 
         onlyVisProperty().addListener(l -> changeFilterProperty());
-        onlyReservedProperty().addListener(l -> changeFilterProperty());
+        onlyBookmarkProperty().addListener(l -> changeFilterProperty());
         onlyHdProperty().addListener(l -> changeFilterProperty());
         onlyNewProperty().addListener(l -> changeFilterProperty());
         onlyUtProperty().addListener(l -> changeFilterProperty());
@@ -210,7 +210,7 @@ public final class SelectedFilter extends SelectedFilterProps {
         setMinTime(0);
         setMaxTime(FILTER_FILMTIME_MAX_SEC);
 
-        setOnlyReserved(false);
+        setOnlyBookmark(false);
         setOnlyHd(false);
         setOnlyNew(false);
         setOnlyUt(false);
@@ -325,7 +325,7 @@ public final class SelectedFilter extends SelectedFilterProps {
         fUrl = new Filter(filterUrl);
         fUrl.makeFilter();// gibt URLs mit ",", das also nicht trennen
 
-        final boolean onlyReserved = selectedFilter.isOnlyVis() ? selectedFilter.isOnlyReserved() : false;
+        final boolean onlyMarked = selectedFilter.isOnlyVis() ? selectedFilter.isOnlyBookmark() : false;
         final boolean onlyHd = selectedFilter.isOnlyVis() ? selectedFilter.isOnlyHd() : false;
         final boolean onlyUt = selectedFilter.isOnlyVis() ? selectedFilter.isOnlyUt() : false;
         final boolean onlyLive = selectedFilter.isOnlyVis() ? selectedFilter.isOnlyLive() : false;
@@ -369,8 +369,8 @@ public final class SelectedFilter extends SelectedFilterProps {
             }
         };
 
-        if (onlyReserved) {
-            predicate = predicate.and(f -> f.isReserve());
+        if (onlyMarked) {
+            predicate = predicate.and(f -> f.isBookmark());
         }
         if (onlyHd) {
             predicate = predicate.and(f -> f.isHd());
