@@ -115,7 +115,7 @@ public class ProgInitFilter {
 
         //========================================================
         sf = new SelectedFilter();
-        sf.setName("nur markierte Filme");
+        sf.setName("nur Bookmarks");
         sf.setChannelVis(true);
         sf.setChannelExact(true);
 
