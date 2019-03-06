@@ -325,7 +325,7 @@ public final class SelectedFilter extends SelectedFilterProps {
         fUrl = new Filter(filterUrl);
         fUrl.makeFilter();// gibt URLs mit ",", das also nicht trennen
 
-        final boolean onlyMarked = selectedFilter.isOnlyVis() ? selectedFilter.isOnlyBookmark() : false;
+        final boolean onlyBookmark = selectedFilter.isOnlyVis() ? selectedFilter.isOnlyBookmark() : false;
         final boolean onlyHd = selectedFilter.isOnlyVis() ? selectedFilter.isOnlyHd() : false;
         final boolean onlyUt = selectedFilter.isOnlyVis() ? selectedFilter.isOnlyUt() : false;
         final boolean onlyLive = selectedFilter.isOnlyVis() ? selectedFilter.isOnlyLive() : false;
@@ -369,7 +369,7 @@ public final class SelectedFilter extends SelectedFilterProps {
             }
         };
 
-        if (onlyMarked) {
+        if (onlyBookmark) {
             predicate = predicate.and(f -> f.isBookmark());
         }
         if (onlyHd) {

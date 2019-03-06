@@ -52,11 +52,7 @@ public class FilmTools {
         ArrayList<Film> filmArrayList = new ArrayList<>(1);
         filmArrayList.add(film);
 
-        if (bookmark) {
-            progData.bookmarks.addFilmDataToHistory(filmArrayList);
-        } else {
-            progData.bookmarks.removeFilmDataFromHistory(filmArrayList);
-        }
+        bookmarkFilm(progData, filmArrayList, bookmark);
     }
 
     public static void bookmarkFilm(ProgData progData, ArrayList<Film> filmArrayList, boolean bookmark) {

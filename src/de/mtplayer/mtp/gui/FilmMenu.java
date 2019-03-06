@@ -28,7 +28,8 @@ public class FilmMenu {
     final private ProgData progData;
     private static final String FILM_PLAY_TEXT = "Film abspielen";
     private static final String FILM_RECORD_TEXT = "Filme aufzeichnen";
-    private static final String FILM_BOOKMARK_TEXT = "Bookmark für die Filme anlegen";
+    private static final String FILM_BOOKMARK_TEXT = "Bookmark für die Filme anlegen oder löschen";
+    private static final String FILM_DEL_BOOKMARK_TEXT = "alle angelegten Bookmarks löschen";
     BooleanProperty boolFilterOn = ProgConfig.FILM_GUI_FILTER_DIVIDER_ON.getBooleanProperty();
     BooleanProperty boolInfoOn = ProgConfig.FILM_GUI_DIVIDER_ON.getBooleanProperty();
 
@@ -56,9 +57,13 @@ public class FilmMenu {
         final ToolBarButton btBookmark =
                 new ToolBarButton(vbox, "Bookmark", FILM_BOOKMARK_TEXT, new ProgIcons().FX_ICON_TOOLBAR_FILM_BOOKMARK);
 
+        final ToolBarButton btDelBookmark =
+                new ToolBarButton(vbox, "Bookmark löschen", FILM_DEL_BOOKMARK_TEXT, new ProgIcons().FX_ICON_TOOLBAR_FILM_DEL_BOOKMARK);
+
         btPlay.setOnAction(a -> progData.filmGuiController.playFilmUrl());
         btSave.setOnAction(a -> progData.filmGuiController.saveTheFilm());
         btBookmark.setOnAction(a -> progData.filmGuiController.bookmarkFilm());
+        btDelBookmark.setOnAction(a -> progData.bookmarks.clearAll(progData.primaryStage));
     }
 
     private void initFilmMenu() {

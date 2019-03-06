@@ -71,6 +71,20 @@ public class FilmFilter {
         return false;
     }
 
+    /**
+     * Abo und Blacklist prüfen
+     *
+     * @param sender
+     * @param theme
+     * @param themeTitle
+     * @param title
+     * @param somewhere
+     * @param laengeSekundenSuchen_min
+     * @param laengeSekundenSuchen_max
+     * @param film
+     * @param withLength
+     * @return
+     */
     public static boolean checkFilmWithFilter(Filter sender,
                                               Filter theme,
                                               Filter themeTitle,
