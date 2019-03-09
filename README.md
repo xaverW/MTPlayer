@@ -36,3 +36,25 @@ Alle Einstellungen können nicht übernommen werden da sich einiges geändert ha
 Unterstützt wird Windows (Vista, 7, 8, 10) und Linux. Das Programm benötigt unter Windows und Linux eine aktuelle Java-VM ab Version: 1.8 (= Java 8, Java 9, Java 10).
 
 Für Linux-Benutzer wird OpenJDK8 empfohlen. Außerdem benötigen Linux Benutzer die aktuelle Version von JavaFX (OpenJFX). OpenJFX ist aber nur für OpenJDK8 ohne Probleme zu installieren. Soll es Java 10 sein, wäre das Oracle Java SE 10 eine Alternative (und das bringt JavaFX schon mit).
+
+
+**Java 11**
+
+MTPlayer kann auch unter Java 11 laufen. Da Oracle ab der Java Version 11 FX ausgelagert hat, muss das zusätzlich installiert sein. Der Download der aktuellen FX-Pakete findet sich hier: <a href="https://gluonhq.com/products/javafx/" target="_blank">www.gluonhq.com/products/javafx</a>. Für weitere Infos wäre hier ein guter Startpunkt: <a href="https://openjfx.io/" target="_blank">www.openjfx.io</a>
+
+FX für Windows: __JavaFX Windows SDK__   
+FX für Linux: __JavaFX Linux SDK__
+
+Das Zipfile muss nur in ein beliebiges Verzeichnis entpackt werden.
+
+
+Aufruf von MTPlayer für Windows (in einer Zeile):   
+
+```java --module-path "C:\PFAD_ZUM_ENTPACKTEN_FX\javafx-sdk-11.0.2\lib" --add-modules=javafx.controls -jar MTPlayer.jar ```
+
+Aufruf von MTPlayer für Linux (in einer Zeile):   
+
+```java --module-path /PFAD_ZUM_ENTPACKTEN_FX/javafx-sdk-11.0.2/lib/ --add-modules=javafx.controls -jar MTPlayer.jar ```
+
+(Soll der Aufruf nicht aus dem Speicherordner von MTPlayer erfolgen, muss auch für MTPlayer.jar der Pfad mit angegeben werden.)
+
