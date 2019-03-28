@@ -1,0 +1,25 @@
+Das Programm MTPlayer verwendet als Config-Ordner
+im Homeverzeichnis des Benutzers den Ordner
+
+Windows:	p2Mtplayer
+Linux: 		.p2Mtplayer
+
+
+Wer Einstellungen von MediathekView übernehmen will,
+muss aus dessen Config-Ordner (.mediathek3)
+folgende 3 Dateien in den neuen Config-Ordner kopieren:
+
+history.txt
+
+downloadAbos.txt
+(diese Datei muss umbenannt werden in: downloads.txt)
+
+mediathek.xml
+(diese Datei muss umbenannt werden in: mtplayer.xml)
+
+
+Alle Einstellungen können nicht übernommen werden 
+da sich einiges geändert hat, nach dem Start bitte die 
+Einstellungen und Abos (z.B. Mindestdauer der Abos) 
+durchgehen und überprüfen.
+
