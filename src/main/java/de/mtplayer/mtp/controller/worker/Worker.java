@@ -141,6 +141,7 @@ public class Worker {
     }
 
     public void getTheme(String sender) {
+        // toDo geht vielleicht besser??
         final ArrayList<String> theme = new ArrayList<>();
         if (sender.isEmpty()) {
             theme.addAll(Arrays.asList(progData.filmlistFiltered.themePerChannel[0]));

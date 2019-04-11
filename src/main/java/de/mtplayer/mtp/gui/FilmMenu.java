@@ -22,7 +22,6 @@ import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.tools.storedFilter.BookmarkFilter;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
@@ -30,8 +29,8 @@ import javafx.scene.layout.VBox;
 public class FilmMenu {
     final private VBox vBox;
     final private ProgData progData;
-    private SelectedFilter selectedFilter = null;
-    ChangeListener changeListener;
+    private SelectedFilter storedFilter = null;
+    private SelectedFilter storedBookmarkFilter = null;
     private static final String FILM_PLAY_TEXT = "Film abspielen";
     private static final String FILM_RECORD_TEXT = "Filme aufzeichnen";
     private static final String FILM_BOOKMARK_TEXT = "Bookmark für die Filme anlegen oder löschen";
@@ -77,19 +76,25 @@ public class FilmMenu {
         btBookmark.setOnAction(a -> progData.filmGuiController.bookmarkFilm());
         btDelBookmark.setOnAction(a -> progData.bookmarks.clearAll(progData.primaryStage));
 
-        changeListener = (observable, oldValue, newValue) -> selectedFilter = null;
         btFilter.setOnAction(a -> {
-            progData.storedFilter.filterChangeProperty().removeListener(changeListener);
 
-            if (selectedFilter == null) {
-                selectedFilter = SelectedFilter.getFilterCopy(progData.storedFilter.getSelectedFilter());
+            if (storedFilter != null && storedBookmarkFilter != null) {
+                SelectedFilter sf = progData.storedFilter.getSelectedFilter();
+                if (!SelectedFilter.compareFilter(storedBookmarkFilter, sf)) {
+                    // dann hat sich der Filter geändert
+                    storedFilter = null;
+                }
+            }
 
-                progData.storedFilter.loadStoredFilter(BookmarkFilter.getBookmarkFilter(selectedFilter));
-                progData.storedFilter.filterChangeProperty().addListener(changeListener);
+            if (storedFilter == null) {
+                storedFilter = SelectedFilter.getFilterCopy(progData.storedFilter.getSelectedFilter());
+
+                storedBookmarkFilter = BookmarkFilter.getBookmarkFilter(storedFilter);
+                progData.storedFilter.loadStoredFilter(storedBookmarkFilter);
 
             } else {
-                progData.storedFilter.loadStoredFilter(selectedFilter);
-                selectedFilter = null;
+                progData.storedFilter.loadStoredFilter(storedFilter);
+                storedFilter = null;
             }
         });
 

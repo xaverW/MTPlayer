@@ -122,6 +122,26 @@ public final class SelectedFilter extends SelectedFilterProps {
         sfTo.setBlacklistOn(sfFrom.isBlacklistOn());
     }
 
+    public static boolean compareFilter(SelectedFilter sfFrom, SelectedFilter sfTo) {
+        for (int i = 0; i < sfFrom.sfBooleanPropArr.length; i++) {
+            if (sfFrom.sfBooleanPropArr[i].get() != sfTo.sfBooleanPropArr[i].get()) {
+                return false;
+            }
+        }
+        for (int i = 0; i < sfFrom.sfIntegerPropArr.length; i++) {
+            if (sfFrom.sfIntegerPropArr[i].get() != sfTo.sfIntegerPropArr[i].get()) {
+                return false;
+            }
+        }
+        for (int i = 0; i < sfFrom.sfStringPropArr.length; i++) {
+            if (!sfFrom.sfStringPropArr[i].getValueSafe().equals(sfTo.sfStringPropArr[i].getValueSafe())) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public void initFilter() {
         clearFilter();
 
@@ -150,7 +170,12 @@ public final class SelectedFilter extends SelectedFilterProps {
 
         themeVisProperty().addListener(l -> changeFilterProperty());
         themeExactProperty().addListener(l -> changeFilterProperty());
-        themeProperty().addListener(l -> changeFilterProperty());
+        themeProperty().addListener(l -> {
+            // todo -> beim ändern der "Thema" liste wird das aufgerufen
+            if (themeVisProperty().get()) {
+                changeFilterProperty();
+            }
+        });
 
         themeTitleVisProperty().addListener(l -> changeFilterProperty());
         themeTitleProperty().addListener(l -> changeFilterProperty());

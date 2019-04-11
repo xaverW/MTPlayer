@@ -71,6 +71,14 @@ public class SelectedFilterProps {
 
     private final BooleanProperty blacklistOn = new SimpleBooleanProperty(false);
 
+    public BooleanProperty[] sfBooleanPropArr = {channelVis, channelExact, themeVis, themeExact, themeTitleVis,
+            titleVis, somewhereVis, urlVis, daysVis, minMaxDurVis, minMaxTimeVis, minMaxTimeInvert,
+            onlyVis, onlyBookmark, onlyHd, onlyNew, onlyUt, onlyLive, onlyAktHistory, notVis,
+            notAbo, notHistory, notDouble, notGeo, notFuture, blacklistOn};
+    public StringProperty[] sfStringPropArr = {name, channel, theme, themeTitle, title, somewhere, url};
+    public IntegerProperty[] sfIntegerPropArr = {days, minDur, maxDur, minTime, maxTime};
+
+
     public String getName() {
         return name.get();
     }
