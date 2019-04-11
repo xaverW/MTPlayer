@@ -19,7 +19,6 @@ import de.mtplayer.mLib.tools.SystemInfo;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.p2tools.p2Lib.guiTools.LinuxJavaFx;
 import de.p2tools.p2Lib.tools.net.Proxy;
-import javafx.application.Application;
 import javafx.application.Platform;
 
 public class Main {
@@ -62,7 +61,8 @@ public class Main {
             LinuxJavaFx.setupX11WindowManagerClassName(ProgConst.PROGRAMNAME);
         }
 
-        Application.launch(MTPlayer.class, args);
+        MTPlayer.main(args);
+//        Application.launch(MTPlayer.class, args);
     }
 
 }

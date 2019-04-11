@@ -68,6 +68,12 @@ public final class SelectedFilter extends SelectedFilterProps {
         setTitleVis(true);
     }
 
+    public static SelectedFilter getFilterCopy(SelectedFilter sfFrom) {
+        SelectedFilter sf = new SelectedFilter();
+        copyFilter(sfFrom, sf);
+        return sf;
+    }
+
     public static void copyFilter(SelectedFilter sfFrom, SelectedFilter sfTo) {
         sfTo.setName(sfFrom.getName());
 

@@ -146,4 +146,7 @@ public class MTPlayer extends Application {
         PDuration.onlyPing("Gui steht!");
     }
 
+    public static void main(String[] args) {
+        launch(args);
+    }
 }

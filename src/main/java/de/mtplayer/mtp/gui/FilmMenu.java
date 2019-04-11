@@ -19,28 +19,35 @@ package de.mtplayer.mtp.gui;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
+import de.mtplayer.mtp.tools.storedFilter.BookmarkFilter;
+import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
+
 public class FilmMenu {
-    final private VBox vbox;
+    final private VBox vBox;
     final private ProgData progData;
+    private SelectedFilter selectedFilter = null;
+    ChangeListener changeListener;
     private static final String FILM_PLAY_TEXT = "Film abspielen";
     private static final String FILM_RECORD_TEXT = "Filme aufzeichnen";
     private static final String FILM_BOOKMARK_TEXT = "Bookmark für die Filme anlegen oder löschen";
+    private static final String FILM_FILTER_BOOKMARK_TEXT = "angelegte Bookmarks anzeigen";
     private static final String FILM_DEL_BOOKMARK_TEXT = "alle angelegten Bookmarks löschen";
     BooleanProperty boolFilterOn = ProgConfig.FILM_GUI_FILTER_DIVIDER_ON.getBooleanProperty();
     BooleanProperty boolInfoOn = ProgConfig.FILM_GUI_DIVIDER_ON.getBooleanProperty();
 
-    public FilmMenu(VBox vbox) {
-        this.vbox = vbox;
+    public FilmMenu(VBox vBox) {
+        this.vBox = vBox;
         progData = ProgData.getInstance();
     }
 
 
     public void init() {
-        vbox.getChildren().clear();
+        vBox.getChildren().clear();
 
         initFilmMenu();
         initButton();
@@ -49,21 +56,43 @@ public class FilmMenu {
     private void initButton() {
         // Button
         final ToolBarButton btPlay =
-                new ToolBarButton(vbox, "Abspielen", FILM_PLAY_TEXT, new ProgIcons().FX_ICON_TOOLBAR_FILM_START);
-
+                new ToolBarButton(vBox, "Abspielen", FILM_PLAY_TEXT, new ProgIcons().FX_ICON_TOOLBAR_FILM_START);
         final ToolBarButton btSave =
-                new ToolBarButton(vbox, "Speichern", FILM_RECORD_TEXT, new ProgIcons().FX_ICON_TOOLBAR_FILM_REC);
+                new ToolBarButton(vBox, "Speichern", FILM_RECORD_TEXT, new ProgIcons().FX_ICON_TOOLBAR_FILM_REC);
+
+        VBox vBoxSpace = new VBox();
+        vBoxSpace.setMaxHeight(10);
+        vBox.getChildren().add(vBoxSpace);
 
         final ToolBarButton btBookmark =
-                new ToolBarButton(vbox, "Bookmark", FILM_BOOKMARK_TEXT, new ProgIcons().FX_ICON_TOOLBAR_FILM_BOOKMARK);
-
+                new ToolBarButton(vBox, "Bookmark", FILM_BOOKMARK_TEXT, new ProgIcons().FX_ICON_TOOLBAR_FILM_BOOKMARK);
+        final ToolBarButton btFilter =
+                new ToolBarButton(vBox, "Bookmarks anzeigen", FILM_FILTER_BOOKMARK_TEXT, new ProgIcons().FX_ICON_TOOLBAR_FILM_BOOKMARK_FILTER);
         final ToolBarButton btDelBookmark =
-                new ToolBarButton(vbox, "Bookmark löschen", FILM_DEL_BOOKMARK_TEXT, new ProgIcons().FX_ICON_TOOLBAR_FILM_DEL_BOOKMARK);
+                new ToolBarButton(vBox, "Bookmark löschen", FILM_DEL_BOOKMARK_TEXT, new ProgIcons().FX_ICON_TOOLBAR_FILM_DEL_BOOKMARK);
 
         btPlay.setOnAction(a -> progData.filmGuiController.playFilmUrl());
         btSave.setOnAction(a -> progData.filmGuiController.saveTheFilm());
+
         btBookmark.setOnAction(a -> progData.filmGuiController.bookmarkFilm());
         btDelBookmark.setOnAction(a -> progData.bookmarks.clearAll(progData.primaryStage));
+
+        changeListener = (observable, oldValue, newValue) -> selectedFilter = null;
+        btFilter.setOnAction(a -> {
+            progData.storedFilter.filterChangeProperty().removeListener(changeListener);
+
+            if (selectedFilter == null) {
+                selectedFilter = SelectedFilter.getFilterCopy(progData.storedFilter.getSelectedFilter());
+
+                progData.storedFilter.loadStoredFilter(BookmarkFilter.getBookmarkFilter(selectedFilter));
+                progData.storedFilter.filterChangeProperty().addListener(changeListener);
+
+            } else {
+                progData.storedFilter.loadStoredFilter(selectedFilter);
+                selectedFilter = null;
+            }
+        });
+
     }
 
     private void initFilmMenu() {
@@ -113,6 +142,6 @@ public class FilmMenu {
         mb.getItems().add(new SeparatorMenuItem());
         mb.getItems().addAll(miShowFilter, miShowInfo);
 
-        vbox.getChildren().add(mb);
+        vBox.getChildren().add(mb);
     }
 }

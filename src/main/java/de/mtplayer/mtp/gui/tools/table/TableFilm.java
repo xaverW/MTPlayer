@@ -189,12 +189,6 @@ public class TableFilm {
                             getChildren().get(i).setStyle(MTColor.FILM_NEW.getCssFont());
                         }
 
-//                    } else if (film.isBookmarked()) {
-//                        // vorgemerkte Filme
-//                        for (int i = 0; i < getChildren().size(); i++) {
-//                            getChildren().get(i).setStyle(MTColor.FILM_BOOKMARK.getCssFont());
-//                        }
-//
                     } else {
                         for (int i = 0; i < getChildren().size(); i++) {
                             getChildren().get(i).setStyle("");
@@ -216,32 +210,6 @@ public class TableFilm {
         });
 
     }
-
-//    private Callback<TableColumn<Film, FilmSize>, TableCell<Film, FilmSize>> cellFactorySize
-//            = (final TableColumn<Film, FilmSize> param) -> {
-//
-//        final TableCell<Film, FilmSize> cell = new TableCell<Film, FilmSize>() {
-//
-//            @Override
-//            public void updateItem(FilmSize item, boolean empty) {
-//                super.updateItem(item, empty);
-//
-//                if (item == null || empty) {
-//                    setGraphic(null);
-//                    setText(null);
-//                    return;
-//                }
-//
-//                if (item.l == 0) {
-//                    setText("");
-//                } else {
-////                    Film film = getTableView().getItems().get(getIndex());
-//                    setText(item.l + "");
-//                }
-//            }
-//        };
-//        return cell;
-//    };
 
     private Callback<TableColumn<Film, String>, TableCell<Film, String>> cellFactoryStart
             = (final TableColumn<Film, String> param) -> {
@@ -267,7 +235,7 @@ public class TableFilm {
 
                 final Button btnPlay;
                 final Button btnSave;
-                final Button btnBookmark;
+//                final Button btnBookmark;
 
 
                 btnPlay = new Button("");
@@ -276,16 +244,16 @@ public class TableFilm {
                 btnSave = new Button("");
                 btnSave.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_FILM_SAVE));
 
-                btnBookmark = new Button("");
-                btnBookmark.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_FILM_BOOKMARK));
+//                btnBookmark = new Button("");
+//                btnBookmark.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_FILM_BOOKMARK));
 
                 if (small.get()) {
                     btnPlay.setMaxHeight(18);
                     btnPlay.setMinHeight(18);
                     btnSave.setMaxHeight(18);
                     btnSave.setMinHeight(18);
-                    btnBookmark.setMaxHeight(18);
-                    btnBookmark.setMinHeight(18);
+//                    btnBookmark.setMaxHeight(18);
+//                    btnBookmark.setMinHeight(18);
                 }
 
                 btnPlay.setOnAction((ActionEvent event) -> {
@@ -294,10 +262,10 @@ public class TableFilm {
                 btnSave.setOnAction(event -> {
                     ProgData.getInstance().filmlist.saveFilm(film, null);
                 });
-                btnBookmark.setOnAction(event -> {
-                    FilmTools.bookmarkFilm(progData, film, !film.isBookmark());
-                });
-                hbox.getChildren().addAll(btnPlay, btnSave, btnBookmark);
+//                btnBookmark.setOnAction(event -> {
+//                    FilmTools.bookmarkFilm(progData, film, !film.isBookmark());
+//                });
+                hbox.getChildren().addAll(btnPlay, btnSave/*, btnBookmark*/);
                 setGraphic(hbox);
             }
         };
