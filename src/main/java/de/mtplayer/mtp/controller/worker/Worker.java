@@ -146,6 +146,32 @@ public class Worker {
         if (sender.isEmpty()) {
             theme.addAll(Arrays.asList(progData.filmlistFiltered.themePerChannel[0]));
         } else {
+            makeTheme(sender.trim(), theme);
+//            for (int i = 1; i < progData.filmlistFiltered.themePerChannel.length; ++i) {
+//                if (progData.filmlistFiltered.sender[i].equalsIgnoreCase(sender)) {
+//                    theme.addAll(Arrays.asList(progData.filmlistFiltered.themePerChannel[i]));
+//                    break;
+//                }
+//            }
+        }
+
+        Platform.runLater(() -> themeForChannelList.setAll(theme));
+    }
+
+    private void makeTheme(String sender, ArrayList<String> theme) {
+        // todo liste sortieren
+        if (sender.contains(",")) {
+            String[] senderArr = sender.split(",");
+            for (int i = 1; i < progData.filmlistFiltered.themePerChannel.length; ++i) {
+                for (String s : senderArr) {
+                    if (progData.filmlistFiltered.sender[i].equalsIgnoreCase(s.trim())) {
+                        theme.addAll(Arrays.asList(progData.filmlistFiltered.themePerChannel[i]));
+                        break;
+                    }
+                }
+            }
+
+        } else {
             for (int i = 1; i < progData.filmlistFiltered.themePerChannel.length; ++i) {
                 if (progData.filmlistFiltered.sender[i].equalsIgnoreCase(sender)) {
                     theme.addAll(Arrays.asList(progData.filmlistFiltered.themePerChannel[i]));
@@ -154,7 +180,6 @@ public class Worker {
             }
         }
 
-        Platform.runLater(() -> themeForChannelList.setAll(theme));
     }
 
     private void getAboNames() {
