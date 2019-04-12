@@ -20,6 +20,9 @@ import de.mtplayer.mtp.controller.config.ProgConst;
 import de.p2tools.p2Lib.guiTools.LinuxJavaFx;
 import de.p2tools.p2Lib.tools.net.Proxy;
 import javafx.application.Platform;
+import org.apache.commons.io.FileUtils;
+
+import java.awt.*;
 
 public class Main {
 
@@ -60,9 +63,23 @@ public class Main {
         if (SystemInfo.isUnix()) {
             LinuxJavaFx.setupX11WindowManagerClassName(ProgConst.PROGRAMNAME);
         }
+        checkMemory(args);
 
         MTPlayer.main(args);
 //        Application.launch(MTPlayer.class, args);
+    }
+
+    private void checkMemory(final String[] args) {
+        final var maxMem = Runtime.getRuntime().maxMemory();
+        if (maxMem < 500 * FileUtils.ONE_MB) {
+            if (GraphicsEnvironment.isHeadless()) {
+                System.err.println("Die VM hat nicht genügend Arbeitsspeicher zugewiesen bekommen.");
+                System.err.println("Nutzen Sie den Startparameter -Xmx512M für Minimumspeicher");
+            } else {
+                MTStartErrorWindow.main(args);
+            }
+
+        }
     }
 
 }
