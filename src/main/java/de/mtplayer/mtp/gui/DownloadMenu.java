@@ -20,10 +20,7 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import javafx.beans.property.BooleanProperty;
-import javafx.scene.control.CheckMenuItem;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
 public class DownloadMenu {
@@ -90,6 +87,7 @@ public class DownloadMenu {
 
         // MenuButton
         final MenuButton mb = new MenuButton("");
+        mb.setTooltip(new Tooltip("Downloadmenü anzeigen"));
         mb.setGraphic(new ProgIcons().FX_ICON_TOOLBAR_MENU);
         mb.getStyleClass().add("btnFunction");
 

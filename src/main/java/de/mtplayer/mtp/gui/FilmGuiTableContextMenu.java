@@ -185,8 +185,8 @@ public class FilmGuiTableContextMenu {
 
     private void addBookmark(ContextMenu contextMenu, Film film) {
         Menu submenuBookmark = new Menu("Bookmarks");
-        final MenuItem miBookmarkDel = new MenuItem("Bookmark löschen");
         final MenuItem miBookmarkAdd = new MenuItem("neues Bookmark anlegen");
+        final MenuItem miBookmarkDel = new MenuItem("Bookmark löschen");
 
         if (film.isBookmark()) {
             // Bookmark löschen
@@ -198,7 +198,7 @@ public class FilmGuiTableContextMenu {
             miBookmarkAdd.setOnAction(a -> FilmTools.bookmarkFilm(progData, film, true));
         }
 
-        submenuBookmark.getItems().addAll(miBookmarkDel, miBookmarkAdd);
+        submenuBookmark.getItems().addAll(miBookmarkAdd, miBookmarkDel);
         contextMenu.getItems().add(submenuBookmark);
     }
 

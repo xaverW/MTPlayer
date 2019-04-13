@@ -15,6 +15,9 @@
  */
 package de.mtplayer.mtp;
 
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.data.ProgIcons;
+import de.p2tools.p2Lib.guiTools.PHyperlink;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -32,7 +35,7 @@ public class MTStartErrorWindow extends Application {
     // toDo für weitere Startfehlermeldungen vorbereiten -> nach P2Tools
 
     private Stage primaryStage;
-
+    private final String url = "https://www.p2tools.de/mtplayer/manual/start.html";
 
     @Override
     public void init() throws Exception {
@@ -47,7 +50,7 @@ public class MTStartErrorWindow extends Application {
     private void initRootLayout() {
         try {
             StackPane root = new StackPane();
-            Scene scene = new Scene(root, 500, 300);
+            Scene scene = new Scene(root, 600, 300);
             primaryStage.setTitle("Fehler");
             primaryStage.setScene(scene);
             primaryStage.setOnCloseRequest(e -> {
@@ -63,6 +66,12 @@ public class MTStartErrorWindow extends Application {
             txtText.setWrapText(true);
             txtText.setEditable(false);
 
+            HBox hBoxUrl = new HBox(10);
+            hBoxUrl.setAlignment(Pos.CENTER_LEFT);
+            PHyperlink hyperlink = new PHyperlink(url,
+                    ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
+            hBoxUrl.getChildren().addAll(new Label("Infos:"), hyperlink);
+
             Button btnOk = new Button("Ok");
             btnOk.setOnAction(a -> {
                 quitt();
@@ -72,7 +81,7 @@ public class MTStartErrorWindow extends Application {
             hBox.setAlignment(Pos.BOTTOM_RIGHT);
 
             hBox.getChildren().add(btnOk);
-            vBox.getChildren().addAll(txtHeader, txtText, hBox);
+            vBox.getChildren().addAll(txtHeader, txtText, hBoxUrl, hBox);
             root.getChildren().add(vBox);
 
             primaryStage.show();

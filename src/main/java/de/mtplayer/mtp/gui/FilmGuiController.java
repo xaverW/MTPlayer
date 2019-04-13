@@ -124,12 +124,12 @@ public class FilmGuiController extends AnchorPane {
         }
     }
 
-    public void bookmarkFilm() {
-        final ArrayList<Film> list = getSelList();
-        if (!list.isEmpty()) {
-            FilmTools.bookmarkFilm(progData, list, !list.get(0).isBookmark());
-        }
-    }
+//    public void bookmarkFilm() {
+//        final ArrayList<Film> list = getSelList();
+//        if (!list.isEmpty()) {
+//            FilmTools.bookmarkFilm(progData, list, !list.get(0).isBookmark());
+//        }
+//    }
 
     public void guiFilmMediaCollection() {
         final Optional<Film> film = getSel();

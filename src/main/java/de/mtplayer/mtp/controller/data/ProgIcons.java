@@ -74,6 +74,7 @@ public class ProgIcons {
     public final ImageView FX_ICON_TOOLBAR_FILM_BOOKMARK = GetIcon.getImageView("toolbar-filme-bookmark.png", 32, 32);
     public final ImageView FX_ICON_TOOLBAR_FILM_BOOKMARK_FILTER = GetIcon.getImageView("toolbar-filme-bookmark-filter.png", 32, 32);
     public final ImageView FX_ICON_TOOLBAR_FILM_DEL_BOOKMARK = GetIcon.getImageView("toolbar-filme-del-bookmark.png", 32, 32);
+    public final ImageView FX_ICON_TOOLBAR_FILM_DEL_ALL_BOOKMARK = GetIcon.getImageView("toolbar-filme-del-all-bookmark.png", 32, 32);
 
     public final ImageView FX_ICON_TOOLBAR_ABO_NEW = GetIcon.getImageView("toolbar-abo-new.png", 32, 32);
     public final ImageView FX_ICON_TOOLBAR_ABO_ON = GetIcon.getImageView("toolbar-abo-on.png", 32, 32);

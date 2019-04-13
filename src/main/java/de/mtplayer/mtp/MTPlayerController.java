@@ -127,6 +127,7 @@ public class MTPlayerController extends StackPane {
     private void initButton() {
         btnFilmlist.setMinWidth(Region.USE_PREF_SIZE);
         btnFilmlist.getStyleClass().add("btnFilmlist");
+        btnFilmlist.setTooltip(new Tooltip("neue Filmliste laden"));
         btnFilmlist.setOnAction(e -> {
             // falls "neue Filmliste" aktiv ist
             btnFilmlist.getStyleClass().clear();
@@ -134,12 +135,15 @@ public class MTPlayerController extends StackPane {
             progData.loadFilmlist.loadFilmlist();
         });
 
+        btnFilm.setTooltip(new Tooltip("Filme anzeigen"));
         btnFilm.setOnAction(e -> selPanelFilm());
         btnFilm.setMaxWidth(Double.MAX_VALUE);
 
+        btnDownload.setTooltip(new Tooltip("Downloads anzeigen"));
         btnDownload.setOnAction(e -> selPanelDownload());
         btnDownload.setMaxWidth(Double.MAX_VALUE);
 
+        btnAbo.setTooltip(new Tooltip("Abos anzeigen"));
         btnAbo.setOnAction(e -> selPanelAbo());
         btnAbo.setMaxWidth(Double.MAX_VALUE);
 
@@ -182,6 +186,7 @@ public class MTPlayerController extends StackPane {
             mHelp.getItems().addAll(new SeparatorMenuItem(), miDebug);
         }
 
+        menuButton.setTooltip(new Tooltip("Programmeinstellungen anzeigen"));
         menuButton.setMinWidth(Region.USE_PREF_SIZE);
         menuButton.getStyleClass().add("btnFunction");
         menuButton.setText("");

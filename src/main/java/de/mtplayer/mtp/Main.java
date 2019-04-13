@@ -15,8 +15,6 @@
  */
 package de.mtplayer.mtp;
 
-import de.mtplayer.mLib.tools.SystemInfo;
-import de.mtplayer.mtp.controller.config.ProgConst;
 import de.p2tools.p2Lib.guiTools.LinuxJavaFx;
 import de.p2tools.p2Lib.tools.net.Proxy;
 import javafx.application.Platform;
@@ -60,9 +58,11 @@ public class Main {
         // JavaFX stuff
         Platform.setImplicitExit(false);
 
-        if (SystemInfo.isUnix()) {
-            LinuxJavaFx.setupX11WindowManagerClassName(ProgConst.PROGRAMNAME);
-        }
+//        todo wirft einen Fehler und funktioniert nicht mit FX
+//        if (SystemInfo.isUnix()) {
+//            LinuxJavaFx.setupX11WindowManagerClassName(ProgConst.PROGRAMNAME);
+//        }
+
         checkMemory(args);
 
         MTPlayer.main(args);
@@ -70,7 +70,9 @@ public class Main {
     }
 
     private void checkMemory(final String[] args) {
-        final var maxMem = Runtime.getRuntime().maxMemory();
+        final long maxMem = Runtime.getRuntime().maxMemory();
+
+        // todo muss abgestuft werden -> laden der Filmliste einschränken
         if (maxMem < 500 * FileUtils.ONE_MB) {
             if (GraphicsEnvironment.isHeadless()) {
                 System.err.println("Die VM hat nicht genügend Arbeitsspeicher zugewiesen bekommen.");
@@ -78,7 +80,6 @@ public class Main {
             } else {
                 MTStartErrorWindow.main(args);
             }
-
         }
     }
 
