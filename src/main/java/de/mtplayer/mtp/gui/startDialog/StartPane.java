@@ -45,21 +45,33 @@ public class StartPane {
         iv.setImage(im);
 
         hBox.getChildren().addAll(iv);
-        Label text = new Label("1) Hier kann die Filmliste" + PConst.LINE_SEPARATOR +
-                "aktualisiert werden." +
+        Label text = new Label("1) Hier wird die Filmliste" + PConst.LINE_SEPARATOR +
+                "aktualisiert." +
+
                 PConst.LINE_SEPARATORx2 +
                 "2) Die Ansicht der Filme, Downloads" + PConst.LINE_SEPARATOR +
                 "oder Abos wird hier umgeschaltet." +
+
                 PConst.LINE_SEPARATORx2 +
                 "3) Hier befinden sich" + PConst.LINE_SEPARATOR +
                 "die Programmeinstellungen." +
+
                 PConst.LINE_SEPARATORx2 +
                 "4) Mit dem Pluszeichen können" + PConst.LINE_SEPARATOR +
                 "Spalten in der Tabelle" + PConst.LINE_SEPARATOR +
                 "ein- und ausgeblendet werden." +
+
                 PConst.LINE_SEPARATORx2 +
                 "5) Damit kann man Filme ansehen" + PConst.LINE_SEPARATOR +
-                "und speichern.");
+                "und speichern." +
+
+                PConst.LINE_SEPARATORx2 +
+                "6) Hier lassen sich einzelne Filme vormerken," + PConst.LINE_SEPARATOR +
+                "die Vormerkung wieder löschen" + PConst.LINE_SEPARATOR +
+                "und vorgemerkte Filme anzeigen." + PConst.LINE_SEPARATOR +
+                "Zuletzt werden alle Vormerkungen" + PConst.LINE_SEPARATOR +
+                "wieder gelöscht.");
+
         hBox.getChildren().add(text);
 
         TitledPane tpConfig = new TitledPane("Infos zur Programmoberfläche", hBox);
