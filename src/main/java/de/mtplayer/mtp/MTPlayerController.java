@@ -21,6 +21,8 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
+import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
+import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.mtplayer.mtp.gui.AboGuiPack;
 import de.mtplayer.mtp.gui.DownloadGuiPack;
 import de.mtplayer.mtp.gui.FilmGuiPack;
@@ -129,10 +131,17 @@ public class MTPlayerController extends StackPane {
         btnFilmlist.getStyleClass().add("btnFilmlist");
         btnFilmlist.setTooltip(new Tooltip("neue Filmliste laden"));
         btnFilmlist.setOnAction(e -> {
-            // falls "neue Filmliste" aktiv ist
-            btnFilmlist.getStyleClass().clear();
-            btnFilmlist.getStyleClass().add("btnFilmlist");
             progData.loadFilmlist.loadFilmlist();
+        });
+
+        progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
+
+            @Override
+            public void start(ListenerFilmlistLoadEvent event) {
+                // falls "neue Filmliste" aktiv ist
+                btnFilmlist.getStyleClass().clear();
+                btnFilmlist.getStyleClass().add("btnFilmlist");
+            }
         });
 
         btnFilm.setTooltip(new Tooltip("Filme anzeigen"));
