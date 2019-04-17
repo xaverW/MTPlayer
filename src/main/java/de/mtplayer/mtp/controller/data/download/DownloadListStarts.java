@@ -182,34 +182,35 @@ public class DownloadListStarts {
     }
 
     private Download nextStart() {
-        int nr = -1;
-        Download tmpDownload = null;
-
+        // Download mit der kleinsten Nr finden der zu Starten ist
         // erster Versuch, Start mit einem anderen Sender
-        for (Download download : downloadList) {
-            if (download.isStateStartedWaiting() &&
-                    !maxChannelPlay(download, 1) &&
-                    (nr == -1 || download.getNr() < nr)) {
-                tmpDownload = download;
-                nr = tmpDownload.getNr();
-            }
-        }
+
+        Download tmpDownload = searchNextDownload(1);
         if (tmpDownload != null) {
+            // einer wurde gefunden
             return tmpDownload;
         }
 
-
-        // zweiter Versuch, Start mit einem passenden Sender
-        nr = -1;
-        int maxProChannel = ProgConst.MAX_SENDER_FILME_LADEN;
         if (Boolean.parseBoolean(ProgConfig.DOWNLOAD_MAX_ONE_PER_SERVER.get())) {
             // dann darf nur ein Download pro Server gestartet werden
-            maxProChannel = 1;
+            return null;
         }
+
+        // zweiter Versuch, Start mit einem passenden Sender
+        tmpDownload = searchNextDownload(ProgConst.MAX_SENDER_FILME_LADEN);
+        return tmpDownload;
+    }
+
+    private Download searchNextDownload(int maxProChannel) {
+        Download tmpDownload = null;
+        int nr = -1;
+
         for (Download download : downloadList) {
+
             if (download.isStateStartedWaiting() &&
                     !maxChannelPlay(download, maxProChannel) &&
                     (nr == -1 || download.getNr() < nr)) {
+
                 tmpDownload = download;
                 nr = tmpDownload.getNr();
             }
@@ -223,6 +224,11 @@ public class DownloadListStarts {
         try {
             int counter = 0;
             final String host = getHost(d);
+            if (host.equals("akamaihd.net")) {
+                // content delivery network
+                return false;
+            }
+
             for (final Download download : downloadList) {
                 if (download.isStateStartedRun() && getHost(download).equalsIgnoreCase(host)) {
                     counter++;
