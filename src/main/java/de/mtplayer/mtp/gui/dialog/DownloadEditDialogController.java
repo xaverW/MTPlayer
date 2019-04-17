@@ -653,7 +653,8 @@ public class DownloadEditDialogController extends PDialogExtra {
                 break;
             case DownloadXml.DOWNLOAD_SUBTITLE:
                 cbx[i].setSelected(download.isSubtitle());
-                if (isStarted) {
+                Film film = download.getFilm();
+                if (!isStarted && film != null && !film.getUrlSubtitle().isEmpty()) {
                     cbx[i].setDisable(false);
                     final CheckBox boxSub = cbx[i];
                     cbx[i].setOnAction(event -> download.setSubtitle(boxSub.isSelected()));
