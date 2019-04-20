@@ -261,15 +261,72 @@ public class LoadFilmlist {
     }
 
     /**
+     * wird nach dem Import einer neuen Liste gemacht
+     *
+     * @param event
+     */
+    private void afterImportNewFilmlistFromServer(ListenerFilmlistLoadEvent event) {
+        final List<String> logList = new ArrayList<>();
+        logList.add(PLog.LILNE3);
+
+        if (!diffListe.isEmpty()) {
+            // wenn nur ein Update
+            progData.filmlist.updateList(diffListe, true/* Vergleich über Index, sonst nur URL */, true /* ersetzen */);
+            progData.filmlist.metaData = diffListe.metaData;
+            progData.filmlist.sort(); // jetzt sollte alles passen
+            diffListe.clear();
+        }
+
+        if (event.error) {
+            // Laden war fehlerhaft
+            logList.add("");
+            logList.add("Filmliste laden war fehlerhaft, alte Liste wird wieder geladen");
+            final boolean stopped = isStop();
+            Platform.runLater(() -> PAlert.showErrorAlert("Filmliste laden",
+                    stopped ? "Das Laden einer neuen Filmliste wurde abgebrochen!" :
+                            "Das Laden einer neuen Filmliste hat nicht geklappt!")
+            );
+
+            // dann die alte Liste wieder laden
+            progData.filmlist.clear();
+            setStop(false);
+            new ReadFilmlist().readFilmlist(ProgInfos.getFilmListFile(),
+                    progData.filmlist, ProgConfig.SYSTEM_NUM_DAYS_FILMLIST.getInt());
+            logList.add("");
+
+        } else {
+            // dann war alles OK
+            findAndMarkNewFilms(logList, progData.filmlist);
+
+            logList.add("Unicode-Zeichen korrigieren");
+            FilmlistFactory.cleanFaultyCharacter();
+
+            logList.add("");
+            logList.add("Filme schreiben (" + progData.filmlist.size() + " Filme) :");
+            logList.add("   --> Start Schreiben nach: " + ProgInfos.getFilmListFile());
+            new WriteFilmlistJson().write(ProgInfos.getFilmListFile(), progData.filmlist);
+            logList.add("   --> geschrieben!");
+            logList.add("");
+        }
+
+        afterLoadFilmlistFromServerOrLocal(logList);
+        PLog.addSysLog(logList);
+    }
+
+    /**
      * alles was nach einem Neuladen oder Einlesen einer gespeicherten Filmliste ansteht
      */
     private void afterLoadFilmlistFromServerOrLocal(List<String> logList) {
+
+        logList.add("");
+        logList.add("Jetzige Liste erstellt am: " + progData.filmlist.genDate());
+        logList.add("  Anzahl Filme: " + progData.filmlist.size());
+        logList.add("  Anzahl Neue:  " + progData.filmlist.countNewFilms());
+        logList.add("");
+
         notifyProgress.notifyEvent(NotifyProgress.NOTIFY.LOADED,
                 new ListenerFilmlistLoadEvent("", "Filme markieren, Themen suchen",
                         ListenerFilmlistLoad.PROGRESS_INDETERMINATE, 0, false/* Fehler */));
-
-        logList.add("UTF-Strings korrigieren");
-        FilmlistFactory.cleanFaultyCharacter();
 
         logList.add("Filme markieren");
         final int count = progData.filmlist.markFilms();
@@ -305,63 +362,6 @@ public class LoadFilmlist {
         progData.downloadList.addFilmInList();
 
         setPropLoadFilmlist(false);
-    }
-
-    /**
-     * wird nach dem Import einer neuen Liste gemacht
-     *
-     * @param event
-     */
-    private void afterImportNewFilmlistFromServer(ListenerFilmlistLoadEvent event) {
-        // Abos eintragen in der gesamten Liste vor Blacklist da das nur beim Ändern der Filmliste oder
-        // beim Ändern von Abos gemacht wird
-
-        final List<String> logList = new ArrayList<>();
-        logList.add(PLog.LILNE3);
-
-        if (!diffListe.isEmpty()) {
-            // wenn nur ein Update
-            progData.filmlist.updateList(diffListe, true/* Vergleich über Index, sonst nur URL */, true /* ersetzen */);
-            progData.filmlist.metaData = diffListe.metaData;
-            progData.filmlist.sort(); // jetzt sollte alles passen
-            diffListe.clear();
-        }
-
-        findAndMarkNewFilms(logList, progData.filmlist);
-
-        if (event.error) {
-            logList.add("");
-            logList.add("Filmliste laden war fehlerhaft, alte Liste wird wieder geladen");
-            final boolean stopped = isStop();
-            Platform.runLater(() -> PAlert.showErrorAlert("Filmliste laden",
-                    stopped ? "Das Laden einer neuen Filmliste wurde abgebrochen!" :
-                            "Das Laden einer neuen Filmliste hat nicht geklappt!")
-            );
-
-            // dann die alte Liste wieder laden
-            progData.filmlist.clear();
-            setStop(false);
-            new ReadFilmlist().readFilmlist(ProgInfos.getFilmListFile(),
-                    progData.filmlist, ProgConfig.SYSTEM_NUM_DAYS_FILMLIST.getInt());
-            logList.add("");
-
-        } else {
-            logList.add("");
-            logList.add("Filme schreiben (" + progData.filmlist.size() + " Filme) :");
-            logList.add("   --> Start Schreiben nach: " + ProgInfos.getFilmListFile());
-            new WriteFilmlistJson().write(ProgInfos.getFilmListFile(), progData.filmlist);
-            logList.add("   --> geschrieben!");
-            logList.add("");
-        }
-
-        logList.add("");
-        logList.add("Jetzige Liste erstellt am: " + progData.filmlist.genDate());
-        logList.add("  Anzahl Filme: " + progData.filmlist.size());
-        logList.add("  Anzahl Neue:  " + progData.filmlist.countNewFilms());
-        logList.add("");
-
-        afterLoadFilmlistFromServerOrLocal(logList);
-        PLog.addSysLog(logList);
     }
 
     private void fillHash(List<String> logList, Filmlist filmlist) {

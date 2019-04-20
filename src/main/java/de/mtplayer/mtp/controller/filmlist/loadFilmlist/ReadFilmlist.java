@@ -36,7 +36,6 @@ import de.p2tools.p2Lib.tools.log.PLog;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import org.apache.commons.lang3.time.FastDateFormat;
 import org.tukaani.xz.XZInputStream;
 
 import javax.swing.event.EventListenerList;
@@ -46,7 +45,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 import java.util.zip.ZipInputStream;
 
@@ -85,11 +87,11 @@ public class ReadFilmlist {
 
             if (sourceFileUrl.startsWith("http")) {
                 // URL laden
-                logList.add("Filmliste von URL laden: " + sourceFileUrl);
+                logList.add("Filmliste aus URL laden: " + sourceFileUrl);
                 processFromWeb(new URL(sourceFileUrl), filmlist);
             } else {
                 // lokale Datei laden
-                logList.add("Filmliste von Datei laden: " + sourceFileUrl);
+                logList.add("Filmliste aus Datei laden: " + sourceFileUrl);
                 processFromFile(sourceFileUrl, filmlist);
             }
 
@@ -98,11 +100,9 @@ public class ReadFilmlist {
                 filmlist.clear();
 
             } else {
-                logList.add(PLog.LILNE3);
-                logList.add("Filmliste geladen   am: " + FastDateFormat.getInstance("dd.MM.yyyy, HH:mm").format(new Date()));
-                logList.add("          erstellt  am: " + filmlist.genDate());
-                logList.add("          Anzahl Filme: " + filmlist.size());
-                logList.add("          Anzahl  Neue: " + filmlist.countNewFilms());
+//                logList.add(PLog.LILNE3);
+                logList.add("    erstellt am:  " + filmlist.genDate());
+                logList.add("    Anzahl Filme: " + filmlist.size());
 
                 countFoundChannel(logList);
             }
