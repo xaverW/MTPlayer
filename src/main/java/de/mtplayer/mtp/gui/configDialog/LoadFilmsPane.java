@@ -122,7 +122,7 @@ public class LoadFilmsPane {
             // im Startdialog brauchts das noch nicht
             Button btnLoad = new Button("Filmliste jetzt laden");
             btnLoad.setOnAction(event -> {
-                progData.loadFilmlist.loadFilmlist(true);
+                progData.loadFilmlist.loadNewFilmlistFromServer(true);
             });
 
             HBox hBoxLoadBtn = new HBox();

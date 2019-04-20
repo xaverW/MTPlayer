@@ -131,7 +131,7 @@ public class MTPlayerController extends StackPane {
         btnFilmlist.getStyleClass().add("btnFilmlist");
         btnFilmlist.setTooltip(new Tooltip("neue Filmliste laden"));
         btnFilmlist.setOnAction(e -> {
-            progData.loadFilmlist.loadFilmlist();
+            progData.loadFilmlist.loadNewFilmlistFromServer();
         });
 
         progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {

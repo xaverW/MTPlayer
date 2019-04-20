@@ -23,7 +23,7 @@ import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.Filmlist;
 import de.mtplayer.mtp.controller.data.film.FilmlistFactory;
 import de.mtplayer.mtp.controller.filmlist.checkFilmlistUpdate.SearchForFilmlistUpdate;
-import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ImportNewFilmlist;
+import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ImportNewFilmlistFromServer;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ReadFilmlist;
@@ -48,7 +48,7 @@ public class LoadFilmlist {
     private final Filmlist diffListe;
 
     private final ProgData progData;
-    private final ImportNewFilmlist importNewFilmliste;
+    private final ImportNewFilmlistFromServer importNewFilmlisteFromServer;
     private final SearchForFilmlistUpdate searchForFilmlistUpdate;
 
     private final NotifyProgress notifyProgress = new NotifyProgress();
@@ -62,8 +62,8 @@ public class LoadFilmlist {
         searchForFilmlistUpdate = new SearchForFilmlistUpdate();
         checkForFilmlistUpdate();
 
-        importNewFilmliste = new ImportNewFilmlist(progData);
-        importNewFilmliste.addAdListener(new ListenerFilmlistLoad() {
+        importNewFilmlisteFromServer = new ImportNewFilmlistFromServer(progData);
+        importNewFilmlisteFromServer.addAdListener(new ListenerFilmlistLoad() {
             @Override
             public synchronized void start(ListenerFilmlistLoadEvent event) {
                 // Start ans Prog melden
@@ -84,7 +84,7 @@ public class LoadFilmlist {
 
 
                 PDuration.onlyPing("Filme geladen: Nachbearbeiten");
-                afterImportNewFilmlist(event);
+                afterImportNewFilmlistFromServer(event);
                 stopMsg();
 
                 PDuration.onlyPing("Filme nachbearbeiten: Ende");
@@ -119,12 +119,12 @@ public class LoadFilmlist {
         return stop.get();
     }
 
-    public void loadFilmlist() {
-        loadFilmlist(false);
+    public void loadNewFilmlistFromServer() {
+        loadNewFilmlistFromServer(false);
     }
 
-    public void loadFilmlist(boolean alwaysLoadNew) {
-        // damit wird die Filmliste geladen UND auch gleich im Konfig-Ordner gespeichert
+    public void loadNewFilmlistFromServer(boolean alwaysLoadNew) {
+        // damit wird eine neue Filmliste (Web) geladen UND auch gleich im Konfig-Ordner gespeichert
 
         if (LoadFactory.checkAllSenderSelectedNotToLoad(progData.primaryStage)) {
             // alle Sender sind vom Laden ausgenommen
@@ -168,14 +168,14 @@ public class LoadFilmlist {
             if (fileUrl.isEmpty()) {
                 // Filmeliste laden und Url automatisch ermitteln
                 logList.add("Filmliste laden (auto)");
-                importNewFilmliste.importFilmListAuto(progData.filmlist,
+                importNewFilmlisteFromServer.importFilmListAuto(progData.filmlist,
                         diffListe, ProgConfig.SYSTEM_NUM_DAYS_FILMLIST.getInt());
 
             } else {
                 // Filmeliste laden von URL/Datei
                 logList.add("Filmliste mit fester URL/Datei laden");
                 progData.filmlist.clear();
-                importNewFilmliste.importFilmlistFromFile(fileUrl,
+                importNewFilmlisteFromServer.importFilmlistFromFile(fileUrl,
                         progData.filmlist, ProgConfig.SYSTEM_NUM_DAYS_FILMLIST.getInt());
             }
 
@@ -226,7 +226,7 @@ public class LoadFilmlist {
 
                 PDuration.onlyPing("Programmstart Filmliste laden: neue Liste laden");
                 setPropLoadFilmlist(false);
-                loadFilmlist(false);
+                loadNewFilmlistFromServer(false);
                 PDuration.onlyPing("Programmstart Filmliste laden: neue Liste geladen");
 
             } else {
@@ -234,7 +234,7 @@ public class LoadFilmlist {
                         new ListenerFilmlistLoadEvent("", "Filme verarbeiten",
                                 ListenerFilmlistLoad.PROGRESS_INDETERMINATE, 0, false/* Fehler */));
 
-                afterLoadFilmlist(logList);
+                afterLoadFilmlistFromServerOrLocal(logList);
                 PLog.addSysLog(logList);
                 stopMsg();
                 notifyProgress.notifyFinishedOk();
@@ -263,10 +263,13 @@ public class LoadFilmlist {
     /**
      * alles was nach einem Neuladen oder Einlesen einer gespeicherten Filmliste ansteht
      */
-    private void afterLoadFilmlist(List<String> logList) {
+    private void afterLoadFilmlistFromServerOrLocal(List<String> logList) {
         notifyProgress.notifyEvent(NotifyProgress.NOTIFY.LOADED,
                 new ListenerFilmlistLoadEvent("", "Filme markieren, Themen suchen",
                         ListenerFilmlistLoad.PROGRESS_INDETERMINATE, 0, false/* Fehler */));
+
+        logList.add("UTF-Strings korrigieren");
+        FilmlistFactory.cleanFaultyCharacter();
 
         logList.add("Filme markieren");
         final int count = progData.filmlist.markFilms();
@@ -309,7 +312,7 @@ public class LoadFilmlist {
      *
      * @param event
      */
-    private void afterImportNewFilmlist(ListenerFilmlistLoadEvent event) {
+    private void afterImportNewFilmlistFromServer(ListenerFilmlistLoadEvent event) {
         // Abos eintragen in der gesamten Liste vor Blacklist da das nur beim Ändern der Filmliste oder
         // beim Ändern von Abos gemacht wird
 
@@ -357,7 +360,7 @@ public class LoadFilmlist {
         logList.add("  Anzahl Neue:  " + progData.filmlist.countNewFilms());
         logList.add("");
 
-        afterLoadFilmlist(logList);
+        afterLoadFilmlistFromServerOrLocal(logList);
         PLog.addSysLog(logList);
     }
 

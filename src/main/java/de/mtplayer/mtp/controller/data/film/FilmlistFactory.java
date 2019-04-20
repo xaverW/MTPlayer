@@ -39,4 +39,24 @@ public class FilmlistFactory {
         Filmlist filmlist = ProgData.getInstance().filmlist;
         filmlist.stream().forEach(film -> film.setBookmark(false));
     }
+
+    public static void cleanFaultyCharacter() {
+        // damit werden Unicode-Zeichen korrigiert
+        // gibt da eine Java-Bug
+        // https://github.com/javafxports/openjdk-jfx/issues/287
+
+        Filmlist filmlist = ProgData.getInstance().filmlist;
+        filmlist.stream().forEach(film -> {
+            film.arr[Film.FILM_TITLE] = cleanUnicode(film.getTitle());
+            film.arr[Film.FILM_THEME] = cleanUnicode(film.getTheme());
+            film.setDescription(cleanUnicode(film.getDescription()));
+        });
+    }
+
+    final static String regEx = "[\\p{Cc}&&[^\n,\r,\t]]";
+
+    private static String cleanUnicode(String ret) {
+        ret = ret.replaceAll(regEx, "");
+        return ret;
+    }
 }

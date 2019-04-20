@@ -105,10 +105,6 @@ public class StatusBarController extends AnchorPane {
         stackPane.getChildren().addAll(nonePane, filmPane, downloadPane, aboPane);
         nonePane.toFront();
 
-//        lblSelFilm.getStyleClass().add("lblSelectedLines");
-//        lblSelDownload.getStyleClass().add("lblSelectedLines");
-//        lblSelAbo.getStyleClass().add("lblSelectedLines");
-
         progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
             @Override
             public void start(ListenerFilmlistLoadEvent event) {

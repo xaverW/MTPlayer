@@ -89,6 +89,14 @@ public class MTPTester {
             btnClearDescription.setMaxWidth(Double.MAX_VALUE);
             btnClearDescription.setOnAction(a -> clearDescription());
 
+            Button btnCheck = new Button("Text checken (UTF8)");
+            btnCheck.setMaxWidth(Double.MAX_VALUE);
+            btnCheck.setOnAction(a -> checkText());
+
+            Button btnRepair = new Button("Text reparieren (UTF8)");
+            btnRepair.setMaxWidth(Double.MAX_VALUE);
+            btnRepair.setOnAction(a -> repairText());
+
             int row = 0;
             gridPane.add(text, 0, row, 2, 1);
             gridPane.add(btnAddToHash, 0, ++row);
@@ -96,6 +104,8 @@ public class MTPTester {
             gridPane.add(btnFind, 0, ++row);
             gridPane.add(btnClear, 0, ++row);
             gridPane.add(btnClearDescription, 0, ++row);
+            gridPane.add(btnCheck, 0, ++row);
+            gridPane.add(btnRepair, 0, ++row);
             gridPane.add(textArea, 0, ++row, 2, 1);
         }
     }
@@ -199,8 +209,80 @@ public class MTPTester {
         text += count + " Filme\n";
         text += countDesc + " Beschreibungen gelöscht\n\n";
         textArea.setText(text);
+    }
+
+    private void checkText() {
+        Filmlist filmlist = progData.filmlist;
+
+        int i = 0;
+        int countTheme = 0, countTitle = 0, countDescreption = 0;
+
+        try {
+            for (Film film : filmlist) {
+                ++i;
+                if (i % 10_000 == 0) {
+                    System.out.println("fertig: " + i);
+                }
+
+                if (!cleanUnicode(film.getTitle()).equals(film.getTitle())) {
+                    System.out.println(film.getDate() + " Titel:  " + film.getTitle());
+                    System.out.println("                   " + cleanUnicode(film.getTitle()));
+                    ++countTitle;
+                }
+                if (!cleanUnicode(film.getTheme()).equals(film.getTheme())) {
+                    System.out.println(film.getDate() + " Thema:  " + film.getTheme());
+                    System.out.println("                   " + cleanUnicode(film.getTheme()));
+                    ++countTheme;
+                }
+                if (!cleanUnicode(film.getDescription()).equals(film.getDescription())) {
+                    ++countDescreption;
+                }
+
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        System.out.println("Themen: " + countTheme);
+        System.out.println("Titel: " + countTitle);
+        System.out.println("Beschreibungen: " + countDescreption);
+    }
+
+    private void repairText() {
+        Filmlist filmlist = progData.filmlist;
+
+        try {
+            for (Film film : filmlist) {
+                film.arr[Film.FILM_TITLE] = cleanUnicode(film.getTitle());
+                film.arr[Film.FILM_THEME] = cleanUnicode(film.getTheme());
+                film.setDescription(cleanUnicode(film.getDescription()));
+
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    private static String cleanUnicode(String ret) {
+//        final String regEx = "[\\p{Cc}&&[^\n,\r,\t,\\x7F,\\x10,\\x11,\\x12,\\x13,\\x14,\\x15,\\x16," +
+//                "\\x17,\\x18,\\x19,\\x1A,\\x1B,\\x1C,\\x1D,\\x1E,\\x1F," +
+//                "\\x00,\\x01,\\x02,\\x03,\\x04,\\x05,\\x06,\\x07,\\x08,\\x09,\\x0A,\\x0B,\\x0C,\\x0D,\\x0E,\\x0F," +
+//                "\uC280-\uC29F]]";
 
 
+//        final String regEx = "\uC296";
+
+//        if (!ret.equals(ret.replaceAll(regEx, "?"))) {
+//            System.out.println();
+//            System.out.println(ret);
+//            System.out.println(ret.replaceAll(regEx, "******"));
+//        }
+        // ret = ret.replaceAll("[\\p{Cc}\\p{Cf}\\p{Co}\\p{Cn}]", "?");
+
+
+        final String regEx = "[\\p{Cc}&&[^\n,\r,\t]]";
+        ret = ret.replaceAll(regEx, "?");
+
+        return ret;
     }
 
     private boolean checkDate(Film film, long mSeconds) {

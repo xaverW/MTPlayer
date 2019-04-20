@@ -24,13 +24,13 @@ import de.p2tools.p2Lib.tools.log.PLog;
 import javax.swing.event.EventListenerList;
 import java.util.ArrayList;
 
-public class ImportNewFilmlist {
+public class ImportNewFilmlistFromServer {
 
     private final EventListenerList eventListenerList;
     private final ReadFilmlist readFilmlist;
     private final ProgData progData;
 
-    public ImportNewFilmlist(ProgData progData) {
+    public ImportNewFilmlistFromServer(ProgData progData) {
         this.progData = progData;
         eventListenerList = new EventListenerList();
         readFilmlist = new ReadFilmlist();
