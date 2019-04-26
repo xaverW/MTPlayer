@@ -152,5 +152,5 @@ public class FilmPaneController extends AnchorPane {
                 PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcPrefSize());
     }
-    
+
 }

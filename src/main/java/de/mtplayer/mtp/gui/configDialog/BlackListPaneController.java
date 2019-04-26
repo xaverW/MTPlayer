@@ -146,6 +146,8 @@ public class BlackListPaneController extends AnchorPane {
         final Button btnHelpDays = PButton.helpButton(stage, "Blacklist",
                 HelpText.BLACKLIST_DAYS);
 
+        lblDays.setMinWidth(Region.USE_PREF_SIZE);
+        lblSize.setMinWidth(Region.USE_PREF_SIZE);
 
         int row = 0;
         gridPane.add(tglAbo, 0, row);
