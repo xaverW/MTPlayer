@@ -49,6 +49,7 @@ public class FilmlistBlackFilter {
 
         PDuration.counterStart("FilmlistBlackFilter.getBlackFiltered");
         listRet.clear();
+        PROG_DATA.blackList.clearCounter();
 
         if (filmlist != null) {
             listRet.setMeta(filmlist);
@@ -77,7 +78,7 @@ public class FilmlistBlackFilter {
                 }
 
                 if (!PROG_DATA.blackList.isEmpty()) {
-                    filterList.add(FilmlistBlackFilter::applyBlacklistFilters);
+                    filterList.add(film -> applyBlacklistFilters(film, true));
                 }
 
                 for (final Predicate<Film> pred : filterList) {
@@ -133,7 +134,7 @@ public class FilmlistBlackFilter {
             return true;
         }
 
-        return applyBlacklistFilters(film);
+        return applyBlacklistFilters(film, false);
     }
 
     /**
@@ -233,7 +234,7 @@ public class FilmlistBlackFilter {
      * @return true if film can be displayed
      */
 
-    private static boolean applyBlacklistFilters(Film film) {
+    private static boolean applyBlacklistFilters(Film film, boolean inc) {
         for (final BlackData blackData : PROG_DATA.blackList) {
 
             if (FilmFilter.checkFilmWithFilter(
@@ -249,6 +250,9 @@ public class FilmlistBlackFilter {
                     film,
                     false /* auch die Länge prüfen */)) {
 
+                if (inc) {
+                    blackData.incCountHits();
+                }
                 return ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST.getBool();
             }
         }

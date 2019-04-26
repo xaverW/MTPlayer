@@ -60,4 +60,9 @@ public class BlackList extends SimpleListProperty<BlackData> {
         Listener.notify(Listener.EREIGNIS_BLACKLIST_GEAENDERT, BlackList.class.getSimpleName());
     }
 
+    public synchronized void clearCounter() {
+        for (final BlackData blackData : this) {
+            blackData.setCountHits(0);
+        }
+    }
 }

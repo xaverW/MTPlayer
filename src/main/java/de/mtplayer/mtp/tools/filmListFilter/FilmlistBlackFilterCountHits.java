@@ -33,9 +33,7 @@ public class FilmlistBlackFilterCountHits {
         final Filmlist filmlist = PROG_DATA.filmlist;
 
         PDuration.counterStart("FilmlistBlackFilterCountHits.countHits");
-        for (final BlackData blackData : PROG_DATA.blackList) {
-            blackData.setCountHits(0);
-        }
+        PROG_DATA.blackList.clearCounter();
 
         if (filmlist != null) {
             filmlist.parallelStream().forEach(film -> applyBlacklistFilters(film));
