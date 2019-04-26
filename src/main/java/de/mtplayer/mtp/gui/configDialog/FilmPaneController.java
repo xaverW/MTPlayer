@@ -100,7 +100,6 @@ public class FilmPaneController extends AnchorPane {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
         makeConfig(result);
         result.add(new LoadFilmsPane(stage, progData).make());
-        makeLoadManuel(result);
 
         return result;
     }
@@ -114,7 +113,6 @@ public class FilmPaneController extends AnchorPane {
         TitledPane tpConfig = new TitledPane("Filmliste laden", gridPane);
         result.add(tpConfig);
 
-
         final PToggleSwitch tglLoad = new PToggleSwitch("Filmliste beim Programmstart laden");
         tglLoad.setHGrow(false);
         tglLoad.selectedProperty().bindBidirectional(propLoad);
@@ -124,22 +122,6 @@ public class FilmPaneController extends AnchorPane {
         final Button btnHelpLoad = PButton.helpButton(stage, "Filmliste laden",
                 HelpText.LOAD_FILMLIST_PROGRAMSTART);
         GridPane.setHalignment(btnHelpLoad, HPos.RIGHT);
-
-        int row = 0;
-        gridPane.add(hBoxTgl, 0, row);
-        gridPane.add(btnHelpLoad, 1, row);
-
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(), PColumnConstraints.getCcPrefSize());
-    }
-
-    private void makeLoadManuel(Collection<TitledPane> result) {
-        final GridPane gridPane = new GridPane();
-        gridPane.setHgap(15);
-        gridPane.setVgap(15);
-        gridPane.setPadding(new Insets(20));
-
-        TitledPane tpConfig = new TitledPane("Filmliste manuell auswählen", gridPane);
-        result.add(tpConfig);
 
         TextField txtUrl = new TextField("");
         txtUrl.textProperty().bindBidirectional(propUrl);
@@ -154,20 +136,21 @@ public class FilmPaneController extends AnchorPane {
         final Button btnHelp = PButton.helpButton(stage, "Filmliste laden",
                 HelpText.LOAD_FILMLIST_MANUAL);
 
-        Button btnLoad = new Button("Filmliste jetzt laden");
-        btnLoad.disableProperty().bind(txtUrl.textProperty().isEmpty());
-        btnLoad.setOnAction(event -> progData.loadFilmlist.loadNewFilmlistFromServer(true));
-
         int row = 0;
-        gridPane.add(new Label("Adresse (Datei oder URL) zum Laden der Filmliste:"), 0, row, 2, 1);
+        gridPane.add(hBoxTgl, 0, row);
+        gridPane.add(btnHelpLoad, 2, row);
+
+        gridPane.add(new Label(" "), 0, ++row);
+        gridPane.add(new Label("Adresse (Datei oder URL) zum Laden der Filmliste:\n" +
+                "(wenn leer, wird die Standard-URL verwendet)"), 0, ++row, 2, 1);
 
         gridPane.add(txtUrl, 0, ++row);
         gridPane.add(btnFile, 1, row);
         gridPane.add(btnHelp, 2, row);
 
-        gridPane.add(btnLoad, 0, ++row);
-
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(),
+                PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcPrefSize());
     }
-
+    
 }

@@ -295,7 +295,7 @@ public class HelpText {
             "älter als 3h ist). Zusätzlich kann sie über den " +
             "Button \"Filmliste\" " +
             "aktualisiert werden. Zum Update werden dann nur noch die " +
-            "Differenzlisten geladen (enthalten " +
+            "Differenzlisten geladen (diese enthalten nur " +
             "die neuen Filme).";
 
     public static final String LOAD_FILMLIST_MANUAL = "Die angegebene Datei/URL wird beim " +

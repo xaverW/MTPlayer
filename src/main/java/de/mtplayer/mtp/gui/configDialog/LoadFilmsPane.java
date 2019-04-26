@@ -27,10 +27,7 @@ import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -39,7 +36,7 @@ public class LoadFilmsPane {
 
     private final Slider slDays = new Slider();
     private final Label lblDays = new Label("");
-    final Button btnClearall = new Button("wieder alle Sender laden");
+    final Button btnClearall = new Button("wieder alles laden");
     private final Stage stage;
     private final ProgData progData;
     StringProperty propChannel = ProgConfig.SYSTEM_LOAD_NOT_SENDER.getStringProperty();
@@ -56,25 +53,11 @@ public class LoadFilmsPane {
     }
 
     public TitledPane make() {
-        final VBox vBox = new VBox(20);
-        vBox.setPadding(new Insets(25, 20, 20, 20));
 
-        initDays();
         final Button btnHelpDays = PButton.helpButton(stage, "nur Filme der letzten Tage laden",
                 HelpText.LOAD_FILM_ONLY_DAYS);
 
-        HBox hBoxLoad1 = new HBox();
-        hBoxLoad1.setAlignment(Pos.CENTER_LEFT);
-        hBoxLoad1.getChildren().add(lblDays);
-        HBox.setHgrow(hBoxLoad1, Priority.ALWAYS);
-
-        HBox hBoxLoad2 = new HBox(10);
-        hBoxLoad2.setAlignment(Pos.CENTER);
-        hBoxLoad2.getChildren().addAll(new Label("Filme laden:"), slDays, hBoxLoad1, btnHelpDays);
-
-        vBox.getChildren().addAll(new Label("nur aktuelle Filme laden"), hBoxLoad2);
-
-
+        initDays();
         final TilePane tilePane = new TilePane();
         tilePane.setHgap(10);
         tilePane.setVgap(10);
@@ -99,23 +82,49 @@ public class LoadFilmsPane {
         final Button btnHelpSender = PButton.helpButton(stage, "Filmliste laden",
                 HelpText.LOAD_FILMLIST_SENDER);
 
+        btnClearall.setMinWidth(Region.USE_PREF_SIZE);
         btnClearall.setOnAction(a -> {
             aListCb.stream().forEach(checkBox -> checkBox.setSelected(false));
             makePropSender(aListCb);
         });
         checkPropSender(aListCb);
 
+
+        final VBox vBox = new VBox(20);
+        vBox.setPadding(new Insets(25, 20, 20, 20));
+
+        lblDays.setMinWidth(Region.USE_PREF_SIZE);
+        HBox hBoxLoad1 = new HBox();
+        hBoxLoad1.setAlignment(Pos.CENTER_LEFT);
+        hBoxLoad1.getChildren().add(lblDays);
+        HBox.setHgrow(hBoxLoad1, Priority.ALWAYS);
+
+        slDays.setMinWidth(Region.USE_PREF_SIZE);
+        HBox hBoxLoad2 = new HBox(10);
+        hBoxLoad2.setAlignment(Pos.CENTER);
+        Label lblLaden = new Label("Filme laden:");
+        lblLaden.setMinWidth(Region.USE_PREF_SIZE);
+        hBoxLoad2.getChildren().addAll(lblLaden, slDays, hBoxLoad1, btnHelpDays);
+
+        Label lblAkt = new Label("nur Filme der letzten Tage laden");
+        lblAkt.setMinWidth(Region.USE_PREF_SIZE);
+        vBox.getChildren().addAll(lblAkt, hBoxLoad2);
+
+
         HBox hBoxSender1 = new HBox(10);
         hBoxSender1.setAlignment(Pos.CENTER_RIGHT);
         HBox.setHgrow(hBoxSender1, Priority.ALWAYS);
-        hBoxSender1.getChildren().addAll(btnClearall, btnHelpSender);
+        hBoxSender1.getChildren().addAll(btnHelpSender);
 
         HBox hBoxSender2 = new HBox(10);
         hBoxSender2.setAlignment(Pos.CENTER);
-        hBoxSender2.getChildren().addAll(new Label("diese Sender  _nicht_  laden"), hBoxSender1);
+        hBoxSender2.getChildren().addAll(new Label("diese Sender  *nicht*  laden"), hBoxSender1);
 
         vBox.getChildren().addAll(new Label(" "), hBoxSender2);
-        vBox.getChildren().add(tilePane);
+        HBox hBox = new HBox(10);
+        hBox.getChildren().addAll(tilePane, btnClearall);
+        HBox.setHgrow(tilePane, Priority.ALWAYS);
+        vBox.getChildren().add(hBox);
 
 
         if (progData != null) {
@@ -129,14 +138,15 @@ public class LoadFilmsPane {
             hBoxLoadBtn.setAlignment(Pos.CENTER_LEFT);
             hBoxLoadBtn.getChildren().add(btnLoad);
 
-            VBox vBoxLoadBtn = new VBox();
+            VBox vBoxLoadBtn = new VBox(25);
             vBoxLoadBtn.setAlignment(Pos.BOTTOM_LEFT);
             VBox.setVgrow(vBoxLoadBtn, Priority.ALWAYS);
             vBoxLoadBtn.getChildren().add(hBoxLoadBtn);
-            vBox.getChildren().add(vBoxLoadBtn);
+            vBox.getChildren().addAll(new VBox(25), hBoxLoadBtn);
         }
 
         TitledPane tpConfig = new TitledPane("Filme und Sender laden", vBox);
+
         return tpConfig;
     }
 
