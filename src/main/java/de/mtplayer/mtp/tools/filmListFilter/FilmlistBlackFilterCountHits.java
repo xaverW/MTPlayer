@@ -17,10 +17,7 @@
 package de.mtplayer.mtp.tools.filmListFilter;
 
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.BlackData;
-import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.Filmlist;
-import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 
 public class FilmlistBlackFilterCountHits {
@@ -36,40 +33,42 @@ public class FilmlistBlackFilterCountHits {
         PROG_DATA.blackList.clearCounter();
 
         if (filmlist != null) {
-            filmlist.parallelStream().forEach(film -> applyBlacklistFilters(film));
+            filmlist.parallelStream().forEach(film -> FilmlistBlackFilter.applyBlacklistFilters(film, true));
         }
 
         PDuration.counterStop("FilmlistBlackFilterCountHits.countHits");
     }
 
 
-    /**
-     * Apply filters to film.
-     *
-     * @param film item to be filtered
-     */
-
-    private static void applyBlacklistFilters(Film film) {
-        for (final BlackData blackData : PROG_DATA.blackList) {
-
-            if (FilmFilter.checkFilmWithFilter(
-                    blackData.fChannel,
-                    blackData.fTheme,
-                    blackData.fThemeTitle,
-                    blackData.fTitle,
-                    blackData.fSomewhere,
-
-                    0,
-                    SelectedFilter.FILTER_DURATION_MAX_SEC,
-
-                    film,
-                    false /* auch die Länge prüfen */)) {
-                blackData.incCountHits();
-            }
-
-        }
-
-
-    }
+//    /**
+//     * Apply filters to film.
+//     *
+//     * @param film item to be filtered
+//     */
+//
+//    private static void applyBlacklistFilters(Film film) {
+//        // toDo -> FilmlistBlackFilter
+//        for (final BlackData blackData : PROG_DATA.blackList) {
+//
+//            if (FilmFilter.checkFilmWithFilter(
+//                    blackData.fChannel,
+//                    blackData.fTheme,
+//                    blackData.fThemeTitle,
+//                    blackData.fTitle,
+//                    blackData.fSomewhere,
+//
+//                    0,
+//                    SelectedFilter.FILTER_DURATION_MAX_SEC,
+//
+//                    film,
+//                    false /* auch die Länge prüfen */)) {
+//                blackData.incCountHits();
+//                return;
+//            }
+//
+//        }
+//
+//
+//    }
 
 }

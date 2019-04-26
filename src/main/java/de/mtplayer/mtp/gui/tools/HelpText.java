@@ -268,6 +268,10 @@ public class HelpText {
             "reduzieren. Dadurch kann das Arbeiten mit den " +
             "Filmen schneller werden.";
 
+    public static final String BLACKLIST_COUNT = "Beim Treffer zählen wird jeder Film gegen die Blacklist geprüft. " +
+            "Jeder Film läuft also die Blacklist von Anfang nach Ende ab. Bei einem Treffer wird die Suche abgebrochen. " +
+            "Bei zwei gleichen Einträgen in der Blacklist hat der erste Eintrag alle Treffer, der zweite dann keine mehr.";
+
     public static final String BLACKLIST_FUTURE = "Filme, deren Datum in der Zukunft liegt, sind meist nur Trailer.";
 
     public static final String BLACKLIST_ABO = "Wenn Downloads aus Abos gesucht werden, " +

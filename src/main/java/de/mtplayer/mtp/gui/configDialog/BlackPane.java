@@ -174,8 +174,11 @@ public class BlackPane {
             tableView.scrollTo(blackData);
         });
 
+        final Button btnHelpCount = PButton.helpButton(stage, "Treffer zählen",
+                HelpText.BLACKLIST_COUNT);
+
         Button btnCountHits = new Button("Treffer zählen");
-        btnCountHits.setTooltip(new Tooltip("Damit kann man die Filmliste nach Treffern durchsuchen." + PConst.LINE_SEPARATOR +
+        btnCountHits.setTooltip(new Tooltip("Damit wird die Filmliste nach Treffern durchsuchen." + PConst.LINE_SEPARATOR +
                 "Für jeden Eintrag in der Blacklist wird gezählt," + PConst.LINE_SEPARATOR +
                 "wieviele Filme damit geblockt werden."));
         btnCountHits.setOnAction(a -> {
@@ -183,10 +186,10 @@ public class BlackPane {
             Table.refresh_table(tableView);
         });
 
-        HBox hBoxCount = new HBox();
+        HBox hBoxCount = new HBox(10);
         hBoxCount.setAlignment(Pos.CENTER_RIGHT);
         HBox.setHgrow(hBoxCount, Priority.ALWAYS);
-        hBoxCount.getChildren().add(btnCountHits);
+        hBoxCount.getChildren().addAll(btnCountHits, btnHelpCount);
 
         HBox hBox = new HBox(10);
         hBox.getChildren().addAll(btnNew, btnDel, hBoxCount);

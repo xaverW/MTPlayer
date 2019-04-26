@@ -234,7 +234,7 @@ public class FilmlistBlackFilter {
      * @return true if film can be displayed
      */
 
-    private static boolean applyBlacklistFilters(Film film, boolean inc) {
+    public static boolean applyBlacklistFilters(Film film, boolean inc) {
         for (final BlackData blackData : PROG_DATA.blackList) {
 
             if (FilmFilter.checkFilmWithFilter(
