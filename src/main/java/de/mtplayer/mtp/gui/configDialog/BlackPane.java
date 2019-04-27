@@ -21,6 +21,8 @@ import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.BlackData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
+import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
+import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.gui.tools.table.Table;
 import de.mtplayer.mtp.tools.filmListFilter.FilmlistBlackFilterCountHits;
@@ -183,6 +185,7 @@ public class BlackPane {
         final Button btnHelpCount = PButton.helpButton(stage, "Treffer zählen",
                 HelpText.BLACKLIST_COUNT);
 
+
         Button btnSortList = new Button("Liste nach Treffer sortieren");
         btnSortList.setTooltip(new Tooltip("Damit kann die Blacklist anhand der \"Treffer\"" + PConst.LINE_SEPARATOR +
                 "sortiert werden."));
@@ -190,6 +193,7 @@ public class BlackPane {
             ProgData.getInstance().blackList.sortIncCounter(true);
             Table.refresh_table(tableView);
         });
+
 
         Button btnCountHits = new Button("Treffer zählen");
         btnCountHits.setTooltip(new Tooltip("Damit wird die Filmliste nach \"Treffern\" durchsucht." + PConst.LINE_SEPARATOR +
@@ -199,6 +203,23 @@ public class BlackPane {
             FilmlistBlackFilterCountHits.countHits(true);
             Table.refresh_table(tableView);
         });
+
+
+        // toDo -> vielleicht den ganzen Dialog sperren??
+        ProgData.getInstance().loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
+            @Override
+            public void start(ListenerFilmlistLoadEvent event) {
+                btnSortList.setDisable(true);
+                btnCountHits.setDisable(true);
+            }
+
+            @Override
+            public void finished(ListenerFilmlistLoadEvent event) {
+                btnSortList.setDisable(false);
+                btnCountHits.setDisable(false);
+            }
+        });
+
 
         HBox hBoxCount = new HBox(10);
         hBoxCount.setAlignment(Pos.CENTER_RIGHT);
