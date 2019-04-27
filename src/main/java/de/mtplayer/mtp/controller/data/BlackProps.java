@@ -32,6 +32,7 @@ public class BlackProps extends Data<BlackProps> {
     public static final int BLACKLIST_THEME_EXACT = 4;
     public static final int BLACKLIST_TITLE = 5;
     public static final int BLACKLIST_THEME_TITLE = 6;
+    public static final int BLACKLIST_COUNT_HITS = 7;
 
     public static final String TAG = "Blacklist";
     public static final String[] XML_NAMES = {
@@ -41,12 +42,12 @@ public class BlackProps extends Data<BlackProps> {
             "black-thema",
             "black-thema-exakt",
             "black-titel",
-            "black-thema-titel"};
+            "black-thema-titel",
+            "black-count-hits"};
     public static int MAX_ELEM = XML_NAMES.length;
 
     public String[] arr;
 
-    private int countHits = 0;
     private int nr = 0;
     private final StringProperty channel = new SimpleStringProperty("");
     private final BooleanProperty channelExact = new SimpleBooleanProperty(true);
@@ -54,6 +55,7 @@ public class BlackProps extends Data<BlackProps> {
     private final BooleanProperty themeExact = new SimpleBooleanProperty(true);
     private final StringProperty title = new SimpleStringProperty("");
     private final StringProperty themeTitle = new SimpleStringProperty("");
+    private int countHits = 0;
 
 
     public BlackProps() {
@@ -159,6 +161,11 @@ public class BlackProps extends Data<BlackProps> {
         setThemeExact(arr[BLACKLIST_THEME_EXACT].isEmpty() ? true : Boolean.parseBoolean(arr[BLACKLIST_THEME_EXACT]));
         setTitle(arr[BLACKLIST_TITLE]);
         setThemeTitle(arr[BLACKLIST_THEME_TITLE]);
+        try {
+            setCountHits(Integer.parseInt(arr[BLACKLIST_COUNT_HITS]));
+        } catch (Exception ex) {
+            setCountHits(0);
+        }
     }
 
     public void setXmlFromProps() {
@@ -169,5 +176,6 @@ public class BlackProps extends Data<BlackProps> {
         arr[BLACKLIST_THEME_EXACT] = String.valueOf(getThemeExact());
         arr[BLACKLIST_TITLE] = getTitle();
         arr[BLACKLIST_THEME_TITLE] = getThemeTitle();
+        arr[BLACKLIST_COUNT_HITS] = String.valueOf(getCountHits());
     }
 }

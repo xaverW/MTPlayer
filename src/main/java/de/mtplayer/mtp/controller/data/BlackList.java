@@ -18,8 +18,12 @@ package de.mtplayer.mtp.controller.data;
 
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.tools.Listener;
+import de.mtplayer.mtp.tools.filmListFilter.FilmlistBlackFilterCountHits;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
+
+import java.util.Collections;
+import java.util.Comparator;
 
 @SuppressWarnings("serial")
 public class BlackList extends SimpleListProperty<BlackData> {
@@ -65,4 +69,27 @@ public class BlackList extends SimpleListProperty<BlackData> {
             blackData.setCountHits(0);
         }
     }
+
+    public synchronized void sortIncCounter(boolean searchHitsBefore) {
+        if (searchHitsBefore) {
+            // zuerst ohne Abbruch Treffer suchen
+            FilmlistBlackFilterCountHits.countHits(false);
+
+            // und dann sortieren
+            Collections.sort(this, Comparator.comparingInt(BlackProps::getCountHits).reversed());
+
+            // dann die tatsächlichen Trefferzahlen ermitteln
+            FilmlistBlackFilterCountHits.countHits(true);
+        }
+
+        // und dann endgültig sortieren
+        Collections.sort(this, Comparator.comparingInt(BlackProps::getCountHits).reversed());
+
+        // zum Schluss noch neu nummerieren 1, 2, ...
+        int i = 0;
+        for (BlackData blackData : this) {
+            blackData.setNr(++i);
+        }
+    }
+
 }

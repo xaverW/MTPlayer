@@ -149,7 +149,10 @@ public class IoReadXml implements AutoCloseable {
                                 if (get(parser, FilterToXml.TAG, FilterToXml.getXmlArray(), ar)) {
                                     FilterToXml.setValueArray(sf, ar);
                                     if (filtercount == 0) {
+                                        // damit das nicht schon gemeldet wird
+                                        this.progData.storedFilter.getSelectedFilter().setReportChange(false);
                                         SelectedFilter.copyFilter(sf, this.progData.storedFilter.getSelectedFilter());
+                                        this.progData.storedFilter.getSelectedFilter().setReportChange(true);
                                     } else {
                                         this.progData.storedFilter.getStordeFilterList().add(sf);
                                     }
@@ -198,6 +201,7 @@ public class IoReadXml implements AutoCloseable {
 
 
     private void initAfterLoad() {
+        progData.blackList.sortIncCounter(false);
         progData.downloadList.initDownloads();
         progData.aboList.initAboList();
         progData.aboList.sort();

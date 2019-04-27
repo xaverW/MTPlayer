@@ -17,58 +17,53 @@
 package de.mtplayer.mtp.tools.filmListFilter;
 
 import de.mtplayer.mtp.controller.config.ProgData;
+import de.mtplayer.mtp.controller.data.BlackData;
+import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.Filmlist;
+import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 
 public class FilmlistBlackFilterCountHits {
 
     private final static ProgData PROG_DATA = ProgData.getInstance();
 
-    public static synchronized void countHits() {
+    public static synchronized void countHits(boolean abort) {
         // hier wird die Blacklist gegen die Filmliste gefilter und die Treffer
         // für jeden Blacklisteintrag ermittelt
-        final Filmlist filmlist = PROG_DATA.filmlist;
 
         PDuration.counterStart("FilmlistBlackFilterCountHits.countHits");
         PROG_DATA.blackList.clearCounter();
 
+        final Filmlist filmlist = PROG_DATA.filmlist;
         if (filmlist != null) {
-            filmlist.parallelStream().forEach(film -> FilmlistBlackFilter.applyBlacklistFilters(film, true));
+            filmlist.parallelStream().forEach(film -> applyBlacklistFilters(film, abort));
         }
 
         PDuration.counterStop("FilmlistBlackFilterCountHits.countHits");
     }
 
 
-//    /**
-//     * Apply filters to film.
-//     *
-//     * @param film item to be filtered
-//     */
-//
-//    private static void applyBlacklistFilters(Film film) {
-//        // toDo -> FilmlistBlackFilter
-//        for (final BlackData blackData : PROG_DATA.blackList) {
-//
-//            if (FilmFilter.checkFilmWithFilter(
-//                    blackData.fChannel,
-//                    blackData.fTheme,
-//                    blackData.fThemeTitle,
-//                    blackData.fTitle,
-//                    blackData.fSomewhere,
-//
-//                    0,
-//                    SelectedFilter.FILTER_DURATION_MAX_SEC,
-//
-//                    film,
-//                    false /* auch die Länge prüfen */)) {
-//                blackData.incCountHits();
-//                return;
-//            }
-//
-//        }
-//
-//
-//    }
+    private static void applyBlacklistFilters(Film film, boolean abort) {
+        // zum Sortieren ist es sinnvoll, dass ALLE MÖGLICHEN Treffer gesucht werden
+        for (final BlackData blackData : PROG_DATA.blackList) {
+
+            if (FilmFilter.checkFilmWithFilter(
+                    blackData.fChannel,
+                    blackData.fTheme,
+                    blackData.fThemeTitle,
+                    blackData.fTitle,
+                    blackData.fSomewhere,
+                    0,
+                    SelectedFilter.FILTER_DURATION_MAX_SEC,
+                    film, false)) {
+
+                blackData.incCountHits();
+                if (abort) {
+                    return;
+                }
+            }
+        }
+
+    }
 
 }

@@ -32,6 +32,7 @@ import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -147,9 +148,14 @@ public class BlackPane {
 
         tableView.getColumns().addAll(nrColumn, channelColumn, channelExactColumn, themeColumn, themeExactColumn,
                 titleColumn, themeTitleColumn, hitsColumn);
-        tableView.setItems(ProgData.getInstance().blackList);
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
                 Platform.runLater(this::setActBlackData));
+
+        SortedList<BlackData> sortedList;
+        sortedList = new SortedList<>(ProgData.getInstance().blackList);
+        sortedList.comparatorProperty().bind(tableView.comparatorProperty());
+        tableView.setItems(sortedList);
+
 
         Button btnDel = new Button("");
         btnDel.setGraphic(new ProgIcons().ICON_BUTTON_REMOVE);
@@ -177,19 +183,27 @@ public class BlackPane {
         final Button btnHelpCount = PButton.helpButton(stage, "Treffer zählen",
                 HelpText.BLACKLIST_COUNT);
 
+        Button btnSortList = new Button("Liste nach Treffer sortieren");
+        btnSortList.setTooltip(new Tooltip("Damit kann die Blacklist anhand der \"Treffer\"" + PConst.LINE_SEPARATOR +
+                "sortiert werden."));
+        btnSortList.setOnAction(a -> {
+            ProgData.getInstance().blackList.sortIncCounter(true);
+            Table.refresh_table(tableView);
+        });
+
         Button btnCountHits = new Button("Treffer zählen");
-        btnCountHits.setTooltip(new Tooltip("Damit wird die Filmliste nach Treffern durchsuchen." + PConst.LINE_SEPARATOR +
+        btnCountHits.setTooltip(new Tooltip("Damit wird die Filmliste nach \"Treffern\" durchsucht." + PConst.LINE_SEPARATOR +
                 "Für jeden Eintrag in der Blacklist wird gezählt," + PConst.LINE_SEPARATOR +
                 "wieviele Filme damit geblockt werden."));
         btnCountHits.setOnAction(a -> {
-            FilmlistBlackFilterCountHits.countHits();
+            FilmlistBlackFilterCountHits.countHits(true);
             Table.refresh_table(tableView);
         });
 
         HBox hBoxCount = new HBox(10);
         hBoxCount.setAlignment(Pos.CENTER_RIGHT);
         HBox.setHgrow(hBoxCount, Priority.ALWAYS);
-        hBoxCount.getChildren().addAll(btnCountHits, btnHelpCount);
+        hBoxCount.getChildren().addAll(btnSortList, btnCountHits, btnHelpCount);
 
         HBox hBox = new HBox(10);
         hBox.getChildren().addAll(btnNew, btnDel, hBoxCount);

@@ -29,6 +29,7 @@ public final class SelectedFilter extends SelectedFilterProps {
 
     private final BooleanProperty filterChange = new SimpleBooleanProperty(false);
     private final BooleanProperty blacklistChange = new SimpleBooleanProperty(false);
+    private boolean reportChange = true;
 
     public SelectedFilter() {
         initFilter();
@@ -38,6 +39,14 @@ public final class SelectedFilter extends SelectedFilterProps {
     public SelectedFilter(String name) {
         initFilter();
         setName(name);
+    }
+
+    public boolean isReportChange() {
+        return reportChange;
+    }
+
+    public void setReportChange(boolean reportChange) {
+        this.reportChange = reportChange;
     }
 
     public BooleanProperty filterChangeProperty() {
@@ -216,12 +225,20 @@ public final class SelectedFilter extends SelectedFilterProps {
         notGeoProperty().addListener(l -> changeFilterProperty());
         notFutureProperty().addListener(l -> changeFilterProperty());
 
-        blacklistOnProperty().addListener(l -> blacklistChange.setValue(!blacklistChange.getValue()));
+        blacklistOnProperty().addListener(l -> changeBlacklistProperty());
 
     }
 
     private void changeFilterProperty() {
-        filterChange.setValue(!filterChange.getValue());
+        if (reportChange) {
+            filterChange.setValue(!filterChange.getValue());
+        }
+    }
+
+    private void changeBlacklistProperty() {
+        if (reportChange) {
+            blacklistChange.setValue(!blacklistChange.getValue());
+        }
     }
 
     public void clearFilter() {

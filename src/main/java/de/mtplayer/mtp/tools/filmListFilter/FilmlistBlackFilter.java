@@ -43,24 +43,26 @@ public class FilmlistBlackFilter {
         // mit der Liste wird dannn im TabFilme weiter gearbeitet
 
         final Filmlist filmlist = PROG_DATA.filmlist;
-        final Filmlist listRet = PROG_DATA.filmlistFiltered;
+        final Filmlist listFiltered = PROG_DATA.filmlistFiltered;
 
         loadCurrentFilterSettings();
 
         PDuration.counterStart("FilmlistBlackFilter.getBlackFiltered");
-        listRet.clear();
-        PROG_DATA.blackList.clearCounter();
+        listFiltered.clear();
 
         if (filmlist != null) {
-            listRet.setMeta(filmlist);
+            listFiltered.setMeta(filmlist);
 
             Stream<Film> initialStream = filmlist.parallelStream();
 
             filterList.clear();
             if (PROG_DATA.storedFilter.getSelectedFilter().isBlacklistOn()) {
-                // add the filter predicates to the list
                 // only when blacklist in ON!
 
+                // vor dem Zählen der Treffer erst mal löschen
+                PROG_DATA.blackList.clearCounter();
+
+                // add the filter predicates to the list
                 if (days > 0) {
                     filterList.add(FilmlistBlackFilter::checkDate);
                 }
@@ -88,11 +90,11 @@ public class FilmlistBlackFilter {
 
             final List<Film> col = initialStream.collect(Collectors.toList());
 
-            listRet.addAll(col);
+            listFiltered.addAll(col);
             col.clear();
 
             // Array mit Sendernamen/Themen füllen
-            listRet.loadTheme();
+            listFiltered.loadTheme();
         }
         PDuration.counterStop("FilmlistBlackFilter.getBlackFiltered");
     }
@@ -234,7 +236,7 @@ public class FilmlistBlackFilter {
      * @return true if film can be displayed
      */
 
-    public static boolean applyBlacklistFilters(Film film, boolean inc) {
+    private static boolean applyBlacklistFilters(Film film, boolean inc) {
         for (final BlackData blackData : PROG_DATA.blackList) {
 
             if (FilmFilter.checkFilmWithFilter(

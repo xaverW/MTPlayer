@@ -269,8 +269,10 @@ public class HelpText {
             "Filmen schneller werden.";
 
     public static final String BLACKLIST_COUNT = "Beim Treffer zählen wird jeder Film gegen die Blacklist geprüft. " +
-            "Jeder Film läuft also die Blacklist von Anfang nach Ende ab. Bei einem Treffer wird die Suche abgebrochen. " +
-            "Bei zwei gleichen Einträgen in der Blacklist hat der erste Eintrag alle Treffer, der zweite dann keine mehr.";
+            "Jeder Film läuft also die Blacklist von Anfang nach Ende ab und jeder Treffer wird gezählt. " +
+            PConst.LINE_SEPARATORx2 +
+            "Beim Filtern der Filmliste wird nach einem Treffer wird die Suche abgebrochen. Es beschleunigt die Suche " +
+            "wenn die Blacklisteinträge mit den meisten Treffern am Anfang liegen";
 
     public static final String BLACKLIST_FUTURE = "Filme, deren Datum in der Zukunft liegt, sind meist nur Trailer.";
 
