@@ -679,15 +679,21 @@ public class DownloadAddDialogController extends PDialogExtra {
 
         // jetzt alle gesammelten Pfade speichern
         final ArrayList<String> path2 = new ArrayList<>();
-        path1.stream().forEach(s1 -> {
+        for (String s1 : path1) {
             // um doppelte auszusortieren
             final String s2 = StringUtils.removeEnd(s1, SEPARATOR);
             if (!path2.contains(s1) && !path2.contains(s2)) {
                 path2.add(s2);
             }
-        });
 
-        String savePath = PStringUtils.appendList(path2, "<>", true, false);
+            if (path2.size() > ProgConst.MAX_DEST_PATH_IN_DIALOG_DOWNLOAD) {
+                // die Anzahl der Einträge begrenzen
+                break;
+            }
+        }
+
+
+        String savePath = PStringUtils.appendList(path2, "<>", true, true);
         ProgConfig.DOWNLOAD_DIALOG_PATH_SAVING.setValue(savePath);
     }
 
