@@ -213,6 +213,8 @@ public class AboEditDialogController extends PDialogExtra {
             }
         }
 
+        btnOk.requestFocus();
+
     }
 
     private void initControl(int i) {

@@ -125,7 +125,7 @@ public class AboList extends SimpleListProperty<Abo> {
             ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(abo.getMinDuration());
             ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(abo.getMaxDuration());
             addAbo(abo);
-            sort();
+//            sort();
             notifyChanges();
             ret = true;
         }
@@ -133,7 +133,7 @@ public class AboList extends SimpleListProperty<Abo> {
     }
 
     public synchronized boolean changeAboFromFilter(Optional<Abo> oAbo, SelectedFilter selectedFilter) {
-        // abo nach dem Filter einstellen
+        // abo mit den Filterwerten einstellen
         if (!oAbo.isPresent()) {
             return false;
         }
@@ -168,7 +168,7 @@ public class AboList extends SimpleListProperty<Abo> {
             // als Vorgabe merken
             ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(abo.getMinDuration());
             ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(abo.getMaxDuration());
-            sort();
+//            sort();
             notifyChanges();
             ret = true;
         }
@@ -217,7 +217,7 @@ public class AboList extends SimpleListProperty<Abo> {
             ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(abo.getMinDuration());
             ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(abo.getMaxDuration());
             addAbo(abo);
-            sort();
+//            sort();
             notifyChanges();
             ret = true;
         }
@@ -283,6 +283,11 @@ public class AboList extends SimpleListProperty<Abo> {
 
     public synchronized void sort() {
         Collections.sort(this);
+
+        nr = 0;
+        for (Abo abo : this) {
+            abo.setNr(++nr);
+        }
     }
 
     public synchronized ArrayList<String> getAboDestinationPathList() {
