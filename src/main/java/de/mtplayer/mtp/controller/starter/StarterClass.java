@@ -17,7 +17,6 @@
 package de.mtplayer.mtp.controller.starter;
 
 import de.mtplayer.mLib.tools.MDate;
-import de.mtplayer.mLib.tools.MLInputStream;
 import de.mtplayer.mLib.tools.SizeTools;
 import de.mtplayer.mLib.tools.StringFormatters;
 import de.mtplayer.mtp.controller.config.ProgConfig;
@@ -268,9 +267,11 @@ public class StarterClass {
             }
         }
 
+        ProgData.getInstance().downloadGuiController.tableRefresh();
         start.setProcess(null);
         start.setInputStream(null);
         start.setStartTime(null);
+
     }
 
     /**
@@ -301,10 +302,6 @@ public class StarterClass {
     private class Start extends Thread {
 
         private Download download;
-        /**
-         * The only {@link java.util.Timer} used for all
-         * {@link MLInputStream.BandwidthCalculationTask} calculation tasks.
-         */
         private final java.util.Timer bandwidthCalculationTimer;
 
         public Start() {

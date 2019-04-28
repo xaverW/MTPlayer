@@ -78,6 +78,8 @@ public class DownloadConstants {
             } else if (status == STATE_STARTED_WAITING) {
 //                ret = "wartend";
                 ret = "wartet";
+            } else if (status == STATE_ERROR) {
+                ret = dManager ? "extern:fehler" : "fehlerhaft";
             } else {
                 ret = "nicht gestartet";
             }

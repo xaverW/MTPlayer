@@ -111,6 +111,9 @@ public class DownloadGuiController extends AnchorPane {
         setFilter();
     }
 
+    public void tableRefresh() {
+        tableView.refresh();
+    }
 
     public void isShown() {
         setFilm();
