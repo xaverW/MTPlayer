@@ -187,7 +187,7 @@ public class BlackPane {
 
 
         Button btnSortList = new Button("Liste nach Treffer sortieren");
-        btnSortList.setTooltip(new Tooltip("Damit kann die Blacklist anhand der \"Treffer\"" + PConst.LINE_SEPARATOR +
+        btnSortList.setTooltip(new Tooltip("Damit kann die Blacklist anhand der \"Treffer\"\n" +
                 "sortiert werden."));
         btnSortList.setOnAction(a -> {
             ProgData.getInstance().blackList.sortIncCounter(true);
@@ -196,8 +196,8 @@ public class BlackPane {
 
 
         Button btnCountHits = new Button("Treffer zählen");
-        btnCountHits.setTooltip(new Tooltip("Damit wird die Filmliste nach \"Treffern\" durchsucht." + PConst.LINE_SEPARATOR +
-                "Für jeden Eintrag in der Blacklist wird gezählt," + PConst.LINE_SEPARATOR +
+        btnCountHits.setTooltip(new Tooltip("Damit wird die Filmliste nach \"Treffern\" durchsucht.\n" +
+                "Für jeden Eintrag in der Blacklist wird gezählt,\n" +
                 "wieviele Filme damit geblockt werden."));
         btnCountHits.setOnAction(a -> {
             FilmlistBlackFilterCountHits.countHits(true);

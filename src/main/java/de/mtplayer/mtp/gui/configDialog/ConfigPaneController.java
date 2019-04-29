@@ -259,8 +259,11 @@ public class ConfigPaneController extends AnchorPane {
             txtLogFile.setText(ProgInfos.getStandardLogDirectory_String());
         });
 
-        final Button btnChange = new Button("Logfile ändern");
-        btnChange.setTooltip(new Tooltip("Mit den geänderten Einstellungen ein neues Logfile erstellen"));
+        final Button btnChange = new Button("Pfad zum Logfile jetzt schon ändern");
+        btnChange.setTooltip(new Tooltip("Den geänderten Pfad für das Logfile\n" +
+                "jetzt schon verwenden.\n\n" +
+                "Ansonsten wird er erst beim nächsten\n" +
+                "Programmstart verwendet."));
         btnChange.setOnAction(event -> {
             PLogger.setFileHandler(ProgInfos.getLogDirectory_String());
             logfileChanged.setValue(false);
@@ -288,9 +291,7 @@ public class ConfigPaneController extends AnchorPane {
         btnReset.disableProperty().bind(tglEnableLog.selectedProperty().not());
         btnChange.disableProperty().bind(tglEnableLog.selectedProperty().not().or(logfileChanged.not()));
 
-        txtLogFile.textProperty().addListener((observable, oldValue, newValue) -> {
-            logfileChanged.setValue(true);
-        });
+        txtLogFile.textProperty().addListener((observable, oldValue, newValue) -> logfileChanged.setValue(true));
     }
 
     private void makeProg(Collection<TitledPane> result) {

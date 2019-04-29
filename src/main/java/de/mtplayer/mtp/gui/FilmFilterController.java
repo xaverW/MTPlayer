@@ -21,7 +21,6 @@ import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.tools.storedFilter.ProgInitFilter;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
-import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PGuiTools;
@@ -153,7 +152,7 @@ public class FilmFilterController extends FilterController {
         // Filterprofile einrichten
         cbFilter.setItems(progData.storedFilter.getStordeFilterList());
         cbFilter.getSelectionModel().selectFirst();
-        cbFilter.setTooltip(new Tooltip("Gespeicherte Filterprofile können" + PConst.LINE_SEPARATOR +
+        cbFilter.setTooltip(new Tooltip("Gespeicherte Filterprofile können\n" +
                 "hier geladen werden"));
 
         final StringConverter<SelectedFilter> converter = new StringConverter<SelectedFilter>() {

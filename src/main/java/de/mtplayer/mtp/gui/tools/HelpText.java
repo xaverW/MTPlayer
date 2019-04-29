@@ -329,7 +329,11 @@ public class HelpText {
 
     public static final String LOGFILE = "Hier kann ein Ordner angegeben werden " +
             "in dem ein Logfile erstellt wird. Darin wird der Programmverlauf skizziert. " +
-            "Das kann hilfreich sein, wenn das Programm nicht wie erwartet funktioniert." + PConst.LINE_SEPARATOR;
+            "Das kann hilfreich sein, wenn das Programm nicht wie erwartet funktioniert." + PConst.LINE_SEPARATORx2 +
+            "Der Standardordner ist \"Log\" im Konfigordner des Programms." + PConst.LINE_SEPARATORx2 +
+            "Wird der Pfad zum Logfile geändert, wirkt sich das erst beim Neustart des Programms " +
+            "aus. Mit dem Button \"Pfad zum Logfile jetzt schon verwenden\" wird die Programmausgabe ab " +
+            "Klick darauf ins neue Logfile geschrieben.";
 
     public static final String FILEMANAGER = "Im Tab \"Downloads\" kann man mit der rechten " +
             "Maustaste den Downloadordner (Zielordner) " +
