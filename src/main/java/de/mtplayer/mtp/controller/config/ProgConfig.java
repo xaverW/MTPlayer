@@ -42,9 +42,9 @@ public class ProgConfig extends MLConfig {
     // 250 Sekunden, wie bei Firefox
     public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND = addNewKey("__system-parameter__download-timeout-second_250__", "250");
     // max. Startversuche für fehlgeschlagene Downloads (insgesamt: restart * restart_http Versuche)
-    public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART = addNewKey("__system-parameter__download-max-restart_5__", "5");
+    public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART = addNewKey("__system-parameter__download-max-restart_5__", "3");
     // max. Startversuche für fehlgeschlagene Downloads, direkt beim Download
-    public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP = addNewKey("__system-parameter__download-max-restart-http_10__", "10");
+    public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP = addNewKey("__system-parameter__download-max-restart-http_10__", "5");
     // Beim Dialog "Download weiterführen" wird in dieser Zeit der DownloadXml weitergeführt
     public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECOND = addNewKey("__system-parameter__download-continue-second_60__", "60");
     // Downloadfehlermeldung wird xx Sedunden lang angezeigt

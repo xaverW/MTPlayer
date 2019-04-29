@@ -20,6 +20,7 @@ public class ProgConst {
 
     public static final String PROGRAMNAME = "MTPlayer";
     public static final String USER_AGENT_DEFAULT = "";
+    public static final int MAX_USER_AGENT_SIZE = 100;
 
     // settings file
     public static final String CONFIG_FILE = "mtplayer.xml";
@@ -48,7 +49,6 @@ public class ProgConst {
 
     // beim Programmstart wird die Liste geladen wenn sie älter ist als ..
     public static final int ALTER_FILMLISTE_SEKUNDEN_FUER_AUTOUPDATE = 4 * 60 * 60;
-    public static final int MAX_USER_AGENT_SIZE = 100;
 
     // Uhrzeit ab der die Diffliste alle Änderungen abdeckt, die Filmliste darf also nicht vor xx erstellt worden sein
     public static final String TIME_MAX_AGE_FOR_DIFF = "09";
@@ -103,7 +103,6 @@ public class ProgConst {
     public static final int LAENGE_DATEINAME_MAX = 200; // Standardwert für die Länge des Zieldateinamens
     public static final int LAENGE_FELD_MAX = 100; // Standardwert für die Länge des Feldes des
     public final static int MAX_COPY_OF_BACKUPFILE = 5; // Maximum number of backup files to be stored.
-    public static final String LINE_SEPARATOR = System.getProperty("line.separator");
 
     public static final int MIN_TABLE_HEIGHT = 250;
 

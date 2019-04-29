@@ -138,28 +138,30 @@ public class StarterClass {
     }
 
     static void startMsg(Download download) {
-        final ArrayList<String> text = new ArrayList<>();
+        final ArrayList<String> list = new ArrayList<>();
         final boolean play = download.getSource().equals(DownloadConstants.SRC_BUTTON);
+        list.add(PLog.LILNE3);
         if (play) {
-            text.add("Film abspielen");
+            list.add("Film abspielen");
         } else {
-            if (download.getStart().getStartCounter() > 1) {
-                text.add("Download starten - Restart (Summe Starts: " + download.getStart().getStartCounter() + ')');
+            if (download.getStart().getRestartCounter() > 0) {
+                list.add("Download starten - Restart (Summe Starts: " + download.getStart().getRestartCounter() + ')');
             } else {
-                text.add("Download starten");
+                list.add("Download starten");
             }
-            text.add("Programmset: " + download.getSetData() == null ? "" : download.getSetData().getVisibleName());
-            text.add("Ziel: " + download.getDestPathFile());
+            list.add("Programmset: " + download.getSetData() == null ? "" : download.getSetData().getVisibleName());
+            list.add("Ziel: " + download.getDestPathFile());
         }
-        text.add("URL: " + download.getUrl());
-        text.add("Startzeit: " + StringFormatters.FORMATTER_HHmmss.format(download.getStart().getStartTime()));
+        list.add("URL: " + download.getUrl());
+        list.add("Startzeit: " + StringFormatters.FORMATTER_HHmmss.format(download.getStart().getStartTime()));
         if (download.getArt().equals(DownloadConstants.ART_DOWNLOAD)) {
-            text.add(DownloadConstants.ART_DOWNLOAD);
+            list.add(DownloadConstants.ART_DOWNLOAD);
         } else {
-            text.add("Programmaufruf: " + download.getProgramCall());
-            text.add("Programmaufruf[]: " + download.getProgramCallArray());
+            list.add("Programmaufruf: " + download.getProgramCall());
+            list.add("Programmaufruf[]: " + download.getProgramCallArray());
         }
-        PLog.sysLog(text.toArray(new String[text.size()]));
+        list.add(PLog.LILNE_EMPTY);
+        PLog.sysLog(list.toArray(new String[list.size()]));
     }
 
     private void restartMsg(Download download) {
@@ -227,7 +229,7 @@ public class StarterClass {
             list.add("Programmaufruf: " + download.getProgramCall());
             list.add("Programmaufruf[]: " + download.getProgramCallArray());
         }
-        list.add(PLog.LILNE3);
+        list.add(PLog.LILNE_EMPTY);
         PLog.sysLog(list);
 
         if (!download.getSource().equals(DownloadConstants.SRC_BUTTON) && !download.isStateStoped()) {

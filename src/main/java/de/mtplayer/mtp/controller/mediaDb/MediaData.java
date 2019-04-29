@@ -17,7 +17,6 @@
 package de.mtplayer.mtp.controller.mediaDb;
 
 import de.mtplayer.mLib.tools.Data;
-import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.p2tools.p2Lib.PConst;
 
@@ -127,9 +126,9 @@ public class MediaData extends Data<MediaData> {
         String ret = "";
         for (int i = 0; i < MAX_ELEM; ++i) {
             if (i == 0) {
-                ret += "| ***|" + COLUMN_NAMES[i] + ": " + arr[i] + ProgConst.LINE_SEPARATOR;
+                ret += "| ***|" + COLUMN_NAMES[i] + ": " + arr[i] + PConst.LINE_SEPARATOR;
             } else {
-                ret += "|    |" + COLUMN_NAMES[i] + ": " + arr[i] + ProgConst.LINE_SEPARATOR;
+                ret += "|    |" + COLUMN_NAMES[i] + ": " + arr[i] + PConst.LINE_SEPARATOR;
             }
         }
         return ret;

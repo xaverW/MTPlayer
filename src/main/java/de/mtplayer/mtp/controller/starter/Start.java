@@ -25,7 +25,7 @@ import de.mtplayer.mtp.controller.data.download.DownloadConstants;
 public class Start {
 
     private int startCounter = 0;
-    private int restartCounter = 0;
+    private int restartCounter = 0; // zählt die Anzahl der Neustarts bei einem Downloadfeheler->Summe Starts = erster Start + Restarts
 
     private boolean startViewing = false;
 

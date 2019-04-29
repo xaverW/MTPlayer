@@ -16,8 +16,8 @@
 
 package de.mtplayer.mtp.controller.data;
 
-import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
+import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.tools.PIndex;
 
 public class SetData extends SetDataProps {
@@ -160,16 +160,16 @@ public class SetData extends SetDataProps {
 
     public String setDataToString() {
         String ret = "";
-        ret += "================================================" + ProgConst.LINE_SEPARATOR;
-        ret += "| Programmset" + ProgConst.LINE_SEPARATOR;
+        ret += "================================================" + PConst.LINE_SEPARATOR;
+        ret += "| Programmset" + PConst.LINE_SEPARATOR;
         for (int i = 0; i < MAX_ELEM; ++i) {
-            ret += "| " + COLUMN_NAMES[i] + ": " + arr[i] + ProgConst.LINE_SEPARATOR;
+            ret += "| " + COLUMN_NAMES[i] + ": " + arr[i] + PConst.LINE_SEPARATOR;
         }
         for (final Object aListeProg : programList) {
-            ret += "|" + ProgConst.LINE_SEPARATOR;
+            ret += "|" + PConst.LINE_SEPARATOR;
             ret += aListeProg.toString();
         }
-        ret += "|_______________________________________________" + ProgConst.LINE_SEPARATOR;
+        ret += "|_______________________________________________" + PConst.LINE_SEPARATOR;
         return ret;
     }
 
