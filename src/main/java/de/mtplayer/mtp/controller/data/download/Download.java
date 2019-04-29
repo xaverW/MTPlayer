@@ -245,6 +245,7 @@ public final class Download extends DownloadProps {
             setFilmNr(DownloadConstants.FILM_NUMBER_NOT_FOUND);
             return;
         }
+
         this.film = film;
         setFilmNr(film.getNr());
         setChannel(film.arr[FilmXml.FILM_CHANNEL]);

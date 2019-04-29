@@ -243,7 +243,7 @@ public class Filmlist extends SimpleListProperty<Film> {
     public synchronized Film getFilmByUrl_small_high_hd(String url) {
         // Problem wegen gleicher URLs
         // wird versucht, einen Film mit einer kleinen/Hoher/HD-URL zu finden
-        Film ret = null;
+
         return parallelStream().filter(f ->
 
                 f.arr[FilmXml.FILM_URL].equals(url) ||

@@ -16,6 +16,7 @@
 
 package de.mtplayer.mtp.controller.starter;
 
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadConstants;
 import de.mtplayer.mtp.controller.data.download.DownloadSize;
@@ -167,7 +168,9 @@ public class RuntimeExec {
                     final double d = Double.parseDouble(percent);
                     notifyDouble(d);
                 } catch (final Exception ex) {
-                    PLog.errorLog(954120125, input);
+                    if (ProgData.debug) {
+                        PLog.errorLog(954120125, input);
+                    }
                 }
                 return;
             }
@@ -230,7 +233,9 @@ public class RuntimeExec {
                     }
                 }
             } catch (final Exception ex) {
-                PLog.errorLog(912036780, input);
+                if (ProgData.debug) {
+                    PLog.errorLog(912036780, input);
+                }
             }
         }
 

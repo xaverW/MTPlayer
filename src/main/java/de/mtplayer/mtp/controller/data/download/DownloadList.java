@@ -111,13 +111,14 @@ public class DownloadList extends SimpleListProperty<Download> {
         return ret;
     }
 
-    private int counter = 50; //todo das dauert sonst viel zu lang
 
     public synchronized void addFilmInList() {
+
         // bei einmal Downloads nach einem Programmstart/Neuladen der Filmliste
         // den Film wieder eintragen
-        PDuration.counterStart("Filme eintragen");
+        PDuration.counterStart("DownloadList.addFilmInList");
 
+        int counter = 50; //todo das dauert sonst viel zu lang
         for (Download d : this) {
             --counter;
             if (counter < 0) {
@@ -126,20 +127,22 @@ public class DownloadList extends SimpleListProperty<Download> {
             d.setFilm(progData.filmlist.getFilmByUrl_small_high_hd(d.getUrl())); //todo sollen da wirklich alle Filmfelder gesetzt werden??
             d.setSizeDownloadFromFilm();
         }
+
+//        counter = 50;
 //        parallelStream().filter(d -> {
 //            counter -= 1;
 //            System.out.println(counter);
-//            if ((counter > 0) && d.getFilm() == null) {
+//            if ((counter > 0)/* && d.getFilm() == null*/) {
 //                return true;
 //            } else {
 //                return false;
 //            }
 //        }).forEach(d -> {
-//            d.setFilm(daten.filmlist.getFilmByUrl_klein_hoch_hd(d.getUrl())); //todo sollen da wirklich alle Filmfelder gesetzt werden??
+//            d.setFilm(progData.filmlist.getFilmByUrl_small_high_hd(d.getUrl())); //todo sollen da wirklich alle Filmfelder gesetzt werden??
 //            d.setSizeDownloadFromFilm();
 //
 //        });
-        PDuration.counterStop("Filme eintragen");
+        PDuration.counterStop("DownloadList.addFilmInList");
     }
 
 
