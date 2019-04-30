@@ -79,8 +79,8 @@ public class FilmFilter {
      * @param themeTitle
      * @param title
      * @param somewhere
-     * @param laengeSekundenSuchen_min
-     * @param laengeSekundenSuchen_max
+     * @param searchLengthMinute_min
+     * @param searchLengthMinute_max
      * @param film
      * @param withLength
      * @return
@@ -90,8 +90,8 @@ public class FilmFilter {
                                               Filter themeTitle,
                                               Filter title,
                                               Filter somewhere,
-                                              int laengeSekundenSuchen_min,
-                                              int laengeSekundenSuchen_max,
+                                              int searchLengthMinute_min,
+                                              int searchLengthMinute_max,
                                               Film film,
                                               boolean withLength) {
 
@@ -116,7 +116,7 @@ public class FilmFilter {
             return false;
         }
 
-        if (withLength && !checkLength(laengeSekundenSuchen_min, laengeSekundenSuchen_max, film.dauerL)) {
+        if (withLength && !checkLength(searchLengthMinute_min, searchLengthMinute_max, film.getDurationMinute())) {
             return false;
         }
 
@@ -198,13 +198,13 @@ public class FilmFilter {
     }
 
 
-    public static boolean checkLengthMin(int filterLaengeInSekunden, long filmLength) {
-        return filterLaengeInSekunden == 0 || filmLength == 0 || filmLength >= filterLaengeInSekunden;
+    public static boolean checkLengthMin(int filterLaenge, long filmLength) {
+        return filterLaenge == 0 || filmLength == 0 || filmLength >= filterLaenge;
     }
 
-    public static boolean checkLengthMax(int filterLaengeInSekunden, long filmLength) {
-        return filterLaengeInSekunden == SelectedFilter.FILTER_DURATION_MAX_SEC || filmLength == 0
-                || filmLength <= filterLaengeInSekunden;
+    public static boolean checkLengthMax(int filterLaenge, long filmLength) {
+        return filterLaenge == SelectedFilter.FILTER_DURATION_MAX_MINUTE || filmLength == 0
+                || filmLength <= filterLaenge;
     }
 
     public static boolean checkFilmTime(int timeMin, int timeMax, boolean invert, int filmTime) {
@@ -222,9 +222,9 @@ public class FilmFilter {
         }
     }
 
-    public static boolean checkLength(int filterLaengeInSekunden_min, int filterLaengeInSekunden_max, long filmLength) {
-        return checkLengthMin(filterLaengeInSekunden_min, filmLength)
-                && checkLengthMax(filterLaengeInSekunden_max, filmLength);
+    public static boolean checkLength(int filterLeangth_minute_min, int filterLength_minute_max, long filmLength) {
+        return checkLengthMin(filterLeangth_minute_min, filmLength)
+                && checkLengthMax(filterLength_minute_max, filmLength);
     }
 
     private static boolean check(Filter filter, String im) {

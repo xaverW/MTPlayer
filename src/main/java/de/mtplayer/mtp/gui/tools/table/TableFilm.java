@@ -85,8 +85,9 @@ public class TableFilm {
         timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
         timeColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<Film, Integer> durationColumn = new TableColumn<>("Dauer");
-        durationColumn.setCellValueFactory(new PropertyValueFactory<>("duration"));
+        final TableColumn<Film, Integer> durationColumn = new TableColumn<>("Dauer [Min]");
+        durationColumn.setCellFactory(cellFactoryDuration);
+        durationColumn.setCellValueFactory(new PropertyValueFactory<>("durationMinute"));
         durationColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<Film, FilmSize> sizeColumn = new TableColumn<>("Größe [MB]");
@@ -214,7 +215,7 @@ public class TableFilm {
     private Callback<TableColumn<Film, String>, TableCell<Film, String>> cellFactoryStart
             = (final TableColumn<Film, String> param) -> {
 
-        final TableCell<Film, String> cell = new TableCell<Film, String>() {
+        final TableCell<Film, String> cell = new TableCell<>() {
 
             @Override
             public void updateItem(String item, boolean empty) {
@@ -267,6 +268,35 @@ public class TableFilm {
 //                });
                 hbox.getChildren().addAll(btnPlay, btnSave/*, btnBookmark*/);
                 setGraphic(hbox);
+            }
+        };
+        return cell;
+    };
+
+
+    private Callback<TableColumn<Film, Integer>, TableCell<Film, Integer>> cellFactoryDuration
+            = (final TableColumn<Film, Integer> param) -> {
+
+        final TableCell<Film, Integer> cell = new TableCell<>() {
+
+            @Override
+            public void updateItem(Integer item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (item == null || empty) {
+                    setGraphic(null);
+                    setText(null);
+                    return;
+                }
+
+                if (item == 0) {
+                    setGraphic(null);
+                    setText(null);
+                } else {
+                    setGraphic(null);
+                    setText(item + "");
+                }
+
             }
         };
         return cell;

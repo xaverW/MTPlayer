@@ -29,7 +29,8 @@ public class FilmProps extends FilmXml {
     FilmSize filmSize = new FilmSize(); // Dateigröße in MByte
     public FilmDate filmDate = new FilmDate(0);
 
-    public long dauerL = 0; // Sekunden
+    //    public long dauerL = 0; // Sekunden
+    private int durationMinute = 0; //
     public int filmTime = 0; // Zeit -> Minuten ab 0:00 Uhr
 
     private boolean small = false; // Film hat "small"-URL
@@ -45,6 +46,14 @@ public class FilmProps extends FilmXml {
     private final BooleanProperty shown = new SimpleBooleanProperty(false);
     private final BooleanProperty actHist = new SimpleBooleanProperty(false);
     private final BooleanProperty bookmark = new SimpleBooleanProperty(false);
+
+    public int getDurationMinute() {
+        return durationMinute;
+    }
+
+    public void setDurationMinute(int durationMinute) {
+        this.durationMinute = durationMinute;
+    }
 
     public int getFilmTime() {
         return filmTime;

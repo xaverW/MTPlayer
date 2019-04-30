@@ -109,9 +109,9 @@ public class DownloadListInfoAll {
                 // die Downlaods laufen gerade
                 bandwidth += download.getStart().getBandwidth(); // bytes per second
                 byteAktDownloads += (download.getDownloadSize().getAktFileSize() > 0 ? download.getDownloadSize().getAktFileSize() : 0);
-                if (download.getStart().getTimeLeft() > timeRestAktDownloads) {
+                if (download.getStart().getTimeLeftSeconds() > timeRestAktDownloads) {
                     // der längeste gibt die aktuelle Restzeit vor
-                    timeRestAktDownloads = download.getStart().getTimeLeft();
+                    timeRestAktDownloads = download.getStart().getTimeLeftSeconds();
                 }
             }
         }

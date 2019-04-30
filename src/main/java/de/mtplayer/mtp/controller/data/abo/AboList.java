@@ -90,7 +90,7 @@ public class AboList extends SimpleListProperty<Abo> {
         String themeTitle = selectedFilter.isThemeTitleVis() ? selectedFilter.getThemeTitle() : "";
         String somewhere = selectedFilter.isSomewhereVis() ? selectedFilter.getSomewhere() : "";
         int minDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMinDur() : 0;
-        int maxDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMaxDur() : SelectedFilter.FILTER_DURATION_MAX_MIN;
+        int maxDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMaxDur() : SelectedFilter.FILTER_DURATION_MAX_MINUTE;
 
 
         String namePath = channel + (theme.isEmpty() ? "" : " - " + theme) + (title.isEmpty() ? "" : " - " + title);
@@ -122,8 +122,8 @@ public class AboList extends SimpleListProperty<Abo> {
 
         if (new AboEditDialogController(progData, abo, true).getOk()) {
             // als Vorgabe merken
-            ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(abo.getMinDuration());
-            ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(abo.getMaxDuration());
+            ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(abo.getMinDurationMinute());
+            ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(abo.getMaxDurationMinute());
             addAbo(abo);
 //            sort();
             notifyChanges();
@@ -150,7 +150,7 @@ public class AboList extends SimpleListProperty<Abo> {
         final String themeTitle = selectedFilter.isThemeTitleVis() ? selectedFilter.getThemeTitle() : "";
         final String somewhere = selectedFilter.isSomewhereVis() ? selectedFilter.getSomewhere() : "";
         final int minDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMinDur() : 0;
-        final int maxDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMaxDur() : SelectedFilter.FILTER_DURATION_MAX_MIN;
+        final int maxDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMaxDur() : SelectedFilter.FILTER_DURATION_MAX_MINUTE;
 
         aboCopy.setChannel(channel);
         aboCopy.setChannelExact(channelExact);
@@ -159,15 +159,15 @@ public class AboList extends SimpleListProperty<Abo> {
         aboCopy.setTitle(title);
         aboCopy.setThemeTitle(themeTitle);
         aboCopy.setSomewhere(somewhere);
-        aboCopy.setMinDuration(minDuration);
-        aboCopy.setMaxDuration(maxDuration);
+        aboCopy.setMinDurationMinute(minDuration);
+        aboCopy.setMaxDurationMinute(maxDuration);
 
         if (new AboEditDialogController(progData, aboCopy, false).getOk()) {
             abo.copyToMe(aboCopy);
 
             // als Vorgabe merken
-            ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(abo.getMinDuration());
-            ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(abo.getMaxDuration());
+            ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(abo.getMinDurationMinute());
+            ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(abo.getMaxDurationMinute());
 //            sort();
             notifyChanges();
             ret = true;
@@ -190,9 +190,9 @@ public class AboList extends SimpleListProperty<Abo> {
             maxDuration = ProgConfig.ABO_MINUTE_MAX_SIZE.getInt();
         } catch (final Exception ex) {
             minDuration = 0;
-            maxDuration = SelectedFilter.FILTER_DURATION_MAX_MIN;
+            maxDuration = SelectedFilter.FILTER_DURATION_MAX_MINUTE;
             ProgConfig.ABO_MINUTE_MIN_SIZE.setValue("0");
-            ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(SelectedFilter.FILTER_DURATION_MAX_MIN);
+            ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(SelectedFilter.FILTER_DURATION_MAX_MINUTE);
         }
 
         String namePath = DownloadTools.replaceEmptyFileName(aboName,
@@ -214,8 +214,8 @@ public class AboList extends SimpleListProperty<Abo> {
 
         if (new AboEditDialogController(progData, abo, true).getOk()) {
             // als Vorgabe merken
-            ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(abo.getMinDuration());
-            ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(abo.getMaxDuration());
+            ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(abo.getMinDurationMinute());
+            ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(abo.getMaxDurationMinute());
             addAbo(abo);
 //            sort();
             notifyChanges();
@@ -344,13 +344,13 @@ public class AboList extends SimpleListProperty<Abo> {
 
     public synchronized Abo getAboForFilm_quick(Film film, boolean checkLength) {
         // da wird nur in der Filmliste geschaut, ob in "DatenFilm" ein Abo eingetragen ist
-        // geht schneller, "getAboFuerFilm" muss aber vorher schon gelaufen sein!!
+        // geht schneller, "assignAboToFilm" muss aber vorher schon gelaufen sein!!
         Abo abo = film.getAbo();
         if (abo == null) {
             return null;
         } else {
             if (checkLength) {
-                if (!FilmFilter.checkLength(abo.getMinSec(), abo.getMaxSec(), film.dauerL)) {
+                if (!FilmFilter.checkLength(abo.getMinDurationMinute(), abo.getMaxDurationMinute(), film.getDurationMinute())) {
                     return null;
                 }
             }
@@ -385,19 +385,19 @@ public class AboList extends SimpleListProperty<Abo> {
                         abo.fThemeTitle,
                         abo.fTitle,
                         abo.fSomewhere,
-                        abo.getMinSec(),
-                        abo.getMaxSec(),
+                        abo.getMinDurationMinute(),
+                        abo.getMaxDurationMinute(),
                         film,
                         false))
                 .findFirst()
                 .orElse(null);
 
         if (foundAbo != null) {
-            if (!FilmFilter.checkLengthMin(foundAbo.getMinSec(), film.dauerL)) {
+            if (!FilmFilter.checkLengthMin(foundAbo.getMinDurationMinute(), film.getDurationMinute())) {
                 // dann ist der Film zu kurz
                 film.arr[FilmXml.FILM_ABO_NAME] = foundAbo.arr[AboXml.ABO_NAME] + (" [zu kurz]");
                 film.setAbo(foundAbo);
-            } else if (!FilmFilter.checkLengthMax(foundAbo.getMaxSec(), film.dauerL)) {
+            } else if (!FilmFilter.checkLengthMax(foundAbo.getMaxDurationMinute(), film.getDurationMinute())) {
                 // dann ist der Film zu lang
                 film.arr[FilmXml.FILM_ABO_NAME] = foundAbo.arr[AboXml.ABO_NAME] + (" [zu lang]");
                 film.setAbo(foundAbo);

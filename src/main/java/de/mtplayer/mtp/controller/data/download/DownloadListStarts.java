@@ -96,7 +96,7 @@ public class DownloadListStarts {
         for (final Download d : downloadList) {
             final Start s = d.getStart();
             if (d.isStarted()) {
-                rem = Math.max(rem, s.getTimeLeft());
+                rem = Math.max(rem, s.getTimeLeftSeconds());
             }
         }
 

@@ -222,7 +222,7 @@ public class TableAbo {
                     return;
                 }
 
-                if (item == SelectedFilter.FILTER_DURATION_MAX_MIN) {
+                if (item == SelectedFilter.FILTER_DURATION_MAX_MINUTE) {
                     setText("alles");
                 } else {
                     setText(item + "");

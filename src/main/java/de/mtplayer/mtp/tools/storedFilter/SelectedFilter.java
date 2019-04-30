@@ -253,7 +253,7 @@ public final class SelectedFilter extends SelectedFilterProps {
         setDays(FILTER_DAYS_MAX);
 
         setMinDur(0);
-        setMaxDur(FILTER_DURATION_MAX_MIN);
+        setMaxDur(FILTER_DURATION_MAX_MINUTE);
 
         setMinTime(0);
         setMaxTime(FILTER_FILMTIME_MAX_SEC);
@@ -386,11 +386,11 @@ public final class SelectedFilter extends SelectedFilterProps {
         final boolean noGeo = selectedFilter.isNotVis() ? selectedFilter.isNotGeo() : false;
         final boolean noFuture = selectedFilter.isNotVis() ? selectedFilter.isNotFuture() : false;
 
-        // Länge am Slider in Min, im Film Sekunden
-        final int minLaengeSec = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMinDur() * 60 : 0;
-        final int maxLaengeSec = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMaxDur() * 60 : FILTER_DURATION_MAX_SEC;
+        // Länge am Slider in Min
+        final int minLengthMinute = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMinDur() : 0;
+        final int maxLengthMinute = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMaxDur() : FILTER_DURATION_MAX_MINUTE;
 
-        // Filmzeit in Sek. von 0:00 Uhr
+        // FilmUhrZeit in Sek. von 0:00 Uhr
         final int minTimeSec = selectedFilter.isMinMaxTimeVis() ? selectedFilter.getMinTime() : 0;
         final int maxTimeSec = selectedFilter.isMinMaxTimeVis() ? selectedFilter.getMaxTime() : FILTER_FILMTIME_MAX_SEC;
         final boolean minMaxTimeInvert = selectedFilter.isMinMaxTimeInvert();
@@ -460,11 +460,11 @@ public final class SelectedFilter extends SelectedFilterProps {
         }
 
         // Filmlänge
-        if (minLaengeSec != 0) {
-            predicate = predicate.and(f -> FilmFilter.checkLengthMin(minLaengeSec, f.dauerL));
+        if (minLengthMinute != 0) {
+            predicate = predicate.and(f -> FilmFilter.checkLengthMin(minLengthMinute, f.getDurationMinute()));
         }
-        if (maxLaengeSec != FILTER_DURATION_MAX_SEC) {
-            predicate = predicate.and(f -> FilmFilter.checkLengthMax(maxLaengeSec, f.dauerL));
+        if (maxLengthMinute != FILTER_DURATION_MAX_MINUTE) {
+            predicate = predicate.and(f -> FilmFilter.checkLengthMax(maxLengthMinute, f.getDurationMinute()));
         }
 
         // Film-Uhrzeit

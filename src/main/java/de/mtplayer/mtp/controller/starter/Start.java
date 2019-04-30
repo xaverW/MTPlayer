@@ -30,7 +30,7 @@ public class Start {
     private boolean startViewing = false;
 
     private long bandwidth = -1; // Downloadbandbreite: bytes per second
-    private long timeLeft = -1; // restliche Laufzeit des Downloads
+    private long timeLeftSeconds = -1; // restliche Laufzeit [s] des Downloads
 
     private Process process = null; //Prozess des Download
     private MDate startTime = null;
@@ -51,14 +51,14 @@ public class Start {
         download.setBandwidth(SizeTools.humanReadableBandwidth(bandwidth));
     }
 
-    public long getTimeLeft() {
-        return timeLeft;
+    public long getTimeLeftSeconds() {
+        return timeLeftSeconds;
     }
 
-    public void setTimeLeft(long timeLeft) {
-        this.timeLeft = timeLeft;
-        if (download.isStateStartedRun() && getTimeLeft() > 0) {
-            download.setRemaining(DownloadConstants.getTimeLeft(timeLeft));
+    public void setTimeLeftSeconds(long timeLeftSeconds) {
+        this.timeLeftSeconds = timeLeftSeconds;
+        if (download.isStateStartedRun() && getTimeLeftSeconds() > 0) {
+            download.setRemaining(DownloadConstants.getTimeLeft(timeLeftSeconds));
         } else {
             download.setRemaining("");
         }

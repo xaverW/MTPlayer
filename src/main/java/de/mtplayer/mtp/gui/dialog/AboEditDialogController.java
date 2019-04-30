@@ -51,7 +51,7 @@ public class AboEditDialogController extends PDialogExtra {
     private final ComboBox<SetData> cboSetData = new ComboBox<>();
     private final ComboBox<String> cboChannel = new ComboBox<>();
     private final ComboBox<String> cboDestination = new ComboBox<>();
-    private final PRangeBox pRangeBoxTime = new PRangeBox(0, SelectedFilter.FILTER_DURATION_MAX_MIN);
+    private final PRangeBox pRangeBoxTime = new PRangeBox(0, SelectedFilter.FILTER_DURATION_MAX_MINUTE);
     private final CheckBox cbxOn = new CheckBox();
     private final Label[] lbl = new Label[AboXml.MAX_ELEM];
     private final TextField[] txt = new TextField[AboXml.MAX_ELEM];
@@ -428,8 +428,8 @@ public class AboEditDialogController extends PDialogExtra {
     }
 
     private void initDur() {
-        pRangeBoxTime.minValueProperty().bindBidirectional(aboCopy.minDurationProperty());
-        pRangeBoxTime.maxValueProperty().bindBidirectional(aboCopy.maxDurationProperty());
+        pRangeBoxTime.minValueProperty().bindBidirectional(aboCopy.minDurationMinuteProperty());
+        pRangeBoxTime.maxValueProperty().bindBidirectional(aboCopy.maxDurationMinuteProperty());
         pRangeBoxTime.maxValueProperty().addListener((observable, oldValue, newValue) ->
                 cbxEditAll[AboXml.ABO_MIN_DURATION].setSelected(true));
         pRangeBoxTime.minValueProperty().addListener((observable, oldValue, newValue) ->

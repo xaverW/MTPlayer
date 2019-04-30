@@ -45,7 +45,7 @@ public class FilmFilterController extends FilterController {
     private final Slider slDays = new Slider();
     private final Label lblDays = new Label();
 
-    private final PRangeBox slDur = new PRangeBox(0, SelectedFilter.FILTER_DURATION_MAX_MIN);
+    private final PRangeBox slDur = new PRangeBox(0, SelectedFilter.FILTER_DURATION_MAX_MINUTE);
     private final Label lblDur = new Label("Filmlänge:");
 
     private final PTimePeriodBox slFilmTime = new PTimePeriodBox();

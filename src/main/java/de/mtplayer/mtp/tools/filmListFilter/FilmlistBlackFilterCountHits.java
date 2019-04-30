@@ -54,7 +54,7 @@ public class FilmlistBlackFilterCountHits {
                     blackData.fTitle,
                     blackData.fSomewhere,
                     0,
-                    SelectedFilter.FILTER_DURATION_MAX_SEC,
+                    SelectedFilter.FILTER_DURATION_MAX_MINUTE,
                     film, false)) {
 
                 blackData.incCountHits();

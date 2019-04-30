@@ -206,8 +206,8 @@ public final class StoredFilter {
         selectedFilter.setSomewhere(abo.getSomewhere());
         selectedFilter.setSomewhereVis(true);
 
-        selectedFilter.setMinDur(abo.getMinDuration());
-        selectedFilter.setMaxDur(abo.getMaxDuration());
+        selectedFilter.setMinDur(abo.getMinDurationMinute());
+        selectedFilter.setMaxDur(abo.getMaxDurationMinute());
         selectedFilter.setMinMaxDurVis(true);
 
 

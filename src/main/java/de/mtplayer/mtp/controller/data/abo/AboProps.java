@@ -37,8 +37,8 @@ public class AboProps extends AboXml {
     private final StringProperty themeTitle = new SimpleStringProperty("");
     private final StringProperty title = new SimpleStringProperty("");
     private final StringProperty somewhere = new SimpleStringProperty("");
-    private final IntegerProperty minDuration = new SimpleIntegerProperty(0); // Minuten
-    private final IntegerProperty maxDuration = new SimpleIntegerProperty(SelectedFilter.FILTER_DURATION_MAX_MIN); //Minuten
+    private final IntegerProperty minDurationMinute = new SimpleIntegerProperty(0); // Minuten
+    private final IntegerProperty maxDurationMinute = new SimpleIntegerProperty(SelectedFilter.FILTER_DURATION_MAX_MINUTE); //Minuten
     private final StringProperty destination = new SimpleStringProperty("");
     private final ObjectProperty<MDate> date = new SimpleObjectProperty<>(new MDate(0));
     private final StringProperty setDataId = new SimpleStringProperty("");
@@ -50,7 +50,7 @@ public class AboProps extends AboXml {
 
     public final Property[] properties = {nr, active, name, description, resolution,
             channel, channelExact, theme, themeExact, themeTitle, title, somewhere,
-            minDuration, maxDuration, destination, date, setDataId};
+            minDurationMinute, maxDurationMinute, destination, date, setDataId};
 
     public String getStringOf(int i) {
         return String.valueOf(properties[i].getValue());
@@ -224,36 +224,36 @@ public class AboProps extends AboXml {
         this.somewhere.set(somewhere);
     }
 
-    public int getMinDuration() {
-        return minDuration.get();
+    public int getMinDurationMinute() {
+        return minDurationMinute.get();
     }
 
-    public int getMinSec() {
-        return minDuration.get() * 60;
+//    public int getMinSec() {
+//        return minDurationMinute.get() * 60;
+//    }
+
+    public IntegerProperty minDurationMinuteProperty() {
+        return minDurationMinute;
     }
 
-    public IntegerProperty minDurationProperty() {
-        return minDuration;
+    public void setMinDurationMinute(int minDurationMinute) {
+        this.minDurationMinute.set(minDurationMinute);
     }
 
-    public void setMinDuration(int minDuration) {
-        this.minDuration.set(minDuration);
+    public int getMaxDurationMinute() {
+        return maxDurationMinute.get();
     }
 
-    public int getMaxDuration() {
-        return maxDuration.get();
+//    public int getMaxSec() {
+//        return maxDurationMinute.get() * 60;
+//    }
+
+    public IntegerProperty maxDurationMinuteProperty() {
+        return maxDurationMinute;
     }
 
-    public int getMaxSec() {
-        return maxDuration.get() * 60;
-    }
-
-    public IntegerProperty maxDurationProperty() {
-        return maxDuration;
-    }
-
-    public void setMaxDuration(int maxDuration) {
-        this.maxDuration.set(maxDuration);
+    public void setMaxDurationMinute(int maxDurationMinute) {
+        this.maxDurationMinute.set(maxDurationMinute);
     }
 
     public String getDestination() {
@@ -356,8 +356,8 @@ public class AboProps extends AboXml {
         arr[ABO_TITLE] = getTitle();
         arr[ABO_SOMEWHERE] = getSomewhere();
 
-        arr[ABO_MIN_DURATION] = String.valueOf(getMinDuration());
-        arr[ABO_MAX_DURATION] = String.valueOf(getMaxDuration());
+        arr[ABO_MIN_DURATION] = String.valueOf(getMinDurationMinute());
+        arr[ABO_MAX_DURATION] = String.valueOf(getMaxDurationMinute());
 
         arr[ABO_DEST_PATH] = getDestination();
         arr[ABO_DOWN_DATE] = getDate().toString();
@@ -372,10 +372,10 @@ public class AboProps extends AboXml {
             max = Integer.parseInt(arr[ABO_MAX_DURATION]);
         } catch (final Exception ex) {
             min = 0;
-            max = SelectedFilter.FILTER_DURATION_MAX_MIN;
+            max = SelectedFilter.FILTER_DURATION_MAX_MINUTE;
         }
-        setMinDuration(min);
-        setMaxDuration(max);
+        setMinDurationMinute(min);
+        setMaxDurationMinute(max);
     }
 
 

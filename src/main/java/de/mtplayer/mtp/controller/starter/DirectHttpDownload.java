@@ -174,7 +174,7 @@ public class DirectHttpDownload extends Thread {
                         final int diffTime = download.getStart().getStartTime().diffInSeconds();
                         final double restPercent = DownloadConstants.PROGRESS_FINISHED - p;
 
-                        download.getStart().setTimeLeft((long) (diffTime * restPercent / (p - startPercent)));
+                        download.getStart().setTimeLeftSeconds((long) (diffTime * restPercent / (p - startPercent)));
                         // anfangen zum Schauen kann man, wenn die Restzeit kürzer ist
                         // als die bereits geladene Speilzeit des Films
                         canAlreadyStarted(download);
@@ -373,13 +373,18 @@ public class DirectHttpDownload extends Thread {
 
     private void canAlreadyStarted(Download dataDownload) {
         if (dataDownload.getFilm() != null && dataDownload.isStateStartedRun()) {
-            if (dataDownload.getFilm().dauerL > 0 && dataDownload.getStart().getTimeLeft() > 0
+
+            if (dataDownload.getFilm().getDurationMinute() > 0
+                    && dataDownload.getStart().getTimeLeftSeconds() > 0
                     && dataDownload.getDownloadSize().getAktFileSize() > 0
                     && dataDownload.getDownloadSize().getFilmSize() > 0) {
+
                 // macht nur dann Sinn
-                final long zeitGeladen =
-                        dataDownload.getFilm().dauerL * dataDownload.getDownloadSize().getAktFileSize() / dataDownload.getDownloadSize().getFilmSize();
-                if (zeitGeladen > (dataDownload.getStart().getTimeLeft() * 1.1 /* plus 10% zur Sicherheit */)) {
+                final long filetimeAlreadyLoadedSeconds = dataDownload.getFilm().getDurationMinute() * 60
+                        * dataDownload.getDownloadSize().getAktFileSize()
+                        / dataDownload.getDownloadSize().getFilmSize();
+
+                if (filetimeAlreadyLoadedSeconds > (dataDownload.getStart().getTimeLeftSeconds() * 1.1 /* plus 10% zur Sicherheit */)) {
                     dataDownload.getStart().setStartViewing(true);
                 }
             }

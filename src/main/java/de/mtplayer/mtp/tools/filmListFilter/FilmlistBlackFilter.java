@@ -35,7 +35,7 @@ public class FilmlistBlackFilter {
     final static List<Predicate<Film>> filterList = new ArrayList<>();
     private static long days = 0;
     private static boolean doNotShowFutureFilms, doNotShowGeoBlockedFilms;
-    private static long filmlaengeSoll = 0;
+    private static long filmLengthTarget_Minute = 0;
     private final static ProgData PROG_DATA = ProgData.getInstance();
 
     public static synchronized void getBlackFiltered() {
@@ -75,7 +75,7 @@ public class FilmlistBlackFilter {
 //                    filterList.add(FilmlistBlackFilter::checkFilmNotInFuture);
                     filterList.add(film -> !film.isInFuture());
                 }
-                if (filmlaengeSoll != 0) {
+                if (filmLengthTarget_Minute != 0) {
                     filterList.add(FilmlistBlackFilter::checkFilmLength);
                 }
 
@@ -127,7 +127,7 @@ public class FilmlistBlackFilter {
         if (doNotShowFutureFilms && film.isInFuture()) {
             return false;
         }
-        if (filmlaengeSoll != 0 && !checkFilmLength(film)) {
+        if (filmLengthTarget_Minute != 0 && !checkFilmLength(film)) {
             return false;
         }
 
@@ -155,9 +155,9 @@ public class FilmlistBlackFilter {
         }
 
         try {
-            filmlaengeSoll = Long.valueOf(ProgConfig.SYSTEM_BLACKLIST_FILMSIZE.get()) * 60; // Minuten
+            filmLengthTarget_Minute = Long.valueOf(ProgConfig.SYSTEM_BLACKLIST_FILMSIZE.get()); // Minuten
         } catch (final Exception ex) {
-            filmlaengeSoll = 0;
+            filmLengthTarget_Minute = 0;
         }
 
         doNotShowFutureFilms = Boolean.parseBoolean(ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_FUTURE.get());
@@ -225,7 +225,7 @@ public class FilmlistBlackFilter {
      * @return true if film should be displayed
      */
     private static boolean checkFilmLength(Film film) {
-        return film.dauerL == 0 || filmlaengeSoll <= film.dauerL;
+        return film.getDurationMinute() == 0 || filmLengthTarget_Minute <= film.getDurationMinute();
 
     }
 
@@ -247,7 +247,7 @@ public class FilmlistBlackFilter {
                     blackData.fSomewhere,
 
                     0,
-                    SelectedFilter.FILTER_DURATION_MAX_SEC,
+                    SelectedFilter.FILTER_DURATION_MAX_MINUTE,
 
                     film,
                     false /* auch die Länge prüfen */)) {

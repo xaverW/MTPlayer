@@ -181,17 +181,18 @@ public class Film extends FilmProps {
     }
 
     private void setFilmLength() {
+        long durSecond;
         try {
             if (!arr[FilmXml.FILM_DURATION].contains(":") && !arr[FilmXml.FILM_DURATION].isEmpty()) {
                 // nur als Übergang bis die Liste umgestellt ist
-                long l = Long.parseLong(arr[FilmXml.FILM_DURATION]);
-                dauerL = l;
-                if (l > 0) {
-                    final long hours = l / 3600;
-                    l = l - (hours * 3600);
-                    final long min = l / 60;
-                    l = l - (min * 60);
-                    final long seconds = l;
+                durSecond = Long.parseLong(arr[FilmXml.FILM_DURATION]);
+                setDur(durSecond);
+                if (durSecond > 0) {
+                    final long hours = durSecond / 3600;
+                    durSecond = durSecond - (hours * 3600);
+                    final long min = durSecond / 60;
+                    durSecond = durSecond - (min * 60);
+                    final long seconds = durSecond;
                     arr[FilmXml.FILM_DURATION] = fillString(2, String.valueOf(hours)) + ':'
                             + fillString(2, String.valueOf(min))
                             + ':'
@@ -199,21 +200,40 @@ public class Film extends FilmProps {
                 } else {
                     arr[FilmXml.FILM_DURATION] = "";
                 }
+
             } else {
-                dauerL = 0;
+                durSecond = 0;
                 if (!arr[FilmXml.FILM_DURATION].isEmpty()) {
                     final String[] parts = arr[FilmXml.FILM_DURATION].split(":");
                     long power = 1;
                     for (int i = parts.length - 1; i >= 0; i--) {
-                        dauerL += Long.parseLong(parts[i]) * power;
+                        durSecond += Long.parseLong(parts[i]) * power;
                         power *= 60;
                     }
                 }
             }
+            setDur(durSecond);
+
         } catch (final Exception ex) {
-            dauerL = 0;
+            setDur(0);
             PLog.errorLog(468912049, "Dauer: " + arr[FilmXml.FILM_DURATION]);
         }
+    }
+
+    private void setDur(long durSecond) {
+        if (durSecond <= 0) {
+            setDurationMinute(0);
+            return;
+        }
+
+//        int d = (int) PMath.divideAndRoundUp(duration, 60);
+        int d = (int) (durSecond / 60);
+        if (d <= 0) {
+            d = 1;
+        }
+
+        setDurationMinute(d);
+        // arr[FilmXml.FILM_DURATION] = arr[FilmXml.FILM_DURATION] + "   " + d;
     }
 
     private void setDatum() {
@@ -332,7 +352,8 @@ public class Film extends FilmProps {
         ret.filmDate = filmDate;
         ret.nr = nr;
         ret.filmSize = filmSize;
-        ret.dauerL = dauerL;
+//        ret.dauerL = dauerL;
+        ret.setDurationMinute(getDurationMinute());
         ret.abo = abo;
         ret.setHd(isHd());
         ret.setSmall(isSmall());

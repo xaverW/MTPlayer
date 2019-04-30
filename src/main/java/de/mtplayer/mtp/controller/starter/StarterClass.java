@@ -252,7 +252,7 @@ public class StarterClass {
 //            MLProperty.setProperty(download.progressProperty(), DownloadConstants.PROGRESS_NOT_STARTED);
         } else if (!download.isStateStoped()) {
             //dann ist er gelaufen
-            start.setTimeLeft(0);
+            start.setTimeLeftSeconds(0);
             download.setProgress(DownloadConstants.PROGRESS_FINISHED);
 //            MLProperty.setProperty(download.progressProperty(), DownloadConstants.PROGRESS_FINISHED);
             download.getDownloadSize().setAktFileSize(-1);

@@ -255,7 +255,7 @@ public class RuntimeExec {
                     final int diffTime = download.getStart().getStartTime().diffInSeconds();
                     final double diffPercent = percent - percent_start;
                     final double restPercent = DownloadConstants.PROGRESS_FINISHED - percent;
-                    download.getStart().setTimeLeft((long) (diffTime * restPercent / diffPercent));
+                    download.getStart().setTimeLeftSeconds((long) (diffTime * restPercent / diffPercent));
                 }
             }
         }

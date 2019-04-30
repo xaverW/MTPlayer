@@ -43,7 +43,7 @@ public class ProgInitFilter {
 
         sf.setMinMaxDurVis(false);
         sf.setMinDur(0);
-        sf.setMaxDur(SelectedFilter.FILTER_DURATION_MAX_MIN);
+        sf.setMaxDur(SelectedFilter.FILTER_DURATION_MAX_MINUTE);
 
         sf.setMinMaxTimeVis(false);
         sf.setMinMaxTimeInvert(false);
@@ -88,7 +88,7 @@ public class ProgInitFilter {
 
         sf.setMinMaxDurVis(false);
         sf.setMinDur(0);
-        sf.setMaxDur(SelectedFilter.FILTER_DURATION_MAX_MIN);
+        sf.setMaxDur(SelectedFilter.FILTER_DURATION_MAX_MINUTE);
 
         sf.setMinMaxTimeVis(false);
         sf.setMinMaxTimeInvert(false);
@@ -132,7 +132,7 @@ public class ProgInitFilter {
 
         sf.setMinMaxDurVis(false);
         sf.setMinDur(0);
-        sf.setMaxDur(SelectedFilter.FILTER_DURATION_MAX_MIN);
+        sf.setMaxDur(SelectedFilter.FILTER_DURATION_MAX_MINUTE);
 
         sf.setMinMaxTimeVis(false);
         sf.setMinMaxTimeInvert(false);
@@ -268,7 +268,7 @@ public class ProgInitFilter {
 
         sf.setMinMaxDurVis(false);
         sf.setMinDur(0);
-        sf.setMaxDur(SelectedFilter.FILTER_DURATION_MAX_MIN);
+        sf.setMaxDur(SelectedFilter.FILTER_DURATION_MAX_MINUTE);
 
         sf.setMinMaxTimeVis(false);
         sf.setMinMaxTimeInvert(false);
@@ -313,7 +313,7 @@ public class ProgInitFilter {
 
         sf.setMinMaxDurVis(false);
         sf.setMinDur(0);
-        sf.setMaxDur(SelectedFilter.FILTER_DURATION_MAX_MIN);
+        sf.setMaxDur(SelectedFilter.FILTER_DURATION_MAX_MINUTE);
 
         sf.setMinMaxTimeVis(false);
         sf.setMinMaxTimeInvert(false);
@@ -358,7 +358,7 @@ public class ProgInitFilter {
 
         sf.setMinMaxDurVis(false);
         sf.setMinDur(0);
-        sf.setMaxDur(SelectedFilter.FILTER_DURATION_MAX_MIN);
+        sf.setMaxDur(SelectedFilter.FILTER_DURATION_MAX_MINUTE);
 
         sf.setMinMaxTimeVis(false);
         sf.setMinMaxTimeInvert(false);
@@ -406,7 +406,7 @@ public class ProgInitFilter {
 
         sf.setMinMaxDurVis(true);
         sf.setMinDur(40);
-        sf.setMaxDur(SelectedFilter.FILTER_DURATION_MAX_MIN);
+        sf.setMaxDur(SelectedFilter.FILTER_DURATION_MAX_MINUTE);
 
         sf.setMinMaxTimeVis(true);
         sf.setMinMaxTimeInvert(false);
@@ -453,7 +453,7 @@ public class ProgInitFilter {
 
         sf.setMinMaxDurVis(true);
         sf.setMinDur(20);
-        sf.setMaxDur(SelectedFilter.FILTER_DURATION_MAX_MIN);
+        sf.setMaxDur(SelectedFilter.FILTER_DURATION_MAX_MINUTE);
 
         sf.setMinMaxTimeVis(false);
         sf.setMinMaxTimeInvert(false);

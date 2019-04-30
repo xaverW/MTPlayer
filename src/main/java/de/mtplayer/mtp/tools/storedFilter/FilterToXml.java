@@ -180,7 +180,7 @@ public class FilterToXml {
             sf.setDays(SelectedFilter.FILTER_DAYS_MAX);
 
             sf.setMinDur(0);
-            sf.setMaxDur(SelectedFilter.FILTER_DURATION_MAX_MIN);
+            sf.setMaxDur(SelectedFilter.FILTER_DURATION_MAX_MINUTE);
 
             sf.setMinTime(0);
             sf.setMaxTime(SelectedFilter.FILTER_FILMTIME_MAX_SEC);
