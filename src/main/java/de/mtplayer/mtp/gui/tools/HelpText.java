@@ -265,8 +265,8 @@ public class HelpText {
             "Längenangabe haben, werden immer angezeigt.";
 
     public static final String BLACKLIST_DAYS = "Damit kann man die Anzahl der angezeigten Filme " +
-            "reduzieren. Dadurch kann das Arbeiten mit den " +
-            "Filmen schneller werden.";
+            "reduzieren. Filme ohne Datum werden immer angezeigt. " +
+            "Durch eine kürzere Filmliste kann das Arbeiten mit den Filmen schneller werden.";
 
     public static final String BLACKLIST_COUNT = "Beim Treffer zählen wird jeder Film gegen die Blacklist geprüft. " +
             "Jeder Film läuft also die Blacklist von Anfang nach Ende ab und jeder Treffer wird gezählt. " +

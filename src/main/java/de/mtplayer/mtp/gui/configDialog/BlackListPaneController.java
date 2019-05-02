@@ -148,29 +148,35 @@ public class BlackListPaneController extends AnchorPane {
         lblSize.setMinWidth(Region.USE_PREF_SIZE);
 
         int row = 0;
-        gridPane.add(tglAbo, 0, row);
-        gridPane.add(btnHelp, 2, row);
+        gridPane.add(tglAbo, 0, row, 3, 1);
+        gridPane.add(btnHelp, 3, row);
 
-        gridPane.add(tglFuture, 0, ++row);
-        gridPane.add(btnHelpFuture, 2, row);
+        gridPane.add(tglFuture, 0, ++row, 3, 1);
+        gridPane.add(btnHelpFuture, 3, row);
 
-        gridPane.add(tglGeo, 0, ++row);
-        gridPane.add(btnHelpGeo, 2, row);
+        gridPane.add(tglGeo, 0, ++row, 3, 1);
+        gridPane.add(btnHelpGeo, 3, row);
 
-
-        gridPane.add(new Label(" "), 0, ++row);
-        gridPane.add(new Label("nur aktuelle Filme anzeigen:"), 0, ++row);
-        gridPane.add(slDays, 0, ++row);
-        gridPane.add(lblDays, 1, row);
-        gridPane.add(btnHelpDays, 2, row);
 
         gridPane.add(new Label(" "), 0, ++row);
-        gridPane.add(new Label("keine kurzen Filme anzeigen:"), 0, ++row);
-        gridPane.add(slSize, 0, ++row);
-        gridPane.add(lblSize, 1, row);
-        gridPane.add(btnHelpSize, 2, row);
+        gridPane.add(new Label("nur Filme der letzten Tage anzeigen:"), 0, ++row, 2, 1);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(), PColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.add(new Label("Filme anzeigen:"), 0, ++row);
+        gridPane.add(slDays, 1, row);
+        gridPane.add(lblDays, 2, row);
+        gridPane.add(btnHelpDays, 3, row);
+
+        gridPane.add(new Label(" "), 0, ++row);
+        gridPane.add(new Label("nur Filme mit Mindestlänge anzeigen:"), 0, ++row, 2, 1);
+
+        gridPane.add(new Label("Filme anzeigen:"), 0, ++row);
+        gridPane.add(slSize, 1, row);
+        gridPane.add(lblSize, 2, row);
+        gridPane.add(btnHelpSize, 3, row);
+
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcComputedSizeAndHgrow());
     }
 
     private void initDays() {
@@ -197,9 +203,9 @@ public class BlackListPaneController extends AnchorPane {
 
     private void setValueSlider() {
         int min = (int) slSize.getValue();
-        lblSize.setText(min == 0 ? "alles anzeigen" : "Länge des Films mindestens " + min + " Minuten");
+        lblSize.setText(min == 0 ? "alles anzeigen" : "nur Filme mit mindestens " + min + " Minuten Länge");
 
         min = (int) slDays.getValue();
-        lblDays.setText(min == 0 ? "alles anzeigen" : "Alter des Filmes höchstens " + min + " Tage");
+        lblDays.setText(min == 0 ? "alles anzeigen" : "nur Filme der letzten " + min + " Tage");
     }
 }
