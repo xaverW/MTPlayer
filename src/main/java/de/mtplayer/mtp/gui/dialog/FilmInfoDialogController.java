@@ -104,6 +104,9 @@ public class FilmInfoDialogController extends PDialog {
                         case FilmXml.FILM_NR:
                             lblCont[i].setText(film.getNr() + "");
                             break;
+                        case FilmXml.FILM_DURATION:
+                            lblCont[i].setText(film.getDurationMinute() + "");
+                            break;
                         case FilmXml.FILM_URL:
                             pHyperlinkUrl.setUrl(film.arr[FilmXml.FILM_URL]);
                             break;

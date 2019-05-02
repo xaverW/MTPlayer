@@ -84,7 +84,7 @@ public class DownloadXml extends Data<Download> {
             "Größe [MB]",
             "Datum",
             "Zeit",
-            "Dauer",
+            "Dauer [min]",
             "HD",
             "UT",
             "Pause",

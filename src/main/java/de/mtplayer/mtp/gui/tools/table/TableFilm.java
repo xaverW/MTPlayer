@@ -75,7 +75,6 @@ public class TableFilm {
         final TableColumn<Film, String> startColumn = new TableColumn<>("");
         startColumn.setCellFactory(cellFactoryStart);
         startColumn.getStyleClass().add("alignCenter");
-        startColumn.setPrefWidth(150);
 
         final TableColumn<Film, MDate> datumColumn = new TableColumn<>("Datum");
         datumColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
@@ -85,7 +84,7 @@ public class TableFilm {
         timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
         timeColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<Film, Integer> durationColumn = new TableColumn<>("Dauer [Min]");
+        final TableColumn<Film, Integer> durationColumn = new TableColumn<>("Dauer [min]");
         durationColumn.setCellFactory(cellFactoryDuration);
         durationColumn.setCellValueFactory(new PropertyValueFactory<>("durationMinute"));
         durationColumn.getStyleClass().add("alignCenter");

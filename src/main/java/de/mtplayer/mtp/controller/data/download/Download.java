@@ -256,7 +256,7 @@ public final class Download extends DownloadProps {
 
         setFilmDate(film.arr[FilmXml.FILM_DATE], film.arr[FilmXml.FILM_TIME]);
         setTime(film.arr[FilmXml.FILM_TIME]);
-        setDuration(film.arr[FilmXml.FILM_DURATION]);
+        setDurationMinute(film.getDurationMinute());
 
         setUrlRtmp(film.arr[FilmXml.FILM_URL_RTMP]);
         setHd(film.isHd());

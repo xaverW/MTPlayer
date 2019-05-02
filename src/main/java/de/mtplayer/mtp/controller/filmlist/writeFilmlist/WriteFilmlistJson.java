@@ -53,12 +53,14 @@ public class WriteFilmlistJson {
                     jg.writeString(filmlist.metaData[i]);
                 }
                 jg.writeEndArray();
+
                 // Infos der Felder in der Filmliste
                 jg.writeArrayFieldStart(FilmlistXml.FILMLIST);
                 for (int i = 0; i < FilmXml.JSON_NAMES.length; ++i) {
                     jg.writeString(FilmXml.COLUMN_NAMES[FilmXml.JSON_NAMES[i]]);
                 }
                 jg.writeEndArray();
+
                 //Filme schreiben
                 for (Film film : filmlist) {
                     film.arr[FilmXml.FILM_NEW] = Boolean.toString(film.isNewFilm()); // damit wirs beim nächsten Programmstart noch wissen

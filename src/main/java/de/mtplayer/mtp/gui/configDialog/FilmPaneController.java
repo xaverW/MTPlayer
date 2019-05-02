@@ -141,8 +141,8 @@ public class FilmPaneController extends AnchorPane {
         gridPane.add(btnHelpLoad, 2, row);
 
         gridPane.add(new Label(" "), 0, ++row);
-        gridPane.add(new Label("Adresse (Datei oder URL) zum Laden der Filmliste:\n" +
-                "(wenn leer, wird die Standard-URL verwendet)"), 0, ++row, 2, 1);
+        gridPane.add(new Label("Adresse (Datei oder URL) zum Laden der Filmliste:"),
+                0, ++row, 2, 1);
 
         gridPane.add(txtUrl, 0, ++row);
         gridPane.add(btnFile, 1, row);

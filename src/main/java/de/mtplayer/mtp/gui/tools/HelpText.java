@@ -280,18 +280,53 @@ public class HelpText {
             "werden alle gefundenen Filme geladen oder nur die, die nicht durch " +
             "die Blacklist geblockt werden.";
 
-    public static final String LOAD_FILM_ONLY_DAYS = "Es werden nur Filme der letzten " +
-            "xx Tage geladen. Filme ohne Datum werden immer geladen. " +
+    public static final String LOAD_ONLY_FILMS = "\n" +
+            "nur Filme der letzten Tage laden" +
+            "\n==========================\n" +
+            "Die Filmliste enthält nur Filme der letzten XX Tage. " +
+            "Filme ohne Datum sind immer enthalten. " +
+            PConst.LINE_SEPARATORx3 +
+
+            "nur Filme mit Mindestlänge laden" +
+            "\n==========================\n" +
+            "Die Filmliste enthält nur Filme mit einer Mindestlänge von XX Minuten. " +
+            "Filme ohne Längenangabe sind immer enthalten. " +
+
+            PConst.LINE_SEPARATORx3 +
+            "\n==========================\n" +
+            "Bei \"Alle\" sind alle Filme enthalten.\n" +
+            "Beim Filtern mit: \"maximal 250 Tagen\" oder auch " +
+            "beim Filtern mit: \"mindestens 5 Minuten\" ist die Filmliste nur " +
+            "etwa halb so groß: ~ 140.000 Filme. " +
+
             PConst.LINE_SEPARATORx2 +
-            "Bei \"Alle\" werden alle Filme geladen. Bei \"250 Tagen\" ist die Filmliste nur " +
-            "etwa halb so groß: ~ 130.000 Filme. (Eine kleinere Filmliste kann bei älteren " +
-            "Rechnern mit wenig Speicher hilfreich sein.) " +
-            PConst.LINE_SEPARATORx2 +
+            "Eine kleinere Filmliste kann bei älteren Rechnern mit wenig Speicher hilfreich sein. " +
             "Auswirkung hat das erst nach dem Neustart des Programms oder dem " +
             "Neuladen der kompletten Filmliste.";
 
+//    public static final String LOAD_FILM_ONLY_DAYS = "Die Filmliste enthält nur Filme der letzten " +
+//            "xx Tage. Filme ohne Datum sind immer enthalten. " +
+//            PConst.LINE_SEPARATORx2 +
+//            "Bei \"Alle\" sind alle Filme enthalten. Bei \"250 Tagen\" ist die Filmliste nur " +
+//            "etwa halb so groß: ~ 140.000 Filme. (Eine kleinere Filmliste kann bei älteren " +
+//            "Rechnern mit wenig Speicher hilfreich sein.) " +
+//            PConst.LINE_SEPARATORx2 +
+//            "Auswirkung hat das erst nach dem Neustart des Programms oder dem " +
+//            "Neuladen der kompletten Filmliste.";
+//
+//    public static final String LOAD_FILM_ONLY_DURATION = "Die Filmliste enthält nur Filme mit einer " +
+//            "Mindestlänge von XX Minuten. Filme ohne Längenangabe sind immer enthalten. " +
+//            PConst.LINE_SEPARATORx2 +
+//            "Bei \"Alle\" sind alle Filme enthalten. Bei \"5 Minuten\" ist die Filmliste nur " +
+//            "etwa halb so groß: ~ 140.000 Filme. (Eine kleinere Filmliste kann bei älteren " +
+//            "Rechnern mit wenig Speicher hilfreich sein.) " +
+//            "Filme kürzer als 5 Minuten sind meist nur Ausschnitte oder Trailer." +
+//            PConst.LINE_SEPARATORx2 +
+//            "Auswirkung hat das erst nach dem Neustart des Programms oder dem " +
+//            "Neuladen der kompletten Filmliste.";
+
     public static final String LOAD_FILMLIST_SENDER = "Filme der markierten Sender " +
-            "werden beim Neuladen der Filmliste  _nicht_  geladen." +
+            "sind in der Filmliste  _nicht_  enthalten. " +
             PConst.LINE_SEPARATORx2 +
             "Auswirkung hat das erst nach dem Neustart des Programms oder dem " +
             "Neuladen der kompletten Filmliste.";

@@ -98,12 +98,12 @@ public class TableAbo {
 
         final TableColumn<Abo, Integer> minColumn = new TableColumn<>("min");
         minColumn.setCellFactory(cellFactoryMin);
-        minColumn.setCellValueFactory(new PropertyValueFactory<>("minDuration"));
+        minColumn.setCellValueFactory(new PropertyValueFactory<>("minDurationMinute"));
         minColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Abo, Integer> maxColumn = new TableColumn<>("max");
         maxColumn.setCellFactory(cellFactoryMax);
-        maxColumn.setCellValueFactory(new PropertyValueFactory<>("maxDuration"));
+        maxColumn.setCellValueFactory(new PropertyValueFactory<>("maxDurationMinute"));
         maxColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Abo, String> destinationColumn = new TableColumn<>("Ziel");

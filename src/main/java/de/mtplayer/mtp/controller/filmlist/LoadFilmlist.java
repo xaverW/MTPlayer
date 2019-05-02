@@ -168,15 +168,13 @@ public class LoadFilmlist {
             if (fileUrl.isEmpty()) {
                 // Filmeliste laden und Url automatisch ermitteln
                 logList.add("Filmliste laden (auto)");
-                importNewFilmlisteFromServer.importFilmListAuto(progData.filmlist,
-                        diffListe, ProgConfig.SYSTEM_NUM_DAYS_FILMLIST.getInt());
+                importNewFilmlisteFromServer.importFilmListAuto(progData.filmlist, diffListe);
 
             } else {
                 // Filmeliste laden von URL/Datei
                 logList.add("Filmliste mit fester URL/Datei laden");
                 progData.filmlist.clear();
-                importNewFilmlisteFromServer.importFilmlistFromFile(fileUrl,
-                        progData.filmlist, ProgConfig.SYSTEM_NUM_DAYS_FILMLIST.getInt());
+                importNewFilmlisteFromServer.importFilmlistFromFile(fileUrl, progData.filmlist);
             }
 
             PLog.addSysLog(logList);
@@ -209,8 +207,7 @@ public class LoadFilmlist {
 
             if (!firstProgramStart) {
                 // gespeicherte Filmliste laden, macht beim ersten Programmstart keinen Sinn
-                new ReadFilmlist().readFilmlist(ProgInfos.getFilmListFile(),
-                        progData.filmlist, ProgConfig.SYSTEM_NUM_DAYS_FILMLIST.getInt());
+                new ReadFilmlist().readFilmlist(ProgInfos.getFilmListFile(), progData.filmlist);
 
                 PDuration.onlyPing("Programmstart Filmliste laden: geladen");
             }
@@ -290,8 +287,7 @@ public class LoadFilmlist {
             // dann die alte Liste wieder laden
             progData.filmlist.clear();
             setStop(false);
-            new ReadFilmlist().readFilmlist(ProgInfos.getFilmListFile(),
-                    progData.filmlist, ProgConfig.SYSTEM_NUM_DAYS_FILMLIST.getInt());
+            new ReadFilmlist().readFilmlist(ProgInfos.getFilmListFile(), progData.filmlist);
             logList.add("");
 
         } else {

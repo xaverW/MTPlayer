@@ -40,7 +40,11 @@ public class ProgConst {
     public static final String RTMP_PRTOKOLL = "rtmp";
     public static final String RTMP_FLVSTREAMER = "-r ";
 
-    public static final int LOAD_FILMS_MAX_DAYS_MAX = 300; // Filter beim Programmstart/Blacklist: nur Filme der letzten xx Tage laden
+    public static final int SYSTEM_BLACKLIST_MAX_FILM_DAYS = 300; // Filter Blacklist: nur Filme der letzten xx Tage laden
+    public static final int SYSTEM_BLACKLIST_MIN_FILM_DURATION = 100; // Filter Blacklist: nur Filme mit mind. xx Minuten länge laden
+
+    public static final int SYSTEM_LOAD_FILMLIST_MAX_DAYS = 300; // Filter beim Programmstart/Blacklist: nur Filme der letzten xx Tage laden
+    public static final int SYSTEM_LOAD_FILMLIST_MIN_DURATION = 30; // Filter Programmstart: nur Filme mit mind. xx Minuten länge laden
 
     public static final int CHECK_FILMLIST_UPDATE = 30 * 60; // 30 Minuten
     public static final int CHECK_FILMLIST_UPDATE_PROGRAMSTART = CHECK_FILMLIST_UPDATE - 5 * 60; // 5 Minuten

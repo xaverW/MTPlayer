@@ -98,7 +98,8 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs SYSTEM_LOAD_FILMS_ON_START = addNewKey("system-load-films-on-start", Boolean.TRUE.toString());
     public static MLConfigs SYSTEM_LOAD_FILMS_MANUALLY = addNewKey("system-load-films-manually", "");
     public static MLConfigs SYSTEM_LOAD_NOT_SENDER = addNewKey("system-load-not-sender", "");
-    public static MLConfigs SYSTEM_NUM_DAYS_FILMLIST = addNewKey("system-num-days-filmilst", "0"); //es werden nur die x letzten Tage geladen
+    public static MLConfigs SYSTEM_LOAD_FILMLIST_MAX_DAYS = addNewKey("system-load-filmlist-max-days", "0"); //es werden nur die x letzten Tage geladen
+    public static MLConfigs SYSTEM_LOAD_FILMLIST_MIN_DURATION = addNewKey("system-load-filmlist-min-duration", "0"); //es werden nur Filme mit mind. x Minuten geladen
     public static MLConfigs SYSTEM_PATH_VLC = addNewKey("path-vlc", SetsPrograms.getTemplatePathVlc());
     public static MLConfigs SYSTEM_PATH_FLVSTREAMER = addNewKey("path-flvstreamer", SetsPrograms.getTemplatePathFlv());
     public static MLConfigs SYSTEM_PATH_FFMPEG = addNewKey("path-ffmpeg", SetsPrograms.getTemplatePathFFmpeg());
@@ -107,8 +108,8 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs SYSTEM_BLACKLIST_SHOW_NO_FUTURE = addNewKey("blacklist-show-no-future");
     public static MLConfigs SYSTEM_BLACKLIST_SHOW_NO_GEO = addNewKey("blacklist-show-no-geo");
     public static MLConfigs SYSTEM_BLACKLIST_SHOW_ABO = addNewKey("blacklist-show-abo");
-    public static MLConfigs SYSTEM_BLACKLIST_SHOW_ONLY_DAYS = addNewKey("blacklist-show-only-days", "0");
-    public static MLConfigs SYSTEM_BLACKLIST_FILMSIZE = addNewKey("blacklist-filmsize", "0"); // Minuten
+    public static MLConfigs SYSTEM_BLACKLIST_MAX_FILM_DAYS = addNewKey("blacklist-max-film-days", "0");
+    public static MLConfigs SYSTEM_BLACKLIST_MIN_FILM_DURATION = addNewKey("blacklist-min-film-duration", "0"); // Minuten
     public static MLConfigs SYSTEM_BLACKLIST_IS_WHITELIST = addNewKey("blacklist-is-whitelist");
 
     // Download

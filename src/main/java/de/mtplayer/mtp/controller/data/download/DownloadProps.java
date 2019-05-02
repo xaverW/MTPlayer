@@ -42,7 +42,7 @@ public class DownloadProps extends DownloadXml {
     private final ObjectProperty<MDate> filmDate = new SimpleObjectProperty<>(new MDate(0));
 
     private final StringProperty time = new SimpleStringProperty("");
-    private final StringProperty duration = new SimpleStringProperty("");
+    private final IntegerProperty durationMinute = new SimpleIntegerProperty(0);
     private final BooleanProperty hd = new SimpleBooleanProperty(false);
     private final BooleanProperty ut = new SimpleBooleanProperty(false);
     private final BooleanProperty geoBlocked = new SimpleBooleanProperty(false);
@@ -72,7 +72,7 @@ public class DownloadProps extends DownloadXml {
 
     public final Property[] properties = {nr, filmNr, aboName, channel, theme, title,
             state, progress, remaining, bandwidth, downloadSize,
-            filmDate, time, duration,
+            filmDate, time, durationMinute,
             hd, ut, geoBlocked, filmUrl, historyUrl, url, urlRtmp, urlSubtitle,
             setDataId, program, programCall, programCallArray, programRestart, programDownloadmanager,
             destFileName, destPath, destPathFile,
@@ -262,16 +262,16 @@ public class DownloadProps extends DownloadXml {
         this.time.set(time);
     }
 
-    public String getDuration() {
-        return duration.get();
+    public int getDurationMinute() {
+        return durationMinute.get();
     }
 
-    public StringProperty durationProperty() {
-        return duration;
+    public IntegerProperty durationMinuteProperty() {
+        return durationMinute;
     }
 
-    public void setDuration(String duration) {
-        this.duration.set(duration);
+    public void setDurationMinute(int durationMinute) {
+        this.durationMinute.set(durationMinute);
     }
 
     public boolean isHd() {
@@ -547,7 +547,14 @@ public class DownloadProps extends DownloadXml {
 
         setFilmDate(arr[DOWNLOAD_DATE], arr[DOWNLOAD_TIME]);
         setTime(arr[DOWNLOAD_TIME]);
-        setDuration(arr[DOWNLOAD_DURATION]);
+
+        int dur;
+        try {
+            dur = Integer.parseInt(arr[DOWNLOAD_DURATION]);
+        } catch (final Exception ex) {
+            dur = 0;
+        }
+        setDurationMinute(dur);
 
         setHd(Boolean.parseBoolean(arr[DOWNLOAD_HD]));
         setUt(Boolean.parseBoolean(arr[DOWNLOAD_UT]));
@@ -585,7 +592,7 @@ public class DownloadProps extends DownloadXml {
         arr[DOWNLOAD_TITLE] = getTitle();
         arr[DOWNLOAD_DATE] = getFilmDate().toString();
         arr[DOWNLOAD_TIME] = getTime();
-        arr[DOWNLOAD_DURATION] = getDuration();
+        arr[DOWNLOAD_DURATION] = String.valueOf(getDurationMinute());
         arr[DOWNLOAD_HD] = String.valueOf(isHd());
         arr[DOWNLOAD_UT] = String.valueOf(isUt());
         arr[DOWNLOAD_GEO] = String.valueOf(getGeoBlocked());

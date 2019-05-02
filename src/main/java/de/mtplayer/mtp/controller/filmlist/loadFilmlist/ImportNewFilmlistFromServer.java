@@ -63,8 +63,8 @@ public class ImportNewFilmlistFromServer {
     // #########################################################
     // Filmeliste importieren, URL automatisch wählen
     // #########################################################
-    public void importFilmListAuto(Filmlist filmlist, Filmlist filmlistDiff, int days) {
-        Thread th = new Thread(new ImportAutoThread(filmlist, filmlistDiff, days));
+    public void importFilmListAuto(Filmlist filmlist, Filmlist filmlistDiff) {
+        Thread th = new Thread(new ImportAutoThread(filmlist, filmlistDiff));
         th.setName("importFilmListAuto");
         th.start();
     }
@@ -77,12 +77,11 @@ public class ImportNewFilmlistFromServer {
         private final Filmlist filmlist;
         private final Filmlist filmlistDiff;
         private STATE state;
-        private final int days;
 
-        public ImportAutoThread(Filmlist filmlist, Filmlist filmlistDiff, int days) {
+
+        public ImportAutoThread(Filmlist filmlist, Filmlist filmlistDiff) {
             this.filmlist = filmlist;
             this.filmlistDiff = filmlistDiff;
-            this.days = days;
         }
 
         @Override
@@ -128,7 +127,7 @@ public class ImportNewFilmlistFromServer {
 
 
             for (int i = 0; i < maxRetries; ++i) {
-                ret = loadFileUrl(updateUrl, list, days);
+                ret = loadFileUrl(updateUrl, list);
                 if (ret && i < 1 && list.isOlderThan(5 * 60 * 60 /* sekunden */)) {
                     // Laden hat geklappt ABER: Liste zu alt, dann gibts einen 2. Versuch
                     PLog.addSysLog("Filmliste zu alt, neuer Versuch");
@@ -175,8 +174,8 @@ public class ImportNewFilmlistFromServer {
     // #######################################
     // Filmeliste importieren, mit fester URL/Pfad
     // #######################################
-    public void importFilmlistFromFile(String path, Filmlist filmlist, int days) {
-        Thread th = new Thread(new FilmImportFileThread(path, filmlist, days));
+    public void importFilmlistFromFile(String path, Filmlist filmlist) {
+        Thread th = new Thread(new FilmImportFileThread(path, filmlist));
         th.setName("importFilmlistFromFile");
         th.start();
 
@@ -186,17 +185,15 @@ public class ImportNewFilmlistFromServer {
 
         private final String path;
         private final Filmlist filmlist;
-        private final int days;
 
-        public FilmImportFileThread(String path, Filmlist filmlist, int days) {
+        public FilmImportFileThread(String path, Filmlist filmlist) {
             this.path = path;
             this.filmlist = filmlist;
-            this.days = days;
         }
 
         @Override
         public void run() {
-            final boolean ok = loadFileUrl(path, filmlist, days);
+            final boolean ok = loadFileUrl(path, filmlist);
             reportFinished(ok);
         }
     }
@@ -204,11 +201,11 @@ public class ImportNewFilmlistFromServer {
     // #######################################
     // #######################################
 
-    private boolean loadFileUrl(String fileUrl, Filmlist filmlist, int days) {
+    private boolean loadFileUrl(String fileUrl, Filmlist filmlist) {
         boolean ret = false;
         try {
             if (!fileUrl.isEmpty()) {
-                readFilmlist.readFilmlist(fileUrl, filmlist, days);
+                readFilmlist.readFilmlist(fileUrl, filmlist);
                 if (!filmlist.isEmpty()) {
                     ret = true;
                 }

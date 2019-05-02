@@ -523,7 +523,7 @@ public class DownloadEditDialogController extends PDialogExtra {
                 ++row;
                 break;
             case DownloadXml.DOWNLOAD_DURATION:
-                lblCont[i].textProperty().bind(download.durationProperty());
+                lblCont[i].textProperty().bind(download.durationMinuteProperty().asString());
                 gridPane.add(lbl[i], 0, row);
                 gridPane.add(lblCont[i], 1, row);
                 ++row;

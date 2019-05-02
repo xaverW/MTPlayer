@@ -121,9 +121,10 @@ public class TableDownload {
         timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
         timeColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<Download, Integer> durationColumn = new TableColumn<>("Dauer");
-        durationColumn.setCellValueFactory(new PropertyValueFactory<>("duration"));
-        durationColumn.getStyleClass().add("alignCenterLeft");
+        final TableColumn<Download, Integer> durationColumn = new TableColumn<>("Dauer [min]");
+        durationColumn.setCellFactory(cellFactoryDuration);
+        durationColumn.setCellValueFactory(new PropertyValueFactory<>("durationMinute"));
+        durationColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<Download, Boolean> hdColumn = new TableColumn<>("HD");
         hdColumn.setCellValueFactory(new PropertyValueFactory<>("hd"));
@@ -498,4 +499,33 @@ public class TableDownload {
         };
         return cell;
     };
+
+    private Callback<TableColumn<Download, Integer>, TableCell<Download, Integer>> cellFactoryDuration
+            = (final TableColumn<Download, Integer> param) -> {
+
+        final TableCell<Download, Integer> cell = new TableCell<>() {
+
+            @Override
+            public void updateItem(Integer item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (item == null || empty) {
+                    setGraphic(null);
+                    setText(null);
+                    return;
+                }
+
+                if (item == 0) {
+                    setGraphic(null);
+                    setText(null);
+                } else {
+                    setGraphic(null);
+                    setText(item + "");
+                }
+
+            }
+        };
+        return cell;
+    };
+
 }

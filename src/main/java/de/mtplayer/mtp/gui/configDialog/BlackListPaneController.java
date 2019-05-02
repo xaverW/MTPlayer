@@ -48,14 +48,12 @@ public class BlackListPaneController extends AnchorPane {
     private final Label lblDays = new Label("");
 
     BooleanProperty accordionProp = ProgConfig.CONFIG_DIALOG_ACCORDION.getBooleanProperty();
-    IntegerProperty propSize = ProgConfig.SYSTEM_BLACKLIST_FILMSIZE.getIntegerProperty();
-    IntegerProperty propDay = ProgConfig.SYSTEM_BLACKLIST_SHOW_ONLY_DAYS.getIntegerProperty();
+    IntegerProperty propSize = ProgConfig.SYSTEM_BLACKLIST_MIN_FILM_DURATION.getIntegerProperty();
+    IntegerProperty propDay = ProgConfig.SYSTEM_BLACKLIST_MAX_FILM_DAYS.getIntegerProperty();
     BooleanProperty propGeo = ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_GEO.getBooleanProperty();
     BooleanProperty propAbo = ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.getBooleanProperty();
     BooleanProperty propFuture = ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_FUTURE.getBooleanProperty();
     IntegerProperty selectedTab = ProgConfig.SYSTEM_CONFIG_DIALOG_BLACKLIST;
-
-    private final int SIZE_MAX = 100;
 
     private final Stage stage;
 
@@ -161,23 +159,32 @@ public class BlackListPaneController extends AnchorPane {
 
 
         gridPane.add(new Label(" "), 0, ++row);
-        gridPane.add(new Label("keine kurzen Filme anzeigen:"), 0, ++row);
-        gridPane.add(slSize, 0, ++row);
-        gridPane.add(lblSize, 1, row);
-        gridPane.add(btnHelpSize, 2, row);
-
-        gridPane.add(new Label(" "), 0, ++row);
         gridPane.add(new Label("nur aktuelle Filme anzeigen:"), 0, ++row);
         gridPane.add(slDays, 0, ++row);
         gridPane.add(lblDays, 1, row);
         gridPane.add(btnHelpDays, 2, row);
 
+        gridPane.add(new Label(" "), 0, ++row);
+        gridPane.add(new Label("keine kurzen Filme anzeigen:"), 0, ++row);
+        gridPane.add(slSize, 0, ++row);
+        gridPane.add(lblSize, 1, row);
+        gridPane.add(btnHelpSize, 2, row);
+
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(), PColumnConstraints.getCcComputedSizeAndHgrow());
     }
 
     private void initDays() {
+        slDays.setMin(0);
+        slDays.setMax(ProgConst.SYSTEM_BLACKLIST_MAX_FILM_DAYS);
+        slDays.setShowTickLabels(false);
+        slDays.setMajorTickUnit(10);
+        slDays.setBlockIncrement(10);
+
+        slDays.valueProperty().bindBidirectional(propDay);
+        slDays.valueProperty().addListener((observable, oldValue, newValue) -> setValueSlider());
+
         slSize.setMin(0);
-        slSize.setMax(SIZE_MAX);
+        slSize.setMax(ProgConst.SYSTEM_BLACKLIST_MIN_FILM_DURATION);
         slSize.setShowTickLabels(false);
         slSize.setMajorTickUnit(10);
         slSize.setBlockIncrement(10);
@@ -185,14 +192,6 @@ public class BlackListPaneController extends AnchorPane {
         slSize.valueProperty().bindBidirectional(propSize);
         slSize.valueProperty().addListener((observable, oldValue, newValue) -> setValueSlider());
 
-        slDays.setMin(0);
-        slDays.setMax(ProgConst.LOAD_FILMS_MAX_DAYS_MAX);
-        slDays.setShowTickLabels(false);
-        slDays.setMajorTickUnit(10);
-        slDays.setBlockIncrement(10);
-
-        slDays.valueProperty().bindBidirectional(propDay);
-        slDays.valueProperty().addListener((observable, oldValue, newValue) -> setValueSlider());
         setValueSlider();
     }
 

@@ -22,6 +22,7 @@ import com.fasterxml.jackson.core.JsonToken;
 import de.mtplayer.mLib.tools.InputStreamProgressMonitor;
 import de.mtplayer.mLib.tools.MLHttpClient;
 import de.mtplayer.mLib.tools.ProgressMonitorInputStream;
+import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
@@ -56,10 +57,10 @@ public class ReadFilmlist {
 
     private final EventListenerList listeners = new EventListenerList();
     private double progress = 0;
-    private long millisecondsToLoadFilms = 0;
     private Map<String, Integer> filmsPerChannelFound = new TreeMap<>();
     private Map<String, Integer> filmsPerChannelBlocked = new TreeMap<>();
-    private Map<String, Integer> filmsPerChannelBlockedDate = new TreeMap<>();
+    private Map<String, Integer> filmsPerDateBlocked = new TreeMap<>();
+    private Map<String, Integer> filmsPerDurationBlocked = new TreeMap<>();
 
     public void addAdListener(ListenerFilmlistLoad listener) {
         listeners.add(ListenerFilmlistLoad.class, listener);
@@ -68,11 +69,16 @@ public class ReadFilmlist {
     /*
     Hier wird die Filmliste tatsächlich geladen (von Datei/URL)
      */
+    public void readFilmlist(String sourceFileUrl, final Filmlist filmlist) {
+        readFilmlist(sourceFileUrl, filmlist, ProgConfig.SYSTEM_LOAD_FILMLIST_MAX_DAYS.getInt());
+    }
+
     public void readFilmlist(String sourceFileUrl, final Filmlist filmlist, int loadFilmsNumberDays) {
 
         filmsPerChannelFound.clear();
         filmsPerChannelBlocked.clear();
-        filmsPerChannelBlockedDate.clear();
+        filmsPerDateBlocked.clear();
+        filmsPerDurationBlocked.clear();
 
         List<String> logList = new ArrayList<>();
         logList.add("");
@@ -83,7 +89,6 @@ public class ReadFilmlist {
             notifyStart(sourceFileUrl); // für die Progressanzeige
 
             filmlist.clear();
-            checkDaysLoadingFilms(loadFilmsNumberDays);
 
             if (sourceFileUrl.startsWith("http")) {
                 // URL laden
@@ -150,13 +155,29 @@ public class ReadFilmlist {
             list.add(PStringUtils.increaseString(KEYSIZE, "=> Summe") + ": " + sumFilms);
         }
 
-        if (!filmsPerChannelBlockedDate.isEmpty()) {
+        if (!filmsPerDateBlocked.isEmpty()) {
             list.add(PLog.LILNE3);
-            list.add("== nach Datum geblockte Filme ==");
+            final int date = ProgConfig.SYSTEM_LOAD_FILMLIST_MAX_DAYS.getInt();
+            list.add("== nach Datum geblockte Filme (max. " + date + " Tage) ==");
 
             sumFilms = 0;
-            filmsPerChannelBlockedDate.keySet().stream().forEach(key -> {
-                int found = filmsPerChannelBlockedDate.get(key);
+            filmsPerDateBlocked.keySet().stream().forEach(key -> {
+                int found = filmsPerDateBlocked.get(key);
+                sumFilms += found;
+                list.add(PStringUtils.increaseString(KEYSIZE, key) + ": " + found);
+            });
+            list.add("--");
+            list.add(PStringUtils.increaseString(KEYSIZE, "=> Summe") + ": " + sumFilms);
+        }
+
+        if (!filmsPerDurationBlocked.isEmpty()) {
+            list.add(PLog.LILNE3);
+            final int dur = ProgConfig.SYSTEM_LOAD_FILMLIST_MIN_DURATION.getInt();
+            list.add("== nach Filmlänge geblockte Filme (mind. " + dur + " min.) ==");
+
+            sumFilms = 0;
+            filmsPerDurationBlocked.keySet().stream().forEach(key -> {
+                int found = filmsPerDurationBlocked.get(key);
                 sumFilms += found;
                 list.add(PStringUtils.increaseString(KEYSIZE, key) + ": " + found);
             });
@@ -181,6 +202,9 @@ public class ReadFilmlist {
     private void readData(JsonParser jp, Filmlist filmlist) throws IOException {
         JsonToken jsonToken;
         ArrayList listChannel = LoadFactory.getSenderListNotToLoad();
+        final long loadFilmsMaxMilliSeconds = getDaysLoadingFilms();
+        final int loadFilmsMinDuration = ProgConfig.SYSTEM_LOAD_FILMLIST_MIN_DURATION.getInt();
+
 
         if (jp.nextToken() != JsonToken.START_OBJECT) {
             throw new IllegalStateException("Expected data to start with an Object");
@@ -227,9 +251,14 @@ public class ReadFilmlist {
                 }
 
                 film.init(); // damit wird auch das Datum! gesetzt
-                if (millisecondsToLoadFilms > 0 && !checkDate(film)) {
+                if (loadFilmsMaxMilliSeconds > 0 && !checkDate(film, loadFilmsMaxMilliSeconds)) {
                     // wenn das Datum nicht passt, nicht laden
-                    countFilm(filmsPerChannelBlockedDate, film);
+                    countFilm(filmsPerDateBlocked, film);
+                    continue;
+                }
+                if (loadFilmsMinDuration > 0 && !checkDuration(film, loadFilmsMinDuration)) {
+                    // wenn das Datum nicht passt, nicht laden
+                    countFilm(filmsPerDurationBlocked, film);
                     continue;
                 }
 
@@ -306,11 +335,12 @@ public class ReadFilmlist {
         }
     }
 
-    private void checkDaysLoadingFilms(long days) {
+    private long getDaysLoadingFilms() {
+        final long days = ProgConfig.SYSTEM_LOAD_FILMLIST_MAX_DAYS.getInt();
         if (days > 0) {
-            millisecondsToLoadFilms = System.currentTimeMillis() - TimeUnit.MILLISECONDS.convert(days, TimeUnit.DAYS);
+            return System.currentTimeMillis() - TimeUnit.MILLISECONDS.convert(days, TimeUnit.DAYS);
         } else {
-            millisecondsToLoadFilms = 0;
+            return 0;
         }
     }
 
@@ -356,11 +386,25 @@ public class ReadFilmlist {
         }
     }
 
-    private boolean checkDate(Film film) {
+    private boolean checkDate(Film film, long loadFilmsLastSeconds) {
         // true wenn der Film angezeigt werden kann!
         try {
             if (film.filmDate.getTime() != 0) {
-                if (film.filmDate.getTime() < millisecondsToLoadFilms) {
+                if (film.filmDate.getTime() < loadFilmsLastSeconds) {
+                    return false;
+                }
+            }
+        } catch (final Exception ex) {
+            PLog.errorLog(495623014, ex);
+        }
+        return true;
+    }
+
+    private boolean checkDuration(Film film, int loadFilmsMinDuration) {
+        // true wenn der Film angezeigt werden kann!
+        try {
+            if (film.getDurationMinute() != 0) {
+                if (film.getDurationMinute() < loadFilmsMinDuration) {
                     return false;
                 }
             }

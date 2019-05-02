@@ -63,7 +63,7 @@ public class FilmXml extends Data<FilmXml> {
             "",
             "Datum",
             "Zeit",
-            "Dauer",
+            "Dauer [min]",
             "Größe [MB]",
             "HD",
             "UT",
