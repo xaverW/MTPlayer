@@ -109,8 +109,8 @@ public class PaneConfigController extends AnchorPane {
         TitledPane tpConfig = new TitledPane("Allgemein", vBox);
         result.add(tpConfig);
 
-        final RadioButton rbWithOutSuff = new RadioButton("Keine Dateien mit diesem Suffix (z.B.: txt,xml,jpg");
-        final RadioButton rbWithSuff = new RadioButton("Nur Dateien mit diesem Suffix  (z.B.: mp4,flv,m4v");
+        final RadioButton rbWithOutSuff = new RadioButton("keine Dateien mit diesem Suffix (z.B.: txt,xml,jpg");
+        final RadioButton rbWithSuff = new RadioButton("nur Dateien mit diesem Suffix  (z.B.: mp4,flv,m4v");
 
         final Button btnHelp = PButton.helpButton(stage,
                 "Mediensammlungen verwalten", HelpText.MEDIA_COLLECTION);

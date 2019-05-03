@@ -390,39 +390,51 @@ public class HelpText {
             "fest zugeordnet werden (z.B. der Browser \"Firefox\").";
 
     public static final String MEDIA_DIALOG = "Hier kann eine Mediensammlung angelegt werden. Vor dem " +
-            "Download eines Films, kann dieser mit der Mediensammlung abgeglichen werden. So können doppelte " +
-            "Downloads vermieden werden. Im Tab \"Filme\" und Tab \"Download\" kann " +
-            "mit der rechten Maustaste auf einen Film: \"Titel in der Mediensammlung suchen\" " +
-            "nach dem Filmtitel gesucht werden." +
-            PConst.LINE_SEPARATORx3 +
-            "Dazu werden Ordner mit Medien angegeben, die das Programm absucht. " +
-            "Die angegebenen Pfade zum Durchsuchen, werden beim Programmstart " +
+            "Download eines Films, kann der Filmtitel mit der Mediensammlung abgeglichen werden. So können doppelte " +
+            "Downloads vermieden werden." +
+            PConst.LINE_SEPARATORx2 +
+
+            "Hier im Konfig-Dialog werden Ordner mit Medien angegeben, die das Programm dann absucht." +
+            PConst.LINE_SEPARATORx2 +
+
+            "Die angegebenen Pfade der \"Internen Medien\", werden beim Programmstart " +
             "abgesucht, diese müssen also verfügbar sein. Dafür ist der aktuelle " +
             "Bestand an Filmen auch in der MedienDB enthalten." +
-            PConst.LINE_SEPARATOR +
-            "Externe Medien werden nur beim Anlegen abgesucht. " +
-            "Deren Inhalt an Medien steht dauerhaft im Programm  und " +
-            "bei der Suche in der Mediensammlung zur Verfügung. " +
-            "Diese müssen also beim Programmstart nicht vorhanden sein.";
-
-    public static final String MEDIA_COLLECTION = "\"Keine Dateien mit diesem Suffix\": Dateien mit einem dort " +
-            "angegebenen Suffix werden nicht in den Index aufgenommen." +
             PConst.LINE_SEPARATORx2 +
-            "\"Nur Dateien mit diesem Suffix\": Da werden dann genau die Dateien " +
-            "genommen, auf die das zutrifft." +
+
+            "Externe Medien werden nur beim Anlegen abgesucht. " +
+            "Deren Inhalt an Mediendateien steht dauerhaft im Programm und " +
+            "bei der Suche in der Mediensammlung zur Verfügung. " +
+            "Diese müssen also beim Programmstart nicht vorhanden sein." +
+            PConst.LINE_SEPARATORx3 +
+
+            "Im Tab \"Filme\" und im Tab \"Download\" kann mit einem Klick " +
+            "mit der rechten Maustaste auf einen Film: \"Titel in der Mediensammlung suchen\" " +
+            "nach dem Filmtitel gesucht werden. Ein Dialog listet dann gefundene Filmtitel aus der Mediensammlung auf.";
+
+
+    public static final String MEDIA_COLLECTION = "\"Keine Dateien mit diesem Suffix\"\n" +
+            "Dateien mit einem dort angegebenen Suffix werden nicht in den Index aufgenommen." +
+
+            PConst.LINE_SEPARATORx2 +
+            "\"Nur Dateien mit diesem Suffix\"\n" +
+            "Es werden dann nur Dateien mit diesm Suffix genommen." +
+
             PConst.LINE_SEPARATORx2 +
             "Suffixe können durch \"Komma\" getrennt angegeben werden: " +
             "\"txt,xml\" besagt, Dateien die mit \".txt\" oder \".xml\" enden " +
             "werden nicht - oder nur diese werden - in den Index " +
             "aufgenommen." +
             PConst.LINE_SEPARATORx2 +
-            "\"keine versteckten Dateien suchen\" besagt, dass eben diese Dateien nicht in die Mediensammlung " +
+            "\"keine versteckten Dateien suchen\"\n" +
+            "besagt, dass eben diese Dateien nicht in die Mediensammlung " +
             "aufgenommen werden, unabhängig davon ob die Datei in das Schema oben passen würde.";
 
 
     public static final String EXTERN_MEDIA_COLLECTION = "Externe Mediensammlungen werden nicht bei " +
             "jedem Programmstart neu eingelesen. Die können dadurch auf externen Medien liegen und " +
-            "müssen nur einmal eingelesen werden. Hier können externe Mediensammlungen verwaltet werden:" + PConst.LINE_SEPARATOR +
+            "müssen nur einmal eingelesen werden.\n" +
+            "Hier können externe Mediensammlungen verwaltet werden: " +
             "Neue anlegen, aktualisieren oder auch wieder löschen." +
             "";
     public static final String INTERN_MEDIA_COLLECTION = "Die hier angegebenen Ordner werden bei jedem Programmstart " +
