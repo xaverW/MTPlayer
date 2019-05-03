@@ -31,12 +31,15 @@ public class FilmMenu {
     final private ProgData progData;
     private SelectedFilter storedFilter = null;
     private SelectedFilter storedBookmarkFilter = null;
-    private static final String FILM_PLAY_TEXT = "Film abspielen";
-    private static final String FILM_RECORD_TEXT = "Filme aufzeichnen";
+    private static final String FILM_PLAY_TEXT = "markierten Film abspielen";
+    private static final String FILM_RECORD_TEXT = "markierte Filme aufzeichnen";
     private static final String FILM_BOOKMARK_TEXT = "Bookmarks für die markierten Filme anlegen";
     private static final String FILM_DEL_BOOKMARK_TEXT = "Bookmarks für die markierten Filme löschen";
-    private static final String FILM_FILTER_BOOKMARK_TEXT = "alle angelegte Bookmarks anzeigen";
     private static final String FILM_DEL_ALL_BOOKMARK_TEXT = "alle angelegten Bookmarks löschen";
+    private static final String FILM_FILTER_BOOKMARK_TEXT = "alle angelegte Bookmarks anzeigen\n\n" +
+            "der zweite Klick stellt den\n" +
+            "eingestellten Filter wieder her";
+
     BooleanProperty boolFilterOn = ProgConfig.FILM_GUI_FILTER_DIVIDER_ON.getBooleanProperty();
     BooleanProperty boolInfoOn = ProgConfig.FILM_GUI_DIVIDER_ON.getBooleanProperty();
 
@@ -68,10 +71,10 @@ public class FilmMenu {
                 new ToolBarButton(vBox, "Bookmarks anlegen", FILM_BOOKMARK_TEXT, new ProgIcons().FX_ICON_TOOLBAR_FILM_BOOKMARK);
         final ToolBarButton btDelBookmark =
                 new ToolBarButton(vBox, "Bookmarks löschen", FILM_DEL_BOOKMARK_TEXT, new ProgIcons().FX_ICON_TOOLBAR_FILM_DEL_BOOKMARK);
-        final ToolBarButton btFilterBookmakr =
-                new ToolBarButton(vBox, "Bookmarks anzeigen", FILM_FILTER_BOOKMARK_TEXT, new ProgIcons().FX_ICON_TOOLBAR_FILM_BOOKMARK_FILTER);
         final ToolBarButton btDelAllBookmark =
                 new ToolBarButton(vBox, "alle Bookmarks löschen", FILM_DEL_ALL_BOOKMARK_TEXT, new ProgIcons().FX_ICON_TOOLBAR_FILM_DEL_ALL_BOOKMARK);
+        final ToolBarButton btFilterBookmakr =
+                new ToolBarButton(vBox, "Bookmarks anzeigen", FILM_FILTER_BOOKMARK_TEXT, new ProgIcons().FX_ICON_TOOLBAR_FILM_BOOKMARK_FILTER);
 
         btPlay.setOnAction(a -> progData.filmGuiController.playFilmUrl());
         btSave.setOnAction(a -> progData.filmGuiController.saveTheFilm());
