@@ -28,22 +28,24 @@ public class HelpText {
             "für Dateinamen erfüllt sind." +
             PConst.LINE_SEPARATOR +
             PConst.LINE_SEPARATOR +
+            "Ein Doppelklick auf ein Wort im Suchtext stellt dieses frei. So kann man den Suchtext schnell " +
+            "auf den entscheidenden Begriff reduzieren. Der Button rechts daneben, stellt den ursprünglichen " +
+            "Suchtext weider her." +
+            PConst.LINE_SEPARATOR +
+            PConst.LINE_SEPARATOR +
             "Groß- und Kleinschreibung wird beim Suchen " +
             "nicht beachtet." +
             PConst.LINE_SEPARATOR +
             PConst.LINE_SEPARATOR +
-            "In dem Filter kann auch mit regulären Ausdrücken (RegExp)  " +
+            "In dem Filter kann auch mit regulären Ausdrücken (RegExp) " +
             "gesucht werden. Diese müssen mit \"#:\" eingeleitet " +
-            "werden." +
+            "werden. Auch bei den regulären Ausdrücken spielt Groß- und " +
+            "Kleinschreibung keine Rolle." +
             PConst.LINE_SEPARATOR +
             PConst.LINE_SEPARATOR +
             "#:Abend.*" + PConst.LINE_SEPARATOR +
             "Das bedeutet z.B.: Es werden alle Dateien gefunden, die " +
-            "mit \"Abend\" beginnen." +
-            PConst.LINE_SEPARATOR +
-            PConst.LINE_SEPARATOR +
-            "Auch bei den regulären Ausdrücken spielt Groß- und " +
-            "Kleinschreibung keine Rolle." +
+            "mit \"Abend\" beginnen. " +
             PConst.LINE_SEPARATOR +
             PConst.LINE_SEPARATOR +
             "https://de.wikipedia.org/wiki/Regul%C3%A4rer_Ausdruck";

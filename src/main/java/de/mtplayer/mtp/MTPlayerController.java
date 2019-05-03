@@ -31,6 +31,7 @@ import de.mtplayer.mtp.gui.configDialog.ConfigDialogController;
 import de.mtplayer.mtp.gui.dialog.AboutDialogController;
 import de.mtplayer.mtp.gui.dialog.ResetDialogController;
 import de.mtplayer.mtp.gui.mediaConfig.MediaConfigDialogController;
+import de.mtplayer.mtp.gui.mediaDialog.MediaDialogController;
 import de.p2tools.p2Lib.guiTools.POpen;
 import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -158,16 +159,19 @@ public class MTPlayerController extends StackPane {
 
 
         // Menü
-        final MenuItem miConfig = new MenuItem("Einstellungen");
+        final MenuItem miConfig = new MenuItem("Einstellungen des Programms");
         miConfig.setOnAction(e -> new ConfigDialogController());
 
-        final MenuItem miMedia = new MenuItem("Mediensammlung");
-        miMedia.setOnAction(e -> new MediaConfigDialogController());
+        final MenuItem miMediaCollectionConfig = new MenuItem("Einstellungen der Mediensammlung");
+        miMediaCollectionConfig.setOnAction(e -> new MediaConfigDialogController());
+
+        final MenuItem miSearchMediaCollection = new MenuItem("Mediensammlung durchsuchen");
+        miSearchMediaCollection.setOnAction(a -> new MediaDialogController(""));
 
         final MenuItem miQuit = new MenuItem("Beenden");
         miQuit.setOnAction(e -> new ProgQuit().quit(true, false));
 
-        final MenuItem miAbout = new MenuItem("Über dieses Programm");
+        final MenuItem miAbout = new MenuItem("über dieses Programm");
         miAbout.setOnAction(event -> new AboutDialogController(progData));
 
         final MenuItem miLog = new MenuItem("Logdatei öffnen");
@@ -200,7 +204,8 @@ public class MTPlayerController extends StackPane {
         menuButton.getStyleClass().add("btnFunction");
         menuButton.setText("");
         menuButton.setGraphic(new ProgIcons().FX_ICON_TOOLBAR_MENU_TOP);
-        menuButton.getItems().addAll(miConfig, miMedia, mHelp, new SeparatorMenuItem(), miQuit);
+        menuButton.getItems().addAll(miConfig, miMediaCollectionConfig, miSearchMediaCollection, mHelp,
+                new SeparatorMenuItem(), miQuit);
     }
 
     private void selPanelFilm() {

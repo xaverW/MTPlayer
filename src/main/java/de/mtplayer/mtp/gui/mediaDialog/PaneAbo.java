@@ -37,13 +37,13 @@ import java.util.regex.Pattern;
 public class PaneAbo extends ScrollPane {
 
     private Label lblGesamtAbo = new Label();
-    private  Label lblTrefferAbo = new Label();
-    private  TableView<HistoryData> tableAbo = new TableView();
-    private  TextField txtTitleAbo = new TextField();
-    private   TextField txtUrlAbo = new TextField();
+    private Label lblTrefferAbo = new Label();
+    private TableView<HistoryData> tableAbo = new TableView();
+    private TextField txtTitleAbo = new TextField();
+    private TextField txtUrlAbo = new TextField();
 
-    private  ProgData progData = ProgData.getInstance();
-    private  String searchStr = "";
+    private ProgData progData = ProgData.getInstance();
+    private String searchStr = "";
 
     public PaneAbo(Stage stage) {
         initPanel();

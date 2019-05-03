@@ -27,10 +27,7 @@ import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PGuiTools;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
@@ -112,6 +109,7 @@ public class MediaDialogController extends PDialog {
         });
 
         btnReset.setGraphic(new ProgIcons().ICON_BUTTON_RESET);
+        btnReset.setTooltip(new Tooltip("Suchtext wieder herstellen"));
         btnReset.setOnAction(a -> txtSearch.setText(searchStr));
         btnOk.setOnAction(a -> close());
 
