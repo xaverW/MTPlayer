@@ -17,6 +17,7 @@
 
 package de.mtplayer.mtp.controller.history;
 
+import de.mtplayer.mtp.controller.data.film.FilmlistFactory;
 import de.p2tools.p2Lib.tools.log.PLog;
 
 import java.io.IOException;
@@ -61,6 +62,33 @@ public class HistoryWorker {
             String line;
             while ((line = in.readLine()) != null) {
                 final HistoryData historyData = HistoryData.getHistoryDataFromLine(line);
+
+
+                // ==================================================================
+                // todo --> kommt die nächste Version wieder raus,
+                // da können Problematische Zeichen enthalten sein
+                // können aber keine Fehler mehr nachfolgen
+
+                // 0,2s bei 80_000 Einträgen
+                // PDuration.counterStart("readHistoryDataFromFile");
+
+                // String th = historyData.getTheme();
+                // String ti = historyData.getTitle();
+
+                historyData.setTheme(FilmlistFactory.cleanUnicode(historyData.getTheme()));
+                historyData.setTitle(FilmlistFactory.cleanUnicode(historyData.getTitle()));
+
+                // if (!th.equals(historyData.getTheme())) {
+                //   System.out.println("Thema: " + th + "   " + historyData.getTheme());
+                // }
+                // if (!ti.equals(historyData.getTitle())) {
+                //   System.out.println("Titel: " + ti + "    " + historyData.getTitle());
+                // }
+
+                // PDuration.counterStop("readHistoryDataFromFile");
+                // ==================================================================
+
+
                 dataList.add(historyData);
             }
 

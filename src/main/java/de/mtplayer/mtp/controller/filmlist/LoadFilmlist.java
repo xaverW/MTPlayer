@@ -295,7 +295,7 @@ public class LoadFilmlist {
             findAndMarkNewFilms(logList, progData.filmlist);
 
             logList.add("Unicode-Zeichen korrigieren");
-            FilmlistFactory.cleanFaultyCharacter();
+            FilmlistFactory.cleanFaultyCharacterFilmlist();
 
             logList.add("");
             logList.add("Filme schreiben (" + progData.filmlist.size() + " Filme) :");
