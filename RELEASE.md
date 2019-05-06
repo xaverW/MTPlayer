@@ -1,6 +1,24 @@
 ## MTPlayer
 
 
+**Release 7**
+
+* Erkennung neuer Filme (wenn Filme nicht in jeder neuen Filmliste enthalten sind), wurde verbessert
+* Ändern von Abonamen (auch mehre gleichzeitig) und Umbenennen von Sets jetzt möglich
+* Filmdownload löschen: Dann kann jetzt auch die Info- und Untertiteldatei mit gelöscht werden
+* Tab Abo: Button zum Anlegen eines neuen Abos
+* Tab Abo: Filmfilter kann man nach einem Abo setzen und ein Abo kann aus dem aktuellen Filmfilter aktualisiert werden (damit lassen sich Abos optimieren)
+* Tab Film, Tab Download: Zeilenhöhe der Tabelle läßt sich verkleinern -> Einstellungen
+* Bookmarks für Filme lassen sich anlegen, alle Filme mit Bookmark können angezeigt werden
+* Check beim Programmstart auf zu wenig Speicher
+* Fehlerhafte Zeichen in der Filmliste werden abgefangen (Java-Problem unter Linux)
+* Blacklist wird nach „Trefferzahl“ sortiert (ist etwas performanter)
+* Anzeige der Filmlänge wurde auf Minuten geändert
+* Beim Laden der Filmliste können bereits Filme mit Mindestlänge kleiner als X gefiltert werden -> Einstellungen (dadurch kann die Filmliste deutlich verkleinert werden)
+* an vielen weitern Stellen gabs kleine Verbesserungen und Fehler und ungereimtheiten wurden entfernt
+
+<br />
+
 
 **Release 6**
 
