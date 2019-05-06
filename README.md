@@ -36,10 +36,12 @@ Alle Einstellungen können nicht übernommen werden da sich einiges geändert ha
 Unterstützt wird Windows (7, 8, 10) und Linux. 
 
 *** bis Programmversion 6 ***
+
 Das Programm benötigt unter Windows und Linux eine aktuelle Java-VM ab Version: 1.8 (= Java 8, Java 9, Java 10).
 Für Linux-Benutzer wird OpenJDK8 empfohlen. Außerdem benötigen Linux Benutzer die aktuelle Version von JavaFX (OpenJFX). OpenJFX ist aber nur für OpenJDK8 ohne Probleme zu installieren. Soll es Java 10 sein, wäre das Oracle Java SE 10 eine Alternative (und das bringt JavaFX schon mit).
 
 *** ab Programmversion 7 ***
+
 Das Programm benötigt unter Windows und Linux eine aktuelle Java-VM ab Version: Java 11.
 Für Linux-Benutzer wird OpenJDK11 empfohlen. (FX-Runtime bringt das Programm bereits mit und muss nicht installiert werden).
 
