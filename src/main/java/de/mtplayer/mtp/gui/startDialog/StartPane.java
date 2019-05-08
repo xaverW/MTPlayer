@@ -66,11 +66,11 @@ public class StartPane {
                 "und speichern." +
 
                 PConst.LINE_SEPARATORx2 +
-                "6) Hier lassen sich einzelne Filme vormerken," + PConst.LINE_SEPARATOR +
-                "die Vormerkung wieder löschen" + PConst.LINE_SEPARATOR +
-                "und vorgemerkte Filme anzeigen." + PConst.LINE_SEPARATOR +
-                "Zuletzt werden alle Vormerkungen" + PConst.LINE_SEPARATOR +
-                "wieder gelöscht.");
+                "6) Hier lassen sich einzelne Filme" + PConst.LINE_SEPARATOR +
+                "vormerken, die Vormerkung für" + PConst.LINE_SEPARATOR +
+                "einzelne oder alle Filme" + PConst.LINE_SEPARATOR +
+                "wieder löschen und zuletzt werden" + PConst.LINE_SEPARATOR +
+                "alle vorgemerkte Filme angezeigt.");
 
         hBox.getChildren().add(text);
 

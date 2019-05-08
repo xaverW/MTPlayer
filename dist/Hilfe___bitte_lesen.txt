@@ -2,33 +2,37 @@
 ============================================================
 	Infos und Hilfe
 ============================================================
-Infos und Hilfe zur Installation befindet sich
-im Ordner "Info" in der Datei: README.txt
+Infos und Hilfe zur Installation und Verwendung des Programms
+befinden sich im Ordner "Info" in der Datei: README.txt
+und auf der Website:
+
+www.p2tools.de/mtplayer/
 
 
+============================================================
+	Download des Programms
+============================================================
 Das Programm wird in drei Paketen angeboten. Diese
 unterscheiden sich nur im "Zubehör", das Programm
 selbst ist in allen Paketen identisch. Das Programm
-braucht eine Java-Laufzeitumgebung ab JRE11.
+braucht eine Java-Laufzeitumgebung ab Java11.
 
-
-
-============================================================
+------------------------------------------------------------
 	MTPlayer-XX.zip
-============================================================
-Das Programmpaket "MTPlayer-XX.zip" bring nur das Programm
+------------------------------------------------------------
+Das Programmpaket "MTPlayer-XX.zip" bringt nur das Programm
 und das benötigte "Zubehör" aber kein Java mit. Auf dem
-Rechner muss eine Java-Laufzeitumgebung ab JRE11 installiert
+Rechner muss eine Java-Laufzeitumgebung ab Java11 installiert
 sein. Dieses Programmpaket kann auf allen Betriebssystemen
 verwendet werden. Es bringt Startdateien für Linux und
 Windows mit.
 
 Der Programmaufruf aus der Konsole (im Programmordner)
 ist bei Linux:
-	# java -jar ./MTPlayer.jar
+# java -jar ./MTPlayer.jar
 
 oder bei Windows:
-	# java -jar MTPlayer.jar
+# java -jar MTPlayer.jar
 
 
 Ist die Laufzeitumgebung nicht richtig installiert muss der
@@ -36,24 +40,23 @@ Pfad dorthin mit angegeben werden:
 
 Der Programmaufruf aus der Konsole (im Programmordner)
 ist bei Linux:
-	# /PFAD_ZU_JAVA/java -jar ./MTPlayer.jar
+# /PFAD_ZU_JAVA/java -jar ./MTPlayer.jar
 
 oder bei Windows:
-	# PFAD_ZU_JAVA\java.exe -jar MTPlayer.jar
+# PFAD_ZU_JAVA\javaw.exe -jar MTPlayer.jar
 
 
 
-
-============================================================
+------------------------------------------------------------
 	MTPlayer-XX__Linux+Java.zip
 	MTPlayer-XX__Win+Java.zip
-============================================================
+------------------------------------------------------------
 Die Programmpakete "MTPlayer-XX__Linux+Java.zip" und
 "MTPlayer-XX__Win+Java.zip" bringen die Java-Laufzeitumgebung
 mit und sind nur für das angegebene Betriebssystem: Linux
 oder Windows. Es muss kein Java auf dem System installiert sein.
-(Die Java-Laufzeitumgebung liegt im Ordner "Java" und kommt von
-jdk.java.net/11).
+(Die Java-Laufzeitumgebung liegt im Ordner "Java" und kommt 
+von jdk.java.net).
 
 Die Startdatei "MTPlayer__Linux.sh" bzw. "MTPlayer__Windows.exe"
 startet das Programm MTPlayer in der mitgelieferten
@@ -61,16 +64,41 @@ Java-Laufzeitumgebung.
 
 Der Programmaufruf aus der Konsole (im Programmordner)
 ist bei Linux:
-	# ./Java/bin/java -jar ./MTPlayer.jar
+# ./Java/bin/java -jar ./MTPlayer.jar
 
 oder bei Windows:
-	# Java\bin\java.exe -jar MTPlayer.jar
+# Java\bin\java.exe -jar MTPlayer.jar
 
 
 Der Start mit einer **andern** Laufzeitumgebung aus der Konsole
 (im Programmordner) ist bei Linux:
-	# /PFAD_ZU_JAVA/java -jar ./MTPlayer.jar
+# /PFAD_ZU_JAVA/java -jar ./MTPlayer.jar
 
 oder bei Windows:
-	# PFAD_ZU_JAVA\java.exe -jar MTPlayer.jar
+# PFAD_ZU_JAVA\java.exe -jar MTPlayer.jar
+
+
+
+============================================================
+	Einen anderen Ordner für die Programmeinstellungen
+	verwenden (so können z.B. zwei Versionen des Programms
+	auf einem Rechner verwendet werden)
+============================================================
+
+Der Programmaufruf aus der Konsole (im Programmordner)
+
+	# java -jar MTPlayer.jar c:\temp
+	# PFAD_ZU_JAVA\java.exe -jar MTPlayer.jar c:\temp
+	# /PFAD_ZU_JAVA/java  -jar MTPlayer.jar /tmp
+
+	# java -jar MTPlayer.jar Einstellungen
+	# PFAD_ZU_JAVA\java.exe -jar MTPlayer.jar Einstellungen
+	# /PFAD_ZU_JAVA/java -jar MTPlayer.jar Einstellungen
+	
+Im ersten Fall (c:\temp oder bei Linux /tmp) verwendet das Programm für die 
+Einstellungen den absoluten Ordner “c:\temp” bzw. "/tmp", im zweiten Fall 
+wir der Ordner “Einstellungen” relativ zum Programmorder 
+verwendet. (So kann das Programm auch auf einem USB-Stick 
+verwendet werden.)
+
 

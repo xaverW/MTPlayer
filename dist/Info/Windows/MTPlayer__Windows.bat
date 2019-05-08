@@ -1,10 +1,11 @@
 :: Wenn man in den Einstellungen (nicht im Filter!!), das
-:: Laden der Filmliste auf die letzten 14 Tage reduziert,
-:: bekommt man eine Filmliste mit weniger als 18.000 
-:: Einträgen. Damit läßt sich das Programm leicht mit nur wenig
-:: Speicher starten, und ohne Einschränkung anwenden.
+:: Laden der Filmliste auf die letzten 25 Tage reduziert
+:: und die Minimale Filmlänge auf 5 min. setzt, 
+:: bekommt man eine Filmliste mit weniger als 15.000 
+:: Einträgen. Damit lässt sich das Programm mit sehr wenig
+:: Speicher starten, und auch ohne Einschränkung anwenden.
 :: Nachdem die Einstellungen geändert wurden, und
-:: MTPlayer neu gestartet wird, versuch es hiermit:
+:: MTPlayer neu gestartet wird, versuchen sie es hiermit:
  
 :: java -Xms128M -Xmx256M -jar ./MTPlayer.jar
 
@@ -14,8 +15,10 @@
 :: Das sind verschiedene Möglichkeiten das Programm
 :: zu starten, die anderen Aufrufe sind auskommentiert
 :: der Pfad zum Programm "PFAD" muss angepasst werden
-:: Durch Entfernen des "::" vor einer Zeile wird die Zeile als Befehl interpretiert.
-:: Durch Schreiben eines "::" zu Beginn einer Zeile wird diese nicht mehr als Befehl interpretiert.
+:: Durch Entfernen des "::" vor einer Zeile wird die 
+:: Zeile als Befehl interpretiert.
+:: Durch Schreiben eines "::" zu Beginn einer Zeile wird 
+:: diese nicht mehr als Befehl interpretiert.
 
 
 :: Start in einer extra Dos-Box die minimiert startet
@@ -25,11 +28,7 @@ start /min javaw -Xms128m -Xmx1024m -jar "C:\Users\PFAD\MTPlayer.jar"
 
 
 :: Start mit mehr Speicher für das Programm
-:: java -Xms128M -Xmx1G -jar "C:\Users\PFAD\MTPlayer.jar"
-
-
-:: Start mit noch mehr Speicher, falls neue Filmliste trotzdem nicht voll geladen werden kann
-:: java -Xms128M -Xmx1.5G -jar "C:\Users\PFAD\MTPlayer.jar
+:: java -Xms128M -Xmx2G -jar "C:\Users\PFAD\MTPlayer.jar"
 
 
 :: Start mit Pfad zu Java

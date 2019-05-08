@@ -47,7 +47,7 @@ anderen Programme werden mitgeliefert).
 Linux
 ------
 * Für Linux-Benutzer wird OpenJDK11 empfohlen (oder das Programmpaket
-das Java bereits enthält).
+das Java bereits enthält und so ohne Java-Installation auskommt).
 
 * Bei Linux muss der VLC Media Player, der flvstreamer (oder rtmpdump)
 und FFmpeg (oder avconv) durch die Paketverwaltung installiert werden.
@@ -104,7 +104,7 @@ MTPlayer startet nicht:
 =====================================================================
 
 * Java ist nicht oder nicht in der richtigen Version installiert
-(Java11, Java11+). Zum Java-Download: https://jdk.java.net/11/
+(Java11, Java11+). Zum Java-Download: https://jdk.java.net/
 
 * ZIP-Datei nicht entpackt: Die Programmdatei wurde direkt im
 ZIP-Archiv doppelgeklickt. Die ZIP-Datei muss erst entpackt werden, dazu
