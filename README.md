@@ -8,7 +8,7 @@ Das Programm MTPlayer ist eine Alternative zu meinem früheren Programm Mediathe
 
 <br />
 
-**Infos über das Programm**
+## Infos über das Programm
 
 Das Programm nutzt den Ordner ".p2Mtplayer" unter Linux und den versteckten Ordner "p2Mtplayer" unter Windows als Konfig-Ordner, es kann also parallel zu MediathekView benutzt werden. Man kann dem Programm auch einen Ordner für die Einstellungen mitgeben (und es z.B. auf einem USB-Stick verwenden):  
 java -jar MTPlayer.jar ORDNER 
@@ -20,7 +20,7 @@ https://www.p2tools.de/mtplayer/
 
 <br />
 
-**Datenübernahme aus MediathekView**
+*Datenübernahme aus MediathekView*
 
 Wer Einstellungen von MediathekView übernehmen will, muss aus dessen Config-Ordner (.mediathek3) diese Dateien in den neuen Config-Ordner kopieren:  
 history.txt  
@@ -31,17 +31,28 @@ Alle Einstellungen können nicht übernommen werden da sich einiges geändert ha
 
 <br />
 
-**Systemvoraussetzungen**
+## Systemvoraussetzungen
 
 Unterstützt wird Windows (7, 8, 10) und Linux. 
 
-***bis Programmversion 6***
+*bis Programmversion 6*
 
 Das Programm benötigt unter Windows und Linux eine aktuelle Java-VM ab Version: 1.8 (= Java 8, Java 9, Java 10).
 Für Linux-Benutzer wird OpenJDK8 empfohlen. Außerdem benötigen Linux Benutzer die aktuelle Version von JavaFX (OpenJFX). OpenJFX ist aber nur für OpenJDK8 ohne Probleme zu installieren. Soll es Java 10 sein, wäre das Oracle Java SE 10 eine Alternative (und das bringt JavaFX schon mit).
 
-***ab Programmversion 7***
+**ab Programmversion 7**
 
 Das Programm benötigt unter Windows und Linux eine aktuelle Java-VM ab Version: Java 11.
 Für Linux-Benutzer wird OpenJDK11 empfohlen. (FX-Runtime bringt das Programm bereits mit und muss nicht installiert werden).
+
+## Download
+
+Das Programm wird in drei Paketen angeboten. Diese unterscheiden sich nur im "Zubehör", das Programm selbst ist in allen Paketen identisch:
+
+- **MTPlayer-XX.zip**  
+Das Programmpaket bringt nur das Programm und die benötigten "Hilfsprogramme" aber kein Java mit. Auf dem Rechner muss eine Java-Laufzeitumgebung ab Java11 installiert sein. Dieses Programmpaket kann auf allen Betriebssystemen verwendet werden. Es bringt Startdateien für Linux und Windows mit.
+
+- **MTPlayer-XX__Linux+Java.zip**  
+**MTPlayer-XX__Win+Java.zip**  
+Diese Programmpakete bringen die Java-Laufzeitumgebung mit und sind nur für das angegebene Betriebssystem: Linux oder Windows. Es muss kein Java auf dem System installiert sein. (Die Java-Laufzeitumgebung liegt im Ordner "Java" und kommt von jdk.java.net).
 
