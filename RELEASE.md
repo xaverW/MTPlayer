@@ -7,13 +7,14 @@
 * Ändern von Abonamen (auch mehre gleichzeitig) und Umbenennen von Sets jetzt möglich
 * Filmdownload löschen: Jetzt kann auch die Info- und Untertiteldatei mit gelöscht werden
 * Tab Abo: Button zum Anlegen eines neuen Abos
-* Tab Abo: Der Filmfilter kann nach einem Abo gesetzt werden und ein Abo kann aus dem aktuellen Filmfilter aktualisiert werden (damit lassen sich Abos optimieren)
-* Tab Film, Tab Download: Zeilenhöhe der Tabelle lässt sich verkleinern -> Einstellungen
+* Tab Abo: Der Filter im Tab Filme kann nach einem Abo gesetzt werden und ein Abo kann aus dem aktuellen Filter im Tab Filme aktualisiert werden (damit lassen sich Abos leichter optimieren)
+* Tab Filme, Tab Downloads: Zeilenhöhe der Tabelle lässt sich verkleinern -> Einstellungen
 * Bookmarks für Filme lassen sich anlegen, alle Filme mit Bookmark können angezeigt werden
 * Check beim Programmstart auf zu wenig Speicher
 * Blacklist wird nach „Trefferzahl“ sortiert (ist etwas performanter)
 * Anzeige der Filmlänge wurde auf Minuten geändert
-* Beim Laden der Filmliste können bereits Filme mit Mindestlänge kleiner als X gefiltert werden -> Einstellungen (dadurch kann die Filmliste deutlich verkleinert werden)
+* Beim Laden der Filmliste können bereits Filme mit Mindestlänge kleiner als X (z.B. <5 min.) gefiltert werden -> Einstellungen (dadurch kann die Filmliste deutlich verkleinert werden)
+* neuer Menüpunkt: In der Mediensammlung suchen (die Suche lässt sich so auch direkt starten)
 * an vielen weiteren Stellen gab es kleine Verbesserungen und Fehler und Ungereimtheiten wurden entfernt
 
 <br />
@@ -36,7 +37,6 @@
 * einige Fehler konnten beseitigt werden
 * viele kleinere Änderungen die die Übersichtlichkeit und die Bedienung verbessern sollen (Danke für die vielen Vorschläge dazu)
 
-
 <br />
 
 
@@ -44,8 +44,8 @@
 
 * In bestimmten Kon­s­tel­la­ti­onen kam es zu hoher Prozessorlast
 
-
 <br />
+
 
 **Release 4**
 
@@ -57,8 +57,8 @@
 * Das Programm bekam einige optische Veränderungen und einige interne Verbesserungen und auch ein paar Fehler wurden bereinigt
 * Habs geschafft auch eine Anleitung zu schreiben: https://www.p2tools.de/mtplayer/manual/
 
-
 <br />
+
 
 **Release 3**
 
@@ -69,8 +69,8 @@
 * Viele kleinere Verbesserungen: Anzeige der Dialoge, Zeilenumbruch im Logfile unter Windows, Hilfetexte, Filterprofile, Mediensammlung (Anzeige der Filme pro Pfad jetzt auch bei den Internen Medien), ...
 * Auch ein paar Probleme beim Anlegen des Downloadpfads und beim Reset der Programmsets wurden behoben
 
-
 <br />
+
 
 **Release 2**
 
@@ -83,8 +83,8 @@
 Windows: p2Mtplayer  
 Linux: .p2Mtplayer
 
-
 <br />
+
 
 **Release 1-81**
 
@@ -92,15 +92,15 @@ Linux: .p2Mtplayer
 * Das Format des Log (Konsole und Logfile) wurde übersichtlicher gestaltet
 * Die Suche nach einem Programmupdate wurde geändert und auf die neue Website umgestellt
 
-
 <br />
+
 
 **Release 1-55**
 
 * Es gibt einen neuen Filter (in "nicht anzeigen"): "Zukunft", damit werden Filme in der Zukunft nicht angezeigt.
 
-
 <br />
+
 
 **Release 1-50**
 
@@ -108,8 +108,8 @@ Linux: .p2Mtplayer
 http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html  
 https://de.wikipedia.org/wiki/Java_Cryptography_Extension
 
-
 <br />
+
 
 **Release 1**
 
@@ -136,7 +136,6 @@ https://de.wikipedia.org/wiki/Java_Cryptography_Extension
 * Die Filmauflösung (HD, Hoch, Klein) für Abos kann jetzt direkt im Abo ausgewählt werden. Die Vorgabe im Set ist nur noch fürs Abspielen von Filmen oder für manuell gestartete Downloads zuständig.
 
 * An allen wichtigen Einstellungen oder Schaltern ist ein "Hilfebutton" mit Erklärungen zu der Funktion.
-
 
 <br />
 <br />
