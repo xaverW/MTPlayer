@@ -4,7 +4,7 @@
 **Release 7**
 
 * Erkennung neuer Filme (wenn Filme nicht in jeder neuen Filmliste enthalten sind), wurde verbessert
-* Ändern von Abonamen (auch mehre gleichzeitig) und Umbenennen von Sets jetzt möglich
+* Ändern von Abonamen (auch mehrere gleichzeitig) und Umbenennen von Sets jetzt möglich
 * Filmdownload löschen: Jetzt kann auch die Info- und Untertiteldatei mit gelöscht werden
 * Tab Abo: Button zum Anlegen eines neuen Abos
 * Tab Abo: Der Filter im Tab Filme kann nach einem Abo gesetzt werden und ein Abo kann aus dem aktuellen Filter im Tab Filme aktualisiert werden (damit lassen sich Abos leichter optimieren)
