@@ -13,7 +13,7 @@
 * Check beim Programmstart auf zu wenig Speicher
 * Blacklist wird nach „Trefferzahl“ sortiert (ist etwas performanter)
 * Anzeige der Filmlänge wurde auf Minuten geändert
-* Beim Laden der Filmliste können bereits Filme mit Mindestlänge kleiner als X (z.B. <5 min.) gefiltert werden -> Einstellungen (dadurch kann die Filmliste deutlich verkleinert werden)
+* Beim Laden der Filmliste können bereits Filme mit Mindestlänge kleiner als X (z.B. <5 min.) gefiltert werden (dadurch kann die Filmliste deutlich verkleinert werden) -> Einstellungen
 * neuer Menüpunkt: In der Mediensammlung suchen (die Suche lässt sich so auch direkt starten)
 * an vielen weiteren Stellen gab es kleine Verbesserungen und Fehler und Ungereimtheiten wurden entfernt
 
