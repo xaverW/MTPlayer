@@ -25,8 +25,8 @@ https://www.p2tools.de/mtplayer/
 *Datenübernahme aus MediathekView*
 
 Wer Einstellungen von MediathekView übernehmen will, muss aus dessen Config-Ordner (.mediathek3) diese Dateien in den neuen Config-Ordner kopieren:  
-*history.txt  *
-*downloadAbos.txt (diese Datei muss umbenannt werden in: downloads.txt)  *
+*history.txt*  
+*downloadAbos.txt (diese Datei muss umbenannt werden in: downloads.txt)*  
 *mediathek.xml (diese Datei muss umbenannt werden in: mtplayer.xml)*
 
 Alle Einstellungen können nicht übernommen werden da sich einiges geändert hat, nach dem Start bitte die Einstellungen durchgehen und überprüfen.
