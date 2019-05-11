@@ -489,6 +489,7 @@ public class FilmFilterController extends FilterController {
         dialog.setTitle("Filtername");
         dialog.setHeaderText("Den Namen des Filters vorgeben");
         dialog.setContentText("Name:");
+        dialog.setResizable(true);
 
         final Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
