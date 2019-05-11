@@ -58,4 +58,4 @@ Das Programmpaket bringt nur das Programm und die benötigten "Hilfsprogramme" a
 **MTPlayer-XX__Win+Java.zip**  
 Diese Programmpakete bringen die Java-Laufzeitumgebung mit und sind nur für das angegebene Betriebssystem: Linux oder Windows. Es muss kein Java auf dem System installiert sein. (Die Java-Laufzeitumgebung liegt im Ordner "Java" und kommt von jdk.java.net).
 
-[zum Download: github.com/xaverW/MTPlayer/releases](https://github.com/xaverW/MTPlayer/releases)
+zum Download: [github.com/xaverW/MTPlayer/releases](https://github.com/xaverW/MTPlayer/releases)
