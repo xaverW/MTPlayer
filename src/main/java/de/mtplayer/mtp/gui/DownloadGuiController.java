@@ -30,7 +30,7 @@ import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.gui.tools.table.Table;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.POpen;
-import de.p2tools.p2Lib.guiTools.PTableViewTools;
+import de.p2tools.p2Lib.guiTools.PTableFactory;
 import de.p2tools.p2Lib.tools.PSystemUtils;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -309,7 +309,7 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     public void invertSelection() {
-        PTableViewTools.invertSelection(tableView);
+        PTableFactory.invertSelection(tableView);
     }
 
     public void saveTable() {

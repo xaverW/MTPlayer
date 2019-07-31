@@ -428,12 +428,14 @@ public class AboEditDialogController extends PDialogExtra {
     }
 
     private void initDur() {
-        pRangeBoxTime.minValueProperty().bindBidirectional(aboCopy.minDurationMinuteProperty());
         pRangeBoxTime.maxValueProperty().bindBidirectional(aboCopy.maxDurationMinuteProperty());
+        pRangeBoxTime.minValueProperty().bindBidirectional(aboCopy.minDurationMinuteProperty());
+
         pRangeBoxTime.maxValueProperty().addListener((observable, oldValue, newValue) ->
                 cbxEditAll[AboXml.ABO_MIN_DURATION].setSelected(true));
         pRangeBoxTime.minValueProperty().addListener((observable, oldValue, newValue) ->
                 cbxEditAll[AboXml.ABO_MIN_DURATION].setSelected(true));
+
         pRangeBoxTime.setValuePrefix("");
     }
 

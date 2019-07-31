@@ -23,7 +23,7 @@ import de.mtplayer.mtp.controller.data.abo.AboConstants;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.gui.tools.table.Table;
 import de.p2tools.p2Lib.alert.PAlert;
-import de.p2tools.p2Lib.guiTools.PTableViewTools;
+import de.p2tools.p2Lib.guiTools.PTableFactory;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.collections.ObservableList;
@@ -125,7 +125,7 @@ public class AboGuiController extends AnchorPane {
     }
 
     public void invertSelection() {
-        PTableViewTools.invertSelection(tableView);
+        PTableFactory.invertSelection(tableView);
     }
 
 
