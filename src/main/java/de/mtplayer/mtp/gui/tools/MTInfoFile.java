@@ -43,19 +43,19 @@ public class MTInfoFile {
              OutputStreamWriter osw = new OutputStreamWriter(dos);
              BufferedWriter br = new BufferedWriter(osw)) {
             if (download.getFilm() != null) {
-                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_CHANNEL] + ":      " + download.getFilm().arr[FilmXml.FILM_CHANNEL]);
+                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_CHANNEL] + ":        " + download.getFilm().arr[FilmXml.FILM_CHANNEL]);
                 br.write(PConst.LINE_SEPARATOR);
-                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_THEME] + ":       " + download.getFilm().arr[FilmXml.FILM_THEME]);
+                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_THEME] + ":         " + download.getFilm().arr[FilmXml.FILM_THEME]);
                 br.write(PConst.LINE_SEPARATORx2);
-                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_TITLE] + ":       " + download.getFilm().arr[FilmXml.FILM_TITLE]);
+                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_TITLE] + ":         " + download.getFilm().arr[FilmXml.FILM_TITLE]);
                 br.write(PConst.LINE_SEPARATORx2);
-                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_DATE] + ":       " + download.getFilm().arr[FilmXml.FILM_DATE]);
+                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_DATE] + ":         " + download.getFilm().arr[FilmXml.FILM_DATE]);
                 br.write(PConst.LINE_SEPARATOR);
-                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_TIME] + ":        " + download.getFilm().arr[FilmXml.FILM_TIME]);
+                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_TIME] + ":          " + download.getFilm().arr[FilmXml.FILM_TIME]);
                 br.write(PConst.LINE_SEPARATOR);
-                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_DURATION] + ":       " + download.getFilm().arr[FilmXml.FILM_DURATION]);
+                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_DURATION] + ":   " + download.getFilm().arr[FilmXml.FILM_DURATION]);
                 br.write(PConst.LINE_SEPARATOR);
-                br.write(DownloadXml.COLUMN_NAMES[DownloadXml.DOWNLOAD_SIZE] + ":  " + download.getDownloadSize());
+                br.write(DownloadXml.COLUMN_NAMES[DownloadXml.DOWNLOAD_SIZE] + ":    " + download.getDownloadSize());
                 br.write(PConst.LINE_SEPARATORx2);
 
                 br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_WEBSITE] + PConst.LINE_SEPARATOR);
