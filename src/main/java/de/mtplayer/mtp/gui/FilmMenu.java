@@ -30,7 +30,7 @@ import javafx.scene.layout.VBox;
 public class FilmMenu {
     final private VBox vBox;
     final private ProgData progData;
-    private SelectedFilter storedFilter = null;
+    private SelectedFilter storedActFilterSettings = null;
     private SelectedFilter storedBookmarkFilter = null;
     private static final String FILM_PLAY_TEXT = "markierten Film abspielen";
     private static final String FILM_RECORD_TEXT = "markierte Filme aufzeichnen";
@@ -86,23 +86,25 @@ public class FilmMenu {
 
         btFilterBookmakr.setOnAction(a -> {
 
-            if (storedFilter != null && storedBookmarkFilter != null) {
+            if (storedActFilterSettings != null && storedBookmarkFilter != null) {
                 SelectedFilter sf = progData.storedFilters.getActFilterSettings();
-                if (!SelectedFilterFactory.compareFilter(storedBookmarkFilter, sf)) {
+                if (!SelectedFilterFactory.compareFilterWithoutNameOfFilter(storedBookmarkFilter, sf)) {
                     // dann hat sich der Filter geändert
-                    storedFilter = null;
+                    storedActFilterSettings = null;
                 }
             }
 
-            if (storedFilter == null) {
-                storedFilter = SelectedFilterFactory.getFilterCopy(progData.storedFilters.getActFilterSettings());
+            if (storedActFilterSettings == null) {
+                // dann setzen des Bookmarkfilters
+                storedActFilterSettings = SelectedFilterFactory.getFilterCopy(progData.storedFilters.getActFilterSettings());
 
-                storedBookmarkFilter = BookmarkFilter.getBookmarkFilter(storedFilter);
+                storedBookmarkFilter = BookmarkFilter.getBookmarkFilter(storedActFilterSettings);
                 progData.storedFilters.setActFilterSettings(storedBookmarkFilter);
 
             } else {
-                progData.storedFilters.setActFilterSettings(storedFilter);
-                storedFilter = null;
+                // dann den gemerkten Filter wieder setzen
+                progData.storedFilters.setActFilterSettings(storedActFilterSettings);
+                storedActFilterSettings = null;
             }
         });
 

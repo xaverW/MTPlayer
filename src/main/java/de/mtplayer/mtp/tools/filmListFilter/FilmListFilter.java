@@ -55,7 +55,7 @@ public class FilmListFilter {
     private static final AtomicBoolean search = new AtomicBoolean(false);
     private static final AtomicBoolean research = new AtomicBoolean(false);
 
-    public void filterList() {
+    private void filterList() {
         // ist etwas "umständlich", scheint aber am flüssigsten zu laufen
 
         if (!search.getAndSet(true)) {

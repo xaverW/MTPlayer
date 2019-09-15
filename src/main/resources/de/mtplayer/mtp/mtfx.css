@@ -189,6 +189,12 @@
     -fx-border: 10;
 }
 
+.markFilterOk {
+    -fx-text-fill: -fx-text-base-color;
+    -fx-background-color: #c3c4c4,
+        linear-gradient(from 50% 17% to 50% 114% , repeat, #E6E6E6, #CBD8EB 100% );
+    -fx-background-insets: 0,1,1;
+}
 
 .btnFilmlist{
     -fx-background-color: #c3c4c4,

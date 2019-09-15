@@ -103,6 +103,14 @@ public class MTPTester {
             btnShowActFilter.setMaxWidth(Double.MAX_VALUE);
             btnShowActFilter.setOnAction(a -> showFilter());
 
+            Button btnMarkFilmFilterOk = new Button("Filter Ok");
+            btnMarkFilmFilterOk.setMaxWidth(Double.MAX_VALUE);
+            btnMarkFilmFilterOk.setOnAction(a -> makrFilterOk(true));
+
+            Button btnMarkFilmFilterNotOk = new Button("Filter !Ok");
+            btnMarkFilmFilterNotOk.setMaxWidth(Double.MAX_VALUE);
+            btnMarkFilmFilterNotOk.setOnAction(a -> makrFilterOk(false));
+
             int row = 0;
             gridPane.add(text, 0, row, 2, 1);
             gridPane.add(btnAddToHash, 0, ++row);
@@ -113,6 +121,8 @@ public class MTPTester {
             gridPane.add(btnCheck, 0, ++row);
             gridPane.add(btnRepair, 0, ++row);
             gridPane.add(btnShowActFilter, 0, ++row);
+            gridPane.add(btnMarkFilmFilterOk, 0, ++row);
+            gridPane.add(btnMarkFilmFilterNotOk, 0, ++row);
             gridPane.add(textArea, 0, ++row, 2, 1);
         }
     }
@@ -276,6 +286,10 @@ public class MTPTester {
             System.out.println(s);
         }
         System.out.println("====================================");
+    }
+
+    private void makrFilterOk(boolean ok) {
+        progData.mtPlayerController.markFilterOk(ok);
     }
 
     private static String cleanUnicode(String ret) {

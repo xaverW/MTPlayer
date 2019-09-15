@@ -74,7 +74,11 @@ public class SelectedFilterFactory {
         sfTo.setBlacklistOn(sfFrom.isBlacklistOn());
     }
 
-    public static boolean compareFilter(SelectedFilter sfFrom, SelectedFilter sfTo) {
+    public static boolean compareFilterWithoutNameOfFilter(SelectedFilter sfFrom, SelectedFilter sfTo) {
+        if (sfFrom == null || sfTo == null) {
+            return false;
+        }
+
         for (int i = 0; i < sfFrom.sfBooleanPropArr.length; i++) {
             if (sfFrom.sfBooleanPropArr[i].get() != sfTo.sfBooleanPropArr[i].get()) {
                 return false;
@@ -85,7 +89,8 @@ public class SelectedFilterFactory {
                 return false;
             }
         }
-        for (int i = 0; i < sfFrom.sfStringPropArr.length; i++) {
+        // nur die Filter (nicht den Namen) vergleichen
+        for (int i = 1; i < sfFrom.sfStringPropArr.length; i++) {
             if (!sfFrom.sfStringPropArr[i].getValueSafe().equals(sfTo.sfStringPropArr[i].getValueSafe())) {
                 return false;
             }

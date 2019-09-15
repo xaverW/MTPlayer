@@ -48,6 +48,10 @@ public class FilmGuiPack {
         boolDivOn.setValue(!boolDivOn.get());
     }
 
+    public void markFilterOk(boolean ok) {
+        filmFilterController.markFilterOk(ok);
+    }
+
     private void setSplit() {
         if (boolDivOn.getValue()) {
             splitPane.getItems().clear();
