@@ -56,7 +56,7 @@ public class AboFilterController extends FilterController {
         txtDescription.textProperty().bindBidirectional(ProgConfig.FILTER_ABO_DESCRIPTION.getStringProperty());
 
         cboChannel.setItems(progData.worker.getChannelsForAbosList());
-        cboChannel.valueProperty().bindBidirectional(ProgConfig.FILTER_ABO_SENDER.getStringProperty());
+        cboChannel.valueProperty().bindBidirectional(ProgConfig.FILTER_ABO_CHANNEL.getStringProperty());
 
         cboArt.getItems().addAll(AboConstants.ALL,
                 AboConstants.ABO_ON,

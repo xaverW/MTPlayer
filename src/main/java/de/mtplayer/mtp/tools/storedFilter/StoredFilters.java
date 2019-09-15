@@ -28,32 +28,30 @@ import javafx.collections.ObservableList;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public final class StoredFilter {
-
-    private final BooleanProperty filterChange = new SimpleBooleanProperty(true);
+public final class StoredFilters {
 
     private final ProgData progData;
+
+    private final BooleanProperty filterChange = new SimpleBooleanProperty(true);
     private final ChangeListener<Boolean> filterChangeListener;
     private final ChangeListener<Boolean> blacklistChangeListener;
 
-    // dient nur der Info im Config-File
-    public static final String SELECTED_FILTER_NAME = "aktuelle Einstellung";
-
     // ist der aktuell angezeigte Filter
-    private SelectedFilter selectedFilter = new SelectedFilter(SELECTED_FILTER_NAME);
+    public static final String SELECTED_FILTER_NAME = "aktuelle Einstellung"; // dient nur der Info im Config-File
+    private SelectedFilter actFilterSettings = new SelectedFilter(SELECTED_FILTER_NAME);
 
     // ist die Liste der gespeicherten Filter
     private final ObservableList<SelectedFilter> filterList =
             FXCollections.observableList(new ArrayList<>(), (SelectedFilter tp) -> new Observable[]{tp.nameProperty()});
 
-    public StoredFilter(ProgData progData) {
+    public StoredFilters(ProgData progData) {
         this.progData = progData;
 
         filterChangeListener = (observable, oldValue, newValue) -> postFilterChange();
         blacklistChangeListener = (observable, oldValue, newValue) -> postBlacklistChange();
 
-        selectedFilter.filterChangeProperty().addListener(filterChangeListener);
-        selectedFilter.blacklistChangeProperty().addListener(blacklistChangeListener);
+        actFilterSettings.filterChangeProperty().addListener(filterChangeListener);
+        actFilterSettings.blacklistChangeProperty().addListener(blacklistChangeListener);
     }
 
     public BooleanProperty filterChangeProperty() {
@@ -69,12 +67,35 @@ public final class StoredFilter {
     }
 
     /**
-     * ist der aktuell angezeigte Filter
+     * liefert den aktuell angezeigte Filter
      *
      * @return
      */
-    public SelectedFilter getSelectedFilter() {
-        return selectedFilter;
+    public SelectedFilter getActFilterSettings() {
+        return actFilterSettings;
+    }
+
+    /**
+     * setzt die aktuellen Filtereinstellungen aus einen Filter (gespeicherten Filter)
+     *
+     * @param sf
+     */
+    public synchronized void setActFilterSettings(SelectedFilter sf) {
+        if (sf == null) {
+            return;
+        }
+        actFilterSettings.filterChangeProperty().removeListener(filterChangeListener);
+        actFilterSettings.blacklistChangeProperty().removeListener(blacklistChangeListener);
+        Boolean black = actFilterSettings.blacklistOnProperty().getValue();
+        SelectedFilterFactory.copyFilter(sf, actFilterSettings);
+        if (actFilterSettings.blacklistOnProperty().getValue() == black) {
+            // Black hat sich nicht geändert
+            postFilterChange();
+        } else {
+            postBlacklistChange();
+        }
+        actFilterSettings.filterChangeProperty().addListener(filterChangeListener);
+        actFilterSettings.blacklistChangeProperty().addListener(blacklistChangeListener);
     }
 
     /**
@@ -93,7 +114,7 @@ public final class StoredFilter {
      */
     public String addNewStoredFilter(String name) {
         final SelectedFilter sf = new SelectedFilter();
-        SelectedFilter.copyFilter(selectedFilter, sf);
+        SelectedFilterFactory.copyFilter(actFilterSettings, sf);
 
         sf.setName(name.isEmpty() ? getNextName() : name);
         filterList.add(sf);
@@ -148,31 +169,8 @@ public final class StoredFilter {
             return;
         }
         final String name = sf.getName();
-        SelectedFilter.copyFilter(selectedFilter, sf);
+        SelectedFilterFactory.copyFilter(actFilterSettings, sf);
         sf.setName(name);
-    }
-
-    /**
-     * gespeicherten Filter einstellen
-     *
-     * @param sf
-     */
-    public synchronized void loadStoredFilter(SelectedFilter sf) {
-        if (sf == null) {
-            return;
-        }
-        selectedFilter.filterChangeProperty().removeListener(filterChangeListener);
-        selectedFilter.blacklistChangeProperty().removeListener(blacklistChangeListener);
-        Boolean black = selectedFilter.blacklistOnProperty().getValue();
-        SelectedFilter.copyFilter(sf, selectedFilter);
-        if (selectedFilter.blacklistOnProperty().getValue() == black) {
-            // Black hat sich nicht geändert
-            postFilterChange();
-        } else {
-            postBlacklistChange();
-        }
-        selectedFilter.filterChangeProperty().addListener(filterChangeListener);
-        selectedFilter.blacklistChangeProperty().addListener(blacklistChangeListener);
     }
 
     /**
@@ -186,46 +184,46 @@ public final class StoredFilter {
         }
 
         final Abo abo = oAbo.get();
-        selectedFilter.filterChangeProperty().removeListener(filterChangeListener);
-        selectedFilter.blacklistChangeProperty().removeListener(blacklistChangeListener);
+        actFilterSettings.filterChangeProperty().removeListener(filterChangeListener);
+        actFilterSettings.blacklistChangeProperty().removeListener(blacklistChangeListener);
 
         // Filter erstmal löschen und dann alle abschalten
-        selectedFilter.turnOffFilter();
+        actFilterSettings.turnOffFilter();
 
 
-        selectedFilter.setChannelAndVis(abo.getChannel());
-        selectedFilter.setChannelExact(abo.isChannelExact());
+        actFilterSettings.setChannelAndVis(abo.getChannel());
+        actFilterSettings.setChannelExact(abo.isChannelExact());
 
-        selectedFilter.setThemeAndVis(abo.getTheme());
-        selectedFilter.setThemeExact(abo.isThemeExact());
+        actFilterSettings.setThemeAndVis(abo.getTheme());
+        actFilterSettings.setThemeExact(abo.isThemeExact());
 
-        selectedFilter.setThemeTitleAndVis(abo.getThemeTitle());
+        actFilterSettings.setThemeTitleAndVis(abo.getThemeTitle());
 
-        selectedFilter.setTitleAndVis(abo.getTitle());
+        actFilterSettings.setTitleAndVis(abo.getTitle());
 
-        selectedFilter.setSomewhere(abo.getSomewhere());
-        selectedFilter.setSomewhereVis(true);
+        actFilterSettings.setSomewhere(abo.getSomewhere());
+        actFilterSettings.setSomewhereVis(true);
 
-        selectedFilter.setMinDur(abo.getMinDurationMinute());
-        selectedFilter.setMaxDur(abo.getMaxDurationMinute());
-        selectedFilter.setMinMaxDurVis(true);
+        actFilterSettings.setMinDur(abo.getMinDurationMinute());
+        actFilterSettings.setMaxDur(abo.getMaxDurationMinute());
+        actFilterSettings.setMinMaxDurVis(true);
 
 
         postFilterChange();
-        selectedFilter.filterChangeProperty().addListener(filterChangeListener);
-        selectedFilter.blacklistChangeProperty().addListener(blacklistChangeListener);
+        actFilterSettings.filterChangeProperty().addListener(filterChangeListener);
+        actFilterSettings.blacklistChangeProperty().addListener(blacklistChangeListener);
     }
 
     public synchronized boolean txtFilterIsEmpty() {
-        return txtFilterIsEmpty(selectedFilter);
+        return txtFilterIsEmpty(actFilterSettings);
     }
 
     public synchronized boolean txtFilterIsEmpty(SelectedFilter sf) {
-        return sf.txtFilterIsEmpty();
+        return sf.isTextFilterEmpty();
     }
 
     public synchronized boolean clearTxtFilter() {
-        return clearTxtFilter(selectedFilter);
+        return clearTxtFilter(actFilterSettings);
     }
 
     /**
@@ -236,17 +234,17 @@ public final class StoredFilter {
      */
     public synchronized boolean clearTxtFilter(SelectedFilter sf) {
         boolean ret;
-        selectedFilter.filterChangeProperty().removeListener(filterChangeListener);
-        selectedFilter.blacklistChangeProperty().removeListener(blacklistChangeListener);
+        actFilterSettings.filterChangeProperty().removeListener(filterChangeListener);
+        actFilterSettings.blacklistChangeProperty().removeListener(blacklistChangeListener);
         ret = sf.clearTxtFilter();
         postFilterChange();
-        selectedFilter.filterChangeProperty().addListener(filterChangeListener);
-        selectedFilter.blacklistChangeProperty().addListener(blacklistChangeListener);
+        actFilterSettings.filterChangeProperty().addListener(filterChangeListener);
+        actFilterSettings.blacklistChangeProperty().addListener(blacklistChangeListener);
         return ret;
     }
 
     public synchronized void clearFilter() {
-        clearFilter(selectedFilter);
+        clearFilter(actFilterSettings);
     }
 
     /**
@@ -255,12 +253,12 @@ public final class StoredFilter {
      * @param sf
      */
     public synchronized void clearFilter(SelectedFilter sf) {
-        selectedFilter.filterChangeProperty().removeListener(filterChangeListener);
-        selectedFilter.blacklistChangeProperty().removeListener(blacklistChangeListener);
+        actFilterSettings.filterChangeProperty().removeListener(filterChangeListener);
+        actFilterSettings.blacklistChangeProperty().removeListener(blacklistChangeListener);
         sf.clearFilter(); // Button Black wird nicht verändert
         postFilterChange();
-        selectedFilter.filterChangeProperty().addListener(filterChangeListener);
-        selectedFilter.blacklistChangeProperty().addListener(blacklistChangeListener);
+        actFilterSettings.filterChangeProperty().addListener(filterChangeListener);
+        actFilterSettings.blacklistChangeProperty().addListener(blacklistChangeListener);
     }
 
 

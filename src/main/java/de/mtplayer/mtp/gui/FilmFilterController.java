@@ -145,12 +145,12 @@ public class FilmFilterController extends FilterController {
 
 
         tglBlacklist.setTooltip(new Tooltip("Blacklist einschalten"));
-        tglBlacklist.selectedProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().blacklistOnProperty());
+        tglBlacklist.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().blacklistOnProperty());
     }
 
     private void filterProfiles() {
         // Filterprofile einrichten
-        cbFilter.setItems(progData.storedFilter.getStordeFilterList());
+        cbFilter.setItems(progData.storedFilters.getStordeFilterList());
         cbFilter.getSelectionModel().selectFirst();
         cbFilter.setTooltip(new Tooltip("Gespeicherte Filterprofile können\n" +
                 "hier geladen werden"));
@@ -164,7 +164,7 @@ public class FilmFilterController extends FilterController {
             @Override
             public SelectedFilter fromString(String id) {
                 final int i = cbFilter.getSelectionModel().getSelectedIndex();
-                return progData.storedFilter.getStordeFilterList().get(i);
+                return progData.storedFilters.getStordeFilterList().get(i);
             }
         };
         cbFilter.setConverter(converter);
@@ -197,7 +197,7 @@ public class FilmFilterController extends FilterController {
 
         final MenuItem miAbo = new MenuItem("aus dem Filter ein Abo erstellen");
         miAbo.setOnAction(a -> {
-            SelectedFilter selectedFilter = progData.storedFilter.getSelectedFilter();
+            SelectedFilter selectedFilter = progData.storedFilters.getActFilterSettings();
             progData.aboList.addNewAbo(selectedFilter);
         });
 
@@ -214,10 +214,11 @@ public class FilmFilterController extends FilterController {
     }
 
     private void initStringFilter() {
-        cboChannel.editableProperty().bind(progData.storedFilter.getSelectedFilter().channelExactProperty().not());
+        cboChannel.editableProperty().bind(progData.storedFilters.getActFilterSettings().channelExactProperty().not());
         cboChannel.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         cboChannel.setVisibleRowCount(25);
-        cboChannel.valueProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().channelProperty());
+        cboChannel.valueProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().channelProperty());
+
         cboChannel.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue != null && newValue != null) {
                 // wenn Änderung beim Sender -> Themen anpassen
@@ -236,50 +237,49 @@ public class FilmFilterController extends FilterController {
                 } else {
                     progData.worker.getTheme(newValue);
                 }
-                progData.storedFilter.getSelectedFilter().setChannel(newValue);
+                progData.storedFilters.getActFilterSettings().setChannel(newValue);
             }
         });
 
 
-        cbxTheme.editableProperty().bind(progData.storedFilter.getSelectedFilter().themeExactProperty().not());
+        cbxTheme.editableProperty().bind(progData.storedFilters.getActFilterSettings().themeExactProperty().not());
         cbxTheme.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         cbxTheme.setVisibleRowCount(25);
-        cbxTheme.valueProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().themeProperty());
+        cbxTheme.valueProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().themeProperty());
         cbxTheme.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue != null && newValue != null) {
-                progData.storedFilter.getSelectedFilter().setTheme(newValue);
+                progData.storedFilters.getActFilterSettings().setTheme(newValue);
             }
         });
-
 
         cboChannel.setItems(progData.worker.getAllChannelList());
         cbxTheme.setItems(progData.worker.getThemeForChannelList());
 
-        txtThemeTitle.textProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().themeTitleProperty());
-        txtTitle.textProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().titleProperty());
-        txtSomewhere.textProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().somewhereProperty());
-        txtUrl.textProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().urlProperty());
+        txtThemeTitle.textProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().themeTitleProperty());
+        txtTitle.textProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().titleProperty());
+        txtSomewhere.textProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().somewhereProperty());
+        txtUrl.textProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().urlProperty());
 
 
         VBox vBox = new VBox(10);
-        addTxt("Sender", cboChannel, vBox, progData.storedFilter.getSelectedFilter().channelVisProperty());
-        addTxt("Thema", cbxTheme, vBox, progData.storedFilter.getSelectedFilter().themeVisProperty());
-        addTxt("Thema oder Titel", txtThemeTitle, vBox, progData.storedFilter.getSelectedFilter().themeTitleVisProperty());
-        addTxt("Titel", txtTitle, vBox, progData.storedFilter.getSelectedFilter().titleVisProperty());
-        addTxt("Irgendwo", txtSomewhere, vBox, progData.storedFilter.getSelectedFilter().somewhereVisProperty());
-        addTxt("URL", txtUrl, vBox, progData.storedFilter.getSelectedFilter().urlVisProperty());
+        addTxt("Sender", cboChannel, vBox, progData.storedFilters.getActFilterSettings().channelVisProperty());
+        addTxt("Thema", cbxTheme, vBox, progData.storedFilters.getActFilterSettings().themeVisProperty());
+        addTxt("Thema oder Titel", txtThemeTitle, vBox, progData.storedFilters.getActFilterSettings().themeTitleVisProperty());
+        addTxt("Titel", txtTitle, vBox, progData.storedFilters.getActFilterSettings().titleVisProperty());
+        addTxt("Irgendwo", txtSomewhere, vBox, progData.storedFilters.getActFilterSettings().somewhereVisProperty());
+        addTxt("URL", txtUrl, vBox, progData.storedFilters.getActFilterSettings().urlVisProperty());
 
         Separator sp = new Separator();
 //        sp.getStyleClass().add("pseperator1");
         sp.setMinHeight(20);
         vBox.getChildren().add(sp);
 
-        vBox.visibleProperty().bind(progData.storedFilter.getSelectedFilter().channelVisProperty()
-                .or(progData.storedFilter.getSelectedFilter().themeVisProperty()
-                        .or(progData.storedFilter.getSelectedFilter().themeTitleVisProperty()
-                                .or(progData.storedFilter.getSelectedFilter().titleVisProperty()
-                                        .or(progData.storedFilter.getSelectedFilter().somewhereVisProperty()
-                                                .or(progData.storedFilter.getSelectedFilter().urlVisProperty())
+        vBox.visibleProperty().bind(progData.storedFilters.getActFilterSettings().channelVisProperty()
+                .or(progData.storedFilters.getActFilterSettings().themeVisProperty()
+                        .or(progData.storedFilters.getActFilterSettings().themeTitleVisProperty()
+                                .or(progData.storedFilters.getActFilterSettings().titleVisProperty()
+                                        .or(progData.storedFilters.getActFilterSettings().somewhereVisProperty()
+                                                .or(progData.storedFilters.getActFilterSettings().urlVisProperty())
                                         )
                                 )
                         )
@@ -315,22 +315,22 @@ public class FilmFilterController extends FilterController {
         });
 
         // kein direktes binding wegen: valueChangingProperty, nur melden wenn "steht"
-        slDays.setValue(progData.storedFilter.getSelectedFilter().getDays());
+        slDays.setValue(progData.storedFilters.getActFilterSettings().getDays());
 
-        progData.storedFilter.getSelectedFilter().daysProperty().addListener(
-                l -> slDays.setValue(progData.storedFilter.getSelectedFilter().getDays()));
+        progData.storedFilters.getActFilterSettings().daysProperty().addListener(
+                l -> slDays.setValue(progData.storedFilters.getActFilterSettings().getDays()));
 
         slDays.valueChangingProperty().addListener((observable, oldvalue, newvalue) -> {
                     if (!newvalue) {
-                        progData.storedFilter.getSelectedFilter().setDays((int) slDays.getValue());
+                        progData.storedFilters.getActFilterSettings().setDays((int) slDays.getValue());
                     }
                 }
         );
     }
 
     private void initDurFilter() {
-        slDur.minValueProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().minDurProperty());
-        slDur.maxValueProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().maxDurProperty());
+        slDur.minValueProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().minDurProperty());
+        slDur.maxValueProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().maxDurProperty());
         slDur.setValuePrefix("");
 
 //        progData.storedFilter.getSelectedFilter().minDurProperty().addListener((observable, oldValue, newValue) ->
@@ -340,8 +340,8 @@ public class FilmFilterController extends FilterController {
     }
 
     private void initFilmTimeFilter() {
-        slFilmTime.minValueProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().minTimeProperty());
-        slFilmTime.maxValueProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().maxTimeProperty());
+        slFilmTime.minValueProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().minTimeProperty());
+        slFilmTime.maxValueProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().maxTimeProperty());
         slFilmTime.setVluePrefix("");
 
 //        progData.storedFilter.getSelectedFilter().minTimeProperty().addListener((observable, oldValue, newValue) ->
@@ -349,7 +349,7 @@ public class FilmFilterController extends FilterController {
 //        progData.storedFilter.getSelectedFilter().maxTimeProperty().addListener((observable, oldValue, newValue) ->
 //                System.out.println("getSelectedFilter().getMaxTime " + progData.storedFilter.getSelectedFilter().getMaxTime()));
 
-        tglFilmTime.selectedProperty().bindBidirectional(progData.storedFilter.getSelectedFilter().minMaxTimeInvertProperty());
+        tglFilmTime.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().minMaxTimeInvertProperty());
         GridPane.setFillWidth(tglFilmTime, false);
     }
 
@@ -357,49 +357,49 @@ public class FilmFilterController extends FilterController {
         // Tage
         VBox vBox = new VBox(5);
         vBox.getChildren().addAll(lblDays, slDays);
-        vBox.visibleProperty().bind(progData.storedFilter.getSelectedFilter().daysVisProperty());
-        vBox.managedProperty().bind(progData.storedFilter.getSelectedFilter().daysVisProperty());
+        vBox.visibleProperty().bind(progData.storedFilters.getActFilterSettings().daysVisProperty());
+        vBox.managedProperty().bind(progData.storedFilters.getActFilterSettings().daysVisProperty());
         vBoxFilter.getChildren().addAll(vBox);
 
         // MinMax Dauer
         vBox = new VBox(5);
         vBox.getChildren().addAll(lblDur, slDur);
-        vBox.visibleProperty().bind(progData.storedFilter.getSelectedFilter().minMaxDurVisProperty());
-        vBox.managedProperty().bind(progData.storedFilter.getSelectedFilter().minMaxDurVisProperty());
+        vBox.visibleProperty().bind(progData.storedFilters.getActFilterSettings().minMaxDurVisProperty());
+        vBox.managedProperty().bind(progData.storedFilters.getActFilterSettings().minMaxDurVisProperty());
         vBoxFilter.getChildren().addAll(vBox);
 
         // MinMax Uhrzeit
         vBox = new VBox(5);
         vBox.getChildren().addAll(lblFilmTime, slFilmTime, tglFilmTime);
-        vBox.visibleProperty().bind(progData.storedFilter.getSelectedFilter().minMaxTimeVisProperty());
-        vBox.managedProperty().bind(progData.storedFilter.getSelectedFilter().minMaxTimeVisProperty());
+        vBox.visibleProperty().bind(progData.storedFilters.getActFilterSettings().minMaxTimeVisProperty());
+        vBox.managedProperty().bind(progData.storedFilters.getActFilterSettings().minMaxTimeVisProperty());
         vBoxFilter.getChildren().addAll(vBox);
     }
 
     private void initCheckFilter() {
-        checkOnly.addItem(ONLY_BOOKMARK, "nur Filme der Bookmarks anzeigen", progData.storedFilter.getSelectedFilter().onlyBookmarkProperty());
-        checkOnly.addItem(ONLY_HD, "nur HD-Filme anzeigen", progData.storedFilter.getSelectedFilter().onlyHdProperty());
-        checkOnly.addItem(ONLY_UT, "nur Filme mit Untertitel anzeigen", progData.storedFilter.getSelectedFilter().onlyUtProperty());
-        checkOnly.addItem(ONLY_NEW, "nur neue Filme anzeigen", progData.storedFilter.getSelectedFilter().onlyNewProperty());
-        checkOnly.addItem(ONLY_LIVE, "nur Livestreams anzeigen", progData.storedFilter.getSelectedFilter().onlyLiveProperty());
-        checkOnly.addItem(ONLY_AKT_HISTORY, "nur die aktuelle History anzeigen", progData.storedFilter.getSelectedFilter().onlyAktHistoryProperty());
+        checkOnly.addItem(ONLY_BOOKMARK, "nur Filme der Bookmarks anzeigen", progData.storedFilters.getActFilterSettings().onlyBookmarkProperty());
+        checkOnly.addItem(ONLY_HD, "nur HD-Filme anzeigen", progData.storedFilters.getActFilterSettings().onlyHdProperty());
+        checkOnly.addItem(ONLY_UT, "nur Filme mit Untertitel anzeigen", progData.storedFilters.getActFilterSettings().onlyUtProperty());
+        checkOnly.addItem(ONLY_NEW, "nur neue Filme anzeigen", progData.storedFilters.getActFilterSettings().onlyNewProperty());
+        checkOnly.addItem(ONLY_LIVE, "nur Livestreams anzeigen", progData.storedFilters.getActFilterSettings().onlyLiveProperty());
+        checkOnly.addItem(ONLY_AKT_HISTORY, "nur die aktuelle History anzeigen", progData.storedFilters.getActFilterSettings().onlyAktHistoryProperty());
 
-        checkNot.addItem(NOT_ABO, "keine Filme für die es ein Abo gibt, anzeigen", progData.storedFilter.getSelectedFilter().notAboProperty());
-        checkNot.addItem(NOT_HISTORY, "bereits gesehene Filme nicht anzeigen", progData.storedFilter.getSelectedFilter().notHistoryProperty());
-        checkNot.addItem(NOT_DOUBLE, "doppelte Filme nur einmal anzeigen", progData.storedFilter.getSelectedFilter().notDoubleProperty());
-        checkNot.addItem(NOT_GEO, "geo-geblockte Filme nicht anzeigen", progData.storedFilter.getSelectedFilter().notGeoProperty());
-        checkNot.addItem(NOT_FUTURE, "keine Filme mit Datum in der Zukunft anzeigen", progData.storedFilter.getSelectedFilter().notFutureProperty());
+        checkNot.addItem(NOT_ABO, "keine Filme für die es ein Abo gibt, anzeigen", progData.storedFilters.getActFilterSettings().notAboProperty());
+        checkNot.addItem(NOT_HISTORY, "bereits gesehene Filme nicht anzeigen", progData.storedFilters.getActFilterSettings().notHistoryProperty());
+        checkNot.addItem(NOT_DOUBLE, "doppelte Filme nur einmal anzeigen", progData.storedFilters.getActFilterSettings().notDoubleProperty());
+        checkNot.addItem(NOT_GEO, "geo-geblockte Filme nicht anzeigen", progData.storedFilters.getActFilterSettings().notGeoProperty());
+        checkNot.addItem(NOT_FUTURE, "keine Filme mit Datum in der Zukunft anzeigen", progData.storedFilters.getActFilterSettings().notFutureProperty());
 
         VBox vBox = new VBox();
         vBox.getChildren().addAll(lblOnly, checkOnly);
-        vBox.visibleProperty().bind(progData.storedFilter.getSelectedFilter().onlyVisProperty());
-        vBox.managedProperty().bind(progData.storedFilter.getSelectedFilter().onlyVisProperty());
+        vBox.visibleProperty().bind(progData.storedFilters.getActFilterSettings().onlyVisProperty());
+        vBox.managedProperty().bind(progData.storedFilters.getActFilterSettings().onlyVisProperty());
         vBoxFilter.getChildren().add(vBox);
 
         vBox = new VBox();
         vBox.getChildren().addAll(lblNot, checkNot);
-        vBox.visibleProperty().bind(progData.storedFilter.getSelectedFilter().notVisProperty());
-        vBox.managedProperty().bind(progData.storedFilter.getSelectedFilter().notVisProperty());
+        vBox.visibleProperty().bind(progData.storedFilters.getActFilterSettings().notVisProperty());
+        vBox.managedProperty().bind(progData.storedFilters.getActFilterSettings().notVisProperty());
         vBoxFilter.getChildren().add(vBox);
     }
 
@@ -451,25 +451,25 @@ public class FilmFilterController extends FilterController {
     }
 
     private void loadFilter() {
-        progData.storedFilter.loadStoredFilter(cbFilter.getSelectionModel().getSelectedItem());
+        progData.storedFilters.setActFilterSettings(cbFilter.getSelectionModel().getSelectedItem());
     }
 
     private void saveFilter() {
         if (cbFilter.getSelectionModel().getSelectedItem() == null) {
             newFilter();
         } else {
-            progData.storedFilter.saveStoredFilter(cbFilter.getSelectionModel().getSelectedItem());
+            progData.storedFilters.saveStoredFilter(cbFilter.getSelectionModel().getSelectedItem());
         }
     }
 
     private void delFilter() {
-        progData.storedFilter.removeStoredFilter(cbFilter.getSelectionModel().getSelectedItem());
+        progData.storedFilters.removeStoredFilter(cbFilter.getSelectionModel().getSelectedItem());
         cbFilter.getSelectionModel().selectFirst();
     }
 
     private void delAllFilter() {
         if (PAlert.showAlertOkCancel("Löschen", "Filter löschen", "Sollen alle Filter gelöscht werden?")) {
-            progData.storedFilter.removeAllStoredFilter();
+            progData.storedFilters.removeAllStoredFilter();
             cbFilter.getSelectionModel().selectFirst();
         }
     }
@@ -478,14 +478,14 @@ public class FilmFilterController extends FilterController {
         if (PAlert.showAlertOkCancel("Zurücksetzen", "Filter zurücksetzen", "Sollen alle Filter gelöscht werden " +
                 "und durch die Filter vom ersten Programmstart " +
                 "ersetzt werden?")) {
-            progData.storedFilter.getStordeFilterList().clear();
+            progData.storedFilters.getStordeFilterList().clear();
             ProgInitFilter.setProgInitFilter();
             cbFilter.getSelectionModel().selectFirst();
         }
     }
 
     private void newFilter() {
-        final TextInputDialog dialog = new TextInputDialog(progData.storedFilter.getNextName());
+        final TextInputDialog dialog = new TextInputDialog(progData.storedFilters.getNextName());
         dialog.setTitle("Filtername");
         dialog.setHeaderText("Den Namen des Filters vorgeben");
         dialog.setContentText("Name:");
@@ -493,7 +493,7 @@ public class FilmFilterController extends FilterController {
 
         final Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
-            progData.storedFilter.addNewStoredFilter(result.get());
+            progData.storedFilters.addNewStoredFilter(result.get());
             cbFilter.getSelectionModel().selectLast();
         }
     }
@@ -517,10 +517,10 @@ public class FilmFilterController extends FilterController {
 
     private void clearFilter() {
         PDuration.onlyPing("Filter löschen");
-        if (progData.storedFilter.txtFilterIsEmpty()) {
-            progData.storedFilter.clearFilter();
+        if (progData.storedFilters.txtFilterIsEmpty()) {
+            progData.storedFilters.clearFilter();
         } else {
-            progData.storedFilter.clearTxtFilter();
+            progData.storedFilters.clearTxtFilter();
         }
     }
 

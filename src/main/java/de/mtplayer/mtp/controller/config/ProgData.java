@@ -26,6 +26,7 @@ import de.mtplayer.mtp.controller.data.abo.AboList;
 import de.mtplayer.mtp.controller.data.download.DownloadList;
 import de.mtplayer.mtp.controller.data.film.Filmlist;
 import de.mtplayer.mtp.controller.filmlist.LoadFilmlist;
+import de.mtplayer.mtp.controller.filmlist.checkFilmlistUpdate.SearchForFilmlistUpdate;
 import de.mtplayer.mtp.controller.filmlist.filmlistUrls.SearchFilmListUrls;
 import de.mtplayer.mtp.controller.history.HistoryList;
 import de.mtplayer.mtp.controller.mediaDb.MediaCollectionDataList;
@@ -38,7 +39,7 @@ import de.mtplayer.mtp.gui.FilmGuiController;
 import de.mtplayer.mtp.gui.dialog.FilmInfoDialogController;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.tools.filmListFilter.FilmListFilter;
-import de.mtplayer.mtp.tools.storedFilter.StoredFilter;
+import de.mtplayer.mtp.tools.storedFilter.StoredFilters;
 import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import javafx.animation.Animation;
@@ -65,7 +66,7 @@ public class ProgData {
     public LoadFilmlist loadFilmlist; // erledigt das updaten der Filmliste
     public SearchFilmListUrls searchFilmListUrls; // da werden die DownloadURLs der Filmliste verwaltet
     public static final MTColor mTColor = new MTColor(); // verwendete Farben
-    public StoredFilter storedFilter = null; // gespeicherte Filterprofile
+    public StoredFilters storedFilters = null; // gespeicherte Filterprofile
     public FilmListFilter filmListFilter = null;
 
     // Gui
@@ -79,6 +80,7 @@ public class ProgData {
 
     // Worker
     public Worker worker = null; // Liste aller Sender, Themen, ...
+    private SearchForFilmlistUpdate searchForFilmlistUpdate; // prüft, ob es eine neue Filmliste gibt
 
     // Programmdaten
     public Filmlist filmlist = null; // ist die komplette Filmliste
@@ -101,7 +103,7 @@ public class ProgData {
 
     private ProgData() {
         replaceList = new ReplaceList();
-        storedFilter = new StoredFilter(this);
+        storedFilters = new StoredFilters(this);
         filmlist = new Filmlist();
         loadFilmlist = new LoadFilmlist(this);
         searchFilmListUrls = new SearchFilmListUrls();
@@ -133,6 +135,7 @@ public class ProgData {
         starterClass = new StarterClass(this);
 
         worker = new Worker(this);
+        searchForFilmlistUpdate = SearchForFilmlistUpdate.StartSearchForFilmlistUpdate();
     }
 
     boolean oneSecond = false;

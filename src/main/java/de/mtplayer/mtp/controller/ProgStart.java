@@ -23,8 +23,8 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
-import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
+import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
 import de.mtplayer.mtp.tools.update.SearchProgramUpdate;
 import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.alert.PAlert;
@@ -64,7 +64,7 @@ public class ProgStart {
         setOrgTitle();
 
         progData.startTimer();
-        progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
+        progData.loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
             @Override
             public void finished(ListenerFilmlistLoadEvent event) {
                 if (!onlyOne) {
@@ -106,12 +106,12 @@ public class ProgStart {
      * @return
      */
     public boolean loadAll() {
-        boolean load = load();
+        boolean loadOk = load();
         if (ProgConfig.SYSTEM_LOG_ON.getBool()) {
             PLogger.setFileHandler(ProgInfos.getLogDirectory_String());
         }
 
-        if (!load) {
+        if (!loadOk) {
             PLog.sysLog("Weder Konfig noch Backup konnte geladen werden!");
             // teils geladene Reste entfernen
             clearConfig();

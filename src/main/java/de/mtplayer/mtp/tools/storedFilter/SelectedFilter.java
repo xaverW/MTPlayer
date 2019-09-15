@@ -77,80 +77,6 @@ public final class SelectedFilter extends SelectedFilterProps {
         setTitleVis(true);
     }
 
-    public static SelectedFilter getFilterCopy(SelectedFilter sfFrom) {
-        SelectedFilter sf = new SelectedFilter();
-        copyFilter(sfFrom, sf);
-        return sf;
-    }
-
-    public static void copyFilter(SelectedFilter sfFrom, SelectedFilter sfTo) {
-        sfTo.setName(sfFrom.getName());
-
-        sfTo.setChannelVis(sfFrom.isChannelVis());
-        sfTo.setChannelExact(sfFrom.isChannelExact());
-        sfTo.setChannel(sfFrom.getChannel());
-        sfTo.setThemeVis(sfFrom.isThemeVis());
-        sfTo.setThemeExact(sfFrom.isThemeExact());
-        sfTo.setTheme(sfFrom.getTheme());
-        sfTo.setThemeTitleVis(sfFrom.isThemeTitleVis());
-        sfTo.setThemeTitle(sfFrom.getThemeTitle());
-        sfTo.setTitleVis(sfFrom.isTitleVis());
-        sfTo.setTitle(sfFrom.getTitle());
-        sfTo.setSomewhereVis(sfFrom.isSomewhereVis());
-        sfTo.setSomewhere(sfFrom.getSomewhere());
-        sfTo.setUrlVis(sfFrom.isUrlVis());
-        sfTo.setUrl(sfFrom.getUrl());
-
-        sfTo.setDaysVis(sfFrom.isDaysVis());
-        sfTo.setDays(sfFrom.getDays());
-
-        sfTo.setMinMaxDurVis(sfFrom.isMinMaxDurVis());
-        sfTo.setMinDur(sfFrom.getMinDur());
-        sfTo.setMaxDur(sfFrom.getMaxDur());
-
-        sfTo.setMinMaxTimeVis(sfFrom.isMinMaxTimeVis());
-        sfTo.setMinMaxTimeInvert(sfFrom.isMinMaxTimeInvert());
-        sfTo.setMinTime(sfFrom.getMinTime());
-        sfTo.setMaxTime(sfFrom.getMaxTime());
-
-        sfTo.setOnlyVis(sfFrom.isOnlyVis());
-        sfTo.setOnlyBookmark(sfFrom.isOnlyBookmark());
-        sfTo.setOnlyHd(sfFrom.isOnlyHd());
-        sfTo.setOnlyNew(sfFrom.isOnlyNew());
-        sfTo.setOnlyUt(sfFrom.isOnlyUt());
-        sfTo.setOnlyLive(sfFrom.isOnlyLive());
-        sfTo.setOnlyAktHistory(sfFrom.isOnlyAktHistory());
-
-        sfTo.setNotVis(sfFrom.isNotVis());
-        sfTo.setNotAbo(sfFrom.isNotAbo());
-        sfTo.setNotHistory(sfFrom.isNotHistory());
-        sfTo.setNotDouble(sfFrom.isNotDouble());
-        sfTo.setNotGeo(sfFrom.isNotGeo());
-        sfTo.setNotFuture(sfFrom.isNotFuture());
-
-        sfTo.setBlacklistOn(sfFrom.isBlacklistOn());
-    }
-
-    public static boolean compareFilter(SelectedFilter sfFrom, SelectedFilter sfTo) {
-        for (int i = 0; i < sfFrom.sfBooleanPropArr.length; i++) {
-            if (sfFrom.sfBooleanPropArr[i].get() != sfTo.sfBooleanPropArr[i].get()) {
-                return false;
-            }
-        }
-        for (int i = 0; i < sfFrom.sfIntegerPropArr.length; i++) {
-            if (sfFrom.sfIntegerPropArr[i].get() != sfTo.sfIntegerPropArr[i].get()) {
-                return false;
-            }
-        }
-        for (int i = 0; i < sfFrom.sfStringPropArr.length; i++) {
-            if (!sfFrom.sfStringPropArr[i].getValueSafe().equals(sfTo.sfStringPropArr[i].getValueSafe())) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
     public void initFilter() {
         clearFilter();
 
@@ -171,71 +97,71 @@ public final class SelectedFilter extends SelectedFilterProps {
         setNotVis(false);
         setOnlyVis(false);
 
-        nameProperty().addListener(l -> changeFilterProperty());
+        nameProperty().addListener(l -> reportFilterChange());
 
-        channelVisProperty().addListener(l -> changeFilterProperty());
-        channelExactProperty().addListener(l -> changeFilterProperty());
-        channelProperty().addListener(l -> changeFilterProperty());
+        channelVisProperty().addListener(l -> reportFilterChange());
+        channelExactProperty().addListener(l -> reportFilterChange());
+        channelProperty().addListener(l -> reportFilterChange());
 
-        themeVisProperty().addListener(l -> changeFilterProperty());
-        themeExactProperty().addListener(l -> changeFilterProperty());
+        themeVisProperty().addListener(l -> reportFilterChange());
+        themeExactProperty().addListener(l -> reportFilterChange());
         themeProperty().addListener(l -> {
             // todo -> beim ändern der "Thema" liste wird das aufgerufen
             if (themeVisProperty().get()) {
-                changeFilterProperty();
+                reportFilterChange();
             }
         });
 
-        themeTitleVisProperty().addListener(l -> changeFilterProperty());
-        themeTitleProperty().addListener(l -> changeFilterProperty());
+        themeTitleVisProperty().addListener(l -> reportFilterChange());
+        themeTitleProperty().addListener(l -> reportFilterChange());
 
-        titleVisProperty().addListener(l -> changeFilterProperty());
-        titleProperty().addListener(l -> changeFilterProperty());
+        titleVisProperty().addListener(l -> reportFilterChange());
+        titleProperty().addListener(l -> reportFilterChange());
 
-        somewhereVisProperty().addListener(l -> changeFilterProperty());
-        somewhereProperty().addListener(l -> changeFilterProperty());
+        somewhereVisProperty().addListener(l -> reportFilterChange());
+        somewhereProperty().addListener(l -> reportFilterChange());
 
-        urlVisProperty().addListener(l -> changeFilterProperty());
-        urlProperty().addListener(l -> changeFilterProperty());
+        urlVisProperty().addListener(l -> reportFilterChange());
+        urlProperty().addListener(l -> reportFilterChange());
 
-        daysVisProperty().addListener(l -> changeFilterProperty());
-        daysProperty().addListener(l -> changeFilterProperty());
+        daysVisProperty().addListener(l -> reportFilterChange());
+        daysProperty().addListener(l -> reportFilterChange());
 
-        minMaxDurVisProperty().addListener((observable, oldValue, newValue) -> changeFilterProperty());
-        minDurProperty().addListener(l -> changeFilterProperty());
-        maxDurProperty().addListener(l -> changeFilterProperty());
+        minMaxDurVisProperty().addListener((observable, oldValue, newValue) -> reportFilterChange());
+        minDurProperty().addListener(l -> reportFilterChange());
+        maxDurProperty().addListener(l -> reportFilterChange());
 
-        minMaxTimeVisProperty().addListener((observable, oldValue, newValue) -> changeFilterProperty());
-        minMaxTimeInvertProperty().addListener((observable, oldValue, newValue) -> changeFilterProperty());
-        minTimeProperty().addListener(l -> changeFilterProperty());
-        maxTimeProperty().addListener(l -> changeFilterProperty());
+        minMaxTimeVisProperty().addListener((observable, oldValue, newValue) -> reportFilterChange());
+        minMaxTimeInvertProperty().addListener((observable, oldValue, newValue) -> reportFilterChange());
+        minTimeProperty().addListener(l -> reportFilterChange());
+        maxTimeProperty().addListener(l -> reportFilterChange());
 
-        onlyVisProperty().addListener(l -> changeFilterProperty());
-        onlyBookmarkProperty().addListener(l -> changeFilterProperty());
-        onlyHdProperty().addListener(l -> changeFilterProperty());
-        onlyNewProperty().addListener(l -> changeFilterProperty());
-        onlyUtProperty().addListener(l -> changeFilterProperty());
-        onlyLiveProperty().addListener(l -> changeFilterProperty());
-        onlyAktHistoryProperty().addListener(l -> changeFilterProperty());
+        onlyVisProperty().addListener(l -> reportFilterChange());
+        onlyBookmarkProperty().addListener(l -> reportFilterChange());
+        onlyHdProperty().addListener(l -> reportFilterChange());
+        onlyNewProperty().addListener(l -> reportFilterChange());
+        onlyUtProperty().addListener(l -> reportFilterChange());
+        onlyLiveProperty().addListener(l -> reportFilterChange());
+        onlyAktHistoryProperty().addListener(l -> reportFilterChange());
 
-        notVisProperty().addListener(l -> changeFilterProperty());
-        notAboProperty().addListener(l -> changeFilterProperty());
-        notHistoryProperty().addListener(l -> changeFilterProperty());
-        notDoubleProperty().addListener(l -> changeFilterProperty());
-        notGeoProperty().addListener(l -> changeFilterProperty());
-        notFutureProperty().addListener(l -> changeFilterProperty());
+        notVisProperty().addListener(l -> reportFilterChange());
+        notAboProperty().addListener(l -> reportFilterChange());
+        notHistoryProperty().addListener(l -> reportFilterChange());
+        notDoubleProperty().addListener(l -> reportFilterChange());
+        notGeoProperty().addListener(l -> reportFilterChange());
+        notFutureProperty().addListener(l -> reportFilterChange());
 
-        blacklistOnProperty().addListener(l -> changeBlacklistProperty());
+        blacklistOnProperty().addListener(l -> reportBlacklistChange());
 
     }
 
-    private void changeFilterProperty() {
+    private void reportFilterChange() {
         if (reportChange) {
             filterChange.setValue(!filterChange.getValue());
         }
     }
 
-    private void changeBlacklistProperty() {
+    private void reportBlacklistChange() {
         if (reportChange) {
             blacklistChange.setValue(!blacklistChange.getValue());
         }
@@ -291,7 +217,7 @@ public final class SelectedFilter extends SelectedFilterProps {
         setNotVis(false);
     }
 
-    public boolean txtFilterIsEmpty() {
+    public boolean isTextFilterEmpty() {
         return getChannel().isEmpty() &&
                 getTheme().isEmpty() &&
                 getThemeTitle().isEmpty() &&
@@ -330,7 +256,7 @@ public final class SelectedFilter extends SelectedFilterProps {
         return ret;
     }
 
-    public Predicate<Film> getPred() {
+    public Predicate<Film> getPredicate() {
         SelectedFilter selectedFilter = this;
 
         Filter fChannel;
@@ -500,5 +426,6 @@ public final class SelectedFilter extends SelectedFilterProps {
 
         return predicate;
     }
+
 
 }

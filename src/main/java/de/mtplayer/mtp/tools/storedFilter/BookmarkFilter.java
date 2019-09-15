@@ -24,7 +24,7 @@ public class BookmarkFilter {
     }
 
     public static SelectedFilter getBookmarkFilter(SelectedFilter selectedFilter) {
-        SelectedFilter sf = SelectedFilter.getFilterCopy(selectedFilter);
+        SelectedFilter sf = SelectedFilterFactory.getFilterCopy(selectedFilter);
         sf.clearFilter();
         sf.setOnlyVis(true);
         sf.setOnlyBookmark(true);

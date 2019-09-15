@@ -20,8 +20,8 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.abo.Abo;
 import de.mtplayer.mtp.controller.data.download.DownloadConstants;
 import de.mtplayer.mtp.controller.data.download.DownloadFactory;
-import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
+import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.geometry.Insets;
@@ -105,7 +105,7 @@ public class StatusBarController extends AnchorPane {
         stackPane.getChildren().addAll(nonePane, filmPane, downloadPane, aboPane);
         nonePane.toFront();
 
-        progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
+        progData.loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
             @Override
             public void start(ListenerFilmlistLoadEvent event) {
                 stopTimer = true;

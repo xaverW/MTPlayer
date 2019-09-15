@@ -34,17 +34,17 @@ public class ImportNewFilmlistFromServer {
         this.progData = progData;
         eventListenerList = new EventListenerList();
         readFilmlist = new ReadFilmlist();
-        readFilmlist.addAdListener(new ListenerFilmlistLoad() {
+        readFilmlist.addAdListener(new ListenerLoadFilmlist() {
             @Override
             public synchronized void start(ListenerFilmlistLoadEvent event) {
-                for (final ListenerFilmlistLoad l : eventListenerList.getListeners(ListenerFilmlistLoad.class)) {
+                for (final ListenerLoadFilmlist l : eventListenerList.getListeners(ListenerLoadFilmlist.class)) {
                     l.start(event);
                 }
             }
 
             @Override
             public synchronized void progress(ListenerFilmlistLoadEvent event) {
-                for (final ListenerFilmlistLoad l : eventListenerList.getListeners(ListenerFilmlistLoad.class)) {
+                for (final ListenerLoadFilmlist l : eventListenerList.getListeners(ListenerLoadFilmlist.class)) {
                     l.progress(event);
 
                 }
@@ -56,8 +56,8 @@ public class ImportNewFilmlistFromServer {
         });
     }
 
-    public void addAdListener(ListenerFilmlistLoad listener) {
-        eventListenerList.add(ListenerFilmlistLoad.class, listener);
+    public void addAdListener(ListenerLoadFilmlist listener) {
+        eventListenerList.add(ListenerLoadFilmlist.class, listener);
     }
 
     // #########################################################
@@ -218,7 +218,7 @@ public class ImportNewFilmlistFromServer {
     }
 
     private synchronized void reportFinished(boolean ok) {
-        for (final ListenerFilmlistLoad l : eventListenerList.getListeners(ListenerFilmlistLoad.class)) {
+        for (final ListenerLoadFilmlist l : eventListenerList.getListeners(ListenerLoadFilmlist.class)) {
             l.finished(new ListenerFilmlistLoadEvent("", "", 0, 0, !ok));
         }
     }

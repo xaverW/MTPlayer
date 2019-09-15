@@ -56,7 +56,7 @@ public class FilmlistBlackFilter {
             Stream<Film> initialStream = filmlist.parallelStream();
 
             filterList.clear();
-            if (PROG_DATA.storedFilter.getSelectedFilter().isBlacklistOn()) {
+            if (PROG_DATA.storedFilters.getActFilterSettings().isBlacklistOn()) {
                 // only when blacklist in ON!
 
                 // vor dem Zählen der Treffer erst mal löschen

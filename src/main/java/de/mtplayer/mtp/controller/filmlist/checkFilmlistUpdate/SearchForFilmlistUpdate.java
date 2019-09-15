@@ -17,7 +17,13 @@
 
 package de.mtplayer.mtp.controller.filmlist.checkFilmlistUpdate;
 
+import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
+import de.mtplayer.mtp.controller.config.ProgData;
+import de.mtplayer.mtp.controller.filmlist.LoadFilmlist;
+import de.mtplayer.mtp.gui.tools.Listener;
+import de.p2tools.p2Lib.tools.log.PLog;
+import javafx.application.Platform;
 
 public class SearchForFilmlistUpdate {
 
@@ -25,30 +31,65 @@ public class SearchForFilmlistUpdate {
     private String dateOfFilmlistFromLastCheck = "";
     private boolean checkedListWasNewer = false;
 
-    public boolean doCheck(String source, String date) {
+    public static SearchForFilmlistUpdate StartSearchForFilmlistUpdate() {
+        SearchForFilmlistUpdate s = new SearchForFilmlistUpdate();
+        s.startCheckForFilmlistUpdate();
+        return s;
+    }
+
+    private void startCheckForFilmlistUpdate() {
+        Listener.addListener(new Listener(Listener.EREIGNIS_TIMER, LoadFilmlist.class.getSimpleName()) {
+            @Override
+            public void ping() {
+                try {
+                    if (ProgData.getInstance().loadFilmlist.getPropLoadFilmlist()) {
+                        // dann laden wir gerade
+                        counter = 0;
+                        return;
+                    }
+
+                    if (doCheck()) {
+                        Platform.runLater(() -> ProgData.getInstance().mtPlayerController.setButtonFilmlistUpdate());
+                    }
+
+                } catch (final Exception ex) {
+                    PLog.errorLog(963014785, ex);
+                }
+            }
+        });
+    }
+
+    private boolean doCheck() {
         boolean ret = false;
+        String date = ProgData.getInstance().filmlist.genDate();
         ++counter;
-        if (counter > ProgConst.CHECK_FILMLIST_UPDATE) {
-            counter = 0;
 
-            if (date.equals(dateOfFilmlistFromLastCheck) && checkedListWasNewer) {
-                // dann wurde die Filmliste schon mal nicht geändert und
-                // es ist schon bekannt, dass es eine neue Liste gibt
-                return false;
-            }
+        if (counter < ProgConst.CHECK_FILMLIST_UPDATE) {
+            // dann ists noch nicht soweit
+            return false;
+        }
+        counter = 0;
 
-            dateOfFilmlistFromLastCheck = date;
-            checkedListWasNewer = false;
+        if (date.equals(dateOfFilmlistFromLastCheck) && checkedListWasNewer) {
+            // dann wurde die Filmliste schon mal nicht geändert und
+            // es ist schon bekannt, dass es eine neue Liste gibt
+            return false;
+        }
+        dateOfFilmlistFromLastCheck = date;
+        checkedListWasNewer = false;
 
-            // dann Filmliste prüfen
+        // URL direkt aus der Liste holen, sonst wird die URL-Liste aktualisiert!!
+        final String url = ProgConfig.SYSTEM_LOAD_FILMS_MANUALLY.get().isEmpty() ?
+                ProgData.getInstance().searchFilmListUrls.getFilmlistUrlList_akt().getRand(null) :
+                ProgConfig.SYSTEM_LOAD_FILMS_MANUALLY.get();
+
+        // dann Filmliste prüfen
 //            if (new SearchUpdateWithId().hasNewRemoteFilmlist()) { //todo wenn drin und source ist URL!! dann das
-            if (new SearchUpdateWithDate().hasNewRemoteFilmlist(source, date)) {
-                checkedListWasNewer = true;
-                ret = true;
-            }
+        if (new SearchUpdateWithDate().hasNewRemoteFilmlist(url, date)) {
+            checkedListWasNewer = true;
+            ret = true;
         }
 
         return ret;
     }
-
 }

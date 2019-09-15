@@ -21,8 +21,8 @@ import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.BlackData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
-import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
+import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.gui.tools.table.Table;
 import de.mtplayer.mtp.tools.filmListFilter.FilmlistBlackFilterCountHits;
@@ -206,7 +206,7 @@ public class BlackPane {
 
 
         // toDo -> vielleicht den ganzen Dialog sperren??
-        ProgData.getInstance().loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
+        ProgData.getInstance().loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
             @Override
             public void start(ListenerFilmlistLoadEvent event) {
                 btnSortList.setDisable(true);

@@ -32,7 +32,7 @@ import de.mtplayer.mtp.controller.filmlist.filmlistUrls.FilmlistUrlData;
 import de.mtplayer.mtp.controller.mediaDb.MediaCollectionData;
 import de.mtplayer.mtp.tools.storedFilter.FilterToXml;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
-import de.mtplayer.mtp.tools.storedFilter.StoredFilter;
+import de.mtplayer.mtp.tools.storedFilter.StoredFilters;
 import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.tools.log.PLog;
 
@@ -225,23 +225,23 @@ public class IoWriteXml implements AutoCloseable {
 
     private void xmlWriteFilterFilm() throws XMLStreamException {
         // Filter schreiben, aktuellen
-        final SelectedFilter akt_sf = progData.storedFilter.getSelectedFilter();
+        final SelectedFilter akt_sf = progData.storedFilters.getActFilterSettings();
         // nur zur Info im Config-File
-        akt_sf.setName(StoredFilter.SELECTED_FILTER_NAME);
+        akt_sf.setName(StoredFilters.SELECTED_FILTER_NAME);
 
         writer.writeComment("aktuelle Filtereinstellungen");
         writer.writeCharacters(PConst.LINE_SEPARATOR);
 
         xmlWriteData(FilterToXml.TAG,
                 FilterToXml.getXmlArray(),
-                FilterToXml.getValueArray(progData.storedFilter.getSelectedFilter()),
+                FilterToXml.getValueArray(progData.storedFilters.getActFilterSettings()),
                 true);
 
         writer.writeCharacters(PConst.LINE_SEPARATOR);
         writer.writeComment("gespeicherte Filter");
         writer.writeCharacters(PConst.LINE_SEPARATOR);
         // Liste der Filterprofile
-        progData.storedFilter.getStordeFilterList().stream().forEach((sf) -> {
+        progData.storedFilters.getStordeFilterList().stream().forEach((sf) -> {
             xmlWriteData(FilterToXml.TAG, FilterToXml.getXmlArray(), FilterToXml.getValueArray(sf), true);
         });
     }

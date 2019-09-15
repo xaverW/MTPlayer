@@ -66,7 +66,7 @@ public class ProgInitFilter {
         sf.setNotFuture(false);
 
         sf.initFilter();
-        progData.storedFilter.getStordeFilterList().add(sf);
+        progData.storedFilters.getStordeFilterList().add(sf);
 
 
         //========================================================
@@ -110,7 +110,7 @@ public class ProgInitFilter {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.storedFilter.getStordeFilterList().add(sf);
+        progData.storedFilters.getStordeFilterList().add(sf);
 
 
         //========================================================
@@ -154,7 +154,7 @@ public class ProgInitFilter {
         sf.setNotGeo(false);
         sf.setNotFuture(false);
 
-        progData.storedFilter.getStordeFilterList().add(sf);
+        progData.storedFilters.getStordeFilterList().add(sf);
 
 
         //========================================================
@@ -199,7 +199,7 @@ public class ProgInitFilter {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.storedFilter.getStordeFilterList().add(sf);
+        progData.storedFilters.getStordeFilterList().add(sf);
 
 
         //========================================================
@@ -244,7 +244,7 @@ public class ProgInitFilter {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.storedFilter.getStordeFilterList().add(sf);
+        progData.storedFilters.getStordeFilterList().add(sf);
 
 
         //========================================================
@@ -290,7 +290,7 @@ public class ProgInitFilter {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.storedFilter.getStordeFilterList().add(sf);
+        progData.storedFilters.getStordeFilterList().add(sf);
 
 
         //========================================================
@@ -335,7 +335,7 @@ public class ProgInitFilter {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.storedFilter.getStordeFilterList().add(sf);
+        progData.storedFilters.getStordeFilterList().add(sf);
 
 
         //========================================================
@@ -380,7 +380,7 @@ public class ProgInitFilter {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.storedFilter.getStordeFilterList().add(sf);
+        progData.storedFilters.getStordeFilterList().add(sf);
 
 
         //========================================================
@@ -428,7 +428,7 @@ public class ProgInitFilter {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.storedFilter.getStordeFilterList().add(sf);
+        progData.storedFilters.getStordeFilterList().add(sf);
 
 
         //========================================================
@@ -475,7 +475,7 @@ public class ProgInitFilter {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.storedFilter.getStordeFilterList().add(sf);
+        progData.storedFilters.getStordeFilterList().add(sf);
 
 
     }

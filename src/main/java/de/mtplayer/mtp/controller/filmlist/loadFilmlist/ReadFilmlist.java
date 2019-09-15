@@ -62,18 +62,18 @@ public class ReadFilmlist {
     private Map<String, Integer> filmsPerDateBlocked = new TreeMap<>();
     private Map<String, Integer> filmsPerDurationBlocked = new TreeMap<>();
 
-    public void addAdListener(ListenerFilmlistLoad listener) {
-        listeners.add(ListenerFilmlistLoad.class, listener);
+    public void addAdListener(ListenerLoadFilmlist listener) {
+        listeners.add(ListenerLoadFilmlist.class, listener);
+    }
+
+    public static void readSavedFilmlist() {
+        new ReadFilmlist().readFilmlist(ProgInfos.getFilmListFile(), ProgData.getInstance().filmlist);
     }
 
     /*
     Hier wird die Filmliste tatsächlich geladen (von Datei/URL)
      */
-    public void readFilmlist(String sourceFileUrl, final Filmlist filmlist) {
-        readFilmlist(sourceFileUrl, filmlist, ProgConfig.SYSTEM_LOAD_FILMLIST_MAX_DAYS.getInt());
-    }
-
-    public void readFilmlist(String sourceFileUrl, final Filmlist filmlist, int loadFilmsNumberDays) {
+    void readFilmlist(String sourceFileUrl, final Filmlist filmlist) {
 
         filmsPerChannelFound.clear();
         filmsPerChannelBlocked.clear();
@@ -322,7 +322,7 @@ public class ReadFilmlist {
      * @param filmlist the list to read to
      */
     private void processFromFile(String source, Filmlist filmlist) {
-        notifyProgress(source, ListenerFilmlistLoad.PROGRESS_INDETERMINATE);
+        notifyProgress(source, ListenerLoadFilmlist.PROGRESS_INDETERMINATE);
         try (InputStream in = selectDecompressor(source, new FileInputStream(source));
              JsonParser jp = new JsonFactory().createParser(in)) {
             readData(jp, filmlist);
@@ -416,23 +416,23 @@ public class ReadFilmlist {
 
     private void notifyStart(String url) {
         progress = 0;
-        for (final ListenerFilmlistLoad l : listeners.getListeners(ListenerFilmlistLoad.class)) {
+        for (final ListenerLoadFilmlist l : listeners.getListeners(ListenerLoadFilmlist.class)) {
             l.start(new ListenerFilmlistLoadEvent(url, "Filmliste downloaden", 0, 0, false));
         }
     }
 
     private void notifyProgress(String url, double iProgress) {
         progress = iProgress;
-        if (progress > ListenerFilmlistLoad.PROGRESS_MAX) {
-            progress = ListenerFilmlistLoad.PROGRESS_MAX;
+        if (progress > ListenerLoadFilmlist.PROGRESS_MAX) {
+            progress = ListenerLoadFilmlist.PROGRESS_MAX;
         }
-        for (final ListenerFilmlistLoad l : listeners.getListeners(ListenerFilmlistLoad.class)) {
+        for (final ListenerLoadFilmlist l : listeners.getListeners(ListenerLoadFilmlist.class)) {
             l.progress(new ListenerFilmlistLoadEvent(url, "Filmliste downloaden", progress, 0, false));
         }
     }
 
     private void notifyFinished(String url) {
-        for (final ListenerFilmlistLoad l : listeners.getListeners(ListenerFilmlistLoad.class)) {
+        for (final ListenerLoadFilmlist l : listeners.getListeners(ListenerLoadFilmlist.class)) {
             l.finished(new ListenerFilmlistLoadEvent(url, "Filmliste geladen", progress, 0, false));
         }
     }

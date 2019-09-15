@@ -20,6 +20,8 @@ package de.mtplayer.mtp;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.Filmlist;
+import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
+import de.mtplayer.mtp.tools.storedFilter.SelectedFilterFactory;
 import de.p2tools.p2Lib.dialog.ProgInfoDialog;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.tools.duration.PDuration;
@@ -97,6 +99,10 @@ public class MTPTester {
             btnRepair.setMaxWidth(Double.MAX_VALUE);
             btnRepair.setOnAction(a -> repairText());
 
+            Button btnShowActFilter = new Button("aktuellen Filter ausgeben");
+            btnShowActFilter.setMaxWidth(Double.MAX_VALUE);
+            btnShowActFilter.setOnAction(a -> showFilter());
+
             int row = 0;
             gridPane.add(text, 0, row, 2, 1);
             gridPane.add(btnAddToHash, 0, ++row);
@@ -106,6 +112,7 @@ public class MTPTester {
             gridPane.add(btnClearDescription, 0, ++row);
             gridPane.add(btnCheck, 0, ++row);
             gridPane.add(btnRepair, 0, ++row);
+            gridPane.add(btnShowActFilter, 0, ++row);
             gridPane.add(textArea, 0, ++row, 2, 1);
         }
     }
@@ -260,6 +267,15 @@ public class MTPTester {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
+    }
+
+    private void showFilter() {
+        SelectedFilter sf = progData.storedFilters.getActFilterSettings();
+        System.out.println("====================================");
+        for (String s : SelectedFilterFactory.printFilter(sf)) {
+            System.out.println(s);
+        }
+        System.out.println("====================================");
     }
 
     private static String cleanUnicode(String ret) {

@@ -33,6 +33,7 @@ import de.mtplayer.mtp.controller.mediaDb.MediaCollectionData;
 import de.mtplayer.mtp.tools.storedFilter.FilterToXml;
 import de.mtplayer.mtp.tools.storedFilter.ProgInitFilter;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
+import de.mtplayer.mtp.tools.storedFilter.SelectedFilterFactory;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 
@@ -150,11 +151,11 @@ public class IoReadXml implements AutoCloseable {
                                     FilterToXml.setValueArray(sf, ar);
                                     if (filtercount == 0) {
                                         // damit das nicht schon gemeldet wird
-                                        this.progData.storedFilter.getSelectedFilter().setReportChange(false);
-                                        SelectedFilter.copyFilter(sf, this.progData.storedFilter.getSelectedFilter());
-                                        this.progData.storedFilter.getSelectedFilter().setReportChange(true);
+                                        this.progData.storedFilters.getActFilterSettings().setReportChange(false);
+                                        SelectedFilterFactory.copyFilter(sf, this.progData.storedFilters.getActFilterSettings());
+                                        this.progData.storedFilters.getActFilterSettings().setReportChange(true);
                                     } else {
-                                        this.progData.storedFilter.getStordeFilterList().add(sf);
+                                        this.progData.storedFilters.getStordeFilterList().add(sf);
                                     }
                                     ++filtercount;
                                 }
@@ -207,7 +208,7 @@ public class IoReadXml implements AutoCloseable {
         progData.aboList.sort();
 
         // ListeFilmUpdateServer aufbauen
-        if (progData.storedFilter.getStordeFilterList().isEmpty()) {
+        if (progData.storedFilters.getStordeFilterList().isEmpty()) {
             ProgInitFilter.setProgInitFilter();
         }
     }

@@ -18,7 +18,7 @@ package de.mtplayer.mtp.controller.filmlist.loadFilmlist;
 
 import java.util.EventListener;
 
-public class ListenerFilmlistLoad implements EventListener {
+public class ListenerLoadFilmlist implements EventListener {
 
     public static final double PROGRESS_MIN = 0.0;
     public static final double PROGRESS_MAX = 1.0;

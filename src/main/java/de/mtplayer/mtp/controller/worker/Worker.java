@@ -19,9 +19,11 @@ package de.mtplayer.mtp.controller.worker;
 import de.mtplayer.mtp.controller.ProgSave;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
+import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
 import de.mtplayer.mtp.gui.dialog.NoSetDialogController;
+import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
+import de.mtplayer.mtp.tools.storedFilter.SelectedFilterFactory;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
@@ -38,20 +40,29 @@ public class Worker {
     private ObservableList<String> channelsForAbosList = FXCollections.observableArrayList("");
     private ObservableList<String> allAboNamesList = FXCollections.observableArrayList("");
 
+    final SelectedFilter sfTemp = new SelectedFilter();
+    String downloadFilterChannel = ProgConfig.FILTER_DOWNLOAD_CHANNEL.get();
+    String downloadFilterAbo = ProgConfig.FILTER_DOWNLOAD_ABO.get();
+    String aboFilterChannel = ProgConfig.FILTER_ABO_CHANNEL.get();
+
     private final ProgData progData;
 
     public Worker(ProgData progData) {
         this.progData = progData;
-        progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
+
+        progData.loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
             @Override
             public void start(ListenerFilmlistLoadEvent event) {
-                if (event.progress == ListenerFilmlistLoad.PROGRESS_INDETERMINATE) {
+                if (event.progress == ListenerLoadFilmlist.PROGRESS_INDETERMINATE) {
                     // ist dann die gespeicherte Filmliste
                     progData.maskerPane.setMaskerVisible(true, false);
                 } else {
                     progData.maskerPane.setMaskerVisible(true, true);
                 }
                 progData.maskerPane.setMaskerProgress(event.progress, event.text);
+
+                // the channel combo will be resetted, therefor save the filter
+                saveFilter();
             }
 
             @Override
@@ -62,18 +73,21 @@ public class Worker {
             @Override
             public void loaded(ListenerFilmlistLoadEvent event) {
                 progData.maskerPane.setMaskerVisible(true, false);
-                progData.maskerPane.setMaskerProgress(ListenerFilmlistLoad.PROGRESS_INDETERMINATE, "Filmliste verarbeiten");
+                progData.maskerPane.setMaskerProgress(ListenerLoadFilmlist.PROGRESS_INDETERMINATE, "Filmliste verarbeiten");
             }
 
             @Override
             public void finished(ListenerFilmlistLoadEvent event) {
                 new ProgSave().saveAll(); // damit nichts verlorengeht
-                getChannelAndTheme();
+                createChannelAndThemeList();
                 if (ProgConfig.ABO_SEARCH_NOW.getBool()) {
                     searchForAbosAndMaybeStart();
                 } else {
                     progData.maskerPane.setMaskerVisible(false);
                 }
+
+                // activate the saved filter
+                resetFilter();
             }
         });
 
@@ -88,6 +102,19 @@ public class Worker {
                 getAboNames());
     }
 
+    private void saveFilter() {
+        SelectedFilterFactory.copyFilter(progData.storedFilters.getActFilterSettings(), sfTemp);
+        downloadFilterChannel = ProgConfig.FILTER_DOWNLOAD_CHANNEL.get();
+        downloadFilterAbo = ProgConfig.FILTER_DOWNLOAD_ABO.get();
+        aboFilterChannel = ProgConfig.FILTER_ABO_CHANNEL.get();
+    }
+
+    private void resetFilter() {
+        SelectedFilterFactory.copyFilter(sfTemp, progData.storedFilters.getActFilterSettings());
+        ProgConfig.FILTER_DOWNLOAD_CHANNEL.setValue(downloadFilterChannel);
+        ProgConfig.FILTER_DOWNLOAD_ABO.setValue(downloadFilterAbo);
+        ProgConfig.FILTER_ABO_CHANNEL.setValue(aboFilterChannel);
+    }
 
     public void searchForAbosAndMaybeStart() {
         if (progData.loadFilmlist.getPropLoadFilmlist()) {
@@ -107,7 +134,7 @@ public class Worker {
 
         PDuration.counterStart("Worker.searchForAbosAndMaybeStart");
         progData.maskerPane.setMaskerVisible(true, false);
-        progData.maskerPane.setMaskerProgress(ListenerFilmlistLoad.PROGRESS_INDETERMINATE, "Downloads suchen");
+        progData.maskerPane.setMaskerProgress(ListenerLoadFilmlist.PROGRESS_INDETERMINATE, "Downloads suchen");
 
         Thread th = new Thread(() -> {
             try {
@@ -134,7 +161,7 @@ public class Worker {
         th.start();
     }
 
-    private void getChannelAndTheme() {
+    private void createChannelAndThemeList() {
 //        Platform.runLater(() -> allChannelList.setAll(Arrays.asList(progData.filmlist.sender)));
         allChannelList.setAll(Arrays.asList(progData.filmlist.sender));
         getTheme("");
@@ -147,15 +174,13 @@ public class Worker {
             theme.addAll(Arrays.asList(progData.filmlistFiltered.themePerChannel[0]));
         } else {
             makeTheme(sender.trim(), theme);
-//            for (int i = 1; i < progData.filmlistFiltered.themePerChannel.length; ++i) {
-//                if (progData.filmlistFiltered.sender[i].equalsIgnoreCase(sender)) {
-//                    theme.addAll(Arrays.asList(progData.filmlistFiltered.themePerChannel[i]));
-//                    break;
-//                }
-//            }
         }
 
-        Platform.runLater(() -> themeForChannelList.setAll(theme));
+        Platform.runLater(() -> {
+            saveFilter();
+            themeForChannelList.setAll(theme);
+            resetFilter();
+        });
     }
 
     private void makeTheme(String sender, ArrayList<String> theme) {
@@ -185,10 +210,11 @@ public class Worker {
     private void getAboNames() {
         final ArrayList<String> listAboChannel = progData.aboList.getAboChannelList();
         final ArrayList<String> listAboName = progData.aboList.getAboNameList();
-
         Platform.runLater(() -> {
+            saveFilter();
             channelsForAbosList.setAll(listAboChannel);
             allAboNamesList.setAll(listAboName);
+            resetFilter();
         });
     }
 

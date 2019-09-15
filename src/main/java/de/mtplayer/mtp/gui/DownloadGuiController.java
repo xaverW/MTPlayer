@@ -434,7 +434,7 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private void setFilterProperty() {
-        ProgConfig.FILTER_DOWNLOAD_SENDER.getStringProperty().addListener((observable, oldValue, newValue) -> {
+        ProgConfig.FILTER_DOWNLOAD_CHANNEL.getStringProperty().addListener((observable, oldValue, newValue) -> {
             setFilter();
         });
         ProgConfig.FILTER_DOWNLOAD_ABO.getStringProperty().addListener((observable, oldValue, newValue) -> {
@@ -452,7 +452,7 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private void setFilter() {
-        final String sender = ProgConfig.FILTER_DOWNLOAD_SENDER.get();
+        final String sender = ProgConfig.FILTER_DOWNLOAD_CHANNEL.get();
         final String abo = ProgConfig.FILTER_DOWNLOAD_ABO.get();
         final String source = ProgConfig.FILTER_DOWNLOAD_SOURCE.get();
         final String art = ProgConfig.FILTER_DOWNLOAD_KIND.get();

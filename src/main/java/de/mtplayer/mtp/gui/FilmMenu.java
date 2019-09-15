@@ -21,6 +21,7 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.tools.storedFilter.BookmarkFilter;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
+import de.mtplayer.mtp.tools.storedFilter.SelectedFilterFactory;
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -86,21 +87,21 @@ public class FilmMenu {
         btFilterBookmakr.setOnAction(a -> {
 
             if (storedFilter != null && storedBookmarkFilter != null) {
-                SelectedFilter sf = progData.storedFilter.getSelectedFilter();
-                if (!SelectedFilter.compareFilter(storedBookmarkFilter, sf)) {
+                SelectedFilter sf = progData.storedFilters.getActFilterSettings();
+                if (!SelectedFilterFactory.compareFilter(storedBookmarkFilter, sf)) {
                     // dann hat sich der Filter geändert
                     storedFilter = null;
                 }
             }
 
             if (storedFilter == null) {
-                storedFilter = SelectedFilter.getFilterCopy(progData.storedFilter.getSelectedFilter());
+                storedFilter = SelectedFilterFactory.getFilterCopy(progData.storedFilters.getActFilterSettings());
 
                 storedBookmarkFilter = BookmarkFilter.getBookmarkFilter(storedFilter);
-                progData.storedFilter.loadStoredFilter(storedBookmarkFilter);
+                progData.storedFilters.setActFilterSettings(storedBookmarkFilter);
 
             } else {
-                progData.storedFilter.loadStoredFilter(storedFilter);
+                progData.storedFilters.setActFilterSettings(storedFilter);
                 storedFilter = null;
             }
         });

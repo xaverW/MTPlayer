@@ -18,8 +18,8 @@
 package de.mtplayer.mtp.tools.filmListFilter;
 
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
+import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
 import de.mtplayer.mtp.gui.tools.Listener;
 import javafx.application.Platform;
 
@@ -31,9 +31,9 @@ public class FilmListFilter {
     public FilmListFilter(ProgData progData) {
         this.progData = progData;
 
-        progData.storedFilter.filterChangeProperty().addListener((observable, oldValue, newValue) -> filter());
+        progData.storedFilters.filterChangeProperty().addListener((observable, oldValue, newValue) -> filter());
         progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> filterList());
-        progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
+        progData.loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
             @Override
             public void finished(ListenerFilmlistLoadEvent event) {
                 filterList();
@@ -64,7 +64,7 @@ public class FilmListFilter {
             Thread th = new Thread(() -> {
                 try {
                     Platform.runLater(() -> {
-                        progData.filmlistFiltered.filterdListSetPred(progData.storedFilter.getSelectedFilter().getPred());
+                        progData.filmlistFiltered.filterdListSetPred(progData.storedFilters.getActFilterSettings().getPredicate());
                         search.set(false);
                         if (research.get()) {
                             filterList();

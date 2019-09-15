@@ -101,12 +101,12 @@ public class AboGuiController extends AnchorPane {
 
     public void setFilmFilterFromAbo() {
         Optional<Abo> abo = getSel();
-        progData.storedFilter.loadStoredFilterFromAbo(abo);
+        progData.storedFilters.loadStoredFilterFromAbo(abo);
     }
 
     public void setAboFromFilmFilter() {
         Optional<Abo> abo = getSel();
-        progData.aboList.changeAboFromFilter(abo, progData.storedFilter.getSelectedFilter());
+        progData.aboList.changeAboFromFilter(abo, progData.storedFilters.getActFilterSettings());
     }
 
     public void setAboActive(boolean on) {
@@ -219,7 +219,7 @@ public class AboGuiController extends AnchorPane {
     }
 
     private void setFilterProperty() {
-        ProgConfig.FILTER_ABO_SENDER.getStringProperty().addListener((observable, oldValue, newValue) -> {
+        ProgConfig.FILTER_ABO_CHANNEL.getStringProperty().addListener((observable, oldValue, newValue) -> {
             setFilter();
         });
         ProgConfig.FILTER_ABO_KIND.getStringProperty().addListener((observable, oldValue, newValue) -> {
@@ -231,7 +231,7 @@ public class AboGuiController extends AnchorPane {
     }
 
     private void setFilter() {
-        final String sender = ProgConfig.FILTER_ABO_SENDER.get();
+        final String sender = ProgConfig.FILTER_ABO_CHANNEL.get();
         final String kind = ProgConfig.FILTER_ABO_KIND.get();
         final String description = ProgConfig.FILTER_ABO_DESCRIPTION.get().trim().toLowerCase();
 

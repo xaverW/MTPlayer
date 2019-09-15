@@ -97,19 +97,19 @@ public class FilmGuiTableContextMenu {
     private void addFilter(ContextMenu contextMenu, Film film) {
         Menu submenuFilter = new Menu("Filter");
         final MenuItem miFilterChannel = new MenuItem("nach Sender filtern");
-        miFilterChannel.setOnAction(event -> progData.storedFilter.getSelectedFilter().setChannelAndVis(film.getChannel()));
+        miFilterChannel.setOnAction(event -> progData.storedFilters.getActFilterSettings().setChannelAndVis(film.getChannel()));
         final MenuItem miFilterTheme = new MenuItem("nach Thema filtern");
-        miFilterTheme.setOnAction(event -> progData.storedFilter.getSelectedFilter().setThemeAndVis(film.getTheme()));
+        miFilterTheme.setOnAction(event -> progData.storedFilters.getActFilterSettings().setThemeAndVis(film.getTheme()));
         final MenuItem miFilterChannelTheme = new MenuItem("nach Sender und Thema filtern");
         miFilterChannelTheme.setOnAction(event -> {
-            progData.storedFilter.getSelectedFilter().setChannelAndVis(film.getChannel());
-            progData.storedFilter.getSelectedFilter().setThemeAndVis(film.getTheme());
+            progData.storedFilters.getActFilterSettings().setChannelAndVis(film.getChannel());
+            progData.storedFilters.getActFilterSettings().setThemeAndVis(film.getTheme());
         });
         final MenuItem miFilterChannelThemeTitle = new MenuItem("nach Sender, Thema und Titel filtern");
         miFilterChannelThemeTitle.setOnAction(event -> {
-            progData.storedFilter.getSelectedFilter().setChannelAndVis(film.getChannel());
-            progData.storedFilter.getSelectedFilter().setThemeAndVis(film.getTheme());
-            progData.storedFilter.getSelectedFilter().setTitleAndVis(film.getTitle());
+            progData.storedFilters.getActFilterSettings().setChannelAndVis(film.getChannel());
+            progData.storedFilters.getActFilterSettings().setThemeAndVis(film.getTheme());
+            progData.storedFilters.getActFilterSettings().setTitleAndVis(film.getTitle());
         });
         submenuFilter.getItems().addAll(miFilterChannel, miFilterTheme, miFilterChannelTheme, miFilterChannelThemeTitle);
         contextMenu.getItems().add(submenuFilter);
@@ -127,7 +127,7 @@ public class FilmGuiTableContextMenu {
         if (film.getAbo() == null) {
             // neues Abo anlegen
             miAboAddFilter.setOnAction(a -> {
-                SelectedFilter selectedFilter = progData.storedFilter.getSelectedFilter();
+                SelectedFilter selectedFilter = progData.storedFilters.getActFilterSettings();
                 progData.aboList.addNewAbo(selectedFilter);
             });
             miAboAddChannelTheme.setOnAction(a ->

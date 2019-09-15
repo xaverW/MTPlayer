@@ -78,7 +78,7 @@ public class FilmTools {
             return;
         }
 
-        if (ProgData.getInstance().storedFilter.getSelectedFilter().isOnlyHd()) {
+        if (ProgData.getInstance().storedFilters.getActFilterSettings().isOnlyHd()) {
             resolution = Film.RESOLUTION_HD;
         }
 
@@ -107,7 +107,7 @@ public class FilmTools {
         }
 
         String resolution = "";
-        if (progData.storedFilter.getSelectedFilter().isOnlyHd()) {
+        if (progData.storedFilters.getActFilterSettings().isOnlyHd()) {
             resolution = Film.RESOLUTION_HD;
         }
 

@@ -193,12 +193,12 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs MEDIA_DB_NO_HIDDEN_FILES = addNewKey("media-db-no-hidden-files");
 
     // Filter Abo
-    public static MLConfigs FILTER_ABO_SENDER = addNewKey("filter-abo-sender");
+    public static MLConfigs FILTER_ABO_CHANNEL = addNewKey("filter-abo-sender");
     public static MLConfigs FILTER_ABO_DESCRIPTION = addNewKey("filter-abo-beschreibung");
     public static MLConfigs FILTER_ABO_KIND = addNewKey("filter-abo-kind");
 
     // Filter Download
-    public static MLConfigs FILTER_DOWNLOAD_SENDER = addNewKey("filter-download-sender");
+    public static MLConfigs FILTER_DOWNLOAD_CHANNEL = addNewKey("filter-download-sender");
     public static MLConfigs FILTER_DOWNLOAD_SOURCE = addNewKey("filter-download-source");
     public static MLConfigs FILTER_DOWNLOAD_KIND = addNewKey("filter-download-kind");
     public static MLConfigs FILTER_DOWNLOAD_ABO = addNewKey("filter-download-abo");

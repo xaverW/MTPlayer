@@ -21,8 +21,8 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
-import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
+import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
 import de.mtplayer.mtp.gui.AboGuiPack;
 import de.mtplayer.mtp.gui.DownloadGuiPack;
 import de.mtplayer.mtp.gui.FilmGuiPack;
@@ -135,7 +135,7 @@ public class MTPlayerController extends StackPane {
             progData.loadFilmlist.loadNewFilmlistFromServer();
         });
 
-        progData.loadFilmlist.addAdListener(new ListenerFilmlistLoad() {
+        progData.loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
 
             @Override
             public void start(ListenerFilmlistLoadEvent event) {

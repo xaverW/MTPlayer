@@ -17,8 +17,8 @@
 
 package de.mtplayer.mtp.controller.filmlist;
 
-import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoad;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
+import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
 
@@ -37,7 +37,7 @@ public class NotifyProgress {
         try {
             Platform.runLater(() -> {
 
-                for (final ListenerFilmlistLoad l : listeners.getListeners(ListenerFilmlistLoad.class)) {
+                for (final ListenerLoadFilmlist l : listeners.getListeners(ListenerLoadFilmlist.class)) {
                     switch (notify) {
                         case START:
                             l.start(event);

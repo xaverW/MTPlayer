@@ -21,7 +21,6 @@ import javafx.beans.property.*;
 public class SelectedFilterProps {
 
     public static final int FILTER_DURATION_MAX_MINUTE = 150;
-    //    public static final int FILTER_DURATION_MAX_SEC = FILTER_DURATION_MAX_MINUTE * 60;
     public static final int FILTER_FILMTIME_MAX_SEC = 24 * 60 * 60; // das ist eigentlich bereits 00:00 vom nächsten Tag!!
     public static final int FILTER_DAYS_MAX = 30;
 
