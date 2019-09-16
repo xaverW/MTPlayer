@@ -16,6 +16,7 @@
 
 package de.mtplayer.mtp.gui;
 
+import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.gui.tools.HelpText;
@@ -32,6 +33,7 @@ import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -87,10 +89,10 @@ public class FilmFilterController extends FilterController {
     private final String NOT_GEO = "Geo geblockt";
     private final String NOT_FUTURE = "Zukunft";
 
-    private final SplitMenuButton menuItem = new SplitMenuButton();
     private final VBox vBoxFilter;
     private final ProgData progData;
 
+    private final IntegerProperty filterProp = ProgConfig.FILTER_FILME_SEL_FILTER.getIntegerProperty();
 
     public FilmFilterController() {
         super();
@@ -114,6 +116,7 @@ public class FilmFilterController extends FilterController {
         initCheckFilter();
 
         initRest();
+
         progData.storedFilters.filterChangeProperty().addListener((observable, oldValue, newValue) -> checkCboFilter());
         checkCboFilter();
     }
@@ -163,7 +166,6 @@ public class FilmFilterController extends FilterController {
     private void filterProfiles() {
         // Filterprofile einrichten
         cboFilter.setItems(progData.storedFilters.getStordeFilterList());
-        cboFilter.getSelectionModel().selectFirst();
         cboFilter.setTooltip(new Tooltip("Gespeicherte Filterprofile können\n" +
                 "hier geladen werden"));
 
@@ -216,6 +218,9 @@ public class FilmFilterController extends FilterController {
         mbFilterTools.setGraphic(new ProgIcons().ICON_BUTTON_MENU);
         mbFilterTools.getItems().addAll(miLoad, miSave, miNew, miRename, miDel, miDelAll, miReset, new SeparatorMenuItem(), miAbo);
         mbFilterTools.setTooltip(new Tooltip("gespeicherte Filter bearbeiten"));
+
+        cboFilter.getSelectionModel().select(filterProp.get());
+        filterProp.bind(cboFilter.getSelectionModel().selectedIndexProperty());
 
         cboFilter.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {

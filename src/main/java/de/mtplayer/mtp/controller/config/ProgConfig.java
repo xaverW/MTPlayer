@@ -192,6 +192,9 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs MEDIA_DB_WITH_OUT_SUFFIX = addNewKey("media-db-with-out-suffix");
     public static MLConfigs MEDIA_DB_NO_HIDDEN_FILES = addNewKey("media-db-no-hidden-files");
 
+    // Filter Filme
+    public static MLConfigs FILTER_FILME_SEL_FILTER = addNewKey("filter-filme-sel-filter");
+
     // Filter Abo
     public static MLConfigs FILTER_ABO_CHANNEL = addNewKey("filter-abo-sender");
     public static MLConfigs FILTER_ABO_DESCRIPTION = addNewKey("filter-abo-beschreibung");
