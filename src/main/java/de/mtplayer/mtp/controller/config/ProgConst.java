@@ -34,6 +34,7 @@ public class ProgConst {
     public static final String FILE_MEDIA_DB = "mediadb.txt";
     public static final String LOG_DIR = "Log";
     public static final String CSS_FILE = "/de/mtplayer/mtp/mtfx.css";
+    public static final String CSS_FILE_DARK_THEME = "/de/mtplayer/mtp/mtfx-dark.css";
 
     public static final String FORMAT_ZIP = ".zip";
     public static final String FORMAT_XZ = ".xz";

@@ -125,6 +125,10 @@ public class MTPlayer extends Application {
             scene.getStylesheets().add(css);
             PInit.addP2LibCss(scene);
 
+            ProgConfig.SYSTEM_DARK_THEME.getStringProperty().addListener((u, o, n) ->
+                    setTheme());
+            setTheme();
+
             primaryStage.setScene(scene);
             primaryStage.setOnCloseRequest(e -> {
                 e.consume();
@@ -138,6 +142,18 @@ public class MTPlayer extends Application {
 
         } catch (final Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void setTheme() {
+        if (ProgConfig.SYSTEM_DARK_THEME.getBool()) {
+            String css = this.getClass().getResource(ProgConst.CSS_FILE_DARK_THEME).toExternalForm();
+            scene.getStylesheets().add(css);
+            PInit.addCssFile(css);
+        } else {
+            String css = this.getClass().getResource(ProgConst.CSS_FILE_DARK_THEME).toExternalForm();
+            scene.getStylesheets().removeAll(css);
+            PInit.removeCssFile(css);
         }
     }
 

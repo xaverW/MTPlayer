@@ -67,6 +67,7 @@ public class ConfigPaneController extends AnchorPane {
     StringProperty propLogDir = ProgConfig.SYSTEM_LOG_DIR.getStringProperty();
     BooleanProperty propSizeFilm = ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM.getBooleanProperty();
     BooleanProperty propSizeDownload = ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD.getBooleanProperty();
+    BooleanProperty propDarkTheme = ProgConfig.SYSTEM_DARK_THEME.getBooleanProperty();
 
     IntegerProperty selectedTab = ProgConfig.SYSTEM_CONFIG_DIALOG_CONFIG;
 
@@ -135,37 +136,40 @@ public class ConfigPaneController extends AnchorPane {
         TitledPane tpConfig = new TitledPane("Allgemein", gridPane);
         result.add(tpConfig);
 
+
         final PToggleSwitch tglSearchAbo = new PToggleSwitch("Abos automatisch suchen:");
         tglSearchAbo.selectedProperty().bindBidirectional(propAbo);
-
         final Button btnHelpAbo = PButton.helpButton(stage, "Abos automatisch suchen",
                 HelpText.SEARCH_ABOS_IMMEDIATELY);
         GridPane.setHalignment(btnHelpAbo, HPos.RIGHT);
 
-        final PToggleSwitch tglSmallFilm = new PToggleSwitch("In der Tabelle \"Film\" nur kleine Button anzeigen:");
-        tglSmallFilm.selectedProperty().bindBidirectional(propSizeFilm);
-
-        final PToggleSwitch tglSmallDownload = new PToggleSwitch("In der Tabelle \"Download\" nur kleine Button anzeigen:");
-        tglSmallDownload.selectedProperty().bindBidirectional(propSizeDownload);
-
-        final Button btnHelpSize = PButton.helpButton(stage, "Nur kleine Button anzeigen",
-                HelpText.SMALL_BUTTON);
-        GridPane.setHalignment(btnHelpSize, HPos.RIGHT);
-
 
         final PToggleSwitch tglStartDownload = new PToggleSwitch("Downloads aus Abos sofort starten:");
         tglStartDownload.selectedProperty().bindBidirectional(propDown);
-
         final Button btnHelpDownload = PButton.helpButton(stage, "Downloads sofort starten",
                 HelpText.START_DOWNLOADS_FROM_ABOS_IMMEDIATELY);
         GridPane.setHalignment(btnHelpDownload, HPos.RIGHT);
 
 
+        final PToggleSwitch tglSmallFilm = new PToggleSwitch("In der Tabelle \"Film\" nur kleine Button anzeigen:");
+        tglSmallFilm.selectedProperty().bindBidirectional(propSizeFilm);
+        final PToggleSwitch tglSmallDownload = new PToggleSwitch("In der Tabelle \"Download\" nur kleine Button anzeigen:");
+        tglSmallDownload.selectedProperty().bindBidirectional(propSizeDownload);
+        final Button btnHelpSize = PButton.helpButton(stage, "Nur kleine Button anzeigen",
+                HelpText.SMALL_BUTTON);
+        GridPane.setHalignment(btnHelpSize, HPos.RIGHT);
+
+
+        final PToggleSwitch tglDarkTheme = new PToggleSwitch("Dunkles Erscheinungsbild der Programmoberfläche");
+        tglDarkTheme.selectedProperty().bindBidirectional(propDarkTheme);
+        final Button btnHelpTheme = PButton.helpButton(stage, "Erscheinungsbild der Programmoberfläche",
+                HelpText.DARK_THEME);
+        GridPane.setHalignment(btnHelpSize, HPos.RIGHT);
+
+
         final Button btnHelpUserAgent = PButton.helpButton(stage, "User Agent festlegen",
                 HelpText.USER_AGENT);
         GridPane.setHalignment(btnHelpUserAgent, HPos.RIGHT);
-
-
         TextField txtUserAgent = new TextField() {
 
             @Override
@@ -192,7 +196,6 @@ public class ConfigPaneController extends AnchorPane {
                 return false;
             }
         };
-
         txtUserAgent.textProperty().bindBidirectional(ProgConfig.SYSTEM_USERAGENT.getStringProperty());
 
 
@@ -205,6 +208,9 @@ public class ConfigPaneController extends AnchorPane {
         gridPane.add(tglSmallFilm, 0, ++row, 2, 1);
         gridPane.add(btnHelpSize, 2, row);
         gridPane.add(tglSmallDownload, 0, ++row, 2, 1);
+
+        gridPane.add(tglDarkTheme, 0, ++row, 2, 1);
+        gridPane.add(btnHelpTheme, 2, row);
 
         gridPane.add(new Label(" "), 0, ++row);
         gridPane.add(new Label("User Agent:"), 0, ++row);

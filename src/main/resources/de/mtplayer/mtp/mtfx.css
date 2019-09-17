@@ -1,6 +1,7 @@
 /*  Programmweites style sheet */
 
 .root {
+//    -fx-base: rgba(60, 63, 65, 255); // dark
     -style-border-color-1: royalblue;
     -style-border-color-2: royalblue;
     -style-text-color-1: mediumblue;
@@ -325,3 +326,4 @@
 .titled-pane:collapsed > .title {
     -fx-font-weight: normal;
 }
+

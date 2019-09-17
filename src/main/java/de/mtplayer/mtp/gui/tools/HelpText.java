@@ -352,6 +352,10 @@ public class HelpText {
     public static final String SMALL_BUTTON = "In der Tabelle Filme und Downloads können auch " +
             "kleine Buttons angezeigt werden. Die Zeilenhöhe wird dadurch kleiner.";
 
+    public static final String DARK_THEME = "Das Programm wird damit mit einer dunklen " +
+            "Programmoberfläche angezeigt. Damit alle Elemente der Programmoberfläche " +
+            "geändert werden, kann ein Programmneustart notwendig sein.";
+
     public static final String USER_AGENT = "Hier kann ein User Agent angegeben werden. " +
             "Bei Downloads wird er dann als Absender verwendet. Bleibt das Feld leer, wird kein User Agent " +
             "verwendet. Solange alles funktioniert, kann das Feld leer bleiben. Ansonsten wäre das z.B. eine " +
