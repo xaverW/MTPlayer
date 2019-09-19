@@ -1,7 +1,20 @@
 /*  style sheet for the dark-theme */
 
 .root {
-    -fx-base: #3f474f;
+    -tab-button-1: #969696;
+    -tab-button-2: #a6a6a6;
+    -tab-button-3: rgba(230,230,230,0);
+
+    -filter-ok-1: #939494;
+    -filter-lin-grad-1: linear-gradient(from 50% 22% to 50% 120% , reflect, #6D6D6D 10% , #8A929E 100% );
+
+    -lin-grad-1: linear-gradient(from 0% 0% to 100% 100%, -tab-button-1 50%, white 100%);
+    -rad-grad-1: radial-gradient(center 50% -40%, radius 200%, -tab-button-2 45%, -tab-button-3 50%);
+
+    -lin-grad-btn-func-1: linear-gradient(from 0% 0% to 100% 100%, -tab-button-1 40%, white 90%);
+    -rad-grad-btn-func-1: radial-gradient(center 80% -70%, radius 200%, -tab-button-2 35%, -tab-button-3 40%);
+
+    -fx-base: #5d6166;
     -fx-accent: #e7eff7 ;
     -fx-default-button: #7f878f ;
     -fx-focus-color: #dfdfdf;
@@ -15,6 +28,12 @@
         );
     -fx-focused-mark-color : -fx-focused-text-base-color ;
 
+}
+
+.pRangeButton {
+    -lin-grad-pRangeBox-1: linear-gradient(from 0% 0% to 100% 100% , #BDBDBD 50% , #9A9A9A 100% );
+    -rad-grad-pRangeBox-1: radial-gradient(center 50% -40% , radius 120% , #909090 50% , #E6E6E6);
+    -pRangeBox-1: #555555;
 }
 
 .text-input:focused {

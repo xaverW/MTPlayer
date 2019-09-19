@@ -1,14 +1,25 @@
 /*  Programmweites style sheet */
 
 .root {
-//    -fx-base: rgba(60, 63, 65, 255); // dark
+    -tab-button-1: #d6d6d6;
+    -tab-button-2: #e6e6e6;
+    -tab-button-3: rgba(230,230,230,0);
+
+    -filter-ok-1: #c3c4c4;
+    -filter-lin-grad-1: linear-gradient(from 50% 17% to 50% 114% , repeat, #E6E6E6, #CBD8EB 100% );
+
+    -lin-grad-1: linear-gradient(from 0% 0% to 100% 100%, -tab-button-1 50%, white 100%);
+    -rad-grad-1: radial-gradient(center 50% -40%, radius 200%, -tab-button-2 45%, -tab-button-3 50%);
+
+    -lin-grad-btn-func-1: linear-gradient(from 0% 0% to 100% 100%, -tab-button-1 40%, white 90%);
+    -rad-grad-btn-func-1: radial-gradient(center 80% -70%, radius 200%, -tab-button-2 35%, -tab-button-3 40%);
+
     -style-border-color-1: royalblue;
     -style-border-color-2: royalblue;
     -style-text-color-1: mediumblue;
     -style-border-color-lbl: royalblue;
     -style-border-color-tab: cornflowerblue;
 }
-
 
 /* CheckBoxCell */
 .checkbox-table * {
@@ -94,8 +105,8 @@
     -fx-background-radius: 12 12 0 0, 10 10 0 0;
     -fx-background-insets: 0;
     -fx-background-color:
-             linear-gradient(from 0% 0% to 100% 100%, #d6d6d6 50%, white 100%),
-             radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+             -lin-grad-1,
+             -rad-grad-1;
     -fx-text-fill: black;
  }
 .tab-pane > .tab-header-area > .headers-region > .tab:selected {
@@ -138,8 +149,8 @@
     -fx-font-weight: bold;
     -fx-alignment: center ;
     -fx-background-color: #c3c4c4,
-        linear-gradient(from 0% 0% to 100% 100%, #d6d6d6 50%, white 100%),
-        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+        -lin-grad-1,
+        -rad-grad-1;
     -fx-background-radius: 30;
     -fx-background-insets: 0,1,1;
     -fx-text-fill: black;
@@ -152,8 +163,8 @@
     -fx-font-weight: bold;
     -fx-alignment: center ;
     -fx-background-color: #5d5e8c,
-        linear-gradient(from 0% 0% to 100% 100%, #d6d6d6 50%, white 100%),
-        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+        -lin-grad-1,
+        -rad-grad-1;
     -fx-background-radius: 30;
     -fx-background-insets: 0,1,1;
     -fx-text-fill: black;
@@ -166,8 +177,8 @@
     -fx-font-weight: bold;
     -fx-alignment: center ;
     -fx-background-color: blue,
-        linear-gradient(from 0% 0% to 100% 100%, #d6d6d6 50%, white 100%),
-        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+        -lin-grad-1,
+        -rad-grad-1;
     -fx-background-radius: 30;
     -fx-background-insets: 0,1,1;
     -fx-text-fill: black;
@@ -180,8 +191,8 @@
     -fx-font-weight: bold;
     -fx-alignment: center ;
     -fx-background-color: blue,
-         linear-gradient(from 0% 0% to 100% 100%, #d6d6d6 50%, white 100%),
-         radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+         -lin-grad-1,
+         -rad-grad-1;
     -fx-background-radius: 30;
     -fx-background-insets: 0,1,1;
     -fx-text-fill: blue;
@@ -192,15 +203,15 @@
 
 .markFilterOk {
     -fx-text-fill: -fx-text-base-color;
-    -fx-background-color: #c3c4c4,
-        linear-gradient(from 50% 17% to 50% 114% , repeat, #E6E6E6, #CBD8EB 100% );
+    -fx-background-color: -filter-ok-1,
+       -filter-lin-grad-1;
     -fx-background-insets: 0,1,1;
 }
 
 .btnFilmlist{
     -fx-background-color: #c3c4c4,
-        linear-gradient(from 0% 0% to 100% 100%, #d6d6d6 50%, white 100%),
-        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+        -lin-grad-1,
+        -rad-grad-1;
     -fx-background-radius: 30;
     -fx-background-insets: 0,1,1;
     -fx-text-fill: black;
@@ -212,7 +223,7 @@
 .btnFilmlist_{
     -fx-background-color: #3a74d4,
         linear-gradient(from 0% 0% to 100% 100%, #c7d4d4 50%, white 100%),
-        radial-gradient(center 50% -40%, radius 200%, #c7d4d4 45%, rgba(230,230,230,0) 50%);
+        radial-gradient(center 50% -40%, radius 200%, #c7d4d4 45%, -tab-button-3 50%);
     -fx-background-radius: 30;
     -fx-background-insets: 0,2,2;
     -fx-text-fill: black;
@@ -223,22 +234,22 @@
 
 .btnFilmlist:hover{
      -fx-background-color: #f3f4f4,
-         linear-gradient(from 0% 0% to 100% 100%, #d6d6d6 50%, white 100%),
-         radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+         -lin-grad-1,
+         -rad-grad-1;
 }
 
 .btnFilmlist:pressed{
      -fx-background-color: #5d5e8c,
          linear-gradient(from 0% 0% to 100% 100%, #d6d6d6 40%, white 90%),
-         radial-gradient(center 80% -70%, radius 200%, #e6e6e6 35%, rgba(230,230,230,0) 40%);
+         radial-gradient(center 80% -70%, radius 200%, #e6e6e6 35%, -tab-button-3 40%);
 }
 
 .btnStartDialog{
     -fx-font-weight: bold;
     -fx-alignment: center ;
     -fx-background-color: #c3c4c4,
-        linear-gradient(from 0% 0% to 100% 100%, #d6d6d6 50%, white 100%),
-        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+        -lin-grad-1,
+        -rad-grad-1;
     -fx-background-radius: 30;
     -fx-background-insets: 0,1,1;
     -fx-text-fill: black;
@@ -249,15 +260,15 @@
 
 .btnStartDialogSel{
     -fx-background-color: blue,
-            linear-gradient(from 0% 0% to 100% 100%, #d6d6d6 50%, white 100%),
-            radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+            -lin-grad-1,
+            -rad-grad-1;
     -fx-text-fill: blue;
 }
 
 .btnFunction{
     -fx-background-color: #c3c4c4,
-        linear-gradient(from 0% 0% to 100% 100%, #d6d6d6 50%, white 100%),
-        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+        -lin-grad-1,
+        -rad-grad-1;
     -fx-background-radius: 30;
     -fx-background-insets: 0,1,1;
     -fx-text-fill: black;
@@ -277,20 +288,20 @@
 
 .btnFunction:hover{
     -fx-background-color: #f3f4f4,
-         linear-gradient(from 0% 0% to 100% 100%, #d6d6d6 50%, white 100%),
-         radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+         -lin-grad-1,
+         -rad-grad-1;
 }
 
 .btnFunction:pressed{
      -fx-background-color: #5d5e8c,
-         linear-gradient(from 0% 0% to 100% 100%, #d6d6d6 40%, white 90%),
-         radial-gradient(center 80% -70%, radius 200%, #e6e6e6 35%, rgba(230,230,230,0) 40%);
+         -lin-grad-btn-func-1,
+         -rad-grad-btn-func-1;
 }
 
 .lblSelectedLines {
     -fx-background-color: #c4c4c4,
-        linear-gradient(from 0% 0% to 100% 100%, #d6d6d6 50%, white 100%),
-        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+        -lin-grad-1,
+        -rad-grad-1;
     -fx-background-insets: 0,1,1;
     -fx-background-radius: 5;
     -fx-text-fill: black;
