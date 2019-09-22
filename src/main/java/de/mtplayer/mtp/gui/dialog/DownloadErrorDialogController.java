@@ -26,7 +26,6 @@ import javafx.animation.Timeline;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -39,10 +38,10 @@ import javafx.util.Duration;
 
 public class DownloadErrorDialogController extends PDialogExtra {
 
-    private VBox vBoxCont;
-    private HBox hBoxOk;
+    private final HBox hBoxTitle;
+    private final VBox vBoxCont;
+    private final HBox hBoxOk;
 
-    private HBox hboxTitle = new HBox();
     private Label lblHeader = new Label("Downloadfehler");
     private Button btnOk = new Button("Ok");
 
@@ -58,7 +57,6 @@ public class DownloadErrorDialogController extends PDialogExtra {
 
     private Timeline timeline = null;
     private Integer timeSeconds = ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getInt();
-//    private Integer timeSeconds = 500000;
 
     private final String message;
     private final Download download;
@@ -70,16 +68,44 @@ public class DownloadErrorDialogController extends PDialogExtra {
         this.download = download;
         this.message = message;
 
+        hBoxTitle = getHBoxTitle();
         vBoxCont = getVboxCont();
         hBoxOk = getHboxOk();
 
-        init(getvBoxDialog(), true);
+        init(getVBoxCompleteDialog(), true);
+    }
+
+    @Override
+    public void make() {
+        initCont();
+
+        lblFilmTitle.setStyle("-fx-font-weight: bold;");
+        lblFilmTitle.setText(download.getTitle());
+
+        lblUrl.setText(download.getUrl());
+
+        txtCont.setEditable(false);
+        txtCont.setText(message);
+
+        btnOk.setOnAction(event -> {
+            stopCounter();
+            quit();
+        });
+
+        imageView.setImage(new ProgIcons().IMAGE_ACHTUNG_64);
+
+        //start the countdown...
+        lblTime.setText("");
+        timeline = new Timeline();
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1),
+                new CountdownAction()));
+        timeline.playFromStart();
+
     }
 
     private void initCont() {
-        hboxTitle.setAlignment(Pos.CENTER);
-        hboxTitle.setPadding(new Insets(10));
-        hboxTitle.getChildren().add(lblHeader);
+        hBoxTitle.getChildren().add(lblHeader);
 
         VBox vBox = new VBox();
         vBox.setPadding(new Insets(20));
@@ -112,41 +138,9 @@ public class DownloadErrorDialogController extends PDialogExtra {
 
         vBoxCont.setPadding(new Insets(5));
         vBoxCont.setSpacing(10);
-        vBoxCont.getChildren().addAll(hboxTitle, hBox);
+        vBoxCont.getChildren().add(hBox);
 
         hBoxOk.getChildren().addAll(lblTime, btnOk);
-    }
-
-    @Override
-    public void make() {
-        initCont();
-
-        hboxTitle.getStyleClass().add("dialog-title-border");
-        lblHeader.setStyle("-fx-font-weight: bold;");
-
-        lblFilmTitle.setStyle("-fx-font-weight: bold;");
-        lblFilmTitle.setText(download.getTitle());
-
-        lblUrl.setText(download.getUrl());
-
-        txtCont.setEditable(false);
-        txtCont.setText(message);
-
-        btnOk.setOnAction(event -> {
-            stopCounter();
-            quit();
-        });
-
-        imageView.setImage(new ProgIcons().IMAGE_ACHTUNG_64);
-
-        //start the countdown...
-        lblTime.setText("");
-        timeline = new Timeline();
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1),
-                new CountdownAction()));
-        timeline.playFromStart();
-
     }
 
     private class CountdownAction implements EventHandler {

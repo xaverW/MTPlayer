@@ -50,7 +50,7 @@ public class AboutDialogController extends PDialogExtra {
         this.progData = progData;
 
         addOkButtons(btnOk);
-        init(getvBoxDialog(), true);
+        init(getVBoxCompleteDialog(), true);
     }
 
 

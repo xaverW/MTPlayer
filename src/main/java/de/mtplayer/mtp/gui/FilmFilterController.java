@@ -287,8 +287,8 @@ public class FilmFilterController extends FilterController {
         addTxt("URL", txtUrl, vBox, progData.storedFilters.getActFilterSettings().urlVisProperty());
 
         Separator sp = new Separator();
-//        sp.getStyleClass().add("pseperator1");
-        sp.setMinHeight(20);
+        sp.getStyleClass().add("pseperator1");
+        sp.setMinHeight(10);
         vBox.getChildren().add(sp);
 
         vBox.visibleProperty().bind(progData.storedFilters.getActFilterSettings().channelVisProperty()

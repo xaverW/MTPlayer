@@ -105,7 +105,7 @@ public class AboEditDialogController extends PDialogExtra {
         if (setData == null) {
             Platform.runLater(() -> new NoSetDialogController(progData, NoSetDialogController.TEXT.ABO));
         } else {
-            init(getvBoxDialog(), true);
+            init(getVBoxCompleteDialog(), true);
         }
     }
 

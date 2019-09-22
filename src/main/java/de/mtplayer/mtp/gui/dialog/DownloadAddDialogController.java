@@ -198,7 +198,7 @@ public class DownloadAddDialogController extends PDialogExtra {
         vBoxCont = getVboxCont();
         hBoxOk = getHboxOk();
 
-        init(getvBoxDialog(), true);
+        init(getVBoxCompleteDialog(), true);
     }
 
     @Override

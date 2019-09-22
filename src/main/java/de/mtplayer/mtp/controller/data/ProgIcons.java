@@ -17,13 +17,15 @@
 
 package de.mtplayer.mtp.controller.data;
 
+import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.res.GetIcon;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class ProgIcons {
 
-    public final Image ICON_DIALOG_EIN_SW = GetIcon.getImage("dialog-ein-sw.png");
+    public final Image ICON_DIALOG_EIN_SW = GetIcon.getImage(ProgConfig.SYSTEM_DARK_THEME.getBool() ? "dialog-ein.png" : "dialog-ein-sw.png");
+    public final Image ICON_DIALOG_EIN = GetIcon.getImage("dialog-ein.png");
     public final Image IMAGE_ACHTUNG_32 = GetIcon.getImage("achtung_32.png");
     public final Image IMAGE_ACHTUNG_64 = GetIcon.getImage("achtung_64.png");
 

@@ -14,7 +14,8 @@
     -lin-grad-btn-func-1: linear-gradient(from 0% 0% to 100% 100%, -tab-button-1 40%, white 90%);
     -rad-grad-btn-func-1: radial-gradient(center 80% -70%, radius 200%, -tab-button-2 35%, -tab-button-3 40%);
 
-    -fx-base: #5d6166;
+/*    -fx-base: #5d6166;*/
+    -fx-base: #383b3d;
     -fx-accent: #e7eff7 ;
     -fx-default-button: #7f878f ;
     -fx-focus-color: #dfdfdf;
@@ -26,9 +27,18 @@
             -fx-dark-text-color 59%,
             -fx-mid-text-color 60%
         );
-    -fx-focused-mark-color : -fx-focused-text-base-color ;
 
+    -fx-focused-mark-color : -fx-focused-text-base-color ;
 }
+
+.radio-button:selected .radio .dot {
+    -fx-background-color: #0b99c9;
+    -fx-background-insets: 0;
+}
+.check-box:selected .mark {
+    -fx-background-color: #0b99c9;
+}
+
 
 .pRangeButton {
     -lin-grad-pRangeBox-1: linear-gradient(from 0% 0% to 100% 100% , #BDBDBD 50% , #9A9A9A 100% );
@@ -45,4 +55,29 @@
         -fx-mid-text-color   60%
     );
 }
+
+.context-menu {
+    -fx-background-color: #44484a;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-border-color: #939a9f;
+/*  -fx-text-fill: white;*/
+}
+
+/*
+.menu-item .label {
+    -fx-background-radius: 15px;
+}
+*/
+.menu-item  {
+    -fx-background-radius: 5px;
+}
+
+/*
+.menu-item:focused .label {
+  -fx-text-fill: white;
+}
+*/
+
+
 

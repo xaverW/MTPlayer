@@ -21,7 +21,9 @@
     -style-border-color-tab: cornflowerblue;
 }
 
-/* CheckBoxCell */
+
+
+/* CheckBoxCell: CheckBoxen in der Tabelle*/
 .checkbox-table * {
     -fx-background-color: transparent;
 }
@@ -39,31 +41,36 @@
     -fx-background-color: black;
 }
 
+/* ist nur ein Strich als Trenner: im FilmFilter*/
 .pseperator1 .line {
     -fx-border-style: solid;
-    -fx-border-width: 0 0 1 0; /* its make really one-pixel-border */
+    -fx-border-width: 0 0 1 0; /* makes really one-pixel-border */
     -fx-border-color: steelblue;
 }
 
 .pseperator2 .line {
     -fx-border-style: solid;
-    -fx-border-width: 0 0 2 0; /* its make really one-pixel-border */
+    -fx-border-width: 0 0 2 0; /* makes really one-pixel-border */
     -fx-border-color: steelblue;
 }
 
 .pseperator3 .line {
     -fx-border-style: solid;
-    -fx-border-width: 0 0 3 0; /* its make really one-pixel-border */
+    -fx-border-width: 0 0 3 0; /* makes really one-pixel-border */
     -fx-border-color: steelblue;
 }
 
-/* Rahmen */
-.dialog-title-border {
+/* Rahmen für Dialoge */
+.dialog-title {
     -fx-background-insets: 10;
     -fx-border-color: lightgray;
     -fx-border-insets: 0;
-    -fx-border-width: 5 1;
-    -fx-padding: 5px;
+    -fx-border-width: 2;
+    -fx-padding: 10 5px;
+    -fx-text-alignment: center;
+    -fx-alignment: center ;
+    -fx-font-weight: bold;
+    -fx-font-size: 1.3em;
 }
 .dialog-border {
     -fx-background-insets: 10, 40;
@@ -87,6 +94,7 @@
      -fx-border-width: 20 5, 10 3;
      -fx-padding: 0px;
 }
+
 
 .tab .tab-label {
     -fx-text-alignment: center;
@@ -122,6 +130,9 @@
     -fx-border-color: -style-border-color-1, -style-border-color-2, transparent;
  }
 
+.tab .tab-label {
+     -fx-text-fill: black;
+}
 .tab:selected .tab-label {
      -fx-text-fill: -style-text-color-1;
 }
@@ -338,3 +349,11 @@
     -fx-font-weight: normal;
 }
 
+.context-menu {
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-border-color: #939a9f;
+}
+.menu-item  {
+    -fx-background-radius: 5px;
+}

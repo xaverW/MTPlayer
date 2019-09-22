@@ -532,7 +532,7 @@ public class DownloadEditDialogController extends PDialogExtra {
             case DownloadXml.DOWNLOAD_GEO:
                 if (download.getGeoBlocked()) {
                     ImageView imageView = new ImageView();
-                    imageView.setImage(new ProgIcons().ICON_DIALOG_EIN_SW);
+                    imageView.setImage(ProgConfig.SYSTEM_DARK_THEME.getBool() ? new ProgIcons().ICON_DIALOG_EIN_SW : new ProgIcons().ICON_DIALOG_EIN);
                     gridPane.add(imageView, 1, row);
                 }
                 gridPane.add(lbl[i], 0, row);

@@ -42,10 +42,10 @@ import javafx.util.Duration;
 
 public class DownloadContinueDialogController extends PDialogExtra {
 
+    private final HBox hBoxTitle;
     private final VBox vBoxCont;
     private final HBox hBoxOk;
 
-    private HBox hboxTitle = new HBox();
     private Label lblHeader = new Label("Die Filmdatei existiert bereits.");
     private Button btnRestartDownload = new Button("neu Starten");
     private Button btnCancel = new Button("Abbrechen");
@@ -77,18 +77,17 @@ public class DownloadContinueDialogController extends PDialogExtra {
         this.directDownload = directDownload;
         this.oldPathFile = download.getDestPathFile();
 
+        hBoxTitle = getHBoxTitle();
         vBoxCont = getVboxCont();
         hBoxOk = getHboxOk();
 
-        init(getvBoxDialog(), true);
+        init(getVBoxCompleteDialog(), true);
     }
 
     @Override
     public void make() {
         initCont();
-        hboxTitle.getStyleClass().add("dialog-title-border");
 
-        lblHeader.setStyle("-fx-font-weight: bold;");
         lblFilmTitle.setStyle("-fx-font-weight: bold;");
         lblFilmTitle.setText(download.getTitle());
 
@@ -115,10 +114,7 @@ public class DownloadContinueDialogController extends PDialogExtra {
     }
 
     private void initCont() {
-        hboxTitle.setSpacing(10);
-        hboxTitle.setAlignment(Pos.CENTER);
-        hboxTitle.setPadding(new Insets(10));
-        hboxTitle.getChildren().add(lblHeader);
+        hBoxTitle.getChildren().add(lblHeader);
 
         // Gridpane
         gridPane.setHgap(10);
@@ -147,7 +143,7 @@ public class DownloadContinueDialogController extends PDialogExtra {
 
         vBoxCont.setPadding(new Insets(5));
         vBoxCont.setSpacing(20);
-        vBoxCont.getChildren().addAll(hboxTitle, gridPane);
+        vBoxCont.getChildren().addAll(gridPane);
 
 
         hBoxOk.setAlignment(Pos.BOTTOM_RIGHT);
