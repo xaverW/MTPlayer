@@ -183,22 +183,15 @@ public class FilmFilterController extends FilterController {
         };
         cboFilter.setConverter(converter);
 
-        final MenuItem miLoad = new MenuItem("Filter wieder laden");
+        final MenuItem miLoad = new MenuItem("aktuellen Filter wieder laden");
         miLoad.setOnAction(e -> loadFilter());
         miLoad.disableProperty().bind(cboFilter.getSelectionModel().selectedItemProperty().isNull());
 
-        final MenuItem miSave = new MenuItem("aktuelle Einstellungen als Filter speichern");
-        miSave.setOnAction(e -> saveFilter());
-        miSave.disableProperty().bind(cboFilter.getSelectionModel().selectedItemProperty().isNull());
-
-        final MenuItem miNew = new MenuItem("neuen Filter erstellen");
-        miNew.setOnAction(e -> newFilter());
-
-        final MenuItem miRename = new MenuItem("Filter umbenennen");
+        final MenuItem miRename = new MenuItem("aktuellen Filter umbenennen");
         miRename.setOnAction(e -> renameFilter());
         miRename.disableProperty().bind(cboFilter.getSelectionModel().selectedItemProperty().isNull());
 
-        final MenuItem miDel = new MenuItem("Filter löschen");
+        final MenuItem miDel = new MenuItem("aktuellen Filter löschen");
         miDel.setOnAction(e -> delFilter());
         miDel.disableProperty().bind(cboFilter.getSelectionModel().selectedItemProperty().isNull());
 
@@ -206,17 +199,24 @@ public class FilmFilterController extends FilterController {
         miDelAll.setOnAction(e -> delAllFilter());
         miDelAll.disableProperty().bind(Bindings.size(cboFilter.getItems()).isEqualTo(0));
 
-        final MenuItem miReset = new MenuItem("Filterprofile wieder herstellen");
-        miReset.setOnAction(e -> resetFilter());
+        final MenuItem miSave = new MenuItem("Filtereinstellungen in aktuellem Filter speichern");
+        miSave.setOnAction(e -> saveFilter());
+        miSave.disableProperty().bind(cboFilter.getSelectionModel().selectedItemProperty().isNull());
 
-        final MenuItem miAbo = new MenuItem("aus dem Filter ein Abo erstellen");
+        final MenuItem miNew = new MenuItem("Filtereinstellungen in neuem Filter speichern");
+        miNew.setOnAction(e -> newFilter());
+
+        final MenuItem miAbo = new MenuItem("aus den Filtereinstellungen ein Abo erstellen");
         miAbo.setOnAction(a -> {
             SelectedFilter selectedFilter = progData.storedFilters.getActFilterSettings();
             progData.aboList.addNewAbo(selectedFilter);
         });
 
+        final MenuItem miReset = new MenuItem("alle Filterprofile wieder herstellen");
+        miReset.setOnAction(e -> resetFilter());
+
         mbFilterTools.setGraphic(new ProgIcons().ICON_BUTTON_MENU);
-        mbFilterTools.getItems().addAll(miLoad, miSave, miNew, miRename, miDel, miDelAll, miReset, new SeparatorMenuItem(), miAbo);
+        mbFilterTools.getItems().addAll(miLoad, miRename, miDel, miDelAll, miSave, miNew, miAbo, new SeparatorMenuItem(), miReset);
         mbFilterTools.setTooltip(new Tooltip("gespeicherte Filter bearbeiten"));
 
         cboFilter.getSelectionModel().select(filterProp.get());
@@ -524,6 +524,7 @@ public class FilmFilterController extends FilterController {
         dialog.setTitle("Filter umbenennen");
         dialog.setHeaderText("Den Namen des Filters ändern");
         dialog.setContentText("Neuer Name:");
+        dialog.setResizable(true); // sonst geht der Dialog nicht "auf" und lässt sich nicht vergrößern, bug??
 
         final Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {

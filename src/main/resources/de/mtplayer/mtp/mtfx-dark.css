@@ -58,26 +58,41 @@
 
 .context-menu {
     -fx-background-color: #44484a;
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
     -fx-border-color: #939a9f;
-/*  -fx-text-fill: white;*/
 }
 
-/*
-.menu-item .label {
-    -fx-background-radius: 15px;
-}
-*/
 .menu-item  {
     -fx-background-radius: 5px;
 }
 
+/*normal color: #93979a */
 /*
-.menu-item:focused .label {
-  -fx-text-fill: white;
+.table-row-cell:odd {
+    -fx-background-color: #808486;
 }
 */
+.table-row-cell:empty {
+    -fx-background-color: #b5babd;
+}
 
+.list-cell:empty {
+    -fx-background-color: #b5babd;
+}
 
+.combo-box-popup .list-view .list-cell:hover {
+    -fx-background-color: #b7bccf;
+    -fx-text-fill: black;
+}
+/*.combo-box .cell {
+    -fx-background-color: green;
+    -fx-text-fill: black;
+}*/
+.combo-box .cell:selected {
+    -fx-background-color: #b3b8ba;
+    -fx-text-fill: black;
+}
+
+.downloadDialog {
+    -fx-background-color: #64696b;
+}
 

@@ -184,6 +184,7 @@ public class DownloadFilterController extends FilterController {
         cboState.valueProperty().bindBidirectional(ProgConfig.FILTER_DOWNLOAD_STATE.getStringProperty());
 
         cboChannel.setItems(progData.worker.getAllChannelList());
+        cboChannel.setVisibleRowCount(25);
         cboChannel.valueProperty().bindBidirectional(ProgConfig.FILTER_DOWNLOAD_CHANNEL.getStringProperty());
 
         cboAbo.setItems(progData.worker.getAllAboNamesList()); // todo evtl. nur die vorhandenen Abos

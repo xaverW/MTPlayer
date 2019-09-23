@@ -151,6 +151,7 @@
     -fx-border-width: 0px;
 }
 
+
 .contPanel {
     -fx-border-color: blue;
     -fx-background-color: white;
@@ -356,4 +357,8 @@
 }
 .menu-item  {
     -fx-background-radius: 5px;
+}
+
+.downloadDialog {
+    -fx-background-color: gainsboro;
 }

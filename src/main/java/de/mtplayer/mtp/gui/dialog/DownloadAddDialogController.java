@@ -250,8 +250,11 @@ public class DownloadAddDialogController extends PDialogExtra {
     }
 
     private void initCont() {
-        vBoxAllDownloads.setStyle("-fx-background-color: gainsboro;");
-        hBoxSize.setStyle("-fx-background-color: gainsboro;");
+//        vBoxAllDownloads.setStyle("-fx-background-color: gainsboro;");
+//        hBoxSize.setStyle("-fx-background-color: gainsboro;");
+        vBoxAllDownloads.getStyleClass().add("downloadDialog");
+        hBoxSize.getStyleClass().add("downloadDialog");
+
         lblFilm.setStyle("-fx-font-weight: bold;");
         lblFilmTitle.setStyle("-fx-font-weight: bold;");
 
