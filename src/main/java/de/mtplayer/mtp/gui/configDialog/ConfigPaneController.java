@@ -67,7 +67,7 @@ public class ConfigPaneController extends AnchorPane {
     StringProperty propLogDir = ProgConfig.SYSTEM_LOG_DIR.getStringProperty();
     BooleanProperty propSizeFilm = ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM.getBooleanProperty();
     BooleanProperty propSizeDownload = ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD.getBooleanProperty();
-    BooleanProperty propDarkTheme = ProgConfig.SYSTEM_DARK_THEME.getBooleanProperty();
+//    BooleanProperty propDarkTheme = ProgConfig.SYSTEM_DARK_THEME.getBooleanProperty();
 
     IntegerProperty selectedTab = ProgConfig.SYSTEM_CONFIG_DIALOG_CONFIG;
 
@@ -160,11 +160,11 @@ public class ConfigPaneController extends AnchorPane {
         GridPane.setHalignment(btnHelpSize, HPos.RIGHT);
 
 
-        final PToggleSwitch tglDarkTheme = new PToggleSwitch("Dunkles Erscheinungsbild der Programmoberfläche");
-        tglDarkTheme.selectedProperty().bindBidirectional(propDarkTheme);
-        final Button btnHelpTheme = PButton.helpButton(stage, "Erscheinungsbild der Programmoberfläche",
-                HelpText.DARK_THEME);
-        GridPane.setHalignment(btnHelpSize, HPos.RIGHT);
+//        final PToggleSwitch tglDarkTheme = new PToggleSwitch("Dunkles Erscheinungsbild der Programmoberfläche");
+//        tglDarkTheme.selectedProperty().bindBidirectional(propDarkTheme);
+//        final Button btnHelpTheme = PButton.helpButton(stage, "Erscheinungsbild der Programmoberfläche",
+//                HelpText.DARK_THEME);
+//        GridPane.setHalignment(btnHelpTheme, HPos.RIGHT);
 
 
         final Button btnHelpUserAgent = PButton.helpButton(stage, "User Agent festlegen",
@@ -209,8 +209,8 @@ public class ConfigPaneController extends AnchorPane {
         gridPane.add(btnHelpSize, 2, row);
         gridPane.add(tglSmallDownload, 0, ++row, 2, 1);
 
-        gridPane.add(tglDarkTheme, 0, ++row, 2, 1);
-        gridPane.add(btnHelpTheme, 2, row);
+//        gridPane.add(tglDarkTheme, 0, ++row, 2, 1);
+//        gridPane.add(btnHelpTheme, 2, row);
 
         gridPane.add(new Label(" "), 0, ++row);
         gridPane.add(new Label("User Agent:"), 0, ++row);

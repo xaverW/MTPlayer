@@ -75,8 +75,8 @@ public class HistoryWorker {
                 // String th = historyData.getTheme();
                 // String ti = historyData.getTitle();
 
-                historyData.setTheme(FilmlistFactory.cleanUnicode_1(historyData.getTheme()));
-                historyData.setTitle(FilmlistFactory.cleanUnicode_1(historyData.getTitle()));
+                historyData.setTheme(FilmlistFactory.cleanUnicode(historyData.getTheme()));
+                historyData.setTitle(FilmlistFactory.cleanUnicode(historyData.getTitle()));
 
                 // if (!th.equals(historyData.getTheme())) {
                 //   System.out.println("Thema: " + th + "   " + historyData.getTheme());

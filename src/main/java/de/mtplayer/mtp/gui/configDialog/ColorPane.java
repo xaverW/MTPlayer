@@ -17,14 +17,21 @@
 package de.mtplayer.mtp.gui.configDialog;
 
 import de.mtplayer.mLib.tools.MLC;
+import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.MTColor;
+import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.gui.tools.Listener;
+import de.p2tools.p2Lib.guiTools.PButton;
+import de.p2tools.p2Lib.guiTools.PColumnConstraints;
+import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
+import javafx.beans.property.BooleanProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -36,6 +43,7 @@ import java.util.Collection;
 
 public class ColorPane {
     private final Stage stage;
+    BooleanProperty propDarkTheme = ProgConfig.SYSTEM_DARK_THEME.getBooleanProperty();
 
     public ColorPane(Stage stage) {
         this.stage = stage;
@@ -47,22 +55,33 @@ public class ColorPane {
         vBox.setSpacing(10);
         vBox.setPadding(new Insets(20));
 
-        TableView<MLC> tableView = new TableView<>();
-        VBox.setVgrow(tableView, Priority.ALWAYS);
-        initTableColor(tableView);
-
         Button button = new Button("Alle Farben zurücksetzen");
         button.setOnAction(event -> {
             ProgData.mTColor.reset();
             Listener.notify(Listener.EREIGNIS_GUI_COLOR_CHANGED, ColorPane.class.getSimpleName());
         });
-
         HBox hBox = new HBox();
         hBox.getChildren().add(button);
         hBox.setPadding(new Insets(0));
         hBox.setAlignment(Pos.CENTER_RIGHT);
 
-        vBox.getChildren().addAll(tableView, hBox);
+        final GridPane gridPane = new GridPane();
+        gridPane.setHgap(15);
+        gridPane.setVgap(15);
+        gridPane.setPadding(new Insets(0, 0, 10, 0));
+        final PToggleSwitch tglDarkTheme = new PToggleSwitch("Dunkles Erscheinungsbild der Programmoberfläche");
+        tglDarkTheme.selectedProperty().bindBidirectional(propDarkTheme);
+        final Button btnHelpTheme = PButton.helpButton(stage, "Erscheinungsbild der Programmoberfläche",
+                HelpText.DARK_THEME);
+        gridPane.add(tglDarkTheme, 0, 0);
+        gridPane.add(btnHelpTheme, 1, 0);
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(), PColumnConstraints.getCcPrefSize());
+
+        TableView<MLC> tableView = new TableView<>();
+        VBox.setVgrow(tableView, Priority.ALWAYS);
+        initTableColor(tableView);
+
+        vBox.getChildren().addAll(gridPane, tableView, hBox);
 
         TitledPane tpColor = new TitledPane("Farben", vBox);
         result.add(tpColor);
