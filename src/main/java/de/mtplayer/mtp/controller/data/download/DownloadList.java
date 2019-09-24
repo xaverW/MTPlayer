@@ -146,10 +146,17 @@ public class DownloadList extends SimpleListProperty<Download> {
     }
 
 
-    public synchronized void preferDownloads(ArrayList<Download> download) {
-        renumberList(1 + download.size());
+    public synchronized void preferDownloads(ArrayList<Download> prefDownList) {
+        int addNr = prefDownList.size();
+        for (final Download download : this) {
+            final int i = download.getNr();
+            if (i < DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED) {
+                download.setNr(i + addNr);
+            }
+        }
+
         int i = 1;
-        for (final Download dataDownload : download) {
+        for (final Download dataDownload : prefDownList) {
             dataDownload.setNr(i++);
         }
     }
@@ -203,8 +210,9 @@ public class DownloadList extends SimpleListProperty<Download> {
     }
 
 
-    // =========================
-    // Downloads für Abos suchen
+    /**
+     * search downloads for abos after loading a filmlist
+     */
     public synchronized void searchForDownloadsFromAbos() {
         final int count = getSize();
         downloadListAbo.searchDownloadsFromAbos();
@@ -313,11 +321,16 @@ public class DownloadList extends SimpleListProperty<Download> {
 
 
     public synchronized void setNumbersInList() {
-        int i = 1;
+        int i = getNextNumber();
         for (final Download download : this) {
             if (download.isStarted()) {
-                download.setNr(i++);
+                // gestartete Downloads ohne!! Nummer nummerieren
+                if (download.getNr() == DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED) {
+                    download.setNr(i++);
+                }
+
             } else {
+                // nicht gestartete Downloads
                 download.setNr(DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED);
             }
         }
@@ -332,10 +345,6 @@ public class DownloadList extends SimpleListProperty<Download> {
         }
     }
 
-    public synchronized void numberStoppedDownloads() {
-        this.stream().filter(download -> download.isStateInit()).forEach(download -> download.setNr(DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED));
-    }
-
     private int getNextNumber() {
         int i = 1;
         for (final Download download : this) {
@@ -343,11 +352,7 @@ public class DownloadList extends SimpleListProperty<Download> {
                 i = download.getNr() + 1;
             }
         }
-        return i++;
-    }
-
-    public synchronized void addNumber(Download addDownload) {
-        addDownload.setNr(getNextNumber());
+        return i;
     }
 
     public synchronized void addNumber(ArrayList<Download> downloads) {

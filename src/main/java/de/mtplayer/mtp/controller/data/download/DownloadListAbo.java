@@ -48,9 +48,7 @@ public class DownloadListAbo {
     private void refreshDownloads() {
         // fehlerhafte und nicht gestartete löschen, wird nicht gemeldet ob was gefunden wurde
         PDuration.counterStart("DownloadListAbo.refreshDownloads");
-
-        List<Download> removeList = new ArrayList<>();
-        List<Download> syncRemoveLisst = Collections.synchronizedList(removeList);
+        List<Download> syncRemoveList = Collections.synchronizedList(new ArrayList<>());
 
         downloadList.stream()
                 .filter(d -> !d.isStateStoped())
@@ -58,7 +56,7 @@ public class DownloadListAbo {
                 .forEach(download -> {
                     if (download.isStateInit()) {
                         // noch nicht gestartet
-                        syncRemoveLisst.add(download);
+                        syncRemoveList.add(download);
                     } else if (download.isStateError()) {
                         // fehlerhafte
                         download.resetDownload();
@@ -66,12 +64,13 @@ public class DownloadListAbo {
                 });
 
         // Downloads löschen
-        if (syncRemoveLisst.size() == downloadList.size()) {
+        if (syncRemoveList.size() == downloadList.size()) {
             downloadList.clear();
         } else {
             // das kostet Zeit
-            downloadList.removeAll(syncRemoveLisst);
+            downloadList.removeAll(syncRemoveList);
         }
+
         // und zurückgestellte wieder aktivieren
         downloadList.resetPlacedBack();
 
@@ -81,21 +80,10 @@ public class DownloadListAbo {
     private void searchForNewDownloads() {
         // in der Filmliste nach passenden Filmen suchen und Downloads anlegen
         PDuration.counterStart("DownloadListAbo.searchForNewDownloads");
+        List<Download> syncDownloadArrayList = Collections.synchronizedList(new ArrayList<>());
 
         // den Abo-Trefferzähler zurücksetzen
         progData.aboList.stream().forEach(abo -> abo.clearCountHit());
-
-        ArrayList<Download> downloadArrayList = new ArrayList<>();
-        List<Download> syncDownloadArrayList = Collections.synchronizedList(downloadArrayList);
-
-        final HashSet<String> downloadsAlreadyInTheListHash = new HashSet<>(500); //todo für 90% übertrieben, für 10% immer noch zu wenig???
-        Set syncDownloadsAlreadyInTheListHash = Collections.synchronizedSet(downloadsAlreadyInTheListHash);
-
-        // mit den bereits enthaltenen Download-URLs füllen
-        downloadList.forEach((download) -> syncDownloadsAlreadyInTheListHash.add(download.getUrl()));
-
-        // prüfen ob in "alle Filme" oder nur "nach Blacklist" gesucht werden soll
-        final boolean checkWithBlackList = ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.getBool();
 
         if (progData.setDataList.getSetDataForAbo("") == null) {
             // dann fehlt ein Set für die Abos
@@ -103,22 +91,26 @@ public class DownloadListAbo {
             return;
         }
 
+        // mit den bereits enthaltenen Download-URLs füllen
+        Set<String> syncDownloadsAlreadyInTheListHash = Collections.synchronizedSet(new HashSet<>(500)); //todo für 90% übertrieben, für 10% immer noch zu wenig???
+        downloadList.forEach((download) -> syncDownloadsAlreadyInTheListHash.add(download.getUrl()));
+
+        // prüfen ob in "alle Filme" oder nur "nach Blacklist" gesucht werden soll
+        final boolean checkWithBlackList = ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.getBool();
+
         // und jetzt die Filmliste ablaufen
         progData.filmlist.parallelStream().forEach(film -> {
             final Abo abo = progData.aboList.getAboForFilm_quick(film, true);
-
             if (abo == null) {
                 // dann gibts dafür kein Abo
                 return;
             }
 
             abo.incrementCountHit();
-
             if (!abo.isActive()) {
                 // oder es ist ausgeschaltet
                 return;
             }
-
 
             if (checkWithBlackList && !FilmlistBlackFilter.checkBlacklistForDownloads(film)) {
                 // Blacklist auch bei Abos anwenden und Film wird blockiert
@@ -153,7 +145,7 @@ public class DownloadListAbo {
         syncDownloadsAlreadyInTheListHash.clear();
 
         // und jetzt die hits eintragen (hier, damit nicht bei jedem die Tabelle geändert werden muss)
-        progData.aboList.stream().forEach(abo -> abo.setCountedHits());
+        progData.aboList.forEach(abo -> abo.setCountedHits());
 
         PDuration.counterStop("DownloadListAbo.searchForNewDownloads");
     }

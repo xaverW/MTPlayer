@@ -123,7 +123,6 @@ public class Worker {
             return;
         }
 
-
         if (progData.setDataList.getSetDataForAbo() == null) {
             // SetData sind nicht eingerichtet
             Platform.runLater(() -> new NoSetDialogController(progData, NoSetDialogController.TEXT.ABO));
@@ -131,38 +130,39 @@ public class Worker {
             return;
         }
 
-
         PDuration.counterStart("Worker.searchForAbosAndMaybeStart");
         progData.maskerPane.setMaskerVisible(true, false);
         progData.maskerPane.setMaskerProgress(ListenerLoadFilmlist.PROGRESS_INDETERMINATE, "Downloads suchen");
 
-        Thread th = new Thread(() -> {
-            try {
+//        Thread th = new Thread(() -> {
+//            try {
+// todo da kommst sonst zu Laufzeitproblemen
 
-                PLog.sysLog("Downloads aus Abos suchen");
-                // erledigte entfernen, nicht gestartete Abos entfernen und nach neu Abos suchen
-                progData.downloadList.searchForDownloadsFromAbos();
+        PLog.sysLog("Downloads aus Abos suchen");
+        // erledigte entfernen, nicht gestartete Abos entfernen und nach neu Abos suchen
+        progData.downloadList.searchForDownloadsFromAbos();
 
-                if (Boolean.parseBoolean(ProgConfig.DOWNLOAD_START_NOW.get())) {
-                    // und wenn gewollt auch gleich starten, kann kein Dialog aufgehen: false!
-                    PLog.sysLog("Downloads aus Abos starten");
-                    progData.downloadList.startDownloads();
-                }
+        if (Boolean.parseBoolean(ProgConfig.DOWNLOAD_START_NOW.get())) {
+            // und wenn gewollt auch gleich starten, kann kein Dialog aufgehen: false!
+            PLog.sysLog("Downloads aus Abos starten");
+            progData.downloadList.startDownloads();
+        }
 
-            } catch (Exception ex) {
-                PLog.errorLog(951241204, ex);
-            } finally {
-                progData.maskerPane.switchOffMasker();
-                PDuration.counterStop("Worker.searchForAbosAndMaybeStart");
-            }
-        });
+//            } catch (Exception ex) {
+//                PLog.errorLog(951241204, ex);
+//            } finally {
 
-        th.setName("searchForAbosAndMaybeStart");
-        th.start();
+        progData.maskerPane.switchOffMasker();
+        PDuration.counterStop("Worker.searchForAbosAndMaybeStart");
+
+
+//            }
+//        });
+//        th.setName("searchForAbosAndMaybeStart");
+//        th.start();
     }
 
     private void createChannelAndThemeList() {
-//        Platform.runLater(() -> allChannelList.setAll(Arrays.asList(progData.filmlist.sender)));
         allChannelList.setAll(Arrays.asList(progData.filmlist.sender));
         getTheme("");
     }
