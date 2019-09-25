@@ -198,6 +198,7 @@ public class ProgConfig extends MLConfig {
 
     // Filter Abo
     public static MLConfigs FILTER_ABO_CHANNEL = addNewKey("filter-abo-sender");
+    public static MLConfigs FILTER_ABO_NAME = addNewKey("filter-abo-name");
     public static MLConfigs FILTER_ABO_DESCRIPTION = addNewKey("filter-abo-beschreibung");
     public static MLConfigs FILTER_ABO_KIND = addNewKey("filter-abo-kind");
 

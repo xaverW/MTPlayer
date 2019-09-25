@@ -29,6 +29,7 @@ public class AboFilterController extends FilterController {
     ComboBox<String> cboChannel = new ComboBox<>();
     ComboBox<String> cboArt = new ComboBox<>(); // Abo ein-/ausgeschaltet
     TextField txtDescription = new TextField();
+    TextField txtName = new TextField();
     Button btnClear = new Button("Filter löschen");
 
     private final VBox vBoxFilter;
@@ -41,6 +42,7 @@ public class AboFilterController extends FilterController {
 
         addCont("Abos für Sender", cboChannel, vBoxFilter);
         addCont("Status", cboArt, vBoxFilter);
+        addCont("Name", txtName, vBoxFilter);
         addCont("Beschreibung", txtDescription, vBoxFilter);
 
         HBox hBox = new HBox();
@@ -53,6 +55,7 @@ public class AboFilterController extends FilterController {
     }
 
     private void initFilter() {
+        txtName.textProperty().bindBidirectional(ProgConfig.FILTER_ABO_NAME.getStringProperty());
         txtDescription.textProperty().bindBidirectional(ProgConfig.FILTER_ABO_DESCRIPTION.getStringProperty());
 
         cboChannel.setItems(progData.worker.getChannelsForAbosList());
@@ -65,6 +68,7 @@ public class AboFilterController extends FilterController {
     }
 
     private void clearFilter() {
+        txtName.setText("");
         txtDescription.setText("");
         if (cboChannel.getSelectionModel() != null) {
             cboChannel.getSelectionModel().selectFirst();
