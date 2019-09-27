@@ -17,6 +17,7 @@
 package de.mtplayer.mtp.gui.configDialog;
 
 import de.mtplayer.mLib.tools.MLC;
+import de.mtplayer.mLib.tools.MLCFactory;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
@@ -57,7 +58,7 @@ public class ColorPane {
 
         Button button = new Button("Alle Farben zurücksetzen");
         button.setOnAction(event -> {
-            ProgData.mTColor.reset();
+            ProgData.mTColor.resetAllColors();
             Listener.notify(Listener.EREIGNIS_GUI_COLOR_CHANGED, ColorPane.class.getSimpleName());
         });
         HBox hBox = new HBox();
@@ -105,7 +106,7 @@ public class ColorPane {
         colorColumn.setCellFactory(cellFactoryColor);
 
         final TableColumn<MLC, Color> colorOrgColumn = new TableColumn<>("Original");
-        colorOrgColumn.setCellValueFactory(new PropertyValueFactory<>("colorReset"));
+        colorOrgColumn.setCellValueFactory(new PropertyValueFactory<>("resetColor"));
         colorOrgColumn.setCellFactory(cellFactoryColorReset);
 
         tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
@@ -144,7 +145,7 @@ public class ColorPane {
                 colorPicker.setOnAction(a -> {
                     Color fxColor = colorPicker.getValue();
                     MLC.setColor(fxColor);
-                    ProgData.mTColor.save();
+//                    ProgData.mTColor.save();
                     Listener.notify(Listener.EREIGNIS_GUI_COLOR_CHANGED, ColorPane.class.getSimpleName());
                 });
                 hbox.getChildren().addAll(colorPicker);
@@ -180,7 +181,7 @@ public class ColorPane {
                 final Button button = new Button("Reset");
                 button.setOnAction(a -> {
                     MLC.resetColor();
-                    ProgData.mTColor.save();
+//                    ProgData.mTColor.save();
                     Listener.notify(Listener.EREIGNIS_GUI_COLOR_CHANGED, ColorPane.class.getSimpleName());
                 });
 
@@ -233,7 +234,7 @@ public class ColorPane {
                 }
 
                 MLC MLC = getTableView().getItems().get(getIndex());
-                setStyle("-fx-background-color:" + MLC.getColorToWeb(MLC.getColorReset()));
+                setStyle("-fx-background-color:" + MLCFactory.getColorToWeb(MLC.getResetColor()));
             }
 
         };

@@ -215,25 +215,13 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs COLOR__FILM_NEW = addNewKey("COLOR_FILM_NEW");
     public static MLConfigs COLOR__FILM_BOOKMARK = addNewKey("COLOR_FILM_BOKKMARK");
     public static MLConfigs COLOR__FILM_GEOBLOCK_BACKGROUND = addNewKey("COLOR_FILM_GEOBLOCK_BACKGROUND");
-    public static MLConfigs COLOR__FILM_GEOBLOCK_BACKGROUND_SEL = addNewKey("COLOR_FILM_GEOBLOCK_BACKGROUND_SEL");
-    public static MLConfigs COLOR__DOWNLOAD_IS_ABO = addNewKey("COLOR_DOWNLOAD_IS_ABO");
-    public static MLConfigs COLOR__DOWNLOAD_IS_DIREKT_DOWNLOAD = addNewKey("COLOR_DOWNLOAD_IS_DIREKT_DOWNLOAD");
-    public static MLConfigs COLOR__DOWNLOAD_SHOW = addNewKey("COLOR_DOWNLOAD_SHOW");
     public static MLConfigs COLOR__DOWNLOAD_WAIT = addNewKey("COLOR_DOWNLOAD_WAIT");
-    public static MLConfigs COLOR__DOWNLOAD_WAIT_SEL = addNewKey("COLOR_DOWNLOAD_WAIT_SEL");
     public static MLConfigs COLOR__DOWNLOAD_RUN = addNewKey("COLOR_DOWNLOAD_RUN");
-    public static MLConfigs COLOR__DOWNLOAD_RUN_SEL = addNewKey("COLOR_DOWNLOAD_RUN_SEL");
     public static MLConfigs COLOR__DOWNLOAD_FINISHED = addNewKey("COLOR_DOWNLOAD_FINISHED");
-    public static MLConfigs COLOR__DOWNLOAD_FINISHED_SEL = addNewKey("COLOR_DOWNLOAD_FINISHED_SEL");
     public static MLConfigs COLOR__DOWNLOAD_ERROR = addNewKey("COLOR_DOWNLOAD_ERROR");
-    public static MLConfigs COLOR__DOWNLOAD_ERROR_SEL = addNewKey("COLOR_DOWNLOAD_ERROR_SEL");
     public static MLConfigs COLOR__ABO_SWITCHED_OFF = addNewKey("COLOR_ABO_SWITCHED_OFF");
-    public static MLConfigs COLOR__ABO_SWITCHED_OFF_SEL = addNewKey("COLOR_ABO_SWITCHED_OFF_SEL");
     public static MLConfigs COLOR__FILTER_REGEX = addNewKey("COLOR_FILTER_REGEX");
     public static MLConfigs COLOR__FILTER_REGEX_ERROR = addNewKey("COLOR_FILTER_REGEX_ERROR");
-    public static MLConfigs COLOR__DOWNLOAD_NAME_EXISTS = addNewKey("COLOR_DOWNLOAD_NAME_EXISTS");
-    public static MLConfigs COLOR__DOWNLOAD_NAME_NEW = addNewKey("COLOR_DOWNLOAD_NAME_NEW");
-    public static MLConfigs COLOR__DOWNLOAD_NAME_OLD = addNewKey("COLOR_DOWNLOAD_NAME_OLD");
     public static MLConfigs COLOR__DOWNLOAD_NAME_ERROR = addNewKey("COLOR_DOWNLOAD_NAME_ERROR");
 
 

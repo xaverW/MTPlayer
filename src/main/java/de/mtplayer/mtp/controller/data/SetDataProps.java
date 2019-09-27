@@ -16,7 +16,7 @@
 
 package de.mtplayer.mtp.controller.data;
 
-import de.mtplayer.mLib.tools.MLC;
+import de.mtplayer.mLib.tools.MLCFactory;
 import de.mtplayer.mtp.controller.data.film.Film;
 import javafx.beans.property.*;
 import javafx.scene.paint.Color;
@@ -345,7 +345,7 @@ public class SetDataProps extends SetDataXml {
         arr[PROGRAMSET_PRAEFIX_DIRECT] = getPrefix();
         arr[PROGRAMSET_SUFFIX_DIRECT] = getSuffix();
 
-        arr[PROGRAMSET_COLOR] = MLC.getColorToHex(color.getValue());
+        arr[PROGRAMSET_COLOR] = MLCFactory.getColorToHex(color.getValue());
         arr[PROGRAMSET_ZIEL_PFAD] = getDestPath();
         arr[PROGRAMSET_ZIEL_DATEINAME] = getDestName();
 
