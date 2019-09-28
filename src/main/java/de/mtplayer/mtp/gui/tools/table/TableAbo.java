@@ -33,9 +33,7 @@ public class TableAbo {
     public static TableColumn[] initAboColumn(TableView table) {
         table.getColumns().clear();
 
-        MTColor.ABO_SWITCHED_OFF.colorProperty().addListener((a, b, c) -> {
-            table.refresh();
-        });
+        MTColor.ABO_SWITCHED_OFF.colorProperty().addListener((a, b, c) -> table.refresh());
 
         final TableColumn<Abo, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("nr"));

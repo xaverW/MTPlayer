@@ -20,7 +20,6 @@ package de.mtplayer.mtp.controller.filmlist.checkFilmlistUpdate;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.filmlist.LoadFilmlist;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
@@ -38,7 +37,7 @@ public class SearchForFilmlistUpdate {
     }
 
     private void startCheckForFilmlistUpdate() {
-        Listener.addListener(new Listener(Listener.EREIGNIS_TIMER, LoadFilmlist.class.getSimpleName()) {
+        Listener.addListener(new Listener(Listener.EREIGNIS_TIMER, SearchForFilmlistUpdate.class.getSimpleName()) {
             @Override
             public void ping() {
                 try {

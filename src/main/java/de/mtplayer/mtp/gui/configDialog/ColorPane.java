@@ -23,7 +23,6 @@ import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.gui.tools.HelpText;
-import de.mtplayer.mtp.gui.tools.Listener;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
@@ -58,8 +57,7 @@ public class ColorPane {
 
         Button button = new Button("Alle Farben zurücksetzen");
         button.setOnAction(event -> {
-            ProgData.mTColor.resetAllColors();
-            Listener.notify(Listener.EREIGNIS_GUI_COLOR_CHANGED, ColorPane.class.getSimpleName());
+            ProgData.getInstance().mTColor.resetAllColors();
         });
         HBox hBox = new HBox();
         hBox.getChildren().add(button);
@@ -90,6 +88,7 @@ public class ColorPane {
 
     private void initTableColor(TableView<MLC> tableView) {
 
+        ProgData.getInstance().mTColor.changedProperty().addListener((u, o, n) -> tableView.refresh());
         final TableColumn<MLC, String> textColumn = new TableColumn<>("Beschreibung");
         textColumn.setCellValueFactory(new PropertyValueFactory<>("text"));
 
@@ -145,8 +144,6 @@ public class ColorPane {
                 colorPicker.setOnAction(a -> {
                     Color fxColor = colorPicker.getValue();
                     MLC.setColor(fxColor);
-//                    ProgData.mTColor.save();
-                    Listener.notify(Listener.EREIGNIS_GUI_COLOR_CHANGED, ColorPane.class.getSimpleName());
                 });
                 hbox.getChildren().addAll(colorPicker);
                 setGraphic(hbox);
@@ -181,8 +178,6 @@ public class ColorPane {
                 final Button button = new Button("Reset");
                 button.setOnAction(a -> {
                     MLC.resetColor();
-//                    ProgData.mTColor.save();
-                    Listener.notify(Listener.EREIGNIS_GUI_COLOR_CHANGED, ColorPane.class.getSimpleName());
                 });
 
                 hbox.getChildren().add(button);

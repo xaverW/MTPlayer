@@ -62,12 +62,12 @@ public class ProgData {
     public static String configDir = ""; // Verzeichnis zum Speichern der Programmeinstellungen
 
     // zentrale Klassen
-    public StarterClass starterClass = null; // Klasse zum Ausführen der Programme (für die Downloads): VLC, flvstreamer, ...
+    public StarterClass starterClass; // Klasse zum Ausführen der Programme (für die Downloads): VLC, flvstreamer, ...
     public LoadFilmlist loadFilmlist; // erledigt das updaten der Filmliste
     public SearchFilmListUrls searchFilmListUrls; // da werden die DownloadURLs der Filmliste verwaltet
-    public static final MTColor mTColor = new MTColor(); // verwendete Farben
-    public StoredFilters storedFilters = null; // gespeicherte Filterprofile
-    public FilmListFilter filmListFilter = null;
+    public MTColor mTColor; // verwendete Farben
+    public StoredFilters storedFilters; // gespeicherte Filterprofile
+    public FilmListFilter filmListFilter;
 
     // Gui
     public Stage primaryStage = null;
@@ -79,47 +79,45 @@ public class ProgData {
     public FilmInfoDialogController filmInfoDialogController = null;
 
     // Worker
-    public Worker worker = null; // Liste aller Sender, Themen, ...
+    public Worker worker; // Liste aller Sender, Themen, ...
     private SearchForFilmlistUpdate searchForFilmlistUpdate; // prüft, ob es eine neue Filmliste gibt
 
     // Programmdaten
-    public Filmlist filmlist = null; // ist die komplette Filmliste
-    public Filmlist filmlistFiltered = null; // Filmliste, wie im TabFilme angezeigt
+    public Filmlist filmlist; // ist die komplette Filmliste
+    public Filmlist filmlistFiltered; // Filmliste, wie im TabFilme angezeigt
 
-    public DownloadList downloadList = null; // Filme die als "Download" geladen werden sollen
-    public DownloadList downloadListButton = null; // Filme die über "Tab Filme" als Button/Film abspielen gestartet werden
-    public AboList aboList = null;
-    public BlackList blackList = null;
-    public SetDataList setDataList = null;
-    public MediaDataList mediaDataList = null;
+    public DownloadList downloadList; // Filme die als "Download" geladen werden sollen
+    public DownloadList downloadListButton; // Filme die über "Tab Filme" als Button/Film abspielen gestartet werden
+    public AboList aboList;
+    public BlackList blackList;
+    public SetDataList setDataList;
+    public MediaDataList mediaDataList;
     public MediaCollectionDataList mediaCollectionDataList = null;
 
-    public ReplaceList replaceList = null;
+    public ReplaceList replaceList;
 
-    public HistoryList history = null; // alle angesehenen Filme
-    public HistoryList erledigteAbos = null; // erfolgreich geladenen Abos
-    public HistoryList bookmarks = null; // markierte Filme
+    public HistoryList history; // alle angesehenen Filme
+    public HistoryList erledigteAbos; // erfolgreich geladenen Abos
+    public HistoryList bookmarks; // markierte Filme
 
 
     private ProgData() {
+        mTColor = new MTColor();
         replaceList = new ReplaceList();
-        storedFilters = new StoredFilters(this);
-        filmlist = new Filmlist();
-        loadFilmlist = new LoadFilmlist(this);
         searchFilmListUrls = new SearchFilmListUrls();
 
+        loadFilmlist = new LoadFilmlist(this);
+        storedFilters = new StoredFilters(this);
+        filmlist = new Filmlist();
         filmlistFiltered = new Filmlist();
+
         blackList = new BlackList(this);
-
         setDataList = new SetDataList();
-
         aboList = new AboList(this);
-
         downloadList = new DownloadList(this);
         downloadListButton = new DownloadList(this);
 
         filmListFilter = new FilmListFilter(this);
-
 
         history = new HistoryList(ProgConst.FILE_HISTORY,
                 ProgInfos.getSettingsDirectory_String(), false);
@@ -128,12 +126,10 @@ public class ProgData {
         bookmarks = new HistoryList(ProgConst.FILE_BOOKMARKS,
                 ProgInfos.getSettingsDirectory_String(), true);
 
-
         mediaDataList = new MediaDataList();
         mediaCollectionDataList = new MediaCollectionDataList();
 
         starterClass = new StarterClass(this);
-
         worker = new Worker(this);
         searchForFilmlistUpdate = SearchForFilmlistUpdate.StartSearchForFilmlistUpdate();
     }

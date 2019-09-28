@@ -51,10 +51,11 @@ public class TableFilm {
         table.getColumns().clear();
 
         ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM.getStringProperty().addListener((observableValue, s, t1) -> table.refresh());
-        MTColor.FILM_LIVESTREAM.colorProperty().addListener((a, b, c) -> table.refresh());
-        MTColor.FILM_GEOBLOCK.colorProperty().addListener((a, b, c) -> table.refresh());
-        MTColor.FILM_NEW.colorProperty().addListener((a, b, c) -> table.refresh());
-        MTColor.FILM_HISTORY.colorProperty().addListener((a, b, c) -> table.refresh());
+        // bei Farbänderung der Schriftfarbe klappt es damit besser: Table.refresh_table(table)
+        MTColor.FILM_LIVESTREAM.colorProperty().addListener((a, b, c) -> Table.refresh_table(table));
+        MTColor.FILM_GEOBLOCK.colorProperty().addListener((a, b, c) -> Table.refresh_table(table));
+        MTColor.FILM_NEW.colorProperty().addListener((a, b, c) -> Table.refresh_table(table));
+        MTColor.FILM_HISTORY.colorProperty().addListener((a, b, c) -> Table.refresh_table(table));
 
         final TableColumn<Film, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("nr"));

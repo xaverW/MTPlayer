@@ -119,7 +119,7 @@ public class ProgStart {
         }
         PLog.sysLog("Konfig wurde gelesen!");
         MLInit.initLib(ProgData.debug, ProgConst.PROGRAMNAME, ProgInfos.getUserAgent());
-        ProgData.mTColor.loadStoredColors(); // Farben einrichten
+        ProgData.getInstance().mTColor.loadStoredColors(); // Farben einrichten
         return true;
     }
 

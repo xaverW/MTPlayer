@@ -211,18 +211,31 @@ public class ProgConfig extends MLConfig {
 
     // Farben
     public static MLConfigs COLOR__FILM_LIVESTREAM = addNewKey("COLOR_FILM_LIVESTREAM");
+    public static MLConfigs COLOR__FILM_LIVESTREAM_DARK = addNewKey("COLOR_FILM_LIVESTREAM_DARK");
     public static MLConfigs COLOR__FILM_HISTORY = addNewKey("COLOR_FILM_HISTORY");
+    public static MLConfigs COLOR__FILM_HISTORY_DARK = addNewKey("COLOR_FILM_HISTORY_DARK");
     public static MLConfigs COLOR__FILM_NEW = addNewKey("COLOR_FILM_NEW");
-    public static MLConfigs COLOR__FILM_BOOKMARK = addNewKey("COLOR_FILM_BOKKMARK");
+    public static MLConfigs COLOR__FILM_NEW_DARK = addNewKey("COLOR_FILM_NEW_DARK");
+    public static MLConfigs COLOR__FILM_BOOKMARK = addNewKey("COLOR_FILM_BOKMARK");
+    public static MLConfigs COLOR__FILM_BOOKMARK_DARK = addNewKey("COLOR_FILM_BOKMARK_DARK");
     public static MLConfigs COLOR__FILM_GEOBLOCK_BACKGROUND = addNewKey("COLOR_FILM_GEOBLOCK_BACKGROUND");
+    public static MLConfigs COLOR__FILM_GEOBLOCK_BACKGROUND_DARK = addNewKey("COLOR_FILM_GEOBLOCK_BACKGROUND_DARK");
     public static MLConfigs COLOR__DOWNLOAD_WAIT = addNewKey("COLOR_DOWNLOAD_WAIT");
+    public static MLConfigs COLOR__DOWNLOAD_WAIT_DARK = addNewKey("COLOR_DOWNLOAD_WAIT_DARK");
     public static MLConfigs COLOR__DOWNLOAD_RUN = addNewKey("COLOR_DOWNLOAD_RUN");
+    public static MLConfigs COLOR__DOWNLOAD_RUN_DARK = addNewKey("COLOR_DOWNLOAD_RUN_DARK");
     public static MLConfigs COLOR__DOWNLOAD_FINISHED = addNewKey("COLOR_DOWNLOAD_FINISHED");
+    public static MLConfigs COLOR__DOWNLOAD_FINISHED_DARK = addNewKey("COLOR_DOWNLOAD_FINISHED_DARK");
     public static MLConfigs COLOR__DOWNLOAD_ERROR = addNewKey("COLOR_DOWNLOAD_ERROR");
+    public static MLConfigs COLOR__DOWNLOAD_ERROR_DARK = addNewKey("COLOR_DOWNLOAD_ERROR_DARK");
     public static MLConfigs COLOR__ABO_SWITCHED_OFF = addNewKey("COLOR_ABO_SWITCHED_OFF");
+    public static MLConfigs COLOR__ABO_SWITCHED_OFF_DARK = addNewKey("COLOR_ABO_SWITCHED_OFF_DARK");
     public static MLConfigs COLOR__FILTER_REGEX = addNewKey("COLOR_FILTER_REGEX");
+    public static MLConfigs COLOR__FILTER_REGEX_DARK = addNewKey("COLOR_FILTER_REGEX_DARK");
     public static MLConfigs COLOR__FILTER_REGEX_ERROR = addNewKey("COLOR_FILTER_REGEX_ERROR");
+    public static MLConfigs COLOR__FILTER_REGEX_ERROR_DARK = addNewKey("COLOR_FILTER_REGEX_ERROR_DARK");
     public static MLConfigs COLOR__DOWNLOAD_NAME_ERROR = addNewKey("COLOR_DOWNLOAD_NAME_ERROR");
+    public static MLConfigs COLOR__DOWNLOAD_NAME_ERROR_DARK = addNewKey("COLOR_DOWNLOAD_NAME_ERROR_DARK");
 
 
     public static String PARAMETER_INFO = PConst.LINE_SEPARATOR + "\t"
