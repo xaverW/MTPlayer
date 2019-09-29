@@ -14,6 +14,11 @@
     -lin-grad-btn-func-1: linear-gradient(from 0% 0% to 100% 100%, -tab-button-1 40%, white 90%);
     -rad-grad-btn-func-1: radial-gradient(center 80% -70%, radius 200%, -tab-button-2 35%, -tab-button-3 40%);
 
+    -style-tab-border-color-1: #003ca0;
+    -style-tab-border-color-2: #003cff;
+
+    -style-extra-pane-color: derive(-fx-base,40%);
+
 /*    -fx-base: #5d6166;*/
     -fx-base: #383b3d;
     -fx-accent: #e7eff7 ;
@@ -95,4 +100,3 @@
 .downloadDialog {
     -fx-background-color: #64696b;
 }
-

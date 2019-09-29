@@ -23,7 +23,6 @@ import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.ProgramData;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.gui.tools.HelpTextPset;
-import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
@@ -170,7 +169,7 @@ public class ProgramPane {
     }
 
     private void addConfigs(VBox vBox) {
-        gridPane.setStyle(PConst.CSS_BACKGROUND_COLOR_GREY);
+        gridPane.getStyleClass().add("extra-pane");
         gridPane.setHgap(15);
         gridPane.setVgap(5);
         gridPane.setPadding(new Insets(20));

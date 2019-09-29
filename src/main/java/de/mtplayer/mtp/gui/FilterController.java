@@ -17,7 +17,6 @@
 package de.mtplayer.mtp.gui;
 
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.guiTools.PGuiTools;
 import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
@@ -69,7 +68,8 @@ public class FilterController extends AnchorPane {
 
     public VBox getVBoxBotton() {
         VBox vBox = new VBox();
-        vBox.setStyle(PConst.CSS_BACKGROUND_COLOR_GREY);
+        vBox.getStyleClass().add("extra-pane");
+//        vBox.setStyle(PConst.CSS_BACKGROUND_COLOR_GREY);
         vBox.setPadding(new Insets(15, 15, 15, 15));
         vBox.setSpacing(20);
         vBox.setMaxWidth(Double.MAX_VALUE);

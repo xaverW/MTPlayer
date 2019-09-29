@@ -160,7 +160,7 @@ public class PaneConfigPath {
 
     private void makeGrid(VBox vBox) {
         final GridPane gridPane = new GridPane();
-        gridPane.setStyle(PConst.CSS_BACKGROUND_COLOR_GREY);
+        gridPane.getStyleClass().add("extra-pane");
         gridPane.setHgap(10);
         gridPane.setVgap(10);
         gridPane.setPadding(new Insets(20));

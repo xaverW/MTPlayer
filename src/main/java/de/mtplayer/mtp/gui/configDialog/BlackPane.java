@@ -26,7 +26,6 @@ import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.gui.tools.table.Table;
 import de.mtplayer.mtp.tools.filmListFilter.FilmlistBlackFilterCountHits;
-import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
@@ -234,7 +233,7 @@ public class BlackPane {
     }
 
     private void addConfigs(VBox vBox) {
-        gridPane.setStyle(PConst.CSS_BACKGROUND_COLOR_GREY);
+        gridPane.getStyleClass().add("extra-pane");
         gridPane.setHgap(15);
         gridPane.setVgap(5);
         gridPane.setPadding(new Insets(20));

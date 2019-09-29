@@ -14,9 +14,12 @@
     -lin-grad-btn-func-1: linear-gradient(from 0% 0% to 100% 100%, -tab-button-1 40%, white 90%);
     -rad-grad-btn-func-1: radial-gradient(center 80% -70%, radius 200%, -tab-button-2 35%, -tab-button-3 40%);
 
-    -style-border-color-1: royalblue;
-    -style-border-color-2: royalblue;
-    -style-text-color-1: mediumblue;
+    -style-tab-border-color-1: #4169E1; /*royalblue*/
+    -style-tab-border-color-2: #3a5fcc;
+
+    -style-extra-pane-color: derive(-fx-base,60%);
+
+    -style-text-color-1: mediumblue; /*#0000CD*/
     -style-border-color-lbl: royalblue;
     -style-border-color-tab: cornflowerblue;
 }
@@ -95,7 +98,7 @@
      -fx-padding: 0px;
 }
 
-
+/* tabs of the tabpane*/
 .tab .tab-label {
     -fx-text-alignment: center;
     -fx-alignment: center ;
@@ -106,28 +109,31 @@
  }
 .tab-pane > .tab-header-area > .headers-region > .tab {
     -fx-padding: 0 10 0 10;
+
     -fx-border-width: 1, 2;
-    -fx-border-radius: 12 12 0 0, 10 10 0 0;
-    -fx-border-insets: 0, 4;
-    -fx-border-color: -style-border-color-1, transparent;
-    -fx-background-radius: 12 12 0 0, 10 10 0 0;
-    -fx-background-insets: 0;
+    -fx-border-radius: 8 8 0 0, 6 6 0 0;
+    -fx-border-insets: 0 3 0 0, 3 6 3 3;
+    -fx-border-color: -style-tab-border-color-1, transparent;
+
+    -fx-background-radius: 0, 10 10 0 0, 6 6 0 0;
+    -fx-background-insets: 0, 0 3 0 0, 2 5 2 2;
     -fx-background-color:
+             transparent,
              -lin-grad-1,
              -rad-grad-1;
     -fx-text-fill: black;
  }
 .tab-pane > .tab-header-area > .headers-region > .tab:selected {
-    -fx-border-width: 2, 1, 2;
-    -fx-border-color: -style-border-color-1, transparent, transparent;
+    -fx-border-width: 3, 2;
+    -fx-border-color: -style-tab-border-color-1, transparent;
  }
 .tab-pane > .tab-header-area > .headers-region > .tab:hover {
-    -fx-border-width: 2, 1, 2;
-    -fx-border-color: -style-border-color-2, -style-border-color-1, transparent;
+    -fx-border-width: 2, 1, 2;/* 3 Rahmen, damit die "Gesamtbreite" gleich bleibt */
+    -fx-border-color: -style-tab-border-color-1, -style-tab-border-color-2, transparent;
  }
 .tab-pane > .tab-header-area > .headers-region > .tab:pressed {
-    -fx-border-width: 1, 2, 2;
-    -fx-border-color: -style-border-color-1, -style-border-color-2, transparent;
+    -fx-border-width: 1, 2;
+    -fx-border-color: -style-tab-border-color-1, -style-tab-border-color-2;
  }
 
 .tab .tab-label {
@@ -361,4 +367,8 @@
 
 .downloadDialog {
     -fx-background-color: gainsboro;
+}
+
+.extra-pane {
+    -fx-background-color: -style-extra-pane-color;
 }
