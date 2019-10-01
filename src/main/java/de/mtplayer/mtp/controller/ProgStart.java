@@ -46,7 +46,7 @@ public class ProgStart {
     private static final String TITLE_TEXT_PROGRAM_VERSION_IS_UPTODATE = "Programmversion ist aktuell";
     private static final String TITLE_TEXT_PROGRAMMUPDATE_EXISTS = "Ein Programmupdate ist verfügbar";
     private ProgData progData;
-    private boolean onlyOne = false;
+    private boolean doneAtProgramstart = false;
 
     public ProgStart(ProgData progData) {
         this.progData = progData;
@@ -67,8 +67,8 @@ public class ProgStart {
         progData.loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
             @Override
             public void finished(ListenerFilmlistLoadEvent event) {
-                if (!onlyOne) {
-                    onlyOne = true;
+                if (!doneAtProgramstart) {
+                    doneAtProgramstart = true;
                     progData.mediaDataList.createMediaDb();
                     checkProgUpdate();
                 }

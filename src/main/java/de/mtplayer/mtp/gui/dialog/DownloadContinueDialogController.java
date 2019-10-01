@@ -66,7 +66,7 @@ public class DownloadContinueDialogController extends PDialogExtra {
     private String oldPathFile;
 
     private Timeline timeline = null;
-    private Integer timeSeconds = ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECOND.getInt();
+    private Integer timeSeconds = ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS.getInt();
 
     public DownloadContinueDialogController(ProgData progData, Download download, boolean directDownload) {
         super(ProgConfig.DOWNLOAD_DIALOG_CONTINUE_SIZE.getStringProperty(),

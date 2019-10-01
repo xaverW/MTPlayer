@@ -45,8 +45,10 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART = addNewKey("__system-parameter__download-max-restart_5__", "3");
     // max. Startversuche für fehlgeschlagene Downloads, direkt beim Download
     public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP = addNewKey("__system-parameter__download-max-restart-http_10__", "5");
-    // Beim Dialog "Download weiterführen" wird in dieser Zeit der DownloadXml weitergeführt
-    public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECOND = addNewKey("__system-parameter__download-continue-second_60__", "60");
+    // Beim Dialog "Download weiterführen" wird nach dieser Zeit der Download weitergeführt
+    public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS = addNewKey("__system-parameter__download-continue-second_60__", "60");
+    // Beim Dialog "Automode" wird nach dieser Zeit der das Programm beendet
+    public static MLConfigs SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS = addNewKey("__system-parameter__automode-quitt-second_60__", "15");
     // Downloadfehlermeldung wird xx Sedunden lang angezeigt
     public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND = addNewKey("__system-parameter__download-errormsg-in-second_30__", "30");
     // Downloadprogress im Terminal anzeigen
@@ -242,28 +244,39 @@ public class ProgConfig extends MLConfig {
             + "\"__system-parameter__xxx\" können nur im Konfigfile geändert werden" + PConst.LINE_SEPARATOR
             + "\t" + "und sind auch nicht für ständige Änderungen gedacht." + PConst.LINE_SEPARATOR
             + "\t" + "Wird eine Zeile gelöscht, wird der Parameter wieder mit dem Standardwert angelegt." + PConst.LINE_SEPARATOR
+
             + PConst.LINE_SEPARATOR
             + "\t" + SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getKey() + PConst.LINE_SEPARATOR
             + "\t" + "Timeout für direkte Downloads, Standardwert: "
             + SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getInitValue() + PConst.LINE_SEPARATOR +
+
             PConst.LINE_SEPARATOR
             + "\t" + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getKey() + PConst.LINE_SEPARATOR
             + "\t" + "max. Startversuche für fehlgeschlagene Downloads, am Ende aller Downloads" + PConst.LINE_SEPARATOR
             + "\t" + "(Versuche insgesamt: DOWNLOAD_MAX_RESTART * DOWNLOAD_MAX_RESTART_HTTP), Standardwert: " +
             SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getInitValue() + PConst.LINE_SEPARATOR +
+
             PConst.LINE_SEPARATOR
             + "\t" + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP.getKey() + PConst.LINE_SEPARATOR
             + "\t" + "max. Startversuche für fehlgeschlagene Downloads, direkt beim Download," + PConst.LINE_SEPARATOR
             + "\t" + "(Versuche insgesamt: DOWNLOAD_MAX_RESTART * DOWNLOAD_MAX_RESTART_HTTP), Standardwert: "
             + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP.getInitValue() + PConst.LINE_SEPARATOR +
+
             PConst.LINE_SEPARATOR
-            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECOND.getKey() + PConst.LINE_SEPARATOR
-            + "\t" + "Beim Dialog \"Download weiterführen\" wird nach dieser Zeit der DownloadXml weitergeführt, Standardwert: "
-            + SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECOND.getInitValue() + PConst.LINE_SEPARATOR +
+            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS.getKey() + PConst.LINE_SEPARATOR
+            + "\t" + "Beim Dialog \"Download weiterführen\" wird nach dieser Zeit der Download weitergeführt, Standardwert: "
+            + SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS.getInitValue() + PConst.LINE_SEPARATOR +
+
+            PConst.LINE_SEPARATOR
+            + "\t" + SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS.getKey() + PConst.LINE_SEPARATOR
+            + "\t" + "Beim Dialog \"Automode\" wird nach dieser Zeit der das Programm beendet, Standardwert: "
+            + SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS.getInitValue() + PConst.LINE_SEPARATOR +
+
             PConst.LINE_SEPARATOR
             + "\t" + SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getKey() + PConst.LINE_SEPARATOR
             + "\t" + "Downloadfehlermeldung wird xx Sedunden lang angezeigt, Standardwert: "
             + SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getInitValue() + PConst.LINE_SEPARATOR +
+
             PConst.LINE_SEPARATOR
             + "\t" + SYSTEM_PARAMETER_DOWNLOAD_PROGRESS.getKey() + PConst.LINE_SEPARATOR
             + "\t" + "Downloadprogress im Terminal (-auto) anzeigen: "
@@ -290,10 +303,11 @@ public class ProgConfig extends MLConfig {
 
 
     static {
-        check(SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND, 5, 1000);
-        check(SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART, 0, 100);
-        check(SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP, 0, 100);
-        check(SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECOND, 5, 1000);
-        check(SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND, 5, 1000);
+        check(SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND, 5, 200);
+        check(SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART, 0, 10);
+        check(SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP, 0, 10);
+        check(SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS, 5, 200);
+        check(SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS, 5, 200);
+        check(SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND, 5, 200);
     }
 }

@@ -19,6 +19,7 @@ package de.mtplayer.mtp.controller.starter;
 import de.mtplayer.mLib.tools.MDate;
 import de.mtplayer.mLib.tools.SizeTools;
 import de.mtplayer.mLib.tools.StringFormatters;
+import de.mtplayer.mtp.controller.ProgQuit;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
@@ -29,7 +30,9 @@ import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
+import de.mtplayer.mtp.gui.dialog.AutomodeContinueDialogController;
 import de.p2tools.p2Lib.tools.log.PLog;
+import javafx.application.Platform;
 
 import java.awt.*;
 import java.io.File;
@@ -41,7 +44,8 @@ public class StarterClass {
     private final ProgData progData;
     private Start start = null;
     private boolean paused = false;
-    private boolean searchFilms = false;
+    private boolean searchFilms = true; // beim Programmstart muss zuerst die Filmliste galaden werden
+    private boolean checkQuitAfterDownload = false; // Prüfen, ob automode aktiv ist
 
     // ===================================
     // Public
@@ -323,7 +327,6 @@ public class StarterClass {
                         continue;
                     }
 
-
                     while ((download = getNextStart()) != null) {
                         if (searchFilms) {
                             break;
@@ -333,16 +336,48 @@ public class StarterClass {
                         // alle 5 Sekunden einen Download starten
                         sleep(5 * 1000);
                     }
-
                     if (searchFilms) {
                         continue;
                     }
+
                     progData.downloadListButton.cleanUpButtonStarts(); // Button Starts aus der Liste
-                    // löschen
+                    if (!checkQuitAfterDownload) {
+                        // ist für den auto mode
+                        quitProgramAfterDownload();
+                    }
+
                     sleep(3 * 1000);
                 } catch (final Exception ex) {
                     PLog.errorLog(613822015, ex);
                 }
+            }
+        }
+
+        private void quitProgramAfterDownload() {
+            checkQuitAfterDownload = true;
+            if (ProgData.automode) {
+                // dann haben wir den "Automodus"
+
+                Platform.runLater(() -> {
+
+                    if (progData.downloadList.countRunningDownloads() == 0) {
+                        // dann gibts keine Downloads und das Programm beendet sich sofort nach dem Start
+                        // drum eine kurze Info
+                        final AutomodeContinueDialogController dialogController = new AutomodeContinueDialogController();
+                        if (dialogController.isContinueAutomode()) {
+                            new ProgQuit().quit(true, true);
+                        } else {
+                            // automode abgebrochen
+                            ProgData.automode = false;
+                        }
+                    } else {
+                        // dann gleich den "Quitt-Dialog" anzeigen, ist ja eine Weile zu sehen
+                        new ProgQuit().quit(true, true);
+                        // dann wurde das "Beenden" abgebrochen
+                        ProgData.automode = false;
+                    }
+
+                });
             }
         }
 

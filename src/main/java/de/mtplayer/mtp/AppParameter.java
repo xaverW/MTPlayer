@@ -38,7 +38,7 @@ public class AppParameter {
         }
 
         printArguments(arguments);
-        ProgData.configDir = readPathFromArguments(arguments);
+        readPathFromArguments(arguments);
 
         try {
             final Options allowed = new Options();
@@ -66,16 +66,17 @@ public class AppParameter {
                 ProgData.debug = true;
             }
 
+            if (hasOption(line, ProgParameter.AUTOMODE)) {
+                ProgData.automode = true;
+            }
+
             if (hasOption(line, ProgParameter.DURATION)) {
                 ProgData.duration = true;
             }
 
             if (hasOption(line, ProgParameter.PATH)) {
-                String configDir = line.getOptionValue(ProgParameter.PATH.name);
-                if (!configDir.endsWith(File.separator)) {
-                    configDir += File.separator;
-                }
-                ProgData.configDir = configDir;
+                String path = line.getOptionValue(ProgParameter.PATH.name);
+                setConfigDir(path);
             }
 
         } catch (Exception ex) {
@@ -83,23 +84,21 @@ public class AppParameter {
         }
     }
 
-    private String readPathFromArguments(final String[] arguments) {
-        String path = "";
-
-        if (arguments == null || arguments.length == 0) {
-            return path;
+    private void readPathFromArguments(final String[] arguments) {
+        if (arguments == null ||
+                arguments.length == 0 ||
+                arguments[0].startsWith(ARGUMENT_PREFIX)) {
+            return;
         }
 
-        if (arguments[0].startsWith(ARGUMENT_PREFIX)) {
-            return path;
-        }
+        setConfigDir(arguments[0]);
+    }
 
-        path = arguments[0];
+    private void setConfigDir(String path) {
         if (!path.endsWith(File.separator)) {
             path += File.separator;
         }
-
-        return path;
+        ProgData.configDir = path;
     }
 
     private void printArguments(final String[] aArguments) {
@@ -124,6 +123,7 @@ public class AppParameter {
         VERSION("v", "version", false, "show version"),
         PATH("p", "path", true, "path of configuration file"),
         DEBUG("d", "debug", false, "show debug info"),
+        AUTOMODE("a", "auto", false, "use automode: start, load, quit"),
         DURATION("t", "time", false, "show timekeeping info");
 
         final String shortname;

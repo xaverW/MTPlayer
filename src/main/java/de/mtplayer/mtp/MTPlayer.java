@@ -40,13 +40,11 @@ public class MTPlayer extends Application {
     private Stage primaryStage;
 
     private static final String LOG_TEXT_PROGRAMSTART = "Dauer Programmstart";
-//    private static final String TITLE_TEXT_PROGRAM_VERSION_IS_UPTODATE = "Programmversion ist aktuell";
-//    private static final String TITLE_TEXT_PROGRAMMUPDATE_EXISTS = "Ein Programmupdate ist verfügbar";
 
     protected ProgData progData;
     ProgStart progStart;
     Scene scene = null;
-    private boolean firstProgramStart = false;
+    private boolean firstProgramStart = false; // ist der allererste Programmstart: Programminit wird gemacht
 
     @Override
     public void init() throws Exception {
@@ -80,8 +78,8 @@ public class MTPlayer extends Application {
     private void workBeforeGui() {
         if (!progStart.loadAll()) {
             PDuration.onlyPing("Erster Start");
-
             firstProgramStart = true;
+
             // einmal ein Muster anlegen, für Linux ist es bereits aktiv!
             progData.replaceList.init();
 

@@ -54,10 +54,10 @@ public class ProgQuit {
      * Quit the MTPlayer application
      *
      * @param showOptionTerminate show options dialog when downloads are running
-     * @param shutDown            try to shutdown the computer if requested
+     * @param startWithWaiting    starts the dialog with the masker pane
      */
-    public void quit(boolean showOptionTerminate, boolean shutDown) {
-        if (quit_(showOptionTerminate, shutDown)) {
+    public void quit(boolean showOptionTerminate, boolean startWithWaiting) {
+        if (quit_(showOptionTerminate, startWithWaiting)) {
 
             // dann jetzt beenden -> Thüss
             Platform.runLater(() -> {
@@ -68,26 +68,30 @@ public class ProgQuit {
         }
     }
 
-    private boolean quit_(boolean showOptionTerminate, boolean shutDown) {
+    private boolean quit_(boolean showOptionTerminate, boolean startWithWaiting) {
+        // erst mal prüfen ob noch Downloads laufen
         if (progData.downloadList.countRunningDownloads() > 0) {
 
-            // erst mal prüfen ob noch Downloads laufen
+            // und ob der Dialog angezeigt werden soll
             if (showOptionTerminate) {
-                QuitDialogController quitDialogController = new QuitDialogController(progData);
+
+                QuitDialogController quitDialogController;
+                quitDialogController = new QuitDialogController(startWithWaiting);
+
                 if (!quitDialogController.canTerminate()) {
                     return false;
                 }
+
             }
         }
 
+        // und dann Programm beenden
         writeTabSettings();
         stopAllDownloads();
         writeWindowSizes();
 
         new ProgSave().saveAll();
-
         LogMessage.endMsg();
-
         return true;
     }
 

@@ -55,7 +55,7 @@ public class MTColor {
                     ProgConfig.COLOR__DOWNLOAD_RUN_DARK, Color.rgb(174, 150, 85), "Tabelle Download, läuft");
     public static final MLC DOWNLOAD_FINISHED =
             new MLC(ProgConfig.COLOR__DOWNLOAD_FINISHED, Color.rgb(206, 255, 202),
-                    ProgConfig.COLOR__DOWNLOAD_FINISHED_DARK, Color.rgb(88, 144, 83), "Tabelle Download, fertig");
+                    ProgConfig.COLOR__DOWNLOAD_FINISHED_DARK, Color.rgb(79, 129, 74), "Tabelle Download, fertig");
     public static final MLC DOWNLOAD_ERROR =
             new MLC(ProgConfig.COLOR__DOWNLOAD_ERROR, Color.rgb(255, 233, 233),
                     ProgConfig.COLOR__DOWNLOAD_ERROR_DARK, Color.rgb(163, 82, 82), "Tabelle Download, fehlerhaft");

@@ -150,7 +150,7 @@ public class DownloadListStarts {
     }
 
     public synchronized void cleanUpButtonStarts() {
-        // Starts durch Button die fertig sind, löschen
+        // Starts durch Button (zB. Film abspielen) die fertig sind, löschen
         boolean found = false;
         final Iterator<Download> it = downloadList.iterator();
         while (it.hasNext()) {

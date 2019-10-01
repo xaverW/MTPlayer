@@ -29,28 +29,19 @@ import javafx.scene.layout.*;
 
 public class QuitDialogController extends PDialog {
 
-    final ProgData progData;
-    final StackPane stackPane;
-    final PMaskerPane maskerPane;
-    final WaitTask waitTask;
-    final VBox vbox;
+    private final StackPane stackPane = new StackPane();
+    private final PMaskerPane maskerPane = new PMaskerPane();
+    private final WaitTask waitTask = new WaitTask();
+    private final VBox vbox = new VBox();
 
-    boolean canQuit = false;
+    private boolean canQuit = false;
+    private boolean startWithWaiting = false;
 
-    public QuitDialogController(ProgData progData) {
-        super(null,
-                "Programm beenden", true);
-
-        this.progData = progData;
-
-        stackPane = new StackPane();
-        maskerPane = new PMaskerPane();
-        waitTask = new WaitTask();
-        vbox = new VBox();
-
+    public QuitDialogController(boolean startWithWaiting) {
+        super(null, "Programm beenden", true);
+        this.startWithWaiting = startWithWaiting;
         init(vbox, true);
     }
-
 
     @Override
     public void make() {
@@ -73,22 +64,22 @@ public class QuitDialogController extends PDialog {
         Label headerLabel = new Label("Es laufen noch Downloads!");
         headerLabel.setStyle("-fx-font-size: 1.5em;");
 
-        BigButton cancelButton = new BigButton(new ProgIcons().ICON_BUTTON_QUIT, "Nicht beenden",
-                "");
-        cancelButton.setOnAction(e -> close());
+        BigButton cancelButton = new BigButton(new ProgIcons().ICON_BUTTON_QUIT,
+                "Nicht beenden", "");
+        cancelButton.setOnAction(e -> {
+            close();
+        });
 
-        BigButton quitButton = new BigButton(new ProgIcons().ICON_BUTTON_QUIT, "Beenden",
-                "Alle Downloads abbrechen und das Programm beenden.");
+        BigButton quitButton = new BigButton(new ProgIcons().ICON_BUTTON_QUIT,
+                "Beenden", "Alle Downloads abbrechen und das Programm beenden.");
         quitButton.setOnAction(e -> {
             canQuit = true;
             close();
         });
 
-        BigButton waitButton = new BigButton(new ProgIcons().ICON_BUTTON_QUIT, "Warten",
-                "Alle Downloads abwarten und dann das Programm beenden.");
-        waitButton.setOnAction(e -> {
-            startWaiting();
-        });
+        BigButton waitButton = new BigButton(new ProgIcons().ICON_BUTTON_QUIT,
+                "Warten", "Alle Downloads abwarten und dann das Programm beenden.");
+        waitButton.setOnAction(e -> startWaiting());
 
 
         gridPane.add(new ProgIcons().ICON_DIALOG_QUIT, 0, 0, 1, 1);
@@ -107,10 +98,14 @@ public class QuitDialogController extends PDialog {
 
         stackPane.getChildren().addAll(gridPane, maskerPane);
         vbox.getChildren().addAll(stackPane);
+
+        if (startWithWaiting) {
+            startWaiting();
+        }
     }
 
 
-    private void startWaiting() {
+    public void startWaiting() {
         maskerPane.setMaskerVisible(true, false, true);
         Thread th = new Thread(waitTask);
         th.setName("startWaiting");

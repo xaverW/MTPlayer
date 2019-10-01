@@ -29,6 +29,7 @@ public class Main {
      *
      * Programmschalter:
      * -d,  --debug         show debug info
+     * -a   --auto          automode
      * -h,  --help          show help
      * -t,  --time          show timekeeping info
      * -p,  --path <arg>    path of configuration file

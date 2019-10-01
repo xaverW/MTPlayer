@@ -24,12 +24,15 @@ import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilterFactory;
 import de.p2tools.p2Lib.dialog.ProgInfoDialog;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
+import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
+import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -46,6 +49,8 @@ public class MTPTester {
     private final ProgData progData;
     private final TextArea textArea = new TextArea();
     private String text = "";
+    private final PMaskerPane maskerPane = new PMaskerPane();
+    private final WaitTask waitTask = new WaitTask();
 
     public MTPTester(ProgData progData) {
         this.progData = progData;
@@ -66,7 +71,13 @@ public class MTPTester {
             gridPane.setPadding(new Insets(10));
             gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize());
 
-            progInfoDialog.getVboxCont().getChildren().addAll(gridPane);
+            maskerPane.setMaskerVisible(false);
+            maskerPane.setButtonText("Abbrechen");
+            maskerPane.getButton().setOnAction(a -> close());
+
+            StackPane stackPane = new StackPane();
+            stackPane.getChildren().addAll(gridPane, maskerPane);
+            progInfoDialog.getVboxCont().getChildren().addAll(stackPane);
 
             Text text = new Text("Debugtools");
             text.setFont(Font.font(null, FontWeight.BOLD, 15));
@@ -111,6 +122,10 @@ public class MTPTester {
             btnMarkFilmFilterNotOk.setMaxWidth(Double.MAX_VALUE);
             btnMarkFilmFilterNotOk.setOnAction(a -> makrFilterOk(false));
 
+            Button btnStartWaiting = new Button("start waiting");
+            btnStartWaiting.setMaxWidth(Double.MAX_VALUE);
+            btnStartWaiting.setOnAction(a -> startWaiting());
+
             int row = 0;
             gridPane.add(text, 0, row, 2, 1);
             gridPane.add(btnAddToHash, 0, ++row);
@@ -123,6 +138,7 @@ public class MTPTester {
             gridPane.add(btnShowActFilter, 0, ++row);
             gridPane.add(btnMarkFilmFilterOk, 0, ++row);
             gridPane.add(btnMarkFilmFilterNotOk, 0, ++row);
+            gridPane.add(btnStartWaiting, 0, ++row);
             gridPane.add(textArea, 0, ++row, 2, 1);
         }
     }
@@ -327,5 +343,38 @@ public class MTPTester {
             PLog.errorLog(951202147, ex);
         }
         return true;
+    }
+
+    private void startWaiting() {
+        maskerPane.setMaskerText("Test Text");
+        maskerPane.setButtonText("Button Text");
+        maskerPane.setMaskerVisible(true, true, true);
+        Thread th = new Thread(waitTask);
+        th.setName("startWaiting");
+        th.start();
+    }
+
+    private class WaitTask extends Task<Void> {
+
+        @Override
+        protected Void call() throws Exception {
+            try {
+                Thread.sleep(5000);
+            } catch (Exception ignore) {
+            }
+            return null;
+        }
+
+        @Override
+        public boolean cancel(boolean mayInterruptIfRunning) {
+            return super.cancel(mayInterruptIfRunning);
+        }
+    }
+
+    public void close() {
+        if (waitTask.isRunning()) {
+            waitTask.cancel();
+        }
+        maskerPane.switchOffMasker();
     }
 }

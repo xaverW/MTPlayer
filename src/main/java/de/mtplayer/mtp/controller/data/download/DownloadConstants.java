@@ -46,9 +46,9 @@ public class DownloadConstants {
 
     public static final String ALL = "";
 
-    public static final String SRC_BUTTON = "Button";
-    public static final String SRC_DOWNLOAD = "Download";
-    public static final String SRC_ABO = "Abo";
+    public static final String SRC_BUTTON = "Button"; // sind im Tab Filme mit Button gestartete
+    public static final String SRC_DOWNLOAD = "Download"; // sind manuell angelegte Downloads
+    public static final String SRC_ABO = "Abo"; // sind Downloads aus Abos
 
     public static final String SRC_COMBO_DOWNLOAD = "nur Downloads";
     public static final String SRC_COMBO_ABO = "nur Abos";

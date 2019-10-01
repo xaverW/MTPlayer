@@ -28,7 +28,6 @@ import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -107,21 +106,17 @@ public class FilmPaneController extends AnchorPane {
     private void makeConfig(Collection<TitledPane> result) {
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
-        gridPane.setVgap(15);
+        gridPane.setVgap(5);
         gridPane.setPadding(new Insets(20));
 
         TitledPane tpConfig = new TitledPane("Filmliste laden", gridPane);
         result.add(tpConfig);
 
         final PToggleSwitch tglLoad = new PToggleSwitch("Filmliste beim Programmstart laden");
-        tglLoad.setHGrow(false);
         tglLoad.selectedProperty().bindBidirectional(propLoad);
-        HBox hBoxTgl = new HBox(10);
-        hBoxTgl.getChildren().add(tglLoad);
-
         final Button btnHelpLoad = PButton.helpButton(stage, "Filmliste laden",
                 HelpText.LOAD_FILMLIST_PROGRAMSTART);
-        GridPane.setHalignment(btnHelpLoad, HPos.RIGHT);
+
 
         TextField txtUrl = new TextField("");
         txtUrl.textProperty().bindBidirectional(propUrl);
@@ -137,12 +132,13 @@ public class FilmPaneController extends AnchorPane {
                 HelpText.LOAD_FILMLIST_MANUAL);
 
         int row = 0;
-        gridPane.add(hBoxTgl, 0, row);
+
+        gridPane.add(tglLoad, 0, ++row, 2, 1);
         gridPane.add(btnHelpLoad, 2, row);
 
         gridPane.add(new Label(" "), 0, ++row);
         gridPane.add(new Label("Adresse (Datei oder URL) zum Laden der Filmliste:"),
-                0, ++row, 2, 1);
+                0, ++row);
 
         gridPane.add(txtUrl, 0, ++row);
         gridPane.add(btnFile, 1, row);

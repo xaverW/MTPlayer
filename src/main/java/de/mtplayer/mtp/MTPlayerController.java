@@ -197,9 +197,11 @@ public class MTPlayerController extends StackPane {
 
         // ProgInfoDialog
         if (ProgData.debug) {
-            MTPTester mtpTester = new MTPTester(progData);
             final MenuItem miDebug = new MenuItem("Debugtools");
-            miDebug.setOnAction(event -> mtpTester.showDialog());
+            miDebug.setOnAction(event -> {
+                MTPTester mtpTester = new MTPTester(progData);
+                mtpTester.showDialog();
+            });
             mHelp.getItems().addAll(new SeparatorMenuItem(), miDebug);
         }
 

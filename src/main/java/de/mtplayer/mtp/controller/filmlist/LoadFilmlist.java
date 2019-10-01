@@ -145,7 +145,8 @@ public class LoadFilmlist {
                 PDuration.onlyPing("Programmstart Filmliste laden: geladen");
             }
 
-            if (progData.filmlist.isTooOld() && ProgConfig.SYSTEM_LOAD_FILMS_ON_START.getBool()) {
+            if (progData.filmlist.isTooOld() &&
+                    (ProgConfig.SYSTEM_LOAD_FILMS_ON_START.getBool() || ProgData.automode)) {
                 logList.add("Filmliste zu alt, neue Filmliste laden");
                 logList.add(PLog.LILNE3);
                 PLog.addSysLog(logList);

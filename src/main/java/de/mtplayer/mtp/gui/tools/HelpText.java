@@ -345,8 +345,8 @@ public class HelpText {
             "Neuladen einer Filmliste verwendet. Ist nichts angegeben, wird die Filmliste auf herkömmliche " +
             "Art geladen und die URL dafür wird automatisch gewählt.";
 
-    public static final String SEARCH_ABOS_IMMEDIATELY = "Nach dem Neuladen einer Filmliste wird dann " +
-            "sofort nach neuen Abos gesucht. Ansonsten muss man " +
+    public static final String SEARCH_ABOS_IMMEDIATELY = "Nach dem Neuladen einer Filmliste wird anschießend " +
+            "sofort nach neuen Downloads aus Abos gesucht. Ansonsten muss man " +
             "im Tab Download auf \"Downloads aktualisieren\" klicken.";
 
     public static final String SMALL_BUTTON = "In der Tabelle Filme und Downloads können auch " +
@@ -367,6 +367,14 @@ public class HelpText {
 
     public static final String START_DOWNLOADS_FROM_ABOS_IMMEDIATELY = "Neu angelegte Downloads (aus Abos) werden " +
             "sofort gestartet. Ansonsten muss man sie selbst starten.";
+
+    public static final String QUIT_PRGRAM_AFTER_DOWNLOAD = "Das Programm aktualisiert automatisch " +
+            "beim Programmstart die Filmliste (sofern veraltert), " +
+            "sucht nach Downloads aus Abos, speichert alle Downloads und beendet sich dann wieder." +
+            PConst.LINE_SEPARATORx2 +
+            "Es wird während dessen ein Hinweisfenster angezeigt. Wird dieses Hinweisfenster geschlossen, " +
+            "wird damit auch der \"Automodus\" abgebrochen und mit dem Programm " +
+            "kann normal weiter gearbeitet werden.";
 
     public static final String LOGFILE = "Hier kann ein Ordner angegeben werden " +
             "in dem ein Logfile erstellt wird. Darin wird der Programmverlauf skizziert. " +

@@ -80,7 +80,7 @@ public class Worker {
             public void finished(ListenerFilmlistLoadEvent event) {
                 new ProgSave().saveAll(); // damit nichts verlorengeht
                 createChannelAndThemeList();
-                if (ProgConfig.ABO_SEARCH_NOW.getBool()) {
+                if (ProgConfig.ABO_SEARCH_NOW.getBool() || ProgData.automode) {
                     searchForAbosAndMaybeStart();
                 } else {
                     progData.maskerPane.setMaskerVisible(false);
@@ -142,7 +142,7 @@ public class Worker {
         // erledigte entfernen, nicht gestartete Abos entfernen und nach neu Abos suchen
         progData.downloadList.searchForDownloadsFromAbos();
 
-        if (Boolean.parseBoolean(ProgConfig.DOWNLOAD_START_NOW.get())) {
+        if (Boolean.parseBoolean(ProgConfig.DOWNLOAD_START_NOW.get()) || ProgData.automode) {
             // und wenn gewollt auch gleich starten, kann kein Dialog aufgehen: false!
             PLog.sysLog("Downloads aus Abos starten");
             progData.downloadList.startDownloads();
