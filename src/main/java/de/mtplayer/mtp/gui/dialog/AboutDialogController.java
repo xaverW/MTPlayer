@@ -42,13 +42,17 @@ public class AboutDialogController extends PDialogExtra {
 
     private final ProgData progData;
     Button btnOk = new Button("Ok");
-    private final Color GRAY = Color.DARKSLATEGRAY;
+    private final Color GRAY;
 
 
     public AboutDialogController(ProgData progData) {
         super(null, "Über das Programm", true);
         this.progData = progData;
-
+        if (ProgConfig.SYSTEM_DARK_THEME.getBool()) {
+            this.GRAY = Color.LAVENDER;
+        } else {
+            this.GRAY = Color.DARKBLUE;
+        }
         addOkButtons(btnOk);
         init(getVBoxCompleteDialog(), true);
     }

@@ -55,6 +55,24 @@ public class ColorPane {
         vBox.setSpacing(10);
         vBox.setPadding(new Insets(20));
 
+        final GridPane gridPane = new GridPane();
+        gridPane.setHgap(15);
+        gridPane.setVgap(15);
+        gridPane.setPadding(new Insets(0, 0, 10, 0));
+
+        final PToggleSwitch tglDarkTheme = new PToggleSwitch("Dunkles Erscheinungsbild der Programmoberfläche");
+        tglDarkTheme.selectedProperty().bindBidirectional(propDarkTheme);
+        final Button btnHelpTheme = PButton.helpButton(stage, "Erscheinungsbild der Programmoberfläche",
+                HelpText.DARK_THEME);
+
+        gridPane.add(tglDarkTheme, 0, 0);
+        gridPane.add(btnHelpTheme, 1, 0);
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(), PColumnConstraints.getCcPrefSize());
+
+        TableView<MLC> tableView = new TableView<>();
+        VBox.setVgrow(tableView, Priority.ALWAYS);
+        initTableColor(tableView);
+
         Button button = new Button("Alle Farben zurücksetzen");
         button.setOnAction(event -> {
             ProgData.getInstance().mTColor.resetAllColors();
@@ -63,22 +81,6 @@ public class ColorPane {
         hBox.getChildren().add(button);
         hBox.setPadding(new Insets(0));
         hBox.setAlignment(Pos.CENTER_RIGHT);
-
-        final GridPane gridPane = new GridPane();
-        gridPane.setHgap(15);
-        gridPane.setVgap(15);
-        gridPane.setPadding(new Insets(0, 0, 10, 0));
-        final PToggleSwitch tglDarkTheme = new PToggleSwitch("Dunkles Erscheinungsbild der Programmoberfläche");
-        tglDarkTheme.selectedProperty().bindBidirectional(propDarkTheme);
-        final Button btnHelpTheme = PButton.helpButton(stage, "Erscheinungsbild der Programmoberfläche",
-                HelpText.DARK_THEME);
-        gridPane.add(tglDarkTheme, 0, 0);
-        gridPane.add(btnHelpTheme, 1, 0);
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(), PColumnConstraints.getCcPrefSize());
-
-        TableView<MLC> tableView = new TableView<>();
-        VBox.setVgrow(tableView, Priority.ALWAYS);
-        initTableColor(tableView);
 
         vBox.getChildren().addAll(gridPane, tableView, hBox);
 

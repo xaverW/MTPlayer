@@ -44,9 +44,8 @@ public class GeoPane {
 
     public TitledPane makeGeo() {
 
-        final PToggleSwitch tglGeo = new PToggleSwitch("geblockte Sendungen gelb markieren:", false, false);
+        final PToggleSwitch tglGeo = new PToggleSwitch("geblockte Sendungen gelb markieren:");
         tglGeo.selectedProperty().bindBidirectional(geoProperty);
-
         final Button btnHelpGeo = PButton.helpButton(stage, "Geogeblockte Filme", HelpText.CONFIG_GEO);
 
         ToggleGroup tg = new ToggleGroup();
@@ -105,7 +104,8 @@ public class GeoPane {
         gridPane.add(rbSonst, 1, ++row);
 
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrow());
+                PColumnConstraints.getCcComputedSizeAndHgrow(),
+                PColumnConstraints.getCcPrefSize());
 
         TitledPane tpConfig = new TitledPane("Geogeblockte Filme", gridPane);
         return tpConfig;

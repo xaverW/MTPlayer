@@ -148,18 +148,18 @@ public class DownloadPaneController extends AnchorPane {
 
         int row = 0;
         gridPane.add(tglFinished, 0, row);
-        gridPane.add(btnHelpFinished, 2, row);
+        gridPane.add(btnHelpFinished, 1, row);
 
         gridPane.add(tglError, 0, ++row);
-        gridPane.add(btnHelpError, 2, row);
+        gridPane.add(btnHelpError, 1, row);
 
         gridPane.add(tglOne, 0, ++row);
-        gridPane.add(btnHelpOne, 2, row);
+        gridPane.add(btnHelpOne, 1, row);
 
         gridPane.add(tglBeep, 0, ++row);
-        gridPane.add(btnBeep, 2, row);
+        gridPane.add(btnBeep, 1, row);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(), PColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(), PColumnConstraints.getCcPrefSize());
     }
 
 

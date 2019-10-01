@@ -220,7 +220,7 @@ public class ConfigPaneController extends AnchorPane {
         TitledPane tpConfig = new TitledPane("Logfile", gridPane);
         result.add(tpConfig);
 
-        final PToggleSwitch tglEnableLog = new PToggleSwitch("Ein Logfile anlegen:", false, false);
+        final PToggleSwitch tglEnableLog = new PToggleSwitch("Ein Logfile anlegen:");
         tglEnableLog.selectedProperty().bindBidirectional(propLog);
         tglEnableLog.selectedProperty().addListener(((observable, oldValue, newValue) -> {
             if (newValue == null) {
@@ -266,7 +266,7 @@ public class ConfigPaneController extends AnchorPane {
         });
 
         int row = 0;
-        gridPane.add(tglEnableLog, 0, row, 2, 1);
+        gridPane.add(tglEnableLog, 0, row, 3, 1);
         gridPane.add(btnHelp, 3, row);
 
         gridPane.add(new Label(""), 0, ++row);
@@ -375,13 +375,10 @@ public class ConfigPaneController extends AnchorPane {
         //einmal am Tag Update suchen
         final PToggleSwitch tglSearch = new PToggleSwitch("einmal am Tag nach einer neuen Programmversion suchen");
         tglSearch.selectedProperty().bindBidirectional(propUpdateSearch);
-        tglSearch.setHGrow(false);
-
         final Button btnHelp = PButton.helpButton(stage, "Programmupdate suchen",
                 "Beim Programmstart wird geprüft, ob es eine neue Version des Programms gibt. " +
                         "Ist eine aktualisierte Version vorhanden, wird das dann gemeldet." + PConst.LINE_SEPARATOR +
                         "Das Programm wird aber nicht ungefragt ersetzt.");
-        GridPane.setHalignment(btnHelp, HPos.RIGHT);
 
         //jetzt suchen
         Button btnNow = new Button("Jetzt suchen");
@@ -389,7 +386,6 @@ public class ConfigPaneController extends AnchorPane {
 
         PHyperlink hyperlink = new PHyperlink(ProgConst.ADRESSE_WEBSITE,
                 ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
-
         HBox hBoxHyper = new HBox();
         hBoxHyper.setAlignment(Pos.CENTER_LEFT);
         hBoxHyper.setPadding(new Insets(10, 0, 0, 0));
@@ -404,8 +400,8 @@ public class ConfigPaneController extends AnchorPane {
 
         gridPane.add(btnNow, 0, ++row);
         gridPane.add(hBoxHyper, 0, ++row);
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(),
+                PColumnConstraints.getCcPrefSize());
     }
 
 }

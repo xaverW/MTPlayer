@@ -111,22 +111,20 @@ public class PaneConfigController extends AnchorPane {
 
         final RadioButton rbWithOutSuff = new RadioButton("keine Dateien mit diesem Suffix (z.B.: txt,xml,jpg");
         final RadioButton rbWithSuff = new RadioButton("nur Dateien mit diesem Suffix  (z.B.: mp4,flv,m4v");
-
-        final Button btnHelp = PButton.helpButton(stage,
-                "Mediensammlungen verwalten", HelpText.MEDIA_COLLECTION);
+        rbWithSuff.setSelected(!propSuff.getValue());
+        rbWithOutSuff.selectedProperty().bindBidirectional(propSuff);
 
         final ToggleGroup tg = new ToggleGroup();
         rbWithOutSuff.setToggleGroup(tg);
         rbWithSuff.setToggleGroup(tg);
 
-        rbWithSuff.setSelected(!propSuff.getValue());
-        rbWithOutSuff.selectedProperty().bindBidirectional(propSuff);
+        final Button btnHelp = PButton.helpButton(stage,
+                "Mediensammlungen verwalten", HelpText.MEDIA_COLLECTION);
 
         TextField txtSuff = new TextField();
         txtSuff.textProperty().bindBidirectional(propSuffStr);
 
-
-        final PToggleSwitch tglNoHiddenFiles = new PToggleSwitch("keine versteckten Dateien suchen:", false, false);
+        final PToggleSwitch tglNoHiddenFiles = new PToggleSwitch("keine versteckten Dateien suchen:");
         tglNoHiddenFiles.selectedProperty().bindBidirectional(propNoHiddenFiles);
 
         int row = 0;
@@ -136,9 +134,10 @@ public class PaneConfigController extends AnchorPane {
         gridPane.add(txtSuff, 0, ++row, 2, 1);
 
         gridPane.add(new Label(" "), 0, ++row);
-        gridPane.add(tglNoHiddenFiles, 0, ++row);
+        gridPane.add(tglNoHiddenFiles, 0, ++row, 2, 1);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(),
+                PColumnConstraints.getCcPrefSize());
 
         vBox.getChildren().addAll(gridPane);
     }

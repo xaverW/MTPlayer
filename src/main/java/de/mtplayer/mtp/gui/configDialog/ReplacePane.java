@@ -29,7 +29,6 @@ import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.collections.ObservableList;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -96,14 +95,13 @@ public class ReplacePane {
 
 
         gridPane.add(tglAscii, 0, 0);
-        GridPane.setHalignment(btnHelpAscii, HPos.RIGHT);
-        gridPane.add(btnHelpAscii, 2, 0);
+        gridPane.add(btnHelpAscii, 1, 0);
 
         gridPane.add(tglReplace, 0, 1);
-        GridPane.setHalignment(btnHelpReplace, HPos.RIGHT);
-        gridPane.add(btnHelpReplace, 2, 1);
+        gridPane.add(btnHelpReplace, 1, 1);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(), PColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(),
+                PColumnConstraints.getCcPrefSize());
     }
 
 

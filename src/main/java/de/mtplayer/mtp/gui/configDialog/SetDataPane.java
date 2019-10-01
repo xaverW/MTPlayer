@@ -251,8 +251,8 @@ public class SetDataPane {
 
         gridPane.add(tglSubdir, 0, 0);
         gridPane.add(btnHelpColor, 1, 0);
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(),
+                PColumnConstraints.getCcPrefSize());
 
         // path/name
         gridPane = new GridPane();
