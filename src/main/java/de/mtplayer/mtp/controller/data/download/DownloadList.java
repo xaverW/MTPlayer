@@ -100,11 +100,11 @@ public class DownloadList extends SimpleListProperty<Download> {
         return downloadListInfoAll;
     }
 
-    public synchronized int countRunningDownloads() {
-        // es wird nach noch nicht fertigen gestarteten Downloads gesucht
+    public synchronized int countStartedAndRunningDownloads() {
+        // es wird nach noch nicht fertigen, gestarteten Downloads gesucht
         int ret = 0;
         for (final Download download : this) {
-            if (download.isStateStartedRun()) {
+            if (download.isStateStartedWaiting() || download.isStateStartedRun()) {
                 ++ret;
             }
         }

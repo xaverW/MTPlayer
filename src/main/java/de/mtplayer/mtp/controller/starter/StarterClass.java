@@ -360,9 +360,9 @@ public class StarterClass {
 
                 Platform.runLater(() -> {
 
-                    if (progData.downloadList.countRunningDownloads() == 0) {
-                        // dann gibts keine Downloads und das Programm beendet sich sofort nach dem Start
-                        // drum eine kurze Info
+                    if (progData.downloadList.countStartedAndRunningDownloads() == 0) {
+                        // dann gibts keine gestarteten Downloads und das Programm beendet sich sofort nach dem Start
+                        // drum nur eine kurze Info
                         final AutomodeContinueDialogController dialogController = new AutomodeContinueDialogController();
                         if (dialogController.isContinueAutomode()) {
                             new ProgQuit().quit(true, true);

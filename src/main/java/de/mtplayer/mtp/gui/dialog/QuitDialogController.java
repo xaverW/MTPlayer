@@ -116,7 +116,7 @@ public class QuitDialogController extends PDialog {
 
         @Override
         protected Void call() throws Exception {
-            while ((ProgData.getInstance().downloadList.countRunningDownloads() > 0) && !isCancelled()) {
+            while ((ProgData.getInstance().downloadList.countStartedAndRunningDownloads() > 0) && !isCancelled()) {
                 try {
                     Thread.sleep(500);
                 } catch (Exception ignore) {

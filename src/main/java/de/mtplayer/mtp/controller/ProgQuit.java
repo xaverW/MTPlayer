@@ -69,8 +69,8 @@ public class ProgQuit {
     }
 
     private boolean quit_(boolean showOptionTerminate, boolean startWithWaiting) {
-        // erst mal prüfen ob noch Downloads laufen
-        if (progData.downloadList.countRunningDownloads() > 0) {
+        // erst mal prüfen ob noch Downloads  gestartet sind oder laufen
+        if (progData.downloadList.countStartedAndRunningDownloads() > 0) {
 
             // und ob der Dialog angezeigt werden soll
             if (showOptionTerminate) {
