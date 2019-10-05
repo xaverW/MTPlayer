@@ -70,7 +70,7 @@ public class FilmFilterController extends FilterController {
     private final PToggleSwitch tglBlacklist = new PToggleSwitch("Blacklist einschalten:");
     private final Button btnClearFilter = new Button("Filter löschen");
     private final Button btnEditFilter = new Button("");
-    private final ComboBox<SelectedFilter> cboFilter = new ComboBox<>();
+    private final ComboBox<SelectedFilter> cboFilterProfiles = new ComboBox<>();
     private final MenuButton mbFilterTools = new MenuButton("");
     private final Button btnLoadFilter = new Button("laden");
     private final Button btnSaveFilter = new Button("speichern");
@@ -123,10 +123,10 @@ public class FilmFilterController extends FilterController {
 
     public void markFilterOk(boolean ok) {
         if (ok) {
-            cboFilter.getStyleClass().removeAll("markFilterOk");
-            cboFilter.getStyleClass().add("markFilterOk");
+            cboFilterProfiles.getStyleClass().removeAll("markFilterOk");
+            cboFilterProfiles.getStyleClass().add("markFilterOk");
         } else {
-            cboFilter.getStyleClass().removeAll("markFilterOk");
+            cboFilterProfiles.getStyleClass().removeAll("markFilterOk");
         }
     }
 
@@ -138,13 +138,13 @@ public class FilmFilterController extends FilterController {
         btnEditFilter.setTooltip(new Tooltip("Filter ein/ausschalten"));
 
         btnLoadFilter.setOnAction(a -> loadFilter());
-        btnLoadFilter.disableProperty().bind(cboFilter.getSelectionModel().selectedItemProperty().isNull());
+        btnLoadFilter.disableProperty().bind(cboFilterProfiles.getSelectionModel().selectedItemProperty().isNull());
         btnLoadFilter.setGraphic(new ProgIcons().FX_ICON_FILTER_FILM_LOAD);
         btnLoadFilter.setText("");
         btnLoadFilter.setTooltip(new Tooltip("Filter wieder laden"));
 
         btnSaveFilter.setOnAction(a -> {
-            if (cboFilter.getSelectionModel().getSelectedItem() == null
+            if (cboFilterProfiles.getSelectionModel().getSelectedItem() == null
                     || PAlert.showAlertOkCancel("Speichern", "Filter speichern", "Soll der Filter überschrieben werden?")) {
                 saveFilter();
             }
@@ -165,8 +165,8 @@ public class FilmFilterController extends FilterController {
 
     private void filterProfiles() {
         // Filterprofile einrichten
-        cboFilter.setItems(progData.storedFilters.getStordeFilterList());
-        cboFilter.setTooltip(new Tooltip("Gespeicherte Filterprofile können\n" +
+        cboFilterProfiles.setItems(progData.storedFilters.getStordeFilterList());
+        cboFilterProfiles.setTooltip(new Tooltip("Gespeicherte Filterprofile können\n" +
                 "hier geladen werden"));
 
         final StringConverter<SelectedFilter> converter = new StringConverter<SelectedFilter>() {
@@ -177,31 +177,31 @@ public class FilmFilterController extends FilterController {
 
             @Override
             public SelectedFilter fromString(String id) {
-                final int i = cboFilter.getSelectionModel().getSelectedIndex();
+                final int i = cboFilterProfiles.getSelectionModel().getSelectedIndex();
                 return progData.storedFilters.getStordeFilterList().get(i);
             }
         };
-        cboFilter.setConverter(converter);
+        cboFilterProfiles.setConverter(converter);
 
         final MenuItem miLoad = new MenuItem("aktuellen Filter wieder laden");
         miLoad.setOnAction(e -> loadFilter());
-        miLoad.disableProperty().bind(cboFilter.getSelectionModel().selectedItemProperty().isNull());
+        miLoad.disableProperty().bind(cboFilterProfiles.getSelectionModel().selectedItemProperty().isNull());
 
         final MenuItem miRename = new MenuItem("aktuellen Filter umbenennen");
         miRename.setOnAction(e -> renameFilter());
-        miRename.disableProperty().bind(cboFilter.getSelectionModel().selectedItemProperty().isNull());
+        miRename.disableProperty().bind(cboFilterProfiles.getSelectionModel().selectedItemProperty().isNull());
 
         final MenuItem miDel = new MenuItem("aktuellen Filter löschen");
         miDel.setOnAction(e -> delFilter());
-        miDel.disableProperty().bind(cboFilter.getSelectionModel().selectedItemProperty().isNull());
+        miDel.disableProperty().bind(cboFilterProfiles.getSelectionModel().selectedItemProperty().isNull());
 
         final MenuItem miDelAll = new MenuItem("alle Filter löschen");
         miDelAll.setOnAction(e -> delAllFilter());
-        miDelAll.disableProperty().bind(Bindings.size(cboFilter.getItems()).isEqualTo(0));
+        miDelAll.disableProperty().bind(Bindings.size(cboFilterProfiles.getItems()).isEqualTo(0));
 
         final MenuItem miSave = new MenuItem("Filtereinstellungen in aktuellem Filter speichern");
         miSave.setOnAction(e -> saveFilter());
-        miSave.disableProperty().bind(cboFilter.getSelectionModel().selectedItemProperty().isNull());
+        miSave.disableProperty().bind(cboFilterProfiles.getSelectionModel().selectedItemProperty().isNull());
 
         final MenuItem miNew = new MenuItem("Filtereinstellungen in neuem Filter speichern");
         miNew.setOnAction(e -> newFilter());
@@ -219,10 +219,10 @@ public class FilmFilterController extends FilterController {
         mbFilterTools.getItems().addAll(miLoad, miRename, miDel, miDelAll, miSave, miNew, miAbo, new SeparatorMenuItem(), miReset);
         mbFilterTools.setTooltip(new Tooltip("gespeicherte Filter bearbeiten"));
 
-        cboFilter.getSelectionModel().select(filterProp.get());
-        filterProp.bind(cboFilter.getSelectionModel().selectedIndexProperty());
+        cboFilterProfiles.getSelectionModel().select(filterProp.get());
+        filterProp.bind(cboFilterProfiles.getSelectionModel().selectedIndexProperty());
 
-        cboFilter.valueProperty().addListener((observable, oldValue, newValue) -> {
+        cboFilterProfiles.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 loadFilter();
             }
@@ -443,9 +443,9 @@ public class FilmFilterController extends FilterController {
         hBox.getChildren().addAll(btnLoadFilter, btnNewFilter, btnSaveFilter);
         vbController.getChildren().add(hBox);
 
-        cboFilter.setMaxWidth(Double.MAX_VALUE);
+        cboFilterProfiles.setMaxWidth(Double.MAX_VALUE);
         VBox vBox = new VBox(1);
-        vBox.getChildren().addAll(new Label("gespeicherte Filter:"), cboFilter);
+        vBox.getChildren().addAll(new Label("gespeicherte Filter:"), cboFilterProfiles);
         vbController.getChildren().add(vBox);
 
         final Button btnHelp = PButton.helpButton("Filter", HelpText.GUI_FILM_FILTER);
@@ -468,26 +468,26 @@ public class FilmFilterController extends FilterController {
     }
 
     private void loadFilter() {
-        progData.storedFilters.setActFilterSettings(cboFilter.getSelectionModel().getSelectedItem());
+        progData.storedFilters.setActFilterSettings(cboFilterProfiles.getSelectionModel().getSelectedItem());
     }
 
     private void saveFilter() {
-        if (cboFilter.getSelectionModel().getSelectedItem() == null) {
+        if (cboFilterProfiles.getSelectionModel().getSelectedItem() == null) {
             newFilter();
         } else {
-            progData.storedFilters.saveStoredFilter(cboFilter.getSelectionModel().getSelectedItem());
+            progData.storedFilters.saveStoredFilter(cboFilterProfiles.getSelectionModel().getSelectedItem());
         }
     }
 
     private void delFilter() {
-        progData.storedFilters.removeStoredFilter(cboFilter.getSelectionModel().getSelectedItem());
-        cboFilter.getSelectionModel().selectFirst();
+        progData.storedFilters.removeStoredFilter(cboFilterProfiles.getSelectionModel().getSelectedItem());
+        cboFilterProfiles.getSelectionModel().selectFirst();
     }
 
     private void delAllFilter() {
         if (PAlert.showAlertOkCancel("Löschen", "Filter löschen", "Sollen alle Filter gelöscht werden?")) {
             progData.storedFilters.removeAllStoredFilter();
-            cboFilter.getSelectionModel().selectFirst();
+            cboFilterProfiles.getSelectionModel().selectFirst();
         }
     }
 
@@ -497,7 +497,7 @@ public class FilmFilterController extends FilterController {
                 "ersetzt werden?")) {
             progData.storedFilters.getStordeFilterList().clear();
             ProgInitFilter.setProgInitFilter();
-            cboFilter.getSelectionModel().selectFirst();
+            cboFilterProfiles.getSelectionModel().selectFirst();
         }
     }
 
@@ -511,12 +511,12 @@ public class FilmFilterController extends FilterController {
         final Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
             progData.storedFilters.addNewStoredFilter(result.get());
-            cboFilter.getSelectionModel().selectLast();
+            cboFilterProfiles.getSelectionModel().selectLast();
         }
     }
 
     private void renameFilter() {
-        final SelectedFilter sf = cboFilter.getSelectionModel().getSelectedItem();
+        final SelectedFilter sf = cboFilterProfiles.getSelectionModel().getSelectedItem();
         if (sf == null) {
             return;
         }
@@ -529,7 +529,7 @@ public class FilmFilterController extends FilterController {
         final Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
             sf.setName(result.get());
-            cboFilter.getSelectionModel().select(sf);
+            cboFilterProfiles.getSelectionModel().select(sf);
         }
     }
 
@@ -548,7 +548,7 @@ public class FilmFilterController extends FilterController {
 
     private void checkCboFilter() {
         SelectedFilter sf = progData.storedFilters.getActFilterSettings();
-        SelectedFilter sfCbo = cboFilter.getSelectionModel().getSelectedItem();
+        SelectedFilter sfCbo = cboFilterProfiles.getSelectionModel().getSelectedItem();
         if (SelectedFilterFactory.compareFilterWithoutNameOfFilter(sf, sfCbo)) {
             markFilterOk(true);
         } else {

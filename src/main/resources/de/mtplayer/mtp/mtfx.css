@@ -17,14 +17,14 @@
     -style-tab-border-color-1: #4169E1; /*royalblue*/
     -style-tab-border-color-2: #3a5fcc;
 
-    -style-extra-pane-color: derive(-fx-base,60%);
+    -style-extra-pane-color: derive(-fx-base,-5%);
 
-    -style-text-color-1: mediumblue; /*#0000CD*/
-    -style-border-color-lbl: royalblue;
-    -style-border-color-tab: cornflowerblue;
+    -lblSelectedLines-color-1: #007bc8;
+    -lblSelectedLines-color-2: derive(-fx-base,-10%);
+
+    -text-color-blue: #002fbe;
+
 }
-
-
 
 /* CheckBoxCell: CheckBoxen in der Tabelle*/
 .checkbox-table * {
@@ -105,7 +105,7 @@
 }
 .tab-pane {
     -fx-border-width: 1;
-    -fx-border-color: -style-border-color-tab;
+    -fx-border-color: -text-color-blue;
  }
 .tab-pane > .tab-header-area > .headers-region > .tab {
     -fx-padding: 0 10 0 10;
@@ -140,7 +140,7 @@
      -fx-text-fill: black;
 }
 .tab:selected .tab-label {
-     -fx-text-fill: -style-text-color-1;
+     -fx-text-fill: -text-color-blue;
 }
 .tab-pane > .tab-header-area > .headers-region > .tab:selected  .focus-indicator {
     -fx-focus-color: transparent;
@@ -158,17 +158,11 @@
 }
 
 
-.contPanel {
-    -fx-border-color: blue;
-    -fx-background-color: white;
-}
-
-.btnTab{
+/* Button "Filme", "Downloads", "Abos" */
+.btnTab, .btnTab-sel{
     -fx-font-weight: bold;
-    -fx-alignment: center ;
-    -fx-background-color: #c3c4c4,
-        -lin-grad-1,
-        -rad-grad-1;
+    -fx-alignment: center;
+    -fx-background-color: #c3c4c4, -lin-grad-1, -rad-grad-1;
     -fx-background-radius: 30;
     -fx-background-insets: 0,1,1;
     -fx-text-fill: black;
@@ -177,59 +171,35 @@
     -fx-border: 10;
 }
 
+.btnTab:focused{
+    -fx-background-color: #355c8c, -lin-grad-1, -rad-grad-1;
+    -fx-background-insets: -0.5,1,1;
+}
 .btnTab:hover{
-    -fx-font-weight: bold;
-    -fx-alignment: center ;
-    -fx-background-color: #5d5e8c,
-        -lin-grad-1,
-        -rad-grad-1;
-    -fx-background-radius: 30;
-    -fx-background-insets: 0,1,1;
-    -fx-text-fill: black;
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
-    -fx-padding: 10 20 10 20;
-    -fx-border: 10;
+    -fx-background-insets: -1.0,1,1;
 }
-
-.btnTab:pressed{
-    -fx-font-weight: bold;
-    -fx-alignment: center ;
-    -fx-background-color: blue,
-        -lin-grad-1,
-        -rad-grad-1;
-    -fx-background-radius: 30;
-    -fx-background-insets: 0,1,1;
-    -fx-text-fill: black;
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
-    -fx-padding: 10 20 10 20;
-    -fx-border: 10;
+.btnTab:focused:hover{
+    -fx-background-insets: -1.5,1,1;
 }
 
 .btnTab-sel{
-    -fx-font-weight: bold;
-    -fx-alignment: center ;
-    -fx-background-color: blue,
-         -lin-grad-1,
-         -rad-grad-1;
-    -fx-background-radius: 30;
-    -fx-background-insets: 0,1,1;
-    -fx-text-fill: blue;
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
-    -fx-padding: 10 20 10 20;
-    -fx-border: 10;
+    -fx-background-color: -text-color-blue, -lin-grad-1, -rad-grad-1;
+    -fx-background-insets: -0.3,1,1;
+    -fx-text-fill: -text-color-blue;
+}
+.btnTab-sel:focused{
+    -fx-background-insets: -1,1,1;
+}
+.btnTab-sel:hover{
+    -fx-background-insets: -1.5,1,1;
+}
+.btnTab-sel:focused:hover{
+    -fx-background-insets: -1.6,1,1;
 }
 
-.markFilterOk {
-    -fx-text-fill: -fx-text-base-color;
-    -fx-background-color: -filter-ok-1,
-       -filter-lin-grad-1;
-    -fx-background-insets: 0,1,1;
-}
-
+/* Button "Filmliste" */
 .btnFilmlist{
-    -fx-background-color: #c3c4c4,
-        -lin-grad-1,
-        -rad-grad-1;
+    -fx-background-color: #c3c4c4, -lin-grad-1, -rad-grad-1;
     -fx-background-radius: 30;
     -fx-background-insets: 0,1,1;
     -fx-text-fill: black;
@@ -250,10 +220,17 @@
     -fx-border: 5;
 }
 
+.btnFilmlist:focused{
+    -fx-background-color: #8d8d8d, -lin-grad-1, -rad-grad-1;
+    -fx-background-insets: -0.5,1,1;
+}
 .btnFilmlist:hover{
-     -fx-background-color: #f3f4f4,
-         -lin-grad-1,
-         -rad-grad-1;
+    -fx-background-color: #98abc4, -lin-grad-1, -rad-grad-1;
+    -fx-background-insets: -0.8,1,1;
+}
+.btnFilmlist:focused:hover{
+    -fx-background-color: #98abc4, -lin-grad-1, -rad-grad-1;
+    -fx-background-insets: -1.4,1,1;
 }
 
 .btnFilmlist:pressed{
@@ -262,12 +239,11 @@
          radial-gradient(center 80% -70%, radius 200%, #e6e6e6 35%, -tab-button-3 40%);
 }
 
+/* Startdialog beim aller ersten Start */
 .btnStartDialog{
     -fx-font-weight: bold;
     -fx-alignment: center ;
-    -fx-background-color: #c3c4c4,
-        -lin-grad-1,
-        -rad-grad-1;
+    -fx-background-color: #c3c4c4, -lin-grad-1, -rad-grad-1;
     -fx-background-radius: 30;
     -fx-background-insets: 0,1,1;
     -fx-text-fill: black;
@@ -275,18 +251,40 @@
     -fx-padding: 5 10;
     -fx-border: 5;
 }
-
-.btnStartDialogSel{
-    -fx-background-color: blue,
-            -lin-grad-1,
-            -rad-grad-1;
-    -fx-text-fill: blue;
+.btnStartDialog:focused{
+    -fx-background-color: #8d8d8d, -lin-grad-1, -rad-grad-1;
+    -fx-background-insets: -0.5,1,1;
+}
+.btnStartDialog:hover{
+    -fx-background-color: #98abc4, -lin-grad-1, -rad-grad-1;
+    -fx-background-insets: -0.8,1,1;
+}
+.btnStartDialog:focused:hover{
+    -fx-background-color: #98abc4, -lin-grad-1, -rad-grad-1;
+    -fx-background-insets: -1.4,1,1;
 }
 
+.btnStartDialogSel{
+    -fx-background-color: -text-color-blue, -lin-grad-1, -rad-grad-1;
+    -fx-background-insets: 0,1,1;
+    -fx-text-fill: -text-color-blue;
+}
+.btnStartDialogSel:focused{
+    -fx-background-color: -text-color-blue, -lin-grad-1, -rad-grad-1;
+    -fx-background-insets: -0.5,1,1;
+}
+.btnStartDialogSel:hover{
+    -fx-background-color: -text-color-blue, -lin-grad-1, -rad-grad-1;
+    -fx-background-insets: -0.8,1,1;
+}
+.btnStartDialogSel:focused:hover{
+    -fx-background-color: -text-color-blue, -lin-grad-1, -rad-grad-1;
+    -fx-background-insets: -1.4,1,1;
+}
+
+/* Menü-Button */
 .btnFunction{
-    -fx-background-color: #c3c4c4,
-        -lin-grad-1,
-        -rad-grad-1;
+    -fx-background-color: #c3c4c4, -lin-grad-1, -rad-grad-1;
     -fx-background-radius: 30;
     -fx-background-insets: 0,1,1;
     -fx-text-fill: black;
@@ -294,36 +292,38 @@
     -fx-padding: 5;
     -fx-border: 5;
 }
-
-/*Pfeil ausblenden*/
 .btnFunction > .arrow-button {
+    /*Pfeil ausblenden*/
     -fx-padding: 0;
 }
-
 .btnFunction > .arrow-button > .arrow {
+    /*Pfeil ausblenden*/
     -fx-padding: 0;
 }
-
+.btnFunction:focused{
+    -fx-background-color: #4898de, -lin-grad-1, -rad-grad-1;
+    -fx-background-insets: -0.4,1,1;
+}
 .btnFunction:hover{
-    -fx-background-color: #f3f4f4,
-         -lin-grad-1,
-         -rad-grad-1;
+    -fx-background-color: #005ab0, -lin-grad-btn-func-1, -rad-grad-btn-func-1;
+    -fx-background-insets: -0.8,1,1;
+}
+.btnFunction:focused:hover{
+    -fx-background-color: #005ab0, -lin-grad-btn-func-1, -rad-grad-btn-func-1;
+    -fx-background-insets: -1.2,1,1;
 }
 
-.btnFunction:pressed{
-     -fx-background-color: #5d5e8c,
-         -lin-grad-btn-func-1,
-         -rad-grad-btn-func-1;
+/* ist die ComboBox mit den Filterprofilen: markiert wenn das Profil aktiv ist*/
+.markFilterOk > .list-cell{
+-fx-underline: true;
 }
 
+/* ist der Label mit der Anzahl markierter Tabellenzeilen in der Taskbar*/
 .lblSelectedLines {
-    -fx-background-color: #c4c4c4,
-        -lin-grad-1,
-        -rad-grad-1;
-    -fx-background-insets: 0,1,1;
-    -fx-background-radius: 5;
-    -fx-text-fill: black;
-    -fx-padding: 4 14 4 14;
+    -fx-background-color: -lblSelectedLines-color-1, -lblSelectedLines-color-2;
+    -fx-background-insets: 0,1;
+    -fx-background-radius: 3,3;
+    -fx-padding: 2 12 2 12;
 }
 
 /*Checkbox edit all abo*/
@@ -331,12 +331,32 @@
     -fx-border-color: cornflowerblue;
     -fx-border-width: 1;
     -fx-border-radius: 5;
+    -fx-background-radius: 5;
  }
 .chk-edit-all-text {
     -fx-border-color: cornflowerblue;
     -fx-border-width: 1;
     -fx-border-radius: 5;
     -fx-padding: 5;
+}
+
+/* der allgemeine Rest*/
+
+.combo-box-base{
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+.combo-box .arrow-button{
+    -fx-border-radius: 0 5 5 0;
+    -fx-background-radius: 0 5 5 0;
+}
+.combo-box > .list-cell{
+    -fx-border-radius: 5 0 0 5;
+    -fx-background-radius: 5 0 0 5;
+}
+.combo-box .text-input{
+    -fx-border-radius: 5 0 0 5;
+    -fx-background-radius: 5 0 0 5;
 }
 
 .alignCenter {
@@ -356,6 +376,12 @@
     -fx-font-weight: normal;
 }
 
+/* ist der abgesetzte Bereich im Download Dialog*/
+.downloadDialog {
+    -fx-background-color: gainsboro;
+}
+
+/* sind alle Context-Menüs */
 .context-menu {
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
@@ -365,10 +391,8 @@
     -fx-background-radius: 5px;
 }
 
-.downloadDialog {
-    -fx-background-color: gainsboro;
-}
-
+/* farblich abgesetzter Bereich in vielen Panes/Dialogen*/
 .extra-pane {
     -fx-background-color: -style-extra-pane-color;
 }
+

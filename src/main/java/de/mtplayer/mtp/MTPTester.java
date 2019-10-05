@@ -25,6 +25,7 @@ import de.mtplayer.mtp.tools.storedFilter.SelectedFilterFactory;
 import de.p2tools.p2Lib.dialog.ProgInfoDialog;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
+import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.concurrent.Task;
@@ -126,6 +127,9 @@ public class MTPTester {
             btnStartWaiting.setMaxWidth(Double.MAX_VALUE);
             btnStartWaiting.setOnAction(a -> startWaiting());
 
+            PToggleSwitch ptgl = new PToggleSwitch("Test");
+            ptgl.setAllowIndeterminate(true);
+
             int row = 0;
             gridPane.add(text, 0, row, 2, 1);
             gridPane.add(btnAddToHash, 0, ++row);
@@ -139,6 +143,7 @@ public class MTPTester {
             gridPane.add(btnMarkFilmFilterOk, 0, ++row);
             gridPane.add(btnMarkFilmFilterNotOk, 0, ++row);
             gridPane.add(btnStartWaiting, 0, ++row);
+            gridPane.add(ptgl, 0, ++row);
             gridPane.add(textArea, 0, ++row, 2, 1);
         }
     }
