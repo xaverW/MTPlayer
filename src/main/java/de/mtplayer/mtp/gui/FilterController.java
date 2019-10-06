@@ -26,6 +26,7 @@ import javafx.scene.layout.VBox;
 
 public class FilterController extends AnchorPane {
 
+
     private final VBox vBoxAll = new VBox(20);
     private final ProgData progData;
 
@@ -76,5 +77,4 @@ public class FilterController extends AnchorPane {
         vBoxAll.getChildren().addAll(vBox);
         return vBox;
     }
-
 }

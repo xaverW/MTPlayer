@@ -32,7 +32,7 @@ public class FilmGuiPack {
     private final HBox hBox = new HBox();
     static DoubleProperty doubleProperty;//sonst geht die Ref verloren
     static BooleanProperty boolDivOn;
-    private final FilmFilterController filmFilterController;
+    private final FilmFilterFactory filmFilterController;
     private final FilmGuiController guiController;
     private boolean bound = false;
 
@@ -40,7 +40,7 @@ public class FilmGuiPack {
         progData = ProgData.getInstance();
         this.doubleProperty = ProgConfig.FILM_GUI_FILTER_DIVIDER.getDoubleProperty();
         this.boolDivOn = ProgConfig.FILM_GUI_FILTER_DIVIDER_ON.getBooleanProperty();
-        filmFilterController = new FilmFilterController();
+        filmFilterController = new FilmFilterFactory();
         guiController = new FilmGuiController();
     }
 

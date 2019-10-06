@@ -157,7 +157,9 @@ public class HelpText {
                     "==================" + PConst.LINE_SEPARATOR +
                     "Mit den Buttons unten, kann man eingestellte Filter speichern " +
                     "und auch wieder abrufen. So wird der gespeicherte Zustand genau " +
-                    "wieder hergestellt.";
+                    "wieder hergestellt. Ist der Profilname im Auswahlfeld unterstrichen, " +
+                    "besagt das, dass die aktuellen Filtereinstellungen unverändert sind und " +
+                    "denen des Profils entsprechen.";
 
     public static final String BLACKLIST_WHITELIST =
             "Bei der Funktion \"Blacklist\" werden Filme, die den " +
