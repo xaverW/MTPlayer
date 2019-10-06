@@ -228,6 +228,7 @@ public class FilmFilterControllerProfiles extends VBox {
         dialog.setHeaderText("Den Namen des Filterprofils vorgeben");
         dialog.setContentText("Name:");
         dialog.setResizable(true);
+        dialog.initOwner(progData.primaryStage);
 
         final Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
@@ -246,6 +247,7 @@ public class FilmFilterControllerProfiles extends VBox {
         dialog.setHeaderText("Den Namen des Filterprofils ändern");
         dialog.setContentText("Neuer Name:");
         dialog.setResizable(true); // sonst geht der Dialog nicht "auf" und lässt sich nicht vergrößern, bug??
+        dialog.initOwner(progData.primaryStage);
 
         final Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
