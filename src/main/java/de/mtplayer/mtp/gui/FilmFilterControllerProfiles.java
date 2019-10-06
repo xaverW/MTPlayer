@@ -177,7 +177,7 @@ public class FilmFilterControllerProfiles extends VBox {
 
         cboFilterProfiles.setMaxWidth(Double.MAX_VALUE);
         VBox vBox = new VBox(3);
-        vBox.getChildren().addAll(new Label("gespeicherte Filterprofile:"), cboFilterProfiles);
+        vBox.getChildren().addAll(new Label("Filterprofile:"), cboFilterProfiles);
         getChildren().add(vBox);
 
         final Button btnHelp = PButton.helpButton("Filter", HelpText.GUI_FILM_FILTER);

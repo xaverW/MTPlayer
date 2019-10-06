@@ -88,9 +88,9 @@ public class SearchUpdateWithDate {
              JsonParser jp = new JsonFactory().createParser(in)) {
             ret = startReadingData(jp);
         } catch (final FileNotFoundException ex) {
-            list.add(912020214, "FilmListe existiert nicht: " + source);
+            list.add("FilmListe existiert nicht: " + source);
         } catch (final Exception ex) {
-            list.add(963214587, "FilmListe: " + source + PConst.LINE_SEPARATOR + ex.getMessage());
+            list.add("FilmListe: " + source + PConst.LINE_SEPARATOR + ex.getMessage());
         }
         return ret;
     }
