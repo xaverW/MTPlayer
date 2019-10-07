@@ -58,7 +58,4 @@ public class FilmFilterController extends FilterController {
         vBoxBlacklist.getChildren().add(tglBlacklist);
     }
 
-    public void markFilterOk(boolean ok) {
-        profiles.markFilterOk(ok);
-    }
 }

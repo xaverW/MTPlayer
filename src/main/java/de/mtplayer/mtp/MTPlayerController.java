@@ -76,10 +76,6 @@ public class MTPlayerController extends StackPane {
         btnFilmlist.getStyleClass().add("btnFilmlist_");
     }
 
-    public void markFilterOk(boolean ok) {
-        filmGuiPack.markFilterOk(ok);
-    }
-
     private void init() {
         try {
             // Toolbar

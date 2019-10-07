@@ -310,7 +310,7 @@ public class MTPTester {
     }
 
     private void makrFilterOk(boolean ok) {
-        progData.mtPlayerController.markFilterOk(ok);
+//        progData.mtPlayerController.markFilterOk(ok);
     }
 
     private static String cleanUnicode(String ret) {

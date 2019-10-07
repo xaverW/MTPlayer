@@ -65,7 +65,7 @@ public class FilmFilterControllerProfiles extends VBox {
         checkCboFilter();
     }
 
-    public void markFilterOk(boolean ok) {
+    private void markFilterOk(boolean ok) {
         if (ok) {
             cboFilterProfiles.getStyleClass().removeAll("markFilterOk");
             cboFilterProfiles.getStyleClass().add("markFilterOk");
@@ -191,10 +191,12 @@ public class FilmFilterControllerProfiles extends VBox {
     }
 
     private void saveFilter() {
-        if (cboFilterProfiles.getSelectionModel().getSelectedItem() == null) {
+        final SelectedFilter sf = cboFilterProfiles.getSelectionModel().getSelectedItem();
+        if (sf == null) {
             newFilter();
         } else {
-            progData.storedFilters.saveStoredFilter(cboFilterProfiles.getSelectionModel().getSelectedItem());
+            progData.storedFilters.saveStoredFilter(sf);
+            checkCboFilter();
         }
     }
 
