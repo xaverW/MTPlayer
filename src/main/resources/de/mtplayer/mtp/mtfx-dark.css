@@ -45,7 +45,7 @@
 }
 
 /* PRangeBox aus P2Lib*/
-.pRangeButton {
+/*.pRangeButton {
     -lin-grad-pRangeBox-1: linear-gradient(to bottom, #606468, #35383A 100% );
     -lin-grad-pRangeBox-2: linear-gradient(to bottom, #777F85, #585D61 100% );
     -pRangeBox-1: #121212;
@@ -64,7 +64,7 @@
 }
 .pRangeButton > .arrow-button:hover{
     -fx-background-color: -lin-grad-1, -lin-grad-pRangeBox-2;
-}
+}*/
 
 /* ComboBox */
 .combo-box-popup .list-view .list-cell:hover {

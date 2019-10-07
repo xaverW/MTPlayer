@@ -16,7 +16,6 @@
 
 package de.mtplayer.mtp.gui;
 
-import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
 import de.p2tools.p2Lib.guiTools.pCheckComboBox.PCheckComboBox;
@@ -24,7 +23,6 @@ import de.p2tools.p2Lib.guiTools.pRange.PRangeBox;
 import de.p2tools.p2Lib.guiTools.pRange.PTimePeriodBox;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -72,8 +70,6 @@ public class FilmFilterControllerFilter extends VBox {
 
     private final ProgData progData;
 
-    private final IntegerProperty filterProp = ProgConfig.FILTER_FILME_SEL_FILTER.getIntegerProperty();
-
     public FilmFilterControllerFilter() {
         super();
         progData = ProgData.getInstance();
@@ -86,11 +82,8 @@ public class FilmFilterControllerFilter extends VBox {
         addStringFilter();
 
         // Slider
-        initDaysFilter();
-        initDurFilter();
-        initFilmTimeFilter();
         addSlider();
-        setLabelSlider();
+
 
         // CheckOnOff
         addCheckFilter();
@@ -199,6 +192,7 @@ public class FilmFilterControllerFilter extends VBox {
 
         // kein direktes binding wegen: valueChangingProperty, nur melden wenn "steht"
         slDays.setValue(progData.storedFilters.getActFilterSettings().getDays());
+        setLabelSlider();
 
         progData.storedFilters.getActFilterSettings().daysProperty().addListener(
                 l -> slDays.setValue(progData.storedFilters.getActFilterSettings().getDays()));
@@ -215,11 +209,6 @@ public class FilmFilterControllerFilter extends VBox {
         slDur.minValueProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().minDurProperty());
         slDur.maxValueProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().maxDurProperty());
         slDur.setValuePrefix("");
-
-//        progData.storedFilter.getSelectedFilter().minDurProperty().addListener((observable, oldValue, newValue) ->
-//                System.out.println("getSelectedFilter().getMinDur " + progData.storedFilter.getSelectedFilter().getMinDur()));
-//        progData.storedFilter.getSelectedFilter().maxDurProperty().addListener((observable, oldValue, newValue) ->
-//                System.out.println("getSelectedFilter().getMaxDur " + progData.storedFilter.getSelectedFilter().getMaxDur()));
     }
 
     private void initFilmTimeFilter() {
@@ -227,16 +216,15 @@ public class FilmFilterControllerFilter extends VBox {
         slFilmTime.maxValueProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().maxTimeProperty());
         slFilmTime.setVluePrefix("");
 
-//        progData.storedFilter.getSelectedFilter().minTimeProperty().addListener((observable, oldValue, newValue) ->
-//                System.out.println("getSelectedFilter().getMinTime " + progData.storedFilter.getSelectedFilter().getMinTime()));
-//        progData.storedFilter.getSelectedFilter().maxTimeProperty().addListener((observable, oldValue, newValue) ->
-//                System.out.println("getSelectedFilter().getMaxTime " + progData.storedFilter.getSelectedFilter().getMaxTime()));
-
         tglFilmTime.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().minMaxTimeInvertProperty());
         GridPane.setFillWidth(tglFilmTime, false);
     }
 
     private void addSlider() {
+        initDaysFilter();
+        initDurFilter();
+        initFilmTimeFilter();
+
         // Tage
         VBox vBox = new VBox(3);
         vBox.getChildren().addAll(lblDays, slDays);
