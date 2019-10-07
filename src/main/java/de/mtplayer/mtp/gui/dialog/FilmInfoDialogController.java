@@ -31,10 +31,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -187,6 +184,7 @@ public class FilmInfoDialogController extends PDialog {
 
         btnOk.setOnAction(a -> close());
         vBoxCont.getChildren().add(gridPane);
+        VBox.setVgrow(gridPane, Priority.ALWAYS);
 
         gridPane.setHgap(5);
         gridPane.setVgap(5);
@@ -225,28 +223,34 @@ public class FilmInfoDialogController extends PDialog {
                 case FilmXml.FILM_HD:
                     gridPane.add(textTitle[i], 0, row);
                     gridPane.add(ivHD, 1, row++);
+                    gridPane.getRowConstraints().add(new RowConstraints());
                     break;
                 case FilmXml.FILM_UT:
                     gridPane.add(textTitle[i], 0, row);
                     gridPane.add(ivUT, 1, row++);
+                    gridPane.getRowConstraints().add(new RowConstraints());
                     break;
                 case FilmXml.FILM_NEW:
                     gridPane.add(textTitle[i], 0, row);
                     gridPane.add(ivNew, 1, row++);
+                    gridPane.getRowConstraints().add(new RowConstraints());
                     break;
 
                 case FilmXml.FILM_URL:
 //                    hBoxUrl.getChildren().add(pHyperlinkUrl);
                     gridPane.add(textTitle[i], 0, row);
                     gridPane.add(pHyperlinkUrl, 1, row++);
+                    gridPane.getRowConstraints().add(new RowConstraints());
                     break;
                 case FilmXml.FILM_WEBSITE:
 //                    hBoxWebsite.getChildren().add(pHyperlinkWebsite);
                     gridPane.add(textTitle[i], 0, row);
                     gridPane.add(pHyperlinkWebsite, 1, row++);
+                    gridPane.getRowConstraints().add(new RowConstraints());
                     break;
 
                 case FilmXml.FILM_DESCRIPTION:
+                    textArea.setMaxHeight(Double.MAX_VALUE);
                     textArea.setPrefRowCount(6);
                     textArea.setWrapText(true);
                     textArea.setEditable(false);
@@ -254,11 +258,16 @@ public class FilmInfoDialogController extends PDialog {
 
                     gridPane.add(textTitle[i], 0, row);
                     gridPane.add(textArea, 1, row++);
+
+                    RowConstraints regRow = new RowConstraints();
+                    regRow.setVgrow(Priority.ALWAYS);
+                    gridPane.getRowConstraints().add(regRow);
                     break;
 
                 default:
                     gridPane.add(textTitle[i], 0, row);
                     gridPane.add(lblCont[i], 1, row++);
+                    gridPane.getRowConstraints().add(new RowConstraints());
 
                     final int ii = i;
                     lblCont[i].setOnContextMenuRequested(event ->
