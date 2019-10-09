@@ -147,14 +147,35 @@ public class DownloadList extends SimpleListProperty<Download> {
 
 
     public synchronized void preferDownloads(ArrayList<Download> prefDownList) {
-        int addNr = prefDownList.size();
+        // macht nur Sinn, wenn der Download auf Laden wartet: Init
+        // todo auch bei noch nicht gestarteten ermöglichen
+        prefDownList.removeIf(d -> d.getState() != DownloadConstants.STATE_STARTED_WAITING);
+        if (prefDownList.isEmpty()) {
+            return;
+        }
+
+        // zum neu nummerieren der alten Downloads
+        List<Download> list = new ArrayList<>();
         for (final Download download : this) {
             final int i = download.getNr();
             if (i < DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED) {
-                download.setNr(i + addNr);
+                list.add(download);
             }
         }
+        prefDownList.stream().forEach(d -> list.remove(d));
+        Collections.sort(list, new Comparator<Download>() {
+            @Override
+            public int compare(Download d1, Download d2) {
+                return (d1.getNr() < d2.getNr()) ? -1 : 1;
+            }
+        });
+        int addNr = prefDownList.size();
+        for (final Download download : list) {
+            ++addNr;
+            download.setNr(addNr);
+        }
 
+        // und jetzt die vorgezogenen Downloads nummerieren
         int i = 1;
         for (final Download dataDownload : prefDownList) {
             dataDownload.setNr(i++);
