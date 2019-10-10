@@ -21,6 +21,7 @@ import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.geometry.Insets;
 import javafx.scene.control.Separator;
 import javafx.scene.control.Tooltip;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 public class FilmFilterController extends FilterController {
@@ -50,6 +51,8 @@ public class FilmFilterController extends FilterController {
 
         vBoxFilter = getVBoxAll();
         vBoxFilter.setSpacing(0);
+        VBox.setVgrow(clearFilter, Priority.ALWAYS);
+
         vBoxFilter.getChildren().addAll(filter, clearFilter, sp, profiles);
 
         tglBlacklist.setTooltip(new Tooltip("Blacklist einschalten"));

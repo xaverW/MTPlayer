@@ -26,8 +26,8 @@ import javafx.beans.property.BooleanProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.util.StringConverter;
 
 public class FilmFilterControllerFilter extends VBox {
 
@@ -76,7 +76,6 @@ public class FilmFilterControllerFilter extends VBox {
 
         setPadding(new Insets(15, 15, 15, 15));
         setSpacing(20);
-        VBox.setVgrow(this, Priority.ALWAYS);
 
         // Sender, Thema, ..
         addStringFilter();
@@ -185,6 +184,20 @@ public class FilmFilterControllerFilter extends VBox {
         slDays.setShowTickLabels(true);
         slDays.setMajorTickUnit(10);
         slDays.setBlockIncrement(1);
+
+        slDays.setLabelFormatter(new StringConverter<>() {
+            @Override
+            public String toString(Double x) {
+                if (x == SelectedFilter.FILTER_DAYS_MAX) return "alles";
+
+                return x.intValue() + "";
+            }
+
+            @Override
+            public Double fromString(String string) {
+                return null;
+            }
+        });
 
         slDays.valueProperty().addListener(l -> {
             setLabelSlider();

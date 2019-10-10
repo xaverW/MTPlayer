@@ -104,8 +104,6 @@ public class ProgConst {
 
     public static final String CONFIG_DIALOG_SET_DIVIDER = "0.2";
 
-    public static final int DOWNLOAD_CHART_MAX_TIME = 30; // Minuten
-
     public static final int LAENGE_DATEINAME_MAX = 200; // Standardwert für die Länge des Zieldateinamens
     public static final int LAENGE_FELD_MAX = 100; // Standardwert für die Länge des Feldes des
     public final static int MAX_COPY_OF_BACKUPFILE = 5; // Maximum number of backup files to be stored.

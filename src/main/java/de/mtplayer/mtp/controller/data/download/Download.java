@@ -29,6 +29,7 @@ import de.p2tools.p2Lib.tools.PSystemUtils;
 import de.p2tools.p2Lib.tools.file.PFileUtils;
 import de.p2tools.p2Lib.tools.net.PUrlTools;
 import javafx.application.Platform;
+import javafx.scene.chart.XYChart;
 
 import java.io.File;
 import java.util.Date;
@@ -41,6 +42,8 @@ public final class Download extends DownloadProps {
     private Film film = null;
     private SetData setData = null;
     private Abo abo = null;
+
+    private XYChart.Series<Number, Number> cSeries = null;
 
     public Download() {
     }
@@ -70,6 +73,17 @@ public final class Download extends DownloadProps {
         setSizeDownloadFromFilm();
         // und endlich Aufruf bauen :)
         downloadProgram.makeProgParameter(film, abo, name, path);
+        nrProperty().addListener((observable, oldValue, newValue) -> {
+            if (cSeries == null) {
+                return;
+            }
+            if (getNr() < DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED) {
+                Platform.runLater(() -> cSeries.setName(getNr() + ""));
+            } else {
+                // Download ohne Nummer, dann auch im Chart löschen
+                Platform.runLater(() -> cSeries.setName(" "));
+            }
+        });
     }
 
 
@@ -131,6 +145,13 @@ public final class Download extends DownloadProps {
         return getState() >= DownloadConstants.STATE_FINISHED;
     }
 
+    public XYChart.Series<Number, Number> getCSeries() {
+        return cSeries;
+    }
+
+    public void setCSeries(XYChart.Series<Number, Number> cSeries) {
+        this.cSeries = cSeries;
+    }
 
     //==============================================
     //==============================================
@@ -141,6 +162,7 @@ public final class Download extends DownloadProps {
 
     public void initStartDownload() {
         getStart().setRestartCounter(0);
+        getStart().setBandwidth(0);
         setStateStartedWaiting();
     }
 
@@ -165,6 +187,8 @@ public final class Download extends DownloadProps {
         downSize.reset();
         setRemaining("");
         setBandwidth("");
+        getStart().setBandwidth(0);
+        setCSeries(null);
         setNr(DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED);
 
         setState(DownloadConstants.STATE_INIT);
@@ -190,6 +214,8 @@ public final class Download extends DownloadProps {
         downSize.reset();
         setRemaining("");
         setBandwidth("");
+        getStart().setBandwidth(0);
+        setCSeries(null);
         setNr(DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED);
     }
 

@@ -119,7 +119,6 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs DOWNLOAD_START_NOW = addNewKey("download-start-now", Boolean.FALSE.toString());
     public static MLConfigs DOWNLOAD_BEEP = addNewKey("download-beep");
     public static MLConfigs DOWNLOAD_ERROR_MSG = addNewKey("download-error-msg", Boolean.TRUE.toString());
-    public static MLConfigs DOWNLOAD_CHART_SEPARAT = addNewKey("download-chart-separat", Boolean.TRUE.toString());
     public static MLConfigs DOWNLOAD_MAX_DOWNLOADS = addNewKey("download-max-downloads", "1");
     public static MLConfigs DOWNLOAD_MAX_ONE_PER_SERVER = addNewKey("download-max-one-per-server"); // nur ein Download pro Server - sonst max 2
     public static MLConfigs DOWNLOAD_MAX_BANDWITH_KBYTE = addNewKey("download-max-bandwith-kbyte", String.valueOf(MLBandwidthTokenBucket.BANDWIDTH_MAX_KBYTE));
@@ -153,6 +152,10 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs DOWNLOAD_GUI_TABLE_VIS = addNewKey("download-gui-table-vis");
     public static MLConfigs DOWNLOAD_GUI_TABLE_ORDER = addNewKey("download-gui-table-order");
     public static MLConfigs DOWNLOAD_SHOW_NOTIFICATION = addNewKey("download-show-notification", Boolean.TRUE.toString());
+
+    // downloadchart
+    public static MLConfigs DOWNLOAD_CHART_SEPARAT = addNewKey("download-chart-separat", Boolean.TRUE.toString());
+    public static MLConfigs DOWNLOAD_CHART_MAX_TIME = addNewKey("download-chart-max-time", 30);
 
     // Gui Abo
     public static MLConfigs ABO_SEARCH_NOW = addNewKey("abo-search-now", Boolean.TRUE.toString());

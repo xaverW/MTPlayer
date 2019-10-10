@@ -17,30 +17,33 @@
 package de.mtplayer.mtp.gui;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
-import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadConstants;
 import de.mtplayer.mtp.gui.tools.Listener;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
+import javafx.geometry.Side;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.CheckMenuItem;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.util.StringConverter;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public class DownloadGuiChart {
 
     private BooleanProperty separatChartProp = ProgConfig.DOWNLOAD_CHART_SEPARAT.getBooleanProperty();
+    private IntegerProperty maxTime = ProgConfig.DOWNLOAD_CHART_MAX_TIME.getIntegerProperty();
+
     private final ProgData progData;
 
     private int countSek = 0;
@@ -49,14 +52,14 @@ public class DownloadGuiChart {
     private LineChart<Number, Number> lineChart = null;
     private LinkedList<Download> startedDownloads = new LinkedList<>(); // Liste gestarteter Downloads
 
-    private final XYChart.Series<Number, Number> sumSeries =
+    private final XYChart.Series<Number, Number> sumChartSeries =
             new XYChart.Series<>("Summe", FXCollections.observableArrayList(new XYChart.Data<Number, Number>(0.0, 0.0)));
 
     // Liste der LineCharts für Gesamt -> hat nur eine LineChart
-    private final ObservableList<XYChart.Series<Number, Number>> listChartSum = FXCollections.observableArrayList(sumSeries);
+    private final ObservableList<XYChart.Series<Number, Number>> lineChartsSum = FXCollections.observableArrayList(sumChartSeries);
 
     // Liste der LineCharts für einzele Downloads -> für jeden Download eine LineChart
-    private final ObservableList<XYChart.Series<Number, Number>> listChartSerparat = FXCollections.observableArrayList();
+    private final ObservableList<XYChart.Series<Number, Number>> lineChartsSeparate = FXCollections.observableArrayList();
 
     private AnchorPane anchorPane;
 
@@ -77,50 +80,51 @@ public class DownloadGuiChart {
     }
 
     private synchronized void initList() {
-        listChartSerparat.clear();
-        sumSeries.getData().clear();
+        lineChartsSeparate.clear(); // da werden alle chartSeries gelöscht, jeder Download
+        sumChartSeries.getData().clear(); // da werden die Daten in der einen chartSeries gelöscht, Summe aller Downloads
         scale = 1;
     }
 
     private void initCharts() {
-        final ContextMenu cm = initContext();
-
         lineChart = new LineChart<>(createXAxis(), createYAxis());
-
-        anchorPane.getChildren().add(lineChart);
-        anchorPane.setPadding(new Insets(10, 10, 10, 10));
-
-        AnchorPane.setLeftAnchor(lineChart, 10.0);
-        AnchorPane.setBottomAnchor(lineChart, 10.0);
-        AnchorPane.setRightAnchor(lineChart, 10.0);
-        AnchorPane.setTopAnchor(lineChart, 10.0);
-
-        lineChart.setCreateSymbols(false);
-        selectChartData();
-
-        lineChart.setTitle("Downloads");
-        lineChart.getXAxis().setLabel("Zeit [min]");
-        lineChart.getYAxis().setLabel("Bandbreite");
+        lineChart.getStyleClass().add("thick-chart");
+        lineChart.setLegendSide(Side.RIGHT);
         lineChart.setAnimated(false);
         lineChart.setCreateSymbols(false);
-
+        lineChart.setTitle("Downloads");
+        lineChart.getXAxis().setLabel("Programmlaufzeit [min]");
+        setYAxisLabel();
         lineChart.setOnMouseClicked(e -> {
             if (e.getButton() == MouseButton.SECONDARY) {
+                final ContextMenu cm = initContextMenu();
                 cm.show(lineChart, e.getSceneX(), e.getSceneY());
+                // bei Dualscreen wird auf dem ersten angezeigt->javafx Fehler: https://bugs.openjdk.java.net/browse/JDK-8156094
             }
         });
 
+        AnchorPane.setLeftAnchor(lineChart, 0.0);
+        AnchorPane.setBottomAnchor(lineChart, 0.0);
+        AnchorPane.setRightAnchor(lineChart, 0.0);
+        AnchorPane.setTopAnchor(lineChart, 0.0);
+        anchorPane.getChildren().add(lineChart);
+
+        selectChartData();
     }
 
     private NumberAxis createXAxis() {
         final NumberAxis xAxis = new NumberAxis();
-        xAxis.setAutoRanging(true);
+        xAxis.setAutoRanging(false);
         xAxis.setLowerBound(0.0);
-        xAxis.setTickLabelFormatter(new StringConverter<Number>() {
+        xAxis.setTickLabelFormatter(new StringConverter<>() {
             @Override
             public String toString(Number object) {
-                int i = (int) (object.doubleValue() * 10);
-                return ((i / 10.0) + "");
+                if (object.doubleValue() > 60) {
+                    int i = (int) object.doubleValue();
+                    return i + "";
+                } else {
+                    int i = (int) (object.doubleValue() * 10);
+                    return ((i / 10.0) + "");
+                }
             }
 
             @Override
@@ -132,41 +136,57 @@ public class DownloadGuiChart {
     }
 
     private NumberAxis createYAxis() {
-        final NumberAxis xAxis = new NumberAxis();
-        xAxis.setAutoRanging(true);
-        xAxis.setLowerBound(0.0);
-        return xAxis;
+        final NumberAxis yAxis = new NumberAxis();
+        yAxis.setAutoRanging(true);
+        yAxis.setLowerBound(0.0);
+        return yAxis;
     }
 
-    private ContextMenu initContext() {
-        final ContextMenu cm = new ContextMenu();
-
-        final CheckMenuItem allDowns = new CheckMenuItem("Downloads einzeln anzeigen");
-        final MenuItem delData = new MenuItem("Löschen");
-        cm.getItems().addAll(allDowns, delData);
-
+    private ContextMenu initContextMenu() {
+        final CheckMenuItem allDowns = new CheckMenuItem("jeden Download einzeln zeichnen und nicht alle zusammenfassen");
         allDowns.selectedProperty().bindBidirectional(separatChartProp);
-
         allDowns.setOnAction(e -> selectChartData());
+
+
+        final Slider slMaxTime = new Slider();
+        slMaxTime.setMaxWidth(Double.MAX_VALUE);
+        slMaxTime.setMin(30);
+        slMaxTime.setMax(300);
+        slMaxTime.valueProperty().bindBidirectional(maxTime);
+
+        final Label lblValue = new Label(" " + maxTime.get() + " Min.");
+        slMaxTime.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                lblValue.setText(" " + newValue.intValue() + " Min.");
+            }
+        });
+        final Label lblInfo = new Label("Zeitraum:");
+
+        HBox hBox = new HBox(5);
+        hBox.getChildren().addAll(lblInfo, slMaxTime, lblValue);
+        HBox.setHgrow(slMaxTime, Priority.ALWAYS);
+        CustomMenuItem cmi = new CustomMenuItem(hBox);
+
+        final MenuItem delData = new MenuItem("Diagramm löschen");
         delData.setOnAction(e -> initList());
 
+        final ContextMenu cm = new ContextMenu();
+        cm.getItems().addAll(cmi, allDowns, delData);
         return cm;
     }
 
     private void selectChartData() {
         if (ProgConfig.DOWNLOAD_CHART_SEPARAT.getBool()) {
-            lineChart.setData(listChartSerparat);
+            lineChart.setData(lineChartsSeparate);
         } else {
-            lineChart.setData(listChartSum);
+            lineChart.setData(lineChartsSum);
         }
     }
 
     // ============================
     // Daten generieren
     // ============================
-
     private synchronized void searchInfos() {
-        boolean found;
         ++countSek; // Sekunden
         final double countMin = countSek / 60.0; // Minuten
         startedDownloads = progData.downloadList.getListOfStartsNotFinished(DownloadConstants.ALL);
@@ -174,40 +194,91 @@ public class DownloadGuiChart {
         //Downloads in "Diagramm" eintragen
         for (final Download download : startedDownloads) {
             //jeden Download eintragen
-            found = false;
-            for (final XYChart.Series<Number, Number> cSeries : listChartSerparat) {
-                if (cSeries.getName().equals(download.getNr() + "")) { //todo beim umsortieren der Downloads ändert sich die Nr
-                    //dann gibts den schon
-                    cSeries.getData().add(new XYChart.Data<>(countMin, download.getStart().getBandwidth() / scale));
-                    found = true;
-                }
-            }
-            if (!found) {
-                listChartSerparat.add(new XYChart.Series<Number, Number>(download.getNr() + "",
-                        FXCollections.observableArrayList(new XYChart.Data<Number, Number>(countMin, download.getStart().getBandwidth() / scale))));
+            XYChart.Series<Number, Number> cSeries = download.getCSeries();
+
+            if (cSeries != null) {
+                cSeries.getData().add(new XYChart.Data<>(countMin, download.getStart().getBandwidth() / scale));
+            } else {
+                cSeries = new XYChart.Series<>(download.getNr() + "",
+                        FXCollections.observableArrayList());
+                download.setCSeries(cSeries);
+
+                cSeries.getData().add(new XYChart.Data<>(countMin, 0L));
+                cSeries.getData().add(new XYChart.Data<>(countMin, download.getStart().getBandwidth() / scale));
+                lineChartsSeparate.add(cSeries);
             }
         }
-        sumSeries.getData().add(new XYChart.Data<>(countMin, progData.downloadList.getDownloadListInfoAll().bandwidth / scale));
+
+
+        // chart in den gestarteten Downloads suchen
+        Iterator<XYChart.Series<Number, Number>> it = lineChartsSeparate.listIterator();
+        while (it.hasNext()) {
+            XYChart.Series<Number, Number> cSeries = it.next();
+            boolean foundDownload = false;
+            for (final Download download : startedDownloads) {
+                if (download.getCSeries() != null && download.getCSeries().equals(cSeries)) {
+                    foundDownload = true;
+                    break;
+                }
+            }
+
+            if (!foundDownload) {
+                int size = cSeries.getData().size();
+                if (size > 0 && cSeries.getData().get(size - 1).getYValue().longValue() > 0) {
+                    // nur einen Wert "0" setzen und dann pausieren
+                    cSeries.getData().add(new XYChart.Data<>(countMin, 0L));
+                }
+                if (cSeries.getData().isEmpty()) {
+                    // dann wurde bereits alles gelöscht und kommt jetzt auch weg
+                    it.remove();
+                }
+            }
+        }
+
+        // chart in allen Downloads suchen
+        for (final XYChart.Series<Number, Number> cSeries : lineChartsSeparate) {
+            boolean foundDownload = false;
+            for (final Download download : progData.downloadList) {
+                if (download.getCSeries() != null && download.getCSeries().equals(cSeries)) {
+                    foundDownload = true;
+                    break;
+                }
+            }
+
+            if (!foundDownload) {
+                if (!cSeries.getName().equals(" ")) {
+                    cSeries.setName(" ");
+                }
+            }
+        }
+
+        // Anzeige der Summe aller Downloads
+        sumChartSeries.getData().add(new XYChart.Data<>(countMin, progData.downloadList.getDownloadListInfoAll().bandwidth / scale));
         zoomXAxis(countMin);
         zoomYAxis();
     }
 
     private synchronized void zoomXAxis(double count) {
-        final double MIN = count - ProgConst.DOWNLOAD_CHART_MAX_TIME;
+        final NumberAxis xAxis = (NumberAxis) lineChart.getXAxis();
+        xAxis.setUpperBound(count);
+        final double MIN = count - maxTime.get();
         if (MIN <= 0) {
             return;
         }
+        xAxis.setLowerBound(MIN);
 
-        listChartSerparat.removeIf(cs -> !cs.getData().isEmpty() && cs.getData().get(0).getXValue().intValue() < MIN);
+        lineChartsSeparate.stream().forEach(cs -> {
+            if (cs.getData().isEmpty()) {
+                return;
+            }
 
-        while (!sumSeries.getData().isEmpty() && sumSeries.getData().get(0).getXValue().intValue() < MIN) {
-            sumSeries.getData().remove(0);
+            cs.getData().removeIf(d -> d.getXValue().doubleValue() < MIN);
+        });
+
+        while (!sumChartSeries.getData().isEmpty() && sumChartSeries.getData().get(0).getXValue().doubleValue() < MIN) {
+            sumChartSeries.getData().remove(0);
         }
 
-        final NumberAxis xAxis = (NumberAxis) lineChart.getXAxis();
-        xAxis.setAutoRanging(false);
-        xAxis.setLowerBound(MIN);
-        xAxis.setUpperBound(count);
     }
 
     private synchronized void zoomYAxis() {
@@ -215,9 +286,9 @@ public class DownloadGuiChart {
         final ObservableList<XYChart.Series<Number, Number>> list;
 
         if (ProgConfig.DOWNLOAD_CHART_SEPARAT.getBool()) {
-            list = listChartSerparat;
+            list = lineChartsSeparate;
         } else {
-            list = listChartSum;
+            list = lineChartsSum;
         }
 
         for (final XYChart.Series<Number, Number> cSeries : list) {
@@ -229,13 +300,15 @@ public class DownloadGuiChart {
         }
 
         if (max > 5_000) {
-            scale *= 1000; // todo muss evtl. auch wieder kleiner werden??
-            for (final XYChart.Series<Number, Number> cSeries : listChartSerparat) {
+            scale *= 1000;
+            setYAxisLabel();
+
+            for (final XYChart.Series<Number, Number> cSeries : lineChartsSeparate) {
                 for (final XYChart.Data<Number, Number> date : cSeries.getData()) {
                     date.setYValue((long) date.getYValue() / 1_000);
                 }
             }
-            for (final XYChart.Series<Number, Number> cSeries : listChartSum) {
+            for (final XYChart.Series<Number, Number> cSeries : lineChartsSum) {
                 for (final XYChart.Data<Number, Number> date : cSeries.getData()) {
                     date.setYValue((long) date.getYValue() / 1_000);
                 }
@@ -244,4 +317,17 @@ public class DownloadGuiChart {
 
     }
 
+    private void setYAxisLabel() {
+        switch (scale) {
+            case 1:
+                lineChart.getYAxis().setLabel("Bandbreite [Byte/s]");
+                break;
+            case 1_000:
+                lineChart.getYAxis().setLabel("Bandbreite [kByte/s]");
+                break;
+            case 1_000_000:
+                lineChart.getYAxis().setLabel("Bandbreite [MByte/s]");
+                break;
+        }
+    }
 }
