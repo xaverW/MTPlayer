@@ -27,8 +27,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.util.StringConverter;
 
 public class DownloadFilterController extends FilterController {
@@ -88,13 +86,28 @@ public class DownloadFilterController extends FilterController {
         addCont("gleichzeitige Downloads", spinnerAnz, vBoxFilter);
 
 
-        hBox = new HBox();
-        hBox.setAlignment(Pos.CENTER_RIGHT);
-        hBox.getChildren().add(lblBandwidth);
+//        Label lblText = new Label("Bandbreite/Download: ");
+//        lblText.setMinWidth(0);
+//        lblBandwidth.setMinWidth(Region.USE_PREF_SIZE);
+//        hBox = new HBox();
+//        hBox.getChildren().addAll(lblText, lblBandwidth);
+//        HBox.setHgrow(lblText, Priority.NEVER);
+//        HBox.setHgrow(lblBandwidth, Priority.ALWAYS);
+//
+//        VBox v = new VBox();
+//        HBox h = new HBox();
+//        h.getChildren().addAll(lblText, lblBandwidth);
+//        v.getChildren().addAll(h, sliderBandwidth);
+//
+//        vBoxFilter.getChildren().add(v);
 
+
+        Label lblText = new Label("max. Bandbreite je Download: ");
         VBox v = new VBox();
-        Label label = new Label("max. Bandbreite je Download");
-        v.getChildren().addAll(label, sliderBandwidth, hBox);
+        HBox h = new HBox();
+        h.setAlignment(Pos.CENTER_RIGHT);
+        h.getChildren().addAll(lblBandwidth);
+        v.getChildren().addAll(lblText, sliderBandwidth, h);
         vBoxFilter.getChildren().add(v);
     }
 
@@ -206,34 +219,52 @@ public class DownloadFilterController extends FilterController {
         sliderBandwidth.setBlockIncrement(25);
         sliderBandwidth.setSnapToTicks(true);
 
+        sliderBandwidth.setLabelFormatter(new StringConverter<>() {
+            @Override
+            public String toString(Double x) {
+                if (x == MLBandwidthTokenBucket.BANDWIDTH_MAX_KBYTE) {
+                    return "aus";
+                }
+
+                return x.intValue() + "";
+            }
+
+            @Override
+            public Double fromString(String string) {
+                return null;
+            }
+        });
+
         sliderBandwidth.valueProperty().bindBidirectional(bandwidthValue);
-        setTextBandwith();
+        setTextBandwidth();
 
         sliderBandwidth.valueProperty().addListener((obs, oldValue, newValue) -> {
-            setTextBandwith();
+            setTextBandwidth();
         });
     }
 
-    private void setTextBandwith() {
+    private void setTextBandwidth() {
         int bandwidthKByte;
         String ret;
         bandwidthKByte = ProgConfig.DOWNLOAD_MAX_BANDWITH_KBYTE.getInt();
         if (bandwidthKByte == MLBandwidthTokenBucket.BANDWIDTH_MAX_KBYTE) {
-            ret = "aus";
+            ret = "";
         } else {
             ret = bandwidthKByte + " kByte/s";
         }
         lblBandwidth.setText(ret);
-        if (bandwidthKByte > MLBandwidthTokenBucket.BANDWIDTH_MAX_RED_KBYTE) {
-            final Text amount = new Text(ret);
-            amount.setFill(Color.RED);
-            lblBandwidth.setText(amount.getText());
-            lblBandwidth.setTextFill(Color.RED);
-        } else {
-            final Text amount = new Text(ret);
-            lblBandwidth.setText(amount.getText());
-            lblBandwidth.setTextFill(Color.BLACK);
-        }
+
+//        lblBandwidth.setText(ret);
+//        if (bandwidthKByte > MLBandwidthTokenBucket.BANDWIDTH_MAX_RED_KBYTE) {
+//            final Text amount = new Text(ret);
+//            amount.setFill(Color.RED);
+//            lblBandwidth.setText(amount.getText());
+//            lblBandwidth.setTextFill(Color.RED);
+//        } else {
+//            final Text amount = new Text(ret);
+//            lblBandwidth.setText(amount.getText());
+//            lblBandwidth.setTextFill(Color.BLACK);
+//        }
     }
 
     private void clearFilter() {
