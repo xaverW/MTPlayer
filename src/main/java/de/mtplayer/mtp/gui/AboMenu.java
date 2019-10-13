@@ -26,11 +26,6 @@ import javafx.scene.layout.VBox;
 public class AboMenu {
     final private VBox vbox;
     final private ProgData progData;
-    private static final String ABO_NEW_TEXT = "neus Abo anlegen";
-    private static final String ABO_ON_TEXT = "Abos einschalten";
-    private static final String ABO_OFF_TEXT = "Abos ausschalten";
-    private static final String ABO_DELETE_TEXT = "Abos löschen";
-    private static final String ABO_CHANGE_TEXT = "Abos ändern";
     BooleanProperty boolDivOn = ProgConfig.ABO_GUI_FILTER_DIVIDER_ON.getBooleanProperty();
     BooleanProperty boolInfoOn = ProgConfig.ABO_GUI_DIVIDER_ON.getBooleanProperty();
 
@@ -49,12 +44,26 @@ public class AboMenu {
 
     private void initButton() {
         // Button
-        final ToolBarButton btNew = new ToolBarButton(vbox, "neues Abo", ABO_NEW_TEXT, new ProgIcons().FX_ICON_TOOLBAR_ABO_NEW);
-        final ToolBarButton btOn = new ToolBarButton(vbox, "einschalten", ABO_ON_TEXT, new ProgIcons().FX_ICON_TOOLBAR_ABO_ON);
-        final ToolBarButton btOff = new ToolBarButton(vbox, "ausschalten", ABO_OFF_TEXT, new ProgIcons().FX_ICON_TOOLBAR_ABO_OFF);
-        final ToolBarButton btDel = new ToolBarButton(vbox, "löschen", ABO_DELETE_TEXT, new ProgIcons().FX_ICON_TOOLBAR_ABO_DEL);
-        final ToolBarButton btChange =
-                new ToolBarButton(vbox, "ändern", ABO_CHANGE_TEXT, new ProgIcons().FX_ICON_TOOLBAR_ABO_CONFIG);
+        final ToolBarButton btNew = new ToolBarButton(vbox,
+                "neues Abo", "neus Abo anlegen", new ProgIcons().FX_ICON_TOOLBAR_ABO_NEW);
+
+        VBox vBoxSpace = new VBox();
+        vBoxSpace.setMaxHeight(10);
+        vbox.getChildren().add(vBoxSpace);
+
+        final ToolBarButton btOn = new ToolBarButton(vbox,
+                "Abos einschalten", "markierte Abos einschalten", new ProgIcons().FX_ICON_TOOLBAR_ABO_ON);
+        final ToolBarButton btOff = new ToolBarButton(vbox,
+                "Abos ausschalten", "markierte Abos ausschalten", new ProgIcons().FX_ICON_TOOLBAR_ABO_OFF);
+        final ToolBarButton btDel = new ToolBarButton(vbox,
+                "Abos löschen", "markierte Abos löschen", new ProgIcons().FX_ICON_TOOLBAR_ABO_DEL);
+
+        vBoxSpace = new VBox();
+        vBoxSpace.setMaxHeight(10);
+        vbox.getChildren().add(vBoxSpace);
+
+        final ToolBarButton btChange = new ToolBarButton(vbox,
+                "Abos ändern", "markierte Abos ändern", new ProgIcons().FX_ICON_TOOLBAR_ABO_CONFIG);
 
         btNew.setOnAction(a -> progData.aboGuiController.addNewAbo());
         btOn.setOnAction(a -> progData.aboGuiController.setAboActive(true));

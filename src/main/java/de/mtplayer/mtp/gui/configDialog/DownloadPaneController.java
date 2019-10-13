@@ -121,7 +121,7 @@ public class DownloadPaneController extends AnchorPane {
                 HelpText.DOWNLOAD_FINISHED);
 
 
-        final PToggleSwitch tglError = new PToggleSwitch("bei Downloadfehler, Fehlermeldung anzeigen");
+        final PToggleSwitch tglError = new PToggleSwitch("bei Downloadfehler Fehlermeldung anzeigen");
         tglError.selectedProperty().bindBidirectional(propErr);
 
         final Button btnHelpError = PButton.helpButton(stage, "Download",
