@@ -23,6 +23,7 @@ import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.controller.data.ReplaceList;
 import de.mtplayer.mtp.controller.data.SetDataList;
 import de.mtplayer.mtp.controller.data.abo.AboList;
+import de.mtplayer.mtp.controller.data.download.DownloadInfos;
 import de.mtplayer.mtp.controller.data.download.DownloadList;
 import de.mtplayer.mtp.controller.data.film.Filmlist;
 import de.mtplayer.mtp.controller.filmlist.LoadFilmlist;
@@ -45,7 +46,6 @@ import de.p2tools.p2Lib.tools.duration.PDuration;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -82,6 +82,7 @@ public class ProgData {
     // Worker
     public Worker worker; // Liste aller Sender, Themen, ...
     private SearchForFilmlistUpdate searchForFilmlistUpdate; // prüft, ob es eine neue Filmliste gibt
+    public DownloadInfos downloadInfos;
 
     // Programmdaten
     public Filmlist filmlist; // ist die komplette Filmliste
@@ -133,6 +134,7 @@ public class ProgData {
         starterClass = new StarterClass(this);
         worker = new Worker(this);
         searchForFilmlistUpdate = SearchForFilmlistUpdate.StartSearchForFilmlistUpdate();
+        downloadInfos = new DownloadInfos(this);
     }
 
     boolean oneSecond = false;
@@ -156,7 +158,7 @@ public class ProgData {
     }
 
     private void doTimerWorkOneSecond() {
-        Platform.runLater(() -> downloadList.makeDownloadInfo());
+//        Platform.runLater(() -> downloadList.makeDownloadInfo());
         Listener.notify(Listener.EREIGNIS_TIMER, ProgData.class.getName());
     }
 

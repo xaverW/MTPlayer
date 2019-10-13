@@ -17,9 +17,7 @@
 package de.mtplayer.mtp.gui;
 
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.abo.Abo;
-import de.mtplayer.mtp.controller.data.download.DownloadConstants;
-import de.mtplayer.mtp.controller.data.download.DownloadFactory;
+import de.mtplayer.mtp.controller.data.download.DownloadInfosFactory;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
 import de.mtplayer.mtp.gui.tools.Listener;
@@ -160,202 +158,21 @@ public class StatusBarController extends AnchorPane {
 
 
     private void setInfoFilm() {
-        String textLinks;
-        final int sumFilmlist = progData.filmlist.size();
-        final int sumFilmShown = progData.filmGuiController.getFilmCount();
-        final int runs = progData.downloadListButton.getListOfStartsNotFinished(DownloadConstants.SRC_BUTTON).size();
-
-        String sumFilmlistStr = numberFormat.format(sumFilmShown);
-        String sumFilmShownStr = numberFormat.format(sumFilmlist);
-
-
-        // Anzahl der Filme
-        if (sumFilmShown == 1) {
-            textLinks = "1 Film";
-        } else {
-            textLinks = sumFilmlistStr + " Filme";
-        }
-        if (sumFilmlist != sumFilmShown) {
-            textLinks += " (Insgesamt: " + sumFilmShownStr + " )";
-        }
-        // laufende Programme
-        if (runs == 1) {
-            textLinks += SEPARATOR;
-            textLinks += (runs + " laufender Film");
-        } else if (runs > 1) {
-            textLinks += SEPARATOR;
-            textLinks += (runs + " laufende Filme");
-        }
-        // auch die Downloads anzeigen
-        textLinks += SEPARATOR;
-        textLinks += getInfoTextDownloads(false);
-        lblLeftFilm.setText(textLinks);
-
+        lblLeftFilm.setText(DownloadInfosFactory.getStatusInfosFilm());
         final int selCount = progData.filmGuiController.getSelCount();
         lblSelFilm.setText(selCount > 0 ? selCount + "" : " ");
     }
 
     private void setInfoDownload() {
-        final String textLinks = getInfoTextDownloads(true /* mitAbo */);
-        lblLeftDownload.setText(textLinks);
-
+        lblLeftDownload.setText(DownloadInfosFactory.getStatusInfosDownload());
         final int selCount = progData.downloadGuiController.getSelCount();
         lblSelDownload.setText(selCount > 0 ? selCount + "" : " ");
     }
 
     private void setInfoAbo() {
-        String textLinks;
-        int countOn = 0;
-        int countOff = 0;
-        final int sumAboList = progData.aboList.size();
-        final int sumAboShown = progData.aboGuiController.getAboCount();
-
-        for (final Abo abo : progData.aboList) {
-            if (abo.isActive()) {
-                ++countOn;
-            } else {
-                ++countOff;
-            }
-        }
-
-        String sumAboListStr = numberFormat.format(sumAboList);
-        String sumAboShownStr = numberFormat.format(sumAboShown);
-
-        // Anzahl der Abos
-        if (sumAboShown == 1) {
-            textLinks = "1 Abo";
-        } else {
-            textLinks = sumAboShownStr + " Abos";
-        }
-        if (sumAboList != sumAboShown) {
-            textLinks += " (Insgesamt: " + sumAboListStr;
-            textLinks += ")";
-        }
-
-        textLinks += SEPARATOR + countOn + " eingeschaltet, " + countOff + " ausgeschaltet";
-
-        lblLeftAbo.setText(textLinks);
-
-
+        lblLeftAbo.setText(DownloadInfosFactory.getStatusInfosAbo());
         final int selCount = progData.aboGuiController.getSelCount();
         lblSelAbo.setText(selCount > 0 ? selCount + "" : " ");
-
-    }
-
-    private String getInfoTextDownloads(boolean showMoreInfos) {
-        String textLinks;
-        // Text links: Zeilen Tabelle
-        // nicht gestarted, laufen, fertig OK, fertig fehler
-        final int[] downloadInfos = progData.downloadList.getDownloadListInfoAll().downloadInfos;
-
-        final int sumDownloadList = progData.downloadList.size();
-        final int sumDownloadsShown = progData.downloadGuiController.getDownloadsShown();
-
-        String sumDownloadListStr = numberFormat.format(sumDownloadList);
-        String sumDownloadsShownStr = numberFormat.format(sumDownloadsShown);
-        final int diff = sumDownloadList - downloadInfos[DownloadFactory.INFO.AMOUNT.getI()];
-
-        boolean printDownloadStatus = false;
-        for (int ii = 1; ii < downloadInfos.length; ++ii) {
-            // nur wenn ein Download läuft, wartet, ..
-            if (downloadInfos[ii] > 0) {
-                printDownloadStatus = true;
-                break;
-            }
-        }
-
-        // Anzahl der Downloads
-        if (sumDownloadsShown == 1) {
-            textLinks = "1 Download";
-        } else {
-            textLinks = sumDownloadsShownStr + " Downloads";
-        }
-
-        // weitere Infos anzeigen, wenn gewünscht
-        if (showMoreInfos && sumDownloadList != sumDownloadsShown) {
-            textLinks += " (Insgesamt: " + sumDownloadListStr;
-            if (diff >= 1) {
-                textLinks += ", zurückgestellt: " + numberFormat.format(diff);
-            }
-            textLinks += ")";
-        }
-
-        if (!showMoreInfos) {
-            // Filmtab
-            textLinks += ": ";
-
-        } else {
-            if (downloadInfos[DownloadFactory.INFO.AMOUNT_ABO.getI()] > 0
-                    && downloadInfos[DownloadFactory.INFO.AMOUNT_DOWNLOAD.getI()] == 0) {
-                // nur Abos
-                textLinks += SEPARATOR;
-                textLinks += "nur Abos";
-                textLinks += SEPARATOR;
-
-            } else if (downloadInfos[DownloadFactory.INFO.AMOUNT_ABO.getI()] == 0 &&
-                    downloadInfos[DownloadFactory.INFO.AMOUNT_DOWNLOAD.getI()] > 0) {
-                // keine Abos
-                textLinks += SEPARATOR;
-                textLinks += "nur direkte Downloads";
-                textLinks += SEPARATOR;
-
-            } else if (downloadInfos[DownloadFactory.INFO.AMOUNT_ABO.getI()] > 0
-                    && downloadInfos[DownloadFactory.INFO.AMOUNT_DOWNLOAD.getI()] > 0) {
-
-                textLinks += SEPARATOR;
-
-                // Abos
-                if (downloadInfos[DownloadFactory.INFO.AMOUNT_ABO.getI()] == 1) {
-                    textLinks += " 1 Abo, ";
-                } else {
-                    textLinks += numberFormat.format(downloadInfos[DownloadFactory.INFO.AMOUNT_ABO.getI()]) + " Abos, ";
-                }
-
-                // Downloads
-                if (downloadInfos[DownloadFactory.INFO.AMOUNT_DOWNLOAD.getI()] == 1) {
-                    textLinks += "1 Download";
-                } else if (downloadInfos[DownloadFactory.INFO.AMOUNT_DOWNLOAD.getI()] > 1) {
-                    textLinks += numberFormat.format(downloadInfos[DownloadFactory.INFO.AMOUNT_DOWNLOAD.getI()]) + " Downloads";
-                }
-
-                textLinks += SEPARATOR;
-            }
-
-        }
-
-        if (printDownloadStatus) {
-            if (downloadInfos[DownloadFactory.INFO.LOADING.getI()] == 1) {
-                textLinks += "1 läuft";
-            } else {
-                textLinks += downloadInfos[DownloadFactory.INFO.LOADING.getI()] + " laufen";
-            }
-
-            if (downloadInfos[DownloadFactory.INFO.LOADING.getI()] > 0) {
-                textLinks += " (" + progData.downloadList.getDownloadListInfoAll().bandwidthStr + ')';
-            }
-
-            if (downloadInfos[DownloadFactory.INFO.NOT_STARTED.getI()] == 1) {
-                textLinks += ", 1 wartet";
-            } else {
-                textLinks += ", " + numberFormat.format(downloadInfos[DownloadFactory.INFO.NOT_STARTED.getI()]) + " warten";
-            }
-            if (downloadInfos[DownloadFactory.INFO.FINISHED_OK.getI()] > 0) {
-                if (downloadInfos[DownloadFactory.INFO.FINISHED_OK.getI()] == 1) {
-                    textLinks += ", 1 fertig";
-                } else {
-                    textLinks += ", " + numberFormat.format(downloadInfos[DownloadFactory.INFO.FINISHED_OK.getI()]) + " fertig";
-                }
-            }
-            if (downloadInfos[DownloadFactory.INFO.FINISHED_NOT_OK.getI()] > 0) {
-                if (downloadInfos[DownloadFactory.INFO.FINISHED_NOT_OK.getI()] == 1) {
-                    textLinks += ", 1 fehlerhaft";
-                } else {
-                    textLinks += ", " + numberFormat.format(downloadInfos[DownloadFactory.INFO.FINISHED_NOT_OK.getI()]) + " fehlerhaft";
-                }
-            }
-        }
-
-        return textLinks;
     }
 
     private void setTextForRightDisplay() {
@@ -365,7 +182,6 @@ public class StatusBarController extends AnchorPane {
         strText += " Uhr  ";
 
         final int second = progData.filmlist.getAge();
-
         if (second != 0) {
             strText += "||  Alter: ";
             final int minute = second / 60;
@@ -388,6 +204,4 @@ public class StatusBarController extends AnchorPane {
         lblRightDownload.setText(strText);
         lblRightAbo.setText(strText);
     }
-
-
 }

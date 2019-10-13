@@ -19,89 +19,55 @@ package de.mtplayer.mtp.controller.data.download;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.starter.Start;
 import de.p2tools.p2Lib.tools.log.PLog;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class DownloadListStarts {
     private final ProgData progData;
     private final DownloadList downloadList;
-    private final LinkedList<Download> activeDownloads = new LinkedList<>();
 
     public DownloadListStarts(ProgData progData, DownloadList downloadList) {
         this.progData = progData;
         this.downloadList = downloadList;
     }
 
-    public synchronized int[] getStarts() {
-        // liefert die Anzahl Starts die:
-        // Anzahl, Anz-Abo, Anz-Down, nicht gestarted, laufen, fertig OK, fertig fehler
-        // Downloads und Abos
+//    /**
+//     * Return the number of Starts, which are queued in state INIT or RUN.
+//     *
+//     * @return number of queued Starts.
+//     */
+//    public synchronized int getNumberOfStartsNotFinished() {
+//        // todo?? wird aber nicht benutzt
+//        for (final Download dataDownload : downloadList) {
+//            final Start s = dataDownload.getStart();
+//            if (dataDownload.isStarted()) {
+//                return downloadList.size();
+//            }
+//        }
+//        return 0;
+//    }
 
-        final int[] ret = new int[]{0, 0, 0, 0, 0, 0, 0};
-        for (final Download download : downloadList) {
-            if (!download.getPlacedBack()) {
-                ++ret[DownloadFactory.INFO.AMOUNT.getI()];
-            }
-            if (download.isAbo()) {
-                ++ret[DownloadFactory.INFO.AMOUNT_ABO.getI()];
-            } else {
-                ++ret[DownloadFactory.INFO.AMOUNT_DOWNLOAD.getI()];
-            }
-            if (download.isStarted() || download.isFinishedOrError()) {
-                // final int quelle = download.getSource();
-                if (download.getSource().equals(DownloadConstants.SRC_ABO) || download.getSource().equals(DownloadConstants.SRC_DOWNLOAD)) {
-                    if (download.isStateStartedWaiting()) {
-                        ++ret[DownloadFactory.INFO.NOT_STARTED.getI()];
-                    } else if (download.isStateStartedRun()) {
-                        ++ret[DownloadFactory.INFO.LOADING.getI()];
-                    } else if (download.isStateFinished()) {
-                        ++ret[DownloadFactory.INFO.FINISHED_OK.getI()];
-                    } else if (download.isStateError()) {
-                        ++ret[DownloadFactory.INFO.FINISHED_NOT_OK.getI()];
-                    }
-                }
-            }
-        }
-        return ret;
-    }
-
-    /**
-     * Return the number of Starts, which are queued in state INIT or RUN.
-     *
-     * @return number of queued Starts.
-     */
-    public synchronized int getNumberOfStartsNotFinished() {
-        // todo?? wird aber nicht benutzt
-        for (final Download dataDownload : downloadList) {
-            final Start s = dataDownload.getStart();
-            if (dataDownload.isStarted()) {
-                return downloadList.size();
-            }
-        }
-        return 0;
-    }
-
-    /**
-     * Return the maximum time of all running starts until finish.
-     *
-     * @return The time in SECONDS.
-     */
-    public synchronized long getMaximumFinishTimeOfRunningStarts() {
-        long rem = 0;
-        for (final Download d : downloadList) {
-            final Start s = d.getStart();
-            if (d.isStarted()) {
-                rem = Math.max(rem, s.getTimeLeftSeconds());
-            }
-        }
-
-        return rem;
-    }
+//    /**
+//     * Return the maximum time of all running starts until finish.
+//     *
+//     * @return The time in SECONDS.
+//     */
+//    public synchronized long getMaximumFinishTimeOfRunningStarts() {
+//        long rem = 0;
+//        for (final Download d : downloadList) {
+//            final Start s = d.getStart();
+//            if (d.isStarted()) {
+//                rem = Math.max(rem, s.getTimeLeftSeconds());
+//            }
+//        }
+//
+//        return rem;
+//    }
 
     public Download getRestartDownload() {
         // Versuch einen Fehlgeschlagenen Download zu finden um ihn wieder zu starten
@@ -135,17 +101,34 @@ public class DownloadListStarts {
     }
 
     /**
-     * Return a List of all not yet finished downloads.
+     * Return a List of all loading but not yet finished downloads.
      *
      * @param source Use QUELLE_XXX constants from {@link de.mtplayer.mtp.controller.starter.Start}.
      * @return A list with all download objects.
      */
-    public synchronized LinkedList<Download> getListOfStartsNotFinished(String source) {
+    synchronized List<Download> getListOfStartsNotFinished(String source) {
+        final List<Download> activeDownloads = new ArrayList<>();
 
-        activeDownloads.clear();
         activeDownloads.addAll(downloadList.stream().filter(download -> download.isStateStartedRun())
                 .filter(download -> source.equals(DownloadConstants.ALL) || download.getSource().equals(source))
                 .collect(Collectors.toList()));
+
+        return activeDownloads;
+    }
+
+    /**
+     * Return a List of all started but not loading downloads.
+     *
+     * @param source Use QUELLE_XXX constants from {@link de.mtplayer.mtp.controller.starter.Start}.
+     * @return A list with all download objects.
+     */
+    synchronized List<Download> getListOfStartsNotLoading(String source) {
+        final List<Download> activeDownloads = new ArrayList<>();
+
+        activeDownloads.addAll(downloadList.stream().filter(download -> download.isStateStartedWaiting())
+                .filter(download -> source.equals(DownloadConstants.ALL) || download.getSource().equals(source))
+                .collect(Collectors.toList()));
+
         return activeDownloads;
     }
 

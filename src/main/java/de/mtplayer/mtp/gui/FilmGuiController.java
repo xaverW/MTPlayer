@@ -271,7 +271,7 @@ public class FilmGuiController extends AnchorPane {
             scrollPane.setPadding(new Insets(10));
             scrollPane.setContent(tilePaneButton);
 
-            Tab filmInfoTab = new Tab("Filminfo");
+            Tab filmInfoTab = new Tab("Beschreibung");
             filmInfoTab.setClosable(false);
             filmInfoTab.setContent(filmPane);
 

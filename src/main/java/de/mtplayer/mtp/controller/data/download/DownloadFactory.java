@@ -32,22 +32,6 @@ public class DownloadFactory {
     private DownloadFactory() {
     }
 
-    // Anzahl, Anz-Abo, Anz-Down, nicht gestarted, laufen, fertig OK, fertig fehler
-    public enum INFO {
-
-        AMOUNT(0), AMOUNT_ABO(1), AMOUNT_DOWNLOAD(2), NOT_STARTED(3), LOADING(4), FINISHED_OK(5), FINISHED_NOT_OK(6);
-        final private int i;
-
-        INFO(int i) {
-            this.i = i;
-        }
-
-        public int getI() {
-            return i;
-        }
-    }
-
-
     public static void deleteFilmFile(Download download) {
         // Download nur löschen wenn er nicht läuft
 

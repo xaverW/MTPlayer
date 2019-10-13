@@ -399,3 +399,11 @@
 .thick-chart .chart-series-line {
     -fx-stroke-width: 1px;
 }
+
+#infoGrid {
+    -fx-border-style: solid inside;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-border-color: -text-color-blue;
+}
+

@@ -32,7 +32,6 @@ public class DownloadList extends SimpleListProperty<Download> {
     private final DownloadListAbo downloadListAbo;
     private final DownloadListStarts downloadListStarts;
     private final DownloadListStartStop downloadListStartStop;
-    private final DownloadListInfoAll downloadListInfoAll;
 
     private BooleanProperty downloadsChanged = new SimpleBooleanProperty(true);
 
@@ -42,7 +41,6 @@ public class DownloadList extends SimpleListProperty<Download> {
         this.downloadListAbo = new DownloadListAbo(progData, this);
         this.downloadListStarts = new DownloadListStarts(progData, this);
         this.downloadListStartStop = new DownloadListStartStop(progData, this);
-        this.downloadListInfoAll = new DownloadListInfoAll(progData, this);
     }
 
     public boolean getDownloadsChanged() {
@@ -94,10 +92,6 @@ public class DownloadList extends SimpleListProperty<Download> {
     @Override
     public synchronized boolean removeAll(Collection<?> objects) {
         return super.removeAll(objects);
-    }
-
-    public DownloadListInfoAll getDownloadListInfoAll() {
-        return downloadListInfoAll;
     }
 
     public synchronized int countStartedAndRunningDownloads() {
@@ -243,23 +237,20 @@ public class DownloadList extends SimpleListProperty<Download> {
         }
     }
 
+//    public synchronized int getNumberOfStartsNotFinished() {
+//        return downloadListStarts.getNumberOfStartsNotFinished();
+//    }
+//
+//    public synchronized long getMaximumFinishTimeOfRunningStarts() {
+//        return downloadListStarts.getMaximumFinishTimeOfRunningStarts();
+//    }
 
-    // =========================
-    // Starts
-    public synchronized int[] getStarts() {
-        return downloadListStarts.getStarts();
-    }
-
-    public synchronized int getNumberOfStartsNotFinished() {
-        return downloadListStarts.getNumberOfStartsNotFinished();
-    }
-
-    public synchronized long getMaximumFinishTimeOfRunningStarts() {
-        return downloadListStarts.getMaximumFinishTimeOfRunningStarts();
-    }
-
-    public synchronized LinkedList<Download> getListOfStartsNotFinished(String source) {
+    public synchronized List<Download> getListOfStartsNotFinished(String source) {
         return downloadListStarts.getListOfStartsNotFinished(source);
+    }
+
+    public synchronized List<Download> getListOfStartsNotLoading(String source) {
+        return downloadListStarts.getListOfStartsNotLoading(source);
     }
 
     public synchronized Download getRestartDownload() {
@@ -334,11 +325,11 @@ public class DownloadList extends SimpleListProperty<Download> {
         }
     }
 
-    // ======================================
-    // DownloadInfosAll
-    public synchronized void makeDownloadInfo() {
-        downloadListInfoAll.makeDownloadInfo();
-    }
+//    // ======================================
+//    // DownloadInfosAll
+//    public synchronized void makeDownloadInfo() {
+//        downloadListInfoAll.makeDownloadInfo();
+//    }
 
 
     public synchronized void setNumbersInList() {

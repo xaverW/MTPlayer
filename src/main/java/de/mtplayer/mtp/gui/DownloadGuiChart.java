@@ -36,8 +36,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.util.StringConverter;
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.List;
 
 public class DownloadGuiChart {
 
@@ -50,7 +51,7 @@ public class DownloadGuiChart {
     private int scale = 1;
 
     private LineChart<Number, Number> lineChart = null;
-    private LinkedList<Download> startedDownloads = new LinkedList<>(); // Liste gestarteter Downloads
+    private List<Download> startedDownloads = new ArrayList<>(); // Liste gestarteter Downloads
 
     private final XYChart.Series<Number, Number> sumChartSeries =
             new XYChart.Series<>("Summe", FXCollections.observableArrayList(new XYChart.Data<Number, Number>(0.0, 0.0)));
@@ -253,7 +254,7 @@ public class DownloadGuiChart {
         }
 
         // Anzeige der Summe aller Downloads
-        sumChartSeries.getData().add(new XYChart.Data<>(countMin, progData.downloadList.getDownloadListInfoAll().bandwidth / scale));
+        sumChartSeries.getData().add(new XYChart.Data<>(countMin, progData.downloadInfos.getBandwidth() / scale));
         zoomXAxis(countMin);
         zoomYAxis();
     }
