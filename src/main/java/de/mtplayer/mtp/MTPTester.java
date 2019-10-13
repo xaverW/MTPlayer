@@ -351,7 +351,7 @@ public class MTPTester {
     }
 
     private void startWaiting() {
-        maskerPane.setMaskerText("Test Text");
+        maskerPane.setMaskerText("Filmliste ist zu alt, eine neue downloaden");
         maskerPane.setButtonText("Button Text");
         maskerPane.setMaskerVisible(true, true, true);
         Thread th = new Thread(waitTask);
