@@ -24,19 +24,19 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
 public class AboMenu {
-    final private VBox vbox;
+    final private VBox vBox;
     final private ProgData progData;
     BooleanProperty boolDivOn = ProgConfig.ABO_GUI_FILTER_DIVIDER_ON.getBooleanProperty();
     BooleanProperty boolInfoOn = ProgConfig.ABO_GUI_DIVIDER_ON.getBooleanProperty();
 
-    public AboMenu(VBox vbox) {
-        this.vbox = vbox;
+    public AboMenu(VBox vBox) {
+        this.vBox = vBox;
         progData = ProgData.getInstance();
     }
 
 
     public void init() {
-        vbox.getChildren().clear();
+        vBox.getChildren().clear();
 
         initMenu();
         initButton();
@@ -44,25 +44,26 @@ public class AboMenu {
 
     private void initButton() {
         // Button
-        final ToolBarButton btNew = new ToolBarButton(vbox,
-                "neues Abo", "neus Abo anlegen", new ProgIcons().FX_ICON_TOOLBAR_ABO_NEW);
-
         VBox vBoxSpace = new VBox();
-        vBoxSpace.setMaxHeight(10);
-        vbox.getChildren().add(vBoxSpace);
+        vBoxSpace.setMaxHeight(0);
+        vBoxSpace.setMinHeight(0);
+        vBox.getChildren().add(vBoxSpace);
 
-        final ToolBarButton btOn = new ToolBarButton(vbox,
-                "Abos einschalten", "markierte Abos einschalten", new ProgIcons().FX_ICON_TOOLBAR_ABO_ON);
-        final ToolBarButton btOff = new ToolBarButton(vbox,
-                "Abos ausschalten", "markierte Abos ausschalten", new ProgIcons().FX_ICON_TOOLBAR_ABO_OFF);
-        final ToolBarButton btDel = new ToolBarButton(vbox,
-                "Abos löschen", "markierte Abos löschen", new ProgIcons().FX_ICON_TOOLBAR_ABO_DEL);
+        final ToolBarButton btNew = new ToolBarButton(vBox,
+                "neues Abo", "neus Abo anlegen", new ProgIcons().FX_ICON_TOOLBAR_ABO_NEW);
 
         vBoxSpace = new VBox();
         vBoxSpace.setMaxHeight(10);
-        vbox.getChildren().add(vBoxSpace);
+        vBoxSpace.setMinHeight(10);
+        vBox.getChildren().add(vBoxSpace);
 
-        final ToolBarButton btChange = new ToolBarButton(vbox,
+        final ToolBarButton btOn = new ToolBarButton(vBox,
+                "Abos einschalten", "markierte Abos einschalten", new ProgIcons().FX_ICON_TOOLBAR_ABO_ON);
+        final ToolBarButton btOff = new ToolBarButton(vBox,
+                "Abos ausschalten", "markierte Abos ausschalten", new ProgIcons().FX_ICON_TOOLBAR_ABO_OFF);
+        final ToolBarButton btDel = new ToolBarButton(vBox,
+                "Abos löschen", "markierte Abos löschen", new ProgIcons().FX_ICON_TOOLBAR_ABO_DEL);
+        final ToolBarButton btChange = new ToolBarButton(vBox,
                 "Abos ändern", "markierte Abos ändern", new ProgIcons().FX_ICON_TOOLBAR_ABO_CONFIG);
 
         btNew.setOnAction(a -> progData.aboGuiController.addNewAbo());
@@ -79,35 +80,37 @@ public class AboMenu {
         mb.setGraphic(new ProgIcons().FX_ICON_TOOLBAR_MENU);
         mb.getStyleClass().add("btnFunction");
 
-        final MenuItem mbOn = new MenuItem("einschalten");
+        final MenuItem mbOn = new MenuItem("Abos einschalten");
         mbOn.setOnAction(a -> progData.aboGuiController.setAboActive(true));
-
-        final MenuItem mbOff = new MenuItem("ausschalten");
+        final MenuItem mbOff = new MenuItem("Abos ausschalten");
         mbOff.setOnAction(e -> progData.aboGuiController.setAboActive(false));
-
-        final MenuItem miDel = new MenuItem("löschen");
+        final MenuItem miDel = new MenuItem("Abos löschen");
         miDel.setOnAction(a -> progData.aboGuiController.deleteAbo());
-
-        final MenuItem miChange = new MenuItem("ändern");
+        final MenuItem miChange = new MenuItem("Abos ändern");
         miChange.setOnAction(a -> progData.aboGuiController.changeAbo());
-
         final MenuItem miNew = new MenuItem("neues Abo anlegen");
         miNew.setOnAction(a -> progData.aboGuiController.addNewAbo());
 
+        mb.getItems().addAll(mbOn, mbOff, miDel, miChange, miNew);
+
+
+        final MenuItem miSelectAll = new MenuItem("alles auswählen");
+        miSelectAll.setOnAction(a -> progData.aboGuiController.selectAll());
         final MenuItem miSelection = new MenuItem("Auswahl umkehren");
         miSelection.setOnAction(a -> progData.aboGuiController.invertSelection());
 
+        mb.getItems().add(new SeparatorMenuItem());
+        mb.getItems().addAll(miSelectAll, miSelection);
+
+
         final CheckMenuItem miShowFilter = new CheckMenuItem("Filter anzeigen");
         miShowFilter.selectedProperty().bindBidirectional(boolDivOn);
-
         final CheckMenuItem miShowInfo = new CheckMenuItem("Infos anzeigen");
         miShowInfo.selectedProperty().bindBidirectional(boolInfoOn);
 
-        mb.getItems().addAll(mbOn, mbOff, miDel, miChange, miNew,
-                new SeparatorMenuItem(), miSelection,
-                new SeparatorMenuItem(), miShowFilter, miShowInfo);
+        mb.getItems().add(new SeparatorMenuItem());
+        mb.getItems().addAll(miShowFilter, miShowInfo);
 
-        vbox.getChildren().add(mb);
-
+        vBox.getChildren().add(mb);
     }
 }

@@ -124,6 +124,10 @@ public class AboGuiController extends AnchorPane {
         progData.aboList.addNewAbo("Neu" /* Aboname */);
     }
 
+    public void selectAll() {
+        tableView.getSelectionModel().selectAll();
+    }
+
     public void invertSelection() {
         PTableFactory.invertSelection(tableView);
     }

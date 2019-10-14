@@ -50,21 +50,26 @@ public class FilmGuiTableContextMenu {
         miStart.setOnAction(a -> filmGuiController.playFilmUrl());
         MenuItem miSave = new MenuItem("Film speichern");
         miSave.setOnAction(a -> filmGuiController.saveTheFilm());
+        contextMenu.getItems().addAll(miStart, miSave);
 
 
         Menu mFilter = addFilter(film);// Filter
         Menu mAddAbo = addAbo(film);// Abo
+        contextMenu.getItems().add(new SeparatorMenuItem());
+        contextMenu.getItems().addAll(mFilter, mAddAbo);
+
+
         Menu mStartFilm = startFilmWithSet(); // Film mit Set starten
+        if (mStartFilm != null) {
+            contextMenu.getItems().add(mStartFilm);
+        }
+
+
         Menu mBlacklist = addBlacklist(film);// Blacklist
         Menu mBookmark = addBookmark(film);// Bookmark
         Menu mCopyUrl = copyUrl(film);// URL kopieren
+        contextMenu.getItems().addAll(mBlacklist, mBookmark, mCopyUrl);
 
-
-        MenuItem miMediaDb = new MenuItem("Titel in der Mediensammlung suchen");
-        miMediaDb.setOnAction(a -> filmGuiController.guiFilmMediaCollection());
-
-        MenuItem miFilmInfo = new MenuItem("Filminformation anzeigen");
-        miFilmInfo.setOnAction(a -> filmGuiController.showFilmInfo());
 
         final MenuItem miFilmsSetShown;
         if (film.isShown()) {
@@ -74,26 +79,18 @@ public class FilmGuiTableContextMenu {
             miFilmsSetShown = new MenuItem("Filme als gesehen markieren");
             miFilmsSetShown.setOnAction(a -> filmGuiController.setFilmShown());
         }
+        MenuItem miFilmInfo = new MenuItem("Filminformation anzeigen");
+        miFilmInfo.setOnAction(a -> filmGuiController.showFilmInfo());
+        MenuItem miMediaDb = new MenuItem("Titel in der Mediensammlung suchen");
+        miMediaDb.setOnAction(a -> filmGuiController.guiFilmMediaCollection());
+        contextMenu.getItems().add(new SeparatorMenuItem());
+        contextMenu.getItems().addAll(miFilmsSetShown, miFilmInfo, miMediaDb);
+
 
         MenuItem resetTable = new MenuItem("Tabelle zurücksetzen");
         resetTable.setOnAction(a -> new Table().resetTable(tableView, Table.TABLE.FILM));
-
-
-        contextMenu.getItems().addAll(
-                miStart, miSave,
-                new SeparatorMenuItem(),
-                mFilter, mAddAbo);
-
-        if (mStartFilm != null) {
-            contextMenu.getItems().add(mStartFilm);
-        }
-
-        contextMenu.getItems().addAll(
-                mBlacklist, mBookmark, mCopyUrl,
-                new SeparatorMenuItem(),
-                miMediaDb, miFilmInfo, miFilmsSetShown,
-                new SeparatorMenuItem(),
-                resetTable);
+        contextMenu.getItems().add(new SeparatorMenuItem());
+        contextMenu.getItems().addAll(resetTable);
     }
 
     private Menu addFilter(Film film) {

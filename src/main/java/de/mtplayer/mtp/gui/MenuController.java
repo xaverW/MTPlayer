@@ -42,8 +42,8 @@ public class MenuController extends ScrollPane {
         setVbarPolicy(ScrollBarPolicy.NEVER);
         setContent(vb);
 
-        vb.setPadding(new Insets(20, 10, 10, 10));
-        vb.setSpacing(20);
+        vb.setPadding(new Insets(10, 10, 10, 10));
+        vb.setSpacing(15);
         vb.setAlignment(Pos.TOP_CENTER);
 
         switch (startupMode) {

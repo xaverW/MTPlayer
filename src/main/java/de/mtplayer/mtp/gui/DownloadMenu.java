@@ -24,19 +24,19 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
 public class DownloadMenu {
-    final private VBox vbox;
+    final private VBox vBox;
     final private ProgData progData;
     BooleanProperty boolDivOn = ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER_ON.getBooleanProperty();
     BooleanProperty boolInfoOn = ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.getBooleanProperty();
 
-    public DownloadMenu(VBox vbox) {
-        this.vbox = vbox;
+    public DownloadMenu(VBox vBox) {
+        this.vBox = vBox;
         progData = ProgData.getInstance();
     }
 
 
     public void init() {
-        vbox.getChildren().clear();
+        vBox.getChildren().clear();
 
         initMenu();
         initButton();
@@ -44,29 +44,36 @@ public class DownloadMenu {
 
     private void initButton() {
         // Button
-        final ToolBarButton btDownloadRefresh = new ToolBarButton(vbox,
+        VBox vBoxSpace = new VBox();
+        vBoxSpace.setMaxHeight(0);
+        vBoxSpace.setMinHeight(0);
+        vBox.getChildren().add(vBoxSpace);
+
+        final ToolBarButton btDownloadRefresh = new ToolBarButton(vBox,
                 "Downloads aktualisieren", "Liste der Downloads aktualisieren", new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_REFRESH);
-        final ToolBarButton btDownloadAll = new ToolBarButton(vbox,
+        final ToolBarButton btDownloadAll = new ToolBarButton(vBox,
                 "alle Downloads starten", "alle Downloads starten", new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_START_ALL);
-        final ToolBarButton btDownloadClear = new ToolBarButton(vbox,
+        final ToolBarButton btDownloadClear = new ToolBarButton(vBox,
                 "Downloads aufräumen", "Liste der Downloads aufräumen", new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_CLEAR);
 
-        VBox vBoxSpace = new VBox();
+        vBoxSpace = new VBox();
         vBoxSpace.setMaxHeight(10);
-        vbox.getChildren().add(vBoxSpace);
+        vBoxSpace.setMinHeight(10);
+        vBox.getChildren().add(vBoxSpace);
 
-        final ToolBarButton btStartDownloads = new ToolBarButton(vbox,
+        final ToolBarButton btStartDownloads = new ToolBarButton(vBox,
                 "Downloads Starten", "markierte Downloads starten", new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_START);
-        final ToolBarButton btDownloadBack = new ToolBarButton(vbox,
+        final ToolBarButton btDownloadBack = new ToolBarButton(vBox,
                 "Downloads zurückstellen", "markierte Downloads zurückstellen", new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_UNDO);
-        final ToolBarButton btDownloadDel = new ToolBarButton(vbox,
+        final ToolBarButton btDownloadDel = new ToolBarButton(vBox,
                 "Downloads löschen", "markierte Downloads löschen", new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_DEL);
 
         vBoxSpace = new VBox();
         vBoxSpace.setMaxHeight(10);
-        vbox.getChildren().add(vBoxSpace);
+        vBoxSpace.setMinHeight(10);
+        vBox.getChildren().add(vBoxSpace);
 
-        final ToolBarButton btDownloadFilm = new ToolBarButton(vbox,
+        final ToolBarButton btDownloadFilm = new ToolBarButton(vBox,
                 "Film Starten", "gespeicherten Film abspielen", new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_FILM_START);
 
         btDownloadRefresh.setOnAction(a -> progData.worker.searchForAbosAndMaybeStart());
@@ -86,77 +93,98 @@ public class DownloadMenu {
         mb.setGraphic(new ProgIcons().FX_ICON_TOOLBAR_MENU);
         mb.getStyleClass().add("btnFunction");
 
+
+        final MenuItem miDownloadStart = new MenuItem("Downloads starten");
+        miDownloadStart.setOnAction(a -> progData.downloadGuiController.startDownload(false));
+        final MenuItem miDownloadStop = new MenuItem("Downloads stoppen");
+        miDownloadStop.setOnAction(a -> progData.downloadGuiController.stopDownload(false));
+        final MenuItem miChange = new MenuItem("Download ändern");
+        miChange.setOnAction(a -> progData.downloadGuiController.changeDownload());
+
+        mb.getItems().addAll(miDownloadStart, miDownloadStop, miChange);
+
+
+        // Submenü "Download"
+        final MenuItem miPrefer = new MenuItem("Downloads vorziehen");
+        miPrefer.setOnAction(a -> progData.downloadGuiController.preferDownload());
+        final MenuItem miPutBack = new MenuItem("Downloads zurückstellen");
+        miPutBack.setOnAction(a -> progData.downloadGuiController.moveDownloadBack());
+        final MenuItem miRemove = new MenuItem("Downloads aus Liste entfernen");
+        miRemove.setOnAction(a -> progData.downloadGuiController.deleteDownloads());
+
+        Menu submenuDownload = new Menu("Downloads");
+        submenuDownload.getItems().addAll(miPrefer, miPutBack, miRemove);
+        mb.getItems().add(new SeparatorMenuItem());
+        mb.getItems().addAll(submenuDownload);
+
+
+        // Submenü "alle Downloads"
         final MenuItem mbStartAll = new MenuItem("alle Downloads starten");
         mbStartAll.setOnAction(a -> progData.downloadGuiController.startDownload(true /* alle */));
-
         final MenuItem mbStopAll = new MenuItem("alle Downloads stoppen");
         mbStopAll.setOnAction(a -> progData.downloadGuiController.stopDownload(true /* alle */));
-
-        final MenuItem mbStopWait = new MenuItem("wartende stoppen");
+        final MenuItem mbStopWait = new MenuItem("alle wartenden Downloads stoppen");
         mbStopWait.setOnAction(a -> progData.downloadGuiController.stopWaitingDownloads());
-
         final MenuItem mbAct = new MenuItem("Liste der Downloads aktualisieren");
         mbAct.setOnAction(e -> progData.worker.searchForAbosAndMaybeStart());
-
         final MenuItem mbClean = new MenuItem("Liste der Downloads aufräumen");
         mbClean.setOnAction(e -> progData.downloadGuiController.cleanUp());
 
-        final MenuItem miDownloadStart = new MenuItem("Download starten");
-        miDownloadStart.setOnAction(a -> progData.downloadGuiController.startDownload(false));
+        Menu submenuAllDownloads = new Menu("alle Downloads");
+        submenuAllDownloads.getItems().addAll(mbStartAll, mbStopAll, mbStopWait, mbAct, mbClean);
+        mb.getItems().addAll(submenuAllDownloads);
 
-        final MenuItem miDownloadStop = new MenuItem("Download stoppen");
-        miDownloadStop.setOnAction(a -> progData.downloadGuiController.stopDownload(false));
 
-        final MenuItem miDownloadTop = new MenuItem("Download vorziehen");
-        miDownloadTop.setOnAction(a -> progData.downloadGuiController.preferDownload());
+//        // Submenü "gespeicherte Filme"
+//        final MenuItem miDownloadShown = new MenuItem("Filme als gesehen markieren");
+//        miDownloadShown.setOnAction(a -> progData.downloadGuiController.setFilmShown());
+//        final MenuItem miDownloadNotShown = new MenuItem("Filme als ungesehen markieren");
+//        miDownloadNotShown.setOnAction(a -> progData.downloadGuiController.setFilmNotShown());
+//        final MenuItem miPlayerDownload = new MenuItem("gespeicherten Film (Datei) abspielen");
+//        miPlayerDownload.setOnAction(a -> progData.downloadGuiController.playFilm());
+//        MenuItem miDeleteDownload = new MenuItem("gespeicherten Film (Datei) löschen");
+//        miDeleteDownload.setOnAction(a -> progData.downloadGuiController.deleteFilmFile());
+//        MenuItem miOpenDir = new MenuItem("Zielordner öffnen");
+//        miOpenDir.setOnAction(e -> progData.downloadGuiController.openDestinationDir());
+//        final MenuItem miFilmMediaCollection = new MenuItem("Titel in der Mediensammlung suchen");
+//        miFilmMediaCollection.setOnAction(a -> progData.downloadGuiController.guiFilmMediaCollection());
+//
+//        Menu submenuFilm = new Menu("gespeicherten Film");
+//        submenuFilm.getItems().addAll(miDownloadShown, miDownloadNotShown, miPlayerDownload,
+//                miDeleteDownload, miOpenDir, miFilmMediaCollection);
+//        mb.getItems().addAll(submenuFilm);
 
-        final MenuItem miDownloadEnd = new MenuItem("Download zurückstellen");
-        miDownloadEnd.setOnAction(a -> progData.downloadGuiController.moveDownloadBack());
+        MenuItem miMediaDb = new MenuItem("Titel in der Mediensammlung suchen");
+        miMediaDb.setOnAction(a -> progData.downloadGuiController.guiFilmMediaCollection());
+        MenuItem miFilmInfo = new MenuItem("Filminformation anzeigen");
+        miFilmInfo.setOnAction(a -> progData.downloadGuiController.showFilmInfo());
+        MenuItem miPlayUrl = new MenuItem("Film (URL) abspielen");
+        miPlayUrl.setOnAction(a -> progData.downloadGuiController.playUrl());
+        MenuItem miCopyUrl = new MenuItem("Download (URL) kopieren");
+        miCopyUrl.setOnAction(a -> progData.downloadGuiController.copyUrl());
 
-        final MenuItem miDownloadRemove = new MenuItem("Downloads aus Liste entfernen");
-        miDownloadRemove.setOnAction(a -> progData.downloadGuiController.deleteDownloads());
+        mb.getItems().add(new SeparatorMenuItem());
+        mb.getItems().addAll(miMediaDb, miFilmInfo, miPlayUrl, miCopyUrl);
 
-        final MenuItem miDownloadChange = new MenuItem("Download ändern");
-        miDownloadChange.setOnAction(a -> progData.downloadGuiController.changeDownload());
 
-        final MenuItem miDownloadShown = new MenuItem("Filme als gesehen markieren");
-        miDownloadShown.setOnAction(a -> progData.downloadGuiController.setFilmShown());
-
-        final MenuItem miDownloadNotShown = new MenuItem("Filme als ungesehen markieren");
-        miDownloadNotShown.setOnAction(a -> progData.downloadGuiController.setFilmNotShown());
-
-        final MenuItem miDownloadStored = new MenuItem("gespeicherten Film abspielen");
-        miDownloadStored.setOnAction(a -> progData.downloadGuiController.playFilm());
-
-        final MenuItem miFilmMediaCollection = new MenuItem("Titel in der Mediensammlung suchen");
-        miFilmMediaCollection.setOnAction(a -> progData.downloadGuiController.guiFilmMediaCollection());
-
+        final MenuItem miSelectAll = new MenuItem("alles auswählen");
+        miSelectAll.setOnAction(a -> progData.downloadGuiController.selectAll());
         final MenuItem miSelection = new MenuItem("Auswahl umkehren");
         miSelection.setOnAction(a -> progData.downloadGuiController.invertSelection());
 
+        mb.getItems().add(new SeparatorMenuItem());
+        mb.getItems().addAll(miSelectAll, miSelection);
+
+
         final CheckMenuItem miShowFilter = new CheckMenuItem("Filter anzeigen");
         miShowFilter.selectedProperty().bindBidirectional(boolDivOn);
-
         final CheckMenuItem miShowInfo = new CheckMenuItem("Infos anzeigen");
         miShowInfo.selectedProperty().bindBidirectional(boolInfoOn);
 
-
-        mb.getItems().addAll(mbStartAll, mbStopAll, mbStopWait, mbAct, mbClean);
-        mb.getItems().add(new SeparatorMenuItem());
-        mb.getItems().addAll(miDownloadStart,
-                miDownloadStop,
-                miDownloadTop,
-                miDownloadEnd,
-                miDownloadRemove,
-                miDownloadChange);
-        mb.getItems().add(new SeparatorMenuItem());
-        mb.getItems().addAll(miDownloadShown, miDownloadNotShown, miDownloadStored, miFilmMediaCollection);
-        mb.getItems().add(new SeparatorMenuItem());
-        mb.getItems().add(miSelection);
         mb.getItems().add(new SeparatorMenuItem());
         mb.getItems().addAll(miShowFilter, miShowInfo);
 
-        vbox.getChildren().add(mb);
+        vBox.getChildren().add(mb);
 
     }
 }

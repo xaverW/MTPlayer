@@ -291,22 +291,22 @@ public class DownloadInfos {
             timeLeftLoadingDownloads = timeLeft;
         }
 
-        // wartende Downloads
-        if (byteWaitingDownloads <= 0) {
-            timeLeftWaitingDownloads = 0;
-        } else {
-            timeLeftWaitingDownloads = byteWaitingDownloads /
-                    (bandwidth <= 0 ? ProgConfig.DOWNLOAD_BANDWITH_KBYTE.getLong() : bandwidth);
-        }
+        final long resBandwidth = bandwidth > 0 ? bandwidth : ProgConfig.DOWNLOAD_BANDWITH_KBYTE.getLong();
+        if (resBandwidth > 0) {
+            // wartende Downloads
+            if (byteWaitingDownloads <= 0) {
+                timeLeftWaitingDownloads = 0;
+            } else {
+                timeLeftWaitingDownloads = byteWaitingDownloads / resBandwidth;
+            }
 
-        // nicht gestartete Downloads
-        if (byteNotStartedDownloads <= 0) {
-            timeLeftNotStartedDownloads = 0;
-        } else {
-            timeLeftNotStartedDownloads = byteNotStartedDownloads /
-                    (bandwidth <= 0 ? ProgConfig.DOWNLOAD_BANDWITH_KBYTE.getLong() : bandwidth);
+            // nicht gestartete Downloads
+            if (byteNotStartedDownloads <= 0) {
+                timeLeftNotStartedDownloads = 0;
+            } else {
+                timeLeftNotStartedDownloads = byteNotStartedDownloads / resBandwidth;
+            }
         }
-
 
         if (byteLoadingDownloads > 0) {
             percent = (int) (byteLoadingDownloadsAlreadyLoaded * 100 / byteLoadingDownloads);

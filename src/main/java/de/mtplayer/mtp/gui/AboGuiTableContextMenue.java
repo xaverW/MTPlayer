@@ -52,53 +52,44 @@ public class AboGuiTableContextMenue {
 
         final MenuItem mbOnOff;
         if (abo.isActive()) {
-            mbOnOff = new MenuItem("Abo ausschalten");
+            mbOnOff = new MenuItem("Abos ausschalten");
             mbOnOff.setOnAction(e -> aboGuiController.setAboActive(false));
         } else {
-            mbOnOff = new MenuItem("Abo einschalten");
+            mbOnOff = new MenuItem("Abos einschalten");
             mbOnOff.setOnAction(a -> aboGuiController.setAboActive(true));
         }
-
-        final MenuItem miDel = new MenuItem("Abo löschen");
+        final MenuItem miDel = new MenuItem("Abos löschen");
         miDel.setOnAction(a -> aboGuiController.deleteAbo());
-
-        final MenuItem miChange = new MenuItem("Abo ändern");
+        final MenuItem miChange = new MenuItem("Abos ändern");
         miChange.setOnAction(a -> aboGuiController.changeAbo());
-
         final MenuItem miNew = new MenuItem("neues Abo anlegen");
         miNew.setOnAction(a -> aboGuiController.addNewAbo());
+
+        contextMenu.getItems().addAll(mbOnOff, miDel, miChange, miNew);
 
 
         // Submenu "Filter"
         final MenuItem miAboToFilter = new MenuItem("Abo  -->  Filmfilter (Filmfilter aus Abo setzen)");
         miAboToFilter.setOnAction(a -> aboGuiController.setFilmFilterFromAbo());
-
         final MenuItem miFilterToAbo = new MenuItem("Filmfilter  -->  Abo (Abo aus Filmfilter setzen)");
         miFilterToAbo.setOnAction(a -> aboGuiController.setAboFromFilmFilter());
 
         Menu mFilter = new Menu("Filmfilter - Abo");
         mFilter.getItems().addAll(miAboToFilter, miFilterToAbo);
+        contextMenu.getItems().add(new SeparatorMenuItem());
+        contextMenu.getItems().addAll(mFilter);
 
 
         // Auswahl
         final MenuItem miSelectAll = new MenuItem("alles auswählen");
         miSelectAll.setOnAction(a -> tableView.getSelectionModel().selectAll());
-
         final MenuItem miSelection = new MenuItem("Auswahl umkehren");
         miSelection.setOnAction(a -> aboGuiController.invertSelection());
-
         MenuItem resetTable = new MenuItem("Tabelle zurücksetzen");
         resetTable.setOnAction(e -> new Table().resetTable(tableView, Table.TABLE.ABO));
 
-
-        contextMenu.getItems().addAll(
-                mbOnOff, miDel, miChange, miNew,
-
-                new SeparatorMenuItem(),
-                mFilter,
-
-                new SeparatorMenuItem(),
-                miSelectAll, miSelection, resetTable);
+        contextMenu.getItems().add(new SeparatorMenuItem());
+        contextMenu.getItems().addAll(miSelectAll, miSelection, resetTable);
     }
 
 }

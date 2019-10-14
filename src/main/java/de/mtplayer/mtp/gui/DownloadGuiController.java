@@ -308,6 +308,10 @@ public class DownloadGuiController extends AnchorPane {
         setFilmShown(false);
     }
 
+    public void selectAll() {
+        tableView.getSelectionModel().selectAll();
+    }
+
     public void invertSelection() {
         PTableFactory.invertSelection(tableView);
     }
@@ -489,7 +493,7 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private void stopWaiting() {
-        // es werden alle noch nicht gestarteten Downloads gelöscht
+        // es werden alle noch nicht gestarteten Downloads gestoppt
         final ArrayList<Download> listStopDownload = new ArrayList<>();
         tableView.getItems().stream().filter(download -> download.isStateStartedWaiting()).forEach(download -> {
             listStopDownload.add(download);

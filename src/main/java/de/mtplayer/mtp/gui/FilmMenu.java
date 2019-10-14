@@ -54,13 +54,20 @@ public class FilmMenu {
 
     private void initButton() {
         // Button
+        VBox vBoxSpace = new VBox();
+        vBoxSpace.setMaxHeight(0);
+        vBoxSpace.setMinHeight(0);
+        vBox.getChildren().add(vBoxSpace);
+
+
         final ToolBarButton btPlay = new ToolBarButton(vBox,
                 "Abspielen", "markierten Film abspielen", new ProgIcons().FX_ICON_TOOLBAR_FILM_START);
         final ToolBarButton btSave = new ToolBarButton(vBox,
                 "Speichern", "markierte Filme speichern", new ProgIcons().FX_ICON_TOOLBAR_FILM_REC);
 
-        VBox vBoxSpace = new VBox();
+        vBoxSpace = new VBox();
         vBoxSpace.setMaxHeight(10);
+        vBoxSpace.setMinHeight(10);
         vBox.getChildren().add(vBoxSpace);
 
         final ToolBarButton btBookmark = new ToolBarButton(vBox,
@@ -113,42 +120,40 @@ public class FilmMenu {
 
         final MenuItem mbPlay = new MenuItem("Film abspielen");
         mbPlay.setOnAction(a -> progData.filmGuiController.playFilmUrl());
-
-        final MenuItem mbSave = new MenuItem("Film aufzeichnen");
+        final MenuItem mbSave = new MenuItem("Film speichern");
         mbSave.setOnAction(e -> progData.filmGuiController.saveTheFilm());
+
+        mb.getItems().addAll(mbPlay, mbSave);
+
 
         final MenuItem miFilmShown = new MenuItem("Filme als gesehen markieren");
         miFilmShown.setOnAction(a -> progData.filmGuiController.setFilmShown());
-
         final MenuItem miFilmNotShown = new MenuItem("Filme als ungesehen markieren");
         miFilmNotShown.setOnAction(a -> progData.filmGuiController.setFilmNotShown());
-
         final MenuItem miFilmMediaCollection = new MenuItem("Titel in der Mediensammlung suchen");
         miFilmMediaCollection.setOnAction(a -> progData.filmGuiController.guiFilmMediaCollection());
+
+        mb.getItems().add(new SeparatorMenuItem());
+        mb.getItems().addAll(miFilmShown, miFilmNotShown, miFilmMediaCollection);
 
 
         // Bookmarks
         Menu submenuBookmark = new Menu("Bookmarks");
         final MenuItem miBookmarkAdd = new MenuItem("neue Bookmarks anlegen");
-        final MenuItem miBookmarkDel = new MenuItem("Bookmarks löschen");
-        final MenuItem miBookmarkDelAll = new MenuItem("alle angelegten Bookmarks löschen");
-
         miBookmarkAdd.setOnAction(a -> progData.filmGuiController.bookmarkFilm(true));
+        final MenuItem miBookmarkDel = new MenuItem("Bookmarks löschen");
         miBookmarkDel.setOnAction(a -> progData.filmGuiController.bookmarkFilm(false));
+        final MenuItem miBookmarkDelAll = new MenuItem("alle angelegten Bookmarks löschen");
         miBookmarkDelAll.setOnAction(a -> progData.bookmarks.clearAll(progData.primaryStage));
+
         submenuBookmark.getItems().addAll(miBookmarkAdd, miBookmarkDel, miBookmarkDelAll);
+        mb.getItems().add(submenuBookmark);
 
 
         final CheckMenuItem miShowFilter = new CheckMenuItem("Filter anzeigen");
         miShowFilter.selectedProperty().bindBidirectional(boolFilterOn);
-
         final CheckMenuItem miShowInfo = new CheckMenuItem("Infos anzeigen");
         miShowInfo.selectedProperty().bindBidirectional(boolInfoOn);
-
-        mb.getItems().addAll(mbPlay, mbSave);
-        mb.getItems().add(new SeparatorMenuItem());
-        mb.getItems().addAll(miFilmShown, miFilmNotShown, miFilmMediaCollection);
-        mb.getItems().add(submenuBookmark);
 
         mb.getItems().add(new SeparatorMenuItem());
         mb.getItems().addAll(miShowFilter, miShowInfo);
