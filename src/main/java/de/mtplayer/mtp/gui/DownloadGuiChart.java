@@ -321,13 +321,16 @@ public class DownloadGuiChart {
     private void setYAxisLabel() {
         switch (scale) {
             case 1:
-                lineChart.getYAxis().setLabel("Bandbreite [Byte/s]");
+//                lineChart.getYAxis().setLabel("Bandbreite [Byte/s]");
+                lineChart.getYAxis().setLabel("Bandbreite [B/s]");
                 break;
             case 1_000:
-                lineChart.getYAxis().setLabel("Bandbreite [kByte/s]");
+//                lineChart.getYAxis().setLabel("Bandbreite [kByte/s]");
+                lineChart.getYAxis().setLabel("Bandbreite [kB/s]");
                 break;
             case 1_000_000:
-                lineChart.getYAxis().setLabel("Bandbreite [MByte/s]");
+//                lineChart.getYAxis().setLabel("Bandbreite [MByte/s]");
+                lineChart.getYAxis().setLabel("Bandbreite [MB/s]");
                 break;
         }
     }

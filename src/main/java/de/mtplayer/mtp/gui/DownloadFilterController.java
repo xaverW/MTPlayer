@@ -250,7 +250,8 @@ public class DownloadFilterController extends FilterController {
         if (bandwidthKByte == MLBandwidthTokenBucket.BANDWIDTH_MAX_KBYTE) {
             ret = "";
         } else {
-            ret = bandwidthKByte + " kByte/s";
+//            ret = bandwidthKByte + " kByte/s";
+            ret = bandwidthKByte + " kB/s";
         }
         lblBandwidth.setText(ret);
 

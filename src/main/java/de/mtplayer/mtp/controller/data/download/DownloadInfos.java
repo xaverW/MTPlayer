@@ -367,11 +367,14 @@ public class DownloadInfos {
 
     private String roundBandwidth() {
         if (bandwidth > 1_000_000.0) {
-            bandwidthStr = new DecimalFormat("####0.00").format(bandwidth / 1_000_000.0) + " MByte/s";
+//            bandwidthStr = new DecimalFormat("####0.00").format(bandwidth / 1_000_000.0) + " MByte/s";
+            bandwidthStr = new DecimalFormat("####0.00").format(bandwidth / 1_000_000.0) + " MB/s";
         } else if (bandwidth > 1_000.0) {
-            bandwidthStr = Math.round(bandwidth / 1_000.0) + " kByte/s";
+//            bandwidthStr = Math.round(bandwidth / 1_000.0) + " kByte/s";
+            bandwidthStr = Math.round(bandwidth / 1_000.0) + " kB/s";
         } else {
-            bandwidthStr = Math.round(bandwidth) + " Byte/s";
+//            bandwidthStr = Math.round(bandwidth) + " Byte/s";
+            bandwidthStr = Math.round(bandwidth) + " B/s";
         }
         return bandwidthStr;
     }
