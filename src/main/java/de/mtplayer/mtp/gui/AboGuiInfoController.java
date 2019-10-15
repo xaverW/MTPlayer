@@ -17,57 +17,55 @@
 package de.mtplayer.mtp.gui;
 
 import de.mtplayer.mtp.controller.data.abo.Abo;
+import de.p2tools.p2Lib.guiTools.PColumnConstraints;
+import javafx.geometry.Insets;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 
 public class AboGuiInfoController {
     private final TextArea txtInfo = new TextArea();
-    private final Text txtName = new Text("");
+    private final TextField txtName = new TextField("");
 
     private Abo abo = null;
 
     public AboGuiInfoController(AnchorPane anchorPane) {
 
         txtName.setFont(Font.font(null, FontWeight.BOLD, -1));
+        txtName.setTooltip(new Tooltip("Name des Abos"));
         txtInfo.setWrapText(true);
         txtInfo.setPrefRowCount(4);
+        txtInfo.setTooltip(new Tooltip("Beschreibung des Abos"));
 
-//        final GridPane gridPane = new GridPane();
-//        gridPane.setHgap(15);
-//        gridPane.setVgap(15);
-//        gridPane.setPadding(new Insets(10));
-//        GridPane.setVgrow(txtInfo, Priority.ALWAYS);
-//
-//        int row = 0;
-//        gridPane.add(new Label(Abo.COLUMN_NAMES[Abo.ABO_NAME] + ":"), 0, row);
-//        gridPane.add(txtName, 1, row);
-//        gridPane.add(new Label(Abo.COLUMN_NAMES[Abo.ABO_INFOS] + ":"), 0, ++row);
-//        gridPane.add(txtInfo, 1, row);
-//        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
-//                PColumnConstraints.getCcComputedSizeAndHgrow());
-//
-//        AnchorPane.setLeftAnchor(gridPane, 10.0);
-//        AnchorPane.setBottomAnchor(gridPane, 10.0);
-//        AnchorPane.setRightAnchor(gridPane, 10.0);
-//        AnchorPane.setTopAnchor(gridPane, 10.0);
-//        anchorPane.getChildren().add(gridPane);
+        final GridPane gridPane = new GridPane();
+        gridPane.setHgap(15);
+        gridPane.setVgap(15);
+        gridPane.setPadding(new Insets(10));
+        GridPane.setVgrow(txtInfo, Priority.ALWAYS);
 
+        VBox vb = new VBox(1);
+        vb.getChildren().addAll(new Label(Abo.COLUMN_NAMES[Abo.ABO_NAME]), txtName);
+        gridPane.add(vb, 0, 0);
 
-        VBox vBox = new VBox(10);
-        vBox.getChildren().addAll(txtName, txtInfo);
+        vb = new VBox(1);
         VBox.setVgrow(txtInfo, Priority.ALWAYS);
+        vb.getChildren().addAll(new Label(Abo.COLUMN_NAMES[Abo.ABO_DESCRIPTION]), txtInfo);
+        gridPane.add(vb, 0, 1);
 
-        AnchorPane.setLeftAnchor(vBox, 10.0);
-        AnchorPane.setBottomAnchor(vBox, 10.0);
-        AnchorPane.setRightAnchor(vBox, 10.0);
-        AnchorPane.setTopAnchor(vBox, 10.0);
-        anchorPane.getChildren().add(vBox);
+        RowConstraints rc = new RowConstraints();
+        rc.setVgrow(Priority.ALWAYS);
+        gridPane.getRowConstraints().addAll(new RowConstraints(), rc);
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow());
 
+        AnchorPane.setLeftAnchor(gridPane, 0.0);
+        AnchorPane.setBottomAnchor(gridPane, 0.0);
+        AnchorPane.setRightAnchor(gridPane, 0.0);
+        AnchorPane.setTopAnchor(gridPane, 0.0);
+        anchorPane.getChildren().add(gridPane);
     }
 
     public void setAbo(Abo newAbo) {

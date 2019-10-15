@@ -63,7 +63,7 @@ public class ProgIcons {
     public final ImageView FX_ICON_TOOLBAR_MENU = GetIcon.getImageView("toolbar-menu.png", 18, 15);
     public final ImageView FX_ICON_TOOLBAR_MENU_TOP = GetIcon.getImageView("toolbar-menu-top.png", 32, 18);
 
-    public final ImageView FX_ICON_TOOLBAR_DOWNLOAD_CLEAR = GetIcon.getImageView("toolbar-download-clear.png", 32, 32);
+    public final ImageView FX_ICON_TOOLBAR_DOWNLOAD_CLEAN = GetIcon.getImageView("toolbar-download-clean.png", 32, 32);
     public final ImageView FX_ICON_TOOLBAR_DOWNLOAD_START = GetIcon.getImageView("toolbar-download-starten.png", 32, 32);
     public final ImageView FX_ICON_TOOLBAR_DOWNLOAD_DEL = GetIcon.getImageView("toolbar-download-del.png", 32, 32);
     public final ImageView FX_ICON_TOOLBAR_DOWNLOAD_UNDO = GetIcon.getImageView("toolbar-download-undo.png", 32, 32);

@@ -54,7 +54,7 @@ public class DownloadMenu {
         final ToolBarButton btDownloadAll = new ToolBarButton(vBox,
                 "alle Downloads starten", "alle Downloads starten", new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_START_ALL);
         final ToolBarButton btDownloadClear = new ToolBarButton(vBox,
-                "Downloads aufräumen", "Liste der Downloads aufräumen", new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_CLEAR);
+                "Downloads aufräumen", "Liste der Downloads aufräumen", new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_CLEAN);
 
         vBoxSpace = new VBox();
         vBoxSpace.setMaxHeight(10);
