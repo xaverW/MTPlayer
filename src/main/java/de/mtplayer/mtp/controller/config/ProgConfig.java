@@ -189,7 +189,7 @@ public class ProgConfig extends MLConfig {
 
     // FilmInfoDialog
     public static MLConfigs FILM_INFO_DIALOG_SHOW_URL = addNewKey("film-info-dialog-show-url", Boolean.TRUE.toString());
-    public static MLConfigs FILM_INFO_DIALOG_SHOW_URL_INDERTERMINATE = addNewKey("film-info-dialog-show-url-indeterminate", Boolean.TRUE.toString());
+//    public static MLConfigs FILM_INFO_DIALOG_SHOW_URL_INDERTERMINATE = addNewKey("film-info-dialog-show-url-indeterminate", Boolean.TRUE.toString());
 
     // MediaDB
     public static MLConfigs MEDIA_CONFIG_DIALOG_SIZE = addNewKey("media-config-dialog-size", "800:700");

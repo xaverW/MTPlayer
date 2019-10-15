@@ -36,9 +36,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-/**
- * FXML Controller class
- */
 public class FilmInfoDialogController extends PDialog {
 
     private final int FREE = 190;
@@ -51,11 +48,8 @@ public class FilmInfoDialogController extends PDialog {
     private final GridPane gridPane = new GridPane();
     private final Button btnOk = new Button("Ok");
 
-
     private final VBox vBoxDialog = new VBox();
     private final VBox vBoxCont = new VBox();
-    private final HBox hBoxUrl = new HBox();
-    private final HBox hBoxWebsite = new HBox();
 
     private final ImageView ivHD = new ImageView();
     private final ImageView ivUT = new ImageView();
@@ -69,7 +63,6 @@ public class FilmInfoDialogController extends PDialog {
             ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
 
     BooleanProperty urlProperty = ProgConfig.FILM_INFO_DIALOG_SHOW_URL.getBooleanProperty();
-    BooleanProperty urlIndeterminateProperty = ProgConfig.FILM_INFO_DIALOG_SHOW_URL_INDERTERMINATE.getBooleanProperty();
 
     public FilmInfoDialogController() {
         super(null, ProgConfig.SYSTEM_SIZE_DIALOG_FILMINFO.getStringProperty(),
@@ -174,22 +167,17 @@ public class FilmInfoDialogController extends PDialog {
         initDialog();
 
         tglUrl.setTooltip(new Tooltip("URL anzeigen"));
-        tglUrl.setAllowIndeterminate(true);
-
         tglUrl.selectedProperty().bindBidirectional(urlProperty);
         tglUrl.selectedProperty().addListener((observable, oldValue, newValue) -> setUrl());
 
-        tglUrl.indeterminateProperty().bindBidirectional(urlIndeterminateProperty);
-        tglUrl.indeterminateProperty().addListener((observable, oldValue, newValue) -> setUrl());
-
         btnOk.setOnAction(a -> close());
         vBoxCont.getChildren().add(gridPane);
-        VBox.setVgrow(gridPane, Priority.ALWAYS);
+        VBox.setVgrow(gridPane, Priority.SOMETIMES);
 
         gridPane.setHgap(5);
         gridPane.setVgap(5);
+        gridPane.setMinHeight(Control.USE_PREF_SIZE);
         gridPane.setMinWidth(Control.USE_PREF_SIZE);
-        gridPane.setMaxWidth(Double.MAX_VALUE);
         gridPane.setPadding(new Insets(10, 10, 10, 10));
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcComputedSizeAndHgrow());
@@ -219,7 +207,6 @@ public class FilmInfoDialogController extends PDialog {
                     // bis hier nicht anzeigen
                     break;
 
-
                 case FilmXml.FILM_HD:
                     gridPane.add(textTitle[i], 0, row);
                     gridPane.add(ivHD, 1, row++);
@@ -237,13 +224,11 @@ public class FilmInfoDialogController extends PDialog {
                     break;
 
                 case FilmXml.FILM_URL:
-//                    hBoxUrl.getChildren().add(pHyperlinkUrl);
                     gridPane.add(textTitle[i], 0, row);
                     gridPane.add(pHyperlinkUrl, 1, row++);
                     gridPane.getRowConstraints().add(new RowConstraints());
                     break;
                 case FilmXml.FILM_WEBSITE:
-//                    hBoxWebsite.getChildren().add(pHyperlinkWebsite);
                     gridPane.add(textTitle[i], 0, row);
                     gridPane.add(pHyperlinkWebsite, 1, row++);
                     gridPane.getRowConstraints().add(new RowConstraints());
@@ -279,35 +264,23 @@ public class FilmInfoDialogController extends PDialog {
     }
 
     private void setUrl() {
-//        System.out.println("Inter " + urlIndeterminateProperty.get());
-//        System.out.println("Url   " + urlProperty.get());
-//        System.out.println(" ");
+        pHyperlinkUrl.setWrapText(true);
+        pHyperlinkUrl.maxWidthProperty().bind(vBoxDialog.widthProperty().subtract(FREE));
 
-        if (urlProperty.get()) {
-            pHyperlinkUrl.setWrapText(true);
-            pHyperlinkUrl.maxWidthProperty().bind(vBoxDialog.widthProperty().subtract(FREE));
+        pHyperlinkWebsite.setWrapText(true);
+        pHyperlinkWebsite.maxWidthProperty().bind(vBoxDialog.widthProperty().subtract(FREE));
 
-            pHyperlinkWebsite.setWrapText(true);
-            pHyperlinkWebsite.maxWidthProperty().bind(vBoxDialog.widthProperty().subtract(FREE));
-        } else {
-            pHyperlinkUrl.setWrapText(false);
-            pHyperlinkUrl.maxWidthProperty().unbind();
-            pHyperlinkUrl.setMaxWidth(Double.MAX_VALUE);
+        textTitle[FilmXml.FILM_URL].setVisible(urlProperty.get());
+        textTitle[FilmXml.FILM_URL].setManaged(urlProperty.get());
+        pHyperlinkUrl.setVisible(urlProperty.get());
+        pHyperlinkUrl.setManaged(urlProperty.get());
+        pHyperlinkUrl.setMinHeight(Region.USE_PREF_SIZE);
 
-            pHyperlinkWebsite.setWrapText(false);
-            pHyperlinkWebsite.maxWidthProperty().unbind();
-            pHyperlinkWebsite.setMaxWidth(Double.MAX_VALUE);
-        }
-
-        textTitle[FilmXml.FILM_URL].setVisible(!urlIndeterminateProperty.get());
-        textTitle[FilmXml.FILM_URL].setManaged(!urlIndeterminateProperty.get());
-        pHyperlinkUrl.setVisible(!urlIndeterminateProperty.get());
-        pHyperlinkUrl.setManaged(!urlIndeterminateProperty.get());
-
-        textTitle[FilmXml.FILM_WEBSITE].setVisible(!urlIndeterminateProperty.get());
-        textTitle[FilmXml.FILM_WEBSITE].setManaged(!urlIndeterminateProperty.get());
-        pHyperlinkWebsite.setVisible(!urlIndeterminateProperty.get());
-        pHyperlinkWebsite.setManaged(!urlIndeterminateProperty.get());
+        textTitle[FilmXml.FILM_WEBSITE].setVisible(urlProperty.get());
+        textTitle[FilmXml.FILM_WEBSITE].setManaged(urlProperty.get());
+        pHyperlinkWebsite.setVisible(urlProperty.get());
+        pHyperlinkWebsite.setManaged(urlProperty.get());
+        pHyperlinkWebsite.setMinHeight(Region.USE_PREF_SIZE);
     }
 
     private ContextMenu getMenu(String url) {
