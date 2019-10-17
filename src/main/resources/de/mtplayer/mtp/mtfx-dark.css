@@ -34,7 +34,7 @@
 
     -style-extra-pane-color: derive(-fx-base, 40%);
 
-    -lblSelectedLines-color-1: #007bc8;
+    -lblSelectedLines-color-1: derive(-fx-base, 70%);
     -lblSelectedLines-color-2: derive(-fx-base, 40%);
 
     -text-color-blue: #002fbe;

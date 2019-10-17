@@ -85,28 +85,16 @@ public class DownloadFilterController extends FilterController {
 
         addCont("gleichzeitige Downloads", spinnerAnz, vBoxFilter);
 
-
-//        Label lblText = new Label("Bandbreite/Download: ");
-//        lblText.setMinWidth(0);
-//        lblBandwidth.setMinWidth(Region.USE_PREF_SIZE);
-//        hBox = new HBox();
-//        hBox.getChildren().addAll(lblText, lblBandwidth);
-//        HBox.setHgrow(lblText, Priority.NEVER);
-//        HBox.setHgrow(lblBandwidth, Priority.ALWAYS);
-//
-//        VBox v = new VBox();
-//        HBox h = new HBox();
-//        h.getChildren().addAll(lblText, lblBandwidth);
-//        v.getChildren().addAll(h, sliderBandwidth);
-//
-//        vBoxFilter.getChildren().add(v);
-
-
-        Label lblText = new Label("max. Bandbreite je Download: ");
-        VBox v = new VBox();
         HBox h = new HBox();
         h.setAlignment(Pos.CENTER_RIGHT);
         h.getChildren().addAll(lblBandwidth);
+
+        VBox v = new VBox();
+        Label lblText = new Label("max. Bandbreite je Download: ");
+        lblText.setTooltip(new Tooltip("Maximale Bandbreite die ein einzelner Dowload beanspruchen darf \n" +
+                "oder unbegrenzt wenn \"aus\""));
+        sliderBandwidth.setTooltip(new Tooltip("Maximale Bandbreite die ein einzelner Dowload beanspruchen darf \n" +
+                "oder unbegrenzt wenn \"aus\""));
         v.getChildren().addAll(lblText, sliderBandwidth, h);
         vBoxFilter.getChildren().add(v);
     }
