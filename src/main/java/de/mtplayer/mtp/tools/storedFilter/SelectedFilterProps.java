@@ -16,13 +16,10 @@
 
 package de.mtplayer.mtp.tools.storedFilter;
 
+import de.mtplayer.mtp.tools.filmListFilter.FilmFilter;
 import javafx.beans.property.*;
 
 public class SelectedFilterProps {
-
-    public static final int FILTER_DURATION_MAX_MINUTE = 150;
-    public static final int FILTER_FILMTIME_MAX_SEC = 24 * 60 * 60; // das ist eigentlich bereits 00:00 vom nächsten Tag!!
-    public static final int FILTER_DAYS_MAX = 30;
 
     private final StringProperty name = new SimpleStringProperty();
 
@@ -46,12 +43,12 @@ public class SelectedFilterProps {
 
     private final BooleanProperty minMaxDurVis = new SimpleBooleanProperty(true);
     private final IntegerProperty minDur = new SimpleIntegerProperty(0);
-    private final IntegerProperty maxDur = new SimpleIntegerProperty(FILTER_DURATION_MAX_MINUTE);
+    private final IntegerProperty maxDur = new SimpleIntegerProperty(FilmFilter.FILTER_DURATION_MAX_MINUTE);
 
     private final BooleanProperty minMaxTimeVis = new SimpleBooleanProperty(true);
     private final BooleanProperty minMaxTimeInvert = new SimpleBooleanProperty(false);
     private final IntegerProperty minTime = new SimpleIntegerProperty(0); // Tageszeit in Sekunden
-    private final IntegerProperty maxTime = new SimpleIntegerProperty(FILTER_FILMTIME_MAX_SEC); // Tageszeit in Sekunden
+    private final IntegerProperty maxTime = new SimpleIntegerProperty(FilmFilter.FILTER_FILMTIME_MAX_SEC); // Tageszeit in Sekunden
 
     private final BooleanProperty onlyVis = new SimpleBooleanProperty(false);
     private final BooleanProperty onlyBookmark = new SimpleBooleanProperty(false);

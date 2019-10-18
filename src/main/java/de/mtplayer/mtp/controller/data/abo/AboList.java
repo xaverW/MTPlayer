@@ -42,7 +42,7 @@ import java.util.Optional;
 
 public class AboList extends SimpleListProperty<Abo> {
     private final ProgData progData;
-    private static final String[] LEER = {""};
+    //    private static final String[] LEER = {""};
     private static final GermanStringSorter sorter = GermanStringSorter.getInstance();
 
     private BooleanProperty listChanged = new SimpleBooleanProperty(true);
@@ -89,8 +89,8 @@ public class AboList extends SimpleListProperty<Abo> {
         String title = selectedFilter.isTitleVis() ? selectedFilter.getTitle() : "";
         String themeTitle = selectedFilter.isThemeTitleVis() ? selectedFilter.getThemeTitle() : "";
         String somewhere = selectedFilter.isSomewhereVis() ? selectedFilter.getSomewhere() : "";
-        int minDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMinDur() : 0;
-        int maxDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMaxDur() : SelectedFilter.FILTER_DURATION_MAX_MINUTE;
+        int minDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMinDur() : FilmFilter.FILTER_DURATION_MIN_MINUTE;
+        int maxDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMaxDur() : FilmFilter.FILTER_DURATION_MAX_MINUTE;
 
 
         String namePath = channel + (theme.isEmpty() ? "" : " - " + theme) + (title.isEmpty() ? "" : " - " + title);
@@ -149,8 +149,9 @@ public class AboList extends SimpleListProperty<Abo> {
         final String title = selectedFilter.isTitleVis() ? selectedFilter.getTitle() : "";
         final String themeTitle = selectedFilter.isThemeTitleVis() ? selectedFilter.getThemeTitle() : "";
         final String somewhere = selectedFilter.isSomewhereVis() ? selectedFilter.getSomewhere() : "";
-        final int minDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMinDur() : 0;
-        final int maxDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMaxDur() : SelectedFilter.FILTER_DURATION_MAX_MINUTE;
+        final int timeRange = selectedFilter.isDaysVis() ? selectedFilter.getDays() : FilmFilter.FILTER_ALL_DAYS_VALUE;
+        final int minDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMinDur() : FilmFilter.FILTER_DURATION_MIN_MINUTE;
+        final int maxDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMaxDur() : FilmFilter.FILTER_DURATION_MAX_MINUTE;
 
         aboCopy.setChannel(channel);
         aboCopy.setChannelExact(channelExact);
@@ -159,6 +160,7 @@ public class AboList extends SimpleListProperty<Abo> {
         aboCopy.setTitle(title);
         aboCopy.setThemeTitle(themeTitle);
         aboCopy.setSomewhere(somewhere);
+        aboCopy.setTimeRange(timeRange);
         aboCopy.setMinDurationMinute(minDuration);
         aboCopy.setMaxDurationMinute(maxDuration);
 
@@ -189,10 +191,10 @@ public class AboList extends SimpleListProperty<Abo> {
             minDuration = ProgConfig.ABO_MINUTE_MIN_SIZE.getInt();
             maxDuration = ProgConfig.ABO_MINUTE_MAX_SIZE.getInt();
         } catch (final Exception ex) {
-            minDuration = 0;
-            maxDuration = SelectedFilter.FILTER_DURATION_MAX_MINUTE;
-            ProgConfig.ABO_MINUTE_MIN_SIZE.setValue("0");
-            ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(SelectedFilter.FILTER_DURATION_MAX_MINUTE);
+            minDuration = FilmFilter.FILTER_DURATION_MIN_MINUTE;
+            maxDuration = FilmFilter.FILTER_DURATION_MAX_MINUTE;
+            ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(FilmFilter.FILTER_DURATION_MIN_MINUTE);
+            ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(FilmFilter.FILTER_DURATION_MAX_MINUTE);
         }
 
         String namePath = DownloadTools.replaceEmptyFileName(aboName,
@@ -273,7 +275,7 @@ public class AboList extends SimpleListProperty<Abo> {
         }
     }
 
-    public synchronized void notifyChanges() {
+    private synchronized void notifyChanges() {
         if (!progData.loadFilmlist.getPropLoadFilmlist()) {
             // wird danach eh gemacht
             setAboForFilm(progData.filmlist);
@@ -385,10 +387,14 @@ public class AboList extends SimpleListProperty<Abo> {
                         abo.fThemeTitle,
                         abo.fTitle,
                         abo.fSomewhere,
+
+                        abo.getTimeRange(),
                         abo.getMinDurationMinute(),
                         abo.getMaxDurationMinute(),
+
                         film,
                         false))
+
                 .findFirst()
                 .orElse(null);
 

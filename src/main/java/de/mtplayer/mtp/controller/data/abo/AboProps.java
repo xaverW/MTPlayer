@@ -18,10 +18,11 @@ package de.mtplayer.mtp.controller.data.abo;
 
 import de.mtplayer.mLib.tools.Data;
 import de.mtplayer.mLib.tools.MDate;
+import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.film.Film;
-import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
+import de.mtplayer.mtp.tools.filmListFilter.FilmFilter;
 import javafx.beans.property.*;
 
 public class AboProps extends AboXml {
@@ -37,8 +38,9 @@ public class AboProps extends AboXml {
     private final StringProperty themeTitle = new SimpleStringProperty("");
     private final StringProperty title = new SimpleStringProperty("");
     private final StringProperty somewhere = new SimpleStringProperty("");
-    private final IntegerProperty minDurationMinute = new SimpleIntegerProperty(0); // Minuten
-    private final IntegerProperty maxDurationMinute = new SimpleIntegerProperty(SelectedFilter.FILTER_DURATION_MAX_MINUTE); //Minuten
+    private final IntegerProperty timeRange = new SimpleIntegerProperty(FilmFilter.FILTER_ALL_DAYS_VALUE);
+    private final IntegerProperty minDurationMinute = new SimpleIntegerProperty(FilmFilter.FILTER_DURATION_MIN_MINUTE); // Minuten
+    private final IntegerProperty maxDurationMinute = new SimpleIntegerProperty(FilmFilter.FILTER_DURATION_MAX_MINUTE); //Minuten
     private final StringProperty destination = new SimpleStringProperty("");
     private final ObjectProperty<MDate> date = new SimpleObjectProperty<>(new MDate(0));
     private final StringProperty setDataId = new SimpleStringProperty("");
@@ -50,7 +52,7 @@ public class AboProps extends AboXml {
 
     public final Property[] properties = {nr, active, name, description, resolution,
             channel, channelExact, theme, themeExact, themeTitle, title, somewhere,
-            minDurationMinute, maxDurationMinute, destination, date, setDataId};
+            timeRange, minDurationMinute, maxDurationMinute, destination, date, setDataId};
 
     public String getStringOf(int i) {
         return String.valueOf(properties[i].getValue());
@@ -224,13 +226,21 @@ public class AboProps extends AboXml {
         this.somewhere.set(somewhere);
     }
 
+    public int getTimeRange() {
+        return timeRange.get();
+    }
+
+    public IntegerProperty timeRangeProperty() {
+        return timeRange;
+    }
+
+    public void setTimeRange(int timeRange) {
+        this.timeRange.set(timeRange);
+    }
+
     public int getMinDurationMinute() {
         return minDurationMinute.get();
     }
-
-//    public int getMinSec() {
-//        return minDurationMinute.get() * 60;
-//    }
 
     public IntegerProperty minDurationMinuteProperty() {
         return minDurationMinute;
@@ -243,10 +253,6 @@ public class AboProps extends AboXml {
     public int getMaxDurationMinute() {
         return maxDurationMinute.get();
     }
-
-//    public int getMaxSec() {
-//        return maxDurationMinute.get() * 60;
-//    }
 
     public IntegerProperty maxDurationMinuteProperty() {
         return maxDurationMinute;
@@ -335,7 +341,9 @@ public class AboProps extends AboXml {
         setTitle(arr[ABO_TITLE]);
         setSomewhere(arr[ABO_SOMEWHERE]);
 
-        setDurationFromXml();
+        setTimeRangeFromXml();
+        setDurationMinFromXml();
+        setDurationMaxFromXml();
 
         setDestination(arr[ABO_DEST_PATH]);
         setDatum(arr[ABO_DOWN_DATE], "");
@@ -356,25 +364,76 @@ public class AboProps extends AboXml {
         arr[ABO_TITLE] = getTitle();
         arr[ABO_SOMEWHERE] = getSomewhere();
 
-        arr[ABO_MIN_DURATION] = String.valueOf(getMinDurationMinute());
-        arr[ABO_MAX_DURATION] = String.valueOf(getMaxDurationMinute());
+        if (getTimeRange() == FilmFilter.FILTER_ALL_DAYS_VALUE) {
+            arr[ABO_TIME_RANGE] = ProgConst.FILTER_ALL;
+        } else {
+            arr[ABO_TIME_RANGE] = String.valueOf(getTimeRange());
+        }
+
+        if (getMinDurationMinute() == FilmFilter.FILTER_DURATION_MIN_MINUTE) {
+            arr[ABO_MIN_DURATION] = ProgConst.FILTER_ALL;
+        } else {
+            arr[ABO_MIN_DURATION] = String.valueOf(getMinDurationMinute());
+        }
+
+        if (getMaxDurationMinute() == FilmFilter.FILTER_DURATION_MAX_MINUTE) {
+            arr[ABO_MAX_DURATION] = ProgConst.FILTER_ALL;
+        } else {
+            arr[ABO_MAX_DURATION] = String.valueOf(getMaxDurationMinute());
+        }
 
         arr[ABO_DEST_PATH] = getDestination();
         arr[ABO_DOWN_DATE] = getDate().toString();
         arr[ABO_SET_DATA_ID] = getSetData() == null ? "" : getSetData().getId();
     }
 
-    private void setDurationFromXml() {
-        int min;
+    private void setTimeRangeFromXml() {
         int max;
+
+        if (arr[ABO_TIME_RANGE].equals(ProgConst.FILTER_ALL)) {
+            max = FilmFilter.FILTER_ALL_DAYS_VALUE;
+            setTimeRange(max);
+            return;
+        }
+
+        try {
+            max = Integer.parseInt(arr[ABO_TIME_RANGE]);
+        } catch (final Exception ex) {
+            max = FilmFilter.FILTER_ALL_DAYS_VALUE;
+        }
+
+        setTimeRange(max);
+    }
+
+    private void setDurationMinFromXml() {
+        int min;
+        if (arr[ABO_MIN_DURATION].equals(ProgConst.FILTER_ALL)) {
+            min = FilmFilter.FILTER_DURATION_MIN_MINUTE;
+            setMinDurationMinute(min);
+            return;
+        }
+
         try {
             min = Integer.parseInt(arr[ABO_MIN_DURATION]);
-            max = Integer.parseInt(arr[ABO_MAX_DURATION]);
         } catch (final Exception ex) {
-            min = 0;
-            max = SelectedFilter.FILTER_DURATION_MAX_MINUTE;
+            min = FilmFilter.FILTER_DURATION_MIN_MINUTE;
         }
         setMinDurationMinute(min);
+    }
+
+    private void setDurationMaxFromXml() {
+        int max;
+        if (arr[ABO_MAX_DURATION].equals(ProgConst.FILTER_ALL)) {
+            max = FilmFilter.FILTER_DURATION_MAX_MINUTE;
+            setMaxDurationMinute(max);
+            return;
+        }
+
+        try {
+            max = Integer.parseInt(arr[ABO_MAX_DURATION]);
+        } catch (final Exception ex) {
+            max = FilmFilter.FILTER_DURATION_MAX_MINUTE;
+        }
         setMaxDurationMinute(max);
     }
 

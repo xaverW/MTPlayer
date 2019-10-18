@@ -20,7 +20,7 @@ import de.mtplayer.mLib.tools.CheckBoxCell;
 import de.mtplayer.mLib.tools.MDate;
 import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.controller.data.abo.Abo;
-import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
+import de.mtplayer.mtp.tools.filmListFilter.FilmFilter;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
@@ -94,6 +94,11 @@ public class TableAbo {
         somewhereColumn.setCellValueFactory(new PropertyValueFactory<>("somewhere"));
         somewhereColumn.getStyleClass().add("alignCenterLeft");
 
+        final TableColumn<Abo, Integer> timeRange = new TableColumn<>("Zeitraum");
+        timeRange.setCellFactory(cellFactoryMin);
+        timeRange.setCellValueFactory(new PropertyValueFactory<>("timeRange"));
+        timeRange.getStyleClass().add("alignCenterLeft");
+
         final TableColumn<Abo, Integer> minColumn = new TableColumn<>("min");
         minColumn.setCellFactory(cellFactoryMin);
         minColumn.setCellValueFactory(new PropertyValueFactory<>("minDurationMinute"));
@@ -119,7 +124,7 @@ public class TableAbo {
         return new TableColumn[]{
                 nrColumn, activColumn, hitColumn, nameColumn, descriptionColumn, resColumn, senderColumn, senderExactColumn,
                 themeColumn, themeExactColumn, themeTitleColumn, titleColumn,
-                somewhereColumn, minColumn, maxColumn, destinationColumn, datumColumn, psetColumn};
+                somewhereColumn, timeRange, minColumn, maxColumn, destinationColumn, datumColumn, psetColumn};
 
     }
 
@@ -220,7 +225,7 @@ public class TableAbo {
                     return;
                 }
 
-                if (item == SelectedFilter.FILTER_DURATION_MAX_MINUTE) {
+                if (item == FilmFilter.FILTER_DURATION_MAX_MINUTE) {
                     setText("alles");
                 } else {
                     setText(item + "");

@@ -201,13 +201,15 @@ public final class StoredFilters {
 
         actFilterSettings.setTitleAndVis(abo.getTitle());
 
-        actFilterSettings.setSomewhere(abo.getSomewhere());
         actFilterSettings.setSomewhereVis(true);
+        actFilterSettings.setSomewhere(abo.getSomewhere());
 
+        actFilterSettings.setMinMaxDurVis(true);
         actFilterSettings.setMinDur(abo.getMinDurationMinute());
         actFilterSettings.setMaxDur(abo.getMaxDurationMinute());
-        actFilterSettings.setMinMaxDurVis(true);
 
+        actFilterSettings.setDaysVis(true);
+        actFilterSettings.setDays(abo.getTimeRange());
 
         postFilterChange();
         actFilterSettings.filterChangeProperty().addListener(filterChangeListener);

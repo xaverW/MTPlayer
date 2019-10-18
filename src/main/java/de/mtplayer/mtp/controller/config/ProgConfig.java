@@ -23,7 +23,7 @@ import de.mtplayer.mLib.tools.MLConfigs;
 import de.mtplayer.mLib.tools.SystemInfo;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
-import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
+import de.mtplayer.mtp.tools.filmListFilter.FilmFilter;
 import de.p2tools.p2Lib.PConst;
 import de.p2tools.p2Lib.tools.PStringUtils;
 import de.p2tools.p2Lib.tools.PSystemUtils;
@@ -160,8 +160,8 @@ public class ProgConfig extends MLConfig {
 
     // Gui Abo
     public static MLConfigs ABO_SEARCH_NOW = addNewKey("abo-search-now", Boolean.TRUE.toString());
-    public static MLConfigs ABO_MINUTE_MIN_SIZE = addNewKey("abo-minute-min-size", 0); //Vorgabe beim Anlegen eines Abos
-    public static MLConfigs ABO_MINUTE_MAX_SIZE = addNewKey("abo-minute-max-size", SelectedFilter.FILTER_DURATION_MAX_MINUTE); //Vorgabe beim Anlegen eines Abos
+    public static MLConfigs ABO_MINUTE_MIN_SIZE = addNewKey("abo-minute-min-size", FilmFilter.FILTER_DURATION_MIN_MINUTE); //Vorgabe beim Anlegen eines Abos
+    public static MLConfigs ABO_MINUTE_MAX_SIZE = addNewKey("abo-minute-max-size", FilmFilter.FILTER_DURATION_MAX_MINUTE); //Vorgabe beim Anlegen eines Abos
     public static MLConfigs ABO_DIALOG_EDIT_SIZE = addNewKey("abo-dialog-edit-size");
     public static MLConfigs ABO_GUI_FILTER_DIVIDER = addNewKey("abo-gui-filter-divider", ProgConst.GUI_ABO_FILTER_DIVIDER_LOCATION);
     public static MLConfigs ABO_GUI_FILTER_DIVIDER_ON = addNewKey("abo-gui-filter-divider-on", Boolean.TRUE.toString());

@@ -17,7 +17,7 @@
 package de.mtplayer.mtp.gui;
 
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
+import de.mtplayer.mtp.tools.filmListFilter.FilmFilter;
 import de.p2tools.p2Lib.guiTools.pCheckComboBox.PCheckComboBox;
 import de.p2tools.p2Lib.guiTools.pRange.PRangeBox;
 import de.p2tools.p2Lib.guiTools.pRange.PTimePeriodBox;
@@ -34,7 +34,7 @@ public class FilmFilterControllerFilter extends VBox {
     private final Slider slDays = new Slider();
     private final Label lblDays = new Label();
 
-    private final PRangeBox slDur = new PRangeBox(0, SelectedFilter.FILTER_DURATION_MAX_MINUTE);
+    private final PRangeBox slDur = new PRangeBox(0, FilmFilter.FILTER_DURATION_MAX_MINUTE);
     private final Label lblDur = new Label("Filmlänge:");
 
     private final PTimePeriodBox slFilmTime = new PTimePeriodBox();
@@ -179,16 +179,16 @@ public class FilmFilterControllerFilter extends VBox {
     }
 
     private void initDaysFilter() {
-        slDays.setMin(1);
-        slDays.setMax(SelectedFilter.FILTER_DAYS_MAX);
+        slDays.setMin(FilmFilter.FILTER_DAYS_MIN_VALUE);
+        slDays.setMax(FilmFilter.FILTER_DAYS_MAX_VALUE);
         slDays.setShowTickLabels(true);
         slDays.setMajorTickUnit(10);
-        slDays.setBlockIncrement(1);
+        slDays.setBlockIncrement(5);
 
         slDays.setLabelFormatter(new StringConverter<>() {
             @Override
             public String toString(Double x) {
-                if (x == SelectedFilter.FILTER_DAYS_MAX) return "alles";
+                if (x == FilmFilter.FILTER_ALL_DAYS_VALUE) return "alles";
 
                 return x.intValue() + "";
             }
@@ -293,7 +293,7 @@ public class FilmFilterControllerFilter extends VBox {
         int i = (int) slDays.getValue();
         String tNr = i + "";
 
-        if (i == SelectedFilter.FILTER_DAYS_MAX) {
+        if (i == FilmFilter.FILTER_ALL_DAYS_VALUE) {
             lblDays.setText("Zeitraum: " + txtAll);
         } else {
             lblDays.setText("Zeitraum: " + tNr + (i == 1 ? " Tag" : " Tage"));

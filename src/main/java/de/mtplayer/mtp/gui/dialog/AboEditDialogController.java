@@ -24,13 +24,15 @@ import de.mtplayer.mtp.controller.data.abo.Abo;
 import de.mtplayer.mtp.controller.data.abo.AboXml;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.gui.tools.HelpText;
-import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
+import de.mtplayer.mtp.tools.filmListFilter.FilmFilter;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pRange.PRangeBox;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
@@ -38,8 +40,10 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.util.StringConverter;
 
 import java.util.ArrayList;
 
@@ -51,7 +55,9 @@ public class AboEditDialogController extends PDialogExtra {
     private final ComboBox<SetData> cboSetData = new ComboBox<>();
     private final ComboBox<String> cboChannel = new ComboBox<>();
     private final ComboBox<String> cboDestination = new ComboBox<>();
-    private final PRangeBox pRangeBoxTime = new PRangeBox(0, SelectedFilter.FILTER_DURATION_MAX_MINUTE);
+    private final Slider slDays = new Slider();
+    private final Label lblDays = new Label();
+    private final PRangeBox pRangeBoxTime = new PRangeBox(0, FilmFilter.FILTER_DURATION_MAX_MINUTE);
     private final CheckBox cbxOn = new CheckBox();
     private final Label[] lbl = new Label[AboXml.MAX_ELEM];
     private final TextField[] txt = new TextField[AboXml.MAX_ELEM];
@@ -63,6 +69,7 @@ public class AboEditDialogController extends PDialogExtra {
     private final TextArea textArea = new TextArea();
 
     private boolean ok = false;
+    private BooleanProperty okProp = new SimpleBooleanProperty(true);
 
     private final ObservableList<Abo> lAbo;
     private final Abo aboCopy;
@@ -121,7 +128,7 @@ public class AboEditDialogController extends PDialogExtra {
         }
 
         if (addNewAbo && aboCopy.isEmpty()) {
-            // dann gibts das Abo schon
+            // dann ists leer
             PAlert.showErrorAlert(getStage(), "Fehler", "Abo anlegen",
                     "Das Abo ist \"leer\", es enthält keine Filter.");
             ok = false;
@@ -179,7 +186,7 @@ public class AboEditDialogController extends PDialogExtra {
     @Override
     public void make() {
         btnOk.setOnAction(a -> quit());
-        btnOk.disableProperty().bind(aboCopy.nameProperty().isEmpty());
+        btnOk.disableProperty().bind(aboCopy.nameProperty().isEmpty().or(okProp.not()));
         btnCancel.setOnAction(a -> close());
 
         gridPane.setHgap(5);
@@ -213,17 +220,12 @@ public class AboEditDialogController extends PDialogExtra {
             }
         }
 
+        checkOk();
         btnOk.requestFocus();
-
     }
 
     private void initControl(int i) {
         lbl[i] = new Label(AboXml.COLUMN_NAMES[i] + ":");
-//        lbl[i].setMinHeight(Region.USE_COMPUTED_SIZE);
-//        lbl[i].setMinWidth(Region.USE_COMPUTED_SIZE);
-//        lbl[i].setPrefHeight(Region.USE_COMPUTED_SIZE);
-//        lbl[i].setPrefWidth(Region.USE_COMPUTED_SIZE);
-//        GridPane.setHgrow(lbl[i], Priority.NEVER);
 
         switch (i) {
             case AboXml.ABO_DESCRIPTION:
@@ -262,18 +264,13 @@ public class AboEditDialogController extends PDialogExtra {
 
             default:
                 txt[i] = new TextField("");
-//                txt[i].setMinHeight(Region.USE_COMPUTED_SIZE);
-//                txt[i].setMinWidth(Region.USE_COMPUTED_SIZE);
-//                txt[i].setPrefHeight(Region.USE_COMPUTED_SIZE);
-//                txt[i].setPrefWidth(Region.USE_COMPUTED_SIZE);
                 txt[i].setText(aboCopy.getStringOf(i));
-//                GridPane.setHgrow(txt[i], Priority.ALWAYS);
         }
 
         cbxEditAll[i] = new CheckBox();
         cbxEditAll[i].setSelected(false);
         cbxEditAll[i].getStyleClass().add("chk-edit-all");
-//        GridPane.setHgrow(cbxEditAll[i], Priority.NEVER);
+        cbxEditAll[i].selectedProperty().addListener((u, o, n) -> checkOk());
         GridPane.setHalignment(cbxEditAll[i], HPos.CENTER);
     }
 
@@ -413,6 +410,26 @@ public class AboEditDialogController extends PDialogExtra {
                 this.gridPane.add(cboDestination, 1, grid);
                 break;
 
+            case AboXml.ABO_TIME_RANGE:
+                initDays();
+
+                VBox vBox = new VBox(0);
+                vBox.setPadding(new Insets(5));
+
+                HBox hBox = new HBox();
+                hBox.getChildren().add(lblDays);
+                hBox.setAlignment(Pos.CENTER_RIGHT);
+                vBox.getChildren().addAll(slDays, hBox);
+                this.gridPane.add(vBox, 1, grid);
+
+//                HBox hBox = new HBox(10);
+//                HBox.setHgrow(slDays, Priority.ALWAYS);
+//                hBox.getChildren().addAll(slDays, lblDays);
+//                hBox.setAlignment(Pos.CENTER_RIGHT);
+//                this.gridPane.add(hBox, 1, grid);
+
+                break;
+
             case AboXml.ABO_MIN_DURATION:
                 initDur();
                 this.gridPane.add(pRangeBoxTime, 1, grid);
@@ -439,6 +456,55 @@ public class AboEditDialogController extends PDialogExtra {
         pRangeBoxTime.setValuePrefix("");
     }
 
+    private void initDays() {
+        slDays.setMin(FilmFilter.FILTER_DAYS_MIN_VALUE);
+        slDays.setMax(FilmFilter.FILTER_DAYS_MAX_VALUE);
+        slDays.setShowTickLabels(true);
+        slDays.setMajorTickUnit(10);
+        slDays.setBlockIncrement(5);
+
+        slDays.setLabelFormatter(new StringConverter<>() {
+            @Override
+            public String toString(Double x) {
+                if (x == FilmFilter.FILTER_ALL_DAYS_VALUE) return "alles";
+                return x.intValue() + "";
+            }
+
+            @Override
+            public Double fromString(String string) {
+                return null;
+            }
+        });
+
+        // kein direktes binding wegen: valueChangingProperty, nur melden wenn "steht"
+        slDays.setValue(aboCopy.getTimeRange());
+        slDays.valueChangingProperty().addListener((observable, oldvalue, newvalue) -> {
+                    if (!newvalue) {
+                        aboCopy.setTimeRange((int) slDays.getValue());
+                        cbxEditAll[AboXml.ABO_TIME_RANGE].setSelected(true);
+                    }
+                }
+        );
+
+        slDays.valueProperty().addListener((observable, oldValue, newValue) -> {
+            setLabelSlider();
+        });
+        setLabelSlider();
+    }
+
+    private void setLabelSlider() {
+        final String txtAll = "alles";
+
+        int i = (int) slDays.getValue();
+        String tNr = i + "";
+
+        if (i == FilmFilter.FILTER_ALL_DAYS_VALUE) {
+            lblDays.setText(txtAll);
+        } else {
+            lblDays.setText(tNr + (i == 1 ? " Tag" : " Tagen"));
+        }
+    }
+
     private void setResolution() {
         cbxEditAll[AboXml.ABO_RESOLUTION].setSelected(true);
         if (rbHigh.isSelected()) {
@@ -459,7 +525,6 @@ public class AboEditDialogController extends PDialogExtra {
     }
 
     private void addCheckBoxEditAll(int i, int grid) {
-
         switch (i) {
             case AboXml.ABO_ON:
             case AboXml.ABO_NAME:
@@ -472,6 +537,7 @@ public class AboEditDialogController extends PDialogExtra {
             case AboXml.ABO_TITLE:
             case AboXml.ABO_THEME_TITLE:
             case AboXml.ABO_SOMEWHERE:
+            case AboXml.ABO_TIME_RANGE:
             case AboXml.ABO_MIN_DURATION:
             case AboXml.ABO_DEST_PATH:
                 gridPane.add(cbxEditAll[i], 2, grid);
@@ -483,5 +549,20 @@ public class AboEditDialogController extends PDialogExtra {
                 }
                 break;
         }
+    }
+
+    private void checkOk() {
+        // nur wenn einer geklickt ist, wird auch was geändert -> nur dann macht OK Sinn
+        boolean ok = false;
+        for (int ii = 0; ii < cbxEditAll.length; ++ii) {
+            if (cbxEditAll[ii] == null) {
+                continue;
+            }
+            if (cbxEditAll[ii].isSelected()) {
+                ok = true;
+                break;
+            }
+        }
+        okProp.set(ok);
     }
 }

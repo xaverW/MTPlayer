@@ -20,11 +20,18 @@ import de.mtplayer.mtp.controller.data.abo.Abo;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.mtplayer.mtp.tools.storedFilter.Filter;
-import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
 
 import java.util.regex.Pattern;
 
 public class FilmFilter {
+
+    public static final int FILTER_DURATION_MIN_MINUTE = 0;
+    public static final int FILTER_DURATION_MAX_MINUTE = 150;
+    public static final int FILTER_FILMTIME_MIN_SEC = 0;
+    public static final int FILTER_FILMTIME_MAX_SEC = 24 * 60 * 60; // das ist eigentlich bereits 00:00 vom nächsten Tag!!
+    public static final int FILTER_ALL_DAYS_VALUE = 0;
+    public static final int FILTER_DAYS_MIN_VALUE = 0;
+    public static final int FILTER_DAYS_MAX_VALUE = 60;
 
     public static boolean aboExistsAlready(Abo aboExits, Abo checkAbo) {
         // prüfen ob "aboExistiert" das "aboPrüfen" mit abdeckt, also die gleichen (oder mehr)
@@ -90,12 +97,25 @@ public class FilmFilter {
                                               Filter themeTitle,
                                               Filter title,
                                               Filter somewhere,
+
+                                              int timeRange,
                                               int searchLengthMinute_min,
                                               int searchLengthMinute_max,
+
                                               Film film,
                                               boolean withLength) {
 
 
+        // geht am schnellsten
+        if (timeRange != FilmFilter.FILTER_ALL_DAYS_VALUE && !checkMaxDays(timeRange, film)) {
+            return false;
+        }
+
+        if (withLength && !checkLength(searchLengthMinute_min, searchLengthMinute_max, film.getDurationMinute())) {
+            return false;
+        }
+
+        // brauchen länger
         if (!sender.empty && !checkChannel(sender, film)) {
             return false;
         }
@@ -113,10 +133,6 @@ public class FilmFilter {
         }
 
         if (!somewhere.empty && !checkSomewhere(somewhere, film)) {
-            return false;
-        }
-
-        if (withLength && !checkLength(searchLengthMinute_min, searchLengthMinute_max, film.getDurationMinute())) {
             return false;
         }
 
@@ -176,6 +192,22 @@ public class FilmFilter {
         return true;
     }
 
+    private static boolean checkMaxDays(int maxDays, Film film) {
+        long days = 0;
+        try {
+            if (maxDays == FilmFilter.FILTER_ALL_DAYS_VALUE) {
+                days = 0;
+            } else {
+                final long max = 1000L * 60L * 60L * 24L * maxDays;
+                days = System.currentTimeMillis() - max;
+            }
+        } catch (final Exception ex) {
+            days = 0;
+        }
+
+        return checkDate(days, film);
+    }
+
     public static boolean checkUrl(Filter url, Film film) {
         if (!check(url, film.arr[FilmXml.FILM_WEBSITE])
                 && !check(url, film.arr[FilmXml.FILM_URL])) {
@@ -203,7 +235,7 @@ public class FilmFilter {
     }
 
     public static boolean checkLengthMax(int filterLaenge, long filmLength) {
-        return filterLaenge == SelectedFilter.FILTER_DURATION_MAX_MINUTE || filmLength == 0
+        return filterLaenge == FILTER_DURATION_MAX_MINUTE || filmLength == 0
                 || filmLength <= filterLaenge;
     }
 
@@ -213,7 +245,7 @@ public class FilmFilter {
         }
 
         boolean ret = (timeMin == 0 || filmTime >= timeMin) &&
-                (timeMax == SelectedFilter.FILTER_FILMTIME_MAX_SEC || filmTime <= timeMax);
+                (timeMax == FILTER_FILMTIME_MAX_SEC || filmTime <= timeMax);
 
         if (invert) {
             return !ret;

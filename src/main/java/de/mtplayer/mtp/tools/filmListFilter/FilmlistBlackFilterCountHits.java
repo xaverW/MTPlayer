@@ -20,7 +20,6 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.BlackData;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.Filmlist;
-import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 
 public class FilmlistBlackFilterCountHits {
@@ -53,8 +52,11 @@ public class FilmlistBlackFilterCountHits {
                     blackData.fThemeTitle,
                     blackData.fTitle,
                     blackData.fSomewhere,
-                    0,
-                    SelectedFilter.FILTER_DURATION_MAX_MINUTE,
+
+                    FilmFilter.FILTER_ALL_DAYS_VALUE,
+                    FilmFilter.FILTER_DURATION_MIN_MINUTE,
+                    FilmFilter.FILTER_DURATION_MAX_MINUTE,
+
                     film, false)) {
 
                 blackData.incCountHits();

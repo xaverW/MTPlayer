@@ -176,13 +176,13 @@ public final class SelectedFilter extends SelectedFilterProps {
         setSomewhere("");
         setUrl("");
 
-        setDays(FILTER_DAYS_MAX);
+        setDays(FilmFilter.FILTER_ALL_DAYS_VALUE);
 
         setMinDur(0);
-        setMaxDur(FILTER_DURATION_MAX_MINUTE);
+        setMaxDur(FilmFilter.FILTER_DURATION_MAX_MINUTE);
 
         setMinTime(0);
-        setMaxTime(FILTER_FILMTIME_MAX_SEC);
+        setMaxTime(FilmFilter.FILTER_FILMTIME_MAX_SEC);
 
         setOnlyBookmark(false);
         setOnlyHd(false);
@@ -314,16 +314,16 @@ public final class SelectedFilter extends SelectedFilterProps {
 
         // Länge am Slider in Min
         final int minLengthMinute = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMinDur() : 0;
-        final int maxLengthMinute = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMaxDur() : FILTER_DURATION_MAX_MINUTE;
+        final int maxLengthMinute = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMaxDur() : FilmFilter.FILTER_DURATION_MAX_MINUTE;
 
         // FilmUhrZeit in Sek. von 0:00 Uhr
         final int minTimeSec = selectedFilter.isMinMaxTimeVis() ? selectedFilter.getMinTime() : 0;
-        final int maxTimeSec = selectedFilter.isMinMaxTimeVis() ? selectedFilter.getMaxTime() : FILTER_FILMTIME_MAX_SEC;
+        final int maxTimeSec = selectedFilter.isMinMaxTimeVis() ? selectedFilter.getMaxTime() : FilmFilter.FILTER_FILMTIME_MAX_SEC;
         final boolean minMaxTimeInvert = selectedFilter.isMinMaxTimeInvert();
 
         long days = 0;
         try {
-            if (selectedFilter.getDays() == FILTER_DAYS_MAX) {
+            if (selectedFilter.getDays() == FilmFilter.FILTER_ALL_DAYS_VALUE) {
                 days = 0;
             } else {
                 final long max = 1000L * 60L * 60L * 24L * selectedFilter.getDays();
@@ -389,12 +389,12 @@ public final class SelectedFilter extends SelectedFilterProps {
         if (minLengthMinute != 0) {
             predicate = predicate.and(f -> FilmFilter.checkLengthMin(minLengthMinute, f.getDurationMinute()));
         }
-        if (maxLengthMinute != FILTER_DURATION_MAX_MINUTE) {
+        if (maxLengthMinute != FilmFilter.FILTER_DURATION_MAX_MINUTE) {
             predicate = predicate.and(f -> FilmFilter.checkLengthMax(maxLengthMinute, f.getDurationMinute()));
         }
 
         // Film-Uhrzeit
-        if (minTimeSec != 0 || maxTimeSec != FILTER_FILMTIME_MAX_SEC) {
+        if (minTimeSec != 0 || maxTimeSec != FilmFilter.FILTER_FILMTIME_MAX_SEC) {
             predicate = predicate.and(f -> FilmFilter.checkFilmTime(minTimeSec, maxTimeSec, minMaxTimeInvert, f.filmTime));
         }
 

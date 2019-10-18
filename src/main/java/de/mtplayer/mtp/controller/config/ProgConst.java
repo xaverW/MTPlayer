@@ -110,6 +110,8 @@ public class ProgConst {
 
     public static final int MIN_TABLE_HEIGHT = 250;
 
+    public static final String FILTER_ALL = "alles"; // im config bei "alles" steht das dann
+
 
     public static final String DREISAT = "3Sat";
     public static final String ARD = "ARD";

@@ -19,8 +19,6 @@ package de.mtplayer.mtp.controller.data.abo;
 
 public class AboConstants {
     public static final String ALL = "";
-
     public static final String ABO_ON = "eingeschaltet";
     public static final String ABO_OFF = "ausgeschaltet";
-
 }

@@ -16,6 +16,9 @@
 
 package de.mtplayer.mtp.tools.storedFilter;
 
+import de.mtplayer.mtp.controller.config.ProgConst;
+import de.mtplayer.mtp.tools.filmListFilter.FilmFilter;
+
 public class FilterToXml {
 
 
@@ -40,7 +43,7 @@ public class FilterToXml {
     public static final int FILTER_DAYS_VIS = 15;
     public static final int FILTER_DAYS = 16;
 
-    public static final int FILTER_MIN_MAX_VIS = 17;
+    public static final int FILTER_MIN_MAX_DUR_VIS = 17;
     public static final int FILTER_MIN_DUR = 18;
     public static final int FILTER_MAX_DUR = 19;
 
@@ -141,9 +144,7 @@ public class FilterToXml {
         sf.setUrl(array[FILTER_URL]);
 
         sf.setDaysVis(Boolean.parseBoolean(array[FILTER_DAYS_VIS]));
-
-        sf.setMinMaxDurVis(Boolean.parseBoolean(array[FILTER_MIN_MAX_VIS]));
-
+        sf.setMinMaxDurVis(Boolean.parseBoolean(array[FILTER_MIN_MAX_DUR_VIS]));
         sf.setMinMaxTimeVis(Boolean.parseBoolean(array[FILTER_MIN_MAX_TIME_VIS]));
         sf.setMinMaxTimeInvert(Boolean.parseBoolean(array[FILTER_MIN_MAX_TIME_ON]));
 
@@ -168,22 +169,59 @@ public class FilterToXml {
     }
 
     private static void parsInt(SelectedFilter sf, String[] array) {
-        try {
-            sf.setDays(Integer.parseInt(array[FILTER_DAYS]));
+        // filter days
+        if (array[FILTER_DAYS].equals(ProgConst.FILTER_ALL)) {
+            sf.setDays(FilmFilter.FILTER_ALL_DAYS_VALUE);
+        } else {
+            try {
+                sf.setDays(Integer.parseInt(array[FILTER_DAYS]));
+            } catch (Exception ex) {
+                sf.setDays(FilmFilter.FILTER_ALL_DAYS_VALUE);
+            }
+        }
 
-            sf.setMinDur(Integer.parseInt(array[FILTER_MIN_DUR]));
-            sf.setMaxDur(Integer.parseInt(array[FILTER_MAX_DUR]));
+        // filter minDuration
+        if (array[FILTER_MIN_DUR].equals(ProgConst.FILTER_ALL)) {
+            sf.setMinDur(FilmFilter.FILTER_DURATION_MIN_MINUTE);
+        } else {
+            try {
+                sf.setMinDur(Integer.parseInt(array[FILTER_MIN_DUR]));
+            } catch (Exception ex) {
+                sf.setMinDur(FilmFilter.FILTER_DURATION_MIN_MINUTE);
+            }
+        }
 
-            sf.setMinTime(Integer.parseInt(array[FILTER_MIN_TIME]));
-            sf.setMaxTime(Integer.parseInt(array[FILTER_MAX_TIME]));
-        } catch (Exception ex) {
-            sf.setDays(SelectedFilter.FILTER_DAYS_MAX);
+        // filter maxDuration
+        if (array[FILTER_MAX_DUR].equals(ProgConst.FILTER_ALL)) {
+            sf.setMaxDur(FilmFilter.FILTER_DURATION_MAX_MINUTE);
+        } else {
+            try {
+                sf.setMaxDur(Integer.parseInt(array[FILTER_MAX_DUR]));
+            } catch (Exception ex) {
+                sf.setMaxDur(FilmFilter.FILTER_DURATION_MAX_MINUTE);
+            }
+        }
 
-            sf.setMinDur(0);
-            sf.setMaxDur(SelectedFilter.FILTER_DURATION_MAX_MINUTE);
+        // filter minTime
+        if (array[FILTER_MIN_TIME].equals(ProgConst.FILTER_ALL)) {
+            sf.setMinTime(FilmFilter.FILTER_FILMTIME_MIN_SEC);
+        } else {
+            try {
+                sf.setMinTime(Integer.parseInt(array[FILTER_MIN_TIME]));
+            } catch (Exception ex) {
+                sf.setMinTime(FilmFilter.FILTER_FILMTIME_MIN_SEC);
+            }
+        }
 
-            sf.setMinTime(0);
-            sf.setMaxTime(SelectedFilter.FILTER_FILMTIME_MAX_SEC);
+        // filter maxTime
+        if (array[FILTER_MAX_TIME].equals(ProgConst.FILTER_ALL)) {
+            sf.setMaxTime(FilmFilter.FILTER_FILMTIME_MAX_SEC);
+        } else {
+            try {
+                sf.setMaxTime(Integer.parseInt(array[FILTER_MAX_TIME]));
+            } catch (Exception ex) {
+                sf.setMaxTime(FilmFilter.FILTER_FILMTIME_MAX_SEC);
+            }
         }
     }
 
@@ -209,16 +247,24 @@ public class FilterToXml {
         array[FILTER_URL] = sf.getUrl();
 
         array[FILTER_DAYS_VIS] = String.valueOf(sf.isDaysVis());
-        array[FILTER_DAYS] = String.valueOf(sf.getDays());
+        array[FILTER_DAYS] = sf.getDays() == FilmFilter.FILTER_ALL_DAYS_VALUE ? ProgConst.FILTER_ALL : String.valueOf(sf.getDays());
 
-        array[FILTER_MIN_MAX_VIS] = String.valueOf(sf.isMinMaxDurVis());
-        array[FILTER_MIN_DUR] = String.valueOf(sf.getMinDur());
-        array[FILTER_MAX_DUR] = String.valueOf(sf.getMaxDur());
+//        array[FILTER_MIN_DUR] = String.valueOf(sf.getMinDur());
+//        array[FILTER_MAX_DUR] = String.valueOf(sf.getMaxDur());
+        array[FILTER_MIN_MAX_DUR_VIS] = String.valueOf(sf.isMinMaxDurVis());
+        array[FILTER_MIN_DUR] = sf.getMinDur() == FilmFilter.FILTER_DURATION_MIN_MINUTE ?
+                ProgConst.FILTER_ALL : String.valueOf(sf.getMinDur());
+        array[FILTER_MAX_DUR] = sf.getMaxDur() == FilmFilter.FILTER_DURATION_MAX_MINUTE ?
+                ProgConst.FILTER_ALL : String.valueOf(sf.getMaxDur());
 
+//        array[FILTER_MIN_TIME] = String.valueOf(sf.getMinTime());
+//        array[FILTER_MAX_TIME] = String.valueOf(sf.getMaxTime());
         array[FILTER_MIN_MAX_TIME_VIS] = String.valueOf(sf.isMinMaxTimeVis());
         array[FILTER_MIN_MAX_TIME_ON] = String.valueOf(sf.isMinMaxTimeInvert());
-        array[FILTER_MIN_TIME] = String.valueOf(sf.getMinTime());
-        array[FILTER_MAX_TIME] = String.valueOf(sf.getMaxTime());
+        array[FILTER_MIN_TIME] = sf.getMinTime() == FilmFilter.FILTER_FILMTIME_MIN_SEC ?
+                ProgConst.FILTER_ALL : String.valueOf(sf.getMinTime());
+        array[FILTER_MAX_TIME] = sf.getMaxTime() == FilmFilter.FILTER_FILMTIME_MAX_SEC ?
+                ProgConst.FILTER_ALL : String.valueOf(sf.getMaxTime());
 
         array[FILTER_ONLY_VIS] = String.valueOf(sf.isOnlyVis());
         array[FILTER_ONLY_BOOKMARK] = String.valueOf(sf.isOnlyBookmark());
