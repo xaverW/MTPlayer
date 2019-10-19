@@ -38,7 +38,7 @@ public class AboProps extends AboXml {
     private final StringProperty themeTitle = new SimpleStringProperty("");
     private final StringProperty title = new SimpleStringProperty("");
     private final StringProperty somewhere = new SimpleStringProperty("");
-    private final IntegerProperty timeRange = new SimpleIntegerProperty(FilmFilter.FILTER_ALL_DAYS_VALUE);
+    private final IntegerProperty timeRange = new SimpleIntegerProperty(FilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
     private final IntegerProperty minDurationMinute = new SimpleIntegerProperty(FilmFilter.FILTER_DURATION_MIN_MINUTE); // Minuten
     private final IntegerProperty maxDurationMinute = new SimpleIntegerProperty(FilmFilter.FILTER_DURATION_MAX_MINUTE); //Minuten
     private final StringProperty destination = new SimpleStringProperty("");
@@ -364,7 +364,7 @@ public class AboProps extends AboXml {
         arr[ABO_TITLE] = getTitle();
         arr[ABO_SOMEWHERE] = getSomewhere();
 
-        if (getTimeRange() == FilmFilter.FILTER_ALL_DAYS_VALUE) {
+        if (getTimeRange() == FilmFilter.FILTER_TIME_RANGE_ALL_VALUE) {
             arr[ABO_TIME_RANGE] = ProgConst.FILTER_ALL;
         } else {
             arr[ABO_TIME_RANGE] = String.valueOf(getTimeRange());
@@ -391,7 +391,7 @@ public class AboProps extends AboXml {
         int max;
 
         if (arr[ABO_TIME_RANGE].equals(ProgConst.FILTER_ALL)) {
-            max = FilmFilter.FILTER_ALL_DAYS_VALUE;
+            max = FilmFilter.FILTER_TIME_RANGE_ALL_VALUE;
             setTimeRange(max);
             return;
         }
@@ -399,7 +399,7 @@ public class AboProps extends AboXml {
         try {
             max = Integer.parseInt(arr[ABO_TIME_RANGE]);
         } catch (final Exception ex) {
-            max = FilmFilter.FILTER_ALL_DAYS_VALUE;
+            max = FilmFilter.FILTER_TIME_RANGE_ALL_VALUE;
         }
 
         setTimeRange(max);

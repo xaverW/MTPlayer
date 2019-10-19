@@ -38,8 +38,8 @@ public class SelectedFilterProps {
     private final BooleanProperty urlVis = new SimpleBooleanProperty(false);
     private final StringProperty url = new SimpleStringProperty();
 
-    private final BooleanProperty daysVis = new SimpleBooleanProperty(false);
-    private final IntegerProperty days = new SimpleIntegerProperty(15);
+    private final BooleanProperty timeRangeVis = new SimpleBooleanProperty(false);
+    private final IntegerProperty timeRange = new SimpleIntegerProperty(15);
 
     private final BooleanProperty minMaxDurVis = new SimpleBooleanProperty(true);
     private final IntegerProperty minDur = new SimpleIntegerProperty(0);
@@ -68,11 +68,11 @@ public class SelectedFilterProps {
     private final BooleanProperty blacklistOn = new SimpleBooleanProperty(false);
 
     public BooleanProperty[] sfBooleanPropArr = {channelVis, channelExact, themeVis, themeExact, themeTitleVis,
-            titleVis, somewhereVis, urlVis, daysVis, minMaxDurVis, minMaxTimeVis, minMaxTimeInvert,
+            titleVis, somewhereVis, urlVis, timeRangeVis, minMaxDurVis, minMaxTimeVis, minMaxTimeInvert,
             onlyVis, onlyBookmark, onlyHd, onlyNew, onlyUt, onlyLive, onlyAktHistory, notVis,
             notAbo, notHistory, notDouble, notGeo, notFuture, blacklistOn};
     public StringProperty[] sfStringPropArr = {name, channel, theme, themeTitle, title, somewhere, url};
-    public IntegerProperty[] sfIntegerPropArr = {days, minDur, maxDur, minTime, maxTime};
+    public IntegerProperty[] sfIntegerPropArr = {timeRange, minDur, maxDur, minTime, maxTime};
 
 
     public String getName() {
@@ -257,28 +257,28 @@ public class SelectedFilterProps {
     }
 
 
-    public boolean isDaysVis() {
-        return daysVis.get();
+    public boolean isTimeRangeVis() {
+        return timeRangeVis.get();
     }
 
-    public BooleanProperty daysVisProperty() {
-        return daysVis;
+    public BooleanProperty timeRangeVisProperty() {
+        return timeRangeVis;
     }
 
-    public void setDaysVis(boolean daysVis) {
-        this.daysVis.set(daysVis);
+    public void setTimeRangeVis(boolean timeRangeVis) {
+        this.timeRangeVis.set(timeRangeVis);
     }
 
-    public int getDays() {
-        return days.get();
+    public int getTimeRange() {
+        return timeRange.get();
     }
 
-    public IntegerProperty daysProperty() {
-        return days;
+    public IntegerProperty timeRangeProperty() {
+        return timeRange;
     }
 
-    public void setDays(int days) {
-        this.days.set(days);
+    public void setTimeRange(int timeRange) {
+        this.timeRange.set(timeRange);
     }
 
     public boolean isMinMaxDurVis() {

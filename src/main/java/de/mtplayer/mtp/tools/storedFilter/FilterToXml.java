@@ -40,8 +40,8 @@ public class FilterToXml {
     public static final int FILTER_URL_VIS = 13;
     public static final int FILTER_URL = 14;
 
-    public static final int FILTER_DAYS_VIS = 15;
-    public static final int FILTER_DAYS = 16;
+    public static final int FILTER_TIME_RANGE_VIS = 15;
+    public static final int FILTER_TIME_RANGE = 16;
 
     public static final int FILTER_MIN_MAX_DUR_VIS = 17;
     public static final int FILTER_MIN_DUR = 18;
@@ -143,7 +143,7 @@ public class FilterToXml {
         sf.setUrlVis(Boolean.parseBoolean(array[FILTER_URL_VIS]));
         sf.setUrl(array[FILTER_URL]);
 
-        sf.setDaysVis(Boolean.parseBoolean(array[FILTER_DAYS_VIS]));
+        sf.setTimeRangeVis(Boolean.parseBoolean(array[FILTER_TIME_RANGE_VIS]));
         sf.setMinMaxDurVis(Boolean.parseBoolean(array[FILTER_MIN_MAX_DUR_VIS]));
         sf.setMinMaxTimeVis(Boolean.parseBoolean(array[FILTER_MIN_MAX_TIME_VIS]));
         sf.setMinMaxTimeInvert(Boolean.parseBoolean(array[FILTER_MIN_MAX_TIME_ON]));
@@ -170,13 +170,13 @@ public class FilterToXml {
 
     private static void parsInt(SelectedFilter sf, String[] array) {
         // filter days
-        if (array[FILTER_DAYS].equals(ProgConst.FILTER_ALL)) {
-            sf.setDays(FilmFilter.FILTER_ALL_DAYS_VALUE);
+        if (array[FILTER_TIME_RANGE].equals(ProgConst.FILTER_ALL)) {
+            sf.setTimeRange(FilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
         } else {
             try {
-                sf.setDays(Integer.parseInt(array[FILTER_DAYS]));
+                sf.setTimeRange(Integer.parseInt(array[FILTER_TIME_RANGE]));
             } catch (Exception ex) {
-                sf.setDays(FilmFilter.FILTER_ALL_DAYS_VALUE);
+                sf.setTimeRange(FilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
             }
         }
 
@@ -246,8 +246,8 @@ public class FilterToXml {
         array[FILTER_URL_VIS] = String.valueOf(sf.isUrlVis());
         array[FILTER_URL] = sf.getUrl();
 
-        array[FILTER_DAYS_VIS] = String.valueOf(sf.isDaysVis());
-        array[FILTER_DAYS] = sf.getDays() == FilmFilter.FILTER_ALL_DAYS_VALUE ? ProgConst.FILTER_ALL : String.valueOf(sf.getDays());
+        array[FILTER_TIME_RANGE_VIS] = String.valueOf(sf.isTimeRangeVis());
+        array[FILTER_TIME_RANGE] = sf.getTimeRange() == FilmFilter.FILTER_TIME_RANGE_ALL_VALUE ? ProgConst.FILTER_ALL : String.valueOf(sf.getTimeRange());
 
 //        array[FILTER_MIN_DUR] = String.valueOf(sf.getMinDur());
 //        array[FILTER_MAX_DUR] = String.valueOf(sf.getMaxDur());

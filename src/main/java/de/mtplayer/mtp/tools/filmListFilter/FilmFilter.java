@@ -29,9 +29,9 @@ public class FilmFilter {
     public static final int FILTER_DURATION_MAX_MINUTE = 150;
     public static final int FILTER_FILMTIME_MIN_SEC = 0;
     public static final int FILTER_FILMTIME_MAX_SEC = 24 * 60 * 60; // das ist eigentlich bereits 00:00 vom nächsten Tag!!
-    public static final int FILTER_ALL_DAYS_VALUE = 0;
-    public static final int FILTER_DAYS_MIN_VALUE = 0;
-    public static final int FILTER_DAYS_MAX_VALUE = 60;
+    public static final int FILTER_TIME_RANGE_ALL_VALUE = 0;
+    public static final int FILTER_TIME_RANGE_MIN_VALUE = 0;
+    public static final int FILTER_TIME_RANGE_MAX_VALUE = 60;
 
     public static boolean aboExistsAlready(Abo aboExits, Abo checkAbo) {
         // prüfen ob "aboExistiert" das "aboPrüfen" mit abdeckt, also die gleichen (oder mehr)
@@ -107,7 +107,7 @@ public class FilmFilter {
 
 
         // geht am schnellsten
-        if (timeRange != FilmFilter.FILTER_ALL_DAYS_VALUE && !checkMaxDays(timeRange, film)) {
+        if (timeRange != FilmFilter.FILTER_TIME_RANGE_ALL_VALUE && !checkMaxDays(timeRange, film)) {
             return false;
         }
 
@@ -195,7 +195,7 @@ public class FilmFilter {
     private static boolean checkMaxDays(int maxDays, Film film) {
         long days = 0;
         try {
-            if (maxDays == FilmFilter.FILTER_ALL_DAYS_VALUE) {
+            if (maxDays == FilmFilter.FILTER_TIME_RANGE_ALL_VALUE) {
                 days = 0;
             } else {
                 final long max = 1000L * 60L * 60L * 24L * maxDays;

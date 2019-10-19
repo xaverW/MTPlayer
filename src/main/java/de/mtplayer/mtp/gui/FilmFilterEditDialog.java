@@ -116,10 +116,10 @@ public class FilmFilterEditDialog extends PDialog {
         tglUrl.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().urlVisProperty());
         vbox.getChildren().add(tglUrl);
 
-        PToggleSwitch tglDays = new PToggleSwitch("Zeitraum [Tage]");
-        tglDays.setMaxWidth(Double.MAX_VALUE);
-        tglDays.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().daysVisProperty());
-        vbox.getChildren().add(tglDays);
+        PToggleSwitch tglTimeRange = new PToggleSwitch("Zeitraum [Tage]");
+        tglTimeRange.setMaxWidth(Double.MAX_VALUE);
+        tglTimeRange.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().timeRangeVisProperty());
+        vbox.getChildren().add(tglTimeRange);
 
         PToggleSwitch tglMinMax = new PToggleSwitch("Filmlänge Min/Max [Minuten]");
         tglMinMax.setMaxWidth(Double.MAX_VALUE);

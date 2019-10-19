@@ -241,7 +241,7 @@ public class FilmlistBlackFilter {
                     blackData.fTitle,
                     blackData.fSomewhere,
 
-                    FilmFilter.FILTER_ALL_DAYS_VALUE,
+                    FilmFilter.FILTER_TIME_RANGE_ALL_VALUE,
                     FilmFilter.FILTER_DURATION_MIN_MINUTE,
                     FilmFilter.FILTER_DURATION_MAX_MINUTE,
 

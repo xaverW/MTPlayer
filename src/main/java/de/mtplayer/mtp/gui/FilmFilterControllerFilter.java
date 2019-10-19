@@ -31,8 +31,8 @@ import javafx.util.StringConverter;
 
 public class FilmFilterControllerFilter extends VBox {
 
-    private final Slider slDays = new Slider();
-    private final Label lblDays = new Label();
+    private final Slider slTimeRange = new Slider();
+    private final Label lblTimeRange = new Label();
 
     private final PRangeBox slDur = new PRangeBox(0, FilmFilter.FILTER_DURATION_MAX_MINUTE);
     private final Label lblDur = new Label("Filmlänge:");
@@ -82,7 +82,6 @@ public class FilmFilterControllerFilter extends VBox {
 
         // Slider
         addSlider();
-
 
         // CheckOnOff
         addCheckFilter();
@@ -179,16 +178,16 @@ public class FilmFilterControllerFilter extends VBox {
     }
 
     private void initDaysFilter() {
-        slDays.setMin(FilmFilter.FILTER_DAYS_MIN_VALUE);
-        slDays.setMax(FilmFilter.FILTER_DAYS_MAX_VALUE);
-        slDays.setShowTickLabels(true);
-        slDays.setMajorTickUnit(10);
-        slDays.setBlockIncrement(5);
+        slTimeRange.setMin(FilmFilter.FILTER_TIME_RANGE_MIN_VALUE);
+        slTimeRange.setMax(FilmFilter.FILTER_TIME_RANGE_MAX_VALUE);
+        slTimeRange.setShowTickLabels(true);
+        slTimeRange.setMajorTickUnit(10);
+        slTimeRange.setBlockIncrement(5);
 
-        slDays.setLabelFormatter(new StringConverter<>() {
+        slTimeRange.setLabelFormatter(new StringConverter<>() {
             @Override
             public String toString(Double x) {
-                if (x == FilmFilter.FILTER_ALL_DAYS_VALUE) return "alles";
+                if (x == FilmFilter.FILTER_TIME_RANGE_ALL_VALUE) return "alles";
 
                 return x.intValue() + "";
             }
@@ -199,20 +198,20 @@ public class FilmFilterControllerFilter extends VBox {
             }
         });
 
-        slDays.valueProperty().addListener(l -> {
+        slTimeRange.valueProperty().addListener(l -> {
             setLabelSlider();
         });
 
         // kein direktes binding wegen: valueChangingProperty, nur melden wenn "steht"
-        slDays.setValue(progData.storedFilters.getActFilterSettings().getDays());
+        slTimeRange.setValue(progData.storedFilters.getActFilterSettings().getTimeRange());
         setLabelSlider();
 
-        progData.storedFilters.getActFilterSettings().daysProperty().addListener(
-                l -> slDays.setValue(progData.storedFilters.getActFilterSettings().getDays()));
+        progData.storedFilters.getActFilterSettings().timeRangeProperty().addListener(
+                l -> slTimeRange.setValue(progData.storedFilters.getActFilterSettings().getTimeRange()));
 
-        slDays.valueChangingProperty().addListener((observable, oldvalue, newvalue) -> {
+        slTimeRange.valueChangingProperty().addListener((observable, oldvalue, newvalue) -> {
                     if (!newvalue) {
-                        progData.storedFilters.getActFilterSettings().setDays((int) slDays.getValue());
+                        progData.storedFilters.getActFilterSettings().setTimeRange((int) slTimeRange.getValue());
                     }
                 }
         );
@@ -240,9 +239,9 @@ public class FilmFilterControllerFilter extends VBox {
 
         // Tage
         VBox vBox = new VBox(3);
-        vBox.getChildren().addAll(lblDays, slDays);
-        vBox.visibleProperty().bind(progData.storedFilters.getActFilterSettings().daysVisProperty());
-        vBox.managedProperty().bind(progData.storedFilters.getActFilterSettings().daysVisProperty());
+        vBox.getChildren().addAll(lblTimeRange, slTimeRange);
+        vBox.visibleProperty().bind(progData.storedFilters.getActFilterSettings().timeRangeVisProperty());
+        vBox.managedProperty().bind(progData.storedFilters.getActFilterSettings().timeRangeVisProperty());
         getChildren().addAll(vBox);
 
         // MinMax Dauer
@@ -290,13 +289,13 @@ public class FilmFilterControllerFilter extends VBox {
     private void setLabelSlider() {
         final String txtAll = "alles";
 
-        int i = (int) slDays.getValue();
+        int i = (int) slTimeRange.getValue();
         String tNr = i + "";
 
-        if (i == FilmFilter.FILTER_ALL_DAYS_VALUE) {
-            lblDays.setText("Zeitraum: " + txtAll);
+        if (i == FilmFilter.FILTER_TIME_RANGE_ALL_VALUE) {
+            lblTimeRange.setText("Zeitraum: " + txtAll);
         } else {
-            lblDays.setText("Zeitraum: " + tNr + (i == 1 ? " Tag" : " Tage"));
+            lblTimeRange.setText("Zeitraum: " + tNr + (i == 1 ? " Tag" : " Tage"));
         }
     }
 }

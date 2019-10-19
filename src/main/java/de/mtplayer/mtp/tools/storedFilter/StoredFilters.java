@@ -208,8 +208,8 @@ public final class StoredFilters {
         actFilterSettings.setMinDur(abo.getMinDurationMinute());
         actFilterSettings.setMaxDur(abo.getMaxDurationMinute());
 
-        actFilterSettings.setDaysVis(true);
-        actFilterSettings.setDays(abo.getTimeRange());
+        actFilterSettings.setTimeRangeVis(true);
+        actFilterSettings.setTimeRange(abo.getTimeRange());
 
         postFilterChange();
         actFilterSettings.filterChangeProperty().addListener(filterChangeListener);

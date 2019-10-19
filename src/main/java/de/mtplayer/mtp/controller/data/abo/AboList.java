@@ -149,7 +149,7 @@ public class AboList extends SimpleListProperty<Abo> {
         final String title = selectedFilter.isTitleVis() ? selectedFilter.getTitle() : "";
         final String themeTitle = selectedFilter.isThemeTitleVis() ? selectedFilter.getThemeTitle() : "";
         final String somewhere = selectedFilter.isSomewhereVis() ? selectedFilter.getSomewhere() : "";
-        final int timeRange = selectedFilter.isDaysVis() ? selectedFilter.getDays() : FilmFilter.FILTER_ALL_DAYS_VALUE;
+        final int timeRange = selectedFilter.isTimeRangeVis() ? selectedFilter.getTimeRange() : FilmFilter.FILTER_TIME_RANGE_ALL_VALUE;
         final int minDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMinDur() : FilmFilter.FILTER_DURATION_MIN_MINUTE;
         final int maxDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMaxDur() : FilmFilter.FILTER_DURATION_MAX_MINUTE;
 

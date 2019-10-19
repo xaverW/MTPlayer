@@ -44,8 +44,8 @@ public class SelectedFilterFactory {
         sfTo.setUrlVis(sfFrom.isUrlVis());
         sfTo.setUrl(sfFrom.getUrl());
 
-        sfTo.setDaysVis(sfFrom.isDaysVis());
-        sfTo.setDays(sfFrom.getDays());
+        sfTo.setTimeRangeVis(sfFrom.isTimeRangeVis());
+        sfTo.setTimeRange(sfFrom.getTimeRange());
 
         sfTo.setMinMaxDurVis(sfFrom.isMinMaxDurVis());
         sfTo.setMinDur(sfFrom.getMinDur());
@@ -120,8 +120,8 @@ public class SelectedFilterFactory {
         list.add("getUrl " + sf.getUrl());
 
         list.add("");
-        list.add("isDaysVis " + sf.isDaysVis());
-        list.add("getDays" + sf.getDays());
+        list.add("isTimeRangeVis " + sf.isTimeRangeVis());
+        list.add("getTimeRange" + sf.getTimeRange());
 
         list.add("");
         list.add("isMinMaxDurVis " + sf.isMinMaxDurVis());

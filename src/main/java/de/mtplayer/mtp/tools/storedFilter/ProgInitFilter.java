@@ -39,8 +39,8 @@ public class ProgInitFilter {
         sf.setSomewhereVis(false);
         sf.setUrlVis(false);
 
-        sf.setDaysVis(true);
-        sf.setDays(FilmFilter.FILTER_ALL_DAYS_VALUE);
+        sf.setTimeRangeVis(true);
+        sf.setTimeRange(FilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
 
         sf.setMinMaxDurVis(false);
         sf.setMinDur(0);
@@ -84,8 +84,8 @@ public class ProgInitFilter {
         sf.setSomewhereVis(false);
         sf.setUrlVis(false);
 
-        sf.setDaysVis(true);
-        sf.setDays(10);
+        sf.setTimeRangeVis(true);
+        sf.setTimeRange(10);
 
         sf.setMinMaxDurVis(false);
         sf.setMinDur(0);
@@ -128,8 +128,8 @@ public class ProgInitFilter {
         sf.setSomewhereVis(false);
         sf.setUrlVis(false);
 
-        sf.setDaysVis(true);
-        sf.setDays(FilmFilter.FILTER_ALL_DAYS_VALUE);
+        sf.setTimeRangeVis(true);
+        sf.setTimeRange(FilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
 
         sf.setMinMaxDurVis(false);
         sf.setMinDur(0);
@@ -173,8 +173,8 @@ public class ProgInitFilter {
         sf.setSomewhereVis(false);
         sf.setUrlVis(false);
 
-        sf.setDaysVis(true);
-        sf.setDays(15);
+        sf.setTimeRangeVis(true);
+        sf.setTimeRange(15);
 
         sf.setMinMaxDurVis(true);
         sf.setMinDur(0);
@@ -218,8 +218,8 @@ public class ProgInitFilter {
         sf.setSomewhereVis(false);
         sf.setUrlVis(false);
 
-        sf.setDaysVis(true);
-        sf.setDays(FilmFilter.FILTER_ALL_DAYS_VALUE);
+        sf.setTimeRangeVis(true);
+        sf.setTimeRange(FilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
 
         sf.setMinMaxDurVis(true);
         sf.setMinDur(0);
@@ -264,8 +264,8 @@ public class ProgInitFilter {
         sf.setSomewhereVis(false);
         sf.setUrlVis(false);
 
-        sf.setDaysVis(true);
-        sf.setDays(FilmFilter.FILTER_ALL_DAYS_VALUE);
+        sf.setTimeRangeVis(true);
+        sf.setTimeRange(FilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
 
         sf.setMinMaxDurVis(false);
         sf.setMinDur(0);
@@ -309,8 +309,8 @@ public class ProgInitFilter {
         sf.setSomewhereVis(false);
         sf.setUrlVis(false);
 
-        sf.setDaysVis(true);
-        sf.setDays(FilmFilter.FILTER_ALL_DAYS_VALUE);
+        sf.setTimeRangeVis(true);
+        sf.setTimeRange(FilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
 
         sf.setMinMaxDurVis(false);
         sf.setMinDur(0);
@@ -354,8 +354,8 @@ public class ProgInitFilter {
         sf.setSomewhereVis(false);
         sf.setUrlVis(false);
 
-        sf.setDaysVis(true);
-        sf.setDays(FilmFilter.FILTER_ALL_DAYS_VALUE);
+        sf.setTimeRangeVis(true);
+        sf.setTimeRange(FilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
 
         sf.setMinMaxDurVis(false);
         sf.setMinDur(0);
@@ -402,8 +402,8 @@ public class ProgInitFilter {
         sf.setSomewhere("Krimi,Thriller,Tatort,Film");
         sf.setUrlVis(false);
 
-        sf.setDaysVis(true);
-        sf.setDays(10);
+        sf.setTimeRangeVis(true);
+        sf.setTimeRange(10);
 
         sf.setMinMaxDurVis(true);
         sf.setMinDur(40);
@@ -449,8 +449,8 @@ public class ProgInitFilter {
         sf.setSomewhere("");
         sf.setUrlVis(false);
 
-        sf.setDaysVis(true);
-        sf.setDays(10);
+        sf.setTimeRangeVis(true);
+        sf.setTimeRange(10);
 
         sf.setMinMaxDurVis(true);
         sf.setMinDur(20);

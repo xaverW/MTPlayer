@@ -55,8 +55,8 @@ public class AboEditDialogController extends PDialogExtra {
     private final ComboBox<SetData> cboSetData = new ComboBox<>();
     private final ComboBox<String> cboChannel = new ComboBox<>();
     private final ComboBox<String> cboDestination = new ComboBox<>();
-    private final Slider slDays = new Slider();
-    private final Label lblDays = new Label();
+    private final Slider slTimeRange = new Slider();
+    private final Label lblTimeRange = new Label();
     private final PRangeBox pRangeBoxTime = new PRangeBox(0, FilmFilter.FILTER_DURATION_MAX_MINUTE);
     private final CheckBox cbxOn = new CheckBox();
     private final Label[] lbl = new Label[AboXml.MAX_ELEM];
@@ -220,7 +220,6 @@ public class AboEditDialogController extends PDialogExtra {
             }
         }
 
-        checkOk();
         btnOk.requestFocus();
     }
 
@@ -411,15 +410,15 @@ public class AboEditDialogController extends PDialogExtra {
                 break;
 
             case AboXml.ABO_TIME_RANGE:
-                initDays();
+                initTimeRange();
 
                 VBox vBox = new VBox(0);
                 vBox.setPadding(new Insets(5));
 
                 HBox hBox = new HBox();
-                hBox.getChildren().add(lblDays);
+                hBox.getChildren().add(lblTimeRange);
                 hBox.setAlignment(Pos.CENTER_RIGHT);
-                vBox.getChildren().addAll(slDays, hBox);
+                vBox.getChildren().addAll(slTimeRange, hBox);
                 this.gridPane.add(vBox, 1, grid);
 
 //                HBox hBox = new HBox(10);
@@ -456,17 +455,17 @@ public class AboEditDialogController extends PDialogExtra {
         pRangeBoxTime.setValuePrefix("");
     }
 
-    private void initDays() {
-        slDays.setMin(FilmFilter.FILTER_DAYS_MIN_VALUE);
-        slDays.setMax(FilmFilter.FILTER_DAYS_MAX_VALUE);
-        slDays.setShowTickLabels(true);
-        slDays.setMajorTickUnit(10);
-        slDays.setBlockIncrement(5);
+    private void initTimeRange() {
+        slTimeRange.setMin(FilmFilter.FILTER_TIME_RANGE_MIN_VALUE);
+        slTimeRange.setMax(FilmFilter.FILTER_TIME_RANGE_MAX_VALUE);
+        slTimeRange.setShowTickLabels(true);
+        slTimeRange.setMajorTickUnit(10);
+        slTimeRange.setBlockIncrement(5);
 
-        slDays.setLabelFormatter(new StringConverter<>() {
+        slTimeRange.setLabelFormatter(new StringConverter<>() {
             @Override
             public String toString(Double x) {
-                if (x == FilmFilter.FILTER_ALL_DAYS_VALUE) return "alles";
+                if (x == FilmFilter.FILTER_TIME_RANGE_ALL_VALUE) return "alles";
                 return x.intValue() + "";
             }
 
@@ -477,16 +476,16 @@ public class AboEditDialogController extends PDialogExtra {
         });
 
         // kein direktes binding wegen: valueChangingProperty, nur melden wenn "steht"
-        slDays.setValue(aboCopy.getTimeRange());
-        slDays.valueChangingProperty().addListener((observable, oldvalue, newvalue) -> {
+        slTimeRange.setValue(aboCopy.getTimeRange());
+        slTimeRange.valueChangingProperty().addListener((observable, oldvalue, newvalue) -> {
                     if (!newvalue) {
-                        aboCopy.setTimeRange((int) slDays.getValue());
+                        aboCopy.setTimeRange((int) slTimeRange.getValue());
                         cbxEditAll[AboXml.ABO_TIME_RANGE].setSelected(true);
                     }
                 }
         );
 
-        slDays.valueProperty().addListener((observable, oldValue, newValue) -> {
+        slTimeRange.valueProperty().addListener((observable, oldValue, newValue) -> {
             setLabelSlider();
         });
         setLabelSlider();
@@ -495,13 +494,13 @@ public class AboEditDialogController extends PDialogExtra {
     private void setLabelSlider() {
         final String txtAll = "alles";
 
-        int i = (int) slDays.getValue();
+        int i = (int) slTimeRange.getValue();
         String tNr = i + "";
 
-        if (i == FilmFilter.FILTER_ALL_DAYS_VALUE) {
-            lblDays.setText(txtAll);
+        if (i == FilmFilter.FILTER_TIME_RANGE_ALL_VALUE) {
+            lblTimeRange.setText(txtAll);
         } else {
-            lblDays.setText(tNr + (i == 1 ? " Tag" : " Tagen"));
+            lblTimeRange.setText(tNr + (i == 1 ? " Tag" : " Tagen"));
         }
     }
 

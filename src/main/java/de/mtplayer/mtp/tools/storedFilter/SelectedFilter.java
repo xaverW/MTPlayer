@@ -89,7 +89,7 @@ public final class SelectedFilter extends SelectedFilterProps {
         setSomewhereVis(false);
         setUrlVis(false);
 
-        setDaysVis(true);
+        setTimeRangeVis(true);
         setMinMaxDurVis(true);
         setMinMaxTimeVis(false);
         setMinMaxTimeInvert(false);
@@ -124,8 +124,8 @@ public final class SelectedFilter extends SelectedFilterProps {
         urlVisProperty().addListener(l -> reportFilterChange());
         urlProperty().addListener(l -> reportFilterChange());
 
-        daysVisProperty().addListener(l -> reportFilterChange());
-        daysProperty().addListener(l -> reportFilterChange());
+        timeRangeVisProperty().addListener(l -> reportFilterChange());
+        timeRangeProperty().addListener(l -> reportFilterChange());
 
         minMaxDurVisProperty().addListener((observable, oldValue, newValue) -> reportFilterChange());
         minDurProperty().addListener(l -> reportFilterChange());
@@ -176,7 +176,7 @@ public final class SelectedFilter extends SelectedFilterProps {
         setSomewhere("");
         setUrl("");
 
-        setDays(FilmFilter.FILTER_ALL_DAYS_VALUE);
+        setTimeRange(FilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
 
         setMinDur(0);
         setMaxDur(FilmFilter.FILTER_DURATION_MAX_MINUTE);
@@ -209,7 +209,7 @@ public final class SelectedFilter extends SelectedFilterProps {
         setSomewhereVis(false);
         setUrlVis(false);
 
-        setDaysVis(false);
+        setTimeRangeVis(false);
         setMinMaxDurVis(false);
         setMinMaxTimeVis(false);
 
@@ -323,16 +323,16 @@ public final class SelectedFilter extends SelectedFilterProps {
 
         long days = 0;
         try {
-            if (selectedFilter.getDays() == FilmFilter.FILTER_ALL_DAYS_VALUE) {
+            if (selectedFilter.getTimeRange() == FilmFilter.FILTER_TIME_RANGE_ALL_VALUE) {
                 days = 0;
             } else {
-                final long max = 1000L * 60L * 60L * 24L * selectedFilter.getDays();
+                final long max = 1000L * 60L * 60L * 24L * selectedFilter.getTimeRange();
                 days = System.currentTimeMillis() - max;
             }
         } catch (final Exception ex) {
             days = 0;
         }
-        if (!selectedFilter.isDaysVis()) {
+        if (!selectedFilter.isTimeRangeVis()) {
             days = 0;
         }
 
