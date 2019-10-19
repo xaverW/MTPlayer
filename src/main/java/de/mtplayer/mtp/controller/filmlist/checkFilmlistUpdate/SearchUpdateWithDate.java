@@ -175,7 +175,7 @@ public class SearchUpdateWithDate {
     private boolean isTheListNewer() {
         if (aktDate.equals(genDateLocalTime)) {
             // dann gibts nur die gleiche Liste
-            list.add("-> Filmliste online ist die selbe");
+            list.add("-> Filmliste online ist nicht aktueller");
             return false;
         }
 

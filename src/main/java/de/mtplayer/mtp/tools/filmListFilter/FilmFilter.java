@@ -31,7 +31,7 @@ public class FilmFilter {
     public static final int FILTER_FILMTIME_MAX_SEC = 24 * 60 * 60; // das ist eigentlich bereits 00:00 vom nächsten Tag!!
     public static final int FILTER_TIME_RANGE_ALL_VALUE = 0;
     public static final int FILTER_TIME_RANGE_MIN_VALUE = 0;
-    public static final int FILTER_TIME_RANGE_MAX_VALUE = 60;
+    public static final int FILTER_TIME_RANGE_MAX_VALUE = 50;
 
     public static boolean aboExistsAlready(Abo aboExits, Abo checkAbo) {
         // prüfen ob "aboExistiert" das "aboPrüfen" mit abdeckt, also die gleichen (oder mehr)

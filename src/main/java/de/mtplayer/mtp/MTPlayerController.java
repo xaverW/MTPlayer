@@ -17,6 +17,7 @@
 package de.mtplayer.mtp;
 
 import de.mtplayer.mtp.controller.ProgQuit;
+import de.mtplayer.mtp.controller.ProgSave;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
@@ -198,7 +199,10 @@ public class MTPlayerController extends StackPane {
                 MTPTester mtpTester = new MTPTester(progData);
                 mtpTester.showDialog();
             });
-            mHelp.getItems().addAll(new SeparatorMenuItem(), miDebug);
+            final MenuItem miSave = new MenuItem("alles Speichern");
+            miSave.setOnAction(a -> new ProgSave().saveAll());
+
+            mHelp.getItems().addAll(new SeparatorMenuItem(), miDebug, miSave);
         }
 
         menuButton.setTooltip(new Tooltip("Programmeinstellungen anzeigen"));

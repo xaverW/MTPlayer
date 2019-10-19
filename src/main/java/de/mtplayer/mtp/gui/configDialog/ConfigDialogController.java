@@ -68,6 +68,7 @@ public class ConfigDialogController extends PDialog {
     public void make() {
         stage = getStage();
         btnOk.setOnAction(a -> close());
+        ProgConfig.SYSTEM_DARK_THEME.getStringProperty().addListener((u, o, n) -> updateCss());
         initPanel();
     }
 
