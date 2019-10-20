@@ -97,9 +97,10 @@ public class FilmFilterControllerFilter extends VBox {
             if (oldValue != null && newValue != null) {
                 // wenn Änderung beim Sender -> Themen anpassen
                 if (newValue.isEmpty()) {
-                    progData.worker.getTheme("");
+                    progData.worker.createThemeList("");
                 } else {
-                    progData.worker.getTheme(newValue);
+                    cbxTheme.getSelectionModel().select("");
+                    progData.worker.createThemeList(newValue);
                 }
             }
         });
@@ -107,9 +108,10 @@ public class FilmFilterControllerFilter extends VBox {
             if (oldValue != null && newValue != null) {
                 // wenn Änderung beim Sender -> Themen anpassen
                 if (newValue.isEmpty()) {
-                    progData.worker.getTheme("");
+                    progData.worker.createThemeList("");
                 } else {
-                    progData.worker.getTheme(newValue);
+                    cbxTheme.getSelectionModel().select("");
+                    progData.worker.createThemeList(newValue);
                 }
                 progData.storedFilters.getActFilterSettings().setChannel(newValue);
             }
@@ -181,6 +183,7 @@ public class FilmFilterControllerFilter extends VBox {
         slTimeRange.setMin(FilmFilter.FILTER_TIME_RANGE_MIN_VALUE);
         slTimeRange.setMax(FilmFilter.FILTER_TIME_RANGE_MAX_VALUE);
         slTimeRange.setShowTickLabels(true);
+
         slTimeRange.setMajorTickUnit(10);
         slTimeRange.setBlockIncrement(5);
 
@@ -198,16 +201,18 @@ public class FilmFilterControllerFilter extends VBox {
             }
         });
 
-        slTimeRange.valueProperty().addListener(l -> {
-            setLabelSlider();
-        });
-
-        // kein direktes binding wegen: valueChangingProperty, nur melden wenn "steht"
         slTimeRange.setValue(progData.storedFilters.getActFilterSettings().getTimeRange());
         setLabelSlider();
-
         progData.storedFilters.getActFilterSettings().timeRangeProperty().addListener(
                 l -> slTimeRange.setValue(progData.storedFilters.getActFilterSettings().getTimeRange()));
+
+        // kein direktes binding wegen: valueChangingProperty, nur melden wenn "steht"
+        slTimeRange.valueProperty().addListener((o, oldV, newV) -> {
+            setLabelSlider();
+            if (!slTimeRange.isValueChanging()) {
+                progData.storedFilters.getActFilterSettings().setTimeRange((int) slTimeRange.getValue());
+            }
+        });
 
         slTimeRange.valueChangingProperty().addListener((observable, oldvalue, newvalue) -> {
                     if (!newvalue) {

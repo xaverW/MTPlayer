@@ -58,12 +58,8 @@ public final class StoredFilters {
         return filterChange;
     }
 
-    private boolean isFilterChange() {
-        return filterChange.get();
-    }
-
-    private void setFilterChange(boolean filterChange) {
-        this.filterChange.set(filterChange);
+    private void setFilterChange() {
+        this.filterChange.set(!filterChange.get());
     }
 
     /**
@@ -265,13 +261,13 @@ public final class StoredFilters {
 
 
     private void postFilterChange() {
-        setFilterChange(!isFilterChange());
+        setFilterChange();
     }
 
     private void postBlacklistChange() {
         // dann hat sich auch Blacklist-ein/aus geändert
         progData.filmlist.filterList();
-        setFilterChange(!isFilterChange());
+        setFilterChange();
     }
 
 }

@@ -112,7 +112,7 @@ public class Worker {
     private void resetFilter() {
         SelectedFilterFactory.copyFilter(sfTemp, progData.storedFilters.getActFilterSettings());
         ProgConfig.FILTER_DOWNLOAD_CHANNEL.setValue(downloadFilterChannel);
-        ProgConfig.FILTER_DOWNLOAD_ABO.setValue(downloadFilterAbo);
+        ProgConfig.FILTER_DOWNLOAD_ABO.setValue(downloadFilterAbo); // todo ???
         ProgConfig.FILTER_ABO_CHANNEL.setValue(aboFilterChannel);
     }
 
@@ -164,10 +164,10 @@ public class Worker {
 
     private void createChannelAndThemeList() {
         allChannelList.setAll(Arrays.asList(progData.filmlist.sender));
-        getTheme("");
+        createThemeList("");
     }
 
-    public void getTheme(String sender) {
+    public void createThemeList(String sender) {
         // toDo geht vielleicht besser??
         final ArrayList<String> theme = new ArrayList<>();
         if (sender.isEmpty()) {
@@ -176,7 +176,7 @@ public class Worker {
             makeTheme(sender.trim(), theme);
         }
 
-        Platform.runLater(() -> {
+        Platform.runLater(() -> { // todo brauchts da nicht??
             saveFilter();
             themeForChannelList.setAll(theme);
             resetFilter();

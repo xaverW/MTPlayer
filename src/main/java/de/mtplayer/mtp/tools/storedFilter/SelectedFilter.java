@@ -321,7 +321,7 @@ public final class SelectedFilter extends SelectedFilterProps {
         final int maxTimeSec = selectedFilter.isMinMaxTimeVis() ? selectedFilter.getMaxTime() : FilmFilter.FILTER_FILMTIME_MAX_SEC;
         final boolean minMaxTimeInvert = selectedFilter.isMinMaxTimeInvert();
 
-        long days = 0;
+        long days;
         try {
             if (selectedFilter.getTimeRange() == FilmFilter.FILTER_TIME_RANGE_ALL_VALUE) {
                 days = 0;
