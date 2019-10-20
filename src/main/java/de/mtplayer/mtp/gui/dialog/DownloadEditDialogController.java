@@ -216,18 +216,7 @@ public class DownloadEditDialogController extends PDialogExtra {
             size = fileSize_high;
         }
 
-        if (download.getArt().equals(DownloadConstants.ART_PROGRAM) && download.getSetData() != null) {
-            // muss noch der Programmaufruf neu gebaut werden
-            final Download d = new Download(download.getSetData(), download.getFilm(), download.getSource(), download.getAbo(),
-                    download.getDestFileName(),
-                    download.getDestPath(), res);
-
-            download.setProgramCall(d.getProgramCall());
-            download.setProgramCallArray(d.getProgramCallArray());
-            txt[DownloadXml.DOWNLOAD_PROGRAM_CALL].setText(download.getProgramCall());
-            txt[DownloadXml.DOWNLOAD_PROGRAM_CALL_ARRAY].setText(download.getProgramCallArray());
-        }
-
+        resetDownloadCallForProgramm();
         download.setSizeDownloadFromWeb(size);
     }
 
@@ -313,7 +302,19 @@ public class DownloadEditDialogController extends PDialogExtra {
             // nur bei Downloads über ein Programm
 
             gridPane.add(lbl[DownloadXml.DOWNLOAD_PROGRAM_CALL_ARRAY], 0, row);
+
+            Tooltip t = new Tooltip();
+            t.setWrapText(true);
+            t.setPrefWidth(800);
+            t.textProperty().bind(txt[DownloadXml.DOWNLOAD_PROGRAM_CALL].textProperty());
+            txt[DownloadXml.DOWNLOAD_PROGRAM_CALL].setTooltip(t);
             txt[DownloadXml.DOWNLOAD_PROGRAM_CALL].setEditable(!isStarted);
+
+            t = new Tooltip();
+            t.setWrapText(true);
+            t.setPrefWidth(800);
+            t.textProperty().bind(txt[DownloadXml.DOWNLOAD_PROGRAM_CALL_ARRAY].textProperty());
+            txt[DownloadXml.DOWNLOAD_PROGRAM_CALL_ARRAY].setTooltip(t);
             txt[DownloadXml.DOWNLOAD_PROGRAM_CALL_ARRAY].setEditable(!isStarted);
 
             if (download.getProgramCallArray().isEmpty()) {
@@ -358,7 +359,6 @@ public class DownloadEditDialogController extends PDialogExtra {
     }
 
     private int initPath(int row) {
-
         txt[DownloadXml.DOWNLOAD_DEST_PATH].setEditable(!isStarted); // für die LabelFarbe
         txt[DownloadXml.DOWNLOAD_DEST_PATH].setText(download.getDestPath());
         gridPane.add(lbl[DownloadXml.DOWNLOAD_DEST_PATH], 0, row);
@@ -385,13 +385,12 @@ public class DownloadEditDialogController extends PDialogExtra {
         }
 
         cbPath.valueProperty().addListener((observable, oldValue, newValue) -> {
-
             final String s = cbPath.getSelectionModel().getSelectedItem();
+            resetDownloadCallForProgramm();
             DownloadTools.calculateAndCheckDiskSpace(download, s, lblSizeFree);
         });
 
         DownloadTools.calculateAndCheckDiskSpace(download, cbPath.getSelectionModel().getSelectedItem(), lblSizeFree);
-
         return row;
     }
 
@@ -411,6 +410,8 @@ public class DownloadEditDialogController extends PDialogExtra {
             } else {
                 txt[DownloadXml.DOWNLOAD_DEST_FILE_NAME].setStyle("");
             }
+
+            resetDownloadCallForProgramm();
         });
 
         return row;
@@ -670,5 +671,29 @@ public class DownloadEditDialogController extends PDialogExtra {
             lbl[i].setTextFill(Color.BLUE);
         }
         return row;
+    }
+
+    private void resetDownloadCallForProgramm() {
+        if (download.getArt().equals(DownloadConstants.ART_PROGRAM) && download.getSetData() != null) {
+            // muss noch der Programmaufruf neu gebaut werden
+            final String res;
+            if (rbHd.isSelected()) {
+                res = Film.RESOLUTION_HD;
+            } else if (rbSmall.isSelected()) {
+                res = Film.RESOLUTION_SMALL;
+            } else {
+                res = Film.RESOLUTION_NORMAL;
+            }
+
+            download.setPathName(cbPath.getSelectionModel().getSelectedItem(), txt[DownloadXml.DOWNLOAD_DEST_FILE_NAME].getText());
+            final Download d = new Download(download.getSetData(), download.getFilm(), download.getSource(), download.getAbo(),
+                    download.getDestFileName(),
+                    download.getDestPath(), res);
+
+            download.setProgramCall(d.getProgramCall());
+            download.setProgramCallArray(d.getProgramCallArray());
+            txt[DownloadXml.DOWNLOAD_PROGRAM_CALL].setText(download.getProgramCall());
+            txt[DownloadXml.DOWNLOAD_PROGRAM_CALL_ARRAY].setText(download.getProgramCallArray());
+        }
     }
 }
