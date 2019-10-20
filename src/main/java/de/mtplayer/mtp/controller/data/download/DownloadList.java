@@ -57,10 +57,10 @@ public class DownloadList extends SimpleListProperty<Download> {
 
     public synchronized void initDownloads() {
         this.stream().forEach(download -> {
-            //ist bei gespeiherten Downloads der Fall
+            //ist bei gespeicherten Downloads der Fall
             SetData setData = progData.setDataList.getSetDataForDownloads(download.getSetDataId());
             if (setData != null) { //todo und dann??
-                download.setSetData(setData);
+                download.setSetData(setData, false);
             }
         });
     }

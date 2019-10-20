@@ -57,7 +57,7 @@ public final class Download extends DownloadProps {
                     String resolution) {
 
         setFilm(film);
-        setSetData(setData);
+        setSetData(setData, true);
         setAbo(abo);
         setSource(source);
 
@@ -306,12 +306,16 @@ public final class Download extends DownloadProps {
         return setData;
     }
 
-    public void setSetData(SetData setData) {
+    public void setSetData(SetData setData, boolean initSetData) {
         this.setData = setData;
-
-        setInfoFile(setData.isInfoFile());
-        setSubtitle(setData.isSubtitle());
         setSetDataId(setData.getId());
+
+        if (initSetData) {
+            // wird auch beim Programmstart aufgerufen und da sollen die
+            // manuellen Downloads ja nicht geändert werden
+            setInfoFile(setData.isInfoFile());
+            setSubtitle(setData.isSubtitle());
+        }
     }
 
     public void setPathName(String path, String name) {
