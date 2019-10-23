@@ -340,8 +340,16 @@
     -fx-padding: 5;
 }
 
-/* der allgemeine Rest*/
+/* ist die Senderauswahl (Mehrfachauswahl) */
+.channel-menu{
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+.channel-menu > .arrow-button > .arrow {
+    -fx-background-color: #0b99c9;
+}
 
+/* der allgemeine Rest*/
 .combo-box-base{
     -fx-border-radius: 5;
     -fx-background-radius: 5;

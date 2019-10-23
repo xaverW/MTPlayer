@@ -89,7 +89,7 @@ public class Abo extends AboProps {
     }
 
     private void createFilter() {
-        fChannel = new Filter(getChannel(), isChannelExact());
+        fChannel = new Filter(getChannel(), false);
         fChannel.makeFilterArray();
 
         fTheme = new Filter(getTheme(), isThemeExact());

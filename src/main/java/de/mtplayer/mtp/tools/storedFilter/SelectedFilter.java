@@ -400,7 +400,7 @@ public final class SelectedFilter extends SelectedFilterProps {
 
 
         if (!fChannel.empty) {
-            predicate = predicate.and(f -> FilmFilter.checkChannel(fChannel, f));
+            predicate = predicate.and(f -> FilmFilter.checkChannelSmart(fChannel, f));
         }
 
         if (!fTheme.empty) {

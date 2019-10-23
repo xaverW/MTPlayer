@@ -45,7 +45,7 @@ public class BlackData extends BlackProps {
 
     public void createFilter() {
         fChannel.filter = getChannel();
-        fChannel.exact = getChannelExact();
+        fChannel.exact = false;
         fChannel.makeFilterArray();
 
         fTheme.filter = getTheme();

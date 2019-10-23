@@ -46,6 +46,8 @@ import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class AboEditDialogController extends PDialogExtra {
 
@@ -67,6 +69,9 @@ public class AboEditDialogController extends PDialogExtra {
     private final RadioButton rbHigh = new RadioButton("hohe Auflösung");
     private final RadioButton rbLow = new RadioButton("niedrige Auflösung");
     private final TextArea textArea = new TextArea();
+
+    private final MenuButton mbChannel = new MenuButton("");
+    private final ArrayList<CheckMenuItem> checkMenuItemsList = new ArrayList<>();
 
     private boolean ok = false;
     private BooleanProperty okProp = new SimpleBooleanProperty(true);
@@ -185,6 +190,8 @@ public class AboEditDialogController extends PDialogExtra {
 
     @Override
     public void make() {
+        initSenderMenu();
+
         btnOk.setOnAction(a -> quit());
         btnOk.disableProperty().bind(aboCopy.nameProperty().isEmpty().or(okProp.not()));
         btnCancel.setOnAction(a -> close());
@@ -277,6 +284,7 @@ public class AboEditDialogController extends PDialogExtra {
 
         switch (i) {
             case AboXml.ABO_CHANNEL_EXACT:
+                break;
             case AboXml.ABO_THEME_EXACT:
                 lbl[i].setText("  exakt:");
                 gridPane.add(lbl[i], 0, grid);
@@ -345,6 +353,7 @@ public class AboEditDialogController extends PDialogExtra {
                 break;
 
             case AboXml.ABO_CHANNEL_EXACT:
+                break;
             case AboXml.ABO_THEME_EXACT:
                 cbx[i].selectedProperty().bindBidirectional(aboCopy.properties[i]);
                 cbx[i].selectedProperty().addListener((observable, oldValue, newValue) -> {
@@ -386,13 +395,17 @@ public class AboEditDialogController extends PDialogExtra {
                 break;
 
             case AboXml.ABO_CHANNEL:
-                cboChannel.setMaxWidth(Double.MAX_VALUE);
-                cboChannel.setItems(progData.worker.getAllChannelList());
-                cboChannel.setEditable(true);
-                cboChannel.valueProperty().bindBidirectional(aboCopy.channelProperty());
-                cboChannel.valueProperty().addListener((observable, oldValue, newValue) ->
-                        cbxEditAll[i].setSelected(true));
-                this.gridPane.add(cboChannel, 1, grid);
+//                cboChannel.setMaxWidth(Double.MAX_VALUE);
+//                cboChannel.setItems(progData.worker.getAllChannelList());
+//                cboChannel.setEditable(true);
+//                cboChannel.valueProperty().bindBidirectional(aboCopy.channelProperty());
+//                cboChannel.valueProperty().addListener((observable, oldValue, newValue) ->
+//                        cbxEditAll[i].setSelected(true));
+//                this.gridPane.add(cboChannel, 1, grid);
+
+
+                mbChannel.setMaxWidth(Double.MAX_VALUE);
+                this.gridPane.add(mbChannel, 1, grid);
                 break;
 
             case AboXml.ABO_DEST_PATH:
@@ -564,4 +577,59 @@ public class AboEditDialogController extends PDialogExtra {
         }
         okProp.set(ok);
     }
+
+    private void initSenderMenu() {
+        mbChannel.getStyleClass().add("channel-menu");
+        mbChannel.setMaxWidth(Double.MAX_VALUE);
+
+        List<String> senderArr = new ArrayList<>();
+        String sender = aboCopy.channelProperty().get();
+        if (sender != null) {
+            if (sender.contains(",")) {
+                senderArr.addAll(Arrays.asList(sender.replace(" ", "").toLowerCase().split(",")));
+            } else {
+                senderArr.add(sender.toLowerCase());
+            }
+            senderArr.stream().forEach(s -> s = s.trim());
+        }
+
+        MenuItem mi = new MenuItem("");
+        mi.setOnAction(a -> clearMenuText());
+        mbChannel.getItems().add(mi);
+
+        for (String s : progData.worker.getAllChannelList()) {
+            if (s.isEmpty()) {
+                continue;
+            }
+            CheckMenuItem miCheck = new CheckMenuItem(s);
+            if (senderArr.contains(s.toLowerCase())) {
+                miCheck.setSelected(true);
+            }
+            miCheck.setOnAction(a -> setMenuText());
+
+            checkMenuItemsList.add(miCheck);
+            mbChannel.getItems().add(miCheck);
+        }
+        setMenuText();
+    }
+
+    private void clearMenuText() {
+        for (CheckMenuItem cmi : checkMenuItemsList) {
+            cmi.setSelected(false);
+        }
+        mbChannel.setText("");
+        aboCopy.channelProperty().setValue("");
+    }
+
+    private void setMenuText() {
+        String text = "";
+        for (CheckMenuItem cmi : checkMenuItemsList) {
+            if (cmi.isSelected()) {
+                text = text + (text.isEmpty() ? "" : ", ") + cmi.getText();
+            }
+        }
+        mbChannel.setText(text);
+        aboCopy.channelProperty().setValue(text);
+    }
+
 }

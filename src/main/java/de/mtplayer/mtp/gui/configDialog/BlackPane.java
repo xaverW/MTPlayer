@@ -45,7 +45,10 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 public class BlackPane {
 
@@ -58,6 +61,9 @@ public class BlackPane {
     private final TextField title = new TextField();
     private final TextField themeTitle = new TextField();
     private BlackData blackData = null;
+
+    private final MenuButton mbChannel = new MenuButton("");
+    private final ArrayList<CheckMenuItem> checkMenuItemsList = new ArrayList<>();
 
     BooleanProperty propWhite = ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST.getBooleanProperty();
 
@@ -238,13 +244,13 @@ public class BlackPane {
         gridPane.setVgap(5);
         gridPane.setPadding(new Insets(20));
 
-        cboChannel.setEditable(true);
-        cboChannel.setItems(ProgData.getInstance().worker.getAllChannelList());
+//        cboChannel.setEditable(true);
+//        cboChannel.setItems(ProgData.getInstance().worker.getAllChannelList());
 
         int row = 0;
         gridPane.add(new Label("Sender:"), 0, row);
-        gridPane.add(cboChannel, 1, row);
-        gridPane.add(tgChannel, 2, row);
+        gridPane.add(mbChannel, 1, row);
+//        gridPane.add(tgChannel, 2, row);
 
         gridPane.add(new Label("Thema:"), 0, ++row);
         gridPane.add(theme, 1, row);
@@ -267,7 +273,9 @@ public class BlackPane {
         }
 
         if (blackData != null) {
-            cboChannel.valueProperty().unbindBidirectional(blackData.channelProperty());
+//            cboChannel.valueProperty().unbindBidirectional(blackData.channelProperty());
+            mbChannel.textProperty().unbindBidirectional(blackData.channelProperty());
+            clearMenuText();
             tgChannel.selectedProperty().unbindBidirectional(blackData.channelExactProperty());
             theme.textProperty().unbindBidirectional(blackData.themeProperty());
             tgTheme.selectedProperty().unbindBidirectional(blackData.themeExactProperty());
@@ -278,7 +286,9 @@ public class BlackPane {
         blackData = blackDataAct;
         gridPane.setDisable(blackData == null);
         if (blackData != null) {
-            cboChannel.valueProperty().bindBidirectional(blackData.channelProperty());
+//            cboChannel.valueProperty().bindBidirectional(blackData.channelProperty());
+            initSenderMenu();
+            mbChannel.textProperty().bindBidirectional(blackData.channelProperty());
             tgChannel.selectedProperty().bindBidirectional(blackData.channelExactProperty());
             theme.textProperty().bindBidirectional(blackData.themeProperty());
             tgTheme.selectedProperty().bindBidirectional(blackData.themeExactProperty());
@@ -286,4 +296,60 @@ public class BlackPane {
             themeTitle.textProperty().bindBidirectional(blackData.themeTitleProperty());
         }
     }
+
+    private void initSenderMenu() {
+        mbChannel.getItems().clear();
+        checkMenuItemsList.clear();
+        mbChannel.getStyleClass().add("channel-menu");
+        mbChannel.setMaxWidth(Double.MAX_VALUE);
+
+        List<String> senderArr = new ArrayList<>();
+        String sender = blackData.channelProperty().get();
+        if (sender != null) {
+            if (sender.contains(",")) {
+                senderArr.addAll(Arrays.asList(sender.replace(" ", "").toLowerCase().split(",")));
+            } else {
+                senderArr.add(sender.toLowerCase());
+            }
+            senderArr.stream().forEach(s -> s = s.trim());
+        }
+
+        MenuItem mi = new MenuItem("");
+        mi.setOnAction(a -> clearMenuText());
+        mbChannel.getItems().add(mi);
+
+        for (String s : ProgData.getInstance().worker.getAllChannelList()) {
+            if (s.isEmpty()) {
+                continue;
+            }
+            CheckMenuItem miCheck = new CheckMenuItem(s);
+            if (senderArr.contains(s.toLowerCase())) {
+                miCheck.setSelected(true);
+            }
+            miCheck.setOnAction(a -> setMenuText());
+
+            checkMenuItemsList.add(miCheck);
+            mbChannel.getItems().add(miCheck);
+        }
+        setMenuText();
+    }
+
+    private void clearMenuText() {
+        for (CheckMenuItem cmi : checkMenuItemsList) {
+            cmi.setSelected(false);
+        }
+        mbChannel.setText("");
+    }
+
+    private void setMenuText() {
+        String text = "";
+        for (CheckMenuItem cmi : checkMenuItemsList) {
+            if (cmi.isSelected()) {
+                text = text + (text.isEmpty() ? "" : ", ") + cmi.getText();
+            }
+        }
+        mbChannel.setText(text);
+    }
+
+
 }

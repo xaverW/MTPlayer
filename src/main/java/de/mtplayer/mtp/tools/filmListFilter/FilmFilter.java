@@ -116,7 +116,7 @@ public class FilmFilter {
         }
 
         // brauchen länger
-        if (!sender.empty && !checkChannel(sender, film)) {
+        if (!sender.empty && !checkChannelSmart(sender, film)) {
             return false;
         }
 
@@ -137,6 +137,17 @@ public class FilmFilter {
         }
 
         return true;
+    }
+
+    public static boolean checkChannelSmart(Filter sender, Film film) {
+        // nur ein Suchbegriff muss passen
+        for (final String s : sender.filterArr) {
+            // dann jeden Suchbegriff checken
+            if (s.equalsIgnoreCase(film.arr[FilmXml.FILM_CHANNEL])) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static boolean checkChannel(Filter sender, Film film) {

@@ -32,6 +32,7 @@ import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.TreeSet;
 
 public class Worker {
 
@@ -163,12 +164,16 @@ public class Worker {
     }
 
     private void createChannelAndThemeList() {
+        // alle Sender laden
         allChannelList.setAll(Arrays.asList(progData.filmlist.sender));
-        createThemeList("");
+        // und jetzt noch die Themen für den Sender des aktuellen Filter laden
+        createThemeList(progData.storedFilters.getActFilterSettings().getChannel());
     }
 
     public void createThemeList(String sender) {
         // toDo geht vielleicht besser??
+        System.out.println("createThemeList: " + sender);
+
         final ArrayList<String> theme = new ArrayList<>();
         if (sender.isEmpty()) {
             theme.addAll(Arrays.asList(progData.filmlistFiltered.themePerChannel[0]));
@@ -186,15 +191,21 @@ public class Worker {
     private void makeTheme(String sender, ArrayList<String> theme) {
         // todo liste sortieren
         if (sender.contains(",")) {
-            String[] senderArr = sender.split(",");
+
+            String[] senderArr = sender.toLowerCase().split(",");
+            final TreeSet<String> tree = new TreeSet<>();
+            tree.add("");
+
             for (int i = 1; i < progData.filmlistFiltered.themePerChannel.length; ++i) {
                 for (String s : senderArr) {
                     if (progData.filmlistFiltered.sender[i].equalsIgnoreCase(s.trim())) {
-                        theme.addAll(Arrays.asList(progData.filmlistFiltered.themePerChannel[i]));
+//                    if (progData.filmlistFiltered.sender[i].toLowerCase().contains(s.trim())) {
+                        tree.addAll(Arrays.asList(progData.filmlistFiltered.themePerChannel[i]));
                         break;
                     }
                 }
             }
+            theme.addAll(tree);
 
         } else {
             for (int i = 1; i < progData.filmlistFiltered.themePerChannel.length; ++i) {
@@ -204,7 +215,6 @@ public class Worker {
                 }
             }
         }
-
     }
 
     private void getAboNames() {

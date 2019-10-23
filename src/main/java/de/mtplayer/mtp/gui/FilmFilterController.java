@@ -32,6 +32,7 @@ public class FilmFilterController extends FilterController {
 
     private final PToggleSwitch tglBlacklist = new PToggleSwitch("Blacklist einschalten:");
 
+    FilmFilterControllerTextFilter_old sender;
     FilmFilterControllerFilter filter;
     FilmFilterControllerClearFilter clearFilter;
     FilmFilterControllerProfiles profiles;
@@ -40,6 +41,7 @@ public class FilmFilterController extends FilterController {
         super();
         progData = ProgData.getInstance();
 
+        sender = new FilmFilterControllerTextFilter_old();
         filter = new FilmFilterControllerFilter();
         clearFilter = new FilmFilterControllerClearFilter();
         profiles = new FilmFilterControllerProfiles();
@@ -53,7 +55,7 @@ public class FilmFilterController extends FilterController {
         vBoxFilter.setSpacing(0);
         VBox.setVgrow(clearFilter, Priority.ALWAYS);
 
-        vBoxFilter.getChildren().addAll(filter, clearFilter, sp, profiles);
+        vBoxFilter.getChildren().addAll(sender, filter, clearFilter, sp, profiles);
 
         tglBlacklist.setTooltip(new Tooltip("Blacklist einschalten"));
         tglBlacklist.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().blacklistOnProperty());
