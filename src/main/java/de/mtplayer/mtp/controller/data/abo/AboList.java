@@ -83,7 +83,6 @@ public class AboList extends SimpleListProperty<Abo> {
         boolean ret = false;
 
         String channel = selectedFilter.isChannelVis() ? selectedFilter.getChannel() : "";
-        boolean channelExact = selectedFilter.isChannelExact();
         String theme = selectedFilter.isThemeVis() ? selectedFilter.getTheme() : "";
         boolean themeExact = selectedFilter.isThemeExact();
         String title = selectedFilter.isTitleVis() ? selectedFilter.getTitle() : "";
@@ -113,9 +112,6 @@ public class AboList extends SimpleListProperty<Abo> {
                 maxDuration,
                 namePath);
 
-        if (!channel.isEmpty()) {
-            abo.setChannelExact(channelExact);
-        }
         if (!theme.isEmpty()) {
             abo.setThemeExact(themeExact);
         }
@@ -154,7 +150,6 @@ public class AboList extends SimpleListProperty<Abo> {
         final int maxDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMaxDur() : FilmFilter.FILTER_DURATION_MAX_MINUTE;
 
         aboCopy.setChannel(channel);
-        aboCopy.setChannelExact(channelExact);
         aboCopy.setTheme(theme);
         aboCopy.setThemeExact(themeExact);
         aboCopy.setTitle(title);

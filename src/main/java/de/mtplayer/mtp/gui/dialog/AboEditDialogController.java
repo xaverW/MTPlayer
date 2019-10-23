@@ -259,10 +259,6 @@ public class AboEditDialogController extends PDialogExtra {
                 rbHigh.setOnAction(event -> setResolution());
                 rbLow.setOnAction(event -> setResolution());
                 break;
-            case AboXml.ABO_CHANNEL_EXACT:
-                cbx[i] = new CheckBox("");
-                cbx[i].setSelected(aboCopy.isChannelExact());
-                break;
             case AboXml.ABO_THEME_EXACT:
                 cbx[i] = new CheckBox("");
                 cbx[i].setSelected(aboCopy.isThemeExact());
@@ -283,8 +279,6 @@ public class AboEditDialogController extends PDialogExtra {
     private void addLabel(int i, int grid) {
 
         switch (i) {
-            case AboXml.ABO_CHANNEL_EXACT:
-                break;
             case AboXml.ABO_THEME_EXACT:
                 lbl[i].setText("  exakt:");
                 gridPane.add(lbl[i], 0, grid);
@@ -352,8 +346,6 @@ public class AboEditDialogController extends PDialogExtra {
                 this.gridPane.add(resGrid, 1, grid);
                 break;
 
-            case AboXml.ABO_CHANNEL_EXACT:
-                break;
             case AboXml.ABO_THEME_EXACT:
                 cbx[i].selectedProperty().bindBidirectional(aboCopy.properties[i]);
                 cbx[i].selectedProperty().addListener((observable, oldValue, newValue) -> {
@@ -543,7 +535,6 @@ public class AboEditDialogController extends PDialogExtra {
             case AboXml.ABO_DESCRIPTION:
             case AboXml.ABO_RESOLUTION:
             case AboXml.ABO_CHANNEL:
-            case AboXml.ABO_CHANNEL_EXACT:
             case AboXml.ABO_THEME:
             case AboXml.ABO_THEME_EXACT:
             case AboXml.ABO_TITLE:

@@ -32,7 +32,6 @@ public class AboProps extends AboXml {
     private final StringProperty description = new SimpleStringProperty("");
     private final StringProperty resolution = new SimpleStringProperty(Film.RESOLUTION_NORMAL);
     private final StringProperty channel = new SimpleStringProperty("");
-    private final BooleanProperty channelExact = new SimpleBooleanProperty(true);
     private final StringProperty theme = new SimpleStringProperty("");
     private final BooleanProperty themeExact = new SimpleBooleanProperty(true);
     private final StringProperty themeTitle = new SimpleStringProperty("");
@@ -51,7 +50,7 @@ public class AboProps extends AboXml {
     private int countHit = 0;
 
     public final Property[] properties = {nr, active, name, description, resolution,
-            channel, channelExact, theme, themeExact, themeTitle, title, somewhere,
+            channel, theme, themeExact, themeTitle, title, somewhere,
             timeRange, minDurationMinute, maxDurationMinute, destination, date, setDataId};
 
     public String getStringOf(int i) {
@@ -152,18 +151,6 @@ public class AboProps extends AboXml {
 
     public void setChannel(String channel) {
         this.channel.set(channel);
-    }
-
-    public boolean isChannelExact() {
-        return channelExact.get();
-    }
-
-    public BooleanProperty channelExactProperty() {
-        return channelExact;
-    }
-
-    public void setChannelExact(boolean channelExact) {
-        this.channelExact.set(channelExact);
     }
 
     public String getTheme() {
@@ -334,7 +321,6 @@ public class AboProps extends AboXml {
         setName(arr[ABO_NAME]);
         setDescription(arr[ABO_DESCRIPTION]);
         setChannel(arr[ABO_CHANNEL]);
-        setChannelExact(arr[ABO_CHANNEL_EXACT].isEmpty() ? true : Boolean.parseBoolean(arr[ABO_CHANNEL_EXACT]));
         setTheme(arr[ABO_THEME]);
         setThemeExact(arr[ABO_THEME_EXACT].isEmpty() ? true : Boolean.parseBoolean(arr[ABO_THEME_EXACT]));
         setThemeTitle(arr[ABO_THEME_TITLE]);
@@ -357,7 +343,6 @@ public class AboProps extends AboXml {
         arr[ABO_NAME] = getName();
         arr[ABO_DESCRIPTION] = getDescription();
         arr[ABO_CHANNEL] = getChannel();
-        arr[ABO_CHANNEL_EXACT] = String.valueOf(isChannelExact());
         arr[ABO_THEME] = getTheme();
         arr[ABO_THEME_EXACT] = String.valueOf(isThemeExact());
         arr[ABO_THEME_TITLE] = getThemeTitle();

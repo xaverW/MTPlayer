@@ -115,3 +115,8 @@
     -fx-background-color: #b5babd;
 }
 
+.check-menu-item{
+    -fx-focused-mark-color: #0b99c9;
+    -fx-mark-color: #0b99c9;
+}
+

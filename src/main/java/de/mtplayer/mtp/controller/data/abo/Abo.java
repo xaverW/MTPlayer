@@ -79,7 +79,6 @@ public class Abo extends AboProps {
 
     private void initFilter() {
         channelProperty().addListener(l -> createFilter());
-        channelExactProperty().addListener(l -> createFilter());
         themeProperty().addListener(l -> createFilter());
         themeExactProperty().addListener(l -> createFilter());
 

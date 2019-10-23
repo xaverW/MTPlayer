@@ -407,6 +407,7 @@ public class Filmlist extends SimpleListProperty<Film> {
             // das Sortieren passt nicht richtig zum Filter!
             // oder die Sortierung passt nicht zum User
             // ist so nicht optimal aber ist 10x !! schneller
+
             tree[i] = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
             tree[i].add("");
 //            hashSet[i] = new HashSet<>();

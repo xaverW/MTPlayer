@@ -27,18 +27,16 @@ public class BlackProps extends Data<BlackProps> {
 
     public static final int BLACKLIST_NR = 0;
     public static final int BLACKLIST_SENDER = 1;
-    public static final int BLACKLIST_SENDER_EXACT = 2;
-    public static final int BLACKLIST_THEME = 3;
-    public static final int BLACKLIST_THEME_EXACT = 4;
-    public static final int BLACKLIST_TITLE = 5;
-    public static final int BLACKLIST_THEME_TITLE = 6;
-    public static final int BLACKLIST_COUNT_HITS = 7;
+    public static final int BLACKLIST_THEME = 2;
+    public static final int BLACKLIST_THEME_EXACT = 3;
+    public static final int BLACKLIST_TITLE = 4;
+    public static final int BLACKLIST_THEME_TITLE = 5;
+    public static final int BLACKLIST_COUNT_HITS = 6;
 
     public static final String TAG = "Blacklist";
     public static final String[] XML_NAMES = {
             "black-nr",
             "black-sender",
-            "black-sender-exakt",
             "black-thema",
             "black-thema-exakt",
             "black-titel",
@@ -50,7 +48,6 @@ public class BlackProps extends Data<BlackProps> {
 
     private int nr = 0;
     private final StringProperty channel = new SimpleStringProperty("");
-    private final BooleanProperty channelExact = new SimpleBooleanProperty(true);
     private final StringProperty theme = new SimpleStringProperty("");
     private final BooleanProperty themeExact = new SimpleBooleanProperty(true);
     private final StringProperty title = new SimpleStringProperty("");
@@ -92,18 +89,6 @@ public class BlackProps extends Data<BlackProps> {
 
     public void setChannel(String channel) {
         this.channel.set(channel);
-    }
-
-    public boolean getChannelExact() {
-        return channelExact.get();
-    }
-
-    public BooleanProperty channelExactProperty() {
-        return channelExact;
-    }
-
-    public void setChannelExact(boolean channelExact) {
-        this.channelExact.set(channelExact);
     }
 
     public String getTheme() {
@@ -156,7 +141,6 @@ public class BlackProps extends Data<BlackProps> {
 
     public void setPropsFromXml() {
         setChannel(arr[BLACKLIST_SENDER]);
-        setChannelExact(arr[BLACKLIST_SENDER_EXACT].isEmpty() ? true : Boolean.parseBoolean(arr[BLACKLIST_SENDER_EXACT]));
         setTheme(arr[BLACKLIST_THEME]);
         setThemeExact(arr[BLACKLIST_THEME_EXACT].isEmpty() ? true : Boolean.parseBoolean(arr[BLACKLIST_THEME_EXACT]));
         setTitle(arr[BLACKLIST_TITLE]);
@@ -171,7 +155,6 @@ public class BlackProps extends Data<BlackProps> {
     public void setXmlFromProps() {
         arr[BLACKLIST_NR] = getNr() + "";
         arr[BLACKLIST_SENDER] = getChannel();
-        arr[BLACKLIST_SENDER_EXACT] = String.valueOf(getChannelExact());
         arr[BLACKLIST_THEME] = getTheme();
         arr[BLACKLIST_THEME_EXACT] = String.valueOf(getThemeExact());
         arr[BLACKLIST_TITLE] = getTitle();

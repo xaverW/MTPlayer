@@ -54,8 +54,6 @@ public class BlackPane {
 
     private final TableView<BlackData> tableView = new TableView<>();
     private final GridPane gridPane = new GridPane();
-    private final ComboBox<String> cboChannel = new ComboBox<>();
-    private final PToggleSwitch tgChannel = new PToggleSwitch("exakt:");
     private final TextField theme = new TextField();
     private final PToggleSwitch tgTheme = new PToggleSwitch("exakt:");
     private final TextField title = new TextField();
@@ -276,7 +274,6 @@ public class BlackPane {
 //            cboChannel.valueProperty().unbindBidirectional(blackData.channelProperty());
             mbChannel.textProperty().unbindBidirectional(blackData.channelProperty());
             clearMenuText();
-            tgChannel.selectedProperty().unbindBidirectional(blackData.channelExactProperty());
             theme.textProperty().unbindBidirectional(blackData.themeProperty());
             tgTheme.selectedProperty().unbindBidirectional(blackData.themeExactProperty());
             title.textProperty().unbindBidirectional(blackData.titleProperty());
@@ -289,7 +286,6 @@ public class BlackPane {
 //            cboChannel.valueProperty().bindBidirectional(blackData.channelProperty());
             initSenderMenu();
             mbChannel.textProperty().bindBidirectional(blackData.channelProperty());
-            tgChannel.selectedProperty().bindBidirectional(blackData.channelExactProperty());
             theme.textProperty().bindBidirectional(blackData.themeProperty());
             tgTheme.selectedProperty().bindBidirectional(blackData.themeExactProperty());
             title.textProperty().bindBidirectional(blackData.titleProperty());

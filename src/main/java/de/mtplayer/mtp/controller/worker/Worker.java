@@ -193,7 +193,7 @@ public class Worker {
         if (sender.contains(",")) {
 
             String[] senderArr = sender.toLowerCase().split(",");
-            final TreeSet<String> tree = new TreeSet<>();
+            final TreeSet<String> tree = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
             tree.add("");
 
             for (int i = 1; i < progData.filmlistFiltered.themePerChannel.length; ++i) {

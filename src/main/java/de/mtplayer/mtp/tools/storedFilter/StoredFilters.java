@@ -188,7 +188,7 @@ public final class StoredFilters {
 
 
         actFilterSettings.setChannelAndVis(abo.getChannel());
-        actFilterSettings.setChannelExact(abo.isChannelExact());
+        actFilterSettings.setChannelExact(false);
 
         actFilterSettings.setThemeAndVis(abo.getTheme());
         actFilterSettings.setThemeExact(abo.isThemeExact());
