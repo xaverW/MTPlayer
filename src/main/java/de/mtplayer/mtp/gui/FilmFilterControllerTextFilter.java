@@ -40,7 +40,7 @@ public class FilmFilterControllerTextFilter extends VBox {
     private final TextField txtUrl = new TextField();
 
     private final MenuButton mbChannel = new MenuButton("");
-    private final ArrayList<ChannelMenu> checkMenuItemsList = new ArrayList<>();
+    private final ArrayList<MenuItemClass> menuItemsList = new ArrayList<>();
 
     private final ProgData progData;
 
@@ -61,11 +61,11 @@ public class FilmFilterControllerTextFilter extends VBox {
         mbChannel.getStyleClass().add("channel-menu");
         mbChannel.setMaxWidth(Double.MAX_VALUE);
         VBox.setVgrow(mbChannel, Priority.ALWAYS);
-        initSenderMenu();
+        initchannelMenu();
         progData.storedFilters.getActFilterSettings().channelProperty().addListener((observable, oldValue, newValue) -> {
-            initSenderMenu();
+            initchannelMenu();
         });
-        progData.worker.getAllChannelList().addListener((ListChangeListener<String>) c -> initSenderMenu());
+        progData.worker.getAllChannelList().addListener((ListChangeListener<String>) c -> initchannelMenu());
 
 
         cboChannel.setMaxWidth(Double.MAX_VALUE);
@@ -90,84 +90,73 @@ public class FilmFilterControllerTextFilter extends VBox {
 
         mbChannel.textProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().channelProperty());
         cboChannel.valueProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().channelProperty());
-        progData.storedFilters.getActFilterSettings().channelExactProperty().addListener(l -> {
-            progData.storedFilters.getActFilterSettings().channelProperty().setValue("");
-        });
+//        progData.storedFilters.getActFilterSettings().channelExactProperty().addListener(l -> {
+//            progData.storedFilters.getActFilterSettings().channelProperty().setValue("");
+//        });
     }
 
-    private void initSenderMenu() {
+    private void initchannelMenu() {
         mbChannel.getItems().clear();
-        checkMenuItemsList.clear();
+        menuItemsList.clear();
 
-        List<String> senderArr = new ArrayList<>();
-        String sender = progData.storedFilters.getActFilterSettings().channelProperty().get();
-        if (sender != null) {
-            if (sender.contains(",")) {
-                senderArr.addAll(Arrays.asList(sender.replace(" ", "").toLowerCase().split(",")));
+        List<String> channelFilterList = new ArrayList<>();
+        String channelFilter = progData.storedFilters.getActFilterSettings().channelProperty().get();
+        if (channelFilter != null) {
+            if (channelFilter.contains(",")) {
+                channelFilterList.addAll(Arrays.asList(channelFilter.replace(" ", "").toLowerCase().split(",")));
             } else {
-                senderArr.add(sender.toLowerCase());
+                channelFilterList.add(channelFilter.toLowerCase());
             }
-            senderArr.stream().forEach(s -> s = s.trim());
+            channelFilterList.stream().forEach(s -> s = s.trim());
         }
 
         MenuItem mi = new MenuItem("");
         mi.setOnAction(a -> clearMenuText());
         mbChannel.getItems().add(mi);
 
-        Label sizeLabel = new Label();
-
         for (String s : progData.worker.getAllChannelList()) {
             if (s.isEmpty()) {
                 continue;
             }
+
             CheckBox miCheck = new CheckBox();
-            Label miLabel = new Label(s);
-            miLabel.setStyle("-fx-border-color: red;");
-            miLabel.setMaxWidth(Double.MAX_VALUE);
-            HBox.setHgrow(miLabel, Priority.ALWAYS);
-
-            miLabel.minWidthProperty().bindBidirectional(sizeLabel.minWidthProperty());
-            miLabel.prefWidthProperty().bindBidirectional(sizeLabel.prefWidthProperty());
-
-            ChannelMenu channelMenu = new ChannelMenu(s, miCheck, miLabel);
-
-            if (senderArr.contains(s.toLowerCase())) {
+            if (channelFilterList.contains(s.toLowerCase())) {
                 miCheck.setSelected(true);
             }
             miCheck.setOnAction(a -> setMenuText());
 
-//            miLabel.setOnMouseClicked(a -> {
-//                setMenuButtonText(channelMenu);
-//                mbChannel.hide();
-//            });
+            MenuItemClass menuItemClass = new MenuItemClass(s, miCheck);
+            menuItemsList.add(menuItemClass);
+
+            Button btnChannel = new Button(s);
+            btnChannel.getStyleClass().add("channel-button");
+            btnChannel.setMaxWidth(Double.MAX_VALUE);
+            btnChannel.minWidthProperty().bind(mbChannel.widthProperty().add(-50));
+            btnChannel.setOnAction(e -> {
+                setCheckBoxAndMenuText(menuItemClass);
+                mbChannel.hide();
+            });
 
             HBox hBox = new HBox(10);
-            hBox.setMaxWidth(Double.MAX_VALUE);
-            hBox.setStyle("-fx-border-color: green;");
             hBox.setAlignment(Pos.CENTER_LEFT);
-            hBox.getChildren().addAll(miCheck, miLabel);
-
-            Button mb = new Button("Test");
-            mb.setOnAction(a -> {
-                setMenuButtonText(channelMenu);
-                mbChannel.hide();
-            });
-            hBox.getChildren().add(mb);
-
-            checkMenuItemsList.add(channelMenu);
+            hBox.getChildren().addAll(miCheck, btnChannel);
 
             CustomMenuItem cmi = new CustomMenuItem(hBox);
-            cmi.setOnAction(a -> {
-                setMenuButtonText(channelMenu);
-                mbChannel.hide();
-            });
-            cmi.setStyle("-fx-border-color: blue;");
             mbChannel.getItems().add(cmi);
         }
     }
 
+    private void setCheckBoxAndMenuText(MenuItemClass cmi) {
+        for (MenuItemClass cm : menuItemsList) {
+            cm.getCheckBox().setSelected(false);
+        }
+
+        cmi.getCheckBox().setSelected(true);
+        setMenuText();
+    }
+
     private void clearMenuText() {
-        for (ChannelMenu cmi : checkMenuItemsList) {
+        for (MenuItemClass cmi : menuItemsList) {
             cmi.getCheckBox().setSelected(false);
         }
         mbChannel.setText("");
@@ -176,22 +165,13 @@ public class FilmFilterControllerTextFilter extends VBox {
 
     private void setMenuText() {
         String text = "";
-        for (ChannelMenu cmi : checkMenuItemsList) {
+        for (MenuItemClass cmi : menuItemsList) {
             if (cmi.getCheckBox().isSelected()) {
-                text = text + (text.isEmpty() ? "" : ", ") + cmi.getName();
+                text = text + (text.isEmpty() ? "" : ", ") + cmi.getText();
             }
         }
         mbChannel.setText(text);
         progData.worker.createThemeList(text);
-    }
-
-    private void setMenuButtonText(ChannelMenu cmi) {
-        for (ChannelMenu cm : checkMenuItemsList) {
-            cm.getCheckBox().setSelected(false);
-        }
-
-        cmi.getCheckBox().setSelected(true);
-        setMenuText();
     }
 
     private void initStringFilter() {
@@ -258,40 +238,35 @@ public class FilmFilterControllerTextFilter extends VBox {
     private void addChannel(VBox vBoxComplete) {
         VBox vBox = new VBox();
         Label label = new Label("Sender");
-        vBox.getChildren().addAll(label, mbChannel, cboChannel);
+//        vBox.getChildren().addAll(label, mbChannel, cboChannel);
+        vBox.getChildren().addAll(label, mbChannel);
         vBoxComplete.getChildren().add(vBox);
 
-        mbChannel.visibleProperty().bind(progData.storedFilters.getActFilterSettings().channelExactProperty().not());
-        mbChannel.managedProperty().bind(progData.storedFilters.getActFilterSettings().channelExactProperty().not());
-        cboChannel.visibleProperty().bind(progData.storedFilters.getActFilterSettings().channelExactProperty());
-        cboChannel.managedProperty().bind(progData.storedFilters.getActFilterSettings().channelExactProperty());
+//        mbChannel.visibleProperty().bind(progData.storedFilters.getActFilterSettings().channelExactProperty().not());
+//        mbChannel.managedProperty().bind(progData.storedFilters.getActFilterSettings().channelExactProperty().not());
+//        cboChannel.visibleProperty().bind(progData.storedFilters.getActFilterSettings().channelExactProperty());
+//        cboChannel.managedProperty().bind(progData.storedFilters.getActFilterSettings().channelExactProperty());
 
         vBox.visibleProperty().bind(progData.storedFilters.getActFilterSettings().channelVisProperty());
         vBox.managedProperty().bind(progData.storedFilters.getActFilterSettings().channelVisProperty());
     }
 
-    private class ChannelMenu {
-        private String name = "";
-        private CheckBox checkBox;
-        private Label button;
+    private class MenuItemClass {
 
-        ChannelMenu(String name, CheckBox checkBox, Label button) {
-            this.name = name;
-            this.checkBox = checkBox;
-            this.button = button;
+        private final String text;
+        private final CheckBox checkBox;
+
+        MenuItemClass(String text, CheckBox checkbox) {
+            this.text = text;
+            this.checkBox = checkbox;
         }
 
-        public String getName() {
-            return name;
+        public String getText() {
+            return text;
         }
 
         public CheckBox getCheckBox() {
             return checkBox;
         }
-
-        public Label getButton() {
-            return button;
-        }
     }
-
 }

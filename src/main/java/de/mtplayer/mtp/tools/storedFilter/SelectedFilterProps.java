@@ -24,7 +24,7 @@ public class SelectedFilterProps {
     private final StringProperty name = new SimpleStringProperty();
 
     private final BooleanProperty channelVis = new SimpleBooleanProperty(true);
-    private final BooleanProperty channelExact = new SimpleBooleanProperty(true);
+    //    private final BooleanProperty channelExact = new SimpleBooleanProperty(true);
     private final StringProperty channel = new SimpleStringProperty();
     private final BooleanProperty themeVis = new SimpleBooleanProperty(false);
     private final BooleanProperty themeExact = new SimpleBooleanProperty(false);
@@ -67,7 +67,7 @@ public class SelectedFilterProps {
 
     private final BooleanProperty blacklistOn = new SimpleBooleanProperty(false);
 
-    public BooleanProperty[] sfBooleanPropArr = {channelVis, channelExact, themeVis, themeExact, themeTitleVis,
+    public BooleanProperty[] sfBooleanPropArr = {channelVis, themeVis, themeExact, themeTitleVis,
             titleVis, somewhereVis, urlVis, timeRangeVis, minMaxDurVis, minMaxTimeVis, minMaxTimeInvert,
             onlyVis, onlyBookmark, onlyHd, onlyNew, onlyUt, onlyLive, onlyAktHistory, notVis,
             notAbo, notHistory, notDouble, notGeo, notFuture, blacklistOn};
@@ -99,17 +99,17 @@ public class SelectedFilterProps {
         this.channelVis.set(channelVis);
     }
 
-    public boolean isChannelExact() {
-        return channelExact.get();
-    }
+//    public boolean isChannelExact() {
+//        return channelExact.get();
+//    }
 
-    public BooleanProperty channelExactProperty() {
-        return channelExact;
-    }
-
-    public void setChannelExact(boolean channelExact) {
-        this.channelExact.set(channelExact);
-    }
+//    public BooleanProperty channelExactProperty() {
+//        return channelExact;
+//    }
+//
+//    public void setChannelExact(boolean channelExact) {
+//        this.channelExact.set(channelExact);
+//    }
 
     public String getChannel() {
         return channel.get() == null ? "" : channel.get();

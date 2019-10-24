@@ -172,7 +172,7 @@ public class Worker {
 
     public void createThemeList(String sender) {
         // toDo geht vielleicht besser??
-        System.out.println("createThemeList: " + sender);
+//        System.out.println("createThemeList: " + sender);
 
         final ArrayList<String> theme = new ArrayList<>();
         if (sender.isEmpty()) {

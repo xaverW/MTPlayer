@@ -139,7 +139,7 @@ public class AboList extends SimpleListProperty<Abo> {
         Abo aboCopy = abo.getCopy();
 
         final String channel = selectedFilter.isChannelVis() ? selectedFilter.getChannel() : "";
-        final boolean channelExact = selectedFilter.isChannelExact();
+//        final boolean channelExact = selectedFilter.isChannelExact();
         final String theme = selectedFilter.isThemeVis() ? selectedFilter.getTheme() : "";
         final boolean themeExact = selectedFilter.isThemeExact();
         final String title = selectedFilter.isTitleVis() ? selectedFilter.getTitle() : "";

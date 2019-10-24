@@ -32,7 +32,7 @@ public class FilmFilterController extends FilterController {
 
     private final PToggleSwitch tglBlacklist = new PToggleSwitch("Blacklist einschalten:");
 
-    FilmFilterControllerTextFilter_old sender;
+    FilmFilterControllerTextFilter sender;
     FilmFilterControllerFilter filter;
     FilmFilterControllerClearFilter clearFilter;
     FilmFilterControllerProfiles profiles;
@@ -41,7 +41,7 @@ public class FilmFilterController extends FilterController {
         super();
         progData = ProgData.getInstance();
 
-        sender = new FilmFilterControllerTextFilter_old();
+        sender = new FilmFilterControllerTextFilter();
         filter = new FilmFilterControllerFilter();
         clearFilter = new FilmFilterControllerClearFilter();
         profiles = new FilmFilterControllerProfiles();

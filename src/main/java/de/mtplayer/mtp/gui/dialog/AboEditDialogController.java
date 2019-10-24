@@ -237,6 +237,7 @@ public class AboEditDialogController extends PDialogExtra {
             case AboXml.ABO_DESCRIPTION:
                 textArea.setWrapText(true);
                 textArea.setPrefRowCount(4);
+                textArea.setMinHeight(60);
                 textArea.setPrefColumnCount(1);
                 break;
             case AboXml.ABO_RESOLUTION:

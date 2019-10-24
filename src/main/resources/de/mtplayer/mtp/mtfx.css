@@ -419,3 +419,9 @@
     -fx-border-color: -text-color-blue;
 }
 
+.channel-button {
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-font-size: 0.9em;
+}
+

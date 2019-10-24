@@ -72,19 +72,18 @@ public class FilmFilterEditDialog extends PDialog {
     }
 
     public void init(VBox vbox) {
-        VBox v = new VBox();
         PToggleSwitch tglChannel = new PToggleSwitch("Sender");
         tglChannel.setMaxWidth(Double.MAX_VALUE);
         tglChannel.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().channelVisProperty());
-        v.getChildren().add(tglChannel);
+        vbox.getChildren().add(tglChannel);
 
-        PToggleSwitch tglChannelExact = new PToggleSwitch("  -> exakt");
-        tglChannelExact.setMaxWidth(Double.MAX_VALUE);
-        tglChannelExact.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().channelExactProperty());
-        v.getChildren().add(tglChannelExact);
-        vbox.getChildren().add(v);
+//        PToggleSwitch tglChannelExact = new PToggleSwitch("  -> exakt");
+//        tglChannelExact.setMaxWidth(Double.MAX_VALUE);
+//        tglChannelExact.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().channelExactProperty());
+//        v.getChildren().add(tglChannelExact);
+//        vbox.getChildren().add(v);
 
-        v = new VBox();
+        VBox v = new VBox();
         PToggleSwitch tglTheme = new PToggleSwitch("Thema");
         tglTheme.setMaxWidth(Double.MAX_VALUE);
         tglTheme.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().themeVisProperty());

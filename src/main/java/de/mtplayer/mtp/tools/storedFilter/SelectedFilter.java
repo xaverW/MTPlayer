@@ -81,7 +81,7 @@ public final class SelectedFilter extends SelectedFilterProps {
         clearFilter();
 
         setChannelVis(true);
-        setChannelExact(true);
+//        setChannelExact(true);
         setThemeVis(false);
         setThemeExact(false);
         setThemeTitleVis(true);
@@ -100,7 +100,7 @@ public final class SelectedFilter extends SelectedFilterProps {
         nameProperty().addListener(l -> reportFilterChange());
 
         channelVisProperty().addListener(l -> reportFilterChange());
-        channelExactProperty().addListener(l -> reportFilterChange());
+//        channelExactProperty().addListener(l -> reportFilterChange());
         channelProperty().addListener(l -> reportFilterChange());
 
         themeVisProperty().addListener(l -> reportFilterChange());
@@ -273,10 +273,10 @@ public final class SelectedFilter extends SelectedFilterProps {
         String filterSomewhere = selectedFilter.isSomewhereVis() ? selectedFilter.getSomewhere() : "";
         String filterUrl = selectedFilter.isUrlVis() ? selectedFilter.getUrl() : "";
 
-        final boolean channelExact = selectedFilter.isChannelExact();
+//        final boolean channelExact = selectedFilter.isChannelExact();
         final boolean themeExact = selectedFilter.isThemeExact();
         // Sender
-        fChannel = new Filter(filterChannel, channelExact);
+        fChannel = new Filter(filterChannel, false);
         fChannel.makeFilterArray();
 
         // Thema

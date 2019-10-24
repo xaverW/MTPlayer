@@ -120,3 +120,6 @@
     -fx-mark-color: #0b99c9;
 }
 
+.channel-button {
+    -fx-font-size: 1em;
+}

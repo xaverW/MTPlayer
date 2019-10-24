@@ -30,7 +30,7 @@ public class SelectedFilterFactory {
         sfTo.setName(sfFrom.getName());
 
         sfTo.setChannelVis(sfFrom.isChannelVis());
-        sfTo.setChannelExact(sfFrom.isChannelExact());
+//        sfTo.setChannelExact(sfFrom.isChannelExact());
         sfTo.setChannel(sfFrom.getChannel());
         sfTo.setThemeVis(sfFrom.isThemeVis());
         sfTo.setThemeExact(sfFrom.isThemeExact());
@@ -105,7 +105,7 @@ public class SelectedFilterFactory {
 
         list.add("");
         list.add("isChannelVis " + sf.isChannelVis());
-        list.add("isChannelExact " + sf.isChannelExact());
+//        list.add("isChannelExact " + sf.isChannelExact());
         list.add("getChannel " + sf.getChannel());
         list.add("isThemeVis " + sf.isThemeVis());
         list.add("isThemeExact " + sf.isThemeExact());
