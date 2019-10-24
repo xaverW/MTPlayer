@@ -59,8 +59,9 @@ public class RuntimeExec {
 
         this.mVFilmSize = download.getDownloadSize();
         this.strProgCall = download.getProgramCall();
-        arrProgCallArray = strProgCallArray.split(TRENNER_PROG_ARRAY);
+
         this.strProgCallArray = download.getProgramCallArray();
+        arrProgCallArray = strProgCallArray.split(TRENNER_PROG_ARRAY);
         if (arrProgCallArray.length <= 1) {
             arrProgCallArray = null;
         }

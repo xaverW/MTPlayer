@@ -171,12 +171,12 @@ public class DownloadGuiInfo {
         if (progData.downloadInfos.getByteLoadingDownloads() > 0 ||
                 progData.downloadInfos.getByteLoadingDownloadsAlreadyLoaded() > 0) {
 
-            if (progData.downloadInfos.getByteLoadingDownloadsAlreadyLoaded() > 0) {
+            if (progData.downloadInfos.getByteLoadingDownloads() > 0) {
                 text2 = new Text(PFileSize.convertToStr(progData.downloadInfos.getByteLoadingDownloadsAlreadyLoaded()) + " von "
                         + PFileSize.convertToStr(progData.downloadInfos.getByteLoadingDownloads()));
 
             } else {
-                text2 = new Text(PFileSize.convertToStr(progData.downloadInfos.getByteLoadingDownloads()));
+                text2 = new Text(PFileSize.convertToStr(progData.downloadInfos.getByteLoadingDownloadsAlreadyLoaded()));
             }
             gridPane.add(text2, 1, row);
         }
