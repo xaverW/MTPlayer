@@ -20,6 +20,7 @@ import de.mtplayer.mtp.controller.ProgStart;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
+import de.mtplayer.mtp.controller.config.UpdateConfig;
 import de.mtplayer.mtp.controller.data.ListePsetVorlagen;
 import de.mtplayer.mtp.controller.data.SetDataList;
 import de.mtplayer.mtp.gui.dialog.FilmInfoDialogController;
@@ -80,8 +81,8 @@ public class MTPlayer extends Application {
             PDuration.onlyPing("Erster Start");
             firstProgramStart = true;
 
-            // einmal ein Muster anlegen, für Linux ist es bereits aktiv!
-            progData.replaceList.init();
+            UpdateConfig.setUpdateDone(); // dann ists ja kein Programmupdate
+            progData.replaceList.init(); // einmal ein Muster anlegen, für Linux ist es bereits aktiv!
 
             StartDialogController startDialogController = new StartDialogController();
             if (!startDialogController.isOk()) {

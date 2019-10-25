@@ -19,10 +19,7 @@ package de.mtplayer.mtp.controller;
 import de.mtplayer.mLib.MLInit;
 import de.mtplayer.mLib.tools.Functions;
 import de.mtplayer.mLib.tools.StringFormatters;
-import de.mtplayer.mtp.controller.config.ProgConfig;
-import de.mtplayer.mtp.controller.config.ProgConst;
-import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.config.ProgInfos;
+import de.mtplayer.mtp.controller.config.*;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
 import de.mtplayer.mtp.tools.update.SearchProgramUpdate;
@@ -118,6 +115,7 @@ public class ProgStart {
             return false;
         }
         PLog.sysLog("Konfig wurde gelesen!");
+        UpdateConfig.update(); // falls es ein Programmupdate gab, Configs anpassen
         MLInit.initLib(ProgData.debug, ProgConst.PROGRAMNAME, ProgInfos.getUserAgent());
         ProgData.getInstance().mTColor.loadStoredColors(); // Farben einrichten
         return true;
