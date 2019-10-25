@@ -118,7 +118,7 @@ public class LoadFilmlist {
      * Filmliste beim Programmstart laden
      */
     public void loadFilmlistProgStart(boolean firstProgramStart) {
-        // Start des Ladens, gibt keine Vortschrittsanzeige und keine Abbrechen
+        // Start des Ladens, gibt keine Vortschrittsanzeige und kein Abbrechen
 
         if (LoadFactory.checkAllSenderSelectedNotToLoad(progData.primaryStage)) {
             // alle Sender sind vom Laden ausgenommen
@@ -145,14 +145,22 @@ public class LoadFilmlist {
                 PDuration.onlyPing("Programmstart Filmliste laden: geladen");
             }
 
-            if (progData.filmlist.isTooOld() &&
-                    (ProgConfig.SYSTEM_LOAD_FILMS_ON_START.getBool() || ProgData.automode)) {
-                logList.add("Filmliste zu alt, neue Filmliste laden");
+            // im Automode immer eine neue Filmliste laden oder wenn die gespeicherte zu alt ist
+            if (ProgData.automode ||
+                    progData.filmlist.isTooOld() && ProgConfig.SYSTEM_LOAD_FILMS_ON_START.getBool()) {
+                final String text;
+                if (ProgData.automode) {
+                    logList.add("Automodus: neue Filmliste laden");
+                    text = "Automodus: neue Filmliste laden";
+                } else {
+                    logList.add("Filmliste zu alt, neue Filmliste laden");
+                    text = "Filmliste ist zu alt, eine neue downloaden";
+                }
                 logList.add(PLog.LILNE3);
                 PLog.addSysLog(logList);
 
                 notifyProgress.notifyEvent(NotifyProgress.NOTIFY.PROGRESS,
-                        new ListenerFilmlistLoadEvent("", "Filmliste ist zu alt, eine neue downloaden",
+                        new ListenerFilmlistLoadEvent("", text,
                                 ListenerLoadFilmlist.PROGRESS_INDETERMINATE, 0, false/* Fehler */));
 
                 PDuration.onlyPing("Programmstart Filmliste laden: neue Liste laden");

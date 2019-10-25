@@ -126,10 +126,6 @@ public class BlackPane {
         final TableColumn<BlackData, String> channelColumn = new TableColumn<>("Sender");
         channelColumn.setCellValueFactory(new PropertyValueFactory<>("channel"));
 
-        final TableColumn<BlackData, Boolean> channelExactColumn = new TableColumn<>("Sender exakt");
-        channelExactColumn.setCellValueFactory(new PropertyValueFactory<>("channelExact"));
-        channelExactColumn.setCellFactory(CheckBoxTableCell.forTableColumn(channelExactColumn));
-
         final TableColumn<BlackData, String> themeColumn = new TableColumn<>("Thema");
         themeColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
 
@@ -151,7 +147,7 @@ public class BlackPane {
         tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
-        tableView.getColumns().addAll(nrColumn, channelColumn, channelExactColumn, themeColumn, themeExactColumn,
+        tableView.getColumns().addAll(nrColumn, channelColumn, themeColumn, themeExactColumn,
                 titleColumn, themeTitleColumn, hitsColumn);
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
                 Platform.runLater(this::setActBlackData));

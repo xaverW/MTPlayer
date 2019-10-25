@@ -400,8 +400,9 @@ public class Filmlist extends SimpleListProperty<Film> {
         // für den Sender "" sind alle Themen im themenPerSender[0]
         final int senderLength = sender.length;
         themePerChannel = new String[senderLength][];
+
         final TreeSet<String>[] tree = (TreeSet<String>[]) new TreeSet<?>[senderLength];
-//        final HashSet<String>[] hashSet = (HashSet<String>[]) new HashSet<?>[senderLength];
+        final HashSet<String>[] hashSet = (HashSet<String>[]) new HashSet<?>[senderLength];// wäre nicht nötig ist aber so fast doppelt so schnell
         for (int i = 0; i < tree.length; ++i) {
             // tree[i] = new TreeSet<>(GermanStringSorter.getInstance());
             // das Sortieren passt nicht richtig zum Filter!
@@ -410,7 +411,7 @@ public class Filmlist extends SimpleListProperty<Film> {
 
             tree[i] = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
             tree[i].add("");
-//            hashSet[i] = new HashSet<>();
+            hashSet[i] = new HashSet<>();
         }
 
         // alle Themen
@@ -419,23 +420,25 @@ public class Filmlist extends SimpleListProperty<Film> {
             filmChannel = film.arr[FilmXml.FILM_CHANNEL];
             filmTheme = film.arr[FilmXml.FILM_THEME];
             // hinzufügen
-//            if (!hashSet[0].contains(filmTheme)) {
-//                hashSet[0].add(filmTheme);
-            tree[0].add(filmTheme);
-//            }
+            if (!hashSet[0].contains(filmTheme)) {
+                hashSet[0].add(filmTheme);
+                tree[0].add(filmTheme);
+            }
+
             for (int i = 1; i < senderLength; ++i) {
                 if (filmChannel.equals(sender[i])) {
-//                    if (!hashSet[i].contains(filmTheme)) {
-//                        hashSet[i].add(filmTheme);
-                    tree[i].add(filmTheme);
-//                    }
+                    if (!hashSet[i].contains(filmTheme)) {
+                        hashSet[i].add(filmTheme);
+                        tree[i].add(filmTheme);
+                    }
                 }
             }
         }
+
         for (int i = 0; i < themePerChannel.length; ++i) {
             themePerChannel[i] = tree[i].toArray(new String[tree[i].size()]);
             tree[i].clear();
-//            hashSet[i].clear();
+            hashSet[i].clear();
         }
 
         PDuration.counterStop("Themen in Filmliste suchen");
