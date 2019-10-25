@@ -81,7 +81,14 @@ public class DownloadContinueDialogController extends PDialogExtra {
         vBoxCont = getVboxCont();
         hBoxOk = getHboxOk();
 
-        init(getVBoxCompleteDialog(), true);
+
+        if (ProgData.automode) {
+            // dann schaut ja eh keiner zu, also restart des Downloads
+            result = DownloadState.ContinueDownload.RESTART_DOWNLOAD;
+            return;
+        } else {
+            init(getVBoxCompleteDialog(), true);
+        }
     }
 
     @Override

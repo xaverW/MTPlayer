@@ -17,6 +17,7 @@
 package de.mtplayer.mtp.gui.dialog;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.p2tools.p2Lib.dialog.PDialogExtra;
@@ -72,7 +73,13 @@ public class DownloadErrorDialogController extends PDialogExtra {
         vBoxCont = getVboxCont();
         hBoxOk = getHboxOk();
 
-        init(getVBoxCompleteDialog(), true);
+        if (ProgData.automode) {
+            // dann schaut ja eh keiner zu
+            return;
+
+        } else {
+            init(getVBoxCompleteDialog(), true);
+        }
     }
 
     @Override
