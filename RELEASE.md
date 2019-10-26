@@ -15,7 +15,7 @@ hilfreich?)
 * Filter (Filme, Downloads, Abos) werden beim Programmstart wieder hergestellt
 * der gespeicherte Filter wird unterstrichen, wenn die Filtereinstellungen noch unverändert sind
 * fx bug beim glyphcache management wird abgefangen
-* durch einen Fehler konnten keine Downloads (bei *nix) mit Leerzeichen vorgenommen werden, geht wieder
+* durch einen Fehler konnten keine Downloads (bei *nix) mit Leerzeichen im Pfad vorgenommen werden, geht wieder
 * verbessertes Importscript (für MV), findet jetzt z.B. auch die Abo-Min. und Abo-Max Dauer
 
 
