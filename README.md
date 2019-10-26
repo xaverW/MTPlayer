@@ -35,7 +35,7 @@ Alle Einstellungen können nicht übernommen werden da sich einiges geändert ha
 
 ## Systemvoraussetzungen
 
-Unterstützt wird Windows (7, 8, 10) und Linux. 
+Unterstützt wird Windows und Linux. 
 
 *bis Programmversion 6*
 

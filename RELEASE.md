@@ -1,5 +1,23 @@
 ## MTPlayer
 
+**Release 8**
+
+* Dark Theme, die Programmoberfläche kann jetzt auch in einem "dark theme" angezeigt werden: Einstellungen->Farben
+* neuer Filter im Tab Abos: Suche eines Abos nach Aboname
+* bei Filmabos kann jetzt der Suchzeitraum einschränkt werden: Filter "Zeitraum", es werden nur die Filme der letzten xx Tage gefunden
+* Automode, wird das Programm mit dem Parameter -a oder --auto gestartet, wird die Filmliste aktualisiert, Abos gesucht, Downloads gespeichert 
+und das Programm danach wieder beendet (für *nix user: Das Gui wird dabei geladen, es muss also auch X installiert sein!)
+* das Gui und die Programm-Menüs wurden an vielen Stellen überarbeitet und intuitiver angeordnet
+* der Filter "Zeitraum" wurde überarbeitet
+* Filmfilter "Sender exakt" wurde komplett überarbeitet, jetzt kann man direkt aus dem Gui heraus einen Sender/oder mehrere Sender auswählen,
+dadurch wird die Bedienung deutlich vereinfacht, nicht mehr möglich ist die Suche mit RegEx im Senderfilter (ist hier aber ja auch nicht wirklich
+hilfreich?)
+* Filter (Filme, Downloads, Abos) werden beim Programmstart wieder hergestellt
+* der gespeicherte Filter wird unterstrichen, wenn die Filtereinstellungen noch unverändert sind
+* fx bug beim glyphcache management wird abgefangen
+* durch einen Fehler konnten keine Downloads (bei *nix) mit Leerzeichen vorgenommen werden, geht wieder
+* verbessertes Importscript (für MV), findet jetzt z.B. auch die Abo-Min. und Abo-Max Dauer
+
 
 **Release 7**
 

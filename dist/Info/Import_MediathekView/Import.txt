@@ -23,3 +23,7 @@ da sich einiges geändert hat, nach dem Start bitte die
 Einstellungen und Abos (z.B. Mindestdauer der Abos) 
 durchgehen und überprüfen.
 
+Linux-Nutzer können auch das Script "linux_import.sh"
+dafür verwenden. Es kopiert die Dateien und versucht auch
+noch einige weitere Einstellungen zu übertragen.
+

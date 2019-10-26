@@ -21,7 +21,7 @@ Anleitung: 	https://www.p2tools.de/mtplayer/manual/start.html
 Systemvoraussetzungen
 =====================================================================
 
-* Unterstützt wird Windows (7, 8, 10) und Linux. Das Programm
+* Unterstützt wird Windows und Linux. Das Programm
 benötigt unter Windows und Linux eine aktuelle Java-VM ab Version 11
 (Java11 oder höher, die darüber hinaus benötigten JavaFX-Runtimes
 sind im Programm bereits für alle Betriebssysteme enthalten).
@@ -46,7 +46,7 @@ anderen Programme werden mitgeliefert).
 
 Linux
 ------
-* Für Linux-Benutzer wird OpenJDK11 empfohlen (oder das Programmpaket
+* Für Linux-Benutzer wird OpenJDK empfohlen (oder das Programmpaket
 das Java bereits enthält und so ohne Java-Installation auskommt).
 
 * Bei Linux muss der VLC Media Player, der flvstreamer (oder rtmpdump)
@@ -113,7 +113,7 @@ kopieren. Dort kann dann die Programmdatei "MTPlayer__Windows.exe"
 oder "MTPlayer__Linux.sh" doppelgeklickt werden.
 
 * Benötigte Dateien wurden aus dem Programm-Ordner gelöscht oder
-die Hilfsprogramm (im Ordner "bin") fehlen, da Dateien aus dem
+die Hilfsprogramme (im Ordner "bin") fehlen, da Dateien aus dem
 MTPlayer-Programmordner gelöscht oder verschoben wurden,
 ->dann eine Neuinstallation.
 

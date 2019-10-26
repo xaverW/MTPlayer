@@ -1,16 +1,3 @@
-:: Wenn man in den Einstellungen (nicht im Filter!!), das
-:: Laden der Filmliste auf die letzten 25 Tage reduziert
-:: und die Minimale Filmlänge auf 5 min. setzt, 
-:: bekommt man eine Filmliste mit weniger als 15.000 
-:: Einträgen. Damit lässt sich das Programm mit sehr wenig
-:: Speicher starten, und auch ohne Einschränkung anwenden.
-:: Nachdem die Einstellungen geändert wurden, und
-:: MTPlayer neu gestartet wird, versuchen sie es hiermit:
- 
-:: java -Xms128M -Xmx256M -jar ./MTPlayer.jar
-
-
-
 :: ================================================
 :: Das sind verschiedene Möglichkeiten das Programm
 :: zu starten, die anderen Aufrufe sind auskommentiert
@@ -20,11 +7,21 @@
 :: Durch Schreiben eines "::" zu Beginn einer Zeile wird 
 :: diese nicht mehr als Befehl interpretiert.
 
-
 :: Start in einer extra Dos-Box die minimiert startet
 :: Die Parameter "-Xms128M -Xmx1G" helfen bei geringem Arbeitsspeicher. 
 
 start /min javaw -Xms128m -Xmx1024m -jar "C:\Users\PFAD\MTPlayer.jar"
+
+
+:: Wenn man in den Einstellungen (nicht im Filter!!), das
+:: Laden der Filmliste auf die letzten 25 Tage reduziert
+:: und die Minimale Filmlänge auf 5 min. setzt, 
+:: bekommt man eine Filmliste mit weniger als 15.000 
+:: Einträgen. Damit lässt sich das Programm mit sehr wenig
+:: Speicher starten, und auch ohne Einschränkung anwenden.
+:: Nachdem die Einstellungen geändert wurden, und
+:: MTPlayer neu gestartet wird, versuchen sie es hiermit:
+:: java -Xms128M -Xmx256M -jar ./MTPlayer.jar
 
 
 :: Start mit mehr Speicher für das Programm
