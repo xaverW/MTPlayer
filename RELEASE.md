@@ -4,7 +4,7 @@
 
 * Dark Theme, die Programmoberfläche kann jetzt auch in einem "dark theme" angezeigt werden: Einstellungen->Farben
 * neuer Filter im Tab Abos: Suche eines Abos nach Aboname
-* bei Filmabos kann jetzt der Suchzeitraum einschränkt werden: Filter "Zeitraum", es werden nur die Filme der letzten xx Tage gefunden
+* bei Filmabos kann jetzt der Suchzeitraum eingeschränkt werden: Filter "Zeitraum", es werden nur die Filme der letzten xx Tage gefunden
 * Automode, wird das Programm mit dem Parameter -a oder --auto gestartet, wird die Filmliste aktualisiert, Abos gesucht, Downloads gespeichert 
 und das Programm danach wieder beendet (für *nix user: Das Gui wird dabei geladen, es muss also auch X installiert sein!)
 * das Gui und die Programm-Menüs wurden an vielen Stellen überarbeitet und intuitiver angeordnet
