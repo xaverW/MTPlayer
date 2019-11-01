@@ -27,7 +27,7 @@ import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.film.Filmlist;
 import de.mtplayer.mtp.controller.data.film.FilmlistXml;
-import de.p2tools.p2Lib.PConst;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.tools.log.PLog;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -90,7 +90,7 @@ public class SearchUpdateWithDate {
         } catch (final FileNotFoundException ex) {
             list.add("FilmListe existiert nicht: " + source);
         } catch (final Exception ex) {
-            list.add("FilmListe: " + source + PConst.LINE_SEPARATOR + ex.getMessage());
+            list.add("FilmListe: " + source + P2LibConst.LINE_SEPARATOR + ex.getMessage());
         }
         return ret;
     }

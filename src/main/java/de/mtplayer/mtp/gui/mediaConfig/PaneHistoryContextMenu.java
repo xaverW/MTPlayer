@@ -19,7 +19,7 @@ package de.mtplayer.mtp.gui.mediaConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.history.HistoryData;
-import de.p2tools.p2Lib.PConst;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.tools.PSystemUtils;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
@@ -63,7 +63,7 @@ public class PaneHistoryContextMenu {
         miCopyUrl.setOnAction(a -> {
             String str = "";
             for (HistoryData historyData : historyDataArrayList) {
-                str += str.isEmpty() ? historyData.getUrl() : PConst.LINE_SEPARATOR + historyData.getUrl();
+                str += str.isEmpty() ? historyData.getUrl() : P2LibConst.LINE_SEPARATOR + historyData.getUrl();
             }
             PSystemUtils.copyToClipboard(str);
         });

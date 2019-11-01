@@ -19,24 +19,24 @@ package de.mtplayer.mtp.controller.starter;
 import de.mtplayer.mLib.tools.SizeTools;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.data.download.Download;
-import de.p2tools.p2Lib.PConst;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.guiTools.pNotification.PNotification;
 
 
 public class MTNotification {
     public static void addNotification(Download download, boolean error) {
-        String text = ("Film:   " + download.getTitle() + PConst.LINE_SEPARATOR +
-                "Sender: " + download.getChannel() + PConst.LINE_SEPARATOR +
-                "Größe:  " + SizeTools.humanReadableByteCount(download.getDownloadSize().getFilmSize(), true) + PConst.LINE_SEPARATOR +
+        String text = ("Film:   " + download.getTitle() + P2LibConst.LINE_SEPARATOR +
+                "Sender: " + download.getChannel() + P2LibConst.LINE_SEPARATOR +
+                "Größe:  " + SizeTools.humanReadableByteCount(download.getDownloadSize().getFilmSize(), true) + P2LibConst.LINE_SEPARATOR +
                 (error ? "Download war fehlerhaft" : "Download war erfolgreich"));
 
         add(text, error);
     }
 
     public static void addNotification(boolean error) {
-        String text = ("Film:   " + "Test" + PConst.LINE_SEPARATOR +
-                "Sender: " + "Test" + PConst.LINE_SEPARATOR +
-                "Größe:  " + "Test" + PConst.LINE_SEPARATOR +
+        String text = ("Film:   " + "Test" + P2LibConst.LINE_SEPARATOR +
+                "Sender: " + "Test" + P2LibConst.LINE_SEPARATOR +
+                "Größe:  " + "Test" + P2LibConst.LINE_SEPARATOR +
                 (error ? "Download war fehlerhaft" : "Download war erfolgreich"));
 
         add(text, error);

@@ -5,7 +5,6 @@
     -tab-button-2: #e6e6e6;
     -tab-button-3: rgba(230,230,230,0);
 
-    -filter-ok-1: #c3c4c4;
     -filter-lin-grad-1: linear-gradient(from 50% 17% to 50% 114% , repeat, #E6E6E6, #CBD8EB 100% );
 
     -lin-grad-1: linear-gradient(from 0% 0% to 100% 100%, -tab-button-1 50%, white 100%);
@@ -23,7 +22,6 @@
     -lblSelectedLines-color-2: derive(-fx-base, -10%);
 
     -text-color-blue: #002fbe;
-
 }
 
 /* CheckBoxCell: CheckBoxen in der Tabelle*/
@@ -98,64 +96,7 @@
      -fx-padding: 0px;
 }
 
-/* tabs of the tabpane*/
-.tab .tab-label {
-    -fx-text-alignment: center;
-    -fx-alignment: center ;
-}
-.tab-pane {
-    -fx-border-width: 1;
-    -fx-border-color: -text-color-blue;
- }
-.tab-pane > .tab-header-area > .headers-region > .tab {
-    -fx-padding: 0 10 0 10;
 
-    -fx-border-width: 1, 2;
-    -fx-border-radius: 8 8 0 0, 6 6 0 0;
-    -fx-border-insets: 0 3 0 0, 3 6 3 3;
-    -fx-border-color: -style-tab-border-color-1, transparent;
-
-    -fx-background-radius: 0, 10 10 0 0, 6 6 0 0;
-    -fx-background-insets: 0, 0 3 0 0, 2 5 2 2;
-    -fx-background-color:
-             transparent,
-             -lin-grad-1,
-             -rad-grad-1;
-    -fx-text-fill: black;
- }
-.tab-pane > .tab-header-area > .headers-region > .tab:selected {
-    -fx-border-width: 3, 2;
-    -fx-border-color: -style-tab-border-color-1, transparent;
- }
-.tab-pane > .tab-header-area > .headers-region > .tab:hover {
-    -fx-border-width: 2, 1, 2;/* 3 Rahmen, damit die "Gesamtbreite" gleich bleibt */
-    -fx-border-color: -style-tab-border-color-1, -style-tab-border-color-2, transparent;
- }
-.tab-pane > .tab-header-area > .headers-region > .tab:pressed {
-    -fx-border-width: 1, 2;
-    -fx-border-color: -style-tab-border-color-1, -style-tab-border-color-2;
- }
-
-.tab .tab-label {
-     -fx-text-fill: black;
-}
-.tab:selected .tab-label {
-     -fx-text-fill: -text-color-blue;
-}
-.tab-pane > .tab-header-area > .headers-region > .tab:selected  .focus-indicator {
-    -fx-focus-color: transparent;
-    -fx-faint-focus-color: transparent;
-}
-
-
-/* damit leere Tabellenzeilen nicht angezeigt werden */
-.table-row-cell:empty {
-    -fx-background-color: white;
-}
-
-.table-row-cell:empty .table-cell {
-    -fx-border-width: 0px;
-}
 
 
 /* Button "Filme", "Downloads", "Abos" */
@@ -352,25 +293,6 @@
     -fx-mark-color: #0b99c9;
 }
 
-
-/* der allgemeine Rest*/
-.combo-box-base{
-    -fx-border-radius: 5;
-    -fx-background-radius: 5;
-}
-.combo-box .arrow-button{
-    -fx-border-radius: 0 5 5 0;
-    -fx-background-radius: 0 5 5 0;
-}
-.combo-box > .list-cell{
-    -fx-border-radius: 5 0 0 5;
-    -fx-background-radius: 5 0 0 5;
-}
-.combo-box .text-input{
-    -fx-border-radius: 5 0 0 5;
-    -fx-background-radius: 5 0 0 5;
-}
-
 .alignCenter {
   -fx-alignment: center;
 }
@@ -381,26 +303,10 @@
   -fx-alignment: center-left;
 }
 
-.titled-pane > .title {
-    -fx-font-weight: bold;
-}
-.titled-pane:collapsed > .title {
-    -fx-font-weight: normal;
-}
 
 /* ist der abgesetzte Bereich im Download Dialog*/
 .downloadDialog {
     -fx-background-color: gainsboro;
-}
-
-/* sind alle Context-Menüs */
-.context-menu {
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
-    -fx-border-color: #939a9f;
-}
-.menu-item  {
-    -fx-background-radius: 5px;
 }
 
 /* farblich abgesetzter Bereich in vielen Panes/Dialogen*/
@@ -425,3 +331,95 @@
     -fx-font-size: 0.9em;
 }
 
+/* ========================================================================== */
+/* sind javafx gui Elemente */
+/* ========================================================================== */
+
+/* sind alle Context-Menüs */
+.context-menu {
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-border-color: #939a9f;
+}
+.menu-item  {
+    -fx-background-radius: 5px;
+}
+.titled-pane > .title {
+    -fx-font-weight: bold;
+}
+.titled-pane:collapsed > .title {
+    -fx-font-weight: normal;
+}
+.combo-box-base{
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+.combo-box .arrow-button{
+    -fx-border-radius: 0 5 5 0;
+    -fx-background-radius: 0 5 5 0;
+}
+.combo-box > .list-cell{
+    -fx-border-radius: 5 0 0 5;
+    -fx-background-radius: 5 0 0 5;
+}
+.combo-box .text-input{
+    -fx-border-radius: 5 0 0 5;
+    -fx-background-radius: 5 0 0 5;
+}
+/* damit leere Tabellenzeilen nicht angezeigt werden */
+.table-row-cell:empty {
+    -fx-background-color: white;
+}
+
+.table-row-cell:empty .table-cell {
+    -fx-border-width: 0px;
+}
+
+/* tabs of the tabpane*/
+.tab .tab-label {
+    -fx-text-alignment: center;
+    -fx-alignment: center ;
+}
+.tab-pane {
+    -fx-border-width: 1;
+    -fx-border-color: -text-color-blue;
+ }
+.tab-pane > .tab-header-area > .headers-region > .tab {
+    -fx-padding: 0 10 0 10;
+
+    -fx-border-width: 1, 2;
+    -fx-border-radius: 8 8 0 0, 6 6 0 0;
+    -fx-border-insets: 0 3 0 0, 3 6 3 3;
+    -fx-border-color: -style-tab-border-color-1, transparent;
+
+    -fx-background-radius: 0, 10 10 0 0, 6 6 0 0;
+    -fx-background-insets: 0, 0 3 0 0, 2 5 2 2;
+    -fx-background-color:
+             transparent,
+             -lin-grad-1,
+             -rad-grad-1;
+    -fx-text-fill: black;
+ }
+.tab-pane > .tab-header-area > .headers-region > .tab:selected {
+    -fx-border-width: 3, 2;
+    -fx-border-color: -style-tab-border-color-1, transparent;
+ }
+.tab-pane > .tab-header-area > .headers-region > .tab:hover {
+    -fx-border-width: 2, 1, 2;/* 3 Rahmen, damit die "Gesamtbreite" gleich bleibt */
+    -fx-border-color: -style-tab-border-color-1, -style-tab-border-color-2, transparent;
+ }
+.tab-pane > .tab-header-area > .headers-region > .tab:pressed {
+    -fx-border-width: 1, 2;
+    -fx-border-color: -style-tab-border-color-1, -style-tab-border-color-2;
+ }
+
+.tab .tab-label {
+     -fx-text-fill: black;
+}
+.tab:selected .tab-label {
+     -fx-text-fill: -text-color-blue;
+}
+.tab-pane > .tab-header-area > .headers-region > .tab:selected  .focus-indicator {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}

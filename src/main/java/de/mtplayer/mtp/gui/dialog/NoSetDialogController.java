@@ -17,7 +17,7 @@
 package de.mtplayer.mtp.gui.dialog;
 
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.p2tools.p2Lib.PConst;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.dialog.PDialog;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -74,14 +74,14 @@ public class NoSetDialogController extends PDialog {
         Text textHeaderAbo = new Text("Kein Set zum Aufzeichnen der Abos!");
         textHeaderAbo.setFont(Font.font(null, FontWeight.BOLD, -1));
 
-        final String txtAdd = "Im Menü Einstellungen unter" + PConst.LINE_SEPARATOR +
+        final String txtAdd = "Im Menü Einstellungen unter" + P2LibConst.LINE_SEPARATOR +
 
-                "   ->Aufzeichnen und Abspielen" + PConst.LINE_SEPARATOR +
+                "   ->Aufzeichnen und Abspielen" + P2LibConst.LINE_SEPARATOR +
 
-                "die Programme zum Abspielen von Filmen und " + PConst.LINE_SEPARATOR +
-                "Aufzeichnen von Abos korrigieren." + PConst.LINE_SEPARATORx3 +
+                "die Programme zum Abspielen von Filmen und " + P2LibConst.LINE_SEPARATOR +
+                "Aufzeichnen von Abos korrigieren." + P2LibConst.LINE_SEPARATORx3 +
 
-                "Oder die Einstellungen zurücksetzen und" + PConst.LINE_SEPARATOR +
+                "Oder die Einstellungen zurücksetzen und" + P2LibConst.LINE_SEPARATOR +
                 "die Standardsets wieder herstellen.";
 
         VBox vBoxCont = new VBox();
@@ -101,20 +101,20 @@ public class NoSetDialogController extends PDialog {
         switch (text) {
             case SAVE:
                 textArea.setText(
-                        "Es ist kein Set von Programmen zum" + PConst.LINE_SEPARATOR +
-                                "Aufzeichnen der Filme angelegt." + PConst.LINE_SEPARATORx2 +
+                        "Es ist kein Set von Programmen zum" + P2LibConst.LINE_SEPARATOR +
+                                "Aufzeichnen der Filme angelegt." + P2LibConst.LINE_SEPARATORx2 +
                                 txtAdd);
                 break;
             case PLAY:
                 textArea.setText(
-                        "Es ist kein Videoplayer zum Abspielen" + PConst.LINE_SEPARATOR +
-                                "der Filme angelegt." + PConst.LINE_SEPARATORx2 +
+                        "Es ist kein Videoplayer zum Abspielen" + P2LibConst.LINE_SEPARATOR +
+                                "der Filme angelegt." + P2LibConst.LINE_SEPARATORx2 +
                                 txtAdd);
                 break;
             case ABO:
                 textArea.setText(
-                        "Es ist kein Set von Programmen zum" + PConst.LINE_SEPARATOR +
-                                "Aufzeichnen der Abos angelegt." + PConst.LINE_SEPARATORx2 +
+                        "Es ist kein Set von Programmen zum" + P2LibConst.LINE_SEPARATOR +
+                                "Aufzeichnen der Abos angelegt." + P2LibConst.LINE_SEPARATORx2 +
                                 txtAdd);
         }
 

@@ -22,7 +22,7 @@ import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.gui.dialog.DownloadAddDialogController;
 import de.mtplayer.mtp.gui.dialog.NoSetDialogController;
-import de.p2tools.p2Lib.PConst;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 
 import java.util.ArrayList;
@@ -121,8 +121,8 @@ public class FilmTools {
 
                 if (list.size() <= 1) {
                     PAlert.BUTTON answer = PAlert.showAlert_yes_no("Anlegen?", "Nochmal anlegen?",
-                            "Download für den Film existiert bereits:" + PConst.LINE_SEPARATORx2 +
-                                    dateFilm.getTitle() + PConst.LINE_SEPARATORx2 +
+                            "Download für den Film existiert bereits:" + P2LibConst.LINE_SEPARATORx2 +
+                                    dateFilm.getTitle() + P2LibConst.LINE_SEPARATORx2 +
                                     "Nochmal anlegen?");
                     switch (answer) {
                         case NO:
@@ -135,9 +135,9 @@ public class FilmTools {
 
                 } else {
                     PAlert.BUTTON answer = PAlert.showAlert_yes_no_cancel("Anlegen?", "Nochmal anlegen?",
-                            "Download für den Film existiert bereits:" + PConst.LINE_SEPARATORx2 +
-                                    dateFilm.getTitle() + PConst.LINE_SEPARATORx2 +
-                                    "Nochmal anlegen (Ja / Nein)?" + PConst.LINE_SEPARATOR +
+                            "Download für den Film existiert bereits:" + P2LibConst.LINE_SEPARATORx2 +
+                                    dateFilm.getTitle() + P2LibConst.LINE_SEPARATORx2 +
+                                    "Nochmal anlegen (Ja / Nein)?" + P2LibConst.LINE_SEPARATOR +
                                     "Oder alles Abbrechen?");
                     switch (answer) {
                         case CANCEL:

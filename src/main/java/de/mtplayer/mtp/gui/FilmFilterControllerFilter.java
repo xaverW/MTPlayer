@@ -46,13 +46,6 @@ public class FilmFilterControllerFilter extends VBox {
     Label lblOnly = new Label("nur anzeigen");
     Label lblNot = new Label("nicht anzeigen");
 
-    //    private final ComboBox<String> cboChannel = new ComboBox<>();
-//    private final ComboBox<String> cbxTheme = new ComboBox<>();
-//    private final TextField txtThemeTitle = new TextField();
-//    private final TextField txtTitle = new TextField();
-//    private final TextField txtSomewhere = new TextField();
-//    private final TextField txtUrl = new TextField();
-
     private final String ONLY_BOOKMARK = "Bookmarks";
     private final String ONLY_HD = "HD";
     private final String ONLY_UT = "UT";
@@ -75,107 +68,12 @@ public class FilmFilterControllerFilter extends VBox {
         setPadding(new Insets(15, 15, 15, 15));
         setSpacing(20);
 
-        // Sender, Thema, ..
-//        addStringFilter();
-
         // Slider
         addSlider();
 
         // CheckOnOff
         addCheckFilter();
     }
-
-//    private void addStringFilter() {
-//        cboChannel.editableProperty().bind(progData.storedFilters.getActFilterSettings().channelExactProperty().not());
-//        cboChannel.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-//        cboChannel.setVisibleRowCount(25);
-//        cboChannel.valueProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().channelProperty());
-//
-//        cboChannel.valueProperty().addListener((observable, oldValue, newValue) -> {
-//            if (oldValue != null && newValue != null) {
-//                // wenn Änderung beim Sender -> Themen anpassen
-//                if (newValue.isEmpty()) {
-//                    progData.worker.createThemeList("");
-//                } else {
-//                    cbxTheme.getSelectionModel().select("");
-//                    progData.worker.createThemeList(newValue);
-//                }
-//            }
-//        });
-//        cboChannel.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
-//            if (oldValue != null && newValue != null) {
-//                // wenn Änderung beim Sender -> Themen anpassen
-//                if (newValue.isEmpty()) {
-//                    progData.worker.createThemeList("");
-//                } else {
-//                    cbxTheme.getSelectionModel().select("");
-//                    progData.worker.createThemeList(newValue);
-//                }
-//                progData.storedFilters.getActFilterSettings().setChannel(newValue);
-//            }
-//        });
-//
-//
-//        cbxTheme.editableProperty().bind(progData.storedFilters.getActFilterSettings().themeExactProperty().not());
-//        cbxTheme.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-//        cbxTheme.setVisibleRowCount(25);
-//        cbxTheme.valueProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().themeProperty());
-//        cbxTheme.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
-//            if (oldValue != null && newValue != null) {
-//                progData.storedFilters.getActFilterSettings().setTheme(newValue);
-//            }
-//        });
-//
-//        cboChannel.setItems(progData.worker.getAllChannelList());
-//        cbxTheme.setItems(progData.worker.getThemeForChannelList());
-//
-//        txtThemeTitle.textProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().themeTitleProperty());
-//        txtTitle.textProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().titleProperty());
-//        txtSomewhere.textProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().somewhereProperty());
-//        txtUrl.textProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().urlProperty());
-//
-//
-//        VBox vBox = new VBox(10);
-////        addTxt("Sender", cboChannel, vBox, progData.storedFilters.getActFilterSettings().channelVisProperty());
-////        addTxt("Thema", cbxTheme, vBox, progData.storedFilters.getActFilterSettings().themeVisProperty());
-//        addTxt("Thema oder Titel", txtThemeTitle, vBox, progData.storedFilters.getActFilterSettings().themeTitleVisProperty());
-//        addTxt("Titel", txtTitle, vBox, progData.storedFilters.getActFilterSettings().titleVisProperty());
-//        addTxt("Irgendwo", txtSomewhere, vBox, progData.storedFilters.getActFilterSettings().somewhereVisProperty());
-//        addTxt("URL", txtUrl, vBox, progData.storedFilters.getActFilterSettings().urlVisProperty());
-//
-//        Separator sp = new Separator();
-//        sp.getStyleClass().add("pseperator1");
-//        sp.setMinHeight(10);
-//        vBox.getChildren().add(sp);
-//
-//        vBox.visibleProperty().bind(progData.storedFilters.getActFilterSettings().channelVisProperty()
-//                .or(progData.storedFilters.getActFilterSettings().themeVisProperty()
-//                        .or(progData.storedFilters.getActFilterSettings().themeTitleVisProperty()
-//                                .or(progData.storedFilters.getActFilterSettings().titleVisProperty()
-//                                        .or(progData.storedFilters.getActFilterSettings().somewhereVisProperty()
-//                                                .or(progData.storedFilters.getActFilterSettings().urlVisProperty())
-//                                        )
-//                                )
-//                        )
-//                ));
-//        vBox.managedProperty().bind(vBox.visibleProperty());
-//
-//        sp.visibleProperty().bind(vBox.visibleProperty());
-//        sp.managedProperty().bind(vBox.visibleProperty());
-//
-//
-//        getChildren().add(vBox);
-//    }
-
-//    private void addTxt(String txt, Control control, VBox vBoxComplete, BooleanProperty booleanProperty) {
-//        VBox vBox = new VBox();
-//        Label label = new Label(txt);
-//        vBox.getChildren().addAll(label, control);
-//        vBoxComplete.getChildren().add(vBox);
-//
-//        vBox.visibleProperty().bind(booleanProperty);
-//        vBox.managedProperty().bind(booleanProperty);
-//    }
 
     private void initDaysFilter() {
         slTimeRange.setMin(FilmFilter.FILTER_TIME_RANGE_MIN_VALUE);

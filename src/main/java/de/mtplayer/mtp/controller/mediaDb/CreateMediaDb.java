@@ -19,7 +19,7 @@ package de.mtplayer.mtp.controller.mediaDb;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.tools.Listener;
-import de.p2tools.p2Lib.PConst;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -88,7 +88,7 @@ public class CreateMediaDb implements Runnable {
                     final File f = new File(mediaCollectionData.getPath());
                     if (!f.canRead()) {
                         if (!error.isEmpty()) {
-                            error = error + PConst.LINE_SEPARATOR;
+                            error = error + P2LibConst.LINE_SEPARATOR;
                             more = true;
                         }
                         error = error + f.getPath();
@@ -118,7 +118,7 @@ public class CreateMediaDb implements Runnable {
                 final File f = new File(mediaCollectionData.getPath());
                 if (!f.canRead()) {
                     if (!error.isEmpty()) {
-                        error = error + PConst.LINE_SEPARATOR;
+                        error = error + P2LibConst.LINE_SEPARATOR;
                     }
                     error = error + f.getPath();
                 }
@@ -146,8 +146,8 @@ public class CreateMediaDb implements Runnable {
 
     private void errorMsg() {
         Platform.runLater(() -> PAlert.showErrorAlert("Fehler beim Erstellen der Mediensammlung",
-                (more ? "Die Pfade der Mediensammlung können nicht alle gelesen werden:" + PConst.LINE_SEPARATOR
-                        : "Der Pfad der Mediensammlung kann nicht gelesen werden:" + PConst.LINE_SEPARATOR) + error));
+                (more ? "Die Pfade der Mediensammlung können nicht alle gelesen werden:" + P2LibConst.LINE_SEPARATOR
+                        : "Der Pfad der Mediensammlung kann nicht gelesen werden:" + P2LibConst.LINE_SEPARATOR) + error));
     }
 
     private void searchFile(File dir, MediaCollectionData mediaCollectionData) {

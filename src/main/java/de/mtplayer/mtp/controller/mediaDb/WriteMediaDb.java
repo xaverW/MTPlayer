@@ -17,7 +17,7 @@
 package de.mtplayer.mtp.controller.mediaDb;
 
 import de.mtplayer.mtp.controller.config.ProgConst;
-import de.p2tools.p2Lib.PConst;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
@@ -59,7 +59,7 @@ public class WriteMediaDb implements AutoCloseable {
             list.add("Fehler, nicht geschrieben!");
             PLog.errorLog(656328109, ex);
             Platform.runLater(() -> PAlert.showErrorAlert("Fehler beim Schreiben",
-                    "Die Mediensammlung konnte nicht geschrieben werden:" + PConst.LINE_SEPARATOR +
+                    "Die Mediensammlung konnte nicht geschrieben werden:" + P2LibConst.LINE_SEPARATOR +
                             file.toString()));
         }
 
@@ -69,11 +69,11 @@ public class WriteMediaDb implements AutoCloseable {
     private void writeXmlData() throws XMLStreamException, IOException {
         xmlWriteStart();
 
-        writer.writeCharacters(PConst.LINE_SEPARATORx2);
+        writer.writeCharacters(P2LibConst.LINE_SEPARATORx2);
         writer.writeComment("MediaDb");
-        writer.writeCharacters(PConst.LINE_SEPARATOR);
+        writer.writeCharacters(P2LibConst.LINE_SEPARATOR);
         xmlWrite();
-        writer.writeCharacters(PConst.LINE_SEPARATORx2);
+        writer.writeCharacters(P2LibConst.LINE_SEPARATORx2);
 
         xmlWriteEnd();
     }
@@ -86,9 +86,9 @@ public class WriteMediaDb implements AutoCloseable {
         final XMLOutputFactory outFactory = XMLOutputFactory.newInstance();
         writer = outFactory.createXMLStreamWriter(out);
         writer.writeStartDocument(StandardCharsets.UTF_8.name(), "1.0");
-        writer.writeCharacters(PConst.LINE_SEPARATOR);// neue Zeile
+        writer.writeCharacters(P2LibConst.LINE_SEPARATOR);// neue Zeile
         writer.writeStartElement(ProgConst.XML_START);
-        writer.writeCharacters(PConst.LINE_SEPARATOR);// neue Zeile
+        writer.writeCharacters(P2LibConst.LINE_SEPARATOR);// neue Zeile
     }
 
     private void xmlWrite() throws XMLStreamException {
@@ -105,7 +105,7 @@ public class WriteMediaDb implements AutoCloseable {
         final int xmlMax = dataArray.length;
         writer.writeStartElement(xmlName);
         if (newLine) {
-            writer.writeCharacters(PConst.LINE_SEPARATOR); // neue Zeile
+            writer.writeCharacters(P2LibConst.LINE_SEPARATOR); // neue Zeile
         }
         for (int i = 0; i < xmlMax; ++i) {
             if (!dataArray[i].isEmpty()) {
@@ -116,12 +116,12 @@ public class WriteMediaDb implements AutoCloseable {
                 writer.writeCharacters(dataArray[i]);
                 writer.writeEndElement();
                 if (newLine) {
-                    writer.writeCharacters(PConst.LINE_SEPARATOR); // neue Zeile
+                    writer.writeCharacters(P2LibConst.LINE_SEPARATOR); // neue Zeile
                 }
             }
         }
         writer.writeEndElement();
-        writer.writeCharacters(PConst.LINE_SEPARATOR); // neue Zeile
+        writer.writeCharacters(P2LibConst.LINE_SEPARATOR); // neue Zeile
     }
 
 

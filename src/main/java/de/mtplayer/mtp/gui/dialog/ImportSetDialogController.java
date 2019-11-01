@@ -23,7 +23,7 @@ import de.mtplayer.mtp.gui.configDialog.SetPaneController;
 import de.mtplayer.mtp.gui.startDialog.DownPathPane;
 import de.mtplayer.mtp.gui.startDialog.PathPane;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
-import de.p2tools.p2Lib.PConst;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.dialog.PDialog;
 import de.p2tools.p2Lib.guiTools.PButton;
@@ -73,10 +73,10 @@ public class ImportSetDialogController extends PDialog {
 
         final Button btnHelp = PButton.helpButton("Set zurücksetzen",
                 "\"Bestehende Sets durch neue ersetzen\"" +
-                        PConst.LINE_SEPARATORx2 +
-                        "Damit werden alle Sets (auch eigene), die zum Abspielen" + PConst.LINE_SEPARATOR +
-                        "und Aufzeichnen der Filme gebraucht werden, gelöscht." + PConst.LINE_SEPARATOR +
-                        "Anschließend werden die aktuellen Standardsets eingerichtet." + PConst.LINE_SEPARATOR +
+                        P2LibConst.LINE_SEPARATORx2 +
+                        "Damit werden alle Sets (auch eigene), die zum Abspielen" + P2LibConst.LINE_SEPARATOR +
+                        "und Aufzeichnen der Filme gebraucht werden, gelöscht." + P2LibConst.LINE_SEPARATOR +
+                        "Anschließend werden die aktuellen Standardsets eingerichtet." + P2LibConst.LINE_SEPARATOR +
                         "Damit kann dann direkt weitergearbeitet werden.");
 
         btnImport.setOnAction(event -> {
@@ -111,7 +111,7 @@ public class ImportSetDialogController extends PDialog {
         setPane.setFitToHeight(true);
         setPane.setFitToWidth(true);
 
-        setPaneController = new SetPaneController(PConst.primaryStage);
+        setPaneController = new SetPaneController(P2LibConst.primaryStage);
         setPaneController.setMaxWidth(Double.MAX_VALUE);
         setPaneController.setMaxHeight(Double.MAX_VALUE);
         setPane.setContent(setPaneController);

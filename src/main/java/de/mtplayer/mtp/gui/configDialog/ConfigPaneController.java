@@ -24,7 +24,7 @@ import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.tools.update.SearchProgramUpdate;
-import de.p2tools.p2Lib.PConst;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.guiTools.PAccordion;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
@@ -377,7 +377,7 @@ public class ConfigPaneController extends AnchorPane {
         tglSearch.selectedProperty().bindBidirectional(propUpdateSearch);
         final Button btnHelp = PButton.helpButton(stage, "Programmupdate suchen",
                 "Beim Programmstart wird geprüft, ob es eine neue Version des Programms gibt. " +
-                        "Ist eine aktualisierte Version vorhanden, wird das dann gemeldet." + PConst.LINE_SEPARATOR +
+                        "Ist eine aktualisierte Version vorhanden, wird das dann gemeldet." + P2LibConst.LINE_SEPARATOR +
                         "Das Programm wird aber nicht ungefragt ersetzt.");
 
         //jetzt suchen

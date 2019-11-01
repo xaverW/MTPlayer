@@ -27,7 +27,7 @@ import de.mtplayer.mtp.gui.dialog.FilmInfoDialogController;
 import de.mtplayer.mtp.gui.startDialog.StartDialogController;
 import de.mtplayer.mtp.res.GetIcon;
 import de.mtplayer.mtp.tools.storedFilter.ProgInitFilter;
-import de.p2tools.p2Lib.PInit;
+import de.p2tools.p2Lib.P2LibInit;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PGuiSize;
 import de.p2tools.p2Lib.tools.duration.PDuration;
@@ -71,7 +71,7 @@ public class MTPlayer extends Application {
 
     private void initP2lib() {
         PButton.setHlpImage(GetIcon.getImage("button-help.png", 16, 16));
-        PInit.initLib(primaryStage, ProgConst.PROGRAMNAME,
+        P2LibInit.initLib(primaryStage, ProgConst.PROGRAMNAME,
                 ProgConst.CSS_FILE, "",
                 ProgData.debug, ProgData.duration);
     }
@@ -120,9 +120,9 @@ public class MTPlayer extends Application {
                     PGuiSize.getWidth(ProgConfig.SYSTEM_SIZE_GUI.getStringProperty()),
                     PGuiSize.getHeight(ProgConfig.SYSTEM_SIZE_GUI.getStringProperty()));
 
-            String css = this.getClass().getResource(ProgConst.CSS_FILE).toExternalForm();
-            scene.getStylesheets().add(css);
-            PInit.addP2LibCss(scene);
+//            String css = this.getClass().getResource(ProgConst.CSS_FILE).toExternalForm();
+//            scene.getStylesheets().add(ProgConst.CSS_FILE);
+            P2LibInit.addP2LibCssToScene(scene);
 
             ProgConfig.SYSTEM_DARK_THEME.getStringProperty().addListener((u, o, n) ->
                     setTheme());
@@ -146,13 +146,15 @@ public class MTPlayer extends Application {
 
     private void setTheme() {
         if (ProgConfig.SYSTEM_DARK_THEME.getBool()) {
-            String css = this.getClass().getResource(ProgConst.CSS_FILE_DARK_THEME).toExternalForm();
-            scene.getStylesheets().add(css);
-            PInit.addCssFile(css);
+//            String css = this.getClass().getResource(ProgConst.CSS_FILE_DARK_THEME).toExternalForm();
+//            scene.getStylesheets().add(ProgConst.CSS_FILE_DARK_THEME);
+            P2LibInit.addCssFile(ProgConst.CSS_FILE_DARK_THEME);
+            P2LibInit.addP2LibCssToScene(scene);
         } else {
-            String css = this.getClass().getResource(ProgConst.CSS_FILE_DARK_THEME).toExternalForm();
-            scene.getStylesheets().removeAll(css);
-            PInit.removeCssFile(css);
+//            String css = this.getClass().getResource(ProgConst.CSS_FILE_DARK_THEME).toExternalForm();
+//            scene.getStylesheets().removeAll(ProgConst.CSS_FILE_DARK_THEME);
+            P2LibInit.removeCssFile(ProgConst.CSS_FILE_DARK_THEME);
+            P2LibInit.addP2LibCssToScene(scene);
         }
     }
 

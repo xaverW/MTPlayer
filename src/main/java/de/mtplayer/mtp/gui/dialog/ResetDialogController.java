@@ -22,7 +22,7 @@ import de.mtplayer.mtp.controller.ProgQuit;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.gui.tools.HelpText;
-import de.p2tools.p2Lib.PConst;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.dialog.PDialog;
 import de.p2tools.p2Lib.guiTools.PButton;
@@ -65,8 +65,8 @@ public class ResetDialogController extends PDialog {
         gridPane.setVgap(25);
 
 
-        Label headerLabel = new Label("Einstellungen können komplett oder" + PConst.LINE_SEPARATOR +
-                "nur die Sets zum Abspielen/Speichern" + PConst.LINE_SEPARATOR +
+        Label headerLabel = new Label("Einstellungen können komplett oder" + P2LibConst.LINE_SEPARATOR +
+                "nur die Sets zum Abspielen/Speichern" + P2LibConst.LINE_SEPARATOR +
                 "zurückgesetzt werden!");
         headerLabel.setStyle("-fx-font-size: 1.5em;");
 
@@ -81,10 +81,10 @@ public class ResetDialogController extends PDialog {
 
         BigButton setButton = new BigButton(new ProgIcons().ICON_BUTTON_QUIT,
                 "Einstellungen zum Abspielen/Aufzeichnen zurücksetzen",
-                "Es werden alle Programmsets (auch eigene)" + PConst.LINE_SEPARATOR +
-                        "zum Abspielen und Aufzeichnen gelöscht" + PConst.LINE_SEPARATOR +
+                "Es werden alle Programmsets (auch eigene)" + P2LibConst.LINE_SEPARATOR +
+                        "zum Abspielen und Aufzeichnen gelöscht" + P2LibConst.LINE_SEPARATOR +
                         "und die Standardsets wieder angelegt." +
-                        PConst.LINE_SEPARATORx2 +
+                        P2LibConst.LINE_SEPARATORx2 +
                         "Abos und Blacklist bleiben erhalten.");
         setButton.setOnAction(e -> {
             Platform.runLater(() -> new ImportSetDialogController(progData));
@@ -95,16 +95,16 @@ public class ResetDialogController extends PDialog {
         // alle Einstellungen
         BigButton allButton = new BigButton(new ProgIcons().ICON_BUTTON_QUIT, "" +
                 "Alle Einstellungen zurücksetzen!",
-                "Alle Einstellungen gehen verloren." + PConst.LINE_SEPARATORx2 +
-                        "ACHTUNG" + PConst.LINE_SEPARATOR +
-                        "es werden auch eigene Buttons, Abos" + PConst.LINE_SEPARATOR +
+                "Alle Einstellungen gehen verloren." + P2LibConst.LINE_SEPARATORx2 +
+                        "ACHTUNG" + P2LibConst.LINE_SEPARATOR +
+                        "es werden auch eigene Buttons, Abos" + P2LibConst.LINE_SEPARATOR +
                         "und die Blacklist gelöscht.");
         allButton.setOnAction(e -> {
             Text t = new Text("ALLE");
             t.setFont(Font.font(null, FontWeight.BOLD, -1));
 
             TextFlow tf = new TextFlow();
-            tf.getChildren().addAll(new Text("Es werden "), t, new Text(" von Ihnen erzeugten Änderungen gelöscht." + PConst.LINE_SEPARATORx2 +
+            tf.getChildren().addAll(new Text("Es werden "), t, new Text(" von Ihnen erzeugten Änderungen gelöscht." + P2LibConst.LINE_SEPARATORx2 +
                     "Möchten Sie wirklich alle Einstellungen zurücksetzen?"));
 
             if (PAlert.showAlert_yes_no_cancel("Einstellungen zurücksetzen",

@@ -17,7 +17,7 @@
 package de.mtplayer.mtp.controller.data.download;
 
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.p2tools.p2Lib.PConst;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 
@@ -140,7 +140,7 @@ public class DownloadListStartStop {
             // nur einmal fragen
             String text;
             if (size > 1) {
-                text = "Es sind auch fehlerhafte Filme dabei," + PConst.LINE_SEPARATOR + "diese nochmal starten?";
+                text = "Es sind auch fehlerhafte Filme dabei," + P2LibConst.LINE_SEPARATOR + "diese nochmal starten?";
             } else {
                 text = "Film nochmal starten?  ==> " + title;
             }

@@ -16,12 +16,11 @@
 
 package de.mtplayer.mtp.gui.startDialog;
 
-import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.gui.configDialog.GeoPane;
 import de.mtplayer.mtp.gui.configDialog.LoadFilmsPane;
-import de.p2tools.p2Lib.PInit;
+import de.p2tools.p2Lib.P2LibInit;
 import de.p2tools.p2Lib.dialog.PDialog;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.geometry.Insets;
@@ -83,9 +82,9 @@ public class StartDialogController extends PDialog {
     @Override
     public void make() {
         stage = getStage();
-        String css = this.getClass().getResource(ProgConst.CSS_FILE).toExternalForm();
-        getStage().getScene().getStylesheets().add(css);
-        PInit.addP2LibCss(getStage().getScene());
+//        String css = this.getClass().getResource(ProgConst.CSS_FILE).toExternalForm();
+//        getStage().getScene().getStylesheets().add(css);
+        P2LibInit.addP2LibCssToScene(getStage().getScene());
 
         initPanel();
         addButton();

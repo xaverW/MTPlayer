@@ -92,10 +92,6 @@ public class FilmlistFactory {
         // gibt da eine Java-Bug
         // https://github.com/javafxports/openjdk-jfx/issues/287
 
-//        if (ret.contains("Oldtimer-Flieger")) {
-//            System.out.println("Oldtimer-Flieger");
-//        }
-
         if (alsoNewLine) {
             ret = ret.replaceAll(regEx1, " ").replaceAll(regEx2, "");
         } else {

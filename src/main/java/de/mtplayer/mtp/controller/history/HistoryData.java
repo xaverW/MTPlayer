@@ -18,7 +18,7 @@ package de.mtplayer.mtp.controller.history;
 
 import de.mtplayer.mLib.tools.FilmDate;
 import de.mtplayer.mLib.tools.Functions;
-import de.p2tools.p2Lib.PConst;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.tools.GermanStringSorter;
 import de.p2tools.p2Lib.tools.log.PLog;
 import org.apache.commons.lang3.time.FastDateFormat;
@@ -89,7 +89,7 @@ public class HistoryData implements Comparable<HistoryData> {
 
         if (dateStr.isEmpty() && theme.isEmpty() && title.isEmpty()) {
             // ist das alte Format
-            return url + PConst.LINE_SEPARATOR;
+            return url + P2LibConst.LINE_SEPARATOR;
         }
 
         if (theme.length() < MAX_THEME) {
@@ -106,7 +106,7 @@ public class HistoryData implements Comparable<HistoryData> {
         return dateStr + SEPARATOR_1
                 + cleanUp(theme) + SEPARATOR_1
                 + cleanUp(title) + SEPARATOR_2
-                + url + PConst.LINE_SEPARATOR;
+                + url + P2LibConst.LINE_SEPARATOR;
     }
 
     public static HistoryData getHistoryDataFromLine(String line) {
@@ -135,7 +135,7 @@ public class HistoryData implements Comparable<HistoryData> {
     private static String cleanUp(String s) {
         s = s.replace("\n", ""); // zur Vorsicht bei Win
         s = s.replace("\r\n", ""); // zur Vorsicht bei Ux
-        s = s.replace(PConst.LINE_SEPARATOR, "");
+        s = s.replace(P2LibConst.LINE_SEPARATOR, "");
         s = s.replace("|", "");
         s = s.replace(SEPARATOR_1, "");
         s = s.replace(SEPARATOR_2, "");

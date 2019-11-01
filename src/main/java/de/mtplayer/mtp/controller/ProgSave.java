@@ -19,7 +19,7 @@ package de.mtplayer.mtp.controller;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
-import de.p2tools.p2Lib.PConst;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.tools.log.PLog;
 import de.p2tools.p2Lib.tools.log.PLogger;
@@ -84,10 +84,10 @@ public class ProgSave {
             PLog.errorLog(912012014, ex, "Die Einstellungen konnten nicht zurückgesetzt werden.");
             try {
                 PAlert.showErrorAlert("Fehler", "Einstellungen zurückgesetzen",
-                        "Die Einstellungen konnten nicht zurückgesetzt werden." + PConst.LINE_SEPARATORx2
-                                + "Sie müssen jetzt das Programm beenden, dann den Ordner:" + PConst.LINE_SEPARATORx2
+                        "Die Einstellungen konnten nicht zurückgesetzt werden." + P2LibConst.LINE_SEPARATORx2
+                                + "Sie müssen jetzt das Programm beenden, dann den Ordner:" + P2LibConst.LINE_SEPARATORx2
                                 + ProgInfos.getSettingsDirectory_String()
-                                + PConst.LINE_SEPARATORx2
+                                + P2LibConst.LINE_SEPARATORx2
                                 + "von Hand löschen und das Programm wieder starten.");
                 open = false;
             } catch (Exception ignore) {

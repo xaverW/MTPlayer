@@ -388,15 +388,6 @@ public class AboEditDialogController extends PDialogExtra {
                 break;
 
             case AboXml.ABO_CHANNEL:
-//                cboChannel.setMaxWidth(Double.MAX_VALUE);
-//                cboChannel.setItems(progData.worker.getAllChannelList());
-//                cboChannel.setEditable(true);
-//                cboChannel.valueProperty().bindBidirectional(aboCopy.channelProperty());
-//                cboChannel.valueProperty().addListener((observable, oldValue, newValue) ->
-//                        cbxEditAll[i].setSelected(true));
-//                this.gridPane.add(cboChannel, 1, grid);
-
-
                 mbChannel.setMaxWidth(Double.MAX_VALUE);
                 this.gridPane.add(mbChannel, 1, grid);
                 break;
@@ -426,13 +417,6 @@ public class AboEditDialogController extends PDialogExtra {
                 hBox.setAlignment(Pos.CENTER_RIGHT);
                 vBox.getChildren().addAll(slTimeRange, hBox);
                 this.gridPane.add(vBox, 1, grid);
-
-//                HBox hBox = new HBox(10);
-//                HBox.setHgrow(slDays, Priority.ALWAYS);
-//                hBox.getChildren().addAll(slDays, lblDays);
-//                hBox.setAlignment(Pos.CENTER_RIGHT);
-//                this.gridPane.add(hBox, 1, grid);
-
                 break;
 
             case AboXml.ABO_MIN_DURATION:

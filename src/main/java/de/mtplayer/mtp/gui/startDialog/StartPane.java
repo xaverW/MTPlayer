@@ -16,7 +16,7 @@
 
 package de.mtplayer.mtp.gui.startDialog;
 
-import de.p2tools.p2Lib.PConst;
+import de.p2tools.p2Lib.P2LibConst;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
@@ -45,31 +45,31 @@ public class StartPane {
         iv.setImage(im);
 
         hBox.getChildren().addAll(iv);
-        Label text = new Label("1) Hier wird die Filmliste" + PConst.LINE_SEPARATOR +
+        Label text = new Label("1) Hier wird die Filmliste" + P2LibConst.LINE_SEPARATOR +
                 "aktualisiert." +
 
-                PConst.LINE_SEPARATORx2 +
-                "2) Die Ansicht der Filme, Downloads" + PConst.LINE_SEPARATOR +
+                P2LibConst.LINE_SEPARATORx2 +
+                "2) Die Ansicht der Filme, Downloads" + P2LibConst.LINE_SEPARATOR +
                 "oder Abos wird hier umgeschaltet." +
 
-                PConst.LINE_SEPARATORx2 +
-                "3) Hier befinden sich" + PConst.LINE_SEPARATOR +
+                P2LibConst.LINE_SEPARATORx2 +
+                "3) Hier befinden sich" + P2LibConst.LINE_SEPARATOR +
                 "die Programmeinstellungen." +
 
-                PConst.LINE_SEPARATORx2 +
-                "4) Mit dem Pluszeichen können" + PConst.LINE_SEPARATOR +
-                "Spalten in der Tabelle" + PConst.LINE_SEPARATOR +
+                P2LibConst.LINE_SEPARATORx2 +
+                "4) Mit dem Pluszeichen können" + P2LibConst.LINE_SEPARATOR +
+                "Spalten in der Tabelle" + P2LibConst.LINE_SEPARATOR +
                 "ein- und ausgeblendet werden." +
 
-                PConst.LINE_SEPARATORx2 +
-                "5) Damit kann man Filme ansehen" + PConst.LINE_SEPARATOR +
+                P2LibConst.LINE_SEPARATORx2 +
+                "5) Damit kann man Filme ansehen" + P2LibConst.LINE_SEPARATOR +
                 "und speichern." +
 
-                PConst.LINE_SEPARATORx2 +
-                "6) Hier lassen sich einzelne Filme" + PConst.LINE_SEPARATOR +
-                "vormerken, die Vormerkung für" + PConst.LINE_SEPARATOR +
-                "einzelne oder alle Filme" + PConst.LINE_SEPARATOR +
-                "wieder löschen und zuletzt werden" + PConst.LINE_SEPARATOR +
+                P2LibConst.LINE_SEPARATORx2 +
+                "6) Hier lassen sich einzelne Filme" + P2LibConst.LINE_SEPARATOR +
+                "vormerken, die Vormerkung für" + P2LibConst.LINE_SEPARATOR +
+                "einzelne oder alle Filme" + P2LibConst.LINE_SEPARATOR +
+                "wieder löschen und zuletzt werden" + P2LibConst.LINE_SEPARATOR +
                 "alle vorgemerkte Filme angezeigt.");
 
         hBox.getChildren().add(text);
@@ -92,19 +92,19 @@ public class StartPane {
 
         hBox.getChildren().addAll(iv);
 
-        Label text = new Label("1) In dem Bereich sind die" + PConst.LINE_SEPARATOR +
+        Label text = new Label("1) In dem Bereich sind die" + P2LibConst.LINE_SEPARATOR +
                 "Filter angeordnet." +
-                PConst.LINE_SEPARATORx2 +
-                "2) Hier können die oben angezeigten" + PConst.LINE_SEPARATOR +
+                P2LibConst.LINE_SEPARATORx2 +
+                "2) Hier können die oben angezeigten" + P2LibConst.LINE_SEPARATOR +
                 "Filter ein- und ausgeblendet werden." +
-                PConst.LINE_SEPARATORx2 +
-                "3) Damit werden die oben eingestellten" + PConst.LINE_SEPARATOR +
-                "Filter in dem darunter ausgewählten" + PConst.LINE_SEPARATOR +
-                "Filterprofil gespeichert oder wieder" + PConst.LINE_SEPARATOR +
-                "hergestellt (oder ein neues Profil" + PConst.LINE_SEPARATOR +
+                P2LibConst.LINE_SEPARATORx2 +
+                "3) Damit werden die oben eingestellten" + P2LibConst.LINE_SEPARATOR +
+                "Filter in dem darunter ausgewählten" + P2LibConst.LINE_SEPARATOR +
+                "Filterprofil gespeichert oder wieder" + P2LibConst.LINE_SEPARATOR +
+                "hergestellt (oder ein neues Profil" + P2LibConst.LINE_SEPARATOR +
                 "kann damit angelegt werden)." +
-                PConst.LINE_SEPARATORx2 +
-                "4) Hier können die gespeicherten" + PConst.LINE_SEPARATOR +
+                P2LibConst.LINE_SEPARATORx2 +
+                "4) Hier können die gespeicherten" + P2LibConst.LINE_SEPARATOR +
                 "Filterprofile verwaltet werden.");
         hBox.getChildren().add(text);
 

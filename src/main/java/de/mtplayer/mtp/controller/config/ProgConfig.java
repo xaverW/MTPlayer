@@ -24,7 +24,7 @@ import de.mtplayer.mLib.tools.SystemInfo;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
 import de.mtplayer.mtp.tools.filmListFilter.FilmFilter;
-import de.p2tools.p2Lib.PConst;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.tools.PStringUtils;
 import de.p2tools.p2Lib.tools.PSystemUtils;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -247,47 +247,47 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs COLOR__DOWNLOAD_NAME_ERROR_DARK = addNewKey("COLOR_DOWNLOAD_NAME_ERROR_DARK");
 
 
-    public static String PARAMETER_INFO = PConst.LINE_SEPARATOR + "\t"
-            + "\"__system-parameter__xxx\" können nur im Konfigfile geändert werden" + PConst.LINE_SEPARATOR
-            + "\t" + "und sind auch nicht für ständige Änderungen gedacht." + PConst.LINE_SEPARATOR
-            + "\t" + "Wird eine Zeile gelöscht, wird der Parameter wieder mit dem Standardwert angelegt." + PConst.LINE_SEPARATOR
+    public static String PARAMETER_INFO = P2LibConst.LINE_SEPARATOR + "\t"
+            + "\"__system-parameter__xxx\" können nur im Konfigfile geändert werden" + P2LibConst.LINE_SEPARATOR
+            + "\t" + "und sind auch nicht für ständige Änderungen gedacht." + P2LibConst.LINE_SEPARATOR
+            + "\t" + "Wird eine Zeile gelöscht, wird der Parameter wieder mit dem Standardwert angelegt." + P2LibConst.LINE_SEPARATOR
 
-            + PConst.LINE_SEPARATOR
-            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getKey() + PConst.LINE_SEPARATOR
+            + P2LibConst.LINE_SEPARATOR
+            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getKey() + P2LibConst.LINE_SEPARATOR
             + "\t" + "Timeout für direkte Downloads, Standardwert: "
-            + SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getInitValue() + PConst.LINE_SEPARATOR +
+            + SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getInitValue() + P2LibConst.LINE_SEPARATOR +
 
-            PConst.LINE_SEPARATOR
-            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getKey() + PConst.LINE_SEPARATOR
-            + "\t" + "max. Startversuche für fehlgeschlagene Downloads, am Ende aller Downloads" + PConst.LINE_SEPARATOR
+            P2LibConst.LINE_SEPARATOR
+            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getKey() + P2LibConst.LINE_SEPARATOR
+            + "\t" + "max. Startversuche für fehlgeschlagene Downloads, am Ende aller Downloads" + P2LibConst.LINE_SEPARATOR
             + "\t" + "(Versuche insgesamt: DOWNLOAD_MAX_RESTART * DOWNLOAD_MAX_RESTART_HTTP), Standardwert: " +
-            SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getInitValue() + PConst.LINE_SEPARATOR +
+            SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getInitValue() + P2LibConst.LINE_SEPARATOR +
 
-            PConst.LINE_SEPARATOR
-            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP.getKey() + PConst.LINE_SEPARATOR
-            + "\t" + "max. Startversuche für fehlgeschlagene Downloads, direkt beim Download," + PConst.LINE_SEPARATOR
+            P2LibConst.LINE_SEPARATOR
+            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP.getKey() + P2LibConst.LINE_SEPARATOR
+            + "\t" + "max. Startversuche für fehlgeschlagene Downloads, direkt beim Download," + P2LibConst.LINE_SEPARATOR
             + "\t" + "(Versuche insgesamt: DOWNLOAD_MAX_RESTART * DOWNLOAD_MAX_RESTART_HTTP), Standardwert: "
-            + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP.getInitValue() + PConst.LINE_SEPARATOR +
+            + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP.getInitValue() + P2LibConst.LINE_SEPARATOR +
 
-            PConst.LINE_SEPARATOR
-            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS.getKey() + PConst.LINE_SEPARATOR
+            P2LibConst.LINE_SEPARATOR
+            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS.getKey() + P2LibConst.LINE_SEPARATOR
             + "\t" + "Beim Dialog \"Download weiterführen\" wird nach dieser Zeit der Download weitergeführt, Standardwert: "
-            + SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS.getInitValue() + PConst.LINE_SEPARATOR +
+            + SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS.getInitValue() + P2LibConst.LINE_SEPARATOR +
 
-            PConst.LINE_SEPARATOR
-            + "\t" + SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS.getKey() + PConst.LINE_SEPARATOR
+            P2LibConst.LINE_SEPARATOR
+            + "\t" + SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS.getKey() + P2LibConst.LINE_SEPARATOR
             + "\t" + "Beim Dialog \"Automode\" wird nach dieser Zeit der das Programm beendet, Standardwert: "
-            + SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS.getInitValue() + PConst.LINE_SEPARATOR +
+            + SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS.getInitValue() + P2LibConst.LINE_SEPARATOR +
 
-            PConst.LINE_SEPARATOR
-            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getKey() + PConst.LINE_SEPARATOR
+            P2LibConst.LINE_SEPARATOR
+            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getKey() + P2LibConst.LINE_SEPARATOR
             + "\t" + "Downloadfehlermeldung wird xx Sedunden lang angezeigt, Standardwert: "
-            + SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getInitValue() + PConst.LINE_SEPARATOR +
+            + SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getInitValue() + P2LibConst.LINE_SEPARATOR +
 
-            PConst.LINE_SEPARATOR
-            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_PROGRESS.getKey() + PConst.LINE_SEPARATOR
+            P2LibConst.LINE_SEPARATOR
+            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_PROGRESS.getKey() + P2LibConst.LINE_SEPARATOR
             + "\t" + "Downloadprogress im Terminal (-auto) anzeigen: "
-            + SYSTEM_PARAMETER_DOWNLOAD_PROGRESS.getInitValue() + PConst.LINE_SEPARATOR;
+            + SYSTEM_PARAMETER_DOWNLOAD_PROGRESS.getInitValue() + P2LibConst.LINE_SEPARATOR;
 
     public static void logAllConfigs() {
         ArrayList<String> list = new ArrayList<>();

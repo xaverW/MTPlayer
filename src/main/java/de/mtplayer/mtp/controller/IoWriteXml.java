@@ -33,7 +33,7 @@ import de.mtplayer.mtp.controller.mediaDb.MediaCollectionData;
 import de.mtplayer.mtp.tools.storedFilter.FilterToXml;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
 import de.mtplayer.mtp.tools.storedFilter.StoredFilters;
-import de.p2tools.p2Lib.PConst;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.tools.log.PLog;
 
 import javax.xml.stream.XMLOutputFactory;
@@ -67,71 +67,59 @@ public class IoWriteXml implements AutoCloseable {
         PLog.sysLog(list);
     }
 
-//    public synchronized void exportPset(SetData[] pSet, String datei) {
-//        try {
-//            xmlFilePath = Paths.get(datei);
-//            PLog.sysLog("Pset exportieren nach: " + xmlFilePath.toString());
-//            xmlWriteStart();
-//            xmlWritePset(pSet);
-//            xmlWriteEnd();
-//        } catch (final Exception ex) {
-//            PLog.errorLog(392846204, ex, "nach: " + datei);
-//        }
-//    }
-
     private void xmlWriteData() {
         try {
             xmlWriteStart();
 
-            writer.writeCharacters(PConst.LINE_SEPARATORx2);
+            writer.writeCharacters(P2LibConst.LINE_SEPARATORx2);
             writer.writeComment("Abos");
-            writer.writeCharacters(PConst.LINE_SEPARATOR);
+            writer.writeCharacters(P2LibConst.LINE_SEPARATOR);
             xmlWriteAbo();
 
-            writer.writeCharacters(PConst.LINE_SEPARATORx2);
+            writer.writeCharacters(P2LibConst.LINE_SEPARATORx2);
             writer.writeComment("Blacklist");
-            writer.writeCharacters(PConst.LINE_SEPARATOR);
+            writer.writeCharacters(P2LibConst.LINE_SEPARATOR);
             xmlWriteBlackList();
 
-            writer.writeCharacters(PConst.LINE_SEPARATORx2);
+            writer.writeCharacters(P2LibConst.LINE_SEPARATORx2);
             writer.writeComment("Filter-Film");
-            writer.writeCharacters(PConst.LINE_SEPARATOR);
+            writer.writeCharacters(P2LibConst.LINE_SEPARATOR);
             xmlWriteFilterFilm();
 
-            writer.writeCharacters(PConst.LINE_SEPARATORx2);
+            writer.writeCharacters(P2LibConst.LINE_SEPARATORx2);
             writer.writeComment(ProgConfig.PARAMETER_INFO);
-            writer.writeCharacters(PConst.LINE_SEPARATORx2);
+            writer.writeCharacters(P2LibConst.LINE_SEPARATORx2);
             writer.writeComment("Programmeinstellungen");
-            writer.writeCharacters(PConst.LINE_SEPARATOR);
+            writer.writeCharacters(P2LibConst.LINE_SEPARATOR);
             xmlWriteConfig(ProgConfig.SYSTEM, ProgConfig.getAll());
-            writer.writeCharacters(PConst.LINE_SEPARATOR);
+            writer.writeCharacters(P2LibConst.LINE_SEPARATOR);
 
-            writer.writeCharacters(PConst.LINE_SEPARATORx2);
+            writer.writeCharacters(P2LibConst.LINE_SEPARATORx2);
             writer.writeComment("Programmsets");
-            writer.writeCharacters(PConst.LINE_SEPARATOR);
+            writer.writeCharacters(P2LibConst.LINE_SEPARATOR);
             xmlWriteSetData();
 
-            writer.writeCharacters(PConst.LINE_SEPARATORx2);
+            writer.writeCharacters(P2LibConst.LINE_SEPARATORx2);
             writer.writeComment("Ersetzungstabelle");
-            writer.writeCharacters(PConst.LINE_SEPARATOR);
+            writer.writeCharacters(P2LibConst.LINE_SEPARATOR);
             xmlWriteReplaceData();
 
-            writer.writeCharacters(PConst.LINE_SEPARATORx2);
+            writer.writeCharacters(P2LibConst.LINE_SEPARATORx2);
             writer.writeComment("Downloads");
-            writer.writeCharacters(PConst.LINE_SEPARATOR);
+            writer.writeCharacters(P2LibConst.LINE_SEPARATOR);
             xmlWriteDownloads();
 
-            writer.writeCharacters(PConst.LINE_SEPARATORx2);
+            writer.writeCharacters(P2LibConst.LINE_SEPARATORx2);
             writer.writeComment("Pfade MedienDB");
-            writer.writeCharacters(PConst.LINE_SEPARATOR);
+            writer.writeCharacters(P2LibConst.LINE_SEPARATOR);
             xmlWriteMediaPath();
 
-            writer.writeCharacters(PConst.LINE_SEPARATORx2);
+            writer.writeCharacters(P2LibConst.LINE_SEPARATORx2);
             writer.writeComment("Update Filmliste");
-            writer.writeCharacters(PConst.LINE_SEPARATOR);
+            writer.writeCharacters(P2LibConst.LINE_SEPARATOR);
             xmlWriteFilmUpdateServer();
 
-            writer.writeCharacters(PConst.LINE_SEPARATORx2);
+            writer.writeCharacters(P2LibConst.LINE_SEPARATORx2);
             xmlWriteEnd();
         } catch (final Exception ex) {
             PLog.errorLog(656328109, ex);
@@ -146,9 +134,9 @@ public class IoWriteXml implements AutoCloseable {
         final XMLOutputFactory outFactory = XMLOutputFactory.newInstance();
         writer = outFactory.createXMLStreamWriter(out);
         writer.writeStartDocument(StandardCharsets.UTF_8.name(), "1.0");
-        writer.writeCharacters(PConst.LINE_SEPARATOR);// neue Zeile
+        writer.writeCharacters(P2LibConst.LINE_SEPARATOR);// neue Zeile
         writer.writeStartElement(ProgConst.XML_START);
-        writer.writeCharacters(PConst.LINE_SEPARATOR);// neue Zeile
+        writer.writeCharacters(P2LibConst.LINE_SEPARATOR);// neue Zeile
     }
 
     private void xmlWriteReplaceData() {
@@ -169,20 +157,6 @@ public class IoWriteXml implements AutoCloseable {
             }
         }
     }
-
-//    private void xmlWritePset(SetData[] psetArray) throws XMLStreamException {
-//        // wird beim Export Sets verwendete
-//        writer.writeCharacters(PConst.LINE_SEPARATORx2);
-//        for (final SetData pset : psetArray) {
-//            pset.setXmlFromProps();
-//            xmlWriteData(SetData.TAG, SetData.XML_NAMES, pset.arr, true);
-//            for (final ProgramData progData : pset.getProgramList()) {
-//                progData.setXmlFromProps();
-//                xmlWriteData(ProgramData.TAG, ProgramData.XML_NAMES, progData.arr, true);
-//            }
-//            writer.writeCharacters(PConst.LINE_SEPARATORx2);
-//        }
-//    }
 
     private void xmlWriteDownloads() {
         // Downloads schreiben
@@ -230,16 +204,16 @@ public class IoWriteXml implements AutoCloseable {
         akt_sf.setName(StoredFilters.SELECTED_FILTER_NAME);
 
         writer.writeComment("aktuelle Filtereinstellungen");
-        writer.writeCharacters(PConst.LINE_SEPARATOR);
+        writer.writeCharacters(P2LibConst.LINE_SEPARATOR);
 
         xmlWriteData(FilterToXml.TAG,
                 FilterToXml.getXmlArray(),
                 FilterToXml.getValueArray(progData.storedFilters.getActFilterSettings()),
                 true);
 
-        writer.writeCharacters(PConst.LINE_SEPARATOR);
+        writer.writeCharacters(P2LibConst.LINE_SEPARATOR);
         writer.writeComment("gespeicherte Filter");
-        writer.writeCharacters(PConst.LINE_SEPARATOR);
+        writer.writeCharacters(P2LibConst.LINE_SEPARATOR);
         // Liste der Filterprofile
         progData.storedFilters.getStordeFilterList().stream().forEach((sf) -> {
             xmlWriteData(FilterToXml.TAG, FilterToXml.getXmlArray(), FilterToXml.getValueArray(sf), true);
@@ -248,9 +222,9 @@ public class IoWriteXml implements AutoCloseable {
 
     private void xmlWriteFilmUpdateServer() throws XMLStreamException {
         // FilmUpdate schreiben
-        writer.writeCharacters(PConst.LINE_SEPARATOR);
+        writer.writeCharacters(P2LibConst.LINE_SEPARATOR);
         writer.writeComment("Akt-Filmliste");
-        writer.writeCharacters(PConst.LINE_SEPARATOR);
+        writer.writeCharacters(P2LibConst.LINE_SEPARATOR);
 
         for (final FilmlistUrlData datenUrlFilmliste : progData.searchFilmListUrls.getFilmlistUrlList_akt()) {
             datenUrlFilmliste.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_SORT_NR] = FilmlistUrlData.SERVER_ART_AKT;
@@ -260,9 +234,9 @@ public class IoWriteXml implements AutoCloseable {
                     false);
         }
 
-        writer.writeCharacters(PConst.LINE_SEPARATOR);
+        writer.writeCharacters(P2LibConst.LINE_SEPARATOR);
         writer.writeComment("Diff-Filmliste");
-        writer.writeCharacters(PConst.LINE_SEPARATOR);
+        writer.writeCharacters(P2LibConst.LINE_SEPARATOR);
         for (final FilmlistUrlData datenUrlFilmliste : progData.searchFilmListUrls.getFilmlistUrlList_diff()) {
             datenUrlFilmliste.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_SORT_NR] = FilmlistUrlData.SERVER_ART_DIFF;
             xmlWriteData(FilmlistUrlData.FILMLIST_UPDATE_SERVER,
@@ -277,7 +251,7 @@ public class IoWriteXml implements AutoCloseable {
         try {
             writer.writeStartElement(xmlName);
             if (newLine) {
-                writer.writeCharacters(PConst.LINE_SEPARATOR); // neue Zeile
+                writer.writeCharacters(P2LibConst.LINE_SEPARATOR); // neue Zeile
             }
             for (int i = 0; i < xmlMax; ++i) {
                 if (!dataArray[i].isEmpty()) {
@@ -288,12 +262,12 @@ public class IoWriteXml implements AutoCloseable {
                     writer.writeCharacters(dataArray[i]);
                     writer.writeEndElement();
                     if (newLine) {
-                        writer.writeCharacters(PConst.LINE_SEPARATOR); // neue Zeile
+                        writer.writeCharacters(P2LibConst.LINE_SEPARATOR); // neue Zeile
                     }
                 }
             }
             writer.writeEndElement();
-            writer.writeCharacters(PConst.LINE_SEPARATOR); // neue Zeile
+            writer.writeCharacters(P2LibConst.LINE_SEPARATOR); // neue Zeile
         } catch (final Exception ex) {
             PLog.errorLog(198325017, ex);
         }
@@ -302,17 +276,17 @@ public class IoWriteXml implements AutoCloseable {
     private void xmlWriteConfig(String xmlName, String[][] xmlArray) {
         try {
             writer.writeStartElement(xmlName);
-            writer.writeCharacters(PConst.LINE_SEPARATOR); // neue Zeile
+            writer.writeCharacters(P2LibConst.LINE_SEPARATOR); // neue Zeile
 
             for (final String[] xmlSpalte : xmlArray) {
                 writer.writeCharacters("\t"); // Tab
                 writer.writeStartElement(xmlSpalte[0]);
                 writer.writeCharacters(xmlSpalte[1]);
                 writer.writeEndElement();
-                writer.writeCharacters(PConst.LINE_SEPARATOR); // neue Zeile
+                writer.writeCharacters(P2LibConst.LINE_SEPARATOR); // neue Zeile
             }
             writer.writeEndElement();
-            writer.writeCharacters(PConst.LINE_SEPARATOR); // neue Zeile
+            writer.writeCharacters(P2LibConst.LINE_SEPARATOR); // neue Zeile
         } catch (final Exception ex) {
             PLog.errorLog(951230478, ex);
         }

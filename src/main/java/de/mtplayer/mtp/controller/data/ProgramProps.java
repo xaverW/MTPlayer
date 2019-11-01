@@ -17,7 +17,7 @@
 package de.mtplayer.mtp.controller.data;
 
 import de.mtplayer.mLib.tools.Data;
-import de.p2tools.p2Lib.PConst;
+import de.p2tools.p2Lib.P2LibConst;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -158,9 +158,9 @@ public class ProgramProps extends Data<ProgramProps> {
         String ret = "";
         for (int i = 0; i < MAX_ELEM; ++i) {
             if (i == 0) {
-                ret += "| ***|" + COLUMN_NAMES[i] + ": " + arr[i] + PConst.LINE_SEPARATOR;
+                ret += "| ***|" + COLUMN_NAMES[i] + ": " + arr[i] + P2LibConst.LINE_SEPARATOR;
             } else {
-                ret += "|    |" + COLUMN_NAMES[i] + ": " + arr[i] + PConst.LINE_SEPARATOR;
+                ret += "|    |" + COLUMN_NAMES[i] + ": " + arr[i] + P2LibConst.LINE_SEPARATOR;
             }
         }
         return ret;

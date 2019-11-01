@@ -20,7 +20,7 @@ package de.mtplayer.mtp.controller.data.download;
 import de.mtplayer.mtp.gui.dialog.DeleteFilmFileDialogController;
 import de.mtplayer.mtp.gui.tools.MTInfoFile;
 import de.mtplayer.mtp.gui.tools.MTSubtitle;
-import de.p2tools.p2Lib.PConst;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.tools.log.PLog;
 
@@ -82,7 +82,7 @@ public class DownloadFactory {
 
 
         } catch (Exception ex) {
-            PAlert.showErrorAlert("Film löschen", "Konnte die Datei nicht löschen!", "Fehler beim löschen von:" + PConst.LINE_SEPARATORx2 +
+            PAlert.showErrorAlert("Film löschen", "Konnte die Datei nicht löschen!", "Fehler beim löschen von:" + P2LibConst.LINE_SEPARATORx2 +
                     download.getDestPathFile());
             PLog.errorLog(915236547, "Fehler beim löschen: " + download.getDestPathFile());
         }

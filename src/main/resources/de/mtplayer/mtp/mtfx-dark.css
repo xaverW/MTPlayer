@@ -15,12 +15,10 @@
         );
     -fx-focused-mark-color : -fx-focused-text-base-color ;
 
-
     -tab-button-1: #969696;
     -tab-button-2: #a6a6a6;
     -tab-button-3: rgba(230,230,230,0);
 
-    -filter-ok-1: #939494;
     -filter-lin-grad-1: linear-gradient(from 50% 22% to 50% 120% , reflect, #6D6D6D 10% , #8A929E 100% );
 
     -lin-grad-1: linear-gradient(from 0% 0% to 100% 100%, -tab-button-1 50%, white 100%);
@@ -38,58 +36,6 @@
     -lblSelectedLines-color-2: derive(-fx-base, 40%);
 
     -text-color-blue: #002fbe;
-
-    -lin-grad-combo-box-1: linear-gradient(to bottom, #4F5459, #404549 100% );
-    -lin-grad-combo-box-2: linear-gradient(to bottom, #777F85, #585D61 100% );
-    -pRangeBox-1: #121212;
-}
-
-/* PRangeBox aus P2Lib*/
-/*.pRangeButton {
-    -lin-grad-pRangeBox-1: linear-gradient(to bottom, #606468, #35383A 100% );
-    -lin-grad-pRangeBox-2: linear-gradient(to bottom, #777F85, #585D61 100% );
-    -pRangeBox-1: #121212;
-}
-.pRangeButton > .label {
-    -fx-background-color: #3a3a3a, -lin-grad-pRangeBox-1;
-    -fx-background-insets: 0,0.3;
-    -fx-text-fill: -fx-text-base-color;
-}
-.pRangeButton > .arrow-button {
-    -fx-background-insets: 0,0.3;
-    -fx-background-color: #3a3a3a, -lin-grad-pRangeBox-1;
-}
-.pRangeButton > .label:hover{
-    -fx-background-color: #3a3a3a, -lin-grad-pRangeBox-2;
-}
-.pRangeButton > .arrow-button:hover{
-    -fx-background-color: -lin-grad-1, -lin-grad-pRangeBox-2;
-}*/
-
-/* ComboBox */
-.combo-box-popup .list-view .list-cell:hover {
-    /* ist der markierte Eintrag in der Liste beim Auswählen mit der Maus*/
-    -fx-background-color: #b7bccf;
-    -fx-text-fill: black;
-}
-
-
-.radio-button:selected .radio .dot {
-    -fx-background-color: #0b99c9;
-    -fx-background-insets: 0;
-}
-.check-box:selected .mark {
-    -fx-background-color: #0b99c9;
-}
-
-.text-input:focused {
-    -fx-highlight-text-fill: ladder(
-        -fx-highlight-fill,
-        -fx-light-text-color 45%,
-        -fx-dark-text-color  46%,
-        -fx-dark-text-color  59%,
-        -fx-mid-text-color   60%
-    );
 }
 
 /* ist die abgesetzte Zeile im Downloaddialog */
@@ -97,6 +43,24 @@
     -fx-background-color: #64696b;
 }
 
+.channel-button {
+    -fx-font-size: 1em;
+}
+
+/* ========================================================================== */
+/* sind javafx gui Elemente */
+/* ========================================================================== */
+.check-menu-item{
+    -fx-focused-mark-color: #0b99c9;
+    -fx-mark-color: #0b99c9;
+}
+.table-row-cell:empty {
+    -fx-background-color: #b5babd;
+}
+
+.list-cell:empty {
+    -fx-background-color: #b5babd;
+}
 /* sind alle Context-Menüs */
 .context-menu {
     -fx-background-color: #44484a;
@@ -105,21 +69,25 @@
 .menu-item  {
     -fx-background-radius: 5px;
 }
-
-
-.table-row-cell:empty {
-    -fx-background-color: #b5babd;
+/* ComboBox */
+.combo-box-popup .list-view .list-cell:hover {
+    /* ist der markierte Eintrag in der Liste beim Auswählen mit der Maus*/
+    -fx-background-color: #b7bccf;
+    -fx-text-fill: black;
 }
-
-.list-cell:empty {
-    -fx-background-color: #b5babd;
+.radio-button:selected .radio .dot {
+    -fx-background-color: #0b99c9;
+    -fx-background-insets: 0;
 }
-
-.check-menu-item{
-    -fx-focused-mark-color: #0b99c9;
-    -fx-mark-color: #0b99c9;
+.check-box:selected .mark {
+    -fx-background-color: #0b99c9;
 }
-
-.channel-button {
-    -fx-font-size: 1em;
+.text-input:focused {
+    -fx-highlight-text-fill: ladder(
+        -fx-highlight-fill,
+        -fx-light-text-color 45%,
+        -fx-dark-text-color  46%,
+        -fx-dark-text-color  59%,
+        -fx-mid-text-color   60%
+    );
 }

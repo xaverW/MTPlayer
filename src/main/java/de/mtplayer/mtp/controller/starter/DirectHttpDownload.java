@@ -27,7 +27,7 @@ import de.mtplayer.mtp.gui.dialog.DownloadContinueDialogController;
 import de.mtplayer.mtp.gui.dialog.DownloadErrorDialogController;
 import de.mtplayer.mtp.gui.tools.MTInfoFile;
 import de.mtplayer.mtp.gui.tools.MTSubtitle;
-import de.p2tools.p2Lib.PConst;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
 
@@ -251,7 +251,7 @@ public class DirectHttpDownload extends Thread {
                         } else {
                             // ==================================
                             // dann wars das
-                            responseCode = "Responsecode: " + conn.getResponseCode() + PConst.LINE_SEPARATOR + conn.getResponseMessage();
+                            responseCode = "Responsecode: " + conn.getResponseCode() + P2LibConst.LINE_SEPARATOR + conn.getResponseMessage();
                             PLog.errorLog(915236798, "HTTP-Fehler: " + conn.getResponseCode() + ' ' + conn.getResponseMessage());
                             if (download.getStart().getRestartCounter() == 0) {
                                 // nur beim ersten Mal melden -> nervt sonst
