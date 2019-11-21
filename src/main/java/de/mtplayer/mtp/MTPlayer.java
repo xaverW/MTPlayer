@@ -123,7 +123,6 @@ public class MTPlayer extends Application {
 //            String css = this.getClass().getResource(ProgConst.CSS_FILE).toExternalForm();
 //            scene.getStylesheets().add(ProgConst.CSS_FILE);
             P2LibInit.addP2LibCssToScene(scene);
-
             ProgConfig.SYSTEM_DARK_THEME.getStringProperty().addListener((u, o, n) ->
                     setTheme());
             setTheme();
@@ -149,13 +148,12 @@ public class MTPlayer extends Application {
 //            String css = this.getClass().getResource(ProgConst.CSS_FILE_DARK_THEME).toExternalForm();
 //            scene.getStylesheets().add(ProgConst.CSS_FILE_DARK_THEME);
             P2LibInit.addCssFile(ProgConst.CSS_FILE_DARK_THEME);
-            P2LibInit.addP2LibCssToScene(scene);
         } else {
 //            String css = this.getClass().getResource(ProgConst.CSS_FILE_DARK_THEME).toExternalForm();
 //            scene.getStylesheets().removeAll(ProgConst.CSS_FILE_DARK_THEME);
             P2LibInit.removeCssFile(ProgConst.CSS_FILE_DARK_THEME);
-            P2LibInit.addP2LibCssToScene(scene);
         }
+        P2LibInit.addP2LibCssToScene(scene);
     }
 
     private void workAfterGui() {

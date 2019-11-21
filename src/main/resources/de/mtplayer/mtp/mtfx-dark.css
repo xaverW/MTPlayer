@@ -94,20 +94,22 @@
 
 /* The main scrollbar **thumb** CSS class which we drag every time (movable) */
 .scroll-bar:horizontal .thumb {
-    -fx-background-color: linear-gradient(from 50% 100% to 50% 50% , repeat, #B3B3B3, #6F777E 100% );
-	-fx-background-insets: 2;
-	-fx-background-radius: 0.4em;
+    -fx-background-color: #55595b, linear-gradient(from 50% 100% to 50% 50% , repeat, #B3B3B3, #6F777E 100% );
+	-fx-background-insets: 1,2;
+	-fx-background-radius: 0.2em;
 }
 .scroll-bar:vertical .thumb {
-    -fx-background-color: linear-gradient(from -50% 50% to 50% 50% , repeat, #B3B3B3, #6F777E 100% );
-	-fx-background-insets: 2;
-	-fx-background-radius: 0.4em;
+    -fx-background-color: #55595b, linear-gradient(from -50% 50% to 50% 50% , repeat, #B3B3B3, #6F777E 100% );
+	-fx-background-insets: 1,2;
+	-fx-background-radius: 0.2em;
 }
 .scroll-bar:horizontal .thumb:hover,
 .scroll-bar:horizontal .thumb:pressed{
-    -fx-background-color: linear-gradient(from 50% 100% to 50% 50% , repeat, #CCCCCC, #8F9AA5 100% );
+    -fx-background-color: #55595b, linear-gradient(from 50% 100% to 50% 50% , repeat, #CCCCCC, #8F9AA5 100% );
 }
 .scroll-bar:vertical .thumb:hover,
 .scroll-bar:vertical .thumb:pressed{
-    -fx-background-color: linear-gradient(from -50% 50% to 50% 50% , repeat, #CCCCCC, #A0A6AC 100% );
+    -fx-background-color: #55595b, linear-gradient(from -50% 50% to 50% 50% , repeat, #CCCCCC, #A0A6AC 100% );
 }
+
+
