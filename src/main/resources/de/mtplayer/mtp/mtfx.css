@@ -261,10 +261,15 @@
 
 /* ist der Label mit der Anzahl markierter Tabellenzeilen in der Taskbar*/
 .lblSelectedLines {
+    -fx-border-color: -lblSelectedLines-color-1;
+    -fx-border-width: 0 1 0 0;
+    /*-fx-border-radius: 5;*/
+/*
     -fx-background-color: -lblSelectedLines-color-1, -lblSelectedLines-color-2;
     -fx-background-insets: 0,1;
     -fx-background-radius: 3,3;
     -fx-padding: 2 12 2 12;
+*/
 }
 
 /*Checkbox edit all abo*/

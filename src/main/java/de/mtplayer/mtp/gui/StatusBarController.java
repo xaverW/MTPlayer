@@ -89,18 +89,21 @@ public class StatusBarController extends AnchorPane {
         hBox.setSpacing(10);
         hBox.setAlignment(Pos.CENTER_RIGHT);
 
-        lblLeft.setMaxWidth(Double.MAX_VALUE);
-        HBox.setHgrow(lblLeft, Priority.ALWAYS);
-        hBox.getChildren().addAll(lblSel, lblLeft, lblRight);
-        hBox.setStyle("-fx-background-color: -fx-background ;");
+        lblSel.setPadding(new Insets(0, 10, 0, 0));
         lblSel.getStyleClass().add("lblSelectedLines");
 
+        lblLeft.setMaxWidth(Double.MAX_VALUE);
+        HBox.setHgrow(lblLeft, Priority.ALWAYS);
+
+        hBox.getChildren().addAll(lblSel, lblLeft, lblRight);
+        hBox.setStyle("-fx-background-color: -fx-background ;");
         return hBox;
     }
 
 
     private void make() {
         stackPane.getChildren().addAll(nonePane, filmPane, downloadPane, aboPane);
+        stackPane.setPadding(new Insets(2, 5, 2, 5));
         nonePane.toFront();
 
         progData.loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
