@@ -91,7 +91,6 @@ public class TableFilm {
         durationColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<Film, FilmSize> sizeColumn = new TableColumn<>("Größe [MB]");
-//        sizeColumn.setCellFactory(cellFactorySize);
         sizeColumn.setCellValueFactory(new PropertyValueFactory<>("filmSize"));
         sizeColumn.getStyleClass().add("alignCenterLeft");
 
@@ -105,9 +104,6 @@ public class TableFilm {
         utColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
         utColumn.getStyleClass().add("alignCenter");
 
-//        final TableColumn<Film, String> descriptionColumn = new TableColumn<>("Beschreibung");
-//        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-
         final TableColumn<Film, String> geoColumn = new TableColumn<>("Geo");
         geoColumn.setCellValueFactory(new PropertyValueFactory<>("geo"));
         geoColumn.getStyleClass().add("alignCenter");
@@ -120,28 +116,6 @@ public class TableFilm {
         aboColumn.setCellValueFactory(new PropertyValueFactory<>("aboName"));
         aboColumn.getStyleClass().add("alignCenterLeft");
 
-//        final TableColumn<Film, Boolean> newColumn = new TableColumn<>("Neu");
-//        newColumn.setCellValueFactory(new PropertyValueFactory<>("newFilm"));
-//        newColumn.setCellFactory(new PCheckBoxCell().cellFactoryBool);
-
-//        final TableColumn<Film, Boolean> shownColumn = new TableColumn<>("Gesehen");
-//        shownColumn.setCellValueFactory(new PropertyValueFactory<>("shown"));
-//        shownColumn.setCellFactory(cellFactoryShown);
-
-//        final TableColumn<Film, Boolean> doubleColumn = new TableColumn<>("Doppelt");
-//        doubleColumn.setCellValueFactory(new PropertyValueFactory<>("doubleUrl"));
-//        doubleColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
-//        doubleColumn.getStyleClass().add("alignCenter");
-//
-//        final TableColumn<Film, Boolean> actHistColumn = new TableColumn<>("akt. gesehen");
-//        actHistColumn.setCellValueFactory(new PropertyValueFactory<>("actHist"));
-//        actHistColumn.setCellFactory(new CheckBoxCell().cellFactoryBool);
-//        actHistColumn.getStyleClass().add("alignCenter");
-
-//        final TableColumn<Film, Boolean> futureColumn = new TableColumn<>("Zukunft");
-//        futureColumn.setCellValueFactory(new PropertyValueFactory<>("inFuture"));
-//        futureColumn.setCellFactory(new PCheckBoxCell().cellFactoryBool);
-
         addRowFact(table);
 
         return new TableColumn[]{
@@ -150,13 +124,8 @@ public class TableFilm {
                 startColumn,
                 datumColumn, timeColumn, durationColumn, sizeColumn,
                 hdColumn, utColumn,
-//                descriptionColumn,
                 geoColumn,
                 urlColumn, aboColumn,
-//                newColumn,
-//                shownColumn,
-//                doubleColumn, actHistColumn,
-//                futureColumn
         };
 
     }
@@ -171,7 +140,7 @@ public class TableFilm {
                 if (film == null || empty) {
                     setStyle("");
                 } else {
-                    if (film.getTheme().equals(FilmTools.THEME_LIVE)) {
+                    if (film.isLive()) {
                         // livestream
                         for (int i = 0; i < getChildren().size(); i++) {
                             getChildren().get(i).setStyle(MTColor.FILM_LIVESTREAM.getCssFontBold());
@@ -180,7 +149,7 @@ public class TableFilm {
                     } else if (geoMelden.get() && film.isGeoBlocked()) {
                         // geogeblockt
                         for (int i = 0; i < getChildren().size(); i++) {
-                            getChildren().get(i).setStyle("");
+//                            getChildren().get(i).setStyle("");
                             getChildren().get(i).setStyle(MTColor.FILM_GEOBLOCK.getCssFontBold());
                         }
 

@@ -44,6 +44,7 @@ public class Film extends FilmProps {
     }
 
     public void init() {
+        setLive(arr[FILM_THEME].equals(FilmTools.THEME_LIVE));
         setHd(!arr[FilmXml.FILM_URL_HD].isEmpty() || !arr[FilmXml.FILM_URL_RTMP_HD].isEmpty());
         setSmall(!arr[FilmXml.FILM_URL_SMALL].isEmpty() || !arr[FilmXml.FILM_URL_RTMP_SMALL].isEmpty());
         setUt(!arr[FilmXml.FILM_URL_SUBTITLE].isEmpty());

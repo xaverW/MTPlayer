@@ -17,7 +17,6 @@
 package de.mtplayer.mtp.tools.storedFilter;
 
 import de.mtplayer.mtp.controller.data.film.Film;
-import de.mtplayer.mtp.controller.data.film.FilmTools;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.mtplayer.mtp.tools.filmListFilter.FilmFilter;
 import javafx.beans.property.BooleanProperty;
@@ -353,7 +352,7 @@ public final class SelectedFilter extends SelectedFilterProps {
             predicate = predicate.and(f -> f.isUt());
         }
         if (onlyLive) {
-            predicate = predicate.and(f -> f.arr[FilmXml.FILM_THEME].equals(FilmTools.THEME_LIVE));
+            predicate = predicate.and(f -> f.isLive());
         }
         if (onlyAktHist) {
             predicate = predicate.and(f -> f.getActHist());

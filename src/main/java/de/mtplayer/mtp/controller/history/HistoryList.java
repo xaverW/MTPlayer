@@ -114,14 +114,13 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         return urlHash.contains(urlFilm);
     }
 
-    public synchronized boolean checkIfLiveStream(String theme) {
+    private synchronized boolean checkIfLiveStream(String theme) {
         // live ist nie alt
         return theme.equals(FilmTools.THEME_LIVE);
     }
 
     public synchronized void addHistoryDataToHistory(String theme, String title, String url) {
         // einen Film in die History schreiben
-
         if (checkIfUrlAlreadyIn(url) || checkIfLiveStream(theme)) {
             return;
         }
@@ -149,7 +148,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
 
         PDuration.counterStart("History: addDataToHistory");
         for (final Film film : filmList) {
-            if (checkIfLiveStream(film.getTheme())) {
+            if (film.isLive()) {
                 continue;
             }
 

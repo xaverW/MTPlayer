@@ -33,6 +33,7 @@ public class FilmProps extends FilmXml {
     private int durationMinute = 0; //
     public int filmTime = 0; // Zeit -> Minuten ab 0:00 Uhr
 
+    private boolean live = false; // Film ist Livestream
     private boolean small = false; // Film hat "small"-URL
     private boolean hd = false; // Film hat HD-URL
     private boolean ut = false;
@@ -145,6 +146,14 @@ public class FilmProps extends FilmXml {
 //        return hd;
 //    }
 
+    public boolean isLive() {
+        return live;
+    }
+
+    public void setLive(boolean live) {
+        this.live = live;
+    }
+
     public boolean isSmall() {
         return small;
     }
@@ -249,7 +258,7 @@ public class FilmProps extends FilmXml {
     }
 
     public void setShown(boolean shown) {
-        if (!arr[FilmXml.FILM_THEME].equals(FilmTools.THEME_LIVE)) {
+        if (!isLive()) {
             this.shown.set(shown);
         }
     }

@@ -20,7 +20,6 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.download.DownloadTools;
 import de.mtplayer.mtp.controller.data.film.Film;
-import de.mtplayer.mtp.controller.data.film.FilmTools;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
 import de.mtplayer.mtp.controller.data.film.Filmlist;
 import de.mtplayer.mtp.gui.dialog.AboEditDialogController;
@@ -368,7 +367,7 @@ public class AboList extends SimpleListProperty<Abo> {
      * @param film assignee
      */
     private void assignAboToFilm(Film film) {
-        if (film.getTheme().equals(FilmTools.THEME_LIVE)) {
+        if (film.isLive()) {
             // Livestreams gehören nicht in ein Abo
             deleteAboInFilm(film);
             return;
