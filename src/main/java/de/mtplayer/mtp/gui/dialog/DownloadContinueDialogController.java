@@ -26,6 +26,7 @@ import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadTools;
 import de.mtplayer.mtp.controller.starter.DownloadState;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import javafx.animation.KeyFrame;
@@ -56,7 +57,7 @@ public class DownloadContinueDialogController extends PDialogExtra {
     private ComboBox<String> cbPath = new ComboBox<>();
     private Label lblSizeFree = new Label("");
 
-    private Button btnPath = new Button("Button");
+    private Button btnPath = new Button("");
     private GridPane gridPane = new GridPane();
 
     private final ProgData progData;
@@ -209,21 +210,23 @@ public class DownloadContinueDialogController extends PDialogExtra {
 
     private void initButton() {
         btnPath.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
-        btnPath.setText("");
         btnPath.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen."));
         btnPath.setOnAction(event -> getDestination());
 
+        btnCancel.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnCancel.setOnAction(event -> {
             result = DownloadState.ContinueDownload.CANCEL_DOWNLOAD;
             quit();
         });
 
         setButtonText();
+        btnRestartDownload.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnRestartDownload.setOnAction(event -> {
             result = DownloadState.ContinueDownload.RESTART_DOWNLOAD;
             download.setPathName(cbPath.getSelectionModel().getSelectedItem(), txtFileName.getText());
             quit();
         });
+        btnContinueDownload.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnContinueDownload.setOnAction(event -> {
             result = DownloadState.ContinueDownload.CONTINUE_DOWNLOAD;
             quit();

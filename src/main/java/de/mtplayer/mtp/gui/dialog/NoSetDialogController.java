@@ -58,8 +58,10 @@ public class NoSetDialogController extends PDialog {
 
     @Override
     public void make() {
+        btnCancel.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnCancel.setOnAction(a -> close());
 
+        btnImport.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnImport.setOnAction(event -> {
             importSet();
             close();

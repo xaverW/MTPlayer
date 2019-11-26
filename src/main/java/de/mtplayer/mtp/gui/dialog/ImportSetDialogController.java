@@ -69,6 +69,7 @@ public class ImportSetDialogController extends PDialog {
 
     @Override
     public void make() {
+        btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnOk.setOnAction(a -> close());
 
         final Button btnHelp = PButton.helpButton("Set zurücksetzen",
@@ -79,6 +80,7 @@ public class ImportSetDialogController extends PDialog {
                         "Anschließend werden die aktuellen Standardsets eingerichtet." + P2LibConst.LINE_SEPARATOR +
                         "Damit kann dann direkt weitergearbeitet werden.");
 
+        btnImport.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnImport.setOnAction(event -> {
             importSet();
         });

@@ -17,6 +17,7 @@ package de.mtplayer.mtp;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.data.ProgIcons;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -73,6 +74,7 @@ public class MTStartErrorWindow extends Application {
             hBoxUrl.getChildren().addAll(new Label("Infos:"), hyperlink);
 
             Button btnOk = new Button("Ok");
+            btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
             btnOk.setOnAction(a -> {
                 quitt();
             });

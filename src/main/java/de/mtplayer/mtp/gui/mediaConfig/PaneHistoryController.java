@@ -19,6 +19,7 @@ package de.mtplayer.mtp.gui.mediaConfig;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.history.HistoryData;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PAccordion;
 import javafx.application.Platform;
@@ -163,6 +164,7 @@ public class PaneHistoryController extends AnchorPane {
         });
 
         Button btnDel = new Button("Liste löschen");
+        btnDel.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnDel.setOnAction(event -> {
             if (history) {
                 progData.history.clearAll(stage);

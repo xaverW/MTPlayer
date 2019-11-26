@@ -19,6 +19,7 @@ package de.mtplayer.mtp.gui.configDialog;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.tools.Listener;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.dialog.PDialog;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.beans.property.IntegerProperty;
@@ -67,7 +68,9 @@ public class ConfigDialogController extends PDialog {
     @Override
     public void make() {
         stage = getStage();
+        btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnOk.setOnAction(a -> close());
+
         ProgConfig.SYSTEM_DARK_THEME.getStringProperty().addListener((u, o, n) -> updateCss());
         initPanel();
     }

@@ -25,6 +25,7 @@ import de.mtplayer.mtp.controller.data.film.FilmTools;
 import de.mtplayer.mtp.gui.mediaDialog.MediaDialogController;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.gui.tools.table.Table;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PColor;
 import javafx.application.Platform;
@@ -245,6 +246,7 @@ public class FilmGuiController extends AnchorPane {
         tilePaneButton.getChildren().clear();
         setDataList.stream().forEach(setData -> {
             Button btn = new Button(setData.getVisibleName());
+            btn.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
             btn.setMaxWidth(Double.MAX_VALUE);
             if (!setData.getColor().equals(SetData.RESET_COLOR)) {
                 final String c = PColor.getCssColor(setData.getColor());

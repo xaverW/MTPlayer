@@ -18,6 +18,7 @@ package de.mtplayer.mtp.gui;
 
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.tools.HelpText;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.dialog.PDialog;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
@@ -63,6 +64,7 @@ public class FilmFilterEditDialog extends PDialog {
 
         hBox.setAlignment(Pos.BOTTOM_RIGHT);
         Button btnOk = new Button("Ok");
+        btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnOk.setOnAction(event -> close());
         hBox.getChildren().addAll(btnHelpAbo, btnOk);
 

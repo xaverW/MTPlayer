@@ -23,6 +23,7 @@ import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
@@ -96,6 +97,7 @@ public class PathPane {
         StringProperty property;
         TextField txtPlayer = new TextField();
         final Button btnFind = new Button("suchen");
+        btnFind.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         switch (player) {
             case FLV:
                 text = new Text("Pfad zum flvstreamer-Player auswählen");

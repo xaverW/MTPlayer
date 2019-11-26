@@ -19,6 +19,7 @@ package de.mtplayer.mtp.gui.mediaConfig;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.tools.HelpText;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.dialog.PDialog;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -72,6 +73,7 @@ public class MediaConfigDialogController extends PDialog {
 
         vBoxDialog.getChildren().addAll(hBoxOk);
 
+        btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnOk.setOnAction(a -> close());
         progress.visibleProperty().bind(progData.mediaDataList.searchingProperty());
         btnCreateMediaDB.disableProperty().bind(progData.mediaDataList.searchingProperty());

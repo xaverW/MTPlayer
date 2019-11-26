@@ -20,6 +20,7 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.gui.configDialog.GeoPane;
 import de.mtplayer.mtp.gui.configDialog.LoadFilmsPane;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.P2LibInit;
 import de.p2tools.p2Lib.dialog.PDialog;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -256,6 +257,7 @@ public class StartDialogController extends PDialog {
 
     private void initButton() {
         btnOk = new Button("Ok");
+        btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnOk.setDisable(true);
         btnOk.setOnAction(a -> {
             ok = true;
@@ -263,9 +265,11 @@ public class StartDialogController extends PDialog {
         });
 
         btnCancel = new Button("Abbrechen");
+        btnCancel.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnCancel.setOnAction(a -> close());
 
         btnNext = new Button("");
+        btnNext.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnNext.setGraphic(new ProgIcons().ICON_BUTTON_NEXT);
         btnNext.setOnAction(event -> {
             switch (aktState) {
@@ -293,6 +297,7 @@ public class StartDialogController extends PDialog {
             selectActPane();
         });
         btnPrev = new Button("");
+        btnPrev.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnPrev.setGraphic(new ProgIcons().ICON_BUTTON_PREV);
         btnPrev.setOnAction(event -> {
             switch (aktState) {

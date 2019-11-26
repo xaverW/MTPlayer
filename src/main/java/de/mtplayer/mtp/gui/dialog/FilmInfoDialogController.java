@@ -20,6 +20,7 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.dialog.PDialog;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
@@ -170,6 +171,7 @@ public class FilmInfoDialogController extends PDialog {
         tglUrl.selectedProperty().bindBidirectional(urlProperty);
         tglUrl.selectedProperty().addListener((observable, oldValue, newValue) -> setUrl());
 
+        btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnOk.setOnAction(a -> close());
         vBoxCont.getChildren().add(gridPane);
         VBox.setVgrow(gridPane, Priority.SOMETIMES);

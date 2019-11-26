@@ -20,6 +20,7 @@ import de.mtplayer.mLib.tools.MLBandwidthTokenBucket;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.download.DownloadConstants;
+import de.p2tools.p2Lib.P2LibConst;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Insets;
@@ -108,6 +109,7 @@ public class DownloadFilterController extends FilterController {
     }
 
     private void initFilter() {
+        btnClear.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnClear.setOnAction(a -> clearFilter());
 
         cboSrc.getItems().addAll(DownloadConstants.ALL,

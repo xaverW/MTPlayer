@@ -19,6 +19,7 @@ package de.mtplayer.mtp.gui;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.abo.AboConstants;
+import de.p2tools.p2Lib.P2LibConst;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -51,6 +52,7 @@ public class AboFilterController extends FilterController {
         vBoxFilter.getChildren().add(hBox);
 
         initFilter();
+        btnClear.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnClear.setOnAction(a -> clearFilter());
     }
 
