@@ -71,7 +71,7 @@ public class DeleteFilmFileDialogController extends PDialogExtra {
         vBoxCont.setPadding(new Insets(5));
         vBoxCont.setSpacing(10);
         vBoxCont.getChildren().addAll(gridPane);
-        addOkButtons(btnOk, btnCancel);
+        addButtons(btnOk, btnCancel);
 
         gridPane.setMaxWidth(Double.MAX_VALUE);
         gridPane.setPadding(new Insets(10, 10, 10, 10));

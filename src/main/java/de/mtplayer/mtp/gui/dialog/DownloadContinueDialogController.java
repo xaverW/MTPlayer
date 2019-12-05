@@ -26,14 +26,12 @@ import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadTools;
 import de.mtplayer.mtp.controller.starter.DownloadState;
-import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -45,7 +43,7 @@ public class DownloadContinueDialogController extends PDialogExtra {
 
     private final HBox hBoxTitle;
     private final VBox vBoxCont;
-    private final HBox hBoxOk;
+//    private final HBox hBoxOk;
 
     private Label lblHeader = new Label("Die Filmdatei existiert bereits.");
     private Button btnRestartDownload = new Button("neu Starten");
@@ -80,7 +78,7 @@ public class DownloadContinueDialogController extends PDialogExtra {
 
         hBoxTitle = getHBoxTitle();
         vBoxCont = getVboxCont();
-        hBoxOk = getHboxOk();
+//        hBoxOk = getHboxOk();
 
 
         if (ProgData.automode) {
@@ -154,13 +152,18 @@ public class DownloadContinueDialogController extends PDialogExtra {
         vBoxCont.getChildren().addAll(gridPane);
 
 
-        hBoxOk.setAlignment(Pos.BOTTOM_RIGHT);
-        hBoxOk.setSpacing(10);
-        HBox hBox = new HBox();
-        HBox.setHgrow(hBox, Priority.ALWAYS);
-        hBox.setAlignment(Pos.CENTER_LEFT);
-        hBox.getChildren().add(new Label("Wie möchten Sie forfahren?"));
-        hBoxOk.getChildren().addAll(hBox, btnRestartDownload, btnContinueDownload, btnCancel);
+//        hBoxOk.setAlignment(Pos.BOTTOM_RIGHT);
+//        hBoxOk.setSpacing(10);
+//        HBox hBox = new HBox();
+//        HBox.setHgrow(hBox, Priority.ALWAYS);
+//        hBox.setAlignment(Pos.CENTER_LEFT);
+//        hBox.getChildren().add(new Label("Wie möchten Sie forfahren?"));
+//        hBoxOk.getChildren().addAll(hBox, btnRestartDownload, btnContinueDownload, btnCancel);
+
+        addButtons(btnContinueDownload, btnCancel);
+        ButtonBar.setButtonData(btnRestartDownload, ButtonBar.ButtonData.APPLY);
+        addAnyButton(btnRestartDownload);
+        getHboxLeft().getChildren().add(new Label("Wie möchten Sie forfahren?"));
     }
 
     private boolean checkDownload() {
@@ -213,20 +216,20 @@ public class DownloadContinueDialogController extends PDialogExtra {
         btnPath.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen."));
         btnPath.setOnAction(event -> getDestination());
 
-        btnCancel.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
+//        btnCancel.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnCancel.setOnAction(event -> {
             result = DownloadState.ContinueDownload.CANCEL_DOWNLOAD;
             quit();
         });
 
         setButtonText();
-        btnRestartDownload.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
+//        btnRestartDownload.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnRestartDownload.setOnAction(event -> {
             result = DownloadState.ContinueDownload.RESTART_DOWNLOAD;
             download.setPathName(cbPath.getSelectionModel().getSelectedItem(), txtFileName.getText());
             quit();
         });
-        btnContinueDownload.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
+//        btnContinueDownload.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnContinueDownload.setOnAction(event -> {
             result = DownloadState.ContinueDownload.CONTINUE_DOWNLOAD;
             quit();

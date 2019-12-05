@@ -93,7 +93,7 @@ public class DownloadEditDialogController extends PDialogExtra {
         orgProgArray = download.arr[DownloadXml.DOWNLOAD_PROGRAM_CALL_ARRAY];
         orgPath = download.getDestPathFile();
 
-        addOkButtons(btnOk, btnCancel);
+        addButtons(btnOk, btnCancel);
 
         getVboxCont().getChildren().add(gridPane);
 
@@ -222,13 +222,13 @@ public class DownloadEditDialogController extends PDialogExtra {
 
 
     private void initButton() {
-        btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
+//        btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnOk.setOnAction(event -> {
             if (check()) {
                 quit();
             }
         });
-        btnCancel.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
+//        btnCancel.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnCancel.setOnAction(event -> {
             ok = false;
             quit();

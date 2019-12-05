@@ -18,14 +18,12 @@ package de.mtplayer.mtp.gui;
 
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.tools.HelpText;
-import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.dialog.PDialog;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
@@ -59,17 +57,21 @@ public class FilmFilterEditDialog extends PDialog {
         final Button btnHelpAbo = PButton.helpButton(getStage(), "Filter ein- und ausschalten",
                 HelpText.GUI_FILMS_EDIT_FILTER);
 
-        HBox hBox = new HBox();
-        hBox.setSpacing(10);
-
-        hBox.setAlignment(Pos.BOTTOM_RIGHT);
+//        HBox hBox = new HBox();
+//        hBox.setSpacing(10);
+//
+//        hBox.setAlignment(Pos.BOTTOM_RIGHT);
         Button btnOk = new Button("Ok");
-        btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
+//        btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnOk.setOnAction(event -> close());
-        hBox.getChildren().addAll(btnHelpAbo, btnOk);
+//        hBox.getChildren().addAll(btnHelpAbo, btnOk);
+//        vbox.getChildren().addAll(vBoxCont, hBox);
 
-        vbox.getChildren().addAll(vBoxCont, hBox);
-
+        ButtonBar buttonBar = new ButtonBar();
+        ButtonBar.setButtonData(btnOk, ButtonBar.ButtonData.OK_DONE);
+        ButtonBar.setButtonData(btnHelpAbo, ButtonBar.ButtonData.HELP);
+        buttonBar.getButtons().addAll(btnOk, btnHelpAbo);
+        vbox.getChildren().addAll(vBoxCont, buttonBar);
 
     }
 

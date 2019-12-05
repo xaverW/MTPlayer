@@ -20,16 +20,12 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.gui.configDialog.GeoPane;
 import de.mtplayer.mtp.gui.configDialog.LoadFilmsPane;
-import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.P2LibInit;
 import de.p2tools.p2Lib.dialog.PDialog;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TitledPane;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
@@ -257,7 +253,7 @@ public class StartDialogController extends PDialog {
 
     private void initButton() {
         btnOk = new Button("Ok");
-        btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
+//        btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnOk.setDisable(true);
         btnOk.setOnAction(a -> {
             ok = true;
@@ -265,11 +261,11 @@ public class StartDialogController extends PDialog {
         });
 
         btnCancel = new Button("Abbrechen");
-        btnCancel.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
+//        btnCancel.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnCancel.setOnAction(a -> close());
 
         btnNext = new Button("");
-        btnNext.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
+//        btnNext.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnNext.setGraphic(new ProgIcons().ICON_BUTTON_NEXT);
         btnNext.setOnAction(event -> {
             switch (aktState) {
@@ -297,7 +293,7 @@ public class StartDialogController extends PDialog {
             selectActPane();
         });
         btnPrev = new Button("");
-        btnPrev.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
+//        btnPrev.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnPrev.setGraphic(new ProgIcons().ICON_BUTTON_PREV);
         btnPrev.setOnAction(event -> {
             switch (aktState) {
@@ -330,16 +326,27 @@ public class StartDialogController extends PDialog {
         btnNext.getStyleClass().add("btnStartDialog");
         btnPrev.getStyleClass().add("btnStartDialog");
 
-        HBox hBox1 = new HBox();
-        hBox1.setSpacing(10);
-        hBox1.getChildren().addAll(btnPrev, btnNext);
-        HBox.setHgrow(hBox1, Priority.ALWAYS);
 
-        HBox hBox2 = new HBox();
-        hBox2.setSpacing(10);
-        hBox2.getChildren().addAll(hBox1, btnOk, btnCancel);
+//        HBox hBox1 = new HBox();
+//        hBox1.setSpacing(10);
+//        hBox1.getChildren().addAll(btnPrev, btnNext);
+//        HBox.setHgrow(hBox1, Priority.ALWAYS);
+//
+//        HBox hBox2 = new HBox();
+//        hBox2.setSpacing(10);
+//        hBox2.getChildren().addAll(hBox1, btnOk, btnCancel);
+//
+//        vBoxDialog.getChildren().add(hBox2);
 
-        vBoxDialog.getChildren().add(hBox2);
+
+        ButtonBar buttonBar = new ButtonBar();
+        ButtonBar.setButtonData(btnOk, ButtonBar.ButtonData.OK_DONE);
+        ButtonBar.setButtonData(btnCancel, ButtonBar.ButtonData.CANCEL_CLOSE);
+        ButtonBar.setButtonData(btnPrev, ButtonBar.ButtonData.BACK_PREVIOUS);
+        ButtonBar.setButtonData(btnNext, ButtonBar.ButtonData.NEXT_FORWARD);
+        buttonBar.getButtons().addAll(btnOk, btnCancel, btnPrev, btnNext);
+        buttonBar.setButtonOrder("BX+CO");
+        vBoxDialog.getChildren().add(buttonBar);
     }
 
     private void selectActPane() {

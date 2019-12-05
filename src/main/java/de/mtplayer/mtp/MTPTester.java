@@ -32,6 +32,7 @@ import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -80,6 +81,17 @@ public class MTPTester {
             StackPane stackPane = new StackPane();
             stackPane.getChildren().addAll(gridPane, maskerPane);
             progInfoDialog.getVboxCont().getChildren().addAll(stackPane);
+
+
+            // Create the ButtonBar instance
+            ButtonBar buttonBar = new ButtonBar();
+            Button okButton = new Button("OK");
+            ButtonBar.setButtonData(okButton, ButtonBar.ButtonData.OK_DONE);
+            Button cButton = new Button("Abbrechen");
+            ButtonBar.setButtonData(cButton, ButtonBar.ButtonData.CANCEL_CLOSE);
+            buttonBar.getButtons().addAll(okButton, cButton);
+            progInfoDialog.getVboxCont().getChildren().add(buttonBar);
+
 
             Text text = new Text("Debugtools");
             text.setFont(Font.font(null, FontWeight.BOLD, 15));

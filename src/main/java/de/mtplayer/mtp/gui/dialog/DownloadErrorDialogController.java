@@ -20,7 +20,6 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.download.Download;
-import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import javafx.animation.KeyFrame;
@@ -42,7 +41,7 @@ public class DownloadErrorDialogController extends PDialogExtra {
 
     private final HBox hBoxTitle;
     private final VBox vBoxCont;
-    private final HBox hBoxOk;
+//    private final HBox hBoxOk;
 
     private Label lblHeader = new Label("Downloadfehler");
     private Button btnOk = new Button("Ok");
@@ -72,7 +71,7 @@ public class DownloadErrorDialogController extends PDialogExtra {
 
         hBoxTitle = getHBoxTitle();
         vBoxCont = getVboxCont();
-        hBoxOk = getHboxOk();
+//        hBoxOk = getHboxOk();
 
         if (ProgData.automode) {
             // dann schaut ja eh keiner zu
@@ -95,7 +94,7 @@ public class DownloadErrorDialogController extends PDialogExtra {
         txtCont.setEditable(false);
         txtCont.setText(message);
 
-        btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
+//        btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnOk.setOnAction(event -> {
             stopCounter();
             quit();
@@ -149,7 +148,9 @@ public class DownloadErrorDialogController extends PDialogExtra {
         vBoxCont.setSpacing(10);
         vBoxCont.getChildren().add(hBox);
 
-        hBoxOk.getChildren().addAll(lblTime, btnOk);
+//        hBoxOk.getChildren().addAll(lblTime, btnOk);
+        addButtons(btnOk);
+        getHboxLeft().getChildren().add(lblTime);
     }
 
     private class CountdownAction implements EventHandler {

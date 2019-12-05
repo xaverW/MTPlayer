@@ -53,14 +53,14 @@ public class AboutDialogController extends PDialogExtra {
         } else {
             this.GRAY = Color.DARKBLUE;
         }
-        addOkButtons(btnOk);
+        addButtons(btnOk);
         init(getVBoxCompleteDialog(), true);
     }
 
 
     @Override
     public void make() {
-        btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
+//        btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnOk.setOnAction(a -> close());
         HBox hBox = new HBox();
 

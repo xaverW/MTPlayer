@@ -22,10 +22,8 @@ import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.tools.storedFilter.Filter;
-import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.dialog.PDialog;
 import de.p2tools.p2Lib.guiTools.PButton;
-import de.p2tools.p2Lib.guiTools.PGuiTools;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -112,7 +110,7 @@ public class MediaDialogController extends PDialog {
         btnReset.setGraphic(new ProgIcons().ICON_BUTTON_RESET);
         btnReset.setTooltip(new Tooltip("Suchtext wieder herstellen"));
         btnReset.setOnAction(a -> txtSearch.setText(searchStr));
-        btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
+//        btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnOk.setOnAction(a -> close());
 
         rbMedien.setSelected(true);
@@ -180,10 +178,15 @@ public class MediaDialogController extends PDialog {
             Button btnHelp = PButton.helpButton(stage,
                     "Suche in der Mediensammlung", HelpText.SEARCH_MEDIA_DIALOG);
 
-            hBox = new HBox(10);
-            hBox.getChildren().addAll(btnHelp, PGuiTools.getHBoxGrower(), btnOk);
+//            hBox = new HBox(10);
+//            hBox.getChildren().addAll(btnHelp, PGuiTools.getHBoxGrower(), btnOk);
 
-            vBoxDialog.getChildren().addAll(vBoxCont, hBox);
+            ButtonBar buttonBar = new ButtonBar();
+            ButtonBar.setButtonData(btnOk, ButtonBar.ButtonData.OK_DONE);
+            ButtonBar.setButtonData(btnHelp, ButtonBar.ButtonData.HELP);
+            buttonBar.getButtons().addAll(btnOk, btnHelp);
+
+            vBoxDialog.getChildren().addAll(vBoxCont, buttonBar);
         } catch (final Exception ex) {
             PLog.errorLog(951203030, ex);
         }

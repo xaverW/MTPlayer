@@ -19,17 +19,15 @@ package de.mtplayer.mtp.gui.configDialog;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.tools.Listener;
-import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.dialog.PDialog;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -56,10 +54,15 @@ public class ConfigDialogController extends PDialog {
         vBox.getChildren().add(tabPane);
         VBox.setVgrow(tabPane, Priority.ALWAYS);
 
-        HBox hBox = new HBox();
-        hBox.setAlignment(Pos.CENTER_RIGHT);
-        hBox.getChildren().add(btnOk);
-        vBox.getChildren().add(hBox);
+//        HBox hBox = new HBox();
+//        hBox.setAlignment(Pos.CENTER_RIGHT);
+//        hBox.getChildren().add(btnOk);
+//        vBox.getChildren().add(hBox);
+
+        ButtonBar buttonBar = new ButtonBar();
+        ButtonBar.setButtonData(btnOk, ButtonBar.ButtonData.OK_DONE);
+        buttonBar.getButtons().add(btnOk);
+        vBox.getChildren().add(buttonBar);
 
         this.progData = ProgData.getInstance();
         init(vBox, true);
@@ -68,7 +71,7 @@ public class ConfigDialogController extends PDialog {
     @Override
     public void make() {
         stage = getStage();
-        btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
+//        btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnOk.setOnAction(a -> close());
 
         ProgConfig.SYSTEM_DARK_THEME.getStringProperty().addListener((u, o, n) -> updateCss());

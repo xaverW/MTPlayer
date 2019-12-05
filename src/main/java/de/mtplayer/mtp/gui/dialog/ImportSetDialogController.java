@@ -28,11 +28,10 @@ import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.dialog.PDialog;
 import de.p2tools.p2Lib.guiTools.PButton;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TitledPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -69,7 +68,7 @@ public class ImportSetDialogController extends PDialog {
 
     @Override
     public void make() {
-        btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
+//        btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnOk.setOnAction(a -> close());
 
         final Button btnHelp = PButton.helpButton("Set zurücksetzen",
@@ -80,7 +79,7 @@ public class ImportSetDialogController extends PDialog {
                         "Anschließend werden die aktuellen Standardsets eingerichtet." + P2LibConst.LINE_SEPARATOR +
                         "Damit kann dann direkt weitergearbeitet werden.");
 
-        btnImport.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
+//        btnImport.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnImport.setOnAction(event -> {
             importSet();
         });
@@ -125,12 +124,18 @@ public class ImportSetDialogController extends PDialog {
         vBoxCont.getChildren().add(stackPane);
         VBox.setVgrow(vBoxCont, Priority.ALWAYS);
 
-        HBox hBox = new HBox();
-        hBox.setSpacing(10);
-        hBox.setAlignment(Pos.BOTTOM_RIGHT);
-        hBox.getChildren().addAll(btnImport, btnOk, btnHelp);
+//        HBox hBox = new HBox();
+//        hBox.setSpacing(10);
+//        hBox.setAlignment(Pos.BOTTOM_RIGHT);
+//        hBox.getChildren().addAll(btnImport, btnOk, btnHelp);
 
-        vbox.getChildren().addAll(vBoxCont, hBox);
+        ButtonBar buttonBar = new ButtonBar();
+        ButtonBar.setButtonData(btnOk, ButtonBar.ButtonData.CANCEL_CLOSE);
+        ButtonBar.setButtonData(btnImport, ButtonBar.ButtonData.OK_DONE);
+        ButtonBar.setButtonData(btnHelp, ButtonBar.ButtonData.HELP);
+        buttonBar.getButtons().addAll(btnOk, btnImport, btnHelp);
+
+        vbox.getChildren().addAll(vBoxCont, buttonBar);
     }
 
     private void importSet() {

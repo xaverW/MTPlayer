@@ -18,7 +18,6 @@ package de.mtplayer.mtp.gui;
 
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
-import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.guiTools.PGuiTools;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import javafx.geometry.Insets;
@@ -45,7 +44,6 @@ public class FilmFilterControllerClearFilter extends VBox {
     }
 
     private void addButton() {
-        btnClearFilter.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnClearFilter.setOnAction(a -> clearFilter());
 
         btnEditFilter.setGraphic(new ProgIcons().ICON_BUTTON_EDIT_FILTER);

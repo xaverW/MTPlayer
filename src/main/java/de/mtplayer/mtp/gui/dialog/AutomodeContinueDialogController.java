@@ -23,11 +23,9 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
@@ -35,7 +33,7 @@ import javafx.util.Duration;
 public class AutomodeContinueDialogController extends PDialogExtra {
 
     private final VBox vBoxCont;
-    private final HBox hBoxOk;
+//    private final HBox hBoxOk;
 
     private final Button btnCancel;
     private final Button btnContinue;
@@ -50,7 +48,7 @@ public class AutomodeContinueDialogController extends PDialogExtra {
         super(null, "Automodus", true);
 
         vBoxCont = getVboxCont();
-        hBoxOk = getHboxOk();
+//        hBoxOk = getHboxOk();
 
         btnCancel = new Button("Programm nicht beenden");
         btnContinue = new Button("Beenden in " + timeSeconds + " s");
@@ -79,7 +77,7 @@ public class AutomodeContinueDialogController extends PDialogExtra {
         gridPane.setPadding(new Insets(10, 10, 10, 10));
 
         Label lblHeader1 = new Label("Automodus und keine Downloads,");
-        Label lblHeader2 = new Label("das Programm wird sofort wieder beendet");
+        Label lblHeader2 = new Label("das Programm wird sofort wieder beendet.");
         GridPane.setHalignment(lblHeader1, HPos.CENTER);
         GridPane.setHalignment(lblHeader2, HPos.CENTER);
 
@@ -91,11 +89,14 @@ public class AutomodeContinueDialogController extends PDialogExtra {
         vBoxCont.setPadding(new Insets(15));
         vBoxCont.getChildren().addAll(gridPane);
 
-        HBox hBox = new HBox();
-        HBox.setHgrow(hBox, Priority.ALWAYS);
-        hBox.setAlignment(Pos.CENTER_LEFT);
-        hBox.getChildren().add(new Label("Wie möchten Sie forfahren?"));
-        hBoxOk.getChildren().addAll(hBox, btnContinue, btnCancel);
+//        HBox hBox = new HBox();
+//        HBox.setHgrow(hBox, Priority.ALWAYS);
+//        hBox.setAlignment(Pos.CENTER_LEFT);
+//        hBox.getChildren().add(new Label("Wie möchten Sie forfahren?"));
+//        hBoxOk.getChildren().addAll(hBox, btnContinue, btnCancel);
+
+        getHboxLeft().getChildren().add(new Label("Wie möchten Sie forfahren?"));
+        addButtons(btnContinue, btnCancel);
     }
 
     public boolean isContinueAutomode() {

@@ -32,7 +32,6 @@ import de.mtplayer.mtp.controller.data.download.DownloadTools;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmTools;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
-import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
@@ -62,7 +61,7 @@ import java.util.List;
 public class DownloadAddDialogController extends PDialogExtra {
 
     private VBox vBoxCont;
-    private HBox hBoxOk;
+//    private HBox hBoxOk;
 
     private final VBox vBoxAllDownloads = new VBox();
     private final HBox hBoxTop = new HBox();
@@ -82,7 +81,7 @@ public class DownloadAddDialogController extends PDialogExtra {
     private final Button btnOk = new Button("Ok");
     private final Button btnCancel = new Button("Abbrechen");
     private final TextField txtName = new TextField();
-    private final CheckBox cbxStart = new CheckBox("Download sofort starten");
+    private final CheckBox chkStart = new CheckBox("Download sofort starten");
     private final CheckBox cbxInfo = new CheckBox("Infodatei anlegen: \"Filmname.txt\"");
     private final CheckBox cbxSubtitle = new CheckBox("Untertitel speichern: \"Filmname.xxx\"");
 
@@ -197,7 +196,7 @@ public class DownloadAddDialogController extends PDialogExtra {
         this.setDataList = progData.setDataList.getSetDataListSave();
 
         vBoxCont = getVboxCont();
-        hBoxOk = getHboxOk();
+//        hBoxOk = getHboxOk();
 
         init(getVBoxCompleteDialog(), true);
     }
@@ -315,11 +314,14 @@ public class DownloadAddDialogController extends PDialogExtra {
         vBoxCont.getChildren().addAll(vBoxAllDownloads, gridPane);
 
 
-        // Bottom
-        HBox hBox = new HBox();
-        HBox.setHgrow(hBox, Priority.ALWAYS);
-        hBox.getChildren().add(cbxStart);
-        hBoxOk.getChildren().addAll(hBox, btnOk, btnCancel);
+//        // Bottom
+//        HBox hBox = new HBox();
+//        HBox.setHgrow(hBox, Priority.ALWAYS);
+//        hBox.getChildren().add(cbxStart);
+//        hBoxOk.getChildren().addAll(hBox, btnOk, btnCancel);
+        addButtons(btnOk, btnCancel);
+        getHboxLeft().getChildren().add(chkStart);
+//        addAnyButton(cbxStart);
     }
 
 
@@ -410,13 +412,13 @@ public class DownloadAddDialogController extends PDialogExtra {
             changeFilmNr();
         });
 
-        btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
+//        btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnOk.setOnAction(event -> {
             if (check()) {
                 quit();
             }
         });
-        btnCancel.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
+//        btnCancel.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnCancel.setOnAction(event -> {
             ok = false;
             quit();
@@ -472,7 +474,7 @@ public class DownloadAddDialogController extends PDialogExtra {
 
     private void initCheckBox() {
         // und jetzt noch die Listener anhängen
-        cbxStart.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD.getBooleanProperty());
+        chkStart.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD.getBooleanProperty());
 
         cbxSubtitle.setOnAction(event -> downInfo[actFilmIsShown].setSubtitle(cbxSubtitle.isSelected()));
         cbxInfo.setOnAction(event -> downInfo[actFilmIsShown].setInfo(cbxInfo.isSelected()));
@@ -648,7 +650,7 @@ public class DownloadAddDialogController extends PDialogExtra {
         }
 
         progData.downloadList.addWithNr(list);
-        if (cbxStart.isSelected()) {
+        if (chkStart.isSelected()) {
             // und evtl. auch gleich starten
             progData.downloadList.startDownloads(list);
         }

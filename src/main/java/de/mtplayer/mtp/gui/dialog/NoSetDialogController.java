@@ -21,10 +21,9 @@ import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.dialog.PDialog;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -58,10 +57,10 @@ public class NoSetDialogController extends PDialog {
 
     @Override
     public void make() {
-        btnCancel.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
+//        btnCancel.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnCancel.setOnAction(a -> close());
 
-        btnImport.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
+//        btnImport.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnImport.setOnAction(event -> {
             importSet();
             close();
@@ -121,12 +120,18 @@ public class NoSetDialogController extends PDialog {
         }
 
 
-        HBox hBox = new HBox();
-        hBox.setSpacing(10);
-        hBox.setAlignment(Pos.BOTTOM_RIGHT);
-        hBox.getChildren().addAll(btnImport, btnCancel);
+//        HBox hBox = new HBox();
+//        hBox.setSpacing(10);
+//        hBox.setAlignment(Pos.BOTTOM_RIGHT);
+//        hBox.getChildren().addAll(btnImport, btnCancel);
 
-        vbox.getChildren().addAll(vBoxCont, hBox);
+
+        ButtonBar buttonBar = new ButtonBar();
+        ButtonBar.setButtonData(btnCancel, ButtonBar.ButtonData.CANCEL_CLOSE);
+        ButtonBar.setButtonData(btnImport, ButtonBar.ButtonData.OK_DONE);
+        buttonBar.getButtons().addAll(btnImport, btnCancel);
+
+        vbox.getChildren().addAll(vBoxCont, buttonBar);
     }
 
     private void importSet() {
