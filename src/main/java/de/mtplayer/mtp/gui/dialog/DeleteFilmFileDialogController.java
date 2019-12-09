@@ -34,8 +34,8 @@ public class DeleteFilmFileDialogController extends PDialogExtra {
 
     private VBox vBoxCont;
 
-    private Button btnOk = new Button("Ok");
-    private Button btnCancel = new Button("Abbrechen");
+    private Button btnOk = new Button("_Ok");
+    private Button btnCancel = new Button("_Abbrechen");
 
     private Label lblFilm = new Label("");
     private Label lblInfoFile = new Label();

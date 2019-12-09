@@ -54,14 +54,14 @@ public class FilmFilterEditDialog extends PDialog {
 
         init(vBoxCont);
 
-        final Button btnHelpAbo = PButton.helpButton(getStage(), "Filter ein- und ausschalten",
+        final Button btnHelp = PButton.helpButton(getStage(), "Filter ein- und ausschalten",
                 HelpText.GUI_FILMS_EDIT_FILTER);
 
 //        HBox hBox = new HBox();
 //        hBox.setSpacing(10);
 //
 //        hBox.setAlignment(Pos.BOTTOM_RIGHT);
-        Button btnOk = new Button("Ok");
+        Button btnOk = new Button("_Ok");
 //        btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnOk.setOnAction(event -> close());
 //        hBox.getChildren().addAll(btnHelpAbo, btnOk);
@@ -69,8 +69,8 @@ public class FilmFilterEditDialog extends PDialog {
 
         ButtonBar buttonBar = new ButtonBar();
         ButtonBar.setButtonData(btnOk, ButtonBar.ButtonData.OK_DONE);
-        ButtonBar.setButtonData(btnHelpAbo, ButtonBar.ButtonData.HELP);
-        buttonBar.getButtons().addAll(btnOk, btnHelpAbo);
+        ButtonBar.setButtonData(btnHelp, ButtonBar.ButtonData.HELP);
+        buttonBar.getButtons().addAll(btnOk, btnHelp);
         vbox.getChildren().addAll(vBoxCont, buttonBar);
 
     }

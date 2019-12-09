@@ -73,7 +73,7 @@ public class MTStartErrorWindow extends Application {
                     ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
             hBoxUrl.getChildren().addAll(new Label("Infos:"), hyperlink);
 
-            Button btnOk = new Button("Ok");
+            Button btnOk = new Button("_Ok");
             btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
             btnOk.setOnAction(a -> {
                 quitt();

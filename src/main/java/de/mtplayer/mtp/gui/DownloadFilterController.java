@@ -54,12 +54,17 @@ public class DownloadFilterController extends FilterController {
         super();
         vBoxFilter = getVBoxFilter(true);
         progData = ProgData.getInstance();
+        progData.downloadFilterController = this;
 
         initLayout();
         initFilter();
 
         initNumberDownloads();
         initBandwidth();
+    }
+
+    public void setClearText(String txt) {
+        btnClear.setText(txt);
     }
 
     private void initLayout() {

@@ -44,7 +44,7 @@ public class DownloadErrorDialogController extends PDialogExtra {
 //    private final HBox hBoxOk;
 
     private Label lblHeader = new Label("Downloadfehler");
-    private Button btnOk = new Button("Ok");
+    private Button btnOk = new Button("_Ok");
 
     private Label lblFilmTitle = new Label("ARD: Tatort, ..");
     private Label lblUrl = new Label();

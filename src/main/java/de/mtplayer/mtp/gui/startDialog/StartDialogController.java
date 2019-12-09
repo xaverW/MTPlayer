@@ -252,7 +252,7 @@ public class StartDialogController extends PDialog {
     }
 
     private void initButton() {
-        btnOk = new Button("Ok");
+        btnOk = new Button("_Ok");
 //        btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnOk.setDisable(true);
         btnOk.setOnAction(a -> {
@@ -260,7 +260,7 @@ public class StartDialogController extends PDialog {
             close();
         });
 
-        btnCancel = new Button("Abbrechen");
+        btnCancel = new Button("_Abbrechen");
 //        btnCancel.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnCancel.setOnAction(a -> close());
 

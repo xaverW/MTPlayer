@@ -245,8 +245,8 @@ public class MTPlayerController extends StackPane {
 
         setButtonStyle(btnDownload);
 
-        progData.downloadGuiController.isShown();
         splitPaneDownoad.toFront();
+        progData.downloadGuiController.isShown();
         statusBarController.setStatusbarIndex(StatusBarController.StatusbarIndex.DOWNLOAD);
     }
 
@@ -263,8 +263,8 @@ public class MTPlayerController extends StackPane {
 
         setButtonStyle(btnAbo);
 
-        progData.aboGuiController.isShown();
         splitPaneAbo.toFront();
+        progData.aboGuiController.isShown();
         statusBarController.setStatusbarIndex(StatusBarController.StatusbarIndex.ABO);
     }
 

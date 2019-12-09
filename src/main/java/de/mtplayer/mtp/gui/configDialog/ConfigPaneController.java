@@ -255,7 +255,7 @@ public class ConfigPaneController extends AnchorPane {
             txtLogFile.setText(ProgInfos.getStandardLogDirectory_String());
         });
 
-        final Button btnChange = new Button("Pfad zum Logfile jetzt schon ändern");
+        final Button btnChange = new Button("_Pfad zum Logfile jetzt schon ändern");
         btnChange.setTooltip(new Tooltip("Den geänderten Pfad für das Logfile\n" +
                 "jetzt schon verwenden.\n\n" +
                 "Ansonsten wird er erst beim nächsten\n" +
@@ -381,7 +381,7 @@ public class ConfigPaneController extends AnchorPane {
                         "Das Programm wird aber nicht ungefragt ersetzt.");
 
         //jetzt suchen
-        Button btnNow = new Button("Jetzt suchen");
+        Button btnNow = new Button("_Jetzt suchen");
         btnNow.setOnAction(event -> new SearchProgramUpdate(stage).checkVersion(true, true /* anzeigen */));
 
         PHyperlink hyperlink = new PHyperlink(ProgConst.ADRESSE_WEBSITE,

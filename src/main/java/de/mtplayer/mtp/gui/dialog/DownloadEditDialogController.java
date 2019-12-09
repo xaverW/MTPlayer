@@ -51,8 +51,8 @@ import java.io.File;
 
 public class DownloadEditDialogController extends PDialogExtra {
 
-    private Button btnOk = new Button("Ok");
-    private Button btnCancel = new Button("Abbrechen");
+    private Button btnOk = new Button("_Ok");
+    private Button btnCancel = new Button("_Abbrechen");
 
     private boolean ok = false;
 

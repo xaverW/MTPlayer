@@ -44,7 +44,7 @@ import java.util.regex.Pattern;
 
 public class PaneMedia extends ScrollPane {
 
-    private Button btnCreateMediaDB = new Button("Mediensammlung neu aufbauen");
+    private Button btnCreateMediaDB = new Button("_Mediensammlung neu aufbauen");
     private Button btnPlay = new Button();
     private Button btnOpen = new Button();
 

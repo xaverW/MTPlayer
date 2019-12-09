@@ -52,8 +52,8 @@ import java.util.List;
 public class AboEditDialogController extends PDialogExtra {
 
     private final GridPane gridPane = new GridPane();
-    private final Button btnOk = new Button("Ok");
-    private final Button btnCancel = new Button("Abbrechen");
+    private final Button btnOk = new Button("_Ok");
+    private final Button btnCancel = new Button("_Abbrechen");
     private final ComboBox<SetData> cboSetData = new ComboBox<>();
     private final ComboBox<String> cboChannel = new ComboBox<>();
     private final ComboBox<String> cboDestination = new ComboBox<>();

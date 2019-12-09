@@ -35,8 +35,8 @@ public class NoSetDialogController extends PDialog {
     final ProgData progData;
     final TEXT text;
     VBox vbox;
-    Button btnCancel = new Button("Abbrechen");
-    Button btnImport = new Button("Standarsets wieder herstellen");
+    Button btnCancel = new Button("_Abbrechen");
+    Button btnImport = new Button("_Standarsets wieder herstellen");
 
     public enum TEXT {SAVE, PLAY, ABO}
 

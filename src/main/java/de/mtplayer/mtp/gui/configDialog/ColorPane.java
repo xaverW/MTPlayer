@@ -73,7 +73,7 @@ public class ColorPane {
         VBox.setVgrow(tableView, Priority.ALWAYS);
         initTableColor(tableView);
 
-        Button button = new Button("Alle Farben zurücksetzen");
+        Button button = new Button("Alle _Farben zurücksetzen");
         button.setOnAction(event -> {
             ProgData.getInstance().mTColor.resetAllColors();
         });

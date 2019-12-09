@@ -40,8 +40,8 @@ public class MediaConfigDialogController extends PDialog {
 
     private final VBox vBoxDialog = new VBox(10);
     private TabPane tabPane = new TabPane();
-    private Button btnOk = new Button("Ok");
-    private Button btnCreateMediaDB = new Button("Mediensammlung neu aufbauen");
+    private Button btnOk = new Button("_Ok");
+    private Button btnCreateMediaDB = new Button("_Mediensammlung neu aufbauen");
     private ProgressBar progress = new ProgressBar();
 
     IntegerProperty propSelectedTab = ProgConfig.SYSTEM_MEDIA_DIALOG_TAB;

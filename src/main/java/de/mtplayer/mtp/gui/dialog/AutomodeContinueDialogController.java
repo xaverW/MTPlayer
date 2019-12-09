@@ -50,8 +50,8 @@ public class AutomodeContinueDialogController extends PDialogExtra {
         vBoxCont = getVboxCont();
 //        hBoxOk = getHboxOk();
 
-        btnCancel = new Button("Programm nicht beenden");
-        btnContinue = new Button("Beenden in " + timeSeconds + " s");
+        btnCancel = new Button("_Programm nicht beenden");
+        btnContinue = new Button("_Beenden in " + timeSeconds + " s");
 
         init(getVBoxCompleteDialog(), true);
     }
@@ -106,7 +106,7 @@ public class AutomodeContinueDialogController extends PDialogExtra {
     private void handleCountDownAction() {
         timeSeconds--;
         if (timeSeconds > 0) {
-            btnContinue.setText("Beenden in " + timeSeconds + " s");
+            btnContinue.setText("_Beenden in " + timeSeconds + " s");
         } else {
             timeline.stop();
             continueAutomode = true;

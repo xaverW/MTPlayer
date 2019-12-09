@@ -1,6 +1,7 @@
 /*  Programmweites style sheet */
 
 .root {
+    -p2-color-blue1: #4682B4;
     -tab-button-1: #d6d6d6;
     -tab-button-2: #e6e6e6;
     -tab-button-3: rgba(230,230,230,0);
@@ -36,7 +37,7 @@
     -fx-border-color: lightgray;
 }
 .checkbox-table:selected .box {
-    -fx-border-color: steelblue;
+    -fx-border-color: -p2-color-blue1;
 }
 .checkbox-table:selected .mark {
     -fx-background-color: black;
@@ -46,19 +47,19 @@
 .pseperator1 .line {
     -fx-border-style: solid;
     -fx-border-width: 0 0 1 0; /* makes really one-pixel-border */
-    -fx-border-color: steelblue;
+    -fx-border-color: -p2-color-blue1;
 }
 
 .pseperator2 .line {
     -fx-border-style: solid;
     -fx-border-width: 0 0 2 0; /* makes really one-pixel-border */
-    -fx-border-color: steelblue;
+    -fx-border-color: -p2-color-blue1;
 }
 
 .pseperator3 .line {
     -fx-border-style: solid;
     -fx-border-width: 0 0 3 0; /* makes really one-pixel-border */
-    -fx-border-color: steelblue;
+    -fx-border-color: -p2-color-blue1;
 }
 
 /* Rahmen für Dialoge */
@@ -75,7 +76,7 @@
 }
 .dialog-border {
     -fx-background-insets: 10, 40;
-    -fx-border-color: lightgray transparent lightgray transparent, steelblue;
+    -fx-border-color: lightgray transparent lightgray transparent, -p2-color-blue1;
     -fx-border-insets: 0, 15;
     -fx-border-width: 20 5, 10 3;
     -fx-padding: 20px;
@@ -83,14 +84,14 @@
 
 .dialog-only-border {
     -fx-background-insets: 0, 40;
-    -fx-border-color: lightgray transparent lightgray transparent, steelblue;
+    -fx-border-color: lightgray transparent lightgray transparent, -p2-color-blue1;
     -fx-border-insets: 15, 30;
     -fx-border-width: 20 5, 10 3;
     -fx-padding: 20px;
 }
 .dialog-filminfo {
      -fx-background-insets: 10, 40;
-     -fx-border-color: lightgray transparent lightgray transparent, steelblue;
+     -fx-border-color: lightgray transparent lightgray transparent, -p2-color-blue1;
      -fx-border-insets: 0, 15 5;
      -fx-border-width: 20 5, 10 3;
      -fx-padding: 0px;

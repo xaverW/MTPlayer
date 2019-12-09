@@ -138,7 +138,7 @@ public class DownloadPaneController extends AnchorPane {
         final PToggleSwitch tglBeep = new PToggleSwitch("nach jedem Download einen \"Beep\" ausgeben");
         tglBeep.selectedProperty().bindBidirectional(propBeep);
 
-        final Button btnBeep = new Button("Testen");
+        final Button btnBeep = new Button("_Testen");
         btnBeep.setOnAction(a -> Toolkit.getDefaultToolkit().beep());
 
 

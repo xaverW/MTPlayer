@@ -37,7 +37,7 @@ public class MediaDialogController extends PDialog {
     private final VBox vBoxCont = new VBox();
 
     private final TextField txtSearch = new TextField();
-    private final Button btnOk = new Button("Ok");
+    private final Button btnOk = new Button("_Ok");
     private final Button btnReset = new Button("");
 
     private final RadioButton rbMedien = new RadioButton("Mediensammlung");

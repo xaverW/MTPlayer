@@ -34,9 +34,7 @@ import de.mtplayer.mtp.controller.mediaDb.MediaCollectionDataList;
 import de.mtplayer.mtp.controller.mediaDb.MediaDataList;
 import de.mtplayer.mtp.controller.starter.StarterClass;
 import de.mtplayer.mtp.controller.worker.Worker;
-import de.mtplayer.mtp.gui.AboGuiController;
-import de.mtplayer.mtp.gui.DownloadGuiController;
-import de.mtplayer.mtp.gui.FilmGuiController;
+import de.mtplayer.mtp.gui.*;
 import de.mtplayer.mtp.gui.dialog.FilmInfoDialogController;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.tools.filmListFilter.FilmListFilter;
@@ -76,8 +74,11 @@ public class ProgData {
     public MTPlayerController mtPlayerController = null;
     public FilmGuiController filmGuiController = null; // Tab mit den Filmen
     public DownloadGuiController downloadGuiController = null; // Tab mit den Downloads
+    public DownloadFilterController downloadFilterController = null;
     public AboGuiController aboGuiController = null; // Tab mit den Abos
+    public AboFilterController aboFilterController = null;
     public FilmInfoDialogController filmInfoDialogController = null;
+    public FilmFilterControllerClearFilter filmFilterControllerClearFilter = null;
 
     // Worker
     public Worker worker; // Liste aller Sender, Themen, ...

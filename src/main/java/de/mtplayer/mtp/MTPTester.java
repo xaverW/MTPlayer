@@ -96,7 +96,7 @@ public class MTPTester {
             Text text = new Text("Debugtools");
             text.setFont(Font.font(null, FontWeight.BOLD, 15));
 
-            Button btnAddToHash = new Button("fillHash");
+            Button btnAddToHash = new Button("_fillHash");
             btnAddToHash.setMaxWidth(Double.MAX_VALUE);
             btnAddToHash.setOnAction(a -> fillHash(progData.filmlist));
 

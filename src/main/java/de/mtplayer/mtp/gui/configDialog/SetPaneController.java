@@ -214,7 +214,7 @@ public class SetPaneController extends AnchorPane {
             }
         });
 
-        Button btnDup = new Button("Duplizieren");
+        Button btnDup = new Button("_Duplizieren");
         btnDup.setTooltip(new Tooltip("eine Kopie des markierten Sets erstellen"));
         btnDup.setOnAction(event -> {
             SetData setData = getSelectedSelData();
@@ -225,7 +225,7 @@ public class SetPaneController extends AnchorPane {
         HBox.setHgrow(btnDup, Priority.ALWAYS);
         btnDup.setMaxWidth(Double.MAX_VALUE);
 
-        Button btnNewSet = new Button("Standardsets anfügen");
+        Button btnNewSet = new Button("Standardsets _anfügen");
         btnNewSet.setTooltip(new Tooltip("Standardsets erstellen und der Liste anfügen"));
         btnNewSet.setOnAction(event -> {
             if (!SetsPrograms.addSetTemplate(ListePsetVorlagen.getStandarset(true /*replaceMuster*/))) {
@@ -235,7 +235,7 @@ public class SetPaneController extends AnchorPane {
         HBox.setHgrow(btnNewSet, Priority.ALWAYS);
         btnNewSet.setMaxWidth(Double.MAX_VALUE);
 
-        Button btnCheck = new Button("Prüfen");
+        Button btnCheck = new Button("_Prüfen");
         btnCheck.setTooltip(new Tooltip("die angelegten Sets überprüfen"));
         btnCheck.setOnAction(event -> SetsPrograms.checkPrograms(progData));
         HBox.setHgrow(btnCheck, Priority.ALWAYS);

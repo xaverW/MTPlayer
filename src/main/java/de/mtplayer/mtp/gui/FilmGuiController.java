@@ -84,6 +84,9 @@ public class FilmGuiController extends AnchorPane {
 
     public void isShown() {
         setFilm();
+        progData.filmFilterControllerClearFilter.setClearText("Filter _löschen");
+        progData.downloadFilterController.setClearText("Filter löschen");
+        progData.aboFilterController.setClearText("Filter löschen");
     }
 
     public int getFilmCount() {

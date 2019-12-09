@@ -78,8 +78,8 @@ public class DownloadAddDialogController extends PDialogExtra {
     private final ComboBox<String> cbPath = new ComboBox<>();
     private final Button btnDest = new Button("Pfad");
     private final Button btnPropose = new Button("Vorschlag");
-    private final Button btnOk = new Button("Ok");
-    private final Button btnCancel = new Button("Abbrechen");
+    private final Button btnOk = new Button("_Ok");
+    private final Button btnCancel = new Button("_Abbrechen");
     private final TextField txtName = new TextField();
     private final CheckBox chkStart = new CheckBox("Download sofort starten");
     private final CheckBox cbxInfo = new CheckBox("Infodatei anlegen: \"Filmname.txt\"");

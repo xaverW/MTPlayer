@@ -40,8 +40,8 @@ public class ImportSetDialogController extends PDialog {
 
     private final ProgData progData;
     VBox vbox, vBoxCont;
-    Button btnOk = new Button("Abbrechen");
-    Button btnImport = new Button("Set importieren");
+    Button btnOk = new Button("_Abbrechen");
+    Button btnImport = new Button("_Set importieren");
     private boolean im = false;
     private StackPane stackPane;
     private ScrollPane pathPane, setPane;

@@ -35,7 +35,7 @@ public class ProgIcons {
     public final ImageView ICON_BUTTON_PROPOSE = GetIcon.getImageView("button-propose.png", 16, 16);
     public final ImageView ICON_BUTTON_EDIT_FILTER = GetIcon.getImageView("button-edit-filter.png", 16, 16);
     public final ImageView ICON_BUTTON_MENU = GetIcon.getImageView("button-menu.png", 18, 15);
-    public final ImageView ICON_BUTTON_HELP = GetIcon.getImageView("button-help.png", 16, 16);
+    //    public final ImageView ICON_BUTTON_HELP = GetIcon.getImageView("button-help.png", 16, 16);
     public final ImageView ICON_BUTTON_QUIT = GetIcon.getImageView("button-quit.png", 16, 16);
     public final ImageView ICON_BUTTON_FILE_OPEN = GetIcon.getImageView("button-file-open.png", 16, 16);
     public final ImageView ICON_BUTTON_PLAY = GetIcon.getImageView("button-play.png", 16, 16);

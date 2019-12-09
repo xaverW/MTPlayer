@@ -39,7 +39,7 @@ public class LoadFilmsPane {
     private final Slider slDuration = new Slider();
     private final Label lblDays = new Label("");
     private final Label lblDuration = new Label("");
-    final Button btnClearall = new Button("wieder alles laden");
+    final Button btnClearall = new Button("_wieder alles laden");
     private final Stage stage;
     private final ProgData progData;
     StringProperty propChannel = ProgConfig.SYSTEM_LOAD_NOT_SENDER.getStringProperty();
@@ -138,7 +138,7 @@ public class LoadFilmsPane {
 
         if (progData != null) {
             // im Startdialog brauchts das noch nicht
-            Button btnLoad = new Button("Filmliste jetzt laden");
+            Button btnLoad = new Button("Filmliste _jetzt laden");
             btnLoad.setOnAction(event -> {
                 progData.loadFilmlist.loadNewFilmlistFromServer(true);
             });

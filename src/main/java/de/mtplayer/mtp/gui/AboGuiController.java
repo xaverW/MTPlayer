@@ -84,6 +84,9 @@ public class AboGuiController extends AnchorPane {
 
     public void isShown() {
         progData.filmInfoDialogController.setFilm(null);
+        progData.filmFilterControllerClearFilter.setClearText("Filter löschen");
+        progData.downloadFilterController.setClearText("Filter löschen");
+        progData.aboFilterController.setClearText("Filter _löschen");
     }
 
     public int getAboCount() {

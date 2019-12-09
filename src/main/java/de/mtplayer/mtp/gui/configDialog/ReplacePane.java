@@ -175,7 +175,7 @@ public class ReplacePane {
             }
         });
 
-        Button reset = new Button("Tabelle zurücksetzen");
+        Button reset = new Button("_Tabelle zurücksetzen");
         reset.setOnAction(event -> {
             ProgData.getInstance().replaceList.init();
         });

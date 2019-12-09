@@ -36,7 +36,7 @@ import javafx.stage.Stage;
 public class ConfigDialogController extends PDialog {
 
     private TabPane tabPane = new TabPane();
-    private Button btnOk = new Button("Ok");
+    private Button btnOk = new Button("_Ok");
     private String geo = ProgConfig.SYSTEM_GEO_HOME_PLACE.get();
     private Stage stage;
 

@@ -46,9 +46,9 @@ public class DownloadContinueDialogController extends PDialogExtra {
 //    private final HBox hBoxOk;
 
     private Label lblHeader = new Label("Die Filmdatei existiert bereits.");
-    private Button btnRestartDownload = new Button("neu Starten");
-    private Button btnCancel = new Button("Abbrechen");
-    private Button btnContinueDownload = new Button("Weiterführen in xxxx s");
+    private Button btnRestartDownload = new Button("neu _Starten");
+    private Button btnCancel = new Button("_Abbrechen");
+    private Button btnContinueDownload = new Button("_Weiterführen in xxxx s");
 
     private Label lblFilmTitle = new Label("ARD: Tatort, ..");
     private TextField txtFileName = new TextField("");
@@ -174,9 +174,9 @@ public class DownloadContinueDialogController extends PDialogExtra {
         timeSeconds--;
         if (timeSeconds > 0) {
             if (!directDownload) {
-                btnRestartDownload.setText("neu Starten in " + timeSeconds + " s");
+                btnRestartDownload.setText("neu _Starten in " + timeSeconds + " s");
             } else {
-                btnContinueDownload.setText("Weiterführen in " + timeSeconds + " s");
+                btnContinueDownload.setText("_Weiterführen in " + timeSeconds + " s");
             }
         } else {
             timeline.stop();
@@ -205,9 +205,9 @@ public class DownloadContinueDialogController extends PDialogExtra {
 
     private void setButtonText() {
         if (!directDownload) {
-            btnRestartDownload.setText("neu Starten");
+            btnRestartDownload.setText("neu _Starten");
         } else {
-            btnContinueDownload.setText("Weiterführen");
+            btnContinueDownload.setText("_Weiterführen");
         }
     }
 

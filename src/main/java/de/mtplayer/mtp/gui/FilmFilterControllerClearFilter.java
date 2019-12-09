@@ -28,7 +28,7 @@ import javafx.scene.layout.VBox;
 
 public class FilmFilterControllerClearFilter extends VBox {
 
-    private final Button btnClearFilter = new Button("Filter löschen");
+    private final Button btnClearFilter = new Button("Filter _löschen");
     private final Button btnEditFilter = new Button("");
 
     private final ProgData progData;
@@ -36,11 +36,16 @@ public class FilmFilterControllerClearFilter extends VBox {
     public FilmFilterControllerClearFilter() {
         super();
         progData = ProgData.getInstance();
+        progData.filmFilterControllerClearFilter = this;
 
         setPadding(new Insets(15, 15, 15, 15));
         setSpacing(20);
 
         addButton();
+    }
+
+    public void setClearText(String txt) {
+        btnClearFilter.setText(txt);
     }
 
     private void addButton() {

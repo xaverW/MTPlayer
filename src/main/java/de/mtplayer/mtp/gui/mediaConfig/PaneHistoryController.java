@@ -163,7 +163,7 @@ public class PaneHistoryController extends AnchorPane {
             }
         });
 
-        Button btnDel = new Button("Liste löschen");
+        Button btnDel = new Button("_Liste löschen");
         btnDel.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnDel.setOnAction(event -> {
             if (history) {

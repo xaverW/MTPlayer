@@ -41,7 +41,7 @@ import java.nio.file.Path;
 public class AboutDialogController extends PDialogExtra {
 
     private final ProgData progData;
-    Button btnOk = new Button("Ok");
+    Button btnOk = new Button("_Ok");
     private final Color GRAY;
 
 

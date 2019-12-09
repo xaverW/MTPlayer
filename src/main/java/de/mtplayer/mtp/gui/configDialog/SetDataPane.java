@@ -214,7 +214,7 @@ public class SetDataPane {
         gridPane.setPadding(new Insets(20));
         vBox.getChildren().add(gridPane);
 
-        Button btnResetColor = new Button("Standardfarbe");
+        Button btnResetColor = new Button("_Standardfarbe");
         btnResetColor.setOnAction(event -> {
             setData.setColor(SetData.RESET_COLOR);
         });

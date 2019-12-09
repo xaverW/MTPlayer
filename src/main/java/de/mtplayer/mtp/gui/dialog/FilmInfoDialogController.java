@@ -46,7 +46,7 @@ public class FilmInfoDialogController extends PDialog {
     private final TextArea textArea = new TextArea();
 
     private final GridPane gridPane = new GridPane();
-    private final Button btnOk = new Button("Ok");
+    private final Button btnOk = new Button("_Ok");
 
     private final VBox vBoxDialog = new VBox();
     private final VBox vBoxCont = new VBox();

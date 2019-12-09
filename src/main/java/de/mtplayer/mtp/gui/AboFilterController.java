@@ -26,11 +26,11 @@ import javafx.scene.layout.VBox;
 
 public class AboFilterController extends FilterController {
 
-    ComboBox<String> cboChannel = new ComboBox<>();
-    ComboBox<String> cboArt = new ComboBox<>(); // Abo ein-/ausgeschaltet
-    TextField txtDescription = new TextField();
-    TextField txtName = new TextField();
-    Button btnClear = new Button("Filter löschen");
+    private ComboBox<String> cboChannel = new ComboBox<>();
+    private ComboBox<String> cboArt = new ComboBox<>(); // Abo ein-/ausgeschaltet
+    private TextField txtDescription = new TextField();
+    private TextField txtName = new TextField();
+    private Button btnClear = new Button("_Filter löschen");
 
     private final VBox vBoxFilter;
     private final ProgData progData;
@@ -39,6 +39,7 @@ public class AboFilterController extends FilterController {
         super();
         vBoxFilter = getVBoxFilter(true);
         progData = ProgData.getInstance();
+        progData.aboFilterController = this;
 
         addCont("Abos für Sender", cboChannel, vBoxFilter);
         addCont("Status", cboArt, vBoxFilter);
@@ -52,6 +53,10 @@ public class AboFilterController extends FilterController {
 
         initFilter();
         btnClear.setOnAction(a -> clearFilter());
+    }
+
+    public void setClearText(String txt) {
+        btnClear.setText(txt);
     }
 
     private void initFilter() {

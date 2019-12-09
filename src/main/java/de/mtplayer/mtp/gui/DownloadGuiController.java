@@ -117,6 +117,9 @@ public class DownloadGuiController extends AnchorPane {
 
     public void isShown() {
         setFilm();
+        progData.filmFilterControllerClearFilter.setClearText("Filter löschen");
+        progData.downloadFilterController.setClearText("Filter _löschen");
+        progData.aboFilterController.setClearText("Filter löschen");
     }
 
     public int getDownloadsShown() {
