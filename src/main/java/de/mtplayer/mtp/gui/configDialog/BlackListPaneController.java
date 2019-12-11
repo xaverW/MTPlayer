@@ -54,11 +54,13 @@ public class BlackListPaneController extends AnchorPane {
     BooleanProperty propAbo = ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.getBooleanProperty();
     BooleanProperty propFuture = ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_FUTURE.getBooleanProperty();
     IntegerProperty selectedTab = ProgConfig.SYSTEM_CONFIG_DIALOG_BLACKLIST;
+    private final BooleanProperty blackChanged;
 
     private final Stage stage;
 
-    public BlackListPaneController(Stage stage) {
+    public BlackListPaneController(Stage stage, BooleanProperty blackChanged) {
         this.stage = stage;
+        this.blackChanged = blackChanged;
         progData = ProgData.getInstance();
 
         cbxAccordion.selectedProperty().bindBidirectional(accordionProp);
@@ -102,7 +104,7 @@ public class BlackListPaneController extends AnchorPane {
     private Collection<TitledPane> createPanes() {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
         makeBlack(result);
-        new BlackPane(stage).makeBlackTable(result);
+        new BlackPane(stage, blackChanged).makeBlackTable(result);
         return result;
     }
 
@@ -117,6 +119,7 @@ public class BlackListPaneController extends AnchorPane {
 
         final PToggleSwitch tglAbo = new PToggleSwitch("die Blacklist beim Suchen der Abos berücksichtigen");
         tglAbo.selectedProperty().bindBidirectional(propAbo);
+        tglAbo.selectedProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
 
         final Button btnHelp = PButton.helpButton(stage, "Blacklist",
                 HelpText.BLACKLIST_ABO);
@@ -124,6 +127,7 @@ public class BlackListPaneController extends AnchorPane {
 
         final PToggleSwitch tglFuture = new PToggleSwitch("Filme mit Datum in der Zukunft nicht anzeigen");
         tglFuture.selectedProperty().bindBidirectional(propFuture);
+        tglFuture.selectedProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
 
         final Button btnHelpFuture = PButton.helpButton(stage, "Blacklist",
                 HelpText.BLACKLIST_FUTURE);
@@ -131,6 +135,7 @@ public class BlackListPaneController extends AnchorPane {
 
         final PToggleSwitch tglGeo = new PToggleSwitch("Filme, die per Geoblocking gesperrt sind, nicht anzeigen");
         tglGeo.selectedProperty().bindBidirectional(propGeo);
+        tglGeo.selectedProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
 
         final Button btnHelpGeo = PButton.helpButton(stage, "Blacklist",
                 HelpText.BLACKLIST_GEO);
@@ -187,7 +192,10 @@ public class BlackListPaneController extends AnchorPane {
         slDays.setBlockIncrement(10);
 
         slDays.valueProperty().bindBidirectional(propDay);
-        slDays.valueProperty().addListener((observable, oldValue, newValue) -> setValueSlider());
+        slDays.valueProperty().addListener((observable, oldValue, newValue) -> {
+            setValueSlider();
+            blackChanged.set(true);
+        });
 
         slSize.setMin(0);
         slSize.setMax(ProgConst.SYSTEM_BLACKLIST_MIN_FILM_DURATION);
@@ -196,7 +204,10 @@ public class BlackListPaneController extends AnchorPane {
         slSize.setBlockIncrement(10);
 
         slSize.valueProperty().bindBidirectional(propSize);
-        slSize.valueProperty().addListener((observable, oldValue, newValue) -> setValueSlider());
+        slSize.valueProperty().addListener((observable, oldValue, newValue) -> {
+            setValueSlider();
+            blackChanged.set(true);
+        });
 
         setValueSlider();
     }

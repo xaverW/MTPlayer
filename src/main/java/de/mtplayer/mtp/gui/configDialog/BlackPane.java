@@ -65,10 +65,12 @@ public class BlackPane {
 
     BooleanProperty propWhite = ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST.getBooleanProperty();
 
+    private final BooleanProperty blackChanged;
     private final Stage stage;
 
-    public BlackPane(Stage stage) {
+    public BlackPane(Stage stage, BooleanProperty blackChanged) {
         this.stage = stage;
+        this.blackChanged = blackChanged;
     }
 
     public void makeBlackTable(Collection<TitledPane> result) {
@@ -111,6 +113,7 @@ public class BlackPane {
         gridPane.add(btnHelp, 2, row);
 
         rbWhite.selectedProperty().bindBidirectional(propWhite);
+        rbWhite.selectedProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
         gridPane.add(rbWhite, 0, ++row);
         gridPane.add(new Label("nur diese \"Sender / Thema / Titel\" anzeigen (Whitelist)"), 1, row);
 
@@ -161,6 +164,7 @@ public class BlackPane {
         Button btnDel = new Button("");
         btnDel.setGraphic(new ProgIcons().ICON_BUTTON_REMOVE);
         btnDel.setOnAction(event -> {
+            blackChanged.set(true);
             final ObservableList<BlackData> selected = tableView.getSelectionModel().getSelectedItems();
 
             if (selected == null || selected.isEmpty()) {
@@ -174,6 +178,7 @@ public class BlackPane {
         Button btnNew = new Button("");
         btnNew.setGraphic(new ProgIcons().ICON_BUTTON_ADD);
         btnNew.setOnAction(event -> {
+            blackChanged.set(true);
             BlackData blackData = new BlackData();
             ProgData.getInstance().blackList.add(blackData);
             tableView.getSelectionModel().clearSelection();
@@ -258,6 +263,12 @@ public class BlackPane {
 
         vBox.getChildren().add(gridPane);
         gridPane.setDisable(true);
+
+        mbChannel.textProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
+        theme.textProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
+        tgTheme.selectedProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
+        title.textProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
+        themeTitle.textProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
     }
 
     private void setActBlackData() {

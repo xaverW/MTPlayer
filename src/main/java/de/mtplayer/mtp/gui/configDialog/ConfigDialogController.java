@@ -21,7 +21,9 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.p2tools.p2Lib.dialog.PDialog;
 import de.p2tools.p2Lib.tools.log.PLog;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
@@ -38,6 +40,7 @@ public class ConfigDialogController extends PDialog {
     private TabPane tabPane = new TabPane();
     private Button btnOk = new Button("_Ok");
     private String geo = ProgConfig.SYSTEM_GEO_HOME_PLACE.get();
+    private BooleanProperty blackChanged = new SimpleBooleanProperty(false);
     private Stage stage;
 
     IntegerProperty propSelectedTab = ProgConfig.SYSTEM_CONFIG_DIALOG_TAB;
@@ -81,12 +84,14 @@ public class ConfigDialogController extends PDialog {
     public void close() {
         if (!geo.equals(ProgConfig.SYSTEM_GEO_HOME_PLACE.get())) {
             // dann hat sich der Geo-Standort geändert
+            System.out.println("geo changed");
             progData.filmlist.markGeoBlocked();
         }
 
-        // todo nur wenn die Black und Geo wirklich geändert
-        if (!progData.loadFilmlist.getPropLoadFilmlist()) {
-            // wird sonst dann eh gemacht
+        // todo nur wenn die Black wirklich geändert
+        if (blackChanged.get() && !progData.loadFilmlist.getPropLoadFilmlist()) {
+            // sonst hat sich nichts geändert oder wird dann eh gemacht
+            System.out.println("black filtern");
             progData.filmlist.filterList();
             Listener.notify(Listener.EREIGNIS_BLACKLIST_GEAENDERT, ConfigDialogController.class.getSimpleName());
         }
@@ -108,7 +113,7 @@ public class ConfigDialogController extends PDialog {
             tab.setContent(filmPane);
             tabPane.getTabs().add(tab);
 
-            AnchorPane blackPane = new BlackListPaneController(stage);
+            AnchorPane blackPane = new BlackListPaneController(stage, blackChanged);
             tab = new Tab("Blacklist");
             tab.setClosable(false);
             tab.setContent(blackPane);
