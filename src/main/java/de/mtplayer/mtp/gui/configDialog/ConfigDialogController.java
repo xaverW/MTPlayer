@@ -88,7 +88,6 @@ public class ConfigDialogController extends PDialog {
             progData.filmlist.markGeoBlocked();
         }
 
-        // todo nur wenn die Black wirklich geändert
         if (blackChanged.get() && !progData.loadFilmlist.getPropLoadFilmlist()) {
             // sonst hat sich nichts geändert oder wird dann eh gemacht
             System.out.println("black filtern");
