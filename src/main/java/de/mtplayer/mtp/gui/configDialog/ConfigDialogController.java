@@ -18,6 +18,7 @@ package de.mtplayer.mtp.gui.configDialog;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
+import de.mtplayer.mtp.gui.configDialog.setData.SetPaneController;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.p2tools.p2Lib.dialog.PDialog;
 import de.p2tools.p2Lib.tools.log.PLog;

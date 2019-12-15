@@ -24,6 +24,7 @@ import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.abo.Abo;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
+import de.mtplayer.mtp.gui.configDialog.setData.AboSubDir;
 import de.p2tools.p2Lib.tools.PSystemUtils;
 import de.p2tools.p2Lib.tools.file.PFileUtils;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -169,18 +170,45 @@ public class DownloadProgram {
             if (abo != null) {
                 // bei Abos: den Namen des Abos eintragen und evtl. den Pfad erweitern
                 download.setAboName(abo.getName());
-                if (setData.isGenTheme()) {
+                if (setData.getGenAboSubDir() || !abo.getAboSubDir().trim().isEmpty()) {
                     // und Abopfad an den Pfad anhängen
+                    // wenn im Set angegeben oder im Abo ein Pfad angegeben
                     String addPpath;
-                    if (!abo.getDestination().trim().isEmpty()) {
-                        addPpath = abo.getDestination();
+                    if (!abo.getAboSubDir().trim().isEmpty()) {
+                        addPpath = abo.getAboSubDir();
+
                     } else {
-                        addPpath = download.getTheme();
+                        AboSubDir.DirName dirName = setData.getAboSubDir();
+                        switch (dirName) {
+                            case TITLE:
+                                addPpath = download.getTitle();
+                                break;
+                            case SENDER:
+                                addPpath = download.getChannel();
+                                break;
+                            case ABONAME:
+                                addPpath = abo.getName();
+                                break;
+                            case ABODESCRIPTION:
+                                addPpath = abo.getDescription();
+                                break;
+                            case SENDEDATUM:
+                                addPpath = download.getFilmDate().get_yyyyMMdd();
+                                break;
+                            case DOWNLOADDATUM:
+                                addPpath = getToday_yyyyMMdd();
+                                break;
+                            case THEME:
+                            default:
+                                addPpath = download.getTheme();
+                                break;
+                        }
                     }
-                    path = PFileUtils.addsPath(path, FileNameUtils.removeIllegalCharacters(addPpath, false));
+                    path = PFileUtils.addsPath(path, FileNameUtils.removeIllegalCharacters(addPpath, true));
                 }
-            } else if (setData.isGenTheme()) {
-                // Downloads
+
+            } else if (setData.getGenAboSubDir()) {
+                // direkte Downloads
                 // und den Namen des Themas an den Zielpfad anhängen
                 // --> das wird aber nur beim ersten mal klappen, dann wird im
                 // Downloaddialog immer der letzte Pfad zuerst angeboten

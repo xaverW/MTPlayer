@@ -40,7 +40,7 @@ public class AboProps extends AboXml {
     private final IntegerProperty timeRange = new SimpleIntegerProperty(FilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
     private final IntegerProperty minDurationMinute = new SimpleIntegerProperty(FilmFilter.FILTER_DURATION_MIN_MINUTE); // Minuten
     private final IntegerProperty maxDurationMinute = new SimpleIntegerProperty(FilmFilter.FILTER_DURATION_MAX_MINUTE); //Minuten
-    private final StringProperty destination = new SimpleStringProperty("");
+    private final StringProperty aboSubDir = new SimpleStringProperty("");
     private final ObjectProperty<MDate> date = new SimpleObjectProperty<>(new MDate(0));
     private final StringProperty setDataId = new SimpleStringProperty("");
 
@@ -51,7 +51,7 @@ public class AboProps extends AboXml {
 
     public final Property[] properties = {nr, active, name, description, resolution,
             channel, theme, themeExact, themeTitle, title, somewhere,
-            timeRange, minDurationMinute, maxDurationMinute, destination, date, setDataId};
+            timeRange, minDurationMinute, maxDurationMinute, aboSubDir, date, setDataId};
 
     public String getStringOf(int i) {
         return String.valueOf(properties[i].getValue());
@@ -249,16 +249,16 @@ public class AboProps extends AboXml {
         this.maxDurationMinute.set(maxDurationMinute);
     }
 
-    public String getDestination() {
-        return destination.get();
+    public String getAboSubDir() {
+        return aboSubDir.get();
     }
 
-    public StringProperty destinationProperty() {
-        return destination;
+    public StringProperty aboSubDirProperty() {
+        return aboSubDir;
     }
 
-    public void setDestination(String destination) {
-        this.destination.set(destination);
+    public void setAboSubDir(String aboSubDir) {
+        this.aboSubDir.set(aboSubDir);
     }
 
     public MDate getDate() {
@@ -331,7 +331,7 @@ public class AboProps extends AboXml {
         setDurationMinFromXml();
         setDurationMaxFromXml();
 
-        setDestination(arr[ABO_DEST_PATH]);
+        setAboSubDir(arr[ABO_DEST_PATH]);
         setDatum(arr[ABO_DOWN_DATE], "");
         setSetDataId(arr[ABO_SET_DATA_ID]);
     }
@@ -367,7 +367,7 @@ public class AboProps extends AboXml {
             arr[ABO_MAX_DURATION] = String.valueOf(getMaxDurationMinute());
         }
 
-        arr[ABO_DEST_PATH] = getDestination();
+        arr[ABO_DEST_PATH] = getAboSubDir();
         arr[ABO_DOWN_DATE] = getDate().toString();
         arr[ABO_SET_DATA_ID] = getSetData() == null ? "" : getSetData().getId();
     }

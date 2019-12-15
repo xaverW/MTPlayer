@@ -18,6 +18,7 @@ package de.mtplayer.mtp.controller.data;
 
 import de.mtplayer.mLib.tools.MLCFactory;
 import de.mtplayer.mtp.controller.data.film.Film;
+import de.mtplayer.mtp.gui.configDialog.setData.AboSubDir;
 import javafx.beans.property.*;
 import javafx.scene.paint.Color;
 
@@ -34,7 +35,6 @@ public class SetDataProps extends SetDataXml {
 
     private StringProperty destPath = new SimpleStringProperty("");
     private StringProperty destName = new SimpleStringProperty("");
-    private BooleanProperty genTheme = new SimpleBooleanProperty(true);
     private BooleanProperty play = new SimpleBooleanProperty(false);
     private BooleanProperty save = new SimpleBooleanProperty(false);
     private BooleanProperty button = new SimpleBooleanProperty(false);
@@ -48,6 +48,9 @@ public class SetDataProps extends SetDataXml {
     private StringProperty infoUrl = new SimpleStringProperty("");
     private BooleanProperty infoFile = new SimpleBooleanProperty(false);
     private BooleanProperty subtitle = new SimpleBooleanProperty(false);
+
+    private BooleanProperty genAboSubDir = new SimpleBooleanProperty(true);
+    private final ObjectProperty<AboSubDir.DirName> aboSubDir = new SimpleObjectProperty<>();
 
     public String getId() {
         return id.get();
@@ -131,18 +134,6 @@ public class SetDataProps extends SetDataXml {
 
     public void setDestName(String destName) {
         this.destName.set(destName);
-    }
-
-    public boolean isGenTheme() {
-        return genTheme.get();
-    }
-
-    public BooleanProperty genThemeProperty() {
-        return genTheme;
-    }
-
-    public void setGenTheme(boolean genTheme) {
-        this.genTheme.set(genTheme);
     }
 
     public boolean isPlay() {
@@ -289,6 +280,33 @@ public class SetDataProps extends SetDataXml {
         this.subtitle.set(subtitle);
     }
 
+    public boolean getGenAboSubDir() {
+        return genAboSubDir.get();
+    }
+
+    public BooleanProperty genAboSubDirProperty() {
+        return genAboSubDir;
+    }
+
+    public void setGenAboSubDir(boolean genAboSubDir) {
+        this.genAboSubDir.set(genAboSubDir);
+    }
+
+    public AboSubDir.DirName getAboSubDir() {
+        return aboSubDir.get();
+    }
+
+    public ObjectProperty<AboSubDir.DirName> aboSubDirProperty() {
+        return aboSubDir;
+    }
+
+    public void setAboSubDir(AboSubDir.DirName dirName) {
+        this.aboSubDir.setValue(dirName);
+    }
+
+    public void setAboSub(int aboSubNo) {
+        this.aboSubDir.setValue(AboSubDir.getAboSub(aboSubNo));
+    }
 
     public void setPropsFromXml() {
         setId(arr[PROGRAMSET_ID]);
@@ -298,9 +316,17 @@ public class SetDataProps extends SetDataXml {
 
         setColorFromHex(arr[PROGRAMSET_COLOR]);
 
+        int aboPath;
+        try {
+            aboPath = Integer.parseInt(arr[PROGRAMSET_ABO_UNTERORDNER]);
+        } catch (final Exception ex) {
+            aboPath = 0;
+        }
+        setAboSub(aboPath);
+
         setDestPath(arr[PROGRAMSET_ZIEL_PFAD]);
         setDestName(arr[PROGRAMSET_ZIEL_DATEINAME]);
-        setGenTheme(Boolean.parseBoolean(arr[PROGRAMSET_THEMA_ANLEGEN]));
+        setGenAboSubDir(Boolean.parseBoolean(arr[PROGRAMSET_ABO_SUBDIR_ANLEGEN]));
         setPlay(Boolean.parseBoolean(arr[PROGRAMSET_IST_ABSPIELEN]));
         setSave(Boolean.parseBoolean(arr[PROGRAMSET_IST_SPEICHERN]));
         setButton(Boolean.parseBoolean(arr[PROGRAMSET_IST_BUTTON]));
@@ -346,10 +372,12 @@ public class SetDataProps extends SetDataXml {
         arr[PROGRAMSET_SUFFIX_DIRECT] = getSuffix();
 
         arr[PROGRAMSET_COLOR] = MLCFactory.getColorToHex(color.getValue());
+
+        arr[PROGRAMSET_ABO_UNTERORDNER] = String.valueOf(getAboSubDir().getNo());
         arr[PROGRAMSET_ZIEL_PFAD] = getDestPath();
         arr[PROGRAMSET_ZIEL_DATEINAME] = getDestName();
 
-        arr[PROGRAMSET_THEMA_ANLEGEN] = String.valueOf(isGenTheme());
+        arr[PROGRAMSET_ABO_SUBDIR_ANLEGEN] = String.valueOf(getGenAboSubDir());
         arr[PROGRAMSET_IST_ABSPIELEN] = String.valueOf(isPlay());
         arr[PROGRAMSET_IST_SPEICHERN] = String.valueOf(isSave());
         arr[PROGRAMSET_IST_BUTTON] = String.valueOf(isButton());

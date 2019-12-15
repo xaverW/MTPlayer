@@ -19,7 +19,7 @@ package de.mtplayer.mtp.gui.dialog;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ListePsetVorlagen;
-import de.mtplayer.mtp.gui.configDialog.SetPaneController;
+import de.mtplayer.mtp.gui.configDialog.setData.SetPaneController;
 import de.mtplayer.mtp.gui.startDialog.DownPathPane;
 import de.mtplayer.mtp.gui.startDialog.PathPane;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;

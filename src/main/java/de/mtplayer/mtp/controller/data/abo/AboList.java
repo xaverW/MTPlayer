@@ -290,9 +290,9 @@ public class AboList extends SimpleListProperty<Abo> {
         // liefert ein Array mit allen Pfaden
         final ArrayList<String> path = new ArrayList<>();
         for (final Abo abo : this) {
-            final String s = abo.getDestination();
+            final String s = abo.getAboSubDir();
             if (!path.contains(s)) {
-                path.add(abo.getDestination());
+                path.add(abo.getAboSubDir());
             }
         }
         final GermanStringSorter sorter = GermanStringSorter.getInstance();

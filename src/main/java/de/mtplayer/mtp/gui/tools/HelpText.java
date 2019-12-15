@@ -226,9 +226,48 @@ public class HelpText {
             "gewünschte Auflösung nicht verfügbar, " +
             "wird in \"hoher\" Auflösung geladen.";
 
-    public static final String SETDATA_SUBDIR = "Bei Downloads aus Abos wird ein Unterordner mit dem " +
-            "Abozielpfad angelegt. Ist der Abozielpfad leer, " +
-            "wird das Thema des Films verwendete";
+    public static final String ABO_SUBDIR = "Wenn im ausgewählten Programmset eingeschaltet, " +
+            "werden Downloads aus Abos in einem Unterordner gespeichert." +
+            "\n\n" +
+            "Ist im Abo aber ein Abozielpfad angegeben, wird diese Einstellung überschrieben. " +
+            "Der Download wird immer in einem Unterordner mit dem im Abozielpfad angegebenen Namen gespeichert. " +
+            "\n\n" +
+            "Mit dem Button rechts, kann zwischen der Vorgabe des Programmsets und einer eigenen Einstellung für " +
+            "dieses Abo umgeschaltet werden." +
+            "\n\n" +
+
+            "Beim Namen sind diese Parameter möglich:\n" +
+            "\n" +
+            "%D Sendedatum des Films oder \"heute\", wenn Sendedatum leer\n" +
+            "%d Sendezeit des Films oder \"jetzt\", wenn Sendezeit leer\n" +
+            "%H \"heute\", aktuelles Datum\n" +
+            "%h \"jetzt\", aktuelle Uhrzeit\n" +
+            "Datum in der Form: JJJJMMTT z.B. 20090815 (15.08.2009)\n" +
+            "Zeit in der Form: SSMMss z.B. 152059 (15:20:59)\n" +
+            "\n" +
+            "%1 Tag,\n" +
+            "%2 Monat,\n" +
+            "%3 Jahr vom Sendedatum des Films oder aktuellem Datum, wenn Sendedatum leer\n" +
+            "\n" +
+            "%4 Stunde,\n" +
+            "%5 Minute,\n" +
+            "%6 Sekunde von der Sendezeit des Films oder \"jetzt\", wenn Sendezeit leer\n" +
+            "\n" +
+            "%s Sender des Films\n" +
+            "%T Titel des Films\n" +
+            "%t Thema des Films\n" +
+            "\n" +
+            "%q Qualität des Films (\"HD\", \"H\", \"L\")\n" +
+            "\n" +
+            "Damit kann man einen Namen z.B. so aufbauen:\n" +
+            "%H__%t__%T  \t -> \t  20131206__Doku__Titel_der_Doku\n";
+
+
+    public static final String SETDATA_ABO_SUBDIR = "Wenn eingeschaltet, werden Downloads aus Abos in einem " +
+            "Unterordner gespeichert. Der Ordnername kann mit der Auswahl festgelegt werden. " +
+            "\n\n" +
+            "Ist im Abo ein Abozielpfad angegeben, wird die Einstellung überschrieben. " +
+            "Der Download wird immer in einem Unterordner mit dem im Abozielpfad engegebenen Namen gespeichert.";
 
     public static final String SETDATA_RESET_COLOR = "Wird das Set als Button verwendet, " +
             "kann damit die Schriftfarbe verändert werden.";

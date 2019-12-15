@@ -65,7 +65,7 @@ public class Abo extends AboProps {
         setMinDurationMinute(minDurationMinute);
         setMaxDurationMinute(maxDurationMinute);
 
-        setDestination(destination);
+        setAboSubDir(destination);
         setSetData(progData.setDataList.getSetDataForAbo());
     }
 

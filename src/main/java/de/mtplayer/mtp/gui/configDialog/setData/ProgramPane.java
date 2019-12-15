@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.mtplayer.mtp.gui.configDialog;
+package de.mtplayer.mtp.gui.configDialog.setData;
 
 import de.mtplayer.mLib.tools.DirFileChooser;
 import de.mtplayer.mtp.controller.config.ProgConst;

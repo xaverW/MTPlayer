@@ -104,7 +104,7 @@ public class TableAbo {
         maxColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Abo, String> destinationColumn = new TableColumn<>("Ziel");
-        destinationColumn.setCellValueFactory(new PropertyValueFactory<>("destination"));
+        destinationColumn.setCellValueFactory(new PropertyValueFactory<>("aboSubDir"));
         destinationColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Abo, MDate> datumColumn = new TableColumn<>("Datum");

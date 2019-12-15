@@ -19,6 +19,7 @@ package de.mtplayer.mtp.gui.dialog;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.MTColor;
+import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.controller.data.abo.Abo;
 import de.mtplayer.mtp.controller.data.abo.AboXml;
@@ -39,10 +40,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.util.StringConverter;
 
 import java.util.ArrayList;
@@ -75,6 +73,7 @@ public class AboEditDialogController extends PDialogExtra {
 
     private boolean ok = false;
     private BooleanProperty okProp = new SimpleBooleanProperty(true);
+    private String memory = "";
 
     private final ObservableList<Abo> lAbo;
     private final Abo aboCopy;
@@ -394,16 +393,67 @@ public class AboEditDialogController extends PDialogExtra {
 
             case AboXml.ABO_DEST_PATH:
                 ArrayList<String> path = progData.aboList.getAboDestinationPathList();
-                if (!path.contains(aboCopy.getDestination())) {
-                    path.add(0, aboCopy.getDestination());
+                if (!path.contains(aboCopy.getAboSubDir())) {
+                    path.add(0, aboCopy.getAboSubDir());
                 }
                 cboDestination.setMaxWidth(Double.MAX_VALUE);
                 cboDestination.setItems(FXCollections.observableArrayList(path));
                 cboDestination.setEditable(true);
-                cboDestination.valueProperty().bindBidirectional(aboCopy.destinationProperty());
+                cboDestination.valueProperty().bindBidirectional(aboCopy.aboSubDirProperty());
                 cboDestination.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
                         cbxEditAll[i].setSelected(true));
-                this.gridPane.add(cboDestination, 1, grid);
+
+                final TextField txt = new TextField("");
+                txt.setEditable(false);
+                txt.setDisable(true);
+                if (aboCopy.getSetData().getGenAboSubDir()) {
+                    txt.setText(aboCopy.getSetData().getAboSubDir().getName());
+                }
+                aboCopy.setDataProperty().addListener((u, o, n) -> {
+                    if (n != null) {
+                        if (aboCopy.getSetData().getGenAboSubDir()) {
+                            txt.setText(aboCopy.getSetData().getAboSubDir().getName());
+                        } else {
+                            txt.setText("");
+                        }
+                    }
+                });
+
+
+                Button btn = new Button("");
+                btn.setTooltip(new Tooltip("Zielpfad für das Abo anpassen"));
+                btn.setGraphic(new ProgIcons().ICON_BUTTON_EDIT_ABO_PATH);
+                btn.setOnAction(event -> {
+                    if (txt.isVisible()) {
+                        txt.setVisible(false);
+                        cboDestination.setVisible(true);
+                        cboDestination.setValue(memory);
+                    } else {
+                        txt.setVisible(true);
+                        cboDestination.setVisible(false);
+                        memory = cboDestination.getValue();
+                        cboDestination.setValue("");
+                    }
+                    cbxEditAll[i].setSelected(true);
+                });
+                final Button btnHelp = PButton.helpButton(getStage(), "Unterordner anlegen",
+                        HelpText.ABO_SUBDIR);
+
+                final StackPane sp = new StackPane();
+                sp.getChildren().addAll(txt, cboDestination);
+
+                HBox hbox = new HBox(10);
+                hbox.setAlignment(Pos.CENTER_LEFT);
+                hbox.getChildren().addAll(sp, btn, btnHelp);
+                HBox.setHgrow(sp, Priority.ALWAYS);
+                this.gridPane.add(hbox, 1, grid);
+
+                if (aboCopy.getAboSubDir().trim().isEmpty()) {
+                    cboDestination.setVisible(false);
+                } else {
+                    txt.setVisible(false);
+                }
+
                 break;
 
             case AboXml.ABO_TIME_RANGE:
