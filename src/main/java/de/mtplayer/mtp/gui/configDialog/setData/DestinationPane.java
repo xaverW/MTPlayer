@@ -46,6 +46,7 @@ public class DestinationPane {
     private final TextField txtDestName = new TextField();
     private final Slider slCut = new Slider();
     private final Slider slCutField = new Slider();
+    private boolean changeTgl = false;
 
     private final Stage stage;
     private SetData setData = null;
@@ -75,11 +76,11 @@ public class DestinationPane {
                 HelpTextPset.PSET_FILE_NAME);
 
         cboDest.init(FXCollections.observableArrayList(AboSubDir.DirName.values()));
-//        cboDest.getSelValueProperty().addListener((m, o, n) -> {
-//            if (n != null && this.setData != null) {
-//                setData.setAboSubFolder(n.getNo());
-//            }
-//        });
+        cboDest.getSelValueProperty().addListener((m, o, n) -> {
+            if (changeTgl) {
+                tglSubdir.setSelected(true);
+            }
+        });
 
 
         int row = 0;
@@ -160,7 +161,6 @@ public class DestinationPane {
         gridPane.add(lblSizeField, 2, 1);
     }
 
-
     private void setValueSlider(Slider sl, Label lb, String pre) {
         int days = (int) sl.getValue();
         lb.setText(pre + (days == 0 ? "nicht beschränken" : "auf " + days + " Zeichen beschränken"));
@@ -177,10 +177,12 @@ public class DestinationPane {
             slCut.valueProperty().bindBidirectional(setData.maxSizeProperty());
             slCutField.valueProperty().bindBidirectional(setData.maxFieldProperty());
             cboDest.bindSelValueProperty(setData.aboSubDirProperty());
+            changeTgl = true;
         }
     }
 
     void unBindProgData() {
+        changeTgl = false;
         if (setData != null) {
             tglSubdir.selectedProperty().unbindBidirectional(setData.genAboSubDirProperty());
             txtDestPath.textProperty().unbindBidirectional(setData.destPathProperty());

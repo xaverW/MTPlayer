@@ -189,14 +189,14 @@ public class DownloadProgram {
                             case ABONAME:
                                 addPpath = abo.getName();
                                 break;
-                            case ABODESCRIPTION:
+                           /* case ABODESCRIPTION:
                                 addPpath = abo.getDescription();
-                                break;
+                                break;*/
                             case SENDEDATUM:
-                                addPpath = download.getFilmDate().get_yyyyMMdd();
+                                addPpath = download.getFilmDate().get_yyyy_MM_dd();
                                 break;
                             case DOWNLOADDATUM:
-                                addPpath = getToday_yyyyMMdd();
+                                addPpath = getToday_yyyy_MM_dd();
                                 break;
                             case THEME:
                             default:
@@ -204,7 +204,10 @@ public class DownloadProgram {
                                 break;
                         }
                     }
-                    path = PFileUtils.addsPath(path, FileNameUtils.removeIllegalCharacters(addPpath, true));
+                    addPpath = addPpath.trim();
+                    if (!addPpath.isEmpty()) {
+                        path = PFileUtils.addsPath(path, FileNameUtils.removeIllegalCharacters(addPpath, true));
+                    }
                 }
 
             } else if (setData.getGenAboSubDir()) {
@@ -267,11 +270,11 @@ public class DownloadProgram {
         replStr = replStr.replace("%h", getNow_HHMMSS());
 
         replStr = replStr.replace("%1",
-                getDMY("%1", film.arr[FilmXml.FILM_DATE].equals("") ? getToday_yyyy_MM_dd() : film.arr[FilmXml.FILM_DATE]));
+                getDMY("%1", film.arr[FilmXml.FILM_DATE].equals("") ? getToday__yyyy_o_MM_o_dd() : film.arr[FilmXml.FILM_DATE]));
         replStr = replStr.replace("%2",
-                getDMY("%2", film.arr[FilmXml.FILM_DATE].equals("") ? getToday_yyyy_MM_dd() : film.arr[FilmXml.FILM_DATE]));
+                getDMY("%2", film.arr[FilmXml.FILM_DATE].equals("") ? getToday__yyyy_o_MM_o_dd() : film.arr[FilmXml.FILM_DATE]));
         replStr = replStr.replace("%3",
-                getDMY("%3", film.arr[FilmXml.FILM_DATE].equals("") ? getToday_yyyy_MM_dd() : film.arr[FilmXml.FILM_DATE]));
+                getDMY("%3", film.arr[FilmXml.FILM_DATE].equals("") ? getToday__yyyy_o_MM_o_dd() : film.arr[FilmXml.FILM_DATE]));
 
         replStr = replStr.replace("%4",
                 getHMS("%4", film.arr[FilmXml.FILM_TIME].equals("") ? getNow_HH_MM_SS() : film.arr[FilmXml.FILM_TIME]));
@@ -336,6 +339,10 @@ public class DownloadProgram {
     }
 
     private String getToday_yyyy_MM_dd() {
+        return StringFormatters.FORMATTER_yyyy_MM_dd.format(new Date());
+    }
+
+    private String getToday__yyyy_o_MM_o_dd() {
         return StringFormatters.FORMATTER_ddMMyyyy.format(new Date());
     }
 

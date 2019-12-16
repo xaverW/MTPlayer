@@ -17,12 +17,18 @@
 
 package de.mtplayer.mtp.gui.configDialog.setData;
 
-public class AboSubDir {
-    public enum DirName {
+import de.mtplayer.mLib.tools.StringFormatters;
 
-        THEME("Thema", 0), TITLE("Titel", 1), SENDER("Sender", 2),
-        ABONAME("Abo-Name", 3), ABODESCRIPTION("Abo-Beschreibung", 4),
-        SENDEDATUM("Datum der Sendung", 5), DOWNLOADDATUM("Datum des Downloads", 6);
+import java.util.Date;
+
+public class AboSubDir {
+    private static String date = StringFormatters.FORMATTER_yyyy_MM_dd.format(new Date());
+
+    public enum DirName {
+        // 0--> gibts nicht, da liefern die ProgVersionen ohne die Funktion dann "Thema" wie dort üblich
+        SENDER("Sender", 1), THEME("Thema", 2), TITLE("Titel", 3),
+        ABONAME("Abo-Name", 4), /*ABODESCRIPTION("Abo-Beschreibung", 5),*/
+        SENDEDATUM("Datum der Sendung z.B.: " + date, 6), DOWNLOADDATUM("Datum des Downloads z.B.: " + date, 7);
         private final String name;
         private final int no;
 
@@ -45,14 +51,14 @@ public class AboSubDir {
         }
     }
 
-    public static String getName(int no) {
-        for (DirName s : DirName.values()) {
-            if (s.getNo() == no) {
-                return s.getName();
-            }
-        }
-        return "";
-    }
+//    public static String getName(int no) {
+//        for (DirName s : DirName.values()) {
+//            if (s.getNo() == no) {
+//                return s.getName();
+//            }
+//        }
+//        return "";
+//    }
 
     public static DirName getAboSub(int no) {
         for (DirName s : DirName.values()) {

@@ -267,7 +267,7 @@ public class HelpText {
             "Unterordner gespeichert. Der Ordnername kann mit der Auswahl festgelegt werden. " +
             "\n\n" +
             "Ist im Abo ein Abozielpfad angegeben, wird die Einstellung überschrieben. " +
-            "Der Download wird immer in einem Unterordner mit dem im Abozielpfad engegebenen Namen gespeichert.";
+            "Der Download wird immer in einem Unterordner mit dem im Abozielpfad angegebenen Namen gespeichert.";
 
     public static final String SETDATA_RESET_COLOR = "Wird das Set als Button verwendet, " +
             "kann damit die Schriftfarbe verändert werden.";

@@ -540,7 +540,7 @@ public class AboEditDialogController extends PDialogExtra {
         if (i == FilmFilter.FILTER_TIME_RANGE_ALL_VALUE) {
             lblTimeRange.setText(txtAll);
         } else {
-            lblTimeRange.setText(tNr + (i == 1 ? " Tag" : " Tagen"));
+            lblTimeRange.setText(tNr + (i == 1 ? " Tag" : " Tage"));
         }
     }
 

@@ -21,7 +21,7 @@ import javafx.scene.image.ImageView;
 
 public class GetIcon {
 
-    private final static String PATH_PROGRAM = "/de/mtplayer/mtp/res/programm/";
+    private final static String PATH_PROGRAM = "/de/mtplayer/mtp/res/program/";
     private final static String PATH_SENDER = "/de/mtplayer/mtp/res/sender/";
     private final static String PATH_RES = "/de/mtplayer/mtp/res/";
 
