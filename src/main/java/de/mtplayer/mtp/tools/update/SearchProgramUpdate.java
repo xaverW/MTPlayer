@@ -21,19 +21,20 @@ import de.mtplayer.mLib.tools.StringFormatters;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.p2tools.p2Lib.checkForUpdates.SearchProgInfo;
-import javafx.beans.property.BooleanProperty;
 import javafx.stage.Stage;
 
 import java.util.Date;
 
 public class SearchProgramUpdate {
 
-    BooleanProperty updateProp;
+    //    BooleanProperty updateProp;
+//    BooleanProperty updateBetaProp;
     private final Stage stage;
 
     public SearchProgramUpdate(Stage stage) {
         this.stage = stage;
-        updateProp = ProgConfig.SYSTEM_UPDATE_SEARCH.getBooleanProperty();
+//        updateProp = ProgConfig.SYSTEM_UPDATE_SEARCH.getBooleanProperty();
+//        updateBetaProp = ProgConfig.SYSTEM_UPDATE_BETA_SEARCH.getBooleanProperty();
     }
 
     /**
@@ -41,13 +42,32 @@ public class SearchProgramUpdate {
      * @param showProgramInformation
      * @return
      */
-    public boolean checkVersion(boolean showError, boolean showProgramInformation) {
+    public boolean checkVersion(boolean showError, boolean showProgramInformation, boolean showUpdate) {
         // prüft auf neue Version,
-        ProgConfig.SYSTEM_UPDATE_PROGRAM_VERSION.setValue(Functions.getProgVersion());
         ProgConfig.SYSTEM_UPDATE_DATE.setValue(StringFormatters.FORMATTER_yyyyMMdd.format(new Date()));
 
-        return new SearchProgInfo(stage).checkUpdate(ProgConst.ADRESSE_MTPLAYER_VERSION, ProgConfig.SYSTEM_UPDATE_PROGRAM_VERSION.getInt(),
-                ProgConfig.SYSTEM_UPDATE_INFO_NR_SHOWN.getIntegerProperty(), updateProp,
+        return new SearchProgInfo(stage).checkUpdate(ProgConst.ADRESSE_MTPLAYER_VERSION,
+                Functions.getProgVersionInt(),
+                ProgConfig.SYSTEM_UPDATE_VERSION_SHOWN.getIntegerProperty(),
+                ProgConfig.SYSTEM_UPDATE_INFO_NR_SHOWN.getIntegerProperty(),
+                ProgConfig.SYSTEM_UPDATE_SEARCH.getBooleanProperty(),
+                showUpdate,
+                showProgramInformation, showError);
+    }
+
+    /**
+     * @param showError
+     * @param showProgramInformation
+     * @return
+     */
+    public boolean checkBetaVersion(boolean showError, boolean showProgramInformation) {
+        // prüft auf neue beta Version,
+
+        return new SearchProgInfo(stage).checkBetaUpdate(ProgConst.ADRESSE_MTPLAYER_BETA_VERSION,
+                Functions.getProgVersionInt(), Functions.getBuildInt(),
+                ProgConfig.SYSTEM_UPDATE_BETA_VERSION_SHOWN.getIntegerProperty(),
+                ProgConfig.SYSTEM_UPDATE_BETA_BUILD_NO_SHOWN.getIntegerProperty(),
+                ProgConfig.SYSTEM_UPDATE_BETA_SEARCH.getBooleanProperty(),
                 showProgramInformation, showError);
     }
 

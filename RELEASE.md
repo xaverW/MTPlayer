@@ -1,5 +1,13 @@
 ## MTPlayer
 
+**Release 9**
+
+* Anordnung der Button nach BS
+* beim Schließen des Config-Dialogs Filmliste nur neu laden, wenn Blacklist geändert wurde
+* das Anlegen von Verzeichnissen bei Abos wurde deutlich erweitert
+* Möglichkeit nach Beta-Versionen zu suchen
+
+
 **Release 8**
 
 * Dark Theme, die Programmoberfläche kann jetzt auch in einem "dark theme" angezeigt werden: Einstellungen->Farben

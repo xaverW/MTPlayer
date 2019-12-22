@@ -204,37 +204,39 @@ public class ProgStart {
         return ret;
     }
 
-    private void setOrgTitle() {
-        progData.primaryStage.setTitle(ProgConst.PROGRAMNAME + " " + Functions.getProgVersion());
-    }
-
-    private void setUpdateTitle() {
-        progData.primaryStage.setTitle(TITLE_TEXT_PROGRAMMUPDATE_EXISTS);
-    }
-
-    private void setNoUpdateTitle() {
-        progData.primaryStage.setTitle(TITLE_TEXT_PROGRAM_VERSION_IS_UPTODATE);
-    }
-
     private void checkProgUpdate() {
         // Prüfen obs ein Programmupdate gibt
         PDuration.onlyPing("checkProgUpdate");
+
+        if (ProgData.debug) {
+            runUpdateCheck();
+            return;
+        }
+
         if (!Boolean.parseBoolean(ProgConfig.SYSTEM_UPDATE_SEARCH.get()) ||
+                ProgConfig.SYSTEM_UPDATE_DATE.get().equals(StringFormatters.FORMATTER_yyyyMMdd.format(new Date()))) {
 
-                ProgConfig.SYSTEM_UPDATE_PROGRAM_VERSION.get().equals(Functions.getProgVersion() /*Start mit neuer Version*/)
-                        && ProgConfig.SYSTEM_UPDATE_DATE.get().equals(StringFormatters.FORMATTER_yyyyMMdd.format(new Date()))) {
-
-            // will der User nicht --oder-- keine neue Version und heute schon gemacht
+            // will der User nicht --oder-- wurde heute schon gemacht
             PLog.sysLog("Kein Update-Check");
             return;
         }
 
+        runUpdateCheck();
+    }
+
+    private void runUpdateCheck() {
         Thread th = new Thread(() -> {
             try {
-                if (new SearchProgramUpdate(progData.primaryStage).checkVersion(false, false /* immer anzeigen */)) {
+                if (new SearchProgramUpdate(progData.primaryStage)
+                        .checkVersion(false, false, true)) {
                     Platform.runLater(() -> setUpdateTitle());
+
                 } else {
                     Platform.runLater(() -> setNoUpdateTitle());
+                    if (Boolean.parseBoolean(ProgConfig.SYSTEM_UPDATE_BETA_SEARCH.get())) {
+                        // gibt kein Update, dann wenn gewollt nach neuer Beta suchen
+                        new SearchProgramUpdate(progData.primaryStage).checkBetaVersion(false, false);
+                    }
                 }
 
                 sleep(10_000);
@@ -246,5 +248,17 @@ public class ProgStart {
         });
         th.setName("checkProgUpdate");
         th.start();
+    }
+
+    private void setOrgTitle() {
+        progData.primaryStage.setTitle(ProgConst.PROGRAMNAME + " " + Functions.getProgVersion());
+    }
+
+    private void setUpdateTitle() {
+        progData.primaryStage.setTitle(TITLE_TEXT_PROGRAMMUPDATE_EXISTS);
+    }
+
+    private void setNoUpdateTitle() {
+        progData.primaryStage.setTitle(TITLE_TEXT_PROGRAM_VERSION_IS_UPTODATE);
     }
 }

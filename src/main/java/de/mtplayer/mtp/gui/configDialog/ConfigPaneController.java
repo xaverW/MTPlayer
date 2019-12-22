@@ -58,6 +58,7 @@ public class ConfigPaneController extends AnchorPane {
 
     BooleanProperty accordionProp = ProgConfig.CONFIG_DIALOG_ACCORDION.getBooleanProperty();
     BooleanProperty propUpdateSearch = ProgConfig.SYSTEM_UPDATE_SEARCH.getBooleanProperty();
+    BooleanProperty propUpdateBetaSearch = ProgConfig.SYSTEM_UPDATE_BETA_SEARCH.getBooleanProperty();
     BooleanProperty propAbo = ProgConfig.ABO_SEARCH_NOW.getBooleanProperty();
     BooleanProperty propDown = ProgConfig.DOWNLOAD_START_NOW.getBooleanProperty();
     StringProperty propDir = ProgConfig.SYSTEM_PROG_OPEN_DIR.getStringProperty();
@@ -377,12 +378,44 @@ public class ConfigPaneController extends AnchorPane {
         tglSearch.selectedProperty().bindBidirectional(propUpdateSearch);
         final Button btnHelp = PButton.helpButton(stage, "Programmupdate suchen",
                 "Beim Programmstart wird geprüft, ob es eine neue Version des Programms gibt. " +
-                        "Ist eine aktualisierte Version vorhanden, wird das dann gemeldet." + P2LibConst.LINE_SEPARATOR +
+                        "Ist eine aktualisierte Version vorhanden, dann wird das gemeldet."
+                        + P2LibConst.LINE_SEPARATOR +
+                        "Das Programm wird aber nicht ungefragt ersetzt.");
+
+        final PToggleSwitch tglSearchBeta = new PToggleSwitch("auch nach neuen Vorabversionen suchen");
+        tglSearchBeta.selectedProperty().bindBidirectional(propUpdateBetaSearch);
+        final Button btnHelpBeta = PButton.helpButton(stage, "Vorabversionen suchen",
+                "Beim Programmstart wird geprüft, ob es eine neue Vorabversion des Programms gibt. " +
+                        P2LibConst.LINE_SEPARATORx2 +
+                        "Das sind \"Zwischenschritte\" auf dem Weg zur nächsten Version. Hier ist die " +
+                        "Entwicklung noch nicht abgeschlossen und das Programm kann noch Fehler enthalten. Wer Lust hat " +
+                        "einen Blick auf die nächste Version zu werfen, ist eingeladen, die Vorabversionen zu testen." +
+                        P2LibConst.LINE_SEPARATORx2 +
+                        "Ist eine aktualisierte Vorabversion vorhanden, dann wird das gemeldet."
+                        + P2LibConst.LINE_SEPARATOR +
                         "Das Programm wird aber nicht ungefragt ersetzt.");
 
         //jetzt suchen
         Button btnNow = new Button("_Jetzt suchen");
-        btnNow.setOnAction(event -> new SearchProgramUpdate(stage).checkVersion(true, true /* anzeigen */));
+        btnNow.setOnAction(event -> new SearchProgramUpdate(stage)
+                .checkVersion(true, true /* anzeigen */, false));
+
+        Button btnNowBeta = new Button("_Jetzt suchen");
+        btnNowBeta.setOnAction(event -> new SearchProgramUpdate(stage)
+                .checkBetaVersion(true, true /* anzeigen */));
+
+        tglSearch.selectedProperty().addListener((ob, ol, ne) -> {
+            if (tglSearch.isSelected()) {
+                tglSearchBeta.setDisable(false);
+                btnNowBeta.setDisable(false);
+                btnHelpBeta.setDisable(false);
+            } else {
+                tglSearchBeta.setDisable(true);
+                tglSearchBeta.setSelected(false);
+                btnNowBeta.setDisable(true);
+                btnHelpBeta.setDisable(true);
+            }
+        });
 
         PHyperlink hyperlink = new PHyperlink(ProgConst.ADRESSE_WEBSITE,
                 ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
@@ -394,14 +427,23 @@ public class ConfigPaneController extends AnchorPane {
 
         int row = 0;
         gridPane.add(tglSearch, 0, row);
-        gridPane.add(btnHelp, 1, row);
+        gridPane.add(btnNow, 1, row);
+        gridPane.add(btnHelp, 2, row);
 
         gridPane.add(new Label(" "), 0, ++row);
 
-        gridPane.add(btnNow, 0, ++row);
+        gridPane.add(tglSearchBeta, 0, ++row);
+        gridPane.add(btnNowBeta, 1, row);
+        gridPane.add(btnHelpBeta, 2, row);
+
+        gridPane.add(new Label(" "), 0, ++row);
+
         gridPane.add(hBoxHyper, 0, ++row);
+
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(),
                 PColumnConstraints.getCcPrefSize());
+        gridPane.getRowConstraints().addAll(PColumnConstraints.getRcPrefSize(), PColumnConstraints.getRcPrefSize(),
+                PColumnConstraints.getRcPrefSize(), PColumnConstraints.getRcVgrow(), PColumnConstraints.getRcPrefSize());
     }
 
 }

@@ -129,7 +129,7 @@ public class FilmFilterEditDialog extends PDialog {
         tglMinMax.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().minMaxDurVisProperty());
         vbox.getChildren().add(tglMinMax);
 
-        PToggleSwitch tglMinMaxTime = new PToggleSwitch("Uhrzeit des Films");
+        PToggleSwitch tglMinMaxTime = new PToggleSwitch("Sendezeit des Films");
         tglMinMaxTime.setMaxWidth(Double.MAX_VALUE);
         tglMinMaxTime.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().minMaxTimeVisProperty());
         vbox.getChildren().add(tglMinMaxTime);

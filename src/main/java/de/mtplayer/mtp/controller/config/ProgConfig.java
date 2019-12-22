@@ -60,10 +60,13 @@ public class ProgConfig extends MLConfig {
 
 
     // Configs zur Programmupdatesuche
-    public static MLConfigs SYSTEM_UPDATE_PROGRAM_VERSION = addNewKey("system-update-program-version");
-    public static MLConfigs SYSTEM_UPDATE_SEARCH = addNewKey("system-update-search", Boolean.TRUE.toString());
-    public static MLConfigs SYSTEM_UPDATE_DATE = addNewKey("system-update-date");
-    public static MLConfigs SYSTEM_UPDATE_INFO_NR_SHOWN = addNewKey("system-update-info-nr-shown");
+    public static MLConfigs SYSTEM_UPDATE_DATE = addNewKey("system-update-date"); // Datum der letzten Prüfung
+    public static MLConfigs SYSTEM_UPDATE_SEARCH = addNewKey("system-update-search", Boolean.TRUE.toString()); // ob beim Start nach Updates gesucht werden soll
+    public static MLConfigs SYSTEM_UPDATE_INFO_NR_SHOWN = addNewKey("system-update-info-nr-shown"); // zuletzt angezeigte Info
+    public static MLConfigs SYSTEM_UPDATE_VERSION_SHOWN = addNewKey("system-update-version-shown"); // zuletzt angezeigte Version
+    public static MLConfigs SYSTEM_UPDATE_BETA_SEARCH = addNewKey("system-update-beta-search", Boolean.FALSE.toString());
+    public static MLConfigs SYSTEM_UPDATE_BETA_VERSION_SHOWN = addNewKey("system-update-beta-version-shown"); // zuletzt angezeigtes Update mit versionNo
+    public static MLConfigs SYSTEM_UPDATE_BETA_BUILD_NO_SHOWN = addNewKey("system-update-beta-build-nr-shown"); // zuletzt angezeigtes Update mit buildNo
     public static MLConfigs SYSTEM_UPDATE_PROGSET_VERSION = addNewKey("system-update-progset-version");
 
 
