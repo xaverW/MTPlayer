@@ -23,7 +23,7 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.p2tools.p2Lib.P2LibConst;
-import de.p2tools.p2Lib.dialog.PDialogExtra;
+import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -53,7 +53,7 @@ public class AboutDialogController extends PDialogExtra {
         } else {
             this.GRAY = Color.DARKBLUE;
         }
-        addButtons(btnOk);
+        addOkButton(btnOk);
         init(getVBoxCompleteDialog(), true);
     }
 
@@ -64,7 +64,7 @@ public class AboutDialogController extends PDialogExtra {
         btnOk.setOnAction(a -> close());
         HBox hBox = new HBox();
 
-        getVboxCont().getChildren().add(hBox);
+        getvBoxCont().getChildren().add(hBox);
 
         ImageView iv = new ImageView();
         Image im = getImage();

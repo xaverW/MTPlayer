@@ -26,7 +26,7 @@ import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadTools;
 import de.mtplayer.mtp.controller.starter.DownloadState;
-import de.p2tools.p2Lib.dialog.PDialogExtra;
+import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -77,7 +77,7 @@ public class DownloadContinueDialogController extends PDialogExtra {
         this.oldPathFile = download.getDestPathFile();
 
         hBoxTitle = getHBoxTitle();
-        vBoxCont = getVboxCont();
+        vBoxCont = getvBoxCont();
 //        hBoxOk = getHboxOk();
 
 

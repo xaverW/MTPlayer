@@ -21,22 +21,24 @@ import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.gui.configDialog.GeoPane;
 import de.mtplayer.mtp.gui.configDialog.LoadFilmsPane;
 import de.p2tools.p2Lib.P2LibInit;
-import de.p2tools.p2Lib.dialog.PDialog;
-import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.TitledPane;
+import javafx.scene.control.Tooltip;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 
-public class StartDialogController extends PDialog {
+public class StartDialogController extends PDialogExtra {
 
     private Stage stage = null;
     private boolean ok = false;
-    private AnchorPane rootPane = new AnchorPane();
-    private VBox vBoxDialog = new VBox();
-    private VBox vBoxCont = new VBox();
 
     private TilePane tilePane = new TilePane();
     private StackPane stackpane;
@@ -58,32 +60,29 @@ public class StartDialogController extends PDialog {
 
     private enum State {START_1, START_2, UPDATE, GEO, FILM, DOWN, PATH}
 
-    private ScrollPane startPane_1;
-    private ScrollPane startPane_2;
-    private ScrollPane updatePane;
-    private ScrollPane geoPane;
-    private ScrollPane filmPane;
-    private ScrollPane downPane;
-    private ScrollPane pathPane;
+    private TitledPane tStart1;
+    private TitledPane tStart2;
+    private TitledPane tUpdate;
+    private TitledPane tGeo;
+    private TitledPane tFilm;
+    private TitledPane tDown;
+    private TitledPane tPath;
 
     private final ProgData progData;
     private State aktState = State.START_1;
 
     public StartDialogController() {
-        super(null, null, "Starteinstellungen", true);
+        super(null, null, "Starteinstellungen", true, false, DECO.BORDER);
 
         this.progData = ProgData.getInstance();
-        init(rootPane, true);
+        init(true);
     }
 
     @Override
     public void make() {
         stage = getStage();
-//        String css = this.getClass().getResource(ProgConst.CSS_FILE).toExternalForm();
-//        getStage().getScene().getStylesheets().add(css);
         P2LibInit.addP2LibCssToScene(getStage().getScene());
 
-        initPanel();
         addButton();
         initStack();
         initButton();
@@ -99,33 +98,11 @@ public class StartDialogController extends PDialog {
         return ok;
     }
 
-    private void initPanel() {
-        try {
-            vBoxDialog.setPadding(new Insets(20));
-            vBoxDialog.setSpacing(20);
-
-            vBoxCont.getStyleClass().add("dialog-border");
-            vBoxCont.setSpacing(10);
-            VBox.setVgrow(vBoxCont, Priority.ALWAYS);
-
-            rootPane.getChildren().addAll(vBoxDialog);
-            AnchorPane.setLeftAnchor(vBoxDialog, 0.0);
-            AnchorPane.setBottomAnchor(vBoxDialog, 0.0);
-            AnchorPane.setRightAnchor(vBoxDialog, 0.0);
-            AnchorPane.setTopAnchor(vBoxDialog, 0.0);
-
-            vBoxDialog.getChildren().add(vBoxCont);
-
-        } catch (final Exception ex) {
-            PLog.errorLog(912031210, ex);
-        }
-    }
-
     private void addButton() {
-        vBoxCont.getChildren().add(tilePane);
+        getvBoxCont().getChildren().add(tilePane);
         tilePane.getChildren().addAll(btnStart1, btnStart2, btnUpdate, btnGeo, btnFilm, btnDown, btnPath);
         tilePane.setAlignment(Pos.CENTER);
-        tilePane.setPadding(new Insets(10));
+        tilePane.setPadding(new Insets(10, 10, 20, 10));
         tilePane.setHgap(10);
         tilePane.setVgap(10);
         setButton(btnStart1, State.START_1);
@@ -170,90 +147,48 @@ public class StartDialogController extends PDialog {
     private void initStack() {
         stackpane = new StackPane();
         VBox.setVgrow(stackpane, Priority.ALWAYS);
-        vBoxCont.getChildren().add(stackpane);
+        getvBoxCont().getChildren().add(stackpane);
 
         //startPane 1
-        startPane_1 = new ScrollPane();
-        startPane_1.setFitToHeight(true);
-        startPane_1.setFitToWidth(true);
-
-        TitledPane tStart1 = new StartPane(stage).makeStart1();
+        tStart1 = new StartPane(stage).makeStart1();
         tStart1.setMaxHeight(Double.MAX_VALUE);
         tStart1.setCollapsible(false);
-//        tStart1.setText(STR_START_1);
-        startPane_1.setContent(tStart1);
 
         //startPane 2
-        startPane_2 = new ScrollPane();
-        startPane_2.setFitToHeight(true);
-        startPane_2.setFitToWidth(true);
-
-        TitledPane tStart2 = new StartPane(stage).makeStart2();
+        tStart2 = new StartPane(stage).makeStart2();
         tStart2.setMaxHeight(Double.MAX_VALUE);
         tStart2.setCollapsible(false);
-//        tStart2.setText(STR_START_2);
-        startPane_2.setContent(tStart2);
 
         //updatePane
-        updatePane = new ScrollPane();
-        updatePane.setFitToHeight(true);
-        updatePane.setFitToWidth(true);
-
-        TitledPane tUpdate = new UpdatePane(stage).makeStart();
+        tUpdate = new UpdatePane(stage).makeStart();
         tUpdate.setMaxHeight(Double.MAX_VALUE);
         tUpdate.setCollapsible(false);
-//        tUpdate.setText(STR_UPDATE);
-        updatePane.setContent(tUpdate);
 
         //geoPane
-        geoPane = new ScrollPane();
-        geoPane.setFitToHeight(true);
-        geoPane.setFitToWidth(true);
-
-        TitledPane tGeo = new GeoPane(stage).makeGeo();
+        tGeo = new GeoPane(stage).makeGeo();
         tGeo.setMaxHeight(Double.MAX_VALUE);
         tGeo.setCollapsible(false);
-//        tGeo.setText(STR_GEO);
-        geoPane.setContent(tGeo);
 
         //filmPane
-        filmPane = new ScrollPane();
-        filmPane.setFitToHeight(true);
-        filmPane.setFitToWidth(true);
-
-        TitledPane tFilm = new LoadFilmsPane(stage).make();
+        tFilm = new LoadFilmsPane(stage).make();
         tFilm.setMaxHeight(Double.MAX_VALUE);
         tFilm.setCollapsible(false);
-//        tFilm.setText(STR_FILM);
-        filmPane.setContent(tFilm);
 
         //downPane
-        downPane = new ScrollPane();
-        downPane.setFitToHeight(true);
-        downPane.setFitToWidth(true);
-
-        TitledPane tDown = new DownPathPane(stage).makePath();
+        tDown = new DownPathPane(stage).makePath();
         tDown.setMaxHeight(Double.MAX_VALUE);
         tDown.setCollapsible(false);
-//        tDown.setText(STR_DOWN);
-        downPane.setContent(tDown);
 
         //pathPane
-        pathPane = new ScrollPane();
-        pathPane.setFitToHeight(true);
-        pathPane.setFitToWidth(true);
-
-        TitledPane tPath = new PathPane(stage).makePath();
+        tPath = new PathPane(stage).makePath();
         tPath.setMaxHeight(Double.MAX_VALUE);
         tPath.setCollapsible(false);
-//        tPath.setText(STR_PATH);
-        pathPane.setContent(tPath);
-        stackpane.getChildren().addAll(startPane_1, startPane_2, updatePane, geoPane, filmPane, downPane, pathPane);
+
+        stackpane.getChildren().addAll(tStart1, tStart2, tUpdate, tGeo, tFilm, tDown, tPath);
     }
 
     private void initButton() {
         btnOk = new Button("_Ok");
-//        btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnOk.setDisable(true);
         btnOk.setOnAction(a -> {
             ok = true;
@@ -261,11 +196,9 @@ public class StartDialogController extends PDialog {
         });
 
         btnCancel = new Button("_Abbrechen");
-//        btnCancel.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnCancel.setOnAction(a -> close());
 
         btnNext = new Button("");
-//        btnNext.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnNext.setGraphic(new ProgIcons().ICON_BUTTON_NEXT);
         btnNext.setOnAction(event -> {
             switch (aktState) {
@@ -293,7 +226,6 @@ public class StartDialogController extends PDialog {
             selectActPane();
         });
         btnPrev = new Button("");
-//        btnPrev.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnPrev.setGraphic(new ProgIcons().ICON_BUTTON_PREV);
         btnPrev.setOnAction(event -> {
             switch (aktState) {
@@ -326,27 +258,12 @@ public class StartDialogController extends PDialog {
         btnNext.getStyleClass().add("btnStartDialog");
         btnPrev.getStyleClass().add("btnStartDialog");
 
-
-//        HBox hBox1 = new HBox();
-//        hBox1.setSpacing(10);
-//        hBox1.getChildren().addAll(btnPrev, btnNext);
-//        HBox.setHgrow(hBox1, Priority.ALWAYS);
-//
-//        HBox hBox2 = new HBox();
-//        hBox2.setSpacing(10);
-//        hBox2.getChildren().addAll(hBox1, btnOk, btnCancel);
-//
-//        vBoxDialog.getChildren().add(hBox2);
-
-
-        ButtonBar buttonBar = new ButtonBar();
-        ButtonBar.setButtonData(btnOk, ButtonBar.ButtonData.OK_DONE);
-        ButtonBar.setButtonData(btnCancel, ButtonBar.ButtonData.CANCEL_CLOSE);
+        addButtons(btnOk, btnCancel);
         ButtonBar.setButtonData(btnPrev, ButtonBar.ButtonData.BACK_PREVIOUS);
         ButtonBar.setButtonData(btnNext, ButtonBar.ButtonData.NEXT_FORWARD);
-        buttonBar.getButtons().addAll(btnOk, btnCancel, btnPrev, btnNext);
-        buttonBar.setButtonOrder("BX+CO");
-        vBoxDialog.getChildren().add(buttonBar);
+        addAnyButton(btnNext);
+        addAnyButton(btnPrev);
+        getButtonBar().setButtonOrder("BX+CO");
     }
 
     private void selectActPane() {
@@ -354,44 +271,44 @@ public class StartDialogController extends PDialog {
             case START_1:
                 btnPrev.setDisable(true);
                 btnNext.setDisable(false);
-                startPane_1.toFront();
+                tStart1.toFront();
                 setButtonStyle(btnStart1);
                 break;
             case START_2:
                 btnPrev.setDisable(false);
                 btnNext.setDisable(false);
-                startPane_2.toFront();
+                tStart2.toFront();
                 setButtonStyle(btnStart2);
                 break;
             case UPDATE:
                 btnPrev.setDisable(false);
                 btnNext.setDisable(false);
-                updatePane.toFront();
+                tUpdate.toFront();
                 setButtonStyle(btnUpdate);
                 break;
             case GEO:
                 btnPrev.setDisable(false);
                 btnNext.setDisable(false);
-                geoPane.toFront();
+                tGeo.toFront();
                 setButtonStyle(btnGeo);
                 break;
             case FILM:
                 btnPrev.setDisable(false);
                 btnNext.setDisable(false);
-                filmPane.toFront();
+                tFilm.toFront();
                 setButtonStyle(btnFilm);
                 break;
             case DOWN:
                 btnPrev.setDisable(false);
                 btnNext.setDisable(false);
-                downPane.toFront();
+                tDown.toFront();
                 setButtonStyle(btnDown);
                 break;
             case PATH:
                 btnPrev.setDisable(false);
                 btnNext.setDisable(true);
                 btnOk.setDisable(false);
-                pathPane.toFront();
+                tPath.toFront();
                 setButtonStyle(btnPath);
                 break;
             default:

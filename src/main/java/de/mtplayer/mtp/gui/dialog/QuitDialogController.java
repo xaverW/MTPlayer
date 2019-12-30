@@ -20,19 +20,18 @@ package de.mtplayer.mtp.gui.dialog;
 import de.mtplayer.mLib.tools.BigButton;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
-import de.p2tools.p2Lib.dialog.PDialog;
+import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
 import javafx.concurrent.Task;
-import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 
-public class QuitDialogController extends PDialog {
+public class QuitDialogController extends PDialogExtra {
 
     private final StackPane stackPane = new StackPane();
     private final PMaskerPane maskerPane = new PMaskerPane();
     private final WaitTask waitTask = new WaitTask();
-    private final VBox vbox = new VBox();
+//    private final VBox vbox = new VBox();
 
     private boolean canQuit = false;
     private boolean startWithWaiting = false;
@@ -40,13 +39,13 @@ public class QuitDialogController extends PDialog {
     public QuitDialogController(boolean startWithWaiting) {
         super(null, "Programm beenden", true);
         this.startWithWaiting = startWithWaiting;
-        init(vbox, true);
+        init(true);
     }
 
     @Override
     public void make() {
-        vbox.setPadding(new Insets(10));
-        vbox.setSpacing(30);
+//        vbox.setPadding(new Insets(10));
+//        vbox.setSpacing(30);
 
         GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
@@ -94,10 +93,10 @@ public class QuitDialogController extends PDialog {
         ccTxt.setHgrow(Priority.ALWAYS);
 
         gridPane.getColumnConstraints().addAll(new ColumnConstraints(), ccTxt);
-        gridPane.getStyleClass().add("dialog-only-border");
+//        gridPane.getStyleClass().add("dialog-only-border");
 
         stackPane.getChildren().addAll(gridPane, maskerPane);
-        vbox.getChildren().addAll(stackPane);
+        getvBoxCont().getChildren().addAll(stackPane);
 
         if (startWithWaiting) {
             startWaiting();

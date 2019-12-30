@@ -33,7 +33,7 @@ import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmTools;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
 import de.p2tools.p2Lib.alert.PAlert;
-import de.p2tools.p2Lib.dialog.PDialogExtra;
+import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.tools.PStringUtils;
 import de.p2tools.p2Lib.tools.PSystemUtils;
@@ -195,7 +195,7 @@ public class DownloadAddDialogController extends PDialogExtra {
         this.filterResolution = filterResolution;
         this.setDataList = progData.setDataList.getSetDataListSave();
 
-        vBoxCont = getVboxCont();
+        vBoxCont = getvBoxCont();
 //        hBoxOk = getHboxOk();
 
         init(getVBoxCompleteDialog(), true);

@@ -25,51 +25,37 @@ import de.mtplayer.mtp.gui.startDialog.PathPane;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
-import de.p2tools.p2Lib.dialog.PDialog;
+import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-public class ImportSetDialogController extends PDialog {
+public class ImportSetDialogController extends PDialogExtra {
 
     private final ProgData progData;
-    VBox vbox, vBoxCont;
-    Button btnOk = new Button("_Abbrechen");
+    Button btnCancel = new Button("_Abbrechen");
     Button btnImport = new Button("_Set importieren");
     private boolean im = false;
     private StackPane stackPane;
-    private ScrollPane pathPane, setPane;
+    private VBox vBoxPath = new VBox();
     private SetPaneController setPaneController;
 
 
     public ImportSetDialogController(ProgData progData) {
         super(ProgConfig.CONFIG_DIALOG_IMPORT_SET_SIZE.getStringProperty(),
                 "Set importieren", true);
-//        super("Set importieren", true);
 
         this.progData = progData;
-
-        vbox = new VBox();
-        vbox.setPadding(new Insets(10));
-        vbox.setSpacing(30);
-
-        vBoxCont = new VBox();
-        vBoxCont.getStyleClass().add("dialog-only-border");
-
-        init(vbox, true);
+        init(true);
     }
 
 
     @Override
     public void make() {
-//        btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
-        btnOk.setOnAction(a -> close());
+        btnCancel.setOnAction(a -> close());
 
         final Button btnHelp = PButton.helpButton("Set zurücksetzen",
                 "\"Bestehende Sets durch neue ersetzen\"" +
@@ -79,20 +65,12 @@ public class ImportSetDialogController extends PDialog {
                         "Anschließend werden die aktuellen Standardsets eingerichtet." + P2LibConst.LINE_SEPARATOR +
                         "Damit kann dann direkt weitergearbeitet werden.");
 
-//        btnImport.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnImport.setOnAction(event -> {
             importSet();
         });
 
-        stackPane = new StackPane();
-        VBox.setVgrow(stackPane, Priority.ALWAYS);
-
 
         // vor import
-        pathPane = new ScrollPane();
-        pathPane.setFitToHeight(true);
-        pathPane.setFitToWidth(true);
-
         TitledPane tpDownPath = new DownPathPane(progData.primaryStage).makePath();
         tpDownPath.setMaxHeight(Double.MAX_VALUE);
         tpDownPath.setCollapsible(false);
@@ -101,46 +79,30 @@ public class ImportSetDialogController extends PDialog {
         tpPath.setMaxHeight(Double.MAX_VALUE);
         tpPath.setCollapsible(false);
 
-        VBox vBoxPath = new VBox();
         vBoxPath.setSpacing(10);
         vBoxPath.getChildren().addAll(tpDownPath, tpPath);
-        pathPane.setContent(vBoxPath);
-
+        vBoxPath.setStyle("-fx-background-color: -fx-background;");
 
         // nach Import
-        setPane = new ScrollPane();
-        setPane.setFitToHeight(true);
-        setPane.setFitToWidth(true);
-
         setPaneController = new SetPaneController(P2LibConst.primaryStage);
         setPaneController.setMaxWidth(Double.MAX_VALUE);
         setPaneController.setMaxHeight(Double.MAX_VALUE);
-        setPane.setContent(setPaneController);
+        setPaneController.setStyle("-fx-background-color: -fx-background;");
 
+        stackPane = new StackPane();
+        stackPane.getChildren().addAll(vBoxPath, setPaneController);
+        vBoxPath.toFront();
+        VBox.setVgrow(stackPane, Priority.ALWAYS);
+        getvBoxCont().getChildren().add(stackPane);
 
-        stackPane.getChildren().addAll(pathPane, setPane);
-        pathPane.toFront();
-
-        vBoxCont.getChildren().add(stackPane);
-        VBox.setVgrow(vBoxCont, Priority.ALWAYS);
-
-//        HBox hBox = new HBox();
-//        hBox.setSpacing(10);
-//        hBox.setAlignment(Pos.BOTTOM_RIGHT);
-//        hBox.getChildren().addAll(btnImport, btnOk, btnHelp);
-
-        ButtonBar buttonBar = new ButtonBar();
-        ButtonBar.setButtonData(btnOk, ButtonBar.ButtonData.CANCEL_CLOSE);
-        ButtonBar.setButtonData(btnImport, ButtonBar.ButtonData.OK_DONE);
-        ButtonBar.setButtonData(btnHelp, ButtonBar.ButtonData.HELP);
-        buttonBar.getButtons().addAll(btnOk, btnImport, btnHelp);
-
-        vbox.getChildren().addAll(vBoxCont, buttonBar);
+        addOkButton(btnImport);
+        addCancelButton(btnCancel);
+        addHlpButton(btnHelp);
     }
 
     private void importSet() {
         im = true;
-        btnOk.setText("Ok");
+        btnCancel.setText("Ok");
         btnImport.setDisable(true);
 
         progData.setDataList.clear();
@@ -151,7 +113,7 @@ public class ImportSetDialogController extends PDialog {
             PAlert.showErrorAlert("Set importieren", "Sets konnten nicht importiert werden!");
         }
 
-        setPane.toFront();
+        setPaneController.toFront();
         setPaneController.selectTableFirst();
     }
 }

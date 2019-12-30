@@ -33,7 +33,7 @@ import de.mtplayer.mtp.controller.data.film.FilmTools;
 import de.mtplayer.mtp.tools.file.GetFile;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
-import de.p2tools.p2Lib.dialog.PDialogExtra;
+import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -95,7 +95,7 @@ public class DownloadEditDialogController extends PDialogExtra {
 
         addButtons(btnOk, btnCancel);
 
-        getVboxCont().getChildren().add(gridPane);
+        getvBoxCont().getChildren().add(gridPane);
 
         setData = download.getSetData();
         if (setData == null) {

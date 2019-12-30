@@ -54,6 +54,12 @@ public class ConfigPaneController extends AnchorPane {
     private final HBox hBox = new HBox(0);
     private final CheckBox cbxAccordion = new CheckBox("");
 
+    private final PToggleSwitch tglSearch = new PToggleSwitch("einmal am Tag nach einer neuen Programmversion suchen");
+    private final PToggleSwitch tglSearchBeta = new PToggleSwitch("auch nach neuen Vorabversionen suchen");
+    private final Button btnNow = new Button("_Jetzt suchen");
+    private final Button btnNowBeta = new Button("_Jetzt suchen");
+    private Button btnHelpBeta;
+
     BooleanProperty logfileChanged = new SimpleBooleanProperty(false);
 
     BooleanProperty accordionProp = ProgConfig.CONFIG_DIALOG_ACCORDION.getBooleanProperty();
@@ -374,7 +380,6 @@ public class ConfigPaneController extends AnchorPane {
         result.add(tpConfig);
 
         //einmal am Tag Update suchen
-        final PToggleSwitch tglSearch = new PToggleSwitch("einmal am Tag nach einer neuen Programmversion suchen");
         tglSearch.selectedProperty().bindBidirectional(propUpdateSearch);
         final Button btnHelp = PButton.helpButton(stage, "Programmupdate suchen",
                 "Beim Programmstart wird geprüft, ob es eine neue Version des Programms gibt. " +
@@ -382,9 +387,8 @@ public class ConfigPaneController extends AnchorPane {
                         + P2LibConst.LINE_SEPARATOR +
                         "Das Programm wird aber nicht ungefragt ersetzt.");
 
-        final PToggleSwitch tglSearchBeta = new PToggleSwitch("auch nach neuen Vorabversionen suchen");
         tglSearchBeta.selectedProperty().bindBidirectional(propUpdateBetaSearch);
-        final Button btnHelpBeta = PButton.helpButton(stage, "Vorabversionen suchen",
+        btnHelpBeta = PButton.helpButton(stage, "Vorabversionen suchen",
                 "Beim Programmstart wird geprüft, ob es eine neue Vorabversion des Programms gibt. " +
                         P2LibConst.LINE_SEPARATORx2 +
                         "Das sind \"Zwischenschritte\" auf dem Weg zur nächsten Version. Hier ist die " +
@@ -396,26 +400,14 @@ public class ConfigPaneController extends AnchorPane {
                         "Das Programm wird aber nicht ungefragt ersetzt.");
 
         //jetzt suchen
-        Button btnNow = new Button("_Jetzt suchen");
         btnNow.setOnAction(event -> new SearchProgramUpdate(stage)
                 .checkVersion(true, true /* anzeigen */, false));
 
-        Button btnNowBeta = new Button("_Jetzt suchen");
         btnNowBeta.setOnAction(event -> new SearchProgramUpdate(stage)
                 .checkBetaVersion(true, true /* anzeigen */));
 
-        tglSearch.selectedProperty().addListener((ob, ol, ne) -> {
-            if (tglSearch.isSelected()) {
-                tglSearchBeta.setDisable(false);
-                btnNowBeta.setDisable(false);
-                btnHelpBeta.setDisable(false);
-            } else {
-                tglSearchBeta.setDisable(true);
-                tglSearchBeta.setSelected(false);
-                btnNowBeta.setDisable(true);
-                btnHelpBeta.setDisable(true);
-            }
-        });
+        checkBeta();
+        tglSearch.selectedProperty().addListener((ob, ol, ne) -> checkBeta());
 
         PHyperlink hyperlink = new PHyperlink(ProgConst.ADRESSE_WEBSITE,
                 ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
@@ -446,4 +438,16 @@ public class ConfigPaneController extends AnchorPane {
                 PColumnConstraints.getRcPrefSize(), PColumnConstraints.getRcVgrow(), PColumnConstraints.getRcPrefSize());
     }
 
+    private void checkBeta() {
+        if (tglSearch.isSelected()) {
+            tglSearchBeta.setDisable(false);
+            btnNowBeta.setDisable(false);
+            btnHelpBeta.setDisable(false);
+        } else {
+            tglSearchBeta.setDisable(true);
+            tglSearchBeta.setSelected(false);
+            btnNowBeta.setDisable(true);
+            btnHelpBeta.setDisable(true);
+        }
+    }
 }

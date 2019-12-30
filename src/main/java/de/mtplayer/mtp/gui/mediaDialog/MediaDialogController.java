@@ -22,19 +22,16 @@ import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.tools.storedFilter.Filter;
-import de.p2tools.p2Lib.dialog.PDialog;
+import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.tools.log.PLog;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.stage.Stage;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
-public class MediaDialogController extends PDialog {
-
-    private final AnchorPane rootPane = new AnchorPane();
-    private final VBox vBoxDialog = new VBox();
-    private final VBox vBoxCont = new VBox();
+public class MediaDialogController extends PDialogExtra {
 
     private final TextField txtSearch = new TextField();
     private final Button btnOk = new Button("_Ok");
@@ -52,14 +49,13 @@ public class MediaDialogController extends PDialog {
     private final String searchStr;
 
     private final ProgData progData = ProgData.getInstance();
-    private Stage stage;
-
 
     public MediaDialogController(String searchStr) {
-        super(ProgConfig.MEDIA_DIALOG_SIZE.getStringProperty(), "Mediensammlung", true);
+        super(ProgConfig.MEDIA_DIALOG_SIZE.getStringProperty(), "Mediensammlung",
+                true, false, DECO.BORDER);
+
         this.searchStr = searchStr.trim();
         txtSearch.setText(this.searchStr);
-
         listenerDbStart = new Listener(Listener.EREIGNIS_MEDIA_DB_START, MediaDialogController.class.getSimpleName()) {
             @Override
             public void pingFx() {
@@ -74,15 +70,14 @@ public class MediaDialogController extends PDialog {
                 txtSearch.setDisable(false);
             }
         };
-        init(rootPane, true);
+
+        init(true);
     }
 
     @Override
     public void make() {
-        stage = getStage();
-
-        paneMedia = new PaneMedia(stage);
-        paneAbo = new PaneAbo(stage);
+        paneMedia = new PaneMedia(getStage());
+        paneAbo = new PaneAbo(getStage());
         paneMedia.make();
         paneAbo.make();
 
@@ -110,7 +105,6 @@ public class MediaDialogController extends PDialog {
         btnReset.setGraphic(new ProgIcons().ICON_BUTTON_RESET);
         btnReset.setTooltip(new Tooltip("Suchtext wieder herstellen"));
         btnReset.setOnAction(a -> txtSearch.setText(searchStr));
-//        btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnOk.setOnAction(a -> close());
 
         rbMedien.setSelected(true);
@@ -139,30 +133,17 @@ public class MediaDialogController extends PDialog {
 
     private void initPanel() {
         try {
-            vBoxDialog.setPadding(new Insets(10));
-            vBoxDialog.setSpacing(20);
-            rootPane.getChildren().addAll(vBoxDialog);
-
-            AnchorPane.setLeftAnchor(vBoxDialog, 0.0);
-            AnchorPane.setBottomAnchor(vBoxDialog, 0.0);
-            AnchorPane.setRightAnchor(vBoxDialog, 0.0);
-            AnchorPane.setTopAnchor(vBoxDialog, 0.0);
-
-            VBox.setVgrow(vBoxCont, Priority.ALWAYS);
-            vBoxCont.getStyleClass().add("dialog-border");
-            vBoxCont.setSpacing(10);
-
             HBox hBox = new HBox(10);
             HBox.setHgrow(txtSearch, Priority.ALWAYS);
             hBox.getChildren().addAll(txtSearch, btnReset);
-            vBoxCont.getChildren().add(hBox);
+            getvBoxCont().getChildren().add(hBox);
 
             final ToggleGroup group = new ToggleGroup();
             rbMedien.setToggleGroup(group);
             rbAbos.setToggleGroup(group);
             hBox = new HBox(20);
             hBox.getChildren().addAll(rbMedien, rbAbos);
-            vBoxCont.getChildren().add(hBox);
+            getvBoxCont().getChildren().add(hBox);
 
             // Stackpane
             paneMedia.setFitToHeight(true);
@@ -172,21 +153,14 @@ public class MediaDialogController extends PDialog {
 
             stackPane.getChildren().addAll(paneMedia, paneAbo);
             VBox.setVgrow(stackPane, Priority.ALWAYS);
-            vBoxCont.getChildren().add(stackPane);
+            getvBoxCont().getChildren().add(stackPane);
             paneMedia.toFront();
 
-            Button btnHelp = PButton.helpButton(stage,
+            Button btnHelp = PButton.helpButton(getStage(),
                     "Suche in der Mediensammlung", HelpText.SEARCH_MEDIA_DIALOG);
 
-//            hBox = new HBox(10);
-//            hBox.getChildren().addAll(btnHelp, PGuiTools.getHBoxGrower(), btnOk);
-
-            ButtonBar buttonBar = new ButtonBar();
-            ButtonBar.setButtonData(btnOk, ButtonBar.ButtonData.OK_DONE);
-            ButtonBar.setButtonData(btnHelp, ButtonBar.ButtonData.HELP);
-            buttonBar.getButtons().addAll(btnOk, btnHelp);
-
-            vBoxDialog.getChildren().addAll(vBoxCont, buttonBar);
+            addOkButton(btnOk);
+            addHlpButton(btnHelp);
         } catch (final Exception ex) {
             PLog.errorLog(951203030, ex);
         }

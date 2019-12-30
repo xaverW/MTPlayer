@@ -24,10 +24,9 @@ import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
-import de.p2tools.p2Lib.dialog.PDialog;
+import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
 import javafx.application.Platform;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
@@ -36,40 +35,32 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
-public class ResetDialogController extends PDialog {
+public class ResetDialogController extends PDialogExtra {
 
     final ProgData progData;
     final StackPane stackPane;
-    final VBox vbox;
 
     public ResetDialogController(ProgData progData) {
-        super(null,
-                "Programm zurücksetzen", true);
+        super(progData.primaryStage, null, "Programm zurücksetzen",
+                true, false, DECO.BORDER);
 
         this.progData = progData;
-
         stackPane = new StackPane();
-        vbox = new VBox();
 
-        init(vbox, true);
+        init(true);
     }
 
 
     @Override
     public void make() {
-        vbox.setPadding(new Insets(10));
-        vbox.setSpacing(30);
-
         GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
         gridPane.setVgap(25);
-
 
         Label headerLabel = new Label("Einstellungen können komplett oder" + P2LibConst.LINE_SEPARATOR +
                 "nur die Sets zum Abspielen/Speichern" + P2LibConst.LINE_SEPARATOR +
                 "zurückgesetzt werden!");
         headerLabel.setStyle("-fx-font-size: 1.5em;");
-
 
         // Set zurücksetzen
         BigButton cancelButton = new BigButton(new ProgIcons().ICON_BUTTON_QUIT,
@@ -131,10 +122,8 @@ public class ResetDialogController extends PDialog {
         ccTxt.setHgrow(Priority.ALWAYS);
 
         gridPane.getColumnConstraints().addAll(new ColumnConstraints(), ccTxt);
-        gridPane.getStyleClass().add("dialog-only-border");
 
-        vbox.getChildren().addAll(gridPane);
+        getvBoxCont().getChildren().addAll(gridPane);
     }
-
 
 }

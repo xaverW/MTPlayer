@@ -27,7 +27,7 @@ import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.tools.filmListFilter.FilmFilter;
 import de.p2tools.p2Lib.alert.PAlert;
-import de.p2tools.p2Lib.dialog.PDialogExtra;
+import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pRange.PRangeBox;
@@ -109,7 +109,7 @@ public class AboEditDialogController extends PDialogExtra {
     }
 
     private void initDialog() {
-        getVboxCont().getChildren().add(gridPane);
+        getvBoxCont().getChildren().add(gridPane);
         addButtons(btnOk, btnCancel);
 
         SetData setData = aboCopy.getSetData(progData);

@@ -20,62 +20,45 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.configDialog.setData.SetPaneController;
 import de.mtplayer.mtp.gui.tools.Listener;
-import de.p2tools.p2Lib.dialog.PDialog;
+import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 
-public class ConfigDialogController extends PDialog {
+public class ConfigDialogController extends PDialogExtra {
 
     private TabPane tabPane = new TabPane();
     private Button btnOk = new Button("_Ok");
     private String geo = ProgConfig.SYSTEM_GEO_HOME_PLACE.get();
     private BooleanProperty blackChanged = new SimpleBooleanProperty(false);
-    private Stage stage;
 
     IntegerProperty propSelectedTab = ProgConfig.SYSTEM_CONFIG_DIALOG_TAB;
-
     private final ProgData progData;
 
     public ConfigDialogController() {
-        super(ProgConfig.CONFIG_DIALOG_SIZE.getStringProperty(), "Einstellungen", true);
-
-        VBox vBox = new VBox();
-        vBox.setPadding(new Insets(10));
-        vBox.setSpacing(10);
-
-        vBox.getChildren().add(tabPane);
-        VBox.setVgrow(tabPane, Priority.ALWAYS);
-
-//        HBox hBox = new HBox();
-//        hBox.setAlignment(Pos.CENTER_RIGHT);
-//        hBox.getChildren().add(btnOk);
-//        vBox.getChildren().add(hBox);
-
-        ButtonBar buttonBar = new ButtonBar();
-        ButtonBar.setButtonData(btnOk, ButtonBar.ButtonData.OK_DONE);
-        buttonBar.getButtons().add(btnOk);
-        vBox.getChildren().add(buttonBar);
+        super(ProgData.getInstance().primaryStage, ProgConfig.CONFIG_DIALOG_SIZE.getStringProperty(), "Einstellungen",
+                true, false, DECO.NONE);
 
         this.progData = ProgData.getInstance();
-        init(vBox, true);
+        init(true);
     }
 
     @Override
     public void make() {
-        stage = getStage();
-//        btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
+        VBox.setVgrow(tabPane, Priority.ALWAYS);
+        getvBoxCont().getChildren().add(tabPane);
+        getvBoxCont().setPadding(new Insets(0));
+
+        addOkButton(btnOk);
         btnOk.setOnAction(a -> close());
 
         ProgConfig.SYSTEM_DARK_THEME.getStringProperty().addListener((u, o, n) -> updateCss());
@@ -101,40 +84,41 @@ public class ConfigDialogController extends PDialog {
 
     private void initPanel() {
         try {
-            AnchorPane configPane = new ConfigPaneController(stage);
+            AnchorPane configPane = new ConfigPaneController(getStage());
             Tab tab = new Tab("Allgemein");
             tab.setClosable(false);
             tab.setContent(configPane);
             tabPane.getTabs().add(tab);
 
-            AnchorPane filmPane = new FilmPaneController(stage);
+            AnchorPane filmPane = new FilmPaneController(getStage());
             tab = new Tab("Filmliste laden");
             tab.setClosable(false);
             tab.setContent(filmPane);
             tabPane.getTabs().add(tab);
 
-            AnchorPane blackPane = new BlackListPaneController(stage, blackChanged);
+            AnchorPane blackPane = new BlackListPaneController(getStage(), blackChanged);
             tab = new Tab("Blacklist");
             tab.setClosable(false);
             tab.setContent(blackPane);
             tabPane.getTabs().add(tab);
 
-            AnchorPane downloadPane = new DownloadPaneController(stage);
+            AnchorPane downloadPane = new DownloadPaneController(getStage());
             tab = new Tab("Download");
             tab.setClosable(false);
             tab.setContent(downloadPane);
             tabPane.getTabs().add(tab);
 
-            AnchorPane setPane = new SetPaneController(stage);
+            AnchorPane setPane = new SetPaneController(getStage());
             tab = new Tab("Aufzeichnen/Abspielen");
             tab.setClosable(false);
             tab.setContent(setPane);
             tabPane.getTabs().add(tab);
 
             tabPane.getSelectionModel().select(propSelectedTab.get());
-            tabPane.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) ->
-                    // readOnlyBinding!!
-                    propSelectedTab.setValue(newValue));
+            tabPane.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
+                // readOnlyBinding!!
+                propSelectedTab.setValue(newValue);
+            });
 
         } catch (final Exception ex) {
             PLog.errorLog(784459510, ex);

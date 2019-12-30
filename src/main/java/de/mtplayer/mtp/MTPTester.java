@@ -23,7 +23,7 @@ import de.mtplayer.mtp.controller.data.film.Filmlist;
 import de.mtplayer.mtp.controller.starter.MTNotification;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilterFactory;
-import de.p2tools.p2Lib.dialog.ProgInfoDialog;
+import de.p2tools.p2Lib.dialogs.ProgInfoDialog;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
@@ -80,7 +80,7 @@ public class MTPTester {
 
             StackPane stackPane = new StackPane();
             stackPane.getChildren().addAll(gridPane, maskerPane);
-            progInfoDialog.getVboxCont().getChildren().addAll(stackPane);
+            progInfoDialog.getvBoxCont().getChildren().addAll(stackPane);
 
 
             // Create the ButtonBar instance
@@ -90,7 +90,7 @@ public class MTPTester {
             Button cButton = new Button("Abbrechen");
             ButtonBar.setButtonData(cButton, ButtonBar.ButtonData.CANCEL_CLOSE);
             buttonBar.getButtons().addAll(okButton, cButton);
-            progInfoDialog.getVboxCont().getChildren().add(buttonBar);
+            progInfoDialog.getvBoxCont().getChildren().add(buttonBar);
 
 
             Text text = new Text("Debugtools");

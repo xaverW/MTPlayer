@@ -20,7 +20,7 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.download.Download;
-import de.p2tools.p2Lib.dialog.PDialogExtra;
+import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -70,7 +70,7 @@ public class DownloadErrorDialogController extends PDialogExtra {
         this.message = message;
 
         hBoxTitle = getHBoxTitle();
-        vBoxCont = getVboxCont();
+        vBoxCont = getvBoxCont();
 //        hBoxOk = getHboxOk();
 
         if (ProgData.automode) {
@@ -149,7 +149,7 @@ public class DownloadErrorDialogController extends PDialogExtra {
         vBoxCont.getChildren().add(hBox);
 
 //        hBoxOk.getChildren().addAll(lblTime, btnOk);
-        addButtons(btnOk);
+        addOkButton(btnOk);
         getHboxLeft().getChildren().add(lblTime);
     }
 

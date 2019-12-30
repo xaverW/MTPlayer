@@ -17,7 +17,7 @@
 package de.mtplayer.mtp.gui.dialog;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
-import de.p2tools.p2Lib.dialog.PDialogExtra;
+import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -47,7 +47,7 @@ public class AutomodeContinueDialogController extends PDialogExtra {
     public AutomodeContinueDialogController() {
         super(null, "Automodus", true);
 
-        vBoxCont = getVboxCont();
+        vBoxCont = getvBoxCont();
 //        hBoxOk = getHboxOk();
 
         btnCancel = new Button("_Programm nicht beenden");

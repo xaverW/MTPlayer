@@ -21,32 +21,26 @@ import de.mtplayer.mLib.tools.BigButton;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.p2tools.p2Lib.P2LibConst;
-import de.p2tools.p2Lib.dialog.PDialog;
+import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 
-public class NewSetDialogController extends PDialog {
+public class NewSetDialogController extends PDialogExtra {
 
     final ProgData progData;
-    final StackPane stackPane;
-    final VBox vbox;
 
     boolean addNewSet = false;
     boolean replaceSet = false;
     boolean askAgain = true;
 
     public NewSetDialogController(ProgData progData) {
-        super(null,
-                "Das Standardset wurde aktualisiert", true);
+        super(progData.primaryStage, null, "Das Standardset wurde aktualisiert",
+                true, false, DECO.NONE);
 
         this.progData = progData;
-
-        stackPane = new StackPane();
-        vbox = new VBox();
-
-        init(vbox, true);
+        init(true);
     }
 
     public boolean getAddNewSet() {
@@ -63,9 +57,6 @@ public class NewSetDialogController extends PDialog {
 
     @Override
     public void make() {
-        vbox.setPadding(new Insets(10));
-        vbox.setSpacing(30);
-
         GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
         gridPane.setVgap(25);
@@ -124,8 +115,7 @@ public class NewSetDialogController extends PDialog {
         gridPane.getColumnConstraints().addAll(new ColumnConstraints(), ccTxt);
         gridPane.getStyleClass().add("dialog-only-border");
 
-        vbox.getChildren().addAll(gridPane);
+        getvBoxCont().getChildren().addAll(gridPane);
     }
-
 
 }

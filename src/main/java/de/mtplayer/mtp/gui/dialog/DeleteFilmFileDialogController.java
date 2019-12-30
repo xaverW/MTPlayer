@@ -18,7 +18,7 @@ package de.mtplayer.mtp.gui.dialog;
 
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
-import de.p2tools.p2Lib.dialog.PDialogExtra;
+import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.geometry.Insets;
@@ -62,7 +62,7 @@ public class DeleteFilmFileDialogController extends PDialogExtra {
         this.subtitleFile = subtitleFile;
         this.subtitleFileSrt = subtitleFileSrt;
 
-        vBoxCont = getVboxCont();
+        vBoxCont = getvBoxCont();
         init(getVBoxCompleteDialog(), true);
     }
 

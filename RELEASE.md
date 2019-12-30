@@ -2,7 +2,7 @@
 
 **Release 9**
 
-* Anordnung der Button nach BS
+* Anordnung der Buttons nach BS
 * beim Schließen des Config-Dialogs Filmliste nur neu laden, wenn Blacklist geändert wurde
 * das Anlegen von Verzeichnissen bei Abos wurde deutlich erweitert
 * Möglichkeit nach Beta-Versionen zu suchen

@@ -63,7 +63,7 @@
 }
 
 /* Rahmen für Dialoge */
-.dialog-title {
+/*.dialog-title {
     -fx-background-insets: 10;
     -fx-border-color: lightgray;
     -fx-border-insets: 0;
@@ -73,14 +73,8 @@
     -fx-alignment: center ;
     -fx-font-weight: bold;
     -fx-font-size: 1.3em;
-}
-.dialog-border {
-    -fx-background-insets: 10, 40;
-    -fx-border-color: lightgray transparent lightgray transparent, -p2-color-blue1;
-    -fx-border-insets: 0, 15;
-    -fx-border-width: 20 5, 10 3;
-    -fx-padding: 20px;
-}
+}*/
+
 
 .dialog-only-border {
     -fx-background-insets: 0, 40;
@@ -89,13 +83,13 @@
     -fx-border-width: 20 5, 10 3;
     -fx-padding: 20px;
 }
-.dialog-filminfo {
+/*.dialog-filminfo {
      -fx-background-insets: 10, 40;
      -fx-border-color: lightgray transparent lightgray transparent, -p2-color-blue1;
      -fx-border-insets: 0, 15 5;
      -fx-border-width: 20 5, 10 3;
      -fx-padding: 0px;
-}
+}*/
 
 
 

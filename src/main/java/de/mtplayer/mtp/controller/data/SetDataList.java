@@ -21,7 +21,7 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.download.DownloadTools;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
 import de.p2tools.p2Lib.P2LibConst;
-import de.p2tools.p2Lib.dialog.PDialogFileChosser;
+import de.p2tools.p2Lib.dialogs.PDialogFileChosser;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;

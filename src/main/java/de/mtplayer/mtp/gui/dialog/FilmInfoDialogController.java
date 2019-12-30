@@ -17,10 +17,11 @@
 package de.mtplayer.mtp.gui.dialog;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.FilmXml;
-import de.p2tools.p2Lib.dialog.PDialog;
+import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
@@ -36,11 +37,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-public class FilmInfoDialogController extends PDialog {
+public class FilmInfoDialogController extends PDialogExtra {
 
-    private final int FREE = 190;
+    private final int FREE = 240;
 
-    private final ScrollPane scrollPane = new ScrollPane();
+    //    private final ScrollPane scrollPane = new ScrollPane();
     private final Text[] textTitle = new Text[FilmXml.MAX_ELEM];
     private final Label[] lblCont = new Label[FilmXml.MAX_ELEM];
     private final TextArea textArea = new TextArea();
@@ -48,8 +49,8 @@ public class FilmInfoDialogController extends PDialog {
     private final GridPane gridPane = new GridPane();
     private final Button btnOk = new Button("_Ok");
 
-    private final VBox vBoxDialog = new VBox();
-    private final VBox vBoxCont = new VBox();
+//    private final VBox vBoxDialog = new VBox();
+//    private final VBox vBoxCont = new VBox();
 
     private final ImageView ivHD = new ImageView();
     private final ImageView ivUT = new ImageView();
@@ -65,10 +66,10 @@ public class FilmInfoDialogController extends PDialog {
     BooleanProperty urlProperty = ProgConfig.FILM_INFO_DIALOG_SHOW_URL.getBooleanProperty();
 
     public FilmInfoDialogController() {
-        super(null, ProgConfig.SYSTEM_SIZE_DIALOG_FILMINFO.getStringProperty(),
-                "Filminfos", false);
+        super(ProgData.getInstance().primaryStage, ProgConfig.SYSTEM_SIZE_DIALOG_FILMINFO.getStringProperty(),
+                "Filminfos", false, false, DECO.BORDER);
 
-        init(vBoxDialog);
+        init(false);
     }
 
 
@@ -137,32 +138,34 @@ public class FilmInfoDialogController extends PDialog {
     }
 
     private void initDialog() {
-        final HBox hBoxUrl = new HBox();
-        HBox.setHgrow(hBoxUrl, Priority.ALWAYS);
-        hBoxUrl.getChildren().add(tglUrl);
+//        final HBox hBoxUrl = new HBox();
+//        HBox.setHgrow(hBoxUrl, Priority.ALWAYS);
+//        hBoxUrl.getChildren().add(tglUrl);
 
-        final HBox hBoxOk = new HBox();
-        ButtonBar buttonBar = new ButtonBar();
-        ButtonBar.setButtonData(btnOk, ButtonBar.ButtonData.OK_DONE);
-        buttonBar.getButtons().add(btnOk);
-        hBoxOk.getChildren().addAll(hBoxUrl, buttonBar);
+//        final HBox hBoxOk = new HBox();
+//        ButtonBar buttonBar = new ButtonBar();
+//        ButtonBar.setButtonData(btnOk, ButtonBar.ButtonData.OK_DONE);
+//        buttonBar.getButtons().add(btnOk);
+//        hBoxOk.getChildren().addAll(hBoxUrl, buttonBar);
+
+        getHboxLeft().getChildren().add(tglUrl);
+        addOkButton(btnOk);
+
+//        vBoxDialog.setSpacing(10);
+//        vBoxDialog.setPadding(new Insets(10));
+//
+//        scrollPane.setFitToHeight(true);
+//        scrollPane.setFitToWidth(true);
+//        scrollPane.setContent(vBoxCont);
 
 
-        vBoxDialog.setSpacing(10);
-        vBoxDialog.setPadding(new Insets(10));
-
-        scrollPane.setFitToHeight(true);
-        scrollPane.setFitToWidth(true);
-        scrollPane.setContent(vBoxCont);
-
-
-        VBox vBox = new VBox();
-        VBox.setVgrow(vBox, Priority.ALWAYS);
-        vBox.getStyleClass().add("dialog-filminfo");
-        VBox.setVgrow(scrollPane, Priority.ALWAYS);
-        vBox.getChildren().add(scrollPane);
-
-        vBoxDialog.getChildren().addAll(vBox, hBoxOk);
+//        VBox vBox = new VBox();
+//        VBox.setVgrow(vBox, Priority.ALWAYS);
+//        vBox.getStyleClass().add("dialog-filminfo");
+//        VBox.setVgrow(scrollPane, Priority.ALWAYS);
+//        vBox.getChildren().add(scrollPane);
+//
+//        vBoxDialog.getChildren().addAll(vBox, hBoxOk);
     }
 
     @Override
@@ -175,7 +178,7 @@ public class FilmInfoDialogController extends PDialog {
 
 //        btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnOk.setOnAction(a -> close());
-        vBoxCont.getChildren().add(gridPane);
+        getvBoxCont().getChildren().add(gridPane);
         VBox.setVgrow(gridPane, Priority.SOMETIMES);
 
         gridPane.setHgap(5);
@@ -194,7 +197,7 @@ public class FilmInfoDialogController extends PDialog {
             textTitle[i].setFont(Font.font(null, FontWeight.BOLD, -1));
             lblCont[i] = new Label("");
             lblCont[i].setWrapText(true);
-            lblCont[i].maxWidthProperty().bind(vBoxDialog.widthProperty().subtract(FREE));
+            lblCont[i].maxWidthProperty().bind(getVBoxCompleteDialog().widthProperty().subtract(FREE)); //_______
 
             switch (i) {
                 case FilmXml.FILM_DATE_LONG:
@@ -243,7 +246,7 @@ public class FilmInfoDialogController extends PDialog {
                     textArea.setPrefRowCount(6);
                     textArea.setWrapText(true);
                     textArea.setEditable(false);
-                    textArea.maxWidthProperty().bind(vBoxDialog.widthProperty().subtract(FREE));
+                    textArea.maxWidthProperty().bind(getVBoxCompleteDialog().widthProperty().subtract(FREE)); // ---------------
 
                     gridPane.add(textTitle[i], 0, row);
                     gridPane.add(textArea, 1, row++);
@@ -269,10 +272,10 @@ public class FilmInfoDialogController extends PDialog {
 
     private void setUrl() {
         pHyperlinkUrl.setWrapText(true);
-        pHyperlinkUrl.maxWidthProperty().bind(vBoxDialog.widthProperty().subtract(FREE));
+        pHyperlinkUrl.maxWidthProperty().bind(getVBoxCompleteDialog().widthProperty().subtract(FREE)); //------------
 
         pHyperlinkWebsite.setWrapText(true);
-        pHyperlinkWebsite.maxWidthProperty().bind(vBoxDialog.widthProperty().subtract(FREE));
+        pHyperlinkWebsite.maxWidthProperty().bind(getVBoxCompleteDialog().widthProperty().subtract(FREE)); //----------
 
         textTitle[FilmXml.FILM_URL].setVisible(urlProperty.get());
         textTitle[FilmXml.FILM_URL].setManaged(urlProperty.get());

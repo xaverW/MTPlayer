@@ -18,11 +18,9 @@ package de.mtplayer.mtp.gui.dialog;
 
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.p2tools.p2Lib.P2LibConst;
-import de.p2tools.p2Lib.dialog.PDialog;
+import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import javafx.application.Platform;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -30,11 +28,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-public class NoSetDialogController extends PDialog {
+public class NoSetDialogController extends PDialogExtra {
 
     final ProgData progData;
     final TEXT text;
-    VBox vbox;
     Button btnCancel = new Button("_Abbrechen");
     Button btnImport = new Button("_Standarsets wieder herstellen");
 
@@ -46,21 +43,14 @@ public class NoSetDialogController extends PDialog {
 
         this.progData = progData;
         this.text = text;
-
-        vbox = new VBox();
-        vbox.setPadding(new Insets(10));
-        vbox.setSpacing(30);
-
-        init(vbox, true);
+        init(true);
     }
 
 
     @Override
     public void make() {
-//        btnCancel.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnCancel.setOnAction(a -> close());
 
-//        btnImport.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnImport.setOnAction(event -> {
             importSet();
             close();
@@ -85,10 +75,6 @@ public class NoSetDialogController extends PDialog {
                 "Oder die Einstellungen zurücksetzen und" + P2LibConst.LINE_SEPARATOR +
                 "die Standardsets wieder herstellen.";
 
-        VBox vBoxCont = new VBox();
-        vBoxCont.setSpacing(20);
-        vBoxCont.getStyleClass().add("dialog-only-border");
-        VBox.setVgrow(vBoxCont, Priority.ALWAYS);
 
         final int prefRowCount = 14;
         TextArea textArea = new TextArea();
@@ -96,7 +82,8 @@ public class NoSetDialogController extends PDialog {
         textArea.setMaxHeight(Double.MAX_VALUE);
         textArea.setPrefRowCount(prefRowCount);
         VBox.setVgrow(textArea, Priority.ALWAYS);
-        vBoxCont.getChildren().addAll(textHeaderSave, textArea);
+        getvBoxCont().getChildren().addAll(textHeaderSave, textArea);
+        getvBoxCont().setSpacing(20);
 
 
         switch (text) {
@@ -119,19 +106,8 @@ public class NoSetDialogController extends PDialog {
                                 txtAdd);
         }
 
-
-//        HBox hBox = new HBox();
-//        hBox.setSpacing(10);
-//        hBox.setAlignment(Pos.BOTTOM_RIGHT);
-//        hBox.getChildren().addAll(btnImport, btnCancel);
-
-
-        ButtonBar buttonBar = new ButtonBar();
-        ButtonBar.setButtonData(btnCancel, ButtonBar.ButtonData.CANCEL_CLOSE);
-        ButtonBar.setButtonData(btnImport, ButtonBar.ButtonData.OK_DONE);
-        buttonBar.getButtons().addAll(btnImport, btnCancel);
-
-        vbox.getChildren().addAll(vBoxCont, buttonBar);
+        addOkButton(btnImport);
+        addCancelButton(btnCancel);
     }
 
     private void importSet() {

@@ -18,74 +18,45 @@ package de.mtplayer.mtp.gui;
 
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.tools.HelpText;
-import de.p2tools.p2Lib.dialog.PDialog;
+import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 
-public class FilmFilterEditDialog extends PDialog {
+public class FilmFilterEditDialog extends PDialogExtra {
 
     final ProgData progData;
-    final VBox vbox;
 
     public FilmFilterEditDialog(ProgData progData) {
-        super(null, "Filter ein- und ausschalten", true);
+        super(progData.primaryStage, null, "Filter ein- und ausschalten", true, true, DECO.BORDER);
 
         this.progData = progData;
-        vbox = new VBox();
-        vbox.setSpacing(20);
-
-        init(vbox, true);
+        init(true);
     }
 
     @Override
     public void make() {
-        vbox.setPadding(new Insets(10));
-
-        VBox vBoxCont = new VBox();
-        vBoxCont.setSpacing(15);
-        VBox.setVgrow(vBoxCont, Priority.ALWAYS);
-        vBoxCont.getStyleClass().add("dialog-only-border");
-
-        init(vBoxCont);
+        init(getvBoxCont());
 
         final Button btnHelp = PButton.helpButton(getStage(), "Filter ein- und ausschalten",
                 HelpText.GUI_FILMS_EDIT_FILTER);
 
-//        HBox hBox = new HBox();
-//        hBox.setSpacing(10);
-//
-//        hBox.setAlignment(Pos.BOTTOM_RIGHT);
         Button btnOk = new Button("_Ok");
-//        btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnOk.setOnAction(event -> close());
-//        hBox.getChildren().addAll(btnHelpAbo, btnOk);
-//        vbox.getChildren().addAll(vBoxCont, hBox);
 
-        ButtonBar buttonBar = new ButtonBar();
-        ButtonBar.setButtonData(btnOk, ButtonBar.ButtonData.OK_DONE);
-        ButtonBar.setButtonData(btnHelp, ButtonBar.ButtonData.HELP);
-        buttonBar.getButtons().addAll(btnOk, btnHelp);
-        vbox.getChildren().addAll(vBoxCont, buttonBar);
-
+        addOkButton(btnOk);
+        addHlpButton(btnHelp);
     }
 
     public void init(VBox vbox) {
+        vbox.setSpacing(15);
+
         PToggleSwitch tglChannel = new PToggleSwitch("Sender");
         tglChannel.setMaxWidth(Double.MAX_VALUE);
         tglChannel.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().channelVisProperty());
         vbox.getChildren().add(tglChannel);
-
-//        PToggleSwitch tglChannelExact = new PToggleSwitch("  -> exakt");
-//        tglChannelExact.setMaxWidth(Double.MAX_VALUE);
-//        tglChannelExact.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().channelExactProperty());
-//        v.getChildren().add(tglChannelExact);
-//        vbox.getChildren().add(v);
 
         VBox v = new VBox();
         PToggleSwitch tglTheme = new PToggleSwitch("Thema");
