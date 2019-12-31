@@ -113,6 +113,7 @@ public class MTPlayer extends Application {
 
     private void initRootLayout() {
         try {
+            addThemeCss(); // damit es für die 2 schon mal stimmt
             progData.filmInfoDialogController = new FilmInfoDialogController();
             progData.mtPlayerController = new MTPlayerController();
 
@@ -120,11 +121,11 @@ public class MTPlayer extends Application {
                     PGuiSize.getWidth(ProgConfig.SYSTEM_SIZE_GUI.getStringProperty()),
                     PGuiSize.getHeight(ProgConfig.SYSTEM_SIZE_GUI.getStringProperty()));
 
-//            String css = this.getClass().getResource(ProgConst.CSS_FILE).toExternalForm();
-//            scene.getStylesheets().add(ProgConst.CSS_FILE);
             P2LibInit.addP2LibCssToScene(scene);
-            ProgConfig.SYSTEM_DARK_THEME.getStringProperty().addListener((u, o, n) ->
-                    setTheme());
+            ProgConfig.SYSTEM_DARK_THEME.getStringProperty().addListener((u, o, n) -> {
+                setTheme();
+                ProgConfig.SYSTEM_THEME_CHANGED.setValue(!ProgConfig.SYSTEM_THEME_CHANGED.getBool());
+            });
             setTheme();
 
             primaryStage.setScene(scene);
@@ -143,16 +144,16 @@ public class MTPlayer extends Application {
         }
     }
 
-    private void setTheme() {
+    private void addThemeCss() {
         if (ProgConfig.SYSTEM_DARK_THEME.getBool()) {
-//            String css = this.getClass().getResource(ProgConst.CSS_FILE_DARK_THEME).toExternalForm();
-//            scene.getStylesheets().add(ProgConst.CSS_FILE_DARK_THEME);
             P2LibInit.addCssFile(ProgConst.CSS_FILE_DARK_THEME);
         } else {
-//            String css = this.getClass().getResource(ProgConst.CSS_FILE_DARK_THEME).toExternalForm();
-//            scene.getStylesheets().removeAll(ProgConst.CSS_FILE_DARK_THEME);
             P2LibInit.removeCssFile(ProgConst.CSS_FILE_DARK_THEME);
         }
+    }
+
+    private void setTheme() {
+        addThemeCss();
         P2LibInit.addP2LibCssToScene(scene);
     }
 

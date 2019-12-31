@@ -41,16 +41,12 @@ public class FilmInfoDialogController extends PDialogExtra {
 
     private final int FREE = 240;
 
-    //    private final ScrollPane scrollPane = new ScrollPane();
     private final Text[] textTitle = new Text[FilmXml.MAX_ELEM];
     private final Label[] lblCont = new Label[FilmXml.MAX_ELEM];
     private final TextArea textArea = new TextArea();
 
     private final GridPane gridPane = new GridPane();
     private final Button btnOk = new Button("_Ok");
-
-//    private final VBox vBoxDialog = new VBox();
-//    private final VBox vBoxCont = new VBox();
 
     private final ImageView ivHD = new ImageView();
     private final ImageView ivUT = new ImageView();
@@ -137,46 +133,16 @@ public class FilmInfoDialogController extends PDialogExtra {
         });
     }
 
-    private void initDialog() {
-//        final HBox hBoxUrl = new HBox();
-//        HBox.setHgrow(hBoxUrl, Priority.ALWAYS);
-//        hBoxUrl.getChildren().add(tglUrl);
-
-//        final HBox hBoxOk = new HBox();
-//        ButtonBar buttonBar = new ButtonBar();
-//        ButtonBar.setButtonData(btnOk, ButtonBar.ButtonData.OK_DONE);
-//        buttonBar.getButtons().add(btnOk);
-//        hBoxOk.getChildren().addAll(hBoxUrl, buttonBar);
-
-        getHboxLeft().getChildren().add(tglUrl);
-        addOkButton(btnOk);
-
-//        vBoxDialog.setSpacing(10);
-//        vBoxDialog.setPadding(new Insets(10));
-//
-//        scrollPane.setFitToHeight(true);
-//        scrollPane.setFitToWidth(true);
-//        scrollPane.setContent(vBoxCont);
-
-
-//        VBox vBox = new VBox();
-//        VBox.setVgrow(vBox, Priority.ALWAYS);
-//        vBox.getStyleClass().add("dialog-filminfo");
-//        VBox.setVgrow(scrollPane, Priority.ALWAYS);
-//        vBox.getChildren().add(scrollPane);
-//
-//        vBoxDialog.getChildren().addAll(vBox, hBoxOk);
-    }
-
     @Override
     public void make() {
-        initDialog();
+        ProgConfig.SYSTEM_THEME_CHANGED.getStringProperty().addListener((u, o, n) -> updateCss());
+        getHboxLeft().getChildren().add(tglUrl);
+        addOkButton(btnOk);
 
         tglUrl.setTooltip(new Tooltip("URL anzeigen"));
         tglUrl.selectedProperty().bindBidirectional(urlProperty);
         tglUrl.selectedProperty().addListener((observable, oldValue, newValue) -> setUrl());
 
-//        btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnOk.setOnAction(a -> close());
         getvBoxCont().getChildren().add(gridPane);
         VBox.setVgrow(gridPane, Priority.SOMETIMES);

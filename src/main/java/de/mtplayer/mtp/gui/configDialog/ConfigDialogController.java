@@ -61,7 +61,7 @@ public class ConfigDialogController extends PDialogExtra {
         addOkButton(btnOk);
         btnOk.setOnAction(a -> close());
 
-        ProgConfig.SYSTEM_DARK_THEME.getStringProperty().addListener((u, o, n) -> updateCss());
+        ProgConfig.SYSTEM_THEME_CHANGED.getStringProperty().addListener((u, o, n) -> updateCss());
         initPanel();
     }
 

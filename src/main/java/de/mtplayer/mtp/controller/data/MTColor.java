@@ -82,7 +82,7 @@ public class MTColor {
     private static ObservableList<MLC> colorList = FXCollections.observableArrayList();
 
     public MTColor() {
-        ProgConfig.SYSTEM_DARK_THEME.getStringProperty().addListener((u, o, n) -> {
+        ProgConfig.SYSTEM_THEME_CHANGED.getStringProperty().addListener((u, o, n) -> {
             setMLC();
         });
 

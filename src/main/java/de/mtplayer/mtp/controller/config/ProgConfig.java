@@ -98,6 +98,7 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs SYSTEM_SMALL_ROW_TABLE_FILM = addNewKey("system-small-row-table-film", Boolean.FALSE.toString());
     public static MLConfigs SYSTEM_SMALL_ROW_TABLE_DOWNLOAD = addNewKey("system-small-row-table-download", Boolean.FALSE.toString());
     public static MLConfigs SYSTEM_DARK_THEME = addNewKey("system-dark-theme", Boolean.FALSE.toString());
+    public static MLConfigs SYSTEM_THEME_CHANGED = addNewKey("system-theme-changed");
 
     // Fenstereinstellungen
     public static MLConfigs SYSTEM_SIZE_GUI = addNewKey("system-size-gui", "1000:900");
