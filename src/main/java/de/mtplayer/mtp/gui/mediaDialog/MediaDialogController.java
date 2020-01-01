@@ -51,8 +51,8 @@ public class MediaDialogController extends PDialogExtra {
     private final ProgData progData = ProgData.getInstance();
 
     public MediaDialogController(String searchStr) {
-        super(ProgConfig.MEDIA_DIALOG_SIZE.getStringProperty(), "Mediensammlung",
-                true, false, DECO.BORDER);
+        super(ProgData.getInstance().primaryStage, ProgConfig.MEDIA_DIALOG_SIZE.getStringProperty(), "Mediensammlung",
+                true, false);
 
         this.searchStr = searchStr.trim();
         txtSearch.setText(this.searchStr);

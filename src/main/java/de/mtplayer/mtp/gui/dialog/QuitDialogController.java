@@ -37,7 +37,7 @@ public class QuitDialogController extends PDialogExtra {
     private boolean startWithWaiting = false;
 
     public QuitDialogController(boolean startWithWaiting) {
-        super(null, "Programm beenden", true);
+        super(ProgData.getInstance().primaryStage, null, "Programm beenden", true, false);
         this.startWithWaiting = startWithWaiting;
         init(true);
     }

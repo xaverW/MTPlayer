@@ -42,7 +42,7 @@ public class ResetDialogController extends PDialogExtra {
 
     public ResetDialogController(ProgData progData) {
         super(progData.primaryStage, null, "Programm zurücksetzen",
-                true, false, DECO.BORDER);
+                true, false);
 
         this.progData = progData;
         stackPane = new StackPane();

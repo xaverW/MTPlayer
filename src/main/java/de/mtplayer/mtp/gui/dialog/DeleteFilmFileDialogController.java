@@ -16,6 +16,7 @@
 
 package de.mtplayer.mtp.gui.dialog;
 
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
@@ -54,7 +55,7 @@ public class DeleteFilmFileDialogController extends PDialogExtra {
 
 
     public DeleteFilmFileDialogController(String downloadPath, File filmFile, File infoFile, File subtitleFile, File subtitleFileSrt) {
-        super(null, "Datei löschen", true);
+        super(ProgData.getInstance().primaryStage, null, "Datei löschen", true, false);
 
         this.downloadPath = downloadPath;
         this.filmFile = filmFile;
@@ -63,7 +64,7 @@ public class DeleteFilmFileDialogController extends PDialogExtra {
         this.subtitleFileSrt = subtitleFileSrt;
 
         vBoxCont = getvBoxCont();
-        init(getVBoxCompleteDialog(), true);
+        init(true);
     }
 
     @Override
@@ -71,7 +72,7 @@ public class DeleteFilmFileDialogController extends PDialogExtra {
         vBoxCont.setPadding(new Insets(5));
         vBoxCont.setSpacing(10);
         vBoxCont.getChildren().addAll(gridPane);
-        addButtons(btnOk, btnCancel);
+        addOkCancelButtons(btnOk, btnCancel);
 
         gridPane.setMaxWidth(Double.MAX_VALUE);
         gridPane.setPadding(new Insets(10, 10, 10, 10));

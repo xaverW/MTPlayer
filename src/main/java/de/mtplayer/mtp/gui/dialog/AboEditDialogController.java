@@ -82,8 +82,8 @@ public class AboEditDialogController extends PDialogExtra {
 
     public AboEditDialogController(ProgData progData, Abo abo, boolean addNewAbo) {
         // hier wird ein neues Abo angelegt!
-        super(ProgConfig.ABO_DIALOG_EDIT_SIZE.getStringProperty(),
-                "Abo anlegen", true);
+        super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE.getStringProperty(),
+                "Abo anlegen", true, false);
 
         this.addNewAbo = addNewAbo;
         this.progData = progData;
@@ -97,8 +97,8 @@ public class AboEditDialogController extends PDialogExtra {
 
     public AboEditDialogController(ProgData progData, ObservableList<Abo> lAbo) {
         // hier werden Abos geändert
-        super(ProgConfig.ABO_DIALOG_EDIT_SIZE.getStringProperty(),
-                "Abo ändern", true);
+        super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE.getStringProperty(),
+                "Abo ändern", true, false);
 
         this.addNewAbo = false;
         this.lAbo = lAbo;
@@ -110,13 +110,13 @@ public class AboEditDialogController extends PDialogExtra {
 
     private void initDialog() {
         getvBoxCont().getChildren().add(gridPane);
-        addButtons(btnOk, btnCancel);
+        addOkCancelButtons(btnOk, btnCancel);
 
         SetData setData = aboCopy.getSetData(progData);
         if (setData == null) {
             Platform.runLater(() -> new NoSetDialogController(progData, NoSetDialogController.TEXT.ABO));
         } else {
-            init(getVBoxCompleteDialog(), true);
+            init(true);
         }
     }
 

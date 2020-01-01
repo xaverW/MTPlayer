@@ -43,7 +43,7 @@ public class MediaConfigDialogController extends PDialogExtra {
     private final ProgData progData;
 
     public MediaConfigDialogController() {
-        super(ProgConfig.MEDIA_CONFIG_DIALOG_SIZE.getStringProperty(), "Mediensammlung",
+        super(ProgData.getInstance().primaryStage, ProgConfig.MEDIA_CONFIG_DIALOG_SIZE.getStringProperty(), "Mediensammlung",
                 true, false, DECO.NONE);
 
         this.progData = ProgData.getInstance();

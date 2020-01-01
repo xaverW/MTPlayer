@@ -63,7 +63,7 @@ public class FilmInfoDialogController extends PDialogExtra {
 
     public FilmInfoDialogController() {
         super(ProgData.getInstance().primaryStage, ProgConfig.SYSTEM_SIZE_DIALOG_FILMINFO.getStringProperty(),
-                "Filminfos", false, false, DECO.BORDER);
+                "Filminfos", false, false);
 
         init(false);
     }

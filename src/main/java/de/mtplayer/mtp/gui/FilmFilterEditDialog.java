@@ -30,7 +30,7 @@ public class FilmFilterEditDialog extends PDialogExtra {
     final ProgData progData;
 
     public FilmFilterEditDialog(ProgData progData) {
-        super(progData.primaryStage, null, "Filter ein- und ausschalten", true, true, DECO.BORDER);
+        super(null, "Filter ein- und ausschalten");
 
         this.progData = progData;
         init(true);

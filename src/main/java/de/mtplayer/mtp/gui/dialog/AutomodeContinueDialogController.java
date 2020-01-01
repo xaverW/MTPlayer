@@ -17,6 +17,7 @@
 package de.mtplayer.mtp.gui.dialog;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import javafx.animation.KeyFrame;
@@ -45,7 +46,7 @@ public class AutomodeContinueDialogController extends PDialogExtra {
     private Integer timeSeconds = ProgConfig.SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS.getInt();
 
     public AutomodeContinueDialogController() {
-        super(null, "Automodus", true);
+        super(ProgData.getInstance().primaryStage, null, "Automodus", true, false);
 
         vBoxCont = getvBoxCont();
 //        hBoxOk = getHboxOk();
@@ -53,7 +54,7 @@ public class AutomodeContinueDialogController extends PDialogExtra {
         btnCancel = new Button("_Programm nicht beenden");
         btnContinue = new Button("_Beenden in " + timeSeconds + " s");
 
-        init(getVBoxCompleteDialog(), true);
+        init(true);
     }
 
     @Override
@@ -96,7 +97,7 @@ public class AutomodeContinueDialogController extends PDialogExtra {
 //        hBoxOk.getChildren().addAll(hBox, btnContinue, btnCancel);
 
         getHboxLeft().getChildren().add(new Label("Wie möchten Sie forfahren?"));
-        addButtons(btnContinue, btnCancel);
+        addOkCancelButtons(btnContinue, btnCancel);
     }
 
     public boolean isContinueAutomode() {

@@ -38,8 +38,8 @@ public class NoSetDialogController extends PDialogExtra {
     public enum TEXT {SAVE, PLAY, ABO}
 
     public NoSetDialogController(ProgData progData, TEXT text) {
-        super(null,
-                text == TEXT.SAVE || text == TEXT.ABO ? "Set zum Speichern" : "Kein Videoplayer!", true);
+        super(progData.primaryStage, null,
+                text == TEXT.SAVE || text == TEXT.ABO ? "Set zum Speichern" : "Kein Videoplayer!", true, false);
 
         this.progData = progData;
         this.text = text;

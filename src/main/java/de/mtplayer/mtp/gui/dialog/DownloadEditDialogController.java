@@ -83,8 +83,9 @@ public class DownloadEditDialogController extends PDialogExtra {
     private final SetData setData;
 
     public DownloadEditDialogController(ProgData progData, Download download, boolean isStarted) {
-        super(ProgConfig.DOWNLOAD_DIALOG_EDIT_SIZE.getStringProperty(),
-                "Download ändern", true);
+        super(progData.primaryStage,
+                ProgConfig.DOWNLOAD_DIALOG_EDIT_SIZE.getStringProperty(),
+                "Download ändern", true, false);
 
         this.progData = progData;
         this.download = download;
@@ -93,7 +94,7 @@ public class DownloadEditDialogController extends PDialogExtra {
         orgProgArray = download.arr[DownloadXml.DOWNLOAD_PROGRAM_CALL_ARRAY];
         orgPath = download.getDestPathFile();
 
-        addButtons(btnOk, btnCancel);
+        addOkCancelButtons(btnOk, btnCancel);
 
         getvBoxCont().getChildren().add(gridPane);
 

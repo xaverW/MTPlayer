@@ -68,8 +68,9 @@ public class DownloadContinueDialogController extends PDialogExtra {
     private Integer timeSeconds = ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS.getInt();
 
     public DownloadContinueDialogController(ProgData progData, Download download, boolean directDownload) {
-        super(ProgConfig.DOWNLOAD_DIALOG_CONTINUE_SIZE.getStringProperty(),
-                "Download weiterführen", true);
+        super(progData.primaryStage,
+                ProgConfig.DOWNLOAD_DIALOG_CONTINUE_SIZE.getStringProperty(),
+                "Download weiterführen", true, false);
 
         this.progData = progData;
         this.download = download;
@@ -86,7 +87,7 @@ public class DownloadContinueDialogController extends PDialogExtra {
             result = DownloadState.ContinueDownload.RESTART_DOWNLOAD;
             return;
         } else {
-            init(getVBoxCompleteDialog(), true);
+            init(true);
         }
     }
 
@@ -160,7 +161,7 @@ public class DownloadContinueDialogController extends PDialogExtra {
 //        hBox.getChildren().add(new Label("Wie möchten Sie forfahren?"));
 //        hBoxOk.getChildren().addAll(hBox, btnRestartDownload, btnContinueDownload, btnCancel);
 
-        addButtons(btnContinueDownload, btnCancel);
+        addOkCancelButtons(btnContinueDownload, btnCancel);
         ButtonBar.setButtonData(btnRestartDownload, ButtonBar.ButtonData.APPLY);
         addAnyButton(btnRestartDownload);
         getHboxLeft().getChildren().add(new Label("Wie möchten Sie forfahren?"));

@@ -45,8 +45,8 @@ public class ImportSetDialogController extends PDialogExtra {
 
 
     public ImportSetDialogController(ProgData progData) {
-        super(ProgConfig.CONFIG_DIALOG_IMPORT_SET_SIZE.getStringProperty(),
-                "Set importieren", true);
+        super(progData.primaryStage, ProgConfig.CONFIG_DIALOG_IMPORT_SET_SIZE.getStringProperty(),
+                "Set importieren", true, false);
 
         this.progData = progData;
         init(true);

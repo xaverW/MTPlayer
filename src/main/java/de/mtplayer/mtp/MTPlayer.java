@@ -123,10 +123,10 @@ public class MTPlayer extends Application {
 
             P2LibInit.addP2LibCssToScene(scene);
             ProgConfig.SYSTEM_DARK_THEME.getStringProperty().addListener((u, o, n) -> {
-                setTheme();
+                addThemeCss();
+                P2LibInit.addP2LibCssToScene(scene);
                 ProgConfig.SYSTEM_THEME_CHANGED.setValue(!ProgConfig.SYSTEM_THEME_CHANGED.getBool());
             });
-            setTheme();
 
             primaryStage.setScene(scene);
             primaryStage.setOnCloseRequest(e -> {
@@ -150,11 +150,6 @@ public class MTPlayer extends Application {
         } else {
             P2LibInit.removeCssFile(ProgConst.CSS_FILE_DARK_THEME);
         }
-    }
-
-    private void setTheme() {
-        addThemeCss();
-        P2LibInit.addP2LibCssToScene(scene);
     }
 
     private void workAfterGui() {

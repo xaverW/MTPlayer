@@ -72,7 +72,7 @@ public class StartDialogController extends PDialogExtra {
     private State aktState = State.START_1;
 
     public StartDialogController() {
-        super(null, null, "Starteinstellungen", true, false, DECO.BORDER);
+        super(null, null, "Starteinstellungen", true, false);
 
         this.progData = ProgData.getInstance();
         init(true);
@@ -258,7 +258,7 @@ public class StartDialogController extends PDialogExtra {
         btnNext.getStyleClass().add("btnStartDialog");
         btnPrev.getStyleClass().add("btnStartDialog");
 
-        addButtons(btnOk, btnCancel);
+        addOkCancelButtons(btnOk, btnCancel);
         ButtonBar.setButtonData(btnPrev, ButtonBar.ButtonData.BACK_PREVIOUS);
         ButtonBar.setButtonData(btnNext, ButtonBar.ButtonData.NEXT_FORWARD);
         addAnyButton(btnNext);

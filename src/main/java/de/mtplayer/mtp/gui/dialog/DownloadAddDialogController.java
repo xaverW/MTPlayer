@@ -185,9 +185,10 @@ public class DownloadAddDialogController extends PDialogExtra {
     }
 
     public DownloadAddDialogController(ProgData progData, ArrayList<Film> filmsToDownloadList, SetData setData, String filterResolution) {
-        super(filmsToDownloadList.size() > 1 ? ProgConfig.DOWNLOAD_DIALOG_ADD_MORE_SIZE.getStringProperty() :
+        super(progData.primaryStage,
+                filmsToDownloadList.size() > 1 ? ProgConfig.DOWNLOAD_DIALOG_ADD_MORE_SIZE.getStringProperty() :
                         ProgConfig.DOWNLOAD_DIALOG_ADD_SIZE.getStringProperty(),
-                "Download anlegen", true);
+                "Download anlegen", true, false);
 
         this.progData = progData;
         this.filmsToDownloadList = filmsToDownloadList;
@@ -198,7 +199,7 @@ public class DownloadAddDialogController extends PDialogExtra {
         vBoxCont = getvBoxCont();
 //        hBoxOk = getHboxOk();
 
-        init(getVBoxCompleteDialog(), true);
+        init(true);
     }
 
     @Override
@@ -319,7 +320,7 @@ public class DownloadAddDialogController extends PDialogExtra {
 //        HBox.setHgrow(hBox, Priority.ALWAYS);
 //        hBox.getChildren().add(cbxStart);
 //        hBoxOk.getChildren().addAll(hBox, btnOk, btnCancel);
-        addButtons(btnOk, btnCancel);
+        addOkCancelButtons(btnOk, btnCancel);
         getHboxLeft().getChildren().add(chkStart);
 //        addAnyButton(cbxStart);
     }

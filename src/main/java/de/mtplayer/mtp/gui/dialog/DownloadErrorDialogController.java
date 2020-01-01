@@ -63,8 +63,8 @@ public class DownloadErrorDialogController extends PDialogExtra {
     private final Download download;
 
     public DownloadErrorDialogController(Download download, String message) {
-        super(ProgConfig.DOWNLOAD_DIALOG_ERROR_SIZE.getStringProperty(),
-                "Fehler", true);
+        super(ProgData.getInstance().primaryStage, ProgConfig.DOWNLOAD_DIALOG_ERROR_SIZE.getStringProperty(),
+                "Fehler", true, false);
 
         this.download = download;
         this.message = message;
@@ -78,7 +78,7 @@ public class DownloadErrorDialogController extends PDialogExtra {
             return;
 
         } else {
-            init(getVBoxCompleteDialog(), true);
+            init(true);
         }
     }
 
