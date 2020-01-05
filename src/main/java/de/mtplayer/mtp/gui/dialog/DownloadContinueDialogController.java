@@ -34,21 +34,16 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 public class DownloadContinueDialogController extends PDialogExtra {
 
-    private final HBox hBoxTitle;
-    private final VBox vBoxCont;
-//    private final HBox hBoxOk;
-
     private Label lblHeader = new Label("Die Filmdatei existiert bereits.");
     private Button btnRestartDownload = new Button("neu _Starten");
     private Button btnCancel = new Button("_Abbrechen");
-    private Button btnContinueDownload = new Button("_Weiterführen in xxxx s");
+    private Button btnContinueDownload = new Button("_Weiterführen");
 
     private Label lblFilmTitle = new Label("ARD: Tatort, ..");
     private TextField txtFileName = new TextField("");
@@ -77,17 +72,27 @@ public class DownloadContinueDialogController extends PDialogExtra {
         this.directDownload = directDownload;
         this.oldPathFile = download.getDestPathFile();
 
-        hBoxTitle = getHBoxTitle();
-        vBoxCont = getvBoxCont();
-//        hBoxOk = getHboxOk();
-
-
         if (ProgData.automode) {
             // dann schaut ja eh keiner zu, also restart des Downloads
             result = DownloadState.ContinueDownload.RESTART_DOWNLOAD;
             return;
         } else {
             init(true);
+        }
+    }
+
+    public DownloadState.ContinueDownload getResult() {
+        return result;
+    }
+
+    public boolean isNewName() {
+        switch (Functions.getOs()) {
+            case LINUX:
+                return !oldPathFile.equals(download.getDestPathFile());
+            case WIN32:
+            case WIN64:
+            default:
+                return !oldPathFile.equalsIgnoreCase(download.getDestPathFile());
         }
     }
 
@@ -114,14 +119,13 @@ public class DownloadContinueDialogController extends PDialogExtra {
         //start the countdown...
         timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
-//        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), new CountdownAction()));
         timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), event -> handleCountDownAction()));
         timeline.playFromStart();
 
     }
 
     private void initCont() {
-        hBoxTitle.getChildren().add(lblHeader);
+        getHBoxTitle().getChildren().add(lblHeader);
 
         // Gridpane
         gridPane.setHgap(10);
@@ -148,18 +152,9 @@ public class DownloadContinueDialogController extends PDialogExtra {
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcComputedSizeAndHgrow());
 
-        vBoxCont.setPadding(new Insets(5));
-        vBoxCont.setSpacing(20);
-        vBoxCont.getChildren().addAll(gridPane);
-
-
-//        hBoxOk.setAlignment(Pos.BOTTOM_RIGHT);
-//        hBoxOk.setSpacing(10);
-//        HBox hBox = new HBox();
-//        HBox.setHgrow(hBox, Priority.ALWAYS);
-//        hBox.setAlignment(Pos.CENTER_LEFT);
-//        hBox.getChildren().add(new Label("Wie möchten Sie forfahren?"));
-//        hBoxOk.getChildren().addAll(hBox, btnRestartDownload, btnContinueDownload, btnCancel);
+        getvBoxCont().setPadding(new Insets(5));
+        getvBoxCont().setSpacing(20);
+        getvBoxCont().getChildren().addAll(gridPane);
 
         addOkCancelButtons(btnContinueDownload, btnCancel);
         ButtonBar.setButtonData(btnRestartDownload, ButtonBar.ButtonData.APPLY);
@@ -167,85 +162,26 @@ public class DownloadContinueDialogController extends PDialogExtra {
         getHboxLeft().getChildren().add(new Label("Wie möchten Sie forfahren?"));
     }
 
-    private boolean checkDownload() {
-        return (download.getSetData() != null && download.getFilm() != null);
-    }
-
-    private void handleCountDownAction() {
-        timeSeconds--;
-        if (timeSeconds > 0) {
-            if (!directDownload) {
-                btnRestartDownload.setText("neu _Starten in " + timeSeconds + " s");
-            } else {
-                btnContinueDownload.setText("_Weiterführen in " + timeSeconds + " s");
-            }
-        } else {
-            timeline.stop();
-            result = DownloadState.ContinueDownload.CONTINUE_DOWNLOAD;
-            quit();
-        }
-    }
-
-    private void stopCounter() {
-        if (timeline != null) {
-            timeline.stop();
-        }
-
-        setButtonText();
-    }
-
-    public DownloadState.ContinueDownload getResult() {
-        return result;
-    }
-
-
-    private void quit() {
-        close();
-    }
-
-
-    private void setButtonText() {
-        if (!directDownload) {
-            btnRestartDownload.setText("neu _Starten");
-        } else {
-            btnContinueDownload.setText("_Weiterführen");
-        }
-    }
-
     private void initButton() {
         btnPath.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
         btnPath.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen."));
         btnPath.setOnAction(event -> getDestination());
 
-//        btnCancel.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnCancel.setOnAction(event -> {
             result = DownloadState.ContinueDownload.CANCEL_DOWNLOAD;
             quit();
         });
 
-        setButtonText();
-//        btnRestartDownload.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
+//        setButtonText();
         btnRestartDownload.setOnAction(event -> {
             result = DownloadState.ContinueDownload.RESTART_DOWNLOAD;
             download.setPathName(cbPath.getSelectionModel().getSelectedItem(), txtFileName.getText());
             quit();
         });
-//        btnContinueDownload.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnContinueDownload.setOnAction(event -> {
             result = DownloadState.ContinueDownload.CONTINUE_DOWNLOAD;
             quit();
         });
-    }
-
-    public boolean isNewName() {
-        switch (Functions.getOs()) {
-            case LINUX:
-                return !oldPathFile.equals(download.getDestPathFile());
-            case WIN32:
-            case WIN64:
-            default:
-                return !oldPathFile.equalsIgnoreCase(download.getDestPathFile());
-        }
     }
 
     private void initPathAndName() {
@@ -284,8 +220,46 @@ public class DownloadContinueDialogController extends PDialogExtra {
         });
     }
 
+    private void handleCountDownAction() {
+        timeSeconds--;
+        if (timeSeconds > 0) {
+            if (!directDownload) {
+                btnRestartDownload.setText("neu _Starten in " + timeSeconds + " s");
+            } else {
+                btnContinueDownload.setText("_Weiterführen in " + timeSeconds + " s");
+            }
+        } else {
+            timeline.stop();
+            result = DownloadState.ContinueDownload.CONTINUE_DOWNLOAD;
+            quit();
+        }
+    }
+
+    private boolean checkDownload() {
+        return (download.getSetData() != null && download.getFilm() != null);
+    }
+
+    private void stopCounter() {
+        if (timeline != null) {
+            timeline.stop();
+        }
+
+        setButtonText();
+    }
+
+    private void setButtonText() {
+        if (!directDownload) {
+            btnRestartDownload.setText("neu _Starten");
+        } else {
+            btnContinueDownload.setText("_Weiterführen");
+        }
+    }
+
+    private void quit() {
+        close();
+    }
+
     private void getDestination() {
         DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, cbPath);
     }
-
 }

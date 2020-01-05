@@ -277,7 +277,7 @@ public class ExternalProgramDownload extends Thread {
         boolean result = false;
         if (file.exists()) {
             final DownloadContinueDialogController downloadContinueDialogController =
-                    new DownloadContinueDialogController(null, download, false /* weiterführen */);
+                    new DownloadContinueDialogController(progData, download, false /* weiterführen */);
 
             switch (downloadContinueDialogController.getResult()) {
                 case CANCEL_DOWNLOAD:
