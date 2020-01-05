@@ -75,7 +75,7 @@ public class BlackPane {
 
     public void makeBlackTable(Collection<TitledPane> result) {
         final VBox vBox = new VBox();
-        vBox.setFillWidth(true);
+//        vBox.setFillWidth(true);
         vBox.setSpacing(10);
 
         makeConfig(vBox);
@@ -85,7 +85,7 @@ public class BlackPane {
         TitledPane tpBlack = new TitledPane("Blacklist", vBox);
         result.add(tpBlack);
         tpBlack.setMaxHeight(Double.MAX_VALUE);
-        VBox.setVgrow(tpBlack, Priority.ALWAYS);
+//        VBox.setVgrow(tpBlack, Priority.ALWAYS);
     }
 
     private void makeConfig(VBox vBox) {
@@ -117,7 +117,8 @@ public class BlackPane {
         gridPane.add(rbWhite, 0, ++row);
         gridPane.add(new Label("nur diese \"Sender / Thema / Titel\" anzeigen (Whitelist)"), 1, row);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(), PColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcComputedSizeAndHgrow());
     }
 
 
@@ -243,13 +244,11 @@ public class BlackPane {
         gridPane.setVgap(5);
         gridPane.setPadding(new Insets(20));
 
-//        cboChannel.setEditable(true);
-//        cboChannel.setItems(ProgData.getInstance().worker.getAllChannelList());
-
         int row = 0;
+
+        mbChannel.setMaxWidth(Double.MAX_VALUE);
         gridPane.add(new Label("Sender:"), 0, row);
         gridPane.add(mbChannel, 1, row);
-//        gridPane.add(tgChannel, 2, row);
 
         gridPane.add(new Label("Thema:"), 0, ++row);
         gridPane.add(theme, 1, row);
@@ -260,6 +259,10 @@ public class BlackPane {
 
         gridPane.add(new Label("Thema/Titel:"), 0, ++row);
         gridPane.add(themeTitle, 1, row);
+
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcComputedSizeAndHgrow(),
+                PColumnConstraints.getCcPrefSize());
 
         vBox.getChildren().add(gridPane);
         gridPane.setDisable(true);
@@ -278,7 +281,6 @@ public class BlackPane {
         }
 
         if (blackData != null) {
-//            cboChannel.valueProperty().unbindBidirectional(blackData.channelProperty());
             mbChannel.textProperty().unbindBidirectional(blackData.channelProperty());
             clearMenuText();
             theme.textProperty().unbindBidirectional(blackData.themeProperty());
@@ -290,7 +292,6 @@ public class BlackPane {
         blackData = blackDataAct;
         gridPane.setDisable(blackData == null);
         if (blackData != null) {
-//            cboChannel.valueProperty().bindBidirectional(blackData.channelProperty());
             initSenderMenu();
             mbChannel.textProperty().bindBidirectional(blackData.channelProperty());
             theme.textProperty().bindBidirectional(blackData.themeProperty());
@@ -304,7 +305,6 @@ public class BlackPane {
         mbChannel.getItems().clear();
         checkMenuItemsList.clear();
         mbChannel.getStyleClass().add("channel-menu");
-        mbChannel.setMaxWidth(Double.MAX_VALUE);
 
         List<String> senderArr = new ArrayList<>();
         String sender = blackData.channelProperty().get();
