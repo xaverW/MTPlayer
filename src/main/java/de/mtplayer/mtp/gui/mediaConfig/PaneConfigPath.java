@@ -30,7 +30,6 @@ import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.PGuiTools;
 import de.p2tools.p2Lib.tools.file.PFileUtils;
 import javafx.beans.binding.Bindings;
-import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -43,7 +42,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class PaneConfigPath {
 
@@ -51,6 +52,7 @@ public class PaneConfigPath {
     private final boolean external;
     private final TextField txtPath = new TextField();
     private final TextField txtCollectionName = new TextField();
+    private final Button btnAdd = new Button("");
 
     private final ProgData progData;
     private final Stage stage;
@@ -70,6 +72,10 @@ public class PaneConfigPath {
         initTable(vBox);
         makeButton(vBox);
         makeGrid(vBox);
+    }
+
+    public void close() {
+        btnAdd.disableProperty().unbind();
     }
 
     private void initTable(VBox vBox) {
@@ -146,8 +152,10 @@ public class PaneConfigPath {
     }
 
     private void delete() {
-        final ObservableList<MediaCollectionData> sels = tableView.getSelectionModel().getSelectedItems();
-        if (sels == null || sels.isEmpty()) {
+        final List<MediaCollectionData> sels = new ArrayList<>();
+        sels.addAll(tableView.getSelectionModel().getSelectedItems());
+
+        if (sels.isEmpty()) {
             PAlert.showInfoNoSelection();
             return;
         }
@@ -155,6 +163,7 @@ public class PaneConfigPath {
         sels.stream().forEach(mediaPathData -> {
             progData.mediaDataList.removeMediaAndCollection(mediaPathData.getId());
         });
+
         tableView.getSelectionModel().clearSelection();
     }
 
@@ -177,7 +186,6 @@ public class PaneConfigPath {
             }
         });
 
-        final Button btnAdd = new Button("");
         btnAdd.setGraphic(new ProgIcons().ICON_BUTTON_ADD);
         if (external) {
             btnAdd.setTooltip(new Tooltip("Eine neue Sammlung wird angelegt und vom angegebenen Pfad eingelesen."));

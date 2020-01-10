@@ -68,8 +68,18 @@ public class StartDialogController extends PDialogExtra {
     private TitledPane tDown;
     private TitledPane tPath;
 
+    private StartPane startPane1;
+    private StartPane startPane2;
+    private UpdatePane updatePane;
+    private GeoPane geoPane;
+    private LoadFilmsPane loadFilmsPane;
+    private DownPathPane downPathPane;
+    private PathPane pathPane;
+
+
     private final ProgData progData;
     private State aktState = State.START_1;
+
 
     public StartDialogController() {
         super(null, null, "Starteinstellungen", true, false);
@@ -92,6 +102,13 @@ public class StartDialogController extends PDialogExtra {
 
     public void close() {
         super.close();
+        startPane1.close();
+        startPane2.close();
+        updatePane.close();
+        geoPane.close();
+        loadFilmsPane.close();
+        downPathPane.close();
+        pathPane.close();
     }
 
     public boolean isOk() {
@@ -150,37 +167,44 @@ public class StartDialogController extends PDialogExtra {
         getvBoxCont().getChildren().add(stackpane);
 
         //startPane 1
-        tStart1 = new StartPane(stage).makeStart1();
+        startPane1 = new StartPane(stage);
+        tStart1 = startPane1.makeStart1();
         tStart1.setMaxHeight(Double.MAX_VALUE);
         tStart1.setCollapsible(false);
 
         //startPane 2
-        tStart2 = new StartPane(stage).makeStart2();
+        startPane2 = new StartPane(stage);
+        tStart2 = startPane2.makeStart2();
         tStart2.setMaxHeight(Double.MAX_VALUE);
         tStart2.setCollapsible(false);
 
         //updatePane
-        tUpdate = new UpdatePane(stage).makeStart();
+        updatePane = new UpdatePane(stage);
+        tUpdate = updatePane.makeStart();
         tUpdate.setMaxHeight(Double.MAX_VALUE);
         tUpdate.setCollapsible(false);
 
         //geoPane
-        tGeo = new GeoPane(stage).makeGeo();
+        geoPane = new GeoPane(stage);
+        tGeo = geoPane.makeGeo();
         tGeo.setMaxHeight(Double.MAX_VALUE);
         tGeo.setCollapsible(false);
 
         //filmPane
-        tFilm = new LoadFilmsPane(stage).make();
+        loadFilmsPane = new LoadFilmsPane(stage);
+        tFilm = loadFilmsPane.make(); // close aufrufen!!
         tFilm.setMaxHeight(Double.MAX_VALUE);
         tFilm.setCollapsible(false);
 
         //downPane
-        tDown = new DownPathPane(stage).makePath();
+        downPathPane = new DownPathPane(stage);
+        tDown = downPathPane.makePath();
         tDown.setMaxHeight(Double.MAX_VALUE);
         tDown.setCollapsible(false);
 
         //pathPane
-        tPath = new PathPane(stage).makePath();
+        pathPane = new PathPane(stage);
+        tPath = pathPane.makePath();
         tPath.setMaxHeight(Double.MAX_VALUE);
         tPath.setCollapsible(false);
 

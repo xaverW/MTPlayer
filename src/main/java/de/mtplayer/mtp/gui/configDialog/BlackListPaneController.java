@@ -20,91 +20,70 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.tools.HelpText;
-import de.p2tools.p2Lib.guiTools.PAccordion;
+import de.p2tools.p2Lib.dialogs.accordion.PAccordionPane;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Insets;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TitledPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class BlackListPaneController extends AnchorPane {
+public class BlackListPaneController extends PAccordionPane {
 
     private final ProgData progData;
-    private final VBox noaccordion = new VBox();
-    private final Accordion accordion = new Accordion();
-    private final HBox hBox = new HBox(0);
-    private final CheckBox cbxAccordion = new CheckBox("");
-    private final ScrollPane scrollPane = new ScrollPane();
     private final Slider slSize = new Slider();
     private final Label lblSize = new Label("");
     private final Slider slDays = new Slider();
     private final Label lblDays = new Label("");
 
-    BooleanProperty accordionProp = ProgConfig.CONFIG_DIALOG_ACCORDION.getBooleanProperty();
+    private final PToggleSwitch tglAbo = new PToggleSwitch("die Blacklist beim Suchen der Abos berücksichtigen");
+    private final PToggleSwitch tglFuture = new PToggleSwitch("Filme mit Datum in der Zukunft nicht anzeigen");
+    private final PToggleSwitch tglGeo = new PToggleSwitch("Filme, die per Geoblocking gesperrt sind, nicht anzeigen");
+
     IntegerProperty propSize = ProgConfig.SYSTEM_BLACKLIST_MIN_FILM_DURATION.getIntegerProperty();
     IntegerProperty propDay = ProgConfig.SYSTEM_BLACKLIST_MAX_FILM_DAYS.getIntegerProperty();
     BooleanProperty propGeo = ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_GEO.getBooleanProperty();
     BooleanProperty propAbo = ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.getBooleanProperty();
     BooleanProperty propFuture = ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_FUTURE.getBooleanProperty();
-    IntegerProperty selectedTab = ProgConfig.SYSTEM_CONFIG_DIALOG_BLACKLIST;
     private final BooleanProperty blackChanged;
 
+    private BlackPane blackPane;
     private final Stage stage;
 
     public BlackListPaneController(Stage stage, BooleanProperty blackChanged) {
+        super(stage, ProgConfig.CONFIG_DIALOG_ACCORDION.getBooleanProperty(), ProgConfig.SYSTEM_CONFIG_DIALOG_BLACKLIST);
         this.stage = stage;
         this.blackChanged = blackChanged;
         progData = ProgData.getInstance();
 
-        cbxAccordion.selectedProperty().bindBidirectional(accordionProp);
-        cbxAccordion.selectedProperty().addListener((observable, oldValue, newValue) -> setAccordion());
-
-        HBox.setHgrow(scrollPane, Priority.ALWAYS);
-        scrollPane.setFitToHeight(true);
-        scrollPane.setFitToWidth(true);
-
-        hBox.getChildren().addAll(cbxAccordion, scrollPane);
-        getChildren().addAll(hBox);
-
-        accordion.setPadding(new Insets(1));
-        noaccordion.setPadding(new Insets(1));
-        noaccordion.setSpacing(1);
-
-        AnchorPane.setLeftAnchor(hBox, 10.0);
-        AnchorPane.setBottomAnchor(hBox, 10.0);
-        AnchorPane.setRightAnchor(hBox, 10.0);
-        AnchorPane.setTopAnchor(hBox, 10.0);
-
-        PAccordion.initAccordionPane(accordion, selectedTab);
-        setAccordion();
+        init();
     }
 
-    private void setAccordion() {
-        if (cbxAccordion.isSelected()) {
-            noaccordion.getChildren().clear();
-            accordion.getPanes().addAll(createPanes());
-            scrollPane.setContent(accordion);
-
-            PAccordion.setAccordionPane(accordion, selectedTab);
-
-        } else {
-            accordion.getPanes().clear();
-            noaccordion.getChildren().addAll(createPanes());
-            scrollPane.setContent(noaccordion);
-        }
+    public void close() {
+        super.close();
+        tglAbo.selectedProperty().unbindBidirectional(propAbo);
+        tglFuture.selectedProperty().unbindBidirectional(propFuture);
+        tglGeo.selectedProperty().unbindBidirectional(propGeo);
+        slDays.valueProperty().unbindBidirectional(propDay);
+        slSize.valueProperty().unbindBidirectional(propSize);
+        blackPane.close();
     }
 
-    private Collection<TitledPane> createPanes() {
+    public Collection<TitledPane> createPanes() {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
         makeBlack(result);
-        new BlackPane(stage, blackChanged).makeBlackTable(result);
+        blackPane = new BlackPane(stage, blackChanged);
+        blackPane.makeBlackTable(result);
         return result;
     }
 
@@ -117,7 +96,6 @@ public class BlackListPaneController extends AnchorPane {
         TitledPane tpConfig = new TitledPane("Blacklist allgemein", gridPane);
         result.add(tpConfig);
 
-        final PToggleSwitch tglAbo = new PToggleSwitch("die Blacklist beim Suchen der Abos berücksichtigen");
         tglAbo.selectedProperty().bindBidirectional(propAbo);
         tglAbo.selectedProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
 
@@ -125,7 +103,6 @@ public class BlackListPaneController extends AnchorPane {
                 HelpText.BLACKLIST_ABO);
 
 
-        final PToggleSwitch tglFuture = new PToggleSwitch("Filme mit Datum in der Zukunft nicht anzeigen");
         tglFuture.selectedProperty().bindBidirectional(propFuture);
         tglFuture.selectedProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
 
@@ -133,7 +110,6 @@ public class BlackListPaneController extends AnchorPane {
                 HelpText.BLACKLIST_FUTURE);
 
 
-        final PToggleSwitch tglGeo = new PToggleSwitch("Filme, die per Geoblocking gesperrt sind, nicht anzeigen");
         tglGeo.selectedProperty().bindBidirectional(propGeo);
         tglGeo.selectedProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
 

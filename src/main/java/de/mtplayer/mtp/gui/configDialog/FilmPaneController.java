@@ -21,84 +21,54 @@ import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.gui.tools.HelpText;
-import de.p2tools.p2Lib.guiTools.PAccordion;
+import de.p2tools.p2Lib.dialogs.accordion.PAccordionPane;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class FilmPaneController extends AnchorPane {
+public class FilmPaneController extends PAccordionPane {
 
-    private final ProgData progData;
-    private final VBox noaccordion = new VBox();
-    private final Accordion accordion = new Accordion();
-    private final HBox hBox = new HBox(0);
-    private final CheckBox cbxAccordion = new CheckBox("");
-    private final ScrollPane scrollPane = new ScrollPane();
     private final int FILTER_DAYS_MAX = 150;
 
-    BooleanProperty accordionProp = ProgConfig.CONFIG_DIALOG_ACCORDION.getBooleanProperty();
     BooleanProperty propLoad = ProgConfig.SYSTEM_LOAD_FILMS_ON_START.getBooleanProperty();
     StringProperty propUrl = ProgConfig.SYSTEM_LOAD_FILMS_MANUALLY.getStringProperty();
-    IntegerProperty selectedTab = ProgConfig.SYSTEM_CONFIG_DIALOG_FILM;
 
+    private LoadFilmsPane loadFilmsPane;
+    private final PToggleSwitch tglLoad = new PToggleSwitch("Filmliste beim Programmstart laden");
+    private TextField txtUrl;
+
+    private final ProgData progData;
     private final Stage stage;
 
     public FilmPaneController(Stage stage) {
+        super(stage, ProgConfig.CONFIG_DIALOG_ACCORDION.getBooleanProperty(), ProgConfig.SYSTEM_CONFIG_DIALOG_FILM);
         this.stage = stage;
         progData = ProgData.getInstance();
 
-        cbxAccordion.selectedProperty().bindBidirectional(accordionProp);
-        cbxAccordion.selectedProperty().addListener((observable, oldValue, newValue) -> setAccordion());
-
-        HBox.setHgrow(scrollPane, Priority.ALWAYS);
-        scrollPane.setFitToHeight(true);
-        scrollPane.setFitToWidth(true);
-
-        hBox.getChildren().addAll(cbxAccordion, scrollPane);
-        getChildren().addAll(hBox);
-
-        accordion.setPadding(new Insets(1));
-        noaccordion.setPadding(new Insets(1));
-        noaccordion.setSpacing(1);
-
-        AnchorPane.setLeftAnchor(hBox, 10.0);
-        AnchorPane.setBottomAnchor(hBox, 10.0);
-        AnchorPane.setRightAnchor(hBox, 10.0);
-        AnchorPane.setTopAnchor(hBox, 10.0);
-
-        PAccordion.initAccordionPane(accordion, selectedTab);
-        setAccordion();
+        init();
     }
 
-    private void setAccordion() {
-        if (cbxAccordion.isSelected()) {
-            noaccordion.getChildren().clear();
-            accordion.getPanes().addAll(createPanes());
-            scrollPane.setContent(accordion);
-
-            PAccordion.setAccordionPane(accordion, selectedTab);
-
-        } else {
-            accordion.getPanes().clear();
-            noaccordion.getChildren().addAll(createPanes());
-            scrollPane.setContent(noaccordion);
-        }
+    public void close() {
+        super.close();
+        tglLoad.selectedProperty().unbindBidirectional(propLoad);
+        txtUrl.textProperty().unbindBidirectional(propUrl);
     }
 
-    private Collection<TitledPane> createPanes() {
+    public Collection<TitledPane> createPanes() {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
         makeConfig(result);
-        result.add(new LoadFilmsPane(stage, progData).make());
+
+        loadFilmsPane = new LoadFilmsPane(stage, progData);
+        loadFilmsPane.make(result);
 
         return result;
     }
@@ -112,13 +82,12 @@ public class FilmPaneController extends AnchorPane {
         TitledPane tpConfig = new TitledPane("Filmliste laden", gridPane);
         result.add(tpConfig);
 
-        final PToggleSwitch tglLoad = new PToggleSwitch("Filmliste beim Programmstart laden");
         tglLoad.selectedProperty().bindBidirectional(propLoad);
         final Button btnHelpLoad = PButton.helpButton(stage, "Filmliste laden",
                 HelpText.LOAD_FILMLIST_PROGRAMSTART);
 
 
-        TextField txtUrl = new TextField("");
+        txtUrl = new TextField("");
         txtUrl.textProperty().bindBidirectional(propUrl);
 
         final Button btnFile = new Button();

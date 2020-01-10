@@ -24,7 +24,7 @@ import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.gui.tools.HelpTextPset;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
 import de.p2tools.p2Lib.alert.PAlert;
-import de.p2tools.p2Lib.guiTools.PAccordion;
+import de.p2tools.p2Lib.dialogs.accordion.PAccordion;
 import de.p2tools.p2Lib.guiTools.PButton;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
@@ -75,7 +75,9 @@ public class SetPaneController extends AnchorPane {
         progData = ProgData.getInstance();
 
         cbxAccordion.selectedProperty().bindBidirectional(accordionProp);
-        cbxAccordion.selectedProperty().addListener((observable, oldValue, newValue) -> setAccordion());
+        cbxAccordion.selectedProperty().addListener((observable, oldValue, newValue) ->
+                PAccordion.setAccordion(cbxAccordion.isSelected(), accordion, noaccordion, scrollPane, setDataPaneTitle, selectedTab));
+
 
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
@@ -102,29 +104,18 @@ public class SetPaneController extends AnchorPane {
         selectTableFirst();
 
         PAccordion.initAccordionPane(accordion, selectedTab);
-        setAccordion();
+        PAccordion.setAccordion(cbxAccordion.isSelected(), accordion, noaccordion, scrollPane, setDataPaneTitle, selectedTab);
 
         splitPane.getDividers().get(0).positionProperty().bindBidirectional(split);
     }
 
-    public void selectTableFirst() {
-        tableView.getSelectionModel().selectFirst();
+    public void close() {
+        cbxAccordion.selectedProperty().unbindBidirectional(accordionProp);
+        splitPane.getDividers().get(0).positionProperty().unbindBidirectional(split);
     }
 
-    private void setAccordion() {
-        if (cbxAccordion.isSelected()) {
-            noaccordion.getChildren().clear();
-            accordion.getPanes().addAll(setDataPaneTitle);
-            scrollPane.setContent(accordion);
-
-            PAccordion.setAccordionPane(accordion, selectedTab);
-
-        } else {
-            accordion.getPanes().clear();
-            noaccordion.getChildren().addAll(setDataPaneTitle);
-            noaccordion.getChildren().stream().forEach(node -> ((TitledPane) node).setExpanded(true));
-            scrollPane.setContent(noaccordion);
-        }
+    public void selectTableFirst() {
+        tableView.getSelectionModel().selectFirst();
     }
 
     private Collection<TitledPane> createSetList() {

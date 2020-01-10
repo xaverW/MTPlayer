@@ -23,11 +23,11 @@ import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.beans.property.IntegerProperty;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
@@ -38,6 +38,11 @@ public class MediaConfigDialogController extends PDialogExtra {
     private Button btnOk = new Button("_Ok");
     private Button btnCreateMediaDB = new Button("_Mediensammlung neu aufbauen");
     private ProgressBar progress = new ProgressBar();
+
+    PaneConfigController mediaConfigPaneController;
+    PaneMediaListController mediaListPaneController;
+    PaneHistoryController historyListPaneController;
+    PaneHistoryController aboListPaneController;
 
     IntegerProperty propSelectedTab = ProgConfig.SYSTEM_MEDIA_DIALOG_TAB;
     private final ProgData progData;
@@ -54,6 +59,7 @@ public class MediaConfigDialogController extends PDialogExtra {
     public void make() {
         VBox.setVgrow(tabPane, Priority.ALWAYS);
         getvBoxCont().getChildren().add(tabPane);
+        getvBoxCont().setPadding(new Insets(0));
 
         final Button btnHelp = PButton.helpButton(getStage(), "Medien", HelpText.MEDIA_DIALOG);
         btnOk.setOnAction(a -> close());
@@ -67,36 +73,49 @@ public class MediaConfigDialogController extends PDialogExtra {
         initPanel();
     }
 
+    @Override
+    public void close() {
+        progress.visibleProperty().unbind();
+        btnCreateMediaDB.disableProperty().unbind();
+
+        mediaConfigPaneController.close();
+        mediaListPaneController.close();
+        historyListPaneController.close();
+        aboListPaneController.close();
+        super.close();
+    }
+
     private void initPanel() {
         try {
-            AnchorPane mediaConfigPaneController = new PaneConfigController(getStage());
+            mediaConfigPaneController = new PaneConfigController(getStage());
             Tab tab = new Tab("Einstellungen Mediensammlung");
             tab.setClosable(false);
             tab.setContent(mediaConfigPaneController);
             tabPane.getTabs().add(tab);
 
-            AnchorPane mediaListPaneController = new PaneMediaListController(getStage());
+            mediaListPaneController = new PaneMediaListController(getStage());
             tab = new Tab("Mediensammlung");
             tab.setClosable(false);
             tab.setContent(mediaListPaneController);
             tabPane.getTabs().add(tab);
 
-            AnchorPane historyListPaneController = new PaneHistoryController(getStage(), true);
+            historyListPaneController = new PaneHistoryController(getStage(), true);
             tab = new Tab("gesehene Filme");
             tab.setClosable(false);
             tab.setContent(historyListPaneController);
             tabPane.getTabs().add(tab);
 
-            AnchorPane aboListPaneController = new PaneHistoryController(getStage(), false);
+            aboListPaneController = new PaneHistoryController(getStage(), false);
             tab = new Tab("erledigte Abos");
             tab.setClosable(false);
             tab.setContent(aboListPaneController);
             tabPane.getTabs().add(tab);
 
             tabPane.getSelectionModel().select(propSelectedTab.get());
-            tabPane.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) ->
-                    // readOnlyBinding!!
-                    propSelectedTab.setValue(newValue));
+            tabPane.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
+                // readOnlyBinding!!
+                propSelectedTab.setValue(newValue);
+            });
 
         } catch (final Exception ex) {
             PLog.errorLog(962104652, ex);

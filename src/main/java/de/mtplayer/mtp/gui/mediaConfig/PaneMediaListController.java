@@ -22,15 +22,14 @@ import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.mediaDb.MediaData;
 import de.mtplayer.mtp.controller.mediaDb.MediaFileSize;
-import de.p2tools.p2Lib.guiTools.PAccordion;
+import de.mtplayer.mtp.tools.storedFilter.Filter;
+import de.p2tools.p2Lib.dialogs.accordion.PAccordionPane;
 import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.IntegerProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.transformation.SortedList;
-import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -38,82 +37,50 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.regex.Pattern;
 
-public class PaneMediaListController extends AnchorPane {
+public class PaneMediaListController extends PAccordionPane {
 
-    private ScrollPane scrollPane = new ScrollPane();
-    private Label lblGesamtMedia = new Label();
-    private VBox noaccordion = new VBox();
-    private final Accordion accordion = new Accordion();
-    private final HBox hBox = new HBox(0);
-    private final CheckBox cbxAccordion = new CheckBox("");
+    private VBox vBox = new VBox(10);
+    private TextField txtSearch = new TextField();
+    private Label lblTreffer = new Label();
 
-    BooleanProperty accordionProp = ProgConfig.MEDIA_CONFIG_DIALOG_ACCORDION.getBooleanProperty();
-    IntegerProperty selectedTab = ProgConfig.SYSTEM_MEDIA_DIALOG_MEDIA;
+    ChangeListener<Number> changeListener;
 
     private final ProgData progData;
-    private final Stage stage;
 
     public PaneMediaListController(Stage stage) {
-        this.stage = stage;
+        super(stage, ProgConfig.MEDIA_CONFIG_DIALOG_ACCORDION.getBooleanProperty(), ProgConfig.SYSTEM_MEDIA_DIALOG_MEDIA);
         progData = ProgData.getInstance();
-
-        cbxAccordion.selectedProperty().bindBidirectional(accordionProp);
-        cbxAccordion.selectedProperty().addListener((observable, oldValue, newValue) -> setAccordion());
-
-        scrollPane.setFitToHeight(true);
-        scrollPane.setFitToWidth(true);
-        HBox.setHgrow(scrollPane, Priority.ALWAYS);
-        hBox.getChildren().addAll(cbxAccordion, scrollPane);
-        getChildren().addAll(hBox);
-
-        AnchorPane.setLeftAnchor(hBox, 10.0);
-        AnchorPane.setBottomAnchor(hBox, 10.0);
-        AnchorPane.setRightAnchor(hBox, 10.0);
-        AnchorPane.setTopAnchor(hBox, 10.0);
-
-        PAccordion.initAccordionPane(accordion, selectedTab);
-        setAccordion();
+        init();
     }
 
-    private void setAccordion() {
-        if (cbxAccordion.isSelected()) {
-            noaccordion.getChildren().clear();
-            accordion.getPanes().addAll(createPanes());
-            scrollPane.setContent(accordion);
-
-            PAccordion.setAccordionPane(accordion, selectedTab);
-
-        } else {
-            accordion.getPanes().clear();
-            noaccordion.getChildren().addAll(createPanes());
-            scrollPane.setContent(noaccordion);
-        }
+    public void close() {
+        super.close();
+        progData.mediaDataList.sizeProperty().removeListener(changeListener);
     }
 
-    private Collection<TitledPane> createPanes() {
+
+    public Collection<TitledPane> createPanes() {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
-        initTable(result);
-
-        lblGesamtMedia.setText(progData.mediaDataList.size() + "");
-        progData.mediaDataList.sizeProperty().addListener((observable, oldValue, newValue) ->
-                Platform.runLater(() -> lblGesamtMedia.setText(progData.mediaDataList.size() + "")));
-
-        return result;
-    }
-
-    private void initTable(Collection<TitledPane> result) {
-        HBox hBoxSum = new HBox(10);
-        hBoxSum.setPadding(new Insets(10));
-        hBoxSum.getChildren().addAll(new Label("Anzahl Medien gesamt:"), lblGesamtMedia);
-
-        VBox vBox = new VBox(10);
-
         TitledPane tpConfig = new TitledPane("Mediensammlung", vBox);
         result.add(tpConfig);
         tpConfig.setMaxHeight(Double.MAX_VALUE);
         VBox.setVgrow(tpConfig, Priority.ALWAYS);
 
+        initTable();
+        initFilter();
+        writeQuantity();
+
+        changeListener = (observable, oldValue, newValue) -> {
+            Platform.runLater(() -> PaneMediaListController.this.filter());
+        };
+        progData.mediaDataList.sizeProperty().addListener(changeListener);
+
+        return result;
+    }
+
+    private void initTable() {
         TableView<MediaData> tableView = new TableView<>();
         tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
@@ -149,8 +116,54 @@ public class PaneMediaListController extends AnchorPane {
         tableView.setItems(sortedList);
 
         VBox.setVgrow(tableView, Priority.ALWAYS);
-        vBox.getChildren().addAll(tableView, hBoxSum);
+        vBox.getChildren().addAll(tableView);
     }
 
+    private void initFilter() {
+        HBox hBox = new HBox(10);
+        hBox.getChildren().addAll(new Label("Suchen:"), txtSearch, lblTreffer);
+        HBox.setHgrow(txtSearch, Priority.ALWAYS);
+        hBox.setAlignment(Pos.CENTER_LEFT);
+        vBox.getChildren().addAll(hBox);
 
+        txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+            Filter.checkPattern1(txtSearch);
+            filter();
+        });
+    }
+
+    private void filter() {
+        final String searchStr = txtSearch.getText().toLowerCase().trim();
+        progData.mediaDataList.filteredListSetPredicate(media -> {
+            if (searchStr.isEmpty()) {
+                return true;
+            }
+            final Pattern p = Filter.makePattern(searchStr);
+            if (p != null) {
+                return filterMedia(media, p);
+            } else {
+                return filterMedia(media, searchStr);
+            }
+        });
+
+        writeQuantity();
+    }
+
+    private boolean filterMedia(MediaData media, Pattern p) {
+        return p.matcher(media.getName()).matches();
+    }
+
+    private boolean filterMedia(MediaData media, String search) {
+        return media.getName().toLowerCase().contains(search);
+    }
+
+    private void writeQuantity() {
+        final int filtered = progData.mediaDataList.getFilteredList().size();
+        final int sum = progData.mediaDataList.size();
+        if (sum != filtered) {
+            lblTreffer.setText("Anzahl: " + filtered + " von " + sum);
+        } else {
+            lblTreffer.setText("Anzahl: " + sum + "");
+        }
+    }
 }

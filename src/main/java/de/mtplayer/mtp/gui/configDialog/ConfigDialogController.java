@@ -29,7 +29,6 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
@@ -43,6 +42,12 @@ public class ConfigDialogController extends PDialogExtra {
 
     IntegerProperty propSelectedTab = ProgConfig.SYSTEM_CONFIG_DIALOG_TAB;
     private final ProgData progData;
+
+    ConfigPaneController configPane;
+    FilmPaneController filmPane;
+    BlackListPaneController blackPane;
+    DownloadPaneController downloadPane;
+    SetPaneController setPane;
 
     public ConfigDialogController() {
         super(ProgData.getInstance().primaryStage, ProgConfig.CONFIG_DIALOG_SIZE.getStringProperty(), "Einstellungen",
@@ -78,37 +83,44 @@ public class ConfigDialogController extends PDialogExtra {
             progData.filmlist.filterList();
             Listener.notify(Listener.EREIGNIS_BLACKLIST_GEAENDERT, ConfigDialogController.class.getSimpleName());
         }
+
+        configPane.close();
+        filmPane.close();
+        blackPane.close();
+        downloadPane.close();
+        setPane.close();
+
         Listener.notify(Listener.EREIGNIS_SETDATA_CHANGED, ConfigDialogController.class.getSimpleName());
         super.close();
     }
 
     private void initPanel() {
         try {
-            AnchorPane configPane = new ConfigPaneController(getStage());
+            configPane = new ConfigPaneController(getStage());
             Tab tab = new Tab("Allgemein");
             tab.setClosable(false);
             tab.setContent(configPane);
             tabPane.getTabs().add(tab);
 
-            AnchorPane filmPane = new FilmPaneController(getStage());
+            filmPane = new FilmPaneController(getStage());
             tab = new Tab("Filmliste laden");
             tab.setClosable(false);
             tab.setContent(filmPane);
             tabPane.getTabs().add(tab);
 
-            AnchorPane blackPane = new BlackListPaneController(getStage(), blackChanged);
+            blackPane = new BlackListPaneController(getStage(), blackChanged);
             tab = new Tab("Blacklist");
             tab.setClosable(false);
             tab.setContent(blackPane);
             tabPane.getTabs().add(tab);
 
-            AnchorPane downloadPane = new DownloadPaneController(getStage());
+            downloadPane = new DownloadPaneController(getStage());
             tab = new Tab("Download");
             tab.setClosable(false);
             tab.setContent(downloadPane);
             tabPane.getTabs().add(tab);
 
-            AnchorPane setPane = new SetPaneController(getStage());
+            setPane = new SetPaneController(getStage());
             tab = new Tab("Aufzeichnen/Abspielen");
             tab.setClosable(false);
             tab.setContent(setPane);

@@ -55,6 +55,10 @@ public class DestinationPane {
         this.stage = stage;
     }
 
+    public void close() {
+        unBindProgData();
+    }
+
     public void makePane(Collection<TitledPane> result) {
         VBox vBox = new VBox(10);
         vBox.setFillWidth(true);

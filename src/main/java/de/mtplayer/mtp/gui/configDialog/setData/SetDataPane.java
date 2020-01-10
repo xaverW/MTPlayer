@@ -41,6 +41,13 @@ public class SetDataPane {
         programPane = new ProgramPane(stage);
     }
 
+    public void close() {
+        setPane.close();
+        destinationPane.close();
+        downloadPane.close();
+        programPane.close();
+    }
+
     public void makeSetPane(Collection<TitledPane> result) {
         this.result = result;
 
@@ -72,5 +79,4 @@ public class SetDataPane {
             tp.setDisable(setData == null);
         }
     }
-
 }

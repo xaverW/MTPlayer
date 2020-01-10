@@ -19,82 +19,62 @@ package de.mtplayer.mtp.gui.mediaConfig;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.tools.HelpText;
-import de.p2tools.p2Lib.guiTools.PAccordion;
+import de.p2tools.p2Lib.dialogs.accordion.PAccordionPane;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class PaneConfigController extends AnchorPane {
+public class PaneConfigController extends PAccordionPane {
 
-    private VBox noaccordion = new VBox();
-    private final Accordion accordion = new Accordion();
-    private final HBox hBox = new HBox(0);
-    private final CheckBox cbxAccordion = new CheckBox("");
-    private final BooleanProperty accordionProp = ProgConfig.MEDIA_CONFIG_DIALOG_ACCORDION.getBooleanProperty();
-    private ScrollPane scrollPane = new ScrollPane();
+    private final RadioButton rbWithOutSuff = new RadioButton("keine Dateien mit diesem Suffix (z.B.: txt,xml,jpg");
+    private final RadioButton rbWithSuff = new RadioButton("nur Dateien mit diesem Suffix  (z.B.: mp4,flv,m4v");
+    private TextField txtSuff = new TextField();
+    private final PToggleSwitch tglNoHiddenFiles = new PToggleSwitch("keine versteckten Dateien suchen:");
 
     BooleanProperty propSuff = ProgConfig.MEDIA_DB_WITH_OUT_SUFFIX.getBooleanProperty();
     StringProperty propSuffStr = ProgConfig.MEDIA_DB_SUFFIX.getStringProperty();
     BooleanProperty propNoHiddenFiles = ProgConfig.MEDIA_DB_NO_HIDDEN_FILES.getBooleanProperty();
-    IntegerProperty selectedTab = ProgConfig.SYSTEM_MEDIA_DIALOG_CONFIG;
 
+    PaneConfigPath pane1;
+    PaneConfigPath pane2;
 
     private final ProgData progData;
     private final Stage stage;
 
     public PaneConfigController(Stage stage) {
+        super(stage, ProgConfig.MEDIA_CONFIG_DIALOG_ACCORDION.getBooleanProperty(), ProgConfig.SYSTEM_MEDIA_DIALOG_CONFIG);
         this.stage = stage;
         progData = ProgData.getInstance();
-
-        cbxAccordion.selectedProperty().bindBidirectional(accordionProp);
-        cbxAccordion.selectedProperty().addListener((observable, oldValue, newValue) -> setAccordion());
-
-        HBox.setHgrow(scrollPane, Priority.ALWAYS);
-        scrollPane.setFitToHeight(true);
-        scrollPane.setFitToWidth(true);
-
-        hBox.getChildren().addAll(cbxAccordion, scrollPane);
-        getChildren().addAll(hBox);
-
-        AnchorPane.setLeftAnchor(hBox, 10.0);
-        AnchorPane.setBottomAnchor(hBox, 10.0);
-        AnchorPane.setRightAnchor(hBox, 10.0);
-        AnchorPane.setTopAnchor(hBox, 10.0);
-
-        PAccordion.initAccordionPane(accordion, selectedTab);
-        setAccordion();
+        init();
     }
 
-    private void setAccordion() {
-        if (cbxAccordion.isSelected()) {
-            noaccordion.getChildren().clear();
-            accordion.getPanes().addAll(createPanes());
-            scrollPane.setContent(accordion);
+    public void close() {
+        super.close();
+        rbWithOutSuff.selectedProperty().unbindBidirectional(propSuff);
+        txtSuff.textProperty().unbindBidirectional(propSuffStr);
+        tglNoHiddenFiles.selectedProperty().unbindBidirectional(propNoHiddenFiles);
 
-            PAccordion.setAccordionPane(accordion, selectedTab);
-
-        } else {
-            accordion.getPanes().clear();
-            noaccordion.getChildren().addAll(createPanes());
-            scrollPane.setContent(noaccordion);
-        }
+        pane1.close();
+        pane2.close();
     }
 
-    private Collection<TitledPane> createPanes() {
+    public Collection<TitledPane> createPanes() {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
         makeConfig(result);
-        new PaneConfigPath(stage, false).make(result);
-        new PaneConfigPath(stage, true).make(result);
+        pane1 = new PaneConfigPath(stage, false);
+        pane1.make(result);
+        pane2 = new PaneConfigPath(stage, true);
+        pane2.make(result);
         return result;
     }
 
@@ -109,8 +89,6 @@ public class PaneConfigController extends AnchorPane {
         TitledPane tpConfig = new TitledPane("Allgemein", vBox);
         result.add(tpConfig);
 
-        final RadioButton rbWithOutSuff = new RadioButton("keine Dateien mit diesem Suffix (z.B.: txt,xml,jpg");
-        final RadioButton rbWithSuff = new RadioButton("nur Dateien mit diesem Suffix  (z.B.: mp4,flv,m4v");
         rbWithSuff.setSelected(!propSuff.getValue());
         rbWithOutSuff.selectedProperty().bindBidirectional(propSuff);
 
@@ -121,10 +99,7 @@ public class PaneConfigController extends AnchorPane {
         final Button btnHelp = PButton.helpButton(stage,
                 "Mediensammlungen verwalten", HelpText.MEDIA_COLLECTION);
 
-        TextField txtSuff = new TextField();
         txtSuff.textProperty().bindBidirectional(propSuffStr);
-
-        final PToggleSwitch tglNoHiddenFiles = new PToggleSwitch("keine versteckten Dateien suchen:");
         tglNoHiddenFiles.selectedProperty().bindBidirectional(propNoHiddenFiles);
 
         int row = 0;

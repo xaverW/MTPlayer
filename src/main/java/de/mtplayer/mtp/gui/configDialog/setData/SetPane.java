@@ -48,6 +48,10 @@ public class SetPane {
         this.stage = stage;
     }
 
+    public void close() {
+        unBindProgData();
+    }
+
     public void makePane(Collection<TitledPane> result) {
         changeListener = (observable, oldValue, newValue) -> ProgData.getInstance().setDataList.setListChanged();
 

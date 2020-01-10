@@ -25,7 +25,7 @@ import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.tools.update.SearchProgramUpdate;
 import de.p2tools.p2Lib.P2LibConst;
-import de.p2tools.p2Lib.guiTools.PAccordion;
+import de.p2tools.p2Lib.dialogs.accordion.PAccordionPane;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
@@ -33,26 +33,22 @@ import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import de.p2tools.p2Lib.tools.PStringUtils;
 import de.p2tools.p2Lib.tools.log.PLogger;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class ConfigPaneController extends AnchorPane {
+public class ConfigPaneController extends PAccordionPane {
 
     private final ProgData progData;
-    VBox noaccordion = new VBox();
-    private final Accordion accordion = new Accordion();
-    private final HBox hBox = new HBox(0);
-    private final CheckBox cbxAccordion = new CheckBox("");
 
     private final PToggleSwitch tglSearch = new PToggleSwitch("einmal am Tag nach einer neuen Programmversion suchen");
     private final PToggleSwitch tglSearchBeta = new PToggleSwitch("auch nach neuen Vorabversionen suchen");
@@ -62,7 +58,6 @@ public class ConfigPaneController extends AnchorPane {
 
     BooleanProperty logfileChanged = new SimpleBooleanProperty(false);
 
-    BooleanProperty accordionProp = ProgConfig.CONFIG_DIALOG_ACCORDION.getBooleanProperty();
     BooleanProperty propUpdateSearch = ProgConfig.SYSTEM_UPDATE_SEARCH.getBooleanProperty();
     BooleanProperty propUpdateBetaSearch = ProgConfig.SYSTEM_UPDATE_BETA_SEARCH.getBooleanProperty();
     BooleanProperty propAbo = ProgConfig.ABO_SEARCH_NOW.getBooleanProperty();
@@ -75,59 +70,55 @@ public class ConfigPaneController extends AnchorPane {
     BooleanProperty propSizeFilm = ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM.getBooleanProperty();
     BooleanProperty propSizeDownload = ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD.getBooleanProperty();
 
-    IntegerProperty selectedTab = ProgConfig.SYSTEM_CONFIG_DIALOG_CONFIG;
+    private final PToggleSwitch tglSearchAbo = new PToggleSwitch("Abos automatisch suchen:");
+    private final PToggleSwitch tglStartDownload = new PToggleSwitch("Downloads aus Abos sofort starten:");
+    private final PToggleSwitch tglSmallFilm = new PToggleSwitch("In der Tabelle \"Film\" nur kleine Button anzeigen:");
+    private final PToggleSwitch tglSmallDownload = new PToggleSwitch("In der Tabelle \"Download\" nur kleine Button anzeigen:");
+    private TextField txtUserAgent;
+    private final PToggleSwitch tglEnableLog = new PToggleSwitch("Ein Logfile anlegen:");
+    private TextField txtLogFile;
+    private TextField txtFileManager;
+    private TextField txtFileManagerVideo;
+    private TextField txtFileManagerWeb;
 
-    ScrollPane scrollPane = new ScrollPane();
     private final Stage stage;
+    private ColorPane colorPane;
+    private GeoPane geoPane;
 
     public ConfigPaneController(Stage stage) {
+        super(stage, ProgConfig.CONFIG_DIALOG_ACCORDION.getBooleanProperty(), ProgConfig.SYSTEM_CONFIG_DIALOG_CONFIG);
         this.stage = stage;
         progData = ProgData.getInstance();
 
-        cbxAccordion.selectedProperty().bindBidirectional(accordionProp);
-        cbxAccordion.selectedProperty().addListener((observable, oldValue, newValue) -> setAccordion());
-
-        HBox.setHgrow(scrollPane, Priority.ALWAYS);
-        scrollPane.setFitToHeight(true);
-        scrollPane.setFitToWidth(true);
-
-        hBox.getChildren().addAll(cbxAccordion, scrollPane);
-        getChildren().addAll(hBox);
-
-        accordion.setPadding(new Insets(1));
-        noaccordion.setPadding(new Insets(1));
-        noaccordion.setSpacing(1);
-
-        AnchorPane.setLeftAnchor(hBox, 10.0);
-        AnchorPane.setBottomAnchor(hBox, 10.0);
-        AnchorPane.setRightAnchor(hBox, 10.0);
-        AnchorPane.setTopAnchor(hBox, 10.0);
-
-        PAccordion.initAccordionPane(accordion, selectedTab);
-        setAccordion();
+        init();
     }
 
-    private void setAccordion() {
-        if (cbxAccordion.isSelected()) {
-            noaccordion.getChildren().clear();
-            accordion.getPanes().addAll(createPanes());
-            scrollPane.setContent(accordion);
-
-            PAccordion.setAccordionPane(accordion, selectedTab);
-
-        } else {
-            accordion.getPanes().clear();
-            noaccordion.getChildren().addAll(createPanes());
-            scrollPane.setContent(noaccordion);
-        }
+    public void close() {
+        super.close();
+        colorPane.close();
+        geoPane.close();
+        tglSearchAbo.selectedProperty().unbindBidirectional(propAbo);
+        tglStartDownload.selectedProperty().unbindBidirectional(propDown);
+        tglSmallFilm.selectedProperty().unbindBidirectional(propSizeFilm);
+        tglSmallDownload.selectedProperty().unbindBidirectional(propSizeDownload);
+        txtUserAgent.textProperty().unbindBidirectional(ProgConfig.SYSTEM_USERAGENT.getStringProperty());
+        tglEnableLog.selectedProperty().unbindBidirectional(propLog);
+        txtLogFile.textProperty().unbindBidirectional(propLogDir);
+        txtFileManager.textProperty().unbindBidirectional(propDir);
+        txtFileManagerVideo.textProperty().unbindBidirectional(propPlay);
+        txtFileManagerWeb.textProperty().unbindBidirectional(propUrl);
+        tglSearch.selectedProperty().unbindBidirectional(propUpdateSearch);
+        tglSearchBeta.selectedProperty().unbindBidirectional(propUpdateBetaSearch);
     }
 
-    private Collection<TitledPane> createPanes() {
+    public Collection<TitledPane> createPanes() {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
         makeConfig(result);
         makeLogfile(result);
-        new ColorPane(stage).makeColor(result);
-        result.add(new GeoPane(stage).makeGeo());
+        colorPane = new ColorPane(stage);
+        colorPane.makeColor(result);
+        geoPane = new GeoPane(stage);
+        geoPane.makeGeo(result);
         makeProg(result);
         makeUpdate(result);
         return result;
@@ -142,23 +133,19 @@ public class ConfigPaneController extends AnchorPane {
         TitledPane tpConfig = new TitledPane("Allgemein", gridPane);
         result.add(tpConfig);
 
-        final PToggleSwitch tglSearchAbo = new PToggleSwitch("Abos automatisch suchen:");
         tglSearchAbo.selectedProperty().bindBidirectional(propAbo);
         final Button btnHelpAbo = PButton.helpButton(stage, "Abos automatisch suchen",
                 HelpText.SEARCH_ABOS_IMMEDIATELY);
         GridPane.setHalignment(btnHelpAbo, HPos.RIGHT);
 
 
-        final PToggleSwitch tglStartDownload = new PToggleSwitch("Downloads aus Abos sofort starten:");
         tglStartDownload.selectedProperty().bindBidirectional(propDown);
         final Button btnHelpDownload = PButton.helpButton(stage, "Downloads sofort starten",
                 HelpText.START_DOWNLOADS_FROM_ABOS_IMMEDIATELY);
         GridPane.setHalignment(btnHelpDownload, HPos.RIGHT);
 
 
-        final PToggleSwitch tglSmallFilm = new PToggleSwitch("In der Tabelle \"Film\" nur kleine Button anzeigen:");
         tglSmallFilm.selectedProperty().bindBidirectional(propSizeFilm);
-        final PToggleSwitch tglSmallDownload = new PToggleSwitch("In der Tabelle \"Download\" nur kleine Button anzeigen:");
         tglSmallDownload.selectedProperty().bindBidirectional(propSizeDownload);
         final Button btnHelpSize = PButton.helpButton(stage, "Nur kleine Button anzeigen",
                 HelpText.SMALL_BUTTON);
@@ -168,7 +155,7 @@ public class ConfigPaneController extends AnchorPane {
         final Button btnHelpUserAgent = PButton.helpButton(stage, "User Agent festlegen",
                 HelpText.USER_AGENT);
         GridPane.setHalignment(btnHelpUserAgent, HPos.RIGHT);
-        TextField txtUserAgent = new TextField() {
+        txtUserAgent = new TextField() {
 
             @Override
             public void replaceText(int start, int end, String text) {
@@ -227,7 +214,6 @@ public class ConfigPaneController extends AnchorPane {
         TitledPane tpConfig = new TitledPane("Logfile", gridPane);
         result.add(tpConfig);
 
-        final PToggleSwitch tglEnableLog = new PToggleSwitch("Ein Logfile anlegen:");
         tglEnableLog.selectedProperty().bindBidirectional(propLog);
         tglEnableLog.selectedProperty().addListener(((observable, oldValue, newValue) -> {
             if (newValue == null) {
@@ -242,7 +228,7 @@ public class ConfigPaneController extends AnchorPane {
 
         final Button btnHelp = PButton.helpButton(stage, "Logfile", HelpText.LOGFILE);
 
-        TextField txtLogFile = new TextField();
+        txtLogFile = new TextField();
         txtLogFile.textProperty().bindBidirectional(propLogDir);
         if (txtLogFile.getText().isEmpty()) {
             txtLogFile.setText(ProgInfos.getLogDirectory_String());
@@ -310,12 +296,11 @@ public class ConfigPaneController extends AnchorPane {
         addVideoPlayer(gridPane, 2);
         addWebbrowser(gridPane, 4);
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow());
-
     }
 
     private void addFilemanager(GridPane gridPane, int row) {
         gridPane.add(new Label("Dateimanager zum Öffnen des Downloadordners"), 0, row);
-        TextField txtFileManager = new TextField();
+        txtFileManager = new TextField();
         txtFileManager.textProperty().bindBidirectional(propDir);
 
         final Button btnFile = new Button();
@@ -334,38 +319,38 @@ public class ConfigPaneController extends AnchorPane {
 
     private void addVideoPlayer(GridPane gridPane, int row) {
         gridPane.add(new Label("Videoplayer zum Abspielen gespeicherter Filme"), 0, row);
-        TextField txtFileManager = new TextField();
-        txtFileManager.textProperty().bindBidirectional(propPlay);
+        txtFileManagerVideo = new TextField();
+        txtFileManagerVideo.textProperty().bindBidirectional(propPlay);
 
         final Button btnFile = new Button();
         btnFile.setOnAction(event -> {
-            DirFileChooser.FileChooser(ProgData.getInstance().primaryStage, txtFileManager);
+            DirFileChooser.FileChooser(ProgData.getInstance().primaryStage, txtFileManagerVideo);
         });
         btnFile.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
         btnFile.setTooltip(new Tooltip("Einen Videoplayer zum Abspielen der gespeicherten Filme auswählen."));
 
         final Button btnHelp = PButton.helpButton(stage, "Videoplayer", HelpText.VIDEOPLAYER);
 
-        gridPane.add(txtFileManager, 0, row + 1);
+        gridPane.add(txtFileManagerVideo, 0, row + 1);
         gridPane.add(btnFile, 1, row + 1);
         gridPane.add(btnHelp, 2, row + 1);
     }
 
     private void addWebbrowser(GridPane gridPane, int row) {
         gridPane.add(new Label("Webbrowser zum Öffnen von URLs"), 0, row);
-        TextField txtFileManager = new TextField();
-        txtFileManager.textProperty().bindBidirectional(propUrl);
+        txtFileManagerWeb = new TextField();
+        txtFileManagerWeb.textProperty().bindBidirectional(propUrl);
 
         final Button btnFile = new Button();
         btnFile.setOnAction(event -> {
-            DirFileChooser.FileChooser(ProgData.getInstance().primaryStage, txtFileManager);
+            DirFileChooser.FileChooser(ProgData.getInstance().primaryStage, txtFileManagerWeb);
         });
         btnFile.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
         btnFile.setTooltip(new Tooltip("Einen Webbrowser zum Öffnen von URLs auswählen."));
 
         final Button btnHelp = PButton.helpButton(stage, "Webbrowser", HelpText.WEBBROWSER);
 
-        gridPane.add(txtFileManager, 0, row + 1);
+        gridPane.add(txtFileManagerWeb, 0, row + 1);
         gridPane.add(btnFile, 1, row + 1);
         gridPane.add(btnHelp, 2, row + 1);
     }

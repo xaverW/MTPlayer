@@ -30,12 +30,16 @@ import javafx.stage.Stage;
 
 public class UpdatePane {
     private final Stage stage;
+    private final PToggleSwitch tglSearch = new PToggleSwitch("einmal am Tag nach einer neuen Programmversion suchen");
+    BooleanProperty updateProp = ProgConfig.SYSTEM_UPDATE_SEARCH.getBooleanProperty();
 
     public UpdatePane(Stage stage) {
         this.stage = stage;
     }
 
-    BooleanProperty updateProp = ProgConfig.SYSTEM_UPDATE_SEARCH.getBooleanProperty();
+    public void close() {
+        tglSearch.selectedProperty().unbindBidirectional(updateProp);
+    }
 
     public TitledPane makeStart() {
         final GridPane gridPane = new GridPane();
@@ -43,19 +47,16 @@ public class UpdatePane {
         gridPane.setVgap(15);
         gridPane.setPadding(new Insets(20));
 
-
         //einmal am Tag Update suchen
-        final PToggleSwitch tglSearch = new PToggleSwitch("einmal am Tag nach einer neuen Programmversion suchen");
         tglSearch.selectedProperty().bindBidirectional(updateProp);
 
-        int row = 0;
-        gridPane.add(tglSearch, 0, ++row);
+        gridPane.add(tglSearch, 0, 0);
 
         final Button btnHelp = PButton.helpButton(stage, "Programmupdate suchen",
                 "Beim Programmstart wird geprüft, ob es eine neue Version des Programms gibt. Wenn es " +
                         "eine neue Version gibt, wird das mit einer Nachricht mitgeteilt. Es wird nicht " +
                         "automatisch das Programm verändert.");
-        gridPane.add(btnHelp, 1, row);
+        gridPane.add(btnHelp, 1, 0);
 
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow());
 

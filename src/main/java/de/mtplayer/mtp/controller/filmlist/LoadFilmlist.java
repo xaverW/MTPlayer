@@ -94,6 +94,10 @@ public class LoadFilmlist {
         notifyProgress.listeners.add(ListenerLoadFilmlist.class, listener);
     }
 
+    public void removeListenerLoadFilmlist(ListenerLoadFilmlist listener) {
+        notifyProgress.listeners.remove(ListenerLoadFilmlist.class, listener);
+    }
+
     public boolean getPropLoadFilmlist() {
         return propLoadFilmlist.get();
     }

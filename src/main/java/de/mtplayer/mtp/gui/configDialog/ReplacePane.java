@@ -50,7 +50,12 @@ public class ReplacePane {
     private final TextField txtTo = new TextField();
     private final GridPane gridPane = new GridPane();
     private ReplaceData replaceData = null;
+
+    private final PToggleSwitch tglAscii = new PToggleSwitch("nur ASCII-Zeichen erlauben");
+    private final PToggleSwitch tglReplace = new PToggleSwitch("Ersetzungstabelle");
+
     private final Stage stage;
+
 
     public ReplacePane(Stage stage) {
         this.stage = stage;
@@ -71,28 +76,26 @@ public class ReplacePane {
         VBox.setVgrow(tpReplace, Priority.ALWAYS);
     }
 
+    public void close() {
+        unbindText();
+        tglAscii.selectedProperty().unbindBidirectional(propAscii);
+        tglReplace.selectedProperty().unbindBidirectional(propReplace);
+    }
 
     private void makeAscii(VBox vBox) {
-
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
         gridPane.setVgap(15);
         gridPane.setPadding(new Insets(20));
-
         vBox.getChildren().add(gridPane);
 
-        final PToggleSwitch tglAscii = new PToggleSwitch("nur ASCII-Zeichen erlauben");
         tglAscii.selectedProperty().bindBidirectional(propAscii);
-
         final Button btnHelpAscii = PButton.helpButton(stage, "Nur ASCII-Zeichen",
                 HelpText.DOWNLOAD_ONLY_ASCII);
 
-        final PToggleSwitch tglReplace = new PToggleSwitch("Ersetzungstabelle");
         tglReplace.selectedProperty().bindBidirectional(propReplace);
-
         final Button btnHelpReplace = PButton.helpButton(stage, "Ersetzungstabelle",
                 HelpText.DOWNLOAD_REPLACELIST);
-
 
         gridPane.add(tglAscii, 0, 0);
         gridPane.add(btnHelpAscii, 1, 0);
@@ -209,10 +212,7 @@ public class ReplacePane {
             return;
         }
 
-        if (replaceData != null) {
-            txtFrom.textProperty().unbindBidirectional(replaceData.fromProperty());
-            txtTo.textProperty().unbindBidirectional(replaceData.toProperty());
-        }
+        unbindText();
 
         replaceData = replaceDataAct;
         gridPane.setDisable(replaceData == null);
@@ -222,4 +222,10 @@ public class ReplacePane {
         }
     }
 
+    private void unbindText() {
+        if (replaceData != null) {
+            txtFrom.textProperty().unbindBidirectional(replaceData.fromProperty());
+            txtTo.textProperty().unbindBidirectional(replaceData.toProperty());
+        }
+    }
 }

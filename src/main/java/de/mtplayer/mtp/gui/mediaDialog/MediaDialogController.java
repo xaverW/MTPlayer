@@ -124,9 +124,10 @@ public class MediaDialogController extends PDialogExtra {
         Listener.removeListener(listenerDbStart);
         Listener.removeListener(listenerDbStop);
 
-        paneMedia.mediaPaneClose();
+        paneAbo.close();
+        paneMedia.close();
 
-        progData.erledigteAbos.filteredListClearPred();
+        progData.erledigteAbos.filterdListSetPredFalse();
         progData.mediaDataList.filterdListSetPredFalse();
         super.close();
     }

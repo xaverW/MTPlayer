@@ -30,6 +30,7 @@ import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.PGuiTools;
 import de.p2tools.p2Lib.guiTools.POpen;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -59,6 +60,7 @@ public class PaneMedia extends ScrollPane {
     private ProgData progData = ProgData.getInstance();
     private String searchStr = "";
     private final Listener listenerDbStop;
+    private ChangeListener sizeListener;
 
     public PaneMedia(Stage stage) {
         initPanel();
@@ -70,8 +72,11 @@ public class PaneMedia extends ScrollPane {
         };
     }
 
-    void mediaPaneClose() {
+    public void close() {
         Listener.removeListener(listenerDbStop);
+        progData.mediaDataList.sizeProperty().removeListener(sizeListener);
+        progress.visibleProperty().unbind();
+        btnCreateMediaDB.disableProperty().unbind();
     }
 
     private void initPanel() {
@@ -79,7 +84,6 @@ public class PaneMedia extends ScrollPane {
         hBoxSum.setPadding(new Insets(10));
         hBoxSum.getChildren().addAll(new Label("Treffer:"), lblTrefferMedia,
                 PGuiTools.getHBoxGrower(), new Label("Anzahl Medien gesamt:"), lblGesamtMedia);
-
 
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(10));
@@ -105,7 +109,6 @@ public class PaneMedia extends ScrollPane {
         progress.setVisible(false);
         hBoxProgess.getChildren().addAll(progress, PGuiTools.getHBoxGrower(), btnCreateMediaDB);
 
-
         tableMedia.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
         VBox.setVgrow(tableMedia, Priority.ALWAYS);
 
@@ -118,8 +121,10 @@ public class PaneMedia extends ScrollPane {
     public void make() {
         Listener.addListener(listenerDbStop);
 
-        progData.mediaDataList.sizeProperty().addListener((observable, oldValue, newValue) ->
-                Platform.runLater(() -> lblGesamtMedia.setText(progData.mediaDataList.size() + "")));
+        sizeListener = (observable, oldValue, newValue) -> {
+            Platform.runLater(() -> lblGesamtMedia.setText(progData.mediaDataList.size() + ""));
+        };
+        progData.mediaDataList.sizeProperty().addListener(sizeListener);
 
         progress.visibleProperty().bind(progData.mediaDataList.searchingProperty());
         btnCreateMediaDB.disableProperty().bind(progData.mediaDataList.searchingProperty());
@@ -137,6 +142,22 @@ public class PaneMedia extends ScrollPane {
 
         initTableMedia();
         setTableMedia();
+    }
+
+    public void filter(String searchStr) {
+        this.searchStr = searchStr;
+        progData.mediaDataList.filteredListSetPredicate(media -> {
+            if (searchStr.isEmpty()) {
+                return false;
+            }
+            final Pattern p = Filter.makePattern(searchStr);
+            if (p != null) {
+                return filterMedia(media, p);
+            } else {
+                return filterMedia(media, searchStr);
+            }
+        });
+        lblTrefferMedia.setText(progData.mediaDataList.getFilteredList().size() + "");
     }
 
     private void play() {
@@ -197,22 +218,6 @@ public class PaneMedia extends ScrollPane {
         lblGesamtMedia.setText(progData.mediaDataList.size() + "");
     }
 
-
-    public void filter(String searchStr) {
-        this.searchStr = searchStr;
-        progData.mediaDataList.filteredListSetPredicate(media -> {
-            if (searchStr.isEmpty()) {
-                return false;
-            }
-            final Pattern p = Filter.makePattern(searchStr);
-            if (p != null) {
-                return filterMedia(media, p);
-            } else {
-                return filterMedia(media, searchStr);
-            }
-        });
-        lblTrefferMedia.setText(progData.mediaDataList.getFilteredList().size() + "");
-    }
 
     private boolean filterMedia(MediaData media, Pattern p) {
         return p.matcher(media.getName()).matches();

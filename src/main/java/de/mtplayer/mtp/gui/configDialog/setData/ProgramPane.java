@@ -64,6 +64,10 @@ public class ProgramPane {
         tableView.setItems(setData.getProgramList());
     }
 
+    public void close() {
+        unbind();
+    }
+
     public void makeProgs(Collection<TitledPane> result) {
         vBox.setFillWidth(true);
         vBox.setPadding(new Insets(10));
@@ -216,16 +220,7 @@ public class ProgramPane {
             return;
         }
 
-        if (programData != null) {
-            txtName.textProperty().unbindBidirectional(programData.nameProperty());
-            txtDestName.textProperty().unbindBidirectional(programData.destNameProperty());
-            txtProgPath.textProperty().unbindBidirectional(programData.progPathProperty());
-            txtProgSwitch.textProperty().unbindBidirectional(programData.progSwitchProperty());
-            txtPraefix.textProperty().unbindBidirectional(programData.praefixProperty());
-            txtSuffix.textProperty().unbindBidirectional(programData.suffixProperty());
-            tglRestart.selectedProperty().unbindBidirectional(programData.restartProperty());
-            tglDown.selectedProperty().unbindBidirectional(programData.downManagerProperty());
-        }
+        unbind();
 
         programData = programDataAct;
         gridPane.setDisable(programData == null);
@@ -238,6 +233,19 @@ public class ProgramPane {
             txtSuffix.textProperty().bindBidirectional(programData.suffixProperty());
             tglRestart.selectedProperty().bindBidirectional(programData.restartProperty());
             tglDown.selectedProperty().bindBidirectional(programData.downManagerProperty());
+        }
+    }
+
+    private void unbind() {
+        if (programData != null) {
+            txtName.textProperty().unbindBidirectional(programData.nameProperty());
+            txtDestName.textProperty().unbindBidirectional(programData.destNameProperty());
+            txtProgPath.textProperty().unbindBidirectional(programData.progPathProperty());
+            txtProgSwitch.textProperty().unbindBidirectional(programData.progSwitchProperty());
+            txtPraefix.textProperty().unbindBidirectional(programData.praefixProperty());
+            txtSuffix.textProperty().unbindBidirectional(programData.suffixProperty());
+            tglRestart.selectedProperty().unbindBidirectional(programData.restartProperty());
+            tglDown.selectedProperty().unbindBidirectional(programData.downManagerProperty());
         }
     }
 

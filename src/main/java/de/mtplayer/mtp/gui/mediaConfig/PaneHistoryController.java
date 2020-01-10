@@ -18,107 +18,112 @@ package de.mtplayer.mtp.gui.mediaConfig;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
+import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.history.HistoryData;
+import de.mtplayer.mtp.tools.storedFilter.Filter;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
-import de.p2tools.p2Lib.guiTools.PAccordion;
+import de.p2tools.p2Lib.dialogs.accordion.PAccordionPane;
 import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.collections.ListChangeListener;
+import javafx.collections.transformation.SortedList;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.regex.Pattern;
 
-public class PaneHistoryController extends AnchorPane {
+public class PaneHistoryController extends PAccordionPane {
 
-    private ScrollPane scrollPane = new ScrollPane();
-    private Label lblGesamtMedia = new Label();
-    private VBox noaccordion = new VBox();
-    private final Accordion accordion = new Accordion();
-    private final HBox hBox = new HBox(0);
-    private final CheckBox cbxAccordion = new CheckBox("");
+    private final TextField txtSearch = new TextField();
+    private final Label lblTreffer = new Label();
+    private final RadioButton rbTheme = new RadioButton("Thema");
+    private final RadioButton rbTitle = new RadioButton("Titel");
+    private final RadioButton rbTt = new RadioButton("Thema oder Titel");
 
-    BooleanProperty accordionProp = ProgConfig.MEDIA_CONFIG_DIALOG_ACCORDION.getBooleanProperty();
-    IntegerProperty selectedTab = ProgConfig.SYSTEM_MEDIA_DIALOG_HISTORY;
+    private final IntegerProperty search;
+    private ListChangeListener<HistoryData> listener;
 
     private final boolean history;
     private final ProgData progData;
     private final Stage stage;
 
     public PaneHistoryController(Stage stage, boolean history) {
+        super(stage, ProgConfig.MEDIA_CONFIG_DIALOG_ACCORDION.getBooleanProperty(), ProgConfig.SYSTEM_MEDIA_DIALOG_HISTORY);
         this.stage = stage;
         this.history = history;
         progData = ProgData.getInstance();
+        init();
 
-        cbxAccordion.selectedProperty().bindBidirectional(accordionProp);
-        cbxAccordion.selectedProperty().addListener((observable, oldValue, newValue) -> setAccordion());
-
-        scrollPane.setFitToHeight(true);
-        scrollPane.setFitToWidth(true);
-        HBox.setHgrow(scrollPane, Priority.ALWAYS);
-        hBox.getChildren().addAll(cbxAccordion, scrollPane);
-        getChildren().addAll(hBox);
-
-        AnchorPane.setLeftAnchor(hBox, 10.0);
-        AnchorPane.setBottomAnchor(hBox, 10.0);
-        AnchorPane.setRightAnchor(hBox, 10.0);
-        AnchorPane.setTopAnchor(hBox, 10.0);
-
-        PAccordion.initAccordionPane(accordion, selectedTab);
-        setAccordion();
-    }
-
-    private void setAccordion() {
-        if (cbxAccordion.isSelected()) {
-            noaccordion.getChildren().clear();
-            accordion.getPanes().addAll(createPanes());
-            scrollPane.setContent(accordion);
-
-            PAccordion.setAccordionPane(accordion, selectedTab);
-
-        } else {
-            accordion.getPanes().clear();
-            noaccordion.getChildren().addAll(createPanes());
-            scrollPane.setContent(noaccordion);
-        }
-    }
-
-    private Collection<TitledPane> createPanes() {
-        Collection<TitledPane> result = new ArrayList<TitledPane>();
-        makeTable(result);
         if (history) {
-            lblGesamtMedia.setText(progData.history.size() + "");
-            progData.history.addListener((ListChangeListener.Change<? extends HistoryData> c) -> {
-                Platform.runLater(() -> {
-                    lblGesamtMedia.setText(progData.history.size() + "");
-                });
-            });
+            search = ProgConfig.MEDIA_CONFIG_DIALOG_SEARCH_HISTORY.getIntegerProperty();
         } else {
-            lblGesamtMedia.setText(progData.erledigteAbos.size() + "");
-            progData.erledigteAbos.addListener((ListChangeListener.Change<? extends HistoryData> c) -> {
-                Platform.runLater(() -> {
-                    lblGesamtMedia.setText(progData.erledigteAbos.size() + "");
-                });
-            });
+            search = ProgConfig.MEDIA_CONFIG_DIALOG_SEARCH_ABO.getIntegerProperty();
         }
-
-        return result;
+        ToggleGroup tg = new ToggleGroup();
+        tg.getToggles().addAll(rbTheme, rbTitle, rbTt);
+        switch (search.get()) {
+            case 0:
+                rbTheme.setSelected(true);
+                break;
+            case 1:
+                rbTitle.setSelected(true);
+                break;
+            case 2:
+            default:
+                rbTt.setSelected(true);
+                break;
+        }
     }
 
-    private void makeTable(Collection<TitledPane> result) {
-        VBox vBox = new VBox(10);
+    public void close() {
+        super.close();
+        if (history) {
+            progData.history.removeListener(listener);
+        } else {
+            progData.erledigteAbos.removeListener(listener);
+        }
+    }
 
+    public Collection<TitledPane> createPanes() {
+        VBox vBox = new VBox(10);
+        Collection<TitledPane> result = new ArrayList();
         TitledPane tpConfig = new TitledPane(history ? "History" : "Downloads", vBox);
         result.add(tpConfig);
         tpConfig.setMaxHeight(Double.MAX_VALUE);
         VBox.setVgrow(tpConfig, Priority.ALWAYS);
 
+        initTable(vBox);
+        initFilter(vBox);
+        writeQuantity();
+
+        listener = new ListChangeListener<HistoryData>() {
+            @Override
+            public void onChanged(Change<? extends HistoryData> c) {
+                Platform.runLater(() -> {
+                    PaneHistoryController.this.writeQuantity();
+                });
+            }
+        };
+        if (history) {
+            progData.history.addListener(listener);
+        } else {
+            progData.erledigteAbos.addListener(listener);
+        }
+
+        return result;
+    }
+
+    private void initTable(VBox vBox) {
         TableView<HistoryData> tableView = new TableView<>();
         tableView.setMinHeight(Region.USE_PREF_SIZE);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -142,9 +147,15 @@ public class PaneHistoryController extends AnchorPane {
 
         tableView.getColumns().addAll(dateColumn, themeColumn, titleColumn, urlColumn);
         if (history) {
-            tableView.setItems(progData.history);
+            SortedList<HistoryData> sortedList = progData.history.getSortedList();
+            sortedList.comparatorProperty().bind(tableView.comparatorProperty());
+            progData.history.filterdListSetPredTrue();
+            tableView.setItems(sortedList);
         } else {
-            tableView.setItems(progData.erledigteAbos);
+            SortedList<HistoryData> sortedList = progData.erledigteAbos.getSortedList();
+            sortedList.comparatorProperty().bind(tableView.comparatorProperty());
+            progData.erledigteAbos.filterdListSetPredTrue();
+            tableView.setItems(sortedList);
         }
 
         tableView.setOnMousePressed(m -> {
@@ -153,16 +164,20 @@ public class PaneHistoryController extends AnchorPane {
                 historyDataArrayList.addAll(tableView.getSelectionModel().getSelectedItems());
                 if (historyDataArrayList.isEmpty()) {
                     PAlert.showInfoNoSelection();
+
                 } else {
                     ContextMenu contextMenu =
                             new PaneHistoryContextMenu(stage, historyDataArrayList, history).getContextMenu();
                     tableView.setContextMenu(contextMenu);
-
                 }
-
             }
         });
 
+        VBox.setVgrow(tableView, Priority.ALWAYS);
+        vBox.getChildren().addAll(tableView);
+    }
+
+    private void initFilter(VBox vBox) {
         Button btnDel = new Button("_Liste löschen");
         btnDel.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnDel.setOnAction(event -> {
@@ -173,16 +188,109 @@ public class PaneHistoryController extends AnchorPane {
             }
         });
 
-        HBox hBox = new HBox();
-        hBox.setSpacing(10);
-        Region region = new Region();
-        HBox.setHgrow(region, Priority.ALWAYS);
-        hBox.getChildren().addAll(new Label("Anzahl Medien gesamt:"), lblGesamtMedia,
-                region, btnDel);
+        Button btnClear = new Button();
+        btnClear.setGraphic(new ProgIcons().ICON_BUTTON_STOP);
+        btnClear.setOnAction(a -> txtSearch.clear());
 
-        VBox.setVgrow(tableView, Priority.ALWAYS);
-        vBox.getChildren().addAll(tableView, hBox);
+        HBox hBox = new HBox(10);
+        hBox.getChildren().addAll(new Label("Suchen: "), txtSearch, btnClear, lblTreffer);
+        HBox.setHgrow(txtSearch, Priority.ALWAYS);
+        hBox.setAlignment(Pos.CENTER_LEFT);
+        vBox.getChildren().addAll(hBox);
+
+        hBox = new HBox(10);
+        Label lbl = new Label();
+        lbl.setMaxWidth(Double.MAX_VALUE);
+        hBox.getChildren().addAll(rbTheme, rbTitle, rbTt, lbl, btnDel);
+        HBox.setHgrow(lbl, Priority.ALWAYS);
+        vBox.getChildren().addAll(hBox);
+
+        txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+            Filter.checkPattern1(txtSearch);
+            filter();
+        });
+        rbTheme.selectedProperty().addListener((o, ol, ne) -> filter());
+        rbTitle.selectedProperty().addListener((o, ol, ne) -> filter());
+        rbTt.selectedProperty().addListener((o, ol, ne) -> filter());
     }
 
+    private void filter() {
+        if (rbTheme.isSelected()) {
+            search.setValue(0);
+        } else if (rbTitle.isSelected()) {
+            search.setValue(1);
+        } else {
+            search.setValue(2);
+        }
+
+        final String search = txtSearch.getText().toLowerCase().trim();
+
+        if (history) {
+            progData.history.filteredListSetPred(historyData ->
+                    compare(search, historyData));
+
+        } else {
+            progData.erledigteAbos.filteredListSetPred(media ->
+                    compare(search, media));
+        }
+
+        writeQuantity();
+    }
+
+    private void writeQuantity() {
+        final int filtered;
+        final int sum;
+        if (history) {
+            filtered = progData.history.getFilteredList().size();
+            sum = progData.history.size();
+        } else {
+            filtered = progData.erledigteAbos.getFilteredList().size();
+            sum = progData.erledigteAbos.size();
+        }
+
+        if (sum != filtered) {
+            lblTreffer.setText("Anzahl: " + filtered + " von " + sum);
+        } else {
+            lblTreffer.setText("Anzahl: " + sum + "");
+        }
+    }
+
+    private boolean compare(String search, HistoryData media) {
+        if (search.isEmpty()) {
+            return true;
+        }
+        final Pattern p = Filter.makePattern(search);
+        if (p != null) {
+            return filterData(media, p);
+        } else {
+            return filterData(media, search);
+        }
+    }
+
+    private boolean filterData(HistoryData historyData, Pattern p) {
+        if (rbTheme.isSelected()) {
+            return (p.matcher(historyData.getTheme()).matches());
+        } else if (rbTitle.isSelected()) {
+            return (p.matcher(historyData.getTitle()).matches());
+        } else {
+            return (p.matcher(historyData.getTheme()).matches()) ||
+                    (p.matcher(historyData.getTitle()).matches());
+        }
+    }
+
+    private boolean filterData(HistoryData historyData, String search) {
+        if (search.isEmpty()) {
+            return true;
+        }
+
+        if (rbTheme.isSelected()) {
+            return (historyData.getTheme().toLowerCase().contains(search));
+        } else if (rbTitle.isSelected()) {
+            return (historyData.getTitle().toLowerCase().contains(search));
+        } else {
+            return (historyData.getTheme().toLowerCase().contains(search) ||
+                    historyData.getTitle().toLowerCase().contains(search));
+        }
+    }
 
 }

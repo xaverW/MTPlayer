@@ -60,10 +60,14 @@ public class BlackPane {
     private final TextField themeTitle = new TextField();
     private BlackData blackData = null;
 
+    private final RadioButton rbBlack = new RadioButton();
+    private final RadioButton rbWhite = new RadioButton();
+
     private final MenuButton mbChannel = new MenuButton("");
     private final ArrayList<CheckMenuItem> checkMenuItemsList = new ArrayList<>();
 
     BooleanProperty propWhite = ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST.getBooleanProperty();
+    ListenerLoadFilmlist listener;
 
     private final BooleanProperty blackChanged;
     private final Stage stage;
@@ -75,7 +79,6 @@ public class BlackPane {
 
     public void makeBlackTable(Collection<TitledPane> result) {
         final VBox vBox = new VBox();
-//        vBox.setFillWidth(true);
         vBox.setSpacing(10);
 
         makeConfig(vBox);
@@ -85,7 +88,11 @@ public class BlackPane {
         TitledPane tpBlack = new TitledPane("Blacklist", vBox);
         result.add(tpBlack);
         tpBlack.setMaxHeight(Double.MAX_VALUE);
-//        VBox.setVgrow(tpBlack, Priority.ALWAYS);
+    }
+
+    public void close() {
+        rbWhite.selectedProperty().unbindBidirectional(propWhite);
+        ProgData.getInstance().loadFilmlist.removeListenerLoadFilmlist(listener);
     }
 
     private void makeConfig(VBox vBox) {
@@ -96,8 +103,6 @@ public class BlackPane {
 
         vBox.getChildren().add(gridPane);
 
-        final RadioButton rbBlack = new RadioButton();
-        final RadioButton rbWhite = new RadioButton();
 
         final ToggleGroup group = new ToggleGroup();
         rbBlack.setToggleGroup(group);
@@ -211,7 +216,7 @@ public class BlackPane {
 
 
         // toDo -> vielleicht den ganzen Dialog sperren??
-        ProgData.getInstance().loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
+        ListenerLoadFilmlist listener = new ListenerLoadFilmlist() {
             @Override
             public void start(ListenerFilmlistLoadEvent event) {
                 btnSortList.setDisable(true);
@@ -223,7 +228,8 @@ public class BlackPane {
                 btnSortList.setDisable(false);
                 btnCountHits.setDisable(false);
             }
-        });
+        };
+        ProgData.getInstance().loadFilmlist.addListenerLoadFilmlist(listener);
 
 
         HBox hBoxCount = new HBox(10);

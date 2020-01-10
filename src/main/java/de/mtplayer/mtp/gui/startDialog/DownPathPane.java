@@ -28,6 +28,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class DownPathPane {
+    private final TextField txtPath = new TextField();
     StringProperty pathProp = ProgConfig.START_DIALOG_DOWNLOAD_PATH.getStringProperty();
 
     private final Stage stage;
@@ -36,17 +37,17 @@ public class DownPathPane {
         this.stage = stage;
     }
 
-    public TitledPane makePath() {
+    public void close() {
+        txtPath.textProperty().unbindBidirectional(pathProp);
+    }
 
+    public TitledPane makePath() {
         GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
         gridPane.setVgap(15);
         gridPane.setPadding(new Insets(20));
 
-
-        TextField txtPath = new TextField();
         txtPath.textProperty().bindBidirectional(pathProp);
-
         final Button btnFile = new Button();
         btnFile.setOnAction(event -> {
             DirFileChooser.DirChooser(stage, txtPath);
@@ -70,6 +71,4 @@ public class DownPathPane {
         TitledPane tpConfig = new TitledPane("Pfad für die Downloads", gridPane);
         return tpConfig;
     }
-
-
 }

@@ -78,7 +78,10 @@ public class ResetDialogController extends PDialogExtra {
                         P2LibConst.LINE_SEPARATORx2 +
                         "Abos und Blacklist bleiben erhalten.");
         setButton.setOnAction(e -> {
-            Platform.runLater(() -> new ImportSetDialogController(progData));
+            Platform.runLater(() -> {
+                ImportSetDialogController importSetDialogController = new ImportSetDialogController(progData);
+                importSetDialogController.close();
+            });
             close();
         });
 

@@ -32,6 +32,9 @@ public class StartPane {
         this.stage = stage;
     }
 
+    public void close() {
+    }
+
     public TitledPane makeStart1() {
 
         HBox hBox = new HBox();
@@ -41,7 +44,6 @@ public class StartPane {
         ImageView iv = new ImageView();
         Image im = getHelpScreen1();
         iv.setSmooth(true);
-//        iv.setCache(true);
         iv.setImage(im);
 
         hBox.getChildren().addAll(iv);
@@ -87,7 +89,6 @@ public class StartPane {
         ImageView iv = new ImageView();
         Image im = getHelpScreen2();
         iv.setSmooth(true);
-//        iv.setCache(true);
         iv.setImage(im);
 
         hBox.getChildren().addAll(iv);
@@ -125,5 +126,4 @@ public class StartPane {
                 600,
                 true, true);
     }
-
 }

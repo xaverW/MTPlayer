@@ -38,6 +38,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import static de.mtplayer.mLib.tools.Functions.getOs;
 
@@ -50,8 +52,28 @@ public class PathPane {
 
     private enum PLAYER {VLC, FLV, FFMPEG}
 
+    private class UnBind {
+        private TextField txt;
+        private StringProperty property;
+
+        UnBind(TextField txt, StringProperty property) {
+            this.txt = txt;
+            this.property = property;
+        }
+
+        void unbind() {
+            txt.textProperty().unbindBidirectional(property);
+        }
+    }
+
+    private List<UnBind> unbindList = new ArrayList<>();
+
     public PathPane(Stage stage) {
         this.stage = stage;
+    }
+
+    public void close() {
+        unbindList.stream().forEach(unBind -> unBind.unbind());
     }
 
     public TitledPane makePath() {
@@ -96,7 +118,6 @@ public class PathPane {
         StringProperty property;
         TextField txtPlayer = new TextField();
         final Button btnFind = new Button("suchen");
-//        btnFind.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         switch (player) {
             case FLV:
                 text = new Text("Pfad zum flvstreamer-Player auswählen");
@@ -150,6 +171,7 @@ public class PathPane {
         });
         txtPlayer.textProperty().bindBidirectional(property);
         gridPane.add(txtPlayer, 0, 1);
+        unbindList.add(new UnBind(txtPlayer, property));
 
         final Button btnFile = new Button();
         btnFile.setOnAction(event -> {

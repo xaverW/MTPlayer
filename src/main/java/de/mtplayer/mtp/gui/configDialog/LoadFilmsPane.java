@@ -32,6 +32,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class LoadFilmsPane {
 
@@ -42,6 +43,7 @@ public class LoadFilmsPane {
     final Button btnClearall = new Button("_wieder alles laden");
     private final Stage stage;
     private final ProgData progData;
+
     StringProperty propChannel = ProgConfig.SYSTEM_LOAD_NOT_SENDER.getStringProperty();
     IntegerProperty propDay = ProgConfig.SYSTEM_LOAD_FILMLIST_MAX_DAYS.getIntegerProperty();
     IntegerProperty propDuration = ProgConfig.SYSTEM_LOAD_FILMLIST_MIN_DURATION.getIntegerProperty();
@@ -56,7 +58,16 @@ public class LoadFilmsPane {
         this.progData = progData;
     }
 
+    public void close() {
+        slDays.valueProperty().unbindBidirectional(propDay);
+        slDuration.valueProperty().unbindBidirectional(propDuration);
+    }
+
     public TitledPane make() {
+        return make(null);
+    }
+
+    public TitledPane make(Collection<TitledPane> result) {
 
         final Button btnHelpDays = PButton.helpButton(stage, "Filmliste beim Laden filtern",
                 HelpText.LOAD_ONLY_FILMS);
@@ -155,7 +166,9 @@ public class LoadFilmsPane {
         }
 
         TitledPane tpConfig = new TitledPane("Filmliste bereits beim Laden filtern", vBox);
-
+        if (result != null) {
+            result.add(tpConfig);
+        }
         return tpConfig;
     }
 
@@ -214,5 +227,4 @@ public class LoadFilmsPane {
         propChannel.setValue(str);
         checkPropSender(aListCb);
     }
-
 }

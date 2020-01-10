@@ -200,6 +200,8 @@ public class ProgConfig extends MLConfig {
 
     // MediaDB
     public static MLConfigs MEDIA_CONFIG_DIALOG_SIZE = addNewKey("media-config-dialog-size", "800:700");
+    public static MLConfigs MEDIA_CONFIG_DIALOG_SEARCH_HISTORY = addNewKey("media-config-dialog-search-history", "0");
+    public static MLConfigs MEDIA_CONFIG_DIALOG_SEARCH_ABO = addNewKey("media-config-dialog-search-abo", "0");
     public static MLConfigs MEDIA_CONFIG_DIALOG_ACCORDION = addNewKey("media-config-dialog-accordion", Boolean.TRUE.toString());
     public static MLConfigs MEDIA_DIALOG_SIZE = addNewKey("media-dialog-size", "800:700");
     public static MLConfigs MEDIA_DB_SUFFIX = addNewKey("media-db-suffix");

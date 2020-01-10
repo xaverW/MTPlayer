@@ -44,6 +44,7 @@ import java.util.Collection;
 public class ColorPane {
     private final Stage stage;
     BooleanProperty propDarkTheme = ProgConfig.SYSTEM_DARK_THEME.getBooleanProperty();
+    private final PToggleSwitch tglDarkTheme = new PToggleSwitch("Dunkles Erscheinungsbild der Programmoberfläche");
 
     public ColorPane(Stage stage) {
         this.stage = stage;
@@ -60,7 +61,6 @@ public class ColorPane {
         gridPane.setVgap(15);
         gridPane.setPadding(new Insets(0, 0, 10, 0));
 
-        final PToggleSwitch tglDarkTheme = new PToggleSwitch("Dunkles Erscheinungsbild der Programmoberfläche");
         tglDarkTheme.selectedProperty().bindBidirectional(propDarkTheme);
         final Button btnHelpTheme = PButton.helpButton(stage, "Erscheinungsbild der Programmoberfläche",
                 HelpText.DARK_THEME);
@@ -86,6 +86,10 @@ public class ColorPane {
 
         TitledPane tpColor = new TitledPane("Farben", vBox);
         result.add(tpColor);
+    }
+
+    public void close() {
+        tglDarkTheme.selectedProperty().unbindBidirectional(propDarkTheme);
     }
 
     private void initTableColor(TableView<MLC> tableView) {

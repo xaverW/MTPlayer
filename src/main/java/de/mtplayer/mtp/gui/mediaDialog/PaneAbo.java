@@ -21,6 +21,7 @@ import de.mtplayer.mtp.controller.history.HistoryData;
 import de.mtplayer.mtp.tools.storedFilter.Filter;
 import de.p2tools.p2Lib.guiTools.PGuiTools;
 import javafx.application.Platform;
+import javafx.collections.ListChangeListener;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -45,8 +46,39 @@ public class PaneAbo extends ScrollPane {
     private ProgData progData = ProgData.getInstance();
     private String searchStr = "";
 
+    private ListChangeListener<HistoryData> listener;
+
     public PaneAbo(Stage stage) {
         initPanel();
+    }
+
+    public void make() {
+        listener = c -> Platform.runLater(() -> {
+            lblGesamtAbo.setText(progData.erledigteAbos.size() + "");
+            filter();
+        });
+        progData.erledigteAbos.addListener(listener);
+        initTableAbo();
+    }
+
+    public void close() {
+        progData.erledigteAbos.removeListener(listener);
+    }
+
+    public void filter(String searchStr) {
+        this.searchStr = searchStr;
+        progData.erledigteAbos.filteredListSetPred(media -> {
+            if (searchStr.isEmpty()) {
+                return false;
+            }
+            final Pattern p = Filter.makePattern(searchStr);
+            if (p != null) {
+                return filterAbo(media, p);
+            } else {
+                return filterAbo(media, searchStr);
+            }
+        });
+        lblTrefferAbo.setText(progData.erledigteAbos.getFilteredList().size() + "");
     }
 
     private void initPanel() {
@@ -76,17 +108,6 @@ public class PaneAbo extends ScrollPane {
         vBoxAbo.getChildren().addAll(hBox, tableAbo, gridPane);
 
         this.setContent(vBoxAbo);
-    }
-
-    public void make() {
-        progData.erledigteAbos.addListener((observable, oldValue, newValue) -> {
-            Platform.runLater(() -> {
-                lblGesamtAbo.setText(progData.erledigteAbos.size() + "");
-                filter();
-            });
-        });
-
-        initTableAbo();
     }
 
     private void initTableAbo() {
@@ -130,24 +151,8 @@ public class PaneAbo extends ScrollPane {
     }
 
 
-    public void filter() {
+    private void filter() {
         filter(searchStr);
-    }
-
-    public void filter(String searchStr) {
-        this.searchStr = searchStr;
-        progData.erledigteAbos.filteredListSetPred(media -> {
-            if (searchStr.isEmpty()) {
-                return false;
-            }
-            final Pattern p = Filter.makePattern(searchStr);
-            if (p != null) {
-                return filterAbo(media, p);
-            } else {
-                return filterAbo(media, searchStr);
-            }
-        });
-        lblTrefferAbo.setText(progData.erledigteAbos.getFilteredList().size() + "");
     }
 
     private boolean filterAbo(HistoryData historyData, Pattern p) {
@@ -158,5 +163,4 @@ public class PaneAbo extends ScrollPane {
         return (historyData.getTheme().toLowerCase().contains(search)
                 || historyData.getTitle().toLowerCase().contains(search));
     }
-
 }

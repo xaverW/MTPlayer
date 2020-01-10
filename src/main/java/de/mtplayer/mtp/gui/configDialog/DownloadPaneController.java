@@ -19,88 +19,60 @@ package de.mtplayer.mtp.gui.configDialog;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.tools.HelpText;
-import de.p2tools.p2Lib.guiTools.PAccordion;
+import de.p2tools.p2Lib.dialogs.accordion.PAccordionPane;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.IntegerProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.control.TitledPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class DownloadPaneController extends AnchorPane {
+public class DownloadPaneController extends PAccordionPane {
 
-    private final ProgData progData;
-    private final VBox noaccordion = new VBox();
-    private final Accordion accordion = new Accordion();
-    private final HBox hBox = new HBox(0);
-    private final CheckBox cbxAccordion = new CheckBox("");
-
-    BooleanProperty accordionProp = ProgConfig.CONFIG_DIALOG_ACCORDION.getBooleanProperty();
     BooleanProperty propNotify = ProgConfig.DOWNLOAD_SHOW_NOTIFICATION.getBooleanProperty();
     BooleanProperty propErr = ProgConfig.DOWNLOAD_ERROR_MSG.getBooleanProperty();
     BooleanProperty propOne = ProgConfig.DOWNLOAD_MAX_ONE_PER_SERVER.getBooleanProperty();
     BooleanProperty propBeep = ProgConfig.DOWNLOAD_BEEP.getBooleanProperty();
-    IntegerProperty selectedTab = ProgConfig.SYSTEM_CONFIG_DIALOG_DOWNLOAD;
 
-    private final ScrollPane scrollPane = new ScrollPane();
+    private final PToggleSwitch tglFinished = new PToggleSwitch("Benachrichtigung wenn abgeschlossen");
+    private final PToggleSwitch tglError = new PToggleSwitch("bei Downloadfehler Fehlermeldung anzeigen");
+    private final PToggleSwitch tglOne = new PToggleSwitch("nur ein Download pro Downloadserver");
+    private final PToggleSwitch tglBeep = new PToggleSwitch("nach jedem Download einen \"Beep\" ausgeben");
+    private ReplacePane replacePane;
+
+    private final ProgData progData;
     private final Stage stage;
 
     public DownloadPaneController(Stage stage) {
+        super(stage, ProgConfig.CONFIG_DIALOG_ACCORDION.getBooleanProperty(), ProgConfig.SYSTEM_CONFIG_DIALOG_DOWNLOAD);
         this.stage = stage;
         progData = ProgData.getInstance();
 
-        cbxAccordion.selectedProperty().bindBidirectional(accordionProp);
-        cbxAccordion.selectedProperty().addListener((observable, oldValue, newValue) -> setAccordion());
-
-        HBox.setHgrow(scrollPane, Priority.ALWAYS);
-        scrollPane.setFitToHeight(true);
-        scrollPane.setFitToWidth(true);
-
-        hBox.getChildren().addAll(cbxAccordion, scrollPane);
-        getChildren().addAll(hBox);
-
-        accordion.setPadding(new Insets(1));
-        noaccordion.setPadding(new Insets(1));
-        noaccordion.setSpacing(1);
-
-        AnchorPane.setLeftAnchor(hBox, 10.0);
-        AnchorPane.setBottomAnchor(hBox, 10.0);
-        AnchorPane.setRightAnchor(hBox, 10.0);
-        AnchorPane.setTopAnchor(hBox, 10.0);
-
-        PAccordion.initAccordionPane(accordion, selectedTab);
-        setAccordion();
+        init();
     }
 
-    private void setAccordion() {
-        if (cbxAccordion.isSelected()) {
-            noaccordion.getChildren().clear();
-            accordion.getPanes().addAll(createPanes());
-            scrollPane.setContent(accordion);
-
-            PAccordion.setAccordionPane(accordion, selectedTab);
-
-        } else {
-            accordion.getPanes().clear();
-            noaccordion.getChildren().addAll(createPanes());
-            scrollPane.setContent(noaccordion);
-        }
+    public void close() {
+        super.close();
+        replacePane.close();
+        tglFinished.selectedProperty().unbindBidirectional(propNotify);
+        tglError.selectedProperty().unbindBidirectional(propErr);
+        tglOne.selectedProperty().unbindBidirectional(propOne);
+        tglBeep.selectedProperty().unbindBidirectional(propBeep);
     }
 
-    private Collection<TitledPane> createPanes() {
+    public Collection<TitledPane> createPanes() {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
         makeDownload(result);
-        new ReplacePane(stage).makeReplaceListTable(result);
+        replacePane = new ReplacePane(stage);
+        replacePane.makeReplaceListTable(result);
         return result;
     }
 
@@ -113,34 +85,21 @@ public class DownloadPaneController extends AnchorPane {
         TitledPane tpConfig = new TitledPane("Download", gridPane);
         result.add(tpConfig);
 
-
-        final PToggleSwitch tglFinished = new PToggleSwitch("Benachrichtigung wenn abgeschlossen");
         tglFinished.selectedProperty().bindBidirectional(propNotify);
-
         final Button btnHelpFinished = PButton.helpButton(stage, "Download",
                 HelpText.DOWNLOAD_FINISHED);
 
-
-        final PToggleSwitch tglError = new PToggleSwitch("bei Downloadfehler Fehlermeldung anzeigen");
         tglError.selectedProperty().bindBidirectional(propErr);
-
         final Button btnHelpError = PButton.helpButton(stage, "Download",
                 HelpText.DOWNLOAD_ERROR);
 
-
-        final PToggleSwitch tglOne = new PToggleSwitch("nur ein Download pro Downloadserver");
         tglOne.selectedProperty().bindBidirectional(propOne);
-
         final Button btnHelpOne = PButton.helpButton(stage, "Download",
                 HelpText.DOWNLOAD_ONE_SERVER);
 
-
-        final PToggleSwitch tglBeep = new PToggleSwitch("nach jedem Download einen \"Beep\" ausgeben");
         tglBeep.selectedProperty().bindBidirectional(propBeep);
-
         final Button btnBeep = new Button("_Testen");
         btnBeep.setOnAction(a -> Toolkit.getDefaultToolkit().beep());
-
 
         GridPane.setHalignment(btnHelpFinished, HPos.RIGHT);
         GridPane.setHalignment(btnHelpError, HPos.RIGHT);

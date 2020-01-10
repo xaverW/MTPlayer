@@ -111,6 +111,9 @@ public class NoSetDialogController extends PDialogExtra {
     }
 
     private void importSet() {
-        Platform.runLater(() -> new ImportSetDialogController(progData));
+        Platform.runLater(() -> {
+            ImportSetDialogController importSetDialogController = new ImportSetDialogController(progData);
+            importSetDialogController.close();
+        });
     }
 }

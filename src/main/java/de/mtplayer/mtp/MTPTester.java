@@ -17,6 +17,7 @@
 
 package de.mtplayer.mtp;
 
+import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.Filmlist;
@@ -147,6 +148,11 @@ public class MTPTester {
             PToggleSwitch ptgl = new PToggleSwitch("Test");
             ptgl.setAllowIndeterminate(true);
 
+            Button btnText = new Button("change text");
+            btnText.setOnAction(a -> {
+                ProgConfig.MEDIA_DB_SUFFIX.getStringProperty().setValue("soso");
+            });
+
             int row = 0;
             gridPane.add(text, 0, row, 2, 1);
             gridPane.add(btnAddToHash, 0, ++row);
@@ -161,6 +167,7 @@ public class MTPTester {
             gridPane.add(btnMarkFilmFilterNotOk, 1, row);
             gridPane.add(btnStartWaiting, 0, ++row);
             gridPane.add(btnNotify, 0, ++row);
+            gridPane.add(btnText, 0, ++row);
 
             gridPane.add(ptgl, 0, ++row);
             gridPane.add(textArea, 0, ++row, 2, 1);
