@@ -54,6 +54,7 @@ public class ImportSetDialogController extends PDialogExtra {
 
     public void close() {
         setPaneController.close();
+        super.close();
     }
 
     @Override

@@ -101,7 +101,6 @@ public class StartDialogController extends PDialogExtra {
     }
 
     public void close() {
-        super.close();
         startPane1.close();
         startPane2.close();
         updatePane.close();
@@ -109,6 +108,7 @@ public class StartDialogController extends PDialogExtra {
         loadFilmsPane.close();
         downPathPane.close();
         pathPane.close();
+        super.close();
     }
 
     public boolean isOk() {

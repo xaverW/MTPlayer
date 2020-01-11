@@ -20,6 +20,7 @@ import de.mtplayer.mLib.tools.CheckBoxCell;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
+import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.mediaDb.MediaData;
 import de.mtplayer.mtp.controller.mediaDb.MediaFileSize;
 import de.mtplayer.mtp.tools.storedFilter.Filter;
@@ -120,8 +121,12 @@ public class PaneMediaListController extends PAccordionPane {
     }
 
     private void initFilter() {
+        Button btnClear = new Button();
+        btnClear.setGraphic(new ProgIcons().ICON_BUTTON_STOP);
+        btnClear.setOnAction(a -> txtSearch.clear());
+
         HBox hBox = new HBox(10);
-        hBox.getChildren().addAll(new Label("Suchen:"), txtSearch, lblTreffer);
+        hBox.getChildren().addAll(new Label("Suchen:"), txtSearch, btnClear, lblTreffer);
         HBox.setHgrow(txtSearch, Priority.ALWAYS);
         hBox.setAlignment(Pos.CENTER_LEFT);
         vBox.getChildren().addAll(hBox);
