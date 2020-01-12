@@ -4,8 +4,10 @@
 
 * Anordnung der Buttons nach BS
 * beim Schließen des Config-Dialogs Filmliste nur neu laden, wenn Blacklist geändert wurde
-* das Anlegen von Verzeichnissen bei Abos wurde deutlich erweitert
-* Möglichkeit nach Beta-Versionen zu suchen
+* die Möglichkeiten zum Anlegen von Verzeichnissen bei Abos wurde deutlich erweitert
+* Möglichkeit, auch bei neuer Beta-Version einen Hinweis angezeigt zu bekommen
+* Speicherverbrauch in den Dialogen verbessert
+* Suchmöglichkeit in der Mediensammlung, der History und den erledigten Abos im Dialog "Einstellungen der Mediensammlung"
 
 
 **Release 8**
