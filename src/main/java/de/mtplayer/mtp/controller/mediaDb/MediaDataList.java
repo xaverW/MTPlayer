@@ -53,20 +53,20 @@ public class MediaDataList extends SimpleListProperty<MediaData> {
     }
 
     // searching-property
-    public boolean getSearching() {
+    public synchronized boolean getSearching() {
         return searching.get();
     }
 
-    public BooleanProperty searchingProperty() {
+    public synchronized BooleanProperty searchingProperty() {
         return searching;
     }
 
-    public void setSearching(boolean searching) {
+    public synchronized void setSearching(boolean searching) {
         this.searching.set(searching);
     }
 
     // sorted/filtered list
-    public SortedList<MediaData> getSortedList() {
+    public synchronized SortedList<MediaData> getSortedList() {
         filteredList = getFilteredList();
         if (sortedList == null) {
             sortedList = new SortedList<>(filteredList);
@@ -74,7 +74,7 @@ public class MediaDataList extends SimpleListProperty<MediaData> {
         return sortedList;
     }
 
-    public FilteredList<MediaData> getFilteredList() {
+    public synchronized FilteredList<MediaData> getFilteredList() {
         if (filteredList == null) {
             filteredList = new FilteredList<>(this, p -> true);
         }
@@ -93,6 +93,13 @@ public class MediaDataList extends SimpleListProperty<MediaData> {
         filteredList.setPredicate(p -> true);
     }
 
+    public synchronized boolean addAllMediaData(List<MediaData> list) {
+        return this.addAll(list);
+    }
+
+    public synchronized boolean setAllMediaData(List<MediaData> list) {
+        return this.setAll(list);
+    }
 
     // **************************************************************
     // INTERNAL
@@ -164,11 +171,11 @@ public class MediaDataList extends SimpleListProperty<MediaData> {
         }
     }
 
-    public List<MediaData> getExternalMediaData() {
+    public synchronized List<MediaData> getExternalMediaData() {
         return this.stream().filter(mediaData -> mediaData.isExternal()).collect(Collectors.toList());
     }
 
-    public void checkExternalMediaData() {
+    public synchronized void checkExternalMediaData() {
         // checks duplicates in the mediaDataList and creates the counter in the pathList
         // beim kompletten Neuladen der MediaDB können ja nur externe doppelt sein
         final HashSet<String> hashSet = new HashSet<>(size());
@@ -186,7 +193,7 @@ public class MediaDataList extends SimpleListProperty<MediaData> {
         }
     }
 
-    public void countMediaData() {
+    public synchronized void countMediaData() {
         // creates the counter in the MediaCollectionDataList
         final MediaCollectionDataList mediaCollectionDataList = ProgData.getInstance().mediaCollectionDataList;
         mediaCollectionDataList.stream().forEach(collectionData -> collectionData.setCount(0));
@@ -220,11 +227,11 @@ public class MediaDataList extends SimpleListProperty<MediaData> {
         return new ReadMediaDb().read(urlPath);
     }
 
-    public synchronized void writeExternalMediaData() {
+    public void writeExternalMediaData() {
         final Path path = getPathMediaDB();
 
         ArrayList<String> logList = new ArrayList<>();
-        logList.add("MediaDB schreiben (" + ProgData.getInstance().mediaDataList.size() + " Dateien) :");
+        logList.add("MediaDB schreiben");
         logList.add("   --> Start Schreiben nach: " + path.toString());
 
         try {
@@ -239,6 +246,7 @@ public class MediaDataList extends SimpleListProperty<MediaData> {
             }
 
             List<MediaData> externalMediaData = getExternalMediaData();
+            logList.add("   --> Anzahl externe Medien: " + externalMediaData.size());
             new WriteMediaDb().write(path, externalMediaData);
             logList.add("   --> geschrieben!");
 

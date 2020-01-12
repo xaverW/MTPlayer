@@ -42,8 +42,13 @@ public class WriteMediaDb implements AutoCloseable {
     private OutputStream os = null;
     private final ArrayList<String> list = new ArrayList<>();
     private List<MediaData> mediaDbList;
+    private boolean writeLog = false;
 
     public WriteMediaDb() {
+    }
+
+    public WriteMediaDb(boolean writeLog) {
+        this.writeLog = writeLog;
     }
 
     public synchronized void write(Path file, List<MediaData> mediaDbList) {
@@ -51,7 +56,7 @@ public class WriteMediaDb implements AutoCloseable {
 
             this.mediaDbList = mediaDbList;
             xmlFilePath = file;
-            list.add("Medien schreiben nach: " + xmlFilePath.toString());
+            list.add("Medien schreiben nach (Anzahl: " + mediaDbList.size() + "): " + xmlFilePath.toString());
 
             writeXmlData();
 
@@ -63,7 +68,9 @@ public class WriteMediaDb implements AutoCloseable {
                             file.toString()));
         }
 
-        PLog.sysLog(list);
+        if (writeLog) {
+            PLog.sysLog(list);
+        }
     }
 
     private void writeXmlData() throws XMLStreamException, IOException {
@@ -79,7 +86,7 @@ public class WriteMediaDb implements AutoCloseable {
     }
 
     private void xmlWriteStart() throws IOException, XMLStreamException {
-        list.add("Start Schreiben nach: " + xmlFilePath.toAbsolutePath());
+        list.add("start Schreiben ....");
         os = Files.newOutputStream(xmlFilePath);
         out = new OutputStreamWriter(os, StandardCharsets.UTF_8);
 
