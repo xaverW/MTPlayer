@@ -1,8 +1,8 @@
 ## MTPlayer
 
-**Release 9**
+**nächste Version**
 
-* Anordnung der Buttons nach BS
+* Anordnung der Buttons (OK, Abbrechen, ..) passend zum Betriebssystem
 * beim Schließen des Config-Dialogs Filmliste nur neu laden, wenn Blacklist geändert wurde
 * die Möglichkeiten zum Anlegen von Verzeichnissen bei Abos wurde deutlich erweitert
 * Möglichkeit, auch bei neuer Beta-Version einen Hinweis angezeigt zu bekommen

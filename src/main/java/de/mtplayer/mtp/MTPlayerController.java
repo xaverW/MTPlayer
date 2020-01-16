@@ -40,6 +40,7 @@ import de.p2tools.p2Lib.tools.log.PLogger;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 
 public class MTPlayerController extends StackPane {
@@ -158,6 +159,7 @@ public class MTPlayerController extends StackPane {
         btnAbo.setOnAction(e -> selPanelAbo());
         btnAbo.setMaxWidth(Double.MAX_VALUE);
 
+        infoPane();
 
         // Menü
         final MenuItem miConfig = new MenuItem("Einstellungen des Programms");
@@ -266,6 +268,36 @@ public class MTPlayerController extends StackPane {
         splitPaneAbo.toFront();
         progData.aboGuiController.isShown();
         statusBarController.setStatusbarIndex(StatusBarController.StatusbarIndex.ABO);
+    }
+
+    private void infoPane() {
+        btnFilm.setOnMouseClicked(mouseEvent -> {
+            if (maskerPane.isVisible() ||
+                    !stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneFilm)) {
+                return;
+            }
+            if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+                ProgConfig.FILM_GUI_DIVIDER_ON.setValue(!ProgConfig.FILM_GUI_DIVIDER_ON.getBool());
+            }
+        });
+        btnDownload.setOnMouseClicked(mouseEvent -> {
+            if (maskerPane.isVisible() ||
+                    !stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneDownoad)) {
+                return;
+            }
+            if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+                ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.setValue(!ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.getBool());
+            }
+        });
+        btnAbo.setOnMouseClicked(mouseEvent -> {
+            if (maskerPane.isVisible() ||
+                    !stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneAbo)) {
+                return;
+            }
+            if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+                ProgConfig.ABO_GUI_DIVIDER_ON.setValue(!ProgConfig.ABO_GUI_DIVIDER_ON.getBool());
+            }
+        });
     }
 
     private void setButtonStyle(Button btnSel) {
