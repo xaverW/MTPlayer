@@ -61,11 +61,10 @@ public class DownPathPane {
                         "in dem die Downloads gespeichert werden.");
 
         int row = 0;
-        gridPane.add(new Label("Pfad:"), 0, ++row);
+        gridPane.add(new Label("Pfad:"), 0, row);
         gridPane.add(txtPath, 1, row);
         gridPane.add(btnFile, 2, row);
         gridPane.add(btnHelp, 3, row);
-
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(), PColumnConstraints.getCcComputedSizeAndHgrow());
 
         TitledPane tpConfig = new TitledPane("Pfad für die Downloads", gridPane);

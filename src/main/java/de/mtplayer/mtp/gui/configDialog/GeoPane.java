@@ -99,7 +99,7 @@ public class GeoPane {
         gridPane.setPadding(new Insets(20));
 
         int row = 0;
-        gridPane.add(tglGeo, 0, ++row, 2, 1);
+        gridPane.add(tglGeo, 0, row, 2, 1);
         gridPane.add(btnHelpGeo, 2, row);
 
         gridPane.add(new Label(" "), 0, ++row);

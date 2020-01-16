@@ -40,7 +40,7 @@ public class LoadFilmsPane {
     private final Slider slDuration = new Slider();
     private final Label lblDays = new Label("");
     private final Label lblDuration = new Label("");
-    final Button btnClearall = new Button("_wieder alles laden");
+    final Button btnClearall = new Button("_wieder alle Sender laden");
     private final Stage stage;
     private final ProgData progData;
 
@@ -76,9 +76,9 @@ public class LoadFilmsPane {
 
         initSlider();
 
-        final TilePane tilePane = new TilePane();
-        tilePane.setHgap(10);
-        tilePane.setVgap(10);
+        final TilePane tilePaneSender = new TilePane();
+        tilePaneSender.setHgap(10);
+        tilePaneSender.setVgap(10);
         ArrayList aListChannel = LoadFactory.getSenderListNotToLoad();
         ArrayList<CheckBox> aListCb = new ArrayList<>();
         for (String s : ProgConst.SENDER) {
@@ -90,7 +90,7 @@ public class LoadFilmsPane {
                 LoadFactory.checkAllSenderSelectedNotToLoad(stage);
             });
 
-            tilePane.getChildren().add(cb);
+            tilePaneSender.getChildren().add(cb);
             TilePane.setAlignment(cb, Pos.CENTER_LEFT);
         }
 
@@ -101,17 +101,19 @@ public class LoadFilmsPane {
         });
         checkPropSender(aListCb);
 
-
         final VBox vBox = new VBox(20);
-        vBox.setPadding(new Insets(25, 20, 20, 20));
+        vBox.setPadding(new Insets(20));
 
         final GridPane gridPane = new GridPane();
-        gridPane.setHgap(25);
+        gridPane.setHgap(15);
         gridPane.setVgap(15);
         gridPane.setPadding(new Insets(0));
+        Button btnEmty = new Button(" "); // ist nur für die Zeilenhöhe
+        btnEmty.setVisible(false);
 
         int row = 0;
-        gridPane.add(new Label("nur Filme der letzten Tage laden:                    "), 0, row, 2, 1);
+        gridPane.add(new Label("nur Filme der letzten Tage laden:"), 0, row, 2, 1);
+        gridPane.add(btnEmty, 3, row);
         gridPane.add(new Label("Filme laden:"), 0, ++row);
         gridPane.add(slDays, 1, row);
         gridPane.add(lblDays, 2, row);
@@ -130,22 +132,19 @@ public class LoadFilmsPane {
 
         vBox.getChildren().add(gridPane);
 
-
-        HBox hBoxSender1 = new HBox(10);
-        hBoxSender1.setAlignment(Pos.CENTER_RIGHT);
-        HBox.setHgrow(hBoxSender1, Priority.ALWAYS);
-        hBoxSender1.getChildren().addAll(btnHelpSender);
-
-        HBox hBoxSender2 = new HBox(10);
-        hBoxSender2.setAlignment(Pos.CENTER);
-        hBoxSender2.getChildren().addAll(new Label("diese Sender  *nicht*  laden:"), hBoxSender1);
-
-        vBox.getChildren().addAll(new Label(" "), hBoxSender2);
         HBox hBox = new HBox(10);
-        hBox.getChildren().addAll(tilePane, btnClearall);
-        HBox.setHgrow(tilePane, Priority.ALWAYS);
-        vBox.getChildren().add(hBox);
+        hBox.setAlignment(Pos.CENTER_LEFT);
+        Label lbl = new Label("diese Sender  *nicht*  laden:");
+        lbl.setMaxWidth(Double.MAX_VALUE);
+        hBox.getChildren().addAll(lbl, btnClearall, btnHelpSender);
+        HBox.setHgrow(lbl, Priority.ALWAYS);
+        vBox.getChildren().addAll(new Label(" "), hBox);
 
+        hBox = new HBox(10);
+        hBox.setAlignment(Pos.CENTER_LEFT);
+        hBox.getChildren().addAll(tilePaneSender);
+        HBox.setHgrow(tilePaneSender, Priority.ALWAYS);
+        vBox.getChildren().addAll(hBox);
 
         if (progData != null) {
             // im Startdialog brauchts das noch nicht
@@ -154,15 +153,10 @@ public class LoadFilmsPane {
                 progData.loadFilmlist.loadNewFilmlistFromServer(true);
             });
 
-            HBox hBoxLoadBtn = new HBox();
-            hBoxLoadBtn.setAlignment(Pos.CENTER_LEFT);
-            hBoxLoadBtn.getChildren().add(btnLoad);
-
-            VBox vBoxLoadBtn = new VBox(25);
-            vBoxLoadBtn.setAlignment(Pos.BOTTOM_LEFT);
-            VBox.setVgrow(vBoxLoadBtn, Priority.ALWAYS);
-            vBoxLoadBtn.getChildren().add(hBoxLoadBtn);
-            vBox.getChildren().addAll(new VBox(25), hBoxLoadBtn);
+            hBox = new HBox();
+            hBox.setAlignment(Pos.CENTER_LEFT);
+            hBox.getChildren().add(btnLoad);
+            vBox.getChildren().addAll(new Label(" "), hBox);
         }
 
         TitledPane tpConfig = new TitledPane("Filmliste bereits beim Laden filtern", vBox);

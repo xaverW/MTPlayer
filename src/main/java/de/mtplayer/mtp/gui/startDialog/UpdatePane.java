@@ -50,14 +50,14 @@ public class UpdatePane {
         //einmal am Tag Update suchen
         tglSearch.selectedProperty().bindBidirectional(updateProp);
 
-        gridPane.add(tglSearch, 0, 0);
 
         final Button btnHelp = PButton.helpButton(stage, "Programmupdate suchen",
                 "Beim Programmstart wird geprüft, ob es eine neue Version des Programms gibt. Wenn es " +
                         "eine neue Version gibt, wird das mit einer Nachricht mitgeteilt. Es wird nicht " +
                         "automatisch das Programm verändert.");
-        gridPane.add(btnHelp, 1, 0);
 
+        gridPane.add(tglSearch, 0, 0);
+        gridPane.add(btnHelp, 1, 0);
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow());
 
         TitledPane tpConfig = new TitledPane("Programmupdate", gridPane);

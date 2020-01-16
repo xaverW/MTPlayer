@@ -27,13 +27,12 @@ import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
 import javafx.beans.property.StringProperty;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -47,7 +46,8 @@ public class PathPane {
     StringProperty vlcProp = ProgConfig.SYSTEM_PATH_VLC.getStringProperty();
     StringProperty flvProp = ProgConfig.SYSTEM_PATH_FLVSTREAMER.getStringProperty();
     StringProperty ffmpegProp = ProgConfig.SYSTEM_PATH_FFMPEG.getStringProperty();
-
+    private GridPane gridPane = new GridPane();
+    private int row = 0;
     private final Stage stage;
 
     private enum PLAYER {VLC, FLV, FFMPEG}
@@ -77,57 +77,56 @@ public class PathPane {
     }
 
     public TitledPane makePath() {
-        VBox vBox = new VBox();
-        vBox.setSpacing(20);
-        vBox.setPadding(new Insets(25, 20, 20, 20));
+        gridPane.setHgap(15);
+        gridPane.setVgap(15);
+        gridPane.setPadding(new Insets(20));
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow());
+
+        Button btnEmpty = new Button(" "); // ist nur für die Zeilenhöhe
+        btnEmpty.setVisible(false);
+        gridPane.add(btnEmpty, 2, row);
 
         switch (getOs()) {
             case WIN32:
             case WIN64:
                 // da wird nur der VLC gebraucht, der Rest wird mitgeliefert
-                vBox.getChildren().add(addPlayer(PLAYER.VLC));
+                addPlayer(PLAYER.VLC);
                 break;
             default:
                 // da brauchs alles
-                vBox.getChildren().add(addPlayer(PLAYER.VLC));
-                vBox.getChildren().add(addPlayer(PLAYER.FLV));
-                vBox.getChildren().add(addPlayer(PLAYER.FFMPEG));
+                addPlayer(PLAYER.VLC);
+                gridPane.add(new Label(" "), 0, ++row);
+                ++row;
+                addPlayer(PLAYER.FLV);
+                gridPane.add(new Label(" "), 0, ++row);
+                ++row;
+                addPlayer(PLAYER.FFMPEG);
         }
 
         final Button btnHelp = PButton.helpButton(stage,
                 "Videoplayer", HelpText.PROG_PATHS);
+        gridPane.add(btnHelp, 2, ++row);
+        GridPane.setHalignment(btnHelp, HPos.RIGHT);
 
-        HBox hBox = new HBox();
-        VBox.setVgrow(hBox, Priority.ALWAYS);
-
-        hBox.setAlignment(Pos.BOTTOM_RIGHT);
-        hBox.getChildren().add(btnHelp);
-        vBox.getChildren().add(hBox);
-
-        TitledPane tpConfig = new TitledPane("Programmpfade", vBox);
+        TitledPane tpConfig = new TitledPane("Programmpfade", gridPane);
         return tpConfig;
     }
 
-    private GridPane addPlayer(PLAYER player) {
-        GridPane gridPane = new GridPane();
-        gridPane.setHgap(15);
-        gridPane.setVgap(15);
-
+    private void addPlayer(PLAYER player) {
         Text text;
         PHyperlink hyperlink;
         StringProperty property;
         TextField txtPlayer = new TextField();
         final Button btnFind = new Button("suchen");
+
         switch (player) {
             case FLV:
                 text = new Text("Pfad zum flvstreamer-Player auswählen");
-
                 property = flvProp;
                 btnFind.setOnAction(event -> {
                     ProgConfig.SYSTEM_PATH_FLVSTREAMER.setValue("");
                     txtPlayer.setText(SetsPrograms.getTemplatePathFlv());
                 });
-
                 hyperlink = new PHyperlink(stage,
                         ProgConst.ADRESSE_WEBSITE_FLVSTREAMER,
                         ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
@@ -139,7 +138,6 @@ public class PathPane {
                     ProgConfig.SYSTEM_PATH_FFMPEG.setValue("");
                     txtPlayer.setText(SetsPrograms.getTemplatePathFFmpeg());
                 });
-
                 hyperlink = new PHyperlink(stage,
                         ProgConst.ADRESSE_WEBSITE_FFMPEG,
                         ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
@@ -152,15 +150,14 @@ public class PathPane {
                     ProgConfig.SYSTEM_PATH_VLC.setValue("");
                     txtPlayer.setText(SetsPrograms.getTemplatePathVlc());
                 });
-
                 hyperlink = new PHyperlink(stage,
                         ProgConst.ADRESSE_WEBSITE_VLC,
                         ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
                 break;
         }
+
         text.setStyle("-fx-font-weight: bold");
 
-        gridPane.add(text, 0, 0);
         txtPlayer.textProperty().addListener((observable, oldValue, newValue) -> {
             File file = new File(txtPlayer.getText());
             if (!file.exists() || !file.isFile()) {
@@ -170,7 +167,6 @@ public class PathPane {
             }
         });
         txtPlayer.textProperty().bindBidirectional(property);
-        gridPane.add(txtPlayer, 0, 1);
         unbindList.add(new UnBind(txtPlayer, property));
 
         final Button btnFile = new Button();
@@ -179,22 +175,16 @@ public class PathPane {
         });
         btnFile.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
         btnFile.setTooltip(new Tooltip("Programmdatei auswählen."));
-        gridPane.add(btnFile, 1, 1);
-
-        gridPane.add(btnFind, 2, 1);
-
 
         HBox hBox = new HBox();
         hBox.setSpacing(10);
         hBox.setAlignment(Pos.CENTER_LEFT);
-
         hBox.getChildren().addAll(new Label("Website"), hyperlink);
-        gridPane.add(hBox, 0, 2, 3, 1);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow());
-
-        return gridPane;
+        gridPane.add(text, 0, row);
+        gridPane.add(txtPlayer, 0, ++row);
+        gridPane.add(btnFile, 1, row);
+        gridPane.add(btnFind, 2, row);
+        gridPane.add(hBox, 0, ++row, 3, 1);
     }
-
-
 }
