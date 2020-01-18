@@ -20,8 +20,8 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.gui.configDialog.GeoPane;
 import de.mtplayer.mtp.gui.configDialog.LoadFilmsPane;
-import de.p2tools.p2Lib.P2LibInit;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
+import de.p2tools.p2Lib.guiTools.PButton;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -32,12 +32,10 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 
 public class StartDialogController extends PDialogExtra {
 
-    private Stage stage = null;
     private boolean ok = false;
 
     private TilePane tilePane = new TilePane();
@@ -60,6 +58,8 @@ public class StartDialogController extends PDialogExtra {
 
     private enum State {START_1, START_2, UPDATE, GEO, FILM, DOWN, PATH}
 
+    private State aktState = State.START_1;
+
     private TitledPane tStart1;
     private TitledPane tStart2;
     private TitledPane tUpdate;
@@ -76,10 +76,7 @@ public class StartDialogController extends PDialogExtra {
     private DownPathPane downPathPane;
     private PathPane pathPane;
 
-
     private final ProgData progData;
-    private State aktState = State.START_1;
-
 
     public StartDialogController() {
         super(null, null, "Starteinstellungen", true, false);
@@ -90,17 +87,15 @@ public class StartDialogController extends PDialogExtra {
 
     @Override
     public void make() {
-        stage = getStage();
-        P2LibInit.addP2LibCssToScene(getStage().getScene());
-
-        addButton();
+        initTopButton();
         initStack();
         initButton();
-        selectActPane();
         initTooltip();
+        selectActPane();
     }
 
-    public void close() {
+    private void closeDialog(boolean ok) {
+        this.ok = ok;
         startPane1.close();
         startPane2.close();
         updatePane.close();
@@ -115,13 +110,14 @@ public class StartDialogController extends PDialogExtra {
         return ok;
     }
 
-    private void addButton() {
+    private void initTopButton() {
         getvBoxCont().getChildren().add(tilePane);
         tilePane.getChildren().addAll(btnStart1, btnStart2, btnUpdate, btnGeo, btnFilm, btnDown, btnPath);
         tilePane.setAlignment(Pos.CENTER);
         tilePane.setPadding(new Insets(10, 10, 20, 10));
         tilePane.setHgap(10);
         tilePane.setVgap(10);
+
         setButton(btnStart1, State.START_1);
         setButton(btnStart2, State.START_2);
         setButton(btnUpdate, State.UPDATE);
@@ -129,7 +125,6 @@ public class StartDialogController extends PDialogExtra {
         setButton(btnFilm, State.FILM);
         setButton(btnDown, State.DOWN);
         setButton(btnPath, State.PATH);
-        btnStart1.getStyleClass().add("btnStartDialogSel");
     }
 
     private void setButton(Button btn, State state) {
@@ -137,28 +132,8 @@ public class StartDialogController extends PDialogExtra {
         btn.setMaxWidth(Double.MAX_VALUE);
         btn.setOnAction(a -> {
             aktState = state;
-            btnStart1.getStyleClass().retainAll("btnStartDialog");
-            btnStart2.getStyleClass().retainAll("btnStartDialog");
-            btnUpdate.getStyleClass().retainAll("btnStartDialog");
-            btnGeo.getStyleClass().retainAll("btnStartDialog");
-            btnFilm.getStyleClass().retainAll("btnStartDialog");
-            btnDown.getStyleClass().retainAll("btnStartDialog");
-            btnPath.getStyleClass().retainAll("btnStartDialog");
-            btn.getStyleClass().add("btnStartDialogSel");
-            setButtonStyle(btnStart1);
             selectActPane();
         });
-    }
-
-    private void setButtonStyle(Button btnSel) {
-        btnStart1.getStyleClass().retainAll("btnStartDialog");
-        btnStart2.getStyleClass().retainAll("btnStartDialog");
-        btnUpdate.getStyleClass().retainAll("btnStartDialog");
-        btnGeo.getStyleClass().retainAll("btnStartDialog");
-        btnFilm.getStyleClass().retainAll("btnStartDialog");
-        btnDown.getStyleClass().retainAll("btnStartDialog");
-        btnPath.getStyleClass().retainAll("btnStartDialog");
-        btnSel.getStyleClass().add("btnStartDialogSel");
     }
 
     private void initStack() {
@@ -167,43 +142,43 @@ public class StartDialogController extends PDialogExtra {
         getvBoxCont().getChildren().add(stackpane);
 
         //startPane 1
-        startPane1 = new StartPane(stage);
+        startPane1 = new StartPane(getStage());
         tStart1 = startPane1.makeStart1();
         tStart1.setMaxHeight(Double.MAX_VALUE);
         tStart1.setCollapsible(false);
 
         //startPane 2
-        startPane2 = new StartPane(stage);
+        startPane2 = new StartPane(getStage());
         tStart2 = startPane2.makeStart2();
         tStart2.setMaxHeight(Double.MAX_VALUE);
         tStart2.setCollapsible(false);
 
         //updatePane
-        updatePane = new UpdatePane(stage);
+        updatePane = new UpdatePane(getStage());
         tUpdate = updatePane.makeStart();
         tUpdate.setMaxHeight(Double.MAX_VALUE);
         tUpdate.setCollapsible(false);
 
         //geoPane
-        geoPane = new GeoPane(stage);
+        geoPane = new GeoPane(getStage());
         tGeo = geoPane.makeGeo();
         tGeo.setMaxHeight(Double.MAX_VALUE);
         tGeo.setCollapsible(false);
 
         //filmPane
-        loadFilmsPane = new LoadFilmsPane(stage);
-        tFilm = loadFilmsPane.make(); // close aufrufen!!
+        loadFilmsPane = new LoadFilmsPane(getStage());
+        tFilm = loadFilmsPane.make();
         tFilm.setMaxHeight(Double.MAX_VALUE);
         tFilm.setCollapsible(false);
 
         //downPane
-        downPathPane = new DownPathPane(stage);
+        downPathPane = new DownPathPane(getStage());
         tDown = downPathPane.makePath();
         tDown.setMaxHeight(Double.MAX_VALUE);
         tDown.setCollapsible(false);
 
         //pathPane
-        pathPane = new PathPane(stage);
+        pathPane = new PathPane(getStage());
         tPath = pathPane.makePath();
         tPath.setMaxHeight(Double.MAX_VALUE);
         tPath.setCollapsible(false);
@@ -215,15 +190,13 @@ public class StartDialogController extends PDialogExtra {
         btnOk = new Button("_Ok");
         btnOk.setDisable(true);
         btnOk.setOnAction(a -> {
-            ok = true;
-            close();
+            closeDialog(true);
         });
 
         btnCancel = new Button("_Abbrechen");
-        btnCancel.setOnAction(a -> close());
+        btnCancel.setOnAction(a -> closeDialog(false));
 
-        btnNext = new Button("");
-        btnNext.setGraphic(new ProgIcons().ICON_BUTTON_NEXT);
+        btnNext = PButton.getButton(new ProgIcons().ICON_BUTTON_NEXT, "nächste Seite");
         btnNext.setOnAction(event -> {
             switch (aktState) {
                 case START_1:
@@ -249,8 +222,7 @@ public class StartDialogController extends PDialogExtra {
             }
             selectActPane();
         });
-        btnPrev = new Button("");
-        btnPrev.setGraphic(new ProgIcons().ICON_BUTTON_PREV);
+        btnPrev = PButton.getButton(new ProgIcons().ICON_BUTTON_PREV, "vorherige Seite");
         btnPrev.setOnAction(event -> {
             switch (aktState) {
                 case START_1:
@@ -338,6 +310,17 @@ public class StartDialogController extends PDialogExtra {
             default:
                 btnOk.setDisable(false);
         }
+    }
+
+    private void setButtonStyle(Button btnSel) {
+        btnStart1.getStyleClass().retainAll("btnStartDialog");
+        btnStart2.getStyleClass().retainAll("btnStartDialog");
+        btnUpdate.getStyleClass().retainAll("btnStartDialog");
+        btnGeo.getStyleClass().retainAll("btnStartDialog");
+        btnFilm.getStyleClass().retainAll("btnStartDialog");
+        btnDown.getStyleClass().retainAll("btnStartDialog");
+        btnPath.getStyleClass().retainAll("btnStartDialog");
+        btnSel.getStyleClass().add("btnStartDialogSel");
     }
 
     private void initTooltip() {

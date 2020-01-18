@@ -108,12 +108,14 @@ public class LoadFilmsPane {
         gridPane.setHgap(15);
         gridPane.setVgap(15);
         gridPane.setPadding(new Insets(0));
-        Button btnEmty = new Button(" "); // ist nur für die Zeilenhöhe
-        btnEmty.setVisible(false);
+        Button btnEmty1 = new Button(" "); // ist nur für die Zeilenhöhe
+        btnEmty1.setVisible(false);
+        Button btnEmty2 = new Button(" "); // ist nur für die Zeilenhöhe
+        btnEmty2.setVisible(false);
 
         int row = 0;
         gridPane.add(new Label("nur Filme der letzten Tage laden:"), 0, row, 2, 1);
-        gridPane.add(btnEmty, 3, row);
+        gridPane.add(btnEmty1, 3, row);
         gridPane.add(new Label("Filme laden:"), 0, ++row);
         gridPane.add(slDays, 1, row);
         gridPane.add(lblDays, 2, row);
@@ -124,6 +126,7 @@ public class LoadFilmsPane {
         gridPane.add(new Label("Filme laden:"), 0, ++row);
         gridPane.add(slDuration, 1, row);
         gridPane.add(lblDuration, 2, row);
+        gridPane.add(btnEmty2, 3, row);
 
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcPrefSize(),

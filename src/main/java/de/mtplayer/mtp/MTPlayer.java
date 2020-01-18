@@ -90,7 +90,6 @@ public class MTPlayer extends Application {
                 Platform.exit();
                 System.exit(0);
             }
-            startDialogController.close();
 
             //todo das ist noch nicht ganz klar ob dahin
             Platform.runLater(() -> {
