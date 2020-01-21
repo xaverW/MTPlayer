@@ -35,6 +35,7 @@ import de.p2tools.p2Lib.tools.PSystemUtils;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
+import javafx.collections.ListChangeListener;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Orientation;
@@ -146,55 +147,6 @@ public class DownloadGuiController extends AnchorPane {
             return;
         }
         DownloadFactory.deleteFilmFile(download.get());
-
-//        if (download.get().isStateStartedRun()) {
-//            PAlert.showErrorAlert("Film löschen", "Download läuft noch", "Download erst stoppen!");
-//        }
-//        try {
-//            File file = new File(download.get().getDestPathFile());
-//            if (!file.exists()) {
-//                PAlert.showErrorAlert("Film löschen", "", "Die Datei existiert nicht!");
-//                return;
-//            }
-//
-//            String header = "", text = "";
-//
-//            Path infoPath = null;
-//            if (download.get().getInfoFile()) {
-//                infoPath = MTInfoFile.getInfoFilePath(download.get());
-//            }
-//            Path subtitlePath = null;
-//            if (download.get().isSubtitle()) {
-//                subtitlePath = MTSubtitle.getSubtitlePath(download.get());
-//            }
-//
-//            if (infoPath != null || subtitlePath != null) {
-//                header = "Gespeicherten Film + Infofile löschen?";
-//            } else {
-//                header = "Gespeicherten Film löschen?";
-//            }
-//
-//            text = "Die Filmdatei löschen:" + PConst.LINE_SEPARATORx2 + download.get().getDestPathFile();
-//            if (infoPath != null) {
-//                text += PConst.LINE_SEPARATORx2 + "die Infodatei löschen:" + PConst.LINE_SEPARATOR + infoPath.getFileName().toString();
-//            } else if (subtitlePath != null) {
-//                text += PConst.LINE_SEPARATORx2 + "die Untertiteldatei löschen:" + PConst.LINE_SEPARATOR + subtitlePath.getFileName().toString();
-//            }
-//
-//            if (PAlert.showAlertOkCancel("Film Löschen?",
-//                    header, text)) {
-//
-//                // und jetzt die Datei löschen
-//                PLog.sysLog(new String[]{"Datei löschen: ", file.getAbsolutePath()});
-//                if (!file.delete()) {
-//                    throw new Exception();
-//                }
-//            }
-//        } catch (Exception ex) {
-//            PAlert.showErrorAlert("Film löschen", "Konnte die Datei nicht löschen!", "Fehler beim löschen von:" + PConst.LINE_SEPARATORx2 +
-//                    download.get().getDestPathFile());
-//            PLog.errorLog(915236547, "Fehler beim löschen: " + download.get().getDestPathFile());
-//        }
     }
 
     public void openDestinationDir() {
@@ -437,6 +389,12 @@ public class DownloadGuiController extends AnchorPane {
 
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             Platform.runLater(() -> setFilm());
+        });
+        tableView.getItems().addListener((ListChangeListener<Download>) c -> {
+            if (tableView.getItems().size() == 1) {
+                // wenns nur eine Zeile gibt, dann gleich selektieren
+                tableView.getSelectionModel().select(0);
+            }
         });
     }
 

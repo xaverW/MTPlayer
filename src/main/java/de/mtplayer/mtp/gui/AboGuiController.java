@@ -26,6 +26,7 @@ import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PTableFactory;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -204,6 +205,12 @@ public class AboGuiController extends AnchorPane {
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             final Abo abo = tableView.getSelectionModel().getSelectedItem();
             aboGuiInfoController.setAbo(abo);
+        });
+        tableView.getItems().addListener((ListChangeListener<Abo>) c -> {
+            if (tableView.getItems().size() == 1) {
+                // wenns nur eine Zeile gibt, dann gleich selektieren
+                tableView.getSelectionModel().select(0);
+            }
         });
     }
 
