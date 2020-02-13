@@ -16,10 +16,12 @@
 
 package de.mtplayer.mtp.controller.filmlist.loadFilmlist;
 
+import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.film.Filmlist;
 import de.mtplayer.mtp.controller.filmlist.filmlistUrls.SearchFilmListUrls;
 import de.p2tools.p2Lib.tools.log.PLog;
+import javafx.application.Platform;
 
 import javax.swing.event.EventListenerList;
 import java.util.ArrayList;
@@ -29,6 +31,7 @@ public class ImportNewFilmlistFromServer {
     private final EventListenerList eventListenerList;
     private final ReadFilmlist readFilmlist;
     private final ProgData progData;
+    private int savedBandwidth = ProgConfig.DOWNLOAD_MAX_BANDWITH_KBYTE.getInt();
 
     public ImportNewFilmlistFromServer(ProgData progData) {
         this.progData = progData;
@@ -37,6 +40,13 @@ public class ImportNewFilmlistFromServer {
         readFilmlist.addAdListener(new ListenerLoadFilmlist() {
             @Override
             public synchronized void start(ListenerFilmlistLoadEvent event) {
+                // save download bandwidth
+                savedBandwidth = ProgConfig.DOWNLOAD_MAX_BANDWITH_KBYTE.getInt();
+                PLog.sysLog("Bandbreite zurücksetzen für das Laden der Filmliste von: " + savedBandwidth + " auf 50");
+                Platform.runLater(() -> {
+                    ProgConfig.DOWNLOAD_MAX_BANDWITH_KBYTE.setValue(50);
+                });
+
                 for (final ListenerLoadFilmlist l : eventListenerList.getListeners(ListenerLoadFilmlist.class)) {
                     l.start(event);
                 }
@@ -52,6 +62,11 @@ public class ImportNewFilmlistFromServer {
 
             @Override
             public synchronized void finished(ListenerFilmlistLoadEvent event) {
+                // reset download bandwidth
+                PLog.sysLog("Bandbreite wieder herstellen: " + savedBandwidth);
+                Platform.runLater(() -> {
+                    ProgConfig.DOWNLOAD_MAX_BANDWITH_KBYTE.setValue(savedBandwidth);
+                });
             }
         });
     }
