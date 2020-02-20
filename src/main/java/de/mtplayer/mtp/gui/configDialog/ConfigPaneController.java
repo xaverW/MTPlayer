@@ -416,17 +416,9 @@ public class ConfigPaneController extends PAccordionPane {
     }
 
     private void checkUpdate() {
-
         SearchProgUpdate searchProgUpdate = new SearchProgUpdate(stage);
         searchProgUpdate.checkAll(ProgConst.ADRESSE_MTPLAYER_VERSION, ProgConst.ADRESSE_MTPLAYER_BETA_VERSION,
                 Functions.getProgVersionInt(), Functions.getBuildInt());
-
-
-//        SearchProgramUpdate searchProgramUpdate = new SearchProgramUpdate(stage);
-//        if (!searchProgramUpdate.checkVersion(true, true /* anzeigen */, false)) {
-//            // gibts nix, dann auch noch nach dem Beta suchen
-//            searchProgramUpdate.checkBetaVersion(true, true /* anzeigen */);
-//        }
     }
 
     private void checkBeta() {
