@@ -17,14 +17,15 @@
 package de.mtplayer.mtp.gui.configDialog;
 
 import de.mtplayer.mLib.tools.DirFileChooser;
+import de.mtplayer.mLib.tools.Functions;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.gui.tools.HelpText;
-import de.mtplayer.mtp.tools.update.SearchProgramUpdate;
 import de.p2tools.p2Lib.P2LibConst;
+import de.p2tools.p2Lib.checkForUpdates.SearchProgUpdate;
 import de.p2tools.p2Lib.dialogs.accordion.PAccordionPane;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
@@ -53,7 +54,6 @@ public class ConfigPaneController extends PAccordionPane {
     private final PToggleSwitch tglSearch = new PToggleSwitch("einmal am Tag nach einer neuen Programmversion suchen");
     private final PToggleSwitch tglSearchBeta = new PToggleSwitch("auch nach neuen Vorabversionen suchen");
     private final Button btnNow = new Button("_Jetzt suchen");
-    private final Button btnNowBeta = new Button("_Jetzt suchen");
     private Button btnHelpBeta;
 
     BooleanProperty logfileChanged = new SimpleBooleanProperty(false);
@@ -385,12 +385,7 @@ public class ConfigPaneController extends PAccordionPane {
                         "Das Programm wird aber nicht ungefragt ersetzt.");
 
         //jetzt suchen
-        btnNow.setOnAction(event -> new SearchProgramUpdate(stage)
-                .checkVersion(true, true /* anzeigen */, false));
-
-        btnNowBeta.setOnAction(event -> new SearchProgramUpdate(stage)
-                .checkBetaVersion(true, true /* anzeigen */));
-
+        btnNow.setOnAction(event -> checkUpdate());
         checkBeta();
         tglSearch.selectedProperty().addListener((ob, ol, ne) -> checkBeta());
 
@@ -404,17 +399,14 @@ public class ConfigPaneController extends PAccordionPane {
 
         int row = 0;
         gridPane.add(tglSearch, 0, row);
-        gridPane.add(btnNow, 1, row);
-        gridPane.add(btnHelp, 2, row);
-
-        gridPane.add(new Label(" "), 0, ++row);
+        gridPane.add(btnHelp, 1, row);
 
         gridPane.add(tglSearchBeta, 0, ++row);
-        gridPane.add(btnNowBeta, 1, row);
-        gridPane.add(btnHelpBeta, 2, row);
+        gridPane.add(btnHelpBeta, 1, row);
+
+        gridPane.add(btnNow, 0, ++row);
 
         gridPane.add(new Label(" "), 0, ++row);
-
         gridPane.add(hBoxHyper, 0, ++row);
 
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(),
@@ -423,15 +415,27 @@ public class ConfigPaneController extends PAccordionPane {
                 PColumnConstraints.getRcPrefSize(), PColumnConstraints.getRcVgrow(), PColumnConstraints.getRcPrefSize());
     }
 
+    private void checkUpdate() {
+
+        SearchProgUpdate searchProgUpdate = new SearchProgUpdate(stage);
+        searchProgUpdate.checkAll(ProgConst.ADRESSE_MTPLAYER_VERSION, ProgConst.ADRESSE_MTPLAYER_BETA_VERSION,
+                Functions.getProgVersionInt(), Functions.getBuildInt());
+
+
+//        SearchProgramUpdate searchProgramUpdate = new SearchProgramUpdate(stage);
+//        if (!searchProgramUpdate.checkVersion(true, true /* anzeigen */, false)) {
+//            // gibts nix, dann auch noch nach dem Beta suchen
+//            searchProgramUpdate.checkBetaVersion(true, true /* anzeigen */);
+//        }
+    }
+
     private void checkBeta() {
         if (tglSearch.isSelected()) {
             tglSearchBeta.setDisable(false);
-            btnNowBeta.setDisable(false);
             btnHelpBeta.setDisable(false);
         } else {
             tglSearchBeta.setDisable(true);
             tglSearchBeta.setSelected(false);
-            btnNowBeta.setDisable(true);
             btnHelpBeta.setDisable(true);
         }
     }

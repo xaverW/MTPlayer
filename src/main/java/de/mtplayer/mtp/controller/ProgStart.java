@@ -36,6 +36,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static java.lang.Thread.sleep;
 
@@ -208,35 +209,44 @@ public class ProgStart {
         // Prüfen obs ein Programmupdate gibt
         PDuration.onlyPing("checkProgUpdate");
 
-        if (ProgData.debug) {
+        if (Boolean.parseBoolean(ProgConfig.SYSTEM_UPDATE_SEARCH.get()) &&
+                !ProgConfig.SYSTEM_UPDATE_DATE.get().equals(StringFormatters.FORMATTER_yyyyMMdd.format(new Date()))) {
+
+            // nach Updates suchen
             runUpdateCheck();
-            return;
-        }
 
-        if (!Boolean.parseBoolean(ProgConfig.SYSTEM_UPDATE_SEARCH.get()) ||
-                ProgConfig.SYSTEM_UPDATE_DATE.get().equals(StringFormatters.FORMATTER_yyyyMMdd.format(new Date()))) {
-
+        } else {
             // will der User nicht --oder-- wurde heute schon gemacht
-            PLog.sysLog("Kein Update-Check");
-            return;
-        }
+            List list = new ArrayList(5);
+            list.add("Kein Update-Check");
 
-        runUpdateCheck();
+            if (!Boolean.parseBoolean(ProgConfig.SYSTEM_UPDATE_SEARCH.get())) {
+                list.add("  der User will nicht");
+            }
+            if (ProgConfig.SYSTEM_UPDATE_DATE.get().equals(StringFormatters.FORMATTER_yyyyMMdd.format(new Date()))) {
+                list.add("  heute schon gemacht");
+            }
+
+            if (ProgData.debug) {
+                // damits bei jedem Start gemacht wird
+                list.add("  DEBUG: Update-Check");
+                runUpdateCheck();
+            }
+
+            PLog.sysLog(list);
+        }
     }
 
     private void runUpdateCheck() {
         Thread th = new Thread(() -> {
             try {
-                if (new SearchProgramUpdate(progData.primaryStage)
-                        .checkVersion(false, false, true)) {
+                boolean searchBeta = ProgConfig.SYSTEM_UPDATE_BETA_SEARCH.getBool();
+                if (searchBeta && new SearchProgramUpdate(progData.primaryStage).checkAlsoBetaVersion() ||
+                        !searchBeta && new SearchProgramUpdate(progData.primaryStage).checkOnlyVersion()) {
                     Platform.runLater(() -> setUpdateTitle());
 
                 } else {
                     Platform.runLater(() -> setNoUpdateTitle());
-                    if (Boolean.parseBoolean(ProgConfig.SYSTEM_UPDATE_BETA_SEARCH.get())) {
-                        // gibt kein Update, dann wenn gewollt nach neuer Beta suchen
-                        new SearchProgramUpdate(progData.primaryStage).checkBetaVersion(false, false);
-                    }
                 }
 
                 sleep(10_000);
