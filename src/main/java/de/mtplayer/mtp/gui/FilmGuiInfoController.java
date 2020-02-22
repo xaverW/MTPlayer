@@ -69,6 +69,7 @@ public class FilmGuiInfoController {
         AnchorPane.setRightAnchor(vBox, 10.0);
         AnchorPane.setTopAnchor(vBox, 10.0);
         anchorPane.getChildren().add(vBox);
+        anchorPane.setMinHeight(0);
     }
 
     public void setFilm(Film film) {

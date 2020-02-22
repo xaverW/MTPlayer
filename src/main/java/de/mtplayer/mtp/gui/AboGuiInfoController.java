@@ -66,6 +66,7 @@ public class AboGuiInfoController {
         AnchorPane.setRightAnchor(gridPane, 0.0);
         AnchorPane.setTopAnchor(gridPane, 0.0);
         anchorPane.getChildren().add(gridPane);
+        anchorPane.setMinHeight(0);
     }
 
     public void setAbo(Abo newAbo) {
