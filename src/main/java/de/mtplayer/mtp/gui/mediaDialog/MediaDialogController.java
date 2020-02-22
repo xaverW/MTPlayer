@@ -25,6 +25,7 @@ import de.mtplayer.mtp.tools.storedFilter.Filter;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.tools.log.PLog;
+import javafx.beans.property.BooleanProperty;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -41,6 +42,7 @@ public class MediaDialogController extends PDialogExtra {
     private final RadioButton rbAbos = new RadioButton("erledigte Abos");
 
     private final StackPane stackPane = new StackPane();
+    private final BooleanProperty propSearchMedia = ProgConfig.SYSTEM_MEDIA_DIALOG_SEARCH_MEDIA;
 
     private PaneMedia paneMedia;
     private PaneAbo paneAbo;
@@ -107,11 +109,12 @@ public class MediaDialogController extends PDialogExtra {
         btnReset.setOnAction(a -> txtSearch.setText(searchStr));
         btnOk.setOnAction(a -> close());
 
-        rbMedien.setSelected(true);
+        rbMedien.selectedProperty().bindBidirectional(propSearchMedia);
         rbMedien.setOnAction(a -> {
             paneMedia.toFront();
             filter();
         });
+        rbAbos.setSelected(!propSearchMedia.get());
         rbAbos.setOnAction(a -> {
             paneAbo.toFront();
             filter();
@@ -121,6 +124,7 @@ public class MediaDialogController extends PDialogExtra {
     }
 
     public void close() {
+        rbMedien.selectedProperty().unbindBidirectional(propSearchMedia);
         Listener.removeListener(listenerDbStart);
         Listener.removeListener(listenerDbStop);
 

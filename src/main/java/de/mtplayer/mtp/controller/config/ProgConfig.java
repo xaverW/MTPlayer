@@ -28,7 +28,9 @@ import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.tools.PStringUtils;
 import de.p2tools.p2Lib.tools.PSystemUtils;
 import de.p2tools.p2Lib.tools.log.PLog;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 import java.util.ArrayList;
@@ -83,6 +85,17 @@ public class ProgConfig extends MLConfig {
     public static IntegerProperty SYSTEM_MEDIA_DIALOG_CONFIG = new SimpleIntegerProperty(-1);
     public static IntegerProperty SYSTEM_MEDIA_DIALOG_MEDIA = new SimpleIntegerProperty(-1);
     public static IntegerProperty SYSTEM_MEDIA_DIALOG_HISTORY = new SimpleIntegerProperty(-1);
+    public static BooleanProperty SYSTEM_MEDIA_DIALOG_SEARCH_MEDIA = new SimpleBooleanProperty(true);
+
+    // MediaDB
+    public static MLConfigs MEDIA_CONFIG_DIALOG_SIZE = addNewKey("media-config-dialog-size", "800:700");
+    public static MLConfigs MEDIA_CONFIG_DIALOG_SEARCH_HISTORY = addNewKey("media-config-dialog-search-history", "0");
+    public static MLConfigs MEDIA_CONFIG_DIALOG_SEARCH_ABO = addNewKey("media-config-dialog-search-abo", "0");
+    public static MLConfigs MEDIA_CONFIG_DIALOG_ACCORDION = addNewKey("media-config-dialog-accordion", Boolean.TRUE.toString());
+    public static MLConfigs MEDIA_DIALOG_SIZE = addNewKey("media-dialog-size", "800:700");
+    public static MLConfigs MEDIA_DB_SUFFIX = addNewKey("media-db-suffix");
+    public static MLConfigs MEDIA_DB_WITH_OUT_SUFFIX = addNewKey("media-db-with-out-suffix");
+    public static MLConfigs MEDIA_DB_NO_HIDDEN_FILES = addNewKey("media-db-no-hidden-files");
 
     // Configs
     public static MLConfigs SYSTEM_USERAGENT = addNewKey("system-useragent", ProgConst.USER_AGENT_DEFAULT);    // Useragent für direkte Downloads
@@ -161,7 +174,7 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs DOWNLOAD_GUI_TABLE_ORDER = addNewKey("download-gui-table-order");
     public static MLConfigs DOWNLOAD_SHOW_NOTIFICATION = addNewKey("download-show-notification", Boolean.TRUE.toString());
 
-    // downloadchart
+    // Downloadchart
     public static MLConfigs DOWNLOAD_CHART_SEPARAT = addNewKey("download-chart-separat", Boolean.TRUE.toString());
     public static MLConfigs DOWNLOAD_CHART_MAX_TIME = addNewKey("download-chart-max-time", 30);
 
@@ -197,16 +210,6 @@ public class ProgConfig extends MLConfig {
     // FilmInfoDialog
     public static MLConfigs FILM_INFO_DIALOG_SHOW_URL = addNewKey("film-info-dialog-show-url", Boolean.TRUE.toString());
 //    public static MLConfigs FILM_INFO_DIALOG_SHOW_URL_INDERTERMINATE = addNewKey("film-info-dialog-show-url-indeterminate", Boolean.TRUE.toString());
-
-    // MediaDB
-    public static MLConfigs MEDIA_CONFIG_DIALOG_SIZE = addNewKey("media-config-dialog-size", "800:700");
-    public static MLConfigs MEDIA_CONFIG_DIALOG_SEARCH_HISTORY = addNewKey("media-config-dialog-search-history", "0");
-    public static MLConfigs MEDIA_CONFIG_DIALOG_SEARCH_ABO = addNewKey("media-config-dialog-search-abo", "0");
-    public static MLConfigs MEDIA_CONFIG_DIALOG_ACCORDION = addNewKey("media-config-dialog-accordion", Boolean.TRUE.toString());
-    public static MLConfigs MEDIA_DIALOG_SIZE = addNewKey("media-dialog-size", "800:700");
-    public static MLConfigs MEDIA_DB_SUFFIX = addNewKey("media-db-suffix");
-    public static MLConfigs MEDIA_DB_WITH_OUT_SUFFIX = addNewKey("media-db-with-out-suffix");
-    public static MLConfigs MEDIA_DB_NO_HIDDEN_FILES = addNewKey("media-db-no-hidden-files");
 
     // Filter Filme
     public static MLConfigs FILTER_FILME_SEL_FILTER = addNewKey("filter-filme-sel-filter");
