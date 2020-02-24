@@ -28,6 +28,7 @@ import de.mtplayer.mtp.gui.tools.table.Table;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PColor;
+import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
@@ -35,7 +36,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseButton;
+import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.TilePane;
 
@@ -57,6 +58,7 @@ public class FilmGuiController extends AnchorPane {
     private final ProgData progData;
     private boolean bound = false;
     private final SortedList<Film> sortedList;
+    private final KeyCombination STRG_A = new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_ANY);
 
     DoubleProperty splitPaneProperty = ProgConfig.FILM_GUI_DIVIDER.getDoubleProperty();
     BooleanProperty boolInfoOn = ProgConfig.FILM_GUI_DIVIDER_ON.getBooleanProperty();
@@ -289,6 +291,8 @@ public class FilmGuiController extends AnchorPane {
         }
     }
 
+    int count = 0;
+
     private void initTable() {
         tableView.setTableMenuButtonVisible(true);
 
@@ -319,8 +323,19 @@ public class FilmGuiController extends AnchorPane {
             }
         });
 
+        tableView.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
+            if (STRG_A.match(event)) {
+                if (tableView.getItems().size() > 3_000) {
+                    // bei sehr langen Listen dauert das seeeeeehr lange
+                    PLog.sysLog("STRG-A: lange Liste -> verhindern");
+                    event.consume();
+                }
+            }
+        });
+
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
-                Platform.runLater(this::setFilm));
+                Platform.runLater(this::setFilm)
+        );
 
     }
 
