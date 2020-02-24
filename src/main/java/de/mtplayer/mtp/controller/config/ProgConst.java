@@ -116,27 +116,27 @@ public class ProgConst {
     public static final String FILTER_ALL = "alles"; // im config bei "alles" steht das dann
 
 
-    private static final String DREISAT = "3Sat";
-    private static final String ARD = "ARD";
-    private static final String ARTE_DE = "ARTE.DE";
-    private static final String ARTE_FR = "ARTE.FR";
-    private static final String BR = "BR";
-    private static final String DW = "DW";
-    private static final String HR = "HR";
-    private static final String KIKA = "KiKA";
-    private static final String MDR = "MDR";
-    private static final String NDR = "NDR";
-    private static final String ORF = "ORF";
-    private static final String PHOENIX = "PHOENIX";
-    private static final String RBB = "RBB";
-    private static final String RBB_TV = "RBTV";
-    private static final String SR = "SR";
-    private static final String SRF = "SRF";
-    private static final String SRF_PODCAST = "SRF.Podcast";
-    private static final String SWR = "SWR";
-    private static final String WDR = "WDR";
-    private static final String ZDF = "ZDF";
-    private static final String ZDF_TIVI = "ZDF-tivi";
+    public static final String DREISAT = "3Sat";
+    public static final String ARD = "ARD";
+    public static final String ARTE_DE = "ARTE.DE";
+    public static final String ARTE_FR = "ARTE.FR";
+    public static final String BR = "BR";
+    public static final String DW = "DW";
+    public static final String HR = "HR";
+    public static final String KIKA = "KiKA";
+    public static final String MDR = "MDR";
+    public static final String NDR = "NDR";
+    public static final String ORF = "ORF";
+    public static final String PHOENIX = "PHOENIX";
+    public static final String RBB = "RBB";
+    public static final String RBB_TV = "rbtv";
+    public static final String SR = "SR";
+    public static final String SRF = "SRF";
+    public static final String SRF_PODCAST = "SRF.Podcast";
+    public static final String SWR = "SWR";
+    public static final String WDR = "WDR";
+    public static final String ZDF = "ZDF";
+    public static final String ZDF_TIVI = "ZDF-tivi";
 
     public static final String[] SENDER = {DREISAT, ARD, ARTE_DE, ARTE_FR,
             BR, DW, HR, KIKA, MDR, NDR, ORF, PHOENIX, RBB, RBB_TV, SR,
