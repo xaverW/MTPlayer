@@ -78,16 +78,7 @@ public class MediaDialogController extends PDialogExtra {
 
     @Override
     public void make() {
-        paneMedia = new PaneMedia(getStage());
-        paneAbo = new PaneAbo(getStage());
-        paneMedia.make();
-        paneAbo.make();
-
         initPanel();
-
-        final ToggleGroup tg = new ToggleGroup();
-        rbMedien.setToggleGroup(tg);
-        rbAbos.setToggleGroup(tg);
 
         Listener.addListener(listenerDbStart);
         Listener.addListener(listenerDbStop);
@@ -96,7 +87,6 @@ public class MediaDialogController extends PDialogExtra {
             Filter.checkPattern1(txtSearch);
             filter();
         });
-
         txtSearch.setOnMouseClicked(event -> {
             if (event.getClickCount() > 1) {
                 String sel = txtSearch.getSelectedText();
@@ -109,17 +99,20 @@ public class MediaDialogController extends PDialogExtra {
         btnReset.setOnAction(a -> txtSearch.setText(searchStr));
         btnOk.setOnAction(a -> close());
 
+        final ToggleGroup group = new ToggleGroup();
+        rbMedien.setToggleGroup(group);
+        rbAbos.setToggleGroup(group);
         rbMedien.selectedProperty().bindBidirectional(propSearchMedia);
         rbMedien.setOnAction(a -> {
-            paneMedia.toFront();
+            setPane();
             filter();
         });
         rbAbos.setSelected(!propSearchMedia.get());
         rbAbos.setOnAction(a -> {
-            paneAbo.toFront();
+            setPane();
             filter();
         });
-
+        setPane();
         filter();
     }
 
@@ -143,31 +136,39 @@ public class MediaDialogController extends PDialogExtra {
             hBox.getChildren().addAll(txtSearch, btnReset);
             getvBoxCont().getChildren().add(hBox);
 
-            final ToggleGroup group = new ToggleGroup();
-            rbMedien.setToggleGroup(group);
-            rbAbos.setToggleGroup(group);
             hBox = new HBox(20);
             hBox.getChildren().addAll(rbMedien, rbAbos);
             getvBoxCont().getChildren().add(hBox);
 
             // Stackpane
+            paneMedia = new PaneMedia(getStage());
+            paneMedia.make();
             paneMedia.setFitToHeight(true);
             paneMedia.setFitToWidth(true);
+
+            paneAbo = new PaneAbo(getStage());
+            paneAbo.make();
             paneAbo.setFitToHeight(true);
             paneAbo.setFitToWidth(true);
 
             stackPane.getChildren().addAll(paneMedia, paneAbo);
             VBox.setVgrow(stackPane, Priority.ALWAYS);
             getvBoxCont().getChildren().add(stackPane);
-            paneMedia.toFront();
 
             Button btnHelp = PButton.helpButton(getStage(),
                     "Suche in der Mediensammlung", HelpText.SEARCH_MEDIA_DIALOG);
-
             addOkButton(btnOk);
             addHlpButton(btnHelp);
         } catch (final Exception ex) {
             PLog.errorLog(951203030, ex);
+        }
+    }
+
+    private void setPane() {
+        if (rbMedien.isSelected()) {
+            paneMedia.toFront();
+        } else {
+            paneAbo.toFront();
         }
     }
 

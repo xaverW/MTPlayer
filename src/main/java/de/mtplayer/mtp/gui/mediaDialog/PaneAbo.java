@@ -45,7 +45,6 @@ public class PaneAbo extends ScrollPane {
 
     private ProgData progData = ProgData.getInstance();
     private String searchStr = "";
-
     private ListChangeListener<HistoryData> listener;
 
     public PaneAbo(Stage stage) {
@@ -144,12 +143,11 @@ public class PaneAbo extends ScrollPane {
         });
 
         SortedList<HistoryData> sortedList = progData.erledigteAbos.getSortedList();
-        tableAbo.setItems(sortedList);
         sortedList.comparatorProperty().bind(tableAbo.comparatorProperty());
+        tableAbo.setItems(sortedList);
 
         lblGesamtAbo.setText(progData.erledigteAbos.size() + "");
     }
-
 
     private void filter() {
         filter(searchStr);

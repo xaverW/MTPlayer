@@ -141,7 +141,6 @@ public class PaneMedia extends ScrollPane {
         btnPlay.disableProperty().bind(txtPathMedia.textProperty().isEmpty().and(txtTitleMedia.textProperty().isEmpty()));
 
         initTableMedia();
-        setTableMedia();
     }
 
     public void filter(String searchStr) {
@@ -178,7 +177,6 @@ public class PaneMedia extends ScrollPane {
     private void initTableMedia() {
         txtTitleMedia.setText("");
         txtPathMedia.setText("");
-
         tableMedia.getColumns().clear();
 
         final TableColumn<MediaData, String> nameColumn = new TableColumn<>("Name");
@@ -208,9 +206,7 @@ public class PaneMedia extends ScrollPane {
                 txtTitleMedia.setText("");
             }
         });
-    }
 
-    private void setTableMedia() {
         SortedList<MediaData> sortedList = progData.mediaDataList.getSortedList();
         sortedList.comparatorProperty().bind(tableMedia.comparatorProperty());
         tableMedia.setItems(sortedList);
