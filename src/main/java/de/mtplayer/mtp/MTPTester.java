@@ -19,6 +19,7 @@ package de.mtplayer.mtp;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
+import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.film.Film;
 import de.mtplayer.mtp.controller.data.film.Filmlist;
 import de.mtplayer.mtp.controller.starter.MTNotification;
@@ -27,7 +28,7 @@ import de.mtplayer.mtp.tools.storedFilter.SelectedFilterFactory;
 import de.p2tools.p2Lib.dialogs.ProgInfoDialog;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
-import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
+import de.p2tools.p2Lib.tools.download.DownloadFactory;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.concurrent.Task;
@@ -73,7 +74,7 @@ public class MTPTester {
             gridPane.setHgap(5);
             gridPane.setVgap(5);
             gridPane.setPadding(new Insets(10));
-            gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize());
+            gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow());
 
             maskerPane.setMaskerVisible(false);
             maskerPane.setButtonText("Abbrechen");
@@ -97,45 +98,45 @@ public class MTPTester {
             Text text = new Text("Debugtools");
             text.setFont(Font.font(null, FontWeight.BOLD, 15));
 
-            Button btnAddToHash = new Button("_fillHash");
-            btnAddToHash.setMaxWidth(Double.MAX_VALUE);
-            btnAddToHash.setOnAction(a -> fillHash(progData.filmlist));
+//            Button btnAddToHash = new Button("_fillHash");
+//            btnAddToHash.setMaxWidth(Double.MAX_VALUE);
+//            btnAddToHash.setOnAction(a -> fillHash(progData.filmlist));
+//
+//            Button btnCleanHash = new Button("cleanHash");
+//            btnCleanHash.setMaxWidth(Double.MAX_VALUE);
+//            btnCleanHash.setOnAction(a -> cleanHash(progData.filmlist));
+//
+//            Button btnFind = new Button("findAndMark");
+//            btnFind.setMaxWidth(Double.MAX_VALUE);
+//            btnFind.setOnAction(a -> findAndMarkNewFilms(progData.filmlist));
+//
+//            Button btnClear = new Button("clearHash");
+//            btnClear.setMaxWidth(Double.MAX_VALUE);
+//            btnClear.setOnAction(a -> clearHash());
+//
+//            Button btnClearDescription = new Button("Beschreibung löschen");
+//            btnClearDescription.setMaxWidth(Double.MAX_VALUE);
+//            btnClearDescription.setOnAction(a -> clearDescription());
 
-            Button btnCleanHash = new Button("cleanHash");
-            btnCleanHash.setMaxWidth(Double.MAX_VALUE);
-            btnCleanHash.setOnAction(a -> cleanHash(progData.filmlist));
+//            Button btnCheck = new Button("Text checken (UTF8)");
+//            btnCheck.setMaxWidth(Double.MAX_VALUE);
+//            btnCheck.setOnAction(a -> checkText());
+//
+//            Button btnRepair = new Button("Text reparieren (UTF8)");
+//            btnRepair.setMaxWidth(Double.MAX_VALUE);
+//            btnRepair.setOnAction(a -> repairText());
 
-            Button btnFind = new Button("findAndMark");
-            btnFind.setMaxWidth(Double.MAX_VALUE);
-            btnFind.setOnAction(a -> findAndMarkNewFilms(progData.filmlist));
-
-            Button btnClear = new Button("clearHash");
-            btnClear.setMaxWidth(Double.MAX_VALUE);
-            btnClear.setOnAction(a -> clearHash());
-
-            Button btnClearDescription = new Button("Beschreibung löschen");
-            btnClearDescription.setMaxWidth(Double.MAX_VALUE);
-            btnClearDescription.setOnAction(a -> clearDescription());
-
-            Button btnCheck = new Button("Text checken (UTF8)");
-            btnCheck.setMaxWidth(Double.MAX_VALUE);
-            btnCheck.setOnAction(a -> checkText());
-
-            Button btnRepair = new Button("Text reparieren (UTF8)");
-            btnRepair.setMaxWidth(Double.MAX_VALUE);
-            btnRepair.setOnAction(a -> repairText());
-
-            Button btnShowActFilter = new Button("aktuellen Filter ausgeben");
-            btnShowActFilter.setMaxWidth(Double.MAX_VALUE);
-            btnShowActFilter.setOnAction(a -> showFilter());
-
-            Button btnMarkFilmFilterOk = new Button("Filter Ok");
-            btnMarkFilmFilterOk.setMaxWidth(Double.MAX_VALUE);
-            btnMarkFilmFilterOk.setOnAction(a -> makrFilterOk(true));
-
-            Button btnMarkFilmFilterNotOk = new Button("Filter !Ok");
-            btnMarkFilmFilterNotOk.setMaxWidth(Double.MAX_VALUE);
-            btnMarkFilmFilterNotOk.setOnAction(a -> makrFilterOk(false));
+//            Button btnShowActFilter = new Button("aktuellen Filter ausgeben");
+//            btnShowActFilter.setMaxWidth(Double.MAX_VALUE);
+//            btnShowActFilter.setOnAction(a -> showFilter());
+//
+//            Button btnMarkFilmFilterOk = new Button("Filter Ok");
+//            btnMarkFilmFilterOk.setMaxWidth(Double.MAX_VALUE);
+//            btnMarkFilmFilterOk.setOnAction(a -> makrFilterOk(true));
+//
+//            Button btnMarkFilmFilterNotOk = new Button("Filter !Ok");
+//            btnMarkFilmFilterNotOk.setMaxWidth(Double.MAX_VALUE);
+//            btnMarkFilmFilterNotOk.setOnAction(a -> makrFilterOk(false));
 
             Button btnStartWaiting = new Button("start waiting");
             btnStartWaiting.setMaxWidth(Double.MAX_VALUE);
@@ -143,34 +144,46 @@ public class MTPTester {
 
             Button btnNotify = new Button("Notify");
             btnNotify.setMaxWidth(Double.MAX_VALUE);
-            btnNotify.setOnAction(a -> MTNotification.addNotification(true));
-
-            PToggleSwitch ptgl = new PToggleSwitch("Test");
-            ptgl.setAllowIndeterminate(true);
+            btnNotify.setOnAction(a -> MTNotification.addNotification(new Download(), true));
 
             Button btnText = new Button("change text");
+            btnText.setMaxWidth(Double.MAX_VALUE);
             btnText.setOnAction(a -> {
                 ProgConfig.MEDIA_DB_SUFFIX.getStringProperty().setValue("soso");
             });
 
+            Button btnDownload = new Button("Download");
+            btnDownload.setMaxWidth(Double.MAX_VALUE);
+            btnDownload.setOnAction(a -> {
+
+                if (DownloadFactory.downloadFile(progInfoDialog.getStage(),
+                        "http://p2.localhost:8080/extra/beta/MTPlayer-8-42__2020.02.22.zip",
+                        "MTPlayer-8-42__20200222.zip")) {
+                    System.out.println("Download OK");
+                } else {
+                    System.out.println("Download NOT OK");
+                }
+            });
+
             int row = 0;
             gridPane.add(text, 0, row, 2, 1);
-            gridPane.add(btnAddToHash, 0, ++row);
-            gridPane.add(btnCleanHash, 1, row);
-            gridPane.add(btnFind, 0, ++row);
-            gridPane.add(btnClear, 1, row);
-            gridPane.add(btnClearDescription, 0, ++row);
-            gridPane.add(btnCheck, 0, ++row);
-            gridPane.add(btnRepair, 1, row);
-            gridPane.add(btnShowActFilter, 0, ++row);
-            gridPane.add(btnMarkFilmFilterOk, 1, row);
-            gridPane.add(btnMarkFilmFilterNotOk, 1, row);
+//            gridPane.add(btnAddToHash, 0, ++row);
+//            gridPane.add(btnCleanHash, 1, row);
+//            gridPane.add(btnFind, 0, ++row);
+//            gridPane.add(btnClear, 1, row);
+//            gridPane.add(btnClearDescription, 0, ++row);
+//            gridPane.add(btnCheck, 0, ++row);
+//            gridPane.add(btnRepair, 1, row);
+//            gridPane.add(btnShowActFilter, 0, ++row);
+//            gridPane.add(btnMarkFilmFilterOk, 1, row);
+//            gridPane.add(btnMarkFilmFilterNotOk, 1, row);
             gridPane.add(btnStartWaiting, 0, ++row);
             gridPane.add(btnNotify, 0, ++row);
             gridPane.add(btnText, 0, ++row);
+            gridPane.add(btnDownload, 0, ++row);
 
-            gridPane.add(ptgl, 0, ++row);
             gridPane.add(textArea, 0, ++row, 2, 1);
+
         }
     }
 

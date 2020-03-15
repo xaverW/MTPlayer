@@ -33,16 +33,6 @@ public class MTNotification {
         add(text, error);
     }
 
-    public static void addNotification(boolean error) {
-        String text = ("Film:   " + "Test" + P2LibConst.LINE_SEPARATOR +
-                "Sender: " + "Test" + P2LibConst.LINE_SEPARATOR +
-                "Größe:  " + "Test" + P2LibConst.LINE_SEPARATOR +
-                (error ? "Download war fehlerhaft" : "Download war erfolgreich"));
-
-        add(text, error);
-    }
-
-
     private static void add(String text, boolean error) {
         if (!ProgConfig.DOWNLOAD_SHOW_NOTIFICATION.getBool()) {
             return;

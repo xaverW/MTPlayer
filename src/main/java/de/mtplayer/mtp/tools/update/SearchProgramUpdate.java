@@ -20,49 +20,119 @@ import de.mtplayer.mLib.tools.Functions;
 import de.mtplayer.mLib.tools.StringFormatters;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
+import de.mtplayer.mtp.controller.config.ProgData;
 import de.p2tools.p2Lib.checkForUpdates.SearchProgUpdate;
+import de.p2tools.p2Lib.checkForUpdates.UpdateSearchData;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 
 import java.util.Date;
 
+import static java.lang.Thread.sleep;
+
 public class SearchProgramUpdate {
 
+    private final ProgData progData;
     private final Stage stage;
+    private static final String TITLE_TEXT_PROGRAM_VERSION_IS_UPTODATE = "Programmversion ist aktuell";
+    private static final String TITLE_TEXT_PROGRAMMUPDATE_EXISTS = "Ein Programmupdate ist verfügbar";
+    private String title = "";
 
-    public SearchProgramUpdate(Stage stage) {
+    public SearchProgramUpdate(ProgData progData) {
+        this.progData = progData;
+        this.stage = progData.primaryStage;
+    }
+
+    public SearchProgramUpdate(Stage stage, ProgData progData) {
+        this.progData = progData;
         this.stage = stage;
     }
 
     /**
      * @return
      */
-    public boolean checkOnlyVersion() {
-        // prüft auf neue Version, nur aktuelle ProgVersion
+    public boolean searchNewProgramVersion() {
+        // prüft auf neue Version, ProgVersion und auch (wenn gewünscht) BETA-Version
+        boolean ret;
         ProgConfig.SYSTEM_UPDATE_DATE.setValue(StringFormatters.FORMATTER_yyyyMMdd.format(new Date()));
 
-        return new SearchProgUpdate(stage).checkProgVersion(ProgConst.ADRESSE_MTPLAYER_VERSION, Functions.getProgVersionInt(),
-                ProgConfig.SYSTEM_UPDATE_VERSION_SHOWN.getIntegerProperty(), ProgConfig.SYSTEM_UPDATE_INFO_NR_SHOWN.getIntegerProperty(),
+        if (!ProgConfig.SYSTEM_UPDATE_SEARCH.getBool()) {
+            // dann ist es nicht gewünscht
+            return false;
+        }
+
+        UpdateSearchData updateSearchData = new UpdateSearchData(ProgConst.ADRESSE_MTPLAYER_VERSION,
+                Functions.getProgVersionInt(), Functions.getBuildInt(),
+                ProgConfig.SYSTEM_UPDATE_VERSION_SHOWN.getIntegerProperty(),
+                null,
+                ProgConfig.SYSTEM_UPDATE_INFO_NR_SHOWN.getIntegerProperty(),
                 ProgConfig.SYSTEM_UPDATE_SEARCH.getBooleanProperty());
+
+        UpdateSearchData updateSearchDataBeta = null;
+        if (ProgConfig.SYSTEM_UPDATE_BETA_SEARCH.getBool()) {
+            updateSearchDataBeta = new UpdateSearchData(ProgConst.ADRESSE_MTPLAYER_BETA_VERSION,
+                    Functions.getProgVersionInt(), Functions.getBuildInt(),
+                    ProgConfig.SYSTEM_UPDATE_BETA_VERSION_SHOWN.getIntegerProperty(),
+                    ProgConfig.SYSTEM_UPDATE_BETA_BUILD_NO_SHOWN.getIntegerProperty(),
+                    null,
+                    ProgConfig.SYSTEM_UPDATE_BETA_SEARCH.getBooleanProperty());
+        }
+
+        ret = new SearchProgUpdate(stage).checkAllUpdates(updateSearchData, updateSearchDataBeta, false);
+        setTitleInfo(ret);
+        return ret;
     }
 
+    private void setTitleInfo(boolean newVersion) {
+        title = progData.primaryStage.getTitle();
+        if (newVersion) {
+            Platform.runLater(() -> setUpdateTitle());
+        } else {
+            Platform.runLater(() -> setNoUpdateTitle());
+        }
+        try {
+            sleep(10_000);
+        } catch (Exception ignore) {
+        }
+        Platform.runLater(() -> setOrgTitle());
+    }
+
+    private void setUpdateTitle() {
+        progData.primaryStage.setTitle(TITLE_TEXT_PROGRAMMUPDATE_EXISTS);
+    }
+
+    private void setNoUpdateTitle() {
+        progData.primaryStage.setTitle(TITLE_TEXT_PROGRAM_VERSION_IS_UPTODATE);
+    }
+
+    private void setOrgTitle() {
+        progData.primaryStage.setTitle(title);
+    }
 
     /**
      * @return
      */
-    public boolean checkAlsoBetaVersion() {
-        // prüft auf neue Version, ProgVersion und auch BETA-Version
-        ProgConfig.SYSTEM_UPDATE_DATE.setValue(StringFormatters.FORMATTER_yyyyMMdd.format(new Date()));
+    public boolean searchNewVersionInfos() {
+        // prüft auf neue Version und zeigts immer an, auch (wenn gewünscht) BETA-Version
 
-        return new SearchProgUpdate(stage).checkProgVersionBeta(ProgConst.ADRESSE_MTPLAYER_VERSION, ProgConst.ADRESSE_MTPLAYER_BETA_VERSION,
+        UpdateSearchData updateSearchData = new UpdateSearchData(ProgConst.ADRESSE_MTPLAYER_VERSION,
                 Functions.getProgVersionInt(), Functions.getBuildInt(),
-                ProgConfig.SYSTEM_UPDATE_VERSION_SHOWN.getIntegerProperty(),
-                ProgConfig.SYSTEM_UPDATE_INFO_NR_SHOWN.getIntegerProperty(),
-                ProgConfig.SYSTEM_UPDATE_BETA_VERSION_SHOWN.getIntegerProperty(),
-                ProgConfig.SYSTEM_UPDATE_BETA_BUILD_NO_SHOWN.getIntegerProperty(),
-                ProgConfig.SYSTEM_UPDATE_SEARCH.getBooleanProperty(),
-                ProgConfig.SYSTEM_UPDATE_BETA_SEARCH.getBooleanProperty());
+                null,
+                null,
+                null,
+                null);
 
+        UpdateSearchData updateSearchDataBeta = null;
+        if (ProgConfig.SYSTEM_UPDATE_BETA_SEARCH.getBool()) {
+            updateSearchDataBeta = new UpdateSearchData(ProgConst.ADRESSE_MTPLAYER_BETA_VERSION,
+                    Functions.getProgVersionInt(), Functions.getBuildInt(),
+                    null,
+                    null,
+                    null,
+                    null);
+        }
 
+        return new SearchProgUpdate(stage).checkAllUpdates(updateSearchData, updateSearchDataBeta, true);
     }
 
 }

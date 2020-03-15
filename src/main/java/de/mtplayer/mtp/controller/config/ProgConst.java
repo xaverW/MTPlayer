@@ -70,10 +70,11 @@ public class ProgConst {
 
     public static final String ADRESSE_MTPLAYER_VERSION = "https://www.p2tools.de/extra/mtplayer-info.xml";
     public static final String ADRESSE_MTPLAYER_BETA_VERSION = "https://www.p2tools.de/extra/mtplayer-beta-info.xml";
+
 //    public static final String ADRESSE_MTPLAYER_VERSION = "https://www.p2tools.de/extra/mtplayer-info2.xml";
 //    public static final String ADRESSE_MTPLAYER_BETA_VERSION = "https://www.p2tools.de/extra/mtplayer-beta-info2.xml";
-    // public static final String ADRESSE_MTPLAYER_VERSION = "http://p2.localhost:8080/extra/mtplayer-info.xml";
-    // public static final String ADRESSE_MTPLAYER_BETA_VERSION = "http://p2.localhost:8080/extra/mtplayer-beta-info.xml";
+//    public static final String ADRESSE_MTPLAYER_VERSION = "http://p2.localhost:8080/extra/mtplayer-info2.xml";
+//    public static final String ADRESSE_MTPLAYER_BETA_VERSION = "http://p2.localhost:8080/extra/mtplayer-beta-info2.xml";
 
     // die URL der Sets, nicht mehr mit jeder Programmversion hochzählen, nur noch wenn notwendig
     // public static final String URL_MTPLAYER_CONFIG_DIRECTORY = "https://www.p2tools.de/extra/mtplayer/v-" + Functions.getProgVersion() + "/";

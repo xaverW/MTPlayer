@@ -22,6 +22,7 @@ import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.controller.data.ProgIcons;
+import de.mtplayer.mtp.tools.update.SearchProgramUpdate;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
@@ -44,6 +45,7 @@ public class AboutDialogController extends PDialogExtra {
 
     private final ProgData progData;
     Button btnOk = new Button("_Ok");
+    Button btnCheck = new Button("_Programmupdate prüfen");
     private final Color GRAY;
 
 
@@ -56,6 +58,7 @@ public class AboutDialogController extends PDialogExtra {
             this.GRAY = Color.DARKBLUE;
         }
         addOkButton(btnOk);
+        getHboxLeft().getChildren().add(btnCheck);
         init(true);
     }
 
@@ -63,8 +66,8 @@ public class AboutDialogController extends PDialogExtra {
     public void make() {
 //        make1();
 //        make2();
-        make3(true);
-//        make3(false);
+//        make3(true);
+        make3(false);
     }
 
     public void make1() {
@@ -331,6 +334,7 @@ public class AboutDialogController extends PDialogExtra {
 
     public void make3(boolean a1) {
         btnOk.setOnAction(a -> close());
+        btnCheck.setOnAction(a -> new SearchProgramUpdate(this.getStage(), progData).searchNewVersionInfos());
 
         GridPane gridPane = new GridPane();
 //        gridPane.setGridLinesVisible(true);

@@ -63,17 +63,16 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
     }
 
     public SortedList<HistoryData> getSortedList() {
-        if (sortedList == null || filteredList == null) {
-            filteredList = new FilteredList<>(this, p -> true);
+        filteredList = getFilteredList();
+        if (sortedList == null) {
             sortedList = new SortedList<>(filteredList);
         }
         return sortedList;
     }
 
     public FilteredList<HistoryData> getFilteredList() {
-        if (sortedList == null || filteredList == null) {
+        if (filteredList == null) {
             filteredList = new FilteredList<>(this, p -> true);
-            sortedList = new SortedList<>(filteredList);
         }
         return filteredList;
     }

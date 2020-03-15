@@ -43,7 +43,7 @@ public class MTPlayer extends Application {
     private static final String LOG_TEXT_PROGRAMSTART = "Dauer Programmstart";
 
     protected ProgData progData;
-    ProgStart progStart;
+    ProgStart progStart = new ProgStart();
     Scene scene = null;
     private boolean firstProgramStart = false; // ist der allererste Programmstart: Programminit wird gemacht
 
@@ -58,14 +58,13 @@ public class MTPlayer extends Application {
         PDuration.counterStart(LOG_TEXT_PROGRAMSTART);
         progData = ProgData.getInstance();
         progData.primaryStage = primaryStage;
-        progStart = new ProgStart(progData);
 
         initP2lib();
         workBeforeGui();
-
         initRootLayout();
+        progStart.doWorkAfterGui(progData, firstProgramStart);
 
-        workAfterGui();
+        PDuration.onlyPing("Gui steht!");
         PDuration.counterStop(LOG_TEXT_PROGRAMSTART);
     }
 
@@ -149,11 +148,6 @@ public class MTPlayer extends Application {
         } else {
             P2LibInit.removeCssFile(ProgConst.CSS_FILE_DARK_THEME);
         }
-    }
-
-    private void workAfterGui() {
-        progStart.doWorkAfterGui(firstProgramStart);
-        PDuration.onlyPing("Gui steht!");
     }
 
     public static void main(String[] args) {

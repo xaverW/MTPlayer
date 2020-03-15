@@ -30,7 +30,6 @@ import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.LogMessage;
 import de.p2tools.p2Lib.tools.log.PLog;
 import de.p2tools.p2Lib.tools.log.PLogger;
-import javafx.application.Platform;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -38,17 +37,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static java.lang.Thread.sleep;
-
 public class ProgStart {
-    private static final String TITLE_TEXT_PROGRAM_VERSION_IS_UPTODATE = "Programmversion ist aktuell";
-    private static final String TITLE_TEXT_PROGRAMMUPDATE_EXISTS = "Ein Programmupdate ist verfügbar";
-    private ProgData progData;
+    //    private ProgData progData;
     private boolean doneAtProgramstart = false;
 
-    public ProgStart(ProgData progData) {
-        this.progData = progData;
-    }
+//    public ProgStart(ProgData progData) {
+//        this.progData = progData;
+//    }
 
     /**
      * alles was nach der GUI gemacht werden soll z.B.
@@ -56,10 +51,10 @@ public class ProgStart {
      *
      * @param firstProgramStart
      */
-    public void doWorkAfterGui(boolean firstProgramStart) {
+    public void doWorkAfterGui(ProgData progData, boolean firstProgramStart) {
         GetIcon.addWindowP2Icon(progData.primaryStage);
         startMsg();
-        setOrgTitle();
+        setTitle(progData);
 
         progData.startTimer();
         progData.loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
@@ -68,7 +63,7 @@ public class ProgStart {
                 if (!doneAtProgramstart) {
                     doneAtProgramstart = true;
                     progData.mediaDataList.createMediaDb();
-                    checkProgUpdate();
+                    checkProgUpdate(progData);
                 }
 
             }
@@ -205,15 +200,16 @@ public class ProgStart {
         return ret;
     }
 
-    private void checkProgUpdate() {
+    private void checkProgUpdate(ProgData progData) {
         // Prüfen obs ein Programmupdate gibt
         PDuration.onlyPing("checkProgUpdate");
 
-        if (Boolean.parseBoolean(ProgConfig.SYSTEM_UPDATE_SEARCH.get()) &&
-                !ProgConfig.SYSTEM_UPDATE_DATE.get().equals(StringFormatters.FORMATTER_yyyyMMdd.format(new Date()))) {
+        if (ProgData.debug || // zum Testen wird immer geprüft
+                Boolean.parseBoolean(ProgConfig.SYSTEM_UPDATE_SEARCH.get()) &&
+                        !ProgConfig.SYSTEM_UPDATE_DATE.get().equals(StringFormatters.FORMATTER_yyyyMMdd.format(new Date()))) {
 
             // nach Updates suchen
-            runUpdateCheck();
+            runUpdateCheck(progData);
 
         } else {
             // will der User nicht --oder-- wurde heute schon gemacht
@@ -230,45 +226,22 @@ public class ProgStart {
             if (ProgData.debug) {
                 // damits bei jedem Start gemacht wird
                 list.add("  DEBUG: Update-Check");
-                runUpdateCheck();
+                runUpdateCheck(progData);
             }
 
             PLog.sysLog(list);
         }
     }
 
-    private void runUpdateCheck() {
+    private void runUpdateCheck(ProgData progData) {
         Thread th = new Thread(() -> {
-            try {
-                boolean searchBeta = ProgConfig.SYSTEM_UPDATE_BETA_SEARCH.getBool();
-                if (searchBeta && new SearchProgramUpdate(progData.primaryStage).checkAlsoBetaVersion() ||
-                        !searchBeta && new SearchProgramUpdate(progData.primaryStage).checkOnlyVersion()) {
-                    Platform.runLater(() -> setUpdateTitle());
-
-                } else {
-                    Platform.runLater(() -> setNoUpdateTitle());
-                }
-
-                sleep(10_000);
-                Platform.runLater(() -> setOrgTitle());
-
-            } catch (final Exception ex) {
-                PLog.errorLog(794612801, ex);
-            }
+            new SearchProgramUpdate(progData).searchNewProgramVersion();
         });
         th.setName("checkProgUpdate");
         th.start();
     }
 
-    private void setOrgTitle() {
+    private void setTitle(ProgData progData) {
         progData.primaryStage.setTitle(ProgConst.PROGRAMNAME + " " + Functions.getProgVersion());
-    }
-
-    private void setUpdateTitle() {
-        progData.primaryStage.setTitle(TITLE_TEXT_PROGRAMMUPDATE_EXISTS);
-    }
-
-    private void setNoUpdateTitle() {
-        progData.primaryStage.setTitle(TITLE_TEXT_PROGRAM_VERSION_IS_UPTODATE);
     }
 }
