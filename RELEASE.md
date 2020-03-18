@@ -8,6 +8,13 @@
 * Möglichkeit, auch bei neuer Beta-Version einen Hinweis angezeigt zu bekommen
 * Speicherverbrauch in den Dialogen verbessert
 * Suchmöglichkeit in der Mediensammlung, der History und den erledigten Abos im Dialog "Einstellungen der Mediensammlung"
+* während das Ladens der Filmliste wird die Downloadbandbreite reduziert um die Filmliste schneller zu laden
+* im Dialog "In der Mediensammlung suchen" bleibt die eingestellte Suche: "Mediensammlung" oder "History" erhalten
+* STRG-A in der Filmliste wird abgefangen wenn zu viele Filme in der Liste sind
+* Anpassungen für den Sender RBTV
+* Dialog "Über das Programm" wurde überarbeitet
+* Anpassungen bei der Suche nach einem Update / einer neuen BETA-Version
+* ...
 
 
 **Release 8**
