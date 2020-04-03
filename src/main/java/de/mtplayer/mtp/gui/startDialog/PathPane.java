@@ -26,6 +26,7 @@ import de.mtplayer.mtp.gui.tools.SetsPrograms;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
+import de.p2tools.p2Lib.tools.ProgramTools;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -39,8 +40,6 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import static de.mtplayer.mLib.tools.Functions.getOs;
 
 public class PathPane {
     StringProperty vlcProp = ProgConfig.SYSTEM_PATH_VLC.getStringProperty();
@@ -86,7 +85,7 @@ public class PathPane {
         btnEmpty.setVisible(false);
         gridPane.add(btnEmpty, 2, row);
 
-        switch (getOs()) {
+        switch (ProgramTools.getOs()) {
             case WIN32:
             case WIN64:
                 // da wird nur der VLC gebraucht, der Rest wird mitgeliefert

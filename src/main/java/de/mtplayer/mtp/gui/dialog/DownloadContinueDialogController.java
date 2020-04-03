@@ -18,7 +18,6 @@ package de.mtplayer.mtp.gui.dialog;
 
 import de.mtplayer.mLib.tools.DirFileChooser;
 import de.mtplayer.mLib.tools.FileNameUtils;
-import de.mtplayer.mLib.tools.Functions;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.MTColor;
@@ -28,6 +27,7 @@ import de.mtplayer.mtp.controller.data.download.DownloadTools;
 import de.mtplayer.mtp.controller.starter.DownloadState;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
+import de.p2tools.p2Lib.tools.ProgramTools;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.HPos;
@@ -86,7 +86,7 @@ public class DownloadContinueDialogController extends PDialogExtra {
     }
 
     public boolean isNewName() {
-        switch (Functions.getOs()) {
+        switch (ProgramTools.getOs()) {
             case LINUX:
                 return !oldPathFile.equals(download.getDestPathFile());
             case WIN32:

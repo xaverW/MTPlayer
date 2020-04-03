@@ -17,7 +17,6 @@
 package de.mtplayer.mtp.gui.mediaDialog;
 
 import de.mtplayer.mLib.tools.CheckBoxCell;
-import de.mtplayer.mLib.tools.Functions;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
@@ -29,6 +28,7 @@ import de.mtplayer.mtp.tools.storedFilter.Filter;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.PGuiTools;
 import de.p2tools.p2Lib.guiTools.POpen;
+import de.p2tools.p2Lib.tools.file.PFileUtils;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.transformation.SortedList;
@@ -163,7 +163,7 @@ public class PaneMedia extends ScrollPane {
         String file = txtTitleMedia.getText();
         String dir = txtPathMedia.getText();
         if (!file.isEmpty() && !dir.isEmpty()) {
-            POpen.playStoredFilm(Functions.addsPath(dir, file),
+            POpen.playStoredFilm(PFileUtils.addsPath(dir, file),
                     ProgConfig.SYSTEM_PROG_PLAY_FILME.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
         }
     }

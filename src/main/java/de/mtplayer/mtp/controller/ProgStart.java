@@ -17,7 +17,6 @@
 package de.mtplayer.mtp.controller;
 
 import de.mtplayer.mLib.MLInit;
-import de.mtplayer.mLib.tools.Functions;
 import de.mtplayer.mLib.tools.StringFormatters;
 import de.mtplayer.mtp.controller.config.*;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
@@ -26,6 +25,7 @@ import de.mtplayer.mtp.tools.update.SearchProgramUpdate;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.icon.GetIcon;
+import de.p2tools.p2Lib.tools.ProgramTools;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.LogMessage;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -242,6 +242,6 @@ public class ProgStart {
     }
 
     private void setTitle(ProgData progData) {
-        progData.primaryStage.setTitle(ProgConst.PROGRAMNAME + " " + Functions.getProgVersion());
+        progData.primaryStage.setTitle(ProgConst.PROGRAMNAME + " " + ProgramTools.getProgVersion());
     }
 }

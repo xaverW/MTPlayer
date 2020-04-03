@@ -26,6 +26,7 @@ import de.mtplayer.mtp.controller.data.SetDataList;
 import de.mtplayer.mtp.controller.starter.RuntimeExec;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
+import de.p2tools.p2Lib.tools.ProgramTools;
 import de.p2tools.p2Lib.tools.file.PFileUtils;
 import de.p2tools.p2Lib.tools.net.PUrlTools;
 
@@ -36,8 +37,6 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-
-import static de.mtplayer.mLib.tools.Functions.getOs;
 
 public class SetsPrograms {
 
@@ -73,7 +72,7 @@ public class SetsPrograms {
         final String PATH_WIN = "\\VideoLAN\\VLC\\vlc.exe";
         String path = "";
         try {
-            switch (getOs()) {
+            switch (ProgramTools.getOs()) {
                 case LINUX:
                     if (System.getProperty("os.name").toLowerCase().contains("freebsd")) {
                         path = PATH_FREEBSD;
@@ -111,7 +110,7 @@ public class SetsPrograms {
         final String PATH_WINDOWS_FLV = "bin\\flvstreamer_win32_latest.exe";
         String path = "";
         try {
-            switch (getOs()) {
+            switch (ProgramTools.getOs()) {
                 case LINUX:
                     if (System.getProperty("os.name").toLowerCase().contains("freebsd")) {
                         path = PATH_FREEBSD;
@@ -143,7 +142,7 @@ public class SetsPrograms {
         final String PATH_WINDOWS_FFMPEG = "bin\\ffmpeg.exe";
         String path = "";
         try {
-            switch (getOs()) {
+            switch (ProgramTools.getOs()) {
                 case LINUX:
                     if (System.getProperty("os.name").toLowerCase().contains("freebsd")) {
                         path = PATH_FREEBSD_FFMPEG;
@@ -171,7 +170,7 @@ public class SetsPrograms {
         String path;
         final String PATH_LINUX_SCRIPT = "bin/flv.sh";
         final String PATH_WINDOWS_SCRIPT = "bin\\flv.bat";
-        switch (getOs()) {
+        switch (ProgramTools.getOs()) {
             case LINUX:
                 path = ProgInfos.getPathJar() + PATH_LINUX_SCRIPT;
                 break;

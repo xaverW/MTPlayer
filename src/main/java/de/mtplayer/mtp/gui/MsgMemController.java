@@ -17,8 +17,8 @@
 
 package de.mtplayer.mtp.gui;
 
-import de.mtplayer.mLib.tools.Functions;
 import de.mtplayer.mtp.gui.tools.Listener;
+import de.p2tools.p2Lib.tools.ProgramTools;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -30,8 +30,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
-
-import static de.mtplayer.mLib.tools.Functions.getOs;
 
 public class MsgMemController extends AnchorPane {
     private final VBox vBoxCont = new VBox();
@@ -117,7 +115,7 @@ public class MsgMemController extends AnchorPane {
         final double countMin = countSek / 60.0; // Minuten
 
         final long maxMem;
-        if (getOs() == Functions.OperatingSystemType.LINUX) {
+        if (ProgramTools.getOs() == ProgramTools.OperatingSystemType.LINUX) {
             maxMem = rt.totalMemory();
         } else {
             maxMem = rt.maxMemory();

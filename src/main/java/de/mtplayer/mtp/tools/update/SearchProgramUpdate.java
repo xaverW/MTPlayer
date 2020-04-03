@@ -16,13 +16,13 @@
 
 package de.mtplayer.mtp.tools.update;
 
-import de.mtplayer.mLib.tools.Functions;
 import de.mtplayer.mLib.tools.StringFormatters;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.p2tools.p2Lib.checkForUpdates.SearchProgUpdate;
 import de.p2tools.p2Lib.checkForUpdates.UpdateSearchData;
+import de.p2tools.p2Lib.tools.ProgramTools;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
@@ -62,7 +62,7 @@ public class SearchProgramUpdate {
         }
 
         UpdateSearchData updateSearchData = new UpdateSearchData(ProgConst.ADRESSE_MTPLAYER_VERSION,
-                Functions.getProgVersionInt(), Functions.getBuildInt(),
+                ProgramTools.getProgVersionInt(), ProgramTools.getBuildInt(),
                 ProgConfig.SYSTEM_UPDATE_VERSION_SHOWN.getIntegerProperty(),
                 null,
                 ProgConfig.SYSTEM_UPDATE_INFO_NR_SHOWN.getIntegerProperty(),
@@ -71,7 +71,7 @@ public class SearchProgramUpdate {
         UpdateSearchData updateSearchDataBeta = null;
         if (ProgConfig.SYSTEM_UPDATE_BETA_SEARCH.getBool()) {
             updateSearchDataBeta = new UpdateSearchData(ProgConst.ADRESSE_MTPLAYER_BETA_VERSION,
-                    Functions.getProgVersionInt(), Functions.getBuildInt(),
+                    ProgramTools.getProgVersionInt(), ProgramTools.getBuildInt(),
                     ProgConfig.SYSTEM_UPDATE_BETA_VERSION_SHOWN.getIntegerProperty(),
                     ProgConfig.SYSTEM_UPDATE_BETA_BUILD_NO_SHOWN.getIntegerProperty(),
                     null,
@@ -116,7 +116,7 @@ public class SearchProgramUpdate {
         // prüft auf neue Version und zeigts immer an, auch (wenn gewünscht) BETA-Version
 
         UpdateSearchData updateSearchData = new UpdateSearchData(ProgConst.ADRESSE_MTPLAYER_VERSION,
-                Functions.getProgVersionInt(), Functions.getBuildInt(),
+                ProgramTools.getProgVersionInt(), ProgramTools.getBuildInt(),
                 null,
                 null,
                 null,
@@ -125,7 +125,7 @@ public class SearchProgramUpdate {
         UpdateSearchData updateSearchDataBeta = null;
         if (ProgConfig.SYSTEM_UPDATE_BETA_SEARCH.getBool()) {
             updateSearchDataBeta = new UpdateSearchData(ProgConst.ADRESSE_MTPLAYER_BETA_VERSION,
-                    Functions.getProgVersionInt(), Functions.getBuildInt(),
+                    ProgramTools.getProgVersionInt(), ProgramTools.getBuildInt(),
                     null,
                     null,
                     null,

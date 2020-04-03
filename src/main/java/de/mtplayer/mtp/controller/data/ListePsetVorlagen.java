@@ -19,6 +19,7 @@ package de.mtplayer.mtp.controller.data;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.mtplayer.mtp.tools.file.GetFile;
+import de.p2tools.p2Lib.tools.ProgramTools;
 import de.p2tools.p2Lib.tools.log.PLog;
 import de.p2tools.p2Lib.tools.net.PUrlTools;
 
@@ -32,8 +33,6 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 
-import static de.mtplayer.mLib.tools.Functions.getOs;
-import static de.mtplayer.mLib.tools.Functions.getOsString;
 
 @SuppressWarnings("serial")
 public class ListePsetVorlagen extends LinkedList<String[]> {
@@ -62,7 +61,7 @@ public class ListePsetVorlagen extends LinkedList<String[]> {
         final ListePsetVorlagen listePsetVorlagen = new ListePsetVorlagen();
         if (listePsetVorlagen.loadListOfSets()) {
             for (final String[] ar : listePsetVorlagen) {
-                if (ar[PGR_NAME_NR].equalsIgnoreCase("Standardset " + getOsString())) {
+                if (ar[PGR_NAME_NR].equalsIgnoreCase("Standardset " + ProgramTools.getOsString())) {
                     template = ar;
                     break;
                 }
@@ -81,7 +80,7 @@ public class ListePsetVorlagen extends LinkedList<String[]> {
             // dann nehmen wir halt die im jar-File
             // liefert das Standard Programmset für das entsprechende BS
             InputStreamReader inReader;
-            switch (getOs()) {
+            switch (ProgramTools.getOs()) {
                 case LINUX:
                     inReader = new GetFile().getPsetTamplateLinux();
                     break;
