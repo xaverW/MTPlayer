@@ -53,7 +53,7 @@ public class AboEditDialogController extends PDialogExtra {
     private final Button btnOk = new Button("_Ok");
     private final Button btnCancel = new Button("_Abbrechen");
     private final ComboBox<SetData> cboSetData = new ComboBox<>();
-    private final ComboBox<String> cboChannel = new ComboBox<>();
+    //    private final ComboBox<String> cboChannel = new ComboBox<>();
     private final ComboBox<String> cboDestination = new ComboBox<>();
     private final Slider slTimeRange = new Slider();
     private final Label lblTimeRange = new Label();
@@ -64,8 +64,8 @@ public class AboEditDialogController extends PDialogExtra {
     private final CheckBox[] cbx = new CheckBox[AboXml.MAX_ELEM];
     private final CheckBox[] cbxEditAll = new CheckBox[AboXml.MAX_ELEM];
     private final RadioButton rbHd = new RadioButton("HD");
-    private final RadioButton rbHigh = new RadioButton("hohe Auflösung");
-    private final RadioButton rbLow = new RadioButton("niedrige Auflösung");
+    private final RadioButton rbHigh = new RadioButton("hoch");
+    private final RadioButton rbLow = new RadioButton("niedrig");
     private final TextArea textArea = new TextArea();
 
     private final MenuButton mbChannel = new MenuButton("");
@@ -154,7 +154,7 @@ public class AboEditDialogController extends PDialogExtra {
     @Override
     public void close() {
         // WICHTIG!!
-        cboChannel.valueProperty().unbindBidirectional(aboCopy.channelProperty());
+//        cboChannel.valueProperty().unbindBidirectional(aboCopy.channelProperty());
         super.close();
     }
 
@@ -328,22 +328,17 @@ public class AboEditDialogController extends PDialogExtra {
                 break;
 
             case AboXml.ABO_RESOLUTION:
-                GridPane resGrid = new GridPane();
-                resGrid.setHgap(10);
-                resGrid.setVgap(10);
-
                 final Button btnHelpRes = PButton.helpButton(this.getStage(),
                         "Auflösung", HelpText.ABO_RES);
 
-                resGrid.add(rbHd, 0, 0);
-                resGrid.add(btnHelpRes, 1, 0);
-                resGrid.add(rbHigh, 0, 1);
-                resGrid.add(rbLow, 0, 2);
+                HBox h = new HBox();
+                h.setAlignment(Pos.CENTER_RIGHT);
+                HBox.setHgrow(h, Priority.ALWAYS);
+                h.getChildren().add(btnHelpRes);
 
-                resGrid.getColumnConstraints().add(PColumnConstraints.getCcComputedSizeAndHgrow());
-                GridPane.setHgrow(resGrid, Priority.ALWAYS);
-
-                this.gridPane.add(resGrid, 1, grid);
+                HBox hAufloeung = new HBox(10);
+                hAufloeung.getChildren().addAll(rbHd, rbHigh, rbLow, h);
+                this.gridPane.add(hAufloeung, 1, grid);
                 break;
 
             case AboXml.ABO_THEME_EXACT:
@@ -378,6 +373,7 @@ public class AboEditDialogController extends PDialogExtra {
 
                 } else {
                     cboSetData.setMaxWidth(Double.MAX_VALUE);
+                    cboSetData.setPrefWidth(20);
                     cboSetData.getItems().addAll(progData.setDataList.getSetDataListAbo());
                     cboSetData.valueProperty().bindBidirectional(aboCopy.setDataProperty());
                     cboSetData.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
@@ -441,6 +437,7 @@ public class AboEditDialogController extends PDialogExtra {
 
                 final StackPane sp = new StackPane();
                 sp.getChildren().addAll(txt, cboDestination);
+                sp.setPrefWidth(20);
 
                 HBox hbox = new HBox(10);
                 hbox.setAlignment(Pos.CENTER_LEFT);
