@@ -57,7 +57,9 @@ public class ReadFilmlist {
 
     private final EventListenerList listeners = new EventListenerList();
     private double progress = 0;
-    private Map<String, Integer> filmsPerChannelFound = new TreeMap<>();
+    private int countAll = 0;
+    private Map<String, Integer> filmsPerChannelFoundCompleteList = new TreeMap<>();
+    private Map<String, Integer> filmsPerChannelUsed = new TreeMap<>();
     private Map<String, Integer> filmsPerChannelBlocked = new TreeMap<>();
     private Map<String, Integer> filmsPerDateBlocked = new TreeMap<>();
     private Map<String, Integer> filmsPerDurationBlocked = new TreeMap<>();
@@ -75,7 +77,9 @@ public class ReadFilmlist {
      */
     void readFilmlist(String sourceFileUrl, final Filmlist filmlist) {
 
-        filmsPerChannelFound.clear();
+        countAll = 0;
+        filmsPerChannelFoundCompleteList.clear();
+        filmsPerChannelUsed.clear();
         filmsPerChannelBlocked.clear();
         filmsPerDateBlocked.clear();
         filmsPerDurationBlocked.clear();
@@ -106,8 +110,9 @@ public class ReadFilmlist {
 
             } else {
 //                logList.add(PLog.LILNE3);
-                logList.add("    erstellt am:  " + filmlist.genDate());
-                logList.add("    Anzahl Filme: " + filmlist.size());
+                logList.add("   erstellt am:        " + filmlist.genDate());
+                logList.add("   Anzahl Gesamtliste: " + countAll);
+                logList.add("   Anzahl verwendet:   " + filmlist.size());
 
                 countFoundChannel(logList);
             }
@@ -127,22 +132,41 @@ public class ReadFilmlist {
     private void countFoundChannel(List<String> list) {
         final int KEYSIZE = 12;
 
-        if (!filmsPerChannelFound.isEmpty()) {
+        if (!filmsPerChannelFoundCompleteList.isEmpty()) {
             list.add(PLog.LILNE3);
+            list.add(" ");
             list.add("== Filme pro Sender in der Gesamtliste ==");
 
             sumFilms = 0;
-            filmsPerChannelFound.keySet().stream().forEach(key -> {
-                int found = filmsPerChannelFound.get(key);
+            filmsPerChannelFoundCompleteList.keySet().stream().forEach(key -> {
+                int found = filmsPerChannelFoundCompleteList.get(key);
                 sumFilms += found;
                 list.add(PStringUtils.increaseString(KEYSIZE, key) + ": " + found);
             });
             list.add("--");
             list.add(PStringUtils.increaseString(KEYSIZE, "=> Summe") + ": " + sumFilms);
+            list.add(" ");
+        }
+
+        if (!filmsPerChannelUsed.isEmpty()) {
+            list.add(PLog.LILNE3);
+            list.add(" ");
+            list.add("== Filme pro Sender verwendet ==");
+
+            sumFilms = 0;
+            filmsPerChannelUsed.keySet().stream().forEach(key -> {
+                int found = filmsPerChannelUsed.get(key);
+                sumFilms += found;
+                list.add(PStringUtils.increaseString(KEYSIZE, key) + ": " + found);
+            });
+            list.add("--");
+            list.add(PStringUtils.increaseString(KEYSIZE, "=> Summe") + ": " + sumFilms);
+            list.add(" ");
         }
 
         if (!filmsPerChannelBlocked.isEmpty()) {
             list.add(PLog.LILNE3);
+            list.add(" ");
             list.add("== nach Sender geblockte Filme ==");
 
             sumFilms = 0;
@@ -153,10 +177,12 @@ public class ReadFilmlist {
             });
             list.add("--");
             list.add(PStringUtils.increaseString(KEYSIZE, "=> Summe") + ": " + sumFilms);
+            list.add(" ");
         }
 
         if (!filmsPerDateBlocked.isEmpty()) {
             list.add(PLog.LILNE3);
+            list.add(" ");
             final int date = ProgConfig.SYSTEM_LOAD_FILMLIST_MAX_DAYS.getInt();
             list.add("== nach Datum geblockte Filme (max. " + date + " Tage) ==");
 
@@ -168,10 +194,12 @@ public class ReadFilmlist {
             });
             list.add("--");
             list.add(PStringUtils.increaseString(KEYSIZE, "=> Summe") + ": " + sumFilms);
+            list.add(" ");
         }
 
         if (!filmsPerDurationBlocked.isEmpty()) {
             list.add(PLog.LILNE3);
+            list.add(" ");
             final int dur = ProgConfig.SYSTEM_LOAD_FILMLIST_MIN_DURATION.getInt();
             list.add("== nach Filmlänge geblockte Filme (mind. " + dur + " min.) ==");
 
@@ -183,6 +211,7 @@ public class ReadFilmlist {
             });
             list.add("--");
             list.add(PStringUtils.increaseString(KEYSIZE, "=> Summe") + ": " + sumFilms);
+            list.add(" ");
         }
     }
 
@@ -242,7 +271,8 @@ public class ReadFilmlist {
                 final Film film = new Film();
                 addValue(film, jp);
 
-                countFilm(filmsPerChannelFound, film);
+                ++countAll;
+                countFilm(filmsPerChannelFoundCompleteList, film);
 
                 if (!listChannelIsEmpty && listChannel.contains(film.arr[FilmXml.FILM_CHANNEL])) {
                     // diesen Sender nicht laden
@@ -262,6 +292,7 @@ public class ReadFilmlist {
                     continue;
                 }
 
+                countFilm(filmsPerChannelUsed, film);
                 filmlist.importFilmOnlyWithNr(film);
             }
 

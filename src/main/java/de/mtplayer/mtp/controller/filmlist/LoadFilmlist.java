@@ -327,6 +327,8 @@ public class LoadFilmlist {
         logList.add("  Anzahl Filme: " + progData.filmlist.size());
         logList.add("  Anzahl Neue:  " + progData.filmlist.countNewFilms());
         logList.add("");
+        logList.add(PLog.LILNE2);
+        logList.add("");
 
         notifyProgress.notifyEvent(NotifyProgress.NOTIFY.LOADED,
                 new ListenerFilmlistLoadEvent("", "Filme markieren, Themen suchen",
