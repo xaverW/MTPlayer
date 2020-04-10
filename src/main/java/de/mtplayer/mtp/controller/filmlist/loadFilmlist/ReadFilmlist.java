@@ -114,7 +114,7 @@ public class ReadFilmlist {
                 logList.add("   Anzahl Gesamtliste: " + countAll);
                 logList.add("   Anzahl verwendet:   " + filmlist.size());
 
-                countFoundChannel(logList);
+                countFoundChannel(filmlist, logList);
             }
         } catch (final MalformedURLException ex) {
             PLog.errorLog(945120201, ex);
@@ -129,7 +129,7 @@ public class ReadFilmlist {
 
     int sumFilms = 0;
 
-    private void countFoundChannel(List<String> list) {
+    private void countFoundChannel(Filmlist filmlist, List<String> list) {
         final int KEYSIZE = 12;
 
         if (!filmsPerChannelFoundCompleteList.isEmpty()) {
@@ -146,6 +146,12 @@ public class ReadFilmlist {
             list.add("--");
             list.add(PStringUtils.increaseString(KEYSIZE, "=> Summe") + ": " + sumFilms);
             list.add(" ");
+        }
+
+        if (sumFilms == filmlist.size()) {
+            // dann werden alle gefunden Filme auch genommen
+            // -> gibt keine "blocked"
+            return;
         }
 
         if (!filmsPerChannelUsed.isEmpty()) {
