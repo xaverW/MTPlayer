@@ -24,11 +24,8 @@ import de.mtplayer.mtp.controller.data.SetData;
 import de.mtplayer.mtp.gui.tools.HelpTextPset;
 import de.mtplayer.mtp.gui.tools.SetsPrograms;
 import de.p2tools.p2Lib.alert.PAlert;
-import de.p2tools.p2Lib.dialogs.accordion.PAccordion;
 import de.p2tools.p2Lib.guiTools.PButton;
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -48,69 +45,44 @@ public class SetPaneController extends AnchorPane {
 
     private final ProgData progData;
 
-    private final VBox noaccordion = new VBox();
     private final Accordion accordion = new Accordion();
-    private final CheckBox cbxAccordion = new CheckBox("");
-
     private final SplitPane splitPane = new SplitPane();
-    private final HBox hBox = new HBox();
     private final ScrollPane scrollPane = new ScrollPane();
     private final VBox vBox = new VBox();
+    private final TableView<SetData> tableView = new TableView<>();
+    private final ToggleGroup toggleGroup = new ToggleGroup();
 
-    TableView<SetData> tableView = new TableView<>();
-    ToggleGroup toggleGroup = new ToggleGroup();
     static int newCounter = 1;
-
-    SetDataPane setDataPane;
-    Collection<TitledPane> setDataPaneTitle;
-
-    BooleanProperty accordionProp = ProgConfig.CONFIG_DIALOG_ACCORDION.getBooleanProperty();
-    DoubleProperty split = ProgConfig.CONFIG_DIALOG_SET_DIVIDER.getDoubleProperty();
-    IntegerProperty selectedTab = ProgConfig.SYSTEM_CONFIG_DIALOG_PLAY;
-
+    private SetDataPane setDataPane;
+    private Collection<TitledPane> setDataPaneTitle;
     private final Stage stage;
+    DoubleProperty split = ProgConfig.CONFIG_DIALOG_SET_DIVIDER.getDoubleProperty();
 
     public SetPaneController(Stage stage) {
         this.stage = stage;
         progData = ProgData.getInstance();
 
-        cbxAccordion.selectedProperty().bindBidirectional(accordionProp);
-        cbxAccordion.selectedProperty().addListener((observable, oldValue, newValue) ->
-                PAccordion.setAccordion(cbxAccordion.isSelected(), accordion, noaccordion, scrollPane, setDataPaneTitle, selectedTab));
-
-
+        AnchorPane.setLeftAnchor(splitPane, 0.0);
+        AnchorPane.setBottomAnchor(splitPane, 0.0);
+        AnchorPane.setRightAnchor(splitPane, 0.0);
+        AnchorPane.setTopAnchor(splitPane, 0.0);
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
 
         vBox.getChildren().addAll(createSetList());
-
         splitPane.getItems().addAll(vBox, scrollPane);
         SplitPane.setResizableWithParent(vBox, Boolean.FALSE);
-
-        hBox.getChildren().addAll(cbxAccordion, splitPane);
-        HBox.setHgrow(splitPane, Priority.ALWAYS);
-        getChildren().addAll(hBox);
-
-        accordion.setPadding(new Insets(1));
-        noaccordion.setPadding(new Insets(1));
-        noaccordion.setSpacing(1);
-
-        AnchorPane.setLeftAnchor(hBox, 10.0);
-        AnchorPane.setBottomAnchor(hBox, 10.0);
-        AnchorPane.setRightAnchor(hBox, 10.0);
-        AnchorPane.setTopAnchor(hBox, 10.0);
+        getChildren().addAll(splitPane);
 
         createSetDataPane();
         selectTableFirst();
 
-        PAccordion.initAccordionPane(accordion, selectedTab);
-        PAccordion.setAccordion(cbxAccordion.isSelected(), accordion, noaccordion, scrollPane, setDataPaneTitle, selectedTab);
-
+        accordion.getPanes().addAll(setDataPaneTitle);
+        scrollPane.setContent(accordion);
         splitPane.getDividers().get(0).positionProperty().bindBidirectional(split);
     }
 
     public void close() {
-        cbxAccordion.selectedProperty().unbindBidirectional(accordionProp);
         splitPane.getDividers().get(0).positionProperty().unbindBidirectional(split);
     }
 

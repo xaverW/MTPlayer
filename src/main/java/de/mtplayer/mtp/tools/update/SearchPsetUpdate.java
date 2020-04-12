@@ -91,7 +91,7 @@ public class SearchPsetUpdate {
                 if (!listPsetOrgSave.isEmpty()) {
                     for (final SetData psNew : listPsetStandard.getSetDataListSave()) {
                         psNew.setDestPath(listPsetOrgSave.get(0).getDestPath());
-                        psNew.setGenAboSubDir(listPsetOrgSave.get(0).getGenAboSubDir());
+                        psNew.setGenAboSubDir(listPsetOrgSave.get(0).isGenAboSubDir());
                         psNew.setMaxSize(listPsetOrgSave.get(0).getMaxSize());
                         psNew.setMaxField(listPsetOrgSave.get(0).getMaxField());
                     }

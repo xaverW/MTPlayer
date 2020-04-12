@@ -50,7 +50,7 @@ public class SetDataProps extends SetDataXml {
     private BooleanProperty subtitle = new SimpleBooleanProperty(false);
 
     private BooleanProperty genAboSubDir = new SimpleBooleanProperty(true);
-    private final ObjectProperty<AboSubDir.DirName> aboSubDir = new SimpleObjectProperty<>();
+    private final ObjectProperty<AboSubDir.DirName> aboSubDir = new SimpleObjectProperty<>(AboSubDir.DirName.THEME);
 
     public String getId() {
         return id.get();
@@ -280,7 +280,7 @@ public class SetDataProps extends SetDataXml {
         this.subtitle.set(subtitle);
     }
 
-    public boolean getGenAboSubDir() {
+    public boolean isGenAboSubDir() {
         return genAboSubDir.get();
     }
 
@@ -377,7 +377,7 @@ public class SetDataProps extends SetDataXml {
         arr[PROGRAMSET_ZIEL_PFAD] = getDestPath();
         arr[PROGRAMSET_ZIEL_DATEINAME] = getDestName();
 
-        arr[PROGRAMSET_ABO_SUBDIR_ANLEGEN] = String.valueOf(getGenAboSubDir());
+        arr[PROGRAMSET_ABO_SUBDIR_ANLEGEN] = String.valueOf(isGenAboSubDir());
         arr[PROGRAMSET_IST_ABSPIELEN] = String.valueOf(isPlay());
         arr[PROGRAMSET_IST_SPEICHERN] = String.valueOf(isSave());
         arr[PROGRAMSET_IST_BUTTON] = String.valueOf(isButton());

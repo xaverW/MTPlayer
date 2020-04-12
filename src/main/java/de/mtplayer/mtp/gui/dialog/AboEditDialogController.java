@@ -402,12 +402,12 @@ public class AboEditDialogController extends PDialogExtra {
                 final TextField txt = new TextField("");
                 txt.setEditable(false);
                 txt.setDisable(true);
-                if (aboCopy.getSetData().getGenAboSubDir()) {
+                if (aboCopy.getSetData().isGenAboSubDir()) {
                     txt.setText(aboCopy.getSetData().getAboSubDir().getName());
                 }
                 aboCopy.setDataProperty().addListener((u, o, n) -> {
                     if (n != null) {
-                        if (aboCopy.getSetData().getGenAboSubDir()) {
+                        if (aboCopy.getSetData().isGenAboSubDir()) {
                             txt.setText(aboCopy.getSetData().getAboSubDir().getName());
                         } else {
                             txt.setText("");

@@ -122,7 +122,7 @@ public class IoWriteXml implements AutoCloseable {
             writer.writeCharacters(P2LibConst.LINE_SEPARATORx2);
             xmlWriteEnd();
         } catch (final Exception ex) {
-            PLog.errorLog(656328109, ex);
+            PLog.errorLog(312147896, ex);
         }
     }
 

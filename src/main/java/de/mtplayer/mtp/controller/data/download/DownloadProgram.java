@@ -170,7 +170,7 @@ public class DownloadProgram {
             if (abo != null) {
                 // bei Abos: den Namen des Abos eintragen und evtl. den Pfad erweitern
                 download.setAboName(abo.getName());
-                if (setData.getGenAboSubDir() || !abo.getAboSubDir().trim().isEmpty()) {
+                if (setData.isGenAboSubDir() || !abo.getAboSubDir().trim().isEmpty()) {
                     // und Abopfad an den Pfad anhängen
                     // wenn im Set angegeben oder im Abo ein Pfad angegeben
                     String addPpath;
@@ -210,7 +210,7 @@ public class DownloadProgram {
                     }
                 }
 
-            } else if (setData.getGenAboSubDir()) {
+            } else if (setData.isGenAboSubDir()) {
                 // direkte Downloads
                 // und den Namen des Themas an den Zielpfad anhängen
                 // --> das wird aber nur beim ersten mal klappen, dann wird im
