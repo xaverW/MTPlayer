@@ -19,6 +19,7 @@ package de.mtplayer.mtp.gui;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.abo.AboConstants;
+import de.mtplayer.mtp.tools.storedFilter.FilterCheckRegEx;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -61,7 +62,12 @@ public class AboFilterController extends FilterController {
 
     private void initFilter() {
         txtName.textProperty().bindBidirectional(ProgConfig.FILTER_ABO_NAME.getStringProperty());
+        FilterCheckRegEx fN = new FilterCheckRegEx(txtName);
+        txtName.textProperty().addListener((observable, oldValue, newValue) -> fN.checkPattern());
+
         txtDescription.textProperty().bindBidirectional(ProgConfig.FILTER_ABO_DESCRIPTION.getStringProperty());
+        FilterCheckRegEx fD = new FilterCheckRegEx(txtDescription);
+        txtDescription.textProperty().addListener((observable, oldValue, newValue) -> fD.checkPattern());
 
         cboChannel.setItems(progData.worker.getChannelsForAbosList());
         cboChannel.valueProperty().bindBidirectional(ProgConfig.FILTER_ABO_CHANNEL.getStringProperty());

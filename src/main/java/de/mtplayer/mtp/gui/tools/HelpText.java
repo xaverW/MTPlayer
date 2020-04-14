@@ -314,7 +314,7 @@ public class HelpText {
     public static final String BLACKLIST_COUNT = "Beim Treffer zählen wird jeder Film gegen die Blacklist geprüft. " +
             "Jeder Film läuft also die Blacklist von Anfang nach Ende ab und jeder Treffer wird gezählt. " +
             P2LibConst.LINE_SEPARATORx2 +
-            "Beim Filtern der Filmliste wird nach einem Treffer wird die Suche abgebrochen. Es beschleunigt die Suche " +
+            "Beim Filtern der Filmliste wird nach einem Treffer die weitere Suche abgebrochen. Es beschleunigt also die Suche " +
             "wenn die Blacklisteinträge mit den meisten Treffern am Anfang liegen";
 
     public static final String BLACKLIST_FUTURE = "Filme, deren Datum in der Zukunft liegt, sind meist nur Trailer.";

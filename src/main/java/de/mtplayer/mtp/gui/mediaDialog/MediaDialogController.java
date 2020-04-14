@@ -21,7 +21,7 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.mtplayer.mtp.gui.tools.Listener;
-import de.mtplayer.mtp.tools.storedFilter.Filter;
+import de.mtplayer.mtp.tools.storedFilter.FilterCheckRegEx;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -83,8 +83,9 @@ public class MediaDialogController extends PDialogExtra {
         Listener.addListener(listenerDbStart);
         Listener.addListener(listenerDbStop);
 
+        FilterCheckRegEx fTT = new FilterCheckRegEx(txtSearch);
         txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
-            Filter.checkPattern1(txtSearch);
+            fTT.checkPattern();
             filter();
         });
         txtSearch.setOnMouseClicked(event -> {

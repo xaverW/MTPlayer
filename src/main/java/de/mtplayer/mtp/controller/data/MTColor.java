@@ -67,10 +67,10 @@ public class MTColor {
 
     // Filter wenn RegEx
     public static final MLC FILTER_REGEX =
-            new MLC(ProgConfig.COLOR__FILTER_REGEX, Color.rgb(153, 214, 255),
+            new MLC(ProgConfig.COLOR__FILTER_REGEX, Color.rgb(225, 255, 225),
                     ProgConfig.COLOR__FILTER_REGEX_DARK, Color.rgb(128, 179, 213), "Filter ist RegEx");
     public static final MLC FILTER_REGEX_ERROR =
-            new MLC(ProgConfig.COLOR__FILTER_REGEX_ERROR, Color.RED,
+            new MLC(ProgConfig.COLOR__FILTER_REGEX_ERROR, Color.rgb(255, 230, 230),
                     ProgConfig.COLOR__FILTER_REGEX_ERROR_DARK, Color.rgb(170, 0, 0), "Filter ist Regex, fehlerhaft");
 
     // DialogDownload

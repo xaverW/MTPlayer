@@ -24,6 +24,7 @@ import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.mediaDb.MediaData;
 import de.mtplayer.mtp.controller.mediaDb.MediaFileSize;
 import de.mtplayer.mtp.tools.storedFilter.Filter;
+import de.mtplayer.mtp.tools.storedFilter.FilterCheckRegEx;
 import de.p2tools.p2Lib.dialogs.accordion.PAccordionPane;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -131,8 +132,9 @@ public class PaneMediaListController extends PAccordionPane {
         hBox.setAlignment(Pos.CENTER_LEFT);
         vBox.getChildren().addAll(hBox);
 
+        FilterCheckRegEx fTT = new FilterCheckRegEx(txtSearch);
         txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
-            Filter.checkPattern1(txtSearch);
+            fTT.checkPattern();
             filter();
         });
     }

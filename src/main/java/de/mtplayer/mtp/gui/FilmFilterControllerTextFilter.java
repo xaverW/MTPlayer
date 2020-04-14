@@ -17,6 +17,7 @@
 package de.mtplayer.mtp.gui;
 
 import de.mtplayer.mtp.controller.config.ProgData;
+import de.mtplayer.mtp.tools.storedFilter.FilterCheckRegEx;
 import javafx.beans.property.BooleanProperty;
 import javafx.collections.ListChangeListener;
 import javafx.geometry.Insets;
@@ -185,11 +186,22 @@ public class FilmFilterControllerTextFilter extends VBox {
             }
         });
         cbxTheme.setItems(progData.worker.getThemeForChannelList());
+        FilterCheckRegEx fTh = new FilterCheckRegEx(cbxTheme.getEditor());
+        cbxTheme.getEditor().textProperty().addListener((observable, oldValue, newValue) -> fTh.checkPattern());
 
         txtThemeTitle.textProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().themeTitleProperty());
         txtTitle.textProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().titleProperty());
         txtSomewhere.textProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().somewhereProperty());
         txtUrl.textProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().urlProperty());
+
+        FilterCheckRegEx fTT = new FilterCheckRegEx(txtThemeTitle);
+        txtThemeTitle.textProperty().addListener((observable, oldValue, newValue) -> fTT.checkPattern());
+        FilterCheckRegEx fT = new FilterCheckRegEx(txtTitle);
+        txtTitle.textProperty().addListener((observable, oldValue, newValue) -> fT.checkPattern());
+        FilterCheckRegEx fS = new FilterCheckRegEx(txtSomewhere);
+        txtSomewhere.textProperty().addListener((observable, oldValue, newValue) -> fS.checkPattern());
+        FilterCheckRegEx fU = new FilterCheckRegEx(txtUrl);
+        txtUrl.textProperty().addListener((observable, oldValue, newValue) -> fU.checkPattern());
     }
 
     private void addFilter() {

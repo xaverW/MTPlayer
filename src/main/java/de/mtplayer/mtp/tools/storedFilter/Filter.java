@@ -17,13 +17,9 @@
 
 package de.mtplayer.mtp.tools.storedFilter;
 
-import de.mtplayer.mtp.controller.data.MTColor;
-import javafx.scene.control.TextField;
-
 import java.util.regex.Pattern;
 
 public class Filter {
-
 
     public String filter = "";
     public String[] filterArr = {""};
@@ -124,22 +120,22 @@ public class Filter {
         return searchText.startsWith("#:");
     }
 
-    public static void checkPattern1(TextField tf) {
-        // Hintergrund ändern wenn eine RegEx
-        final String text = tf.getText();
-        if (isPattern(text)) {
-            if (makePattern(text) == null) {
-                // soll Pattern sein, ist aber falsch
-                tf.setStyle("");
-                tf.setStyle("-fx-control-inner-background: " + MTColor.FILTER_REGEX_ERROR.getColorToWeb() + ";");
-            } else {
-                tf.setStyle("");
-                tf.setStyle("-fx-control-inner-background: " + MTColor.FILTER_REGEX_ERROR.getColorToWeb() + ";");
-                tf.setStyle("-fx-control-inner-background: " + MTColor.FILTER_REGEX.getColorToWeb() + ";");
-            }
-        } else {
-            tf.setStyle("");
-        }
-    }
+//    public static void checkPattern1(TextField tf) {
+//        // Hintergrund ändern wenn eine RegEx
+//        final String text = tf.getText();
+//        if (isPattern(text)) {
+//            if (makePattern(text) == null) {
+//                // soll Pattern sein, ist aber falsch
+//                tf.setStyle("");
+//                tf.setStyle("-fx-control-inner-background: " + MTColor.FILTER_REGEX_ERROR.getColorToWeb() + ";");
+//            } else {
+//                tf.setStyle("");
+//                tf.setStyle("-fx-control-inner-background: " + MTColor.FILTER_REGEX_ERROR.getColorToWeb() + ";");
+//                tf.setStyle("-fx-control-inner-background: " + MTColor.FILTER_REGEX.getColorToWeb() + ";");
+//            }
+//        } else {
+//            tf.setStyle("");
+//        }
+//    }
 }
 

@@ -21,6 +21,7 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.history.HistoryData;
 import de.mtplayer.mtp.tools.storedFilter.Filter;
+import de.mtplayer.mtp.tools.storedFilter.FilterCheckRegEx;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.dialogs.accordion.PAccordionPane;
@@ -205,10 +206,12 @@ public class PaneHistoryController extends PAccordionPane {
         HBox.setHgrow(lbl, Priority.ALWAYS);
         vBox.getChildren().addAll(hBox);
 
+        FilterCheckRegEx fTT = new FilterCheckRegEx(txtSearch);
         txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
-            Filter.checkPattern1(txtSearch);
+            fTT.checkPattern();
             filter();
         });
+
         rbTheme.selectedProperty().addListener((o, ol, ne) -> filter());
         rbTitle.selectedProperty().addListener((o, ol, ne) -> filter());
         rbTt.selectedProperty().addListener((o, ol, ne) -> filter());
