@@ -37,14 +37,13 @@ import java.util.function.Predicate;
 public class Filmlist extends SimpleListProperty<Film> {
 
     {
-//        sdf_.setTimeZone(new SimpleTimeZone(SimpleTimeZone.UTC_TIME, "UTC"));
         sdfUtc.setTimeZone(new SimpleTimeZone(SimpleTimeZone.UTC_TIME, "UTC"));
     }
 
-    private final static String DATE_TIME_FORMAT = "dd.MM.yyyy, HH:mm";
-    private final SimpleDateFormat sdf = new SimpleDateFormat(DATE_TIME_FORMAT);
+    private static final String DATE_TIME_FORMAT = "dd.MM.yyyy, HH:mm";
     private static final SimpleDateFormat sdfUtc = new SimpleDateFormat(DATE_TIME_FORMAT);
-    //    private static final SimpleDateFormat sdf_ = new SimpleDateFormat(DATE_TIME_FORMAT);
+    private static final SimpleDateFormat sdf = new SimpleDateFormat(DATE_TIME_FORMAT);
+
     public int nr = 1;
     public String[] metaData = new String[]{"", "", "", "", ""};
     public String[] sender = {""};
