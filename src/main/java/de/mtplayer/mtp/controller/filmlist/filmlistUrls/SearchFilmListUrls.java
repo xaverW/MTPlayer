@@ -137,6 +137,13 @@ public class SearchFilmListUrls {
     }
 
     private void insertDefaultUrlForCompleteList() {
+        filmlistUrlList_akt.add(new FilmlistUrlData("https://liste.mediathekview.de/Filmliste-akt.xz", FilmlistUrlData.SERVER_ART_AKT));
+        filmlistUrlList_akt.add(new FilmlistUrlData("https://liste.mediathekview.de/Filmliste-akt.xz", FilmlistUrlData.SERVER_ART_AKT));
+        filmlistUrlList_akt.add(new FilmlistUrlData("https://liste.mediathekview.de/Filmliste-akt.xz", FilmlistUrlData.SERVER_ART_AKT));
+        filmlistUrlList_akt.add(new FilmlistUrlData("https://liste.mediathekview.de/Filmliste-akt.xz", FilmlistUrlData.SERVER_ART_AKT));
+        filmlistUrlList_akt.add(new FilmlistUrlData("https://liste.mediathekview.de/Filmliste-akt.xz", FilmlistUrlData.SERVER_ART_AKT));
+        filmlistUrlList_akt.add(new FilmlistUrlData("https://liste.mediathekview.de/Filmliste-akt.xz", FilmlistUrlData.SERVER_ART_AKT));
+
         filmlistUrlList_akt.add(new FilmlistUrlData("http://verteiler1.mediathekview.de/Filmliste-akt.xz", FilmlistUrlData.SERVER_ART_AKT));
         filmlistUrlList_akt.add(new FilmlistUrlData("http://verteiler2.mediathekview.de/Filmliste-akt.xz", FilmlistUrlData.SERVER_ART_AKT));
         filmlistUrlList_akt.add(new FilmlistUrlData("http://verteiler3.mediathekview.de/Filmliste-akt.xz", FilmlistUrlData.SERVER_ART_AKT));
@@ -146,6 +153,14 @@ public class SearchFilmListUrls {
     }
 
     private void insertDefaultUrlForDiffList() {
+        filmlistUrlList_diff.add(new FilmlistUrlData("https://liste.mediathekview.de/Filmliste-diff.xz", FilmlistUrlData.SERVER_ART_DIFF));
+        filmlistUrlList_diff.add(new FilmlistUrlData("https://liste.mediathekview.de/Filmliste-diff.xz", FilmlistUrlData.SERVER_ART_DIFF));
+        filmlistUrlList_diff.add(new FilmlistUrlData("https://liste.mediathekview.de/Filmliste-diff.xz", FilmlistUrlData.SERVER_ART_DIFF));
+        filmlistUrlList_diff.add(new FilmlistUrlData("https://liste.mediathekview.de/Filmliste-diff.xz", FilmlistUrlData.SERVER_ART_DIFF));
+        filmlistUrlList_diff.add(new FilmlistUrlData("https://liste.mediathekview.de/Filmliste-diff.xz", FilmlistUrlData.SERVER_ART_DIFF));
+        filmlistUrlList_diff.add(new FilmlistUrlData("https://liste.mediathekview.de/Filmliste-diff.xz", FilmlistUrlData.SERVER_ART_DIFF));
+        filmlistUrlList_diff.add(new FilmlistUrlData("https://liste.mediathekview.de/Filmliste-diff.xz", FilmlistUrlData.SERVER_ART_DIFF));
+
         filmlistUrlList_diff.add(new FilmlistUrlData("http://verteiler1.mediathekview.de/Filmliste-diff.xz", FilmlistUrlData.SERVER_ART_DIFF));
         filmlistUrlList_diff.add(new FilmlistUrlData("http://verteiler2.mediathekview.de/Filmliste-diff.xz", FilmlistUrlData.SERVER_ART_DIFF));
         filmlistUrlList_diff.add(new FilmlistUrlData("http://verteiler3.mediathekview.de/Filmliste-diff.xz", FilmlistUrlData.SERVER_ART_DIFF));
