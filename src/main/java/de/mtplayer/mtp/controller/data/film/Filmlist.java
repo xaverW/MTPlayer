@@ -36,7 +36,15 @@ import java.util.function.Predicate;
 @SuppressWarnings("serial")
 public class Filmlist extends SimpleListProperty<Film> {
 
+    {
+//        sdf_.setTimeZone(new SimpleTimeZone(SimpleTimeZone.UTC_TIME, "UTC"));
+        sdfUtc.setTimeZone(new SimpleTimeZone(SimpleTimeZone.UTC_TIME, "UTC"));
+    }
+
     private final static String DATE_TIME_FORMAT = "dd.MM.yyyy, HH:mm";
+    private final SimpleDateFormat sdf = new SimpleDateFormat(DATE_TIME_FORMAT);
+    private static final SimpleDateFormat sdfUtc = new SimpleDateFormat(DATE_TIME_FORMAT);
+    //    private static final SimpleDateFormat sdf_ = new SimpleDateFormat(DATE_TIME_FORMAT);
     public int nr = 1;
     public String[] metaData = new String[]{"", "", "", "", ""};
     public String[] sender = {""};
@@ -261,25 +269,29 @@ public class Filmlist extends SimpleListProperty<Film> {
         // in der Form "dd.MM.yyyy, HH:mm"
         String ret;
         String date;
+
         if (metaData[FilmlistXml.FILMLIST_DATE_GMT_NR].isEmpty()) {
             // noch eine alte Filmliste
-            ret = metaData[FilmlistXml.FILMLIST_DATE_NR];
+            return metaData[FilmlistXml.FILMLIST_DATE_NR];
+
         } else {
             date = metaData[FilmlistXml.FILMLIST_DATE_GMT_NR];
-            final SimpleDateFormat sdf_ = new SimpleDateFormat(DATE_TIME_FORMAT);
-            sdf_.setTimeZone(new SimpleTimeZone(SimpleTimeZone.UTC_TIME, "UTC"));
+            //sdfUtc.setTimeZone(new SimpleTimeZone(SimpleTimeZone.UTC_TIME, "UTC"));
             Date filmDate = null;
             try {
-                filmDate = sdf_.parse(date);
+                filmDate = sdfUtc.parse(date);
             } catch (final ParseException ignored) {
             }
+
             if (filmDate == null) {
                 ret = metaData[FilmlistXml.FILMLIST_DATE_GMT_NR];
+
             } else {
                 final FastDateFormat formatter = FastDateFormat.getInstance(DATE_TIME_FORMAT);
                 ret = formatter.format(filmDate);
             }
         }
+
         return ret;
     }
 
@@ -307,14 +319,17 @@ public class Filmlist extends SimpleListProperty<Film> {
      * @return Age as a {@link java.util.Date} object.
      */
     public Date getAgeAsDate() {
-        final SimpleDateFormat sdf = new SimpleDateFormat(DATE_TIME_FORMAT);
-        String date;
         if (!metaData[FilmlistXml.FILMLIST_DATE_GMT_NR].isEmpty()) {
-            date = metaData[FilmlistXml.FILMLIST_DATE_GMT_NR];
-            sdf.setTimeZone(new SimpleTimeZone(SimpleTimeZone.UTC_TIME, "UTC"));
+            final String date = metaData[FilmlistXml.FILMLIST_DATE_GMT_NR];
+            return getDate(date, sdfUtc);
+
         } else {
-            date = metaData[FilmlistXml.FILMLIST_DATE_NR];
+            final String date = metaData[FilmlistXml.FILMLIST_DATE_NR];
+            return getDate(date, sdf);
         }
+    }
+
+    private Date getDate(String date, SimpleDateFormat df) {
         if (date.isEmpty()) {
             // dann ist die Filmliste noch nicht geladen
             return null;
@@ -322,7 +337,7 @@ public class Filmlist extends SimpleListProperty<Film> {
 
         Date filmDate = null;
         try {
-            filmDate = sdf.parse(date);
+            filmDate = df.parse(date);
         } catch (final Exception ignored) {
         }
 
