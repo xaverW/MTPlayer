@@ -36,11 +36,9 @@ import java.util.function.Predicate;
 @SuppressWarnings("serial")
 public class Filmlist extends SimpleListProperty<Film> {
 
+    private final static String DATE_TIME_FORMAT = "dd.MM.yyyy, HH:mm";
     public int nr = 1;
     public String[] metaData = new String[]{"", "", "", "", ""};
-    private final static String DATE_TIME_FORMAT = "dd.MM.yyyy, HH:mm";
-    private final SimpleDateFormat sdf = new SimpleDateFormat(DATE_TIME_FORMAT);
-
     public String[] sender = {""};
     public String[][] themePerChannel = {{""}};
 
@@ -309,6 +307,7 @@ public class Filmlist extends SimpleListProperty<Film> {
      * @return Age as a {@link java.util.Date} object.
      */
     public Date getAgeAsDate() {
+        final SimpleDateFormat sdf = new SimpleDateFormat(DATE_TIME_FORMAT);
         String date;
         if (!metaData[FilmlistXml.FILMLIST_DATE_GMT_NR].isEmpty()) {
             date = metaData[FilmlistXml.FILMLIST_DATE_GMT_NR];

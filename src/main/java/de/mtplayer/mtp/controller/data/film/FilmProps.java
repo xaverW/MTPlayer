@@ -81,6 +81,7 @@ public class FilmProps extends FilmXml {
     }
 
     public void setInFuture() {
+        // bezieht sich immer auf den Zeitpunkt, an dem die Filmliste geladen wurde
         try {
             if (filmDate.getTime() > System.currentTimeMillis()) {
                 inFuture = true;
