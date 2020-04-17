@@ -14,6 +14,7 @@
 * Anpassungen für den Sender RBTV
 * Dialog "Über das Programm" wurde überarbeitet
 * Anpassungen bei der Suche nach einem Update / einer neuen BETA-Version
+* RegEx: Textfelder rot einfärben bei Fehlern
 * ...
 
 
