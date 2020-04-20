@@ -78,6 +78,11 @@ public class FilmGuiController extends AnchorPane {
         scrollPane.setFitToWidth(true);
         scrollPane.setContent(tableView);
 
+//        ContextMenu ct = new ContextMenu();
+//        final MenuItem miDel = new MenuItem("Abos löschen");
+//        ct.getItems().addAll(miDel);
+//        tableView.setContextMenu(ct);
+
         initInfoPane();
         setInfoPane();
         initTable();
@@ -174,11 +179,17 @@ public class FilmGuiController extends AnchorPane {
     }
 
     public Optional<Film> getSel() {
+        return getSel(true);
+    }
+
+    public Optional<Film> getSel(boolean show) {
         final int selectedTableRow = tableView.getSelectionModel().getSelectedIndex();
         if (selectedTableRow >= 0) {
             return Optional.of(tableView.getSelectionModel().getSelectedItem());
         } else {
-            PAlert.showInfoNoSelection();
+            if (show) {
+                PAlert.showInfoNoSelection();
+            }
             return Optional.empty();
         }
     }
@@ -313,13 +324,15 @@ public class FilmGuiController extends AnchorPane {
 
         tableView.setOnMousePressed(m -> {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
-                final Optional<Film> film = getSel();
-                if (film.isPresent()) {
-                    ContextMenu contextMenu = new FilmGuiTableContextMenu(progData, this, tableView).getContextMenu(film.get());
-                    tableView.setContextMenu(contextMenu);
+                final Optional<Film> optionalFilm = getSel(false);
+                Film film;
+                if (optionalFilm.isPresent()) {
+                    film = optionalFilm.get();
                 } else {
-                    tableView.setContextMenu(null);
+                    film = null;
                 }
+                ContextMenu contextMenu = new FilmGuiTableContextMenu(progData, this, tableView).getContextMenu(film);
+                tableView.setContextMenu(contextMenu);
             }
         });
 
