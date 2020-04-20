@@ -45,6 +45,7 @@ public class Abo extends AboProps {
                String themeTitle,
                String title,
                String somewhere,
+               int timeRange,
                int minDurationMinute,
                int maxDurationMinute,
                String destination) {
@@ -62,6 +63,7 @@ public class Abo extends AboProps {
         setTitle(title);
         setSomewhere(somewhere);
 
+        setTimeRange(timeRange);
         setMinDurationMinute(minDurationMinute);
         setMaxDurationMinute(maxDurationMinute);
 

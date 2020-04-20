@@ -107,6 +107,7 @@ public class AboList extends SimpleListProperty<Abo> {
                 themeTitle,
                 title,
                 somewhere,
+                selectedFilter.getTimeRange(),
                 minDuration,
                 maxDuration,
                 namePath);
@@ -203,6 +204,7 @@ public class AboList extends SimpleListProperty<Abo> {
                 "" /* filmThemaTitel */,
                 filmTitle,
                 "",
+                FilmFilter.FILTER_TIME_RANGE_ALL_VALUE,
                 minDuration,
                 maxDuration,
                 namePath);

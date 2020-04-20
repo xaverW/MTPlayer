@@ -18,6 +18,7 @@ package de.mtplayer.mtp.gui;
 
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
+import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
 import de.p2tools.p2Lib.guiTools.PGuiTools;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import javafx.geometry.Insets;
@@ -29,6 +30,7 @@ import javafx.scene.layout.VBox;
 public class FilmFilterControllerClearFilter extends VBox {
 
     private final Button btnClearFilter = new Button("Filter _löschen");
+    private final Button btnAddAbo = new Button("_Abo anlegen");
     private final Button btnEditFilter = new Button("");
 
     private final ProgData progData;
@@ -50,14 +52,22 @@ public class FilmFilterControllerClearFilter extends VBox {
 
     private void addButton() {
         btnClearFilter.setOnAction(a -> clearFilter());
+        btnClearFilter.setTooltip(new Tooltip("Textfilter löschen, ein zweiter Klick löscht alle Filter."));
+        btnAddAbo.setOnAction(a -> addAbo());
+        btnAddAbo.setTooltip(new Tooltip("Aus den Filtereinstellungen ein neues Abo anlegen."));
 
         btnEditFilter.setGraphic(new ProgIcons().ICON_BUTTON_EDIT_FILTER);
         btnEditFilter.setOnAction(a -> editFilter());
         btnEditFilter.setTooltip(new Tooltip("Filter ein/ausschalten"));
 
-        HBox hBox = new HBox();
-        hBox.getChildren().addAll(btnEditFilter, PGuiTools.getHBoxGrower(), btnClearFilter);
+        HBox hBox = new HBox(5);
+        hBox.getChildren().addAll(btnEditFilter, PGuiTools.getHBoxGrower(), btnAddAbo, btnClearFilter);
         getChildren().addAll(hBox);
+    }
+
+    private void addAbo() {
+        SelectedFilter selectedFilter = progData.storedFilters.getActFilterSettings();
+        progData.aboList.addNewAbo(selectedFilter);
     }
 
     private void clearFilter() {
