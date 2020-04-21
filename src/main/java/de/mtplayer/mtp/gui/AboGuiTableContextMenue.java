@@ -20,7 +20,6 @@ package de.mtplayer.mtp.gui;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.abo.Abo;
 import de.mtplayer.mtp.gui.tools.table.Table;
-import de.p2tools.p2Lib.tools.PException;
 import javafx.scene.control.*;
 
 public class AboGuiTableContextMenue {
@@ -38,10 +37,6 @@ public class AboGuiTableContextMenue {
     }
 
     public ContextMenu getContextMenu(Abo abo) {
-        if (abo == null) {
-            PException.throwPException(97420202, AboGuiTableContextMenue.class.toString());
-        }
-
         final ContextMenu contextMenu = new ContextMenu();
         getMenu(contextMenu, abo);
         return contextMenu;
@@ -50,13 +45,13 @@ public class AboGuiTableContextMenue {
 
     private void getMenu(ContextMenu contextMenu, Abo abo) {
 
-        final MenuItem mbOnOff;
-        if (abo.isActive()) {
-            mbOnOff = new MenuItem("Abos ausschalten");
-            mbOnOff.setOnAction(e -> aboGuiController.setAboActive(false));
+        final MenuItem miOnOff;
+        if (abo != null && abo.isActive()) {
+            miOnOff = new MenuItem("Abos ausschalten");
+            miOnOff.setOnAction(e -> aboGuiController.setAboActive(false));
         } else {
-            mbOnOff = new MenuItem("Abos einschalten");
-            mbOnOff.setOnAction(a -> aboGuiController.setAboActive(true));
+            miOnOff = new MenuItem("Abos einschalten");
+            miOnOff.setOnAction(a -> aboGuiController.setAboActive(true));
         }
         final MenuItem miDel = new MenuItem("Abos löschen");
         miDel.setOnAction(a -> aboGuiController.deleteAbo());
@@ -65,7 +60,11 @@ public class AboGuiTableContextMenue {
         final MenuItem miNew = new MenuItem("neues Abo anlegen");
         miNew.setOnAction(a -> aboGuiController.addNewAbo());
 
-        contextMenu.getItems().addAll(mbOnOff, miDel, miChange, miNew);
+        miOnOff.setDisable(abo == null);
+        miDel.setDisable(abo == null);
+        miChange.setDisable(abo == null);
+
+        contextMenu.getItems().addAll(miOnOff, miDel, miChange, miNew);
 
 
         // Submenu "Filter"
@@ -75,6 +74,7 @@ public class AboGuiTableContextMenue {
         miFilterToAbo.setOnAction(a -> aboGuiController.setAboFromFilmFilter());
 
         Menu mFilter = new Menu("Filmfilter - Abo");
+        mFilter.setDisable(abo == null);
         mFilter.getItems().addAll(miAboToFilter, miFilterToAbo);
         contextMenu.getItems().add(new SeparatorMenuItem());
         contextMenu.getItems().addAll(mFilter);
@@ -87,6 +87,9 @@ public class AboGuiTableContextMenue {
         miSelection.setOnAction(a -> aboGuiController.invertSelection());
         MenuItem resetTable = new MenuItem("Tabelle zurücksetzen");
         resetTable.setOnAction(e -> new Table().resetTable(tableView, Table.TABLE.ABO));
+
+        miSelectAll.setDisable(abo == null);
+        miSelection.setDisable(abo == null);
 
         contextMenu.getItems().add(new SeparatorMenuItem());
         contextMenu.getItems().addAll(miSelectAll, miSelection, resetTable);

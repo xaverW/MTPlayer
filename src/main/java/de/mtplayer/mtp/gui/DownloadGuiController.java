@@ -286,11 +286,17 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private Optional<Download> getSel() {
+        return getSel(true);
+    }
+
+    private Optional<Download> getSel(boolean show) {
         final int selectedTableRow = tableView.getSelectionModel().getSelectedIndex();
         if (selectedTableRow >= 0) {
             return Optional.of(tableView.getSelectionModel().getSelectedItem());
         } else {
-            PAlert.showInfoNoSelection();
+            if (show) {
+                PAlert.showInfoNoSelection();
+            }
             return Optional.empty();
         }
     }
@@ -378,12 +384,15 @@ public class DownloadGuiController extends AnchorPane {
 
         tableView.setOnMousePressed(m -> {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
-                final Optional<Download> download = getSel();
-                if (download.isPresent()) {
-                    tableView.setContextMenu(new DownloadGuiTableContextMenu(progData, this, tableView).getContextMenu(download.get()));
+                final Optional<Download> optionalDownload = getSel(false);
+                Download download;
+                if (optionalDownload.isPresent()) {
+                    download = optionalDownload.get();
                 } else {
-                    tableView.setContextMenu(null);
+                    download = null;
                 }
+                ContextMenu contextMenu = new DownloadGuiTableContextMenu(progData, this, tableView).getContextMenu(download);
+                tableView.setContextMenu(contextMenu);
             }
         });
 

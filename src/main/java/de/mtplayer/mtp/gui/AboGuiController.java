@@ -31,10 +31,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Orientation;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.SplitPane;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 
@@ -193,12 +190,15 @@ public class AboGuiController extends AnchorPane {
 
         tableView.setOnMousePressed(m -> {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
-                final Optional<Abo> abo = getSel();
-                if (abo.isPresent()) {
-                    tableView.setContextMenu(new AboGuiTableContextMenue(progData, this, tableView).getContextMenu(abo.get()));
+                final Optional<Abo> optionalAbo = getSel(false);
+                Abo abo;
+                if (optionalAbo.isPresent()) {
+                    abo = optionalAbo.get();
                 } else {
-                    tableView.setContextMenu(null);
+                    abo = null;
                 }
+                ContextMenu contextMenu = new AboGuiTableContextMenue(progData, this, tableView).getContextMenu(abo);
+                tableView.setContextMenu(contextMenu);
             }
         });
 
@@ -223,11 +223,17 @@ public class AboGuiController extends AnchorPane {
     }
 
     private Optional<Abo> getSel() {
+        return getSel(true);
+    }
+
+    private Optional<Abo> getSel(boolean show) {
         final int selectedTableRow = tableView.getSelectionModel().getSelectedIndex();
         if (selectedTableRow >= 0) {
             return Optional.of(tableView.getSelectionModel().getSelectedItem());
         } else {
-            PAlert.showInfoNoSelection();
+            if (show) {
+                PAlert.showInfoNoSelection();
+            }
             return Optional.empty();
         }
     }

@@ -50,6 +50,9 @@ public class DownloadGuiTableContextMenu {
         MenuItem miChange = new MenuItem("Download ändern");
         miChange.setOnAction(a -> downloadGuiController.changeDownload());
 
+        miStart.setDisable(download == null);
+        miStop.setDisable(download == null);
+        miChange.setDisable(download == null);
         contextMenu.getItems().addAll(miStart, miStop, miChange);
 
 
@@ -62,6 +65,7 @@ public class DownloadGuiTableContextMenu {
         miRemove.setOnAction(a -> downloadGuiController.deleteDownloads());
 
         Menu submenuDownload = new Menu("Downloads");
+        submenuDownload.setDisable(download == null);
         submenuDownload.getItems().addAll(miPrefer, miPutBack, miRemove);
         contextMenu.getItems().add(new SeparatorMenuItem());
         contextMenu.getItems().addAll(submenuDownload);
@@ -79,11 +83,15 @@ public class DownloadGuiTableContextMenu {
         MenuItem miCleanUp = new MenuItem("Liste der Downloads aufräumen");
         miCleanUp.setOnAction(e -> downloadGuiController.cleanUp());
 
+        miStartAll.setDisable(download == null);
+        miStopAll.setDisable(download == null);
+        miStopWaiting.setDisable(download == null);
+
         Menu submenuAllDownloads = new Menu("alle Downloads");
         submenuAllDownloads.getItems().addAll(miStartAll, miStopAll, miStopWaiting, miUpdate, miCleanUp);
         contextMenu.getItems().addAll(submenuAllDownloads);
 
-
+        
         // Submenü "gespeicherte Filme"
         final MenuItem miDownloadShown = new MenuItem("Filme als gesehen markieren");
         miDownloadShown.setOnAction(a -> downloadGuiController.setFilmShown());
@@ -97,6 +105,7 @@ public class DownloadGuiTableContextMenu {
         miOpenDir.setOnAction(e -> downloadGuiController.openDestinationDir());
 
         Menu submenuFilm = new Menu("gespeicherten Film");
+        submenuFilm.setDisable(download == null);
         submenuFilm.getItems().addAll(miDownloadShown, miDownloadNotShown, miPlayerDownload, miDeleteDownload, miOpenDir);
         contextMenu.getItems().add(new SeparatorMenuItem());
         contextMenu.getItems().addAll(submenuFilm);
@@ -105,15 +114,16 @@ public class DownloadGuiTableContextMenu {
         // Submenü "Abo"
         MenuItem miChangeAbo = new MenuItem("Abo ändern");
         MenuItem miDelAbo = new MenuItem("Abo löschen");
-        if (download.getAbo() == null) {
-            miChangeAbo.setDisable(true);
-            miDelAbo.setDisable(true);
-        } else {
+        if (download != null && download.getAbo() != null) {
             miChangeAbo.setOnAction(event -> progData.aboList.changeAbo(download.getAbo()));
             miDelAbo.setOnAction(event -> progData.aboList.deleteAbo(download.getAbo()));
+        } else {
+            miChangeAbo.setDisable(true);
+            miDelAbo.setDisable(true);
         }
 
         Menu submenuAbo = new Menu("Abo");
+        submenuAbo.setDisable(download == null);
         submenuAbo.getItems().addAll(miChangeAbo, miDelAbo);
         contextMenu.getItems().addAll(submenuAbo);
 
@@ -127,6 +137,11 @@ public class DownloadGuiTableContextMenu {
         MenuItem miCopyUrl = new MenuItem("Download (URL) kopieren");
         miCopyUrl.setOnAction(a -> downloadGuiController.copyUrl());
 
+        miMediaDb.setDisable(download == null);
+        miFilmInfo.setDisable(download == null);
+        miPlayUrl.setDisable(download == null);
+        miCopyUrl.setDisable(download == null);
+
         contextMenu.getItems().add(new SeparatorMenuItem());
         contextMenu.getItems().addAll(miMediaDb, miFilmInfo, miPlayUrl, miCopyUrl);
 
@@ -137,6 +152,9 @@ public class DownloadGuiTableContextMenu {
         miSelection.setOnAction(a -> downloadGuiController.invertSelection());
         MenuItem resetTable = new MenuItem("Tabelle zurücksetzen");
         resetTable.setOnAction(a -> new Table().resetTable(tableView, Table.TABLE.DOWNLOAD));
+
+        miSelectAll.setDisable(download == null);
+        miSelection.setDisable(download == null);
 
         contextMenu.getItems().add(new SeparatorMenuItem());
         contextMenu.getItems().addAll(miSelectAll, miSelection, resetTable);
