@@ -25,7 +25,7 @@ public class HelpTextPset {
             "%H \"heute\", aktuelles Datum\n" +
             "%h \"jetzt\", aktuelle Uhrzeit\n" +
             "Datum in der Form: JJJJMMTT z.B. 20090815 (15.08.2009)\n" +
-            "Zeit in der Form: SSMMss z.B. 152059 (15:20:59)\n" +
+            "Zeit in der Form: HHMMss z.B. 152059 (15:20:59)\n" +
             "\n" +
             "%1 Tag,\n" +
             "%2 Monat,\n" +
