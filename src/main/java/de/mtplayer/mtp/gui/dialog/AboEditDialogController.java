@@ -616,7 +616,7 @@ public class AboEditDialogController extends PDialogExtra {
             senderArr.stream().forEach(s -> s = s.trim());
         }
 
-        MenuItem mi = new MenuItem("");
+        MenuItem mi = new MenuItem("Auswahl löschen");
         mi.setOnAction(a -> clearMenuText());
         mbChannel.getItems().add(mi);
 

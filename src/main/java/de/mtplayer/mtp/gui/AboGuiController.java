@@ -252,7 +252,7 @@ public class AboGuiController extends AnchorPane {
         final String description = ProgConfig.FILTER_ABO_DESCRIPTION.get().trim().toLowerCase();
 
         filteredAbos.setPredicate(abo ->
-                (sender.isEmpty() || abo.getChannel().equals(sender)) &&
+                (sender.isEmpty() || abo.getChannel().contains(sender)) &&
                         (name.isEmpty() || abo.getName().toLowerCase().contains(name)) &&
                         (description.isEmpty() || abo.getDescription().toLowerCase().contains(description)) &&
                         (kind.isEmpty() ||

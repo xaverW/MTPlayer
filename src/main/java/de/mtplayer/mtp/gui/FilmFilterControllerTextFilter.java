@@ -33,14 +33,13 @@ import java.util.List;
 
 public class FilmFilterControllerTextFilter extends VBox {
 
-    private final ComboBox<String> cboChannel = new ComboBox<>();
     private final ComboBox<String> cbxTheme = new ComboBox<>();
+    private final MenuButton mbChannel = new MenuButton("");
     private final TextField txtThemeTitle = new TextField();
     private final TextField txtTitle = new TextField();
     private final TextField txtSomewhere = new TextField();
     private final TextField txtUrl = new TextField();
 
-    private final MenuButton mbChannel = new MenuButton("");
     private final ArrayList<MenuItemClass> menuItemsList = new ArrayList<>();
 
     private final ProgData progData;
@@ -62,38 +61,13 @@ public class FilmFilterControllerTextFilter extends VBox {
         mbChannel.getStyleClass().add("channel-menu");
         mbChannel.setMaxWidth(Double.MAX_VALUE);
         VBox.setVgrow(mbChannel, Priority.ALWAYS);
+
         initchannelMenu();
         progData.storedFilters.getActFilterSettings().channelProperty().addListener((observable, oldValue, newValue) -> {
             initchannelMenu();
         });
         progData.worker.getAllChannelList().addListener((ListChangeListener<String>) c -> initchannelMenu());
-
-
-        cboChannel.setMaxWidth(Double.MAX_VALUE);
-        cboChannel.setVisibleRowCount(25);
-        cboChannel.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (!cboChannel.isVisible()) {
-                // dann ist das andere Sendermenü aktiv
-                return;
-            }
-
-            if (oldValue != null && newValue != null) {
-                // wenn Änderung beim Sender -> Themen anpassen
-                if (newValue.isEmpty()) {
-                    progData.worker.createThemeList("");
-                } else {
-                    cbxTheme.getSelectionModel().select("");
-                    progData.worker.createThemeList(newValue);
-                }
-            }
-        });
-        cboChannel.setItems(progData.worker.getAllChannelList());
-
         mbChannel.textProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().channelProperty());
-        cboChannel.valueProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().channelProperty());
-//        progData.storedFilters.getActFilterSettings().channelExactProperty().addListener(l -> {
-//            progData.storedFilters.getActFilterSettings().channelProperty().setValue("");
-//        });
     }
 
     private void initchannelMenu() {
@@ -111,9 +85,25 @@ public class FilmFilterControllerTextFilter extends VBox {
             channelFilterList.stream().forEach(s -> s = s.trim());
         }
 
-        MenuItem mi = new MenuItem("");
-        mi.setOnAction(a -> clearMenuText());
-        mbChannel.getItems().add(mi);
+        CheckBox miCheckAll = new CheckBox();
+        miCheckAll.setVisible(false);
+
+//        Button btnAll = new Button("alle Sender");
+        Button btnAll = new Button("Auswahl löschen");
+        btnAll.getStyleClass().add("channel-button");
+        btnAll.setMaxWidth(Double.MAX_VALUE);
+        btnAll.minWidthProperty().bind(mbChannel.widthProperty().add(-50));
+        btnAll.setOnAction(e -> {
+            clearMenuText();
+            mbChannel.hide();
+        });
+
+        HBox hBoxAll = new HBox(10);
+        hBoxAll.setAlignment(Pos.CENTER_LEFT);
+        hBoxAll.getChildren().addAll(miCheckAll, btnAll);
+
+        CustomMenuItem cmiAll = new CustomMenuItem(hBoxAll);
+        mbChannel.getItems().add(cmiAll);
 
         for (String s : progData.worker.getAllChannelList()) {
             if (s.isEmpty()) {
@@ -151,7 +141,6 @@ public class FilmFilterControllerTextFilter extends VBox {
         for (MenuItemClass cm : menuItemsList) {
             cm.getCheckBox().setSelected(false);
         }
-
         cmi.getCheckBox().setSelected(true);
         setMenuText();
     }
@@ -250,14 +239,8 @@ public class FilmFilterControllerTextFilter extends VBox {
     private void addChannel(VBox vBoxComplete) {
         VBox vBox = new VBox();
         Label label = new Label("Sender");
-//        vBox.getChildren().addAll(label, mbChannel, cboChannel);
         vBox.getChildren().addAll(label, mbChannel);
         vBoxComplete.getChildren().add(vBox);
-
-//        mbChannel.visibleProperty().bind(progData.storedFilters.getActFilterSettings().channelExactProperty().not());
-//        mbChannel.managedProperty().bind(progData.storedFilters.getActFilterSettings().channelExactProperty().not());
-//        cboChannel.visibleProperty().bind(progData.storedFilters.getActFilterSettings().channelExactProperty());
-//        cboChannel.managedProperty().bind(progData.storedFilters.getActFilterSettings().channelExactProperty());
 
         vBox.visibleProperty().bind(progData.storedFilters.getActFilterSettings().channelVisProperty());
         vBox.managedProperty().bind(progData.storedFilters.getActFilterSettings().channelVisProperty());

@@ -42,6 +42,7 @@ public class ProgIcons {
     public final ImageView ICON_BUTTON_PLAY = GetIcon.getImageView("button-play.png", 16, 16);
 
     public final ImageView ICON_DIALOG_QUIT = GetIcon.getImageView("dialog-quit.png", 64, 64);
+    public final ImageView ICON_CLEAN_16 = GetIcon.getImageView("clean_16.png", 16, 16);
 
 
     // table

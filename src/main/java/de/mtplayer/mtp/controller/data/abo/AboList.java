@@ -35,9 +35,7 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Optional;
+import java.util.*;
 
 public class AboList extends SimpleListProperty<Abo> {
     private final ProgData progData;
@@ -307,11 +305,29 @@ public class AboList extends SimpleListProperty<Abo> {
         final ArrayList<String> sender = new ArrayList<>();
         sender.add("");
         for (final Abo abo : this) {
+
             final String s = abo.getChannel();
-            if (!sender.contains(s)) {
-                sender.add(abo.getChannel());
+
+            List<String> channelFilterList = new ArrayList<>();
+            String channelFilter = abo.getChannel();
+            if (channelFilter != null) {
+                if (channelFilter.contains(",")) {
+                    channelFilterList.addAll(Arrays.asList(channelFilter.replace(" ", "").split(",")));
+                } else {
+                    channelFilterList.add(channelFilter);
+                }
+                channelFilterList.stream().forEach(st -> st = st.trim());
+            }
+            for (String sf : channelFilterList) {
+                if (sf.isEmpty()) {
+                    continue;
+                }
+                if (!sender.contains(sf)) {
+                    sender.add(sf);
+                }
             }
         }
+
         sender.sort(sorter);
         return sender;
     }
