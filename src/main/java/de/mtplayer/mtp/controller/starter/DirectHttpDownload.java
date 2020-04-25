@@ -257,6 +257,7 @@ public class DirectHttpDownload extends Thread {
                                 // nur beim ersten Mal melden -> nervt sonst
                                 Platform.runLater(() -> new DownloadErrorDialogController(download, responseCode));
                             }
+                            download.setErrorMessage(responseCode);
                             download.setStateError();
                         }
                     }
@@ -283,11 +284,12 @@ public class DirectHttpDownload extends Thread {
                     // dann weiß der Geier!
                     exMessage = ex.getMessage();
                     PLog.errorLog(316598941, ex, "Fehler");
-                    download.setStateError();
                     if (download.getStart().getRestartCounter() == 0) {
                         // nur beim ersten Mal melden -> nervt sonst
                         Platform.runLater(() -> new DownloadErrorDialogController(download, exMessage));
                     }
+                    download.setErrorMessage(exMessage);
+                    download.setStateError();
                 }
             }
         }

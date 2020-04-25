@@ -116,6 +116,11 @@ public class TableFilm {
         aboColumn.setCellValueFactory(new PropertyValueFactory<>("aboName"));
         aboColumn.getStyleClass().add("alignCenterLeft");
 
+        nrColumn.setPrefWidth(50);
+        senderColumn.setPrefWidth(80);
+        themeColumn.setPrefWidth(180);
+        titleColumn.setPrefWidth(230);
+
         addRowFact(table);
 
         return new TableColumn[]{

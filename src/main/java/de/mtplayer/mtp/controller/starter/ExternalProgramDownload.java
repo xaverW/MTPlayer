@@ -95,13 +95,14 @@ public class ExternalProgramDownload extends Thread {
                 stat = downloadLoop(stat);
             }
         } catch (final Exception ex) {
-            download.setStateError();
             exMessage = ex.getLocalizedMessage();
             PLog.errorLog(395623710, ex);
             if (download.getStart().getRestartCounter() == 0) {
                 // nur beim ersten Mal melden -> nervt sonst
                 Platform.runLater(() -> new DownloadErrorDialogController(download, exMessage));
             }
+            download.setStateError();
+            download.setErrorMessage(exMessage);
         }
         finalizeDownload(download);
     }

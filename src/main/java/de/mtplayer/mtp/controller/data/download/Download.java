@@ -42,6 +42,7 @@ public final class Download extends DownloadProps {
     private Film film = null;
     private SetData setData = null;
     private Abo abo = null;
+    private String errorMessage = "";
 
     private XYChart.Series<Number, Number> cSeries = null;
 
@@ -164,6 +165,7 @@ public final class Download extends DownloadProps {
         getStart().setRestartCounter(0);
         getStart().setBandwidth(0);
         setStateStartedWaiting();
+        setErrorMessage("");
     }
 
     public void putBack() {
@@ -348,6 +350,15 @@ public final class Download extends DownloadProps {
         setDestFileName(name);
         setDestPath(path);
         setDestPathFile(PFileUtils.addsPath(path, name));
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        final String s = "Der Download hatte einen Fehler:\n\n";
+        this.errorMessage = s + errorMessage;
     }
 
     public Download getCopy() {

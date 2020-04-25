@@ -174,6 +174,12 @@ public class TableDownload {
         pathColumn.setCellValueFactory(new PropertyValueFactory<>("destPath"));
         pathColumn.getStyleClass().add("alignCenterLeft");
 
+        nrColumn.setPrefWidth(50);
+        filmNrColumn.setPrefWidth(70);
+        senderColumn.setPrefWidth(80);
+        themeColumn.setPrefWidth(180);
+        titleColumn.setPrefWidth(230);
+
         addRowFact(table);
 
         return new TableColumn[]{
@@ -205,6 +211,10 @@ public class TableDownload {
                             getChildren().get(i).setStyle(MTColor.FILM_GEOBLOCK.getCssFontBold());
                         }
 
+                    } else if (download.isStateError()) {
+                        Tooltip tooltip = new Tooltip();
+                        tooltip.setText(download.getErrorMessage());
+                        setTooltip(tooltip);
 
                     } else {
                         for (int i = 0; i < getChildren().size(); i++) {
