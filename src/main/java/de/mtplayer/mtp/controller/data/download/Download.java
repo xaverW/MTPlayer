@@ -81,8 +81,9 @@ public final class Download extends DownloadProps {
             if (getNr() < DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED) {
                 Platform.runLater(() -> cSeries.setName(getNr() + ""));
             } else {
-                // Download ohne Nummer, dann auch im Chart löschen
-                Platform.runLater(() -> cSeries.setName(" "));
+                // Download ohne Nummer, dann die FilmNr eintragen
+                final String fNo = getFilmNr() == DownloadConstants.FILM_NUMBER_NOT_FOUND ? " " : "[" + getFilmNr() + "]";
+                Platform.runLater(() -> cSeries.setName(fNo));
             }
         });
     }
@@ -190,7 +191,7 @@ public final class Download extends DownloadProps {
         setRemaining("");
         setBandwidth("");
         getStart().setBandwidth(0);
-        setCSeries(null);
+//        setCSeries(null);
         setNr(DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED);
 
         setState(DownloadConstants.STATE_INIT);
@@ -217,7 +218,7 @@ public final class Download extends DownloadProps {
         setRemaining("");
         setBandwidth("");
         getStart().setBandwidth(0);
-        setCSeries(null);
+//        setCSeries(null);
         setNr(DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED);
     }
 
