@@ -112,4 +112,16 @@
     -fx-background-color: #55595b, linear-gradient(from -50% 50% to 50% 50% , repeat, #CCCCCC, #A0A6AC 100% );
 }
 
+/*
+Download Chart
+*/
+
+.chart-plot-background {
+    -fx-background-color: #5e6264;
+}
+.chart-alternative-row-fill {
+    -fx-fill: #686d6f;
+    -fx-stroke: transparent;
+    -fx-stroke-width: 0;
+}
 

@@ -176,6 +176,7 @@ public class ProgConfig extends MLConfig {
 
     // Downloadchart
     public static MLConfigs DOWNLOAD_CHART_SEPARAT = addNewKey("download-chart-separat", Boolean.TRUE.toString());
+    public static MLConfigs DOWNLOAD_CHART_ONLY_RUNNING = addNewKey("download-chart-onlyRunning", Boolean.FALSE.toString());
     public static MLConfigs DOWNLOAD_CHART_MAX_TIME = addNewKey("download-chart-max-time", 30);
 
     // Gui Abo

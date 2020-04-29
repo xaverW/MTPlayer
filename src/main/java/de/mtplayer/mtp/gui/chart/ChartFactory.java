@@ -137,21 +137,32 @@ public class ChartFactory {
 
     public static synchronized void cleanUpChart(ProgData progData, ChartData chartData) {
         // charts die keinen Download mehr haben, löschen
+        final boolean onlyRunning = ProgConfig.DOWNLOAD_CHART_ONLY_RUNNING.getBool();
         Iterator<XYChart.Series<Number, Number>> it = chartData.getLineChartsSeparate().listIterator();
         while (it.hasNext()) {
+
             XYChart.Series<Number, Number> cSeries = it.next();
             boolean foundDownload = false;
             for (final Download download : progData.downloadList) {
+
                 if (download.getCSeries() != null && download.getCSeries().equals(cSeries)) {
-                    foundDownload = true;
+                    if (!onlyRunning) {
+                        // dann werden alle Downloads angezeigt
+                        foundDownload = true;
+                    } else if (download.isStateStartedRun()) {
+                        // nur die laufenden anzeigen
+                        foundDownload = true;
+                    }
                     break;
                 }
+
             }
 
             if (!foundDownload) {
                 // dann gibts den Download nicht mehr
                 it.remove();
             }
+
         }
     }
 }

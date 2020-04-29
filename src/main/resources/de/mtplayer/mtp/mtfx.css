@@ -422,3 +422,52 @@
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
 }
+
+
+/*
+.chart {
+    -fx-padding: 10px;
+}
+.chart-content {
+    -fx-padding: 10px;
+}
+*/
+
+/* grün: #d2ffd2 */
+/* rot: #ffe6e6 */
+
+/*
+.chart-legend {
+    -fx-background-color: #d2ffd2;
+    -fx-padding: 5px;
+}
+
+.chart-legend-item-symbol{
+    -fx-background-radius: 0;
+}
+.chart-legend-item{
+    -fx-text-fill: green;
+}
+*/
+/*
+Download Chart
+Schwarz: #55595b
+Weiß:    #f4f4f4
+*/
+
+.chart-plot-background {
+    -fx-background-color: #ebebeb;
+}
+/*
+.chart-vertical-grid-lines {
+    -fx-stroke: #78808b;
+}
+.chart-horizontal-grid-lines {
+    -fx-stroke: #78808b;
+}
+*/
+.chart-alternative-row-fill {
+    -fx-fill: #e1e1e1;
+    -fx-stroke: transparent;
+    -fx-stroke-width: 0;
+}

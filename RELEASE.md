@@ -16,6 +16,8 @@
 * Anpassungen bei der Suche nach einem Update / einer neuen BETA-Version
 * RegEx: Textfelder rot einfärben bei Fehlern
 * Tabellenmenü jetzt auch bei leerer Tabelle verfügbar (für z.B. "neues Abo anlegen", ..)
+* ToolTip der Downloadtabelle enthält die Fehlermeldung bei Downloadfehlern
+* Downloadchart wurde überarbeitet
 * ...
 
 

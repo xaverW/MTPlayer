@@ -54,6 +54,9 @@ public class ProgIcons {
     public static final Image IMAGE_TABLE_DOWNLOAD_STOP = GetIcon.getImage("table-download-stop.png", 14, 14);
     public static final Image IMAGE_TABLE_DOWNLOAD_OPEN_DIR = GetIcon.getImage("table-download-open-dir.png", 14, 14);
 
+    public final ImageView DOWNLOAD_OK = GetIcon.getImageView("download-ok.png", 16, 16);
+    public final ImageView DOWNLOAD_ERROR = GetIcon.getImageView("download-error.png", 16, 16);
+
     public final ImageView ICON_BUTTON_STOP = GetIcon.getImageView("button-stop.png", 16, 16);
     public final ImageView ICON_BUTTON_NEXT = GetIcon.getImageView("button-next.png", 16, 16);
     public final ImageView ICON_BUTTON_PREV = GetIcon.getImageView("button-prev.png", 16, 16);
