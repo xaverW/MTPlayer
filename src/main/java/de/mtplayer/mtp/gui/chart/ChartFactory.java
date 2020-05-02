@@ -94,8 +94,8 @@ public class ChartFactory {
             cs.getData().removeIf(d -> d.getXValue().doubleValue() < MIN);
         });
 
-        while (!chartData.getSumChartSeries().getData().isEmpty() && chartData.getSumChartSeries().getData().get(0).getXValue().doubleValue() < MIN) {
-            chartData.getSumChartSeries().getData().remove(0);
+        while (!chartData.getChartSeriesSum().getData().isEmpty() && chartData.getChartSeriesSum().getData().get(0).getXValue().doubleValue() < MIN) {
+            chartData.getChartSeriesSum().getData().remove(0);
         }
     }
 
@@ -137,7 +137,15 @@ public class ChartFactory {
 
     public static synchronized void cleanUpChart(ProgData progData, ChartData chartData) {
         // charts die keinen Download mehr haben, löschen
-        final boolean onlyRunning = ProgConfig.DOWNLOAD_CHART_ONLY_RUNNING.getBool();
+        final boolean all = ProgConfig.DOWNLOAD_CHART_ALL_DOWNLOADS.getBool();
+        final boolean onlyExisting = ProgConfig.DOWNLOAD_CHART_ONLY_EXISTING.getBool();
+//        final boolean onlyRunning = ProgConfig.DOWNLOAD_CHART_ONLY_RUNNING.getBool();
+
+        if (all) {
+            // dann sollen alle Downloads angezeigt werden
+            return;
+        }
+
         Iterator<XYChart.Series<Number, Number>> it = chartData.getLineChartsSeparate().listIterator();
         while (it.hasNext()) {
 
@@ -146,8 +154,8 @@ public class ChartFactory {
             for (final Download download : progData.downloadList) {
 
                 if (download.getCSeries() != null && download.getCSeries().equals(cSeries)) {
-                    if (!onlyRunning) {
-                        // dann werden alle Downloads angezeigt
+                    if (onlyExisting) {
+                        // dann werden alle vorhandenen Downloads angezeigt
                         foundDownload = true;
                     } else if (download.isStateStartedRun()) {
                         // nur die laufenden anzeigen

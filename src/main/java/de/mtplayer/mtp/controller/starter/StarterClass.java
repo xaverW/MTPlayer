@@ -273,6 +273,7 @@ public class StarterClass {
             }
         }
 
+        download.setNr(DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED);
         ProgData.getInstance().downloadGuiController.tableRefresh();
         start.setProcess(null);
         start.setInputStream(null);

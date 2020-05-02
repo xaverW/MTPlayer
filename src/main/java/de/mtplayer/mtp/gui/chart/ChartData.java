@@ -29,11 +29,12 @@ public class ChartData {
     private int countSek = 0;
     private int scale = 1;
 
-    private final XYChart.Series<Number, Number> sumChartSeries =
+    // ist die eine Chart für den Gesamtwert
+    private final XYChart.Series<Number, Number> chartSeriesSum =
             new XYChart.Series<>("Summe", FXCollections.observableArrayList(new XYChart.Data<Number, Number>(0.0, 0.0)));
 
     // Liste der LineCharts für Gesamt -> hat nur eine LineChart
-    private final ObservableList<XYChart.Series<Number, Number>> lineChartsSum = FXCollections.observableArrayList(sumChartSeries);
+    private final ObservableList<XYChart.Series<Number, Number>> lineChartsSum = FXCollections.observableArrayList(chartSeriesSum);
 
     // Liste der LineCharts für einzele Downloads -> für jeden Download eine LineChart
     private final ObservableList<XYChart.Series<Number, Number>> lineChartsSeparate = FXCollections.observableArrayList();
@@ -74,8 +75,8 @@ public class ChartData {
         this.scale = scale;
     }
 
-    public XYChart.Series<Number, Number> getSumChartSeries() {
-        return sumChartSeries;
+    public XYChart.Series<Number, Number> getChartSeriesSum() {
+        return chartSeriesSum;
     }
 
     public ObservableList<XYChart.Series<Number, Number>> getLineChartsSum() {

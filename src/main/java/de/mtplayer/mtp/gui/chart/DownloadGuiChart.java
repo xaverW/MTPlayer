@@ -42,6 +42,8 @@ import java.util.Set;
 public class DownloadGuiChart {
 
     private BooleanProperty separatChartProp = ProgConfig.DOWNLOAD_CHART_SEPARAT.getBooleanProperty();
+    private BooleanProperty allDownloadsProp = ProgConfig.DOWNLOAD_CHART_ALL_DOWNLOADS.getBooleanProperty();
+    private BooleanProperty onlyExistingProp = ProgConfig.DOWNLOAD_CHART_ONLY_EXISTING.getBooleanProperty();
     private BooleanProperty onlyRunningProp = ProgConfig.DOWNLOAD_CHART_ONLY_RUNNING.getBooleanProperty();
     private final ProgData progData;
 
@@ -71,13 +73,13 @@ public class DownloadGuiChart {
 
     private synchronized void initList() {
         chartData.getLineChartsSeparate().clear(); // da werden alle chartSeries gelöscht, jeder Download
-        chartData.getSumChartSeries().getData().clear(); // da werden die Daten in der einen chartSeries gelöscht, Summe aller Downloads
+        chartData.getChartSeriesSum().getData().clear(); // da werden die Daten in der einen chartSeries gelöscht, Summe aller Downloads
         chartData.setScale(1);
     }
 
     private synchronized void clearChart() {
         chartData.getLineChartsSeparate().stream().forEach(series -> series.getData().clear()); // da werden nur die Series gelöscht
-        chartData.getSumChartSeries().getData().clear(); // da werden die Daten in der einen chartSeries gelöscht, Summe aller Downloads
+        chartData.getChartSeriesSum().getData().clear(); // da werden die Daten in der einen chartSeries gelöscht, Summe aller Downloads
         chartData.setScale(1);
     }
 
@@ -109,40 +111,67 @@ public class DownloadGuiChart {
     }
 
     private ContextMenu initContextMenu() {
-        final Slider slMaxTime = new Slider();
-        slMaxTime.setMaxWidth(Double.MAX_VALUE);
-        slMaxTime.setMin(30);
-        slMaxTime.setMax(300);
-        slMaxTime.valueProperty().bindBidirectional(chartData.maxTimeProperty());
-
         final Label lblValue = new Label(" " + chartData.getMaxTime() + " Min.");
+        final Label lblInfo = new Label("Zeitraum:");
+
+        final Slider slMaxTime = new Slider();
+        slMaxTime.setMinWidth(250);
+        slMaxTime.setMin(10);
+        slMaxTime.setMax(300);
+        slMaxTime.setBlockIncrement(10);
+        slMaxTime.setShowTickLabels(true);
+        slMaxTime.setSnapToTicks(true);
+        slMaxTime.setShowTickMarks(true);
+        slMaxTime.setMinorTickCount(13);
+        slMaxTime.setMajorTickUnit(140);
+
+        slMaxTime.valueProperty().bindBidirectional(chartData.maxTimeProperty());
         slMaxTime.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 lblValue.setText(" " + newValue.intValue() + " Min.");
             }
         });
-        final Label lblInfo = new Label("Zeitraum:");
 
         HBox hBox = new HBox(5);
         hBox.getChildren().addAll(lblInfo, slMaxTime, lblValue);
         HBox.setHgrow(slMaxTime, Priority.ALWAYS);
-        CustomMenuItem cmi = new CustomMenuItem(hBox);
+        CustomMenuItem cmiTime = new CustomMenuItem(hBox);
 
 
         final CheckMenuItem chkAllDowns = new CheckMenuItem("jeden Download einzeln zeichnen und nicht alle zusammenfassen");
         chkAllDowns.selectedProperty().bindBidirectional(separatChartProp);
         chkAllDowns.setOnAction(e -> selectChartData());
 
-        final CheckMenuItem chkOnlyRunning = new CheckMenuItem("nur aktuell laufende Downloads anzeigen");
-        chkOnlyRunning.selectedProperty().bindBidirectional(onlyRunningProp);
-        chkOnlyRunning.setOnAction(e -> ChartFactory.cleanUpChart(progData, chartData));
+
+        final RadioMenuItem rbAll = new RadioMenuItem("alle Downloads immer anzeigen");
+        final RadioMenuItem rbOnlyExisting = new RadioMenuItem("nur noch vorhandene Downloads anzeigen");
+        final RadioMenuItem rbOnlyRunning = new RadioMenuItem("nur aktuell laufende Downloads anzeigen");
+        final ToggleGroup group = new ToggleGroup();
+        rbAll.setToggleGroup(group);
+        rbOnlyExisting.setToggleGroup(group);
+        rbOnlyRunning.setToggleGroup(group);
+
+        rbAll.setOnAction(e -> ChartFactory.cleanUpChart(progData, chartData));
+        rbOnlyExisting.setOnAction(e -> ChartFactory.cleanUpChart(progData, chartData));
+        rbOnlyRunning.setOnAction(e -> ChartFactory.cleanUpChart(progData, chartData));
+
+        rbAll.selectedProperty().bindBidirectional(allDownloadsProp);
+        rbOnlyExisting.selectedProperty().bindBidirectional(onlyExistingProp);
+        rbOnlyRunning.selectedProperty().bindBidirectional(onlyRunningProp);
+
+        rbAll.disableProperty().bind(chkAllDowns.selectedProperty().not());
+        rbOnlyExisting.disableProperty().bind(chkAllDowns.selectedProperty().not());
+        rbOnlyRunning.disableProperty().bind(chkAllDowns.selectedProperty().not());
+
 
         final MenuItem delData = new MenuItem("Diagramm löschen");
         delData.setOnAction(e -> clearChart());
 
 
         final ContextMenu cm = new ContextMenu();
-        cm.getItems().addAll(cmi, chkAllDowns, chkOnlyRunning, delData);
+        cm.getItems().addAll(cmiTime,
+                new SeparatorMenuItem(), rbAll, rbOnlyExisting, rbOnlyRunning,
+                new SeparatorMenuItem(), chkAllDowns, delData);
         return cm;
     }
 
@@ -213,7 +242,7 @@ public class DownloadGuiChart {
         colorChartName();
 
         // Anzeige der Summe aller Downloads
-        chartData.getSumChartSeries().getData().add(new XYChart.Data<>(countMin, progData.downloadInfos.getBandwidth() / chartData.getScale()));
+        chartData.getChartSeriesSum().getData().add(new XYChart.Data<>(countMin, progData.downloadInfos.getBandwidth() / chartData.getScale()));
         ChartFactory.zoomXAxis(lineChart, chartData, countMin);
         ChartFactory.zoomYAxis(lineChart, chartData);
     }
@@ -249,7 +278,7 @@ public class DownloadGuiChart {
                         label.setStyle(" -fx-text-fill: " + cRed + ";");
                         break;
                     default:
-                        label.setStyle(" -fx-text-fill: ;");
+                        label.setStyle(" -fx-text-fill:");
                 }
             }
         }
