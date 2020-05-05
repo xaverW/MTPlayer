@@ -53,6 +53,7 @@ public class RuntimeExec {
     private String[] arrProgCallArray = null;
     private String strProgCallArray = "";
     private PlayerMessage playerMessage = new PlayerMessage();
+    private boolean flvstreamer = false;
 
     public RuntimeExec(Download download) {
         this.download = download;
@@ -95,6 +96,12 @@ public class RuntimeExec {
                 process = Runtime.getRuntime().exec(strProgCall);
             }
 
+            if (strProgCall.contains("flvstreamer")) {
+                PLog.sysLog("=====================");
+                PLog.sysLog("flvstreamer");
+                PLog.sysLog("=====================");
+                flvstreamer = true;
+            }
             clearIn = new Thread(new ClearInOut(INPUT, process));
             clearOut = new Thread(new ClearInOut(ERROR, process));
 
@@ -162,7 +169,7 @@ public class RuntimeExec {
             // by: siedlerchr für den flvstreamer und rtmpdump
             Matcher matcher;
             matcher = patternFlvstreamer.matcher(input);
-            if (matcher.find()) {
+            if (flvstreamer && matcher.find()) {
                 try {
                     String percent = matcher.group();
                     percent = percent.substring(0, percent.length() - 1);
@@ -176,7 +183,7 @@ public class RuntimeExec {
                 return;
             }
             matcher = patternFlvstreamerComplete.matcher(input);
-            if (matcher.find()) {
+            if (flvstreamer && matcher.find()) {
                 // dann ist der Download fertig, zur sicheren Erkennung von 100%
                 notifyDouble(100);
                 return;

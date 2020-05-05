@@ -278,7 +278,7 @@ public class DownloadGuiChart {
                         label.setStyle(" -fx-text-fill: " + cRed + ";");
                         break;
                     default:
-                        label.setStyle(" -fx-text-fill:");
+                        label.setStyle("");
                 }
             }
         }
