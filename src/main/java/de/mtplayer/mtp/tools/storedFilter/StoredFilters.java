@@ -38,7 +38,7 @@ public final class StoredFilters {
 
     // ist der aktuell angezeigte Filter
     public static final String SELECTED_FILTER_NAME = "aktuelle Einstellung"; // dient nur der Info im Config-File
-    private SelectedFilter actFilterSettings = new SelectedFilter(SELECTED_FILTER_NAME);
+    private SelectedFilter actFilterSettings = new SelectedFilter(SELECTED_FILTER_NAME); // ist der "aktuelle" Filter im Programm
 
     // ist die Liste der gespeicherten Filter
     private final ObservableList<SelectedFilter> filterList =
@@ -50,8 +50,8 @@ public final class StoredFilters {
         filterChangeListener = (observable, oldValue, newValue) -> postFilterChange();
         blacklistChangeListener = (observable, oldValue, newValue) -> postBlacklistChange();
 
-        actFilterSettings.filterChangeProperty().addListener(filterChangeListener);
-        actFilterSettings.blacklistChangeProperty().addListener(blacklistChangeListener);
+        actFilterSettings.filterChangeProperty().addListener(filterChangeListener); // wenn der User den Filter ändert
+        actFilterSettings.blacklistChangeProperty().addListener(blacklistChangeListener); // wenn der User die Blackl. ein-/ausschaltet
     }
 
     public BooleanProperty filterChangeProperty() {

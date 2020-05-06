@@ -28,10 +28,12 @@ import de.mtplayer.mtp.gui.tools.table.Table;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PColor;
+import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
+import javafx.collections.ListChangeListener;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -66,6 +68,9 @@ public class FilmGuiController extends AnchorPane {
     public FilmGuiController() {
         progData = ProgData.getInstance();
         sortedList = progData.filmlistFiltered.getSortedList();
+        sortedList.addListener((ListChangeListener<Film>) c -> {
+            selectFilm();
+        });
 
         AnchorPane.setLeftAnchor(splitPane, 0.0);
         AnchorPane.setBottomAnchor(splitPane, 0.0);
@@ -109,6 +114,31 @@ public class FilmGuiController extends AnchorPane {
         Film film = tableView.getSelectionModel().getSelectedItem();
         filmGuiInfoController.setFilm(film);
         progData.filmInfoDialogController.setFilm(film);
+    }
+
+    private void selectFilm() {
+        Platform.runLater(() -> {
+            if ((tableView.getItems().size() == 0)) {
+                return;
+            }
+//            Film selFilm = tableView.getSelectionModel().getSelectedItem();
+//            System.out.println("Sel: " + selFilm);
+//            if (selFilm != null) {
+//                PDuration.counterStart("selectFilm: with selection");
+//                tableView.getSelectionModel().clearSelection();
+////                int sel = tableView.getSelectionModel().getSelectedIndex();
+////                tableView.scrollTo(sel);
+//                tableView.getSelectionModel().select(selFilm);
+//                tableView.scrollTo(selFilm);
+//                PDuration.counterStop("selectFilm: with selection");
+//            } else {
+            PDuration.counterStart("selectFilm: with no selection");
+            tableView.getSelectionModel().clearSelection();
+            tableView.scrollTo(0);
+            tableView.getSelectionModel().select(0);
+            PDuration.counterStop("selectFilm: with no selection");
+//            }
+        });
     }
 
     public void showFilmInfo() {

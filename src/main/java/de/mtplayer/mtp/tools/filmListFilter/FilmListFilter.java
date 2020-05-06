@@ -28,10 +28,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class FilmListFilter {
     private final ProgData progData;
 
+    /**
+     * hier wird das Filtern der Filmliste "angestoßen"
+     *
+     * @param progData
+     */
     public FilmListFilter(ProgData progData) {
         this.progData = progData;
 
-        progData.storedFilters.filterChangeProperty().addListener((observable, oldValue, newValue) -> filter());
+        progData.storedFilters.filterChangeProperty().addListener((observable, oldValue, newValue) -> filter()); // Filmfilter (User) haben sich geändert
         progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> filterList());
         progData.loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
             @Override
