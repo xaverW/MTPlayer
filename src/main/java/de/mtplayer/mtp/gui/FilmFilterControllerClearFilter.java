@@ -50,7 +50,7 @@ public class FilmFilterControllerClearFilter extends VBox {
 
     private void addButton() {
         btnClearFilter.setOnAction(a -> clearFilter());
-        btnClearFilter.setTooltip(new Tooltip("Textfilter löschen, ein zweiter Klick löscht alle Filter."));
+        btnClearFilter.setTooltip(new Tooltip("Textfilter löschen, ein zweiter Klick löscht alle Filter"));
 
         btnEditFilter.setGraphic(new ProgIcons().ICON_BUTTON_EDIT_FILTER);
         btnEditFilter.setOnAction(a -> editFilter());

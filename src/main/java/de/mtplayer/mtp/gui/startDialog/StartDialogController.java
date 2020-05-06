@@ -324,22 +324,22 @@ public class StartDialogController extends PDialogExtra {
     }
 
     private void initTooltip() {
-        btnStart1.setTooltip(new Tooltip("Infos über das Programm."));
-        btnStart2.setTooltip(new Tooltip("Infos über das Programm."));
-        btnUpdate.setTooltip(new Tooltip("Soll das Programm nach Updates suchen!"));
+        btnStart1.setTooltip(new Tooltip("Infos über das Programm"));
+        btnStart2.setTooltip(new Tooltip("Infos über das Programm"));
+        btnUpdate.setTooltip(new Tooltip("Soll das Programm nach Updates suchen?"));
         btnGeo.setTooltip(new Tooltip("Einstellung des eigenen Standorts\n" +
-                "und der Markierung geblockter Filme."));
+                "und der Markierung geblockter Filme"));
         btnFilm.setTooltip(new Tooltip("Damit kann man die Größe der\n" +
                 "Filmliste reduzieren und damit die Geschwindigkeit\n" +
-                "des Programms auf langsamen Rechnern verbessern."));
-        btnDown.setTooltip(new Tooltip("Auswahl des Verzeichniss zum Speichern der Filme."));
+                "des Programms auf langsamen Rechnern verbessern"));
+        btnDown.setTooltip(new Tooltip("Auswahl des Verzeichniss zum Speichern der Filme"));
         btnPath.setTooltip(new Tooltip("Angabe von Programmen zum Ansehen\n" +
-                "und Speichern der Filme."));
+                "und Speichern der Filme"));
 
-        btnOk.setTooltip(new Tooltip("Programm mit den gewählten Einstellungen starten."));
+        btnOk.setTooltip(new Tooltip("Programm mit den gewählten Einstellungen starten"));
         btnCancel.setTooltip(new Tooltip("Das Programm nicht einrichten\n" +
-                "und starten sondern Dialog wieder beenden."));
-        btnNext.setTooltip(new Tooltip("Nächste Einstellmöglichkeit."));
-        btnPrev.setTooltip(new Tooltip("Vorherige Einstellmöglichkeit."));
+                "und starten sondern Dialog wieder beenden"));
+        btnNext.setTooltip(new Tooltip("Nächste Einstellmöglichkeit"));
+        btnPrev.setTooltip(new Tooltip("Vorherige Einstellmöglichkeit"));
     }
 }

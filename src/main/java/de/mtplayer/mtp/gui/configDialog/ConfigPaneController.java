@@ -234,7 +234,7 @@ public class ConfigPaneController extends PAccordionPane {
         }
 
         final Button btnFile = new Button();
-        btnFile.setTooltip(new Tooltip("Einen Ordner für das Logfile auswählen."));
+        btnFile.setTooltip(new Tooltip("Einen Ordner für das Logfile auswählen"));
         btnFile.setOnAction(event -> {
             DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtLogFile);
         });
@@ -242,16 +242,16 @@ public class ConfigPaneController extends PAccordionPane {
 
         final Button btnReset = new Button();
         btnReset.setGraphic(new ProgIcons().ICON_BUTTON_RESET);
-        btnReset.setTooltip(new Tooltip("Standardpfad für das Logfile wieder herstellen."));
+        btnReset.setTooltip(new Tooltip("Standardpfad für das Logfile wieder herstellen"));
         btnReset.setOnAction(event -> {
             txtLogFile.setText(ProgInfos.getStandardLogDirectory_String());
         });
 
         final Button btnChange = new Button("_Pfad zum Logfile jetzt schon ändern");
         btnChange.setTooltip(new Tooltip("Den geänderten Pfad für das Logfile\n" +
-                "jetzt schon verwenden.\n\n" +
-                "Ansonsten wird er erst beim nächsten\n" +
-                "Programmstart verwendet."));
+                "jetzt schon verwenden, \n\n" +
+                "ansonsten wird er erst beim nächsten\n" +
+                "Programmstart verwendet"));
         btnChange.setOnAction(event -> {
             PLogger.setFileHandler(ProgInfos.getLogDirectory_String());
             logfileChanged.setValue(false);
@@ -326,7 +326,7 @@ public class ConfigPaneController extends PAccordionPane {
             DirFileChooser.FileChooser(ProgData.getInstance().primaryStage, txtFileManagerVideo);
         });
         btnFile.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
-        btnFile.setTooltip(new Tooltip("Einen Videoplayer zum Abspielen der gespeicherten Filme auswählen."));
+        btnFile.setTooltip(new Tooltip("Einen Videoplayer zum Abspielen der gespeicherten Filme auswählen"));
 
         final Button btnHelp = PButton.helpButton(stage, "Videoplayer", HelpText.VIDEOPLAYER);
 
@@ -345,7 +345,7 @@ public class ConfigPaneController extends PAccordionPane {
             DirFileChooser.FileChooser(ProgData.getInstance().primaryStage, txtFileManagerWeb);
         });
         btnFile.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
-        btnFile.setTooltip(new Tooltip("Einen Webbrowser zum Öffnen von URLs auswählen."));
+        btnFile.setTooltip(new Tooltip("Einen Webbrowser zum Öffnen von URLs auswählen"));
 
         final Button btnHelp = PButton.helpButton(stage, "Webbrowser", HelpText.WEBBROWSER);
 

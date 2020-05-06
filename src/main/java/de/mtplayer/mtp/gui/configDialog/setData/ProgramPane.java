@@ -181,7 +181,7 @@ public class ProgramPane {
         final Button btnFile = new Button();
         btnFile.setOnAction(event -> DirFileChooser.FileChooser(ProgData.getInstance().primaryStage, txtProgPath));
         btnFile.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
-        btnFile.setTooltip(new Tooltip("Ein Programm zum verarbeiten der URL auswählen."));
+        btnFile.setTooltip(new Tooltip("Ein Programm zum verarbeiten der URL auswählen"));
 
         final Button btnHelpDest = PButton.helpButton(stage, "Zieldateiname",
                 HelpTextPset.PSET_FILE_NAME);

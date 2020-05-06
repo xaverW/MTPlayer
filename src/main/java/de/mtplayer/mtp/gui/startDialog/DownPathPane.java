@@ -53,7 +53,7 @@ public class DownPathPane {
             DirFileChooser.DirChooser(stage, txtPath);
         });
         btnFile.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
-        btnFile.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen."));
+        btnFile.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen"));
 
         final Button btnHelp = PButton.helpButton(stage,
                 "Zielverzeichnis",

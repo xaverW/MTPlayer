@@ -121,23 +121,23 @@ public class FilmGuiController extends AnchorPane {
             if ((tableView.getItems().size() == 0)) {
                 return;
             }
-//            Film selFilm = tableView.getSelectionModel().getSelectedItem();
+            Film selFilm = tableView.getSelectionModel().getSelectedItem();
 //            System.out.println("Sel: " + selFilm);
-//            if (selFilm != null) {
-//                PDuration.counterStart("selectFilm: with selection");
+            if (selFilm != null) {
+                PDuration.counterStart("selectFilm: with selection");
+//                int sel = tableView.getSelectionModel().getSelectedIndex();
+//                tableView.scrollTo(sel);
 //                tableView.getSelectionModel().clearSelection();
-////                int sel = tableView.getSelectionModel().getSelectedIndex();
-////                tableView.scrollTo(sel);
 //                tableView.getSelectionModel().select(selFilm);
-//                tableView.scrollTo(selFilm);
-//                PDuration.counterStop("selectFilm: with selection");
-//            } else {
-            PDuration.counterStart("selectFilm: with no selection");
-            tableView.getSelectionModel().clearSelection();
-            tableView.scrollTo(0);
-            tableView.getSelectionModel().select(0);
-            PDuration.counterStop("selectFilm: with no selection");
-//            }
+                tableView.scrollTo(selFilm);
+                PDuration.counterStop("selectFilm: with selection");
+            } else {
+                PDuration.counterStart("selectFilm: with no selection");
+                tableView.getSelectionModel().clearSelection();
+                tableView.scrollTo(0);
+                tableView.getSelectionModel().select(0);
+                PDuration.counterStop("selectFilm: with no selection");
+            }
         });
     }
 

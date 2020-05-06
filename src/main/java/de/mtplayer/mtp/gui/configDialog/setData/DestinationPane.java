@@ -74,7 +74,7 @@ public class DestinationPane {
         final Button btnFile = new Button();
         btnFile.setOnAction(event -> DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtDestPath));
         btnFile.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
-        btnFile.setTooltip(new Tooltip("Einen Ordner zum Speichern der Filme auswählen."));
+        btnFile.setTooltip(new Tooltip("Einen Ordner zum Speichern der Filme auswählen"));
 
         final Button btnHelpDest = PButton.helpButton(stage, "Zieldateiname",
                 HelpTextPset.PSET_FILE_NAME);

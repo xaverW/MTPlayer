@@ -138,7 +138,7 @@ public class SetPaneController extends AnchorPane {
         vBox.getChildren().addAll(tableView);
 
         Button btnDel = new Button("");
-        btnDel.setTooltip(new Tooltip("markiertes Set löschen"));
+        btnDel.setTooltip(new Tooltip("Markiertes Set löschen"));
         btnDel.setGraphic(new ProgIcons().ICON_BUTTON_REMOVE);
         btnDel.setOnAction(event -> {
             SetData setData = getSelectedSelData();
@@ -148,7 +148,7 @@ public class SetPaneController extends AnchorPane {
         });
 
         Button btnNew = new Button("");
-        btnNew.setTooltip(new Tooltip("ein neues Set anlegen"));
+        btnNew.setTooltip(new Tooltip("Ein neues Set anlegen"));
         btnNew.setGraphic(new ProgIcons().ICON_BUTTON_ADD);
         btnNew.setOnAction(event -> {
             SetData setData = new SetData("Neu-" + ++newCounter);
@@ -156,7 +156,7 @@ public class SetPaneController extends AnchorPane {
         });
 
         Button btnUp = new Button("");
-        btnUp.setTooltip(new Tooltip("markiertes Set nach oben schieben"));
+        btnUp.setTooltip(new Tooltip("Markiertes Set nach oben schieben"));
         btnUp.setGraphic(new ProgIcons().ICON_BUTTON_MOVE_UP);
         btnUp.setOnAction(event -> {
             int sel = getSelectedLine();
@@ -167,7 +167,7 @@ public class SetPaneController extends AnchorPane {
         });
 
         Button btnDown = new Button("");
-        btnDown.setTooltip(new Tooltip("markiertes Set nach unten schieben"));
+        btnDown.setTooltip(new Tooltip("Markiertes Set nach unten schieben"));
         btnDown.setGraphic(new ProgIcons().ICON_BUTTON_MOVE_DOWN);
         btnDown.setOnAction(event -> {
             int sel = getSelectedLine();
@@ -178,7 +178,7 @@ public class SetPaneController extends AnchorPane {
         });
 
         Button btnDup = new Button("_Duplizieren");
-        btnDup.setTooltip(new Tooltip("eine Kopie des markierten Sets erstellen"));
+        btnDup.setTooltip(new Tooltip("Eine Kopie des markierten Sets erstellen"));
         btnDup.setOnAction(event -> {
             SetData setData = getSelectedSelData();
             if (setData != null) {
@@ -199,7 +199,7 @@ public class SetPaneController extends AnchorPane {
         btnNewSet.setMaxWidth(Double.MAX_VALUE);
 
         Button btnCheck = new Button("_Prüfen");
-        btnCheck.setTooltip(new Tooltip("die angelegten Sets überprüfen"));
+        btnCheck.setTooltip(new Tooltip("Die angelegten Sets überprüfen"));
         btnCheck.setOnAction(event -> SetsPrograms.checkPrograms(progData));
         HBox.setHgrow(btnCheck, Priority.ALWAYS);
         btnCheck.setMaxWidth(Double.MAX_VALUE);

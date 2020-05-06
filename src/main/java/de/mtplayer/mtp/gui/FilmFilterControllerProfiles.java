@@ -90,12 +90,12 @@ public class FilmFilterControllerProfiles extends VBox {
         });
         btnSaveFilter.setGraphic(new ProgIcons().FX_ICON_FILTER_FILM_SAVE);
         btnSaveFilter.setText("");
-        btnSaveFilter.setTooltip(new Tooltip("aktuelle Filtereinstellung als Filterprofil speichern"));
+        btnSaveFilter.setTooltip(new Tooltip("Aktuelle Filtereinstellung als Filterprofil speichern"));
 
         btnNewFilter.setOnAction(a -> newFilter());
         btnNewFilter.setGraphic(new ProgIcons().FX_ICON_FILTER_FILM_NEW);
         btnNewFilter.setText("");
-        btnNewFilter.setTooltip(new Tooltip("aktuelle Filtereinstellung als neues Filterprofil anlegen"));
+        btnNewFilter.setTooltip(new Tooltip("Aktuelle Filtereinstellung als neues Filterprofil anlegen"));
     }
 
     private void filterProfiles() {
@@ -152,7 +152,7 @@ public class FilmFilterControllerProfiles extends VBox {
 
         mbFilterTools.setGraphic(new ProgIcons().ICON_BUTTON_MENU);
         mbFilterTools.getItems().addAll(miLoad, miRename, miDel, miDelAll, miSave, miNew, miAbo, new SeparatorMenuItem(), miReset);
-        mbFilterTools.setTooltip(new Tooltip("gespeicherte Filterprofile bearbeiten"));
+        mbFilterTools.setTooltip(new Tooltip("Gespeicherte Filterprofile bearbeiten"));
 
         cboFilterProfiles.getSelectionModel().select(filterProp.get());
         filterProp.bind(cboFilterProfiles.getSelectionModel().selectedIndexProperty());

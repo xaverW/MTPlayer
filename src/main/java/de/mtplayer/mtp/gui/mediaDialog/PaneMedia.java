@@ -131,12 +131,12 @@ public class PaneMedia extends ScrollPane {
         btnCreateMediaDB.setOnAction(e -> progData.mediaDataList.createMediaDb());
 
         btnOpen.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
-        btnOpen.setTooltip(new Tooltip("Ausgewählten Pfad im Dateimanager öffnen."));
+        btnOpen.setTooltip(new Tooltip("Ausgewählten Pfad im Dateimanager öffnen"));
         btnOpen.setOnAction(e -> open());
         btnOpen.disableProperty().bind(txtPathMedia.textProperty().isEmpty().and(txtTitleMedia.textProperty().isEmpty()));
 
         btnPlay.setGraphic(new ProgIcons().ICON_BUTTON_PLAY);
-        btnPlay.setTooltip(new Tooltip("Ausgewählten Film abspielen."));
+        btnPlay.setTooltip(new Tooltip("Ausgewählten Film abspielen"));
         btnPlay.setOnAction(e -> play());
         btnPlay.disableProperty().bind(txtPathMedia.textProperty().isEmpty().and(txtTitleMedia.textProperty().isEmpty()));
 

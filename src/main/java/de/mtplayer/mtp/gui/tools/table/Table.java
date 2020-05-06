@@ -88,7 +88,7 @@ public class Table {
 //        table.setTooltip(new Tooltip("In der Tabelle können mit dem \"+\"-Button\n" +
 //                "Spalten ein- und ausgeblendet werden." + PConst.LINE_SEPARATOR +
 //                "Mit einem Klick auf den Titel einer Spalte" + PConst.LINE_SEPARATOR +
-//                "wird die Tabelle nach der Spalte sortiert."));
+//                "wird die Tabelle nach der Spalte sortiert"));
 
         TableColumn[] tArray;
         switch (eTable) {

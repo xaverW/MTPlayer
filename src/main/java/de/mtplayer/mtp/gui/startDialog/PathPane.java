@@ -173,7 +173,7 @@ public class PathPane {
             DirFileChooser.FileChooser(stage, txtPlayer);
         });
         btnFile.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
-        btnFile.setTooltip(new Tooltip("Programmdatei auswählen."));
+        btnFile.setTooltip(new Tooltip("Programmdatei auswählen"));
 
         HBox hBox = new HBox();
         hBox.setSpacing(10);
