@@ -15,8 +15,7 @@ Das Programm nutzt den Ordner ".p2Mtplayer" unter Linux und den versteckten Ordn
 java -jar MTPlayer.jar ORDNER 
 ```
 
-Ich habe einige Ideen die ich hatte oder bekam, damit umgesetzt. Die größten Änderungen haben die Filter und die interne Verarbeitung der Filme in der Filmliste und Blacklist erfahren.
-Weitere Infos über das Programm und was sich geändert hat, kann auf der Website nachgelsesen werden.
+Ich habe einige Ideen die ich hatte oder bekam, damit umgesetzt. Die größten Änderungen haben die Filter und die interne Verarbeitung der Filme in der Filmliste und Blacklist erfahren. Weitere Infos über das Programm und was sich geändert hat, kann auf der Website nachgelsesen werden.
 
 https://www.p2tools.de/mtplayer/
 

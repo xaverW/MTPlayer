@@ -2,21 +2,23 @@
 
 **nächste Version**
 
+**Release 9**
+
 * Anordnung der Buttons (OK, Abbrechen, ..) passend zum Betriebssystem
 * beim Schließen des Config-Dialogs Filmliste nur neu laden, wenn Blacklist geändert wurde
 * die Möglichkeiten zum Anlegen von Verzeichnissen bei Abos wurde deutlich erweitert
 * Möglichkeit, auch bei neuer Beta-Version einen Hinweis angezeigt zu bekommen
+* Anpassungen bei der Suche nach einem Update / einer neuen BETA-Version
 * Speicherverbrauch in den Dialogen verbessert
 * Suchmöglichkeit in der Mediensammlung, der History und den erledigten Abos im Dialog "Einstellungen der Mediensammlung"
-* während das Ladens der Filmliste wird die Downloadbandbreite reduziert um die Filmliste schneller zu laden
 * im Dialog "In der Mediensammlung suchen" bleibt die eingestellte Suche: "Mediensammlung" oder "History" erhalten
+* während das Ladens der Filmliste wird die Downloadbandbreite reduziert um die Filmliste schneller zu laden
 * STRG-A in der Filmliste wird abgefangen wenn zu viele Filme in der Liste sind
 * Anpassungen für den Sender RBTV
 * Dialog "Über das Programm" wurde überarbeitet
-* Anpassungen bei der Suche nach einem Update / einer neuen BETA-Version
 * RegEx: Textfelder rot einfärben bei Fehlern
 * Tabellenmenü jetzt auch bei leerer Tabelle verfügbar (für z.B. "neues Abo anlegen", ..)
-* ToolTip der Downloadtabelle enthält die Fehlermeldung bei Downloadfehlern
+* ToolTip des Downloads in der Downloadtabelle enthält die Fehlermeldung bei Downloadfehlern
 * Downloadchart wurde überarbeitet
 * ...
 
