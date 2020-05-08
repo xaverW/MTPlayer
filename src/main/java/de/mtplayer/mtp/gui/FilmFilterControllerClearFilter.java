@@ -30,6 +30,8 @@ public class FilmFilterControllerClearFilter extends VBox {
 
     private final Button btnClearFilter = new Button("Filter _löschen");
     private final Button btnEditFilter = new Button("");
+    private final Button btnGoBack = new Button("");
+    private final Button btnGoForward = new Button("");
 
     private final ProgData progData;
 
@@ -49,6 +51,15 @@ public class FilmFilterControllerClearFilter extends VBox {
     }
 
     private void addButton() {
+        btnGoBack.setGraphic(new ProgIcons().ICON_BUTTON_BACKWARD);
+        btnGoBack.setOnAction(a -> progData.storedFilters.goBack());
+        btnGoBack.disableProperty().bind(progData.storedFilters.backwardProperty().not());
+        btnGoBack.setTooltip(new Tooltip("letzte Filtereinstellung wieder herstellen"));
+        btnGoForward.setGraphic(new ProgIcons().ICON_BUTTON_FORWARD);
+        btnGoForward.setOnAction(a -> progData.storedFilters.goForward());
+        btnGoForward.disableProperty().bind(progData.storedFilters.forwardProperty().not());
+        btnGoForward.setTooltip(new Tooltip("letzte Filtereinstellung wieder herstellen"));
+
         btnClearFilter.setOnAction(a -> clearFilter());
         btnClearFilter.setTooltip(new Tooltip("Textfilter löschen, ein zweiter Klick löscht alle Filter"));
 
@@ -56,18 +67,19 @@ public class FilmFilterControllerClearFilter extends VBox {
         btnEditFilter.setOnAction(a -> editFilter());
         btnEditFilter.setTooltip(new Tooltip("Filter ein/ausschalten"));
 
-        HBox hBox = new HBox();
-        hBox.getChildren().addAll(btnEditFilter, PGuiTools.getHBoxGrower(), btnClearFilter);
+        HBox hBox = new HBox(5);
+        hBox.getChildren().addAll(btnEditFilter, PGuiTools.getHBoxGrower(), btnGoBack, btnGoForward, btnClearFilter);
         getChildren().addAll(hBox);
     }
 
     private void clearFilter() {
         PDuration.onlyPing("Filter löschen");
-        if (progData.storedFilters.txtFilterIsEmpty()) {
-            progData.storedFilters.clearFilter();
-        } else {
-            progData.storedFilters.clearTxtFilter();
-        }
+        progData.storedFilters.clearFilter();
+//        if (progData.storedFilters.txtFilterIsEmpty()) {
+//            progData.storedFilters.clearFilter();
+//        } else {
+//            progData.storedFilters.clearTxtFilter();
+//        }
     }
 
     private void editFilter() {
