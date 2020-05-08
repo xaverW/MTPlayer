@@ -52,7 +52,7 @@ public class FilmFilterControllerClearFilter extends VBox {
 
     private void addButton() {
         btnGoBack.setGraphic(new ProgIcons().ICON_BUTTON_BACKWARD);
-        btnGoBack.setOnAction(a -> progData.storedFilters.goBack());
+        btnGoBack.setOnAction(a -> progData.storedFilters.goBackward());
         btnGoBack.disableProperty().bind(progData.storedFilters.backwardProperty().not());
         btnGoBack.setTooltip(new Tooltip("letzte Filtereinstellung wieder herstellen"));
         btnGoForward.setGraphic(new ProgIcons().ICON_BUTTON_FORWARD);

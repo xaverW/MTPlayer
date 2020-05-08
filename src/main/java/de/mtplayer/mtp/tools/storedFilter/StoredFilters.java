@@ -65,7 +65,6 @@ public final class StoredFilters {
             postBlacklistChange();
             filterListForward.clear();
         };
-
         actFilterSettings.filterChangeProperty().addListener(filterChangeListener); // wenn der User den Filter ändert
         actFilterSettings.blacklistChangeProperty().addListener(blacklistChangeListener); // wenn der User die Blackl. ein-/ausschaltet
 
@@ -88,7 +87,7 @@ public final class StoredFilters {
 
 
     /**
-     * liefert den aktuell angezeigte Filter
+     * liefert den aktuell angezeigten Filter
      *
      * @return
      */
@@ -207,19 +206,12 @@ public final class StoredFilters {
         final Abo abo = oAbo.get();
         actFilterSettings.filterChangeProperty().removeListener(filterChangeListener);
         actFilterSettings.blacklistChangeProperty().removeListener(blacklistChangeListener);
-
-        // Filter erstmal löschen und dann alle abschalten
-        actFilterSettings.turnOffFilter();
-
+        actFilterSettings.turnOffFilter(); // Filter erstmal löschen und dann alle abschalten
 
         actFilterSettings.setChannelAndVis(abo.getChannel());
-//        actFilterSettings.setChannelExact(false);
-
         actFilterSettings.setThemeAndVis(abo.getTheme());
         actFilterSettings.setThemeExact(abo.isThemeExact());
-
         actFilterSettings.setThemeTitleAndVis(abo.getThemeTitle());
-
         actFilterSettings.setTitleAndVis(abo.getTitle());
 
         actFilterSettings.setSomewhereVis(true);
@@ -252,7 +244,7 @@ public final class StoredFilters {
         actFilterSettings.blacklistChangeProperty().addListener(blacklistChangeListener);
     }
 
-    public void goBack() {
+    public void goBackward() {
         if (filterListBackward.size() <= 1) {
             // dann gibts noch keine oder ist nur die aktuelle Einstellung drin
             return;
