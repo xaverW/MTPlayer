@@ -183,8 +183,11 @@ public class Worker {
 
         Platform.runLater(() -> { // todo brauchts da nicht??
             saveFilter();
+            this.progData.storedFilters.getActFilterSettings().setReportChange(false);
             themeForChannelList.setAll(theme);
+            this.progData.storedFilters.getActFilterSettings().setReportChange(true);
             resetFilter();
+            this.progData.storedFilters.initFilter();
         });
     }
 
@@ -199,7 +202,6 @@ public class Worker {
             for (int i = 1; i < progData.filmlistFiltered.themePerChannel.length; ++i) {
                 for (String s : senderArr) {
                     if (progData.filmlistFiltered.sender[i].equalsIgnoreCase(s.trim())) {
-//                    if (progData.filmlistFiltered.sender[i].toLowerCase().contains(s.trim())) {
                         tree.addAll(Arrays.asList(progData.filmlistFiltered.themePerChannel[i]));
                         break;
                     }

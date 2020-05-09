@@ -21,6 +21,7 @@ import de.mtplayer.mtp.controller.data.abo.Abo;
 import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -53,6 +54,7 @@ public final class StoredFilters {
             FXCollections.observableList(new ArrayList<>(), (SelectedFilter tp) -> new Observable[]{tp.nameProperty()});
     private final ObservableList<SelectedFilter> filterListForward =
             FXCollections.observableList(new ArrayList<>(), (SelectedFilter tp) -> new Observable[]{tp.nameProperty()});
+    private boolean thema = false, themaTitle = false, title = false, somewhere = false, url = false;
 
     public StoredFilters(ProgData progData) {
         this.progData = progData;
@@ -68,7 +70,7 @@ public final class StoredFilters {
         actFilterSettings.filterChangeProperty().addListener(filterChangeListener); // wenn der User den Filter ändert
         actFilterSettings.blacklistChangeProperty().addListener(blacklistChangeListener); // wenn der User die Blackl. ein-/ausschaltet
 
-        addBackward();
+//        addBackward();
         filterListBackward.addListener((ListChangeListener<SelectedFilter>) c -> {
             if (filterListBackward.size() > 1) {
                 backward.setValue(true);
@@ -85,6 +87,9 @@ public final class StoredFilters {
         });
     }
 
+    public void initFilter() {
+        addBackward();
+    }
 
     /**
      * liefert den aktuell angezeigten Filter
@@ -224,6 +229,7 @@ public final class StoredFilters {
         actFilterSettings.setTimeRangeVis(true);
         actFilterSettings.setTimeRange(abo.getTimeRange());
 
+        filterListForward.clear();
         postFilterChange();
         actFilterSettings.filterChangeProperty().addListener(filterChangeListener);
         actFilterSettings.blacklistChangeProperty().addListener(blacklistChangeListener);
@@ -239,6 +245,7 @@ public final class StoredFilters {
             actFilterSettings.clearTxtFilter();
         }
 
+        filterListForward.clear();
         postFilterChange();
         actFilterSettings.filterChangeProperty().addListener(filterChangeListener);
         actFilterSettings.blacklistChangeProperty().addListener(blacklistChangeListener);
@@ -273,7 +280,68 @@ public final class StoredFilters {
     private void addBackward() {
         final SelectedFilter sf = new SelectedFilter();
         SelectedFilterFactory.copyFilter(actFilterSettings, sf);
+        if (filterListBackward.isEmpty()) {
+            filterListBackward.add(sf);
+            return;
+        }
+
+        SelectedFilter sfB = filterListBackward.get(filterListBackward.size() - 1);
+        if (SelectedFilterFactory.compareFilterWithoutNameOfFilter(sf, sfB)) {
+            // dann hat sich nichts geändert (z.B. mehrmals gelöscht)
+            return;
+        }
+
+        if (!sf.isThemeExact() && checkText(sfB.themeProperty(), sf.themeProperty(), sfB, sf, thema)) {
+            setFalse();
+            thema = true;
+            return;
+        }
+        if (checkText(sfB.themeTitleProperty(), sf.themeTitleProperty(), sfB, sf, themaTitle)) {
+            setFalse();
+            themaTitle = true;
+            return;
+        }
+        if (checkText(sfB.titleProperty(), sf.titleProperty(), sfB, sf, title)) {
+            setFalse();
+            title = true;
+            return;
+        }
+        if (checkText(sfB.somewhereProperty(), sf.somewhereProperty(), sfB, sf, somewhere)) {
+            setFalse();
+            somewhere = true;
+            return;
+        }
+        if (checkText(sfB.urlProperty(), sf.urlProperty(), sfB, sf, url)) {
+            setFalse();
+            url = true;
+            return;
+        }
+
+        // dann wars kein Textfilter
         filterListBackward.add(sf);
+    }
+
+    private void setFalse() {
+        thema = false;
+        themaTitle = false;
+        title = false;
+        somewhere = false;
+        url = false;
+    }
+
+    private boolean checkText(StringProperty old, StringProperty nnew, SelectedFilter oldSf, SelectedFilter newSf,
+                              boolean check) {
+        if (old.get().equals(nnew.get())) {
+            return false;
+        }
+        if (check && !old.get().isEmpty() && !nnew.get().isEmpty() &&
+                (old.get().contains(nnew.get()) || nnew.get().contains(old.get()))) {
+            // dann hat sich nur ein Teil geändert und wird ersetzt
+            old.setValue(nnew.getValue());
+        } else {
+            filterListBackward.add(newSf);
+        }
+        return true;
     }
 
     private void postFilterChange() {

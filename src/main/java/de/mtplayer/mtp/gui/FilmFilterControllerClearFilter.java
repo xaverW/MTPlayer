@@ -75,11 +75,6 @@ public class FilmFilterControllerClearFilter extends VBox {
     private void clearFilter() {
         PDuration.onlyPing("Filter löschen");
         progData.storedFilters.clearFilter();
-//        if (progData.storedFilters.txtFilterIsEmpty()) {
-//            progData.storedFilters.clearFilter();
-//        } else {
-//            progData.storedFilters.clearTxtFilter();
-//        }
     }
 
     private void editFilter() {

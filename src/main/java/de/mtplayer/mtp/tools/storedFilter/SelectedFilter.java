@@ -99,13 +99,12 @@ public final class SelectedFilter extends SelectedFilterProps {
         nameProperty().addListener(l -> reportFilterChange());
 
         channelVisProperty().addListener(l -> reportFilterChange());
-//        channelExactProperty().addListener(l -> reportFilterChange());
         channelProperty().addListener(l -> reportFilterChange());
 
         themeVisProperty().addListener(l -> reportFilterChange());
         themeExactProperty().addListener(l -> reportFilterChange());
         themeProperty().addListener(l -> {
-            // todo -> beim ändern der "Thema" liste wird das aufgerufen
+            // todo -> beim Ändern der "Thema" liste wird das 3xaufgerufen
             if (themeVisProperty().get()) {
                 reportFilterChange();
             }
@@ -272,7 +271,6 @@ public final class SelectedFilter extends SelectedFilterProps {
         String filterSomewhere = selectedFilter.isSomewhereVis() ? selectedFilter.getSomewhere() : "";
         String filterUrl = selectedFilter.isUrlVis() ? selectedFilter.getUrl() : "";
 
-//        final boolean channelExact = selectedFilter.isChannelExact();
         final boolean themeExact = selectedFilter.isThemeExact();
         // Sender
         fChannel = new Filter(filterChannel, false);
