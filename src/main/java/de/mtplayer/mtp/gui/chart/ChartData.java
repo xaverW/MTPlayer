@@ -34,10 +34,13 @@ public class ChartData {
             new XYChart.Series<>("Summe", FXCollections.observableArrayList(new XYChart.Data<Number, Number>(0.0, 0.0)));
 
     // Liste der LineCharts für Gesamt -> hat nur eine LineChart
-    private final ObservableList<XYChart.Series<Number, Number>> lineChartsSum = FXCollections.observableArrayList(chartSeriesSum);
+    private final ObservableList<XYChart.Series<Number, Number>> chartSeriesListSum = FXCollections.observableArrayList(chartSeriesSum);
 
     // Liste der LineCharts für einzele Downloads -> für jeden Download eine LineChart
-    private final ObservableList<XYChart.Series<Number, Number>> lineChartsSeparate = FXCollections.observableArrayList();
+    private final ObservableList<XYChart.Series<Number, Number>> chartSeriesListSeparate = FXCollections.observableArrayList();
+
+    // ist die Liste mit ALLEN LineCharts (auch denen die nicht angezeigt werden sollen)
+    private final ObservableList<XYChart.Series<Number, Number>> chartSeriesListAll = FXCollections.observableArrayList();
 
     public ChartData() {
 
@@ -79,11 +82,15 @@ public class ChartData {
         return chartSeriesSum;
     }
 
-    public ObservableList<XYChart.Series<Number, Number>> getLineChartsSum() {
-        return lineChartsSum;
+    public ObservableList<XYChart.Series<Number, Number>> getChartSeriesListSum() {
+        return chartSeriesListSum;
     }
 
-    public ObservableList<XYChart.Series<Number, Number>> getLineChartsSeparate() {
-        return lineChartsSeparate;
+    public ObservableList<XYChart.Series<Number, Number>> getChartSeriesListSeparate() {
+        return chartSeriesListSeparate;
+    }
+
+    public ObservableList<XYChart.Series<Number, Number>> getChartSeriesListAll() {
+        return chartSeriesListAll;
     }
 }

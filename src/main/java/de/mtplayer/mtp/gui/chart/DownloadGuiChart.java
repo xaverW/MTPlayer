@@ -18,16 +18,12 @@ package de.mtplayer.mtp.gui.chart;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadConstants;
 import de.mtplayer.mtp.gui.tools.Listener;
 import javafx.beans.property.BooleanProperty;
-import javafx.collections.FXCollections;
 import javafx.geometry.Side;
-import javafx.scene.Node;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
@@ -35,9 +31,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 public class DownloadGuiChart {
 
@@ -72,13 +66,13 @@ public class DownloadGuiChart {
     }
 
     private synchronized void initList() {
-        chartData.getLineChartsSeparate().clear(); // da werden alle chartSeries gelöscht, jeder Download
+        chartData.getChartSeriesListSeparate().clear(); // da werden alle chartSeries gelöscht, jeder Download
         chartData.getChartSeriesSum().getData().clear(); // da werden die Daten in der einen chartSeries gelöscht, Summe aller Downloads
         chartData.setScale(1);
     }
 
     private synchronized void clearChart() {
-        chartData.getLineChartsSeparate().stream().forEach(series -> series.getData().clear()); // da werden nur die Series gelöscht
+        chartData.getChartSeriesListSeparate().stream().forEach(series -> series.getData().clear()); // da werden nur die Series gelöscht
         chartData.getChartSeriesSum().getData().clear(); // da werden die Daten in der einen chartSeries gelöscht, Summe aller Downloads
         chartData.setScale(1);
     }
@@ -116,8 +110,8 @@ public class DownloadGuiChart {
 
         final Slider slMaxTime = new Slider();
         slMaxTime.setMinWidth(250);
-        slMaxTime.setMin(10);
-        slMaxTime.setMax(300);
+        slMaxTime.setMin(1); //<------------------------
+        slMaxTime.setMax(ChartFactory.CHART_MAX_TIME);
         slMaxTime.setBlockIncrement(10);
         slMaxTime.setShowTickLabels(true);
         slMaxTime.setSnapToTicks(true);
@@ -151,9 +145,9 @@ public class DownloadGuiChart {
         rbOnlyExisting.setToggleGroup(group);
         rbOnlyRunning.setToggleGroup(group);
 
-        rbAll.setOnAction(e -> ChartFactory.cleanUpChart(progData, chartData));
-        rbOnlyExisting.setOnAction(e -> ChartFactory.cleanUpChart(progData, chartData));
-        rbOnlyRunning.setOnAction(e -> ChartFactory.cleanUpChart(progData, chartData));
+        rbAll.setOnAction(e -> ChartFactory.generateChartData(lineChart, progData, chartData));
+        rbOnlyExisting.setOnAction(e -> ChartFactory.generateChartData(lineChart, progData, chartData));
+        rbOnlyRunning.setOnAction(e -> ChartFactory.generateChartData(lineChart, progData, chartData));
 
         rbAll.selectedProperty().bindBidirectional(allDownloadsProp);
         rbOnlyExisting.selectedProperty().bindBidirectional(onlyExistingProp);
@@ -177,9 +171,9 @@ public class DownloadGuiChart {
 
     private void selectChartData() {
         if (ProgConfig.DOWNLOAD_CHART_SEPARAT.getBool()) {
-            lineChart.setData(chartData.getLineChartsSeparate());
+            lineChart.setData(chartData.getChartSeriesListSeparate());
         } else {
-            lineChart.setData(chartData.getLineChartsSum());
+            lineChart.setData(chartData.getChartSeriesListSum());
         }
     }
 
@@ -187,102 +181,17 @@ public class DownloadGuiChart {
     // Daten generieren
     // ============================
     private synchronized void searchInfos() {
-        ChartFactory.cleanUpChart(progData, chartData);
-
         chartData.addCountSek(1); // Sekunden
-        final double countMin = chartData.getCountSek() / 60.0; // Minuten
+        final double countMinute = chartData.getCountSek() / 60.0; // Minuten
         startedDownloads = progData.downloadList.getListOfStartsNotFinished(DownloadConstants.ALL);
 
-        //Downloads in "Diagramm" eintragen
-        for (final Download download : startedDownloads) {
-            //jeden Download eintragen
-            XYChart.Series<Number, Number> cSeries = download.getCSeries();
-
-            if (cSeries != null) {
-                final long bandw = download.getStart().getBandwidth();
-                cSeries.getData().add(new XYChart.Data<>(countMin, bandw / chartData.getScale()));
-            } else {
-                cSeries = new XYChart.Series<>(download.getNr() + "", FXCollections.observableArrayList());
-                cSeries.setNode(new ProgIcons().DOWNLOAD_OK);
-                download.setCSeries(cSeries);
-
-                cSeries.getData().add(new XYChart.Data<>(countMin, 0L));
-                cSeries.getData().add(new XYChart.Data<>(countMin, download.getStart().getBandwidth() / chartData.getScale()));
-                chartData.getLineChartsSeparate().add(cSeries);
-            }
-
-
-        }
-
-        // chart in den gestarteten Downloads suchen
-        Iterator<XYChart.Series<Number, Number>> it = chartData.getLineChartsSeparate().listIterator();
-        while (it.hasNext()) {
-            XYChart.Series<Number, Number> cSeries = it.next();
-            boolean foundDownload = false;
-            for (final Download download : startedDownloads) {
-                if (download.getCSeries() != null && download.getCSeries().equals(cSeries)) {
-                    foundDownload = true;
-                    break;
-                }
-            }
-
-            if (!foundDownload) {
-                int size = cSeries.getData().size();
-                if (size > 0 && cSeries.getData().get(size - 1).getYValue().longValue() > 0) {
-                    // nur einen Wert "0" setzen und dann pausieren
-                    cSeries.getData().add(new XYChart.Data<>(countMin, 0L));
-                }
-                if (cSeries.getData().isEmpty()) {
-                    // dann wurde bereits alles gelöscht und kommt jetzt auch weg
-                    it.remove();
-                }
-            }
-        }
-
-        colorChartName();
-
-        // Anzeige der Summe aller Downloads
-        chartData.getChartSeriesSum().getData().add(new XYChart.Data<>(countMin, progData.downloadInfos.getBandwidth() / chartData.getScale()));
-        ChartFactory.zoomXAxis(lineChart, chartData, countMin);
+        ChartFactory.cleanUpChartData(chartData, startedDownloads, countMinute);
+        ChartFactory.inputDownloadDate(chartData, startedDownloads, countMinute, progData);
+        ChartFactory.generateChartData(lineChart, progData, chartData);
+        ChartFactory.zoomXAxis(lineChart, chartData, countMinute);
         ChartFactory.zoomYAxis(lineChart, chartData);
     }
 
-    private synchronized void colorChartName() {
-        // chart einfärben
-        chartData.getLineChartsSeparate().stream().forEach(cSeries -> {
-
-            Download download = progData.downloadList.stream()
-                    .filter(d -> d.getCSeries() != null && d.getCSeries().equals(cSeries))
-                    .findFirst().orElse(null);
-
-            if (download != null) {
-                setColor(cSeries, download);
-            }
-
-        });
-    }
-
-    private synchronized void setColor(XYChart.Series<Number, Number> cSeries, Download download) {
-        final String cRed = ProgConfig.SYSTEM_DARK_THEME.getBooleanProperty().get() ? "#ff0000" : "#de0000";
-        final String cGreen = ProgConfig.SYSTEM_DARK_THEME.getBooleanProperty().get() ? "#00ff00" : "#00aa00";
-        String name = cSeries.getName();
-        Set<Node> items = lineChart.lookupAll("Label.chart-legend-item");
-        for (Node item : items) {
-            Label label = (Label) item;
-            if (label.getText().equals(name)) {
-                switch (download.getState()) {
-                    case DownloadConstants.STATE_FINISHED:
-                        label.setStyle(" -fx-text-fill: " + cGreen + ";");
-                        break;
-                    case DownloadConstants.STATE_ERROR:
-                        label.setStyle(" -fx-text-fill: " + cRed + ";");
-                        break;
-                    default:
-                        label.setStyle("");
-                }
-            }
-        }
-    }
 
 //    private synchronized void changeLegend() {
 //
