@@ -35,6 +35,7 @@ import de.mtplayer.mtp.controller.mediaDb.MediaDataList;
 import de.mtplayer.mtp.controller.starter.StarterClass;
 import de.mtplayer.mtp.controller.worker.Worker;
 import de.mtplayer.mtp.gui.*;
+import de.mtplayer.mtp.gui.chart.ChartData;
 import de.mtplayer.mtp.gui.dialog.FilmInfoDialogController;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.tools.filmListFilter.FilmListFilter;
@@ -79,6 +80,7 @@ public class ProgData {
     public AboFilterController aboFilterController = null;
     public FilmInfoDialogController filmInfoDialogController = null;
     public FilmFilterControllerClearFilter filmFilterControllerClearFilter = null;
+    public final ChartData chartData;
 
     // Worker
     public Worker worker; // Liste aller Sender, Themen, ...
@@ -136,6 +138,7 @@ public class ProgData {
         worker = new Worker(this);
         searchForFilmlistUpdate = SearchForFilmlistUpdate.StartSearchForFilmlistUpdate();
         downloadInfos = new DownloadInfos(this);
+        chartData = new ChartData();
     }
 
     boolean oneSecond = false;

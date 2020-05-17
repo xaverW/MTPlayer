@@ -18,10 +18,13 @@
 package de.mtplayer.mtp.gui.chart;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.beans.property.IntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.XYChart;
+
+import java.util.ArrayList;
 
 public class ChartData {
     private IntegerProperty maxTime = ProgConfig.DOWNLOAD_CHART_MAX_TIME.getIntegerProperty();
@@ -43,7 +46,6 @@ public class ChartData {
     private final ObservableList<XYChart.Series<Number, Number>> chartSeriesListAll = FXCollections.observableArrayList();
 
     public ChartData() {
-
     }
 
     public int getMaxTime() {
@@ -92,5 +94,33 @@ public class ChartData {
 
     public ObservableList<XYChart.Series<Number, Number>> getChartSeriesListAll() {
         return chartSeriesListAll;
+    }
+
+    public void genInfos() {
+        ArrayList<String> info = new ArrayList<>();
+        info.add(" ");
+        info.add("======================");
+        info.add(" Downloadchart");
+        info.add("----------------------");
+        final int max = ChartFactory.CHART_MAX_TIME * 60;
+        info.add("--> max: " + max);
+
+        info.add("chartSeriesListSum: " + chartSeriesListSum.size());
+        for (final XYChart.Series<Number, Number> cSeries : chartSeriesListSum) {
+            info.add("    " + cSeries.getName() + ": " + cSeries.getData().size());
+        }
+
+        info.add("chartSeriesListSeparate: " + chartSeriesListSeparate.size());
+        for (final XYChart.Series<Number, Number> cSeries : chartSeriesListSeparate) {
+            info.add("    " + cSeries.getName() + ": " + cSeries.getData().size());
+        }
+
+        info.add("chartSeriesListAll: " + chartSeriesListAll.size());
+        for (final XYChart.Series<Number, Number> cSeries : chartSeriesListAll) {
+            info.add("    " + cSeries.getName() + ": " + cSeries.getData().size());
+        }
+
+        info.add("======================");
+        PLog.sysLog(info.toArray(new String[info.size()]));
     }
 }

@@ -165,6 +165,12 @@ public class MTPTester {
                 }
             });
 
+            Button btnChart = new Button("Chart");
+            btnChart.setMaxWidth(Double.MAX_VALUE);
+            btnChart.setOnAction(a -> {
+                progData.chartData.genInfos();
+            });
+
             int row = 0;
             gridPane.add(text, 0, row, 2, 1);
 //            gridPane.add(btnAddToHash, 0, ++row);
@@ -181,6 +187,7 @@ public class MTPTester {
             gridPane.add(btnNotify, 0, ++row);
             gridPane.add(btnText, 0, ++row);
             gridPane.add(btnDownload, 0, ++row);
+            gridPane.add(btnChart, 0, ++row);
 
             gridPane.add(textArea, 0, ++row, 2, 1);
 

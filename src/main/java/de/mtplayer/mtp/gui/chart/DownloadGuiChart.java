@@ -50,8 +50,7 @@ public class DownloadGuiChart {
     public DownloadGuiChart(ProgData progData, AnchorPane anchorPane) {
         this.anchorPane = anchorPane;
         this.progData = progData;
-
-        chartData = new ChartData();
+        chartData = progData.chartData;
 
         initList();
         initCharts();
@@ -66,13 +65,8 @@ public class DownloadGuiChart {
     }
 
     private synchronized void initList() {
+        chartData.getChartSeriesListAll().clear(); // da werden alle chartSeries gelöscht, jeder Download
         chartData.getChartSeriesListSeparate().clear(); // da werden alle chartSeries gelöscht, jeder Download
-        chartData.getChartSeriesSum().getData().clear(); // da werden die Daten in der einen chartSeries gelöscht, Summe aller Downloads
-        chartData.setScale(1);
-    }
-
-    private synchronized void clearChart() {
-        chartData.getChartSeriesListSeparate().stream().forEach(series -> series.getData().clear()); // da werden nur die Series gelöscht
         chartData.getChartSeriesSum().getData().clear(); // da werden die Daten in der einen chartSeries gelöscht, Summe aller Downloads
         chartData.setScale(1);
     }
@@ -104,13 +98,28 @@ public class DownloadGuiChart {
         anchorPane.getChildren().add(lineChart);
     }
 
+    private void selectChartData() {
+        if (ProgConfig.DOWNLOAD_CHART_SEPARAT.getBool()) {
+            lineChart.setData(chartData.getChartSeriesListSeparate());
+        } else {
+            lineChart.setData(chartData.getChartSeriesListSum());
+        }
+    }
+
+    private synchronized void clearChart() {
+        chartData.getChartSeriesListAll().stream().forEach(series -> series.getData().clear()); // da werden nur die Series gelöscht
+        chartData.getChartSeriesListSeparate().stream().forEach(series -> series.getData().clear()); // da werden nur die Series gelöscht
+        chartData.getChartSeriesSum().getData().clear(); // da werden die Daten in der einen chartSeries gelöscht, Summe aller Downloads
+        chartData.setScale(1);
+    }
+
     private ContextMenu initContextMenu() {
         final Label lblValue = new Label(" " + chartData.getMaxTime() + " Min.");
         final Label lblInfo = new Label("Zeitraum:");
 
         final Slider slMaxTime = new Slider();
         slMaxTime.setMinWidth(250);
-        slMaxTime.setMin(1); //<------------------------
+        slMaxTime.setMin(10);
         slMaxTime.setMax(ChartFactory.CHART_MAX_TIME);
         slMaxTime.setBlockIncrement(10);
         slMaxTime.setShowTickLabels(true);
@@ -145,10 +154,6 @@ public class DownloadGuiChart {
         rbOnlyExisting.setToggleGroup(group);
         rbOnlyRunning.setToggleGroup(group);
 
-        rbAll.setOnAction(e -> ChartFactory.generateChartData(lineChart, progData, chartData));
-        rbOnlyExisting.setOnAction(e -> ChartFactory.generateChartData(lineChart, progData, chartData));
-        rbOnlyRunning.setOnAction(e -> ChartFactory.generateChartData(lineChart, progData, chartData));
-
         rbAll.selectedProperty().bindBidirectional(allDownloadsProp);
         rbOnlyExisting.selectedProperty().bindBidirectional(onlyExistingProp);
         rbOnlyRunning.selectedProperty().bindBidirectional(onlyRunningProp);
@@ -169,14 +174,6 @@ public class DownloadGuiChart {
         return cm;
     }
 
-    private void selectChartData() {
-        if (ProgConfig.DOWNLOAD_CHART_SEPARAT.getBool()) {
-            lineChart.setData(chartData.getChartSeriesListSeparate());
-        } else {
-            lineChart.setData(chartData.getChartSeriesListSum());
-        }
-    }
-
     // ============================
     // Daten generieren
     // ============================
@@ -185,74 +182,6 @@ public class DownloadGuiChart {
         final double countMinute = chartData.getCountSek() / 60.0; // Minuten
         startedDownloads = progData.downloadList.getListOfStartsNotFinished(DownloadConstants.ALL);
 
-        ChartFactory.cleanUpChartData(chartData, startedDownloads, countMinute);
-        ChartFactory.inputDownloadDate(chartData, startedDownloads, countMinute, progData);
-        ChartFactory.generateChartData(lineChart, progData, chartData);
-        ChartFactory.zoomXAxis(lineChart, chartData, countMinute);
-        ChartFactory.zoomYAxis(lineChart, chartData);
+        ChartFactory.runChart(lineChart, chartData, startedDownloads, countMinute, progData);
     }
-
-
-//    private synchronized void changeLegend() {
-//
-////        XYChart.Series<Number, Number> value = null;  //is our serie value.
-////        for (int index = 0; index < value.getData().size(); index++) {
-////            // we're looping for each data point, changing the color of line symbol
-////            XYChart.Data dataPoint = value.getData().get(index);
-////            Node lineSymbol = dataPoint.getNode().lookup(".chart-line-symbol");
-////            lineSymbol.setStyle("-fx-background-color: #0000FF, white;");
-////        }
-////        // and this is for the color of the line
-////        value.getNode().setStyle("-fx-border-style: solid; -fx-stroke: #0000FF; -fx-background-color: #0000FF;");
-//
-//        Set<Node> items = lineChart.lookupAll("Label.chart-legend-item");
-//        int i = 0;
-//        // these colors came from caspian.css .default-color0..4.chart-pie
-//        Color[] colors = {Color.web("#f9d900"), Color.web("#a9e200"), Color.web("#22bad9"), Color.web("#0181e2"), Color.web("#2f357f")};
-//        for (Node item : items) {
-//            Label label = (Label) item;
-//            if (red) {
-//                red = false;
-//                label.setStyle(" -fx-text-fill: green;");
-//            } else {
-//                red = true;
-//                label.setStyle(" -fx-text-fill: red;");
-//            }
-////            final Rectangle rectangle = new Rectangle(10, 10, colors[i]);
-////            final Glow niceEffect = new Glow();
-////            niceEffect.setInput(new Reflection());
-////            rectangle.setEffect(niceEffect);
-////            label.setGraphic(rectangle);
-//            i++;
-//        }
-//
-//
-//        for (Node n : lineChart.getChildrenUnmodifiable()) {
-//            if (n instanceof Legend) {
-//                for (Legend.LegendItem legendItem : ((Legend) n).getItems()) {
-//                    if (legendItem.getText().equals("1")) {
-//                        legendItem.getSymbol().setStyle("-fx-stroke: #333;");
-////                        legendItem.getSymbol().setStyle(" -fx-text-fill: green;");
-////                        legendItem.getSymbol().setStyle(" -fx-background-color: #d2ffd2;");
-////                        legendItem.setSymbol(new ProgIcons().DOWNLOAD_OK);
-//                    }
-//
-//
-//                }
-//            } else if (n instanceof Label) {
-//                final Label label = (Label) n;
-//                label.setStyle(" -fx-text-fill: green;");
-//                label.getChildrenUnmodifiable().addListener(new ListChangeListener<Object>() {
-//                    @Override
-//                    public void onChanged(Change<?> arg0) {
-//                        //make style changes here
-//                        label.setStyle(" -fx-text-fill: green;");
-//                    }
-//
-//                });
-//            }
-//        }
-//
-//    }
-
 }

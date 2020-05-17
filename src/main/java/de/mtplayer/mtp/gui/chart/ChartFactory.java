@@ -19,7 +19,6 @@ package de.mtplayer.mtp.gui.chart;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.data.download.Download;
 import de.mtplayer.mtp.controller.data.download.DownloadConstants;
 import javafx.collections.FXCollections;
@@ -37,7 +36,6 @@ import java.util.Set;
 
 public class ChartFactory {
     public static int CHART_MAX_TIME = 300;
-
 
     private ChartFactory() {
     }
@@ -73,79 +71,16 @@ public class ChartFactory {
         return yAxis;
     }
 
-    public static void setYAxisLabel(LineChart<Number, Number> lineChart, ChartData chartData) {
-        switch (chartData.getScale()) {
-            case 1:
-                lineChart.getYAxis().setLabel("Bandbreite [B/s]");
-                break;
-            case 1_000:
-                lineChart.getYAxis().setLabel("Bandbreite [kB/s]");
-                break;
-            case 1_000_000:
-                lineChart.getYAxis().setLabel("Bandbreite [MB/s]");
-                break;
-        }
+    public static synchronized void runChart(LineChart<Number, Number> lineChart, ChartData chartData, List<Download> startedDownloads,
+                                             double countMinute, ProgData progData) {
+        cleanUpChartData(chartData, startedDownloads, countMinute);
+        inputDownloadDate(chartData, startedDownloads, countMinute, progData);
+        generateChartData(lineChart, progData, chartData);
+        zoomXAxis(lineChart, chartData, countMinute);
+        zoomYAxis(lineChart, chartData);
     }
 
-    public static synchronized void zoomXAxis(LineChart<Number, Number> lineChart, ChartData chartData, double countMinute) {
-        final NumberAxis xAxis = (NumberAxis) lineChart.getXAxis();
-        xAxis.setUpperBound(countMinute);
-        final double MIN = countMinute - chartData.getMaxTime();
-        if (MIN <= 0) {
-            xAxis.setLowerBound(0);
-            return;
-        }
-        xAxis.setLowerBound(MIN);
-
-
-//        chartData.getChartSeriesListSeparate().stream().forEach(cs -> {
-//            if (cs.getData().isEmpty()) {
-//                return;
-//            }
-//
-//            cs.getData().removeIf(d -> d.getXValue().doubleValue() < MIN);
-//        });
-//
-//        while (!chartData.getChartSeriesSum().getData().isEmpty() && chartData.getChartSeriesSum().getData().get(0).getXValue().doubleValue() < MIN) {
-//            chartData.getChartSeriesSum().getData().remove(0);
-//        }
-    }
-
-    public static synchronized void zoomYAxis(LineChart<Number, Number> lineChart,
-                                              ChartData chartData) {
-        double max = 0;
-        final ObservableList<XYChart.Series<Number, Number>> list;
-
-        if (ProgConfig.DOWNLOAD_CHART_SEPARAT.getBool()) {
-            list = chartData.getChartSeriesListSeparate();
-        } else {
-            list = chartData.getChartSeriesListSum();
-        }
-
-        for (final XYChart.Series<Number, Number> cSeries : list) {
-            for (final XYChart.Data<Number, Number> date : cSeries.getData()) {
-                if ((long) date.getYValue() > max) {
-                    max = (long) date.getYValue();
-                }
-            }
-        }
-
-        if (max > 5_000) {
-            chartData.setScale(chartData.getScale() * 1000);
-            setYAxisLabel(lineChart, chartData);
-
-            for (final XYChart.Series<Number, Number> cSeries : chartData.getChartSeriesListSeparate()) {
-                for (final XYChart.Data<Number, Number> date : cSeries.getData()) {
-                    date.setYValue((long) date.getYValue() / 1_000);
-                }
-            }
-            for (final XYChart.Data<Number, Number> date : chartData.getChartSeriesSum().getData()) {
-                date.setYValue((long) date.getYValue() / 1_000);
-            }
-        }
-    }
-
-    public static synchronized void cleanUpChartData(ChartData chartData, List<Download> startedDownloads, double countMinute) {
+    private static synchronized void cleanUpChartData(ChartData chartData, List<Download> startedDownloads, double countMinute) {
         // letzten Wert bei abgeschlossenen Downloads setzen
         // leere Chart.Series löschen
         Iterator<XYChart.Series<Number, Number>> it = chartData.getChartSeriesListAll().listIterator();
@@ -188,8 +123,8 @@ public class ChartFactory {
         chartData.getChartSeriesSum().getData().removeIf(d -> d.getXValue().doubleValue() < MIN);
     }
 
-    public static synchronized void inputDownloadDate(ChartData chartData, List<Download> startedDownloads,
-                                                      double countMinute, ProgData progData) {
+    private static synchronized void inputDownloadDate(ChartData chartData, List<Download> startedDownloads,
+                                                       double countMinute, ProgData progData) {
         //Downloads in "Diagramm" eintragen
         for (final Download download : startedDownloads) {
             //jeden Download eintragen
@@ -200,7 +135,7 @@ public class ChartFactory {
                 cSeries.getData().add(new XYChart.Data<>(countMinute, bandw / chartData.getScale()));
             } else {
                 cSeries = new XYChart.Series<>(download.getNr() + "", FXCollections.observableArrayList());
-                cSeries.setNode(new ProgIcons().DOWNLOAD_OK);
+//                cSeries.setNode(new ProgIcons().DOWNLOAD_OK);//??????
                 download.setCSeries(cSeries);
 
                 cSeries.getData().add(new XYChart.Data<>(countMinute, 0L));
@@ -212,7 +147,7 @@ public class ChartFactory {
         chartData.getChartSeriesSum().getData().add(new XYChart.Data<>(countMinute, progData.downloadInfos.getBandwidth() / chartData.getScale()));
     }
 
-    public static synchronized void generateChartData(LineChart<Number, Number> lineChart, ProgData progData, ChartData chartData) {
+    private static synchronized void generateChartData(LineChart<Number, Number> lineChart, ProgData progData, ChartData chartData) {
         final boolean all = ProgConfig.DOWNLOAD_CHART_ALL_DOWNLOADS.getBool();
         final boolean onlyExisting = ProgConfig.DOWNLOAD_CHART_ONLY_EXISTING.getBool();
 
@@ -241,6 +176,65 @@ public class ChartFactory {
             }
         });
         colorChartName(lineChart, progData, chartData);
+    }
+
+    private static synchronized void zoomXAxis(LineChart<Number, Number> lineChart, ChartData chartData, double countMinute) {
+        final NumberAxis xAxis = (NumberAxis) lineChart.getXAxis();
+        xAxis.setUpperBound(countMinute);
+        final double MIN = countMinute - chartData.getMaxTime();
+        if (MIN <= 0) {
+            xAxis.setLowerBound(0);
+            return;
+        }
+        xAxis.setLowerBound(MIN);
+    }
+
+    private static synchronized void zoomYAxis(LineChart<Number, Number> lineChart,
+                                               ChartData chartData) {
+        double max = 0;
+        final ObservableList<XYChart.Series<Number, Number>> list;
+
+        if (ProgConfig.DOWNLOAD_CHART_SEPARAT.getBool()) {
+            list = chartData.getChartSeriesListSeparate();
+        } else {
+            list = chartData.getChartSeriesListSum();
+        }
+
+        for (final XYChart.Series<Number, Number> cSeries : list) {
+            for (final XYChart.Data<Number, Number> date : cSeries.getData()) {
+                if ((long) date.getYValue() > max) {
+                    max = (long) date.getYValue();
+                }
+            }
+        }
+
+        if (max > 5_000) {
+            chartData.setScale(chartData.getScale() * 1000);
+            setYAxisLabel(lineChart, chartData);
+
+            for (final XYChart.Series<Number, Number> cSeries : chartData.getChartSeriesListSeparate()) {
+                for (final XYChart.Data<Number, Number> date : cSeries.getData()) {
+                    date.setYValue((long) date.getYValue() / 1_000);
+                }
+            }
+            for (final XYChart.Data<Number, Number> date : chartData.getChartSeriesSum().getData()) {
+                date.setYValue((long) date.getYValue() / 1_000);
+            }
+        }
+    }
+
+    public static void setYAxisLabel(LineChart<Number, Number> lineChart, ChartData chartData) {
+        switch (chartData.getScale()) {
+            case 1:
+                lineChart.getYAxis().setLabel("Bandbreite [B/s]");
+                break;
+            case 1_000:
+                lineChart.getYAxis().setLabel("Bandbreite [kB/s]");
+                break;
+            case 1_000_000:
+                lineChart.getYAxis().setLabel("Bandbreite [MB/s]");
+                break;
+        }
     }
 
     private static synchronized void colorChartName(LineChart<Number, Number> lineChart, ProgData progData, ChartData chartData) {
