@@ -1,6 +1,8 @@
 ## MTPlayer
 
 **nächste Version**
+* Downloadchart: Daten bleiben auch beim Ändern der Anzeige erhalten
+* Filmfilter erhält eine "zurück" Funktion
 
 **Release 9**
 
