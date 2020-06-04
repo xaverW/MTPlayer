@@ -1,6 +1,6 @@
 /*  style sheet for the dark-theme */
 
-.root {
+/*.root {
     -fx-base: #383b3d;
     -fx-accent: #e7eff7 ;
     -fx-default-button: #7f878f ;
@@ -36,7 +36,7 @@
     -lblSelectedLines-color-2: derive(-fx-base, 40%);
 
     -text-color-blue: #002fbe;
-}
+}*/
 
 /* ist die abgesetzte Zeile im Downloaddialog */
 .downloadDialog {
@@ -50,67 +50,7 @@
 /* ========================================================================== */
 /* sind javafx gui Elemente */
 /* ========================================================================== */
-.check-menu-item{
-    -fx-focused-mark-color: #0b99c9;
-    -fx-mark-color: #0b99c9;
-}
-.table-row-cell:empty {
-    -fx-background-color: #b5babd;
-}
 
-.list-cell:empty {
-    -fx-background-color: #b5babd;
-}
-/* sind alle Context-Menüs */
-.context-menu {
-    -fx-background-color: #44484a;
-    -fx-border-color: #939a9f;
-}
-.menu-item  {
-    -fx-background-radius: 5px;
-}
-/* ComboBox */
-.combo-box-popup .list-view .list-cell:hover {
-    /* ist der markierte Eintrag in der Liste beim Auswählen mit der Maus*/
-    -fx-background-color: #b7bccf;
-    -fx-text-fill: black;
-}
-.radio-button:selected .radio .dot {
-    -fx-background-color: #0b99c9;
-    -fx-background-insets: 0;
-}
-.check-box:selected .mark {
-    -fx-background-color: #0b99c9;
-}
-.text-input:focused {
-    -fx-highlight-text-fill: ladder(
-        -fx-highlight-fill,
-        -fx-light-text-color 45%,
-        -fx-dark-text-color  46%,
-        -fx-dark-text-color  59%,
-        -fx-mid-text-color   60%
-    );
-}
-
-/* The main scrollbar **thumb** CSS class which we drag every time (movable) */
-.scroll-bar:horizontal .thumb {
-    -fx-background-color: #55595b, linear-gradient(from 50% 100% to 50% 50% , repeat, #B3B3B3, #6F777E 100% );
-	-fx-background-insets: 1,2;
-	-fx-background-radius: 0.2em;
-}
-.scroll-bar:vertical .thumb {
-    -fx-background-color: #55595b, linear-gradient(from -50% 50% to 50% 50% , repeat, #B3B3B3, #6F777E 100% );
-	-fx-background-insets: 1,2;
-	-fx-background-radius: 0.2em;
-}
-.scroll-bar:horizontal .thumb:hover,
-.scroll-bar:horizontal .thumb:pressed{
-    -fx-background-color: #55595b, linear-gradient(from 50% 100% to 50% 50% , repeat, #CCCCCC, #8F9AA5 100% );
-}
-.scroll-bar:vertical .thumb:hover,
-.scroll-bar:vertical .thumb:pressed{
-    -fx-background-color: #55595b, linear-gradient(from -50% 50% to 50% 50% , repeat, #CCCCCC, #A0A6AC 100% );
-}
 
 /*
 Download Chart

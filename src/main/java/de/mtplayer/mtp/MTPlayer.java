@@ -27,6 +27,7 @@ import de.mtplayer.mtp.gui.dialog.FilmInfoDialogController;
 import de.mtplayer.mtp.gui.startDialog.StartDialogController;
 import de.mtplayer.mtp.res.GetIcon;
 import de.mtplayer.mtp.tools.storedFilter.ProgInitFilter;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.P2LibInit;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PGuiSize;
@@ -71,8 +72,9 @@ public class MTPlayer extends Application {
     private void initP2lib() {
         PButton.setHlpImage(GetIcon.getImage("button-help.png", 16, 16));
         P2LibInit.initLib(primaryStage, ProgConst.PROGRAMNAME,
-                ProgConst.CSS_FILE, "",
-                ProgData.debug, ProgData.duration);
+                "", ProgData.debug, ProgData.duration);
+        P2LibInit.addCssFile(P2LibConst.CSS_GUI);
+        P2LibInit.addCssFile(ProgConst.CSS_FILE);
     }
 
     private void workBeforeGui() {
@@ -144,8 +146,10 @@ public class MTPlayer extends Application {
 
     private void addThemeCss() {
         if (ProgConfig.SYSTEM_DARK_THEME.getBool()) {
+            P2LibInit.addCssFile(P2LibConst.CSS_GUI_DARK);
             P2LibInit.addCssFile(ProgConst.CSS_FILE_DARK_THEME);
         } else {
+            P2LibInit.removeCssFile(P2LibConst.CSS_GUI_DARK);
             P2LibInit.removeCssFile(ProgConst.CSS_FILE_DARK_THEME);
         }
     }
