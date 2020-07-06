@@ -1,29 +1,5 @@
 /*  Programmweites style sheet */
 
-/*.root {
-    -tab-button-1: #d6d6d6;
-    -tab-button-2: #e6e6e6;
-    -tab-button-3: rgba(230,230,230,0);
-
-    -filter-lin-grad-1: linear-gradient(from 50% 17% to 50% 114% , repeat, #E6E6E6, #CBD8EB 100% );
-
-    -lin-grad-1: linear-gradient(from 0% 0% to 100% 100%, -tab-button-1 50%, white 100%);
-    -rad-grad-1: radial-gradient(center 50% -40%, radius 200%, -tab-button-2 45%, -tab-button-3 50%);
-
-    -lin-grad-btn-func-1: linear-gradient(from 0% 0% to 100% 100%, -tab-button-1 40%, white 90%);
-    -rad-grad-btn-func-1: radial-gradient(center 80% -70%, radius 200%, -tab-button-2 35%, -tab-button-3 40%);
-
-    -style-tab-border-color-1: #4169E1;
-    -style-tab-border-color-2: #3a5fcc;
-
-    -style-extra-pane-color: derive(-fx-base,-5%);
-
-    -lblSelectedLines-color-1: derive(-fx-base, -40%);
-    -lblSelectedLines-color-2: derive(-fx-base, -10%);
-
-    -text-color-blue: #002fbe;
-}*/
-
 /* CheckBoxCell: CheckBoxen in der Tabelle*/
 .checkbox-table * {
     -fx-background-color: transparent;
