@@ -28,6 +28,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
@@ -69,6 +70,11 @@ public class MediaConfigDialogController extends PDialogExtra {
 
         addOkButton(btnOk);
         addHlpButton(btnHelp);
+
+        progress.setMaxHeight(Double.MAX_VALUE);
+        progress.setMaxWidth(Double.MAX_VALUE);
+        HBox.setHgrow(progress, Priority.ALWAYS);
+
         getHBoxOverButtons().getChildren().addAll(btnCreateMediaDB, progress);
         initPanel();
     }
