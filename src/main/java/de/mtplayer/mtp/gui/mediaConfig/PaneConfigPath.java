@@ -22,6 +22,7 @@ import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.mediaDb.MediaCollectionData;
+import de.mtplayer.mtp.controller.mediaDb.MediaDataWorker;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
@@ -115,27 +116,11 @@ public class PaneConfigPath {
     }
 
     private void makeButton(VBox vBox) {
+        HBox hBox = new HBox(10);
+
         final Button btnHelp = PButton.helpButton(stage,
                 external ? "Externe Mediensammlungen verwalten" : "Interne Mediensammlungen verwalten",
                 external ? HelpText.EXTERN_MEDIA_COLLECTION : HelpText.INTERN_MEDIA_COLLECTION);
-
-        Button btnUpdate = new Button("");
-        btnUpdate.setTooltip(new Tooltip("Die markierte Sammlung wird neu eingelesen."));
-        btnUpdate.setGraphic(new ProgIcons().ICON_BUTTON_UPDATE);
-        btnUpdate.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
-        btnUpdate.setOnAction(a -> {
-            MediaCollectionData mediaCollectionData = tableView.getSelectionModel().getSelectedItem();
-
-            File file = new File(mediaCollectionData.getPath());
-            if (!file.exists()) {
-                PAlert.showErrorAlert("Pfad existiert nicht!", "Der Pfad der Sammlung:" + P2LibConst.LINE_SEPARATOR +
-                        mediaCollectionData.getPath() + P2LibConst.LINE_SEPARATOR +
-                        "existiert nicht. Die Sammlung kann nicht eingelesen werden");
-                return;
-            }
-
-            progData.mediaDataList.updateExternalCollection(mediaCollectionData);
-        });
 
         Button btnDel = new Button("");
         btnDel.setTooltip(new Tooltip("Die markierte Sammlung wird gelöscht."));
@@ -143,12 +128,34 @@ public class PaneConfigPath {
         btnDel.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
         btnDel.setOnAction(a -> delete());
 
-        HBox hBox = new HBox(10);
         if (external) {
+            Button btnUpdate = new Button("");
+            btnUpdate.setTooltip(new Tooltip("Die markierte Sammlung wird neu eingelesen."));
+            btnUpdate.setGraphic(new ProgIcons().ICON_BUTTON_UPDATE);
+            btnUpdate.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
+
+            btnUpdate.setOnAction(a -> {
+                update();
+            });
             hBox.getChildren().addAll(btnUpdate);
         }
+
         hBox.getChildren().addAll(btnDel, PGuiTools.getHBoxGrower(), btnHelp);
         vBox.getChildren().addAll(hBox);
+    }
+
+    private void update() {
+        MediaCollectionData mediaCollectionData = tableView.getSelectionModel().getSelectedItem();
+
+        File file = new File(mediaCollectionData.getPath());
+        if (!file.exists()) {
+            PAlert.showErrorAlert("Pfad existiert nicht!", "Der Pfad der Sammlung:" + P2LibConst.LINE_SEPARATOR +
+                    mediaCollectionData.getPath() + P2LibConst.LINE_SEPARATOR +
+                    "existiert nicht. Die Sammlung kann nicht eingelesen werden");
+            return;
+        }
+
+        new MediaDataWorker(progData).updateExternalCollection(mediaCollectionData);
     }
 
     private void delete() {
@@ -160,9 +167,11 @@ public class PaneConfigPath {
             return;
         }
 
+        List<Long> idList = new ArrayList<>();
         sels.stream().forEach(mediaPathData -> {
-            progData.mediaDataList.removeMediaAndCollection(mediaPathData.getId());
+            idList.add(mediaPathData.getId());
         });
+        new MediaDataWorker(progData).removeMediaCollection(idList);
 
         tableView.getSelectionModel().clearSelection();
     }
@@ -233,7 +242,7 @@ public class PaneConfigPath {
 
         mediaCollectionData = progData.mediaCollectionDataList.addNewMediaCollectionData(txtPath.getText(), txtCollectionName.getText(), external);
         if (external) {
-            progData.mediaDataList.createExternalCollection(mediaCollectionData);
+            new MediaDataWorker(progData).createExternalCollection(mediaCollectionData);
         }
 
         txtCollectionName.setText(progData.mediaCollectionDataList.getNextMediaCollectionName(external));

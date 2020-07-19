@@ -16,13 +16,7 @@
 
 package de.mtplayer.mtp.controller.mediaDb;
 
-import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.config.ProgInfos;
-import de.p2tools.p2Lib.P2LibConst;
-import de.p2tools.p2Lib.alert.PAlert;
-import de.p2tools.p2Lib.tools.log.PLog;
-import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -30,17 +24,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class MediaDataList extends SimpleListProperty<MediaData> {
 
@@ -101,81 +89,18 @@ public class MediaDataList extends SimpleListProperty<MediaData> {
         return this.setAll(list);
     }
 
-    // **************************************************************
-    // INTERNAL
-    // MediaDataList INTERN anlegen und die gespeicherten EXTERNEN anfügen
-    public synchronized void createMediaDb() {
-        if (getSearching()) {
-            // dann mach mers gerade schon :)
-            return;
-        }
 
-        Thread th = new Thread(new CreateMediaDb());
-        th.setName("createInternalMediaDb");
-        th.start();
-    }
-
-    // **************************************************************
-    // EXTERNAL
-    // MediaDataList EXTERN: eine collection anlegen
-    public synchronized void createExternalCollection(MediaCollectionData mediaCollectionData) {
-        if (null == ProgData.getInstance().mediaCollectionDataList.getMediaCollectionData(mediaCollectionData.getId())) {
-            // evtl. erst mal die Collection anlegen
-            ProgData.getInstance().mediaCollectionDataList.add(mediaCollectionData);
-        }
-
-        if (getSearching()) {
-            // dann mach mers gerade schon :)
-            return;
-        }
-
-        // und jetzt Medien suchen
-        Thread th = new Thread(new CreateMediaDb(mediaCollectionData));
-        th.setName("createExternalCollection");
-        th.start();
-    }
-
-    public synchronized void updateExternalCollection(MediaCollectionData mediaCollectionData) {
-        // eine externe Collection überprüfen
-        if (getSearching()) {
-            // dann mach mers gerade schon :)
-            return;
-        }
-
-        removeMediaData(mediaCollectionData.getId());
-        mediaCollectionData.setCount(0);
-
-        createExternalCollection(mediaCollectionData);
-    }
-
-    public synchronized void removeMediaAndCollection(long id) {
-        // remove collection AND all media of this collection
-        if (getSearching()) {
-            // dann mach mers gerade schon :)
-            return;
-        }
-
-        removeMediaData(id);
-        ProgData.getInstance().mediaCollectionDataList.removeMediaCollectionData(id);
-        writeExternalMediaData();
-    }
-
-    private void removeMediaData(long collectionId) {
+    synchronized void removeMediaData(long collectionId) {
         // remove all media with this collectionId
-        final Iterator<MediaData> iterator = iterator();
-        while (iterator.hasNext()) {
-            MediaData mediaData = iterator.next();
-            if (mediaData.getCollectionId() == collectionId) {
-                iterator.remove();
-            }
-        }
+        List<MediaData> rest = new ArrayList<>();
+        this.stream().filter(mediaData -> mediaData.getCollectionId() != collectionId).forEach(mediaData -> rest.add(mediaData));
+        this.setAll(rest);
+//        this.clear();
+//        this.addAllMediaData(rest.parallelStream().collect(Collectors.toList()));
     }
 
-    public synchronized List<MediaData> getExternalMediaData() {
-        return this.stream().filter(mediaData -> mediaData.isExternal()).collect(Collectors.toList());
-    }
 
-    public synchronized void checkExternalMediaData() {
+    synchronized void checkExternalMediaData() {
         // checks duplicates in the mediaDataList and creates the counter in the pathList
         // beim kompletten Neuladen der MediaDB können ja nur externe doppelt sein
         final HashSet<String> hashSet = new HashSet<>(size());
@@ -193,9 +118,9 @@ public class MediaDataList extends SimpleListProperty<MediaData> {
         }
     }
 
-    public synchronized void countMediaData() {
+    public synchronized void countMediaData(ProgData progData) {
         // creates the counter in the MediaCollectionDataList
-        final MediaCollectionDataList mediaCollectionDataList = ProgData.getInstance().mediaCollectionDataList;
+        final MediaCollectionDataList mediaCollectionDataList = progData.mediaCollectionDataList;
         mediaCollectionDataList.stream().forEach(collectionData -> collectionData.setCount(0));
 
         this.stream().forEach(mediaData -> {
@@ -206,59 +131,125 @@ public class MediaDataList extends SimpleListProperty<MediaData> {
         });
     }
 
+    // **************************************************************
+    // INTERNAL
+    // MediaDataList INTERN anlegen und die gespeicherten EXTERNEN anfügen
+//    public synchronized void createMediaDb() {
+//        if (getSearching()) {
+//            // dann mach mers gerade schon :)
+//            return;
+//        }
+//
+//        Thread th = new Thread(new CreateMediaDb());
+//        th.setName("createInternalMediaDb");
+//        th.start();
+//    }
 
-    // ******************************************************
-    // EXTERNAL MediaData aus File lesen und schreiben
-    private Path getPathMediaDB() {
-        Path urlPath = null;
-        try {
-            urlPath = Paths.get(ProgInfos.getSettingsDirectory_String()).resolve(ProgConst.FILE_MEDIA_DB);
-            if (Files.notExists(urlPath)) {
-                urlPath = Files.createFile(urlPath);
-            }
-        } catch (final IOException ex) {
-            PLog.errorLog(951201201, ex);
-        }
-        return urlPath;
-    }
+    // **************************************************************
+    // EXTERNAL
+    // MediaDataList EXTERN: eine collection anlegen
+//    public synchronized void createExternalCollection(MediaCollectionData mediaCollectionData) {
+//        if (null == ProgData.getInstance().mediaCollectionDataList.getMediaCollectionData(mediaCollectionData.getId())) {
+//            // evtl. erst mal die Collection anlegen
+//            ProgData.getInstance().mediaCollectionDataList.add(mediaCollectionData);
+//        }
+//
+//        if (getSearching()) {
+//            // dann mach mers gerade schon :)
+//            return;
+//        }
+//
+//        // und jetzt Medien suchen
+//        Thread th = new Thread(new CreateMediaDb(mediaCollectionData));
+//        th.setName("createExternalCollection");
+//        th.start();
+//    }
+//
+//    public synchronized void updateExternalCollection(MediaCollectionData mediaCollectionData) {
+//        // eine externe Collection überprüfen
+//        if (getSearching()) {
+//            // dann mach mers gerade schon :)
+//            return;
+//        }
+//
+//        removeMediaData(mediaCollectionData.getId());
+//        mediaCollectionData.setCount(0);
+//
+//        createExternalCollection(mediaCollectionData);
+//    }
 
-    public List<MediaData> loadSavedExternalMediaData() {
-        final Path urlPath = getPathMediaDB();
-        return new ReadMediaDb().read(urlPath);
-    }
+//    synchronized void removeMediaAndCollection(List<Long> idList) {
+//        // remove collection AND all media of this collection
+//        if (getSearching()) {
+//            // dann mach mers gerade schon :)
+//            return;
+//        }
+//
+//        idList.stream().forEach(id -> {
+//            removeMediaData(id);
+//            ProgData.getInstance().mediaCollectionDataList.removeMediaCollectionData(id);
+//        });
+//        writeExternalMediaData();
+//    }
 
-    public void writeExternalMediaData() {
-        final Path path = getPathMediaDB();
 
-        ArrayList<String> logList = new ArrayList<>();
-        logList.add("MediaDB schreiben");
-        logList.add("   --> Start Schreiben nach: " + path.toString());
+//    private synchronized List<MediaData> getExternalMediaData() {
+//        return this.stream().filter(mediaData -> mediaData.isExternal()).collect(Collectors.toList());
+//    }
 
-        try {
-            final File file = path.toFile();
-            final File dir = new File(file.getParent());
-            if (!dir.exists() && !dir.mkdirs()) {
-                PLog.errorLog(932102478, "Kann den Pfad nicht anlegen: " + dir.toString());
-                Platform.runLater(() -> PAlert.showErrorAlert("Fehler beim Schreiben",
-                        "Der Pfad zum Schreiben der Mediensammlung kann nicht angelegt werden: " + P2LibConst.LINE_SEPARATOR +
-                                path.toString()));
-                return;
-            }
 
-            List<MediaData> externalMediaData = getExternalMediaData();
-            logList.add("   --> Anzahl externe Medien: " + externalMediaData.size());
-            new WriteMediaDb().write(path, externalMediaData);
-            logList.add("   --> geschrieben!");
+//    // ******************************************************
+//    // EXTERNAL MediaData aus File lesen und schreiben
+//    private Path getPathMediaDB() {
+//        Path urlPath = null;
+//        try {
+//            urlPath = Paths.get(ProgInfos.getSettingsDirectory_String()).resolve(ProgConst.FILE_MEDIA_DB);
+//            if (Files.notExists(urlPath)) {
+//                urlPath = Files.createFile(urlPath);
+//            }
+//        } catch (final IOException ex) {
+//            PLog.errorLog(951201201, ex);
+//        }
+//        return urlPath;
+//    }
+//
+//    public List<MediaData> loadSavedExternalMediaData() {
+//        final Path urlPath = getPathMediaDB();
+//        return new ReadMediaDb().read(urlPath);
+//    }
 
-        } catch (final Exception ex) {
-            logList.add("   --> Fehler, nicht geschrieben!");
-            PLog.errorLog(931201478, ex, "nach: " + path.toString());
-            Platform.runLater(() -> PAlert.showErrorAlert("Fehler beim Schreiben",
-                    "Die Mediensammlung konnte nicht geschrieben werden:" + P2LibConst.LINE_SEPARATOR +
-                            path.toString()));
-        }
-
-        PLog.sysLog(logList);
-    }
+//    public void writeExternalMediaData() {
+//        final Path path = getPathMediaDB();
+//
+//        ArrayList<String> logList = new ArrayList<>();
+//        logList.add("MediaDB schreiben");
+//        logList.add("   --> Start Schreiben nach: " + path.toString());
+//
+//        try {
+//            final File file = path.toFile();
+//            final File dir = new File(file.getParent());
+//            if (!dir.exists() && !dir.mkdirs()) {
+//                PLog.errorLog(932102478, "Kann den Pfad nicht anlegen: " + dir.toString());
+//                Platform.runLater(() -> PAlert.showErrorAlert("Fehler beim Schreiben",
+//                        "Der Pfad zum Schreiben der Mediensammlung kann nicht angelegt werden: " + P2LibConst.LINE_SEPARATOR +
+//                                path.toString()));
+//                return;
+//            }
+//
+//            List<MediaData> externalMediaData = getExternalMediaData();
+//            logList.add("   --> Anzahl externe Medien: " + externalMediaData.size());
+//            new WriteMediaDb().write(path, externalMediaData);
+//            logList.add("   --> geschrieben!");
+//
+//        } catch (final Exception ex) {
+//            logList.add("   --> Fehler, nicht geschrieben!");
+//            PLog.errorLog(931201478, ex, "nach: " + path.toString());
+//            Platform.runLater(() -> PAlert.showErrorAlert("Fehler beim Schreiben",
+//                    "Die Mediensammlung konnte nicht geschrieben werden:" + P2LibConst.LINE_SEPARATOR +
+//                            path.toString()));
+//        }
+//
+//        PLog.sysLog(logList);
+//    }
 
 }

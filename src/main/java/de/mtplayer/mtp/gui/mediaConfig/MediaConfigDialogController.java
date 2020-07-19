@@ -18,6 +18,7 @@ package de.mtplayer.mtp.gui.mediaConfig;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
+import de.mtplayer.mtp.controller.mediaDb.MediaDataWorker;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
@@ -66,7 +67,7 @@ public class MediaConfigDialogController extends PDialogExtra {
         btnOk.setOnAction(a -> close());
         progress.visibleProperty().bind(progData.mediaDataList.searchingProperty());
         btnCreateMediaDB.disableProperty().bind(progData.mediaDataList.searchingProperty());
-        btnCreateMediaDB.setOnAction(event -> progData.mediaDataList.createMediaDb());
+        btnCreateMediaDB.setOnAction(event -> new MediaDataWorker(progData).createMediaDb());
 
         addOkButton(btnOk);
         addHlpButton(btnHelp);

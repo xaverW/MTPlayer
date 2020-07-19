@@ -21,6 +21,7 @@ import de.mtplayer.mLib.tools.StringFormatters;
 import de.mtplayer.mtp.controller.config.*;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
+import de.mtplayer.mtp.controller.mediaDb.MediaDataWorker;
 import de.mtplayer.mtp.tools.update.SearchProgramUpdate;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
@@ -62,7 +63,7 @@ public class ProgStart {
             public void finished(ListenerFilmlistLoadEvent event) {
                 if (!doneAtProgramstart) {
                     doneAtProgramstart = true;
-                    progData.mediaDataList.createMediaDb();
+                    new MediaDataWorker(progData).createMediaDb();
                     checkProgUpdate(progData);
                 }
 

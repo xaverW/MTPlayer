@@ -22,6 +22,7 @@ import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.mediaDb.MediaData;
+import de.mtplayer.mtp.controller.mediaDb.MediaDataWorker;
 import de.mtplayer.mtp.controller.mediaDb.MediaFileSize;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.mtplayer.mtp.tools.storedFilter.Filter;
@@ -107,7 +108,10 @@ public class PaneMedia extends ScrollPane {
         hBoxProgess.setSpacing(10);
         hBoxProgess.setPadding(new Insets(10));
         progress.setVisible(false);
-        hBoxProgess.getChildren().addAll(progress, PGuiTools.getHBoxGrower(), btnCreateMediaDB);
+        progress.setMaxHeight(Double.MAX_VALUE);
+        progress.setMaxWidth(Double.MAX_VALUE);
+        hBoxProgess.getChildren().addAll(btnCreateMediaDB, progress);
+        HBox.setHgrow(progress, Priority.ALWAYS);
 
         tableMedia.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
         VBox.setVgrow(tableMedia, Priority.ALWAYS);
@@ -128,7 +132,7 @@ public class PaneMedia extends ScrollPane {
 
         progress.visibleProperty().bind(progData.mediaDataList.searchingProperty());
         btnCreateMediaDB.disableProperty().bind(progData.mediaDataList.searchingProperty());
-        btnCreateMediaDB.setOnAction(e -> progData.mediaDataList.createMediaDb());
+        btnCreateMediaDB.setOnAction(e -> new MediaDataWorker(progData).createMediaDb());
 
         btnOpen.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
         btnOpen.setTooltip(new Tooltip("Ausgewählten Pfad im Dateimanager öffnen"));

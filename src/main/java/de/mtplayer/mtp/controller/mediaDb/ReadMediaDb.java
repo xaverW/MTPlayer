@@ -17,18 +17,23 @@
 
 package de.mtplayer.mtp.controller.mediaDb;
 
+import de.mtplayer.mtp.controller.config.ProgConst;
+import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ReadMediaDb implements AutoCloseable {
 
@@ -40,6 +45,26 @@ public class ReadMediaDb implements AutoCloseable {
 
         inFactory = XMLInputFactory.newInstance();
         inFactory.setProperty(XMLInputFactory.IS_COALESCING, Boolean.FALSE);
+    }
+
+    // ******************************************************
+    // EXTERNAL MediaData aus File lesen und schreiben
+    public List<MediaData> loadSavedExternalMediaData() {
+        final Path urlPath = getPathMediaDB();
+        return new ReadMediaDb().read(urlPath);
+    }
+
+    private Path getPathMediaDB() {
+        Path urlPath = null;
+        try {
+            urlPath = Paths.get(ProgInfos.getSettingsDirectory_String()).resolve(ProgConst.FILE_MEDIA_DB);
+            if (Files.notExists(urlPath)) {
+                urlPath = Files.createFile(urlPath);
+            }
+        } catch (final IOException ex) {
+            PLog.errorLog(951201201, ex);
+        }
+        return urlPath;
     }
 
     public ArrayList<MediaData> read(Path xmlFilePath) {

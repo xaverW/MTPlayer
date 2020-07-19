@@ -17,6 +17,8 @@
 package de.mtplayer.mtp.controller.mediaDb;
 
 import de.mtplayer.mtp.controller.config.ProgConst;
+import de.mtplayer.mtp.controller.config.ProgData;
+import de.mtplayer.mtp.controller.config.ProgInfos;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -25,14 +27,17 @@ import javafx.application.Platform;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class WriteMediaDb implements AutoCloseable {
 
@@ -43,12 +48,48 @@ public class WriteMediaDb implements AutoCloseable {
     private final ArrayList<String> list = new ArrayList<>();
     private List<MediaData> mediaDbList;
     private boolean writeLog = false;
+    private ProgData progData;
 
-    public WriteMediaDb() {
+    public WriteMediaDb(ProgData progData) {
+        this.progData = progData;
     }
 
     public WriteMediaDb(boolean writeLog) {
         this.writeLog = writeLog;
+    }
+
+    public synchronized void writeExternalMediaData() {
+        final Path path = getPathMediaDB();
+
+        ArrayList<String> logList = new ArrayList<>();
+        logList.add("MediaDB schreiben");
+        logList.add("   --> Start Schreiben nach: " + path.toString());
+
+        try {
+            final File file = path.toFile();
+            final File dir = new File(file.getParent());
+            if (!dir.exists() && !dir.mkdirs()) {
+                PLog.errorLog(932102478, "Kann den Pfad nicht anlegen: " + dir.toString());
+                Platform.runLater(() -> PAlert.showErrorAlert("Fehler beim Schreiben",
+                        "Der Pfad zum Schreiben der Mediensammlung kann nicht angelegt werden: " + P2LibConst.LINE_SEPARATOR +
+                                path.toString()));
+                return;
+            }
+
+            List<MediaData> externalMediaData = getExternalMediaData();
+            logList.add("   --> Anzahl externe Medien: " + externalMediaData.size());
+            write(path, externalMediaData);
+            logList.add("   --> geschrieben!");
+
+        } catch (final Exception ex) {
+            logList.add("   --> Fehler, nicht geschrieben!");
+            PLog.errorLog(931201478, ex, "nach: " + path.toString());
+            Platform.runLater(() -> PAlert.showErrorAlert("Fehler beim Schreiben",
+                    "Die Mediensammlung konnte nicht geschrieben werden:" + P2LibConst.LINE_SEPARATOR +
+                            path.toString()));
+        }
+
+        PLog.sysLog(logList);
     }
 
     public synchronized void write(Path file, List<MediaData> mediaDbList) {
@@ -71,6 +112,36 @@ public class WriteMediaDb implements AutoCloseable {
         if (writeLog) {
             PLog.sysLog(list);
         }
+    }
+
+    // ******************************************************
+    // EXTERNAL MediaData aus File lesen und schreiben
+    private Path getPathMediaDB() {
+        Path urlPath = null;
+        try {
+            urlPath = Paths.get(ProgInfos.getSettingsDirectory_String()).resolve(ProgConst.FILE_MEDIA_DB);
+            if (Files.notExists(urlPath)) {
+                urlPath = Files.createFile(urlPath);
+            }
+        } catch (final IOException ex) {
+            PLog.errorLog(951201201, ex);
+        }
+        return urlPath;
+    }
+
+    private synchronized List<MediaData> getExternalMediaData() {
+//        List<MediaData> list = new ArrayList<>();
+//        progData.mediaDataList.stream().forEach(mediaData -> {
+//            if (mediaData == null) {
+//                System.out.println("Mist");
+//            } else if (mediaData.isExternal()) {
+//                list.add(mediaData);
+//            }
+//        });
+//        return list;
+
+        return progData.mediaDataList.parallelStream().filter(mediaData -> mediaData != null && mediaData.isExternal())
+                .collect(Collectors.toList());
     }
 
     private void writeXmlData() throws XMLStreamException, IOException {

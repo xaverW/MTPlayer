@@ -136,7 +136,7 @@ public class MediaCollectionDataList extends SimpleListProperty<MediaCollectionD
         hashSet.clear();
     }
 
-    public synchronized void removeMediaCollectionData(long id) {
+    synchronized void removeMediaCollectionData(long id) {
         // remove collection
         Iterator<MediaCollectionData> iterator = iterator();
         while (iterator.hasNext()) {

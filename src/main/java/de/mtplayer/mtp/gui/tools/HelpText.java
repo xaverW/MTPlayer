@@ -445,7 +445,7 @@ public class HelpText {
             "fest zugeordnet werden (z.B. der Browser \"Firefox\").";
 
     public static final String MEDIA_DIALOG = "Hier kann eine Mediensammlung angelegt werden. Vor dem " +
-            "Download eines Films, kann der Filmtitel mit der Mediensammlung abgeglichen werden. So können doppelte " +
+            "Download eines Films, kann der Filmtitel in der Mediensammlung gesucht werden. So können doppelte " +
             "Downloads vermieden werden." +
             P2LibConst.LINE_SEPARATORx2 +
 
@@ -453,11 +453,11 @@ public class HelpText {
             P2LibConst.LINE_SEPARATORx2 +
 
             "Die angegebenen Pfade der \"Internen Medien\", werden beim Programmstart " +
-            "abgesucht, diese müssen also verfügbar sein. Dafür ist der aktuelle " +
-            "Bestand an Filmen auch in der MedienDB enthalten." +
+            "abgesucht, diese müssen also verfügbar sein während das Programm läuft. Dafür ist der aktuelle " +
+            "Bestand an Filmen dann auch in der Mediensammlung enthalten." +
             P2LibConst.LINE_SEPARATORx2 +
 
-            "Externe Medien werden nur beim Anlegen abgesucht. " +
+            "Externe Medien werden nur beim Hinzufügen abgesucht. " +
             "Deren Inhalt an Mediendateien steht dauerhaft im Programm und " +
             "bei der Suche in der Mediensammlung zur Verfügung. " +
             "Diese müssen also beim Programmstart nicht vorhanden sein." +
@@ -469,17 +469,17 @@ public class HelpText {
 
 
     public static final String MEDIA_COLLECTION = "\"Keine Dateien mit diesem Suffix\"\n" +
-            "Dateien mit einem dort angegebenen Suffix werden nicht in den Index aufgenommen." +
+            "Dateien mit einem dort angegebenen Suffix werden nicht in die Mediensammlung aufgenommen." +
 
             P2LibConst.LINE_SEPARATORx2 +
             "\"Nur Dateien mit diesem Suffix\"\n" +
-            "Es werden dann nur Dateien mit diesm Suffix genommen." +
+            "Es werden dann nur Dateien mit diesm Suffix aufgenommen." +
 
             P2LibConst.LINE_SEPARATORx2 +
             "Suffixe können durch \"Komma\" getrennt angegeben werden: " +
             "\"txt,xml\" besagt, Dateien die mit \".txt\" oder \".xml\" enden " +
-            "werden nicht - oder nur diese werden - in den Index " +
-            "aufgenommen." +
+            "werden nicht - oder nur diese werden - in die Mediensammlung " +
+            "aufgenommen. Ist die Zeile leer, werden alle Dateien aufgenommen." +
             P2LibConst.LINE_SEPARATORx2 +
             "\"keine versteckten Dateien suchen\"\n" +
             "besagt, dass eben diese Dateien nicht in die Mediensammlung " +

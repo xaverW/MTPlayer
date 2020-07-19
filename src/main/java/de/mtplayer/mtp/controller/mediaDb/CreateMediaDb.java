@@ -29,30 +29,89 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreateMediaDb implements Runnable {
+public class CreateMediaDb {
 
     private String error = "";
     private boolean more = false;
 
     private final ProgData progData;
     private final MediaDataList mediaDataList;
-    private final MediaCollectionData mediaCollectionData;
     private String[] suffix;
     private List tmpMediaDataList = new ArrayList<MediaData>();
+    ArrayList<String> logs = new ArrayList<>();
 
     final boolean withoutSuffix = ProgConfig.MEDIA_DB_WITH_OUT_SUFFIX.getBool();
     final boolean noHiddenFiles = ProgConfig.MEDIA_DB_NO_HIDDEN_FILES.getBool();
+
+    public CreateMediaDb() {
+        progData = ProgData.getInstance();
+        this.mediaDataList = progData.mediaDataList;
+        getSuffix();
+    }
+
+    public void createDB(MediaCollectionData mediaCollectionData) {
+        if (mediaCollectionData == null) {
+            // duchsucht die vom User angelegten Pfade für die interne Mediensammlung
+            // und fügt die gespeicherten externen Medien hinzu
+            create();
+        } else {
+            // durchsucht einen EXTERNEN Pfad und fügt ihn an die DB an
+            // wird nur manuell vom User gestartet und löscht nicht die MediaDB
+            create(mediaCollectionData);
+        }
+    }
 
     /**
      * duchsucht die vom User angelegten Pfade für die interne Mediensammlung
      * und fügt die gespeicherten externen Medien hinzu
      * -> bei jedem Start
      */
-    public CreateMediaDb() {
-        progData = ProgData.getInstance();
-        this.mediaDataList = progData.mediaDataList;
-        this.mediaCollectionData = null;
-        getSuffix();
+    private void create() {
+        start();
+        try {
+            // ===================================
+            // die gesamte MediaDB laden: gespeicherte Liste abarbeiten
+            // und lokale Filme anfügen
+            logs.add("Gesamte Mediensammlung aufbauen");
+            tmpMediaDataList.addAll(new ReadMediaDb().loadSavedExternalMediaData());
+
+            // und die Pfade "putzen" und dann auf lesbarkeit prüfen
+            progData.mediaCollectionDataList.cleanUpInternalMediaCollectionData();
+            for (final MediaCollectionData mediaCollectionData : progData.mediaCollectionDataList.getMediaCollectionDataList(false)) {
+                final File f = new File(mediaCollectionData.getPath());
+                if (!f.canRead()) {
+                    if (!error.isEmpty()) {
+                        error = error + P2LibConst.LINE_SEPARATOR;
+                        more = true;
+                    }
+                    error = error + f.getPath();
+                }
+            }
+            if (!error.isEmpty()) {
+                // Verzeichnisse können nicht durchsucht werden
+                errorMsg();
+            }
+
+            // und jetzt abarbeiten
+            progData.mediaCollectionDataList.getMediaCollectionDataList(false).stream().forEach((mediaPathData) -> {
+                if (mediaPathData.getCollectionName().isEmpty()) {
+                    final String name = progData.mediaCollectionDataList.getNextMediaCollectionName(false);
+                    mediaPathData.setCollectionName(name.intern());
+                }
+                // und alle Medien dieses Pfades suchen
+                searchFile(new File(mediaPathData.getPath()), mediaPathData);
+            });
+
+            logs.add(" -> gefundene Medien: " + tmpMediaDataList.size());
+            mediaDataList.setAllMediaData(tmpMediaDataList);
+            mediaDataList.checkExternalMediaData();
+            mediaDataList.countMediaData(progData);
+
+
+        } catch (final Exception ex) {
+            PLog.errorLog(945120375, ex);
+        }
+        stop();
     }
 
     /**
@@ -61,97 +120,54 @@ public class CreateMediaDb implements Runnable {
      *
      * @param mediaCollectionData
      */
-    public CreateMediaDb(MediaCollectionData mediaCollectionData) {
-        progData = ProgData.getInstance();
-        this.mediaDataList = progData.mediaDataList;
-        this.mediaCollectionData = mediaCollectionData;
-        getSuffix();
-    }
-
-    @Override
-    public synchronized void run() {
-
-        PDuration.counterStart("Mediensammlung erstellen");
-        ArrayList<String> logs = new ArrayList<>();
-        mediaDataList.setSearching(true);
-        Listener.notify(Listener.EREIGNIS_MEDIA_DB_START, CreateMediaDb.class.getSimpleName());
-
+    private void create(MediaCollectionData mediaCollectionData) {
+        start();
         try {
             if (mediaCollectionData == null) {
-                // ===================================
-                // die gesamte MediaDB laden: gespeicherte Liste abarbeiten
-                // und lokale Filme anfügen
-                logs.add("Gesamte Mediensammlung aufbauen");
-                tmpMediaDataList.addAll(mediaDataList.loadSavedExternalMediaData());
-
-                // und die Pfade "putzen" und dann auf lesbarkeit prüfen
-                progData.mediaCollectionDataList.cleanUpInternalMediaCollectionData();
-                for (final MediaCollectionData mediaCollectionData : progData.mediaCollectionDataList.getMediaCollectionDataList(false)) {
-                    final File f = new File(mediaCollectionData.getPath());
-                    if (!f.canRead()) {
-                        if (!error.isEmpty()) {
-                            error = error + P2LibConst.LINE_SEPARATOR;
-                            more = true;
-                        }
-                        error = error + f.getPath();
-                    }
-                }
-                if (!error.isEmpty()) {
-                    // Verzeichnisse können nicht durchsucht werden
-                    errorMsg();
-                }
-
-                // und jetzt abarbeiten
-                progData.mediaCollectionDataList.getMediaCollectionDataList(false).stream().forEach((mediaPathData) -> {
-                    if (mediaPathData.getCollectionName().isEmpty()) {
-                        final String name = progData.mediaCollectionDataList.getNextMediaCollectionName(false);
-                        mediaPathData.setCollectionName(name.intern());
-                    }
-                    // und alle Medien dieses Pfades suchen
-                    searchFile(new File(mediaPathData.getPath()), mediaPathData);
-                });
-
-                logs.add(" -> gefundene Medien: " + tmpMediaDataList.size());
-                mediaDataList.setAllMediaData(tmpMediaDataList);
-                mediaDataList.checkExternalMediaData();
-                mediaDataList.countMediaData();
-
-            } else {
-                // ===================================
-                // dann nur einen Pfad hinzufügen
-                final File f = new File(mediaCollectionData.getPath());
-                logs.add("externen Pfad absuchen: " + f.getAbsolutePath());
-
-                if (!f.canRead()) {
-                    if (!error.isEmpty()) {
-                        error = error + P2LibConst.LINE_SEPARATOR;
-                    }
-                    error = error + f.getPath();
-                }
-                if (!error.isEmpty()) {
-                    // Verzeichnisse können nicht durchsucht werden
-                    errorMsg();
-                }
-
-                // und jetzt alle Medien dieses Pfades suchen
-                searchFile(new File(mediaCollectionData.getPath()), mediaCollectionData);
-                logs.add(" -> im Pfad gefundene Medien: " + tmpMediaDataList.size());
-                mediaDataList.addAllMediaData(tmpMediaDataList);
-                mediaDataList.checkExternalMediaData();
-                mediaDataList.countMediaData();
-                mediaDataList.writeExternalMediaData();
+                return;
             }
+            // ===================================
+            // dann nur einen Pfad hinzufügen
+            final File f = new File(mediaCollectionData.getPath());
+            logs.add("externen Pfad absuchen: " + f.getAbsolutePath());
+
+            if (!f.canRead()) {
+                if (!error.isEmpty()) {
+                    error = error + P2LibConst.LINE_SEPARATOR;
+                }
+                error = error + f.getPath();
+            }
+            if (!error.isEmpty()) {
+                // Verzeichnisse können nicht durchsucht werden
+                errorMsg();
+            }
+
+            // und jetzt alle Medien dieses Pfades suchen
+            searchFile(new File(mediaCollectionData.getPath()), mediaCollectionData);
+            logs.add(" -> im Pfad gefundene Medien: " + tmpMediaDataList.size());
+            mediaDataList.addAllMediaData(tmpMediaDataList);
+            mediaDataList.checkExternalMediaData();
+            mediaDataList.countMediaData(progData);
+            new WriteMediaDb(progData).writeExternalMediaData();
 
         } catch (final Exception ex) {
             PLog.errorLog(120321254, ex);
         }
+        stop();
+    }
 
+    private void start() {
+        PDuration.counterStart("Mediensammlung erstellen");
+        mediaDataList.setSearching(true);
+        Listener.notify(Listener.EREIGNIS_MEDIA_DB_START, CreateMediaDb.class.getSimpleName());
+    }
+
+    private void stop() {
         mediaDataList.setSearching(false);
         PLog.sysLog(logs);
         Listener.notify(Listener.EREIGNIS_MEDIA_DB_STOP, CreateMediaDb.class.getSimpleName());
         PDuration.counterStop("Mediensammlung erstellen");
     }
-
 
     private void errorMsg() {
         Platform.runLater(() -> PAlert.showErrorAlert("Fehler beim Erstellen der Mediensammlung",

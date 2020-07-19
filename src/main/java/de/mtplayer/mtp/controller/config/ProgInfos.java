@@ -67,7 +67,7 @@ public class ProgInfos {
      */
     public static String getFilmListFile() {
         String strFile;
-        strFile = ProgInfos.getSettingsDirectory_String() + File.separator + ProgConst.JSON_DATEI_FILME;
+        strFile = getSettingsDirectory_String() + File.separator + ProgConst.JSON_DATEI_FILME;
 
         return strFile;
     }
@@ -120,7 +120,7 @@ public class ProgInfos {
      */
     public void getMTPlayerXmlCopyFilePath(ArrayList<Path> xmlFilePath) {
         for (int i = 1; i <= ProgConst.MAX_COPY_OF_BACKUPFILE; ++i) {
-            final Path path = ProgInfos.getSettingsDirectory().resolve(ProgConst.CONFIG_FILE_COPY + i);
+            final Path path = getSettingsDirectory().resolve(ProgConst.CONFIG_FILE_COPY + i);
             if (Files.exists(path)) {
                 xmlFilePath.add(path);
             }
