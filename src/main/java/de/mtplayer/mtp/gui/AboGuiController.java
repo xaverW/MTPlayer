@@ -240,14 +240,14 @@ public class AboGuiController extends AnchorPane {
 
     private void setFilterProperty() {
         ProgConfig.FILTER_ABO_CHANNEL.getStringProperty().addListener((observable, oldValue, newValue) -> setFilter());
-        ProgConfig.FILTER_ABO_KIND.getStringProperty().addListener((observable, oldValue, newValue) -> setFilter());
+        ProgConfig.FILTER_ABO_TYPE.getStringProperty().addListener((observable, oldValue, newValue) -> setFilter());
         ProgConfig.FILTER_ABO_NAME.getStringProperty().addListener((observable, oldValue, newValue) -> setFilter());
         ProgConfig.FILTER_ABO_DESCRIPTION.getStringProperty().addListener((observable, oldValue, newValue) -> setFilter());
     }
 
     private void setFilter() {
         final String sender = ProgConfig.FILTER_ABO_CHANNEL.get();
-        final String kind = ProgConfig.FILTER_ABO_KIND.get();
+        final String type = ProgConfig.FILTER_ABO_TYPE.get();
         final String name = ProgConfig.FILTER_ABO_NAME.get().trim().toLowerCase();
         final String description = ProgConfig.FILTER_ABO_DESCRIPTION.get().trim().toLowerCase();
 
@@ -255,9 +255,9 @@ public class AboGuiController extends AnchorPane {
                 (sender.isEmpty() || abo.getChannel().contains(sender)) &&
                         (name.isEmpty() || abo.getName().toLowerCase().contains(name)) &&
                         (description.isEmpty() || abo.getDescription().toLowerCase().contains(description)) &&
-                        (kind.isEmpty() ||
-                                kind.equals(AboConstants.ABO_ON) && abo.isActive() ||
-                                kind.equals(AboConstants.ABO_OFF) && !abo.isActive())
+                        (type.isEmpty() ||
+                                type.equals(AboConstants.ABO_ON) && abo.isActive() ||
+                                type.equals(AboConstants.ABO_OFF) && !abo.isActive())
         );
     }
 }

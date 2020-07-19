@@ -53,11 +53,11 @@ public class DownloadConstants {
     public static final String SRC_COMBO_DOWNLOAD = "nur Downloads";
     public static final String SRC_COMBO_ABO = "nur Abos";
 
-    public static final String ART_DOWNLOAD = "direkter Download";
-    public static final String ART_PROGRAM = "Programm";
+    public static final String TYPE_DOWNLOAD = "direkter Download";
+    public static final String TYPE_PROGRAM = "Programm";
 
-    public static final String ART_COMBO_DOWNLOAD = "nur direkte Downloads";
-    public static final String ART_COMBO_PROGRAM = "nur Programme";
+    public static final String TYPE_COMBO_DOWNLOAD = "nur direkte Downloads";
+    public static final String TYPE_COMBO_PROGRAM = "nur Programme";
 
     public static final String STATE_COMBO_NOT_STARTED = "noch nicht gestartet";
     public static final String STATE_COMBO_WAITING = "gestartet und wartet noch";

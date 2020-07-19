@@ -221,12 +221,12 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs FILTER_ABO_CHANNEL = addNewKey("filter-abo-sender");
     public static MLConfigs FILTER_ABO_NAME = addNewKey("filter-abo-name");
     public static MLConfigs FILTER_ABO_DESCRIPTION = addNewKey("filter-abo-beschreibung");
-    public static MLConfigs FILTER_ABO_KIND = addNewKey("filter-abo-kind");
+    public static MLConfigs FILTER_ABO_TYPE = addNewKey("filter-abo-type");
 
     // Filter Download
     public static MLConfigs FILTER_DOWNLOAD_CHANNEL = addNewKey("filter-download-sender");
     public static MLConfigs FILTER_DOWNLOAD_SOURCE = addNewKey("filter-download-source");
-    public static MLConfigs FILTER_DOWNLOAD_KIND = addNewKey("filter-download-kind");
+    public static MLConfigs FILTER_DOWNLOAD_TYPE = addNewKey("filter-download-type");
     public static MLConfigs FILTER_DOWNLOAD_ABO = addNewKey("filter-download-abo");
     public static MLConfigs FILTER_DOWNLOAD_STATE = addNewKey("filter-download-state");
 

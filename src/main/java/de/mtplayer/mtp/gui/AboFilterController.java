@@ -75,7 +75,7 @@ public class AboFilterController extends FilterController {
         cboArt.getItems().addAll(AboConstants.ALL,
                 AboConstants.ABO_ON,
                 AboConstants.ABO_OFF);
-        cboArt.valueProperty().bindBidirectional(ProgConfig.FILTER_ABO_KIND.getStringProperty());
+        cboArt.valueProperty().bindBidirectional(ProgConfig.FILTER_ABO_TYPE.getStringProperty());
     }
 
     private void clearFilter() {

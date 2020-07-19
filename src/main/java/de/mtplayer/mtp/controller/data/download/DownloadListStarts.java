@@ -88,7 +88,7 @@ public class DownloadListStarts {
                     && !maxChannelPlay(download, 1)) {
 
                 int restarted = download.getStart().getRestartCounter();
-                if (download.getArt().equals(DownloadConstants.ART_DOWNLOAD)) {
+                if (download.getType().equals(DownloadConstants.TYPE_DOWNLOAD)) {
                     download.restartDownload();
                     progData.downloadList.startDownloads(download);
                     // UND jetzt den Restartcounter wieder setzen!!

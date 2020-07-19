@@ -150,20 +150,20 @@ public class DownloadFilterController extends FilterController {
                 });
 
         cboArt.getItems().addAll(DownloadConstants.ALL,
-                DownloadConstants.ART_COMBO_DOWNLOAD,
-                DownloadConstants.ART_COMBO_PROGRAM);
+                DownloadConstants.TYPE_COMBO_DOWNLOAD,
+                DownloadConstants.TYPE_COMBO_PROGRAM);
 
-        Bindings.bindBidirectional(cboArt.valueProperty(), ProgConfig.FILTER_DOWNLOAD_KIND.getStringProperty(),
+        Bindings.bindBidirectional(cboArt.valueProperty(), ProgConfig.FILTER_DOWNLOAD_TYPE.getStringProperty(),
                 new StringConverter<String>() {
 
                     public String fromString(String cb) {
                         switch (cb) {
                             case DownloadConstants.ALL:
                                 return DownloadConstants.ALL;
-                            case DownloadConstants.ART_COMBO_DOWNLOAD:
-                                return DownloadConstants.ART_DOWNLOAD;
-                            case DownloadConstants.ART_COMBO_PROGRAM:
-                                return DownloadConstants.ART_PROGRAM;
+                            case DownloadConstants.TYPE_COMBO_DOWNLOAD:
+                                return DownloadConstants.TYPE_DOWNLOAD;
+                            case DownloadConstants.TYPE_COMBO_PROGRAM:
+                                return DownloadConstants.TYPE_PROGRAM;
                             default:
                                 return DownloadConstants.ALL;
                         }
@@ -173,10 +173,10 @@ public class DownloadFilterController extends FilterController {
                         switch (prop) {
                             case DownloadConstants.ALL:
                                 return DownloadConstants.ALL;
-                            case DownloadConstants.ART_DOWNLOAD:
-                                return DownloadConstants.ART_COMBO_DOWNLOAD;
-                            case DownloadConstants.ART_PROGRAM:
-                                return DownloadConstants.ART_COMBO_PROGRAM;
+                            case DownloadConstants.TYPE_DOWNLOAD:
+                                return DownloadConstants.TYPE_COMBO_DOWNLOAD;
+                            case DownloadConstants.TYPE_PROGRAM:
+                                return DownloadConstants.TYPE_COMBO_PROGRAM;
                             default:
                                 return DownloadConstants.ALL;
                         }

@@ -64,7 +64,7 @@ public class DownloadProps extends DownloadXml {
     private final StringProperty destPath = new SimpleStringProperty("");
     private final StringProperty destPathFile = new SimpleStringProperty("");
 
-    private final StringProperty art = new SimpleStringProperty(DownloadConstants.ART_DOWNLOAD);
+    private final StringProperty type = new SimpleStringProperty(DownloadConstants.TYPE_DOWNLOAD);
     private final StringProperty source = new SimpleStringProperty(DownloadConstants.ALL);
     private final BooleanProperty placedBack = new SimpleBooleanProperty(false);
     private final BooleanProperty infoFile = new SimpleBooleanProperty(false);
@@ -76,7 +76,7 @@ public class DownloadProps extends DownloadXml {
             hd, ut, geoBlocked, filmUrl, historyUrl, url, urlRtmp, urlSubtitle,
             setDataId, program, programCall, programCallArray, programRestart, programDownloadmanager,
             destFileName, destPath, destPathFile,
-            art, source, placedBack, infoFile, subtitle};
+            type, source, placedBack, infoFile, subtitle};
 
     public MDate getFilmDate() {
         return filmDate.get();
@@ -478,16 +478,16 @@ public class DownloadProps extends DownloadXml {
         this.destPathFile.set(destPathFile);
     }
 
-    public String getArt() {
-        return art.get();
+    public String getType() {
+        return type.get();
     }
 
-    public StringProperty artProperty() {
-        return art;
+    public StringProperty typeProperty() {
+        return type;
     }
 
-    public void setArt(String art) {
-        this.art.set(art);
+    public void setType(String type) {
+        this.type.set(type);
     }
 
     public String getSource() {
@@ -572,7 +572,7 @@ public class DownloadProps extends DownloadXml {
         setDestPath(arr[DOWNLOAD_DEST_PATH]);
         setDestPathFile(arr[DOWNLOAD_DEST_PATH_FILE_NAME]);
 
-        setArt(arr[Download.DOWNLOAD_TYPE]);
+        setType(arr[Download.DOWNLOAD_TYPE]);
         if (!arr[Download.DOWNLOAD_SOURCE].equals(DownloadConstants.SRC_ABO)) {
             // bei gelöschten Abos kanns dazu kommen
             arr[Download.DOWNLOAD_SOURCE] = DownloadConstants.SRC_DOWNLOAD;
@@ -608,7 +608,7 @@ public class DownloadProps extends DownloadXml {
         arr[DOWNLOAD_DEST_FILE_NAME] = getDestFileName();
         arr[DOWNLOAD_DEST_PATH] = getDestPath();
         arr[DOWNLOAD_DEST_PATH_FILE_NAME] = getDestPathFile();
-        arr[DOWNLOAD_TYPE] = getArt();
+        arr[DOWNLOAD_TYPE] = getType();
         arr[DOWNLOAD_SOURCE] = getSource();
         arr[DOWNLOAD_PLACED_BACK] = String.valueOf(getPlacedBack());
         arr[DOWNLOAD_INFO_FILE] = String.valueOf(getInfoFile());

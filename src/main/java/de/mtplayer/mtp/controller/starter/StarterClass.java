@@ -158,8 +158,8 @@ public class StarterClass {
         }
         list.add("URL: " + download.getUrl());
         list.add("Startzeit: " + StringFormatters.FORMATTER_HHmmss.format(download.getStart().getStartTime()));
-        if (download.getArt().equals(DownloadConstants.ART_DOWNLOAD)) {
-            list.add(DownloadConstants.ART_DOWNLOAD);
+        if (download.getType().equals(DownloadConstants.TYPE_DOWNLOAD)) {
+            list.add(DownloadConstants.TYPE_DOWNLOAD);
         } else {
             list.add("Programmaufruf: " + download.getProgramCall());
             list.add("Programmaufruf[]: " + download.getProgramCallArray());
@@ -220,15 +220,15 @@ public class StarterClass {
             list.add("Dauer: " + start.getStartTime().diffInMinutes() + " Min");
         }
 
-        if (download.getArt().equals(DownloadConstants.ART_DOWNLOAD)) {
+        if (download.getType().equals(DownloadConstants.TYPE_DOWNLOAD)) {
             if (start.getInputStream() != null) {
                 list.add("Bytes gelesen: " + SizeTools.humanReadableByteCount(start.getInputStream().getSumByte(), true));
                 list.add("Bandbreite: " + SizeTools.humanReadableBandwidth(start.getInputStream().getSumBandwidth()));
             }
         }
         list.add("URL: " + download.getUrl());
-        if (download.getArt().equals(DownloadConstants.ART_DOWNLOAD)) {
-            list.add(DownloadConstants.ART_DOWNLOAD);
+        if (download.getType().equals(DownloadConstants.TYPE_DOWNLOAD)) {
+            list.add(DownloadConstants.TYPE_DOWNLOAD);
         } else {
             list.add("Programmaufruf: " + download.getProgramCall());
             list.add("Programmaufruf[]: " + download.getProgramCallArray());
@@ -412,12 +412,12 @@ public class StarterClass {
             download.getStart().startDownload();
             Thread downloadThread;
 
-            switch (download.getArt()) {
-                case DownloadConstants.ART_PROGRAM:
+            switch (download.getType()) {
+                case DownloadConstants.TYPE_PROGRAM:
                     downloadThread = new ExternalProgramDownload(progData, download);
                     downloadThread.start();
                     break;
-                case DownloadConstants.ART_DOWNLOAD:
+                case DownloadConstants.TYPE_DOWNLOAD:
                 default:
                     downloadThread = new DirectHttpDownload(progData, download, bandwidthCalculationTimer);
                     downloadThread.start();

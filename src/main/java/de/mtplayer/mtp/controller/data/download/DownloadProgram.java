@@ -53,10 +53,10 @@ public class DownloadProgram {
 
             // Direkter Download nur wenn url passt und wenn im Programm ein Zielpfad ist sonst Abspielen
             //legt fest, dass NICHT Abspielen, Abspielen immer über Programm!
-            download.setArt((download.getSetData().checkDownloadDirect(download.getUrl()) && download.getSetData().progsContainPath()) ?
-                    DownloadConstants.ART_DOWNLOAD : DownloadConstants.ART_PROGRAM);
-            if (download.getArt().equals(DownloadConstants.ART_DOWNLOAD)) {
-                download.setProgram(DownloadConstants.ART_DOWNLOAD);
+            download.setType((download.getSetData().checkDownloadDirect(download.getUrl()) && download.getSetData().progsContainPath()) ?
+                    DownloadConstants.TYPE_DOWNLOAD : DownloadConstants.TYPE_PROGRAM);
+            if (download.getType().equals(DownloadConstants.TYPE_DOWNLOAD)) {
+                download.setProgram(DownloadConstants.TYPE_DOWNLOAD);
             } else {
                 download.setProgram(programData.getName());
             }
@@ -72,7 +72,7 @@ public class DownloadProgram {
     }
 
     private void buildProgParameter(ProgramData program) {
-        if (download.getArt().equals(DownloadConstants.ART_DOWNLOAD)) {
+        if (download.getType().equals(DownloadConstants.TYPE_DOWNLOAD)) {
             download.setProgramCall("");
             download.setProgramCallArray("");
         } else {
@@ -151,6 +151,10 @@ public class DownloadProgram {
                 int length = setData.getMaxSize();
                 name = PFileUtils.cutName(name, length);
             }
+
+            // wenn schon ein Download mit dem Namen existiert, dann Namen erweitern
+
+            System.out.println("=================> Name");
         }
 
         // ##############################################

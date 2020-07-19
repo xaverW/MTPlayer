@@ -142,7 +142,7 @@ public class TableDownload {
         geoColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<Download, String> artColumn = new TableColumn<>("Art");
-        artColumn.setCellValueFactory(new PropertyValueFactory<>("art"));
+        artColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
         artColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Download, String> srcColumn = new TableColumn<>("Quelle");

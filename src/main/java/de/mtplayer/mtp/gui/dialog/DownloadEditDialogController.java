@@ -301,7 +301,7 @@ public class DownloadEditDialogController extends PDialogExtra {
         txt[DownloadXml.DOWNLOAD_PROGRAM_CALL_ARRAY].setText(download.getProgramCallArray());
         txt[DownloadXml.DOWNLOAD_PROGRAM_CALL].setText(download.getProgramCall());
 
-        if (download.getArt().equals(DownloadConstants.ART_PROGRAM)) {
+        if (download.getType().equals(DownloadConstants.TYPE_PROGRAM)) {
             // nur bei Downloads über ein Programm
 
             gridPane.add(lbl[DownloadXml.DOWNLOAD_PROGRAM_CALL_ARRAY], 0, row);
@@ -495,7 +495,7 @@ public class DownloadEditDialogController extends PDialogExtra {
 
             case DownloadXml.DOWNLOAD_BUTTON1:
                 //die Auflösung an der Stelle anzgeigen
-                if (!download.getArt().equals(DownloadConstants.ART_DOWNLOAD) && download.getSetData() == null) {
+                if (!download.getType().equals(DownloadConstants.TYPE_DOWNLOAD) && download.getSetData() == null) {
                     // ansonsten müsste erst der Programmaufruf neu gebaut werden
                     break;
                 }
@@ -677,7 +677,7 @@ public class DownloadEditDialogController extends PDialogExtra {
     }
 
     private void resetDownloadCallForProgramm() {
-        if (download.getArt().equals(DownloadConstants.ART_PROGRAM) && download.getSetData() != null) {
+        if (download.getType().equals(DownloadConstants.TYPE_PROGRAM) && download.getSetData() != null) {
             // muss noch der Programmaufruf neu gebaut werden
             final String res;
             if (rbHd.isSelected()) {

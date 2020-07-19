@@ -418,7 +418,7 @@ public class DownloadGuiController extends AnchorPane {
         ProgConfig.FILTER_DOWNLOAD_SOURCE.getStringProperty().addListener((observable, oldValue, newValue) -> {
             setFilter();
         });
-        ProgConfig.FILTER_DOWNLOAD_KIND.getStringProperty().addListener((observable, oldValue, newValue) -> {
+        ProgConfig.FILTER_DOWNLOAD_TYPE.getStringProperty().addListener((observable, oldValue, newValue) -> {
             setFilter();
         });
         ProgConfig.FILTER_DOWNLOAD_STATE.getStringProperty().addListener((observable, oldValue, newValue) -> {
@@ -430,7 +430,7 @@ public class DownloadGuiController extends AnchorPane {
         final String sender = ProgConfig.FILTER_DOWNLOAD_CHANNEL.get();
         final String abo = ProgConfig.FILTER_DOWNLOAD_ABO.get();
         final String source = ProgConfig.FILTER_DOWNLOAD_SOURCE.get();
-        final String art = ProgConfig.FILTER_DOWNLOAD_KIND.get();
+        final String type = ProgConfig.FILTER_DOWNLOAD_TYPE.get();
         final String state = ProgConfig.FILTER_DOWNLOAD_STATE.get();
 
         //System.out.println("Sender: " + sender + " Abo: " + abo + " Quelle: " + quelle + " Art: " + art);
@@ -439,7 +439,7 @@ public class DownloadGuiController extends AnchorPane {
                 (sender.isEmpty() ? true : download.getChannel().equals(sender)) &&
                 (abo.isEmpty() ? true : download.getAboName().equals(abo)) &&
                 (source.isEmpty() ? true : download.getSource().equals(source)) &&
-                (art.isEmpty() ? true : download.getArt().equals(art)) &&
+                (type.isEmpty() ? true : download.getType().equals(type)) &&
 
                 (state.isEmpty() ? true : (
                         state.equals(DownloadConstants.STATE_COMBO_NOT_STARTED) && !download.isStarted() ||
