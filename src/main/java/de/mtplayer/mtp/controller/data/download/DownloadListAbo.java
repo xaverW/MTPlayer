@@ -138,6 +138,7 @@ public class DownloadListAbo {
 
 
         if (found) {
+            DownloadTools.checkDoubleNames(syncDownloadArrayList, downloadList);
             downloadList.addAll(syncDownloadArrayList);
             downloadList.setNumbersInList();
         }

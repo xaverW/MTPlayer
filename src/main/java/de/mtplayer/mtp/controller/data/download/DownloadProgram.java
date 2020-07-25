@@ -151,10 +151,6 @@ public class DownloadProgram {
                 int length = setData.getMaxSize();
                 name = PFileUtils.cutName(name, length);
             }
-
-            // wenn schon ein Download mit dem Namen existiert, dann Namen erweitern
-
-            System.out.println("=================> Name");
         }
 
         // ##############################################
