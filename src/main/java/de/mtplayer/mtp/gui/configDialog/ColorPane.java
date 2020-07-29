@@ -97,22 +97,25 @@ public class ColorPane {
         ProgData.getInstance().mTColor.changedProperty().addListener((u, o, n) -> tableView.refresh());
         final TableColumn<MLC, String> textColumn = new TableColumn<>("Beschreibung");
         textColumn.setCellValueFactory(new PropertyValueFactory<>("text"));
+        textColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<MLC, String> changeColumn = new TableColumn<>("Farbe");
         changeColumn.setCellFactory(cellFactoryChange);
-        changeColumn.getStyleClass().add("center");
+        changeColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<MLC, String> resetColumn = new TableColumn<>("Reset");
         resetColumn.setCellFactory(cellFactoryReset);
-        resetColumn.getStyleClass().add("center");
+        resetColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<MLC, Color> colorColumn = new TableColumn<>("Farbe");
         colorColumn.setCellValueFactory(new PropertyValueFactory<>("color"));
         colorColumn.setCellFactory(cellFactoryColor);
+        colorColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<MLC, Color> colorOrgColumn = new TableColumn<>("Original");
         colorOrgColumn.setCellValueFactory(new PropertyValueFactory<>("resetColor"));
         colorOrgColumn.setCellFactory(cellFactoryColorReset);
+        colorOrgColumn.getStyleClass().add("alignCenter");
 
         tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
