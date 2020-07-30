@@ -21,6 +21,7 @@ import de.mtplayer.mtp.controller.ProgSave;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
+import de.mtplayer.mtp.controller.data.MTShortcut;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.mtplayer.mtp.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
@@ -37,6 +38,7 @@ import de.p2tools.p2Lib.guiTools.POpen;
 import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
 import de.p2tools.p2Lib.tools.log.PLog;
 import de.p2tools.p2Lib.tools.log.PLogger;
+import de.p2tools.p2Lib.tools.shortcut.PShortcutWorker;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -164,15 +166,24 @@ public class MTPlayerController extends StackPane {
         // Menü
         final MenuItem miConfig = new MenuItem("Einstellungen des Programms");
         miConfig.setOnAction(e -> new ConfigDialogController());
+//        PShortcutWorker.addShortCut(miConfig, MTShortcut.SHORTCUT_CONFIG);
 
         final MenuItem miMediaCollectionConfig = new MenuItem("Einstellungen der Mediensammlung");
         miMediaCollectionConfig.setOnAction(e -> new MediaConfigDialogController());
+//        PShortcutWorker.addShortCut(miMediaCollectionConfig, MTShortcut.SHORTCUT_CONFIG_MEDIACOLLECTION);
 
         final MenuItem miSearchMediaCollection = new MenuItem("Mediensammlung durchsuchen");
         miSearchMediaCollection.setOnAction(a -> new MediaDialogController(""));
+        PShortcutWorker.addShortCut(miSearchMediaCollection, MTShortcut.SHORTCUT_SEARCH_MEDIACOLLECTION);
 
         final MenuItem miQuit = new MenuItem("Beenden");
         miQuit.setOnAction(e -> new ProgQuit().quit(true, false));
+        PShortcutWorker.addShortCut(miQuit, MTShortcut.SHORTCUT_QUIT_PROGRAM);
+
+        final MenuItem miQuitWait = new MenuItem("Beenden, laufende Downloads abwarten");
+        miQuitWait.setVisible(false); // wegen dem shortcut, aber der zusätzliche Menüpunkt verwirrt nur
+        miQuitWait.setOnAction(e -> new ProgQuit().quit(true, true));
+        PShortcutWorker.addShortCut(miQuitWait, MTShortcut.SHORTCUT_QUIT_PROGRAM_WAIT);
 
         final MenuItem miAbout = new MenuItem("über dieses Programm");
         miAbout.setOnAction(event -> new AboutDialogController(progData));
@@ -213,7 +224,7 @@ public class MTPlayerController extends StackPane {
         menuButton.setText("");
         menuButton.setGraphic(new ProgIcons().FX_ICON_TOOLBAR_MENU_TOP);
         menuButton.getItems().addAll(miConfig, miMediaCollectionConfig, miSearchMediaCollection, mHelp,
-                new SeparatorMenuItem(), miQuit);
+                new SeparatorMenuItem(), miQuit, miQuitWait);
     }
 
     private void selPanelFilm() {

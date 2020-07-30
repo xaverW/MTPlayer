@@ -18,10 +18,7 @@
 package de.mtplayer.mtp.controller.config;
 
 import de.mtplayer.mtp.MTPlayerController;
-import de.mtplayer.mtp.controller.data.BlackList;
-import de.mtplayer.mtp.controller.data.MTColor;
-import de.mtplayer.mtp.controller.data.ReplaceList;
-import de.mtplayer.mtp.controller.data.SetDataList;
+import de.mtplayer.mtp.controller.data.*;
 import de.mtplayer.mtp.controller.data.abo.AboList;
 import de.mtplayer.mtp.controller.data.download.DownloadInfos;
 import de.mtplayer.mtp.controller.data.download.DownloadList;
@@ -66,6 +63,7 @@ public class ProgData {
     public LoadFilmlist loadFilmlist; // erledigt das updaten der Filmliste
     public SearchFilmListUrls searchFilmListUrls; // da werden die DownloadURLs der Filmliste verwaltet
     public MTColor mTColor; // verwendete Farben
+    public MTShortcut mtShortcut; // verwendete Shortcuts
     public StoredFilters storedFilters; // gespeicherte Filterprofile
     public FilmListFilter filmListFilter;
 
@@ -108,6 +106,7 @@ public class ProgData {
 
     private ProgData() {
         mTColor = new MTColor();
+        mtShortcut = new MTShortcut();
         replaceList = new ReplaceList();
         searchFilmListUrls = new SearchFilmListUrls();
 

@@ -82,6 +82,7 @@ public class ConfigPaneController extends PAccordionPane {
 
     private final Stage stage;
     private ColorPane colorPane;
+    private ShortcutPane shortcutPane;
     private GeoPane geoPane;
 
     public ConfigPaneController(Stage stage) {
@@ -95,6 +96,7 @@ public class ConfigPaneController extends PAccordionPane {
     public void close() {
         super.close();
         colorPane.close();
+        shortcutPane.close();
         geoPane.close();
         tglSearchAbo.selectedProperty().unbindBidirectional(propAbo);
         tglStartDownload.selectedProperty().unbindBidirectional(propDown);
@@ -116,6 +118,8 @@ public class ConfigPaneController extends PAccordionPane {
         makeLogfile(result);
         colorPane = new ColorPane(stage);
         colorPane.makeColor(result);
+        shortcutPane = new ShortcutPane(stage);
+        shortcutPane.makeShortcut(result);
         geoPane = new GeoPane(stage);
         geoPane.makeGeo(result);
         makeProg(result);

@@ -113,6 +113,7 @@ public class ProgConst {
     public final static int MAX_COPY_OF_BACKUPFILE = 5; // Maximum number of backup files to be stored.
 
     public static final int MIN_TABLE_HEIGHT = 200;
+    public static final int MIN_TEXTAREA_HEIGHT = 75;
 
     public static final String FILTER_ALL = "alles"; // im config bei "alles" steht das dann
 

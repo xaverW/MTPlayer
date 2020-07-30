@@ -16,11 +16,11 @@
 
 package de.mtplayer.mtp.gui.configDialog;
 
-import de.mtplayer.mLib.tools.MLC;
 import de.mtplayer.mLib.tools.MLCFactory;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
+import de.mtplayer.mtp.controller.data.MLC;
 import de.mtplayer.mtp.controller.data.MTColor;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.guiTools.PButton;
@@ -94,7 +94,7 @@ public class ColorPane {
 
     private void initTableColor(TableView<MLC> tableView) {
 
-        ProgData.getInstance().mTColor.changedProperty().addListener((u, o, n) -> tableView.refresh());
+//        ProgData.getInstance().mTColor.changedProperty().addListener((u, o, n) -> tableView.refresh());
         final TableColumn<MLC, String> textColumn = new TableColumn<>("Beschreibung");
         textColumn.setCellValueFactory(new PropertyValueFactory<>("text"));
         textColumn.getStyleClass().add("alignCenterLeft");

@@ -258,6 +258,24 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs COLOR__DOWNLOAD_NAME_ERROR = addNewKey("COLOR_DOWNLOAD_NAME_ERROR");
     public static MLConfigs COLOR__DOWNLOAD_NAME_ERROR_DARK = addNewKey("COLOR_DOWNLOAD_NAME_ERROR_DARK");
 
+    // Shorcuts Hauptmenü
+    public static MLConfigs SHORTCUT_QUIT_PROGRAM = addNewKey("SHORTCUT_QUIT_PROGRAM", "Ctrl+Q");
+    public static MLConfigs SHORTCUT_QUIT_PROGRAM_WAIT = addNewKey("SHORTCUT_QUIT_PROGRAM", "Ctrl+Shift+Q");
+    public static MLConfigs SHORTCUT_SEARCH_MEDIACOLLECTION = addNewKey("SHORTCUT_SEARCH_MEDIACOLLECTION", "Ctrl+Alt+M");
+
+    // Shortcuts Filmmenü
+    public static MLConfigs SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION = addNewKey("SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION", "Ctrl+M");
+    public static MLConfigs SHORTCUT_PLAY_FILM = addNewKey("SHORTCUT_PLAY_FILM", "Ctrl+P");
+    public static MLConfigs SHORTCUT_SAVE_FILM = addNewKey("SHORTCUT_SAVE_FILM", "Ctrl+S");
+
+    // Shortcuts Downloadmenü
+    public static MLConfigs SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION = addNewKey("SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION", "Alt+M");
+    public static MLConfigs SHORTCUT_DOWNLOAD_START = addNewKey("SHORTCUT_DOWNLOAD_START", "Ctrl+D");
+    public static MLConfigs SHORTCUT_DOWNLOAD_STOP = addNewKey("SHORTCUT_DOWNLOAD_STOP", "Ctrl+T");
+    public static MLConfigs SHORTCUT_DOWNLOAD_CHANGE = addNewKey("SHORTCUT_DOWNLOAD_CHANGE", "Ctrl+C");
+    public static MLConfigs SHORTCUT_DOWNLOADS_UPDATE = addNewKey("SHORTCUT_DOWNLOADS_UPDATE", "CTRL+U");
+    public static MLConfigs SHORTCUT_DOWNLOADS_CLEAN_UP = addNewKey("SHORTCUT_DOWNLOADS_CLEAN_UP", "CTRL+O");
+
 
     public static String PARAMETER_INFO = P2LibConst.LINE_SEPARATOR + "\t"
             + "\"__system-parameter__xxx\" können nur im Konfigfile geändert werden" + P2LibConst.LINE_SEPARATOR

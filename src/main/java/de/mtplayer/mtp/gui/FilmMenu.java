@@ -18,10 +18,12 @@ package de.mtplayer.mtp.gui;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
+import de.mtplayer.mtp.controller.data.MTShortcut;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.tools.storedFilter.BookmarkFilter;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilter;
 import de.mtplayer.mtp.tools.storedFilter.SelectedFilterFactory;
+import de.p2tools.p2Lib.tools.shortcut.PShortcutWorker;
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -120,8 +122,11 @@ public class FilmMenu {
 
         final MenuItem mbPlay = new MenuItem("Film abspielen");
         mbPlay.setOnAction(a -> progData.filmGuiController.playFilmUrl());
+        PShortcutWorker.addShortCut(mbPlay, MTShortcut.SHORTCUT_PLAY_FILM);
+
         final MenuItem mbSave = new MenuItem("Film speichern");
         mbSave.setOnAction(e -> progData.filmGuiController.saveTheFilm());
+        PShortcutWorker.addShortCut(mbSave, MTShortcut.SHORTCUT_SAVE_FILM);
 
         mb.getItems().addAll(mbPlay, mbSave);
 
@@ -132,6 +137,7 @@ public class FilmMenu {
         miFilmNotShown.setOnAction(a -> progData.filmGuiController.setFilmNotShown());
         final MenuItem miFilmMediaCollection = new MenuItem("Titel in der Mediensammlung suchen");
         miFilmMediaCollection.setOnAction(a -> progData.filmGuiController.guiFilmMediaCollection());
+        PShortcutWorker.addShortCut(miFilmMediaCollection, MTShortcut.SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION);
 
         mb.getItems().add(new SeparatorMenuItem());
         mb.getItems().addAll(miFilmShown, miFilmNotShown, miFilmMediaCollection);

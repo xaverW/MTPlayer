@@ -18,7 +18,9 @@ package de.mtplayer.mtp.gui;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
+import de.mtplayer.mtp.controller.data.MTShortcut;
 import de.mtplayer.mtp.controller.data.ProgIcons;
+import de.p2tools.p2Lib.tools.shortcut.PShortcutWorker;
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -96,10 +98,15 @@ public class DownloadMenu {
 
         final MenuItem miDownloadStart = new MenuItem("Downloads starten");
         miDownloadStart.setOnAction(a -> progData.downloadGuiController.startDownload(false));
+        PShortcutWorker.addShortCut(miDownloadStart, MTShortcut.SHORTCUT_DOWNLOAD_START);
+
         final MenuItem miDownloadStop = new MenuItem("Downloads stoppen");
         miDownloadStop.setOnAction(a -> progData.downloadGuiController.stopDownload(false));
+        PShortcutWorker.addShortCut(miDownloadStop, MTShortcut.SHORTCUT_DOWNLOAD_STOP);
+
         final MenuItem miChange = new MenuItem("Download ändern");
         miChange.setOnAction(a -> progData.downloadGuiController.changeDownload());
+        PShortcutWorker.addShortCut(miChange, MTShortcut.SHORTCUT_DOWNLOAD_CHANGE);
 
         mb.getItems().addAll(miDownloadStart, miDownloadStop, miChange);
 
@@ -125,13 +132,16 @@ public class DownloadMenu {
         mbStopAll.setOnAction(a -> progData.downloadGuiController.stopDownload(true /* alle */));
         final MenuItem mbStopWait = new MenuItem("alle wartenden Downloads stoppen");
         mbStopWait.setOnAction(a -> progData.downloadGuiController.stopWaitingDownloads());
-        final MenuItem mbAct = new MenuItem("Liste der Downloads aktualisieren");
-        mbAct.setOnAction(e -> progData.worker.searchForAbosAndMaybeStart());
+        final MenuItem mbUpdateList = new MenuItem("Liste der Downloads aktualisieren");
+        mbUpdateList.setOnAction(e -> progData.worker.searchForAbosAndMaybeStart());
+        PShortcutWorker.addShortCut(mbUpdateList, MTShortcut.SHORTCUT_DOWNLOADS_UPDATE);
+
         final MenuItem mbClean = new MenuItem("Liste der Downloads aufräumen");
         mbClean.setOnAction(e -> progData.downloadGuiController.cleanUp());
+        PShortcutWorker.addShortCut(mbClean, MTShortcut.SHORTCUT_DOWNLOADS_CLEAN_UP);
 
         Menu submenuAllDownloads = new Menu("alle Downloads");
-        submenuAllDownloads.getItems().addAll(mbStartAll, mbStopAll, mbStopWait, mbAct, mbClean);
+        submenuAllDownloads.getItems().addAll(mbStartAll, mbStopAll, mbStopWait, mbUpdateList, mbClean);
         mb.getItems().addAll(submenuAllDownloads);
 
 
@@ -156,6 +166,8 @@ public class DownloadMenu {
 
         MenuItem miMediaDb = new MenuItem("Titel in der Mediensammlung suchen");
         miMediaDb.setOnAction(a -> progData.downloadGuiController.guiFilmMediaCollection());
+        PShortcutWorker.addShortCut(miMediaDb, MTShortcut.SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION);
+
         MenuItem miFilmInfo = new MenuItem("Filminformation anzeigen");
         miFilmInfo.setOnAction(a -> progData.downloadGuiController.showFilmInfo());
         MenuItem miPlayUrl = new MenuItem("Film (URL) abspielen");

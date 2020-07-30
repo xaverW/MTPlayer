@@ -17,17 +17,14 @@
 
 package de.mtplayer.mtp.controller.data;
 
-import de.mtplayer.mLib.tools.MLC;
 import de.mtplayer.mtp.controller.config.ProgConfig;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 
 public class MTColor {
 
-    private BooleanProperty changed = new SimpleBooleanProperty();
+//    private BooleanProperty changed = new SimpleBooleanProperty();
 
     // Tabelle Filme
     public static final MLC FILM_LIVESTREAM =
@@ -83,7 +80,7 @@ public class MTColor {
 
     public MTColor() {
         ProgConfig.SYSTEM_THEME_CHANGED.getStringProperty().addListener((u, o, n) -> {
-            setMLC();
+            setColorTheme();
         });
 
         colorList.add(FILM_LIVESTREAM);
@@ -101,26 +98,26 @@ public class MTColor {
         colorList.add(DOWNLOAD_NAME_ERROR);
     }
 
-    public BooleanProperty changedProperty() {
-        return changed;
-    }
+//    public BooleanProperty changedProperty() {
+//        return changed;
+//    }
 
     public static synchronized ObservableList<MLC> getColorList() {
         return colorList;
     }
 
-    public final void loadStoredColors() {
-        setMLC();
-    }
+//    public final void loadStoredColors() {
+//        setColorTheme();
+//    }
 
     public void resetAllColors() {
         colorList.forEach(MLC::resetColor);
     }
 
-    private void setMLC() {
+    public void setColorTheme() {
         for (int i = 0; i < colorList.size(); ++i) {
             colorList.get(i).setColorTheme(ProgConfig.SYSTEM_DARK_THEME.getBool());
         }
-        changed.setValue(!changed.get());
+//        changed.setValue(!changed.get());
     }
 }

@@ -114,7 +114,8 @@ public class ProgStart {
         PLog.sysLog("Konfig wurde gelesen!");
         UpdateConfig.update(); // falls es ein Programmupdate gab, Configs anpassen
         MLInit.initLib(ProgData.debug, ProgConst.PROGRAMNAME, ProgInfos.getUserAgent());
-        ProgData.getInstance().mTColor.loadStoredColors(); // Farben einrichten
+        ProgData.getInstance().mTColor.setColorTheme(); // Farben einrichten
+//        ProgData.getInstance().mtShortcut.loadStoredShortcuts(); // Shortcuts einrichten
         return true;
     }
 
