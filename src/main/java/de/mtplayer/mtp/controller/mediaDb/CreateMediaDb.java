@@ -17,6 +17,7 @@
 package de.mtplayer.mtp.controller.mediaDb;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.tools.Listener;
 import de.p2tools.p2Lib.P2LibConst;
@@ -42,6 +43,8 @@ public class CreateMediaDb {
 
     final boolean withoutSuffix = ProgConfig.MEDIA_DB_WITH_OUT_SUFFIX.getBool();
     final boolean noHiddenFiles = ProgConfig.MEDIA_DB_NO_HIDDEN_FILES.getBool();
+    final int fileSize = ProgConfig.MEDIA_DB_FILE_SIZE_MBYTE.getInt() * 1000 * 1000; //sind BYTE
+    final boolean checkFileSize = fileSize > ProgConst.MEDIA_COLLECTION_FILESIZE_ALL_FILES;
 
     public CreateMediaDb() {
         progData = ProgData.getInstance();
@@ -186,6 +189,9 @@ public class CreateMediaDb {
                 if (file.isDirectory()) {
                     searchFile(file, mediaCollectionData);
                 } else {
+                    if (checkFileSize && file.length() < fileSize) {
+                        continue;
+                    }
                     if (noHiddenFiles && file.isHidden()) {
                         continue;
                     }

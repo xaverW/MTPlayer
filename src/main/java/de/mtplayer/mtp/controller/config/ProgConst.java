@@ -59,6 +59,10 @@ public class ProgConst {
     // Uhrzeit ab der die Diffliste alle Änderungen abdeckt, die Filmliste darf also nicht vor xx erstellt worden sein
     public static final String TIME_MAX_AGE_FOR_DIFF = "09";
 
+    // Mediensammlung
+    public static final int MEDIA_COLLECTION_FILESIZE_ALL_FILES = 0;
+    public static final int MEDIA_COLLECTION_FILESIZE_MAX = 20;
+
     // MediathekView URLs
     public static final String ADRESSE_FILMLISTEN_SERVER_DIFF = "http://res.mediathekview.de/diff.xml";
     public static final String ADRESSE_FILMLISTEN_SERVER_AKT = "http://res.mediathekview.de/akt.xml";

@@ -470,11 +470,9 @@ public class HelpText {
 
     public static final String MEDIA_COLLECTION = "\"Keine Dateien mit diesem Suffix\"\n" +
             "Dateien mit einem dort angegebenen Suffix werden nicht in die Mediensammlung aufgenommen." +
-
             P2LibConst.LINE_SEPARATORx2 +
             "\"Nur Dateien mit diesem Suffix\"\n" +
             "Es werden dann nur Dateien mit diesm Suffix aufgenommen." +
-
             P2LibConst.LINE_SEPARATORx2 +
             "Suffixe können durch \"Komma\" getrennt angegeben werden: " +
             "\"txt,xml\" besagt, Dateien die mit \".txt\" oder \".xml\" enden " +
@@ -483,7 +481,11 @@ public class HelpText {
             P2LibConst.LINE_SEPARATORx2 +
             "\"keine versteckten Dateien suchen\"\n" +
             "besagt, dass eben diese Dateien nicht in die Mediensammlung " +
-            "aufgenommen werden, unabhängig davon ob die Datei in das Schema oben passen würde.";
+            "aufgenommen werden, unabhängig davon ob die Datei in das Schema oben passen würde." +
+            P2LibConst.LINE_SEPARATORx2 +
+            "\"nur Dateien mit Mindestgröße suchen\"\n" +
+            "besagt, dass nur Dateien die mindestens die angegebene Größe haben, in die Mediensammlung " +
+            "aufgenommen werden.";
 
 
     public static final String EXTERN_MEDIA_COLLECTION = "Externe Mediensammlungen werden nicht bei " +

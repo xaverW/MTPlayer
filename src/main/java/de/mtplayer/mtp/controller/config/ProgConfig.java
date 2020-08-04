@@ -96,6 +96,7 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs MEDIA_DB_SUFFIX = addNewKey("media-db-suffix");
     public static MLConfigs MEDIA_DB_WITH_OUT_SUFFIX = addNewKey("media-db-with-out-suffix");
     public static MLConfigs MEDIA_DB_NO_HIDDEN_FILES = addNewKey("media-db-no-hidden-files");
+    public static MLConfigs MEDIA_DB_FILE_SIZE_MBYTE = addNewKey("media-db-filesize_mbyte", ProgConst.MEDIA_COLLECTION_FILESIZE_ALL_FILES);
 
     // Configs
     public static MLConfigs SYSTEM_USERAGENT = addNewKey("system-useragent", ProgConst.USER_AGENT_DEFAULT);    // Useragent für direkte Downloads

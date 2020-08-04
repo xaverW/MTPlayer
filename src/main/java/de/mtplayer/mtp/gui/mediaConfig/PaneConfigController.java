@@ -17,6 +17,7 @@
 package de.mtplayer.mtp.gui.mediaConfig;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.dialogs.accordion.PAccordionPane;
@@ -25,11 +26,15 @@ import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.StringProperty;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.VPos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -40,6 +45,10 @@ public class PaneConfigController extends PAccordionPane {
     private final RadioButton rbWithSuff = new RadioButton("nur Dateien mit diesem Suffix  (z.B.: mp4,flv,m4v");
     private TextField txtSuff = new TextField();
     private final PToggleSwitch tglNoHiddenFiles = new PToggleSwitch("keine versteckten Dateien suchen:");
+    private final Slider slFileSize = new Slider();
+    private final Label lblFileSize = new Label();
+    private final String TXT_ALL = "alle Dateien";
+    private int intValue = 0;
 
     BooleanProperty propSuff = ProgConfig.MEDIA_DB_WITH_OUT_SUFFIX.getBooleanProperty();
     StringProperty propSuffStr = ProgConfig.MEDIA_DB_SUFFIX.getStringProperty();
@@ -55,6 +64,7 @@ public class PaneConfigController extends PAccordionPane {
         super(stage, ProgConfig.MEDIA_CONFIG_DIALOG_ACCORDION.getBooleanProperty(), ProgConfig.SYSTEM_MEDIA_DIALOG_CONFIG);
         this.stage = stage;
         progData = ProgData.getInstance();
+
         init();
     }
 
@@ -103,18 +113,84 @@ public class PaneConfigController extends PAccordionPane {
         tglNoHiddenFiles.selectedProperty().bindBidirectional(propNoHiddenFiles);
 
         int row = 0;
-        gridPane.add(rbWithOutSuff, 0, row);
+        gridPane.add(rbWithOutSuff, 0, row, 1, 1);
         gridPane.add(btnHelp, 1, row);
-        gridPane.add(rbWithSuff, 0, ++row);
+        GridPane.setHalignment(btnHelp, HPos.RIGHT);
+        gridPane.add(rbWithSuff, 0, ++row, 1, 1);
         gridPane.add(txtSuff, 0, ++row, 2, 1);
 
         gridPane.add(new Label(" "), 0, ++row);
         gridPane.add(tglNoHiddenFiles, 0, ++row, 2, 1);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(),
+        Label lbl = new Label(TXT_ALL);
+        lbl.setVisible(false);
+        gridPane.add(lbl, 1, ++row);
+
+        Label lblTxt = new Label("nur Dateien mit Mindestgröße suchen:");
+        gridPane.add(lblTxt, 0, ++row);
+        gridPane.add(lblFileSize, 1, row);
+        GridPane.setHalignment(lblFileSize, HPos.RIGHT);
+        gridPane.add(slFileSize, 0, ++row, 2, 1);
+
+        for (int i = 0; i < gridPane.getRowCount(); ++i) {
+            RowConstraints rowC = new RowConstraints();
+            rowC.setValignment(VPos.CENTER);
+            gridPane.getRowConstraints().add(rowC);
+        }
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcComputedSizeAndHgrow(),
                 PColumnConstraints.getCcPrefSize());
 
         vBox.getChildren().addAll(gridPane);
+
+        initFileSizeSlider();
+    }
+
+
+    private void initFileSizeSlider() {
+        slFileSize.setPadding(new Insets(0, 10, 0, 5));
+        slFileSize.setMin(ProgConst.MEDIA_COLLECTION_FILESIZE_ALL_FILES);
+        slFileSize.setMax(ProgConst.MEDIA_COLLECTION_FILESIZE_MAX);
+        slFileSize.setShowTickLabels(true);
+        slFileSize.setMajorTickUnit(5);
+        slFileSize.setMinorTickCount(2);
+        slFileSize.setBlockIncrement(5);
+
+        slFileSize.setLabelFormatter(new StringConverter<>() {
+            @Override
+            public String toString(Double x) {
+                if (x == ProgConst.MEDIA_COLLECTION_FILESIZE_ALL_FILES) return "alles";
+                return x.intValue() + "";
+            }
+
+            @Override
+            public Double fromString(String string) {
+                return null;
+            }
+        });
+
+        // kein direktes binding wegen: valueChangingProperty, nur melden wenn "steht"
+        slFileSize.setValue(ProgConfig.MEDIA_DB_FILE_SIZE_MBYTE.getInt());
+        slFileSize.valueChangingProperty().addListener((observable, oldvalue, newvalue) -> {
+                    if (!newvalue) {
+                        ProgConfig.MEDIA_DB_FILE_SIZE_MBYTE.setValue(intValue);
+                    }
+                }
+        );
+
+        slFileSize.valueProperty().addListener((observable, oldValue, newValue) -> {
+            intValue = (int) Math.round(slFileSize.getValue());
+            setLabelSlider();
+        });
+        setLabelSlider();
+    }
+
+    private void setLabelSlider() {
+        if (intValue == ProgConst.MEDIA_COLLECTION_FILESIZE_ALL_FILES) {
+            lblFileSize.setText(TXT_ALL);
+        } else {
+            lblFileSize.setText(intValue + " MB");
+        }
     }
 
 }
