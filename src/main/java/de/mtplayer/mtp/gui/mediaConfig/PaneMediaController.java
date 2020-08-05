@@ -25,6 +25,7 @@ import de.mtplayer.mtp.controller.mediaDb.MediaData;
 import de.mtplayer.mtp.controller.mediaDb.MediaFileSize;
 import de.mtplayer.mtp.tools.storedFilter.Filter;
 import de.mtplayer.mtp.tools.storedFilter.FilterCheckRegEx;
+import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.dialogs.accordion.PAccordionPane;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -32,6 +33,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -41,7 +43,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.regex.Pattern;
 
-public class PaneMediaListController extends PAccordionPane {
+public class PaneMediaController extends PAccordionPane {
 
     private VBox vBox = new VBox(10);
     private TextField txtSearch = new TextField();
@@ -50,10 +52,12 @@ public class PaneMediaListController extends PAccordionPane {
     ChangeListener<Number> changeListener;
 
     private final ProgData progData;
+    private final Stage stage;
 
-    public PaneMediaListController(Stage stage) {
+    public PaneMediaController(Stage stage) {
         super(stage, ProgConfig.MEDIA_CONFIG_DIALOG_ACCORDION.getBooleanProperty(), ProgConfig.SYSTEM_MEDIA_DIALOG_MEDIA);
         progData = ProgData.getInstance();
+        this.stage = stage;
         init();
     }
 
@@ -75,7 +79,7 @@ public class PaneMediaListController extends PAccordionPane {
         writeQuantity();
 
         changeListener = (observable, oldValue, newValue) -> {
-            Platform.runLater(() -> PaneMediaListController.this.filter());
+            Platform.runLater(() -> PaneMediaController.this.filter());
         };
         progData.mediaDataList.sizeProperty().addListener(changeListener);
 
@@ -111,6 +115,20 @@ public class PaneMediaListController extends PAccordionPane {
         sizeColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(10.0 / 100));
         collectionNameColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(15.0 / 100));
         externalColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(10.0 / 100));
+
+        tableView.setOnMousePressed(m -> {
+            if (m.getButton().equals(MouseButton.SECONDARY)) {
+                MediaData mediaData = tableView.getSelectionModel().getSelectedItem();
+                if (mediaData == null) {
+                    PAlert.showInfoNoSelection();
+
+                } else {
+                    ContextMenu contextMenu = new PaneMediaContextMenu(stage, mediaData).getContextMenu();
+                    tableView.setContextMenu(contextMenu);
+                }
+            }
+        });
+
 
         SortedList<MediaData> sortedList = progData.mediaDataList.getSortedList();
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());

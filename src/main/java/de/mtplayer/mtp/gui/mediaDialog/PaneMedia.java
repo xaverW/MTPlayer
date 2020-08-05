@@ -164,16 +164,16 @@ public class PaneMedia extends ScrollPane {
     }
 
     private void play() {
-        String file = txtTitleMedia.getText();
-        String dir = txtPathMedia.getText();
-        if (!file.isEmpty() && !dir.isEmpty()) {
-            POpen.playStoredFilm(PFileUtils.addsPath(dir, file),
+        final String path = txtPathMedia.getText();
+        final String name = txtTitleMedia.getText();
+        if (!name.isEmpty() && !path.isEmpty()) {
+            POpen.playStoredFilm(PFileUtils.addsPath(path, name),
                     ProgConfig.SYSTEM_PROG_PLAY_FILME.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
         }
     }
 
     private void open() {
-        String s = txtPathMedia.getText();
+        final String s = txtPathMedia.getText();
         POpen.openDir(s, ProgConfig.SYSTEM_PROG_OPEN_DIR.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
     }
 

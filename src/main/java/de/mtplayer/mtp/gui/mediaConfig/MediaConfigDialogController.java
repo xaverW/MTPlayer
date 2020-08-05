@@ -42,7 +42,7 @@ public class MediaConfigDialogController extends PDialogExtra {
     private ProgressBar progress = new ProgressBar();
 
     PaneConfigController mediaConfigPaneController;
-    PaneMediaListController mediaListPaneController;
+    PaneMediaController mediaListPaneController;
     PaneHistoryController historyListPaneController;
     PaneHistoryController aboListPaneController;
 
@@ -100,7 +100,7 @@ public class MediaConfigDialogController extends PDialogExtra {
             tab.setContent(mediaConfigPaneController);
             tabPane.getTabs().add(tab);
 
-            mediaListPaneController = new PaneMediaListController(getStage());
+            mediaListPaneController = new PaneMediaController(getStage());
             tab = new Tab("Mediensammlung");
             tab.setClosable(false);
             tab.setContent(mediaListPaneController);
