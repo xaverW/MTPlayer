@@ -117,6 +117,9 @@ public class PaneMediaController extends PAccordionPane {
         externalColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(10.0 / 100));
 
         tableView.setOnMousePressed(m -> {
+            if (tableView.getItems().isEmpty()) {
+                return;
+            }
             if (m.getButton().equals(MouseButton.SECONDARY)) {
                 MediaData mediaData = tableView.getSelectionModel().getSelectedItem();
                 if (mediaData == null) {

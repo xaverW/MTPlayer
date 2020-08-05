@@ -45,6 +45,14 @@ public class PaneMediaContextMenu {
     }
 
     private void getMenu(ContextMenu contextMenu) {
+        MenuItem miOpen = new MenuItem("Pfad zum Film im Dateimanager öffnen");
+        miOpen.setOnAction(a -> {
+            String path = mediaData.getPath();
+            if (!path.isEmpty()) {
+                POpen.openDir(path, ProgConfig.SYSTEM_PROG_OPEN_DIR.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
+            }
+        });
+
         MenuItem miPlay = new MenuItem("gespeicherten Film abspielen");
         miPlay.setOnAction(a -> {
             String path = mediaData.getPath();
@@ -55,7 +63,7 @@ public class PaneMediaContextMenu {
             }
         });
 
-        contextMenu.getItems().addAll(miPlay);
+        contextMenu.getItems().addAll(miOpen, miPlay);
     }
 
 }
