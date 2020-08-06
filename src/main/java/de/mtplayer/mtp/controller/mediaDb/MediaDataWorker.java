@@ -18,25 +18,21 @@
 package de.mtplayer.mtp.controller.mediaDb;
 
 import de.mtplayer.mtp.controller.config.ProgData;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 
 import java.util.List;
 
 public class MediaDataWorker {
 
-    ProgData progData;
-    private BooleanProperty searching = new SimpleBooleanProperty(false);
+    private static ProgData progData = ProgData.getInstance();
 
-    public MediaDataWorker(ProgData progData) {
-        this.progData = progData;
+    private MediaDataWorker() {
     }
 
     // **************************************************************
     // INTERNAL
     // MediaDataList INTERN anlegen und die gespeicherten EXTERNEN anfügen
-    public synchronized void createMediaDb() {
-        if (searching.get()) {
+    public static synchronized void createMediaDb() {
+        if (progData.mediaDataList.isSearching()) {
             // dann mach mers gerade schon :)
             return;
         }
@@ -49,13 +45,13 @@ public class MediaDataWorker {
     // **************************************************************
     // EXTERNAL
     // MediaDataList EXTERN: eine neue collection anlegen
-    public synchronized void createExternalCollection(MediaCollectionData mediaCollectionData) {
-        if (null == progData.mediaCollectionDataList.getMediaCollectionData(mediaCollectionData.getId())) {
+    public static synchronized void createExternalCollection(MediaCollectionData mediaCollectionData) {
+        if (progData.mediaCollectionDataList.getMediaCollectionData(mediaCollectionData.getId()) == null) {
             // evtl. erst mal die Collection anlegen
             progData.mediaCollectionDataList.add(mediaCollectionData);
         }
 
-        if (searching.get()) {
+        if (progData.mediaDataList.isSearching()) {
             // dann mach mers gerade schon :)
             return;
         }
@@ -69,8 +65,8 @@ public class MediaDataWorker {
     // **************************************************************
     // EXTERNAL
     // MediaDataList EXTERN: eine collection neu einlesen
-    public synchronized void updateExternalCollection(MediaCollectionData mediaCollectionData) {
-        if (searching.get()) {
+    public static synchronized void updateExternalCollection(MediaCollectionData mediaCollectionData) {
+        if (progData.mediaDataList.isSearching()) {
             // dann mach mers gerade schon :)
             return;
         }
@@ -83,8 +79,8 @@ public class MediaDataWorker {
     // **************************************************************
     // INTERN/EXTERNAL: eine collection und ihre medien löschen
     // EXTERNAL media in Datei schreiben
-    public synchronized void removeMediaCollection(List<Long> idList) {
-        if (searching.get()) {
+    public static synchronized void removeMediaCollection(List<Long> idList) {
+        if (progData.mediaDataList.isSearching()) {
             // dann mach mers gerade schon :)
             return;
         }
@@ -106,7 +102,7 @@ public class MediaDataWorker {
     }
 
     // create/update threads
-    private class CreateTheMediaDB implements Runnable {
+    private static class CreateTheMediaDB implements Runnable {
         MediaCollectionData mediaCollectionData = null;
 
         // nur eine mediaCollection einlesen
@@ -124,7 +120,7 @@ public class MediaDataWorker {
         }
     }
 
-    private class UpdateExternal implements Runnable {
+    private static class UpdateExternal implements Runnable {
         MediaCollectionData mediaCollectionData;
 
         public UpdateExternal(MediaCollectionData mediaCollectionData) {

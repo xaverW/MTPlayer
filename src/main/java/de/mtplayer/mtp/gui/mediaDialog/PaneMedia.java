@@ -132,7 +132,7 @@ public class PaneMedia extends ScrollPane {
 
         progress.visibleProperty().bind(progData.mediaDataList.searchingProperty());
         btnCreateMediaDB.disableProperty().bind(progData.mediaDataList.searchingProperty());
-        btnCreateMediaDB.setOnAction(e -> new MediaDataWorker(progData).createMediaDb());
+        btnCreateMediaDB.setOnAction(e -> MediaDataWorker.createMediaDb());
 
         btnOpen.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
         btnOpen.setTooltip(new Tooltip("Ausgewählten Pfad im Dateimanager öffnen"));

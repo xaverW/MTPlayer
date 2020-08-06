@@ -18,6 +18,7 @@ package de.mtplayer.mtp.gui.mediaConfig;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
+import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.mediaDb.MediaDataWorker;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
@@ -40,6 +41,7 @@ public class MediaConfigDialogController extends PDialogExtra {
     private Button btnOk = new Button("_Ok");
     private Button btnCreateMediaDB = new Button("_Mediensammlung neu aufbauen");
     private ProgressBar progress = new ProgressBar();
+    private Button btnStopSearching = new Button();
 
     PaneConfigController mediaConfigPaneController;
     PaneMediaController mediaListPaneController;
@@ -67,7 +69,7 @@ public class MediaConfigDialogController extends PDialogExtra {
         btnOk.setOnAction(a -> close());
         progress.visibleProperty().bind(progData.mediaDataList.searchingProperty());
         btnCreateMediaDB.disableProperty().bind(progData.mediaDataList.searchingProperty());
-        btnCreateMediaDB.setOnAction(event -> new MediaDataWorker(progData).createMediaDb());
+        btnCreateMediaDB.setOnAction(event -> MediaDataWorker.createMediaDb());
 
         addOkButton(btnOk);
         addHlpButton(btnHelp);
@@ -76,7 +78,11 @@ public class MediaConfigDialogController extends PDialogExtra {
         progress.setMaxWidth(Double.MAX_VALUE);
         HBox.setHgrow(progress, Priority.ALWAYS);
 
-        getHBoxOverButtons().getChildren().addAll(btnCreateMediaDB, progress);
+        btnStopSearching.setGraphic(new ProgIcons().ICON_BUTTON_STOP);
+        btnStopSearching.setOnAction(event -> progData.mediaDataList.setStopSearching(true));
+        btnStopSearching.visibleProperty().bind(progData.mediaDataList.searchingProperty());
+
+        getHBoxOverButtons().getChildren().addAll(btnCreateMediaDB, progress, btnStopSearching);
         initPanel();
     }
 

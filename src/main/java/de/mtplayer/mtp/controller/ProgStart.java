@@ -63,7 +63,7 @@ public class ProgStart {
             public void finished(ListenerFilmlistLoadEvent event) {
                 if (!doneAtProgramstart) {
                     doneAtProgramstart = true;
-                    new MediaDataWorker(progData).createMediaDb();
+                    MediaDataWorker.createMediaDb();
                     checkProgUpdate(progData);
                 }
 

@@ -125,14 +125,16 @@ public class PaneConfigPath {
         Button btnDel = new Button("");
         btnDel.setTooltip(new Tooltip("Die markierte Sammlung wird gelöscht."));
         btnDel.setGraphic(new ProgIcons().ICON_BUTTON_REMOVE);
-        btnDel.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
+        btnDel.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems())
+                .or(progData.mediaDataList.searchingProperty()));
         btnDel.setOnAction(a -> delete());
 
         if (external) {
             Button btnUpdate = new Button("");
             btnUpdate.setTooltip(new Tooltip("Die markierte Sammlung wird neu eingelesen."));
             btnUpdate.setGraphic(new ProgIcons().ICON_BUTTON_UPDATE);
-            btnUpdate.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
+            btnUpdate.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems())
+                    .or(progData.mediaDataList.searchingProperty()));
 
             btnUpdate.setOnAction(a -> {
                 update();
@@ -155,7 +157,7 @@ public class PaneConfigPath {
             return;
         }
 
-        new MediaDataWorker(progData).updateExternalCollection(mediaCollectionData);
+        MediaDataWorker.updateExternalCollection(mediaCollectionData);
     }
 
     private void delete() {
@@ -171,7 +173,7 @@ public class PaneConfigPath {
         sels.stream().forEach(mediaPathData -> {
             idList.add(mediaPathData.getId());
         });
-        new MediaDataWorker(progData).removeMediaCollection(idList);
+        MediaDataWorker.removeMediaCollection(idList);
 
         tableView.getSelectionModel().clearSelection();
     }
@@ -229,7 +231,7 @@ public class PaneConfigPath {
         final String text;
 
         header = "Sammlung: " + txtPath.getText();
-        if (!external && null != progData.mediaCollectionDataList.getMediaCollectionData(txtPath.getText(), external)) {
+        if (!external && progData.mediaCollectionDataList.getMediaCollectionData(txtPath.getText(), external) != null) {
             text = "Eine Sammlung mit dem **Pfad** existiert bereits.";
             PAlert.showErrorAlert(stage, "Sammlung hinzufügen", header, text);
             return;
@@ -242,7 +244,7 @@ public class PaneConfigPath {
 
         mediaCollectionData = progData.mediaCollectionDataList.addNewMediaCollectionData(txtPath.getText(), txtCollectionName.getText(), external);
         if (external) {
-            new MediaDataWorker(progData).createExternalCollection(mediaCollectionData);
+            MediaDataWorker.createExternalCollection(mediaCollectionData);
         }
 
         txtCollectionName.setText(progData.mediaCollectionDataList.getNextMediaCollectionName(external));

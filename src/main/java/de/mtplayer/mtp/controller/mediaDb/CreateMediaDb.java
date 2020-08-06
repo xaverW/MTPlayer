@@ -161,6 +161,7 @@ public class CreateMediaDb {
 
     private void start() {
         PDuration.counterStart("Mediensammlung erstellen");
+        mediaDataList.setStopSearching(false);
         mediaDataList.setSearching(true);
         Listener.notify(Listener.EREIGNIS_MEDIA_DB_START, CreateMediaDb.class.getSimpleName());
     }
@@ -179,6 +180,11 @@ public class CreateMediaDb {
     }
 
     private void searchFile(File dir, MediaCollectionData mediaCollectionData) {
+        if (mediaDataList.isStopSearching()) {
+            // dann wurde es vom User abgebrochen
+            return;
+        }
+
         if (dir == null) {
             return;
         }
