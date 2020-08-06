@@ -64,19 +64,70 @@ public class PaneAbo extends ScrollPane {
         progData.erledigteAbos.removeListener(listener);
     }
 
+//    public void filter__(String searchStr) {
+//        this.searchStr = searchStr;
+//        progData.erledigteAbos.filteredListSetPred(media -> {
+//            if (searchStr.isEmpty()) {
+//                return false;
+//            }
+//            final Pattern p = Filter.makePattern(searchStr);
+//            if (p != null) {
+//                return filterAbo(media, p);
+//            } else {
+//                return filterAbo(media, searchStr);
+//            }
+//        });
+//        lblTrefferAbo.setText(progData.erledigteAbos.getFilteredList().size() + "");
+//    }
+
+
     public void filter(String searchStr) {
+        Filter filter = new Filter(searchStr, true);
+
         this.searchStr = searchStr;
-        progData.erledigteAbos.filteredListSetPred(media -> {
+        progData.erledigteAbos.filteredListSetPred(historyData -> {
             if (searchStr.isEmpty()) {
                 return false;
             }
-            final Pattern p = Filter.makePattern(searchStr);
-            if (p != null) {
-                return filterAbo(media, p);
-            } else {
-                return filterAbo(media, searchStr);
+
+            // wenn einer passt, dann ists gut
+            if (filter.filterArr.length == 1) {
+                final Pattern p = Filter.makePattern(searchStr);
+                if (p != null) {
+                    return p.matcher(historyData.getTheme()).matches() || p.matcher(historyData.getTitle()).matches();
+                } else {
+                    return (historyData.getTheme().toLowerCase().contains(filter.filter)
+                            || historyData.getTitle().toLowerCase().contains(filter.filter));
+                }
             }
+
+            if (filter.filterAnd) {
+                // Suchbegriffe müssen alle passen
+                for (final String s : filter.filterArr) {
+                    // dann jeden Suchbegriff checken
+                    if (!(historyData.getTheme().toLowerCase().contains(s)
+                            || historyData.getTitle().toLowerCase().contains(s))) {
+                        return false;
+                    }
+                }
+                return true;
+
+            } else {
+                // nur ein Suchbegriff muss passen
+                for (final String s : filter.filterArr) {
+                    // dann jeden Suchbegriff checken
+                    if (historyData.getTheme().toLowerCase().contains(s)
+                            || historyData.getTitle().toLowerCase().contains(s)) {
+                        return true;
+                    }
+                }
+            }
+
+            // nix wars
+            return false;
+
         });
+
         lblTrefferAbo.setText(progData.erledigteAbos.getFilteredList().size() + "");
     }
 

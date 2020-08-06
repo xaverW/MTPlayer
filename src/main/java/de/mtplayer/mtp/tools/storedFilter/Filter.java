@@ -31,15 +31,25 @@ public class Filter {
     public Filter() {
     }
 
-    public Filter(String filter) {
+    public Filter(String filter, boolean makeArr) {
         this.filter = filter;
         this.filterArr = new String[]{filter};
+        if (makeArr) {
+            makeFilterArray();
+        } else {
+            makeFilter();
+        }
     }
 
-    public Filter(String filter, boolean exact) {
+    public Filter(String filter, boolean exact, boolean makeArr) {
         this.filter = filter;
         this.filterArr = new String[]{filter};
         this.exact = exact;
+        if (makeArr) {
+            makeFilterArray();
+        } else {
+            makeFilter();
+        }
     }
 
     public void makeFilter() {

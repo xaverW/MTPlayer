@@ -20,7 +20,13 @@ import de.p2tools.p2Lib.P2LibConst;
 
 public class HelpText {
 
-    public static final String SEARCH_MEDIA_DIALOG = "Ein Filterwort kann auch Leerzeichen enthalten, " +
+    public static final String SEARCH_MEDIA_DIALOG = "" +
+            "In der Mediensammlung wird der Filterbegriff im Dateinamen gesucht. " +
+            "In den erledigten Abos, muss der Filterbegriff " +
+            "im \"Thema\" ODER im \"Titel\" vorkommen." +
+            P2LibConst.LINE_SEPARATOR +
+            P2LibConst.LINE_SEPARATOR +
+            "Ein Filterwort kann auch Leerzeichen enthalten, " +
             "z.B.: \"Hallo ich\". Es wird dann nach Dateien " +
             "gesucht, die im Namen \"Hallo ich\" an beliebiger " +
             "Stelle enthalten. Man sollte den Suchbegriff " +
@@ -30,13 +36,29 @@ public class HelpText {
             P2LibConst.LINE_SEPARATOR +
             "Ein Doppelklick auf ein Wort im Suchtext stellt dieses frei. So kann man den Suchtext schnell " +
             "auf den entscheidenden Begriff reduzieren. Der Button rechts daneben, stellt den ursprünglichen " +
-            "Suchtext weider her." +
+            "Suchtext wieder her." +
             P2LibConst.LINE_SEPARATOR +
             P2LibConst.LINE_SEPARATOR +
             "Groß- und Kleinschreibung wird beim Suchen " +
             "nicht beachtet." +
             P2LibConst.LINE_SEPARATOR +
             P2LibConst.LINE_SEPARATOR +
+
+
+            "Es kann auch nach mehreren Begriffen gesucht werden (diese " +
+            "werden durch \"Komma\" oder \"Doppelpunkt\" getrennt angegeben " +
+            "und können auch Leerzeichen enthalten)." +
+            P2LibConst.LINE_SEPARATOR +
+            P2LibConst.LINE_SEPARATOR +
+            "\"Sport,Fussball\" sucht nach Dateien die den " +
+            "Begriff \"Sport\" ODER \"Fussball\" im Namen haben." +
+            P2LibConst.LINE_SEPARATOR +
+            "\"Sport:Fussball\" sucht nach Dateien die den " +
+            "Begriff \"Sport\" UND \"Fussball\" im Namen haben." +
+
+            P2LibConst.LINE_SEPARATOR +
+            P2LibConst.LINE_SEPARATOR +
+
             "In dem Filter kann auch mit regulären Ausdrücken (RegExp) " +
             "gesucht werden. Diese müssen mit \"#:\" eingeleitet " +
             "werden. Auch bei den regulären Ausdrücken spielt Groß- und " +

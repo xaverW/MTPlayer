@@ -96,14 +96,11 @@ public class Abo extends AboProps {
         fTheme = new Filter(getTheme(), isThemeExact());
         fTheme.makeFilterArray();
 
-        fThemeTitle = new Filter(getThemeTitle());
-        fThemeTitle.makeFilterArray();
+        fThemeTitle = new Filter(getThemeTitle(), true);
 
-        fTitle = new Filter(getTitle());
-        fTitle.makeFilterArray();
+        fTitle = new Filter(getTitle(), true);
 
-        fSomewhere = new Filter(getSomewhere());
-        fSomewhere.makeFilterArray();
+        fSomewhere = new Filter(getSomewhere(), true);
     }
 
     public boolean isEmpty() {

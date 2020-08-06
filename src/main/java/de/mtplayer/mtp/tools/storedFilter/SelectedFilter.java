@@ -281,20 +281,16 @@ public final class SelectedFilter extends SelectedFilterProps {
         fTheme.makeFilterArray();
 
         // ThemaTitel
-        fThemeTitle = new Filter(filterThemeTitle);
-        fThemeTitle.makeFilterArray();
+        fThemeTitle = new Filter(filterThemeTitle, true);
 
         // Titel
-        fTitle = new Filter(filterTitle);
-        fTitle.makeFilterArray();
+        fTitle = new Filter(filterTitle, true);
 
         // Irgendwo
-        fSomewhere = new Filter(filterSomewhere);
-        fSomewhere.makeFilterArray();
+        fSomewhere = new Filter(filterSomewhere, true);
 
         // URL
-        fUrl = new Filter(filterUrl);
-        fUrl.makeFilter();// gibt URLs mit ",", das also nicht trennen
+        fUrl = new Filter(filterUrl, false); // gibt URLs mit ",", das also nicht trennen
 
         final boolean onlyBookmark = selectedFilter.isOnlyVis() ? selectedFilter.isOnlyBookmark() : false;
         final boolean onlyHd = selectedFilter.isOnlyVis() ? selectedFilter.isOnlyHd() : false;
