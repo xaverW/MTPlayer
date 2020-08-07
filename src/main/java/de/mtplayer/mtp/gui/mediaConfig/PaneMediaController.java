@@ -79,7 +79,7 @@ public class PaneMediaController extends PAccordionPane {
         writeQuantity();
 
         changeListener = (observable, oldValue, newValue) -> {
-            Platform.runLater(() -> PaneMediaController.this.filter());
+            Platform.runLater(() -> filter());
         };
         progData.mediaDataList.sizeProperty().addListener(changeListener);
 

@@ -273,22 +273,15 @@ public final class SelectedFilter extends SelectedFilterProps {
 
         final boolean themeExact = selectedFilter.isThemeExact();
         // Sender
-        fChannel = new Filter(filterChannel, false);
-        fChannel.makeFilterArray();
-
+        fChannel = new Filter(filterChannel, true);
         // Thema
-        fTheme = new Filter(filterTheme, themeExact);
-        fTheme.makeFilterArray();
-
+        fTheme = new Filter(filterTheme, themeExact, true);
         // ThemaTitel
         fThemeTitle = new Filter(filterThemeTitle, true);
-
         // Titel
         fTitle = new Filter(filterTitle, true);
-
         // Irgendwo
         fSomewhere = new Filter(filterSomewhere, true);
-
         // URL
         fUrl = new Filter(filterUrl, false); // gibt URLs mit ",", das also nicht trennen
 

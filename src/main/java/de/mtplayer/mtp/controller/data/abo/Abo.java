@@ -90,16 +90,10 @@ public class Abo extends AboProps {
     }
 
     private void createFilter() {
-        fChannel = new Filter(getChannel(), false);
-        fChannel.makeFilterArray();
-
-        fTheme = new Filter(getTheme(), isThemeExact());
-        fTheme.makeFilterArray();
-
+        fChannel = new Filter(getChannel(), true);
+        fTheme = new Filter(getTheme(), isThemeExact(), true);
         fThemeTitle = new Filter(getThemeTitle(), true);
-
         fTitle = new Filter(getTitle(), true);
-
         fSomewhere = new Filter(getSomewhere(), true);
     }
 

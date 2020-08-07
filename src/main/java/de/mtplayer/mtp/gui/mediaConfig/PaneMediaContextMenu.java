@@ -45,7 +45,7 @@ public class PaneMediaContextMenu {
     }
 
     private void getMenu(ContextMenu contextMenu) {
-        MenuItem miOpen = new MenuItem("Pfad zum Film im Dateimanager öffnen");
+        MenuItem miOpen = new MenuItem("Speicherort des Film im Dateimanager öffnen");
         miOpen.setOnAction(a -> {
             String path = mediaData.getPath();
             if (!path.isEmpty()) {
