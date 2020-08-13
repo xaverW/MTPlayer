@@ -62,6 +62,14 @@ public class ProgConst {
     // Mediensammlung
     public static final int MEDIA_COLLECTION_FILESIZE_ALL_FILES = 0;
     public static final int MEDIA_COLLECTION_FILESIZE_MAX = 20;
+    public static final int MEDIA_COLLECTION_SEARCH_THEMA = 0; // dann wird nach Thema gesucht
+    public static final int MEDIA_COLLECTION_SEARCH_TITEL = 1; // dann wird nach Titel gesucht
+    public static final int MEDIA_COLLECTION_SEARCH_THEMA_TITEL = 2; // dann wird nach TT gesucht
+    public static final String MEDIA_COLLECTION_EXPORT_FILE_NAME = "MediaDB.txt"; // der erste vorgegebene Name für den Export
+    public static final int MEDIA_COLLECTION_EXPORT_INTERN = 0; // nur interne exportieren
+    public static final int MEDIA_COLLECTION_EXPORT_EXTERN = 1; // nur externe exportieren
+    public static final int MEDIA_COLLECTION_EXPORT_INTERN_EXTERN = 2; // alles exportieren
+
 
     // MediathekView URLs
     public static final String ADRESSE_FILMLISTEN_SERVER_DIFF = "http://res.mediathekview.de/diff.xml";

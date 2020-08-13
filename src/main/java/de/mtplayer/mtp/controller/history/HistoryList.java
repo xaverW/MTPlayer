@@ -77,7 +77,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         return filteredList;
     }
 
-    public synchronized void filteredListSetPred(Predicate<HistoryData> predicate) {
+    public synchronized void filteredListSetPredicate(Predicate<HistoryData> predicate) {
         filteredList.setPredicate(predicate);
     }
 

@@ -89,14 +89,18 @@ public class ProgConfig extends MLConfig {
 
     // MediaDB
     public static MLConfigs MEDIA_CONFIG_DIALOG_SIZE = addNewKey("media-config-dialog-size", "800:700");
-    public static MLConfigs MEDIA_CONFIG_DIALOG_SEARCH_HISTORY = addNewKey("media-config-dialog-search-history", "0");
-    public static MLConfigs MEDIA_CONFIG_DIALOG_SEARCH_ABO = addNewKey("media-config-dialog-search-abo", "0");
+    public static MLConfigs MEDIA_CONFIG_DIALOG_SEARCH = addNewKey("media-config-dialog-search", ProgConst.MEDIA_COLLECTION_SEARCH_THEMA_TITEL);
     public static MLConfigs MEDIA_CONFIG_DIALOG_ACCORDION = addNewKey("media-config-dialog-accordion", Boolean.TRUE.toString());
     public static MLConfigs MEDIA_DIALOG_SIZE = addNewKey("media-dialog-size", "800:700");
+    public static MLConfigs MEDIA_DIALOG_SEARCH_ABO = addNewKey("media-dialog-search-abo", ProgConst.MEDIA_COLLECTION_SEARCH_THEMA_TITEL);
     public static MLConfigs MEDIA_DB_SUFFIX = addNewKey("media-db-suffix");
     public static MLConfigs MEDIA_DB_WITH_OUT_SUFFIX = addNewKey("media-db-with-out-suffix");
     public static MLConfigs MEDIA_DB_NO_HIDDEN_FILES = addNewKey("media-db-no-hidden-files");
     public static MLConfigs MEDIA_DB_FILE_SIZE_MBYTE = addNewKey("media-db-filesize_mbyte", ProgConst.MEDIA_COLLECTION_FILESIZE_ALL_FILES);
+    public static MLConfigs MEDIA_DB_EXPORT_INTERN = addNewKey("media-db-export-intern", Boolean.FALSE.toString());
+    public static MLConfigs MEDIA_DB_EXPORT_EXTERN = addNewKey("media-db-export-extern", Boolean.FALSE.toString());
+    public static MLConfigs MEDIA_DB_EXPORT_INTERN_EXTERN = addNewKey("media-db-export-intern-extern", Boolean.TRUE.toString());
+    public static MLConfigs MEDIA_DB_EXPORT_FILE = addNewKey("media-db-export-file");
 
     // Configs
     public static MLConfigs SYSTEM_USERAGENT = addNewKey("system-useragent", ProgConst.USER_AGENT_DEFAULT);    // Useragent für direkte Downloads

@@ -17,31 +17,34 @@
 package de.mtplayer.mtp.gui.mediaConfig;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.history.HistoryData;
-import de.mtplayer.mtp.tools.storedFilter.Filter;
 import de.mtplayer.mtp.tools.storedFilter.FilterCheckRegEx;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.dialogs.accordion.PAccordionPane;
+import de.p2tools.p2Lib.guiTools.PGuiTools;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.transformation.SortedList;
-import javafx.geometry.Pos;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.geometry.VPos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.regex.Pattern;
 
 public class PaneHistoryController extends PAccordionPane {
 
@@ -52,38 +55,22 @@ public class PaneHistoryController extends PAccordionPane {
     private final RadioButton rbTt = new RadioButton("Thema oder Titel");
 
     private final IntegerProperty search;
+    private final StringProperty searchText;
     private ListChangeListener<HistoryData> listener;
 
     private final boolean history;
     private final ProgData progData;
     private final Stage stage;
 
-    public PaneHistoryController(Stage stage, boolean history) {
+    public PaneHistoryController(Stage stage, boolean history, StringProperty searchText) {
         super(stage, ProgConfig.MEDIA_CONFIG_DIALOG_ACCORDION.getBooleanProperty(), ProgConfig.SYSTEM_MEDIA_DIALOG_HISTORY);
         this.stage = stage;
         this.history = history;
+        this.searchText = searchText;
         progData = ProgData.getInstance();
-        init();
+        search = ProgConfig.MEDIA_CONFIG_DIALOG_SEARCH.getIntegerProperty();
 
-        if (history) {
-            search = ProgConfig.MEDIA_CONFIG_DIALOG_SEARCH_HISTORY.getIntegerProperty();
-        } else {
-            search = ProgConfig.MEDIA_CONFIG_DIALOG_SEARCH_ABO.getIntegerProperty();
-        }
-        ToggleGroup tg = new ToggleGroup();
-        tg.getToggles().addAll(rbTheme, rbTitle, rbTt);
-        switch (search.get()) {
-            case 0:
-                rbTheme.setSelected(true);
-                break;
-            case 1:
-                rbTitle.setSelected(true);
-                break;
-            case 2:
-            default:
-                rbTt.setSelected(true);
-                break;
-        }
+        init();
     }
 
     public void close() {
@@ -95,8 +82,17 @@ public class PaneHistoryController extends PAccordionPane {
         }
     }
 
+    public void tabChange() {
+        selectSearch();
+        txtSearch.setText(searchText.getValueSafe());
+    }
+
     public Collection<TitledPane> createPanes() {
-        VBox vBox = new VBox(10);
+        ToggleGroup tg = new ToggleGroup();
+        tg.getToggles().addAll(rbTheme, rbTitle, rbTt);
+        selectSearch();
+
+        VBox vBox = new VBox();
         Collection<TitledPane> result = new ArrayList();
         TitledPane tpConfig = new TitledPane(history ? "History" : "Downloads", vBox);
         result.add(tpConfig);
@@ -107,14 +103,9 @@ public class PaneHistoryController extends PAccordionPane {
         initFilter(vBox);
         writeQuantity();
 
-        listener = new ListChangeListener<HistoryData>() {
-            @Override
-            public void onChanged(Change<? extends HistoryData> c) {
-                Platform.runLater(() -> {
-                    PaneHistoryController.this.writeQuantity();
-                });
-            }
-        };
+        listener = c -> Platform.runLater(() -> {
+            PaneHistoryController.this.writeQuantity();
+        });
         if (history) {
             progData.history.addListener(listener);
         } else {
@@ -126,7 +117,7 @@ public class PaneHistoryController extends PAccordionPane {
 
     private void initTable(VBox vBox) {
         TableView<HistoryData> tableView = new TableView<>();
-        tableView.setMinHeight(Region.USE_PREF_SIZE);
+        tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         final TableColumn<HistoryData, String> dateColumn = new TableColumn<>("Datum");
@@ -178,6 +169,24 @@ public class PaneHistoryController extends PAccordionPane {
         vBox.getChildren().addAll(tableView);
     }
 
+    private void selectSearch() {
+        switch (search.get()) {
+            case ProgConst.MEDIA_COLLECTION_SEARCH_THEMA:
+                rbTheme.setSelected(true);
+                break;
+            case ProgConst.MEDIA_COLLECTION_SEARCH_TITEL:
+                rbTitle.setSelected(true);
+                break;
+            case ProgConst.MEDIA_COLLECTION_SEARCH_THEMA_TITEL:
+                rbTt.setSelected(true);
+                break;
+            default:
+                rbTt.setSelected(true);
+                search.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_THEMA_TITEL);
+                break;
+        }
+    }
+
     private void initFilter(VBox vBox) {
         Button btnDel = new Button("_Liste löschen");
         btnDel.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
@@ -194,47 +203,65 @@ public class PaneHistoryController extends PAccordionPane {
         btnClear.setOnAction(a -> txtSearch.clear());
 
         HBox hBox = new HBox(10);
-        hBox.getChildren().addAll(new Label("Suchen: "), txtSearch, btnClear, lblTreffer);
-        HBox.setHgrow(txtSearch, Priority.ALWAYS);
-        hBox.setAlignment(Pos.CENTER_LEFT);
-        vBox.getChildren().addAll(hBox);
+        hBox.getChildren().addAll(rbTheme, rbTitle, rbTt);
 
-        hBox = new HBox(10);
-        Label lbl = new Label();
-        lbl.setMaxWidth(Double.MAX_VALUE);
-        hBox.getChildren().addAll(rbTheme, rbTitle, rbTt, lbl, btnDel);
-        HBox.setHgrow(lbl, Priority.ALWAYS);
-        vBox.getChildren().addAll(hBox);
+        HBox hBoxSum = new HBox();
+        hBoxSum.getChildren().addAll(lblTreffer, PGuiTools.getHBoxGrower(), btnDel);
+        vBox.getChildren().addAll(hBoxSum);
+
+        GridPane.setHgrow(txtSearch, Priority.ALWAYS);
+        GridPane.setHalignment(btnClear, HPos.RIGHT);
+        GridPane.setHalignment(btnDel, HPos.RIGHT);
+        GridPane.setValignment(txtSearch, VPos.CENTER);
+
+        GridPane gridPane = new GridPane();
+        gridPane.setPadding(new Insets(10));
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+
+        gridPane.add(hBoxSum, 0, 0, 3, 1);
+
+        gridPane.add(new Label("Suchen: "), 0, 1);
+        gridPane.add(txtSearch, 1, 1);
+        gridPane.add(btnClear, 2, 1);
+
+        gridPane.add(hBox, 1, 2, 2, 1);
+
+        vBox.getChildren().add(gridPane);
 
         FilterCheckRegEx fTT = new FilterCheckRegEx(txtSearch);
         txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+            searchText.setValue(txtSearch.getText());
             fTT.checkPattern();
             filter();
         });
 
-        rbTheme.selectedProperty().addListener((o, ol, ne) -> filter());
-        rbTitle.selectedProperty().addListener((o, ol, ne) -> filter());
-        rbTt.selectedProperty().addListener((o, ol, ne) -> filter());
+        rbTheme.selectedProperty().addListener((o, ol, ne) -> {
+            if (ne) filter();
+        });
+        rbTitle.selectedProperty().addListener((o, ol, ne) -> {
+            if (ne) filter();
+        });
+        rbTt.selectedProperty().addListener((o, ol, ne) -> {
+            if (ne) filter();
+        });
     }
 
-    private void filter() {
+    public void filter() {
         if (rbTheme.isSelected()) {
-            search.setValue(0);
+            search.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_THEMA);
         } else if (rbTitle.isSelected()) {
-            search.setValue(1);
+            search.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_TITEL);
         } else {
-            search.setValue(2);
+            search.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_THEMA_TITEL);
         }
 
-        final String search = txtSearch.getText().toLowerCase().trim();
-
         if (history) {
-            progData.history.filteredListSetPred(historyData ->
-                    compare(search, historyData));
-
+            progData.history.filteredListSetPredicate(SearchPredicateWorker.getPredicateHistoryData(rbTheme.isSelected(), rbTitle.isSelected(),
+                    txtSearch.getText(), true));
         } else {
-            progData.erledigteAbos.filteredListSetPred(media ->
-                    compare(search, media));
+            progData.erledigteAbos.filteredListSetPredicate(SearchPredicateWorker.getPredicateHistoryData(rbTheme.isSelected(), rbTitle.isSelected(),
+                    txtSearch.getText(), true));
         }
 
         writeQuantity();
@@ -257,43 +284,4 @@ public class PaneHistoryController extends PAccordionPane {
             lblTreffer.setText("Anzahl: " + sum + "");
         }
     }
-
-    private boolean compare(String search, HistoryData media) {
-        if (search.isEmpty()) {
-            return true;
-        }
-        final Pattern p = Filter.makePattern(search);
-        if (p != null) {
-            return filterData(media, p);
-        } else {
-            return filterData(media, search);
-        }
-    }
-
-    private boolean filterData(HistoryData historyData, Pattern p) {
-        if (rbTheme.isSelected()) {
-            return (p.matcher(historyData.getTheme()).matches());
-        } else if (rbTitle.isSelected()) {
-            return (p.matcher(historyData.getTitle()).matches());
-        } else {
-            return (p.matcher(historyData.getTheme()).matches()) ||
-                    (p.matcher(historyData.getTitle()).matches());
-        }
-    }
-
-    private boolean filterData(HistoryData historyData, String search) {
-        if (search.isEmpty()) {
-            return true;
-        }
-
-        if (rbTheme.isSelected()) {
-            return (historyData.getTheme().toLowerCase().contains(search));
-        } else if (rbTitle.isSelected()) {
-            return (historyData.getTitle().toLowerCase().contains(search));
-        } else {
-            return (historyData.getTheme().toLowerCase().contains(search) ||
-                    historyData.getTitle().toLowerCase().contains(search));
-        }
-    }
-
 }

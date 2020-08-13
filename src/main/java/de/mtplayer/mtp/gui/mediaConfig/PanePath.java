@@ -47,7 +47,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class PaneConfigPath {
+public class PanePath {
 
     private final TableView<MediaCollectionData> tableView = new TableView<>();
     private final boolean external;
@@ -58,7 +58,7 @@ public class PaneConfigPath {
     private final ProgData progData;
     private final Stage stage;
 
-    public PaneConfigPath(Stage stage, boolean external) {
+    public PanePath(Stage stage, boolean external) {
         this.stage = stage;
         this.external = external;
         this.progData = ProgData.getInstance();

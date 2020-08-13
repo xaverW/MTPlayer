@@ -92,7 +92,7 @@ public class FilmPaneController extends PAccordionPane {
 
         final Button btnFile = new Button();
         btnFile.setOnAction(event -> {
-            DirFileChooser.FileChooser(ProgData.getInstance().primaryStage, txtUrl);
+            DirFileChooser.FileChooserOpenFile(ProgData.getInstance().primaryStage, txtUrl);
         });
         btnFile.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
         btnFile.setTooltip(new Tooltip("Eine Filmliste die geladen werden soll, manuell auswählen."));

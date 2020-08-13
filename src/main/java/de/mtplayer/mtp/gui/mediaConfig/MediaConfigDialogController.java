@@ -25,6 +25,8 @@ import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
@@ -43,12 +45,19 @@ public class MediaConfigDialogController extends PDialogExtra {
     private ProgressBar progress = new ProgressBar();
     private Button btnStopSearching = new Button();
 
-    PaneConfigController mediaConfigPaneController;
-    PaneMediaController mediaListPaneController;
-    PaneHistoryController historyListPaneController;
-    PaneHistoryController aboListPaneController;
+    private PaneConfigController paneConfigController;
+    private PaneMediaController paneMediaController;
+    private PaneHistoryController paneHistoryController;
+    private PaneHistoryController paneAboController;
+
+    private Tab tabConfig = null;
+    private Tab tabMedia = null;
+    private Tab tabHistory = null;
+    private Tab tabAbo = null;
 
     IntegerProperty propSelectedTab = ProgConfig.SYSTEM_MEDIA_DIALOG_TAB;
+    StringProperty searchText = new SimpleStringProperty();
+
     private final ProgData progData;
 
     public MediaConfigDialogController() {
@@ -91,40 +100,47 @@ public class MediaConfigDialogController extends PDialogExtra {
         progress.visibleProperty().unbind();
         btnCreateMediaDB.disableProperty().unbind();
 
-        mediaConfigPaneController.close();
-        mediaListPaneController.close();
-        historyListPaneController.close();
-        aboListPaneController.close();
+        paneConfigController.close();
+        paneMediaController.close();
+        paneHistoryController.close();
+        paneAboController.close();
         super.close();
     }
 
     private void initPanel() {
         try {
-            mediaConfigPaneController = new PaneConfigController(getStage());
-            Tab tab = new Tab("Einstellungen Mediensammlung");
-            tab.setClosable(false);
-            tab.setContent(mediaConfigPaneController);
-            tabPane.getTabs().add(tab);
+            paneConfigController = new PaneConfigController(getStage());
+            tabConfig = new Tab("Einstellungen Mediensammlung");
+            tabConfig.setClosable(false);
+            tabConfig.setContent(paneConfigController);
+            tabPane.getTabs().add(tabConfig);
 
-            mediaListPaneController = new PaneMediaController(getStage());
-            tab = new Tab("Mediensammlung");
-            tab.setClosable(false);
-            tab.setContent(mediaListPaneController);
-            tabPane.getTabs().add(tab);
+            paneMediaController = new PaneMediaController(getStage());
+            tabMedia = new Tab("Mediensammlung");
+            tabMedia.setClosable(false);
+            tabMedia.setContent(paneMediaController);
+            tabPane.getTabs().add(tabMedia);
 
-            historyListPaneController = new PaneHistoryController(getStage(), true);
-            tab = new Tab("gesehene Filme");
-            tab.setClosable(false);
-            tab.setContent(historyListPaneController);
-            tabPane.getTabs().add(tab);
+            paneHistoryController = new PaneHistoryController(getStage(), true, searchText);
+            tabHistory = new Tab("gesehene Filme");
+            tabHistory.setClosable(false);
+            tabHistory.setContent(paneHistoryController);
+            tabPane.getTabs().add(tabHistory);
 
-            aboListPaneController = new PaneHistoryController(getStage(), false);
-            tab = new Tab("erledigte Abos");
-            tab.setClosable(false);
-            tab.setContent(aboListPaneController);
-            tabPane.getTabs().add(tab);
+            paneAboController = new PaneHistoryController(getStage(), false, searchText);
+            tabAbo = new Tab("erledigte Abos");
+            tabAbo.setClosable(false);
+            tabAbo.setContent(paneAboController);
+            tabPane.getTabs().add(tabAbo);
 
             tabPane.getSelectionModel().select(propSelectedTab.get());
+            tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue.equals(tabHistory)) {
+                    paneHistoryController.tabChange();
+                } else if (newValue.equals(tabAbo)) {
+                    paneAboController.tabChange();
+                }
+            });
             tabPane.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
                 // readOnlyBinding!!
                 propSelectedTab.setValue(newValue);

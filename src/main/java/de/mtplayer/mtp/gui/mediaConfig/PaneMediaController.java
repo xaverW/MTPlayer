@@ -23,7 +23,6 @@ import de.mtplayer.mtp.controller.config.ProgData;
 import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.mediaDb.MediaData;
 import de.mtplayer.mtp.controller.mediaDb.MediaFileSize;
-import de.mtplayer.mtp.tools.storedFilter.Filter;
 import de.mtplayer.mtp.tools.storedFilter.FilterCheckRegEx;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.dialogs.accordion.PAccordionPane;
@@ -41,7 +40,6 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.regex.Pattern;
 
 public class PaneMediaController extends PAccordionPane {
 
@@ -148,7 +146,12 @@ public class PaneMediaController extends PAccordionPane {
         btnClear.setOnAction(a -> txtSearch.clear());
 
         HBox hBox = new HBox(10);
-        hBox.getChildren().addAll(new Label("Suchen:"), txtSearch, btnClear, lblTreffer);
+        hBox.getChildren().addAll(lblTreffer);
+        hBox.setAlignment(Pos.CENTER_LEFT);
+        vBox.getChildren().addAll(hBox);
+
+        hBox = new HBox(10);
+        hBox.getChildren().addAll(new Label("Suchen:"), txtSearch, btnClear);
         HBox.setHgrow(txtSearch, Priority.ALWAYS);
         hBox.setAlignment(Pos.CENTER_LEFT);
         vBox.getChildren().addAll(hBox);
@@ -160,29 +163,9 @@ public class PaneMediaController extends PAccordionPane {
         });
     }
 
-    private void filter() {
-        final String searchStr = txtSearch.getText().toLowerCase().trim();
-        progData.mediaDataList.filteredListSetPredicate(media -> {
-            if (searchStr.isEmpty()) {
-                return true;
-            }
-            final Pattern p = Filter.makePattern(searchStr);
-            if (p != null) {
-                return filterMedia(media, p);
-            } else {
-                return filterMedia(media, searchStr);
-            }
-        });
-
+    public void filter() {
+        progData.mediaDataList.filteredListSetPredicate(SearchPredicateWorker.getPredicateMediaData_(txtSearch.getText(), true));
         writeQuantity();
-    }
-
-    private boolean filterMedia(MediaData media, Pattern p) {
-        return p.matcher(media.getName()).matches();
-    }
-
-    private boolean filterMedia(MediaData media, String search) {
-        return media.getName().toLowerCase().contains(search);
     }
 
     private void writeQuantity() {

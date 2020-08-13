@@ -17,15 +17,61 @@
 
 package de.mtplayer.mtp.controller.mediaDb;
 
+import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
+import de.p2tools.p2Lib.P2LibConst;
+import de.p2tools.p2Lib.alert.PAlert;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 
+import java.nio.file.Path;
 import java.util.List;
 
 public class MediaDataWorker {
 
     private static ProgData progData = ProgData.getInstance();
+    private static BooleanProperty exportIsWorking = new SimpleBooleanProperty(false);
 
     private MediaDataWorker() {
+    }
+
+    // **************************************************************
+    // MediaDataList in eine Textdatei schreiben
+    public static synchronized void exportMediaDB(List<MediaData> list, String pathStr, boolean internDB, boolean externDB) {
+        if (exportIsWorking.get()) {
+            // dann mach mers gerade schon :)
+            return;
+        }
+
+        Path path = Path.of(pathStr);
+        int export;
+        if (internDB && !externDB) {
+            export = ProgConst.MEDIA_COLLECTION_EXPORT_INTERN;
+        } else if (!internDB && externDB) {
+            export = ProgConst.MEDIA_COLLECTION_EXPORT_EXTERN;
+        } else {
+            export = ProgConst.MEDIA_COLLECTION_EXPORT_INTERN_EXTERN;
+        }
+
+
+        if (path.toFile().exists()) {
+            PAlert.BUTTON button = PAlert.showAlert_yes_no("Hinweis", "Mediensammlung in Datei exportieren",
+                    "Die Zieldatei existiert bereits:" + P2LibConst.LINE_SEPARATOR +
+                            path.toString() +
+                            P2LibConst.LINE_SEPARATORx2 +
+                            "Soll die Datei überschrieben werden?");
+            if (button.equals(PAlert.BUTTON.YES)) {
+                path.toFile().delete();
+            } else {
+                // dann nix tun
+                return;
+            }
+        }
+
+        exportIsWorking.set(true);
+        Thread th = new Thread(new ExportMediaDB(list, exportIsWorking, path, export));
+        th.setName("ExportMediaDB");
+        th.start();
     }
 
     // **************************************************************

@@ -18,15 +18,16 @@ package de.mtplayer.mtp.gui.mediaDialog;
 
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgData;
-import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.gui.tools.HelpText;
-import de.mtplayer.mtp.gui.tools.Listener;
-import de.mtplayer.mtp.tools.storedFilter.FilterCheckRegEx;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.beans.property.BooleanProperty;
-import javafx.scene.control.*;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
@@ -34,9 +35,7 @@ import javafx.scene.layout.VBox;
 
 public class MediaDialogController extends PDialogExtra {
 
-    private final TextField txtSearch = new TextField();
     private final Button btnOk = new Button("_Ok");
-    private final Button btnReset = new Button("");
 
     private final RadioButton rbMedien = new RadioButton("Mediensammlung");
     private final RadioButton rbAbos = new RadioButton("erledigte Abos");
@@ -46,32 +45,17 @@ public class MediaDialogController extends PDialogExtra {
 
     private PaneMedia paneMedia;
     private PaneAbo paneAbo;
-    private final Listener listenerDbStart;
-    private final Listener listenerDbStop;
-    private final String searchStr;
+    private final String searchStrOrg;
+    private final StringProperty searchStrProp = new SimpleStringProperty();
 
     private final ProgData progData = ProgData.getInstance();
 
-    public MediaDialogController(String searchStr) {
+    public MediaDialogController(String searchStrOrg) {
         super(ProgData.getInstance().primaryStage, ProgConfig.MEDIA_DIALOG_SIZE.getStringProperty(), "Mediensammlung",
                 true, false);
 
-        this.searchStr = searchStr.trim();
-        txtSearch.setText(this.searchStr);
-        listenerDbStart = new Listener(Listener.EREIGNIS_MEDIA_DB_START, MediaDialogController.class.getSimpleName()) {
-            @Override
-            public void pingFx() {
-                // neue DB suchen
-                txtSearch.setDisable(true);
-            }
-        };
-        listenerDbStop = new Listener(Listener.EREIGNIS_MEDIA_DB_STOP, MediaDialogController.class.getSimpleName()) {
-            @Override
-            public void pingFx() {
-                // neue DB liegt vor
-                txtSearch.setDisable(false);
-            }
-        };
+        this.searchStrOrg = searchStrOrg.trim();
+        searchStrProp.setValue(searchStrOrg);
 
         init(true);
     }
@@ -79,49 +63,13 @@ public class MediaDialogController extends PDialogExtra {
     @Override
     public void make() {
         initPanel();
-
-        Listener.addListener(listenerDbStart);
-        Listener.addListener(listenerDbStop);
-
-        FilterCheckRegEx fTT = new FilterCheckRegEx(txtSearch);
-        txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
-            fTT.checkPattern();
-            filter();
-        });
-        txtSearch.setOnMouseClicked(event -> {
-            if (event.getClickCount() > 1) {
-                String sel = txtSearch.getSelectedText();
-                txtSearch.setText(sel);
-            }
-        });
-
-        btnReset.setGraphic(new ProgIcons().ICON_BUTTON_RESET);
-        btnReset.setTooltip(new Tooltip("Suchtext wieder herstellen"));
-        btnReset.setOnAction(a -> txtSearch.setText(searchStr));
-        btnOk.setOnAction(a -> close());
-
-        final ToggleGroup group = new ToggleGroup();
-        rbMedien.setToggleGroup(group);
-        rbAbos.setToggleGroup(group);
-        rbMedien.selectedProperty().bindBidirectional(propSearchMedia);
-        rbMedien.setOnAction(a -> {
-            setPane();
-            filter();
-        });
-        rbAbos.setSelected(!propSearchMedia.get());
-        rbAbos.setOnAction(a -> {
-            setPane();
-            filter();
-        });
+        initAction();
         setPane();
         filter();
     }
 
     public void close() {
         rbMedien.selectedProperty().unbindBidirectional(propSearchMedia);
-        Listener.removeListener(listenerDbStart);
-        Listener.removeListener(listenerDbStop);
-
         paneAbo.close();
         paneMedia.close();
 
@@ -132,22 +80,21 @@ public class MediaDialogController extends PDialogExtra {
 
     private void initPanel() {
         try {
-            HBox hBox = new HBox(10);
-            HBox.setHgrow(txtSearch, Priority.ALWAYS);
-            hBox.getChildren().addAll(txtSearch, btnReset);
-            getvBoxCont().getChildren().add(hBox);
+            final ToggleGroup group = new ToggleGroup();
+            rbMedien.setToggleGroup(group);
+            rbAbos.setToggleGroup(group);
 
-            hBox = new HBox(20);
+            HBox hBox = new HBox(20);
             hBox.getChildren().addAll(rbMedien, rbAbos);
             getvBoxCont().getChildren().add(hBox);
 
             // Stackpane
-            paneMedia = new PaneMedia(getStage());
+            paneMedia = new PaneMedia(getStage(), searchStrOrg, searchStrProp);
             paneMedia.make();
             paneMedia.setFitToHeight(true);
             paneMedia.setFitToWidth(true);
 
-            paneAbo = new PaneAbo(getStage());
+            paneAbo = new PaneAbo(getStage(), searchStrOrg, searchStrProp);
             paneAbo.make();
             paneAbo.setFitToHeight(true);
             paneAbo.setFitToWidth(true);
@@ -165,6 +112,21 @@ public class MediaDialogController extends PDialogExtra {
         }
     }
 
+    private void initAction() {
+        btnOk.setOnAction(a -> close());
+
+        rbMedien.selectedProperty().bindBidirectional(propSearchMedia);
+        rbMedien.setOnAction(a -> {
+            setPane();
+            filter();
+        });
+        rbAbos.setSelected(!propSearchMedia.get());
+        rbAbos.setOnAction(a -> {
+            setPane();
+            filter();
+        });
+    }
+
     private void setPane() {
         if (rbMedien.isSelected()) {
             paneMedia.toFront();
@@ -174,11 +136,10 @@ public class MediaDialogController extends PDialogExtra {
     }
 
     private void filter() {
-        final String searchStr = txtSearch.getText().toLowerCase().trim();
         if (rbMedien.isSelected()) {
-            paneMedia.filter(searchStr);
+            paneMedia.filter(searchStrProp.getValueSafe());
         } else {
-            paneAbo.filter(searchStr);
+            paneAbo.filter(searchStrProp.getValueSafe());
         }
     }
 }

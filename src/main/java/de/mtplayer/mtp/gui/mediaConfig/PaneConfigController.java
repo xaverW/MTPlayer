@@ -16,9 +16,12 @@
 
 package de.mtplayer.mtp.gui.mediaConfig;
 
+import de.mtplayer.mLib.tools.DirFileChooser;
 import de.mtplayer.mtp.controller.config.ProgConfig;
 import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
+import de.mtplayer.mtp.controller.data.ProgIcons;
+import de.mtplayer.mtp.controller.mediaDb.MediaDataWorker;
 import de.mtplayer.mtp.gui.tools.HelpText;
 import de.p2tools.p2Lib.dialogs.accordion.PAccordionPane;
 import de.p2tools.p2Lib.guiTools.PButton;
@@ -30,12 +33,11 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -49,13 +51,23 @@ public class PaneConfigController extends PAccordionPane {
     private final Label lblFileSize = new Label();
     private final String TXT_ALL = "alle Dateien";
     private int intValue = 0;
+    private TextField txtExport = new TextField();
+    private Button btnExport = new Button("exportieren");
+    private Button btnExportFile = new Button("");
+    private final RadioButton rbIntern = new RadioButton("interne");
+    private final RadioButton rbExtern = new RadioButton("externe");
+    private final RadioButton rbInternExtern = new RadioButton("beide");
 
+    BooleanProperty propExportIntern = ProgConfig.MEDIA_DB_EXPORT_INTERN.getBooleanProperty();
+    BooleanProperty propExportExtern = ProgConfig.MEDIA_DB_EXPORT_EXTERN.getBooleanProperty();
+    BooleanProperty propExportInternExtern = ProgConfig.MEDIA_DB_EXPORT_INTERN_EXTERN.getBooleanProperty();
+    StringProperty propExportFile = ProgConfig.MEDIA_DB_EXPORT_FILE.getStringProperty();
     BooleanProperty propSuff = ProgConfig.MEDIA_DB_WITH_OUT_SUFFIX.getBooleanProperty();
     StringProperty propSuffStr = ProgConfig.MEDIA_DB_SUFFIX.getStringProperty();
     BooleanProperty propNoHiddenFiles = ProgConfig.MEDIA_DB_NO_HIDDEN_FILES.getBooleanProperty();
 
-    PaneConfigPath pane1;
-    PaneConfigPath pane2;
+    PanePath panePathIntern;
+    PanePath panePathExtern;
 
     private final ProgData progData;
     private final Stage stage;
@@ -71,52 +83,61 @@ public class PaneConfigController extends PAccordionPane {
     public void close() {
         super.close();
         rbWithOutSuff.selectedProperty().unbindBidirectional(propSuff);
-        txtSuff.textProperty().unbindBidirectional(propSuffStr);
         tglNoHiddenFiles.selectedProperty().unbindBidirectional(propNoHiddenFiles);
 
-        pane1.close();
-        pane2.close();
+        rbIntern.selectedProperty().unbindBidirectional(propExportIntern);
+        rbExtern.selectedProperty().unbindBidirectional(propExportExtern);
+        rbInternExtern.selectedProperty().unbindBidirectional(propExportInternExtern);
+
+        txtSuff.textProperty().unbindBidirectional(propSuffStr);
+        txtExport.textProperty().unbindBidirectional(propExportFile);
+
+        panePathIntern.close();
+        panePathExtern.close();
     }
 
     public Collection<TitledPane> createPanes() {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
-        makeConfig(result);
-        pane1 = new PaneConfigPath(stage, false);
-        pane1.make(result);
-        pane2 = new PaneConfigPath(stage, true);
-        pane2.make(result);
+        initPane(result);
+        initProp();
+
+        panePathIntern = new PanePath(stage, false);
+        panePathIntern.make(result);
+        panePathExtern = new PanePath(stage, true);
+        panePathExtern.make(result);
+
+        initAction();
         return result;
     }
 
-    private void makeConfig(Collection<TitledPane> result) {
+    private void initPane(Collection<TitledPane> result) {
         VBox vBox = new VBox();
-
-        final GridPane gridPane = new GridPane();
-        gridPane.setHgap(15);
-        gridPane.setVgap(15);
-        gridPane.setPadding(new Insets(20));
-
         TitledPane tpConfig = new TitledPane("Allgemein", vBox);
         result.add(tpConfig);
 
-        rbWithSuff.setSelected(!propSuff.getValue());
-        rbWithOutSuff.selectedProperty().bindBidirectional(propSuff);
+        final Button btnHelp = PButton.helpButton(stage,
+                "Mediensammlungen verwalten", HelpText.MEDIA_COLLECTION);
+        btnExportFile.setTooltip(new Tooltip("Einen Ordner für den Export auswählen"));
+        btnExportFile.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
 
         final ToggleGroup tg = new ToggleGroup();
         rbWithOutSuff.setToggleGroup(tg);
         rbWithSuff.setToggleGroup(tg);
 
-        final Button btnHelp = PButton.helpButton(stage,
-                "Mediensammlungen verwalten", HelpText.MEDIA_COLLECTION);
+        final ToggleGroup tgExport = new ToggleGroup();
+        rbIntern.setToggleGroup(tgExport);
+        rbExtern.setToggleGroup(tgExport);
+        rbInternExtern.setToggleGroup(tgExport);
 
-        txtSuff.textProperty().bindBidirectional(propSuffStr);
-        tglNoHiddenFiles.selectedProperty().bindBidirectional(propNoHiddenFiles);
-
+        final GridPane gridPane = new GridPane();
+        gridPane.setHgap(15);
+        gridPane.setVgap(10);
+        gridPane.setPadding(new Insets(20));
         int row = 0;
-        gridPane.add(rbWithOutSuff, 0, row, 1, 1);
+        gridPane.add(rbWithOutSuff, 0, row);
         gridPane.add(btnHelp, 1, row);
         GridPane.setHalignment(btnHelp, HPos.RIGHT);
-        gridPane.add(rbWithSuff, 0, ++row, 1, 1);
+        gridPane.add(rbWithSuff, 0, ++row);
         gridPane.add(txtSuff, 0, ++row, 2, 1);
 
         gridPane.add(new Label(" "), 0, ++row);
@@ -125,27 +146,67 @@ public class PaneConfigController extends PAccordionPane {
         Label lbl = new Label(TXT_ALL);
         lbl.setVisible(false);
         gridPane.add(lbl, 1, ++row);
-
-        Label lblTxt = new Label("nur Dateien mit Mindestgröße suchen:");
-        gridPane.add(lblTxt, 0, ++row);
+        gridPane.add(new Label("nur Dateien mit Mindestgröße suchen:"), 0, ++row);
         gridPane.add(lblFileSize, 1, row);
         GridPane.setHalignment(lblFileSize, HPos.RIGHT);
         gridPane.add(slFileSize, 0, ++row, 2, 1);
+
+        gridPane.add(new Label(" "), 0, ++row);
+        gridPane.add(new Label(" "), 0, ++row);
+        HBox hBox = new HBox(15);
+        HBox.setHgrow(txtExport, Priority.ALWAYS);
+        hBox.getChildren().addAll(new Label("Datei:"), txtExport, btnExportFile);
+        gridPane.add(new Label("Mediensammlung in eine Datei exportieren:"), 0, ++row);
+        gridPane.add(hBox, 0, ++row, 2, 1);
+        HBox hBoxExport = new HBox(15);
+        Label lblExport = new Label("Datei:");
+        lblExport.setVisible(false);
+        hBoxExport.getChildren().addAll(lblExport, rbIntern, rbExtern, rbInternExtern);
+        gridPane.add(hBoxExport, 0, ++row);
+        gridPane.add(btnExport, 1, row);
+        GridPane.setHalignment(btnExport, HPos.RIGHT);
 
         for (int i = 0; i < gridPane.getRowCount(); ++i) {
             RowConstraints rowC = new RowConstraints();
             rowC.setValignment(VPos.CENTER);
             gridPane.getRowConstraints().add(rowC);
         }
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrow(),
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(),
                 PColumnConstraints.getCcPrefSize());
-
         vBox.getChildren().addAll(gridPane);
 
         initFileSizeSlider();
     }
 
+    private void initProp() {
+        rbWithSuff.setSelected(!propSuff.getValue());
+        rbWithOutSuff.selectedProperty().bindBidirectional(propSuff);
+
+        rbIntern.setSelected(propExportIntern.getValue());
+        rbIntern.selectedProperty().bindBidirectional(propExportIntern);
+        rbExtern.setSelected(propExportExtern.getValue());
+        rbExtern.selectedProperty().bindBidirectional(propExportExtern);
+        rbInternExtern.setSelected(propExportInternExtern.getValue());
+        rbInternExtern.selectedProperty().bindBidirectional(propExportInternExtern);
+
+        if (propExportFile.getValueSafe().isBlank()) {
+            File initFile = new File(System.getProperty("user.home"), ProgConst.MEDIA_COLLECTION_EXPORT_FILE_NAME);
+            propExportFile.setValue(initFile.getAbsolutePath());
+        }
+        txtExport.textProperty().bindBidirectional(propExportFile);
+        txtSuff.textProperty().bindBidirectional(propSuffStr);
+        tglNoHiddenFiles.selectedProperty().bindBidirectional(propNoHiddenFiles);
+    }
+
+    private void initAction() {
+        btnExportFile.setOnAction(event -> {
+            DirFileChooser.FileChooserSaveFile(ProgData.getInstance().primaryStage, txtExport);
+        });
+
+        btnExport.setOnAction(a -> {
+            MediaDataWorker.exportMediaDB(progData.mediaDataList, txtExport.getText(), rbIntern.isSelected(), rbExtern.isSelected());
+        });
+    }
 
     private void initFileSizeSlider() {
         slFileSize.setPadding(new Insets(0, 10, 0, 5));

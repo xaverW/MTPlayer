@@ -507,8 +507,10 @@ public class HelpText {
             P2LibConst.LINE_SEPARATORx2 +
             "\"nur Dateien mit Mindestgröße suchen\"\n" +
             "besagt, dass nur Dateien die mindestens die angegebene Größe haben, in die Mediensammlung " +
-            "aufgenommen werden.";
-
+            "aufgenommen werden." +
+            P2LibConst.LINE_SEPARATORx2 +
+            "Mit Export kann die komplette Mediensammlung " +
+            "in eine Textdatei geschrieben werden.";
 
     public static final String EXTERN_MEDIA_COLLECTION = "Externe Mediensammlungen werden nicht bei " +
             "jedem Programmstart neu eingelesen. Die können dadurch auf externen Medien liegen und " +

@@ -16,11 +16,18 @@
 
 package de.mtplayer.mtp.gui.mediaDialog;
 
+import de.mtplayer.mtp.controller.config.ProgConfig;
+import de.mtplayer.mtp.controller.config.ProgConst;
 import de.mtplayer.mtp.controller.config.ProgData;
+import de.mtplayer.mtp.controller.data.ProgIcons;
 import de.mtplayer.mtp.controller.history.HistoryData;
-import de.mtplayer.mtp.tools.storedFilter.Filter;
+import de.mtplayer.mtp.gui.mediaConfig.SearchPredicateWorker;
+import de.mtplayer.mtp.gui.tools.Listener;
+import de.mtplayer.mtp.tools.storedFilter.FilterCheckRegEx;
 import de.p2tools.p2Lib.guiTools.PGuiTools;
 import javafx.application.Platform;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
@@ -33,7 +40,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.Date;
-import java.util.regex.Pattern;
 
 public class PaneAbo extends ScrollPane {
 
@@ -42,109 +48,98 @@ public class PaneAbo extends ScrollPane {
     private TableView<HistoryData> tableAbo = new TableView();
     private TextField txtTitleAbo = new TextField();
     private TextField txtUrlAbo = new TextField();
-
+    private final TextField txtSearch = new TextField();
+    private final Button btnReset = new Button("");
+    private final RadioButton rbTheme = new RadioButton("Thema");
+    private final RadioButton rbTitle = new RadioButton("Titel");
+    private final RadioButton rbTt = new RadioButton("Thema oder Titel");
+    private final IntegerProperty search;
+    private final Listener listenerDbStart;
+    private final Listener listenerDbStop;
     private ProgData progData = ProgData.getInstance();
-    private String searchStr = "";
+
+    private final String searchStrOrg;
+    private StringProperty searchStrProp;
+
     private ListChangeListener<HistoryData> listener;
 
-    public PaneAbo(Stage stage) {
-        initPanel();
+    public PaneAbo(Stage stage, String searchStrOrg, StringProperty searchStrProp) {
+        this.searchStrOrg = searchStrOrg;
+        this.searchStrProp = searchStrProp;
+        search = ProgConfig.MEDIA_DIALOG_SEARCH_ABO.getIntegerProperty();
+        listenerDbStart = new Listener(Listener.EREIGNIS_MEDIA_DB_START, MediaDialogController.class.getSimpleName()) {
+            @Override
+            public void pingFx() {
+                // neue DB suchen
+                txtSearch.setDisable(true);
+            }
+        };
+        listenerDbStop = new Listener(Listener.EREIGNIS_MEDIA_DB_STOP, MediaDialogController.class.getSimpleName()) {
+            @Override
+            public void pingFx() {
+                // neue DB liegt vor
+                txtSearch.setDisable(false);
+            }
+        };
     }
 
     public void make() {
-        listener = c -> Platform.runLater(() -> {
-            lblGesamtAbo.setText(progData.erledigteAbos.size() + "");
-            filter();
-        });
-        progData.erledigteAbos.addListener(listener);
+        initPanel();
         initTableAbo();
+        initAction();
+        filter();
     }
 
     public void close() {
+        Listener.removeListener(listenerDbStart);
+        Listener.removeListener(listenerDbStop);
         progData.erledigteAbos.removeListener(listener);
     }
 
-//    public void filter__(String searchStr) {
-//        this.searchStr = searchStr;
-//        progData.erledigteAbos.filteredListSetPred(media -> {
-//            if (searchStr.isEmpty()) {
-//                return false;
-//            }
-//            final Pattern p = Filter.makePattern(searchStr);
-//            if (p != null) {
-//                return filterAbo(media, p);
-//            } else {
-//                return filterAbo(media, searchStr);
-//            }
-//        });
-//        lblTrefferAbo.setText(progData.erledigteAbos.getFilteredList().size() + "");
-//    }
-
-
-    public void filter(String searchStr) {
-        Filter filter = new Filter(searchStr, true);
-
-        this.searchStr = searchStr;
-        progData.erledigteAbos.filteredListSetPred(historyData -> {
-            if (searchStr.isEmpty()) {
-                return false;
-            }
-
-            // wenn einer passt, dann ists gut
-            if (filter.filterArr.length == 1) {
-                final Pattern p = Filter.makePattern(searchStr);
-                if (p != null) {
-                    return p.matcher(historyData.getTheme()).matches() || p.matcher(historyData.getTitle()).matches();
-                } else {
-                    return (historyData.getTheme().toLowerCase().contains(filter.filter)
-                            || historyData.getTitle().toLowerCase().contains(filter.filter));
-                }
-            }
-
-            if (filter.filterAnd) {
-                // Suchbegriffe müssen alle passen
-                for (final String s : filter.filterArr) {
-                    // dann jeden Suchbegriff checken
-                    if (!(historyData.getTheme().toLowerCase().contains(s)
-                            || historyData.getTitle().toLowerCase().contains(s))) {
-                        return false;
-                    }
-                }
-                return true;
-
-            } else {
-                // nur ein Suchbegriff muss passen
-                for (final String s : filter.filterArr) {
-                    // dann jeden Suchbegriff checken
-                    if (historyData.getTheme().toLowerCase().contains(s)
-                            || historyData.getTitle().toLowerCase().contains(s)) {
-                        return true;
-                    }
-                }
-            }
-
-            // nix wars
-            return false;
-
-        });
-
-        lblTrefferAbo.setText(progData.erledigteAbos.getFilteredList().size() + "");
-    }
-
     private void initPanel() {
-        HBox hBox = new HBox(10);
-        hBox.setPadding(new Insets(10));
-        hBox.getChildren().addAll(new Label("Treffer:"), lblTrefferAbo, PGuiTools.getHBoxGrower(),
+        ToggleGroup tg = new ToggleGroup();
+        tg.getToggles().addAll(rbTheme, rbTitle, rbTt);
+        switch (search.get()) {
+            case ProgConst.MEDIA_COLLECTION_SEARCH_THEMA:
+                rbTheme.setSelected(true);
+                break;
+            case ProgConst.MEDIA_COLLECTION_SEARCH_TITEL:
+                rbTitle.setSelected(true);
+                break;
+            case ProgConst.MEDIA_COLLECTION_SEARCH_THEMA_TITEL:
+            default:
+                rbTt.setSelected(true);
+                break;
+        }
+
+        btnReset.setGraphic(new ProgIcons().ICON_BUTTON_RESET);
+        btnReset.setTooltip(new Tooltip("Suchtext wieder herstellen"));
+
+        GridPane gridPaneSearch = new GridPane();
+        gridPaneSearch.setPadding(new Insets(10));
+        gridPaneSearch.setHgap(10);
+        gridPaneSearch.setVgap(10);
+        txtSearch.setPrefWidth(Double.MAX_VALUE);
+        GridPane.setHgrow(txtSearch, Priority.ALWAYS);
+        gridPaneSearch.getStyleClass().add("extra-pane");
+
+        gridPaneSearch.add(new Label("Suchen: "), 0, 0);
+        gridPaneSearch.add(txtSearch, 1, 0, 3, 1);
+        gridPaneSearch.add(btnReset, 4, 0);
+
+        gridPaneSearch.add(rbTheme, 1, 1);
+        gridPaneSearch.add(rbTitle, 2, 1);
+        gridPaneSearch.add(rbTt, 3, 1);
+
+        HBox hBoxSum = new HBox(10);
+        hBoxSum.setPadding(new Insets(10));
+        hBoxSum.getChildren().addAll(new Label("Treffer:"), lblTrefferAbo, PGuiTools.getHBoxGrower(),
                 new Label("Anzahl Medien gesamt:"), lblGesamtAbo);
 
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(10));
         gridPane.setHgap(10);
         gridPane.setVgap(10);
-
-        GridPane.setHgrow(txtTitleAbo, Priority.ALWAYS);
-        txtTitleAbo.setEditable(false);
-
         GridPane.setHgrow(txtUrlAbo, Priority.ALWAYS);
         txtUrlAbo.setEditable(false);
 
@@ -155,16 +150,11 @@ public class PaneAbo extends ScrollPane {
 
         VBox vBoxAbo = new VBox();
         VBox.setVgrow(tableAbo, Priority.ALWAYS);
-        vBoxAbo.getChildren().addAll(hBox, tableAbo, gridPane);
-
+        vBoxAbo.getChildren().addAll(gridPaneSearch, PGuiTools.getHDistance(10), tableAbo, hBoxSum, gridPane);
         this.setContent(vBoxAbo);
     }
 
     private void initTableAbo() {
-        txtTitleAbo.setText("");
-        txtUrlAbo.setText("");
-        tableAbo.getColumns().clear();
-
         final TableColumn<HistoryData, String> themeColumn = new TableColumn<>("Thema");
         final TableColumn<HistoryData, String> titleColumn = new TableColumn<>("Titel");
         final TableColumn<HistoryData, Date> dateColumn = new TableColumn<>("Datum");
@@ -196,20 +186,56 @@ public class PaneAbo extends ScrollPane {
         SortedList<HistoryData> sortedList = progData.erledigteAbos.getSortedList();
         sortedList.comparatorProperty().bind(tableAbo.comparatorProperty());
         tableAbo.setItems(sortedList);
+    }
+
+    private void initAction() {
+        FilterCheckRegEx fTT = new FilterCheckRegEx(txtSearch);
+        txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+            fTT.checkPattern();
+            filter();
+            searchStrProp.setValue(txtSearch.getText());
+        });
+        txtSearch.setOnMouseClicked(event -> {
+            if (event.getClickCount() > 1) {
+                String sel = txtSearch.getSelectedText();
+                txtSearch.setText(sel);
+            }
+        });
+
+        btnReset.setOnAction(a -> txtSearch.setText(searchStrOrg));
+
+        Listener.addListener(listenerDbStart);
+        Listener.addListener(listenerDbStop);
 
         lblGesamtAbo.setText(progData.erledigteAbos.size() + "");
+        listener = c -> Platform.runLater(() -> {
+            lblGesamtAbo.setText(progData.erledigteAbos.size() + "");
+            filter();
+        });
+        progData.erledigteAbos.addListener(listener);
+
+        rbTheme.selectedProperty().addListener((o, ol, ne) -> filter());
+        rbTitle.selectedProperty().addListener((o, ol, ne) -> filter());
+        rbTt.selectedProperty().addListener((o, ol, ne) -> filter());
+    }
+
+    public void filter(String searStr) {
+        txtSearch.setText(searStr);
+        filter();
     }
 
     private void filter() {
-        filter(searchStr);
+        if (rbTheme.isSelected()) {
+            search.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_THEMA);
+        } else if (rbTitle.isSelected()) {
+            search.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_TITEL);
+        } else {
+            search.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_THEMA_TITEL);
+        }
+
+        progData.erledigteAbos.filteredListSetPredicate(SearchPredicateWorker.getPredicateHistoryData(rbTheme.isSelected(), rbTitle.isSelected(),
+                txtSearch.getText(), false));
+        lblTrefferAbo.setText(progData.erledigteAbos.getFilteredList().size() + "");
     }
 
-    private boolean filterAbo(HistoryData historyData, Pattern p) {
-        return p.matcher(historyData.getTheme()).matches() || p.matcher(historyData.getTitle()).matches();
-    }
-
-    private boolean filterAbo(HistoryData historyData, String search) {
-        return (historyData.getTheme().toLowerCase().contains(search)
-                || historyData.getTitle().toLowerCase().contains(search));
-    }
 }

@@ -151,7 +151,7 @@ public class CreateMediaDb {
             mediaDataList.addAllMediaData(tmpMediaDataList);
             mediaDataList.checkExternalMediaData();
             mediaDataList.countMediaData(progData);
-            new WriteMediaDb(progData).writeExternalMediaData();
+            new WriteMediaDb(progData).writeExternalMediaData(logs);
 
         } catch (final Exception ex) {
             PLog.errorLog(120321254, ex);

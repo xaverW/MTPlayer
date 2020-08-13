@@ -45,25 +45,25 @@ public class WriteMediaDb implements AutoCloseable {
     private OutputStreamWriter out = null;
     private Path xmlFilePath = null;
     private OutputStream os = null;
-    private final ArrayList<String> list = new ArrayList<>();
+    private ArrayList<String> logList = new ArrayList<>();
+    boolean writeLog = false;
     private List<MediaData> mediaDbList;
-    private boolean writeLog = false;
     private ProgData progData;
 
     public WriteMediaDb(ProgData progData) {
         this.progData = progData;
     }
 
-    public WriteMediaDb(boolean writeLog) {
-        this.writeLog = writeLog;
+    public synchronized void writeExternalMediaData() {
+        writeLog = true;
+        writeExternalMediaData(logList);
     }
 
-    public synchronized void writeExternalMediaData() {
+    public synchronized void writeExternalMediaData(ArrayList<String> logList) {
         final Path path = getPathMediaDB();
-
-        ArrayList<String> logList = new ArrayList<>();
-        logList.add("MediaDB schreiben");
-        logList.add("   --> Start Schreiben nach: " + path.toString());
+        this.logList = logList;
+        logList.add("MediaDB (extern) schreiben");
+        logList.add("   --> Schreiben nach: " + path.toString());
 
         try {
             final File file = path.toFile();
@@ -89,28 +89,25 @@ public class WriteMediaDb implements AutoCloseable {
                             path.toString()));
         }
 
-        PLog.sysLog(logList);
+        if (writeLog) {
+            PLog.sysLog(logList);
+        }
     }
 
-    public synchronized void write(Path file, List<MediaData> mediaDbList) {
+    private synchronized void write(Path file, List<MediaData> mediaDbList) {
         try {
 
             this.mediaDbList = mediaDbList;
             xmlFilePath = file;
-            list.add("Medien schreiben nach (Anzahl: " + mediaDbList.size() + "): " + xmlFilePath.toString());
 
             writeXmlData();
 
         } catch (final Exception ex) {
-            list.add("Fehler, nicht geschrieben!");
+            logList.add("Fehler, nicht geschrieben!");
             PLog.errorLog(656328109, ex);
             Platform.runLater(() -> PAlert.showErrorAlert("Fehler beim Schreiben",
                     "Die Mediensammlung konnte nicht geschrieben werden:" + P2LibConst.LINE_SEPARATOR +
                             file.toString()));
-        }
-
-        if (writeLog) {
-            PLog.sysLog(list);
         }
     }
 
@@ -157,7 +154,6 @@ public class WriteMediaDb implements AutoCloseable {
     }
 
     private void xmlWriteStart() throws IOException, XMLStreamException {
-        list.add("start Schreiben ....");
         os = Files.newOutputStream(xmlFilePath);
         out = new OutputStreamWriter(os, StandardCharsets.UTF_8);
 
@@ -207,8 +203,6 @@ public class WriteMediaDb implements AutoCloseable {
         writer.writeEndElement();
         writer.writeEndDocument();
         writer.flush();
-
-        list.add("geschrieben!");
     }
 
     @Override
