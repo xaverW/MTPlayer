@@ -25,11 +25,9 @@ import de.mtplayer.mtp.controller.data.ListePsetVorlagen;
 import de.mtplayer.mtp.controller.data.SetDataList;
 import de.mtplayer.mtp.gui.dialog.FilmInfoDialogController;
 import de.mtplayer.mtp.gui.startDialog.StartDialogController;
-import de.mtplayer.mtp.res.GetIcon;
 import de.mtplayer.mtp.tools.storedFilter.ProgInitFilter;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.P2LibInit;
-import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PGuiSize;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import javafx.application.Application;
@@ -70,7 +68,7 @@ public class MTPlayer extends Application {
     }
 
     private void initP2lib() {
-        PButton.setHlpImage(GetIcon.getImage("button-help.png", 16, 16));
+//        PButton.setHlpImage(GetIcon.getImage("button-help.png", 16, 16));
         P2LibInit.initLib(primaryStage, ProgConst.PROGRAMNAME,
                 "", ProgData.debug, ProgData.duration);
         P2LibInit.addCssFile(P2LibConst.CSS_GUI);
@@ -120,11 +118,10 @@ public class MTPlayer extends Application {
             scene = new Scene(progData.mtPlayerController,
                     PGuiSize.getWidth(ProgConfig.SYSTEM_SIZE_GUI.getStringProperty()),
                     PGuiSize.getHeight(ProgConfig.SYSTEM_SIZE_GUI.getStringProperty()));
+            addThemeCss(); // und jetzt noch für die neue Scene
 
-            P2LibInit.addP2LibCssToScene(scene);
             ProgConfig.SYSTEM_DARK_THEME.getStringProperty().addListener((u, o, n) -> {
                 addThemeCss();
-                P2LibInit.addP2LibCssToScene(scene);
                 ProgConfig.SYSTEM_THEME_CHANGED.setValue(!ProgConfig.SYSTEM_THEME_CHANGED.getBool());
             });
 
@@ -152,6 +149,7 @@ public class MTPlayer extends Application {
             P2LibInit.removeCssFile(P2LibConst.CSS_GUI_DARK);
             P2LibInit.removeCssFile(ProgConst.CSS_FILE_DARK_THEME);
         }
+        P2LibInit.addP2LibCssToScene(scene);
     }
 
     public static void main(String[] args) {

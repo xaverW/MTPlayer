@@ -19,23 +19,23 @@
 }
 
 /* ist nur ein Strich als Trenner: im FilmFilter*/
-.pseperator1 .line {
+/*.pseperator1 .line {
     -fx-border-style: solid;
-    -fx-border-width: 0 0 1 0; /* makes really one-pixel-border */
+    -fx-border-width: 0 0 1 0; *//* makes really one-pixel-border *//*
     -fx-border-color: -p2-color-blue1;
 }
 
 .pseperator2 .line {
     -fx-border-style: solid;
-    -fx-border-width: 0 0 2 0; /* makes really one-pixel-border */
+    -fx-border-width: 0 0 2 0; *//* makes really one-pixel-border *//*
     -fx-border-color: -p2-color-blue1;
 }
 
 .pseperator3 .line {
     -fx-border-style: solid;
-    -fx-border-width: 0 0 3 0; /* makes really one-pixel-border */
+    -fx-border-width: 0 0 3 0; *//* makes really one-pixel-border *//*
     -fx-border-color: -p2-color-blue1;
-}
+}*/
 
 /* Button "Filmliste" */
 .btnFilmlist{
