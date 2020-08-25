@@ -201,7 +201,6 @@ public class PaneAbo extends ScrollPane {
                 txtSearch.setText(sel);
             }
         });
-
         btnReset.setOnAction(a -> txtSearch.setText(searchStrOrg));
 
         Listener.addListener(listenerDbStart);

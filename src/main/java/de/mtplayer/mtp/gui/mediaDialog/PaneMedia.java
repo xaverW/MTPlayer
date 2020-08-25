@@ -112,6 +112,8 @@ public class PaneMedia extends ScrollPane {
         hBoxSearch.getChildren().addAll(new Label("Suchen: "), txtSearch, btnReset);
         hBoxSearch.getStyleClass().add("extra-pane");
 
+        btnReset.setGraphic(new ProgIcons().ICON_BUTTON_RESET);
+        btnReset.setTooltip(new Tooltip("Suchtext wieder herstellen"));
 
         HBox hBoxSum = new HBox(10);
         hBoxSum.setPadding(new Insets(10));
@@ -201,13 +203,9 @@ public class PaneMedia extends ScrollPane {
                 txtSearch.setText(sel);
             }
         });
-
-        btnReset.setGraphic(new ProgIcons().ICON_BUTTON_RESET);
-        btnReset.setTooltip(new Tooltip("Suchtext wieder herstellen"));
-        btnReset.setOnAction(a -> searchStrProp.setValue(searchStrOrg));
+        btnReset.setOnAction(a -> txtSearch.setText(searchStrOrg));
 
         Listener.addListener(listenerDbStart);
-        Listener.addListener(listenerDbStop);
         Listener.addListener(listenerDbStop);
 
         lblGesamtMedia.setText(progData.mediaDataList.size() + "");
