@@ -93,7 +93,7 @@ public class DownloadMenu {
         final MenuButton mb = new MenuButton("");
         mb.setTooltip(new Tooltip("Downloadmenü anzeigen"));
         mb.setGraphic(new ProgIcons().FX_ICON_TOOLBAR_MENU);
-        mb.getStyleClass().add("btnFunction");
+        mb.getStyleClass().add("btnFunctionWide");
 
 
         final MenuItem miDownloadStart = new MenuItem("Downloads starten");

@@ -18,25 +18,6 @@
     -fx-background-color: black;
 }
 
-/* ist nur ein Strich als Trenner: im FilmFilter*/
-/*.pseperator1 .line {
-    -fx-border-style: solid;
-    -fx-border-width: 0 0 1 0; *//* makes really one-pixel-border *//*
-    -fx-border-color: -p2-color-blue1;
-}
-
-.pseperator2 .line {
-    -fx-border-style: solid;
-    -fx-border-width: 0 0 2 0; *//* makes really one-pixel-border *//*
-    -fx-border-color: -p2-color-blue1;
-}
-
-.pseperator3 .line {
-    -fx-border-style: solid;
-    -fx-border-width: 0 0 3 0; *//* makes really one-pixel-border *//*
-    -fx-border-color: -p2-color-blue1;
-}*/
-
 /* Button "Filmliste" */
 .btnFilmlist{
     -fx-background-color: #c3c4c4, -lin-grad-1, -rad-grad-1;
@@ -44,10 +25,9 @@
     -fx-background-insets: 0,1,1;
     -fx-text-fill: black;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
-    -fx-padding: 10 20 10 20;
-    -fx-border: 5;
+    -fx-padding: 5 20 5 20;
+    /*-fx-border: 5;*/
 }
-
 .btnFilmlist_{
     -fx-background-color: #3a74d4,
         linear-gradient(from 0% 0% to 100% 100%, #c7d4d4 50%, white 100%),
@@ -56,10 +36,9 @@
     -fx-background-insets: 0,2,2;
     -fx-text-fill: black;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
-    -fx-padding: 10 20 10 20;
-    -fx-border: 5;
+    -fx-padding: 5 20 5 20;
+    /*-fx-border: 5;*/
 }
-
 .btnFilmlist:focused{
     -fx-background-color: #8d8d8d, -lin-grad-1, -rad-grad-1;
     -fx-background-insets: -0.5,1,1;
@@ -72,9 +51,8 @@
     -fx-background-color: #98abc4, -lin-grad-1, -rad-grad-1;
     -fx-background-insets: -1.4,1,1;
 }
-
 .btnFilmlist:pressed{
-     -fx-background-color: #5d5e8c,
+    -fx-background-color: #5d5e8c,
          linear-gradient(from 0% 0% to 100% 100%, #d6d6d6 40%, white 90%),
          radial-gradient(center 80% -70%, radius 200%, #e6e6e6 35%, -tab-button-3 40%);
 }
@@ -82,20 +60,13 @@
 
 /* ist die ComboBox mit den Filterprofilen: markiert wenn das Profil aktiv ist*/
 .markFilterOk > .list-cell{
--fx-underline: true;
+    -fx-underline: true;
 }
 
 /* ist der Label mit der Anzahl markierter Tabellenzeilen in der Taskbar*/
 .lblSelectedLines {
     -fx-border-color: -lblSelectedLines-color-1;
     -fx-border-width: 0 1 0 0;
-    /*-fx-border-radius: 5;*/
-/*
-    -fx-background-color: -lblSelectedLines-color-1, -lblSelectedLines-color-2;
-    -fx-background-insets: 0,1;
-    -fx-background-radius: 3,3;
-    -fx-padding: 2 12 2 12;
-*/
 }
 
 /*Checkbox edit all abo*/
@@ -120,10 +91,6 @@
 .channel-menu > .arrow-button > .arrow {
     -fx-background-color: #0b99c9;
 }
-/*.check-menu-item{
-    -fx-mark-color: #0b99c9;
-}*/
-
 
 /* ist der abgesetzte Bereich im Download Dialog*/
 .downloadDialog {
@@ -148,50 +115,9 @@
     -fx-font-size: 0.9em;
 }
 
-
-
-/*
-.chart {
-    -fx-padding: 10px;
-}
-.chart-content {
-    -fx-padding: 10px;
-}
-*/
-
-/* grün: #d2ffd2 */
-/* rot: #ffe6e6 */
-
-/*
-.chart-legend {
-    -fx-background-color: #d2ffd2;
-    -fx-padding: 5px;
-}
-
-.chart-legend-item-symbol{
-    -fx-background-radius: 0;
-}
-.chart-legend-item{
-    -fx-text-fill: green;
-}
-*/
-/*
-Download Chart
-Schwarz: #55595b
-Weiß:    #f4f4f4
-*/
-
 .chart-plot-background {
     -fx-background-color: #ebebeb;
 }
-/*
-.chart-vertical-grid-lines {
-    -fx-stroke: #78808b;
-}
-.chart-horizontal-grid-lines {
-    -fx-stroke: #78808b;
-}
-*/
 .chart-alternative-row-fill {
     -fx-fill: #e1e1e1;
     -fx-stroke: transparent;

@@ -220,7 +220,7 @@ public class MTPlayerController extends StackPane {
 
         menuButton.setTooltip(new Tooltip("Programmeinstellungen anzeigen"));
         menuButton.setMinWidth(Region.USE_PREF_SIZE);
-        menuButton.getStyleClass().add("btnFunction");
+        menuButton.getStyleClass().add("btnFunctionWide");
         menuButton.setText("");
         menuButton.setGraphic(new ProgIcons().FX_ICON_TOOLBAR_MENU_TOP);
         menuButton.getItems().addAll(miConfig, miMediaCollectionConfig, miSearchMediaCollection, mHelp,
