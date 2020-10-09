@@ -43,13 +43,13 @@ import java.util.List;
 
 public class PathPane {
     StringProperty vlcProp = ProgConfig.SYSTEM_PATH_VLC.getStringProperty();
-    StringProperty flvProp = ProgConfig.SYSTEM_PATH_FLVSTREAMER.getStringProperty();
+    //    StringProperty flvProp = ProgConfig.SYSTEM_PATH_FLVSTREAMER.getStringProperty();
     StringProperty ffmpegProp = ProgConfig.SYSTEM_PATH_FFMPEG.getStringProperty();
     private GridPane gridPane = new GridPane();
     private int row = 0;
     private final Stage stage;
 
-    private enum PLAYER {VLC, FLV, FFMPEG}
+    private enum PLAYER {VLC, /*FLV,*/ FFMPEG}
 
     private class UnBind {
         private TextField txt;
@@ -96,9 +96,9 @@ public class PathPane {
                 addPlayer(PLAYER.VLC);
                 gridPane.add(new Label(" "), 0, ++row);
                 ++row;
-                addPlayer(PLAYER.FLV);
-                gridPane.add(new Label(" "), 0, ++row);
-                ++row;
+//                addPlayer(PLAYER.FLV);
+//                gridPane.add(new Label(" "), 0, ++row);
+//                ++row;
                 addPlayer(PLAYER.FFMPEG);
         }
 
@@ -119,17 +119,17 @@ public class PathPane {
         final Button btnFind = new Button("suchen");
 
         switch (player) {
-            case FLV:
-                text = new Text("Pfad zum flvstreamer-Player auswählen");
-                property = flvProp;
-                btnFind.setOnAction(event -> {
-                    ProgConfig.SYSTEM_PATH_FLVSTREAMER.setValue("");
-                    txtPlayer.setText(SetsPrograms.getTemplatePathFlv());
-                });
-                hyperlink = new PHyperlink(stage,
-                        ProgConst.ADRESSE_WEBSITE_FLVSTREAMER,
-                        ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
-                break;
+//            case FLV:
+//                text = new Text("Pfad zum flvstreamer-Player auswählen");
+//                property = flvProp;
+//                btnFind.setOnAction(event -> {
+//                    ProgConfig.SYSTEM_PATH_FLVSTREAMER.setValue("");
+//                    txtPlayer.setText(SetsPrograms.getTemplatePathFlv());
+//                });
+//                hyperlink = new PHyperlink(stage,
+//                        ProgConst.ADRESSE_WEBSITE_FLVSTREAMER,
+//                        ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
+//                break;
             case FFMPEG:
                 text = new Text("Pfad zum ffmpeg-Player auswählen");
                 property = ffmpegProp;

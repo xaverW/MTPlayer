@@ -90,7 +90,7 @@ public class ProgConst {
 
     // die URL der Sets, nicht mehr mit jeder Programmversion hochzählen, nur noch wenn notwendig
     // public static final String URL_MTPLAYER_CONFIG_DIRECTORY = "https://www.p2tools.de/extra/mtplayer/v-" + Functions.getProgVersion() + "/";
-    public static final String URL_MTPLAYER_CONFIG_DIRECTORY = "https://www.p2tools.de/extra/mtplayer/v-3/";
+    public static final String URL_MTPLAYER_CONFIG_DIRECTORY = "https://www.p2tools.de/extra/mtplayer/v-4/";
     public static final String URL_MTPLAYER_PROGRAM_SETS = URL_MTPLAYER_CONFIG_DIRECTORY + "pset-templates.xml";
 
     // ProgrammUrls

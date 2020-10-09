@@ -129,7 +129,7 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs SYSTEM_LOAD_FILMLIST_MAX_DAYS = addNewKey("system-load-filmlist-max-days", "0"); //es werden nur die x letzten Tage geladen
     public static MLConfigs SYSTEM_LOAD_FILMLIST_MIN_DURATION = addNewKey("system-load-filmlist-min-duration", "0"); //es werden nur Filme mit mind. x Minuten geladen
     public static MLConfigs SYSTEM_PATH_VLC = addNewKey("path-vlc", SetsPrograms.getTemplatePathVlc());
-    public static MLConfigs SYSTEM_PATH_FLVSTREAMER = addNewKey("path-flvstreamer", SetsPrograms.getTemplatePathFlv());
+    //    public static MLConfigs SYSTEM_PATH_FLVSTREAMER = addNewKey("path-flvstreamer", SetsPrograms.getTemplatePathFlv());
     public static MLConfigs SYSTEM_PATH_FFMPEG = addNewKey("path-ffmpeg", SetsPrograms.getTemplatePathFFmpeg());
 
     // Blacklist
