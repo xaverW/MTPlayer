@@ -3,6 +3,14 @@
 **nächste Version**
 * Downloadchart: Daten bleiben auch beim Ändern der Anzeige erhalten
 * Filmfilter erhält eine "zurück" Funktion
+* Die interne Verarbeitung der Mediensammlung wurde verbessert, ist jetzt deutlich schneller bei sehr großen Mediensammlungen
+* Beim Anlegen der Mediensammlung kann jetzt eine Mindestgröße vorgegeben werden, Dateien die kleiner sind werden nicht mehr aufgenommen
+* Die Mediensammlung kann in eine Datei exportiert werden
+* Beim Suchen in der History/erledigten Abos kann zwischen Thema oder Titel unterschieden werden
+* Häufige Programmfunktionen können über Tastenkürzel aufgerufen werden und in den Einstellungen können die Tastenkürzel angepasst werden
+* Wenn sich bei Downloads aus Abos doppelte Dateinamen ergeben, werden diese jetzt nummeriert
+* ...
+
 
 **Release 9**
 
