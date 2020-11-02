@@ -25,7 +25,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 
 public class FilmProps extends FilmXml {
 
-    public int nr;
+    public int no;
     FilmSize filmSize = new FilmSize(); // Dateigröße in MByte
     public FilmDate filmDate = new FilmDate(0);
 
@@ -102,8 +102,8 @@ public class FilmProps extends FilmXml {
         this.doubleUrl = doubleUrl;
     }
 
-    public int getNr() {
-        return nr;
+    public int getNo() {
+        return no;
     }
 
     public String getChannel() {

@@ -122,20 +122,6 @@ public class DownloadList extends SimpleListProperty<Download> {
             d.setSizeDownloadFromFilm();
         }
 
-//        counter = 50;
-//        parallelStream().filter(d -> {
-//            counter -= 1;
-//            System.out.println(counter);
-//            if ((counter > 0)/* && d.getFilm() == null*/) {
-//                return true;
-//            } else {
-//                return false;
-//            }
-//        }).forEach(d -> {
-//            d.setFilm(progData.filmlist.getFilmByUrl_small_high_hd(d.getUrl())); //todo sollen da wirklich alle Filmfelder gesetzt werden??
-//            d.setSizeDownloadFromFilm();
-//
-//        });
         PDuration.counterStop("DownloadList.addFilmInList");
     }
 
@@ -151,7 +137,7 @@ public class DownloadList extends SimpleListProperty<Download> {
         // zum neu nummerieren der alten Downloads
         List<Download> list = new ArrayList<>();
         for (final Download download : this) {
-            final int i = download.getNr();
+            final int i = download.getNo();
             if (i < DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED) {
                 list.add(download);
             }
@@ -160,19 +146,19 @@ public class DownloadList extends SimpleListProperty<Download> {
         Collections.sort(list, new Comparator<Download>() {
             @Override
             public int compare(Download d1, Download d2) {
-                return (d1.getNr() < d2.getNr()) ? -1 : 1;
+                return (d1.getNo() < d2.getNo()) ? -1 : 1;
             }
         });
         int addNr = prefDownList.size();
         for (final Download download : list) {
             ++addNr;
-            download.setNr(addNr);
+            download.setNo(addNr);
         }
 
         // und jetzt die vorgezogenen Downloads nummerieren
         int i = 1;
         for (final Download dataDownload : prefDownList) {
-            dataDownload.setNr(i++);
+            dataDownload.setNo(i++);
         }
     }
 
@@ -325,34 +311,27 @@ public class DownloadList extends SimpleListProperty<Download> {
         }
     }
 
-//    // ======================================
-//    // DownloadInfosAll
-//    public synchronized void makeDownloadInfo() {
-//        downloadListInfoAll.makeDownloadInfo();
-//    }
-
-
     public synchronized void setNumbersInList() {
         int i = getNextNumber();
         for (final Download download : this) {
             if (download.isStarted()) {
                 // gestartete Downloads ohne!! Nummer nummerieren
-                if (download.getNr() == DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED) {
-                    download.setNr(i++);
+                if (download.getNo() == DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED) {
+                    download.setNo(i++);
                 }
 
             } else {
                 // nicht gestartete Downloads
-                download.setNr(DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED);
+                download.setNo(DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED);
             }
         }
     }
 
     public synchronized void renumberList(int addNr) {
         for (final Download download : this) {
-            final int i = download.getNr();
+            final int i = download.getNo();
             if (i < DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED) {
-                download.setNr(i + addNr);
+                download.setNo(i + addNr);
             }
         }
     }
@@ -360,8 +339,8 @@ public class DownloadList extends SimpleListProperty<Download> {
     private int getNextNumber() {
         int i = 1;
         for (final Download download : this) {
-            if (download.getNr() < DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED && download.getNr() >= i) {
-                i = download.getNr() + 1;
+            if (download.getNo() < DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED && download.getNo() >= i) {
+                i = download.getNo() + 1;
             }
         }
         return i;
@@ -370,7 +349,7 @@ public class DownloadList extends SimpleListProperty<Download> {
     public synchronized void addNumber(ArrayList<Download> downloads) {
         int i = getNextNumber();
         for (Download download : downloads) {
-            download.setNr(i++);
+            download.setNo(i++);
         }
     }
 }

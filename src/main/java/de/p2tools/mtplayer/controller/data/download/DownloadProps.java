@@ -24,7 +24,7 @@ import javafx.beans.property.*;
 
 public class DownloadProps extends DownloadXml {
 
-    private final IntegerProperty nr = new SimpleIntegerProperty(DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED);
+    private final IntegerProperty no = new SimpleIntegerProperty(DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED);
     private final IntegerProperty filmNr = new SimpleIntegerProperty(DownloadConstants.FILM_NUMBER_NOT_FOUND);
 
     private final StringProperty aboName = new SimpleStringProperty("");
@@ -71,13 +71,16 @@ public class DownloadProps extends DownloadXml {
     private final BooleanProperty infoFile = new SimpleBooleanProperty(false);
     private final BooleanProperty subtitle = new SimpleBooleanProperty(false);
 
-    public final Property[] properties = {nr, filmNr, aboName, channel, theme, title,
+    public final Property[] properties = {no, filmNr, aboName, channel, theme, title,
             state, progress, remaining, bandwidth, downloadSize,
             filmDate, time, durationMinute,
             hd, ut, geoBlocked, filmUrl, historyUrl, url, urlRtmp, urlSubtitle,
             setDataId, program, programCall, programCallArray, programRestart, programDownloadmanager,
             destFileName, destPath, destPathFile,
             type, source, placedBack, infoFile, subtitle};
+
+    DownloadProps() {
+    }
 
     public PDate getFilmDate() {
         return filmDate.get();
@@ -98,8 +101,6 @@ public class DownloadProps extends DownloadXml {
     }
 
     // GuiProps
-
-
     public int getGuiState() {
         return guiState.get();
     }
@@ -116,16 +117,16 @@ public class DownloadProps extends DownloadXml {
         return guiProgress;
     }
 
-    public int getNr() {
-        return nr.get();
+    public int getNo() {
+        return no.get();
     }
 
-    public IntegerProperty nrProperty() {
-        return nr;
+    public IntegerProperty noProperty() {
+        return no;
     }
 
-    public void setNr(int nr) {
-        this.nr.set(nr);
+    public void setNo(int no) {
+        this.no.set(no);
     }
 
     public int getFilmNr() {

@@ -351,7 +351,7 @@ public class Film extends FilmProps {
         final Film ret = new Film();
         System.arraycopy(arr, 0, ret.arr, 0, arr.length);
         ret.filmDate = filmDate;
-        ret.nr = nr;
+        ret.no = no;
         ret.filmSize = filmSize;
 //        ret.dauerL = dauerL;
         ret.setDurationMinute(getDurationMinute());

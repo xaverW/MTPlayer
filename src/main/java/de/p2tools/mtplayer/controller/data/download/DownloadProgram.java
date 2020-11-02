@@ -283,7 +283,7 @@ public class DownloadProgram {
         replStr = replStr.replace("%6",
                 getHMS("%6", film.arr[FilmXml.FILM_TIME].equals("") ? getNow_HH_MM_SS() : film.arr[FilmXml.FILM_TIME]));
 
-        replStr = replStr.replace("%i", String.valueOf(film.nr));
+        replStr = replStr.replace("%i", String.valueOf(film.no));
 
         String res = "";
         if (download.getUrl().equals(film.getUrlForResolution(Film.RESOLUTION_NORMAL))) {

@@ -16,11 +16,9 @@
 
 package de.p2tools.mtplayer.gui.chart;
 
-import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.download.Download;
-import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
+import de.p2tools.mtplayer.gui.tools.Listener;
 import javafx.beans.property.BooleanProperty;
 import javafx.geometry.Side;
 import javafx.scene.chart.LineChart;
@@ -30,19 +28,15 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class DownloadGuiChart {
 
     private BooleanProperty separatChartProp = ProgConfig.DOWNLOAD_CHART_SEPARAT.getBooleanProperty();
-    private BooleanProperty allDownloadsProp = ProgConfig.DOWNLOAD_CHART_ALL_DOWNLOADS.getBooleanProperty();
-    private BooleanProperty onlyExistingProp = ProgConfig.DOWNLOAD_CHART_ONLY_EXISTING.getBooleanProperty();
-    private BooleanProperty onlyRunningProp = ProgConfig.DOWNLOAD_CHART_ONLY_RUNNING.getBooleanProperty();
+    private BooleanProperty chartAllDownloadsProp = ProgConfig.DOWNLOAD_CHART_ALL_DOWNLOADS.getBooleanProperty();
+    private BooleanProperty chartOnlyExistingProp = ProgConfig.DOWNLOAD_CHART_ONLY_EXISTING.getBooleanProperty();
+    private BooleanProperty chartOnlyRunningProp = ProgConfig.DOWNLOAD_CHART_ONLY_RUNNING.getBooleanProperty();
     private final ProgData progData;
 
     private LineChart<Number, Number> lineChart = null;
-    private List<Download> startedDownloads = new ArrayList<>(); // Liste gestarteter Downloads
     private final ChartData chartData;
     private ContextMenu cm = null;
     private AnchorPane anchorPane;
@@ -65,9 +59,6 @@ public class DownloadGuiChart {
     }
 
     private synchronized void initList() {
-        chartData.getChartSeriesListAll().clear(); // da werden alle chartSeries gelöscht, jeder Download
-        chartData.getChartSeriesListSeparate().clear(); // da werden alle chartSeries gelöscht, jeder Download
-        chartData.getChartSeriesSum().getData().clear(); // da werden die Daten in der einen chartSeries gelöscht, Summe aller Downloads
         chartData.setScale(1);
     }
 
@@ -99,28 +90,26 @@ public class DownloadGuiChart {
     }
 
     private void selectChartData() {
-        if (ProgConfig.DOWNLOAD_CHART_SEPARAT.getBool()) {
-            lineChart.setData(chartData.getChartSeriesListSeparate());
+        if (separatChartProp.get()) {
+            lineChart.setData(chartData.getChartSeriesList_SeparateCharts());
         } else {
-            lineChart.setData(chartData.getChartSeriesListSum());
+            lineChart.setData(chartData.getChartSeriesList_OneSumChart());
         }
     }
 
     private synchronized void clearChart() {
-        chartData.getChartSeriesListAll().stream().forEach(series -> series.getData().clear()); // da werden nur die Series gelöscht
-        chartData.getChartSeriesListSeparate().stream().forEach(series -> series.getData().clear()); // da werden nur die Series gelöscht
-        chartData.getChartSeriesSum().getData().clear(); // da werden die Daten in der einen chartSeries gelöscht, Summe aller Downloads
+        chartData.getBandwidthDataList().clear(); // da werden alle gesammelten Daten gelöscht
         chartData.setScale(1);
     }
 
     private ContextMenu initContextMenu() {
-        final Label lblValue = new Label(" " + chartData.getMaxTime() + " Min.");
+        final Label lblValue = new Label(" " + chartData.getShowMaxTimeMinutes() + " Min.");
         final Label lblInfo = new Label("Zeitraum:");
 
         final Slider slMaxTime = new Slider();
         slMaxTime.setMinWidth(250);
-        slMaxTime.setMin(10);
-        slMaxTime.setMax(ChartFactory.CHART_MAX_TIME);
+        slMaxTime.setMin(ProgData.debug ? 1 : 10);
+        slMaxTime.setMax(ChartFactory.MAX_MINUTES_SHOWING);
         slMaxTime.setBlockIncrement(10);
         slMaxTime.setShowTickLabels(true);
         slMaxTime.setSnapToTicks(true);
@@ -128,7 +117,7 @@ public class DownloadGuiChart {
         slMaxTime.setMinorTickCount(13);
         slMaxTime.setMajorTickUnit(140);
 
-        slMaxTime.valueProperty().bindBidirectional(chartData.maxTimeProperty());
+        slMaxTime.valueProperty().bindBidirectional(chartData.showMaxTimeMinutesProperty());
         slMaxTime.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 lblValue.setText(" " + newValue.intValue() + " Min.");
@@ -154,9 +143,9 @@ public class DownloadGuiChart {
         rbOnlyExisting.setToggleGroup(group);
         rbOnlyRunning.setToggleGroup(group);
 
-        rbAll.selectedProperty().bindBidirectional(allDownloadsProp);
-        rbOnlyExisting.selectedProperty().bindBidirectional(onlyExistingProp);
-        rbOnlyRunning.selectedProperty().bindBidirectional(onlyRunningProp);
+        rbAll.selectedProperty().bindBidirectional(chartAllDownloadsProp);
+        rbOnlyExisting.selectedProperty().bindBidirectional(chartOnlyExistingProp);
+        rbOnlyRunning.selectedProperty().bindBidirectional(chartOnlyRunningProp);
 
         rbAll.disableProperty().bind(chkAllDowns.selectedProperty().not());
         rbOnlyExisting.disableProperty().bind(chkAllDowns.selectedProperty().not());
@@ -178,10 +167,6 @@ public class DownloadGuiChart {
     // Daten generieren
     // ============================
     private synchronized void searchInfos() {
-        chartData.addCountSek(1); // Sekunden
-        final double countMinute = chartData.getCountSek() / 60.0; // Minuten
-        startedDownloads = progData.downloadList.getListOfStartsNotFinished(DownloadConstants.ALL);
-
-        ChartFactory.runChart(lineChart, chartData, startedDownloads, countMinute, progData);
+        ChartFactory.runChart(lineChart, chartData, progData);
     }
 }

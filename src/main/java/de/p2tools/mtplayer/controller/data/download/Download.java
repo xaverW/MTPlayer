@@ -29,7 +29,6 @@ import de.p2tools.p2Lib.tools.date.PDateFactory;
 import de.p2tools.p2Lib.tools.file.PFileUtils;
 import de.p2tools.p2Lib.tools.net.PUrlTools;
 import javafx.application.Platform;
-import javafx.scene.chart.XYChart;
 
 import java.io.File;
 import java.util.Date;
@@ -43,8 +42,6 @@ public final class Download extends DownloadProps {
     private SetData setData = null;
     private Abo abo = null;
     private String errorMessage = "";
-
-    private XYChart.Series<Number, Number> cSeries = null;
 
     public Download() {
     }
@@ -74,18 +71,19 @@ public final class Download extends DownloadProps {
         setSizeDownloadFromFilm();
         // und endlich Aufruf bauen :)
         downloadProgram.makeProgParameter(film, abo, name, path);
-        nrProperty().addListener((observable, oldValue, newValue) -> {
-            if (cSeries == null) {
-                return;
-            }
-            if (getNr() < DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED) {
-                Platform.runLater(() -> cSeries.setName(getNr() + ""));
-            } else {
-                // Download ohne Nummer, dann die FilmNr eintragen
-                final String fNo = getFilmNr() == DownloadConstants.FILM_NUMBER_NOT_FOUND ? " " : "[" + getFilmNr() + "]";
-                Platform.runLater(() -> cSeries.setName(fNo));
-            }
-        });
+
+//        noProperty().addListener((observable, oldValue, newValue) -> {
+//            if (bandwidthData == null) {
+//                return;
+//            }
+//            if (getNo() < DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED) {
+//                Platform.runLater(() -> bandwidthData.setName(getNo() + ""));
+//            } else {
+//                // Download ohne Nummer, dann die FilmNr eintragen
+//                final String fNo = getFilmNr() == DownloadConstants.FILM_NUMBER_NOT_FOUND ? " " : "[" + getFilmNr() + "]";
+//                Platform.runLater(() -> bandwidthData.setName(fNo));
+//            }
+//        });
     }
 
 
@@ -147,14 +145,6 @@ public final class Download extends DownloadProps {
         return getState() >= DownloadConstants.STATE_FINISHED;
     }
 
-    public XYChart.Series<Number, Number> getCSeries() {
-        return cSeries;
-    }
-
-    public void setCSeries(XYChart.Series<Number, Number> cSeries) {
-        this.cSeries = cSeries;
-    }
-
     //==============================================
     //==============================================
 
@@ -180,7 +170,6 @@ public final class Download extends DownloadProps {
         // stoppen und alles zurücksetzen
         stopDownload();
         setState(DownloadConstants.STATE_INIT);
-//        MLProperty.setProperty(stateProperty(), DownloadConstants.STATE_INIT);
     }
 
     public void restartDownload() {
@@ -191,14 +180,10 @@ public final class Download extends DownloadProps {
         setRemaining("");
         setBandwidth("");
         getStart().setBandwidth(0);
-//        setCSeries(null);
-        setNr(DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED);
+        setNo(DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED);
 
         setState(DownloadConstants.STATE_INIT);
         setProgress(DownloadConstants.PROGRESS_NOT_STARTED);
-
-//        MLProperty.setProperty(stateProperty(), DownloadConstants.STATE_INIT);
-//        MLProperty.setProperty(progressProperty(), DownloadConstants.PROGRESS_NOT_STARTED);
     }
 
     public void stopDownload() {
@@ -208,9 +193,6 @@ public final class Download extends DownloadProps {
         } else {
             setState(DownloadConstants.STATE_STOPPED);
             setProgress(DownloadConstants.PROGRESS_NOT_STARTED);
-
-//            MLProperty.setProperty(stateProperty(), DownloadConstants.STATE_STOPPED);
-//            MLProperty.setProperty(progressProperty(), DownloadConstants.PROGRESS_NOT_STARTED);
         }
 
         final DownloadSize downSize = getDownloadSize();
@@ -218,8 +200,7 @@ public final class Download extends DownloadProps {
         setRemaining("");
         setBandwidth("");
         getStart().setBandwidth(0);
-//        setCSeries(null);
-        setNr(DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED);
+        setNo(DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED);
     }
 
     public void makeProgParameter() {
@@ -276,7 +257,7 @@ public final class Download extends DownloadProps {
         }
 
         this.film = film;
-        setFilmNr(film.getNr());
+        setFilmNr(film.getNo());
         setChannel(film.arr[FilmXml.FILM_CHANNEL]);
         setTheme(film.arr[FilmXml.FILM_THEME]);
         setTitle(film.arr[FilmXml.FILM_TITLE]);

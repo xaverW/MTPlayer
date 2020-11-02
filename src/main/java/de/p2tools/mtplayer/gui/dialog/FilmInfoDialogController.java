@@ -89,7 +89,7 @@ public class FilmInfoDialogController extends PDialogExtra {
                 } else {
                     switch (i) {
                         case FilmXml.FILM_NR:
-                            lblCont[i].setText(film.getNr() + "");
+                            lblCont[i].setText(film.getNo() + "");
                             break;
                         case FilmXml.FILM_DURATION:
                             lblCont[i].setText(film.getDurationMinute() + "");

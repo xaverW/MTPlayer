@@ -16,10 +16,10 @@
 
 package de.p2tools.mtplayer.controller.data.film;
 
-import de.p2tools.mtplayer.tools.filmListFilter.FilmlistBlackFilter;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.SetData;
+import de.p2tools.mtplayer.tools.filmListFilter.FilmlistBlackFilter;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.beans.property.SimpleListProperty;
@@ -98,14 +98,14 @@ public class Filmlist extends SimpleListProperty<Film> {
     public synchronized boolean importFilm(Film film) {
         // hier nur beim Laden aus einer fertigen Filmliste mit der GUI
         // die Filme sind schon sortiert, nur die Nummer muss noch ergänzt werden
-        film.nr = nr++;
+        film.no = nr++;
         return addInit(film);
     }
 
     public synchronized boolean importFilmOnlyWithNr(Film film) {
         // hier nur beim Laden aus einer fertigen Filmliste mit der GUI
         // die Filme sind schon sortiert, nur die Nummer muss noch ergänzt werden
-        film.nr = nr++;
+        film.no = nr++;
         return add(film);
     }
 
@@ -225,7 +225,7 @@ public class Filmlist extends SimpleListProperty<Film> {
         // und jetzt noch die Nummerierung in Ordnung bringen
         int i = 1;
         for (final Film film : this) {
-            film.nr = i++;
+            film.no = i++;
         }
     }
 

@@ -63,7 +63,7 @@ public class TableDownload {
 
 
         final TableColumn<Download, Integer> nrColumn = new TableColumn<>("Nr");
-        nrColumn.setCellValueFactory(new PropertyValueFactory<>("nr"));
+        nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));
         nrColumn.setCellFactory(cellFactoryNr);
         nrColumn.getStyleClass().add("alignCenterLeft");
 
@@ -481,7 +481,7 @@ public class TableDownload {
     private Callback<TableColumn<Download, Double>, TableCell<Download, Double>> cellFactoryProgress
             = (final TableColumn<Download, Double> param) -> {
 
-        final ProgressBarTableCell<Download> cell = new ProgressBarTableCell<Download>() {
+        final ProgressBarTableCell<Download> cell = new ProgressBarTableCell<>() {
 
             @Override
             public void updateItem(Double item, boolean empty) {

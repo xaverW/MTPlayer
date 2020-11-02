@@ -31,11 +31,16 @@ import javafx.scene.control.Label;
 import javafx.util.StringConverter;
 
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 public class ChartFactory {
-    public static int CHART_MAX_TIME = 300;
+    public static int MAX_CHART_DATA_PER_SCREEN = 100;
+    public static int DATA_ALL_SECONDS = 2;
+    public static int MAX_MINUTES_SHOWING = 300;
+    public static int MAX_SECONDS_SHOWING = MAX_MINUTES_SHOWING * 60;
+    public static int MAX_DATA = MAX_SECONDS_SHOWING / DATA_ALL_SECONDS; // 3600
+    private static int runChart = 0;
+    private static long[] bandwidthSumArr = new long[MAX_CHART_DATA_PER_SCREEN];
 
     private ChartFactory() {
     }
@@ -43,6 +48,7 @@ public class ChartFactory {
     public static NumberAxis createXAxis() {
         final NumberAxis xAxis = new NumberAxis();
         xAxis.setAutoRanging(false);
+        xAxis.setLabel("Zeit");
         xAxis.setLowerBound(0.0);
         xAxis.setTickLabelFormatter(new StringConverter<>() {
             @Override
@@ -67,121 +73,306 @@ public class ChartFactory {
     public static NumberAxis createYAxis() {
         final NumberAxis yAxis = new NumberAxis();
         yAxis.setAutoRanging(true);
+        yAxis.setLabel("Wert");
         yAxis.setLowerBound(0.0);
         return yAxis;
     }
 
-    public static synchronized void runChart(LineChart<Number, Number> lineChart, ChartData chartData, List<Download> startedDownloads,
-                                             double countMinute, ProgData progData) {
-        cleanUpChartData(chartData, startedDownloads, countMinute);
-        inputDownloadDate(chartData, startedDownloads, countMinute, progData);
-        generateChartData(lineChart, progData, chartData);
-        zoomXAxis(lineChart, chartData, countMinute);
+    public static synchronized void runChart(LineChart<Number, Number> lineChart, ChartData chartData,
+                                             ProgData progData) {
+
+        chartData.addCountSek(); // Sekunden
+        ++runChart;
+        if (runChart < DATA_ALL_SECONDS) {
+            return;
+        }
+        runChart = 0;
+
+        cleanUpData(chartData, progData);
+        inputDownloadData(chartData, progData);
+        generateChartData(lineChart, chartData);
+        zoomXAxis(lineChart, chartData);
         zoomYAxis(lineChart, chartData);
     }
 
-    private static synchronized void cleanUpChartData(ChartData chartData, List<Download> startedDownloads, double countMinute) {
-        // letzten Wert bei abgeschlossenen Downloads setzen
-        // leere Chart.Series löschen
-        Iterator<XYChart.Series<Number, Number>> it = chartData.getChartSeriesListAll().listIterator();
+    private static synchronized void cleanUpData(ChartData chartData, ProgData progData) {
+        chartData.setScale(1);
+
+        //Downloads die es nicht mehr gibt löschen
+        Iterator<BandwidthData> it = chartData.getBandwidthDataList().listIterator();
         while (it.hasNext()) {
-            XYChart.Series<Number, Number> cSeries = it.next();
+            BandwidthData bandwidthData = it.next();
             boolean foundDownload = false;
-            for (final Download download : startedDownloads) {
-                if (download.getCSeries() != null && download.getCSeries().equals(cSeries)) {
+            for (final Download download : progData.downloadList) {
+                if (bandwidthData.getDownload() != null && bandwidthData.getDownload().equals(download)) {
                     foundDownload = true;
                     break;
                 }
             }
-
             if (!foundDownload) {
-                int size = cSeries.getData().size();
-                if (size > 0 && cSeries.getData().get(size - 1).getYValue().longValue() > 0) {
-                    // nur einen Wert "0" setzen und dann wars der letzte Wert
-                    cSeries.getData().add(new XYChart.Data<>(countMinute, 0L));
-                }
-                if (cSeries.getData().isEmpty()) {
+                bandwidthData.setDownload(null);
+                if (bandwidthData.isEmpty()) {
                     // dann wurde bereits alles gelöscht und kommt jetzt auch weg
                     it.remove();
                 }
             }
         }
 
-        // und jetzt noch alle Messpunkte nach MAX-Zeit löschen
-        final double MIN = countMinute - ChartFactory.CHART_MAX_TIME;
-        if (MIN <= 0) {
-            // dann noch unter MAX_TIME
-            return;
-        }
-
-        // Einzelcharts
-        chartData.getChartSeriesListAll().stream().forEach(cs -> {
-            cs.getData().removeIf(d -> d.getXValue().doubleValue() < MIN);
-        });
-
-        // Summe
-        chartData.getChartSeriesSum().getData().removeIf(d -> d.getXValue().doubleValue() < MIN);
-    }
-
-    private static synchronized void inputDownloadDate(ChartData chartData, List<Download> startedDownloads,
-                                                       double countMinute, ProgData progData) {
-        //Downloads in "Diagramm" eintragen
-        for (final Download download : startedDownloads) {
-            //jeden Download eintragen
-            XYChart.Series<Number, Number> cSeries = download.getCSeries();
-
-            if (cSeries != null) {
-                final long bandw = download.getStart().getBandwidth();
-                cSeries.getData().add(new XYChart.Data<>(countMinute, bandw / chartData.getScale()));
-            } else {
-                cSeries = new XYChart.Series<>(download.getNr() + "", FXCollections.observableArrayList());
-//                cSeries.setNode(new ProgIcons().DOWNLOAD_OK);//??????
-                download.setCSeries(cSeries);
-
-                cSeries.getData().add(new XYChart.Data<>(countMinute, 0L));
-                cSeries.getData().add(new XYChart.Data<>(countMinute, download.getStart().getBandwidth() / chartData.getScale()));
-                chartData.getChartSeriesListAll().add(cSeries);
-            }
-        }
-        // Anzeige der Summe aller Downloads
-        chartData.getChartSeriesSum().getData().add(new XYChart.Data<>(countMinute, progData.downloadInfos.getBandwidth() / chartData.getScale()));
-    }
-
-    private static synchronized void generateChartData(LineChart<Number, Number> lineChart, ProgData progData, ChartData chartData) {
-        final boolean all = ProgConfig.DOWNLOAD_CHART_ALL_DOWNLOADS.getBool();
-        final boolean onlyExisting = ProgConfig.DOWNLOAD_CHART_ONLY_EXISTING.getBool();
-
-        if (all) {
-            // dann sollen alle Downloads angezeigt werden, die Liste der angezeigten Series wieder mit "allen" füllen
-            chartData.getChartSeriesListSeparate().setAll(chartData.getChartSeriesListAll());
-            colorChartName(lineChart, progData, chartData);
-            return;
-        }
-
-        chartData.getChartSeriesListSeparate().clear();
-        chartData.getChartSeriesListAll().stream().forEach(cSeries -> {
-            for (final Download download : progData.downloadList) {
-                if (download.getCSeries() != null && download.getCSeries().equals(cSeries)) {
-
-                    if (onlyExisting) {
-                        // dann werden alle vorhandenen Downloads angezeigt
-                        chartData.getChartSeriesListSeparate().add(cSeries);
-
-                    } else if (download.isStateStartedRun()) {
-                        // nur die laufenden anzeigen
-                        chartData.getChartSeriesListSeparate().add(cSeries);
-                    }
+        it = chartData.getBandwidthDataList().listIterator();
+        while (it.hasNext()) {
+            BandwidthData bandwidthData = it.next();
+            boolean foundDownload = false;
+            for (final Download download : progData.downloadList.getListOfStartsNotFinished(DownloadConstants.ALL)) {
+                if (bandwidthData.getDownload() != null && bandwidthData.getDownload().equals(download)) {
+                    foundDownload = true;
                     break;
                 }
             }
+
+            if (!foundDownload) {
+                //Download gibts nicht mehr oder läuft nicht mehr
+                int size = bandwidthData.size();
+                if (size > 0 && bandwidthData.get(size - 1).longValue() > 0) {
+                    // nur einen Wert "0" setzen und dann wars der letzte Wert
+                    bandwidthData.add(0L);
+                }
+            }
+        }
+
+        // und jetzt noch alle Messpunkte vor MAX-Zeit löschen
+        chartData.getBandwidthDataList().stream().forEach(bandwidthData -> {
+            while (bandwidthData.size() > ChartFactory.MAX_DATA) {
+                if (bandwidthData.isEmpty()) {
+                    break;
+                }
+                bandwidthData.removeFirst();
+            }
+            while ((chartData.getCountSek() - bandwidthData.getStartTimeSec()) > ChartFactory.MAX_SECONDS_SHOWING) {
+                if (bandwidthData.isEmpty()) {
+                    break;
+                }
+                bandwidthData.removeFirst();
+            }
         });
-        colorChartName(lineChart, progData, chartData);
     }
 
-    private static synchronized void zoomXAxis(LineChart<Number, Number> lineChart, ChartData chartData, double countMinute) {
+    private static synchronized void inputDownloadData(ChartData chartData, ProgData progData) {
+        //Downloads in BandwidthData eintragen und jeden Download prüfen
+        boolean foundDownload;
+        for (final Download download : progData.downloadList) {
+            foundDownload = false;
+            for (final BandwidthData bandwidthData : chartData.getBandwidthDataList()) {
+                if (bandwidthData.getDownload() != null && bandwidthData.getDownload().equals(download)) {
+                    foundDownload = true;
+                    break;
+                }
+            }
+            if (!foundDownload && download.isStarted()) {
+                // dann ist es ein neue gestarteter
+                BandwidthData bwd = new BandwidthData(download, chartData.getCountSek());
+                chartData.getBandwidthDataList().add(bwd);
+            }
+        }
+
+        for (final BandwidthData bandwidthData : chartData.getBandwidthDataList()) {
+            final Download download = bandwidthData.getDownload();
+            if (download != null && download.isStateStartedRun()) {
+                // sonst läuft er noch nicht/nicht mehr
+                final long bandw = download.getStart().getBandwidth();
+                bandwidthData.add(bandw);
+            } else {
+                bandwidthData.add(0L);
+            }
+        }
+    }
+
+    private static synchronized void generateChartData(LineChart<Number, Number> lineChart, ChartData chartData) {
+        // und jetzt die sichtbaren Daten eintragen
+        final boolean separatBool = ProgConfig.DOWNLOAD_CHART_SEPARAT.getBool();
+        if (separatBool) {
+            generateChartDataSeparated(lineChart, chartData);
+        } else {
+            generateChartDataAll(lineChart, chartData);
+        }
+    }
+
+    private static synchronized void generateChartDataAll(LineChart<Number, Number> lineChart, ChartData chartData) {
+
+        int displayMinTimeShowing_sec = chartData.getCountSek() - chartData.getShowMaxTimeMinutes() * 60;
+        if (displayMinTimeShowing_sec < 0) {
+            displayMinTimeShowing_sec = 0;
+        }
+        final double timePerTick_sec = 1.0 * (chartData.getCountSek() - displayMinTimeShowing_sec) / MAX_CHART_DATA_PER_SCREEN;
+
+        //löschen und dann die aktuellen Downloads eintragen
+        for (int i = 0; i < bandwidthSumArr.length; ++i) {
+            bandwidthSumArr[i] = 0;
+        }
+
+        for (BandwidthData bandwidthData : chartData.getBandwidthDataList()) {
+            if (bandwidthData.size() == 0) {
+                continue;
+            }
+
+            for (int i = 0; i < ChartFactory.MAX_CHART_DATA_PER_SCREEN; ++i) {
+
+                final int indexChart = ChartFactory.MAX_CHART_DATA_PER_SCREEN - 1 - i;
+                final double aktTime_sec = (chartData.getCountSek() - timePerTick_sec * i);
+                final long actVal;
+
+                int bandwidthIdx = (int) Math.round((aktTime_sec - bandwidthData.getStartTimeSec()) / ChartFactory.DATA_ALL_SECONDS);
+                if (bandwidthIdx >= 0 && bandwidthIdx < bandwidthData.size()) {
+                    actVal = bandwidthData.get(bandwidthIdx);
+                } else {
+                    //gibts keine Downloads
+                    actVal = 0;
+                }
+                bandwidthSumArr[indexChart] = bandwidthSumArr[indexChart] + actVal;
+            }
+        }
+
+        //ins Chart eintragen
+        for (int i = 0; i < ChartFactory.MAX_CHART_DATA_PER_SCREEN; ++i) {
+            final int indexChart = ChartFactory.MAX_CHART_DATA_PER_SCREEN - 1 - i;
+            final double time = (chartData.getCountSek() - timePerTick_sec * i) / 60.0;
+            final long val = bandwidthSumArr[indexChart];
+
+            chartData.getChartSeriesSum().getData().get(indexChart).setXValue(time);
+            chartData.getChartSeriesSum().getData().get(indexChart).setYValue(val);
+        }
+
+        colorChartName(lineChart, chartData);
+        // logData(chartData, displayMinTimeShowing_sec, true);
+    }
+
+    private static synchronized void generateChartDataSeparated(LineChart<Number, Number> lineChart, ChartData chartData) {
+        // und jetzt die sichtbaren Daten eintragen
+        final boolean chartOnlyRunning = ProgConfig.DOWNLOAD_CHART_ONLY_RUNNING.getBool();
+        final boolean chartOnlyExisting = ProgConfig.DOWNLOAD_CHART_ONLY_EXISTING.getBool();
+        // final boolean chartAll = ProgConfig.DOWNLOAD_CHART_ALL_DOWNLOADS.getBool();
+
+        int displayMinTimeShowing_sec = chartData.getCountSek() - chartData.getShowMaxTimeMinutes() * 60;
+        if (displayMinTimeShowing_sec < 0) {
+            displayMinTimeShowing_sec = 0;
+        }
+        final double timePerTick_sec = 1.0 * (chartData.getCountSek() - displayMinTimeShowing_sec) / MAX_CHART_DATA_PER_SCREEN;
+
+        int countCseries = 0;
+        for (int bi = 0; bi < chartData.getBandwidthDataList().size(); ++bi) {
+            BandwidthData bandwidthData = chartData.getBandwidthDataList().get(bi);
+            boolean downL = bandwidthData.getDownload() != null;
+            boolean downLRunning = bandwidthData.getDownload() != null && bandwidthData.getDownload().isStateStartedRun();
+            if (chartOnlyRunning && !downLRunning) {
+                //dann gibts den Download nicht mehr und soll auch nicht angezeigt werden
+                continue;
+            } else if (chartOnlyExisting && !downL) {
+                //sollen nur laufende angezeigt werden
+                continue;
+            }
+            ++countCseries;
+        }
+
+        int sumChartSeries = chartData.getChartSeriesList_SeparateCharts().size();
+        if (sumChartSeries > countCseries) {
+            chartData.getChartSeriesList_SeparateCharts().remove(0, sumChartSeries - countCseries);
+        }
+        while (sumChartSeries < countCseries) {
+            final XYChart.Series<Number, Number> cSeries = new XYChart.Series<>("", FXCollections.observableArrayList());
+            ChartFactory.fillChartSeries(cSeries);
+            chartData.getChartSeriesList_SeparateCharts().add(cSeries);
+            ++sumChartSeries;
+        }
+
+        lineChart.setData(chartData.getChartSeriesList_SeparateCharts());
+
+        int countChart = 0;
+        for (int bi = 0; bi < chartData.getBandwidthDataList().size(); ++bi) {
+            BandwidthData bandwidthData = chartData.getBandwidthDataList().get(bi);
+
+            boolean downL = bandwidthData.getDownload() != null;
+            boolean downLRunning = bandwidthData.getDownload() != null && bandwidthData.getDownload().isStateStartedRun();
+            if (chartOnlyRunning && !downLRunning) {
+                //dann gibts den Download nicht mehr und soll auch nicht angezeigt werden
+                continue;
+            } else if (chartOnlyExisting && !downL) {
+                //sollen nur laufende angezeigt werden
+                continue;
+            }
+
+            final XYChart.Series<Number, Number> cSeries = chartData.getChartSeriesList_SeparateCharts().get(countChart++);
+            if (bandwidthData.getDownload() != null && bandwidthData.getDownload().getNo() != DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED) {
+                bandwidthData.setName(bandwidthData.getDownload().getNo() + "");
+            } else if (bandwidthData.getDownload() != null && bandwidthData.getDownload().getFilm() != null) {
+                final String fNo = bandwidthData.getDownload().getFilm().getNo() == DownloadConstants.FILM_NUMBER_NOT_FOUND ?
+                        " " : "[" + bandwidthData.getDownload().getFilm().getNo() + "]";
+                bandwidthData.setName(fNo);
+            }
+            cSeries.setName(bandwidthData.getName());
+
+            for (int i = 0; i < ChartFactory.MAX_CHART_DATA_PER_SCREEN; ++i) {
+                final int indexChart = ChartFactory.MAX_CHART_DATA_PER_SCREEN - 1 - i;
+                final double aktTime_sec = (chartData.getCountSek() - timePerTick_sec * i);
+                final double time = (chartData.getCountSek() - timePerTick_sec * i) / 60.0;
+                final long actVal;
+                int bandwidthIdx = (int) Math.round((aktTime_sec - bandwidthData.getStartTimeSec()) / ChartFactory.DATA_ALL_SECONDS);
+                if (bandwidthIdx >= 0 && bandwidthIdx < bandwidthData.size()) {
+                    actVal = bandwidthData.get(bandwidthIdx);
+                } else {
+                    //gibts keine Downloads
+                    actVal = 0;
+                }
+                cSeries.getData().get(indexChart).setXValue(time);
+                cSeries.getData().get(indexChart).setYValue(actVal);
+            }
+        }
+        colorChartName(lineChart, chartData);
+        // logData(chartData, displayMinTimeShowing_sec, false);
+    }
+
+    private static void logData(ChartData chartData, int displayMinTimeShowing_sec, boolean all) {
+        //ins Chart eintragen
+        final double timePerTick_sec = 1.0 * (chartData.getCountSek() - displayMinTimeShowing_sec) / MAX_CHART_DATA_PER_SCREEN;
+        int i = 0;
+        int indexChart = ChartFactory.MAX_CHART_DATA_PER_SCREEN - 1 - i;
+        double time = (chartData.getCountSek() - timePerTick_sec * i) / 60.0;
+        long val;
+        String tmp = "";
+
+        if (all) {
+            val = chartData.getChartSeriesSum().getData().get(i).getYValue().longValue();
+        } else {
+            if (chartData.getChartSeriesList_SeparateCharts().size() > 0) {
+                val = chartData.getChartSeriesList_SeparateCharts().get(0).getData().get(i).getYValue().longValue();
+            } else {
+                val = 0;
+            }
+        }
+        tmp = "ii: " + i + " - indexChart: " + indexChart + " - val: " + val + " - time: " + time;
+
+        i = ChartFactory.MAX_CHART_DATA_PER_SCREEN - 1;
+        indexChart = ChartFactory.MAX_CHART_DATA_PER_SCREEN - 1 - i;
+        time = (chartData.getCountSek() - timePerTick_sec * i) / 60.0;
+
+        if (all) {
+            val = chartData.getChartSeriesSum().getData().get(i).getYValue().longValue();
+        } else {
+            if (chartData.getChartSeriesList_SeparateCharts().size() > 0) {
+                val = chartData.getChartSeriesList_SeparateCharts().get(0).getData().get(i).getYValue().longValue();
+            } else {
+                val = 0;
+            }
+        }
+        System.out.println("=========================================");
+        System.out.println("timePerTickSec: " + timePerTick_sec);
+        System.out.println("DISPLAY_MIN_TIME_SHOWING_SEC: " + displayMinTimeShowing_sec);
+        System.out.println(tmp);
+        System.out.println("ii: " + i + " - indexChart: " + indexChart + " - val: " + val + " - time: " + time);
+    }
+
+    private static synchronized void zoomXAxis(LineChart<Number, Number> lineChart, ChartData chartData) {
         final NumberAxis xAxis = (NumberAxis) lineChart.getXAxis();
-        xAxis.setUpperBound(countMinute);
-        final double MIN = countMinute - chartData.getMaxTime();
+        xAxis.setUpperBound(chartData.getCountMin());
+        final double MIN = chartData.getCountMin() - chartData.getShowMaxTimeMinutes();
         if (MIN <= 0) {
             xAxis.setLowerBound(0);
             return;
@@ -195,30 +386,28 @@ public class ChartFactory {
         final ObservableList<XYChart.Series<Number, Number>> list;
 
         if (ProgConfig.DOWNLOAD_CHART_SEPARAT.getBool()) {
-            list = chartData.getChartSeriesListSeparate();
+            list = chartData.getChartSeriesList_SeparateCharts();
         } else {
-            list = chartData.getChartSeriesListSum();
+            list = chartData.getChartSeriesList_OneSumChart();
         }
 
         for (final XYChart.Series<Number, Number> cSeries : list) {
             for (final XYChart.Data<Number, Number> date : cSeries.getData()) {
-                if ((long) date.getYValue() > max) {
-                    max = (long) date.getYValue();
+                if (date.getYValue().longValue() > max) {
+                    max = date.getYValue().longValue();
                 }
             }
         }
 
-        if (max > 5_000) {
+        while (max > 5_000) {
+            max /= 1_000;
             chartData.setScale(chartData.getScale() * 1000);
-            setYAxisLabel(lineChart, chartData);
+        }
 
-            for (final XYChart.Series<Number, Number> cSeries : chartData.getChartSeriesListSeparate()) {
-                for (final XYChart.Data<Number, Number> date : cSeries.getData()) {
-                    date.setYValue((long) date.getYValue() / 1_000);
-                }
-            }
-            for (final XYChart.Data<Number, Number> date : chartData.getChartSeriesSum().getData()) {
-                date.setYValue((long) date.getYValue() / 1_000);
+        setYAxisLabel(lineChart, chartData);
+        for (final XYChart.Series<Number, Number> cSeries : list) {
+            for (final XYChart.Data<Number, Number> date : cSeries.getData()) {
+                date.setYValue(date.getYValue().longValue() / chartData.getScale());
             }
         }
     }
@@ -237,30 +426,22 @@ public class ChartFactory {
         }
     }
 
-    private static synchronized void colorChartName(LineChart<Number, Number> lineChart, ProgData progData, ChartData chartData) {
+    private static synchronized void colorChartName(LineChart<Number, Number> lineChart, ChartData chartData) {
         // chart einfärben
-        chartData.getChartSeriesListSeparate().stream().forEach(cSeries -> {
-
-            Download download = progData.downloadList.stream()
-                    .filter(d -> d.getCSeries() != null && d.getCSeries().equals(cSeries))
-                    .findFirst().orElse(null);
-
-            if (download != null) {
-                setColor(lineChart, cSeries, download);
-            }
-
-        });
+        for (int bi = 0; bi < chartData.getBandwidthDataList().size(); ++bi) {
+            BandwidthData bandwidthData = chartData.getBandwidthDataList().get(bi);
+            setColor(lineChart, bandwidthData);
+        }
     }
 
-    private static synchronized void setColor(LineChart<Number, Number> lineChart, XYChart.Series<Number, Number> cSeries, Download download) {
+    private static synchronized void setColor(LineChart<Number, Number> lineChart, BandwidthData bandwidthData) {
         final String cRed = ProgConfig.SYSTEM_DARK_THEME.getBooleanProperty().get() ? "#ff0000" : "#de0000";
         final String cGreen = ProgConfig.SYSTEM_DARK_THEME.getBooleanProperty().get() ? "#00ff00" : "#00aa00";
-        String name = cSeries.getName();
         Set<Node> items = lineChart.lookupAll("Label.chart-legend-item");
         for (Node item : items) {
             Label label = (Label) item;
-            if (label.getText().equals(name)) {
-                switch (download.getState()) {
+            if (label.getText().equals(bandwidthData.getName())) {
+                switch (bandwidthData.getDownloadState()) {
                     case DownloadConstants.STATE_FINISHED:
                         label.setStyle(" -fx-text-fill: " + cGreen + ";");
                         break;
@@ -274,4 +455,10 @@ public class ChartFactory {
         }
     }
 
+    public static void fillChartSeries(XYChart.Series<Number, Number> series) {
+        series.getData().clear();
+        for (int i = 0; i < ChartFactory.MAX_CHART_DATA_PER_SCREEN; ++i) {
+            series.getData().add(new XYChart.Data<Number, Number>(i, 0));
+        }
+    }
 }

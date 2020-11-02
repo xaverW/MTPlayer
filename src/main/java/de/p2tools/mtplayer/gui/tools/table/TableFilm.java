@@ -58,7 +58,7 @@ public class TableFilm {
         MTColor.FILM_HISTORY.colorProperty().addListener((a, b, c) -> Table.refresh_table(table));
 
         final TableColumn<Film, Integer> nrColumn = new TableColumn<>("Nr");
-        nrColumn.setCellValueFactory(new PropertyValueFactory<>("nr"));
+        nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));
         nrColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Film, String> senderColumn = new TableColumn<>("Sender");

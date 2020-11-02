@@ -16,10 +16,10 @@
 
 package de.p2tools.mtplayer.controller.data.download;
 
-import de.p2tools.mtplayer.controller.starter.Start;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.starter.Start;
 import de.p2tools.p2Lib.tools.log.PLog;
 
 import java.net.URL;
@@ -193,10 +193,10 @@ public class DownloadListStarts {
 
             if (download.isStateStartedWaiting() &&
                     !maxChannelPlay(download, maxProChannel) &&
-                    (nr == -1 || download.getNr() < nr)) {
+                    (nr == -1 || download.getNo() < nr)) {
 
                 tmpDownload = download;
-                nr = tmpDownload.getNr();
+                nr = tmpDownload.getNo();
             }
         }
 

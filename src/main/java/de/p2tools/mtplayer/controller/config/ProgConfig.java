@@ -184,7 +184,7 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs DOWNLOAD_CHART_ALL_DOWNLOADS = addNewKey("download-chart-all-downloads", Boolean.TRUE.toString());
     public static MLConfigs DOWNLOAD_CHART_ONLY_EXISTING = addNewKey("download-chart-only-existing", Boolean.FALSE.toString());
     public static MLConfigs DOWNLOAD_CHART_ONLY_RUNNING = addNewKey("download-chart-only-running", Boolean.FALSE.toString());
-    public static MLConfigs DOWNLOAD_CHART_MAX_TIME = addNewKey("download-chart-max-time", 30);
+    public static MLConfigs DOWNLOAD_CHART_MAX_TIME = addNewKey("download-chart-max-time", 30); //MAX Minuten im Chart
 
     // Gui Abo
     public static MLConfigs ABO_SEARCH_NOW = addNewKey("abo-search-now", Boolean.TRUE.toString());

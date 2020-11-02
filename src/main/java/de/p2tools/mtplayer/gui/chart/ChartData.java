@@ -27,49 +27,51 @@ import javafx.scene.chart.XYChart;
 import java.util.ArrayList;
 
 public class ChartData {
-    private IntegerProperty maxTime = ProgConfig.DOWNLOAD_CHART_MAX_TIME.getIntegerProperty();
+    private IntegerProperty showMaxTimeMinutes = ProgConfig.DOWNLOAD_CHART_MAX_TIME.getIntegerProperty(); // MAX Minuten todo
 
     private int countSek = 0;
+    private double countMin = 0;
     private int scale = 1;
 
-    // ist die eine Chart für den Gesamtwert
+    // ist die eine LineChart für den Gesamtwert
     private final XYChart.Series<Number, Number> chartSeriesSum =
-            new XYChart.Series<>("Summe", FXCollections.observableArrayList(new XYChart.Data<Number, Number>(0.0, 0.0)));
+            new XYChart.Series<>("Summe", FXCollections.observableArrayList());
 
     // Liste der LineCharts für Gesamt -> hat nur eine LineChart
-    private final ObservableList<XYChart.Series<Number, Number>> chartSeriesListSum = FXCollections.observableArrayList(chartSeriesSum);
-
+    private final ObservableList<XYChart.Series<Number, Number>> chartSeriesList_OneSumChart = FXCollections.observableArrayList(chartSeriesSum);
     // Liste der LineCharts für einzele Downloads -> für jeden Download eine LineChart
-    private final ObservableList<XYChart.Series<Number, Number>> chartSeriesListSeparate = FXCollections.observableArrayList();
+    private final ObservableList<XYChart.Series<Number, Number>> chartSeriesList_SeparateCharts = FXCollections.observableArrayList();
 
-    // ist die Liste mit ALLEN LineCharts (auch denen die nicht angezeigt werden sollen)
-    private final ObservableList<XYChart.Series<Number, Number>> chartSeriesListAll = FXCollections.observableArrayList();
+    // ist die Liste mit ALLEN BandwidthData (auch denen die nicht angezeigt werden sollen)
+    private final ObservableList<BandwidthData> bandwidthDataList = FXCollections.observableArrayList();
 
     public ChartData() {
+        ChartFactory.fillChartSeries(chartSeriesSum);
     }
 
-    public int getMaxTime() {
-        return maxTime.get();
+    public int getShowMaxTimeMinutes() {
+        return showMaxTimeMinutes.get();
     }
 
-    public IntegerProperty maxTimeProperty() {
-        return maxTime;
+    public IntegerProperty showMaxTimeMinutesProperty() {
+        return showMaxTimeMinutes;
     }
 
-    public void setMaxTime(int maxTime) {
-        this.maxTime.set(maxTime);
+    public void setShowMaxTimeMinutes(int showMaxTimeMinutes) {
+        this.showMaxTimeMinutes.set(showMaxTimeMinutes);
     }
 
     public int getCountSek() {
         return countSek;
     }
 
-    public void setCountSek(int countSek) {
-        this.countSek = countSek;
+    public void addCountSek() {
+        this.countSek += 1;
+        countMin = countSek / 60.0; // Minuten
     }
 
-    public void addCountSek(int addCountSek) {
-        this.countSek += addCountSek;
+    public double getCountMin() {
+        return countMin;
     }
 
     public int getScale() {
@@ -84,16 +86,16 @@ public class ChartData {
         return chartSeriesSum;
     }
 
-    public ObservableList<XYChart.Series<Number, Number>> getChartSeriesListSum() {
-        return chartSeriesListSum;
+    public ObservableList<XYChart.Series<Number, Number>> getChartSeriesList_OneSumChart() {
+        return chartSeriesList_OneSumChart;
     }
 
-    public ObservableList<XYChart.Series<Number, Number>> getChartSeriesListSeparate() {
-        return chartSeriesListSeparate;
+    public ObservableList<XYChart.Series<Number, Number>> getChartSeriesList_SeparateCharts() {
+        return chartSeriesList_SeparateCharts;
     }
 
-    public ObservableList<XYChart.Series<Number, Number>> getChartSeriesListAll() {
-        return chartSeriesListAll;
+    public ObservableList<BandwidthData> getBandwidthDataList() {
+        return bandwidthDataList;
     }
 
     public void genInfos() {
@@ -102,21 +104,16 @@ public class ChartData {
         info.add("======================");
         info.add(" Downloadchart");
         info.add("----------------------");
-        final int max = ChartFactory.CHART_MAX_TIME * 60;
+        final int max = ChartFactory.MAX_MINUTES_SHOWING * 60;
         info.add("--> max: " + max);
 
-        info.add("chartSeriesListSum: " + chartSeriesListSum.size());
-        for (final XYChart.Series<Number, Number> cSeries : chartSeriesListSum) {
+        info.add("chartSeriesListSum: " + chartSeriesList_OneSumChart.size());
+        for (final XYChart.Series<Number, Number> cSeries : chartSeriesList_OneSumChart) {
             info.add("    " + cSeries.getName() + ": " + cSeries.getData().size());
         }
 
-        info.add("chartSeriesListSeparate: " + chartSeriesListSeparate.size());
-        for (final XYChart.Series<Number, Number> cSeries : chartSeriesListSeparate) {
-            info.add("    " + cSeries.getName() + ": " + cSeries.getData().size());
-        }
-
-        info.add("chartSeriesListAll: " + chartSeriesListAll.size());
-        for (final XYChart.Series<Number, Number> cSeries : chartSeriesListAll) {
+        info.add("chartSeriesListSeparate: " + chartSeriesList_SeparateCharts.size());
+        for (final XYChart.Series<Number, Number> cSeries : chartSeriesList_SeparateCharts) {
             info.add("    " + cSeries.getName() + ": " + cSeries.getData().size());
         }
 
