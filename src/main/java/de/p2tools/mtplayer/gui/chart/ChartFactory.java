@@ -34,7 +34,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 public class ChartFactory {
-    public static int MAX_CHART_DATA_PER_SCREEN = 100;
+    public static int MAX_CHART_DATA_PER_SCREEN = 1000;
     public static int DATA_ALL_SECONDS = 2;
     public static int MAX_MINUTES_SHOWING = 300;
     public static int MAX_SECONDS_SHOWING = MAX_MINUTES_SHOWING * 60;

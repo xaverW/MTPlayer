@@ -15,19 +15,17 @@
  */
 package de.p2tools.mtplayer;
 
+import de.p2tools.mtplayer.controller.ProgQuit;
+import de.p2tools.mtplayer.controller.ProgStart;
+import de.p2tools.mtplayer.controller.config.*;
+import de.p2tools.mtplayer.controller.data.ListePsetVorlagen;
+import de.p2tools.mtplayer.controller.data.SetDataList;
 import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
 import de.p2tools.mtplayer.gui.startDialog.StartDialogController;
 import de.p2tools.mtplayer.tools.storedFilter.ProgInitFilter;
-import de.p2tools.mtplayer.controller.ProgQuit;
-import de.p2tools.mtplayer.controller.ProgStart;
-import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgConst;
-import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.UpdateConfig;
-import de.p2tools.mtplayer.controller.data.ListePsetVorlagen;
-import de.p2tools.mtplayer.controller.data.SetDataList;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.P2LibInit;
+import de.p2tools.p2Lib.configFile.IoReadWriteStyle;
 import de.p2tools.p2Lib.guiTools.PGuiSize;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import javafx.application.Application;
@@ -68,7 +66,6 @@ public class MTPlayer extends Application {
     }
 
     private void initP2lib() {
-//        PButton.setHlpImage(GetIcon.getImage("button-help.png", 16, 16));
         P2LibInit.initLib(primaryStage, ProgConst.PROGRAMNAME,
                 "", ProgData.debug, ProgData.duration);
         P2LibInit.addCssFile(P2LibConst.CSS_GUI);
@@ -119,6 +116,11 @@ public class MTPlayer extends Application {
                     PGuiSize.getWidth(ProgConfig.SYSTEM_SIZE_GUI.getStringProperty()),
                     PGuiSize.getHeight(ProgConfig.SYSTEM_SIZE_GUI.getStringProperty()));
             addThemeCss(); // und jetzt noch für die neue Scene
+
+            if (ProgConfig.SYSTEM_STYLE.getBool()) {
+                P2LibInit.setStyleFile(ProgInfos.getStyleFile().toString());
+                IoReadWriteStyle.readStyle(ProgInfos.getStyleFile(), scene);
+            }
 
             ProgConfig.SYSTEM_DARK_THEME.getStringProperty().addListener((u, o, n) -> {
                 addThemeCss();

@@ -111,6 +111,8 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs SYSTEM_PROG_PLAY_FILME = addNewKey("system-prog-play-filme");
     public static MLConfigs SYSTEM_MARK_GEO = addNewKey("system-mark-geo", Boolean.TRUE.toString());
     public static MLConfigs SYSTEM_GEO_HOME_PLACE = addNewKey("system-geo-home-place", Film.GEO_DE);
+    public static MLConfigs SYSTEM_STYLE = addNewKey("system-style", Boolean.FALSE.toString());
+    public static MLConfigs SYSTEM_STYLE_SIZE = addNewKey("system-geo-home-place", "14");
     public static MLConfigs SYSTEM_LOG_DIR = addNewKey("system-log-dir", "");
     public static MLConfigs SYSTEM_LOG_ON = addNewKey("system-log-on", Boolean.TRUE.toString());
     public static MLConfigs SYSTEM_SMALL_ROW_TABLE_FILM = addNewKey("system-small-row-table-film", Boolean.FALSE.toString());

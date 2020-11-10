@@ -84,6 +84,7 @@ public class ConfigPaneController extends PAccordionPane {
     private ColorPane colorPane;
     private ShortcutPane shortcutPane;
     private GeoPane geoPane;
+    private StylePane stylePane;
 
     public ConfigPaneController(Stage stage) {
         super(stage, ProgConfig.CONFIG_DIALOG_ACCORDION.getBooleanProperty(), ProgConfig.SYSTEM_CONFIG_DIALOG_CONFIG);
@@ -98,6 +99,7 @@ public class ConfigPaneController extends PAccordionPane {
         colorPane.close();
         shortcutPane.close();
         geoPane.close();
+        stylePane.close();
         tglSearchAbo.selectedProperty().unbindBidirectional(propAbo);
         tglStartDownload.selectedProperty().unbindBidirectional(propDown);
         tglSmallFilm.selectedProperty().unbindBidirectional(propSizeFilm);
@@ -122,6 +124,9 @@ public class ConfigPaneController extends PAccordionPane {
         shortcutPane.makeShortcut(result);
         geoPane = new GeoPane(stage);
         geoPane.makeGeo(result);
+        stylePane = new StylePane(stage, progData);
+        stylePane.makeStyle(result);
+
         makeProg(result);
         makeUpdate(result);
         return result;

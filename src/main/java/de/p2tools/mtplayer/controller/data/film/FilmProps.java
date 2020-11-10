@@ -20,8 +20,6 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.tools.FilmDate;
 import de.p2tools.p2Lib.tools.date.PDate;
 import de.p2tools.p2Lib.tools.log.PLog;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 
 public class FilmProps extends FilmXml {
 
@@ -43,10 +41,10 @@ public class FilmProps extends FilmXml {
 
     // todo?? die Property brauchts nicht alle aber dann müssen die checkboxen in der Tabelle
     // ersetzt werden
-    private final BooleanProperty newFilm = new SimpleBooleanProperty(false);
-    private final BooleanProperty shown = new SimpleBooleanProperty(false);
-    private final BooleanProperty actHist = new SimpleBooleanProperty(false);
-    private final BooleanProperty bookmark = new SimpleBooleanProperty(false);
+    private boolean newFilm = false;
+    private boolean shown = false;
+    private boolean actHist = false;
+    private boolean bookmark = false;
 
     public int getDurationMinute() {
         return durationMinute;
@@ -239,53 +237,53 @@ public class FilmProps extends FilmXml {
     }
 
     public boolean isNewFilm() {
-        return newFilm.get();
-    }
-
-    public void setNewFilm(final boolean newFilm) {
-        this.newFilm.setValue(newFilm);
-    }
-
-    public BooleanProperty newFilmProperty() {
         return newFilm;
     }
 
-    public boolean isShown() {
-        return shown.get();
+    public void setNewFilm(final boolean newFilm) {
+        this.newFilm = newFilm;
     }
 
-    public BooleanProperty shownProperty() {
+//    public BooleanProperty newFilmProperty() {
+//        return newFilm;
+//    }
+
+    public boolean isShown() {
         return shown;
     }
 
+//    public BooleanProperty shownProperty() {
+//        return shown;
+//    }
+
     public void setShown(boolean shown) {
         if (!isLive()) {
-            this.shown.set(shown);
+            this.shown = shown;
         }
     }
 
     public boolean getActHist() {
-        return actHist.get();
-    }
-
-    public BooleanProperty actHistProperty() {
         return actHist;
     }
 
+//    public BooleanProperty actHistProperty() {
+//        return actHist;
+//    }
+
     public void setActHist(boolean actHist) {
-        this.actHist.set(actHist);
+        this.actHist = actHist;
     }
 
     public boolean isBookmark() {
-        return bookmark.get();
-    }
-
-    public BooleanProperty bookmarkProperty() {
         return bookmark;
     }
 
+//    public BooleanProperty bookmarkProperty() {
+//        return bookmark;
+//    }
+
     public void setBookmark(boolean bookmark) {
-        this.bookmark.set(bookmark);
+        this.bookmark = bookmark;
     }
 
     public String getFilmDateLong() {

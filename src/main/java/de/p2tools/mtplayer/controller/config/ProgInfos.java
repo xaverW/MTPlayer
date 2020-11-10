@@ -98,6 +98,17 @@ public class ProgInfos {
     }
 
     /**
+     * Return the path to "mtplayer.xml"
+     *
+     * @return Path object to mtplayer.xml file
+     */
+    public static Path getStyleFile() {
+        return SettingsDirectory.getSettingsFile(ProgData.configDir,
+                ProgConst.CONFIG_DIRECTORY,
+                ProgConst.STYLE_FILE);
+    }
+
+    /**
      * Return the location of the settings directory. If it does not exist, create one.
      *
      * @return Path to the settings directory

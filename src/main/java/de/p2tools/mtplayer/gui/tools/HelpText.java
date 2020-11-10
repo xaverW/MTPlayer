@@ -216,6 +216,13 @@ public class HelpText {
             "abgespielt werden kann, liegt fast immer " +
             "Geoblocking vor.";
 
+    public static final String CONFIG_STYLE = "Hier kann die Schriftgröße des Programms angepasst werden." + P2LibConst.LINE_SEPARATORx2 +
+            "Die sollte sich automatisch an die vorgegebene Größe im Betriebssystem einstellen. " +
+            "Wenn die Automatik nicht korrekt funktioniert oder eine andere gewünscht wird, kann " +
+            "sie hier angepasst werden." +
+            P2LibConst.LINE_SEPARATORx2 +
+            "Damit die Änderungen wirksam werden, kann ein Programmneustart notwendig sein.";
+
     public static final String GUI_FILMS_EDIT_FILTER = "Hier können die Filter " +
             "die angezeigt werden sollen, ein- und ausgeschaltet werden." +
             P2LibConst.LINE_SEPARATORx2 +
