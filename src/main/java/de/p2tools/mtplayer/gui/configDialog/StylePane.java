@@ -102,7 +102,7 @@ public class StylePane {
     }
 
     private void initNumberDownloads() {
-        spinnerAnz.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(5, 30, 1));
+        spinnerAnz.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(6, 30, 1));
         spinnerAnz.getValueFactory().setValue(ProgConfig.SYSTEM_STYLE_SIZE.getInt());
     }
 
