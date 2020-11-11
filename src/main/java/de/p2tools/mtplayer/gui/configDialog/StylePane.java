@@ -27,6 +27,8 @@ import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -40,30 +42,31 @@ public class StylePane {
     private Spinner<Integer> spinnerAnz = new Spinner<>();
     private final Stage stage;
     private final ProgData progData;
+    boolean changed = false;
 
     BooleanProperty styleProperty = ProgConfig.SYSTEM_STYLE.getBooleanProperty();
 
     public StylePane(Stage stage, ProgData progData) {
         this.stage = stage;
         this.progData = progData;
-        initNumberDownloads();
     }
 
     public void close() {
         tglStyle.selectedProperty().unbindBidirectional(styleProperty);
-        if (styleProperty.get()) {
-            int size = spinnerAnz.getValue();
-            ProgConfig.SYSTEM_STYLE_SIZE.setValue(size);
+        int size = spinnerAnz.getValue();
+        ProgConfig.SYSTEM_STYLE_SIZE.setValue(size);
 
-            IoReadWriteStyle.writeStyle(ProgInfos.getStyleFile(), size);
-            P2LibInit.setStyleFile(ProgInfos.getStyleFile().toString());
+        if (changed) {
+            if (styleProperty.get()) {
+                IoReadWriteStyle.writeStyle(ProgInfos.getStyleFile(), size);
+                P2LibInit.setStyleFile(ProgInfos.getStyleFile().toString());
+                PLog.sysLog("Schriftgröße ändern: " + size);
+            } else {
+                IoReadWriteStyle.writeStyle(ProgInfos.getStyleFile(), -1);
+                P2LibInit.setStyleFile("");
+                PLog.sysLog("Schriftgröße nicht mehr ändern.");
+            }
             IoReadWriteStyle.readStyle(ProgInfos.getStyleFile(), progData.primaryStage.getScene());
-            PLog.sysLog("Schriftgröße änndern: " + size);
-
-        } else {
-            IoReadWriteStyle.writeStyle(ProgInfos.getStyleFile(), -1);
-            P2LibInit.setStyleFile("");
-            PLog.sysLog("Schriftgröße nicht mehr ändern.");
         }
     }
 
@@ -98,12 +101,25 @@ public class StylePane {
         if (result != null) {
             result.add(tpConfig);
         }
+        init();
         return tpConfig;
     }
 
-    private void initNumberDownloads() {
+    private void init() {
         spinnerAnz.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(6, 30, 1));
         spinnerAnz.getValueFactory().setValue(ProgConfig.SYSTEM_STYLE_SIZE.getInt());
+        spinnerAnz.valueProperty().addListener(new ChangeListener<Integer>() {
+            @Override
+            public void changed(ObservableValue<? extends Integer> observable, Integer oldValue, Integer newValue) {
+                changed = true;
+            }
+        });
+        tglStyle.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                changed = true;
+            }
+        });
     }
 
 
