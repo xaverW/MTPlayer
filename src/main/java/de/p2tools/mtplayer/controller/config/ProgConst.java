@@ -127,6 +127,7 @@ public class ProgConst {
 
     public static final int MIN_TABLE_HEIGHT = 200;
     public static final int MIN_TEXTAREA_HEIGHT = 75;
+    public static final int MIN_TEXTAREA_HEIGHT_LOW = 50;
 
     public static final String FILTER_ALL = "alles"; // im config bei "alles" steht das dann
 

@@ -16,23 +16,22 @@
 
 package de.p2tools.mtplayer.gui.configDialog;
 
+import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.MTShortcut;
-import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.tools.log.PLog;
 import de.p2tools.p2Lib.tools.shortcut.PShortcut;
 import javafx.application.Platform;
+import javafx.beans.property.DoubleProperty;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -45,40 +44,31 @@ public class ShortcutPane {
     private String newShortcutValue = "";
     private final TextArea txtLongDescription = new TextArea();
     private final TableView<PShortcut> tableView = new TableView<>();
+    DoubleProperty doubleProperty;//sonst geht die Ref verloren
 
     public ShortcutPane(Stage stage) {
         this.stage = stage;
         progData = ProgData.getInstance();
+        this.doubleProperty = ProgConfig.CONFIG_DIALOG_SHORTCUT_DIVIDER.getDoubleProperty();
     }
 
     public void makeShortcut(Collection<TitledPane> result) {
-        final VBox vBox = new VBox();
-        vBox.setFillWidth(true);
-        vBox.setSpacing(10);
-        vBox.setPadding(new Insets(20));
+        SplitPane splitPane = new SplitPane();
+        splitPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        splitPane.setOrientation(Orientation.VERTICAL);
+        SplitPane.setResizableWithParent(tableView, Boolean.TRUE);
+        SplitPane.setResizableWithParent(txtLongDescription, Boolean.FALSE);
+        splitPane.getItems().addAll(tableView, txtLongDescription);
+        splitPane.getDividers().get(0).positionProperty().bindBidirectional(doubleProperty);
 
-        final GridPane gridPane = new GridPane();
-        gridPane.setHgap(15);
-        gridPane.setVgap(15);
-        gridPane.setPadding(new Insets(0, 0, 10, 0));
-
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(), PColumnConstraints.getCcPrefSize());
-
-        VBox.setVgrow(tableView, Priority.ALWAYS);
         initTable(tableView);
-
-        HBox hBox = new HBox(10);
-        txtLongDescription.setMinHeight(ProgConst.MIN_TEXTAREA_HEIGHT);
+        txtLongDescription.setMinHeight(ProgConst.MIN_TEXTAREA_HEIGHT_LOW);
+        txtLongDescription.setPrefHeight(ProgConst.MIN_TEXTAREA_HEIGHT_LOW);
         txtLongDescription.setEditable(false);
         txtLongDescription.setWrapText(true);
-        hBox.getChildren().addAll(txtLongDescription/*, buttonReset*/);
-        hBox.setPadding(new Insets(0));
-        HBox.setHgrow(txtLongDescription, Priority.ALWAYS);
 
-        vBox.getChildren().addAll(gridPane, tableView, hBox);
-
-        TitledPane tpColor = new TitledPane("Tastenkürzel", vBox);
-        result.add(tpColor);
+        TitledPane tpShortcut = new TitledPane("Tastenkürzel", splitPane);
+        result.add(tpShortcut);
     }
 
     public void close() {
