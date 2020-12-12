@@ -34,10 +34,10 @@ import java.util.Iterator;
 import java.util.Set;
 
 public class ChartFactory {
-    public static int MAX_CHART_DATA_PER_SCREEN = 1000;
+    public static int MAX_CHART_DATA_PER_SCREEN = 500;
     public static int DATA_ALL_SECONDS = 2;
     public static int MAX_MINUTES_SHOWING = 300;
-    public static int MAX_SECONDS_SHOWING = MAX_MINUTES_SHOWING * 60;
+    public static int MAX_SECONDS_SHOWING = MAX_MINUTES_SHOWING * 60; //1800
     public static int MAX_DATA = MAX_SECONDS_SHOWING / DATA_ALL_SECONDS; // 3600
     private static int runChart = 0;
     private static long[] bandwidthSumArr = new long[MAX_CHART_DATA_PER_SCREEN];
@@ -79,7 +79,7 @@ public class ChartFactory {
     }
 
     public static synchronized void runChart(LineChart<Number, Number> lineChart, ChartData chartData,
-                                             ProgData progData) {
+                                             ProgData progData, boolean visible) {
 
         chartData.addCountSek(); // Sekunden
         ++runChart;
@@ -90,61 +90,21 @@ public class ChartFactory {
 
         cleanUpData(chartData, progData);
         inputDownloadData(chartData, progData);
-        generateChartData(lineChart, chartData);
-        zoomXAxis(lineChart, chartData);
-        zoomYAxis(lineChart, chartData);
+
+        if (visible) {
+            generateChartData(lineChart, chartData);
+            zoomXAxis(lineChart, chartData);
+            zoomYAxis(lineChart, chartData);
+        }
     }
 
     private static synchronized void cleanUpData(ChartData chartData, ProgData progData) {
         chartData.setScale(1);
+        boolean foundDownload;
 
-        //Downloads die es nicht mehr gibt löschen
-        Iterator<BandwidthData> it = chartData.getBandwidthDataList().listIterator();
-        while (it.hasNext()) {
-            BandwidthData bandwidthData = it.next();
-            boolean foundDownload = false;
-            for (final Download download : progData.downloadList) {
-                if (bandwidthData.getDownload() != null && bandwidthData.getDownload().equals(download)) {
-                    foundDownload = true;
-                    break;
-                }
-            }
-            if (!foundDownload) {
-                bandwidthData.setDownload(null);
-                if (bandwidthData.isEmpty()) {
-                    // dann wurde bereits alles gelöscht und kommt jetzt auch weg
-                    it.remove();
-                }
-            }
-        }
-
-        it = chartData.getBandwidthDataList().listIterator();
-        while (it.hasNext()) {
-            BandwidthData bandwidthData = it.next();
-            boolean foundDownload = false;
-            for (final Download download : progData.downloadList.getListOfStartsNotFinished(DownloadConstants.ALL)) {
-                if (bandwidthData.getDownload() != null && bandwidthData.getDownload().equals(download)) {
-                    foundDownload = true;
-                    break;
-                }
-            }
-
-            if (!foundDownload) {
-                //Download gibts nicht mehr oder läuft nicht mehr
-                int size = bandwidthData.size();
-                if (size > 0 && bandwidthData.get(size - 1).longValue() > 0) {
-                    // nur einen Wert "0" setzen und dann wars der letzte Wert
-                    bandwidthData.add(0L);
-                }
-            }
-        }
-
-        // und jetzt noch alle Messpunkte vor MAX-Zeit löschen
+        //alle Messpunkte vor MAX-Zeit löschen
         chartData.getBandwidthDataList().stream().forEach(bandwidthData -> {
             while (bandwidthData.size() > ChartFactory.MAX_DATA) {
-                if (bandwidthData.isEmpty()) {
-                    break;
-                }
                 bandwidthData.removeFirst();
             }
             while ((chartData.getCountSek() - bandwidthData.getStartTimeSec()) > ChartFactory.MAX_SECONDS_SHOWING) {
@@ -154,6 +114,46 @@ public class ChartFactory {
                 bandwidthData.removeFirst();
             }
         });
+
+        //Downloads die es nicht mehr gibt: "Download" entfernen und
+        //wurde bereits alles aus "BandwidthData" gelöscht, kommts auch weg
+        Iterator<BandwidthData> it = chartData.getBandwidthDataList().listIterator();
+        while (it.hasNext()) {
+            foundDownload = false;
+            final BandwidthData bandwidthData = it.next();
+            for (final Download download : progData.downloadList) {
+                if (bandwidthData.getDownload() != null && bandwidthData.getDownload().equals(download)) {
+                    foundDownload = true;
+                    break;
+                }
+            }
+            if (!foundDownload) {
+                bandwidthData.setDownload(null);
+                if (bandwidthData.isEmpty()) {
+                    it.remove();
+                }
+            }
+        }
+
+        //fertige Downloads abschließen, Download gibts nicht mehr oder läuft nicht mehr,
+        //dann einen Wert "0" anfügen, wenn noch nicht geschehen
+        it = chartData.getBandwidthDataList().listIterator();
+        while (it.hasNext()) {
+            BandwidthData bandwidthData = it.next();
+            foundDownload = false;
+            for (final Download download : progData.downloadList.getListOfStartsNotFinished(DownloadConstants.ALL)) {
+                if (bandwidthData.getDownload() != null && bandwidthData.getDownload().equals(download)) {
+                    foundDownload = true;
+                    break;
+                }
+            }
+            if (!foundDownload) {
+                int size = bandwidthData.size();
+                if (size > 0 && bandwidthData.get(size - 1).longValue() > 0) {
+                    bandwidthData.add(0L);
+                }
+            }
+        }
     }
 
     private static synchronized void inputDownloadData(ChartData chartData, ProgData progData) {
@@ -183,6 +183,16 @@ public class ChartFactory {
             } else {
                 bandwidthData.add(0L);
             }
+
+            //damit beim Pausieren die Nummer nicht verloren geht
+            if (download != null && download.getNo() != DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED) {
+                bandwidthData.setName(download.getNo() + "");
+            } else if (download != null && download.getFilm() != null) {
+                final String fNo = download.getFilm().getNo() == DownloadConstants.FILM_NUMBER_NOT_FOUND ?
+                        " " : "[" + download.getFilm().getNo() + "]";
+                bandwidthData.setName(fNo);
+            }
+
         }
     }
 
@@ -242,14 +252,12 @@ public class ChartFactory {
         }
 
         colorChartName(lineChart, chartData);
-        // logData(chartData, displayMinTimeShowing_sec, true);
     }
 
     private static synchronized void generateChartDataSeparated(LineChart<Number, Number> lineChart, ChartData chartData) {
         // und jetzt die sichtbaren Daten eintragen
         final boolean chartOnlyRunning = ProgConfig.DOWNLOAD_CHART_ONLY_RUNNING.getBool();
         final boolean chartOnlyExisting = ProgConfig.DOWNLOAD_CHART_ONLY_EXISTING.getBool();
-        // final boolean chartAll = ProgConfig.DOWNLOAD_CHART_ALL_DOWNLOADS.getBool();
 
         int displayMinTimeShowing_sec = chartData.getCountSek() - chartData.getShowMaxTimeMinutes() * 60;
         if (displayMinTimeShowing_sec < 0) {
@@ -257,9 +265,103 @@ public class ChartFactory {
         }
         final double timePerTick_sec = 1.0 * (chartData.getCountSek() - displayMinTimeShowing_sec) / MAX_CHART_DATA_PER_SCREEN;
 
-        int countCseries = 0;
+        setBandwidthShowing(chartData, timePerTick_sec);
+        genChartSeries(chartData);
+        lineChart.setData(chartData.getChartSeriesList_SeparateCharts());
+
+        int countChart = 0;
         for (int bi = 0; bi < chartData.getBandwidthDataList().size(); ++bi) {
             BandwidthData bandwidthData = chartData.getBandwidthDataList().get(bi);
+            if (!bandwidthData.isShowing()) {
+                continue;
+            }
+
+            boolean downL = bandwidthData.getDownload() != null;
+            boolean downLRunning = bandwidthData.getDownload() != null && bandwidthData.getDownload().isStateStartedRun();
+            if (chartOnlyRunning && !downLRunning) {
+                //dann gibts den Download nicht mehr und soll auch nicht angezeigt werden
+                continue;
+            } else if (chartOnlyExisting && !downL) {
+                //sollen nur laufende angezeigt werden
+                continue;
+            }
+
+            final XYChart.Series<Number, Number> cSeries = chartData.getChartSeriesList_SeparateCharts().get(countChart++);
+//            if (bandwidthData.getDownload() != null && bandwidthData.getDownload().getNo() != DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED) {
+//                bandwidthData.setName(bandwidthData.getDownload().getNo() + "");
+//            } else if (bandwidthData.getDownload() != null && bandwidthData.getDownload().getFilm() != null) {
+//                final String fNo = bandwidthData.getDownload().getFilm().getNo() == DownloadConstants.FILM_NUMBER_NOT_FOUND ?
+//                        " " : "[" + bandwidthData.getDownload().getFilm().getNo() + "]";
+//                bandwidthData.setName(fNo);
+//            }
+            cSeries.setName(bandwidthData.getName());
+
+            boolean onlyNull = true;
+            if (bandwidthData.getDownload() != null) {
+                //dann ist er noch da und wird auch immer angezeigt, auch wenn Bandbreite 0
+                onlyNull = false;
+            }
+            for (int i = 0; i < ChartFactory.MAX_CHART_DATA_PER_SCREEN; ++i) {
+                final int indexChart = ChartFactory.MAX_CHART_DATA_PER_SCREEN - 1 - i;
+                final double aktTime_sec = (chartData.getCountSek() - timePerTick_sec * i);
+                final double time = (chartData.getCountSek() - timePerTick_sec * i) / 60.0;
+                final long actVal;
+                int bandwidthIdx = (int) Math.round((aktTime_sec - bandwidthData.getStartTimeSec()) / ChartFactory.DATA_ALL_SECONDS);
+                if (bandwidthIdx >= 0 && bandwidthIdx < bandwidthData.size()) {
+                    actVal = bandwidthData.get(bandwidthIdx);
+                    if (actVal > 0) {
+                        onlyNull = false;
+                    }
+                } else {
+                    //gibts keine Downloads
+                    actVal = 0;
+                }
+                cSeries.getData().get(indexChart).setXValue(time);
+                cSeries.getData().get(indexChart).setYValue(actVal);
+            }
+            if (onlyNull) {
+                cSeries.setName("NO_DOWN");
+                chartData.getChartSeriesList_SeparateCharts().remove(cSeries);
+            }
+        }
+        colorChartName(lineChart, chartData);
+        // logData(chartData, displayMinTimeShowing_sec, false);
+    }
+
+    private static void setBandwidthShowing(ChartData chartData, double timePerTick_sec) {
+        for (int bi = 0; bi < chartData.getBandwidthDataList().size(); ++bi) {
+            BandwidthData bandwidthData = chartData.getBandwidthDataList().get(bi);
+            boolean onlyNull = true;
+            for (int i = 0; i < ChartFactory.MAX_CHART_DATA_PER_SCREEN; ++i) {
+                final double aktTime_sec = (chartData.getCountSek() - timePerTick_sec * i);
+                final long actVal;
+                int bandwidthIdx = (int) Math.round((aktTime_sec - bandwidthData.getStartTimeSec()) / ChartFactory.DATA_ALL_SECONDS);
+                if (bandwidthIdx >= 0 && bandwidthIdx < bandwidthData.size()) {
+                    actVal = bandwidthData.get(bandwidthIdx);
+                    if (actVal > 0) {
+                        onlyNull = false;
+                    }
+                }
+            }
+            if (onlyNull && bandwidthData.getDownload() == null) {
+                // dann wird kein Downloadwert mehr im sichtbaren Bereich des Displays angezeigt
+                bandwidthData.setShowing(false);
+            } else {
+                bandwidthData.setShowing(true);
+            }
+        }
+    }
+
+    private static void genChartSeries(ChartData chartData) {
+        final boolean chartOnlyRunning = ProgConfig.DOWNLOAD_CHART_ONLY_RUNNING.getBool();
+        final boolean chartOnlyExisting = ProgConfig.DOWNLOAD_CHART_ONLY_EXISTING.getBool();
+        int countCseries = 0;
+
+        for (int bi = 0; bi < chartData.getBandwidthDataList().size(); ++bi) {
+            BandwidthData bandwidthData = chartData.getBandwidthDataList().get(bi);
+            if (!bandwidthData.isShowing()) {
+                continue;
+            }
             boolean downL = bandwidthData.getDownload() != null;
             boolean downLRunning = bandwidthData.getDownload() != null && bandwidthData.getDownload().isStateStartedRun();
             if (chartOnlyRunning && !downLRunning) {
@@ -282,51 +384,6 @@ public class ChartFactory {
             chartData.getChartSeriesList_SeparateCharts().add(cSeries);
             ++sumChartSeries;
         }
-
-        lineChart.setData(chartData.getChartSeriesList_SeparateCharts());
-
-        int countChart = 0;
-        for (int bi = 0; bi < chartData.getBandwidthDataList().size(); ++bi) {
-            BandwidthData bandwidthData = chartData.getBandwidthDataList().get(bi);
-
-            boolean downL = bandwidthData.getDownload() != null;
-            boolean downLRunning = bandwidthData.getDownload() != null && bandwidthData.getDownload().isStateStartedRun();
-            if (chartOnlyRunning && !downLRunning) {
-                //dann gibts den Download nicht mehr und soll auch nicht angezeigt werden
-                continue;
-            } else if (chartOnlyExisting && !downL) {
-                //sollen nur laufende angezeigt werden
-                continue;
-            }
-
-            final XYChart.Series<Number, Number> cSeries = chartData.getChartSeriesList_SeparateCharts().get(countChart++);
-            if (bandwidthData.getDownload() != null && bandwidthData.getDownload().getNo() != DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED) {
-                bandwidthData.setName(bandwidthData.getDownload().getNo() + "");
-            } else if (bandwidthData.getDownload() != null && bandwidthData.getDownload().getFilm() != null) {
-                final String fNo = bandwidthData.getDownload().getFilm().getNo() == DownloadConstants.FILM_NUMBER_NOT_FOUND ?
-                        " " : "[" + bandwidthData.getDownload().getFilm().getNo() + "]";
-                bandwidthData.setName(fNo);
-            }
-            cSeries.setName(bandwidthData.getName());
-
-            for (int i = 0; i < ChartFactory.MAX_CHART_DATA_PER_SCREEN; ++i) {
-                final int indexChart = ChartFactory.MAX_CHART_DATA_PER_SCREEN - 1 - i;
-                final double aktTime_sec = (chartData.getCountSek() - timePerTick_sec * i);
-                final double time = (chartData.getCountSek() - timePerTick_sec * i) / 60.0;
-                final long actVal;
-                int bandwidthIdx = (int) Math.round((aktTime_sec - bandwidthData.getStartTimeSec()) / ChartFactory.DATA_ALL_SECONDS);
-                if (bandwidthIdx >= 0 && bandwidthIdx < bandwidthData.size()) {
-                    actVal = bandwidthData.get(bandwidthIdx);
-                } else {
-                    //gibts keine Downloads
-                    actVal = 0;
-                }
-                cSeries.getData().get(indexChart).setXValue(time);
-                cSeries.getData().get(indexChart).setYValue(actVal);
-            }
-        }
-        colorChartName(lineChart, chartData);
-        // logData(chartData, displayMinTimeShowing_sec, false);
     }
 
     private static void logData(ChartData chartData, int displayMinTimeShowing_sec, boolean all) {

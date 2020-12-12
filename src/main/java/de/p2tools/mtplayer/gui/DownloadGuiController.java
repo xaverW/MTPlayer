@@ -16,11 +16,6 @@
 
 package de.p2tools.mtplayer.gui;
 
-import de.p2tools.mtplayer.gui.chart.DownloadGuiChart;
-import de.p2tools.mtplayer.gui.dialog.DownloadEditDialogController;
-import de.p2tools.mtplayer.gui.mediaDialog.MediaDialogController;
-import de.p2tools.mtplayer.gui.tools.Listener;
-import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
@@ -29,6 +24,11 @@ import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
 import de.p2tools.mtplayer.controller.data.film.Film;
 import de.p2tools.mtplayer.controller.data.film.FilmTools;
+import de.p2tools.mtplayer.gui.chart.DownloadGuiChart;
+import de.p2tools.mtplayer.gui.dialog.DownloadEditDialogController;
+import de.p2tools.mtplayer.gui.mediaDialog.MediaDialogController;
+import de.p2tools.mtplayer.gui.tools.Listener;
+import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.POpen;
 import de.p2tools.p2Lib.guiTools.PTableFactory;
@@ -111,6 +111,13 @@ public class DownloadGuiController extends AnchorPane {
         initListener();
         setFilterProperty();
         setFilter();
+
+        Listener.addListener(new Listener(Listener.EREIGNIS_TIMER, DownloadGuiChart.class.getSimpleName()) {
+            @Override
+            public void pingFx() {
+                downloadGuiChart.searchInfos(tabPane.getSelectionModel().getSelectedItem().equals(tabBand));
+            }
+        });
     }
 
     public void tableRefresh() {

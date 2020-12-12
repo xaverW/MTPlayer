@@ -27,6 +27,7 @@ public class BandwidthData extends ArrayList<Long> {
     private int downloadState = DownloadConstants.STATE_INIT;
     private String name = "";
     private int startTimeSec; //Startzeit in Sekunden
+    private boolean isShowing = false;
 
     public BandwidthData(Download download, int startTimeSec) {
         this.download = download;
@@ -76,6 +77,14 @@ public class BandwidthData extends ArrayList<Long> {
 
     public int getTimeSec(int sec) {
         return startTimeSec + sec * ChartFactory.DATA_ALL_SECONDS;
+    }
+
+    public boolean isShowing() {
+        return isShowing;
+    }
+
+    public void setShowing(boolean showing) {
+        isShowing = showing;
     }
 
     public double getTimeMin(int sec) {

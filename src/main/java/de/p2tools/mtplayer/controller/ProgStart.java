@@ -205,31 +205,26 @@ public class ProgStart {
         // Prüfen obs ein Programmupdate gibt
         PDuration.onlyPing("checkProgUpdate");
 
-        if (ProgData.debug || // zum Testen wird immer geprüft
-                Boolean.parseBoolean(ProgConfig.SYSTEM_UPDATE_SEARCH.get()) &&
-                        !ProgConfig.SYSTEM_UPDATE_DATE.get().equals(PDateFactory.FORMATTER_yyyyMMdd.format(new Date()))) {
-
+        if (Boolean.parseBoolean(ProgConfig.SYSTEM_UPDATE_SEARCH.get()) &&
+                !ProgConfig.SYSTEM_UPDATE_DATE.get().equals(PDateFactory.FORMATTER_yyyyMMdd.format(new Date()))) {
             // nach Updates suchen
+            runUpdateCheck(progData);
+
+        } else if (ProgData.debug) {
+            // damits bei jedem Start gemacht wird
+            PLog.sysLog("DEBUG: Update-Check");
             runUpdateCheck(progData);
 
         } else {
             // will der User nicht --oder-- wurde heute schon gemacht
             List list = new ArrayList(5);
-            list.add("Kein Update-Check");
-
+            list.add("Kein Update-Check:");
             if (!Boolean.parseBoolean(ProgConfig.SYSTEM_UPDATE_SEARCH.get())) {
                 list.add("  der User will nicht");
             }
             if (ProgConfig.SYSTEM_UPDATE_DATE.get().equals(PDateFactory.FORMATTER_yyyyMMdd.format(new Date()))) {
                 list.add("  heute schon gemacht");
             }
-
-            if (ProgData.debug) {
-                // damits bei jedem Start gemacht wird
-                list.add("  DEBUG: Update-Check");
-                runUpdateCheck(progData);
-            }
-
             PLog.sysLog(list);
         }
     }

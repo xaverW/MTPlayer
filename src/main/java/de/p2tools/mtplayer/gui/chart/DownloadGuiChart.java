@@ -18,7 +18,6 @@ package de.p2tools.mtplayer.gui.chart;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.gui.tools.Listener;
 import javafx.beans.property.BooleanProperty;
 import javafx.geometry.Side;
 import javafx.scene.chart.LineChart;
@@ -31,7 +30,7 @@ import javafx.scene.layout.Priority;
 public class DownloadGuiChart {
 
     private BooleanProperty separatChartProp = ProgConfig.DOWNLOAD_CHART_SEPARAT.getBooleanProperty();
-    private BooleanProperty chartAllDownloadsProp = ProgConfig.DOWNLOAD_CHART_ALL_DOWNLOADS.getBooleanProperty();
+    //    private BooleanProperty chartAllDownloadsProp = ProgConfig.DOWNLOAD_CHART_ALL_DOWNLOADS.getBooleanProperty();
     private BooleanProperty chartOnlyExistingProp = ProgConfig.DOWNLOAD_CHART_ONLY_EXISTING.getBooleanProperty();
     private BooleanProperty chartOnlyRunningProp = ProgConfig.DOWNLOAD_CHART_ONLY_RUNNING.getBooleanProperty();
     private final ProgData progData;
@@ -50,12 +49,12 @@ public class DownloadGuiChart {
         initCharts();
         selectChartData();
 
-        Listener.addListener(new Listener(Listener.EREIGNIS_TIMER, DownloadGuiChart.class.getSimpleName()) {
-            @Override
-            public void pingFx() {
-                searchInfos();
-            }
-        });
+//        Listener.addListener(new Listener(Listener.EREIGNIS_TIMER, DownloadGuiChart.class.getSimpleName()) {
+//            @Override
+//            public void pingFx() {
+//                searchInfos();
+//            }
+//        });
     }
 
     private synchronized void initList() {
@@ -143,7 +142,7 @@ public class DownloadGuiChart {
         rbOnlyExisting.setToggleGroup(group);
         rbOnlyRunning.setToggleGroup(group);
 
-        rbAll.selectedProperty().bindBidirectional(chartAllDownloadsProp);
+        rbAll.setSelected(!chartOnlyExistingProp.getValue() && !chartOnlyRunningProp.getValue());
         rbOnlyExisting.selectedProperty().bindBidirectional(chartOnlyExistingProp);
         rbOnlyRunning.selectedProperty().bindBidirectional(chartOnlyRunningProp);
 
@@ -166,7 +165,7 @@ public class DownloadGuiChart {
     // ============================
     // Daten generieren
     // ============================
-    private synchronized void searchInfos() {
-        ChartFactory.runChart(lineChart, chartData, progData);
+    public synchronized void searchInfos(boolean visible) {
+        ChartFactory.runChart(lineChart, chartData, progData, visible);
     }
 }
