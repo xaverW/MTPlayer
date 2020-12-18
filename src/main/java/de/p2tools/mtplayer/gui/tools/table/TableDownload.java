@@ -25,6 +25,7 @@ import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadSizeData;
 import de.p2tools.p2Lib.guiTools.PCheckBoxCell;
 import de.p2tools.p2Lib.guiTools.POpen;
+import de.p2tools.p2Lib.tools.GermanStringIntSorter;
 import de.p2tools.p2Lib.tools.date.PDate;
 import javafx.beans.property.BooleanProperty;
 import javafx.event.ActionEvent;
@@ -53,6 +54,7 @@ public class TableDownload {
     public TableColumn[] initDownloadColumn(TableView table) {
         table.getColumns().clear();
 
+        final GermanStringIntSorter sorter = GermanStringIntSorter.getInstance();
         ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD.getStringProperty().addListener((observableValue, s, t1) -> table.refresh());
 
         MTColor.FILM_GEOBLOCK.colorProperty().addListener((a, b, c) -> table.refresh());
@@ -83,11 +85,12 @@ public class TableDownload {
         final TableColumn<Download, String> themeColumn = new TableColumn<>("Thema");
         themeColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
         themeColumn.getStyleClass().add("alignCenterLeft");
+        themeColumn.setComparator(sorter);
 
         final TableColumn<Download, String> titleColumn = new TableColumn<>("Titel");
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         titleColumn.getStyleClass().add("alignCenterLeft");
-
+        titleColumn.setComparator(sorter);
 
         // die zwei Spalten mit eigenen propertys
         final TableColumn<Download, Integer> startColumn = new TableColumn<>("");
