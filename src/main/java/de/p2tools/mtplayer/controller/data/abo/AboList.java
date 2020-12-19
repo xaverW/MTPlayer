@@ -88,11 +88,27 @@ public class AboList extends SimpleListProperty<Abo> {
         int minDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMinDur() : FilmFilter.FILTER_DURATION_MIN_MINUTE;
         int maxDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMaxDur() : FilmFilter.FILTER_DURATION_MAX_MINUTE;
 
+        String search = "";
+        String searchChannel = channel.isEmpty() ? "" : channel + " - ";
 
-        String namePath = channel + (theme.isEmpty() ? "" : " - " + theme) + (title.isEmpty() ? "" : " - " + title);
-        if (namePath.isEmpty()) {
-            namePath = "Abo aus Filter";
+        if (!themeTitle.isEmpty()) {
+            search = searchChannel + themeTitle;
+
+        } else if (!theme.isEmpty() && !title.isEmpty()) {
+            search = searchChannel + theme + "-" + title;
+
+        } else if (!theme.isEmpty() || !title.isEmpty()) {
+            search = searchChannel + theme + title;
+
+        } else if (!somewhere.isEmpty()) {
+            search = searchChannel + somewhere;
         }
+
+        if (search.isEmpty()) {
+            search = "Abo aus Filter";
+        }
+
+        String namePath = search;
         namePath = DownloadTools.replaceEmptyFileName(namePath,
                 false /* nur ein Ordner */,
                 Boolean.parseBoolean(ProgConfig.SYSTEM_USE_REPLACETABLE.get()),
