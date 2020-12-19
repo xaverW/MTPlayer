@@ -80,42 +80,41 @@ public class AboList extends SimpleListProperty<Abo> {
         boolean ret = false;
 
         String channel = selectedFilter.isChannelVis() ? selectedFilter.getChannel() : "";
-        String theme = selectedFilter.isThemeVis() ? selectedFilter.getTheme() : "";
+        String theme = selectedFilter.isThemeVis() ? selectedFilter.getTheme().trim() : "";
         boolean themeExact = selectedFilter.isThemeExact();
-        String title = selectedFilter.isTitleVis() ? selectedFilter.getTitle() : "";
-        String themeTitle = selectedFilter.isThemeTitleVis() ? selectedFilter.getThemeTitle() : "";
-        String somewhere = selectedFilter.isSomewhereVis() ? selectedFilter.getSomewhere() : "";
+        String title = selectedFilter.isTitleVis() ? selectedFilter.getTitle().trim() : "";
+        String themeTitle = selectedFilter.isThemeTitleVis() ? selectedFilter.getThemeTitle().trim() : "";
+        String somewhere = selectedFilter.isSomewhereVis() ? selectedFilter.getSomewhere().trim() : "";
         int minDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMinDur() : FilmFilter.FILTER_DURATION_MIN_MINUTE;
         int maxDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMaxDur() : FilmFilter.FILTER_DURATION_MAX_MINUTE;
 
-        String search = "";
+        String searchTitle = "";
         String searchChannel = channel.isEmpty() ? "" : channel + " - ";
 
         if (!themeTitle.isEmpty()) {
-            search = searchChannel + themeTitle;
+            searchTitle = searchChannel + themeTitle;
 
         } else if (!theme.isEmpty() && !title.isEmpty()) {
-            search = searchChannel + theme + "-" + title;
+            searchTitle = searchChannel + theme + "-" + title;
 
         } else if (!theme.isEmpty() || !title.isEmpty()) {
-            search = searchChannel + theme + title;
+            searchTitle = searchChannel + theme + title;
 
         } else if (!somewhere.isEmpty()) {
-            search = searchChannel + somewhere;
+            searchTitle = searchChannel + somewhere;
         }
 
-        if (search.isEmpty()) {
-            search = "Abo aus Filter";
+        if (searchTitle.isEmpty()) {
+            searchTitle = "Abo aus Filter";
         }
 
-        String namePath = search;
-        namePath = DownloadTools.replaceEmptyFileName(namePath,
+        searchTitle = DownloadTools.replaceEmptyFileName(searchTitle,
                 false /* nur ein Ordner */,
                 Boolean.parseBoolean(ProgConfig.SYSTEM_USE_REPLACETABLE.get()),
                 Boolean.parseBoolean(ProgConfig.SYSTEM_ONLY_ASCII.get()));
 
         final Abo abo = new Abo(progData,
-                namePath /* name */,
+                searchTitle /* name */,
                 channel,
                 theme,
                 themeTitle,
@@ -124,7 +123,7 @@ public class AboList extends SimpleListProperty<Abo> {
                 selectedFilter.getTimeRange(),
                 minDuration,
                 maxDuration,
-                namePath);
+                searchTitle);
 
         if (!theme.isEmpty()) {
             abo.setThemeExact(themeExact);
