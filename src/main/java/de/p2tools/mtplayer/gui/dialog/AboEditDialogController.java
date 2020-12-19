@@ -16,8 +16,6 @@
 
 package de.p2tools.mtplayer.gui.dialog;
 
-import de.p2tools.mtplayer.gui.tools.HelpText;
-import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.MTColor;
@@ -26,10 +24,13 @@ import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.data.abo.Abo;
 import de.p2tools.mtplayer.controller.data.abo.AboXml;
 import de.p2tools.mtplayer.controller.data.film.Film;
+import de.p2tools.mtplayer.gui.tools.HelpText;
+import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
+import de.p2tools.p2Lib.guiTools.PTextAreaIgnoreTab;
 import de.p2tools.p2Lib.guiTools.pRange.PRangeBox;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -66,8 +67,7 @@ public class AboEditDialogController extends PDialogExtra {
     private final RadioButton rbHd = new RadioButton("HD");
     private final RadioButton rbHigh = new RadioButton("hoch");
     private final RadioButton rbLow = new RadioButton("niedrig");
-    private final TextArea textArea = new TextArea();
-
+    private final TextArea textArea = new PTextAreaIgnoreTab(false, true);
     private final MenuButton mbChannel = new MenuButton("");
     private final ArrayList<CheckMenuItem> checkMenuItemsList = new ArrayList<>();
 
@@ -111,6 +111,7 @@ public class AboEditDialogController extends PDialogExtra {
     private void initDialog() {
         getvBoxCont().getChildren().add(gridPane);
         addOkCancelButtons(btnOk, btnCancel);
+//        btnOk.setDefaultButton(true);
 
         SetData setData = aboCopy.getSetData(progData);
         if (setData == null) {
@@ -654,5 +655,4 @@ public class AboEditDialogController extends PDialogExtra {
         mbChannel.setText(text);
         aboCopy.channelProperty().setValue(text);
     }
-
 }
