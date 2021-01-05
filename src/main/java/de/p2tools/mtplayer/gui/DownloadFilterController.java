@@ -43,7 +43,7 @@ public class DownloadFilterController extends FilterController {
     private Label lblBandwidth = new Label();
 
     // funktioniert nur wenn hier angelegt, geht sonst die Ref verloren!
-    IntegerProperty bandwidthValue = ProgConfig.DOWNLOAD_MAX_BANDWITH_KBYTE.getIntegerProperty();
+    IntegerProperty bandwidthValue = ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getIntegerProperty();
     IntegerProperty anzValue = ProgConfig.DOWNLOAD_MAX_DOWNLOADS.getIntegerProperty();
     IntegerProperty integerProperty;
 
@@ -239,7 +239,7 @@ public class DownloadFilterController extends FilterController {
     private void setTextBandwidth() {
         int bandwidthKByte;
         String ret;
-        bandwidthKByte = ProgConfig.DOWNLOAD_MAX_BANDWITH_KBYTE.getInt();
+        bandwidthKByte = ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getInt();
         if (bandwidthKByte == MLBandwidthTokenBucket.BANDWIDTH_MAX_KBYTE) {
             ret = "";
         } else {

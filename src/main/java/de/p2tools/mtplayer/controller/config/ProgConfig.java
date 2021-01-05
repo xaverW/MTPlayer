@@ -148,8 +148,8 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs DOWNLOAD_ERROR_MSG = addNewKey("download-error-msg", Boolean.TRUE.toString());
     public static MLConfigs DOWNLOAD_MAX_DOWNLOADS = addNewKey("download-max-downloads", "1");
     public static MLConfigs DOWNLOAD_MAX_ONE_PER_SERVER = addNewKey("download-max-one-per-server"); // nur ein Download pro Server - sonst max 2
-    public static MLConfigs DOWNLOAD_MAX_BANDWITH_KBYTE = addNewKey("download-max-bandwith-kbyte", String.valueOf(MLBandwidthTokenBucket.BANDWIDTH_MAX_KBYTE));
-    public static MLConfigs DOWNLOAD_BANDWITH_KBYTE = addNewKey("download-bandwith-byte"); // da wird die genutzte Bandbreite gespeichert
+    public static MLConfigs DOWNLOAD_MAX_BANDWIDTH_KBYTE = addNewKey("download-max-bandwidth-kilobyte", String.valueOf(MLBandwidthTokenBucket.BANDWIDTH_MAX_KBYTE));
+    public static MLConfigs DOWNLOAD_BANDWIDTH_KBYTE = addNewKey("download-bandwidth-byte"); // da wird die genutzte Bandbreite gespeichert
 
     // Gui Film
     public static MLConfigs FILM_GUI_FILTER_DIVIDER = addNewKey("film-gui-filter-divider", ProgConst.GUI_FILME_FILTER_DIVIDER_LOCATION);

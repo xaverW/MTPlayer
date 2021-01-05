@@ -274,7 +274,7 @@ public class DownloadInfos {
 
 
         if (bandwidth > 0) {
-            ProgConfig.DOWNLOAD_BANDWITH_KBYTE.setValue(bandwidth);
+            ProgConfig.DOWNLOAD_BANDWIDTH_KBYTE.setValue(bandwidth);
 
             // Restzeit laufende Downloads
             final long b = byteLoadingDownloads - byteLoadingDownloadsAlreadyLoaded;
@@ -291,7 +291,7 @@ public class DownloadInfos {
             timeLeftLoadingDownloads = timeLeft;
         }
 
-        final long resBandwidth = bandwidth > 0 ? bandwidth : ProgConfig.DOWNLOAD_BANDWITH_KBYTE.getLong();
+        final long resBandwidth = bandwidth > 0 ? bandwidth : ProgConfig.DOWNLOAD_BANDWIDTH_KBYTE.getLong();
         if (resBandwidth > 0) {
             // wartende Downloads
             if (byteWaitingDownloads <= 0) {

@@ -128,7 +128,7 @@ public class DirectHttpDownload extends Thread {
         }
 
         download.getStart().setInputStream(new MLInputStream(conn.getInputStream(),
-                bandwidthCalculationTimer, ProgConfig.DOWNLOAD_MAX_BANDWITH_KBYTE.getIntegerProperty()));
+                bandwidthCalculationTimer, ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getIntegerProperty()));
 
         fos = new FileOutputStream(file, (downloaded != 0));
 

@@ -16,17 +16,17 @@
 
 package de.p2tools.mtplayer.controller.filmlist;
 
+import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.config.ProgInfos;
+import de.p2tools.mtplayer.controller.data.film.Film;
+import de.p2tools.mtplayer.controller.data.film.Filmlist;
 import de.p2tools.mtplayer.controller.data.film.FilmlistFactory;
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ImportNewFilmlistFromServer;
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ReadFilmlist;
 import de.p2tools.mtplayer.controller.filmlist.writeFilmlist.WriteFilmlistJson;
-import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgInfos;
-import de.p2tools.mtplayer.controller.data.film.Film;
-import de.p2tools.mtplayer.controller.data.film.Filmlist;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -56,6 +56,12 @@ public class LoadFilmlist {
     public LoadFilmlist(ProgData progData) {
         this.progData = progData;
         diffListe = new Filmlist();
+
+        ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getActValue().addListener((v, o, n) -> {
+            System.out.println("##=============================================##");
+            System.out.println("## DOWNLOAD_MAX_BANDWIDTH_KBYTE: " + ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.get());
+            System.out.println("##=============================================##");
+        });
 
         importNewFilmlisteFromServer = new ImportNewFilmlistFromServer(progData);
         importNewFilmlisteFromServer.addAdListener(new ListenerLoadFilmlist() {

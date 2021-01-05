@@ -31,7 +31,7 @@ public class ImportNewFilmlistFromServer {
     private final EventListenerList eventListenerList;
     private final ReadFilmlist readFilmlist;
     private final ProgData progData;
-    private int savedBandwidth = ProgConfig.DOWNLOAD_MAX_BANDWITH_KBYTE.getInt();
+    private int savedBandwidth = ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getInt();
 
     public ImportNewFilmlistFromServer(ProgData progData) {
         this.progData = progData;
@@ -41,10 +41,10 @@ public class ImportNewFilmlistFromServer {
             @Override
             public synchronized void start(ListenerFilmlistLoadEvent event) {
                 // save download bandwidth
-                savedBandwidth = ProgConfig.DOWNLOAD_MAX_BANDWITH_KBYTE.getInt();
+                savedBandwidth = ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getInt();
                 PLog.sysLog("Bandbreite zurücksetzen für das Laden der Filmliste von: " + savedBandwidth + " auf 50");
                 Platform.runLater(() -> {
-                    ProgConfig.DOWNLOAD_MAX_BANDWITH_KBYTE.setValue(50);
+                    ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.setValue(50);
                 });
 
                 for (final ListenerLoadFilmlist l : eventListenerList.getListeners(ListenerLoadFilmlist.class)) {
@@ -65,7 +65,7 @@ public class ImportNewFilmlistFromServer {
                 // reset download bandwidth
                 PLog.sysLog("Bandbreite wieder herstellen: " + savedBandwidth);
                 Platform.runLater(() -> {
-                    ProgConfig.DOWNLOAD_MAX_BANDWITH_KBYTE.setValue(savedBandwidth);
+                    ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.setValue(savedBandwidth);
                 });
             }
         });
