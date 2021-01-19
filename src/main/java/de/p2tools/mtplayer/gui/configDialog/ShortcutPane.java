@@ -16,14 +16,12 @@
 
 package de.p2tools.mtplayer.gui.configDialog;
 
-import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.MTShortcut;
 import de.p2tools.p2Lib.tools.log.PLog;
 import de.p2tools.p2Lib.tools.shortcut.PShortcut;
 import javafx.application.Platform;
-import javafx.beans.property.DoubleProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -32,6 +30,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -44,12 +44,10 @@ public class ShortcutPane {
     private String newShortcutValue = "";
     private final TextArea txtLongDescription = new TextArea();
     private final TableView<PShortcut> tableView = new TableView<>();
-    DoubleProperty doubleProperty;//sonst geht die Ref verloren
 
     public ShortcutPane(Stage stage) {
         this.stage = stage;
         progData = ProgData.getInstance();
-        this.doubleProperty = ProgConfig.CONFIG_DIALOG_SHORTCUT_DIVIDER.getDoubleProperty();
     }
 
     public void makeShortcut(Collection<TitledPane> result) {
@@ -59,7 +57,6 @@ public class ShortcutPane {
         SplitPane.setResizableWithParent(tableView, Boolean.TRUE);
         SplitPane.setResizableWithParent(txtLongDescription, Boolean.FALSE);
         splitPane.getItems().addAll(tableView, txtLongDescription);
-        splitPane.getDividers().get(0).positionProperty().bindBidirectional(doubleProperty);
 
         initTable(tableView);
         txtLongDescription.setMinHeight(ProgConst.MIN_TEXTAREA_HEIGHT_LOW);
@@ -67,7 +64,11 @@ public class ShortcutPane {
         txtLongDescription.setEditable(false);
         txtLongDescription.setWrapText(true);
 
-        TitledPane tpShortcut = new TitledPane("Tastenkürzel", splitPane);
+        VBox vBox = new VBox(5);
+        vBox.setPadding(new Insets(20));
+        VBox.setVgrow(splitPane, Priority.ALWAYS);
+        vBox.getChildren().add(splitPane);
+        TitledPane tpShortcut = new TitledPane("Tastenkürzel", vBox);
         result.add(tpShortcut);
     }
 
