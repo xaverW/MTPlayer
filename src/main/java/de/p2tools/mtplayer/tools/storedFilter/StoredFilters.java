@@ -111,14 +111,18 @@ public final class StoredFilters {
         }
         actFilterSettings.filterChangeProperty().removeListener(filterChangeListener);
         actFilterSettings.blacklistChangeProperty().removeListener(blacklistChangeListener);
-        Boolean black = actFilterSettings.blacklistOnProperty().getValue();
+        boolean black = actFilterSettings.blacklistOnProperty().getValue();
+        boolean blackOnly = actFilterSettings.blacklistOnlyProperty().getValue();
+
         SelectedFilterFactory.copyFilter(sf, actFilterSettings);
-        if (actFilterSettings.blacklistOnProperty().getValue() == black) {
+        if (actFilterSettings.blacklistOnProperty().getValue() == black &&
+                actFilterSettings.blacklistOnlyProperty().getValue() == blackOnly) {
             // Black hat sich nicht geändert
             postFilterChange();
         } else {
             postBlacklistChange();
         }
+
         actFilterSettings.filterChangeProperty().addListener(filterChangeListener);
         actFilterSettings.blacklistChangeProperty().addListener(blacklistChangeListener);
     }
@@ -351,7 +355,7 @@ public final class StoredFilters {
 
     private void postBlacklistChange() {
         // dann hat sich auch Blacklist-ein/aus geändert
-        progData.filmlist.filterList();
+        progData.filmlist.filterListWithBlacklist(false);
         setFilterChange();
     }
 

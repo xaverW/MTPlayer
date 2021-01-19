@@ -45,6 +45,7 @@ public class FilmProps extends FilmXml {
     private boolean shown = false;
     private boolean actHist = false;
     private boolean bookmark = false;
+    private boolean blackBlocked = false;
 
     public int getDurationMinute() {
         return durationMinute;
@@ -284,6 +285,14 @@ public class FilmProps extends FilmXml {
 
     public void setBookmark(boolean bookmark) {
         this.bookmark = bookmark;
+    }
+
+    public boolean isBlackBlocked() {
+        return blackBlocked;
+    }
+
+    public void setBlackBlocked(boolean blackBlocked) {
+        this.blackBlocked = blackBlocked;
     }
 
     public String getFilmDateLong() {

@@ -72,6 +72,7 @@ public class SelectedFilterFactory {
         sfTo.setNotFuture(sfFrom.isNotFuture());
 
         sfTo.setBlacklistOn(sfFrom.isBlacklistOn());
+        sfTo.setBlacklistOnly(sfFrom.isBlacklistOnly());
     }
 
     public static boolean compareFilterWithoutNameOfFilter(SelectedFilter sfFrom, SelectedFilter sfTo) {
@@ -153,6 +154,7 @@ public class SelectedFilterFactory {
 
         list.add("");
         list.add("isBlacklistOn " + sf.isBlacklistOn());
+        list.add("isBlacklistOnly " + sf.isBlacklistOnly());
 
         return list;
     }

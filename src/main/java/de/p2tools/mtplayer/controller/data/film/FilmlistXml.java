@@ -32,6 +32,7 @@ public class FilmlistXml {
     public static final int FILMLIST_ID_NR = 4;
     public static final int MAX_ELEM = 5;
 
-    public static final String[] COLUMN_NAMES = {FILMLIST_DATE, FILMLIST_DATE_GMT, FILMLIST_VERSION, FILMLIST_PROGRAM, FILMLIST_ID};
+    public static final String[] COLUMN_NAMES = {FILMLIST_DATE, FILMLIST_DATE_GMT,
+            FILMLIST_VERSION, FILMLIST_PROGRAM, FILMLIST_ID};
 
 }

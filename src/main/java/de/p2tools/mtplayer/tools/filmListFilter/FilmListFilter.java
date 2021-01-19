@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
 import de.p2tools.mtplayer.gui.tools.Listener;
+import de.p2tools.p2Lib.tools.duration.PDuration;
 import javafx.application.Platform;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -69,7 +70,9 @@ public class FilmListFilter {
             Thread th = new Thread(() -> {
                 try {
                     Platform.runLater(() -> {
-                        progData.filmlistFiltered.filterdListSetPred(progData.storedFilters.getActFilterSettings().getPredicate());
+                        PDuration.counterStart("FilmListFilter.filterList");
+                        progData.filmlistFiltered.filteredListSetPred(progData.storedFilters.getActFilterSettings().getPredicate());
+                        PDuration.counterStopAndLog("FilmListFilter.filterList");
                         search.set(false);
                         if (research.get()) {
                             filterList();

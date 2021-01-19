@@ -150,6 +150,7 @@ public final class SelectedFilter extends SelectedFilterProps {
         notFutureProperty().addListener(l -> reportFilterChange());
 
         blacklistOnProperty().addListener(l -> reportBlacklistChange());
+        blacklistOnlyProperty().addListener(l -> reportBlacklistChange());
 
     }
 
@@ -298,6 +299,8 @@ public final class SelectedFilter extends SelectedFilterProps {
         final boolean noGeo = selectedFilter.isNotVis() ? selectedFilter.isNotGeo() : false;
         final boolean noFuture = selectedFilter.isNotVis() ? selectedFilter.isNotFuture() : false;
 
+        final boolean onlyBlack = selectedFilter.isBlacklistOnly();
+
         // Länge am Slider in Min
         final int minLengthMinute = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMinDur() : 0;
         final int maxLengthMinute = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMaxDur() : FilmFilter.FILTER_DURATION_MAX_MINUTE;
@@ -363,6 +366,10 @@ public final class SelectedFilter extends SelectedFilterProps {
 
         if (noFuture) {
             predicate = predicate.and(f -> !f.isInFuture());
+        }
+
+        if (onlyBlack) {
+            predicate = predicate.and(f -> !f.isBlackBlocked());
         }
 
         // Filmdatum

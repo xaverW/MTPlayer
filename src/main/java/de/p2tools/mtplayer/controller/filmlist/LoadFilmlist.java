@@ -50,7 +50,7 @@ public class LoadFilmlist {
 
     private final NotifyProgress notifyProgress = new NotifyProgress();
     private BooleanProperty propLoadFilmlist = new SimpleBooleanProperty(false);
-    private static final AtomicBoolean stop = new AtomicBoolean(false); // damit kannn das Laden gestoppt werden kann
+    private static final AtomicBoolean stop = new AtomicBoolean(false); // damit kann das Laden gestoppt werden kann
 
 
     public LoadFilmlist(ProgData progData) {
@@ -128,7 +128,7 @@ public class LoadFilmlist {
      * Filmliste beim Programmstart laden
      */
     public void loadFilmlistProgStart(boolean firstProgramStart) {
-        // Start des Ladens, gibt keine Vortschrittsanzeige und kein Abbrechen
+        // Start des Ladens, gibt keine Fortschrittsanzeige und kein Abbrechen
 
         if (LoadFactory.checkAllSenderSelectedNotToLoad(progData.primaryStage)) {
             // alle Sender sind vom Laden ausgenommen
@@ -199,7 +199,7 @@ public class LoadFilmlist {
     }
 
     public void loadNewFilmlistFromServer(boolean alwaysLoadNew) {
-        // damit wird eine neue Filmliste (Web) geladen UND auch gleich im Konfig-Ordner gespeichert
+        // damit wird eine neue Filmliste (Web) geladen UND auch gleich im Config-Ordner gespeichert
 
         if (LoadFactory.checkAllSenderSelectedNotToLoad(progData.primaryStage)) {
             // alle Sender sind vom Laden ausgenommen
@@ -241,12 +241,12 @@ public class LoadFilmlist {
             setStop(false);
 
             if (fileUrl.isEmpty()) {
-                // Filmeliste laden und Url automatisch ermitteln
+                // Filmliste laden und Url automatisch ermitteln
                 logList.add("Filmliste laden (auto)");
                 importNewFilmlisteFromServer.importFilmListAuto(progData.filmlist, diffListe);
 
             } else {
-                // Filmeliste laden von URL/Datei
+                // Filmliste laden von URL/Datei
                 logList.add("Filmliste mit fester URL/Datei laden");
                 progData.filmlist.clear();
                 importNewFilmlisteFromServer.importFilmlistFromFile(fileUrl, progData.filmlist);
@@ -363,7 +363,7 @@ public class LoadFilmlist {
         }
 
         logList.add("Blacklist filtern");
-        progData.filmlist.filterList();
+        progData.filmlist.filterListWithBlacklist(true);
 
 
         notifyProgress.notifyEvent(NotifyProgress.NOTIFY.LOADED,

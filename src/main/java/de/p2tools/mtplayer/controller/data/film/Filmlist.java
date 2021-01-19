@@ -56,9 +56,12 @@ public class Filmlist extends SimpleListProperty<Film> {
         super(FXCollections.observableArrayList());
     }
 
-    public synchronized void filterList() {
+    public synchronized void filterListWithBlacklist(boolean markFilms) {
         // damit wird die Filmlist gegen die Blacklist geprüft:
         // Filmliste geladen, add Black, ConfigDialog, Filter blkBtn
+        if (markFilms) {
+            FilmlistBlackFilter.markFilmBlack();
+        }
         FilmlistBlackFilter.getBlackFiltered();
     }
 
@@ -78,7 +81,7 @@ public class Filmlist extends SimpleListProperty<Film> {
         return filteredList;
     }
 
-    public synchronized void filterdListSetPred(Predicate<Film> predicate) {
+    public synchronized void filteredListSetPred(Predicate<Film> predicate) {
         filteredList.setPredicate(predicate);
     }
 

@@ -66,11 +66,13 @@ public class SelectedFilterProps {
     private final BooleanProperty notFuture = new SimpleBooleanProperty(false);
 
     private final BooleanProperty blacklistOn = new SimpleBooleanProperty(false);
+    private final BooleanProperty blacklistOnly = new SimpleBooleanProperty(false);
 
     public BooleanProperty[] sfBooleanPropArr = {channelVis, themeVis, themeExact, themeTitleVis,
             titleVis, somewhereVis, urlVis, timeRangeVis, minMaxDurVis, minMaxTimeVis, minMaxTimeInvert,
             onlyVis, onlyBookmark, onlyHd, onlyNew, onlyUt, onlyLive, onlyAktHistory, notVis,
-            notAbo, notHistory, notDouble, notGeo, notFuture, blacklistOn};
+            notAbo, notHistory, notDouble, notGeo, notFuture, blacklistOn, blacklistOnly};
+
     public StringProperty[] sfStringPropArr = {name, channel, theme, themeTitle, title, somewhere, url};
     public IntegerProperty[] sfIntegerPropArr = {timeRange, minDur, maxDur, minTime, maxTime};
 
@@ -532,6 +534,18 @@ public class SelectedFilterProps {
 
     public void setBlacklistOn(boolean blacklistOn) {
         this.blacklistOn.set(blacklistOn);
+    }
+
+    public boolean isBlacklistOnly() {
+        return blacklistOnly.get();
+    }
+
+    public BooleanProperty blacklistOnlyProperty() {
+        return blacklistOnly;
+    }
+
+    public void setBlacklistOnly(boolean blacklistOnly) {
+        this.blacklistOnly.set(blacklistOnly);
     }
 
     @Override

@@ -80,7 +80,7 @@ public class ConfigDialogController extends PDialogExtra {
         if (blackChanged.get() && !progData.loadFilmlist.getPropLoadFilmlist()) {
             // sonst hat sich nichts geändert oder wird dann eh gemacht
             System.out.println("black filtern");
-            progData.filmlist.filterList();
+            progData.filmlist.filterListWithBlacklist(true);
             Listener.notify(Listener.EREIGNIS_BLACKLIST_GEAENDERT, ConfigDialogController.class.getSimpleName());
         }
 

@@ -19,8 +19,10 @@ package de.p2tools.mtplayer.gui;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.geometry.Insets;
+import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.control.Tooltip;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
@@ -30,7 +32,7 @@ public class FilmFilterController extends FilterController {
     private final VBox vBoxBlacklist;
     private final ProgData progData;
 
-    private final PToggleSwitch tglBlacklist = new PToggleSwitch("Blacklist einschalten:");
+    private final PToggleSwitch tglBlacklist = new PToggleSwitch("Blacklist:");
 
     FilmFilterControllerTextFilter sender;
     FilmFilterControllerFilter filter;
@@ -57,10 +59,27 @@ public class FilmFilterController extends FilterController {
 
         vBoxFilter.getChildren().addAll(sender, filter, clearFilter, sp, profiles);
 
-        tglBlacklist.setTooltip(new Tooltip("Blacklist einschalten"));
+        Label lblRight = new Label();
+        tglBlacklist.setAllowIndeterminate(true);
+        tglBlacklist.setLabelRight(lblRight, "ein", "aus", "nur");
+        tglBlacklist.setTooltip(new Tooltip("Blacklist ein- ausschalten oder nur Filme aus der Blacklist anzeigen"));
         tglBlacklist.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().blacklistOnProperty());
+        tglBlacklist.indeterminateProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().blacklistOnlyProperty());
+
+        
+        tglBlacklist.indeterminateProperty().addListener((v, o, n) -> {
+            System.out.println("interminate: " + "" + tglBlacklist.isIndeterminate() + " selected: " + tglBlacklist.isSelected());
+        });
+        tglBlacklist.selectedProperty().addListener((v, o, n) -> {
+            System.out.println("interminate: " + "" + tglBlacklist.isIndeterminate() + " selected: " + tglBlacklist.isSelected());
+        });
+
+
         vBoxBlacklist = getVBoxBotton();
-        vBoxBlacklist.getChildren().add(tglBlacklist);
+        HBox hBox = new HBox(5);
+        HBox.setHgrow(tglBlacklist, Priority.ALWAYS);
+        hBox.getChildren().addAll(tglBlacklist, lblRight);
+        vBoxBlacklist.getChildren().add(hBox);
     }
 
 }

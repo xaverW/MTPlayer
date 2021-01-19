@@ -68,6 +68,7 @@ public class FilterToXml {
     public static final int FILTER_NOT_FUTURE = 35;
 
     public static final int FILTER_BLACKLIST_ON = 36;
+    public static final int FILTER_BLACKLIST_ONLY = 37;
 
     public static final String[] XML_NAMES = {"Name",
             "Sender-vis",
@@ -110,7 +111,9 @@ public class FilterToXml {
             "keine-doppelten",
             "keine-geblockten",
             "keine-zukunft",
-            "Blacklist-ein"};
+            "Blacklist-ein",
+            "nur-Blacklist"
+    };
 
     public static final String TAG = "Filter-Film";
 
@@ -163,6 +166,7 @@ public class FilterToXml {
         sf.setNotFuture(Boolean.parseBoolean(array[FILTER_NOT_FUTURE]));
 
         sf.setBlacklistOn(Boolean.parseBoolean(array[FILTER_BLACKLIST_ON]));
+        sf.setBlacklistOnly(Boolean.parseBoolean(array[FILTER_BLACKLIST_ONLY]));
 
         parsInt(sf, array);
     }
@@ -281,6 +285,7 @@ public class FilterToXml {
         array[FILTER_NOT_FUTURE] = String.valueOf(sf.isNotFuture());
 
         array[FILTER_BLACKLIST_ON] = String.valueOf(sf.isBlacklistOn());
+        array[FILTER_BLACKLIST_ONLY] = String.valueOf(sf.isBlacklistOnly());
 
         return array;
     }

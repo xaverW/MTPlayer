@@ -23,23 +23,20 @@ import de.p2tools.mtplayer.controller.data.film.Film;
 import de.p2tools.mtplayer.controller.data.film.Filmlist;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class FilmlistBlackFilter {
 
-    final static List<Predicate<Film>> filterList = new ArrayList<>();
     private static long days = 0;
     private static boolean doNotShowFutureFilms, doNotShowGeoBlockedFilms;
     private static long filmLengthTarget_Minute = 0;
     private final static ProgData PROG_DATA = ProgData.getInstance();
 
     public static synchronized void getBlackFiltered() {
-        // hier wird die komplette Filmliste gegen die Blacklist gefilter
-        // mit der Liste wird dannn im TabFilme weiter gearbeitet
+        // hier wird die komplette Filmliste gegen die Blacklist gefiltert
+        // mit der Liste wird dann im TabFilme weiter gearbeitet
 
         final Filmlist filmlist = PROG_DATA.filmlist;
         final Filmlist listFiltered = PROG_DATA.filmlistFiltered;
@@ -54,48 +51,75 @@ public class FilmlistBlackFilter {
 
             Stream<Film> initialStream = filmlist.parallelStream();
 
-            filterList.clear();
-            if (PROG_DATA.storedFilters.getActFilterSettings().isBlacklistOn()) {
-                // only when blacklist in ON!
+            if (PROG_DATA.storedFilters.getActFilterSettings().isBlacklistOnly()) {
+                //only when blacklist in ONLY!
+                System.out.println("FilmlistBlackFilter - isBlacklistOnly");
+                initialStream = initialStream.filter(f -> !f.isBlackBlocked());
 
-                // vor dem Zählen der Treffer erst mal löschen
-                PROG_DATA.blackList.clearCounter();
+            } else if (PROG_DATA.storedFilters.getActFilterSettings().isBlacklistOn()) {
+                //only when blacklist in ON!
+                System.out.println("FilmlistBlackFilter - isBlacklistOn");
 
-                // add the filter predicates to the list
-                if (days > 0) {
-                    filterList.add(FilmlistBlackFilter::checkDate);
-                }
+//                List<Predicate<Film>> filterList = new ArrayList<>();
+//                filterList.add(film -> film.isBlackBlocked());
 
-                if (doNotShowGeoBlockedFilms) {
-//                    filterList.add(FilmlistBlackFilter::checkFilmNotGeoBlocked);
-                    filterList.add(film -> !film.isGeoBlocked());
-                }
-                if (doNotShowFutureFilms) {
-//                    filterList.add(FilmlistBlackFilter::checkFilmNotInFuture);
-                    filterList.add(film -> !film.isInFuture());
-                }
-                if (filmLengthTarget_Minute != 0) {
-                    filterList.add(FilmlistBlackFilter::checkFilmLength);
-                }
+//                // vor dem Zählen der Treffer erst mal löschen
+//                PROG_DATA.blackList.clearCounter();
+//
+//                // add the filter predicates to the list
+//                if (days > 0) {
+//                    filterList.add(FilmlistBlackFilter::checkDate);
+//                }
+//
+//                if (doNotShowGeoBlockedFilms) {
+//                    filterList.add(film -> !film.isGeoBlocked());
+//                }
+//                if (doNotShowFutureFilms) {
+//                    filterList.add(film -> !film.isInFuture());
+//                }
+//                if (filmLengthTarget_Minute != 0) {
+//                    filterList.add(FilmlistBlackFilter::checkFilmLength);
+//                }
+//
+//                if (!PROG_DATA.blackList.isEmpty()) {
+//                    filterList.add(film -> applyBlacklistFilters(film, true));
+//                }
 
-                if (!PROG_DATA.blackList.isEmpty()) {
-                    filterList.add(film -> applyBlacklistFilters(film, true));
-                }
+//                for (final Predicate<Film> predicate : filterList) {
+//                    initialStream = initialStream.filter(predicate);
+//                }
 
-                for (final Predicate<Film> pred : filterList) {
-                    initialStream = initialStream.filter(pred);
-                }
+                initialStream = initialStream.filter(f -> f.isBlackBlocked());
+
+            } else {
+                System.out.println("ohne");
             }
 
             final List<Film> col = initialStream.collect(Collectors.toList());
-
             listFiltered.addAll(col);
             col.clear();
 
             // Array mit Sendernamen/Themen füllen
             listFiltered.loadTheme();
         }
+
+//        filterList.clear();
         PDuration.counterStop("FilmlistBlackFilter.getBlackFiltered");
+    }
+
+    public static synchronized void markFilmBlack() {
+        PDuration.counterStart("FilmlistBlackFilter.markFilmBlack");
+        final Filmlist filmlist = PROG_DATA.filmlist;
+        loadCurrentFilterSettings();
+
+        filmlist.stream().forEach(film -> {
+            if (checkBlacklist(film)) {
+                film.setBlackBlocked(true);
+            } else {
+                film.setBlackBlocked(false);
+            }
+        });
+        PDuration.counterStop("FilmlistBlackFilter.markFilmBlack");
     }
 
     /**
@@ -110,16 +134,15 @@ public class FilmlistBlackFilter {
         // wird damit geprüft
 
         loadCurrentFilterSettings(); // todo das muss nur beim ersten mal gemacht werden
+        return checkBlacklist(film);
+    }
+
+    private static synchronized boolean checkBlacklist(Film film) {
+        // hier werden die Filme gegen die Blacklist geprüft
 
         if (days > 0 && !checkDate(film)) {
             return false;
         }
-//        if (doNotShowGeoBlockedFilms && !checkFilmNotGeoBlocked(film)) {
-//            return false;
-//        }
-//        if (doNotShowFutureFilms && !checkFilmNotInFuture(film)) {
-//            return false;
-//        }
         if (doNotShowGeoBlockedFilms && film.isGeoBlocked()) {
             return false;
         }
@@ -137,6 +160,40 @@ public class FilmlistBlackFilter {
 
         return applyBlacklistFilters(film, false);
     }
+
+    /**
+     * Apply filters to film.
+     *
+     * @param film item to be filtered
+     * @return true if film can be displayed
+     */
+
+    private static boolean applyBlacklistFilters(Film film, boolean countHits) {
+        for (final BlackData blackData : PROG_DATA.blackList) {
+
+            if (FilmFilter.checkFilmWithFilter(
+                    blackData.fChannel,
+                    blackData.fTheme,
+                    blackData.fThemeTitle,
+                    blackData.fTitle,
+                    blackData.fSomewhere,
+                    FilmFilter.FILTER_TIME_RANGE_ALL_VALUE,
+                    FilmFilter.FILTER_DURATION_MIN_MINUTE,
+                    FilmFilter.FILTER_DURATION_MAX_MINUTE,
+                    film,
+                    false /* auch die Länge prüfen */)) {
+
+                if (countHits) {
+                    blackData.incCountHits();
+                }
+                return ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST.getBool();
+            }
+
+        }
+
+        return !ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST.getBool();
+    }
+
 
     /**
      * Load current filter settings from XvConfig
@@ -178,41 +235,6 @@ public class FilmlistBlackFilter {
         return true;
     }
 
-//    /**
-//     * Check if film would be geoblocked for user
-//     *
-//     * @param film item to be checked
-//     * @return true if it is NOT blocked, false if it IS blocked
-//     */
-//    private static boolean checkFilmNotGeoBlocked(Film film) {
-//        return !film.isGeoBlocked();
-//    }
-//
-//    /**
-//     * Check if a future film should be displayed.
-//     *
-//     * @param film item to be checked.
-//     * @return true if it should be displayed (not in future).
-//     */
-//    private static boolean checkFilmNotInFuture(Film film) {
-////        if (film.isInFuture()) {
-////            return false;
-////        }
-//
-//// todo ??
-//
-//        try {
-//            if (film.filmDate.getTime() > System.currentTimeMillis()) {
-//                // Film in Zukunft, filtern
-//                return false;
-//            }
-//        } catch (final Exception ex) {
-//            PLog.errorLog(696987123, ex);
-//        }
-//
-//        return true;
-//    }
-
     /**
      * Filter based on film length.
      *
@@ -224,37 +246,5 @@ public class FilmlistBlackFilter {
 
     }
 
-    /**
-     * Apply filters to film.
-     *
-     * @param film item to be filtered
-     * @return true if film can be displayed
-     */
-
-    private static boolean applyBlacklistFilters(Film film, boolean inc) {
-        for (final BlackData blackData : PROG_DATA.blackList) {
-
-            if (FilmFilter.checkFilmWithFilter(
-                    blackData.fChannel,
-                    blackData.fTheme,
-                    blackData.fThemeTitle,
-                    blackData.fTitle,
-                    blackData.fSomewhere,
-
-                    FilmFilter.FILTER_TIME_RANGE_ALL_VALUE,
-                    FilmFilter.FILTER_DURATION_MIN_MINUTE,
-                    FilmFilter.FILTER_DURATION_MAX_MINUTE,
-
-                    film,
-                    false /* auch die Länge prüfen */)) {
-
-                if (inc) {
-                    blackData.incCountHits();
-                }
-                return ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST.getBool();
-            }
-        }
-        return !ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST.getBool();
-    }
 
 }
