@@ -39,6 +39,7 @@ import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class TableDownload {
@@ -54,7 +55,9 @@ public class TableDownload {
     public TableColumn[] initDownloadColumn(TableView table) {
         table.getColumns().clear();
 
-        final GermanStringIntSorter sorter = GermanStringIntSorter.getInstance();
+//        final Comparator<String> sorter = NaturalOrderComparator.CASEINSENSITIVE_NUMERICAL_ORDER;
+        final Comparator<String> sorter = GermanStringIntSorter.getInstance();
+
         ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD.getStringProperty().addListener((observableValue, s, t1) -> table.refresh());
 
         MTColor.FILM_GEOBLOCK.colorProperty().addListener((a, b, c) -> table.refresh());
@@ -172,10 +175,12 @@ public class TableDownload {
         final TableColumn<Download, String> fileNameColumn = new TableColumn<>("Dateiname");
         fileNameColumn.setCellValueFactory(new PropertyValueFactory<>("destFileName"));
         fileNameColumn.getStyleClass().add("alignCenterLeft");
+        fileNameColumn.setComparator(sorter);
 
         final TableColumn<Download, String> pathColumn = new TableColumn<>("Pfad");
         pathColumn.setCellValueFactory(new PropertyValueFactory<>("destPath"));
         pathColumn.getStyleClass().add("alignCenterLeft");
+        pathColumn.setComparator(sorter);
 
         nrColumn.setPrefWidth(50);
         filmNrColumn.setPrefWidth(70);
