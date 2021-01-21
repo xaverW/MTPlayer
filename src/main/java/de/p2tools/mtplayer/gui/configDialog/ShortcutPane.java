@@ -19,6 +19,9 @@ package de.p2tools.mtplayer.gui.configDialog;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.MTShortcut;
+import de.p2tools.mtplayer.gui.tools.HelpText;
+import de.p2tools.p2Lib.alert.PAlert;
+import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.tools.log.PLog;
 import de.p2tools.p2Lib.tools.shortcut.PShortcut;
 import javafx.application.Platform;
@@ -31,7 +34,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -51,24 +53,31 @@ public class ShortcutPane {
     }
 
     public void makeShortcut(Collection<TitledPane> result) {
+        final Button btnHelp = PButton.helpButton(stage, "Tastenkürzel ändern",
+                HelpText.SHORTCUT);
+
         SplitPane splitPane = new SplitPane();
+
+        initTable(tableView);
+
+        txtLongDescription.setMinHeight(ProgConst.MIN_TEXTAREA_HEIGHT_LOW);
+        txtLongDescription.setPrefHeight(ProgConst.MIN_TEXTAREA_HEIGHT_LOW);
+        txtLongDescription.setEditable(false);
+        txtLongDescription.setWrapText(true);
+        txtLongDescription.setPrefRowCount(2);
+
         splitPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         splitPane.setOrientation(Orientation.VERTICAL);
         SplitPane.setResizableWithParent(tableView, Boolean.TRUE);
         SplitPane.setResizableWithParent(txtLongDescription, Boolean.FALSE);
         splitPane.getItems().addAll(tableView, txtLongDescription);
 
-        initTable(tableView);
-        txtLongDescription.setMinHeight(ProgConst.MIN_TEXTAREA_HEIGHT_LOW);
-        txtLongDescription.setPrefHeight(ProgConst.MIN_TEXTAREA_HEIGHT_LOW);
-        txtLongDescription.setEditable(false);
-        txtLongDescription.setWrapText(true);
+        HBox hBox = new HBox(5);
+        hBox.setMaxHeight(Double.MAX_VALUE);
+        hBox.getChildren().addAll(splitPane, btnHelp);
+        HBox.setHgrow(splitPane, Priority.ALWAYS);
 
-        VBox vBox = new VBox(5);
-        vBox.setPadding(new Insets(20));
-        VBox.setVgrow(splitPane, Priority.ALWAYS);
-        vBox.getChildren().add(splitPane);
-        TitledPane tpShortcut = new TitledPane("Tastenkürzel", vBox);
+        TitledPane tpShortcut = new TitledPane("Tastenkürzel", hBox);
         result.add(tpShortcut);
     }
 
@@ -76,8 +85,6 @@ public class ShortcutPane {
     }
 
     private void initTable(TableView<PShortcut> tableView) {
-//        progData.mtShortcut.changedProperty().addListener((u, o, n) -> tableView.refresh());
-
         final TableColumn<PShortcut, String> descriptionColumn = new TableColumn<>("Beschreibung");
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         descriptionColumn.getStyleClass().add("alignCenterLeft");
@@ -101,9 +108,9 @@ public class ShortcutPane {
         tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
-        descriptionColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(30.0 / 100));
-        actShortcutColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(20.0 / 100));
-        changeColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(10.0 / 100));
+        descriptionColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(40.0 / 100));
+        actShortcutColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(15.0 / 100));
+        changeColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(15.0 / 100));
         resetColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(15.0 / 100));
         orgShortcutColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(15.0 / 100));
 
@@ -127,7 +134,7 @@ public class ShortcutPane {
     private Callback<TableColumn<PShortcut, String>, TableCell<PShortcut, String>> cellFactoryChange
             = (final TableColumn<PShortcut, String> param) -> {
 
-        final TableCell<PShortcut, String> cell = new TableCell<PShortcut, String>() {
+        final TableCell<PShortcut, String> cell = new TableCell<>() {
 
             @Override
             public void updateItem(String item, boolean empty) {
@@ -143,10 +150,25 @@ public class ShortcutPane {
 
                 final Button btnChange = new Button("Ändern");
                 btnChange.setTooltip(new Tooltip("Button klicken und dann das neue Tastenkürzel eingeben"));
+                btnChange.setOnAction(a -> getTableView().getSelectionModel().select(getIndex()));
                 btnChange.addEventFilter(KeyEvent.KEY_RELEASED, ke -> {
                     released = true;
+                    if (newShortcutValue.isEmpty()) {
+                        PLog.sysLog("Shortcut: nicht ändern");
+                        return;
+                    }
+
                     PLog.sysLog("Shortcut: " + pShortcut.getDescription() + " ändern von: " + pShortcut.getActShortcut() + " nach: " + newShortcutValue);
                     pShortcut.setActShortcut(newShortcutValue);
+
+                    for (PShortcut p : MTShortcut.getShortcutList()) {
+                        if (p.getActShortcut().equals(newShortcutValue)) {
+                            PAlert.showErrorAlert("Tastenkürzel", "das angegebene Tastenkürzel " +
+                                    "wird zweimal verwendet.");
+                            break;
+                        }
+                    }
+
                 });
                 btnChange.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
                     if (released) {
@@ -204,7 +226,10 @@ public class ShortcutPane {
 
                 final Button btnResete = new Button("Zurücksetzen");
                 btnResete.setTooltip(new Tooltip("Ein Klick setzt wieder das Original Tastenkürzel"));
-                btnResete.setOnAction(a -> pShortcut.resetShortcut());
+                btnResete.setOnAction(a -> {
+                    getTableView().getSelectionModel().select(getIndex());
+                    pShortcut.resetShortcut();
+                });
 
                 final HBox hbox = new HBox();
                 hbox.setSpacing(5);

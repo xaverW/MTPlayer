@@ -426,6 +426,14 @@ public class HelpText {
             "Programmoberfläche angezeigt. Damit alle Elemente der Programmoberfläche " +
             "geändert werden, kann ein Programmneustart notwendig sein.";
 
+    public static final String SHORTCUT = "Zum Ändern eines Tastenkürzels den \"Ändern\" Button des entsprechenden " +
+            "Kürzels klicken und dann die gewünschten neuen Tasten klicken." +
+            P2LibConst.LINE_SEPARATORx2 +
+            "Um das Tastenkürzel wieder zurück zu setzen, einfach " +
+            "auf \"Zurücksetzen\" des entsprechenden Kürzels klicken." +
+            P2LibConst.LINE_SEPARATORx2 +
+            "Damit die Änderungen wirksam werden, muss das Programm neu gestartet werden.";
+
     public static final String USER_AGENT = "Hier kann ein User Agent angegeben werden. " +
             "Bei Downloads wird er dann als Absender verwendet. Bleibt das Feld leer, wird kein User Agent " +
             "verwendet. Solange alles funktioniert, kann das Feld leer bleiben. Ansonsten wäre das z.B. eine " +
