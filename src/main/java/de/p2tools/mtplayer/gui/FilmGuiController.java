@@ -16,15 +16,15 @@
 
 package de.p2tools.mtplayer.gui;
 
-import de.p2tools.mtplayer.gui.mediaDialog.MediaDialogController;
-import de.p2tools.mtplayer.gui.tools.Listener;
-import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.data.SetDataList;
 import de.p2tools.mtplayer.controller.data.film.Film;
 import de.p2tools.mtplayer.controller.data.film.FilmTools;
+import de.p2tools.mtplayer.gui.mediaDialog.MediaDialogController;
+import de.p2tools.mtplayer.gui.tools.Listener;
+import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PColor;
@@ -346,11 +346,21 @@ public class FilmGuiController extends AnchorPane {
         tableView.setItems(sortedList);
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
 
-        tableView.setOnMouseClicked(m -> {
-            if (m.getButton().equals(MouseButton.PRIMARY) && m.getClickCount() == 2) {
-                progData.filmInfoDialogController.showFilmInfo();
-            }
+        tableView.setRowFactory(tv -> {
+            TableRow<Film> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                    progData.filmInfoDialogController.showFilmInfo();
+                }
+            });
+            return row;
         });
+
+//        tableView.setOnMouseClicked(m -> {
+//            if (m.getButton().equals(MouseButton.PRIMARY) && m.getClickCount() == 2) {
+//                progData.filmInfoDialogController.showFilmInfo();
+//            }
+//        });
 
         tableView.setOnMousePressed(m -> {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
@@ -381,7 +391,6 @@ public class FilmGuiController extends AnchorPane {
         );
 
     }
-
 
     private synchronized void startFilmUrl() {
         final Optional<Film> filmSelection = getSel();

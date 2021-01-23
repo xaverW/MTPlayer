@@ -384,11 +384,21 @@ public class DownloadGuiController extends AnchorPane {
         tableView.setItems(sortedDownloads);
         sortedDownloads.comparatorProperty().bind(tableView.comparatorProperty());
 
-        tableView.setOnMouseClicked(m -> {
-            if (m.getButton().equals(MouseButton.PRIMARY) && m.getClickCount() == 2) {
-                changeDownload();
-            }
+        tableView.setRowFactory(tv -> {
+            TableRow<Download> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                    changeDownload();
+                }
+            });
+            return row;
         });
+
+//        tableView.setOnMouseClicked(m -> {
+//            if (m.getButton().equals(MouseButton.PRIMARY) && m.getClickCount() == 2) {
+//                changeDownload();
+//            }
+//        });
 
         tableView.setOnMousePressed(m -> {
             if (m.getButton().equals(MouseButton.SECONDARY)) {

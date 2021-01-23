@@ -16,12 +16,12 @@
 
 package de.p2tools.mtplayer.gui;
 
-import de.p2tools.mtplayer.gui.tools.Listener;
-import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.Abo;
 import de.p2tools.mtplayer.controller.data.abo.AboConstants;
+import de.p2tools.mtplayer.gui.tools.Listener;
+import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PTableFactory;
 import javafx.beans.property.BooleanProperty;
@@ -182,11 +182,20 @@ public class AboGuiController extends AnchorPane {
         tableView.setItems(sortedAbos);
         sortedAbos.comparatorProperty().bind(tableView.comparatorProperty());
 
-        tableView.setOnMouseClicked(m -> {
-            if (m.getButton().equals(MouseButton.PRIMARY) && m.getClickCount() == 2) {
-                changeAbo();
-            }
+        tableView.setRowFactory(tv -> {
+            TableRow<Abo> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                    changeAbo();
+                }
+            });
+            return row;
         });
+//        tableView.setOnMouseClicked(m -> {
+//            if (m.getButton().equals(MouseButton.PRIMARY) && m.getClickCount() == 2) {
+//                changeAbo();
+//            }
+//        });
 
         tableView.setOnMousePressed(m -> {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
