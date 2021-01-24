@@ -94,7 +94,8 @@ public class DownloadConstants {
             if (dManager) {
                 ret = "extern";
             } else {
-                ret = df.format(progress / 10) + " %";
+                ret = df.format(progress * 100) + " %";
+//                System.out.println("progress: " + progress);
 //                ret = Double.toString(progress / 10.0) + '%';
             }
 

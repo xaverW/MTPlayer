@@ -154,7 +154,7 @@ public class DirectHttpDownload extends Thread {
                 if (startPercent == DownloadConstants.PROGRESS_NOT_STARTED) {
                     startPercent = p;
                 }
-                // p muss zwischen 1 und 999 liegen
+                // p muss zwischen 0 und 1 liegen
                 if (p == DownloadConstants.PROGRESS_WAITING) {
                     p = DownloadConstants.PROGRESS_STARTED;
                 } else if (p >= DownloadConstants.PROGRESS_FINISHED) {

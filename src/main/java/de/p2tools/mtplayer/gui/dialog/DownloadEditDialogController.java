@@ -38,6 +38,8 @@ import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
+import javafx.beans.binding.StringBinding;
+import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -46,6 +48,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.TextAlignment;
 
 import java.io.File;
 
@@ -249,7 +252,8 @@ public class DownloadEditDialogController extends PDialogExtra {
             fileSize_high = FilmTools.getSizeFromWeb(download.getFilm(),
                     download.getFilm().getUrlForResolution(Film.RESOLUTION_NORMAL));
             if (!fileSize_high.isEmpty()) {
-                rbHigh.setText(rbHigh.getText() + "   [ " + fileSize_high + " MB ]");
+                rbHigh.setText(rbHigh.getText() + P2LibConst.LINE_SEPARATOR + "[ " + fileSize_high + " MB ]");
+                rbHigh.setTextAlignment(TextAlignment.CENTER);
             }
 
             if (download.getFilm().isHd()) {
@@ -258,7 +262,8 @@ public class DownloadEditDialogController extends PDialogExtra {
                 fileSize_HD = FilmTools.getSizeFromWeb(download.getFilm(),
                         download.getFilm().getUrlForResolution(Film.RESOLUTION_HD));
                 if (!fileSize_HD.isEmpty()) {
-                    rbHd.setText(rbHd.getText() + "   [ " + fileSize_HD + " MB ]");
+                    rbHd.setText(rbHd.getText() + P2LibConst.LINE_SEPARATOR + "[ " + fileSize_HD + " MB ]");
+                    rbHd.setTextAlignment(TextAlignment.CENTER);
                 }
             }
 
@@ -268,7 +273,8 @@ public class DownloadEditDialogController extends PDialogExtra {
                 fileSize_small = FilmTools.getSizeFromWeb(download.getFilm(),
                         download.getFilm().getUrlForResolution(Film.RESOLUTION_SMALL));
                 if (!fileSize_small.isEmpty()) {
-                    rbSmall.setText(rbSmall.getText() + "   [ " + fileSize_small + " MB ]");
+                    rbSmall.setText(rbSmall.getText() + P2LibConst.LINE_SEPARATOR + "[ " + fileSize_small + " MB ]");
+                    rbSmall.setTextAlignment(TextAlignment.CENTER);
                 }
             }
 
@@ -354,7 +360,7 @@ public class DownloadEditDialogController extends PDialogExtra {
 
                 vBox.getChildren().addAll(hBoxArray1, hBoxArray2);
 
-                gridPane.add(vBox, 1, row);
+                gridPane.add(vBox, 1, row, 3, 1);
             }
             ++row;
         }
@@ -374,7 +380,7 @@ public class DownloadEditDialogController extends PDialogExtra {
 
         hBoxPath.getChildren().addAll(cbPath, btnPath);
         vBox.getChildren().addAll(hBoxPath, lblSizeFree);
-        gridPane.add(vBox, 1, row);
+        gridPane.add(vBox, 1, row, 3, 1);
         ++row;
 
         // gespeicherte Pfade eintragen
@@ -402,7 +408,7 @@ public class DownloadEditDialogController extends PDialogExtra {
         txt[DownloadXml.DOWNLOAD_DEST_FILE_NAME].setEditable(!isStarted);
         txt[DownloadXml.DOWNLOAD_DEST_FILE_NAME].setText(download.getDestFileName());
         gridPane.add(lbl[DownloadXml.DOWNLOAD_DEST_FILE_NAME], 0, row);
-        gridPane.add(txt[DownloadXml.DOWNLOAD_DEST_FILE_NAME], 1, row);
+        gridPane.add(txt[DownloadXml.DOWNLOAD_DEST_FILE_NAME], 1, row, 3, 1);
         ++row;
 
         txt[DownloadXml.DOWNLOAD_DEST_FILE_NAME].textProperty().addListener((observable, oldValue, newValue) -> {
@@ -421,6 +427,203 @@ public class DownloadEditDialogController extends PDialogExtra {
     }
 
     private void initGridPane() {
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcComputedSizeAndHgrow(),
+                PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcComputedSizeAndHgrow());
+
+        gridPane.setHgap(5);
+        gridPane.setVgap(15);
+        gridPane.setPadding(new Insets(10));
+
+        int row = 0;
+        for (int i = 0; i < DownloadXml.MAX_ELEM; ++i) {
+            lbl[i] = new Label(DownloadXml.COLUMN_NAMES[i] + ":");
+            lbl[i].setPadding(new Insets(2, 0, 2, 0));
+            lblCont[i] = new Label("");
+
+            txt[i] = new TextField("");
+            txt[i].setEditable(false);
+            txt[i].setMaxWidth(Double.MAX_VALUE);
+            txt[i].setPrefWidth(Control.USE_COMPUTED_SIZE);
+
+            cbx[i] = new CheckBox();
+            cbx[i].setDisable(true);
+        }
+        setGrid();
+    }
+
+    private void addToGrid(int i, boolean second, int row, StringBinding stringProperty) {
+        lblCont[i].textProperty().bind(stringProperty);
+        gridPane.add(lbl[i], second ? 2 : 0, row);
+        gridPane.add(lblCont[i], second ? 3 : 1, row);
+    }
+
+    private void addToGrid(int i, boolean second, int row, StringProperty stringProperty, boolean expand) {
+        lblCont[i].textProperty().bind(stringProperty);
+        gridPane.add(lbl[i], second ? 2 : 0, row);
+        if (expand) {
+            gridPane.add(lblCont[i], second ? 3 : 1, row, 3, 1);
+        } else {
+            gridPane.add(lblCont[i], second ? 3 : 1, row);
+        }
+    }
+
+    private int setGrid() {
+//         DownloadXml.DOWNLOAD_NR:
+//         DownloadXml.DOWNLOAD_SOURCE:
+//         DownloadXml.DOWNLOAD_REF:
+//         DownloadXml.DOWNLOAD_PLACED_BACK:
+//         DownloadXml.DOWNLOAD_TYPE:
+//         DownloadXml.DOWNLOAD_HISTORY_URL:
+//         DownloadXml.DOWNLOAD_BANDWIDTH:
+//         DownloadXml.DOWNLOAD_INTERRUPTED:
+//         DownloadXml.DOWNLOAD_URL_RTMP:
+//         DownloadXml.DOWNLOAD_URL_SUBTITLE:
+//         DownloadXml.DOWNLOAD_SPOTLIGHT:
+//         DownloadXml.DOWNLOAD_BUTTON2:
+//         DownloadXml.DOWNLOAD_PROGRAM_CALL:
+//
+
+        int row = 0;
+
+        if (!download.getAboName().isEmpty()) {
+            addToGrid(DownloadXml.DOWNLOAD_ABO, false, row++, download.aboNameProperty(), false);
+        }
+
+        //---------------------------------
+        addToGrid(DownloadXml.DOWNLOAD_SENDER, false, row, download.channelProperty(), false);
+        addToGrid(DownloadXml.DOWNLOAD_THEME, true, row++, download.themeProperty(), false);
+
+        //---------------------------------
+        addToGrid(DownloadXml.DOWNLOAD_TITLE, false, row++, download.titleProperty(), false);
+
+        //---------------------------------
+        lblCont[DownloadXml.DOWNLOAD_PROGRESS].setText(DownloadConstants.getTextProgress(
+                download.getProgramDownloadmanager(),
+                download.getState(),
+                download.getProgress()));
+
+        gridPane.add(lbl[DownloadXml.DOWNLOAD_PROGRESS], 0, row);
+        gridPane.add(lblCont[DownloadXml.DOWNLOAD_PROGRESS], 1, row);
+
+        if (download.isStateStartedRun() &&
+                download.getStart().getTimeLeftSeconds() > 0) {
+            lblCont[DownloadXml.DOWNLOAD_REMAINING_TIME].setText(DownloadConstants.getTimeLeft(download.getStart().getTimeLeftSeconds()));
+        }
+        gridPane.add(lbl[DownloadXml.DOWNLOAD_REMAINING_TIME], 2, row);
+        gridPane.add(lblCont[DownloadXml.DOWNLOAD_REMAINING_TIME], 3, row);
+        ++row;
+
+        //---------------------------------
+        addToGrid(DownloadXml.DOWNLOAD_SIZE, false, row++, download.downloadSizeProperty().asString());
+
+        //---------------------------------
+        lblCont[DownloadXml.DOWNLOAD_DATE].setText(download.getFilmDate().toString()); //todo bind
+        gridPane.add(lbl[DownloadXml.DOWNLOAD_DATE], 0, row);
+        gridPane.add(lblCont[DownloadXml.DOWNLOAD_DATE], 1, row);
+
+        if (download.isHd()) {
+            ImageView imageView = new ImageView();
+            imageView.setImage(new ProgIcons().ICON_DIALOG_EIN_SW);
+            gridPane.add(imageView, 3, row);
+        }
+        gridPane.add(lbl[DownloadXml.DOWNLOAD_HD], 2, row);
+        ++row;
+
+        //---------------------------------
+        addToGrid(DownloadXml.DOWNLOAD_TIME, false, row, download.timeProperty(), false);
+
+        if (download.isUt()) {
+            ImageView imageView = new ImageView();
+            imageView.setImage(new ProgIcons().ICON_DIALOG_EIN_SW);
+            gridPane.add(imageView, 3, row);
+        }
+        gridPane.add(lbl[DownloadXml.DOWNLOAD_UT], 2, row);
+        ++row;
+
+        //---------------------------------
+        addToGrid(DownloadXml.DOWNLOAD_DURATION, false, row, download.durationMinuteProperty().asString());
+
+        if (download.getGeoBlocked()) {
+            ImageView imageView = new ImageView();
+            imageView.setImage(ProgConfig.SYSTEM_DARK_THEME.getBool() ? new ProgIcons().ICON_DIALOG_EIN_SW : new ProgIcons().ICON_DIALOG_EIN);
+            gridPane.add(imageView, 3, row);
+        }
+        gridPane.add(lbl[DownloadXml.DOWNLOAD_GEO], 2, row);
+        ++row;
+
+        //---------------------------------
+        cbx[DownloadXml.DOWNLOAD_PROGRAM_RESTART].setSelected(download.getProgramRestart());
+        if (!download.getProgramDownloadmanager() && !isStarted) {
+            cbx[DownloadXml.DOWNLOAD_PROGRAM_RESTART].setDisable(false);
+            final CheckBox box = cbx[DownloadXml.DOWNLOAD_PROGRAM_RESTART];
+            cbx[DownloadXml.DOWNLOAD_PROGRAM_RESTART].setOnAction(event -> download.setProgramRestart(box.isSelected()));
+        }
+        gridPane.add(lbl[DownloadXml.DOWNLOAD_PROGRAM_RESTART], 0, row);
+        gridPane.add(cbx[DownloadXml.DOWNLOAD_PROGRAM_RESTART], 1, row);
+
+        //---------------------------------
+        cbx[DownloadXml.DOWNLOAD_PROGRAM_DOWNLOADMANAGER].setSelected(download.getProgramDownloadmanager());
+        gridPane.add(lbl[DownloadXml.DOWNLOAD_PROGRAM_DOWNLOADMANAGER], 2, row);
+        gridPane.add(cbx[DownloadXml.DOWNLOAD_PROGRAM_DOWNLOADMANAGER], 3, row);
+        ++row;
+
+        //---------------------------------
+        cbx[DownloadXml.DOWNLOAD_INFO_FILE].setSelected(download.getInfoFile());
+        if (!isStarted) {
+            cbx[DownloadXml.DOWNLOAD_INFO_FILE].setDisable(false);
+            final CheckBox boxInfo = cbx[DownloadXml.DOWNLOAD_INFO_FILE];
+            cbx[DownloadXml.DOWNLOAD_INFO_FILE].setOnAction(event -> download.setInfoFile(boxInfo.isSelected()));
+        }
+        gridPane.add(lbl[DownloadXml.DOWNLOAD_INFO_FILE], 0, row);
+        gridPane.add(cbx[DownloadXml.DOWNLOAD_INFO_FILE], 1, row);
+
+        //---------------------------------
+        cbx[DownloadXml.DOWNLOAD_SUBTITLE].setSelected(download.isSubtitle());
+        Film film = download.getFilm();
+        if (!isStarted && film != null && !film.getUrlSubtitle().isEmpty()) {
+            cbx[DownloadXml.DOWNLOAD_SUBTITLE].setDisable(false);
+            final CheckBox boxSub = cbx[DownloadXml.DOWNLOAD_SUBTITLE];
+            cbx[DownloadXml.DOWNLOAD_SUBTITLE].setOnAction(event -> download.setSubtitle(boxSub.isSelected()));
+        }
+        gridPane.add(lbl[DownloadXml.DOWNLOAD_SUBTITLE], 2, row);
+        gridPane.add(cbx[DownloadXml.DOWNLOAD_SUBTITLE], 3, row);
+        ++row;
+        ++row;
+
+        //---------------------------------
+        if (download.getType().equals(DownloadConstants.TYPE_DOWNLOAD) || download.getSetData() != null) {
+            // ansonsten müsste erst der Programmaufruf neu gebaut werden
+            HBox hBox = new HBox(20);
+            hBox.getChildren().addAll(rbHd, rbHigh, rbSmall);
+
+            gridPane.add(new Label("Auflösung:"), 0, row);
+            gridPane.add(hBox, 1, row, 3, 1);
+            ++row;
+        }
+
+        //---------------------------------
+        addToGrid(DownloadXml.DOWNLOAD_FILM_URL, false, row++, download.filmUrlProperty(), true);
+        addToGrid(DownloadXml.DOWNLOAD_URL, false, row++, download.urlProperty(), true);
+        addToGrid(DownloadXml.DOWNLOAD_SET_DATA, false, row++, setData.visibleNameProperty(), true);
+        addToGrid(DownloadXml.DOWNLOAD_PROGRAM, false, row++, download.programProperty(), true);
+        //case DownloadXml.DOWNLOAD_PROGRAM_CALL_ARRAY:
+        row = initProgramArray(row);
+        //case DownloadXml.DOWNLOAD_DEST_FILE_NAME:
+        row = initName(row);
+        //case DownloadXml.DOWNLOAD_DEST_PATH:
+        row = initPath(row);
+
+        for (int i = 0; i < DownloadXml.MAX_ELEM; ++i) {
+            if (txt[i].isEditable() || !cbx[i].isDisabled()) {
+                lbl[i].setTextFill(Color.BLUE);
+            }
+        }
+        return row;
+    }
+
+    private void initGridPane_() {
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcComputedSizeAndHgrow());
 
@@ -442,11 +645,11 @@ public class DownloadEditDialogController extends PDialogExtra {
             cbx[i] = new CheckBox();
             cbx[i].setDisable(true);
 
-            row = setGrid(i, row);
+            row = setGrid_(i, row);
         }
     }
 
-    private int setGrid(int i, int row) {
+    private int setGrid_(int i, int row) {
         switch (i) {
             case DownloadXml.DOWNLOAD_NR:
             case DownloadXml.DOWNLOAD_SOURCE:
