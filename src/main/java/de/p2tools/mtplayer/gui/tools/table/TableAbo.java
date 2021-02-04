@@ -23,7 +23,6 @@ import de.p2tools.p2Lib.guiTools.PCheckBoxCell;
 import de.p2tools.p2Lib.tools.date.PDate;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
@@ -125,7 +124,7 @@ public class TableAbo {
     private static Callback<TableColumn<Abo, Boolean>, TableCell<Abo, Boolean>> callbackAktiv =
             (final TableColumn<Abo, Boolean> param) -> {
 
-                final PCheckBoxCell<Abo, Boolean> cell = new PCheckBoxCell<Abo, Boolean>() {
+                final PCheckBoxCell<Abo, Boolean> cell = new PCheckBoxCell<>() {
 
                     @Override
                     public void updateItem(Boolean item, boolean empty) {
@@ -140,14 +139,14 @@ public class TableAbo {
 
                         initCell(item);
 
-                        TableRow<Abo> currentRow = getTableRow();
-                        if (currentRow != null) {
-                            if (!item.booleanValue()) {
-                                currentRow.setStyle(MTColor.ABO_SWITCHED_OFF.getCssBackgroundSel());
-                            } else {
-                                currentRow.setStyle("");
-                            }
-                        }
+//                        TableRow<Abo> currentRow = getTableRow();
+//                        if (currentRow != null) {
+//                            if (!item.booleanValue()) {
+//                                currentRow.setStyle(MTColor.ABO_SWITCHED_OFF.getCssBackgroundSel());
+//                            } else {
+//                                currentRow.setStyle("");
+//                            }
+//                        }
                     }
                 };
                 return cell;
@@ -156,7 +155,7 @@ public class TableAbo {
     private static Callback<TableColumn<Abo, Integer>, TableCell<Abo, Integer>> callbackHits =
             (final TableColumn<Abo, Integer> param) -> {
 
-                final TableCell<Abo, Integer> cell = new TableCell<Abo, Integer>() {
+                final TableCell<Abo, Integer> cell = new TableCell<>() {
 
                     @Override
                     public void updateItem(Integer item, boolean empty) {
@@ -182,7 +181,7 @@ public class TableAbo {
     private static Callback<TableColumn<Abo, Integer>, TableCell<Abo, Integer>> cellFactoryMin
             = (final TableColumn<Abo, Integer> param) -> {
 
-        final TableCell<Abo, Integer> cell = new TableCell<Abo, Integer>() {
+        final TableCell<Abo, Integer> cell = new TableCell<>() {
 
             @Override
             public void updateItem(Integer item, boolean empty) {
@@ -207,7 +206,7 @@ public class TableAbo {
     private static Callback<TableColumn<Abo, Integer>, TableCell<Abo, Integer>> cellFactoryMax
             = (final TableColumn<Abo, Integer> param) -> {
 
-        final TableCell<Abo, Integer> cell = new TableCell<Abo, Integer>() {
+        final TableCell<Abo, Integer> cell = new TableCell<>() {
 
             @Override
             public void updateItem(Integer item, boolean empty) {

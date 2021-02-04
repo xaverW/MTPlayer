@@ -102,7 +102,7 @@ public class StartPane {
                 "3) Damit werden die oben eingestellten" + P2LibConst.LINE_SEPARATOR +
                 "Filter in dem darunter ausgewählten" + P2LibConst.LINE_SEPARATOR +
                 "Filterprofil gespeichert oder wieder" + P2LibConst.LINE_SEPARATOR +
-                "hergestellt (oder ein neues Profil" + P2LibConst.LINE_SEPARATOR +
+                "hergestellt (auch ein neues Profil" + P2LibConst.LINE_SEPARATOR +
                 "kann damit angelegt werden)." +
                 P2LibConst.LINE_SEPARATORx2 +
                 "4) Hier können die gespeicherten" + P2LibConst.LINE_SEPARATOR +

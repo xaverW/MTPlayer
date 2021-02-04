@@ -25,6 +25,7 @@ import de.p2tools.mtplayer.controller.data.film.FilmTools;
 import de.p2tools.mtplayer.gui.mediaDialog.MediaDialogController;
 import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.mtplayer.gui.tools.table.Table;
+import de.p2tools.mtplayer.gui.tools.table.TableRowFilm;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PColor;
@@ -347,7 +348,7 @@ public class FilmGuiController extends AnchorPane {
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
 
         tableView.setRowFactory(tv -> {
-            TableRow<Film> row = new TableRow<>();
+            TableRowFilm<Film> row = new TableRowFilm<>();
             row.setOnMouseClicked(event -> {
                 if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
                     progData.filmInfoDialogController.showFilmInfo();

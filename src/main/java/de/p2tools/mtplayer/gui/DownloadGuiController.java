@@ -29,6 +29,7 @@ import de.p2tools.mtplayer.gui.dialog.DownloadEditDialogController;
 import de.p2tools.mtplayer.gui.mediaDialog.MediaDialogController;
 import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.mtplayer.gui.tools.table.Table;
+import de.p2tools.mtplayer.gui.tools.table.TableRowDownload;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.POpen;
 import de.p2tools.p2Lib.guiTools.PTableFactory;
@@ -385,7 +386,7 @@ public class DownloadGuiController extends AnchorPane {
         sortedDownloads.comparatorProperty().bind(tableView.comparatorProperty());
 
         tableView.setRowFactory(tv -> {
-            TableRow<Download> row = new TableRow<>();
+            TableRowDownload<Download> row = new TableRowDownload<>();
             row.setOnMouseClicked(event -> {
                 if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
                     changeDownload();

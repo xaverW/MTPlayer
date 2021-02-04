@@ -188,7 +188,7 @@ public class TableDownload {
         themeColumn.setPrefWidth(180);
         titleColumn.setPrefWidth(230);
 
-        addRowFact(table);
+//        addRowFact(table);
 
         return new TableColumn[]{
                 nrColumn, filmNrColumn,
@@ -201,62 +201,39 @@ public class TableDownload {
 
     }
 
-    private void addRowFact(TableView<Download> table) {
-
-        table.setRowFactory(tableview -> new TableRow<Download>() {
-            @Override
-            public void updateItem(Download download, boolean empty) {
-                super.updateItem(download, empty);
-
-                if (download == null || empty) {
-                    setStyle("");
-                } else {
-
-                    if (geoMelden.get() && download.getGeoBlocked()) {
-                        // geogeblockt
-                        for (int i = 0; i < getChildren().size(); i++) {
-                            getChildren().get(i).setStyle("");
-                            getChildren().get(i).setStyle(MTColor.FILM_GEOBLOCK.getCssFontBold());
-                        }
-
-                    } else if (download.isStateError()) {
-                        Tooltip tooltip = new Tooltip();
-                        tooltip.setText(download.getErrorMessage());
-                        setTooltip(tooltip);
-
-                    } else {
-                        for (int i = 0; i < getChildren().size(); i++) {
-                            getChildren().get(i).setStyle("");
-                        }
-                    }
-
-
-//                    int item = download.getState();
-//                    switch (item) {
-//                        case DownloadConstants.STATE_INIT:
-//                        case DownloadConstants.STATE_STOPPED:
-//                            setStyle("");
-//                            break;
-//                        case DownloadConstants.STATE_STARTED_WAITING:
-//                            setStyle(MTColor.DOWNLOAD_WAIT.getCssBackground());
-//                            break;
-//                        case DownloadConstants.STATE_STARTED_RUN:
-//                            setStyle(MTColor.DOWNLOAD_RUN.getCssBackground());
-//                            break;
-//                        case DownloadConstants.STATE_FINISHED:
-//                            setStyle(MTColor.DOWNLOAD_FINISHED.getCssBackground());
-//                            break;
-//                        case DownloadConstants.STATE_ERROR:
-//                            setStyle(MTColor.DOWNLOAD_ERROR.getCssBackground());
-//                            break;
+//    private void addRowFact(TableView<Download> table) {
+//
+//        table.setRowFactory(tableview -> new TableRow<Download>() {
+//            @Override
+//            public void updateItem(Download download, boolean empty) {
+//                super.updateItem(download, empty);
+//
+//                if (download == null || empty) {
+//                    setStyle("");
+//                } else {
+//
+//                    if (geoMelden.get() && download.getGeoBlocked()) {
+//                        // geogeblockt
+//                        for (int i = 0; i < getChildren().size(); i++) {
+//                            getChildren().get(i).setStyle("");
+//                            getChildren().get(i).setStyle(MTColor.FILM_GEOBLOCK.getCssFontBold());
+//                        }
+//
+//                    } else if (download.isStateError()) {
+//                        Tooltip tooltip = new Tooltip();
+//                        tooltip.setText(download.getErrorMessage());
+//                        setTooltip(tooltip);
+//
+//                    } else {
+//                        for (int i = 0; i < getChildren().size(); i++) {
+//                            getChildren().get(i).setStyle("");
+//                        }
 //                    }
-
-                }
-
-            }
-        });
-
-    }
+//                }
+//
+//            }
+//        });
+//    }
 
     private Callback<TableColumn<Download, Integer>, TableCell<Download, Integer>> cellFactoryState
             = (final TableColumn<Download, Integer> param) -> {

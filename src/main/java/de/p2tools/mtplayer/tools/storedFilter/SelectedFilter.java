@@ -80,10 +80,10 @@ public final class SelectedFilter extends SelectedFilterProps {
         clearFilter();
 
         setChannelVis(true);
-//        setChannelExact(true);
+        setThemeTitleVis(true);
+
         setThemeVis(false);
         setThemeExact(false);
-        setThemeTitleVis(true);
         setTitleVis(false);
         setSomewhereVis(false);
         setUrlVis(false);
@@ -151,7 +151,6 @@ public final class SelectedFilter extends SelectedFilterProps {
 
         blacklistOnProperty().addListener(l -> reportBlacklistChange());
         blacklistOnlyProperty().addListener(l -> reportBlacklistChange());
-
     }
 
     private void reportFilterChange() {

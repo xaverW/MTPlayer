@@ -16,8 +16,8 @@
 
 package de.p2tools.mtplayer.gui;
 
-import de.p2tools.mtplayer.tools.storedFilter.FilterCheckRegEx;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.tools.storedFilter.FilterCheckRegEx;
 import javafx.beans.property.BooleanProperty;
 import javafx.collections.ListChangeListener;
 import javafx.geometry.Insets;
@@ -33,7 +33,7 @@ import java.util.List;
 
 public class FilmFilterControllerTextFilter extends VBox {
 
-    private final ComboBox<String> cbxTheme = new ComboBox<>();
+    private final ComboBox<String> cboTheme = new ComboBox<>();
     private final MenuButton mbChannel = new MenuButton("");
     private final TextField txtThemeTitle = new TextField();
     private final TextField txtTitle = new TextField();
@@ -165,18 +165,18 @@ public class FilmFilterControllerTextFilter extends VBox {
     }
 
     private void initStringFilter() {
-        cbxTheme.editableProperty().bind(progData.storedFilters.getActFilterSettings().themeExactProperty().not());
-        cbxTheme.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        cbxTheme.setVisibleRowCount(25);
-        cbxTheme.valueProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().themeProperty());
-        cbxTheme.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+        cboTheme.editableProperty().bind(progData.storedFilters.getActFilterSettings().themeExactProperty().not());
+        cboTheme.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        cboTheme.setVisibleRowCount(25);
+        cboTheme.valueProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().themeProperty());
+        cboTheme.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue != null && newValue != null) {
                 progData.storedFilters.getActFilterSettings().setTheme(newValue);
             }
         });
-        cbxTheme.setItems(progData.worker.getThemeForChannelList());
-        FilterCheckRegEx fTh = new FilterCheckRegEx(cbxTheme.getEditor());
-        cbxTheme.getEditor().textProperty().addListener((observable, oldValue, newValue) -> fTh.checkPattern());
+        cboTheme.setItems(progData.worker.getThemeForChannelList());
+        FilterCheckRegEx fTh = new FilterCheckRegEx(cboTheme.getEditor());
+        cboTheme.getEditor().textProperty().addListener((observable, oldValue, newValue) -> fTh.checkPattern());
 
         txtThemeTitle.textProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().themeTitleProperty());
         txtTitle.textProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().titleProperty());
@@ -196,7 +196,7 @@ public class FilmFilterControllerTextFilter extends VBox {
     private void addFilter() {
         VBox vBox = new VBox(10);
         addChannel(vBox);
-        addTxt("Thema", cbxTheme, vBox, progData.storedFilters.getActFilterSettings().themeVisProperty());
+        addTxt("Thema", cboTheme, vBox, progData.storedFilters.getActFilterSettings().themeVisProperty());
         addTxt("Thema oder Titel", txtThemeTitle, vBox, progData.storedFilters.getActFilterSettings().themeTitleVisProperty());
         addTxt("Titel", txtTitle, vBox, progData.storedFilters.getActFilterSettings().titleVisProperty());
         addTxt("Irgendwo", txtSomewhere, vBox, progData.storedFilters.getActFilterSettings().somewhereVisProperty());

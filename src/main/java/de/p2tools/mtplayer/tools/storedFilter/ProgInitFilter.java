@@ -25,15 +25,11 @@ public class ProgInitFilter {
         ProgData progData = ProgData.getInstance();
 
         //========================================================
-        SelectedFilter sf = new SelectedFilter();
-        sf.setName("alle Filme");
+        SelectedFilter sf = new SelectedFilter("alle Filme");
 
         sf.setChannelVis(true);
-//        sf.setChannelExact(true);
-
         sf.setThemeVis(false);
         sf.setThemeExact(true);
-
         sf.setThemeTitleVis(true);
         sf.setTitleVis(false);
         sf.setSomewhereVis(false);
@@ -66,19 +62,14 @@ public class ProgInitFilter {
         sf.setNotGeo(false);
         sf.setNotFuture(false);
 
-        sf.initFilter();
         progData.storedFilters.getStordeFilterList().add(sf);
 
-
         //========================================================
-        sf = new SelectedFilter();
-        sf.setName("nur neue Filme");
-        sf.setChannelVis(true);
-//        sf.setChannelExact(true);
+        sf = new SelectedFilter("nur neue Filme");
 
+        sf.setChannelVis(true);
         sf.setThemeVis(false);
         sf.setThemeExact(true);
-
         sf.setThemeTitleVis(true);
         sf.setTitleVis(false);
         sf.setSomewhereVis(false);
@@ -113,16 +104,12 @@ public class ProgInitFilter {
 
         progData.storedFilters.getStordeFilterList().add(sf);
 
-
         //========================================================
-        sf = new SelectedFilter();
-        sf.setName("nur Bookmarks");
-        sf.setChannelVis(true);
-//        sf.setChannelExact(true);
+        sf = new SelectedFilter("nur Bookmarks");
 
+        sf.setChannelVis(true);
         sf.setThemeVis(false);
         sf.setThemeExact(true);
-
         sf.setThemeTitleVis(true);
         sf.setTitleVis(false);
         sf.setSomewhereVis(false);
@@ -157,13 +144,10 @@ public class ProgInitFilter {
 
         progData.storedFilters.getStordeFilterList().add(sf);
 
-
         //========================================================
-        sf = new SelectedFilter();
-        sf.setName("aktuelle Nachrichten");
-        sf.setChannelVis(true);
-//        sf.setChannelExact(true);
+        sf = new SelectedFilter("aktuelle Nachrichten");
 
+        sf.setChannelVis(true);
         sf.setThemeVis(false);
         sf.setThemeExact(true);
 
@@ -202,13 +186,10 @@ public class ProgInitFilter {
 
         progData.storedFilters.getStordeFilterList().add(sf);
 
-
         //========================================================
-        sf = new SelectedFilter();
-        sf.setName("Nachrichten mit Europa UND Brexit");
-        sf.setChannelVis(true);
-//        sf.setChannelExact(true);
+        sf = new SelectedFilter("Nachrichten mit Europa UND Brexit");
 
+        sf.setChannelVis(true);
         sf.setThemeVis(false);
         sf.setThemeExact(true);
 
@@ -247,17 +228,13 @@ public class ProgInitFilter {
 
         progData.storedFilters.getStordeFilterList().add(sf);
 
-
         //========================================================
-        sf = new SelectedFilter();
-        sf.setName("nur ARD ODER ZDF");
-        sf.setChannelVis(true);
-//        sf.setChannelExact(false);
-        sf.setChannel("ard,zdf");
+        sf = new SelectedFilter("nur ARD ODER ZDF");
 
+        sf.setChannelVis(true);
+        sf.setChannel("ard,zdf");
         sf.setThemeVis(false);
         sf.setThemeExact(true);
-
         sf.setThemeTitleVis(true);
         sf.setThemeTitle("");
         sf.setTitleVis(false);
@@ -293,16 +270,12 @@ public class ProgInitFilter {
 
         progData.storedFilters.getStordeFilterList().add(sf);
 
-
         //========================================================
-        sf = new SelectedFilter();
-        sf.setName("Sport");
-        sf.setChannelVis(true);
-//        sf.setChannelExact(true);
+        sf = new SelectedFilter("Sport");
 
+        sf.setChannelVis(true);
         sf.setThemeVis(false);
         sf.setThemeExact(true);
-
         sf.setThemeTitleVis(true);
         sf.setThemeTitle("Sport");
         sf.setTitleVis(false);
@@ -338,16 +311,12 @@ public class ProgInitFilter {
 
         progData.storedFilters.getStordeFilterList().add(sf);
 
-
         //========================================================
-        sf = new SelectedFilter();
-        sf.setName("Livestreams");
-        sf.setChannelVis(true);
-//        sf.setChannelExact(true);
+        sf = new SelectedFilter("Livestreams");
 
+        sf.setChannelVis(true);
         sf.setThemeVis(false);
         sf.setThemeExact(true);
-
         sf.setThemeTitleVis(true);
         sf.setThemeTitle("");
         sf.setTitleVis(false);
@@ -383,21 +352,16 @@ public class ProgInitFilter {
 
         progData.storedFilters.getStordeFilterList().add(sf);
 
-
         //========================================================
-        sf = new SelectedFilter();
-        sf.setName("Abendkrimi");
-        sf.setChannelVis(true);
-//        sf.setChannelExact(false);
-        sf.setChannel("ard,zdf");
+        sf = new SelectedFilter("Abendkrimi");
 
+        sf.setChannelVis(true);
+        sf.setChannel("ard,zdf");
         sf.setThemeVis(false);
         sf.setThemeExact(true);
-
         sf.setThemeTitleVis(true);
         sf.setThemeTitle("");
         sf.setTitleVis(false);
-
         sf.setSomewhereVis(true);
         sf.setSomewhere("Krimi,Thriller,Tatort,Film");
         sf.setUrlVis(false);
@@ -431,17 +395,13 @@ public class ProgInitFilter {
 
         progData.storedFilters.getStordeFilterList().add(sf);
 
-
         //========================================================
-        sf = new SelectedFilter();
-        sf.setName("nur \"neue\" in HD");
-        sf.setChannelVis(true);
-//        sf.setChannelExact(true);
-        sf.setChannel("");
+        sf = new SelectedFilter("nur \"neue\" in HD");
 
+        sf.setChannelVis(true);
+        sf.setChannel("");
         sf.setThemeVis(false);
         sf.setThemeExact(true);
-
         sf.setThemeTitleVis(true);
         sf.setThemeTitle("");
         sf.setTitleVis(false);
@@ -478,7 +438,5 @@ public class ProgInitFilter {
 
         progData.storedFilters.getStordeFilterList().add(sf);
 
-
     }
-
 }

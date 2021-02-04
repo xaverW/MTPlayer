@@ -22,6 +22,7 @@ import de.p2tools.mtplayer.controller.data.abo.Abo;
 import de.p2tools.mtplayer.controller.data.abo.AboConstants;
 import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.mtplayer.gui.tools.table.Table;
+import de.p2tools.mtplayer.gui.tools.table.TableRowAbo;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PTableFactory;
 import javafx.beans.property.BooleanProperty;
@@ -183,7 +184,7 @@ public class AboGuiController extends AnchorPane {
         sortedAbos.comparatorProperty().bind(tableView.comparatorProperty());
 
         tableView.setRowFactory(tv -> {
-            TableRow<Abo> row = new TableRow<>();
+            TableRowAbo<Abo> row = new TableRowAbo<>();
             row.setOnMouseClicked(event -> {
                 if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
                     changeAbo();
