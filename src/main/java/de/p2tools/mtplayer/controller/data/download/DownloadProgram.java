@@ -331,19 +331,19 @@ public class DownloadProgram {
     }
 
     private String getNow_HH_MM_SS() {
-        return PDateFactory.FORMATTER_HHmmss.format(new Date());
+        return PDateFactory.F_FORMATTER_HHmmss.format(new Date());
     }
 
     private String getToday_yyyyMMdd() {
-        return PDateFactory.FORMATTER_yyyyMMdd.format(new Date());
+        return PDateFactory.F_FORMATTER_yyyyMMdd.format(new Date());
     }
 
     private String getToday_yyyy_MM_dd() {
-        return PDateFactory.FORMATTER_yyyy_MM_dd.format(new Date());
+        return PDateFactory.F_FORMATTER_yyyy_MM_dd.format(new Date());
     }
 
     private String getToday__yyyy_o_MM_o_dd() {
-        return PDateFactory.FORMATTER_ddMMyyyy.format(new Date());
+        return PDateFactory.F_FORMATTER_ddMMyyyy.format(new Date());
     }
 
     private static String getDMY(String s, String datum) {

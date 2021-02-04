@@ -276,7 +276,7 @@ public class AboProps extends AboXml {
 
     public void setDatum(String date, String time) {
         PDate d = new PDate();
-        d.setPDate(date, time, PDateFactory.FORMATTER_dd_MM_yyyy, PDateFactory.FORMATTER_ddMMyyyyHHmmss);
+        d.setPDate(date, time, PDateFactory.F_FORMATTER_dd_MM_yyyy, PDateFactory.F_FORMATTER_ddMMyyyyHHmmss);
         this.date.setValue(d);
     }
 

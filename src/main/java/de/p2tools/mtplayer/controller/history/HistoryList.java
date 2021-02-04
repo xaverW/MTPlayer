@@ -130,7 +130,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
 
         PDuration.counterStart("History: addDataToHistory");
         final ArrayList<HistoryData> list = new ArrayList<>();
-        final String datum = PDateFactory.FORMATTER_ddMMyyyy.format(new Date());
+        final String datum = PDateFactory.F_FORMATTER_ddMMyyyy.format(new Date());
         HistoryData historyData = new HistoryData(datum, theme, title, url);
         addToThisList(historyData);
         list.add(historyData);
@@ -147,7 +147,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         }
 
         final ArrayList<HistoryData> list = new ArrayList<>(filmList.size());
-        final String datum = PDateFactory.FORMATTER_ddMMyyyy.format(new Date());
+        final String datum = PDateFactory.F_FORMATTER_ddMMyyyy.format(new Date());
 
         PDuration.counterStart("History: addDataToHistory");
         for (final Film film : filmList) {
@@ -184,7 +184,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         }
 
         final ArrayList<HistoryData> list = new ArrayList<>(downloadList.size());
-        final String datum = PDateFactory.FORMATTER_ddMMyyyy.format(new Date());
+        final String datum = PDateFactory.F_FORMATTER_ddMMyyyy.format(new Date());
 
         PDuration.counterStart("History: addDataToHistory");
         for (final Download download : downloadList) {
