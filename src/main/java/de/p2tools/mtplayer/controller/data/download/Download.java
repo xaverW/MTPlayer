@@ -315,7 +315,7 @@ public final class Download extends DownloadProps {
             path = PSystemUtils.getStandardDownloadPath();
         }
         if (name.isEmpty()) {
-            name = PDateFactory.F_FORMATTER_yyyyMMdd.format(new Date()) + '_' + getTheme() + '-' + getTitle() + ".mp4";
+            name = PDateFactory.F_FORMAT_yyyyMMdd.format(new Date()) + '_' + getTheme() + '-' + getTitle() + ".mp4";
         }
         final String[] pathName = {path, name};
         PFileUtils.checkLengthPath(pathName);

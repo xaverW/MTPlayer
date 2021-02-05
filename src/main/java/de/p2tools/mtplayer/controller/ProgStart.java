@@ -206,7 +206,7 @@ public class ProgStart {
         PDuration.onlyPing("checkProgUpdate");
 
         if (Boolean.parseBoolean(ProgConfig.SYSTEM_UPDATE_SEARCH.get()) &&
-                !ProgConfig.SYSTEM_UPDATE_DATE.get().equals(PDateFactory.F_FORMATTER_yyyyMMdd.format(new Date()))) {
+                !ProgConfig.SYSTEM_UPDATE_DATE.get().equals(PDateFactory.F_FORMAT_yyyyMMdd.format(new Date()))) {
             // nach Updates suchen
             runUpdateCheck(progData);
 
@@ -222,7 +222,7 @@ public class ProgStart {
             if (!Boolean.parseBoolean(ProgConfig.SYSTEM_UPDATE_SEARCH.get())) {
                 list.add("  der User will nicht");
             }
-            if (ProgConfig.SYSTEM_UPDATE_DATE.get().equals(PDateFactory.F_FORMATTER_yyyyMMdd.format(new Date()))) {
+            if (ProgConfig.SYSTEM_UPDATE_DATE.get().equals(PDateFactory.F_FORMAT_yyyyMMdd.format(new Date()))) {
                 list.add("  heute schon gemacht");
             }
             PLog.sysLog(list);

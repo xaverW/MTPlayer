@@ -54,7 +54,7 @@ public class SearchProgramUpdate {
     public boolean searchNewProgramVersion() {
         // prüft auf neue Version, ProgVersion und auch (wenn gewünscht) BETA-Version
         boolean ret;
-        ProgConfig.SYSTEM_UPDATE_DATE.setValue(PDateFactory.F_FORMATTER_yyyyMMdd.format(new Date()));
+        ProgConfig.SYSTEM_UPDATE_DATE.setValue(PDateFactory.F_FORMAT_yyyyMMdd.format(new Date()));
 
         if (!ProgConfig.SYSTEM_UPDATE_SEARCH.getBool()) {
             // dann ist es nicht gewünscht

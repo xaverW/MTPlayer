@@ -157,7 +157,7 @@ public class StarterClass {
             list.add("Ziel: " + download.getDestPathFile());
         }
         list.add("URL: " + download.getUrl());
-        list.add("Startzeit: " + PDateFactory.F_FORMATTER_HHmmss.format(download.getStart().getStartTime()));
+        list.add("Startzeit: " + PDateFactory.F_FORMAT_HH_mm_ss.format(download.getStart().getStartTime()));
         if (download.getType().equals(DownloadConstants.TYPE_DOWNLOAD)) {
             list.add(DownloadConstants.TYPE_DOWNLOAD);
         } else {
@@ -205,8 +205,8 @@ public class StarterClass {
             list.add("Ziel: " + download.getDestPathFile());
         }
 
-        list.add("Startzeit: " + PDateFactory.F_FORMATTER_HHmmss.format(start.getStartTime()));
-        list.add("Endzeit: " + PDateFactory.F_FORMATTER_HHmmss.format(new PDate().getTime()));
+        list.add("Startzeit: " + PDateFactory.F_FORMAT_HH_mm_ss.format(start.getStartTime()));
+        list.add("Endzeit: " + PDateFactory.F_FORMAT_HH_mm_ss.format(new PDate().getTime()));
 
         if (start.getRestartCounter() > 0) {
             list.add("Restarts: " + start.getRestartCounter());

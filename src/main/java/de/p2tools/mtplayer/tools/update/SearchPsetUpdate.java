@@ -108,7 +108,7 @@ public class SearchPsetUpdate {
                     }
 
                     // damit man sie auch findet :)
-                    final String date = PDateFactory.F_FORMATTER_ddMMyyyy.format(new Date());
+                    final String date = PDateFactory.F_FORMAT_dd_MM_yyyy.format(new Date());
                     listPsetStandard.forEach((psNew) -> {
                         psNew.setId(PIndex.getIndexStr());
                         psNew.setVisibleName(psNew.getVisibleName() + ", neu: " + date);

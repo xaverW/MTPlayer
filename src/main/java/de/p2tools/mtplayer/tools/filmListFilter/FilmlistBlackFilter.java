@@ -22,6 +22,7 @@ import de.p2tools.mtplayer.controller.data.BlackData;
 import de.p2tools.mtplayer.controller.data.film.Film;
 import de.p2tools.mtplayer.controller.data.film.Filmlist;
 import de.p2tools.p2Lib.tools.duration.PDuration;
+import de.p2tools.p2Lib.tools.log.PLog;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,47 +53,18 @@ public class FilmlistBlackFilter {
             Stream<Film> initialStream = filmlist.parallelStream();
 
             if (PROG_DATA.storedFilters.getActFilterSettings().isBlacklistOnly()) {
-                //only when blacklist in ONLY!
-                System.out.println("FilmlistBlackFilter - isBlacklistOnly");
+                //blacklist in ONLY
+                PLog.sysLog("FilmlistBlackFilter - isBlacklistOnly");
                 initialStream = initialStream.filter(f -> !f.isBlackBlocked());
 
             } else if (PROG_DATA.storedFilters.getActFilterSettings().isBlacklistOn()) {
-                //only when blacklist in ON!
-                System.out.println("FilmlistBlackFilter - isBlacklistOn");
-
-//                List<Predicate<Film>> filterList = new ArrayList<>();
-//                filterList.add(film -> film.isBlackBlocked());
-
-//                // vor dem Zählen der Treffer erst mal löschen
-//                PROG_DATA.blackList.clearCounter();
-//
-//                // add the filter predicates to the list
-//                if (days > 0) {
-//                    filterList.add(FilmlistBlackFilter::checkDate);
-//                }
-//
-//                if (doNotShowGeoBlockedFilms) {
-//                    filterList.add(film -> !film.isGeoBlocked());
-//                }
-//                if (doNotShowFutureFilms) {
-//                    filterList.add(film -> !film.isInFuture());
-//                }
-//                if (filmLengthTarget_Minute != 0) {
-//                    filterList.add(FilmlistBlackFilter::checkFilmLength);
-//                }
-//
-//                if (!PROG_DATA.blackList.isEmpty()) {
-//                    filterList.add(film -> applyBlacklistFilters(film, true));
-//                }
-
-//                for (final Predicate<Film> predicate : filterList) {
-//                    initialStream = initialStream.filter(predicate);
-//                }
-
+                //blacklist in ON
+                PLog.sysLog("FilmlistBlackFilter - isBlacklistOn");
                 initialStream = initialStream.filter(f -> f.isBlackBlocked());
 
             } else {
-                System.out.println("ohne");
+                //blacklist in OFF
+                PLog.sysLog("FilmlistBlackFilter - isBlacklistOff");
             }
 
             final List<Film> col = initialStream.collect(Collectors.toList());

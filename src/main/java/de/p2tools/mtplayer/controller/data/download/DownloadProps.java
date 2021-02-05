@@ -96,7 +96,7 @@ public class DownloadProps extends DownloadXml {
 
     public void setFilmDate(String date, String time) {
         PDate d = new PDate();
-        d.setPDate(date, time, PDateFactory.F_FORMATTER_dd_MM_yyyy, PDateFactory.F_FORMATTER_ddMMyyyyHHmmss);
+        d.setPDate(date, time, PDateFactory.F_FORMAT_dd_MM_yyyy, PDateFactory.F_FORMAT_dd_MM_yyyyHH_mm_ss);
         this.filmDate.setValue(d);
     }
 

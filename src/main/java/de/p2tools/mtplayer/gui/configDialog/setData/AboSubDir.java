@@ -22,7 +22,7 @@ import de.p2tools.p2Lib.tools.date.PDateFactory;
 import java.util.Date;
 
 public class AboSubDir {
-    private static String date = PDateFactory.F_FORMATTER_yyyy_MM_dd.format(new Date());
+    private static String date = PDateFactory.F_FORMAT_yyyy_MM_dd.format(new Date());
 
     public enum DirName {
         // 0--> gibts nicht, da liefern die ProgVersionen ohne die Funktion dann "Thema" wie dort üblich
