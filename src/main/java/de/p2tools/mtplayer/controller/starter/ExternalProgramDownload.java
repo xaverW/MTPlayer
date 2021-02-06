@@ -16,13 +16,14 @@
 
 package de.p2tools.mtplayer.controller.starter;
 
+import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.data.download.Download;
+import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.gui.dialog.DownloadContinueDialogController;
 import de.p2tools.mtplayer.gui.dialog.DownloadErrorDialogController;
 import de.p2tools.mtplayer.gui.tools.MTInfoFile;
 import de.p2tools.mtplayer.gui.tools.MTSubtitle;
-import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.download.Download;
-import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
 
@@ -275,20 +276,25 @@ public class ExternalProgramDownload extends Thread {
     }
 
     private boolean checkCancel() {
-        boolean result = false;
+        boolean ret = false;
         if (file.exists()) {
-            final DownloadContinueDialogController downloadContinueDialogController =
-                    new DownloadContinueDialogController(progData, download, false /* weiterführen */);
+            DownloadContinueDialogController downloadContinueDialogController =
+                    new DownloadContinueDialogController(ProgConfig.DOWNLOAD_DIALOG_CONTINUE_SIZE.getStringProperty(),
+                            progData, download, false /* weiterführen */);
 
-            switch (downloadContinueDialogController.getResult()) {
+            DownloadState.ContinueDownload result = downloadContinueDialogController.getResult();
+            boolean isNewName = downloadContinueDialogController.isNewName();
+            downloadContinueDialogController = null;
+
+            switch (result) {
                 case CANCEL_DOWNLOAD:
                     // dann wars das
                     download.stopDownload();
-                    result = true;
+                    ret = true;
                     break;
 
                 case RESTART_DOWNLOAD:
-                    if (!downloadContinueDialogController.isNewName()) {
+                    if (!isNewName) {
                         // alte Datei vorher löschen
                         try {
                             Files.deleteIfExists(file.toPath());
@@ -309,6 +315,6 @@ public class ExternalProgramDownload extends Thread {
 
             }
         }
-        return result;
+        return ret;
     }
 }

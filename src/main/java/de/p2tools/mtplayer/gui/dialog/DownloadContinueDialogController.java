@@ -30,6 +30,7 @@ import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.tools.ProgramTools;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.StringProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -62,10 +63,9 @@ public class DownloadContinueDialogController extends PDialogExtra {
     private Timeline timeline = null;
     private Integer timeSeconds = ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS.getInt();
 
-    public DownloadContinueDialogController(ProgData progData, Download download, boolean directDownload) {
-        super(progData.primaryStage,
-                ProgConfig.DOWNLOAD_DIALOG_CONTINUE_SIZE.getStringProperty(),
-                "Download weiterführen", true, false);
+    public DownloadContinueDialogController(StringProperty conf, ProgData progData,
+                                            Download download, boolean directDownload) {
+        super(progData.primaryStage, conf, "Download weiterführen", true, false);
 
         this.progData = progData;
         this.download = download;
@@ -121,7 +121,6 @@ public class DownloadContinueDialogController extends PDialogExtra {
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), event -> handleCountDownAction()));
         timeline.playFromStart();
-
     }
 
     private void initCont() {
@@ -243,7 +242,6 @@ public class DownloadContinueDialogController extends PDialogExtra {
         if (timeline != null) {
             timeline.stop();
         }
-
         setButtonText();
     }
 
@@ -256,6 +254,7 @@ public class DownloadContinueDialogController extends PDialogExtra {
     }
 
     private void quit() {
+        timeline.stop();
         close();
     }
 

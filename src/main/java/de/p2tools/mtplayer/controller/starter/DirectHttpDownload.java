@@ -331,10 +331,15 @@ public class DirectHttpDownload extends Thread {
     private boolean break_() {
         boolean cancel = false;
         if (file.exists()) {
-            final DownloadContinueDialogController downloadContinueDialogController =
-                    new DownloadContinueDialogController(progData, download, true /* weiterführen */);
+            DownloadContinueDialogController downloadContinueDialogController =
+                    new DownloadContinueDialogController(ProgConfig.DOWNLOAD_DIALOG_CONTINUE_SIZE.getStringProperty(),
+                            progData, download, true /* weiterführen */);
 
-            switch (downloadContinueDialogController.getResult()) {
+            DownloadState.ContinueDownload result = downloadContinueDialogController.getResult();
+            boolean isNewName = downloadContinueDialogController.isNewName();
+            downloadContinueDialogController = null;
+
+            switch (result) {
                 case CANCEL_DOWNLOAD:
                     // dann wars das
                     download.stopDownload();
@@ -346,7 +351,7 @@ public class DirectHttpDownload extends Thread {
                     break;
 
                 case RESTART_DOWNLOAD:
-                    if (!downloadContinueDialogController.isNewName()) {
+                    if (!isNewName) {
                         // dann mit gleichem Namen und Datei vorher löschen
                         try {
                             Files.deleteIfExists(file.toPath());

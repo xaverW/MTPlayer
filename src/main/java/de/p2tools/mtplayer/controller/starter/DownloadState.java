@@ -21,7 +21,6 @@ public class DownloadState {
 
     public enum ContinueDownload {
         // Anwort des Dialogs: Datei schon vorhanden
-
         CANCEL_DOWNLOAD,
         CONTINUE_DOWNLOAD,
         RESTART_DOWNLOAD
