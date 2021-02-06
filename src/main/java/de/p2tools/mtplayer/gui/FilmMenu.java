@@ -16,13 +16,13 @@
 
 package de.p2tools.mtplayer.gui;
 
-import de.p2tools.mtplayer.tools.storedFilter.BookmarkFilter;
-import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
-import de.p2tools.mtplayer.tools.storedFilter.SelectedFilterFactory;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.MTShortcut;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
+import de.p2tools.mtplayer.tools.storedFilter.BookmarkFilter;
+import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
+import de.p2tools.mtplayer.tools.storedFilter.SelectedFilterFactory;
 import de.p2tools.p2Lib.tools.shortcut.PShortcutWorker;
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.control.*;
@@ -135,12 +135,16 @@ public class FilmMenu {
         miFilmShown.setOnAction(a -> progData.filmGuiController.setFilmShown());
         final MenuItem miFilmNotShown = new MenuItem("Filme als ungesehen markieren");
         miFilmNotShown.setOnAction(a -> progData.filmGuiController.setFilmNotShown());
+        final MenuItem miFilmInfo = new MenuItem("Filminformation anzeigen");
+        miFilmInfo.setOnAction(a -> progData.filmGuiController.showFilmInfo());
+        PShortcutWorker.addShortCut(miFilmInfo, MTShortcut.SHORTCUT_INFO_FILM);
+
         final MenuItem miFilmMediaCollection = new MenuItem("Titel in der Mediensammlung suchen");
         miFilmMediaCollection.setOnAction(a -> progData.filmGuiController.guiFilmMediaCollection());
         PShortcutWorker.addShortCut(miFilmMediaCollection, MTShortcut.SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION);
 
         mb.getItems().add(new SeparatorMenuItem());
-        mb.getItems().addAll(miFilmShown, miFilmNotShown, miFilmMediaCollection);
+        mb.getItems().addAll(miFilmShown, miFilmNotShown, miFilmInfo, miFilmMediaCollection);
 
 
         // Bookmarks

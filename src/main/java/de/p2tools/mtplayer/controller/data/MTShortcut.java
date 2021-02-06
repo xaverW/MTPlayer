@@ -29,10 +29,12 @@ public class MTShortcut {
             new PShortcut(ProgConfig.SHORTCUT_SEARCH_MEDIACOLLECTION.getStringProperty(), ProgConfig.SHORTCUT_SEARCH_MEDIACOLLECTION.getInitValue(),
                     "Mediensammlung durchsuchen",
                     "Der Dialog zum Durchsuchen der Mediensammlung wird angezeigt.");
+
     public static final PShortcut SHORTCUT_QUIT_PROGRAM =
             new PShortcut(ProgConfig.SHORTCUT_QUIT_PROGRAM.getStringProperty(), ProgConfig.SHORTCUT_QUIT_PROGRAM.getInitValue(),
                     "Programm beenden",
                     "Das Programm wird beendet. Wenn noch ein Download läuft, wird in einem Dialog abgefragt, was getan werden soll.");
+
     public static final PShortcut SHORTCUT_QUIT_PROGRAM_WAIT =
             new PShortcut(ProgConfig.SHORTCUT_QUIT_PROGRAM_WAIT.getStringProperty(), ProgConfig.SHORTCUT_QUIT_PROGRAM_WAIT.getInitValue(),
                     "Programm beenden, Downloads abwarten",
@@ -40,10 +42,16 @@ public class MTShortcut {
                             "das Programm wartet auf den Download. Der Dialog mit der Abfrage was getan werden soll, wird aber übersprungen.");
 
     // Tabelle Filme
+    public static final PShortcut SHORTCUT_INFO_FILM =
+            new PShortcut(ProgConfig.SHORTCUT_INFO_FILM.getStringProperty(), ProgConfig.SHORTCUT_INFO_FILM.getInitValue(),
+                    "Filminformation anzeigen",
+                    "Infos des markierten Films in der Tabelle \"Filme\" anzeigen.");
+
     public static final PShortcut SHORTCUT_PLAY_FILM =
             new PShortcut(ProgConfig.SHORTCUT_PLAY_FILM.getStringProperty(), ProgConfig.SHORTCUT_PLAY_FILM.getInitValue(),
                     "Film abspielen",
                     "Der markierte Film in der Tabelle \"Filme\" wird abgespielt.");
+
     public static final PShortcut SHORTCUT_SAVE_FILM =
             new PShortcut(ProgConfig.SHORTCUT_SAVE_FILM.getStringProperty(), ProgConfig.SHORTCUT_SAVE_FILM.getInitValue(),
                     "Film speichern",
@@ -64,18 +72,27 @@ public class MTShortcut {
             new PShortcut(ProgConfig.SHORTCUT_DOWNLOAD_STOP.getStringProperty(), ProgConfig.SHORTCUT_DOWNLOAD_STOP.getInitValue(),
                     "Download stoppen",
                     "Der markierte Download in der Tabelle \"Downloads\" wird gestoppt.");
+
     public static final PShortcut SHORTCUT_DOWNLOAD_CHANGE =
             new PShortcut(ProgConfig.SHORTCUT_DOWNLOAD_CHANGE.getStringProperty(), ProgConfig.SHORTCUT_DOWNLOAD_CHANGE.getInitValue(),
                     "Download ändern",
                     "Der markierte Download in der Tabelle \"Downloads\" kann geändert werden.");
+
+    public static final PShortcut SHORTCUT_DOWNLOAD_INFO_FILM =
+            new PShortcut(ProgConfig.SHORTCUT_DOWNLOAD_INFO_FILM.getStringProperty(), ProgConfig.SHORTCUT_DOWNLOAD_INFO_FILM.getInitValue(),
+                    "Filminformation anzeigen",
+                    "Infos des markierten Films in der Tabelle \"Filme\" anzeigen.");
+
     public static final PShortcut SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION =
             new PShortcut(ProgConfig.SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION.getStringProperty(), ProgConfig.SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION.getInitValue(),
                     "Download in Mediensammlung suchen",
                     "Der Titel des markierten Downloads in der Tabelle \"Downloads\" wird in der Mediensammlung gesucht.");
+
     public static final PShortcut SHORTCUT_DOWNLOADS_UPDATE =
             new PShortcut(ProgConfig.SHORTCUT_DOWNLOADS_UPDATE.getStringProperty(), ProgConfig.SHORTCUT_DOWNLOADS_UPDATE.getInitValue(),
                     "Downloads aktualisieren",
                     "Die Liste der Downloads in der Tabelle \"Downloads\" wird aktualisiert.");
+
     public static final PShortcut SHORTCUT_DOWNLOADS_CLEAN_UP =
             new PShortcut(ProgConfig.SHORTCUT_DOWNLOADS_CLEAN_UP.getStringProperty(), ProgConfig.SHORTCUT_DOWNLOADS_CLEAN_UP.getInitValue(),
                     "Downloads aufräumen",
@@ -89,6 +106,7 @@ public class MTShortcut {
         shortcutList.add(SHORTCUT_QUIT_PROGRAM);
         shortcutList.add(SHORTCUT_QUIT_PROGRAM_WAIT);
 
+        shortcutList.add(SHORTCUT_INFO_FILM);
         shortcutList.add(SHORTCUT_PLAY_FILM);
         shortcutList.add(SHORTCUT_SAVE_FILM);
         shortcutList.add(SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION);
@@ -96,6 +114,7 @@ public class MTShortcut {
         shortcutList.add(SHORTCUT_DOWNLOAD_START);
         shortcutList.add(SHORTCUT_DOWNLOAD_STOP);
         shortcutList.add(SHORTCUT_DOWNLOAD_CHANGE);
+        shortcutList.add(SHORTCUT_DOWNLOAD_INFO_FILM);
         shortcutList.add(SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION);
         shortcutList.add(SHORTCUT_DOWNLOADS_UPDATE);
         shortcutList.add(SHORTCUT_DOWNLOADS_CLEAN_UP);

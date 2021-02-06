@@ -272,6 +272,7 @@ public class ProgConfig extends MLConfig {
 
     // Shortcuts Filmmenü
     public static MLConfigs SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION = addNewKey("SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION", "Ctrl+M");
+    public static MLConfigs SHORTCUT_INFO_FILM = addNewKey("SHORTCUT_INFO_FILM", "Ctrl+I");
     public static MLConfigs SHORTCUT_PLAY_FILM = addNewKey("SHORTCUT_PLAY_FILM", "Ctrl+P");
     public static MLConfigs SHORTCUT_SAVE_FILM = addNewKey("SHORTCUT_SAVE_FILM", "Ctrl+S");
 
@@ -280,6 +281,7 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs SHORTCUT_DOWNLOAD_START = addNewKey("SHORTCUT_DOWNLOAD_START", "Ctrl+D");
     public static MLConfigs SHORTCUT_DOWNLOAD_STOP = addNewKey("SHORTCUT_DOWNLOAD_STOP", "Ctrl+T");
     public static MLConfigs SHORTCUT_DOWNLOAD_CHANGE = addNewKey("SHORTCUT_DOWNLOAD_CHANGE", "Ctrl+C");
+    public static MLConfigs SHORTCUT_DOWNLOAD_INFO_FILM = addNewKey("SHORTCUT_DOWNLOAD_INFO_FILM", "Ctrl+I");
     public static MLConfigs SHORTCUT_DOWNLOADS_UPDATE = addNewKey("SHORTCUT_DOWNLOADS_UPDATE", "CTRL+U");
     public static MLConfigs SHORTCUT_DOWNLOADS_CLEAN_UP = addNewKey("SHORTCUT_DOWNLOADS_CLEAN_UP", "CTRL+O");
 
