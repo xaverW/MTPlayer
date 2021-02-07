@@ -76,48 +76,48 @@ public class MTColor {
                     ProgConfig.COLOR__DOWNLOAD_NAME_ERROR_DARK, Color.rgb(200, 183, 183), "Download, Dateiname ist fehlerhaft");
 
 
-    private static ObservableList<MLC> colorList = FXCollections.observableArrayList();
+    private static ObservableList<MLC> colorListFont = FXCollections.observableArrayList();
+    private static ObservableList<MLC> colorListBackground = FXCollections.observableArrayList();
 
     public MTColor() {
         ProgConfig.SYSTEM_THEME_CHANGED.getStringProperty().addListener((u, o, n) -> {
             setColorTheme();
         });
 
-        colorList.add(FILM_LIVESTREAM);
-        colorList.add(FILM_HISTORY);
-        colorList.add(FILM_NEW);
-        colorList.add(FILM_BOOKMARK);
-        colorList.add(FILM_GEOBLOCK);
-        colorList.add(DOWNLOAD_WAIT);
-        colorList.add(DOWNLOAD_RUN);
-        colorList.add(DOWNLOAD_FINISHED);
-        colorList.add(DOWNLOAD_ERROR);
-        colorList.add(ABO_SWITCHED_OFF);
-        colorList.add(FILTER_REGEX);
-        colorList.add(FILTER_REGEX_ERROR);
-        colorList.add(DOWNLOAD_NAME_ERROR);
+        colorListFont.add(FILM_LIVESTREAM);
+        colorListBackground.add(FILM_HISTORY);
+        colorListFont.add(FILM_NEW);
+        colorListBackground.add(FILM_BOOKMARK);
+        colorListFont.add(FILM_GEOBLOCK);
+        colorListBackground.add(DOWNLOAD_WAIT);
+        colorListBackground.add(DOWNLOAD_RUN);
+        colorListBackground.add(DOWNLOAD_FINISHED);
+        colorListBackground.add(DOWNLOAD_ERROR);
+        colorListBackground.add(ABO_SWITCHED_OFF);
+        colorListBackground.add(FILTER_REGEX);
+        colorListBackground.add(FILTER_REGEX_ERROR);
+        colorListBackground.add(DOWNLOAD_NAME_ERROR);
     }
 
-//    public BooleanProperty changedProperty() {
-//        return changed;
-//    }
-
-    public static synchronized ObservableList<MLC> getColorList() {
-        return colorList;
+    public static synchronized ObservableList<MLC> getColorListFont() {
+        return colorListFont;
     }
 
-//    public final void loadStoredColors() {
-//        setColorTheme();
-//    }
+    public static synchronized ObservableList<MLC> getColorListBackground() {
+        return colorListBackground;
+    }
 
     public void resetAllColors() {
-        colorList.forEach(MLC::resetColor);
+        colorListFont.forEach(MLC::resetColor);
+        colorListBackground.forEach(MLC::resetColor);
     }
 
     public void setColorTheme() {
-        for (int i = 0; i < colorList.size(); ++i) {
-            colorList.get(i).setColorTheme(ProgConfig.SYSTEM_DARK_THEME.getBool());
+        for (int i = 0; i < colorListFont.size(); ++i) {
+            colorListFont.get(i).setColorTheme(ProgConfig.SYSTEM_DARK_THEME.getBool());
         }
-//        changed.setValue(!changed.get());
+        for (int i = 0; i < colorListBackground.size(); ++i) {
+            colorListBackground.get(i).setColorTheme(ProgConfig.SYSTEM_DARK_THEME.getBool());
+        }
     }
 }

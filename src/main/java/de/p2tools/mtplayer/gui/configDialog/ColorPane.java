@@ -27,14 +27,13 @@ import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import de.p2tools.p2Lib.tools.PColorFactory;
 import javafx.beans.property.BooleanProperty;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -51,40 +50,47 @@ public class ColorPane {
     }
 
     public void makeColor(Collection<TitledPane> result) {
-        final VBox vBox = new VBox();
-        vBox.setFillWidth(true);
-        vBox.setSpacing(10);
-        vBox.setPadding(new Insets(20));
-
-        final GridPane gridPane = new GridPane();
-        gridPane.setHgap(15);
-        gridPane.setVgap(15);
-        gridPane.setPadding(new Insets(0, 0, 10, 0));
-
         tglDarkTheme.selectedProperty().bindBidirectional(propDarkTheme);
         final Button btnHelpTheme = PButton.helpButton(stage, "Erscheinungsbild der Programmoberfläche",
                 HelpText.DARK_THEME);
 
-        gridPane.add(tglDarkTheme, 0, 0);
-        gridPane.add(btnHelpTheme, 1, 0);
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(), PColumnConstraints.getCcPrefSize());
+        TableView<MLC> tableViewFont = new TableView<>();
+        initTableColor(tableViewFont);
+        tableViewFont.setPrefHeight(ProgConst.MIN_TABLE_HEIGHT);
+        tableViewFont.setItems(MTColor.getColorListFont());
 
-        TableView<MLC> tableView = new TableView<>();
-        VBox.setVgrow(tableView, Priority.ALWAYS);
-        initTableColor(tableView);
+        TableView<MLC> tableViewBackground = new TableView<>();
+        initTableColor(tableViewBackground);
+        tableViewBackground.setItems(MTColor.getColorListBackground());
 
         Button button = new Button("Alle _Farben zurücksetzen");
         button.setOnAction(event -> {
             ProgData.getInstance().mTColor.resetAllColors();
         });
-        HBox hBox = new HBox();
-        hBox.getChildren().add(button);
-        hBox.setPadding(new Insets(0));
-        hBox.setAlignment(Pos.CENTER_RIGHT);
 
-        vBox.getChildren().addAll(gridPane, tableView, hBox);
+        int row = 0;
+        final GridPane gridPane = new GridPane();
+        gridPane.setHgap(15);
+        gridPane.setVgap(15);
+        gridPane.setPadding(new Insets(10));
 
-        TitledPane tpColor = new TitledPane("Farben", vBox);
+        gridPane.add(tglDarkTheme, 0, row);
+        gridPane.add(btnHelpTheme, 1, row);
+        GridPane.setHalignment(btnHelpTheme, HPos.RIGHT);
+
+        gridPane.add(new Label("Schriftfarben"), 0, ++row, 2, 1);
+        gridPane.add(tableViewFont, 0, ++row, 2, 1);
+        ++row;
+        gridPane.add(new Label("Hintergrundfarben"), 0, ++row, 2, 1);
+        gridPane.add(tableViewBackground, 0, ++row, 2, 1);
+
+        gridPane.add(button, 0, ++row, 2, 1);
+        GridPane.setHalignment(button, HPos.RIGHT);
+
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(),
+                PColumnConstraints.getCcPrefSize());
+
+        TitledPane tpColor = new TitledPane("Farben", gridPane);
         result.add(tpColor);
     }
 
@@ -93,8 +99,6 @@ public class ColorPane {
     }
 
     private void initTableColor(TableView<MLC> tableView) {
-
-//        ProgData.getInstance().mTColor.changedProperty().addListener((u, o, n) -> tableView.refresh());
         final TableColumn<MLC, String> textColumn = new TableColumn<>("Beschreibung");
         textColumn.setCellValueFactory(new PropertyValueFactory<>("text"));
         textColumn.getStyleClass().add("alignCenterLeft");
@@ -121,7 +125,6 @@ public class ColorPane {
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
         tableView.getColumns().addAll(textColumn, changeColumn, colorColumn, colorOrgColumn, resetColumn);
-        tableView.setItems(MTColor.getColorList());
     }
 
     private Callback<TableColumn<MLC, String>, TableCell<MLC, String>> cellFactoryChange
@@ -132,7 +135,6 @@ public class ColorPane {
             @Override
             public void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
-
                 if (empty) {
                     setGraphic(null);
                     setText(null);
@@ -140,7 +142,6 @@ public class ColorPane {
                 }
 
                 MLC MLC = getTableView().getItems().get(getIndex());
-
                 final HBox hbox = new HBox();
                 hbox.setSpacing(5);
                 hbox.setAlignment(Pos.CENTER);
@@ -158,7 +159,6 @@ public class ColorPane {
                 setGraphic(hbox);
             }
         };
-
         return cell;
     };
 
@@ -170,7 +170,6 @@ public class ColorPane {
             @Override
             public void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
-
                 if (empty) {
                     setGraphic(null);
                     setText(null);
@@ -178,7 +177,6 @@ public class ColorPane {
                 }
 
                 MLC MLC = getTableView().getItems().get(getIndex());
-
                 final HBox hbox = new HBox();
                 hbox.setSpacing(5);
                 hbox.setAlignment(Pos.CENTER);
@@ -193,7 +191,6 @@ public class ColorPane {
                 setGraphic(hbox);
             }
         };
-
         return cell;
     };
 
@@ -206,19 +203,16 @@ public class ColorPane {
             @Override
             public void updateItem(Color item, boolean empty) {
                 super.updateItem(item, empty);
-
                 if (empty) {
                     setGraphic(null);
                     setText(null);
                     return;
                 }
-
                 MLC MLC = getTableView().getItems().get(getIndex());
                 setStyle("-fx-background-color:" + MLC.getColorToWeb());
             }
 
         };
-
         return cell;
     };
     private Callback<TableColumn<MLC, Color>, TableCell<MLC, Color>> cellFactoryColorReset
@@ -230,19 +224,16 @@ public class ColorPane {
             @Override
             public void updateItem(Color item, boolean empty) {
                 super.updateItem(item, empty);
-
                 if (empty) {
                     setGraphic(null);
                     setText(null);
                     return;
                 }
-
                 MLC MLC = getTableView().getItems().get(getIndex());
                 setStyle("-fx-background-color:" + PColorFactory.getColorToWeb(MLC.getResetColor()));
             }
 
         };
-
         return cell;
     };
 
