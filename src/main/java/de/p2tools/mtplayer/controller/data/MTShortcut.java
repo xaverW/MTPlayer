@@ -22,6 +22,8 @@ import de.p2tools.p2Lib.tools.shortcut.PShortcut;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.HashSet;
+
 public class MTShortcut {
 
     // Menü
@@ -45,7 +47,7 @@ public class MTShortcut {
     public static final PShortcut SHORTCUT_INFO_FILM =
             new PShortcut(ProgConfig.SHORTCUT_INFO_FILM.getStringProperty(), ProgConfig.SHORTCUT_INFO_FILM.getInitValue(),
                     "Filminformation anzeigen",
-                    "Infos des markierten Films in der Tabelle \"Filme\" anzeigen.");
+                    "In der Tabelle \"Filme\" und \"Downloads\" die Infos des markierten Films anzeigen.");
 
     public static final PShortcut SHORTCUT_PLAY_FILM =
             new PShortcut(ProgConfig.SHORTCUT_PLAY_FILM.getStringProperty(), ProgConfig.SHORTCUT_PLAY_FILM.getInitValue(),
@@ -78,11 +80,6 @@ public class MTShortcut {
                     "Download ändern",
                     "Der markierte Download in der Tabelle \"Downloads\" kann geändert werden.");
 
-    public static final PShortcut SHORTCUT_DOWNLOAD_INFO_FILM =
-            new PShortcut(ProgConfig.SHORTCUT_DOWNLOAD_INFO_FILM.getStringProperty(), ProgConfig.SHORTCUT_DOWNLOAD_INFO_FILM.getInitValue(),
-                    "Filminformation anzeigen",
-                    "Infos des markierten Films in der Tabelle \"Filme\" anzeigen.");
-
     public static final PShortcut SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION =
             new PShortcut(ProgConfig.SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION.getStringProperty(), ProgConfig.SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION.getInitValue(),
                     "Download in Mediensammlung suchen",
@@ -114,7 +111,6 @@ public class MTShortcut {
         shortcutList.add(SHORTCUT_DOWNLOAD_START);
         shortcutList.add(SHORTCUT_DOWNLOAD_STOP);
         shortcutList.add(SHORTCUT_DOWNLOAD_CHANGE);
-        shortcutList.add(SHORTCUT_DOWNLOAD_INFO_FILM);
         shortcutList.add(SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION);
         shortcutList.add(SHORTCUT_DOWNLOADS_UPDATE);
         shortcutList.add(SHORTCUT_DOWNLOADS_CLEAN_UP);
@@ -122,5 +118,15 @@ public class MTShortcut {
 
     public static synchronized ObservableList<PShortcut> getShortcutList() {
         return shortcutList;
+    }
+
+    public static synchronized boolean checkDoubleShortcutList() {
+        HashSet<String> hashSet = new HashSet<>();
+        for (PShortcut ps : shortcutList) {
+            if (!hashSet.add(ps.getActShortcut())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

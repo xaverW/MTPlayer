@@ -158,17 +158,15 @@ public class ShortcutPane {
                         return;
                     }
 
+                    //neu setzen
                     PLog.sysLog("Shortcut: " + pShortcut.getDescription() + " ändern von: " + pShortcut.getActShortcut() + " nach: " + newShortcutValue);
                     pShortcut.setActShortcut(newShortcutValue);
 
-                    for (PShortcut p : MTShortcut.getShortcutList()) {
-                        if (p.getActShortcut().equals(newShortcutValue)) {
-                            PAlert.showErrorAlert("Tastenkürzel", "das angegebene Tastenkürzel " +
-                                    "wird zweimal verwendet.");
-                            break;
-                        }
+                    //Prüfen auf Doppelte
+                    if (MTShortcut.checkDoubleShortcutList()) {
+                        PAlert.showErrorAlert("Tastenkürzel", "das angegebene Tastenkürzel " +
+                                "wird zweimal verwendet.");
                     }
-
                 });
                 btnChange.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
                     if (released) {

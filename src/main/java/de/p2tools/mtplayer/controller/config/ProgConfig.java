@@ -281,7 +281,6 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs SHORTCUT_DOWNLOAD_START = addNewKey("SHORTCUT_DOWNLOAD_START", "Ctrl+D");
     public static MLConfigs SHORTCUT_DOWNLOAD_STOP = addNewKey("SHORTCUT_DOWNLOAD_STOP", "Ctrl+T");
     public static MLConfigs SHORTCUT_DOWNLOAD_CHANGE = addNewKey("SHORTCUT_DOWNLOAD_CHANGE", "Ctrl+C");
-    public static MLConfigs SHORTCUT_DOWNLOAD_INFO_FILM = addNewKey("SHORTCUT_DOWNLOAD_INFO_FILM", "Ctrl+I");
     public static MLConfigs SHORTCUT_DOWNLOADS_UPDATE = addNewKey("SHORTCUT_DOWNLOADS_UPDATE", "CTRL+U");
     public static MLConfigs SHORTCUT_DOWNLOADS_CLEAN_UP = addNewKey("SHORTCUT_DOWNLOADS_CLEAN_UP", "CTRL+O");
 

@@ -170,7 +170,7 @@ public class DownloadMenu {
 
         MenuItem miFilmInfo = new MenuItem("Filminformation anzeigen");
         miFilmInfo.setOnAction(a -> progData.downloadGuiController.showFilmInfo());
-        PShortcutWorker.addShortCut(miFilmInfo, MTShortcut.SHORTCUT_DOWNLOAD_INFO_FILM);
+        PShortcutWorker.addShortCut(miFilmInfo, MTShortcut.SHORTCUT_INFO_FILM);
 
         MenuItem miPlayUrl = new MenuItem("Film (URL) abspielen");
         miPlayUrl.setOnAction(a -> progData.downloadGuiController.playUrl());
