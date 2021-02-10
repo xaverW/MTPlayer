@@ -26,6 +26,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 
@@ -90,23 +91,40 @@ public class DownloadFilterController extends FilterController {
 
         addCont("gleichzeitige Downloads", spinnerAnz, vBoxFilter);
 
-        HBox h = new HBox();
-        h.setAlignment(Pos.CENTER_RIGHT);
-        h.getChildren().addAll(lblBandwidth);
+//        HBox h = new HBox();
+//        h.setAlignment(Pos.CENTER_RIGHT);
+//        h.getChildren().addAll(lblBandwidth);
+//
+//        VBox v = new VBox();
+//        Label lblText = new Label("max. Bandbreite je Download: ");
+//        lblText.setTooltip(new Tooltip("Maximale Bandbreite die ein einzelner Dowload beanspruchen darf \n" +
+//                "oder unbegrenzt wenn \"aus\""));
+//        sliderBandwidth.setTooltip(new Tooltip("Maximale Bandbreite die ein einzelner Dowload beanspruchen darf \n" +
+//                "oder unbegrenzt wenn \"aus\""));
+//
+//        v.getChildren().addAll(lblText, sliderBandwidth, h);
+//        vBoxFilter.getChildren().add(v);
 
-        VBox v = new VBox();
-        Label lblText = new Label("max. Bandbreite je Download: ");
+
+        VBox v = new VBox(2);
+        Label lblText = new Label("max. Bandbreite: ");
         lblText.setTooltip(new Tooltip("Maximale Bandbreite die ein einzelner Dowload beanspruchen darf \n" +
                 "oder unbegrenzt wenn \"aus\""));
         sliderBandwidth.setTooltip(new Tooltip("Maximale Bandbreite die ein einzelner Dowload beanspruchen darf \n" +
                 "oder unbegrenzt wenn \"aus\""));
-        v.getChildren().addAll(lblText, sliderBandwidth, h);
+
+        HBox h = new HBox();
+        HBox hh = new HBox();
+        h.getChildren().addAll(lblText, hh, lblBandwidth);
+        HBox.setHgrow(hh, Priority.ALWAYS);
+        lblText.setMinWidth(0);
+        v.getChildren().addAll(h, sliderBandwidth);
         vBoxFilter.getChildren().add(v);
     }
 
     private void addCont(String txt, Control control, VBox vBox) {
         control.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        VBox v = new VBox();
+        VBox v = new VBox(2);
         Label label = new Label(txt);
         v.getChildren().addAll(label, control);
         vBox.getChildren().add(v);

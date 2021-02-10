@@ -16,8 +16,8 @@
 
 package de.p2tools.mtplayer.gui;
 
-import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
 import de.p2tools.p2Lib.guiTools.pCheckComboBox.PCheckComboBox;
 import de.p2tools.p2Lib.guiTools.pRange.PRangeBox;
 import de.p2tools.p2Lib.guiTools.pRange.PTimePeriodBox;
@@ -26,13 +26,16 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 
 public class FilmFilterControllerFilter extends VBox {
 
     private final Slider slTimeRange = new Slider();
-    private final Label lblTimeRange = new Label();
+    private final Label lblTimeRange = new Label("Zeitraum:");
+    private final Label lblTimeRangeValue = new Label();
 
     private final PRangeBox slDur = new PRangeBox(0, FilmFilter.FILTER_DURATION_MAX_MINUTE);
     private final Label lblDur = new Label("Filmlänge:");
@@ -138,22 +141,30 @@ public class FilmFilterControllerFilter extends VBox {
         initDurFilter();
         initFilmTimeFilter();
 
+        VBox vBox = new VBox(2);
         // Tage
-        VBox vBox = new VBox(3);
-        vBox.getChildren().addAll(lblTimeRange, slTimeRange);
-        vBox.visibleProperty().bind(progData.storedFilters.getActFilterSettings().timeRangeVisProperty());
-        vBox.managedProperty().bind(progData.storedFilters.getActFilterSettings().timeRangeVisProperty());
+        HBox h = new HBox();
+        HBox hh = new HBox();
+        h.getChildren().addAll(lblTimeRange, hh, lblTimeRangeValue);
+        HBox.setHgrow(hh, Priority.ALWAYS);
+        lblTimeRange.setMinWidth(0);
+        vBox.getChildren().addAll(h, slTimeRange);
         getChildren().addAll(vBox);
 
+//        vBox.getChildren().addAll(lblTimeRange, slTimeRange);
+//        vBox.visibleProperty().bind(progData.storedFilters.getActFilterSettings().timeRangeVisProperty());
+//        vBox.managedProperty().bind(progData.storedFilters.getActFilterSettings().timeRangeVisProperty());
+//        getChildren().addAll(vBox);
+
         // MinMax Dauer
-        vBox = new VBox(3);
+        vBox = new VBox(2);
         vBox.getChildren().addAll(lblDur, slDur);
         vBox.visibleProperty().bind(progData.storedFilters.getActFilterSettings().minMaxDurVisProperty());
         vBox.managedProperty().bind(progData.storedFilters.getActFilterSettings().minMaxDurVisProperty());
         getChildren().addAll(vBox);
 
         // MinMax Uhrzeit
-        vBox = new VBox(3);
+        vBox = new VBox(2);
         vBox.getChildren().addAll(lblFilmTime, slFilmTime, tglFilmTime);
         vBox.visibleProperty().bind(progData.storedFilters.getActFilterSettings().minMaxTimeVisProperty());
         vBox.managedProperty().bind(progData.storedFilters.getActFilterSettings().minMaxTimeVisProperty());
@@ -194,9 +205,9 @@ public class FilmFilterControllerFilter extends VBox {
         String tNr = i + "";
 
         if (i == FilmFilter.FILTER_TIME_RANGE_ALL_VALUE) {
-            lblTimeRange.setText("Zeitraum: " + txtAll);
+            lblTimeRangeValue.setText(txtAll);
         } else {
-            lblTimeRange.setText("Zeitraum: " + tNr + (i == 1 ? " Tag" : " Tage"));
+            lblTimeRangeValue.setText(tNr + (i == 1 ? " Tag" : " Tage"));
         }
     }
 }

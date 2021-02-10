@@ -227,7 +227,7 @@ public class FilmFilterControllerTextFilter extends VBox {
     }
 
     private void addTxt(String txt, Control control, VBox vBoxComplete, BooleanProperty booleanProperty) {
-        VBox vBox = new VBox();
+        VBox vBox = new VBox(2);
         Label label = new Label(txt);
         vBox.getChildren().addAll(label, control);
         vBoxComplete.getChildren().add(vBox);
@@ -237,7 +237,7 @@ public class FilmFilterControllerTextFilter extends VBox {
     }
 
     private void addChannel(VBox vBoxComplete) {
-        VBox vBox = new VBox();
+        VBox vBox = new VBox(2);
         Label label = new Label("Sender");
         vBox.getChildren().addAll(label, mbChannel);
         vBoxComplete.getChildren().add(vBox);
