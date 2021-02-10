@@ -75,10 +75,8 @@ public class AboList extends SimpleListProperty<Abo> {
         super.add(abo);
     }
 
-    public synchronized boolean addNewAbo(SelectedFilter selectedFilter) {
+    public synchronized void addNewAboFromFilter(SelectedFilter selectedFilter) {
         // abo anlegen, oder false wenns schon existiert
-        boolean ret = false;
-
         String channel = selectedFilter.isChannelVis() ? selectedFilter.getChannel() : "";
         String theme = selectedFilter.isThemeVis() ? selectedFilter.getTheme().trim() : "";
         boolean themeExact = selectedFilter.isThemeExact();
@@ -129,71 +127,66 @@ public class AboList extends SimpleListProperty<Abo> {
             abo.setThemeExact(themeExact);
         }
 
-        if (new AboEditDialogController(progData, abo, true).getOk()) {
-            // als Vorgabe merken
-            ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(abo.getMinDurationMinute());
-            ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(abo.getMaxDurationMinute());
-            addAbo(abo);
-//            sort();
-            notifyChanges();
-            ret = true;
-        }
-        return ret;
+//        if (new AboEditDialogController(progData, abo).getOk()) {
+//            // als Vorgabe merken
+//            ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(abo.getMinDurationMinute());
+//            ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(abo.getMaxDurationMinute());
+//            addAbo(abo);
+//            notifyChanges();
+//        }
+
+        new AboEditDialogController(progData, abo);
     }
 
-    public synchronized boolean changeAboFromFilter(Optional<Abo> oAbo, SelectedFilter selectedFilter) {
+    public synchronized void changeAboFromFilter(Optional<Abo> oAbo, SelectedFilter selectedFilter) {
         // abo mit den Filterwerten einstellen
         if (!oAbo.isPresent()) {
-            return false;
+            return;
         }
 
-        boolean ret = false;
+//        final Abo abo = oAbo.get();
+////        Abo aboCopy = abo.getCopy();
+////
+////        final String channel = selectedFilter.isChannelVis() ? selectedFilter.getChannel() : "";
+////        final String theme = selectedFilter.isThemeVis() ? selectedFilter.getTheme() : "";
+////        final boolean themeExact = selectedFilter.isThemeExact();
+////        final String title = selectedFilter.isTitleVis() ? selectedFilter.getTitle() : "";
+////        final String themeTitle = selectedFilter.isThemeTitleVis() ? selectedFilter.getThemeTitle() : "";
+////        final String somewhere = selectedFilter.isSomewhereVis() ? selectedFilter.getSomewhere() : "";
+////        final int timeRange = selectedFilter.isTimeRangeVis() ? selectedFilter.getTimeRange() : FilmFilter.FILTER_TIME_RANGE_ALL_VALUE;
+////        final int minDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMinDur() : FilmFilter.FILTER_DURATION_MIN_MINUTE;
+////        final int maxDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMaxDur() : FilmFilter.FILTER_DURATION_MAX_MINUTE;
+////
+////        aboCopy.setChannel(channel);
+////        aboCopy.setTheme(theme);
+////        aboCopy.setThemeExact(themeExact);
+////        aboCopy.setTitle(title);
+////        aboCopy.setThemeTitle(themeTitle);
+////        aboCopy.setSomewhere(somewhere);
+////        aboCopy.setTimeRange(timeRange);
+////        aboCopy.setMinDurationMinute(minDuration);
+////        aboCopy.setMaxDurationMinute(maxDuration);
+//
+//        if (new AboEditDialogController(progData, aboCopy, false).getOk()) {
+//            abo.copyToMe(aboCopy);
+//
+//            // als Vorgabe merken
+//            ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(abo.getMinDurationMinute());
+//            ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(abo.getMaxDurationMinute());
+//            notifyChanges();
+//        }
+
+
         final Abo abo = oAbo.get();
-        Abo aboCopy = abo.getCopy();
-
-        final String channel = selectedFilter.isChannelVis() ? selectedFilter.getChannel() : "";
-//        final boolean channelExact = selectedFilter.isChannelExact();
-        final String theme = selectedFilter.isThemeVis() ? selectedFilter.getTheme() : "";
-        final boolean themeExact = selectedFilter.isThemeExact();
-        final String title = selectedFilter.isTitleVis() ? selectedFilter.getTitle() : "";
-        final String themeTitle = selectedFilter.isThemeTitleVis() ? selectedFilter.getThemeTitle() : "";
-        final String somewhere = selectedFilter.isSomewhereVis() ? selectedFilter.getSomewhere() : "";
-        final int timeRange = selectedFilter.isTimeRangeVis() ? selectedFilter.getTimeRange() : FilmFilter.FILTER_TIME_RANGE_ALL_VALUE;
-        final int minDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMinDur() : FilmFilter.FILTER_DURATION_MIN_MINUTE;
-        final int maxDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMaxDur() : FilmFilter.FILTER_DURATION_MAX_MINUTE;
-
-        aboCopy.setChannel(channel);
-        aboCopy.setTheme(theme);
-        aboCopy.setThemeExact(themeExact);
-        aboCopy.setTitle(title);
-        aboCopy.setThemeTitle(themeTitle);
-        aboCopy.setSomewhere(somewhere);
-        aboCopy.setTimeRange(timeRange);
-        aboCopy.setMinDurationMinute(minDuration);
-        aboCopy.setMaxDurationMinute(maxDuration);
-
-        if (new AboEditDialogController(progData, aboCopy, false).getOk()) {
-            abo.copyToMe(aboCopy);
-
-            // als Vorgabe merken
-            ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(abo.getMinDurationMinute());
-            ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(abo.getMaxDurationMinute());
-//            sort();
-            notifyChanges();
-            ret = true;
-        }
-
-        return ret;
+        new AboEditDialogController(progData, selectedFilter, abo);
     }
 
-    public synchronized boolean addNewAbo(String aboName) {
-        return addNewAbo(aboName, "", "", "");
-    }
+//    public synchronized void addNewAbo(String aboName) {
+//        addNewAbo(aboName, "", "", "");
+//    }
 
-    public synchronized boolean addNewAbo(String aboName, String filmChannel, String filmTheme, String filmTitle) {
+    public synchronized void addNewAbo(String aboName, String filmChannel, String filmTheme, String filmTitle) {
         // abo anlegen, oder false wenns schon existiert
-        boolean ret = false;
-
         int minDuration, maxDuration;
         try {
             minDuration = ProgConfig.ABO_MINUTE_MIN_SIZE.getInt();
@@ -223,19 +216,19 @@ public class AboList extends SimpleListProperty<Abo> {
                 namePath);
 
 
-        if (new AboEditDialogController(progData, abo, true).getOk()) {
-            // als Vorgabe merken
-            ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(abo.getMinDurationMinute());
-            ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(abo.getMaxDurationMinute());
-            addAbo(abo);
-//            sort();
-            notifyChanges();
-            ret = true;
-        }
-        return ret;
+//        if (new AboEditDialogController(progData, abo).getOk()) {
+//            // als Vorgabe merken
+//            ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(abo.getMinDurationMinute());
+//            ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(abo.getMaxDurationMinute());
+//            addAbo(abo);
+//            notifyChanges();
+//        }
+
+        new AboEditDialogController(progData, abo);
     }
 
     public synchronized void changeAbo(Abo abo) {
+        //Abo aus Tab Filme/Download ändern
         if (abo != null) {
             ObservableList<Abo> lAbo = FXCollections.observableArrayList(abo);
             changeAbo(lAbo);
@@ -244,10 +237,7 @@ public class AboList extends SimpleListProperty<Abo> {
 
     public synchronized void changeAbo(ObservableList<Abo> lAbo) {
         if (!lAbo.isEmpty()) {
-            final AboEditDialogController editAboController = new AboEditDialogController(progData, lAbo);
-            if (editAboController.getOk()) {
-                notifyChanges();
-            }
+            new AboEditDialogController(progData, lAbo);
         }
     }
 
@@ -284,7 +274,7 @@ public class AboList extends SimpleListProperty<Abo> {
         }
     }
 
-    private synchronized void notifyChanges() {
+    public synchronized void notifyChanges() {
         if (!progData.loadFilmlist.getPropLoadFilmlist()) {
             // wird danach eh gemacht
             setAboForFilm(progData.filmlist);
@@ -438,6 +428,7 @@ public class AboList extends SimpleListProperty<Abo> {
                 film.arr[FilmXml.FILM_ABO_NAME] = foundAbo.arr[AboXml.ABO_NAME];
                 film.setAbo(foundAbo);
             }
+
         } else {
             deleteAboInFilm(film);
         }
@@ -446,7 +437,6 @@ public class AboList extends SimpleListProperty<Abo> {
     public synchronized void setAboForFilm(Filmlist filmlist) {
         // hier wird tatsächlich für jeden Film die Liste der Abos durchsucht
         // braucht länger
-
         PDuration.counterStart("Abo in Filmliste eintragen");
 
         // leere Abos löschen, die sind Fehler

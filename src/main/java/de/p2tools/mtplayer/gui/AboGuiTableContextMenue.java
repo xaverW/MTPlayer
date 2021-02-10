@@ -17,9 +17,9 @@
 
 package de.p2tools.mtplayer.gui;
 
-import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.Abo;
+import de.p2tools.mtplayer.gui.tools.table.Table;
 import javafx.scene.control.*;
 
 public class AboGuiTableContextMenue {
@@ -58,7 +58,7 @@ public class AboGuiTableContextMenue {
         final MenuItem miChange = new MenuItem("Abos ändern");
         miChange.setOnAction(a -> aboGuiController.changeAbo());
         final MenuItem miNew = new MenuItem("neues Abo anlegen");
-        miNew.setOnAction(a -> aboGuiController.addNewAbo());
+        miNew.setOnAction(a -> progData.aboList.addNewAbo("Neu", "", "", ""));
 
         miOnOff.setDisable(abo == null);
         miDel.setDisable(abo == null);

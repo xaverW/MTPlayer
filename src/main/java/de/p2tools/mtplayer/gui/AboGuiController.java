@@ -97,6 +97,7 @@ public class AboGuiController extends AnchorPane {
     }
 
     public void changeAbo() {
+        //Abos aus Tab Abo (Menü, Doppelklick Tabelle) ändern
         ObservableList<Abo> lAbo = getSelList();
         progData.aboList.changeAbo(lAbo);
     }
@@ -122,9 +123,9 @@ public class AboGuiController extends AnchorPane {
     }
 
 
-    public void addNewAbo() {
-        progData.aboList.addNewAbo("Neu" /* Aboname */);
-    }
+//    public void addNewAbo() {
+//        progData.aboList.addNewAbo("Neu", "", "", "");
+//    }
 
     public void selectAll() {
         tableView.getSelectionModel().selectAll();

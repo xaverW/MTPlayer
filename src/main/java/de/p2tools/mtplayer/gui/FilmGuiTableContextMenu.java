@@ -16,13 +16,13 @@
 
 package de.p2tools.mtplayer.gui;
 
-import de.p2tools.mtplayer.gui.tools.table.Table;
-import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.BlackData;
 import de.p2tools.mtplayer.controller.data.SetDataList;
 import de.p2tools.mtplayer.controller.data.film.Film;
 import de.p2tools.mtplayer.controller.data.film.FilmTools;
+import de.p2tools.mtplayer.gui.tools.table.Table;
+import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
 import de.p2tools.p2Lib.tools.PSystemUtils;
 import javafx.scene.control.*;
 
@@ -141,7 +141,7 @@ public class FilmGuiTableContextMenu {
         // neues Abo aus Filter anlegen
         miAboAddFilter.setOnAction(a -> {
             SelectedFilter selectedFilter = progData.storedFilters.getActFilterSettings();
-            progData.aboList.addNewAbo(selectedFilter);
+            progData.aboList.addNewAboFromFilter(selectedFilter);
         });
 
         if (film != null && film.getAbo() == null) {

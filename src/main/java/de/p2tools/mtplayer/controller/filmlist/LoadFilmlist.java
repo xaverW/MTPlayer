@@ -57,11 +57,11 @@ public class LoadFilmlist {
         this.progData = progData;
         diffListe = new Filmlist();
 
-        ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getActValue().addListener((v, o, n) -> {
-            System.out.println("##=============================================##");
-            System.out.println("## DOWNLOAD_MAX_BANDWIDTH_KBYTE: " + ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.get());
-            System.out.println("##=============================================##");
-        });
+//        ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getActValue().addListener((v, o, n) -> {
+//            System.out.println("##=============================================##");
+//            System.out.println("## DOWNLOAD_MAX_BANDWIDTH_KBYTE: " + ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.get());
+//            System.out.println("##=============================================##");
+//        });
 
         importNewFilmlisteFromServer = new ImportNewFilmlistFromServer(progData);
         importNewFilmlisteFromServer.addAdListener(new ListenerLoadFilmlist() {
