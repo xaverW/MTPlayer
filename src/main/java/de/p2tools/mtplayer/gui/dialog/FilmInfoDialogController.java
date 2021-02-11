@@ -25,6 +25,7 @@ import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -74,60 +75,62 @@ public class FilmInfoDialogController extends PDialogExtra {
 
 
     public void setFilm(Film film) {
-//        Platform.runLater(() -> {
-        for (int i = 0; i < FilmXml.MAX_ELEM; ++i) {
-            if (film == null) {
-                lblCont[i].setText("");
-                textArea.setText("");
-                ivHD.setImage(null);
-                ivUT.setImage(null);
-                ivNew.setImage(null);
-                pHyperlinkUrl.setUrl("");
-                pHyperlinkWebsite.setUrl("");
-            } else {
-                switch (i) {
-                    case FilmXml.FILM_NR:
-                        lblCont[i].setText(film.getNo() + "");
-                        break;
-                    case FilmXml.FILM_DURATION:
-                        lblCont[i].setText(film.getDurationMinute() + "");
-                        break;
-                    case FilmXml.FILM_URL:
-                        pHyperlinkUrl.setUrl(film.arr[FilmXml.FILM_URL]);
-                        break;
-                    case FilmXml.FILM_WEBSITE:
-                        pHyperlinkWebsite.setUrl(film.arr[FilmXml.FILM_WEBSITE]);
-                        break;
-                    case FilmXml.FILM_DESCRIPTION:
-                        textArea.setText(film.arr[i]);
-                        break;
-                    case FilmXml.FILM_HD:
-                        if (film.isHd()) {
-                            ivHD.setImage(new ProgIcons().ICON_DIALOG_ON);
-                        } else {
-                            ivHD.setImage(null);
-                        }
-                        break;
-                    case FilmXml.FILM_UT:
-                        if (film.isUt()) {
-                            ivUT.setImage(new ProgIcons().ICON_DIALOG_ON);
-                        } else {
-                            ivUT.setImage(null);
-                        }
-                        break;
-                    case FilmXml.FILM_NEW:
-                        if (film.isNewFilm()) {
-                            ivNew.setImage(new ProgIcons().ICON_DIALOG_ON);
-                        } else {
-                            ivNew.setImage(null);
-                        }
-                        break;
+        Platform.runLater(() -> {
+            //braucht es aktuell (noch) nicht: Platform ....
+            for (int i = 0; i < FilmXml.MAX_ELEM; ++i) {
+                if (film == null) {
+                    lblCont[i].setText("");
+                    textArea.setText("");
+                    ivHD.setImage(null);
+                    ivUT.setImage(null);
+                    ivNew.setImage(null);
+                    pHyperlinkUrl.setUrl("");
+                    pHyperlinkWebsite.setUrl("");
+                } else {
+                    switch (i) {
+                        case FilmXml.FILM_NR:
+                            lblCont[i].setText(film.getNo() + "");
+                            break;
+                        case FilmXml.FILM_DURATION:
+                            lblCont[i].setText(film.getDurationMinute() + "");
+                            break;
+                        case FilmXml.FILM_URL:
+                            pHyperlinkUrl.setUrl(film.arr[FilmXml.FILM_URL]);
+                            break;
+                        case FilmXml.FILM_WEBSITE:
+                            pHyperlinkWebsite.setUrl(film.arr[FilmXml.FILM_WEBSITE]);
+                            break;
+                        case FilmXml.FILM_DESCRIPTION:
+                            textArea.setText(film.arr[i]);
+                            break;
+                        case FilmXml.FILM_HD:
+                            if (film.isHd()) {
+                                ivHD.setImage(new ProgIcons().ICON_DIALOG_ON);
+                            } else {
+                                ivHD.setImage(null);
+                            }
+                            break;
+                        case FilmXml.FILM_UT:
+                            if (film.isUt()) {
+                                ivUT.setImage(new ProgIcons().ICON_DIALOG_ON);
+                            } else {
+                                ivUT.setImage(null);
+                            }
+                            break;
+                        case FilmXml.FILM_NEW:
+                            if (film.isNewFilm()) {
+                                ivNew.setImage(new ProgIcons().ICON_DIALOG_ON);
+                            } else {
+                                ivNew.setImage(null);
+                            }
+                            break;
 
-                    default:
-                        lblCont[i].setText(film.arr[i]);
+                        default:
+                            lblCont[i].setText(film.arr[i]);
+                    }
                 }
             }
-        }
+        });
     }
 
     @Override
