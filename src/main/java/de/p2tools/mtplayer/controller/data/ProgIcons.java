@@ -24,11 +24,9 @@ import javafx.scene.image.ImageView;
 
 public class ProgIcons {
 
-    public final Image ICON_DIALOG_EIN_SW = GetIcon.getImage(ProgConfig.SYSTEM_DARK_THEME.getBool() ? "dialog-ein.png" : "dialog-ein-sw.png");
-    public final Image ICON_DIALOG_EIN = GetIcon.getImage("dialog-ein.png");
+    public final Image ICON_DIALOG_ON = GetIcon.getImage(ProgConfig.SYSTEM_DARK_THEME.getBool() ? "dialog-ein.png" : "dialog-ein-sw.png");
     public final Image IMAGE_ACHTUNG_32 = GetIcon.getImage("achtung_32.png");
     public final Image IMAGE_ACHTUNG_64 = GetIcon.getImage("achtung_64.png");
-
 
     public final ImageView ICON_BUTTON_RESET = GetIcon.getImageView("button-reset.png", 16, 16);
     public final ImageView ICON_BUTTON_UPDATE = GetIcon.getImageView("button-update.png", 16, 16);
@@ -38,7 +36,6 @@ public class ProgIcons {
     public final ImageView ICON_BUTTON_FORWARD = GetIcon.getImageView("button-forward.png", 16, 16);
     public final ImageView ICON_BUTTON_EDIT_ABO_PATH = GetIcon.getImageView("button-edit-filter.png", 16, 16);
     public final ImageView ICON_BUTTON_MENU = GetIcon.getImageView("button-menu.png", 18, 15);
-    //    public final ImageView ICON_BUTTON_HELP = GetIcon.getImageView("button-help.png", 16, 16);
     public final ImageView ICON_BUTTON_QUIT = GetIcon.getImageView("button-quit.png", 16, 16);
     public final ImageView ICON_BUTTON_FILE_OPEN = GetIcon.getImageView("button-file-open.png", 16, 16);
     public final ImageView ICON_BUTTON_PLAY = GetIcon.getImageView("button-play.png", 16, 16);
@@ -46,11 +43,9 @@ public class ProgIcons {
     public final ImageView ICON_DIALOG_QUIT = GetIcon.getImageView("dialog-quit.png", 64, 64);
     public final ImageView ICON_CLEAN_16 = GetIcon.getImageView("clean_16.png", 16, 16);
 
-
     // table
     public static final Image IMAGE_TABLE_FILM_PLAY = GetIcon.getImage("table-film-play.png", 14, 14);
     public static final Image IMAGE_TABLE_FILM_SAVE = GetIcon.getImage("table-film-save.png", 14, 14);
-    //    public static final Image IMAGE_TABLE_FILM_BOOKMARK = GetIcon.getImage("table-film-bookmark.png", 14, 14);
     public static final Image IMAGE_TABLE_DOWNLOAD_START = GetIcon.getImage("table-download-start.png", 14, 14);
     public static final Image IMAGE_TABLE_DOWNLOAD_DEL = GetIcon.getImage("table-download-del.png", 14, 14);
     public static final Image IMAGE_TABLE_DOWNLOAD_STOP = GetIcon.getImage("table-download-stop.png", 14, 14);
@@ -94,6 +89,4 @@ public class ProgIcons {
     public final ImageView FX_ICON_FILTER_FILM_LOAD = GetIcon.getImageView("filter-film-load.png", 22, 22);
     public final ImageView FX_ICON_FILTER_FILM_SAVE = GetIcon.getImageView("filter-film-save.png", 22, 22);
     public final ImageView FX_ICON_FILTER_FILM_NEW = GetIcon.getImageView("filter-film-new.png", 22, 22);
-
-
 }

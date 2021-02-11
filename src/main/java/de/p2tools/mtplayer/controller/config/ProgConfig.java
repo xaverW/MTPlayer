@@ -219,7 +219,9 @@ public class ProgConfig extends MLConfig {
 
     // FilmInfoDialog
     public static MLConfigs FILM_INFO_DIALOG_SHOW_URL = addNewKey("film-info-dialog-show-url", Boolean.TRUE.toString());
-//    public static MLConfigs FILM_INFO_DIALOG_SHOW_URL_INDERTERMINATE = addNewKey("film-info-dialog-show-url-indeterminate", Boolean.TRUE.toString());
+
+    // DownloadAddDialog
+    public static MLConfigs DOWNLOAD_INFO_DIALOG_SHOW_URL = addNewKey("download-info-dialog-show-url", Boolean.TRUE.toString());
 
     // Filter Filme
     public static MLConfigs FILTER_FILME_SEL_FILTER = addNewKey("filter-filme-sel-filter");
