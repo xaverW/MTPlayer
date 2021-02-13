@@ -16,6 +16,13 @@
 
 package de.p2tools.mtplayer;
 
+import de.p2tools.mtplayer.controller.ProgQuit;
+import de.p2tools.mtplayer.controller.ProgSave;
+import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgConst;
+import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.data.MTShortcut;
+import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
 import de.p2tools.mtplayer.gui.AboGuiPack;
@@ -27,13 +34,6 @@ import de.p2tools.mtplayer.gui.dialog.AboutDialogController;
 import de.p2tools.mtplayer.gui.dialog.ResetDialogController;
 import de.p2tools.mtplayer.gui.mediaConfig.MediaConfigDialogController;
 import de.p2tools.mtplayer.gui.mediaDialog.MediaDialogController;
-import de.p2tools.mtplayer.controller.ProgQuit;
-import de.p2tools.mtplayer.controller.ProgSave;
-import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgConst;
-import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.MTShortcut;
-import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.p2Lib.guiTools.POpen;
 import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -53,7 +53,6 @@ public class MTPlayerController extends StackPane {
     Button btnAbo = new Button("Abos");
 
     MenuButton menuButton = new MenuButton("");
-
     BorderPane borderPane = new BorderPane();
     StackPane stackPaneCont = new StackPane();
 
@@ -65,7 +64,6 @@ public class MTPlayerController extends StackPane {
     private SplitPane splitPaneAbo;
 
     private final ProgData progData;
-
     FilmGuiPack filmGuiPack = new FilmGuiPack();
     DownloadGuiPack downloadGuiPack = new DownloadGuiPack();
     AboGuiPack aboGuiPack = new AboGuiPack();
@@ -128,7 +126,6 @@ public class MTPlayerController extends StackPane {
         maskerPane.setButtonText("");
         btnStop.setGraphic(new ProgIcons().ICON_BUTTON_STOP);
         btnStop.setOnAction(a -> progData.loadFilmlist.setStop(true));
-
     }
 
     private void initButton() {
@@ -166,11 +163,9 @@ public class MTPlayerController extends StackPane {
         // Menü
         final MenuItem miConfig = new MenuItem("Einstellungen des Programms");
         miConfig.setOnAction(e -> new ConfigDialogController());
-//        PShortcutWorker.addShortCut(miConfig, MTShortcut.SHORTCUT_CONFIG);
 
         final MenuItem miMediaCollectionConfig = new MenuItem("Einstellungen der Mediensammlung");
         miMediaCollectionConfig.setOnAction(e -> new MediaConfigDialogController());
-//        PShortcutWorker.addShortCut(miMediaCollectionConfig, MTShortcut.SHORTCUT_CONFIG_MEDIACOLLECTION);
 
         final MenuItem miSearchMediaCollection = new MenuItem("Mediensammlung durchsuchen");
         miSearchMediaCollection.setOnAction(a -> new MediaDialogController(""));
@@ -239,7 +234,6 @@ public class MTPlayerController extends StackPane {
         }
 
         setButtonStyle(btnFilm);
-
         splitPaneFilm.toFront();
         progData.filmGuiController.isShown();
         statusBarController.setStatusbarIndex(StatusBarController.StatusbarIndex.FILM);
@@ -257,7 +251,6 @@ public class MTPlayerController extends StackPane {
         }
 
         setButtonStyle(btnDownload);
-
         splitPaneDownoad.toFront();
         progData.downloadGuiController.isShown();
         statusBarController.setStatusbarIndex(StatusBarController.StatusbarIndex.DOWNLOAD);
@@ -275,7 +268,6 @@ public class MTPlayerController extends StackPane {
         }
 
         setButtonStyle(btnAbo);
-
         splitPaneAbo.toFront();
         progData.aboGuiController.isShown();
         statusBarController.setStatusbarIndex(StatusBarController.StatusbarIndex.ABO);
@@ -333,4 +325,29 @@ public class MTPlayerController extends StackPane {
         }
     }
 
+    public void setFilter() {
+        if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneFilm)) {
+            ProgConfig.FILM_GUI_FILTER_DIVIDER_ON.setValue(!ProgConfig.FILM_GUI_FILTER_DIVIDER_ON.getBool());
+            System.out.println("FilmeFilter");
+        } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneDownoad)) {
+            ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER_ON.setValue(!ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER_ON.getBool());
+            System.out.println("DownloadFilter");
+        } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneAbo)) {
+            ProgConfig.ABO_GUI_FILTER_DIVIDER_ON.setValue(!ProgConfig.ABO_GUI_FILTER_DIVIDER_ON.getBool());
+            System.out.println("AboFilter");
+        }
+    }
+
+    public void setInfos() {
+        if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneFilm)) {
+            ProgConfig.FILM_GUI_DIVIDER_ON.setValue(!ProgConfig.FILM_GUI_DIVIDER_ON.getBool());
+            System.out.println("FilmeInfos");
+        } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneDownoad)) {
+            ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.setValue(!ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.getBool());
+            System.out.println("DownloadInfos");
+        } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneAbo)) {
+            ProgConfig.ABO_GUI_DIVIDER_ON.setValue(!ProgConfig.ABO_GUI_DIVIDER_ON.getBool());
+            System.out.println("AboInfos");
+        }
+    }
 }

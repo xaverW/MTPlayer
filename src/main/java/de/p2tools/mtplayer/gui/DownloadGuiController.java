@@ -395,12 +395,6 @@ public class DownloadGuiController extends AnchorPane {
             return row;
         });
 
-//        tableView.setOnMouseClicked(m -> {
-//            if (m.getButton().equals(MouseButton.PRIMARY) && m.getClickCount() == 2) {
-//                changeDownload();
-//            }
-//        });
-
         tableView.setOnMousePressed(m -> {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
                 final Optional<Download> optionalDownload = getSel(false);
@@ -414,7 +408,6 @@ public class DownloadGuiController extends AnchorPane {
                 tableView.setContextMenu(contextMenu);
             }
         });
-
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             Platform.runLater(() -> setFilm());
         });
@@ -451,7 +444,6 @@ public class DownloadGuiController extends AnchorPane {
         final String type = ProgConfig.FILTER_DOWNLOAD_TYPE.get();
         final String state = ProgConfig.FILTER_DOWNLOAD_STATE.get();
 
-        //System.out.println("Sender: " + sender + " Abo: " + abo + " Quelle: " + quelle + " Art: " + art);
         filteredDownloads.setPredicate(download -> !download.getPlacedBack() &&
 
                 (sender.isEmpty() ? true : download.getChannel().equals(sender)) &&
@@ -465,7 +457,6 @@ public class DownloadGuiController extends AnchorPane {
                                 state.equals(DownloadConstants.STATE_COMBO_LOADING) && download.isStateStartedRun()
                 ))
         );
-
     }
 
     private void setFilmShown(boolean shown) {
@@ -498,7 +489,6 @@ public class DownloadGuiController extends AnchorPane {
 
         final ArrayList<Download> startDownloadsList = new ArrayList<>();
         startDownloadsList.addAll(all ? tableView.getItems() : getSelList());
-
         progData.downloadList.startDownloads(startDownloadsList, true);
     }
 
@@ -506,7 +496,6 @@ public class DownloadGuiController extends AnchorPane {
         // bezieht sich auf "alle" oder nur die markierten Filme
 
         final ArrayList<Download> listDownloadsSelected = new ArrayList<>();
-
         // die URLs sammeln
         listDownloadsSelected.addAll(all ? tableView.getItems() : getSelList());
         progData.downloadList.stopDownloads(listDownloadsSelected);

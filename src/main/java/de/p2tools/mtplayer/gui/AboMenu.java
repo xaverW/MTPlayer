@@ -16,19 +16,20 @@
 
 package de.p2tools.mtplayer.gui;
 
-import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.data.MTShortcut;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
-import javafx.beans.property.BooleanProperty;
-import javafx.scene.control.*;
+import de.p2tools.p2Lib.tools.shortcut.PShortcutWorker;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.VBox;
 
 public class AboMenu {
     final private VBox vBox;
     final private ProgData progData;
-    BooleanProperty boolDivOn = ProgConfig.ABO_GUI_FILTER_DIVIDER_ON.getBooleanProperty();
-    BooleanProperty boolInfoOn = ProgConfig.ABO_GUI_DIVIDER_ON.getBooleanProperty();
 
     public AboMenu(VBox vBox) {
         this.vBox = vBox;
@@ -99,7 +100,6 @@ public class AboMenu {
 
         mb.getItems().addAll(mbOn, mbOff, miDel, miChange, miNew, miAboAddFilter);
 
-
         final MenuItem miSelectAll = new MenuItem("alles auswählen");
         miSelectAll.setOnAction(a -> progData.aboGuiController.selectAll());
         final MenuItem miSelection = new MenuItem("Auswahl umkehren");
@@ -108,15 +108,17 @@ public class AboMenu {
         mb.getItems().add(new SeparatorMenuItem());
         mb.getItems().addAll(miSelectAll, miSelection);
 
+        final MenuItem miShowFilter = new MenuItem("Filter ein-/ausblenden");
+        //ausgeführt wird aber der Button im Tab Filme!!
+        miShowFilter.setOnAction(a -> progData.mtPlayerController.setFilter());
+        PShortcutWorker.addShortCut(miShowFilter, MTShortcut.SHORTCUT_SHOW_FILTER);
 
-        final CheckMenuItem miShowFilter = new CheckMenuItem("Filter anzeigen");
-        miShowFilter.selectedProperty().bindBidirectional(boolDivOn);
-        final CheckMenuItem miShowInfo = new CheckMenuItem("Infos anzeigen");
-        miShowInfo.selectedProperty().bindBidirectional(boolInfoOn);
+        final MenuItem miShowInfo = new MenuItem("Infos ein-/ausblenden");
+        miShowInfo.setOnAction(a -> progData.mtPlayerController.setInfos());
+        PShortcutWorker.addShortCut(miShowInfo, MTShortcut.SHORTCUT_SHOW_INFOS);
 
         mb.getItems().add(new SeparatorMenuItem());
         mb.getItems().addAll(miShowFilter, miShowInfo);
-
         vBox.getChildren().add(mb);
     }
 }

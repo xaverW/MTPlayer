@@ -16,20 +16,16 @@
 
 package de.p2tools.mtplayer.gui;
 
-import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.MTShortcut;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.p2Lib.tools.shortcut.PShortcutWorker;
-import javafx.beans.property.BooleanProperty;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
 public class DownloadMenu {
     final private VBox vBox;
     final private ProgData progData;
-    BooleanProperty boolDivOn = ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER_ON.getBooleanProperty();
-    BooleanProperty boolInfoOn = ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.getBooleanProperty();
 
     public DownloadMenu(VBox vBox) {
         this.vBox = vBox;
@@ -88,13 +84,11 @@ public class DownloadMenu {
     }
 
     private void initMenu() {
-
         // MenuButton
         final MenuButton mb = new MenuButton("");
         mb.setTooltip(new Tooltip("Downloadmenü anzeigen"));
         mb.setGraphic(new ProgIcons().FX_ICON_TOOLBAR_MENU);
         mb.getStyleClass().add("btnFunctionWide");
-
 
         final MenuItem miDownloadStart = new MenuItem("Downloads starten");
         miDownloadStart.setOnAction(a -> progData.downloadGuiController.startDownload(false));
@@ -110,7 +104,6 @@ public class DownloadMenu {
 
         mb.getItems().addAll(miDownloadStart, miDownloadStop, miChange);
 
-
         // Submenü "Download"
         final MenuItem miPrefer = new MenuItem("Downloads vorziehen");
         miPrefer.setOnAction(a -> progData.downloadGuiController.preferDownload());
@@ -123,7 +116,6 @@ public class DownloadMenu {
         submenuDownload.getItems().addAll(miPrefer, miPutBack, miRemove);
         mb.getItems().add(new SeparatorMenuItem());
         mb.getItems().addAll(submenuDownload);
-
 
         // Submenü "alle Downloads"
         final MenuItem mbStartAll = new MenuItem("alle Downloads starten");
@@ -144,26 +136,6 @@ public class DownloadMenu {
         submenuAllDownloads.getItems().addAll(mbStartAll, mbStopAll, mbStopWait, mbUpdateList, mbClean);
         mb.getItems().addAll(submenuAllDownloads);
 
-
-//        // Submenü "gespeicherte Filme"
-//        final MenuItem miDownloadShown = new MenuItem("Filme als gesehen markieren");
-//        miDownloadShown.setOnAction(a -> progData.downloadGuiController.setFilmShown());
-//        final MenuItem miDownloadNotShown = new MenuItem("Filme als ungesehen markieren");
-//        miDownloadNotShown.setOnAction(a -> progData.downloadGuiController.setFilmNotShown());
-//        final MenuItem miPlayerDownload = new MenuItem("gespeicherten Film (Datei) abspielen");
-//        miPlayerDownload.setOnAction(a -> progData.downloadGuiController.playFilm());
-//        MenuItem miDeleteDownload = new MenuItem("gespeicherten Film (Datei) löschen");
-//        miDeleteDownload.setOnAction(a -> progData.downloadGuiController.deleteFilmFile());
-//        MenuItem miOpenDir = new MenuItem("Zielordner öffnen");
-//        miOpenDir.setOnAction(e -> progData.downloadGuiController.openDestinationDir());
-//        final MenuItem miFilmMediaCollection = new MenuItem("Titel in der Mediensammlung suchen");
-//        miFilmMediaCollection.setOnAction(a -> progData.downloadGuiController.guiFilmMediaCollection());
-//
-//        Menu submenuFilm = new Menu("gespeicherten Film");
-//        submenuFilm.getItems().addAll(miDownloadShown, miDownloadNotShown, miPlayerDownload,
-//                miDeleteDownload, miOpenDir, miFilmMediaCollection);
-//        mb.getItems().addAll(submenuFilm);
-
         MenuItem miMediaDb = new MenuItem("Titel in der Mediensammlung suchen");
         miMediaDb.setOnAction(a -> progData.downloadGuiController.guiFilmMediaCollection());
         PShortcutWorker.addShortCut(miMediaDb, MTShortcut.SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION);
@@ -180,7 +152,6 @@ public class DownloadMenu {
         mb.getItems().add(new SeparatorMenuItem());
         mb.getItems().addAll(miMediaDb, miFilmInfo, miPlayUrl, miCopyUrl);
 
-
         final MenuItem miSelectAll = new MenuItem("alles auswählen");
         miSelectAll.setOnAction(a -> progData.downloadGuiController.selectAll());
         final MenuItem miSelection = new MenuItem("Auswahl umkehren");
@@ -189,16 +160,17 @@ public class DownloadMenu {
         mb.getItems().add(new SeparatorMenuItem());
         mb.getItems().addAll(miSelectAll, miSelection);
 
+        final MenuItem miShowFilter = new MenuItem("Filter ein-/ausblenden");
+        //ausgeführt wird aber der Button im Tab Filme!!
+        miShowFilter.setOnAction(a -> progData.mtPlayerController.setFilter());
+        PShortcutWorker.addShortCut(miShowFilter, MTShortcut.SHORTCUT_SHOW_FILTER);
 
-        final CheckMenuItem miShowFilter = new CheckMenuItem("Filter anzeigen");
-        miShowFilter.selectedProperty().bindBidirectional(boolDivOn);
-        final CheckMenuItem miShowInfo = new CheckMenuItem("Infos anzeigen");
-        miShowInfo.selectedProperty().bindBidirectional(boolInfoOn);
+        final MenuItem miShowInfo = new MenuItem("Infos ein-/ausblenden");
+        miShowInfo.setOnAction(a -> progData.mtPlayerController.setInfos());
+        PShortcutWorker.addShortCut(miShowInfo, MTShortcut.SHORTCUT_SHOW_INFOS);
 
         mb.getItems().add(new SeparatorMenuItem());
         mb.getItems().addAll(miShowFilter, miShowInfo);
-
         vBox.getChildren().add(mb);
-
     }
 }

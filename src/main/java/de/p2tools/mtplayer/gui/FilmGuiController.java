@@ -29,7 +29,6 @@ import de.p2tools.mtplayer.gui.tools.table.TableRowFilm;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PColor;
-import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -84,11 +83,6 @@ public class FilmGuiController extends AnchorPane {
         scrollPane.setFitToWidth(true);
         scrollPane.setContent(tableView);
 
-//        ContextMenu ct = new ContextMenu();
-//        final MenuItem miDel = new MenuItem("Abos löschen");
-//        ct.getItems().addAll(miDel);
-//        tableView.setContextMenu(ct);
-
         initInfoPane();
         setInfoPane();
         initTable();
@@ -123,21 +117,12 @@ public class FilmGuiController extends AnchorPane {
                 return;
             }
             Film selFilm = tableView.getSelectionModel().getSelectedItem();
-//            System.out.println("Sel: " + selFilm);
             if (selFilm != null) {
-                PDuration.counterStart("selectFilm: with selection");
-//                int sel = tableView.getSelectionModel().getSelectedIndex();
-//                tableView.scrollTo(sel);
-//                tableView.getSelectionModel().clearSelection();
-//                tableView.getSelectionModel().select(selFilm);
                 tableView.scrollTo(selFilm);
-                PDuration.counterStop("selectFilm: with selection");
             } else {
-                PDuration.counterStart("selectFilm: with no selection");
                 tableView.getSelectionModel().clearSelection();
                 tableView.scrollTo(0);
                 tableView.getSelectionModel().select(0);
-                PDuration.counterStop("selectFilm: with no selection");
             }
         });
     }
@@ -165,13 +150,6 @@ public class FilmGuiController extends AnchorPane {
             FilmTools.bookmarkFilm(progData, list, bookmark);
         }
     }
-
-//    public void bookmarkFilm() {
-//        final ArrayList<Film> list = getSelList();
-//        if (!list.isEmpty()) {
-//            FilmTools.bookmarkFilm(progData, list, !list.get(0).isBookmark());
-//        }
-//    }
 
     public void guiFilmMediaCollection() {
         final Optional<Film> film = getSel();
@@ -239,7 +217,6 @@ public class FilmGuiController extends AnchorPane {
                 Table.refresh_table(tableView);
             }
         });
-
     }
 
     private void initInfoPane() {
@@ -288,7 +265,6 @@ public class FilmGuiController extends AnchorPane {
             return;
         }
 
-
         // Button wieder aufbauen
         tilePaneButton.getChildren().clear();
         setDataList.stream().forEach(setData -> {
@@ -307,7 +283,6 @@ public class FilmGuiController extends AnchorPane {
             btn.setOnAction(a -> playFilmUrlWithSet(setData));
             tilePaneButton.getChildren().add(btn);
         });
-
 
         if (splitPane.getItems().size() != 2 || splitPane.getItems().get(1) != infoTab) {
             splitPane.getItems().clear();
@@ -333,17 +308,13 @@ public class FilmGuiController extends AnchorPane {
         }
     }
 
-    int count = 0;
-
     private void initTable() {
         tableView.setTableMenuButtonVisible(true);
-
         tableView.setEditable(false);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
         new Table().setTable(tableView, Table.TABLE.FILM);
-
         tableView.setItems(sortedList);
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
 
@@ -356,12 +327,6 @@ public class FilmGuiController extends AnchorPane {
             });
             return row;
         });
-
-//        tableView.setOnMouseClicked(m -> {
-//            if (m.getButton().equals(MouseButton.PRIMARY) && m.getClickCount() == 2) {
-//                progData.filmInfoDialogController.showFilmInfo();
-//            }
-//        });
 
         tableView.setOnMousePressed(m -> {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
@@ -378,19 +343,22 @@ public class FilmGuiController extends AnchorPane {
         });
 
         tableView.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
-            if (STRG_A.match(event)) {
-                if (tableView.getItems().size() > 3_000) {
-                    // bei sehr langen Listen dauert das seeeeeehr lange
-                    PLog.sysLog("STRG-A: lange Liste -> verhindern");
-                    event.consume();
-                }
+            if (STRG_A.match(event) && tableView.getItems().size() > 3_000) {
+                //macht eingentlich keine Sinn???
+//                if (PAlert.BUTTON.YES != PAlert.showAlert_yes_no(progData.primaryStage, "Alles markieren?",
+//                        "Sollen wirklich alle Filme markiert werden?",
+//                        "Das Markieren aller Filme ist aufwändig und kann sehr lange dauern.")) {
+//                    // bei sehr langen Listen dauert das seeeeeehr lange
+//                    PLog.sysLog("STRG-A: lange Liste -> verhindern");
+//                    event.consume();
+//                }
+                PLog.sysLog("STRG-A: lange Liste -> verhindern");
+                event.consume();
             }
         });
 
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
-                Platform.runLater(this::setFilm)
-        );
-
+                Platform.runLater(this::setFilm));
     }
 
     private synchronized void startFilmUrl() {
@@ -402,7 +370,6 @@ public class FilmGuiController extends AnchorPane {
 
     private void startFilmUrlWithSet(SetData pSet) {
         // Url mit Prognr. starten
-
         if (pSet.isSave()) {
             // wenn das pSet zum Speichern (über die Button) gewählt wurde,
             // weiter mit dem Dialog "Speichern"
@@ -426,6 +393,4 @@ public class FilmGuiController extends AnchorPane {
         final ArrayList<Film> list = getSelList();
         progData.filmlist.saveFilm(list, pSet);
     }
-
-
 }

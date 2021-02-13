@@ -122,11 +122,6 @@ public class AboGuiController extends AnchorPane {
         progData.aboList.deleteAbo(lAbo);
     }
 
-
-//    public void addNewAbo() {
-//        progData.aboList.addNewAbo("Neu", "", "", "");
-//    }
-
     public void selectAll() {
         tableView.getSelectionModel().selectAll();
     }
@@ -168,8 +163,8 @@ public class AboGuiController extends AnchorPane {
             bound = true;
             splitPane.getItems().clear();
             splitPane.getItems().addAll(scrollPane, infoPane);
-            splitPane.getDividers().get(0).positionProperty().bindBidirectional(splitPaneProperty);
             SplitPane.setResizableWithParent(infoPane, false);
+            splitPane.getDividers().get(0).positionProperty().bindBidirectional(splitPaneProperty);
         }
     }
 
@@ -193,12 +188,6 @@ public class AboGuiController extends AnchorPane {
             });
             return row;
         });
-//        tableView.setOnMouseClicked(m -> {
-//            if (m.getButton().equals(MouseButton.PRIMARY) && m.getClickCount() == 2) {
-//                changeAbo();
-//            }
-//        });
-
         tableView.setOnMousePressed(m -> {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
                 final Optional<Abo> optionalAbo = getSel(false);
@@ -212,7 +201,6 @@ public class AboGuiController extends AnchorPane {
                 tableView.setContextMenu(contextMenu);
             }
         });
-
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             final Abo abo = tableView.getSelectionModel().getSelectedItem();
             aboGuiInfoController.setAbo(abo);

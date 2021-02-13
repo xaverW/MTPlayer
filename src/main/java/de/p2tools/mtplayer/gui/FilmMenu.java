@@ -16,7 +16,6 @@
 
 package de.p2tools.mtplayer.gui;
 
-import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.MTShortcut;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
@@ -24,7 +23,6 @@ import de.p2tools.mtplayer.tools.storedFilter.BookmarkFilter;
 import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
 import de.p2tools.mtplayer.tools.storedFilter.SelectedFilterFactory;
 import de.p2tools.p2Lib.tools.shortcut.PShortcutWorker;
-import javafx.beans.property.BooleanProperty;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
@@ -37,9 +35,6 @@ public class FilmMenu {
     private static final String FILM_FILTER_BOOKMARK_TEXT = "alle angelegte Bookmarks anzeigen\n\n" +
             "der zweite Klick stellt den\n" +
             "eingestellten Filter wieder her";
-
-    BooleanProperty boolFilterOn = ProgConfig.FILM_GUI_FILTER_DIVIDER_ON.getBooleanProperty();
-    BooleanProperty boolInfoOn = ProgConfig.FILM_GUI_DIVIDER_ON.getBooleanProperty();
 
     public FilmMenu(VBox vBox) {
         this.vBox = vBox;
@@ -60,7 +55,6 @@ public class FilmMenu {
         vBoxSpace.setMaxHeight(0);
         vBoxSpace.setMinHeight(0);
         vBox.getChildren().add(vBoxSpace);
-
 
         final ToolBarButton btPlay = new ToolBarButton(vBox,
                 "Abspielen", "markierten Film abspielen", new ProgIcons().FX_ICON_TOOLBAR_FILM_START);
@@ -89,7 +83,6 @@ public class FilmMenu {
         btDelAllBookmark.setOnAction(a -> progData.bookmarks.clearAll(progData.primaryStage));
 
         btFilterBookmakr.setOnAction(a -> {
-
             if (storedActFilterSettings != null && storedBookmarkFilter != null) {
                 SelectedFilter sf = progData.storedFilters.getActFilterSettings();
                 if (!SelectedFilterFactory.compareFilterWithoutNameOfFilter(storedBookmarkFilter, sf)) {
@@ -111,7 +104,6 @@ public class FilmMenu {
                 storedActFilterSettings = null;
             }
         });
-
     }
 
     private void initFilmMenu() {
@@ -130,7 +122,6 @@ public class FilmMenu {
 
         mb.getItems().addAll(mbPlay, mbSave);
 
-
         final MenuItem miFilmShown = new MenuItem("Filme als gesehen markieren");
         miFilmShown.setOnAction(a -> progData.filmGuiController.setFilmShown());
         final MenuItem miFilmNotShown = new MenuItem("Filme als ungesehen markieren");
@@ -146,7 +137,6 @@ public class FilmMenu {
         mb.getItems().add(new SeparatorMenuItem());
         mb.getItems().addAll(miFilmShown, miFilmNotShown, miFilmInfo, miFilmMediaCollection);
 
-
         // Bookmarks
         Menu submenuBookmark = new Menu("Bookmarks");
         final MenuItem miBookmarkAdd = new MenuItem("neue Bookmarks anlegen");
@@ -159,15 +149,16 @@ public class FilmMenu {
         submenuBookmark.getItems().addAll(miBookmarkAdd, miBookmarkDel, miBookmarkDelAll);
         mb.getItems().add(submenuBookmark);
 
+        final MenuItem miShowFilter = new MenuItem("Filter ein-/ausblenden");
+        miShowFilter.setOnAction(a -> progData.mtPlayerController.setFilter());
+        PShortcutWorker.addShortCut(miShowFilter, MTShortcut.SHORTCUT_SHOW_FILTER);
 
-        final CheckMenuItem miShowFilter = new CheckMenuItem("Filter anzeigen");
-        miShowFilter.selectedProperty().bindBidirectional(boolFilterOn);
-        final CheckMenuItem miShowInfo = new CheckMenuItem("Infos anzeigen");
-        miShowInfo.selectedProperty().bindBidirectional(boolInfoOn);
+        final MenuItem miShowInfo = new MenuItem("Infos ein-/ausblenden");
+        miShowInfo.setOnAction(a -> progData.mtPlayerController.setInfos());
+        PShortcutWorker.addShortCut(miShowInfo, MTShortcut.SHORTCUT_SHOW_INFOS);
 
         mb.getItems().add(new SeparatorMenuItem());
         mb.getItems().addAll(miShowFilter, miShowInfo);
-
         vBox.getChildren().add(mb);
     }
 }

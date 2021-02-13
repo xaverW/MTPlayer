@@ -274,6 +274,8 @@ public class ProgConfig extends MLConfig {
 
     // Shortcuts Filmmenü
     public static MLConfigs SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION = addNewKey("SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION", "Ctrl+M");
+    public static MLConfigs SHORTCUT_SHOW_FILTER = addNewKey("SHORTCUT_SHOW_FILTER", "Alt+F");
+    public static MLConfigs SHORTCUT_SHOW_INFOS = addNewKey("SHORTCUT_SHOW_INFO", "Alt+I");
     public static MLConfigs SHORTCUT_INFO_FILM = addNewKey("SHORTCUT_INFO_FILM", "Ctrl+I");
     public static MLConfigs SHORTCUT_PLAY_FILM = addNewKey("SHORTCUT_PLAY_FILM", "Ctrl+P");
     public static MLConfigs SHORTCUT_SAVE_FILM = addNewKey("SHORTCUT_SAVE_FILM", "Ctrl+S");

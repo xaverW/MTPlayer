@@ -44,6 +44,16 @@ public class MTShortcut {
                             "das Programm wartet auf den Download. Der Dialog mit der Abfrage was getan werden soll, wird aber übersprungen.");
 
     // Tabelle Filme
+    public static final PShortcut SHORTCUT_SHOW_FILTER =
+            new PShortcut(ProgConfig.SHORTCUT_SHOW_FILTER.getStringProperty(), ProgConfig.SHORTCUT_SHOW_FILTER.getInitValue(),
+                    "Filter anzeigen",
+                    "In der Tabelle \"Filme\", \"Downloads\" und \"Abos\" die Filter anzeigen.");
+
+    public static final PShortcut SHORTCUT_SHOW_INFOS =
+            new PShortcut(ProgConfig.SHORTCUT_SHOW_INFOS.getStringProperty(), ProgConfig.SHORTCUT_SHOW_INFOS.getInitValue(),
+                    "Infos anzeigen",
+                    "In der Tabelle \"Filme\", \"Downloads\" und \"Abos\" die Infos anzeigen.");
+
     public static final PShortcut SHORTCUT_INFO_FILM =
             new PShortcut(ProgConfig.SHORTCUT_INFO_FILM.getStringProperty(), ProgConfig.SHORTCUT_INFO_FILM.getInitValue(),
                     "Filminformation anzeigen",
@@ -103,6 +113,8 @@ public class MTShortcut {
         shortcutList.add(SHORTCUT_QUIT_PROGRAM);
         shortcutList.add(SHORTCUT_QUIT_PROGRAM_WAIT);
 
+        shortcutList.add(SHORTCUT_SHOW_FILTER);
+        shortcutList.add(SHORTCUT_SHOW_INFOS);
         shortcutList.add(SHORTCUT_INFO_FILM);
         shortcutList.add(SHORTCUT_PLAY_FILM);
         shortcutList.add(SHORTCUT_SAVE_FILM);
