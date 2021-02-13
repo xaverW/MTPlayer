@@ -16,12 +16,12 @@
 
 package de.p2tools.mtplayer.gui.mediaConfig;
 
-import de.p2tools.mtplayer.tools.storedFilter.FilterCheckRegEx;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.history.HistoryData;
+import de.p2tools.mtplayer.tools.storedFilter.FilterCheckRegEx;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.dialogs.accordion.PAccordionPane;
@@ -122,6 +122,7 @@ public class PaneHistoryController extends PAccordionPane {
 
         final TableColumn<HistoryData, String> dateColumn = new TableColumn<>("Datum");
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        dateColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<HistoryData, String> themeColumn = new TableColumn<>("Thema");
         themeColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));

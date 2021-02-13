@@ -158,22 +158,24 @@ public class PaneMedia extends ScrollPane {
 
     private void initTableMedia() {
         final TableColumn<MediaData, String> nameColumn = new TableColumn<>("Name");
-        final TableColumn<MediaData, String> pathColumn = new TableColumn<>("Pfad");
-        final TableColumn<MediaData, MediaFileSize> sizeColumn = new TableColumn<>("Größe [MB]");
-        final TableColumn<MediaData, Boolean> externalColumn = new TableColumn<>("extern");
-
+        nameColumn.prefWidthProperty().bind(tableMedia.widthProperty().multiply(50.0 / 100));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        final TableColumn<MediaData, String> pathColumn = new TableColumn<>("Pfad");
+        pathColumn.prefWidthProperty().bind(tableMedia.widthProperty().multiply(25.0 / 100));
         pathColumn.setCellValueFactory(new PropertyValueFactory<>("path"));
+
+        final TableColumn<MediaData, MediaFileSize> sizeColumn = new TableColumn<>("Größe [MB]");
+        sizeColumn.prefWidthProperty().bind(tableMedia.widthProperty().multiply(15.0 / 100));
         sizeColumn.setCellValueFactory(new PropertyValueFactory<>("size"));
+        sizeColumn.getStyleClass().add("alignCenterRightPadding_25");
+
+        final TableColumn<MediaData, Boolean> externalColumn = new TableColumn<>("extern");
+        externalColumn.prefWidthProperty().bind(tableMedia.widthProperty().multiply(10.0 / 100));
         externalColumn.setCellValueFactory(new PropertyValueFactory<>("external"));
         externalColumn.setCellFactory(new PCheckBoxCell().cellFactoryBool);
 
         tableMedia.getColumns().addAll(nameColumn, pathColumn, sizeColumn, externalColumn);
-
-        nameColumn.prefWidthProperty().bind(tableMedia.widthProperty().multiply(50.0 / 100));
-        pathColumn.prefWidthProperty().bind(tableMedia.widthProperty().multiply(25.0 / 100));
-        sizeColumn.prefWidthProperty().bind(tableMedia.widthProperty().multiply(15.0 / 100));
-        externalColumn.prefWidthProperty().bind(tableMedia.widthProperty().multiply(10.0 / 100));
 
         tableMedia.getSelectionModel().selectedItemProperty().addListener((observableValue, dataOld, dataNew) -> {
             if (dataNew != null) {

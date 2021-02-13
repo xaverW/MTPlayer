@@ -16,14 +16,14 @@
 
 package de.p2tools.mtplayer.gui.mediaDialog;
 
-import de.p2tools.mtplayer.gui.tools.Listener;
-import de.p2tools.mtplayer.tools.storedFilter.FilterCheckRegEx;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.history.HistoryData;
 import de.p2tools.mtplayer.gui.mediaConfig.SearchPredicateWorker;
+import de.p2tools.mtplayer.gui.tools.Listener;
+import de.p2tools.mtplayer.tools.storedFilter.FilterCheckRegEx;
 import de.p2tools.p2Lib.guiTools.PGuiTools;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
@@ -156,22 +156,24 @@ public class PaneAbo extends ScrollPane {
 
     private void initTableAbo() {
         final TableColumn<HistoryData, String> themeColumn = new TableColumn<>("Thema");
-        final TableColumn<HistoryData, String> titleColumn = new TableColumn<>("Titel");
-        final TableColumn<HistoryData, Date> dateColumn = new TableColumn<>("Datum");
-        final TableColumn<HistoryData, String> pathColumn = new TableColumn<>("Url");
-
+        themeColumn.prefWidthProperty().bind(tableAbo.widthProperty().multiply(20.0 / 100));
         themeColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
+
+        final TableColumn<HistoryData, String> titleColumn = new TableColumn<>("Titel");
+        titleColumn.prefWidthProperty().bind(tableAbo.widthProperty().multiply(50.0 / 100));
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+
+        final TableColumn<HistoryData, Date> dateColumn = new TableColumn<>("Datum");
+        dateColumn.prefWidthProperty().bind(tableAbo.widthProperty().multiply(15.0 / 100));
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        dateColumn.setSortType(TableColumn.SortType.DESCENDING);
+        dateColumn.getStyleClass().add("alignCenter");
+
+        final TableColumn<HistoryData, String> pathColumn = new TableColumn<>("Url");
+        pathColumn.prefWidthProperty().bind(tableAbo.widthProperty().multiply(14.0 / 100));
         pathColumn.setCellValueFactory(new PropertyValueFactory<>("url"));
 
         tableAbo.getColumns().addAll(themeColumn, titleColumn, dateColumn, pathColumn);
-        dateColumn.setSortType(TableColumn.SortType.DESCENDING);
-
-        themeColumn.prefWidthProperty().bind(tableAbo.widthProperty().multiply(20.0 / 100));
-        titleColumn.prefWidthProperty().bind(tableAbo.widthProperty().multiply(50.0 / 100));
-        dateColumn.prefWidthProperty().bind(tableAbo.widthProperty().multiply(15.0 / 100));
-        pathColumn.prefWidthProperty().bind(tableAbo.widthProperty().multiply(14.0 / 100));
 
         tableAbo.getSelectionModel().selectedItemProperty().addListener((observableValue, dataOld, dataNew) -> {
             if (dataNew != null) {

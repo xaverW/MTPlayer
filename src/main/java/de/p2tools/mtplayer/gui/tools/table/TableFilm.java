@@ -62,11 +62,11 @@ public class TableFilm {
 
         final TableColumn<Film, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));
-        nrColumn.getStyleClass().add("alignCenterLeft");
+        nrColumn.getStyleClass().add("alignCenterRightPadding_10");
 
         final TableColumn<Film, String> senderColumn = new TableColumn<>("Sender");
         senderColumn.setCellValueFactory(new PropertyValueFactory<>("channel"));
-        senderColumn.getStyleClass().add("alignCenterLeft");
+        senderColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<Film, String> themeColumn = new TableColumn<>("Thema");
         themeColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
@@ -91,11 +91,11 @@ public class TableFilm {
         final TableColumn<Film, Integer> durationColumn = new TableColumn<>("Dauer [min]");
         durationColumn.setCellFactory(cellFactoryDuration);
         durationColumn.setCellValueFactory(new PropertyValueFactory<>("durationMinute"));
-        durationColumn.getStyleClass().add("alignCenter");
+        durationColumn.getStyleClass().add("alignCenterRightPadding_25");
 
         final TableColumn<Film, FilmSize> sizeColumn = new TableColumn<>("Größe [MB]");
         sizeColumn.setCellValueFactory(new PropertyValueFactory<>("filmSize"));
-        sizeColumn.getStyleClass().add("alignCenterLeft");
+        sizeColumn.getStyleClass().add("alignCenterRightPadding_25");
 
         final TableColumn<Film, Boolean> hdColumn = new TableColumn<>("HD");
         hdColumn.setCellValueFactory(new PropertyValueFactory<>("hd"));

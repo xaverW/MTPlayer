@@ -70,12 +70,12 @@ public class TableDownload {
         final TableColumn<Download, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));
         nrColumn.setCellFactory(cellFactoryNr);
-        nrColumn.getStyleClass().add("alignCenterLeft");
+        nrColumn.getStyleClass().add("alignCenterRightPadding_10");
 
         final TableColumn<Download, Integer> filmNrColumn = new TableColumn<>("Filmnr");
         filmNrColumn.setCellValueFactory(new PropertyValueFactory<>("filmNr"));
         filmNrColumn.setCellFactory(cellFactoryFilmNr);
-        filmNrColumn.getStyleClass().add("alignCenterLeft");
+        filmNrColumn.getStyleClass().add("alignCenterRightPadding_10");
 
         final TableColumn<Download, String> aboColumn = new TableColumn<>("Abo");
         aboColumn.setCellValueFactory(new PropertyValueFactory<>("aboName"));
@@ -83,7 +83,7 @@ public class TableDownload {
 
         final TableColumn<Download, String> senderColumn = new TableColumn<>("Sender");
         senderColumn.setCellValueFactory(new PropertyValueFactory<>("channel"));
-        senderColumn.getStyleClass().add("alignCenterLeft");
+        senderColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<Download, String> themeColumn = new TableColumn<>("Thema");
         themeColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
@@ -109,15 +109,15 @@ public class TableDownload {
 
         final TableColumn<Download, Integer> remainingColumn = new TableColumn<>("Restzeit");
         remainingColumn.setCellValueFactory(new PropertyValueFactory<>("remaining"));
-        remainingColumn.getStyleClass().add("alignCenterLeft");
+        remainingColumn.getStyleClass().add("alignCenterRightPadding_25");
 
         final TableColumn<Download, Integer> speedColumn = new TableColumn<>("Geschwindigkeit");
         speedColumn.setCellValueFactory(new PropertyValueFactory<>("bandwidth"));
-        speedColumn.getStyleClass().add("alignCenterLeft");
+        speedColumn.getStyleClass().add("alignCenterRightPadding_25");
 
         final TableColumn<Download, DownloadSizeData> sizeColumn = new TableColumn<>("Größe [MB]");
         sizeColumn.setCellValueFactory(new PropertyValueFactory<>("downloadSize"));
-        sizeColumn.getStyleClass().add("alignCenterLeft");
+        sizeColumn.getStyleClass().add("alignCenterRightPadding_25");
 
         final TableColumn<Download, PDate> datumColumn = new TableColumn<>("Datum");
         datumColumn.setCellValueFactory(new PropertyValueFactory<>("filmDate"));
@@ -130,7 +130,7 @@ public class TableDownload {
         final TableColumn<Download, Integer> durationColumn = new TableColumn<>("Dauer [min]");
         durationColumn.setCellFactory(cellFactoryDuration);
         durationColumn.setCellValueFactory(new PropertyValueFactory<>("durationMinute"));
-        durationColumn.getStyleClass().add("alignCenter");
+        durationColumn.getStyleClass().add("alignCenterRightPadding_25");
 
         final TableColumn<Download, Boolean> hdColumn = new TableColumn<>("HD");
         hdColumn.setCellValueFactory(new PropertyValueFactory<>("hd"));

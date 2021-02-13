@@ -16,9 +16,6 @@
 
 package de.p2tools.mtplayer.gui.configDialog;
 
-import de.p2tools.mtplayer.gui.tools.HelpText;
-import de.p2tools.mtplayer.gui.tools.table.Table;
-import de.p2tools.mtplayer.tools.filmListFilter.FilmlistBlackFilterCountHits;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
@@ -26,6 +23,9 @@ import de.p2tools.mtplayer.controller.data.BlackData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
+import de.p2tools.mtplayer.gui.tools.HelpText;
+import de.p2tools.mtplayer.gui.tools.table.Table;
+import de.p2tools.mtplayer.tools.filmListFilter.FilmlistBlackFilterCountHits;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
@@ -130,10 +130,11 @@ public class BlackPane {
     private void initTable(VBox vBox) {
         final TableColumn<BlackData, String> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("nr"));
-        nrColumn.getStyleClass().add("center");
+        nrColumn.getStyleClass().add("alignCenterRightPadding_10");
 
         final TableColumn<BlackData, String> channelColumn = new TableColumn<>("Sender");
         channelColumn.setCellValueFactory(new PropertyValueFactory<>("channel"));
+        channelColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<BlackData, String> themeColumn = new TableColumn<>("Thema");
         themeColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
@@ -150,7 +151,7 @@ public class BlackPane {
 
         final TableColumn<BlackData, Integer> hitsColumn = new TableColumn<>("Treffer");
         hitsColumn.setCellValueFactory(new PropertyValueFactory<>("countHits"));
-        hitsColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
+        hitsColumn.getStyleClass().add("alignCenterRightPadding_10");
 
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);

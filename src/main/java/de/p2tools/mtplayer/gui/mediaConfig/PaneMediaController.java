@@ -98,6 +98,7 @@ public class PaneMediaController extends PAccordionPane {
 
         final TableColumn<MediaData, MediaFileSize> sizeColumn = new TableColumn<>("Größe [MB]");
         sizeColumn.setCellValueFactory(new PropertyValueFactory<>("size"));
+        sizeColumn.getStyleClass().add("alignCenterRightPadding_25");
 
         final TableColumn<MediaData, String> collectionNameColumn = new TableColumn<>("Sammlung");
         collectionNameColumn.setCellValueFactory(new PropertyValueFactory<>("collectionName"));

@@ -36,7 +36,7 @@ public class TableAbo {
 
         final TableColumn<Abo, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("nr"));
-        nrColumn.getStyleClass().add("alignCenterLeft");
+        nrColumn.getStyleClass().add("alignCenterRightPadding_10");
 
         final TableColumn<Abo, Boolean> activColumn = new TableColumn<>("Aktiv");
         activColumn.setCellValueFactory(new PropertyValueFactory<>("active"));
@@ -47,7 +47,7 @@ public class TableAbo {
         final TableColumn<Abo, Integer> hitColumn = new TableColumn<>("Treffer");
         hitColumn.setCellValueFactory(new PropertyValueFactory<>("hit"));
         hitColumn.setCellFactory(callbackHits);
-        hitColumn.getStyleClass().add("alignCenterLeft");
+        hitColumn.getStyleClass().add("alignCenterRightPadding_10");
 
         final TableColumn<Abo, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -63,7 +63,7 @@ public class TableAbo {
 
         final TableColumn<Abo, String> senderColumn = new TableColumn<>("Sender");
         senderColumn.setCellValueFactory(new PropertyValueFactory<>("channel"));
-        senderColumn.getStyleClass().add("alignCenterLeft");
+        senderColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<Abo, String> themeColumn = new TableColumn<>("Thema");
         themeColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
@@ -90,17 +90,17 @@ public class TableAbo {
         final TableColumn<Abo, Integer> timeRange = new TableColumn<>("Zeitraum");
         timeRange.setCellFactory(cellFactoryMin);
         timeRange.setCellValueFactory(new PropertyValueFactory<>("timeRange"));
-        timeRange.getStyleClass().add("alignCenterLeft");
+        timeRange.getStyleClass().add("alignCenter");
 
         final TableColumn<Abo, Integer> minColumn = new TableColumn<>("min");
         minColumn.setCellFactory(cellFactoryMin);
         minColumn.setCellValueFactory(new PropertyValueFactory<>("minDurationMinute"));
-        minColumn.getStyleClass().add("alignCenterLeft");
+        minColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<Abo, Integer> maxColumn = new TableColumn<>("max");
         maxColumn.setCellFactory(cellFactoryMax);
         maxColumn.setCellValueFactory(new PropertyValueFactory<>("maxDurationMinute"));
-        maxColumn.getStyleClass().add("alignCenterLeft");
+        maxColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<Abo, String> destinationColumn = new TableColumn<>("Ziel");
         destinationColumn.setCellValueFactory(new PropertyValueFactory<>("aboSubDir"));

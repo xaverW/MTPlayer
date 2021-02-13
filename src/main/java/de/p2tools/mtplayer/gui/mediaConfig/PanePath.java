@@ -94,6 +94,7 @@ public class PanePath {
 
         final TableColumn<MediaCollectionData, Integer> countColumn = new TableColumn<>("Anzahl");
         countColumn.setCellValueFactory(new PropertyValueFactory<>("count"));
+        countColumn.getStyleClass().add("alignCenterRightPadding_25");
 
         nameColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(30.0 / 100));
         pathColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(40.0 / 100));
