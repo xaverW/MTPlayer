@@ -234,7 +234,7 @@ public class DownloadFilterController extends FilterController {
             @Override
             public String toString(Double x) {
                 if (x == MLBandwidthTokenBucket.BANDWIDTH_MAX_KBYTE) {
-                    return "aus";
+                    return "alles";
                 }
 
                 return x.intValue() + "";
@@ -259,7 +259,7 @@ public class DownloadFilterController extends FilterController {
         String ret;
         bandwidthKByte = ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getInt();
         if (bandwidthKByte == MLBandwidthTokenBucket.BANDWIDTH_MAX_KBYTE) {
-            ret = "";
+            ret = "alles";
         } else {
 //            ret = bandwidthKByte + " kByte/s";
             ret = bandwidthKByte + " kB/s";

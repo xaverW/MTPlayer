@@ -46,8 +46,8 @@ public class FilmFilterControllerFilter extends VBox {
 
     PCheckComboBox checkOnly = new PCheckComboBox();
     PCheckComboBox checkNot = new PCheckComboBox();
-    Label lblOnly = new Label("nur anzeigen");
-    Label lblNot = new Label("nicht anzeigen");
+    Label lblOnly = new Label("anzeigen:");
+    Label lblNot = new Label("ausschließen:");
 
     private final String ONLY_BOOKMARK = "Bookmarks";
     private final String ONLY_HD = "HD";
@@ -172,6 +172,7 @@ public class FilmFilterControllerFilter extends VBox {
     }
 
     private void addCheckFilter() {
+        checkOnly.setEmptyText("alles");
         checkOnly.addItem(ONLY_BOOKMARK, "nur Filme der Bookmarks anzeigen", progData.storedFilters.getActFilterSettings().onlyBookmarkProperty());
         checkOnly.addItem(ONLY_HD, "nur HD-Filme anzeigen", progData.storedFilters.getActFilterSettings().onlyHdProperty());
         checkOnly.addItem(ONLY_UT, "nur Filme mit Untertitel anzeigen", progData.storedFilters.getActFilterSettings().onlyUtProperty());
@@ -179,19 +180,20 @@ public class FilmFilterControllerFilter extends VBox {
         checkOnly.addItem(ONLY_LIVE, "nur Livestreams anzeigen", progData.storedFilters.getActFilterSettings().onlyLiveProperty());
         checkOnly.addItem(ONLY_AKT_HISTORY, "nur die aktuelle History anzeigen", progData.storedFilters.getActFilterSettings().onlyAktHistoryProperty());
 
+        checkNot.setEmptyText("nichts");
         checkNot.addItem(NOT_ABO, "keine Filme für die es ein Abo gibt, anzeigen", progData.storedFilters.getActFilterSettings().notAboProperty());
         checkNot.addItem(NOT_HISTORY, "bereits gesehene Filme nicht anzeigen", progData.storedFilters.getActFilterSettings().notHistoryProperty());
         checkNot.addItem(NOT_DOUBLE, "doppelte Filme nur einmal anzeigen", progData.storedFilters.getActFilterSettings().notDoubleProperty());
         checkNot.addItem(NOT_GEO, "geo-geblockte Filme nicht anzeigen", progData.storedFilters.getActFilterSettings().notGeoProperty());
         checkNot.addItem(NOT_FUTURE, "keine Filme mit Datum in der Zukunft anzeigen", progData.storedFilters.getActFilterSettings().notFutureProperty());
 
-        VBox vBox = new VBox();
+        VBox vBox = new VBox(2);
         vBox.getChildren().addAll(lblOnly, checkOnly);
         vBox.visibleProperty().bind(progData.storedFilters.getActFilterSettings().onlyVisProperty());
         vBox.managedProperty().bind(progData.storedFilters.getActFilterSettings().onlyVisProperty());
         getChildren().add(vBox);
 
-        vBox = new VBox();
+        vBox = new VBox(2);
         vBox.getChildren().addAll(lblNot, checkNot);
         vBox.visibleProperty().bind(progData.storedFilters.getActFilterSettings().notVisProperty());
         vBox.managedProperty().bind(progData.storedFilters.getActFilterSettings().notVisProperty());
