@@ -108,6 +108,7 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs SYSTEM_ONLY_ASCII = addNewKey("system-only-ascii", Boolean.FALSE.toString());
     public static MLConfigs SYSTEM_PROG_OPEN_DIR = addNewKey("system-prog-open-dir");
     public static MLConfigs SYSTEM_PROG_OPEN_URL = addNewKey("system-prog-open-url");
+    public static MLConfigs SYSTEM_PROG_EXTERN_PROGRAM = addNewKey("system-extern-program");
     public static MLConfigs SYSTEM_PROG_PLAY_FILME = addNewKey("system-prog-play-filme");
     public static MLConfigs SYSTEM_MARK_GEO = addNewKey("system-mark-geo", Boolean.TRUE.toString());
     public static MLConfigs SYSTEM_GEO_HOME_PLACE = addNewKey("system-geo-home-place", Film.GEO_DE);
@@ -192,7 +193,7 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs ABO_SEARCH_NOW = addNewKey("abo-search-now", Boolean.TRUE.toString());
     public static MLConfigs ABO_MINUTE_MIN_SIZE = addNewKey("abo-minute-min-size", FilmFilter.FILTER_DURATION_MIN_MINUTE); //Vorgabe beim Anlegen eines Abos
     public static MLConfigs ABO_MINUTE_MAX_SIZE = addNewKey("abo-minute-max-size", FilmFilter.FILTER_DURATION_MAX_MINUTE); //Vorgabe beim Anlegen eines Abos
-    public static MLConfigs ABO_DIALOG_EDIT_SIZE = addNewKey("abo-dialog-edit-size");
+    public static MLConfigs ABO_DIALOG_EDIT_SIZE = addNewKey("abo-dialog-edit-size", "600:800");
     public static MLConfigs ABO_GUI_FILTER_DIVIDER = addNewKey("abo-gui-filter-divider", ProgConst.GUI_ABO_FILTER_DIVIDER_LOCATION);
     public static MLConfigs ABO_GUI_FILTER_DIVIDER_ON = addNewKey("abo-gui-filter-divider-on", Boolean.TRUE.toString());
     public static MLConfigs ABO_GUI_DIVIDER = addNewKey("abo-gui-divider", ProgConst.GUI_ABO_DIVIDER_LOCATION);
@@ -287,6 +288,7 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs SHORTCUT_DOWNLOAD_CHANGE = addNewKey("SHORTCUT_DOWNLOAD_CHANGE", "Ctrl+C");
     public static MLConfigs SHORTCUT_DOWNLOADS_UPDATE = addNewKey("SHORTCUT_DOWNLOADS_UPDATE", "CTRL+U");
     public static MLConfigs SHORTCUT_DOWNLOADS_CLEAN_UP = addNewKey("SHORTCUT_DOWNLOADS_CLEAN_UP", "CTRL+O");
+    public static MLConfigs SHORTCUT_EXTERN_PROGRAM = addNewKey("SHORTCUT_EXTERN_PROGRAM", "CTRL+E");
 
 
     public static String PARAMETER_INFO = P2LibConst.LINE_SEPARATOR + "\t"

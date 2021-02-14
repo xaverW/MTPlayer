@@ -41,6 +41,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -63,6 +65,7 @@ public class ConfigPaneController extends PAccordionPane {
     BooleanProperty propDown = ProgConfig.DOWNLOAD_START_NOW.getBooleanProperty();
     StringProperty propDir = ProgConfig.SYSTEM_PROG_OPEN_DIR.getStringProperty();
     StringProperty propUrl = ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty();
+    StringProperty propExternProgram = ProgConfig.SYSTEM_PROG_EXTERN_PROGRAM.getStringProperty();
     StringProperty propPlay = ProgConfig.SYSTEM_PROG_PLAY_FILME.getStringProperty();
     BooleanProperty propLog = ProgConfig.SYSTEM_LOG_ON.getBooleanProperty();
     StringProperty propLogDir = ProgConfig.SYSTEM_LOG_DIR.getStringProperty();
@@ -79,6 +82,7 @@ public class ConfigPaneController extends PAccordionPane {
     private TextField txtFileManager;
     private TextField txtFileManagerVideo;
     private TextField txtFileManagerWeb;
+    private TextField txtShortCut;
 
     private final Stage stage;
     private ColorPane colorPane;
@@ -110,6 +114,7 @@ public class ConfigPaneController extends PAccordionPane {
         txtFileManager.textProperty().unbindBidirectional(propDir);
         txtFileManagerVideo.textProperty().unbindBidirectional(propPlay);
         txtFileManagerWeb.textProperty().unbindBidirectional(propUrl);
+        txtShortCut.textProperty().unbindBidirectional(propExternProgram);
         tglSearch.selectedProperty().unbindBidirectional(propUpdateSearch);
         tglSearchBeta.selectedProperty().unbindBidirectional(propUpdateBetaSearch);
     }
@@ -301,13 +306,13 @@ public class ConfigPaneController extends PAccordionPane {
         result.add(tpConfig);
 
         addFilemanager(gridPane, 0);
-        addVideoPlayer(gridPane, 2);
-        addWebbrowser(gridPane, 4);
+        addVideoPlayer(gridPane, 1);
+        addWebbrowser(gridPane, 2);
+        addShortCut(gridPane, 3);
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow());
     }
 
     private void addFilemanager(GridPane gridPane, int row) {
-        gridPane.add(new Label("Dateimanager zum Öffnen des Downloadordners"), 0, row);
         txtFileManager = new TextField();
         txtFileManager.textProperty().bindBidirectional(propDir);
 
@@ -320,13 +325,15 @@ public class ConfigPaneController extends PAccordionPane {
 
         final Button btnHelp = PButton.helpButton(stage, "Dateimanager", HelpText.FILEMANAGER);
 
-        gridPane.add(txtFileManager, 0, row + 1);
-        gridPane.add(btnFile, 1, row + 1);
-        gridPane.add(btnHelp, 2, row + 1);
+        VBox vBox = new VBox(2);
+        HBox hBox = new HBox(5);
+        hBox.getChildren().addAll(txtFileManager, btnFile, btnHelp);
+        HBox.setHgrow(txtFileManager, Priority.ALWAYS);
+        vBox.getChildren().addAll(new Label("Dateimanager zum Öffnen des Downloadordners"), hBox);
+        gridPane.add(vBox, 0, row);
     }
 
     private void addVideoPlayer(GridPane gridPane, int row) {
-        gridPane.add(new Label("Videoplayer zum Abspielen gespeicherter Filme"), 0, row);
         txtFileManagerVideo = new TextField();
         txtFileManagerVideo.textProperty().bindBidirectional(propPlay);
 
@@ -339,13 +346,15 @@ public class ConfigPaneController extends PAccordionPane {
 
         final Button btnHelp = PButton.helpButton(stage, "Videoplayer", HelpText.VIDEOPLAYER);
 
-        gridPane.add(txtFileManagerVideo, 0, row + 1);
-        gridPane.add(btnFile, 1, row + 1);
-        gridPane.add(btnHelp, 2, row + 1);
+        VBox vBox = new VBox(2);
+        HBox hBox = new HBox(5);
+        hBox.getChildren().addAll(txtFileManagerVideo, btnFile, btnHelp);
+        HBox.setHgrow(txtFileManagerVideo, Priority.ALWAYS);
+        vBox.getChildren().addAll(new Label("Videoplayer zum Abspielen gespeicherter Filme"), hBox);
+        gridPane.add(vBox, 0, row);
     }
 
     private void addWebbrowser(GridPane gridPane, int row) {
-        gridPane.add(new Label("Webbrowser zum Öffnen von URLs"), 0, row);
         txtFileManagerWeb = new TextField();
         txtFileManagerWeb.textProperty().bindBidirectional(propUrl);
 
@@ -358,9 +367,33 @@ public class ConfigPaneController extends PAccordionPane {
 
         final Button btnHelp = PButton.helpButton(stage, "Webbrowser", HelpText.WEBBROWSER);
 
-        gridPane.add(txtFileManagerWeb, 0, row + 1);
-        gridPane.add(btnFile, 1, row + 1);
-        gridPane.add(btnHelp, 2, row + 1);
+        VBox vBox = new VBox(2);
+        HBox hBox = new HBox(5);
+        hBox.getChildren().addAll(txtFileManagerWeb, btnFile, btnHelp);
+        HBox.setHgrow(txtFileManagerWeb, Priority.ALWAYS);
+        vBox.getChildren().addAll(new Label("Webbrowser zum Öffnen von URLs"), hBox);
+        gridPane.add(vBox, 0, row);
+    }
+
+    private void addShortCut(GridPane gridPane, int row) {
+        txtShortCut = new TextField();
+        txtShortCut.textProperty().bindBidirectional(propExternProgram);
+
+        final Button btnFile = new Button();
+        btnFile.setOnAction(event -> {
+            PDirFileChooser.FileChooserOpenFile(ProgData.getInstance().primaryStage, txtShortCut);
+        });
+        btnFile.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
+        btnFile.setTooltip(new Tooltip("Ein externes Programm auswählen"));
+
+        final Button btnHelp = PButton.helpButton(stage, "Externes Programm", HelpText.EXTERN_PROGRAM_SHORT_CUT);
+
+        VBox vBox = new VBox(2);
+        HBox hBox = new HBox(5);
+        hBox.getChildren().addAll(txtShortCut, btnFile, btnHelp);
+        HBox.setHgrow(txtShortCut, Priority.ALWAYS);
+        vBox.getChildren().addAll(new Label("Externes Programm starten"), hBox);
+        gridPane.add(vBox, 0, row);
     }
 
     private void makeUpdate(Collection<TitledPane> result) {

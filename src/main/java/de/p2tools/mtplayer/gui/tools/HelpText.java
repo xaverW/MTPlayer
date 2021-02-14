@@ -481,6 +481,10 @@ public class HelpText {
             "kann damit ein Programm ausgewählt und " +
             "fest zugeordnet werden (z.B. der Browser \"Firefox\").";
 
+    public static final String EXTERN_PROGRAM_SHORT_CUT = "In den Tastenkürzel gibt es eines, das ein externes " +
+            "Programm ausführen kann. Dieses Programm kann hier ausgewählt werden. Gedacht ist das z.B. " +
+            "um per Tastenkürzel ein Programm zum Aufräumen des Download-Ordner laufen zu lassen, oder ähnliches.";
+
     public static final String MEDIA_DIALOG = "Hier kann eine Mediensammlung angelegt werden. Vor dem " +
             "Download eines Films, kann der Filmtitel in der Mediensammlung gesucht werden. So können doppelte " +
             "Downloads vermieden werden." +

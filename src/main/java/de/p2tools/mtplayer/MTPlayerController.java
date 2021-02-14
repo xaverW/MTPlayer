@@ -200,6 +200,14 @@ public class MTPlayerController extends StackPane {
         final Menu mHelp = new Menu("Hilfe");
         mHelp.getItems().addAll(miUrlHelp, miLog, miReset, new SeparatorMenuItem(), miAbout);
 
+        final MenuItem mbExternProgram = new MenuItem("Externes Programm starten");
+        mbExternProgram.setVisible(false); //vorerst mal noch nicht anzeigen???
+        mbExternProgram.setOnAction(e ->
+                POpen.openExternProgram(progData.primaryStage,
+                        ProgConfig.SYSTEM_PROG_EXTERN_PROGRAM.getStringProperty(), new ProgIcons().ICON_BUTTON_EXTERN_PROGRAM)
+        );
+        PShortcutWorker.addShortCut(mbExternProgram, MTShortcut.SHORTCUT_EXTERN_PROGRAM);
+
         // ProgInfoDialog
         if (ProgData.debug) {
             final MenuItem miDebug = new MenuItem("Debugtools");
@@ -219,7 +227,7 @@ public class MTPlayerController extends StackPane {
         menuButton.setText("");
         menuButton.setGraphic(new ProgIcons().FX_ICON_TOOLBAR_MENU_TOP);
         menuButton.getItems().addAll(miConfig, miMediaCollectionConfig, miSearchMediaCollection, mHelp,
-                new SeparatorMenuItem(), miQuit, miQuitWait);
+                new SeparatorMenuItem(), miQuit, miQuitWait, mbExternProgram);
     }
 
     private void selPanelFilm() {

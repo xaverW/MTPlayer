@@ -66,13 +66,13 @@ public class FilmFilterController extends FilterController {
         tglBlacklist.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().blacklistOnProperty());
         tglBlacklist.indeterminateProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().blacklistOnlyProperty());
 
-        
-        tglBlacklist.indeterminateProperty().addListener((v, o, n) -> {
-            System.out.println("interminate: " + "" + tglBlacklist.isIndeterminate() + " selected: " + tglBlacklist.isSelected());
-        });
-        tglBlacklist.selectedProperty().addListener((v, o, n) -> {
-            System.out.println("interminate: " + "" + tglBlacklist.isIndeterminate() + " selected: " + tglBlacklist.isSelected());
-        });
+
+//        tglBlacklist.indeterminateProperty().addListener((v, o, n) -> {
+//            System.out.println("interminate: " + "" + tglBlacklist.isIndeterminate() + " selected: " + tglBlacklist.isSelected());
+//        });
+//        tglBlacklist.selectedProperty().addListener((v, o, n) -> {
+//            System.out.println("interminate: " + "" + tglBlacklist.isIndeterminate() + " selected: " + tglBlacklist.isSelected());
+//        });
 
 
         vBoxBlacklist = getVBoxBotton();
