@@ -22,7 +22,7 @@ import javafx.application.Platform;
 import javafx.scene.control.TextField;
 
 public class FilterCheckRegEx {
-    private final int COUNTER_MAX = 2_000;
+    private final int COUNTER_MAX = 2_500;
 
     private TextField tf;
     private boolean colorRed = false;

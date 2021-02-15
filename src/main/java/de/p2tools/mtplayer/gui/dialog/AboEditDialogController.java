@@ -26,6 +26,7 @@ import de.p2tools.mtplayer.controller.data.abo.AboXml;
 import de.p2tools.mtplayer.controller.data.film.Film;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
+import de.p2tools.mtplayer.tools.storedFilter.FilterCheckRegEx;
 import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
@@ -428,18 +429,18 @@ public class AboEditDialogController extends PDialogExtra {
                 cboDestination.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
                         cbxEditAll[i].setSelected(true));
 
-                final TextField txt = new TextField("");
-                txt.setEditable(false);
-                txt.setDisable(true);
+                final TextField textField = new TextField("");
+                textField.setEditable(false);
+                textField.setDisable(true);
                 if (aboCopy.getSetData().isGenAboSubDir()) {
-                    txt.setText(aboCopy.getSetData().getAboSubDir().getName());
+                    textField.setText(aboCopy.getSetData().getAboSubDir().getName());
                 }
                 aboCopy.setDataProperty().addListener((u, o, n) -> {
                     if (n != null) {
                         if (aboCopy.getSetData().isGenAboSubDir()) {
-                            txt.setText(aboCopy.getSetData().getAboSubDir().getName());
+                            textField.setText(aboCopy.getSetData().getAboSubDir().getName());
                         } else {
-                            txt.setText("");
+                            textField.setText("");
                         }
                     }
                 });
@@ -448,12 +449,12 @@ public class AboEditDialogController extends PDialogExtra {
                 btn.setTooltip(new Tooltip("Zielpfad für das Abo anpassen"));
                 btn.setGraphic(new ProgIcons().ICON_BUTTON_EDIT_ABO_PATH);
                 btn.setOnAction(event -> {
-                    if (txt.isVisible()) {
-                        txt.setVisible(false);
+                    if (textField.isVisible()) {
+                        textField.setVisible(false);
                         cboDestination.setVisible(true);
                         cboDestination.setValue(memory);
                     } else {
-                        txt.setVisible(true);
+                        textField.setVisible(true);
                         cboDestination.setVisible(false);
                         memory = cboDestination.getValue();
                         cboDestination.setValue("");
@@ -464,7 +465,7 @@ public class AboEditDialogController extends PDialogExtra {
                         HelpText.ABO_SUBDIR);
 
                 final StackPane sp = new StackPane();
-                sp.getChildren().addAll(txt, cboDestination);
+                sp.getChildren().addAll(textField, cboDestination);
                 sp.setPrefWidth(20);
 
                 HBox hbox = new HBox(10);
@@ -476,7 +477,7 @@ public class AboEditDialogController extends PDialogExtra {
                 if (aboCopy.getAboSubDir().trim().isEmpty()) {
                     cboDestination.setVisible(false);
                 } else {
-                    txt.setVisible(false);
+                    textField.setVisible(false);
                 }
                 break;
             case AboXml.ABO_TIME_RANGE:
@@ -496,6 +497,14 @@ public class AboEditDialogController extends PDialogExtra {
                 this.gridPane.add(pRangeBoxTime, 1, grid);
                 break;
             case AboXml.ABO_MAX_DURATION:
+                break;
+            case AboXml.ABO_THEME:
+            case AboXml.ABO_THEME_TITLE:
+            case AboXml.ABO_TITLE:
+            case AboXml.ABO_SOMEWHERE:
+                FilterCheckRegEx fT = new FilterCheckRegEx(txt[i]);
+                txt[i].textProperty().addListener((observable, oldValue, newValue) -> fT.checkPattern());
+                setDefaultTxt(i, grid);
                 break;
             default:
                 setDefaultTxt(i, grid);
