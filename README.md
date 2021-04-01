@@ -1,4 +1,3 @@
-
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
 # MTPlayer
@@ -46,6 +45,8 @@ Für Linux-Benutzer wird OpenJDK8 empfohlen. Außerdem benötigen Linux Benutzer
 
 Das Programm benötigt unter Windows und Linux eine aktuelle Java-VM ab Version: Java 11.
 Für Linux-Benutzer wird OpenJDK11 empfohlen. (FX-Runtime bringt das Programm bereits mit und muss nicht installiert werden).
+
+<br />
 
 ## Download
 
