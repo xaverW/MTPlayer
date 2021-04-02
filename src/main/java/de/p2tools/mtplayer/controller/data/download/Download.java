@@ -71,21 +71,7 @@ public final class Download extends DownloadProps {
         setSizeDownloadFromFilm();
         // und endlich Aufruf bauen :)
         downloadProgram.makeProgParameter(film, abo, name, path);
-
-//        noProperty().addListener((observable, oldValue, newValue) -> {
-//            if (bandwidthData == null) {
-//                return;
-//            }
-//            if (getNo() < DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED) {
-//                Platform.runLater(() -> bandwidthData.setName(getNo() + ""));
-//            } else {
-//                // Download ohne Nummer, dann die FilmNr eintragen
-//                final String fNo = getFilmNr() == DownloadConstants.FILM_NUMBER_NOT_FOUND ? " " : "[" + getFilmNr() + "]";
-//                Platform.runLater(() -> bandwidthData.setName(fNo));
-//            }
-//        });
     }
-
 
     //==============================================
     // Downloadstatus
@@ -117,26 +103,21 @@ public final class Download extends DownloadProps {
 
     public void setStateStartedWaiting() {
         setState(DownloadConstants.STATE_STARTED_WAITING);
-//        MLProperty.setProperty(stateProperty(), DownloadConstants.STATE_STARTED_WAITING);
     }
 
     public void setStateStartedRun() {
         setState(DownloadConstants.STATE_STARTED_RUN);
-//        MLProperty.setProperty(stateProperty(), DownloadConstants.STATE_STARTED_RUN);
     }
 
     public void setStateFinished() {
         setState(DownloadConstants.STATE_FINISHED);
-//        MLProperty.setProperty(stateProperty(), DownloadConstants.STATE_FINISHED);
     }
 
     public void setStateError() {
         setState(DownloadConstants.STATE_ERROR);
-//        MLProperty.setProperty(stateProperty(), DownloadConstants.STATE_ERROR);
     }
 
     //=======================================
-
     public boolean isStarted() {
         return getState() > DownloadConstants.STATE_STOPPED && !isStateFinished();
     }
@@ -147,7 +128,6 @@ public final class Download extends DownloadProps {
 
     //==============================================
     //==============================================
-
     public boolean isAbo() {
         return !getAboName().isEmpty();
     }
@@ -160,7 +140,7 @@ public final class Download extends DownloadProps {
     }
 
     public void putBack() {
-        // download resetten, und als "zurückgestelt" markieren
+        // download resetten, und als "zurückgestellt" markieren
         setPlacedBack(true);
         resetDownload();
     }
@@ -174,7 +154,6 @@ public final class Download extends DownloadProps {
 
     public void restartDownload() {
         // stoppen und alles zurücksetzen
-
         final DownloadSize downSize = getDownloadSize();
         downSize.reset();
         setRemaining("");

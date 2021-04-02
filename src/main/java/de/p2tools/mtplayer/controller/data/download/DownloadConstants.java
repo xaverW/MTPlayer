@@ -108,10 +108,9 @@ public class DownloadConstants {
         return ret;
     }
 
-
     public static String getTimeLeft(long timeLeftSeconds) {
         if (timeLeftSeconds > 300) {
-            return Long.toString(Math.round(timeLeftSeconds / 60.0)) + " Min.";
+            return Math.round(timeLeftSeconds / 60.0) + " Min.";
         } else if (timeLeftSeconds > 230) {
             return "5 Min.";
         } else if (timeLeftSeconds > 170) {

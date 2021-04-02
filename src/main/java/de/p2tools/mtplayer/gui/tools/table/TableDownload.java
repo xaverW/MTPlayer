@@ -55,17 +55,13 @@ public class TableDownload {
     public TableColumn[] initDownloadColumn(TableView table) {
         table.getColumns().clear();
 
-//        final Comparator<String> sorter = NaturalOrderComparator.CASEINSENSITIVE_NUMERICAL_ORDER;
         final Comparator<String> sorter = GermanStringIntSorter.getInstance();
-
         ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD.getStringProperty().addListener((observableValue, s, t1) -> table.refresh());
-
         MTColor.FILM_GEOBLOCK.colorProperty().addListener((a, b, c) -> table.refresh());
         MTColor.DOWNLOAD_WAIT.colorProperty().addListener((a, b, c) -> table.refresh());
         MTColor.DOWNLOAD_RUN.colorProperty().addListener((a, b, c) -> table.refresh());
         MTColor.DOWNLOAD_FINISHED.colorProperty().addListener((a, b, c) -> table.refresh());
         MTColor.DOWNLOAD_ERROR.colorProperty().addListener((a, b, c) -> table.refresh());
-
 
         final TableColumn<Download, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));
@@ -105,7 +101,6 @@ public class TableDownload {
         progressColumn.setCellValueFactory(new PropertyValueFactory<>("guiProgress"));
         progressColumn.setCellFactory(cellFactoryProgress);
         progressColumn.getStyleClass().add("alignCenterLeft");
-
 
         final TableColumn<Download, Integer> remainingColumn = new TableColumn<>("Restzeit");
         remainingColumn.setCellValueFactory(new PropertyValueFactory<>("remaining"));
@@ -188,8 +183,6 @@ public class TableDownload {
         themeColumn.setPrefWidth(180);
         titleColumn.setPrefWidth(230);
 
-//        addRowFact(table);
-
         return new TableColumn[]{
                 nrColumn, filmNrColumn,
                 aboColumn, senderColumn, themeColumn, titleColumn, startColumn,
@@ -198,42 +191,7 @@ public class TableDownload {
                 hdColumn, utColumn, geoColumn, artColumn, srcColumn, placedBackColumn,
                 programColumn, setColumn, urlColumn, fileNameColumn, pathColumn
         };
-
     }
-
-//    private void addRowFact(TableView<Download> table) {
-//
-//        table.setRowFactory(tableview -> new TableRow<Download>() {
-//            @Override
-//            public void updateItem(Download download, boolean empty) {
-//                super.updateItem(download, empty);
-//
-//                if (download == null || empty) {
-//                    setStyle("");
-//                } else {
-//
-//                    if (geoMelden.get() && download.getGeoBlocked()) {
-//                        // geogeblockt
-//                        for (int i = 0; i < getChildren().size(); i++) {
-//                            getChildren().get(i).setStyle("");
-//                            getChildren().get(i).setStyle(MTColor.FILM_GEOBLOCK.getCssFontBold());
-//                        }
-//
-//                    } else if (download.isStateError()) {
-//                        Tooltip tooltip = new Tooltip();
-//                        tooltip.setText(download.getErrorMessage());
-//                        setTooltip(tooltip);
-//
-//                    } else {
-//                        for (int i = 0; i < getChildren().size(); i++) {
-//                            getChildren().get(i).setStyle("");
-//                        }
-//                    }
-//                }
-//
-//            }
-//        });
-//    }
 
     private Callback<TableColumn<Download, Integer>, TableCell<Download, Integer>> cellFactoryState
             = (final TableColumn<Download, Integer> param) -> {
@@ -375,7 +333,6 @@ public class TableDownload {
                 }
 
                 setCellStyle(this, item);
-
             }
         };
         return cell;
@@ -393,7 +350,6 @@ public class TableDownload {
                 break;
             case DownloadConstants.STATE_STARTED_WAITING:
                 currentRow.setStyle(MTColor.DOWNLOAD_WAIT.getCssBackgroundSel());
-//                currentRow.setStyle("-fx-selection-bar: red;");
                 break;
             case DownloadConstants.STATE_STARTED_RUN:
                 currentRow.setStyle(MTColor.DOWNLOAD_RUN.getCssBackgroundSel());
@@ -415,7 +371,6 @@ public class TableDownload {
             @Override
             public void updateItem(Integer item, boolean empty) {
                 super.updateItem(item, empty);
-
                 if (item == null || empty) {
                     setGraphic(null);
                     setText(null);
@@ -429,7 +384,6 @@ public class TableDownload {
                     setGraphic(null);
                     setText(item + "");
                 }
-
             }
         };
         return cell;
@@ -443,7 +397,6 @@ public class TableDownload {
             @Override
             public void updateItem(Integer item, boolean empty) {
                 super.updateItem(item, empty);
-
                 if (item == null || empty) {
                     setGraphic(null);
                     setText(null);
@@ -457,7 +410,6 @@ public class TableDownload {
                     setGraphic(null);
                     setText(item + "");
                 }
-
             }
         };
         return cell;
@@ -471,7 +423,6 @@ public class TableDownload {
             @Override
             public void updateItem(Double item, boolean empty) {
                 super.updateItem(item, empty);
-
                 if (item != null) {
                     Download download = getTableView().getItems().get(getIndex());
                     if (download.getProgramDownloadmanager()) {
@@ -503,7 +454,6 @@ public class TableDownload {
             @Override
             public void updateItem(Integer item, boolean empty) {
                 super.updateItem(item, empty);
-
                 if (item == null || empty) {
                     setGraphic(null);
                     setText(null);
@@ -517,10 +467,8 @@ public class TableDownload {
                     setGraphic(null);
                     setText(item + "");
                 }
-
             }
         };
         return cell;
     };
-
 }

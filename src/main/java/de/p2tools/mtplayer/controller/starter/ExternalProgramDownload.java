@@ -59,23 +59,23 @@ public class ExternalProgramDownload extends Thread {
 
     private long fileSize = -1;
 
-    public ExternalProgramDownload(ProgData progData, Download d) {
+    public ExternalProgramDownload(ProgData progData, Download download) {
         super();
-        setName("EXTERNAL PROGRAM DL THREAD: " + d.getTitle());
+        setName("EXTERNAL PROGRAM DL THREAD: " + download.getTitle());
 
         this.progData = progData;
-        download = d;
-        download.setStateStartedRun();
-        file = new File(download.getDestPathFile());
+        this.download = download;
+        this.download.setStateStartedRun();
+        file = new File(this.download.getDestPathFile());
         try {
-            if (download.getInfoFile()) {
-                MTInfoFile.writeInfoFile(download);
+            if (this.download.getInfoFile()) {
+                MTInfoFile.writeInfoFile(this.download);
             }
-            if (download.isSubtitle()) {
-                new MTSubtitle().writeSubtitle(download);
+            if (this.download.isSubtitle()) {
+                new MTSubtitle().writeSubtitle(this.download);
             }
 
-            Files.createDirectories(Paths.get(download.getDestPath()));
+            Files.createDirectories(Paths.get(this.download.getDestPath()));
         } catch (final IOException ignored) {
         } catch (final Exception ex) {
             PLog.errorLog(469365281, ex);

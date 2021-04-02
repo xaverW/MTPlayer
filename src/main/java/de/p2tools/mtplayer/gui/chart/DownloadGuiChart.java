@@ -30,7 +30,6 @@ import javafx.scene.layout.Priority;
 public class DownloadGuiChart {
 
     private BooleanProperty separatChartProp = ProgConfig.DOWNLOAD_CHART_SEPARAT.getBooleanProperty();
-    //    private BooleanProperty chartAllDownloadsProp = ProgConfig.DOWNLOAD_CHART_ALL_DOWNLOADS.getBooleanProperty();
     private BooleanProperty chartOnlyExistingProp = ProgConfig.DOWNLOAD_CHART_ONLY_EXISTING.getBooleanProperty();
     private BooleanProperty chartOnlyRunningProp = ProgConfig.DOWNLOAD_CHART_ONLY_RUNNING.getBooleanProperty();
     private final ProgData progData;
@@ -48,13 +47,6 @@ public class DownloadGuiChart {
         initList();
         initCharts();
         selectChartData();
-
-//        Listener.addListener(new Listener(Listener.EREIGNIS_TIMER, DownloadGuiChart.class.getSimpleName()) {
-//            @Override
-//            public void pingFx() {
-//                searchInfos();
-//            }
-//        });
     }
 
     private synchronized void initList() {

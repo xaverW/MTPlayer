@@ -129,15 +129,12 @@ public class DirectHttpDownload extends Thread {
 
         download.getStart().setInputStream(new MLInputStream(conn.getInputStream(),
                 bandwidthCalculationTimer, ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getIntegerProperty()));
-
         fos = new FileOutputStream(file, (downloaded != 0));
-
         download.getDownloadSize().addAktFileSize(downloaded);
         final byte[] buffer = new byte[MLBandwidthTokenBucket.DEFAULT_BUFFER_SIZE];
-        double p, pp = DownloadConstants.PROGRESS_WAITING, startPercent = DownloadConstants.PROGRESS_NOT_STARTED;
+        double percent, ppercent = DownloadConstants.PROGRESS_WAITING, startPercent = DownloadConstants.PROGRESS_NOT_STARTED;
         int len;
-        long aktBandwidth, aktSize = 0;
-        boolean report = false; //todo? kann entfallen??
+        long aktBandwidth = 0, aktSize = 0;
 
         while ((len = download.getStart().getInputStream().read(buffer)) != -1 && (!download.isStateStoped())) {
             downloaded += len;
@@ -147,46 +144,48 @@ public class DirectHttpDownload extends Thread {
             // für die Anzeige prüfen ob sich was geändert hat
             if (aktSize != download.getDownloadSize().getAktFileSize()) {
                 aktSize = download.getDownloadSize().getAktFileSize();
-                report = true;
             }
             if (download.getDownloadSize().getFilmSize() > 0) {
-                p = 1.0 * aktSize / download.getDownloadSize().getFilmSize();
+                percent = 1.0 * aktSize / download.getDownloadSize().getFilmSize();
                 if (startPercent == DownloadConstants.PROGRESS_NOT_STARTED) {
-                    startPercent = p;
+                    startPercent = percent;
                 }
-                // p muss zwischen 0 und 1 liegen
-                if (p == DownloadConstants.PROGRESS_WAITING) {
-                    p = DownloadConstants.PROGRESS_STARTED;
-                } else if (p >= DownloadConstants.PROGRESS_FINISHED) {
-                    p = DownloadConstants.PROGRESS_NEARLY_FINISHED;
+
+                // percent muss zwischen 0 und 1 liegen
+                if (percent == DownloadConstants.PROGRESS_WAITING) {
+                    percent = DownloadConstants.PROGRESS_STARTED;
+                } else if (percent >= DownloadConstants.PROGRESS_FINISHED) {
+                    percent = DownloadConstants.PROGRESS_NEARLY_FINISHED;
                 }
-                download.setProgress(p);
-//                MLProperty.setProperty(download.progressProperty(), p); // todo-> das kann dazu führen, dass der check (99,5%) nicht klappt
-                if (p != pp) {
-                    pp = p;
+                download.setProgress(percent);
+                if (percent != ppercent) {
+                    ppercent = percent;
 
                     // Restzeit ermitteln
-                    if (p > (DownloadConstants.PROGRESS_STARTED) && p > startPercent) {
+                    if (percent > (DownloadConstants.PROGRESS_STARTED) && percent > startPercent) {
                         // sonst macht es noch keinen Sinn
-                        final int diffTime = download.getStart().getStartTime().diffInSeconds();
-                        final double restPercent = DownloadConstants.PROGRESS_FINISHED - p;
+//                        final int diffTime = download.getStart().getStartTime().diffInSeconds();
+//                        final double restPercent = DownloadConstants.PROGRESS_FINISHED - percent;
+//                        download.getStart().setTimeLeftSeconds((long) (diffTime * restPercent / (percent - startPercent)));
 
-                        download.getStart().setTimeLeftSeconds((long) (diffTime * restPercent / (p - startPercent)));
+                        long timeLeft = 0;
+                        long sizeLeft = download.getDownloadSize().getFilmSize() - download.getDownloadSize().getAktFileSize();
+                        if (sizeLeft <= 0) {
+                            timeLeft = 0;
+                        } else if (aktBandwidth > 0) {
+                            timeLeft = sizeLeft / aktBandwidth;
+                        }
+                        download.getStart().setTimeLeftSeconds(timeLeft);
+
                         // anfangen zum Schauen kann man, wenn die Restzeit kürzer ist
                         // als die bereits geladene Speilzeit des Films
                         canAlreadyStarted(download);
                     }
-
-                    report = true;
                 }
             }
             aktBandwidth = download.getStart().getInputStream().getBandwidth(); // bytes per second
             if (aktBandwidth != download.getStart().getBandwidth()) {
                 download.getStart().setBandwidth(aktBandwidth);
-                report = true;
-            }
-            if (report) {
-                report = false;
             }
         }
 

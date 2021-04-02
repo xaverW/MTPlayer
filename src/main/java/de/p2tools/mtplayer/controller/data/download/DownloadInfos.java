@@ -40,7 +40,6 @@ public class DownloadInfos {
     private int finishedOk = 0; //fertig und Ok
     private int finishedError = 0; //fertig mit Fehler
 
-
     private int numberNotStartedDownloads = 0; //Anzahl aller noch nicht gestarteten Downloads
     private int numberWaitingDownloads = 0; //Anzahl aller gestarteten und wartenden Downloads
     private int numberLoadingDownloads = 0; //Anzahl aller ladenden Downloads
@@ -56,7 +55,6 @@ public class DownloadInfos {
     private long bandwidth = 0; //Bandbreite: bytes per second
     private String bandwidthStr = "";
     private int percent = -1; // Prozent fertig (alle)
-
 
     private final ProgData progData;
 
@@ -165,37 +163,40 @@ public class DownloadInfos {
     }
 
     public String getTimeLeftNotStarted() {
-        return getTimeInfo(timeLeftNotStartedDownloads);
+//        return getTimeInfo(timeLeftNotStartedDownloads);
+        return DownloadConstants.getTimeLeft(timeLeftNotStartedDownloads);
     }
 
     public String getTimeLeftWaiting() {
-        return getTimeInfo(timeLeftWaitingDownloads);
+//        return getTimeInfo(timeLeftWaitingDownloads);
+        return DownloadConstants.getTimeLeft(timeLeftWaitingDownloads);
     }
 
     public String getTimeLeftLoading() {
-        return getTimeInfo(timeLeftLoadingDownloads);
+//        return getTimeInfo(timeLeftLoadingDownloads);
+        return DownloadConstants.getTimeLeft(timeLeftLoadingDownloads);
     }
 
-    private String getTimeInfo(long time) {
-        if (time <= 0) {
-            return "";
-        }
-
-        time = time / 60; // Minuten
-        if (time < 0) {
-            return "< 1 min";
-        }
-
-        if (time < 90) {
-            return time + " min";
-        }
-
-        String m = time % 60 + "";
-        while (m.length() < 2) {
-            m = m + "0";
-        }
-        return time / 60 + ":" + m + " Stunden";
-    }
+//    private String getTimeInfo(long time) {
+//        if (time <= 0) {
+//            return "";
+//        }
+//
+//        time = time / 60; // Minuten
+//        if (time < 0) {
+//            return "< 1 min";
+//        }
+//
+//        if (time < 90) {
+//            return time + " min";
+//        }
+//
+//        String m = time % 60 + "";
+//        while (m.length() < 2) {
+//            m = m + "0";
+//        }
+//        return time / 60 + ":" + m + " Stunden";
+//    }
 
     private synchronized void generateDownloadInfos() {
         // generiert die Anzahl Downloads (aus Downloads und Abos):
@@ -217,10 +218,8 @@ public class DownloadInfos {
             }
 
             if (download.isStarted() || download.isFinishedOrError()) {
-                // final int quelle = download.getSource();
                 if (download.getSource().equals(DownloadConstants.SRC_ABO) ||
                         download.getSource().equals(DownloadConstants.SRC_DOWNLOAD)) {
-
                     ++started;
                     if (download.isStateStartedWaiting()) {
                         ++startedNotLoading;
@@ -231,11 +230,7 @@ public class DownloadInfos {
                     } else if (download.isStateError()) {
                         ++finishedError;
                     }
-                } else {
-                    System.out.println("download.getSource().equals(DownloadConstants.SRC_ABO) ||\n" +
-                            "                        download.getSource().equals(DownloadConstants.SRC_DOWNLOAD)");
                 }
-
             } else {
                 ++notStarted;
             }
@@ -243,7 +238,7 @@ public class DownloadInfos {
     }
 
     private synchronized void generateBandwidthInfo() {
-        // Liste aller nicht gestarteten oder wartenden Downloads
+        // Liste aller Downloads
         for (final Download download : progData.downloadList) {
             if (download.isStateInit()) {
                 // noch nicht gestartet
@@ -256,7 +251,7 @@ public class DownloadInfos {
                 byteWaitingDownloads += (download.getDownloadSize().getFilmSize() > 0 ? download.getDownloadSize().getFilmSize() : 0);
 
             } else if (download.isStateStartedRun()) {
-                // die Downlaods laufen gerade
+                // die Downloads laufen gerade
                 ++numberLoadingDownloads;
                 byteLoadingDownloads += (download.getDownloadSize().getFilmSize() > 0 ? download.getDownloadSize().getFilmSize() : 0);
 
@@ -266,30 +261,31 @@ public class DownloadInfos {
                 }
                 byteLoadingDownloadsAlreadyLoaded += (download.getDownloadSize().getAktFileSize() > 0 ? download.getDownloadSize().getAktFileSize() : 0);
                 if (download.getStart().getTimeLeftSeconds() > timeLeftLoadingDownloads) {
-                    // der längeste gibt die aktuelle Restzeit vor
+                    // der längste gibt die aktuelle Restzeit vor
                     timeLeftLoadingDownloads = download.getStart().getTimeLeftSeconds();
                 }
             }
         }
 
 
-        if (bandwidth > 0) {
-            ProgConfig.DOWNLOAD_BANDWIDTH_KBYTE.setValue(bandwidth);
-
-            // Restzeit laufende Downloads
-            final long b = byteLoadingDownloads - byteLoadingDownloadsAlreadyLoaded;
-            long timeLeft;
-
-            if (b <= 0) {
-                timeLeft = 0;
-            } else {
-                timeLeft = b / bandwidth;
-            }
-            if (timeLeft < timeLeftLoadingDownloads) {
-                timeLeft = timeLeftLoadingDownloads; // falsch geraten oder es gibt nur einen
-            }
-            timeLeftLoadingDownloads = timeLeft;
-        }
+//        if (bandwidth > 0) {
+//            ProgConfig.DOWNLOAD_BANDWIDTH_KBYTE.setValue(bandwidth);
+//
+//            // Restzeit laufende Downloads
+//            final long byteRest = byteLoadingDownloads - byteLoadingDownloadsAlreadyLoaded;
+//            long timeLeft;
+//
+//            if (byteRest <= 0) {
+//                timeLeft = 0;
+//            } else {
+//                timeLeft = byteRest / bandwidth;
+//            }
+//            if (timeLeft < timeLeftLoadingDownloads) {
+//                timeLeft = timeLeftLoadingDownloads; // falsch geraten oder es gibt nur einen
+//            }
+////            timeLeft = DownloadConstants.getTimeLeftSeconds(timeLeft);
+//            timeLeftLoadingDownloads = timeLeft;
+//        }
 
         final long resBandwidth = bandwidth > 0 ? bandwidth : ProgConfig.DOWNLOAD_BANDWIDTH_KBYTE.getLong();
         if (resBandwidth > 0) {
@@ -367,13 +363,10 @@ public class DownloadInfos {
 
     private String roundBandwidth() {
         if (bandwidth > 1_000_000.0) {
-//            bandwidthStr = new DecimalFormat("####0.00").format(bandwidth / 1_000_000.0) + " MByte/s";
             bandwidthStr = new DecimalFormat("####0.00").format(bandwidth / 1_000_000.0) + " MB/s";
         } else if (bandwidth > 1_000.0) {
-//            bandwidthStr = Math.round(bandwidth / 1_000.0) + " kByte/s";
             bandwidthStr = Math.round(bandwidth / 1_000.0) + " kB/s";
         } else {
-//            bandwidthStr = Math.round(bandwidth) + " Byte/s";
             bandwidthStr = Math.round(bandwidth) + " B/s";
         }
         return bandwidthStr;
