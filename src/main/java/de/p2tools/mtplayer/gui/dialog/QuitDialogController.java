@@ -23,6 +23,8 @@ import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.BigButton;
 import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
 import javafx.concurrent.Task;
+import javafx.geometry.Pos;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 
@@ -31,30 +33,24 @@ public class QuitDialogController extends PDialogExtra {
     private final StackPane stackPane = new StackPane();
     private final PMaskerPane maskerPane = new PMaskerPane();
     private final WaitTask waitTask = new WaitTask();
-//    private final VBox vbox = new VBox();
 
     private boolean canQuit = false;
+    private boolean canShutDown = false;
     private boolean startWithWaiting = false;
+    private CheckBox cbxShutDown = new CheckBox("Rechner anschließend herunterfahren");
 
     public QuitDialogController(boolean startWithWaiting) {
         super(ProgData.getInstance().primaryStage, null, "Programm beenden", true, false);
         this.startWithWaiting = startWithWaiting;
+        ProgData.getInstance().quitDialogController = this;
         init(true);
     }
 
     @Override
     public void make() {
-//        vbox.setPadding(new Insets(10));
-//        vbox.setSpacing(30);
-
         GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
         gridPane.setVgap(25);
-
-        waitTask.setOnSucceeded(event -> {
-            canQuit = true;
-            close();
-        });
 
         maskerPane.setMaskerVisible(false);
         maskerPane.setButtonText("Abbrechen");
@@ -63,12 +59,16 @@ public class QuitDialogController extends PDialogExtra {
         Label headerLabel = new Label("Es laufen noch Downloads!");
         headerLabel.setStyle("-fx-font-size: 1.5em;");
 
+
+        //nicht beenden
         BigButton cancelButton = new BigButton(new ProgIcons().ICON_BUTTON_QUIT,
                 "Nicht beenden", "");
         cancelButton.setOnAction(e -> {
             close();
         });
 
+
+        //beenden
         BigButton quitButton = new BigButton(new ProgIcons().ICON_BUTTON_QUIT,
                 "Beenden", "Alle Downloads abbrechen und das Programm beenden.");
         quitButton.setOnAction(e -> {
@@ -76,24 +76,34 @@ public class QuitDialogController extends PDialogExtra {
             close();
         });
 
+
+        //warten, dann beenden
         BigButton waitButton = new BigButton(new ProgIcons().ICON_BUTTON_QUIT,
                 "Warten", "Alle Downloads abwarten und dann das Programm beenden.");
         waitButton.setOnAction(e -> startWaiting());
+        cbxShutDown.setSelected(false);
+        waitTask.setOnSucceeded(event -> {
+            canQuit = true;
+            canShutDown = true;
+            close();
+        });
 
 
         gridPane.add(new ProgIcons().ICON_DIALOG_QUIT, 0, 0, 1, 1);
         gridPane.add(headerLabel, 1, 0);
         gridPane.add(cancelButton, 1, 1);
         gridPane.add(quitButton, 1, 2);
-        gridPane.add(waitButton, 1, 3);
+
+        VBox vBox = new VBox(5);
+        vBox.getChildren().addAll(waitButton, cbxShutDown);
+        vBox.setAlignment(Pos.CENTER_RIGHT);
+        gridPane.add(vBox, 1, 3);
 
         ColumnConstraints ccTxt = new ColumnConstraints();
         ccTxt.setFillWidth(true);
         ccTxt.setMinWidth(Region.USE_COMPUTED_SIZE);
         ccTxt.setHgrow(Priority.ALWAYS);
-
         gridPane.getColumnConstraints().addAll(new ColumnConstraints(), ccTxt);
-//        gridPane.getStyleClass().add("dialog-only-border");
 
         stackPane.getChildren().addAll(gridPane, maskerPane);
         getvBoxCont().getChildren().addAll(stackPane);
@@ -131,6 +141,7 @@ public class QuitDialogController extends PDialogExtra {
     }
 
     public void close() {
+        ProgData.getInstance().quitDialogController = null;
         if (waitTask.isRunning()) {
             waitTask.cancel();
         }
@@ -142,4 +153,7 @@ public class QuitDialogController extends PDialogExtra {
         return canQuit;
     }
 
+    public boolean canShutDown() {
+        return cbxShutDown.isSelected() && canShutDown;
+    }
 }

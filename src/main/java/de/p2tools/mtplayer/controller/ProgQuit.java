@@ -16,10 +16,11 @@
 
 package de.p2tools.mtplayer.controller;
 
-import de.p2tools.mtplayer.gui.dialog.QuitDialogController;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.gui.dialog.QuitDialogController;
 import de.p2tools.p2Lib.guiTools.PGuiSize;
+import de.p2tools.p2Lib.tools.PShutDown;
 import de.p2tools.p2Lib.tools.log.LogMessage;
 import javafx.application.Platform;
 
@@ -58,30 +59,50 @@ public class ProgQuit {
      */
     public void quit(boolean showOptionTerminate, boolean startWithWaiting) {
         if (quit_(showOptionTerminate, startWithWaiting)) {
-
             // dann jetzt beenden -> Thüss
             Platform.runLater(() -> {
                 Platform.exit();
                 System.exit(0);
             });
-
         }
+    }
+
+    public void quitShutDown() {
+        writeTabSettings();
+        stopAllDownloads();
+        writeWindowSizes();
+        new ProgSave().saveAll();
+        LogMessage.endMsg();
+
+        PShutDown.shutDown();
+
+        // dann jetzt beenden -> Thüss
+        Platform.runLater(() -> {
+            Platform.exit();
+            System.exit(0);
+        });
     }
 
     private boolean quit_(boolean showOptionTerminate, boolean startWithWaiting) {
         // erst mal prüfen ob noch Downloads  gestartet sind oder laufen
+        boolean shutDown = false;
         if (progData.downloadList.countStartedAndRunningDownloads() > 0) {
 
             // und ob der Dialog angezeigt werden soll
             if (showOptionTerminate) {
 
                 QuitDialogController quitDialogController;
-                quitDialogController = new QuitDialogController(startWithWaiting);
+                if (progData.quitDialogController != null) {
+                    progData.quitDialogController.getStage().toFront();
+                    quitDialogController = progData.quitDialogController;
+                } else {
+                    quitDialogController = new QuitDialogController(startWithWaiting);
+                }
 
+                shutDown = quitDialogController.canShutDown();
                 if (!quitDialogController.canTerminate()) {
                     return false;
                 }
-
             }
         }
 
@@ -92,7 +113,10 @@ public class ProgQuit {
 
         new ProgSave().saveAll();
         LogMessage.endMsg();
+        if (shutDown) {
+            PShutDown.shutDown();
+        }
+
         return true;
     }
-
 }

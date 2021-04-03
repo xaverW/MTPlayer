@@ -103,7 +103,8 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs MEDIA_DB_EXPORT_FILE = addNewKey("media-db-export-file");
 
     // Configs
-    public static MLConfigs SYSTEM_USERAGENT = addNewKey("system-useragent", ProgConst.USER_AGENT_DEFAULT);    // Useragent für direkte Downloads
+    public static MLConfigs SYSTEM_TRAY = addNewKey("system-tray", Boolean.FALSE.toString());
+    public static MLConfigs SYSTEM_USERAGENT = addNewKey("system-useragent", ProgConst.USER_AGENT_DEFAULT); //Useragent für direkte Downloads
     public static MLConfigs SYSTEM_USE_REPLACETABLE = addNewKey("system-use-replacetable", SystemUtils.IS_OS_LINUX ? Boolean.TRUE.toString() : Boolean.FALSE.toString());
     public static MLConfigs SYSTEM_ONLY_ASCII = addNewKey("system-only-ascii", Boolean.FALSE.toString());
     public static MLConfigs SYSTEM_PROG_OPEN_DIR = addNewKey("system-prog-open-dir");

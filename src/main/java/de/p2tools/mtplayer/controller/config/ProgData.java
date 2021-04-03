@@ -34,6 +34,7 @@ import de.p2tools.mtplayer.controller.worker.Worker;
 import de.p2tools.mtplayer.gui.*;
 import de.p2tools.mtplayer.gui.chart.ChartData;
 import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
+import de.p2tools.mtplayer.gui.dialog.QuitDialogController;
 import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.mtplayer.tools.filmListFilter.FilmListFilter;
 import de.p2tools.mtplayer.tools.storedFilter.StoredFilters;
@@ -79,6 +80,8 @@ public class ProgData {
     public FilmInfoDialogController filmInfoDialogController = null;
     public FilmFilterControllerClearFilter filmFilterControllerClearFilter = null;
     public final ChartData chartData;
+    public final ProgTray progTray;
+    public QuitDialogController quitDialogController = null;
 
     // Worker
     public Worker worker; // Liste aller Sender, Themen, ...
@@ -138,6 +141,7 @@ public class ProgData {
         searchForFilmlistUpdate = SearchForFilmlistUpdate.StartSearchForFilmlistUpdate();
         downloadInfos = new DownloadInfos(this);
         chartData = new ChartData();
+        progTray = new ProgTray(this);
     }
 
     boolean oneSecond = false;

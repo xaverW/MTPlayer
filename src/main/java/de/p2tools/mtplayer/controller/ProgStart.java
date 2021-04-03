@@ -115,6 +115,7 @@ public class ProgStart {
 //        MLInit.initLib(ProgData.debug, ProgConst.PROGRAMNAME, ProgInfos.getUserAgent());
         ProgData.getInstance().mTColor.setColorTheme(); // Farben einrichten
 //        ProgData.getInstance().mtShortcut.loadStoredShortcuts(); // Shortcuts einrichten
+//        ProgData.getInstance().progTray.init();
         return true;
     }
 

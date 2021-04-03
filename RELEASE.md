@@ -1,5 +1,11 @@
 # MTPlayer
 
+
+* Download-Chart, Download-Infos
+* Dialog: Programm nach Downloads beenden: Möglichkeit auch den Rechner herunterzufahren
+* ...
+
+
 <br />
 
 **Release 10**

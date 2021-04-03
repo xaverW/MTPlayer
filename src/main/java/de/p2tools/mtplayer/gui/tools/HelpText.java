@@ -422,6 +422,9 @@ public class HelpText {
     public static final String SMALL_BUTTON = "In der Tabelle Filme und Downloads können auch " +
             "kleine Buttons angezeigt werden. Die Zeilenhöhe wird dadurch kleiner.";
 
+    public static final String TRAY = "Im System Tray wird für das Programm ein Symbol angezeigt. Damit kann das " +
+            "Programm auf dem Desktop ausgeblendete werden.";
+
     public static final String DARK_THEME = "Das Programm wird damit mit einer dunklen " +
             "Programmoberfläche angezeigt. Damit alle Elemente der Programmoberfläche " +
             "geändert werden, kann ein Programmneustart notwendig sein.";

@@ -17,20 +17,22 @@
 
 package de.p2tools.mtplayer;
 
-import de.p2tools.mtplayer.controller.starter.MTNotification;
-import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
-import de.p2tools.mtplayer.tools.storedFilter.SelectedFilterFactory;
+import de.p2tools.mtplayer.controller.ProgQuit;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.Download;
 import de.p2tools.mtplayer.controller.data.film.Film;
 import de.p2tools.mtplayer.controller.data.film.Filmlist;
+import de.p2tools.mtplayer.controller.starter.MTNotification;
+import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
+import de.p2tools.mtplayer.tools.storedFilter.SelectedFilterFactory;
 import de.p2tools.p2Lib.dialogs.ProgInfoDialog;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
 import de.p2tools.p2Lib.tools.download.DownloadFactory;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -171,6 +173,11 @@ public class MTPTester {
                 progData.chartData.genInfos();
             });
 
+            Button btnShutDown = new Button("Rechner herunterfahren");
+            btnShutDown.setMaxWidth(Double.MAX_VALUE);
+            btnShutDown.setOnAction(a ->
+                    Platform.runLater(() -> new ProgQuit().quitShutDown()));
+
             int row = 0;
             gridPane.add(text, 0, row, 2, 1);
 //            gridPane.add(btnAddToHash, 0, ++row);
@@ -188,6 +195,7 @@ public class MTPTester {
             gridPane.add(btnText, 0, ++row);
             gridPane.add(btnDownload, 0, ++row);
             gridPane.add(btnChart, 0, ++row);
+            gridPane.add(btnShutDown, 0, ++row);
 
             gridPane.add(textArea, 0, ++row, 2, 1);
 

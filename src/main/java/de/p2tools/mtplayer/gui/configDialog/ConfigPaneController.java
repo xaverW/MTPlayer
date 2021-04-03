@@ -71,11 +71,13 @@ public class ConfigPaneController extends PAccordionPane {
     StringProperty propLogDir = ProgConfig.SYSTEM_LOG_DIR.getStringProperty();
     BooleanProperty propSizeFilm = ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM.getBooleanProperty();
     BooleanProperty propSizeDownload = ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD.getBooleanProperty();
+    BooleanProperty propTray = ProgConfig.SYSTEM_TRAY.getBooleanProperty();
 
     private final PToggleSwitch tglSearchAbo = new PToggleSwitch("Abos automatisch suchen:");
     private final PToggleSwitch tglStartDownload = new PToggleSwitch("Downloads aus Abos sofort starten:");
     private final PToggleSwitch tglSmallFilm = new PToggleSwitch("In der Tabelle \"Film\" nur kleine Button anzeigen:");
     private final PToggleSwitch tglSmallDownload = new PToggleSwitch("In der Tabelle \"Download\" nur kleine Button anzeigen:");
+    private final PToggleSwitch tglTray = new PToggleSwitch("Programm im System Tray anzeigen");
     private TextField txtUserAgent;
     private final PToggleSwitch tglEnableLog = new PToggleSwitch("Ein Logfile anlegen:");
     private TextField txtLogFile;
@@ -108,6 +110,7 @@ public class ConfigPaneController extends PAccordionPane {
         tglStartDownload.selectedProperty().unbindBidirectional(propDown);
         tglSmallFilm.selectedProperty().unbindBidirectional(propSizeFilm);
         tglSmallDownload.selectedProperty().unbindBidirectional(propSizeDownload);
+        tglTray.selectedProperty().unbindBidirectional(propTray);
         txtUserAgent.textProperty().unbindBidirectional(ProgConfig.SYSTEM_USERAGENT.getStringProperty());
         tglEnableLog.selectedProperty().unbindBidirectional(propLog);
         txtLogFile.textProperty().unbindBidirectional(propLogDir);
@@ -164,12 +167,15 @@ public class ConfigPaneController extends PAccordionPane {
                 HelpText.SMALL_BUTTON);
         GridPane.setHalignment(btnHelpSize, HPos.RIGHT);
 
+        tglTray.selectedProperty().bindBidirectional(propTray);
+        final Button btnHelpTray = PButton.helpButton(stage, "Programm im System Tray anzeigen",
+                HelpText.TRAY);
+        GridPane.setHalignment(btnHelpTray, HPos.RIGHT);
 
         final Button btnHelpUserAgent = PButton.helpButton(stage, "User Agent festlegen",
                 HelpText.USER_AGENT);
         GridPane.setHalignment(btnHelpUserAgent, HPos.RIGHT);
         txtUserAgent = new TextField() {
-
             @Override
             public void replaceText(int start, int end, String text) {
                 if (check(text)) {
@@ -196,7 +202,6 @@ public class ConfigPaneController extends PAccordionPane {
         };
         txtUserAgent.textProperty().bindBidirectional(ProgConfig.SYSTEM_USERAGENT.getStringProperty());
 
-
         int row = 0;
         gridPane.add(tglSearchAbo, 0, row, 2, 1);
         gridPane.add(btnHelpAbo, 2, row);
@@ -207,6 +212,10 @@ public class ConfigPaneController extends PAccordionPane {
         gridPane.add(tglSmallFilm, 0, ++row, 2, 1);
         gridPane.add(btnHelpSize, 2, row);
         gridPane.add(tglSmallDownload, 0, ++row, 2, 1);
+
+        gridPane.add(new Label(" "), 0, ++row);
+        gridPane.add(tglTray, 0, ++row, 2, 1);
+        gridPane.add(btnHelpTray, 2, row);
 
         gridPane.add(new Label(" "), 0, ++row);
         gridPane.add(new Label(" "), 0, ++row);
