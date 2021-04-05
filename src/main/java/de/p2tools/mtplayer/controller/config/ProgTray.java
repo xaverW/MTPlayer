@@ -68,14 +68,11 @@ public class ProgTray {
 
         java.awt.MenuItem miAbout = new java.awt.MenuItem("über dieses Programm");
         java.awt.MenuItem miQuit = new java.awt.MenuItem("Programm Beenden");
-//        java.awt.MenuItem miShutDown = new java.awt.MenuItem("ShutDown");
 
         miAbout.addActionListener(event ->
                 Platform.runLater(() -> new AboutDialogController(progData)));
         miQuit.addActionListener(event ->
                 Platform.runLater(() -> new ProgQuit().quit(true, false)));
-//        miShutDown.addActionListener(event ->
-//                Platform.runLater(() -> new ProgQuit().quitShutDown()));
 
         popup.add(miAbout);
         popup.addSeparator();
@@ -84,18 +81,23 @@ public class ProgTray {
         String resource = "/de/p2tools/mtplayer/res/P2_24.png";
         URL res = getClass().getResource(resource);
         Image image = Toolkit.getDefaultToolkit().getImage(res);
-
-        TrayIcon trayicon = new TrayIcon(image, "System Tray Demo", popup);
-        trayicon.setImage(image);
+        TrayIcon trayicon = new TrayIcon(image, "MTPlayer", popup);
         trayicon.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    System.out.println("Clicked");
                     if (progData.primaryStage.isShowing()) {
                         Platform.runLater(() -> progData.primaryStage.close());
                     } else {
                         Platform.runLater(() -> progData.primaryStage.show());
+                    }
+
+                    if (progData.quitDialogController != null) {
+                        if (progData.quitDialogController.isShowing()) {
+                            Platform.runLater(() -> progData.quitDialogController.getStage().close());
+                        } else {
+                            Platform.runLater(() -> progData.quitDialogController.getStage().show());
+                        }
                     }
                 }
             }
