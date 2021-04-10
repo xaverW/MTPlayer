@@ -18,8 +18,10 @@
 package de.p2tools.mtplayer.controller.config;
 
 import de.p2tools.mtplayer.controller.ProgQuit;
+import de.p2tools.mtplayer.gui.configDialog.ConfigDialogController;
 import de.p2tools.mtplayer.gui.dialog.AboutDialogController;
 import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2Lib.tools.log.PLogger;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.value.ChangeListener;
@@ -66,14 +68,28 @@ public class ProgTray {
         tray = SystemTray.getSystemTray();
         PopupMenu popup = new PopupMenu();
 
+//                --------------------------------
+//        "1 aktiver Download (76,3%; 2.304 # 3019 MB, 6,2 MB/s, 3,2 Minuten verbleibend), 2 wartende Downloads" (so als Beispiel)
+//        Die Ausgabe von "1 aktiver ..." könnte man auch als MouseOver-Funktion vom TrayIcon implementieren. Nur so als Idee.
+
+
+        java.awt.MenuItem miMaxMin = new java.awt.MenuItem("Programm maximieren/minimieren");
+        java.awt.MenuItem miConfig = new java.awt.MenuItem("Einstellungen öffnen");
+        java.awt.MenuItem miLogfile = new java.awt.MenuItem("LogDatei öffnen");
         java.awt.MenuItem miAbout = new java.awt.MenuItem("über dieses Programm");
         java.awt.MenuItem miQuit = new java.awt.MenuItem("Programm Beenden");
 
-        miAbout.addActionListener(event ->
-                Platform.runLater(() -> new AboutDialogController(progData)));
-        miQuit.addActionListener(event ->
-                Platform.runLater(() -> new ProgQuit().quit(true, false)));
+        miLogfile.addActionListener((e -> Platform.runLater(() -> PLogger.openLogFile())));
+        miConfig.addActionListener(e -> Platform.runLater(() -> new ConfigDialogController()));
+        miMaxMin.addActionListener(e -> Platform.runLater(() -> maxMin()));
+        miAbout.addActionListener(e -> Platform.runLater(() -> new AboutDialogController(progData)));
+        miQuit.addActionListener(e -> Platform.runLater(() -> ProgQuit.quit(false)));
 
+        popup.add(miMaxMin);
+        popup.add(miConfig);
+        popup.add(miLogfile);
+
+        popup.addSeparator();
         popup.add(miAbout);
         popup.addSeparator();
         popup.add(miQuit);
@@ -86,19 +102,7 @@ public class ProgTray {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    if (progData.primaryStage.isShowing()) {
-                        Platform.runLater(() -> progData.primaryStage.close());
-                    } else {
-                        Platform.runLater(() -> progData.primaryStage.show());
-                    }
-
-                    if (progData.quitDialogController != null) {
-                        if (progData.quitDialogController.isShowing()) {
-                            Platform.runLater(() -> progData.quitDialogController.getStage().close());
-                        } else {
-                            Platform.runLater(() -> progData.quitDialogController.getStage().show());
-                        }
-                    }
+                    maxMin();
                 }
             }
         });
@@ -107,6 +111,22 @@ public class ProgTray {
             tray.add(trayicon);
         } catch (AWTException exception) {
             PLog.errorLog(945120364, exception.getMessage());
+        }
+    }
+
+    private void maxMin() {
+        if (progData.primaryStage.isShowing()) {
+            Platform.runLater(() -> progData.primaryStage.close());
+        } else {
+            Platform.runLater(() -> progData.primaryStage.show());
+        }
+
+        if (progData.quitDialogController != null) {
+            if (progData.quitDialogController.isShowing()) {
+                Platform.runLater(() -> progData.quitDialogController.getStage().close());
+            } else {
+                Platform.runLater(() -> progData.quitDialogController.getStage().show());
+            }
         }
     }
 }

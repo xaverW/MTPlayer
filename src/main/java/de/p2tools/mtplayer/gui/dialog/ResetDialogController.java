@@ -106,7 +106,7 @@ public class ResetDialogController extends PDialogExtra {
                 // damit wird vor dem Beenden das Konfig-Verzeichnis umbenannt und so startet das
                 // Programm wie beim ersten Start
                 ProgData.reset = true;
-                new ProgQuit().quit(false, false);
+                ProgQuit.quit();
             }
         });
 

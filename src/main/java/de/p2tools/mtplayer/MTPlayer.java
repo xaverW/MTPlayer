@@ -130,7 +130,7 @@ public class MTPlayer extends Application {
             primaryStage.setScene(scene);
             primaryStage.setOnCloseRequest(e -> {
                 e.consume();
-                new ProgQuit().quit(true, false);
+                ProgQuit.quit(false);
             });
 
             if (!PGuiSize.setPos(ProgConfig.SYSTEM_SIZE_GUI.getStringProperty(), primaryStage)) {

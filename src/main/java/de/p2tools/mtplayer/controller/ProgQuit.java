@@ -25,57 +25,63 @@ import de.p2tools.p2Lib.tools.log.LogMessage;
 import javafx.application.Platform;
 
 public class ProgQuit {
-    final ProgData progData;
 
-    public ProgQuit() {
-        progData = ProgData.getInstance();
-    }
-
-    private void stopAllDownloads() {
-        progData.downloadList.forEach(download ->
-        {
-            if (download.isStateStartedRun())
-                download.stopDownload();
-        });
-    }
-
-    private void writeWindowSizes() {
-        // Hauptfenster
-        PGuiSize.getSizeScene(ProgConfig.SYSTEM_SIZE_GUI.getStringProperty(), progData.primaryStage);
-    }
-
-    private void writeTabSettings() {
-        // Tabelleneinstellungen merken
-        progData.filmGuiController.saveTable();
-        progData.downloadGuiController.saveTable();
-        progData.aboGuiController.saveTable();
+    private ProgQuit() {
     }
 
     /**
      * Quit the MTPlayer application
-     *
-     * @param showOptionTerminate show options dialog when downloads are running
-     * @param startWithWaiting    starts the dialog with the masker pane
      */
-    public void quit(boolean showOptionTerminate, boolean startWithWaiting) {
-        if (quit_(showOptionTerminate, startWithWaiting)) {
-            // dann jetzt beenden -> Thüss
-            Platform.runLater(() -> {
-                Platform.exit();
-                System.exit(0);
-            });
+    public static void quit() {
+        saveConfig();
+        exitProg();
+    }
+
+    /**
+     * Quit the MTPlayer application and shutDown the computer
+     */
+    public static void quitShutDown() {
+        saveConfig();
+        PShutDown.shutDown();
+        exitProg();
+    }
+
+    /**
+     * Quit the MTPlayer application and show QuitDialog
+     *
+     * @param startWithWaiting starts the dialog with the masker pane
+     */
+    public static void quit(boolean startWithWaiting) {
+        final ProgData progData = ProgData.getInstance();
+
+        // erst mal prüfen ob noch Downloads gestartet sind oder laufen
+        if (progData.downloadList.countStartedAndRunningDownloads() > 0) {
+            QuitDialogController quitDialogController;
+            if (progData.quitDialogController != null) {
+                progData.quitDialogController.getStage().toFront();
+                quitDialogController = progData.quitDialogController;
+            } else {
+                quitDialogController = new QuitDialogController();
+                if (startWithWaiting) {
+                    quitDialogController.startWaiting();
+                }
+            }
+
+        } else {
+            //dann Programm beenden
+            saveConfig();
+            exitProg();
         }
     }
 
-    public void quitShutDown() {
-        writeTabSettings();
+    private static void saveConfig() {
         stopAllDownloads();
-        writeWindowSizes();
+        writeTabSettings();
         new ProgSave().saveAll();
         LogMessage.endMsg();
+    }
 
-        PShutDown.shutDown();
-
+    private static void exitProg() {
         // dann jetzt beenden -> Thüss
         Platform.runLater(() -> {
             Platform.exit();
@@ -83,40 +89,20 @@ public class ProgQuit {
         });
     }
 
-    private boolean quit_(boolean showOptionTerminate, boolean startWithWaiting) {
-        // erst mal prüfen ob noch Downloads  gestartet sind oder laufen
-        boolean shutDown = false;
-        if (progData.downloadList.countStartedAndRunningDownloads() > 0) {
+    private static void stopAllDownloads() {
+        ProgData.getInstance().downloadList.forEach(download -> {
+            if (download.isStateStartedRun())
+                download.stopDownload();
+        });
+    }
 
-            // und ob der Dialog angezeigt werden soll
-            if (showOptionTerminate) {
-
-                QuitDialogController quitDialogController;
-                if (progData.quitDialogController != null) {
-                    progData.quitDialogController.getStage().toFront();
-                    quitDialogController = progData.quitDialogController;
-                } else {
-                    quitDialogController = new QuitDialogController(startWithWaiting);
-                }
-
-                shutDown = quitDialogController.canShutDown();
-                if (!quitDialogController.canTerminate()) {
-                    return false;
-                }
-            }
-        }
-
-        // und dann Programm beenden
-        writeTabSettings();
-        stopAllDownloads();
-        writeWindowSizes();
-
-        new ProgSave().saveAll();
-        LogMessage.endMsg();
-        if (shutDown) {
-            PShutDown.shutDown();
-        }
-
-        return true;
+    private static void writeTabSettings() {
+        // Tabelleneinstellungen merken
+        final ProgData progData = ProgData.getInstance();
+        progData.filmGuiController.saveTable();
+        progData.downloadGuiController.saveTable();
+        progData.aboGuiController.saveTable();
+        // Hauptfenster
+        PGuiSize.getSizeScene(ProgConfig.SYSTEM_SIZE_GUI.getStringProperty(), ProgData.getInstance().primaryStage);
     }
 }

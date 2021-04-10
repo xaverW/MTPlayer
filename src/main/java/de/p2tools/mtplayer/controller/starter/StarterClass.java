@@ -358,26 +358,24 @@ public class StarterClass {
             checkQuitAfterDownload = true;
             if (ProgData.automode) {
                 // dann haben wir den "Automodus"
-
                 Platform.runLater(() -> {
-
                     if (progData.downloadList.countStartedAndRunningDownloads() == 0) {
                         // dann gibts keine gestarteten Downloads und das Programm beendet sich sofort nach dem Start
                         // drum nur eine kurze Info
                         final AutomodeContinueDialogController dialogController = new AutomodeContinueDialogController();
                         if (dialogController.isContinueAutomode()) {
-                            new ProgQuit().quit(true, true);
+                            ProgQuit.quit(true);
                         } else {
                             // automode abgebrochen
                             ProgData.automode = false;
                         }
+
                     } else {
                         // dann gleich den "Quitt-Dialog" anzeigen, ist ja eine Weile zu sehen
-                        new ProgQuit().quit(true, true);
+                        ProgQuit.quit(true); //->todo
                         // dann wurde das "Beenden" abgebrochen
                         ProgData.automode = false;
                     }
-
                 });
             }
         }

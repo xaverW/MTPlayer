@@ -176,7 +176,7 @@ public class MTPTester {
             Button btnShutDown = new Button("Rechner herunterfahren");
             btnShutDown.setMaxWidth(Double.MAX_VALUE);
             btnShutDown.setOnAction(a ->
-                    Platform.runLater(() -> new ProgQuit().quitShutDown()));
+                    Platform.runLater(() -> ProgQuit.quitShutDown()));
 
             int row = 0;
             gridPane.add(text, 0, row, 2, 1);

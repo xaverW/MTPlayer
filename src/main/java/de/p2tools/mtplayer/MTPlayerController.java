@@ -172,12 +172,12 @@ public class MTPlayerController extends StackPane {
         PShortcutWorker.addShortCut(miSearchMediaCollection, MTShortcut.SHORTCUT_SEARCH_MEDIACOLLECTION);
 
         final MenuItem miQuit = new MenuItem("Beenden");
-        miQuit.setOnAction(e -> new ProgQuit().quit(true, false));
+        miQuit.setOnAction(e -> ProgQuit.quit(false));
         PShortcutWorker.addShortCut(miQuit, MTShortcut.SHORTCUT_QUIT_PROGRAM);
 
         final MenuItem miQuitWait = new MenuItem("Beenden, laufende Downloads abwarten");
         miQuitWait.setVisible(false); // wegen dem shortcut, aber der zusätzliche Menüpunkt verwirrt nur
-        miQuitWait.setOnAction(e -> new ProgQuit().quit(true, true));
+        miQuitWait.setOnAction(e -> ProgQuit.quit(true));
         PShortcutWorker.addShortCut(miQuitWait, MTShortcut.SHORTCUT_QUIT_PROGRAM_WAIT);
 
         final MenuItem miAbout = new MenuItem("über dieses Programm");
