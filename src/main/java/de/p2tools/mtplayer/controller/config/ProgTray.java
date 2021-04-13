@@ -36,7 +36,7 @@ import java.util.Arrays;
 public class ProgTray {
     private final ProgData progData;
     private BooleanProperty propTray = ProgConfig.SYSTEM_TRAY.getBooleanProperty();
-    private SystemTray tray = null;
+    private SystemTray systemTray = null;
 
 
     public ProgTray(ProgData progData) {
@@ -54,9 +54,9 @@ public class ProgTray {
     }
 
     public void removeTray() {
-        if (tray != null) {
-            Arrays.stream(tray.getTrayIcons()).sequential().forEach(e -> tray.remove(e));
-            tray = null;
+        if (systemTray != null) {
+            Arrays.stream(systemTray.getTrayIcons()).sequential().forEach(e -> systemTray.remove(e));
+            systemTray = null;
         }
     }
 
@@ -65,7 +65,7 @@ public class ProgTray {
             return;
         }
 
-        tray = SystemTray.getSystemTray();
+        systemTray = SystemTray.getSystemTray();
         PopupMenu popup = new PopupMenu();
 
 //                --------------------------------
@@ -97,7 +97,12 @@ public class ProgTray {
         String resource = "/de/p2tools/mtplayer/res/P2_24.png";
         URL res = getClass().getResource(resource);
         Image image = Toolkit.getDefaultToolkit().getImage(res);
+
         TrayIcon trayicon = new TrayIcon(image, "MTPlayer", popup);
+        trayicon.setImageAutoSize(true);
+        trayicon.setToolTip(null);
+//        System.out.println("tooltip: " + trayicon.getToolTip());
+//        trayicon.setToolTip("tooltip");
         trayicon.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -108,7 +113,7 @@ public class ProgTray {
         });
 
         try {
-            tray.add(trayicon);
+            systemTray.add(trayicon);
         } catch (AWTException exception) {
             PLog.errorLog(945120364, exception.getMessage());
         }

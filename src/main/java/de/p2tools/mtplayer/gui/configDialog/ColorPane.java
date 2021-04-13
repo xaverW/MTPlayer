@@ -220,7 +220,6 @@ public class ColorPane {
 
         final TableCell<MLC, Color> cell = new TableCell<MLC, Color>() {
 
-
             @Override
             public void updateItem(Color item, boolean empty) {
                 super.updateItem(item, empty);
