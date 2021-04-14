@@ -76,18 +76,21 @@ public class ProgTray {
         java.awt.MenuItem miMaxMin = new java.awt.MenuItem("Programm maximieren/minimieren");
         java.awt.MenuItem miConfig = new java.awt.MenuItem("Einstellungen öffnen");
         java.awt.MenuItem miLogfile = new java.awt.MenuItem("LogDatei öffnen");
+        java.awt.MenuItem miTray = new java.awt.MenuItem("Tray-Icon ausblenden");
         java.awt.MenuItem miAbout = new java.awt.MenuItem("über dieses Programm");
         java.awt.MenuItem miQuit = new java.awt.MenuItem("Programm Beenden");
 
-        miLogfile.addActionListener((e -> Platform.runLater(() -> PLogger.openLogFile())));
-        miConfig.addActionListener(e -> Platform.runLater(() -> new ConfigDialogController()));
         miMaxMin.addActionListener(e -> Platform.runLater(() -> maxMin()));
+        miConfig.addActionListener(e -> Platform.runLater(() -> new ConfigDialogController()));
+        miLogfile.addActionListener((e -> Platform.runLater(() -> PLogger.openLogFile())));
+        miTray.addActionListener((e -> Platform.runLater(() -> ProgConfig.SYSTEM_TRAY.setValue(false))));
         miAbout.addActionListener(e -> Platform.runLater(() -> new AboutDialogController(progData)));
         miQuit.addActionListener(e -> Platform.runLater(() -> ProgQuit.quit(false)));
 
         popup.add(miMaxMin);
         popup.add(miConfig);
         popup.add(miLogfile);
+        popup.add(miTray);
 
         popup.addSeparator();
         popup.add(miAbout);
