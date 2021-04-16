@@ -97,7 +97,6 @@ public class FilmTools {
             return;
         }
 
-        final SetData psetData = pSet;
         ProgData progData = ProgData.getInstance();
         ArrayList<Film> filmsAddDownloadList = new ArrayList<>();
 
@@ -111,32 +110,32 @@ public class FilmTools {
             resolution = Film.RESOLUTION_HD;
         }
 
-        for (final Film dateFilm : list) {
+        for (final Film film : list) {
             // erst mal schauen obs den schon gibt
-            Download download = progData.downloadList.getDownloadUrlFilm(dateFilm.arr[Film.FILM_URL]);
+            Download download = progData.downloadList.getDownloadUrlFilm(film.arr[Film.FILM_URL]);
             if (download == null) {
-                filmsAddDownloadList.add(dateFilm);
+                filmsAddDownloadList.add(film);
             } else {
                 // dann ist der Film schon in der Downloadliste
 
                 if (list.size() <= 1) {
                     PAlert.BUTTON answer = PAlert.showAlert_yes_no("Anlegen?", "Nochmal anlegen?",
                             "Download für den Film existiert bereits:" + P2LibConst.LINE_SEPARATORx2 +
-                                    dateFilm.getTitle() + P2LibConst.LINE_SEPARATORx2 +
+                                    film.getTitle() + P2LibConst.LINE_SEPARATORx2 +
                                     "Nochmal anlegen?");
                     switch (answer) {
                         case NO:
                             // alles Abbrechen
                             return;
                         case YES:
-                            filmsAddDownloadList.add(dateFilm);
+                            filmsAddDownloadList.add(film);
                             break;
                     }
 
                 } else {
                     PAlert.BUTTON answer = PAlert.showAlert_yes_no_cancel("Anlegen?", "Nochmal anlegen?",
                             "Download für den Film existiert bereits:" + P2LibConst.LINE_SEPARATORx2 +
-                                    dateFilm.getTitle() + P2LibConst.LINE_SEPARATORx2 +
+                                    film.getTitle() + P2LibConst.LINE_SEPARATORx2 +
                                     "Nochmal anlegen (Ja / Nein)?" + P2LibConst.LINE_SEPARATOR +
                                     "Oder alles Abbrechen?");
                     switch (answer) {
@@ -146,14 +145,14 @@ public class FilmTools {
                         case NO:
                             continue;
                         case YES:
-                            filmsAddDownloadList.add(dateFilm);
+                            filmsAddDownloadList.add(film);
                             break;
                     }
                 }
             }
         }
         if (!filmsAddDownloadList.isEmpty()) {
-            new DownloadAddDialogController(progData, filmsAddDownloadList, psetData, resolution);
+            new DownloadAddDialogController(progData, filmsAddDownloadList, pSet, resolution);
         }
     }
 }

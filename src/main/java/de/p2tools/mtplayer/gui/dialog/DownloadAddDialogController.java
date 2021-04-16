@@ -171,6 +171,7 @@ public class DownloadAddDialogController extends PDialogExtra {
         initArrays();
         initButton();
         initPathAndName();
+        pathNameBase();
         initResolutionButton();
         initCheckBox();
 
@@ -364,8 +365,49 @@ public class DownloadAddDialogController extends PDialogExtra {
                 txtName.setStyle("");
             }
         });
-
         txtName.disableProperty().bind(chkAll.selectedProperty());
+    }
+
+    private void pathNameBase() {
+        if (cbPath.getItems().isEmpty()) {
+            //leer
+            if (setData.getDestPath().isEmpty()) {
+                String path = System.getProperty("user.home");
+                cbPath.getItems().add(path);
+                cbPath.getSelectionModel().select(path);
+            } else {
+                String path = setData.getDestPath();
+                cbPath.getItems().add(path);
+                cbPath.getSelectionModel().select(path);
+            }
+        } else if (cbPath.getItems().size() == 1 && cbPath.getItems().get(0).isEmpty()) {
+            //dann ist nur der leere Eintrag drin
+            if (setData.getDestPath().isEmpty()) {
+                cbPath.getItems().clear();
+                String path = System.getProperty("user.home");
+                cbPath.getItems().add(path);
+                cbPath.getSelectionModel().select(path);
+            } else {
+                cbPath.getItems().clear();
+                String path = setData.getDestPath();
+                cbPath.getItems().add(path);
+                cbPath.getSelectionModel().select(path);
+            }
+        } else if (cbPath.getItems().size() == 1) {
+            //ein Eintrag aber nicht leer
+            cbPath.getSelectionModel().select(0);
+        } else {
+            //dann gibts den 2.
+            cbPath.getSelectionModel().select(1);
+        }
+
+        if (txtName.getText().isEmpty()) {
+            if (setData.getDestName().isEmpty()) {
+                txtName.setText(filmsToDownloadList.get(0).getTitle());
+            } else {
+                txtName.setText(setData.getDestName());
+            }
+        }
     }
 
     private void initResolutionButton() {
@@ -407,6 +449,7 @@ public class DownloadAddDialogController extends PDialogExtra {
         makeResolutionButtons();
         makeCheckBox();
         makeFilmName();
+        pathNameBase();
         calculateAndCheckDiskSpace();
     }
 
@@ -505,10 +548,14 @@ public class DownloadAddDialogController extends PDialogExtra {
         ok = false;
 
         for (DownloadAddInfo d : downloadAddInfos) {
-
             if (d.download == null) {
                 PAlert.showErrorAlert("Fehlerhafter Download!", "Fehlerhafter Download!",
                         "Download konnte nicht erstellt werden.");
+
+//            } else if (d.psetData.isDownloadManager()) {
+//                //dann kümmert sich der Downloadmanager um alles!
+//                PLog.sysLog("Download mit Downloadmanager starten!");
+//                ok = true;
 
             } else if (d.path.isEmpty() || d.name.isEmpty()) {
                 PAlert.showErrorAlert("Fehlerhafter Pfad/Name!", "Fehlerhafter Pfad/Name!",

@@ -3,6 +3,8 @@
 
 * Download-Chart, Download-Infos
 * Dialog: Programm nach Downloads beenden: Möglichkeit auch den Rechner herunterzufahren
+* Tray: Programm kann ins Tray gelegt werden -> Einstellung zum Einschalten des Tray
+* Downloads: Es gibt einen weiterer Parameter "%w" für die Website des Films, z.B. für den youtube-dl
 * ...
 
 

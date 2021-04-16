@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.data.download.Download;
 import de.p2tools.mtplayer.controller.data.download.DownloadXml;
 import de.p2tools.mtplayer.controller.data.film.FilmXml;
 import de.p2tools.p2Lib.P2LibConst;
+import de.p2tools.p2Lib.tools.PSystemUtils;
 import de.p2tools.p2Lib.tools.log.PLog;
 
 import java.io.*;
@@ -30,6 +31,10 @@ import java.nio.file.Paths;
 public class MTInfoFile {
 
     public static void writeInfoFile(Download download) {
+        if (download.getDestPath().isEmpty()) {
+            download.setDestPath(PSystemUtils.getStandardDownloadPath());
+        }
+        
         PLog.sysLog(new String[]{"Infofile schreiben nach: ", download.getDestPath()});
 
         new File(download.getDestPath()).mkdirs();

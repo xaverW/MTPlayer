@@ -92,12 +92,13 @@ public class DownloadProgram {
         // (aus TabFilme)
         String name;
         String path;
-        if (!setData.progsContainPath()) {
-            // dann können wir uns das sparen
-            download.setDestFileName("");
-            download.setDestPath("");
-            return;
-        }
+        //bei Downloadmanager ist es auch nicht enthalten aber für die Info.txt brauchts doch den Pfad
+//        if (!setData.progsContainPath()) {
+//            // dann können wir uns das sparen
+//            download.setDestFileName("");
+//            download.setDestPath("");
+//            return;
+//        }
 
         // ##############################################
         // Name
@@ -434,6 +435,9 @@ public class DownloadProgram {
         execString = execString.replace("**", download.getDestPathFile());
         execString = execString.replace("%f", download.getUrl());
         execString = execString.replace("%F", download.getUrlRtmp());
+        if (download.getFilm() != null) {
+            execString = execString.replace("%w", download.getFilm().getWebsite());
+        }
 
         execString = execString.replace("%a", download.getDestPath());
         execString = execString.replace("%b", download.getDestFileName());
