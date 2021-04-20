@@ -38,6 +38,8 @@ import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.control.*;
+import javafx.scene.control.skin.TableViewSkin;
+import javafx.scene.control.skin.VirtualFlow;
 import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.TilePane;
@@ -61,6 +63,7 @@ public class FilmGuiController extends AnchorPane {
     private boolean bound = false;
     private final SortedList<Film> sortedList;
     private final KeyCombination STRG_A = new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_ANY);
+    private final KeyCombination SPACE = new KeyCodeCombination(KeyCode.SPACE);
 
     DoubleProperty splitPaneProperty = ProgConfig.FILM_GUI_DIVIDER.getDoubleProperty();
     BooleanProperty boolInfoOn = ProgConfig.FILM_GUI_DIVIDER_ON.getBooleanProperty();
@@ -343,15 +346,21 @@ public class FilmGuiController extends AnchorPane {
         });
 
         tableView.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
+            if (SPACE.match(event)) {
+                int ii[] = getVisibleRange(tableView);
+                int i1 = ii[0];
+                int i2 = ii[1];
+                int count = i2 - i1;
+                int n = i1 + count;
+                if (count > 0 && n < tableView.getItems().size()) {
+                    tableView.getSelectionModel().clearAndSelect(n);
+                    tableView.scrollTo(n);
+                }
+
+            }
+
             if (STRG_A.match(event) && tableView.getItems().size() > 3_000) {
                 //macht eingentlich keine Sinn???
-//                if (PAlert.BUTTON.YES != PAlert.showAlert_yes_no(progData.primaryStage, "Alles markieren?",
-//                        "Sollen wirklich alle Filme markiert werden?",
-//                        "Das Markieren aller Filme ist aufwändig und kann sehr lange dauern.")) {
-//                    // bei sehr langen Listen dauert das seeeeeehr lange
-//                    PLog.sysLog("STRG-A: lange Liste -> verhindern");
-//                    event.consume();
-//                }
                 PLog.sysLog("STRG-A: lange Liste -> verhindern");
                 event.consume();
             }
@@ -359,6 +368,33 @@ public class FilmGuiController extends AnchorPane {
 
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
                 Platform.runLater(this::setFilm));
+    }
+
+    public int[] getVisibleRange(TableView table) {
+        TableViewSkin<?> skin = (TableViewSkin) table.getSkin();
+        if (skin == null) {
+            return new int[]{0, 0};
+        }
+        VirtualFlow<?> flow = (VirtualFlow) skin.getChildren().get(1);
+        int indexFirst;
+        int indexLast;
+        if (flow != null && flow.getFirstVisibleCell() != null
+                && flow.getLastVisibleCell() != null) {
+            indexFirst = flow.getFirstVisibleCell().getIndex();
+            if (indexFirst >= table.getItems().size())
+                indexFirst = table.getItems().size() - 1;
+
+            indexLast = flow.getLastVisibleCell().getIndex();
+            if (indexLast >= table.getItems().size())
+                indexLast = table.getItems().size() - 1;
+
+        } else {
+            indexFirst = 0;
+            indexLast = 0;
+        }
+
+        System.out.println("get: " + indexFirst + " - " + indexLast);
+        return new int[]{indexFirst, indexLast};
     }
 
     private synchronized void startFilmUrl() {
