@@ -41,6 +41,7 @@ import de.p2tools.p2Lib.tools.log.PLogger;
 import de.p2tools.p2Lib.tools.shortcut.PShortcutWorker;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
@@ -143,6 +144,24 @@ public class MTPlayerController extends StackPane {
                 // falls "neue Filmliste" aktiv ist
                 btnFilmlist.getStyleClass().clear();
                 btnFilmlist.getStyleClass().add("btnFilmlist");
+            }
+
+            @Override
+            public void finished(ListenerFilmlistLoadEvent event) {
+                if (stackPaneCont.getChildren().size() == 0) {
+                    return;
+                }
+
+                Node node = stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1);
+                if (node != null && node == splitPaneFilm) {
+                    progData.filmGuiController.isShown();
+                }
+                if (node != null && node == splitPaneDownoad) {
+                    progData.downloadGuiController.isShown();
+                }
+                if (node != null && node == splitPaneAbo) {
+                    progData.aboGuiController.isShown();
+                }
             }
         });
 

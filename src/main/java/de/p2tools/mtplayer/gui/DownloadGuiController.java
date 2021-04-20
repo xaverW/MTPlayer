@@ -42,7 +42,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Orientation;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseButton;
+import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 
 import java.util.ArrayList;
@@ -70,6 +70,7 @@ public class DownloadGuiController extends AnchorPane {
 
     DoubleProperty splitPaneProperty = ProgConfig.DOWNLOAD_GUI_DIVIDER.getDoubleProperty();
     BooleanProperty boolInfoOn = ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.getBooleanProperty();
+    private final KeyCombination SPACE = new KeyCodeCombination(KeyCode.SPACE);
 
     public DownloadGuiController() {
         progData = ProgData.getInstance();
@@ -126,7 +127,9 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     public void isShown() {
+        System.out.println("DownloadGuiIsShown");
         setFilm();
+        tableView.requestFocus();
         progData.filmFilterControllerClearFilter.setClearText("Filter löschen");
         progData.downloadFilterController.setClearText("Filter _löschen");
         progData.aboFilterController.setClearText("Filter löschen");
@@ -394,7 +397,6 @@ public class DownloadGuiController extends AnchorPane {
             });
             return row;
         });
-
         tableView.setOnMousePressed(m -> {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
                 final Optional<Download> optionalDownload = getSel(false);
@@ -415,6 +417,12 @@ public class DownloadGuiController extends AnchorPane {
             if (tableView.getItems().size() == 1) {
                 // wenns nur eine Zeile gibt, dann gleich selektieren
                 tableView.getSelectionModel().select(0);
+            }
+        });
+        tableView.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
+            if (SPACE.match(event)) {
+                PTableFactory.scrollVisibleRange(tableView);
+                event.consume();
             }
         });
     }
