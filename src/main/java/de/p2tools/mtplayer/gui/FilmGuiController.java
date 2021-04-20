@@ -356,7 +356,6 @@ public class FilmGuiController extends AnchorPane {
                     tableView.getSelectionModel().clearAndSelect(n);
                     tableView.scrollTo(n);
                 }
-
             }
 
             if (STRG_A.match(event) && tableView.getItems().size() > 3_000) {
