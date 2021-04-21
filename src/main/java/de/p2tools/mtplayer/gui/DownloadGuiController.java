@@ -42,7 +42,8 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Orientation;
 import javafx.scene.control.*;
-import javafx.scene.input.*;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 
 import java.util.ArrayList;
@@ -70,7 +71,6 @@ public class DownloadGuiController extends AnchorPane {
 
     DoubleProperty splitPaneProperty = ProgConfig.DOWNLOAD_GUI_DIVIDER.getDoubleProperty();
     BooleanProperty boolInfoOn = ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.getBooleanProperty();
-    private final KeyCombination SPACE = new KeyCodeCombination(KeyCode.SPACE);
 
     public DownloadGuiController() {
         progData = ProgData.getInstance();
@@ -420,8 +420,12 @@ public class DownloadGuiController extends AnchorPane {
             }
         });
         tableView.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
-            if (SPACE.match(event)) {
-                PTableFactory.scrollVisibleRange(tableView);
+            if (PTableFactory.SPACE.match(event)) {
+                PTableFactory.scrollVisibleRangeDown(tableView);
+                event.consume();
+            }
+            if (PTableFactory.SPACE_SHIFT.match(event)) {
+                PTableFactory.scrollVisibleRangeUp(tableView);
                 event.consume();
             }
         });

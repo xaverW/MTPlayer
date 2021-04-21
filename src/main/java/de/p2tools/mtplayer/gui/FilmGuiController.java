@@ -62,7 +62,6 @@ public class FilmGuiController extends AnchorPane {
     private boolean bound = false;
     private final SortedList<Film> sortedList;
     private final KeyCombination STRG_A = new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_ANY);
-    private final KeyCombination SPACE = new KeyCodeCombination(KeyCode.SPACE);
 
     DoubleProperty splitPaneProperty = ProgConfig.FILM_GUI_DIVIDER.getDoubleProperty();
     BooleanProperty boolInfoOn = ProgConfig.FILM_GUI_DIVIDER_ON.getBooleanProperty();
@@ -347,8 +346,12 @@ public class FilmGuiController extends AnchorPane {
         });
 
         tableView.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
-            if (SPACE.match(event)) {
-                PTableFactory.scrollVisibleRange(tableView);
+            if (PTableFactory.SPACE.match(event)) {
+                PTableFactory.scrollVisibleRangeDown(tableView);
+                event.consume();
+            }
+            if (PTableFactory.SPACE_SHIFT.match(event)) {
+                PTableFactory.scrollVisibleRangeUp(tableView);
                 event.consume();
             }
 
