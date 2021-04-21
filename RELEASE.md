@@ -5,6 +5,7 @@
 * Dialog: Programm nach Downloads beenden: Möglichkeit auch den Rechner herunterzufahren
 * Tray: Programm kann ins Tray gelegt werden -> "Einstellungen" zum Einschalten des Tray
 * Downloads: Es gibt einen weiterer Parameter "%w" für die Website des Films, z.B. für den youtube-dl
+* in den Tabellen kann mit der Leertaste "Seitenweise" gescrollt werden
 * ...
 
 
@@ -14,20 +15,20 @@
 
 * Downloadchart: Daten bleiben auch beim Ändern der Anzeige erhalten
 * Filmfilter erhält eine “zurück” Funktion
-* Die interne Verarbeitung der Mediensammlung wurde verbessert, ist jetzt deutlich schneller bei sehr großen
+* die interne Verarbeitung der Mediensammlung wurde verbessert, ist jetzt deutlich schneller bei sehr großen
   Mediensammlungen
-* Beim Anlegen der Mediensammlung kann jetzt eine Mindestgröße vorgegeben werden, Dateien die kleiner sind werden nicht
+* beim Anlegen der Mediensammlung kann jetzt eine Mindestgröße vorgegeben werden, Dateien die kleiner sind werden nicht
   mehr aufgenommen
-* Die Mediensammlung kann in eine Datei exportiert werden
-* Beim Suchen in der History/erledigten Abos kann zwischen Thema oder Titel unterschieden werden
-* Häufige Programmfunktionen können über Tastenkürzel aufgerufen werden und in den Einstellungen können die Tastenkürzel
+* die Mediensammlung kann in eine Datei exportiert werden
+* beim Suchen in der History/erledigten Abos kann zwischen Thema oder Titel unterschieden werden
+* häufige Programmfunktionen können über Tastenkürzel aufgerufen werden und in den Einstellungen können die Tastenkürzel
   angepasst werden
-* Wenn sich bei Downloads aus Abos doppelte Dateinamen ergeben, werden diese jetzt nummeriert
+* wenn sich bei Downloads aus Abos doppelte Dateinamen ergeben, werden diese jetzt nummeriert
 * flvstreamer wurde entfernt, gibt keine Downloads mehr dafür
 * Downloadchart wurde überarbeitet
 * Schriftgröße lässt sich anpassen
-* Die Sortierreihenfolge der Downloads (Thema, Titel, Dateiname) wurde überarbeitet
-* Der Add-Abo Dialog wurde überarbeitet
+* die Sortierreihenfolge der Downloads (Thema, Titel, Dateiname) wurde überarbeitet
+* der Add-Abo Dialog wurde überarbeitet
 * Filmfilter Blacklist: “nur Blacklist” anzeigen, zur Kontrolle der Blacklist
 * Download Continue Dialog wurde überarbeitet
 * Einstellungen: Farben wurde überarbeitet
@@ -35,7 +36,7 @@
 * Beschriftung Slider wurde überarbeitet
 * Download Dialog wurde überarbeitet
 * GUI Design (Filter, Tabellenspalten Ausrichtung, Filter Beschriftung, Shortcut, ..) wurde überarbeitet
-* Start eines externen Programms über ein Shortcut möglich
+* start eines externen Programms über ein Shortcut möglich
 * ...
 
 **Release 9**
