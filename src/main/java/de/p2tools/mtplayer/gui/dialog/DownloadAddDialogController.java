@@ -546,16 +546,10 @@ public class DownloadAddDialogController extends PDialogExtra {
 
     private boolean check() {
         ok = false;
-
         for (DownloadAddInfo d : downloadAddInfos) {
             if (d.download == null) {
                 PAlert.showErrorAlert("Fehlerhafter Download!", "Fehlerhafter Download!",
                         "Download konnte nicht erstellt werden.");
-
-//            } else if (d.psetData.isDownloadManager()) {
-//                //dann kümmert sich der Downloadmanager um alles!
-//                PLog.sysLog("Download mit Downloadmanager starten!");
-//                ok = true;
 
             } else if (d.path.isEmpty() || d.name.isEmpty()) {
                 PAlert.showErrorAlert("Fehlerhafter Pfad/Name!", "Fehlerhafter Pfad/Name!",
@@ -584,7 +578,6 @@ public class DownloadAddDialogController extends PDialogExtra {
 
         saveComboPath(cbPath);
         List<Download> list = new ArrayList<>();
-
         for (DownloadAddInfo d : downloadAddInfos) {
             // jetzt wird mit den angegebenen Pfaden gearbeitet
             Download download = new Download(d.psetData,
@@ -594,7 +587,6 @@ public class DownloadAddDialogController extends PDialogExtra {
                     d.name,
                     d.path,
                     d.resolution);
-
             download.setSizeDownloadFromWeb(getFilmSize(d));
             download.setInfoFile(d.info);
             download.setSubtitle(d.subtitle);

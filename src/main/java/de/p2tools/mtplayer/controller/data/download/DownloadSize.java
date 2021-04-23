@@ -103,11 +103,19 @@ public class DownloadSize extends ObjectPropertyBase<DownloadSizeData> implement
 
     public void setAktFileSize(long l) {
         aktFileSize = l;
+        if (fileSize < aktFileSize) {
+            //kann bei m3u8-URL passieren
+            fileSize = aktFileSize;
+        }
         fireValueChangedEvent();
     }
 
     public void addAktFileSize(long l) {
         aktFileSize += l;
+        if (fileSize < aktFileSize) {
+            //kann bei m3u8-URL passieren
+            fileSize = aktFileSize;
+        }
         fireValueChangedEvent();
     }
 

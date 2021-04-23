@@ -163,40 +163,16 @@ public class DownloadInfos {
     }
 
     public String getTimeLeftNotStarted() {
-//        return getTimeInfo(timeLeftNotStartedDownloads);
         return DownloadConstants.getTimeLeft(timeLeftNotStartedDownloads);
     }
 
     public String getTimeLeftWaiting() {
-//        return getTimeInfo(timeLeftWaitingDownloads);
         return DownloadConstants.getTimeLeft(timeLeftWaitingDownloads);
     }
 
     public String getTimeLeftLoading() {
-//        return getTimeInfo(timeLeftLoadingDownloads);
         return DownloadConstants.getTimeLeft(timeLeftLoadingDownloads);
     }
-
-//    private String getTimeInfo(long time) {
-//        if (time <= 0) {
-//            return "";
-//        }
-//
-//        time = time / 60; // Minuten
-//        if (time < 0) {
-//            return "< 1 min";
-//        }
-//
-//        if (time < 90) {
-//            return time + " min";
-//        }
-//
-//        String m = time % 60 + "";
-//        while (m.length() < 2) {
-//            m = m + "0";
-//        }
-//        return time / 60 + ":" + m + " Stunden";
-//    }
 
     private synchronized void generateDownloadInfos() {
         // generiert die Anzahl Downloads (aus Downloads und Abos):
@@ -264,28 +240,13 @@ public class DownloadInfos {
                     // der längste gibt die aktuelle Restzeit vor
                     timeLeftLoadingDownloads = download.getStart().getTimeLeftSeconds();
                 }
+
             }
         }
-
-
-//        if (bandwidth > 0) {
-//            ProgConfig.DOWNLOAD_BANDWIDTH_KBYTE.setValue(bandwidth);
-//
-//            // Restzeit laufende Downloads
-//            final long byteRest = byteLoadingDownloads - byteLoadingDownloadsAlreadyLoaded;
-//            long timeLeft;
-//
-//            if (byteRest <= 0) {
-//                timeLeft = 0;
-//            } else {
-//                timeLeft = byteRest / bandwidth;
-//            }
-//            if (timeLeft < timeLeftLoadingDownloads) {
-//                timeLeft = timeLeftLoadingDownloads; // falsch geraten oder es gibt nur einen
-//            }
-////            timeLeft = DownloadConstants.getTimeLeftSeconds(timeLeft);
-//            timeLeftLoadingDownloads = timeLeft;
-//        }
+        //wegen Downloads die "keine Größenangabe (m3u8)" haben:
+        if (byteLoadingDownloads < byteLoadingDownloadsAlreadyLoaded) {
+            byteLoadingDownloads = byteLoadingDownloadsAlreadyLoaded;
+        }
 
         final long resBandwidth = bandwidth > 0 ? bandwidth : ProgConfig.DOWNLOAD_BANDWIDTH_KBYTE.getLong();
         if (resBandwidth > 0) {
