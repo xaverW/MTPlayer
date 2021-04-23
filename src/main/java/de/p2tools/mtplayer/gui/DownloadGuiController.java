@@ -127,7 +127,7 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     public void isShown() {
-        System.out.println("DownloadGuiIsShown");
+//        System.out.println("DownloadGuiIsShown");
         setFilm();
         tableView.requestFocus();
         progData.filmFilterControllerClearFilter.setClearText("Filter löschen");

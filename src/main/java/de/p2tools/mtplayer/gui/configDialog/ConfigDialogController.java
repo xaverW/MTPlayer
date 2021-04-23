@@ -73,13 +73,13 @@ public class ConfigDialogController extends PDialogExtra {
     public void close() {
         if (!geo.equals(ProgConfig.SYSTEM_GEO_HOME_PLACE.get())) {
             // dann hat sich der Geo-Standort geändert
-            System.out.println("geo changed");
+//            System.out.println("geo changed");
             progData.filmlist.markGeoBlocked();
         }
 
         if (blackChanged.get() && !progData.loadFilmlist.getPropLoadFilmlist()) {
             // sonst hat sich nichts geändert oder wird dann eh gemacht
-            System.out.println("black filtern");
+//            System.out.println("black filtern");
             progData.filmlist.filterListWithBlacklist(true);
             Listener.notify(Listener.EREIGNIS_BLACKLIST_GEAENDERT, ConfigDialogController.class.getSimpleName());
         }

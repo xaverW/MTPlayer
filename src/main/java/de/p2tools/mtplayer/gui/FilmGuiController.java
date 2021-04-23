@@ -91,7 +91,7 @@ public class FilmGuiController extends AnchorPane {
     }
 
     public void isShown() {
-        System.out.println("FilmGuiIsShown");
+//        System.out.println("FilmGuiIsShown");
         setFilm();
         tableView.requestFocus();
         progData.filmFilterControllerClearFilter.setClearText("Filter _löschen");

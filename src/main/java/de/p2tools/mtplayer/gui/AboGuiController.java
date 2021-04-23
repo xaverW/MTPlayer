@@ -83,7 +83,7 @@ public class AboGuiController extends AnchorPane {
     }
 
     public void isShown() {
-        System.out.println("AboGuiIsShown");
+//        System.out.println("AboGuiIsShown");
         tableView.requestFocus();
         progData.filmInfoDialogController.setFilm(null);
         progData.filmFilterControllerClearFilter.setClearText("Filter löschen");

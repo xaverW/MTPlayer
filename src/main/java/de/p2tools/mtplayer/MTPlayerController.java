@@ -355,26 +355,26 @@ public class MTPlayerController extends StackPane {
     public void setFilter() {
         if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneFilm)) {
             ProgConfig.FILM_GUI_FILTER_DIVIDER_ON.setValue(!ProgConfig.FILM_GUI_FILTER_DIVIDER_ON.getBool());
-            System.out.println("FilmeFilter");
+//            System.out.println("FilmeFilter");
         } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneDownoad)) {
             ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER_ON.setValue(!ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER_ON.getBool());
-            System.out.println("DownloadFilter");
+//            System.out.println("DownloadFilter");
         } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneAbo)) {
             ProgConfig.ABO_GUI_FILTER_DIVIDER_ON.setValue(!ProgConfig.ABO_GUI_FILTER_DIVIDER_ON.getBool());
-            System.out.println("AboFilter");
+//            System.out.println("AboFilter");
         }
     }
 
     public void setInfos() {
         if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneFilm)) {
             ProgConfig.FILM_GUI_DIVIDER_ON.setValue(!ProgConfig.FILM_GUI_DIVIDER_ON.getBool());
-            System.out.println("FilmeInfos");
+//            System.out.println("FilmeInfos");
         } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneDownoad)) {
             ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.setValue(!ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.getBool());
-            System.out.println("DownloadInfos");
+//            System.out.println("DownloadInfos");
         } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneAbo)) {
             ProgConfig.ABO_GUI_DIVIDER_ON.setValue(!ProgConfig.ABO_GUI_DIVIDER_ON.getBool());
-            System.out.println("AboInfos");
+//            System.out.println("AboInfos");
         }
     }
 }
