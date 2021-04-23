@@ -105,6 +105,7 @@ public class DownloadSize extends ObjectPropertyBase<DownloadSizeData> implement
         aktFileSize = l;
         if (fileSize < aktFileSize) {
             //kann bei m3u8-URL passieren
+            //fileSize = 0L;??
             fileSize = aktFileSize;
         }
         fireValueChangedEvent();
@@ -114,6 +115,7 @@ public class DownloadSize extends ObjectPropertyBase<DownloadSizeData> implement
         aktFileSize += l;
         if (fileSize < aktFileSize) {
             //kann bei m3u8-URL passieren
+            //fileSize = 0L;??
             fileSize = aktFileSize;
         }
         fireValueChangedEvent();
