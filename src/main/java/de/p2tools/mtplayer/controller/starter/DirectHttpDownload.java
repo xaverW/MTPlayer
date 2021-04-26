@@ -142,8 +142,8 @@ public class DirectHttpDownload extends Thread {
             download.getDownloadSize().addAktFileSize(len);
 
             // für die Anzeige prüfen ob sich was geändert hat
-            if (aktSize != download.getDownloadSize().getAktFileSize()) {
-                aktSize = download.getDownloadSize().getAktFileSize();
+            if (aktSize != download.getDownloadSize().getActFileSize()) {
+                aktSize = download.getDownloadSize().getActFileSize();
             }
             if (download.getDownloadSize().getFilmSize() > 0) {
                 percent = 1.0 * aktSize / download.getDownloadSize().getFilmSize();
@@ -169,7 +169,7 @@ public class DirectHttpDownload extends Thread {
 //                        download.getStart().setTimeLeftSeconds((long) (diffTime * restPercent / (percent - startPercent)));
 
                         long timeLeft = 0;
-                        long sizeLeft = download.getDownloadSize().getFilmSize() - download.getDownloadSize().getAktFileSize();
+                        long sizeLeft = download.getDownloadSize().getFilmSize() - download.getDownloadSize().getActFileSize();
                         if (sizeLeft <= 0) {
                             timeLeft = 0;
                         } else if (aktBandwidth > 0) {
@@ -223,7 +223,7 @@ public class DirectHttpDownload extends Thread {
                 if (!cancelDownload()) {
 
                     download.getDownloadSize().setSize(getContentLength(url));
-                    download.getDownloadSize().setAktFileSize(0);
+                    download.getDownloadSize().setActFileSize(0);
                     conn = (HttpURLConnection) url.openConnection();
                     conn.setConnectTimeout(1000 * ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getInt());
                     conn.setReadTimeout(1000 * ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getInt());
@@ -379,12 +379,12 @@ public class DirectHttpDownload extends Thread {
 
             if (dataDownload.getFilm().getDurationMinute() > 0
                     && dataDownload.getStart().getTimeLeftSeconds() > 0
-                    && dataDownload.getDownloadSize().getAktFileSize() > 0
+                    && dataDownload.getDownloadSize().getActFileSize() > 0
                     && dataDownload.getDownloadSize().getFilmSize() > 0) {
 
                 // macht nur dann Sinn
                 final long filetimeAlreadyLoadedSeconds = dataDownload.getFilm().getDurationMinute() * 60
-                        * dataDownload.getDownloadSize().getAktFileSize()
+                        * dataDownload.getDownloadSize().getActFileSize()
                         / dataDownload.getDownloadSize().getFilmSize();
 
                 if (filetimeAlreadyLoadedSeconds > (dataDownload.getStart().getTimeLeftSeconds() * 1.1 /* plus 10% zur Sicherheit */)) {

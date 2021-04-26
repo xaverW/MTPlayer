@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.controller.starter;
 
+
 import de.p2tools.mtplayer.controller.ProgQuit;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
@@ -39,10 +40,8 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class StarterClass {
-    // Tags Filme
-
     private final ProgData progData;
-    private Start start = null;
+    private StarterThread starterThread = null;
     private boolean paused = false;
     private boolean searchFilms = true; // beim Programmstart muss zuerst die Filmliste galaden werden
     private boolean checkQuitAfterDownload = false; // Prüfen, ob automode aktiv ist
@@ -52,8 +51,8 @@ public class StarterClass {
     // ===================================
     public StarterClass(ProgData progData) {
         this.progData = progData;
-        start = new Start();
-        start.start();
+        starterThread = new StarterThread();
+        starterThread.start();
 
         progData.loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
             @Override
@@ -77,7 +76,7 @@ public class StarterClass {
             final Download download = new Download(pSet, ersterFilm, DownloadConstants.SRC_BUTTON, null, "", "", resolution);
             progData.downloadList.startDownloads(download);
 
-            start.startDownload(download); // da nicht in der ListeDownloads
+            starterThread.startDownload(download); // da nicht in der ListeDownloads
 
             // und jetzt noch in die Downloadliste damit die Farbe im Tab Filme passt
             progData.downloadListButton.addWithNr(download);
@@ -257,7 +256,7 @@ public class StarterClass {
             //dann ist er gelaufen
             start.setTimeLeftSeconds(0);
             download.setProgress(DownloadConstants.PROGRESS_FINISHED);
-            download.getDownloadSize().setAktFileSize(-1);
+            download.getDownloadSize().setActFileSize(-1);
 
             if (start.getInputStream() != null) {
                 download.setBandwidth("Ø " + SizeTools.humanReadableByteCount(start.getInputStream().getSumBandwidth(), true));
@@ -287,29 +286,35 @@ public class StarterClass {
 
     static void setFileSize(Download download) {
         try {
-            final File testFile = new File(download.getDestPathFile());
-            if (testFile.exists()) {
-                final long length = testFile.length();
-                if (length > 0) {
-                    download.getDownloadSize().setSize(length);
-                }
+            final File destFile = new File(download.getDestPathFile());
+            if (destFile.exists()) {
+                final long length = destFile.length();
+                if (length > 0)
+                    if (download.getDownloadSize().getFilmSize() > 0) {
+                        //nur wenn der Download schon eine Größe hatte, nicht bei m3u8!
+                        download.getDownloadSize().setSize(length);
+                    } else {
+                        //bei m3u8 nur die aktSize setzen!
+                        download.getDownloadSize().setActFileSize(length);
+                    }
             }
-        } catch (final Exception ex) {
+        } catch (
+                final Exception ex) {
             PLog.errorLog(461204780,
                     "Fehler beim Ermitteln der Dateigröße: " + download.getDestPathFile());
         }
     }
 
     // ********************************************
-    // Hier wird dann gestartet
-    // Ewige Schleife die die Downloads startet
-    // ********************************************
-    private class Start extends Thread {
+// Hier wird dann gestartet
+// Ewige Schleife die die Downloads startet
+// ********************************************
+    private class StarterThread extends Thread {
 
         private Download download;
         private final java.util.Timer bandwidthCalculationTimer;
 
-        public Start() {
+        public StarterThread() {
             super();
             setName("DownloadStarter Daemon Thread");
             setDaemon(true);

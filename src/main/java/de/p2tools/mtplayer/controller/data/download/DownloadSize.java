@@ -22,16 +22,16 @@ import javafx.beans.property.ObjectPropertyBase;
 
 public class DownloadSize extends ObjectPropertyBase<DownloadSizeData> implements Comparable<DownloadSize> {
 
-    private long aktFileSize = -1L;
+    private long actFileSize = -1L;
     private Long fileSize = 0L;
     private DownloadSizeData downloadSizeData = new DownloadSizeData(0, "");
 
     public DownloadSize() {
     }
 
-    public DownloadSize(long filmSize, long aktFileSize) {
+    public DownloadSize(long filmSize, long actFileSize) {
         this.fileSize = filmSize;
-        this.aktFileSize = aktFileSize;
+        this.actFileSize = actFileSize;
     }
 
     @Override
@@ -47,7 +47,7 @@ public class DownloadSize extends ObjectPropertyBase<DownloadSizeData> implement
 
     @Override
     public final DownloadSizeData get() {
-        return getDownloadSizeData();
+        return new DownloadSizeData(fileSize, getString());
     }
 
     @Override
@@ -73,7 +73,7 @@ public class DownloadSize extends ObjectPropertyBase<DownloadSizeData> implement
     public void setSize(String size) {
         // im Film ist die Größe in "MB" !!
         if (size.isEmpty()) {
-            aktFileSize = -1L;
+            actFileSize = -1L;
             fileSize = 0L;
         } else {
             try {
@@ -87,13 +87,13 @@ public class DownloadSize extends ObjectPropertyBase<DownloadSizeData> implement
         fireValueChangedEvent();
     }
 
-    public void reset() {
-        aktFileSize = -1L;
+    public void setSize(long l) {
+        fileSize = l;
         fireValueChangedEvent();
     }
 
-    public void setSize(long l) {
-        fileSize = l;
+    public void reset() {
+        actFileSize = -1L;
         fireValueChangedEvent();
     }
 
@@ -101,49 +101,42 @@ public class DownloadSize extends ObjectPropertyBase<DownloadSizeData> implement
         return fileSize;
     }
 
-    public void setAktFileSize(long l) {
-        aktFileSize = l;
-        if (fileSize < aktFileSize) {
+    public void setActFileSize(long l) {
+        actFileSize = l;
+        if (fileSize < actFileSize) {
             //kann bei m3u8-URL passieren
-            //fileSize = 0L;??
-            fileSize = aktFileSize;
+            fileSize = 0L;
         }
         fireValueChangedEvent();
     }
 
     public void addAktFileSize(long l) {
-        aktFileSize += l;
-        if (fileSize < aktFileSize) {
+        actFileSize += l;
+        if (fileSize < actFileSize) {
             //kann bei m3u8-URL passieren
-            //fileSize = 0L;??
-            fileSize = aktFileSize;
+            fileSize = 0L;
         }
         fireValueChangedEvent();
     }
 
-    public long getAktFileSize() {
-        return aktFileSize;
+    public long getActFileSize() {
+        return actFileSize;
     }
 
     private String getString() {
         String sizeStr;
-        if (aktFileSize <= 0) {
+        if (actFileSize <= 0) {
             if (fileSize > 0) {
                 sizeStr = SizeTools.getSize(fileSize);
             } else {
                 sizeStr = "";
             }
         } else if (fileSize > 0) {
-            sizeStr = SizeTools.getSize(aktFileSize) + " von " + SizeTools.getSize(fileSize);
+            sizeStr = SizeTools.getSize(actFileSize) + " von " + SizeTools.getSize(fileSize);
         } else {
-            sizeStr = SizeTools.getSize(aktFileSize);
+            sizeStr = SizeTools.getSize(actFileSize);
         }
         downloadSizeData = new DownloadSizeData(fileSize, sizeStr);
         return sizeStr;
     }
-
-    private DownloadSizeData getDownloadSizeData() {
-        return new DownloadSizeData(fileSize, getString());
-    }
-
 }

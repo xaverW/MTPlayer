@@ -235,7 +235,7 @@ public class DownloadInfos {
                 if (bandwidth < 0) {
                     bandwidth = 0;
                 }
-                byteLoadingDownloadsAlreadyLoaded += (download.getDownloadSize().getAktFileSize() > 0 ? download.getDownloadSize().getAktFileSize() : 0);
+                byteLoadingDownloadsAlreadyLoaded += (download.getDownloadSize().getActFileSize() > 0 ? download.getDownloadSize().getActFileSize() : 0);
                 if (download.getStart().getTimeLeftSeconds() > timeLeftLoadingDownloads) {
                     // der längste gibt die aktuelle Restzeit vor
                     timeLeftLoadingDownloads = download.getStart().getTimeLeftSeconds();
