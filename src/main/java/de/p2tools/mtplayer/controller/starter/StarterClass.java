@@ -306,9 +306,9 @@ public class StarterClass {
     }
 
     // ********************************************
-// Hier wird dann gestartet
-// Ewige Schleife die die Downloads startet
-// ********************************************
+    // Hier wird dann gestartet
+    // Ewige Schleife die die Downloads startet
+    // ********************************************
     private class StarterThread extends Thread {
 
         private Download download;
