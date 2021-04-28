@@ -72,9 +72,10 @@ public class ChartFactory {
 
     public static NumberAxis createYAxis() {
         final NumberAxis yAxis = new NumberAxis();
-        yAxis.setAutoRanging(true);
-        yAxis.setLabel("Wert");
+//        yAxis.setAutoRanging(true);
+        yAxis.setAutoRanging(false);
         yAxis.setLowerBound(0.0);
+        yAxis.setLabel("Wert");
         return yAxis;
     }
 
@@ -460,6 +461,27 @@ public class ChartFactory {
             max /= 1_000;
             chartData.setScale(chartData.getScale() * 1000);
         }
+
+        int lowDiv = max > 250 ? 100 : 50;
+        long upper = Math.round(max / lowDiv);
+        upper *= lowDiv;
+
+        upper = upper < max ? upper + lowDiv : upper;
+        upper = upper <= 0 ? lowDiv : upper;
+
+        NumberAxis axis = (NumberAxis) lineChart.getYAxis();
+        axis.setUpperBound(upper);
+
+        if (upper <= 100) {
+            axis.setTickUnit(50);
+        } else if (upper <= 500) {
+            axis.setTickUnit(100);
+        } else if (upper <= 1000) {
+            axis.setTickUnit(200);
+        } else {
+            axis.setTickUnit(500);
+        }
+//        System.out.println(max + " - " + upper);
 
         setYAxisLabel(lineChart, chartData);
         for (final XYChart.Series<Number, Number> cSeries : list) {
