@@ -18,6 +18,7 @@
 package de.p2tools.mtplayer.controller.data.download;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.mtplayer.tools.SizeTools;
@@ -35,6 +36,7 @@ public class DownloadInfos {
     private int notStarted = 0; //davon gestartet, alle, egal ob warten, laden oder fertig
     private int started = 0; //davon gestartet, alle, egal ob warten, laden oder fertig
 
+    private int loadingM3u8 = 0; //gestarte m3u8-URLs
     private int startedNotLoading = 0; //davon gestartet, warten aber noch
     private int loading = 0; //laden schon
     private int finishedOk = 0; //fertig und Ok
@@ -100,6 +102,10 @@ public class DownloadInfos {
 
     public synchronized int getLoading() {
         return loading;
+    }
+
+    public int getLoadingM3u8() {
+        return loadingM3u8;
     }
 
     public synchronized int getFinishedOk() {
@@ -201,6 +207,9 @@ public class DownloadInfos {
                         ++startedNotLoading;
                     } else if (download.isStateStartedRun()) {
                         ++loading;
+                        if (download.getUrl().endsWith(ProgConst.M3U8_URL)) {
+                            ++loadingM3u8;
+                        }
                     } else if (download.isStateFinished()) {
                         ++finishedOk;
                     } else if (download.isStateError()) {
@@ -282,6 +291,7 @@ public class DownloadInfos {
         notStarted = 0;
         started = 0;
         startedNotLoading = 0;
+        loadingM3u8 = 0;
         loading = 0;
         finishedOk = 0;
         finishedError = 0;

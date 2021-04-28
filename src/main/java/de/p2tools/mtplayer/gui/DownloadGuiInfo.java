@@ -162,6 +162,14 @@ public class DownloadGuiInfo {
                     txt += ", " + progData.downloadInfos.getFinishedError() + " fehlerhaft";
                 }
             }
+
+            int m3u8 = progData.downloadInfos.getLoadingM3u8();
+            if (m3u8 == 1) {
+                txt += ", ein Download ist ein Stream, Zeit- und Größenangaben sind nur Schätzungen";
+            } else if (m3u8 > 1) {
+                txt += ", " + m3u8 + " Downloads sind Streams, Zeit- und Größenangaben sind nur Schätzungen";
+            }
+
             txt += " )";
             Text text2 = new Text(txt);
             vBoxHeader.getChildren().add(text2);
