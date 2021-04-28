@@ -16,8 +16,8 @@
 
 package de.p2tools.mtplayer.gui;
 
-import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.p2Lib.tools.file.PFileSize;
 import javafx.geometry.Insets;
 import javafx.scene.layout.AnchorPane;
@@ -33,8 +33,6 @@ public class DownloadGuiInfo {
     private final VBox vBoxHeader = new VBox();
     private final GridPane gridPane = new GridPane();
     private final ProgData progData;
-    private int row = 0;
-
 
     public DownloadGuiInfo(AnchorPane anchorPane) {
         progData = ProgData.getInstance();
@@ -65,7 +63,6 @@ public class DownloadGuiInfo {
 
     private void setInfoText() {
         Text text1, text2;
-        row = 0;
         vBoxHeader.getChildren().clear();
         gridPane.getChildren().clear();
 
@@ -78,10 +75,12 @@ public class DownloadGuiInfo {
             return;
         }
 
+
+        int row = 0;
         gridPane.setVisible(true);
         getInfoText();
 
-        // Beschriftung
+        // Beschriftung erste Zeile
         text1 = new Text("laufende Downloads: " + progData.downloadInfos.getLoading());
         text1.setFont(Font.font(null, FontWeight.BOLD, -1));
         gridPane.add(text1, 1, row);
@@ -94,6 +93,7 @@ public class DownloadGuiInfo {
         text1.setFont(Font.font(null, FontWeight.BOLD, -1));
         gridPane.add(text1, 3, row);
 
+        // Beschriftung weitere Zeilen
         text1 = new Text("Größe: ");
         text1.setFont(Font.font(null, FontWeight.BOLD, -1));
         gridPane.add(text1, 0, ++row);
@@ -106,10 +106,13 @@ public class DownloadGuiInfo {
         text1.setFont(Font.font(null, FontWeight.BOLD, -1));
         gridPane.add(text1, 0, ++row);
 
+        //Downloadgröße
         row = 1;
-        getSizeText();
+        getSizeText(row);
+
+        //Restzeit Downloads, wartende
         ++row;
-        getRestzeit();
+        getRestzeit(row);
 
         // Bandbreite
         ++row;
@@ -165,7 +168,7 @@ public class DownloadGuiInfo {
         }
     }
 
-    private void getSizeText() {
+    private void getSizeText(int row) {
         Text text2;
         // Größe laufende Downloads
         if (progData.downloadInfos.getByteLoadingDownloads() > 0 ||
@@ -194,7 +197,7 @@ public class DownloadGuiInfo {
         }
     }
 
-    private void getRestzeit() {
+    private void getRestzeit(int row) {
         Text text2;
         // Restzeit laufende Downloads
         if (progData.downloadInfos.getTimeLeftLoadingDownloads() > 0 &&
