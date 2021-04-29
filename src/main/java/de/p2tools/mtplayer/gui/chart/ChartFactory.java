@@ -468,22 +468,14 @@ public class ChartFactory {
 
         upper = upper < max ? upper + lowDiv : upper;
         upper = upper <= 0 ? lowDiv : upper;
+        int unit = Math.round(upper / 5);
+//        System.out.println(max + " - " + upper + " - " + unit);
 
         NumberAxis axis = (NumberAxis) lineChart.getYAxis();
         axis.setUpperBound(upper);
-
-        if (upper <= 100) {
-            axis.setTickUnit(50);
-        } else if (upper <= 500) {
-            axis.setTickUnit(100);
-        } else if (upper <= 1000) {
-            axis.setTickUnit(200);
-        } else {
-            axis.setTickUnit(500);
-        }
-//        System.out.println(max + " - " + upper);
-
+        axis.setTickUnit(unit);
         setYAxisLabel(lineChart, chartData);
+
         for (final XYChart.Series<Number, Number> cSeries : list) {
             for (final XYChart.Data<Number, Number> date : cSeries.getData()) {
                 date.setYValue(date.getYValue().longValue() / chartData.getScale());
