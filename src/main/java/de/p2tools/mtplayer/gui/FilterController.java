@@ -17,10 +17,14 @@
 package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.tools.MLConfigs;
 import de.p2tools.p2Lib.guiTools.PGuiTools;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
@@ -30,21 +34,47 @@ public class FilterController extends AnchorPane {
     private final VBox vBoxAll = new VBox(20);
     private final ProgData progData;
 
-    public FilterController() {
+    public FilterController(MLConfigs mlConfig) {
+//        progData = ProgData.getInstance();
+//
+//        ScrollPane scrollPane = new ScrollPane();
+//        scrollPane.setFitToHeight(true);
+//        scrollPane.setFitToWidth(true);
+
+//        getChildren().addAll(scrollPane);
+
+//        AnchorPane.setLeftAnchor(scrollPane, 0.0);
+//        AnchorPane.setBottomAnchor(scrollPane, 0.0);
+//        AnchorPane.setRightAnchor(scrollPane, 0.0);
+//        AnchorPane.setTopAnchor(scrollPane, 0.0);
+
+//        scrollPane.setContent(vBoxAll);
+
         progData = ProgData.getInstance();
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
-
-        getChildren().addAll(scrollPane);
-
-        AnchorPane.setLeftAnchor(scrollPane, 0.0);
-        AnchorPane.setBottomAnchor(scrollPane, 0.0);
-        AnchorPane.setRightAnchor(scrollPane, 0.0);
-        AnchorPane.setTopAnchor(scrollPane, 0.0);
-
         scrollPane.setContent(vBoxAll);
+
+        Button button = new Button();
+        button.getStyleClass().add("close-button");
+        button.setOnAction(a -> mlConfig.setValue(false));
+
+        HBox hBox = new HBox();
+        hBox.getStyleClass().add("close-pane");
+        hBox.setAlignment(Pos.CENTER_RIGHT);
+        hBox.getChildren().addAll(button);
+
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(hBox, scrollPane);
+        VBox.setVgrow(scrollPane, Priority.ALWAYS);
+
+        AnchorPane.setLeftAnchor(vBox, 0.0);
+        AnchorPane.setBottomAnchor(vBox, 0.0);
+        AnchorPane.setRightAnchor(vBox, 0.0);
+        AnchorPane.setTopAnchor(vBox, 0.0);
+        getChildren().addAll(vBox);
     }
 
     public VBox getVBoxAll() {

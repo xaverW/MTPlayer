@@ -55,9 +55,9 @@ public class DownloadGuiController extends AnchorPane {
     private final ScrollPane scrollPane = new ScrollPane();
 
     private final TabPane tabPane = new TabPane();
-    private final AnchorPane tabFilmInfo = new AnchorPane();
-    private final AnchorPane tabBandwidth = new AnchorPane();
-    private final AnchorPane tabDownloadInfos = new AnchorPane();
+    //    private final AnchorPane tabFilmInfo = new AnchorPane();
+//    private final AnchorPane tabBandwidth = new AnchorPane();
+    //    private final AnchorPane tabDownloadInfos = new AnchorPane();
     private final TableView<Download> tableView = new TableView<>();
 
     private FilmGuiInfoController filmGuiInfoController;
@@ -74,6 +74,9 @@ public class DownloadGuiController extends AnchorPane {
 
     public DownloadGuiController() {
         progData = ProgData.getInstance();
+        filmGuiInfoController = new FilmGuiInfoController();
+        downloadGuiChart = new DownloadGuiChart(progData);
+        downloadGuiInfo = new DownloadGuiInfo();
 
         AnchorPane.setLeftAnchor(splitPane, 0.0);
         AnchorPane.setBottomAnchor(splitPane, 0.0);
@@ -88,22 +91,19 @@ public class DownloadGuiController extends AnchorPane {
 
         Tab tabFilm = new Tab("Filminfo");
         tabFilm.setClosable(false);
-        tabFilm.setContent(tabFilmInfo);
+        tabFilm.setContent(filmGuiInfoController);
 
         Tab tabBand = new Tab("Bandbreite");
         tabBand.setClosable(false);
-        tabBand.setContent(tabBandwidth);
+        tabBand.setContent(downloadGuiChart);
 
         Tab tabDown = new Tab("DownloadInfos");
         tabDown.setClosable(false);
-        tabDown.setContent(tabDownloadInfos);
+        tabDown.setContent(downloadGuiInfo);
 
         tabPane.getTabs().addAll(tabFilm, tabBand, tabDown);
         boolInfoOn.addListener((observable, oldValue, newValue) -> setInfoPane());
 
-        filmGuiInfoController = new FilmGuiInfoController(tabFilmInfo);
-        downloadGuiChart = new DownloadGuiChart(progData, tabBandwidth);
-        downloadGuiInfo = new DownloadGuiInfo(tabDownloadInfos);
 
         filteredDownloads = new FilteredList<>(progData.downloadList, p -> true);
         sortedDownloads = new SortedList<>(filteredDownloads);

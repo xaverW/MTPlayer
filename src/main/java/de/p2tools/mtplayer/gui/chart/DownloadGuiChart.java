@@ -27,7 +27,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
-public class DownloadGuiChart {
+public class DownloadGuiChart extends AnchorPane {
 
     private BooleanProperty separatChartProp = ProgConfig.DOWNLOAD_CHART_SEPARAT.getBooleanProperty();
     private BooleanProperty chartOnlyExistingProp = ProgConfig.DOWNLOAD_CHART_ONLY_EXISTING.getBooleanProperty();
@@ -37,10 +37,8 @@ public class DownloadGuiChart {
     private LineChart<Number, Number> lineChart = null;
     private final ChartData chartData;
     private ContextMenu cm = null;
-    private AnchorPane anchorPane;
 
-    public DownloadGuiChart(ProgData progData, AnchorPane anchorPane) {
-        this.anchorPane = anchorPane;
+    public DownloadGuiChart(ProgData progData) {
         this.progData = progData;
         chartData = progData.chartData;
 
@@ -77,7 +75,7 @@ public class DownloadGuiChart {
         AnchorPane.setBottomAnchor(lineChart, 0.0);
         AnchorPane.setRightAnchor(lineChart, 0.0);
         AnchorPane.setTopAnchor(lineChart, 0.0);
-        anchorPane.getChildren().add(lineChart);
+        getChildren().add(lineChart);
     }
 
     private void selectChartData() {

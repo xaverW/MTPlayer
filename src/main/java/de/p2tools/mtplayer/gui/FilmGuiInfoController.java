@@ -30,7 +30,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-public class FilmGuiInfoController {
+public class FilmGuiInfoController extends AnchorPane {
     private final TextArea textArea = new TextArea();
     private final Button btnReset = new Button("@");
     private final Label lblTitle = new Label("");
@@ -40,7 +40,7 @@ public class FilmGuiInfoController {
     private Film film = null;
     private String oldDescription = "";
 
-    public FilmGuiInfoController(AnchorPane anchorPane) {
+    public FilmGuiInfoController() {
         StackPane stackPane = new StackPane();
         stackPane.getChildren().addAll(textArea, btnReset);
         StackPane.setAlignment(btnReset, Pos.BOTTOM_RIGHT);
@@ -68,8 +68,8 @@ public class FilmGuiInfoController {
         AnchorPane.setBottomAnchor(vBox, 10.0);
         AnchorPane.setRightAnchor(vBox, 10.0);
         AnchorPane.setTopAnchor(vBox, 10.0);
-        anchorPane.getChildren().add(vBox);
-        anchorPane.setMinHeight(0);
+        getChildren().add(vBox);
+        setMinHeight(0);
     }
 
     public void setFilm(Film film) {

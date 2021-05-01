@@ -16,10 +16,10 @@
 
 package de.p2tools.mtplayer.gui;
 
-import de.p2tools.mtplayer.tools.storedFilter.FilterCheckRegEx;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboConstants;
+import de.p2tools.mtplayer.tools.storedFilter.FilterCheckRegEx;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -37,7 +37,7 @@ public class AboFilterController extends FilterController {
     private final ProgData progData;
 
     public AboFilterController() {
-        super();
+        super(ProgConfig.ABO_GUI_FILTER_DIVIDER_ON);
         vBoxFilter = getVBoxFilter(true);
         progData = ProgData.getInstance();
         progData.aboFilterController = this;

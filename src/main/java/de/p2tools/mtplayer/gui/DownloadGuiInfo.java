@@ -27,14 +27,14 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-public class DownloadGuiInfo {
+public class DownloadGuiInfo extends AnchorPane {
 
     private final VBox vBoxAll = new VBox();
     private final VBox vBoxHeader = new VBox();
     private final GridPane gridPane = new GridPane();
     private final ProgData progData;
 
-    public DownloadGuiInfo(AnchorPane anchorPane) {
+    public DownloadGuiInfo() {
         progData = ProgData.getInstance();
 
         gridPane.setHgap(30);
@@ -45,7 +45,7 @@ public class DownloadGuiInfo {
         vBoxAll.setSpacing(10);
         vBoxAll.setPadding(new Insets(10));
         vBoxAll.getChildren().addAll(vBoxHeader, gridPane);
-        anchorPane.getChildren().add(vBoxAll);
+        getChildren().add(vBoxAll);
 
         AnchorPane.setLeftAnchor(gridPane, 0.0);
         AnchorPane.setBottomAnchor(gridPane, 0.0);

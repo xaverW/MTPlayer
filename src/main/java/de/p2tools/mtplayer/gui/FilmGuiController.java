@@ -49,12 +49,11 @@ import java.util.Optional;
 public class FilmGuiController extends AnchorPane {
 
     private final SplitPane splitPane = new SplitPane();
-    private final ScrollPane scrollPane = new ScrollPane();
+    private final ScrollPane scrollPaneTableFilm = new ScrollPane();
 
     private final TabPane infoTab = new TabPane();
-    private final AnchorPane infoPane = new AnchorPane();
-    private final AnchorPane filmPane = new AnchorPane();
     private final TilePane tilePaneButton = new TilePane();
+    //    private final AnchorPane filmInfoPane = new AnchorPane();
     private FilmGuiInfoController filmGuiInfoController;
     private final TableView<Film> tableView = new TableView<>();
 
@@ -80,9 +79,9 @@ public class FilmGuiController extends AnchorPane {
         splitPane.setOrientation(Orientation.VERTICAL);
         getChildren().addAll(splitPane);
 
-        scrollPane.setFitToHeight(true);
-        scrollPane.setFitToWidth(true);
-        scrollPane.setContent(tableView);
+        scrollPaneTableFilm.setFitToHeight(true);
+        scrollPaneTableFilm.setFitToWidth(true);
+        scrollPaneTableFilm.setContent(tableView);
 
         initInfoPane();
         setInfoPane();
@@ -223,7 +222,7 @@ public class FilmGuiController extends AnchorPane {
     }
 
     private void initInfoPane() {
-        filmGuiInfoController = new FilmGuiInfoController(filmPane);
+        filmGuiInfoController = new FilmGuiInfoController();
         boolInfoOn.addListener((observable, oldValue, newValue) -> setInfoPane());
 
         tilePaneButton.setVgap(15);
@@ -235,8 +234,8 @@ public class FilmGuiController extends AnchorPane {
     }
 
     private void setInfoPane() {
-        infoPane.setVisible(boolInfoOn.getValue());
-        infoPane.setManaged(boolInfoOn.getValue());
+//        infoPane.setVisible(boolInfoOn.getValue());
+//        infoPane.setManaged(boolInfoOn.getValue());
 
         if (boolInfoOn.getValue()) {
             bound = true;
@@ -250,7 +249,7 @@ public class FilmGuiController extends AnchorPane {
 
             if (splitPane.getItems().size() != 1) {
                 splitPane.getItems().clear();
-                splitPane.getItems().add(scrollPane);
+                splitPane.getItems().add(scrollPaneTableFilm);
             }
         }
     }
@@ -260,10 +259,10 @@ public class FilmGuiController extends AnchorPane {
 
         if (setDataList.isEmpty()) {
             // dann brauchen wir den Tab mit den Button nicht
-            if (splitPane.getItems().size() != 2 || splitPane.getItems().get(1) != filmPane) {
+            if (splitPane.getItems().size() != 2 || splitPane.getItems().get(1) != filmGuiInfoController) {
                 splitPane.getItems().clear();
-                splitPane.getItems().addAll(scrollPane, filmPane);
-                SplitPane.setResizableWithParent(filmPane, false);
+                splitPane.getItems().addAll(scrollPaneTableFilm, filmGuiInfoController);
+                SplitPane.setResizableWithParent(filmGuiInfoController, false);
             }
             return;
         }
@@ -289,7 +288,7 @@ public class FilmGuiController extends AnchorPane {
 
         if (splitPane.getItems().size() != 2 || splitPane.getItems().get(1) != infoTab) {
             splitPane.getItems().clear();
-            splitPane.getItems().addAll(scrollPane, infoTab);
+            splitPane.getItems().addAll(scrollPaneTableFilm, infoTab);
             SplitPane.setResizableWithParent(infoTab, false);
 
             ScrollPane scrollPane = new ScrollPane();
@@ -300,7 +299,7 @@ public class FilmGuiController extends AnchorPane {
 
             Tab filmInfoTab = new Tab("Beschreibung");
             filmInfoTab.setClosable(false);
-            filmInfoTab.setContent(filmPane);
+            filmInfoTab.setContent(filmGuiInfoController);
 
             Tab setTab = new Tab("Startbutton");
             setTab.setClosable(false);

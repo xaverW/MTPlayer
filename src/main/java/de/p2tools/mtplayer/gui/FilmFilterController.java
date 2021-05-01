@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.gui;
 
+import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.geometry.Insets;
@@ -40,7 +41,7 @@ public class FilmFilterController extends FilterController {
     FilmFilterControllerProfiles profiles;
 
     public FilmFilterController() {
-        super();
+        super(ProgConfig.FILM_GUI_FILTER_DIVIDER_ON);
         progData = ProgData.getInstance();
 
         sender = new FilmFilterControllerTextFilter();
