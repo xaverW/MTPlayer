@@ -25,6 +25,7 @@ import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.mtplayer.gui.tools.table.TableRowAbo;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PTableFactory;
+import de.p2tools.p2Lib.guiTools.pClosePane.PClosePaneH;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.collections.ListChangeListener;
@@ -36,6 +37,8 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 
 import java.util.Optional;
 
@@ -43,10 +46,9 @@ public class AboGuiController extends AnchorPane {
 
     private final SplitPane splitPane = new SplitPane();
     private final ScrollPane scrollPane = new ScrollPane();
-    private final AnchorPane infoPane = new AnchorPane();
-
     private AboGuiInfoController aboGuiInfoController;
     private final TableView<Abo> tableView = new TableView<>();
+    private final PClosePaneH pClosePaneH;
 
     private final ProgData progData;
     private boolean bound = false;
@@ -58,6 +60,7 @@ public class AboGuiController extends AnchorPane {
 
     public AboGuiController() {
         progData = ProgData.getInstance();
+        pClosePaneH = new PClosePaneH(ProgConfig.ABO_GUI_DIVIDER_ON.getBooleanProperty(), true);
 
         AnchorPane.setLeftAnchor(splitPane, 0.0);
         AnchorPane.setBottomAnchor(splitPane, 0.0);
@@ -70,8 +73,11 @@ public class AboGuiController extends AnchorPane {
         scrollPane.setFitToWidth(true);
         scrollPane.setContent(tableView);
 
-        aboGuiInfoController = new AboGuiInfoController(infoPane);
+        aboGuiInfoController = new AboGuiInfoController();
+        VBox.setVgrow(aboGuiInfoController, Priority.ALWAYS);
+        pClosePaneH.getVBoxAll().getChildren().add(aboGuiInfoController);
         boolInfoOn.addListener((observable, oldValue, newValue) -> setInfoPane());
+
         filteredAbos = new FilteredList<>(progData.aboList, p -> true);
         sortedAbos = new SortedList<>(filteredAbos);
 
@@ -83,7 +89,6 @@ public class AboGuiController extends AnchorPane {
     }
 
     public void isShown() {
-//        System.out.println("AboGuiIsShown");
         tableView.requestFocus();
         progData.filmInfoDialogController.setFilm(null);
         progData.filmFilterControllerClearFilter.setClearText("Filter löschen");
@@ -151,8 +156,8 @@ public class AboGuiController extends AnchorPane {
     }
 
     private void setInfoPane() {
-        infoPane.setVisible(boolInfoOn.getValue());
-        infoPane.setManaged(boolInfoOn.getValue());
+        pClosePaneH.setVisible(boolInfoOn.getValue());
+        pClosePaneH.setManaged(boolInfoOn.getValue());
 
         if (!boolInfoOn.getValue()) {
             if (bound) {
@@ -165,8 +170,8 @@ public class AboGuiController extends AnchorPane {
         } else {
             bound = true;
             splitPane.getItems().clear();
-            splitPane.getItems().addAll(scrollPane, infoPane);
-            SplitPane.setResizableWithParent(infoPane, false);
+            splitPane.getItems().addAll(scrollPane, pClosePaneH);
+            SplitPane.setResizableWithParent(pClosePaneH, false);
             splitPane.getDividers().get(0).positionProperty().bindBidirectional(splitPaneProperty);
         }
     }

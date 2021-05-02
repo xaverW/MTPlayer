@@ -53,9 +53,9 @@ public class TableAbo {
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         nameColumn.getStyleClass().add("alignCenterLeft");
 
-        final TableColumn<Abo, String> descriptionColumn = new TableColumn<>("Beschreibung");
-        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-        descriptionColumn.getStyleClass().add("alignCenterLeft");
+//        final TableColumn<Abo, String> descriptionColumn = new TableColumn<>("Beschreibung");
+//        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+//        descriptionColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<Abo, String> resColumn = new TableColumn<>("Auflösung");
         resColumn.setCellValueFactory(new PropertyValueFactory<>("resolution"));
@@ -115,7 +115,7 @@ public class TableAbo {
         psetColumn.getStyleClass().add("alignCenterLeft");
 
         return new TableColumn[]{
-                nrColumn, activColumn, hitColumn, nameColumn, descriptionColumn, resColumn, senderColumn,
+                nrColumn, activColumn, hitColumn, nameColumn, /*descriptionColumn,*/ resColumn, senderColumn,
                 themeColumn, themeExactColumn, themeTitleColumn, titleColumn,
                 somewhereColumn, timeRange, minColumn, maxColumn, destinationColumn, datumColumn, psetColumn};
 
@@ -138,15 +138,6 @@ public class TableAbo {
                         }
 
                         initCell(item);
-
-//                        TableRow<Abo> currentRow = getTableRow();
-//                        if (currentRow != null) {
-//                            if (!item.booleanValue()) {
-//                                currentRow.setStyle(MTColor.ABO_SWITCHED_OFF.getCssBackgroundSel());
-//                            } else {
-//                                currentRow.setStyle("");
-//                            }
-//                        }
                     }
                 };
                 return cell;
@@ -227,5 +218,4 @@ public class TableAbo {
         };
         return cell;
     };
-
 }

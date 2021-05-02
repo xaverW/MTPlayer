@@ -23,18 +23,20 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
-import javafx.scene.layout.*;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-public class AboGuiInfoController {
+public class AboGuiInfoController extends VBox {
     private final TextArea txtInfo = new TextArea();
     private final TextField txtName = new TextField("");
 
     private Abo abo = null;
 
-    public AboGuiInfoController(AnchorPane anchorPane) {
-
+    public AboGuiInfoController() {
         txtName.setFont(Font.font(null, FontWeight.BOLD, -1));
         txtName.setTooltip(new Tooltip("Name des Abos"));
         txtInfo.setWrapText(true);
@@ -43,30 +45,18 @@ public class AboGuiInfoController {
 
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
-        gridPane.setVgap(15);
+        gridPane.setVgap(5);
         gridPane.setPadding(new Insets(10));
         GridPane.setVgrow(txtInfo, Priority.ALWAYS);
 
-        VBox vb = new VBox(1);
-        vb.getChildren().addAll(new Label(Abo.COLUMN_NAMES[Abo.ABO_NAME]), txtName);
-        gridPane.add(vb, 0, 0);
+        gridPane.add(new Label(Abo.COLUMN_NAMES[Abo.ABO_NAME]), 0, 0);
+        gridPane.add(txtName, 1, 0);
+        gridPane.add(new Label(Abo.COLUMN_NAMES[Abo.ABO_DESCRIPTION]), 0, 1);
+        gridPane.add(txtInfo, 1, 1);
 
-        vb = new VBox(1);
-        VBox.setVgrow(txtInfo, Priority.ALWAYS);
-        vb.getChildren().addAll(new Label(Abo.COLUMN_NAMES[Abo.ABO_DESCRIPTION]), txtInfo);
-        gridPane.add(vb, 0, 1);
-
-        RowConstraints rc = new RowConstraints();
-        rc.setVgrow(Priority.ALWAYS);
-        gridPane.getRowConstraints().addAll(new RowConstraints(), rc);
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow());
-
-        AnchorPane.setLeftAnchor(gridPane, 0.0);
-        AnchorPane.setBottomAnchor(gridPane, 0.0);
-        AnchorPane.setRightAnchor(gridPane, 0.0);
-        AnchorPane.setTopAnchor(gridPane, 0.0);
-        anchorPane.getChildren().add(gridPane);
-        anchorPane.setMinHeight(0);
+        gridPane.getColumnConstraints().addAll(new ColumnConstraints(), PColumnConstraints.getCcComputedSizeAndHgrow());
+        VBox.setVgrow(gridPane, Priority.ALWAYS);
+        getChildren().add(gridPane);
     }
 
     public void setAbo(Abo newAbo) {
@@ -85,6 +75,5 @@ public class AboGuiInfoController {
         txtName.textProperty().bindBidirectional(this.abo.nameProperty());
         txtInfo.textProperty().bindBidirectional(this.abo.descriptionProperty());
     }
-
 }
 

@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.data.film.Film;
 import de.p2tools.mtplayer.controller.data.film.FilmXml;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -30,7 +31,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-public class FilmGuiInfoController extends AnchorPane {
+public class FilmGuiInfoController extends VBox {
     private final TextArea textArea = new TextArea();
     private final Button btnReset = new Button("@");
     private final Label lblTitle = new Label("");
@@ -59,17 +60,11 @@ public class FilmGuiInfoController extends AnchorPane {
         textArea.setPrefRowCount(4);
         textArea.textProperty().addListener((a, b, c) -> setFilmDescription());
 
-        VBox vBox = new VBox(10);
-        vBox.getChildren().add(lblTitle);
-        vBox.getChildren().add(stackPane);
-        vBox.getChildren().add(hBox);
-
-        AnchorPane.setLeftAnchor(vBox, 10.0);
-        AnchorPane.setBottomAnchor(vBox, 10.0);
-        AnchorPane.setRightAnchor(vBox, 10.0);
-        AnchorPane.setTopAnchor(vBox, 10.0);
-        getChildren().add(vBox);
-        setMinHeight(0);
+        setSpacing(10);
+        setPadding(new Insets(10));
+        getChildren().add(lblTitle);
+        getChildren().add(stackPane);
+        getChildren().add(hBox);
     }
 
     public void setFilm(Film film) {
@@ -112,6 +107,5 @@ public class FilmGuiInfoController extends AnchorPane {
             btnReset.setVisible(false);
         }
     }
-
 }
 

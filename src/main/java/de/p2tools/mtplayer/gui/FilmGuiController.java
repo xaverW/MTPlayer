@@ -30,6 +30,7 @@ import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PColor;
 import de.p2tools.p2Lib.guiTools.PTableFactory;
+import de.p2tools.p2Lib.guiTools.pClosePane.PClosePaneH;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -40,8 +41,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.control.*;
 import javafx.scene.input.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.TilePane;
+import javafx.scene.layout.*;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -50,15 +50,13 @@ public class FilmGuiController extends AnchorPane {
 
     private final SplitPane splitPane = new SplitPane();
     private final ScrollPane scrollPaneTableFilm = new ScrollPane();
+    private final PClosePaneH pClosePaneH;
 
-    private final TabPane infoTab = new TabPane();
-    private final TilePane tilePaneButton = new TilePane();
-    //    private final AnchorPane filmInfoPane = new AnchorPane();
     private FilmGuiInfoController filmGuiInfoController;
     private final TableView<Film> tableView = new TableView<>();
 
     private final ProgData progData;
-    private boolean bound = false;
+    private boolean boundSplitPaneDivPos = false;
     private final SortedList<Film> sortedList;
     private final KeyCombination STRG_A = new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_ANY);
 
@@ -68,9 +66,7 @@ public class FilmGuiController extends AnchorPane {
     public FilmGuiController() {
         progData = ProgData.getInstance();
         sortedList = progData.filmlistFiltered.getSortedList();
-        sortedList.addListener((ListChangeListener<Film>) c -> {
-            selectFilm();
-        });
+        pClosePaneH = new PClosePaneH(ProgConfig.FILM_GUI_DIVIDER_ON.getBooleanProperty(), true);
 
         AnchorPane.setLeftAnchor(splitPane, 0.0);
         AnchorPane.setBottomAnchor(splitPane, 0.0);
@@ -83,6 +79,9 @@ public class FilmGuiController extends AnchorPane {
         scrollPaneTableFilm.setFitToWidth(true);
         scrollPaneTableFilm.setContent(tableView);
 
+        sortedList.addListener((ListChangeListener<Film>) c -> {
+            selectFilm();
+        });
         initInfoPane();
         setInfoPane();
         initTable();
@@ -90,7 +89,6 @@ public class FilmGuiController extends AnchorPane {
     }
 
     public void isShown() {
-//        System.out.println("FilmGuiIsShown");
         setFilm();
         tableView.requestFocus();
         progData.filmFilterControllerClearFilter.setClearText("Filter _löschen");
@@ -224,26 +222,16 @@ public class FilmGuiController extends AnchorPane {
     private void initInfoPane() {
         filmGuiInfoController = new FilmGuiInfoController();
         boolInfoOn.addListener((observable, oldValue, newValue) -> setInfoPane());
-
-        tilePaneButton.setVgap(15);
-        tilePaneButton.setHgap(15);
-        tilePaneButton.setPadding(new Insets(10));
-        tilePaneButton.setStyle("-fx-border-color: -fx-text-box-border; " +
-                "-fx-border-radius: 5px; " +
-                "-fx-border-width: 1;");
     }
 
     private void setInfoPane() {
-//        infoPane.setVisible(boolInfoOn.getValue());
-//        infoPane.setManaged(boolInfoOn.getValue());
-
         if (boolInfoOn.getValue()) {
-            bound = true;
+            boundSplitPaneDivPos = true;
             setInfoTabPane();
             splitPane.getDividers().get(0).positionProperty().bindBidirectional(splitPaneProperty);
 
         } else {
-            if (bound) {
+            if (boundSplitPaneDivPos) {
                 splitPane.getDividers().get(0).positionProperty().unbindBidirectional(splitPaneProperty);
             }
 
@@ -255,20 +243,51 @@ public class FilmGuiController extends AnchorPane {
     }
 
     private void setInfoTabPane() {
-        final SetDataList setDataList = progData.setDataList.getSetDataListButton();
+        if (splitPane.getItems().size() != 2) {
+            //erst mal splitPane einrichten, dass Tabelle ind Info angezeigt wird
+            splitPane.getItems().clear();
+            splitPane.getItems().addAll(scrollPaneTableFilm, pClosePaneH);
+            SplitPane.setResizableWithParent(pClosePaneH, false);
+        }
 
+        pClosePaneH.getVBoxAll().getChildren().clear();
+        pClosePaneH.getVBoxAll().setMinHeight(Region.USE_PREF_SIZE);
+
+        final SetDataList setDataList = progData.setDataList.getSetDataListButton();
         if (setDataList.isEmpty()) {
-            // dann brauchen wir den Tab mit den Button nicht
-            if (splitPane.getItems().size() != 2 || splitPane.getItems().get(1) != filmGuiInfoController) {
-                splitPane.getItems().clear();
-                splitPane.getItems().addAll(scrollPaneTableFilm, filmGuiInfoController);
-                SplitPane.setResizableWithParent(filmGuiInfoController, false);
-            }
+            //dann brauchen wir den Tab mit den Button nicht
+            pClosePaneH.getVBoxAll().getChildren().setAll(filmGuiInfoController);
+            VBox.setVgrow(filmGuiInfoController, Priority.ALWAYS);
             return;
         }
 
         // Button wieder aufbauen
-        tilePaneButton.getChildren().clear();
+        TilePane tilePaneButton = getButtonPane(setDataList);
+
+        Tab filmInfoTab = new Tab("Beschreibung");
+        filmInfoTab.setClosable(false);
+        filmInfoTab.setContent(filmGuiInfoController);
+
+        Tab buttonTab = new Tab("Startbutton");
+        buttonTab.setClosable(false);
+        buttonTab.setContent(tilePaneButton);
+
+        TabPane infoTabPane = new TabPane();
+        infoTabPane.getTabs().addAll(filmInfoTab, buttonTab);
+
+        pClosePaneH.getVBoxAll().getChildren().setAll(infoTabPane);
+        VBox.setVgrow(infoTabPane, Priority.ALWAYS);
+    }
+
+    private TilePane getButtonPane(SetDataList setDataList) {
+        TilePane tilePaneButton = new TilePane();
+        tilePaneButton.setVgap(15);
+        tilePaneButton.setHgap(15);
+        tilePaneButton.setPadding(new Insets(10));
+        tilePaneButton.setStyle("-fx-border-color: -fx-text-box-border; " +
+                "-fx-border-radius: 5px; " +
+                "-fx-border-width: 1;");
+
         setDataList.stream().forEach(setData -> {
             Button btn = new Button(setData.getVisibleName());
             btn.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
@@ -285,29 +304,7 @@ public class FilmGuiController extends AnchorPane {
             btn.setOnAction(a -> playFilmUrlWithSet(setData));
             tilePaneButton.getChildren().add(btn);
         });
-
-        if (splitPane.getItems().size() != 2 || splitPane.getItems().get(1) != infoTab) {
-            splitPane.getItems().clear();
-            splitPane.getItems().addAll(scrollPaneTableFilm, infoTab);
-            SplitPane.setResizableWithParent(infoTab, false);
-
-            ScrollPane scrollPane = new ScrollPane();
-            scrollPane.setFitToWidth(true);
-            scrollPane.setFitToHeight(true);
-            scrollPane.setPadding(new Insets(10));
-            scrollPane.setContent(tilePaneButton);
-
-            Tab filmInfoTab = new Tab("Beschreibung");
-            filmInfoTab.setClosable(false);
-            filmInfoTab.setContent(filmGuiInfoController);
-
-            Tab setTab = new Tab("Startbutton");
-            setTab.setClosable(false);
-            setTab.setContent(scrollPane);
-
-            infoTab.getTabs().clear();
-            infoTab.getTabs().addAll(filmInfoTab, setTab);
-        }
+        return tilePaneButton;
     }
 
     private void initTable() {

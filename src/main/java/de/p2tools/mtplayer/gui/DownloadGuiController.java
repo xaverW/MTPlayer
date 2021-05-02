@@ -33,6 +33,7 @@ import de.p2tools.mtplayer.gui.tools.table.TableRowDownload;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.POpen;
 import de.p2tools.p2Lib.guiTools.PTableFactory;
+import de.p2tools.p2Lib.guiTools.pClosePane.PClosePaneH;
 import de.p2tools.p2Lib.tools.PSystemUtils;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -45,6 +46,8 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -53,16 +56,13 @@ public class DownloadGuiController extends AnchorPane {
 
     private final SplitPane splitPane = new SplitPane();
     private final ScrollPane scrollPane = new ScrollPane();
-
-    private final TabPane tabPane = new TabPane();
-    //    private final AnchorPane tabFilmInfo = new AnchorPane();
-//    private final AnchorPane tabBandwidth = new AnchorPane();
-    //    private final AnchorPane tabDownloadInfos = new AnchorPane();
     private final TableView<Download> tableView = new TableView<>();
+    private final TabPane tabPane = new TabPane();
 
     private FilmGuiInfoController filmGuiInfoController;
     private DownloadGuiChart downloadGuiChart;
     private DownloadGuiInfo downloadGuiInfo;
+    private final PClosePaneH pClosePaneH;
 
     private final ProgData progData;
     private boolean bound = false;
@@ -77,6 +77,8 @@ public class DownloadGuiController extends AnchorPane {
         filmGuiInfoController = new FilmGuiInfoController();
         downloadGuiChart = new DownloadGuiChart(progData);
         downloadGuiInfo = new DownloadGuiInfo();
+
+        pClosePaneH = new PClosePaneH(ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.getBooleanProperty(), false);
 
         AnchorPane.setLeftAnchor(splitPane, 0.0);
         AnchorPane.setBottomAnchor(splitPane, 0.0);
@@ -102,8 +104,10 @@ public class DownloadGuiController extends AnchorPane {
         tabDown.setContent(downloadGuiInfo);
 
         tabPane.getTabs().addAll(tabFilm, tabBand, tabDown);
+        pClosePaneH.getVBoxAll().getChildren().clear();
+        pClosePaneH.getVBoxAll().getChildren().add(tabPane);
+        VBox.setVgrow(tabPane, Priority.ALWAYS);
         boolInfoOn.addListener((observable, oldValue, newValue) -> setInfoPane());
-
 
         filteredDownloads = new FilteredList<>(progData.downloadList, p -> true);
         sortedDownloads = new SortedList<>(filteredDownloads);
@@ -127,7 +131,6 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     public void isShown() {
-//        System.out.println("DownloadGuiIsShown");
         setFilm();
         tableView.requestFocus();
         progData.filmFilterControllerClearFilter.setClearText("Filter löschen");
@@ -357,23 +360,23 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private void setInfoPane() {
-        tabPane.setVisible(boolInfoOn.getValue());
-        tabPane.setManaged(boolInfoOn.getValue());
+        pClosePaneH.setVisible(boolInfoOn.getValue());
+        pClosePaneH.setManaged(boolInfoOn.getValue());
 
         if (!boolInfoOn.getValue()) {
             if (bound) {
                 splitPane.getDividers().get(0).positionProperty().unbindBidirectional(splitPaneProperty);
             }
-
             splitPane.getItems().clear();
             splitPane.getItems().add(scrollPane);
 
         } else {
             bound = true;
+
             splitPane.getItems().clear();
-            splitPane.getItems().addAll(scrollPane, tabPane);
+            splitPane.getItems().addAll(scrollPane, pClosePaneH);
             splitPane.getDividers().get(0).positionProperty().bindBidirectional(splitPaneProperty);
-            SplitPane.setResizableWithParent(tabPane, false);
+            SplitPane.setResizableWithParent(pClosePaneH, false);
         }
     }
 
@@ -506,7 +509,6 @@ public class DownloadGuiController extends AnchorPane {
 
     private void stopDownloads(boolean all) {
         // bezieht sich auf "alle" oder nur die markierten Filme
-
         final ArrayList<Download> listDownloadsSelected = new ArrayList<>();
         // die URLs sammeln
         listDownloadsSelected.addAll(all ? tableView.getItems() : getSelList());
