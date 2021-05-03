@@ -82,8 +82,12 @@ public class ProgTray {
 
         miMaxMin.addActionListener(e -> Platform.runLater(() -> maxMin()));
         miConfig.addActionListener(e -> Platform.runLater(() -> new ConfigDialogController()));
-        miLogfile.addActionListener((e -> Platform.runLater(() -> PLogger.openLogFile())));
-        miTray.addActionListener((e -> Platform.runLater(() -> ProgConfig.SYSTEM_TRAY.setValue(false))));
+        miLogfile.addActionListener(e -> Platform.runLater(() -> PLogger.openLogFile()));
+        miTray.addActionListener(e -> Platform.runLater(() -> {
+            //vor dem Ausschalten des Tray GUI anzeigen!!
+            max();
+            ProgConfig.SYSTEM_TRAY.setValue(false);
+        }));
         miAbout.addActionListener(e -> Platform.runLater(() -> new AboutDialogController(progData)));
         miQuit.addActionListener(e -> Platform.runLater(() -> ProgQuit.quit(false)));
 
@@ -119,6 +123,18 @@ public class ProgTray {
             systemTray.add(trayicon);
         } catch (AWTException exception) {
             PLog.errorLog(945120364, exception.getMessage());
+        }
+    }
+
+    private void max() {
+        if (!progData.primaryStage.isShowing()) {
+            Platform.runLater(() -> progData.primaryStage.show());
+        }
+
+        if (progData.quitDialogController != null) {
+            if (!progData.quitDialogController.isShowing()) {
+                Platform.runLater(() -> progData.quitDialogController.getStage().show());
+            }
         }
     }
 
