@@ -60,11 +60,11 @@ public class ProgQuit {
             if (progData.quitDialogController != null) {
                 progData.quitDialogController.getStage().toFront();
                 quitDialogController = progData.quitDialogController;
-            } else {
-                quitDialogController = new QuitDialogController();
                 if (startWithWaiting) {
                     quitDialogController.startWaiting();
                 }
+            } else {
+                quitDialogController = new QuitDialogController(startWithWaiting);
             }
 
         } else {

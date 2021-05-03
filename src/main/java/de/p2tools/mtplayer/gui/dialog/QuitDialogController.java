@@ -35,10 +35,12 @@ public class QuitDialogController extends PDialogExtra {
     private final StackPane stackPane = new StackPane();
     private final PMaskerPane maskerPane = new PMaskerPane();
     private final WaitTask waitTask = new WaitTask();
+    private final boolean startWithWaiting;
 
-    public QuitDialogController() {
+    public QuitDialogController(boolean startWithWaiting) {
         super(ProgData.getInstance().primaryStage, null, "Programm beenden", true, false);
         ProgData.getInstance().quitDialogController = this;
+        this.startWithWaiting = startWithWaiting;
         init(true);
     }
 
@@ -100,6 +102,9 @@ public class QuitDialogController extends PDialogExtra {
 
         stackPane.getChildren().addAll(gridPane, maskerPane);
         getvBoxCont().getChildren().addAll(stackPane);
+        if (startWithWaiting) {
+            startWaiting();
+        }
     }
 
     public void startWaiting() {

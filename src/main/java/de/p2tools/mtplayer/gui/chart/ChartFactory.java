@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.Download;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
+import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -457,7 +458,7 @@ public class ChartFactory {
             }
         }
 
-        while (max > 5_000) {
+        while (max > 25_000) {
             max /= 1_000;
             chartData.setScale(chartData.getScale() * 1000);
         }
@@ -466,10 +467,20 @@ public class ChartFactory {
         long upper = Math.round(max / lowDiv);
         upper *= lowDiv;
 
-        upper = upper < max ? upper + lowDiv : upper;
+//        upper = upper < max ? upper + lowDiv : upper;
+//        if (upper < max) {
+//            System.out.println("Feher!!!!!!!!!!!!!!!!!");
+//        }
+
+        int count = 0;
+        while (upper < max) {
+            ++count;
+            upper = upper < max ? upper + lowDiv : upper;
+        }
         upper = upper <= 0 ? lowDiv : upper;
         int unit = Math.round(upper / 5);
-//        System.out.println(max + " - " + upper + " - " + unit);
+        
+        PLog.sysLog("max: " + max + "  upper: " + upper + "  unit: " + unit + "  count: " + count);
 
         NumberAxis axis = (NumberAxis) lineChart.getYAxis();
         axis.setUpperBound(upper);
