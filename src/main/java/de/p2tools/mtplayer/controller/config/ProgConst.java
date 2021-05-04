@@ -108,7 +108,7 @@ public class ProgConst {
     // es können maximal soviele Filme eines Senders/Servers gleichzeitig geladen werden
     public static final int MAX_SENDER_FILME_LADEN = 2;
 
-    public static final int MAX_DEST_PATH_IN_DIALOG_DOWNLOAD = 15;
+    public static final int MAX_DEST_PATH_IN_DIALOG_DOWNLOAD = 10;
 
     public static final String GUI_FILME_FILTER_DIVIDER_LOCATION = "0.3";
     public static final String GUI_DOWNLOAD_FILTER_DIVIDER_LOCATION = "0.3";

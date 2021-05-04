@@ -369,36 +369,22 @@ public class DownloadAddDialogController extends PDialogExtra {
     }
 
     private void pathNameBase() {
-        if (cbPath.getItems().isEmpty()) {
-            //leer
+        if (cbPath.getItems().isEmpty() ||
+                cbPath.getItems().size() == 1 && cbPath.getItems().get(0).isEmpty()) {
+            //leer oder und ein leerer Eintrag
+            String path;
+            cbPath.getItems().clear();
             if (setData.getDestPath().isEmpty()) {
-                String path = System.getProperty("user.home");
-                cbPath.getItems().add(path);
-                cbPath.getSelectionModel().select(path);
+                path = System.getProperty("user.home");
             } else {
-                String path = setData.getDestPath();
-                cbPath.getItems().add(path);
-                cbPath.getSelectionModel().select(path);
+                path = setData.getDestPath();
             }
-        } else if (cbPath.getItems().size() == 1 && cbPath.getItems().get(0).isEmpty()) {
-            //dann ist nur der leere Eintrag drin
-            if (setData.getDestPath().isEmpty()) {
-                cbPath.getItems().clear();
-                String path = System.getProperty("user.home");
-                cbPath.getItems().add(path);
-                cbPath.getSelectionModel().select(path);
-            } else {
-                cbPath.getItems().clear();
-                String path = setData.getDestPath();
-                cbPath.getItems().add(path);
-                cbPath.getSelectionModel().select(path);
-            }
-        } else if (cbPath.getItems().size() == 1) {
-            //ein Eintrag aber nicht leer
-            cbPath.getSelectionModel().select(0);
+            cbPath.getItems().add(path);
+            cbPath.getSelectionModel().select(path);
+
         } else {
-            //dann gibts den 2.
-            cbPath.getSelectionModel().select(1);
+            //min. ein Eintrag und nicht leer
+            cbPath.getSelectionModel().select(0);
         }
 
         if (txtName.getText().isEmpty()) {
