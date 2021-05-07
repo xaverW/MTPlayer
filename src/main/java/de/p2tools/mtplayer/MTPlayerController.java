@@ -377,4 +377,28 @@ public class MTPlayerController extends StackPane {
 //            System.out.println("AboInfos");
         }
     }
+
+    public boolean isFilmPaneShown() {
+        if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneFilm)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isDownloadPaneShown() {
+        if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneDownoad)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isAboPaneShown() {
+        if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneAbo)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

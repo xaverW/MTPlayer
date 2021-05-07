@@ -121,7 +121,8 @@ public class DownloadGuiController extends AnchorPane {
         Listener.addListener(new Listener(Listener.EREIGNIS_TIMER, DownloadGuiChart.class.getSimpleName()) {
             @Override
             public void pingFx() {
-                downloadGuiChart.searchInfos(tabPane.getSelectionModel().getSelectedItem().equals(tabBand));
+                downloadGuiChart.searchInfos(progData.mtPlayerController.isDownloadPaneShown() &&
+                        tabPane.getSelectionModel().getSelectedItem().equals(tabBand));
             }
         });
     }
