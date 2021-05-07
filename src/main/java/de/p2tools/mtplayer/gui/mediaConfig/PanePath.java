@@ -91,6 +91,7 @@ public class PanePath {
 
         final TableColumn<MediaCollectionData, String> pathColumn = new TableColumn<>("Pfad");
         pathColumn.setCellValueFactory(new PropertyValueFactory<>("path"));
+        pathColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
         final TableColumn<MediaCollectionData, Integer> countColumn = new TableColumn<>("Anzahl");
         countColumn.setCellValueFactory(new PropertyValueFactory<>("count"));
