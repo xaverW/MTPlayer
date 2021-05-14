@@ -92,7 +92,7 @@ public class DownloadGuiChart extends AnchorPane {
     }
 
     private ContextMenu initContextMenu() {
-        final Label lblValue = new Label(" " + chartData.getShowMaxTimeMinutes() + " Min.");
+        final Label lblValue = new Label(" " + chartData.getDownloadChartMaxTimeMinutes() + " Min.");
         final Label lblInfo = new Label("Zeitraum:");
 
         final Slider slMaxTime = new Slider();
@@ -106,7 +106,7 @@ public class DownloadGuiChart extends AnchorPane {
         slMaxTime.setMinorTickCount(13);
         slMaxTime.setMajorTickUnit(140);
 
-        slMaxTime.valueProperty().bindBidirectional(chartData.showMaxTimeMinutesProperty());
+        slMaxTime.valueProperty().bindBidirectional(chartData.downloadChartMaxTimeMinutesProperty());
         slMaxTime.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 lblValue.setText(" " + newValue.intValue() + " Min.");

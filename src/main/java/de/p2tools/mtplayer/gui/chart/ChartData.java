@@ -27,7 +27,7 @@ import javafx.scene.chart.XYChart;
 import java.util.ArrayList;
 
 public class ChartData {
-    private IntegerProperty showMaxTimeMinutes = ProgConfig.DOWNLOAD_CHART_MAX_TIME.getIntegerProperty(); // MAX Minuten todo
+    private IntegerProperty downloadChartMaxTimeMinutes = ProgConfig.DOWNLOAD_CHART_MAX_TIME_MIN.getIntegerProperty(); // MAX Minuten todo
 
     private int countSek = 0;
     private double countMin = 0;
@@ -46,22 +46,23 @@ public class ChartData {
     private final ObservableList<BandwidthData> bandwidthDataList = FXCollections.observableArrayList();
 
     public ChartData() {
-        ChartFactory.fillChartSeries(chartSeriesSum);
+        ChartFactory.initChartSeries(chartSeriesSum);
     }
 
-    public int getShowMaxTimeMinutes() {
-        return showMaxTimeMinutes.get();
+    public int getDownloadChartMaxTimeMinutes() {
+        return downloadChartMaxTimeMinutes.get();
     }
 
-    public IntegerProperty showMaxTimeMinutesProperty() {
-        return showMaxTimeMinutes;
+    public IntegerProperty downloadChartMaxTimeMinutesProperty() {
+        return downloadChartMaxTimeMinutes;
     }
 
-    public void setShowMaxTimeMinutes(int showMaxTimeMinutes) {
-        this.showMaxTimeMinutes.set(showMaxTimeMinutes);
+    public void setDownloadChartMaxTimeMinutes(int downloadChartMaxTimeMinutes) {
+        this.downloadChartMaxTimeMinutes.set(downloadChartMaxTimeMinutes);
     }
 
     public int getCountSek() {
+        //Summe aller "Sekunden" die das Programm läuft
         return countSek;
     }
 
@@ -72,6 +73,14 @@ public class ChartData {
 
     public double getCountMin() {
         return countMin;
+    }
+
+    public int getTimeShowingSeconds() {
+        int displayMinTimeShowing_sec = getCountSek() - getDownloadChartMaxTimeMinutes() * 60;
+        if (displayMinTimeShowing_sec < 0) {
+            displayMinTimeShowing_sec = 0;
+        }
+        return displayMinTimeShowing_sec;
     }
 
     public int getScale() {

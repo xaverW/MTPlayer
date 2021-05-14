@@ -69,12 +69,6 @@ public class BandwidthData extends ArrayList<Long> {
         return startTimeSec;
     }
 
-    public void removeFirst() {
-        //ersten Wert entfernen und dann auch!! die Startzeit weiterschieben
-        this.remove(0);
-        this.startTimeSec += ChartFactory.DATA_ALL_SECONDS;
-    }
-
     public int getTimeSec(int sec) {
         return startTimeSec + sec * ChartFactory.DATA_ALL_SECONDS;
     }
@@ -89,6 +83,12 @@ public class BandwidthData extends ArrayList<Long> {
 
     public double getTimeMin(int sec) {
         return getTimeSec(sec) / 60.0;
+    }
+
+    public void removeFirst() {
+        //ersten Wert entfernen und dann auch!! die Startzeit weiterschieben
+        this.remove(0);
+        this.startTimeSec += ChartFactory.DATA_ALL_SECONDS;
     }
 
     public long getLast() {
