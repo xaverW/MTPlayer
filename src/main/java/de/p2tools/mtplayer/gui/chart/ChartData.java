@@ -76,6 +76,7 @@ public class ChartData {
     }
 
     public int getTimeShowingSeconds() {
+        //Zeit die angezeigt werden soll oder Programmlaufzeit wenn weniger
         int displayMinTimeShowing_sec = getCountSek() - getDownloadChartMaxTimeMinutes() * 60;
         if (displayMinTimeShowing_sec < 0) {
             displayMinTimeShowing_sec = 0;

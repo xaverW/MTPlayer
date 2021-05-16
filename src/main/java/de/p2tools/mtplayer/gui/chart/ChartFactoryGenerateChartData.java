@@ -38,12 +38,7 @@ public class ChartFactoryGenerateChartData {
         // und jetzt die sichtbaren Daten eintragen
         final boolean chartOnlyRunning = ProgConfig.DOWNLOAD_CHART_ONLY_RUNNING.getBool();
         final boolean chartOnlyExisting = ProgConfig.DOWNLOAD_CHART_ONLY_EXISTING.getBool();
-
-        int startChartDataSecond = chartData.getCountSek() - chartData.getDownloadChartMaxTimeMinutes() * 60;
-        if (startChartDataSecond < 0) {
-            startChartDataSecond = 0;
-        }
-        final double secondsPerTickInTheChart = 1.0 * (chartData.getCountSek() - startChartDataSecond) / ChartFactory.MAX_CHART_DATA_PER_SCREEN;
+        final double secondsPerTickInTheChart = 1.0 * (chartData.getCountSek() - chartData.getTimeShowingSeconds()) / ChartFactory.MAX_CHART_DATA_PER_SCREEN;
 
         setBandwidthShowing(chartData, secondsPerTickInTheChart);//feststellen ob noch ein Wert über 0 ist und zu sehen ist
         genChartSeries(chartData);//Anzahl der XYChart.Series<Number, Number> wird angelegt
@@ -119,62 +114,63 @@ public class ChartFactoryGenerateChartData {
     }
 
     public static synchronized void generateChartDataAll(LineChart<Number, Number> lineChart, ChartData chartData) {
-
-        int displayMinTimeShowing_sec = chartData.getTimeShowingSeconds();
-        final double timePerTick_sec = 1.0 * (chartData.getCountSek() - displayMinTimeShowing_sec) / ChartFactory.MAX_CHART_DATA_PER_SCREEN;
+        final double timePerTick_sec = 1.0 * (chartData.getCountSek() - chartData.getTimeShowingSeconds()) / ChartFactory.MAX_CHART_DATA_PER_SCREEN;
 
         //löschen und dann die aktuellen Downloads eintragen
         for (int i = 0; i < bandwidthSumArr.length; ++i) {
             bandwidthSumArr[i] = 0;
         }
 
-        for (BandwidthData bandwidthData : chartData.getBandwidthDataList()) {
-            if (bandwidthData.size() == 0) {
-                continue;
-            }
+        int bandwidthLastIdx = 0;//letzter Wert
+        for (int i = 0; i < ChartFactory.MAX_CHART_DATA_PER_SCREEN; ++i) {
+            //0 ..... ChartFactory.MAX_CHART_DATA_PER_SCREEN-1
 
-            int bandwidthLastIdx = bandwidthData.size() - 1;//letzter Wert
-            for (int i = 0; i < ChartFactory.MAX_CHART_DATA_PER_SCREEN; ++i) {
+            final int indexChart = ChartFactory.MAX_CHART_DATA_PER_SCREEN - 1 - i;
+            final double timeIdx = i * timePerTick_sec;
+            final int bandIdx = (int) Math.round(timeIdx / ChartFactory.DATA_ALL_SECONDS);
 
-                int count = 0;
-                final int indexChart = ChartFactory.MAX_CHART_DATA_PER_SCREEN - 1 - i;
-                final double aktTime_sec = (chartData.getCountSek() - timePerTick_sec * i);
-                long actVal = 0;
+            final double actTimeSec = (chartData.getCountSek() - timePerTick_sec * i);
+            final double actTimeMin = actTimeSec / 60.0;
 
-                int bandwidthIdx = (int) Math.round((aktTime_sec - bandwidthData.getStartTimeSec()) / ChartFactory.DATA_ALL_SECONDS);
-                if (bandwidthIdx >= 0 && bandwidthIdx < bandwidthData.size()) {
-                    actVal = bandwidthData.get(bandwidthIdx);
-
-                    for (int ii = bandwidthLastIdx; ii > bandwidthIdx; --ii) {
-                        if (ii >= 0 && ii < bandwidthData.size()) {
-                            ++count;
-                            actVal += bandwidthData.get(ii);
-                            System.out.println("---> actValue: " + actVal + " count: " + count + " bandwidthI: " + bandwidthLastIdx + " bandwidthIdx: " + bandwidthIdx);
-                        }
-                    }
-                    if (count > 1) {
-                        actVal /= count;
-                    }
-
-                } else {
-                    //gibts keine Downloads
-                    actVal = 0;
+            double actVal = 0;
+            int count = 0;
+            for (BandwidthData bandwidthData : chartData.getBandwidthDataList()) {
+                if (bandwidthData.size() == 0) {
+                    continue;
                 }
-                bandwidthLastIdx = bandwidthIdx - 1;
 
-                bandwidthSumArr[indexChart] = bandwidthSumArr[indexChart] + actVal;
+                int bandwidthIdx = bandwidthData.size() - 1 - bandIdx;
+                if (bandwidthIdx >= 0 && bandwidthIdx < bandwidthData.size()) {
+                    ++count;
+                    actVal += bandwidthData.get(bandwidthIdx);
+
+//                    for (int ii = bandwidthLastIdx; ii < bandwidthIdx; ++ii) {
+//                        if (ii >= 0 && ii < bandwidthData.size()) {
+//                            ++count;
+//                            actVal += bandwidthData.get(ii);
+//                            System.out.println("---> actValue: " + actVal + " count: " + count + " bandwidthI: " + bandwidthLastIdx + " bandwidthIdx: " + bandwidthIdx);
+//                        }
+//                    }
+                }
+                bandwidthLastIdx = bandwidthIdx + 1;
+//                bandwidthSumArr[indexChart] = bandwidthSumArr[indexChart] + Math.round(actVal);
             }
+//            if (count > 1) {
+//                actVal /= count;
+//            }
+            chartData.getChartSeriesSum().getData().get(indexChart).setXValue(actTimeMin);
+            chartData.getChartSeriesSum().getData().get(indexChart).setYValue(actVal);
         }
 
         //ins Chart eintragen
-        for (int i = 0; i < ChartFactory.MAX_CHART_DATA_PER_SCREEN; ++i) {
-            final int indexChart = ChartFactory.MAX_CHART_DATA_PER_SCREEN - 1 - i;
-            final double time = (chartData.getCountSek() - timePerTick_sec * i) / 60.0;
-            final long val = bandwidthSumArr[indexChart];
-
-            chartData.getChartSeriesSum().getData().get(indexChart).setXValue(time);
-            chartData.getChartSeriesSum().getData().get(indexChart).setYValue(val);
-        }
+//        for (int i = 0; i < ChartFactory.MAX_CHART_DATA_PER_SCREEN; ++i) {
+//            final int indexChart = ChartFactory.MAX_CHART_DATA_PER_SCREEN - 1 - i;
+//            final double time = (chartData.getCountSek() - timePerTick_sec * i) / 60.0;
+//            final long val = bandwidthSumArr[indexChart];
+//
+//            chartData.getChartSeriesSum().getData().get(indexChart).setXValue(time);
+//            chartData.getChartSeriesSum().getData().get(indexChart).setYValue(val);
+//        }
 
         colorChartName(lineChart, chartData);
     }
