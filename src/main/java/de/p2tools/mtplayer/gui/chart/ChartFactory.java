@@ -31,8 +31,8 @@ public class ChartFactory {
     public static int MAX_CHART_DATA_PER_SCREEN = 500;
     public static int DATA_ALL_SECONDS = 2;
     public static int MAX_MINUTES_SHOWING = 300;
-    public static int MAX_SECONDS_SHOWING = MAX_MINUTES_SHOWING * 60; //1800
-    public static int MAX_DATA = MAX_SECONDS_SHOWING / DATA_ALL_SECONDS; // 3600
+    public static int MAX_SECONDS_SHOWING = MAX_MINUTES_SHOWING * 60; //18_000
+    public static int MAX_DATA = MAX_SECONDS_SHOWING / DATA_ALL_SECONDS; // 9_000
     private static int runChart = 0;
     private static long[] bandwidthSumArr = new long[MAX_CHART_DATA_PER_SCREEN];
 
@@ -75,7 +75,6 @@ public class ChartFactory {
 
     public static synchronized void runChart(LineChart<Number, Number> lineChart, ChartData chartData,
                                              ProgData progData, boolean visible) {
-
         chartData.addCountSek(); // Sekunden
         ++runChart;
         if (runChart < DATA_ALL_SECONDS) {
@@ -145,7 +144,7 @@ public class ChartFactory {
             if (!foundDownload) {
                 int size = bandwidthData.size();
                 if (size > 0 && bandwidthData.get(size - 1).longValue() > 0) {
-                    bandwidthData.add(0L);
+                    bandwidthData.addData(0L);
                 }
             }
         }
@@ -174,9 +173,9 @@ public class ChartFactory {
             if (download != null && download.isStateStartedRun()) {
                 // sonst läuft er noch nicht/nicht mehr
                 final long bandw = download.getStart().getBandwidth();
-                bandwidthData.add(bandw);
+                bandwidthData.addData(bandw);
             } else {
-                bandwidthData.add(0L);
+                bandwidthData.addData(0L);
             }
 
             //damit beim Pausieren die Nummer nicht verloren geht

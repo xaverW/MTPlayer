@@ -57,6 +57,10 @@ public class BandwidthData extends ArrayList<Long> {
         }
     }
 
+    public boolean addData(Long a) {
+        return super.add(a);
+    }
+
     public String getName() {
         return name;
     }
