@@ -61,6 +61,10 @@ public class ChartData {
         this.downloadChartMaxTimeMinutes.set(downloadChartMaxTimeMinutes);
     }
 
+    public double getTimePerTick() {
+        return 1.0 * (getCountSek() - getTimeShowingSeconds()) / ChartFactory.MAX_CHART_DATA_PER_SCREEN;
+    }
+
     public int getCountSek() {
         //Summe aller "Sekunden" die das Programm läuft
         return countSek;

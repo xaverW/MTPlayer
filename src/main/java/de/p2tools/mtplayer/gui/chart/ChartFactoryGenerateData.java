@@ -127,6 +127,9 @@ public class ChartFactoryGenerateData {
         final boolean chartOnlyRunning = ProgConfig.DOWNLOAD_CHART_ONLY_RUNNING.getBool();
         final boolean chartOnlyExisting = ProgConfig.DOWNLOAD_CHART_ONLY_EXISTING.getBool();
 
+        final double timeIdx = (ChartFactory.MAX_CHART_DATA_PER_SCREEN - 1) * chartData.getTimePerTick();//0 .... xx[s]
+        final int bandwidthTimeIdx = (int) Math.round(timeIdx / ChartFactory.DATA_ALL_SECONDS);//0 ... xx, 0=letzter Wert in der Bandwidthliste
+
         long maxValue = 0;
         for (int bi = 0; bi < chartData.getBandwidthDataList().size(); ++bi) {
             BandwidthData bandwidthData = chartData.getBandwidthDataList().get(bi);
@@ -144,16 +147,13 @@ public class ChartFactoryGenerateData {
                 continue;
             }
 
-            final double aktTime_sec = (chartData.getCountSek());
-            int bandwidthIdx = (int) Math.round((aktTime_sec - bandwidthData.getStartTimeSec()) / ChartFactory.DATA_ALL_SECONDS);
-            if (bandwidthIdx < 0) {
-                bandwidthIdx = 0;
-            }
-
+            int bandwidthIdx = bandwidthData.size() - 1 - bandwidthTimeIdx;
             for (int i = bandwidthIdx; i < bandwidthData.size(); ++i) {
-                long actVal = bandwidthData.get(i);
-                if (actVal > maxValue) {
-                    maxValue = actVal;
+                if (i >= 0 && i < bandwidthData.size()) {
+                    long actVal = bandwidthData.get(i);
+                    if (actVal > maxValue) {
+                        maxValue = actVal;
+                    }
                 }
             }
         }
