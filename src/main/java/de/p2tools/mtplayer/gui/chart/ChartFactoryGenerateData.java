@@ -91,10 +91,16 @@ public class ChartFactoryGenerateData {
             chartData.setScale(chartData.getScale() * 1000);
         }
 
-        double absMax = getMaxYChartData(chartData);
+        double absMax;
+        if (ProgConfig.DOWNLOAD_CHART_SEPARAT.getBool()) {
+            absMax = getMaxYChartData(chartData);
+        } else {
+            absMax = getMaxYChartDataAll(chartData);
+        }
+
         absMax /= scale;
         if (absMax > max) {
-            PLog.sysLog("=====> absMax: " + absMax + "  max: " + max);
+            System.out.println("========> absMax: " + absMax + "  max: " + max);
             max = absMax;
         }
 
@@ -106,8 +112,9 @@ public class ChartFactoryGenerateData {
         int unit = Math.round(upper / 5);
 
         if (upper < max) {
-            PLog.sysLog("=====> max: " + max + "  upper: " + upper + "  unit: " + unit);
+            System.out.println("========> max: " + max + "  upper: " + upper + "  unit: " + unit);
         }
+
         PLog.sysLog("absMax: " + absMax + "  max: " + max + "  upper: " + upper + "  unit: " + unit);
 
         NumberAxis axis = (NumberAxis) lineChart.getYAxis();
@@ -126,9 +133,7 @@ public class ChartFactoryGenerateData {
         // und jetzt die sichtbaren Daten eintragen
         final boolean chartOnlyRunning = ProgConfig.DOWNLOAD_CHART_ONLY_RUNNING.getBool();
         final boolean chartOnlyExisting = ProgConfig.DOWNLOAD_CHART_ONLY_EXISTING.getBool();
-
-        final double timeIdx = (ChartFactory.MAX_CHART_DATA_PER_SCREEN - 1) * chartData.getTimePerTick();//0 .... xx[s]
-        final int bandwidthTimeIdx = (int) Math.round(timeIdx / ChartFactory.DATA_ALL_SECONDS);//0 ... xx, 0=letzter Wert in der Bandwidthliste
+        final int bandwidthFirstIdx = getFirstBandwidthIdx(chartData);
 
         long maxValue = 0;
         for (int bi = 0; bi < chartData.getBandwidthDataList().size(); ++bi) {
@@ -147,16 +152,44 @@ public class ChartFactoryGenerateData {
                 continue;
             }
 
-            int bandwidthIdx = bandwidthData.size() - 1 - bandwidthTimeIdx;
-            for (int i = bandwidthIdx; i < bandwidthData.size(); ++i) {
-                if (i >= 0 && i < bandwidthData.size()) {
-                    long actVal = bandwidthData.get(i);
-                    if (actVal > maxValue) {
-                        maxValue = actVal;
-                    }
+            long actValue = getMax(bandwidthData, bandwidthFirstIdx);
+            maxValue = actValue > maxValue ? actValue : maxValue;
+        }
+        return maxValue;
+    }
+
+    private static synchronized long getMaxYChartDataAll(ChartData chartData) {
+        // und jetzt die sichtbaren Daten eintragen
+        final int bandwidthFirstIdx = getFirstBandwidthIdx(chartData);
+
+        long maxValue = 0;
+        for (int bi = 0; bi < chartData.getBandwidthDataList().size(); ++bi) {
+            //zum MaxWert addieren
+            BandwidthData bandwidthData = chartData.getBandwidthDataList().get(bi);
+            maxValue += getMax(bandwidthData, bandwidthFirstIdx);
+        }
+
+        return maxValue;
+    }
+
+    private static int getFirstBandwidthIdx(ChartData chartData) {
+        //0 .... xx[s], Zeit ältester Wert
+        final double timeIdx = (ChartFactory.MAX_CHART_DATA_PER_SCREEN - 1) * chartData.getTimePerTick();
+        //0 ... xx, 0=letzter Wert in der Bandwidthliste, "älterster" idx in der BandwidthListe
+        return (int) Math.round(timeIdx / ChartFactory.DATA_ALL_SECONDS);
+    }
+
+    private static long getMax(BandwidthData bandwidthData, int bandwidthTimeIdx) {
+        long maxBand = 0;
+        int bandwidthIdx = bandwidthData.size() - 1 - bandwidthTimeIdx;
+        for (int i = bandwidthIdx; i < bandwidthData.size(); ++i) {
+            if (i >= 0 && i < bandwidthData.size()) {
+                long actVal = bandwidthData.get(i);
+                if (actVal > maxBand) {
+                    maxBand = actVal;
                 }
             }
         }
-        return maxValue;
+        return maxBand;
     }
 }

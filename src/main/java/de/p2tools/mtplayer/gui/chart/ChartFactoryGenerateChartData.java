@@ -71,12 +71,10 @@ public class ChartFactoryGenerateChartData {
                 }
 
                 final XYChart.Series<Number, Number> cSeries = chartData.getChartSeriesList_SeparateCharts().get(countChart++);
-                cSeries.setName(bandwidthData.getName());
-
-                boolean onlyZero = true;//alle Werte sind "0"
                 if (bandwidthData.getDownload() != null) {
-                    //dann ist er noch da und wird auch immer angezeigt, auch wenn Bandbreite 0
-                    onlyZero = false;
+                    cSeries.setName(bandwidthData.getName());
+                } else {
+                    cSeries.setName("-");
                 }
 
                 int count = 0;
@@ -90,7 +88,7 @@ public class ChartFactoryGenerateChartData {
                         if (ii >= 0 && ii < bandwidthData.size()) {
                             ++count;
                             actValue += bandwidthData.get(ii);
-                            System.out.println("---> actValue: " + actValue + " count: " + count + " bandwidthI: " + bandwidthLastIdx + " bandwidthIdx: " + bandwidthIdx);
+//                            System.out.println("---> actValue: " + actValue + " count: " + count + " bandwidthI: " + bandwidthLastIdx + " bandwidthIdx: " + bandwidthIdx);
                         }
                     }
                 }
@@ -101,10 +99,6 @@ public class ChartFactoryGenerateChartData {
 
                 cSeries.getData().get(indexChart).setXValue(actTimeMin);
                 cSeries.getData().get(indexChart).setYValue(actValue);
-                if (onlyZero) {
-                    cSeries.setName("NO_DOWN");
-                    chartData.getChartSeriesList_SeparateCharts().remove(cSeries);
-                }
             }
         }
         colorChartName(lineChart, chartData);
@@ -210,7 +204,7 @@ public class ChartFactoryGenerateChartData {
                         if (ii >= 0 && ii < bandwidthData.size()) {
                             ++count;
                             act += bandwidthData.get(ii);
-                            System.out.println("---> actValue: " + actVal + " count: " + count + " bandwidthI: " + bandwidthLastIdx + " bandwidthIdx: " + bandwidthIdx);
+//                            System.out.println("---> actValue: " + actVal + " count: " + count + " bandwidthI: " + bandwidthLastIdx + " bandwidthIdx: " + bandwidthIdx);
                         }
                     }
                 }
