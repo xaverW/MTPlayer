@@ -36,23 +36,20 @@ public class ChartFactoryGenerateChartData {
         // und jetzt die sichtbaren Daten eintragen
         final boolean chartOnlyRunning = ProgConfig.DOWNLOAD_CHART_ONLY_RUNNING.getBool();
         final boolean chartOnlyExisting = ProgConfig.DOWNLOAD_CHART_ONLY_EXISTING.getBool();
-        final double secondsPerTickInTheChart = 1.0 * (chartData.getCountSek() - chartData.getTimeShowingSeconds()) / ChartFactory.MAX_CHART_DATA_PER_SCREEN;
+        final double secondsPerTickInTheChart = chartData.getTimePerTick();
 
         setBandwidthShowing(chartData, secondsPerTickInTheChart);//feststellen ob noch ein Wert über 0 ist und zu sehen ist
         genChartSeries(chartData);//Anzahl der XYChart.Series wird angelegt
         lineChart.setData(chartData.getChartSeriesList_SeparateCharts());
 
-        final double timePerTick_sec = chartData.getTimePerTick();
         int bandwidthLastIdx = 0;//letzter Wert: Suchen von bandwidthIdx+1 bis bandwidthLastIdx
         for (int i = 0; i < ChartFactory.MAX_CHART_DATA_PER_SCREEN; ++i) {
             //0 ..... ChartFactory.MAX_CHART_DATA_PER_SCREEN-1
 
             int countChart = 0;
             final int indexChart = ChartFactory.MAX_CHART_DATA_PER_SCREEN - 1 - i;//ChartFactory.MAX_CHART_DATA_PER_SCREEN - 1 ... 0
-            final double timeIdx = i * timePerTick_sec;//0 .... xx[s]
-            final int bandwidthTimeIdx = (int) Math.round(timeIdx / ChartFactory.DATA_ALL_SECONDS);//0 ... xx, 0=letzter Wert in der Bandwidthliste
-
-            final double actTimeMin = (chartData.getCountSek() - timePerTick_sec * i) / 60.0;//jetzt[min] ... vor[min]
+            final int bandwidthTimeIdx = (int) Math.round(i * secondsPerTickInTheChart / ChartFactory.DATA_ALL_SECONDS);//0 ... xx, 0=letzter Wert in der Bandwidthliste
+            final double actTimeMin = (chartData.getCountSek() - secondsPerTickInTheChart * i) / 60.0;//jetzt[min] ... vor[min]
 
             for (BandwidthData bandwidthData : chartData.getBandwidthDataList()) {
                 if (!bandwidthData.isShowing()) {
@@ -88,7 +85,6 @@ public class ChartFactoryGenerateChartData {
                         if (ii >= 0 && ii < bandwidthData.size()) {
                             ++count;
                             actValue += bandwidthData.get(ii);
-//                            System.out.println("---> actValue: " + actValue + " count: " + count + " bandwidthI: " + bandwidthLastIdx + " bandwidthIdx: " + bandwidthIdx);
                         }
                     }
                 }
@@ -102,75 +98,6 @@ public class ChartFactoryGenerateChartData {
             }
         }
         colorChartName(lineChart, chartData);
-
-
-//        int countChart = 0;
-//        for (int bi = 0; bi < chartData.getBandwidthDataList().size(); ++bi) {
-//            BandwidthData bandwidthData = chartData.getBandwidthDataList().get(bi);
-//            if (!bandwidthData.isShowing()) {
-//                //hat dann keine sichtbaren Daten mehr
-//                continue;
-//            }
-//
-//            boolean downL = bandwidthData.getDownload() != null;
-//            boolean downLRunning = bandwidthData.getDownload() != null && bandwidthData.getDownload().isStateStartedRun();
-//            if (chartOnlyRunning && !downLRunning) {
-//                //dann gibts den Download nicht mehr und soll auch nicht angezeigt werden
-//                continue;
-//            } else if (chartOnlyExisting && !downL) {
-//                //sollen nur laufende angezeigt werden
-//                continue;
-//            }
-//
-//            final XYChart.Series<Number, Number> cSeries = chartData.getChartSeriesList_SeparateCharts().get(countChart++);
-//            cSeries.setName(bandwidthData.getName());
-//
-//            boolean onlyZero = true;//alle Werte sind "0"
-//            if (bandwidthData.getDownload() != null) {
-//                //dann ist er noch da und wird auch immer angezeigt, auch wenn Bandbreite 0
-//                onlyZero = false;
-//            }
-//
-////            int bandwidthLastIdx = bandwidthData.size() - 1;//letzter Wert
-//            for (int i = 0; i < ChartFactory.MAX_CHART_DATA_PER_SCREEN; ++i) {
-//                final int indexChart = ChartFactory.MAX_CHART_DATA_PER_SCREEN - 1 - i;
-//                final double actTimeSec = (chartData.getCountSek() - secondsPerTickInTheChart * i);
-//                final double actTimeMin = actTimeSec / 60.0;
-//
-//                double actVal = 0;
-//                int count = 0;
-//                int bandwidthIdx = (int) Math.round((actTimeSec - bandwidthData.getStartTimeSec()) / ChartFactory.DATA_ALL_SECONDS);
-//                if (bandwidthIdx >= 0 && bandwidthIdx < bandwidthData.size()) {
-//                    actVal = bandwidthData.get(bandwidthIdx);
-//                    ++count;
-//
-//                    for (int ii = bandwidthLastIdx; ii > bandwidthIdx; --ii) {
-//                        if (ii >= 0 && ii < bandwidthData.size()) {
-//                            ++count;
-//                            actVal += bandwidthData.get(ii);
-//                            System.out.println("---> actValue: " + actVal + " count: " + count + " bandwidthI: " + bandwidthLastIdx + " bandwidthIdx: " + bandwidthIdx);
-//                        }
-//                    }
-//                    if (count > 1) {
-//                        actVal /= count;
-//                    }
-//
-//                    if (actVal > 0) {
-//                        onlyZero = false;
-//                    }
-//                }
-//                bandwidthLastIdx = bandwidthIdx - 1;
-//
-//                cSeries.getData().get(indexChart).setXValue(actTimeMin);
-//                cSeries.getData().get(indexChart).setYValue(actVal);
-//            }
-//
-//            if (onlyZero) {
-//                cSeries.setName("NO_DOWN");
-//                chartData.getChartSeriesList_SeparateCharts().remove(cSeries);
-//            }
-//        }
-//        colorChartName(lineChart, chartData);
     }
 
     public static synchronized void generateChartDataAll(LineChart<Number, Number> lineChart, ChartData chartData) {
@@ -181,11 +108,8 @@ public class ChartFactoryGenerateChartData {
             //0 ..... ChartFactory.MAX_CHART_DATA_PER_SCREEN-1
 
             final int indexChart = ChartFactory.MAX_CHART_DATA_PER_SCREEN - 1 - i;//ChartFactory.MAX_CHART_DATA_PER_SCREEN - 1 ... 0
-            final double timeIdx = i * timePerTick_sec;//0 .... xx[s]
-            final int bandwidthTimeIdx = (int) Math.round(timeIdx / ChartFactory.DATA_ALL_SECONDS);//0 ... xx, 0=letzter Wert in der Bandwidthliste
-
-            final double actTimeSec = chartData.getCountSek() - timePerTick_sec * i;//jetzt[s] ... vor xx[s]
-            final double actTimeMin = actTimeSec / 60.0;//jetzt[min] ... vor[min]
+            final int bandwidthTimeIdx = (int) Math.round(i * timePerTick_sec / ChartFactory.DATA_ALL_SECONDS);//0 ... xx, 0=letzter Wert in der Bandwidthliste
+            final double actTimeMin = (chartData.getCountSek() - timePerTick_sec * i) / 60.0;//jetzt[min] ... vor[min]
 
             double actVal = 0;
             for (BandwidthData bandwidthData : chartData.getBandwidthDataList()) {
@@ -204,7 +128,6 @@ public class ChartFactoryGenerateChartData {
                         if (ii >= 0 && ii < bandwidthData.size()) {
                             ++count;
                             act += bandwidthData.get(ii);
-//                            System.out.println("---> actValue: " + actVal + " count: " + count + " bandwidthI: " + bandwidthLastIdx + " bandwidthIdx: " + bandwidthIdx);
                         }
                     }
                 }

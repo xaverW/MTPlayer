@@ -85,6 +85,7 @@ public class ChartFactoryGenerateData {
             }
         }
 
+        chartData.setScale(1);
         while (max > 25_000) {
             max /= 1_000;
             scale *= 1_000;
@@ -100,7 +101,7 @@ public class ChartFactoryGenerateData {
 
         absMax /= scale;
         if (absMax > max) {
-            System.out.println("========> absMax: " + absMax + "  max: " + max);
+            System.out.println("========> absMax<, absMax: " + absMax + "  max: " + max);
             max = absMax;
         }
 
@@ -112,7 +113,7 @@ public class ChartFactoryGenerateData {
         int unit = Math.round(upper / 5);
 
         if (upper < max) {
-            System.out.println("========> max: " + max + "  upper: " + upper + "  unit: " + unit);
+            System.out.println("========> upper<, max: " + max + "  upper: " + upper + "  unit: " + unit);
         }
 
         PLog.sysLog("absMax: " + absMax + "  max: " + max + "  upper: " + upper + "  unit: " + unit);
@@ -136,8 +137,8 @@ public class ChartFactoryGenerateData {
         final int bandwidthFirstIdx = getFirstBandwidthIdx(chartData);
 
         long maxValue = 0;
-        for (int bi = 0; bi < chartData.getBandwidthDataList().size(); ++bi) {
-            BandwidthData bandwidthData = chartData.getBandwidthDataList().get(bi);
+        for (int i = 0; i < chartData.getBandwidthDataList().size(); ++i) {
+            BandwidthData bandwidthData = chartData.getBandwidthDataList().get(i);
             if (!bandwidthData.isShowing()) {
                 continue;
             }
@@ -163,9 +164,9 @@ public class ChartFactoryGenerateData {
         final int bandwidthFirstIdx = getFirstBandwidthIdx(chartData);
 
         long maxValue = 0;
-        for (int bi = 0; bi < chartData.getBandwidthDataList().size(); ++bi) {
+        for (int i = 0; i < chartData.getBandwidthDataList().size(); ++i) {
             //zum MaxWert addieren
-            BandwidthData bandwidthData = chartData.getBandwidthDataList().get(bi);
+            BandwidthData bandwidthData = chartData.getBandwidthDataList().get(i);
             maxValue += getMax(bandwidthData, bandwidthFirstIdx);
         }
 
