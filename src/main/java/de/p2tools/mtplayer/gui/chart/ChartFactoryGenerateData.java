@@ -18,21 +18,72 @@
 package de.p2tools.mtplayer.gui.chart;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.p2Lib.tools.log.PLog;
-import javafx.collections.ObservableList;
+import javafx.collections.FXCollections;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 
 public class ChartFactoryGenerateData {
-    private static int runChart = 0;
-    private static long[] bandwidthSumArr = new long[ChartFactory.MAX_CHART_DATA_PER_SCREEN];
+//    private static int runChart = 0;
+//    private static long[] bandwidthSumArr = new long[ChartFactory.MAX_CHART_DATA_PER_SCREEN];
 
     private ChartFactoryGenerateData() {
     }
 
-    public static void setYAxisLabel(LineChart<Number, Number> lineChart, ChartData chartData) {
-        switch (chartData.getScale()) {
+    public static synchronized void setChartDataShowing(ChartData chartData) {
+        //was ist noch sichtbar
+        final boolean chartOnlyRunning = ProgConfig.DOWNLOAD_CHART_ONLY_RUNNING.getBool();
+        final boolean chartOnlyExisting = ProgConfig.DOWNLOAD_CHART_ONLY_EXISTING.getBool();
+
+        for (BandwidthData bandwidthData : chartData.getBandwidthDataList()) {
+            if (bandwidthData.allValuesEmpty(chartData)) {
+                //hat dann keine sichtbaren Daten mehr
+                bandwidthData.setShowing(false);
+                continue;
+            }
+
+            boolean downExist = bandwidthData.getDownload() != null;
+            boolean downRunning = bandwidthData.getDownload() != null && bandwidthData.getDownload().isStateStartedRun();
+            if (chartOnlyRunning && !downRunning) {
+                //dann gibts den Download nicht mehr und soll auch nicht angezeigt werden
+                bandwidthData.setShowing(false);
+                continue;
+            } else if (chartOnlyExisting && !downExist) {
+                //sollen nur laufende angezeigt werden
+                bandwidthData.setShowing(false);
+                continue;
+            }
+
+            bandwidthData.setShowing(true);
+        }
+    }
+
+    public static synchronized void generateScale(LineChart<Number, Number> lineChart, ChartData chartData) {
+        double max = 0;
+        int scale = 1;
+
+        for (BandwidthData bandwidthData : chartData.getBandwidthDataList()) {
+            if (!bandwidthData.isShowing()) {
+                continue;
+            }
+
+            long m = bandwidthData.getMaxValue(chartData);
+            if (m > max) {
+                max = m;
+            }
+        }
+
+        while (max > 25_000) {
+            max /= 1_000;
+            scale *= 1_000;
+        }
+        chartData.setScale(scale);
+        setYAxisLabel(lineChart, scale);
+//        System.out.println("Scale: " + max + " - " + scale);
+    }
+
+    private static void setYAxisLabel(LineChart<Number, Number> lineChart, int scale) {
+        switch (scale) {
             case 1:
                 lineChart.getYAxis().setLabel("Bandbreite [B/s]");
                 break;
@@ -45,152 +96,170 @@ public class ChartFactoryGenerateData {
         }
     }
 
-    public static synchronized void generateChartData(LineChart<Number, Number> lineChart, ChartData chartData) {
-        // und jetzt die sichtbaren Daten eintragen
-        final boolean separatBool = ProgConfig.DOWNLOAD_CHART_SEPARAT.getBool();
-        if (separatBool) {
-            ChartFactoryGenerateChartData.generateChartDataSeparated(lineChart, chartData);
-        } else {
-            ChartFactoryGenerateChartData.generateChartDataAll(lineChart, chartData);
+    public static void genChartSeries(ChartData chartData) {
+        //Anzahl der XYChart.Series<Number, Number> wird angelegt
+        int countCseries = 0;
+
+        for (int bi = 0; bi < chartData.getBandwidthDataList().size(); ++bi) {
+            BandwidthData bandwidthData = chartData.getBandwidthDataList().get(bi);
+            if (!bandwidthData.isShowing()) {
+                continue;
+            }
+            ++countCseries;
+        }
+
+        int sumChartSeries = chartData.getChartSeriesList_SeparateCharts().size();
+        if (sumChartSeries > countCseries) {
+            chartData.getChartSeriesList_SeparateCharts().remove(0, sumChartSeries - countCseries);
+        }
+        while (sumChartSeries < countCseries) {
+            final XYChart.Series<Number, Number> cSeries = new XYChart.Series<>("", FXCollections.observableArrayList());
+            ChartFactory.initChartSeries(cSeries);
+            chartData.getChartSeriesList_SeparateCharts().add(cSeries);
+            ++sumChartSeries;
         }
     }
 
     public static synchronized void zoomXAxis(LineChart<Number, Number> lineChart, ChartData chartData) {
         final NumberAxis xAxis = (NumberAxis) lineChart.getXAxis();
-        xAxis.setUpperBound(chartData.getCountMin());
-        final double MIN = chartData.getCountMin() - chartData.getDownloadChartMaxTimeMinutes();
+        double lower, upper;
+        final double MIN = chartData.getCountMinutes() - chartData.getDownloadChartShowMaxTimeMinutes();
         if (MIN <= 0) {
-            xAxis.setLowerBound(0);
-            return;
-        }
-        xAxis.setLowerBound(MIN);
-    }
-
-    public static synchronized void zoomYAxis(LineChart<Number, Number> lineChart, ChartData chartData) {
-        double max = 0;
-        int scale = 1;
-        final ObservableList<XYChart.Series<Number, Number>> list;
-
-        if (ProgConfig.DOWNLOAD_CHART_SEPARAT.getBool()) {
-            list = chartData.getChartSeriesList_SeparateCharts();
+            lower = 0;
         } else {
-            list = chartData.getChartSeriesList_OneSumChart();
+            lower = MIN;
         }
+        upper = chartData.getCountMinutes() + 1;
+        upper = Math.ceil(chartData.getCountMinutes());
 
-        for (final XYChart.Series<Number, Number> cSeries : list) {
-            for (final XYChart.Data<Number, Number> date : cSeries.getData()) {
-                if (date.getYValue().longValue() > max) {
-                    max = date.getYValue().longValue();
-                }
-            }
-        }
-
-        chartData.setScale(1);
-        while (max > 25_000) {
-            max /= 1_000;
-            scale *= 1_000;
-            chartData.setScale(chartData.getScale() * 1000);
-        }
-
-        double absMax;
-        if (ProgConfig.DOWNLOAD_CHART_SEPARAT.getBool()) {
-            absMax = getMaxYChartData(chartData);
-        } else {
-            absMax = getMaxYChartDataAll(chartData);
-        }
-
-        absMax /= scale;
-        if (absMax > max) {
-            System.out.println("========> absMax<, absMax: " + absMax + "  max: " + max);
-            max = absMax;
-        }
-
-        int lowDiv = max > 250 ? 100 : 50;
-        long upper = Math.round(max / lowDiv);
-        upper *= lowDiv;
-        upper = upper < max ? upper + lowDiv : upper;
-        upper = upper <= 0 ? lowDiv : upper;
-        int unit = Math.round(upper / 5);
-
-        if (upper < max) {
-            System.out.println("========> upper<, max: " + max + "  upper: " + upper + "  unit: " + unit);
-        }
-
-        PLog.sysLog("absMax: " + absMax + "  max: " + max + "  upper: " + upper + "  unit: " + unit);
-
-        NumberAxis axis = (NumberAxis) lineChart.getYAxis();
-        axis.setUpperBound(upper);
-        axis.setTickUnit(unit);
-        setYAxisLabel(lineChart, chartData);
-
-        for (final XYChart.Series<Number, Number> cSeries : list) {
-            for (final XYChart.Data<Number, Number> date : cSeries.getData()) {
-                date.setYValue(date.getYValue().longValue() / chartData.getScale());
-            }
-        }
+        xAxis.setLowerBound(lower);
+        xAxis.setUpperBound(upper);
     }
 
-    private static synchronized long getMaxYChartData(ChartData chartData) {
-        // und jetzt die sichtbaren Daten eintragen
-        final boolean chartOnlyRunning = ProgConfig.DOWNLOAD_CHART_ONLY_RUNNING.getBool();
-        final boolean chartOnlyExisting = ProgConfig.DOWNLOAD_CHART_ONLY_EXISTING.getBool();
-        final int bandwidthFirstIdx = getFirstBandwidthIdx(chartData);
 
-        long maxValue = 0;
-        for (int i = 0; i < chartData.getBandwidthDataList().size(); ++i) {
-            BandwidthData bandwidthData = chartData.getBandwidthDataList().get(i);
-            if (!bandwidthData.isShowing()) {
-                continue;
-            }
+//    public static synchronized void zoomYAxis(LineChart<Number, Number> lineChart, ChartData chartData) {
+//        double max = 0;
+//        int scale = 1;
+//        final ObservableList<XYChart.Series<Number, Number>> list;
+//
+//        if (ProgConfig.DOWNLOAD_CHART_SEPARAT.getBool()) {
+//            list = chartData.getChartSeriesList_SeparateCharts();
+//        } else {
+//            list = chartData.getChartSeriesList_OneSumChart();
+//        }
+//
+//        for (final XYChart.Series<Number, Number> cSeries : list) {
+//            for (final XYChart.Data<Number, Number> date : cSeries.getData()) {
+//                if (date.getYValue().longValue() > max) {
+//                    max = date.getYValue().longValue();
+//                }
+//            }
+//        }
+//
+//        chartData.setScale(1);
+//        while (max > 25_000) {
+//            max /= 1_000;
+//            scale *= 1_000;
+//            chartData.setScale(chartData.getScale() * 1000);
+//        }
+//
+//        double absMax;
+//        if (ProgConfig.DOWNLOAD_CHART_SEPARAT.getBool()) {
+//            absMax = getMaxYChartData(chartData);
+//        } else {
+//            absMax = getMaxYChartDataAll(chartData);
+//        }
+//
+//        absMax /= scale;
+//        if (absMax > max) {
+//            System.out.println("========> absMax<, absMax: " + absMax + "  max: " + max);
+//            max = absMax;
+//        }
+//
+//        int lowDiv = max > 250 ? 100 : 50;
+//        long upper = Math.round(max / lowDiv);
+//        upper *= lowDiv;
+//        upper = upper < max ? upper + lowDiv : upper;
+//        upper = upper <= 0 ? lowDiv : upper;
+//        int unit = Math.round(upper / 5);
+//
+//        if (upper < max) {
+//            System.out.println("========> upper<, max: " + max + "  upper: " + upper + "  unit: " + unit);
+//        }
+//
+//        PLog.sysLog("absMax: " + absMax + "  max: " + max + "  upper: " + upper + "  unit: " + unit);
+//
+//        NumberAxis axis = (NumberAxis) lineChart.getYAxis();
+//        axis.setUpperBound(upper);
+//        axis.setTickUnit(unit);
+////        setYAxisLabel(lineChart, chartData);
+//
+//        for (final XYChart.Series<Number, Number> cSeries : list) {
+//            for (final XYChart.Data<Number, Number> date : cSeries.getData()) {
+//                date.setYValue(date.getYValue().longValue() / chartData.getScale());
+//            }
+//        }
+//    }
 
-            boolean downL = bandwidthData.getDownload() != null;
-            boolean downLRunning = bandwidthData.getDownload() != null && bandwidthData.getDownload().isStateStartedRun();
-            if (chartOnlyRunning && !downLRunning) {
-                //dann gibts den Download nicht mehr und soll auch nicht angezeigt werden
-                continue;
-            } else if (chartOnlyExisting && !downL) {
-                //sollen nur laufende angezeigt werden
-                continue;
-            }
+//    private static synchronized long getMaxYChartData(ChartData chartData) {
+//        // und jetzt die sichtbaren Daten eintragen
+//        final boolean chartOnlyRunning = ProgConfig.DOWNLOAD_CHART_ONLY_RUNNING.getBool();
+//        final boolean chartOnlyExisting = ProgConfig.DOWNLOAD_CHART_ONLY_EXISTING.getBool();
+//        final int bandwidthFirstIdx = getFirstBandwidthIdx(chartData);
+//
+//        long maxValue = 0;
+//        for (int i = 0; i < chartData.getBandwidthDataList().size(); ++i) {
+//            BandwidthData bandwidthData = chartData.getBandwidthDataList().get(i);
+//            if (!bandwidthData.isShowing()) {
+//                continue;
+//            }
+//
+//            boolean downL = bandwidthData.getDownload() != null;
+//            boolean downLRunning = bandwidthData.getDownload() != null && bandwidthData.getDownload().isStateStartedRun();
+//            if (chartOnlyRunning && !downLRunning) {
+//                //dann gibts den Download nicht mehr und soll auch nicht angezeigt werden
+//                continue;
+//            } else if (chartOnlyExisting && !downL) {
+//                //sollen nur laufende angezeigt werden
+//                continue;
+//            }
+//
+//            long actValue = getMax(bandwidthData, bandwidthFirstIdx);
+//            maxValue = actValue > maxValue ? actValue : maxValue;
+//        }
+//        return maxValue;
+//    }
 
-            long actValue = getMax(bandwidthData, bandwidthFirstIdx);
-            maxValue = actValue > maxValue ? actValue : maxValue;
-        }
-        return maxValue;
-    }
+//    private static synchronized long getMaxYChartDataAll(ChartData chartData) {
+//        // und jetzt die sichtbaren Daten eintragen
+//        long maxValue=0;
+//        for (int i = 0; i < chartData.getBandwidthDataList().size(); ++i) {
+//            //zum MaxWert addieren
+//            BandwidthData bandwidthData = chartData.getBandwidthDataList().get(i);
+//            maxValue += bandwidthData.getMaxValue(chartData);
+//        }
+//
+//        return maxValue;
+//    }
 
-    private static synchronized long getMaxYChartDataAll(ChartData chartData) {
-        // und jetzt die sichtbaren Daten eintragen
-        final int bandwidthFirstIdx = getFirstBandwidthIdx(chartData);
+//    private static int getFirstBandwidthIdx(ChartData chartData) {
+//        //0 .... xx[s], Zeit ältester Wert
+//        final double timeIdx = (ChartFactory.MAX_CHART_DATA_PER_SCREEN - 1) * chartData.getTimePerTick();
+//        //0 ... xx, 0=letzter Wert in der Bandwidthliste, "älterster" idx in der BandwidthListe
+//        return (int) Math.round(timeIdx / ChartFactory.DATA_ALL_SECONDS);
+//    }
 
-        long maxValue = 0;
-        for (int i = 0; i < chartData.getBandwidthDataList().size(); ++i) {
-            //zum MaxWert addieren
-            BandwidthData bandwidthData = chartData.getBandwidthDataList().get(i);
-            maxValue += getMax(bandwidthData, bandwidthFirstIdx);
-        }
-
-        return maxValue;
-    }
-
-    private static int getFirstBandwidthIdx(ChartData chartData) {
-        //0 .... xx[s], Zeit ältester Wert
-        final double timeIdx = (ChartFactory.MAX_CHART_DATA_PER_SCREEN - 1) * chartData.getTimePerTick();
-        //0 ... xx, 0=letzter Wert in der Bandwidthliste, "älterster" idx in der BandwidthListe
-        return (int) Math.round(timeIdx / ChartFactory.DATA_ALL_SECONDS);
-    }
-
-    private static long getMax(BandwidthData bandwidthData, int bandwidthTimeIdx) {
-        long maxBand = 0;
-        int bandwidthIdx = bandwidthData.size() - 1 - bandwidthTimeIdx;
-        for (int i = bandwidthIdx; i < bandwidthData.size(); ++i) {
-            if (i >= 0 && i < bandwidthData.size()) {
-                long actVal = bandwidthData.get(i);
-                if (actVal > maxBand) {
-                    maxBand = actVal;
-                }
-            }
-        }
-        return maxBand;
-    }
+//    private static long getMax(BandwidthData bandwidthData, int bandwidthTimeIdx) {
+//        long maxBand = 0;
+//        int bandwidthIdx = bandwidthData.size() - 1 - bandwidthTimeIdx;
+//        for (int i = bandwidthIdx; i < bandwidthData.size(); ++i) {
+//            if (i >= 0 && i < bandwidthData.size()) {
+//                long actVal = bandwidthData.get(i);
+//                if (actVal > maxBand) {
+//                    maxBand = actVal;
+//                }
+//            }
+//        }
+//        return maxBand;
+//    }
 }

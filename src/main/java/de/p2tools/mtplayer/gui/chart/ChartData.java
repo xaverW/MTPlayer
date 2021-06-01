@@ -27,18 +27,18 @@ import javafx.scene.chart.XYChart;
 import java.util.ArrayList;
 
 public class ChartData {
-    private IntegerProperty downloadChartMaxTimeMinutes = ProgConfig.DOWNLOAD_CHART_MAX_TIME_MIN.getIntegerProperty(); // MAX Minuten todo
+    private IntegerProperty downloadChartMaxTimeMinutes = ProgConfig.DOWNLOAD_CHART_SHOW_MAX_TIME_MIN.getIntegerProperty(); // MAX Minuten todo
 
-    private int countSek = 0;
-    private double countMin = 0;
+    private int countSeconds = 0;
+    private double countMinutes = 0;
     private int scale = 1;
 
     // ist die eine LineChart für den Gesamtwert
-    private final XYChart.Series<Number, Number> chartSeriesSum =
-            new XYChart.Series<>("Summe", FXCollections.observableArrayList());
+    private final XYChart.Series<Number, Number> chartSeriesOneSumChart = new XYChart.Series<>("Summe", FXCollections.observableArrayList());
 
     // Liste der LineCharts für Gesamt -> hat nur eine LineChart
-    private final ObservableList<XYChart.Series<Number, Number>> chartSeriesList_OneSumChart = FXCollections.observableArrayList(chartSeriesSum);
+    private final ObservableList<XYChart.Series<Number, Number>> chartSeriesList_OneSumChart = FXCollections.observableArrayList(chartSeriesOneSumChart);
+
     // Liste der LineCharts für einzele Downloads -> für jeden Download eine LineChart
     private final ObservableList<XYChart.Series<Number, Number>> chartSeriesList_SeparateCharts = FXCollections.observableArrayList();
 
@@ -46,42 +46,51 @@ public class ChartData {
     private final ObservableList<BandwidthData> bandwidthDataList = FXCollections.observableArrayList();
 
     public ChartData() {
-        ChartFactory.initChartSeries(chartSeriesSum);
+        ChartFactory.initChartSeries(chartSeriesOneSumChart);
+        downloadChartMaxTimeMinutes.addListener((ob, ol, ne) -> {
+            //die muss dann neu gesetzt werden!!
+            bandwidthDataList.stream().forEach(b -> b.setLastIdx(0));
+        });
     }
 
-    public int getDownloadChartMaxTimeMinutes() {
+    public int getDownloadChartShowMaxTimeMinutes() {
         return downloadChartMaxTimeMinutes.get();
-    }
-
-    public IntegerProperty downloadChartMaxTimeMinutesProperty() {
-        return downloadChartMaxTimeMinutes;
     }
 
     public void setDownloadChartMaxTimeMinutes(int downloadChartMaxTimeMinutes) {
         this.downloadChartMaxTimeMinutes.set(downloadChartMaxTimeMinutes);
     }
 
-    public double getTimePerTick() {
-        return 1.0 * (getCountSek() - getTimeShowingSeconds()) / ChartFactory.MAX_CHART_DATA_PER_SCREEN;
+    public double getTimePerPixel() {
+        return 1.0 * getDownloadChartShowMaxTimeMinutes() * 60.0 / ChartFactory.MAX_CHART_DATA_PER_SCREEN;
     }
 
-    public int getCountSek() {
+    public int getAmountDataPerPixel() {
+        //BandwidthData per screen-point
+        final int secPerScreen = getDownloadChartShowMaxTimeMinutes() * 60;
+        final double secPerPixel = 1.0 * secPerScreen / ChartFactory.MAX_CHART_DATA_PER_SCREEN;
+        final int dataPerPixel = (int) Math.round(secPerPixel / ChartFactory.DATA_ALL_SECONDS);
+
+        return dataPerPixel <= 0 ? 1 : dataPerPixel;
+    }
+
+    public int getCountSeconds() {
         //Summe aller "Sekunden" die das Programm läuft
-        return countSek;
+        return countSeconds;
     }
 
     public void addCountSek() {
-        this.countSek += 1;
-        countMin = countSek / 60.0; // Minuten
+        this.countSeconds += 1;
+        countMinutes = countSeconds / 60.0; // Minuten
     }
 
-    public double getCountMin() {
-        return countMin;
+    public double getCountMinutes() {
+        return countMinutes;
     }
 
     public int getTimeShowingSeconds() {
         //Zeit die angezeigt werden soll oder Programmlaufzeit wenn weniger
-        int displayMinTimeShowing_sec = getCountSek() - getDownloadChartMaxTimeMinutes() * 60;
+        int displayMinTimeShowing_sec = getCountSeconds() - getDownloadChartShowMaxTimeMinutes() * 60;
         if (displayMinTimeShowing_sec < 0) {
             displayMinTimeShowing_sec = 0;
         }
@@ -96,8 +105,8 @@ public class ChartData {
         this.scale = scale;
     }
 
-    public XYChart.Series<Number, Number> getChartSeriesSum() {
-        return chartSeriesSum;
+    public XYChart.Series<Number, Number> getChartSeriesOneSumChart() {
+        return chartSeriesOneSumChart;
     }
 
     public ObservableList<XYChart.Series<Number, Number>> getChartSeriesList_OneSumChart() {

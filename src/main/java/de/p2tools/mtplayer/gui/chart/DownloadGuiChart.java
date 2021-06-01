@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.gui.chart;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Side;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.*;
@@ -55,11 +56,17 @@ public class DownloadGuiChart extends AnchorPane {
         lineChart = new LineChart<>(ChartFactory.createXAxis(), ChartFactory.createYAxis());
         lineChart.getStyleClass().add("thick-chart");
         lineChart.setLegendSide(Side.RIGHT);
+        lineChart.setLegendVisible(true);
         lineChart.setAnimated(false);
-        lineChart.setCreateSymbols(false);
+        lineChart.setCreateSymbols(true);
         lineChart.setTitle("Downloads");
+
         lineChart.getXAxis().setLabel("Programmlaufzeit [min]");
-        ChartFactory.setYAxisLabel(lineChart, chartData);
+        lineChart.getXAxis().setSide(Side.RIGHT);
+        lineChart.getYAxis().setAutoRanging(true);
+
+//        ChartFactory.setYAxisLabel(lineChart, chartData);
+
         lineChart.setOnMouseClicked(e -> {
             if (cm != null && cm.isShowing()) {
                 // hier damit beim normalen Klick das Menü wieder ausgeblendet wird
@@ -92,7 +99,7 @@ public class DownloadGuiChart extends AnchorPane {
     }
 
     private ContextMenu initContextMenu() {
-        final Label lblValue = new Label(" " + chartData.getDownloadChartMaxTimeMinutes() + " Min.");
+        final Label lblValue = new Label(" " + chartData.getDownloadChartShowMaxTimeMinutes() + " Min.");
         final Label lblInfo = new Label("Zeitraum:");
 
         final Slider slMaxTime = new Slider();
@@ -106,7 +113,8 @@ public class DownloadGuiChart extends AnchorPane {
         slMaxTime.setMinorTickCount(13);
         slMaxTime.setMajorTickUnit(140);
 
-        slMaxTime.valueProperty().bindBidirectional(chartData.downloadChartMaxTimeMinutesProperty());
+        IntegerProperty ip = ProgConfig.DOWNLOAD_CHART_SHOW_MAX_TIME_MIN.getIntegerProperty();
+        slMaxTime.valueProperty().bindBidirectional(ip);
         slMaxTime.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 lblValue.setText(" " + newValue.intValue() + " Min.");

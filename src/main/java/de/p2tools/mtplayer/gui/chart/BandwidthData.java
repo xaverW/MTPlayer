@@ -28,6 +28,9 @@ public class BandwidthData extends ArrayList<Long> {
     private String name = "";
     private int startTimeSec; //Startzeit in Sekunden
     private boolean isShowing = false;
+    private long tmpData = 0;
+    private int tmpCount = 0;
+    private int lastIdx = 0;
 
     public BandwidthData(Download download, int startTimeSec) {
         this.download = download;
@@ -61,6 +64,24 @@ public class BandwidthData extends ArrayList<Long> {
         return super.add(a);
     }
 
+    public void addTmpData(long a) {
+        ++tmpCount;
+        tmpData += a;
+//        if (tmpCount >= ChartFactory.DATA_ALL_SECONDS) {
+//            super.add(tmpData / tmpCount);
+//            tmpData = 0;
+//            tmpCount = 0;
+//        }
+    }
+
+    public void addFromTmpData() {
+        if (tmpCount > 0) {
+            super.add(tmpData / tmpCount);
+        }
+        tmpData = 0;
+        tmpCount = 0;
+    }
+
     public String getName() {
         return name;
     }
@@ -83,6 +104,14 @@ public class BandwidthData extends ArrayList<Long> {
 
     public void setShowing(boolean showing) {
         isShowing = showing;
+    }
+
+    public int getLastIdx() {
+        return lastIdx;
+    }
+
+    public void setLastIdx(int lastIdx) {
+        this.lastIdx = lastIdx;
     }
 
     public double getTimeMin(int sec) {
@@ -109,5 +138,30 @@ public class BandwidthData extends ArrayList<Long> {
         }
 
         return this.remove(this.size() - 1);
+    }
+
+    public int getFirstIdx(ChartData chartData) {
+        final int first = size() - (chartData.getDownloadChartShowMaxTimeMinutes() * 60) / ChartFactory.DATA_ALL_SECONDS;
+        return first < 0 ? 0 : first;
+    }
+
+    public boolean allValuesEmpty(ChartData chartData) {
+        for (int i = getFirstIdx(chartData); i < size(); ++i) {
+            if (get(i) > 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public long getMaxValue(ChartData chartData) {
+        long max = 0;
+        for (int i = getFirstIdx(chartData); i < size(); ++i) {
+            if (get(i) > max) {
+                max = get(i);
+            }
+        }
+//        System.out.println("Anz: " + getFirstValue(chartData) + " - " + max);
+        return max;
     }
 }
