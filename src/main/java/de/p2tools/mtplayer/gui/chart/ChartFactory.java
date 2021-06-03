@@ -20,6 +20,7 @@ package de.p2tools.mtplayer.gui.chart;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.Download;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
+import javafx.geometry.Side;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
@@ -68,8 +69,9 @@ public class ChartFactory {
     public static NumberAxis createXAxis() {
         final NumberAxis xAxis = new NumberAxis();
         xAxis.setAutoRanging(false);
-        xAxis.setLabel("Zeit");
+        xAxis.setLabel("Programmlaufzeit [min]");
         xAxis.setLowerBound(0.0);
+        xAxis.setSide(Side.RIGHT);
         xAxis.setTickLabelFormatter(new StringConverter<>() {
             @Override
             public String toString(Number object) {
@@ -92,8 +94,7 @@ public class ChartFactory {
 
     public static NumberAxis createYAxis() {
         final NumberAxis yAxis = new NumberAxis();
-//        yAxis.setAutoRanging(true);
-        yAxis.setAutoRanging(false);
+        yAxis.setAutoRanging(true);
         yAxis.setLowerBound(0.0);
         yAxis.setLabel("Wert");
         return yAxis;

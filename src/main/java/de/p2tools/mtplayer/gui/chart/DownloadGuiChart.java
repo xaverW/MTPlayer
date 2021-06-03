@@ -61,12 +61,6 @@ public class DownloadGuiChart extends AnchorPane {
         lineChart.setCreateSymbols(true);
         lineChart.setTitle("Downloads");
 
-        lineChart.getXAxis().setLabel("Programmlaufzeit [min]");
-        lineChart.getXAxis().setSide(Side.RIGHT);
-        lineChart.getYAxis().setAutoRanging(true);
-
-//        ChartFactory.setYAxisLabel(lineChart, chartData);
-
         lineChart.setOnMouseClicked(e -> {
             if (cm != null && cm.isShowing()) {
                 // hier damit beim normalen Klick das Menü wieder ausgeblendet wird

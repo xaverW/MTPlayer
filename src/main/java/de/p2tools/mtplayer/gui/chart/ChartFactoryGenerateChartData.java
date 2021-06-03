@@ -72,7 +72,6 @@ public class ChartFactoryGenerateChartData {
 
                 final int indexChart = ChartFactory.MAX_CHART_DATA_PER_SCREEN - 1 - i;//ChartFactory.MAX_CHART_DATA_PER_SCREEN - 1 ... 0
                 final double actTimeMin = (actTimeSec - timePerTick_sec * i) / 60.0;//jetzt[min] ... vor[min]
-                cSeries.getData().get(indexChart).setXValue(actTimeMin);
 
                 if (actTimeMin < 0) {
                     cSeries.getData().get(indexChart).setYValue(0);
@@ -80,6 +79,7 @@ public class ChartFactoryGenerateChartData {
                     continue;
                 }
 
+                cSeries.getData().get(indexChart).setXValue(actTimeMin);
                 int bandwidthIdx = bandwidthData.size() - 1 - i * amountDataPerPixel;
                 if (bandwidthIdx < 0) {
                     cSeries.getData().get(indexChart).setYValue(0);

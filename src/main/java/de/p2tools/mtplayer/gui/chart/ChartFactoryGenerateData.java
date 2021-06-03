@@ -121,7 +121,6 @@ public class ChartFactoryGenerateData {
     }
 
     public static synchronized void zoomXAxis(LineChart<Number, Number> lineChart, ChartData chartData) {
-        final int amountDataPerPixel = chartData.getAmountDataPerPixel(); //nur vom Slider"Zeit" abhängig
         final double timePerTick_sec = chartData.getSecondsPerPixel();
 
         final NumberAxis xAxis = (NumberAxis) lineChart.getXAxis();
