@@ -30,7 +30,6 @@ public class BandwidthData extends ArrayList<Long> {
     private boolean isShowing = false;
     private long tmpData = 0;
     private int tmpCount = 0;
-    private int lastIdx = 0;
 
     public BandwidthData(Download download, int startTimeSec) {
         this.download = download;
@@ -106,14 +105,6 @@ public class BandwidthData extends ArrayList<Long> {
         isShowing = showing;
     }
 
-    public int getLastIdx() {
-        return lastIdx;
-    }
-
-    public void setLastIdx(int lastIdx) {
-        this.lastIdx = lastIdx;
-    }
-
     public double getTimeMin(int sec) {
         return getTimeSec(sec) / 60.0;
     }
@@ -140,13 +131,13 @@ public class BandwidthData extends ArrayList<Long> {
         return this.remove(this.size() - 1);
     }
 
-    public int getFirstIdx(ChartData chartData) {
+    public int getMaxFirstIdx(ChartData chartData) {
         final int first = size() - (chartData.getDownloadChartShowMaxTimeMinutes() * 60) / ChartFactory.DATA_ALL_SECONDS;
         return first < 0 ? 0 : first;
     }
 
     public boolean allValuesEmpty(ChartData chartData) {
-        for (int i = getFirstIdx(chartData); i < size(); ++i) {
+        for (int i = getMaxFirstIdx(chartData); i < size(); ++i) {
             if (get(i) > 0) {
                 return false;
             }
@@ -156,7 +147,7 @@ public class BandwidthData extends ArrayList<Long> {
 
     public long getMaxValue(ChartData chartData) {
         long max = 0;
-        for (int i = getFirstIdx(chartData); i < size(); ++i) {
+        for (int i = getMaxFirstIdx(chartData); i < size(); ++i) {
             if (get(i) > max) {
                 max = get(i);
             }

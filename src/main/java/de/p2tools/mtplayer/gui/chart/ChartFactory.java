@@ -28,7 +28,7 @@ import javafx.util.StringConverter;
 import java.util.Iterator;
 
 public class ChartFactory {
-    public static int MAX_CHART_DATA_PER_SCREEN = 50;
+    public static int MAX_CHART_DATA_PER_SCREEN = 60;
     public static int DATA_ALL_SECONDS = 2;
 
     public static int MAX_MINUTES_SHOWING = 300;
@@ -54,11 +54,13 @@ public class ChartFactory {
 
         if (visible) {
             ChartFactoryGenerateData.setChartDataShowing(chartData);
-            ChartFactoryGenerateData.generateScale(lineChart, chartData);
+            ChartFactoryGenerateData.generateYScale(lineChart, chartData);
             ChartFactoryGenerateData.genChartSeries(chartData);
 
             ChartFactoryGenerateChartData.generateChartData(lineChart, chartData);
+//            lineChart.getXAxis().setAutoRanging(true);
             ChartFactoryGenerateData.zoomXAxis(lineChart, chartData);
+
 //            ChartFactoryGenerateData.zoomYAxis(lineChart, chartData);
         }
     }
@@ -98,7 +100,7 @@ public class ChartFactory {
     }
 
     private static synchronized void cleanUpData(ChartData chartData, ProgData progData) {
-        chartData.setScale(1);
+        chartData.setyScale(1);
         boolean foundDownload;
 
         //alle Messpunkte vor MAX-Zeit löschen
@@ -161,10 +163,7 @@ public class ChartFactory {
         for (final Download download : progData.downloadList) {
             foundDownload = false;
             for (final BandwidthData bandwidthData : chartData.getBandwidthDataList()) {
-                if (bandwidthData.getDownload() == null) {
-                    break;
-                }
-                if (bandwidthData.getDownload().equals(download)) {
+                if (bandwidthData.getDownload() != null && bandwidthData.getDownload().equals(download)) {
                     foundDownload = true;
                     break;
                 }

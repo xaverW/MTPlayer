@@ -49,7 +49,7 @@ public class DownloadGuiChart extends AnchorPane {
     }
 
     private synchronized void initList() {
-        chartData.setScale(1);
+        chartData.setyScale(1);
     }
 
     private void initCharts() {
@@ -95,7 +95,7 @@ public class DownloadGuiChart extends AnchorPane {
 
     private synchronized void clearChart() {
         chartData.getBandwidthDataList().clear(); // da werden alle gesammelten Daten gelöscht
-        chartData.setScale(1);
+        chartData.setyScale(1);
     }
 
     private ContextMenu initContextMenu() {

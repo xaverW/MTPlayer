@@ -58,7 +58,7 @@ public class ChartFactoryGenerateData {
         }
     }
 
-    public static synchronized void generateScale(LineChart<Number, Number> lineChart, ChartData chartData) {
+    public static synchronized void generateYScale(LineChart<Number, Number> lineChart, ChartData chartData) {
         double max = 0;
         int scale = 1;
 
@@ -77,7 +77,7 @@ public class ChartFactoryGenerateData {
             max /= 1_000;
             scale *= 1_000;
         }
-        chartData.setScale(scale);
+        chartData.setyScale(scale);
         setYAxisLabel(lineChart, scale);
 //        System.out.println("Scale: " + max + " - " + scale);
     }
@@ -121,6 +121,9 @@ public class ChartFactoryGenerateData {
     }
 
     public static synchronized void zoomXAxis(LineChart<Number, Number> lineChart, ChartData chartData) {
+        final int amountDataPerPixel = chartData.getAmountDataPerPixel(); //nur vom Slider"Zeit" abhängig
+        final double timePerTick_sec = chartData.getSecondsPerPixel();
+
         final NumberAxis xAxis = (NumberAxis) lineChart.getXAxis();
         double lower, upper;
         final double MIN = chartData.getCountMinutes() - chartData.getDownloadChartShowMaxTimeMinutes();
@@ -129,11 +132,14 @@ public class ChartFactoryGenerateData {
         } else {
             lower = MIN;
         }
-        upper = chartData.getCountMinutes() + 1;
         upper = Math.ceil(chartData.getCountMinutes());
 
-        xAxis.setLowerBound(lower);
-        xAxis.setUpperBound(upper);
+        double res = 5 * timePerTick_sec / 60.0;
+        if (xAxis.getUpperBound() < upper || xAxis.getUpperBound() > upper + res) {
+            //nur wenn zu klein oder zu groß!
+            xAxis.setLowerBound(lower);
+            xAxis.setUpperBound(upper + res);
+        }
     }
 
 
