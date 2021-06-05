@@ -133,6 +133,9 @@ public class ChartData {
         if (secondsPerPixel < 1.0 * maxTimeSeconds / ChartFactory.MAX_CHART_DATA_PER_SCREEN) {
             ++secondsPerPixel;
         }
+        if (secondsPerPixel < 1) {
+            secondsPerPixel = 1;
+        }
     }
 
     public int getAmountDataPerPixel() {

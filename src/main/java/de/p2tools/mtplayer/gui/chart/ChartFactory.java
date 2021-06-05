@@ -30,7 +30,7 @@ import java.util.Iterator;
 
 public class ChartFactory {
     public static int MAX_CHART_DATA_PER_SCREEN = 60;
-    public static int DATA_ALL_SECONDS = 2;
+    public static int DATA_ALL_SECONDS = 1;
 
     public static int MAX_MINUTES_SHOWING = 300;
     public static int MAX_SECONDS_SHOWING = MAX_MINUTES_SHOWING * 60; //18_000
@@ -44,6 +44,7 @@ public class ChartFactory {
     public static synchronized void runChart(LineChart<Number, Number> lineChart, ChartData chartData,
                                              ProgData progData, boolean visible) {
         chartData.addCountSek(); // Sekunden
+        chartData.genActValues();
         cleanUpData(chartData, progData);
         inputDownloadData(chartData, progData);
 
@@ -117,7 +118,7 @@ public class ChartFactory {
             }
         });
 
-        //Downloads die es nicht mehr gibt: "Download" entfernen und
+        //Downloads die es nicht mehr gibt: "Download" entfernen
         //wurde bereits alles aus "BandwidthData" gelöscht, kommts auch weg
         Iterator<BandwidthData> it = chartData.getBandwidthDataList().listIterator();
         while (it.hasNext()) {
@@ -170,8 +171,8 @@ public class ChartFactory {
                 }
             }
             if (!foundDownload && download.isStarted()) {
-                // dann ist es ein neue gestarteter
-                BandwidthData bwd = new BandwidthData(download, chartData.getCountSeconds());
+                // dann ist es ein neu gestarteter
+                BandwidthData bwd = new BandwidthData(chartData, download);
                 chartData.getBandwidthDataList().add(bwd);
             }
         }
@@ -205,10 +206,10 @@ public class ChartFactory {
         }
     }
 
-    public static void initChartSeries(XYChart.Series<Number, Number> series) {
-        series.getData().clear();
+    public static void initChartSeries(XYChart.Series<Number, Number> chartSeries) {
+        chartSeries.getData().clear();
         for (int i = 0; i < ChartFactory.MAX_CHART_DATA_PER_SCREEN; ++i) {
-            series.getData().add(new XYChart.Data<>(i, 0));
+            chartSeries.getData().add(new XYChart.Data<>(i, 0));
         }
     }
 }

@@ -36,7 +36,7 @@ public class ChartFactoryGenerateData {
         final boolean chartOnlyExisting = ProgConfig.DOWNLOAD_CHART_ONLY_EXISTING.getBool();
 
         for (BandwidthData bandwidthData : chartData.getBandwidthDataList()) {
-            if (bandwidthData.allValuesEmpty(chartData)) {
+            if (bandwidthData.allValuesEmpty()) {
                 //hat dann keine sichtbaren Daten mehr
                 bandwidthData.setShowing(false);
                 continue;
@@ -48,6 +48,7 @@ public class ChartFactoryGenerateData {
                 //dann gibts den Download nicht mehr und soll auch nicht angezeigt werden
                 bandwidthData.setShowing(false);
                 continue;
+
             } else if (chartOnlyExisting && !downExist) {
                 //sollen nur laufende angezeigt werden
                 bandwidthData.setShowing(false);
@@ -67,7 +68,7 @@ public class ChartFactoryGenerateData {
                 continue;
             }
 
-            long m = bandwidthData.getMaxValue(chartData);
+            long m = bandwidthData.getMaxValue();
             if (m > max) {
                 max = m;
             }
@@ -98,30 +99,32 @@ public class ChartFactoryGenerateData {
 
     public static void genChartSeries(ChartData chartData) {
         //Anzahl der XYChart.Series<Number, Number> wird angelegt
-        int countCseries = 0;
+        int countChartSeries = 0;
 
         for (int bi = 0; bi < chartData.getBandwidthDataList().size(); ++bi) {
             BandwidthData bandwidthData = chartData.getBandwidthDataList().get(bi);
-            if (!bandwidthData.isShowing()) {
-                continue;
+            if (bandwidthData.isShowing()) {
+                ++countChartSeries;
             }
-            ++countCseries;
         }
 
         int sumChartSeries = chartData.getChartSeriesList_SeparateCharts().size();
-        if (sumChartSeries > countCseries) {
-            chartData.getChartSeriesList_SeparateCharts().remove(0, sumChartSeries - countCseries);
+        if (sumChartSeries > countChartSeries) {
+            //zu viele
+            chartData.getChartSeriesList_SeparateCharts().remove(0, sumChartSeries - countChartSeries);
         }
-        while (sumChartSeries < countCseries) {
-            final XYChart.Series<Number, Number> cSeries = new XYChart.Series<>("", FXCollections.observableArrayList());
-            ChartFactory.initChartSeries(cSeries);
-            chartData.getChartSeriesList_SeparateCharts().add(cSeries);
+
+        while (sumChartSeries < countChartSeries) {
+            // zu wenige
+            final XYChart.Series<Number, Number> chartSeries = new XYChart.Series<>("", FXCollections.observableArrayList());
+            ChartFactory.initChartSeries(chartSeries);
+            chartData.getChartSeriesList_SeparateCharts().add(chartSeries);
             ++sumChartSeries;
         }
     }
 
     public static synchronized void zoomXAxis(LineChart<Number, Number> lineChart, ChartData chartData) {
-        final double timePerTick_sec = chartData.getSecondsPerPixel();
+        final double secondsPerPixel = chartData.getSecondsPerPixel();
 
         final NumberAxis xAxis = (NumberAxis) lineChart.getXAxis();
         double lower, upper;
@@ -131,13 +134,19 @@ public class ChartFactoryGenerateData {
         } else {
             lower = MIN;
         }
-        upper = Math.ceil(chartData.getCountMinutes());
+//        upper = Math.ceil(chartData.getCountMinutes());
+        upper = chartData.getCountMinutes();
 
-        double res = 5 * timePerTick_sec / 60.0;
+        double res = 5 * secondsPerPixel / 60.0;
         if (xAxis.getUpperBound() < upper || xAxis.getUpperBound() > upper + res) {
-            //nur wenn zu klein oder zu groß!
-            xAxis.setLowerBound(lower);
+            //nur wenn zu klein oder viel zu groß!
             xAxis.setUpperBound(upper + res);
+        }
+
+        res = secondsPerPixel / 60.0;
+        if (xAxis.getLowerBound() < lower + res || xAxis.getLowerBound() > lower) {
+            //nur wenn viel zu klein oder zu groß!
+            xAxis.setLowerBound(lower - res < 0 ? 0 : lower - res);
         }
     }
 
