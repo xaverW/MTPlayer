@@ -75,7 +75,7 @@ public class BandwidthData extends ArrayList<Long> {
     public boolean addData(Long a) {
         if (this.isEmpty()) {
             //dann auch die Startzeit neu setzen
-            this.startTimeSec = chartData.getCountSeconds();
+            this.startTimeSec = chartData.getCountRunningTimeSeconds();
         }
         genData();
         return super.add(a);
@@ -84,11 +84,6 @@ public class BandwidthData extends ArrayList<Long> {
     public void addTmpData(long a) {
         ++tmpCount;
         tmpData += a;
-//        if (tmpCount >= ChartFactory.DATA_ALL_SECONDS) {
-//            super.add(tmpData / tmpCount);
-//            tmpData = 0;
-//            tmpCount = 0;
-//        }
     }
 
     public void addFromTmpData() {
@@ -146,46 +141,19 @@ public class BandwidthData extends ArrayList<Long> {
         this.startTimeSec += dataAllSecond;
     }
 
-    public long setSecondsBack(int indexChart, double actTime) {
-
-        int idx2, idx = indexChart / secondsPerPixel;
-        long ret = 0;
-        int count = 0;
-
-        if (idx >= 0 && idx < this.size()) {
-            ++count;
-            ret = this.get(idx);
-        }
-
-        if (indexChart > 0) {
-            idx2 = (indexChart - 1) / secondsPerPixel + 1;
-            for (int i = idx2; i < idx; ++i) {
-                ++count;
-                ret += this.get(i);
-            }
-        }
-
-        ret = ret / count;
-        XYChart.Data<Number, Number> data = chartSeries.getData().remove(0);
-        chartSeries.getData().add(data);
-        data.setYValue(ret);
-        data.setXValue(actTime);
-
-        return ret;
-    }
-
     public void fillDate(XYChart.Series<Number, Number> chartSeries) {
         final int secondsPerPixel = chartData.getSecondsPerPixel();//nur vom Slider abhängig!
-        final int actTimeSec = chartData.getCountSeconds(); //jetzt[sec], damit es während des gesamten Durchlaufs gleich ist!
+        final int actTimeSec = chartData.getCountRunningTimeSeconds(); //jetzt[sec], damit es während des gesamten Durchlaufs gleich ist!
         int startIdx = 0, endIdx = 0;
         long value = 0;
         int extraIdx = 0;
 
+        System.out.println("--------");
+        chartSeries.setName(getName());
         if (this.size() % secondsPerPixel != 0) {
             extraIdx = this.size() % secondsPerPixel;
         }
 
-        System.out.println("--------");
         final int size = this.size() - extraIdx;
         for (int i = 0; i < ChartFactory.MAX_CHART_DATA_PER_SCREEN; ++i) {
             //ChartFactory.MAX_CHART_DATA_PER_SCREEN-1 (aktuellster Wert) ... 0
@@ -222,6 +190,19 @@ public class BandwidthData extends ArrayList<Long> {
                 System.out.println("   size: " + size + "/" + this.size() + " startIdx: " + startIdx + " endIdx: " + endIdx +
                         " value: " + value + " secondsPerPixel: " + secondsPerPixel);
             }
+
+
+            //der Rest oder Wenn kein EXTRA alles
+//            startIdx = size - i * secondsPerPixel - secondsPerPixel;
+//            endIdx = size - i * secondsPerPixel;
+//            value = getValue(startIdx, endIdx);
+//
+//            chartSeries.getData().get(chartIndex).setXValue(actTimeMin);
+//            chartSeries.getData().get(chartIndex).setYValue(value);
+//            System.out.println("   size: " + size + "/" + this.size() + " startIdx: " + startIdx + " endIdx: " + endIdx +
+//                    " value: " + value + " secondsPerPixel: " + secondsPerPixel);
+
+
         }
     }
 
@@ -241,8 +222,6 @@ public class BandwidthData extends ArrayList<Long> {
         if (count > 0) {
             value = value / count / chartData.getyScale();
         }
-
-//        System.out.println("from: " + from + " to: " + to + " value: " + value);
         return value;
     }
 
@@ -297,7 +276,7 @@ public class BandwidthData extends ArrayList<Long> {
     }
 
     public int getMaxFirstIdx() {
-        final int first = size() - (chartData.getDownloadChartShowMaxTimeMinutes() * 60) / dataAllSecond;
+        final int first = size() - (chartData.getDownloadChartMaxTimeMinutes() * 60) / dataAllSecond;
         return first < 0 ? 0 : first;
     }
 

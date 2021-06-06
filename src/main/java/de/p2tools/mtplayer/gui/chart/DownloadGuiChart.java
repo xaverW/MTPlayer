@@ -58,7 +58,9 @@ public class DownloadGuiChart extends AnchorPane {
         lineChart.setLegendSide(Side.RIGHT);
         lineChart.setLegendVisible(true);
         lineChart.setAnimated(false);
-        lineChart.setCreateSymbols(true);
+        if (ProgData.debug) {
+            lineChart.setCreateSymbols(true);
+        }
         lineChart.setTitle("Downloads");
 
         lineChart.setOnMouseClicked(e -> {
@@ -93,7 +95,7 @@ public class DownloadGuiChart extends AnchorPane {
     }
 
     private ContextMenu initContextMenu() {
-        final Label lblValue = new Label(" " + chartData.getDownloadChartShowMaxTimeMinutes() + " Min.");
+        final Label lblValue = new Label(" " + chartData.getDownloadChartMaxTimeMinutes() + " Min.");
         final Label lblInfo = new Label("Zeitraum:");
 
         final Slider slMaxTime = new Slider();

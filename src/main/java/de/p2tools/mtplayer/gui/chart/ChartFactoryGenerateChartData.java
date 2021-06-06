@@ -45,56 +45,28 @@ public class ChartFactoryGenerateChartData {
     }
 
     public static synchronized void generateChartDataSeparated(LineChart<Number, Number> lineChart, ChartData chartData) {
-        final int actTimeSec = chartData.getCountSeconds(); //jetzt[sec], damit es während des gesamten Durchlaufs gleich ist!
-        final int secondsPerPixel = chartData.getSecondsPerPixel();//nur vom Slider abhängig!
         int countChart = 0;
-
-//        chartData.getChartSeriesList_SeparateCharts().clear();
         for (BandwidthData bandwidthData : chartData.getBandwidthDataList()) {
             if (!bandwidthData.isShowing() || bandwidthData.isEmpty()) {
                 //hat dann keine sichtbaren Daten mehr
                 continue;
             }
-//            System.out.println("========");
 
             final XYChart.Series<Number, Number> chartSeries = chartData.getChartSeriesList_SeparateCharts().get(countChart++);
-            chartSeries.setName(bandwidthData.getName());
             bandwidthData.fillDate(chartSeries);
-
-//            chartData.getChartSeriesList_SeparateCharts().add(bandwidthData.getChartSeries());
-//            final XYChart.Series<Number, Number> chartSeries = bandwidthData.getChartSeries();
-
-//            for (int i = 0; i < ChartFactory.MAX_CHART_DATA_PER_SCREEN; ++i) {
-//                //ChartFactory.MAX_CHART_DATA_PER_SCREEN-1 (aktuellster Wert) ... 0
-//                final int indexChart = ChartFactory.MAX_CHART_DATA_PER_SCREEN - 1 - i;//ChartFactory.MAX_CHART_DATA_PER_SCREEN - 1 ... 0
-//                final double actTimeMin = (actTimeSec - secondsPerPixel * i) / 60.0;//jetzt[min] ... vor[min]
-//
-//                if (actTimeMin < 0) {
-//                    chartSeries.getData().get(indexChart).setYValue(0);
-//                    chartSeries.getData().get(indexChart).setXValue(0);
-//                    continue;
-//                }
-//
-//                chartSeries.getData().get(indexChart).setXValue(actTimeMin);
-//                long value = bandwidthData.getSecondsBack(i) / chartData.getyScale();
-//                chartSeries.getData().get(indexChart).setYValue(value);
-//
-////                System.out.println("->ii: " + i + " value: " + value +
-////                        " scale: " + chartData.getyScale() + "  -  actTime: " + actTimeMin);
-//            }
         }
 
         colorChartName(lineChart, chartData);
     }
 
     public static synchronized void generateChartDataSeparated_(LineChart<Number, Number> lineChart, ChartData chartData) {
-        final int amountDataPerPixel = chartData.getAmountDataPerPixel(); //nur vom Slider"Zeit" abhängig
-        final int actTimeSec = chartData.getCountSeconds(); //jetzt[sec], damit es während des gesamten Durchlaufs gleich ist!
+        final int amountDataPerPixel = chartData.getDataPerPixel(); //nur vom Slider"Zeit" abhängig
+        final int actTimeSec = chartData.getCountRunningTimeSeconds(); //jetzt[sec], damit es während des gesamten Durchlaufs gleich ist!
         final int maxTimeSec = chartData.getMaxTimeSeconds();
 
         int countChart = 0;
 
-        int lastIdx = chartData.getLastIdx();
+//        int lastIdx = chartData.getLastIdx();
         final double timePerTick_sec = chartData.getSecondsPerPixel();
 
         for (BandwidthData bandwidthData : chartData.getBandwidthDataList()) {
@@ -156,7 +128,7 @@ public class ChartFactoryGenerateChartData {
                     value = value / count / chartData.getyScale();
                 }
 
-                System.out.println("->ii: " + i + " - bandwidthIdx: " + bandwidthIdx + " lastIdx: " + lastIdx + " amountDataPerPixel: " + amountDataPerPixel + " value: " + value + " count: " + count + " scale: " + chartData.getyScale() + "  -  actTime: " + actTimeMin);
+                System.out.println("->ii: " + i + " - bandwidthIdx: " + bandwidthIdx + /*" lastIdx: " + lastIdx +*/ " amountDataPerPixel: " + amountDataPerPixel + " value: " + value + " count: " + count + " scale: " + chartData.getyScale() + "  -  actTime: " + actTimeMin);
                 cSeries.getData().get(indexChart).setYValue(value);
             }
         }
@@ -173,7 +145,7 @@ public class ChartFactoryGenerateChartData {
 
             final int indexChart = ChartFactory.MAX_CHART_DATA_PER_SCREEN - 1 - i;//ChartFactory.MAX_CHART_DATA_PER_SCREEN - 1 ... 0
             final int bandwidthTimeIdx = (int) Math.round(i * timePerTick_sec / ChartFactory.DATA_ALL_SECONDS);//0 ... xx, 0=letzter Wert in der Bandwidthliste
-            final double actTimeMin = (chartData.getCountSeconds() - timePerTick_sec * i) / 60.0;//jetzt[min] ... vor[min]
+            final double actTimeMin = (chartData.getCountRunningTimeSeconds() - timePerTick_sec * i) / 60.0;//jetzt[min] ... vor[min]
 
             double actVal = 0;
             for (BandwidthData bandwidthData : chartData.getBandwidthDataList()) {

@@ -30,7 +30,7 @@ import java.util.Iterator;
 
 public class ChartFactory {
     public static int MAX_CHART_DATA_PER_SCREEN = 60;
-    public static int DATA_ALL_SECONDS = 1;
+    public static int DATA_ALL_SECONDS = 2;
 
     public static int MAX_MINUTES_SHOWING = 300;
     public static int MAX_SECONDS_SHOWING = MAX_MINUTES_SHOWING * 60; //18_000
@@ -110,7 +110,7 @@ public class ChartFactory {
             while (bandwidthData.size() > ChartFactory.MAX_DATA) {
                 bandwidthData.removeFirst();
             }
-            while ((chartData.getCountSeconds() - bandwidthData.getStartTimeSec()) > ChartFactory.MAX_SECONDS_SHOWING) {
+            while ((chartData.getCountRunningTimeSeconds() - bandwidthData.getStartTimeSec()) > ChartFactory.MAX_SECONDS_SHOWING) {
                 if (bandwidthData.isEmpty()) {
                     break;
                 }

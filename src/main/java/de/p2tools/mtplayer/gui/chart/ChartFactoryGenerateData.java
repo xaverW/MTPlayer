@@ -128,26 +128,29 @@ public class ChartFactoryGenerateData {
 
         final NumberAxis xAxis = (NumberAxis) lineChart.getXAxis();
         double lower, upper;
-        final double MIN = chartData.getCountMinutes() - chartData.getDownloadChartShowMaxTimeMinutes();
+        final double MIN = chartData.getCountRunningTimeMinutes() - chartData.getDownloadChartMaxTimeMinutes();
         if (MIN <= 0) {
             lower = 0;
         } else {
             lower = MIN;
         }
 //        upper = Math.ceil(chartData.getCountMinutes());
-        upper = chartData.getCountMinutes();
+        upper = chartData.getCountRunningTimeMinutes();
 
-        double res = 5 * secondsPerPixel / 60.0;
-        if (xAxis.getUpperBound() < upper || xAxis.getUpperBound() > upper + res) {
-            //nur wenn zu klein oder viel zu groß!
-            xAxis.setUpperBound(upper + res);
-        }
+        xAxis.setUpperBound(upper);
+        xAxis.setLowerBound(lower);
 
-        res = secondsPerPixel / 60.0;
-        if (xAxis.getLowerBound() < lower + res || xAxis.getLowerBound() > lower) {
-            //nur wenn viel zu klein oder zu groß!
-            xAxis.setLowerBound(lower - res < 0 ? 0 : lower - res);
-        }
+//        double res = 2.0 * secondsPerPixel / 60.0;
+//        if (xAxis.getUpperBound() < upper || xAxis.getUpperBound() > upper + res) {
+//            //nur wenn zu klein oder viel zu groß!
+//            xAxis.setUpperBound(upper + res);
+//        }
+
+//        res = 1.0 * secondsPerPixel / 60.0;
+//        if (xAxis.getLowerBound() < lower + res || xAxis.getLowerBound() > lower) {
+//            //nur wenn viel zu klein oder zu groß!
+//            xAxis.setLowerBound(lower - res < 0 ? 0 : lower - res);
+//        }
     }
 
 
