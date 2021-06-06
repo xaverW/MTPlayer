@@ -110,7 +110,7 @@ public class ChartFactory {
             while (bandwidthData.size() > ChartFactory.MAX_DATA) {
                 bandwidthData.removeFirst();
             }
-            while ((chartData.getCountRunningTimeSeconds() - bandwidthData.getStartTimeSec()) > ChartFactory.MAX_SECONDS_SHOWING) {
+            while ((chartData.getCountProgRunningTimeSeconds() - bandwidthData.getStartTimeSec()) > ChartFactory.MAX_SECONDS_SHOWING) {
                 if (bandwidthData.isEmpty()) {
                     break;
                 }

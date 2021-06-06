@@ -75,7 +75,7 @@ public class BandwidthData extends ArrayList<Long> {
     public boolean addData(Long a) {
         if (this.isEmpty()) {
             //dann auch die Startzeit neu setzen
-            this.startTimeSec = chartData.getCountRunningTimeSeconds();
+            this.startTimeSec = chartData.getCountProgRunningTimeSeconds();
         }
         genData();
         return super.add(a);
@@ -143,7 +143,7 @@ public class BandwidthData extends ArrayList<Long> {
 
     public void fillDate(XYChart.Series<Number, Number> chartSeries) {
         final int secondsPerPixel = chartData.getSecondsPerPixel();//nur vom Slider abhängig!
-        final int actTimeSec = chartData.getCountRunningTimeSeconds(); //jetzt[sec], damit es während des gesamten Durchlaufs gleich ist!
+        final int actTimeSec = chartData.getCountProgRunningTimeSeconds(); //jetzt[sec], damit es während des gesamten Durchlaufs gleich ist!
         int startIdx = 0, endIdx = 0;
         long value = 0;
         int extraIdx = 0;

@@ -61,7 +61,7 @@ public class ChartFactoryGenerateChartData {
 
     public static synchronized void generateChartDataSeparated_(LineChart<Number, Number> lineChart, ChartData chartData) {
         final int amountDataPerPixel = chartData.getDataPerPixel(); //nur vom Slider"Zeit" abhängig
-        final int actTimeSec = chartData.getCountRunningTimeSeconds(); //jetzt[sec], damit es während des gesamten Durchlaufs gleich ist!
+        final int actTimeSec = chartData.getCountProgRunningTimeSeconds(); //jetzt[sec], damit es während des gesamten Durchlaufs gleich ist!
         final int maxTimeSec = chartData.getMaxTimeSeconds();
 
         int countChart = 0;
@@ -145,7 +145,7 @@ public class ChartFactoryGenerateChartData {
 
             final int indexChart = ChartFactory.MAX_CHART_DATA_PER_SCREEN - 1 - i;//ChartFactory.MAX_CHART_DATA_PER_SCREEN - 1 ... 0
             final int bandwidthTimeIdx = (int) Math.round(i * timePerTick_sec / ChartFactory.DATA_ALL_SECONDS);//0 ... xx, 0=letzter Wert in der Bandwidthliste
-            final double actTimeMin = (chartData.getCountRunningTimeSeconds() - timePerTick_sec * i) / 60.0;//jetzt[min] ... vor[min]
+            final double actTimeMin = (chartData.getCountProgRunningTimeSeconds() - timePerTick_sec * i) / 60.0;//jetzt[min] ... vor[min]
 
             double actVal = 0;
             for (BandwidthData bandwidthData : chartData.getBandwidthDataList()) {

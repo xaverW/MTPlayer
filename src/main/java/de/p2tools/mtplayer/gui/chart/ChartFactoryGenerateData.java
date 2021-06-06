@@ -128,14 +128,14 @@ public class ChartFactoryGenerateData {
 
         final NumberAxis xAxis = (NumberAxis) lineChart.getXAxis();
         double lower, upper;
-        final double MIN = chartData.getCountRunningTimeMinutes() - chartData.getDownloadChartMaxTimeMinutes();
+        final double MIN = chartData.getCountProgRunningTimeMinutes() - chartData.getDownloadChartMaxTimeMinutes();
         if (MIN <= 0) {
             lower = 0;
         } else {
             lower = MIN;
         }
 //        upper = Math.ceil(chartData.getCountMinutes());
-        upper = chartData.getCountRunningTimeMinutes();
+        upper = chartData.getCountProgRunningTimeMinutes();
 
         xAxis.setUpperBound(upper);
         xAxis.setLowerBound(lower);

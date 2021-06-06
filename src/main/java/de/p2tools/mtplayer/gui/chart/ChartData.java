@@ -29,8 +29,8 @@ import java.util.ArrayList;
 public class ChartData {
     private IntegerProperty downloadChartMaxTimeMinutes = ProgConfig.DOWNLOAD_CHART_SHOW_MAX_TIME_MIN.getIntegerProperty(); // MAX Minuten todo
 
-    private int countRunningTimeSeconds = 0;
-    private double countRunningTimeMinutes = 0;
+    private int countProgRunningTimeSeconds = 0;
+    private double countProgRunningTimeMinutes = 0;
     private int yScale = 1;
     //    private int lastIdx = 0;
     private int oldestSecond = 0;
@@ -77,7 +77,8 @@ public class ChartData {
         oldestSecond = oldest;
 
         //Anzahl der Sekunden/Pixel
-        int div = getCountRunningTimeSeconds() - oldestSecond;
+        int div = getCountProgRunningTimeSeconds() - oldestSecond;
+        div = div < maxTimeSeconds ? div : maxTimeSeconds;
         if (div < 10 * 60) {
             maxTimeSecondsAct = 10 * 60;
 
@@ -117,13 +118,13 @@ public class ChartData {
     }
 
     public void addCountSek() {
-        this.countRunningTimeSeconds += 1;
-        countRunningTimeMinutes = countRunningTimeSeconds / 60.0; // Minuten
+        this.countProgRunningTimeSeconds += 1;
+        countProgRunningTimeMinutes = countProgRunningTimeSeconds / 60.0; // Minuten
     }
 
     public int getTimeShowingSeconds() {
         //Zeit die angezeigt werden soll oder Programmlaufzeit wenn weniger
-        int displayMinTimeShowing_sec = getCountRunningTimeSeconds() - getDownloadChartMaxTimeMinutes() * 60;
+        int displayMinTimeShowing_sec = getCountProgRunningTimeSeconds() - getDownloadChartMaxTimeMinutes() * 60;
         if (displayMinTimeShowing_sec < 0) {
             displayMinTimeShowing_sec = 0;
         }
@@ -158,20 +159,20 @@ public class ChartData {
         return downloadChartMaxTimeMinutes.get();
     }
 
-    public int getCountRunningTimeSeconds() {
-        return countRunningTimeSeconds;
+    public int getCountProgRunningTimeSeconds() {
+        return countProgRunningTimeSeconds;
     }
 
-    public void setCountRunningTimeSeconds(int countRunningTimeSeconds) {
-        this.countRunningTimeSeconds = countRunningTimeSeconds;
+    public void setCountProgRunningTimeSeconds(int countProgRunningTimeSeconds) {
+        this.countProgRunningTimeSeconds = countProgRunningTimeSeconds;
     }
 
-    public double getCountRunningTimeMinutes() {
-        return countRunningTimeMinutes;
+    public double getCountProgRunningTimeMinutes() {
+        return countProgRunningTimeMinutes;
     }
 
-    public void setCountRunningTimeMinutes(double countRunningTimeMinutes) {
-        this.countRunningTimeMinutes = countRunningTimeMinutes;
+    public void setCountProgRunningTimeMinutes(double countProgRunningTimeMinutes) {
+        this.countProgRunningTimeMinutes = countProgRunningTimeMinutes;
     }
 
     public int getyScale() {
