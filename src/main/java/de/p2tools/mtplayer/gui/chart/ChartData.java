@@ -67,10 +67,14 @@ public class ChartData {
         int oldest = 0;
         for (int bi = 0; bi < getBandwidthDataList().size(); ++bi) {
             BandwidthData bandwidthData = getBandwidthDataList().get(bi);
-            if (!bandwidthData.isShowing()) {
+            if (bandwidthData.isEmpty()) {
+                //alte oder noch leere
                 continue;
             }
-            if (oldest < bandwidthData.getStartTimeSec()) {
+//            if (!bandwidthData.isShowing()) {
+//                continue;
+//            }
+            if (oldest > bandwidthData.getStartTimeSec()) {
                 oldest = bandwidthData.getStartTimeSec();
             }
         }
@@ -81,9 +85,6 @@ public class ChartData {
         div = div < maxTimeSeconds ? div : maxTimeSeconds;
         if (div < 10 * 60) {
             maxTimeSecondsAct = 10 * 60;
-
-//        } else if (div < 10 * 60) {
-//            maxTimeSecondsAct = 10 * 60;
 
         } else if (div < 30 * 60) {
             maxTimeSecondsAct = 30 * 60;

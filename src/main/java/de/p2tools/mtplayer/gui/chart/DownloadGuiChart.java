@@ -58,9 +58,7 @@ public class DownloadGuiChart extends AnchorPane {
         lineChart.setLegendSide(Side.RIGHT);
         lineChart.setLegendVisible(true);
         lineChart.setAnimated(false);
-        if (ProgData.debug) {
-            lineChart.setCreateSymbols(true);
-        }
+        lineChart.setCreateSymbols(ProgData.debug ? true : false);
         lineChart.setTitle("Downloads");
 
         lineChart.setOnMouseClicked(e -> {

@@ -17,7 +17,6 @@
 
 package de.p2tools.mtplayer.gui.chart;
 
-import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.download.Download;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import javafx.collections.FXCollections;
@@ -35,7 +34,7 @@ public class BandwidthData extends ArrayList<Long> {
     private int tmpCount = 0;
 
     private int lastIdx = 0;
-    private int amountDataPerPixel = 1;
+    //    private int amountDataPerPixel = 1;
     private int secondsPerPixel = 1;
     final private ChartData chartData;
     private int dataAllSecond = ChartFactory.DATA_ALL_SECONDS;
@@ -141,30 +140,32 @@ public class BandwidthData extends ArrayList<Long> {
         this.startTimeSec += dataAllSecond;
     }
 
-    public void fillDate(XYChart.Series<Number, Number> chartSeries) {
+    public void fillData(XYChart.Series<Number, Number> chartSeries, boolean addData) {
         final int secondsPerPixel = chartData.getSecondsPerPixel();//nur vom Slider abhängig!
-        final int actTimeSec = chartData.getCountProgRunningTimeSeconds(); //jetzt[sec], damit es während des gesamten Durchlaufs gleich ist!
         int startIdx = 0, endIdx = 0;
         long value = 0;
         int extraIdx = 0;
 
         System.out.println("--------");
-        chartSeries.setName(getName());
+        if (!addData) {
+            chartSeries.setName(getName());
+        }
         if (this.size() % secondsPerPixel != 0) {
             extraIdx = this.size() % secondsPerPixel;
         }
 
-        final int size = this.size() - extraIdx;
+        final int sizeWithoutExtra = this.size() - extraIdx;
         for (int i = 0; i < ChartFactory.MAX_CHART_DATA_PER_SCREEN; ++i) {
             //ChartFactory.MAX_CHART_DATA_PER_SCREEN-1 (aktuellster Wert) ... 0
 
-            final double actTimeMin = (actTimeSec - secondsPerPixel * i) / 60.0;//jetzt[min] ... vor[min]
+            double actTimeMin = (chartData.getCountProgRunningTimeSeconds() - secondsPerPixel * i) / 60.0;//jetzt[min] ... vor[min]
             final int chartIndex = ChartFactory.MAX_CHART_DATA_PER_SCREEN - 1 - i;//MAX_CHART_DATA - 1 ... 0, aktuellster zuerst
 
             if (actTimeMin < 0) {
-                chartSeries.getData().get(chartIndex).setYValue(0);
+                if (!addData) {
+                    chartSeries.getData().get(chartIndex).setYValue(0);
+                }
                 chartSeries.getData().get(chartIndex).setXValue(0);
-//                    System.out.println("actTimeMin>0: " + actTimeMin);
                 continue;
             }
 
@@ -173,39 +174,39 @@ public class BandwidthData extends ArrayList<Long> {
                 startIdx = this.size() - extraIdx;
                 endIdx = this.size();
                 value = getValue(startIdx, endIdx);
-                chartSeries.getData().get(chartIndex).setYValue(value);
+                actTimeMin = (chartData.getCountProgRunningTimeSeconds() - secondsPerPixel * i) / 60.0;//jetzt[min] ... vor[min]
+
+                if (addData) {
+                    chartSeries.getData().get(chartIndex).setYValue(chartSeries.getData().get(chartIndex).getYValue().longValue() + value);
+                } else {
+                    chartSeries.getData().get(chartIndex).setYValue(value);
+                }
                 chartSeries.getData().get(chartIndex).setXValue(actTimeMin);
-                System.out.println("EXTRA->" + " size: " + size + "/" + this.size() + " startIdx: " + startIdx + " endIdx: " + endIdx +
+                System.out.println("   actTimeMin: " + (((int) (actTimeMin * 100)) / 100.0) + " EXTRA->" + " sizeWithoutExtra: " + sizeWithoutExtra + "/" + this.size() + " startIdx: " + startIdx + " endIdx: " + endIdx +
                         " value: " + value + " secondsPerPixel: " + secondsPerPixel);
 
             } else {
                 //der Rest oder Wenn kein EXTRA alles
-                int idx = extraIdx != 0 ? i - 1 : i;
-                startIdx = size - idx * secondsPerPixel - secondsPerPixel;
-                endIdx = size - idx * secondsPerPixel;
+                int idx = extraIdx == 0 ? i : i - 1; //da wird wieder bei Null angefangen: neue Größe
+                startIdx = sizeWithoutExtra - idx * secondsPerPixel / ChartFactory.DATA_ALL_SECONDS - secondsPerPixel / ChartFactory.DATA_ALL_SECONDS;
+                endIdx = sizeWithoutExtra - idx * secondsPerPixel / ChartFactory.DATA_ALL_SECONDS;
                 value = getValue(startIdx, endIdx);
+                actTimeMin = (chartData.getCountProgRunningTimeSeconds() - secondsPerPixel * i) / 60.0;//jetzt[min] ... vor[min]
 
+                if (endIdx <= 0) {
+                    continue;
+                }
+                if (addData) {
+                    chartSeries.getData().get(chartIndex).setYValue(chartSeries.getData().get(chartIndex).getYValue().longValue() + value);
+                } else {
+                    chartSeries.getData().get(chartIndex).setYValue(value);
+                }
                 chartSeries.getData().get(chartIndex).setXValue(actTimeMin);
-                chartSeries.getData().get(chartIndex).setYValue(value);
-                System.out.println("   size: " + size + "/" + this.size() + " startIdx: " + startIdx + " endIdx: " + endIdx +
+                System.out.println("   actTimeMin: " + (((int) (actTimeMin * 100)) / 100.0) + " sizeWithoutExtra: " + sizeWithoutExtra + "/" + this.size() + " startIdx: " + startIdx + " endIdx: " + endIdx +
                         " value: " + value + " secondsPerPixel: " + secondsPerPixel);
             }
-
-
-            //der Rest oder Wenn kein EXTRA alles
-//            startIdx = size - i * secondsPerPixel - secondsPerPixel;
-//            endIdx = size - i * secondsPerPixel;
-//            value = getValue(startIdx, endIdx);
-//
-//            chartSeries.getData().get(chartIndex).setXValue(actTimeMin);
-//            chartSeries.getData().get(chartIndex).setYValue(value);
-//            System.out.println("   size: " + size + "/" + this.size() + " startIdx: " + startIdx + " endIdx: " + endIdx +
-//                    " value: " + value + " secondsPerPixel: " + secondsPerPixel);
-
-
         }
     }
-
 
     private long getValue(int from, int to) {
         long value = 0;
@@ -225,55 +226,55 @@ public class BandwidthData extends ArrayList<Long> {
         return value;
     }
 
-    public long getSecondsBack(int chartIdx) {
-        int secondsPerPixel = chartData.getSecondsPerPixel();
-
-        int idx2, idx = this.size() - 1 - chartIdx / secondsPerPixel;
-        long ret = 0;
-        int count = 0;
-        int change = chartIdx / secondsPerPixel;
-
-//        if (idx >= lastIdx - secondsPerPixel) {
-//            //dann ists ein "Zwischenwert"
-//            idx = lastIdx;
+//    public long getSecondsBack(int chartIdx) {
+//        int secondsPerPixel = chartData.getSecondsPerPixel();
+//
+//        int idx2, idx = this.size() - 1 - chartIdx / secondsPerPixel;
+//        long ret = 0;
+//        int count = 0;
+//        int change = chartIdx / secondsPerPixel;
+//
+////        if (idx >= lastIdx - secondsPerPixel) {
+////            //dann ists ein "Zwischenwert"
+////            idx = lastIdx;
+////        }
+//        System.out.println("idx: " + idx + " - " + lastIdx + " secondsPerPixel: " + secondsPerPixel + " chartIdx: " + chartIdx);
+//        lastIdx = idx;
+//
+//        if (idx >= 0 && idx < this.size()) {
+//            ++count;
+//            ret = this.get(idx);
 //        }
-        System.out.println("idx: " + idx + " - " + lastIdx + " secondsPerPixel: " + secondsPerPixel + " chartIdx: " + chartIdx);
-        lastIdx = idx;
+//
+//        idx2 = this.size() - 1 - (chartIdx - 1) / secondsPerPixel + 1;//eins vor dem "nächstem"
+//        if (idx2 >= 0) {
+//            for (int i = idx2; i < idx; ++i) {
+//                ++count;
+//                ret += this.get(i);
+//            }
+//        }
+//
+//        if (count > 0) {
+//            ret = ret / count;
+//        }
+//        return ret;
+//    }
 
-        if (idx >= 0 && idx < this.size()) {
-            ++count;
-            ret = this.get(idx);
-        }
-
-        idx2 = this.size() - 1 - (chartIdx - 1) / secondsPerPixel + 1;//eins vor dem "nächstem"
-        if (idx2 >= 0) {
-            for (int i = idx2; i < idx; ++i) {
-                ++count;
-                ret += this.get(i);
-            }
-        }
-
-        if (count > 0) {
-            ret = ret / count;
-        }
-        return ret;
-    }
-
-    public long getLast() {
-        if (this.isEmpty()) {
-            return 0;
-        }
-
-        return this.get(this.size() - 1);
-    }
-
-    public long removeLast() {
-        if (this.isEmpty()) {
-            return 0;
-        }
-
-        return this.remove(this.size() - 1);
-    }
+//    public long getLast() {
+//        if (this.isEmpty()) {
+//            return 0;
+//        }
+//
+//        return this.get(this.size() - 1);
+//    }
+//
+//    public long removeLast() {
+//        if (this.isEmpty()) {
+//            return 0;
+//        }
+//
+//        return this.remove(this.size() - 1);
+//    }
 
     public int getMaxFirstIdx() {
         final int first = size() - (chartData.getDownloadChartMaxTimeMinutes() * 60) / dataAllSecond;
@@ -299,18 +300,17 @@ public class BandwidthData extends ArrayList<Long> {
         return max;
     }
 
-    public int getAmountDataPerPixel() {
-        return amountDataPerPixel;
-    }
+//    public int getAmountDataPerPixel() {
+//        return amountDataPerPixel;
+//    }
 
     private void genData() {
-        int maxTimeSeconds = ProgConfig.DOWNLOAD_CHART_SHOW_MAX_TIME_MIN.getInt() * 60;
         secondsPerPixel = chartData.getSecondsPerPixel();
 
-        amountDataPerPixel = (int) Math.round(1.0 * secondsPerPixel / ChartFactory.DATA_ALL_SECONDS);
-        if (amountDataPerPixel < secondsPerPixel / ChartFactory.DATA_ALL_SECONDS) {
-            ++amountDataPerPixel;
-        }
-        amountDataPerPixel = amountDataPerPixel <= 0 ? 1 : amountDataPerPixel;
+//        amountDataPerPixel = (int) Math.round(1.0 * secondsPerPixel / ChartFactory.DATA_ALL_SECONDS);
+//        if (amountDataPerPixel < secondsPerPixel / ChartFactory.DATA_ALL_SECONDS) {
+//            ++amountDataPerPixel;
+//        }
+//        amountDataPerPixel = amountDataPerPixel <= 0 ? 1 : amountDataPerPixel;
     }
 }

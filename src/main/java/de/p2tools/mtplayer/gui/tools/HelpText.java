@@ -516,7 +516,7 @@ public class HelpText {
             "Dateien mit einem dort angegebenen Suffix werden nicht in die Mediensammlung aufgenommen." +
             P2LibConst.LINE_SEPARATORx2 +
             "\"Nur Dateien mit diesem Suffix\"\n" +
-            "Es werden dann nur Dateien mit diesm Suffix aufgenommen." +
+            "Es werden dann nur Dateien mit diesem Suffix aufgenommen." +
             P2LibConst.LINE_SEPARATORx2 +
             "Suffixe können durch \"Komma\" getrennt angegeben werden: " +
             "\"txt,xml\" besagt, Dateien die mit \".txt\" oder \".xml\" enden " +
