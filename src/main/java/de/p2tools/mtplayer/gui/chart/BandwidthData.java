@@ -19,7 +19,6 @@ package de.p2tools.mtplayer.gui.chart;
 
 import de.p2tools.mtplayer.controller.data.download.Download;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
-import javafx.collections.FXCollections;
 import javafx.scene.chart.XYChart;
 
 import java.util.ArrayList;
@@ -38,14 +37,14 @@ public class BandwidthData extends ArrayList<Long> {
     private int secondsPerPixel = 1;
     final private ChartData chartData;
     private int dataAllSecond = ChartFactory.DATA_ALL_SECONDS;
-    private final XYChart.Series<Number, Number> chartSeries;
+//    private final XYChart.Series<Number, Number> chartSeries;
 
     public BandwidthData(ChartData chartData, Download download) {
         this.chartData = chartData;
         this.download = download;
-        this.chartSeries = new XYChart.Series<>("", FXCollections.observableArrayList());
-        this.add(0L);
-        ChartFactory.initChartSeries(chartSeries);
+//        this.chartSeries = new XYChart.Series<>("", FXCollections.observableArrayList());
+//        this.add(0L);
+//        ChartFactory.initChartSeries(chartSeries);
         setDownloadState();
         genData();
     }
@@ -71,13 +70,14 @@ public class BandwidthData extends ArrayList<Long> {
         }
     }
 
-    public boolean addData(Long a) {
-        if (this.isEmpty()) {
-            //dann auch die Startzeit neu setzen
-            this.startTimeSec = chartData.getCountProgRunningTimeSeconds();
+    public void setStartTimeNow() {
+        this.startTimeSec = chartData.getCountProgRunningTimeSeconds();
+    }
+
+    public void cleanUpData() {
+        if (size() > 0 && get(size() - 1).longValue() > 0) {
+            super.add(0L);
         }
-        genData();
-        return super.add(a);
     }
 
     public void addTmpData(long a) {
@@ -93,22 +93,31 @@ public class BandwidthData extends ArrayList<Long> {
         tmpCount = 0;
     }
 
+    private boolean addData(Long a) {
+        if (this.isEmpty()) {
+            //dann auch die Startzeit neu setzen
+            setStartTimeNow();
+        }
+        genData();
+        return super.add(a);
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-        chartSeries.setName(name);
+//        chartSeries.setName(name);
     }
 
     public int getStartTimeSec() {
         return startTimeSec;
     }
 
-    public int getTimeSec(int sec) {
-        return startTimeSec + sec * dataAllSecond;
-    }
+//    public int getTimeSec(int sec) {
+//        return startTimeSec + sec * dataAllSecond;
+//    }
 
     public boolean isShowing() {
         return isShowing;
@@ -118,9 +127,9 @@ public class BandwidthData extends ArrayList<Long> {
         isShowing = showing;
     }
 
-    public double getTimeMin(int sec) {
-        return getTimeSec(sec) / 60.0;
-    }
+//    public double getTimeMin(int sec) {
+//        return getTimeSec(sec) / 60.0;
+//    }
 
     public int getDataAllSecond() {
         return dataAllSecond;
@@ -130,9 +139,9 @@ public class BandwidthData extends ArrayList<Long> {
         this.dataAllSecond = dataAllSecond;
     }
 
-    public XYChart.Series<Number, Number> getChartSeries() {
-        return chartSeries;
-    }
+//    public XYChart.Series<Number, Number> getChartSeries() {
+//        return chartSeries;
+//    }
 
     public void removeFirst() {
         //ersten Wert entfernen und dann auch!! die Startzeit weiterschieben
@@ -194,8 +203,11 @@ public class BandwidthData extends ArrayList<Long> {
                 actTimeMin = (chartData.getCountProgRunningTimeSeconds() - secondsPerPixel * i) / 60.0;//jetzt[min] ... vor[min]
 
                 if (endIdx <= 0) {
+                    chartSeries.getData().get(chartIndex).setYValue(0);
+                    chartSeries.getData().get(chartIndex).setXValue(actTimeMin);
                     continue;
                 }
+
                 if (addData) {
                     chartSeries.getData().get(chartIndex).setYValue(chartSeries.getData().get(chartIndex).getYValue().longValue() + value);
                 } else {

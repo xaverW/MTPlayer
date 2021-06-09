@@ -151,10 +151,7 @@ public class ChartFactory {
                 }
             }
             if (!foundDownload) {
-                int size = bandwidthData.size();
-                if (size > 0 && bandwidthData.get(size - 1).longValue() > 0) {
-                    bandwidthData.addData(0L);
-                }
+                bandwidthData.cleanUpData();
             }
         }
     }
