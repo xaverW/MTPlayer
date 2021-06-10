@@ -16,9 +16,9 @@
 
 package de.p2tools.mtplayer.gui.configDialog;
 
-import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2Lib.dialogs.accordion.PAccordionPane;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
@@ -40,11 +40,13 @@ public class DownloadPaneController extends PAccordionPane {
     BooleanProperty propNotify = ProgConfig.DOWNLOAD_SHOW_NOTIFICATION.getBooleanProperty();
     BooleanProperty propErr = ProgConfig.DOWNLOAD_ERROR_MSG.getBooleanProperty();
     BooleanProperty propOne = ProgConfig.DOWNLOAD_MAX_ONE_PER_SERVER.getBooleanProperty();
+    BooleanProperty propSSL = ProgConfig.SYSTEM_SSL_ALWAYS_TRUE.getBooleanProperty();
     BooleanProperty propBeep = ProgConfig.DOWNLOAD_BEEP.getBooleanProperty();
 
     private final PToggleSwitch tglFinished = new PToggleSwitch("Benachrichtigung wenn abgeschlossen");
     private final PToggleSwitch tglError = new PToggleSwitch("bei Downloadfehler Fehlermeldung anzeigen");
     private final PToggleSwitch tglOne = new PToggleSwitch("nur ein Download pro Downloadserver");
+    private final PToggleSwitch tglSSL = new PToggleSwitch("SSL-Download-URLs: Bei Problemen SSL abschalten");
     private final PToggleSwitch tglBeep = new PToggleSwitch("nach jedem Download einen \"Beep\" ausgeben");
     private ReplacePane replacePane;
 
@@ -65,6 +67,7 @@ public class DownloadPaneController extends PAccordionPane {
         tglFinished.selectedProperty().unbindBidirectional(propNotify);
         tglError.selectedProperty().unbindBidirectional(propErr);
         tglOne.selectedProperty().unbindBidirectional(propOne);
+        tglSSL.selectedProperty().unbindBidirectional(propSSL);
         tglBeep.selectedProperty().unbindBidirectional(propBeep);
     }
 
@@ -97,6 +100,10 @@ public class DownloadPaneController extends PAccordionPane {
         final Button btnHelpOne = PButton.helpButton(stage, "Download",
                 HelpText.DOWNLOAD_ONE_SERVER);
 
+        tglSSL.selectedProperty().bindBidirectional(propSSL);
+        final Button btnHelpSSL = PButton.helpButton(stage, "Download",
+                HelpText.DOWNLOAD_SSL_ALWAYS_TRUE);
+
         tglBeep.selectedProperty().bindBidirectional(propBeep);
         final Button btnBeep = new Button("_Testen");
         btnBeep.setOnAction(a -> Toolkit.getDefaultToolkit().beep());
@@ -104,6 +111,7 @@ public class DownloadPaneController extends PAccordionPane {
         GridPane.setHalignment(btnHelpFinished, HPos.RIGHT);
         GridPane.setHalignment(btnHelpError, HPos.RIGHT);
         GridPane.setHalignment(btnHelpOne, HPos.RIGHT);
+        GridPane.setHalignment(btnHelpSSL, HPos.RIGHT);
 
         int row = 0;
         gridPane.add(tglFinished, 0, row);
@@ -115,11 +123,12 @@ public class DownloadPaneController extends PAccordionPane {
         gridPane.add(tglOne, 0, ++row);
         gridPane.add(btnHelpOne, 1, row);
 
+        gridPane.add(tglSSL, 0, ++row);
+        gridPane.add(btnHelpSSL, 1, row);
+
         gridPane.add(tglBeep, 0, ++row);
         gridPane.add(btnBeep, 1, row);
 
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(), PColumnConstraints.getCcPrefSize());
     }
-
-
 }

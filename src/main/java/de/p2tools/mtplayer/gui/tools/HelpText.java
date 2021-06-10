@@ -323,6 +323,12 @@ public class HelpText {
             P2LibConst.LINE_SEPARATOR +
             "Das kann bei Downloadproblemen helfen.";
 
+    public static final String DOWNLOAD_SSL_ALWAYS_TRUE = "Bei Downloads mit \"https-URL\" wird die Verbindung über SSL " +
+            "aufgebaut. Wenn SSL-Zertifikate auf dem Rechner fehlen oder das Server-Zertifikat fehlerhaft ist, kommt es " +
+            "zu Download-Fehlern. Der Download bricht mit einer Fehlermeldung ab. " +
+            P2LibConst.LINE_SEPARATORx2 +
+            "Die Überprüfung der Zertifikate kann mit dieser Funktion abgeschaltet werden.";
+
     public static final String DOWNLOAD_FINISHED = "Wird ein Download beendet, wird man mit einem Fenster informiert.";
 
     public static final String DOWNLOAD_ERROR = "Wird ein Download mit einem Fehler beendet, " +

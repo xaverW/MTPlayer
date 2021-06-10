@@ -31,6 +31,7 @@ import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
 
+import javax.net.ssl.HttpsURLConnection;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -221,12 +222,46 @@ public class DirectHttpDownload extends Thread {
                 file = new File(download.getDestPathFile());
 
                 if (!cancelDownload()) {
+                    //If the server uses self-signed X.509 certificate, we will get SSLHandshakeException -> BR!!
+                    //https://nakov.com/blog/2009/07/16/disable-certificate-validation-in-java-ssl-connections/
+//                    // Create a trust manager that does not validate certificate chains
+//                    TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
+//                        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+//                            return null;
+//                        }
+//
+//                        public void checkClientTrusted(X509Certificate[] certs, String authType) {
+//                        }
+//
+//                        public void checkServerTrusted(X509Certificate[] certs, String authType) {
+//                        }
+//                    }};
+//                    // Install the all-trusting trust manager
+//                    SSLContext sc = SSLContext.getInstance("SSL");
+//                    sc.init(null, trustAllCerts, new java.security.SecureRandom());
+//                    HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+
+
+//                    if (ProgConfig.SYSTEM_SSL_ALWAYS_TRUE.getBool()) {
+//                        // Create all-trusting host name verifier
+//                        HostnameVerifier allHostsValid = (hostname, session) -> true;
+//                        // Install the all-trusting host verifier
+//                        HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+//                    }
 
                     download.getDownloadSize().setSize(getContentLength(url));
                     download.getDownloadSize().setActFileSize(0);
                     conn = (HttpURLConnection) url.openConnection();
                     conn.setConnectTimeout(1000 * ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getInt());
                     conn.setReadTimeout(1000 * ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getInt());
+
+                    if (ProgConfig.SYSTEM_SSL_ALWAYS_TRUE.getBool() && conn instanceof HttpsURLConnection) {
+                        HttpsURLConnection httpsConn = (HttpsURLConnection) conn;
+                        httpsConn.setHostnameVerifier(
+                                // Create all-trusting host name verifier
+                                (hostname, session) -> true);
+//                        httpsConn.setSSLSocketFactory(sc.getSocketFactory());
+                    }
 
                     setupHttpConnection(conn);
                     conn.connect();
