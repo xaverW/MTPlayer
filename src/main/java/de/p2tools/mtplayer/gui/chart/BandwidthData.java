@@ -191,8 +191,8 @@ public class BandwidthData extends ArrayList<Long> {
                     chartSeries.getData().get(chartIndex).setYValue(value);
                 }
                 chartSeries.getData().get(chartIndex).setXValue(actTimeMin);
-                System.out.println("   actTimeMin: " + (((int) (actTimeMin * 100)) / 100.0) + " EXTRA->" + " sizeWithoutExtra: " + sizeWithoutExtra + "/" + this.size() + " startIdx: " + startIdx + " endIdx: " + endIdx +
-                        " value: " + value + " secondsPerPixel: " + secondsPerPixel);
+//                System.out.println("   actTimeMin: " + (((int) (actTimeMin * 100)) / 100.0) + " EXTRA->" + " sizeWithoutExtra: " + sizeWithoutExtra + "/" + this.size() + " startIdx: " + startIdx + " endIdx: " + endIdx +
+//                        " value: " + value + " secondsPerPixel: " + secondsPerPixel);
 
             } else {
                 //der Rest oder Wenn kein EXTRA alles
@@ -214,8 +214,8 @@ public class BandwidthData extends ArrayList<Long> {
                     chartSeries.getData().get(chartIndex).setYValue(value);
                 }
                 chartSeries.getData().get(chartIndex).setXValue(actTimeMin);
-                System.out.println("   actTimeMin: " + (((int) (actTimeMin * 100)) / 100.0) + " sizeWithoutExtra: " + sizeWithoutExtra + "/" + this.size() + " startIdx: " + startIdx + " endIdx: " + endIdx +
-                        " value: " + value + " secondsPerPixel: " + secondsPerPixel);
+//                System.out.println("   actTimeMin: " + (((int) (actTimeMin * 100)) / 100.0) + " sizeWithoutExtra: " + sizeWithoutExtra + "/" + this.size() + " startIdx: " + startIdx + " endIdx: " + endIdx +
+//                        " value: " + value + " secondsPerPixel: " + secondsPerPixel);
             }
         }
     }

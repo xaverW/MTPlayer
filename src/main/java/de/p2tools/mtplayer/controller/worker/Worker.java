@@ -16,23 +16,22 @@
 
 package de.p2tools.mtplayer.controller.worker;
 
-import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
-import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
-import de.p2tools.mtplayer.tools.storedFilter.SelectedFilterFactory;
 import de.p2tools.mtplayer.controller.ProgSave;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
+import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
+import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
+import de.p2tools.mtplayer.tools.storedFilter.SelectedFilterFactory;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.TreeSet;
+import java.text.Collator;
+import java.util.*;
 
 public class Worker {
 
@@ -135,12 +134,8 @@ public class Worker {
         progData.maskerPane.setMaskerVisible(true, false);
         progData.maskerPane.setMaskerProgress(ListenerLoadFilmlist.PROGRESS_INDETERMINATE, "Downloads suchen");
 
-//        Thread th = new Thread(() -> {
-//            try {
-// todo da kommst sonst zu Laufzeitproblemen
-
         PLog.sysLog("Downloads aus Abos suchen");
-        // erledigte entfernen, nicht gestartete Abos entfernen und nach neu Abos suchen
+        //erledigte entfernen, nicht gestartete Abos entfernen und nach neu Abos suchen
         progData.downloadList.searchForDownloadsFromAbos();
 
         if (Boolean.parseBoolean(ProgConfig.DOWNLOAD_START_NOW.get()) || ProgData.automode) {
@@ -149,18 +144,8 @@ public class Worker {
             progData.downloadList.startDownloads();
         }
 
-//            } catch (Exception ex) {
-//                PLog.errorLog(951241204, ex);
-//            } finally {
-
         progData.maskerPane.switchOffMasker();
         PDuration.counterStop("Worker.searchForAbosAndMaybeStart");
-
-
-//            }
-//        });
-//        th.setName("searchForAbosAndMaybeStart");
-//        th.start();
     }
 
     private void createChannelAndThemeList() {
@@ -171,9 +156,8 @@ public class Worker {
     }
 
     public void createThemeList(String sender) {
-        // toDo geht vielleicht besser??
-//        System.out.println("createThemeList: " + sender);
-
+        //toDo geht vielleicht besser??
+        PDuration.counterStart("createThemeList");
         final ArrayList<String> theme = new ArrayList<>();
         if (sender.isEmpty()) {
             theme.addAll(Arrays.asList(progData.filmlistFiltered.themePerChannel[0]));
@@ -181,7 +165,23 @@ public class Worker {
             makeTheme(sender.trim(), theme);
         }
 
-        Platform.runLater(() -> { // todo brauchts da nicht??
+        Collator collator = Collator.getInstance(Locale.GERMANY);
+        collator.setStrength(Collator.PRIMARY);
+        collator.setDecomposition(Collator.CANONICAL_DECOMPOSITION);
+
+        Comparator<String> comparator = (arg1, arg2) -> {
+            if (arg1.startsWith("\"") || arg1.startsWith("#") || arg1.startsWith("„")) {
+                arg1 = arg1.substring(1);
+            }
+            if (arg2.startsWith("\"") || arg2.startsWith("#") || arg2.startsWith("„")) {
+                arg2 = arg2.substring(1);
+            }
+
+            return collator.compare(arg1, arg2);
+        };
+        Collections.sort(theme, comparator);
+
+        Platform.runLater(() -> {
             saveFilter();
             this.progData.storedFilters.getActFilterSettings().setReportChange(false);
             themeForChannelList.setAll(theme);
@@ -189,12 +189,11 @@ public class Worker {
             resetFilter();
             this.progData.storedFilters.initFilter();
         });
+        PDuration.counterStop("createThemeList");
     }
 
     private void makeTheme(String sender, ArrayList<String> theme) {
-        // todo liste sortieren
         if (sender.contains(",")) {
-
             String[] senderArr = sender.toLowerCase().split(",");
             final TreeSet<String> tree = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
             tree.add("");
