@@ -16,8 +16,8 @@
 
 package de.p2tools.mtplayer.gui;
 
-import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
@@ -64,9 +64,14 @@ public class FilmFilterEditDialog extends PDialogExtra {
         tglTheme.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().themeVisProperty());
         v.getChildren().add(tglTheme);
 
-        PToggleSwitch tglThemeExact = new PToggleSwitch("  -> exakt");
+        PToggleSwitch tglThemeExact = new PToggleSwitch("  -> freie Suche mit Eingabefeld");
+        tglThemeExact.disableProperty().bind(progData.storedFilters.getActFilterSettings().themeVisProperty().not());
         tglThemeExact.setMaxWidth(Double.MAX_VALUE);
-        tglThemeExact.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().themeExactProperty());
+        tglThemeExact.setSelected(!progData.storedFilters.getActFilterSettings().isThemeExact());
+        tglThemeExact.selectedProperty().addListener((observable, oldValue, newValue) ->
+                progData.storedFilters.getActFilterSettings().themeExactProperty().setValue(!newValue));
+//        tglThemeExact.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().themeExactProperty());
+
         v.getChildren().add(tglThemeExact);
         vbox.getChildren().add(v);
 

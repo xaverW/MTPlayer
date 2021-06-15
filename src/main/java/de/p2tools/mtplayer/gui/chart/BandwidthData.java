@@ -155,7 +155,7 @@ public class BandwidthData extends ArrayList<Long> {
         long value = 0;
         int extraIdx = 0;
 
-        System.out.println("--------");
+//        System.out.println("--------");
         if (!addData) {
             chartSeries.setName(getName());
         }
