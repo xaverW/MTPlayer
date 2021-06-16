@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.dialog.QuitDialogController;
 import de.p2tools.p2Lib.guiTools.PGuiSize;
 import de.p2tools.p2Lib.tools.PShutDown;
+import de.p2tools.p2Lib.tools.ProgramTools;
 import de.p2tools.p2Lib.tools.log.LogMessage;
 import javafx.application.Platform;
 
@@ -75,6 +76,10 @@ public class ProgQuit {
     }
 
     private static void saveConfig() {
+        ProgConfig.SYSTEM_PROG_VERSION.setValue(ProgramTools.getProgVersion());
+        ProgConfig.SYSTEM_PROG_BUILD_NO.setValue(ProgramTools.getBuild());
+        ProgConfig.SYSTEM_PROG_BUILD_DATE.setValue(ProgramTools.getCompileDate());
+
         stopAllDownloads();
         writeTabSettings();
         new ProgSave().saveAll();

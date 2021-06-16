@@ -57,6 +57,13 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_PROGRESS = addNewKey("__system-parameter__download_progress_", Boolean.TRUE.toString());
     // ===========================================
 
+
+    // Configs der Programmversion
+    public static MLConfigs SYSTEM_PROG_VERSION = addNewKey("system-prog-version");
+    public static MLConfigs SYSTEM_PROG_BUILD_NO = addNewKey("system-prog-build-no");
+    public static MLConfigs SYSTEM_PROG_BUILD_DATE = addNewKey("system-prog-build-date");
+
+
     // Configs zum Aktualisieren beim Programmupdate
     public static MLConfigs SYSTEM_AFTER_UPDATE_FILTER = addNewKey("system-after-update-filter", Boolean.FALSE.toString());
 
