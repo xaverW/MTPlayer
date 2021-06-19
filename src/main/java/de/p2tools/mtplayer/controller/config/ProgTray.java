@@ -18,14 +18,17 @@
 package de.p2tools.mtplayer.controller.config;
 
 import de.p2tools.mtplayer.controller.ProgQuit;
+import de.p2tools.mtplayer.controller.data.download.DownloadInfosFactory;
+import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
+import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
+import de.p2tools.mtplayer.gui.StatusBarController;
 import de.p2tools.mtplayer.gui.configDialog.ConfigDialogController;
 import de.p2tools.mtplayer.gui.dialog.AboutDialogController;
+import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.p2Lib.tools.log.PLog;
 import de.p2tools.p2Lib.tools.log.PLogger;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -37,18 +40,41 @@ public class ProgTray {
     private final ProgData progData;
     private BooleanProperty propTray = ProgConfig.SYSTEM_TRAY.getBooleanProperty();
     private SystemTray systemTray = null;
-
+    private boolean stopTimer = false;
 
     public ProgTray(ProgData progData) {
         this.progData = progData;
-        propTray.addListener(new ChangeListener<Boolean>() {
+        propTray.addListener((observableValue, aBoolean, t1) -> {
+            if (propTray.get()) {
+                setTray();
+            } else {
+                removeTray();
+            }
+        });
+        Listener.addListener(new Listener(Listener.EREIGNIS_TIMER, StatusBarController.class.getSimpleName()) {
             @Override
-            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
-                if (propTray.get()) {
-                    setTray();
-                } else {
-                    removeTray();
+            public void pingFx() {
+                try {
+                    if (!stopTimer) {
+                        String toolTip = DownloadInfosFactory.getTrayInfo(); //da gibts eine max Größe vom Text!!
+                        if (systemTray != null) {
+                            Arrays.stream(systemTray.getTrayIcons()).sequential().forEach(e -> e.setToolTip(toolTip));
+                        }
+                    }
+                } catch (final Exception ex) {
+                    PLog.errorLog(936251087, ex);
                 }
+            }
+        });
+        progData.loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
+            @Override
+            public void start(ListenerFilmlistLoadEvent event) {
+                stopTimer = true;
+            }
+
+            @Override
+            public void finished(ListenerFilmlistLoadEvent event) {
+                stopTimer = false;
             }
         });
     }
@@ -60,18 +86,37 @@ public class ProgTray {
         }
     }
 
+    int count = 0;
+
     public void setTray() {
         if (!SystemTray.isSupported()) {
             return;
         }
 
         systemTray = SystemTray.getSystemTray();
+        String resource = "/de/p2tools/mtplayer/res/P2_24.png";
+        URL res = getClass().getResource(resource);
+        Image image = Toolkit.getDefaultToolkit().getImage(res);
         PopupMenu popup = new PopupMenu();
+        TrayIcon trayicon = new TrayIcon(image, "MTPlayer", popup);
+        trayicon.setImageAutoSize(true);
+        trayicon.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    maxMin();
+                }
+            }
+        });
 
+        try {
+            systemTray.add(trayicon);
+        } catch (AWTException exception) {
+            PLog.errorLog(945120364, exception.getMessage());
+        }
 //                --------------------------------
 //        "1 aktiver Download (76,3%; 2.304 # 3019 MB, 6,2 MB/s, 3,2 Minuten verbleibend), 2 wartende Downloads" (so als Beispiel)
 //        Die Ausgabe von "1 aktiver ..." könnte man auch als MouseOver-Funktion vom TrayIcon implementieren. Nur so als Idee.
-
 
         java.awt.MenuItem miMaxMin = new java.awt.MenuItem("Programm maximieren/minimieren");
         java.awt.MenuItem miConfig = new java.awt.MenuItem("Einstellungen öffnen");
@@ -89,7 +134,10 @@ public class ProgTray {
             ProgConfig.SYSTEM_TRAY.setValue(false);
         }));
         miAbout.addActionListener(e -> Platform.runLater(() -> new AboutDialogController(progData)));
-        miQuit.addActionListener(e -> Platform.runLater(() -> ProgQuit.quit(false)));
+        miQuit.addActionListener(e -> Platform.runLater(() -> {
+            ProgQuit.quit(false);
+            systemTray.remove(trayicon);
+        }));
 
         popup.add(miMaxMin);
         popup.add(miConfig);
@@ -100,30 +148,6 @@ public class ProgTray {
         popup.add(miAbout);
         popup.addSeparator();
         popup.add(miQuit);
-
-        String resource = "/de/p2tools/mtplayer/res/P2_24.png";
-        URL res = getClass().getResource(resource);
-        Image image = Toolkit.getDefaultToolkit().getImage(res);
-
-        TrayIcon trayicon = new TrayIcon(image, "MTPlayer", popup);
-        trayicon.setImageAutoSize(true);
-        trayicon.setToolTip(null);
-//        System.out.println("tooltip: " + trayicon.getToolTip());
-//        trayicon.setToolTip("tooltip");
-        trayicon.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getButton() == MouseEvent.BUTTON1) {
-                    maxMin();
-                }
-            }
-        });
-
-        try {
-            systemTray.add(trayicon);
-        } catch (AWTException exception) {
-            PLog.errorLog(945120364, exception.getMessage());
-        }
     }
 
     private void max() {

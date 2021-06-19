@@ -19,6 +19,8 @@ package de.p2tools.mtplayer.controller.data.download;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.Abo;
+import de.p2tools.p2Lib.P2LibConst;
+import de.p2tools.p2Lib.tools.file.PFileSize;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -203,5 +205,83 @@ public class DownloadInfosFactory {
         }
 
         return textLinks;
+    }
+
+    public static synchronized String getTrayInfo() {
+        if (progData.downloadList.size() == 0) {
+            // dann gibts keine :)
+            return "keine Downloads";
+        }
+
+        String text1;
+        text1 = getInfoText();
+        text1 += P2LibConst.LINE_SEPARATOR;
+
+        //Größe laufende Downloads
+        text1 += "laufende Downloads: ";
+        if (progData.downloadInfos.getByteLoadingDownloads() > 0 ||
+                progData.downloadInfos.getByteLoadingDownloadsAlreadyLoaded() > 0) {
+            if (progData.downloadInfos.getByteLoadingDownloads() > 0) {
+                text1 += PFileSize.convertToStr(progData.downloadInfos.getByteLoadingDownloadsAlreadyLoaded()) + " von "
+                        + PFileSize.convertToStr(progData.downloadInfos.getByteLoadingDownloads());
+            } else {
+                text1 += PFileSize.convertToStr(progData.downloadInfos.getByteLoadingDownloadsAlreadyLoaded());
+            }
+            text1 += ", " + progData.downloadInfos.getBandwidthStr();
+        }
+        text1 += P2LibConst.LINE_SEPARATOR;
+
+        //Größe wartende Downloads
+        text1 += "wartende Downloads: ";
+        if (progData.downloadInfos.getByteWaitingDownloads() > 0) {
+            text1 += PFileSize.convertToStr(progData.downloadInfos.getByteWaitingDownloads());
+        }
+
+        return text1;
+    }
+
+    private static String getInfoText() {
+        String text1 = "Downloads: " + progData.downloadList.size();
+
+        if (progData.downloadList.size() > 0) {
+            String txt;
+            txt = ", (";
+
+            if (progData.downloadInfos.getPlacedBack() != 0) {
+                txt += progData.downloadInfos.getPlacedBack() + " zurückgestellt, ";
+            }
+
+            if (progData.downloadInfos.getLoading() == 1) {
+                txt += "1 läuft";
+            } else {
+                txt += progData.downloadInfos.getLoading() + " laufen";
+            }
+
+            if (progData.downloadInfos.getStartedNotLoading() == 1) {
+                txt += ", 1 wartet";
+            } else {
+                txt += ", " + progData.downloadInfos.getStartedNotLoading() + " warten";
+            }
+
+            if (progData.downloadInfos.getFinishedOk() > 0) {
+                if (progData.downloadInfos.getFinishedOk() == 1) {
+                    txt += ", 1 fertig";
+                } else {
+                    txt += ", " + progData.downloadInfos.getFinishedOk() + " fertig";
+                }
+            }
+
+            if (progData.downloadInfos.getFinishedError() > 0) {
+                if (progData.downloadInfos.getFinishedError() == 1) {
+                    txt += ", 1 fehlerhaft";
+                } else {
+                    txt += ", " + progData.downloadInfos.getFinishedError() + " fehlerhaft";
+                }
+            }
+            txt += ")";
+            text1 += txt;
+        }
+
+        return text1;
     }
 }
