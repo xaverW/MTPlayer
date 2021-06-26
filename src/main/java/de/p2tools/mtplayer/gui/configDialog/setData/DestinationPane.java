@@ -29,7 +29,6 @@ import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.PComboBoxObject;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.collections.FXCollections;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.control.*;
@@ -40,7 +39,7 @@ import javafx.stage.Stage;
 import java.util.Collection;
 
 public class DestinationPane {
-    private final PToggleSwitch tglSubdir = new PToggleSwitch("Bei Abos Unterordner anlegen");
+    private final PToggleSwitch tglSubdir = new PToggleSwitch("Bei Abos Unterordner anlegen:");
     private final PComboBoxObject<AboSubDir.DirName> cboDest = new PComboBoxObject();
     private final TextField txtDestPath = new TextField();
     private final TextField txtDestName = new TextField();
@@ -67,16 +66,14 @@ public class DestinationPane {
         TitledPane tpConfig = new TitledPane("Speicherziel", vBox);
         result.add(tpConfig);
 
-        final Button btnHelpColor = PButton.helpButton(stage, "Unterordner anlegen",
-                HelpText.SETDATA_ABO_SUBDIR);
-        GridPane.setHalignment(btnHelpColor, HPos.RIGHT);
-
         final Button btnFile = new Button();
-        btnFile.setOnAction(event -> PDirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtDestPath));
         btnFile.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
         btnFile.setTooltip(new Tooltip("Einen Ordner zum Speichern der Filme auswählen"));
+        btnFile.setOnAction(event -> PDirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtDestPath));
 
-        final Button btnHelpDest = PButton.helpButton(stage, "Zieldateiname",
+        final Button btnHelSubDir = PButton.helpButton(stage, "Unterordner anlegen",
+                HelpText.SETDATA_ABO_SUBDIR);
+        final Button btnHelpDestName = PButton.helpButton(stage, "Zieldateiname",
                 HelpTextPset.PSET_FILE_NAME);
 
         cboDest.init(FXCollections.observableArrayList(AboSubDir.DirName.values()));
@@ -85,7 +82,7 @@ public class DestinationPane {
                 tglSubdir.setSelected(true);
             }
         });
-
+        cboDest.setMaxWidth(Double.MAX_VALUE);
 
         int row = 0;
         GridPane gridPane = new GridPane();
@@ -96,7 +93,7 @@ public class DestinationPane {
 
         // Unterordner
         gridPane.add(tglSubdir, 0, row, 2, 1);
-        gridPane.add(btnHelpColor, 2, row);
+        gridPane.add(btnHelSubDir, 2, row);
 
         gridPane.add(new Label("Ordnername:"), 0, ++row);
         gridPane.add(cboDest, 1, row);
@@ -109,18 +106,24 @@ public class DestinationPane {
 
         gridPane.add(new Label("Zieldateiname:"), 0, ++row);
         gridPane.add(txtDestName, 1, row);
-        gridPane.add(btnHelpDest, 2, row);
+        gridPane.add(btnHelpDestName, 2, row);
 
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrow());
+                PColumnConstraints.getCcComputedSizeAndHgrow(),
+                PColumnConstraints.getCcPrefSize());
 
+        makeCut(vBox);
+    }
 
+    private void makeCut(VBox vBox) {
         // cut
-        gridPane = new GridPane();
-        gridPane.setHgap(25);
-        gridPane.setVgap(15);
-        gridPane.setPadding(new Insets(20));
-        vBox.getChildren().add(gridPane);
+        Label lblTxtAll = new Label("Länge des\nganzen Dateinamens:");
+        Label lblSizeAll = new Label();
+        Label lblTxtField = new Label("Länge\neinzelner Felder:");
+        Label lblSizeField = new Label();
+
+        final Button btnHelpDestSize = PButton.helpButton(stage, "Länge des Zieldateinamens",
+                HelpTextPset.PSET_DEST_FILE_SIZE);
 
         slCut.setMin(0);
         slCut.setMax(ProgConst.LAENGE_DATEINAME_MAX);
@@ -130,12 +133,6 @@ public class DestinationPane {
         slCut.setBlockIncrement(10);
         slCut.setSnapToTicks(true);
 
-        Label lblTxtAll = new Label("Länge des ganzen Dateinamen:");
-        Label lblSizeAll = new Label();
-        slCut.valueProperty().addListener((observable, oldValue, newValue) -> setValueSlider(slCut, lblSizeAll, ""));
-        setValueSlider(slCut, lblSizeAll, "");
-
-
         slCutField.setMin(0);
         slCutField.setMax(ProgConst.LAENGE_FELD_MAX);
         slCutField.setShowTickLabels(true);
@@ -144,11 +141,12 @@ public class DestinationPane {
         slCutField.setBlockIncrement(10);
         slCutField.setSnapToTicks(true);
 
-        Label lblTxtField = new Label("Länge einzelner Felder:");
-        Label lblSizeField = new Label();
-        slCutField.valueProperty().addListener((observable, oldValue, newValue) -> setValueSlider(slCutField, lblSizeField, ""));
+        setValueSlider(slCut, lblSizeAll, "");
+        slCut.valueProperty().addListener((observable, oldValue, newValue) -> setValueSlider(slCut, lblSizeAll, ""));
         setValueSlider(slCutField, lblSizeField, "");
+        slCutField.valueProperty().addListener((observable, oldValue, newValue) -> setValueSlider(slCutField, lblSizeField, ""));
 
+        GridPane.setValignment(btnHelpDestSize, VPos.CENTER);
         GridPane.setValignment(lblTxtAll, VPos.CENTER);
         GridPane.setValignment(lblSizeAll, VPos.CENTER);
         GridPane.setValignment(slCutField, VPos.CENTER);
@@ -156,18 +154,31 @@ public class DestinationPane {
         GridPane.setValignment(lblSizeField, VPos.CENTER);
         GridPane.setValignment(slCutField, VPos.CENTER);
 
+        GridPane gridPane = new GridPane();
+        gridPane.setHgap(25);
+        gridPane.setVgap(15);
+        gridPane.setPadding(new Insets(20));
+        vBox.getChildren().add(gridPane);
+
         gridPane.add(lblTxtAll, 0, 0);
         gridPane.add(slCut, 1, 0);
         gridPane.add(lblSizeAll, 2, 0);
+        gridPane.add(btnHelpDestSize, 3, 0);
 
-        gridPane.add(lblTxtField, 0, 1);
-        gridPane.add(slCutField, 1, 1);
-        gridPane.add(lblSizeField, 2, 1);
+        gridPane.add(new Label(" "), 0, 1);
+
+        gridPane.add(lblTxtField, 0, 2);
+        gridPane.add(slCutField, 1, 2);
+        gridPane.add(lblSizeField, 2, 2);
+
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcComputedSizeAndHgrow(), PColumnConstraints.getCcPrefSize());
     }
 
     private void setValueSlider(Slider sl, Label lb, String pre) {
         int days = (int) sl.getValue();
-        lb.setText(pre + (days == 0 ? "nicht beschränken" : "auf " + days + " Zeichen beschränken"));
+        lb.setText(pre + (days == 0 ? "nicht\nbeschränken" : "auf " + days + "Zeichen\nbeschränken"));
     }
 
     public void bindProgData(SetData setData) {

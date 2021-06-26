@@ -16,13 +16,13 @@
 
 package de.p2tools.mtplayer.gui.configDialog.setData;
 
-import de.p2tools.mtplayer.gui.tools.HelpTextPset;
-import de.p2tools.mtplayer.gui.tools.SetsPrograms;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ListePsetVorlagen;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.data.SetData;
+import de.p2tools.mtplayer.gui.tools.HelpTextPset;
+import de.p2tools.mtplayer.gui.tools.SetsPrograms;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
 import javafx.beans.property.DoubleProperty;
@@ -127,11 +127,26 @@ public class SetPaneController extends AnchorPane {
 
         final TableColumn<SetData, Boolean> playColumn = new TableColumn<>("Abspielen");
         playColumn.setCellValueFactory(new PropertyValueFactory<>("play"));
-        playColumn.setCellFactory(cellFactoryStart);
+        playColumn.setCellFactory(cellFactoryPlay);
         playColumn.getStyleClass().add("center");
 
+        final TableColumn<SetData, Boolean> saveColumn = new TableColumn<>("Speichern");
+        saveColumn.setCellValueFactory(new PropertyValueFactory<>("save"));
+        saveColumn.setCellFactory(cellFactorySave);
+        saveColumn.getStyleClass().add("center");
+
+        final TableColumn<SetData, Boolean> aboColumn = new TableColumn<>("Abo");
+        aboColumn.setCellValueFactory(new PropertyValueFactory<>("abo"));
+        aboColumn.setCellFactory(cellFactoryAbo);
+        aboColumn.getStyleClass().add("center");
+
+        final TableColumn<SetData, Boolean> buttonColumn = new TableColumn<>("Button");
+        buttonColumn.setCellValueFactory(new PropertyValueFactory<>("button"));
+        buttonColumn.setCellFactory(cellFactoryButton);
+        buttonColumn.getStyleClass().add("center");
+
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-        tableView.getColumns().addAll(visibleNameColumn, playColumn);
+        tableView.getColumns().addAll(visibleNameColumn, playColumn, saveColumn, aboColumn, buttonColumn);
         tableView.setItems(progData.setDataList);
 
         VBox.setVgrow(tableView, Priority.ALWAYS);
@@ -233,7 +248,7 @@ public class SetPaneController extends AnchorPane {
         return sel;
     }
 
-    private Callback<TableColumn<SetData, Boolean>, TableCell<SetData, Boolean>> cellFactoryStart
+    private Callback<TableColumn<SetData, Boolean>, TableCell<SetData, Boolean>> cellFactoryPlay
             = (final TableColumn<SetData, Boolean> param) -> {
 
         final TableCell<SetData, Boolean> cell = new TableCell<SetData, Boolean>() {
@@ -263,6 +278,93 @@ public class SetPaneController extends AnchorPane {
                 hbox.getChildren().addAll(radioButton);
                 setGraphic(hbox);
 
+            }
+        };
+        return cell;
+    };
+    private Callback<TableColumn<SetData, Boolean>, TableCell<SetData, Boolean>> cellFactorySave
+            = (final TableColumn<SetData, Boolean> param) -> {
+
+        final TableCell<SetData, Boolean> cell = new TableCell<SetData, Boolean>() {
+
+            @Override
+            public void updateItem(Boolean item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (item == null || empty) {
+                    setGraphic(null);
+                    setText(null);
+                    return;
+                }
+                SetData setData = getTableView().getItems().get(getIndex());
+
+                final HBox hbox = new HBox(5);
+                hbox.setAlignment(Pos.CENTER);
+                hbox.setPadding(new Insets(0, 2, 0, 2));
+
+                final CheckBox chkButton = new CheckBox("");
+                chkButton.selectedProperty().bindBidirectional(setData.saveProperty());
+                chkButton.selectedProperty().addListener((nn, o, n) -> ProgData.getInstance().setDataList.setListChanged());
+                hbox.getChildren().addAll(chkButton);
+                setGraphic(hbox);
+            }
+        };
+        return cell;
+    };
+    private Callback<TableColumn<SetData, Boolean>, TableCell<SetData, Boolean>> cellFactoryButton
+            = (final TableColumn<SetData, Boolean> param) -> {
+
+        final TableCell<SetData, Boolean> cell = new TableCell<SetData, Boolean>() {
+
+            @Override
+            public void updateItem(Boolean item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (item == null || empty) {
+                    setGraphic(null);
+                    setText(null);
+                    return;
+                }
+                SetData setData = getTableView().getItems().get(getIndex());
+
+                final HBox hbox = new HBox(5);
+                hbox.setAlignment(Pos.CENTER);
+                hbox.setPadding(new Insets(0, 2, 0, 2));
+
+                final CheckBox chkButton = new CheckBox("");
+                chkButton.selectedProperty().bindBidirectional(setData.buttonProperty());
+                chkButton.selectedProperty().addListener((nn, o, n) -> ProgData.getInstance().setDataList.setListChanged());
+                hbox.getChildren().addAll(chkButton);
+                setGraphic(hbox);
+            }
+        };
+        return cell;
+    };
+    private Callback<TableColumn<SetData, Boolean>, TableCell<SetData, Boolean>> cellFactoryAbo
+            = (final TableColumn<SetData, Boolean> param) -> {
+
+        final TableCell<SetData, Boolean> cell = new TableCell<SetData, Boolean>() {
+
+            @Override
+            public void updateItem(Boolean item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (item == null || empty) {
+                    setGraphic(null);
+                    setText(null);
+                    return;
+                }
+                SetData setData = getTableView().getItems().get(getIndex());
+
+                final HBox hbox = new HBox(5);
+                hbox.setAlignment(Pos.CENTER);
+                hbox.setPadding(new Insets(0, 2, 0, 2));
+
+                final CheckBox chkButton = new CheckBox("");
+                chkButton.selectedProperty().bindBidirectional(setData.aboProperty());
+                chkButton.selectedProperty().addListener((nn, o, n) -> ProgData.getInstance().setDataList.setListChanged());
+                hbox.getChildren().addAll(chkButton);
+                setGraphic(hbox);
             }
         };
         return cell;

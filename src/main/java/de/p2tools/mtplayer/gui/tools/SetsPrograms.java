@@ -369,7 +369,7 @@ public class SetsPrograms {
             ret = true;
             if (!setData.isFreeLine() && !setData.isLable()) {
                 // nur wenn kein Lable oder freeline
-                text += "++++++++++++++++++++++++++++++++++++++++++++" + P2LibConst.LINE_SEPARATOR;
+                text += "++++++++++++++++++++++++++" + P2LibConst.LINE_SEPARATOR;
                 text += PIPE + "Programmgruppe: " + setData.getVisibleName() + P2LibConst.LINE_SEPARATOR;
                 final String destPath = setData.getDestPath();
                 if (setData.progsContainPath()) {
@@ -416,7 +416,7 @@ public class SetsPrograms {
                     //sollte alles passen
                     text += PIPE + PFEIL + "Ok!" + P2LibConst.LINE_SEPARATOR;
                 }
-                text += "++++++++++++++++++++++++++++++++++++++++++++" + "" + P2LibConst.LINE_SEPARATORx3;
+                text += "++++++++++++++++++++++++++" + "" + P2LibConst.LINE_SEPARATORx3;
             }
         }
         PAlert.showInfoAlert("Set", "Sets prüfen", text);

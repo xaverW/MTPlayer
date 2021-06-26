@@ -30,6 +30,7 @@ import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -165,8 +166,16 @@ public class ProgramPane {
             }
         });
 
+        final Button btnHelpProg = PButton.helpButton(stage, "Hilfsprogramme",
+                HelpTextPset.PSET_FILE_HELP_PROG);
+
+        HBox hBoxHlp = new HBox();
+        hBoxHlp.getChildren().add(btnHelpProg);
+        HBox.setHgrow(hBoxHlp, Priority.ALWAYS);
+        hBoxHlp.setAlignment(Pos.CENTER_RIGHT);
+
         HBox hBox = new HBox(10);
-        hBox.getChildren().addAll(btnNew, btnDel, btnUp, btnDown);
+        hBox.getChildren().addAll(btnNew, btnDel, btnUp, btnDown, hBoxHlp);
 
         VBox.setVgrow(tableView, Priority.ALWAYS);
         vBox.getChildren().addAll(tableView, hBox);
@@ -204,8 +213,8 @@ public class ProgramPane {
         gridPane.add(new Label("Suffix: "), 0, ++row);
         gridPane.add(txtSuffix, 1, row, 2, 1);
 
-        gridPane.add(tglRestart, 0, ++row, 2, 1);
-        gridPane.add(tglDown, 0, ++row, 2, 1);
+        gridPane.add(tglRestart, 0, ++row, 3, 1);
+        gridPane.add(tglDown, 0, ++row, 3, 1);
 
         gridPane.getColumnConstraints().addAll(new ColumnConstraints(),
                 PColumnConstraints.getCcComputedSizeAndHgrow());

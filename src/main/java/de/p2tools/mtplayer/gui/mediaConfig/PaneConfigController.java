@@ -43,8 +43,8 @@ import java.util.Collection;
 
 public class PaneConfigController extends PAccordionPane {
 
-    private final RadioButton rbWithOutSuff = new RadioButton("keine Dateien mit diesem Suffix (z.B.: txt,xml,jpg");
-    private final RadioButton rbWithSuff = new RadioButton("nur Dateien mit diesem Suffix  (z.B.: mp4,flv,m4v");
+    private final RadioButton rbWithOutSuff = new RadioButton("keine Dateien mit diesem Suffix (z.B.: txt,xml,jpg)");
+    private final RadioButton rbWithSuff = new RadioButton("nur Dateien mit diesem Suffix (z.B.: mp4,flv,m4v)");
     private TextField txtSuff = new TextField();
     private final PToggleSwitch tglNoHiddenFiles = new PToggleSwitch("keine versteckten Dateien suchen:");
     private final Slider slFileSize = new Slider();

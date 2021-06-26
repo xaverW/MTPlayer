@@ -100,22 +100,22 @@ public class FilmFilterEditDialog extends PDialogExtra {
         tglTimeRange.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().timeRangeVisProperty());
         vbox.getChildren().add(tglTimeRange);
 
-        PToggleSwitch tglMinMax = new PToggleSwitch("Filmlänge Min/Max [Minuten]");
+        PToggleSwitch tglMinMax = new PToggleSwitch("Filmlänge Min/Max");
         tglMinMax.setMaxWidth(Double.MAX_VALUE);
         tglMinMax.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().minMaxDurVisProperty());
         vbox.getChildren().add(tglMinMax);
 
-        PToggleSwitch tglMinMaxTime = new PToggleSwitch("Sendezeit des Films");
+        PToggleSwitch tglMinMaxTime = new PToggleSwitch("Sendezeit");
         tglMinMaxTime.setMaxWidth(Double.MAX_VALUE);
         tglMinMaxTime.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().minMaxTimeVisProperty());
         vbox.getChildren().add(tglMinMaxTime);
 
-        PToggleSwitch tglOnly = new PToggleSwitch("\"nur anzeigen\"");
+        PToggleSwitch tglOnly = new PToggleSwitch("\"anzeigen\"");
         tglOnly.setMaxWidth(Double.MAX_VALUE);
         tglOnly.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().onlyVisProperty());
         vbox.getChildren().add(tglOnly);
 
-        PToggleSwitch tglNot = new PToggleSwitch("\"nicht anzeigen\"");
+        PToggleSwitch tglNot = new PToggleSwitch("\"ausschließen\"");
         tglNot.setMaxWidth(Double.MAX_VALUE);
         tglNot.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().notVisProperty());
         vbox.getChildren().add(tglNot);

@@ -120,7 +120,7 @@ public class ProgConst {
     public static final String GUI_MSG_DIVIDER_LOCATION = "0.7";
     public static final String GUI_MSG_LOG_DIVIDER_LOCATION = "0.5";
 
-    public static final String CONFIG_DIALOG_SET_DIVIDER = "0.2";
+    public static final String CONFIG_DIALOG_SET_DIVIDER = "0.4";
 
     public static final int LAENGE_DATEINAME_MAX = 200; // Standardwert für die Länge des Zieldateinamens
     public static final int LAENGE_FELD_MAX = 100; // Standardwert für die Länge des Feldes des
