@@ -61,7 +61,6 @@ public class HelpTextPset {
                     "abgeschlossen*. Das eingerichtete Hilfsprogramm muss sich um den Download komplett selbst " +
                     "kümmern, und MTPlayer erhält darüber keine Rückmeldung.\n" +
                     "\n" +
-                    "\n" +
                     "Beispiel für VLC:\n" +
                     "Programm: '/usr/bin/vlc' (Windows: '%PROGRAMFILES%\\VideoLAN\\VLC\\vlc.exe')\n" +
                     "Schalter: '%f :sout=#standard{access=file,mux=ts,dst=**} -I dummy --play-and-exit'\n" +
@@ -128,7 +127,7 @@ public class HelpTextPset {
 
     public static final String HELP_PSET_BUTTON =
             "\"Button\" stellt einen Button für dieses Set in der Ansicht \"Filme\" zur " +
-                    "Verfügung (unter der Tabelle, im Tab 'Startbutton'), mit dem es direkt aus der " +
+                    "Verfügung (unter der Tabelle, im Tab \"Startbutton\"), mit dem es direkt aus der " +
                     "Filmtabelle gestartet werden kann.";
 
     public static final String HELP_PSET_ABO =
@@ -149,7 +148,6 @@ public class HelpTextPset {
                     "dafür werden beim ersten Programmstart mit Standardeinstellungen angelegt; sie " +
                     "können bearbeitet und umbenannt werden.\n" +
                     "\n" +
-                    "\n" +
                     "-- Set-Funktionen --\n" +
                     "Diese Schalter bestimmen die Funktion des Sets:\n" +
                     "\n" +
@@ -165,7 +163,7 @@ public class HelpTextPset {
                     "wird dann also  \"Speichern\" und \"Abo\" eingeschaltet.\n" +
                     "\n" +
                     "\"Button\" stellt einen Button für dieses Set in der Ansicht \"Filme\" zur Verfügung (unter der " +
-                    "Tabelle, im Tab 'Startbutton'), mit dem es direkt aus der Filmtabelle gestartet werden kann.\n" +
+                    "Tabelle, im Tab \"Startbutton\"), mit dem es direkt aus der Filmtabelle gestartet werden kann.\n" +
                     "\n" +
                     "Soll ein Film mit einem Set aufgezeichnet werden, müssen [Zielpfad] und [Zieldateiname] " +
                     "in \"Speicherziel\" ausgefüllt werden.";

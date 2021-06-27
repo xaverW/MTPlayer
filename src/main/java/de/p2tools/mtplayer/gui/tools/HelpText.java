@@ -62,10 +62,9 @@ public class HelpText {
             "durchsucht werden: In der Mediensammlung DATEINAME, " +
             "in der Liste der erledigten Abos THEMA und TITEL.\n" +
             "\n" +
-            "\n" +
             FILTER_FIELD + "\n" +
             "\n" +
-            "\n" +
+            "-- Besonderheiten --\n" +
             "Beim Durchsuchen der Mediensammlung muss der Suchtext den eigenen Vorgaben für " +
             "Dateinamen entsprechen. Eine Suche nach 'mein Film' würde den Film 'Das ist mein Film.avi' " +
             "finden, aber nicht 'Das_ist_mein_Film.avi'.\n" +
@@ -127,10 +126,9 @@ public class HelpText {
                     "(ein- oder ausschließen), \"anzeigen:\" und \"ausschließen:\" erlauben noch " +
                     "weitergehende Filterung.\n" +
                     "\n" +
-                    "\n" +
                     FILTER_FIELD + "\n" +
                     "\n" +
-                    "\n" +
+                    "-- Besonderheiten --\n" +
                     "[Thema oder Titel] durchsucht THEMA und TITEL der Filmliste. [Irgendwo] sucht " +
                     "außerdem noch in BESCHREIBUNG.\n" +
                     "Bei einer Suche nach mehreren Suchbegriffen müssen hier alle Suchbegriffe im selben " +
@@ -143,7 +141,7 @@ public class HelpText {
                     "Die Buttons \"<\" und \">\") blättern durch die letzten Such/Filtereinstellungen.\n" +
                     "\n" +
                     "Darunter kann man die aktuellen Einstellungen als Profil speichern bzw. aus dem " +
-                    "gespeicherten Zustand wieder laden.\n" +
+                    "gespeicherten Zustand wieder laden. " +
                     "Solange ein geladenes Profil nicht verändert wurde ist sein Name unterstrichen.\n";
 
     public static final String BLACKLIST_WHITELIST =
@@ -153,10 +151,9 @@ public class HelpText {
                     "Angaben in mindestens einer Zeile entsprechen.\n" +
                     "Beim Umschalten zwischen ihnen wird also die Auswahl der angezeigten Filme invertiert.\n" +
                     "\n" +
-                    "\n" +
                     FILTER_FIELD + "\n" +
                     "\n" +
-                    "\n" +
+                    "-- Besonderheiten --\n" +
                     "Wenn bei \"Thema\" der Schalter \"Exakt\" eingeschaltet ist, darf der Suchtext " +
                     "nicht \"an beliebiger Stelle darin enthalten\" sein, sondern muss das gesamte " +
                     "Feld darstellen.\n" +
@@ -206,7 +203,7 @@ public class HelpText {
                     "Hilfsprogramm gespeichert.\n" +
                     "\n" +
                     "Mehrere Einträge sind möglich, wenn sie durch Kommas " +
-                    "getrennt sind (z.B. \"mp4,mp3,m4v,m4a\").";
+                    "getrennt sind (z.B. 'mp4,mp3,m4v,m4a').";
 
     public static final String SETDATA_RES =
             "Nicht jede Auflösung wird von jedem Sender angeboten. Wenn die gewünschte " +
