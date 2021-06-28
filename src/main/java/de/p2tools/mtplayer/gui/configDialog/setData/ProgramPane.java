@@ -34,7 +34,10 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.Collection;
@@ -222,11 +225,11 @@ public class ProgramPane {
         gridPane.add(tglDown, 2, row, 2, 1);
 
         gridPane.getColumnConstraints().addAll(
-                new ColumnConstraints(),
+                PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcComputedSizeAndHgrow(),
-                new ColumnConstraints(),
+                PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcComputedSizeAndHgrow(),
-                new ColumnConstraints()
+                PColumnConstraints.getCcPrefSize()
         );
 
         vBox.getChildren().add(gridPane);
