@@ -111,7 +111,7 @@ public class ProgramPane {
         downManagerColumn.setCellFactory(CheckBoxTableCell.forTableColumn(downManagerColumn));
         downManagerColumn.getStyleClass().add("center");
 
-        tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
+        tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT_LOW);
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
@@ -197,27 +197,37 @@ public class ProgramPane {
 
         int row = 0;
         gridPane.add(new Label("Name: "), 0, row);
-        gridPane.add(txtName, 1, row, 2, 1);
+        gridPane.add(txtName, 1, row, 3, 1);
         gridPane.add(new Label("Zieldateiname: "), 0, ++row);
-        gridPane.add(txtDestName, 1, row);
-        gridPane.add(btnHelpDest, 2, row);
+        gridPane.add(txtDestName, 1, row, 3, 1);
+        gridPane.add(btnHelpDest, 4, row);
 
         gridPane.add(new Label("Programm: "), 0, ++row);
-        gridPane.add(txtProgPath, 1, row);
-        gridPane.add(btnFile, 2, row);
+        gridPane.add(txtProgPath, 1, row, 3, 1);
+        gridPane.add(btnFile, 4, row);
         gridPane.add(new Label("Schalter: "), 0, ++row);
-        gridPane.add(txtProgSwitch, 1, row, 2, 1);
+        gridPane.add(txtProgSwitch, 1, row, 3, 1);
 
         gridPane.add(new Label("Präfix: "), 0, ++row);
-        gridPane.add(txtPraefix, 1, row, 2, 1);
-        gridPane.add(new Label("Suffix: "), 0, ++row);
-        gridPane.add(txtSuffix, 1, row, 2, 1);
+        gridPane.add(txtPraefix, 1, row);
+        gridPane.add(new Label("Suffix: "), 2, row);
+        gridPane.add(txtSuffix, 3, row);
 
-        gridPane.add(tglRestart, 0, ++row, 3, 1);
-        gridPane.add(tglDown, 0, ++row, 3, 1);
+//        HBox hBox = new HBox(15);
+//        hBox.getChildren().addAll(tglRestart, tglDown);
+//        HBox.setHgrow(tglRestart, Priority.ALWAYS);
+//        HBox.setHgrow(tglDown, Priority.ALWAYS);
+//        gridPane.add(hBox, 0, ++row, 2, 1);
+        gridPane.add(tglRestart, 0, ++row, 2, 1);
+        gridPane.add(tglDown, 2, row, 2, 1);
 
-        gridPane.getColumnConstraints().addAll(new ColumnConstraints(),
-                PColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.getColumnConstraints().addAll(
+                new ColumnConstraints(),
+                PColumnConstraints.getCcComputedSizeAndHgrow(),
+                new ColumnConstraints(),
+                PColumnConstraints.getCcComputedSizeAndHgrow(),
+                new ColumnConstraints()
+        );
 
         vBox.getChildren().add(gridPane);
         gridPane.setDisable(true);

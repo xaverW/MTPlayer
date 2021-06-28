@@ -120,15 +120,29 @@ public class HelpTextPset {
             "\"Abspielen\" ruft ein Programm zur Wiedergabe auf, wenn ein Film zum Abspielen gestartet wird. " +
                     "Es kann nur ein Set dafür zuständig sein.";
 
+    public static final String HELP_PSET_SAVE_ABO_BUTTON =
+            "-- Funktion Speichern --\n" +
+                    "\"Speichern\" ist für das Speichern eines Films zuständig. " +
+                    "Wenn mehrere Sets zum Speichern angelegt sind, muss für jeden Film in einem " +
+                    "Dialog das Set ausgewählt werden.\n" +
+                    "\n" +
+                    "-- Funktion Abo --\n" +
+                    "\"Abo\": Wenn Abos genutzt werden, muss dafür ein Set bereitstehen, bei " +
+                    "dem dies eingeschaltet ist.\n" +
+                    "\n" +
+                    "In der Regel eignet sich das Set \"Speichern\" auch für die Abos, es muss also meist für die " +
+                    "Abos kein eigenes Set angelegt werden. Bei diesem Set (Speichern-Set) wird dann also " +
+                    " \"Speichern\" und \"Abo\" eingeschaltet.\n" +
+                    "\n" +
+                    "-- Funktion Button --\n" +
+                    "\"Button\" stellt einen Button für dieses Set in der Ansicht \"Filme\" zur " +
+                    "Verfügung (unter der Tabelle, im Tab \"Startbutton\"), mit dem es direkt aus der " +
+                    "Filmtabelle gestartet werden kann.";
+
     public static final String HELP_PSET_SAVE =
             "\"Speichern\" ist für das Speichern eines Films zuständig. " +
                     "Wenn mehrere Sets zum Speichern angelegt sind, muss für jeden Film in einem " +
                     "Dialog das Set ausgewählt werden.";
-
-    public static final String HELP_PSET_BUTTON =
-            "\"Button\" stellt einen Button für dieses Set in der Ansicht \"Filme\" zur " +
-                    "Verfügung (unter der Tabelle, im Tab \"Startbutton\"), mit dem es direkt aus der " +
-                    "Filmtabelle gestartet werden kann.";
 
     public static final String HELP_PSET_ABO =
             "\"Abo\": Wenn Abos genutzt werden, muss dafür ein Set bereitstehen, bei " +
@@ -137,6 +151,11 @@ public class HelpTextPset {
                     "In der Regel eignet sich das Set \"Speichern\" auch für die Abos, es muss also meist für die " +
                     "Abos kein eigenes Set angelegt werden. Bei diesem Set (Speichern-Set) wird dann also " +
                     " \"Speichern\" und \"Abo\" eingeschaltet.";
+
+    public static final String HELP_PSET_BUTTON =
+            "\"Button\" stellt einen Button für dieses Set in der Ansicht \"Filme\" zur " +
+                    "Verfügung (unter der Tabelle, im Tab \"Startbutton\"), mit dem es direkt aus der " +
+                    "Filmtabelle gestartet werden kann.";
 
     public static final String HELP_PSET =
             "Ein Set ist ein Satz von Einstellungen (auch für ggf. genutzte Hilfsprogramme), der auf " +

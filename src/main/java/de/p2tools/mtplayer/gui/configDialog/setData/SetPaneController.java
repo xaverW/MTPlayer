@@ -27,6 +27,7 @@ import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
 import javafx.beans.property.DoubleProperty;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -62,6 +63,7 @@ public class SetPaneController extends AnchorPane {
         this.stage = stage;
         progData = ProgData.getInstance();
 
+        splitPane.setOrientation(Orientation.VERTICAL);
         AnchorPane.setLeftAnchor(splitPane, 0.0);
         AnchorPane.setBottomAnchor(splitPane, 0.0);
         AnchorPane.setRightAnchor(splitPane, 0.0);
@@ -71,6 +73,7 @@ public class SetPaneController extends AnchorPane {
 
         vBox.getChildren().addAll(createSetList());
         splitPane.getItems().addAll(vBox, scrollPane);
+        splitPane.getItems().get(0).autosize();
         SplitPane.setResizableWithParent(vBox, Boolean.FALSE);
         getChildren().addAll(splitPane);
 
@@ -102,14 +105,29 @@ public class SetPaneController extends AnchorPane {
         setDataPane.makeSetPane(setDataPaneTitle);
     }
 
+    double size = 0;
+    double div = 0;
+
     private void makeSetListTable(Collection<TitledPane> result) {
         final VBox vBox = new VBox(10);
         vBox.setFillWidth(true);
-
         initTable(vBox);
 
         TitledPane tpSet = new TitledPane("Sets", vBox);
-        tpSet.setCollapsible(false);
+        tpSet.setCollapsible(true);
+        tpSet.expandedProperty().addListener((nn, n, i) -> {
+            if (tpSet.isExpanded()) {
+                this.vBox.setMaxHeight(Double.MAX_VALUE);
+//                this.tableView.setMinHeight(size);
+//                this.tableView.setPrefHeight(size);
+//                this.tableView.resize(this.tableView.getWidth(), size);
+                splitPane.getDividers().get(0).setPosition(div);
+            } else {
+                div = splitPane.getDividers().get(0).getPosition();
+                size = tableView.getHeight();
+                this.vBox.setMaxHeight(0);
+            }
+        });
         result.add(tpSet);
         VBox.setVgrow(tpSet, Priority.ALWAYS);
         tpSet.setMaxHeight(Double.MAX_VALUE);
@@ -117,6 +135,15 @@ public class SetPaneController extends AnchorPane {
 
 
     private void initTable(VBox vBox) {
+        HBox hBoxTable = new HBox(10);
+        VBox vBoxButton = new VBox(10);
+        HBox hBoxButton = new HBox(10);
+        HBox.setHgrow(tableView, Priority.ALWAYS);
+        VBox.setVgrow(hBoxTable, Priority.ALWAYS);
+        vBoxButton.getChildren().add(hBoxButton);
+        hBoxTable.getChildren().addAll(tableView, vBoxButton);
+        vBox.getChildren().addAll(hBoxTable);
+
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             setDataPane.bindProgData(newValue);
         });
@@ -148,9 +175,6 @@ public class SetPaneController extends AnchorPane {
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
         tableView.getColumns().addAll(visibleNameColumn, playColumn, saveColumn, aboColumn, buttonColumn);
         tableView.setItems(progData.setDataList);
-
-        VBox.setVgrow(tableView, Priority.ALWAYS);
-        vBox.getChildren().addAll(tableView);
 
         Button btnDel = new Button("");
         btnDel.setTooltip(new Tooltip("Markiertes Set löschen"));
@@ -192,6 +216,13 @@ public class SetPaneController extends AnchorPane {
             }
         });
 
+        final Button btnHelp = PButton.helpButton(stage, "Set", HelpTextPset.HELP_PSET);
+        HBox hBox = new HBox(10);
+        hBox.getChildren().addAll(btnNew, btnDel, btnUp, btnDown);
+        HBox.setHgrow(hBox, Priority.ALWAYS);
+        hBoxButton.getChildren().addAll(hBox, btnHelp);
+
+
         Button btnDup = new Button("_Duplizieren");
         btnDup.setTooltip(new Tooltip("Eine Kopie des markierten Sets erstellen"));
         btnDup.setOnAction(event -> {
@@ -219,17 +250,7 @@ public class SetPaneController extends AnchorPane {
         HBox.setHgrow(btnCheck, Priority.ALWAYS);
         btnCheck.setMaxWidth(Double.MAX_VALUE);
 
-        final Button btnHelp = PButton.helpButton(stage, "Set", HelpTextPset.HELP_PSET);
-
-
-        HBox hBox = new HBox(10);
-        hBox.getChildren().addAll(btnNew, btnDel, btnUp, btnDown);
-        HBox.setHgrow(hBox, Priority.ALWAYS);
-
-        HBox hBoxHlp = new HBox(10);
-        hBoxHlp.getChildren().addAll(hBox, btnHelp);
-
-        vBox.getChildren().addAll(hBoxHlp, btnDup, btnNewSet, btnCheck);
+        vBoxButton.getChildren().addAll(btnDup, btnNewSet, btnCheck);
     }
 
     private SetData getSelectedSelData() {

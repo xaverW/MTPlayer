@@ -25,6 +25,7 @@ import java.util.Collection;
 public class SetDataPane {
 
     private final SetPane setPane;
+    private final SetFunction setFunction;
     private final DestinationPane destinationPane;
     private final DownloadPane downloadPane;
 
@@ -36,6 +37,7 @@ public class SetDataPane {
     public SetDataPane(Stage stage) {
         this.stage = stage;
         setPane = new SetPane(stage);
+        setFunction = new SetFunction(stage);
         destinationPane = new DestinationPane(stage);
         downloadPane = new DownloadPane(stage);
         programPane = new ProgramPane(stage);
@@ -43,6 +45,7 @@ public class SetDataPane {
 
     public void close() {
         setPane.close();
+        setFunction.close();
         destinationPane.close();
         downloadPane.close();
         programPane.close();
@@ -52,6 +55,7 @@ public class SetDataPane {
         this.result = result;
 
         setPane.makePane(result);
+        setFunction.makePane(result);
         destinationPane.makePane(result);
         downloadPane.makePane(result);
         programPane.makeProgs(result);
@@ -61,12 +65,14 @@ public class SetDataPane {
 
     public void bindProgData(SetData setData) {
         setPane.unBindProgData();
+        setFunction.unBindProgData();
         destinationPane.unBindProgData();
         downloadPane.unBindProgData();
 
         this.setData = setData;
         if (setData != null) {
             setPane.bindProgData(setData);
+            setFunction.bindProgData(setData);
             destinationPane.bindProgData(setData);
             downloadPane.bindProgData(setData);
             programPane.setSetDate(setData);

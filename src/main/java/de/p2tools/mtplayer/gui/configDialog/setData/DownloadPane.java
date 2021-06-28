@@ -26,6 +26,8 @@ import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -35,8 +37,8 @@ public class DownloadPane {
     private final TextField txtPrefix = new TextField();
     private final TextField txtSuffix = new TextField();
     private final RadioButton rbHd = new RadioButton("Film in HD laden");
-    private final RadioButton rbHeight = new RadioButton("Film in hoher Auflösung laden");
-    private final RadioButton rbLow = new RadioButton("Film in kleiner Auflösung laden");
+    private final RadioButton rbHeight = new RadioButton("hohe Auflösung laden");
+    private final RadioButton rbLow = new RadioButton("kleine Auflösung laden");
     private final PToggleSwitch tglInfo = new PToggleSwitch("Infodatei anlegen: \"Filmname.txt\"");
     private final PToggleSwitch tglSubtitle = new PToggleSwitch("Untertitel speichern: \"Filmname.xxx\"");
 
@@ -52,7 +54,7 @@ public class DownloadPane {
     }
 
     public void makePane(Collection<TitledPane> result) {
-        VBox vBox = new VBox(10);
+        VBox vBox = new VBox(0);
         vBox.setPadding(new Insets(10));
 
         TitledPane tpConfig = new TitledPane("Download", vBox);
@@ -67,26 +69,32 @@ public class DownloadPane {
         // praefix/suffix
         GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
-        gridPane.setVgap(15);
+        gridPane.setVgap(10);
         gridPane.setPadding(new Insets(20));
         vBox.getChildren().add(gridPane);
 
         final Button btnHelpPraefix = PButton.helpButton(stage, "Direkt speichern",
                 HelpText.SETDATA_PRAEFIX);
-        Label lbl = new Label("direkt Speichern \n(Download von diesem Programm durchführen lassen):");
-
+        Label lbl = new Label("direkt Speichern (Download durch dieses Programm):");
+        HBox hBox = new HBox(15);
+        HBox hBoxSpace = new HBox();
+        HBox.setHgrow(hBoxSpace, Priority.ALWAYS);
+        hBox.getChildren().addAll(lbl, hBoxSpace, btnHelpPraefix);
         int row = 0;
-        gridPane.add(lbl, 0, row, 2, 1);
-        gridPane.add(btnHelpPraefix, 2, row);
+        gridPane.add(hBox, 0, row, 4, 1);
+//        gridPane.add(btnHelpPraefix, 3, row);
 
         gridPane.add(new Label("Präfix (z.B. http):"), 0, ++row);
-        gridPane.add(txtPrefix, 1, row, 2, 1);
+        gridPane.add(txtPrefix, 1, row);
 
-        gridPane.add(new Label("Suffix (z.B. mp4,mp3):"), 0, ++row);
-        gridPane.add(txtSuffix, 1, row, 2, 1);
+        gridPane.add(new Label("Suffix (z.B. mp4):"), 2, row);
+        gridPane.add(txtSuffix, 3, row);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(), PColumnConstraints.getCcComputedSizeAndHgrow(),
-                PColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(
+                PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcComputedSizeAndHgrow(),
+                PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcComputedSizeAndHgrowRight());
     }
 
     private void makeReolution(VBox vBox) {
@@ -101,7 +109,7 @@ public class DownloadPane {
 
         GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
-        gridPane.setVgap(15);
+        gridPane.setVgap(10);
         gridPane.setPadding(new Insets(20));
         vBox.getChildren().add(gridPane);
 
@@ -109,19 +117,22 @@ public class DownloadPane {
                 HelpText.SETDATA_RES);
 
         gridPane.add(rbHd, 0, 0);
-        gridPane.add(btnHelpRes, 1, 0);
-        gridPane.add(rbHeight, 0, 1);
-        gridPane.add(rbLow, 0, 2);
+        gridPane.add(rbHeight, 1, 0);
+        gridPane.add(rbLow, 2, 0);
+        gridPane.add(btnHelpRes, 3, 0);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(),
-                PColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(
+                PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcComputedSizeAndHgrowRight());
     }
 
     private void makeInfo(VBox vBox) {
         // Infodateien
         GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
-        gridPane.setVgap(15);
+        gridPane.setVgap(10);
         gridPane.setPadding(new Insets(20));
         vBox.getChildren().add(gridPane);
 

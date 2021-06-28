@@ -33,6 +33,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -92,14 +94,16 @@ public class DestinationPane {
         vBox.getChildren().add(gridPane);
 
         // Unterordner
-        gridPane.add(tglSubdir, 0, row, 2, 1);
+        HBox hBox = new HBox(25);
+        HBox.setHgrow(cboDest, Priority.ALWAYS);
+        hBox.getChildren().addAll(tglSubdir, cboDest);
+        gridPane.add(hBox, 0, row, 2, 1);
         gridPane.add(btnHelSubDir, 2, row);
 
-        gridPane.add(new Label("Ordnername:"), 0, ++row);
-        gridPane.add(cboDest, 1, row);
+//        gridPane.add(new Label("Ordnername:"), 0, ++row);
 
         // path/name
-        gridPane.add(new Label(" "), 0, ++row);
+//        gridPane.add(new Label(" "), 0, ++row);
         gridPane.add(new Label("Zielpfad:"), 0, ++row);
         gridPane.add(txtDestPath, 1, row);
         gridPane.add(btnFile, 2, row);
@@ -117,9 +121,9 @@ public class DestinationPane {
 
     private void makeCut(VBox vBox) {
         // cut
-        Label lblTxtAll = new Label("Länge des\nganzen Dateinamens:");
+        Label lblTxtAll = new Label("Länge ganzer Dateinamens:");
         Label lblSizeAll = new Label();
-        Label lblTxtField = new Label("Länge\neinzelner Felder:");
+        Label lblTxtField = new Label("Länge einzelne Felder:");
         Label lblSizeField = new Label();
 
         final Button btnHelpDestSize = PButton.helpButton(stage, "Länge des Zieldateinamens",
@@ -165,11 +169,11 @@ public class DestinationPane {
         gridPane.add(lblSizeAll, 2, 0);
         gridPane.add(btnHelpDestSize, 3, 0);
 
-        gridPane.add(new Label(" "), 0, 1);
+//        gridPane.add(new Label(" "), 0, 1);
 
-        gridPane.add(lblTxtField, 0, 2);
-        gridPane.add(slCutField, 1, 2);
-        gridPane.add(lblSizeField, 2, 2);
+        gridPane.add(lblTxtField, 0, 1);
+        gridPane.add(slCutField, 1, 1);
+        gridPane.add(lblSizeField, 2, 1);
 
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcPrefSize(),
@@ -178,7 +182,7 @@ public class DestinationPane {
 
     private void setValueSlider(Slider sl, Label lb, String pre) {
         int days = (int) sl.getValue();
-        lb.setText(pre + (days == 0 ? "nicht\nbeschränken" : "auf " + days + "Zeichen\nbeschränken"));
+        lb.setText(pre + (days == 0 ? "nicht beschränken" : "auf " + days + "Zeichen beschränken"));
     }
 
     public void bindProgData(SetData setData) {
