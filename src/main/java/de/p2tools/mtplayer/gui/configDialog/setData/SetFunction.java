@@ -76,25 +76,33 @@ public class SetFunction {
         //Speichern, Button, Abo
         GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
-        gridPane.setVgap(10);
+        gridPane.setVgap(15);
         gridPane.setPadding(new Insets(20));
         vBox.getChildren().add(gridPane);
         gridPane.add(new Label("Funktionen des Sets:"), 0, row, 4, 1);
 
         HBox hBox = new HBox(15);
+        HBox hBoxSpace = new HBox();
+        HBox.setHgrow(hBoxSpace, Priority.ALWAYS);
         hBox.setAlignment(Pos.CENTER_LEFT);
-        hBox.getChildren().addAll(new Label("Abspielen:"), rbPlay);
+        hBox.getChildren().addAll(new Label("Abspielen:"), hBoxSpace, rbPlay);
 
         gridPane.add(new Label(" "), 0, ++row);
         gridPane.add(hBox, 1, row);
         gridPane.add(PButton.helpButton(stage, "Funktion des Sets",
-                HelpTextPset.HELP_PSET_PLAY), 4, row);
+                HelpTextPset.HELP_PSET_PLAY), 2, row);
 
         gridPane.add(tglSave, 1, ++row);
-        gridPane.add(tglAbo, 2, row);
-        gridPane.add(tglButton, 3, row);
         gridPane.add(PButton.helpButton(stage, "Funktion des Sets",
-                HelpTextPset.HELP_PSET_SAVE_ABO_BUTTON), 4, row);
+                HelpTextPset.HELP_PSET_SAVE), 2, row);
+
+        gridPane.add(tglAbo, 1, ++row);
+        gridPane.add(PButton.helpButton(stage, "Funktion des Sets",
+                HelpTextPset.HELP_PSET_ABO), 2, row);
+
+        gridPane.add(tglButton, 1, ++row);
+        gridPane.add(PButton.helpButton(stage, "Funktion des Sets",
+                HelpTextPset.HELP_PSET_BUTTON), 2, row);
 
         Label lblColor = new Label("Farbe des Button:");
         Button btnResetColor = new Button("_Standardfarbe");
@@ -109,13 +117,13 @@ public class SetFunction {
         btnResetColor.disableProperty().bind(tglButton.selectedProperty().not());
 
         HBox hBoxColor = new HBox(10);
-        HBox hBoxSpace = new HBox();
-        HBox.setHgrow(hBoxSpace, Priority.ALWAYS);
-        hBoxColor.getChildren().addAll(lblColor, colorPicker, btnResetColor, hBoxSpace, btnHelpColor);
-        gridPane.add(hBoxColor, 1, ++row, 4, 1);
+//        HBox hBoxSpace = new HBox();
+//        HBox.setHgrow(hBoxSpace, Priority.ALWAYS);
+        hBoxColor.getChildren().addAll(lblColor, colorPicker, btnResetColor);
+        gridPane.add(hBoxColor, 1, ++row);
+        gridPane.add(btnHelpColor, 2, row);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcPrefSize(),
+        gridPane.getColumnConstraints().addAll(
                 PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcComputedSizeAndHgrowRight());

@@ -18,6 +18,13 @@
     -fx-background-color: black;
 }
 
+/*Tabelle Sets: Set ist "Abspielen" */
+.markSetPlay{
+    /*-fx-underline: true;*/
+    -fx-text-fill: green;
+    /*-fx-background-color: #c3c4c4, -lin-grad-1, -rad-grad-1;*/
+}
+
 /* Button "Filmliste" */
 .btnFilmlist{
     -fx-background-color: #c3c4c4, -lin-grad-1, -rad-grad-1;

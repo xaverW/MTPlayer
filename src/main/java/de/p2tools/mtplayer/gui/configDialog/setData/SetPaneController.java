@@ -27,11 +27,9 @@ import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
 import javafx.beans.property.DoubleProperty;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -63,7 +61,7 @@ public class SetPaneController extends AnchorPane {
         this.stage = stage;
         progData = ProgData.getInstance();
 
-        splitPane.setOrientation(Orientation.VERTICAL);
+//        splitPane.setOrientation(Orientation.VERTICAL);
         AnchorPane.setLeftAnchor(splitPane, 0.0);
         AnchorPane.setBottomAnchor(splitPane, 0.0);
         AnchorPane.setRightAnchor(splitPane, 0.0);
@@ -83,6 +81,7 @@ public class SetPaneController extends AnchorPane {
         accordion.getPanes().addAll(setDataPaneTitle);
         scrollPane.setContent(accordion);
         splitPane.getDividers().get(0).positionProperty().bindBidirectional(split);
+        progData.setDataList.listChangedProperty().addListener((ol, ne, o) -> tableView.refresh());
     }
 
     public void close() {
@@ -137,12 +136,22 @@ public class SetPaneController extends AnchorPane {
     private void initTable(VBox vBox) {
         HBox hBoxTable = new HBox(10);
         VBox vBoxButton = new VBox(10);
-        HBox hBoxButton = new HBox(10);
+        HBox hBoxButton1 = new HBox(10);
+        HBox hBoxButton2 = new HBox(10);
         HBox.setHgrow(tableView, Priority.ALWAYS);
-        VBox.setVgrow(hBoxTable, Priority.ALWAYS);
-        vBoxButton.getChildren().add(hBoxButton);
-        hBoxTable.getChildren().addAll(tableView, vBoxButton);
-        vBox.getChildren().addAll(hBoxTable);
+//        VBox.setVgrow(hBoxTable, Priority.ALWAYS);
+        vBoxButton.getChildren().add(hBoxButton1);
+        vBoxButton.getChildren().add(hBoxButton2);
+//        hBoxTable.getChildren().addAll(tableView, vBoxButton);
+        final Button btnHelp = PButton.helpButton(stage, "Set", HelpTextPset.HELP_PSET);
+
+        VBox vBoxHlp = new VBox();
+        VBox.setVgrow(vBoxHlp, Priority.ALWAYS);
+        HBox hBox = new HBox();
+        hBox.setAlignment(Pos.CENTER_RIGHT);
+        hBox.getChildren().add(btnHelp);
+
+        vBox.getChildren().addAll(tableView, vBoxButton, vBoxHlp, hBox);
 
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             setDataPane.bindProgData(newValue);
@@ -150,30 +159,32 @@ public class SetPaneController extends AnchorPane {
 
         final TableColumn<SetData, String> visibleNameColumn = new TableColumn<>("Name");
         visibleNameColumn.setCellValueFactory(new PropertyValueFactory<>("visibleName"));
-        visibleNameColumn.setCellFactory(TextFieldTableCell.forTableColumn()); //todo muss eindeutig sein
+        visibleNameColumn.setCellFactory(cellFactoryName);
+//        visibleNameColumn.setCellFactory(TextFieldTableCell.forTableColumn()); //todo muss eindeutig sein
 
-        final TableColumn<SetData, Boolean> playColumn = new TableColumn<>("Abspielen");
-        playColumn.setCellValueFactory(new PropertyValueFactory<>("play"));
-        playColumn.setCellFactory(cellFactoryPlay);
-        playColumn.getStyleClass().add("center");
+//        final TableColumn<SetData, Boolean> playColumn = new TableColumn<>("Name"); //wird für den Namen missbraucht, da Änderung gemeldet werden
+//        playColumn.setCellValueFactory(new PropertyValueFactory<>("play"));
+//        playColumn.setCellFactory(cellFactoryPlay);
+//        playColumn.getStyleClass().add("center");
 
-        final TableColumn<SetData, Boolean> saveColumn = new TableColumn<>("Speichern");
-        saveColumn.setCellValueFactory(new PropertyValueFactory<>("save"));
-        saveColumn.setCellFactory(cellFactorySave);
-        saveColumn.getStyleClass().add("center");
+//        final TableColumn<SetData, Boolean> saveColumn = new TableColumn<>("Speichern");
+//        saveColumn.setCellValueFactory(new PropertyValueFactory<>("save"));
+//        saveColumn.setCellFactory(cellFactorySave);
+//        saveColumn.getStyleClass().add("center");
+//
+//        final TableColumn<SetData, Boolean> aboColumn = new TableColumn<>("Abo");
+//        aboColumn.setCellValueFactory(new PropertyValueFactory<>("abo"));
+//        aboColumn.setCellFactory(cellFactoryAbo);
+//        aboColumn.getStyleClass().add("center");
+//
+//        final TableColumn<SetData, Boolean> buttonColumn = new TableColumn<>("Button");
+//        buttonColumn.setCellValueFactory(new PropertyValueFactory<>("button"));
+//        buttonColumn.setCellFactory(cellFactoryButton);
+//        buttonColumn.getStyleClass().add("center");
 
-        final TableColumn<SetData, Boolean> aboColumn = new TableColumn<>("Abo");
-        aboColumn.setCellValueFactory(new PropertyValueFactory<>("abo"));
-        aboColumn.setCellFactory(cellFactoryAbo);
-        aboColumn.getStyleClass().add("center");
-
-        final TableColumn<SetData, Boolean> buttonColumn = new TableColumn<>("Button");
-        buttonColumn.setCellValueFactory(new PropertyValueFactory<>("button"));
-        buttonColumn.setCellFactory(cellFactoryButton);
-        buttonColumn.getStyleClass().add("center");
-
-        tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-        tableView.getColumns().addAll(visibleNameColumn, playColumn, saveColumn, aboColumn, buttonColumn);
+        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+//        tableView.getColumns().addAll(visibleNameColumn, playColumn, saveColumn, aboColumn, buttonColumn);
+        tableView.getColumns().addAll(visibleNameColumn);
         tableView.setItems(progData.setDataList);
 
         Button btnDel = new Button("");
@@ -216,11 +227,12 @@ public class SetPaneController extends AnchorPane {
             }
         });
 
-        final Button btnHelp = PButton.helpButton(stage, "Set", HelpTextPset.HELP_PSET);
-        HBox hBox = new HBox(10);
-        hBox.getChildren().addAll(btnNew, btnDel, btnUp, btnDown);
-        HBox.setHgrow(hBox, Priority.ALWAYS);
-        hBoxButton.getChildren().addAll(hBox, btnHelp);
+//        final Button btnHelp = PButton.helpButton(stage, "Set", HelpTextPset.HELP_PSET);
+        HBox hBoxH = new HBox(10);
+        hBoxH.getChildren().addAll(btnNew, btnDel, btnUp, btnDown);
+        HBox.setHgrow(hBoxH, Priority.ALWAYS);
+        hBoxButton1.getChildren().addAll(hBoxH);
+//        hBoxButton2.getChildren().addAll(btnHelp);
 
 
         Button btnDup = new Button("_Duplizieren");
@@ -269,6 +281,33 @@ public class SetPaneController extends AnchorPane {
         return sel;
     }
 
+    private Callback<TableColumn<SetData, String>, TableCell<SetData, String>> cellFactoryName
+            = (final TableColumn<SetData, String> param) -> {
+
+        final TableCell<SetData, String> cell = new TableCell<SetData, String>() {
+
+            @Override
+            public void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (item == null || empty) {
+                    setGraphic(null);
+                    setText(null);
+                    return;
+                }
+
+                SetData setData = getTableView().getItems().get(getIndex());
+                Label lbl = new Label(setData.getVisibleName());
+                if (setData.isPlay()) {
+                    lbl.getStyleClass().add("markSetPlay");
+                } else {
+                    lbl.getStyleClass().removeAll("markSetPlay");
+                }
+                setGraphic(lbl);
+            }
+        };
+        return cell;
+    };
     private Callback<TableColumn<SetData, Boolean>, TableCell<SetData, Boolean>> cellFactoryPlay
             = (final TableColumn<SetData, Boolean> param) -> {
 
@@ -284,21 +323,14 @@ public class SetPaneController extends AnchorPane {
                     return;
                 }
 
-                final HBox hbox = new HBox(5);
-                hbox.setAlignment(Pos.CENTER);
-                hbox.setPadding(new Insets(0, 2, 0, 2));
-
                 SetData setData = getTableView().getItems().get(getIndex());
-
-                final RadioButton radioButton = new RadioButton("");
-                radioButton.setToggleGroup(toggleGroup);
-                radioButton.setSelected(item.booleanValue());
-
-                radioButton.setOnAction(event -> progData.setDataList.setPlay(setData));
-
-                hbox.getChildren().addAll(radioButton);
-                setGraphic(hbox);
-
+                Label lbl = new Label(setData.getVisibleName());
+                if (setData.isPlay()) {
+                    lbl.getStyleClass().add("markSetPlay");
+                } else {
+                    lbl.getStyleClass().removeAll("markSetPlay");
+                }
+                setGraphic(lbl);
             }
         };
         return cell;

@@ -37,8 +37,8 @@ public class DownloadPane {
     private final TextField txtPrefix = new TextField();
     private final TextField txtSuffix = new TextField();
     private final RadioButton rbHd = new RadioButton("Film in HD laden");
-    private final RadioButton rbHeight = new RadioButton("hohe Auflösung laden");
-    private final RadioButton rbLow = new RadioButton("kleine Auflösung laden");
+    private final RadioButton rbHeight = new RadioButton("Film in hoher Auflösung laden");
+    private final RadioButton rbLow = new RadioButton("Film in kleiner Auflösung laden");
     private final PToggleSwitch tglInfo = new PToggleSwitch("Infodatei anlegen: \"Filmname.txt\"");
     private final PToggleSwitch tglSubtitle = new PToggleSwitch("Untertitel speichern: \"Filmname.xxx\"");
 
@@ -87,8 +87,8 @@ public class DownloadPane {
         gridPane.add(new Label("Präfix (z.B. http):"), 0, ++row);
         gridPane.add(txtPrefix, 1, row);
 
-        gridPane.add(new Label("Suffix (z.B. mp4):"), 2, row);
-        gridPane.add(txtSuffix, 3, row);
+        gridPane.add(new Label("Suffix (z.B. mp4,mp3):"), 0, ++row);
+        gridPane.add(txtSuffix, 1, row);
 
         gridPane.getColumnConstraints().addAll(
                 PColumnConstraints.getCcPrefSize(),
@@ -117,13 +117,11 @@ public class DownloadPane {
                 HelpText.SETDATA_RES);
 
         gridPane.add(rbHd, 0, 0);
-        gridPane.add(rbHeight, 1, 0);
-        gridPane.add(rbLow, 2, 0);
-        gridPane.add(btnHelpRes, 3, 0);
+        gridPane.add(btnHelpRes, 1, 0);
+        gridPane.add(rbHeight, 0, 1);
+        gridPane.add(rbLow, 0, 2);
 
         gridPane.getColumnConstraints().addAll(
-                PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcComputedSizeAndHgrowRight());
     }
