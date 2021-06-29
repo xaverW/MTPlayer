@@ -26,8 +26,6 @@ import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -54,7 +52,7 @@ public class DownloadPane {
     }
 
     public void makePane(Collection<TitledPane> result) {
-        VBox vBox = new VBox(0);
+        VBox vBox = new VBox(25);
         vBox.setPadding(new Insets(10));
 
         TitledPane tpConfig = new TitledPane("Download", vBox);
@@ -70,19 +68,15 @@ public class DownloadPane {
         GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
         gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(20));
         vBox.getChildren().add(gridPane);
 
         final Button btnHelpPraefix = PButton.helpButton(stage, "Direkt speichern",
                 HelpText.SETDATA_PRAEFIX);
-        Label lbl = new Label("direkt Speichern (Download durch dieses Programm):");
-        HBox hBox = new HBox(15);
-        HBox hBoxSpace = new HBox();
-        HBox.setHgrow(hBoxSpace, Priority.ALWAYS);
-        hBox.getChildren().addAll(lbl, hBoxSpace, btnHelpPraefix);
+        final Label lbl = new Label("direkt Speichern (Download durch dieses Programm):");
+
         int row = 0;
-        gridPane.add(hBox, 0, row, 4, 1);
-//        gridPane.add(btnHelpPraefix, 3, row);
+        gridPane.add(lbl, 0, row, 2, 1);
+        gridPane.add(btnHelpPraefix, 2, row);
 
         gridPane.add(new Label("Präfix (z.B. http):"), 0, ++row);
         gridPane.add(txtPrefix, 1, row);
@@ -93,8 +87,7 @@ public class DownloadPane {
         gridPane.getColumnConstraints().addAll(
                 PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcComputedSizeAndHgrow(),
-                PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrowRight());
+                PColumnConstraints.getCcPrefSize());
     }
 
     private void makeReolution(VBox vBox) {
@@ -110,7 +103,6 @@ public class DownloadPane {
         GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
         gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(20));
         vBox.getChildren().add(gridPane);
 
         final Button btnHelpRes = PButton.helpButton(stage, "Auflösung",
@@ -131,11 +123,9 @@ public class DownloadPane {
         GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
         gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(20));
-        vBox.getChildren().add(gridPane);
-
         gridPane.add(tglInfo, 0, 0);
         gridPane.add(tglSubtitle, 0, 1);
+        vBox.getChildren().add(gridPane);
     }
 
     private void setResolution() {
@@ -184,5 +174,4 @@ public class DownloadPane {
             tglSubtitle.selectedProperty().unbindBidirectional(setData.subtitleProperty());
         }
     }
-
 }

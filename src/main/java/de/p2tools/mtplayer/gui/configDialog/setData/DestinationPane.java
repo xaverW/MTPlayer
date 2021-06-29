@@ -89,14 +89,7 @@ public class DestinationPane {
         GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
         gridPane.setVgap(15);
-        gridPane.setPadding(new Insets(20));
         vBox.getChildren().add(gridPane);
-
-        // Unterordner
-//        HBox hBox = new HBox(25);
-//        HBox.setHgrow(cboDest, Priority.ALWAYS);
-//        hBox.getChildren().addAll(tglSubdir, cboDest);
-//        gridPane.add(hBox, 0, row, 2, 1);
 
         gridPane.add(tglSubdir, 0, row, 2, 1);
         gridPane.add(btnHelSubDir, 2, row);
@@ -161,17 +154,15 @@ public class DestinationPane {
         GridPane.setValignment(slCutField, VPos.CENTER);
 
         GridPane gridPane = new GridPane();
-        gridPane.setHgap(25);
+        gridPane.setHgap(15);
         gridPane.setVgap(15);
-        gridPane.setPadding(new Insets(20));
+//        gridPane.setPadding(new Insets(20));
         vBox.getChildren().add(gridPane);
 
         gridPane.add(lblTxtAll, 0, 0);
         gridPane.add(slCut, 1, 0);
         gridPane.add(lblSizeAll, 2, 0);
         gridPane.add(btnHelpDestSize, 3, 0);
-
-//        gridPane.add(new Label(" "), 0, 1);
 
         gridPane.add(lblTxtField, 0, 1);
         gridPane.add(slCutField, 1, 1);

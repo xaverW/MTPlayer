@@ -168,9 +168,12 @@ public class HelpTextPset {
                     "können bearbeitet und umbenannt werden.\n" +
                     "\n" +
                     "-- Set-Funktionen --\n" +
+                    "Die Set-Funktionen können in der Tabelle mit dem Maus-Kontextmenü und in \"Funktionen\" " +
+                    "ein- und ausgeschaltet werden.\n" +
+                    "\n" +
                     "\"Abspielen\" ruft ein Programm zur Wiedergabe auf, wenn ein Film zum Abspielen gestartet wird. " +
                     "Es kann nur ein Set dafür zuständig sein. In der Tabelle erscheint das Set zum " +
-                    "Abspielen in grüner Schrift.\n" +
+                    "Abspielen in roter Schrift.\n" +
                     "\n" +
                     "\"Speichern\" ist für das Speichern eines Films zuständig. Wenn mehrere Sets zum Speichern angelegt " +
                     "sind, muss für jeden Film in einem Dialog das Set ausgewählt werden.\n" +

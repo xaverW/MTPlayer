@@ -64,7 +64,7 @@ public class SetFunction {
         vBox.setFillWidth(true);
         vBox.setPadding(new Insets(10));
 
-        TitledPane tpConfig = new TitledPane("Set Funktionen", vBox);
+        TitledPane tpConfig = new TitledPane("Funktionen", vBox);
         result.add(tpConfig);
 
         rbPlay.setTooltip(new Tooltip("Dieses Set zum Abspielen auswählen"));
@@ -77,9 +77,8 @@ public class SetFunction {
         GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
         gridPane.setVgap(15);
-        gridPane.setPadding(new Insets(20));
         vBox.getChildren().add(gridPane);
-        gridPane.add(new Label("Funktionen des Sets:"), 0, row, 4, 1);
+        gridPane.add(new Label("Funktionen des Sets:"), 0, row, 3, 1);
 
         HBox hBox = new HBox(15);
         HBox hBoxSpace = new HBox();
@@ -104,7 +103,7 @@ public class SetFunction {
         gridPane.add(PButton.helpButton(stage, "Funktion des Sets",
                 HelpTextPset.HELP_PSET_BUTTON), 2, row);
 
-        Label lblColor = new Label("Farbe des Button:");
+        Label lblColor = new Label("Farbe:");
         Button btnResetColor = new Button("_Standardfarbe");
         btnResetColor.setOnAction(event -> {
             setData.setColor(SetData.RESET_COLOR);
@@ -117,16 +116,15 @@ public class SetFunction {
         btnResetColor.disableProperty().bind(tglButton.selectedProperty().not());
 
         HBox hBoxColor = new HBox(10);
-//        HBox hBoxSpace = new HBox();
-//        HBox.setHgrow(hBoxSpace, Priority.ALWAYS);
         hBoxColor.getChildren().addAll(lblColor, colorPicker, btnResetColor);
+        hBoxColor.setAlignment(Pos.CENTER_LEFT);
         gridPane.add(hBoxColor, 1, ++row);
         gridPane.add(btnHelpColor, 2, row);
 
         gridPane.getColumnConstraints().addAll(
                 PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrowRight());
+                PColumnConstraints.getCcComputedSizeAndHgrow(),
+                PColumnConstraints.getCcPrefSize());
     }
 
     public void bindProgData(SetData setData) {

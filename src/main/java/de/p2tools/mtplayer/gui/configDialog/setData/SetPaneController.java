@@ -30,6 +30,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -39,6 +40,7 @@ import javafx.util.Callback;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 
 public class SetPaneController extends AnchorPane {
 
@@ -61,7 +63,6 @@ public class SetPaneController extends AnchorPane {
         this.stage = stage;
         progData = ProgData.getInstance();
 
-//        splitPane.setOrientation(Orientation.VERTICAL);
         AnchorPane.setLeftAnchor(splitPane, 0.0);
         AnchorPane.setBottomAnchor(splitPane, 0.0);
         AnchorPane.setRightAnchor(splitPane, 0.0);
@@ -92,6 +93,16 @@ public class SetPaneController extends AnchorPane {
         tableView.getSelectionModel().selectFirst();
     }
 
+    public Optional<SetData> getSel() {
+        final int selectedTableRow = tableView.getSelectionModel().getSelectedIndex();
+        if (selectedTableRow >= 0) {
+            return Optional.of(tableView.getSelectionModel().getSelectedItem());
+        } else {
+            PAlert.showInfoNoSelection();
+            return Optional.empty();
+        }
+    }
+
     private Collection<TitledPane> createSetList() {
         Collection<TitledPane> result = new ArrayList<>();
         makeSetListTable(result);
@@ -104,54 +115,22 @@ public class SetPaneController extends AnchorPane {
         setDataPane.makeSetPane(setDataPaneTitle);
     }
 
-    double size = 0;
-    double div = 0;
-
     private void makeSetListTable(Collection<TitledPane> result) {
         final VBox vBox = new VBox(10);
         vBox.setFillWidth(true);
         initTable(vBox);
+        initButton(vBox);
 
         TitledPane tpSet = new TitledPane("Sets", vBox);
-        tpSet.setCollapsible(true);
-        tpSet.expandedProperty().addListener((nn, n, i) -> {
-            if (tpSet.isExpanded()) {
-                this.vBox.setMaxHeight(Double.MAX_VALUE);
-//                this.tableView.setMinHeight(size);
-//                this.tableView.setPrefHeight(size);
-//                this.tableView.resize(this.tableView.getWidth(), size);
-                splitPane.getDividers().get(0).setPosition(div);
-            } else {
-                div = splitPane.getDividers().get(0).getPosition();
-                size = tableView.getHeight();
-                this.vBox.setMaxHeight(0);
-            }
-        });
-        result.add(tpSet);
-        VBox.setVgrow(tpSet, Priority.ALWAYS);
         tpSet.setMaxHeight(Double.MAX_VALUE);
+        tpSet.setCollapsible(false);
+        VBox.setVgrow(tpSet, Priority.ALWAYS);
+        result.add(tpSet);
     }
 
 
     private void initTable(VBox vBox) {
-        HBox hBoxTable = new HBox(10);
-        VBox vBoxButton = new VBox(10);
-        HBox hBoxButton1 = new HBox(10);
-        HBox hBoxButton2 = new HBox(10);
-        HBox.setHgrow(tableView, Priority.ALWAYS);
-//        VBox.setVgrow(hBoxTable, Priority.ALWAYS);
-        vBoxButton.getChildren().add(hBoxButton1);
-        vBoxButton.getChildren().add(hBoxButton2);
-//        hBoxTable.getChildren().addAll(tableView, vBoxButton);
-        final Button btnHelp = PButton.helpButton(stage, "Set", HelpTextPset.HELP_PSET);
-
-        VBox vBoxHlp = new VBox();
-        VBox.setVgrow(vBoxHlp, Priority.ALWAYS);
-        HBox hBox = new HBox();
-        hBox.setAlignment(Pos.CENTER_RIGHT);
-        hBox.getChildren().add(btnHelp);
-
-        vBox.getChildren().addAll(tableView, vBoxButton, vBoxHlp, hBox);
+        vBox.getChildren().addAll(tableView);
 
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             setDataPane.bindProgData(newValue);
@@ -160,33 +139,24 @@ public class SetPaneController extends AnchorPane {
         final TableColumn<SetData, String> visibleNameColumn = new TableColumn<>("Name");
         visibleNameColumn.setCellValueFactory(new PropertyValueFactory<>("visibleName"));
         visibleNameColumn.setCellFactory(cellFactoryName);
-//        visibleNameColumn.setCellFactory(TextFieldTableCell.forTableColumn()); //todo muss eindeutig sein
 
-//        final TableColumn<SetData, Boolean> playColumn = new TableColumn<>("Name"); //wird für den Namen missbraucht, da Änderung gemeldet werden
-//        playColumn.setCellValueFactory(new PropertyValueFactory<>("play"));
-//        playColumn.setCellFactory(cellFactoryPlay);
-//        playColumn.getStyleClass().add("center");
-
-//        final TableColumn<SetData, Boolean> saveColumn = new TableColumn<>("Speichern");
-//        saveColumn.setCellValueFactory(new PropertyValueFactory<>("save"));
-//        saveColumn.setCellFactory(cellFactorySave);
-//        saveColumn.getStyleClass().add("center");
-//
-//        final TableColumn<SetData, Boolean> aboColumn = new TableColumn<>("Abo");
-//        aboColumn.setCellValueFactory(new PropertyValueFactory<>("abo"));
-//        aboColumn.setCellFactory(cellFactoryAbo);
-//        aboColumn.getStyleClass().add("center");
-//
-//        final TableColumn<SetData, Boolean> buttonColumn = new TableColumn<>("Button");
-//        buttonColumn.setCellValueFactory(new PropertyValueFactory<>("button"));
-//        buttonColumn.setCellFactory(cellFactoryButton);
-//        buttonColumn.getStyleClass().add("center");
-
-        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-//        tableView.getColumns().addAll(visibleNameColumn, playColumn, saveColumn, aboColumn, buttonColumn);
         tableView.getColumns().addAll(visibleNameColumn);
+        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tableView.setItems(progData.setDataList);
+        tableView.setOnMousePressed(m -> {
+            if (m.getButton().equals(MouseButton.SECONDARY)) {
+                final Optional<SetData> optionalSetData = getSel();
+                SetData setData;
+                if (optionalSetData.isPresent()) {
+                    setData = optionalSetData.get();
+                    ContextMenu contextMenu = new SetDataTableContextMenu(progData).getContextMenu(setData);
+                    tableView.setContextMenu(contextMenu);
+                }
+            }
+        });
+    }
 
+    private void initButton(VBox vBox) {
         Button btnDel = new Button("");
         btnDel.setTooltip(new Tooltip("Markiertes Set löschen"));
         btnDel.setGraphic(new ProgIcons().ICON_BUTTON_REMOVE);
@@ -227,14 +197,6 @@ public class SetPaneController extends AnchorPane {
             }
         });
 
-//        final Button btnHelp = PButton.helpButton(stage, "Set", HelpTextPset.HELP_PSET);
-        HBox hBoxH = new HBox(10);
-        hBoxH.getChildren().addAll(btnNew, btnDel, btnUp, btnDown);
-        HBox.setHgrow(hBoxH, Priority.ALWAYS);
-        hBoxButton1.getChildren().addAll(hBoxH);
-//        hBoxButton2.getChildren().addAll(btnHelp);
-
-
         Button btnDup = new Button("_Duplizieren");
         btnDup.setTooltip(new Tooltip("Eine Kopie des markierten Sets erstellen"));
         btnDup.setOnAction(event -> {
@@ -243,7 +205,6 @@ public class SetPaneController extends AnchorPane {
                 progData.setDataList.addSetData(setData.copy());
             }
         });
-        HBox.setHgrow(btnDup, Priority.ALWAYS);
         btnDup.setMaxWidth(Double.MAX_VALUE);
 
         Button btnNewSet = new Button("Standardsets _anfügen");
@@ -253,29 +214,40 @@ public class SetPaneController extends AnchorPane {
                 PAlert.showErrorAlert("Set importieren", "Set konnten nicht importiert werden!");
             }
         });
-        HBox.setHgrow(btnNewSet, Priority.ALWAYS);
         btnNewSet.setMaxWidth(Double.MAX_VALUE);
 
         Button btnCheck = new Button("_Prüfen");
         btnCheck.setTooltip(new Tooltip("Die angelegten Sets überprüfen"));
         btnCheck.setOnAction(event -> SetsPrograms.checkPrograms(progData));
-        HBox.setHgrow(btnCheck, Priority.ALWAYS);
         btnCheck.setMaxWidth(Double.MAX_VALUE);
 
-        vBoxButton.getChildren().addAll(btnDup, btnNewSet, btnCheck);
-    }
+        final Button btnHelp = PButton.helpButton(stage, "Set", HelpTextPset.HELP_PSET);
 
-    private SetData getSelectedSelData() {
-        final SetData sel = tableView.getSelectionModel().getSelectedItem();
-        if (sel == null) {
-            PAlert.showInfoNoSelection();
-        }
-        return sel;
+
+        HBox hBoxButton = new HBox(10);
+        hBoxButton.getChildren().addAll(btnNew, btnDel, btnUp, btnDown);
+
+        VBox vBoxSpace = new VBox();
+        VBox.setVgrow(vBoxSpace, Priority.ALWAYS);
+
+        HBox hBoxHelp = new HBox();
+        hBoxHelp.setAlignment(Pos.CENTER_RIGHT);
+        hBoxHelp.getChildren().add(btnHelp);
+
+        vBox.getChildren().addAll(hBoxButton, btnDup, btnNewSet, btnCheck, vBoxSpace, hBoxHelp);
     }
 
     private int getSelectedLine() {
         final int sel = tableView.getSelectionModel().getSelectedIndex();
         if (sel < 0) {
+            PAlert.showInfoNoSelection();
+        }
+        return sel;
+    }
+
+    private SetData getSelectedSelData() {
+        final SetData sel = tableView.getSelectionModel().getSelectedItem();
+        if (sel == null) {
             PAlert.showInfoNoSelection();
         }
         return sel;

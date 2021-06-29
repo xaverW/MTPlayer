@@ -59,14 +59,13 @@ public class SetPane {
         vBox.setFillWidth(true);
         vBox.setPadding(new Insets(10));
 
-        TitledPane tpConfig = new TitledPane("Set Einstellungen", vBox);
+        TitledPane tpConfig = new TitledPane("Einstellungen", vBox);
         result.add(tpConfig);
 
         // Name, Beschreibung
         GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
         gridPane.setVgap(15);
-        gridPane.setPadding(new Insets(20));
         vBox.getChildren().add(gridPane);
 
         gridPane.add(new Label("Set Name:"), 0, 0);
