@@ -45,7 +45,6 @@ import java.util.Collection;
 public class ProgramPane {
     TableView<ProgramData> tableView = new TableView<>();
     private SetData setData = null;
-    private final VBox vBox = new VBox(10);
 
     private final GridPane gridPane = new GridPane();
     private final TextField txtName = new TextField();
@@ -73,10 +72,12 @@ public class ProgramPane {
     }
 
     public void makeProgs(Collection<TitledPane> result) {
+        VBox vBox = new VBox(10);
         vBox.setFillWidth(true);
         vBox.setPadding(new Insets(10));
 
-        initTable();
+        initTable(vBox);
+        initButton(vBox);
         addConfigs(vBox);
 
         TitledPane tpConfig = new TitledPane("Hilfsprogramme", vBox);
@@ -85,7 +86,7 @@ public class ProgramPane {
         VBox.setVgrow(tpConfig, Priority.ALWAYS);
     }
 
-    private void initTable() {
+    private void initTable(VBox vBox) {
         final TableColumn<ProgramData, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
@@ -123,6 +124,11 @@ public class ProgramPane {
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
                 Platform.runLater(this::setActProgramData));
 
+        VBox.setVgrow(tableView, Priority.ALWAYS);
+        vBox.getChildren().addAll(tableView);
+    }
+
+    private void initButton(VBox vBox) {
         Button btnDel = new Button("");
         btnDel.setGraphic(new ProgIcons().ICON_BUTTON_REMOVE);
         btnDel.setOnAction(event -> {
@@ -179,9 +185,7 @@ public class ProgramPane {
 
         HBox hBox = new HBox(10);
         hBox.getChildren().addAll(btnNew, btnDel, btnUp, btnDown, hBoxHlp);
-
-        VBox.setVgrow(tableView, Priority.ALWAYS);
-        vBox.getChildren().addAll(tableView, hBox);
+        vBox.getChildren().addAll(hBox);
     }
 
     private void addConfigs(VBox vBox) {
@@ -216,11 +220,6 @@ public class ProgramPane {
         gridPane.add(new Label("Suffix: "), 2, row);
         gridPane.add(txtSuffix, 3, row);
 
-//        HBox hBox = new HBox(15);
-//        hBox.getChildren().addAll(tglRestart, tglDown);
-//        HBox.setHgrow(tglRestart, Priority.ALWAYS);
-//        HBox.setHgrow(tglDown, Priority.ALWAYS);
-//        gridPane.add(hBox, 0, ++row, 2, 1);
         gridPane.add(tglRestart, 0, ++row, 2, 1);
         gridPane.add(tglDown, 2, row, 2, 1);
 
@@ -232,8 +231,8 @@ public class ProgramPane {
                 PColumnConstraints.getCcPrefSize()
         );
 
-        vBox.getChildren().add(gridPane);
         gridPane.setDisable(true);
+        vBox.getChildren().add(gridPane);
     }
 
     private void setActProgramData() {
@@ -278,5 +277,4 @@ public class ProgramPane {
         }
         return sel;
     }
-
 }

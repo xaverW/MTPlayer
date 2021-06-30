@@ -76,7 +76,7 @@ public class SetFunction {
         //Speichern, Button, Abo
         GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
-        gridPane.setVgap(15);
+        gridPane.setVgap(10);
         vBox.getChildren().add(gridPane);
         gridPane.add(new Label("Funktionen des Sets:"), 0, row, 3, 1);
 

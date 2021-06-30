@@ -59,7 +59,7 @@ public class DestinationPane {
     }
 
     public void makePane(Collection<TitledPane> result) {
-        VBox vBox = new VBox(10);
+        VBox vBox = new VBox(25);
         vBox.setFillWidth(true);
         vBox.setPadding(new Insets(10));
 
@@ -88,7 +88,7 @@ public class DestinationPane {
         int row = 0;
         GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
-        gridPane.setVgap(15);
+        gridPane.setVgap(10);
         vBox.getChildren().add(gridPane);
 
         gridPane.add(tglSubdir, 0, row, 2, 1);
@@ -155,18 +155,21 @@ public class DestinationPane {
 
         GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
-        gridPane.setVgap(15);
+        gridPane.setVgap(10);
 //        gridPane.setPadding(new Insets(20));
         vBox.getChildren().add(gridPane);
 
-        gridPane.add(lblTxtAll, 0, 0);
-        gridPane.add(slCut, 1, 0);
-        gridPane.add(lblSizeAll, 2, 0);
-        gridPane.add(btnHelpDestSize, 3, 0);
+        int row = 0;
+//        gridPane.add(new Label(" "), 0, row);
 
-        gridPane.add(lblTxtField, 0, 1);
-        gridPane.add(slCutField, 1, 1);
-        gridPane.add(lblSizeField, 2, 1);
+        gridPane.add(lblTxtAll, 0, ++row);//Platz nach oben!
+        gridPane.add(slCut, 1, row);
+        gridPane.add(lblSizeAll, 2, row);
+        gridPane.add(btnHelpDestSize, 3, row);
+
+        gridPane.add(lblTxtField, 0, ++row);
+        gridPane.add(slCutField, 1, row);
+        gridPane.add(lblSizeField, 2, row);
 
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcPrefSize(),

@@ -65,7 +65,7 @@ public class SetPane {
         // Name, Beschreibung
         GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
-        gridPane.setVgap(15);
+        gridPane.setVgap(10);
         vBox.getChildren().add(gridPane);
 
         gridPane.add(new Label("Set Name:"), 0, 0);

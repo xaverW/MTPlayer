@@ -108,10 +108,11 @@ public class DownloadPane {
         final Button btnHelpRes = PButton.helpButton(stage, "Auflösung",
                 HelpText.SETDATA_RES);
 
-        gridPane.add(rbHd, 0, 0);
-        gridPane.add(btnHelpRes, 1, 0);
-        gridPane.add(rbHeight, 0, 1);
-        gridPane.add(rbLow, 0, 2);
+        int row = 0;
+        gridPane.add(rbHd, 0, ++row);//Platz nach oben!
+        gridPane.add(btnHelpRes, 1, row);
+        gridPane.add(rbHeight, 0, ++row);
+        gridPane.add(rbLow, 0, ++row);
 
         gridPane.getColumnConstraints().addAll(
                 PColumnConstraints.getCcPrefSize(),
@@ -123,8 +124,10 @@ public class DownloadPane {
         GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
         gridPane.setVgap(10);
-        gridPane.add(tglInfo, 0, 0);
-        gridPane.add(tglSubtitle, 0, 1);
+
+        int row = 0;
+        gridPane.add(tglInfo, 0, ++row);//Platz nach oben!
+        gridPane.add(tglSubtitle, 0, ++row);
         vBox.getChildren().add(gridPane);
     }
 
