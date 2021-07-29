@@ -65,7 +65,6 @@ public class ProgStart {
                     MediaDataWorker.createMediaDb();
                     checkProgUpdate(progData);
                 }
-
             }
         });
 
@@ -78,7 +77,7 @@ public class ProgStart {
         list.add("Programmpfad: " + ProgInfos.getPathJar());
         list.add("Verzeichnis Einstellungen: " + ProgInfos.getSettingsDirectory_String());
 
-        LogMessage.startMsg(ProgConst.PROGRAMNAME, list);
+        LogMessage.startMsg(ProgConst.PROGRAM_NAME, list);
 
         list = new ArrayList<>();
         list.add(PLog.LILNE2);
@@ -206,39 +205,44 @@ public class ProgStart {
         // Prüfen obs ein Programmupdate gibt
         PDuration.onlyPing("checkProgUpdate");
 
-        if (Boolean.parseBoolean(ProgConfig.SYSTEM_UPDATE_SEARCH.get()) &&
-                !ProgConfig.SYSTEM_UPDATE_DATE.get().equals(PDateFactory.F_FORMAT_yyyyMMdd.format(new Date()))) {
+        if (ProgConfig.SYSTEM_UPDATE_SEARCH_ACT.getBool() &&
+                !updateCheckTodayDone()) {
             // nach Updates suchen
-            runUpdateCheck(progData);
+            runUpdateCheck(progData, false);
 
         } else if (ProgData.debug) {
             // damits bei jedem Start gemacht wird
             PLog.sysLog("DEBUG: Update-Check");
-            runUpdateCheck(progData);
+            runUpdateCheck(progData, true);
 
         } else {
             // will der User nicht --oder-- wurde heute schon gemacht
             List list = new ArrayList(5);
             list.add("Kein Update-Check:");
-            if (!Boolean.parseBoolean(ProgConfig.SYSTEM_UPDATE_SEARCH.get())) {
+            if (!ProgConfig.SYSTEM_UPDATE_SEARCH_ACT.getBool()) {
                 list.add("  der User will nicht");
             }
-            if (ProgConfig.SYSTEM_UPDATE_DATE.get().equals(PDateFactory.F_FORMAT_yyyyMMdd.format(new Date()))) {
+            if (updateCheckTodayDone()) {
                 list.add("  heute schon gemacht");
             }
             PLog.sysLog(list);
         }
     }
 
-    private void runUpdateCheck(ProgData progData) {
+    private static boolean updateCheckTodayDone() {
+        return ProgConfig.SYSTEM_UPDATE_DATE.get().equals(PDateFactory.F_FORMAT_yyyy_MM_dd.format(new Date()));
+    }
+
+    private void runUpdateCheck(ProgData progData, boolean showAlways) {
+        ProgConfig.SYSTEM_UPDATE_DATE.setValue(PDateFactory.F_FORMAT_yyyy_MM_dd.format(new Date()));
         Thread th = new Thread(() -> {
-            new SearchProgramUpdate(progData).searchNewProgramVersion();
+            new SearchProgramUpdate(progData).searchNewProgramVersion(showAlways);
         });
         th.setName("checkProgUpdate");
         th.start();
     }
 
     private void setTitle(ProgData progData) {
-        progData.primaryStage.setTitle(ProgConst.PROGRAMNAME + " " + ProgramTools.getProgVersion());
+        progData.primaryStage.setTitle(ProgConst.PROGRAM_NAME + " " + ProgramTools.getProgVersion());
     }
 }

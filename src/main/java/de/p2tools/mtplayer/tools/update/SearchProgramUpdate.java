@@ -19,23 +19,20 @@ package de.p2tools.mtplayer.tools.update;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.p2Lib.checkForUpdates.SearchProgUpdate;
-import de.p2tools.p2Lib.checkForUpdates.UpdateSearchData;
-import de.p2tools.p2Lib.tools.ProgramTools;
-import de.p2tools.p2Lib.tools.date.PDateFactory;
+import de.p2tools.p2Lib.checkForActInfos.FoundAll;
+import de.p2tools.p2Lib.checkForActInfos.FoundSearchData;
+import de.p2tools.p2Lib.tools.date.PDate;
 import javafx.application.Platform;
 import javafx.stage.Stage;
-
-import java.util.Date;
 
 import static java.lang.Thread.sleep;
 
 public class SearchProgramUpdate {
 
-    private final ProgData progData;
-    private final Stage stage;
     private static final String TITLE_TEXT_PROGRAM_VERSION_IS_UPTODATE = "Programmversion ist aktuell";
     private static final String TITLE_TEXT_PROGRAMMUPDATE_EXISTS = "Ein Programmupdate ist verfügbar";
+    private final ProgData progData;
+    private final Stage stage;
     private String title = "";
 
     public SearchProgramUpdate(ProgData progData) {
@@ -43,7 +40,7 @@ public class SearchProgramUpdate {
         this.stage = progData.primaryStage;
     }
 
-    public SearchProgramUpdate(Stage stage, ProgData progData) {
+    public SearchProgramUpdate(ProgData progData, Stage stage) {
         this.progData = progData;
         this.stage = stage;
     }
@@ -51,36 +48,44 @@ public class SearchProgramUpdate {
     /**
      * @return
      */
-    public boolean searchNewProgramVersion() {
-        // prüft auf neue Version, ProgVersion und auch (wenn gewünscht) BETA-Version
-        boolean ret;
-        ProgConfig.SYSTEM_UPDATE_DATE.setValue(PDateFactory.F_FORMAT_yyyyMMdd.format(new Date()));
-
-        if (!ProgConfig.SYSTEM_UPDATE_SEARCH.getBool()) {
-            // dann ist es nicht gewünscht
-            return false;
+    public void searchNewProgramVersion(boolean showAllways) {
+        final String SEARCH_URL;
+        final String SEARCH_URL_DOWNLOAD;
+        if (ProgData.debug) {
+            SEARCH_URL = "http://p2.localhost:8080";
+            SEARCH_URL_DOWNLOAD = "http://p2.localhost:8080/download/";
+        } else {
+            SEARCH_URL = "https://www.p2tools.de";
+            SEARCH_URL_DOWNLOAD = "https://www.p2tools.de/download/";
         }
 
-        UpdateSearchData updateSearchData = new UpdateSearchData(ProgConst.ADRESSE_MTPLAYER_VERSION,
-                ProgramTools.getProgVersionInt(), ProgramTools.getBuildInt(),
-                ProgConfig.SYSTEM_UPDATE_VERSION_SHOWN.getIntegerProperty(),
-                null,
-                ProgConfig.SYSTEM_UPDATE_INFO_NR_SHOWN.getIntegerProperty(),
-                ProgConfig.SYSTEM_UPDATE_SEARCH.getBooleanProperty());
+        final PDate pd = new PDate(ProgConfig.SYSTEM_PROG_BUILD_DATE.get());
+        String buildDate = pd.get_yyyy_MM_dd();
 
-        UpdateSearchData updateSearchDataBeta = null;
-        if (ProgConfig.SYSTEM_UPDATE_BETA_SEARCH.getBool()) {
-            updateSearchDataBeta = new UpdateSearchData(ProgConst.ADRESSE_MTPLAYER_BETA_VERSION,
-                    ProgramTools.getProgVersionInt(), ProgramTools.getBuildInt(),
-                    ProgConfig.SYSTEM_UPDATE_BETA_VERSION_SHOWN.getIntegerProperty(),
-                    ProgConfig.SYSTEM_UPDATE_BETA_BUILD_NO_SHOWN.getIntegerProperty(),
-                    null,
-                    ProgConfig.SYSTEM_UPDATE_BETA_SEARCH.getBooleanProperty());
-        }
+        FoundSearchData foundSearchData = new FoundSearchData(
+                stage,
+                SEARCH_URL,
+                SEARCH_URL_DOWNLOAD,
 
-        ret = new SearchProgUpdate(stage).checkAllUpdates(updateSearchData, updateSearchDataBeta, false);
-        setTitleInfo(ret);
-        return ret;
+                ProgConfig.SYSTEM_UPDATE_SEARCH_ACT.getBooleanProperty(),
+                ProgConfig.SYSTEM_UPDATE_SEARCH_BETA.getBooleanProperty(),
+                ProgConfig.SYSTEM_UPDATE_SEARCH_DAILY.getBooleanProperty(),
+
+                ProgConfig.SYSTEM_UPDATE_LAST_INFO.getStringProperty(),
+                ProgConfig.SYSTEM_UPDATE_LAST_ACT.getStringProperty(),
+                ProgConfig.SYSTEM_UPDATE_LAST_BETA.getStringProperty(),
+                ProgConfig.SYSTEM_UPDATE_LAST_DAILY.getStringProperty(),
+
+                ProgConst.URL_WEBSITE,
+                ProgConst.URL_WEBSITE_DOWNLOAD,
+                ProgConst.PROGRAM_NAME,
+                ProgConfig.SYSTEM_PROG_VERSION.get(),
+                buildDate,
+                showAllways
+        );
+
+        FoundAll.foundAll(foundSearchData);
+        setTitleInfo(foundSearchData.foundNewVersionProperty().getValue());
     }
 
     private void setTitleInfo(boolean newVersion) {
@@ -108,31 +113,4 @@ public class SearchProgramUpdate {
     private void setOrgTitle() {
         progData.primaryStage.setTitle(title);
     }
-
-    /**
-     * @return
-     */
-    public boolean searchNewVersionInfos() {
-        // prüft auf neue Version und zeigts immer an, auch (wenn gewünscht) BETA-Version
-
-        UpdateSearchData updateSearchData = new UpdateSearchData(ProgConst.ADRESSE_MTPLAYER_VERSION,
-                ProgramTools.getProgVersionInt(), ProgramTools.getBuildInt(),
-                null,
-                null,
-                null,
-                null);
-
-        UpdateSearchData updateSearchDataBeta = null;
-        if (ProgConfig.SYSTEM_UPDATE_BETA_SEARCH.getBool()) {
-            updateSearchDataBeta = new UpdateSearchData(ProgConst.ADRESSE_MTPLAYER_BETA_VERSION,
-                    ProgramTools.getProgVersionInt(), ProgramTools.getBuildInt(),
-                    null,
-                    null,
-                    null,
-                    null);
-        }
-
-        return new SearchProgUpdate(stage).checkAllUpdates(updateSearchData, updateSearchDataBeta, true);
-    }
-
 }

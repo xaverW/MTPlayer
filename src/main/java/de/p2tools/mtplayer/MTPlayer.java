@@ -66,7 +66,7 @@ public class MTPlayer extends Application {
     }
 
     private void initP2lib() {
-        P2LibInit.initLib(primaryStage, ProgConst.PROGRAMNAME,
+        P2LibInit.initLib(primaryStage, ProgConst.PROGRAM_NAME,
                 "", ProgData.debug, ProgData.duration);
         P2LibInit.addCssFile(P2LibConst.CSS_GUI);
         P2LibInit.addCssFile(ProgConst.CSS_FILE);

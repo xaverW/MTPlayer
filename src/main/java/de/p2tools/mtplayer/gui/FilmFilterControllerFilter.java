@@ -41,7 +41,7 @@ public class FilmFilterControllerFilter extends VBox {
     private final Label lblDur = new Label("Filmlänge:");
 
     private final PTimePeriodBox slFilmTime = new PTimePeriodBox();
-    private final PToggleSwitch tglFilmTime = new PToggleSwitch("Zeitraum \"ausschließen\"");
+    private final PToggleSwitch tglFilmTime = new PToggleSwitch("Zeitraum ausschließen");
     private final Label lblFilmTime = new Label("Sendezeit:");
 
     PCheckComboBox checkOnly = new PCheckComboBox();

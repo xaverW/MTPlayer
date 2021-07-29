@@ -31,7 +31,7 @@ import javafx.stage.Stage;
 public class UpdatePane {
     private final Stage stage;
     private final PToggleSwitch tglSearch = new PToggleSwitch("einmal am Tag nach einer neuen Programmversion suchen");
-    BooleanProperty updateProp = ProgConfig.SYSTEM_UPDATE_SEARCH.getBooleanProperty();
+    BooleanProperty updateProp = ProgConfig.SYSTEM_UPDATE_SEARCH_ACT.getBooleanProperty();
 
     public UpdatePane(Stage stage) {
         this.stage = stage;

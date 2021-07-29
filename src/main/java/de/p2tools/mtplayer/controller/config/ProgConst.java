@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.controller.config;
 
 public class ProgConst {
 
-    public static final String PROGRAMNAME = "MTPlayer";
+    public static final String PROGRAM_NAME = "MTPlayer";
     public static final String USER_AGENT_DEFAULT = "";
     public static final int MAX_USER_AGENT_SIZE = 100;
 
@@ -79,7 +79,8 @@ public class ProgConst {
 
 
     // Website MTPlayer
-    public static final String ADRESSE_WEBSITE = "https://www.p2tools.de/mtplayer/";
+    public static final String URL_WEBSITE = "https://www.p2tools.de/mtplayer/";
+    public static final String URL_WEBSITE_DOWNLOAD = "https://www.p2tools.de/mtplayer/download.html";
     public static final String ADRESSE_WEBSITE_HELP = "https://www.p2tools.de/mtplayer/manual/";
 
     public static final String ADRESSE_MTPLAYER_VERSION = "https://www.p2tools.de/extra/mtplayer-info.xml";

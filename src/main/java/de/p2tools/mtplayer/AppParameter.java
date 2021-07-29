@@ -152,7 +152,7 @@ public class AppParameter {
 
     private static void printHelp(final Options allowed) {
         final HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp(ProgConst.PROGRAMNAME, allowed);
+        formatter.printHelp(ProgConst.PROGRAM_NAME, allowed);
 
     }
 

@@ -73,7 +73,8 @@ public class AboutDialogController extends PDialogExtra {
 
     public void make3() {
         btnOk.setOnAction(a -> close());
-        btnCheck.setOnAction(a -> new SearchProgramUpdate(this.getStage(), progData).searchNewVersionInfos());
+        btnCheck.setOnAction(a -> new Thread(() ->
+                new SearchProgramUpdate(progData, this.getStage()).searchNewProgramVersion(true)).start());
 
         GridPane gridPane = new GridPane();
         gridPane.setHgap(10);
@@ -96,7 +97,7 @@ public class AboutDialogController extends PDialogExtra {
         gridPane.add(iv, 0, row, 1, 3);
 
         // top
-        Text text1 = new Text(ProgConst.PROGRAMNAME);
+        Text text1 = new Text(ProgConst.PROGRAM_NAME);
         text1.setFont(Font.font(null, FontWeight.BOLD, 40));
         gridPane.add(text1, 1, row);
         GridPane.setValignment(text1, VPos.TOP);
@@ -145,7 +146,7 @@ public class AboutDialogController extends PDialogExtra {
         gridPane.add(text, c, ++row, 2, 1);
 
 
-        PHyperlink hyperlinkWeb = new PHyperlink(ProgConst.ADRESSE_WEBSITE,
+        PHyperlink hyperlinkWeb = new PHyperlink(ProgConst.URL_WEBSITE,
                 ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
 
         PHyperlink hyperlinkHelp = new PHyperlink(ProgConst.ADRESSE_WEBSITE_HELP,

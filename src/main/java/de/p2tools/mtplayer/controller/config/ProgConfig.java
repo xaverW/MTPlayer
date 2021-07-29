@@ -70,13 +70,23 @@ public class ProgConfig extends MLConfig {
 
     // Configs zur Programmupdatesuche
     public static MLConfigs SYSTEM_UPDATE_DATE = addNewKey("system-update-date"); // Datum der letzten Prüfung
-    public static MLConfigs SYSTEM_UPDATE_SEARCH = addNewKey("system-update-search", Boolean.TRUE.toString()); // ob beim Start nach Updates gesucht werden soll
-    public static MLConfigs SYSTEM_UPDATE_INFO_NR_SHOWN = addNewKey("system-update-info-nr-shown"); // zuletzt angezeigte Info
-    public static MLConfigs SYSTEM_UPDATE_VERSION_SHOWN = addNewKey("system-update-version-shown"); // zuletzt angezeigte Version
-    public static MLConfigs SYSTEM_UPDATE_BETA_SEARCH = addNewKey("system-update-beta-search", Boolean.FALSE.toString());
-    public static MLConfigs SYSTEM_UPDATE_BETA_VERSION_SHOWN = addNewKey("system-update-beta-version-shown"); // zuletzt angezeigtes Update mit versionNo
-    public static MLConfigs SYSTEM_UPDATE_BETA_BUILD_NO_SHOWN = addNewKey("system-update-beta-build-nr-shown"); // zuletzt angezeigtes Update mit buildNo
+    //    public static MLConfigs SYSTEM_UPDATE_SEARCH = addNewKey("system-update-search", Boolean.TRUE.toString()); // ob beim Start nach Updates gesucht werden soll
+//    public static MLConfigs SYSTEM_UPDATE_INFO_NR_SHOWN = addNewKey("system-update-info-nr-shown"); // zuletzt angezeigte Info
+//    public static MLConfigs SYSTEM_UPDATE_VERSION_SHOWN = addNewKey("system-update-version-shown"); // zuletzt angezeigte Version
+//    public static MLConfigs SYSTEM_UPDATE_BETA_SEARCH = addNewKey("system-update-beta-search", Boolean.FALSE.toString());
+//    public static MLConfigs SYSTEM_UPDATE_BETA_VERSION_SHOWN = addNewKey("system-update-beta-version-shown"); // zuletzt angezeigtes Update mit versionNo
+//    public static MLConfigs SYSTEM_UPDATE_BETA_BUILD_NO_SHOWN = addNewKey("system-update-beta-build-nr-shown"); // zuletzt angezeigtes Update mit buildNo
     public static MLConfigs SYSTEM_UPDATE_PROGSET_VERSION = addNewKey("system-update-progset-version");
+
+
+    public static MLConfigs SYSTEM_UPDATE_SEARCH_ACT = addNewKey("system-update-search-act", Boolean.TRUE.toString()); //Infos und Programm
+    public static MLConfigs SYSTEM_UPDATE_SEARCH_BETA = addNewKey("system-update-search-beta", Boolean.FALSE.toString()); //beta suchen
+    public static MLConfigs SYSTEM_UPDATE_SEARCH_DAILY = addNewKey("system-update-search-daily", Boolean.FALSE.toString()); //daily suchen
+
+    public static MLConfigs SYSTEM_UPDATE_LAST_INFO = addNewKey("system-update-last-info");
+    public static MLConfigs SYSTEM_UPDATE_LAST_ACT = addNewKey("system-update-last-act");
+    public static MLConfigs SYSTEM_UPDATE_LAST_BETA = addNewKey("system-update-last-beta");
+    public static MLConfigs SYSTEM_UPDATE_LAST_DAILY = addNewKey("system-update-last-daily");
 
 
     // ConfigDialog, Dialog nach Start immer gleich öffnen
