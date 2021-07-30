@@ -144,6 +144,34 @@ public class HelpText {
                     "gespeicherten Zustand wieder laden. " +
                     "Solange ein geladenes Profil nicht verändert wurde ist sein Name unterstrichen.\n";
 
+    public static final String GUI_DOWNLOAD_FILTER =
+            "Die Menüs und Schieberegler erlauben ein detailliertes " +
+                    "Durchsuchen und Filtern der vorhandenen Downloads.\n" +
+                    "\n" +
+                    "-- Menüs \"Quelle\", \"Downloadart\", \"Sender\", \"Abo\" und \"Status\" --\n" +
+                    "Die Einträge der Filtermenüs werden automatisch aus der " +
+                    "Filmliste und Downloadliste erstellt.\n" +
+                    "\n" +
+                    "-- Suchen und Filtern --\n" +
+                    "[Quelle] filtert nach Herkunft, also Downloads von Hand oder durch ein Abo angelegt.\n" +
+                    "[Downloadart] sucht nach Downloads die direkt geladen werden können oder Downloads " +
+                    "die durch ein externes Programm geladen werden müssen.\n" +
+                    "\n" +
+                    "[Sender], [Abo], [Status] sucht Downloads mit dem Sender, " +
+                    "aus dem Abo, oder mit dem Status (nicht/gestartet, fertig).\n" +
+                    "\n" +
+                    "Mit den Schiebereglern ([gleichzeitige Downloads] und [max. Bandbreite] " +
+                    "kann die Anzahl der gleichzeitigen Downloads die geladen werden, festgelegt werden. Die vorgegebene " +
+                    "maximale Bandbreite gilt pro Download.\n" +
+                    "\n" +
+                    "-- Besonderheiten --\n" +
+                    "Für die maximale Anzahl an Downloads gibt es noch eine Einschränkung: Es können maximal 2 Downloads " +
+                    "pro Server (ist meist dann auch pro Sender) geladen werden. Wenn z.B. alle Downloads vom ZDF sind, werden " +
+                    "maximal 2 Downloads gestartet auch wenn als Maximum mehr vorgegeben ist." +
+                    "\n" +
+                    "(Ausgenommen davon sind explizite Downloadfarmen wie z.B. Akamai die ARTE benutzt.)" +
+                    "\n";
+
     public static final String BLACKLIST_WHITELIST =
             "Die Funktion \"Blacklist\" blendet alle Filme aus, die den Angaben in mindestens einer Zeile " +
                     "in der Tabelle entsprechen.\n" +

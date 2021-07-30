@@ -73,8 +73,7 @@ public class AboutDialogController extends PDialogExtra {
 
     public void make3() {
         btnOk.setOnAction(a -> close());
-        btnCheck.setOnAction(a -> new Thread(() ->
-                new SearchProgramUpdate(progData, this.getStage()).searchNewProgramVersion(true)).start());
+        btnCheck.setOnAction(a -> new SearchProgramUpdate(progData, this.getStage()).searchNewProgramVersion(true));
 
         GridPane gridPane = new GridPane();
         gridPane.setHgap(10);

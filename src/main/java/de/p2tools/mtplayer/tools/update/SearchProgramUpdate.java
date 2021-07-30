@@ -84,8 +84,10 @@ public class SearchProgramUpdate {
                 showAllways
         );
 
-        FoundAll.foundAll(foundSearchData);
-        setTitleInfo(foundSearchData.foundNewVersionProperty().getValue());
+        new Thread(() -> {
+            FoundAll.foundAll(foundSearchData);
+            setTitleInfo(foundSearchData.foundNewVersionProperty().getValue());
+        }).start();
     }
 
     private void setTitleInfo(boolean newVersion) {

@@ -19,7 +19,9 @@ package de.p2tools.mtplayer.gui;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
+import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.mtplayer.tools.MLBandwidthTokenBucket;
+import de.p2tools.p2Lib.guiTools.PButton;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Insets;
@@ -120,6 +122,12 @@ public class DownloadFilterController extends FilterController {
         lblText.setMinWidth(0);
         v.getChildren().addAll(h, sliderBandwidth);
         vBoxFilter.getChildren().add(v);
+
+        final Button btnHelp = PButton.helpButton("Filter", HelpText.GUI_DOWNLOAD_FILTER);
+        hBox = new HBox(10);
+        hBox.setAlignment(Pos.CENTER_RIGHT);
+        hBox.getChildren().addAll(btnHelp);
+        vBoxFilter.getChildren().add(hBox);
     }
 
     private void addCont(String txt, Control control, VBox vBox) {

@@ -438,11 +438,7 @@ public class ConfigPaneController extends PAccordionPane {
                         "Das Programm wird aber nicht ungefragt ersetzt.");
 
         //jetzt suchen
-        btnNow.setOnAction(event -> {
-            new Thread(() -> {
-                new SearchProgramUpdate(progData, stage).searchNewProgramVersion(true);
-            }).start();
-        });
+        btnNow.setOnAction(event -> new SearchProgramUpdate(progData, stage).searchNewProgramVersion(true));
         checkBeta();
         tglSearch.selectedProperty().addListener((ob, ol, ne) -> checkBeta());
         tglSearchBeta.selectedProperty().addListener((ob, ol, ne) -> checkBeta());

@@ -139,7 +139,7 @@ public class QuitDialogController extends PDialogExtra {
     }
 
     public void close() {
-        System.out.println("close");
+//        System.out.println("close");
         ProgData.getInstance().quitDialogController = null;
         if (waitTask.isRunning()) {
             waitTask.cancel();

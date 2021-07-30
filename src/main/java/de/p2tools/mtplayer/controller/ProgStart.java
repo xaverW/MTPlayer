@@ -38,12 +38,10 @@ import java.util.Date;
 import java.util.List;
 
 public class ProgStart {
-    //    private ProgData progData;
     private boolean doneAtProgramstart = false;
 
-//    public ProgStart(ProgData progData) {
-//        this.progData = progData;
-//    }
+    public ProgStart() {
+    }
 
     /**
      * alles was nach der GUI gemacht werden soll z.B.
@@ -235,11 +233,7 @@ public class ProgStart {
 
     private void runUpdateCheck(ProgData progData, boolean showAlways) {
         ProgConfig.SYSTEM_UPDATE_DATE.setValue(PDateFactory.F_FORMAT_yyyy_MM_dd.format(new Date()));
-        Thread th = new Thread(() -> {
-            new SearchProgramUpdate(progData).searchNewProgramVersion(showAlways);
-        });
-        th.setName("checkProgUpdate");
-        th.start();
+        new SearchProgramUpdate(progData).searchNewProgramVersion(showAlways);
     }
 
     private void setTitle(ProgData progData) {
