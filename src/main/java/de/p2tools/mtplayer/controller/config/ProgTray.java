@@ -25,6 +25,7 @@ import de.p2tools.mtplayer.gui.StatusBarController;
 import de.p2tools.mtplayer.gui.configDialog.ConfigDialogController;
 import de.p2tools.mtplayer.gui.dialog.AboutDialogController;
 import de.p2tools.mtplayer.gui.tools.Listener;
+import de.p2tools.p2Lib.guiTools.PGuiSize;
 import de.p2tools.p2Lib.tools.log.PLog;
 import de.p2tools.p2Lib.tools.log.PLogger;
 import javafx.application.Platform;
@@ -130,8 +131,7 @@ public class ProgTray {
         miLogfile.addActionListener(e -> Platform.runLater(() -> PLogger.openLogFile()));
         miTray.addActionListener(e -> Platform.runLater(() -> {
             //vor dem Ausschalten des Tray GUI anzeigen!!
-            max();
-            ProgConfig.SYSTEM_TRAY.setValue(false);
+            closeTray();
         }));
         miAbout.addActionListener(e -> Platform.runLater(() -> new AboutDialogController(progData)));
         miQuit.addActionListener(e -> Platform.runLater(() -> {
@@ -150,30 +150,40 @@ public class ProgTray {
         popup.add(miQuit);
     }
 
-    private void max() {
-        if (!progData.primaryStage.isShowing()) {
-            Platform.runLater(() -> progData.primaryStage.show());
-        }
+    private void closeTray() {
+        System.out.println("\ncloseTray()");
+        System.out.println("   max: " + progData.primaryStage.getX() + " - " + progData.primaryStage.getY());
+        System.out.println("   progData.primaryStage.isShowing(): " + progData.primaryStage.isShowing());
+        PGuiSize.showSave(progData.primaryStage);
+//        if (!progData.primaryStage.isShowing()) {
+//        }
 
         if (progData.quitDialogController != null) {
-            if (!progData.quitDialogController.isShowing()) {
-                Platform.runLater(() -> progData.quitDialogController.getStage().show());
-            }
+            PGuiSize.showSave(progData.quitDialogController.getStage());
+//            if (!progData.quitDialogController.isShowing()) {
+//            }
         }
+
+        ProgConfig.SYSTEM_TRAY.setValue(false);
     }
 
     private void maxMin() {
+        System.out.println("\nmaxMin()");
+        System.out.println("   maxMin: " + progData.primaryStage.getX() + " - " + progData.primaryStage.getY());
         if (progData.primaryStage.isShowing()) {
+            System.out.println("   close");
             Platform.runLater(() -> progData.primaryStage.close());
         } else {
-            Platform.runLater(() -> progData.primaryStage.show());
+            System.out.println("   show");
+            PGuiSize.showSave(progData.primaryStage);
+//            Platform.runLater(() -> progData.primaryStage.show());
         }
 
         if (progData.quitDialogController != null) {
             if (progData.quitDialogController.isShowing()) {
                 Platform.runLater(() -> progData.quitDialogController.getStage().close());
             } else {
-                Platform.runLater(() -> progData.quitDialogController.getStage().show());
+                PGuiSize.showSave(progData.quitDialogController.getStage());
             }
         }
     }
