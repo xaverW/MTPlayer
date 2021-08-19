@@ -87,8 +87,6 @@ public class ProgTray {
         }
     }
 
-    int count = 0;
-
     public void setTray() {
         if (!SystemTray.isSupported()) {
             return;
@@ -98,8 +96,9 @@ public class ProgTray {
         String resource = "/de/p2tools/mtplayer/res/P2_24.png";
         URL res = getClass().getResource(resource);
         Image image = Toolkit.getDefaultToolkit().getImage(res);
-        PopupMenu popup = new PopupMenu();
-        TrayIcon trayicon = new TrayIcon(image, "MTPlayer", popup);
+
+        TrayIcon trayicon = new TrayIcon(image, "MTPlayer");
+        addMenu(trayicon);
         trayicon.setImageAutoSize(true);
         trayicon.addMouseListener(new MouseAdapter() {
             @Override
@@ -115,7 +114,9 @@ public class ProgTray {
         } catch (AWTException exception) {
             PLog.errorLog(945120364, exception.getMessage());
         }
-//                --------------------------------
+    }
+
+    public void addMenu(TrayIcon trayicon) {
 //        "1 aktiver Download (76,3%; 2.304 # 3019 MB, 6,2 MB/s, 3,2 Minuten verbleibend), 2 wartende Downloads" (so als Beispiel)
 //        Die Ausgabe von "1 aktiver ..." könnte man auch als MouseOver-Funktion vom TrayIcon implementieren. Nur so als Idee.
 
@@ -139,15 +140,18 @@ public class ProgTray {
             systemTray.remove(trayicon);
         }));
 
-        popup.add(miMaxMin);
-        popup.add(miConfig);
-        popup.add(miLogfile);
-        popup.add(miTray);
+        PopupMenu popupMenu = new PopupMenu();
+        popupMenu.add(miMaxMin);
+        popupMenu.add(miConfig);
+        popupMenu.add(miLogfile);
+        popupMenu.add(miTray);
 
-        popup.addSeparator();
-        popup.add(miAbout);
-        popup.addSeparator();
-        popup.add(miQuit);
+        popupMenu.addSeparator();
+        popupMenu.add(miAbout);
+        popupMenu.addSeparator();
+        popupMenu.add(miQuit);
+
+        trayicon.setPopupMenu(popupMenu);
     }
 
     private void closeTray() {
