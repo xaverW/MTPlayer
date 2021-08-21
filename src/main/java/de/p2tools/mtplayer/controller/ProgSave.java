@@ -16,11 +16,13 @@
 
 package de.p2tools.mtplayer.controller;
 
+import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
+import de.p2tools.p2Lib.tools.ProgramTools;
 import de.p2tools.p2Lib.tools.log.PLog;
 import de.p2tools.p2Lib.tools.log.PLogger;
 import org.apache.commons.lang3.time.FastDateFormat;
@@ -47,6 +49,11 @@ public class ProgSave {
     }
 
     public void saveAll() {
+        // Configs der Programmversion, nur damit sie (zur Update-Suche) im Config-File stehen
+        ProgConfig.SYSTEM_PROG_VERSION.setValue(ProgramTools.getProgVersion());
+        ProgConfig.SYSTEM_PROG_BUILD_NO.setValue(ProgramTools.getBuild());
+        ProgConfig.SYSTEM_PROG_BUILD_DATE.setValue(ProgramTools.getCompileDate());
+
         copyConfig();
         try (IoWriteXml writer = new IoWriteXml(progData)) {
             writer.writeData();

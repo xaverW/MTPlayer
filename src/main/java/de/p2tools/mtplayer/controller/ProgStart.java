@@ -203,15 +203,15 @@ public class ProgStart {
         // Prüfen obs ein Programmupdate gibt
         PDuration.onlyPing("checkProgUpdate");
 
-        if (ProgConfig.SYSTEM_UPDATE_SEARCH_ACT.getBool() &&
-                !updateCheckTodayDone()) {
-            // nach Updates suchen
-            runUpdateCheck(progData, false);
-
-        } else if (ProgData.debug) {
+        if (ProgData.debug) {
             // damits bei jedem Start gemacht wird
             PLog.sysLog("DEBUG: Update-Check");
             runUpdateCheck(progData, true);
+
+        } else if (ProgConfig.SYSTEM_UPDATE_SEARCH_ACT.getBool() &&
+                !updateCheckTodayDone()) {
+            // nach Updates suchen
+            runUpdateCheck(progData, false);
 
         } else {
             // will der User nicht --oder-- wurde heute schon gemacht

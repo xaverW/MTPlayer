@@ -58,7 +58,7 @@ public class ProgConfig extends MLConfig {
     // ===========================================
 
 
-    // Configs der Programmversion
+    // Configs der Programmversion, nur damit sie (zur Update-Suche) im Config-File stehen
     public static MLConfigs SYSTEM_PROG_VERSION = addNewKey("system-prog-version");
     public static MLConfigs SYSTEM_PROG_BUILD_NO = addNewKey("system-prog-build-no");
     public static MLConfigs SYSTEM_PROG_BUILD_DATE = addNewKey("system-prog-build-date");
