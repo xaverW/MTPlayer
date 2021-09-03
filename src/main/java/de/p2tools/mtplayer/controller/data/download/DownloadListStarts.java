@@ -20,9 +20,11 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.starter.Start;
+import de.p2tools.p2Lib.tools.date.PLocalTimeFactory;
 import de.p2tools.p2Lib.tools.log.PLog;
 
 import java.net.URL;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -153,13 +155,13 @@ public class DownloadListStarts {
     }
 
     public synchronized Download getNextStart() {
-        // erste passende Element der Liste zurückgeben oder null
-        // und versuchen dass bei mehreren laufenden Downloads ein anderer Sender gesucht wird
+        //ersten passenden Download der Liste zurückgeben oder null
+        //und versuchen, dass bei mehreren laufenden Downloads ein anderer Sender gesucht wird
         Download ret = null;
         if (downloadList.size() > 0 && getDown(ProgConfig.DOWNLOAD_MAX_DOWNLOADS.getInt())) {
-            final Download dataDownload = nextStart();
-            if (dataDownload != null && dataDownload.isStateStartedWaiting()) {
-                ret = dataDownload;
+            final Download download = nextStart();
+            if (download != null && download.isStateStartedWaiting()) {
+                ret = download;
             }
         }
         return ret;
@@ -188,10 +190,9 @@ public class DownloadListStarts {
     private Download searchNextDownload(int maxProChannel) {
         Download tmpDownload = null;
         int nr = -1;
-
         for (Download download : downloadList) {
-
             if (download.isStateStartedWaiting() &&
+                    checkStartTime(download) &&
                     !maxChannelPlay(download, maxProChannel) &&
                     (nr == -1 || download.getNo() < nr)) {
 
@@ -201,6 +202,26 @@ public class DownloadListStarts {
         }
 
         return tmpDownload;
+    }
+
+    private boolean checkStartTime(Download download) {
+        if (download.getStartTime().isEmpty()) {
+            return true;
+        }
+
+        try {
+            LocalTime lNow = LocalTime.now();
+            LocalTime lDownload = PLocalTimeFactory.getPLocalTime(download.getStartTime());
+            if (lNow.compareTo(lDownload) >= 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception ex) {
+            PLog.errorLog(945123690, "Download-Starttime: " + download.getStartTime());
+        }
+
+        return true;
     }
 
     private boolean maxChannelPlay(Download d, int max) {

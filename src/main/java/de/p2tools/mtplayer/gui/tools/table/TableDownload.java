@@ -110,6 +110,10 @@ public class TableDownload {
         speedColumn.setCellValueFactory(new PropertyValueFactory<>("bandwidth"));
         speedColumn.getStyleClass().add("alignCenterRightPadding_25");
 
+        final TableColumn<Download, String> startTimeColumn = new TableColumn<>("Startzeit");
+        startTimeColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+        startTimeColumn.getStyleClass().add("alignCenter");
+
         final TableColumn<Download, DownloadSizeData> sizeColumn = new TableColumn<>("Größe [MB]");
         sizeColumn.setCellValueFactory(new PropertyValueFactory<>("downloadSize"));
         sizeColumn.getStyleClass().add("alignCenterRightPadding_25");
@@ -150,10 +154,10 @@ public class TableDownload {
         srcColumn.setCellValueFactory(new PropertyValueFactory<>("source"));
         srcColumn.getStyleClass().add("alignCenterLeft");
 
-        final TableColumn<Download, Boolean> placedBackColumn = new TableColumn<>("Zurückgestellt");
-        placedBackColumn.setCellValueFactory(new PropertyValueFactory<>("placedBack"));
-        placedBackColumn.setCellFactory(new PCheckBoxCell().cellFactoryBool);
-        placedBackColumn.getStyleClass().add("alignCenter");
+//        final TableColumn<Download, Boolean> placedBackColumn = new TableColumn<>("Zurückgestellt");
+//        placedBackColumn.setCellValueFactory(new PropertyValueFactory<>("placedBack"));
+//        placedBackColumn.setCellFactory(new PCheckBoxCell().cellFactoryBool);
+//        placedBackColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<Download, String> programColumn = new TableColumn<>("Programm");
         programColumn.setCellValueFactory(new PropertyValueFactory<>("program"));
@@ -186,9 +190,9 @@ public class TableDownload {
         return new TableColumn[]{
                 nrColumn, filmNrColumn,
                 aboColumn, senderColumn, themeColumn, titleColumn, startColumn,
-                progressColumn, remainingColumn, speedColumn, sizeColumn,
+                progressColumn, remainingColumn, speedColumn, startTimeColumn, sizeColumn,
                 datumColumn, timeColumn, durationColumn,
-                hdColumn, utColumn, geoColumn, artColumn, srcColumn, placedBackColumn,
+                hdColumn, utColumn, geoColumn, artColumn, srcColumn, /*placedBackColumn,*/
                 programColumn, setColumn, urlColumn, fileNameColumn, pathColumn
         };
     }

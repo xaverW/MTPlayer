@@ -40,6 +40,7 @@ public class ProgIcons {
     public final ImageView ICON_BUTTON_FILE_OPEN = GetIcon.getImageView("button-file-open.png", 16, 16);
     public final ImageView ICON_BUTTON_EXTERN_PROGRAM = GetIcon.getImageView("button-forward.png", 16, 16);
     public final ImageView ICON_BUTTON_PLAY = GetIcon.getImageView("button-play.png", 16, 16);
+    public final ImageView ICON_BUTTON_CLEAR = GetIcon.getImageView("button-clear.png", 16, 16);
 
     public final ImageView ICON_DIALOG_QUIT = GetIcon.getImageView("dialog-quit.png", 64, 64);
     public final ImageView ICON_CLEAN_16 = GetIcon.getImageView("clean_16.png", 16, 16);

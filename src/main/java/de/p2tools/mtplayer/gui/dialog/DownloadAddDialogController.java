@@ -35,6 +35,7 @@ import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.dialogs.PDirFileChooser;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
+import de.p2tools.p2Lib.guiTools.PTimePicker;
 import de.p2tools.p2Lib.tools.PStringUtils;
 import de.p2tools.p2Lib.tools.PSystemUtils;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -70,6 +71,7 @@ public class DownloadAddDialogController extends PDialogExtra {
     private final Button btnPrev = new Button("<");
     private final Button btnNext = new Button(">");
     private final Label lblSum = new Label("");
+    private final PTimePicker pTimePicker = new PTimePicker();
 
     private final CheckBox chkAll = new CheckBox("Änderungen auf alle Filme anwenden");
     private final Label lblSet = new Label("Set:");
@@ -80,14 +82,18 @@ public class DownloadAddDialogController extends PDialogExtra {
     private final Button btnOk = new Button("_Ok");
     private final Button btnCancel = new Button("_Abbrechen");
     private final TextField txtName = new TextField();
-    private final CheckBox chkStart = new CheckBox("Download sofort starten");
+    private final RadioButton rbNot = new RadioButton("noch nicht");
+    private final RadioButton rbStart = new RadioButton("sofort");
+    private final RadioButton rbTime = new RadioButton("um: ");
+    private final ToggleGroup toggleGroupStart = new ToggleGroup();
+
     private final CheckBox cbxInfo = new CheckBox("Infodatei anlegen: \"Filmname.txt\"");
     private final CheckBox cbxSubtitle = new CheckBox("Untertitel speichern: \"Filmname.xxx\"");
 
     private final RadioButton rbHd = new RadioButton("HD");
     private final RadioButton rbHigh = new RadioButton("Hoch");
     private final RadioButton rbSmall = new RadioButton("Klein");
-    private final ToggleGroup group = new ToggleGroup();
+    private final ToggleGroup toggleGroupSize = new ToggleGroup();
 
     private final Label lblFree = new Label("4M noch frei");
     private final Label lblFilm = new Label("Film:");
@@ -239,7 +245,7 @@ public class DownloadAddDialogController extends PDialogExtra {
         vBoxCont.getChildren().addAll(vBoxAllDownloads, gridPane);
 
         addOkCancelButtons(btnOk, btnCancel);
-        getHboxLeft().getChildren().add(chkStart);
+        getHboxLeft().getChildren().addAll(new Label("Download starten: "), rbNot, rbStart, rbTime, pTimePicker);
     }
 
 
@@ -397,9 +403,9 @@ public class DownloadAddDialogController extends PDialogExtra {
     }
 
     private void initResolutionButton() {
-        rbHd.setToggleGroup(group);
-        rbHigh.setToggleGroup(group);
-        rbSmall.setToggleGroup(group);
+        rbHd.setToggleGroup(toggleGroupSize);
+        rbHigh.setToggleGroup(toggleGroupSize);
+        rbSmall.setToggleGroup(toggleGroupSize);
 
         // und jetzt für den aktuellen Film das GUI setzen
         makeResolutionButtons();
@@ -411,7 +417,13 @@ public class DownloadAddDialogController extends PDialogExtra {
 
     private void initCheckBox() {
         // und jetzt noch die Listener anhängen
-        chkStart.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD.getBooleanProperty());
+        pTimePicker.setOnAction(a -> rbTime.setSelected(true));
+        rbStart.setToggleGroup(toggleGroupStart);
+        rbNot.setToggleGroup(toggleGroupStart);
+        rbTime.setToggleGroup(toggleGroupStart);
+        rbStart.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD_NOW.getBooleanProperty());
+        rbNot.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD_NOT.getBooleanProperty());
+        rbTime.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD_TIME.getBooleanProperty());
         cbxSubtitle.setOnAction(event -> downloadAddInfos[actFilmIsShown].setSubtitle(cbxSubtitle.isSelected()));
         cbxInfo.setOnAction(event -> downloadAddInfos[actFilmIsShown].setInfo(cbxInfo.isSelected()));
     }
@@ -579,12 +591,15 @@ public class DownloadAddDialogController extends PDialogExtra {
             download.setSizeDownloadFromWeb(getFilmSize(d));
             download.setInfoFile(d.info);
             download.setSubtitle(d.subtitle);
+            if (rbTime.isSelected()) {
+                download.setStartTime(pTimePicker.getTime());
+            }
 
             list.add(download);
         }
 
         progData.downloadList.addWithNr(list);
-        if (chkStart.isSelected()) {
+        if (rbStart.isSelected() || rbTime.isSelected()) {
             // und evtl. auch gleich starten
             progData.downloadList.startDownloads(list);
         }

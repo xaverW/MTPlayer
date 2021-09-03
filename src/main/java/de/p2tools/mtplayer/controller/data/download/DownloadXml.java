@@ -69,7 +69,8 @@ public class DownloadXml extends Data<Download> {
     public static final int DOWNLOAD_SPOTLIGHT = 36;
     public static final int DOWNLOAD_SUBTITLE = 37;
     public static final int DOWNLOAD_PROGRAM_DOWNLOADMANAGER = 38;
-    public static final int DOWNLOAD_REF = 39;
+    public static final int DOWNLOAD_START_TIME = 39;
+    public static final int DOWNLOAD_REF = 40;
     public static final String[] COLUMN_NAMES = {"Nr",
             "Filmnr",
             "Abo",
@@ -109,6 +110,7 @@ public class DownloadXml extends Data<Download> {
             "Spotlight",
             "Untertitel",
             "Remote Download",
+            "Startzeit",
             "Ref"};
     public static final String[] XML_NAMES = {"Nr",
             "Filmnr",
@@ -152,6 +154,7 @@ public class DownloadXml extends Data<Download> {
             "Spotlight",
             "Untertitel",
             "Remote-Download",
+            "Startzeit",
             "Ref"};
     public static final String TAG = "Downlad";
     public static int MAX_ELEM = XML_NAMES.length;

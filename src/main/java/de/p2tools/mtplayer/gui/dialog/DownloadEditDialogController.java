@@ -37,12 +37,14 @@ import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
+import de.p2tools.p2Lib.guiTools.PTimePicker;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.Clipboard;
@@ -87,6 +89,8 @@ public class DownloadEditDialogController extends PDialogExtra {
     private String fileSize_high = "";
     private String fileSize_small = "";
     private String resolution = Film.RESOLUTION_NORMAL;
+    private final PTimePicker pTimePicker = new PTimePicker();
+    private final CheckBox chkStartTime = new CheckBox();
 
     private final Download download;
     private final boolean isStarted;
@@ -482,6 +486,38 @@ public class DownloadEditDialogController extends PDialogExtra {
         return row;
     }
 
+    private int initStartTime(int row) {
+        HBox hBox = new HBox(10);
+        hBox.setAlignment(Pos.CENTER_LEFT);
+
+        txt[DownloadXml.DOWNLOAD_START_TIME].setEditable(!isStarted);
+        pTimePicker.setDisable(isStarted);
+        chkStartTime.setDisable(isStarted);
+
+        chkStartTime.setSelected(!download.getStartTime().isEmpty());
+        chkStartTime.setOnAction(a -> {
+            if (chkStartTime.isSelected()) {
+                download.setStartTime(pTimePicker.getTime());
+            } else {
+                download.setStartTime("");
+            }
+        });
+
+        pTimePicker.setTime(download.getStartTime());
+        pTimePicker.setOnAction(a -> {
+            download.setStartTime(pTimePicker.getTime());
+        });
+
+        pTimePicker.disableProperty().bind(chkStartTime.selectedProperty().not());
+
+        hBox.getChildren().addAll(chkStartTime, pTimePicker);
+        gridPane.add(text[DownloadXml.DOWNLOAD_START_TIME], 0, row);
+        gridPane.add(hBox, 1, row, 3, 1);
+        ++row;
+
+        return row;
+    }
+
 
     private void getMenu(Label lbl, ContextMenuEvent event) {
         if (lbl.getText().isEmpty()) {
@@ -668,6 +704,7 @@ public class DownloadEditDialogController extends PDialogExtra {
         row = initProgramArray(row);
         row = initName(row);
         row = initPath(row);
+        row = initStartTime(row);
 
         for (int i = 0; i < DownloadXml.MAX_ELEM; ++i) {
             if (txt[i].isEditable() || !cbx[i].isDisabled()) {

@@ -307,7 +307,7 @@ public class StarterClass {
 
     // ********************************************
     // Hier wird dann gestartet
-    // Ewige Schleife die die Downloads startet
+    // ewige Schleife die die Downloads startet
     // ********************************************
     private class StarterThread extends Thread {
 
@@ -384,11 +384,11 @@ public class StarterClass {
         }
 
         private synchronized Download getNextStart() throws InterruptedException {
-            // erstes passende Element der Liste zurückgeben oder null
-            // und versuchen dass bei mehreren laufenden Downloads ein anderer Sender gesucht wird
+            //ersten passenden Download der Liste zurückgeben oder null und versuchen,
+            //dass bei mehreren laufenden Downloads ein anderer Sender gesucht wird
             if (paused) {
-                // beim Löschen der Downloads, kann das Starten etwas "pausiert" werden
-                // damit ein zu Löschender Download nicht noch schnell gestartet wird
+                //beim Löschen der Downloads kann das Starten etwas "pausiert" werden
+                //damit ein zu löschender Download nicht noch schnell gestartet wird
                 sleep(5 * 1000);
                 paused = false;
             }

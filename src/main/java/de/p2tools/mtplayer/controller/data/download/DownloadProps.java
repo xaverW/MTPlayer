@@ -60,6 +60,7 @@ public class DownloadProps extends DownloadXml {
     private final StringProperty programCallArray = new SimpleStringProperty("");
     private final BooleanProperty programRestart = new SimpleBooleanProperty(false);
     private final BooleanProperty programDownloadmanager = new SimpleBooleanProperty(false);
+    private final StringProperty startTime = new SimpleStringProperty("");
 
     private final StringProperty destFileName = new SimpleStringProperty("");
     private final StringProperty destPath = new SimpleStringProperty("");
@@ -75,7 +76,7 @@ public class DownloadProps extends DownloadXml {
             state, progress, remaining, bandwidth, downloadSize,
             filmDate, time, durationMinute,
             hd, ut, geoBlocked, filmUrl, historyUrl, url, urlRtmp, urlSubtitle,
-            setDataId, program, programCall, programCallArray, programRestart, programDownloadmanager,
+            setDataId, program, programCall, programCallArray, programRestart, programDownloadmanager, startTime,
             destFileName, destPath, destPathFile,
             type, source, placedBack, infoFile, subtitle};
 
@@ -210,7 +211,7 @@ public class DownloadProps extends DownloadXml {
         return progress;
     }
 
-    public void setProgress(Double progress) {
+    public void setProgress(double progress) {
         this.progress.setValue(progress);
         Platform.runLater(() -> guiProgress.setValue(progress));
     }
@@ -444,6 +445,18 @@ public class DownloadProps extends DownloadXml {
         this.programDownloadmanager.set(programDownloadmanager);
     }
 
+    public String getStartTime() {
+        return startTime.get();
+    }
+
+    public StringProperty startTimeProperty() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime.set(startTime);
+    }
+
     public String getDestFileName() {
         return destFileName.get();
     }
@@ -573,6 +586,7 @@ public class DownloadProps extends DownloadXml {
         setDestFileName(arr[DOWNLOAD_DEST_FILE_NAME]);
         setDestPath(arr[DOWNLOAD_DEST_PATH]);
         setDestPathFile(arr[DOWNLOAD_DEST_PATH_FILE_NAME]);
+        setStartTime(arr[DOWNLOAD_START_TIME]);
 
         setType(arr[DOWNLOAD_TYPE]);
         if (!arr[DOWNLOAD_SOURCE].equals(DownloadConstants.SRC_ABO)) {
@@ -585,8 +599,7 @@ public class DownloadProps extends DownloadXml {
         setSubtitle(Boolean.parseBoolean(arr[DOWNLOAD_SUBTITLE]));
         setProgramDownloadmanager(Boolean.parseBoolean(arr[DOWNLOAD_PROGRAM_DOWNLOADMANAGER]));
     }
-
-
+    
     public void setXmlFromProps() {
         arr[DOWNLOAD_ABO] = getAboName();
         arr[DOWNLOAD_SENDER] = getChannel();
@@ -610,6 +623,7 @@ public class DownloadProps extends DownloadXml {
         arr[DOWNLOAD_DEST_FILE_NAME] = getDestFileName();
         arr[DOWNLOAD_DEST_PATH] = getDestPath();
         arr[DOWNLOAD_DEST_PATH_FILE_NAME] = getDestPathFile();
+        arr[DOWNLOAD_START_TIME] = getStartTime();
         arr[DOWNLOAD_TYPE] = getType();
         arr[DOWNLOAD_SOURCE] = getSource();
         arr[DOWNLOAD_PLACED_BACK] = String.valueOf(getPlacedBack());
@@ -617,7 +631,6 @@ public class DownloadProps extends DownloadXml {
         arr[DOWNLOAD_SUBTITLE] = String.valueOf(isSubtitle());
         arr[DOWNLOAD_PROGRAM_DOWNLOADMANAGER] = String.valueOf(getProgramDownloadmanager());
     }
-
 
     public int compareTo(DownloadProps arg0) {
         return Data.sorter.compare(getChannel(), arg0.getChannel());

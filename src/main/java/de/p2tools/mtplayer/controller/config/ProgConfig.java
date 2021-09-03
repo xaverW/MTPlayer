@@ -184,7 +184,9 @@ public class ProgConfig extends MLConfig {
 
     // Gui Download
     public static MLConfigs DOWNLOAD_DIALOG_PATH_SAVING = addNewKey("download-dialog-path-saving"); // gesammelten Downloadpfade im Downloaddialog
-    public static MLConfigs DOWNLOAD_DIALOG_START_DOWNLOAD = addNewKey("download-dialog-start-download", Boolean.TRUE.toString());
+    public static MLConfigs DOWNLOAD_DIALOG_START_DOWNLOAD_NOW = addNewKey("download-dialog-start-download-now", Boolean.TRUE.toString());
+    public static MLConfigs DOWNLOAD_DIALOG_START_DOWNLOAD_NOT = addNewKey("download-dialog-start-download-not", Boolean.FALSE.toString());
+    public static MLConfigs DOWNLOAD_DIALOG_START_DOWNLOAD_TIME = addNewKey("download-dialog-start-download-time", Boolean.FALSE.toString());
     public static MLConfigs DOWNLOAD_DIALOG_EDIT_SIZE = addNewKey("download-dialog-edit-size", "800:800");
     public static MLConfigs DOWNLOAD_DIALOG_ADD_SIZE = addNewKey("download-dialog-add-size");
     public static MLConfigs DOWNLOAD_DIALOG_ADD_MORE_SIZE = addNewKey("download-dialog-add-more-size");
