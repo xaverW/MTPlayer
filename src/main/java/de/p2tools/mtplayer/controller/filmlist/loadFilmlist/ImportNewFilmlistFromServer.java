@@ -31,6 +31,7 @@ public class ImportNewFilmlistFromServer {
     private final EventListenerList eventListenerList;
     private final ReadFilmlist readFilmlist;
     private final ProgData progData;
+    private final int REDUCED_BANDWIDTH = 55;//ist ein Wert, der nicht eingestellt werden kann
     private int savedBandwidth = ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getInt();
 
     public ImportNewFilmlistFromServer(ProgData progData) {
@@ -41,11 +42,15 @@ public class ImportNewFilmlistFromServer {
             @Override
             public synchronized void start(ListenerFilmlistLoadEvent event) {
                 // save download bandwidth
-                savedBandwidth = ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getInt();
-                PLog.sysLog("Bandbreite zurücksetzen für das Laden der Filmliste von: " + savedBandwidth + " auf 50");
-                Platform.runLater(() -> {
-                    ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.setValue(50);
-                });
+                if (ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getInt() == REDUCED_BANDWIDTH) {
+                    PLog.errorLog(845120697, "Bandbreite reduzieren: Ist schon reduziert!!!!");
+                } else {
+                    savedBandwidth = ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getInt();
+                    PLog.sysLog("Bandbreite zurücksetzen für das Laden der Filmliste von: " + savedBandwidth + " auf " + REDUCED_BANDWIDTH);
+                    Platform.runLater(() -> {
+                        ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.setValue(REDUCED_BANDWIDTH);
+                    });
+                }
 
                 for (final ListenerLoadFilmlist l : eventListenerList.getListeners(ListenerLoadFilmlist.class)) {
                     l.start(event);
@@ -56,7 +61,6 @@ public class ImportNewFilmlistFromServer {
             public synchronized void progress(ListenerFilmlistLoadEvent event) {
                 for (final ListenerLoadFilmlist l : eventListenerList.getListeners(ListenerLoadFilmlist.class)) {
                     l.progress(event);
-
                 }
             }
 
@@ -134,12 +138,10 @@ public class ImportNewFilmlistFromServer {
             String updateUrl;
             final int maxRetries = (state == STATE.DIFF ? 2 : 3); // 3x (bei diff nur 2x) probieren, eine Liste zu laden
 
-
             updateUrl = getUpdateUrl(state, usedUrls);
             if (updateUrl.isEmpty()) {
                 return false;
             }
-
 
             for (int i = 0; i < maxRetries; ++i) {
                 ret = loadFileUrl(updateUrl, list);
@@ -162,7 +164,6 @@ public class ImportNewFilmlistFromServer {
                 // dann hat das Laden schon mal nicht geklappt
                 SearchFilmListUrls.setUpdateFilmlistUrls(); // für die DownloadURLs "aktualisieren" setzen
                 updateUrl = getUpdateUrl(state, usedUrls);
-
             }
 
             return ret;
