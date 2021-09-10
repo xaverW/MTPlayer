@@ -104,11 +104,17 @@ public class HelpText {
             "Die Menüs, Textfelder und Schieberegler erlauben ein detailliertes " +
                     "Durchsuchen und Filtern der vorhandenen Filme.\n" +
                     "\n" +
+                    "\n" +
                     "Im Bereich darunter können ganze Such-/Filtereinstellungen als Profile " +
                     "angelegt und verwaltet werden.\n" +
                     "\n" +
-                    "Die Blacklist (anzulegen unter Einstellungen > Blacklist) kann für die " +
+                    "\n" +
+                    "Die Blacklist (anlegen unter Einstellungen > Blacklist) kann für die " +
                     "Anzeige aktiviert bzw. deaktiviert werden.\n" +
+                    "  - Blacklist aus: Alle Filme werden angezeigt.\n" +
+                    "  - Blacklist ein: Von der Blacklist erfasste Filme werden nicht angezeigt.\n" +
+                    "  - Blacklist invers: Nur von der Blacklist erfasste Filme werden angezeigt.\n" +
+                    "\n" +
                     "\n" +
                     "Der Einstellungs-Button (das Zahnrad) öffnet einen Dialog in dem die einzelnen " +
                     "Filter ein- oder ausgeschaltet werden können.\n" +

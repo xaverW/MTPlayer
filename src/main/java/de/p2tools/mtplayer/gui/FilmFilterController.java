@@ -62,19 +62,15 @@ public class FilmFilterController extends FilterController {
 
         Label lblRight = new Label();
         tglBlacklist.setAllowIndeterminate(true);
-        tglBlacklist.setLabelRight(lblRight, "ein", "aus", "nur");
-        tglBlacklist.setTooltip(new Tooltip("Blacklist ein- ausschalten oder nur Filme aus der Blacklist anzeigen"));
+        tglBlacklist.setLabelRight(lblRight, "ein", "aus", "invers");
+//        tglBlacklist.setTooltip(new Tooltip("Blacklist ein- ausschalten oder nur Filme aus der Blacklist anzeigen"));
+        tglBlacklist.setTooltip(new Tooltip("Blacklist aus: Alle Filme werden angezeigt.\n" +
+                "Blacklist ein: Von der Blacklist erfasste Filme werden nicht angezeigt.\n" +
+                "Blacklist invers: Nur von der Blacklist erfasste Filme werden angezeigt."));
+
+
         tglBlacklist.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().blacklistOnProperty());
         tglBlacklist.indeterminateProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().blacklistOnlyProperty());
-
-
-//        tglBlacklist.indeterminateProperty().addListener((v, o, n) -> {
-//            System.out.println("interminate: " + "" + tglBlacklist.isIndeterminate() + " selected: " + tglBlacklist.isSelected());
-//        });
-//        tglBlacklist.selectedProperty().addListener((v, o, n) -> {
-//            System.out.println("interminate: " + "" + tglBlacklist.isIndeterminate() + " selected: " + tglBlacklist.isSelected());
-//        });
-
 
         vBoxBlacklist = getVBoxBotton();
         HBox hBox = new HBox(5);
