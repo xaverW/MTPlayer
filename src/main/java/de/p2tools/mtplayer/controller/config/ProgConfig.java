@@ -139,6 +139,9 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs SYSTEM_DARK_THEME = addNewKey("system-dark-theme", Boolean.FALSE.toString());
     public static MLConfigs SYSTEM_THEME_CHANGED = addNewKey("system-theme-changed");
     public static MLConfigs SYSTEM_SSL_ALWAYS_TRUE = addNewKey("system-ssl-always-true");
+    public static MLConfigs TOOLTIPS_DONT_SHOW = addNewKey("tool-tips-dont-show");
+    public static MLConfigs TOOLTIPS_SHOWN = addNewKey("tool-tips-shown");
+
 
     // Fenstereinstellungen
     public static MLConfigs SYSTEM_SIZE_GUI = addNewKey("system-size-gui", "1000:900");

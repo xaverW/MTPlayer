@@ -62,6 +62,7 @@ public class ProgStart {
                     doneAtProgramstart = true;
                     MediaDataWorker.createMediaDb();
                     checkProgUpdate(progData);
+                    new ProgToolTips().showDialog(progData, false);
                 }
             }
         });

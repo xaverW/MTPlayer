@@ -43,7 +43,7 @@ public class ImportNewFilmlistFromServer {
             public synchronized void start(ListenerFilmlistLoadEvent event) {
                 // save download bandwidth
                 if (ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getInt() == REDUCED_BANDWIDTH) {
-                    PLog.errorLog(845120697, "Bandbreite reduzieren: Ist schon reduziert!!!!");
+                    PLog.sysLog("Bandbreite reduzieren: Ist schon reduziert!!!!");
                 } else {
                     savedBandwidth = ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getInt();
                     PLog.sysLog("Bandbreite zurücksetzen für das Laden der Filmliste von: " + savedBandwidth + " auf " + REDUCED_BANDWIDTH);

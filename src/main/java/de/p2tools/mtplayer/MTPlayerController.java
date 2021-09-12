@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.ProgSave;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.config.ProgToolTips;
 import de.p2tools.mtplayer.controller.data.MTShortcut;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
@@ -206,8 +207,11 @@ public class MTPlayerController extends StackPane {
         final MenuItem miReset = new MenuItem("Einstellungen zurücksetzen");
         miReset.setOnAction(event -> new ResetDialogController(progData));
 
+        final MenuItem miToolTip = new MenuItem("ToolTips");
+        miToolTip.setOnAction(a -> new ProgToolTips().showDialog(progData, true));
+
         final Menu mHelp = new Menu("Hilfe");
-        mHelp.getItems().addAll(miUrlHelp, miLog, miReset, new SeparatorMenuItem(), miAbout);
+        mHelp.getItems().addAll(miUrlHelp, miLog, miReset, miToolTip, new SeparatorMenuItem(), miAbout);
 
         final MenuItem mbExternProgram = new MenuItem("Externes Programm starten");
         mbExternProgram.setVisible(false); //vorerst mal noch nicht anzeigen???
