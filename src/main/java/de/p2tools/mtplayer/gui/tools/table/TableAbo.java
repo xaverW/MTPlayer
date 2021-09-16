@@ -102,6 +102,10 @@ public class TableAbo {
         maxColumn.setCellValueFactory(new PropertyValueFactory<>("maxDurationMinute"));
         maxColumn.getStyleClass().add("alignCenter");
 
+        final TableColumn<Abo, String> startTimeColumn = new TableColumn<>("Startzeit");
+        startTimeColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+        startTimeColumn.getStyleClass().add("alignCenter");
+
         final TableColumn<Abo, String> destinationColumn = new TableColumn<>("Ziel");
         destinationColumn.setCellValueFactory(new PropertyValueFactory<>("aboSubDir"));
         destinationColumn.getStyleClass().add("alignCenterLeft");
@@ -117,7 +121,7 @@ public class TableAbo {
         return new TableColumn[]{
                 nrColumn, activColumn, hitColumn, nameColumn, /*descriptionColumn,*/ resColumn, senderColumn,
                 themeColumn, themeExactColumn, themeTitleColumn, titleColumn,
-                somewhereColumn, timeRange, minColumn, maxColumn, destinationColumn, datumColumn, psetColumn};
+                somewhereColumn, timeRange, minColumn, maxColumn, startTimeColumn, destinationColumn, datumColumn, psetColumn};
 
     }
 

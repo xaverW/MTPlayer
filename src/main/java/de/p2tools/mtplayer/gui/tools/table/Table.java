@@ -18,7 +18,6 @@ package de.p2tools.mtplayer.gui.tools.table;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.abo.Abo;
 import de.p2tools.mtplayer.tools.Data;
 import de.p2tools.mtplayer.tools.MLConfigs;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -374,7 +373,7 @@ public class Table {
         for (int i = 0; i < maxSpalten; ++i) {
             visArray[i] = Boolean.TRUE.toString();
         }
-        visArray[Abo.ABO_SET_DATA_ID] = Boolean.FALSE.toString();
+//        visArray[Abo.ABO_SET_DATA_ID] = Boolean.FALSE.toString();
 
         for (int i = 0; i < maxSpalten; ++i) {
             set += visArray[i] + ",";
