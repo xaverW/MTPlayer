@@ -17,9 +17,7 @@
 
 package de.p2tools.mtplayer.controller.config;
 
-import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.p2Lib.P2LibConst;
-import de.p2tools.p2Lib.guiTools.PHyperlink;
 import de.p2tools.p2Lib.guiTools.pToolTip.PToolTip;
 import de.p2tools.p2Lib.guiTools.pToolTip.PToolTipDialog;
 import de.p2tools.p2Lib.guiTools.pToolTip.PToolTipFactory;
@@ -227,13 +225,11 @@ public class ProgToolTips {
 
         ++listSize;
         text = START;
-        PHyperlink hyperlinkWeb = new PHyperlink(ProgConst.URL_WEBSITE_P2TOOLS,
-                ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
         text += "Weiter Infos finden sich auch\n" +
                 "auf der Website. Ideen zu\n" +
                 "den Tips gerne auch per Mail.\n\n";
         image = "/de/p2tools/mtplayer/res/toolTips/Frage.png";
-        pToolTip = new PToolTip(text, image, hyperlinkWeb);
+        pToolTip = new PToolTip(text, image, ProgConst.URL_WEBSITE_P2TOOLS, ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty());
         pToolTipList.add(pToolTip);
     }
 }
