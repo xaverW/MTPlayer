@@ -33,6 +33,7 @@ import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.PTextAreaIgnoreTab;
+import de.p2tools.p2Lib.guiTools.PTimePicker;
 import de.p2tools.p2Lib.guiTools.pRange.PRangeBox;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -73,6 +74,8 @@ public class AboEditDialogController extends PDialogExtra {
     private final TextArea textArea = new PTextAreaIgnoreTab(false, true);
     private final MenuButton mbChannel = new MenuButton("");
     private final ArrayList<CheckMenuItem> checkMenuItemsList = new ArrayList<>();
+    private final PTimePicker pTimePicker = new PTimePicker();
+    private final CheckBox chkStartTime = new CheckBox();
 
     private boolean addNewAbo;
     private BooleanProperty okProp = new SimpleBooleanProperty(true);
@@ -258,8 +261,8 @@ public class AboEditDialogController extends PDialogExtra {
 
         for (int i = 0; i < AboXml.MAX_ELEM; ++i) {
             initControl(i);
-            addLabel(i, i + 1);
-            addTextField(i, i + 1);
+            addLabel(i);
+            addTextField(i);
 
             if (aboList.size() > 1) {
                 // nur dann brauchts das
@@ -317,7 +320,17 @@ public class AboEditDialogController extends PDialogExtra {
         GridPane.setHalignment(cbxEditAll[i], HPos.CENTER);
     }
 
-    private void addLabel(int i, int grid) {
+    private int getGridLine(int i) {
+        if (i >= AboXml.ABO_MAX_DURATION) {
+            //gibts nicht
+            return --i;
+        } else {
+            return i;
+        }
+    }
+
+    private void addLabel(int i) {
+        final int grid = getGridLine(i);
         switch (i) {
             case AboXml.ABO_THEME_EXACT:
                 lbl[i].setText("  exakt:");
@@ -335,7 +348,8 @@ public class AboEditDialogController extends PDialogExtra {
         }
     }
 
-    private void addTextField(int i, int grid) {
+    private void addTextField(int i) {
+        final int grid = getGridLine(i);
         switch (i) {
             case AboXml.ABO_DESCRIPTION:
                 textArea.textProperty().bindBidirectional(aboCopy.properties[i]);
@@ -373,6 +387,7 @@ public class AboEditDialogController extends PDialogExtra {
                 h.getChildren().add(btnHelpRes);
 
                 HBox hAufloeung = new HBox(10);
+                hAufloeung.setAlignment(Pos.CENTER_LEFT);
                 hAufloeung.getChildren().addAll(rbHd, rbHigh, rbLow, h);
                 this.gridPane.add(hAufloeung, 1, grid);
                 break;
@@ -497,6 +512,28 @@ public class AboEditDialogController extends PDialogExtra {
                 this.gridPane.add(pRangeBoxTime, 1, grid);
                 break;
             case AboXml.ABO_MAX_DURATION:
+                break;
+            case AboXml.ABO_START_TIME:
+                hBox = new HBox(10);
+                hBox.setAlignment(Pos.CENTER_LEFT);
+
+                chkStartTime.setSelected(!aboCopy.getStartTime().isEmpty());
+                chkStartTime.setOnAction(a -> {
+                    if (chkStartTime.isSelected()) {
+                        aboCopy.setStartTime(pTimePicker.getTime());
+                    } else {
+                        aboCopy.setStartTime("");
+                    }
+                });
+
+                pTimePicker.setTime(aboCopy.getStartTime());
+                pTimePicker.setOnAction(a -> {
+                    aboCopy.setStartTime(pTimePicker.getTime());
+                });
+                pTimePicker.disableProperty().bind(chkStartTime.selectedProperty().not());
+
+                hBox.getChildren().addAll(chkStartTime, pTimePicker);
+                gridPane.add(hBox, 1, grid);
                 break;
             case AboXml.ABO_THEME:
             case AboXml.ABO_THEME_TITLE:

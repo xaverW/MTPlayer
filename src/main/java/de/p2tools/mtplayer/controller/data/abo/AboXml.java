@@ -34,9 +34,10 @@ public class AboXml extends Data<AboXml> {
     public static final int ABO_TIME_RANGE = 11;
     public static final int ABO_MIN_DURATION = 12;
     public static final int ABO_MAX_DURATION = 13;
-    public static final int ABO_DEST_PATH = 14;
-    public static final int ABO_DOWN_DATE = 15;
-    public static final int ABO_SET_DATA_ID = 16;
+    public static final int ABO_START_TIME = 14;
+    public static final int ABO_DEST_PATH = 15;
+    public static final int ABO_DOWN_DATE = 16;
+    public static final int ABO_SET_DATA_ID = 17;
 
     public static final String[] COLUMN_NAMES = {"Nr",
             "aktiv",
@@ -52,6 +53,7 @@ public class AboXml extends Data<AboXml> {
             "Zeitraum",
             "min. Dauer",
             "max. Dauer",
+            "Startzeit",
             "Zielpfad",
             "letztes Abo",
             "Programmset"};
@@ -70,6 +72,7 @@ public class AboXml extends Data<AboXml> {
             "Zeitraum",
             "Mindestdauer",
             "Maxdauer",
+            "Startzeit",
             "Zielpfad",
             "letztes_Abo",
             "Programmset"};

@@ -41,6 +41,7 @@ public class AboProps extends AboXml {
     private final IntegerProperty timeRange = new SimpleIntegerProperty(FilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
     private final IntegerProperty minDurationMinute = new SimpleIntegerProperty(FilmFilter.FILTER_DURATION_MIN_MINUTE); // Minuten
     private final IntegerProperty maxDurationMinute = new SimpleIntegerProperty(FilmFilter.FILTER_DURATION_MAX_MINUTE); //Minuten
+    private final StringProperty startTime = new SimpleStringProperty("");
     private final StringProperty aboSubDir = new SimpleStringProperty("");
     private final ObjectProperty<PDate> date = new SimpleObjectProperty<>(new PDate(0));
     private final StringProperty setDataId = new SimpleStringProperty("");
@@ -52,7 +53,7 @@ public class AboProps extends AboXml {
 
     public final Property[] properties = {nr, active, name, description, resolution,
             channel, theme, themeExact, themeTitle, title, somewhere,
-            timeRange, minDurationMinute, maxDurationMinute, aboSubDir, date, setDataId};
+            timeRange, minDurationMinute, maxDurationMinute, startTime, aboSubDir, date, setDataId};
 
     public String getStringOf(int i) {
         return String.valueOf(properties[i].getValue());
@@ -250,6 +251,18 @@ public class AboProps extends AboXml {
         this.maxDurationMinute.set(maxDurationMinute);
     }
 
+    public String getStartTime() {
+        return startTime.get();
+    }
+
+    public StringProperty startTimeProperty() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime.set(startTime);
+    }
+
     public String getAboSubDir() {
         return aboSubDir.get();
     }
@@ -331,6 +344,7 @@ public class AboProps extends AboXml {
         setTimeRangeFromXml();
         setDurationMinFromXml();
         setDurationMaxFromXml();
+        setStartTime(arr[ABO_START_TIME]);
 
         setAboSubDir(arr[ABO_DEST_PATH]);
         setDatum(arr[ABO_DOWN_DATE], "");
@@ -367,6 +381,7 @@ public class AboProps extends AboXml {
         } else {
             arr[ABO_MAX_DURATION] = String.valueOf(getMaxDurationMinute());
         }
+        arr[ABO_START_TIME] = getStartTime();
 
         arr[ABO_DEST_PATH] = getAboSubDir();
         arr[ABO_DOWN_DATE] = getDate().toString();

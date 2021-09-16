@@ -59,6 +59,10 @@ public final class Download extends DownloadProps {
         setAbo(abo);
         setSource(source);
 
+        if (abo != null && !abo.getStartTime().isEmpty()) {
+            setStartTime(abo.getStartTime());
+        }
+
         if (resolution.isEmpty()) {
             setUrl(film.getUrlForResolution(abo != null ? abo.getResolution() : setData.getResolution()));
             setUrlRtmp(film.getUrlFlvstreamerForResolution(abo != null ? abo.getResolution() : setData.getResolution()));
