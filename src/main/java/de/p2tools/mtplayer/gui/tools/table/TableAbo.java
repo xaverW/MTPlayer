@@ -53,10 +53,6 @@ public class TableAbo {
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         nameColumn.getStyleClass().add("alignCenterLeft");
 
-//        final TableColumn<Abo, String> descriptionColumn = new TableColumn<>("Beschreibung");
-//        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-//        descriptionColumn.getStyleClass().add("alignCenterLeft");
-
         final TableColumn<Abo, String> resColumn = new TableColumn<>("Auflösung");
         resColumn.setCellValueFactory(new PropertyValueFactory<>("resolution"));
         resColumn.getStyleClass().add("alignCenterLeft");
@@ -72,7 +68,6 @@ public class TableAbo {
         final TableColumn<Abo, Boolean> themeExactColumn = new TableColumn<>("Thema exakt");
         themeExactColumn.setCellValueFactory(new PropertyValueFactory<>("themeExact"));
         themeExactColumn.setCellFactory(new PCheckBoxCell().cellFactoryBool);
-//        themeExactColumn.setCellFactory(CheckBoxTableCell.forTableColumn(themeExactColumn));
         themeExactColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<Abo, String> themeTitleColumn = new TableColumn<>("Thema-Titel");
@@ -115,11 +110,11 @@ public class TableAbo {
         datumColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<Abo, String> psetColumn = new TableColumn<>("Programmset");
-        psetColumn.setCellValueFactory(new PropertyValueFactory<>("setData"));
+        psetColumn.setCellValueFactory(new PropertyValueFactory<>("setData"));//liefert den Namen: toString()
         psetColumn.getStyleClass().add("alignCenterLeft");
 
         return new TableColumn[]{
-                nrColumn, activColumn, hitColumn, nameColumn, /*descriptionColumn,*/ resColumn, senderColumn,
+                nrColumn, activColumn, hitColumn, nameColumn, resColumn, senderColumn,
                 themeColumn, themeExactColumn, themeTitleColumn, titleColumn,
                 somewhereColumn, timeRange, minColumn, maxColumn, startTimeColumn, destinationColumn, datumColumn, psetColumn};
 
