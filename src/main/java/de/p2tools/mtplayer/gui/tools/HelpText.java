@@ -251,6 +251,7 @@ public class HelpText {
                     "Wenn die gewünschte Auflösung nicht verfügbar ist wird " +
                     "automatisch die hohe Auflösung heruntergeladen.";
 
+
     public static final String ABO_SUBDIR =
             "Downloads aus Abos werden in einem Abo-eigenen Unterordner gespeichert, " +
                     "wenn \"bei Abos Unterordner anlegen\" im ausgewählten Programmset eingeschaltet ist. " +
@@ -285,6 +286,7 @@ public class HelpText {
                     "Beispiel:\n" +
                     "Am 10.05.2021 liefert '%H__%t__%T' z.B. '20210510__Natur__Wildes Shetland'.";
 
+
     public static final String SETDATA_ABO_SUBDIR =
             "Downloads aus Abos werden in einem Abo-eigenen Unterordner gespeichert, " +
                     "wenn hier \"bei Abos Unterordner anlegen\" eingeschaltet ist. " +
@@ -293,6 +295,12 @@ public class HelpText {
                     "Diese Einstellung wird überschrieben, wenn im Abo ein eigener " +
                     "Abozielpfad angegeben ist. Der Download wird dann immer in einem " +
                     "Unterordner mit dem im Abozielpfad angegebenen Namen gespeichert.";
+
+    public static final String ABO_START_TIME =
+            "Die Startzeit legt fest, ab wann ein Download aus diesem Abo gestartet wird.\n\n" +
+                    "Der Download muss ganz normal wie andere Downloads aus Abos behandelt, also auch " +
+                    "gestartet werden. Das Programm beginnt aber erst ab der vorgegebenen Startzeit " +
+                    "mit dem Laden des Downloads.";
 
     public static final String SETDATA_RESET_COLOR =
             "Wenn das Set in der Ansicht \"Filme\" als Button gestartet werden " +

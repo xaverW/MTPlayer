@@ -532,7 +532,15 @@ public class AboEditDialogController extends PDialogExtra {
                 });
                 pTimePicker.disableProperty().bind(chkStartTime.selectedProperty().not());
 
-                hBox.getChildren().addAll(chkStartTime, pTimePicker);
+                final Button btnHelpStartTime = PButton.helpButton(getStage(), "Startzeit",
+                        HelpText.ABO_START_TIME);
+
+                HBox hb = new HBox();
+                hb.setAlignment(Pos.CENTER_RIGHT);
+                HBox.setHgrow(hb, Priority.ALWAYS);
+                hb.getChildren().add(btnHelpStartTime);
+
+                hBox.getChildren().addAll(chkStartTime, pTimePicker, hb);
                 gridPane.add(hBox, 1, grid);
                 break;
             case AboXml.ABO_THEME:
