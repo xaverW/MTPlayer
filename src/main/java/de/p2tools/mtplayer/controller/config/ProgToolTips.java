@@ -125,6 +125,19 @@ public class ProgToolTips {
         pToolTipList.add(pToolTip);
 
         ++listSize;
+        text = START;
+        text += "Weiter Infos finden sich auch\n" +
+                "auf der Website. Dort gibt es\n" +
+                "auch eine Anleitung zum\n" +
+                "Programm.\n\n" +
+                "Fragen zum Programm und\n" +
+                "Ideen zu den Tips gerne\n" +
+                "auch per Mail.\n\n";
+        image = "/de/p2tools/mtplayer/res/toolTips/Frage.png";
+        pToolTip = new PToolTip(text, image, ProgConst.URL_WEBSITE_P2TOOLS, ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty());
+        pToolTipList.add(pToolTip);
+
+        ++listSize;
         text = START + "";
         text += "In den Einstellungen des Abos\n" +
                 "kann auch die maximale Zeit,\n" +
@@ -139,9 +152,10 @@ public class ProgToolTips {
 
         ++listSize;
         text = START + "";
-        text += "In den Abos kann auch die\n" +
-                "Filmlänge eines Films\n" +
-                "(min, max) vorgegeben werden.\n\n" +
+        text += "In den Einstellungen des Abos\n" +
+                "kann auch die Filmlänge\n" +
+                "eines Films (min, max)\n" +
+                "vorgegeben werden.\n\n" +
                 "Es werden dann nur Filme\n" +
                 "gefunden, deren Dauer zu\n" +
                 "den Vorgaben passt.";
@@ -225,11 +239,13 @@ public class ProgToolTips {
 
         ++listSize;
         text = START;
-        text += "Weiter Infos finden sich auch\n" +
-                "auf der Website. Ideen zu\n" +
-                "den Tips gerne auch per Mail.\n\n";
-        image = "/de/p2tools/mtplayer/res/toolTips/Frage.png";
-        pToolTip = new PToolTip(text, image, ProgConst.URL_WEBSITE_P2TOOLS, ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty());
+        text += "In den Einstellungen\n" +
+                "(erreichbar über das Menü)\n" +
+                "kann die verwendetet\n" +
+                "Schriftgröße im Programm\n" +
+                "vorgegeben werden.";
+        image = "/de/p2tools/mtplayer/res/toolTips/Einstellungen_Schriftgroesse.png";
+        pToolTip = new PToolTip(text, image);
         pToolTipList.add(pToolTip);
     }
 }
