@@ -63,7 +63,6 @@ public class FilmFilterController extends FilterController {
         Label lblRight = new Label();
         tglBlacklist.setAllowIndeterminate(true);
         tglBlacklist.setLabelRight(lblRight, "ein", "aus", "invers");
-//        tglBlacklist.setTooltip(new Tooltip("Blacklist ein- ausschalten oder nur Filme aus der Blacklist anzeigen"));
         tglBlacklist.setTooltip(new Tooltip("Blacklist aus: Alle Filme werden angezeigt.\n" +
                 "Blacklist ein: Von der Blacklist erfasste Filme werden nicht angezeigt.\n" +
                 "Blacklist invers: Nur von der Blacklist erfasste Filme werden angezeigt."));
