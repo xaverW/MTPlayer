@@ -241,10 +241,19 @@ public class ProgToolTips {
         text = START;
         text += "In den Einstellungen\n" +
                 "(erreichbar über das Menü)\n" +
-                "kann die verwendetet\n" +
+                "kann die verwendete\n" +
                 "Schriftgröße im Programm\n" +
                 "vorgegeben werden.";
         image = "/de/p2tools/mtplayer/res/toolTips/Einstellungen_Schriftgroesse.png";
+        pToolTip = new PToolTip(text, image);
+        pToolTipList.add(pToolTip);
+
+        ++listSize;
+        text = START;
+        text += "In den Tabellen kann\n" +
+                "mit der Leertaste nach\n" +
+                "unten \"geblättert\" werden.";
+        image = "/de/p2tools/mtplayer/res/toolTips/Leertaste.png";
         pToolTip = new PToolTip(text, image);
         pToolTipList.add(pToolTip);
     }

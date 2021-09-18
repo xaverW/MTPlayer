@@ -19,8 +19,10 @@ package de.p2tools.mtplayer.tools.storedFilter;
 import de.p2tools.mtplayer.controller.data.film.Film;
 import de.p2tools.mtplayer.controller.data.film.FilmXml;
 import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
+import javafx.animation.PauseTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.util.Duration;
 
 import java.util.function.Predicate;
 
@@ -77,6 +79,8 @@ public final class SelectedFilter extends SelectedFilterProps {
     }
 
     public void initFilter() {
+        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+
         clearFilter();
 
         setChannelVis(true);
@@ -105,22 +109,48 @@ public final class SelectedFilter extends SelectedFilterProps {
         themeExactProperty().addListener(l -> reportFilterChange());
         themeProperty().addListener(l -> {
             // todo -> beim Ändern der "Thema" liste wird das 3xaufgerufen
-            if (themeVisProperty().get()) {
-                reportFilterChange();
+            if (!themeExactProperty().getValue()) {
+                System.out.println("Pause");
+                pause.setOnFinished(event -> reportFilterChange());
+                pause.playFromStart();
+
+            } else {
+                if (themeVisProperty().get()) {
+                    reportFilterChange();
+                }
             }
         });
 
         themeTitleVisProperty().addListener(l -> reportFilterChange());
-        themeTitleProperty().addListener(l -> reportFilterChange());
+        themeTitleProperty().addListener(l -> {
+            System.out.println("Pause");
+            pause.setOnFinished(event -> reportFilterChange());
+            pause.playFromStart();
+//          reportFilterChange();
+        });
+
 
         titleVisProperty().addListener(l -> reportFilterChange());
-        titleProperty().addListener(l -> reportFilterChange());
+        titleProperty().addListener(l -> {
+            pause.setOnFinished(event -> reportFilterChange());
+            pause.playFromStart();
+//            reportFilterChange();
+        });
 
         somewhereVisProperty().addListener(l -> reportFilterChange());
-        somewhereProperty().addListener(l -> reportFilterChange());
+        somewhereProperty().addListener(l -> {
+            pause.setOnFinished(event -> reportFilterChange());
+            pause.playFromStart();
+//            reportFilterChange();
+        });
 
         urlVisProperty().addListener(l -> reportFilterChange());
-        urlProperty().addListener(l -> reportFilterChange());
+        urlProperty().addListener(l -> {
+            System.out.println("Pause");
+            pause.setOnFinished(event -> reportFilterChange());
+            pause.playFromStart();
+//            reportFilterChange();
+        });
 
         timeRangeVisProperty().addListener(l -> reportFilterChange());
         timeRangeProperty().addListener(l -> reportFilterChange());
