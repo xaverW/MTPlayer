@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.tools.storedFilter;
 
+import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.film.Film;
 import de.p2tools.mtplayer.controller.data.film.FilmXml;
 import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
@@ -31,6 +32,8 @@ public final class SelectedFilter extends SelectedFilterProps {
     private final BooleanProperty filterChange = new SimpleBooleanProperty(false);
     private final BooleanProperty blacklistChange = new SimpleBooleanProperty(false);
     private boolean reportChange = true;
+    private final PauseTransition pause = new PauseTransition(Duration.millis(200));
+
 
     public SelectedFilter() {
         initFilter();
@@ -79,7 +82,11 @@ public final class SelectedFilter extends SelectedFilterProps {
     }
 
     public void initFilter() {
-        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+        pause.setDuration(Duration.millis(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getInt()));
+        ProgConfig.SYSTEM_FILTER_WAIT_TIME.getStringProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println("SYSTEM_FILTER_WAIT_TIME.getStringProperty(): " + ProgConfig.SYSTEM_FILTER_WAIT_TIME.getInt());
+            pause.setDuration(Duration.millis(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getInt()));
+        });
 
         clearFilter();
 
@@ -103,14 +110,18 @@ public final class SelectedFilter extends SelectedFilterProps {
         nameProperty().addListener(l -> reportFilterChange());
 
         channelVisProperty().addListener(l -> reportFilterChange());
-        channelProperty().addListener(l -> reportFilterChange());
+        channelProperty().addListener(l -> {
+            System.out.println("channelProperty: " + channelProperty().getValue());
+            reportFilterChange();
+        });
 
         themeVisProperty().addListener(l -> reportFilterChange());
         themeExactProperty().addListener(l -> reportFilterChange());
         themeProperty().addListener(l -> {
+            System.out.println("themeProperty: " + themeProperty().getValue());
             // todo -> beim Ändern der "Thema" liste wird das 3xaufgerufen
             if (!themeExactProperty().getValue()) {
-                System.out.println("Pause");
+                System.out.println("Pause themeProperty");
                 pause.setOnFinished(event -> reportFilterChange());
                 pause.playFromStart();
 
@@ -123,7 +134,7 @@ public final class SelectedFilter extends SelectedFilterProps {
 
         themeTitleVisProperty().addListener(l -> reportFilterChange());
         themeTitleProperty().addListener(l -> {
-            System.out.println("Pause");
+            System.out.println("Pause themeTitleProperty");
             pause.setOnFinished(event -> reportFilterChange());
             pause.playFromStart();
 //          reportFilterChange();
@@ -132,6 +143,7 @@ public final class SelectedFilter extends SelectedFilterProps {
 
         titleVisProperty().addListener(l -> reportFilterChange());
         titleProperty().addListener(l -> {
+            System.out.println("Pause titleProperty");
             pause.setOnFinished(event -> reportFilterChange());
             pause.playFromStart();
 //            reportFilterChange();
@@ -139,6 +151,7 @@ public final class SelectedFilter extends SelectedFilterProps {
 
         somewhereVisProperty().addListener(l -> reportFilterChange());
         somewhereProperty().addListener(l -> {
+            System.out.println("Pause somewhereProperty");
             pause.setOnFinished(event -> reportFilterChange());
             pause.playFromStart();
 //            reportFilterChange();
@@ -146,7 +159,7 @@ public final class SelectedFilter extends SelectedFilterProps {
 
         urlVisProperty().addListener(l -> reportFilterChange());
         urlProperty().addListener(l -> {
-            System.out.println("Pause");
+            System.out.println("Pause urlProperty");
             pause.setOnFinished(event -> reportFilterChange());
             pause.playFromStart();
 //            reportFilterChange();
@@ -185,12 +198,14 @@ public final class SelectedFilter extends SelectedFilterProps {
 
     private void reportFilterChange() {
         if (reportChange) {
+            System.out.println("reportFilterChange");
             filterChange.setValue(!filterChange.getValue());
         }
     }
 
     private void reportBlacklistChange() {
         if (reportChange) {
+            System.out.println("reportBlacklistChange");
             blacklistChange.setValue(!blacklistChange.getValue());
         }
     }
@@ -256,6 +271,7 @@ public final class SelectedFilter extends SelectedFilterProps {
 
 
     public boolean clearTxtFilter() {
+        pause.setDuration(Duration.millis(0));
         boolean ret = false;
         if (!getChannel().isEmpty()) {
             ret = true;
@@ -281,6 +297,7 @@ public final class SelectedFilter extends SelectedFilterProps {
             ret = true;
             setUrl("");
         }
+        pause.setDuration(Duration.millis(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getInt()));
         return ret;
     }
 
@@ -445,9 +462,6 @@ public final class SelectedFilter extends SelectedFilterProps {
             predicate = predicate.and(f -> FilmFilter.checkUrl(fUrl, f));
         }
 
-
         return predicate;
     }
-
-
 }

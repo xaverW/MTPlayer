@@ -61,15 +61,16 @@ public class FilmListFilter {
     private static final AtomicBoolean search = new AtomicBoolean(false);
     private static final AtomicBoolean research = new AtomicBoolean(false);
 
+    int count = 0;
+
     private void filterList() {
         // ist etwas "umständlich", scheint aber am flüssigsten zu laufen
-
         if (!search.getAndSet(true)) {
-
             research.set(false);
             Thread th = new Thread(() -> {
                 try {
                     Platform.runLater(() -> {
+                        System.out.println("=================> Filter: " + ++count);
                         PDuration.counterStart("FilmListFilter.filterList");
                         progData.filmlistFiltered.filteredListSetPred(progData.storedFilters.getActFilterSettings().getPredicate());
                         PDuration.counterStopAndLog("FilmListFilter.filterList");

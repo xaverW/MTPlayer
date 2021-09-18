@@ -16,12 +16,20 @@
 
 package de.p2tools.mtplayer.gui;
 
+import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 
@@ -30,7 +38,7 @@ public class FilmFilterEditDialog extends PDialogExtra {
     final ProgData progData;
 
     public FilmFilterEditDialog(ProgData progData) {
-        super(progData.primaryStage, "Filter ein- und ausschalten");
+        super(progData.primaryStage, null, "Filter ein- und ausschalten", true, true, DECO.NONE);
         this.progData = progData;
 
         init(true);
@@ -119,5 +127,39 @@ public class FilmFilterEditDialog extends PDialogExtra {
         tglNot.setMaxWidth(Double.MAX_VALUE);
         tglNot.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().notVisProperty());
         vbox.getChildren().add(tglNot);
+
+        Label lblValue = new Label();
+        Slider slider = new Slider();
+
+        slider.setMin(0);
+        slider.setMax(ProgConst.SYSTEM_FILTER_MAX_WAIT_TIME);
+        slider.setMinorTickCount(9);//dann 10 Teile, 1000/10=alle 100 kann eingeloggt werden :)
+        slider.setBlockIncrement(100);//Bedienung über die Tastatur
+        slider.setMajorTickUnit(1000);
+        slider.setShowTickLabels(true);
+        slider.setSnapToTicks(true);
+
+        slider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            ProgConfig.SYSTEM_FILTER_WAIT_TIME.setValue(setValue(slider, lblValue));
+        });
+
+        slider.setValue(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getInt());
+        setValue(slider, lblValue);
+
+        VBox vBoxLbl = new VBox(0);
+        vBoxLbl.getChildren().addAll(new Label("Wartezeit"), lblValue);
+
+        HBox hBox = new HBox(10);
+        hBox.setPadding(new Insets(10, 0, 0, 0));
+        hBox.getChildren().addAll(vBoxLbl, slider);
+        hBox.setAlignment(Pos.CENTER_LEFT);
+        HBox.setHgrow(slider, Priority.ALWAYS);
+        vbox.getChildren().add(hBox);
+    }
+
+    private int setValue(Slider slider, Label lblValue) {
+        int intValue = Double.valueOf(slider.getValue()).intValue();
+        lblValue.setText("  " + intValue + " ms");
+        return intValue;
     }
 }

@@ -229,7 +229,10 @@ public class HelpText {
             "Hier können Filter aktiviert und deaktiviert werden.\n" +
                     "\n" +
                     "Deaktivierte Filter werden beim Suchen der Filme nicht berücksichtigt, " +
-                    "daher ist eine Suche mit weniger Filtern schneller.";
+                    "daher ist eine Suche mit weniger Filtern schneller.\n\n" +
+                    "Die \"Wartezeit\" ist die Zeit, die bei der Suche in Textfeldern während des Tippens " +
+                    "bis zum Start der Suche gewartet wird. Es wird also nicht bei \"jedem Buchstaben\" bereits " +
+                    "die Suche gestartet.";
 
     public static final String SETDATA_PRAEFIX =
             "Wenn die URL eines Films mit <Präfix> beginnt bzw. mit <Suffix> " +

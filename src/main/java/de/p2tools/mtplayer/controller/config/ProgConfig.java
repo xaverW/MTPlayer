@@ -141,6 +141,7 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs SYSTEM_SSL_ALWAYS_TRUE = addNewKey("system-ssl-always-true");
     public static MLConfigs TOOLTIPS_DONT_SHOW = addNewKey("tool-tips-dont-show");
     public static MLConfigs TOOLTIPS_SHOWN = addNewKey("tool-tips-shown");
+    public static MLConfigs SYSTEM_FILTER_WAIT_TIME = addNewKey("system-filter-wait-time", "100");
 
 
     // Fenstereinstellungen

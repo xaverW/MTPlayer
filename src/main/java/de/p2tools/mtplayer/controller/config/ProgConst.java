@@ -49,6 +49,9 @@ public class ProgConst {
     public static final int SYSTEM_LOAD_FILMLIST_MAX_DAYS = 300; // Filter beim Programmstart/Blacklist: nur Filme der letzten xx Tage laden
     public static final int SYSTEM_LOAD_FILMLIST_MIN_DURATION = 30; // Filter Programmstart: nur Filme mit mind. xx Minuten länge laden
 
+    public static final int SYSTEM_FILTER_MAX_WAIT_TIME = 2_000; // 1.000 ms
+
+
     // prüfen ob es eine neue Filmliste gibt: alle ... Min. oder ... nach dem Programmstart
     public static final int CHECK_FILMLIST_UPDATE = 30 * 60; // 30 Minuten
     public static final int CHECK_FILMLIST_UPDATE_PROGRAMSTART = CHECK_FILMLIST_UPDATE - 5 * 60; // 5 Minuten, Startwert beim Programmstart
