@@ -438,11 +438,11 @@ public class ConfigPaneController extends PAccordionPane {
                         "Das Programm wird aber nicht ungefragt ersetzt.");
 
         //jetzt suchen
-        btnNow.setOnAction(event -> new SearchProgramUpdate(progData, stage).searchNewProgramVersion(true));
         checkBeta();
         tglSearch.selectedProperty().addListener((ob, ol, ne) -> checkBeta());
         tglSearchBeta.selectedProperty().addListener((ob, ol, ne) -> checkBeta());
 
+        btnNow.setOnAction(event -> new SearchProgramUpdate(progData, stage).searchNewProgramVersion(true));
         PHyperlink hyperlink = new PHyperlink(ProgConst.URL_WEBSITE,
                 ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
         HBox hBoxHyper = new HBox();
@@ -475,6 +475,9 @@ public class ConfigPaneController extends PAccordionPane {
         tglSearchBeta.setDisable(!tglSearch.isSelected());
         btnHelpBeta.setDisable(!tglSearch.isSelected());
 
+        if (!tglSearchBeta.isSelected()) {
+            chkDaily.setSelected(false);
+        }
         chkDaily.setDisable(!tglSearchBeta.isSelected() || tglSearchBeta.isDisabled());
     }
 }
