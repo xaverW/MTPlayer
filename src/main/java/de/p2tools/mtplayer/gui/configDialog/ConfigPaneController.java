@@ -74,12 +74,14 @@ public class ConfigPaneController extends PAccordionPane {
     BooleanProperty propSizeFilm = ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM.getBooleanProperty();
     BooleanProperty propSizeDownload = ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD.getBooleanProperty();
     BooleanProperty propTray = ProgConfig.SYSTEM_TRAY.getBooleanProperty();
+    BooleanProperty propTipOfDay = ProgConfig.TIP_OF_DAY_SHOW.getBooleanProperty();
 
     private final PToggleSwitch tglSearchAbo = new PToggleSwitch("Abos automatisch suchen:");
     private final PToggleSwitch tglStartDownload = new PToggleSwitch("Downloads aus Abos sofort starten:");
     private final PToggleSwitch tglSmallFilm = new PToggleSwitch("In der Tabelle \"Film\" nur kleine Button anzeigen:");
     private final PToggleSwitch tglSmallDownload = new PToggleSwitch("In der Tabelle \"Download\" nur kleine Button anzeigen:");
     private final PToggleSwitch tglTray = new PToggleSwitch("Programm im System Tray anzeigen");
+    private final PToggleSwitch tglTipOfDay = new PToggleSwitch("Tip des Tages anzeigen");
     private TextField txtUserAgent;
     private final PToggleSwitch tglEnableLog = new PToggleSwitch("Ein Logfile anlegen:");
     private TextField txtLogFile;
@@ -113,6 +115,7 @@ public class ConfigPaneController extends PAccordionPane {
         tglSmallFilm.selectedProperty().unbindBidirectional(propSizeFilm);
         tglSmallDownload.selectedProperty().unbindBidirectional(propSizeDownload);
         tglTray.selectedProperty().unbindBidirectional(propTray);
+        tglTipOfDay.selectedProperty().unbindBidirectional(propTipOfDay);
         txtUserAgent.textProperty().unbindBidirectional(ProgConfig.SYSTEM_USERAGENT.getStringProperty());
         tglEnableLog.selectedProperty().unbindBidirectional(propLog);
         txtLogFile.textProperty().unbindBidirectional(propLogDir);
@@ -174,6 +177,11 @@ public class ConfigPaneController extends PAccordionPane {
                 HelpText.TRAY);
         GridPane.setHalignment(btnHelpTray, HPos.RIGHT);
 
+        tglTipOfDay.selectedProperty().bindBidirectional(propTipOfDay);
+        final Button btnHelpTipOfDay = PButton.helpButton(stage, "Tip des Tages anzeigen",
+                HelpText.TIP_OF_DAY);
+        GridPane.setHalignment(btnHelpTipOfDay, HPos.RIGHT);
+
         final Button btnHelpUserAgent = PButton.helpButton(stage, "User Agent festlegen",
                 HelpText.USER_AGENT);
         GridPane.setHalignment(btnHelpUserAgent, HPos.RIGHT);
@@ -218,6 +226,10 @@ public class ConfigPaneController extends PAccordionPane {
         gridPane.add(new Label(" "), 0, ++row);
         gridPane.add(tglTray, 0, ++row, 2, 1);
         gridPane.add(btnHelpTray, 2, row);
+
+        gridPane.add(new Label(" "), 0, ++row);
+        gridPane.add(tglTipOfDay, 0, ++row, 2, 1);
+        gridPane.add(btnHelpTipOfDay, 2, row);
 
         gridPane.add(new Label(" "), 0, ++row);
         gridPane.add(new Label(" "), 0, ++row);

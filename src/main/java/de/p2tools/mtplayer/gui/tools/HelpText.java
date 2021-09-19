@@ -418,6 +418,11 @@ public class HelpText {
             "Im System Tray wird für das Programm ein Symbol angezeigt. " +
                     "Damit kann das Programm auf dem Desktop ausgeblendet werden.";
 
+    public static final String TIP_OF_DAY =
+            "Beim Programmstart wird (einmal täglich) ein Tip zur Verwendung " +
+                    "des Programms angezeigt. Das passiert so oft, bis alle Tips " +
+                    "einmal angezeigt wurden.";
+
     public static final String DARK_THEME =
             "Das Programm wird damit mit einer dunklen Programmoberfläche angezeigt. " +
                     "Damit alle Elemente der Programmoberfläche geändert werden, kann ein " +
