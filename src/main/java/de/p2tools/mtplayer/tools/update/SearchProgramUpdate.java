@@ -52,13 +52,13 @@ public class SearchProgramUpdate {
     public void searchNewProgramVersion(boolean showAllways) {
         final String SEARCH_URL;
         final String SEARCH_URL_DOWNLOAD;
-        if (ProgData.debug) {
-            SEARCH_URL = "http://p2.localhost:8080";
-            SEARCH_URL_DOWNLOAD = "http://p2.localhost:8080/download/";
-        } else {
-            SEARCH_URL = "https://www.p2tools.de";
-            SEARCH_URL_DOWNLOAD = "https://www.p2tools.de/download/";
-        }
+//        if (ProgData.debug) {
+        SEARCH_URL = "http://p2.localhost:8080";
+        SEARCH_URL_DOWNLOAD = "http://p2.localhost:8080/download/";
+//        } else {
+//            SEARCH_URL = "https://www.p2tools.de";
+//            SEARCH_URL_DOWNLOAD = "https://www.p2tools.de/download/";
+//        }
 
         final PDate pd = new PDate(ProgramTools.getCompileDate());
         String buildDate = pd.get_yyyy_MM_dd();
