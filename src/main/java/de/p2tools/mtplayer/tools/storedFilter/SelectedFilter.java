@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.film.Film;
 import de.p2tools.mtplayer.controller.data.film.FilmXml;
 import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
+import de.p2tools.p2Lib.tools.log.PDebugLog;
 import javafx.animation.PauseTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -84,12 +85,12 @@ public final class SelectedFilter extends SelectedFilterProps {
     public void initFilter() {
         pause.setDuration(Duration.millis(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getInt()));
         ProgConfig.SYSTEM_FILTER_WAIT_TIME.getStringProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("SYSTEM_FILTER_WAIT_TIME.getStringProperty(): " + ProgConfig.SYSTEM_FILTER_WAIT_TIME.getInt());
+            PDebugLog.sysLog("SYSTEM_FILTER_WAIT_TIME.getStringProperty(): " + ProgConfig.SYSTEM_FILTER_WAIT_TIME.getInt());
             pause.setDuration(Duration.millis(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getInt()));
         });
 
         clearFilter();
-
+        PDebugLog.sysLog("SYSTEM_FILTER_WAIT_TIME.getStringProperty(): " + ProgConfig.SYSTEM_FILTER_WAIT_TIME.getInt());
         setChannelVis(true);
         setThemeTitleVis(true);
 
@@ -111,17 +112,17 @@ public final class SelectedFilter extends SelectedFilterProps {
 
         channelVisProperty().addListener(l -> reportFilterChange());
         channelProperty().addListener(l -> {
-            System.out.println("channelProperty: " + channelProperty().getValue());
+            PDebugLog.sysLog("channelProperty: " + channelProperty().getValue());
             reportFilterChange();
         });
 
         themeVisProperty().addListener(l -> reportFilterChange());
         themeExactProperty().addListener(l -> reportFilterChange());
         themeProperty().addListener(l -> {
-            System.out.println("themeProperty: " + themeProperty().getValue());
+            PDebugLog.sysLog("themeProperty: " + themeProperty().getValue());
             // todo -> beim Ändern der "Thema" liste wird das 3xaufgerufen
             if (!themeExactProperty().getValue()) {
-                System.out.println("Pause themeProperty");
+                PDebugLog.sysLog("Pause themeProperty");
                 pause.setOnFinished(event -> reportFilterChange());
                 pause.playFromStart();
 
@@ -134,7 +135,7 @@ public final class SelectedFilter extends SelectedFilterProps {
 
         themeTitleVisProperty().addListener(l -> reportFilterChange());
         themeTitleProperty().addListener(l -> {
-            System.out.println("Pause themeTitleProperty");
+            PDebugLog.sysLog("Pause themeTitleProperty");
             pause.setOnFinished(event -> reportFilterChange());
             pause.playFromStart();
 //          reportFilterChange();
@@ -143,7 +144,7 @@ public final class SelectedFilter extends SelectedFilterProps {
 
         titleVisProperty().addListener(l -> reportFilterChange());
         titleProperty().addListener(l -> {
-            System.out.println("Pause titleProperty");
+            PDebugLog.sysLog("Pause titleProperty");
             pause.setOnFinished(event -> reportFilterChange());
             pause.playFromStart();
 //            reportFilterChange();
@@ -151,7 +152,7 @@ public final class SelectedFilter extends SelectedFilterProps {
 
         somewhereVisProperty().addListener(l -> reportFilterChange());
         somewhereProperty().addListener(l -> {
-            System.out.println("Pause somewhereProperty");
+            PDebugLog.sysLog("Pause somewhereProperty");
             pause.setOnFinished(event -> reportFilterChange());
             pause.playFromStart();
 //            reportFilterChange();
@@ -159,7 +160,7 @@ public final class SelectedFilter extends SelectedFilterProps {
 
         urlVisProperty().addListener(l -> reportFilterChange());
         urlProperty().addListener(l -> {
-            System.out.println("Pause urlProperty");
+            PDebugLog.sysLog("Pause urlProperty");
             pause.setOnFinished(event -> reportFilterChange());
             pause.playFromStart();
 //            reportFilterChange();
@@ -198,14 +199,14 @@ public final class SelectedFilter extends SelectedFilterProps {
 
     private void reportFilterChange() {
         if (reportChange) {
-            System.out.println("reportFilterChange");
+            PDebugLog.sysLog("reportFilterChange");
             filterChange.setValue(!filterChange.getValue());
         }
     }
 
     private void reportBlacklistChange() {
         if (reportChange) {
-            System.out.println("reportBlacklistChange");
+            PDebugLog.sysLog("reportBlacklistChange");
             blacklistChange.setValue(!blacklistChange.getValue());
         }
     }
