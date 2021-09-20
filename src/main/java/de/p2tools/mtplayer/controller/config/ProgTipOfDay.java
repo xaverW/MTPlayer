@@ -22,6 +22,7 @@ import de.p2tools.p2Lib.guiTools.pTipOfDay.PTipOfDay;
 import de.p2tools.p2Lib.guiTools.pTipOfDay.PTipOfDayDialog;
 import de.p2tools.p2Lib.guiTools.pTipOfDay.PTipOfDayFactory;
 import de.p2tools.p2Lib.tools.date.PDateFactory;
+import de.p2tools.p2Lib.tools.log.PLog;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,8 +30,8 @@ import java.util.List;
 
 public class ProgTipOfDay {
 
-    private final String START = "                                      " + P2LibConst.LINE_SEPARATOR;
-    private final int listSize = 15;
+    private final String START = "                                                     " + P2LibConst.LINE_SEPARATOR;
+    private final int listSize = 17;
 
     public ProgTipOfDay() {
     }
@@ -38,6 +39,7 @@ public class ProgTipOfDay {
     public void showDialog(ProgData progData, boolean showAlways) {
         if (!showAlways && !ProgConfig.TIP_OF_DAY_SHOW.getBool()) {
             //dann wills der User nicht :(
+            PLog.sysLog("TipOfDay: Will der User nicht");
             return;
         }
 
@@ -52,6 +54,8 @@ public class ProgTipOfDay {
             addTips(pTipOfDayArrayList);
             new PTipOfDayDialog(progData.primaryStage, pTipOfDayArrayList,
                     ProgConfig.TIP_OF_DAY_WAS_SHOWN.getStringProperty(), ProgConfig.TIP_OF_DAY_SHOW.getBooleanProperty());
+        } else {
+            PLog.sysLog("TipOfDay: Heute schon gemacht oder keine neuen Tips");
         }
     }
 
@@ -74,7 +78,7 @@ public class ProgTipOfDay {
         pToolTipList.add(pToolTip);
 
         // private final int listSize = 2
-        text = START + "";
+        text = START;
         text += "Suche in der Mediensammlung:\n\n" +
                 "Ein Doppelklick auf einen\n" +
                 "Suchbegriff stellt diesen frei.\n\n" +
@@ -86,7 +90,7 @@ public class ProgTipOfDay {
         pToolTipList.add(pToolTip);
 
         // private final int listSize = 3
-        text = START + "";
+        text = START;
         text += "Über das Menü ist die\n" +
                 "Funktion zum Zurücksetzen\n" +
                 "von Programmeinstellungen\n" +
@@ -100,7 +104,7 @@ public class ProgTipOfDay {
         pToolTipList.add(pToolTip);
 
         // private final int listSize = 4
-        text = START + "";
+        text = START;
         text += "Über das Menü ist die\n" +
                 "Funktion zum Zurücksetzen\n" +
                 "von Programmeinstellungen\n" +
@@ -116,7 +120,7 @@ public class ProgTipOfDay {
         pToolTipList.add(pToolTip);
 
         // private final int listSize = 5
-        text = START + "";
+        text = START;
         text += "Im Download-Filter Panel können\n" +
                 "auch noch weitere Einstellungen\n" +
                 "vorgenommen werden:\n\n" +
@@ -144,7 +148,7 @@ public class ProgTipOfDay {
         pToolTipList.add(pToolTip);
 
         // private final int listSize = 7
-        text = START + "";
+        text = START;
         text += "In den Einstellungen des Abos\n" +
                 "kann auch die maximale Zeit,\n" +
                 "die zurück gesucht wird,\n" +
@@ -157,7 +161,7 @@ public class ProgTipOfDay {
         pToolTipList.add(pToolTip);
 
         // private final int listSize = 8
-        text = START + "";
+        text = START;
         text += "In den Einstellungen des Abos\n" +
                 "kann auch die Filmlänge\n" +
                 "eines Films (min, max)\n" +
@@ -170,7 +174,7 @@ public class ProgTipOfDay {
         pToolTipList.add(pToolTip);
 
         // private final int listSize = 9
-        text = START + "";
+        text = START;
         text += "Im Programm sind immer zwei\n" +
                 "Menüs sichtbar.\n\n" +
                 "Das obere enthält Menüpunkte,\n" +
@@ -184,7 +188,7 @@ public class ProgTipOfDay {
         pToolTipList.add(pToolTip);
 
         // private final int listSize = 10
-        text = START + "";
+        text = START;
         text += "In den Einstellungen\n" +
                 "(erreichbar über das Menü)\n" +
                 "kann das Systemtray\n" +
@@ -197,7 +201,7 @@ public class ProgTipOfDay {
         pToolTipList.add(pToolTip);
 
         // private final int listSize = 11
-        text = START + "";
+        text = START;
         text += "In den Einstellungen\n" +
                 "(erreichbar über das Menü)\n" +
                 "kann die Filmliste beim\n" +
@@ -217,7 +221,7 @@ public class ProgTipOfDay {
         pToolTipList.add(pToolTip);
 
         // private final int listSize = 12
-        text = START + "";
+        text = START;
         text += "In den Einstellungen\n" +
                 "(erreichbar über das Menü)\n" +
                 "wird der Downloadpfad\n" +
@@ -229,7 +233,7 @@ public class ProgTipOfDay {
         pToolTipList.add(pToolTip);
 
         // private final int listSize = 13
-        text = START + "";
+        text = START;
         text += "In den Einstellungen\n" +
                 "(erreichbar über das Menü)\n" +
                 "können für Downloads die ein\n" +
@@ -260,6 +264,33 @@ public class ProgTipOfDay {
                 "mit der Leertaste nach\n" +
                 "unten \"geblättert\" werden.";
         image = "/de/p2tools/mtplayer/res/toolTips/Leertaste.png";
+        pToolTip = new PTipOfDay(text, image);
+        pToolTipList.add(pToolTip);
+
+        // private final int listSize = 16
+        text = START;
+        text += "In den Einstellungen des Abos\n" +
+                "kann auch die Startzeit\n" +
+                "der Downloads aus diesem\n" +
+                "Abo vorgegeben werden.\n\n" +
+                "Downloads aus diesem Abo\n" +
+                "haben dann automatisch\n" +
+                "diese Startzeit.";
+        image = "/de/p2tools/mtplayer/res/toolTips/AboEinstellungen_Startzeit.png";
+        pToolTip = new PTipOfDay(text, image);
+        pToolTipList.add(pToolTip);
+
+        // private final int listSize = 17
+        text = START;
+        text += "In den Filtereinstellungen bei\n" +
+                "den Filmen kann eine Wartezeit\n" +
+                "vorgegeben werden.\n\n" +
+                "Diese wird dann bei der Suche\n" +
+                "in den Textfeldern abgewartet,\n" +
+                "bis die Suche beginnt.\n\n" +
+                "Es wird dann nicht bei jedem\n" +
+                "Buchstaben die Suche gestartet.";
+        image = "/de/p2tools/mtplayer/res/toolTips/GuiFilme_Wartezeit.png";
         pToolTip = new PTipOfDay(text, image);
         pToolTipList.add(pToolTip);
     }

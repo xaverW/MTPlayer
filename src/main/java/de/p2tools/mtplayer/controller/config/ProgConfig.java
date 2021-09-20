@@ -139,8 +139,8 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs SYSTEM_DARK_THEME = addNewKey("system-dark-theme", Boolean.FALSE.toString());
     public static MLConfigs SYSTEM_THEME_CHANGED = addNewKey("system-theme-changed");
     public static MLConfigs SYSTEM_SSL_ALWAYS_TRUE = addNewKey("system-ssl-always-true");
-    public static MLConfigs TIP_OF_DAY_SHOW = addNewKey("tip-of-day-show");
-    public static MLConfigs TIP_OF_DAY_WAS_SHOWN = addNewKey("tip-of-day-was-shown");
+    public static MLConfigs TIP_OF_DAY_SHOW = addNewKey("tip-of-day-show", Boolean.TRUE.toString());//Tips anzeigen
+    public static MLConfigs TIP_OF_DAY_WAS_SHOWN = addNewKey("tip-of-day-was-shown");//bereits angezeigte Tips
     public static MLConfigs TIP_OF_DAY_DATE = addNewKey("tip-of-day-date"); //Datum des letzten Tips
     public static MLConfigs SYSTEM_FILTER_WAIT_TIME = addNewKey("system-filter-wait-time", "100");
 

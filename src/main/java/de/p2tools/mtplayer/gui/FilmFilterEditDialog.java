@@ -28,9 +28,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 
 
 public class FilmFilterEditDialog extends PDialogExtra {
@@ -38,7 +37,7 @@ public class FilmFilterEditDialog extends PDialogExtra {
     final ProgData progData;
 
     public FilmFilterEditDialog(ProgData progData) {
-        super(progData.primaryStage, null, "Filter ein- und ausschalten", true, true, DECO.NONE);
+        super(progData.primaryStage, null, "Filtereinstellungen", true, true, DECO.NONE);
         this.progData = progData;
 
         init(true);
@@ -48,7 +47,7 @@ public class FilmFilterEditDialog extends PDialogExtra {
     public void make() {
         init(getvBoxCont());
 
-        final Button btnHelp = PButton.helpButton(getStage(), "Filter ein- und ausschalten",
+        final Button btnHelp = PButton.helpButton(getStage(), "Filtereinstellungen",
                 HelpText.GUI_FILMS_EDIT_FILTER);
 
         Button btnOk = new Button("_Ok");
@@ -128,9 +127,26 @@ public class FilmFilterEditDialog extends PDialogExtra {
         tglNot.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().notVisProperty());
         vbox.getChildren().add(tglNot);
 
-        Label lblValue = new Label();
-        Slider slider = new Slider();
+        //Wartezeit
+        VBox vBoxWait = new VBox(10);
+        Border b = new Border(new BorderStroke(Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK,
+                BorderStrokeStyle.SOLID, BorderStrokeStyle.NONE, BorderStrokeStyle.NONE, BorderStrokeStyle.NONE,
+                CornerRadii.EMPTY, new BorderWidths(3), new Insets(10, 0, 0, 0)));
+        vBoxWait.setBorder(b);
+        vBoxWait.setSpacing(10);
+        vBoxWait.setPadding(new Insets(10, 0, 0, 0));
 
+        Label lbl = new Label();
+        lbl.setMaxWidth(Double.MAX_VALUE);
+        Label lblValue = new Label();
+        lblValue.setMinWidth(Region.USE_COMPUTED_SIZE);
+//        Label lblTitle = new Label("Zeit bis die Suche in Textfeldern\n" +
+//                "ohne Eingabe startet:");
+        Label lblTitle = new Label("Zeit bis zum Start der Suche\n" +
+                "in Textfeldern ohne Eingabe:");
+        lblTitle.setMinWidth(0);
+
+        Slider slider = new Slider();
         slider.setMin(0);
         slider.setMax(ProgConst.SYSTEM_FILTER_MAX_WAIT_TIME);
         slider.setMinorTickCount(9);//dann 10 Teile, 1000/10=alle 100 kann eingeloggt werden :)
@@ -138,23 +154,23 @@ public class FilmFilterEditDialog extends PDialogExtra {
         slider.setMajorTickUnit(1000);
         slider.setShowTickLabels(true);
         slider.setSnapToTicks(true);
-
         slider.valueProperty().addListener((observable, oldValue, newValue) -> {
             ProgConfig.SYSTEM_FILTER_WAIT_TIME.setValue(setValue(slider, lblValue));
         });
-
         slider.setValue(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getInt());
         setValue(slider, lblValue);
 
-        VBox vBoxLbl = new VBox(0);
-        vBoxLbl.getChildren().addAll(new Label("Wartezeit"), lblValue);
+        HBox hBoxLbl = new HBox(0);
+        hBoxLbl.setAlignment(Pos.CENTER_LEFT);
+        HBox.setHgrow(lbl, Priority.ALWAYS);
+        hBoxLbl.getChildren().addAll(lblTitle, lbl, lblValue);
 
-        HBox hBox = new HBox(10);
-        hBox.setPadding(new Insets(10, 0, 0, 0));
-        hBox.getChildren().addAll(vBoxLbl, slider);
-        hBox.setAlignment(Pos.CENTER_LEFT);
+        HBox hBoxSlider = new HBox(10);
+        hBoxSlider.getChildren().addAll(slider);
         HBox.setHgrow(slider, Priority.ALWAYS);
-        vbox.getChildren().add(hBox);
+
+        vBoxWait.getChildren().addAll(hBoxLbl, hBoxSlider);
+        vbox.getChildren().addAll(vBoxWait);
     }
 
     private int setValue(Slider slider, Label lblValue) {
