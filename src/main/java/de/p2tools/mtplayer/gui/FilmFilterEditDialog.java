@@ -27,9 +27,12 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.control.Slider;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 
 
 public class FilmFilterEditDialog extends PDialogExtra {
@@ -57,15 +60,15 @@ public class FilmFilterEditDialog extends PDialogExtra {
         addHlpButton(btnHelp);
     }
 
-    public void init(VBox vbox) {
-        vbox.setSpacing(15);
+    public void init(VBox vBox) {
+        vBox.setSpacing(15);
 
         PToggleSwitch tglChannel = new PToggleSwitch("Sender");
         tglChannel.setMaxWidth(Double.MAX_VALUE);
         tglChannel.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().channelVisProperty());
-        vbox.getChildren().add(tglChannel);
+        vBox.getChildren().add(tglChannel);
 
-        VBox v = new VBox();
+        VBox v = new VBox(5);
         PToggleSwitch tglTheme = new PToggleSwitch("Thema");
         tglTheme.setMaxWidth(Double.MAX_VALUE);
         tglTheme.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().themeVisProperty());
@@ -80,71 +83,65 @@ public class FilmFilterEditDialog extends PDialogExtra {
 //        tglThemeExact.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().themeExactProperty());
 
         v.getChildren().add(tglThemeExact);
-        vbox.getChildren().add(v);
+        vBox.getChildren().add(v);
 
         PToggleSwitch tglThemeTitle = new PToggleSwitch("Thema oder Titel");
         tglThemeTitle.setMaxWidth(Double.MAX_VALUE);
         tglThemeTitle.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().themeTitleVisProperty());
-        vbox.getChildren().add(tglThemeTitle);
+        vBox.getChildren().add(tglThemeTitle);
 
         PToggleSwitch tglTitle = new PToggleSwitch("Titel");
         tglTitle.setMaxWidth(Double.MAX_VALUE);
         tglTitle.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().titleVisProperty());
-        vbox.getChildren().add(tglTitle);
+        vBox.getChildren().add(tglTitle);
 
         PToggleSwitch tglSomewhere = new PToggleSwitch("Irgendwo");
         tglSomewhere.setMaxWidth(Double.MAX_VALUE);
         tglSomewhere.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().somewhereVisProperty());
-        vbox.getChildren().add(tglSomewhere);
+        vBox.getChildren().add(tglSomewhere);
 
         PToggleSwitch tglUrl = new PToggleSwitch("Url");
         tglUrl.setMaxWidth(Double.MAX_VALUE);
         tglUrl.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().urlVisProperty());
-        vbox.getChildren().add(tglUrl);
+        vBox.getChildren().add(tglUrl);
 
         PToggleSwitch tglTimeRange = new PToggleSwitch("Zeitraum [Tage]");
         tglTimeRange.setMaxWidth(Double.MAX_VALUE);
         tglTimeRange.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().timeRangeVisProperty());
-        vbox.getChildren().add(tglTimeRange);
+        vBox.getChildren().add(tglTimeRange);
 
         PToggleSwitch tglMinMax = new PToggleSwitch("Filmlänge Min/Max");
         tglMinMax.setMaxWidth(Double.MAX_VALUE);
         tglMinMax.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().minMaxDurVisProperty());
-        vbox.getChildren().add(tglMinMax);
+        vBox.getChildren().add(tglMinMax);
 
         PToggleSwitch tglMinMaxTime = new PToggleSwitch("Sendezeit");
         tglMinMaxTime.setMaxWidth(Double.MAX_VALUE);
         tglMinMaxTime.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().minMaxTimeVisProperty());
-        vbox.getChildren().add(tglMinMaxTime);
+        vBox.getChildren().add(tglMinMaxTime);
 
         PToggleSwitch tglOnly = new PToggleSwitch("\"anzeigen\"");
         tglOnly.setMaxWidth(Double.MAX_VALUE);
         tglOnly.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().onlyVisProperty());
-        vbox.getChildren().add(tglOnly);
+        vBox.getChildren().add(tglOnly);
 
         PToggleSwitch tglNot = new PToggleSwitch("\"ausschließen\"");
         tglNot.setMaxWidth(Double.MAX_VALUE);
         tglNot.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().notVisProperty());
-        vbox.getChildren().add(tglNot);
+        vBox.getChildren().add(tglNot);
 
         //Wartezeit
         VBox vBoxWait = new VBox(10);
-        Border b = new Border(new BorderStroke(Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK,
-                BorderStrokeStyle.SOLID, BorderStrokeStyle.NONE, BorderStrokeStyle.NONE, BorderStrokeStyle.NONE,
-                CornerRadii.EMPTY, new BorderWidths(3), new Insets(10, 0, 0, 0)));
-        vBoxWait.setBorder(b);
         vBoxWait.setSpacing(10);
         vBoxWait.setPadding(new Insets(10, 0, 0, 0));
 
+        Label lblTitle = new Label("In Textfeldern: Suchbeginn\n" +
+                "wenn keine Eingabe für:");
+        lblTitle.setMinWidth(0);
         Label lbl = new Label();
         lbl.setMaxWidth(Double.MAX_VALUE);
         Label lblValue = new Label();
         lblValue.setMinWidth(Region.USE_COMPUTED_SIZE);
-//        Label lblTitle = new Label("Zeit bis die Suche in Textfeldern\n" +
-//                "ohne Eingabe startet:");
-        Label lblTitle = new Label("Zeit bis zum Start der Suche\n" +
-                "in Textfeldern ohne Eingabe:");
-        lblTitle.setMinWidth(0);
 
         Slider slider = new Slider();
         slider.setMin(0);
@@ -161,16 +158,20 @@ public class FilmFilterEditDialog extends PDialogExtra {
         setValue(slider, lblValue);
 
         HBox hBoxLbl = new HBox(0);
-        hBoxLbl.setAlignment(Pos.CENTER_LEFT);
+        hBoxLbl.setAlignment(Pos.BOTTOM_LEFT);
         HBox.setHgrow(lbl, Priority.ALWAYS);
         hBoxLbl.getChildren().addAll(lblTitle, lbl, lblValue);
 
-        HBox hBoxSlider = new HBox(10);
+        HBox hBoxSlider = new HBox();
         hBoxSlider.getChildren().addAll(slider);
         HBox.setHgrow(slider, Priority.ALWAYS);
 
-        vBoxWait.getChildren().addAll(hBoxLbl, hBoxSlider);
-        vbox.getChildren().addAll(vBoxWait);
+        Separator sp = new Separator();
+        sp.getStyleClass().add("pseperator2");
+        sp.setMinHeight(0);
+
+        vBoxWait.getChildren().addAll(sp, hBoxLbl, hBoxSlider);
+        vBox.getChildren().addAll(vBoxWait);
     }
 
     private int setValue(Slider slider, Label lblValue) {
