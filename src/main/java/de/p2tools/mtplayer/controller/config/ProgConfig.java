@@ -189,6 +189,7 @@ public class ProgConfig extends MLConfig {
 
     // Gui Download
     public static MLConfigs DOWNLOAD_DIALOG_PATH_SAVING = addNewKey("download-dialog-path-saving"); // gesammelten Downloadpfade im Downloaddialog
+    public static MLConfigs DOWNLOAD_DIALOG_HD_HEIGHT_LOW = addNewKey("download-dialog-hd-height-low", Film.RESOLUTION_NORMAL);
     public static MLConfigs DOWNLOAD_DIALOG_START_DOWNLOAD_NOW = addNewKey("download-dialog-start-download-now", Boolean.TRUE.toString());
     public static MLConfigs DOWNLOAD_DIALOG_START_DOWNLOAD_NOT = addNewKey("download-dialog-start-download-not", Boolean.FALSE.toString());
     public static MLConfigs DOWNLOAD_DIALOG_START_DOWNLOAD_TIME = addNewKey("download-dialog-start-download-time", Boolean.FALSE.toString());

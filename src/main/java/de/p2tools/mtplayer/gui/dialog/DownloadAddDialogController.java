@@ -295,14 +295,17 @@ public class DownloadAddDialogController extends PDialogExtra {
                 downloadAddInfos[i].subtitle = downloadAddInfos[i].psetData.isSubtitle();
             }
 
-            // die Werte passend zum Film setzen
-            if ((filterResolution.equals(Film.RESOLUTION_HD) || downloadAddInfos[i].psetData.getResolution().equals(Film.RESOLUTION_HD))
+            // die Werte passend zum Film setzen: Auflösung
+            if ((ProgConfig.DOWNLOAD_DIALOG_HD_HEIGHT_LOW.get().equals(Film.RESOLUTION_HD) ||
+                    filterResolution.equals(Film.RESOLUTION_HD) ||
+                    downloadAddInfos[i].psetData.getResolution().equals(Film.RESOLUTION_HD))
                     && downloadAddInfos[i].film.isHd()) {
 
                 //Dann wurde im Filter oder Set HD ausgewählt und wird voreingestellt
                 downloadAddInfos[i].resolution = Film.RESOLUTION_HD;
 
-            } else if (downloadAddInfos[i].psetData.getResolution().equals(Film.RESOLUTION_SMALL)
+            } else if ((ProgConfig.DOWNLOAD_DIALOG_HD_HEIGHT_LOW.get().equals(Film.RESOLUTION_SMALL) ||
+                    downloadAddInfos[i].psetData.getResolution().equals(Film.RESOLUTION_SMALL))
                     && downloadAddInfos[i].film.isSmall()) {
                 downloadAddInfos[i].resolution = Film.RESOLUTION_SMALL;
 
@@ -410,9 +413,18 @@ public class DownloadAddDialogController extends PDialogExtra {
         // und jetzt für den aktuellen Film das GUI setzen
         makeResolutionButtons();
 
-        rbHd.setOnAction(a -> downloadAddInfos[actFilmIsShown].setResolution(Film.RESOLUTION_HD));
-        rbHigh.setOnAction(a -> downloadAddInfos[actFilmIsShown].setResolution(Film.RESOLUTION_NORMAL));
-        rbSmall.setOnAction(a -> downloadAddInfos[actFilmIsShown].setResolution(Film.RESOLUTION_SMALL));
+        rbHd.setOnAction(a -> {
+            downloadAddInfos[actFilmIsShown].setResolution(Film.RESOLUTION_HD);
+            ProgConfig.DOWNLOAD_DIALOG_HD_HEIGHT_LOW.setValue(Film.RESOLUTION_HD);
+        });
+        rbHigh.setOnAction(a -> {
+            downloadAddInfos[actFilmIsShown].setResolution(Film.RESOLUTION_NORMAL);
+            ProgConfig.DOWNLOAD_DIALOG_HD_HEIGHT_LOW.setValue(Film.RESOLUTION_NORMAL);
+        });
+        rbSmall.setOnAction(a -> {
+            downloadAddInfos[actFilmIsShown].setResolution(Film.RESOLUTION_SMALL);
+            ProgConfig.DOWNLOAD_DIALOG_HD_HEIGHT_LOW.setValue(Film.RESOLUTION_SMALL);
+        });
     }
 
     private void initCheckBox() {

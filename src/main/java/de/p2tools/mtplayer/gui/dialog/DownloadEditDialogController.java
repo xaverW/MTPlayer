@@ -336,6 +336,7 @@ public class DownloadEditDialogController extends PDialogExtra {
         download.setUrlRtmp(download.getFilm().getUrlFlvstreamerForResolution(res));
         txt[DownloadXml.DOWNLOAD_URL].setText(download.getUrl());
         txt[DownloadXml.DOWNLOAD_URL_RTMP].setText(download.getUrlRtmp());
+        setHyperLink();
 
         final String size;
         if (rbHd.isSelected()) {
@@ -681,20 +682,21 @@ public class DownloadEditDialogController extends PDialogExtra {
         }
 
         //---------------------------------
-        gridPane.add(text[DownloadXml.DOWNLOAD_FILM_URL], 0, row);
-        pHyperlinkUrlFilm.setUrl(download.filmUrlProperty().getValueSafe());
+//        pHyperlinkUrlFilm.setUrl(download.filmUrlProperty().getValueSafe());
         pHyperlinkUrlFilm.setWrapText(true);
         pHyperlinkUrlFilm.setMinHeight(Region.USE_PREF_SIZE);
         pHyperlinkUrlFilm.setPadding(new Insets(5));
-        gridPane.add(pHyperlinkUrlFilm, 1, row++, 3, 1);
 
-        pHyperlinkUrlDownload.setUrl(download.urlProperty().getValueSafe());
+//        pHyperlinkUrlDownload.setUrl(download.urlProperty().getValueSafe());
         pHyperlinkUrlDownload.setWrapText(true);
         pHyperlinkUrlDownload.setMinHeight(Region.USE_PREF_SIZE);
         pHyperlinkUrlDownload.setPadding(new Insets(5));
 
+        setHyperLink();
+
+        gridPane.add(text[DownloadXml.DOWNLOAD_FILM_URL], 0, row);
+        gridPane.add(pHyperlinkUrlFilm, 1, row++, 3, 1);
         gridPane.add(text[DownloadXml.DOWNLOAD_URL], 0, row);
-        pHyperlinkUrlDownload.setUrl(download.urlProperty().getValueSafe());
         gridPane.add(pHyperlinkUrlDownload, 1, row++, 3, 1);
 
         //---------------------------------
@@ -712,6 +714,11 @@ public class DownloadEditDialogController extends PDialogExtra {
             }
         }
         return row;
+    }
+
+    private void setHyperLink() {
+        pHyperlinkUrlFilm.setUrl(download.filmUrlProperty().getValueSafe());
+        pHyperlinkUrlDownload.setUrl(download.urlProperty().getValueSafe());
     }
 
     private void resetDownloadCallForProgramm() {
