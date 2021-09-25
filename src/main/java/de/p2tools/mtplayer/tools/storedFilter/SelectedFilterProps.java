@@ -127,7 +127,7 @@ public class SelectedFilterProps {
 
     public void setChannel(String sender) {
         this.channel.set(sender);
-        this.channelVis.set(true);
+//        this.channelVis.set(true);
     }
 
     public boolean isThemeVis() {
