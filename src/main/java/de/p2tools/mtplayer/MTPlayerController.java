@@ -200,7 +200,7 @@ public class MTPlayerController extends StackPane {
 
         final MenuItem miUrlHelp = new MenuItem("Anleitung im Web");
         miUrlHelp.setOnAction(event -> {
-            POpen.openURL(ProgConst.ADRESSE_WEBSITE_HELP,
+            POpen.openURL(ProgConst.URL_WEBSITE_HELP,
                     ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
         });
 

@@ -85,7 +85,8 @@ public class ProgConst {
     public static final String URL_WEBSITE_P2TOOLS = "https://www.p2tools.de";
     public static final String URL_WEBSITE = "https://www.p2tools.de/mtplayer/";
     public static final String URL_WEBSITE_DOWNLOAD = "https://www.p2tools.de/mtplayer/download.html";
-    public static final String ADRESSE_WEBSITE_HELP = "https://www.p2tools.de/mtplayer/manual/";
+    public static final String URL_WEBSITE_HELP = "https://www.p2tools.de/mtplayer/manual/";
+    public static final String URL_WEBSITE_DONATE = "https://www.p2tools.de/donate.html";
 
     public static final String ADRESSE_MTPLAYER_VERSION = "https://www.p2tools.de/extra/mtplayer-info.xml";
     public static final String ADRESSE_MTPLAYER_BETA_VERSION = "https://www.p2tools.de/extra/mtplayer-beta-info.xml";
