@@ -35,7 +35,7 @@ public class FilmFilterController extends FilterController {
 
     private final PToggleSwitch tglBlacklist = new PToggleSwitch("Blacklist:");
 
-    FilmFilterControllerTextFilter sender;
+    FilmFilterControllerTextFilter textFilter;
     FilmFilterControllerFilter filter;
     FilmFilterControllerClearFilter clearFilter;
     FilmFilterControllerProfiles profiles;
@@ -44,7 +44,7 @@ public class FilmFilterController extends FilterController {
         super(ProgConfig.FILM_GUI_FILTER_DIVIDER_ON);
         progData = ProgData.getInstance();
 
-        sender = new FilmFilterControllerTextFilter();
+        textFilter = new FilmFilterControllerTextFilter();
         filter = new FilmFilterControllerFilter();
         clearFilter = new FilmFilterControllerClearFilter();
         profiles = new FilmFilterControllerProfiles();
@@ -58,7 +58,7 @@ public class FilmFilterController extends FilterController {
         vBoxFilter.setSpacing(0);
         VBox.setVgrow(clearFilter, Priority.ALWAYS);
 
-        vBoxFilter.getChildren().addAll(sender, filter, clearFilter, sp, profiles);
+        vBoxFilter.getChildren().addAll(textFilter, filter, clearFilter, sp, profiles);
 
         Label lblRight = new Label();
         tglBlacklist.setAllowIndeterminate(true);
