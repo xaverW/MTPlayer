@@ -105,6 +105,8 @@ public final class SelectedFilter extends SelectedFilterProps {
         setMinMaxTimeVis(false);
         setMinMaxTimeInvert(false);
 
+        setShowDateVis(false);
+
         setNotVis(false);
         setOnlyVis(false);
 
@@ -178,6 +180,9 @@ public final class SelectedFilter extends SelectedFilterProps {
         minTimeProperty().addListener(l -> reportFilterChange());
         maxTimeProperty().addListener(l -> reportFilterChange());
 
+        showDateVisProperty().addListener(l -> reportFilterChange());
+        showDateProperty().addListener(l -> reportFilterChange());
+
         onlyVisProperty().addListener(l -> reportFilterChange());
         onlyBookmarkProperty().addListener(l -> reportFilterChange());
         onlyHdProperty().addListener(l -> reportFilterChange());
@@ -228,6 +233,8 @@ public final class SelectedFilter extends SelectedFilterProps {
         setMinTime(0);
         setMaxTime(FilmFilter.FILTER_FILMTIME_MAX_SEC);
 
+        setShowDate(FilmFilter.FILTER_SHOW_DATE_ALL);
+
         setOnlyBookmark(false);
         setOnlyHd(false);
         setOnlyNew(false);
@@ -256,6 +263,8 @@ public final class SelectedFilter extends SelectedFilterProps {
         setTimeRangeVis(false);
         setMinMaxDurVis(false);
         setMinMaxTimeVis(false);
+
+        setShowDateVis(false);
 
         setOnlyVis(false);
         setNotVis(false);
@@ -311,6 +320,7 @@ public final class SelectedFilter extends SelectedFilterProps {
         Filter fTitle;
         Filter fSomewhere;
         Filter fUrl;
+        Filter fShowDate;
 
         String filterChannel = selectedFilter.isChannelVis() ? selectedFilter.getChannel() : "";
         String filterTheme = selectedFilter.isThemeVis() ? selectedFilter.getTheme() : "";
@@ -318,6 +328,7 @@ public final class SelectedFilter extends SelectedFilterProps {
         String filterTitle = selectedFilter.isTitleVis() ? selectedFilter.getTitle() : "";
         String filterSomewhere = selectedFilter.isSomewhereVis() ? selectedFilter.getSomewhere() : "";
         String filterUrl = selectedFilter.isUrlVis() ? selectedFilter.getUrl() : "";
+        String filterShowDate = selectedFilter.isShowDateVis() ? selectedFilter.getShowDate() : "";
 
         final boolean themeExact = selectedFilter.isThemeExact();
         // Sender
@@ -332,6 +343,10 @@ public final class SelectedFilter extends SelectedFilterProps {
         fSomewhere = new Filter(filterSomewhere, true);
         // URL
         fUrl = new Filter(filterUrl, false); // gibt URLs mit ",", das also nicht trennen
+        //ShowDate
+        fShowDate = new Filter(filterShowDate, false);
+
+        //Sendedatum
 
         final boolean onlyBookmark = selectedFilter.isOnlyVis() ? selectedFilter.isOnlyBookmark() : false;
         final boolean onlyHd = selectedFilter.isOnlyVis() ? selectedFilter.isOnlyHd() : false;
@@ -461,6 +476,12 @@ public final class SelectedFilter extends SelectedFilterProps {
 
         if (!fUrl.empty) {
             predicate = predicate.and(f -> FilmFilter.checkUrl(fUrl, f));
+        }
+
+        if (!fShowDate.filter.equals(FilmFilter.FILTER_SHOW_DATE_ALL)) {
+//            PLocalDate localDate = new PLocalDate(getShowDate());
+//            predicate = predicate.and(f -> FilmFilter.checkShowDate(localDate, f));
+            predicate = predicate.and(f -> FilmFilter.checkShowDate(getShowDate(), f));
         }
 
         return predicate;

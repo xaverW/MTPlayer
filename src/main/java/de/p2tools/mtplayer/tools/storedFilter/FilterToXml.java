@@ -52,23 +52,26 @@ public class FilterToXml {
     public static final int FILTER_MIN_TIME = 21;
     public static final int FILTER_MAX_TIME = 22;
 
-    public static final int FILTER_ONLY_VIS = 23;
-    public static final int FILTER_ONLY_BOOKMARK = 24;
-    public static final int FILTER_ONLY_HD = 25;
-    public static final int FILTER_ONLY_NEW = 26;
-    public static final int FILTER_ONLY_UT = 27;
-    public static final int FILTER_ONLY_LIVE = 28;
-    public static final int FILTER_ONLY_ACT_HISTORY = 29;
+    public static final int FILTER_SHOW_DATE_VIS = 23;
+    public static final int FILTER_SHOW_DATE = 24;
 
-    public static final int FILTER_NOT_VIS = 30;
-    public static final int FILTER_NOT_ABO = 31;
-    public static final int FILTER_NOT_HISTORY = 32;
-    public static final int FILTER_NOT_DOUBLE = 33;
-    public static final int FILTER_NOT_GEO = 34;
-    public static final int FILTER_NOT_FUTURE = 35;
+    public static final int FILTER_ONLY_VIS = 25;
+    public static final int FILTER_ONLY_BOOKMARK = 26;
+    public static final int FILTER_ONLY_HD = 27;
+    public static final int FILTER_ONLY_NEW = 28;
+    public static final int FILTER_ONLY_UT = 29;
+    public static final int FILTER_ONLY_LIVE = 30;
+    public static final int FILTER_ONLY_ACT_HISTORY = 31;
 
-    public static final int FILTER_BLACKLIST_ON = 36;
-    public static final int FILTER_BLACKLIST_ONLY = 37;
+    public static final int FILTER_NOT_VIS = 32;
+    public static final int FILTER_NOT_ABO = 33;
+    public static final int FILTER_NOT_HISTORY = 34;
+    public static final int FILTER_NOT_DOUBLE = 35;
+    public static final int FILTER_NOT_GEO = 36;
+    public static final int FILTER_NOT_FUTURE = 37;
+
+    public static final int FILTER_BLACKLIST_ON = 38;
+    public static final int FILTER_BLACKLIST_ONLY = 39;
 
     public static final String[] XML_NAMES = {"Name",
             "Sender-vis",
@@ -96,6 +99,9 @@ public class FilterToXml {
             "Zeit-on",
             "Zeit-min",
             "Zeit-max",
+
+            "Sendedatum-vis",
+            "Sendedatum",
 
             "nur-vis",
             "nur-bookmark",
@@ -149,6 +155,9 @@ public class FilterToXml {
         sf.setMinMaxDurVis(Boolean.parseBoolean(array[FILTER_MIN_MAX_DUR_VIS]));
         sf.setMinMaxTimeVis(Boolean.parseBoolean(array[FILTER_MIN_MAX_TIME_VIS]));
         sf.setMinMaxTimeInvert(Boolean.parseBoolean(array[FILTER_MIN_MAX_TIME_ON]));
+
+        sf.setShowDateVis(Boolean.parseBoolean(array[FILTER_SHOW_DATE_VIS]));
+        sf.setShowDate(array[FILTER_SHOW_DATE]);
 
         sf.setOnlyVis(Boolean.parseBoolean(array[FILTER_ONLY_VIS]));
         sf.setOnlyBookmark(Boolean.parseBoolean(array[FILTER_ONLY_BOOKMARK]));
@@ -268,6 +277,9 @@ public class FilterToXml {
                 ProgConst.FILTER_ALL : String.valueOf(sf.getMinTime());
         array[FILTER_MAX_TIME] = sf.getMaxTime() == FilmFilter.FILTER_FILMTIME_MAX_SEC ?
                 ProgConst.FILTER_ALL : String.valueOf(sf.getMaxTime());
+
+        array[FILTER_SHOW_DATE_VIS] = String.valueOf(sf.isShowDateVis());
+        array[FILTER_SHOW_DATE] = sf.getShowDate();
 
         array[FILTER_ONLY_VIS] = String.valueOf(sf.isOnlyVis());
         array[FILTER_ONLY_BOOKMARK] = String.valueOf(sf.isOnlyBookmark());

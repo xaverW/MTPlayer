@@ -16,12 +16,6 @@
 
 package de.p2tools.mtplayer.controller;
 
-import de.p2tools.mtplayer.controller.data.download.DownloadXml;
-import de.p2tools.mtplayer.controller.filmlist.filmlistUrls.FilmlistUrlData;
-import de.p2tools.mtplayer.controller.mediaDb.MediaCollectionData;
-import de.p2tools.mtplayer.tools.storedFilter.FilterToXml;
-import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
-import de.p2tools.mtplayer.tools.storedFilter.StoredFilters;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
@@ -33,6 +27,12 @@ import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.data.abo.Abo;
 import de.p2tools.mtplayer.controller.data.abo.AboXml;
 import de.p2tools.mtplayer.controller.data.download.Download;
+import de.p2tools.mtplayer.controller.data.download.DownloadXml;
+import de.p2tools.mtplayer.controller.filmlist.filmlistUrls.FilmlistUrlData;
+import de.p2tools.mtplayer.controller.mediaDb.MediaCollectionData;
+import de.p2tools.mtplayer.tools.storedFilter.FilterToXml;
+import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
+import de.p2tools.mtplayer.tools.storedFilter.StoredFilters;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.tools.log.PLog;
 
@@ -214,6 +214,7 @@ public class IoWriteXml implements AutoCloseable {
         writer.writeCharacters(P2LibConst.LINE_SEPARATOR);
         writer.writeComment("gespeicherte Filter");
         writer.writeCharacters(P2LibConst.LINE_SEPARATOR);
+        
         // Liste der Filterprofile
         progData.storedFilters.getStordeFilterList().stream().forEach((sf) -> {
             xmlWriteData(FilterToXml.TAG, FilterToXml.getXmlArray(), FilterToXml.getValueArray(sf), true);

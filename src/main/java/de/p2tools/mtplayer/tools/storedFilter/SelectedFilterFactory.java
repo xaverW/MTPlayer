@@ -56,6 +56,9 @@ public class SelectedFilterFactory {
         sfTo.setMinTime(sfFrom.getMinTime());
         sfTo.setMaxTime(sfFrom.getMaxTime());
 
+        sfTo.setShowDateVis(sfFrom.isShowDateVis());
+        sfTo.setShowDate(sfFrom.getShowDate());
+
         sfTo.setOnlyVis(sfFrom.isOnlyVis());
         sfTo.setOnlyBookmark(sfFrom.isOnlyBookmark());
         sfTo.setOnlyHd(sfFrom.isOnlyHd());

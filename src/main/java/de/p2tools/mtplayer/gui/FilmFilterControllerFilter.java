@@ -17,12 +17,15 @@
 package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
+import de.p2tools.p2Lib.guiTools.PDatePicker;
 import de.p2tools.p2Lib.guiTools.pCheckComboBox.PCheckComboBox;
 import de.p2tools.p2Lib.guiTools.pRange.PRangeBox;
 import de.p2tools.p2Lib.guiTools.pRange.PTimePeriodBox;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.GridPane;
@@ -30,6 +33,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class FilmFilterControllerFilter extends VBox {
 
@@ -43,6 +50,10 @@ public class FilmFilterControllerFilter extends VBox {
     private final PTimePeriodBox slFilmTime = new PTimePeriodBox();
     private final PToggleSwitch tglFilmTime = new PToggleSwitch("Zeitraum ausschließen");
     private final Label lblFilmTime = new Label("Sendezeit:");
+
+    private final Label lblShowDate = new Label("Sendedatum:");
+    private final PDatePicker pDatePicker = new PDatePicker();
+    private final Button btnClearDatePicker = new Button("");
 
     PCheckComboBox checkOnly = new PCheckComboBox();
     PCheckComboBox checkNot = new PCheckComboBox();
@@ -134,27 +145,59 @@ public class FilmFilterControllerFilter extends VBox {
 
         tglFilmTime.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().minMaxTimeInvertProperty());
         GridPane.setFillWidth(tglFilmTime, false);
+
+        pDatePicker.valueProperty().addListener((u, o, n) -> {
+            LocalDate newDate = pDatePicker.getValue();
+            if (newDate != null) {
+                try {
+                    progData.storedFilters.getActFilterSettings().setShowDate(newDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
+                } catch (Exception ex) {
+
+                }
+
+            } else {
+                progData.storedFilters.getActFilterSettings().setShowDate(FilmFilter.FILTER_SHOW_DATE_ALL);
+            }
+        });
+        progData.storedFilters.getActFilterSettings().showDateProperty().addListener((observable, oldValue, newValue) -> {
+            initPDatePicker();
+        });
+        initPDatePicker();
+        btnClearDatePicker.setGraphic(new ProgIcons().ICON_BUTTON_CLEAR);
+        btnClearDatePicker.setOnAction(a -> pDatePicker.clearDate());
+    }
+
+    private void initPDatePicker() {
+        try {
+            final String s = progData.storedFilters.getActFilterSettings().getShowDate();
+            if (!s.isEmpty()) {
+                LocalDate localDate = LocalDate.parse(progData.storedFilters.getActFilterSettings().getShowDate(), DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+                pDatePicker.setValue(localDate);
+            } else {
+                pDatePicker.clearDate();
+            }
+        } catch (DateTimeParseException ex) {
+            pDatePicker.clearDate();
+        }
     }
 
     private void addSlider() {
         initDaysFilter();
         initDurFilter();
         initFilmTimeFilter();
+        VBox vBox;
 
-        VBox vBox = new VBox(2);
         // Tage
+        vBox = new VBox(2);
         HBox h = new HBox();
         HBox hh = new HBox();
         h.getChildren().addAll(lblTimeRange, hh, lblTimeRangeValue);
         HBox.setHgrow(hh, Priority.ALWAYS);
         lblTimeRange.setMinWidth(0);
         vBox.getChildren().addAll(h, slTimeRange);
+        vBox.visibleProperty().bind(progData.storedFilters.getActFilterSettings().timeRangeVisProperty());
+        vBox.managedProperty().bind(progData.storedFilters.getActFilterSettings().timeRangeVisProperty());
         getChildren().addAll(vBox);
-
-//        vBox.getChildren().addAll(lblTimeRange, slTimeRange);
-//        vBox.visibleProperty().bind(progData.storedFilters.getActFilterSettings().timeRangeVisProperty());
-//        vBox.managedProperty().bind(progData.storedFilters.getActFilterSettings().timeRangeVisProperty());
-//        getChildren().addAll(vBox);
 
         // MinMax Dauer
         vBox = new VBox(2);
@@ -168,6 +211,18 @@ public class FilmFilterControllerFilter extends VBox {
         vBox.getChildren().addAll(lblFilmTime, slFilmTime, tglFilmTime);
         vBox.visibleProperty().bind(progData.storedFilters.getActFilterSettings().minMaxTimeVisProperty());
         vBox.managedProperty().bind(progData.storedFilters.getActFilterSettings().minMaxTimeVisProperty());
+        getChildren().addAll(vBox);
+
+        //Sendedatum
+        vBox = new VBox(2);
+        HBox hBox = new HBox(0);
+        hBox.getChildren().addAll(pDatePicker, btnClearDatePicker);
+        HBox.setHgrow(pDatePicker, Priority.ALWAYS);
+        pDatePicker.setMaxWidth(Double.MAX_VALUE);
+
+        vBox.getChildren().addAll(lblShowDate, hBox);
+        vBox.visibleProperty().bind(progData.storedFilters.getActFilterSettings().showDateVisProperty());
+        vBox.managedProperty().bind(progData.storedFilters.getActFilterSettings().showDateVisProperty());
         getChildren().addAll(vBox);
     }
 

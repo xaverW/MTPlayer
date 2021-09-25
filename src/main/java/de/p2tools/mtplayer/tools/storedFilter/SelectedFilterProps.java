@@ -50,6 +50,9 @@ public class SelectedFilterProps {
     private final IntegerProperty minTime = new SimpleIntegerProperty(0); // Tageszeit in Sekunden
     private final IntegerProperty maxTime = new SimpleIntegerProperty(FilmFilter.FILTER_FILMTIME_MAX_SEC); // Tageszeit in Sekunden
 
+    private final BooleanProperty showDateVis = new SimpleBooleanProperty(false);
+    private final StringProperty showDate = new SimpleStringProperty(FilmFilter.FILTER_SHOW_DATE_ALL); //Sendedatum
+
     private final BooleanProperty onlyVis = new SimpleBooleanProperty(false);
     private final BooleanProperty onlyBookmark = new SimpleBooleanProperty(false);
     private final BooleanProperty onlyHd = new SimpleBooleanProperty(false);
@@ -69,11 +72,12 @@ public class SelectedFilterProps {
     private final BooleanProperty blacklistOnly = new SimpleBooleanProperty(false);
 
     public BooleanProperty[] sfBooleanPropArr = {channelVis, themeVis, themeExact, themeTitleVis,
-            titleVis, somewhereVis, urlVis, timeRangeVis, minMaxDurVis, minMaxTimeVis, minMaxTimeInvert,
+            titleVis, somewhereVis, urlVis, timeRangeVis, minMaxDurVis,
+            minMaxTimeVis, minMaxTimeInvert, showDateVis,
             onlyVis, onlyBookmark, onlyHd, onlyNew, onlyUt, onlyLive, onlyAktHistory, notVis,
             notAbo, notHistory, notDouble, notGeo, notFuture, blacklistOn, blacklistOnly};
 
-    public StringProperty[] sfStringPropArr = {name, channel, theme, themeTitle, title, somewhere, url};
+    public StringProperty[] sfStringPropArr = {name, channel, theme, themeTitle, title, somewhere, url, showDate};
     public IntegerProperty[] sfIntegerPropArr = {timeRange, minDur, maxDur, minTime, maxTime};
 
 
@@ -366,6 +370,31 @@ public class SelectedFilterProps {
 
     public void setMaxTime(int maxTime) {
         this.maxTime.set(maxTime);
+    }
+
+    public boolean isShowDateVis() {
+        return showDateVis.get();
+    }
+
+    public BooleanProperty showDateVisProperty() {
+        return showDateVis;
+    }
+
+    public void setShowDateVis(boolean showDateVis) {
+        this.showDateVis.set(showDateVis);
+    }
+
+
+    public String getShowDate() {
+        return showDate.get();
+    }
+
+    public StringProperty showDateProperty() {
+        return showDate;
+    }
+
+    public void setShowDate(String showDate) {
+        this.showDate.set(showDate);
     }
 
     public boolean isOnlyVis() {

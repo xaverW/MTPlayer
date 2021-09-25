@@ -120,6 +120,11 @@ public class FilmFilterEditDialog extends PDialogExtra {
         tglMinMaxTime.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().minMaxTimeVisProperty());
         vBox.getChildren().add(tglMinMaxTime);
 
+        PToggleSwitch tglShowDate = new PToggleSwitch("Sendedatum");
+        tglShowDate.setMaxWidth(Double.MAX_VALUE);
+        tglShowDate.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().showDateVisProperty());
+        vBox.getChildren().add(tglShowDate);
+
         PToggleSwitch tglOnly = new PToggleSwitch("\"anzeigen\"");
         tglOnly.setMaxWidth(Double.MAX_VALUE);
         tglOnly.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().onlyVisProperty());
