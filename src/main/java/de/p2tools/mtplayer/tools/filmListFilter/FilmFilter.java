@@ -20,7 +20,6 @@ import de.p2tools.mtplayer.controller.data.abo.Abo;
 import de.p2tools.mtplayer.controller.data.film.Film;
 import de.p2tools.mtplayer.controller.data.film.FilmXml;
 import de.p2tools.mtplayer.tools.storedFilter.Filter;
-import de.p2tools.p2Lib.tools.date.PLocalDate;
 
 import java.util.regex.Pattern;
 
@@ -218,7 +217,7 @@ public class FilmFilter {
             days = 0;
         }
 
-        return checkDate(days, film);
+        return checkDays(days, film);
     }
 
     public static boolean checkUrl(Filter url, Film film) {
@@ -229,7 +228,7 @@ public class FilmFilter {
         return true;
     }
 
-    public static boolean checkDate(long days, Film film) {
+    public static boolean checkDays(long days, Film film) {
         if (days == 0) {
             return true;
         }
@@ -240,20 +239,6 @@ public class FilmFilter {
         }
 
         return true;
-    }
-
-    public static boolean checkShowDate(PLocalDate showDate, Film film) {
-        if (showDate.isEmpty() || film.filmDate.isEmpty()) {
-            //dann will der User nicht oder der Film hat kein Datum
-            return true;
-        }
-
-        final PLocalDate filmDate = film.filmDate.getPlocalDate();
-        if (filmDate != null && filmDate.getLocalDate().isEqual(showDate.getLocalDate())) {
-            return true;
-        }
-
-        return false;
     }
 
     public static boolean checkShowDate(String showDate, Film film) {

@@ -387,12 +387,7 @@ public final class SelectedFilter extends SelectedFilterProps {
             days = 0;
         }
 
-        Predicate<Film> predicate = new Predicate<Film>() {
-            @Override
-            public boolean test(Film film) {
-                return true;
-            }
-        };
+        Predicate<Film> predicate = film -> true;
 
         if (onlyBookmark) {
             predicate = predicate.and(f -> f.isBookmark());
@@ -434,10 +429,10 @@ public final class SelectedFilter extends SelectedFilterProps {
             predicate = predicate.and(f -> !f.isBlackBlocked());
         }
 
-        // Filmdatum
+        //anz Tage Sendezeit
         if (days != 0) {
             final long d = days;
-            predicate = predicate.and(f -> FilmFilter.checkDate(d, f));
+            predicate = predicate.and(f -> FilmFilter.checkDays(d, f));
         }
 
         // Filmlänge
@@ -478,9 +473,8 @@ public final class SelectedFilter extends SelectedFilterProps {
             predicate = predicate.and(f -> FilmFilter.checkUrl(fUrl, f));
         }
 
+        //Sendetag
         if (!fShowDate.filter.equals(FilmFilter.FILTER_SHOW_DATE_ALL)) {
-//            PLocalDate localDate = new PLocalDate(getShowDate());
-//            predicate = predicate.and(f -> FilmFilter.checkShowDate(localDate, f));
             predicate = predicate.and(f -> FilmFilter.checkShowDate(getShowDate(), f));
         }
 
