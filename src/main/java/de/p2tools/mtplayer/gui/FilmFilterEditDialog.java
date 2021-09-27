@@ -22,14 +22,12 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
+import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
+import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
-import javafx.scene.control.Slider;
-import javafx.scene.layout.HBox;
+import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -38,6 +36,7 @@ import javafx.scene.layout.VBox;
 public class FilmFilterEditDialog extends PDialogExtra {
 
     final ProgData progData;
+    IntegerProperty waitTime = ProgConfig.SYSTEM_FILTER_WAIT_TIME.getIntegerProperty();
 
     public FilmFilterEditDialog(ProgData progData) {
         super(progData.primaryStage, null, "Filtereinstellungen", true, true, DECO.NONE);
@@ -136,15 +135,18 @@ public class FilmFilterEditDialog extends PDialogExtra {
         vBox.getChildren().add(tglNot);
 
         //Wartezeit
-        VBox vBoxWait = new VBox(10);
-        vBoxWait.setSpacing(10);
-        vBoxWait.setPadding(new Insets(10, 0, 0, 0));
+        Separator sp = new Separator();
+        sp.getStyleClass().add("pseperator2");
+        sp.setMinHeight(0);
 
-        Label lblTitle = new Label("In Textfeldern: Suchbeginn\n" +
-                "wenn keine Eingabe für:");
-        lblTitle.setMinWidth(0);
-        Label lbl = new Label();
-        lbl.setMaxWidth(Double.MAX_VALUE);
+        final ToggleGroup group = new ToggleGroup();
+        RadioButton rboWait = new RadioButton();
+        RadioButton rboReturn = new RadioButton();
+        rboWait.setToggleGroup(group);
+        rboReturn.setToggleGroup(group);
+        rboWait.setSelected(!ProgConfig.SYSTEM_FILTER_RETURN.getBool());
+        rboReturn.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FILTER_RETURN.getBooleanProperty());
+
         Label lblValue = new Label();
         lblValue.setMinWidth(Region.USE_COMPUTED_SIZE);
 
@@ -157,30 +159,61 @@ public class FilmFilterEditDialog extends PDialogExtra {
         slider.setShowTickLabels(true);
         slider.setSnapToTicks(true);
         slider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            ProgConfig.SYSTEM_FILTER_WAIT_TIME.setValue(setValue(slider, lblValue));
+            waitTime.setValue(Double.valueOf(slider.getValue()).intValue());
+            setLabel(lblValue);
         });
-        slider.setValue(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getInt());
-        setValue(slider, lblValue);
 
-        HBox hBoxLbl = new HBox(0);
-        hBoxLbl.setAlignment(Pos.BOTTOM_LEFT);
-        HBox.setHgrow(lbl, Priority.ALWAYS);
-        hBoxLbl.getChildren().addAll(lblTitle, lbl, lblValue);
 
-        HBox hBoxSlider = new HBox();
-        hBoxSlider.getChildren().addAll(slider);
-        HBox.setHgrow(slider, Priority.ALWAYS);
+        slider.disableProperty().bind(rboReturn.selectedProperty());
+        rboReturn.selectedProperty().addListener((u, o, n) -> {
+            changeRbo(rboReturn, slider, lblValue);
+        });
+        changeRbo(rboReturn, slider, lblValue);
 
-        Separator sp = new Separator();
-        sp.getStyleClass().add("pseperator2");
-        sp.setMinHeight(0);
 
-        vBoxWait.getChildren().addAll(sp, hBoxLbl, hBoxSlider);
-        vBox.getChildren().addAll(vBoxWait);
+        GridPane gridPane = new GridPane();
+        gridPane.setHgap(5);
+        gridPane.setVgap(5);
+        gridPane.setPadding(new Insets(0));
+        gridPane.setMaxWidth(Double.MAX_VALUE);
+        VBox.setVgrow(gridPane, Priority.ALWAYS);
+
+        int row = 0;
+        gridPane.add(new Label("In Textfeldern:"), 0, row, 3, 1);
+
+        gridPane.add(rboWait, 0, ++row);
+        gridPane.add(new Label("Suchbeginn wenn keine\nEingabe für:"), 1, row);
+        gridPane.add(lblValue, 2, row);
+
+        gridPane.add(slider, 1, ++row, 2, 1);
+        GridPane.setHgrow(slider, Priority.ALWAYS);
+        slider.setPadding(new Insets(5, 0, 0, 0));
+
+        gridPane.add(new Label(), 0, ++row);
+
+        gridPane.add(rboReturn, 0, ++row);
+        gridPane.add(new Label("Suchbeginn bei Return-Eingabe"), 1, row, 2, 1);
+
+        gridPane.getColumnConstraints().addAll(
+                PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcComputedSizeAndHgrowRight());
+
+        vBox.getChildren().addAll(sp, gridPane);
     }
 
-    private int setValue(Slider slider, Label lblValue) {
-        int intValue = Double.valueOf(slider.getValue()).intValue();
+    private void changeRbo(RadioButton rboReturn, Slider slider, Label lblValue) {
+        if (rboReturn.isSelected()) {
+            slider.setValue(0);
+            waitTime.setValue(Double.valueOf(slider.getValue()).intValue());
+        } else {
+            slider.setValue(waitTime.getValue());
+        }
+        setLabel(lblValue);
+    }
+
+    private int setLabel(Label lblValue) {
+        int intValue = waitTime.getValue();
         lblValue.setText("  " + intValue + " ms");
         return intValue;
     }

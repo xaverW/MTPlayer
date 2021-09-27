@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.gui;
 
+import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.tools.storedFilter.FilterCheckRegEx;
 import javafx.beans.property.BooleanProperty;
@@ -23,6 +24,7 @@ import javafx.collections.ListChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -168,21 +170,112 @@ public class FilmFilterControllerTextFilter extends VBox {
         cboTheme.editableProperty().bind(progData.storedFilters.getActFilterSettings().themeExactProperty().not());
         cboTheme.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         cboTheme.setVisibleRowCount(25);
-        cboTheme.valueProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().themeProperty());
-        cboTheme.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
-            if (oldValue != null && newValue != null) {
-                progData.storedFilters.getActFilterSettings().setTheme(newValue);
+        cboTheme.setItems(progData.worker.getThemeForChannelList());
+
+//        cboTheme.valueProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().themeProperty());
+//        cboTheme.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+//            if (oldValue != null && newValue != null) {
+//                progData.storedFilters.getActFilterSettings().setTheme(newValue);
+//            }
+//        });
+
+
+        cboTheme.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (!progData.storedFilters.getActFilterSettings().themeExactProperty().getValue()) {
+                return;
+            }
+
+            if (!ProgConfig.SYSTEM_FILTER_RETURN.getBool()) {
+                progData.storedFilters.getActFilterSettings().setTheme(cboTheme.valueProperty().getValue());
             }
         });
-        cboTheme.setItems(progData.worker.getThemeForChannelList());
+        cboTheme.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!ProgConfig.SYSTEM_FILTER_RETURN.getBool()) {
+                progData.storedFilters.getActFilterSettings().setTheme(cboTheme.getEditor().getText());
+            }
+        });
+        cboTheme.getEditor().setOnKeyPressed(event -> {
+            if (ProgConfig.SYSTEM_FILTER_RETURN.getBool() && event.getCode() == KeyCode.ENTER) {
+                progData.storedFilters.getActFilterSettings().setTheme(cboTheme.getEditor().getText());
+            }
+        });
+        progData.storedFilters.getActFilterSettings().themeProperty().addListener((observable, oldValue, newValue) -> {
+                    cboTheme.valueProperty().setValue(progData.storedFilters.getActFilterSettings().getTheme());
+                }
+        );
+        cboTheme.valueProperty().setValue(progData.storedFilters.getActFilterSettings().getTheme());
+        progData.worker.getThemeForChannelList().addListener((ListChangeListener<String>) c -> {
+            cboTheme.valueProperty().setValue(progData.storedFilters.getActFilterSettings().getTheme());
+        });
+
+
+//        txtThemeTitle.textProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().themeTitleProperty());
+        txtThemeTitle.textProperty().addListener((u, o, n) -> {
+            if (!ProgConfig.SYSTEM_FILTER_RETURN.getBool()) {
+                progData.storedFilters.getActFilterSettings().setThemeTitle(txtThemeTitle.getText());
+            }
+        });
+        txtThemeTitle.setOnKeyPressed(event -> {
+            if (ProgConfig.SYSTEM_FILTER_RETURN.getBool() && event.getCode() == KeyCode.ENTER) {
+                progData.storedFilters.getActFilterSettings().setThemeTitle(txtThemeTitle.getText());
+            }
+        });
+        progData.storedFilters.getActFilterSettings().themeTitleProperty().addListener((u, o, n) ->
+                txtThemeTitle.setText(progData.storedFilters.getActFilterSettings().getThemeTitle())
+        );
+        txtThemeTitle.setText(progData.storedFilters.getActFilterSettings().getThemeTitle());
+
+//        txtTitle.textProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().titleProperty());
+        txtTitle.textProperty().addListener((u, o, n) -> {
+            if (!ProgConfig.SYSTEM_FILTER_RETURN.getBool()) {
+                progData.storedFilters.getActFilterSettings().setTitle(txtTitle.getText());
+            }
+        });
+        txtTitle.setOnKeyPressed(event -> {
+            if (ProgConfig.SYSTEM_FILTER_RETURN.getBool() && event.getCode() == KeyCode.ENTER) {
+                progData.storedFilters.getActFilterSettings().setTitle(txtTitle.getText());
+            }
+        });
+        progData.storedFilters.getActFilterSettings().titleProperty().addListener((u, o, n) ->
+                txtTitle.setText(progData.storedFilters.getActFilterSettings().getTitle())
+        );
+        txtTitle.setText(progData.storedFilters.getActFilterSettings().getTitle());
+
+//        txtSomewhere.textProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().somewhereProperty());
+        txtSomewhere.textProperty().addListener((u, o, n) -> {
+            if (!ProgConfig.SYSTEM_FILTER_RETURN.getBool()) {
+                progData.storedFilters.getActFilterSettings().setSomewhere(txtSomewhere.getText());
+            }
+        });
+        txtSomewhere.setOnKeyPressed(event -> {
+            if (ProgConfig.SYSTEM_FILTER_RETURN.getBool() && event.getCode() == KeyCode.ENTER) {
+                progData.storedFilters.getActFilterSettings().setSomewhere(txtSomewhere.getText());
+            }
+        });
+        progData.storedFilters.getActFilterSettings().somewhereProperty().addListener((u, o, n) -> {
+                    txtSomewhere.setText(progData.storedFilters.getActFilterSettings().getSomewhere());
+                }
+        );
+        txtSomewhere.setText(progData.storedFilters.getActFilterSettings().getSomewhere());
+
+//        txtUrl.textProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().urlProperty());
+        txtUrl.textProperty().addListener((u, o, n) -> {
+            if (!ProgConfig.SYSTEM_FILTER_RETURN.getBool()) {
+                progData.storedFilters.getActFilterSettings().setUrl(txtUrl.getText());
+            }
+        });
+        txtUrl.setOnKeyPressed(event -> {
+            if (ProgConfig.SYSTEM_FILTER_RETURN.getBool() && event.getCode() == KeyCode.ENTER) {
+                progData.storedFilters.getActFilterSettings().setUrl(txtUrl.getText());
+            }
+        });
+        progData.storedFilters.getActFilterSettings().urlProperty().addListener((u, o, n) ->
+                txtUrl.setText(progData.storedFilters.getActFilterSettings().getUrl())
+        );
+        txtUrl.setText(progData.storedFilters.getActFilterSettings().getUrl());
+
         FilterCheckRegEx fTh = new FilterCheckRegEx(cboTheme.getEditor());
         cboTheme.getEditor().textProperty().addListener((observable, oldValue, newValue) -> fTh.checkPattern());
-
-        txtThemeTitle.textProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().themeTitleProperty());
-        txtTitle.textProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().titleProperty());
-        txtSomewhere.textProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().somewhereProperty());
-        txtUrl.textProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().urlProperty());
-
         FilterCheckRegEx fTT = new FilterCheckRegEx(txtThemeTitle);
         txtThemeTitle.textProperty().addListener((observable, oldValue, newValue) -> fTT.checkPattern());
         FilterCheckRegEx fT = new FilterCheckRegEx(txtTitle);
@@ -195,7 +288,7 @@ public class FilmFilterControllerTextFilter extends VBox {
 
     private void addFilter() {
         VBox vBox = new VBox(10);
-        addChannel(vBox);
+        addTxt("Sender", mbChannel, vBox, progData.storedFilters.getActFilterSettings().channelVisProperty());
         addTxt("Thema", cboTheme, vBox, progData.storedFilters.getActFilterSettings().themeVisProperty());
         addTxt("Thema oder Titel", txtThemeTitle, vBox, progData.storedFilters.getActFilterSettings().themeTitleVisProperty());
         addTxt("Titel", txtTitle, vBox, progData.storedFilters.getActFilterSettings().titleVisProperty());
@@ -236,15 +329,15 @@ public class FilmFilterControllerTextFilter extends VBox {
         vBox.managedProperty().bind(booleanProperty);
     }
 
-    private void addChannel(VBox vBoxComplete) {
-        VBox vBox = new VBox(2);
-        Label label = new Label("Sender");
-        vBox.getChildren().addAll(label, mbChannel);
-        vBoxComplete.getChildren().add(vBox);
-
-        vBox.visibleProperty().bind(progData.storedFilters.getActFilterSettings().channelVisProperty());
-        vBox.managedProperty().bind(progData.storedFilters.getActFilterSettings().channelVisProperty());
-    }
+//    private void addChannel(VBox vBoxComplete) {
+//        VBox vBox = new VBox(2);
+//        Label label = new Label("Sender");
+//        vBox.getChildren().addAll(label, mbChannel);
+//        vBoxComplete.getChildren().add(vBox);
+//
+//        vBox.visibleProperty().bind(progData.storedFilters.getActFilterSettings().channelVisProperty());
+//        vBox.managedProperty().bind(progData.storedFilters.getActFilterSettings().channelVisProperty());
+//    }
 
     private class MenuItemClass {
 

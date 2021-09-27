@@ -143,6 +143,7 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs TIP_OF_DAY_WAS_SHOWN = addNewKey("tip-of-day-was-shown");//bereits angezeigte Tips
     public static MLConfigs TIP_OF_DAY_DATE = addNewKey("tip-of-day-date"); //Datum des letzten Tips
     public static MLConfigs SYSTEM_FILTER_WAIT_TIME = addNewKey("system-filter-wait-time", "100");
+    public static MLConfigs SYSTEM_FILTER_RETURN = addNewKey("system-filter-return", Boolean.FALSE.toString());
 
 
     // Fenstereinstellungen

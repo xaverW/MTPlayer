@@ -24,6 +24,7 @@ import de.p2tools.p2Lib.tools.log.PDebugLog;
 import javafx.animation.PauseTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.StringProperty;
 import javafx.util.Duration;
 
 import java.util.function.Predicate;
@@ -34,6 +35,7 @@ public final class SelectedFilter extends SelectedFilterProps {
     private final BooleanProperty blacklistChange = new SimpleBooleanProperty(false);
     private boolean reportChange = true;
     private final PauseTransition pause = new PauseTransition(Duration.millis(200));
+    StringProperty filterWaittime = ProgConfig.SYSTEM_FILTER_WAIT_TIME.getStringProperty();
 
 
     public SelectedFilter() {
@@ -84,7 +86,7 @@ public final class SelectedFilter extends SelectedFilterProps {
 
     public void initFilter() {
         pause.setDuration(Duration.millis(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getInt()));
-        ProgConfig.SYSTEM_FILTER_WAIT_TIME.getStringProperty().addListener((observable, oldValue, newValue) -> {
+        filterWaittime.addListener((observable, oldValue, newValue) -> {
             PDebugLog.sysLog("SYSTEM_FILTER_WAIT_TIME.getStringProperty(): " + ProgConfig.SYSTEM_FILTER_WAIT_TIME.getInt());
             pause.setDuration(Duration.millis(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getInt()));
         });
@@ -154,7 +156,7 @@ public final class SelectedFilter extends SelectedFilterProps {
 
         somewhereVisProperty().addListener(l -> reportFilterChange());
         somewhereProperty().addListener(l -> {
-            PDebugLog.sysLog("Pause somewhereProperty");
+            PDebugLog.sysLog("Pause somewhereProperty: " + pause.getDuration().toString());
             pause.setOnFinished(event -> reportFilterChange());
             pause.playFromStart();
 //            reportFilterChange();
