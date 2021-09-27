@@ -185,9 +185,9 @@ public class FilmFilterControllerTextFilter extends VBox {
                 return;
             }
 
-            if (!ProgConfig.SYSTEM_FILTER_RETURN.getBool()) {
-                progData.storedFilters.getActFilterSettings().setTheme(cboTheme.valueProperty().getValue());
-            }
+//            if (!ProgConfig.SYSTEM_FILTER_RETURN.getBool()) {
+            progData.storedFilters.getActFilterSettings().setTheme(cboTheme.valueProperty().getValue());
+//            }
         });
         cboTheme.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
             if (!ProgConfig.SYSTEM_FILTER_RETURN.getBool()) {
