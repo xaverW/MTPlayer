@@ -36,7 +36,7 @@ public class UpdateConfig {
             if (ProgData.getInstance().storedFilters.getActFilterSettings().getTimeRange() == FILTER_DAYS_MAX__OLD) {
                 ProgData.getInstance().storedFilters.getActFilterSettings().setTimeRange(FilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
             }
-            ProgData.getInstance().storedFilters.getStordeFilterList().stream().forEach(sf -> {
+            ProgData.getInstance().storedFilters.getStoredFilterList().stream().forEach(sf -> {
                 if (sf.getTimeRange() == FILTER_DAYS_MAX__OLD) {
                     sf.setTimeRange(FilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
                 }

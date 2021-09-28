@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.tools.storedFilter;
 import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
 import javafx.beans.property.*;
 
-public class SelectedFilterProps {
+public class SelectedFilterProps implements Comparable<SelectedFilter> {
 
     private final StringProperty name = new SimpleStringProperty();
 
@@ -582,4 +582,8 @@ public class SelectedFilterProps {
         return name.getValue();
     }
 
+    @Override
+    public int compareTo(SelectedFilter o) {
+        return name.getValue().compareTo(o.getName());
+    }
 }

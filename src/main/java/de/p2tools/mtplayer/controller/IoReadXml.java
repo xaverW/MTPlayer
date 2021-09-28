@@ -155,7 +155,7 @@ public class IoReadXml implements AutoCloseable {
                                         SelectedFilterFactory.copyFilter(sf, this.progData.storedFilters.getActFilterSettings());
                                         this.progData.storedFilters.getActFilterSettings().setReportChange(true);
                                     } else {
-                                        this.progData.storedFilters.getStordeFilterList().add(sf);
+                                        this.progData.storedFilters.getStoredFilterList().add(sf);
                                     }
                                     ++filtercount;
                                 }
@@ -208,7 +208,7 @@ public class IoReadXml implements AutoCloseable {
         progData.aboList.sort();
 
         // ListeFilmUpdateServer aufbauen
-        if (progData.storedFilters.getStordeFilterList().isEmpty()) {
+        if (progData.storedFilters.getStoredFilterList().isEmpty()) {
             ProgInitFilter.setProgInitFilter();
         }
     }

@@ -62,7 +62,7 @@ public class ProgInitFilter {
         sf.setNotGeo(false);
         sf.setNotFuture(false);
 
-        progData.storedFilters.getStordeFilterList().add(sf);
+        progData.storedFilters.getStoredFilterList().add(sf);
 
         //========================================================
         sf = new SelectedFilter("nur neue Filme");
@@ -102,7 +102,7 @@ public class ProgInitFilter {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.storedFilters.getStordeFilterList().add(sf);
+        progData.storedFilters.getStoredFilterList().add(sf);
 
         //========================================================
         sf = new SelectedFilter("nur Bookmarks");
@@ -142,7 +142,7 @@ public class ProgInitFilter {
         sf.setNotGeo(false);
         sf.setNotFuture(false);
 
-        progData.storedFilters.getStordeFilterList().add(sf);
+        progData.storedFilters.getStoredFilterList().add(sf);
 
         //========================================================
         sf = new SelectedFilter("aktuelle Nachrichten");
@@ -184,7 +184,7 @@ public class ProgInitFilter {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.storedFilters.getStordeFilterList().add(sf);
+        progData.storedFilters.getStoredFilterList().add(sf);
 
         //========================================================
         sf = new SelectedFilter("Nachrichten mit Europa UND Brexit");
@@ -226,7 +226,7 @@ public class ProgInitFilter {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.storedFilters.getStordeFilterList().add(sf);
+        progData.storedFilters.getStoredFilterList().add(sf);
 
         //========================================================
         sf = new SelectedFilter("nur ARD ODER ZDF");
@@ -268,7 +268,7 @@ public class ProgInitFilter {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.storedFilters.getStordeFilterList().add(sf);
+        progData.storedFilters.getStoredFilterList().add(sf);
 
         //========================================================
         sf = new SelectedFilter("Sport");
@@ -309,7 +309,7 @@ public class ProgInitFilter {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.storedFilters.getStordeFilterList().add(sf);
+        progData.storedFilters.getStoredFilterList().add(sf);
 
         //========================================================
         sf = new SelectedFilter("Livestreams");
@@ -350,7 +350,7 @@ public class ProgInitFilter {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.storedFilters.getStordeFilterList().add(sf);
+        progData.storedFilters.getStoredFilterList().add(sf);
 
         //========================================================
         sf = new SelectedFilter("Abendkrimi");
@@ -393,7 +393,7 @@ public class ProgInitFilter {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.storedFilters.getStordeFilterList().add(sf);
+        progData.storedFilters.getStoredFilterList().add(sf);
 
         //========================================================
         sf = new SelectedFilter("nur \"neue\" in HD");
@@ -436,7 +436,7 @@ public class ProgInitFilter {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.storedFilters.getStordeFilterList().add(sf);
+        progData.storedFilters.getStoredFilterList().add(sf);
 
     }
 }

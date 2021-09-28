@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.gui;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
+import de.p2tools.mtplayer.gui.dialog.FilmFilterSortDialog;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.mtplayer.tools.storedFilter.ProgInitFilter;
 import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
@@ -100,7 +101,7 @@ public class FilmFilterControllerProfiles extends VBox {
 
     private void filterProfiles() {
         // Filterprofile einrichten
-        cboFilterProfiles.setItems(progData.storedFilters.getStordeFilterList());
+        cboFilterProfiles.setItems(progData.storedFilters.getStoredFilterList());
         cboFilterProfiles.setTooltip(new Tooltip("Gespeicherte Filterprofile können\n" +
                 "hier geladen werden"));
 
@@ -113,7 +114,7 @@ public class FilmFilterControllerProfiles extends VBox {
             @Override
             public SelectedFilter fromString(String id) {
                 final int i = cboFilterProfiles.getSelectionModel().getSelectedIndex();
-                return progData.storedFilters.getStordeFilterList().get(i);
+                return progData.storedFilters.getStoredFilterList().get(i);
             }
         };
         cboFilterProfiles.setConverter(converter);
@@ -147,11 +148,14 @@ public class FilmFilterControllerProfiles extends VBox {
             progData.aboList.addNewAboFromFilter(selectedFilter);
         });
 
+        final MenuItem miResort = new MenuItem("Filterprofile sortieren");
+        miResort.setOnAction(e -> new FilmFilterSortDialog(progData).showDialog());
+
         final MenuItem miReset = new MenuItem("alle Filterprofile wieder herstellen");
         miReset.setOnAction(e -> resetFilter());
 
         mbFilterTools.setGraphic(new ProgIcons().ICON_BUTTON_MENU);
-        mbFilterTools.getItems().addAll(miLoad, miRename, miDel, miDelAll, miSave, miNew, miAbo, new SeparatorMenuItem(), miReset);
+        mbFilterTools.getItems().addAll(miLoad, miRename, miDel, miDelAll, miSave, miNew, miAbo, miResort, new SeparatorMenuItem(), miReset);
         mbFilterTools.setTooltip(new Tooltip("Gespeicherte Filterprofile bearbeiten"));
 
         cboFilterProfiles.getSelectionModel().select(filterProp.get());
@@ -201,16 +205,19 @@ public class FilmFilterControllerProfiles extends VBox {
     }
 
     private void delFilter() {
-        progData.storedFilters.removeStoredFilter(cboFilterProfiles.getSelectionModel().getSelectedItem());
-        cboFilterProfiles.getSelectionModel().selectFirst();
+        SelectedFilter sf = cboFilterProfiles.getSelectionModel().getSelectedItem();
+        if (sf == null) {
+            PAlert.showInfoNoSelection();
+            return;
+        }
+
+        if (progData.storedFilters.removeStoredFilter(sf)) {
+            cboFilterProfiles.getSelectionModel().selectFirst();
+        }
     }
 
     private void delAllFilter() {
-        if (PAlert.showAlertOkCancel("Löschen", "Filterprofile löschen",
-                "Sollen alle Filterprofile gelöscht werden?")) {
-            progData.storedFilters.removeAllStoredFilter();
-            cboFilterProfiles.getSelectionModel().selectFirst();
-        }
+        progData.storedFilters.removeAllStoredFilter();
     }
 
     private void resetFilter() {
@@ -218,7 +225,7 @@ public class FilmFilterControllerProfiles extends VBox {
                 "Sollen alle Filterprofile gelöscht " +
                         "und durch die Profile vom ersten Programmstart " +
                         "ersetzt werden?")) {
-            progData.storedFilters.getStordeFilterList().clear();
+            progData.storedFilters.getStoredFilterList().clear();
             ProgInitFilter.setProgInitFilter();
             cboFilterProfiles.getSelectionModel().selectFirst();
         }

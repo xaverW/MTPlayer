@@ -18,6 +18,7 @@ package de.p2tools.mtplayer.tools.storedFilter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.Abo;
+import de.p2tools.p2Lib.alert.PAlert;
 import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -46,14 +47,14 @@ public final class StoredFilters {
     private SelectedFilter actFilterSettings = new SelectedFilter(SELECTED_FILTER_NAME); // ist der "aktuelle" Filter im Programm
 
     // ist die Liste der gespeicherten Filter
-    private final ObservableList<SelectedFilter> filterList =
-            FXCollections.observableList(new ArrayList<>(), (SelectedFilter tp) -> new Observable[]{tp.nameProperty()});
+    private final SelectedFilterList selectedFilterList = new SelectedFilterList();
 
     // ist die Liste der zuletzt verwendeten Filter
-    private final ObservableList<SelectedFilter> filterListBackward =
+    private final ObservableList<SelectedFilter> selectedFilterBackward =
             FXCollections.observableList(new ArrayList<>(), (SelectedFilter tp) -> new Observable[]{tp.nameProperty()});
-    private final ObservableList<SelectedFilter> filterListForward =
+    private final ObservableList<SelectedFilter> selectedFilterForward =
             FXCollections.observableList(new ArrayList<>(), (SelectedFilter tp) -> new Observable[]{tp.nameProperty()});
+
     private boolean thema = false, themaTitle = false, title = false, somewhere = false, url = false;
 
     public StoredFilters(ProgData progData) {
@@ -61,25 +62,25 @@ public final class StoredFilters {
 
         filterChangeListener = (observable, oldValue, newValue) -> {
             postFilterChange();
-            filterListForward.clear();
+            selectedFilterForward.clear();
         };
         blacklistChangeListener = (observable, oldValue, newValue) -> {
             postBlacklistChange();
-            filterListForward.clear();
+            selectedFilterForward.clear();
         };
         actFilterSettings.filterChangeProperty().addListener(filterChangeListener); // wenn der User den Filter ändert
         actFilterSettings.blacklistChangeProperty().addListener(blacklistChangeListener); // wenn der User die Blackl. ein-/ausschaltet
 
 //        addBackward();
-        filterListBackward.addListener((ListChangeListener<SelectedFilter>) c -> {
-            if (filterListBackward.size() > 1) {
+        selectedFilterBackward.addListener((ListChangeListener<SelectedFilter>) c -> {
+            if (selectedFilterBackward.size() > 1) {
                 backward.setValue(true);
             } else {
                 backward.setValue(false);
             }
         });
-        filterListForward.addListener((ListChangeListener<SelectedFilter>) c -> {
-            if (filterListForward.size() > 0) {
+        selectedFilterForward.addListener((ListChangeListener<SelectedFilter>) c -> {
+            if (selectedFilterForward.size() > 0) {
                 forward.setValue(true);
             } else {
                 forward.setValue(false);
@@ -132,8 +133,8 @@ public final class StoredFilters {
      *
      * @return
      */
-    public ObservableList<SelectedFilter> getStordeFilterList() {
-        return filterList;
+    public SelectedFilterList getStoredFilterList() {
+        return selectedFilterList;
     }
 
     /**
@@ -146,7 +147,7 @@ public final class StoredFilters {
         SelectedFilterFactory.copyFilter(actFilterSettings, sf);
 
         sf.setName(name.isEmpty() ? getNextName() : name);
-        filterList.add(sf);
+        selectedFilterList.add(sf);
 
         return sf.getName();
     }
@@ -158,7 +159,7 @@ public final class StoredFilters {
         while (!found) {
 
             final String name = "Filter " + id;
-            if (!filterList.stream().filter(f -> name.equalsIgnoreCase(f.getName())).findAny().isPresent()) {
+            if (!selectedFilterList.stream().filter(f -> name.equalsIgnoreCase(f.getName())).findAny().isPresent()) {
                 ret = name;
                 found = true;
             }
@@ -173,19 +174,33 @@ public final class StoredFilters {
      *
      * @param sf
      */
-    public void removeStoredFilter(SelectedFilter sf) {
+    public boolean removeStoredFilter(SelectedFilter sf) {
         if (sf == null) {
-            return;
+            return false;
         }
-        filterList.remove(sf);
+
+        if (PAlert.showAlertOkCancel("Löschen", "Filterprofil löschen",
+                "Soll das Filterprofil: " +
+                        sf.getName() + "\n" +
+                        "gelöscht werden?")) {
+            selectedFilterList.remove(sf);
+            return true;
+        }
+
+        return false;
     }
 
 
     /**
      * delete all Filter
      */
-    public void removeAllStoredFilter() {
-        filterList.clear();
+    public boolean removeAllStoredFilter() {
+        if (PAlert.showAlertOkCancel("Löschen", "Filterprofile löschen",
+                "Sollen alle Filterprofile gelöscht werden?")) {
+            selectedFilterList.clear();
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -233,7 +248,7 @@ public final class StoredFilters {
         actFilterSettings.setTimeRangeVis(true);
         actFilterSettings.setTimeRange(abo.getTimeRange());
 
-        filterListForward.clear();
+        selectedFilterForward.clear();
         postFilterChange();
         actFilterSettings.filterChangeProperty().addListener(filterChangeListener);
         actFilterSettings.blacklistChangeProperty().addListener(blacklistChangeListener);
@@ -249,31 +264,31 @@ public final class StoredFilters {
             actFilterSettings.clearTxtFilter();
         }
 
-        filterListForward.clear();
+        selectedFilterForward.clear();
         postFilterChange();
         actFilterSettings.filterChangeProperty().addListener(filterChangeListener);
         actFilterSettings.blacklistChangeProperty().addListener(blacklistChangeListener);
     }
 
     public void goBackward() {
-        if (filterListBackward.size() <= 1) {
+        if (selectedFilterBackward.size() <= 1) {
             // dann gibts noch keine oder ist nur die aktuelle Einstellung drin
             return;
         }
 
-        SelectedFilter sf = filterListBackward.remove(filterListBackward.size() - 1); // ist die aktuelle Einstellung
-        filterListForward.add(sf);
-        sf = filterListBackward.remove(filterListBackward.size() - 1); // ist die davor
+        SelectedFilter sf = selectedFilterBackward.remove(selectedFilterBackward.size() - 1); // ist die aktuelle Einstellung
+        selectedFilterForward.add(sf);
+        sf = selectedFilterBackward.remove(selectedFilterBackward.size() - 1); // ist die davor
         setActFilterSettings(sf);
     }
 
     public void goForward() {
-        if (filterListForward.isEmpty()) {
+        if (selectedFilterForward.isEmpty()) {
             // dann gibts keine
             return;
         }
 
-        final SelectedFilter sf = filterListForward.remove(filterListForward.size() - 1);
+        final SelectedFilter sf = selectedFilterForward.remove(selectedFilterForward.size() - 1);
         setActFilterSettings(sf);
     }
 
@@ -284,12 +299,12 @@ public final class StoredFilters {
     private void addBackward() {
         final SelectedFilter sf = new SelectedFilter();
         SelectedFilterFactory.copyFilter(actFilterSettings, sf);
-        if (filterListBackward.isEmpty()) {
-            filterListBackward.add(sf);
+        if (selectedFilterBackward.isEmpty()) {
+            selectedFilterBackward.add(sf);
             return;
         }
 
-        SelectedFilter sfB = filterListBackward.get(filterListBackward.size() - 1);
+        SelectedFilter sfB = selectedFilterBackward.get(selectedFilterBackward.size() - 1);
         if (SelectedFilterFactory.compareFilterWithoutNameOfFilter(sf, sfB)) {
             // dann hat sich nichts geändert (z.B. mehrmals gelöscht)
             return;
@@ -322,7 +337,7 @@ public final class StoredFilters {
         }
 
         // dann wars kein Textfilter
-        filterListBackward.add(sf);
+        selectedFilterBackward.add(sf);
     }
 
     private void setFalse() {
@@ -343,7 +358,7 @@ public final class StoredFilters {
             // dann hat sich nur ein Teil geändert und wird ersetzt
             old.setValue(nnew.getValue());
         } else {
-            filterListBackward.add(newSf);
+            selectedFilterBackward.add(newSf);
         }
         return true;
     }

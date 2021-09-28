@@ -214,9 +214,9 @@ public class IoWriteXml implements AutoCloseable {
         writer.writeCharacters(P2LibConst.LINE_SEPARATOR);
         writer.writeComment("gespeicherte Filter");
         writer.writeCharacters(P2LibConst.LINE_SEPARATOR);
-        
+
         // Liste der Filterprofile
-        progData.storedFilters.getStordeFilterList().stream().forEach((sf) -> {
+        progData.storedFilters.getStoredFilterList().stream().forEach((sf) -> {
             xmlWriteData(FilterToXml.TAG, FilterToXml.getXmlArray(), FilterToXml.getValueArray(sf), true);
         });
     }
