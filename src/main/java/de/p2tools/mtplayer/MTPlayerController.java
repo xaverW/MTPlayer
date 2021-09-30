@@ -35,6 +35,7 @@ import de.p2tools.mtplayer.gui.dialog.AboutDialogController;
 import de.p2tools.mtplayer.gui.dialog.ResetDialogController;
 import de.p2tools.mtplayer.gui.mediaConfig.MediaConfigDialogController;
 import de.p2tools.mtplayer.gui.mediaDialog.MediaDialogController;
+import de.p2tools.mtplayer.tools.update.SearchProgramUpdate;
 import de.p2tools.p2Lib.guiTools.POpen;
 import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -210,8 +211,11 @@ public class MTPlayerController extends StackPane {
         final MenuItem miToolTip = new MenuItem("Tip des Tages");
         miToolTip.setOnAction(a -> new ProgTipOfDay().showDialog(progData, true));
 
+        final MenuItem miSearchUpdate = new MenuItem("Gibts ein Update?");
+        miSearchUpdate.setOnAction(a -> new SearchProgramUpdate(progData, progData.primaryStage).searchNewProgramVersion(true));
+
         final Menu mHelp = new Menu("Hilfe");
-        mHelp.getItems().addAll(miUrlHelp, miLog, miReset, miToolTip, new SeparatorMenuItem(), miAbout);
+        mHelp.getItems().addAll(miUrlHelp, miLog, miReset, miToolTip, miSearchUpdate, new SeparatorMenuItem(), miAbout);
 
         final MenuItem mbExternProgram = new MenuItem("Externes Programm starten");
         mbExternProgram.setVisible(false); //vorerst mal noch nicht anzeigen???

@@ -81,6 +81,7 @@ public class SearchProgramUpdate {
                 ProgConst.URL_WEBSITE_DOWNLOAD,
                 ProgConst.PROGRAM_NAME,
                 ProgramTools.getProgVersion(),
+                ProgramTools.getBuild(),
                 buildDate,
                 showAllways
         );
