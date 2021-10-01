@@ -21,3 +21,6 @@
     -fx-stroke-width: 0;
 }
 
+.update-grid-cell {
+    -fx-background-color: #46494c ;
+}

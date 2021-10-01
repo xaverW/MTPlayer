@@ -130,3 +130,7 @@
     -fx-stroke: transparent;
     -fx-stroke-width: 0;
 }
+
+.update-grid-cell {
+    -fx-background-color: white ;
+}
