@@ -33,6 +33,8 @@ public class FilmFilterSortDialog extends PDialogExtra {
     private final Button btnOk = new Button("_Ok");
     private final Button btnUp = new Button();
     private final Button btnDown = new Button();
+    private final Button btnTop = new Button();
+    private final Button btnBottom = new Button();
     private final Button btnDel = new Button();
 
     private final TableView<SelectedFilter> tableView = new TableView<>();
@@ -52,7 +54,7 @@ public class FilmFilterSortDialog extends PDialogExtra {
         btnOk.setOnAction(a -> close());
 
         VBox vBox = new VBox(10);
-        vBox.getChildren().addAll(btnUp, btnDown, btnDel);
+        vBox.getChildren().addAll(btnTop, btnUp, btnDown, btnBottom, btnDel);
 
         HBox hBox = new HBox(10);
         hBox.getChildren().addAll(tableView, vBox);
@@ -73,6 +75,32 @@ public class FilmFilterSortDialog extends PDialogExtra {
         btnDel.setTooltip(new Tooltip("aktuelles Filterprofil löschen"));
         btnDel.setGraphic(new ProgIcons().ICON_BUTTON_REMOVE);
         btnDel.setOnAction(e -> delFilter());
+
+        btnTop.setTooltip(new Tooltip("aktuelles Filterprofil an den Anfang verschieben"));
+        btnTop.setGraphic(new ProgIcons().ICON_BUTTON_MOVE_TOP);
+        btnTop.setOnAction(event -> {
+            final int sel = tableView.getSelectionModel().getSelectedIndex();
+
+            if (sel < 0) {
+                PAlert.showInfoNoSelection();
+            } else {
+                int res = progData.storedFilters.getStoredFilterList().top(sel, true);
+                tableView.getSelectionModel().select(res);
+            }
+        });
+
+        btnBottom.setTooltip(new Tooltip("aktuelles Filterprofil an das Ende verschieben"));
+        btnBottom.setGraphic(new ProgIcons().ICON_BUTTON_MOVE_BOTTOM);
+        btnBottom.setOnAction(event -> {
+            final int sel = tableView.getSelectionModel().getSelectedIndex();
+
+            if (sel < 0) {
+                PAlert.showInfoNoSelection();
+            } else {
+                int res = progData.storedFilters.getStoredFilterList().top(sel, false);
+                tableView.getSelectionModel().select(res);
+            }
+        });
 
         btnUp.setTooltip(new Tooltip("aktuelles Filterprofil nach oben verschieben"));
         btnUp.setGraphic(new ProgIcons().ICON_BUTTON_MOVE_UP);

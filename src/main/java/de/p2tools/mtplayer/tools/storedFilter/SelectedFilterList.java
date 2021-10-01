@@ -25,6 +25,19 @@ public final class SelectedFilterList extends SimpleListProperty<SelectedFilter>
         super(FXCollections.observableArrayList());
     }
 
+    public int top(int idx, boolean up) {
+        SelectedFilter selectedFilter = remove(idx);
+        int ret;
+        if (up) {
+            add(0, selectedFilter);
+            ret = 0;
+        } else {
+            add(selectedFilter);
+            ret = getSize() - 1;
+        }
+        return ret;
+    }
+
     public int up(int idx, boolean up) {
         SelectedFilter selectedFilter = remove(idx);
         int neu = idx;
