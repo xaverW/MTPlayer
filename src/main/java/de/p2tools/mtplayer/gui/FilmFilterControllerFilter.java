@@ -79,8 +79,8 @@ public class FilmFilterControllerFilter extends VBox {
         super();
         progData = ProgData.getInstance();
 
-        setPadding(new Insets(15, 15, 15, 15));
-        setSpacing(20);
+        setPadding(new Insets(10, 15, 5, 15));
+        setSpacing(FilterController.FILTER_SPACING_FILTER);
 
         // Slider
         addSlider();

@@ -20,8 +20,11 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboConstants;
 import de.p2tools.mtplayer.tools.storedFilter.FilterCheckRegEx;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -49,6 +52,7 @@ public class AboFilterController extends FilterController {
 
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER_RIGHT);
+        hBox.setPadding(new Insets(10, 0, 0, 0));
         hBox.getChildren().add(btnClear);
         vBoxFilter.getChildren().add(hBox);
 
@@ -87,13 +91,5 @@ public class AboFilterController extends FilterController {
         if (cboArt.getSelectionModel() != null) {
             cboArt.getSelectionModel().selectFirst();
         }
-    }
-
-    private void addCont(String txt, Control control, VBox vBox) {
-        control.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        VBox v = new VBox();
-        Label label = new Label(txt);
-        v.getChildren().addAll(label, control);
-        vBox.getChildren().add(v);
     }
 }

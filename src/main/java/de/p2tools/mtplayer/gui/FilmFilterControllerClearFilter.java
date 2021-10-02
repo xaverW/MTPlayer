@@ -40,8 +40,8 @@ public class FilmFilterControllerClearFilter extends VBox {
         progData = ProgData.getInstance();
         progData.filmFilterControllerClearFilter = this;
 
-        setPadding(new Insets(15, 15, 15, 15));
-        setSpacing(20);
+        setPadding(new Insets(10, 15, 5, 15));
+        setSpacing(FilterController.FILTER_SPACING_CLEAR);
 
         addButton();
     }
@@ -68,6 +68,7 @@ public class FilmFilterControllerClearFilter extends VBox {
         btnEditFilter.setTooltip(new Tooltip("Filter ein/ausschalten"));
 
         HBox hBox = new HBox(5);
+        hBox.setPadding(new Insets(5, 0, 0, 0));
         hBox.getChildren().addAll(btnEditFilter, PGuiTools.getHBoxGrower(), btnGoBack, btnGoForward, btnClearFilter);
         getChildren().addAll(hBox);
     }

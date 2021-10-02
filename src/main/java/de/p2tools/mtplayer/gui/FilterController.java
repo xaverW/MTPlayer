@@ -20,10 +20,19 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.tools.MLConfigs;
 import de.p2tools.p2Lib.guiTools.pClosePane.PClosePaneV;
 import javafx.geometry.Insets;
+import javafx.scene.control.Control;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 public class FilterController extends PClosePaneV {
+
+    public static final int FILTER_SPACING_FILTER = 15;
+    public static final int FILTER_SPACING_DOWNLOAD = 25;
+    public static final int FILTER_SPACING_TEXTFILTER = 10;
+    public static final int FILTER_SPACING_CLEAR = 10;
+    public static final int FILTER_SPACING_PROFIlE = 10;
 
     private final VBox vBoxAll;
     private final ProgData progData;
@@ -40,8 +49,8 @@ public class FilterController extends PClosePaneV {
 
     public VBox getVBoxFilter(boolean vgrow) {
         VBox vbFilter = new VBox();
-        vbFilter.setPadding(new Insets(15, 15, 15, 15));
-        vbFilter.setSpacing(20);
+        vbFilter.setPadding(new Insets(10, 15, 5, 15));
+        vbFilter.setSpacing(FILTER_SPACING_TEXTFILTER);
         if (vgrow) {
             VBox.setVgrow(vbFilter, Priority.ALWAYS);
         }
@@ -58,5 +67,20 @@ public class FilterController extends PClosePaneV {
         vBox.setMaxWidth(Double.MAX_VALUE);
         vBoxAll.getChildren().addAll(vBox);
         return vBox;
+    }
+
+    public void addCont(String txt, Control control, VBox vBox) {
+        control.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        VBox v = new VBox(2);
+        Label label = new Label(txt);
+        v.getChildren().addAll(label, control);
+        vBox.getChildren().add(v);
+    }
+
+    public void addCont(HBox txt, Control control, VBox vBox) {
+        control.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        VBox v = new VBox(2);
+        v.getChildren().addAll(txt, control);
+        vBox.getChildren().add(v);
     }
 }

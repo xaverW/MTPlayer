@@ -50,8 +50,8 @@ public class FilmFilterControllerTextFilter extends VBox {
         super();
         progData = ProgData.getInstance();
 
-        setPadding(new Insets(15, 15, 15, 15));
-        setSpacing(20);
+        setPadding(new Insets(10, 15, 5, 15));
+        setSpacing(FilterController.FILTER_SPACING_TEXTFILTER);
 
         // Sender, Thema, ..
         initSenderFilter();
@@ -64,15 +64,15 @@ public class FilmFilterControllerTextFilter extends VBox {
         mbChannel.setMaxWidth(Double.MAX_VALUE);
         VBox.setVgrow(mbChannel, Priority.ALWAYS);
 
-        initchannelMenu();
+        initChannelMenu();
         progData.storedFilters.getActFilterSettings().channelProperty().addListener((observable, oldValue, newValue) -> {
-            initchannelMenu();
+            initChannelMenu();
         });
-        progData.worker.getAllChannelList().addListener((ListChangeListener<String>) c -> initchannelMenu());
+        progData.worker.getAllChannelList().addListener((ListChangeListener<String>) c -> initChannelMenu());
         mbChannel.textProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().channelProperty());
     }
 
-    private void initchannelMenu() {
+    private void initChannelMenu() {
         mbChannel.getItems().clear();
         menuItemsList.clear();
 
@@ -90,7 +90,6 @@ public class FilmFilterControllerTextFilter extends VBox {
         CheckBox miCheckAll = new CheckBox();
         miCheckAll.setVisible(false);
 
-//        Button btnAll = new Button("alle Sender");
         Button btnAll = new Button("Auswahl löschen");
         btnAll.getStyleClass().add("channel-button");
         btnAll.setMaxWidth(Double.MAX_VALUE);
@@ -172,22 +171,12 @@ public class FilmFilterControllerTextFilter extends VBox {
         cboTheme.setVisibleRowCount(25);
         cboTheme.setItems(progData.worker.getThemeForChannelList());
 
-//        cboTheme.valueProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().themeProperty());
-//        cboTheme.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
-//            if (oldValue != null && newValue != null) {
-//                progData.storedFilters.getActFilterSettings().setTheme(newValue);
-//            }
-//        });
-
-
         cboTheme.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (!progData.storedFilters.getActFilterSettings().themeExactProperty().getValue()) {
                 return;
             }
 
-//            if (!ProgConfig.SYSTEM_FILTER_RETURN.getBool()) {
             progData.storedFilters.getActFilterSettings().setTheme(cboTheme.valueProperty().getValue());
-//            }
         });
         cboTheme.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
             if (!ProgConfig.SYSTEM_FILTER_RETURN.getBool()) {
@@ -208,8 +197,6 @@ public class FilmFilterControllerTextFilter extends VBox {
             cboTheme.valueProperty().setValue(progData.storedFilters.getActFilterSettings().getTheme());
         });
 
-
-//        txtThemeTitle.textProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().themeTitleProperty());
         txtThemeTitle.textProperty().addListener((u, o, n) -> {
             if (!ProgConfig.SYSTEM_FILTER_RETURN.getBool()) {
                 progData.storedFilters.getActFilterSettings().setThemeTitle(txtThemeTitle.getText());
@@ -225,7 +212,6 @@ public class FilmFilterControllerTextFilter extends VBox {
         );
         txtThemeTitle.setText(progData.storedFilters.getActFilterSettings().getThemeTitle());
 
-//        txtTitle.textProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().titleProperty());
         txtTitle.textProperty().addListener((u, o, n) -> {
             if (!ProgConfig.SYSTEM_FILTER_RETURN.getBool()) {
                 progData.storedFilters.getActFilterSettings().setTitle(txtTitle.getText());
@@ -241,7 +227,6 @@ public class FilmFilterControllerTextFilter extends VBox {
         );
         txtTitle.setText(progData.storedFilters.getActFilterSettings().getTitle());
 
-//        txtSomewhere.textProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().somewhereProperty());
         txtSomewhere.textProperty().addListener((u, o, n) -> {
             if (!ProgConfig.SYSTEM_FILTER_RETURN.getBool()) {
                 progData.storedFilters.getActFilterSettings().setSomewhere(txtSomewhere.getText());
@@ -258,7 +243,6 @@ public class FilmFilterControllerTextFilter extends VBox {
         );
         txtSomewhere.setText(progData.storedFilters.getActFilterSettings().getSomewhere());
 
-//        txtUrl.textProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().urlProperty());
         txtUrl.textProperty().addListener((u, o, n) -> {
             if (!ProgConfig.SYSTEM_FILTER_RETURN.getBool()) {
                 progData.storedFilters.getActFilterSettings().setUrl(txtUrl.getText());
@@ -287,20 +271,20 @@ public class FilmFilterControllerTextFilter extends VBox {
     }
 
     private void addFilter() {
-        VBox vBox = new VBox(10);
-        addTxt("Sender", mbChannel, vBox, progData.storedFilters.getActFilterSettings().channelVisProperty());
-        addTxt("Thema", cboTheme, vBox, progData.storedFilters.getActFilterSettings().themeVisProperty());
-        addTxt("Thema oder Titel", txtThemeTitle, vBox, progData.storedFilters.getActFilterSettings().themeTitleVisProperty());
-        addTxt("Titel", txtTitle, vBox, progData.storedFilters.getActFilterSettings().titleVisProperty());
-        addTxt("Irgendwo", txtSomewhere, vBox, progData.storedFilters.getActFilterSettings().somewhereVisProperty());
-        addTxt("URL", txtUrl, vBox, progData.storedFilters.getActFilterSettings().urlVisProperty());
+        addTxt("Sender", mbChannel, this, progData.storedFilters.getActFilterSettings().channelVisProperty());
+        addTxt("Thema", cboTheme, this, progData.storedFilters.getActFilterSettings().themeVisProperty());
+        addTxt("Thema oder Titel", txtThemeTitle, this, progData.storedFilters.getActFilterSettings().themeTitleVisProperty());
+        addTxt("Titel", txtTitle, this, progData.storedFilters.getActFilterSettings().titleVisProperty());
+        addTxt("Irgendwo", txtSomewhere, this, progData.storedFilters.getActFilterSettings().somewhereVisProperty());
+        addTxt("URL", txtUrl, this, progData.storedFilters.getActFilterSettings().urlVisProperty());
 
         Separator sp = new Separator();
         sp.getStyleClass().add("pseperator1");
-        sp.setMinHeight(10);
-        vBox.getChildren().add(sp);
+        sp.setMinHeight(0);
+        sp.setMaxHeight(1);
+        this.getChildren().add(sp);
 
-        vBox.visibleProperty().bind(progData.storedFilters.getActFilterSettings().channelVisProperty()
+        this.visibleProperty().bind(progData.storedFilters.getActFilterSettings().channelVisProperty()
                 .or(progData.storedFilters.getActFilterSettings().themeVisProperty()
                         .or(progData.storedFilters.getActFilterSettings().themeTitleVisProperty()
                                 .or(progData.storedFilters.getActFilterSettings().titleVisProperty()
@@ -310,13 +294,9 @@ public class FilmFilterControllerTextFilter extends VBox {
                                 )
                         )
                 ));
-        vBox.managedProperty().bind(vBox.visibleProperty());
-
-        sp.visibleProperty().bind(vBox.visibleProperty());
-        sp.managedProperty().bind(vBox.visibleProperty());
-
-
-        getChildren().add(vBox);
+        this.managedProperty().bind(this.visibleProperty());
+        sp.visibleProperty().bind(this.visibleProperty());
+        sp.managedProperty().bind(this.visibleProperty());
     }
 
     private void addTxt(String txt, Control control, VBox vBoxComplete, BooleanProperty booleanProperty) {
@@ -328,16 +308,6 @@ public class FilmFilterControllerTextFilter extends VBox {
         vBox.visibleProperty().bind(booleanProperty);
         vBox.managedProperty().bind(booleanProperty);
     }
-
-//    private void addChannel(VBox vBoxComplete) {
-//        VBox vBox = new VBox(2);
-//        Label label = new Label("Sender");
-//        vBox.getChildren().addAll(label, mbChannel);
-//        vBoxComplete.getChildren().add(vBox);
-//
-//        vBox.visibleProperty().bind(progData.storedFilters.getActFilterSettings().channelVisProperty());
-//        vBox.managedProperty().bind(progData.storedFilters.getActFilterSettings().channelVisProperty());
-//    }
 
     private class MenuItemClass {
 

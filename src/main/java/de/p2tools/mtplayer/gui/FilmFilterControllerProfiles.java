@@ -54,8 +54,8 @@ public class FilmFilterControllerProfiles extends VBox {
         super();
         progData = ProgData.getInstance();
 
-        setPadding(new Insets(15, 15, 15, 15));
-        setSpacing(20);
+        setPadding(new Insets(10, 15, 5, 15));
+        setSpacing(FilterController.FILTER_SPACING_PROFIlE);
 
         initButton();
         filterProfiles();
@@ -166,7 +166,6 @@ public class FilmFilterControllerProfiles extends VBox {
                 loadFilter();
             }
         });
-
     }
 
     private void initRest() {
@@ -180,7 +179,7 @@ public class FilmFilterControllerProfiles extends VBox {
         getChildren().add(hBox);
 
         cboFilterProfiles.setMaxWidth(Double.MAX_VALUE);
-        VBox vBox = new VBox(3);
+        VBox vBox = new VBox(2);
         vBox.getChildren().addAll(new Label("Filterprofile:"), cboFilterProfiles);
         getChildren().add(vBox);
 
@@ -274,5 +273,4 @@ public class FilmFilterControllerProfiles extends VBox {
             markFilterOk(false);
         }
     }
-
 }

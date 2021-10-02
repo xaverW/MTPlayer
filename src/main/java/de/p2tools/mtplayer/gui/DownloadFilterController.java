@@ -71,71 +71,48 @@ public class DownloadFilterController extends FilterController {
     }
 
     private void initLayout() {
-        VBox vBox = new VBox();
-        vBox.setSpacing(10);
-        addCont("Quelle", cboSrc, vBox);
-        addCont("Downloadart", cboArt, vBox);
-        addCont("Sender", cboChannel, vBox);
-        addCont("Abo", cboAbo, vBox);
-        addCont("Status", cboState, vBox);
+        addCont("Quelle", cboSrc, vBoxFilter);
+        addCont("Downloadart", cboArt, vBoxFilter);
+        addCont("Sender", cboChannel, vBoxFilter);
+        addCont("Abo", cboAbo, vBoxFilter);
+        addCont("Status", cboState, vBoxFilter);
 
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER_RIGHT);
         hBox.setPadding(new Insets(10, 0, 0, 0));
         hBox.getChildren().add(btnClear);
+        hBox.setAlignment(Pos.TOP_RIGHT);
+        VBox.setVgrow(hBox, Priority.ALWAYS);
 
         Separator sp = new Separator();
-        sp.setMinHeight(20);
+        sp.getStyleClass().add("pseperator3");
+        sp.setMinHeight(0);
+//        sp.setPadding(new Insets(0, 0, 0, 0));
 
-        vBox.getChildren().addAll(hBox, sp);
-        vBoxFilter.getChildren().addAll(vBox);
+        vBoxFilter.getChildren().addAll(hBox, sp);
 
+        VBox vb = new VBox(FilterController.FILTER_SPACING_DOWNLOAD);
+        addCont("gleichzeitige Downloads", spinnerAnz, vb);
 
-        addCont("gleichzeitige Downloads", spinnerAnz, vBoxFilter);
-
-//        HBox h = new HBox();
-//        h.setAlignment(Pos.CENTER_RIGHT);
-//        h.getChildren().addAll(lblBandwidth);
-//
-//        VBox v = new VBox();
-//        Label lblText = new Label("max. Bandbreite je Download: ");
-//        lblText.setTooltip(new Tooltip("Maximale Bandbreite die ein einzelner Dowload beanspruchen darf \n" +
-//                "oder unbegrenzt wenn \"aus\""));
-//        sliderBandwidth.setTooltip(new Tooltip("Maximale Bandbreite die ein einzelner Dowload beanspruchen darf \n" +
-//                "oder unbegrenzt wenn \"aus\""));
-//
-//        v.getChildren().addAll(lblText, sliderBandwidth, h);
-//        vBoxFilter.getChildren().add(v);
-
-
-        VBox v = new VBox(2);
         Label lblText = new Label("max. Bandbreite: ");
+        lblText.setMinWidth(0);
         lblText.setTooltip(new Tooltip("Maximale Bandbreite die ein einzelner Dowload beanspruchen darf \n" +
                 "oder unbegrenzt wenn \"aus\""));
         sliderBandwidth.setTooltip(new Tooltip("Maximale Bandbreite die ein einzelner Dowload beanspruchen darf \n" +
                 "oder unbegrenzt wenn \"aus\""));
-
-        HBox h = new HBox();
         HBox hh = new HBox();
-        h.getChildren().addAll(lblText, hh, lblBandwidth);
         HBox.setHgrow(hh, Priority.ALWAYS);
-        lblText.setMinWidth(0);
-        v.getChildren().addAll(h, sliderBandwidth);
-        vBoxFilter.getChildren().add(v);
+        HBox h = new HBox();
+        h.getChildren().addAll(lblText, hh, lblBandwidth);
+        addCont(h, sliderBandwidth, vb);
 
         final Button btnHelp = PButton.helpButton("Filter", HelpText.GUI_DOWNLOAD_FILTER);
         hBox = new HBox(10);
         hBox.setAlignment(Pos.CENTER_RIGHT);
         hBox.getChildren().addAll(btnHelp);
-        vBoxFilter.getChildren().add(hBox);
-    }
+        vb.getChildren().add(hBox);
 
-    private void addCont(String txt, Control control, VBox vBox) {
-        control.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        VBox v = new VBox(2);
-        Label label = new Label(txt);
-        v.getChildren().addAll(label, control);
-        vBox.getChildren().add(v);
+        vBoxFilter.getChildren().add(vb);
     }
 
     private void initFilter() {
@@ -269,22 +246,9 @@ public class DownloadFilterController extends FilterController {
         if (bandwidthKByte == MLBandwidthTokenBucket.BANDWIDTH_MAX_KBYTE) {
             ret = "alles";
         } else {
-//            ret = bandwidthKByte + " kByte/s";
             ret = bandwidthKByte + " kB/s";
         }
         lblBandwidth.setText(ret);
-
-//        lblBandwidth.setText(ret);
-//        if (bandwidthKByte > MLBandwidthTokenBucket.BANDWIDTH_MAX_RED_KBYTE) {
-//            final Text amount = new Text(ret);
-//            amount.setFill(Color.RED);
-//            lblBandwidth.setText(amount.getText());
-//            lblBandwidth.setTextFill(Color.RED);
-//        } else {
-//            final Text amount = new Text(ret);
-//            lblBandwidth.setText(amount.getText());
-//            lblBandwidth.setTextFill(Color.BLACK);
-//        }
     }
 
     private void clearFilter() {
@@ -304,5 +268,4 @@ public class DownloadFilterController extends FilterController {
             cboState.getSelectionModel().selectFirst();
         }
     }
-
 }
