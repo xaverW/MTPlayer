@@ -129,6 +129,7 @@ public class ReplacePane {
         vBox.getChildren().addAll(tableView);
 
         Button btnDel = new Button("");
+        btnDel.setTooltip(new Tooltip("Eintrag löschen"));
         btnDel.setGraphic(new ProgIcons().ICON_BUTTON_REMOVE);
         btnDel.setOnAction(event -> {
             final ObservableList<ReplaceData> sels = tableView.getSelectionModel().getSelectedItems();
@@ -142,6 +143,7 @@ public class ReplacePane {
         });
 
         Button btnNew = new Button("");
+        btnNew.setTooltip(new Tooltip("Einen neuen Eintrag erstellen"));
         btnNew.setGraphic(new ProgIcons().ICON_BUTTON_ADD);
         btnNew.setOnAction(event -> {
             ReplaceData replaceData = new ReplaceData();
@@ -152,11 +154,11 @@ public class ReplacePane {
             tableView.scrollTo(replaceData);
         });
 
-        Button up = new Button("");
-        up.setGraphic(new ProgIcons().ICON_BUTTON_MOVE_UP);
-        up.setOnAction(event -> {
+        Button btnUp = new Button("");
+        btnUp.setTooltip(new Tooltip("Eintrag nach oben schieben"));
+        btnUp.setGraphic(new ProgIcons().ICON_BUTTON_MOVE_UP);
+        btnUp.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
-
             if (sel < 0) {
                 PAlert.showInfoNoSelection();
             } else {
@@ -165,11 +167,11 @@ public class ReplacePane {
             }
         });
 
-        Button down = new Button("");
-        down.setGraphic(new ProgIcons().ICON_BUTTON_MOVE_DOWN);
-        down.setOnAction(event -> {
+        Button btnDown = new Button("");
+        btnDown.setTooltip(new Tooltip("Eintrag nach unten schieben"));
+        btnDown.setGraphic(new ProgIcons().ICON_BUTTON_MOVE_DOWN);
+        btnDown.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
-
             if (sel < 0) {
                 PAlert.showInfoNoSelection();
             } else {
@@ -178,14 +180,41 @@ public class ReplacePane {
             }
         });
 
-        Button reset = new Button("_Tabelle zurücksetzen");
-        reset.setOnAction(event -> {
+        Button btnTop = new Button();
+        btnTop.setTooltip(new Tooltip("Eintrag an den Anfang verschieben"));
+        btnTop.setGraphic(new ProgIcons().ICON_BUTTON_MOVE_TOP);
+        btnTop.setOnAction(event -> {
+            final int sel = tableView.getSelectionModel().getSelectedIndex();
+            if (sel < 0) {
+                PAlert.showInfoNoSelection();
+            } else {
+                int res = ProgData.getInstance().replaceList.top(sel, true);
+                tableView.getSelectionModel().select(res);
+            }
+        });
+
+        Button btnBottom = new Button();
+        btnBottom.setTooltip(new Tooltip("Eintrag an das Ende verschieben"));
+        btnBottom.setGraphic(new ProgIcons().ICON_BUTTON_MOVE_BOTTOM);
+        btnBottom.setOnAction(event -> {
+            final int sel = tableView.getSelectionModel().getSelectedIndex();
+            if (sel < 0) {
+                PAlert.showInfoNoSelection();
+            } else {
+                int res = ProgData.getInstance().replaceList.top(sel, false);
+                tableView.getSelectionModel().select(res);
+            }
+        });
+
+        Button btnReset = new Button("_Tabelle zurücksetzen");
+        btnReset.setTooltip(new Tooltip("Alle Einträge löschen und Standardeinträge wieder herstellen"));
+        btnReset.setOnAction(event -> {
             ProgData.getInstance().replaceList.init();
         });
 
         HBox hBox = new HBox();
         hBox.setSpacing(10);
-        hBox.getChildren().addAll(btnNew, btnDel, up, down, reset);
+        hBox.getChildren().addAll(btnNew, btnDel, btnTop, btnUp, btnDown, btnBottom, btnReset);
         vBox.getChildren().addAll(hBox);
 
     }

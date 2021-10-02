@@ -52,6 +52,19 @@ public final class ReplaceList extends SimpleListProperty<ReplaceData> {
         return strCheck;
     }
 
+    public int top(int idx, boolean up) {
+        ReplaceData replace = remove(idx);
+        int ret;
+        if (up) {
+            add(0, replace);
+            ret = 0;
+        } else {
+            add(replace);
+            ret = getSize() - 1;
+        }
+        return ret;
+    }
+
     public int up(int idx, boolean up) {
         ReplaceData replace = remove(idx);
         int neu = idx;
