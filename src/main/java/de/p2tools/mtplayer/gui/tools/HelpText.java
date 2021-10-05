@@ -338,6 +338,12 @@ public class HelpText {
     public static final String DOWNLOAD_ERROR =
             "Wenn ein Download mit einem Fehler endet wird mit einem Fenster informiert.";
 
+    public static final String DOWNLOAD_ADD_AT_TIME =
+            "Downloads können mit einer Startzeit gestartet werden.\n\n" +
+                    "\"Nur ausgewählte Downloads starten\" zeigt die markierten Downloads und\n" +
+                    "\"Alle Downloads starten\" zeigt alle Downloads die gestartet werden können.\n\n" +
+                    "Die Auswahl wird nur angezeigt, wenn auch Downloads markiert wurden.";
+
     public static final String BLACKLIST_GEO =
             "Einschalten um geogeblockte Filme von Anzeige und Abo-Download auszuschließen.\n" +
                     "Es wird der unter \"Allgemein\" angegebene Standort verwendet.";

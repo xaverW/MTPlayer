@@ -191,7 +191,7 @@ public class MTPlayerController extends StackPane {
         miQuitWait.setOnAction(e -> ProgQuit.quit(true));
         PShortcutWorker.addShortCut(miQuitWait, MTShortcut.SHORTCUT_QUIT_PROGRAM_WAIT);
 
-        final MenuItem miAbout = new MenuItem("über dieses Programm");
+        final MenuItem miAbout = new MenuItem("Über dieses Programm");
         miAbout.setOnAction(event -> new AboutDialogController(progData));
 
         final MenuItem miLog = new MenuItem("Logdatei öffnen");
@@ -232,7 +232,7 @@ public class MTPlayerController extends StackPane {
                 MTPTester mtpTester = new MTPTester(progData);
                 mtpTester.showDialog();
             });
-            final MenuItem miSave = new MenuItem("alles Speichern");
+            final MenuItem miSave = new MenuItem("Alles Speichern");
             miSave.setOnAction(a -> new ProgSave().saveAll());
 
             mHelp.getItems().addAll(new SeparatorMenuItem(), miDebug, miSave);

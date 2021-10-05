@@ -32,7 +32,7 @@ public class FilmMenu {
     final private ProgData progData;
     private SelectedFilter storedActFilterSettings = null;
     private SelectedFilter storedBookmarkFilter = null;
-    private static final String FILM_FILTER_BOOKMARK_TEXT = "alle angelegte Bookmarks anzeigen\n\n" +
+    private static final String FILM_FILTER_BOOKMARK_TEXT = "Alle angelegte Bookmarks anzeigen\n\n" +
             "der zweite Klick stellt den\n" +
             "eingestellten Filter wieder her";
 
@@ -57,9 +57,9 @@ public class FilmMenu {
         vBox.getChildren().add(vBoxSpace);
 
         final ToolBarButton btPlay = new ToolBarButton(vBox,
-                "Abspielen", "markierten Film abspielen", new ProgIcons().FX_ICON_TOOLBAR_FILM_START);
+                "Abspielen", "Markierten Film abspielen", new ProgIcons().FX_ICON_TOOLBAR_FILM_START);
         final ToolBarButton btSave = new ToolBarButton(vBox,
-                "Speichern", "markierte Filme speichern", new ProgIcons().FX_ICON_TOOLBAR_FILM_REC);
+                "Speichern", "Markierte Filme speichern", new ProgIcons().FX_ICON_TOOLBAR_FILM_REC);
 
         vBoxSpace = new VBox();
         vBoxSpace.setMaxHeight(10);
@@ -71,7 +71,7 @@ public class FilmMenu {
         final ToolBarButton btDelBookmark = new ToolBarButton(vBox,
                 "Bookmarks löschen", "Bookmarks für die markierten Filme löschen", new ProgIcons().FX_ICON_TOOLBAR_FILM_DEL_BOOKMARK);
         final ToolBarButton btDelAllBookmark = new ToolBarButton(vBox,
-                "alle Bookmarks löschen", "alle angelegten Bookmarks löschen", new ProgIcons().FX_ICON_TOOLBAR_FILM_DEL_ALL_BOOKMARK);
+                "Alle Bookmarks löschen", "Alle angelegten Bookmarks löschen", new ProgIcons().FX_ICON_TOOLBAR_FILM_DEL_ALL_BOOKMARK);
         final ToolBarButton btFilterBookmakr = new ToolBarButton(vBox,
                 "Bookmarks anzeigen", FILM_FILTER_BOOKMARK_TEXT, new ProgIcons().FX_ICON_TOOLBAR_FILM_BOOKMARK_FILTER);
 
@@ -139,11 +139,11 @@ public class FilmMenu {
 
         // Bookmarks
         Menu submenuBookmark = new Menu("Bookmarks");
-        final MenuItem miBookmarkAdd = new MenuItem("neue Bookmarks anlegen");
+        final MenuItem miBookmarkAdd = new MenuItem("Neue Bookmarks anlegen");
         miBookmarkAdd.setOnAction(a -> progData.filmGuiController.bookmarkFilm(true));
         final MenuItem miBookmarkDel = new MenuItem("Bookmarks löschen");
         miBookmarkDel.setOnAction(a -> progData.filmGuiController.bookmarkFilm(false));
-        final MenuItem miBookmarkDelAll = new MenuItem("alle angelegten Bookmarks löschen");
+        final MenuItem miBookmarkDelAll = new MenuItem("Alle angelegten Bookmarks löschen");
         miBookmarkDelAll.setOnAction(a -> progData.bookmarks.clearAll(progData.primaryStage));
 
         submenuBookmark.getItems().addAll(miBookmarkAdd, miBookmarkDel, miBookmarkDelAll);

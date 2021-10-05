@@ -76,7 +76,8 @@ public class ProgIcons {
     public final ImageView FX_ICON_TOOLBAR_DOWNLOAD_FILM_START = GetIcon.getImageView("toolbar-download-film-start.png", 32, 32);
     public final ImageView FX_ICON_TOOLBAR_DOWNLOAD_REFRESH = GetIcon.getImageView("toolbar-download-refresh.png", 32, 32);
     public final ImageView FX_ICON_TOOLBAR_DOWNLOAD_START_ALL = GetIcon.getImageView("toolbar-download-start-all.png", 32, 32);
-
+    public final ImageView FX_ICON_TOOLBAR_DOWNLOAD_START_ALL_TIME = GetIcon.getImageView("toolbar-download-start-time.png", 32, 32);
+    
     public final ImageView FX_ICON_TOOLBAR_FILM_START = GetIcon.getImageView("toolbar-filme-start.png", 32, 32);
     public final ImageView FX_ICON_TOOLBAR_FILM_REC = GetIcon.getImageView("toolbar-filme-rec.png", 32, 32);
     public final ImageView FX_ICON_TOOLBAR_FILM_BOOKMARK = GetIcon.getImageView("toolbar-filme-bookmark.png", 32, 32);

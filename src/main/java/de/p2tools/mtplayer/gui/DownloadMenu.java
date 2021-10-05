@@ -50,7 +50,9 @@ public class DownloadMenu {
         final ToolBarButton btDownloadRefresh = new ToolBarButton(vBox,
                 "Downloads aktualisieren", "Liste der Downloads aktualisieren", new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_REFRESH);
         final ToolBarButton btDownloadAll = new ToolBarButton(vBox,
-                "alle Downloads starten", "alle Downloads starten", new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_START_ALL);
+                "Alle Downloads starten", "Alle Downloads starten", new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_START_ALL);
+        final ToolBarButton btDownloadAllTime = new ToolBarButton(vBox,
+                "Alle Downloads mit Startzeit starten", "Alle Downloads mit Startzeit starten", new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_START_ALL_TIME);
         final ToolBarButton btDownloadClear = new ToolBarButton(vBox,
                 "Downloads aufräumen", "Liste der Downloads aufräumen", new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_CLEAN);
 
@@ -60,11 +62,11 @@ public class DownloadMenu {
         vBox.getChildren().add(vBoxSpace);
 
         final ToolBarButton btStartDownloads = new ToolBarButton(vBox,
-                "Downloads Starten", "markierte Downloads starten", new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_START);
+                "Downloads Starten", "Markierte Downloads starten", new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_START);
         final ToolBarButton btDownloadBack = new ToolBarButton(vBox,
-                "Downloads zurückstellen", "markierte Downloads zurückstellen", new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_UNDO);
+                "Downloads zurückstellen", "Markierte Downloads zurückstellen", new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_UNDO);
         final ToolBarButton btDownloadDel = new ToolBarButton(vBox,
-                "Downloads löschen", "markierte Downloads löschen", new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_DEL);
+                "Downloads löschen", "Markierte Downloads löschen", new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_DEL);
 
         vBoxSpace = new VBox();
         vBoxSpace.setMaxHeight(10);
@@ -72,10 +74,11 @@ public class DownloadMenu {
         vBox.getChildren().add(vBoxSpace);
 
         final ToolBarButton btDownloadFilm = new ToolBarButton(vBox,
-                "Film Starten", "gespeicherten Film abspielen", new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_FILM_START);
+                "Film Starten", "Gespeicherten Film abspielen", new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_FILM_START);
 
         btDownloadRefresh.setOnAction(a -> progData.worker.searchForAbosAndMaybeStart());
         btDownloadAll.setOnAction(a -> progData.downloadGuiController.startDownload(true));
+        btDownloadAllTime.setOnAction(a -> progData.downloadGuiController.startDownloadTime());
         btDownloadClear.setOnAction(a -> progData.downloadGuiController.cleanUp());
         btStartDownloads.setOnAction(a -> progData.downloadGuiController.startDownload(false));
         btDownloadBack.setOnAction(a -> progData.downloadGuiController.moveDownloadBack());
@@ -118,11 +121,13 @@ public class DownloadMenu {
         mb.getItems().addAll(submenuDownload);
 
         // Submenü "alle Downloads"
-        final MenuItem mbStartAll = new MenuItem("alle Downloads starten");
+        final MenuItem mbStartAll = new MenuItem("Alle Downloads starten");
         mbStartAll.setOnAction(a -> progData.downloadGuiController.startDownload(true /* alle */));
-        final MenuItem mbStopAll = new MenuItem("alle Downloads stoppen");
+        final MenuItem mbStartTimeAll = new MenuItem("Alle Downloads mit Startzeit starten");
+        mbStartTimeAll.setOnAction(a -> progData.downloadGuiController.startDownloadTime());
+        final MenuItem mbStopAll = new MenuItem("Alle Downloads stoppen");
         mbStopAll.setOnAction(a -> progData.downloadGuiController.stopDownload(true /* alle */));
-        final MenuItem mbStopWait = new MenuItem("alle wartenden Downloads stoppen");
+        final MenuItem mbStopWait = new MenuItem("Alle wartenden Downloads stoppen");
         mbStopWait.setOnAction(a -> progData.downloadGuiController.stopWaitingDownloads());
         final MenuItem mbUpdateList = new MenuItem("Liste der Downloads aktualisieren");
         mbUpdateList.setOnAction(e -> progData.worker.searchForAbosAndMaybeStart());
@@ -132,8 +137,8 @@ public class DownloadMenu {
         mbClean.setOnAction(e -> progData.downloadGuiController.cleanUp());
         PShortcutWorker.addShortCut(mbClean, MTShortcut.SHORTCUT_DOWNLOADS_CLEAN_UP);
 
-        Menu submenuAllDownloads = new Menu("alle Downloads");
-        submenuAllDownloads.getItems().addAll(mbStartAll, mbStopAll, mbStopWait, mbUpdateList, mbClean);
+        Menu submenuAllDownloads = new Menu("Alle Downloads");
+        submenuAllDownloads.getItems().addAll(mbStartAll, mbStartTimeAll, mbStopAll, mbStopWait, mbUpdateList, mbClean);
         mb.getItems().addAll(submenuAllDownloads);
 
         MenuItem miMediaDb = new MenuItem("Titel in der Mediensammlung suchen");
@@ -152,7 +157,7 @@ public class DownloadMenu {
         mb.getItems().add(new SeparatorMenuItem());
         mb.getItems().addAll(miMediaDb, miFilmInfo, miPlayUrl, miCopyUrl);
 
-        final MenuItem miSelectAll = new MenuItem("alles auswählen");
+        final MenuItem miSelectAll = new MenuItem("Alles auswählen");
         miSelectAll.setOnAction(a -> progData.downloadGuiController.selectAll());
         final MenuItem miSelection = new MenuItem("Auswahl umkehren");
         miSelection.setOnAction(a -> progData.downloadGuiController.invertSelection());

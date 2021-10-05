@@ -26,6 +26,7 @@ import de.p2tools.mtplayer.controller.data.film.Film;
 import de.p2tools.mtplayer.controller.data.film.FilmTools;
 import de.p2tools.mtplayer.gui.chart.DownloadGuiChart;
 import de.p2tools.mtplayer.gui.dialog.DownloadEditDialogController;
+import de.p2tools.mtplayer.gui.dialog.DownloadStartAtTimeController;
 import de.p2tools.mtplayer.gui.mediaDialog.MediaDialogController;
 import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.mtplayer.gui.tools.table.Table;
@@ -230,6 +231,12 @@ public class DownloadGuiController extends AnchorPane {
 
     public void startDownload(boolean all) {
         downloadStartAgain(all);
+    }
+
+    public void startDownloadTime() {
+        new DownloadStartAtTimeController(progData,
+                tableView.getItems(),
+                tableView.getSelectionModel().getSelectedItems());
     }
 
     public void stopDownload(boolean all) {

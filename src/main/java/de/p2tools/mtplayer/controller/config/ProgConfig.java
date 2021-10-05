@@ -195,6 +195,7 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs DOWNLOAD_DIALOG_START_DOWNLOAD_NOT = addNewKey("download-dialog-start-download-not", Boolean.FALSE.toString());
     public static MLConfigs DOWNLOAD_DIALOG_START_DOWNLOAD_TIME = addNewKey("download-dialog-start-download-time", Boolean.FALSE.toString());
     public static MLConfigs DOWNLOAD_DIALOG_EDIT_SIZE = addNewKey("download-dialog-edit-size", "800:800");
+    public static MLConfigs DOWNLOAD_DIALOG_START_AT_TIME_SIZE = addNewKey("download-dialog-start-at-time-size", "800:400");
     public static MLConfigs DOWNLOAD_DIALOG_ADD_SIZE = addNewKey("download-dialog-add-size");
     public static MLConfigs DOWNLOAD_DIALOG_ADD_MORE_SIZE = addNewKey("download-dialog-add-more-size");
     public static MLConfigs DOWNLOAD_DIALOG_CONTINUE_SIZE = addNewKey("download-dialog-continue-size");

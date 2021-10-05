@@ -126,6 +126,10 @@ public final class Download extends DownloadProps {
         return getState() > DownloadConstants.STATE_STOPPED && !isStateFinished();
     }
 
+    public boolean isNotStartedOrFinished() {
+        return isStateInit() || isStateStoped();
+    }
+
     public boolean isFinishedOrError() {
         return getState() >= DownloadConstants.STATE_FINISHED;
     }
