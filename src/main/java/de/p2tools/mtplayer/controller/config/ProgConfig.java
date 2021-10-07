@@ -144,6 +144,7 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs TIP_OF_DAY_DATE = addNewKey("tip-of-day-date"); //Datum des letzten Tips
     public static MLConfigs SYSTEM_FILTER_WAIT_TIME = addNewKey("system-filter-wait-time", "100");
     public static MLConfigs SYSTEM_FILTER_RETURN = addNewKey("system-filter-return", Boolean.FALSE.toString());
+    public static MLConfigs SYSTEM_DOWNLOAD_DIR_NEW_VERSION = addNewKey("system-download-dir-new-version", "");
 
 
     // Fenstereinstellungen
@@ -363,7 +364,7 @@ public class ProgConfig extends MLConfig {
             + SYSTEM_PARAMETER_DOWNLOAD_PROGRESS.getInitValue() + P2LibConst.LINE_SEPARATOR;
 
     public static void logAllConfigs() {
-        ArrayList<String> list = new ArrayList<>();
+        final ArrayList<String> list = new ArrayList<>();
 
         list.add(PLog.LILNE2);
         list.add("Programmeinstellungen");

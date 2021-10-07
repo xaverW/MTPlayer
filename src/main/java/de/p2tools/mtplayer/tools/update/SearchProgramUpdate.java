@@ -36,12 +36,12 @@ public class SearchProgramUpdate {
     private final Stage stage;
     private String title = "";
 
-    public SearchProgramUpdate(ProgData progData) {
+    public SearchProgramUpdate(final ProgData progData) {
         this.progData = progData;
         this.stage = progData.primaryStage;
     }
 
-    public SearchProgramUpdate(ProgData progData, Stage stage) {
+    public SearchProgramUpdate(final ProgData progData, final Stage stage) {
         this.progData = progData;
         this.stage = stage;
     }
@@ -49,7 +49,7 @@ public class SearchProgramUpdate {
     /**
      * @return
      */
-    public void searchNewProgramVersion(boolean showAllways) {
+    public void searchNewProgramVersion(final boolean showAllways) {
         final String SEARCH_URL;
         final String SEARCH_URL_DOWNLOAD;
         if (ProgData.debug) {
@@ -61,9 +61,9 @@ public class SearchProgramUpdate {
         }
 
         final PDate pd = new PDate(ProgramTools.getCompileDate());
-        String buildDate = pd.get_yyyy_MM_dd();
+        final String buildDate = pd.get_yyyy_MM_dd();
 
-        FoundSearchData foundSearchData = new FoundSearchData(
+        final FoundSearchData foundSearchData = new FoundSearchData(
                 stage,
                 SEARCH_URL,
                 SEARCH_URL_DOWNLOAD,
@@ -83,6 +83,7 @@ public class SearchProgramUpdate {
                 ProgramTools.getProgVersion(),
                 ProgramTools.getBuild(),
                 buildDate,
+                ProgConfig.SYSTEM_DOWNLOAD_DIR_NEW_VERSION.getStringProperty(),
                 showAllways
         );
 
@@ -92,7 +93,7 @@ public class SearchProgramUpdate {
         }).start();
     }
 
-    private void setTitleInfo(boolean newVersion) {
+    private void setTitleInfo(final boolean newVersion) {
         title = progData.primaryStage.getTitle();
         if (newVersion) {
             Platform.runLater(() -> setUpdateTitle());
@@ -101,7 +102,7 @@ public class SearchProgramUpdate {
         }
         try {
             sleep(10_000);
-        } catch (Exception ignore) {
+        } catch (final Exception ignore) {
         }
         Platform.runLater(() -> setOrgTitle());
     }

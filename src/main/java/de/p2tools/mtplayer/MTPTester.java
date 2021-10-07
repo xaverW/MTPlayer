@@ -59,7 +59,7 @@ public class MTPTester {
     private final PMaskerPane maskerPane = new PMaskerPane();
     private final WaitTask waitTask = new WaitTask();
 
-    public MTPTester(ProgData progData) {
+    public MTPTester(final ProgData progData) {
         this.progData = progData;
         this.progInfoDialog = new ProgInfoDialog(false);
         addProgTest();
@@ -82,22 +82,22 @@ public class MTPTester {
             maskerPane.setButtonText("Abbrechen");
             maskerPane.getButton().setOnAction(a -> close());
 
-            StackPane stackPane = new StackPane();
+            final StackPane stackPane = new StackPane();
             stackPane.getChildren().addAll(gridPane, maskerPane);
             progInfoDialog.getvBoxCont().getChildren().addAll(stackPane);
 
 
             // Create the ButtonBar instance
-            ButtonBar buttonBar = new ButtonBar();
-            Button okButton = new Button("OK");
+            final ButtonBar buttonBar = new ButtonBar();
+            final Button okButton = new Button("OK");
             ButtonBar.setButtonData(okButton, ButtonBar.ButtonData.OK_DONE);
-            Button cButton = new Button("Abbrechen");
+            final Button cButton = new Button("Abbrechen");
             ButtonBar.setButtonData(cButton, ButtonBar.ButtonData.CANCEL_CLOSE);
             buttonBar.getButtons().addAll(okButton, cButton);
             progInfoDialog.getvBoxCont().getChildren().add(buttonBar);
 
 
-            Text text = new Text("Debugtools");
+            final Text text = new Text("Debugtools");
             text.setFont(Font.font(null, FontWeight.BOLD, 15));
 
 //            Button btnAddToHash = new Button("_fillHash");
@@ -140,26 +140,27 @@ public class MTPTester {
 //            btnMarkFilmFilterNotOk.setMaxWidth(Double.MAX_VALUE);
 //            btnMarkFilmFilterNotOk.setOnAction(a -> makrFilterOk(false));
 
-            Button btnStartWaiting = new Button("start waiting");
+            final Button btnStartWaiting = new Button("start waiting");
             btnStartWaiting.setMaxWidth(Double.MAX_VALUE);
             btnStartWaiting.setOnAction(a -> startWaiting());
 
-            Button btnNotify = new Button("Notify");
+            final Button btnNotify = new Button("Notify");
             btnNotify.setMaxWidth(Double.MAX_VALUE);
             btnNotify.setOnAction(a -> MTNotification.addNotification(new Download(), true));
 
-            Button btnText = new Button("change text");
+            final Button btnText = new Button("change text");
             btnText.setMaxWidth(Double.MAX_VALUE);
             btnText.setOnAction(a -> {
                 ProgConfig.MEDIA_DB_SUFFIX.getStringProperty().setValue("soso");
             });
 
-            Button btnDownload = new Button("Download");
+            final Button btnDownload = new Button("Download");
             btnDownload.setMaxWidth(Double.MAX_VALUE);
             btnDownload.setOnAction(a -> {
 
                 if (DownloadFactory.downloadFile(progInfoDialog.getStage(),
                         "http://p2.localhost:8080/extra/beta/MTPlayer-8-42__2020.02.22.zip",
+                        ProgConfig.START_DIALOG_DOWNLOAD_PATH.getStringProperty(),
                         "MTPlayer-8-42__20200222.zip")) {
                     System.out.println("Download OK");
                 } else {
@@ -167,13 +168,13 @@ public class MTPTester {
                 }
             });
 
-            Button btnChart = new Button("Chart");
+            final Button btnChart = new Button("Chart");
             btnChart.setMaxWidth(Double.MAX_VALUE);
             btnChart.setOnAction(a -> {
                 progData.chartData.genInfos();
             });
 
-            Button btnShutDown = new Button("Rechner herunterfahren");
+            final Button btnShutDown = new Button("Rechner herunterfahren");
             btnShutDown.setMaxWidth(Double.MAX_VALUE);
             btnShutDown.setOnAction(a ->
                     Platform.runLater(() -> ProgQuit.quitShutDown()));
@@ -202,7 +203,7 @@ public class MTPTester {
         }
     }
 
-    private void fillHash(Filmlist filmlist) {
+    private void fillHash(final Filmlist filmlist) {
         final List<String> logList = new ArrayList<>();
         logList.add("");
         logList.add("");
@@ -222,7 +223,7 @@ public class MTPTester {
         PLog.sysLog(logList);
     }
 
-    private void cleanHash(Filmlist filmlist) {
+    private void cleanHash(final Filmlist filmlist) {
         final List<String> logList = new ArrayList<>();
         logList.add("");
         logList.add(PLog.LILNE3);
@@ -240,7 +241,7 @@ public class MTPTester {
         PLog.sysLog(logList);
     }
 
-    private void findAndMarkNewFilms(Filmlist filmlist) {
+    private void findAndMarkNewFilms(final Filmlist filmlist) {
         final List<String> logList = new ArrayList<>();
         logList.add("");
         logList.add("");
@@ -287,7 +288,7 @@ public class MTPTester {
         final String DESCRIPTION = "*****";
         int count = 0;
         int countDesc = 0;
-        for (Film film : ProgData.getInstance().filmlist) {
+        for (final Film film : ProgData.getInstance().filmlist) {
 
             if (!checkDate(film, description)) {
                 ++count;
@@ -304,13 +305,13 @@ public class MTPTester {
     }
 
     private void checkText() {
-        Filmlist filmlist = progData.filmlist;
+        final Filmlist filmlist = progData.filmlist;
 
         int i = 0;
         int countTheme = 0, countTitle = 0, countDescreption = 0;
 
         try {
-            for (Film film : filmlist) {
+            for (final Film film : filmlist) {
                 ++i;
                 if (i % 10_000 == 0) {
                     System.out.println("fertig: " + i);
@@ -331,7 +332,7 @@ public class MTPTester {
                 }
 
             }
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             System.out.println(ex.getMessage());
         }
         System.out.println("Themen: " + countTheme);
@@ -340,30 +341,30 @@ public class MTPTester {
     }
 
     private void repairText() {
-        Filmlist filmlist = progData.filmlist;
+        final Filmlist filmlist = progData.filmlist;
 
         try {
-            for (Film film : filmlist) {
+            for (final Film film : filmlist) {
                 film.arr[Film.FILM_TITLE] = cleanUnicode(film.getTitle());
                 film.arr[Film.FILM_THEME] = cleanUnicode(film.getTheme());
                 film.setDescription(cleanUnicode(film.getDescription()));
 
             }
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             System.out.println(ex.getMessage());
         }
     }
 
     private void showFilter() {
-        SelectedFilter sf = progData.storedFilters.getActFilterSettings();
+        final SelectedFilter sf = progData.storedFilters.getActFilterSettings();
         System.out.println("====================================");
-        for (String s : SelectedFilterFactory.printFilter(sf)) {
+        for (final String s : SelectedFilterFactory.printFilter(sf)) {
             System.out.println(s);
         }
         System.out.println("====================================");
     }
 
-    private void makrFilterOk(boolean ok) {
+    private void makrFilterOk(final boolean ok) {
 //        progData.mtPlayerController.markFilterOk(ok);
     }
 
@@ -390,7 +391,7 @@ public class MTPTester {
         return ret;
     }
 
-    private boolean checkDate(Film film, long mSeconds) {
+    private boolean checkDate(final Film film, final long mSeconds) {
         // true wenn der Film jünger ist und angezeigt werden kann!
         try {
             if (film.filmDate.getTime() != 0) {
@@ -408,7 +409,7 @@ public class MTPTester {
         maskerPane.setMaskerText("Filmliste ist zu alt, eine neue downloaden");
         maskerPane.setButtonText("Button Text");
         maskerPane.setMaskerVisible(true, true, true);
-        Thread th = new Thread(waitTask);
+        final Thread th = new Thread(waitTask);
         th.setName("startWaiting");
         th.start();
     }
@@ -419,13 +420,13 @@ public class MTPTester {
         protected Void call() throws Exception {
             try {
                 Thread.sleep(5000);
-            } catch (Exception ignore) {
+            } catch (final Exception ignore) {
             }
             return null;
         }
 
         @Override
-        public boolean cancel(boolean mayInterruptIfRunning) {
+        public boolean cancel(final boolean mayInterruptIfRunning) {
             return super.cancel(mayInterruptIfRunning);
         }
     }
