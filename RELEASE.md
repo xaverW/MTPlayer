@@ -1,11 +1,26 @@
 # MTPlayer
 
 
-* Download-Chart, Download-Infos
-* Dialog: Programm nach Downloads beenden: Möglichkeit auch den Rechner herunterzufahren
-* Tray: Programm kann ins Tray gelegt werden -> "Einstellungen" zum Einschalten des Tray
-* Downloads: Es gibt einen weiterer Parameter "%w" für die Website des Films, z.B. für den youtube-dl
-* in den Tabellen kann mit der Leertaste "Seitenweise" gescrollt werden
+<br />
+
+**Release 11**
+
+
+* Download-Chart und Download-Infos wurden überarbeitet
+* Der Dialog: "Programm nach Downloads beenden" hat jetzt auch die Möglichkeit den Rechner anschließend herunterzufahren
+* Tray: Das Programm kann ins Tray gelegt werden -> In den Einstellungen kann das Tray eingeschaltet werden
+* Downloads: Es gibt einen weiteren Parameter: "%w" für die Website des Films, z.B. für den youtube-dl
+* In den Tabellen kann mit der Leertaste "Seitenweise" gescrollt werden
+* Dateigröße bei Streams wird ermittelt
+* Download über HTTPS kann bei Problemen abgeschaltet werden
+* Programmupdate-Suche wurde überarbeitet
+* Downloads können mit einer Startzeit gestartet werden
+* In den Abos kann eine Startzeit für die Downloads des Abos vorgegeben werden
+* Im Filmfilter (bei den Textfiltern) kann eine Zeitverzögerung zum Start der Suche, eingestellt werden
+* Im Filmfilter (bei den Textfiltern) kann eingestellt werden, dass die Suche erst nach Eingabe von "Return" startet
+* Es gibt einen "Tip des Tages"
+* Es gibt einen neuen Filmfilter: Sendedatum
+* Die gespeicherten Filterprofile können sortiert werden
 * ...
 
 
@@ -15,20 +30,20 @@
 
 * Downloadchart: Daten bleiben auch beim Ändern der Anzeige erhalten
 * Filmfilter erhält eine “zurück” Funktion
-* die interne Verarbeitung der Mediensammlung wurde verbessert, ist jetzt deutlich schneller bei sehr großen
+* Die interne Verarbeitung der Mediensammlung wurde verbessert, ist jetzt deutlich schneller bei sehr großen
   Mediensammlungen
-* beim Anlegen der Mediensammlung kann jetzt eine Mindestgröße vorgegeben werden, Dateien die kleiner sind werden nicht
+* Beim Anlegen der Mediensammlung kann jetzt eine Mindestgröße vorgegeben werden, Dateien die kleiner sind werden nicht
   mehr aufgenommen
-* die Mediensammlung kann in eine Datei exportiert werden
-* beim Suchen in der History/erledigten Abos kann zwischen Thema oder Titel unterschieden werden
-* häufige Programmfunktionen können über Tastenkürzel aufgerufen werden und in den Einstellungen können die Tastenkürzel
+* Die Mediensammlung kann in eine Datei exportiert werden
+* Beim Suchen in der History/erledigten Abos kann zwischen Thema oder Titel unterschieden werden
+* Häufige Programmfunktionen können über Tastenkürzel aufgerufen werden und in den Einstellungen können die Tastenkürzel
   angepasst werden
-* wenn sich bei Downloads aus Abos doppelte Dateinamen ergeben, werden diese jetzt nummeriert
+* Wenn sich bei Downloads aus Abos doppelte Dateinamen ergeben, werden diese jetzt nummeriert
 * flvstreamer wurde entfernt, gibt keine Downloads mehr dafür
 * Downloadchart wurde überarbeitet
 * Schriftgröße lässt sich anpassen
-* die Sortierreihenfolge der Downloads (Thema, Titel, Dateiname) wurde überarbeitet
-* der Add-Abo Dialog wurde überarbeitet
+* Die Sortierreihenfolge der Downloads (Thema, Titel, Dateiname) wurde überarbeitet
+* Der Add-Abo Dialog wurde überarbeitet
 * Filmfilter Blacklist: “nur Blacklist” anzeigen, zur Kontrolle der Blacklist
 * Download Continue Dialog wurde überarbeitet
 * Einstellungen: Farben wurde überarbeitet
@@ -36,21 +51,21 @@
 * Beschriftung Slider wurde überarbeitet
 * Download Dialog wurde überarbeitet
 * GUI Design (Filter, Tabellenspalten Ausrichtung, Filter Beschriftung, Shortcut, ..) wurde überarbeitet
-* start eines externen Programms über ein Shortcut möglich
+* Start eines externen Programms über ein Shortcut möglich
 * ...
 
 **Release 9**
 
 * Anordnung der Buttons (OK, Abbrechen, ..) passend zum Betriebssystem
-* beim Schließen des Config-Dialogs Filmliste nur neu laden, wenn Blacklist geändert wurde
-* die Möglichkeiten zum Anlegen von Verzeichnissen bei Abos wurde deutlich erweitert
+* Beim Schließen des Config-Dialogs Filmliste nur neu laden, wenn Blacklist geändert wurde
+* Die Möglichkeiten zum Anlegen von Verzeichnissen bei Abos wurde deutlich erweitert
 * Möglichkeit, auch bei neuer Beta-Version einen Hinweis angezeigt zu bekommen
 * Anpassungen bei der Suche nach einem Update / einer neuen BETA-Version
 * Speicherverbrauch in den Dialogen verbessert
 * Suchmöglichkeit in der Mediensammlung, der History und den erledigten Abos im Dialog "Einstellungen der
   Mediensammlung"
-* im Dialog "In der Mediensammlung suchen" bleibt die eingestellte Suche: "Mediensammlung" oder "History" erhalten
-* während das Ladens der Filmliste wird die Downloadbandbreite reduziert um die Filmliste schneller zu laden
+* Im Dialog "In der Mediensammlung suchen" bleibt die eingestellte Suche: "Mediensammlung" oder "History" erhalten
+* Während das Ladens der Filmliste wird die Downloadbandbreite reduziert um die Filmliste schneller zu laden
 * STRG-A in der Filmliste wird abgefangen wenn zu viele Filme in der Liste sind
 * Anpassungen für den Sender RBTV
 * Dialog "Über das Programm" wurde überarbeitet
@@ -63,22 +78,22 @@
 **Release 8**
 
 * Dark Theme, die Programmoberfläche kann jetzt auch in einem "dark theme" angezeigt werden: Einstellungen->Farben
-* neuer Filter im Tab Abos: Suche eines Abos nach Abonamen
-* bei Filmabos kann jetzt der Suchzeitraum eingeschränkt werden: Filter "Zeitraum", es werden nur die Filme der letzten
+* Neuer Filter im Tab Abos: Suche eines Abos nach Abonamen
+* Bei Filmabos kann jetzt der Suchzeitraum eingeschränkt werden: Filter "Zeitraum", es werden nur die Filme der letzten
   xx Tage gefunden
 * Automode, wird das Programm mit dem Parameter -a oder --auto gestartet, wird die Filmliste aktualisiert, Abos gesucht,
   Downloads gespeichert und das Programm danach wieder beendet (für *nix user: Das Gui wird dabei geladen, es muss also
   auch X installiert sein!)
-* das Gui und die Programm-Menüs wurden an vielen Stellen überarbeitet und intuitiver angeordnet
-* der Filter "Zeitraum" wurde überarbeitet
+* Das Gui und die Programm-Menüs wurden an vielen Stellen überarbeitet und intuitiver angeordnet
+* Der Filter "Zeitraum" wurde überarbeitet
 * Filmfilter "Sender exakt" wurde komplett überarbeitet, jetzt kann man direkt aus dem Gui heraus einen Sender/oder
   mehrere Sender auswählen, dadurch wird die Bedienung deutlich vereinfacht, nicht mehr möglich ist die Suche mit RegEx
   im Senderfilter (ist hier aber ja auch nicht wirklich hilfreich?)
 * Filter (Filme, Downloads, Abos) werden beim Programmstart wieder hergestellt
-* der gespeicherte Filter wird unterstrichen, wenn die Filtereinstellungen noch unverändert sind
+* Der gespeicherte Filter wird unterstrichen, wenn die Filtereinstellungen noch unverändert sind
 * fx bug beim glyphcache management wird abgefangen
-* durch einen Fehler konnten keine Downloads (bei *nix) mit Leerzeichen im Pfad vorgenommen werden, geht wieder
-* verbessertes Importscript (für MV), findet jetzt z.B. auch die Abo-Min. und Abo-Max Dauer
+* Durch einen Fehler konnten keine Downloads (bei *nix) mit Leerzeichen im Pfad vorgenommen werden, geht wieder
+* Verbessertes Importscript (für MV), findet jetzt z.B. auch die Abo-Min. und Abo-Max Dauer
 
 **Release 7**
 
@@ -95,8 +110,8 @@
 * Anzeige der Filmlänge wurde auf Minuten geändert
 * Beim Laden der Filmliste können bereits Filme mit Mindestlänge kleiner als X (z.B. <5 min.) gefiltert werden (dadurch
   kann die Filmliste deutlich verkleinert werden) -> Einstellungen
-* neuer Menüpunkt: In der Mediensammlung suchen (die Suche lässt sich so auch direkt starten)
-* an vielen weiteren Stellen gab es kleine Verbesserungen und Fehler und Ungereimtheiten wurden entfernt
+* Neuer Menüpunkt: In der Mediensammlung suchen (die Suche lässt sich so auch direkt starten)
+* An vielen weiteren Stellen gab es kleine Verbesserungen und Fehler und Ungereimtheiten wurden entfernt
 
 <br />
 
@@ -109,15 +124,15 @@
 * Tabelle Abo: Es gibt eine weitere Suche über den Status: "eingeschaltet/ausgeschaltet"
 * Abo: Es gibt jetzt ein neues Feld: "Beschreibung", auch eine Suche damit ist möglich, gedacht um Abos zu strukturieren
   oder mit Tags zu versehen
-* in der Mediensammlung kann man versteckte Dateien ausschließen
+* In der Mediensammlung kann man versteckte Dateien ausschließen
 * Einstellungen: Möglichkeit beim Laden der Filmliste Sender auszuschließen
 * Einstellungen: Ein UserAgent kann angegeben werden
 * Einstellungen: Im Tab Sets kann man jetzt die Standardsets direkt hier hinzufügen
 * Hilfemenü: Möglichkeit zum Öffnen der Anleitung auf der Website
 * Hilfemenü: Möglichkeit zum Öffnen der Logdatei
 * Logdatei wurde übersichtlicher gestaltet und mit weiteren Informationen angereichert
-* einige Fehler konnten beseitigt werden
-* viele kleinere Änderungen die die Übersichtlichkeit und die Bedienung verbessern sollen (Danke für die vielen
+* Einige Fehler konnten beseitigt werden
+* Viele kleinere Änderungen die die Übersichtlichkeit und die Bedienung verbessern sollen (Danke für die vielen
   Vorschläge dazu)
 
 <br />
