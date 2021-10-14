@@ -10,7 +10,7 @@
 * Der Dialog: "Programm nach Downloads beenden" hat jetzt auch die Möglichkeit den Rechner anschließend herunterzufahren
 * Tray: Das Programm kann ins Tray gelegt werden -> In den Einstellungen kann das Tray eingeschaltet werden
 * Downloads: Es gibt einen weiteren Parameter: "%w" für die Website des Films, z.B. für den youtube-dl
-* In den Tabellen kann mit der Leertaste "Seitenweise" gescrollt werden
+* In den Tabellen kann mit der Leertaste seitenweise gescrollt werden
 * Dateigröße bei Streams wird ermittelt
 * Download über HTTPS kann bei Problemen abgeschaltet werden
 * Programmupdate-Suche wurde überarbeitet
