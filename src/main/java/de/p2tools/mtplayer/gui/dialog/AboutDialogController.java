@@ -79,8 +79,9 @@ public class AboutDialogController extends PDialogExtra {
         btnCheck.setOnAction(a -> new SearchProgramUpdate(progData, this.getStage()).searchNewProgramVersion(true));
 
         GridPane gridPane = new GridPane();
+//        gridPane.setGridLinesVisible(true);
         gridPane.setHgap(10);
-        gridPane.setVgap(10);
+        gridPane.setVgap(5);
         gridPane.setPadding(new Insets(0, 10, 0, 10));
         HBox hBox = new HBox();
         hBox.getChildren().add(gridPane);
@@ -118,22 +119,22 @@ public class AboutDialogController extends PDialogExtra {
         GridPane.setHalignment(text3, HPos.CENTER);
 
         HBox.setHgrow(gridPane, Priority.ALWAYS);
-//        gridPane.setGridLinesVisible(true);
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcComputedSizeAndHgrow());
 
 
         //=======================
         gridPane = new GridPane();
+//        gridPane.setGridLinesVisible(true);
         gridPane.setHgap(10);
-        gridPane.setVgap(10);
+        gridPane.setVgap(3);
         gridPane.setPadding(new Insets(10, 10, 10, 10));
         getvBoxCont().getChildren().add(gridPane);
 
         row = 0;
         int c = 0;
 
-        Text text = new Text(P2LibConst.LINE_SEPARATORx2 + "Autor");
+        Text text = new Text(P2LibConst.LINE_SEPARATOR + "Autor");
         text.setFont(Font.font(null, FontWeight.BOLD, 15));
         gridPane.add(text, c, ++row, 2, 1);
 
@@ -143,7 +144,7 @@ public class AboutDialogController extends PDialogExtra {
 
 
         // Pfade
-        text = new Text(P2LibConst.LINE_SEPARATORx2 + "Programm Informationen");
+        text = new Text(P2LibConst.LINE_SEPARATOR + "Programm Informationen");
         text.setFont(Font.font(null, FontWeight.BOLD, 15));
         gridPane.add(text, c, ++row, 2, 1);
 
@@ -200,7 +201,7 @@ public class AboutDialogController extends PDialogExtra {
 
 
         // Java
-        text = new Text(P2LibConst.LINE_SEPARATORx2 + "Java Informationen");
+        text = new Text(P2LibConst.LINE_SEPARATOR + "Java Informationen");
         text.setFont(Font.font(null, FontWeight.BOLD, 15));
         gridPane.add(text, c, ++row, 2, 1);
 
@@ -226,10 +227,18 @@ public class AboutDialogController extends PDialogExtra {
         text.setFill(GRAY);
         gridPane.add(text, c + 1, row);
 
+        text = new Text("JavaFX:");
+        text.setFont(new Font(15));
+        text.setFill(GRAY);
+        gridPane.add(text, c, ++row);
 
-        System.out.println(("JavaFX Version: " + VersionInfo.getVersion()));
-        System.out.println(("JavaFX Runtime Version: " + VersionInfo.getRuntimeVersion()));
 
+        String fxVmType = VersionInfo.getVersion();
+        fxVmType += " (" + VersionInfo.getRuntimeVersion() + ")";
+        text = new Text(fxVmType);
+        text.setFont(new Font(15));
+        text.setFill(GRAY);
+        gridPane.add(text, c + 1, row);
 
         text = new Text(P2LibConst.LINE_SEPARATORx2 + "Ein Dankeschön an alle," + P2LibConst.LINE_SEPARATOR +
                 "die mit Vorschlägen oder Quelltext" + P2LibConst.LINE_SEPARATOR +
