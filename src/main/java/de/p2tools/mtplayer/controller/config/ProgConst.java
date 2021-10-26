@@ -88,22 +88,12 @@ public class ProgConst {
     public static final String URL_WEBSITE_HELP = "https://www.p2tools.de/mtplayer/manual/";
     public static final String URL_WEBSITE_DONATE = "https://www.p2tools.de/donate.html";
 
-    public static final String ADRESSE_MTPLAYER_VERSION = "https://www.p2tools.de/extra/mtplayer-info.xml";
-    public static final String ADRESSE_MTPLAYER_BETA_VERSION = "https://www.p2tools.de/extra/mtplayer-beta-info.xml";
-
-    //    public static final String ADRESSE_MTPLAYER_VERSION = "https://www.p2tools.de/extra/mtplayer-info2.xml";
-//    public static final String ADRESSE_MTPLAYER_BETA_VERSION = "https://www.p2tools.de/extra/mtplayer-beta-info2.xml";
-//    public static final String ADRESSE_MTPLAYER_VERSION = "http://p2.localhost:8080/extra/mtplayer-info2.xml";
-//    public static final String ADRESSE_MTPLAYER_BETA_VERSION = "http://p2.localhost:8080/extra/mtplayer-beta-info2.xml";
-
     // die URL der Sets, nicht mehr mit jeder Programmversion hochzählen, nur noch wenn notwendig
-    // public static final String URL_MTPLAYER_CONFIG_DIRECTORY = "https://www.p2tools.de/extra/mtplayer/v-" + Functions.getProgVersion() + "/";
     public static final String URL_MTPLAYER_CONFIG_DIRECTORY = "https://www.p2tools.de/extra/mtplayer/v-4/";
     public static final String URL_MTPLAYER_PROGRAM_SETS = URL_MTPLAYER_CONFIG_DIRECTORY + "pset-templates.xml";
 
     // ProgrammUrls
     public static final String ADRESSE_WEBSITE_VLC = "http://www.videolan.org";
-    public static final String ADRESSE_WEBSITE_FLVSTREAMER = "https://savannah.nongnu.org/projects/flvstreamer";
     public static final String ADRESSE_WEBSITE_FFMPEG = "http://ffmpeg.org";
 
     // Dateien/Verzeichnisse
@@ -123,8 +113,6 @@ public class ProgConst {
     public static final String GUI_FILME_DIVIDER_LOCATION = "0.7";
     public static final String GUI_DOWNLOAD_DIVIDER_LOCATION = "0.7";
     public static final String GUI_ABO_DIVIDER_LOCATION = "0.7";
-    public static final String GUI_MSG_DIVIDER_LOCATION = "0.7";
-    public static final String GUI_MSG_LOG_DIVIDER_LOCATION = "0.5";
 
     public static final String CONFIG_DIALOG_SET_DIVIDER = "0.2";
 

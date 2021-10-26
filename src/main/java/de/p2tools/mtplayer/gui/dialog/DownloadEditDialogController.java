@@ -120,6 +120,7 @@ public class DownloadEditDialogController extends PDialogExtra {
         }
     }
 
+    @Override
     public void make() {
         addOkCancelButtons(btnOk, btnCancel);
         getvBoxCont().getChildren().add(gridPane);
@@ -400,14 +401,6 @@ public class DownloadEditDialogController extends PDialogExtra {
                         new GetFile().getHelpSearch(GetFile.PATH_HELPTEXT_EDIT_DOWNLOAD_PROG));
 
                 VBox vBox = new VBox(5);
-//                HBox hBoxArray1 = new HBox(10);
-//                HBox.setHgrow(txt[DownloadXml.DOWNLOAD_PROGRAM_CALL], Priority.ALWAYS);
-//                hBoxArray1.getChildren().addAll(btnHelp, txt[DownloadXml.DOWNLOAD_PROGRAM_CALL]);
-//
-//                HBox hBoxArray2 = new HBox(10);
-//                HBox.setHgrow(txt[DownloadXml.DOWNLOAD_PROGRAM_CALL_ARRAY], Priority.ALWAYS);
-//                hBoxArray2.getChildren().addAll(btnReset, txt[DownloadXml.DOWNLOAD_PROGRAM_CALL_ARRAY]);
-
                 HBox hBoxArray1 = new HBox(10);
                 HBox.setHgrow(textAreaProg, Priority.ALWAYS);
                 hBoxArray1.getChildren().addAll(btnHelp, textAreaProg);

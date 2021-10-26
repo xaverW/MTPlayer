@@ -124,11 +124,6 @@ public class QuitDialogController extends PDialogExtra {
                 } catch (Exception ignore) {
                 }
             }
-//            if (cbxShutDown.isSelected()) {
-//                ProgQuit.quitShutDown();
-//            } else {
-//                ProgQuit.quit();
-//            }
             return null;
         }
 
@@ -138,6 +133,7 @@ public class QuitDialogController extends PDialogExtra {
         }
     }
 
+    @Override
     public void close() {
 //        System.out.println("close");
         ProgData.getInstance().quitDialogController = null;

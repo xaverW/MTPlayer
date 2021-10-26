@@ -87,6 +87,7 @@ public class DownloadStartAtTimeController extends PDialogExtra {
         init(true);
     }
 
+    @Override
     public void make() {
         addOkCancelButtons(btnOk, btnCancel);
         Button btnHelp = PButton.helpButton(getStage(), "Downloads starten",
@@ -125,13 +126,6 @@ public class DownloadStartAtTimeController extends PDialogExtra {
         vBoxStart.setMaxWidth(Region.USE_PREF_SIZE);
         gridPane.setMaxWidth(Region.USE_PREF_SIZE);
         vBoxStart.getChildren().add(gridPane);
-
-//        Button btnHelp = PButton.helpButton(getStage(), "Downloads starten",
-//                HelpText.DOWNLOAD_ADD_AT_TIME);
-//        VBox vBoxHlp = new VBox(10);
-//        vBoxHlp.setAlignment(Pos.BOTTOM_RIGHT);
-//        vBoxHlp.getChildren().add(btnHelp);
-//        VBox.setVgrow(vBoxHlp, Priority.ALWAYS);
 
         splitPane.getItems().addAll(vBoxTable, vBoxStart);
         VBox.setVgrow(splitPane, Priority.ALWAYS);

@@ -39,39 +39,6 @@ public class DownloadListStarts {
         this.downloadList = downloadList;
     }
 
-//    /**
-//     * Return the number of Starts, which are queued in state INIT or RUN.
-//     *
-//     * @return number of queued Starts.
-//     */
-//    public synchronized int getNumberOfStartsNotFinished() {
-//        // todo?? wird aber nicht benutzt
-//        for (final Download dataDownload : downloadList) {
-//            final Start s = dataDownload.getStart();
-//            if (dataDownload.isStarted()) {
-//                return downloadList.size();
-//            }
-//        }
-//        return 0;
-//    }
-
-//    /**
-//     * Return the maximum time of all running starts until finish.
-//     *
-//     * @return The time in SECONDS.
-//     */
-//    public synchronized long getMaximumFinishTimeOfRunningStarts() {
-//        long rem = 0;
-//        for (final Download d : downloadList) {
-//            final Start s = d.getStart();
-//            if (d.isStarted()) {
-//                rem = Math.max(rem, s.getTimeLeftSeconds());
-//            }
-//        }
-//
-//        return rem;
-//    }
-
     public Download getRestartDownload() {
         // Versuch einen Fehlgeschlagenen Download zu finden um ihn wieder zu starten
         // die Fehler laufen aber einzeln, vorsichtshalber

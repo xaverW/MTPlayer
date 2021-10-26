@@ -56,15 +56,13 @@ public class ProgQuit {
 
         // erst mal prüfen ob noch Downloads gestartet sind oder laufen
         if (progData.downloadList.countStartedAndRunningDownloads() > 0) {
-            QuitDialogController quitDialogController;
             if (progData.quitDialogController != null) {
                 progData.quitDialogController.getStage().toFront();
-                quitDialogController = progData.quitDialogController;
                 if (startWithWaiting) {
-                    quitDialogController.startWaiting();
+                    progData.quitDialogController.startWaiting();
                 }
             } else {
-                quitDialogController = new QuitDialogController(startWithWaiting);
+                new QuitDialogController(startWithWaiting);
             }
 
         } else {

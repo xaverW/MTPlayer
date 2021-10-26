@@ -46,22 +46,4 @@ public class SizeTools {
         final String pre = (si ? "kMGTPE" : "KMGTPE").charAt(exp - 1) + (si ? "" : "i");
         return String.format("%.1f %sB", bytes / Math.pow(unit, exp), pre);
     }
-
-//    // todo: durch oberes ersetzen
-//    public static String humanReadableBandwidth(long b) {
-//        if (b > 1000 * 1000) {
-//            String s = String.valueOf(b / 1000);
-//            if (s.length() >= 4) {
-//                s = s.substring(0, s.length() - 3) + "," + s.substring(s.length() - 3);
-//            }
-//            return s + " MB/s";
-//        } else if (b > 1000) {
-//            return (b / 1000) + " kB/s";
-//        } else if (b > 1) {
-//            return b + " B/s";
-//        } else {
-//            return "";
-//        }
-//    }
-
 }

@@ -90,12 +90,6 @@ public class AutomodeContinueDialogController extends PDialogExtra {
         vBoxCont.setPadding(new Insets(15));
         vBoxCont.getChildren().addAll(gridPane);
 
-//        HBox hBox = new HBox();
-//        HBox.setHgrow(hBox, Priority.ALWAYS);
-//        hBox.setAlignment(Pos.CENTER_LEFT);
-//        hBox.getChildren().add(new Label("Wie möchten Sie forfahren?"));
-//        hBoxOk.getChildren().addAll(hBox, btnContinue, btnCancel);
-
         getHboxLeft().getChildren().add(new Label("Wie möchten Sie forfahren?"));
         addOkCancelButtons(btnContinue, btnCancel);
     }

@@ -45,23 +45,6 @@ public class GetIcon {
         Image icon;
         icon = getStdImage(strIcon, path, w, h);
 
-//        if (Boolean.parseBoolean(ProgConfig.SYSTEM_ICON_STANDARD.get())) {
-//            icon = getStdImage(strIcon, path, w, h);
-//        } else {
-//            try {
-//                //todo das funzt nicht
-//                final String pfad = PFileUtils.addsPfad(ProgConfig.SYSTEM_ICON_PFAD.get(), strIcon);
-//                if (new File(pfad).exists()) {
-//                    icon = new javafx.scene.image.Image(path);
-//                } else {
-//                    icon = getStdImage(strIcon, path, w, h);
-//                }
-//            } catch (final Exception ex) {
-//                PLog.errorLog(932107891, strIcon);
-//                icon = getStdImage(strIcon, path, w, h);
-//            }
-//        }
-
         return icon;
     }
 

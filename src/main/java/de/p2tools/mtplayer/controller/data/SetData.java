@@ -23,7 +23,6 @@ import de.p2tools.p2Lib.tools.PIndex;
 public class SetData extends SetDataProps {
 
     private final ProgramList programList = new ProgramList();
-//    public static boolean[] spaltenAnzeigen = new boolean[MAX_ELEM];
 
     public SetData() {
         setId(PIndex.getIndexStr());

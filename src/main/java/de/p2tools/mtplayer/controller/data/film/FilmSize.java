@@ -26,11 +26,6 @@ public class FilmSize implements Comparable<FilmSize> {
     public FilmSize() {
     }
 
-//    public FilmSize(long ll) {
-//        l = ll;
-//        s = l.toString();
-//    }
-
     void setFilmSize(Film film) {
         if (film.arr[FilmXml.FILM_SIZE].equals("<1")) {
             film.arr[FilmXml.FILM_SIZE] = "1";

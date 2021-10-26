@@ -129,23 +129,5 @@ public class Filter {
     public static boolean isPattern(String searchText) {
         return searchText.startsWith("#:");
     }
-
-//    public static void checkPattern1(TextField tf) {
-//        // Hintergrund ändern wenn eine RegEx
-//        final String text = tf.getText();
-//        if (isPattern(text)) {
-//            if (makePattern(text) == null) {
-//                // soll Pattern sein, ist aber falsch
-//                tf.setStyle("");
-//                tf.setStyle("-fx-control-inner-background: " + MTColor.FILTER_REGEX_ERROR.getColorToWeb() + ";");
-//            } else {
-//                tf.setStyle("");
-//                tf.setStyle("-fx-control-inner-background: " + MTColor.FILTER_REGEX_ERROR.getColorToWeb() + ";");
-//                tf.setStyle("-fx-control-inner-background: " + MTColor.FILTER_REGEX.getColorToWeb() + ";");
-//            }
-//        } else {
-//            tf.setStyle("");
-//        }
-//    }
 }
 

@@ -51,15 +51,6 @@ public class AboSubDir {
         }
     }
 
-//    public static String getName(int no) {
-//        for (DirName s : DirName.values()) {
-//            if (s.getNo() == no) {
-//                return s.getName();
-//            }
-//        }
-//        return "";
-//    }
-
     public static DirName getAboSub(int no) {
         for (DirName s : DirName.values()) {
             if (s.getNo() == no) {

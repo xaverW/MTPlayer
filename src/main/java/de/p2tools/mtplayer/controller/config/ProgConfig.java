@@ -70,12 +70,6 @@ public class ProgConfig extends MLConfig {
 
     // Configs zur Programmupdatesuche
     public static MLConfigs SYSTEM_UPDATE_DATE = addNewKey("system-update-date"); // Datum der letzten Prüfung
-    //    public static MLConfigs SYSTEM_UPDATE_SEARCH = addNewKey("system-update-search", Boolean.TRUE.toString()); // ob beim Start nach Updates gesucht werden soll
-//    public static MLConfigs SYSTEM_UPDATE_INFO_NR_SHOWN = addNewKey("system-update-info-nr-shown"); // zuletzt angezeigte Info
-//    public static MLConfigs SYSTEM_UPDATE_VERSION_SHOWN = addNewKey("system-update-version-shown"); // zuletzt angezeigte Version
-//    public static MLConfigs SYSTEM_UPDATE_BETA_SEARCH = addNewKey("system-update-beta-search", Boolean.FALSE.toString());
-//    public static MLConfigs SYSTEM_UPDATE_BETA_VERSION_SHOWN = addNewKey("system-update-beta-version-shown"); // zuletzt angezeigtes Update mit versionNo
-//    public static MLConfigs SYSTEM_UPDATE_BETA_BUILD_NO_SHOWN = addNewKey("system-update-beta-build-nr-shown"); // zuletzt angezeigtes Update mit buildNo
     public static MLConfigs SYSTEM_UPDATE_PROGSET_VERSION = addNewKey("system-update-progset-version");
 
 
@@ -95,7 +89,6 @@ public class ProgConfig extends MLConfig {
     public static IntegerProperty SYSTEM_CONFIG_DIALOG_FILM = new SimpleIntegerProperty(-1);
     public static IntegerProperty SYSTEM_CONFIG_DIALOG_BLACKLIST = new SimpleIntegerProperty(-1);
     public static IntegerProperty SYSTEM_CONFIG_DIALOG_DOWNLOAD = new SimpleIntegerProperty(-1);
-//    public static IntegerProperty SYSTEM_CONFIG_DIALOG_PLAY = new SimpleIntegerProperty(-1);
 
     // MediaDialog, Dialog nach Start immer gleich öffnen
     public static IntegerProperty SYSTEM_MEDIA_DIALOG_TAB = new SimpleIntegerProperty(0);
@@ -158,7 +151,6 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs SYSTEM_LOAD_FILMLIST_MAX_DAYS = addNewKey("system-load-filmlist-max-days", "0"); //es werden nur die x letzten Tage geladen
     public static MLConfigs SYSTEM_LOAD_FILMLIST_MIN_DURATION = addNewKey("system-load-filmlist-min-duration", "0"); //es werden nur Filme mit mind. x Minuten geladen
     public static MLConfigs SYSTEM_PATH_VLC = addNewKey("path-vlc", SetsPrograms.getTemplatePathVlc());
-    //    public static MLConfigs SYSTEM_PATH_FLVSTREAMER = addNewKey("path-flvstreamer", SetsPrograms.getTemplatePathFlv());
     public static MLConfigs SYSTEM_PATH_FFMPEG = addNewKey("path-ffmpeg", SetsPrograms.getTemplatePathFFmpeg());
 
     // Blacklist
@@ -214,7 +206,6 @@ public class ProgConfig extends MLConfig {
 
     // Downloadchart
     public static MLConfigs DOWNLOAD_CHART_SEPARAT = addNewKey("download-chart-separat", Boolean.TRUE.toString());
-    //    public static MLConfigs DOWNLOAD_CHART_ALL_DOWNLOADS = addNewKey("download-chart-all-downloads", Boolean.TRUE.toString());
     public static MLConfigs DOWNLOAD_CHART_ONLY_EXISTING = addNewKey("download-chart-only-existing", Boolean.FALSE.toString());
     public static MLConfigs DOWNLOAD_CHART_ONLY_RUNNING = addNewKey("download-chart-only-running", Boolean.FALSE.toString());
     public static MLConfigs DOWNLOAD_CHART_SHOW_MAX_TIME_MIN = addNewKey("download-chart-show-max-time", 30); //MAX Minuten im Chart
@@ -233,11 +224,6 @@ public class ProgConfig extends MLConfig {
     public static MLConfigs ABO_GUI_TABLE_UP_DOWN = addNewKey("abo-gui-table-up-down");
     public static MLConfigs ABO_GUI_TABLE_VIS = addNewKey("abo-gui-table-vis");
     public static MLConfigs ABO_GUI_TABLE_ORDER = addNewKey("abo-gui-table-order");
-
-    // Meldungen
-    public static MLConfigs MSG_VISIBLE = addNewKey("msg-visible", Boolean.FALSE.toString());
-    public static MLConfigs MSG_PANEL_LOGS_DIVIDER = addNewKey("msg-panel-logs-divider", ProgConst.GUI_MSG_LOG_DIVIDER_LOCATION);
-    public static MLConfigs MSG_PANEL_DIVIDER = addNewKey("msg-panel-divider", ProgConst.GUI_MSG_DIVIDER_LOCATION);
 
     // ConfigDialog
     public static MLConfigs CONFIG_DIALOG_SIZE = addNewKey("config-dialog-size");

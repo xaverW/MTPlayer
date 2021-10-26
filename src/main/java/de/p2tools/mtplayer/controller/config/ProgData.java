@@ -24,7 +24,6 @@ import de.p2tools.mtplayer.controller.data.download.DownloadInfos;
 import de.p2tools.mtplayer.controller.data.download.DownloadList;
 import de.p2tools.mtplayer.controller.data.film.Filmlist;
 import de.p2tools.mtplayer.controller.filmlist.LoadFilmlist;
-import de.p2tools.mtplayer.controller.filmlist.checkFilmlistUpdate.SearchForFilmlistUpdate;
 import de.p2tools.mtplayer.controller.filmlist.filmlistUrls.SearchFilmListUrls;
 import de.p2tools.mtplayer.controller.history.HistoryList;
 import de.p2tools.mtplayer.controller.mediaDb.MediaCollectionDataList;
@@ -85,7 +84,6 @@ public class ProgData {
 
     // Worker
     public Worker worker; // Liste aller Sender, Themen, ...
-    private SearchForFilmlistUpdate searchForFilmlistUpdate; // prüft, ob es eine neue Filmliste gibt
     public DownloadInfos downloadInfos;
 
     // Programmdaten
@@ -138,7 +136,6 @@ public class ProgData {
 
         starterClass = new StarterClass(this);
         worker = new Worker(this);
-        searchForFilmlistUpdate = SearchForFilmlistUpdate.StartSearchForFilmlistUpdate();
         downloadInfos = new DownloadInfos(this);
         chartData = new ChartData();
         progTray = new ProgTray(this);
@@ -165,7 +162,6 @@ public class ProgData {
     }
 
     private void doTimerWorkOneSecond() {
-//        Platform.runLater(() -> downloadList.makeDownloadInfo());
         Listener.notify(Listener.EREIGNIS_TIMER, ProgData.class.getName());
     }
 

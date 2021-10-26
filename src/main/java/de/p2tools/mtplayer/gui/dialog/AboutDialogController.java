@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.gui.dialog;
 
+import com.sun.javafx.runtime.VersionInfo;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
@@ -68,6 +69,7 @@ public class AboutDialogController extends PDialogExtra {
     }
 
 
+    @Override
     public void make() {
         make3();
     }
@@ -223,6 +225,11 @@ public class AboutDialogController extends PDialogExtra {
         text.setFont(new Font(15));
         text.setFill(GRAY);
         gridPane.add(text, c + 1, row);
+
+
+        System.out.println(("JavaFX Version: " + VersionInfo.getVersion()));
+        System.out.println(("JavaFX Runtime Version: " + VersionInfo.getRuntimeVersion()));
+
 
         text = new Text(P2LibConst.LINE_SEPARATORx2 + "Ein Dankeschön an alle," + P2LibConst.LINE_SEPARATOR +
                 "die mit Vorschlägen oder Quelltext" + P2LibConst.LINE_SEPARATOR +

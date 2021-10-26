@@ -92,13 +92,6 @@ public class SetDataList extends SetDataListWorker {
                 break;
             }
         }
-//        for (int p = 0; p < pSet.getProgramList().size(); ++p) {
-//            final ProgramData prog = pSet.getProg(p);
-//            if (prog.getProgPath().contains(PATTERN_PATH_FLV) || prog.getProgSwitch().contains(PATTERN_PATH_FLV)) {
-//                flvstreamer = getPathFlv();
-//                break;
-//            }
-//        }
         for (int p = 0; p < pSet.getProgramList().size(); ++p) {
             final ProgramData prog = pSet.getProg(p);
             if (prog.getProgPath().contains(PATTERN_PATH_FFMPEG) || prog.getProgSwitch().contains(PATTERN_PATH_FFMPEG)) {
@@ -133,16 +126,6 @@ public class SetDataList extends SetDataListWorker {
         }
         return ProgConfig.SYSTEM_PATH_VLC.get();
     }
-
-//    private static String getPathFlv() {
-//        // liefert den Pfad wenn vorhanden, wenn nicht wird er in einem Dialog abgefragt
-//        if (ProgConfig.SYSTEM_PATH_FLVSTREAMER.get().isEmpty()) {
-//            ProgConfig.SYSTEM_PATH_FLVSTREAMER.setValue(PDialogFileChosser.showFileChooser(ProgData.getInstance().primaryStage, "flvstreamer",
-//                    "flvstreamer wird nicht gefunden.", "Bitte den Pfad zum" + P2LibConst.LINE_SEPARATOR +
-//                            "flvstreamer angeben.", false, new ProgIcons().ICON_BUTTON_FILE_OPEN));
-//        }
-//        return ProgConfig.SYSTEM_PATH_FLVSTREAMER.get();
-//    }
 
     private static String getPathFFmpeg() {
         // liefert den Pfad wenn vorhanden, wenn nicht wird er in einem Dialog abgefragt
@@ -276,17 +259,6 @@ public class SetDataList extends SetDataListWorker {
         return stream().filter(data -> data.isAbo())
                 .collect(Collectors.toCollection(SetDataList::new));
     }
-
-//    public ObservableList<String> getSetDataVisibleNameList() {
-//        //liefert eine Liste aller SetDataNamen
-//        ObservableList<String> list = FXCollections.observableArrayList();
-//
-//        for (final SetData psetData : this) {
-//            list.add(psetData.getVisibleName());
-//        }
-//
-//        return list;
-//    }
 
     public void setPlay(SetData setData) {
         for (final SetData sData : this) {

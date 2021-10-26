@@ -138,57 +138,6 @@ public class TableFilm {
 
     }
 
-//    private void addRowFact(TableView<Film> table) {
-//
-//        table.setRowFactory(tableview -> new TableRow<Film>() {
-//            @Override
-//            public void updateItem(Film film, boolean empty) {
-//                super.updateItem(film, empty);
-//
-//                if (film == null || empty) {
-//                    setStyle("");
-//                } else {
-//                    if (film.isLive()) {
-//                        // livestream
-//                        for (int i = 0; i < getChildren().size(); i++) {
-//                            getChildren().get(i).setStyle(MTColor.FILM_LIVESTREAM.getCssFontBold());
-//                        }
-//
-//                    } else if (geoMelden.get() && film.isGeoBlocked()) {
-//                        // geogeblockt
-//                        for (int i = 0; i < getChildren().size(); i++) {
-////                            getChildren().get(i).setStyle("");
-//                            getChildren().get(i).setStyle(MTColor.FILM_GEOBLOCK.getCssFontBold());
-//                        }
-//
-//                    } else if (film.isNewFilm()) {
-//                        // neue Filme
-//                        for (int i = 0; i < getChildren().size(); i++) {
-//                            getChildren().get(i).setStyle(MTColor.FILM_NEW.getCssFont());
-//                        }
-//
-//                    } else {
-//                        for (int i = 0; i < getChildren().size(); i++) {
-//                            getChildren().get(i).setStyle("");
-//                        }
-//                    }
-//
-//                    if (film.isBookmark()) {
-//                        setStyle(MTColor.FILM_BOOKMARK.getCssBackgroundSel());
-//
-//                    } else if (film.isShown()) {
-//                        setStyle(MTColor.FILM_HISTORY.getCssBackgroundSel());
-//
-//                    } else {
-//                        setStyle("");
-//                    }
-//
-//                }
-//            }
-//        });
-//
-//    }
-
     private Callback<TableColumn<Film, String>, TableCell<Film, String>> cellFactoryStart
             = (final TableColumn<Film, String> param) -> {
 

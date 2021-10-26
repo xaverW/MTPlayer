@@ -76,7 +76,6 @@ public class DownloadConstants {
             if (status == STATE_STOPPED) {
                 ret = "abgebrochen";
             } else if (status == STATE_STARTED_WAITING) {
-//                ret = "wartend";
                 ret = "wartet";
             } else if (status == STATE_ERROR) {
                 ret = dManager ? "extern:fehler" : "fehlerhaft";
@@ -95,8 +94,6 @@ public class DownloadConstants {
                 ret = "extern";
             } else {
                 ret = df.format(progress * 100) + " %";
-//                System.out.println("progress: " + progress);
-//                ret = Double.toString(progress / 10.0) + '%';
             }
 
         } else if (progress == PROGRESS_FINISHED && status == STATE_ERROR) {

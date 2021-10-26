@@ -159,13 +159,9 @@ public class ProgTray {
         System.out.println("   max: " + progData.primaryStage.getX() + " - " + progData.primaryStage.getY());
         System.out.println("   progData.primaryStage.isShowing(): " + progData.primaryStage.isShowing());
         PGuiSize.showSave(progData.primaryStage);
-//        if (!progData.primaryStage.isShowing()) {
-//        }
 
         if (progData.quitDialogController != null) {
             PGuiSize.showSave(progData.quitDialogController.getStage());
-//            if (!progData.quitDialogController.isShowing()) {
-//            }
         }
 
         ProgConfig.SYSTEM_TRAY.setValue(false);
@@ -180,7 +176,6 @@ public class ProgTray {
         } else {
             System.out.println("   show");
             PGuiSize.showSave(progData.primaryStage);
-//            Platform.runLater(() -> progData.primaryStage.show());
         }
 
         if (progData.quitDialogController != null) {

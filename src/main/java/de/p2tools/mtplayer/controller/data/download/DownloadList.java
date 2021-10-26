@@ -69,6 +69,7 @@ public class DownloadList extends SimpleListProperty<Download> {
         Collections.sort(this);
     }
 
+    @Override
     public synchronized boolean add(Download d) {
         return super.add(d);
     }
@@ -222,14 +223,6 @@ public class DownloadList extends SimpleListProperty<Download> {
             setDownloadsChanged();
         }
     }
-
-//    public synchronized int getNumberOfStartsNotFinished() {
-//        return downloadListStarts.getNumberOfStartsNotFinished();
-//    }
-//
-//    public synchronized long getMaximumFinishTimeOfRunningStarts() {
-//        return downloadListStarts.getMaximumFinishTimeOfRunningStarts();
-//    }
 
     public synchronized List<Download> getListOfStartsNotFinished(String source) {
         return downloadListStarts.getListOfStartsNotFinished(source);

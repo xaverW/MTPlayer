@@ -43,7 +43,6 @@ public class ProgIcons {
     public final ImageView ICON_BUTTON_CLEAR = GetIcon.getImageView("button-clear.png", 16, 16);
 
     public final ImageView ICON_DIALOG_QUIT = GetIcon.getImageView("dialog-quit.png", 64, 64);
-    public final ImageView ICON_CLEAN_16 = GetIcon.getImageView("clean_16.png", 16, 16);
 
     // table
     public static final Image IMAGE_TABLE_FILM_PLAY = GetIcon.getImage("table-film-play.png", 14, 14);
@@ -52,9 +51,6 @@ public class ProgIcons {
     public static final Image IMAGE_TABLE_DOWNLOAD_DEL = GetIcon.getImage("table-download-del.png", 14, 14);
     public static final Image IMAGE_TABLE_DOWNLOAD_STOP = GetIcon.getImage("table-download-stop.png", 14, 14);
     public static final Image IMAGE_TABLE_DOWNLOAD_OPEN_DIR = GetIcon.getImage("table-download-open-dir.png", 14, 14);
-
-    public final ImageView DOWNLOAD_OK = GetIcon.getImageView("download-ok.png", 16, 16);
-    public final ImageView DOWNLOAD_ERROR = GetIcon.getImageView("download-error.png", 16, 16);
 
     public final ImageView ICON_BUTTON_STOP = GetIcon.getImageView("button-stop.png", 16, 16);
     public final ImageView ICON_BUTTON_NEXT = GetIcon.getImageView("button-next.png", 16, 16);
@@ -77,7 +73,7 @@ public class ProgIcons {
     public final ImageView FX_ICON_TOOLBAR_DOWNLOAD_REFRESH = GetIcon.getImageView("toolbar-download-refresh.png", 32, 32);
     public final ImageView FX_ICON_TOOLBAR_DOWNLOAD_START_ALL = GetIcon.getImageView("toolbar-download-start-all.png", 32, 32);
     public final ImageView FX_ICON_TOOLBAR_DOWNLOAD_START_ALL_TIME = GetIcon.getImageView("toolbar-download-start-time.png", 32, 32);
-    
+
     public final ImageView FX_ICON_TOOLBAR_FILM_START = GetIcon.getImageView("toolbar-filme-start.png", 32, 32);
     public final ImageView FX_ICON_TOOLBAR_FILM_REC = GetIcon.getImageView("toolbar-filme-rec.png", 32, 32);
     public final ImageView FX_ICON_TOOLBAR_FILM_BOOKMARK = GetIcon.getImageView("toolbar-filme-bookmark.png", 32, 32);

@@ -144,46 +144,9 @@ public class AboList extends SimpleListProperty<Abo> {
             return;
         }
 
-//        final Abo abo = oAbo.get();
-////        Abo aboCopy = abo.getCopy();
-////
-////        final String channel = selectedFilter.isChannelVis() ? selectedFilter.getChannel() : "";
-////        final String theme = selectedFilter.isThemeVis() ? selectedFilter.getTheme() : "";
-////        final boolean themeExact = selectedFilter.isThemeExact();
-////        final String title = selectedFilter.isTitleVis() ? selectedFilter.getTitle() : "";
-////        final String themeTitle = selectedFilter.isThemeTitleVis() ? selectedFilter.getThemeTitle() : "";
-////        final String somewhere = selectedFilter.isSomewhereVis() ? selectedFilter.getSomewhere() : "";
-////        final int timeRange = selectedFilter.isTimeRangeVis() ? selectedFilter.getTimeRange() : FilmFilter.FILTER_TIME_RANGE_ALL_VALUE;
-////        final int minDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMinDur() : FilmFilter.FILTER_DURATION_MIN_MINUTE;
-////        final int maxDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMaxDur() : FilmFilter.FILTER_DURATION_MAX_MINUTE;
-////
-////        aboCopy.setChannel(channel);
-////        aboCopy.setTheme(theme);
-////        aboCopy.setThemeExact(themeExact);
-////        aboCopy.setTitle(title);
-////        aboCopy.setThemeTitle(themeTitle);
-////        aboCopy.setSomewhere(somewhere);
-////        aboCopy.setTimeRange(timeRange);
-////        aboCopy.setMinDurationMinute(minDuration);
-////        aboCopy.setMaxDurationMinute(maxDuration);
-//
-//        if (new AboEditDialogController(progData, aboCopy, false).getOk()) {
-//            abo.copyToMe(aboCopy);
-//
-//            // als Vorgabe merken
-//            ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(abo.getMinDurationMinute());
-//            ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(abo.getMaxDurationMinute());
-//            notifyChanges();
-//        }
-
-
         final Abo abo = oAbo.get();
         new AboEditDialogController(progData, selectedFilter, abo);
     }
-
-//    public synchronized void addNewAbo(String aboName) {
-//        addNewAbo(aboName, "", "", "");
-//    }
 
     public synchronized void addNewAbo(String aboName, String filmChannel, String filmTheme, String filmTitle) {
         // abo anlegen, oder false wenns schon existiert
@@ -214,15 +177,6 @@ public class AboList extends SimpleListProperty<Abo> {
                 minDuration,
                 maxDuration,
                 namePath);
-
-
-//        if (new AboEditDialogController(progData, abo).getOk()) {
-//            // als Vorgabe merken
-//            ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(abo.getMinDurationMinute());
-//            ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(abo.getMaxDurationMinute());
-//            addAbo(abo);
-//            notifyChanges();
-//        }
 
         new AboEditDialogController(progData, abo);
     }

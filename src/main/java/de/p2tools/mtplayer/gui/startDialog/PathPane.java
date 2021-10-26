@@ -119,17 +119,6 @@ public class PathPane {
         final Button btnFind = new Button("suchen");
 
         switch (player) {
-//            case FLV:
-//                text = new Text("Pfad zum flvstreamer-Player auswählen");
-//                property = flvProp;
-//                btnFind.setOnAction(event -> {
-//                    ProgConfig.SYSTEM_PATH_FLVSTREAMER.setValue("");
-//                    txtPlayer.setText(SetsPrograms.getTemplatePathFlv());
-//                });
-//                hyperlink = new PHyperlink(stage,
-//                        ProgConst.ADRESSE_WEBSITE_FLVSTREAMER,
-//                        ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
-//                break;
             case FFMPEG:
                 text = new Text("Pfad zum ffmpeg-Player auswählen");
                 property = ffmpegProp;

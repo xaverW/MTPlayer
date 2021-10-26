@@ -211,24 +211,6 @@ public class FilmProps extends FilmXml {
         return arr[FILM_URL_AUTH];
     }
 
-
-    //    das macht keinen Sinn da, da die URLs erst "zusammengebaut" werden müssen
-//    public String getUrlKlein() {
-//        return arr[FILM_URL_KLEIN];
-//    }
-//
-//    public String getUrlRtmpKlein() {
-//        return arr[FILM_URL_RTMP_KLEIN];
-//    }
-//
-//    public String getUrlHd() {
-//        return arr[FILM_URL_HD];
-//    }
-//
-//    public String getUrlRtmpHd() {
-//        return arr[FILM_URL_RTMP_HD];
-//    }
-
     public String getUrlHistory() {
         if (arr[FILM_URL_HISTORY].isEmpty()) {
             return arr[FILM_URL];
@@ -245,17 +227,9 @@ public class FilmProps extends FilmXml {
         this.newFilm = newFilm;
     }
 
-//    public BooleanProperty newFilmProperty() {
-//        return newFilm;
-//    }
-
     public boolean isShown() {
         return shown;
     }
-
-//    public BooleanProperty shownProperty() {
-//        return shown;
-//    }
 
     public void setShown(boolean shown) {
         if (!isLive()) {
@@ -267,10 +241,6 @@ public class FilmProps extends FilmXml {
         return actHist;
     }
 
-//    public BooleanProperty actHistProperty() {
-//        return actHist;
-//    }
-
     public void setActHist(boolean actHist) {
         this.actHist = actHist;
     }
@@ -278,10 +248,6 @@ public class FilmProps extends FilmXml {
     public boolean isBookmark() {
         return bookmark;
     }
-
-//    public BooleanProperty bookmarkProperty() {
-//        return bookmark;
-//    }
 
     public void setBookmark(boolean bookmark) {
         this.bookmark = bookmark;
