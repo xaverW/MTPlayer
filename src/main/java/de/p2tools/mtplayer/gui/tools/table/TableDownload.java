@@ -305,7 +305,7 @@ public class TableDownload {
 
                 } else if (item == DownloadConstants.STATE_ERROR) {
                     btnDownStart = new Button("");
-                    btnDownStart.setTooltip(new Tooltip("Download wider starten"));
+                    btnDownStart.setTooltip(new Tooltip("Download wieder starten"));
                     btnDownStart.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_DOWNLOAD_START));
                     btnDownStart.setOnAction((ActionEvent event) -> {
                         Download download = getTableView().getItems().get(getIndex());
