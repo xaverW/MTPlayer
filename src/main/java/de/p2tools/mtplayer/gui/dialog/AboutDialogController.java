@@ -27,10 +27,10 @@ public class AboutDialogController extends AboutDialog {
 
     public AboutDialogController(ProgData progData) {
         super(progData.primaryStage, ProgConst.PROGRAM_NAME, ProgConst.URL_WEBSITE, ProgConst.URL_WEBSITE_HELP,
-                "/de/p2tools/mtplayer/res/P2.png", ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(),
+                ProgConst.FILE_PROG_ICON, ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(),
                 ProgConfig.SYSTEM_DARK_THEME.getBool(),
                 new String[]{"Filmliste:", "Einstellungen:"},
-                new String[]{ProgInfos.getFilmListFile(), ProgInfos.getSettingsDirectory().toAbsolutePath().toString()});
+                new String[]{ProgInfos.getFilmListFile(), ProgInfos.getSettingsFile().toAbsolutePath().toString()});
     }
 
     @Override

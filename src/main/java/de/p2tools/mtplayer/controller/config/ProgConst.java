@@ -96,6 +96,8 @@ public class ProgConst {
     public static final String ADRESSE_WEBSITE_VLC = "http://www.videolan.org";
     public static final String ADRESSE_WEBSITE_FFMPEG = "http://ffmpeg.org";
 
+    public static final String FILE_PROG_ICON = "/de/p2tools/mtplayer/res/P2.png";
+
     // Dateien/Verzeichnisse
     public static final String JSON_DATEI_FILME = "filme.json";
 
