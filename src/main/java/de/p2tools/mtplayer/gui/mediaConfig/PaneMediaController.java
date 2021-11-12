@@ -53,18 +53,20 @@ public class PaneMediaController extends PAccordionPane {
     private final Stage stage;
 
     public PaneMediaController(Stage stage) {
-        super(stage, ProgConfig.MEDIA_CONFIG_DIALOG_ACCORDION.getBooleanProperty(), ProgConfig.SYSTEM_MEDIA_DIALOG_MEDIA);
+        super(stage, ProgConfig.MEDIA_CONFIG_DIALOG_ACCORDION, ProgConfig.SYSTEM_MEDIA_DIALOG_MEDIA);
         progData = ProgData.getInstance();
         this.stage = stage;
         init();
     }
 
+    @Override
     public void close() {
         super.close();
         progData.mediaDataList.sizeProperty().removeListener(changeListener);
     }
 
 
+    @Override
     public Collection<TitledPane> createPanes() {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
         TitledPane tpConfig = new TitledPane("Mediensammlung", vBox);

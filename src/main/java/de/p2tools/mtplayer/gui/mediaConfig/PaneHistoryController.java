@@ -63,16 +63,17 @@ public class PaneHistoryController extends PAccordionPane {
     private final Stage stage;
 
     public PaneHistoryController(Stage stage, boolean history, StringProperty searchText) {
-        super(stage, ProgConfig.MEDIA_CONFIG_DIALOG_ACCORDION.getBooleanProperty(), ProgConfig.SYSTEM_MEDIA_DIALOG_HISTORY);
+        super(stage, ProgConfig.MEDIA_CONFIG_DIALOG_ACCORDION, ProgConfig.SYSTEM_MEDIA_DIALOG_HISTORY);
         this.stage = stage;
         this.history = history;
         this.searchText = searchText;
         progData = ProgData.getInstance();
-        search = ProgConfig.MEDIA_CONFIG_DIALOG_SEARCH.getIntegerProperty();
+        search = ProgConfig.MEDIA_CONFIG_DIALOG_SEARCH;
 
         init();
     }
 
+    @Override
     public void close() {
         super.close();
         if (history) {
@@ -87,6 +88,7 @@ public class PaneHistoryController extends PAccordionPane {
         txtSearch.setText(searchText.getValueSafe());
     }
 
+    @Override
     public Collection<TitledPane> createPanes() {
         ToggleGroup tg = new ToggleGroup();
         tg.getToggles().addAll(rbTheme, rbTitle, rbTt);

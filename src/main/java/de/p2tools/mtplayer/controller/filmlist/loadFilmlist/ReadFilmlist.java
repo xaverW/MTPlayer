@@ -189,7 +189,7 @@ public class ReadFilmlist {
         if (!filmsPerDateBlocked.isEmpty()) {
             list.add(PLog.LILNE3);
             list.add(" ");
-            final int date = ProgConfig.SYSTEM_LOAD_FILMLIST_MAX_DAYS.getInt();
+            final int date = ProgConfig.SYSTEM_LOAD_FILMLIST_MAX_DAYS.getValue();
             list.add("== nach Datum geblockte Filme (max. " + date + " Tage) ==");
 
             sumFilms = 0;
@@ -206,7 +206,7 @@ public class ReadFilmlist {
         if (!filmsPerDurationBlocked.isEmpty()) {
             list.add(PLog.LILNE3);
             list.add(" ");
-            final int dur = ProgConfig.SYSTEM_LOAD_FILMLIST_MIN_DURATION.getInt();
+            final int dur = ProgConfig.SYSTEM_LOAD_FILMLIST_MIN_DURATION.getValue();
             list.add("== nach Filmlänge geblockte Filme (mind. " + dur + " min.) ==");
 
             sumFilms = 0;
@@ -238,7 +238,7 @@ public class ReadFilmlist {
         JsonToken jsonToken;
         ArrayList listChannel = LoadFactory.getSenderListNotToLoad();
         final long loadFilmsMaxMilliSeconds = getDaysLoadingFilms();
-        final int loadFilmsMinDuration = ProgConfig.SYSTEM_LOAD_FILMLIST_MIN_DURATION.getInt();
+        final int loadFilmsMinDuration = ProgConfig.SYSTEM_LOAD_FILMLIST_MIN_DURATION.getValue();
 
 
         if (jp.nextToken() != JsonToken.START_OBJECT) {
@@ -373,7 +373,7 @@ public class ReadFilmlist {
     }
 
     private long getDaysLoadingFilms() {
-        final long days = ProgConfig.SYSTEM_LOAD_FILMLIST_MAX_DAYS.getInt();
+        final long days = ProgConfig.SYSTEM_LOAD_FILMLIST_MAX_DAYS.getValue();
         if (days > 0) {
             return System.currentTimeMillis() - TimeUnit.MILLISECONDS.convert(days, TimeUnit.DAYS);
         } else {

@@ -19,8 +19,8 @@ package de.p2tools.mtplayer.gui.tools.table;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.tools.Data;
-import de.p2tools.mtplayer.tools.MLConfigs;
 import de.p2tools.p2Lib.tools.log.PLog;
+import javafx.beans.property.StringProperty;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
@@ -41,11 +41,11 @@ public class Table {
     private double[] breite;
     private boolean[] visAr;
 
-    private MLConfigs confWidth; //Spaltenbreite
-    private MLConfigs confSort; //"Sortieren"  der Tabelle nach Spalte
-    private MLConfigs confUpDown; //Sortierung UP oder Down
-    private MLConfigs confVis; //Spalte ist sichtbar
-    private MLConfigs confOrder; //"Reihenfolge" der Spalten
+    private StringProperty confWidth; //Spaltenbreite
+    private StringProperty confSort; //"Sortieren"  der Tabelle nach Spalte
+    private StringProperty confUpDown; //Sortierung UP oder Down
+    private StringProperty confVis; //Spalte ist sichtbar
+    private StringProperty confOrder; //"Reihenfolge" der Spalten
 
     public static void refresh_table(TableView table) {
         for (int i = 0; i < table.getColumns().size(); i++) {

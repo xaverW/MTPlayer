@@ -48,7 +48,7 @@ public class FilmFilterControllerProfiles extends VBox {
 
     private final ProgData progData;
 
-    private final IntegerProperty filterProp = ProgConfig.FILTER_FILME_SEL_FILTER.getIntegerProperty();
+    private final IntegerProperty filterProp = ProgConfig.FILTER_FILME_SEL_FILTER;
 
     public FilmFilterControllerProfiles() {
         super();

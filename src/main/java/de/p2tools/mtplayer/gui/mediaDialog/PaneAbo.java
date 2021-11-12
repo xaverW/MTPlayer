@@ -66,7 +66,7 @@ public class PaneAbo extends ScrollPane {
     public PaneAbo(Stage stage, String searchStrOrg, StringProperty searchStrProp) {
         this.searchStrOrg = searchStrOrg;
         this.searchStrProp = searchStrProp;
-        search = ProgConfig.MEDIA_DIALOG_SEARCH_ABO.getIntegerProperty();
+        search = ProgConfig.MEDIA_DIALOG_SEARCH_ABO;
         listenerDbStart = new Listener(Listener.EREIGNIS_MEDIA_DB_START, MediaDialogController.class.getSimpleName()) {
             @Override
             public void pingFx() {

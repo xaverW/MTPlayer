@@ -129,7 +129,7 @@ public class DirectHttpDownload extends Thread {
         }
 
         download.getStart().setInputStream(new MLInputStream(conn.getInputStream(),
-                bandwidthCalculationTimer, ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getIntegerProperty()));
+                bandwidthCalculationTimer, ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE));
         fos = new FileOutputStream(file, (downloaded != 0));
         download.getDownloadSize().addAktFileSize(downloaded);
         final byte[] buffer = new byte[MLBandwidthTokenBucket.DEFAULT_BUFFER_SIZE];
@@ -252,10 +252,10 @@ public class DirectHttpDownload extends Thread {
                     download.getDownloadSize().setSize(getContentLength(url));
                     download.getDownloadSize().setActFileSize(0);
                     conn = (HttpURLConnection) url.openConnection();
-                    conn.setConnectTimeout(1000 * ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getInt());
-                    conn.setReadTimeout(1000 * ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getInt());
+                    conn.setConnectTimeout(1000 * ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getValue());
+                    conn.setReadTimeout(1000 * ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getValue());
 
-                    if (ProgConfig.SYSTEM_SSL_ALWAYS_TRUE.getBool() && conn instanceof HttpsURLConnection) {
+                    if (ProgConfig.SYSTEM_SSL_ALWAYS_TRUE.getValue() && conn instanceof HttpsURLConnection) {
                         HttpsURLConnection httpsConn = (HttpsURLConnection) conn;
                         httpsConn.setHostnameVerifier(
                                 // Create all-trusting host name verifier
@@ -298,7 +298,7 @@ public class DirectHttpDownload extends Thread {
                 }
             } catch (final Exception ex) {
                 if ((ex instanceof java.io.IOException)
-                        && restartCount < ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP.getInt()) {
+                        && restartCount < ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP.getValue()) {
 
                     if (ex instanceof java.net.SocketTimeoutException) {
                         // Timeout Fehlermeldung für zxd :)
@@ -366,7 +366,7 @@ public class DirectHttpDownload extends Thread {
         boolean cancel = false;
         if (file.exists()) {
             DownloadContinueDialogController downloadContinueDialogController =
-                    new DownloadContinueDialogController(ProgConfig.DOWNLOAD_DIALOG_CONTINUE_SIZE.getStringProperty(),
+                    new DownloadContinueDialogController(ProgConfig.DOWNLOAD_DIALOG_CONTINUE_SIZE,
                             progData, download, true /* weiterführen */);
 
             DownloadState.ContinueDownload result = downloadContinueDialogController.getResult();

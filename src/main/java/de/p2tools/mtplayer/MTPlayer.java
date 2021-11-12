@@ -113,18 +113,18 @@ public class MTPlayer extends Application {
             progData.mtPlayerController = new MTPlayerController();
 
             scene = new Scene(progData.mtPlayerController,
-                    PGuiSize.getWidth(ProgConfig.SYSTEM_SIZE_GUI.getStringProperty()),
-                    PGuiSize.getHeight(ProgConfig.SYSTEM_SIZE_GUI.getStringProperty()));
+                    PGuiSize.getWidth(ProgConfig.SYSTEM_SIZE_GUI),
+                    PGuiSize.getHeight(ProgConfig.SYSTEM_SIZE_GUI));
             addThemeCss(); // und jetzt noch für die neue Scene
 
-            if (ProgConfig.SYSTEM_STYLE.getBool()) {
+            if (ProgConfig.SYSTEM_STYLE.getValue()) {
                 P2LibInit.setStyleFile(ProgInfos.getStyleFile().toString());
                 IoReadWriteStyle.readStyle(ProgInfos.getStyleFile(), scene);
             }
 
-            ProgConfig.SYSTEM_DARK_THEME.getStringProperty().addListener((u, o, n) -> {
+            ProgConfig.SYSTEM_DARK_THEME.addListener((u, o, n) -> {
                 addThemeCss();
-                ProgConfig.SYSTEM_THEME_CHANGED.setValue(!ProgConfig.SYSTEM_THEME_CHANGED.getBool());
+                ProgConfig.SYSTEM_THEME_CHANGED.setValue(!ProgConfig.SYSTEM_THEME_CHANGED.getValue());
             });
 
             primaryStage.setScene(scene);
@@ -133,7 +133,7 @@ public class MTPlayer extends Application {
                 ProgQuit.quit(false);
             });
 
-            if (!PGuiSize.setPos(ProgConfig.SYSTEM_SIZE_GUI.getStringProperty(), primaryStage)) {
+            if (!PGuiSize.setPos(ProgConfig.SYSTEM_SIZE_GUI, primaryStage)) {
                 primaryStage.centerOnScreen();
             }
             primaryStage.show();
@@ -144,7 +144,7 @@ public class MTPlayer extends Application {
     }
 
     private void addThemeCss() {
-        if (ProgConfig.SYSTEM_DARK_THEME.getBool()) {
+        if (ProgConfig.SYSTEM_DARK_THEME.getValue()) {
             P2LibInit.addCssFile(P2LibConst.CSS_GUI_DARK);
             P2LibInit.addCssFile(ProgConst.CSS_FILE_DARK_THEME);
         } else {

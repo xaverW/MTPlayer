@@ -88,7 +88,7 @@ public class FilmGuiInfoController extends VBox {
 
         if (!film.arr[FilmXml.FILM_WEBSITE].isEmpty()) {
             PHyperlink hyperlink = new PHyperlink(film.arr[FilmXml.FILM_WEBSITE],
-                    ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
+                    ProgConfig.SYSTEM_PROG_OPEN_URL, new ProgIcons().ICON_BUTTON_FILE_OPEN);
             hBox.getChildren().addAll(lblUrl, hyperlink);
         }
     }

@@ -248,12 +248,12 @@ public class PaneMedia extends ScrollPane {
         final String name = txtTitleMedia.getText();
         if (!name.isEmpty() && !path.isEmpty()) {
             POpen.playStoredFilm(PFileUtils.addsPath(path, name),
-                    ProgConfig.SYSTEM_PROG_PLAY_FILME.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
+                    ProgConfig.SYSTEM_PROG_PLAY_FILME, new ProgIcons().ICON_BUTTON_FILE_OPEN);
         }
     }
 
     private void open() {
         final String s = txtPathMedia.getText();
-        POpen.openDir(s, ProgConfig.SYSTEM_PROG_OPEN_DIR.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
+        POpen.openDir(s, ProgConfig.SYSTEM_PROG_OPEN_DIR, new ProgIcons().ICON_BUTTON_FILE_OPEN);
     }
 }

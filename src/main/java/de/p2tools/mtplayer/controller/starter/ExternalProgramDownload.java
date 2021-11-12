@@ -279,7 +279,7 @@ public class ExternalProgramDownload extends Thread {
         boolean ret = false;
         if (file.exists()) {
             DownloadContinueDialogController downloadContinueDialogController =
-                    new DownloadContinueDialogController(ProgConfig.DOWNLOAD_DIALOG_CONTINUE_SIZE.getStringProperty(),
+                    new DownloadContinueDialogController(ProgConfig.DOWNLOAD_DIALOG_CONTINUE_SIZE,
                             progData, download, false /* weiterführen */);
 
             DownloadState.ContinueDownload result = downloadContinueDialogController.getResult();

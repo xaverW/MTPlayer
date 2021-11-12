@@ -16,9 +16,9 @@
 
 package de.p2tools.mtplayer.gui.startDialog;
 
+import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
-import de.p2tools.mtplayer.controller.data.MTColor;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.mtplayer.gui.tools.SetsPrograms;
@@ -42,9 +42,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PathPane {
-    StringProperty vlcProp = ProgConfig.SYSTEM_PATH_VLC.getStringProperty();
-    //    StringProperty flvProp = ProgConfig.SYSTEM_PATH_FLVSTREAMER.getStringProperty();
-    StringProperty ffmpegProp = ProgConfig.SYSTEM_PATH_FFMPEG.getStringProperty();
+    StringProperty vlcProp = ProgConfig.SYSTEM_PATH_VLC;
+    //    StringProperty flvProp = ProgConfig.SYSTEM_PATH_FLVSTREAMER;
+    StringProperty ffmpegProp = ProgConfig.SYSTEM_PATH_FFMPEG;
     private GridPane gridPane = new GridPane();
     private int row = 0;
     private final Stage stage;
@@ -128,7 +128,7 @@ public class PathPane {
                 });
                 hyperlink = new PHyperlink(stage,
                         ProgConst.ADRESSE_WEBSITE_FFMPEG,
-                        ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
+                        ProgConfig.SYSTEM_PROG_OPEN_URL, new ProgIcons().ICON_BUTTON_FILE_OPEN);
                 break;
             case VLC:
             default:
@@ -140,7 +140,7 @@ public class PathPane {
                 });
                 hyperlink = new PHyperlink(stage,
                         ProgConst.ADRESSE_WEBSITE_VLC,
-                        ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
+                        ProgConfig.SYSTEM_PROG_OPEN_URL, new ProgIcons().ICON_BUTTON_FILE_OPEN);
                 break;
         }
 
@@ -149,7 +149,7 @@ public class PathPane {
         txtPlayer.textProperty().addListener((observable, oldValue, newValue) -> {
             File file = new File(txtPlayer.getText());
             if (!file.exists() || !file.isFile()) {
-                txtPlayer.setStyle(MTColor.DOWNLOAD_NAME_ERROR.getCssBackground());
+                txtPlayer.setStyle(ProgColorList.DOWNLOAD_NAME_ERROR.getCssBackground());
             } else {
                 txtPlayer.setStyle("");
             }

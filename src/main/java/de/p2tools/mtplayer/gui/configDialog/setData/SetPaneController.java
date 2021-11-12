@@ -57,7 +57,7 @@ public class SetPaneController extends AnchorPane {
     private SetDataPane setDataPane;
     private Collection<TitledPane> setDataPaneTitle;
     private final Stage stage;
-    DoubleProperty split = ProgConfig.CONFIG_DIALOG_SET_DIVIDER.getDoubleProperty();
+    DoubleProperty split = ProgConfig.CONFIG_DIALOG_SET_DIVIDER;
 
     public SetPaneController(Stage stage) {
         this.stage = stage;

@@ -60,21 +60,21 @@ public class ConfigPaneController extends PAccordionPane {
 
     BooleanProperty logfileChanged = new SimpleBooleanProperty(false);
 
-    BooleanProperty propUpdateSearch = ProgConfig.SYSTEM_UPDATE_SEARCH_ACT.getBooleanProperty();
-    BooleanProperty propUpdateBetaSearch = ProgConfig.SYSTEM_UPDATE_SEARCH_BETA.getBooleanProperty();
-    BooleanProperty propUpdateDailySearch = ProgConfig.SYSTEM_UPDATE_SEARCH_DAILY.getBooleanProperty();
-    BooleanProperty propAbo = ProgConfig.ABO_SEARCH_NOW.getBooleanProperty();
-    BooleanProperty propDown = ProgConfig.DOWNLOAD_START_NOW.getBooleanProperty();
-    StringProperty propDir = ProgConfig.SYSTEM_PROG_OPEN_DIR.getStringProperty();
-    StringProperty propUrl = ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty();
-    StringProperty propExternProgram = ProgConfig.SYSTEM_PROG_EXTERN_PROGRAM.getStringProperty();
-    StringProperty propPlay = ProgConfig.SYSTEM_PROG_PLAY_FILME.getStringProperty();
-    BooleanProperty propLog = ProgConfig.SYSTEM_LOG_ON.getBooleanProperty();
-    StringProperty propLogDir = ProgConfig.SYSTEM_LOG_DIR.getStringProperty();
-    BooleanProperty propSizeFilm = ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM.getBooleanProperty();
-    BooleanProperty propSizeDownload = ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD.getBooleanProperty();
-    BooleanProperty propTray = ProgConfig.SYSTEM_TRAY.getBooleanProperty();
-    BooleanProperty propTipOfDay = ProgConfig.TIP_OF_DAY_SHOW.getBooleanProperty();
+    BooleanProperty propUpdateSearch = ProgConfig.SYSTEM_UPDATE_SEARCH_ACT;
+    BooleanProperty propUpdateBetaSearch = ProgConfig.SYSTEM_UPDATE_SEARCH_BETA;
+    BooleanProperty propUpdateDailySearch = ProgConfig.SYSTEM_UPDATE_SEARCH_DAILY;
+    BooleanProperty propAbo = ProgConfig.ABO_SEARCH_NOW;
+    BooleanProperty propDown = ProgConfig.DOWNLOAD_START_NOW;
+    StringProperty propDir = ProgConfig.SYSTEM_PROG_OPEN_DIR;
+    StringProperty propUrl = ProgConfig.SYSTEM_PROG_OPEN_URL;
+    StringProperty propExternProgram = ProgConfig.SYSTEM_PROG_EXTERN_PROGRAM;
+    StringProperty propPlay = ProgConfig.SYSTEM_PROG_PLAY_FILME;
+    BooleanProperty propLog = ProgConfig.SYSTEM_LOG_ON;
+    StringProperty propLogDir = ProgConfig.SYSTEM_LOG_DIR;
+    BooleanProperty propSizeFilm = ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM;
+    BooleanProperty propSizeDownload = ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD;
+    BooleanProperty propTray = ProgConfig.SYSTEM_TRAY;
+    BooleanProperty propTipOfDay = ProgConfig.TIP_OF_DAY_SHOW;
 
     private final PToggleSwitch tglSearchAbo = new PToggleSwitch("Abos automatisch suchen:");
     private final PToggleSwitch tglStartDownload = new PToggleSwitch("Downloads aus Abos sofort starten:");
@@ -97,13 +97,14 @@ public class ConfigPaneController extends PAccordionPane {
     private StylePane stylePane;
 
     public ConfigPaneController(Stage stage) {
-        super(stage, ProgConfig.CONFIG_DIALOG_ACCORDION.getBooleanProperty(), ProgConfig.SYSTEM_CONFIG_DIALOG_CONFIG);
+        super(stage, ProgConfig.CONFIG_DIALOG_ACCORDION, ProgConfig.SYSTEM_CONFIG_DIALOG_CONFIG);
         this.stage = stage;
         progData = ProgData.getInstance();
 
         init();
     }
 
+    @Override
     public void close() {
         super.close();
         colorPane.close();
@@ -116,7 +117,7 @@ public class ConfigPaneController extends PAccordionPane {
         tglSmallDownload.selectedProperty().unbindBidirectional(propSizeDownload);
         tglTray.selectedProperty().unbindBidirectional(propTray);
         tglTipOfDay.selectedProperty().unbindBidirectional(propTipOfDay);
-        txtUserAgent.textProperty().unbindBidirectional(ProgConfig.SYSTEM_USERAGENT.getStringProperty());
+        txtUserAgent.textProperty().unbindBidirectional(ProgConfig.SYSTEM_USERAGENT);
         tglEnableLog.selectedProperty().unbindBidirectional(propLog);
         txtLogFile.textProperty().unbindBidirectional(propLogDir);
         txtFileManager.textProperty().unbindBidirectional(propDir);
@@ -127,6 +128,7 @@ public class ConfigPaneController extends PAccordionPane {
         tglSearchBeta.selectedProperty().unbindBidirectional(propUpdateBetaSearch);
     }
 
+    @Override
     public Collection<TitledPane> createPanes() {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
         makeConfig(result);
@@ -210,7 +212,7 @@ public class ConfigPaneController extends PAccordionPane {
                 return false;
             }
         };
-        txtUserAgent.textProperty().bindBidirectional(ProgConfig.SYSTEM_USERAGENT.getStringProperty());
+        txtUserAgent.textProperty().bindBidirectional(ProgConfig.SYSTEM_USERAGENT);
 
         int row = 0;
         gridPane.add(tglSearchAbo, 0, row, 2, 1);
@@ -456,7 +458,7 @@ public class ConfigPaneController extends PAccordionPane {
 
         btnNow.setOnAction(event -> new SearchProgramUpdate(progData, stage).searchNewProgramVersion(true));
         PHyperlink hyperlink = new PHyperlink(ProgConst.URL_WEBSITE,
-                ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
+                ProgConfig.SYSTEM_PROG_OPEN_URL, new ProgIcons().ICON_BUTTON_FILE_OPEN);
         HBox hBoxHyper = new HBox();
         hBoxHyper.setAlignment(Pos.CENTER_LEFT);
         hBoxHyper.setPadding(new Insets(10, 0, 0, 0));

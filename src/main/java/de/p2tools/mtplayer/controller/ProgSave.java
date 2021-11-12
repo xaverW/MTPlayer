@@ -22,6 +22,8 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
+import de.p2tools.p2Lib.configFile.ConfigFile;
+import de.p2tools.p2Lib.configFile.WriteConfigFile;
 import de.p2tools.p2Lib.tools.ProgramTools;
 import de.p2tools.p2Lib.tools.log.PLog;
 import de.p2tools.p2Lib.tools.log.PLogger;
@@ -55,6 +57,8 @@ public class ProgSave {
         ProgConfig.SYSTEM_PROG_BUILD_DATE.setValue(ProgramTools.getCompileDate());
 
         copyConfig();
+        saveProgConfig();
+
         try (IoWriteXml writer = new IoWriteXml(progData)) {
             writer.writeData();
         } catch (final Exception ex) {
@@ -64,6 +68,19 @@ public class ProgSave {
         if (ProgData.reset) {
             reset();
         }
+    }
+
+    public static void saveProgConfig() {
+        //sind die Programmeinstellungen
+        PLog.sysLog("save progConfig");
+
+        final Path xmlFilePath = ProgInfos.getSettingsFile();
+        ConfigFile configFile = new ConfigFile(ProgConst.XML_START, xmlFilePath);
+        ProgConfig.addConfigData(configFile);
+
+        WriteConfigFile writeConfigFile = new WriteConfigFile();
+        writeConfigFile.addConfigFile(configFile);
+        writeConfigFile.writeConfigFile();
     }
 
     private void reset() {

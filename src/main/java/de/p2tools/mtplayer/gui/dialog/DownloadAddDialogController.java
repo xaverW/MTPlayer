@@ -16,10 +16,10 @@
 
 package de.p2tools.mtplayer.gui.dialog;
 
+import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.MTColor;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.data.SetDataList;
@@ -121,8 +121,8 @@ public class DownloadAddDialogController extends PDialogExtra {
 
     public DownloadAddDialogController(ProgData progData, ArrayList<Film> filmsToDownloadList, SetData setData, String filterResolution) {
         super(progData.primaryStage,
-                filmsToDownloadList.size() > 1 ? ProgConfig.DOWNLOAD_DIALOG_ADD_MORE_SIZE.getStringProperty() :
-                        ProgConfig.DOWNLOAD_DIALOG_ADD_SIZE.getStringProperty(),
+                filmsToDownloadList.size() > 1 ? ProgConfig.DOWNLOAD_DIALOG_ADD_MORE_SIZE :
+                        ProgConfig.DOWNLOAD_DIALOG_ADD_SIZE,
                 "Download anlegen", true, false);
 
         this.progData = progData;
@@ -369,7 +369,7 @@ public class DownloadAddDialogController extends PDialogExtra {
             downloadAddInfos[actFilmIsShown].setName(txtName.getText());
 
             if (!txtName.getText().equals(FileNameUtils.checkFileName(txtName.getText(), false /* pfad */))) {
-                txtName.setStyle(MTColor.DOWNLOAD_NAME_ERROR.getCssBackground());
+                txtName.setStyle(ProgColorList.DOWNLOAD_NAME_ERROR.getCssBackground());
             } else {
                 txtName.setStyle("");
             }
@@ -433,9 +433,9 @@ public class DownloadAddDialogController extends PDialogExtra {
         rbStart.setToggleGroup(toggleGroupStart);
         rbNot.setToggleGroup(toggleGroupStart);
         rbTime.setToggleGroup(toggleGroupStart);
-        rbStart.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD_NOW.getBooleanProperty());
-        rbNot.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD_NOT.getBooleanProperty());
-        rbTime.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD_TIME.getBooleanProperty());
+        rbStart.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD_NOW);
+        rbNot.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD_NOT);
+        rbTime.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD_TIME);
         cbxSubtitle.setOnAction(event -> downloadAddInfos[actFilmIsShown].setSubtitle(cbxSubtitle.isSelected()));
         cbxInfo.setOnAction(event -> downloadAddInfos[actFilmIsShown].setInfo(cbxInfo.isSelected()));
     }
@@ -767,8 +767,8 @@ public class DownloadAddDialogController extends PDialogExtra {
 
         theme = DownloadTools.replaceEmptyFileName(theme,
                 false /* pfad */,
-                Boolean.parseBoolean(ProgConfig.SYSTEM_USE_REPLACETABLE.get()),
-                Boolean.parseBoolean(ProgConfig.SYSTEM_ONLY_ASCII.get()));
+                ProgConfig.SYSTEM_USE_REPLACETABLE.getValue(),
+                ProgConfig.SYSTEM_ONLY_ASCII.getValue());
 
         if (actDownPath.endsWith(SEPARATOR)) {
             ret = actDownPath.substring(0, actDownPath.length() - SEPARATOR.length());

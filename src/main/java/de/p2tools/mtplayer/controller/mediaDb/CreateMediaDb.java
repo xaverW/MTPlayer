@@ -16,10 +16,10 @@
 
 package de.p2tools.mtplayer.controller.mediaDb;
 
-import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.tools.duration.PDuration;
@@ -41,9 +41,9 @@ public class CreateMediaDb {
     private List tmpMediaDataList = new ArrayList<MediaData>();
     ArrayList<String> logs = new ArrayList<>();
 
-    final boolean withoutSuffix = ProgConfig.MEDIA_DB_WITH_OUT_SUFFIX.getBool();
-    final boolean noHiddenFiles = ProgConfig.MEDIA_DB_NO_HIDDEN_FILES.getBool();
-    final int fileSize = ProgConfig.MEDIA_DB_FILE_SIZE_MBYTE.getInt() * 1000 * 1000; //sind BYTE
+    final boolean withoutSuffix = ProgConfig.MEDIA_DB_WITH_OUT_SUFFIX.getValue();
+    final boolean noHiddenFiles = ProgConfig.MEDIA_DB_NO_HIDDEN_FILES.getValue();
+    final int fileSize = ProgConfig.MEDIA_DB_FILE_SIZE_MBYTE.getValue() * 1000 * 1000; //sind BYTE
     final boolean checkFileSize = fileSize > ProgConst.MEDIA_COLLECTION_FILESIZE_ALL_FILES;
 
     public CreateMediaDb() {

@@ -27,7 +27,7 @@ import javafx.scene.chart.XYChart;
 import java.util.ArrayList;
 
 public class ChartData {
-    private IntegerProperty downloadChartMaxTimeMinutes = ProgConfig.DOWNLOAD_CHART_SHOW_MAX_TIME_MIN.getIntegerProperty(); // MAX Minuten todo
+    private IntegerProperty downloadChartMaxTimeMinutes = ProgConfig.DOWNLOAD_CHART_SHOW_MAX_TIME_MIN; // MAX Minuten todo
 
     private int countProgRunningTimeSeconds = 0;
     private double countProgRunningTimeMinutes = 0;

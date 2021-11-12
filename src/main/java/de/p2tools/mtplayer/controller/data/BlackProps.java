@@ -16,22 +16,35 @@
 
 package de.p2tools.mtplayer.controller.data;
 
-import de.p2tools.mtplayer.tools.Data;
+import de.p2tools.p2Lib.configFile.config.Config;
+import de.p2tools.p2Lib.configFile.config.ConfigBoolPropExtra;
+import de.p2tools.p2Lib.configFile.config.ConfigIntExtra;
+import de.p2tools.p2Lib.configFile.config.ConfigStringPropExtra;
+import de.p2tools.p2Lib.configFile.pData.PDataSample;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class BlackProps extends Data<BlackProps> {
+import java.util.ArrayList;
 
+public class BlackProps extends PDataSample<BlackProps> {
 
-    public static final int BLACKLIST_NR = 0;
-    public static final int BLACKLIST_SENDER = 1;
-    public static final int BLACKLIST_THEME = 2;
-    public static final int BLACKLIST_THEME_EXACT = 3;
-    public static final int BLACKLIST_TITLE = 4;
-    public static final int BLACKLIST_THEME_TITLE = 5;
-    public static final int BLACKLIST_COUNT_HITS = 6;
+    public static final String BLACKLIST_NO = "Nr";
+    public static final String BLACKLIST_SENDER = "Sender";
+    public static final String BLACKLIST_THEME = "Thema";
+    public static final String BLACKLIST_THEME_EXACT = "Thema exakt";
+    public static final String BLACKLIST_TITLE = "Titel";
+    public static final String BLACKLIST_THEME_TITLE = "Thema/Titel";
+    public static final String BLACKLIST_COUNT_HITS = "Treffer";
+
+    public static final int BLACKLIST_NO_NO = 0;
+    public static final int BLACKLIST_SENDER_NO = 1;
+    public static final int BLACKLIST_THEME_NO = 2;
+    public static final int BLACKLIST_THEME_EXACT_NO = 3;
+    public static final int BLACKLIST_TITLE_NO = 4;
+    public static final int BLACKLIST_THEME_TITLE_NO = 5;
+    public static final int BLACKLIST_COUNT_HITS_NO = 6;
 
     public static final String TAG = "Blacklist";
     public static final String[] XML_NAMES = {
@@ -46,7 +59,7 @@ public class BlackProps extends Data<BlackProps> {
 
     public String[] arr;
 
-    private int nr = 0;
+    private int no = 0;
     private final StringProperty channel = new SimpleStringProperty("");
     private final StringProperty theme = new SimpleStringProperty("");
     private final BooleanProperty themeExact = new SimpleBooleanProperty(true);
@@ -55,28 +68,35 @@ public class BlackProps extends Data<BlackProps> {
     private int countHits = 0;
 
 
-    public BlackProps() {
-        arr = super.makeArr(MAX_ELEM);
+    @Override
+    public Config[] getConfigsArr() {
+        ArrayList<Config> list = new ArrayList<>();
+        list.add(new ConfigIntExtra("no", BLACKLIST_NO, no));
+        list.add(new ConfigStringPropExtra("channel", BLACKLIST_SENDER, channel));
+        list.add(new ConfigStringPropExtra("theme", BLACKLIST_THEME, theme));
+        list.add(new ConfigBoolPropExtra("themeExact", BLACKLIST_THEME_EXACT, themeExact));
+        list.add(new ConfigStringPropExtra("title", BLACKLIST_TITLE, title));
+        list.add(new ConfigStringPropExtra("bithemeTitletrate", BLACKLIST_THEME_TITLE, themeTitle));
+        list.add(new ConfigIntExtra("countHits", BLACKLIST_COUNT_HITS, countHits));
+
+        return list.toArray(new Config[]{});
     }
 
-    public int getCountHits() {
-        return countHits;
-    }
-
-    public void setCountHits(int countHits) {
-        this.countHits = countHits;
+    @Override
+    public String getTag() {
+        return TAG;
     }
 
     public synchronized void incCountHits() {
         ++this.countHits;
     }
-
-    public int getNr() {
-        return nr;
+    
+    public int getNo() {
+        return no;
     }
 
-    public void setNr(int nr) {
-        this.nr = nr;
+    public void setNo(int no) {
+        this.no = no;
     }
 
     public String getChannel() {
@@ -103,7 +123,7 @@ public class BlackProps extends Data<BlackProps> {
         this.theme.set(theme);
     }
 
-    public boolean getThemeExact() {
+    public boolean isThemeExact() {
         return themeExact.get();
     }
 
@@ -139,26 +159,38 @@ public class BlackProps extends Data<BlackProps> {
         this.themeTitle.set(themeTitle);
     }
 
-    public void setPropsFromXml() {
-        setChannel(arr[BLACKLIST_SENDER]);
-        setTheme(arr[BLACKLIST_THEME]);
-        setThemeExact(arr[BLACKLIST_THEME_EXACT].isEmpty() ? true : Boolean.parseBoolean(arr[BLACKLIST_THEME_EXACT]));
-        setTitle(arr[BLACKLIST_TITLE]);
-        setThemeTitle(arr[BLACKLIST_THEME_TITLE]);
-        try {
-            setCountHits(Integer.parseInt(arr[BLACKLIST_COUNT_HITS]));
-        } catch (Exception ex) {
-            setCountHits(0);
-        }
+    public int getCountHits() {
+        return countHits;
     }
 
-    public void setXmlFromProps() {
-        arr[BLACKLIST_NR] = getNr() + "";
-        arr[BLACKLIST_SENDER] = getChannel();
-        arr[BLACKLIST_THEME] = getTheme();
-        arr[BLACKLIST_THEME_EXACT] = String.valueOf(getThemeExact());
-        arr[BLACKLIST_TITLE] = getTitle();
-        arr[BLACKLIST_THEME_TITLE] = getThemeTitle();
-        arr[BLACKLIST_COUNT_HITS] = String.valueOf(getCountHits());
+    public void setCountHits(int countHits) {
+        this.countHits = countHits;
     }
+
+//    public BlackProps() {
+//        arr = super.makeArr(MAX_ELEM);
+//    }
+
+//    public void setPropsFromXml() {
+//        setChannel(arr[BLACKLIST_SENDER_NO]);
+//        setTheme(arr[BLACKLIST_THEME_NO]);
+//        setThemeExact(arr[BLACKLIST_THEME_EXACT_NO].isEmpty() ? true : Boolean.parseBoolean(arr[BLACKLIST_THEME_EXACT_NO]));
+//        setTitle(arr[BLACKLIST_TITLE_NO]);
+//        setThemeTitle(arr[BLACKLIST_THEME_TITLE_NO]);
+//        try {
+//            setCountHits(Integer.parseInt(arr[BLACKLIST_COUNT_HITS_NO]));
+//        } catch (Exception ex) {
+//            setCountHits(0);
+//        }
+//    }
+//
+//    public void setXmlFromProps() {
+//        arr[BLACKLIST_NO_NO] = getNo() + "";
+//        arr[BLACKLIST_SENDER_NO] = getChannel();
+//        arr[BLACKLIST_THEME_NO] = getTheme();
+//        arr[BLACKLIST_THEME_EXACT_NO] = String.valueOf(getThemeExact());
+//        arr[BLACKLIST_TITLE_NO] = getTitle();
+//        arr[BLACKLIST_THEME_TITLE_NO] = getThemeTitle();
+//        arr[BLACKLIST_COUNT_HITS_NO] = String.valueOf(getCountHits());
+//    }
 }

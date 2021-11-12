@@ -54,7 +54,7 @@ public class DownloadListStarts {
             }
 
             if (download.isStateError()
-                    && download.getStart().getRestartCounter() < ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getInt()
+                    && download.getStart().getRestartCounter() < ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getValue()
                     && !maxChannelPlay(download, 1)) {
 
                 int restarted = download.getStart().getRestartCounter();
@@ -125,7 +125,7 @@ public class DownloadListStarts {
         //ersten passenden Download der Liste zurückgeben oder null
         //und versuchen, dass bei mehreren laufenden Downloads ein anderer Sender gesucht wird
         Download ret = null;
-        if (downloadList.size() > 0 && getDown(ProgConfig.DOWNLOAD_MAX_DOWNLOADS.getInt())) {
+        if (downloadList.size() > 0 && getDown(ProgConfig.DOWNLOAD_MAX_DOWNLOADS.getValue())) {
             final Download download = nextStart();
             if (download != null && download.isStateStartedWaiting()) {
                 ret = download;
@@ -144,7 +144,7 @@ public class DownloadListStarts {
             return tmpDownload;
         }
 
-        if (Boolean.parseBoolean(ProgConfig.DOWNLOAD_MAX_ONE_PER_SERVER.get())) {
+        if (ProgConfig.DOWNLOAD_MAX_ONE_PER_SERVER.getValue()) {
             // dann darf nur ein Download pro Server gestartet werden
             return null;
         }

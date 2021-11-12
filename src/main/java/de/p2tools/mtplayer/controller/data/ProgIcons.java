@@ -24,7 +24,7 @@ import javafx.scene.image.ImageView;
 
 public class ProgIcons {
 
-    public final Image ICON_DIALOG_ON = GetIcon.getImage(ProgConfig.SYSTEM_DARK_THEME.getBool() ? "dialog-ein.png" : "dialog-ein-sw.png");
+    public final Image ICON_DIALOG_ON = GetIcon.getImage(ProgConfig.SYSTEM_DARK_THEME.getValue() ? "dialog-ein.png" : "dialog-ein-sw.png");
     public final Image IMAGE_ACHTUNG_32 = GetIcon.getImage("achtung_32.png");
     public final Image IMAGE_ACHTUNG_64 = GetIcon.getImage("achtung_64.png");
 

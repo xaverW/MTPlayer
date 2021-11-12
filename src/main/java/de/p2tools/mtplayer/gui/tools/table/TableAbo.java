@@ -16,7 +16,7 @@
 
 package de.p2tools.mtplayer.gui.tools.table;
 
-import de.p2tools.mtplayer.controller.data.MTColor;
+import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.data.abo.Abo;
 import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
 import de.p2tools.p2Lib.guiTools.PCheckBoxCell;
@@ -32,7 +32,7 @@ public class TableAbo {
     public static TableColumn[] initAboColumn(TableView table) {
         table.getColumns().clear();
 
-        MTColor.ABO_SWITCHED_OFF.colorProperty().addListener((a, b, c) -> table.refresh());
+        ProgColorList.ABO_SWITCHED_OFF.colorProperty().addListener((a, b, c) -> table.refresh());
 
         final TableColumn<Abo, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("nr"));

@@ -43,7 +43,7 @@ public class AutomodeContinueDialogController extends PDialogExtra {
     private boolean continueAutomode = true;
 
     private Timeline timeline = null;
-    private Integer timeSeconds = ProgConfig.SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS.getInt();
+    private Integer timeSeconds = ProgConfig.SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS.getValue();
 
     public AutomodeContinueDialogController() {
         super(ProgData.getInstance().primaryStage, null, "Automodus", true, false);

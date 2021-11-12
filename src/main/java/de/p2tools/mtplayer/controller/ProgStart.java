@@ -98,7 +98,7 @@ public class ProgStart {
      */
     public boolean loadAll() {
         boolean loadOk = load();
-        if (ProgConfig.SYSTEM_LOG_ON.getBool()) {
+        if (ProgConfig.SYSTEM_LOG_ON.getValue()) {
             PLogger.setFileHandler(ProgInfos.getLogDirectory_String());
         }
 
@@ -206,7 +206,7 @@ public class ProgStart {
             PLog.sysLog("DEBUG: Update-Check");
             runUpdateCheck(progData, true);
 
-        } else if (ProgConfig.SYSTEM_UPDATE_SEARCH_ACT.getBool() &&
+        } else if (ProgConfig.SYSTEM_UPDATE_SEARCH_ACT.getValue() &&
                 !updateCheckTodayDone()) {
             // nach Updates suchen
             runUpdateCheck(progData, false);
@@ -215,7 +215,7 @@ public class ProgStart {
             // will der User nicht --oder-- wurde heute schon gemacht
             List list = new ArrayList(5);
             list.add("Kein Update-Check:");
-            if (!ProgConfig.SYSTEM_UPDATE_SEARCH_ACT.getBool()) {
+            if (!ProgConfig.SYSTEM_UPDATE_SEARCH_ACT.getValue()) {
                 list.add("  der User will nicht");
             }
             if (updateCheckTodayDone()) {

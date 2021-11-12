@@ -151,7 +151,7 @@ public class MTPTester {
             final Button btnText = new Button("change text");
             btnText.setMaxWidth(Double.MAX_VALUE);
             btnText.setOnAction(a -> {
-                ProgConfig.MEDIA_DB_SUFFIX.getStringProperty().setValue("soso");
+                ProgConfig.MEDIA_DB_SUFFIX.setValue("soso");
             });
 
             final Button btnDownload = new Button("Download");
@@ -160,7 +160,7 @@ public class MTPTester {
 
                 if (DownloadFactory.downloadFile(progInfoDialog.getStage(),
                         "http://p2.localhost:8080/extra/beta/MTPlayer-8-42__2020.02.22.zip",
-                        ProgConfig.START_DIALOG_DOWNLOAD_PATH.getStringProperty(),
+                        ProgConfig.START_DIALOG_DOWNLOAD_PATH,
                         "MTPlayer-8-42__20200222.zip")) {
                     System.out.println("Download OK");
                 } else {

@@ -36,7 +36,7 @@ import javafx.scene.layout.VBox;
 public class FilmFilterEditDialog extends PDialogExtra {
 
     final ProgData progData;
-    IntegerProperty waitTime = ProgConfig.SYSTEM_FILTER_WAIT_TIME.getIntegerProperty();
+    IntegerProperty waitTime = ProgConfig.SYSTEM_FILTER_WAIT_TIME;
 
     public FilmFilterEditDialog(ProgData progData) {
         super(progData.primaryStage, null, "Filtereinstellungen", true, true, DECO.NONE);
@@ -144,8 +144,8 @@ public class FilmFilterEditDialog extends PDialogExtra {
         RadioButton rboReturn = new RadioButton();
         rboWait.setToggleGroup(group);
         rboReturn.setToggleGroup(group);
-        rboWait.setSelected(!ProgConfig.SYSTEM_FILTER_RETURN.getBool());
-        rboReturn.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FILTER_RETURN.getBooleanProperty());
+        rboWait.setSelected(!ProgConfig.SYSTEM_FILTER_RETURN.getValue());
+        rboReturn.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FILTER_RETURN);
 
         Label lblValue = new Label();
         lblValue.setMinWidth(Region.USE_COMPUTED_SIZE);

@@ -33,7 +33,7 @@ public class ChartFactoryGenerateChartData {
 
     public static synchronized void generateChartData(LineChart<Number, Number> lineChart, ChartData chartData) {
         // und jetzt die sichtbaren Daten eintragen
-        if (ProgConfig.DOWNLOAD_CHART_SEPARAT.getBool()) {
+        if (ProgConfig.DOWNLOAD_CHART_SEPARAT.getValue()) {
             //für die Einzel-Charts
             generateChartDataSeparated(lineChart, chartData);
 
@@ -122,8 +122,8 @@ public class ChartFactoryGenerateChartData {
     }
 
     private static synchronized void setColor(LineChart<Number, Number> lineChart, BandwidthData bandwidthData) {
-        final String cRed = ProgConfig.SYSTEM_DARK_THEME.getBooleanProperty().get() ? "#ff0000" : "#de0000";
-        final String cGreen = ProgConfig.SYSTEM_DARK_THEME.getBooleanProperty().get() ? "#00ff00" : "#00aa00";
+        final String cRed = ProgConfig.SYSTEM_DARK_THEME.getValue() ? "#ff0000" : "#de0000";
+        final String cGreen = ProgConfig.SYSTEM_DARK_THEME.getValue() ? "#00ff00" : "#00aa00";
         Set<Node> items = lineChart.lookupAll("Label.chart-legend-item");
         for (Node item : items) {
             Label label = (Label) item;

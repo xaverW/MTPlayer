@@ -68,14 +68,14 @@ public class SearchProgramUpdate {
                 SEARCH_URL,
                 SEARCH_URL_DOWNLOAD,
 
-                ProgConfig.SYSTEM_UPDATE_SEARCH_ACT.getBooleanProperty(),
-                ProgConfig.SYSTEM_UPDATE_SEARCH_BETA.getBooleanProperty(),
-                ProgConfig.SYSTEM_UPDATE_SEARCH_DAILY.getBooleanProperty(),
+                ProgConfig.SYSTEM_UPDATE_SEARCH_ACT,
+                ProgConfig.SYSTEM_UPDATE_SEARCH_BETA,
+                ProgConfig.SYSTEM_UPDATE_SEARCH_DAILY,
 
-                ProgConfig.SYSTEM_UPDATE_LAST_INFO.getStringProperty(),
-                ProgConfig.SYSTEM_UPDATE_LAST_ACT.getStringProperty(),
-                ProgConfig.SYSTEM_UPDATE_LAST_BETA.getStringProperty(),
-                ProgConfig.SYSTEM_UPDATE_LAST_DAILY.getStringProperty(),
+                ProgConfig.SYSTEM_UPDATE_LAST_INFO,
+                ProgConfig.SYSTEM_UPDATE_LAST_ACT,
+                ProgConfig.SYSTEM_UPDATE_LAST_BETA,
+                ProgConfig.SYSTEM_UPDATE_LAST_DAILY,
 
                 ProgConst.URL_WEBSITE,
                 ProgConst.URL_WEBSITE_DOWNLOAD,
@@ -83,7 +83,7 @@ public class SearchProgramUpdate {
                 ProgramTools.getProgVersion(),
                 ProgramTools.getBuild(),
                 buildDate,
-                ProgConfig.SYSTEM_DOWNLOAD_DIR_NEW_VERSION.getStringProperty(),
+                ProgConfig.SYSTEM_DOWNLOAD_DIR_NEW_VERSION,
                 showAllways
         );
 

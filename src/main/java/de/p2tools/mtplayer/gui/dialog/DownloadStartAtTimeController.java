@@ -67,7 +67,7 @@ public class DownloadStartAtTimeController extends PDialogExtra {
 
     public DownloadStartAtTimeController(ProgData progData, List<Download> dListAll,
                                          List<Download> dListSel) {
-        super(progData.primaryStage, ProgConfig.DOWNLOAD_DIALOG_START_AT_TIME_SIZE.getStringProperty(),
+        super(progData.primaryStage, ProgConfig.DOWNLOAD_DIALOG_START_AT_TIME_SIZE,
                 "Downloads starten", true, false, DECO.NONE);
 
         this.progData = progData;

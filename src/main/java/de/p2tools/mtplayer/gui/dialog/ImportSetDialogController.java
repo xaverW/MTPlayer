@@ -16,13 +16,13 @@
 
 package de.p2tools.mtplayer.gui.dialog;
 
-import de.p2tools.mtplayer.gui.startDialog.DownPathPane;
-import de.p2tools.mtplayer.gui.startDialog.PathPane;
-import de.p2tools.mtplayer.gui.tools.SetsPrograms;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ListePsetVorlagen;
 import de.p2tools.mtplayer.gui.configDialog.setData.SetPaneController;
+import de.p2tools.mtplayer.gui.startDialog.DownPathPane;
+import de.p2tools.mtplayer.gui.startDialog.PathPane;
+import de.p2tools.mtplayer.gui.tools.SetsPrograms;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
@@ -45,13 +45,14 @@ public class ImportSetDialogController extends PDialogExtra {
 
 
     public ImportSetDialogController(ProgData progData) {
-        super(progData.primaryStage, ProgConfig.CONFIG_DIALOG_IMPORT_SET_SIZE.getStringProperty(),
+        super(progData.primaryStage, ProgConfig.CONFIG_DIALOG_IMPORT_SET_SIZE,
                 "Set importieren", true, false, DECO.SMALL);
 
         this.progData = progData;
         init(true);
     }
 
+    @Override
     public void close() {
         setPaneController.close();
         super.close();

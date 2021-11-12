@@ -29,7 +29,7 @@ public class UpdateConfig {
     }
 
     public static void update() {
-        if (!ProgConfig.SYSTEM_AFTER_UPDATE_FILTER.getBool()) {
+        if (!ProgConfig.SYSTEM_AFTER_UPDATE_FILTER.getValue()) {
             // dann müssen die gespeicherten Filter aktualisiert werden
             final int FILTER_DAYS_MAX__OLD = 30; // ist der alte Wert für "alles"
 

@@ -39,8 +39,8 @@ public class AboGuiPack {
 
     public AboGuiPack() {
         progData = ProgData.getInstance();
-        this.doubleProperty = ProgConfig.ABO_GUI_FILTER_DIVIDER.getDoubleProperty();
-        this.boolDivOn = ProgConfig.ABO_GUI_FILTER_DIVIDER_ON.getBooleanProperty();
+        this.doubleProperty = ProgConfig.ABO_GUI_FILTER_DIVIDER;
+        this.boolDivOn = ProgConfig.ABO_GUI_FILTER_DIVIDER_ON;
         aboFilterController = new AboFilterController();
         aboGuiController = new AboGuiController();
     }

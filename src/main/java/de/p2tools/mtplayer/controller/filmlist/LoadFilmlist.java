@@ -151,7 +151,7 @@ public class LoadFilmlist {
 
             // im Automode immer eine neue Filmliste laden oder wenn die gespeicherte zu alt ist
             if (ProgData.automode ||
-                    progData.filmlist.isTooOld() && ProgConfig.SYSTEM_LOAD_FILMS_ON_START.getBool()) {
+                    progData.filmlist.isTooOld() && ProgConfig.SYSTEM_LOAD_FILMS_ON_START.getValue()) {
                 final String text;
                 if (ProgData.automode) {
                     logList.add("Automodus: neue Filmliste laden");

@@ -70,8 +70,8 @@ public class DownloadGuiController extends AnchorPane {
     private final FilteredList<Download> filteredDownloads;
     private final SortedList<Download> sortedDownloads;
 
-    DoubleProperty splitPaneProperty = ProgConfig.DOWNLOAD_GUI_DIVIDER.getDoubleProperty();
-    BooleanProperty boolInfoOn = ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.getBooleanProperty();
+    DoubleProperty splitPaneProperty = ProgConfig.DOWNLOAD_GUI_DIVIDER;
+    BooleanProperty boolInfoOn = ProgConfig.DOWNLOAD_GUI_DIVIDER_ON;
 
     public DownloadGuiController() {
         progData = ProgData.getInstance();
@@ -79,7 +79,7 @@ public class DownloadGuiController extends AnchorPane {
         downloadGuiChart = new DownloadGuiChart(progData);
         downloadGuiInfo = new DownloadGuiInfo();
 
-        pClosePaneH = new PClosePaneH(ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.getBooleanProperty(), false);
+        pClosePaneH = new PClosePaneH(ProgConfig.DOWNLOAD_GUI_DIVIDER_ON, false);
 
         AnchorPane.setLeftAnchor(splitPane, 0.0);
         AnchorPane.setBottomAnchor(splitPane, 0.0);
@@ -152,7 +152,7 @@ public class DownloadGuiController extends AnchorPane {
         final Optional<Download> download = getSel();
         if (download.isPresent()) {
             POpen.playStoredFilm(download.get().getDestPathFile(),
-                    ProgConfig.SYSTEM_PROG_PLAY_FILME.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
+                    ProgConfig.SYSTEM_PROG_PLAY_FILME, new ProgIcons().ICON_BUTTON_FILE_OPEN);
         }
     }
 
@@ -173,7 +173,7 @@ public class DownloadGuiController extends AnchorPane {
         }
 
         String s = download.get().getDestPath();
-        POpen.openDir(s, ProgConfig.SYSTEM_PROG_OPEN_DIR.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
+        POpen.openDir(s, ProgConfig.SYSTEM_PROG_OPEN_DIR, new ProgIcons().ICON_BUTTON_FILE_OPEN);
     }
 
     public void playUrl() {
@@ -338,8 +338,8 @@ public class DownloadGuiController extends AnchorPane {
         Listener.addListener(new Listener(Listener.EREIGNIS_BLACKLIST_GEAENDERT, DownloadGuiController.class.getSimpleName()) {
             @Override
             public void pingFx() {
-                if ((Boolean.parseBoolean(ProgConfig.ABO_SEARCH_NOW.get()) || ProgData.automode)
-                        && Boolean.parseBoolean(ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.get())) {
+                if ((ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.automode)
+                        && ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.getValue()) {
                     // nur auf Blacklist reagieren, wenn auch für Abos eingeschaltet
                     progData.worker.searchForAbosAndMaybeStart();
                 }
@@ -355,13 +355,13 @@ public class DownloadGuiController extends AnchorPane {
         progData.downloadList.downloadsChangedProperty().addListener((observable, oldValue, newValue) ->
                 Platform.runLater(() -> setFilter()));
 
-        ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.getBooleanProperty().addListener((observable, oldValue, newValue) -> {
-            if (ProgConfig.ABO_SEARCH_NOW.getBool() || ProgData.automode) {
+        ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.addListener((observable, oldValue, newValue) -> {
+            if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.automode) {
                 Platform.runLater(() -> progData.worker.searchForAbosAndMaybeStart());
             }
         });
         progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
-            if (ProgConfig.ABO_SEARCH_NOW.getBool() || ProgData.automode) {
+            if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.automode) {
                 Platform.runLater(() -> progData.worker.searchForAbosAndMaybeStart());
             }
         });
@@ -443,19 +443,19 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private void setFilterProperty() {
-        ProgConfig.FILTER_DOWNLOAD_CHANNEL.getStringProperty().addListener((observable, oldValue, newValue) -> {
+        ProgConfig.FILTER_DOWNLOAD_CHANNEL.addListener((observable, oldValue, newValue) -> {
             setFilter();
         });
-        ProgConfig.FILTER_DOWNLOAD_ABO.getStringProperty().addListener((observable, oldValue, newValue) -> {
+        ProgConfig.FILTER_DOWNLOAD_ABO.addListener((observable, oldValue, newValue) -> {
             setFilter();
         });
-        ProgConfig.FILTER_DOWNLOAD_SOURCE.getStringProperty().addListener((observable, oldValue, newValue) -> {
+        ProgConfig.FILTER_DOWNLOAD_SOURCE.addListener((observable, oldValue, newValue) -> {
             setFilter();
         });
-        ProgConfig.FILTER_DOWNLOAD_TYPE.getStringProperty().addListener((observable, oldValue, newValue) -> {
+        ProgConfig.FILTER_DOWNLOAD_TYPE.addListener((observable, oldValue, newValue) -> {
             setFilter();
         });
-        ProgConfig.FILTER_DOWNLOAD_STATE.getStringProperty().addListener((observable, oldValue, newValue) -> {
+        ProgConfig.FILTER_DOWNLOAD_STATE.addListener((observable, oldValue, newValue) -> {
             setFilter();
         });
     }

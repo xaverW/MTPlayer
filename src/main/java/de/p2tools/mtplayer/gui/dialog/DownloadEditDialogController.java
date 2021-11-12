@@ -16,9 +16,9 @@
 
 package de.p2tools.mtplayer.gui.dialog;
 
+import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.MTColor;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.data.ProgramData;
 import de.p2tools.mtplayer.controller.data.SetData;
@@ -80,9 +80,9 @@ public class DownloadEditDialogController extends PDialogExtra {
     private final TextArea textAreaCallArray = new TextArea();
     private final PToggleSwitch tglUrl = new PToggleSwitch("URL");
     PHyperlink pHyperlinkUrlFilm = new PHyperlink("",
-            ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
+            ProgConfig.SYSTEM_PROG_OPEN_URL, new ProgIcons().ICON_BUTTON_FILE_OPEN);
     PHyperlink pHyperlinkUrlDownload = new PHyperlink("",
-            ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
+            ProgConfig.SYSTEM_PROG_OPEN_URL, new ProgIcons().ICON_BUTTON_FILE_OPEN);
 
     private final ToggleGroup group = new ToggleGroup();
     private String fileSize_HD = "";
@@ -98,11 +98,11 @@ public class DownloadEditDialogController extends PDialogExtra {
     private final String orgPath;
     private final ProgData progData;
     private final SetData setData;
-    BooleanProperty urlProperty = ProgConfig.DOWNLOAD_INFO_DIALOG_SHOW_URL.getBooleanProperty();
+    BooleanProperty urlProperty = ProgConfig.DOWNLOAD_INFO_DIALOG_SHOW_URL;
 
     public DownloadEditDialogController(ProgData progData, Download download, boolean isStarted) {
         super(progData.primaryStage,
-                ProgConfig.DOWNLOAD_DIALOG_EDIT_SIZE.getStringProperty(),
+                ProgConfig.DOWNLOAD_DIALOG_EDIT_SIZE,
                 "Download ändern", true, false);
 
         this.progData = progData;
@@ -471,7 +471,7 @@ public class DownloadEditDialogController extends PDialogExtra {
         txt[DownloadXml.DOWNLOAD_DEST_FILE_NAME].textProperty().addListener((observable, oldValue, newValue) -> {
             if (!txt[DownloadXml.DOWNLOAD_DEST_FILE_NAME].getText().equals(
                     FileNameUtils.checkFileName(txt[DownloadXml.DOWNLOAD_DEST_FILE_NAME].getText(), false /* pfad */))) {
-                txt[DownloadXml.DOWNLOAD_DEST_FILE_NAME].setStyle(MTColor.DOWNLOAD_NAME_ERROR.getCssBackground());
+                txt[DownloadXml.DOWNLOAD_DEST_FILE_NAME].setStyle(ProgColorList.DOWNLOAD_NAME_ERROR.getCssBackground());
             } else {
                 txt[DownloadXml.DOWNLOAD_DEST_FILE_NAME].setStyle("");
             }

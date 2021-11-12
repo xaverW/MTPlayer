@@ -16,11 +16,11 @@
 
 package de.p2tools.mtplayer.gui.mediaConfig;
 
-import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.mediaDb.MediaDataWorker;
+import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -61,7 +61,7 @@ public class MediaConfigDialogController extends PDialogExtra {
     private final ProgData progData;
 
     public MediaConfigDialogController() {
-        super(ProgData.getInstance().primaryStage, ProgConfig.MEDIA_CONFIG_DIALOG_SIZE.getStringProperty(), "Mediensammlung",
+        super(ProgData.getInstance().primaryStage, ProgConfig.MEDIA_CONFIG_DIALOG_SIZE, "Mediensammlung",
                 true, false, DECO.NONE);
 
         this.progData = ProgData.getInstance();

@@ -39,7 +39,7 @@ import java.util.Arrays;
 
 public class ProgTray {
     private final ProgData progData;
-    private BooleanProperty propTray = ProgConfig.SYSTEM_TRAY.getBooleanProperty();
+    private BooleanProperty propTray = ProgConfig.SYSTEM_TRAY;
     private SystemTray systemTray = null;
     private boolean stopTimer = false;
 

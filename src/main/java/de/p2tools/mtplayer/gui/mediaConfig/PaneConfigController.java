@@ -58,13 +58,13 @@ public class PaneConfigController extends PAccordionPane {
     private final RadioButton rbExtern = new RadioButton("externe");
     private final RadioButton rbInternExtern = new RadioButton("beide");
 
-    BooleanProperty propExportIntern = ProgConfig.MEDIA_DB_EXPORT_INTERN.getBooleanProperty();
-    BooleanProperty propExportExtern = ProgConfig.MEDIA_DB_EXPORT_EXTERN.getBooleanProperty();
-    BooleanProperty propExportInternExtern = ProgConfig.MEDIA_DB_EXPORT_INTERN_EXTERN.getBooleanProperty();
-    StringProperty propExportFile = ProgConfig.MEDIA_DB_EXPORT_FILE.getStringProperty();
-    BooleanProperty propSuff = ProgConfig.MEDIA_DB_WITH_OUT_SUFFIX.getBooleanProperty();
-    StringProperty propSuffStr = ProgConfig.MEDIA_DB_SUFFIX.getStringProperty();
-    BooleanProperty propNoHiddenFiles = ProgConfig.MEDIA_DB_NO_HIDDEN_FILES.getBooleanProperty();
+    BooleanProperty propExportIntern = ProgConfig.MEDIA_DB_EXPORT_INTERN;
+    BooleanProperty propExportExtern = ProgConfig.MEDIA_DB_EXPORT_EXTERN;
+    BooleanProperty propExportInternExtern = ProgConfig.MEDIA_DB_EXPORT_INTERN_EXTERN;
+    StringProperty propExportFile = ProgConfig.MEDIA_DB_EXPORT_FILE;
+    BooleanProperty propSuff = ProgConfig.MEDIA_DB_WITH_OUT_SUFFIX;
+    StringProperty propSuffStr = ProgConfig.MEDIA_DB_SUFFIX;
+    BooleanProperty propNoHiddenFiles = ProgConfig.MEDIA_DB_NO_HIDDEN_FILES;
 
     PanePath panePathIntern;
     PanePath panePathExtern;
@@ -73,13 +73,14 @@ public class PaneConfigController extends PAccordionPane {
     private final Stage stage;
 
     public PaneConfigController(Stage stage) {
-        super(stage, ProgConfig.MEDIA_CONFIG_DIALOG_ACCORDION.getBooleanProperty(), ProgConfig.SYSTEM_MEDIA_DIALOG_CONFIG);
+        super(stage, ProgConfig.MEDIA_CONFIG_DIALOG_ACCORDION, ProgConfig.SYSTEM_MEDIA_DIALOG_CONFIG);
         this.stage = stage;
         progData = ProgData.getInstance();
 
         init();
     }
 
+    @Override
     public void close() {
         super.close();
         rbWithOutSuff.selectedProperty().unbindBidirectional(propSuff);
@@ -96,6 +97,7 @@ public class PaneConfigController extends PAccordionPane {
         panePathExtern.close();
     }
 
+    @Override
     public Collection<TitledPane> createPanes() {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
         initPane(result);
@@ -231,7 +233,7 @@ public class PaneConfigController extends PAccordionPane {
         });
 
         // kein direktes binding wegen: valueChangingProperty, nur melden wenn "steht"
-        slFileSize.setValue(ProgConfig.MEDIA_DB_FILE_SIZE_MBYTE.getInt());
+        slFileSize.setValue(ProgConfig.MEDIA_DB_FILE_SIZE_MBYTE.getValue());
         slFileSize.valueChangingProperty().addListener((observable, oldvalue, newvalue) -> {
                     if (!newvalue) {
                         ProgConfig.MEDIA_DB_FILE_SIZE_MBYTE.setValue(intValue);

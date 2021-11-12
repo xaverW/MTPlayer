@@ -49,7 +49,7 @@ public class BlackData extends BlackProps {
         fChannel.makeFilterArray();
 
         fTheme.filter = getTheme();
-        fTheme.exact = getThemeExact();
+        fTheme.exact = isThemeExact();
         fTheme.makeFilterArray();
 
         fThemeTitle.filter = getThemeTitle();

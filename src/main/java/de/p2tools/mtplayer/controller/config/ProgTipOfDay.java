@@ -37,7 +37,7 @@ public class ProgTipOfDay {
     }
 
     public void showDialog(ProgData progData, boolean showAlways) {
-        if (!showAlways && !ProgConfig.TIP_OF_DAY_SHOW.getBool()) {
+        if (!showAlways && !ProgConfig.TIP_OF_DAY_SHOW.getValue()) {
             //dann wills der User nicht :(
             PLog.sysLog("TipOfDay: Will der User nicht");
             return;
@@ -53,7 +53,7 @@ public class ProgTipOfDay {
             final List<PTipOfDay> pTipOfDayArrayList = new ArrayList<>();
             addTips(pTipOfDayArrayList);
             new PTipOfDayDialog(progData.primaryStage, pTipOfDayArrayList,
-                    ProgConfig.TIP_OF_DAY_WAS_SHOWN.getStringProperty(), ProgConfig.TIP_OF_DAY_SHOW.getBooleanProperty());
+                    ProgConfig.TIP_OF_DAY_WAS_SHOWN, ProgConfig.TIP_OF_DAY_SHOW);
         } else {
             PLog.sysLog("TipOfDay: Heute schon gemacht oder keine neuen Tips");
         }
@@ -144,7 +144,7 @@ public class ProgTipOfDay {
                 "Ideen zu den Tips gerne\n" +
                 "auch per Mail.\n\n";
         image = "/de/p2tools/mtplayer/res/toolTips/Frage.png";
-        pToolTip = new PTipOfDay(text, image, ProgConst.URL_WEBSITE_P2TOOLS, ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty());
+        pToolTip = new PTipOfDay(text, image, ProgConst.URL_WEBSITE_P2TOOLS, ProgConfig.SYSTEM_PROG_OPEN_URL);
         pToolTipList.add(pToolTip);
 
         // private final int listSize = 7

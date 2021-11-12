@@ -19,7 +19,6 @@ package de.p2tools.mtplayer.controller;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.BlackData;
 import de.p2tools.mtplayer.controller.data.ProgramData;
 import de.p2tools.mtplayer.controller.data.ReplaceData;
 import de.p2tools.mtplayer.controller.data.SetData;
@@ -29,7 +28,6 @@ import de.p2tools.mtplayer.controller.data.download.Download;
 import de.p2tools.mtplayer.controller.data.download.DownloadXml;
 import de.p2tools.mtplayer.controller.filmlist.filmlistUrls.FilmlistUrlData;
 import de.p2tools.mtplayer.controller.mediaDb.MediaCollectionData;
-import de.p2tools.mtplayer.tools.MLConfigs;
 import de.p2tools.mtplayer.tools.storedFilter.FilterToXml;
 import de.p2tools.mtplayer.tools.storedFilter.ProgInitFilter;
 import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
@@ -127,14 +125,14 @@ public class IoReadXml implements AutoCloseable {
                                     this.progData.downloadList.add(d);
                                 }
                                 break;
-                            case BlackData.TAG:
-                                // Blacklist
-                                final BlackData blackData = new BlackData();
-                                if (get(parser, BlackData.TAG, BlackData.XML_NAMES, blackData.arr)) {
-                                    blackData.setPropsFromXml();
-                                    this.progData.blackList.add(blackData);
-                                }
-                                break;
+//                            case BlackData.TAG:
+//                                // Blacklist
+//                                final BlackData blackData = new BlackData();
+//                                if (get(parser, BlackData.TAG, BlackData.XML_NAMES, blackData.arr)) {
+//                                    blackData.setPropsFromXml();
+//                                    this.progData.blackList.add(blackData);
+//                                }
+//                                break;
                             case MediaCollectionData.TAG:
                                 //
                                 final MediaCollectionData mp = new MediaCollectionData();
@@ -248,27 +246,27 @@ public class IoReadXml implements AutoCloseable {
 
     private boolean getConfig(XMLStreamReader parser, String xmlElem) {
         boolean ret = true;
-        try {
-            while (parser.hasNext()) {
-                final int event = parser.next();
-                if (event == XMLStreamConstants.END_ELEMENT) {
-                    if (parser.getLocalName().equals(xmlElem)) {
-                        break;
-                    }
-                }
-                if (event == XMLStreamConstants.START_ELEMENT) {
-                    final String s = parser.getLocalName();
-                    final String n = parser.getElementText();
-                    MLConfigs mlConfigs = ProgConfig.get(s);
-                    if (mlConfigs != null) {
-                        mlConfigs.setValue(n);
-                    }
-                }
-            }
-        } catch (final Exception ex) {
-            ret = false;
-            PLog.errorLog(945120369, ex);
-        }
+//        try {
+//            while (parser.hasNext()) {
+//                final int event = parser.next();
+//                if (event == XMLStreamConstants.END_ELEMENT) {
+//                    if (parser.getLocalName().equals(xmlElem)) {
+//                        break;
+//                    }
+//                }
+//                if (event == XMLStreamConstants.START_ELEMENT) {
+//                    final String s = parser.getLocalName();
+//                    final String n = parser.getElementText();
+//                    MLConfigs mlConfigs = ProgConfig.get(s);
+//                    if (mlConfigs != null) {
+//                        mlConfigs.setValue(n);
+//                    }
+//                }
+//            }
+//        } catch (final Exception ex) {
+//            ret = false;
+//            PLog.errorLog(945120369, ex);
+//        }
         return ret;
     }
 

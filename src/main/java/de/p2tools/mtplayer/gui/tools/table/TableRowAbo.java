@@ -17,8 +17,8 @@
 
 package de.p2tools.mtplayer.gui.tools.table;
 
+import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.data.MTColor;
 import de.p2tools.mtplayer.controller.data.abo.Abo;
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.control.TableRow;
@@ -29,7 +29,7 @@ public class TableRowAbo<T> extends TableRow {
     private final BooleanProperty geoMelden;
 
     public TableRowAbo() {
-        geoMelden = ProgConfig.SYSTEM_MARK_GEO.getBooleanProperty();
+        geoMelden = ProgConfig.SYSTEM_MARK_GEO;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class TableRowAbo<T> extends TableRow {
 
         } else {
             if (!abo.isActive()) {
-                setStyle(MTColor.ABO_SWITCHED_OFF.getCssBackgroundSel());
+                setStyle(ProgColorList.ABO_SWITCHED_OFF.getCssBackgroundSel());
             } else {
                 setStyle("");
             }

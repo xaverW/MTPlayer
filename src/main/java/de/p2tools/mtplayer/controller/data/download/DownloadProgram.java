@@ -132,8 +132,8 @@ public class DownloadProgram {
 
             name = DownloadTools.replaceEmptyFileName(name,
                     false /* pfad */,
-                    Boolean.parseBoolean(ProgConfig.SYSTEM_USE_REPLACETABLE.get()),
-                    Boolean.parseBoolean(ProgConfig.SYSTEM_ONLY_ASCII.get()));
+                    ProgConfig.SYSTEM_USE_REPLACETABLE.getValue(),
+                    ProgConfig.SYSTEM_ONLY_ASCII.getValue());
             name = name + suff;
 
             // prüfen ob das Suffix 2x vorkommt
@@ -219,8 +219,8 @@ public class DownloadProgram {
                 path = PFileUtils.addsPath(path,
                         DownloadTools.replaceEmptyFileName(download.getTheme(),
                                 true /* pfad */,
-                                Boolean.parseBoolean(ProgConfig.SYSTEM_USE_REPLACETABLE.get()),
-                                Boolean.parseBoolean(ProgConfig.SYSTEM_ONLY_ASCII.get())));
+                                ProgConfig.SYSTEM_USE_REPLACETABLE.getValue(),
+                                ProgConfig.SYSTEM_ONLY_ASCII.getValue()));
             }
 
             path = replaceString(path, film); // %D ... ersetzen
@@ -314,8 +314,8 @@ public class DownloadProgram {
     private String getField(String name, int length) {
         name = DownloadTools.replaceEmptyFileName(name,
                 false /* pfad */,
-                Boolean.parseBoolean(ProgConfig.SYSTEM_USE_REPLACETABLE.get()),
-                Boolean.parseBoolean(ProgConfig.SYSTEM_ONLY_ASCII.get()));
+                ProgConfig.SYSTEM_USE_REPLACETABLE.getValue(),
+                ProgConfig.SYSTEM_ONLY_ASCII.getValue());
 
         if (length <= 0) {
             return name;

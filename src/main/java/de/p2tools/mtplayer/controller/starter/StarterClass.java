@@ -177,7 +177,7 @@ public class StarterClass {
 
     private static void finishedMsg(final Download download) {
         final de.p2tools.mtplayer.controller.starter.Start start = download.getStart();
-        if (Boolean.parseBoolean(ProgConfig.DOWNLOAD_BEEP.get())) {
+        if (ProgConfig.DOWNLOAD_BEEP.getValue()) {
             try {
                 Toolkit.getDefaultToolkit().beep();
             } catch (final Exception ignored) {

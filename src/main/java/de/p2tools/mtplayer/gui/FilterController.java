@@ -17,8 +17,8 @@
 package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.tools.MLConfigs;
 import de.p2tools.p2Lib.guiTools.pClosePane.PClosePaneV;
+import javafx.beans.property.BooleanProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
@@ -37,12 +37,13 @@ public class FilterController extends PClosePaneV {
     private final VBox vBoxAll;
     private final ProgData progData;
 
-    public FilterController(MLConfigs mlConfig) {
-        super(mlConfig.getBooleanProperty(), true);
+    public FilterController(BooleanProperty mlConfig) {
+        super(mlConfig, true);
         vBoxAll = super.getVBoxAll();
         progData = ProgData.getInstance();
     }
 
+    @Override
     public VBox getVBoxAll() {
         return vBoxAll;
     }

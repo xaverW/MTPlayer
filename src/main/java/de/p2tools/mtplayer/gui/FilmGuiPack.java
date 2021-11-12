@@ -38,8 +38,8 @@ public class FilmGuiPack {
 
     public FilmGuiPack() {
         progData = ProgData.getInstance();
-        this.doubleProperty = ProgConfig.FILM_GUI_FILTER_DIVIDER.getDoubleProperty();
-        this.boolDivOn = ProgConfig.FILM_GUI_FILTER_DIVIDER_ON.getBooleanProperty();
+        this.doubleProperty = ProgConfig.FILM_GUI_FILTER_DIVIDER;
+        this.boolDivOn = ProgConfig.FILM_GUI_FILTER_DIVIDER_ON;
         filmFilterController = new FilmFilterController();
         guiController = new FilmGuiController();
     }

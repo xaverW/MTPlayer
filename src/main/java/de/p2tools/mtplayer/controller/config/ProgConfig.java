@@ -20,67 +20,75 @@ package de.p2tools.mtplayer.controller.config;
 import de.p2tools.mtplayer.controller.data.film.Film;
 import de.p2tools.mtplayer.gui.tools.SetsPrograms;
 import de.p2tools.mtplayer.tools.MLBandwidthTokenBucket;
-import de.p2tools.mtplayer.tools.MLConfig;
-import de.p2tools.mtplayer.tools.MLConfigs;
 import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
 import de.p2tools.p2Lib.P2LibConst;
+import de.p2tools.p2Lib.configFile.ConfigFile;
+import de.p2tools.p2Lib.configFile.config.Config;
+import de.p2tools.p2Lib.configFile.pData.PDataProgConfig;
 import de.p2tools.p2Lib.tools.PStringUtils;
 import de.p2tools.p2Lib.tools.PSystemUtils;
+import de.p2tools.p2Lib.tools.ProgramTools;
 import de.p2tools.p2Lib.tools.log.PLog;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.*;
 import org.apache.commons.lang3.SystemUtils;
 
 import java.util.ArrayList;
 
-public class ProgConfig extends MLConfig {
+public class ProgConfig extends PDataProgConfig {
 
+    private static ProgConfig instance;
+    private static final ArrayList<Config> arrayList = new ArrayList<>();
     public static final String SYSTEM = "system";
+
 
     // Programm-Configs, änderbar nur im Konfig-File
     // ============================================
     // 250 Sekunden, wie bei Firefox
-    public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND = addNewKey("__system-parameter__download-timeout-second_250__", "250");
+    public static int SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND_INIT = 250;
+    public static IntegerProperty SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND = addInt("__system-parameter__download-timeout-second_250__", SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND_INIT);
     // max. Startversuche für fehlgeschlagene Downloads (insgesamt: restart * restart_http Versuche)
-    public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART = addNewKey("__system-parameter__download-max-restart_5__", "3");
+    public static int SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_INIT = 3;
+    public static IntegerProperty SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART = addInt("__system-parameter__download-max-restart_5__", SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_INIT);
     // max. Startversuche für fehlgeschlagene Downloads, direkt beim Download
-    public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP = addNewKey("__system-parameter__download-max-restart-http_10__", "5");
+    public static int SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP_INIT = 5;
+    public static IntegerProperty SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP = addInt("__system-parameter__download-max-restart-http_10__", SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP_INIT);
     // Beim Dialog "Download weiterführen" wird nach dieser Zeit der Download weitergeführt
-    public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS = addNewKey("__system-parameter__download-continue-second_60__", "60");
+    public static int SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS_INIT = 60;
+    public static IntegerProperty SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS = addInt("__system-parameter__download-continue-second_60__", SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS_INIT);
     // Beim Dialog "Automode" wird nach dieser Zeit der das Programm beendet
-    public static MLConfigs SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS = addNewKey("__system-parameter__automode-quitt-second_60__", "15");
+    public static int SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS_INIT = 15;
+    public static IntegerProperty SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS = addInt("__system-parameter__automode-quitt-second_60__", SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS_INIT);
     // Downloadfehlermeldung wird xx Sedunden lang angezeigt
-    public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND = addNewKey("__system-parameter__download-errormsg-in-second_30__", "30");
+    public static int SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND_INIT = 30;
+    public static IntegerProperty SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND = addInt("__system-parameter__download-errormsg-in-second_30__", SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND_INIT);
     // Downloadprogress im Terminal anzeigen
-    public static MLConfigs SYSTEM_PARAMETER_DOWNLOAD_PROGRESS = addNewKey("__system-parameter__download_progress_", Boolean.TRUE.toString());
+    public static BooleanProperty SYSTEM_PARAMETER_DOWNLOAD_PROGRESS = addBool("__system-parameter__download_progress_", Boolean.TRUE);
     // ===========================================
 
 
     // Configs der Programmversion, nur damit sie (zur Update-Suche) im Config-File stehen
-    public static MLConfigs SYSTEM_PROG_VERSION = addNewKey("system-prog-version");
-    public static MLConfigs SYSTEM_PROG_BUILD_NO = addNewKey("system-prog-build-no");
-    public static MLConfigs SYSTEM_PROG_BUILD_DATE = addNewKey("system-prog-build-date");
+    public static StringProperty SYSTEM_PROG_VERSION = addStr("system-prog-version");
+    public static StringProperty SYSTEM_PROG_BUILD_NO = addStr("system-prog-build-no");
+    public static StringProperty SYSTEM_PROG_BUILD_DATE = addStr("system-prog-build-date");//z.B.: 27.07.2
 
 
     // Configs zum Aktualisieren beim Programmupdate
-    public static MLConfigs SYSTEM_AFTER_UPDATE_FILTER = addNewKey("system-after-update-filter", Boolean.FALSE.toString());
+    public static BooleanProperty SYSTEM_AFTER_UPDATE_FILTER = addBool("system-after-update-filter", Boolean.FALSE);
 
 
     // Configs zur Programmupdatesuche
-    public static MLConfigs SYSTEM_UPDATE_DATE = addNewKey("system-update-date"); // Datum der letzten Prüfung
-    public static MLConfigs SYSTEM_UPDATE_PROGSET_VERSION = addNewKey("system-update-progset-version");
+    public static StringProperty SYSTEM_UPDATE_DATE = addStr("system-update-date"); // Datum der letzten Prüfung
+    public static StringProperty SYSTEM_UPDATE_PROGSET_VERSION = addStr("system-update-progset-version");
 
 
-    public static MLConfigs SYSTEM_UPDATE_SEARCH_ACT = addNewKey("system-update-search-act", Boolean.TRUE.toString()); //Infos und Programm
-    public static MLConfigs SYSTEM_UPDATE_SEARCH_BETA = addNewKey("system-update-search-beta", Boolean.FALSE.toString()); //beta suchen
-    public static MLConfigs SYSTEM_UPDATE_SEARCH_DAILY = addNewKey("system-update-search-daily", Boolean.FALSE.toString()); //daily suchen
+    public static BooleanProperty SYSTEM_UPDATE_SEARCH_ACT = addBool("system-update-search-act", Boolean.TRUE); //Infos und Programm
+    public static BooleanProperty SYSTEM_UPDATE_SEARCH_BETA = addBool("system-update-search-beta", Boolean.FALSE); //beta suchen
+    public static BooleanProperty SYSTEM_UPDATE_SEARCH_DAILY = addBool("system-update-search-daily", Boolean.FALSE); //daily suchen
 
-    public static MLConfigs SYSTEM_UPDATE_LAST_INFO = addNewKey("system-update-last-info");
-    public static MLConfigs SYSTEM_UPDATE_LAST_ACT = addNewKey("system-update-last-act");
-    public static MLConfigs SYSTEM_UPDATE_LAST_BETA = addNewKey("system-update-last-beta");
-    public static MLConfigs SYSTEM_UPDATE_LAST_DAILY = addNewKey("system-update-last-daily");
+    public static StringProperty SYSTEM_UPDATE_LAST_INFO = addStr("system-update-last-info");
+    public static StringProperty SYSTEM_UPDATE_LAST_ACT = addStr("system-update-last-act");
+    public static StringProperty SYSTEM_UPDATE_LAST_BETA = addStr("system-update-last-beta");
+    public static StringProperty SYSTEM_UPDATE_LAST_DAILY = addStr("system-update-last-daily");
 
 
     // ConfigDialog, Dialog nach Start immer gleich öffnen
@@ -98,213 +106,214 @@ public class ProgConfig extends MLConfig {
     public static BooleanProperty SYSTEM_MEDIA_DIALOG_SEARCH_MEDIA = new SimpleBooleanProperty(true);
 
     // MediaDB
-    public static MLConfigs MEDIA_CONFIG_DIALOG_SIZE = addNewKey("media-config-dialog-size", "800:700");
-    public static MLConfigs MEDIA_CONFIG_DIALOG_SEARCH = addNewKey("media-config-dialog-search", ProgConst.MEDIA_COLLECTION_SEARCH_THEMA_TITEL);
-    public static MLConfigs MEDIA_CONFIG_DIALOG_ACCORDION = addNewKey("media-config-dialog-accordion", Boolean.TRUE.toString());
-    public static MLConfigs MEDIA_DIALOG_SIZE = addNewKey("media-dialog-size", "800:700");
-    public static MLConfigs MEDIA_DIALOG_SEARCH_ABO = addNewKey("media-dialog-search-abo", ProgConst.MEDIA_COLLECTION_SEARCH_THEMA_TITEL);
-    public static MLConfigs MEDIA_DB_SUFFIX = addNewKey("media-db-suffix");
-    public static MLConfigs MEDIA_DB_WITH_OUT_SUFFIX = addNewKey("media-db-with-out-suffix");
-    public static MLConfigs MEDIA_DB_NO_HIDDEN_FILES = addNewKey("media-db-no-hidden-files");
-    public static MLConfigs MEDIA_DB_FILE_SIZE_MBYTE = addNewKey("media-db-filesize_mbyte", ProgConst.MEDIA_COLLECTION_FILESIZE_ALL_FILES);
-    public static MLConfigs MEDIA_DB_EXPORT_INTERN = addNewKey("media-db-export-intern", Boolean.FALSE.toString());
-    public static MLConfigs MEDIA_DB_EXPORT_EXTERN = addNewKey("media-db-export-extern", Boolean.FALSE.toString());
-    public static MLConfigs MEDIA_DB_EXPORT_INTERN_EXTERN = addNewKey("media-db-export-intern-extern", Boolean.TRUE.toString());
-    public static MLConfigs MEDIA_DB_EXPORT_FILE = addNewKey("media-db-export-file");
+    public static StringProperty MEDIA_CONFIG_DIALOG_SIZE = addStr("media-config-dialog-size", "800:700");
+    public static IntegerProperty MEDIA_CONFIG_DIALOG_SEARCH = addInt("media-config-dialog-search", ProgConst.MEDIA_COLLECTION_SEARCH_THEMA_TITEL);
+    public static BooleanProperty MEDIA_CONFIG_DIALOG_ACCORDION = addBool("media-config-dialog-accordion", Boolean.TRUE);
+    public static StringProperty MEDIA_DIALOG_SIZE = addStr("media-dialog-size", "800:700");
+    public static IntegerProperty MEDIA_DIALOG_SEARCH_ABO = addInt("media-dialog-search-abo", ProgConst.MEDIA_COLLECTION_SEARCH_THEMA_TITEL);
+    public static StringProperty MEDIA_DB_SUFFIX = addStr("media-db-suffix");
+    public static BooleanProperty MEDIA_DB_WITH_OUT_SUFFIX = addBool("media-db-with-out-suffix");
+    public static BooleanProperty MEDIA_DB_NO_HIDDEN_FILES = addBool("media-db-no-hidden-files");
+    public static IntegerProperty MEDIA_DB_FILE_SIZE_MBYTE = addInt("media-db-filesize_mbyte", ProgConst.MEDIA_COLLECTION_FILESIZE_ALL_FILES);
+    public static BooleanProperty MEDIA_DB_EXPORT_INTERN = addBool("media-db-export-intern", Boolean.FALSE);
+    public static BooleanProperty MEDIA_DB_EXPORT_EXTERN = addBool("media-db-export-extern", Boolean.FALSE);
+    public static BooleanProperty MEDIA_DB_EXPORT_INTERN_EXTERN = addBool("media-db-export-intern-extern", Boolean.TRUE);
+    public static StringProperty MEDIA_DB_EXPORT_FILE = addStr("media-db-export-file");
 
     // Configs
-    public static MLConfigs SYSTEM_TRAY = addNewKey("system-tray", Boolean.FALSE.toString());
-    public static MLConfigs SYSTEM_USERAGENT = addNewKey("system-useragent", ProgConst.USER_AGENT_DEFAULT); //Useragent für direkte Downloads
-    public static MLConfigs SYSTEM_USE_REPLACETABLE = addNewKey("system-use-replacetable", SystemUtils.IS_OS_LINUX ? Boolean.TRUE.toString() : Boolean.FALSE.toString());
-    public static MLConfigs SYSTEM_ONLY_ASCII = addNewKey("system-only-ascii", Boolean.FALSE.toString());
-    public static MLConfigs SYSTEM_PROG_OPEN_DIR = addNewKey("system-prog-open-dir");
-    public static MLConfigs SYSTEM_PROG_OPEN_URL = addNewKey("system-prog-open-url");
-    public static MLConfigs SYSTEM_PROG_EXTERN_PROGRAM = addNewKey("system-extern-program");
-    public static MLConfigs SYSTEM_PROG_PLAY_FILME = addNewKey("system-prog-play-filme");
-    public static MLConfigs SYSTEM_MARK_GEO = addNewKey("system-mark-geo", Boolean.TRUE.toString());
-    public static MLConfigs SYSTEM_GEO_HOME_PLACE = addNewKey("system-geo-home-place", Film.GEO_DE);
-    public static MLConfigs SYSTEM_STYLE = addNewKey("system-style", Boolean.FALSE.toString());
-    public static MLConfigs SYSTEM_STYLE_SIZE = addNewKey("system-geo-home-place", "14");
-    public static MLConfigs SYSTEM_LOG_DIR = addNewKey("system-log-dir", "");
-    public static MLConfigs SYSTEM_LOG_ON = addNewKey("system-log-on", Boolean.TRUE.toString());
-    public static MLConfigs SYSTEM_SMALL_ROW_TABLE_FILM = addNewKey("system-small-row-table-film", Boolean.FALSE.toString());
-    public static MLConfigs SYSTEM_SMALL_ROW_TABLE_DOWNLOAD = addNewKey("system-small-row-table-download", Boolean.FALSE.toString());
-    public static MLConfigs SYSTEM_DARK_THEME = addNewKey("system-dark-theme", Boolean.FALSE.toString());
-    public static MLConfigs SYSTEM_THEME_CHANGED = addNewKey("system-theme-changed");
-    public static MLConfigs SYSTEM_SSL_ALWAYS_TRUE = addNewKey("system-ssl-always-true");
-    public static MLConfigs TIP_OF_DAY_SHOW = addNewKey("tip-of-day-show", Boolean.TRUE.toString());//Tips anzeigen
-    public static MLConfigs TIP_OF_DAY_WAS_SHOWN = addNewKey("tip-of-day-was-shown");//bereits angezeigte Tips
-    public static MLConfigs TIP_OF_DAY_DATE = addNewKey("tip-of-day-date"); //Datum des letzten Tips
-    public static MLConfigs SYSTEM_FILTER_WAIT_TIME = addNewKey("system-filter-wait-time", "100");
-    public static MLConfigs SYSTEM_FILTER_RETURN = addNewKey("system-filter-return", Boolean.FALSE.toString());
-    public static MLConfigs SYSTEM_DOWNLOAD_DIR_NEW_VERSION = addNewKey("system-download-dir-new-version", "");
+    public static BooleanProperty SYSTEM_TRAY = addBool("system-tray", Boolean.FALSE);
+    public static StringProperty SYSTEM_USERAGENT = addStr("system-useragent", ProgConst.USER_AGENT_DEFAULT); //Useragent für direkte Downloads
+    public static BooleanProperty SYSTEM_USE_REPLACETABLE = addBool("system-use-replacetable", SystemUtils.IS_OS_LINUX ? Boolean.TRUE : Boolean.FALSE);
+    public static BooleanProperty SYSTEM_ONLY_ASCII = addBool("system-only-ascii", Boolean.FALSE);
+    public static StringProperty SYSTEM_PROG_OPEN_DIR = addStr("system-prog-open-dir");
+    public static StringProperty SYSTEM_PROG_OPEN_URL = addStr("system-prog-open-url");
+    public static StringProperty SYSTEM_PROG_EXTERN_PROGRAM = addStr("system-extern-program");
+    public static StringProperty SYSTEM_PROG_PLAY_FILME = addStr("system-prog-play-filme");
+    public static BooleanProperty SYSTEM_MARK_GEO = addBool("system-mark-geo", Boolean.TRUE);
+    public static StringProperty SYSTEM_GEO_HOME_PLACE = addStr("system-geo-home-place", Film.GEO_DE);
+    public static BooleanProperty SYSTEM_STYLE = addBool("system-style", Boolean.FALSE);
+    public static IntegerProperty SYSTEM_STYLE_SIZE = addInt("system-geo-home-place", 14);
+    public static StringProperty SYSTEM_LOG_DIR = addStr("system-log-dir", "");
+    public static BooleanProperty SYSTEM_LOG_ON = addBool("system-log-on", Boolean.TRUE);
+    public static BooleanProperty SYSTEM_SMALL_ROW_TABLE_FILM = addBool("system-small-row-table-film", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_SMALL_ROW_TABLE_DOWNLOAD = addBool("system-small-row-table-download", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_DARK_THEME = addBool("system-dark-theme", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_THEME_CHANGED = addBool("system-theme-changed");
+    public static BooleanProperty SYSTEM_SSL_ALWAYS_TRUE = addBool("system-ssl-always-true");
+    public static BooleanProperty TIP_OF_DAY_SHOW = addBool("tip-of-day-show", Boolean.TRUE);//Tips anzeigen
+    public static StringProperty TIP_OF_DAY_WAS_SHOWN = addStr("tip-of-day-was-shown");//bereits angezeigte Tips
+    public static StringProperty TIP_OF_DAY_DATE = addStr("tip-of-day-date"); //Datum des letzten Tips
+    public static IntegerProperty SYSTEM_FILTER_WAIT_TIME = addInt("system-filter-wait-time", 100);
+    public static BooleanProperty SYSTEM_FILTER_RETURN = addBool("system-filter-return", Boolean.FALSE);
+    public static StringProperty SYSTEM_DOWNLOAD_DIR_NEW_VERSION = addStr("system-download-dir-new-version", "");
 
 
     // Fenstereinstellungen
-    public static MLConfigs SYSTEM_SIZE_GUI = addNewKey("system-size-gui", "1000:900");
-    public static MLConfigs SYSTEM_SIZE_DIALOG_FILMINFO = addNewKey("system-size-dialog-filminfo", "600:800");
+    public static StringProperty SYSTEM_SIZE_GUI = addStr("system-size-gui", "1000:900");
+    public static StringProperty SYSTEM_SIZE_DIALOG_FILMINFO = addStr("system-size-dialog-filminfo", "600:800");
 
     // Einstellungen Filmliste
-    public static MLConfigs SYSTEM_LOAD_FILMS_ON_START = addNewKey("system-load-films-on-start", Boolean.TRUE.toString());
-    public static MLConfigs SYSTEM_LOAD_FILMS_MANUALLY = addNewKey("system-load-films-manually", "");
-    public static MLConfigs SYSTEM_LOAD_NOT_SENDER = addNewKey("system-load-not-sender", "");
-    public static MLConfigs SYSTEM_LOAD_FILMLIST_MAX_DAYS = addNewKey("system-load-filmlist-max-days", "0"); //es werden nur die x letzten Tage geladen
-    public static MLConfigs SYSTEM_LOAD_FILMLIST_MIN_DURATION = addNewKey("system-load-filmlist-min-duration", "0"); //es werden nur Filme mit mind. x Minuten geladen
-    public static MLConfigs SYSTEM_PATH_VLC = addNewKey("path-vlc", SetsPrograms.getTemplatePathVlc());
-    public static MLConfigs SYSTEM_PATH_FFMPEG = addNewKey("path-ffmpeg", SetsPrograms.getTemplatePathFFmpeg());
+    public static BooleanProperty SYSTEM_LOAD_FILMS_ON_START = addBool("system-load-films-on-start", Boolean.TRUE);
+    public static StringProperty SYSTEM_LOAD_FILMS_MANUALLY = addStr("system-load-films-manually", "");
+    public static StringProperty SYSTEM_LOAD_NOT_SENDER = addStr("system-load-not-sender", "");
+    public static IntegerProperty SYSTEM_LOAD_FILMLIST_MAX_DAYS = addInt("system-load-filmlist-max-days", 0); //es werden nur die x letzten Tage geladen
+    public static IntegerProperty SYSTEM_LOAD_FILMLIST_MIN_DURATION = addInt("system-load-filmlist-min-duration", 0); //es werden nur Filme mit mind. x Minuten geladen
+    public static StringProperty SYSTEM_PATH_VLC = addStr("path-vlc", SetsPrograms.getTemplatePathVlc());
+    public static StringProperty SYSTEM_PATH_FFMPEG = addStr("path-ffmpeg", SetsPrograms.getTemplatePathFFmpeg());
 
     // Blacklist
-    public static MLConfigs SYSTEM_BLACKLIST_SHOW_NO_FUTURE = addNewKey("blacklist-show-no-future");
-    public static MLConfigs SYSTEM_BLACKLIST_SHOW_NO_GEO = addNewKey("blacklist-show-no-geo");
-    public static MLConfigs SYSTEM_BLACKLIST_SHOW_ABO = addNewKey("blacklist-show-abo");
-    public static MLConfigs SYSTEM_BLACKLIST_MAX_FILM_DAYS = addNewKey("blacklist-max-film-days", "0");
-    public static MLConfigs SYSTEM_BLACKLIST_MIN_FILM_DURATION = addNewKey("blacklist-min-film-duration", "0"); // Minuten
-    public static MLConfigs SYSTEM_BLACKLIST_IS_WHITELIST = addNewKey("blacklist-is-whitelist");
+    public static BooleanProperty SYSTEM_BLACKLIST_SHOW_NO_FUTURE = addBool("blacklist-show-no-future");
+    public static BooleanProperty SYSTEM_BLACKLIST_SHOW_NO_GEO = addBool("blacklist-show-no-geo");
+    public static BooleanProperty SYSTEM_BLACKLIST_SHOW_ABO = addBool("blacklist-show-abo");
+    public static IntegerProperty SYSTEM_BLACKLIST_MAX_FILM_DAYS = addInt("blacklist-max-film-days", 0);
+    public static IntegerProperty SYSTEM_BLACKLIST_MIN_FILM_DURATION = addInt("blacklist-min-film-duration", 0); // Minuten
+    public static BooleanProperty SYSTEM_BLACKLIST_IS_WHITELIST = addBool("blacklist-is-whitelist");
 
     // Download
-    public static MLConfigs DOWNLOAD_START_NOW = addNewKey("download-start-now", Boolean.FALSE.toString());
-    public static MLConfigs DOWNLOAD_BEEP = addNewKey("download-beep");
-    public static MLConfigs DOWNLOAD_ERROR_MSG = addNewKey("download-error-msg", Boolean.TRUE.toString());
-    public static MLConfigs DOWNLOAD_MAX_DOWNLOADS = addNewKey("download-max-downloads", "1");
-    public static MLConfigs DOWNLOAD_MAX_ONE_PER_SERVER = addNewKey("download-max-one-per-server"); // nur ein Download pro Server - sonst max 2
-    public static MLConfigs DOWNLOAD_MAX_BANDWIDTH_KBYTE = addNewKey("download-max-bandwidth-kilobyte", String.valueOf(MLBandwidthTokenBucket.BANDWIDTH_MAX_KBYTE));
-    public static MLConfigs DOWNLOAD_BANDWIDTH_KBYTE = addNewKey("download-bandwidth-byte"); // da wird die genutzte Bandbreite gespeichert
+    public static BooleanProperty DOWNLOAD_START_NOW = addBool("download-start-now", Boolean.FALSE);
+    public static BooleanProperty DOWNLOAD_BEEP = addBool("download-beep");
+    public static BooleanProperty DOWNLOAD_ERROR_MSG = addBool("download-error-msg", Boolean.TRUE);
+    public static IntegerProperty DOWNLOAD_MAX_DOWNLOADS = addInt("download-max-downloads", 1);
+    public static BooleanProperty DOWNLOAD_MAX_ONE_PER_SERVER = addBool("download-max-one-per-server"); // nur ein Download pro Server - sonst max 2
+    public static IntegerProperty DOWNLOAD_MAX_BANDWIDTH_KBYTE = addInt("download-max-bandwidth-kilobyte", MLBandwidthTokenBucket.BANDWIDTH_MAX_KBYTE);
+    public static IntegerProperty DOWNLOAD_BANDWIDTH_KBYTE = addInt("download-bandwidth-byte"); // da wird die genutzte Bandbreite gespeichert
 
     // Gui Film
-    public static MLConfigs FILM_GUI_FILTER_DIVIDER = addNewKey("film-gui-filter-divider", ProgConst.GUI_FILME_FILTER_DIVIDER_LOCATION);
-    public static MLConfigs FILM_GUI_FILTER_DIVIDER_ON = addNewKey("film-gui-filter-divider-on", Boolean.TRUE.toString());
-    public static MLConfigs FILM_GUI_DIVIDER = addNewKey("film-gui-divider", ProgConst.GUI_FILME_DIVIDER_LOCATION);
-    public static MLConfigs FILM_GUI_DIVIDER_ON = addNewKey("film-gui-divider-on", Boolean.TRUE.toString());
-    public static MLConfigs FILM_GUI_TABLE_WIDTH = addNewKey("film-gui-table-width");
-    public static MLConfigs FILM_GUI_TABLE_SORT = addNewKey("film-gui-table-sort");
-    public static MLConfigs FILM_GUI_TABLE_UP_DOWN = addNewKey("film-gui-table-up-down");
-    public static MLConfigs FILM_GUI_TABLE_VIS = addNewKey("film-gui-table-vis");
-    public static MLConfigs FILM_GUI_TABLE_ORDER = addNewKey("film-gui-table-order");
+    public static DoubleProperty FILM_GUI_FILTER_DIVIDER = addDouble("film-gui-filter-divider", ProgConst.GUI_FILME_FILTER_DIVIDER_LOCATION);
+    public static BooleanProperty FILM_GUI_FILTER_DIVIDER_ON = addBool("film-gui-filter-divider-on", Boolean.TRUE);
+    public static DoubleProperty FILM_GUI_DIVIDER = addDouble("film-gui-divider", ProgConst.GUI_FILME_DIVIDER_LOCATION);
+    public static BooleanProperty FILM_GUI_DIVIDER_ON = addBool("film-gui-divider-on", Boolean.TRUE);
+    public static StringProperty FILM_GUI_TABLE_WIDTH = addStr("film-gui-table-width");
+    public static StringProperty FILM_GUI_TABLE_SORT = addStr("film-gui-table-sort");
+    public static StringProperty FILM_GUI_TABLE_UP_DOWN = addStr("film-gui-table-up-down");
+    public static StringProperty FILM_GUI_TABLE_VIS = addStr("film-gui-table-vis");
+    public static StringProperty FILM_GUI_TABLE_ORDER = addStr("film-gui-table-order");
 
     // Gui Download
-    public static MLConfigs DOWNLOAD_DIALOG_PATH_SAVING = addNewKey("download-dialog-path-saving"); // gesammelten Downloadpfade im Downloaddialog
-    public static MLConfigs DOWNLOAD_DIALOG_HD_HEIGHT_LOW = addNewKey("download-dialog-hd-height-low", Film.RESOLUTION_NORMAL);
-    public static MLConfigs DOWNLOAD_DIALOG_START_DOWNLOAD_NOW = addNewKey("download-dialog-start-download-now", Boolean.TRUE.toString());
-    public static MLConfigs DOWNLOAD_DIALOG_START_DOWNLOAD_NOT = addNewKey("download-dialog-start-download-not", Boolean.FALSE.toString());
-    public static MLConfigs DOWNLOAD_DIALOG_START_DOWNLOAD_TIME = addNewKey("download-dialog-start-download-time", Boolean.FALSE.toString());
-    public static MLConfigs DOWNLOAD_DIALOG_EDIT_SIZE = addNewKey("download-dialog-edit-size", "800:800");
-    public static MLConfigs DOWNLOAD_DIALOG_START_AT_TIME_SIZE = addNewKey("download-dialog-start-at-time-size", "800:400");
-    public static MLConfigs DOWNLOAD_DIALOG_ADD_SIZE = addNewKey("download-dialog-add-size");
-    public static MLConfigs DOWNLOAD_DIALOG_ADD_MORE_SIZE = addNewKey("download-dialog-add-more-size");
-    public static MLConfigs DOWNLOAD_DIALOG_CONTINUE_SIZE = addNewKey("download-dialog-continue-size");
-    public static MLConfigs DOWNLOAD_DIALOG_ERROR_SIZE = addNewKey("download-dialog-error-size", "");
-    public static MLConfigs DOWNLOAD_GUI_FILTER_DIVIDER = addNewKey("download-gui-filter-divider", ProgConst.GUI_DOWNLOAD_FILTER_DIVIDER_LOCATION);
-    public static MLConfigs DOWNLOAD_GUI_FILTER_DIVIDER_ON = addNewKey("download-gui-filter-divider-on", Boolean.TRUE.toString());
-    public static MLConfigs DOWNLOAD_GUI_DIVIDER = addNewKey("download-gui-divider", ProgConst.GUI_DOWNLOAD_DIVIDER_LOCATION);
-    public static MLConfigs DOWNLOAD_GUI_DIVIDER_ON = addNewKey("download-gui-divider-on", Boolean.TRUE.toString());
-    public static MLConfigs DOWNLOAD_GUI_TABLE_WIDTH = addNewKey("download-gui-table-width");
-    public static MLConfigs DOWNLOAD_GUI_TABLE_SORT = addNewKey("download-gui-table-sort");
-    public static MLConfigs DOWNLOAD_GUI_TABLE_UP_DOWN = addNewKey("download-gui-table-up-down");
-    public static MLConfigs DOWNLOAD_GUI_TABLE_VIS = addNewKey("download-gui-table-vis");
-    public static MLConfigs DOWNLOAD_GUI_TABLE_ORDER = addNewKey("download-gui-table-order");
-    public static MLConfigs DOWNLOAD_SHOW_NOTIFICATION = addNewKey("download-show-notification", Boolean.TRUE.toString());
+    public static StringProperty DOWNLOAD_DIALOG_PATH_SAVING = addStr("download-dialog-path-saving"); // gesammelten Downloadpfade im Downloaddialog
+    public static StringProperty DOWNLOAD_DIALOG_HD_HEIGHT_LOW = addStr("download-dialog-hd-height-low", Film.RESOLUTION_NORMAL);
+    public static BooleanProperty DOWNLOAD_DIALOG_START_DOWNLOAD_NOW = addBool("download-dialog-start-download-now", Boolean.TRUE);
+    public static BooleanProperty DOWNLOAD_DIALOG_START_DOWNLOAD_NOT = addBool("download-dialog-start-download-not", Boolean.FALSE);
+    public static BooleanProperty DOWNLOAD_DIALOG_START_DOWNLOAD_TIME = addBool("download-dialog-start-download-time", Boolean.FALSE);
+    public static StringProperty DOWNLOAD_DIALOG_EDIT_SIZE = addStr("download-dialog-edit-size", "800:800");
+    public static StringProperty DOWNLOAD_DIALOG_START_AT_TIME_SIZE = addStr("download-dialog-start-at-time-size", "800:400");
+    public static StringProperty DOWNLOAD_DIALOG_ADD_SIZE = addStr("download-dialog-add-size");
+    public static StringProperty DOWNLOAD_DIALOG_ADD_MORE_SIZE = addStr("download-dialog-add-more-size");
+    public static StringProperty DOWNLOAD_DIALOG_CONTINUE_SIZE = addStr("download-dialog-continue-size");
+    public static StringProperty DOWNLOAD_DIALOG_ERROR_SIZE = addStr("download-dialog-error-size", "");
+    public static DoubleProperty DOWNLOAD_GUI_FILTER_DIVIDER = addDouble("download-gui-filter-divider", ProgConst.GUI_DOWNLOAD_FILTER_DIVIDER_LOCATION);
+    public static BooleanProperty DOWNLOAD_GUI_FILTER_DIVIDER_ON = addBool("download-gui-filter-divider-on", Boolean.TRUE);
+    public static DoubleProperty DOWNLOAD_GUI_DIVIDER = addDouble("download-gui-divider", ProgConst.GUI_DOWNLOAD_DIVIDER_LOCATION);
+    public static BooleanProperty DOWNLOAD_GUI_DIVIDER_ON = addBool("download-gui-divider-on", Boolean.TRUE);
+    public static StringProperty DOWNLOAD_GUI_TABLE_WIDTH = addStr("download-gui-table-width");
+    public static StringProperty DOWNLOAD_GUI_TABLE_SORT = addStr("download-gui-table-sort");
+    public static StringProperty DOWNLOAD_GUI_TABLE_UP_DOWN = addStr("download-gui-table-up-down");
+    public static StringProperty DOWNLOAD_GUI_TABLE_VIS = addStr("download-gui-table-vis");
+    public static StringProperty DOWNLOAD_GUI_TABLE_ORDER = addStr("download-gui-table-order");
+    public static BooleanProperty DOWNLOAD_SHOW_NOTIFICATION = addBool("download-show-notification", Boolean.TRUE);
 
     // Downloadchart
-    public static MLConfigs DOWNLOAD_CHART_SEPARAT = addNewKey("download-chart-separat", Boolean.TRUE.toString());
-    public static MLConfigs DOWNLOAD_CHART_ONLY_EXISTING = addNewKey("download-chart-only-existing", Boolean.FALSE.toString());
-    public static MLConfigs DOWNLOAD_CHART_ONLY_RUNNING = addNewKey("download-chart-only-running", Boolean.FALSE.toString());
-    public static MLConfigs DOWNLOAD_CHART_SHOW_MAX_TIME_MIN = addNewKey("download-chart-show-max-time", 30); //MAX Minuten im Chart
+    public static BooleanProperty DOWNLOAD_CHART_SEPARAT = addBool("download-chart-separat", Boolean.TRUE);
+    public static BooleanProperty DOWNLOAD_CHART_ONLY_EXISTING = addBool("download-chart-only-existing", Boolean.FALSE);
+    public static BooleanProperty DOWNLOAD_CHART_ONLY_RUNNING = addBool("download-chart-only-running", Boolean.FALSE);
+    public static IntegerProperty DOWNLOAD_CHART_SHOW_MAX_TIME_MIN = addInt("download-chart-show-max-time", 30); //MAX Minuten im Chart
 
     // Gui Abo
-    public static MLConfigs ABO_SEARCH_NOW = addNewKey("abo-search-now", Boolean.TRUE.toString());
-    public static MLConfigs ABO_MINUTE_MIN_SIZE = addNewKey("abo-minute-min-size", FilmFilter.FILTER_DURATION_MIN_MINUTE); //Vorgabe beim Anlegen eines Abos
-    public static MLConfigs ABO_MINUTE_MAX_SIZE = addNewKey("abo-minute-max-size", FilmFilter.FILTER_DURATION_MAX_MINUTE); //Vorgabe beim Anlegen eines Abos
-    public static MLConfigs ABO_DIALOG_EDIT_SIZE = addNewKey("abo-dialog-edit-size", "600:800");
-    public static MLConfigs ABO_GUI_FILTER_DIVIDER = addNewKey("abo-gui-filter-divider", ProgConst.GUI_ABO_FILTER_DIVIDER_LOCATION);
-    public static MLConfigs ABO_GUI_FILTER_DIVIDER_ON = addNewKey("abo-gui-filter-divider-on", Boolean.TRUE.toString());
-    public static MLConfigs ABO_GUI_DIVIDER = addNewKey("abo-gui-divider", ProgConst.GUI_ABO_DIVIDER_LOCATION);
-    public static MLConfigs ABO_GUI_DIVIDER_ON = addNewKey("abo-gui-divider-on", Boolean.TRUE.toString());
-    public static MLConfigs ABO_GUI_TABLE_WIDTH = addNewKey("abo-gui-table-width");
-    public static MLConfigs ABO_GUI_TABLE_SORT = addNewKey("abo-gui-table-sort");
-    public static MLConfigs ABO_GUI_TABLE_UP_DOWN = addNewKey("abo-gui-table-up-down");
-    public static MLConfigs ABO_GUI_TABLE_VIS = addNewKey("abo-gui-table-vis");
-    public static MLConfigs ABO_GUI_TABLE_ORDER = addNewKey("abo-gui-table-order");
+    public static BooleanProperty ABO_SEARCH_NOW = addBool("abo-search-now", Boolean.TRUE);
+    public static IntegerProperty ABO_MINUTE_MIN_SIZE = addInt("abo-minute-min-size", FilmFilter.FILTER_DURATION_MIN_MINUTE); //Vorgabe beim Anlegen eines Abos
+    public static IntegerProperty ABO_MINUTE_MAX_SIZE = addInt("abo-minute-max-size", FilmFilter.FILTER_DURATION_MAX_MINUTE); //Vorgabe beim Anlegen eines Abos
+    public static StringProperty ABO_DIALOG_EDIT_SIZE = addStr("abo-dialog-edit-size", "600:800");
+    public static DoubleProperty ABO_GUI_FILTER_DIVIDER = addDouble("abo-gui-filter-divider", ProgConst.GUI_ABO_FILTER_DIVIDER_LOCATION);
+    public static BooleanProperty ABO_GUI_FILTER_DIVIDER_ON = addBool("abo-gui-filter-divider-on", Boolean.TRUE);
+    public static DoubleProperty ABO_GUI_DIVIDER = addDouble("abo-gui-divider", ProgConst.GUI_ABO_DIVIDER_LOCATION);
+    public static BooleanProperty ABO_GUI_DIVIDER_ON = addBool("abo-gui-divider-on", Boolean.TRUE);
+    public static StringProperty ABO_GUI_TABLE_WIDTH = addStr("abo-gui-table-width");
+    public static StringProperty ABO_GUI_TABLE_SORT = addStr("abo-gui-table-sort");
+    public static StringProperty ABO_GUI_TABLE_UP_DOWN = addStr("abo-gui-table-up-down");
+    public static StringProperty ABO_GUI_TABLE_VIS = addStr("abo-gui-table-vis");
+    public static StringProperty ABO_GUI_TABLE_ORDER = addStr("abo-gui-table-order");
 
     // ConfigDialog
-    public static MLConfigs CONFIG_DIALOG_SIZE = addNewKey("config-dialog-size");
-    public static MLConfigs CONFIG_DIALOG_ACCORDION = addNewKey("config_dialog-accordion", Boolean.TRUE.toString());
-    public static MLConfigs CONFIG_DIALOG_SET_DIVIDER = addNewKey("config-dialog-set-divider", ProgConst.CONFIG_DIALOG_SET_DIVIDER);
-    public static MLConfigs CONFIG_DIALOG_IMPORT_SET_SIZE = addNewKey("config-dialog-import-set-size", "800:700");
+    public static StringProperty CONFIG_DIALOG_SIZE = addStr("config-dialog-size");
+    public static BooleanProperty CONFIG_DIALOG_ACCORDION = addBool("config_dialog-accordion", Boolean.TRUE);
+    public static DoubleProperty CONFIG_DIALOG_SET_DIVIDER = addDouble("config-dialog-set-divider", ProgConst.CONFIG_DIALOG_SET_DIVIDER);
+    public static StringProperty CONFIG_DIALOG_IMPORT_SET_SIZE = addStr("config-dialog-import-set-size", "800:700");
 
     // StartDialog
-    public static MLConfigs START_DIALOG_DOWNLOAD_PATH = addNewKey("start-dialog-download-path", PSystemUtils.getStandardDownloadPath());
+    public static StringProperty START_DIALOG_DOWNLOAD_PATH = addStr("start-dialog-download-path", PSystemUtils.getStandardDownloadPath());
 
     // FilmInfoDialog
-    public static MLConfigs FILM_INFO_DIALOG_SHOW_URL = addNewKey("film-info-dialog-show-url", Boolean.TRUE.toString());
+    public static BooleanProperty FILM_INFO_DIALOG_SHOW_URL = addBool("film-info-dialog-show-url", Boolean.TRUE);
 
     // DownloadAddDialog
-    public static MLConfigs DOWNLOAD_INFO_DIALOG_SHOW_URL = addNewKey("download-info-dialog-show-url", Boolean.TRUE.toString());
+    public static BooleanProperty DOWNLOAD_INFO_DIALOG_SHOW_URL = addBool("download-info-dialog-show-url", Boolean.TRUE);
 
     // Filter Filme
-    public static MLConfigs FILTER_FILME_SEL_FILTER = addNewKey("filter-filme-sel-filter");
+    public static IntegerProperty FILTER_FILME_SEL_FILTER = addInt("filter-filme-sel-filter");
 
     // Filter Abo
-    public static MLConfigs FILTER_ABO_CHANNEL = addNewKey("filter-abo-sender");
-    public static MLConfigs FILTER_ABO_NAME = addNewKey("filter-abo-name");
-    public static MLConfigs FILTER_ABO_DESCRIPTION = addNewKey("filter-abo-beschreibung");
-    public static MLConfigs FILTER_ABO_TYPE = addNewKey("filter-abo-type");
+    public static StringProperty FILTER_ABO_CHANNEL = addStr("filter-abo-sender");
+    public static StringProperty FILTER_ABO_NAME = addStr("filter-abo-name");
+    public static StringProperty FILTER_ABO_DESCRIPTION = addStr("filter-abo-beschreibung");
+    public static StringProperty FILTER_ABO_TYPE = addStr("filter-abo-type");
 
     // Filter Download
-    public static MLConfigs FILTER_DOWNLOAD_CHANNEL = addNewKey("filter-download-sender");
-    public static MLConfigs FILTER_DOWNLOAD_SOURCE = addNewKey("filter-download-source");
-    public static MLConfigs FILTER_DOWNLOAD_TYPE = addNewKey("filter-download-type");
-    public static MLConfigs FILTER_DOWNLOAD_ABO = addNewKey("filter-download-abo");
-    public static MLConfigs FILTER_DOWNLOAD_STATE = addNewKey("filter-download-state");
-
-    // Farben
-    public static MLConfigs COLOR__FILM_LIVESTREAM = addNewKey("COLOR_FILM_LIVESTREAM");
-    public static MLConfigs COLOR__FILM_LIVESTREAM_DARK = addNewKey("COLOR_FILM_LIVESTREAM_DARK");
-    public static MLConfigs COLOR__FILM_HISTORY = addNewKey("COLOR_FILM_HISTORY");
-    public static MLConfigs COLOR__FILM_HISTORY_DARK = addNewKey("COLOR_FILM_HISTORY_DARK");
-    public static MLConfigs COLOR__FILM_NEW = addNewKey("COLOR_FILM_NEW");
-    public static MLConfigs COLOR__FILM_NEW_DARK = addNewKey("COLOR_FILM_NEW_DARK");
-    public static MLConfigs COLOR__FILM_BOOKMARK = addNewKey("COLOR_FILM_BOKMARK");
-    public static MLConfigs COLOR__FILM_BOOKMARK_DARK = addNewKey("COLOR_FILM_BOKMARK_DARK");
-    public static MLConfigs COLOR__FILM_GEOBLOCK_BACKGROUND = addNewKey("COLOR_FILM_GEOBLOCK_BACKGROUND");
-    public static MLConfigs COLOR__FILM_GEOBLOCK_BACKGROUND_DARK = addNewKey("COLOR_FILM_GEOBLOCK_BACKGROUND_DARK");
-    public static MLConfigs COLOR__DOWNLOAD_WAIT = addNewKey("COLOR_DOWNLOAD_WAIT");
-    public static MLConfigs COLOR__DOWNLOAD_WAIT_DARK = addNewKey("COLOR_DOWNLOAD_WAIT_DARK");
-    public static MLConfigs COLOR__DOWNLOAD_RUN = addNewKey("COLOR_DOWNLOAD_RUN");
-    public static MLConfigs COLOR__DOWNLOAD_RUN_DARK = addNewKey("COLOR_DOWNLOAD_RUN_DARK");
-    public static MLConfigs COLOR__DOWNLOAD_FINISHED = addNewKey("COLOR_DOWNLOAD_FINISHED");
-    public static MLConfigs COLOR__DOWNLOAD_FINISHED_DARK = addNewKey("COLOR_DOWNLOAD_FINISHED_DARK");
-    public static MLConfigs COLOR__DOWNLOAD_ERROR = addNewKey("COLOR_DOWNLOAD_ERROR");
-    public static MLConfigs COLOR__DOWNLOAD_ERROR_DARK = addNewKey("COLOR_DOWNLOAD_ERROR_DARK");
-    public static MLConfigs COLOR__ABO_SWITCHED_OFF = addNewKey("COLOR_ABO_SWITCHED_OFF");
-    public static MLConfigs COLOR__ABO_SWITCHED_OFF_DARK = addNewKey("COLOR_ABO_SWITCHED_OFF_DARK");
-    public static MLConfigs COLOR__FILTER_REGEX = addNewKey("COLOR_FILTER_REGEX");
-    public static MLConfigs COLOR__FILTER_REGEX_DARK = addNewKey("COLOR_FILTER_REGEX_DARK");
-    public static MLConfigs COLOR__FILTER_REGEX_ERROR = addNewKey("COLOR_FILTER_REGEX_ERROR");
-    public static MLConfigs COLOR__FILTER_REGEX_ERROR_DARK = addNewKey("COLOR_FILTER_REGEX_ERROR_DARK");
-    public static MLConfigs COLOR__DOWNLOAD_NAME_ERROR = addNewKey("COLOR_DOWNLOAD_NAME_ERROR");
-    public static MLConfigs COLOR__DOWNLOAD_NAME_ERROR_DARK = addNewKey("COLOR_DOWNLOAD_NAME_ERROR_DARK");
+    public static StringProperty FILTER_DOWNLOAD_CHANNEL = addStr("filter-download-sender");
+    public static StringProperty FILTER_DOWNLOAD_SOURCE = addStr("filter-download-source");
+    public static StringProperty FILTER_DOWNLOAD_TYPE = addStr("filter-download-type");
+    public static StringProperty FILTER_DOWNLOAD_ABO = addStr("filter-download-abo");
+    public static StringProperty FILTER_DOWNLOAD_STATE = addStr("filter-download-state");
 
     // Shorcuts Hauptmenü
-    public static MLConfigs SHORTCUT_QUIT_PROGRAM = addNewKey("SHORTCUT_QUIT_PROGRAM", "Ctrl+Q");
-    public static MLConfigs SHORTCUT_QUIT_PROGRAM_WAIT = addNewKey("SHORTCUT_QUIT_PROGRAM", "Ctrl+Shift+Q");
-    public static MLConfigs SHORTCUT_SEARCH_MEDIACOLLECTION = addNewKey("SHORTCUT_SEARCH_MEDIACOLLECTION", "Ctrl+Alt+M");
+    public static String SHORTCUT_QUIT_PROGRAM_INIT = "Ctrl+Q";
+    public static StringProperty SHORTCUT_QUIT_PROGRAM = addStr("SHORTCUT_QUIT_PROGRAM", SHORTCUT_QUIT_PROGRAM_INIT);
+
+    public static String SHORTCUT_QUIT_PROGRAM_WAIT_INIT = "Ctrl+Shift+Q";
+    public static StringProperty SHORTCUT_QUIT_PROGRAM_WAIT = addStr("SHORTCUT_QUIT_PROGRAM", SHORTCUT_QUIT_PROGRAM_WAIT_INIT);
+
+    public static String SHORTCUT_SEARCH_MEDIACOLLECTION_INIT = "Ctrl+Alt+M";
+    public static StringProperty SHORTCUT_SEARCH_MEDIACOLLECTION = addStr("SHORTCUT_SEARCH_MEDIACOLLECTION", SHORTCUT_SEARCH_MEDIACOLLECTION_INIT);
 
     // Shortcuts Filmmenü
-    public static MLConfigs SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION = addNewKey("SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION", "Ctrl+M");
-    public static MLConfigs SHORTCUT_SHOW_FILTER = addNewKey("SHORTCUT_SHOW_FILTER", "Alt+F");
-    public static MLConfigs SHORTCUT_SHOW_INFOS = addNewKey("SHORTCUT_SHOW_INFO", "Alt+I");
-    public static MLConfigs SHORTCUT_INFO_FILM = addNewKey("SHORTCUT_INFO_FILM", "Ctrl+I");
-    public static MLConfigs SHORTCUT_PLAY_FILM = addNewKey("SHORTCUT_PLAY_FILM", "Ctrl+P");
-    public static MLConfigs SHORTCUT_SAVE_FILM = addNewKey("SHORTCUT_SAVE_FILM", "Ctrl+S");
+    public static String SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION_INIT = "Ctrl+M";
+    public static StringProperty SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION = addStr("SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION", SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION_INIT);
+
+    public static String SHORTCUT_SHOW_FILTER_INIT = "Alt+F";
+    public static StringProperty SHORTCUT_SHOW_FILTER = addStr("SHORTCUT_SHOW_FILTER", SHORTCUT_SHOW_FILTER_INIT);
+
+    public static String SHORTCUT_SHOW_INFOS_INIT = "Alt+I";
+    public static StringProperty SHORTCUT_SHOW_INFOS = addStr("SHORTCUT_SHOW_INFO", SHORTCUT_SHOW_INFOS_INIT);
+
+    public static String SHORTCUT_INFO_FILM_INIT = "Ctrl+I";
+    public static StringProperty SHORTCUT_INFO_FILM = addStr("SHORTCUT_INFO_FILM", SHORTCUT_INFO_FILM_INIT);
+
+    public static String SHORTCUT_PLAY_FILM_INIT = "Ctrl+P";
+    public static StringProperty SHORTCUT_PLAY_FILM = addStr("SHORTCUT_PLAY_FILM", SHORTCUT_PLAY_FILM_INIT);
+
+    public static String SHORTCUT_SAVE_FILM_INIT = "Ctrl+S";
+    public static StringProperty SHORTCUT_SAVE_FILM = addStr("SHORTCUT_SAVE_FILM", SHORTCUT_SAVE_FILM_INIT);
 
     // Shortcuts Downloadmenü
-    public static MLConfigs SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION = addNewKey("SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION", "Alt+M");
-    public static MLConfigs SHORTCUT_DOWNLOAD_START = addNewKey("SHORTCUT_DOWNLOAD_START", "Ctrl+D");
-    public static MLConfigs SHORTCUT_DOWNLOAD_STOP = addNewKey("SHORTCUT_DOWNLOAD_STOP", "Ctrl+T");
-    public static MLConfigs SHORTCUT_DOWNLOAD_CHANGE = addNewKey("SHORTCUT_DOWNLOAD_CHANGE", "Ctrl+C");
-    public static MLConfigs SHORTCUT_DOWNLOADS_UPDATE = addNewKey("SHORTCUT_DOWNLOADS_UPDATE", "CTRL+U");
-    public static MLConfigs SHORTCUT_DOWNLOADS_CLEAN_UP = addNewKey("SHORTCUT_DOWNLOADS_CLEAN_UP", "CTRL+O");
-    public static MLConfigs SHORTCUT_EXTERN_PROGRAM = addNewKey("SHORTCUT_EXTERN_PROGRAM", "CTRL+E");
+    public static String SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION_INIT = "Alt+M";
+    public static StringProperty SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION = addStr("SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION", SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION_INIT);
+
+    public static String SHORTCUT_DOWNLOAD_START_INIT = "Ctrl+D";
+    public static StringProperty SHORTCUT_DOWNLOAD_START = addStr("SHORTCUT_DOWNLOAD_START", SHORTCUT_DOWNLOAD_START_INIT);
+
+    public static String SHORTCUT_DOWNLOAD_STOP_INIT = "Ctrl+T";
+    public static StringProperty SHORTCUT_DOWNLOAD_STOP = addStr("SHORTCUT_DOWNLOAD_STOP", "Ctrl+T");
+
+    public static String SHORTCUT_DOWNLOAD_CHANGE_INIT = "Ctrl+C";
+    public static StringProperty SHORTCUT_DOWNLOAD_CHANGE = addStr("SHORTCUT_DOWNLOAD_CHANGE", SHORTCUT_DOWNLOAD_CHANGE_INIT);
+
+    public static String SHORTCUT_DOWNLOADS_UPDATE_INIT = "CTRL+U";
+    public static StringProperty SHORTCUT_DOWNLOADS_UPDATE = addStr("SHORTCUT_DOWNLOADS_UPDATE", "CTRL+U");
+
+    public static String SHORTCUT_DOWNLOADS_CLEAN_UP_INIT = "CTRL+O";
+    public static StringProperty SHORTCUT_DOWNLOADS_CLEAN_UP = addStr("SHORTCUT_DOWNLOADS_CLEAN_UP", SHORTCUT_DOWNLOADS_CLEAN_UP_INIT);
+
+    public static String SHORTCUT_EXTERN_PROGRAM_INIT = "CTRL+E";
+    public static StringProperty SHORTCUT_EXTERN_PROGRAM = addStr("SHORTCUT_EXTERN_PROGRAM", SHORTCUT_EXTERN_PROGRAM_INIT);
 
 
     public static String PARAMETER_INFO = P2LibConst.LINE_SEPARATOR + "\t"
@@ -313,41 +322,76 @@ public class ProgConfig extends MLConfig {
             + "\t" + "Wird eine Zeile gelöscht, wird der Parameter wieder mit dem Standardwert angelegt." + P2LibConst.LINE_SEPARATOR
 
             + P2LibConst.LINE_SEPARATOR
-            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getKey() + P2LibConst.LINE_SEPARATOR
+            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getName() + P2LibConst.LINE_SEPARATOR
             + "\t" + "Timeout für direkte Downloads, Standardwert: "
-            + SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getInitValue() + P2LibConst.LINE_SEPARATOR +
+            + SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getValue() + P2LibConst.LINE_SEPARATOR +
 
             P2LibConst.LINE_SEPARATOR
-            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getKey() + P2LibConst.LINE_SEPARATOR
+            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getName() + P2LibConst.LINE_SEPARATOR
             + "\t" + "max. Startversuche für fehlgeschlagene Downloads, am Ende aller Downloads" + P2LibConst.LINE_SEPARATOR
             + "\t" + "(Versuche insgesamt: DOWNLOAD_MAX_RESTART * DOWNLOAD_MAX_RESTART_HTTP), Standardwert: " +
-            SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getInitValue() + P2LibConst.LINE_SEPARATOR +
+            SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getValue() + P2LibConst.LINE_SEPARATOR +
 
             P2LibConst.LINE_SEPARATOR
-            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP.getKey() + P2LibConst.LINE_SEPARATOR
+            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP.getName() + P2LibConst.LINE_SEPARATOR
             + "\t" + "max. Startversuche für fehlgeschlagene Downloads, direkt beim Download," + P2LibConst.LINE_SEPARATOR
             + "\t" + "(Versuche insgesamt: DOWNLOAD_MAX_RESTART * DOWNLOAD_MAX_RESTART_HTTP), Standardwert: "
-            + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP.getInitValue() + P2LibConst.LINE_SEPARATOR +
+            + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP.getValue() + P2LibConst.LINE_SEPARATOR +
 
             P2LibConst.LINE_SEPARATOR
-            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS.getKey() + P2LibConst.LINE_SEPARATOR
+            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS.getName() + P2LibConst.LINE_SEPARATOR
             + "\t" + "Beim Dialog \"Download weiterführen\" wird nach dieser Zeit der Download weitergeführt, Standardwert: "
-            + SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS.getInitValue() + P2LibConst.LINE_SEPARATOR +
+            + SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS.getValue() + P2LibConst.LINE_SEPARATOR +
 
             P2LibConst.LINE_SEPARATOR
-            + "\t" + SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS.getKey() + P2LibConst.LINE_SEPARATOR
+            + "\t" + SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS.getName() + P2LibConst.LINE_SEPARATOR
             + "\t" + "Beim Dialog \"Automode\" wird nach dieser Zeit der das Programm beendet, Standardwert: "
-            + SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS.getInitValue() + P2LibConst.LINE_SEPARATOR +
+            + SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS.getValue() + P2LibConst.LINE_SEPARATOR +
 
             P2LibConst.LINE_SEPARATOR
-            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getKey() + P2LibConst.LINE_SEPARATOR
+            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getName() + P2LibConst.LINE_SEPARATOR
             + "\t" + "Downloadfehlermeldung wird xx Sedunden lang angezeigt, Standardwert: "
-            + SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getInitValue() + P2LibConst.LINE_SEPARATOR +
+            + SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getValue() + P2LibConst.LINE_SEPARATOR +
 
             P2LibConst.LINE_SEPARATOR
-            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_PROGRESS.getKey() + P2LibConst.LINE_SEPARATOR
+            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_PROGRESS.getName() + P2LibConst.LINE_SEPARATOR
             + "\t" + "Downloadprogress im Terminal (-auto) anzeigen: "
-            + SYSTEM_PARAMETER_DOWNLOAD_PROGRESS.getInitValue() + P2LibConst.LINE_SEPARATOR;
+            + SYSTEM_PARAMETER_DOWNLOAD_PROGRESS.getValue() + P2LibConst.LINE_SEPARATOR;
+
+    static {
+        check(SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND, SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND_INIT, 5, 200);
+        check(SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART, SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_INIT, 0, 10);
+        check(SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP, SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP_INIT, 0, 10);
+        check(SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS, SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS_INIT, 5, 200);
+        check(SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS, SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS_INIT, 5, 200);
+        check(SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND, SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND_INIT, 5, 200);
+    }
+
+    private ProgConfig() {
+        super(arrayList, "ProgConfig");
+    }
+
+    public static final ProgConfig getInstance() {
+        return instance == null ? instance = new ProgConfig() : instance;
+    }
+
+    public static void addConfigData(ConfigFile configFile) {
+        // Configs der Programmversion, nur damit sie (zur Update-Suche) im Config-File stehen
+        ProgConfig.SYSTEM_PROG_VERSION.set(ProgramTools.getProgVersion());
+        ProgConfig.SYSTEM_PROG_BUILD_NO.set(ProgramTools.getBuild());
+        ProgConfig.SYSTEM_PROG_BUILD_DATE.set(ProgramTools.getCompileDate());
+
+        configFile.addConfigs(ProgConfig.getInstance());
+        configFile.addConfigs(ProgColorList.getConfigsData());
+//        configFile.addConfigs(ProgData.getInstance().blackList);
+//        configFile.addConfigs(ProgData.getInstance().favouriteList);
+//        configFile.addConfigs(ProgData.getInstance().lastPlayedList);
+//        configFile.addConfigs(ProgData.getInstance().storedFilters.getActFilterSettings());
+//        configFile.addConfigs(ProgData.getInstance().storedFilters.getStoredFilterList());
+//        configFile.addConfigs(ProgData.getInstance().blackDataList);
+//        configFile.addConfigs(ProgData.getInstance().favouriteFilter);
+//        configFile.addConfigs(ProgData.getInstance().lastPlayedFilter);
+    }
 
     public static void logAllConfigs() {
         final ArrayList<String> list = new ArrayList<>();
@@ -355,11 +399,20 @@ public class ProgConfig extends MLConfig {
         list.add(PLog.LILNE2);
         list.add("Programmeinstellungen");
         list.add("===========================");
-        for (final String[] s : ProgConfig.getAll()) {
-            if (!s[1].isEmpty()) {
-                list.add(s[0] + "\t\t" + s[1]);
+        arrayList.stream().forEach(c -> {
+            String s = c.getKey();
+            if (s.startsWith("_")) {
+                while (s.length() < 55) {
+                    s += " ";
+                }
+            } else {
+                while (s.length() < 35) {
+                    s += " ";
+                }
             }
-        }
+
+            list.add(s + "  " + c.getActValueString());
+        });
         list.add(PLog.LILNE2);
         PStringUtils.appendString(list, "|  ", "=");
 
@@ -368,13 +421,70 @@ public class ProgConfig extends MLConfig {
         PLog.emptyLine();
     }
 
+    private static synchronized void check(IntegerProperty mlConfigs, int init, int min, int max) {
+        final int v = mlConfigs.getValue();
+        if (v < min || v > max) {
+            mlConfigs.setValue(init);
+        }
+    }
 
-    static {
-        check(SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND, 5, 200);
-        check(SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART, 0, 10);
-        check(SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP, 0, 10);
-        check(SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS, 5, 200);
-        check(SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS, 5, 200);
-        check(SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND, 5, 200);
+    private static StringProperty addStr(String key) {
+        return addStrProp(arrayList, key);
+    }
+
+    private static StringProperty addStrC(String comment, String key) {
+        return addStrPropC(comment, arrayList, key);
+    }
+
+    private static StringProperty addStr(String key, String init) {
+        return addStrProp(arrayList, key, init);
+    }
+
+    private static StringProperty addStrC(String comment, String key, String init) {
+        return addStrPropC(comment, arrayList, key, init);
+    }
+
+    private static DoubleProperty addDouble(String key, double init) {
+        return addDoubleProp(arrayList, key, init);
+    }
+
+    private static DoubleProperty addDoubleC(String comment, String key, double init) {
+        return addDoublePropC(comment, arrayList, key, init);
+    }
+
+    private static IntegerProperty addInt(String key) {
+        return addIntProp(arrayList, key, 0);
+    }
+
+    private static IntegerProperty addInt(String key, int init) {
+        return addIntProp(arrayList, key, init);
+    }
+
+    private static IntegerProperty addIntC(String comment, String key, int init) {
+        return addIntPropC(comment, arrayList, key, init);
+    }
+
+    private static LongProperty addLong(String key) {
+        return addLongProp(arrayList, key, 0);
+    }
+
+    private static LongProperty addLong(String key, long init) {
+        return addLongProp(arrayList, key, init);
+    }
+
+    private static LongProperty addLongC(String comment, String key, long init) {
+        return addLongPropC(comment, arrayList, key, init);
+    }
+
+    private static BooleanProperty addBool(String key, boolean init) {
+        return addBoolProp(arrayList, key, init);
+    }
+
+    private static BooleanProperty addBool(String key) {
+        return addBoolProp(arrayList, key, Boolean.FALSE);
+    }
+
+    private static BooleanProperty addBoolC(String comment, String key, boolean init) {
+        return addBoolPropC(comment, arrayList, key, init);
     }
 }

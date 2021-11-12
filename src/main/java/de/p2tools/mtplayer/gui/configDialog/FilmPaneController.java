@@ -39,8 +39,8 @@ public class FilmPaneController extends PAccordionPane {
 
     private final int FILTER_DAYS_MAX = 150;
 
-    BooleanProperty propLoad = ProgConfig.SYSTEM_LOAD_FILMS_ON_START.getBooleanProperty();
-    StringProperty propUrl = ProgConfig.SYSTEM_LOAD_FILMS_MANUALLY.getStringProperty();
+    BooleanProperty propLoad = ProgConfig.SYSTEM_LOAD_FILMS_ON_START;
+    StringProperty propUrl = ProgConfig.SYSTEM_LOAD_FILMS_MANUALLY;
 
     private LoadFilmsPane loadFilmsPane;
     private final PToggleSwitch tglLoad = new PToggleSwitch("Filmliste beim Programmstart laden");
@@ -50,19 +50,21 @@ public class FilmPaneController extends PAccordionPane {
     private final Stage stage;
 
     public FilmPaneController(Stage stage) {
-        super(stage, ProgConfig.CONFIG_DIALOG_ACCORDION.getBooleanProperty(), ProgConfig.SYSTEM_CONFIG_DIALOG_FILM);
+        super(stage, ProgConfig.CONFIG_DIALOG_ACCORDION, ProgConfig.SYSTEM_CONFIG_DIALOG_FILM);
         this.stage = stage;
         progData = ProgData.getInstance();
 
         init();
     }
 
+    @Override
     public void close() {
         super.close();
         tglLoad.selectedProperty().unbindBidirectional(propLoad);
         txtUrl.textProperty().unbindBidirectional(propUrl);
     }
 
+    @Override
     public Collection<TitledPane> createPanes() {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
         makeConfig(result);

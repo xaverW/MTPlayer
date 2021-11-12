@@ -16,9 +16,9 @@
 
 package de.p2tools.mtplayer.gui.tools.table;
 
+import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.MTColor;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.data.download.Download;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
@@ -48,20 +48,20 @@ public class TableDownload {
     private final BooleanProperty small;
 
     public TableDownload() {
-        geoMelden = ProgConfig.SYSTEM_MARK_GEO.getBooleanProperty();
-        small = ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD.getBooleanProperty();
+        geoMelden = ProgConfig.SYSTEM_MARK_GEO;
+        small = ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD;
     }
 
     public TableColumn[] initDownloadColumn(TableView table) {
         table.getColumns().clear();
 
         final Comparator<String> sorter = GermanStringIntSorter.getInstance();
-        ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD.getStringProperty().addListener((observableValue, s, t1) -> table.refresh());
-        MTColor.FILM_GEOBLOCK.colorProperty().addListener((a, b, c) -> table.refresh());
-        MTColor.DOWNLOAD_WAIT.colorProperty().addListener((a, b, c) -> table.refresh());
-        MTColor.DOWNLOAD_RUN.colorProperty().addListener((a, b, c) -> table.refresh());
-        MTColor.DOWNLOAD_FINISHED.colorProperty().addListener((a, b, c) -> table.refresh());
-        MTColor.DOWNLOAD_ERROR.colorProperty().addListener((a, b, c) -> table.refresh());
+        ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD.addListener((observableValue, s, t1) -> table.refresh());
+        ProgColorList.FILM_GEOBLOCK.colorProperty().addListener((a, b, c) -> table.refresh());
+        ProgColorList.DOWNLOAD_WAIT.colorProperty().addListener((a, b, c) -> table.refresh());
+        ProgColorList.DOWNLOAD_RUN.colorProperty().addListener((a, b, c) -> table.refresh());
+        ProgColorList.DOWNLOAD_FINISHED.colorProperty().addListener((a, b, c) -> table.refresh());
+        ProgColorList.DOWNLOAD_ERROR.colorProperty().addListener((a, b, c) -> table.refresh());
 
         final TableColumn<Download, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));
@@ -282,7 +282,7 @@ public class TableDownload {
                     btnFilmStart.setOnAction((ActionEvent event) -> {
                         Download download = getTableView().getItems().get(getIndex());
                         POpen.playStoredFilm(download.getDestPathFile(),
-                                ProgConfig.SYSTEM_PROG_PLAY_FILME.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
+                                ProgConfig.SYSTEM_PROG_PLAY_FILME, new ProgIcons().ICON_BUTTON_FILE_OPEN);
                     });
 
                     btnOpenDirectory = new Button();
@@ -291,7 +291,7 @@ public class TableDownload {
                     btnOpenDirectory.setOnAction((ActionEvent event) -> {
                         Download download = getTableView().getItems().get(getIndex());
                         POpen.openDir(download.getDestPath(),
-                                ProgConfig.SYSTEM_PROG_OPEN_DIR.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
+                                ProgConfig.SYSTEM_PROG_OPEN_DIR, new ProgIcons().ICON_BUTTON_FILE_OPEN);
                     });
 
                     if (small.get()) {
@@ -353,16 +353,16 @@ public class TableDownload {
                 currentRow.setStyle("");
                 break;
             case DownloadConstants.STATE_STARTED_WAITING:
-                currentRow.setStyle(MTColor.DOWNLOAD_WAIT.getCssBackgroundSel());
+                currentRow.setStyle(ProgColorList.DOWNLOAD_WAIT.getCssBackgroundSel());
                 break;
             case DownloadConstants.STATE_STARTED_RUN:
-                currentRow.setStyle(MTColor.DOWNLOAD_RUN.getCssBackgroundSel());
+                currentRow.setStyle(ProgColorList.DOWNLOAD_RUN.getCssBackgroundSel());
                 break;
             case DownloadConstants.STATE_FINISHED:
-                currentRow.setStyle(MTColor.DOWNLOAD_FINISHED.getCssBackgroundSel());
+                currentRow.setStyle(ProgColorList.DOWNLOAD_FINISHED.getCssBackgroundSel());
                 break;
             case DownloadConstants.STATE_ERROR:
-                currentRow.setStyle(MTColor.DOWNLOAD_ERROR.getCssBackgroundSel());
+                currentRow.setStyle(ProgColorList.DOWNLOAD_ERROR.getCssBackgroundSel());
                 break;
         }
     }
@@ -440,7 +440,7 @@ public class TableDownload {
                         if (geoMelden.get() && download.getGeoBlocked()) {
                             // geogeblockt
                             label.setStyle("");
-                            label.setStyle(MTColor.FILM_GEOBLOCK.getCssFontBold());
+                            label.setStyle(ProgColorList.FILM_GEOBLOCK.getCssFontBold());
                         }
                         setGraphic(label);
                     }

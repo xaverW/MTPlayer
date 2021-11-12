@@ -17,7 +17,7 @@
 
 package de.p2tools.mtplayer.tools.storedFilter;
 
-import de.p2tools.mtplayer.controller.data.MTColor;
+import de.p2tools.mtplayer.controller.config.ProgColorList;
 import javafx.application.Platform;
 import javafx.scene.control.TextField;
 
@@ -49,13 +49,13 @@ public class FilterCheckRegEx {
                 // aber falsch
                 colorRed = true;
                 tf.setStyle("");
-                tf.setStyle("-fx-control-inner-background: " + MTColor.FILTER_REGEX_ERROR.getColorToWeb() + ";");
+                tf.setStyle("-fx-control-inner-background: " + ProgColorList.FILTER_REGEX_ERROR.getColorLightToWeb() + ";");
 
             } else {
                 // RegEx OK
                 colorRed = false;
                 tf.setStyle("");
-                tf.setStyle("-fx-control-inner-background: " + MTColor.FILTER_REGEX.getColorToWeb() + ";");
+                tf.setStyle("-fx-control-inner-background: " + ProgColorList.FILTER_REGEX.getColorLightToWeb() + ";");
             }
 
             if (colorThread != null) {

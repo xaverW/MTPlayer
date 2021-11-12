@@ -55,12 +55,12 @@ public class AboGuiController extends AnchorPane {
     private final FilteredList<Abo> filteredAbos;
     private final SortedList<Abo> sortedAbos;
 
-    DoubleProperty splitPaneProperty = ProgConfig.ABO_GUI_DIVIDER.getDoubleProperty();
-    BooleanProperty boolInfoOn = ProgConfig.ABO_GUI_DIVIDER_ON.getBooleanProperty();
+    DoubleProperty splitPaneProperty = ProgConfig.ABO_GUI_DIVIDER;
+    BooleanProperty boolInfoOn = ProgConfig.ABO_GUI_DIVIDER_ON;
 
     public AboGuiController() {
         progData = ProgData.getInstance();
-        pClosePaneH = new PClosePaneH(ProgConfig.ABO_GUI_DIVIDER_ON.getBooleanProperty(), true);
+        pClosePaneH = new PClosePaneH(ProgConfig.ABO_GUI_DIVIDER_ON, true);
 
         AnchorPane.setLeftAnchor(splitPane, 0.0);
         AnchorPane.setBottomAnchor(splitPane, 0.0);
@@ -256,10 +256,10 @@ public class AboGuiController extends AnchorPane {
     }
 
     private void setFilterProperty() {
-        ProgConfig.FILTER_ABO_CHANNEL.getStringProperty().addListener((observable, oldValue, newValue) -> setFilter());
-        ProgConfig.FILTER_ABO_TYPE.getStringProperty().addListener((observable, oldValue, newValue) -> setFilter());
-        ProgConfig.FILTER_ABO_NAME.getStringProperty().addListener((observable, oldValue, newValue) -> setFilter());
-        ProgConfig.FILTER_ABO_DESCRIPTION.getStringProperty().addListener((observable, oldValue, newValue) -> setFilter());
+        ProgConfig.FILTER_ABO_CHANNEL.addListener((observable, oldValue, newValue) -> setFilter());
+        ProgConfig.FILTER_ABO_TYPE.addListener((observable, oldValue, newValue) -> setFilter());
+        ProgConfig.FILTER_ABO_NAME.addListener((observable, oldValue, newValue) -> setFilter());
+        ProgConfig.FILTER_ABO_DESCRIPTION.addListener((observable, oldValue, newValue) -> setFilter());
     }
 
     private void setFilter() {

@@ -34,7 +34,7 @@ public class MTNotification {
     }
 
     private static void add(String text, boolean error) {
-        if (!ProgConfig.DOWNLOAD_SHOW_NOTIFICATION.getBool()) {
+        if (!ProgConfig.DOWNLOAD_SHOW_NOTIFICATION.getValue()) {
             return;
         }
 

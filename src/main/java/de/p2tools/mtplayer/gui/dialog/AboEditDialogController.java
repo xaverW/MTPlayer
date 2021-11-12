@@ -16,9 +16,9 @@
 
 package de.p2tools.mtplayer.gui.dialog;
 
+import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.MTColor;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.data.abo.Abo;
@@ -87,7 +87,7 @@ public class AboEditDialogController extends PDialogExtra {
 
     public AboEditDialogController(ProgData progData, Abo abo) {
         //hier wird ein neues Abo angelegt!
-        super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE.getStringProperty(),
+        super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE,
                 "Abo anlegen", false, false);
 
         this.progData = progData;
@@ -102,7 +102,7 @@ public class AboEditDialogController extends PDialogExtra {
 
     public AboEditDialogController(ProgData progData, SelectedFilter selectedFilter, Abo abo) {
         //hier wird ein Abo an den Filter angepasst
-        super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE.getStringProperty(),
+        super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE,
                 "Abo anlegen", false, false);
 
         this.progData = progData;
@@ -137,7 +137,7 @@ public class AboEditDialogController extends PDialogExtra {
 
     public AboEditDialogController(ProgData progData, ObservableList<Abo> aboList) {
         //hier werden Abos geändert
-        super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE.getStringProperty(),
+        super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE,
                 "Abo ändern", false, false);
 
         this.progData = progData;
@@ -366,13 +366,13 @@ public class AboEditDialogController extends PDialogExtra {
                 setDefaultTxt(i, grid);
                 txt[i].textProperty().addListener((observable, oldValue, newValue) -> {
                     if (txt[i].getText().isEmpty()) {
-                        txt[i].setStyle(MTColor.DOWNLOAD_NAME_ERROR.getCssBackground());
+                        txt[i].setStyle(ProgColorList.DOWNLOAD_NAME_ERROR.getCssBackground());
                     } else {
                         txt[i].setStyle("");
                     }
                 });
                 if (txt[i].getText().isEmpty()) {
-                    txt[i].setStyle(MTColor.DOWNLOAD_NAME_ERROR.getCssBackground());
+                    txt[i].setStyle(ProgColorList.DOWNLOAD_NAME_ERROR.getCssBackground());
                 } else {
                     txt[i].setStyle("");
                 }

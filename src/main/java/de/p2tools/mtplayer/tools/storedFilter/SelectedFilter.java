@@ -23,8 +23,8 @@ import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
 import de.p2tools.p2Lib.tools.log.PDebugLog;
 import javafx.animation.PauseTransition;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.StringProperty;
 import javafx.util.Duration;
 
 import java.util.function.Predicate;
@@ -35,7 +35,7 @@ public final class SelectedFilter extends SelectedFilterProps {
     private final BooleanProperty blacklistChange = new SimpleBooleanProperty(false);
     private boolean reportChange = true;
     private final PauseTransition pause = new PauseTransition(Duration.millis(200));
-    StringProperty filterWaitTime = ProgConfig.SYSTEM_FILTER_WAIT_TIME.getStringProperty();
+    IntegerProperty filterWaitTime = ProgConfig.SYSTEM_FILTER_WAIT_TIME;
 
 
     public SelectedFilter() {
@@ -85,14 +85,14 @@ public final class SelectedFilter extends SelectedFilterProps {
     }
 
     public void initFilter() {
-        pause.setDuration(Duration.millis(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getInt()));
+        pause.setDuration(Duration.millis(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getValue()));
         filterWaitTime.addListener((observable, oldValue, newValue) -> {
-            PDebugLog.sysLog("SYSTEM_FILTER_WAIT_TIME.getStringProperty(): " + ProgConfig.SYSTEM_FILTER_WAIT_TIME.getInt());
-            pause.setDuration(Duration.millis(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getInt()));
+            PDebugLog.sysLog("SYSTEM_FILTER_WAIT_TIME: " + ProgConfig.SYSTEM_FILTER_WAIT_TIME.getValue());
+            pause.setDuration(Duration.millis(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getValue()));
         });
 
         clearFilter();
-        PDebugLog.sysLog("SYSTEM_FILTER_WAIT_TIME.getStringProperty(): " + ProgConfig.SYSTEM_FILTER_WAIT_TIME.getInt());
+        PDebugLog.sysLog("SYSTEM_FILTER_WAIT_TIME: " + ProgConfig.SYSTEM_FILTER_WAIT_TIME.getValue());
         setChannelVis(true);
         setThemeTitleVis(true);
 
@@ -309,7 +309,7 @@ public final class SelectedFilter extends SelectedFilterProps {
             ret = true;
             setUrl("");
         }
-        pause.setDuration(Duration.millis(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getInt()));
+        pause.setDuration(Duration.millis(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getValue()));
         return ret;
     }
 

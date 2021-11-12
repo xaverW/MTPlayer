@@ -16,9 +16,9 @@
 
 package de.p2tools.mtplayer.gui.mediaDialog;
 
-import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -51,7 +51,7 @@ public class MediaDialogController extends PDialogExtra {
     private final ProgData progData = ProgData.getInstance();
 
     public MediaDialogController(String searchStrOrg) {
-        super(ProgData.getInstance().primaryStage, ProgConfig.MEDIA_DIALOG_SIZE.getStringProperty(), "Mediensammlung",
+        super(ProgData.getInstance().primaryStage, ProgConfig.MEDIA_DIALOG_SIZE, "Mediensammlung",
                 true, false);
 
         this.searchStrOrg = searchStrOrg.trim();
@@ -68,6 +68,7 @@ public class MediaDialogController extends PDialogExtra {
         filter();
     }
 
+    @Override
     public void close() {
         rbMedien.selectedProperty().unbindBidirectional(propSearchMedia);
         paneAbo.close();

@@ -50,7 +50,7 @@ public class ConfigDialogController extends PDialogExtra {
     SetPaneController setPane;
 
     public ConfigDialogController() {
-        super(ProgData.getInstance().primaryStage, ProgConfig.CONFIG_DIALOG_SIZE.getStringProperty(), "Einstellungen",
+        super(ProgData.getInstance().primaryStage, ProgConfig.CONFIG_DIALOG_SIZE, "Einstellungen",
                 true, false, DECO.NONE);
 
         this.progData = ProgData.getInstance();
@@ -66,10 +66,11 @@ public class ConfigDialogController extends PDialogExtra {
         addOkButton(btnOk);
         btnOk.setOnAction(a -> close());
 
-        ProgConfig.SYSTEM_THEME_CHANGED.getStringProperty().addListener((u, o, n) -> updateCss());
+        ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> updateCss());
         initPanel();
     }
 
+    @Override
     public void close() {
         if (!geo.equals(ProgConfig.SYSTEM_GEO_HOME_PLACE.get())) {
             // dann hat sich der Geo-Standort geändert

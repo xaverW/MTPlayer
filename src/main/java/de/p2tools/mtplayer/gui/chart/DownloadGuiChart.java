@@ -30,9 +30,9 @@ import javafx.scene.layout.Priority;
 
 public class DownloadGuiChart extends AnchorPane {
 
-    private BooleanProperty separatChartProp = ProgConfig.DOWNLOAD_CHART_SEPARAT.getBooleanProperty();
-    private BooleanProperty chartOnlyExistingProp = ProgConfig.DOWNLOAD_CHART_ONLY_EXISTING.getBooleanProperty();
-    private BooleanProperty chartOnlyRunningProp = ProgConfig.DOWNLOAD_CHART_ONLY_RUNNING.getBooleanProperty();
+    private BooleanProperty separatChartProp = ProgConfig.DOWNLOAD_CHART_SEPARAT;
+    private BooleanProperty chartOnlyExistingProp = ProgConfig.DOWNLOAD_CHART_ONLY_EXISTING;
+    private BooleanProperty chartOnlyRunningProp = ProgConfig.DOWNLOAD_CHART_ONLY_RUNNING;
     private final ProgData progData;
 
     private LineChart<Number, Number> lineChart = null;
@@ -107,7 +107,7 @@ public class DownloadGuiChart extends AnchorPane {
         slMaxTime.setMinorTickCount(13);
         slMaxTime.setMajorTickUnit(140);
 
-        IntegerProperty ip = ProgConfig.DOWNLOAD_CHART_SHOW_MAX_TIME_MIN.getIntegerProperty();
+        IntegerProperty ip = ProgConfig.DOWNLOAD_CHART_SHOW_MAX_TIME_MIN;
         slMaxTime.valueProperty().bindBidirectional(ip);
         slMaxTime.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {

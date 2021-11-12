@@ -17,8 +17,8 @@
 
 package de.p2tools.mtplayer.gui.tools.table;
 
+import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.data.MTColor;
 import de.p2tools.mtplayer.controller.data.film.Film;
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.control.TableRow;
@@ -29,7 +29,7 @@ public class TableRowFilm<T> extends TableRow {
     private final BooleanProperty geoMelden;
 
     public TableRowFilm() {
-        geoMelden = ProgConfig.SYSTEM_MARK_GEO.getBooleanProperty();
+        geoMelden = ProgConfig.SYSTEM_MARK_GEO;
     }
 
     @Override
@@ -43,19 +43,19 @@ public class TableRowFilm<T> extends TableRow {
             if (film.isLive()) {
                 // livestream
                 for (int i = 0; i < getChildren().size(); i++) {
-                    getChildren().get(i).setStyle(MTColor.FILM_LIVESTREAM.getCssFontBold());
+                    getChildren().get(i).setStyle(ProgColorList.FILM_LIVESTREAM.getCssFontBold());
                 }
 
             } else if (geoMelden.get() && film.isGeoBlocked()) {
                 // geogeblockt
                 for (int i = 0; i < getChildren().size(); i++) {
-                    getChildren().get(i).setStyle(MTColor.FILM_GEOBLOCK.getCssFontBold());
+                    getChildren().get(i).setStyle(ProgColorList.FILM_GEOBLOCK.getCssFontBold());
                 }
 
             } else if (film.isNewFilm()) {
                 // neue Filme
                 for (int i = 0; i < getChildren().size(); i++) {
-                    getChildren().get(i).setStyle(MTColor.FILM_NEW.getCssFont());
+                    getChildren().get(i).setStyle(ProgColorList.FILM_NEW.getCssFont());
                 }
 
             } else {
@@ -65,10 +65,10 @@ public class TableRowFilm<T> extends TableRow {
             }
 
             if (film.isBookmark()) {
-                setStyle(MTColor.FILM_BOOKMARK.getCssBackgroundSel());
+                setStyle(ProgColorList.FILM_BOOKMARK.getCssBackgroundSel());
 
             } else if (film.isShown()) {
-                setStyle(MTColor.FILM_HISTORY.getCssBackgroundSel());
+                setStyle(ProgColorList.FILM_HISTORY.getCssBackgroundSel());
 
             } else {
                 setStyle("");

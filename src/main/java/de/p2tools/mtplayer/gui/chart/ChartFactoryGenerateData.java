@@ -32,8 +32,8 @@ public class ChartFactoryGenerateData {
 
     public static synchronized void setChartDataShowing(ChartData chartData) {
         //was ist noch sichtbar
-        final boolean chartOnlyRunning = ProgConfig.DOWNLOAD_CHART_ONLY_RUNNING.getBool();
-        final boolean chartOnlyExisting = ProgConfig.DOWNLOAD_CHART_ONLY_EXISTING.getBool();
+        final boolean chartOnlyRunning = ProgConfig.DOWNLOAD_CHART_ONLY_RUNNING.getValue();
+        final boolean chartOnlyExisting = ProgConfig.DOWNLOAD_CHART_ONLY_EXISTING.getValue();
 
         for (BandwidthData bandwidthData : chartData.getBandwidthDataList()) {
             if (bandwidthData.allValuesEmpty()) {

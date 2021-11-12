@@ -40,8 +40,8 @@ public class DownloadGuiPack {
 
     public DownloadGuiPack() {
         progData = ProgData.getInstance();
-        this.doubleProperty = ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER.getDoubleProperty();
-        this.boolDivOn = ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER_ON.getBooleanProperty();
+        this.doubleProperty = ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER;
+        this.boolDivOn = ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER_ON;
         downloadFilterController = new DownloadFilterController();
         guiController = new DownloadGuiController();
     }

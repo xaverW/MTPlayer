@@ -54,15 +54,15 @@ public class FilmInfoDialogController extends PDialogExtra {
     private final PToggleSwitch tglUrl = new PToggleSwitch("URL");
 
     private final PHyperlink pHyperlinkUrl = new PHyperlink("",
-            ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
+            ProgConfig.SYSTEM_PROG_OPEN_URL, new ProgIcons().ICON_BUTTON_FILE_OPEN);
 
     private final PHyperlink pHyperlinkWebsite = new PHyperlink("",
-            ProgConfig.SYSTEM_PROG_OPEN_URL.getStringProperty(), new ProgIcons().ICON_BUTTON_FILE_OPEN);
+            ProgConfig.SYSTEM_PROG_OPEN_URL, new ProgIcons().ICON_BUTTON_FILE_OPEN);
 
-    BooleanProperty urlProperty = ProgConfig.FILM_INFO_DIALOG_SHOW_URL.getBooleanProperty();
+    BooleanProperty urlProperty = ProgConfig.FILM_INFO_DIALOG_SHOW_URL;
 
     public FilmInfoDialogController() {
-        super(ProgData.getInstance().primaryStage, ProgConfig.SYSTEM_SIZE_DIALOG_FILMINFO.getStringProperty(),
+        super(ProgData.getInstance().primaryStage, ProgConfig.SYSTEM_SIZE_DIALOG_FILMINFO,
                 "Filminfos", false, false);
 
         init(false);
@@ -135,7 +135,7 @@ public class FilmInfoDialogController extends PDialogExtra {
 
     @Override
     public void make() {
-        ProgConfig.SYSTEM_THEME_CHANGED.getStringProperty().addListener((u, o, n) -> updateCss());
+        ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> updateCss());
         addOkButton(btnOk);
 
         getHboxLeft().getChildren().add(tglUrl);

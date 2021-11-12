@@ -108,15 +108,15 @@ public class ProgConst {
 
     public static final int MAX_DEST_PATH_IN_DIALOG_DOWNLOAD = 10;
 
-    public static final String GUI_FILME_FILTER_DIVIDER_LOCATION = "0.3";
-    public static final String GUI_DOWNLOAD_FILTER_DIVIDER_LOCATION = "0.3";
-    public static final String GUI_ABO_FILTER_DIVIDER_LOCATION = "0.3";
+    public static final double GUI_FILME_FILTER_DIVIDER_LOCATION = 0.3;
+    public static final double GUI_DOWNLOAD_FILTER_DIVIDER_LOCATION = 0.3;
+    public static final double GUI_ABO_FILTER_DIVIDER_LOCATION = 0.3;
 
-    public static final String GUI_FILME_DIVIDER_LOCATION = "0.7";
-    public static final String GUI_DOWNLOAD_DIVIDER_LOCATION = "0.7";
-    public static final String GUI_ABO_DIVIDER_LOCATION = "0.7";
+    public static final double GUI_FILME_DIVIDER_LOCATION = 0.7;
+    public static final double GUI_DOWNLOAD_DIVIDER_LOCATION = 0.7;
+    public static final double GUI_ABO_DIVIDER_LOCATION = 0.7;
 
-    public static final String CONFIG_DIALOG_SET_DIVIDER = "0.2";
+    public static final double CONFIG_DIALOG_SET_DIVIDER = 0.2;
 
     public static final int LAENGE_DATEINAME_MAX = 200; // Standardwert für die Länge des Zieldateinamens
     public static final int LAENGE_FELD_MAX = 100; // Standardwert für die Länge des Feldes des

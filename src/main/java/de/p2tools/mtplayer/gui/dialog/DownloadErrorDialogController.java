@@ -57,13 +57,13 @@ public class DownloadErrorDialogController extends PDialogExtra {
 
 
     private Timeline timeline = null;
-    private Integer timeSeconds = ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getInt();
+    private Integer timeSeconds = ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getValue();
 
     private final String message;
     private final Download download;
 
     public DownloadErrorDialogController(Download download, String message) {
-        super(ProgData.getInstance().primaryStage, ProgConfig.DOWNLOAD_DIALOG_ERROR_SIZE.getStringProperty(),
+        super(ProgData.getInstance().primaryStage, ProgConfig.DOWNLOAD_DIALOG_ERROR_SIZE,
                 "Fehler", true, false);
 
         this.download = download;

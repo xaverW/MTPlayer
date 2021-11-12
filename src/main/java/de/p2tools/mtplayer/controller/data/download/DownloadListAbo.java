@@ -96,7 +96,7 @@ public class DownloadListAbo {
         downloadList.forEach((download) -> syncDownloadsAlreadyInTheListHash.add(download.getUrl()));
 
         // prüfen ob in "alle Filme" oder nur "nach Blacklist" gesucht werden soll
-        final boolean checkWithBlackList = ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.getBool();
+        final boolean checkWithBlackList = ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.getValue();
 
         // und jetzt die Filmliste ablaufen
         progData.filmlist.parallelStream().forEach(film -> {

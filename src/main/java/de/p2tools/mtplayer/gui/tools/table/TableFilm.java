@@ -16,9 +16,9 @@
 
 package de.p2tools.mtplayer.gui.tools.table;
 
+import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.MTColor;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.data.film.Film;
 import de.p2tools.mtplayer.controller.data.film.FilmSize;
@@ -46,19 +46,19 @@ public class TableFilm {
 
     public TableFilm(ProgData progData) {
         this.progData = progData;
-//        geoMelden = ProgConfig.SYSTEM_MARK_GEO.getBooleanProperty();
-        small = ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM.getBooleanProperty();
+//        geoMelden = ProgConfig.SYSTEM_MARK_GEO;
+        small = ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM;
     }
 
     public TableColumn[] initFilmColumn(TableView table) {
         table.getColumns().clear();
 
-        ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM.getStringProperty().addListener((observableValue, s, t1) -> table.refresh());
+        ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM.addListener((observableValue, s, t1) -> table.refresh());
         // bei Farbänderung der Schriftfarbe klappt es damit besser: Table.refresh_table(table)
-        MTColor.FILM_LIVESTREAM.colorProperty().addListener((a, b, c) -> Table.refresh_table(table));
-        MTColor.FILM_GEOBLOCK.colorProperty().addListener((a, b, c) -> Table.refresh_table(table));
-        MTColor.FILM_NEW.colorProperty().addListener((a, b, c) -> Table.refresh_table(table));
-        MTColor.FILM_HISTORY.colorProperty().addListener((a, b, c) -> Table.refresh_table(table));
+        ProgColorList.FILM_LIVESTREAM.colorProperty().addListener((a, b, c) -> Table.refresh_table(table));
+        ProgColorList.FILM_GEOBLOCK.colorProperty().addListener((a, b, c) -> Table.refresh_table(table));
+        ProgColorList.FILM_NEW.colorProperty().addListener((a, b, c) -> Table.refresh_table(table));
+        ProgColorList.FILM_HISTORY.colorProperty().addListener((a, b, c) -> Table.refresh_table(table));
 
         final TableColumn<Film, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));

@@ -16,10 +16,10 @@
 
 package de.p2tools.mtplayer.gui.configDialog;
 
-import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2Lib.dialogs.accordion.PAccordionPane;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
@@ -50,18 +50,18 @@ public class BlackListPaneController extends PAccordionPane {
     private final PToggleSwitch tglFuture = new PToggleSwitch("Filme mit Datum in der Zukunft nicht anzeigen");
     private final PToggleSwitch tglGeo = new PToggleSwitch("Filme, die per Geoblocking gesperrt sind, nicht anzeigen");
 
-    IntegerProperty propSize = ProgConfig.SYSTEM_BLACKLIST_MIN_FILM_DURATION.getIntegerProperty();
-    IntegerProperty propDay = ProgConfig.SYSTEM_BLACKLIST_MAX_FILM_DAYS.getIntegerProperty();
-    BooleanProperty propGeo = ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_GEO.getBooleanProperty();
-    BooleanProperty propAbo = ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.getBooleanProperty();
-    BooleanProperty propFuture = ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_FUTURE.getBooleanProperty();
+    IntegerProperty propSize = ProgConfig.SYSTEM_BLACKLIST_MIN_FILM_DURATION;
+    IntegerProperty propDay = ProgConfig.SYSTEM_BLACKLIST_MAX_FILM_DAYS;
+    BooleanProperty propGeo = ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_GEO;
+    BooleanProperty propAbo = ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO;
+    BooleanProperty propFuture = ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_FUTURE;
     private final BooleanProperty blackChanged;
 
     private BlackPane blackPane;
     private final Stage stage;
 
     public BlackListPaneController(Stage stage, BooleanProperty blackChanged) {
-        super(stage, ProgConfig.CONFIG_DIALOG_ACCORDION.getBooleanProperty(), ProgConfig.SYSTEM_CONFIG_DIALOG_BLACKLIST);
+        super(stage, ProgConfig.CONFIG_DIALOG_ACCORDION, ProgConfig.SYSTEM_CONFIG_DIALOG_BLACKLIST);
         this.stage = stage;
         this.blackChanged = blackChanged;
         progData = ProgData.getInstance();
@@ -69,6 +69,7 @@ public class BlackListPaneController extends PAccordionPane {
         init();
     }
 
+    @Override
     public void close() {
         super.close();
         tglAbo.selectedProperty().unbindBidirectional(propAbo);
@@ -79,6 +80,7 @@ public class BlackListPaneController extends PAccordionPane {
         blackPane.close();
     }
 
+    @Override
     public Collection<TitledPane> createPanes() {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
         makeBlack(result);

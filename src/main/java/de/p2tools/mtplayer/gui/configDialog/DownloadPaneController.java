@@ -37,11 +37,11 @@ import java.util.Collection;
 
 public class DownloadPaneController extends PAccordionPane {
 
-    BooleanProperty propNotify = ProgConfig.DOWNLOAD_SHOW_NOTIFICATION.getBooleanProperty();
-    BooleanProperty propErr = ProgConfig.DOWNLOAD_ERROR_MSG.getBooleanProperty();
-    BooleanProperty propOne = ProgConfig.DOWNLOAD_MAX_ONE_PER_SERVER.getBooleanProperty();
-    BooleanProperty propSSL = ProgConfig.SYSTEM_SSL_ALWAYS_TRUE.getBooleanProperty();
-    BooleanProperty propBeep = ProgConfig.DOWNLOAD_BEEP.getBooleanProperty();
+    BooleanProperty propNotify = ProgConfig.DOWNLOAD_SHOW_NOTIFICATION;
+    BooleanProperty propErr = ProgConfig.DOWNLOAD_ERROR_MSG;
+    BooleanProperty propOne = ProgConfig.DOWNLOAD_MAX_ONE_PER_SERVER;
+    BooleanProperty propSSL = ProgConfig.SYSTEM_SSL_ALWAYS_TRUE;
+    BooleanProperty propBeep = ProgConfig.DOWNLOAD_BEEP;
 
     private final PToggleSwitch tglFinished = new PToggleSwitch("Benachrichtigung wenn abgeschlossen");
     private final PToggleSwitch tglError = new PToggleSwitch("bei Downloadfehler Fehlermeldung anzeigen");
@@ -54,13 +54,14 @@ public class DownloadPaneController extends PAccordionPane {
     private final Stage stage;
 
     public DownloadPaneController(Stage stage) {
-        super(stage, ProgConfig.CONFIG_DIALOG_ACCORDION.getBooleanProperty(), ProgConfig.SYSTEM_CONFIG_DIALOG_DOWNLOAD);
+        super(stage, ProgConfig.CONFIG_DIALOG_ACCORDION, ProgConfig.SYSTEM_CONFIG_DIALOG_DOWNLOAD);
         this.stage = stage;
         progData = ProgData.getInstance();
 
         init();
     }
 
+    @Override
     public void close() {
         super.close();
         replacePane.close();
@@ -71,6 +72,7 @@ public class DownloadPaneController extends PAccordionPane {
         tglBeep.selectedProperty().unbindBidirectional(propBeep);
     }
 
+    @Override
     public Collection<TitledPane> createPanes() {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
         makeDownload(result);

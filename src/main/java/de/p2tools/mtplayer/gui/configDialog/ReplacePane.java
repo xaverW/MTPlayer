@@ -44,8 +44,8 @@ public class ReplacePane {
 
     TableView<ReplaceData> tableView = new TableView<>();
 
-    BooleanProperty propAscii = ProgConfig.SYSTEM_ONLY_ASCII.getBooleanProperty();
-    BooleanProperty propReplace = ProgConfig.SYSTEM_USE_REPLACETABLE.getBooleanProperty();
+    BooleanProperty propAscii = ProgConfig.SYSTEM_ONLY_ASCII;
+    BooleanProperty propReplace = ProgConfig.SYSTEM_USE_REPLACETABLE;
     private final TextField txtFrom = new TextField();
     private final TextField txtTo = new TextField();
     private final GridPane gridPane = new GridPane();

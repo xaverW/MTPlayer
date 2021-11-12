@@ -257,7 +257,7 @@ public class DownloadInfos {
             byteLoadingDownloads = byteLoadingDownloadsAlreadyLoaded;
         }
 
-        final long resBandwidth = bandwidth > 0 ? bandwidth : ProgConfig.DOWNLOAD_BANDWIDTH_KBYTE.getLong();
+        final long resBandwidth = bandwidth > 0 ? bandwidth : ProgConfig.DOWNLOAD_BANDWIDTH_KBYTE.getValue();
         if (resBandwidth > 0) {
             // wartende Downloads
             if (byteWaitingDownloads <= 0) {
@@ -312,7 +312,7 @@ public class DownloadInfos {
     }
 
     private void progressMsg() {
-        if (!ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_PROGRESS.getBool()) {
+        if (!ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_PROGRESS.getValue()) {
             return;
         }
         final int progress = percent;

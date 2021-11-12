@@ -176,7 +176,7 @@ public final class Download extends DownloadProps {
     public void stopDownload() {
         if (isStateError()) {
             // damit fehlerhafte nicht wieder starten
-            getStart().setRestartCounter(ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getInt());
+            getStart().setRestartCounter(ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getValue());
         } else {
             setState(DownloadConstants.STATE_STOPPED);
             setProgress(DownloadConstants.PROGRESS_NOT_STARTED);

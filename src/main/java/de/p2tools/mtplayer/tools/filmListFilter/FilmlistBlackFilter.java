@@ -158,12 +158,12 @@ public class FilmlistBlackFilter {
                 if (countHits) {
                     blackData.incCountHits();
                 }
-                return ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST.getBool();
+                return ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST.getValue();
             }
 
         }
 
-        return !ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST.getBool();
+        return !ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST.getValue();
     }
 
 
@@ -172,20 +172,20 @@ public class FilmlistBlackFilter {
      */
     private static void loadCurrentFilterSettings() {
         try {
-            if (ProgConfig.SYSTEM_BLACKLIST_MAX_FILM_DAYS.getInt() == 0) {
+            if (ProgConfig.SYSTEM_BLACKLIST_MAX_FILM_DAYS.getValue() == 0) {
                 days = 0;
             } else {
-                final long max = 1000L * 60L * 60L * 24L * ProgConfig.SYSTEM_BLACKLIST_MAX_FILM_DAYS.getInt();
+                final long max = 1000L * 60L * 60L * 24L * ProgConfig.SYSTEM_BLACKLIST_MAX_FILM_DAYS.getValue();
                 days = System.currentTimeMillis() - max;
             }
         } catch (final Exception ex) {
             days = 0;
         }
 
-        filmLengthTarget_Minute = ProgConfig.SYSTEM_BLACKLIST_MIN_FILM_DURATION.getLong(); // Minuten
+        filmLengthTarget_Minute = ProgConfig.SYSTEM_BLACKLIST_MIN_FILM_DURATION.getValue(); // Minuten
 
-        doNotShowFutureFilms = Boolean.parseBoolean(ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_FUTURE.get());
-        doNotShowGeoBlockedFilms = Boolean.parseBoolean(ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_GEO.get());
+        doNotShowFutureFilms = ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_FUTURE.getValue();
+        doNotShowGeoBlockedFilms = ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_GEO.getValue();
     }
 
     /**

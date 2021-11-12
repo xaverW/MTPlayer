@@ -16,9 +16,9 @@
 
 package de.p2tools.mtplayer.gui.dialog;
 
+import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.MTColor;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.data.download.Download;
 import de.p2tools.mtplayer.controller.data.download.DownloadTools;
@@ -61,7 +61,7 @@ public class DownloadContinueDialogController extends PDialogExtra {
     private String oldPathFile;
 
     private Timeline timeline = null;
-    private Integer timeSeconds = ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS.getInt();
+    private Integer timeSeconds = ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS.getValue();
 
     public DownloadContinueDialogController(StringProperty conf, ProgData progData,
                                             Download download, boolean directDownload) {
@@ -212,7 +212,7 @@ public class DownloadContinueDialogController extends PDialogExtra {
             }
 
             if (!txtFileName.getText().equals(FileNameUtils.checkFileName(txtFileName.getText(), false /* pfad */))) {
-                txtFileName.setStyle(MTColor.DOWNLOAD_NAME_ERROR.getCssBackground());
+                txtFileName.setStyle(ProgColorList.DOWNLOAD_NAME_ERROR.getCssBackground());
             } else {
                 txtFileName.setStyle("");
             }

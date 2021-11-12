@@ -66,7 +66,7 @@ public class BlackPane {
     private final MenuButton mbChannel = new MenuButton("");
     private final ArrayList<CheckMenuItem> checkMenuItemsList = new ArrayList<>();
 
-    BooleanProperty propWhite = ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST.getBooleanProperty();
+    BooleanProperty propWhite = ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST;
     ListenerLoadFilmlist listener;
 
     private final BooleanProperty blackChanged;
@@ -108,7 +108,7 @@ public class BlackPane {
         rbBlack.setToggleGroup(group);
         rbWhite.setToggleGroup(group);
 
-        rbBlack.setSelected(!ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST.getBool());
+        rbBlack.setSelected(!ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST.getValue());
 
         int row = 0;
         gridPane.add(rbBlack, 0, row);

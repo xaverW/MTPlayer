@@ -101,6 +101,6 @@ public class ProgQuit {
         progData.downloadGuiController.saveTable();
         progData.aboGuiController.saveTable();
         // Hauptfenster
-        PGuiSize.getSizeScene(ProgConfig.SYSTEM_SIZE_GUI.getStringProperty(), ProgData.getInstance().primaryStage);
+        PGuiSize.getSizeScene(ProgConfig.SYSTEM_SIZE_GUI, ProgData.getInstance().primaryStage);
     }
 }

@@ -60,13 +60,13 @@ public class FilmGuiController extends AnchorPane {
     private final SortedList<Film> sortedList;
     private final KeyCombination STRG_A = new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_ANY);
 
-    DoubleProperty splitPaneProperty = ProgConfig.FILM_GUI_DIVIDER.getDoubleProperty();
-    BooleanProperty boolInfoOn = ProgConfig.FILM_GUI_DIVIDER_ON.getBooleanProperty();
+    DoubleProperty splitPaneProperty = ProgConfig.FILM_GUI_DIVIDER;
+    BooleanProperty boolInfoOn = ProgConfig.FILM_GUI_DIVIDER_ON;
 
     public FilmGuiController() {
         progData = ProgData.getInstance();
         sortedList = progData.filmlistFiltered.getSortedList();
-        pClosePaneH = new PClosePaneH(ProgConfig.FILM_GUI_DIVIDER_ON.getBooleanProperty(), true);
+        pClosePaneH = new PClosePaneH(ProgConfig.FILM_GUI_DIVIDER_ON, true);
 
         AnchorPane.setLeftAnchor(splitPane, 0.0);
         AnchorPane.setBottomAnchor(splitPane, 0.0);

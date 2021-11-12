@@ -20,7 +20,6 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
-import de.p2tools.mtplayer.controller.data.BlackData;
 import de.p2tools.mtplayer.controller.data.ProgramData;
 import de.p2tools.mtplayer.controller.data.ReplaceData;
 import de.p2tools.mtplayer.controller.data.SetData;
@@ -76,10 +75,10 @@ public class IoWriteXml implements AutoCloseable {
             writer.writeCharacters(P2LibConst.LINE_SEPARATOR);
             xmlWriteAbo();
 
-            writer.writeCharacters(P2LibConst.LINE_SEPARATORx2);
-            writer.writeComment("Blacklist");
-            writer.writeCharacters(P2LibConst.LINE_SEPARATOR);
-            xmlWriteBlackList();
+//            writer.writeCharacters(P2LibConst.LINE_SEPARATORx2);
+//            writer.writeComment("Blacklist");
+//            writer.writeCharacters(P2LibConst.LINE_SEPARATOR);
+//            xmlWriteBlackList();
 
             writer.writeCharacters(P2LibConst.LINE_SEPARATORx2);
             writer.writeComment("Filter-Film");
@@ -89,10 +88,10 @@ public class IoWriteXml implements AutoCloseable {
             writer.writeCharacters(P2LibConst.LINE_SEPARATORx2);
             writer.writeComment(ProgConfig.PARAMETER_INFO);
             writer.writeCharacters(P2LibConst.LINE_SEPARATORx2);
-            writer.writeComment("Programmeinstellungen");
-            writer.writeCharacters(P2LibConst.LINE_SEPARATOR);
-            xmlWriteConfig(ProgConfig.SYSTEM, ProgConfig.getAll());
-            writer.writeCharacters(P2LibConst.LINE_SEPARATOR);
+//            writer.writeComment("Programmeinstellungen");
+//            writer.writeCharacters(P2LibConst.LINE_SEPARATOR);
+//            xmlWriteConfig(ProgConfig.SYSTEM, ProgConfig.getAll());
+//            writer.writeCharacters(P2LibConst.LINE_SEPARATOR);
 
             writer.writeCharacters(P2LibConst.LINE_SEPARATORx2);
             writer.writeComment("Programmsets");
@@ -191,10 +190,10 @@ public class IoWriteXml implements AutoCloseable {
 
     private void xmlWriteBlackList() {
         // Blacklist schreiben
-        for (final BlackData blacklist : progData.blackList) {
-            blacklist.setXmlFromProps();
-            xmlWriteData(BlackData.TAG, BlackData.XML_NAMES, blacklist.arr, false);
-        }
+//        for (final BlackData blacklist : progData.blackList) {
+//            blacklist.setXmlFromProps();
+//            xmlWriteData(BlackData.TAG, BlackData.XML_NAMES, blacklist.arr, false);
+//        }
     }
 
     private void xmlWriteFilterFilm() throws XMLStreamException {

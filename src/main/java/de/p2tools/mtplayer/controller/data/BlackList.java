@@ -36,13 +36,14 @@ public class BlackList extends SimpleListProperty<BlackData> {
         this.progData = progData;
     }
 
+    @Override
     public synchronized boolean add(BlackData b) {
-        b.setNr(nr++);
+        b.setNo(nr++);
         return super.add(b);
     }
 
     public synchronized boolean addAndNotify(BlackData b) {
-        b.setNr(nr++);
+        b.setNo(nr++);
         final boolean ret = super.add(b);
         filterListAndNotifyListeners();
         return ret;
@@ -88,7 +89,7 @@ public class BlackList extends SimpleListProperty<BlackData> {
         // zum Schluss noch neu nummerieren 1, 2, ...
         int i = 0;
         for (BlackData blackData : this) {
-            blackData.setNr(++i);
+            blackData.setNo(++i);
         }
     }
 

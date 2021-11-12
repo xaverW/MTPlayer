@@ -38,7 +38,7 @@ public class LoadFactory {
      * @return
      */
     public static ArrayList<String> getSenderListNotToLoad() {
-        return new ArrayList(Arrays.asList(ProgConfig.SYSTEM_LOAD_NOT_SENDER.getStringProperty().getValue().split(",")));
+        return new ArrayList(Arrays.asList(ProgConfig.SYSTEM_LOAD_NOT_SENDER.getValue().split(",")));
     }
 
     /**

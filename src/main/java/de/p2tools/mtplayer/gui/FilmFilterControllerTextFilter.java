@@ -179,12 +179,12 @@ public class FilmFilterControllerTextFilter extends VBox {
             progData.storedFilters.getActFilterSettings().setTheme(cboTheme.valueProperty().getValue());
         });
         cboTheme.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!ProgConfig.SYSTEM_FILTER_RETURN.getBool()) {
+            if (!ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
                 progData.storedFilters.getActFilterSettings().setTheme(cboTheme.getEditor().getText());
             }
         });
         cboTheme.getEditor().setOnKeyPressed(event -> {
-            if (ProgConfig.SYSTEM_FILTER_RETURN.getBool() && event.getCode() == KeyCode.ENTER) {
+            if (ProgConfig.SYSTEM_FILTER_RETURN.getValue() && event.getCode() == KeyCode.ENTER) {
                 progData.storedFilters.getActFilterSettings().setTheme(cboTheme.getEditor().getText());
             }
         });
@@ -198,12 +198,12 @@ public class FilmFilterControllerTextFilter extends VBox {
         });
 
         txtThemeTitle.textProperty().addListener((u, o, n) -> {
-            if (!ProgConfig.SYSTEM_FILTER_RETURN.getBool()) {
+            if (!ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
                 progData.storedFilters.getActFilterSettings().setThemeTitle(txtThemeTitle.getText());
             }
         });
         txtThemeTitle.setOnKeyPressed(event -> {
-            if (ProgConfig.SYSTEM_FILTER_RETURN.getBool() && event.getCode() == KeyCode.ENTER) {
+            if (ProgConfig.SYSTEM_FILTER_RETURN.getValue() && event.getCode() == KeyCode.ENTER) {
                 progData.storedFilters.getActFilterSettings().setThemeTitle(txtThemeTitle.getText());
             }
         });
@@ -213,12 +213,12 @@ public class FilmFilterControllerTextFilter extends VBox {
         txtThemeTitle.setText(progData.storedFilters.getActFilterSettings().getThemeTitle());
 
         txtTitle.textProperty().addListener((u, o, n) -> {
-            if (!ProgConfig.SYSTEM_FILTER_RETURN.getBool()) {
+            if (!ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
                 progData.storedFilters.getActFilterSettings().setTitle(txtTitle.getText());
             }
         });
         txtTitle.setOnKeyPressed(event -> {
-            if (ProgConfig.SYSTEM_FILTER_RETURN.getBool() && event.getCode() == KeyCode.ENTER) {
+            if (ProgConfig.SYSTEM_FILTER_RETURN.getValue() && event.getCode() == KeyCode.ENTER) {
                 progData.storedFilters.getActFilterSettings().setTitle(txtTitle.getText());
             }
         });
@@ -228,12 +228,12 @@ public class FilmFilterControllerTextFilter extends VBox {
         txtTitle.setText(progData.storedFilters.getActFilterSettings().getTitle());
 
         txtSomewhere.textProperty().addListener((u, o, n) -> {
-            if (!ProgConfig.SYSTEM_FILTER_RETURN.getBool()) {
+            if (!ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
                 progData.storedFilters.getActFilterSettings().setSomewhere(txtSomewhere.getText());
             }
         });
         txtSomewhere.setOnKeyPressed(event -> {
-            if (ProgConfig.SYSTEM_FILTER_RETURN.getBool() && event.getCode() == KeyCode.ENTER) {
+            if (ProgConfig.SYSTEM_FILTER_RETURN.getValue() && event.getCode() == KeyCode.ENTER) {
                 progData.storedFilters.getActFilterSettings().setSomewhere(txtSomewhere.getText());
             }
         });
@@ -244,12 +244,12 @@ public class FilmFilterControllerTextFilter extends VBox {
         txtSomewhere.setText(progData.storedFilters.getActFilterSettings().getSomewhere());
 
         txtUrl.textProperty().addListener((u, o, n) -> {
-            if (!ProgConfig.SYSTEM_FILTER_RETURN.getBool()) {
+            if (!ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
                 progData.storedFilters.getActFilterSettings().setUrl(txtUrl.getText());
             }
         });
         txtUrl.setOnKeyPressed(event -> {
-            if (ProgConfig.SYSTEM_FILTER_RETURN.getBool() && event.getCode() == KeyCode.ENTER) {
+            if (ProgConfig.SYSTEM_FILTER_RETURN.getValue() && event.getCode() == KeyCode.ENTER) {
                 progData.storedFilters.getActFilterSettings().setUrl(txtUrl.getText());
             }
         });

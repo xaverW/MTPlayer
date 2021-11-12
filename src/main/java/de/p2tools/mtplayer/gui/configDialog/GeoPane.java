@@ -16,9 +16,9 @@
 
 package de.p2tools.mtplayer.gui.configDialog;
 
-import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.film.Film;
+import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
@@ -38,7 +38,7 @@ public class GeoPane {
     private final RadioButton rbSonst = new RadioButton("sonst");
 
     private final PToggleSwitch tglGeo = new PToggleSwitch("geblockte Sendungen gelb markieren:");
-    BooleanProperty geoProperty = ProgConfig.SYSTEM_MARK_GEO.getBooleanProperty();
+    BooleanProperty geoProperty = ProgConfig.SYSTEM_MARK_GEO;
 
     private final Stage stage;
 

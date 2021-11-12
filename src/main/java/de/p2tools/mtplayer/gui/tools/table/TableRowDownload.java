@@ -17,8 +17,8 @@
 
 package de.p2tools.mtplayer.gui.tools.table;
 
+import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.data.MTColor;
 import de.p2tools.mtplayer.controller.data.download.Download;
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.control.TableRow;
@@ -30,7 +30,7 @@ public class TableRowDownload<T> extends TableRow {
     private final BooleanProperty geoMelden;
 
     public TableRowDownload() {
-        geoMelden = ProgConfig.SYSTEM_MARK_GEO.getBooleanProperty();
+        geoMelden = ProgConfig.SYSTEM_MARK_GEO;
     }
 
     @Override
@@ -46,7 +46,7 @@ public class TableRowDownload<T> extends TableRow {
                 // geogeblockt
                 for (int i = 0; i < getChildren().size(); i++) {
                     getChildren().get(i).setStyle("");
-                    getChildren().get(i).setStyle(MTColor.FILM_GEOBLOCK.getCssFontBold());
+                    getChildren().get(i).setStyle(ProgColorList.FILM_GEOBLOCK.getCssFontBold());
                 }
 
             } else if (download.isStateError()) {

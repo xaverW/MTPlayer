@@ -16,11 +16,11 @@
 
 package de.p2tools.mtplayer.gui.configDialog;
 
-import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.filmlist.LoadFactory;
+import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import javafx.beans.property.IntegerProperty;
@@ -44,9 +44,9 @@ public class LoadFilmsPane {
     private final Stage stage;
     private final ProgData progData;
 
-    StringProperty propChannel = ProgConfig.SYSTEM_LOAD_NOT_SENDER.getStringProperty();
-    IntegerProperty propDay = ProgConfig.SYSTEM_LOAD_FILMLIST_MAX_DAYS.getIntegerProperty();
-    IntegerProperty propDuration = ProgConfig.SYSTEM_LOAD_FILMLIST_MIN_DURATION.getIntegerProperty();
+    StringProperty propChannel = ProgConfig.SYSTEM_LOAD_NOT_SENDER;
+    IntegerProperty propDay = ProgConfig.SYSTEM_LOAD_FILMLIST_MAX_DAYS;
+    IntegerProperty propDuration = ProgConfig.SYSTEM_LOAD_FILMLIST_MIN_DURATION;
 
     public LoadFilmsPane(Stage stage) {
         this.stage = stage;

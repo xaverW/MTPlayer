@@ -42,7 +42,7 @@ import java.util.Collection;
 
 public class ColorPane {
     private final Stage stage;
-    BooleanProperty propDarkTheme = ProgConfig.SYSTEM_DARK_THEME.getBooleanProperty();
+    BooleanProperty propDarkTheme = ProgConfig.SYSTEM_DARK_THEME;
     private final PToggleSwitch tglDarkTheme = new PToggleSwitch("Dunkles Erscheinungsbild der Programmoberfläche");
 
     public ColorPane(Stage stage) {

@@ -108,8 +108,8 @@ public class AboList extends SimpleListProperty<Abo> {
 
         searchTitle = DownloadTools.replaceEmptyFileName(searchTitle,
                 false /* nur ein Ordner */,
-                Boolean.parseBoolean(ProgConfig.SYSTEM_USE_REPLACETABLE.get()),
-                Boolean.parseBoolean(ProgConfig.SYSTEM_ONLY_ASCII.get()));
+                ProgConfig.SYSTEM_USE_REPLACETABLE.getValue(),
+                ProgConfig.SYSTEM_ONLY_ASCII.getValue());
 
         final Abo abo = new Abo(progData,
                 searchTitle /* name */,
@@ -152,8 +152,8 @@ public class AboList extends SimpleListProperty<Abo> {
         // abo anlegen, oder false wenns schon existiert
         int minDuration, maxDuration;
         try {
-            minDuration = ProgConfig.ABO_MINUTE_MIN_SIZE.getInt();
-            maxDuration = ProgConfig.ABO_MINUTE_MAX_SIZE.getInt();
+            minDuration = ProgConfig.ABO_MINUTE_MIN_SIZE.getValue();
+            maxDuration = ProgConfig.ABO_MINUTE_MAX_SIZE.getValue();
         } catch (final Exception ex) {
             minDuration = FilmFilter.FILTER_DURATION_MIN_MINUTE;
             maxDuration = FilmFilter.FILTER_DURATION_MAX_MINUTE;
@@ -163,8 +163,8 @@ public class AboList extends SimpleListProperty<Abo> {
 
         String namePath = DownloadTools.replaceEmptyFileName(aboName,
                 false /* nur ein Ordner */,
-                Boolean.parseBoolean(ProgConfig.SYSTEM_USE_REPLACETABLE.get()),
-                Boolean.parseBoolean(ProgConfig.SYSTEM_ONLY_ASCII.get()));
+                ProgConfig.SYSTEM_USE_REPLACETABLE.getValue(),
+                ProgConfig.SYSTEM_ONLY_ASCII.getValue());
 
         final Abo abo = new Abo(progData,
                 namePath /* name */,

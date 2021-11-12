@@ -46,8 +46,8 @@ public class DownloadFilterController extends FilterController {
     private Label lblBandwidth = new Label();
 
     // funktioniert nur wenn hier angelegt, geht sonst die Ref verloren!
-    IntegerProperty bandwidthValue = ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getIntegerProperty();
-    IntegerProperty anzValue = ProgConfig.DOWNLOAD_MAX_DOWNLOADS.getIntegerProperty();
+    IntegerProperty bandwidthValue = ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE;
+    IntegerProperty anzValue = ProgConfig.DOWNLOAD_MAX_DOWNLOADS;
     IntegerProperty integerProperty;
 
     private final VBox vBoxFilter;
@@ -122,9 +122,10 @@ public class DownloadFilterController extends FilterController {
                 DownloadConstants.SRC_COMBO_DOWNLOAD,
                 DownloadConstants.SRC_COMBO_ABO);
 
-        Bindings.bindBidirectional(cboSrc.valueProperty(), ProgConfig.FILTER_DOWNLOAD_SOURCE.getStringProperty(),
+        Bindings.bindBidirectional(cboSrc.valueProperty(), ProgConfig.FILTER_DOWNLOAD_SOURCE,
                 new StringConverter<String>() {
 
+                    @Override
                     public String fromString(String cb) {
                         switch (cb) {
                             case DownloadConstants.ALL:
@@ -138,6 +139,7 @@ public class DownloadFilterController extends FilterController {
                         }
                     }
 
+                    @Override
                     public String toString(String prop) {
                         switch (prop) {
                             case DownloadConstants.ALL:
@@ -156,9 +158,10 @@ public class DownloadFilterController extends FilterController {
                 DownloadConstants.TYPE_COMBO_DOWNLOAD,
                 DownloadConstants.TYPE_COMBO_PROGRAM);
 
-        Bindings.bindBidirectional(cboArt.valueProperty(), ProgConfig.FILTER_DOWNLOAD_TYPE.getStringProperty(),
+        Bindings.bindBidirectional(cboArt.valueProperty(), ProgConfig.FILTER_DOWNLOAD_TYPE,
                 new StringConverter<String>() {
 
+                    @Override
                     public String fromString(String cb) {
                         switch (cb) {
                             case DownloadConstants.ALL:
@@ -172,6 +175,7 @@ public class DownloadFilterController extends FilterController {
                         }
                     }
 
+                    @Override
                     public String toString(String prop) {
                         switch (prop) {
                             case DownloadConstants.ALL:
@@ -190,14 +194,14 @@ public class DownloadFilterController extends FilterController {
                 DownloadConstants.STATE_COMBO_NOT_STARTED,
                 DownloadConstants.STATE_COMBO_WAITING,
                 DownloadConstants.STATE_COMBO_LOADING);
-        cboState.valueProperty().bindBidirectional(ProgConfig.FILTER_DOWNLOAD_STATE.getStringProperty());
+        cboState.valueProperty().bindBidirectional(ProgConfig.FILTER_DOWNLOAD_STATE);
 
         cboChannel.setItems(progData.worker.getAllChannelList());
         cboChannel.setVisibleRowCount(25);
-        cboChannel.valueProperty().bindBidirectional(ProgConfig.FILTER_DOWNLOAD_CHANNEL.getStringProperty());
+        cboChannel.valueProperty().bindBidirectional(ProgConfig.FILTER_DOWNLOAD_CHANNEL);
 
         cboAbo.setItems(progData.worker.getAllAboNamesList()); // todo evtl. nur die vorhandenen Abos
-        cboAbo.valueProperty().bindBidirectional(ProgConfig.FILTER_DOWNLOAD_ABO.getStringProperty());
+        cboAbo.valueProperty().bindBidirectional(ProgConfig.FILTER_DOWNLOAD_ABO);
     }
 
     private void initNumberDownloads() {
@@ -242,7 +246,7 @@ public class DownloadFilterController extends FilterController {
     private void setTextBandwidth() {
         int bandwidthKByte;
         String ret;
-        bandwidthKByte = ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getInt();
+        bandwidthKByte = ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getValue();
         if (bandwidthKByte == MLBandwidthTokenBucket.BANDWIDTH_MAX_KBYTE) {
             ret = "alles";
         } else {

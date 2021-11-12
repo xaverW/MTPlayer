@@ -32,7 +32,7 @@ public class ImportNewFilmlistFromServer {
     private final ReadFilmlist readFilmlist;
     private final ProgData progData;
     private final int REDUCED_BANDWIDTH = 55;//ist ein Wert, der nicht eingestellt werden kann
-    private int savedBandwidth = ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getInt();
+    private int savedBandwidth = ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getValue();
 
     public ImportNewFilmlistFromServer(ProgData progData) {
         this.progData = progData;
@@ -42,10 +42,10 @@ public class ImportNewFilmlistFromServer {
             @Override
             public synchronized void start(ListenerFilmlistLoadEvent event) {
                 // save download bandwidth
-                if (ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getInt() == REDUCED_BANDWIDTH) {
+                if (ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getValue() == REDUCED_BANDWIDTH) {
                     PLog.sysLog("Bandbreite reduzieren: Ist schon reduziert!!!!");
                 } else {
-                    savedBandwidth = ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getInt();
+                    savedBandwidth = ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getValue();
                     PLog.sysLog("Bandbreite zurücksetzen für das Laden der Filmliste von: " + savedBandwidth + " auf " + REDUCED_BANDWIDTH);
                     Platform.runLater(() -> {
                         ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.setValue(REDUCED_BANDWIDTH);

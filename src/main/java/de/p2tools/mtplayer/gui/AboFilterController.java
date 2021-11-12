@@ -65,21 +65,21 @@ public class AboFilterController extends FilterController {
     }
 
     private void initFilter() {
-        txtName.textProperty().bindBidirectional(ProgConfig.FILTER_ABO_NAME.getStringProperty());
+        txtName.textProperty().bindBidirectional(ProgConfig.FILTER_ABO_NAME);
         FilterCheckRegEx fN = new FilterCheckRegEx(txtName);
         txtName.textProperty().addListener((observable, oldValue, newValue) -> fN.checkPattern());
 
-        txtDescription.textProperty().bindBidirectional(ProgConfig.FILTER_ABO_DESCRIPTION.getStringProperty());
+        txtDescription.textProperty().bindBidirectional(ProgConfig.FILTER_ABO_DESCRIPTION);
         FilterCheckRegEx fD = new FilterCheckRegEx(txtDescription);
         txtDescription.textProperty().addListener((observable, oldValue, newValue) -> fD.checkPattern());
 
         cboChannel.setItems(progData.worker.getChannelsForAbosList());
-        cboChannel.valueProperty().bindBidirectional(ProgConfig.FILTER_ABO_CHANNEL.getStringProperty());
+        cboChannel.valueProperty().bindBidirectional(ProgConfig.FILTER_ABO_CHANNEL);
 
         cboArt.getItems().addAll(AboConstants.ALL,
                 AboConstants.ABO_ON,
                 AboConstants.ABO_OFF);
-        cboArt.valueProperty().bindBidirectional(ProgConfig.FILTER_ABO_TYPE.getStringProperty());
+        cboArt.valueProperty().bindBidirectional(ProgConfig.FILTER_ABO_TYPE);
     }
 
     private void clearFilter() {

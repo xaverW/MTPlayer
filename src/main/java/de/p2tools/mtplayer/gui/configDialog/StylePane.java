@@ -44,7 +44,7 @@ public class StylePane {
     private final ProgData progData;
     boolean changed = false;
 
-    BooleanProperty styleProperty = ProgConfig.SYSTEM_STYLE.getBooleanProperty();
+    BooleanProperty styleProperty = ProgConfig.SYSTEM_STYLE;
 
     public StylePane(Stage stage, ProgData progData) {
         this.stage = stage;
@@ -107,7 +107,7 @@ public class StylePane {
 
     private void init() {
         spinnerAnz.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(6, 30, 1));
-        spinnerAnz.getValueFactory().setValue(ProgConfig.SYSTEM_STYLE_SIZE.getInt());
+        spinnerAnz.getValueFactory().setValue(ProgConfig.SYSTEM_STYLE_SIZE.getValue());
         spinnerAnz.valueProperty().addListener(new ChangeListener<Integer>() {
             @Override
             public void changed(ObservableValue<? extends Integer> observable, Integer oldValue, Integer newValue) {
