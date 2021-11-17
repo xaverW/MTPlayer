@@ -16,14 +16,17 @@
 
 package de.p2tools.mtplayer.controller.data;
 
-import de.p2tools.mtplayer.tools.Data;
 import de.p2tools.p2Lib.P2LibConst;
+import de.p2tools.p2Lib.configFile.config.Config;
+import de.p2tools.p2Lib.configFile.config.ConfigBoolPropExtra;
+import de.p2tools.p2Lib.configFile.config.ConfigStringPropExtra;
+import de.p2tools.p2Lib.configFile.pData.PDataSample;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class ProgramProps extends Data<ProgramProps> {
+public class ProgramProps extends PDataSample<ProgramData> {
 
     public static final int PROGRAM_NAME = 0;
     public static final int PROGRAM_DEST_FILENAME = 1;
@@ -51,6 +54,23 @@ public class ProgramProps extends Data<ProgramProps> {
     private StringProperty suffix = new SimpleStringProperty("");
     private BooleanProperty restart = new SimpleBooleanProperty(false);
     private BooleanProperty downManager = new SimpleBooleanProperty(false);
+
+    @Override
+    public String getTag() {
+        return TAG;
+    }
+
+    @Override
+    public Config[] getConfigsArr() {
+        return new Config[]{
+                new ConfigStringPropExtra("name", ProgramDataFieldNames.PROGRAM_NAME, name),
+                new ConfigStringPropExtra("progPath", ProgramDataFieldNames.PROGRAM_PROGRAM_PATH, progPath),
+                new ConfigStringPropExtra("progSwitch", ProgramDataFieldNames.PROGRAM_SWITCH, progSwitch),
+                new ConfigStringPropExtra("praefix", ProgramDataFieldNames.PROGRAM_PRAEFIX, praefix),
+                new ConfigStringPropExtra("suffix", ProgramDataFieldNames.PROGRAM_SWITCH, suffix),
+                new ConfigBoolPropExtra("restart", ProgramDataFieldNames.PROGRAM_RESTART, restart),
+        };
+    }
 
     public String getName() {
         return name.get();

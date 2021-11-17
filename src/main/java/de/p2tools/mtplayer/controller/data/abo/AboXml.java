@@ -16,76 +16,132 @@
 
 package de.p2tools.mtplayer.controller.data.abo;
 
-import de.p2tools.mtplayer.tools.Data;
+import de.p2tools.mtplayer.controller.config.ProgConst;
+import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
 
-public class AboXml extends Data<AboXml> {
+public class AboXml extends AboProps {
 
-    public static final int ABO_NR = 0;
-    public static final int ABO_ON = 1;
-    public static final int ABO_NAME = 2;
-    public static final int ABO_DESCRIPTION = 3;
-    public static final int ABO_RESOLUTION = 4;
-    public static final int ABO_CHANNEL = 5;
-    public static final int ABO_THEME = 6;
-    public static final int ABO_THEME_EXACT = 7;
-    public static final int ABO_THEME_TITLE = 8;
-    public static final int ABO_TITLE = 9;
-    public static final int ABO_SOMEWHERE = 10;
-    public static final int ABO_TIME_RANGE = 11;
-    public static final int ABO_MIN_DURATION = 12;
-    public static final int ABO_MAX_DURATION = 13;
-    public static final int ABO_START_TIME = 14;
-    public static final int ABO_DEST_PATH = 15;
-    public static final int ABO_DOWN_DATE = 16;
-    public static final int ABO_SET_DATA_ID = 17;
-
-    public static final String[] COLUMN_NAMES = {"Nr",
-            "aktiv",
-            "Name",
-            "Beschreibung",
-            "Auflösung",
-            "Sender",
-            "Thema",
-            "exakt",
-            "Thema-Titel",
-            "Titel",
-            "Irgendwo",
-            "Zeitraum",
-            "min. Dauer",
-            "max. Dauer",
-            "Startzeit",
-            "Zielpfad",
-            "letztes Abo",
-            "Programmset"};
-
-    public static final String[] XML_NAMES = {"Nr",
-            "aktiv",
-            "Name",
-            "Beschreibung",
-            "Aufloesung",
-            "Sender",
-            "Thema",
-            "Thema-exakt",
-            "Thema-Titel",
-            "Titel",
-            "Irgendwo",
-            "Zeitraum",
-            "Mindestdauer",
-            "Maxdauer",
-            "Startzeit",
-            "Zielpfad",
-            "letztes_Abo",
-            "Programmset"};
-
-    public static int MAX_ELEM = XML_NAMES.length;
-    public static final String TAG = "Abonnement";
+    public String[] arr;
 
     public AboXml() {
-        arr = makeArr(MAX_ELEM);
+        arr = makeArr(AboFieldNames.MAX_ELEM);
     }
 
-    @Override
-    public int compareTo(AboXml arg0) {
-        return sorter.compare(arr[ABO_NAME], arg0.arr[ABO_NAME]);
+    private String[] makeArr(int max) {
+        final String[] a = new String[max];
+        for (int i = 0; i < max; ++i) {
+            a[i] = "";
+        }
+        return a;
     }
+
+    public void setPropsFromXml() {
+        setActive(Boolean.parseBoolean(arr[AboFieldNames.ABO_ON_NO]));
+        setResolution(arr[AboFieldNames.ABO_RESOLUTION_NO]);
+        setName(arr[AboFieldNames.ABO_NAME_NO]);
+        setDescription(arr[AboFieldNames.ABO_DESCRIPTION_NO]);
+        setChannel(arr[AboFieldNames.ABO_CHANNEL_NO]);
+        setTheme(arr[AboFieldNames.ABO_THEME_NO]);
+        setThemeExact(arr[AboFieldNames.ABO_THEME_EXACT_NO].isEmpty() ? true : Boolean.parseBoolean(arr[AboFieldNames.ABO_THEME_EXACT_NO]));
+        setThemeTitle(arr[AboFieldNames.ABO_THEME_TITLE_NO]);
+        setTitle(arr[AboFieldNames.ABO_TITLE_NO]);
+        setSomewhere(arr[AboFieldNames.ABO_SOMEWHERE_NO]);
+
+        setTimeRangeFromXml();
+        setDurationMinFromXml();
+        setDurationMaxFromXml();
+        setStartTime(arr[AboFieldNames.ABO_START_TIME_NO]);
+
+        setAboSubDir(arr[AboFieldNames.ABO_DEST_PATH_NO]);
+        setDatum(arr[AboFieldNames.ABO_DOWN_DATE_NO], "");
+        setSetDataId(arr[AboFieldNames.ABO_SET_DATA_ID_NO]);
+    }
+
+    public void setXmlFromProps() {
+        arr[AboFieldNames.ABO_NO_NO] = getNo() + "";
+        arr[AboFieldNames.ABO_ON_NO] = String.valueOf(isActive());
+        arr[AboFieldNames.ABO_RESOLUTION_NO] = getResolution();
+        arr[AboFieldNames.ABO_NAME_NO] = getName();
+        arr[AboFieldNames.ABO_DESCRIPTION_NO] = getDescription();
+        arr[AboFieldNames.ABO_CHANNEL_NO] = getChannel();
+        arr[AboFieldNames.ABO_THEME_NO] = getTheme();
+        arr[AboFieldNames.ABO_THEME_EXACT_NO] = String.valueOf(isThemeExact());
+        arr[AboFieldNames.ABO_THEME_TITLE_NO] = getThemeTitle();
+        arr[AboFieldNames.ABO_TITLE_NO] = getTitle();
+        arr[AboFieldNames.ABO_SOMEWHERE_NO] = getSomewhere();
+
+        if (getTimeRange() == FilmFilter.FILTER_TIME_RANGE_ALL_VALUE) {
+            arr[AboFieldNames.ABO_TIME_RANGE_NO] = ProgConst.FILTER_ALL;
+        } else {
+            arr[AboFieldNames.ABO_TIME_RANGE_NO] = String.valueOf(getTimeRange());
+        }
+
+        if (getMinDurationMinute() == FilmFilter.FILTER_DURATION_MIN_MINUTE) {
+            arr[AboFieldNames.ABO_MIN_DURATION_NO] = ProgConst.FILTER_ALL;
+        } else {
+            arr[AboFieldNames.ABO_MIN_DURATION_NO] = String.valueOf(getMinDurationMinute());
+        }
+
+        if (getMaxDurationMinute() == FilmFilter.FILTER_DURATION_MAX_MINUTE) {
+            arr[AboFieldNames.ABO_MAX_DURATION_NO] = ProgConst.FILTER_ALL;
+        } else {
+            arr[AboFieldNames.ABO_MAX_DURATION_NO] = String.valueOf(getMaxDurationMinute());
+        }
+        arr[AboFieldNames.ABO_START_TIME_NO] = getStartTime();
+
+        arr[AboFieldNames.ABO_DEST_PATH_NO] = getAboSubDir();
+        arr[AboFieldNames.ABO_DOWN_DATE_NO] = getDate().toString();
+        arr[AboFieldNames.ABO_SET_DATA_ID_NO] = getSetData() == null ? "" : getSetData().getId();
+    }
+
+    private void setTimeRangeFromXml() {
+        int max;
+
+        if (arr[AboFieldNames.ABO_TIME_RANGE_NO].equals(ProgConst.FILTER_ALL)) {
+            max = FilmFilter.FILTER_TIME_RANGE_ALL_VALUE;
+            setTimeRange(max);
+            return;
+        }
+
+        try {
+            max = Integer.parseInt(arr[AboFieldNames.ABO_TIME_RANGE_NO]);
+        } catch (final Exception ex) {
+            max = FilmFilter.FILTER_TIME_RANGE_ALL_VALUE;
+        }
+
+        setTimeRange(max);
+    }
+
+    private void setDurationMinFromXml() {
+        int min;
+        if (arr[AboFieldNames.ABO_MIN_DURATION_NO].equals(ProgConst.FILTER_ALL)) {
+            min = FilmFilter.FILTER_DURATION_MIN_MINUTE;
+            setMinDurationMinute(min);
+            return;
+        }
+
+        try {
+            min = Integer.parseInt(arr[AboFieldNames.ABO_MIN_DURATION_NO]);
+        } catch (final Exception ex) {
+            min = FilmFilter.FILTER_DURATION_MIN_MINUTE;
+        }
+        setMinDurationMinute(min);
+    }
+
+    private void setDurationMaxFromXml() {
+        int max;
+        if (arr[AboFieldNames.ABO_MAX_DURATION_NO].equals(ProgConst.FILTER_ALL)) {
+            max = FilmFilter.FILTER_DURATION_MAX_MINUTE;
+            setMaxDurationMinute(max);
+            return;
+        }
+
+        try {
+            max = Integer.parseInt(arr[AboFieldNames.ABO_MAX_DURATION_NO]);
+        } catch (final Exception ex) {
+            max = FilmFilter.FILTER_DURATION_MAX_MINUTE;
+        }
+        setMaxDurationMinute(max);
+    }
+
 }

@@ -53,7 +53,7 @@ public class ProgInitFilter {
         sf.setOnlyNew(false);
         sf.setOnlyUt(false);
         sf.setOnlyLive(false);
-        sf.setOnlyAktHistory(false);
+        sf.setOnlyActHistory(false);
 
         sf.setNotVis(true);
         sf.setNotAbo(false);
@@ -93,7 +93,7 @@ public class ProgInitFilter {
         sf.setOnlyNew(true);
         sf.setOnlyUt(false);
         sf.setOnlyLive(false);
-        sf.setOnlyAktHistory(false);
+        sf.setOnlyActHistory(false);
 
         sf.setNotVis(true);
         sf.setNotAbo(false);
@@ -133,7 +133,7 @@ public class ProgInitFilter {
         sf.setOnlyNew(false);
         sf.setOnlyUt(false);
         sf.setOnlyLive(false);
-        sf.setOnlyAktHistory(false);
+        sf.setOnlyActHistory(false);
 
         sf.setNotVis(true);
         sf.setNotAbo(false);
@@ -175,7 +175,7 @@ public class ProgInitFilter {
         sf.setOnlyNew(false);
         sf.setOnlyUt(false);
         sf.setOnlyLive(false);
-        sf.setOnlyAktHistory(false);
+        sf.setOnlyActHistory(false);
 
         sf.setNotVis(true);
         sf.setNotAbo(false);
@@ -217,7 +217,7 @@ public class ProgInitFilter {
         sf.setOnlyNew(false);
         sf.setOnlyUt(false);
         sf.setOnlyLive(false);
-        sf.setOnlyAktHistory(false);
+        sf.setOnlyActHistory(false);
 
         sf.setNotVis(true);
         sf.setNotAbo(false);
@@ -259,7 +259,7 @@ public class ProgInitFilter {
         sf.setOnlyNew(false);
         sf.setOnlyUt(false);
         sf.setOnlyLive(false);
-        sf.setOnlyAktHistory(false);
+        sf.setOnlyActHistory(false);
 
         sf.setNotVis(true);
         sf.setNotAbo(false);
@@ -300,7 +300,7 @@ public class ProgInitFilter {
         sf.setOnlyNew(false);
         sf.setOnlyUt(false);
         sf.setOnlyLive(false);
-        sf.setOnlyAktHistory(false);
+        sf.setOnlyActHistory(false);
 
         sf.setNotVis(true);
         sf.setNotAbo(false);
@@ -341,7 +341,7 @@ public class ProgInitFilter {
         sf.setOnlyNew(false);
         sf.setOnlyUt(false);
         sf.setOnlyLive(true);
-        sf.setOnlyAktHistory(false);
+        sf.setOnlyActHistory(false);
 
         sf.setNotVis(true);
         sf.setNotAbo(false);
@@ -384,7 +384,7 @@ public class ProgInitFilter {
         sf.setOnlyNew(false);
         sf.setOnlyUt(false);
         sf.setOnlyLive(false);
-        sf.setOnlyAktHistory(false);
+        sf.setOnlyActHistory(false);
 
         sf.setNotVis(true);
         sf.setNotAbo(false);
@@ -427,7 +427,7 @@ public class ProgInitFilter {
         sf.setOnlyNew(true);
         sf.setOnlyUt(false);
         sf.setOnlyLive(false);
-        sf.setOnlyAktHistory(false);
+        sf.setOnlyActHistory(false);
 
         sf.setNotVis(true);
         sf.setNotAbo(false);

@@ -35,7 +35,7 @@ public class TableAbo {
         ProgColorList.ABO_SWITCHED_OFF.colorProperty().addListener((a, b, c) -> table.refresh());
 
         final TableColumn<Abo, Integer> nrColumn = new TableColumn<>("Nr");
-        nrColumn.setCellValueFactory(new PropertyValueFactory<>("nr"));
+        nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));
         nrColumn.getStyleClass().add("alignCenterRightPadding_10");
 
         final TableColumn<Abo, Boolean> activColumn = new TableColumn<>("Aktiv");

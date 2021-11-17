@@ -17,14 +17,21 @@
 package de.p2tools.mtplayer.tools.storedFilter;
 
 import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
+import de.p2tools.p2Lib.configFile.config.Config;
+import de.p2tools.p2Lib.configFile.config.ConfigBoolPropExtra;
+import de.p2tools.p2Lib.configFile.config.ConfigIntPropExtra;
+import de.p2tools.p2Lib.configFile.config.ConfigStringPropExtra;
+import de.p2tools.p2Lib.configFile.pData.PDataSample;
 import javafx.beans.property.*;
 
-public class SelectedFilterProps implements Comparable<SelectedFilter> {
+import java.util.ArrayList;
+
+public class SelectedFilterProps extends PDataSample<SelectedFilter> implements Comparable<SelectedFilter> {
+
+    public static String TAG = "SelectedFilter";
 
     private final StringProperty name = new SimpleStringProperty();
-
     private final BooleanProperty channelVis = new SimpleBooleanProperty(true);
-    //    private final BooleanProperty channelExact = new SimpleBooleanProperty(true);
     private final StringProperty channel = new SimpleStringProperty();
     private final BooleanProperty themeVis = new SimpleBooleanProperty(false);
     private final BooleanProperty themeExact = new SimpleBooleanProperty(false);
@@ -59,7 +66,7 @@ public class SelectedFilterProps implements Comparable<SelectedFilter> {
     private final BooleanProperty onlyNew = new SimpleBooleanProperty(false);
     private final BooleanProperty onlyUt = new SimpleBooleanProperty(false);
     private final BooleanProperty onlyLive = new SimpleBooleanProperty(false);
-    private final BooleanProperty onlyAktHistory = new SimpleBooleanProperty(false);
+    private final BooleanProperty onlyActHistory = new SimpleBooleanProperty(false);
 
     private final BooleanProperty notVis = new SimpleBooleanProperty(false);
     private final BooleanProperty notAbo = new SimpleBooleanProperty(false);
@@ -74,11 +81,70 @@ public class SelectedFilterProps implements Comparable<SelectedFilter> {
     public BooleanProperty[] sfBooleanPropArr = {channelVis, themeVis, themeExact, themeTitleVis,
             titleVis, somewhereVis, urlVis, timeRangeVis, minMaxDurVis,
             minMaxTimeVis, minMaxTimeInvert, showDateVis,
-            onlyVis, onlyBookmark, onlyHd, onlyNew, onlyUt, onlyLive, onlyAktHistory, notVis,
+            onlyVis, onlyBookmark, onlyHd, onlyNew, onlyUt, onlyLive, onlyActHistory, notVis,
             notAbo, notHistory, notDouble, notGeo, notFuture, blacklistOn, blacklistOnly};
 
     public StringProperty[] sfStringPropArr = {name, channel, theme, themeTitle, title, somewhere, url, showDate};
     public IntegerProperty[] sfIntegerPropArr = {timeRange, minDur, maxDur, minTime, maxTime};
+
+    @Override
+    public Config[] getConfigsArr() {
+        ArrayList<Config> list = new ArrayList<>();
+        list.add(new ConfigStringPropExtra("name", FilterToXml.SELECTED_FILTER_NAME, name));
+        list.add(new ConfigBoolPropExtra("channelVis", FilterToXml.SELECTED_FILTER_CHANNEL_VIS, channelVis));
+        list.add(new ConfigStringPropExtra("channel", FilterToXml.SELECTED_FILTER_CHANNEL, channel));
+        list.add(new ConfigBoolPropExtra("themeVis", FilterToXml.SELECTED_FILTER_THEMA_VIS, themeVis));
+        list.add(new ConfigBoolPropExtra("themeExact", FilterToXml.SELECTED_FILTER_THEMA_EXACT, themeExact));
+        list.add(new ConfigStringPropExtra("theme", FilterToXml.SELECTED_FILTER_THEMA, theme));
+        list.add(new ConfigBoolPropExtra("themeTitleVis", FilterToXml.SELECTED_FILTER_THEMA_TITLE_VIS, themeTitleVis));
+        list.add(new ConfigStringPropExtra("themeTitle", FilterToXml.SELECTED_FILTER_THEMA_TITLE, themeTitle));
+        list.add(new ConfigBoolPropExtra("titleVis", FilterToXml.SELECTED_FILTER_TITLE_VIS, titleVis));
+        list.add(new ConfigStringPropExtra("title", FilterToXml.SELECTED_FILTER_TITLE, title));
+        list.add(new ConfigBoolPropExtra("somewhereVis", FilterToXml.SELECTED_FILTER_SOMEWHERE_VIS, somewhereVis));
+        list.add(new ConfigStringPropExtra("somewhere", FilterToXml.SELECTED_FILTER_SOMEWHERE, somewhere));
+        list.add(new ConfigBoolPropExtra("urlVis", FilterToXml.SELECTED_FILTER_URL_VIS, urlVis));
+        list.add(new ConfigStringPropExtra("url", FilterToXml.SELECTED_FILTER_URL, url));
+
+        list.add(new ConfigBoolPropExtra("timeRangeVis", FilterToXml.SELECTED_FILTER_TIME_RANGE_VIS, timeRangeVis));
+        list.add(new ConfigIntPropExtra("timeRange", FilterToXml.SELECTED_FILTER_TIME_RANGE, timeRange));
+
+        list.add(new ConfigBoolPropExtra("minMaxDurVis", FilterToXml.SELECTED_FILTER_MIN_MAX_DUR_VIS, minMaxDurVis));
+        list.add(new ConfigIntPropExtra("minDur", FilterToXml.SELECTED_FILTER_MIN_DUR, minDur));
+        list.add(new ConfigIntPropExtra("maxDur", FilterToXml.SELECTED_FILTER_MAX_DUR, maxDur));
+
+        list.add(new ConfigBoolPropExtra("minMaxTimeVis", FilterToXml.SELECTED_FILTER_MIN_MAX_TIME_VIS, minMaxTimeVis));
+        list.add(new ConfigBoolPropExtra("minMaxTimeInvert", FilterToXml.SELECTED_FILTER_MIN_MAX_TIME_INVERT, minMaxTimeInvert));
+        list.add(new ConfigIntPropExtra("minTime", FilterToXml.SELECTED_FILTER_MIN_TIME, minTime));
+        list.add(new ConfigIntPropExtra("maxTime", FilterToXml.SELECTED_FILTER_MAX_TIME, maxTime));
+
+        list.add(new ConfigBoolPropExtra("showDateVis", FilterToXml.SELECTED_FILTER_SHOW_DATE_VIS, showDateVis));
+        list.add(new ConfigStringPropExtra("showDate", FilterToXml.SELECTED_FILTER_SHOW_DATE, showDate));
+
+        list.add(new ConfigBoolPropExtra("onlyVis", FilterToXml.SELECTED_FILTER_ONLY_VIS, onlyVis));
+        list.add(new ConfigBoolPropExtra("onlyBookmark", FilterToXml.SELECTED_FILTER_ONLY_BOOKMARK, onlyBookmark));
+        list.add(new ConfigBoolPropExtra("onlyHd", FilterToXml.SELECTED_FILTER_ONLY_HD, onlyHd));
+        list.add(new ConfigBoolPropExtra("onlyNew", FilterToXml.SELECTED_FILTER_ONLY_NEW, onlyNew));
+        list.add(new ConfigBoolPropExtra("onlyUt", FilterToXml.SELECTED_FILTER_ONLY_UT, onlyUt));
+        list.add(new ConfigBoolPropExtra("onlyLive", FilterToXml.SELECTED_FILTER_ONLY_LIVE, onlyLive));
+        list.add(new ConfigBoolPropExtra("onlyAktHistory", FilterToXml.SELECTED_FILTER_ONLY_ACT_HISTORY, onlyActHistory));
+
+        list.add(new ConfigBoolPropExtra("notVis", FilterToXml.SELECTED_FILTER_NOT_VIS, notVis));
+        list.add(new ConfigBoolPropExtra("notAbo", FilterToXml.SELECTED_FILTER_NOT_ABO, notAbo));
+        list.add(new ConfigBoolPropExtra("notHistory", FilterToXml.SELECTED_FILTER_NOT_HISTORY, notHistory));
+        list.add(new ConfigBoolPropExtra("notDouble", FilterToXml.SELECTED_FILTER_NOT_DOUBLE, notDouble));
+        list.add(new ConfigBoolPropExtra("notGeo", FilterToXml.SELECTED_FILTER_NOT_GEO, notGeo));
+        list.add(new ConfigBoolPropExtra("notFuture", FilterToXml.SELECTED_FILTER_NOT_FUTURE, notFuture));
+
+        list.add(new ConfigBoolPropExtra("blacklistOn", FilterToXml.SELECTED_FILTER_BLACKLIST_ON, blacklistOn));
+        list.add(new ConfigBoolPropExtra("blacklistOnly", FilterToXml.SELECTED_FILTER_BLACKLIST_ONLY, blacklistOnly));
+
+        return list.toArray(new Config[]{});
+    }
+
+    @Override
+    public String getTag() {
+        return TAG;
+    }
 
 
     public String getName() {
@@ -105,18 +171,6 @@ public class SelectedFilterProps implements Comparable<SelectedFilter> {
         this.channelVis.set(channelVis);
     }
 
-//    public boolean isChannelExact() {
-//        return channelExact.get();
-//    }
-
-//    public BooleanProperty channelExactProperty() {
-//        return channelExact;
-//    }
-//
-//    public void setChannelExact(boolean channelExact) {
-//        this.channelExact.set(channelExact);
-//    }
-
     public String getChannel() {
         return channel.get() == null ? "" : channel.get();
     }
@@ -127,7 +181,6 @@ public class SelectedFilterProps implements Comparable<SelectedFilter> {
 
     public void setChannel(String sender) {
         this.channel.set(sender);
-//        this.channelVis.set(true);
     }
 
     public boolean isThemeVis() {
@@ -469,16 +522,16 @@ public class SelectedFilterProps implements Comparable<SelectedFilter> {
         this.onlyLive.set(onlyLive);
     }
 
-    public boolean isOnlyAktHistory() {
-        return onlyAktHistory.get();
+    public boolean getOnlyActHistory() {
+        return onlyActHistory.get();
     }
 
-    public BooleanProperty onlyAktHistoryProperty() {
-        return onlyAktHistory;
+    public BooleanProperty onlyActHistoryProperty() {
+        return onlyActHistory;
     }
 
-    public void setOnlyAktHistory(boolean onlyAktHistory) {
-        this.onlyAktHistory.set(onlyAktHistory);
+    public void setOnlyActHistory(boolean onlyActHistory) {
+        this.onlyActHistory.set(onlyActHistory);
     }
 
     public boolean isNotVis() {

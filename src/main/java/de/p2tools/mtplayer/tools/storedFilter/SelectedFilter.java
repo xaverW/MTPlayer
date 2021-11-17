@@ -191,7 +191,7 @@ public final class SelectedFilter extends SelectedFilterProps {
         onlyNewProperty().addListener(l -> reportFilterChange());
         onlyUtProperty().addListener(l -> reportFilterChange());
         onlyLiveProperty().addListener(l -> reportFilterChange());
-        onlyAktHistoryProperty().addListener(l -> reportFilterChange());
+        onlyActHistoryProperty().addListener(l -> reportFilterChange());
 
         notVisProperty().addListener(l -> reportFilterChange());
         notAboProperty().addListener(l -> reportFilterChange());
@@ -242,7 +242,7 @@ public final class SelectedFilter extends SelectedFilterProps {
         setOnlyNew(false);
         setOnlyUt(false);
         setOnlyLive(false);
-        setOnlyAktHistory(false);
+        setOnlyActHistory(false);
 
         setNotAbo(false);
         setNotHistory(false);
@@ -355,7 +355,7 @@ public final class SelectedFilter extends SelectedFilterProps {
         final boolean onlyUt = selectedFilter.isOnlyVis() ? selectedFilter.isOnlyUt() : false;
         final boolean onlyLive = selectedFilter.isOnlyVis() ? selectedFilter.isOnlyLive() : false;
         final boolean onlyNew = selectedFilter.isOnlyVis() ? selectedFilter.isOnlyNew() : false;
-        final boolean onlyAktHist = selectedFilter.isOnlyVis() ? selectedFilter.isOnlyAktHistory() : false;
+        final boolean onlyAktHist = selectedFilter.isOnlyVis() ? selectedFilter.getOnlyActHistory() : false;
 
         final boolean noAbos = selectedFilter.isNotVis() ? selectedFilter.isNotAbo() : false;
         final boolean noShown = selectedFilter.isNotVis() ? selectedFilter.isNotHistory() : false;

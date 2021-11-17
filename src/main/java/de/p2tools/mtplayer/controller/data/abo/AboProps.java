@@ -16,18 +16,22 @@
 
 package de.p2tools.mtplayer.controller.data.abo;
 
-import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.data.film.Film;
 import de.p2tools.mtplayer.tools.Data;
 import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
+import de.p2tools.p2Lib.configFile.config.*;
+import de.p2tools.p2Lib.configFile.pData.PDataSample;
 import de.p2tools.p2Lib.tools.date.PDate;
 import de.p2tools.p2Lib.tools.date.PDateFactory;
 import javafx.beans.property.*;
 
-public class AboProps extends AboXml {
-    private final IntegerProperty nr = new SimpleIntegerProperty(0);
+import java.util.ArrayList;
+
+public class AboProps extends PDataSample<Abo> implements Comparable<Abo> {
+
+    private final IntegerProperty no = new SimpleIntegerProperty(0);
     private final BooleanProperty active = new SimpleBooleanProperty(true);
     private final StringProperty name = new SimpleStringProperty("");
     private final StringProperty description = new SimpleStringProperty("");
@@ -44,24 +48,56 @@ public class AboProps extends AboXml {
     private final StringProperty startTime = new SimpleStringProperty("");
     private final StringProperty aboSubDir = new SimpleStringProperty("");
     private final ObjectProperty<PDate> date = new SimpleObjectProperty<>(new PDate(0));
-    private final StringProperty setDataId = new SimpleStringProperty("");
+    private final StringProperty setDataId = new SimpleStringProperty("");//nur zum Speichern/Laden
 
     private final ObjectProperty<SetData> setData = new SimpleObjectProperty<>();
-
     private final IntegerProperty hit = new SimpleIntegerProperty(0);
     private int countHit = 0;
 
-    public final Property[] properties = {nr, active, name, description, resolution,
+    public final Property[] properties = {no, active, name, description, resolution,
             channel, theme, themeExact, themeTitle, title, somewhere,
             timeRange, minDurationMinute, maxDurationMinute, startTime, aboSubDir, date, setDataId};
+
 
     public String getStringOf(int i) {
         return String.valueOf(properties[i].getValue());
     }
 
-    public AboProps() {
-        super();
+
+    public static final String TAG = "Abo"; //ab jetzt wird "Abo" verwendet, alt war: "Abonnement"
+
+    @Override
+    public Config[] getConfigsArr() {
+        //das muss noch gesetzt werden!!
+        setSetDataId(setData.getValue() == null ? "" : setData.getValue().getId());
+
+        ArrayList<Config> list = new ArrayList<>();
+        list.add(new ConfigIntPropExtra("no", AboFieldNames.ABO_NO, no));
+        list.add(new ConfigBoolPropExtra("active", AboFieldNames.ABO_ACTIV, active));
+        list.add(new ConfigStringPropExtra("name", AboFieldNames.ABO_NAME, name));
+        list.add(new ConfigStringPropExtra("description", AboFieldNames.ABO_DESCRIPTION, description));
+        list.add(new ConfigStringPropExtra("resolution", AboFieldNames.ABO__RESOLUTION, resolution));
+        list.add(new ConfigStringPropExtra("channel", AboFieldNames.ABO_CHANNEL, channel));
+        list.add(new ConfigStringPropExtra("theme", AboFieldNames.ABO_THEME, theme));
+        list.add(new ConfigBoolPropExtra("themeExact", AboFieldNames.ABO_THEME_EXACT, themeExact));
+        list.add(new ConfigStringPropExtra("themeTitle", AboFieldNames.ABO_THEME_TITLE, themeTitle));
+        list.add(new ConfigStringPropExtra("title", AboFieldNames.ABO_TITLE, title));
+        list.add(new ConfigStringPropExtra("somewhere", AboFieldNames.ABO_SOMEWHERE, somewhere));
+        list.add(new ConfigIntPropExtra("timeRange", AboFieldNames.ABO_TIME_RANGE, timeRange));
+        list.add(new ConfigIntPropExtra("minDurationMinute", AboFieldNames.ABO_MIN_DURATION, minDurationMinute));
+        list.add(new ConfigIntPropExtra("maxDurationMinute", AboFieldNames.ABO_MAX_DURATION, maxDurationMinute));
+        list.add(new ConfigStringPropExtra("startTime", AboFieldNames.ABO_START_TIME, startTime));
+        list.add(new ConfigStringPropExtra("aboSubDir", AboFieldNames.ABO_SUB_DUR, aboSubDir));
+        list.add(new ConfigPDate("date", AboFieldNames.ABO_DATE, date.getValue()));
+        list.add(new ConfigStringPropExtra("setDataId", AboFieldNames.ABO_SET_DATA_ID, setDataId));
+        return list.toArray(new Config[]{});
     }
+
+    @Override
+    public String getTag() {
+        return TAG;
+    }
+
 
     public SetData getSetData(ProgData progData) {
         // wenn das Set noch nicht vorhanden ist, wird es vorher gesetzt
@@ -81,18 +117,24 @@ public class AboProps extends AboXml {
 
     public void setSetData(SetData setData) {
         this.setData.set(setData);
+
+        if (this.setData.getValue() == null) {
+            setSetDataId("");
+        } else {
+            setSetDataId(this.setData.getValue().getId());
+        }
     }
 
-    public int getNr() {
-        return nr.get();
+    public int getNo() {
+        return no.get();
     }
 
-    public IntegerProperty nrProperty() {
-        return nr;
+    public IntegerProperty noProperty() {
+        return no;
     }
 
-    public void setNr(int nr) {
-        this.nr.set(nr);
+    public void setNo(int no) {
+        this.no.set(no);
     }
 
     public boolean isActive() {
@@ -327,115 +369,6 @@ public class AboProps extends AboXml {
 
     public void setCountedHits() {
         this.setHit(countHit);
-    }
-
-    public void setPropsFromXml() {
-        setActive(Boolean.parseBoolean(arr[ABO_ON]));
-        setResolution(arr[ABO_RESOLUTION]);
-        setName(arr[ABO_NAME]);
-        setDescription(arr[ABO_DESCRIPTION]);
-        setChannel(arr[ABO_CHANNEL]);
-        setTheme(arr[ABO_THEME]);
-        setThemeExact(arr[ABO_THEME_EXACT].isEmpty() ? true : Boolean.parseBoolean(arr[ABO_THEME_EXACT]));
-        setThemeTitle(arr[ABO_THEME_TITLE]);
-        setTitle(arr[ABO_TITLE]);
-        setSomewhere(arr[ABO_SOMEWHERE]);
-
-        setTimeRangeFromXml();
-        setDurationMinFromXml();
-        setDurationMaxFromXml();
-        setStartTime(arr[ABO_START_TIME]);
-
-        setAboSubDir(arr[ABO_DEST_PATH]);
-        setDatum(arr[ABO_DOWN_DATE], "");
-        setSetDataId(arr[ABO_SET_DATA_ID]);
-    }
-
-    public void setXmlFromProps() {
-        arr[ABO_NR] = getNr() + "";
-        arr[ABO_ON] = String.valueOf(isActive());
-        arr[ABO_RESOLUTION] = getResolution();
-        arr[ABO_NAME] = getName();
-        arr[ABO_DESCRIPTION] = getDescription();
-        arr[ABO_CHANNEL] = getChannel();
-        arr[ABO_THEME] = getTheme();
-        arr[ABO_THEME_EXACT] = String.valueOf(isThemeExact());
-        arr[ABO_THEME_TITLE] = getThemeTitle();
-        arr[ABO_TITLE] = getTitle();
-        arr[ABO_SOMEWHERE] = getSomewhere();
-
-        if (getTimeRange() == FilmFilter.FILTER_TIME_RANGE_ALL_VALUE) {
-            arr[ABO_TIME_RANGE] = ProgConst.FILTER_ALL;
-        } else {
-            arr[ABO_TIME_RANGE] = String.valueOf(getTimeRange());
-        }
-
-        if (getMinDurationMinute() == FilmFilter.FILTER_DURATION_MIN_MINUTE) {
-            arr[ABO_MIN_DURATION] = ProgConst.FILTER_ALL;
-        } else {
-            arr[ABO_MIN_DURATION] = String.valueOf(getMinDurationMinute());
-        }
-
-        if (getMaxDurationMinute() == FilmFilter.FILTER_DURATION_MAX_MINUTE) {
-            arr[ABO_MAX_DURATION] = ProgConst.FILTER_ALL;
-        } else {
-            arr[ABO_MAX_DURATION] = String.valueOf(getMaxDurationMinute());
-        }
-        arr[ABO_START_TIME] = getStartTime();
-
-        arr[ABO_DEST_PATH] = getAboSubDir();
-        arr[ABO_DOWN_DATE] = getDate().toString();
-        arr[ABO_SET_DATA_ID] = getSetData() == null ? "" : getSetData().getId();
-    }
-
-    private void setTimeRangeFromXml() {
-        int max;
-
-        if (arr[ABO_TIME_RANGE].equals(ProgConst.FILTER_ALL)) {
-            max = FilmFilter.FILTER_TIME_RANGE_ALL_VALUE;
-            setTimeRange(max);
-            return;
-        }
-
-        try {
-            max = Integer.parseInt(arr[ABO_TIME_RANGE]);
-        } catch (final Exception ex) {
-            max = FilmFilter.FILTER_TIME_RANGE_ALL_VALUE;
-        }
-
-        setTimeRange(max);
-    }
-
-    private void setDurationMinFromXml() {
-        int min;
-        if (arr[ABO_MIN_DURATION].equals(ProgConst.FILTER_ALL)) {
-            min = FilmFilter.FILTER_DURATION_MIN_MINUTE;
-            setMinDurationMinute(min);
-            return;
-        }
-
-        try {
-            min = Integer.parseInt(arr[ABO_MIN_DURATION]);
-        } catch (final Exception ex) {
-            min = FilmFilter.FILTER_DURATION_MIN_MINUTE;
-        }
-        setMinDurationMinute(min);
-    }
-
-    private void setDurationMaxFromXml() {
-        int max;
-        if (arr[ABO_MAX_DURATION].equals(ProgConst.FILTER_ALL)) {
-            max = FilmFilter.FILTER_DURATION_MAX_MINUTE;
-            setMaxDurationMinute(max);
-            return;
-        }
-
-        try {
-            max = Integer.parseInt(arr[ABO_MAX_DURATION]);
-        } catch (final Exception ex) {
-            max = FilmFilter.FILTER_DURATION_MAX_MINUTE;
-        }
-        setMaxDurationMinute(max);
     }
 
 

@@ -23,9 +23,11 @@ public class ProgConst {
     public static final int MAX_USER_AGENT_SIZE = 100;
 
     // settings file
-    public static final String CONFIG_FILE = "mtplayer.xml";
+    public static final String CONFIG_FILE = "mtp.xml";
+    public static final String CONFIG_FILE_OLD = "mtplayer.xml";
     public static final String STYLE_FILE = "style.css";
-    public static final String CONFIG_FILE_COPY = "mtplayer.xml_copy_";
+    public static final String CONFIG_FILE_COPY = "mtp.xml_copy_";
+    public static final String CONFIG_FILE_COPY_OLD = "mtplayer.xml_copy_";
     public static final String CONFIG_DIRECTORY = "p2Mtplayer"; // im Homeverzeichnis
     public static final String XML_START = "Mediathek";
 

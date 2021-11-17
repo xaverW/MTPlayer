@@ -263,9 +263,9 @@ public class AboGuiController extends AnchorPane {
     }
 
     private void setFilter() {
-        final String sender = ProgConfig.FILTER_ABO_CHANNEL.get();
-        final String type = ProgConfig.FILTER_ABO_TYPE.get();
-        final String name = ProgConfig.FILTER_ABO_NAME.get().trim().toLowerCase();
+        final String sender = ProgConfig.FILTER_ABO_CHANNEL.getValueSafe();
+        final String type = ProgConfig.FILTER_ABO_TYPE.getValueSafe();
+        final String name = ProgConfig.FILTER_ABO_NAME.getValueSafe().trim().toLowerCase();
         final String description = ProgConfig.FILTER_ABO_DESCRIPTION.get().trim().toLowerCase();
 
         filteredAbos.setPredicate(abo ->

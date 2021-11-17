@@ -17,9 +17,11 @@
 package de.p2tools.mtplayer.controller.data;
 
 import de.p2tools.mtplayer.controller.data.film.Film;
-import de.p2tools.mtplayer.tools.Data;
+import de.p2tools.p2Lib.configFile.pData.PDataSample;
 
-public class SetDataXml extends Data<SetData> {
+public class SetDataXml extends PDataSample<SetData> {
+
+    public static final String TAG = "Programmset";
 
     //Tags Programmgruppen
     public static final int PROGRAMSET_ID = 0;
@@ -44,7 +46,6 @@ public class SetDataXml extends Data<SetData> {
     public static final int PROGRAMSET_INFODATEI = 19;
     public static final int PROGRAMSET_SUBTITLE = 20;
 
-    public static final String TAG = "Programmset";
     public static final int MAX_ELEM = 21;
 
     public static final String[] COLUMN_NAMES = {"Name", "Setname", "Präfix", "Suffix", "Farbe",

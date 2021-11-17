@@ -16,12 +16,12 @@
 
 package de.p2tools.mtplayer.controller.data.abo;
 
-import de.p2tools.mtplayer.controller.data.film.Film;
-import de.p2tools.mtplayer.tools.storedFilter.Filter;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.SetData;
+import de.p2tools.mtplayer.controller.data.film.Film;
+import de.p2tools.mtplayer.tools.storedFilter.Filter;
 
-public class Abo extends AboProps {
+public class Abo extends AboXml {
     public int nr;
 
     public Filter fChannel = new Filter();
@@ -113,20 +113,20 @@ public class Abo extends AboProps {
 
 
     public void copyToMe(Abo abo) {
-        for (int i = 0; i < AboXml.MAX_ELEM; ++i) {
+        for (int i = 0; i < AboFieldNames.MAX_ELEM; ++i) {
             this.properties[i].setValue(abo.properties[i].getValue());
         }
         this.setSetData(abo.getSetData());
-        this.setXmlFromProps();
+//        this.setXmlFromProps();
     }
 
     public Abo getCopy() {
         final Abo ret = new Abo();
-        for (int i = 0; i < AboXml.MAX_ELEM; ++i) {
+        for (int i = 0; i < AboFieldNames.MAX_ELEM; ++i) {
             ret.properties[i].setValue(this.properties[i].getValue());
         }
         ret.setSetData(getSetData());
-        ret.setXmlFromProps();
+//        ret.setXmlFromProps();
 
         return ret;
     }

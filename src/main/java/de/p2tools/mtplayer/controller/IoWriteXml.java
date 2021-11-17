@@ -24,7 +24,7 @@ import de.p2tools.mtplayer.controller.data.ProgramData;
 import de.p2tools.mtplayer.controller.data.ReplaceData;
 import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.data.abo.Abo;
-import de.p2tools.mtplayer.controller.data.abo.AboXml;
+import de.p2tools.mtplayer.controller.data.abo.AboFieldNames;
 import de.p2tools.mtplayer.controller.data.download.Download;
 import de.p2tools.mtplayer.controller.data.download.DownloadXml;
 import de.p2tools.mtplayer.controller.filmlist.filmlistUrls.FilmlistUrlData;
@@ -176,7 +176,7 @@ public class IoWriteXml implements AutoCloseable {
         // Abo schreiben
         for (final Abo abo : progData.aboList) {
             abo.setXmlFromProps();
-            xmlWriteData(AboXml.TAG, AboXml.XML_NAMES, abo.arr, false);
+            xmlWriteData("Abonnement", AboFieldNames.XML_NAMES, abo.arr, false);
         }
     }
 

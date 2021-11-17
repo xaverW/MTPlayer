@@ -90,7 +90,7 @@ public class BlackProps extends PDataSample<BlackProps> {
     public synchronized void incCountHits() {
         ++this.countHits;
     }
-    
+
     public int getNo() {
         return no;
     }
@@ -171,18 +171,18 @@ public class BlackProps extends PDataSample<BlackProps> {
 //        arr = super.makeArr(MAX_ELEM);
 //    }
 
-//    public void setPropsFromXml() {
-//        setChannel(arr[BLACKLIST_SENDER_NO]);
-//        setTheme(arr[BLACKLIST_THEME_NO]);
-//        setThemeExact(arr[BLACKLIST_THEME_EXACT_NO].isEmpty() ? true : Boolean.parseBoolean(arr[BLACKLIST_THEME_EXACT_NO]));
-//        setTitle(arr[BLACKLIST_TITLE_NO]);
-//        setThemeTitle(arr[BLACKLIST_THEME_TITLE_NO]);
-//        try {
-//            setCountHits(Integer.parseInt(arr[BLACKLIST_COUNT_HITS_NO]));
-//        } catch (Exception ex) {
-//            setCountHits(0);
-//        }
-//    }
+    public void setPropsFromXml() {
+        setChannel(arr[BLACKLIST_SENDER_NO]);
+        setTheme(arr[BLACKLIST_THEME_NO]);
+        setThemeExact(arr[BLACKLIST_THEME_EXACT_NO].isEmpty() ? true : Boolean.parseBoolean(arr[BLACKLIST_THEME_EXACT_NO]));
+        setTitle(arr[BLACKLIST_TITLE_NO]);
+        setThemeTitle(arr[BLACKLIST_THEME_TITLE_NO]);
+        try {
+            setCountHits(Integer.parseInt(arr[BLACKLIST_COUNT_HITS_NO]));
+        } catch (Exception ex) {
+            setCountHits(0);
+        }
+    }
 //
 //    public void setXmlFromProps() {
 //        arr[BLACKLIST_NO_NO] = getNo() + "";

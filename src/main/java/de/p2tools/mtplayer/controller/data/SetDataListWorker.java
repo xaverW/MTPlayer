@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.controller.data;
 
+import de.p2tools.p2Lib.configFile.pData.PDataList;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -24,8 +25,9 @@ import javafx.collections.FXCollections;
 import java.util.Collection;
 
 @SuppressWarnings("serial")
-public class SetDataListWorker extends SimpleListProperty<SetData> {
+public class SetDataListWorker extends SimpleListProperty<SetData> implements PDataList<SetData> {
     // Liste aller Programmsets
+    public static final String TAG = "SetDataList";
     public static final String PATTERN_PATH_DEST = "ZIELPFAD";
     public static final String PATTERN_PATH_VLC = "PFAD_VLC";
     public static final String PATTERN_PATH_FLV = "PFAD_FLVSTREAMER";
@@ -37,6 +39,28 @@ public class SetDataListWorker extends SimpleListProperty<SetData> {
 
     public SetDataListWorker() {
         super(FXCollections.observableArrayList());
+    }
+
+    @Override
+    public String getTag() {
+        return TAG;
+    }
+
+    @Override
+    public String getComment() {
+        return "Liste aller SetData";
+    }
+
+    @Override
+    public SetData getNewItem() {
+        return new SetData();
+    }
+
+    @Override
+    public void addNewItem(Object obj) {
+        if (obj.getClass().equals(SetData.class)) {
+            add((SetData) obj);
+        }
     }
 
     public boolean isListChanged() {

@@ -27,6 +27,7 @@ import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
 import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
+import de.p2tools.p2Lib.configFile.pData.PDataList;
 import de.p2tools.p2Lib.tools.GermanStringSorter;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import javafx.beans.property.BooleanProperty;
@@ -37,19 +38,41 @@ import javafx.collections.ObservableList;
 
 import java.util.*;
 
-public class AboList extends SimpleListProperty<Abo> {
+public class AboList extends SimpleListProperty<Abo> implements PDataList<Abo> {
     private final ProgData progData;
     //    private static final String[] LEER = {""};
+    public static final String TAG = "AboList";
+    private int nr;
     private static final GermanStringSorter sorter = GermanStringSorter.getInstance();
-
     private BooleanProperty listChanged = new SimpleBooleanProperty(true);
+
 
     public AboList(ProgData progData) {
         super(FXCollections.observableArrayList());
         this.progData = progData;
     }
 
-    private int nr;
+    @Override
+    public String getTag() {
+        return TAG;
+    }
+
+    @Override
+    public String getComment() {
+        return "Liste aller Abos";
+    }
+
+    @Override
+    public Abo getNewItem() {
+        return new Abo();
+    }
+
+    @Override
+    public void addNewItem(Object obj) {
+        if (obj.getClass().equals(Abo.class)) {
+            add((Abo) obj);
+        }
+    }
 
     public BooleanProperty listChangedProperty() {
         return listChanged;
@@ -63,7 +86,7 @@ public class AboList extends SimpleListProperty<Abo> {
         // die Änderung an der Liste wird nicht gemeldet!!
         // für das Lesen der Konfig-Datei beim Programmstart
         ++nr;
-        abo.setNr(nr);
+        abo.setNo(nr);
 
         if (abo.getName().isEmpty()) {
             // Downloads ohne "Aboname" sind manuelle Downloads
@@ -241,7 +264,7 @@ public class AboList extends SimpleListProperty<Abo> {
 
         nr = 0;
         for (Abo abo : this) {
-            abo.setNr(++nr);
+            abo.setNo(++nr);
         }
     }
 
@@ -372,14 +395,14 @@ public class AboList extends SimpleListProperty<Abo> {
         if (foundAbo != null) {
             if (!FilmFilter.checkLengthMin(foundAbo.getMinDurationMinute(), film.getDurationMinute())) {
                 // dann ist der Film zu kurz
-                film.arr[FilmXml.FILM_ABO_NAME] = foundAbo.arr[AboXml.ABO_NAME] + (" [zu kurz]");
+                film.arr[FilmXml.FILM_ABO_NAME] = foundAbo.arr[AboFieldNames.ABO_NAME_NO] + (" [zu kurz]");
                 film.setAbo(foundAbo);
             } else if (!FilmFilter.checkLengthMax(foundAbo.getMaxDurationMinute(), film.getDurationMinute())) {
                 // dann ist der Film zu lang
-                film.arr[FilmXml.FILM_ABO_NAME] = foundAbo.arr[AboXml.ABO_NAME] + (" [zu lang]");
+                film.arr[FilmXml.FILM_ABO_NAME] = foundAbo.arr[AboFieldNames.ABO_NAME_NO] + (" [zu lang]");
                 film.setAbo(foundAbo);
             } else {
-                film.arr[FilmXml.FILM_ABO_NAME] = foundAbo.arr[AboXml.ABO_NAME];
+                film.arr[FilmXml.FILM_ABO_NAME] = foundAbo.arr[AboFieldNames.ABO_NAME_NO];
                 film.setAbo(foundAbo);
             }
 

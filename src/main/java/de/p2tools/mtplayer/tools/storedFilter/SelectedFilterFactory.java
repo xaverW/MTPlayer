@@ -30,7 +30,6 @@ public class SelectedFilterFactory {
         sfTo.setName(sfFrom.getName());
 
         sfTo.setChannelVis(sfFrom.isChannelVis());
-//        sfTo.setChannelExact(sfFrom.isChannelExact());
         sfTo.setChannel(sfFrom.getChannel());
         sfTo.setThemeVis(sfFrom.isThemeVis());
         sfTo.setThemeExact(sfFrom.isThemeExact());
@@ -65,7 +64,7 @@ public class SelectedFilterFactory {
         sfTo.setOnlyNew(sfFrom.isOnlyNew());
         sfTo.setOnlyUt(sfFrom.isOnlyUt());
         sfTo.setOnlyLive(sfFrom.isOnlyLive());
-        sfTo.setOnlyAktHistory(sfFrom.isOnlyAktHistory());
+        sfTo.setOnlyActHistory(sfFrom.getOnlyActHistory());
 
         sfTo.setNotVis(sfFrom.isNotVis());
         sfTo.setNotAbo(sfFrom.isNotAbo());
@@ -109,7 +108,6 @@ public class SelectedFilterFactory {
 
         list.add("");
         list.add("isChannelVis " + sf.isChannelVis());
-//        list.add("isChannelExact " + sf.isChannelExact());
         list.add("getChannel " + sf.getChannel());
         list.add("isThemeVis " + sf.isThemeVis());
         list.add("isThemeExact " + sf.isThemeExact());
@@ -145,7 +143,7 @@ public class SelectedFilterFactory {
         list.add("isOnlyNew " + sf.isOnlyNew());
         list.add("isOnlyUt " + sf.isOnlyUt());
         list.add("isOnlyLive " + sf.isOnlyLive());
-        list.add("isOnlyAktHistory " + sf.isOnlyAktHistory());
+        list.add("isOnlyAktHistory " + sf.getOnlyActHistory());
 
         list.add("");
         list.add("isNotVis " + sf.isNotVis());

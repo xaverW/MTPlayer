@@ -461,11 +461,11 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private void setFilter() {
-        final String sender = ProgConfig.FILTER_DOWNLOAD_CHANNEL.get();
-        final String abo = ProgConfig.FILTER_DOWNLOAD_ABO.get();
-        final String source = ProgConfig.FILTER_DOWNLOAD_SOURCE.get();
-        final String type = ProgConfig.FILTER_DOWNLOAD_TYPE.get();
-        final String state = ProgConfig.FILTER_DOWNLOAD_STATE.get();
+        final String sender = ProgConfig.FILTER_DOWNLOAD_CHANNEL.getValueSafe();
+        final String abo = ProgConfig.FILTER_DOWNLOAD_ABO.getValueSafe();
+        final String source = ProgConfig.FILTER_DOWNLOAD_SOURCE.getValueSafe();
+        final String type = ProgConfig.FILTER_DOWNLOAD_TYPE.getValueSafe();
+        final String state = ProgConfig.FILTER_DOWNLOAD_STATE.getValueSafe();
 
         filteredDownloads.setPredicate(download -> !download.getPlacedBack() &&
 

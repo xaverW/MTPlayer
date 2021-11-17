@@ -22,8 +22,6 @@ import de.p2tools.p2Lib.tools.PIndex;
 
 public class SetData extends SetDataProps {
 
-    private final ProgramList programList = new ProgramList();
-
     public SetData() {
         setId(PIndex.getIndexStr());
     }

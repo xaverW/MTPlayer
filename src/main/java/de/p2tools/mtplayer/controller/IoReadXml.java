@@ -18,12 +18,15 @@
 package de.p2tools.mtplayer.controller;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.config.ProgInfos;
+import de.p2tools.mtplayer.controller.data.BlackData;
 import de.p2tools.mtplayer.controller.data.ProgramData;
 import de.p2tools.mtplayer.controller.data.ReplaceData;
 import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.data.abo.Abo;
-import de.p2tools.mtplayer.controller.data.abo.AboXml;
+import de.p2tools.mtplayer.controller.data.abo.AboFieldNames;
 import de.p2tools.mtplayer.controller.data.download.Download;
 import de.p2tools.mtplayer.controller.data.download.DownloadXml;
 import de.p2tools.mtplayer.controller.filmlist.filmlistUrls.FilmlistUrlData;
@@ -32,6 +35,8 @@ import de.p2tools.mtplayer.tools.storedFilter.FilterToXml;
 import de.p2tools.mtplayer.tools.storedFilter.ProgInitFilter;
 import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
 import de.p2tools.mtplayer.tools.storedFilter.SelectedFilterFactory;
+import de.p2tools.p2Lib.configFile.ConfigFile;
+import de.p2tools.p2Lib.configFile.ReadConfigFile;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 
@@ -61,6 +66,18 @@ public class IoReadXml implements AutoCloseable {
         initAfterLoad();
 
         return ret;
+    }
+
+    private static boolean loadProgConfig() {
+        final Path path = ProgInfos.getSettingsFile();
+        PLog.sysLog("Programmstart und ProgConfig laden von: " + path);
+
+        ConfigFile configFile = new ConfigFile(ProgConst.XML_START, path);
+        ProgConfig.addConfigData(configFile);
+        ReadConfigFile readConfigFile = new ReadConfigFile();
+        readConfigFile.addConfigFile(configFile);
+
+        return readConfigFile.readConfigFile();
     }
 
     private boolean readConfig(Path xmlFilePath) {
@@ -108,10 +125,10 @@ public class IoReadXml implements AutoCloseable {
                                     this.progData.replaceList.add(replaceData);
                                 }
                                 break;
-                            case AboXml.TAG:
+                            case "Abonnement":
                                 // Abo
                                 final Abo abo = new Abo();
-                                if (get(parser, AboXml.TAG, AboXml.XML_NAMES, abo.arr)) {
+                                if (get(parser, "Abonnement", AboFieldNames.XML_NAMES, abo.arr)) {
                                     abo.setPropsFromXml();
                                     this.progData.aboList.addAbo(abo);
                                 }
@@ -125,14 +142,14 @@ public class IoReadXml implements AutoCloseable {
                                     this.progData.downloadList.add(d);
                                 }
                                 break;
-//                            case BlackData.TAG:
-//                                // Blacklist
-//                                final BlackData blackData = new BlackData();
-//                                if (get(parser, BlackData.TAG, BlackData.XML_NAMES, blackData.arr)) {
-//                                    blackData.setPropsFromXml();
-//                                    this.progData.blackList.add(blackData);
-//                                }
-//                                break;
+                            case BlackData.TAG:
+                                // Blacklist
+                                final BlackData blackData = new BlackData();
+                                if (get(parser, BlackData.TAG, BlackData.XML_NAMES, blackData.arr)) {
+                                    blackData.setPropsFromXml();
+                                    this.progData.blackList.add(blackData);
+                                }
+                                break;
                             case MediaCollectionData.TAG:
                                 //
                                 final MediaCollectionData mp = new MediaCollectionData();

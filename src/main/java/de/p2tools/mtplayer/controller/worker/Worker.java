@@ -43,7 +43,7 @@ public class Worker {
     final SelectedFilter sfTemp = new SelectedFilter();
     String downloadFilterChannel = ProgConfig.FILTER_DOWNLOAD_CHANNEL.get();
     String downloadFilterAbo = ProgConfig.FILTER_DOWNLOAD_ABO.get();
-    String aboFilterChannel = ProgConfig.FILTER_ABO_CHANNEL.get();
+    String aboFilterChannel = ProgConfig.FILTER_ABO_CHANNEL.getValueSafe();
 
     private final ProgData progData;
 
@@ -104,9 +104,9 @@ public class Worker {
 
     private void saveFilter() {
         SelectedFilterFactory.copyFilter(progData.storedFilters.getActFilterSettings(), sfTemp);
-        downloadFilterChannel = ProgConfig.FILTER_DOWNLOAD_CHANNEL.get();
-        downloadFilterAbo = ProgConfig.FILTER_DOWNLOAD_ABO.get();
-        aboFilterChannel = ProgConfig.FILTER_ABO_CHANNEL.get();
+        downloadFilterChannel = ProgConfig.FILTER_DOWNLOAD_CHANNEL.getValueSafe();
+        downloadFilterAbo = ProgConfig.FILTER_DOWNLOAD_ABO.getValueSafe();
+        aboFilterChannel = ProgConfig.FILTER_ABO_CHANNEL.getValueSafe();
     }
 
     private void resetFilter() {

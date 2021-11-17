@@ -21,6 +21,8 @@ import de.p2tools.mtplayer.controller.data.film.Film;
 import de.p2tools.mtplayer.gui.tools.SetsPrograms;
 import de.p2tools.mtplayer.tools.MLBandwidthTokenBucket;
 import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
+import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
+import de.p2tools.mtplayer.tools.storedFilter.StoredFilters;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.configFile.ConfigFile;
 import de.p2tools.p2Lib.configFile.config.Config;
@@ -67,10 +69,9 @@ public class ProgConfig extends PDataProgConfig {
 
 
     // Configs der Programmversion, nur damit sie (zur Update-Suche) im Config-File stehen
-    public static StringProperty SYSTEM_PROG_VERSION = addStr("system-prog-version");
-    public static StringProperty SYSTEM_PROG_BUILD_NO = addStr("system-prog-build-no");
-    public static StringProperty SYSTEM_PROG_BUILD_DATE = addStr("system-prog-build-date");//z.B.: 27.07.2
-
+    public static StringProperty SYSTEM_PROG_VERSION = addStr("system-prog-version", ProgramTools.getProgVersion());
+    public static StringProperty SYSTEM_PROG_BUILD_NO = addStr("system-prog-build-no", ProgramTools.getBuild());
+    public static StringProperty SYSTEM_PROG_BUILD_DATE = addStr("system-prog-build-date", ProgramTools.getCompileDate());//z.B.: 27.07.2
 
     // Configs zum Aktualisieren beim Programmupdate
     public static BooleanProperty SYSTEM_AFTER_UPDATE_FILTER = addBool("system-after-update-filter", Boolean.FALSE);
@@ -377,20 +378,65 @@ public class ProgConfig extends PDataProgConfig {
 
     public static void addConfigData(ConfigFile configFile) {
         // Configs der Programmversion, nur damit sie (zur Update-Suche) im Config-File stehen
-        ProgConfig.SYSTEM_PROG_VERSION.set(ProgramTools.getProgVersion());
-        ProgConfig.SYSTEM_PROG_BUILD_NO.set(ProgramTools.getBuild());
-        ProgConfig.SYSTEM_PROG_BUILD_DATE.set(ProgramTools.getCompileDate());
+//        ProgConfig.SYSTEM_PROG_VERSION.set(ProgramTools.getProgVersion());
+//        ProgConfig.SYSTEM_PROG_BUILD_NO.set(ProgramTools.getBuild());
+//        ProgConfig.SYSTEM_PROG_BUILD_DATE.set(ProgramTools.getCompileDate());
+        ProgData progData = ProgData.getInstance();
 
         configFile.addConfigs(ProgConfig.getInstance());
         configFile.addConfigs(ProgColorList.getConfigsData());
-//        configFile.addConfigs(ProgData.getInstance().blackList);
-//        configFile.addConfigs(ProgData.getInstance().favouriteList);
-//        configFile.addConfigs(ProgData.getInstance().lastPlayedList);
-//        configFile.addConfigs(ProgData.getInstance().storedFilters.getActFilterSettings());
-//        configFile.addConfigs(ProgData.getInstance().storedFilters.getStoredFilterList());
-//        configFile.addConfigs(ProgData.getInstance().blackDataList);
-//        configFile.addConfigs(ProgData.getInstance().favouriteFilter);
-//        configFile.addConfigs(ProgData.getInstance().lastPlayedFilter);
+        configFile.addConfigs(progData.setDataList);
+
+
+        // Filter schreiben, aktuellen
+        final SelectedFilter akt_sf = progData.storedFilters.getActFilterSettings();
+        // nur zur Info im Config-File
+        akt_sf.setName(StoredFilters.SELECTED_FILTER_NAME);
+        configFile.addConfigs(progData.storedFilters.getActFilterSettings());
+        // Liste der Filterprofile
+        configFile.addConfigs(progData.storedFilters.getStoredFilterList());
+//        progData.storedFilters.getStoredFilterList().stream().forEach((sf) -> {
+//            configFile.addConfigs(sf);
+//        });
+
+
+        configFile.addConfigs(progData.aboList);
+
+
+        //        configFile.addConfigs(progData.blackList);
+
+
+//        progData.replaceList.stream().forEach(replaceData -> {
+//            replaceData.setXmlFromProps();
+//            configFile.addConfigs(replaceData);
+//        });
+
+//        for (final Download download : progData.downloadList) {
+//            if (download.isStateStoped()) {
+//                // unterbrochene werden gespeichert, dass die Info "Interrupt" erhalten bleibt
+//                download.setXmlFromProps();
+//                configFile.addConfigs(download);
+//            } else if (!download.isAbo() && !download.isStateFinished()) {
+//                // Download, (Abo müssen neu angelegt werden)
+//                download.setXmlFromProps();
+//                configFile.addConfigs(download);
+//            }
+//        }
+//
+//        for (final MediaCollectionData mp : progData.mediaCollectionDataList) {
+//            mp.setXmlFromProps();
+//            configFile.addConfigs(mp);
+//        }
+//
+//        for (final FilmlistUrlData datenUrlFilmliste : progData.searchFilmListUrls.getFilmlistUrlList_akt()) {
+//            datenUrlFilmliste.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_SORT_NR] = FilmlistUrlData.SERVER_ART_AKT;
+//            configFile.addConfigs(datenUrlFilmliste);
+//        }
+//
+//        for (final FilmlistUrlData datenUrlFilmliste : progData.searchFilmListUrls.getFilmlistUrlList_diff()) {
+//            datenUrlFilmliste.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_SORT_NR] = FilmlistUrlData.SERVER_ART_DIFF;
+//            configFile.addConfigs(datenUrlFilmliste);
+//        }
     }
 
     public static void logAllConfigs() {

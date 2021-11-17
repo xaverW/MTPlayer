@@ -98,6 +98,11 @@ public class ProgStart {
      */
     public boolean loadAll() {
         boolean loadOk = load();
+        if (!loadOk) {
+            //dann mit der alten Verison versuchen
+            loadOk = load_oldVersion();
+        }
+
         if (ProgConfig.SYSTEM_LOG_ON.getValue()) {
             PLogger.setFileHandler(ProgInfos.getLogDirectory_String());
         }
@@ -124,14 +129,13 @@ public class ProgStart {
     }
 
     private boolean load() {
-        ProgData progData = ProgData.getInstance();
-
         boolean ret = false;
+        ProgData progData = ProgData.getInstance();
         final Path xmlFilePath = new ProgInfos().getSettingsFile();
 
-        try (IoReadXml reader = new IoReadXml(progData)) {
+        try {
             if (Files.exists(xmlFilePath)) {
-                if (reader.readConfiguration(xmlFilePath)) {
+                if (ProgLoadFactory.loadProgConfigData(progData, xmlFilePath)) {
                     return true;
                 } else {
                     // dann hat das Laden nicht geklappt
@@ -149,6 +153,35 @@ public class ProgStart {
         if (loadBackup()) {
             ret = true;
         }
+        return ret;
+    }
+
+    private boolean load_oldVersion() {
+        ProgData progData = ProgData.getInstance();
+
+        boolean ret = false;
+        final Path xmlFilePath = new ProgInfos().getSettingsFileOld();
+
+        try (IoReadXml reader = new IoReadXml(progData)) {
+            if (Files.exists(xmlFilePath)) {
+                if (reader.readConfiguration(xmlFilePath)) {
+                    return true;
+                } else {
+                    // dann hat das Laden nicht geklappt
+                    PLog.sysLog("Konfig konnte nicht gelesen werden!");
+                }
+            } else {
+                // dann hat das Laden nicht geklappt
+                PLog.sysLog("Konfig existiert nicht!");
+            }
+        } catch (final Exception ex) {
+            ex.printStackTrace();
+        }
+
+//        // versuchen das Backup zu laden
+//        if (loadBackup()) {
+//            ret = true;
+//        }
         return ret;
     }
 
@@ -183,8 +216,8 @@ public class ProgStart {
             // teils geladene Reste entfernen
             clearConfig();
             PLog.sysLog(new String[]{"Versuch Backup zu laden:", p.toString()});
-            try (IoReadXml reader = new IoReadXml(progData)) {
-                if (reader.readConfiguration(p)) {
+            try {
+                if (ProgLoadFactory.loadProgConfigData(progData, p)) {
                     PLog.sysLog(new String[]{"Backup hat geklappt:", p.toString()});
                     ret = true;
                     break;

@@ -18,11 +18,16 @@ package de.p2tools.mtplayer.controller.data;
 
 import de.p2tools.mtplayer.controller.data.film.Film;
 import de.p2tools.mtplayer.gui.configDialog.setData.AboSubDir;
+import de.p2tools.p2Lib.configFile.config.*;
 import de.p2tools.p2Lib.tools.PColorFactory;
 import javafx.beans.property.*;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+
 public class SetDataProps extends SetDataXml {
+
+    final ProgramList programList = new ProgramList();
 
     public static final Color RESET_COLOR = Color.BLACK;
 
@@ -51,6 +56,45 @@ public class SetDataProps extends SetDataXml {
 
     private BooleanProperty genAboSubDir = new SimpleBooleanProperty(true);
     private final ObjectProperty<AboSubDir.DirName> aboSubDir = new SimpleObjectProperty<>(AboSubDir.DirName.THEME);
+
+    @Override
+    public String getTag() {
+        return TAG;
+    }
+
+    @Override
+    public String getComment() {
+        return "SetData";
+    }
+
+    @Override
+    public Config[] getConfigsArr() {
+        ArrayList<Config> list = new ArrayList<>();
+        list.add(new ConfigStringPropExtra("id", SetDataFieldNames.PROGRAMSET_ID, id));
+        list.add(new ConfigStringPropExtra("visibleName", SetDataFieldNames.PROGRAMSET_VISIBLE_NAME, visibleName));
+        list.add(new ConfigStringPropExtra("prefix", SetDataFieldNames.PROGRAMSET_PRAEFIX_DIRECT, prefix));
+        list.add(new ConfigStringPropExtra("suffix", SetDataFieldNames.PROGRAMSET_SUFFIX_DIRECT, suffix));
+        list.add(new ConfigColorProp("color", SetDataFieldNames.PROGRAMSET_COLOR, color));
+        list.add(new ConfigStringPropExtra("destPath", SetDataFieldNames.PROGRAMSET_ZIEL_PFAD, destPath));
+        list.add(new ConfigStringPropExtra("destName", SetDataFieldNames.PROGRAMSET_ZIEL_DATEINAME, destName));
+        list.add(new ConfigBoolPropExtra("play", SetDataFieldNames.PROGRAMSET_IST_ABSPIELEN, play));
+        list.add(new ConfigBoolPropExtra("save", SetDataFieldNames.PROGRAMSET_IST_SPEICHERN, save));
+        list.add(new ConfigBoolPropExtra("button", SetDataFieldNames.PROGRAMSET_IST_BUTTON, button));
+        list.add(new ConfigBoolPropExtra("abo", SetDataFieldNames.PROGRAMSET_IST_ABO, abo));
+        list.add(new ConfigIntPropExtra("maxSize", SetDataFieldNames.PROGRAMSET_MAX_LAENGE, maxSize));
+        list.add(new ConfigIntPropExtra("maxField", SetDataFieldNames.PROGRAMSET_MAX_LAENGE_FIELD, maxField));
+        list.add(new ConfigStringPropExtra("resolution", SetDataFieldNames.PROGRAMSET_AUFLOESUNG, resolution));
+        list.add(new ConfigStringPropExtra("adOn", SetDataFieldNames.PROGRAMSET_ADD_ON, adOn));
+        list.add(new ConfigStringPropExtra("description", SetDataFieldNames.PROGRAMSET_BESCHREIBUNG, description));
+        list.add(new ConfigStringPropExtra("infoUrl", SetDataFieldNames.PROGRAMSET_INFO_URL, infoUrl));
+        list.add(new ConfigBoolPropExtra("infoFile", SetDataFieldNames.PROGRAMSET_INFODATEI, infoFile));
+        list.add(new ConfigBoolPropExtra("subtitle", SetDataFieldNames.PROGRAMSET_SUBTITLE, subtitle));
+        list.add(new ConfigBoolPropExtra("genAboSubDir", SetDataFieldNames.PROGRAMSET_ABO_SUBDIR_ANLEGEN, genAboSubDir));
+        list.add(new ConfigIntExtra("aboSubDir", SetDataFieldNames.PROGRAMSET_ABO_UNTERORDNER, getAboSubDir().getNo()));
+        list.add(new ConfigPDataList(programList));
+
+        return list.toArray(new Config[]{});
+    }
 
     public String getId() {
         return id.get();

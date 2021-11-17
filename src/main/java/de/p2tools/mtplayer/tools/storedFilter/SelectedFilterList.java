@@ -16,13 +16,37 @@
 
 package de.p2tools.mtplayer.tools.storedFilter;
 
+import de.p2tools.p2Lib.configFile.pData.PDataList;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 
-public final class SelectedFilterList extends SimpleListProperty<SelectedFilter> {
+public final class SelectedFilterList extends SimpleListProperty<SelectedFilter> implements PDataList<SelectedFilter> {
+    public static final String TAG = "SelectedFilterList";
 
     public SelectedFilterList() {
         super(FXCollections.observableArrayList());
+    }
+
+    @Override
+    public String getTag() {
+        return TAG;
+    }
+
+    @Override
+    public String getComment() {
+        return "Liste aller Filter";
+    }
+
+    @Override
+    public SelectedFilter getNewItem() {
+        return new SelectedFilter();
+    }
+
+    @Override
+    public void addNewItem(Object obj) {
+        if (obj.getClass().equals(SelectedFilter.class)) {
+            add((SelectedFilter) obj);
+        }
     }
 
     public int top(int idx, boolean up) {

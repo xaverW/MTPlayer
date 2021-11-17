@@ -16,16 +16,40 @@
 
 package de.p2tools.mtplayer.controller.data;
 
+import de.p2tools.p2Lib.configFile.pData.PDataList;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 
 import java.util.Iterator;
 
 @SuppressWarnings("serial")
-public class ProgramList extends SimpleListProperty<ProgramData> {
-
+public class ProgramList extends SimpleListProperty<ProgramData> implements PDataList<ProgramData> {
+    public static final String TAG = "ProgramList";
+    
     public ProgramList() {
         super(FXCollections.observableArrayList());
+    }
+
+    @Override
+    public String getTag() {
+        return TAG;
+    }
+
+    @Override
+    public String getComment() {
+        return "Liste der Programme";
+    }
+
+    @Override
+    public ProgramData getNewItem() {
+        return new ProgramData();
+    }
+
+    @Override
+    public void addNewItem(Object obj) {
+        if (obj.getClass().equals(ProgramData.class)) {
+            super.add((ProgramData) obj);
+        }
     }
 
     public ProgramData remove(String name) {
