@@ -167,9 +167,16 @@ public class BlackProps extends PDataSample<BlackProps> {
         this.countHits = countHits;
     }
 
-//    public BlackProps() {
-//        arr = super.makeArr(MAX_ELEM);
-//    }
+    public BlackProps() {
+        makeArray();
+    }
+
+    void makeArray() {
+        arr = new String[MAX_ELEM];
+        for (int i = 0; i < arr.length; ++i) {
+            arr[i] = "";
+        }
+    }
 
     public void setPropsFromXml() {
         setChannel(arr[BLACKLIST_SENDER_NO]);

@@ -129,7 +129,7 @@ public class BlackPane {
 
     private void initTable(VBox vBox) {
         final TableColumn<BlackData, String> nrColumn = new TableColumn<>("Nr");
-        nrColumn.setCellValueFactory(new PropertyValueFactory<>("nr"));
+        nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));
         nrColumn.getStyleClass().add("alignCenterRightPadding_10");
 
         final TableColumn<BlackData, String> channelColumn = new TableColumn<>("Sender");

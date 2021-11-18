@@ -16,12 +16,12 @@
 
 package de.p2tools.mtplayer.gui.configDialog;
 
+import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.MLC;
-import de.p2tools.mtplayer.controller.data.MTColor;
 import de.p2tools.mtplayer.gui.tools.HelpText;
+import de.p2tools.p2Lib.configFile.pConfData.PColorData;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
@@ -54,14 +54,14 @@ public class ColorPane {
         final Button btnHelpTheme = PButton.helpButton(stage, "Erscheinungsbild der Programmoberfläche",
                 HelpText.DARK_THEME);
 
-        TableView<MLC> tableViewFont = new TableView<>();
+        TableView<PColorData> tableViewFont = new TableView<>();
         initTableColor(tableViewFont);
         tableViewFont.setPrefHeight(ProgConst.MIN_TABLE_HEIGHT);
-        tableViewFont.setItems(MTColor.getColorListFont());
+        tableViewFont.setItems(ProgColorList.getColorListFront());
 
-        TableView<MLC> tableViewBackground = new TableView<>();
+        TableView<PColorData> tableViewBackground = new TableView<>();
         initTableColor(tableViewBackground);
-        tableViewBackground.setItems(MTColor.getColorListBackground());
+        tableViewBackground.setItems(ProgColorList.getColorListBackground());
 
         Button button = new Button("Alle _Farben zurücksetzen");
         button.setOnAction(event -> {
@@ -98,25 +98,25 @@ public class ColorPane {
         tglDarkTheme.selectedProperty().unbindBidirectional(propDarkTheme);
     }
 
-    private void initTableColor(TableView<MLC> tableView) {
-        final TableColumn<MLC, String> textColumn = new TableColumn<>("Beschreibung");
+    private void initTableColor(TableView<PColorData> tableView) {
+        final TableColumn<PColorData, String> textColumn = new TableColumn<>("Beschreibung");
         textColumn.setCellValueFactory(new PropertyValueFactory<>("text"));
         textColumn.getStyleClass().add("alignCenterLeft");
 
-        final TableColumn<MLC, String> changeColumn = new TableColumn<>("Farbe");
+        final TableColumn<PColorData, String> changeColumn = new TableColumn<>("Farbe");
         changeColumn.setCellFactory(cellFactoryChange);
         changeColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<MLC, String> resetColumn = new TableColumn<>("Reset");
+        final TableColumn<PColorData, String> resetColumn = new TableColumn<>("Reset");
         resetColumn.setCellFactory(cellFactoryReset);
         resetColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<MLC, Color> colorColumn = new TableColumn<>("Farbe");
+        final TableColumn<PColorData, Color> colorColumn = new TableColumn<>("Farbe");
         colorColumn.setCellValueFactory(new PropertyValueFactory<>("color"));
         colorColumn.setCellFactory(cellFactoryColor);
         colorColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<MLC, Color> colorOrgColumn = new TableColumn<>("Original");
+        final TableColumn<PColorData, Color> colorOrgColumn = new TableColumn<>("Original");
         colorOrgColumn.setCellValueFactory(new PropertyValueFactory<>("resetColor"));
         colorOrgColumn.setCellFactory(cellFactoryColorReset);
         colorOrgColumn.getStyleClass().add("alignCenter");
@@ -127,10 +127,10 @@ public class ColorPane {
         tableView.getColumns().addAll(textColumn, changeColumn, colorColumn, colorOrgColumn, resetColumn);
     }
 
-    private Callback<TableColumn<MLC, String>, TableCell<MLC, String>> cellFactoryChange
-            = (final TableColumn<MLC, String> param) -> {
+    private Callback<TableColumn<PColorData, String>, TableCell<PColorData, String>> cellFactoryChange
+            = (final TableColumn<PColorData, String> param) -> {
 
-        final TableCell<MLC, String> cell = new TableCell<MLC, String>() {
+        final TableCell<PColorData, String> cell = new TableCell<PColorData, String>() {
 
             @Override
             public void updateItem(String item, boolean empty) {
@@ -141,7 +141,7 @@ public class ColorPane {
                     return;
                 }
 
-                MLC MLC = getTableView().getItems().get(getIndex());
+                PColorData MLC = getTableView().getItems().get(getIndex());
                 final HBox hbox = new HBox();
                 hbox.setSpacing(5);
                 hbox.setAlignment(Pos.CENTER);
@@ -162,10 +162,10 @@ public class ColorPane {
         return cell;
     };
 
-    private Callback<TableColumn<MLC, String>, TableCell<MLC, String>> cellFactoryReset
-            = (final TableColumn<MLC, String> param) -> {
+    private Callback<TableColumn<PColorData, String>, TableCell<PColorData, String>> cellFactoryReset
+            = (final TableColumn<PColorData, String> param) -> {
 
-        final TableCell<MLC, String> cell = new TableCell<MLC, String>() {
+        final TableCell<PColorData, String> cell = new TableCell<PColorData, String>() {
 
             @Override
             public void updateItem(String item, boolean empty) {
@@ -176,7 +176,7 @@ public class ColorPane {
                     return;
                 }
 
-                MLC MLC = getTableView().getItems().get(getIndex());
+                PColorData MLC = getTableView().getItems().get(getIndex());
                 final HBox hbox = new HBox();
                 hbox.setSpacing(5);
                 hbox.setAlignment(Pos.CENTER);
@@ -194,10 +194,10 @@ public class ColorPane {
         return cell;
     };
 
-    private Callback<TableColumn<MLC, Color>, TableCell<MLC, Color>> cellFactoryColor
-            = (final TableColumn<MLC, Color> param) -> {
+    private Callback<TableColumn<PColorData, Color>, TableCell<PColorData, Color>> cellFactoryColor
+            = (final TableColumn<PColorData, Color> param) -> {
 
-        final TableCell<MLC, Color> cell = new TableCell<MLC, Color>() {
+        final TableCell<PColorData, Color> cell = new TableCell<PColorData, Color>() {
 
 
             @Override
@@ -208,17 +208,17 @@ public class ColorPane {
                     setText(null);
                     return;
                 }
-                MLC MLC = getTableView().getItems().get(getIndex());
-                setStyle("-fx-background-color:" + MLC.getColorToWeb());
+                PColorData MLC = getTableView().getItems().get(getIndex());
+                setStyle("-fx-background-color:" + MLC.getColorSelectedToWeb());
             }
 
         };
         return cell;
     };
-    private Callback<TableColumn<MLC, Color>, TableCell<MLC, Color>> cellFactoryColorReset
-            = (final TableColumn<MLC, Color> param) -> {
+    private Callback<TableColumn<PColorData, Color>, TableCell<PColorData, Color>> cellFactoryColorReset
+            = (final TableColumn<PColorData, Color> param) -> {
 
-        final TableCell<MLC, Color> cell = new TableCell<MLC, Color>() {
+        final TableCell<PColorData, Color> cell = new TableCell<PColorData, Color>() {
 
             @Override
             public void updateItem(Color item, boolean empty) {
@@ -228,7 +228,7 @@ public class ColorPane {
                     setText(null);
                     return;
                 }
-                MLC MLC = getTableView().getItems().get(getIndex());
+                PColorData MLC = getTableView().getItems().get(getIndex());
                 setStyle("-fx-background-color:" + PColorFactory.getColorToWeb(MLC.getResetColor()));
             }
 

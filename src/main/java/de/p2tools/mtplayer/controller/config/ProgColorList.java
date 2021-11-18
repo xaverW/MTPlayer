@@ -21,7 +21,11 @@ package de.p2tools.mtplayer.controller.config;
 import de.p2tools.p2Lib.configFile.pConfData.PColorData;
 import de.p2tools.p2Lib.configFile.pConfData.PColorList;
 import de.p2tools.p2Lib.configFile.pData.PData;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
+
+import java.util.List;
 
 public class ProgColorList extends PColorList {
 
@@ -50,7 +54,6 @@ public class ProgColorList extends PColorList {
             Color.rgb(206, 255, 202), Color.rgb(79, 129, 74), "Tabelle Download, fertig");
     public static final PColorData DOWNLOAD_ERROR = addNewKey("COLOR_DOWNLOAD_ERROR", Color.rgb(255, 233, 233), Color.rgb(163, 82, 82), "Tabelle Download, fehlerhaft");
 
-
     // Tabelle Abos
     public static final PColorData ABO_SWITCHED_OFF = addNewKey("COLOR_ABO_SWITCHED_OFF",
             Color.rgb(225, 225, 225), Color.rgb(109, 109, 109), "Tabelle Abo, ausgeschaltet");
@@ -65,12 +68,30 @@ public class ProgColorList extends PColorList {
     public static final PColorData DOWNLOAD_NAME_ERROR = addNewKey("COLOR_DOWNLOAD_NAME_ERROR",
             Color.rgb(255, 233, 233), Color.rgb(200, 183, 183), "Download, Dateiname ist fehlerhaft");
 
+    //Liste der Schrift-Farben -> Rest sind Hintergrundfarben
+    public static final List<PColorData> FRONT_COLOR = List.of(FILM_LIVESTREAM, FILM_NEW, FILM_GEOBLOCK);
 
     public static void setColorTheme() {
         final boolean dark = ProgConfig.SYSTEM_DARK_THEME.get();
         for (int i = 0; i < getColorList().size(); ++i) {
             getColorList().get(i).setColorTheme(dark);
         }
+    }
+
+    public static ObservableList<PColorData> getColorListFront() {
+        ObservableList<PColorData> color = FXCollections.observableArrayList();
+        ObservableList<PColorData> pColorData = getColorList();
+        pColorData.stream().filter(pc -> FRONT_COLOR.contains(pc)).forEach(pc -> color.add(pc));
+
+        return color;
+    }
+
+    public static ObservableList<PColorData> getColorListBackground() {
+        ObservableList<PColorData> color = FXCollections.observableArrayList();
+        ObservableList<PColorData> pColorData = getColorList();
+        pColorData.stream().filter(pc -> !FRONT_COLOR.contains(pc)).forEach(pc -> color.add(pc));
+
+        return color;
     }
 
     public static PData getConfigsData() {

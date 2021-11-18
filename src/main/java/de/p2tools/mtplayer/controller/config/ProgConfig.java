@@ -381,29 +381,21 @@ public class ProgConfig extends PDataProgConfig {
 //        ProgConfig.SYSTEM_PROG_VERSION.set(ProgramTools.getProgVersion());
 //        ProgConfig.SYSTEM_PROG_BUILD_NO.set(ProgramTools.getBuild());
 //        ProgConfig.SYSTEM_PROG_BUILD_DATE.set(ProgramTools.getCompileDate());
+
         ProgData progData = ProgData.getInstance();
 
-        configFile.addConfigs(ProgConfig.getInstance());
-        configFile.addConfigs(ProgColorList.getConfigsData());
-        configFile.addConfigs(progData.setDataList);
+        configFile.addConfigs(ProgConfig.getInstance());//Progconfig
+        configFile.addConfigs(ProgColorList.getConfigsData());//Color
 
+        configFile.addConfigs(progData.setDataList);//SetData
 
-        // Filter schreiben, aktuellen
-        final SelectedFilter akt_sf = progData.storedFilters.getActFilterSettings();
-        // nur zur Info im Config-File
-        akt_sf.setName(StoredFilters.SELECTED_FILTER_NAME);
-        configFile.addConfigs(progData.storedFilters.getActFilterSettings());
-        // Liste der Filterprofile
-        configFile.addConfigs(progData.storedFilters.getStoredFilterList());
-//        progData.storedFilters.getStoredFilterList().stream().forEach((sf) -> {
-//            configFile.addConfigs(sf);
-//        });
+        final SelectedFilter akt_sf = progData.storedFilters.getActFilterSettings();//akt-Filter
+        akt_sf.setName(StoredFilters.SELECTED_FILTER_NAME);// nur zur Info im Config-File
+        configFile.addConfigs(akt_sf);
 
-
-        configFile.addConfigs(progData.aboList);
-
-
-        //        configFile.addConfigs(progData.blackList);
+        configFile.addConfigs(progData.storedFilters.getStoredFilterList());//Filterprofile
+        configFile.addConfigs(progData.aboList);//Abos
+        configFile.addConfigs(progData.blackList);//Blacklist
 
 
 //        progData.replaceList.stream().forEach(replaceData -> {

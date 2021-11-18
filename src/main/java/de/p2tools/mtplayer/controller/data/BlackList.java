@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.controller.data;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.mtplayer.tools.filmListFilter.FilmlistBlackFilterCountHits;
+import de.p2tools.p2Lib.configFile.pData.PDataList;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 
@@ -26,8 +27,9 @@ import java.util.Collections;
 import java.util.Comparator;
 
 @SuppressWarnings("serial")
-public class BlackList extends SimpleListProperty<BlackData> {
+public class BlackList extends SimpleListProperty<BlackData> implements PDataList<BlackData> {
 
+    public static final String TAG = "BlackList";
     private int nr = 0;
     private final ProgData progData;
 
@@ -35,6 +37,29 @@ public class BlackList extends SimpleListProperty<BlackData> {
         super(FXCollections.observableArrayList());
         this.progData = progData;
     }
+
+    @Override
+    public String getTag() {
+        return TAG;
+    }
+
+    @Override
+    public String getComment() {
+        return "Liste aller BlackData";
+    }
+
+    @Override
+    public BlackData getNewItem() {
+        return new BlackData();
+    }
+
+    @Override
+    public void addNewItem(Object obj) {
+        if (obj.getClass().equals(BlackData.class)) {
+            add((BlackData) obj);
+        }
+    }
+
 
     @Override
     public synchronized boolean add(BlackData b) {
