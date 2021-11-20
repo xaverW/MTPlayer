@@ -18,6 +18,7 @@
 package de.p2tools.mtplayer.controller.config;
 
 import de.p2tools.mtplayer.controller.data.film.Film;
+import de.p2tools.mtplayer.controller.filmlist.filmlistUrls.FilmlistUrlList;
 import de.p2tools.mtplayer.gui.tools.SetsPrograms;
 import de.p2tools.mtplayer.tools.MLBandwidthTokenBucket;
 import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
@@ -378,9 +379,9 @@ public class ProgConfig extends PDataProgConfig {
 
     public static void addConfigData(ConfigFile configFile) {
         // Configs der Programmversion, nur damit sie (zur Update-Suche) im Config-File stehen
-//        ProgConfig.SYSTEM_PROG_VERSION.set(ProgramTools.getProgVersion());
-//        ProgConfig.SYSTEM_PROG_BUILD_NO.set(ProgramTools.getBuild());
-//        ProgConfig.SYSTEM_PROG_BUILD_DATE.set(ProgramTools.getCompileDate());
+        // ProgConfig.SYSTEM_PROG_VERSION.set(ProgramTools.getProgVersion());
+        // ProgConfig.SYSTEM_PROG_BUILD_NO.set(ProgramTools.getBuild());
+        // ProgConfig.SYSTEM_PROG_BUILD_DATE.set(ProgramTools.getCompileDate());
 
         ProgData progData = ProgData.getInstance();
 
@@ -398,24 +399,15 @@ public class ProgConfig extends PDataProgConfig {
         configFile.addConfigs(progData.blackList);
         configFile.addConfigs(progData.replaceList);
         configFile.addConfigs(progData.downloadList);
-
-
         configFile.addConfigs(progData.mediaCollectionDataList);
 
-//        for (final MediaCollectionData mp : progData.mediaCollectionDataList) {
-//            mp.setXmlFromProps();
-//            configFile.addConfigs(mp);
-//        }
-//
-//        for (final FilmlistUrlData datenUrlFilmliste : progData.searchFilmListUrls.getFilmlistUrlList_akt()) {
-//            datenUrlFilmliste.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_SORT_NR] = FilmlistUrlData.SERVER_ART_AKT;
-//            configFile.addConfigs(datenUrlFilmliste);
-//        }
-//
-//        for (final FilmlistUrlData datenUrlFilmliste : progData.searchFilmListUrls.getFilmlistUrlList_diff()) {
-//            datenUrlFilmliste.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_SORT_NR] = FilmlistUrlData.SERVER_ART_DIFF;
-//            configFile.addConfigs(datenUrlFilmliste);
-//        }
+        FilmlistUrlList filmlistUrlList = progData.searchFilmListUrls.getFilmlistUrlList_akt();
+        filmlistUrlList.setTag("filmlistUrlList-akt");
+        configFile.addConfigs(filmlistUrlList);
+
+        filmlistUrlList = progData.searchFilmListUrls.getFilmlistUrlList_diff();
+        filmlistUrlList.setTag("filmlistUrlList-diff");
+        configFile.addConfigs(filmlistUrlList);
     }
 
     public static void logAllConfigs() {

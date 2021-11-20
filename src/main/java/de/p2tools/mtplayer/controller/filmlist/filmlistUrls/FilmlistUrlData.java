@@ -16,9 +16,21 @@
 
 package de.p2tools.mtplayer.controller.filmlist.filmlistUrls;
 
+import de.p2tools.p2Lib.configFile.config.Config;
+import de.p2tools.p2Lib.configFile.config.ConfigIntPropExtra;
+import de.p2tools.p2Lib.configFile.config.ConfigStringPropExtra;
+import de.p2tools.p2Lib.configFile.pData.PDataSample;
 import de.p2tools.p2Lib.tools.log.PLog;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
-public class FilmlistUrlData implements Comparable<FilmlistUrlData> {
+import java.util.ArrayList;
+
+public class FilmlistUrlData extends PDataSample<FilmlistUrlData> {
+
+    public static final String TAG = "FilmlistUrlData";
 
     public static final String SERVER_ART_AKT = "akt";
     public static final String SERVER_ART_DIFF = "diff";
@@ -39,6 +51,12 @@ public class FilmlistUrlData implements Comparable<FilmlistUrlData> {
     public static final String[] FILMLIST_UPDATE_SERVER_COLUMN_NAMES = {FILMLIST_UPDATE_SERVER_NR, FILMLIST_UPDATE_SERVER_URL,
             FILMLIST_UPDATE_SERVER_PRIO, FILMLIST_UPDATE_SERVER_SORT};
 
+    private IntegerProperty no = new SimpleIntegerProperty(0);
+    private StringProperty url = new SimpleStringProperty("");
+    private StringProperty prio = new SimpleStringProperty("");
+    private StringProperty kind = new SimpleStringProperty("");
+
+
     public String[] arr;
 
     public FilmlistUrlData() {
@@ -50,6 +68,9 @@ public class FilmlistUrlData implements Comparable<FilmlistUrlData> {
         arr[FILMLIST_UPDATE_SERVER_URL_NR] = url;
         arr[FILMLIST_UPDATE_SERVER_PRIO_NR] = prio;
         arr[FILMLIST_UPDATE_SERVER_SORT_NR] = sort;
+        setUrl(url);
+        setPrio(prio);
+        setKind(sort);
     }
 
     FilmlistUrlData(String url, String sort) {
@@ -57,6 +78,78 @@ public class FilmlistUrlData implements Comparable<FilmlistUrlData> {
         arr[FILMLIST_UPDATE_SERVER_URL_NR] = url;
         arr[FILMLIST_UPDATE_SERVER_PRIO_NR] = FilmlistUrlData.FILMLIST_UPDATE_SERVER_PRIO_1;
         arr[FILMLIST_UPDATE_SERVER_SORT_NR] = sort;
+        setUrl(url);
+        setPrio(FilmlistUrlData.FILMLIST_UPDATE_SERVER_PRIO_1);
+        setKind(sort);
+    }
+
+    @Override
+    public String getTag() {
+        return TAG;
+    }
+
+    @Override
+    public String getComment() {
+        return "FilmlistUrlData";
+    }
+
+    @Override
+    public Config[] getConfigsArr() {
+        ArrayList<Config> list = new ArrayList<>();
+        list.add(new ConfigIntPropExtra("no", "filmlist-update-server-nr", no));
+        list.add(new ConfigStringPropExtra("url", "filmlist-update-server-url", url));
+        list.add(new ConfigStringPropExtra("prio", "filmlist-update-server-prio", prio));
+        list.add(new ConfigStringPropExtra("kind", "filmlist-update-server-kind", kind));
+
+        return list.toArray(new Config[]{});
+    }
+
+    public int getNo() {
+        return no.get();
+    }
+
+    public IntegerProperty noProperty() {
+        return no;
+    }
+
+    public void setNo(int no) {
+        this.no.set(no);
+    }
+
+    public String getUrl() {
+        return url.get();
+    }
+
+    public StringProperty urlProperty() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url.set(url);
+    }
+
+    public String getPrio() {
+        return prio.get();
+    }
+
+    public StringProperty prioProperty() {
+        return prio;
+    }
+
+    public void setPrio(String prio) {
+        this.prio.set(prio);
+    }
+
+    public String getKind() {
+        return kind.get();
+    }
+
+    public StringProperty kindProperty() {
+        return kind;
+    }
+
+    public void setKind(String kind) {
+        this.kind.set(kind);
     }
 
     @Override

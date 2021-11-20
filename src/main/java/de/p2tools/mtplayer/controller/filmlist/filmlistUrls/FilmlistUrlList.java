@@ -16,12 +16,48 @@
 
 package de.p2tools.mtplayer.controller.filmlist.filmlistUrls;
 
+import de.p2tools.p2Lib.configFile.pData.PDataList;
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 
-public class FilmlistUrlList extends LinkedList<FilmlistUrlData> {
+public class FilmlistUrlList extends SimpleListProperty<FilmlistUrlData> implements PDataList<FilmlistUrlData> {
     // ist die Liste mit den URLs zum Download einer Filmliste
+
+    public String TAG = "FilmlistUrlList";
+
+    public FilmlistUrlList() {
+        super(FXCollections.observableArrayList());
+    }
+
+    @Override
+    public String getTag() {
+        return TAG;
+    }
+
+    public String setTag(String TAG) {
+        return this.TAG = TAG;
+    }
+
+    @Override
+    public String getComment() {
+        return "Liste aller SetData";
+    }
+
+    @Override
+    public FilmlistUrlData getNewItem() {
+        return new FilmlistUrlData();
+    }
+
+    @Override
+    public void addNewItem(Object obj) {
+        if (obj.getClass().equals(FilmlistUrlData.class)) {
+            add((FilmlistUrlData) obj);
+        }
+    }
 
     public boolean addWithCheck(FilmlistUrlData addFilmlist) {
         for (FilmlistUrlData dataUrlFilmlist : this) {
@@ -32,6 +68,9 @@ public class FilmlistUrlList extends LinkedList<FilmlistUrlData> {
             }
         }
 
+        addFilmlist.setUrl(addFilmlist.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_URL_NR]);
+        addFilmlist.setPrio(addFilmlist.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_PRIO_NR]);
+        addFilmlist.setKind(addFilmlist.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_SORT_NR]);
         return add(addFilmlist);
     }
 
