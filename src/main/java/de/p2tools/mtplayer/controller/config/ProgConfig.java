@@ -387,32 +387,21 @@ public class ProgConfig extends PDataProgConfig {
         configFile.addConfigs(ProgConfig.getInstance());//Progconfig
         configFile.addConfigs(ProgColorList.getConfigsData());//Color
 
-        configFile.addConfigs(progData.setDataList);//SetData
+        configFile.addConfigs(progData.setDataList);
 
         final SelectedFilter akt_sf = progData.storedFilters.getActFilterSettings();//akt-Filter
         akt_sf.setName(StoredFilters.SELECTED_FILTER_NAME);// nur zur Info im Config-File
         configFile.addConfigs(akt_sf);
         configFile.addConfigs(progData.storedFilters.getStoredFilterList());//Filterprofile
 
-        configFile.addConfigs(progData.aboList);//Abos
-        configFile.addConfigs(progData.blackList);//Blacklist
-        configFile.addConfigs(progData.replaceList);//Replacelist
+        configFile.addConfigs(progData.aboList);
+        configFile.addConfigs(progData.blackList);
+        configFile.addConfigs(progData.replaceList);
+        configFile.addConfigs(progData.downloadList);
 
 
-        configFile.addConfigs(progData.downloadList);//Downloadlist
+        configFile.addConfigs(progData.mediaCollectionDataList);
 
-//        for (final Download download : progData.downloadList) {
-//            if (download.isStateStoped()) {
-//                // unterbrochene werden gespeichert, dass die Info "Interrupt" erhalten bleibt
-//                download.setXmlFromProps();
-//                configFile.addConfigs(download);
-//            } else if (!download.isAbo() && !download.isStateFinished()) {
-//                // Download, (Abo müssen neu angelegt werden)
-//                download.setXmlFromProps();
-//                configFile.addConfigs(download);
-//            }
-//        }
-//
 //        for (final MediaCollectionData mp : progData.mediaCollectionDataList) {
 //            mp.setXmlFromProps();
 //            configFile.addConfigs(mp);

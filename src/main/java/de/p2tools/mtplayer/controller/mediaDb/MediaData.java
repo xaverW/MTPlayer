@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.tools.Data;
 import de.p2tools.p2Lib.P2LibConst;
 
 public class MediaData extends Data<MediaData> {
+    //sind die Daten die im "mediadb.txt" liegen!!
 
     public final static int MEDIA_DATA_NAME = 0;
     public final static int MEDIA_DATA_PATH = 1;
@@ -138,6 +139,7 @@ public class MediaData extends Data<MediaData> {
         return getName() + "##" + getPath() + "##" + getCollectionId();
     }
 
+    @Override
     public void setPropsFromXml() {
         setSize(arr[MEDIA_DATA_SIZE]);
         try {
@@ -147,6 +149,7 @@ public class MediaData extends Data<MediaData> {
         }
     }
 
+    @Override
     public void setXmlFromProps() {
         arr[MEDIA_DATA_SIZE] = getSize().getSizeAsStr();
         arr[MEDIA_DATA_COLLECTION_NAME] = getCollectionName();

@@ -16,12 +16,14 @@
 
 package de.p2tools.mtplayer.controller.mediaDb;
 
-import de.p2tools.mtplayer.tools.Data;
+import de.p2tools.p2Lib.configFile.config.*;
+import de.p2tools.p2Lib.configFile.pData.PDataSample;
 import de.p2tools.p2Lib.tools.PIndex;
 import javafx.beans.property.*;
 
-public class MediaCollectionData extends Data<MediaCollectionData> {
+import java.util.ArrayList;
 
+public class MediaCollectionData extends PDataSample<MediaCollectionData> {
 
     private final static int MEDIA_PATH_ID = 0;
     private final static int MEDIA_PATH_PATH = 1;
@@ -34,18 +36,56 @@ public class MediaCollectionData extends Data<MediaCollectionData> {
     public final static int MAX_ELEM = 4;
     public String[] arr;
 
-    private long id = 0;
+    private LongProperty id = new SimpleLongProperty(0L);
     private StringProperty path = new SimpleStringProperty("");
     private StringProperty collectionName = new SimpleStringProperty("");
     private BooleanProperty external = new SimpleBooleanProperty(false);
     private IntegerProperty count = new SimpleIntegerProperty(0);
 
+    public MediaCollectionData() {
+        makeArr();
+    }
+
+    public MediaCollectionData(String path, String collectionName, boolean external) {
+        makeArr();
+        setPath(path);
+        setCollectionName(collectionName);
+        setExternal(external);
+        setId(PIndex.getIndex());
+    }
+
+    @Override
+    public String getTag() {
+        return TAG;
+    }
+
+    @Override
+    public String getComment() {
+        return "MediaCollectionData";
+    }
+
+    @Override
+    public Config[] getConfigsArr() {
+        ArrayList<Config> list = new ArrayList<>();
+        list.add(new ConfigLongPropExtra("id", "Id", id));
+        list.add(new ConfigStringPropExtra("path", "Id", path));
+        list.add(new ConfigStringPropExtra("collectionName", "Id", collectionName));
+        list.add(new ConfigBoolPropExtra("external", "Id", external));
+        list.add(new ConfigIntPropExtra("count", "Id", count));
+
+        return list.toArray(new Config[]{});
+    }
+
     public long getId() {
+        return id.get();
+    }
+
+    public LongProperty idProperty() {
         return id;
     }
 
     public void setId(long id) {
-        this.id = id;
+        this.id.set(id);
     }
 
     public String getPath() {
@@ -97,23 +137,11 @@ public class MediaCollectionData extends Data<MediaCollectionData> {
         this.count.set(count);
     }
 
-    public MediaCollectionData() {
-        makeArr();
-    }
-
-    public MediaCollectionData(String path, String collectionName, boolean external) {
-        makeArr();
-        setPath(path);
-        setCollectionName(collectionName);
-        setExternal(external);
-        setId(PIndex.getIndex());
-    }
-
     public void setPropsFromXml() {
         try {
-            id = Long.parseLong(arr[MEDIA_PATH_ID]);
+            id.set(Long.parseLong(arr[MEDIA_PATH_ID]));
         } catch (final Exception ex) {
-            id = 0;
+            id.set(0L);
         }
         setPath(arr[MEDIA_PATH_PATH]);
         setCollectionName(arr[MEDIA_PATH_COLLECTION_NAME]);

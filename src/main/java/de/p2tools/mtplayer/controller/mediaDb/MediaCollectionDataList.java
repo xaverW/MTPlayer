@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.controller.mediaDb;
 
+import de.p2tools.p2Lib.configFile.pData.PDataList;
 import de.p2tools.p2Lib.tools.PIndex;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
@@ -27,8 +28,9 @@ import java.util.Iterator;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("serial")
-public class MediaCollectionDataList extends SimpleListProperty<MediaCollectionData> {
+public class MediaCollectionDataList extends SimpleListProperty<MediaCollectionData> implements PDataList<MediaCollectionData> {
 
+    public static final String TAG = "MediaCollectionDataList";
     private FilteredList<MediaCollectionData> filteredListInternal = null;
     private SortedList<MediaCollectionData> sortedListInternal = null;
     private FilteredList<MediaCollectionData> filteredListExternal = null;
@@ -44,6 +46,28 @@ public class MediaCollectionDataList extends SimpleListProperty<MediaCollectionD
             mediaCollectionData.setId(PIndex.getIndex());
         }
         return super.add(mediaCollectionData);
+    }
+
+    @Override
+    public String getTag() {
+        return TAG;
+    }
+
+    @Override
+    public String getComment() {
+        return "Liste aller MediaCollectionData";
+    }
+
+    @Override
+    public MediaCollectionData getNewItem() {
+        return new MediaCollectionData();
+    }
+
+    @Override
+    public void addNewItem(Object obj) {
+        if (obj.getClass().equals(MediaCollectionData.class)) {
+            add((MediaCollectionData) obj);
+        }
     }
 
     public SortedList<MediaCollectionData> getSortedListInternal() {
