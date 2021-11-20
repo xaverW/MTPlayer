@@ -438,6 +438,14 @@ public class ProgConfig extends PDataProgConfig {
         PLog.emptyLine();
     }
 
+    public static void setConfigData(String key, String value) {
+        arrayList.stream().forEach(config -> {
+            if (config.getKey().equals(key)) {
+                config.setActValue(value);
+            }
+        });
+    }
+
     private static synchronized void check(IntegerProperty mlConfigs, int init, int min, int max) {
         final int v = mlConfigs.getValue();
         if (v < min || v > max) {

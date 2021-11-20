@@ -263,27 +263,29 @@ public class IoReadXml implements AutoCloseable {
 
     private boolean getConfig(XMLStreamReader parser, String xmlElem) {
         boolean ret = true;
-//        try {
-//            while (parser.hasNext()) {
-//                final int event = parser.next();
-//                if (event == XMLStreamConstants.END_ELEMENT) {
-//                    if (parser.getLocalName().equals(xmlElem)) {
-//                        break;
-//                    }
-//                }
-//                if (event == XMLStreamConstants.START_ELEMENT) {
-//                    final String s = parser.getLocalName();
-//                    final String n = parser.getElementText();
+        try {
+            while (parser.hasNext()) {
+                final int event = parser.next();
+                if (event == XMLStreamConstants.END_ELEMENT) {
+                    if (parser.getLocalName().equals(xmlElem)) {
+                        break;
+                    }
+                }
+                if (event == XMLStreamConstants.START_ELEMENT) {
+                    final String s = parser.getLocalName();
+                    final String n = parser.getElementText();
+                    ProgConfig.getInstance().setConfigData(s, n);
+
 //                    MLConfigs mlConfigs = ProgConfig.get(s);
 //                    if (mlConfigs != null) {
 //                        mlConfigs.setValue(n);
 //                    }
-//                }
-//            }
-//        } catch (final Exception ex) {
-//            ret = false;
-//            PLog.errorLog(945120369, ex);
-//        }
+                }
+            }
+        } catch (final Exception ex) {
+            ret = false;
+            PLog.errorLog(945120369, ex);
+        }
         return ret;
     }
 
