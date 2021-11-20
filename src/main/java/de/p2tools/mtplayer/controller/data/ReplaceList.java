@@ -16,15 +16,40 @@
 
 package de.p2tools.mtplayer.controller.data;
 
+import de.p2tools.p2Lib.configFile.pData.PDataList;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 
 import java.io.File;
 
-public final class ReplaceList extends SimpleListProperty<ReplaceData> {
+public final class ReplaceList extends SimpleListProperty<ReplaceData> implements PDataList<ReplaceData> {
+
+    public static final String TAG = "ReplaceList";
 
     public ReplaceList() {
         super(FXCollections.observableArrayList());
+    }
+
+    @Override
+    public String getTag() {
+        return TAG;
+    }
+
+    @Override
+    public String getComment() {
+        return "Liste aller ReplaceData";
+    }
+
+    @Override
+    public ReplaceData getNewItem() {
+        return new ReplaceData();
+    }
+
+    @Override
+    public void addNewItem(Object obj) {
+        if (obj.getClass().equals(ReplaceData.class)) {
+            add((ReplaceData) obj);
+        }
     }
 
     public void init() {

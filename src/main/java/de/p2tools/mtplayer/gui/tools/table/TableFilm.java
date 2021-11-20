@@ -41,12 +41,10 @@ import javafx.util.Callback;
 public class TableFilm {
 
     private final ProgData progData;
-    //    private final BooleanProperty geoMelden;
     private final BooleanProperty small;
 
     public TableFilm(ProgData progData) {
         this.progData = progData;
-//        geoMelden = ProgConfig.SYSTEM_MARK_GEO;
         small = ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM;
     }
 
@@ -162,8 +160,6 @@ public class TableFilm {
 
                 final Button btnPlay;
                 final Button btnSave;
-//                final Button btnBookmark;
-
 
                 btnPlay = new Button("");
                 btnPlay.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_FILM_PLAY));
@@ -171,16 +167,11 @@ public class TableFilm {
                 btnSave = new Button("");
                 btnSave.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_FILM_SAVE));
 
-//                btnBookmark = new Button("");
-//                btnBookmark.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_FILM_BOOKMARK));
-
                 if (small.get()) {
                     btnPlay.setMaxHeight(18);
                     btnPlay.setMinHeight(18);
                     btnSave.setMaxHeight(18);
                     btnSave.setMinHeight(18);
-//                    btnBookmark.setMaxHeight(18);
-//                    btnBookmark.setMinHeight(18);
                 }
 
                 btnPlay.setOnAction((ActionEvent event) -> {
@@ -189,9 +180,6 @@ public class TableFilm {
                 btnSave.setOnAction(event -> {
                     ProgData.getInstance().filmlist.saveFilm(film, null);
                 });
-//                btnBookmark.setOnAction(event -> {
-//                    FilmTools.bookmarkFilm(progData, film, !film.isBookmark());
-//                });
                 hbox.getChildren().addAll(btnPlay, btnSave/*, btnBookmark*/);
                 setGraphic(hbox);
             }

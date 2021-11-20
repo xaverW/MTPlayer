@@ -392,16 +392,14 @@ public class ProgConfig extends PDataProgConfig {
         final SelectedFilter akt_sf = progData.storedFilters.getActFilterSettings();//akt-Filter
         akt_sf.setName(StoredFilters.SELECTED_FILTER_NAME);// nur zur Info im Config-File
         configFile.addConfigs(akt_sf);
-
         configFile.addConfigs(progData.storedFilters.getStoredFilterList());//Filterprofile
+
         configFile.addConfigs(progData.aboList);//Abos
         configFile.addConfigs(progData.blackList);//Blacklist
+        configFile.addConfigs(progData.replaceList);//Replacelist
 
 
-//        progData.replaceList.stream().forEach(replaceData -> {
-//            replaceData.setXmlFromProps();
-//            configFile.addConfigs(replaceData);
-//        });
+        configFile.addConfigs(progData.downloadList);//Downloadlist
 
 //        for (final Download download : progData.downloadList) {
 //            if (download.isStateStoped()) {

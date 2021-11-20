@@ -17,12 +17,17 @@
 package de.p2tools.mtplayer.controller.data.download;
 
 import de.p2tools.mtplayer.tools.Data;
+import de.p2tools.p2Lib.configFile.config.*;
+import de.p2tools.p2Lib.configFile.pData.PDataSample;
 import de.p2tools.p2Lib.tools.date.PDate;
 import de.p2tools.p2Lib.tools.date.PDateFactory;
+import de.p2tools.p2Lib.tools.date.PDateProperty;
 import javafx.application.Platform;
 import javafx.beans.property.*;
 
-public class DownloadProps extends DownloadXml {
+import java.util.ArrayList;
+
+public class DownloadProps extends PDataSample<Download> {
 
     private final IntegerProperty no = new SimpleIntegerProperty(DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED);
     private final IntegerProperty filmNr = new SimpleIntegerProperty(DownloadConstants.FILM_NUMBER_NOT_FOUND);
@@ -40,7 +45,7 @@ public class DownloadProps extends DownloadXml {
     private final StringProperty bandwidth = new SimpleStringProperty("");
 
     private final DownloadSize downloadSize = new DownloadSize();
-    private final ObjectProperty<PDate> filmDate = new SimpleObjectProperty<>(new PDate(0));
+    private final PDateProperty filmDate = new PDateProperty(new PDate(0));
 
     private final StringProperty time = new SimpleStringProperty("");
     private final IntegerProperty durationMinute = new SimpleIntegerProperty(0);
@@ -80,8 +85,66 @@ public class DownloadProps extends DownloadXml {
             destFileName, destPath, destPathFile,
             type, source, placedBack, infoFile, subtitle};
 
+    public static final String TAG = "Download";
+
     DownloadProps() {
     }
+
+    @Override
+    public String getTag() {
+        return TAG;
+    }
+
+    @Override
+    public String getComment() {
+        return "SetData";
+    }
+
+    @Override
+    public Config[] getConfigsArr() {
+        ArrayList<Config> list = new ArrayList<>();
+        list.add(new ConfigIntPropExtra("no", DownloadFieldNames.DOWNLOAD_NR, no));
+        list.add(new ConfigIntPropExtra("filmNr", DownloadFieldNames.DOWNLOAD_NR, filmNr));
+        list.add(new ConfigStringPropExtra("aboName", DownloadFieldNames.DOWNLOAD_NR, aboName));
+        list.add(new ConfigStringPropExtra("channel", DownloadFieldNames.DOWNLOAD_NR, channel));
+        list.add(new ConfigStringPropExtra("theme", DownloadFieldNames.DOWNLOAD_NR, theme));
+        list.add(new ConfigStringPropExtra("title", DownloadFieldNames.DOWNLOAD_NR, title));
+        list.add(new ConfigIntPropExtra("state", DownloadFieldNames.DOWNLOAD_NR, state));
+        list.add(new ConfigIntPropExtra("guiState", DownloadFieldNames.DOWNLOAD_NR, guiState));
+        list.add(new ConfigDoublePropExtra("progress", DownloadFieldNames.DOWNLOAD_NR, progress));
+        list.add(new ConfigDoublePropExtra("guiProgress", DownloadFieldNames.DOWNLOAD_NR, guiProgress));
+        list.add(new ConfigStringPropExtra("remaining", DownloadFieldNames.DOWNLOAD_NR, remaining));
+        list.add(new ConfigStringPropExtra("bandwidth", DownloadFieldNames.DOWNLOAD_NR, bandwidth));
+        list.add(new ConfigPDateProp("filmDate", DownloadFieldNames.DOWNLOAD_NR, filmDate));
+        list.add(new ConfigStringPropExtra("time", DownloadFieldNames.DOWNLOAD_NR, time));
+        list.add(new ConfigIntPropExtra("durationMinute", DownloadFieldNames.DOWNLOAD_NR, durationMinute));
+        list.add(new ConfigBoolPropExtra("hd", DownloadFieldNames.DOWNLOAD_NR, hd));
+        list.add(new ConfigBoolPropExtra("ut", DownloadFieldNames.DOWNLOAD_NR, ut));
+        list.add(new ConfigBoolPropExtra("geoBlocked", DownloadFieldNames.DOWNLOAD_NR, geoBlocked));
+        list.add(new ConfigStringPropExtra("filmUrl", DownloadFieldNames.DOWNLOAD_NR, filmUrl));
+        list.add(new ConfigStringPropExtra("historyUrl", DownloadFieldNames.DOWNLOAD_NR, historyUrl));
+        list.add(new ConfigStringPropExtra("url", DownloadFieldNames.DOWNLOAD_NR, url));
+        list.add(new ConfigStringPropExtra("urlRtmp", DownloadFieldNames.DOWNLOAD_NR, urlRtmp));
+        list.add(new ConfigStringPropExtra("urlSubtitle", DownloadFieldNames.DOWNLOAD_NR, urlSubtitle));
+        list.add(new ConfigStringPropExtra("setDataId", DownloadFieldNames.DOWNLOAD_NR, setDataId));
+        list.add(new ConfigStringPropExtra("program", DownloadFieldNames.DOWNLOAD_NR, program));
+        list.add(new ConfigStringPropExtra("programCall", DownloadFieldNames.DOWNLOAD_NR, programCall));
+        list.add(new ConfigStringPropExtra("programCallArray", DownloadFieldNames.DOWNLOAD_NR, programCallArray));
+        list.add(new ConfigBoolPropExtra("programRestart", DownloadFieldNames.DOWNLOAD_NR, programRestart));
+        list.add(new ConfigBoolPropExtra("programDownloadmanager", DownloadFieldNames.DOWNLOAD_NR, programDownloadmanager));
+        list.add(new ConfigStringPropExtra("startTime", DownloadFieldNames.DOWNLOAD_NR, startTime));
+        list.add(new ConfigStringPropExtra("destFileName", DownloadFieldNames.DOWNLOAD_NR, destFileName));
+        list.add(new ConfigStringPropExtra("destPath", DownloadFieldNames.DOWNLOAD_NR, destPath));
+        list.add(new ConfigStringPropExtra("destPathFile", DownloadFieldNames.DOWNLOAD_NR, destPathFile));
+        list.add(new ConfigStringPropExtra("type", DownloadFieldNames.DOWNLOAD_NR, type));
+        list.add(new ConfigStringPropExtra("source", DownloadFieldNames.DOWNLOAD_NR, source));
+        list.add(new ConfigBoolPropExtra("placedBack", DownloadFieldNames.DOWNLOAD_NR, placedBack));
+        list.add(new ConfigBoolPropExtra("infoFile", DownloadFieldNames.DOWNLOAD_NR, infoFile));
+        list.add(new ConfigBoolPropExtra("subtitle", DownloadFieldNames.DOWNLOAD_NR, subtitle));
+
+        return list.toArray(new Config[]{});
+    }
+
 
     public PDate getFilmDate() {
         return filmDate.get();
@@ -553,84 +616,6 @@ public class DownloadProps extends DownloadXml {
         this.subtitle.set(subtitle);
     }
 
-    public void setPropsFromXml() {
-
-        setAboName(arr[DOWNLOAD_ABO]);
-        setChannel(arr[DOWNLOAD_SENDER]);
-        setTheme(arr[DOWNLOAD_THEME]);
-        setTitle(arr[DOWNLOAD_TITLE]);
-
-        setFilmDate(arr[DOWNLOAD_DATE], arr[DOWNLOAD_TIME]);
-        setTime(arr[DOWNLOAD_TIME]);
-
-        int dur;
-        try {
-            dur = Integer.parseInt(arr[DOWNLOAD_DURATION]);
-        } catch (final Exception ex) {
-            dur = 0;
-        }
-        setDurationMinute(dur);
-
-        setHd(Boolean.parseBoolean(arr[DOWNLOAD_HD]));
-        setUt(Boolean.parseBoolean(arr[DOWNLOAD_UT]));
-        setGeoBlocked(Boolean.parseBoolean(arr[DOWNLOAD_GEO]));
-        setFilmUrl(arr[DOWNLOAD_FILM_URL]);
-        setHistoryUrl(arr[DOWNLOAD_HISTORY_URL]);
-        setUrl(arr[DOWNLOAD_URL]);
-        setUrlRtmp(arr[DOWNLOAD_URL_RTMP]);
-        setSubtitle(Boolean.parseBoolean(arr[DOWNLOAD_URL_SUBTITLE]));
-        setSetDataId(arr[DOWNLOAD_SET_DATA]);
-        setProgram(arr[DOWNLOAD_PROGRAM]);
-        setProgramCall(arr[DOWNLOAD_PROGRAM_CALL]);
-        setProgramCallArray(arr[DOWNLOAD_PROGRAM_CALL_ARRAY]);
-        setDestFileName(arr[DOWNLOAD_DEST_FILE_NAME]);
-        setDestPath(arr[DOWNLOAD_DEST_PATH]);
-        setDestPathFile(arr[DOWNLOAD_DEST_PATH_FILE_NAME]);
-        setStartTime(arr[DOWNLOAD_START_TIME]);
-
-        setType(arr[DOWNLOAD_TYPE]);
-        if (!arr[DOWNLOAD_SOURCE].equals(DownloadConstants.SRC_ABO)) {
-            // bei gelöschten Abos kanns dazu kommen
-            arr[DOWNLOAD_SOURCE] = DownloadConstants.SRC_DOWNLOAD;
-        }
-        setSource(arr[DOWNLOAD_SOURCE]);
-        setPlacedBack(Boolean.parseBoolean(arr[DOWNLOAD_PLACED_BACK]));
-        setInfoFile(Boolean.parseBoolean(arr[DOWNLOAD_INFO_FILE]));
-        setSubtitle(Boolean.parseBoolean(arr[DOWNLOAD_SUBTITLE]));
-        setProgramDownloadmanager(Boolean.parseBoolean(arr[DOWNLOAD_PROGRAM_DOWNLOADMANAGER]));
-    }
-    
-    public void setXmlFromProps() {
-        arr[DOWNLOAD_ABO] = getAboName();
-        arr[DOWNLOAD_SENDER] = getChannel();
-        arr[DOWNLOAD_THEME] = getTheme();
-        arr[DOWNLOAD_TITLE] = getTitle();
-        arr[DOWNLOAD_DATE] = getFilmDate().toString();
-        arr[DOWNLOAD_TIME] = getTime();
-        arr[DOWNLOAD_DURATION] = String.valueOf(getDurationMinute());
-        arr[DOWNLOAD_HD] = String.valueOf(isHd());
-        arr[DOWNLOAD_UT] = String.valueOf(isUt());
-        arr[DOWNLOAD_GEO] = String.valueOf(getGeoBlocked());
-        arr[DOWNLOAD_FILM_URL] = getFilmUrl();
-        arr[DOWNLOAD_HISTORY_URL] = getHistoryUrl();
-        arr[DOWNLOAD_URL] = getUrl();
-        arr[DOWNLOAD_URL_RTMP] = getUrlRtmp();
-        arr[DOWNLOAD_URL_SUBTITLE] = getUrlSubtitle();
-        arr[DOWNLOAD_SET_DATA] = getSetDataId();
-        arr[DOWNLOAD_PROGRAM] = getProgram();
-        arr[DOWNLOAD_PROGRAM_CALL] = getProgramCall();
-        arr[DOWNLOAD_PROGRAM_CALL_ARRAY] = getProgramCallArray();
-        arr[DOWNLOAD_DEST_FILE_NAME] = getDestFileName();
-        arr[DOWNLOAD_DEST_PATH] = getDestPath();
-        arr[DOWNLOAD_DEST_PATH_FILE_NAME] = getDestPathFile();
-        arr[DOWNLOAD_START_TIME] = getStartTime();
-        arr[DOWNLOAD_TYPE] = getType();
-        arr[DOWNLOAD_SOURCE] = getSource();
-        arr[DOWNLOAD_PLACED_BACK] = String.valueOf(getPlacedBack());
-        arr[DOWNLOAD_INFO_FILE] = String.valueOf(getInfoFile());
-        arr[DOWNLOAD_SUBTITLE] = String.valueOf(isSubtitle());
-        arr[DOWNLOAD_PROGRAM_DOWNLOADMANAGER] = String.valueOf(getProgramDownloadmanager());
-    }
 
     public int compareTo(DownloadProps arg0) {
         return Data.sorter.compare(getChannel(), arg0.getChannel());

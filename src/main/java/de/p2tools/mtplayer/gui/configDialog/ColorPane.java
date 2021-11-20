@@ -19,7 +19,6 @@ package de.p2tools.mtplayer.gui.configDialog;
 import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
-import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2Lib.configFile.pConfData.PColorData;
 import de.p2tools.p2Lib.guiTools.PButton;
@@ -65,7 +64,7 @@ public class ColorPane {
 
         Button button = new Button("Alle _Farben zurücksetzen");
         button.setOnAction(event -> {
-            ProgData.getInstance().mTColor.resetAllColors();
+            ProgColorList.resetAllColor();
         });
 
         int row = 0;

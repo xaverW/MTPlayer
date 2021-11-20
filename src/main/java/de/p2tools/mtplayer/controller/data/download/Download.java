@@ -33,7 +33,7 @@ import javafx.application.Platform;
 import java.io.File;
 import java.util.Date;
 
-public final class Download extends DownloadProps {
+public final class Download extends DownloadXml {
 
     private Start start = new Start(this);
     private final DownloadProgram downloadProgram = new DownloadProgram(this);

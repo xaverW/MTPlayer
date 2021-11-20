@@ -17,157 +17,106 @@
 package de.p2tools.mtplayer.controller.data.download;
 
 
-import de.p2tools.mtplayer.tools.Data;
-
-public class DownloadXml extends Data<Download> {
+public class DownloadXml extends DownloadProps {
 
 
-    public static final int DOWNLOAD_NR = 0;
-    public static final int DOWNLOAD_FILM_NR = 1;
-
-    public static final int DOWNLOAD_ABO = 2;
-    public static final int DOWNLOAD_SENDER = 3;
-    public static final int DOWNLOAD_THEME = 4;
-    public static final int DOWNLOAD_TITLE = 5;
-
-    public static final int DOWNLOAD_BUTTON1 = 6;
-    public static final int DOWNLOAD_BUTTON2 = 7;
-
-    public static final int DOWNLOAD_PROGRESS = 8;
-    public static final int DOWNLOAD_REMAINING_TIME = 9;
-    public static final int DOWNLOAD_BANDWIDTH = 10;
-    public static final int DOWNLOAD_SIZE = 11;
-
-    public static final int DOWNLOAD_DATE = 12;
-    public static final int DOWNLOAD_TIME = 13;
-    public static final int DOWNLOAD_DURATION = 14;
-    public static final int DOWNLOAD_HD = 15;
-    public static final int DOWNLOAD_UT = 16;
-    public static final int DOWNLOAD_INTERRUPTED = 17;
-    public static final int DOWNLOAD_GEO = 18;
-
-    public static final int DOWNLOAD_FILM_URL = 19;
-    public static final int DOWNLOAD_HISTORY_URL = 20;
-    public static final int DOWNLOAD_URL = 21;
-    public static final int DOWNLOAD_URL_RTMP = 22;
-    public static final int DOWNLOAD_URL_SUBTITLE = 23;
-
-    public static final int DOWNLOAD_SET_DATA = 24;
-    public static final int DOWNLOAD_PROGRAM = 25;
-    public static final int DOWNLOAD_PROGRAM_CALL = 26;
-    public static final int DOWNLOAD_PROGRAM_CALL_ARRAY = 27;
-    public static final int DOWNLOAD_PROGRAM_RESTART = 28;
-
-    public static final int DOWNLOAD_DEST_FILE_NAME = 29;
-    public static final int DOWNLOAD_DEST_PATH = 30;
-    public static final int DOWNLOAD_DEST_PATH_FILE_NAME = 31;
-
-    public static final int DOWNLOAD_TYPE = 32;
-    public static final int DOWNLOAD_SOURCE = 33;
-    public static final int DOWNLOAD_PLACED_BACK = 34;
-    public static final int DOWNLOAD_INFO_FILE = 35;
-    public static final int DOWNLOAD_SPOTLIGHT = 36;
-    public static final int DOWNLOAD_SUBTITLE = 37;
-    public static final int DOWNLOAD_PROGRAM_DOWNLOADMANAGER = 38;
-    public static final int DOWNLOAD_START_TIME = 39;
-    public static final int DOWNLOAD_REF = 40;
-    public static final String[] COLUMN_NAMES = {"Nr",
-            "Filmnr",
-            "Abo",
-            "Sender",
-            "Thema",
-            "Titel",
-            "",
-            "",
-            "Fortschritt",
-            "Restzeit",
-            "Geschwindigkeit",
-            "Größe [MB]",
-            "Datum",
-            "Zeit",
-            "Dauer [min]",
-            "HD",
-            "UT",
-            "Pause",
-            "Geo",
-            "Url Film",
-            "Url History",
-            "Url",
-            "Url RTMP",
-            "Url Untertitel",
-            "Programmset",
-            "Programm",
-            "Programmaufruf",
-            "Programmaufruf Array",
-            "Restart",
-            "Dateiname",
-            "Pfad",
-            "Pfad-Dateiname",
-            "Art",
-            "Quelle",
-            "Zurückgestellt",
-            "Infodatei",
-            "Spotlight",
-            "Untertitel",
-            "Remote Download",
-            "Startzeit",
-            "Ref"};
-    public static final String[] XML_NAMES = {"Nr",
-            "Filmnr",
-            "Abo",
-            "Sender",
-            "Thema",
-            "Titel",
-
-            "Button-Start",
-            "Button-Del",
-
-            "Fortschritt",
-            "Restzeit",
-            "Geschwindigkeit",
-
-            "Groesse"/* DOWNLOAD_GROESSE */,
-            "Datum",
-            "Zeit",
-            "Dauer",
-            "HD",
-            "UT",
-            "Pause",
-            "Geo",
-            "Film-URL",
-            "History-URL",
-            "URL",
-            "URL-rtmp",
-            "URL-Untertitel",
-            "Programmset",
-            "Programm",
-            "Programmaufruf_",
-            "Programmaufruf",
-            "Restart",
-            "Dateiname",
-            "Pfad",
-            "Pfad-Dateiname",
-            "Art",
-            "Quelle",
-            "Zurueckgestellt",
-            "Infodatei",
-            "Spotlight",
-            "Untertitel",
-            "Remote-Download",
-            "Startzeit",
-            "Ref"};
-    public static final String TAG = "Downlad";
-    public static int MAX_ELEM = XML_NAMES.length;
+    public String[] arr;
 
     public DownloadXml() {
-        arr = makeArr(MAX_ELEM);
+        makeArray();
+    }
+
+    void makeArray() {
+        arr = new String[DownloadFieldNames.MAX_ELEM];
+        for (int i = 0; i < arr.length; ++i) {
+            arr[i] = "";
+        }
+    }
+
+    public void setPropsFromXml() {
+
+        setAboName(arr[DownloadFieldNames.DOWNLOAD_ABO_NO]);
+        setChannel(arr[DownloadFieldNames.DOWNLOAD_SENDER_NO]);
+        setTheme(arr[DownloadFieldNames.DOWNLOAD_THEME_NO]);
+        setTitle(arr[DownloadFieldNames.DOWNLOAD_TITLE_NO]);
+
+        setFilmDate(arr[DownloadFieldNames.DOWNLOAD_DATE_NO], arr[DownloadFieldNames.DOWNLOAD_TIME_NO]);
+        setTime(arr[DownloadFieldNames.DOWNLOAD_TIME_NO]);
+
+        int dur;
+        try {
+            dur = Integer.parseInt(arr[DownloadFieldNames.DOWNLOAD_DURATION_NO]);
+        } catch (final Exception ex) {
+            dur = 0;
+        }
+        setDurationMinute(dur);
+
+        setHd(Boolean.parseBoolean(arr[DownloadFieldNames.DOWNLOAD_HD_NO]));
+        setUt(Boolean.parseBoolean(arr[DownloadFieldNames.DOWNLOAD_UT_NO]));
+        setGeoBlocked(Boolean.parseBoolean(arr[DownloadFieldNames.DOWNLOAD_GEO_NO]));
+        setFilmUrl(arr[DownloadFieldNames.DOWNLOAD_FILM_URL_NO]);
+        setHistoryUrl(arr[DownloadFieldNames.DOWNLOAD_HISTORY_URL_NO]);
+        setUrl(arr[DownloadFieldNames.DOWNLOAD_URL_NO]);
+        setUrlRtmp(arr[DownloadFieldNames.DOWNLOAD_URL_RTMP_NO]);
+        setSubtitle(Boolean.parseBoolean(arr[DownloadFieldNames.DOWNLOAD_URL_SUBTITLE_NO]));
+        setSetDataId(arr[DownloadFieldNames.DOWNLOAD_SET_DATA_NO]);
+        setProgram(arr[DownloadFieldNames.DOWNLOAD_PROGRAM_NO]);
+        setProgramCall(arr[DownloadFieldNames.DOWNLOAD_PROGRAM_CALL_NO]);
+        setProgramCallArray(arr[DownloadFieldNames.DOWNLOAD_PROGRAM_CALL_ARRAY_NO]);
+        setDestFileName(arr[DownloadFieldNames.DOWNLOAD_DEST_FILE_NAME_NO]);
+        setDestPath(arr[DownloadFieldNames.DOWNLOAD_DEST_PATH_NO]);
+        setDestPathFile(arr[DownloadFieldNames.DOWNLOAD_DEST_PATH_FILE_NAME_NO]);
+        setStartTime(arr[DownloadFieldNames.DOWNLOAD_START_TIME_NO]);
+
+        setType(arr[DownloadFieldNames.DOWNLOAD_TYPE_NO]);
+        if (!arr[DownloadFieldNames.DOWNLOAD_SOURCE_NO].equals(DownloadConstants.SRC_ABO)) {
+            // bei gelöschten Abos kanns dazu kommen
+            arr[DownloadFieldNames.DOWNLOAD_SOURCE_NO] = DownloadConstants.SRC_DOWNLOAD;
+        }
+        setSource(arr[DownloadFieldNames.DOWNLOAD_SOURCE_NO]);
+        setPlacedBack(Boolean.parseBoolean(arr[DownloadFieldNames.DOWNLOAD_PLACED_BACK_NO]));
+        setInfoFile(Boolean.parseBoolean(arr[DownloadFieldNames.DOWNLOAD_INFO_FILE_NO]));
+        setSubtitle(Boolean.parseBoolean(arr[DownloadFieldNames.DOWNLOAD_SUBTITLE_NO]));
+        setProgramDownloadmanager(Boolean.parseBoolean(arr[DownloadFieldNames.DOWNLOAD_PROGRAM_DOWNLOADMANAGER_NO]));
+    }
+
+    public void setXmlFromProps() {
+        arr[DownloadFieldNames.DOWNLOAD_ABO_NO] = getAboName();
+        arr[DownloadFieldNames.DOWNLOAD_SENDER_NO] = getChannel();
+        arr[DownloadFieldNames.DOWNLOAD_THEME_NO] = getTheme();
+        arr[DownloadFieldNames.DOWNLOAD_TITLE_NO] = getTitle();
+        arr[DownloadFieldNames.DOWNLOAD_DATE_NO] = getFilmDate().toString();
+        arr[DownloadFieldNames.DOWNLOAD_TIME_NO] = getTime();
+        arr[DownloadFieldNames.DOWNLOAD_DURATION_NO] = String.valueOf(getDurationMinute());
+        arr[DownloadFieldNames.DOWNLOAD_HD_NO] = String.valueOf(isHd());
+        arr[DownloadFieldNames.DOWNLOAD_UT_NO] = String.valueOf(isUt());
+        arr[DownloadFieldNames.DOWNLOAD_GEO_NO] = String.valueOf(getGeoBlocked());
+        arr[DownloadFieldNames.DOWNLOAD_FILM_URL_NO] = getFilmUrl();
+        arr[DownloadFieldNames.DOWNLOAD_HISTORY_URL_NO] = getHistoryUrl();
+        arr[DownloadFieldNames.DOWNLOAD_URL_NO] = getUrl();
+        arr[DownloadFieldNames.DOWNLOAD_URL_RTMP_NO] = getUrlRtmp();
+        arr[DownloadFieldNames.DOWNLOAD_URL_SUBTITLE_NO] = getUrlSubtitle();
+        arr[DownloadFieldNames.DOWNLOAD_SET_DATA_NO] = getSetDataId();
+        arr[DownloadFieldNames.DOWNLOAD_PROGRAM_NO] = getProgram();
+        arr[DownloadFieldNames.DOWNLOAD_PROGRAM_CALL_NO] = getProgramCall();
+        arr[DownloadFieldNames.DOWNLOAD_PROGRAM_CALL_ARRAY_NO] = getProgramCallArray();
+        arr[DownloadFieldNames.DOWNLOAD_DEST_FILE_NAME_NO] = getDestFileName();
+        arr[DownloadFieldNames.DOWNLOAD_DEST_PATH_NO] = getDestPath();
+        arr[DownloadFieldNames.DOWNLOAD_DEST_PATH_FILE_NAME_NO] = getDestPathFile();
+        arr[DownloadFieldNames.DOWNLOAD_START_TIME_NO] = getStartTime();
+        arr[DownloadFieldNames.DOWNLOAD_TYPE_NO] = getType();
+        arr[DownloadFieldNames.DOWNLOAD_SOURCE_NO] = getSource();
+        arr[DownloadFieldNames.DOWNLOAD_PLACED_BACK_NO] = String.valueOf(getPlacedBack());
+        arr[DownloadFieldNames.DOWNLOAD_INFO_FILE_NO] = String.valueOf(getInfoFile());
+        arr[DownloadFieldNames.DOWNLOAD_SUBTITLE_NO] = String.valueOf(isSubtitle());
+        arr[DownloadFieldNames.DOWNLOAD_PROGRAM_DOWNLOADMANAGER_NO] = String.valueOf(getProgramDownloadmanager());
     }
 
     @Override
     public int compareTo(Download arg0) {
         int ret;
-        if ((ret = sorter.compare(arr[DownloadXml.DOWNLOAD_SENDER], arg0.arr[DownloadXml.DOWNLOAD_SENDER])) == 0) {
-            return sorter.compare(arr[DownloadXml.DOWNLOAD_THEME], arg0.arr[DownloadXml.DOWNLOAD_THEME]);
+        if ((ret = sorter.compare(arr[DownloadFieldNames.DOWNLOAD_SENDER_NO], arg0.arr[DownloadFieldNames.DOWNLOAD_SENDER_NO])) == 0) {
+            return sorter.compare(arr[DownloadFieldNames.DOWNLOAD_THEME_NO], arg0.arr[DownloadFieldNames.DOWNLOAD_THEME_NO]);
         }
         return ret;
     }

@@ -88,10 +88,18 @@ public class ProgQuit {
     }
 
     private static void stopAllDownloads() {
+        //erst mal alle Downloads stoppen
         ProgData.getInstance().downloadList.forEach(download -> {
-            if (download.isStateStartedRun())
+            if (download.isStateStartedRun()) {
                 download.stopDownload();
+            }
         });
+
+        //unterbrochene werden gespeichert, dass die Info "Interrupt" erhalten bleibt
+        //Download, (Abo müssen neu angelegt werden)
+        ProgData.getInstance().downloadList.removeIf(download ->
+                (!download.isStateStoped() &&
+                        (download.isAbo() || download.isStateFinished())));
     }
 
     private static void writeTabSettings() {

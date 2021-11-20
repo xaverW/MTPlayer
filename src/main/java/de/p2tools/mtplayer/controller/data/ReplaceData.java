@@ -16,20 +16,23 @@
 
 package de.p2tools.mtplayer.controller.data;
 
-import de.p2tools.mtplayer.tools.Data;
+import de.p2tools.p2Lib.configFile.config.Config;
+import de.p2tools.p2Lib.configFile.config.ConfigStringPropExtra;
+import de.p2tools.p2Lib.configFile.pData.PDataSample;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class ReplaceData extends Data<ReplaceData> {
+import java.util.ArrayList;
+
+public class ReplaceData extends PDataSample<ReplaceData> {
 
     public final static String REPLACE_FROM = "von";
     public final static int REPLACE_FROM_NR = 0;
     public final static String REPLACE_TO = "to";
     public final static int REPLACE_TO_NR = 1;
 
-    public static final String TAG = "Ersetzungstabelle";
-
-    public final static String[] COLUMN_NAMES = {REPLACE_FROM, REPLACE_TO};
+    public static final String TAG = "ReplaceData";
+    //    public final static String[] COLUMN_NAMES = {"von", "to"};//alt!!
     public static final int MAX_ELEM = 2;
     public String[] arr;
 
@@ -37,14 +40,41 @@ public class ReplaceData extends Data<ReplaceData> {
     StringProperty to = new SimpleStringProperty();
 
     public ReplaceData() {
-        arr = super.makeArr(MAX_ELEM);
+        makeArray();
     }
 
     public ReplaceData(String from, String to) {
-        arr = super.makeArr(MAX_ELEM);
+        makeArray();
         arr[REPLACE_FROM_NR] = from;
         arr[REPLACE_TO_NR] = to;
         setPropsFromXml();
+    }
+
+    @Override
+    public String getTag() {
+        return TAG;
+    }
+
+    @Override
+    public String getComment() {
+        return "SetData";
+    }
+
+    @Override
+    public Config[] getConfigsArr() {
+        ArrayList<Config> list = new ArrayList<>();
+        list.add(new ConfigStringPropExtra("from", REPLACE_FROM, from));
+        list.add(new ConfigStringPropExtra("to", REPLACE_TO, to));
+
+        return list.toArray(new Config[]{});
+    }
+
+
+    void makeArray() {
+        arr = new String[MAX_ELEM];
+        for (int i = 0; i < arr.length; ++i) {
+            arr[i] = "";
+        }
     }
 
     public String getFrom() {

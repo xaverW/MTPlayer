@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.gui.tools;
 
 import de.p2tools.mtplayer.controller.data.download.Download;
-import de.p2tools.mtplayer.controller.data.download.DownloadXml;
+import de.p2tools.mtplayer.controller.data.download.DownloadFieldNames;
 import de.p2tools.mtplayer.controller.data.film.FilmXml;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.tools.PSystemUtils;
@@ -34,7 +34,7 @@ public class MTInfoFile {
         if (download.getDestPath().isEmpty()) {
             download.setDestPath(PSystemUtils.getStandardDownloadPath());
         }
-        
+
         PLog.sysLog(new String[]{"Infofile schreiben nach: ", download.getDestPath()});
 
         new File(download.getDestPath()).mkdirs();
@@ -60,7 +60,7 @@ public class MTInfoFile {
                 br.write(P2LibConst.LINE_SEPARATOR);
                 br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_DURATION] + ":   " + download.getFilm().arr[FilmXml.FILM_DURATION]);
                 br.write(P2LibConst.LINE_SEPARATOR);
-                br.write(DownloadXml.COLUMN_NAMES[DownloadXml.DOWNLOAD_SIZE] + ":    " + download.getDownloadSize());
+                br.write(DownloadFieldNames.COLUMN_NAMES[DownloadFieldNames.DOWNLOAD_SIZE_NO] + ":    " + download.getDownloadSize());
                 br.write(P2LibConst.LINE_SEPARATORx2);
 
                 br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_WEBSITE] + P2LibConst.LINE_SEPARATOR);
@@ -68,12 +68,12 @@ public class MTInfoFile {
                 br.write(P2LibConst.LINE_SEPARATORx2);
             }
 
-            br.write(DownloadXml.COLUMN_NAMES[DownloadXml.DOWNLOAD_URL] + P2LibConst.LINE_SEPARATOR);
+            br.write(DownloadFieldNames.COLUMN_NAMES[DownloadFieldNames.DOWNLOAD_URL_NO] + P2LibConst.LINE_SEPARATOR);
             br.write(download.getUrl());
             br.write(P2LibConst.LINE_SEPARATORx2);
             if (!download.getUrlRtmp().isEmpty()
                     && !download.getUrlRtmp().equals(download.getUrl())) {
-                br.write(DownloadXml.COLUMN_NAMES[DownloadXml.DOWNLOAD_URL_RTMP] + P2LibConst.LINE_SEPARATOR);
+                br.write(DownloadFieldNames.COLUMN_NAMES[DownloadFieldNames.DOWNLOAD_URL_RTMP_NO] + P2LibConst.LINE_SEPARATOR);
                 br.write(download.getUrlRtmp());
                 br.write(P2LibConst.LINE_SEPARATORx2);
             }

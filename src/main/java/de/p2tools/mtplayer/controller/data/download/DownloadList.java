@@ -18,6 +18,7 @@ package de.p2tools.mtplayer.controller.data.download;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.SetData;
+import de.p2tools.p2Lib.configFile.pData.PDataList;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -26,8 +27,9 @@ import javafx.collections.FXCollections;
 
 import java.util.*;
 
-public class DownloadList extends SimpleListProperty<Download> {
-
+public class DownloadList extends SimpleListProperty<Download> implements PDataList<Download> {
+    
+    public static final String TAG = "DownloadList";
     private final ProgData progData;
     private final DownloadListAbo downloadListAbo;
     private final DownloadListStarts downloadListStarts;
@@ -42,6 +44,29 @@ public class DownloadList extends SimpleListProperty<Download> {
         this.downloadListStarts = new DownloadListStarts(progData, this);
         this.downloadListStartStop = new DownloadListStartStop(progData, this);
     }
+
+    @Override
+    public String getTag() {
+        return TAG;
+    }
+
+    @Override
+    public String getComment() {
+        return "Liste aller SetData";
+    }
+
+    @Override
+    public Download getNewItem() {
+        return new Download();
+    }
+
+    @Override
+    public void addNewItem(Object obj) {
+        if (obj.getClass().equals(Download.class)) {
+            add((Download) obj);
+        }
+    }
+
 
     public boolean getDownloadsChanged() {
         return downloadsChanged.get();

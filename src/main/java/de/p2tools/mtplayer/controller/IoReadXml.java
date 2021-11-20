@@ -28,7 +28,7 @@ import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.data.abo.Abo;
 import de.p2tools.mtplayer.controller.data.abo.AboFieldNames;
 import de.p2tools.mtplayer.controller.data.download.Download;
-import de.p2tools.mtplayer.controller.data.download.DownloadXml;
+import de.p2tools.mtplayer.controller.data.download.DownloadFieldNames;
 import de.p2tools.mtplayer.controller.filmlist.filmlistUrls.FilmlistUrlData;
 import de.p2tools.mtplayer.controller.mediaDb.MediaCollectionData;
 import de.p2tools.mtplayer.tools.storedFilter.FilterToXml;
@@ -117,10 +117,10 @@ public class IoReadXml implements AutoCloseable {
                                 }
                                 // ende Programgruppen
                                 break;
-                            case ReplaceData.TAG:
+                            case "Ersetzungstabelle":
                                 // Ersetzungstabelle
                                 final ReplaceData replaceData = new ReplaceData();
-                                if (get(parser, ReplaceData.TAG, ReplaceData.COLUMN_NAMES, replaceData.arr)) {
+                                if (get(parser, "Ersetzungstabelle", new String[]{"von", "to"}, replaceData.arr)) {
                                     replaceData.setPropsFromXml();
                                     this.progData.replaceList.add(replaceData);
                                 }
@@ -134,10 +134,10 @@ public class IoReadXml implements AutoCloseable {
                                 }
 
                                 break;
-                            case DownloadXml.TAG:
+                            case "Downlad":
                                 // Downloads
                                 final Download d = new Download();
-                                if (get(parser, DownloadXml.TAG, DownloadXml.XML_NAMES, d.arr)) {
+                                if (get(parser, "Downlad", DownloadFieldNames.XML_NAMES, d.arr)) {
                                     d.setPropsFromXml();
                                     this.progData.downloadList.add(d);
                                 }

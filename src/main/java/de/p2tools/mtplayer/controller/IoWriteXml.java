@@ -21,12 +21,11 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.controller.data.ProgramData;
-import de.p2tools.mtplayer.controller.data.ReplaceData;
 import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.data.abo.Abo;
 import de.p2tools.mtplayer.controller.data.abo.AboFieldNames;
 import de.p2tools.mtplayer.controller.data.download.Download;
-import de.p2tools.mtplayer.controller.data.download.DownloadXml;
+import de.p2tools.mtplayer.controller.data.download.DownloadFieldNames;
 import de.p2tools.mtplayer.controller.filmlist.filmlistUrls.FilmlistUrlData;
 import de.p2tools.mtplayer.controller.mediaDb.MediaCollectionData;
 import de.p2tools.mtplayer.tools.storedFilter.FilterToXml;
@@ -141,7 +140,7 @@ public class IoWriteXml implements AutoCloseable {
     private void xmlWriteReplaceData() {
         progData.replaceList.stream().forEach(replaceData -> {
             replaceData.setXmlFromProps();
-            xmlWriteData(ReplaceData.TAG, ReplaceData.COLUMN_NAMES, replaceData.arr, false);
+            xmlWriteData("Ersetzungstabelle", new String[]{"von", "to"}, replaceData.arr, false);
         });
     }
 
@@ -163,11 +162,11 @@ public class IoWriteXml implements AutoCloseable {
             if (download.isStateStoped()) {
                 // unterbrochene werden gespeichert, dass die Info "Interrupt" erhalten bleibt
                 download.setXmlFromProps();
-                xmlWriteData(DownloadXml.TAG, DownloadXml.XML_NAMES, download.arr, false);
+                xmlWriteData("Downlad", DownloadFieldNames.XML_NAMES, download.arr, false);
             } else if (!download.isAbo() && !download.isStateFinished()) {
                 // Download, (Abo müssen neu angelegt werden)
                 download.setXmlFromProps();
-                xmlWriteData(DownloadXml.TAG, DownloadXml.XML_NAMES, download.arr, false);
+                xmlWriteData("Downlad", DownloadFieldNames.XML_NAMES, download.arr, false);
             }
         }
     }
