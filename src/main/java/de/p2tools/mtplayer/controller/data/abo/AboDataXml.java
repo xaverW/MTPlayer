@@ -19,11 +19,11 @@ package de.p2tools.mtplayer.controller.data.abo;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
 
-public class AboXml extends AboProps {
+public class AboDataXml extends AboDataProps {
 
     public String[] arr;
 
-    public AboXml() {
+    public AboDataXml() {
         arr = makeArr(AboFieldNames.MAX_ELEM);
     }
 

@@ -18,10 +18,10 @@ package de.p2tools.mtplayer.controller.data.download;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.SetData;
-import de.p2tools.mtplayer.controller.data.abo.Abo;
-import de.p2tools.mtplayer.controller.data.film.Film;
+import de.p2tools.mtplayer.controller.data.abo.AboData;
+import de.p2tools.mtplayer.controller.data.film.FilmData;
+import de.p2tools.mtplayer.controller.data.film.FilmDataXml;
 import de.p2tools.mtplayer.controller.data.film.FilmTools;
-import de.p2tools.mtplayer.controller.data.film.FilmXml;
 import de.p2tools.mtplayer.controller.starter.Start;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.tools.PSystemUtils;
@@ -33,26 +33,26 @@ import javafx.application.Platform;
 import java.io.File;
 import java.util.Date;
 
-public final class Download extends DownloadXml {
+public final class DownloadData extends DownloadDataXml {
 
     private Start start = new Start(this);
     private final DownloadProgram downloadProgram = new DownloadProgram(this);
 
-    private Film film = null;
+    private FilmData film = null;
     private SetData setData = null;
-    private Abo abo = null;
+    private AboData abo = null;
     private String errorMessage = "";
 
-    public Download() {
+    public DownloadData() {
     }
 
-    public Download(SetData setData,
-                    Film film,
-                    String source,
-                    Abo abo,
-                    String name,
-                    String path,
-                    String resolution) {
+    public DownloadData(SetData setData,
+                        FilmData film,
+                        String source,
+                        AboData abo,
+                        String name,
+                        String path,
+                        String resolution) {
 
         setFilm(film);
         setSetData(setData, true);
@@ -213,8 +213,8 @@ public final class Download extends DownloadXml {
 
     public void setSizeDownloadFromFilm() {
         if (film != null) {
-            if (film.arr[Film.FILM_URL].equals(getUrl())) {
-                getDownloadSize().setSize(film.arr[Film.FILM_SIZE]);
+            if (film.arr[FilmData.FILM_URL].equals(getUrl())) {
+                getDownloadSize().setSize(film.arr[FilmData.FILM_SIZE]);
             } else {
                 getDownloadSize().setSize("");
             }
@@ -232,11 +232,11 @@ public final class Download extends DownloadXml {
         this.start = start;
     }
 
-    public Film getFilm() {
+    public FilmData getFilm() {
         return film;
     }
 
-    public void setFilm(Film film) {
+    public void setFilm(FilmData film) {
         if (film == null) {
             // bei gespeicherten Downloads kann es den Film nicht mehr geben
             setFilmNr(DownloadConstants.FILM_NUMBER_NOT_FOUND);
@@ -245,28 +245,28 @@ public final class Download extends DownloadXml {
 
         this.film = film;
         setFilmNr(film.getNo());
-        setChannel(film.arr[FilmXml.FILM_CHANNEL]);
-        setTheme(film.arr[FilmXml.FILM_THEME]);
-        setTitle(film.arr[FilmXml.FILM_TITLE]);
-        setFilmUrl(film.arr[FilmXml.FILM_URL]);
+        setChannel(film.arr[FilmDataXml.FILM_CHANNEL]);
+        setTheme(film.arr[FilmDataXml.FILM_THEME]);
+        setTitle(film.arr[FilmDataXml.FILM_TITLE]);
+        setFilmUrl(film.arr[FilmDataXml.FILM_URL]);
         setUrlSubtitle(film.getUrlSubtitle());
 
-        setFilmDate(film.arr[FilmXml.FILM_DATE], film.arr[FilmXml.FILM_TIME]);
-        setTime(film.arr[FilmXml.FILM_TIME]);
+        setFilmDate(film.arr[FilmDataXml.FILM_DATE], film.arr[FilmDataXml.FILM_TIME]);
+        setTime(film.arr[FilmDataXml.FILM_TIME]);
         setDurationMinute(film.getDurationMinute());
 
-        setUrlRtmp(film.arr[FilmXml.FILM_URL_RTMP]);
+        setUrlRtmp(film.arr[FilmDataXml.FILM_URL_RTMP]);
         setHd(film.isHd());
         setUt(film.isUt());
         setHistoryUrl(film.getUrlHistory());
         setGeoBlocked(film.isGeoBlocked());
     }
 
-    public Abo getAbo() {
+    public AboData getAbo() {
         return abo;
     }
 
-    public void setAbo(Abo abo) {
+    public void setAbo(AboData abo) {
         this.abo = abo;
         if (abo != null) {
             setAboName(abo.getName());
@@ -330,8 +330,8 @@ public final class Download extends DownloadXml {
         this.errorMessage = s + errorMessage;
     }
 
-    public Download getCopy() {
-        final Download ret = new Download();
+    public DownloadData getCopy() {
+        final DownloadData ret = new DownloadData();
         for (int i = 0; i < properties.length; ++i) {
             ret.properties[i].setValue(this.properties[i].getValue());
         }
@@ -345,7 +345,7 @@ public final class Download extends DownloadXml {
         return ret;
     }
 
-    public void copyToMe(Download download) {
+    public void copyToMe(DownloadData download) {
         for (int i = 0; i < properties.length; ++i) {
             properties[i].setValue(download.properties[i].getValue());
         }

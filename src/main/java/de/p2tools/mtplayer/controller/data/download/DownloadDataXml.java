@@ -17,12 +17,12 @@
 package de.p2tools.mtplayer.controller.data.download;
 
 
-public class DownloadXml extends DownloadProps {
+public class DownloadDataXml extends DownloadDataProps {
 
 
     public String[] arr;
 
-    public DownloadXml() {
+    public DownloadDataXml() {
         makeArray();
     }
 
@@ -113,7 +113,7 @@ public class DownloadXml extends DownloadProps {
     }
 
     @Override
-    public int compareTo(Download arg0) {
+    public int compareTo(DownloadData arg0) {
         int ret;
         if ((ret = sorter.compare(arr[DownloadFieldNames.DOWNLOAD_SENDER_NO], arg0.arr[DownloadFieldNames.DOWNLOAD_SENDER_NO])) == 0) {
             return sorter.compare(arr[DownloadFieldNames.DOWNLOAD_THEME_NO], arg0.arr[DownloadFieldNames.DOWNLOAD_THEME_NO]);

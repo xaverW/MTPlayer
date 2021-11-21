@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.controller.data.abo;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.SetData;
-import de.p2tools.mtplayer.controller.data.film.Film;
+import de.p2tools.mtplayer.controller.data.film.FilmData;
 import de.p2tools.mtplayer.tools.Data;
 import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
 import de.p2tools.p2Lib.configFile.config.*;
@@ -29,13 +29,13 @@ import javafx.beans.property.*;
 
 import java.util.ArrayList;
 
-public class AboProps extends PDataSample<Abo> implements Comparable<Abo> {
+public class AboDataProps extends PDataSample<AboData> implements Comparable<AboData> {
 
     private final IntegerProperty no = new SimpleIntegerProperty(0);
     private final BooleanProperty active = new SimpleBooleanProperty(true);
     private final StringProperty name = new SimpleStringProperty("");
     private final StringProperty description = new SimpleStringProperty("");
-    private final StringProperty resolution = new SimpleStringProperty(Film.RESOLUTION_NORMAL);
+    private final StringProperty resolution = new SimpleStringProperty(FilmData.RESOLUTION_NORMAL);
     private final StringProperty channel = new SimpleStringProperty("");
     private final StringProperty theme = new SimpleStringProperty("");
     private final BooleanProperty themeExact = new SimpleBooleanProperty(true);
@@ -372,7 +372,7 @@ public class AboProps extends PDataSample<Abo> implements Comparable<Abo> {
     }
 
 
-    public int compareTo(AboProps arg0) {
+    public int compareTo(AboDataProps arg0) {
         return Data.sorter.compare(getName(), arg0.getName());
     }
 

@@ -17,14 +17,14 @@
 package de.p2tools.mtplayer.controller.starter;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.data.download.Download;
+import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.tools.SizeTools;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.guiTools.pNotification.PNotification;
 
 
 public class MTNotification {
-    public static void addNotification(Download download, boolean error) {
+    public static void addNotification(DownloadData download, boolean error) {
         String text = ("Film:   " + download.getTitle() + P2LibConst.LINE_SEPARATOR +
                 "Sender: " + download.getChannel() + P2LibConst.LINE_SEPARATOR +
                 "Größe:  " + SizeTools.humanReadableByteCount(download.getDownloadSize().getFilmSize(), true) + P2LibConst.LINE_SEPARATOR +

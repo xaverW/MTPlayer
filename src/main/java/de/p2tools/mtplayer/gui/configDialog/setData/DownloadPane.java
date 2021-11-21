@@ -18,7 +18,7 @@
 package de.p2tools.mtplayer.gui.configDialog.setData;
 
 import de.p2tools.mtplayer.controller.data.SetData;
-import de.p2tools.mtplayer.controller.data.film.Film;
+import de.p2tools.mtplayer.controller.data.film.FilmData;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
@@ -133,13 +133,13 @@ public class DownloadPane {
 
     private void setResolution() {
         if (rbHeight.isSelected()) {
-            setData.setResolution(Film.RESOLUTION_NORMAL);
+            setData.setResolution(FilmData.RESOLUTION_NORMAL);
         }
         if (rbHd.isSelected()) {
-            setData.setResolution(Film.RESOLUTION_HD);
+            setData.setResolution(FilmData.RESOLUTION_HD);
         }
         if (rbLow.isSelected()) {
-            setData.setResolution(Film.RESOLUTION_SMALL);
+            setData.setResolution(FilmData.RESOLUTION_SMALL);
         }
     }
 
@@ -152,10 +152,10 @@ public class DownloadPane {
             txtSuffix.textProperty().bindBidirectional(setData.suffixProperty());
 
             switch (setData.getResolution()) {
-                case Film.RESOLUTION_HD:
+                case FilmData.RESOLUTION_HD:
                     rbHd.setSelected(true);
                     break;
-                case Film.RESOLUTION_SMALL:
+                case FilmData.RESOLUTION_SMALL:
                     rbLow.setSelected(true);
                     break;
                 default:

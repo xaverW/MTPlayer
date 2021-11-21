@@ -20,8 +20,8 @@ package de.p2tools.mtplayer;
 import de.p2tools.mtplayer.controller.ProgQuit;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.download.Download;
-import de.p2tools.mtplayer.controller.data.film.Film;
+import de.p2tools.mtplayer.controller.data.download.DownloadData;
+import de.p2tools.mtplayer.controller.data.film.FilmData;
 import de.p2tools.mtplayer.controller.data.film.Filmlist;
 import de.p2tools.mtplayer.controller.starter.MTNotification;
 import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
@@ -146,7 +146,7 @@ public class MTPTester {
 
             final Button btnNotify = new Button("Notify");
             btnNotify.setMaxWidth(Double.MAX_VALUE);
-            btnNotify.setOnAction(a -> MTNotification.addNotification(new Download(), true));
+            btnNotify.setOnAction(a -> MTNotification.addNotification(new DownloadData(), true));
 
             final Button btnText = new Button("change text");
             btnText.setMaxWidth(Double.MAX_VALUE);
@@ -215,7 +215,7 @@ public class MTPTester {
         logList.add("Größe vorher:  " + hashSet.size());
 
         PDuration.counterStart("fillHash");
-        hashSet.addAll(filmlist.stream().map(Film::getUrlHistory).collect(Collectors.toList()));
+        hashSet.addAll(filmlist.stream().map(FilmData::getUrlHistory).collect(Collectors.toList()));
         PDuration.counterStop("fillHash");
 
         logList.add("Größe nachher: " + hashSet.size());
@@ -288,7 +288,7 @@ public class MTPTester {
         final String DESCRIPTION = "*****";
         int count = 0;
         int countDesc = 0;
-        for (final Film film : ProgData.getInstance().filmlist) {
+        for (final FilmData film : ProgData.getInstance().filmlist) {
 
             if (!checkDate(film, description)) {
                 ++count;
@@ -311,7 +311,7 @@ public class MTPTester {
         int countTheme = 0, countTitle = 0, countDescreption = 0;
 
         try {
-            for (final Film film : filmlist) {
+            for (final FilmData film : filmlist) {
                 ++i;
                 if (i % 10_000 == 0) {
                     System.out.println("fertig: " + i);
@@ -344,9 +344,9 @@ public class MTPTester {
         final Filmlist filmlist = progData.filmlist;
 
         try {
-            for (final Film film : filmlist) {
-                film.arr[Film.FILM_TITLE] = cleanUnicode(film.getTitle());
-                film.arr[Film.FILM_THEME] = cleanUnicode(film.getTheme());
+            for (final FilmData film : filmlist) {
+                film.arr[FilmData.FILM_TITLE] = cleanUnicode(film.getTitle());
+                film.arr[FilmData.FILM_THEME] = cleanUnicode(film.getTheme());
                 film.setDescription(cleanUnicode(film.getDescription()));
 
             }
@@ -391,7 +391,7 @@ public class MTPTester {
         return ret;
     }
 
-    private boolean checkDate(final Film film, final long mSeconds) {
+    private boolean checkDate(final FilmData film, final long mSeconds) {
         // true wenn der Film jünger ist und angezeigt werden kann!
         try {
             if (film.filmDate.getTime() != 0) {

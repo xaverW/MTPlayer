@@ -22,11 +22,11 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.data.ProgramData;
 import de.p2tools.mtplayer.controller.data.SetData;
-import de.p2tools.mtplayer.controller.data.download.Download;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
+import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFieldNames;
 import de.p2tools.mtplayer.controller.data.download.DownloadTools;
-import de.p2tools.mtplayer.controller.data.film.Film;
+import de.p2tools.mtplayer.controller.data.film.FilmData;
 import de.p2tools.mtplayer.controller.data.film.FilmTools;
 import de.p2tools.mtplayer.tools.FileNameUtils;
 import de.p2tools.mtplayer.tools.file.GetFile;
@@ -88,11 +88,11 @@ public class DownloadEditDialogController extends PDialogExtra {
     private String fileSize_HD = "";
     private String fileSize_high = "";
     private String fileSize_small = "";
-    private String resolution = Film.RESOLUTION_NORMAL;
+    private String resolution = FilmData.RESOLUTION_NORMAL;
     private final PTimePicker pTimePicker = new PTimePicker();
     private final CheckBox chkStartTime = new CheckBox();
 
-    private final Download download;
+    private final DownloadData download;
     private final boolean isStarted;
     private final String orgProgArray;
     private final String orgPath;
@@ -100,7 +100,7 @@ public class DownloadEditDialogController extends PDialogExtra {
     private final SetData setData;
     BooleanProperty urlProperty = ProgConfig.DOWNLOAD_INFO_DIALOG_SHOW_URL;
 
-    public DownloadEditDialogController(ProgData progData, Download download, boolean isStarted) {
+    public DownloadEditDialogController(ProgData progData, DownloadData download, boolean isStarted) {
         super(progData.primaryStage,
                 ProgConfig.DOWNLOAD_DIALOG_EDIT_SIZE,
                 "Download ändern", true, false);
@@ -190,9 +190,9 @@ public class DownloadEditDialogController extends PDialogExtra {
 
         if (download.getFilm() != null) {
             rbHigh.setDisable(isStarted);
-            rbHigh.setSelected(download.getUrl().equals(download.getFilm().getUrlForResolution(Film.RESOLUTION_NORMAL)));
+            rbHigh.setSelected(download.getUrl().equals(download.getFilm().getUrlForResolution(FilmData.RESOLUTION_NORMAL)));
             fileSize_high = FilmTools.getSizeFromWeb(download.getFilm(),
-                    download.getFilm().getUrlForResolution(Film.RESOLUTION_NORMAL));
+                    download.getFilm().getUrlForResolution(FilmData.RESOLUTION_NORMAL));
             if (!fileSize_high.isEmpty()) {
                 rbHigh.setText(rbHigh.getText() + P2LibConst.LINE_SEPARATOR + "[ " + fileSize_high + " MB ]");
                 rbHigh.setTextAlignment(TextAlignment.CENTER);
@@ -200,9 +200,9 @@ public class DownloadEditDialogController extends PDialogExtra {
 
             if (download.getFilm().isHd()) {
                 rbHd.setDisable(isStarted);
-                rbHd.setSelected(download.getUrl().equals(download.getFilm().getUrlForResolution(Film.RESOLUTION_HD)));
+                rbHd.setSelected(download.getUrl().equals(download.getFilm().getUrlForResolution(FilmData.RESOLUTION_HD)));
                 fileSize_HD = FilmTools.getSizeFromWeb(download.getFilm(),
-                        download.getFilm().getUrlForResolution(Film.RESOLUTION_HD));
+                        download.getFilm().getUrlForResolution(FilmData.RESOLUTION_HD));
                 if (!fileSize_HD.isEmpty()) {
                     rbHd.setText(rbHd.getText() + P2LibConst.LINE_SEPARATOR + "[ " + fileSize_HD + " MB ]");
                     rbHd.setTextAlignment(TextAlignment.CENTER);
@@ -211,9 +211,9 @@ public class DownloadEditDialogController extends PDialogExtra {
 
             if (download.getFilm().isSmall()) {
                 rbSmall.setDisable(isStarted);
-                rbSmall.setSelected(download.getUrl().equals(download.getFilm().getUrlForResolution(Film.RESOLUTION_SMALL)));
+                rbSmall.setSelected(download.getUrl().equals(download.getFilm().getUrlForResolution(FilmData.RESOLUTION_SMALL)));
                 fileSize_small = FilmTools.getSizeFromWeb(download.getFilm(),
-                        download.getFilm().getUrlForResolution(Film.RESOLUTION_SMALL));
+                        download.getFilm().getUrlForResolution(FilmData.RESOLUTION_SMALL));
                 if (!fileSize_small.isEmpty()) {
                     rbSmall.setText(rbSmall.getText() + P2LibConst.LINE_SEPARATOR + "[ " + fileSize_small + " MB ]");
                     rbSmall.setTextAlignment(TextAlignment.CENTER);
@@ -222,19 +222,19 @@ public class DownloadEditDialogController extends PDialogExtra {
         }
 
         if (rbHd.isSelected()) {
-            resolution = Film.RESOLUTION_HD;
+            resolution = FilmData.RESOLUTION_HD;
             if (!fileSize_HD.isEmpty()) {
                 // ist wahrscheinlich leer
                 download.setSizeDownloadFromWeb(fileSize_HD);
             }
         } else if (rbSmall.isSelected()) {
-            resolution = Film.RESOLUTION_SMALL;
+            resolution = FilmData.RESOLUTION_SMALL;
             if (!fileSize_small.isEmpty()) {
                 // ist wahrscheinlich leer
                 download.setSizeDownloadFromWeb(fileSize_small);
             }
         } else {
-            resolution = Film.RESOLUTION_NORMAL;
+            resolution = FilmData.RESOLUTION_NORMAL;
             if (!fileSize_high.isEmpty()) {
                 // dann den auch noch
                 download.setSizeDownloadFromWeb(fileSize_high);
@@ -273,7 +273,7 @@ public class DownloadEditDialogController extends PDialogExtra {
         setGrid();
     }
 
-    private boolean downloadDeleteFile(Download dataDownload) {
+    private boolean downloadDeleteFile(DownloadData dataDownload) {
         boolean ret = false;
         try {
             final File file = new File(dataDownload.getDestPathFile());
@@ -308,9 +308,9 @@ public class DownloadEditDialogController extends PDialogExtra {
         download.setPathName(cbPath.getSelectionModel().getSelectedItem(),
                 txt[DownloadFieldNames.DOWNLOAD_DEST_FILE_NAME_NO].getText());
 
-        if ((rbHd.isSelected() && !resolution.equals(Film.RESOLUTION_HD))
-                || (rbSmall.isSelected() && !resolution.equals(Film.RESOLUTION_SMALL))
-                || (rbHigh.isSelected() && !resolution.equals(Film.RESOLUTION_NORMAL))) {
+        if ((rbHd.isSelected() && !resolution.equals(FilmData.RESOLUTION_HD))
+                || (rbSmall.isSelected() && !resolution.equals(FilmData.RESOLUTION_SMALL))
+                || (rbHigh.isSelected() && !resolution.equals(FilmData.RESOLUTION_NORMAL))) {
             // dann wurde die Auflösung geändert -> Film kann nicht weitergeführt werden
             ok = downloadDeleteFile(download);
         } else {
@@ -327,11 +327,11 @@ public class DownloadEditDialogController extends PDialogExtra {
         // RadioButton sind nur enabled wenn "datenDownload.film" vorhanden
         final String res;
         if (rbHd.isSelected()) {
-            res = Film.RESOLUTION_HD;
+            res = FilmData.RESOLUTION_HD;
         } else if (rbSmall.isSelected()) {
-            res = Film.RESOLUTION_SMALL;
+            res = FilmData.RESOLUTION_SMALL;
         } else {
-            res = Film.RESOLUTION_NORMAL;
+            res = FilmData.RESOLUTION_NORMAL;
         }
         download.setUrl(download.getFilm().getUrlForResolution(res));
         download.setUrlRtmp(download.getFilm().getUrlFlvstreamerForResolution(res));
@@ -649,7 +649,7 @@ public class DownloadEditDialogController extends PDialogExtra {
 
         //---------------------------------
         cbx[DownloadFieldNames.DOWNLOAD_SUBTITLE_NO].setSelected(download.isSubtitle());
-        Film film = download.getFilm();
+        FilmData film = download.getFilm();
         if (!isStarted && film != null && !film.getUrlSubtitle().isEmpty()) {
             cbx[DownloadFieldNames.DOWNLOAD_SUBTITLE_NO].setDisable(false);
             final CheckBox boxSub = cbx[DownloadFieldNames.DOWNLOAD_SUBTITLE_NO];
@@ -719,15 +719,15 @@ public class DownloadEditDialogController extends PDialogExtra {
             // muss noch der Programmaufruf neu gebaut werden
             final String res;
             if (rbHd.isSelected()) {
-                res = Film.RESOLUTION_HD;
+                res = FilmData.RESOLUTION_HD;
             } else if (rbSmall.isSelected()) {
-                res = Film.RESOLUTION_SMALL;
+                res = FilmData.RESOLUTION_SMALL;
             } else {
-                res = Film.RESOLUTION_NORMAL;
+                res = FilmData.RESOLUTION_NORMAL;
             }
 
             download.setPathName(cbPath.getSelectionModel().getSelectedItem(), txt[DownloadFieldNames.DOWNLOAD_DEST_FILE_NAME_NO].getText());
-            final Download d = new Download(download.getSetData(), download.getFilm(), download.getSource(), download.getAbo(),
+            final DownloadData d = new DownloadData(download.getSetData(), download.getFilm(), download.getSource(), download.getAbo(),
                     download.getDestFileName(),
                     download.getDestPath(), res);
 

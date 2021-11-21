@@ -23,8 +23,8 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
-import de.p2tools.mtplayer.controller.data.film.Film;
-import de.p2tools.mtplayer.controller.data.film.FilmXml;
+import de.p2tools.mtplayer.controller.data.film.FilmData;
+import de.p2tools.mtplayer.controller.data.film.FilmDataXml;
 import de.p2tools.mtplayer.controller.data.film.Filmlist;
 import de.p2tools.mtplayer.controller.data.film.FilmlistXml;
 import de.p2tools.mtplayer.controller.filmlist.LoadFactory;
@@ -274,13 +274,13 @@ public class ReadFilmlist {
             }
 
             if (jp.isExpectedStartArrayToken()) {
-                final Film film = new Film();
+                final FilmData film = new FilmData();
                 addValue(film, jp);
 
                 ++countAll;
                 countFilm(filmsPerChannelFoundCompleteList, film);
 
-                if (!listChannelIsEmpty && listChannel.contains(film.arr[FilmXml.FILM_CHANNEL])) {
+                if (!listChannelIsEmpty && listChannel.contains(film.arr[FilmDataXml.FILM_CHANNEL])) {
                     // diesen Sender nicht laden
                     countFilm(filmsPerChannelBlocked, film);
                     continue;
@@ -306,47 +306,47 @@ public class ReadFilmlist {
 
     }
 
-    private void countFilm(Map<String, Integer> map, Film film) {
-        if (map.containsKey(film.arr[Film.FILM_CHANNEL])) {
-            map.put(film.arr[Film.FILM_CHANNEL], 1 + map.get(film.arr[Film.FILM_CHANNEL]));
+    private void countFilm(Map<String, Integer> map, FilmData film) {
+        if (map.containsKey(film.arr[FilmData.FILM_CHANNEL])) {
+            map.put(film.arr[FilmData.FILM_CHANNEL], 1 + map.get(film.arr[FilmData.FILM_CHANNEL]));
         } else {
-            map.put(film.arr[Film.FILM_CHANNEL], 1);
+            map.put(film.arr[FilmData.FILM_CHANNEL], 1);
         }
     }
 
-    private void addValue(Film film, JsonParser jp) throws IOException {
-        for (int i = 0; i < FilmXml.JSON_NAMES.length; ++i) {
+    private void addValue(FilmData film, JsonParser jp) throws IOException {
+        for (int i = 0; i < FilmDataXml.JSON_NAMES.length; ++i) {
             String str = jp.nextTextValue();
 
-            switch (FilmXml.JSON_NAMES[i]) {
-                case FilmXml.FILM_NEW:
+            switch (FilmDataXml.JSON_NAMES[i]) {
+                case FilmDataXml.FILM_NEW:
                     // This value is unused...
                     // datenFilm.arr[DatenFilm.FILM_NEU_NR] = value;
                     film.setNewFilm(Boolean.parseBoolean(str));
                     break;
 
-                case FilmXml.FILM_CHANNEL:
+                case FilmDataXml.FILM_CHANNEL:
                     if (!str.isEmpty()) {
                         channel = str.intern();
                     }
-                    film.arr[FilmXml.FILM_CHANNEL] = channel;
+                    film.arr[FilmDataXml.FILM_CHANNEL] = channel;
                     break;
 
-                case FilmXml.FILM_THEME:
+                case FilmDataXml.FILM_THEME:
                     if (!str.isEmpty()) {
                         theme = str.intern();
                     }
-                    film.arr[FilmXml.FILM_THEME] = theme;
+                    film.arr[FilmDataXml.FILM_THEME] = theme;
                     break;
 
                 default:
-                    film.arr[FilmXml.JSON_NAMES[i]] = str;
+                    film.arr[FilmDataXml.JSON_NAMES[i]] = str;
                     break;
             }
 
             /// für die Entwicklungszeit
-            if (film.arr[FilmXml.JSON_NAMES[i]] == null) {
-                film.arr[FilmXml.JSON_NAMES[i]] = "";
+            if (film.arr[FilmDataXml.JSON_NAMES[i]] == null) {
+                film.arr[FilmDataXml.JSON_NAMES[i]] = "";
             }
 
         }
@@ -423,7 +423,7 @@ public class ReadFilmlist {
         }
     }
 
-    private boolean checkDate(Film film, long loadFilmsLastSeconds) {
+    private boolean checkDate(FilmData film, long loadFilmsLastSeconds) {
         // true wenn der Film angezeigt werden kann!
         try {
             if (film.filmDate.getTime() != 0) {
@@ -437,7 +437,7 @@ public class ReadFilmlist {
         return true;
     }
 
-    private boolean checkDuration(Film film, int loadFilmsMinDuration) {
+    private boolean checkDuration(FilmData film, int loadFilmsMinDuration) {
         // true wenn der Film angezeigt werden kann!
         try {
             if (film.getDurationMinute() != 0) {

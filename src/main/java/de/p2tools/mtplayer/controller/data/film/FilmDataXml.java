@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.controller.data.film;
 import de.p2tools.mtplayer.tools.Data;
 import org.apache.commons.lang3.time.FastDateFormat;
 
-public class FilmXml extends Data<FilmXml> {
+public class FilmDataXml extends Data<FilmDataXml> {
 
     static final FastDateFormat sdf_date_time = FastDateFormat.getInstance("dd.MM.yyyyHH:mm:ss");
     static final FastDateFormat sdf_date = FastDateFormat.getInstance("dd.MM.yyyy");
@@ -130,12 +130,12 @@ public class FilmXml extends Data<FilmXml> {
             "",
             ""}; // ist einen Tick schneller, hoffentlich :)
 
-    public FilmXml() {
+    public FilmDataXml() {
         super();
     }
 
     @Override
-    public int compareTo(FilmXml arg0) {
+    public int compareTo(FilmDataXml arg0) {
         int ret;
         if ((ret = sorter.compare(arr[FILM_CHANNEL], arg0.arr[FILM_CHANNEL])) == 0) {
             return sorter.compare(arr[FILM_THEME], arg0.arr[FILM_THEME]);

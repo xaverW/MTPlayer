@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.controller.data;
 import de.p2tools.mtplayer.controller.starter.RuntimeExec;
 import de.p2tools.mtplayer.gui.tools.SetsPrograms;
 
-public class ProgramData extends ProgramProps {
+public class ProgramData extends ProgramDataProps {
 
     public ProgramData() {
         setRestart(false);

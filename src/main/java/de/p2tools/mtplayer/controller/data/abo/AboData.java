@@ -18,10 +18,10 @@ package de.p2tools.mtplayer.controller.data.abo;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.SetData;
-import de.p2tools.mtplayer.controller.data.film.Film;
+import de.p2tools.mtplayer.controller.data.film.FilmData;
 import de.p2tools.mtplayer.tools.storedFilter.Filter;
 
-public class Abo extends AboXml {
+public class AboData extends AboDataXml {
     public int nr;
 
     public Filter fChannel = new Filter();
@@ -31,28 +31,28 @@ public class Abo extends AboXml {
     public Filter fSomewhere = new Filter();
 
 
-    public Abo() {
+    public AboData() {
         // neue Abos sind immer ein
         setActive(true);
-        setResolution(Film.RESOLUTION_NORMAL);
+        setResolution(FilmData.RESOLUTION_NORMAL);
         initFilter();
     }
 
-    public Abo(ProgData progData,
-               String name,
-               String channel,
-               String theme,
-               String themeTitle,
-               String title,
-               String somewhere,
-               int timeRange,
-               int minDurationMinute,
-               int maxDurationMinute,
-               String destination) {
+    public AboData(ProgData progData,
+                   String name,
+                   String channel,
+                   String theme,
+                   String themeTitle,
+                   String title,
+                   String somewhere,
+                   int timeRange,
+                   int minDurationMinute,
+                   int maxDurationMinute,
+                   String destination) {
 
         // neue Abos sind immer ein
         setActive(true);
-        setResolution(Film.RESOLUTION_NORMAL);
+        setResolution(FilmData.RESOLUTION_NORMAL);
         initFilter();
 
         setName(name);
@@ -112,7 +112,7 @@ public class Abo extends AboXml {
     }
 
 
-    public void copyToMe(Abo abo) {
+    public void copyToMe(AboData abo) {
         for (int i = 0; i < AboFieldNames.MAX_ELEM; ++i) {
             this.properties[i].setValue(abo.properties[i].getValue());
         }
@@ -120,8 +120,8 @@ public class Abo extends AboXml {
 //        this.setXmlFromProps();
     }
 
-    public Abo getCopy() {
-        final Abo ret = new Abo();
+    public AboData getCopy() {
+        final AboData ret = new AboData();
         for (int i = 0; i < AboFieldNames.MAX_ELEM; ++i) {
             ret.properties[i].setValue(this.properties[i].getValue());
         }

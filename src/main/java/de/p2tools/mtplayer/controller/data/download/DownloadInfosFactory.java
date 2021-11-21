@@ -18,7 +18,7 @@
 package de.p2tools.mtplayer.controller.data.download;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.abo.Abo;
+import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.tools.file.PFileSize;
 
@@ -145,7 +145,7 @@ public class DownloadInfosFactory {
         final int sumAboList = progData.aboList.size();
         final int sumAboShown = progData.aboGuiController.getAboCount();
 
-        for (final Abo abo : progData.aboList) {
+        for (final AboData abo : progData.aboList) {
             if (abo.isActive()) {
                 ++countOn;
             } else {

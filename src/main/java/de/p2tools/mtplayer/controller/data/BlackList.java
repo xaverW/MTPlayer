@@ -102,14 +102,14 @@ public class BlackList extends SimpleListProperty<BlackData> implements PDataLis
             FilmlistBlackFilterCountHits.countHits(false);
 
             // und dann sortieren
-            Collections.sort(this, Comparator.comparingInt(BlackProps::getCountHits).reversed());
+            Collections.sort(this, Comparator.comparingInt(BlackDataProps::getCountHits).reversed());
 
             // dann die tatsächlichen Trefferzahlen ermitteln
             FilmlistBlackFilterCountHits.countHits(true);
         }
 
         // und dann endgültig sortieren
-        Collections.sort(this, Comparator.comparingInt(BlackProps::getCountHits).reversed());
+        Collections.sort(this, Comparator.comparingInt(BlackDataProps::getCountHits).reversed());
 
         // zum Schluss noch neu nummerieren 1, 2, ...
         int i = 0;

@@ -186,7 +186,7 @@ public class DownloadInfos {
         // davon Anz-Abo, Anz-Down,
         // davon gestartet und warten, laufen, fertig OK, fertig Fehler
 
-        for (final Download download : progData.downloadList) {
+        for (final DownloadData download : progData.downloadList) {
             if (download.getPlacedBack()) {
                 ++placedBack;
             } else {
@@ -224,7 +224,7 @@ public class DownloadInfos {
 
     private synchronized void generateBandwidthInfo() {
         // Liste aller Downloads
-        for (final Download download : progData.downloadList) {
+        for (final DownloadData download : progData.downloadList) {
             if (download.isStateInit()) {
                 // noch nicht gestartet
                 ++numberNotStartedDownloads;

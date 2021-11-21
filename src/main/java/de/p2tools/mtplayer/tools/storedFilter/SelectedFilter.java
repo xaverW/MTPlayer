@@ -17,8 +17,8 @@
 package de.p2tools.mtplayer.tools.storedFilter;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.data.film.Film;
-import de.p2tools.mtplayer.controller.data.film.FilmXml;
+import de.p2tools.mtplayer.controller.data.film.FilmData;
+import de.p2tools.mtplayer.controller.data.film.FilmDataXml;
 import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
 import de.p2tools.p2Lib.tools.log.PDebugLog;
 import javafx.animation.PauseTransition;
@@ -313,7 +313,7 @@ public final class SelectedFilter extends SelectedFilterProps {
         return ret;
     }
 
-    public Predicate<Film> getPredicate() {
+    public Predicate<FilmData> getPredicate() {
         SelectedFilter selectedFilter = this;
 
         Filter fChannel;
@@ -389,7 +389,7 @@ public final class SelectedFilter extends SelectedFilterProps {
             days = 0;
         }
 
-        Predicate<Film> predicate = film -> true;
+        Predicate<FilmData> predicate = film -> true;
 
         if (onlyBookmark) {
             predicate = predicate.and(f -> f.isBookmark());
@@ -411,7 +411,7 @@ public final class SelectedFilter extends SelectedFilterProps {
         }
 
         if (noAbos) {
-            predicate = predicate.and(f -> f.arr[FilmXml.FILM_ABO_NAME].isEmpty());
+            predicate = predicate.and(f -> f.arr[FilmDataXml.FILM_ABO_NAME].isEmpty());
         }
         if (noShown) {
             predicate = predicate.and(f -> !f.isShown());

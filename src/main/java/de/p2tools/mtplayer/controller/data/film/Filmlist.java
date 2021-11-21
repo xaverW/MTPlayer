@@ -34,7 +34,7 @@ import java.util.*;
 import java.util.function.Predicate;
 
 @SuppressWarnings("serial")
-public class Filmlist extends SimpleListProperty<Film> {
+public class Filmlist extends SimpleListProperty<FilmData> {
 
     {
         sdfUtc.setTimeZone(new SimpleTimeZone(SimpleTimeZone.UTC_TIME, "UTC"));
@@ -49,8 +49,8 @@ public class Filmlist extends SimpleListProperty<Film> {
     public String[] sender = {""};
     public String[][] themePerChannel = {{""}};
 
-    private FilteredList<Film> filteredList = null;
-    private SortedList<Film> sortedList = null;
+    private FilteredList<FilmData> filteredList = null;
+    private SortedList<FilmData> sortedList = null;
 
     public Filmlist() {
         super(FXCollections.observableArrayList());
@@ -65,23 +65,23 @@ public class Filmlist extends SimpleListProperty<Film> {
         FilmlistBlackFilter.getBlackFiltered();
     }
 
-    public SortedList<Film> getSortedList() {
+    public SortedList<FilmData> getSortedList() {
         if (sortedList == null || filteredList == null) {
-            filteredList = new FilteredList<Film>(this, p -> true);
+            filteredList = new FilteredList<FilmData>(this, p -> true);
             sortedList = new SortedList<>(filteredList);
         }
         return sortedList;
     }
 
-    public FilteredList<Film> getFilteredList() {
+    public FilteredList<FilmData> getFilteredList() {
         if (sortedList == null || filteredList == null) {
-            filteredList = new FilteredList<Film>(this, p -> true);
+            filteredList = new FilteredList<FilmData>(this, p -> true);
             sortedList = new SortedList<>(filteredList);
         }
         return filteredList;
     }
 
-    public synchronized void filteredListSetPred(Predicate<Film> predicate) {
+    public synchronized void filteredListSetPred(Predicate<FilmData> predicate) {
         filteredList.setPredicate(predicate);
     }
 
@@ -89,33 +89,33 @@ public class Filmlist extends SimpleListProperty<Film> {
         return metaData[FilmlistXml.FILMLIST_ID_NR];
     }
 
-    public synchronized void saveFilm(Film film, SetData pSet) {
+    public synchronized void saveFilm(FilmData film, SetData pSet) {
         FilmTools.saveFilm(film, pSet);
     }
 
-    public synchronized void saveFilm(ArrayList<Film> list, SetData pSet) {
+    public synchronized void saveFilm(ArrayList<FilmData> list, SetData pSet) {
         FilmTools.saveFilm(list, pSet);
     }
 
 
-    public synchronized boolean importFilm(Film film) {
+    public synchronized boolean importFilm(FilmData film) {
         // hier nur beim Laden aus einer fertigen Filmliste mit der GUI
         // die Filme sind schon sortiert, nur die Nummer muss noch ergänzt werden
         film.no = nr++;
         return addInit(film);
     }
 
-    public synchronized boolean importFilmOnlyWithNr(Film film) {
+    public synchronized boolean importFilmOnlyWithNr(FilmData film) {
         // hier nur beim Laden aus einer fertigen Filmliste mit der GUI
         // die Filme sind schon sortiert, nur die Nummer muss noch ergänzt werden
         film.no = nr++;
         return add(film);
     }
 
-    private void addHash(Film f, HashSet<String> hash, boolean index) {
-        if (f.arr[FilmXml.FILM_CHANNEL].equals(ProgConst.KIKA)) {
+    private void addHash(FilmData f, HashSet<String> hash, boolean index) {
+        if (f.arr[FilmDataXml.FILM_CHANNEL].equals(ProgConst.KIKA)) {
             // beim KIKA ändern sich die URLs laufend
-            hash.add(f.arr[FilmXml.FILM_THEME] + f.arr[FilmXml.FILM_TITLE]);
+            hash.add(f.arr[FilmDataXml.FILM_THEME] + f.arr[FilmDataXml.FILM_TITLE]);
         } else if (index) {
             hash.add(f.getIndex());
         } else {
@@ -132,14 +132,14 @@ public class Filmlist extends SimpleListProperty<Film> {
         final HashSet<String> hash = new HashSet<>(addList.size() + 1, 0.75F);
 
         if (replace) {
-            addList.forEach((Film f) -> addHash(f, hash, index));
+            addList.forEach((FilmData f) -> addHash(f, hash, index));
 
-            final Iterator<Film> it = iterator();
+            final Iterator<FilmData> it = iterator();
             while (it.hasNext()) {
-                final Film f = it.next();
-                if (f.arr[FilmXml.FILM_CHANNEL].equals(ProgConst.KIKA)) {
+                final FilmData f = it.next();
+                if (f.arr[FilmDataXml.FILM_CHANNEL].equals(ProgConst.KIKA)) {
                     // beim KIKA ändern sich die URLs laufend
-                    if (hash.contains(f.arr[FilmXml.FILM_THEME] + f.arr[FilmXml.FILM_TITLE])) {
+                    if (hash.contains(f.arr[FilmDataXml.FILM_THEME] + f.arr[FilmDataXml.FILM_TITLE])) {
                         it.remove();
                     }
                 } else if (index) {
@@ -156,9 +156,9 @@ public class Filmlist extends SimpleListProperty<Film> {
             // ==============================================
             forEach(f -> addHash(f, hash, index));
 
-            for (final Film f : addList) {
-                if (f.arr[FilmXml.FILM_CHANNEL].equals(ProgConst.KIKA)) {
-                    if (!hash.contains(f.arr[FilmXml.FILM_THEME] + f.arr[FilmXml.FILM_TITLE])) {
+            for (final FilmData f : addList) {
+                if (f.arr[FilmDataXml.FILM_CHANNEL].equals(ProgConst.KIKA)) {
+                    if (!hash.contains(f.arr[FilmDataXml.FILM_THEME] + f.arr[FilmDataXml.FILM_TITLE])) {
                         addInit(f);
                     }
                 } else if (index) {
@@ -175,7 +175,7 @@ public class Filmlist extends SimpleListProperty<Film> {
 
     public synchronized void markGeoBlocked() {
         // geblockte Filme markieren
-        this.parallelStream().forEach((Film f) -> f.setGeoBlocked());
+        this.parallelStream().forEach((FilmData f) -> f.setGeoBlocked());
     }
 
     int countDouble = 0;
@@ -191,7 +191,7 @@ public class Filmlist extends SimpleListProperty<Film> {
         PDuration.counterStart("Filme markieren");
         try {
             countDouble = 0;
-            this.stream().forEach((Film f) -> {
+            this.stream().forEach((FilmData f) -> {
 
                 f.setGeoBlocked();
                 f.setInFuture();
@@ -212,7 +212,7 @@ public class Filmlist extends SimpleListProperty<Film> {
         return countDouble;
     }
 
-    private boolean addInit(Film film) {
+    private boolean addInit(FilmData film) {
         film.init();
         return add(film);
     }
@@ -227,7 +227,7 @@ public class Filmlist extends SimpleListProperty<Film> {
         Collections.sort(this);
         // und jetzt noch die Nummerierung in Ordnung bringen
         int i = 1;
-        for (final Film film : this) {
+        for (final FilmData film : this) {
             film.no = i++;
         }
     }
@@ -236,27 +236,27 @@ public class Filmlist extends SimpleListProperty<Film> {
         System.arraycopy(filmlist.metaData, 0, metaData, 0, FilmlistXml.MAX_ELEM);
     }
 
-    public synchronized Film getFilmByUrl(final String url) {
-        final Optional<Film> opt =
-                parallelStream().filter(f -> f.arr[FilmXml.FILM_URL].equalsIgnoreCase(url)).findAny();
+    public synchronized FilmData getFilmByUrl(final String url) {
+        final Optional<FilmData> opt =
+                parallelStream().filter(f -> f.arr[FilmDataXml.FILM_URL].equalsIgnoreCase(url)).findAny();
         return opt.orElse(null);
     }
 
     public synchronized void getTheme(String sender, LinkedList<String> list) {
-        stream().filter(film -> film.arr[FilmXml.FILM_CHANNEL].equals(sender))
-                .filter(film -> !list.contains(film.arr[FilmXml.FILM_THEME]))
-                .forEach(film -> list.add(film.arr[FilmXml.FILM_THEME]));
+        stream().filter(film -> film.arr[FilmDataXml.FILM_CHANNEL].equals(sender))
+                .filter(film -> !list.contains(film.arr[FilmDataXml.FILM_THEME]))
+                .forEach(film -> list.add(film.arr[FilmDataXml.FILM_THEME]));
     }
 
-    public synchronized Film getFilmByUrl_small_high_hd(String url) {
+    public synchronized FilmData getFilmByUrl_small_high_hd(String url) {
         // Problem wegen gleicher URLs
         // wird versucht, einen Film mit einer kleinen/Hoher/HD-URL zu finden
 
         return parallelStream().filter(f ->
 
-                f.arr[FilmXml.FILM_URL].equals(url) ||
-                        f.getUrlForResolution(Film.RESOLUTION_HD).equals(url) ||
-                        f.getUrlForResolution(Film.RESOLUTION_SMALL).equals(url)
+                f.arr[FilmDataXml.FILM_URL].equals(url) ||
+                        f.getUrlForResolution(FilmData.RESOLUTION_HD).equals(url) ||
+                        f.getUrlForResolution(FilmData.RESOLUTION_SMALL).equals(url)
 
         ).findFirst().orElse(null);
 
@@ -397,7 +397,7 @@ public class Filmlist extends SimpleListProperty<Film> {
     }
 
     public synchronized long countNewFilms() {
-        return stream().filter(Film::isNewFilm).count();
+        return stream().filter(FilmData::isNewFilm).count();
     }
 
     /**
@@ -432,9 +432,9 @@ public class Filmlist extends SimpleListProperty<Film> {
 
         // alle Themen
         String filmTheme, filmChannel;
-        for (final Film film : this) {
-            filmChannel = film.arr[FilmXml.FILM_CHANNEL];
-            filmTheme = film.arr[FilmXml.FILM_THEME];
+        for (final FilmData film : this) {
+            filmChannel = film.arr[FilmDataXml.FILM_CHANNEL];
+            filmTheme = film.arr[FilmDataXml.FILM_THEME];
             // hinzufügen
             if (!hashSet[0].contains(filmTheme)) {
                 hashSet[0].add(filmTheme);

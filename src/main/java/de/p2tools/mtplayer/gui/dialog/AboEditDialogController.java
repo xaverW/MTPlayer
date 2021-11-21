@@ -21,9 +21,9 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.data.SetData;
-import de.p2tools.mtplayer.controller.data.abo.Abo;
+import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.abo.AboFieldNames;
-import de.p2tools.mtplayer.controller.data.film.Film;
+import de.p2tools.mtplayer.controller.data.film.FilmData;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
 import de.p2tools.mtplayer.tools.storedFilter.FilterCheckRegEx;
@@ -81,11 +81,11 @@ public class AboEditDialogController extends PDialogExtra {
     private BooleanProperty okProp = new SimpleBooleanProperty(true);
     private String memory = "";
 
-    private final ObservableList<Abo> aboList;
-    private final Abo aboCopy;
+    private final ObservableList<AboData> aboList;
+    private final AboData aboCopy;
     private ProgData progData;
 
-    public AboEditDialogController(ProgData progData, Abo abo) {
+    public AboEditDialogController(ProgData progData, AboData abo) {
         //hier wird ein neues Abo angelegt!
         super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE,
                 "Abo anlegen", false, false);
@@ -100,7 +100,7 @@ public class AboEditDialogController extends PDialogExtra {
         initDialog();
     }
 
-    public AboEditDialogController(ProgData progData, SelectedFilter selectedFilter, Abo abo) {
+    public AboEditDialogController(ProgData progData, SelectedFilter selectedFilter, AboData abo) {
         //hier wird ein Abo an den Filter angepasst
         super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE,
                 "Abo anlegen", false, false);
@@ -135,7 +135,7 @@ public class AboEditDialogController extends PDialogExtra {
         initDialog();
     }
 
-    public AboEditDialogController(ProgData progData, ObservableList<Abo> aboList) {
+    public AboEditDialogController(ProgData progData, ObservableList<AboData> aboList) {
         //hier werden Abos geändert
         super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE,
                 "Abo ändern", false, false);
@@ -206,7 +206,7 @@ public class AboEditDialogController extends PDialogExtra {
             }
 
             // dann wird das Feld bei allen Abos geändert
-            for (final Abo abo : aboList) {
+            for (final AboData abo : aboList) {
                 if (i == AboFieldNames.ABO_MIN_DURATION_NO) {
                     // duration MIN dann AUCH max
                     abo.properties[AboFieldNames.ABO_MAX_DURATION_NO].setValue(aboCopy.properties[AboFieldNames.ABO_MAX_DURATION_NO].getValue());
@@ -289,14 +289,14 @@ public class AboEditDialogController extends PDialogExtra {
                 rbHigh.setToggleGroup(tg);
                 rbLow.setToggleGroup(tg);
                 switch (aboCopy.getResolution()) {
-                    case Film.RESOLUTION_HD:
+                    case FilmData.RESOLUTION_HD:
                         rbHd.setSelected(true);
                         break;
-                    case Film.RESOLUTION_SMALL:
+                    case FilmData.RESOLUTION_SMALL:
                         rbLow.setSelected(true);
                         break;
                     default:
-                        aboCopy.setResolution(Film.RESOLUTION_NORMAL);
+                        aboCopy.setResolution(FilmData.RESOLUTION_NORMAL);
                         rbHigh.setSelected(true);
                 }
                 rbHd.setOnAction(event -> setResolution());
@@ -621,13 +621,13 @@ public class AboEditDialogController extends PDialogExtra {
     private void setResolution() {
         cbxEditAll[AboFieldNames.ABO_RESOLUTION_NO].setSelected(true);
         if (rbHigh.isSelected()) {
-            aboCopy.setResolution(Film.RESOLUTION_NORMAL);
+            aboCopy.setResolution(FilmData.RESOLUTION_NORMAL);
         }
         if (rbHd.isSelected()) {
-            aboCopy.setResolution(Film.RESOLUTION_HD);
+            aboCopy.setResolution(FilmData.RESOLUTION_HD);
         }
         if (rbLow.isSelected()) {
-            aboCopy.setResolution(Film.RESOLUTION_SMALL);
+            aboCopy.setResolution(FilmData.RESOLUTION_SMALL);
         }
     }
 

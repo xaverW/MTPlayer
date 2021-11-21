@@ -23,10 +23,10 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.data.SetDataList;
-import de.p2tools.mtplayer.controller.data.download.Download;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
+import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadTools;
-import de.p2tools.mtplayer.controller.data.film.Film;
+import de.p2tools.mtplayer.controller.data.film.FilmData;
 import de.p2tools.mtplayer.controller.data.film.FilmTools;
 import de.p2tools.mtplayer.gui.tools.SetsPrograms;
 import de.p2tools.mtplayer.tools.FileNameUtils;
@@ -116,10 +116,10 @@ public class DownloadAddDialogController extends PDialogExtra {
 
     private boolean ok = false;
     private int actFilmIsShown = 0;
-    private ArrayList<Film> filmsToDownloadList;
+    private ArrayList<FilmData> filmsToDownloadList;
     private DownloadAddInfo[] downloadAddInfos;
 
-    public DownloadAddDialogController(ProgData progData, ArrayList<Film> filmsToDownloadList, SetData setData, String filterResolution) {
+    public DownloadAddDialogController(ProgData progData, ArrayList<FilmData> filmsToDownloadList, SetData setData, String filterResolution) {
         super(progData.primaryStage,
                 filmsToDownloadList.size() > 1 ? ProgConfig.DOWNLOAD_DIALOG_ADD_MORE_SIZE :
                         ProgConfig.DOWNLOAD_DIALOG_ADD_SIZE,
@@ -262,7 +262,7 @@ public class DownloadAddDialogController extends PDialogExtra {
             downloadAddInfos[i] = new DownloadAddInfo(chkAll.selectedProperty(), downloadAddInfos);
             downloadAddInfos[i].psetData = setData;
             downloadAddInfos[i].film = filmsToDownloadList.get(i);
-            downloadAddInfos[i].download = new Download(setData, downloadAddInfos[i].film, DownloadConstants.SRC_DOWNLOAD,
+            downloadAddInfos[i].download = new DownloadData(setData, downloadAddInfos[i].film, DownloadConstants.SRC_DOWNLOAD,
                     null, "", aktPath, "");
 
             downloadAddInfos[i].path = downloadAddInfos[i].download.getDestPath();
@@ -270,17 +270,17 @@ public class DownloadAddDialogController extends PDialogExtra {
 
             if (i < ProgConst.DOWNLOAD_DIALOG_LOAD_MAX_FILESIZE_FROM_WEB) {
                 downloadAddInfos[i].fileSize_HD = downloadAddInfos[i].film.isHd() ?
-                        FilmTools.getSizeFromWeb(downloadAddInfos[i].film, downloadAddInfos[i].film.getUrlForResolution(Film.RESOLUTION_HD)) : "";
+                        FilmTools.getSizeFromWeb(downloadAddInfos[i].film, downloadAddInfos[i].film.getUrlForResolution(FilmData.RESOLUTION_HD)) : "";
                 downloadAddInfos[i].fileSize_high = FilmTools.getSizeFromWeb(downloadAddInfos[i].film,
-                        downloadAddInfos[i].film.getUrlForResolution(Film.RESOLUTION_NORMAL));
+                        downloadAddInfos[i].film.getUrlForResolution(FilmData.RESOLUTION_NORMAL));
                 downloadAddInfos[i].fileSize_small = downloadAddInfos[i].film.isSmall() ?
-                        FilmTools.getSizeFromWeb(downloadAddInfos[i].film, downloadAddInfos[i].film.getUrlForResolution(Film.RESOLUTION_SMALL)) : "";
+                        FilmTools.getSizeFromWeb(downloadAddInfos[i].film, downloadAddInfos[i].film.getUrlForResolution(FilmData.RESOLUTION_SMALL)) : "";
 
             } else {
                 // filesize->wenn die Liste länger als ~10 ist, dauert das viel zu lang
                 downloadAddInfos[i].fileSize_HD = "";
                 downloadAddInfos[i].fileSize_high = FilmTools.getSizeFromWeb(downloadAddInfos[i].film,
-                        downloadAddInfos[i].film.getUrlForResolution(Film.RESOLUTION_NORMAL));
+                        downloadAddInfos[i].film.getUrlForResolution(FilmData.RESOLUTION_NORMAL));
                 downloadAddInfos[i].fileSize_small = "";
             }
 
@@ -296,21 +296,21 @@ public class DownloadAddDialogController extends PDialogExtra {
             }
 
             // die Werte passend zum Film setzen: Auflösung
-            if ((ProgConfig.DOWNLOAD_DIALOG_HD_HEIGHT_LOW.get().equals(Film.RESOLUTION_HD) ||
-                    filterResolution.equals(Film.RESOLUTION_HD) ||
-                    downloadAddInfos[i].psetData.getResolution().equals(Film.RESOLUTION_HD))
+            if ((ProgConfig.DOWNLOAD_DIALOG_HD_HEIGHT_LOW.get().equals(FilmData.RESOLUTION_HD) ||
+                    filterResolution.equals(FilmData.RESOLUTION_HD) ||
+                    downloadAddInfos[i].psetData.getResolution().equals(FilmData.RESOLUTION_HD))
                     && downloadAddInfos[i].film.isHd()) {
 
                 //Dann wurde im Filter oder Set HD ausgewählt und wird voreingestellt
-                downloadAddInfos[i].resolution = Film.RESOLUTION_HD;
+                downloadAddInfos[i].resolution = FilmData.RESOLUTION_HD;
 
-            } else if ((ProgConfig.DOWNLOAD_DIALOG_HD_HEIGHT_LOW.get().equals(Film.RESOLUTION_SMALL) ||
-                    downloadAddInfos[i].psetData.getResolution().equals(Film.RESOLUTION_SMALL))
+            } else if ((ProgConfig.DOWNLOAD_DIALOG_HD_HEIGHT_LOW.get().equals(FilmData.RESOLUTION_SMALL) ||
+                    downloadAddInfos[i].psetData.getResolution().equals(FilmData.RESOLUTION_SMALL))
                     && downloadAddInfos[i].film.isSmall()) {
-                downloadAddInfos[i].resolution = Film.RESOLUTION_SMALL;
+                downloadAddInfos[i].resolution = FilmData.RESOLUTION_SMALL;
 
             } else {
-                downloadAddInfos[i].resolution = Film.RESOLUTION_NORMAL;
+                downloadAddInfos[i].resolution = FilmData.RESOLUTION_NORMAL;
             }
         }
     }
@@ -414,16 +414,16 @@ public class DownloadAddDialogController extends PDialogExtra {
         makeResolutionButtons();
 
         rbHd.setOnAction(a -> {
-            downloadAddInfos[actFilmIsShown].setResolution(Film.RESOLUTION_HD);
-            ProgConfig.DOWNLOAD_DIALOG_HD_HEIGHT_LOW.setValue(Film.RESOLUTION_HD);
+            downloadAddInfos[actFilmIsShown].setResolution(FilmData.RESOLUTION_HD);
+            ProgConfig.DOWNLOAD_DIALOG_HD_HEIGHT_LOW.setValue(FilmData.RESOLUTION_HD);
         });
         rbHigh.setOnAction(a -> {
-            downloadAddInfos[actFilmIsShown].setResolution(Film.RESOLUTION_NORMAL);
-            ProgConfig.DOWNLOAD_DIALOG_HD_HEIGHT_LOW.setValue(Film.RESOLUTION_NORMAL);
+            downloadAddInfos[actFilmIsShown].setResolution(FilmData.RESOLUTION_NORMAL);
+            ProgConfig.DOWNLOAD_DIALOG_HD_HEIGHT_LOW.setValue(FilmData.RESOLUTION_NORMAL);
         });
         rbSmall.setOnAction(a -> {
-            downloadAddInfos[actFilmIsShown].setResolution(Film.RESOLUTION_SMALL);
-            ProgConfig.DOWNLOAD_DIALOG_HD_HEIGHT_LOW.setValue(Film.RESOLUTION_SMALL);
+            downloadAddInfos[actFilmIsShown].setResolution(FilmData.RESOLUTION_SMALL);
+            ProgConfig.DOWNLOAD_DIALOG_HD_HEIGHT_LOW.setValue(FilmData.RESOLUTION_SMALL);
         });
     }
 
@@ -469,13 +469,13 @@ public class DownloadAddDialogController extends PDialogExtra {
         rbSmall.setDisable(!downloadAddInfos[actFilmIsShown].film.isSmall());
 
         switch (downloadAddInfos[actFilmIsShown].resolution) {
-            case Film.RESOLUTION_HD:
+            case FilmData.RESOLUTION_HD:
                 rbHd.setSelected(true);
                 break;
-            case Film.RESOLUTION_SMALL:
+            case FilmData.RESOLUTION_SMALL:
                 rbSmall.setSelected(true);
                 break;
-            case Film.RESOLUTION_NORMAL:
+            case FilmData.RESOLUTION_NORMAL:
             default:
                 rbHigh.setSelected(true);
                 break;
@@ -525,7 +525,7 @@ public class DownloadAddDialogController extends PDialogExtra {
         SetData psetData = cbSet.getSelectionModel().getSelectedItem();
 
         downloadAddInfo.psetData = psetData;
-        downloadAddInfo.download = new Download(psetData, downloadAddInfo.film, DownloadConstants.SRC_DOWNLOAD, null, "", "", Film.RESOLUTION_NORMAL);
+        downloadAddInfo.download = new DownloadData(psetData, downloadAddInfo.film, DownloadConstants.SRC_DOWNLOAD, null, "", "", FilmData.RESOLUTION_NORMAL);
         downloadAddInfo.path = downloadAddInfo.download.getDestPath();
         downloadAddInfo.name = downloadAddInfo.download.getDestFileName();
         downloadAddInfo.info = downloadAddInfo.psetData.isInfoFile();
@@ -540,16 +540,16 @@ public class DownloadAddDialogController extends PDialogExtra {
         }
 
         // die Werte passend zum Film setzen
-        if (downloadAddInfo.psetData.getResolution().equals(Film.RESOLUTION_HD)
+        if (downloadAddInfo.psetData.getResolution().equals(FilmData.RESOLUTION_HD)
                 && downloadAddInfo.film.isHd()) {
-            downloadAddInfo.resolution = Film.RESOLUTION_HD;
+            downloadAddInfo.resolution = FilmData.RESOLUTION_HD;
 
-        } else if (downloadAddInfo.psetData.getResolution().equals(Film.RESOLUTION_SMALL)
+        } else if (downloadAddInfo.psetData.getResolution().equals(FilmData.RESOLUTION_SMALL)
                 && downloadAddInfo.film.isSmall()) {
-            downloadAddInfo.resolution = Film.RESOLUTION_SMALL;
+            downloadAddInfo.resolution = FilmData.RESOLUTION_SMALL;
 
         } else {
-            downloadAddInfo.resolution = Film.RESOLUTION_NORMAL;
+            downloadAddInfo.resolution = FilmData.RESOLUTION_NORMAL;
         }
     }
 
@@ -590,10 +590,10 @@ public class DownloadAddDialogController extends PDialogExtra {
         }
 
         saveComboPath(cbPath);
-        List<Download> list = new ArrayList<>();
+        List<DownloadData> list = new ArrayList<>();
         for (DownloadAddInfo d : downloadAddInfos) {
             // jetzt wird mit den angegebenen Pfaden gearbeitet
-            Download download = new Download(d.psetData,
+            DownloadData download = new DownloadData(d.psetData,
                     d.film,
                     DownloadConstants.SRC_DOWNLOAD,
                     null,
@@ -621,13 +621,13 @@ public class DownloadAddDialogController extends PDialogExtra {
 
     private String getFilmSize(DownloadAddInfo downloadAddInfo) {
         switch (downloadAddInfo.resolution) {
-            case Film.RESOLUTION_HD:
+            case FilmData.RESOLUTION_HD:
                 return downloadAddInfo.fileSize_HD;
 
-            case Film.RESOLUTION_SMALL:
+            case FilmData.RESOLUTION_SMALL:
                 return downloadAddInfo.fileSize_small;
 
-            case Film.RESOLUTION_NORMAL:
+            case FilmData.RESOLUTION_NORMAL:
             default:
                 return downloadAddInfo.fileSize_high;
         }

@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
-import de.p2tools.mtplayer.controller.data.film.Film;
+import de.p2tools.mtplayer.controller.data.film.FilmData;
 import de.p2tools.mtplayer.controller.data.film.FilmSize;
 import de.p2tools.mtplayer.controller.data.film.FilmTools;
 import de.p2tools.p2Lib.guiTools.PCheckBoxCell;
@@ -62,62 +62,62 @@ public class TableFilm {
         ProgColorList.FILM_NEW.colorProperty().addListener((a, b, c) -> Table.refresh_table(table));
         ProgColorList.FILM_HISTORY.colorProperty().addListener((a, b, c) -> Table.refresh_table(table));
 
-        final TableColumn<Film, Integer> nrColumn = new TableColumn<>("Nr");
+        final TableColumn<FilmData, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));
         nrColumn.getStyleClass().add("alignCenterRightPadding_10");
 
-        final TableColumn<Film, String> senderColumn = new TableColumn<>("Sender");
+        final TableColumn<FilmData, String> senderColumn = new TableColumn<>("Sender");
         senderColumn.setCellValueFactory(new PropertyValueFactory<>("channel"));
         senderColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<Film, String> themeColumn = new TableColumn<>("Thema");
+        final TableColumn<FilmData, String> themeColumn = new TableColumn<>("Thema");
         themeColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
         themeColumn.getStyleClass().add("alignCenterLeft");
 
-        final TableColumn<Film, String> titleColumn = new TableColumn<>("Titel");
+        final TableColumn<FilmData, String> titleColumn = new TableColumn<>("Titel");
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         titleColumn.getStyleClass().add("alignCenterLeft");
 
-        final TableColumn<Film, String> startColumn = new TableColumn<>("");
+        final TableColumn<FilmData, String> startColumn = new TableColumn<>("");
         startColumn.setCellFactory(cellFactoryStart);
         startColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<Film, PDate> datumColumn = new TableColumn<>("Datum");
+        final TableColumn<FilmData, PDate> datumColumn = new TableColumn<>("Datum");
         datumColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         datumColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<Film, String> timeColumn = new TableColumn<>("Zeit");
+        final TableColumn<FilmData, String> timeColumn = new TableColumn<>("Zeit");
         timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
         timeColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<Film, Integer> durationColumn = new TableColumn<>("Dauer [min]");
+        final TableColumn<FilmData, Integer> durationColumn = new TableColumn<>("Dauer [min]");
         durationColumn.setCellFactory(cellFactoryDuration);
         durationColumn.setCellValueFactory(new PropertyValueFactory<>("durationMinute"));
         durationColumn.getStyleClass().add("alignCenterRightPadding_25");
 
-        final TableColumn<Film, FilmSize> sizeColumn = new TableColumn<>("Größe [MB]");
+        final TableColumn<FilmData, FilmSize> sizeColumn = new TableColumn<>("Größe [MB]");
         sizeColumn.setCellValueFactory(new PropertyValueFactory<>("filmSize"));
         sizeColumn.getStyleClass().add("alignCenterRightPadding_25");
 
-        final TableColumn<Film, Boolean> hdColumn = new TableColumn<>("HD");
+        final TableColumn<FilmData, Boolean> hdColumn = new TableColumn<>("HD");
         hdColumn.setCellValueFactory(new PropertyValueFactory<>("hd"));
         hdColumn.setCellFactory(new PCheckBoxCell().cellFactoryBool);
         hdColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<Film, Boolean> utColumn = new TableColumn<>("UT");
+        final TableColumn<FilmData, Boolean> utColumn = new TableColumn<>("UT");
         utColumn.setCellValueFactory(new PropertyValueFactory<>("ut"));
         utColumn.setCellFactory(new PCheckBoxCell().cellFactoryBool);
         utColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<Film, String> geoColumn = new TableColumn<>("Geo");
+        final TableColumn<FilmData, String> geoColumn = new TableColumn<>("Geo");
         geoColumn.setCellValueFactory(new PropertyValueFactory<>("geo"));
         geoColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<Film, String> urlColumn = new TableColumn<>("URL");
+        final TableColumn<FilmData, String> urlColumn = new TableColumn<>("URL");
         urlColumn.setCellValueFactory(new PropertyValueFactory<>("url"));
         urlColumn.getStyleClass().add("alignCenterLeft");
 
-        final TableColumn<Film, String> aboColumn = new TableColumn<>("Abo");
+        final TableColumn<FilmData, String> aboColumn = new TableColumn<>("Abo");
         aboColumn.setCellValueFactory(new PropertyValueFactory<>("aboName"));
         aboColumn.getStyleClass().add("alignCenterLeft");
 
@@ -140,10 +140,10 @@ public class TableFilm {
 
     }
 
-    private Callback<TableColumn<Film, String>, TableCell<Film, String>> cellFactoryStart
-            = (final TableColumn<Film, String> param) -> {
+    private Callback<TableColumn<FilmData, String>, TableCell<FilmData, String>> cellFactoryStart
+            = (final TableColumn<FilmData, String> param) -> {
 
-        final TableCell<Film, String> cell = new TableCell<>() {
+        final TableCell<FilmData, String> cell = new TableCell<>() {
 
             @Override
             public void updateItem(String item, boolean empty) {
@@ -155,7 +155,7 @@ public class TableFilm {
                     return;
                 }
 
-                Film film = getTableView().getItems().get(getIndex());
+                FilmData film = getTableView().getItems().get(getIndex());
 
                 final HBox hbox = new HBox();
                 hbox.setSpacing(4);
@@ -192,10 +192,10 @@ public class TableFilm {
     };
 
 
-    private Callback<TableColumn<Film, Integer>, TableCell<Film, Integer>> cellFactoryDuration
-            = (final TableColumn<Film, Integer> param) -> {
+    private Callback<TableColumn<FilmData, Integer>, TableCell<FilmData, Integer>> cellFactoryDuration
+            = (final TableColumn<FilmData, Integer> param) -> {
 
-        final TableCell<Film, Integer> cell = new TableCell<>() {
+        final TableCell<FilmData, Integer> cell = new TableCell<>() {
 
             @Override
             public void updateItem(Integer item, boolean empty) {

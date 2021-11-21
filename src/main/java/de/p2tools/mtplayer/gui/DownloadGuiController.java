@@ -19,10 +19,10 @@ package de.p2tools.mtplayer.gui;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
-import de.p2tools.mtplayer.controller.data.download.Download;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
+import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
-import de.p2tools.mtplayer.controller.data.film.Film;
+import de.p2tools.mtplayer.controller.data.film.FilmData;
 import de.p2tools.mtplayer.controller.data.film.FilmTools;
 import de.p2tools.mtplayer.gui.chart.DownloadGuiChart;
 import de.p2tools.mtplayer.gui.dialog.DownloadEditDialogController;
@@ -57,7 +57,7 @@ public class DownloadGuiController extends AnchorPane {
 
     private final SplitPane splitPane = new SplitPane();
     private final ScrollPane scrollPane = new ScrollPane();
-    private final TableView<Download> tableView = new TableView<>();
+    private final TableView<DownloadData> tableView = new TableView<>();
     private final TabPane tabPane = new TabPane();
 
     private FilmGuiInfoController filmGuiInfoController;
@@ -67,8 +67,8 @@ public class DownloadGuiController extends AnchorPane {
 
     private final ProgData progData;
     private boolean bound = false;
-    private final FilteredList<Download> filteredDownloads;
-    private final SortedList<Download> sortedDownloads;
+    private final FilteredList<DownloadData> filteredDownloads;
+    private final SortedList<DownloadData> sortedDownloads;
 
     DoubleProperty splitPaneProperty = ProgConfig.DOWNLOAD_GUI_DIVIDER;
     BooleanProperty boolInfoOn = ProgConfig.DOWNLOAD_GUI_DIVIDER_ON;
@@ -149,7 +149,7 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     public void playFilm() {
-        final Optional<Download> download = getSel();
+        final Optional<DownloadData> download = getSel();
         if (download.isPresent()) {
             POpen.playStoredFilm(download.get().getDestPathFile(),
                     ProgConfig.SYSTEM_PROG_PLAY_FILME, new ProgIcons().ICON_BUTTON_FILE_OPEN);
@@ -159,7 +159,7 @@ public class DownloadGuiController extends AnchorPane {
     public void deleteFilmFile() {
         // Download nur löschen wenn er nicht läuft
 
-        final Optional<Download> download = getSel();
+        final Optional<DownloadData> download = getSel();
         if (!download.isPresent()) {
             return;
         }
@@ -167,7 +167,7 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     public void openDestinationDir() {
-        final Optional<Download> download = getSel();
+        final Optional<DownloadData> download = getSel();
         if (!download.isPresent()) {
             return;
         }
@@ -177,30 +177,30 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     public void playUrl() {
-        final Optional<Download> download = getSel();
+        final Optional<DownloadData> download = getSel();
         if (!download.isPresent()) {
             return;
         }
 
-        Film film;
+        FilmData film;
         if (download.get().getFilm() == null) {
-            film = new Film();
+            film = new FilmData();
         } else {
             film = download.get().getFilm().getCopy();
         }
 
         // und jetzt die tatsächlichen URLs des Downloads eintragen
-        film.arr[Film.FILM_URL] = download.get().getUrl();
-        film.arr[Film.FILM_URL_RTMP] = download.get().getUrlRtmp();
-        film.arr[Film.FILM_URL_SMALL] = "";
-        film.arr[Film.FILM_URL_RTMP_SMALL] = "";
+        film.arr[FilmData.FILM_URL] = download.get().getUrl();
+        film.arr[FilmData.FILM_URL_RTMP] = download.get().getUrlRtmp();
+        film.arr[FilmData.FILM_URL_SMALL] = "";
+        film.arr[FilmData.FILM_URL_RTMP_SMALL] = "";
         // und starten
         FilmTools.playFilm(film, null);
     }
 
 
     public void copyUrl() {
-        final Optional<Download> download = getSel();
+        final Optional<DownloadData> download = getSel();
         if (!download.isPresent()) {
             return;
         }
@@ -208,7 +208,7 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private void setFilm() {
-        Download download = tableView.getSelectionModel().getSelectedItem();
+        DownloadData download = tableView.getSelectionModel().getSelectedItem();
         if (download != null) {
             filmGuiInfoController.setFilm(download.getFilm());
             progData.filmInfoDialogController.setFilm(download.getFilm());
@@ -223,7 +223,7 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     public void guiFilmMediaCollection() {
-        final Optional<Download> download = getSel();
+        final Optional<DownloadData> download = getSel();
         if (download.isPresent()) {
             new MediaDialogController(download.get().getTitle());
         }
@@ -298,9 +298,9 @@ public class DownloadGuiController extends AnchorPane {
         new Table().saveTable(tableView, Table.TABLE.DOWNLOAD);
     }
 
-    private ArrayList<Download> getSelList() {
+    private ArrayList<DownloadData> getSelList() {
         // todo observableList -> abo
-        final ArrayList<Download> ret = new ArrayList<>();
+        final ArrayList<DownloadData> ret = new ArrayList<>();
         ret.addAll(tableView.getSelectionModel().getSelectedItems());
         if (ret.isEmpty()) {
             PAlert.showInfoNoSelection();
@@ -308,11 +308,11 @@ public class DownloadGuiController extends AnchorPane {
         return ret;
     }
 
-    private Optional<Download> getSel() {
+    private Optional<DownloadData> getSel() {
         return getSel(true);
     }
 
-    private Optional<Download> getSel(boolean show) {
+    private Optional<DownloadData> getSel(boolean show) {
         final int selectedTableRow = tableView.getSelectionModel().getSelectedIndex();
         if (selectedTableRow >= 0) {
             return Optional.of(tableView.getSelectionModel().getSelectedItem());
@@ -400,7 +400,7 @@ public class DownloadGuiController extends AnchorPane {
         sortedDownloads.comparatorProperty().bind(tableView.comparatorProperty());
 
         tableView.setRowFactory(tv -> {
-            TableRowDownload<Download> row = new TableRowDownload<>();
+            TableRowDownload<DownloadData> row = new TableRowDownload<>();
             row.setOnMouseClicked(event -> {
                 if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
                     changeDownload();
@@ -410,8 +410,8 @@ public class DownloadGuiController extends AnchorPane {
         });
         tableView.setOnMousePressed(m -> {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
-                final Optional<Download> optionalDownload = getSel(false);
-                Download download;
+                final Optional<DownloadData> optionalDownload = getSel(false);
+                DownloadData download;
                 if (optionalDownload.isPresent()) {
                     download = optionalDownload.get();
                 } else {
@@ -424,7 +424,7 @@ public class DownloadGuiController extends AnchorPane {
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             Platform.runLater(() -> setFilm());
         });
-        tableView.getItems().addListener((ListChangeListener<Download>) c -> {
+        tableView.getItems().addListener((ListChangeListener<DownloadData>) c -> {
             if (tableView.getItems().size() == 1) {
                 // wenns nur eine Zeile gibt, dann gleich selektieren
                 tableView.getSelectionModel().select(0);
@@ -484,10 +484,10 @@ public class DownloadGuiController extends AnchorPane {
 
     private void setFilmShown(boolean shown) {
         // Filme als (un)gesehen markieren
-        final ArrayList<Download> arrayDownloads = getSelList();
-        final ArrayList<Film> filmArrayList = new ArrayList<>();
+        final ArrayList<DownloadData> arrayDownloadData = getSelList();
+        final ArrayList<FilmData> filmArrayList = new ArrayList<>();
 
-        arrayDownloads.stream().forEach(download -> {
+        arrayDownloadData.stream().forEach(download -> {
             if (download.getFilm() != null) {
                 filmArrayList.add(download.getFilm());
             }
@@ -497,7 +497,7 @@ public class DownloadGuiController extends AnchorPane {
 
     private void stopWaiting() {
         // es werden alle noch nicht gestarteten Downloads gestoppt
-        final ArrayList<Download> listStopDownload = new ArrayList<>();
+        final ArrayList<DownloadData> listStopDownload = new ArrayList<>();
         tableView.getItems().stream().filter(download -> download.isStateStartedWaiting()).forEach(download -> {
             listStopDownload.add(download);
         });
@@ -510,14 +510,14 @@ public class DownloadGuiController extends AnchorPane {
         // der/die noch nicht gestartet sind, werden gestartet
         // Filme dessen Start schon auf fehler steht werden wieder gestartet
 
-        final ArrayList<Download> startDownloadsList = new ArrayList<>();
+        final ArrayList<DownloadData> startDownloadsList = new ArrayList<>();
         startDownloadsList.addAll(all ? tableView.getItems() : getSelList());
         progData.downloadList.startDownloads(startDownloadsList, true);
     }
 
     private void stopDownloads(boolean all) {
         // bezieht sich auf "alle" oder nur die markierten Filme
-        final ArrayList<Download> listDownloadsSelected = new ArrayList<>();
+        final ArrayList<DownloadData> listDownloadsSelected = new ArrayList<>();
         // die URLs sammeln
         listDownloadsSelected.addAll(all ? tableView.getItems() : getSelList());
         progData.downloadList.stopDownloads(listDownloadsSelected);
@@ -526,10 +526,10 @@ public class DownloadGuiController extends AnchorPane {
 
 
     private synchronized void change() {
-        final Optional<Download> download = getSel();
+        final Optional<DownloadData> download = getSel();
         if (download.isPresent()) {
 
-            Download downloadCopy = download.get().getCopy();
+            DownloadData downloadCopy = download.get().getCopy();
             DownloadEditDialogController downloadEditDialogController =
                     new DownloadEditDialogController(progData, downloadCopy, download.get().isStateStartedRun());
 

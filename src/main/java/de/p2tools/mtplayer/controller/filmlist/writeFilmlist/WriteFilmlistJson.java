@@ -19,8 +19,8 @@ package de.p2tools.mtplayer.controller.filmlist.writeFilmlist;
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
-import de.p2tools.mtplayer.controller.data.film.Film;
-import de.p2tools.mtplayer.controller.data.film.FilmXml;
+import de.p2tools.mtplayer.controller.data.film.FilmData;
+import de.p2tools.mtplayer.controller.data.film.FilmDataXml;
 import de.p2tools.mtplayer.controller.data.film.Filmlist;
 import de.p2tools.mtplayer.controller.data.film.FilmlistXml;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -56,26 +56,26 @@ public class WriteFilmlistJson {
 
                 // Infos der Felder in der Filmliste
                 jg.writeArrayFieldStart(FilmlistXml.FILMLIST);
-                for (int i = 0; i < FilmXml.JSON_NAMES.length; ++i) {
-                    jg.writeString(FilmXml.COLUMN_NAMES[FilmXml.JSON_NAMES[i]]);
+                for (int i = 0; i < FilmDataXml.JSON_NAMES.length; ++i) {
+                    jg.writeString(FilmDataXml.COLUMN_NAMES[FilmDataXml.JSON_NAMES[i]]);
                 }
                 jg.writeEndArray();
 
                 //Filme schreiben
-                for (Film film : filmlist) {
-                    film.arr[FilmXml.FILM_NEW] = Boolean.toString(film.isNewFilm()); // damit wirs beim nächsten Programmstart noch wissen
+                for (FilmData film : filmlist) {
+                    film.arr[FilmDataXml.FILM_NEW] = Boolean.toString(film.isNewFilm()); // damit wirs beim nächsten Programmstart noch wissen
 
-                    jg.writeArrayFieldStart(FilmXml.TAG_JSON_LIST);
-                    for (int i = 0; i < FilmXml.JSON_NAMES.length; ++i) {
-                        int m = FilmXml.JSON_NAMES[i];
-                        if (m == FilmXml.FILM_CHANNEL) {
+                    jg.writeArrayFieldStart(FilmDataXml.TAG_JSON_LIST);
+                    for (int i = 0; i < FilmDataXml.JSON_NAMES.length; ++i) {
+                        int m = FilmDataXml.JSON_NAMES[i];
+                        if (m == FilmDataXml.FILM_CHANNEL) {
                             if (film.arr[m].equals(sender)) {
                                 jg.writeString("");
                             } else {
                                 sender = film.arr[m];
                                 jg.writeString(film.arr[m]);
                             }
-                        } else if (m == FilmXml.FILM_THEME) {
+                        } else if (m == FilmDataXml.FILM_THEME) {
                             if (film.arr[m].equals(theme)) {
                                 jg.writeString("");
                             } else {

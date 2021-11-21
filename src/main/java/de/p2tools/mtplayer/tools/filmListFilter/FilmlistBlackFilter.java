@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.tools.filmListFilter;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.BlackData;
-import de.p2tools.mtplayer.controller.data.film.Film;
+import de.p2tools.mtplayer.controller.data.film.FilmData;
 import de.p2tools.mtplayer.controller.data.film.Filmlist;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -50,7 +50,7 @@ public class FilmlistBlackFilter {
         if (filmlist != null) {
             listFiltered.setMeta(filmlist);
 
-            Stream<Film> initialStream = filmlist.parallelStream();
+            Stream<FilmData> initialStream = filmlist.parallelStream();
 
             if (PROG_DATA.storedFilters.getActFilterSettings().isBlacklistOnly()) {
                 //blacklist in ONLY
@@ -67,7 +67,7 @@ public class FilmlistBlackFilter {
                 PLog.sysLog("FilmlistBlackFilter - isBlacklistOff");
             }
 
-            final List<Film> col = initialStream.collect(Collectors.toList());
+            final List<FilmData> col = initialStream.collect(Collectors.toList());
             listFiltered.addAll(col);
             col.clear();
 
@@ -100,7 +100,7 @@ public class FilmlistBlackFilter {
      * @param film item to te tested
      * @return true if item should be displayed.
      */
-    public static synchronized boolean checkBlacklistForDownloads(Film film) {
+    public static synchronized boolean checkBlacklistForDownloads(FilmData film) {
         // hier werden die Filme für Downloads aus Abos gesucht,
         // und wenn die Blacklist bei den Abos berücksichtigt werden soll,
         // wird damit geprüft
@@ -109,7 +109,7 @@ public class FilmlistBlackFilter {
         return checkBlacklist(film);
     }
 
-    private static synchronized boolean checkBlacklist(Film film) {
+    private static synchronized boolean checkBlacklist(FilmData film) {
         // hier werden die Filme gegen die Blacklist geprüft
 
         if (days > 0 && !checkDate(film)) {
@@ -140,7 +140,7 @@ public class FilmlistBlackFilter {
      * @return true if film can be displayed
      */
 
-    private static boolean applyBlacklistFilters(Film film, boolean countHits) {
+    private static boolean applyBlacklistFilters(FilmData film, boolean countHits) {
         for (final BlackData blackData : PROG_DATA.blackList) {
 
             if (FilmFilter.checkFilmWithFilter(
@@ -194,7 +194,7 @@ public class FilmlistBlackFilter {
      * @param film item to be checked
      * @return true if film can be displayed
      */
-    private static boolean checkDate(Film film) {
+    private static boolean checkDate(FilmData film) {
         if (days == 0) {
             return true;
         }
@@ -213,7 +213,7 @@ public class FilmlistBlackFilter {
      * @param film item to check
      * @return true if film should be displayed
      */
-    private static boolean checkFilmLength(Film film) {
+    private static boolean checkFilmLength(FilmData film) {
         return film.getDurationMinute() == 0 || filmLengthTarget_Minute <= film.getDurationMinute();
 
     }

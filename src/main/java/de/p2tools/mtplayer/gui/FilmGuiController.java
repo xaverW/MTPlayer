@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.data.SetDataList;
-import de.p2tools.mtplayer.controller.data.film.Film;
+import de.p2tools.mtplayer.controller.data.film.FilmData;
 import de.p2tools.mtplayer.controller.data.film.FilmTools;
 import de.p2tools.mtplayer.gui.mediaDialog.MediaDialogController;
 import de.p2tools.mtplayer.gui.tools.Listener;
@@ -53,11 +53,11 @@ public class FilmGuiController extends AnchorPane {
     private final PClosePaneH pClosePaneH;
 
     private FilmGuiInfoController filmGuiInfoController;
-    private final TableView<Film> tableView = new TableView<>();
+    private final TableView<FilmData> tableView = new TableView<>();
 
     private final ProgData progData;
     private boolean boundSplitPaneDivPos = false;
-    private final SortedList<Film> sortedList;
+    private final SortedList<FilmData> sortedList;
     private final KeyCombination STRG_A = new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_ANY);
 
     DoubleProperty splitPaneProperty = ProgConfig.FILM_GUI_DIVIDER;
@@ -79,7 +79,7 @@ public class FilmGuiController extends AnchorPane {
         scrollPaneTableFilm.setFitToWidth(true);
         scrollPaneTableFilm.setContent(tableView);
 
-        sortedList.addListener((ListChangeListener<Film>) c -> {
+        sortedList.addListener((ListChangeListener<FilmData>) c -> {
             selectFilm();
         });
         initInfoPane();
@@ -106,7 +106,7 @@ public class FilmGuiController extends AnchorPane {
 
 
     private void setFilm() {
-        Film film = tableView.getSelectionModel().getSelectedItem();
+        FilmData film = tableView.getSelectionModel().getSelectedItem();
         filmGuiInfoController.setFilm(film);
         progData.filmInfoDialogController.setFilm(film);
     }
@@ -116,7 +116,7 @@ public class FilmGuiController extends AnchorPane {
             if ((tableView.getItems().size() == 0)) {
                 return;
             }
-            Film selFilm = tableView.getSelectionModel().getSelectedItem();
+            FilmData selFilm = tableView.getSelectionModel().getSelectedItem();
             if (selFilm != null) {
                 tableView.scrollTo(selFilm);
             } else {
@@ -145,27 +145,27 @@ public class FilmGuiController extends AnchorPane {
     }
 
     public void bookmarkFilm(boolean bookmark) {
-        final ArrayList<Film> list = getSelList();
+        final ArrayList<FilmData> list = getSelList();
         if (!list.isEmpty()) {
             FilmTools.bookmarkFilm(progData, list, bookmark);
         }
     }
 
     public void guiFilmMediaCollection() {
-        final Optional<Film> film = getSel();
+        final Optional<FilmData> film = getSel();
         if (film.isPresent()) {
             new MediaDialogController(film.get().getTitle());
         }
     }
 
     public void setFilmShown() {
-        final ArrayList<Film> list = getSelList();
+        final ArrayList<FilmData> list = getSelList();
         FilmTools.setFilmShown(progData, list, true);
         Table.refresh_table(tableView);
     }
 
     public void setFilmNotShown() {
-        final ArrayList<Film> list = getSelList();
+        final ArrayList<FilmData> list = getSelList();
         FilmTools.setFilmShown(progData, list, false);
         Table.refresh_table(tableView);
     }
@@ -178,8 +178,8 @@ public class FilmGuiController extends AnchorPane {
         Table.refresh_table(tableView);
     }
 
-    public ArrayList<Film> getSelList() {
-        final ArrayList<Film> ret = new ArrayList<>();
+    public ArrayList<FilmData> getSelList() {
+        final ArrayList<FilmData> ret = new ArrayList<>();
         ret.addAll(tableView.getSelectionModel().getSelectedItems());
         if (ret.isEmpty()) {
             PAlert.showInfoNoSelection();
@@ -187,11 +187,11 @@ public class FilmGuiController extends AnchorPane {
         return ret;
     }
 
-    public Optional<Film> getSel() {
+    public Optional<FilmData> getSel() {
         return getSel(true);
     }
 
-    public Optional<Film> getSel(boolean show) {
+    public Optional<FilmData> getSel(boolean show) {
         final int selectedTableRow = tableView.getSelectionModel().getSelectedIndex();
         if (selectedTableRow >= 0) {
             return Optional.of(tableView.getSelectionModel().getSelectedItem());
@@ -318,7 +318,7 @@ public class FilmGuiController extends AnchorPane {
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
 
         tableView.setRowFactory(tv -> {
-            TableRowFilm<Film> row = new TableRowFilm<>();
+            TableRowFilm<FilmData> row = new TableRowFilm<>();
             row.setOnMouseClicked(event -> {
                 if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
                     progData.filmInfoDialogController.showFilmInfo();
@@ -329,8 +329,8 @@ public class FilmGuiController extends AnchorPane {
 
         tableView.setOnMousePressed(m -> {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
-                final Optional<Film> optionalFilm = getSel(false);
-                Film film;
+                final Optional<FilmData> optionalFilm = getSel(false);
+                FilmData film;
                 if (optionalFilm.isPresent()) {
                     film = optionalFilm.get();
                 } else {
@@ -363,7 +363,7 @@ public class FilmGuiController extends AnchorPane {
     }
 
     private synchronized void startFilmUrl() {
-        final Optional<Film> filmSelection = getSel();
+        final Optional<FilmData> filmSelection = getSel();
         if (filmSelection.isPresent()) {
             FilmTools.playFilm(filmSelection.get(), null);
         }
@@ -378,7 +378,7 @@ public class FilmGuiController extends AnchorPane {
             return;
         }
 
-        final Optional<Film> filmSelection = getSel();
+        final Optional<FilmData> filmSelection = getSel();
         if (!filmSelection.isPresent()) {
             return;
         }
@@ -391,7 +391,7 @@ public class FilmGuiController extends AnchorPane {
     }
 
     private synchronized void saveFilm(SetData pSet) {
-        final ArrayList<Film> list = getSelList();
+        final ArrayList<FilmData> list = getSelList();
         progData.filmlist.saveFilm(list, pSet);
     }
 }

@@ -28,7 +28,7 @@ import javafx.beans.property.StringProperty;
 
 import java.util.ArrayList;
 
-public class BlackProps extends PDataSample<BlackProps> {
+public class BlackDataProps extends PDataSample<BlackDataProps> {
 
     public static final String BLACKLIST_NO = "Nr";
     public static final String BLACKLIST_SENDER = "Sender";
@@ -167,7 +167,7 @@ public class BlackProps extends PDataSample<BlackProps> {
         this.countHits = countHits;
     }
 
-    public BlackProps() {
+    public BlackDataProps() {
         makeArray();
     }
 

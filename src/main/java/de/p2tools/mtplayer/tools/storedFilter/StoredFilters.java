@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.tools.storedFilter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.abo.Abo;
+import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.p2Lib.alert.PAlert;
 import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
@@ -222,12 +222,12 @@ public final class StoredFilters {
      *
      * @param oAbo
      */
-    public synchronized void loadStoredFilterFromAbo(Optional<Abo> oAbo) {
+    public synchronized void loadStoredFilterFromAbo(Optional<AboData> oAbo) {
         if (!oAbo.isPresent()) {
             return;
         }
 
-        final Abo abo = oAbo.get();
+        final AboData abo = oAbo.get();
         actFilterSettings.filterChangeProperty().removeListener(filterChangeListener);
         actFilterSettings.blacklistChangeProperty().removeListener(blacklistChangeListener);
         actFilterSettings.turnOffFilter(); // Filter erstmal löschen und dann alle abschalten

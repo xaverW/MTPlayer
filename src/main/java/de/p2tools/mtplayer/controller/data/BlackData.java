@@ -18,8 +18,7 @@ package de.p2tools.mtplayer.controller.data;
 
 import de.p2tools.mtplayer.tools.storedFilter.Filter;
 
-public class BlackData extends BlackProps {
-
+public class BlackData extends BlackDataProps {
 
     public Filter fChannel = new Filter();
     public Filter fTheme = new Filter();

@@ -18,8 +18,8 @@
 package de.p2tools.mtplayer.gui.chart;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.download.Download;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
+import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import javafx.geometry.Side;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -124,7 +124,7 @@ public class ChartFactory {
         while (it.hasNext()) {
             foundDownload = false;
             final BandwidthData bandwidthData = it.next();
-            for (final Download download : progData.downloadList) {
+            for (final DownloadData download : progData.downloadList) {
                 if (bandwidthData.getDownload() != null && bandwidthData.getDownload().equals(download)) {
                     foundDownload = true;
                     break;
@@ -144,7 +144,7 @@ public class ChartFactory {
         while (it.hasNext()) {
             BandwidthData bandwidthData = it.next();
             foundDownload = false;
-            for (final Download download : progData.downloadList.getListOfStartsNotFinished(DownloadConstants.ALL)) {
+            for (final DownloadData download : progData.downloadList.getListOfStartsNotFinished(DownloadConstants.ALL)) {
                 if (bandwidthData.getDownload() != null && bandwidthData.getDownload().equals(download)) {
                     foundDownload = true;
                     break;
@@ -159,7 +159,7 @@ public class ChartFactory {
     private static synchronized void inputDownloadData(ChartData chartData, ProgData progData) {
         //Downloads in BandwidthData eintragen und jeden Download prüfen
         boolean foundDownload;
-        for (final Download download : progData.downloadList) {
+        for (final DownloadData download : progData.downloadList) {
             foundDownload = false;
             for (final BandwidthData bandwidthData : chartData.getBandwidthDataList()) {
                 if (bandwidthData.getDownload() != null && bandwidthData.getDownload().equals(download)) {
@@ -175,7 +175,7 @@ public class ChartFactory {
         }
 
         for (final BandwidthData bandwidthData : chartData.getBandwidthDataList()) {
-            final Download download = bandwidthData.getDownload();
+            final DownloadData download = bandwidthData.getDownload();
             if (download != null && download.isStateStartedRun()) {
                 // sonst läuft er noch nicht/nicht mehr
                 final long bandwidth = download.getStart().getBandwidth();

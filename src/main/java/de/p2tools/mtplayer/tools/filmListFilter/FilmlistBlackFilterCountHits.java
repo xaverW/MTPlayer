@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.tools.filmListFilter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.BlackData;
-import de.p2tools.mtplayer.controller.data.film.Film;
+import de.p2tools.mtplayer.controller.data.film.FilmData;
 import de.p2tools.mtplayer.controller.data.film.Filmlist;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 
@@ -42,7 +42,7 @@ public class FilmlistBlackFilterCountHits {
     }
 
 
-    private static void applyBlacklistFilters(Film film, boolean abort) {
+    private static void applyBlacklistFilters(FilmData film, boolean abort) {
         // zum Sortieren ist es sinnvoll, dass ALLE MÖGLICHEN Treffer gesucht werden
         for (final BlackData blackData : PROG_DATA.blackList) {
 

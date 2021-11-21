@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.controller.filmlist;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
-import de.p2tools.mtplayer.controller.data.film.Film;
+import de.p2tools.mtplayer.controller.data.film.FilmData;
 import de.p2tools.mtplayer.controller.data.film.Filmlist;
 import de.p2tools.mtplayer.controller.data.film.FilmlistFactory;
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ImportNewFilmlistFromServer;
@@ -375,7 +375,7 @@ public class LoadFilmlist {
         logList.add(PLog.LILNE3);
         logList.add("Hash füllen, Größe vorher: " + hashSet.size());
 
-        hashSet.addAll(filmlist.stream().map(Film::getUrlHistory).collect(Collectors.toList()));
+        hashSet.addAll(filmlist.stream().map(FilmData::getUrlHistory).collect(Collectors.toList()));
         logList.add("                  nachher: " + hashSet.size());
         logList.add(PLog.LILNE3);
     }

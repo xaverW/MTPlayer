@@ -16,9 +16,9 @@
 
 package de.p2tools.mtplayer.tools.filmListFilter;
 
-import de.p2tools.mtplayer.controller.data.abo.Abo;
-import de.p2tools.mtplayer.controller.data.film.Film;
-import de.p2tools.mtplayer.controller.data.film.FilmXml;
+import de.p2tools.mtplayer.controller.data.abo.AboData;
+import de.p2tools.mtplayer.controller.data.film.FilmData;
+import de.p2tools.mtplayer.controller.data.film.FilmDataXml;
 import de.p2tools.mtplayer.tools.storedFilter.Filter;
 
 import java.util.regex.Pattern;
@@ -34,7 +34,7 @@ public class FilmFilter {
     public static final int FILTER_TIME_RANGE_MIN_VALUE = 0;
     public static final int FILTER_TIME_RANGE_MAX_VALUE = 50;
 
-    public static boolean aboExistsAlready(Abo aboExits, Abo checkAbo) {
+    public static boolean aboExistsAlready(AboData aboExits, AboData checkAbo) {
         // prüfen ob "aboExistiert" das "aboPrüfen" mit abdeckt, also die gleichen (oder mehr)
         // Filme findet, dann wäre das neue Abo hinfällig
 
@@ -103,7 +103,7 @@ public class FilmFilter {
                                               int searchLengthMinute_min,
                                               int searchLengthMinute_max,
 
-                                              Film film,
+                                              FilmData film,
                                               boolean withLength) {
 
 
@@ -140,24 +140,24 @@ public class FilmFilter {
         return true;
     }
 
-    public static boolean checkChannelSmart(Filter sender, Film film) {
+    public static boolean checkChannelSmart(Filter sender, FilmData film) {
         // nur ein Suchbegriff muss passen
         for (final String s : sender.filterArr) {
             // dann jeden Suchbegriff checken
-            if (s.equalsIgnoreCase(film.arr[FilmXml.FILM_CHANNEL])) {
+            if (s.equalsIgnoreCase(film.arr[FilmDataXml.FILM_CHANNEL])) {
                 return true;
             }
         }
         return false;
     }
 
-    public static boolean checkChannel(Filter sender, Film film) {
+    public static boolean checkChannel(Filter sender, FilmData film) {
         if (sender.exact) {
-            if (!sender.filter.equalsIgnoreCase(film.arr[FilmXml.FILM_CHANNEL])) {
+            if (!sender.filter.equalsIgnoreCase(film.arr[FilmDataXml.FILM_CHANNEL])) {
                 return false;
             }
         } else {
-            if (!check(sender, film.arr[FilmXml.FILM_CHANNEL])) {
+            if (!check(sender, film.arr[FilmDataXml.FILM_CHANNEL])) {
                 return false;
             }
         }
@@ -165,46 +165,46 @@ public class FilmFilter {
     }
 
 
-    public static boolean checkTheme(Filter theme, Film film) {
+    public static boolean checkTheme(Filter theme, FilmData film) {
         if (theme.exact) {
             // da ist keine Form optimal?? aber so passt es zur Sortierung der Themenliste
-            if (!theme.filter.equalsIgnoreCase(film.arr[FilmXml.FILM_THEME])) {
+            if (!theme.filter.equalsIgnoreCase(film.arr[FilmDataXml.FILM_THEME])) {
                 return false;
             }
         } else {
-            if (!check(theme, film.arr[FilmXml.FILM_THEME])) {
+            if (!check(theme, film.arr[FilmDataXml.FILM_THEME])) {
                 return false;
             }
         }
         return true;
     }
 
-    public static boolean checkThemeTitle(Filter themeTitle, Film film) {
-        if (!check(themeTitle, film.arr[FilmXml.FILM_THEME])
-                && !check(themeTitle, film.arr[FilmXml.FILM_TITLE])) {
+    public static boolean checkThemeTitle(Filter themeTitle, FilmData film) {
+        if (!check(themeTitle, film.arr[FilmDataXml.FILM_THEME])
+                && !check(themeTitle, film.arr[FilmDataXml.FILM_TITLE])) {
             return false;
         }
         return true;
     }
 
-    public static boolean checkTitle(Filter title, Film film) {
-        if (!check(title, film.arr[FilmXml.FILM_TITLE])) {
+    public static boolean checkTitle(Filter title, FilmData film) {
+        if (!check(title, film.arr[FilmDataXml.FILM_TITLE])) {
             return false;
         }
         return true;
     }
 
-    public static boolean checkSomewhere(Filter somewhere, Film film) {
-        if (!check(somewhere, film.arr[FilmXml.FILM_DATE])
-                && !check(somewhere, film.arr[FilmXml.FILM_THEME])
-                && !check(somewhere, film.arr[FilmXml.FILM_TITLE])
-                && !check(somewhere, film.arr[FilmXml.FILM_DESCRIPTION])) {
+    public static boolean checkSomewhere(Filter somewhere, FilmData film) {
+        if (!check(somewhere, film.arr[FilmDataXml.FILM_DATE])
+                && !check(somewhere, film.arr[FilmDataXml.FILM_THEME])
+                && !check(somewhere, film.arr[FilmDataXml.FILM_TITLE])
+                && !check(somewhere, film.arr[FilmDataXml.FILM_DESCRIPTION])) {
             return false;
         }
         return true;
     }
 
-    private static boolean checkMaxDays(int maxDays, Film film) {
+    private static boolean checkMaxDays(int maxDays, FilmData film) {
         long days = 0;
         try {
             if (maxDays == FilmFilter.FILTER_TIME_RANGE_ALL_VALUE) {
@@ -220,15 +220,15 @@ public class FilmFilter {
         return checkDays(days, film);
     }
 
-    public static boolean checkUrl(Filter url, Film film) {
-        if (!check(url, film.arr[FilmXml.FILM_WEBSITE])
-                && !check(url, film.arr[FilmXml.FILM_URL])) {
+    public static boolean checkUrl(Filter url, FilmData film) {
+        if (!check(url, film.arr[FilmDataXml.FILM_WEBSITE])
+                && !check(url, film.arr[FilmDataXml.FILM_URL])) {
             return false;
         }
         return true;
     }
 
-    public static boolean checkDays(long days, Film film) {
+    public static boolean checkDays(long days, FilmData film) {
         if (days == 0) {
             return true;
         }
@@ -241,13 +241,13 @@ public class FilmFilter {
         return true;
     }
 
-    public static boolean checkShowDate(String showDate, Film film) {
+    public static boolean checkShowDate(String showDate, FilmData film) {
         if (showDate.isEmpty() || film.filmDate.isEmpty()) {
             //dann will der User nicht oder der Film hat kein Datum
             return true;
         }
 
-        if (film.arr[FilmXml.FILM_DATE].equals(showDate)) {
+        if (film.arr[FilmDataXml.FILM_DATE].equals(showDate)) {
             return true;
         }
 
@@ -265,7 +265,7 @@ public class FilmFilter {
     }
 
     public static boolean checkFilmTime(int timeMin, int timeMax, boolean invert, int filmTime) {
-        if (filmTime == Film.FILM_TIME_EMPTY) {
+        if (filmTime == FilmData.FILM_TIME_EMPTY) {
             return true;
         }
 

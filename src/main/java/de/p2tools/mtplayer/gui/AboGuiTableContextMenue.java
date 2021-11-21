@@ -18,7 +18,7 @@
 package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.abo.Abo;
+import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.gui.tools.table.Table;
 import javafx.scene.control.*;
 
@@ -36,14 +36,14 @@ public class AboGuiTableContextMenue {
 
     }
 
-    public ContextMenu getContextMenu(Abo abo) {
+    public ContextMenu getContextMenu(AboData abo) {
         final ContextMenu contextMenu = new ContextMenu();
         getMenu(contextMenu, abo);
         return contextMenu;
     }
 
 
-    private void getMenu(ContextMenu contextMenu, Abo abo) {
+    private void getMenu(ContextMenu contextMenu, AboData abo) {
 
         final MenuItem miOnOff;
         if (abo != null && abo.isActive()) {

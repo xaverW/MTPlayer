@@ -22,10 +22,10 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.SetData;
-import de.p2tools.mtplayer.controller.data.download.Download;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
-import de.p2tools.mtplayer.controller.data.film.Film;
-import de.p2tools.mtplayer.controller.data.film.FilmXml;
+import de.p2tools.mtplayer.controller.data.download.DownloadData;
+import de.p2tools.mtplayer.controller.data.film.FilmData;
+import de.p2tools.mtplayer.controller.data.film.FilmDataXml;
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
 import de.p2tools.mtplayer.gui.dialog.AutomodeContinueDialogController;
@@ -67,13 +67,13 @@ public class StarterClass {
         });
     }
 
-    public synchronized void startUrlWithProgram(Film ersterFilm, SetData pSet, String resolution) {
+    public synchronized void startUrlWithProgram(FilmData ersterFilm, SetData pSet, String resolution) {
         // url mit dem Programm mit der Nr. starten (Button oder TabDownload "rechte Maustaste")
         // Quelle "Button" ist immer ein vom User gestarteter Film, also Quelle_Button!!!!!!!!!!!
 
-        final String url = ersterFilm.arr[FilmXml.FILM_URL];
+        final String url = ersterFilm.arr[FilmDataXml.FILM_URL];
         if (!url.isEmpty()) {
-            final Download download = new Download(pSet, ersterFilm, DownloadConstants.SRC_BUTTON, null, "", "", resolution);
+            final DownloadData download = new DownloadData(pSet, ersterFilm, DownloadConstants.SRC_BUTTON, null, "", "", resolution);
             progData.downloadList.startDownloads(download);
 
             starterThread.startDownload(download); // da nicht in der ListeDownloads
@@ -87,7 +87,7 @@ public class StarterClass {
         paused = true;
     }
 
-    static boolean check(ProgData progData, Download download) {
+    static boolean check(ProgData progData, DownloadData download) {
         // prüfen ob der Download geklappt hat und die Datei existiert und eine min. Größe hat
         boolean ret = false;
 
@@ -140,7 +140,7 @@ public class StarterClass {
         }
     }
 
-    static void startMsg(Download download) {
+    static void startMsg(DownloadData download) {
         final ArrayList<String> list = new ArrayList<>();
         final boolean play = download.getSource().equals(DownloadConstants.SRC_BUTTON);
         list.add(PLog.LILNE3);
@@ -167,7 +167,7 @@ public class StarterClass {
         PLog.sysLog(list.toArray(new String[list.size()]));
     }
 
-    private void restartMsg(Download download) {
+    private void restartMsg(DownloadData download) {
         final ArrayList<String> text = new ArrayList<>();
         text.add("Fehlerhaften Download neu starten - Restart (Summe Starts: " + download.getStart().getRestartCounter() + ')');
         text.add("Ziel: " + download.getDestPathFile());
@@ -175,7 +175,7 @@ public class StarterClass {
         PLog.sysLog(text.toArray(new String[text.size()]));
     }
 
-    private static void finishedMsg(final Download download) {
+    private static void finishedMsg(final DownloadData download) {
         final de.p2tools.mtplayer.controller.starter.Start start = download.getStart();
         if (ProgConfig.DOWNLOAD_BEEP.getValue()) {
             try {
@@ -242,7 +242,7 @@ public class StarterClass {
     }
 
 
-    static void finalizeDownload(Download download) {
+    static void finalizeDownload(DownloadData download) {
 
         final de.p2tools.mtplayer.controller.starter.Start start = download.getStart();
         deleteIfEmpty(new File(download.getDestPathFile()));
@@ -281,10 +281,10 @@ public class StarterClass {
     /**
      * tatsächliche Dateigröße eintragen
      *
-     * @param download {@link Download} with the info of the file
+     * @param download {@link DownloadData} with the info of the file
      */
 
-    static void setFileSize(Download download) {
+    static void setFileSize(DownloadData download) {
         try {
             final File destFile = new File(download.getDestPathFile());
             if (destFile.exists()) {
@@ -311,7 +311,7 @@ public class StarterClass {
     // ********************************************
     private class StarterThread extends Thread {
 
-        private Download download;
+        private DownloadData download;
         private final java.util.Timer bandwidthCalculationTimer;
 
         public StarterThread() {
@@ -383,7 +383,7 @@ public class StarterClass {
             }
         }
 
-        private synchronized Download getNextStart() throws InterruptedException {
+        private synchronized DownloadData getNextStart() throws InterruptedException {
             //ersten passenden Download der Liste zurückgeben oder null und versuchen,
             //dass bei mehreren laufenden Downloads ein anderer Sender gesucht wird
             if (paused) {
@@ -393,7 +393,7 @@ public class StarterClass {
                 paused = false;
             }
 
-            Download download = progData.downloadList.getNextStart();
+            DownloadData download = progData.downloadList.getNextStart();
             if (download == null) {
                 // dann versuchen einen Fehlerhaften nochmal zu starten
                 download = progData.downloadList.getRestartDownload();
@@ -407,9 +407,9 @@ public class StarterClass {
         /**
          * This will start the download process.
          *
-         * @param download The {@link Download} info object for download.
+         * @param download The {@link DownloadData} info object for download.
          */
-        private void startDownload(Download download) {
+        private void startDownload(DownloadData download) {
             download.getStart().startDownload();
             Thread downloadThread;
 

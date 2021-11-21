@@ -16,7 +16,7 @@
 
 package de.p2tools.mtplayer.gui;
 
-import de.p2tools.mtplayer.controller.data.abo.Abo;
+import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.abo.AboFieldNames;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import javafx.geometry.Insets;
@@ -35,7 +35,7 @@ public class AboGuiInfoController extends VBox {
     private final TextArea txtInfo = new TextArea();
     private final TextField txtName = new TextField("");
 
-    private Abo abo = null;
+    private AboData abo = null;
 
     public AboGuiInfoController() {
         txtName.setFont(Font.font(null, FontWeight.BOLD, -1));
@@ -60,7 +60,7 @@ public class AboGuiInfoController extends VBox {
         getChildren().add(gridPane);
     }
 
-    public void setAbo(Abo newAbo) {
+    public void setAbo(AboData newAbo) {
         if (this.abo != null) {
             txtName.textProperty().unbindBidirectional(this.abo.nameProperty());
             txtInfo.textProperty().unbindBidirectional(this.abo.descriptionProperty());

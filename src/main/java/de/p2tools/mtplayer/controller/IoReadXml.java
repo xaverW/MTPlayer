@@ -25,9 +25,9 @@ import de.p2tools.mtplayer.controller.data.BlackData;
 import de.p2tools.mtplayer.controller.data.ProgramData;
 import de.p2tools.mtplayer.controller.data.ReplaceData;
 import de.p2tools.mtplayer.controller.data.SetData;
-import de.p2tools.mtplayer.controller.data.abo.Abo;
+import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.abo.AboFieldNames;
-import de.p2tools.mtplayer.controller.data.download.Download;
+import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFieldNames;
 import de.p2tools.mtplayer.controller.filmlist.filmlistUrls.FilmlistUrlData;
 import de.p2tools.mtplayer.controller.mediaDb.MediaCollectionData;
@@ -127,7 +127,7 @@ public class IoReadXml implements AutoCloseable {
                                 break;
                             case "Abonnement":
                                 // Abo
-                                final Abo abo = new Abo();
+                                final AboData abo = new AboData();
                                 if (get(parser, "Abonnement", AboFieldNames.XML_NAMES, abo.arr)) {
                                     abo.setPropsFromXml();
                                     this.progData.aboList.addAbo(abo);
@@ -136,7 +136,7 @@ public class IoReadXml implements AutoCloseable {
                                 break;
                             case "Downlad":
                                 // Downloads
-                                final Download d = new Download();
+                                final DownloadData d = new DownloadData();
                                 if (get(parser, "Downlad", DownloadFieldNames.XML_NAMES, d.arr)) {
                                     d.setPropsFromXml();
                                     this.progData.downloadList.add(d);

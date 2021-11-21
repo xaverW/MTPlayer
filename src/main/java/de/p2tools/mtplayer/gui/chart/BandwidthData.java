@@ -17,14 +17,14 @@
 
 package de.p2tools.mtplayer.gui.chart;
 
-import de.p2tools.mtplayer.controller.data.download.Download;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
+import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import javafx.scene.chart.XYChart;
 
 import java.util.ArrayList;
 
 public class BandwidthData extends ArrayList<Long> {
-    private Download download;
+    private DownloadData download;
     private int downloadState = DownloadConstants.STATE_INIT;
     private String name = "";
     private int startTimeSec; //Startzeit in Sekunden
@@ -39,7 +39,7 @@ public class BandwidthData extends ArrayList<Long> {
     private int dataAllSecond = ChartFactory.DATA_ALL_SECONDS;
 //    private final XYChart.Series<Number, Number> chartSeries;
 
-    public BandwidthData(ChartData chartData, Download download) {
+    public BandwidthData(ChartData chartData, DownloadData download) {
         this.chartData = chartData;
         this.download = download;
 //        this.chartSeries = new XYChart.Series<>("", FXCollections.observableArrayList());
@@ -49,11 +49,11 @@ public class BandwidthData extends ArrayList<Long> {
         genData();
     }
 
-    public Download getDownload() {
+    public DownloadData getDownload() {
         return download;
     }
 
-    public void setDownload(Download download) {
+    public void setDownload(DownloadData download) {
         setDownloadState();
         this.download = download;
         setDownloadState();

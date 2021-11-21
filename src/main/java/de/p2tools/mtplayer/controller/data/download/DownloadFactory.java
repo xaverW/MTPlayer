@@ -32,7 +32,7 @@ public class DownloadFactory {
     private DownloadFactory() {
     }
 
-    public static void deleteFilmFile(Download download) {
+    public static void deleteFilmFile(DownloadData download) {
         // Download nur löschen wenn er nicht läuft
 
         if (download == null) {

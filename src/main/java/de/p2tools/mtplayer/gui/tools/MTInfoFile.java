@@ -16,9 +16,9 @@
 
 package de.p2tools.mtplayer.gui.tools;
 
-import de.p2tools.mtplayer.controller.data.download.Download;
+import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFieldNames;
-import de.p2tools.mtplayer.controller.data.film.FilmXml;
+import de.p2tools.mtplayer.controller.data.film.FilmDataXml;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.tools.PSystemUtils;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -30,7 +30,7 @@ import java.nio.file.Paths;
 
 public class MTInfoFile {
 
-    public static void writeInfoFile(Download download) {
+    public static void writeInfoFile(DownloadData download) {
         if (download.getDestPath().isEmpty()) {
             download.setDestPath(PSystemUtils.getStandardDownloadPath());
         }
@@ -48,23 +48,23 @@ public class MTInfoFile {
              OutputStreamWriter osw = new OutputStreamWriter(dos);
              BufferedWriter br = new BufferedWriter(osw)) {
             if (download.getFilm() != null) {
-                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_CHANNEL] + ":        " + download.getFilm().arr[FilmXml.FILM_CHANNEL]);
+                br.write(FilmDataXml.COLUMN_NAMES[FilmDataXml.FILM_CHANNEL] + ":        " + download.getFilm().arr[FilmDataXml.FILM_CHANNEL]);
                 br.write(P2LibConst.LINE_SEPARATOR);
-                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_THEME] + ":         " + download.getFilm().arr[FilmXml.FILM_THEME]);
+                br.write(FilmDataXml.COLUMN_NAMES[FilmDataXml.FILM_THEME] + ":         " + download.getFilm().arr[FilmDataXml.FILM_THEME]);
                 br.write(P2LibConst.LINE_SEPARATORx2);
-                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_TITLE] + ":         " + download.getFilm().arr[FilmXml.FILM_TITLE]);
+                br.write(FilmDataXml.COLUMN_NAMES[FilmDataXml.FILM_TITLE] + ":         " + download.getFilm().arr[FilmDataXml.FILM_TITLE]);
                 br.write(P2LibConst.LINE_SEPARATORx2);
-                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_DATE] + ":         " + download.getFilm().arr[FilmXml.FILM_DATE]);
+                br.write(FilmDataXml.COLUMN_NAMES[FilmDataXml.FILM_DATE] + ":         " + download.getFilm().arr[FilmDataXml.FILM_DATE]);
                 br.write(P2LibConst.LINE_SEPARATOR);
-                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_TIME] + ":          " + download.getFilm().arr[FilmXml.FILM_TIME]);
+                br.write(FilmDataXml.COLUMN_NAMES[FilmDataXml.FILM_TIME] + ":          " + download.getFilm().arr[FilmDataXml.FILM_TIME]);
                 br.write(P2LibConst.LINE_SEPARATOR);
-                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_DURATION] + ":   " + download.getFilm().arr[FilmXml.FILM_DURATION]);
+                br.write(FilmDataXml.COLUMN_NAMES[FilmDataXml.FILM_DURATION] + ":   " + download.getFilm().arr[FilmDataXml.FILM_DURATION]);
                 br.write(P2LibConst.LINE_SEPARATOR);
                 br.write(DownloadFieldNames.COLUMN_NAMES[DownloadFieldNames.DOWNLOAD_SIZE_NO] + ":    " + download.getDownloadSize());
                 br.write(P2LibConst.LINE_SEPARATORx2);
 
-                br.write(FilmXml.COLUMN_NAMES[FilmXml.FILM_WEBSITE] + P2LibConst.LINE_SEPARATOR);
-                br.write(download.getFilm().arr[FilmXml.FILM_WEBSITE]);
+                br.write(FilmDataXml.COLUMN_NAMES[FilmDataXml.FILM_WEBSITE] + P2LibConst.LINE_SEPARATOR);
+                br.write(download.getFilm().arr[FilmDataXml.FILM_WEBSITE]);
                 br.write(P2LibConst.LINE_SEPARATORx2);
             }
 
@@ -97,11 +97,11 @@ public class MTInfoFile {
         }
     }
 
-    private static String getInfoFileStr(Download download) {
+    private static String getInfoFileStr(DownloadData download) {
         return download.getFileNameWithoutSuffix() + ".txt";
     }
 
-    public static Path getInfoFilePath(Download download) {
+    public static Path getInfoFilePath(DownloadData download) {
         Path path;
         try {
             path = Paths.get(getInfoFileStr(download));

@@ -18,8 +18,8 @@ package de.p2tools.mtplayer.controller.starter;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.download.Download;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
+import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.gui.dialog.DownloadContinueDialogController;
 import de.p2tools.mtplayer.gui.dialog.DownloadErrorDialogController;
 import de.p2tools.mtplayer.gui.tools.MTInfoFile;
@@ -40,7 +40,7 @@ import static de.p2tools.mtplayer.controller.starter.StarterClass.*;
 public class ExternalProgramDownload extends Thread {
 
     private final ProgData progData;
-    private final Download download;
+    private final DownloadData download;
     private File file;
     private String exMessage = "";
     private boolean retAbort;
@@ -59,7 +59,7 @@ public class ExternalProgramDownload extends Thread {
 
     private long fileSize = -1;
 
-    public ExternalProgramDownload(ProgData progData, Download download) {
+    public ExternalProgramDownload(ProgData progData, DownloadData download) {
         super();
         setName("EXTERNAL PROGRAM DL THREAD: " + download.getTitle());
 

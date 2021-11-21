@@ -27,7 +27,7 @@ import javafx.beans.property.*;
 
 import java.util.ArrayList;
 
-public class DownloadProps extends PDataSample<Download> {
+public class DownloadDataProps extends PDataSample<DownloadData> {
 
     private final IntegerProperty no = new SimpleIntegerProperty(DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED);
     private final IntegerProperty filmNr = new SimpleIntegerProperty(DownloadConstants.FILM_NUMBER_NOT_FOUND);
@@ -87,7 +87,7 @@ public class DownloadProps extends PDataSample<Download> {
 
     public static final String TAG = "Download";
 
-    DownloadProps() {
+    DownloadDataProps() {
     }
 
     @Override
@@ -617,7 +617,7 @@ public class DownloadProps extends PDataSample<Download> {
     }
 
 
-    public int compareTo(DownloadProps arg0) {
+    public int compareTo(DownloadDataProps arg0) {
         return Data.sorter.compare(getChannel(), arg0.getChannel());
     }
 

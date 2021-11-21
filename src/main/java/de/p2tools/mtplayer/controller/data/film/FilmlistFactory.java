@@ -17,8 +17,8 @@
 
 package de.p2tools.mtplayer.controller.data.film;
 
-import de.p2tools.mtplayer.controller.history.HistoryList;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.history.HistoryList;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 
@@ -57,12 +57,12 @@ public class FilmlistFactory {
         Filmlist filmlist = ProgData.getInstance().filmlist;
         filmlist.stream().forEach(film -> {
 
-            film.arr[Film.FILM_TITLE] = clean_1(film.getTitle(), true);
-            film.arr[Film.FILM_THEME] = clean_1(film.getTheme(), true);
+            film.arr[FilmData.FILM_TITLE] = clean_1(film.getTitle(), true);
+            film.arr[FilmData.FILM_THEME] = clean_1(film.getTheme(), true);
             film.setDescription(clean_1(film.getDescription(), false));
 
-            film.arr[Film.FILM_TITLE] = clean_2(film.getTitle());
-            film.arr[Film.FILM_THEME] = clean_2(film.getTheme());
+            film.arr[FilmData.FILM_TITLE] = clean_2(film.getTitle());
+            film.arr[FilmData.FILM_THEME] = clean_2(film.getTheme());
             film.setDescription(clean_2(film.getDescription()));
 
             // U+3000 (12288)	　	Trenn- (Leer-) Zeichen	Whitespace	IDEOGRAPHIC SPACE	Ideographisches Leerzeichen

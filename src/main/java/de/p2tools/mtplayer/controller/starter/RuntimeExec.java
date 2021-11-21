@@ -17,8 +17,8 @@
 package de.p2tools.mtplayer.controller.starter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.download.Download;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
+import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadSize;
 import de.p2tools.p2Lib.tools.log.PLog;
 
@@ -47,7 +47,7 @@ public class RuntimeExec {
     private double totalSecs = 0;
     private long oldSize = 0;
     private long oldSecs = 0;
-    private Download download = null;
+    private DownloadData download = null;
     private DownloadSize mVFilmSize = null;
     private final String strProgCall;
     private String[] arrProgCallArray = null;
@@ -55,7 +55,7 @@ public class RuntimeExec {
     private PlayerMessage playerMessage = new PlayerMessage();
     private boolean flvstreamer = false;
 
-    public RuntimeExec(Download download) {
+    public RuntimeExec(DownloadData download) {
         this.download = download;
 
         this.mVFilmSize = download.getDownloadSize();

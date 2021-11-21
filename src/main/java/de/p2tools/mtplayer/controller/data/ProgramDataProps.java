@@ -26,7 +26,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class ProgramProps extends PDataSample<ProgramData> {
+public class ProgramDataProps extends PDataSample<ProgramData> {
 
     public static final int PROGRAM_NAME = 0;
     public static final int PROGRAM_DEST_FILENAME = 1;
@@ -168,7 +168,7 @@ public class ProgramProps extends PDataSample<ProgramData> {
         this.downManager.set(downManager);
     }
 
-    public ProgramProps() {
+    public ProgramDataProps() {
         makeArr();
     }
 

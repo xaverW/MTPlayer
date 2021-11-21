@@ -18,14 +18,14 @@ package de.p2tools.mtplayer.controller.data.film;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.abo.Abo;
+import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.tools.FilmDate;
 import de.p2tools.p2Lib.tools.log.PLog;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-public class Film extends FilmProps {
+public class FilmData extends FilmDataProps {
 
     public static final String RESOLUTION_NORMAL = "normal";
     public static final String RESOLUTION_HD = "hd";
@@ -36,10 +36,10 @@ public class Film extends FilmProps {
     public static final String GEO_CH = "CH";
     public static final String GEO_EU = "EU";
     public static final String GEO_WELT = "WELT";
-    private Abo abo = null;
+    private AboData abo = null;
 
 
-    public Film() {
+    public FilmData() {
 //        filmSize = new FilmSize(0); // Dateigröße in MByte
     }
 
@@ -347,8 +347,8 @@ public class Film extends FilmProps {
         return getUrlFlvstreamer();
     }
 
-    public Film getCopy() {
-        final Film ret = new Film();
+    public FilmData getCopy() {
+        final FilmData ret = new FilmData();
         System.arraycopy(arr, 0, ret.arr, 0, arr.length);
         ret.filmDate = filmDate;
         ret.no = no;
@@ -363,11 +363,11 @@ public class Film extends FilmProps {
     }
 
 
-    public synchronized Abo getAbo() {
+    public synchronized AboData getAbo() {
         return abo;
     }
 
-    public synchronized void setAbo(Abo abo) {
+    public synchronized void setAbo(AboData abo) {
         this.abo = abo;
     }
 }

@@ -18,7 +18,7 @@
 package de.p2tools.mtplayer.gui.tools;
 
 import de.p2tools.mtplayer.controller.config.ProgInfos;
-import de.p2tools.mtplayer.controller.data.download.Download;
+import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.tools.TimedTextMarkupLanguageParser;
 import de.p2tools.p2Lib.tools.log.PLog;
 import de.p2tools.p2Lib.tools.net.PUrlTools;
@@ -77,7 +77,7 @@ public class MTSubtitle {
         }
     }
 
-    private void writeSrt(String strSubtitelFile, Download download) {
+    private void writeSrt(String strSubtitelFile, DownloadData download) {
         final Path p = Paths.get(strSubtitelFile);
         final TimedTextMarkupLanguageParser ttmlp = new TimedTextMarkupLanguageParser();
         if (ttmlp.parse(p) || ttmlp.parseXmlFlash(p)) {
@@ -87,7 +87,7 @@ public class MTSubtitle {
         ttmlp.cleanup();
     }
 
-    public void writeSubtitle(Download download) {
+    public void writeSubtitle(DownloadData download) {
 //        String suffix;
         String urlSubtitle = download.getUrlSubtitle();
         InputStream in = null;
@@ -140,7 +140,7 @@ public class MTSubtitle {
         }
     }
 
-    private static String getSubtitleStr(Download download) {
+    private static String getSubtitleStr(DownloadData download) {
         String suffix = PUrlTools.getSuffixFromUrl(download.getUrlSubtitle());
         if (!suffix.endsWith(SUFFIX_SRT) && !suffix.endsWith(SUFFIX_VTT)) {
             suffix = SUFFIX_TTML;
@@ -149,7 +149,7 @@ public class MTSubtitle {
         return download.getFileNameWithoutSuffix() + '.' + suffix;
     }
 
-    public static Path getSubtitlePath(Download download) {
+    public static Path getSubtitlePath(DownloadData download) {
         Path path;
         try {
             path = Paths.get(getSubtitleStr(download));
@@ -160,7 +160,7 @@ public class MTSubtitle {
         return path;
     }
 
-    public static Path getSrtPath(Download download) {
+    public static Path getSrtPath(DownloadData download) {
         return Paths.get(download.getFileNameWithoutSuffix() + SRT_FILETYPE);
     }
 }

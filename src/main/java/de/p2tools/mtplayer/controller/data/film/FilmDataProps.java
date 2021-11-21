@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.tools.FilmDate;
 import de.p2tools.p2Lib.tools.date.PDate;
 import de.p2tools.p2Lib.tools.log.PLog;
 
-public class FilmProps extends FilmXml {
+public class FilmDataProps extends FilmDataXml {
 
     public int no;
     FilmSize filmSize = new FilmSize(); // Dateigröße in MByte

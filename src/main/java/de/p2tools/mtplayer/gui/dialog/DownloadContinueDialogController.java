@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
-import de.p2tools.mtplayer.controller.data.download.Download;
+import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadTools;
 import de.p2tools.mtplayer.controller.starter.DownloadState;
 import de.p2tools.mtplayer.tools.FileNameUtils;
@@ -55,7 +55,7 @@ public class DownloadContinueDialogController extends PDialogExtra {
     private GridPane gridPane = new GridPane();
 
     private final ProgData progData;
-    private final Download download;
+    private final DownloadData download;
     private DownloadState.ContinueDownload result = DownloadState.ContinueDownload.CANCEL_DOWNLOAD;
     private final boolean directDownload;
     private String oldPathFile;
@@ -64,7 +64,7 @@ public class DownloadContinueDialogController extends PDialogExtra {
     private Integer timeSeconds = ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS.getValue();
 
     public DownloadContinueDialogController(StringProperty conf, ProgData progData,
-                                            Download download, boolean directDownload) {
+                                            DownloadData download, boolean directDownload) {
         super(progData.primaryStage, conf, "Download weiterführen", true, false);
 
         this.progData = progData;

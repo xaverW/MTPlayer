@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.gui.tools.table;
 
 import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.data.abo.Abo;
+import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
 import de.p2tools.p2Lib.guiTools.PCheckBoxCell;
 import de.p2tools.p2Lib.tools.date.PDate;
@@ -38,82 +38,82 @@ public class TableAbo {
         });
         ProgColorList.ABO_SWITCHED_OFF.colorProperty().addListener((a, b, c) -> table.refresh());
 
-        final TableColumn<Abo, Integer> nrColumn = new TableColumn<>("Nr");
+        final TableColumn<AboData, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));
         nrColumn.getStyleClass().add("alignCenterRightPadding_10");
 
-        final TableColumn<Abo, Boolean> activColumn = new TableColumn<>("Aktiv");
+        final TableColumn<AboData, Boolean> activColumn = new TableColumn<>("Aktiv");
         activColumn.setCellValueFactory(new PropertyValueFactory<>("active"));
         activColumn.setCellFactory(new PCheckBoxCell().cellFactoryBool);
         activColumn.setCellFactory(callbackAktiv);
         activColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<Abo, Integer> hitColumn = new TableColumn<>("Treffer");
+        final TableColumn<AboData, Integer> hitColumn = new TableColumn<>("Treffer");
         hitColumn.setCellValueFactory(new PropertyValueFactory<>("hit"));
         hitColumn.setCellFactory(callbackHits);
         hitColumn.getStyleClass().add("alignCenterRightPadding_10");
 
-        final TableColumn<Abo, String> nameColumn = new TableColumn<>("Name");
+        final TableColumn<AboData, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         nameColumn.getStyleClass().add("alignCenterLeft");
 
-        final TableColumn<Abo, String> resColumn = new TableColumn<>("Auflösung");
+        final TableColumn<AboData, String> resColumn = new TableColumn<>("Auflösung");
         resColumn.setCellValueFactory(new PropertyValueFactory<>("resolution"));
         resColumn.getStyleClass().add("alignCenterLeft");
 
-        final TableColumn<Abo, String> senderColumn = new TableColumn<>("Sender");
+        final TableColumn<AboData, String> senderColumn = new TableColumn<>("Sender");
         senderColumn.setCellValueFactory(new PropertyValueFactory<>("channel"));
         senderColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<Abo, String> themeColumn = new TableColumn<>("Thema");
+        final TableColumn<AboData, String> themeColumn = new TableColumn<>("Thema");
         themeColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
         themeColumn.getStyleClass().add("alignCenterLeft");
 
-        final TableColumn<Abo, Boolean> themeExactColumn = new TableColumn<>("Thema exakt");
+        final TableColumn<AboData, Boolean> themeExactColumn = new TableColumn<>("Thema exakt");
         themeExactColumn.setCellValueFactory(new PropertyValueFactory<>("themeExact"));
         themeExactColumn.setCellFactory(new PCheckBoxCell().cellFactoryBool);
         themeExactColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<Abo, String> themeTitleColumn = new TableColumn<>("Thema-Titel");
+        final TableColumn<AboData, String> themeTitleColumn = new TableColumn<>("Thema-Titel");
         themeTitleColumn.setCellValueFactory(new PropertyValueFactory<>("themeTitle"));
         themeTitleColumn.getStyleClass().add("alignCenterLeft");
 
-        final TableColumn<Abo, String> titleColumn = new TableColumn<>("Titel");
+        final TableColumn<AboData, String> titleColumn = new TableColumn<>("Titel");
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         titleColumn.getStyleClass().add("alignCenterLeft");
 
-        final TableColumn<Abo, String> somewhereColumn = new TableColumn<>("irgendwo");
+        final TableColumn<AboData, String> somewhereColumn = new TableColumn<>("irgendwo");
         somewhereColumn.setCellValueFactory(new PropertyValueFactory<>("somewhere"));
         somewhereColumn.getStyleClass().add("alignCenterLeft");
 
-        final TableColumn<Abo, Integer> timeRange = new TableColumn<>("Zeitraum");
+        final TableColumn<AboData, Integer> timeRange = new TableColumn<>("Zeitraum");
         timeRange.setCellFactory(cellFactoryMin);
         timeRange.setCellValueFactory(new PropertyValueFactory<>("timeRange"));
         timeRange.getStyleClass().add("alignCenter");
 
-        final TableColumn<Abo, Integer> minColumn = new TableColumn<>("min");
+        final TableColumn<AboData, Integer> minColumn = new TableColumn<>("min");
         minColumn.setCellFactory(cellFactoryMin);
         minColumn.setCellValueFactory(new PropertyValueFactory<>("minDurationMinute"));
         minColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<Abo, Integer> maxColumn = new TableColumn<>("max");
+        final TableColumn<AboData, Integer> maxColumn = new TableColumn<>("max");
         maxColumn.setCellFactory(cellFactoryMax);
         maxColumn.setCellValueFactory(new PropertyValueFactory<>("maxDurationMinute"));
         maxColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<Abo, String> startTimeColumn = new TableColumn<>("Startzeit");
+        final TableColumn<AboData, String> startTimeColumn = new TableColumn<>("Startzeit");
         startTimeColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
         startTimeColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<Abo, String> destinationColumn = new TableColumn<>("Ziel");
+        final TableColumn<AboData, String> destinationColumn = new TableColumn<>("Ziel");
         destinationColumn.setCellValueFactory(new PropertyValueFactory<>("aboSubDir"));
         destinationColumn.getStyleClass().add("alignCenterLeft");
 
-        final TableColumn<Abo, PDate> datumColumn = new TableColumn<>("Datum");
+        final TableColumn<AboData, PDate> datumColumn = new TableColumn<>("Datum");
         datumColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         datumColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<Abo, String> psetColumn = new TableColumn<>("Programmset");
+        final TableColumn<AboData, String> psetColumn = new TableColumn<>("Programmset");
         psetColumn.setCellValueFactory(new PropertyValueFactory<>("setData"));//liefert den Namen: toString()
         psetColumn.getStyleClass().add("alignCenterLeft");
 
@@ -124,10 +124,10 @@ public class TableAbo {
 
     }
 
-    private static Callback<TableColumn<Abo, Boolean>, TableCell<Abo, Boolean>> callbackAktiv =
-            (final TableColumn<Abo, Boolean> param) -> {
+    private static Callback<TableColumn<AboData, Boolean>, TableCell<AboData, Boolean>> callbackAktiv =
+            (final TableColumn<AboData, Boolean> param) -> {
 
-                final PCheckBoxCell<Abo, Boolean> cell = new PCheckBoxCell<>() {
+                final PCheckBoxCell<AboData, Boolean> cell = new PCheckBoxCell<>() {
 
                     @Override
                     public void updateItem(Boolean item, boolean empty) {
@@ -146,10 +146,10 @@ public class TableAbo {
                 return cell;
             };
 
-    private static Callback<TableColumn<Abo, Integer>, TableCell<Abo, Integer>> callbackHits =
-            (final TableColumn<Abo, Integer> param) -> {
+    private static Callback<TableColumn<AboData, Integer>, TableCell<AboData, Integer>> callbackHits =
+            (final TableColumn<AboData, Integer> param) -> {
 
-                final TableCell<Abo, Integer> cell = new TableCell<>() {
+                final TableCell<AboData, Integer> cell = new TableCell<>() {
 
                     @Override
                     public void updateItem(Integer item, boolean empty) {
@@ -161,8 +161,8 @@ public class TableAbo {
                             return;
                         }
 
-                        Abo abo = getTableView().getItems().get(getIndex());
-                        if (abo.isActive()) {
+                        AboData aboData = getTableView().getItems().get(getIndex());
+                        if (aboData.isActive()) {
                             setText(item.toString());
                         } else {
                             setText("");
@@ -172,10 +172,10 @@ public class TableAbo {
                 return cell;
             };
 
-    private static Callback<TableColumn<Abo, Integer>, TableCell<Abo, Integer>> cellFactoryMin
-            = (final TableColumn<Abo, Integer> param) -> {
+    private static Callback<TableColumn<AboData, Integer>, TableCell<AboData, Integer>> cellFactoryMin
+            = (final TableColumn<AboData, Integer> param) -> {
 
-        final TableCell<Abo, Integer> cell = new TableCell<>() {
+        final TableCell<AboData, Integer> cell = new TableCell<>() {
 
             @Override
             public void updateItem(Integer item, boolean empty) {
@@ -197,10 +197,10 @@ public class TableAbo {
         return cell;
     };
 
-    private static Callback<TableColumn<Abo, Integer>, TableCell<Abo, Integer>> cellFactoryMax
-            = (final TableColumn<Abo, Integer> param) -> {
+    private static Callback<TableColumn<AboData, Integer>, TableCell<AboData, Integer>> cellFactoryMax
+            = (final TableColumn<AboData, Integer> param) -> {
 
-        final TableCell<Abo, Integer> cell = new TableCell<>() {
+        final TableCell<AboData, Integer> cell = new TableCell<>() {
 
             @Override
             public void updateItem(Integer item, boolean empty) {

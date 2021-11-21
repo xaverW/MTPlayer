@@ -19,8 +19,8 @@ package de.p2tools.mtplayer.controller.data.abo;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadTools;
-import de.p2tools.mtplayer.controller.data.film.Film;
-import de.p2tools.mtplayer.controller.data.film.FilmXml;
+import de.p2tools.mtplayer.controller.data.film.FilmData;
+import de.p2tools.mtplayer.controller.data.film.FilmDataXml;
 import de.p2tools.mtplayer.controller.data.film.Filmlist;
 import de.p2tools.mtplayer.gui.dialog.AboEditDialogController;
 import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
@@ -38,7 +38,7 @@ import javafx.collections.ObservableList;
 
 import java.util.*;
 
-public class AboList extends SimpleListProperty<Abo> implements PDataList<Abo> {
+public class AboList extends SimpleListProperty<AboData> implements PDataList<AboData> {
     private final ProgData progData;
     //    private static final String[] LEER = {""};
     public static final String TAG = "AboList";
@@ -63,14 +63,14 @@ public class AboList extends SimpleListProperty<Abo> implements PDataList<Abo> {
     }
 
     @Override
-    public Abo getNewItem() {
-        return new Abo();
+    public AboData getNewItem() {
+        return new AboData();
     }
 
     @Override
     public void addNewItem(Object obj) {
-        if (obj.getClass().equals(Abo.class)) {
-            add((Abo) obj);
+        if (obj.getClass().equals(AboData.class)) {
+            add((AboData) obj);
         }
     }
 
@@ -82,7 +82,7 @@ public class AboList extends SimpleListProperty<Abo> implements PDataList<Abo> {
         this.stream().forEach(abo -> abo.initAbo(progData));
     }
 
-    public synchronized void addAbo(Abo abo) {
+    public synchronized void addAbo(AboData abo) {
         // die Änderung an der Liste wird nicht gemeldet!!
         // für das Lesen der Konfig-Datei beim Programmstart
         ++nr;
@@ -93,7 +93,7 @@ public class AboList extends SimpleListProperty<Abo> implements PDataList<Abo> {
             abo.setName("Abo_" + nr);
         }
         if (abo.getResolution().isEmpty()) {
-            abo.setResolution(Film.RESOLUTION_NORMAL);
+            abo.setResolution(FilmData.RESOLUTION_NORMAL);
         }
         super.add(abo);
     }
@@ -134,7 +134,7 @@ public class AboList extends SimpleListProperty<Abo> implements PDataList<Abo> {
                 ProgConfig.SYSTEM_USE_REPLACETABLE.getValue(),
                 ProgConfig.SYSTEM_ONLY_ASCII.getValue());
 
-        final Abo abo = new Abo(progData,
+        final AboData abo = new AboData(progData,
                 searchTitle /* name */,
                 channel,
                 theme,
@@ -161,13 +161,13 @@ public class AboList extends SimpleListProperty<Abo> implements PDataList<Abo> {
         new AboEditDialogController(progData, abo);
     }
 
-    public synchronized void changeAboFromFilter(Optional<Abo> oAbo, SelectedFilter selectedFilter) {
+    public synchronized void changeAboFromFilter(Optional<AboData> oAbo, SelectedFilter selectedFilter) {
         // abo mit den Filterwerten einstellen
         if (!oAbo.isPresent()) {
             return;
         }
 
-        final Abo abo = oAbo.get();
+        final AboData abo = oAbo.get();
         new AboEditDialogController(progData, selectedFilter, abo);
     }
 
@@ -189,7 +189,7 @@ public class AboList extends SimpleListProperty<Abo> implements PDataList<Abo> {
                 ProgConfig.SYSTEM_USE_REPLACETABLE.getValue(),
                 ProgConfig.SYSTEM_ONLY_ASCII.getValue());
 
-        final Abo abo = new Abo(progData,
+        final AboData abo = new AboData(progData,
                 namePath /* name */,
                 filmChannel,
                 filmTheme,
@@ -204,36 +204,36 @@ public class AboList extends SimpleListProperty<Abo> implements PDataList<Abo> {
         new AboEditDialogController(progData, abo);
     }
 
-    public synchronized void changeAbo(Abo abo) {
+    public synchronized void changeAbo(AboData abo) {
         //Abo aus Tab Filme/Download ändern
         if (abo != null) {
-            ObservableList<Abo> lAbo = FXCollections.observableArrayList(abo);
+            ObservableList<AboData> lAbo = FXCollections.observableArrayList(abo);
             changeAbo(lAbo);
         }
     }
 
-    public synchronized void changeAbo(ObservableList<Abo> lAbo) {
+    public synchronized void changeAbo(ObservableList<AboData> lAbo) {
         if (!lAbo.isEmpty()) {
             new AboEditDialogController(progData, lAbo);
         }
     }
 
-    public synchronized void setAboActive(ObservableList<Abo> lAbo, boolean on) {
+    public synchronized void setAboActive(ObservableList<AboData> lAbo, boolean on) {
         if (!lAbo.isEmpty()) {
             lAbo.stream().forEach(abo -> abo.setActive(on));
             notifyChanges();
         }
     }
 
-    public synchronized void deleteAbo(Abo abo) {
+    public synchronized void deleteAbo(AboData abo) {
         if (abo == null) {
             return;
         }
-        ObservableList<Abo> lAbo = FXCollections.observableArrayList(abo);
+        ObservableList<AboData> lAbo = FXCollections.observableArrayList(abo);
         deleteAbo(lAbo);
     }
 
-    public synchronized void deleteAbo(ObservableList<Abo> lAbo) {
+    public synchronized void deleteAbo(ObservableList<AboData> lAbo) {
         if (lAbo.isEmpty()) {
             return;
         }
@@ -263,7 +263,7 @@ public class AboList extends SimpleListProperty<Abo> implements PDataList<Abo> {
         Collections.sort(this);
 
         nr = 0;
-        for (Abo abo : this) {
+        for (AboData abo : this) {
             abo.setNo(++nr);
         }
     }
@@ -271,7 +271,7 @@ public class AboList extends SimpleListProperty<Abo> implements PDataList<Abo> {
     public synchronized ArrayList<String> getAboDestinationPathList() {
         // liefert ein Array mit allen Pfaden
         final ArrayList<String> path = new ArrayList<>();
-        for (final Abo abo : this) {
+        for (final AboData abo : this) {
             final String s = abo.getAboSubDir();
             if (!path.contains(s)) {
                 path.add(abo.getAboSubDir());
@@ -286,7 +286,7 @@ public class AboList extends SimpleListProperty<Abo> implements PDataList<Abo> {
         // liefert ein Array mit allen Sendern
         final ArrayList<String> sender = new ArrayList<>();
         sender.add("");
-        for (final Abo abo : this) {
+        for (final AboData abo : this) {
 
             final String s = abo.getChannel();
 
@@ -318,7 +318,7 @@ public class AboList extends SimpleListProperty<Abo> implements PDataList<Abo> {
         // liefert ein Array mit allen Abonamen
         final ArrayList<String> name = new ArrayList<>();
         name.add("");
-        for (final Abo abo : this) {
+        for (final AboData abo : this) {
             final String s = abo.getName();
             if (!name.contains(s)) {
                 name.add(abo.getName());
@@ -328,9 +328,9 @@ public class AboList extends SimpleListProperty<Abo> implements PDataList<Abo> {
         return name;
     }
 
-    public boolean aboExistsAlready(Abo abo) {
+    public boolean aboExistsAlready(AboData abo) {
         // true wenn es das Abo schon gibt
-        for (final Abo dataAbo : this) {
+        for (final AboData dataAbo : this) {
             if (FilmFilter.aboExistsAlready(dataAbo, abo)) {
                 return true;
             }
@@ -338,10 +338,10 @@ public class AboList extends SimpleListProperty<Abo> implements PDataList<Abo> {
         return false;
     }
 
-    public synchronized Abo getAboForFilm_quick(Film film, boolean checkLength) {
+    public synchronized AboData getAboForFilm_quick(FilmData film, boolean checkLength) {
         // da wird nur in der Filmliste geschaut, ob in "DatenFilm" ein Abo eingetragen ist
         // geht schneller, "assignAboToFilm" muss aber vorher schon gelaufen sein!!
-        Abo abo = film.getAbo();
+        AboData abo = film.getAbo();
         if (abo == null) {
             return null;
         } else {
@@ -354,9 +354,9 @@ public class AboList extends SimpleListProperty<Abo> implements PDataList<Abo> {
         }
     }
 
-    private void deleteAboInFilm(Film film) {
+    private void deleteAboInFilm(FilmData film) {
         // für jeden Film Abo löschen
-        film.arr[FilmXml.FILM_ABO_NAME] = "";
+        film.arr[FilmDataXml.FILM_ABO_NAME] = "";
         film.setAbo(null);
     }
 
@@ -366,14 +366,14 @@ public class AboList extends SimpleListProperty<Abo> implements PDataList<Abo> {
      *
      * @param film assignee
      */
-    private void assignAboToFilm(Film film) {
+    private void assignAboToFilm(FilmData film) {
         if (film.isLive()) {
             // Livestreams gehören nicht in ein Abo
             deleteAboInFilm(film);
             return;
         }
 
-        final Abo foundAbo = stream()
+        final AboData foundAbo = stream()
                 .filter(abo -> abo.isActive())
                 .filter(abo -> FilmFilter.checkFilmWithFilter(
                         abo.fChannel,
@@ -395,14 +395,14 @@ public class AboList extends SimpleListProperty<Abo> implements PDataList<Abo> {
         if (foundAbo != null) {
             if (!FilmFilter.checkLengthMin(foundAbo.getMinDurationMinute(), film.getDurationMinute())) {
                 // dann ist der Film zu kurz
-                film.arr[FilmXml.FILM_ABO_NAME] = foundAbo.arr[AboFieldNames.ABO_NAME_NO] + (" [zu kurz]");
+                film.arr[FilmDataXml.FILM_ABO_NAME] = foundAbo.arr[AboFieldNames.ABO_NAME_NO] + (" [zu kurz]");
                 film.setAbo(foundAbo);
             } else if (!FilmFilter.checkLengthMax(foundAbo.getMaxDurationMinute(), film.getDurationMinute())) {
                 // dann ist der Film zu lang
-                film.arr[FilmXml.FILM_ABO_NAME] = foundAbo.arr[AboFieldNames.ABO_NAME_NO] + (" [zu lang]");
+                film.arr[FilmDataXml.FILM_ABO_NAME] = foundAbo.arr[AboFieldNames.ABO_NAME_NO] + (" [zu lang]");
                 film.setAbo(foundAbo);
             } else {
-                film.arr[FilmXml.FILM_ABO_NAME] = foundAbo.arr[AboFieldNames.ABO_NAME_NO];
+                film.arr[FilmDataXml.FILM_ABO_NAME] = foundAbo.arr[AboFieldNames.ABO_NAME_NO];
                 film.setAbo(foundAbo);
             }
 

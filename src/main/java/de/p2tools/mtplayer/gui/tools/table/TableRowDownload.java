@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.tools.table;
 
 import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.data.download.Download;
+import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.Tooltip;
@@ -37,7 +37,7 @@ public class TableRowDownload<T> extends TableRow {
     public void updateItem(Object f, boolean empty) {
         super.updateItem(f, empty);
 
-        Download download = (Download) f;
+        DownloadData download = (DownloadData) f;
         if (download == null || empty) {
             setStyle("");
 

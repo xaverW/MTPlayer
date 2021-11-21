@@ -16,8 +16,8 @@
 
 package de.p2tools.mtplayer.controller.starter;
 
-import de.p2tools.mtplayer.controller.data.download.Download;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
+import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.tools.MLInputStream;
 import de.p2tools.mtplayer.tools.SizeTools;
 import de.p2tools.p2Lib.tools.date.PDate;
@@ -36,9 +36,9 @@ public class Start {
     private PDate startTime = null;
     private MLInputStream inputStream = null;
 
-    private Download download; //Referenz auf den Download dazu
+    private DownloadData download; //Referenz auf den Download dazu
 
-    public Start(Download download) {
+    public Start(DownloadData download) {
         this.download = download;
     }
 

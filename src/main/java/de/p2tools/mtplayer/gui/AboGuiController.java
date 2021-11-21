@@ -18,8 +18,8 @@ package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.abo.Abo;
 import de.p2tools.mtplayer.controller.data.abo.AboConstants;
+import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.mtplayer.gui.tools.table.TableRowAbo;
@@ -47,13 +47,13 @@ public class AboGuiController extends AnchorPane {
     private final SplitPane splitPane = new SplitPane();
     private final ScrollPane scrollPane = new ScrollPane();
     private AboGuiInfoController aboGuiInfoController;
-    private final TableView<Abo> tableView = new TableView<>();
+    private final TableView<AboData> tableView = new TableView<>();
     private final PClosePaneH pClosePaneH;
 
     private final ProgData progData;
     private boolean bound = false;
-    private final FilteredList<Abo> filteredAbos;
-    private final SortedList<Abo> sortedAbos;
+    private final FilteredList<AboData> filteredAbos;
+    private final SortedList<AboData> sortedAbos;
 
     DoubleProperty splitPaneProperty = ProgConfig.ABO_GUI_DIVIDER;
     BooleanProperty boolInfoOn = ProgConfig.ABO_GUI_DIVIDER_ON;
@@ -106,27 +106,27 @@ public class AboGuiController extends AnchorPane {
 
     public void changeAbo() {
         //Abos aus Tab Abo (Menü, Doppelklick Tabelle) ändern
-        ObservableList<Abo> lAbo = getSelList();
+        ObservableList<AboData> lAbo = getSelList();
         progData.aboList.changeAbo(lAbo);
     }
 
     public void setFilmFilterFromAbo() {
-        Optional<Abo> abo = getSel();
+        Optional<AboData> abo = getSel();
         progData.storedFilters.loadStoredFilterFromAbo(abo);
     }
 
     public void setAboFromFilmFilter() {
-        Optional<Abo> abo = getSel();
+        Optional<AboData> abo = getSel();
         progData.aboList.changeAboFromFilter(abo, progData.storedFilters.getActFilterSettings());
     }
 
     public void setAboActive(boolean on) {
-        ObservableList<Abo> lAbo = getSelList();
+        ObservableList<AboData> lAbo = getSelList();
         progData.aboList.setAboActive(lAbo, on);
     }
 
     public void deleteAbo() {
-        ObservableList<Abo> lAbo = getSelList();
+        ObservableList<AboData> lAbo = getSelList();
         progData.aboList.deleteAbo(lAbo);
     }
 
@@ -188,7 +188,7 @@ public class AboGuiController extends AnchorPane {
         sortedAbos.comparatorProperty().bind(tableView.comparatorProperty());
 
         tableView.setRowFactory(tv -> {
-            TableRowAbo<Abo> row = new TableRowAbo<>();
+            TableRowAbo<AboData> row = new TableRowAbo<>();
             row.setOnMouseClicked(event -> {
                 if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
                     changeAbo();
@@ -198,8 +198,8 @@ public class AboGuiController extends AnchorPane {
         });
         tableView.setOnMousePressed(m -> {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
-                final Optional<Abo> optionalAbo = getSel(false);
-                Abo abo;
+                final Optional<AboData> optionalAbo = getSel(false);
+                AboData abo;
                 if (optionalAbo.isPresent()) {
                     abo = optionalAbo.get();
                 } else {
@@ -210,10 +210,10 @@ public class AboGuiController extends AnchorPane {
             }
         });
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            final Abo abo = tableView.getSelectionModel().getSelectedItem();
+            final AboData abo = tableView.getSelectionModel().getSelectedItem();
             aboGuiInfoController.setAbo(abo);
         });
-        tableView.getItems().addListener((ListChangeListener<Abo>) c -> {
+        tableView.getItems().addListener((ListChangeListener<AboData>) c -> {
             if (tableView.getItems().size() == 1) {
                 // wenns nur eine Zeile gibt, dann gleich selektieren
                 tableView.getSelectionModel().select(0);
@@ -231,19 +231,19 @@ public class AboGuiController extends AnchorPane {
         });
     }
 
-    private ObservableList<Abo> getSelList() {
-        final ObservableList<Abo> ret = tableView.getSelectionModel().getSelectedItems();
+    private ObservableList<AboData> getSelList() {
+        final ObservableList<AboData> ret = tableView.getSelectionModel().getSelectedItems();
         if (ret == null || ret.isEmpty()) {
             PAlert.showInfoNoSelection();
         }
         return ret;
     }
 
-    private Optional<Abo> getSel() {
+    private Optional<AboData> getSel() {
         return getSel(true);
     }
 
-    private Optional<Abo> getSel(boolean show) {
+    private Optional<AboData> getSel(boolean show) {
         final int selectedTableRow = tableView.getSelectionModel().getSelectedIndex();
         if (selectedTableRow >= 0) {
             return Optional.of(tableView.getSelectionModel().getSelectedItem());

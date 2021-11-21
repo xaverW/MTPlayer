@@ -17,7 +17,7 @@
 
 package de.p2tools.mtplayer.controller.config;
 
-import de.p2tools.mtplayer.controller.data.film.Film;
+import de.p2tools.mtplayer.controller.data.film.FilmData;
 import de.p2tools.mtplayer.controller.filmlist.filmlistUrls.FilmlistUrlList;
 import de.p2tools.mtplayer.gui.tools.SetsPrograms;
 import de.p2tools.mtplayer.tools.MLBandwidthTokenBucket;
@@ -128,7 +128,7 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty SYSTEM_PROG_EXTERN_PROGRAM = addStr("system-extern-program");
     public static StringProperty SYSTEM_PROG_PLAY_FILME = addStr("system-prog-play-filme");
     public static BooleanProperty SYSTEM_MARK_GEO = addBool("system-mark-geo", Boolean.TRUE);
-    public static StringProperty SYSTEM_GEO_HOME_PLACE = addStr("system-geo-home-place", Film.GEO_DE);
+    public static StringProperty SYSTEM_GEO_HOME_PLACE = addStr("system-geo-home-place", FilmData.GEO_DE);
     public static BooleanProperty SYSTEM_STYLE = addBool("system-style", Boolean.FALSE);
     public static IntegerProperty SYSTEM_STYLE_SIZE = addInt("system-geo-home-place", 14);
     public static StringProperty SYSTEM_LOG_DIR = addStr("system-log-dir", "");
@@ -188,7 +188,7 @@ public class ProgConfig extends PDataProgConfig {
 
     // Gui Download
     public static StringProperty DOWNLOAD_DIALOG_PATH_SAVING = addStr("download-dialog-path-saving"); // gesammelten Downloadpfade im Downloaddialog
-    public static StringProperty DOWNLOAD_DIALOG_HD_HEIGHT_LOW = addStr("download-dialog-hd-height-low", Film.RESOLUTION_NORMAL);
+    public static StringProperty DOWNLOAD_DIALOG_HD_HEIGHT_LOW = addStr("download-dialog-hd-height-low", FilmData.RESOLUTION_NORMAL);
     public static BooleanProperty DOWNLOAD_DIALOG_START_DOWNLOAD_NOW = addBool("download-dialog-start-download-now", Boolean.TRUE);
     public static BooleanProperty DOWNLOAD_DIALOG_START_DOWNLOAD_NOT = addBool("download-dialog-start-download-not", Boolean.FALSE);
     public static BooleanProperty DOWNLOAD_DIALOG_START_DOWNLOAD_TIME = addBool("download-dialog-start-download-time", Boolean.FALSE);

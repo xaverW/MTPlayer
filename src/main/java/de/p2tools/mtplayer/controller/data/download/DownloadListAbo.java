@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.controller.data.download;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.SetData;
-import de.p2tools.mtplayer.controller.data.abo.Abo;
+import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
 import de.p2tools.mtplayer.tools.filmListFilter.FilmlistBlackFilter;
 import de.p2tools.p2Lib.tools.date.PDate;
@@ -48,7 +48,7 @@ public class DownloadListAbo {
     private void refreshDownloads() {
         // fehlerhafte und nicht gestartete löschen, wird nicht gemeldet ob was gefunden wurde
         PDuration.counterStart("DownloadListAbo.refreshDownloads");
-        List<Download> syncRemoveList = Collections.synchronizedList(new ArrayList<>());
+        List<DownloadData> syncRemoveList = Collections.synchronizedList(new ArrayList<>());
 
         downloadList.stream()
                 .filter(d -> !d.isStateStoped())
@@ -80,7 +80,7 @@ public class DownloadListAbo {
     private void searchForNewDownloads() {
         // in der Filmliste nach passenden Filmen suchen und Downloads anlegen
         PDuration.counterStart("DownloadListAbo.searchForNewDownloads");
-        List<Download> syncDownloadArrayList = Collections.synchronizedList(new ArrayList<>());
+        List<DownloadData> syncDownloadArrayList = Collections.synchronizedList(new ArrayList<>());
 
         // den Abo-Trefferzähler zurücksetzen
         progData.aboList.stream().forEach(abo -> abo.clearCountHit());
@@ -100,7 +100,7 @@ public class DownloadListAbo {
 
         // und jetzt die Filmliste ablaufen
         progData.filmlist.parallelStream().forEach(film -> {
-            final Abo abo = progData.aboList.getAboForFilm_quick(film, true);
+            final AboData abo = progData.aboList.getAboForFilm_quick(film, true);
             if (abo == null) {
                 // dann gibts dafür kein Abo
                 return;
@@ -132,7 +132,7 @@ public class DownloadListAbo {
             final SetData setData = abo.getSetData(progData);
 
             // dann in die Liste schreiben
-            syncDownloadArrayList.add(new Download(setData, film, DownloadConstants.SRC_ABO, abo, "", "", ""));
+            syncDownloadArrayList.add(new DownloadData(setData, film, DownloadConstants.SRC_ABO, abo, "", "", ""));
             found = true;
         });
 

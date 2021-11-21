@@ -19,8 +19,8 @@ package de.p2tools.mtplayer.controller.starter;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
-import de.p2tools.mtplayer.controller.data.download.Download;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
+import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.gui.dialog.DownloadContinueDialogController;
 import de.p2tools.mtplayer.gui.dialog.DownloadErrorDialogController;
 import de.p2tools.mtplayer.gui.tools.MTInfoFile;
@@ -44,7 +44,7 @@ import java.util.ArrayList;
 public class DirectHttpDownload extends Thread {
 
     private final ProgData progData;
-    private final Download download;
+    private final DownloadData download;
     private HttpURLConnection conn = null;
     private long downloaded = 0;
     private File file = null;
@@ -57,7 +57,7 @@ public class DirectHttpDownload extends Thread {
     private boolean retBreak;
     private boolean dialogBreakIsVis;
 
-    public DirectHttpDownload(ProgData progData, Download d, java.util.Timer bandwidthCalculationTimer) {
+    public DirectHttpDownload(ProgData progData, DownloadData d, java.util.Timer bandwidthCalculationTimer) {
         super();
         this.progData = progData;
         this.bandwidthCalculationTimer = bandwidthCalculationTimer;
@@ -409,21 +409,21 @@ public class DirectHttpDownload extends Thread {
         return cancel;
     }
 
-    private void canAlreadyStarted(Download dataDownload) {
-        if (dataDownload.getFilm() != null && dataDownload.isStateStartedRun()) {
+    private void canAlreadyStarted(DownloadData downloadData) {
+        if (downloadData.getFilm() != null && downloadData.isStateStartedRun()) {
 
-            if (dataDownload.getFilm().getDurationMinute() > 0
-                    && dataDownload.getStart().getTimeLeftSeconds() > 0
-                    && dataDownload.getDownloadSize().getActFileSize() > 0
-                    && dataDownload.getDownloadSize().getFilmSize() > 0) {
+            if (downloadData.getFilm().getDurationMinute() > 0
+                    && downloadData.getStart().getTimeLeftSeconds() > 0
+                    && downloadData.getDownloadSize().getActFileSize() > 0
+                    && downloadData.getDownloadSize().getFilmSize() > 0) {
 
                 // macht nur dann Sinn
-                final long filetimeAlreadyLoadedSeconds = dataDownload.getFilm().getDurationMinute() * 60
-                        * dataDownload.getDownloadSize().getActFileSize()
-                        / dataDownload.getDownloadSize().getFilmSize();
+                final long filetimeAlreadyLoadedSeconds = downloadData.getFilm().getDurationMinute() * 60
+                        * downloadData.getDownloadSize().getActFileSize()
+                        / downloadData.getDownloadSize().getFilmSize();
 
-                if (filetimeAlreadyLoadedSeconds > (dataDownload.getStart().getTimeLeftSeconds() * 1.1 /* plus 10% zur Sicherheit */)) {
-                    dataDownload.getStart().setStartViewing(true);
+                if (filetimeAlreadyLoadedSeconds > (downloadData.getStart().getTimeLeftSeconds() * 1.1 /* plus 10% zur Sicherheit */)) {
+                    downloadData.getStart().setStartViewing(true);
                 }
             }
         }

@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.dialog;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
-import de.p2tools.mtplayer.controller.data.download.Download;
+import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
@@ -53,20 +53,20 @@ public class DownloadStartAtTimeController extends PDialogExtra {
     private final RadioButton rbOnlySel = new RadioButton();
 
     private final GridPane gridPane = new GridPane();
-    private final TableView<Download> tableView = new TableView<>();
+    private final TableView<DownloadData> tableView = new TableView<>();
     private final SplitPane splitPane = new SplitPane();
     private final VBox vBoxTable = new VBox(10);
     private final VBox vBoxStart = new VBox(10);
 
-    private final ObservableList<Download> downloadListAll = FXCollections.observableArrayList();
-    private final ObservableList<Download> downloadListSel = FXCollections.observableArrayList();
+    private final ObservableList<DownloadData> downloadListAll = FXCollections.observableArrayList();
+    private final ObservableList<DownloadData> downloadListSel = FXCollections.observableArrayList();
 
     private final ProgData progData;
     private final boolean onlyAll;
 
 
-    public DownloadStartAtTimeController(ProgData progData, List<Download> dListAll,
-                                         List<Download> dListSel) {
+    public DownloadStartAtTimeController(ProgData progData, List<DownloadData> dListAll,
+                                         List<DownloadData> dListSel) {
         super(progData.primaryStage, ProgConfig.DOWNLOAD_DIALOG_START_AT_TIME_SIZE,
                 "Downloads starten", true, false, DECO.NONE);
 
@@ -154,21 +154,21 @@ public class DownloadStartAtTimeController extends PDialogExtra {
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
-        final TableColumn<Download, Integer> startColumn = new TableColumn<>("");
+        final TableColumn<DownloadData, Integer> startColumn = new TableColumn<>("");
         startColumn.setCellValueFactory(new PropertyValueFactory<>("guiState"));
         startColumn.setCellFactory(cellFactoryState);
         startColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<Download, String> senderColumn = new TableColumn<>("Sender");
+        final TableColumn<DownloadData, String> senderColumn = new TableColumn<>("Sender");
         senderColumn.setCellValueFactory(new PropertyValueFactory<>("channel"));
         senderColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<Download, String> themeColumn = new TableColumn<>("Thema");
+        final TableColumn<DownloadData, String> themeColumn = new TableColumn<>("Thema");
         themeColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
         themeColumn.getStyleClass().add("alignCenterLeft");
         themeColumn.setComparator(sorter);
 
-        final TableColumn<Download, String> titleColumn = new TableColumn<>("Titel");
+        final TableColumn<DownloadData, String> titleColumn = new TableColumn<>("Titel");
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         titleColumn.getStyleClass().add("alignCenterLeft");
         titleColumn.setComparator(sorter);
@@ -192,8 +192,8 @@ public class DownloadStartAtTimeController extends PDialogExtra {
         checkBtnOk();
         rbAll.selectedProperty().addListener((u, o, n) -> checkBtnOk());
         rbOnlySel.selectedProperty().addListener((u, o, n) -> checkBtnOk());
-        downloadListAll.addListener((ListChangeListener<Download>) c -> checkBtnOk());
-        downloadListSel.addListener((ListChangeListener<Download>) c -> checkBtnOk());
+        downloadListAll.addListener((ListChangeListener<DownloadData>) c -> checkBtnOk());
+        downloadListSel.addListener((ListChangeListener<DownloadData>) c -> checkBtnOk());
 
         btnOk.setOnAction(event -> {
             ok = true;
@@ -218,7 +218,7 @@ public class DownloadStartAtTimeController extends PDialogExtra {
     }
 
     private void setStartTimeAndStart() {
-        ObservableList<Download> downloadList;
+        ObservableList<DownloadData> downloadList;
         if (rbAll.isSelected()) {
             downloadList = downloadListAll;
         } else {
@@ -256,10 +256,10 @@ public class DownloadStartAtTimeController extends PDialogExtra {
         gridPane.add(pTimePicker, 1, row);
     }
 
-    private Callback<TableColumn<Download, Integer>, TableCell<Download, Integer>> cellFactoryState
-            = (final TableColumn<Download, Integer> param) -> {
+    private Callback<TableColumn<DownloadData, Integer>, TableCell<DownloadData, Integer>> cellFactoryState
+            = (final TableColumn<DownloadData, Integer> param) -> {
 
-        final TableCell<Download, Integer> cell = new TableCell<Download, Integer>() {
+        final TableCell<DownloadData, Integer> cell = new TableCell<DownloadData, Integer>() {
 
             @Override
             public void updateItem(Integer item, boolean empty) {
@@ -281,7 +281,7 @@ public class DownloadStartAtTimeController extends PDialogExtra {
                 btnDownDel.setTooltip(new Tooltip("Download löschen"));
                 btnDownDel.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_DOWNLOAD_DEL));
                 btnDownDel.setOnAction(event -> {
-                    Download download = getTableView().getItems().get(getIndex());
+                    DownloadData download = getTableView().getItems().get(getIndex());
                     if (rbAll.isSelected()) {
                         downloadListAll.remove(download);
                     } else {

@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.tools.table;
 
 import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.data.film.Film;
+import de.p2tools.mtplayer.controller.data.film.FilmData;
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.control.TableRow;
 
@@ -36,7 +36,7 @@ public class TableRowFilm<T> extends TableRow {
     public void updateItem(Object f, boolean empty) {
         super.updateItem(f, empty);
 
-        Film film = (Film) f;
+        FilmData film = (FilmData) f;
         if (film == null || empty) {
             setStyle("");
         } else {

@@ -36,7 +36,7 @@ public class DownloadTools {
     /**
      * Calculate free disk space on volume and check if the movies can be safely downloaded.
      */
-    public static void calculateAndCheckDiskSpace(Download download, String path, Label lblSizeFree) {
+    public static void calculateAndCheckDiskSpace(DownloadData download, String path, Label lblSizeFree) {
         if (path == null || path.isEmpty()) {
             return;
         }
@@ -119,10 +119,10 @@ public class DownloadTools {
         return ret;
     }
 
-    public static void checkDoubleNames(List<Download> foundDownloads, List<Download> downloadList) {
+    public static void checkDoubleNames(List<DownloadData> foundDownloads, List<DownloadData> downloadList) {
         // prüfen ob schon ein Download mit dem Zieldateinamen in der Downloadliste existiert
         try {
-            final List<Download> alreadyDone = new ArrayList<>();
+            final List<DownloadData> alreadyDone = new ArrayList<>();
 
             foundDownloads.stream().forEach(download -> {
                 final String oldName = download.getDestFileName();
@@ -149,7 +149,7 @@ public class DownloadTools {
         return base + "_" + i + "." + suff;
     }
 
-    private static boolean searchName(List<Download> searchDownloadList, String name) {
+    private static boolean searchName(List<DownloadData> searchDownloadList, String name) {
         return searchDownloadList.stream().filter(download -> download.getDestFileName().equals(name)).findAny().isPresent();
     }
 

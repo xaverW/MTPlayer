@@ -40,8 +40,8 @@ public class DownloadListStartStop {
      *
      * @param download
      */
-    public synchronized void delDownloads(Download download) {
-        ArrayList<Download> list = new ArrayList<>();
+    public synchronized void delDownloads(DownloadData download) {
+        ArrayList<DownloadData> list = new ArrayList<>();
         list.add(download);
         delDownloads(list);
     }
@@ -52,7 +52,7 @@ public class DownloadListStartStop {
      *
      * @param list
      */
-    public synchronized boolean putBackDownloads(ArrayList<Download> list) {
+    public synchronized boolean putBackDownloads(ArrayList<DownloadData> list) {
         boolean found = false;
 
         if (list == null || list.isEmpty()) {
@@ -62,7 +62,7 @@ public class DownloadListStartStop {
         // das Starten von neuen Downloads etwas Pausieren
         progData.starterClass.setPaused();
 
-        for (final Download download : list) {
+        for (final DownloadData download : list) {
             if (download.isStateInit() || download.isStateStoped()) {
                 download.putBack();
                 found = true;
@@ -78,7 +78,7 @@ public class DownloadListStartStop {
      * @param list
      */
 
-    public synchronized boolean delDownloads(ArrayList<Download> list) {
+    public synchronized boolean delDownloads(ArrayList<DownloadData> list) {
 
         PDuration.counterStart("DownloadListStartStop.delDownloads");
         if (list == null || list.isEmpty()) {
@@ -88,9 +88,9 @@ public class DownloadListStartStop {
         // das Starten von neuen Downloads etwas Pausieren
         progData.starterClass.setPaused();
 
-        final ArrayList<Download> aboHistoryList = new ArrayList<>();
+        final ArrayList<DownloadData> aboHistoryList = new ArrayList<>();
 
-        for (final Download download : list) {
+        for (final DownloadData download : list) {
             if (download.isAbo()) {
                 // ein Abo wird zusätzlich ins Logfile geschrieben
                 aboHistoryList.add(download);
@@ -113,7 +113,7 @@ public class DownloadListStartStop {
      *
      * @param list
      */
-    public synchronized boolean stopDownloads(ArrayList<Download> list) {
+    public synchronized boolean stopDownloads(ArrayList<DownloadData> list) {
         boolean found = false;
 
         if (list == null || list.isEmpty()) {
@@ -123,7 +123,7 @@ public class DownloadListStartStop {
         // das Starten von neuen Downloads etwas Pausieren
         progData.starterClass.setPaused();
 
-        for (Download download : list) {
+        for (DownloadData download : list) {
             if (download.isStateStartedWaiting() || download.isStateStartedRun() || download.isStateError()) {
                 // nur dann läuft er
                 download.stopDownload();
@@ -149,7 +149,7 @@ public class DownloadListStartStop {
         return answer;
     }
 
-    private void start(ArrayList<Download> downloads) {
+    private void start(ArrayList<DownloadData> downloads) {
         if (downloads.isEmpty()) {
             return;
         }
@@ -158,9 +158,9 @@ public class DownloadListStartStop {
         progData.history.addDownloadDataListToHistory(downloads);
     }
 
-    public void startDownloads(Download download) {
+    public void startDownloads(DownloadData download) {
         // Download starten
-        ArrayList<Download> list = new ArrayList<>();
+        ArrayList<DownloadData> list = new ArrayList<>();
         list.add(download);
 
         start(list);
@@ -174,14 +174,14 @@ public class DownloadListStartStop {
      * @param alsoFinished
      */
 
-    public boolean startDownloads(Collection<Download> list, boolean alsoFinished) {
+    public boolean startDownloads(Collection<DownloadData> list, boolean alsoFinished) {
 
         if (list == null || list.isEmpty()) {
             return false;
         }
 
         PDuration.counterStart("DownloadListStartStop.startDownloads");
-        final ArrayList<Download> listStartDownloads = new ArrayList<>();
+        final ArrayList<DownloadData> listStartDownloads = new ArrayList<>();
 
         // das Starten von neuen Downloads etwas Pausieren
         progData.starterClass.setPaused();
@@ -203,15 +203,15 @@ public class DownloadListStartStop {
         return true;
     }
 
-    private boolean startAlsoFinishedDownloads(Collection<Download> list, ArrayList<Download> listStartDownloads) {
+    private boolean startAlsoFinishedDownloads(Collection<DownloadData> list, ArrayList<DownloadData> listStartDownloads) {
 
         PAlert.BUTTON answer = PAlert.BUTTON.UNKNOWN;
-        final ArrayList<Download> listDelDownloads = new ArrayList<>();
-        final ArrayList<Download> listDownloadsRemoveAboHistory = new ArrayList<>();
+        final ArrayList<DownloadData> listDelDownloads = new ArrayList<>();
+        final ArrayList<DownloadData> listDownloadsRemoveAboHistory = new ArrayList<>();
 
         // bereits gestartete erst vorbehandeln: wenn er noch läuft/fertig ist gibts nix
         // fehlerhafte nur wenn gewollt
-        for (Download download : list) {
+        for (DownloadData download : list) {
 
             // abgebrochene starten
             if (download.isStateStoped()) {

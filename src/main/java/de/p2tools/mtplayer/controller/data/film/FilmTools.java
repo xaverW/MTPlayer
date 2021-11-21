@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.controller.data.film;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.SetData;
-import de.p2tools.mtplayer.controller.data.download.Download;
+import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.gui.dialog.DownloadAddDialogController;
 import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
 import de.p2tools.mtplayer.tools.FileSizeUrl;
@@ -31,15 +31,15 @@ public class FilmTools {
 
     public static final String THEME_LIVE = "Livestream";
 
-    public static String getSizeFromWeb(Film film, String url) {
-        if (url.equals(film.arr[FilmXml.FILM_URL])) {
-            return film.arr[FilmXml.FILM_SIZE];
+    public static String getSizeFromWeb(FilmData film, String url) {
+        if (url.equals(film.arr[FilmDataXml.FILM_URL])) {
+            return film.arr[FilmDataXml.FILM_SIZE];
         } else {
             return FileSizeUrl.getFileSizeFromUrl(url);
         }
     }
 
-    public static void setFilmShown(ProgData progData, ArrayList<Film> filmArrayList, boolean setShown) {
+    public static void setFilmShown(ProgData progData, ArrayList<FilmData> filmArrayList, boolean setShown) {
         if (setShown) {
             progData.history.addFilmDataToHistory(filmArrayList);
         } else {
@@ -48,14 +48,14 @@ public class FilmTools {
     }
 
 
-    public static void bookmarkFilm(ProgData progData, Film film, boolean bookmark) {
-        ArrayList<Film> filmArrayList = new ArrayList<>(1);
+    public static void bookmarkFilm(ProgData progData, FilmData film, boolean bookmark) {
+        ArrayList<FilmData> filmArrayList = new ArrayList<>(1);
         filmArrayList.add(film);
 
         bookmarkFilm(progData, filmArrayList, bookmark);
     }
 
-    public static void bookmarkFilm(ProgData progData, ArrayList<Film> filmArrayList, boolean bookmark) {
+    public static void bookmarkFilm(ProgData progData, ArrayList<FilmData> filmArrayList, boolean bookmark) {
         if (bookmark) {
             progData.bookmarks.addFilmDataToHistory(filmArrayList);
         } else {
@@ -63,7 +63,7 @@ public class FilmTools {
         }
     }
 
-    public static void playFilm(Film film, SetData psetData) {
+    public static void playFilm(FilmData film, SetData psetData) {
         SetData setData;
         String resolution = "";
 
@@ -79,26 +79,26 @@ public class FilmTools {
         }
 
         if (ProgData.getInstance().storedFilters.getActFilterSettings().isOnlyHd()) {
-            resolution = Film.RESOLUTION_HD;
+            resolution = FilmData.RESOLUTION_HD;
         }
 
         // und starten
         ProgData.getInstance().starterClass.startUrlWithProgram(film, setData, resolution);
     }
 
-    public static void saveFilm(Film film, SetData pSet) {
-        ArrayList<Film> list = new ArrayList<>();
+    public static void saveFilm(FilmData film, SetData pSet) {
+        ArrayList<FilmData> list = new ArrayList<>();
         list.add(film);
         saveFilm(list, pSet);
     }
 
-    public static void saveFilm(ArrayList<Film> list, SetData pSet) {
+    public static void saveFilm(ArrayList<FilmData> list, SetData pSet) {
         if (list.isEmpty()) {
             return;
         }
 
         ProgData progData = ProgData.getInstance();
-        ArrayList<Film> filmsAddDownloadList = new ArrayList<>();
+        ArrayList<FilmData> filmsAddDownloadList = new ArrayList<>();
 
         if (progData.setDataList.getSetDataListSave().isEmpty()) {
             new NoSetDialogController(progData, NoSetDialogController.TEXT.SAVE);
@@ -107,12 +107,12 @@ public class FilmTools {
 
         String resolution = "";
         if (progData.storedFilters.getActFilterSettings().isOnlyHd()) {
-            resolution = Film.RESOLUTION_HD;
+            resolution = FilmData.RESOLUTION_HD;
         }
 
-        for (final Film film : list) {
+        for (final FilmData film : list) {
             // erst mal schauen obs den schon gibt
-            Download download = progData.downloadList.getDownloadUrlFilm(film.arr[Film.FILM_URL]);
+            DownloadData download = progData.downloadList.getDownloadUrlFilm(film.arr[FilmData.FILM_URL]);
             if (download == null) {
                 filmsAddDownloadList.add(film);
             } else {

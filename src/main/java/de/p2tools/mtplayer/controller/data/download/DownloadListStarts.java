@@ -39,7 +39,7 @@ public class DownloadListStarts {
         this.downloadList = downloadList;
     }
 
-    public Download getRestartDownload() {
+    public DownloadData getRestartDownload() {
         // Versuch einen Fehlgeschlagenen Download zu finden um ihn wieder zu starten
         // die Fehler laufen aber einzeln, vorsichtshalber
 
@@ -48,7 +48,7 @@ public class DownloadListStarts {
             return null;
         }
 
-        for (final Download download : downloadList) {
+        for (final DownloadData download : downloadList) {
             if (download.isStateInit()) {
                 continue;
             }
@@ -76,14 +76,14 @@ public class DownloadListStarts {
      * @param source Use QUELLE_XXX constants from {@link Start}.
      * @return A list with all download objects.
      */
-    synchronized List<Download> getListOfStartsNotFinished(String source) {
-        final List<Download> activeDownloads = new ArrayList<>();
+    synchronized List<DownloadData> getListOfStartsNotFinished(String source) {
+        final List<DownloadData> activeDownloadData = new ArrayList<>();
 
-        activeDownloads.addAll(downloadList.stream().filter(download -> download.isStateStartedRun())
+        activeDownloadData.addAll(downloadList.stream().filter(download -> download.isStateStartedRun())
                 .filter(download -> source.equals(DownloadConstants.ALL) || download.getSource().equals(source))
                 .collect(Collectors.toList()));
 
-        return activeDownloads;
+        return activeDownloadData;
     }
 
     /**
@@ -92,22 +92,22 @@ public class DownloadListStarts {
      * @param source Use QUELLE_XXX constants from {@link Start}.
      * @return A list with all download objects.
      */
-    synchronized List<Download> getListOfStartsNotLoading(String source) {
-        final List<Download> activeDownloads = new ArrayList<>();
+    synchronized List<DownloadData> getListOfStartsNotLoading(String source) {
+        final List<DownloadData> activeDownloadData = new ArrayList<>();
 
-        activeDownloads.addAll(downloadList.stream().filter(download -> download.isStateStartedWaiting())
+        activeDownloadData.addAll(downloadList.stream().filter(download -> download.isStateStartedWaiting())
                 .filter(download -> source.equals(DownloadConstants.ALL) || download.getSource().equals(source))
                 .collect(Collectors.toList()));
 
-        return activeDownloads;
+        return activeDownloadData;
     }
 
     public synchronized void cleanUpButtonStarts() {
         // Starts durch Button (zB. Film abspielen) die fertig sind, löschen
         boolean found = false;
-        final Iterator<Download> it = downloadList.iterator();
+        final Iterator<DownloadData> it = downloadList.iterator();
         while (it.hasNext()) {
-            final Download d = it.next();
+            final DownloadData d = it.next();
             if (d.isStateFinished()) {
                 if (d.getSource().equals(DownloadConstants.SRC_BUTTON)) {
                     // dann ist er fertig oder abgebrochen
@@ -121,12 +121,12 @@ public class DownloadListStarts {
         }
     }
 
-    public synchronized Download getNextStart() {
+    public synchronized DownloadData getNextStart() {
         //ersten passenden Download der Liste zurückgeben oder null
         //und versuchen, dass bei mehreren laufenden Downloads ein anderer Sender gesucht wird
-        Download ret = null;
+        DownloadData ret = null;
         if (downloadList.size() > 0 && getDown(ProgConfig.DOWNLOAD_MAX_DOWNLOADS.getValue())) {
-            final Download download = nextStart();
+            final DownloadData download = nextStart();
             if (download != null && download.isStateStartedWaiting()) {
                 ret = download;
             }
@@ -134,11 +134,11 @@ public class DownloadListStarts {
         return ret;
     }
 
-    private Download nextStart() {
+    private DownloadData nextStart() {
         // Download mit der kleinsten Nr finden der zu Starten ist
         // erster Versuch, Start mit einem anderen Sender
 
-        Download tmpDownload = searchNextDownload(1);
+        DownloadData tmpDownload = searchNextDownload(1);
         if (tmpDownload != null) {
             // einer wurde gefunden
             return tmpDownload;
@@ -154,10 +154,10 @@ public class DownloadListStarts {
         return tmpDownload;
     }
 
-    private Download searchNextDownload(int maxProChannel) {
-        Download tmpDownload = null;
+    private DownloadData searchNextDownload(int maxProChannel) {
+        DownloadData tmpDownload = null;
         int nr = -1;
-        for (Download download : downloadList) {
+        for (DownloadData download : downloadList) {
             if (download.isStateStartedWaiting() &&
                     checkStartTime(download) &&
                     !maxChannelPlay(download, maxProChannel) &&
@@ -171,7 +171,7 @@ public class DownloadListStarts {
         return tmpDownload;
     }
 
-    private boolean checkStartTime(Download download) {
+    private boolean checkStartTime(DownloadData download) {
         if (download.getStartTime().isEmpty()) {
             return true;
         }
@@ -191,7 +191,7 @@ public class DownloadListStarts {
         return true;
     }
 
-    private boolean maxChannelPlay(Download d, int max) {
+    private boolean maxChannelPlay(DownloadData d, int max) {
         // true wenn bereits die maxAnzahl pro Sender läuft
         try {
             int counter = 0;
@@ -201,7 +201,7 @@ public class DownloadListStarts {
                 return false;
             }
 
-            for (final Download download : downloadList) {
+            for (final DownloadData download : downloadList) {
                 if (download.isStateStartedRun() && getHost(download).equalsIgnoreCase(host)) {
                     counter++;
                     if (counter >= max) {
@@ -215,7 +215,7 @@ public class DownloadListStarts {
         }
     }
 
-    private String getHost(Download download) {
+    private String getHost(DownloadData download) {
         String host = "";
         try {
             try {
@@ -263,7 +263,7 @@ public class DownloadListStarts {
     private boolean getDown(int max) {
         int count = 0;
         try {
-            for (final Download download : downloadList) {
+            for (final DownloadData download : downloadList) {
                 if (download.isStateStartedRun()) {
                     ++count;
                     if (count >= max) {

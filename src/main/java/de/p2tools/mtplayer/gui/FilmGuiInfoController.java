@@ -18,8 +18,8 @@ package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
-import de.p2tools.mtplayer.controller.data.film.Film;
-import de.p2tools.mtplayer.controller.data.film.FilmXml;
+import de.p2tools.mtplayer.controller.data.film.FilmData;
+import de.p2tools.mtplayer.controller.data.film.FilmDataXml;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -38,7 +38,7 @@ public class FilmGuiInfoController extends VBox {
     private final HBox hBox = new HBox(10);
     private final Label lblUrl = new Label("zur Website: ");
 
-    private Film film = null;
+    private FilmData film = null;
     private String oldDescription = "";
 
     public FilmGuiInfoController() {
@@ -67,7 +67,7 @@ public class FilmGuiInfoController extends VBox {
         getChildren().add(hBox);
     }
 
-    public void setFilm(Film film) {
+    public void setFilm(FilmData film) {
         hBox.getChildren().clear();
 
         if (film == null) {
@@ -81,13 +81,13 @@ public class FilmGuiInfoController extends VBox {
 
         this.film = film;
 
-        lblTitle.setText(film.arr[FilmXml.FILM_CHANNEL] + "  -  " + film.arr[FilmXml.FILM_TITLE]);
+        lblTitle.setText(film.arr[FilmDataXml.FILM_CHANNEL] + "  -  " + film.arr[FilmDataXml.FILM_TITLE]);
         textArea.setText(film.getDescription());
         oldDescription = film.getDescription();
         btnReset.setVisible(false);
 
-        if (!film.arr[FilmXml.FILM_WEBSITE].isEmpty()) {
-            PHyperlink hyperlink = new PHyperlink(film.arr[FilmXml.FILM_WEBSITE],
+        if (!film.arr[FilmDataXml.FILM_WEBSITE].isEmpty()) {
+            PHyperlink hyperlink = new PHyperlink(film.arr[FilmDataXml.FILM_WEBSITE],
                     ProgConfig.SYSTEM_PROG_OPEN_URL, new ProgIcons().ICON_BUTTON_FILE_OPEN);
             hBox.getChildren().addAll(lblUrl, hyperlink);
         }

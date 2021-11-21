@@ -25,7 +25,7 @@ import java.util.Iterator;
 @SuppressWarnings("serial")
 public class ProgramList extends SimpleListProperty<ProgramData> implements PDataList<ProgramData> {
     public static final String TAG = "ProgramList";
-    
+
     public ProgramList() {
         super(FXCollections.observableArrayList());
     }

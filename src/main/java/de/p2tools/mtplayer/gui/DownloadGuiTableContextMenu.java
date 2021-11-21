@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.download.Download;
+import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.gui.tools.table.Table;
 import javafx.scene.control.*;
 
@@ -35,13 +35,13 @@ public class DownloadGuiTableContextMenu {
 
     }
 
-    public ContextMenu getContextMenu(final Download download) {
+    public ContextMenu getContextMenu(final DownloadData download) {
         final ContextMenu contextMenu = new ContextMenu();
         getMenu(contextMenu, download);
         return contextMenu;
     }
 
-    private void getMenu(final ContextMenu contextMenu, final Download download) {
+    private void getMenu(final ContextMenu contextMenu, final DownloadData download) {
 
         final MenuItem miStart = new MenuItem("Download starten");
         miStart.setOnAction(a -> downloadGuiController.startDownload(false));
