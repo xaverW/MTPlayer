@@ -21,10 +21,12 @@ package de.p2tools.mtplayer.controller.config;
 import de.p2tools.p2Lib.configFile.pConfData.PColorData;
 import de.p2tools.p2Lib.configFile.pConfData.PColorList;
 import de.p2tools.p2Lib.configFile.pData.PData;
+import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class ProgColorList extends PColorList {
@@ -43,7 +45,7 @@ public class ProgColorList extends PColorList {
     public static final PColorData FILM_BOOKMARK = addNewKey("COLOR_FILM_BOKMARK",
             Color.rgb(255, 236, 151), Color.rgb(177, 164, 105), "Tabelle Filme, Bookmarks");
     public static final PColorData FILM_GEOBLOCK = addNewKey("COLOR_FILM_GEOBLOCK_BACKGROUND",
-            Color.rgb(255, 168, 0), Color.rgb(236, 153, 0), "Tabelle Film, geogeblockt");
+            Color.rgb(255, 168, 0), Color.rgb(236, 153, 0), "Tabelle Filme, geogeblockt");
 
     // Tabelle Downloads
     public static final PColorData DOWNLOAD_WAIT = addNewKey("COLOR_DOWNLOAD_WAIT",
@@ -68,6 +70,7 @@ public class ProgColorList extends PColorList {
     public static final PColorData DOWNLOAD_NAME_ERROR = addNewKey("COLOR_DOWNLOAD_NAME_ERROR",
             Color.rgb(255, 233, 233), Color.rgb(200, 183, 183), "Download, Dateiname ist fehlerhaft");
 
+    //=======================================================================================
     //Liste der Schrift-Farben -> Rest sind Hintergrundfarben
     public static final List<PColorData> FRONT_COLOR = List.of(FILM_LIVESTREAM, FILM_NEW, FILM_GEOBLOCK);
 
@@ -79,19 +82,43 @@ public class ProgColorList extends PColorList {
     }
 
     public static ObservableList<PColorData> getColorListFront() {
-        ObservableList<PColorData> color = FXCollections.observableArrayList();
+        ObservableList<PColorData> list = FXCollections.observableArrayList();
         ObservableList<PColorData> pColorData = getColorList();
-        pColorData.stream().filter(pc -> FRONT_COLOR.contains(pc)).forEach(pc -> color.add(pc));
+        pColorData.stream().filter(pc -> FRONT_COLOR.contains(pc)).forEach(pc -> list.add(pc));
 
-        return color;
+        Comparator<PColorData> comparator = Comparator.comparing(PColorData::getText);
+        FXCollections.sort(list, comparator);
+
+        return list;
     }
 
     public static ObservableList<PColorData> getColorListBackground() {
-        ObservableList<PColorData> color = FXCollections.observableArrayList();
+        ObservableList<PColorData> list = FXCollections.observableArrayList();
         ObservableList<PColorData> pColorData = getColorList();
-        pColorData.stream().filter(pc -> !FRONT_COLOR.contains(pc)).forEach(pc -> color.add(pc));
+        pColorData.stream().filter(pc -> !FRONT_COLOR.contains(pc)).forEach(pc -> list.add(pc));
 
-        return color;
+        Comparator<PColorData> comparator = Comparator.comparing(PColorData::getText);
+        FXCollections.sort(list, comparator);
+
+        return list;
+    }
+
+    public static void setColorData(String key, String value) {
+        try {
+            ObservableList<PColorData> list = getColorList();
+            list.stream().forEach(pColorData -> {
+                if (pColorData.getKey().equals(key)) {
+                    Color c = Color.web(value);
+                    if (value.endsWith("_DARK")) {
+                        pColorData.setColorDark(c);
+                    } else {
+                        pColorData.setColorLight(c);
+                    }
+                }
+            });
+        } catch (Exception ex) {
+            PLog.errorLog(956410210, "setColorData");
+        }
     }
 
     public static PData getConfigsData() {

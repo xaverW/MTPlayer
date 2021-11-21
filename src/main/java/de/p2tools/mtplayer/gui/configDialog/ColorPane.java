@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.gui.tools.HelpText;
+import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.p2Lib.configFile.pConfData.PColorData;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
@@ -98,6 +99,11 @@ public class ColorPane {
     }
 
     private void initTableColor(TableView<PColorData> tableView) {
+        ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> {
+            Table.refresh_table(tableView);
+            tableView.refresh();
+        });
+
         final TableColumn<PColorData, String> textColumn = new TableColumn<>("Beschreibung");
         textColumn.setCellValueFactory(new PropertyValueFactory<>("text"));
         textColumn.getStyleClass().add("alignCenterLeft");
@@ -140,7 +146,7 @@ public class ColorPane {
                     return;
                 }
 
-                PColorData MLC = getTableView().getItems().get(getIndex());
+                PColorData pColorData = getTableView().getItems().get(getIndex());
                 final HBox hbox = new HBox();
                 hbox.setSpacing(5);
                 hbox.setAlignment(Pos.CENTER);
@@ -149,10 +155,10 @@ public class ColorPane {
                 final ColorPicker colorPicker = new ColorPicker();
                 colorPicker.getStyleClass().add("split-button");
 
-                colorPicker.setValue(MLC.getColor());
+                colorPicker.setValue(pColorData.getColor());
                 colorPicker.setOnAction(a -> {
-                    Color fxColor = colorPicker.getValue();
-                    MLC.setColor(fxColor);
+                    Color color = colorPicker.getValue();
+                    pColorData.setColor(color);
                 });
                 hbox.getChildren().addAll(colorPicker);
                 setGraphic(hbox);
@@ -175,7 +181,7 @@ public class ColorPane {
                     return;
                 }
 
-                PColorData MLC = getTableView().getItems().get(getIndex());
+                PColorData pColorData = getTableView().getItems().get(getIndex());
                 final HBox hbox = new HBox();
                 hbox.setSpacing(5);
                 hbox.setAlignment(Pos.CENTER);
@@ -183,7 +189,7 @@ public class ColorPane {
 
                 final Button button = new Button("Reset");
                 button.setOnAction(a -> {
-                    MLC.resetColor();
+                    pColorData.resetColor();
                 });
 
                 hbox.getChildren().add(button);
@@ -207,13 +213,14 @@ public class ColorPane {
                     setText(null);
                     return;
                 }
-                PColorData MLC = getTableView().getItems().get(getIndex());
-                setStyle("-fx-background-color:" + MLC.getColorSelectedToWeb());
+                PColorData pColorData = getTableView().getItems().get(getIndex());
+                setStyle("-fx-background-color:" + pColorData.getColorSelectedToWeb());
             }
 
         };
         return cell;
     };
+
     private Callback<TableColumn<PColorData, Color>, TableCell<PColorData, Color>> cellFactoryColorReset
             = (final TableColumn<PColorData, Color> param) -> {
 
@@ -227,12 +234,11 @@ public class ColorPane {
                     setText(null);
                     return;
                 }
-                PColorData MLC = getTableView().getItems().get(getIndex());
-                setStyle("-fx-background-color:" + PColorFactory.getColorToWeb(MLC.getResetColor()));
+                PColorData pColorData = getTableView().getItems().get(getIndex());
+                setStyle("-fx-background-color:" + PColorFactory.getColorToWeb(pColorData.getResetColor()));
             }
 
         };
         return cell;
     };
-
 }

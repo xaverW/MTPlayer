@@ -49,8 +49,9 @@ public class Table {
 
     public static void refresh_table(TableView table) {
         for (int i = 0; i < table.getColumns().size(); i++) {
-            ((TableColumn) (table.getColumns().get(i))).setVisible(false);
-            ((TableColumn) (table.getColumns().get(i))).setVisible(true);
+            TableColumn tc = ((TableColumn) (table.getColumns().get(i)));
+            tc.setVisible(!tc.isVisible());
+            tc.setVisible(!tc.isVisible());
         }
     }
 

@@ -52,7 +52,11 @@ public class TableFilm {
         table.getColumns().clear();
 
         ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM.addListener((observableValue, s, t1) -> table.refresh());
+
         // bei Farbänderung der Schriftfarbe klappt es damit besser: Table.refresh_table(table)
+        ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> {
+            Table.refresh_table(table);
+        });
         ProgColorList.FILM_LIVESTREAM.colorProperty().addListener((a, b, c) -> Table.refresh_table(table));
         ProgColorList.FILM_GEOBLOCK.colorProperty().addListener((a, b, c) -> Table.refresh_table(table));
         ProgColorList.FILM_NEW.colorProperty().addListener((a, b, c) -> Table.refresh_table(table));

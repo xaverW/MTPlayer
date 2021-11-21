@@ -124,6 +124,8 @@ public class MTPlayer extends Application {
 
             ProgConfig.SYSTEM_DARK_THEME.addListener((u, o, n) -> {
                 addThemeCss();
+                //erst css ändern, dann
+                ProgColorList.setColorTheme();
                 ProgConfig.SYSTEM_THEME_CHANGED.setValue(!ProgConfig.SYSTEM_THEME_CHANGED.getValue());
             });
 

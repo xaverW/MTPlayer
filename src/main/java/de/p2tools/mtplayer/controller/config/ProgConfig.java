@@ -443,6 +443,10 @@ public class ProgConfig extends PDataProgConfig {
             if (config.getKey().equals(key)) {
                 config.setActValue(value);
             }
+
+            if (key.startsWith("COLOR_") && !value.isEmpty()) {
+                ProgColorList.setColorData(key, value);
+            }
         });
     }
 

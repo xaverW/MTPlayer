@@ -57,6 +57,9 @@ public class TableDownload {
 
         final Comparator<String> sorter = GermanStringIntSorter.getInstance();
         ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD.addListener((observableValue, s, t1) -> table.refresh());
+        ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> {
+            Table.refresh_table(table);
+        });
         ProgColorList.FILM_GEOBLOCK.colorProperty().addListener((a, b, c) -> table.refresh());
         ProgColorList.DOWNLOAD_WAIT.colorProperty().addListener((a, b, c) -> table.refresh());
         ProgColorList.DOWNLOAD_RUN.colorProperty().addListener((a, b, c) -> table.refresh());

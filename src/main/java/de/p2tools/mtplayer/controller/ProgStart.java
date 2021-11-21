@@ -115,7 +115,7 @@ public class ProgStart {
         }
         PLog.sysLog("Konfig wurde gelesen!");
         UpdateConfig.update(); // falls es ein Programmupdate gab, Configs anpassen
-        ProgData.getInstance().mTColor.setColorTheme(); // Farben einrichten
+        ProgColorList.setColorTheme(); // Farben einrichten
         return true;
     }
 

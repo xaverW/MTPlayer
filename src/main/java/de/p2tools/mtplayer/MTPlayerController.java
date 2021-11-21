@@ -156,7 +156,7 @@ public class MTPlayerController extends StackPane {
                 setFocus();
             }
         });
-
+        
         btnFilm.setTooltip(new Tooltip("Filme anzeigen"));
         btnFilm.setOnAction(e -> selPanelFilm());
         btnFilm.setMaxWidth(Double.MAX_VALUE);
