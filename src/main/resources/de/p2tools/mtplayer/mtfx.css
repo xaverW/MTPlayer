@@ -20,9 +20,7 @@
 
 /*Tabelle Sets: Set ist "Abspielen" */
 .markSetPlay{
-   /* -fx-underline: true;*/
     -fx-text-fill: #ff0000;
-    /*-fx-background-color: #a9ceff;*/
 }
 
 /* Button "Filmliste" */
@@ -33,7 +31,6 @@
     -fx-text-fill: black;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
     -fx-padding: 5 20 5 20;
-    /*-fx-border: 5;*/
 }
 .btnFilmlist_{
     -fx-background-color: #3a74d4,
@@ -44,7 +41,6 @@
     -fx-text-fill: black;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
     -fx-padding: 5 20 5 20;
-    /*-fx-border: 5;*/
 }
 .btnFilmlist:focused{
     -fx-background-color: #8d8d8d, -lin-grad-1, -rad-grad-1;

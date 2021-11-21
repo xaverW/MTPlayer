@@ -68,7 +68,6 @@ public class ProgConfig extends PDataProgConfig {
     public static BooleanProperty SYSTEM_PARAMETER_DOWNLOAD_PROGRESS = addBool("__system-parameter__download_progress_", Boolean.TRUE);
     // ===========================================
 
-
     // Configs der Programmversion, nur damit sie (zur Update-Suche) im Config-File stehen
     public static StringProperty SYSTEM_PROG_VERSION = addStr("system-prog-version", ProgramTools.getProgVersion());
     public static StringProperty SYSTEM_PROG_BUILD_NO = addStr("system-prog-build-no", ProgramTools.getBuild());
@@ -77,11 +76,9 @@ public class ProgConfig extends PDataProgConfig {
     // Configs zum Aktualisieren beim Programmupdate
     public static BooleanProperty SYSTEM_AFTER_UPDATE_FILTER = addBool("system-after-update-filter", Boolean.FALSE);
 
-
     // Configs zur Programmupdatesuche
     public static StringProperty SYSTEM_UPDATE_DATE = addStr("system-update-date"); // Datum der letzten Prüfung
     public static StringProperty SYSTEM_UPDATE_PROGSET_VERSION = addStr("system-update-progset-version");
-
 
     public static BooleanProperty SYSTEM_UPDATE_SEARCH_ACT = addBool("system-update-search-act", Boolean.TRUE); //Infos und Programm
     public static BooleanProperty SYSTEM_UPDATE_SEARCH_BETA = addBool("system-update-search-beta", Boolean.FALSE); //beta suchen
@@ -91,7 +88,6 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty SYSTEM_UPDATE_LAST_ACT = addStr("system-update-last-act");
     public static StringProperty SYSTEM_UPDATE_LAST_BETA = addStr("system-update-last-beta");
     public static StringProperty SYSTEM_UPDATE_LAST_DAILY = addStr("system-update-last-daily");
-
 
     // ConfigDialog, Dialog nach Start immer gleich öffnen
     public static IntegerProperty SYSTEM_CONFIG_DIALOG_TAB = new SimpleIntegerProperty(0);
@@ -148,7 +144,6 @@ public class ProgConfig extends PDataProgConfig {
     public static IntegerProperty SYSTEM_FILTER_WAIT_TIME = addInt("system-filter-wait-time", 100);
     public static BooleanProperty SYSTEM_FILTER_RETURN = addBool("system-filter-return", Boolean.FALSE);
     public static StringProperty SYSTEM_DOWNLOAD_DIR_NEW_VERSION = addStr("system-download-dir-new-version", "");
-
 
     // Fenstereinstellungen
     public static StringProperty SYSTEM_SIZE_GUI = addStr("system-size-gui", "1000:900");
@@ -321,43 +316,31 @@ public class ProgConfig extends PDataProgConfig {
     public static String PARAMETER_INFO = P2LibConst.LINE_SEPARATOR + "\t"
             + "\"__system-parameter__xxx\" können nur im Konfigfile geändert werden" + P2LibConst.LINE_SEPARATOR
             + "\t" + "und sind auch nicht für ständige Änderungen gedacht." + P2LibConst.LINE_SEPARATOR
-            + "\t" + "Wird eine Zeile gelöscht, wird der Parameter wieder mit dem Standardwert angelegt." + P2LibConst.LINE_SEPARATOR
-
+            + "\t" + "Wird eine Zeile gelöscht, wird der Parameter wieder mit dem Standardwert angelegt."
             + P2LibConst.LINE_SEPARATOR
-            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getName() + P2LibConst.LINE_SEPARATOR
-            + "\t" + "Timeout für direkte Downloads, Standardwert: "
-            + SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getValue() + P2LibConst.LINE_SEPARATOR +
+            + P2LibConst.LINE_SEPARATOR
 
-            P2LibConst.LINE_SEPARATOR
-            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getName() + P2LibConst.LINE_SEPARATOR
-            + "\t" + "max. Startversuche für fehlgeschlagene Downloads, am Ende aller Downloads" + P2LibConst.LINE_SEPARATOR
+            + "*" + "\t" + "Timeout für direkte Downloads, Standardwert: "
+            + SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getValue() + P2LibConst.LINE_SEPARATOR
+
+            + "*" + "\t" + "max. Startversuche für fehlgeschlagene Downloads, am Ende aller Downloads" + P2LibConst.LINE_SEPARATOR
             + "\t" + "(Versuche insgesamt: DOWNLOAD_MAX_RESTART * DOWNLOAD_MAX_RESTART_HTTP), Standardwert: " +
-            SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getValue() + P2LibConst.LINE_SEPARATOR +
+            SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getValue() + P2LibConst.LINE_SEPARATOR
 
-            P2LibConst.LINE_SEPARATOR
-            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP.getName() + P2LibConst.LINE_SEPARATOR
-            + "\t" + "max. Startversuche für fehlgeschlagene Downloads, direkt beim Download," + P2LibConst.LINE_SEPARATOR
+            + "*" + "\t" + "max. Startversuche für fehlgeschlagene Downloads, direkt beim Download," + P2LibConst.LINE_SEPARATOR
             + "\t" + "(Versuche insgesamt: DOWNLOAD_MAX_RESTART * DOWNLOAD_MAX_RESTART_HTTP), Standardwert: "
-            + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP.getValue() + P2LibConst.LINE_SEPARATOR +
+            + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP.getValue() + P2LibConst.LINE_SEPARATOR
 
-            P2LibConst.LINE_SEPARATOR
-            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS.getName() + P2LibConst.LINE_SEPARATOR
-            + "\t" + "Beim Dialog \"Download weiterführen\" wird nach dieser Zeit der Download weitergeführt, Standardwert: "
-            + SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS.getValue() + P2LibConst.LINE_SEPARATOR +
+            + "*" + "\t" + "Beim Dialog \"Download weiterführen\" wird nach dieser Zeit der Download weitergeführt, Standardwert: "
+            + SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS.getValue() + P2LibConst.LINE_SEPARATOR
 
-            P2LibConst.LINE_SEPARATOR
-            + "\t" + SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS.getName() + P2LibConst.LINE_SEPARATOR
-            + "\t" + "Beim Dialog \"Automode\" wird nach dieser Zeit der das Programm beendet, Standardwert: "
-            + SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS.getValue() + P2LibConst.LINE_SEPARATOR +
+            + "*" + "\t" + "Beim Dialog \"Automode\" wird nach dieser Zeit der das Programm beendet, Standardwert: "
+            + SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS.getValue() + P2LibConst.LINE_SEPARATOR
 
-            P2LibConst.LINE_SEPARATOR
-            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getName() + P2LibConst.LINE_SEPARATOR
-            + "\t" + "Downloadfehlermeldung wird xx Sedunden lang angezeigt, Standardwert: "
-            + SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getValue() + P2LibConst.LINE_SEPARATOR +
+            + "*" + "\t" + "Downloadfehlermeldung wird xx Sedunden lang angezeigt, Standardwert: "
+            + SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getValue() + P2LibConst.LINE_SEPARATOR
 
-            P2LibConst.LINE_SEPARATOR
-            + "\t" + SYSTEM_PARAMETER_DOWNLOAD_PROGRESS.getName() + P2LibConst.LINE_SEPARATOR
-            + "\t" + "Downloadprogress im Terminal (-auto) anzeigen: "
+            + "*" + "\t" + "Downloadprogress im Terminal (-auto) anzeigen: "
             + SYSTEM_PARAMETER_DOWNLOAD_PROGRESS.getValue() + P2LibConst.LINE_SEPARATOR;
 
     static {
@@ -378,11 +361,6 @@ public class ProgConfig extends PDataProgConfig {
     }
 
     public static void addConfigData(ConfigFile configFile) {
-        // Configs der Programmversion, nur damit sie (zur Update-Suche) im Config-File stehen
-        // ProgConfig.SYSTEM_PROG_VERSION.set(ProgramTools.getProgVersion());
-        // ProgConfig.SYSTEM_PROG_BUILD_NO.set(ProgramTools.getBuild());
-        // ProgConfig.SYSTEM_PROG_BUILD_DATE.set(ProgramTools.getCompileDate());
-
         ProgData progData = ProgData.getInstance();
 
         configFile.addConfigs(ProgConfig.getInstance());//Progconfig
@@ -412,6 +390,8 @@ public class ProgConfig extends PDataProgConfig {
 
     public static void logAllConfigs() {
         final ArrayList<String> list = new ArrayList<>();
+
+        list.add(PARAMETER_INFO);
 
         list.add(PLog.LILNE2);
         list.add("Programmeinstellungen");

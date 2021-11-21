@@ -47,19 +47,8 @@ public class ProgSave {
     }
 
     public void saveAll() {
-        // Configs der Programmversion, nur damit sie (zur Update-Suche) im Config-File stehen
-//        ProgConfig.SYSTEM_PROG_VERSION.setValue(ProgramTools.getProgVersion());
-//        ProgConfig.SYSTEM_PROG_BUILD_NO.setValue(ProgramTools.getBuild());
-//        ProgConfig.SYSTEM_PROG_BUILD_DATE.setValue(ProgramTools.getCompileDate());
-
         copyConfig();
         ProgSaveFactory.saveProgConfig();
-
-//        try (IoWriteXml writer = new IoWriteXml(progData)) {
-//            writer.writeData();
-//        } catch (final Exception ex) {
-//            PLog.errorLog(951201478, ex);
-//        }
 
         if (ProgData.reset) {
             reset();

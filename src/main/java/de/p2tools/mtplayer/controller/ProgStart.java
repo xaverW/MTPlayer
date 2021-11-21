@@ -178,10 +178,6 @@ public class ProgStart {
             ex.printStackTrace();
         }
 
-//        // versuchen das Backup zu laden
-//        if (loadBackup()) {
-//            ret = true;
-//        }
         return ret;
     }
 
@@ -197,7 +193,6 @@ public class ProgStart {
 
         // dann gibts ein Backup
         PLog.sysLog("Es gibt ein Backup");
-
 
         // stage bzw. scene gibts noch nicht
         if (PAlert.BUTTON.YES != PAlert.showAlert_yes_no(null, "Gesicherte Einstellungen laden?",

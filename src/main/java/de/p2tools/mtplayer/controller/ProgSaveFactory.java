@@ -42,6 +42,4 @@ public class ProgSaveFactory {
         writeConfigFile.addConfigFile(configFile);
         writeConfigFile.writeConfigFile();
     }
-
-
 }

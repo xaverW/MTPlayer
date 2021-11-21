@@ -155,9 +155,6 @@ public class ProgTray {
     }
 
     private void closeTray() {
-        System.out.println("\ncloseTray()");
-        System.out.println("   max: " + progData.primaryStage.getX() + " - " + progData.primaryStage.getY());
-        System.out.println("   progData.primaryStage.isShowing(): " + progData.primaryStage.isShowing());
         PGuiSize.showSave(progData.primaryStage);
 
         if (progData.quitDialogController != null) {
@@ -168,8 +165,6 @@ public class ProgTray {
     }
 
     private void maxMin() {
-        System.out.println("\nmaxMin()");
-        System.out.println("   maxMin: " + progData.primaryStage.getX() + " - " + progData.primaryStage.getY());
         if (progData.primaryStage.isShowing()) {
             System.out.println("   close");
             Platform.runLater(() -> progData.primaryStage.close());
