@@ -202,7 +202,7 @@ public class SetPaneController extends AnchorPane {
         btnDup.setOnAction(event -> {
             SetData setData = getSelectedSelData();
             if (setData != null) {
-                progData.setDataList.addSetData(setData.copy());
+                progData.setDataList.addSetData(setData.getCopy());
             }
         });
         btnDup.setMaxWidth(Double.MAX_VALUE);

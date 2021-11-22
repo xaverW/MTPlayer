@@ -179,8 +179,8 @@ public class DownloadProgram {
                         addPpath = abo.getAboSubDir();
 
                     } else {
-                        AboSubDir.DirName dirName = setData.getAboSubDir();
-                        switch (dirName) {
+                        AboSubDir.ENSubDir ENSubDir = AboSubDir.getENSubDir(setData.getAboSubDir_ENSubDirNo());
+                        switch (ENSubDir) {
                             case TITLE:
                                 addPpath = download.getTitle();
                                 break;

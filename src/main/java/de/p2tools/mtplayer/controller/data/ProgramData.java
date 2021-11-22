@@ -35,6 +35,7 @@ public class ProgramData extends ProgramDataProps {
     }
 
     public ProgramData copy() {
+        //todo
         setXmlFromProps();
 
         final ProgramData ret = new ProgramData();

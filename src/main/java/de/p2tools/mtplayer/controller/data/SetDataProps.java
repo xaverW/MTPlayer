@@ -55,7 +55,11 @@ public class SetDataProps extends SetDataXml {
     private BooleanProperty subtitle = new SimpleBooleanProperty(false);
 
     private BooleanProperty genAboSubDir = new SimpleBooleanProperty(true);
-    private final ObjectProperty<AboSubDir.DirName> aboSubDir = new SimpleObjectProperty<>(AboSubDir.DirName.THEME);
+    private final IntegerProperty aboSubDir_ENSubDirNo = new SimpleIntegerProperty(AboSubDir.ENSubDir.THEME.getNo());
+
+    public final Property[] properties = {id, visibleName, prefix, suffix, color, destPath, destName,
+            play, save, button, abo, maxSize, maxField, resolution, adOn, description,
+            infoUrl, infoFile, subtitle, genAboSubDir, aboSubDir_ENSubDirNo};
 
     @Override
     public String getTag() {
@@ -90,7 +94,7 @@ public class SetDataProps extends SetDataXml {
         list.add(new ConfigBoolPropExtra("infoFile", SetDataFieldNames.PROGRAMSET_INFODATEI, infoFile));
         list.add(new ConfigBoolPropExtra("subtitle", SetDataFieldNames.PROGRAMSET_SUBTITLE, subtitle));
         list.add(new ConfigBoolPropExtra("genAboSubDir", SetDataFieldNames.PROGRAMSET_ABO_SUBDIR_ANLEGEN, genAboSubDir));
-        list.add(new ConfigIntExtra("aboSubDir", SetDataFieldNames.PROGRAMSET_ABO_UNTERORDNER, getAboSubDir().getNo()));
+        list.add(new ConfigIntPropExtra("aboSubDir_ENSubDirNo", SetDataFieldNames.PROGRAMSET_ABO_UNTERORDNER, aboSubDir_ENSubDirNo));
         list.add(new ConfigPDataList(programList));
 
         return list.toArray(new Config[]{});
@@ -336,20 +340,24 @@ public class SetDataProps extends SetDataXml {
         this.genAboSubDir.set(genAboSubDir);
     }
 
-    public AboSubDir.DirName getAboSubDir() {
-        return aboSubDir.get();
+    public int getAboSubDir_ENSubDirNo() {
+        return aboSubDir_ENSubDirNo.get();
     }
 
-    public ObjectProperty<AboSubDir.DirName> aboSubDirProperty() {
-        return aboSubDir;
+    public IntegerProperty aboSubDir_ENSubDirNoProperty() {
+        return aboSubDir_ENSubDirNo;
     }
 
-    public void setAboSubDir(AboSubDir.DirName dirName) {
-        this.aboSubDir.setValue(dirName);
+    public void setAboSubDir_ENSubDirNo(int aboSubDir_ENSubDirNo) {
+        this.aboSubDir_ENSubDirNo.set(aboSubDir_ENSubDirNo);
     }
 
-    public void setAboSub(int aboSubNo) {
-        this.aboSubDir.setValue(AboSubDir.getAboSub(aboSubNo));
+    public AboSubDir.ENSubDir getAboSubDir_ENSubDir() {
+        return AboSubDir.getENSubDir(getAboSubDir_ENSubDirNo());
+    }
+
+    public String getAboSubDir_ENSubDir_Name() {
+        return getAboSubDir_ENSubDir().getName();
     }
 
     public void setPropsFromXml() {
@@ -366,7 +374,7 @@ public class SetDataProps extends SetDataXml {
         } catch (final Exception ex) {
             aboPath = 0;
         }
-        setAboSub(aboPath);
+        setAboSubDir_ENSubDirNo(aboPath);
 
         setDestPath(arr[PROGRAMSET_ZIEL_PFAD]);
         setDestName(arr[PROGRAMSET_ZIEL_DATEINAME]);
@@ -417,7 +425,7 @@ public class SetDataProps extends SetDataXml {
 
         arr[PROGRAMSET_COLOR] = PColorFactory.getColorToHex(color.getValue());
 
-        arr[PROGRAMSET_ABO_UNTERORDNER] = String.valueOf(getAboSubDir().getNo());
+        arr[PROGRAMSET_ABO_UNTERORDNER] = String.valueOf(getAboSubDir_ENSubDirNo());
         arr[PROGRAMSET_ZIEL_PFAD] = getDestPath();
         arr[PROGRAMSET_ZIEL_DATEINAME] = getDestName();
 

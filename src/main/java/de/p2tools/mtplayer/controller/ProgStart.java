@@ -100,7 +100,7 @@ public class ProgStart {
         boolean loadOk = load();
         if (!loadOk) {
             //dann mit der alten Verison versuchen
-            loadOk = load_oldVersion();
+            loadOk = load__oldVersion();
         }
 
         if (ProgConfig.SYSTEM_LOG_ON.getValue()) {
@@ -153,31 +153,6 @@ public class ProgStart {
         if (loadBackup()) {
             ret = true;
         }
-        return ret;
-    }
-
-    private boolean load_oldVersion() {
-        ProgData progData = ProgData.getInstance();
-
-        boolean ret = false;
-        final Path xmlFilePath = new ProgInfos().getSettingsFileOld();
-
-        try (IoReadXml reader = new IoReadXml(progData)) {
-            if (Files.exists(xmlFilePath)) {
-                if (reader.readConfiguration(xmlFilePath)) {
-                    return true;
-                } else {
-                    // dann hat das Laden nicht geklappt
-                    PLog.sysLog("Konfig konnte nicht gelesen werden!");
-                }
-            } else {
-                // dann hat das Laden nicht geklappt
-                PLog.sysLog("Konfig existiert nicht!");
-            }
-        } catch (final Exception ex) {
-            ex.printStackTrace();
-        }
-
         return ret;
     }
 
@@ -268,5 +243,29 @@ public class ProgStart {
         } else {
             progData.primaryStage.setTitle(ProgConst.PROGRAM_NAME + " " + ProgramTools.getProgVersion());
         }
+    }
+
+    private boolean load__oldVersion() {
+        ProgData progData = ProgData.getInstance();
+        boolean ret = false;
+        final Path xmlFilePath = new ProgInfos().getSettingsFileOld();
+
+        try (IoReadXml reader = new IoReadXml(progData)) {
+            if (Files.exists(xmlFilePath)) {
+                if (reader.readConfiguration(xmlFilePath)) {
+                    return true;
+                } else {
+                    // dann hat das Laden nicht geklappt
+                    PLog.sysLog("Konfig konnte nicht gelesen werden!");
+                }
+            } else {
+                // dann hat das Laden nicht geklappt
+                PLog.sysLog("Konfig existiert nicht!");
+            }
+        } catch (final Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return ret;
     }
 }

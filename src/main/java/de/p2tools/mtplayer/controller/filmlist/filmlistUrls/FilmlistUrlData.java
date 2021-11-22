@@ -44,17 +44,17 @@ public class FilmlistUrlData extends PDataSample<FilmlistUrlData> {
     public static final int FILMLIST_UPDATE_SERVER_URL_NR = 1;
     public static final String FILMLIST_UPDATE_SERVER_PRIO = "filmlist-update-server-prio";
     public static final int FILMLIST_UPDATE_SERVER_PRIO_NR = 2;
-    public static final String FILMLIST_UPDATE_SERVER_SORT = "filmlist-update-server-art";
-    public static final int FILMLIST_UPDATE_SERVER_SORT_NR = 3;
+    public static final String FILMLIST_UPDATE_SERVER_TYPE = "filmlist-update-server-art";
+    public static final int FILMLIST_UPDATE_SERVER_TYPE_NR = 3;
     public static final int FILMLIST_UPDATE_SERVER_MAX_ELEM = 4;
 
     public static final String[] FILMLIST_UPDATE_SERVER_COLUMN_NAMES = {FILMLIST_UPDATE_SERVER_NR, FILMLIST_UPDATE_SERVER_URL,
-            FILMLIST_UPDATE_SERVER_PRIO, FILMLIST_UPDATE_SERVER_SORT};
+            FILMLIST_UPDATE_SERVER_PRIO, FILMLIST_UPDATE_SERVER_TYPE};
 
     private IntegerProperty no = new SimpleIntegerProperty(0);
     private StringProperty url = new SimpleStringProperty("");
     private StringProperty prio = new SimpleStringProperty("");
-    private StringProperty kind = new SimpleStringProperty("");
+    private StringProperty type = new SimpleStringProperty("");
 
 
     public String[] arr;
@@ -63,24 +63,24 @@ public class FilmlistUrlData extends PDataSample<FilmlistUrlData> {
         makeArr();
     }
 
-    FilmlistUrlData(String url, String prio, String sort) {
+    FilmlistUrlData(String url, String prio, String type) {
         makeArr();
         arr[FILMLIST_UPDATE_SERVER_URL_NR] = url;
         arr[FILMLIST_UPDATE_SERVER_PRIO_NR] = prio;
-        arr[FILMLIST_UPDATE_SERVER_SORT_NR] = sort;
+        arr[FILMLIST_UPDATE_SERVER_TYPE_NR] = type;
         setUrl(url);
         setPrio(prio);
-        setKind(sort);
+        setType(type);
     }
 
-    FilmlistUrlData(String url, String sort) {
+    FilmlistUrlData(String url, String type) {
         makeArr();
         arr[FILMLIST_UPDATE_SERVER_URL_NR] = url;
         arr[FILMLIST_UPDATE_SERVER_PRIO_NR] = FilmlistUrlData.FILMLIST_UPDATE_SERVER_PRIO_1;
-        arr[FILMLIST_UPDATE_SERVER_SORT_NR] = sort;
+        arr[FILMLIST_UPDATE_SERVER_TYPE_NR] = type;
         setUrl(url);
         setPrio(FilmlistUrlData.FILMLIST_UPDATE_SERVER_PRIO_1);
-        setKind(sort);
+        setType(type);
     }
 
     @Override
@@ -99,9 +99,15 @@ public class FilmlistUrlData extends PDataSample<FilmlistUrlData> {
         list.add(new ConfigIntPropExtra("no", "filmlist-update-server-nr", no));
         list.add(new ConfigStringPropExtra("url", "filmlist-update-server-url", url));
         list.add(new ConfigStringPropExtra("prio", "filmlist-update-server-prio", prio));
-        list.add(new ConfigStringPropExtra("kind", "filmlist-update-server-kind", kind));
+        list.add(new ConfigStringPropExtra("kind", "filmlist-update-server-kind", type));
 
         return list.toArray(new Config[]{});
+    }
+
+    public void setPropsFromXml() {
+        setUrl(arr[FILMLIST_UPDATE_SERVER_URL_NR]);
+        setPrio(arr[FILMLIST_UPDATE_SERVER_PRIO_NR]);
+        setType(arr[FILMLIST_UPDATE_SERVER_TYPE_NR]);
     }
 
     public int getNo() {
@@ -140,23 +146,23 @@ public class FilmlistUrlData extends PDataSample<FilmlistUrlData> {
         this.prio.set(prio);
     }
 
-    public String getKind() {
-        return kind.get();
+    public String getType() {
+        return type.get();
     }
 
-    public StringProperty kindProperty() {
-        return kind;
+    public StringProperty typeProperty() {
+        return type;
     }
 
-    public void setKind(String kind) {
-        this.kind.set(kind);
+    public void setType(String type) {
+        this.type.set(type);
     }
 
     @Override
     public int compareTo(FilmlistUrlData arg0) {
         int ret = 0;
         try {
-            return arr[FILMLIST_UPDATE_SERVER_URL_NR].compareTo(arg0.arr[FILMLIST_UPDATE_SERVER_URL_NR]);
+            return getUrl().compareTo(arg0.getComment());
         } catch (Exception ex) {
             PLog.errorLog(936542876, ex);
         }

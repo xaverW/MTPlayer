@@ -448,12 +448,12 @@ public class AboEditDialogController extends PDialogExtra {
                 textField.setEditable(false);
                 textField.setDisable(true);
                 if (aboCopy.getSetData().isGenAboSubDir()) {
-                    textField.setText(aboCopy.getSetData().getAboSubDir().getName());
+                    textField.setText(aboCopy.getSetData().getAboSubDir_ENSubDir_Name());
                 }
                 aboCopy.setDataProperty().addListener((u, o, n) -> {
                     if (n != null) {
                         if (aboCopy.getSetData().isGenAboSubDir()) {
-                            textField.setText(aboCopy.getSetData().getAboSubDir().getName());
+                            textField.setText(aboCopy.getSetData().getAboSubDir_ENSubDir_Name());
                         } else {
                             textField.setText("");
                         }

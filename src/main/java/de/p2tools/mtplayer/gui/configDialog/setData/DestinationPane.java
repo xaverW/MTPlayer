@@ -40,7 +40,7 @@ import java.util.Collection;
 
 public class DestinationPane {
     private final PToggleSwitch tglSubdir = new PToggleSwitch("Bei Abos Unterordner anlegen:");
-    private final PComboBoxObject<AboSubDir.DirName> cboDest = new PComboBoxObject();
+    private final PComboBoxObject<AboSubDir.ENSubDir> cboDest = new PComboBoxObject();
     private final TextField txtDestPath = new TextField();
     private final TextField txtDestName = new TextField();
     private final Slider slCut = new Slider();
@@ -76,10 +76,13 @@ public class DestinationPane {
         final Button btnHelpDestName = PButton.helpButton(stage, "Zieldateiname",
                 HelpTextPset.PSET_FILE_NAME);
 
-        cboDest.init(FXCollections.observableArrayList(AboSubDir.DirName.values()));
+        cboDest.init(FXCollections.observableArrayList(AboSubDir.ENSubDir.values()));
         cboDest.getSelValueProperty().addListener((m, o, n) -> {
             if (changeTgl) {
                 tglSubdir.setSelected(true);
+            }
+            if (setData != null && cboDest.getSelValue() != null) {
+                setData.setAboSubDir_ENSubDirNo(cboDest.getSelValue().getNo());
             }
         });
         cboDest.setMaxWidth(Double.MAX_VALUE);
@@ -191,7 +194,9 @@ public class DestinationPane {
             txtDestName.textProperty().bindBidirectional(setData.destNameProperty());
             slCut.valueProperty().bindBidirectional(setData.maxSizeProperty());
             slCutField.valueProperty().bindBidirectional(setData.maxFieldProperty());
-            cboDest.bindSelValueProperty(setData.aboSubDirProperty());
+
+            cboDest.getSelectionModel().select(setData.getAboSubDir_ENSubDir());
+
             changeTgl = true;
         }
     }
@@ -204,7 +209,6 @@ public class DestinationPane {
             txtDestName.textProperty().unbindBidirectional(setData.destNameProperty());
             slCut.valueProperty().unbindBidirectional(setData.maxSizeProperty());
             slCutField.valueProperty().unbindBidirectional(setData.maxFieldProperty());
-            cboDest.unbindSelValueProperty();
         }
     }
 }

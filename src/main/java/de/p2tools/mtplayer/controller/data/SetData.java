@@ -136,12 +136,16 @@ public class SetData extends SetDataProps {
         return false;
     }
 
-    public SetData copy() {
+    public SetData getCopy() {
         final SetData ret = new SetData();
+        for (int i = 0; i < properties.length; ++i) {
+            ret.properties[i].setValue(this.properties[i].getValue());
+        }
 
-        setXmlFromProps();
-        System.arraycopy(arr, 0, ret.arr, 0, arr.length);
-        ret.setPropsFromXml();
+
+//        setXmlFromProps();
+//        System.arraycopy(arr, 0, ret.arr, 0, arr.length);
+//        ret.setPropsFromXml();
 
         //es darf nur einen geben!
         ret.setId(PIndex.getIndexStr());
@@ -154,6 +158,7 @@ public class SetData extends SetDataProps {
 
         return ret;
     }
+
 
     public String setDataToString() {
         String ret = "";

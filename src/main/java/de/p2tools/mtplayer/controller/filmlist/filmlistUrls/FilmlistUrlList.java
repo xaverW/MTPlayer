@@ -59,24 +59,27 @@ public class FilmlistUrlList extends SimpleListProperty<FilmlistUrlData> impleme
         }
     }
 
+//    @Override
+//    public boolean add(FilmlistUrlData addFilmlist) {
+//        return addWithCheck(addFilmlist);
+//    }
+
     public boolean addWithCheck(FilmlistUrlData addFilmlist) {
         for (FilmlistUrlData dataUrlFilmlist : this) {
-
-            if (dataUrlFilmlist.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_URL_NR]
-                    .equals(addFilmlist.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_URL_NR])) {
+            if (dataUrlFilmlist.getUrl().equals(addFilmlist.getUrl())) {
                 return false;
             }
         }
 
-        addFilmlist.setUrl(addFilmlist.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_URL_NR]);
-        addFilmlist.setPrio(addFilmlist.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_PRIO_NR]);
-        addFilmlist.setKind(addFilmlist.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_SORT_NR]);
-        return add(addFilmlist);
+//        addFilmlist.setUrl(addFilmlist.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_URL_NR]);
+//        addFilmlist.setPrio(addFilmlist.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_PRIO_NR]);
+//        addFilmlist.setKind(addFilmlist.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_SORT_NR]);
+        return super.add(addFilmlist);
     }
 
     public ArrayList<String> getUrls() {
         ArrayList<String> ret = new ArrayList<>();
-        this.stream().forEach(filmlistUrlData -> ret.add(filmlistUrlData.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_URL_NR]));
+        this.stream().forEach(filmlistUrlData -> ret.add(filmlistUrlData.getUrl()));
         return ret;
     }
 
@@ -91,11 +94,11 @@ public class FilmlistUrlList extends SimpleListProperty<FilmlistUrlData> impleme
         // unbenutze URLs nach prio gewichten
         if (alreadyUsed != null) {
             for (FilmlistUrlData filmlistUrlData : this) {
-                if (alreadyUsed.contains(filmlistUrlData.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_URL_NR])) {
+                if (alreadyUsed.contains(filmlistUrlData.getUrl())) {
                     // wurde schon versucht
                     continue;
                 }
-                if (filmlistUrlData.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_PRIO_NR].equals(FilmlistUrlData.FILMLIST_UPDATE_SERVER_PRIO_1)) {
+                if (filmlistUrlData.getPrio().equals(FilmlistUrlData.FILMLIST_UPDATE_SERVER_PRIO_1)) {
                     listPrio.add(filmlistUrlData);
                     listPrio.add(filmlistUrlData);
                 } else {
@@ -117,7 +120,7 @@ public class FilmlistUrlList extends SimpleListProperty<FilmlistUrlData> impleme
             filmlistUrlData = this.get(nr);
         }
 
-        return filmlistUrlData.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_URL_NR];
+        return filmlistUrlData.getUrl();
     }
 
 }

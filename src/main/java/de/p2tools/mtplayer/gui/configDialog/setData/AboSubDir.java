@@ -24,7 +24,7 @@ import java.util.Date;
 public class AboSubDir {
     private static String date = PDateFactory.F_FORMAT_yyyy_MM_dd.format(new Date());
 
-    public enum DirName {
+    public enum ENSubDir {
         // 0--> gibts nicht, da liefern die ProgVersionen ohne die Funktion dann "Thema" wie dort üblich
         SENDER("Sender", 1), THEME("Thema", 2), TITLE("Titel", 3),
         ABONAME("Abo-Name", 4), /*ABODESCRIPTION("Abo-Beschreibung", 5),*/
@@ -32,7 +32,7 @@ public class AboSubDir {
         private final String name;
         private final int no;
 
-        DirName(String name, int no) {
+        ENSubDir(String name, int no) {
             this.name = name;
             this.no = no;
         }
@@ -51,12 +51,12 @@ public class AboSubDir {
         }
     }
 
-    public static DirName getAboSub(int no) {
-        for (DirName s : DirName.values()) {
+    public static ENSubDir getENSubDir(int no) {
+        for (ENSubDir s : ENSubDir.values()) {
             if (s.getNo() == no) {
                 return s;
             }
         }
-        return DirName.THEME;
+        return ENSubDir.THEME;
     }
 }

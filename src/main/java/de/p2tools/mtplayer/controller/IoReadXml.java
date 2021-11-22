@@ -18,9 +18,7 @@
 package de.p2tools.mtplayer.controller;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.controller.data.BlackData;
 import de.p2tools.mtplayer.controller.data.ProgramData;
 import de.p2tools.mtplayer.controller.data.ReplaceData;
@@ -35,8 +33,6 @@ import de.p2tools.mtplayer.tools.storedFilter.FilterToXml;
 import de.p2tools.mtplayer.tools.storedFilter.ProgInitFilter;
 import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
 import de.p2tools.mtplayer.tools.storedFilter.SelectedFilterFactory;
-import de.p2tools.p2Lib.configFile.ConfigFile;
-import de.p2tools.p2Lib.configFile.ReadConfigFile;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 
@@ -68,18 +64,6 @@ public class IoReadXml implements AutoCloseable {
         return ret;
     }
 
-    private static boolean loadProgConfig() {
-        final Path path = ProgInfos.getSettingsFile();
-        PLog.sysLog("Programmstart und ProgConfig laden von: " + path);
-
-        ConfigFile configFile = new ConfigFile(ProgConst.XML_START, path);
-        ProgConfig.addConfigData(configFile);
-        ReadConfigFile readConfigFile = new ReadConfigFile();
-        readConfigFile.addConfigFile(configFile);
-
-        return readConfigFile.readConfigFile();
-    }
-
     private boolean readConfig(Path xmlFilePath) {
         PDuration.counterStart("Konfig lesen");
         boolean ret = false;
@@ -90,15 +74,18 @@ public class IoReadXml implements AutoCloseable {
             XMLStreamReader parser = null;
             try (InputStream is = Files.newInputStream(xmlFilePath);
                  InputStreamReader in = new InputStreamReader(is, StandardCharsets.UTF_8)) {
+
                 parser = inFactory.createXMLStreamReader(in);
                 while (parser.hasNext()) {
                     final int event = parser.next();
                     if (event == XMLStreamConstants.START_ELEMENT) {
                         switch (parser.getLocalName()) {
+
                             case ProgConfig.SYSTEM:
                                 // System
                                 getConfig(parser, ProgConfig.SYSTEM);
                                 break;
+
                             case SetData.TAG:
                                 // Programmgruppen
                                 psetData = new SetData();
@@ -107,6 +94,7 @@ public class IoReadXml implements AutoCloseable {
                                     progData.setDataList.add(psetData);
                                 }
                                 break;
+
                             case ProgramData.TAG:
                                 final ProgramData progData = new ProgramData();
                                 if (get(parser, ProgramData.TAG, ProgramData.XML_NAMES, progData.arr)) {
@@ -117,6 +105,7 @@ public class IoReadXml implements AutoCloseable {
                                 }
                                 // ende Programgruppen
                                 break;
+
                             case "Ersetzungstabelle":
                                 // Ersetzungstabelle
                                 final ReplaceData replaceData = new ReplaceData();
@@ -125,6 +114,7 @@ public class IoReadXml implements AutoCloseable {
                                     this.progData.replaceList.add(replaceData);
                                 }
                                 break;
+
                             case "Abonnement":
                                 // Abo
                                 final AboData abo = new AboData();
@@ -134,6 +124,7 @@ public class IoReadXml implements AutoCloseable {
                                 }
 
                                 break;
+
                             case "Downlad":
                                 // Downloads
                                 final DownloadData d = new DownloadData();
@@ -142,6 +133,7 @@ public class IoReadXml implements AutoCloseable {
                                     this.progData.downloadList.add(d);
                                 }
                                 break;
+
                             case BlackData.TAG:
                                 // Blacklist
                                 final BlackData blackData = new BlackData();
@@ -150,6 +142,7 @@ public class IoReadXml implements AutoCloseable {
                                     this.progData.blackList.add(blackData);
                                 }
                                 break;
+
                             case MediaCollectionData.TAG:
                                 //
                                 final MediaCollectionData mp = new MediaCollectionData();
@@ -158,6 +151,7 @@ public class IoReadXml implements AutoCloseable {
                                     this.progData.mediaCollectionDataList.add(mp);
                                 }
                                 break;
+
                             case FilterToXml.TAG:
                                 // Filter
                                 final SelectedFilter sf = new SelectedFilter();
@@ -175,6 +169,7 @@ public class IoReadXml implements AutoCloseable {
                                     ++filtercount;
                                 }
                                 break;
+
                             case FilmlistUrlData.FILMLIST_UPDATE_SERVER:
                                 // Urls Filmlisten
                                 final FilmlistUrlData filmlistUrlData = new FilmlistUrlData();
@@ -182,7 +177,8 @@ public class IoReadXml implements AutoCloseable {
                                         FilmlistUrlData.FILMLIST_UPDATE_SERVER,
                                         FilmlistUrlData.FILMLIST_UPDATE_SERVER_COLUMN_NAMES,
                                         filmlistUrlData.arr)) {
-                                    switch (filmlistUrlData.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_SORT_NR]) {
+                                    filmlistUrlData.setPropsFromXml();
+                                    switch (filmlistUrlData.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_TYPE_NR]) {
                                         case FilmlistUrlData.SERVER_ART_AKT:
                                             this.progData.searchFilmListUrls.getFilmlistUrlList_akt().addWithCheck(filmlistUrlData);
                                             break;
@@ -216,16 +212,27 @@ public class IoReadXml implements AutoCloseable {
     }
 
 
-    private void initAfterLoad() {
-        progData.blackList.sortIncCounter(false);
-        progData.downloadList.initDownloads();
-        progData.aboList.initAboList();
-        progData.aboList.sort();
-
-        // ListeFilmUpdateServer aufbauen
-        if (progData.storedFilters.getStoredFilterList().isEmpty()) {
-            ProgInitFilter.setProgInitFilter();
+    private boolean getConfig(XMLStreamReader parser, String xmlElem) {
+        boolean ret = true;
+        try {
+            while (parser.hasNext()) {
+                final int event = parser.next();
+                if (event == XMLStreamConstants.END_ELEMENT) {
+                    if (parser.getLocalName().equals(xmlElem)) {
+                        break;
+                    }
+                }
+                if (event == XMLStreamConstants.START_ELEMENT) {
+                    final String s = parser.getLocalName();
+                    final String n = parser.getElementText();
+                    ProgConfig.getInstance().setConfigData(s, n);
+                }
+            }
+        } catch (final Exception ex) {
+            ret = false;
+            PLog.errorLog(945120369, ex);
         }
+        return ret;
     }
 
     private boolean get(XMLStreamReader parser, String xmlElem, String[] xmlNames, String[] strRet) {
@@ -261,32 +268,16 @@ public class IoReadXml implements AutoCloseable {
         return ret;
     }
 
-    private boolean getConfig(XMLStreamReader parser, String xmlElem) {
-        boolean ret = true;
-        try {
-            while (parser.hasNext()) {
-                final int event = parser.next();
-                if (event == XMLStreamConstants.END_ELEMENT) {
-                    if (parser.getLocalName().equals(xmlElem)) {
-                        break;
-                    }
-                }
-                if (event == XMLStreamConstants.START_ELEMENT) {
-                    final String s = parser.getLocalName();
-                    final String n = parser.getElementText();
-                    ProgConfig.getInstance().setConfigData(s, n);
+    private void initAfterLoad() {
+        progData.blackList.sortIncCounter(false);
+        progData.downloadList.initDownloads();
+        progData.aboList.initAboList();
+        progData.aboList.sort();
 
-//                    MLConfigs mlConfigs = ProgConfig.get(s);
-//                    if (mlConfigs != null) {
-//                        mlConfigs.setValue(n);
-//                    }
-                }
-            }
-        } catch (final Exception ex) {
-            ret = false;
-            PLog.errorLog(945120369, ex);
+        // ListeFilmUpdateServer aufbauen
+        if (progData.storedFilters.getStoredFilterList().isEmpty()) {
+            ProgInitFilter.setProgInitFilter();
         }
-        return ret;
     }
 
     @Override
