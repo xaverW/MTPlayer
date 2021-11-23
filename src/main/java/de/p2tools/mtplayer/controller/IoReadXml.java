@@ -86,18 +86,18 @@ public class IoReadXml implements AutoCloseable {
                                 getConfig(parser, ProgConfig.SYSTEM);
                                 break;
 
-                            case SetData.TAG:
+                            case "Programmset":
                                 // Programmgruppen
                                 psetData = new SetData();
-                                if (get(parser, SetData.TAG, SetData.XML_NAMES, psetData.arr)) {
+                                if (get(parser, "Programmset", SetData.XML_NAMES, psetData.arr)) {
                                     psetData.setPropsFromXml();
                                     progData.setDataList.add(psetData);
                                 }
                                 break;
 
-                            case ProgramData.TAG:
+                            case "Programm":
                                 final ProgramData progData = new ProgramData();
-                                if (get(parser, ProgramData.TAG, ProgramData.XML_NAMES, progData.arr)) {
+                                if (get(parser, "Programm", ProgramData.XML_NAMES, progData.arr)) {
                                     if (psetData != null) {
                                         progData.setPropsFromXml();
                                         psetData.addProg(progData);

@@ -234,7 +234,7 @@ public class HelpText {
                     "bis zum Start der Suche gewartet wird. Es wird also nicht bei jedem Buchstaben bereits " +
                     "die Suche gestartet.";
 
-    public static final String SETDATA_PRAEFIX =
+    public static final String SETDATA_PREFIX =
             "Wenn die URL eines Films mit <Präfix> beginnt bzw. mit <Suffix> " +
                     "endet wird der Film von MTPlayer selbst geladen und nicht mit einem " +
                     "Hilfsprogramm gespeichert.\n" +

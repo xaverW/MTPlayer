@@ -64,19 +64,19 @@ public class DownloadPane {
     }
 
     private void makePraef(VBox vBox) {
-        // praefix/suffix
+        // prefix/suffix
         GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
         gridPane.setVgap(10);
         vBox.getChildren().add(gridPane);
 
-        final Button btnHelpPraefix = PButton.helpButton(stage, "Direkt speichern",
-                HelpText.SETDATA_PRAEFIX);
+        final Button btnHelpPrefix = PButton.helpButton(stage, "Direkt speichern",
+                HelpText.SETDATA_PREFIX);
         final Label lbl = new Label("direkt Speichern (Download durch dieses Programm):");
 
         int row = 0;
         gridPane.add(lbl, 0, row, 2, 1);
-        gridPane.add(btnHelpPraefix, 2, row);
+        gridPane.add(btnHelpPrefix, 2, row);
 
         gridPane.add(new Label("Präfix (z.B. http):"), 0, ++row);
         gridPane.add(txtPrefix, 1, row);

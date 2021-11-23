@@ -51,7 +51,7 @@ public class ProgramPane {
     private final TextField txtDestName = new TextField();
     private final TextField txtProgPath = new TextField();
     private final TextField txtProgSwitch = new TextField();
-    private final TextField txtPraefix = new TextField();
+    private final TextField txtPrefix = new TextField();
     private final TextField txtSuffix = new TextField();
     private final PToggleSwitch tglRestart = new PToggleSwitch("Restart:");
     private final PToggleSwitch tglDown = new PToggleSwitch("Downloadmanager: ");
@@ -102,8 +102,8 @@ public class ProgramPane {
         final TableColumn<ProgramData, String> switchColumn = new TableColumn<>("Schalter");
         switchColumn.setCellValueFactory(new PropertyValueFactory<>("progSwitch"));
 
-        final TableColumn<ProgramData, String> praefixColumn = new TableColumn<>("Präfix");
-        praefixColumn.setCellValueFactory(new PropertyValueFactory<>("praefix"));
+        final TableColumn<ProgramData, String> prefixColumn = new TableColumn<>("Präfix");
+        prefixColumn.setCellValueFactory(new PropertyValueFactory<>("prefix"));
 
         final TableColumn<ProgramData, String> suffixColumn = new TableColumn<>("Suffix");
         suffixColumn.setCellValueFactory(new PropertyValueFactory<>("suffix"));
@@ -123,7 +123,7 @@ public class ProgramPane {
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         tableView.getColumns().addAll(nameColumn, destNameColumn, progColumn, switchColumn,
-                praefixColumn, suffixColumn, restartColumn, downManagerColumn);
+                prefixColumn, suffixColumn, restartColumn, downManagerColumn);
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
                 Platform.runLater(this::setActProgramData));
 
@@ -219,7 +219,7 @@ public class ProgramPane {
         gridPane.add(txtProgSwitch, 1, row, 3, 1);
 
         gridPane.add(new Label("Präfix: "), 0, ++row);
-        gridPane.add(txtPraefix, 1, row);
+        gridPane.add(txtPrefix, 1, row);
         gridPane.add(new Label("Suffix: "), 2, row);
         gridPane.add(txtSuffix, 3, row);
 
@@ -253,7 +253,7 @@ public class ProgramPane {
             txtDestName.textProperty().bindBidirectional(programData.destNameProperty());
             txtProgPath.textProperty().bindBidirectional(programData.progPathProperty());
             txtProgSwitch.textProperty().bindBidirectional(programData.progSwitchProperty());
-            txtPraefix.textProperty().bindBidirectional(programData.praefixProperty());
+            txtPrefix.textProperty().bindBidirectional(programData.prefixProperty());
             txtSuffix.textProperty().bindBidirectional(programData.suffixProperty());
             tglRestart.selectedProperty().bindBidirectional(programData.restartProperty());
             tglDown.selectedProperty().bindBidirectional(programData.downManagerProperty());
@@ -266,7 +266,7 @@ public class ProgramPane {
             txtDestName.textProperty().unbindBidirectional(programData.destNameProperty());
             txtProgPath.textProperty().unbindBidirectional(programData.progPathProperty());
             txtProgSwitch.textProperty().unbindBidirectional(programData.progSwitchProperty());
-            txtPraefix.textProperty().unbindBidirectional(programData.praefixProperty());
+            txtPrefix.textProperty().unbindBidirectional(programData.prefixProperty());
             txtSuffix.textProperty().unbindBidirectional(programData.suffixProperty());
             tglRestart.selectedProperty().unbindBidirectional(programData.restartProperty());
             tglDown.selectedProperty().unbindBidirectional(programData.downManagerProperty());

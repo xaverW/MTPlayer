@@ -34,14 +34,11 @@ public class ProgramData extends ProgramDataProps {
         setDownManager(downloadmanager.equals("") ? false : Boolean.parseBoolean(downloadmanager));
     }
 
-    public ProgramData copy() {
-        //todo
-        setXmlFromProps();
-
+    public ProgramData getCopy() {
         final ProgramData ret = new ProgramData();
-        System.arraycopy(arr, 0, ret.arr, 0, arr.length);
-        ret.setPropsFromXml();
-
+        for (int i = 0; i < properties.length; ++i) {
+            ret.properties[i].setValue(this.properties[i].getValue());
+        }
         return ret;
     }
 
@@ -50,7 +47,7 @@ public class ProgramData extends ProgramDataProps {
         boolean ret = false;
         if (url != null) {
             //Felder sind entweder leer oder passen
-            if (SetsPrograms.testPrefix(getPraefix(), url, true)
+            if (SetsPrograms.testPrefix(getPrefix(), url, true)
                     && SetsPrograms.testPrefix(getSuffix(), url, false)) {
                 ret = true;
             }

@@ -21,7 +21,7 @@ public class SetDataFieldNames {
 
     public static final String PROGRAMSET_ID = "SetId";
     public static final String PROGRAMSET_VISIBLE_NAME = "Setname";
-    public static final String PROGRAMSET_PRAEFIX_DIRECT = "Praefix";
+    public static final String PROGRAMSET_PREFIX_DIRECT = "Praefix";
     public static final String PROGRAMSET_SUFFIX_DIRECT = "Suffix";
     public static final String PROGRAMSET_COLOR = "Farbe";
     public static final String PROGRAMSET_ABO_UNTERORDNER = "AboUnterordner";

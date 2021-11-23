@@ -153,7 +153,7 @@ public class SetData extends SetDataProps {
         ret.setPlay(false);
 
         for (final ProgramData programData : getProgramList()) {
-            ret.addProg(programData.copy());
+            ret.addProg(programData.getCopy());
         }
 
         return ret;

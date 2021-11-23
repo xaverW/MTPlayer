@@ -21,12 +21,10 @@ import de.p2tools.p2Lib.configFile.pData.PDataSample;
 
 public class SetDataXml extends PDataSample<SetData> {
 
-    public static final String TAG = "Programmset";
-
     //Tags Programmgruppen
     public static final int PROGRAMSET_ID = 0;
     public static final int PROGRAMSET_VISIBLE_NAME = 1;
-    public static final int PROGRAMSET_PRAEFIX_DIRECT = 2;
+    public static final int PROGRAMSET_PREFIX_DIRECT = 2;
     public static final int PROGRAMSET_SUFFIX_DIRECT = 3;
     public static final int PROGRAMSET_COLOR = 4;
     public static final int PROGRAMSET_ABO_UNTERORDNER = 5;

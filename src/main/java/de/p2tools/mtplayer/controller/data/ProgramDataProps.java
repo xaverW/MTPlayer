@@ -21,24 +21,21 @@ import de.p2tools.p2Lib.configFile.config.Config;
 import de.p2tools.p2Lib.configFile.config.ConfigBoolPropExtra;
 import de.p2tools.p2Lib.configFile.config.ConfigStringPropExtra;
 import de.p2tools.p2Lib.configFile.pData.PDataSample;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 public class ProgramDataProps extends PDataSample<ProgramData> {
 
+    public static final String TAG = "Program";
     public static final int PROGRAM_NAME = 0;
     public static final int PROGRAM_DEST_FILENAME = 1;
     public static final int PROGRAM_PROGRAMPATH = 2;
     public static final int PROGRAM_SCHALTER = 3;
-    public static final int PROGRAM_PRAEFIX = 4;
+    public static final int PROGRAM_PREFIX = 4;
     public static final int PROGRAM_SUFFIX = 5;
     public static final int PROGRAM_RESTART = 6;
     public static final int PROGRAM_DOWNLOADMANAGER = 7;
 
     public static final int MAX_ELEM = 8;
-    public static final String TAG = "Programm";
     public static final String[] COLUMN_NAMES = {"Beschreibung", "Zieldateiname", "Programm",
             "Schalter", "Präfix", "Suffix", "Restart", "Downloadmanager"};
     public static final String[] XML_NAMES = {"Programmname", "Zieldateiname", "Programmpfad",
@@ -50,10 +47,16 @@ public class ProgramDataProps extends PDataSample<ProgramData> {
     private StringProperty destName = new SimpleStringProperty("");
     private StringProperty progPath = new SimpleStringProperty("");
     private StringProperty progSwitch = new SimpleStringProperty("");
-    private StringProperty praefix = new SimpleStringProperty("");
+    private StringProperty prefix = new SimpleStringProperty("");
     private StringProperty suffix = new SimpleStringProperty("");
     private BooleanProperty restart = new SimpleBooleanProperty(false);
     private BooleanProperty downManager = new SimpleBooleanProperty(false);
+
+    public final Property[] properties = {name, destName, progPath, progSwitch, prefix, suffix, restart, downManager};
+
+    public ProgramDataProps() {
+        makeArr();
+    }
 
     @Override
     public String getTag() {
@@ -66,7 +69,7 @@ public class ProgramDataProps extends PDataSample<ProgramData> {
                 new ConfigStringPropExtra("name", ProgramDataFieldNames.PROGRAM_NAME, name),
                 new ConfigStringPropExtra("progPath", ProgramDataFieldNames.PROGRAM_PROGRAM_PATH, progPath),
                 new ConfigStringPropExtra("progSwitch", ProgramDataFieldNames.PROGRAM_SWITCH, progSwitch),
-                new ConfigStringPropExtra("praefix", ProgramDataFieldNames.PROGRAM_PRAEFIX, praefix),
+                new ConfigStringPropExtra("prefix", ProgramDataFieldNames.PROGRAM_PREFIX, prefix),
                 new ConfigStringPropExtra("suffix", ProgramDataFieldNames.PROGRAM_SWITCH, suffix),
                 new ConfigBoolPropExtra("restart", ProgramDataFieldNames.PROGRAM_RESTART, restart),
         };
@@ -120,16 +123,16 @@ public class ProgramDataProps extends PDataSample<ProgramData> {
         this.progSwitch.set(progSwitch);
     }
 
-    public String getPraefix() {
-        return praefix.get();
+    public String getPrefix() {
+        return prefix.get();
     }
 
-    public StringProperty praefixProperty() {
-        return praefix;
+    public StringProperty prefixProperty() {
+        return prefix;
     }
 
-    public void setPraefix(String praefix) {
-        this.praefix.set(praefix);
+    public void setPrefix(String prefix) {
+        this.prefix.set(prefix);
     }
 
     public String getSuffix() {
@@ -168,20 +171,16 @@ public class ProgramDataProps extends PDataSample<ProgramData> {
         this.downManager.set(downManager);
     }
 
-    public ProgramDataProps() {
-        makeArr();
-    }
-
     @Override
     public String toString() {
-        setXmlFromProps();
         String ret = "";
-        for (int i = 0; i < MAX_ELEM; ++i) {
+        for (int i = 0; i < properties.length; ++i) {
             if (i == 0) {
-                ret += "| ***|" + COLUMN_NAMES[i] + ": " + arr[i] + P2LibConst.LINE_SEPARATOR;
+                ret += "| ***|";
             } else {
-                ret += "|    |" + COLUMN_NAMES[i] + ": " + arr[i] + P2LibConst.LINE_SEPARATOR;
+                ret += "|    |";
             }
+            ret += properties[i].getName() + ": " + properties[i].getValue() + P2LibConst.LINE_SEPARATOR;
         }
         return ret;
     }
@@ -201,21 +200,9 @@ public class ProgramDataProps extends PDataSample<ProgramData> {
         setDestName(arr[PROGRAM_DEST_FILENAME]);
         setProgPath(arr[PROGRAM_PROGRAMPATH]);
         setProgSwitch(arr[PROGRAM_SCHALTER]);
-        setPraefix(arr[PROGRAM_PRAEFIX]);
+        setPrefix(arr[PROGRAM_PREFIX]);
         setSuffix(arr[PROGRAM_SUFFIX]);
         setRestart(Boolean.parseBoolean(arr[PROGRAM_RESTART]));
         setDownManager(Boolean.parseBoolean(arr[PROGRAM_DOWNLOADMANAGER]));
     }
-
-    public void setXmlFromProps() {
-        arr[PROGRAM_NAME] = getName();
-        arr[PROGRAM_DEST_FILENAME] = getDestName();
-        arr[PROGRAM_PROGRAMPATH] = getProgPath();
-        arr[PROGRAM_SCHALTER] = getProgSwitch();
-        arr[PROGRAM_PRAEFIX] = getPraefix();
-        arr[PROGRAM_SUFFIX] = getSuffix();
-        arr[PROGRAM_RESTART] = String.valueOf(isRestart());
-        arr[PROGRAM_DOWNLOADMANAGER] = String.valueOf(isDownManager());
-    }
-
 }

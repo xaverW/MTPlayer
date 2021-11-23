@@ -23,7 +23,7 @@ public class ProgramDataFieldNames {
     public static final String PROGRAM_DEST_FILENAME = "Zieldateiname";
     public static final String PROGRAM_PROGRAM_PATH = "Pfad";
     public static final String PROGRAM_SWITCH = "Schalter";
-    public static final String PROGRAM_PRAEFIX = "Präfix";
+    public static final String PROGRAM_PREFIX = "Präfix";
     public static final String PROGRAM_SUFFIX = "Suffix";
     public static final String PROGRAM_RESTART = "Restart";
     public static final String PROGRAM_DOWNLOADMANAGER = "Downloadmanager";

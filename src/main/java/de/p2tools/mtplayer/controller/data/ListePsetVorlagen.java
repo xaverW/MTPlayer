@@ -164,9 +164,9 @@ public class ListePsetVorlagen extends LinkedList<String[]> {
                 event = parser.next();
                 if (event == XMLStreamConstants.START_ELEMENT) {
                     switch (parser.getLocalName()) {
-                        case SetData.TAG:
+                        case "Programmset":
                             psetData = new SetData();
-                            if (!get(parser, SetData.TAG, SetData.XML_NAMES, psetData.arr)) {
+                            if (!get(parser, "Programmset", SetData.XML_NAMES, psetData.arr)) {
                                 psetData = null;
                             } else {
                                 if (!psetData.isEmpty()) {
@@ -176,10 +176,10 @@ public class ListePsetVorlagen extends LinkedList<String[]> {
                                 }
                             }
                             break;
-                        case ProgramData.TAG:
+                        case "Programm":
                             if (psetData != null) {
                                 final ProgramData progData = new ProgramData();
-                                if (get(parser, ProgramData.TAG, ProgramData.XML_NAMES, progData.arr)) {
+                                if (get(parser, "Programm", ProgramData.XML_NAMES, progData.arr)) {
                                     progData.setPropsFromXml();
                                     psetData.addProg(progData);
                                 }

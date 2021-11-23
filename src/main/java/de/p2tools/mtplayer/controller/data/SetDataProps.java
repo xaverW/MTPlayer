@@ -19,7 +19,6 @@ package de.p2tools.mtplayer.controller.data;
 import de.p2tools.mtplayer.controller.data.film.FilmData;
 import de.p2tools.mtplayer.gui.configDialog.setData.AboSubDir;
 import de.p2tools.p2Lib.configFile.config.*;
-import de.p2tools.p2Lib.tools.PColorFactory;
 import javafx.beans.property.*;
 import javafx.scene.paint.Color;
 
@@ -27,8 +26,8 @@ import java.util.ArrayList;
 
 public class SetDataProps extends SetDataXml {
 
+    public static final String TAG = "SetData";
     final ProgramList programList = new ProgramList();
-
     public static final Color RESET_COLOR = Color.BLACK;
 
     private StringProperty id = new SimpleStringProperty("");
@@ -76,7 +75,7 @@ public class SetDataProps extends SetDataXml {
         ArrayList<Config> list = new ArrayList<>();
         list.add(new ConfigStringPropExtra("id", SetDataFieldNames.PROGRAMSET_ID, id));
         list.add(new ConfigStringPropExtra("visibleName", SetDataFieldNames.PROGRAMSET_VISIBLE_NAME, visibleName));
-        list.add(new ConfigStringPropExtra("prefix", SetDataFieldNames.PROGRAMSET_PRAEFIX_DIRECT, prefix));
+        list.add(new ConfigStringPropExtra("prefix", SetDataFieldNames.PROGRAMSET_PREFIX_DIRECT, prefix));
         list.add(new ConfigStringPropExtra("suffix", SetDataFieldNames.PROGRAMSET_SUFFIX_DIRECT, suffix));
         list.add(new ConfigColorProp("color", SetDataFieldNames.PROGRAMSET_COLOR, color));
         list.add(new ConfigStringPropExtra("destPath", SetDataFieldNames.PROGRAMSET_ZIEL_PFAD, destPath));
@@ -363,7 +362,7 @@ public class SetDataProps extends SetDataXml {
     public void setPropsFromXml() {
         setId(arr[PROGRAMSET_ID]);
         setVisibleName(arr[PROGRAMSET_VISIBLE_NAME]);
-        setPrefix(arr[PROGRAMSET_PRAEFIX_DIRECT]);
+        setPrefix(arr[PROGRAMSET_PREFIX_DIRECT]);
         setSuffix(arr[PROGRAMSET_SUFFIX_DIRECT]);
 
         setColorFromHex(arr[PROGRAMSET_COLOR]);
@@ -415,36 +414,6 @@ public class SetDataProps extends SetDataXml {
         } catch (Exception ex) {
 
         }
-    }
-
-    public void setXmlFromProps() {
-        arr[PROGRAMSET_ID] = getId();
-        arr[PROGRAMSET_VISIBLE_NAME] = getVisibleName();
-        arr[PROGRAMSET_PRAEFIX_DIRECT] = getPrefix();
-        arr[PROGRAMSET_SUFFIX_DIRECT] = getSuffix();
-
-        arr[PROGRAMSET_COLOR] = PColorFactory.getColorToHex(color.getValue());
-
-        arr[PROGRAMSET_ABO_UNTERORDNER] = String.valueOf(getAboSubDir_ENSubDirNo());
-        arr[PROGRAMSET_ZIEL_PFAD] = getDestPath();
-        arr[PROGRAMSET_ZIEL_DATEINAME] = getDestName();
-
-        arr[PROGRAMSET_ABO_SUBDIR_ANLEGEN] = String.valueOf(isGenAboSubDir());
-        arr[PROGRAMSET_IST_ABSPIELEN] = String.valueOf(isPlay());
-        arr[PROGRAMSET_IST_SPEICHERN] = String.valueOf(isSave());
-        arr[PROGRAMSET_IST_BUTTON] = String.valueOf(isButton());
-        arr[PROGRAMSET_IST_ABO] = String.valueOf(isAbo());
-
-        arr[PROGRAMSET_MAX_LAENGE] = String.valueOf(getMaxSize());
-        arr[PROGRAMSET_MAX_LAENGE_FIELD] = String.valueOf(getMaxField());
-
-        arr[PROGRAMSET_AUFLOESUNG] = getResolution();
-        arr[PROGRAMSET_ADD_ON] = getAdOn();
-        arr[PROGRAMSET_BESCHREIBUNG] = getDescription();
-        arr[PROGRAMSET_INFO_URL] = getInfoUrl();
-
-        arr[PROGRAMSET_INFODATEI] = String.valueOf(isInfoFile());
-        arr[PROGRAMSET_SUBTITLE] = String.valueOf(isSubtitle());
     }
 
     @Override
