@@ -67,6 +67,4 @@ public class BlackData extends BlackDataProps {
         themeTitleProperty().addListener(l -> createFilter());
         titleProperty().addListener(l -> createFilter());
     }
-
-
 }

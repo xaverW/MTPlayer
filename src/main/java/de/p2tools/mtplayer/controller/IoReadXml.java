@@ -70,7 +70,7 @@ public class IoReadXml implements AutoCloseable {
         int filtercount = 0;
 
         if (Files.exists(xmlFilePath)) {
-            SetData psetData = null;
+            SetData setData = null;
             XMLStreamReader parser = null;
             try (InputStream is = Files.newInputStream(xmlFilePath);
                  InputStreamReader in = new InputStreamReader(is, StandardCharsets.UTF_8)) {
@@ -88,19 +88,19 @@ public class IoReadXml implements AutoCloseable {
 
                             case "Programmset":
                                 // Programmgruppen
-                                psetData = new SetData();
-                                if (get(parser, "Programmset", SetData.XML_NAMES, psetData.arr)) {
-                                    psetData.setPropsFromXml();
-                                    progData.setDataList.add(psetData);
+                                setData = new SetData();
+                                if (get(parser, "Programmset", SetData.XML_NAMES, setData.arr)) {
+                                    setData.setPropsFromXml();
+                                    progData.setDataList.add(setData);
                                 }
                                 break;
 
                             case "Programm":
-                                final ProgramData progData = new ProgramData();
-                                if (get(parser, "Programm", ProgramData.XML_NAMES, progData.arr)) {
-                                    if (psetData != null) {
-                                        progData.setPropsFromXml();
-                                        psetData.addProg(progData);
+                                final ProgramData programData = new ProgramData();
+                                if (get(parser, "Programm", ProgramData.XML_NAMES, programData.arr)) {
+                                    if (setData != null) {
+                                        programData.setPropsFromXml();
+                                        setData.addProg(programData);
                                     }
                                 }
                                 // ende Programgruppen
@@ -117,26 +117,26 @@ public class IoReadXml implements AutoCloseable {
 
                             case "Abonnement":
                                 // Abo
-                                final AboData abo = new AboData();
-                                if (get(parser, "Abonnement", AboFieldNames.XML_NAMES, abo.arr)) {
-                                    abo.setPropsFromXml();
-                                    this.progData.aboList.addAbo(abo);
+                                final AboData aboData = new AboData();
+                                if (get(parser, "Abonnement", AboFieldNames.XML_NAMES, aboData.arr)) {
+                                    aboData.setPropsFromXml();
+                                    this.progData.aboList.addAbo(aboData);
                                 }
                                 break;
 
                             case "Downlad":
                                 // Downloads
-                                final DownloadData d = new DownloadData();
-                                if (get(parser, "Downlad", DownloadFieldNames.XML_NAMES, d.arr)) {
-                                    d.setPropsFromXml();
-                                    this.progData.downloadList.add(d);
+                                final DownloadData downloadData = new DownloadData();
+                                if (get(parser, "Downlad", DownloadFieldNames.XML_NAMES, downloadData.arr)) {
+                                    downloadData.setPropsFromXml();
+                                    this.progData.downloadList.add(downloadData);
                                 }
                                 break;
 
-                            case BlackData.TAG:
+                            case "Blacklist":
                                 // Blacklist
                                 final BlackData blackData = new BlackData();
-                                if (get(parser, BlackData.TAG, BlackData.XML_NAMES, blackData.arr)) {
+                                if (get(parser, "Blacklist", BlackData.XML_NAMES, blackData.arr)) {
                                     blackData.setPropsFromXml();
                                     this.progData.blackList.add(blackData);
                                 }
