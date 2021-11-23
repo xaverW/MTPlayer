@@ -117,7 +117,6 @@ public class AboData extends AboDataXml {
             this.properties[i].setValue(abo.properties[i].getValue());
         }
         this.setSetData(abo.getSetData());
-//        this.setXmlFromProps();
     }
 
     public AboData getCopy() {
@@ -126,9 +125,6 @@ public class AboData extends AboDataXml {
             ret.properties[i].setValue(this.properties[i].getValue());
         }
         ret.setSetData(getSetData());
-//        ret.setXmlFromProps();
-
         return ret;
     }
-
 }

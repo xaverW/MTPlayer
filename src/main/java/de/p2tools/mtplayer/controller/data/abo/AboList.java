@@ -40,12 +40,10 @@ import java.util.*;
 
 public class AboList extends SimpleListProperty<AboData> implements PDataList<AboData> {
     private final ProgData progData;
-    //    private static final String[] LEER = {""};
     public static final String TAG = "AboList";
     private int nr;
     private static final GermanStringSorter sorter = GermanStringSorter.getInstance();
     private BooleanProperty listChanged = new SimpleBooleanProperty(true);
-
 
     public AboList(ProgData progData) {
         super(FXCollections.observableArrayList());
@@ -149,14 +147,6 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
         if (!theme.isEmpty()) {
             abo.setThemeExact(themeExact);
         }
-
-//        if (new AboEditDialogController(progData, abo).getOk()) {
-//            // als Vorgabe merken
-//            ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(abo.getMinDurationMinute());
-//            ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(abo.getMaxDurationMinute());
-//            addAbo(abo);
-//            notifyChanges();
-//        }
 
         new AboEditDialogController(progData, abo);
     }

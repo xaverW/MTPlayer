@@ -57,43 +57,6 @@ public class AboDataXml extends AboDataProps {
         setSetDataId(arr[AboFieldNames.ABO_SET_DATA_ID_NO]);
     }
 
-    public void setXmlFromProps() {
-        arr[AboFieldNames.ABO_NO_NO] = getNo() + "";
-        arr[AboFieldNames.ABO_ON_NO] = String.valueOf(isActive());
-        arr[AboFieldNames.ABO_RESOLUTION_NO] = getResolution();
-        arr[AboFieldNames.ABO_NAME_NO] = getName();
-        arr[AboFieldNames.ABO_DESCRIPTION_NO] = getDescription();
-        arr[AboFieldNames.ABO_CHANNEL_NO] = getChannel();
-        arr[AboFieldNames.ABO_THEME_NO] = getTheme();
-        arr[AboFieldNames.ABO_THEME_EXACT_NO] = String.valueOf(isThemeExact());
-        arr[AboFieldNames.ABO_THEME_TITLE_NO] = getThemeTitle();
-        arr[AboFieldNames.ABO_TITLE_NO] = getTitle();
-        arr[AboFieldNames.ABO_SOMEWHERE_NO] = getSomewhere();
-
-        if (getTimeRange() == FilmFilter.FILTER_TIME_RANGE_ALL_VALUE) {
-            arr[AboFieldNames.ABO_TIME_RANGE_NO] = ProgConst.FILTER_ALL;
-        } else {
-            arr[AboFieldNames.ABO_TIME_RANGE_NO] = String.valueOf(getTimeRange());
-        }
-
-        if (getMinDurationMinute() == FilmFilter.FILTER_DURATION_MIN_MINUTE) {
-            arr[AboFieldNames.ABO_MIN_DURATION_NO] = ProgConst.FILTER_ALL;
-        } else {
-            arr[AboFieldNames.ABO_MIN_DURATION_NO] = String.valueOf(getMinDurationMinute());
-        }
-
-        if (getMaxDurationMinute() == FilmFilter.FILTER_DURATION_MAX_MINUTE) {
-            arr[AboFieldNames.ABO_MAX_DURATION_NO] = ProgConst.FILTER_ALL;
-        } else {
-            arr[AboFieldNames.ABO_MAX_DURATION_NO] = String.valueOf(getMaxDurationMinute());
-        }
-        arr[AboFieldNames.ABO_START_TIME_NO] = getStartTime();
-
-        arr[AboFieldNames.ABO_DEST_PATH_NO] = getAboSubDir();
-        arr[AboFieldNames.ABO_DOWN_DATE_NO] = getDate().toString();
-        arr[AboFieldNames.ABO_SET_DATA_ID_NO] = getSetData() == null ? "" : getSetData().getId();
-    }
-
     private void setTimeRangeFromXml() {
         int max;
 
@@ -143,5 +106,4 @@ public class AboDataXml extends AboDataProps {
         }
         setMaxDurationMinute(max);
     }
-
 }

@@ -58,13 +58,11 @@ public class AboDataProps extends PDataSample<AboData> implements Comparable<Abo
             channel, theme, themeExact, themeTitle, title, somewhere,
             timeRange, minDurationMinute, maxDurationMinute, startTime, aboSubDir, date, setDataId};
 
-
     public String getStringOf(int i) {
         return String.valueOf(properties[i].getValue());
     }
 
-
-    public static final String TAG = "Abo"; //ab jetzt wird "Abo" verwendet, alt war: "Abonnement"
+    public static final String TAG = "AboData"; //ab jetzt wird "Abo" verwendet, alt war: "Abonnement"
 
     @Override
     public Config[] getConfigsArr() {
@@ -97,7 +95,6 @@ public class AboDataProps extends PDataSample<AboData> implements Comparable<Abo
     public String getTag() {
         return TAG;
     }
-
 
     public SetData getSetData(ProgData progData) {
         // wenn das Set noch nicht vorhanden ist, wird es vorher gesetzt
@@ -371,9 +368,7 @@ public class AboDataProps extends PDataSample<AboData> implements Comparable<Abo
         this.setHit(countHit);
     }
 
-
     public int compareTo(AboDataProps arg0) {
         return Data.sorter.compare(getName(), arg0.getName());
     }
-
 }

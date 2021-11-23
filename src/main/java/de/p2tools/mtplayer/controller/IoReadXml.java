@@ -122,7 +122,6 @@ public class IoReadXml implements AutoCloseable {
                                     abo.setPropsFromXml();
                                     this.progData.aboList.addAbo(abo);
                                 }
-
                                 break;
 
                             case "Downlad":
