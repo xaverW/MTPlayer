@@ -85,7 +85,7 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
             destFileName, destPath, destPathFile,
             type, source, placedBack, infoFile, subtitle};
 
-    public static final String TAG = "Download";
+    public static final String TAG = "DownloadData";
 
     DownloadDataProps() {
     }
@@ -97,7 +97,7 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
 
     @Override
     public String getComment() {
-        return "SetData";
+        return "DownloadData";
     }
 
     @Override

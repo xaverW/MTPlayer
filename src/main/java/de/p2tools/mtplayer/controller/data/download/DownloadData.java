@@ -80,7 +80,6 @@ public final class DownloadData extends DownloadDataXml {
     //==============================================
     // Downloadstatus
     //==============================================
-
     public boolean isStateInit() {
         return getState() == DownloadConstants.STATE_INIT;
     }
@@ -335,7 +334,6 @@ public final class DownloadData extends DownloadDataXml {
         for (int i = 0; i < properties.length; ++i) {
             ret.properties[i].setValue(this.properties[i].getValue());
         }
-        ret.setXmlFromProps();
 
         ret.film = film;
         ret.setStart(getStart());
@@ -349,7 +347,6 @@ public final class DownloadData extends DownloadDataXml {
         for (int i = 0; i < properties.length; ++i) {
             properties[i].setValue(download.properties[i].getValue());
         }
-        setXmlFromProps();
 
         film = download.film;
         getDownloadSize().setSize(download.getDownloadSize().getFilmSize());// die Auflösung des Films kann sich ändern

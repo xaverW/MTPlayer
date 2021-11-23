@@ -52,7 +52,7 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
 
     @Override
     public String getComment() {
-        return "Liste aller SetData";
+        return "Liste aller Downloads";
     }
 
     @Override
@@ -66,7 +66,6 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
             add((DownloadData) obj);
         }
     }
-
 
     public boolean getDownloadsChanged() {
         return downloadsChanged.get();
@@ -133,7 +132,6 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
 
 
     public synchronized void addFilmInList() {
-
         // bei einmal Downloads nach einem Programmstart/Neuladen der Filmliste
         // den Film wieder eintragen
         PDuration.counterStart("DownloadList.addFilmInList");
@@ -150,7 +148,6 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
 
         PDuration.counterStop("DownloadList.addFilmInList");
     }
-
 
     public synchronized void preferDownloads(ArrayList<DownloadData> prefDownList) {
         // macht nur Sinn, wenn der Download auf Laden wartet: Init
@@ -236,7 +233,6 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
         }
     }
 
-
     /**
      * search downloads for abos after loading a filmlist
      */
@@ -277,7 +273,6 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
 
     // ==============================
     // DownloadListStartStop
-
     public synchronized void stopDownloads(ArrayList<DownloadData> list) {
         if (downloadListStartStop.stopDownloads(list)) {
             setDownloadsChanged();
@@ -306,12 +301,10 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
         }
     }
 
-
     public void startDownloads(DownloadData download) {
         downloadListStartStop.startDownloads(download);
         setDownloadsChanged();
     }
-
 
     public void startDownloads() {
         startDownloads(this, false);

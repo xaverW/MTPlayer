@@ -18,8 +18,6 @@ package de.p2tools.mtplayer.controller.data.download;
 
 
 public class DownloadDataXml extends DownloadDataProps {
-
-
     public String[] arr;
 
     public DownloadDataXml() {
@@ -34,7 +32,6 @@ public class DownloadDataXml extends DownloadDataProps {
     }
 
     public void setPropsFromXml() {
-
         setAboName(arr[DownloadFieldNames.DOWNLOAD_ABO_NO]);
         setChannel(arr[DownloadFieldNames.DOWNLOAD_SENDER_NO]);
         setTheme(arr[DownloadFieldNames.DOWNLOAD_THEME_NO]);
@@ -78,38 +75,6 @@ public class DownloadDataXml extends DownloadDataProps {
         setInfoFile(Boolean.parseBoolean(arr[DownloadFieldNames.DOWNLOAD_INFO_FILE_NO]));
         setSubtitle(Boolean.parseBoolean(arr[DownloadFieldNames.DOWNLOAD_SUBTITLE_NO]));
         setProgramDownloadmanager(Boolean.parseBoolean(arr[DownloadFieldNames.DOWNLOAD_PROGRAM_DOWNLOADMANAGER_NO]));
-    }
-
-    public void setXmlFromProps() {
-        arr[DownloadFieldNames.DOWNLOAD_ABO_NO] = getAboName();
-        arr[DownloadFieldNames.DOWNLOAD_SENDER_NO] = getChannel();
-        arr[DownloadFieldNames.DOWNLOAD_THEME_NO] = getTheme();
-        arr[DownloadFieldNames.DOWNLOAD_TITLE_NO] = getTitle();
-        arr[DownloadFieldNames.DOWNLOAD_DATE_NO] = getFilmDate().toString();
-        arr[DownloadFieldNames.DOWNLOAD_TIME_NO] = getTime();
-        arr[DownloadFieldNames.DOWNLOAD_DURATION_NO] = String.valueOf(getDurationMinute());
-        arr[DownloadFieldNames.DOWNLOAD_HD_NO] = String.valueOf(isHd());
-        arr[DownloadFieldNames.DOWNLOAD_UT_NO] = String.valueOf(isUt());
-        arr[DownloadFieldNames.DOWNLOAD_GEO_NO] = String.valueOf(getGeoBlocked());
-        arr[DownloadFieldNames.DOWNLOAD_FILM_URL_NO] = getFilmUrl();
-        arr[DownloadFieldNames.DOWNLOAD_HISTORY_URL_NO] = getHistoryUrl();
-        arr[DownloadFieldNames.DOWNLOAD_URL_NO] = getUrl();
-        arr[DownloadFieldNames.DOWNLOAD_URL_RTMP_NO] = getUrlRtmp();
-        arr[DownloadFieldNames.DOWNLOAD_URL_SUBTITLE_NO] = getUrlSubtitle();
-        arr[DownloadFieldNames.DOWNLOAD_SET_DATA_NO] = getSetDataId();
-        arr[DownloadFieldNames.DOWNLOAD_PROGRAM_NO] = getProgram();
-        arr[DownloadFieldNames.DOWNLOAD_PROGRAM_CALL_NO] = getProgramCall();
-        arr[DownloadFieldNames.DOWNLOAD_PROGRAM_CALL_ARRAY_NO] = getProgramCallArray();
-        arr[DownloadFieldNames.DOWNLOAD_DEST_FILE_NAME_NO] = getDestFileName();
-        arr[DownloadFieldNames.DOWNLOAD_DEST_PATH_NO] = getDestPath();
-        arr[DownloadFieldNames.DOWNLOAD_DEST_PATH_FILE_NAME_NO] = getDestPathFile();
-        arr[DownloadFieldNames.DOWNLOAD_START_TIME_NO] = getStartTime();
-        arr[DownloadFieldNames.DOWNLOAD_TYPE_NO] = getType();
-        arr[DownloadFieldNames.DOWNLOAD_SOURCE_NO] = getSource();
-        arr[DownloadFieldNames.DOWNLOAD_PLACED_BACK_NO] = String.valueOf(getPlacedBack());
-        arr[DownloadFieldNames.DOWNLOAD_INFO_FILE_NO] = String.valueOf(getInfoFile());
-        arr[DownloadFieldNames.DOWNLOAD_SUBTITLE_NO] = String.valueOf(isSubtitle());
-        arr[DownloadFieldNames.DOWNLOAD_PROGRAM_DOWNLOADMANAGER_NO] = String.valueOf(getProgramDownloadmanager());
     }
 
     @Override
