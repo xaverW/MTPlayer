@@ -32,7 +32,6 @@ public class ReplaceData extends PDataSample<ReplaceData> {
     public final static int REPLACE_TO_NR = 1;
 
     public static final String TAG = "ReplaceData";
-    //    public final static String[] COLUMN_NAMES = {"von", "to"};//alt!!
     public static final int MAX_ELEM = 2;
     public String[] arr;
 
@@ -57,7 +56,7 @@ public class ReplaceData extends PDataSample<ReplaceData> {
 
     @Override
     public String getComment() {
-        return "SetData";
+        return "ReplaceData";
     }
 
     @Override
@@ -101,14 +100,8 @@ public class ReplaceData extends PDataSample<ReplaceData> {
         this.to.set(to);
     }
 
-
     public void setPropsFromXml() {
         setFrom(arr[REPLACE_FROM_NR]);
         setTo(arr[REPLACE_TO_NR]);
-    }
-
-    public void setXmlFromProps() {
-        arr[REPLACE_FROM_NR] = getFrom();
-        arr[REPLACE_TO_NR] = getTo();
     }
 }
