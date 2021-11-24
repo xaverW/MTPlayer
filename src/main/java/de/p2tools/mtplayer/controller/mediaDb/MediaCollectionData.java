@@ -32,8 +32,8 @@ public class MediaCollectionData extends PDataSample<MediaCollectionData> {
 
     public final static String[] COLUMN_NAMES = {"Id", "Pfad", "Sammlung", "Extern"};
     public final static String[] XML_NAMES = COLUMN_NAMES;
-    public static final String TAG = "MediaPath";
-    public final static int MAX_ELEM = 4;
+    public static final String TAG = "MediaCollectionData";
+    public final static int MAX_ELEM = XML_NAMES.length;
     public String[] arr;
 
     private LongProperty id = new SimpleLongProperty(0L);
@@ -68,10 +68,9 @@ public class MediaCollectionData extends PDataSample<MediaCollectionData> {
     public Config[] getConfigsArr() {
         ArrayList<Config> list = new ArrayList<>();
         list.add(new ConfigLongPropExtra("id", "Id", id));
-        list.add(new ConfigStringPropExtra("path", "Id", path));
-        list.add(new ConfigStringPropExtra("collectionName", "Id", collectionName));
-        list.add(new ConfigBoolPropExtra("external", "Id", external));
-        list.add(new ConfigIntPropExtra("count", "Id", count));
+        list.add(new ConfigStringPropExtra("path", "Pfad", path));
+        list.add(new ConfigStringPropExtra("collectionName", "Sammlung", collectionName));
+        list.add(new ConfigBoolPropExtra("external", "Extern", external));
 
         return list.toArray(new Config[]{});
     }
@@ -146,13 +145,6 @@ public class MediaCollectionData extends PDataSample<MediaCollectionData> {
         setPath(arr[MEDIA_PATH_PATH]);
         setCollectionName(arr[MEDIA_PATH_COLLECTION_NAME]);
         setExternal(Boolean.valueOf(arr[MEDIA_PATH_EXTERNAL]));
-    }
-
-    public void setXmlFromProps() {
-        arr[MEDIA_PATH_ID] = String.valueOf(id);
-        arr[MEDIA_PATH_PATH] = getPath();
-        arr[MEDIA_PATH_COLLECTION_NAME] = getCollectionName();
-        arr[MEDIA_PATH_EXTERNAL] = String.valueOf(isExternal());
     }
 
     public String getHash() {
