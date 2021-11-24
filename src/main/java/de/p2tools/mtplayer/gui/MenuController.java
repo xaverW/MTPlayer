@@ -58,5 +58,4 @@ public class MenuController extends ScrollPane {
                 break;
         }
     }
-
 }

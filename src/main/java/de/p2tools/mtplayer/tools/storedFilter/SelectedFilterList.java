@@ -75,5 +75,4 @@ public final class SelectedFilterList extends SimpleListProperty<SelectedFilter>
         add(neu, selectedFilter);
         return neu;
     }
-
 }

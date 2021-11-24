@@ -117,5 +117,4 @@ public class NewSetDialogController extends PDialogExtra {
 
         getvBoxCont().getChildren().addAll(gridPane);
     }
-
 }

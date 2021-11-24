@@ -43,7 +43,6 @@ public class ImportSetDialogController extends PDialogExtra {
     private VBox vBoxPath = new VBox();
     private SetPaneController setPaneController;
 
-
     public ImportSetDialogController(ProgData progData) {
         super(progData.primaryStage, ProgConfig.CONFIG_DIALOG_IMPORT_SET_SIZE,
                 "Set importieren", true, false, DECO.SMALL);

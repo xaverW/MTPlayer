@@ -36,7 +36,6 @@ public class StartPane {
     }
 
     public TitledPane makeStart1() {
-
         HBox hBox = new HBox();
         hBox.setSpacing(25);
         hBox.setPadding(new Insets(20));
@@ -81,7 +80,6 @@ public class StartPane {
     }
 
     public TitledPane makeStart2() {
-
         HBox hBox = new HBox();
         hBox.setSpacing(25);
         hBox.setPadding(new Insets(20));

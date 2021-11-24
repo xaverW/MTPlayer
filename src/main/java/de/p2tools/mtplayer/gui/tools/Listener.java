@@ -24,7 +24,6 @@ import java.util.EventListener;
 
 
 public class Listener implements EventListener {
-
     static int count = 0;
 
     public static final int EREIGNIS_BLACKLIST_GEAENDERT = count++;
@@ -98,5 +97,4 @@ public class Listener implements EventListener {
             PLog.errorLog(698989743, ex);
         }
     }
-
 }

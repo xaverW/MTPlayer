@@ -189,7 +189,6 @@ public class DeleteFilmFileDialogController extends PDialogExtra {
                 }
             }
 
-
         } catch (Exception ex) {
             ret = false;
             PAlert.showErrorAlert("Datei löschen",
@@ -204,5 +203,4 @@ public class DeleteFilmFileDialogController extends PDialogExtra {
     private void quit() {
         close();
     }
-
 }

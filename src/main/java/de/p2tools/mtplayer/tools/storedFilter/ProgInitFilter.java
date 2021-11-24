@@ -437,6 +437,5 @@ public class ProgInitFilter {
         sf.setNotFuture(false);
 
         progData.storedFilters.getStoredFilterList().add(sf);
-
     }
 }

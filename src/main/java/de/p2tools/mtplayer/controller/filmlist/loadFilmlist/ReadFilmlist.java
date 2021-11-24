@@ -109,7 +109,6 @@ public class ReadFilmlist {
                 filmlist.clear();
 
             } else {
-//                logList.add(PLog.LILNE3);
                 logList.add("   erstellt am:        " + filmlist.genDate());
                 logList.add("   Anzahl Gesamtliste: " + countAll);
                 logList.add("   Anzahl verwendet:   " + filmlist.size());
@@ -473,5 +472,4 @@ public class ReadFilmlist {
             l.finished(new ListenerFilmlistLoadEvent(url, "Filmliste geladen", progress, 0, false));
         }
     }
-
 }

@@ -77,5 +77,4 @@ public class FilmFilterController extends FilterController {
         hBox.getChildren().addAll(tglBlacklist, lblRight);
         vBoxBlacklist.getChildren().add(hBox);
     }
-
 }

@@ -18,7 +18,6 @@ package de.p2tools.mtplayer.controller.starter;
 
 public class DownloadState {
 
-
     public enum ContinueDownload {
         // Anwort des Dialogs: Datei schon vorhanden
         CANCEL_DOWNLOAD,

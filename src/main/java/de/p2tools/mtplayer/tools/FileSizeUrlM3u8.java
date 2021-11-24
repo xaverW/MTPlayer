@@ -98,5 +98,4 @@ public class FileSizeUrlM3u8 {
 
         return size;
     }
-
 }

@@ -50,7 +50,6 @@ public class SearchUpdateWithId {
 
             if (body != null && response.isSuccessful()) {
                 String remoteId = body.string();
-//                System.out.println(remoteId);
                 if (!remoteId.isEmpty() && !remoteId.equalsIgnoreCase(id)) {
                     // Filmliste hat sich geändert
                     ret = true;

@@ -86,5 +86,4 @@ public class AboGuiPack {
         setSplit();
         return new SplitPane(hBox);
     }
-
 }

@@ -94,6 +94,5 @@ public class AboGuiTableContextMenue {
         contextMenu.getItems().add(new SeparatorMenuItem());
         contextMenu.getItems().addAll(miSelectAll, miSelection, resetTable);
     }
-
 }
 

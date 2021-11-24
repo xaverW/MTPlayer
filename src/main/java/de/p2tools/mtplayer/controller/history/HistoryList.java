@@ -378,5 +378,4 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         urlHash.clear();
         this.stream().forEach(h -> urlHash.add(h.getUrl()));
     }
-
 }

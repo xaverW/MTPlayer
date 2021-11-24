@@ -154,7 +154,6 @@ public class DownloadErrorDialogController extends PDialogExtra {
     }
 
     private class CountdownAction implements EventHandler {
-
         @Override
         public void handle(Event event) {
             timeSeconds--;
@@ -171,12 +170,9 @@ public class DownloadErrorDialogController extends PDialogExtra {
         if (timeline != null) {
             timeline.stop();
         }
-
     }
 
     private void quit() {
         close();
     }
-
-
 }

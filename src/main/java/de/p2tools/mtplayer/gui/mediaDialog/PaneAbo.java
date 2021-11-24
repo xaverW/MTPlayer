@@ -238,5 +238,4 @@ public class PaneAbo extends ScrollPane {
                 txtSearch.getText(), false));
         lblTrefferAbo.setText(progData.erledigteAbos.getFilteredList().size() + "");
     }
-
 }

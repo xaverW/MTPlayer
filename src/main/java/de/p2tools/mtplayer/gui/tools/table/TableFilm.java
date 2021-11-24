@@ -191,7 +191,6 @@ public class TableFilm {
         return cell;
     };
 
-
     private Callback<TableColumn<FilmData, Integer>, TableCell<FilmData, Integer>> cellFactoryDuration
             = (final TableColumn<FilmData, Integer> param) -> {
 
@@ -219,5 +218,4 @@ public class TableFilm {
         };
         return cell;
     };
-
 }

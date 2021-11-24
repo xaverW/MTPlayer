@@ -28,11 +28,9 @@ public class DownloadGuiTableContextMenu {
     private final TableView tableView;
 
     public DownloadGuiTableContextMenu(final ProgData progData, final DownloadGuiController downloadGuiController, final TableView tableView) {
-
         this.progData = progData;
         this.downloadGuiController = downloadGuiController;
         this.tableView = tableView;
-
     }
 
     public ContextMenu getContextMenu(final DownloadData download) {
@@ -164,5 +162,4 @@ public class DownloadGuiTableContextMenu {
         contextMenu.getItems().add(new SeparatorMenuItem());
         contextMenu.getItems().addAll(miSelectAll, miSelection, resetTable);
     }
-
 }

@@ -96,5 +96,4 @@ public class FileSizeUrl {
 
         return size;
     }
-
 }

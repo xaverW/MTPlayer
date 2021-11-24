@@ -50,5 +50,4 @@ public class Data<E> implements Comparable<E> {
     public int compareTo(E o) {
         return 0;
     }
-
 }

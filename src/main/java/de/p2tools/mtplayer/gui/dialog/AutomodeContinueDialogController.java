@@ -132,6 +132,5 @@ public class AutomodeContinueDialogController extends PDialogExtra {
             quit();
         });
     }
-
 }
 

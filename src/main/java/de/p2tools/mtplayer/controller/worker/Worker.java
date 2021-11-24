@@ -244,5 +244,4 @@ public class Worker {
     public ObservableList<String> getAllAboNamesList() {
         return allAboNamesList;
     }
-
 }

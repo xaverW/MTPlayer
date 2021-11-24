@@ -240,5 +240,4 @@ public class ShortcutPane {
 
         return cell;
     };
-
 }

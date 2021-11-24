@@ -64,7 +64,6 @@ public class FilmGuiPack {
     }
 
     public SplitPane pack() {
-
         // Menü
         final MenuController menuController = new MenuController(MenuController.StartupMode.Film);
         menuController.setId("film-menu-pane");
@@ -85,5 +84,4 @@ public class FilmGuiPack {
         setSplit();
         return new SplitPane(hBox);
     }
-
 }

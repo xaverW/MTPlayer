@@ -58,7 +58,6 @@ public class DownloadGuiInfo extends AnchorPane {
                 setInfoText();
             }
         });
-
     }
 
     private void setInfoText() {

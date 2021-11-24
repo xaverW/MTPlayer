@@ -112,7 +112,6 @@ public class ReadMediaDb implements AutoCloseable {
         return list;
     }
 
-
     private boolean get(XMLStreamReader parser, String xmlElem, String[] xmlNames, String[] strRet) {
         boolean ret = true;
         final int maxElem = strRet.length;
@@ -146,10 +145,7 @@ public class ReadMediaDb implements AutoCloseable {
         return ret;
     }
 
-
     @Override
     public void close() throws Exception {
-
     }
-
 }

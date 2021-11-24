@@ -137,5 +137,4 @@ public class ConfigDialogController extends PDialogExtra {
             PLog.errorLog(784459510, ex);
         }
     }
-
 }

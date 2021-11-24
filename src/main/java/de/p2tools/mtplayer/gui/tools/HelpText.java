@@ -19,7 +19,6 @@ package de.p2tools.mtplayer.gui.tools;
 import de.p2tools.p2Lib.P2LibConst;
 
 public class HelpText {
-
     public static final String FILTER_FIELD =
             "Mit den Textfeldern kann entweder nach einem wörtlichen Suchtext oder nach " +
                     "regulären Ausdrücken (RegExp) gesucht werden.\n" +
@@ -78,7 +77,6 @@ public class HelpText {
             "ursprünglichen Suchtext wieder her. Nach Start der Suche aus einem Kontextmenü in den " +
             "Ansichten 'Filme' oder 'Downloads' ist dies ein automatisch eingetragener Text; nach Start der Suche " +
             "aus dem Programm-Menü ist es ein leeres Suchfeld.";
-
 
     public static final String PROG_PATHS =
             "Hier können Standardprogramme zum Ansehen und Aufzeichnen der Filme eingetragen werden.\n" +
@@ -254,7 +252,6 @@ public class HelpText {
                     "Wenn die gewünschte Auflösung nicht verfügbar ist wird " +
                     "automatisch die hohe Auflösung heruntergeladen.";
 
-
     public static final String ABO_SUBDIR =
             "Downloads aus Abos werden in einem Abo-eigenen Unterordner gespeichert, " +
                     "wenn \"bei Abos Unterordner anlegen\" im ausgewählten Programmset eingeschaltet ist. " +
@@ -288,7 +285,6 @@ public class HelpText {
                     "\n" +
                     "Beispiel:\n" +
                     "Am 10.05.2021 liefert '%H__%t__%T' z.B. '20210510__Natur__Wildes Shetland'.";
-
 
     public static final String SETDATA_ABO_SUBDIR =
             "Downloads aus Abos werden in einem Abo-eigenen Unterordner gespeichert, " +

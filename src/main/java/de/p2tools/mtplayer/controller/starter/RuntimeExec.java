@@ -66,7 +66,6 @@ public class RuntimeExec {
         if (arrProgCallArray.length <= 1) {
             arrProgCallArray = null;
         }
-
     }
 
     public RuntimeExec(String p) {

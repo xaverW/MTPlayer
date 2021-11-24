@@ -119,5 +119,4 @@ public class FilmPaneController extends PAccordionPane {
                 PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcPrefSize());
     }
-
 }

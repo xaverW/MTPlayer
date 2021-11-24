@@ -40,7 +40,6 @@ public class MTNotification {
 
         PNotification.addNotification("Download beendet", text, error);
     }
-
 }
 
 

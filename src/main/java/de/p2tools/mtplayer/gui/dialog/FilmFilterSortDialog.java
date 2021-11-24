@@ -47,7 +47,6 @@ public class FilmFilterSortDialog extends PDialogExtra {
         init(false);
     }
 
-
     @Override
     public void make() {
         addOkButton(btnOk);

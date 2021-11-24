@@ -65,7 +65,6 @@ public class PaneMediaController extends PAccordionPane {
         progData.mediaDataList.sizeProperty().removeListener(changeListener);
     }
 
-
     @Override
     public Collection<TitledPane> createPanes() {
         Collection<TitledPane> result = new ArrayList<TitledPane>();

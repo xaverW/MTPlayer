@@ -360,6 +360,4 @@ public class BlackPane {
         }
         mbChannel.setText(text);
     }
-
-
 }

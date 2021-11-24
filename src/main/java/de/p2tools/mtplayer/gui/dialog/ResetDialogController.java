@@ -50,7 +50,6 @@ public class ResetDialogController extends PDialogExtra {
         init(true);
     }
 
-
     @Override
     public void make() {
         GridPane gridPane = new GridPane();
@@ -85,7 +84,6 @@ public class ResetDialogController extends PDialogExtra {
             close();
         });
 
-
         // alle Einstellungen
         BigButton allButton = new BigButton(new ProgIcons().ICON_BUTTON_QUIT, "" +
                 "Alle Einstellungen zurücksetzen!",
@@ -110,7 +108,6 @@ public class ResetDialogController extends PDialogExtra {
             }
         });
 
-
         gridPane.add(new ProgIcons().ICON_DIALOG_QUIT, 0, 0, 1, 1);
         gridPane.add(headerLabel, 1, 0);
         gridPane.add(cancelButton, 1, 1);
@@ -128,5 +125,4 @@ public class ResetDialogController extends PDialogExtra {
 
         getvBoxCont().getChildren().addAll(gridPane);
     }
-
 }

@@ -37,7 +37,6 @@ public class DownloadGuiPack {
 
     private boolean bound = false;
 
-
     public DownloadGuiPack() {
         progData = ProgData.getInstance();
         this.doubleProperty = ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER;
@@ -86,5 +85,4 @@ public class DownloadGuiPack {
         setSplit();
         return new SplitPane(hBox);
     }
-
 }

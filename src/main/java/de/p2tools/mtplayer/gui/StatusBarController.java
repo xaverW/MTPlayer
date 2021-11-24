@@ -16,11 +16,11 @@
 
 package de.p2tools.mtplayer.gui;
 
-import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadInfosFactory;
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
+import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -55,7 +55,6 @@ public class StatusBarController extends AnchorPane {
     private final Pane aboPane;
 
     private final NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.GERMANY);
-
 
     public enum StatusbarIndex {NONE, FILM, DOWNLOAD, ABO}
 

@@ -217,6 +217,4 @@ public class FilmlistBlackFilter {
         return film.getDurationMinute() == 0 || filmLengthTarget_Minute <= film.getDurationMinute();
 
     }
-
-
 }

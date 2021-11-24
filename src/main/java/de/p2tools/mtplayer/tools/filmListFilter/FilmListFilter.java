@@ -87,11 +87,8 @@ public class FilmListFilter {
 
             th.setName("filterList");
             th.start();
-
         } else {
             research.set(true);
         }
-
     }
-
 }

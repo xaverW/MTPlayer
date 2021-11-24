@@ -29,7 +29,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class MTInfoFile {
-
     public static void writeInfoFile(DownloadData download) {
         if (download.getDestPath().isEmpty()) {
             download.setDestPath(PSystemUtils.getStandardDownloadPath());

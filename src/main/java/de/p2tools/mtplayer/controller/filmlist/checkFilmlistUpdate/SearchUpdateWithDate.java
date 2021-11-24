@@ -193,5 +193,4 @@ public class SearchUpdateWithDate {
         }
         return in;
     }
-
 }

@@ -150,5 +150,4 @@ public class MediaConfigDialogController extends PDialogExtra {
             PLog.errorLog(962104652, ex);
         }
     }
-
 }

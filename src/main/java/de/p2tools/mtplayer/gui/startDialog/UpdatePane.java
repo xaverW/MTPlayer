@@ -63,5 +63,4 @@ public class UpdatePane {
         TitledPane tpConfig = new TitledPane("Programmupdate", gridPane);
         return tpConfig;
     }
-
 }

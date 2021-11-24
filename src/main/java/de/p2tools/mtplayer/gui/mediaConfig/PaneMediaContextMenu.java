@@ -65,5 +65,4 @@ public class PaneMediaContextMenu {
 
         contextMenu.getItems().addAll(miOpen, miPlay);
     }
-
 }

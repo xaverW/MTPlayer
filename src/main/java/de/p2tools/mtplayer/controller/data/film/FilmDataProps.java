@@ -27,7 +27,6 @@ public class FilmDataProps extends FilmDataXml {
     FilmSize filmSize = new FilmSize(); // Dateigröße in MByte
     public FilmDate filmDate = new FilmDate(0);
 
-    //    public long dauerL = 0; // Sekunden
     private int durationMinute = 0; //
     public int filmTime = 0; // Zeit -> Minuten ab 0:00 Uhr
 

@@ -135,7 +135,6 @@ public class QuitDialogController extends PDialogExtra {
 
     @Override
     public void close() {
-//        System.out.println("close");
         ProgData.getInstance().quitDialogController = null;
         if (waitTask.isRunning()) {
             waitTask.cancel();

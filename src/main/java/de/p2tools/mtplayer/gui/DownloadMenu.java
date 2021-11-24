@@ -32,7 +32,6 @@ public class DownloadMenu {
         progData = ProgData.getInstance();
     }
 
-
     public void init() {
         vBox.getChildren().clear();
 

@@ -327,5 +327,4 @@ public class FilmFilter {
         // nix wars
         return false;
     }
-
 }

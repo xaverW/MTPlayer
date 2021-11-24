@@ -46,7 +46,6 @@ public class NoSetDialogController extends PDialogExtra {
         init(true);
     }
 
-
     @Override
     public void make() {
         btnCancel.setOnAction(a -> close());

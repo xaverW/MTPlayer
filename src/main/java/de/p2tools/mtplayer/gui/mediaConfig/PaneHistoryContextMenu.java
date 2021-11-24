@@ -81,5 +81,4 @@ public class PaneHistoryContextMenu {
 
         contextMenu.getItems().addAll(miDelUrl, miCopyUrl, miShowFilm, miDownload);
     }
-
 }

@@ -371,7 +371,6 @@ public class LoadFilmlist {
     }
 
     private void fillHash(List<String> logList, Filmlist filmlist) {
-//        hashSet.clear();
         logList.add(PLog.LILNE3);
         logList.add("Hash füllen, Größe vorher: " + hashSet.size());
 
@@ -387,7 +386,6 @@ public class LoadFilmlist {
                 .forEach(film -> film.setNewFilm(true));
 
         cleanHash(logList, filmlist);
-//        hashSet.clear();
     }
 
     private void cleanHash(List<String> logList, Filmlist filmlist) {

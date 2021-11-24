@@ -49,28 +49,11 @@ public class FilmData extends FilmDataProps {
         setSmall(!arr[FILM_URL_SMALL].isEmpty() || !arr[FILM_URL_RTMP_SMALL].isEmpty());
         setUt(!arr[FILM_URL_SUBTITLE].isEmpty());
 
-//        if (!arr[FilmXml.FILM_URL_HD].isEmpty() || !arr[FilmXml.FILM_URL_RTMP_HD].isEmpty()) {
-//            setHd(Boolean.TRUE);
-//        } else {
-//            setHd(Boolean.FALSE);
-//        }
-//        if (!arr[FilmXml.FILM_URL_SMALL].isEmpty() || !arr[FilmXml.FILM_URL_RTMP_SMALL].isEmpty()) {
-//            setSmall(Boolean.TRUE);
-//        } else {
-//            setSmall(Boolean.FALSE);
-//        }
-//        if (!arr[FilmXml.FILM_URL_SUBTITLE].isEmpty()) {
-//            setUt(Boolean.TRUE);
-//        } else {
-//            setUt(Boolean.FALSE);
-//        }
-
         setShown(ProgData.getInstance().history.checkIfUrlAlreadyIn(getUrlHistory()));
         preserveMemory();
 
         // ================================
         // Dateigröße
-//        filmSize = new FilmSize(this);
         filmSize.setFilmSize(this);
 
         // ================================
@@ -353,7 +336,6 @@ public class FilmData extends FilmDataProps {
         ret.filmDate = filmDate;
         ret.no = no;
         ret.filmSize = filmSize;
-//        ret.dauerL = dauerL;
         ret.setDurationMinute(getDurationMinute());
         ret.abo = abo;
         ret.setHd(isHd());

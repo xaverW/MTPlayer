@@ -255,5 +255,4 @@ public class PaneConfigController extends PAccordionPane {
             lblFileSize.setText(intValue + " MB");
         }
     }
-
 }

@@ -68,11 +68,9 @@ public class FilmInfoDialogController extends PDialogExtra {
         init(false);
     }
 
-
     public void showFilmInfo() {
         showDialog();
     }
-
 
     public void setFilm(FilmData film) {
         Platform.runLater(() -> {

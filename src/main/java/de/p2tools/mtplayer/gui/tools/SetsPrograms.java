@@ -39,7 +39,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 public class SetsPrograms {
-
     private static final ArrayList<String> winPath = new ArrayList<>();
 
     private static void setWinProgPath() {

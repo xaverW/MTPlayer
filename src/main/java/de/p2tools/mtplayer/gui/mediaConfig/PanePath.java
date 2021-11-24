@@ -255,5 +255,4 @@ public class PanePath {
         tableView.getSelectionModel().select(mediaCollectionData);
         tableView.scrollTo(mediaCollectionData);
     }
-
 }

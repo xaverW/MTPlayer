@@ -17,7 +17,6 @@
 package de.p2tools.mtplayer.gui.tools;
 
 public class HelpTextPset {
-
     public static final String PSET_DEST_FILE_SIZE =
             "Die Länge des Dateinamens eines Downloads kann beschränkt werden.\n" +
                     "\n" +

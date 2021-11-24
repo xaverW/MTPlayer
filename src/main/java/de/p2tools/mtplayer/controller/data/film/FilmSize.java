@@ -47,7 +47,6 @@ public class FilmSize implements Comparable<FilmSize> {
 
     @Override
     public String toString() {
-//     return    l == 0 ? "" : Long.toString(l);
         return s;
     }
 
