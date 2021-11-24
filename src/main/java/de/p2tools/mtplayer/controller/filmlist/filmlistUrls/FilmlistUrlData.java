@@ -32,30 +32,28 @@ public class FilmlistUrlData extends PDataSample<FilmlistUrlData> {
 
     public static final String TAG = "FilmlistUrlData";
 
-    public static final String SERVER_ART_AKT = "akt";
-    public static final String SERVER_ART_DIFF = "diff";
+    public static final String SERVER_TYPE_ACT = "akt";
+    public static final String SERVER_TYPE_DIFF = "diff";
+    public static final String FILMLIST_URL_DATA_PRIO_1 = "1";
 
-    public static final String FILMLIST_UPDATE_SERVER_PRIO_1 = "1";
-    public static final String FILMLIST_UPDATE_SERVER = "filmlist-update-server";
+    public static final String FILMLIST_URL_DATA_SERVER_NO = "filmlist-update-server-nr";
+    public static final int FILMLIST_URL_DATA_SERVER_NO_NO = 0;
+    public static final String FILMLIST_URL_DATA_URL = "filmlist-update-server-url";
+    public static final int FILMLIST_URL_DATA_URL_NO = 1;
+    public static final String FILMLIST_URL_DATA_PRIO = "filmlist-update-server-prio";
+    public static final int FILMLIST_URL_DATA_PRIO_NO = 2;
+    public static final String FILMLIST_URL_DATA_TYPE = "filmlist-update-server-art";
+    public static final int FILMLIST_URL_DATA_TYPE_NO = 3;
 
-    public static final String FILMLIST_UPDATE_SERVER_NR = "filmlist-update-server-nr";
-    public static final int FILMLIST_UPDATE_SERVER_NR_NR = 0;
-    public static final String FILMLIST_UPDATE_SERVER_URL = "filmlist-update-server-url";
-    public static final int FILMLIST_UPDATE_SERVER_URL_NR = 1;
-    public static final String FILMLIST_UPDATE_SERVER_PRIO = "filmlist-update-server-prio";
-    public static final int FILMLIST_UPDATE_SERVER_PRIO_NR = 2;
-    public static final String FILMLIST_UPDATE_SERVER_TYPE = "filmlist-update-server-art";
-    public static final int FILMLIST_UPDATE_SERVER_TYPE_NR = 3;
     public static final int FILMLIST_UPDATE_SERVER_MAX_ELEM = 4;
 
-    public static final String[] FILMLIST_UPDATE_SERVER_COLUMN_NAMES = {FILMLIST_UPDATE_SERVER_NR, FILMLIST_UPDATE_SERVER_URL,
-            FILMLIST_UPDATE_SERVER_PRIO, FILMLIST_UPDATE_SERVER_TYPE};
+    public static final String[] FILMLIST_URL_DATA_COLUMN_NAMES = {FILMLIST_URL_DATA_SERVER_NO, FILMLIST_URL_DATA_URL,
+            FILMLIST_URL_DATA_PRIO, FILMLIST_URL_DATA_TYPE};
 
     private IntegerProperty no = new SimpleIntegerProperty(0);
     private StringProperty url = new SimpleStringProperty("");
     private StringProperty prio = new SimpleStringProperty("");
     private StringProperty type = new SimpleStringProperty("");
-
 
     public String[] arr;
 
@@ -65,9 +63,6 @@ public class FilmlistUrlData extends PDataSample<FilmlistUrlData> {
 
     FilmlistUrlData(String url, String prio, String type) {
         makeArr();
-        arr[FILMLIST_UPDATE_SERVER_URL_NR] = url;
-        arr[FILMLIST_UPDATE_SERVER_PRIO_NR] = prio;
-        arr[FILMLIST_UPDATE_SERVER_TYPE_NR] = type;
         setUrl(url);
         setPrio(prio);
         setType(type);
@@ -75,11 +70,8 @@ public class FilmlistUrlData extends PDataSample<FilmlistUrlData> {
 
     FilmlistUrlData(String url, String type) {
         makeArr();
-        arr[FILMLIST_UPDATE_SERVER_URL_NR] = url;
-        arr[FILMLIST_UPDATE_SERVER_PRIO_NR] = FilmlistUrlData.FILMLIST_UPDATE_SERVER_PRIO_1;
-        arr[FILMLIST_UPDATE_SERVER_TYPE_NR] = type;
         setUrl(url);
-        setPrio(FilmlistUrlData.FILMLIST_UPDATE_SERVER_PRIO_1);
+        setPrio(FilmlistUrlData.FILMLIST_URL_DATA_PRIO_1);
         setType(type);
     }
 
@@ -96,18 +88,25 @@ public class FilmlistUrlData extends PDataSample<FilmlistUrlData> {
     @Override
     public Config[] getConfigsArr() {
         ArrayList<Config> list = new ArrayList<>();
-        list.add(new ConfigIntPropExtra("no", "filmlist-update-server-nr", no));
-        list.add(new ConfigStringPropExtra("url", "filmlist-update-server-url", url));
-        list.add(new ConfigStringPropExtra("prio", "filmlist-update-server-prio", prio));
-        list.add(new ConfigStringPropExtra("kind", "filmlist-update-server-kind", type));
+        list.add(new ConfigIntPropExtra("no", "FilmlistUrlData No", no));
+        list.add(new ConfigStringPropExtra("url", "FilmlistUrlData Url", url));
+        list.add(new ConfigStringPropExtra("prio", "FilmlistUrlData Prio", prio));
+        list.add(new ConfigStringPropExtra("type", "FilmlistUrlData Type", type));
 
         return list.toArray(new Config[]{});
     }
 
+    private void makeArr() {
+        arr = new String[FILMLIST_UPDATE_SERVER_MAX_ELEM];
+        for (int i = 0; i < arr.length; ++i) {
+            arr[i] = "";
+        }
+    }
+
     public void setPropsFromXml() {
-        setUrl(arr[FILMLIST_UPDATE_SERVER_URL_NR]);
-        setPrio(arr[FILMLIST_UPDATE_SERVER_PRIO_NR]);
-        setType(arr[FILMLIST_UPDATE_SERVER_TYPE_NR]);
+        setUrl(arr[FILMLIST_URL_DATA_URL_NO]);
+        setPrio(arr[FILMLIST_URL_DATA_PRIO_NO]);
+        setType(arr[FILMLIST_URL_DATA_TYPE_NO]);
     }
 
     public int getNo() {
@@ -162,17 +161,10 @@ public class FilmlistUrlData extends PDataSample<FilmlistUrlData> {
     public int compareTo(FilmlistUrlData arg0) {
         int ret = 0;
         try {
-            return getUrl().compareTo(arg0.getComment());
+            return getUrl().compareTo(arg0.getUrl());
         } catch (Exception ex) {
             PLog.errorLog(936542876, ex);
         }
         return ret;
-    }
-
-    private void makeArr() {
-        arr = new String[FILMLIST_UPDATE_SERVER_MAX_ELEM];
-        for (int i = 0; i < arr.length; ++i) {
-            arr[i] = "";
-        }
     }
 }

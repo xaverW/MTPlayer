@@ -169,19 +169,17 @@ public class IoReadXml implements AutoCloseable {
                                 }
                                 break;
 
-                            case FilmlistUrlData.FILMLIST_UPDATE_SERVER:
+                            case "filmlist-update-server":
                                 // Urls Filmlisten
                                 final FilmlistUrlData filmlistUrlData = new FilmlistUrlData();
-                                if (get(parser,
-                                        FilmlistUrlData.FILMLIST_UPDATE_SERVER,
-                                        FilmlistUrlData.FILMLIST_UPDATE_SERVER_COLUMN_NAMES,
-                                        filmlistUrlData.arr)) {
+                                if (get(parser, "filmlist-update-server",
+                                        FilmlistUrlData.FILMLIST_URL_DATA_COLUMN_NAMES, filmlistUrlData.arr)) {
                                     filmlistUrlData.setPropsFromXml();
-                                    switch (filmlistUrlData.arr[FilmlistUrlData.FILMLIST_UPDATE_SERVER_TYPE_NR]) {
-                                        case FilmlistUrlData.SERVER_ART_AKT:
+                                    switch (filmlistUrlData.arr[FilmlistUrlData.FILMLIST_URL_DATA_TYPE_NO]) {
+                                        case FilmlistUrlData.SERVER_TYPE_ACT:
                                             this.progData.searchFilmListUrls.getFilmlistUrlList_akt().addWithCheck(filmlistUrlData);
                                             break;
-                                        case FilmlistUrlData.SERVER_ART_DIFF:
+                                        case FilmlistUrlData.SERVER_TYPE_DIFF:
                                             this.progData.searchFilmListUrls.getFilmlistUrlList_diff().addWithCheck(filmlistUrlData);
                                             break;
                                     }
