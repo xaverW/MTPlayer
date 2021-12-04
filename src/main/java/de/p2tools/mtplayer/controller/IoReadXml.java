@@ -17,6 +17,7 @@
 
 package de.p2tools.mtplayer.controller;
 
+import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.BlackData;
@@ -27,12 +28,14 @@ import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.abo.AboFieldNames;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFieldNames;
+import de.p2tools.mtplayer.controller.data.film.FilmData;
 import de.p2tools.mtplayer.controller.filmlist.filmlistUrls.FilmlistUrlData;
 import de.p2tools.mtplayer.controller.mediaDb.MediaCollectionData;
 import de.p2tools.mtplayer.tools.storedFilter.FilterToXml;
 import de.p2tools.mtplayer.tools.storedFilter.ProgInitFilter;
 import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
 import de.p2tools.mtplayer.tools.storedFilter.SelectedFilterFactory;
+import de.p2tools.p2Lib.configFile.config.Config;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 
@@ -222,7 +225,7 @@ public class IoReadXml implements AutoCloseable {
                 if (event == XMLStreamConstants.START_ELEMENT) {
                     final String s = parser.getLocalName();
                     final String n = parser.getElementText();
-                    ProgConfig.getInstance().setConfigData(s, n);
+                    setConfigData(s, n);
                 }
             }
         } catch (final Exception ex) {
@@ -230,6 +233,96 @@ public class IoReadXml implements AutoCloseable {
             PLog.errorLog(945120369, ex);
         }
         return ret;
+    }
+
+    private void setConfigData(String key, String value) {
+        if (key.equals("system-geo-home-place")) {
+            try {
+                ProgConfig.SYSTEM_STYLE_SIZE.setValue(Integer.parseInt(value));
+            } catch (Exception ex) {
+                ProgConfig.SYSTEM_STYLE_SIZE.setValue(14);
+            }
+            ProgConfig.SYSTEM_GEO_HOME_PLACE.setValue(FilmData.GEO_DE);//war ein Fehler
+            return;
+        }
+        if (key.equals("path-vlc")) {
+            ProgConfig.SYSTEM_PATH_VLC.setValue(value);
+            return;
+        }
+        if (key.equals("path-ffmpeg")) {
+            ProgConfig.SYSTEM_PATH_FFMPEG.setValue(value);
+            return;
+        }
+
+        if (key.equals("blacklist-show-no-future")) {
+            try {
+                ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_FUTURE.setValue(Boolean.parseBoolean(value));
+            } catch (Exception ex) {
+                ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_FUTURE.setValue(false);
+            }
+            return;
+        }
+        if (key.equals("blacklist-show-no-geo")) {
+            try {
+                ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_GEO.setValue(Boolean.parseBoolean(value));
+            } catch (Exception ex) {
+                ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_GEO.setValue(false);
+            }
+            return;
+        }
+        if (key.equals("blacklist-show-abo")) {
+            try {
+                ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.setValue(Boolean.parseBoolean(value));
+            } catch (Exception ex) {
+                ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.setValue(false);
+            }
+            return;
+        }
+        if (key.equals("blacklist-max-film-days")) {
+            try {
+                ProgConfig.SYSTEM_BLACKLIST_MAX_FILM_DAYS.setValue(Integer.parseInt(value));
+            } catch (Exception ex) {
+                ProgConfig.SYSTEM_BLACKLIST_MAX_FILM_DAYS.setValue(0);
+            }
+            return;
+        }
+        if (key.equals("blacklist-min-film-duration")) {
+            try {
+                ProgConfig.SYSTEM_BLACKLIST_MIN_FILM_DURATION.setValue(Integer.parseInt(value));
+            } catch (Exception ex) {
+                ProgConfig.SYSTEM_BLACKLIST_MIN_FILM_DURATION.setValue(0);
+            }
+            return;
+        }
+        if (key.equals("blacklist-is-whitelist")) {
+            try {
+                ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST.setValue(Boolean.parseBoolean(value));
+            } catch (Exception ex) {
+                ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST.setValue(false);
+            }
+            return;
+        }
+
+
+        Config[] configs = ProgConfig.getInstance().getConfigsArr();
+        for (Config config : configs) {
+            if (config.getKey().equals(key)) {
+                config.setActValue(value);
+            }
+
+            if (key.startsWith("COLOR_") && !value.isEmpty()) {
+                ProgColorList.setColorData(key, value);
+            }
+        }
+    }
+
+    private int getInt(String key) {
+        try {
+            int i = Integer.parseInt(key);
+            return i;
+        } catch (Exception ex) {
+            return 0;
+        }
     }
 
     private boolean get(XMLStreamReader parser, String xmlElem, String[] xmlNames, String[] strRet) {

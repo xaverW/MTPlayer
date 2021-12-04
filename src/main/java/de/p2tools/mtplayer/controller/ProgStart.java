@@ -246,6 +246,7 @@ public class ProgStart {
     }
 
     private boolean load__oldVersion() {
+        PLog.sysLog("Konfig von OLD-VERSION importieren!");
         ProgData progData = ProgData.getInstance();
         boolean ret = false;
         final Path xmlFilePath = new ProgInfos().getSettingsFileOld();

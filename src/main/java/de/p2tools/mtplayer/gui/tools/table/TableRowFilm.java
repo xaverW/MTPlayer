@@ -65,10 +65,10 @@ public class TableRowFilm<T> extends TableRow {
             }
 
             if (film.isBookmark()) {
-                setStyle(ProgColorList.FILM_BOOKMARK.getCssBackgroundSel());
+                setStyle(ProgColorList.FILM_BOOKMARK.getCssBackgroundAndSel());
 
             } else if (film.isShown()) {
-                setStyle(ProgColorList.FILM_HISTORY.getCssBackgroundSel());
+                setStyle(ProgColorList.FILM_HISTORY.getCssBackgroundAndSel());
 
             } else {
                 setStyle("");

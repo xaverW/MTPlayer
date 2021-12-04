@@ -19,17 +19,18 @@ package de.p2tools.mtplayer.controller.data.download;
 
 public class DownloadFieldNames {
 
-    public static final String DOWNLOAD_NR = "Nr";
-    public static final String DOWNLOAD_FILM_NR = "Filmnr";
+    public static final String DOWNLOAD_NO = "Nr";
+    public static final String DOWNLOAD_FILM_NO = "Filmnr";
 
     public static final String DOWNLOAD_ABO = "Abo";
-    public static final String DOWNLOAD_SENDER = "Sender";
+    public static final String DOWNLOAD_CHANNEL = "Sender";
     public static final String DOWNLOAD_THEME = "Thema";
     public static final String DOWNLOAD_TITLE = "Titel";
 
     public static final String DOWNLOAD_BUTTON1 = "";
     public static final String DOWNLOAD_BUTTON2 = "";
 
+    public static final String DOWNLOAD_STATE = "Status";
     public static final String DOWNLOAD_PROGRESS = "Fortschritt";
     public static final String DOWNLOAD_REMAINING_TIME = "Restzeit";
     public static final String DOWNLOAD_BANDWIDTH = "Geschwindigkeit";
@@ -121,10 +122,10 @@ public class DownloadFieldNames {
     public static final int DOWNLOAD_REF_NO = 40;
 
     public static final String[] COLUMN_NAMES = {
-            DOWNLOAD_NR,
-            DOWNLOAD_FILM_NR,
+            DOWNLOAD_NO,
+            DOWNLOAD_FILM_NO,
             DOWNLOAD_ABO,
-            DOWNLOAD_SENDER,
+            DOWNLOAD_CHANNEL,
             DOWNLOAD_THEME,
             DOWNLOAD_TITLE,
 

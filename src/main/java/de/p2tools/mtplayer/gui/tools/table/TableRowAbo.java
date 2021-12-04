@@ -42,7 +42,7 @@ public class TableRowAbo<T> extends TableRow {
 
         } else {
             if (!abo.isActive()) {
-                setStyle(ProgColorList.ABO_SWITCHED_OFF.getCssBackgroundSel());
+                setStyle(ProgColorList.ABO_SWITCHED_OFF.getCssBackgroundAndSel());
             } else {
                 setStyle("");
             }

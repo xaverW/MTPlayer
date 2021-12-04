@@ -130,7 +130,7 @@ public class ProgConfig extends PDataProgConfig {
     public static BooleanProperty SYSTEM_MARK_GEO = addBool("system-mark-geo", Boolean.TRUE);
     public static StringProperty SYSTEM_GEO_HOME_PLACE = addStr("system-geo-home-place", FilmData.GEO_DE);
     public static BooleanProperty SYSTEM_STYLE = addBool("system-style", Boolean.FALSE);
-    public static IntegerProperty SYSTEM_STYLE_SIZE = addInt("system-geo-home-place", 14);
+    public static IntegerProperty SYSTEM_STYLE_SIZE = addInt("system-style-size", 14);
     public static StringProperty SYSTEM_LOG_DIR = addStr("system-log-dir", "");
     public static BooleanProperty SYSTEM_LOG_ON = addBool("system-log-on", Boolean.TRUE);
     public static BooleanProperty SYSTEM_SMALL_ROW_TABLE_FILM = addBool("system-small-row-table-film", Boolean.FALSE);
@@ -155,16 +155,16 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty SYSTEM_LOAD_NOT_SENDER = addStr("system-load-not-sender", "");
     public static IntegerProperty SYSTEM_LOAD_FILMLIST_MAX_DAYS = addInt("system-load-filmlist-max-days", 0); //es werden nur die x letzten Tage geladen
     public static IntegerProperty SYSTEM_LOAD_FILMLIST_MIN_DURATION = addInt("system-load-filmlist-min-duration", 0); //es werden nur Filme mit mind. x Minuten geladen
-    public static StringProperty SYSTEM_PATH_VLC = addStr("path-vlc", SetsPrograms.getTemplatePathVlc());
-    public static StringProperty SYSTEM_PATH_FFMPEG = addStr("path-ffmpeg", SetsPrograms.getTemplatePathFFmpeg());
+    public static StringProperty SYSTEM_PATH_VLC = addStr("system-path-vlc", SetsPrograms.getTemplatePathVlc());
+    public static StringProperty SYSTEM_PATH_FFMPEG = addStr("system-path-ffmpeg", SetsPrograms.getTemplatePathFFmpeg());
 
     // Blacklist
-    public static BooleanProperty SYSTEM_BLACKLIST_SHOW_NO_FUTURE = addBool("blacklist-show-no-future");
-    public static BooleanProperty SYSTEM_BLACKLIST_SHOW_NO_GEO = addBool("blacklist-show-no-geo");
-    public static BooleanProperty SYSTEM_BLACKLIST_SHOW_ABO = addBool("blacklist-show-abo");
-    public static IntegerProperty SYSTEM_BLACKLIST_MAX_FILM_DAYS = addInt("blacklist-max-film-days", 0);
-    public static IntegerProperty SYSTEM_BLACKLIST_MIN_FILM_DURATION = addInt("blacklist-min-film-duration", 0); // Minuten
-    public static BooleanProperty SYSTEM_BLACKLIST_IS_WHITELIST = addBool("blacklist-is-whitelist");
+    public static BooleanProperty SYSTEM_BLACKLIST_SHOW_NO_FUTURE = addBool("system-blacklist-show-no-future");
+    public static BooleanProperty SYSTEM_BLACKLIST_SHOW_NO_GEO = addBool("system-blacklist-show-no-geo");
+    public static BooleanProperty SYSTEM_BLACKLIST_SHOW_ABO = addBool("system-blacklist-show-abo");
+    public static IntegerProperty SYSTEM_BLACKLIST_MAX_FILM_DAYS = addInt("system-blacklist-max-film-days", 0);
+    public static IntegerProperty SYSTEM_BLACKLIST_MIN_FILM_DURATION = addInt("system-blacklist-min-film-duration", 0); // Minuten
+    public static BooleanProperty SYSTEM_BLACKLIST_IS_WHITELIST = addBool("system-blacklist-is-whitelist");
 
     // Download
     public static BooleanProperty DOWNLOAD_START_NOW = addBool("download-start-now", Boolean.FALSE);
@@ -213,7 +213,7 @@ public class ProgConfig extends PDataProgConfig {
     public static BooleanProperty DOWNLOAD_CHART_SEPARAT = addBool("download-chart-separat", Boolean.TRUE);
     public static BooleanProperty DOWNLOAD_CHART_ONLY_EXISTING = addBool("download-chart-only-existing", Boolean.FALSE);
     public static BooleanProperty DOWNLOAD_CHART_ONLY_RUNNING = addBool("download-chart-only-running", Boolean.FALSE);
-    public static IntegerProperty DOWNLOAD_CHART_SHOW_MAX_TIME_MIN = addInt("download-chart-show-max-time", 30); //MAX Minuten im Chart
+    public static IntegerProperty DOWNLOAD_CHART_SHOW_MAX_TIME_MIN = addInt("download-chart-show-max-time-min", 30); //MAX Minuten im Chart
 
     // Gui Abo
     public static BooleanProperty ABO_SEARCH_NOW = addBool("abo-search-now", Boolean.TRUE);
@@ -246,16 +246,16 @@ public class ProgConfig extends PDataProgConfig {
     public static BooleanProperty DOWNLOAD_INFO_DIALOG_SHOW_URL = addBool("download-info-dialog-show-url", Boolean.TRUE);
 
     // Filter Filme
-    public static IntegerProperty FILTER_FILME_SEL_FILTER = addInt("filter-filme-sel-filter");
+    public static IntegerProperty FILTER_FILM_SEL_FILTER = addInt("filter-film-sel-filter");
 
     // Filter Abo
-    public static StringProperty FILTER_ABO_CHANNEL = addStr("filter-abo-sender");
+    public static StringProperty FILTER_ABO_CHANNEL = addStr("filter-abo-channel");
     public static StringProperty FILTER_ABO_NAME = addStr("filter-abo-name");
-    public static StringProperty FILTER_ABO_DESCRIPTION = addStr("filter-abo-beschreibung");
+    public static StringProperty FILTER_ABO_DESCRIPTION = addStr("filter-abo-description");
     public static StringProperty FILTER_ABO_TYPE = addStr("filter-abo-type");
 
     // Filter Download
-    public static StringProperty FILTER_DOWNLOAD_CHANNEL = addStr("filter-download-sender");
+    public static StringProperty FILTER_DOWNLOAD_CHANNEL = addStr("filter-download-channel");
     public static StringProperty FILTER_DOWNLOAD_SOURCE = addStr("filter-download-source");
     public static StringProperty FILTER_DOWNLOAD_TYPE = addStr("filter-download-type");
     public static StringProperty FILTER_DOWNLOAD_ABO = addStr("filter-download-abo");
@@ -266,14 +266,14 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty SHORTCUT_QUIT_PROGRAM = addStr("SHORTCUT_QUIT_PROGRAM", SHORTCUT_QUIT_PROGRAM_INIT);
 
     public static String SHORTCUT_QUIT_PROGRAM_WAIT_INIT = "Ctrl+Shift+Q";
-    public static StringProperty SHORTCUT_QUIT_PROGRAM_WAIT = addStr("SHORTCUT_QUIT_PROGRAM", SHORTCUT_QUIT_PROGRAM_WAIT_INIT);
+    public static StringProperty SHORTCUT_QUIT_PROGRAM_WAIT = addStr("SHORTCUT_QUIT_PROGRAM_WAIT", SHORTCUT_QUIT_PROGRAM_WAIT_INIT);
 
-    public static String SHORTCUT_SEARCH_MEDIACOLLECTION_INIT = "Ctrl+Alt+M";
-    public static StringProperty SHORTCUT_SEARCH_MEDIACOLLECTION = addStr("SHORTCUT_SEARCH_MEDIACOLLECTION", SHORTCUT_SEARCH_MEDIACOLLECTION_INIT);
+    public static String SHORTCUT_SEARCH_MEDIA_COLLECTION_INIT = "Ctrl+Alt+M";
+    public static StringProperty SHORTCUT_SEARCH_MEDIA_COLLECTION = addStr("SHORTCUT_SEARCH_MEDIA_COLLECTION", SHORTCUT_SEARCH_MEDIA_COLLECTION_INIT);
 
     // Shortcuts Filmmenü
-    public static String SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION_INIT = "Ctrl+M";
-    public static StringProperty SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION = addStr("SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION", SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION_INIT);
+    public static String SHORTCUT_SEARCH_FILM_IN_MEDIA_COLLECTION_INIT = "Ctrl+M";
+    public static StringProperty SHORTCUT_SEARCH_FILM_IN_MEDIA_COLLECTION = addStr("SHORTCUT_SEARCH_FILM_IN_MEDIA_COLLECTION", SHORTCUT_SEARCH_FILM_IN_MEDIA_COLLECTION_INIT);
 
     public static String SHORTCUT_SHOW_FILTER_INIT = "Alt+F";
     public static StringProperty SHORTCUT_SHOW_FILTER = addStr("SHORTCUT_SHOW_FILTER", SHORTCUT_SHOW_FILTER_INIT);
@@ -291,23 +291,23 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty SHORTCUT_SAVE_FILM = addStr("SHORTCUT_SAVE_FILM", SHORTCUT_SAVE_FILM_INIT);
 
     // Shortcuts Downloadmenü
-    public static String SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION_INIT = "Alt+M";
-    public static StringProperty SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION = addStr("SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION", SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION_INIT);
+    public static String SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIA_COLLECTION_INIT = "Alt+M";
+    public static StringProperty SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIA_COLLECTION = addStr("SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIA_COLLECTION", SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIA_COLLECTION_INIT);
 
     public static String SHORTCUT_DOWNLOAD_START_INIT = "Ctrl+D";
     public static StringProperty SHORTCUT_DOWNLOAD_START = addStr("SHORTCUT_DOWNLOAD_START", SHORTCUT_DOWNLOAD_START_INIT);
 
     public static String SHORTCUT_DOWNLOAD_STOP_INIT = "Ctrl+T";
-    public static StringProperty SHORTCUT_DOWNLOAD_STOP = addStr("SHORTCUT_DOWNLOAD_STOP", "Ctrl+T");
+    public static StringProperty SHORTCUT_DOWNLOAD_STOP = addStr("SHORTCUT_DOWNLOAD_STOP", SHORTCUT_DOWNLOAD_STOP_INIT);
 
     public static String SHORTCUT_DOWNLOAD_CHANGE_INIT = "Ctrl+C";
     public static StringProperty SHORTCUT_DOWNLOAD_CHANGE = addStr("SHORTCUT_DOWNLOAD_CHANGE", SHORTCUT_DOWNLOAD_CHANGE_INIT);
 
     public static String SHORTCUT_DOWNLOADS_UPDATE_INIT = "CTRL+U";
-    public static StringProperty SHORTCUT_DOWNLOADS_UPDATE = addStr("SHORTCUT_DOWNLOADS_UPDATE", "CTRL+U");
+    public static StringProperty SHORTCUT_DOWNLOAD_UPDATE = addStr("SHORTCUT_DOWNLOAD_UPDATE", SHORTCUT_DOWNLOADS_UPDATE_INIT);
 
-    public static String SHORTCUT_DOWNLOADS_CLEAN_UP_INIT = "CTRL+O";
-    public static StringProperty SHORTCUT_DOWNLOADS_CLEAN_UP = addStr("SHORTCUT_DOWNLOADS_CLEAN_UP", SHORTCUT_DOWNLOADS_CLEAN_UP_INIT);
+    public static String SHORTCUT_DOWNLOAD_CLEAN_UP_INIT = "CTRL+O";
+    public static StringProperty SHORTCUT_DOWNLOAD_CLEAN_UP = addStr("SHORTCUT_DOWNLOAD_CLEAN_UP", SHORTCUT_DOWNLOAD_CLEAN_UP_INIT);
 
     public static String SHORTCUT_EXTERN_PROGRAM_INIT = "CTRL+E";
     public static StringProperty SHORTCUT_EXTERN_PROGRAM = addStr("SHORTCUT_EXTERN_PROGRAM", SHORTCUT_EXTERN_PROGRAM_INIT);
@@ -416,18 +416,6 @@ public class ProgConfig extends PDataProgConfig {
         PLog.emptyLine();
         PLog.sysLog(list);
         PLog.emptyLine();
-    }
-
-    public static void setConfigData(String key, String value) {
-        arrayList.stream().forEach(config -> {
-            if (config.getKey().equals(key)) {
-                config.setActValue(value);
-            }
-
-            if (key.startsWith("COLOR_") && !value.isEmpty()) {
-                ProgColorList.setColorData(key, value);
-            }
-        });
     }
 
     private static synchronized void check(IntegerProperty mlConfigs, int init, int min, int max) {

@@ -28,7 +28,7 @@ public class MTShortcut {
 
     // Menü
     public static final PShortcut SHORTCUT_SEARCH_MEDIACOLLECTION =
-            new PShortcut(ProgConfig.SHORTCUT_SEARCH_MEDIACOLLECTION, ProgConfig.SHORTCUT_SEARCH_MEDIACOLLECTION_INIT,
+            new PShortcut(ProgConfig.SHORTCUT_SEARCH_MEDIA_COLLECTION, ProgConfig.SHORTCUT_SEARCH_MEDIA_COLLECTION_INIT,
                     "Mediensammlung durchsuchen",
                     "Der Dialog zum Durchsuchen der Mediensammlung wird angezeigt.");
 
@@ -70,7 +70,7 @@ public class MTShortcut {
                     "Der markierte Film in der Tabelle \"Filme\" wird aufgezeichnet.");
 
     public static final PShortcut SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION =
-            new PShortcut(ProgConfig.SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION, ProgConfig.SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION_INIT,
+            new PShortcut(ProgConfig.SHORTCUT_SEARCH_FILM_IN_MEDIA_COLLECTION, ProgConfig.SHORTCUT_SEARCH_FILM_IN_MEDIA_COLLECTION_INIT,
                     "Filmtitel in Mediensammlung suchen",
                     "Der Titel des markierten Films in der Tabelle \"Filme\" wird in der Mediensammlung gesucht.");
 
@@ -91,17 +91,17 @@ public class MTShortcut {
                     "Der markierte Download in der Tabelle \"Downloads\" kann geändert werden.");
 
     public static final PShortcut SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION =
-            new PShortcut(ProgConfig.SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION, ProgConfig.SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION_INIT,
+            new PShortcut(ProgConfig.SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIA_COLLECTION, ProgConfig.SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIA_COLLECTION_INIT,
                     "Download in Mediensammlung suchen",
                     "Der Titel des markierten Downloads in der Tabelle \"Downloads\" wird in der Mediensammlung gesucht.");
 
     public static final PShortcut SHORTCUT_DOWNLOADS_UPDATE =
-            new PShortcut(ProgConfig.SHORTCUT_DOWNLOADS_UPDATE, ProgConfig.SHORTCUT_DOWNLOADS_UPDATE_INIT,
+            new PShortcut(ProgConfig.SHORTCUT_DOWNLOAD_UPDATE, ProgConfig.SHORTCUT_DOWNLOADS_UPDATE_INIT,
                     "Downloads aktualisieren",
                     "Die Liste der Downloads in der Tabelle \"Downloads\" wird aktualisiert.");
 
     public static final PShortcut SHORTCUT_DOWNLOADS_CLEAN_UP =
-            new PShortcut(ProgConfig.SHORTCUT_DOWNLOADS_CLEAN_UP, ProgConfig.SHORTCUT_DOWNLOADS_CLEAN_UP_INIT,
+            new PShortcut(ProgConfig.SHORTCUT_DOWNLOAD_CLEAN_UP, ProgConfig.SHORTCUT_DOWNLOAD_CLEAN_UP_INIT,
                     "Downloads aufräumen",
                     "Die Liste der Downloads in der Tabelle \"Downloads\" wird aufgeräumt.");
 

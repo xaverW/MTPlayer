@@ -356,16 +356,16 @@ public class TableDownload {
                 currentRow.setStyle("");
                 break;
             case DownloadConstants.STATE_STARTED_WAITING:
-                currentRow.setStyle(ProgColorList.DOWNLOAD_WAIT.getCssBackgroundSel());
+                currentRow.setStyle(ProgColorList.DOWNLOAD_WAIT.getCssBackgroundAndSel());
                 break;
             case DownloadConstants.STATE_STARTED_RUN:
-                currentRow.setStyle(ProgColorList.DOWNLOAD_RUN.getCssBackgroundSel());
+                currentRow.setStyle(ProgColorList.DOWNLOAD_RUN.getCssBackgroundAndSel());
                 break;
             case DownloadConstants.STATE_FINISHED:
-                currentRow.setStyle(ProgColorList.DOWNLOAD_FINISHED.getCssBackgroundSel());
+                currentRow.setStyle(ProgColorList.DOWNLOAD_FINISHED.getCssBackgroundAndSel());
                 break;
             case DownloadConstants.STATE_ERROR:
-                currentRow.setStyle(ProgColorList.DOWNLOAD_ERROR.getCssBackgroundSel());
+                currentRow.setStyle(ProgColorList.DOWNLOAD_ERROR.getCssBackgroundAndSel());
                 break;
         }
     }
