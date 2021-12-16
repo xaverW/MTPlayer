@@ -67,11 +67,13 @@ public class ProgramDataProps extends PDataSample<ProgramData> {
     public Config[] getConfigsArr() {
         return new Config[]{
                 new ConfigStringPropExtra("name", ProgramDataFieldNames.PROGRAM_NAME, name),
+                new ConfigStringPropExtra("destName", ProgramDataFieldNames.PROGRAM_DEST_FILENAME, destName),
                 new ConfigStringPropExtra("progPath", ProgramDataFieldNames.PROGRAM_PROGRAM_PATH, progPath),
                 new ConfigStringPropExtra("progSwitch", ProgramDataFieldNames.PROGRAM_SWITCH, progSwitch),
                 new ConfigStringPropExtra("prefix", ProgramDataFieldNames.PROGRAM_PREFIX, prefix),
                 new ConfigStringPropExtra("suffix", ProgramDataFieldNames.PROGRAM_SWITCH, suffix),
                 new ConfigBoolPropExtra("restart", ProgramDataFieldNames.PROGRAM_RESTART, restart),
+                new ConfigBoolPropExtra("downManager", ProgramDataFieldNames.PROGRAM_DOWNLOADMANAGER, downManager),
         };
     }
 
