@@ -32,6 +32,7 @@ public class ProgIcons {
     public final ImageView ICON_BUTTON_UPDATE = GetIcon.getImageView("button-update.png", 16, 16);
     public final ImageView ICON_BUTTON_PROPOSE = GetIcon.getImageView("button-propose.png", 16, 16);
     public final ImageView ICON_BUTTON_EDIT_FILTER = GetIcon.getImageView("button-edit-filter.png", 16, 16);
+    public final ImageView ICON_BUTTON_CLEAR_FILTER = GetIcon.getImageView("button-clear-filter.png", 25, 20);
     public final ImageView ICON_BUTTON_BACKWARD = GetIcon.getImageView("button-backward.png", 16, 16);
     public final ImageView ICON_BUTTON_FORWARD = GetIcon.getImageView("button-forward.png", 16, 16);
     public final ImageView ICON_BUTTON_EDIT_ABO_PATH = GetIcon.getImageView("button-edit-filter.png", 16, 16);

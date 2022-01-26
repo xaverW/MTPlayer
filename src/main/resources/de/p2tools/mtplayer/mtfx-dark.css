@@ -1,5 +1,12 @@
 /*  style sheet for the dark-theme */
 
+.root {
+    -clear-filter-tab-button-1: #666666;
+    -clear-filter-tab-button-2: #767676;
+    -clear-filter-tab-button-3: rgba(220,220,220,0);
+    -clear-filter-lin-grad-1: linear-gradient(from 0% 0% to 100% 100%, -clear-filter-tab-button-1 50%, white 100%);
+    -clear-filter-rad-grad-1: radial-gradient(center 50% -40%, radius 200%, -clear-filter-tab-button-2 45%, -clear-filter-tab-button-3 50%);
+}
 
 /* ist die abgesetzte Zeile im Downloaddialog */
 .downloadDialog {
@@ -9,7 +16,6 @@
 .channel-button {
     -fx-font-size: 1em;
 }
-
 
 /* Download Chart */
 .chart-plot-background {

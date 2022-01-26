@@ -18,6 +18,7 @@ package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.mtplayer.tools.MLBandwidthTokenBucket;
@@ -42,7 +43,7 @@ public class DownloadFilterController extends FilterController {
 
     private Spinner<Integer> spinnerAnz = new Spinner<>();
     private Slider sliderBandwidth = new Slider();
-    private Button btnClear = new Button("Filter löschen");
+    private Button btnClear = new Button("");
     private Label lblBandwidth = new Label();
 
     // funktioniert nur wenn hier angelegt, geht sonst die Ref verloren!
@@ -66,9 +67,9 @@ public class DownloadFilterController extends FilterController {
         initBandwidth();
     }
 
-    public void setClearText(String txt) {
-        btnClear.setText(txt);
-    }
+//    public void setClearText(String txt) {
+////        btnClear.setText(txt);
+//    }
 
     private void initLayout() {
         addCont("Quelle", cboSrc, vBoxFilter);
@@ -116,7 +117,10 @@ public class DownloadFilterController extends FilterController {
     }
 
     private void initFilter() {
+        btnClear.setGraphic(new ProgIcons().ICON_BUTTON_CLEAR_FILTER);
+        btnClear.getStyleClass().add("btnClearFilter");
         btnClear.setOnAction(a -> clearFilter());
+        btnClear.setTooltip(new Tooltip("Filter löschen"));
 
         cboSrc.getItems().addAll(DownloadConstants.ALL,
                 DownloadConstants.SRC_COMBO_DOWNLOAD,

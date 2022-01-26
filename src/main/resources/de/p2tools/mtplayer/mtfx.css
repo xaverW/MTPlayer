@@ -1,4 +1,11 @@
 /*  Programmweites style sheet */
+.root {
+    -clear-filter-tab-button-1: #d6d6d6;
+    -clear-filter-tab-button-2: #e6e6e6;
+    -clear-filter-tab-button-3: rgba(230,230,230,0);
+    -clear-filter-lin-grad-1: linear-gradient(from 0% 0% to 100% 100%, -clear-filter-tab-button-1 50%, white 100%);
+    -clear-filter-rad-grad-1: radial-gradient(center 50% -40%, radius 200%, -clear-filter-tab-button-2 45%, -clear-filter-tab-button-3 50%);
+}
 
 /* CheckBoxCell: CheckBoxen in der Tabelle*/
 .checkbox-table * {
@@ -21,6 +28,33 @@
 /*Tabelle Sets: Set ist "Abspielen" */
 .markSetPlay{
     -fx-text-fill: #ff0000;
+}
+
+/*Button zum löschen der Filter*/
+.btnClearFilter {
+    -fx-background-color: #1162be, -clear-filter-lin-grad-1, -clear-filter-rad-grad-1;
+    /*-fx-background-radius: 10;*/
+    -fx-background-insets: 0,2,2;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+    -fx-padding: 5 20 5 20;
+}
+.btnClearFilter:focused{
+    -fx-background-color: #0c3f8d, -clear-filter-lin-grad-1, -clear-filter-rad-grad-1;
+    -fx-background-insets: -0.5,1,1;
+}
+.btnClearFilter:hover{
+    -fx-background-color: #00508d, -clear-filter-lin-grad-1, -clear-filter-rad-grad-1;
+    -fx-background-insets: -0.8,1,1;
+}
+.btnClearFilter:focused:hover{
+    -fx-background-color: #003462, -clear-filter-lin-grad-1, -clear-filter-rad-grad-1;
+    -fx-background-insets: -1.4,1,1;
+}
+.btnClearFilter:pressed{
+    -fx-background-color: #1d0f62,
+         linear-gradient(from 0% 0% to 100% 100%, #d6d6d6 40%, white 90%),
+         radial-gradient(center 80% -70%, radius 200%, #e6e6e6 35%, -clear-filter-tab-button-3 40%);
 }
 
 /* Button "Filmliste" */
@@ -99,7 +133,6 @@
 .downloadDialog {
     -fx-background-color: gainsboro;
 }
-
 
 .thick-chart .chart-series-line {
     -fx-stroke-width: 1px;

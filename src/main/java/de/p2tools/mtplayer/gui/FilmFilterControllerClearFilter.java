@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.p2Lib.guiTools.PGuiTools;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
@@ -28,7 +29,7 @@ import javafx.scene.layout.VBox;
 
 public class FilmFilterControllerClearFilter extends VBox {
 
-    private final Button btnClearFilter = new Button("Filter _löschen");
+    private final Button btnClearFilter = new Button("");
     private final Button btnEditFilter = new Button("");
     private final Button btnGoBack = new Button("");
     private final Button btnGoForward = new Button("");
@@ -46,9 +47,9 @@ public class FilmFilterControllerClearFilter extends VBox {
         addButton();
     }
 
-    public void setClearText(String txt) {
-        btnClearFilter.setText(txt);
-    }
+//    public void setClearText(String txt) {
+////        btnClearFilter.setText(txt);
+//    }
 
     private void addButton() {
         btnGoBack.setGraphic(new ProgIcons().ICON_BUTTON_BACKWARD);
@@ -60,6 +61,8 @@ public class FilmFilterControllerClearFilter extends VBox {
         btnGoForward.disableProperty().bind(progData.storedFilters.forwardProperty().not());
         btnGoForward.setTooltip(new Tooltip("letzte Filtereinstellung wieder herstellen"));
 
+        btnClearFilter.setGraphic(new ProgIcons().ICON_BUTTON_CLEAR_FILTER);
+        btnClearFilter.getStyleClass().add("btnClearFilter");
         btnClearFilter.setOnAction(a -> clearFilter());
         btnClearFilter.setTooltip(new Tooltip("Textfilter löschen, ein zweiter Klick löscht alle Filter"));
 
@@ -67,7 +70,9 @@ public class FilmFilterControllerClearFilter extends VBox {
         btnEditFilter.setOnAction(a -> editFilter());
         btnEditFilter.setTooltip(new Tooltip("Filter ein/ausschalten"));
 
+
         HBox hBox = new HBox(5);
+        hBox.setAlignment(Pos.CENTER_RIGHT);
         hBox.setPadding(new Insets(5, 0, 0, 0));
         hBox.getChildren().addAll(btnEditFilter, PGuiTools.getHBoxGrower(), btnGoBack, btnGoForward, btnClearFilter);
         getChildren().addAll(hBox);
