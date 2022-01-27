@@ -83,6 +83,7 @@ public class FilmMenu {
 
         btFilterBookmakr.setOnAction(a -> {
             if (storedActFilterSettings != null && storedBookmarkFilter != null) {
+                //prüfen ob sich der Filter geändert hat, wenn ja dann auf Anfang
                 SelectedFilter sf = progData.storedFilters.getActFilterSettings();
                 if (!SelectedFilterFactory.compareFilterWithoutNameOfFilter(storedBookmarkFilter, sf)) {
                     // dann hat sich der Filter geändert
@@ -91,14 +92,23 @@ public class FilmMenu {
             }
 
             if (storedActFilterSettings == null) {
-                // dann setzen des Bookmarkfilters
-                storedActFilterSettings = SelectedFilterFactory.getFilterCopy(progData.storedFilters.getActFilterSettings());
+                //dann wurde es noch nicht aufgerufen
+                if (progData.storedFilters.getActFilterSettings().isOnlyVis() &&
+                        progData.storedFilters.getActFilterSettings().isOnlyBookmark()) {
+                    // dann ist Bookmark schon gesetzt, dann erst mal ausschalten
+                    storedActFilterSettings = SelectedFilterFactory.getFilterCopy(progData.storedFilters.getActFilterSettings());
+                    progData.storedFilters.getActFilterSettings().clearFilter();
 
-                storedBookmarkFilter = BookmarkFilter.getBookmarkFilter(storedActFilterSettings);
-                progData.storedFilters.setActFilterSettings(storedBookmarkFilter);
+                } else {
+                    // dann setzen des Bookmarkfilters
+                    storedActFilterSettings = SelectedFilterFactory.getFilterCopy(progData.storedFilters.getActFilterSettings());
+                    storedBookmarkFilter = BookmarkFilter.getBookmarkFilter(storedActFilterSettings);
+                    progData.storedFilters.setActFilterSettings(storedBookmarkFilter);
+                }
 
             } else {
-                // dann den gemerkten Filter wieder setzen
+                // dann den gemerkten Filter wieder setzen, aber ohne Bookmark
+                storedActFilterSettings.setOnlyBookmark(false);
                 progData.storedFilters.setActFilterSettings(storedActFilterSettings);
                 storedActFilterSettings = null;
             }
