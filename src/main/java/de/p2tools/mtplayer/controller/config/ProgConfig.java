@@ -303,6 +303,9 @@ public class ProgConfig extends PDataProgConfig {
     public static String SHORTCUT_DOWNLOAD_CHANGE_INIT = "Ctrl+C";
     public static StringProperty SHORTCUT_DOWNLOAD_CHANGE = addStr("SHORTCUT_DOWNLOAD_CHANGE", SHORTCUT_DOWNLOAD_CHANGE_INIT);
 
+    public static String SHORTCUT_DOWNLOAD_UNDO_DELETE_INIT = "Ctrl+R";
+    public static StringProperty SHORTCUT_DOWNLOAD_UNDO_DELETE = addStr("SHORTCUT_DOWNLOAD_UNDO_DELETE", SHORTCUT_DOWNLOAD_UNDO_DELETE_INIT);
+
     public static String SHORTCUT_DOWNLOADS_UPDATE_INIT = "CTRL+U";
     public static StringProperty SHORTCUT_DOWNLOAD_UPDATE = addStr("SHORTCUT_DOWNLOAD_UPDATE", SHORTCUT_DOWNLOADS_UPDATE_INIT);
 

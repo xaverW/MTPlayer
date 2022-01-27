@@ -90,6 +90,11 @@ public class MTShortcut {
                     "Download ändern",
                     "Der markierte Download in der Tabelle \"Downloads\" kann geändert werden.");
 
+    public static final PShortcut SHORTCUT_DOWNLOAD_UNDO_DELETE =
+            new PShortcut(ProgConfig.SHORTCUT_DOWNLOAD_UNDO_DELETE, ProgConfig.SHORTCUT_DOWNLOAD_UNDO_DELETE_INIT,
+                    "Gelöschten Download wieder anlegen",
+                    "Der markierte Download in der Tabelle \"Downloads\" kann geändert werden.");
+
     public static final PShortcut SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION =
             new PShortcut(ProgConfig.SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIA_COLLECTION, ProgConfig.SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIA_COLLECTION_INIT,
                     "Download in Mediensammlung suchen",
@@ -129,6 +134,7 @@ public class MTShortcut {
         shortcutList.add(SHORTCUT_DOWNLOAD_START);
         shortcutList.add(SHORTCUT_DOWNLOAD_STOP);
         shortcutList.add(SHORTCUT_DOWNLOAD_CHANGE);
+        shortcutList.add(SHORTCUT_DOWNLOAD_UNDO_DELETE);
         shortcutList.add(SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION);
         shortcutList.add(SHORTCUT_DOWNLOADS_UPDATE);
         shortcutList.add(SHORTCUT_DOWNLOADS_CLEAN_UP);

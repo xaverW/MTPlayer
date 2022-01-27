@@ -299,7 +299,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         PDuration.counterStop("History: removeDataFromHistory");
     }
 
-    public synchronized void removeDownloadDataFromHistory(ArrayList<DownloadData> downloadList) {
+    public synchronized void removeDownloadDataFromHistory(List<DownloadData> downloadList) {
         // eine Liste Downloads aus der History löschen und File wieder schreiben
 
         if (downloadList == null || downloadList.isEmpty()) {
@@ -349,7 +349,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         });
 
         if (found) {
-            // und nur dann wurde was gelöscht und muss geschreiben werden
+            // und nur dann wurde was gelöscht und muss geschrieben werden
             replaceThisList(newHistoryList);
             writeToFile(newHistoryList, false);
             Listener.notify(Listener.EREIGNIS_GUI_HISTORY_CHANGED, HistoryList.class.getSimpleName());

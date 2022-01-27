@@ -48,31 +48,6 @@ public class DownloadListStartStop {
 
 
     /**
-     * eine Liste Downloads aus der "Dwonloadliste"  zurückstellen
-     *
-     * @param list
-     */
-    public synchronized boolean putBackDownloads(ArrayList<DownloadData> list) {
-        boolean found = false;
-
-        if (list == null || list.isEmpty()) {
-            return false;
-        }
-
-        // das Starten von neuen Downloads etwas Pausieren
-        progData.starterClass.setPaused();
-
-        for (final DownloadData download : list) {
-            if (download.isStateInit() || download.isStateStoped()) {
-                download.putBack();
-                found = true;
-            }
-        }
-
-        return found;
-    }
-
-    /**
      * eine Liste Downloads aus der "Dwonloadliste"  stoppen und dann entfernen
      *
      * @param list
@@ -81,6 +56,8 @@ public class DownloadListStartStop {
     public synchronized boolean delDownloads(ArrayList<DownloadData> list) {
 
         PDuration.counterStart("DownloadListStartStop.delDownloads");
+        progData.downloadList.addDownloadUndoList(list);
+
         if (list == null || list.isEmpty()) {
             return false;
         }
@@ -105,6 +82,31 @@ public class DownloadListStartStop {
         boolean found = downloadList.removeAll(list);
 
         PDuration.counterStop("DownloadListStartStop.delDownloads");
+        return found;
+    }
+
+    /**
+     * eine Liste Downloads aus der "Dwonloadliste"  zurückstellen
+     *
+     * @param list
+     */
+    public synchronized boolean putBackDownloads(ArrayList<DownloadData> list) {
+        boolean found = false;
+
+        if (list == null || list.isEmpty()) {
+            return false;
+        }
+
+        // das Starten von neuen Downloads etwas Pausieren
+        progData.starterClass.setPaused();
+
+        for (final DownloadData download : list) {
+            if (download.isStateInit() || download.isStateStoped()) {
+                download.putBack();
+                found = true;
+            }
+        }
+
         return found;
     }
 

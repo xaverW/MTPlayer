@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.MTShortcut;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.p2Lib.tools.shortcut.PShortcutWorker;
+import javafx.beans.binding.Bindings;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
@@ -104,7 +105,12 @@ public class DownloadMenu {
         miChange.setOnAction(a -> progData.downloadGuiController.changeDownload());
         PShortcutWorker.addShortCut(miChange, MTShortcut.SHORTCUT_DOWNLOAD_CHANGE);
 
-        mb.getItems().addAll(miDownloadStart, miDownloadStop, miChange);
+        final MenuItem miUndo = new MenuItem("Gelöschten Download wieder anlegen");
+        miUndo.setOnAction(a -> progData.downloadGuiController.undoDeleteDownload());
+        PShortcutWorker.addShortCut(miUndo, MTShortcut.SHORTCUT_DOWNLOAD_UNDO_DELETE);
+        miUndo.disableProperty().bind(Bindings.isEmpty(progData.downloadList.getUndoList()));
+
+        mb.getItems().addAll(miDownloadStart, miDownloadStop, miChange, miUndo);
 
         // Submenü "Download"
         final MenuItem miPrefer = new MenuItem("Downloads vorziehen");

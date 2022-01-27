@@ -24,6 +24,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.util.*;
 
@@ -34,7 +35,8 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
     private final DownloadListAbo downloadListAbo;
     private final DownloadListStarts downloadListStarts;
     private final DownloadListStartStop downloadListStartStop;
-
+    private final ObservableList<DownloadData> undoList = FXCollections.observableArrayList();
+    ;
     private BooleanProperty downloadsChanged = new SimpleBooleanProperty(true);
 
     public DownloadList(ProgData progData) {
@@ -65,6 +67,25 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
         if (obj.getClass().equals(DownloadData.class)) {
             add((DownloadData) obj);
         }
+    }
+
+    public ObservableList<DownloadData> getUndoList() {
+        return undoList;
+    }
+
+    public synchronized void addDownloadUndoList(List<DownloadData> list) {
+        undoList.clear();
+        undoList.addAll(list);
+    }
+
+    public synchronized void undoDownloads() {
+        if (undoList.isEmpty()) {
+            return;
+        }
+        //aus der AboHistory löschen
+        progData.erledigteAbos.removeDownloadDataFromHistory(undoList);
+        addAll(undoList);
+        undoList.clear();
     }
 
     public boolean getDownloadsChanged() {
@@ -283,23 +304,23 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
         downloadListStartStop.delDownloads(download);
     }
 
-    public synchronized void putBackDownloads(ArrayList<DownloadData> list) {
-        if (downloadListStartStop.putBackDownloads(list)) {
-            setDownloadsChanged();
-        }
-    }
-
-    public synchronized void resetDownloads(ArrayList<DownloadData> list) {
-        if (downloadListStartStop.delDownloads(list)) {
-            setDownloadsChanged();
-        }
-    }
-
     public synchronized void delDownloads(ArrayList<DownloadData> list) {
         if (downloadListStartStop.delDownloads(list)) {
             setDownloadsChanged();
         }
     }
+
+    public synchronized void putBackDownloads(ArrayList<DownloadData> list) {
+        if (downloadListStartStop.putBackDownloads(list)) {
+            setDownloadsChanged();
+        }
+    }
+//    public synchronized void resetDownloads(ArrayList<DownloadData> list) {
+//        if (downloadListStartStop.delDownloads(list)) {
+//            setDownloadsChanged();
+//        }
+
+//    }
 
     public void startDownloads(DownloadData download) {
         downloadListStartStop.startDownloads(download);
