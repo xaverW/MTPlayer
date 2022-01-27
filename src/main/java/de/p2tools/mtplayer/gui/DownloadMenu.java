@@ -105,7 +105,7 @@ public class DownloadMenu {
         miChange.setOnAction(a -> progData.downloadGuiController.changeDownload());
         PShortcutWorker.addShortCut(miChange, MTShortcut.SHORTCUT_DOWNLOAD_CHANGE);
 
-        final MenuItem miUndo = new MenuItem("Gelöschten Download wieder anlegen");
+        final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen");
         miUndo.setOnAction(a -> progData.downloadGuiController.undoDeleteDownload());
         PShortcutWorker.addShortCut(miUndo, MTShortcut.SHORTCUT_DOWNLOAD_UNDO_DELETE);
         miUndo.disableProperty().bind(Bindings.isEmpty(progData.downloadList.getUndoList()));

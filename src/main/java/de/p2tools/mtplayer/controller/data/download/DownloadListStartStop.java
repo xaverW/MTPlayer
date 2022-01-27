@@ -54,26 +54,21 @@ public class DownloadListStartStop {
      */
 
     public synchronized boolean delDownloads(ArrayList<DownloadData> list) {
-
         PDuration.counterStart("DownloadListStartStop.delDownloads");
-        progData.downloadList.addDownloadUndoList(list);
-
         if (list == null || list.isEmpty()) {
             return false;
         }
-
         // das Starten von neuen Downloads etwas Pausieren
         progData.starterClass.setPaused();
+        progData.downloadList.addDownloadUndoList(list);
 
         final ArrayList<DownloadData> aboHistoryList = new ArrayList<>();
-
         for (final DownloadData download : list) {
             if (download.isAbo()) {
                 // ein Abo wird zusätzlich ins Logfile geschrieben
                 aboHistoryList.add(download);
             }
         }
-
         if (!aboHistoryList.isEmpty()) {
             progData.erledigteAbos.addDownloadDataListToHistory(aboHistoryList);
         }
