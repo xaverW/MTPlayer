@@ -134,8 +134,14 @@ public class ProgConst {
 
     public static final String DREISAT = "3Sat";
     public static final String ARD = "ARD";
+
     public static final String ARTE_DE = "ARTE.DE";
+    public static final String ARTE_EN = "ARTE.EN";
+    public static final String ARTE_ES = "ARTE.ES";
     public static final String ARTE_FR = "ARTE.FR";
+    public static final String ARTE_IT = "ARTE.IT";
+    public static final String ARTE_PL = "ARTE.PL";
+
     public static final String BR = "BR";
     public static final String DW = "DW";
     public static final String HR = "HR";
@@ -154,8 +160,8 @@ public class ProgConst {
     public static final String ZDF = "ZDF";
     public static final String ZDF_TIVI = "ZDF-tivi";
 
-    public static final String[] SENDER = {DREISAT, ARD, ARTE_DE, ARTE_FR,
+    public static final String[] SENDER = {DREISAT, ARD,
+            ARTE_DE, ARTE_EN, ARTE_ES, ARTE_FR, ARTE_IT, ARTE_PL,
             BR, DW, HR, KIKA, MDR, NDR, ORF, PHOENIX, RBB, RBB_TV, SR,
             SRF, SRF_PODCAST, SWR, WDR, ZDF, ZDF_TIVI};
-
 }
