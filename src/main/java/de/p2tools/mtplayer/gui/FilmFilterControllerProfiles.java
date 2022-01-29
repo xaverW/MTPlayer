@@ -27,6 +27,7 @@ import de.p2tools.mtplayer.tools.storedFilter.SelectedFilterFactory;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PGuiTools;
+import de.p2tools.p2Lib.guiTools.PSeparatorComboBox;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Insets;
@@ -40,7 +41,7 @@ import java.util.Optional;
 
 public class FilmFilterControllerProfiles extends VBox {
 
-    private final ComboBox<SelectedFilter> cboFilterProfiles = new ComboBox<>();
+    private final ComboBox<SelectedFilter> cboFilterProfiles = new PSeparatorComboBox<>();
     private final MenuButton mbFilterTools = new MenuButton("");
     private final Button btnLoadFilter = new Button("laden");
     private final Button btnSaveFilter = new Button("speichern");

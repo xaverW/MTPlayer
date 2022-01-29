@@ -57,6 +57,7 @@ public class ProgIcons {
     public final ImageView ICON_BUTTON_NEXT = GetIcon.getImageView("button-next.png", 16, 16);
     public final ImageView ICON_BUTTON_PREV = GetIcon.getImageView("button-prev.png", 16, 16);
     public final ImageView ICON_BUTTON_REMOVE = GetIcon.getImageView("button-remove.png", 16, 16);
+    public final ImageView ICON_BUTTON_SEPARATOR = GetIcon.getImageView("button-separator.png", 22, 16);
     public final ImageView ICON_BUTTON_ADD = GetIcon.getImageView("button-add.png", 16, 16);
     public final ImageView ICON_BUTTON_MOVE_DOWN = GetIcon.getImageView("button-move-down.png", 16, 16);
     public final ImageView ICON_BUTTON_MOVE_UP = GetIcon.getImageView("button-move-up.png", 16, 16);

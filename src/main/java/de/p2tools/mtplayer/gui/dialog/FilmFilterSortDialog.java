@@ -22,6 +22,8 @@ import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
+import de.p2tools.p2Lib.guiTools.PSeparatorComboBox;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
@@ -36,6 +38,7 @@ public class FilmFilterSortDialog extends PDialogExtra {
     private final Button btnTop = new Button();
     private final Button btnBottom = new Button();
     private final Button btnDel = new Button();
+    private final Button btnSeparator = new Button();
 
     private final TableView<SelectedFilter> tableView = new TableView<>();
     private final ProgData progData;
@@ -53,7 +56,8 @@ public class FilmFilterSortDialog extends PDialogExtra {
         btnOk.setOnAction(a -> close());
 
         VBox vBox = new VBox(10);
-        vBox.getChildren().addAll(btnTop, btnUp, btnDown, btnBottom, btnDel);
+        vBox.setAlignment(Pos.TOP_CENTER);
+        vBox.getChildren().addAll(btnTop, btnUp, btnDown, btnBottom, btnDel, btnSeparator);
 
         HBox hBox = new HBox(10);
         hBox.getChildren().addAll(tableView, vBox);
@@ -74,6 +78,10 @@ public class FilmFilterSortDialog extends PDialogExtra {
         btnDel.setTooltip(new Tooltip("aktuelles Filterprofil löschen"));
         btnDel.setGraphic(new ProgIcons().ICON_BUTTON_REMOVE);
         btnDel.setOnAction(e -> delFilter());
+
+        btnSeparator.setTooltip(new Tooltip("einen Trenner einfügen"));
+        btnSeparator.setGraphic(new ProgIcons().ICON_BUTTON_SEPARATOR);
+        btnSeparator.setOnAction(e -> addSeparator());
 
         btnTop.setTooltip(new Tooltip("aktuelles Filterprofil an den Anfang verschieben"));
         btnTop.setGraphic(new ProgIcons().ICON_BUTTON_MOVE_TOP);
@@ -137,6 +145,16 @@ public class FilmFilterSortDialog extends PDialogExtra {
 
         if (progData.storedFilters.removeStoredFilter(sf)) {
             tableView.getSelectionModel().selectFirst();
+        }
+    }
+
+    private void addSeparator() {
+        final int sel = tableView.getSelectionModel().getSelectedIndex();
+        SelectedFilter sf = new SelectedFilter(PSeparatorComboBox.SEPARATOR);
+        if (sel < 0) {
+            progData.storedFilters.getStoredFilterList().add(sf);
+        } else {
+            progData.storedFilters.getStoredFilterList().add(sel + 1, sf);
         }
     }
 }
