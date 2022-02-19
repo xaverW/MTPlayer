@@ -134,11 +134,18 @@ public class FilmFilterEditDialog extends PDialogExtra {
         tglNot.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().notVisProperty());
         vBox.getChildren().add(tglNot);
 
-        //Wartezeit
-        Separator sp = new Separator();
-        sp.getStyleClass().add("pseperator2");
-        sp.setMinHeight(0);
+        //Diacritic
+        PToggleSwitch tglDiacritic = new PToggleSwitch("Diakritische Zeichen ändern");
+        tglDiacritic.setMaxWidth(Double.MAX_VALUE);
+        tglDiacritic.setSelected(ProgData.filterDiacritic);
+        tglDiacritic.selectedProperty().addListener((observableValue, aBoolean, t1) -> ProgData.filterDiacritic = tglDiacritic.isSelected());
 
+        Separator sp2 = new Separator();
+        sp2.getStyleClass().add("pseperator2");
+        sp2.setMinHeight(0);
+        vBox.getChildren().addAll(sp2, tglDiacritic);
+
+        //Wartezeit
         final ToggleGroup group = new ToggleGroup();
         RadioButton rboWait = new RadioButton();
         RadioButton rboReturn = new RadioButton();
@@ -162,14 +169,11 @@ public class FilmFilterEditDialog extends PDialogExtra {
             waitTime.setValue(Double.valueOf(slider.getValue()).intValue());
             setLabel(lblValue);
         });
-
-
         slider.disableProperty().bind(rboReturn.selectedProperty());
         rboReturn.selectedProperty().addListener((u, o, n) -> {
             changeRbo(rboReturn, slider, lblValue);
         });
         changeRbo(rboReturn, slider, lblValue);
-
 
         GridPane gridPane = new GridPane();
         gridPane.setHgap(5);
@@ -180,7 +184,6 @@ public class FilmFilterEditDialog extends PDialogExtra {
 
         int row = 0;
         gridPane.add(new Label("In Textfeldern:"), 0, row, 3, 1);
-
         gridPane.add(rboWait, 0, ++row);
         gridPane.add(new Label("Suchbeginn wenn keine\nEingabe für:"), 1, row);
         gridPane.add(lblValue, 2, row);
@@ -199,7 +202,10 @@ public class FilmFilterEditDialog extends PDialogExtra {
                 PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcComputedSizeAndHgrowRight());
 
-        vBox.getChildren().addAll(sp, gridPane);
+        Separator sp1 = new Separator();
+        sp1.getStyleClass().add("pseperator2");
+        sp1.setMinHeight(0);
+        vBox.getChildren().addAll(sp1, gridPane);
     }
 
     private void changeRbo(RadioButton rboReturn, Slider slider, Label lblValue) {

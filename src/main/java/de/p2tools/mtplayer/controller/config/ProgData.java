@@ -54,6 +54,7 @@ public class ProgData {
     public static boolean automode = false; // Automodus: start, laden, beenden
     public static boolean duration = false; // Duration ausgeben
     public static boolean reset = false; // Programm auf Starteinstellungen zurücksetzen
+    public static boolean filterDiacritic = false;
 
     // Infos
     public static String configDir = ""; // Verzeichnis zum Speichern der Programmeinstellungen

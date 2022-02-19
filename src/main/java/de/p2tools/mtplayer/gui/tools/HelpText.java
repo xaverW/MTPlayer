@@ -227,7 +227,13 @@ public class HelpText {
             "Hier können Filter aktiviert und deaktiviert werden.\n" +
                     "\n" +
                     "Deaktivierte Filter werden beim Suchen der Filme nicht berücksichtigt, " +
-                    "daher ist eine Suche mit weniger Filtern schneller.\n\n" +
+                    "daher ist eine Suche mit weniger Filtern schneller.\n" +
+                    "\n" +
+                    "\"Diakritische Zeichen ändern\" meint, dass bestimmte Zeichen im \"Film: Titel, Thema, Beschreibung\" vor dem Filtern " +
+                    "angepasst werden. Aus z.B. \"äöü ń ǹ ň ñ ṅ ņ ṇ ṋ ç č c\" wird dann " +
+                    "\"äöü n n n n n n n n c c c\" das dann zum Suchen verwendet wird. Diese Anpassung ist aber aufwändig " +
+                    "so dass die Suche länger dauert!\n" +
+                    "\n" +
                     "Die Wartezeit ist die Zeit, die bei der Suche in Textfeldern während des Tippens " +
                     "bis zum Start der Suche gewartet wird. Es wird also nicht bei jedem Buchstaben bereits " +
                     "die Suche gestartet.";

@@ -74,7 +74,7 @@ public class FilmListFilter {
                         PDebugLog.sysLog("=================> Filter: " + ++count);
                         PDuration.counterStart("FilmListFilter.filterList");
                         progData.filmlistFiltered.filteredListSetPred(progData.storedFilters.getActFilterSettings().getPredicate());
-                        PDuration.counterStopAndLog("FilmListFilter.filterList");
+                        PDuration.counterStop("FilmListFilter.filterList");
                         search.set(false);
                         if (research.get()) {
                             filterList();

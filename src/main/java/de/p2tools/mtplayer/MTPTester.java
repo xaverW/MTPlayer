@@ -17,23 +17,12 @@
 
 package de.p2tools.mtplayer;
 
-import de.p2tools.mtplayer.controller.ProgQuit;
-import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.mtplayer.controller.data.film.FilmData;
-import de.p2tools.mtplayer.controller.data.film.Filmlist;
-import de.p2tools.mtplayer.controller.starter.MTNotification;
-import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
-import de.p2tools.mtplayer.tools.storedFilter.SelectedFilterFactory;
 import de.p2tools.p2Lib.dialogs.ProgInfoDialog;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
-import de.p2tools.p2Lib.tools.download.DownloadFactory;
+import de.p2tools.p2Lib.tools.DiacriticFactory;
 import de.p2tools.p2Lib.tools.duration.PDuration;
-import de.p2tools.p2Lib.tools.log.PLog;
-import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
@@ -44,11 +33,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-import java.util.ArrayList;
+import java.text.Normalizer;
 import java.util.HashSet;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
+import java.util.regex.Pattern;
 
 public class MTPTester {
     private final ProgInfoDialog progInfoDialog;
@@ -57,7 +44,6 @@ public class MTPTester {
     private final TextArea textArea = new TextArea();
     private String text = "";
     private final PMaskerPane maskerPane = new PMaskerPane();
-    private final WaitTask waitTask = new WaitTask();
 
     public MTPTester(final ProgData progData) {
         this.progData = progData;
@@ -100,268 +86,130 @@ public class MTPTester {
             final Text text = new Text("Debugtools");
             text.setFont(Font.font(null, FontWeight.BOLD, 15));
 
-//            Button btnAddToHash = new Button("_fillHash");
-//            btnAddToHash.setMaxWidth(Double.MAX_VALUE);
-//            btnAddToHash.setOnAction(a -> fillHash(progData.filmlist));
-//
-//            Button btnCleanHash = new Button("cleanHash");
-//            btnCleanHash.setMaxWidth(Double.MAX_VALUE);
-//            btnCleanHash.setOnAction(a -> cleanHash(progData.filmlist));
-//
-//            Button btnFind = new Button("findAndMark");
-//            btnFind.setMaxWidth(Double.MAX_VALUE);
-//            btnFind.setOnAction(a -> findAndMarkNewFilms(progData.filmlist));
-//
-//            Button btnClear = new Button("clearHash");
-//            btnClear.setMaxWidth(Double.MAX_VALUE);
-//            btnClear.setOnAction(a -> clearHash());
-//
-//            Button btnClearDescription = new Button("Beschreibung löschen");
-//            btnClearDescription.setMaxWidth(Double.MAX_VALUE);
-//            btnClearDescription.setOnAction(a -> clearDescription());
-
-//            Button btnCheck = new Button("Text checken (UTF8)");
-//            btnCheck.setMaxWidth(Double.MAX_VALUE);
-//            btnCheck.setOnAction(a -> checkText());
-//
-//            Button btnRepair = new Button("Text reparieren (UTF8)");
-//            btnRepair.setMaxWidth(Double.MAX_VALUE);
-//            btnRepair.setOnAction(a -> repairText());
-
-//            Button btnShowActFilter = new Button("aktuellen Filter ausgeben");
-//            btnShowActFilter.setMaxWidth(Double.MAX_VALUE);
-//            btnShowActFilter.setOnAction(a -> showFilter());
-//
-//            Button btnMarkFilmFilterOk = new Button("Filter Ok");
-//            btnMarkFilmFilterOk.setMaxWidth(Double.MAX_VALUE);
-//            btnMarkFilmFilterOk.setOnAction(a -> makrFilterOk(true));
-//
-//            Button btnMarkFilmFilterNotOk = new Button("Filter !Ok");
-//            btnMarkFilmFilterNotOk.setMaxWidth(Double.MAX_VALUE);
-//            btnMarkFilmFilterNotOk.setOnAction(a -> makrFilterOk(false));
-
-            final Button btnStartWaiting = new Button("start waiting");
-            btnStartWaiting.setMaxWidth(Double.MAX_VALUE);
-            btnStartWaiting.setOnAction(a -> startWaiting());
-
-            final Button btnNotify = new Button("Notify");
-            btnNotify.setMaxWidth(Double.MAX_VALUE);
-            btnNotify.setOnAction(a -> MTNotification.addNotification(new DownloadData(), true));
-
-            final Button btnText = new Button("change text");
-            btnText.setMaxWidth(Double.MAX_VALUE);
-            btnText.setOnAction(a -> {
-                ProgConfig.MEDIA_DB_SUFFIX.setValue("soso");
-            });
-
-            final Button btnDownload = new Button("Download");
-            btnDownload.setMaxWidth(Double.MAX_VALUE);
-            btnDownload.setOnAction(a -> {
-
-                if (DownloadFactory.downloadFile(progInfoDialog.getStage(),
-                        "http://p2.localhost:8080/extra/beta/MTPlayer-8-42__2020.02.22.zip",
-                        ProgConfig.START_DIALOG_DOWNLOAD_PATH,
-                        "MTPlayer-8-42__20200222.zip")) {
-                    System.out.println("Download OK");
-                } else {
-                    System.out.println("Download NOT OK");
-                }
-            });
-
-            final Button btnChart = new Button("Chart");
-            btnChart.setMaxWidth(Double.MAX_VALUE);
-            btnChart.setOnAction(a -> {
-                progData.chartData.genInfos();
-            });
-
-            final Button btnShutDown = new Button("Rechner herunterfahren");
-            btnShutDown.setMaxWidth(Double.MAX_VALUE);
-            btnShutDown.setOnAction(a ->
-                    Platform.runLater(() -> ProgQuit.quitShutDown()));
+            Button btnMarkFilm = new Button("Diakrit");
+            btnMarkFilm.setMaxWidth(Double.MAX_VALUE);
+            btnMarkFilm.setOnAction(a -> check());
 
             int row = 0;
             gridPane.add(text, 0, row, 2, 1);
-//            gridPane.add(btnAddToHash, 0, ++row);
-//            gridPane.add(btnCleanHash, 1, row);
-//            gridPane.add(btnFind, 0, ++row);
-//            gridPane.add(btnClear, 1, row);
-//            gridPane.add(btnClearDescription, 0, ++row);
-//            gridPane.add(btnCheck, 0, ++row);
-//            gridPane.add(btnRepair, 1, row);
-//            gridPane.add(btnShowActFilter, 0, ++row);
-//            gridPane.add(btnMarkFilmFilterOk, 1, row);
-//            gridPane.add(btnMarkFilmFilterNotOk, 1, row);
-            gridPane.add(btnStartWaiting, 0, ++row);
-            gridPane.add(btnNotify, 0, ++row);
-            gridPane.add(btnText, 0, ++row);
-            gridPane.add(btnDownload, 0, ++row);
-            gridPane.add(btnChart, 0, ++row);
-            gridPane.add(btnShutDown, 0, ++row);
+            gridPane.add(btnMarkFilm, 0, ++row);
 
             gridPane.add(textArea, 0, ++row, 2, 1);
 
         }
     }
 
-    private void fillHash(final Filmlist filmlist) {
-        final List<String> logList = new ArrayList<>();
-        logList.add("");
-        logList.add("");
-        logList.add("");
-        logList.add("");
-        logList.add(PLog.LILNE3);
-        logList.add("fillHash");
-        logList.add("Größe Filmliste: " + filmlist.size());
-        logList.add("Größe vorher:  " + hashSet.size());
+    int count = 0;
+    String test = "äöü ń ǹ ň ñ ṅ ņ ṇ ṋ    ( ç/č/c => c; a/á/à/â/ă/ȁ/å/ā/ã => a aber ä => ä )";
 
-        PDuration.counterStart("fillHash");
-        hashSet.addAll(filmlist.stream().map(FilmData::getUrlHistory).collect(Collectors.toList()));
-        PDuration.counterStop("fillHash");
+    private void check() {
+        PDuration.counterStart("MTPTester diakritische Zeichen");
 
-        logList.add("Größe nachher: " + hashSet.size());
-        logList.add(PLog.LILNE3);
-        PLog.sysLog(logList);
-    }
-
-    private void cleanHash(final Filmlist filmlist) {
-        final List<String> logList = new ArrayList<>();
-        logList.add("");
-        logList.add(PLog.LILNE3);
-        logList.add("Hash bereinigen");
-        logList.add("Größe Filmliste: " + filmlist.size());
-        logList.add("Größe vorher:  " + hashSet.size());
-
-        PDuration.counterStart("cleanHash");
-        filmlist.stream().forEach(film -> hashSet.remove(film.getUrlHistory()));
-//        hashSet.removeAll(filmlist.stream().map(Film::getUrlHistory).collect(Collectors.toList()));
-        PDuration.counterStop("cleanHash");
-
-        logList.add("Größe nachher: " + hashSet.size());
-        logList.add(PLog.LILNE3);
-        PLog.sysLog(logList);
-    }
-
-    private void findAndMarkNewFilms(final Filmlist filmlist) {
-        final List<String> logList = new ArrayList<>();
-        logList.add("");
-        logList.add("");
-        logList.add("");
-        logList.add("");
-        logList.add(PLog.LILNE3);
-        logList.add("findAndMarkNewFilms");
-        logList.add("Größe Filmliste: " + filmlist.size());
-        logList.add("Größe vorher:  " + hashSet.size());
-
-        PDuration.counterStart("findAndMarkNewFilms");
-        filmlist.stream() //genauso schnell wie "parallel": ~90ms
-                .peek(film -> film.setNewFilm(false))
-                .filter(film -> !hashSet.contains(film.getUrlHistory()))
-                .forEach(film -> film.setNewFilm(true));
-        PDuration.counterStop("findAndMarkNewFilms");
-
-        logList.add("Größe nachher: " + hashSet.size());
-        logList.add(PLog.LILNE3);
-        PLog.sysLog(logList);
-    }
-
-    private void clearHash() {
-        final List<String> logList = new ArrayList<>();
-        logList.add("");
-        logList.add("");
-        logList.add("");
-        logList.add("");
-        logList.add(PLog.LILNE3);
-        logList.add("clearHash");
-        logList.add("Größe vorher:  " + hashSet.size());
-
-        PDuration.counterStart("clearHash");
-        hashSet.clear();
-        PDuration.counterStop("clearHash");
-
-        logList.add("Größe nachher: " + hashSet.size());
-        logList.add(PLog.LILNE3);
-        PLog.sysLog(logList);
-    }
-
-    private void clearDescription() {
-        final long description = System.currentTimeMillis() - TimeUnit.MILLISECONDS.convert(50, TimeUnit.DAYS);
-        final String DESCRIPTION = "*****";
-        int count = 0;
-        int countDesc = 0;
-        for (final FilmData film : ProgData.getInstance().filmlist) {
-
-            if (!checkDate(film, description)) {
-                ++count;
-                if (!film.getDescription().isEmpty() && !film.getDescription().equals(DESCRIPTION)) {
-                    ++countDesc;
-                }
-                film.setDescription(DESCRIPTION);
-            }
-        }
-
-        text += count + " Filme\n";
-        text += countDesc + " Beschreibungen gelöscht\n\n";
-        textArea.setText(text);
-    }
-
-    private void checkText() {
-        final Filmlist filmlist = progData.filmlist;
-
-        int i = 0;
-        int countTheme = 0, countTitle = 0, countDescreption = 0;
+        progData.filmlist.stream().forEach(film -> {
+//            stripDiacritics(film.getTitle());
+            flatten(film.getTitle());
+        });
 
         try {
-            for (final FilmData film : filmlist) {
-                ++i;
-                if (i % 10_000 == 0) {
-                    System.out.println("fertig: " + i);
-                }
+            System.out.println("TEST " + test);
+            System.out.println("==============");
+            System.out.println("NFC  " + new String(Normalizer.normalize(test, Normalizer.Form.NFC).getBytes("ascii"), "ascii"));
+            System.out.println("NFD  " + new String(Normalizer.normalize(test, Normalizer.Form.NFD).getBytes("ascii"), "ascii"));
+            System.out.println("NFKC " + new String(Normalizer.normalize(test, Normalizer.Form.NFKC).getBytes("ascii"), "ascii"));
+            System.out.println("NFKD " + new String(Normalizer.normalize(test, Normalizer.Form.NFKD).getBytes("ascii"), "ascii"));
+            System.out.println("==============");
+            System.out.println("NFC  " + new String(Normalizer.normalize(test, Normalizer.Form.NFC)));
+            System.out.println("NFD  " + new String(Normalizer.normalize(test, Normalizer.Form.NFD)));
+            System.out.println("NFKC " + new String(Normalizer.normalize(test, Normalizer.Form.NFKC)));
+            System.out.println("NFKD " + new String(Normalizer.normalize(test, Normalizer.Form.NFKD)));
+            System.out.println("==============");
+            System.out.println("DiacriticFactory " + DiacriticFactory.flattenDiacritic(test));
+            System.out.println("apache " + org.apache.commons.lang3.StringUtils.stripAccents(test));
+            flatten(test);
 
-                if (!cleanUnicode(film.getTitle()).equals(film.getTitle())) {
-                    System.out.println(film.getDate() + " Titel:  " + film.getTitle());
-                    System.out.println("                   " + cleanUnicode(film.getTitle()));
-                    ++countTitle;
-                }
-                if (!cleanUnicode(film.getTheme()).equals(film.getTheme())) {
-                    System.out.println(film.getDate() + " Thema:  " + film.getTheme());
-                    System.out.println("                   " + cleanUnicode(film.getTheme()));
-                    ++countTheme;
-                }
-                if (!cleanUnicode(film.getDescription()).equals(film.getDescription())) {
-                    ++countDescreption;
-                }
-
-            }
-        } catch (final Exception ex) {
-            System.out.println(ex.getMessage());
+        } catch (Exception ex) {
         }
-        System.out.println("Themen: " + countTheme);
-        System.out.println("Titel: " + countTitle);
-        System.out.println("Beschreibungen: " + countDescreption);
+        PDuration.counterStop("MTPTester diakritische Zeichen");
+        System.out.println("Anzahl: " + count);
     }
 
-    private void repairText() {
-        final Filmlist filmlist = progData.filmlist;
+    private final Pattern DIACRITICS_AND_FRIENDS
+            = Pattern.compile("[\\p{InCombiningDiacriticalMarks}\\p{IsLm}\\p{IsSk}]+");
 
-        try {
-            for (final FilmData film : filmlist) {
-                film.arr[FilmData.FILM_TITLE] = cleanUnicode(film.getTitle());
-                film.arr[FilmData.FILM_THEME] = cleanUnicode(film.getTheme());
-                film.setDescription(cleanUnicode(film.getDescription()));
-
-            }
-        } catch (final Exception ex) {
-            System.out.println(ex.getMessage());
-        }
+    private String stripDiacritics(String str) {
+        str = Normalizer.normalize(str, Normalizer.Form.NFD);
+        str = DIACRITICS_AND_FRIENDS.matcher(str).replaceAll("");
+        return str;
     }
 
-    private void showFilter() {
-        final SelectedFilter sf = progData.storedFilters.getActFilterSettings();
-        System.out.println("====================================");
-        for (final String s : SelectedFilterFactory.printFilter(sf)) {
+
+    private void flatten(String str) {
+        final String s = flattenApache(str);
+        if (!str.equals(s)) {
+            System.out.println(str);
             System.out.println(s);
+            ++count;
         }
-        System.out.println("====================================");
+    }
+
+    private String flattenApache(String string) {
+        try {
+            if (!string.contains("ä") && !string.contains("ö") && !string.contains("ü") &&
+                    !string.contains("Ä") && !string.contains("Ö") && !string.contains("Ü")) {
+//                return org.apache.commons.lang3.StringUtils.stripAccents(string);
+//                return Normalizer.normalize(string, Normalizer.Form.NFKD);
+                return stripDiacritics(string);
+
+            } else {
+                String to = "";
+                for (char c : string.toCharArray()) {
+                    String s = c + "";
+                    if (s.equals("ä") || s.equals("ö") || s.equals("ü") ||
+                            s.equals("Ä") || s.equals("Ö") || s.equals("Ü")) {
+                        to += s;
+                    } else {
+//                        to += org.apache.commons.lang3.StringUtils.stripAccents(s);
+//                        to += Normalizer.normalize(s, Normalizer.Form.NFKD);
+                        to += stripDiacritics(s);
+                    }
+                }
+                return to;
+            }
+        } catch (Exception ex) {
+        }
+        return string;
+    }
+
+
+    private String flattenToAscii(String string) {
+        String norm = "";
+        try {
+
+//         norm = Normalizer.normalize(string, Normalizer.Form.NFC);
+            norm = new String(Normalizer.normalize(string, Normalizer.Form.NFKD).getBytes("ascii"), "ascii");
+//         norm = Normalizer.normalize(string, Normalizer.Form.NFC).replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+//         norm = StringEscapeUtils.unescapeJava(string);
+
+//        char[] out = new char[norm.length()];
+//
+//        int j = 0;
+//        for (int i = 0, n = norm.length(); i < n; ++i) {
+//            char c = norm.charAt(i);
+//            int type = Character.getType(c);
+//
+//            //Log.d(TAG,""+c);
+//            //by Ricardo, modified the character check for accents, ref: http://stackoverflow.com/a/5697575/689223
+//            if (type != Character.NON_SPACING_MARK) {
+//                out[j] = c;
+//                j++;
+//            }
+//        }
+            //Log.d(TAG,"normalized string:"+norm+"/"+new String(out));
+
+        } catch (Exception ex) {
+
+        }
+        return new String(norm);
     }
 
     private void makrFilterOk(final boolean ok) {
@@ -391,50 +239,7 @@ public class MTPTester {
         return ret;
     }
 
-    private boolean checkDate(final FilmData film, final long mSeconds) {
-        // true wenn der Film jünger ist und angezeigt werden kann!
-        try {
-            if (film.filmDate.getTime() != 0) {
-                if (film.filmDate.getTime() < mSeconds) {
-                    return false;
-                }
-            }
-        } catch (final Exception ex) {
-            PLog.errorLog(951202147, ex);
-        }
-        return true;
-    }
-
-    private void startWaiting() {
-        maskerPane.setMaskerText("Filmliste ist zu alt, eine neue downloaden");
-        maskerPane.setButtonText("Button Text");
-        maskerPane.setMaskerVisible(true, true, true);
-        final Thread th = new Thread(waitTask);
-        th.setName("startWaiting");
-        th.start();
-    }
-
-    private class WaitTask extends Task<Void> {
-
-        @Override
-        protected Void call() throws Exception {
-            try {
-                Thread.sleep(5000);
-            } catch (final Exception ignore) {
-            }
-            return null;
-        }
-
-        @Override
-        public boolean cancel(final boolean mayInterruptIfRunning) {
-            return super.cancel(mayInterruptIfRunning);
-        }
-    }
-
     public void close() {
-        if (waitTask.isRunning()) {
-            waitTask.cancel();
-        }
         maskerPane.switchOffMasker();
     }
 }
