@@ -210,7 +210,7 @@ public class FilmGuiController extends AnchorPane {
             }
             setInfoPane();
         });
-        Listener.addListener(new Listener(new int[]{Listener.EREIGNIS_GUI_HISTORY_CHANGED},
+        Listener.addListener(new Listener(new int[]{Listener.EVENT_GUI_HISTORY_CHANGED},
                 FilmGuiController.class.getSimpleName()) {
             @Override
             public void pingFx() {

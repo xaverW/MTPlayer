@@ -17,7 +17,9 @@
 
 package de.p2tools.mtplayer;
 
+import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.data.film.FilmlistFactory;
 import de.p2tools.p2Lib.dialogs.ProgInfoDialog;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
@@ -33,9 +35,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-import java.text.Normalizer;
 import java.util.HashSet;
-import java.util.regex.Pattern;
 
 public class MTPTester {
     private final ProgInfoDialog progInfoDialog;
@@ -99,144 +99,19 @@ public class MTPTester {
         }
     }
 
-    int count = 0;
     String test = "äöü ń ǹ ň ñ ṅ ņ ṇ ṋ    ( ç/č/c => c; a/á/à/â/ă/ȁ/å/ā/ã => a aber ä => ä )";
 
     private void check() {
         PDuration.counterStart("MTPTester diakritische Zeichen");
 
-        progData.filmlist.stream().forEach(film -> {
-//            stripDiacritics(film.getTitle());
-            flatten(film.getTitle());
-        });
+        ProgConfig.SYSTEM_SHOW_DIACRITICS.setValue(ProgConfig.SYSTEM_SHOW_DIACRITICS.getValue());
 
-        try {
-            System.out.println("TEST " + test);
-            System.out.println("==============");
-            System.out.println("NFC  " + new String(Normalizer.normalize(test, Normalizer.Form.NFC).getBytes("ascii"), "ascii"));
-            System.out.println("NFD  " + new String(Normalizer.normalize(test, Normalizer.Form.NFD).getBytes("ascii"), "ascii"));
-            System.out.println("NFKC " + new String(Normalizer.normalize(test, Normalizer.Form.NFKC).getBytes("ascii"), "ascii"));
-            System.out.println("NFKD " + new String(Normalizer.normalize(test, Normalizer.Form.NFKD).getBytes("ascii"), "ascii"));
-            System.out.println("==============");
-            System.out.println("NFC  " + new String(Normalizer.normalize(test, Normalizer.Form.NFC)));
-            System.out.println("NFD  " + new String(Normalizer.normalize(test, Normalizer.Form.NFD)));
-            System.out.println("NFKC " + new String(Normalizer.normalize(test, Normalizer.Form.NFKC)));
-            System.out.println("NFKD " + new String(Normalizer.normalize(test, Normalizer.Form.NFKD)));
-            System.out.println("==============");
-            System.out.println("DiacriticFactory " + DiacriticFactory.flattenDiacritic(test));
-            System.out.println("apache " + org.apache.commons.lang3.StringUtils.stripAccents(test));
-            flatten(test);
+        FilmlistFactory.setDiacritic(false);
 
-        } catch (Exception ex) {
-        }
+        System.out.println(test);
+        System.out.println(DiacriticFactory.flattenDiacritic(test));
+
         PDuration.counterStop("MTPTester diakritische Zeichen");
-        System.out.println("Anzahl: " + count);
-    }
-
-    private final Pattern DIACRITICS_AND_FRIENDS
-            = Pattern.compile("[\\p{InCombiningDiacriticalMarks}\\p{IsLm}\\p{IsSk}]+");
-
-    private String stripDiacritics(String str) {
-        str = Normalizer.normalize(str, Normalizer.Form.NFD);
-        str = DIACRITICS_AND_FRIENDS.matcher(str).replaceAll("");
-        return str;
-    }
-
-
-    private void flatten(String str) {
-        final String s = flattenApache(str);
-        if (!str.equals(s)) {
-            System.out.println(str);
-            System.out.println(s);
-            ++count;
-        }
-    }
-
-    private String flattenApache(String string) {
-        try {
-            if (!string.contains("ä") && !string.contains("ö") && !string.contains("ü") &&
-                    !string.contains("Ä") && !string.contains("Ö") && !string.contains("Ü")) {
-//                return org.apache.commons.lang3.StringUtils.stripAccents(string);
-//                return Normalizer.normalize(string, Normalizer.Form.NFKD);
-                return stripDiacritics(string);
-
-            } else {
-                String to = "";
-                for (char c : string.toCharArray()) {
-                    String s = c + "";
-                    if (s.equals("ä") || s.equals("ö") || s.equals("ü") ||
-                            s.equals("Ä") || s.equals("Ö") || s.equals("Ü")) {
-                        to += s;
-                    } else {
-//                        to += org.apache.commons.lang3.StringUtils.stripAccents(s);
-//                        to += Normalizer.normalize(s, Normalizer.Form.NFKD);
-                        to += stripDiacritics(s);
-                    }
-                }
-                return to;
-            }
-        } catch (Exception ex) {
-        }
-        return string;
-    }
-
-
-    private String flattenToAscii(String string) {
-        String norm = "";
-        try {
-
-//         norm = Normalizer.normalize(string, Normalizer.Form.NFC);
-            norm = new String(Normalizer.normalize(string, Normalizer.Form.NFKD).getBytes("ascii"), "ascii");
-//         norm = Normalizer.normalize(string, Normalizer.Form.NFC).replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
-//         norm = StringEscapeUtils.unescapeJava(string);
-
-//        char[] out = new char[norm.length()];
-//
-//        int j = 0;
-//        for (int i = 0, n = norm.length(); i < n; ++i) {
-//            char c = norm.charAt(i);
-//            int type = Character.getType(c);
-//
-//            //Log.d(TAG,""+c);
-//            //by Ricardo, modified the character check for accents, ref: http://stackoverflow.com/a/5697575/689223
-//            if (type != Character.NON_SPACING_MARK) {
-//                out[j] = c;
-//                j++;
-//            }
-//        }
-            //Log.d(TAG,"normalized string:"+norm+"/"+new String(out));
-
-        } catch (Exception ex) {
-
-        }
-        return new String(norm);
-    }
-
-    private void makrFilterOk(final boolean ok) {
-//        progData.mtPlayerController.markFilterOk(ok);
-    }
-
-    private static String cleanUnicode(String ret) {
-//        final String regEx = "[\\p{Cc}&&[^\n,\r,\t,\\x7F,\\x10,\\x11,\\x12,\\x13,\\x14,\\x15,\\x16," +
-//                "\\x17,\\x18,\\x19,\\x1A,\\x1B,\\x1C,\\x1D,\\x1E,\\x1F," +
-//                "\\x00,\\x01,\\x02,\\x03,\\x04,\\x05,\\x06,\\x07,\\x08,\\x09,\\x0A,\\x0B,\\x0C,\\x0D,\\x0E,\\x0F," +
-//                "\uC280-\uC29F]]";
-
-
-//        final String regEx = "\uC296";
-
-//        if (!ret.equals(ret.replaceAll(regEx, "?"))) {
-//            System.out.println();
-//            System.out.println(ret);
-//            System.out.println(ret.replaceAll(regEx, "******"));
-//        }
-        // ret = ret.replaceAll("[\\p{Cc}\\p{Cf}\\p{Co}\\p{Cn}]", "?");
-
-
-        final String regEx = "[\\p{Cc}&&[^\n,\r,\t]]";
-        ret = ret.replaceAll(regEx, "?");
-
-        return ret;
     }
 
     public void close() {

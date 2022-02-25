@@ -331,6 +331,11 @@ public class LoadFilmlist {
         logList.add("");
 
         notifyProgress.notifyEvent(NotifyProgress.NOTIFY.LOADED,
+                new ListenerFilmlistLoadEvent("", "Diacritics setzen/ändern, Diacritics suchen",
+                        ListenerLoadFilmlist.PROGRESS_INDETERMINATE, 0, false/* Fehler */));
+        FilmlistFactory.setDiacritic(false);
+
+        notifyProgress.notifyEvent(NotifyProgress.NOTIFY.LOADED,
                 new ListenerFilmlistLoadEvent("", "Filme markieren, Themen suchen",
                         ListenerLoadFilmlist.PROGRESS_INDETERMINATE, 0, false/* Fehler */));
 

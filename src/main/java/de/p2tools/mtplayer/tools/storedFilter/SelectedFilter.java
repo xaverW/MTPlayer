@@ -17,7 +17,6 @@
 package de.p2tools.mtplayer.tools.storedFilter;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.film.FilmData;
 import de.p2tools.mtplayer.controller.data.film.FilmDataXml;
 import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
@@ -457,35 +456,35 @@ public final class SelectedFilter extends SelectedFilterProps {
         }
 
         if (!fTheme.empty) {
-            if (ProgData.filterDiacritic) {
-                predicate = predicate.and(f -> FilmFilter.checkThemeDiacritic(fTheme, f));
-            } else {
-                predicate = predicate.and(f -> FilmFilter.checkTheme(fTheme, f));
-            }
+//            if (ProgData.filterDiacritic) {
+//                predicate = predicate.and(f -> FilmFilter.checkThemeDiacritic(fTheme, f));
+//            } else {
+            predicate = predicate.and(f -> FilmFilter.checkTheme(fTheme, f));
+//            }
         }
 
         if (!fThemeTitle.empty) {
-            if (ProgData.filterDiacritic) {
-                predicate = predicate.and(f -> FilmFilter.checkThemeTitleDiacritic(fThemeTitle, f));
-            } else {
-                predicate = predicate.and(f -> FilmFilter.checkThemeTitle(fThemeTitle, f));
-            }
+//            if (ProgData.filterDiacritic) {
+//                predicate = predicate.and(f -> FilmFilter.checkThemeTitleDiacritic(fThemeTitle, f));
+//            } else {
+            predicate = predicate.and(f -> FilmFilter.checkThemeTitle(fThemeTitle, f));
+//            }
         }
 
         if (!fTitle.empty) {
-            if (ProgData.filterDiacritic) {
-                predicate = predicate.and(f -> FilmFilter.checkTitleDiacritic(fTitle, f));
-            } else {
-                predicate = predicate.and(f -> FilmFilter.checkTitle(fTitle, f));
-            }
+//            if (ProgData.filterDiacritic) {
+//                predicate = predicate.and(f -> FilmFilter.checkTitleDiacritic(fTitle, f));
+//            } else {
+            predicate = predicate.and(f -> FilmFilter.checkTitle(fTitle, f));
+//            }
         }
 
         if (!fSomewhere.empty) {
-            if (ProgData.filterDiacritic) {
-                predicate = predicate.and(f -> FilmFilter.checkSomewhereDiacritic(fSomewhere, f));
-            } else {
-                predicate = predicate.and(f -> FilmFilter.checkSomewhere(fSomewhere, f));
-            }
+//            if (ProgData.filterDiacritic) {
+//                predicate = predicate.and(f -> FilmFilter.checkSomewhereDiacritic(fSomewhere, f));
+//            } else {
+            predicate = predicate.and(f -> FilmFilter.checkSomewhere(fSomewhere, f));
+//            }
         }
 
         if (!fUrl.empty) {

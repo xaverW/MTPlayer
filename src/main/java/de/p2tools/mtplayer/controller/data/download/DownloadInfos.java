@@ -62,7 +62,7 @@ public class DownloadInfos {
 
     public DownloadInfos(ProgData progData) {
         this.progData = progData;
-        Listener.addListener(new Listener(Listener.EREIGNIS_TIMER, DownloadInfos.class.getSimpleName()) {
+        Listener.addListener(new Listener(Listener.EVENT_TIMER, DownloadInfos.class.getSimpleName()) {
             @Override
             public void ping() {
                 clean();

@@ -17,8 +17,11 @@
 
 package de.p2tools.mtplayer.controller.data.film;
 
+import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.history.HistoryList;
+import de.p2tools.mtplayer.gui.configDialog.ConfigDialogController;
+import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 
@@ -79,6 +82,40 @@ public class FilmlistFactory {
         PDuration.counterStop("cleanFaultyCharacter");
     }
 
+    public static void setDiacritic(boolean inAThread) {
+        if (!ProgData.generatingDiacriticDone && !ProgConfig.SYSTEM_SHOW_DIACRITICS.getValue()) {
+            //dann sollen die Diacritic *nicht* angezeigt werden und
+            //müssen erst mal erstellt werden
+            ProgData.generatingDiacriticDone = true;
+
+            if (inAThread) {
+                ProgData.getInstance().maskerPane.setMaskerVisible(true, false);
+                ProgData.getInstance().maskerPane.setMaskerText("");
+                Thread th = new Thread(() -> {
+                    genDiacriticAndSet();
+                    Listener.notify(Listener.EVENT_DIACRITIC_CHANGED, ConfigDialogController.class.getSimpleName());
+                    ProgData.getInstance().maskerPane.setMaskerVisible(false);
+                });
+                th.setName("generateDiacritic");
+                th.start();
+            } else {
+                genDiacriticAndSet();
+            }
+
+        } else {
+            //oder nur noch setzen
+            ProgData.getInstance().filmlist.stream().forEach(film -> FilmDataFactory.setDiacritic(film));
+        }
+    }
+
+    private static void genDiacriticAndSet() {
+        PDuration.counterStart("genDiacriticAndSet");
+        ProgData.getInstance().filmlist.stream().forEach(film -> {
+            FilmDataFactory.generateDiacritic(film);
+//            FilmDataFactory.setDiacritic(film);
+        });
+        PDuration.counterStop("genDiacriticAndSet");
+    }
 
     final static String regEx1 = "[\\n\\r]";
     final static String regEx2 = "[\\p{Cc}&&[^\\t\\n\\r]]";

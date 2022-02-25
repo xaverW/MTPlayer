@@ -119,7 +119,7 @@ public class DownloadGuiController extends AnchorPane {
         setFilterProperty();
         setFilter();
 
-        Listener.addListener(new Listener(Listener.EREIGNIS_TIMER, DownloadGuiChart.class.getSimpleName()) {
+        Listener.addListener(new Listener(Listener.EVENT_TIMER, DownloadGuiChart.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 downloadGuiChart.searchInfos(progData.mtPlayerController.isDownloadPaneShown() &&
@@ -329,7 +329,7 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private void initListener() {
-        Listener.addListener(new Listener(Listener.EREIGNIS_TIMER, DownloadGuiController.class.getSimpleName()) {
+        Listener.addListener(new Listener(Listener.EVENT_TIMER, DownloadGuiController.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 if (!ProgConfig.FILTER_DOWNLOAD_STATE.get().isEmpty()) {
@@ -339,7 +339,7 @@ public class DownloadGuiController extends AnchorPane {
                 }
             }
         });
-        Listener.addListener(new Listener(Listener.EREIGNIS_BLACKLIST_GEAENDERT, DownloadGuiController.class.getSimpleName()) {
+        Listener.addListener(new Listener(Listener.EVENT_BLACKLIST_CHANGED, DownloadGuiController.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 if ((ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.automode)
@@ -349,7 +349,7 @@ public class DownloadGuiController extends AnchorPane {
                 }
             }
         });
-        Listener.addListener(new Listener(Listener.EREIGNIS_SETDATA_CHANGED, DownloadGuiController.class.getSimpleName()) {
+        Listener.addListener(new Listener(Listener.EVEMT_SETDATA_CHANGED, DownloadGuiController.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 tableView.refresh();

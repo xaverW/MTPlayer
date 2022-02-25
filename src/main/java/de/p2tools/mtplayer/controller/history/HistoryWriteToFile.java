@@ -65,7 +65,7 @@ public class HistoryWriteToFile implements Runnable {
         // und jetzt schreiben
         writeHistoryDataToFile(list, append);
 
-        Listener.notify(Listener.EREIGNIS_GUI_HISTORY_CHANGED, HistoryWriteToFile.class.getSimpleName());
+        Listener.notify(Listener.EVENT_GUI_HISTORY_CHANGED, HistoryWriteToFile.class.getSimpleName());
         PDuration.counterStop("History: Thread: HistoryWriteToFile");
     }
 

@@ -18,6 +18,7 @@ package de.p2tools.mtplayer.gui.configDialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.data.film.FilmlistFactory;
 import de.p2tools.mtplayer.gui.configDialog.setData.SetPaneController;
 import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
@@ -39,6 +40,7 @@ public class ConfigDialogController extends PDialogExtra {
     private Button btnOk = new Button("_Ok");
     private String geo = ProgConfig.SYSTEM_GEO_HOME_PLACE.get();
     private BooleanProperty blackChanged = new SimpleBooleanProperty(false);
+    private BooleanProperty diacriticChanged = new SimpleBooleanProperty(false);
 
     IntegerProperty propSelectedTab = ProgConfig.SYSTEM_CONFIG_DIALOG_TAB;
     private final ProgData progData;
@@ -74,15 +76,18 @@ public class ConfigDialogController extends PDialogExtra {
     public void close() {
         if (!geo.equals(ProgConfig.SYSTEM_GEO_HOME_PLACE.get())) {
             // dann hat sich der Geo-Standort geändert
-//            System.out.println("geo changed");
             progData.filmlist.markGeoBlocked();
         }
 
         if (blackChanged.get() && !progData.loadFilmlist.getPropLoadFilmlist()) {
             // sonst hat sich nichts geändert oder wird dann eh gemacht
-//            System.out.println("black filtern");
             progData.filmlist.filterListWithBlacklist(true);
-            Listener.notify(Listener.EREIGNIS_BLACKLIST_GEAENDERT, ConfigDialogController.class.getSimpleName());
+            Listener.notify(Listener.EVENT_BLACKLIST_CHANGED, ConfigDialogController.class.getSimpleName());
+        }
+
+        if (diacriticChanged.getValue()) {
+            FilmlistFactory.setDiacritic(true);
+            Listener.notify(Listener.EVENT_DIACRITIC_CHANGED, ConfigDialogController.class.getSimpleName());
         }
 
         configPane.close();
@@ -91,7 +96,7 @@ public class ConfigDialogController extends PDialogExtra {
         downloadPane.close();
         setPane.close();
 
-        Listener.notify(Listener.EREIGNIS_SETDATA_CHANGED, ConfigDialogController.class.getSimpleName());
+        Listener.notify(Listener.EVEMT_SETDATA_CHANGED, ConfigDialogController.class.getSimpleName());
         super.close();
     }
 
@@ -103,7 +108,7 @@ public class ConfigDialogController extends PDialogExtra {
             tab.setContent(configPane);
             tabPane.getTabs().add(tab);
 
-            filmPane = new FilmPaneController(getStage());
+            filmPane = new FilmPaneController(getStage(), diacriticChanged);
             tab = new Tab("Filmliste laden");
             tab.setClosable(false);
             tab.setContent(filmPane);

@@ -37,6 +37,7 @@ public class FilmData extends FilmDataProps {
     public static final String GEO_EU = "EU";
     public static final String GEO_WELT = "WELT";
     private AboData abo = null;
+    public boolean showDiacritic = true; //Diacritic werden angezeigt, ist bei neuem Film so!!
 
 
     public FilmData() {
@@ -67,6 +68,19 @@ public class FilmData extends FilmDataProps {
         //=================================
         // Filmzeit
         setFilmTime();
+
+        //=================================
+        // Diacritic
+        initDiacritic();
+    }
+
+    private void initDiacritic() {
+        if (ProgData.generatingDiacriticDone) {
+            //dann müssen die Diacritic erstellt werden
+            FilmDataFactory.generateDiacritic(this);
+//            //und entsprechend gesetzt werden
+//            FilmDataFactory.setDiacritic(this);
+        }
     }
 
     public void initDate() {

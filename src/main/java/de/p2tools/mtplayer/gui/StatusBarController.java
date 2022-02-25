@@ -118,7 +118,7 @@ public class StatusBarController extends AnchorPane {
             }
         });
 
-        Listener.addListener(new Listener(Listener.EREIGNIS_TIMER, StatusBarController.class.getSimpleName()) {
+        Listener.addListener(new Listener(Listener.EVENT_TIMER, StatusBarController.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 try {

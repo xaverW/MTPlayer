@@ -67,14 +67,14 @@ public class PaneAbo extends ScrollPane {
         this.searchStrOrg = searchStrOrg;
         this.searchStrProp = searchStrProp;
         search = ProgConfig.MEDIA_DIALOG_SEARCH_ABO;
-        listenerDbStart = new Listener(Listener.EREIGNIS_MEDIA_DB_START, MediaDialogController.class.getSimpleName()) {
+        listenerDbStart = new Listener(Listener.EVENT_MEDIA_DB_START, MediaDialogController.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 // neue DB suchen
                 txtSearch.setDisable(true);
             }
         };
-        listenerDbStop = new Listener(Listener.EREIGNIS_MEDIA_DB_STOP, MediaDialogController.class.getSimpleName()) {
+        listenerDbStop = new Listener(Listener.EVENT_MEDIA_DB_STOP, MediaDialogController.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 // neue DB liegt vor

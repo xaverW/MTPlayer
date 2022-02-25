@@ -52,7 +52,7 @@ public class DownloadGuiInfo extends AnchorPane {
         AnchorPane.setRightAnchor(gridPane, 0.0);
         AnchorPane.setTopAnchor(gridPane, 0.0);
 
-        Listener.addListener(new Listener(Listener.EREIGNIS_TIMER, DownloadGuiInfo.class.getSimpleName()) {
+        Listener.addListener(new Listener(Listener.EVENT_TIMER, DownloadGuiInfo.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 setInfoText();

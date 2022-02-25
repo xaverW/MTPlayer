@@ -68,6 +68,7 @@ public class WriteFilmlistJson {
                     jg.writeArrayFieldStart(FilmDataXml.TAG_JSON_LIST);
                     for (int i = 0; i < FilmDataXml.JSON_NAMES.length; ++i) {
                         int m = FilmDataXml.JSON_NAMES[i];
+
                         if (m == FilmDataXml.FILM_CHANNEL) {
                             if (film.arr[m].equals(sender)) {
                                 jg.writeString("");
@@ -75,13 +76,33 @@ public class WriteFilmlistJson {
                                 sender = film.arr[m];
                                 jg.writeString(film.arr[m]);
                             }
+
                         } else if (m == FilmDataXml.FILM_THEME) {
                             if (film.arr[m].equals(theme)) {
                                 jg.writeString("");
                             } else {
-                                theme = film.arr[m];
-                                jg.writeString(film.arr[m]);
+                                if (film.showDiacritic) {
+                                    theme = film.arr[m];
+                                } else {
+                                    theme = film.arr[FilmDataXml.FILM_THEME2];
+                                }
+                                jg.writeString(theme);
                             }
+
+                        } else if (m == FilmDataXml.FILM_TITLE) {
+                            if (film.showDiacritic) {
+                                jg.writeString(film.arr[m]);
+                            } else {
+                                jg.writeString(film.arr[FilmDataXml.FILM_TITLE2]);
+                            }
+
+                        } else if (m == FilmDataXml.FILM_DESCRIPTION) {
+                            if (film.showDiacritic) {
+                                jg.writeString(film.arr[m]);
+                            } else {
+                                jg.writeString(film.arr[FilmDataXml.FILM_DESCRIPTION2]);
+                            }
+
                         } else {
                             jg.writeString(film.arr[m]);
                         }

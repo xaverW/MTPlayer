@@ -98,12 +98,12 @@ public class Filmlist extends SimpleListProperty<FilmData> {
     }
 
 
-    public synchronized boolean importFilm(FilmData film) {
-        // hier nur beim Laden aus einer fertigen Filmliste mit der GUI
-        // die Filme sind schon sortiert, nur die Nummer muss noch ergänzt werden
-        film.no = nr++;
-        return addInit(film);
-    }
+//    public synchronized boolean importFilm(FilmData film) {
+//        // hier nur beim Laden aus einer fertigen Filmliste mit der GUI
+//        // die Filme sind schon sortiert, nur die Nummer muss noch ergänzt werden
+//        film.no = nr++;
+//        return addInit(film);
+//    }
 
     public synchronized boolean importFilmOnlyWithNr(FilmData film) {
         // hier nur beim Laden aus einer fertigen Filmliste mit der GUI
@@ -213,7 +213,7 @@ public class Filmlist extends SimpleListProperty<FilmData> {
     }
 
     private boolean addInit(FilmData film) {
-        film.init();
+//        film.init(); todo
         return add(film);
     }
 

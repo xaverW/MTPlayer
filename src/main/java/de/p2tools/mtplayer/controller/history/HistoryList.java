@@ -107,7 +107,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
             if (bookmark) {
                 FilmlistFactory.clearAllBookmarks();
             }
-            Listener.notify(Listener.EREIGNIS_GUI_HISTORY_CHANGED, HistoryList.class.getSimpleName());
+            Listener.notify(Listener.EVENT_GUI_HISTORY_CHANGED, HistoryList.class.getSimpleName());
 
         }
     }
@@ -352,7 +352,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
             // und nur dann wurde was gelöscht und muss geschrieben werden
             replaceThisList(newHistoryList);
             writeToFile(newHistoryList, false);
-            Listener.notify(Listener.EREIGNIS_GUI_HISTORY_CHANGED, HistoryList.class.getSimpleName());
+            Listener.notify(Listener.EVENT_GUI_HISTORY_CHANGED, HistoryList.class.getSimpleName());
         }
 
         PDuration.counterStop("History: removeFromHistory");

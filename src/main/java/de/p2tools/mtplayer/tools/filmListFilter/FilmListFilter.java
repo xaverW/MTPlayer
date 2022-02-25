@@ -47,7 +47,13 @@ public class FilmListFilter {
             }
         });
 
-        Listener.addListener(new Listener(Listener.EREIGNIS_BLACKLIST_GEAENDERT, FilmListFilter.class.getSimpleName()) {
+        Listener.addListener(new Listener(Listener.EVENT_BLACKLIST_CHANGED, FilmListFilter.class.getSimpleName()) {
+            @Override
+            public void pingFx() {
+                filterList();
+            }
+        });
+        Listener.addListener(new Listener(Listener.EVENT_DIACRITIC_CHANGED, FilmListFilter.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 filterList();

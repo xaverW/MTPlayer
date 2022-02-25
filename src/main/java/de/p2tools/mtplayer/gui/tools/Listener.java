@@ -26,16 +26,17 @@ import java.util.EventListener;
 public class Listener implements EventListener {
     static int count = 0;
 
-    public static final int EREIGNIS_BLACKLIST_GEAENDERT = count++;
-    public static final int EREIGNIS_TIMER = count++;
-    public static final int EREIGNIS_TIMER_HALF_SECOND = count++;
+    public static final int EVENT_BLACKLIST_CHANGED = count++;
+    public static final int EVENT_DIACRITIC_CHANGED = count++;
+    public static final int EVENT_TIMER = count++;
+    public static final int EVENT_TIMER_HALF_SECOND = count++;
 
-    public static final int EREIGNIS_MEDIA_DB_START = count++;
-    public static final int EREIGNIS_MEDIA_DB_STOP = count++;
+    public static final int EVENT_MEDIA_DB_START = count++;
+    public static final int EVENT_MEDIA_DB_STOP = count++;
 
-    public static final int EREIGNIS_REPLACELIST_CHANGED = count++;
-    public static final int EREIGNIS_GUI_HISTORY_CHANGED = count++;
-    public static final int EREIGNIS_SETDATA_CHANGED = count++;
+    public static final int EVENT_REPLACELIST_CHANGED = count++;
+    public static final int EVENT_GUI_HISTORY_CHANGED = count++;
+    public static final int EVEMT_SETDATA_CHANGED = count++;
 
     public int[] event = {-1};
     public String eventClass = "";

@@ -52,7 +52,13 @@ public class FilmDataXml extends Data<FilmDataXml> {
     public static final int FILM_URL_HISTORY = 24;
     public static final int FILM_NEW = 25;
     public static final int FILM_DATE_LONG = 26;
-    public static final int MAX_ELEM = 27;
+
+    public static final int FILM_THEME2 = 27;
+    public static final int FILM_TITLE2 = 28;
+    public static final int FILM_DESCRIPTION2 = 29;
+    public static final int MAX_ELEM = 30;
+    //
+//    public static final int MAX_ELEM = 27;
     public static final String TAG = "Filme";
     public static final String TAG_JSON_LIST = "X";
     public static final String[] COLUMN_NAMES = {"Nr",
@@ -81,7 +87,12 @@ public class FilmDataXml extends Data<FilmDataXml> {
             "Url RTMP HD",
             "Url History",
             "neu",
-            "DatumL"};
+            "DatumL",
+
+            "Thema2",
+            "Titel2",
+            "Beschreibung2"
+    };
     public static final int[] JSON_NAMES = {FILM_CHANNEL,
             FILM_THEME,
             FILM_TITLE,
@@ -101,8 +112,12 @@ public class FilmDataXml extends Data<FilmDataXml> {
             FILM_DATE_LONG,
             FILM_URL_HISTORY,
             FILM_GEO,
-            FILM_NEW};
+            FILM_NEW
+    };
     public final String[] arr = new String[]{"",
+            "",
+            "",
+            "",
             "",
             "",
             "",

@@ -45,13 +45,15 @@ public class FilmPaneController extends PAccordionPane {
     private LoadFilmsPane loadFilmsPane;
     private final PToggleSwitch tglLoad = new PToggleSwitch("Filmliste beim Programmstart laden");
     private TextField txtUrl;
+    private final BooleanProperty diacriticChanged;
 
     private final ProgData progData;
     private final Stage stage;
 
-    public FilmPaneController(Stage stage) {
+    public FilmPaneController(Stage stage, BooleanProperty diacriticChanged) {
         super(stage, ProgConfig.CONFIG_DIALOG_ACCORDION, ProgConfig.SYSTEM_CONFIG_DIALOG_FILM);
         this.stage = stage;
+        this.diacriticChanged = diacriticChanged;
         progData = ProgData.getInstance();
 
         init();
@@ -102,6 +104,25 @@ public class FilmPaneController extends PAccordionPane {
         final Button btnHelp = PButton.helpButton(stage, "Filmliste laden",
                 HelpText.LOAD_FILMLIST_MANUAL);
 
+
+        //Diacritic
+        PToggleSwitch tglRemoveDiacritic = new PToggleSwitch("Diakritische Zeichen ändern");
+        tglRemoveDiacritic.setMaxWidth(Double.MAX_VALUE);
+        tglRemoveDiacritic.setSelected(!ProgConfig.SYSTEM_SHOW_DIACRITICS.getValue());
+        tglRemoveDiacritic.selectedProperty().addListener((observableValue, aBoolean, t1) -> {
+            diacriticChanged.setValue(true);
+            ProgConfig.SYSTEM_SHOW_DIACRITICS.setValue(!tglRemoveDiacritic.isSelected());
+            System.out.println("Show Diacrit: " + ProgConfig.SYSTEM_SHOW_DIACRITICS.getValue());
+        });
+        final Button btnHelpDia = PButton.helpButton(stage, "Diakritische Zeichen",
+                HelpText.DIAKRITISCHE_ZEICHEN);
+
+
+        Separator sp2 = new Separator();
+        sp2.getStyleClass().add("pseperator2");
+        sp2.setMinHeight(0);
+
+
         int row = 0;
 
         gridPane.add(tglLoad, 0, ++row, 2, 1);
@@ -114,6 +135,10 @@ public class FilmPaneController extends PAccordionPane {
         gridPane.add(txtUrl, 0, ++row);
         gridPane.add(btnFile, 1, row);
         gridPane.add(btnHelp, 2, row);
+
+        gridPane.add(new Label(" "), 0, ++row);
+        gridPane.add(tglRemoveDiacritic, 0, ++row, 2, 1);
+        gridPane.add(btnHelpDia, 2, row);
 
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(),
                 PColumnConstraints.getCcPrefSize(),

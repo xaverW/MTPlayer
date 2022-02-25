@@ -37,7 +37,7 @@ public class SearchForFilmlistUpdate {
     }
 
     private void startCheckForFilmlistUpdate() {
-        Listener.addListener(new Listener(Listener.EREIGNIS_TIMER, SearchForFilmlistUpdate.class.getSimpleName()) {
+        Listener.addListener(new Listener(Listener.EVENT_TIMER, SearchForFilmlistUpdate.class.getSimpleName()) {
             @Override
             public void ping() {
                 try {

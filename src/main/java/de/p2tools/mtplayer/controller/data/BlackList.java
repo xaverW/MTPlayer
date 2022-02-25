@@ -87,7 +87,7 @@ public class BlackList extends SimpleListProperty<BlackData> implements PDataLis
 
     public synchronized void filterListAndNotifyListeners() {
         progData.filmlist.filterListWithBlacklist(true);
-        Listener.notify(Listener.EREIGNIS_BLACKLIST_GEAENDERT, BlackList.class.getSimpleName());
+        Listener.notify(Listener.EVENT_BLACKLIST_CHANGED, BlackList.class.getSimpleName());
     }
 
     public synchronized void clearCounter() {

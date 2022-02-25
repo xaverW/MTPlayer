@@ -53,7 +53,16 @@ public class FilmFilterEditDialog extends PDialogExtra {
                 HelpText.GUI_FILMS_EDIT_FILTER);
 
         Button btnOk = new Button("_Ok");
-        btnOk.setOnAction(event -> close());
+        btnOk.setOnAction(event -> {
+//                    if (ProgData.filterDiacritic && !ProgData.isFilteredDiacritic) {
+//                        ProgData.isFilteredDiacritic = true;
+//                        PDuration.counterStart("setDiacritic");
+//                        progData.filmlist.stream().forEach(filmData -> filmData.setDiacritic());
+//                        PDuration.counterStart("setDiacritic");
+//                    }
+                    close();
+                }
+        );
 
         addOkButton(btnOk);
         addHlpButton(btnHelp);
@@ -135,15 +144,15 @@ public class FilmFilterEditDialog extends PDialogExtra {
         vBox.getChildren().add(tglNot);
 
         //Diacritic
-        PToggleSwitch tglDiacritic = new PToggleSwitch("Diakritische Zeichen ändern");
-        tglDiacritic.setMaxWidth(Double.MAX_VALUE);
-        tglDiacritic.setSelected(ProgData.filterDiacritic);
-        tglDiacritic.selectedProperty().addListener((observableValue, aBoolean, t1) -> ProgData.filterDiacritic = tglDiacritic.isSelected());
-
-        Separator sp2 = new Separator();
-        sp2.getStyleClass().add("pseperator2");
-        sp2.setMinHeight(0);
-        vBox.getChildren().addAll(sp2, tglDiacritic);
+//        PToggleSwitch tglDiacritic = new PToggleSwitch("Diakritische Zeichen ändern");
+//        tglDiacritic.setMaxWidth(Double.MAX_VALUE);
+//        tglDiacritic.setSelected(ProgData.filterDiacritic);
+//        tglDiacritic.selectedProperty().addListener((observableValue, aBoolean, t1) -> ProgData.filterDiacritic = tglDiacritic.isSelected());
+//
+//        Separator sp2 = new Separator();
+//        sp2.getStyleClass().add("pseperator2");
+//        sp2.setMinHeight(0);
+//        vBox.getChildren().addAll(sp2, tglDiacritic);
 
         //Wartezeit
         final ToggleGroup group = new ToggleGroup();

@@ -56,7 +56,7 @@ public class MsgMemController extends AnchorPane {
         vBoxCont.getChildren().addAll(lblMem, lineChart);
         this.getChildren().add(vBoxCont);
 
-        Listener.addListener(new Listener(Listener.EREIGNIS_TIMER, MsgMemController.class.getSimpleName()) {
+        Listener.addListener(new Listener(Listener.EVENT_TIMER, MsgMemController.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 searchInfos();

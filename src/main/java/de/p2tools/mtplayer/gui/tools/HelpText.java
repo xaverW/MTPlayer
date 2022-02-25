@@ -412,6 +412,17 @@ public class HelpText {
                     "Bei leerem Feld wird die Filmliste auf herkömmliche Art geladen " +
                     "und die URL dafür wird automatisch gewählt.";
 
+    public static final String DIAKRITISCHE_ZEICHEN =
+            "\"Diakritische Zeichen ändern\" meint, dass bestimmte Zeichen in den " +
+                    "Filmfeldern: \"Titel, Thema und Beschreibung\" " +
+                    "angepasst werden. Aus z.B.\n" +
+                    "\"äöü ń ǹ ň ñ ṅ ņ ṇ ṋ ç č c\" wird dann\n" +
+                    "\"äöü n n n n n n n n c c c\".\n" +
+                    "\n" +
+                    "Das Programm arbeitet dann mit der angepassten " +
+                    "Filmliste. Beim Suchen nach Filmen, Downloads und Abos werden die angepassten Namen für Titel, Thema und " +
+                    "Beschreibung verwendet.";
+
     public static final String SEARCH_ABOS_IMMEDIATELY =
             "Nach dem Neuladen einer Filmliste wird automatisch nach neuen " +
                     "Downloads aus Abos gesucht. Wenn dies ausgeschaltet ist, muss man die " +
