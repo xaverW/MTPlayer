@@ -18,7 +18,6 @@ package de.p2tools.mtplayer.controller.data;
 
 import de.p2tools.p2Lib.configFile.config.Config;
 import de.p2tools.p2Lib.configFile.config.ConfigBoolPropExtra;
-import de.p2tools.p2Lib.configFile.config.ConfigIntExtra;
 import de.p2tools.p2Lib.configFile.config.ConfigStringPropExtra;
 import de.p2tools.p2Lib.configFile.pData.PDataSample;
 import javafx.beans.property.BooleanProperty;
@@ -86,7 +85,7 @@ public class BlackDataProps extends PDataSample<BlackDataProps> {
         list.add(new ConfigBoolPropExtra("themeExact", BLACKLIST_THEME_EXACT, themeExact));
         list.add(new ConfigStringPropExtra("title", BLACKLIST_TITLE, title));
         list.add(new ConfigStringPropExtra("bithemeTitletrate", BLACKLIST_THEME_TITLE, themeTitle));
-        list.add(new ConfigIntExtra("countHits", BLACKLIST_COUNT_HITS, countHits));
+//        list.add(new ConfigInntExtra("countHits", BLACKLIST_COUNT_HITS, countHits));
 
         return list.toArray(new Config[]{});
     }

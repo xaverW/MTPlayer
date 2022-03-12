@@ -17,6 +17,7 @@
 package de.p2tools.mtplayer.gui.startDialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.p2Lib.dialogs.PDirFileChooser;
 import de.p2tools.p2Lib.guiTools.PButton;
@@ -47,6 +48,10 @@ public class DownPathPane {
         gridPane.setVgap(15);
         gridPane.setPadding(new Insets(20));
 
+        if (ProgData.debug) {
+            //dann einen anderen Downloadpfad
+            pathProp.setValue("/tmp/Download");
+        }
         txtPath.textProperty().bindBidirectional(pathProp);
         final Button btnFile = new Button();
         btnFile.setOnAction(event -> {
