@@ -113,7 +113,7 @@ public class AboData extends AboDataXml {
 
 
     public void copyToMe(AboData abo) {
-        for (int i = 0; i < AboFieldNames.MAX_ELEM; ++i) {
+        for (int i = 0; i < this.properties.length; ++i) {
             this.properties[i].setValue(abo.properties[i].getValue());
         }
         this.setSetData(abo.getSetData());
@@ -121,7 +121,7 @@ public class AboData extends AboDataXml {
 
     public AboData getCopy() {
         final AboData ret = new AboData();
-        for (int i = 0; i < AboFieldNames.MAX_ELEM; ++i) {
+        for (int i = 0; i < this.properties.length; ++i) {
             ret.properties[i].setValue(this.properties[i].getValue());
         }
         ret.setSetData(getSetData());

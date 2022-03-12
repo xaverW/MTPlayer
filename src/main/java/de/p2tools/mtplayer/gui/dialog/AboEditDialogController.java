@@ -404,6 +404,12 @@ public class AboEditDialogController extends PDialogExtra {
                 txt[i].setText(aboCopy.getDate().toString());
                 gridPane.add(txt[i], 1, grid);
                 break;
+            case AboFieldNames.ABO_GEN_DATE_NO:
+                txt[i].setEditable(false);
+                txt[i].setDisable(true);
+                txt[i].setText(aboCopy.getGenDate().toString());
+                gridPane.add(txt[i], 1, grid);
+                break;
             case AboFieldNames.ABO_ON_NO:
                 cbxOn.selectedProperty().bindBidirectional(aboCopy.activeProperty());
                 cbxOn.setOnAction(a -> cbxEditAll[i].setSelected(true));

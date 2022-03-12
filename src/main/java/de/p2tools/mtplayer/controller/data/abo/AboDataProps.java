@@ -50,6 +50,7 @@ public class AboDataProps extends PDataSample<AboData> implements Comparable<Abo
     private final StringProperty aboSubDir = new SimpleStringProperty("");
     private final PDateProperty date = new PDateProperty(new PDate(0));//Datum des letzten gefundenen Downloads
     private final StringProperty setDataId = new SimpleStringProperty("");//nur zum Speichern/Laden
+    private final PDateProperty genDate = new PDateProperty(new PDate());//Erstelldatum
 
     private final ObjectProperty<SetData> setData = new SimpleObjectProperty<>();
     private final IntegerProperty hit = new SimpleIntegerProperty(0);
@@ -57,7 +58,7 @@ public class AboDataProps extends PDataSample<AboData> implements Comparable<Abo
 
     public final Property[] properties = {no, active, name, description, resolution,
             channel, theme, themeExact, themeTitle, title, somewhere,
-            timeRange, minDurationMinute, maxDurationMinute, startTime, aboSubDir, date, setDataId};
+            timeRange, minDurationMinute, maxDurationMinute, startTime, aboSubDir, date, setDataId, genDate};
 
     public String getStringOf(int i) {
         return String.valueOf(properties[i].getValue());
@@ -89,6 +90,7 @@ public class AboDataProps extends PDataSample<AboData> implements Comparable<Abo
         list.add(new ConfigStringPropExtra("aboSubDir", AboFieldNames.ABO_SUB_DUR, aboSubDir));
         list.add(new ConfigPDateProp("date", AboFieldNames.ABO_DATE, date));
         list.add(new ConfigStringPropExtra("setDataId", AboFieldNames.ABO_SET_DATA_ID, setDataId));
+        list.add(new ConfigPDateProp("genDate", AboFieldNames.ABO_DATE, genDate));
         return list.toArray(new Config[]{});
     }
 
@@ -343,6 +345,18 @@ public class AboDataProps extends PDataSample<AboData> implements Comparable<Abo
 
     public void setSetDataId(String setDataId) {
         this.setDataId.set(setDataId);
+    }
+
+    public PDate getGenDate() {
+        return genDate.get();
+    }
+
+    public PDateProperty genDateProperty() {
+        return genDate;
+    }
+
+    public void setGenDate(PDate genDate) {
+        this.genDate.set(genDate);
     }
 
     public int getHit() {

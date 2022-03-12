@@ -37,8 +37,8 @@ public class AboFieldNames {
     public static final String ABO_SUB_DUR = "Zielpfad";
     public static final String ABO_DATE = "letztes Abo";
     public static final String ABO_SET_DATA_ID = "Programmset";
+    public static final String ABO_GEN_DATE = "Angelegt";
 
-    public static final int ABO_THEME_EXACT_NO = 7;
     public static final int ABO_NO_NO = 0;
     public static final int ABO_ON_NO = 1;
     public static final int ABO_NAME_NO = 2;
@@ -46,6 +46,7 @@ public class AboFieldNames {
     public static final int ABO_RESOLUTION_NO = 4;
     public static final int ABO_CHANNEL_NO = 5;
     public static final int ABO_THEME_NO = 6;
+    public static final int ABO_THEME_EXACT_NO = 7;
     public static final int ABO_THEME_TITLE_NO = 8;
     public static final int ABO_TITLE_NO = 9;
     public static final int ABO_SOMEWHERE_NO = 10;
@@ -56,8 +57,10 @@ public class AboFieldNames {
     public static final int ABO_DEST_PATH_NO = 15;
     public static final int ABO_DOWN_DATE_NO = 16;
     public static final int ABO_SET_DATA_ID_NO = 17;
+    public static final int ABO_GEN_DATE_NO = 18;
 
-    public static final String[] COLUMN_NAMES = {ABO_NO,
+    public static final String[] COLUMN_NAMES = {
+            ABO_NO,
             ABO_ACTIV,
             ABO_NAME,
             ABO_DESCRIPTION,
@@ -74,8 +77,9 @@ public class AboFieldNames {
             ABO_START_TIME,
             ABO_SUB_DUR,
             ABO_DATE,
-            ABO_SET_DATA_ID};
-    
+            ABO_SET_DATA_ID,
+            ABO_GEN_DATE};
+
     public static final String[] XML_NAMES = {"Nr",
             "aktiv",
             "Name",
@@ -93,7 +97,8 @@ public class AboFieldNames {
             "Startzeit",
             "Zielpfad",
             "letztes_Abo",
-            "Programmset"};
+            "Programmset",
+            "Erstellt"};
 
     public static int MAX_ELEM = XML_NAMES.length;
 }

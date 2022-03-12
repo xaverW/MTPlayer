@@ -82,7 +82,7 @@ public class TableAbo {
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         titleColumn.getStyleClass().add("alignCenterLeft");
 
-        final TableColumn<AboData, String> somewhereColumn = new TableColumn<>("irgendwo");
+        final TableColumn<AboData, String> somewhereColumn = new TableColumn<>("Irgendwo");
         somewhereColumn.setCellValueFactory(new PropertyValueFactory<>("somewhere"));
         somewhereColumn.getStyleClass().add("alignCenterLeft");
 
@@ -91,12 +91,12 @@ public class TableAbo {
         timeRange.setCellValueFactory(new PropertyValueFactory<>("timeRange"));
         timeRange.getStyleClass().add("alignCenter");
 
-        final TableColumn<AboData, Integer> minColumn = new TableColumn<>("min");
+        final TableColumn<AboData, Integer> minColumn = new TableColumn<>("Min");
         minColumn.setCellFactory(cellFactoryMin);
         minColumn.setCellValueFactory(new PropertyValueFactory<>("minDurationMinute"));
         minColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<AboData, Integer> maxColumn = new TableColumn<>("max");
+        final TableColumn<AboData, Integer> maxColumn = new TableColumn<>("Max");
         maxColumn.setCellFactory(cellFactoryMax);
         maxColumn.setCellValueFactory(new PropertyValueFactory<>("maxDurationMinute"));
         maxColumn.getStyleClass().add("alignCenter");
@@ -109,7 +109,7 @@ public class TableAbo {
         destinationColumn.setCellValueFactory(new PropertyValueFactory<>("aboSubDir"));
         destinationColumn.getStyleClass().add("alignCenterLeft");
 
-        final TableColumn<AboData, PDate> datumColumn = new TableColumn<>("Datum");
+        final TableColumn<AboData, PDate> datumColumn = new TableColumn<>("Letztes Abo");
         datumColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         datumColumn.getStyleClass().add("alignCenter");
 
@@ -117,10 +117,15 @@ public class TableAbo {
         psetColumn.setCellValueFactory(new PropertyValueFactory<>("setData"));//liefert den Namen: toString()
         psetColumn.getStyleClass().add("alignCenterLeft");
 
+        final TableColumn<AboData, PDate> genDateColumn = new TableColumn<>("Angelegt");
+        genDateColumn.setCellValueFactory(new PropertyValueFactory<>("genDate"));
+        genDateColumn.getStyleClass().add("alignCenter");
+
         return new TableColumn[]{
                 nrColumn, activColumn, hitColumn, nameColumn, resColumn, senderColumn,
                 themeColumn, themeExactColumn, themeTitleColumn, titleColumn,
-                somewhereColumn, timeRange, minColumn, maxColumn, startTimeColumn, destinationColumn, datumColumn, psetColumn};
+                somewhereColumn, timeRange, minColumn, maxColumn, startTimeColumn,
+                destinationColumn, datumColumn, psetColumn, genDateColumn};
 
     }
 
