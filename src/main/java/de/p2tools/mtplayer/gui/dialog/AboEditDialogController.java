@@ -333,7 +333,7 @@ public class AboEditDialogController extends PDialogExtra {
         final int grid = getGridLine(i);
         switch (i) {
             case AboFieldNames.ABO_THEME_EXACT_NO:
-                lbl[i].setText("  exakt:");
+                lbl[i].setText("   Exakt:");
                 gridPane.add(lbl[i], 0, grid);
                 break;
             case AboFieldNames.ABO_MIN_DURATION_NO:

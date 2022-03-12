@@ -20,22 +20,22 @@ package de.p2tools.mtplayer.controller.data.abo;
 public class AboFieldNames {
 
     public static final String ABO_NO = "Nr";
-    public static final String ABO_ACTIV = "aktiv";
+    public static final String ABO_ACTIV = "Aktiv";
     public static final String ABO_NAME = "Name";
     public static final String ABO_DESCRIPTION = "Beschreibung";
-    public static final String ABO__RESOLUTION = "Aufloesung";
+    public static final String ABO__RESOLUTION = "Auflösung";
     public static final String ABO_CHANNEL = "Sender";
     public static final String ABO_THEME = "Thema";
-    public static final String ABO_THEME_EXACT = "exakt";
+    public static final String ABO_THEME_EXACT = "Exakt";
     public static final String ABO_THEME_TITLE = "Thema-Titel";
     public static final String ABO_TITLE = "Titel";
     public static final String ABO_SOMEWHERE = "Irgendwo";
     public static final String ABO_TIME_RANGE = "Zeitraum";
-    public static final String ABO_MIN_DURATION = "min. Dauer";
-    public static final String ABO_MAX_DURATION = "max. Dauer";
+    public static final String ABO_MIN_DURATION = "Min. Dauer";
+    public static final String ABO_MAX_DURATION = "Max. Dauer";
     public static final String ABO_START_TIME = "Startzeit";
     public static final String ABO_SUB_DUR = "Zielpfad";
-    public static final String ABO_DATE = "letztes Abo";
+    public static final String ABO_DATE = "Letztes Abo";
     public static final String ABO_SET_DATA_ID = "Programmset";
     public static final String ABO_GEN_DATE = "Angelegt";
 

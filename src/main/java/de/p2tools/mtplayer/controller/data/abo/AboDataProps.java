@@ -90,7 +90,7 @@ public class AboDataProps extends PDataSample<AboData> implements Comparable<Abo
         list.add(new ConfigStringPropExtra("aboSubDir", AboFieldNames.ABO_SUB_DUR, aboSubDir));
         list.add(new ConfigPDateProp("date", AboFieldNames.ABO_DATE, date));
         list.add(new ConfigStringPropExtra("setDataId", AboFieldNames.ABO_SET_DATA_ID, setDataId));
-        list.add(new ConfigPDateProp("genDate", AboFieldNames.ABO_DATE, genDate));
+        list.add(new ConfigPDateProp("genDate", AboFieldNames.ABO_GEN_DATE, genDate));
         return list.toArray(new Config[]{});
     }
 
