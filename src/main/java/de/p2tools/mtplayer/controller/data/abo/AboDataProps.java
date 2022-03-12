@@ -25,6 +25,7 @@ import de.p2tools.p2Lib.configFile.config.*;
 import de.p2tools.p2Lib.configFile.pData.PDataSample;
 import de.p2tools.p2Lib.tools.date.PDate;
 import de.p2tools.p2Lib.tools.date.PDateFactory;
+import de.p2tools.p2Lib.tools.date.PDateProperty;
 import javafx.beans.property.*;
 
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class AboDataProps extends PDataSample<AboData> implements Comparable<Abo
     private final IntegerProperty maxDurationMinute = new SimpleIntegerProperty(FilmFilter.FILTER_DURATION_MAX_MINUTE); //Minuten
     private final StringProperty startTime = new SimpleStringProperty("");
     private final StringProperty aboSubDir = new SimpleStringProperty("");
-    private final ObjectProperty<PDate> date = new SimpleObjectProperty<>(new PDate(0));
+    private final PDateProperty date = new PDateProperty(new PDate(0));//Datum des letzten gefundenen Downloads
     private final StringProperty setDataId = new SimpleStringProperty("");//nur zum Speichern/Laden
 
     private final ObjectProperty<SetData> setData = new SimpleObjectProperty<>();
@@ -86,7 +87,7 @@ public class AboDataProps extends PDataSample<AboData> implements Comparable<Abo
         list.add(new ConfigIntPropExtra("maxDurationMinute", AboFieldNames.ABO_MAX_DURATION, maxDurationMinute));
         list.add(new ConfigStringPropExtra("startTime", AboFieldNames.ABO_START_TIME, startTime));
         list.add(new ConfigStringPropExtra("aboSubDir", AboFieldNames.ABO_SUB_DUR, aboSubDir));
-        list.add(new ConfigPDate("date", AboFieldNames.ABO_DATE, date.getValue()));
+        list.add(new ConfigPDateProp("date", AboFieldNames.ABO_DATE, date));
         list.add(new ConfigStringPropExtra("setDataId", AboFieldNames.ABO_SET_DATA_ID, setDataId));
         return list.toArray(new Config[]{});
     }
@@ -318,7 +319,7 @@ public class AboDataProps extends PDataSample<AboData> implements Comparable<Abo
         return date.get();
     }
 
-    public ObjectProperty dateProperty() {
+    public PDateProperty dateProperty() {
         return date;
     }
 
@@ -326,7 +327,7 @@ public class AboDataProps extends PDataSample<AboData> implements Comparable<Abo
         this.date.set(date);
     }
 
-    public void setDatum(String date, String time) {
+    public void setDate(String date, String time) {
         PDate d = new PDate();
         d.setPDate(date, time, PDateFactory.F_FORMAT_dd_MM_yyyy, PDateFactory.F_FORMAT_dd_MM_yyyyHH_mm_ss);
         this.date.setValue(d);

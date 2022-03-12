@@ -128,10 +128,10 @@ public class DownloadListAbo {
                 return;
             }
 
+            //dann haben wird einen Treffer :)
+            //und dann auch in die Liste schreiben
             abo.setDate(new PDate());
             final SetData setData = abo.getSetData(progData);
-
-            // dann in die Liste schreiben
             syncDownloadArrayList.add(new DownloadData(setData, film, DownloadConstants.SRC_ABO, abo, "", "", ""));
             found = true;
         });

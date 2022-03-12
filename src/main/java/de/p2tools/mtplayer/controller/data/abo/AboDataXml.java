@@ -53,7 +53,7 @@ public class AboDataXml extends AboDataProps {
         setStartTime(arr[AboFieldNames.ABO_START_TIME_NO]);
 
         setAboSubDir(arr[AboFieldNames.ABO_DEST_PATH_NO]);
-        setDatum(arr[AboFieldNames.ABO_DOWN_DATE_NO], "");
+        setDate(arr[AboFieldNames.ABO_DOWN_DATE_NO], "");
         setSetDataId(arr[AboFieldNames.ABO_SET_DATA_ID_NO]);
     }
 
