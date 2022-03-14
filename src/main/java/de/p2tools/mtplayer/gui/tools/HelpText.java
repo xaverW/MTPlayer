@@ -437,6 +437,10 @@ public class HelpText {
             "Im System Tray wird für das Programm ein Symbol angezeigt. " +
                     "Damit kann das Programm auf dem Desktop ausgeblendet werden.";
 
+    public static final String TRAY_OWN_ICON =
+            "Im System Tray wird für das Programm ein Symbol angezeigt. " +
+                    "Damit kann ein eigens Bild dafür verwendet werden.";
+
     public static final String TIP_OF_DAY =
             "Beim Programmstart wird (einmal täglich) ein Tip zur Verwendung " +
                     "des Programms angezeigt. Das passiert so oft, bis alle Tips " +

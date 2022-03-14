@@ -124,6 +124,8 @@ public class ProgConfig extends PDataProgConfig {
 
     // Configs
     public static BooleanProperty SYSTEM_TRAY = addBool("system-tray", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_TRAY_USE_OWN_ICON = addBool("system-tray-own-icon", Boolean.FALSE);
+    public static StringProperty SYSTEM_TRAY_ICON_PATH = addStr("system-tray-icon", ""); //ein eigenes Tray-Icon
     public static StringProperty SYSTEM_USERAGENT = addStr("system-useragent", ProgConst.USER_AGENT_DEFAULT); //Useragent für direkte Downloads
     public static BooleanProperty SYSTEM_USE_REPLACETABLE = addBool("system-use-replacetable", SystemUtils.IS_OS_LINUX ? Boolean.TRUE : Boolean.FALSE);
     public static BooleanProperty SYSTEM_ONLY_ASCII = addBool("system-only-ascii", Boolean.FALSE);

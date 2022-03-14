@@ -73,14 +73,14 @@ public class ConfigPaneController extends PAccordionPane {
     StringProperty propLogDir = ProgConfig.SYSTEM_LOG_DIR;
     BooleanProperty propSizeFilm = ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM;
     BooleanProperty propSizeDownload = ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD;
-    BooleanProperty propTray = ProgConfig.SYSTEM_TRAY;
+    //    BooleanProperty propTray = ProgConfig.SYSTEM_TRAY;
     BooleanProperty propTipOfDay = ProgConfig.TIP_OF_DAY_SHOW;
 
     private final PToggleSwitch tglSearchAbo = new PToggleSwitch("Abos automatisch suchen:");
     private final PToggleSwitch tglStartDownload = new PToggleSwitch("Downloads aus Abos sofort starten:");
     private final PToggleSwitch tglSmallFilm = new PToggleSwitch("In der Tabelle \"Film\" nur kleine Button anzeigen:");
     private final PToggleSwitch tglSmallDownload = new PToggleSwitch("In der Tabelle \"Download\" nur kleine Button anzeigen:");
-    private final PToggleSwitch tglTray = new PToggleSwitch("Programm im System Tray anzeigen");
+    //    private final PToggleSwitch tglTray = new PToggleSwitch("Programm im System Tray anzeigen");
     private final PToggleSwitch tglTipOfDay = new PToggleSwitch("Tip des Tages anzeigen");
     private TextField txtUserAgent;
     private final PToggleSwitch tglEnableLog = new PToggleSwitch("Ein Logfile anlegen:");
@@ -91,6 +91,7 @@ public class ConfigPaneController extends PAccordionPane {
     private TextField txtShortCut;
 
     private final Stage stage;
+    private TrayPane trayPane;
     private ColorPane colorPane;
     private ShortcutPane shortcutPane;
     private GeoPane geoPane;
@@ -107,6 +108,7 @@ public class ConfigPaneController extends PAccordionPane {
     @Override
     public void close() {
         super.close();
+        trayPane.close();
         colorPane.close();
         shortcutPane.close();
         geoPane.close();
@@ -115,7 +117,7 @@ public class ConfigPaneController extends PAccordionPane {
         tglStartDownload.selectedProperty().unbindBidirectional(propDown);
         tglSmallFilm.selectedProperty().unbindBidirectional(propSizeFilm);
         tglSmallDownload.selectedProperty().unbindBidirectional(propSizeDownload);
-        tglTray.selectedProperty().unbindBidirectional(propTray);
+//        tglTray.selectedProperty().unbindBidirectional(propTray);
         tglTipOfDay.selectedProperty().unbindBidirectional(propTipOfDay);
         txtUserAgent.textProperty().unbindBidirectional(ProgConfig.SYSTEM_USERAGENT);
         tglEnableLog.selectedProperty().unbindBidirectional(propLog);
@@ -132,6 +134,8 @@ public class ConfigPaneController extends PAccordionPane {
     public Collection<TitledPane> createPanes() {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
         makeConfig(result);
+        trayPane = new TrayPane(stage);
+        trayPane.makeTray(result);
         makeLogfile(result);
         colorPane = new ColorPane(stage);
         colorPane.makeColor(result);
@@ -174,10 +178,10 @@ public class ConfigPaneController extends PAccordionPane {
                 HelpText.SMALL_BUTTON);
         GridPane.setHalignment(btnHelpSize, HPos.RIGHT);
 
-        tglTray.selectedProperty().bindBidirectional(propTray);
-        final Button btnHelpTray = PButton.helpButton(stage, "Programm im System Tray anzeigen",
-                HelpText.TRAY);
-        GridPane.setHalignment(btnHelpTray, HPos.RIGHT);
+//        tglTray.selectedProperty().bindBidirectional(propTray);
+//        final Button btnHelpTray = PButton.helpButton(stage, "Programm im System Tray anzeigen",
+//                HelpText.TRAY);
+//        GridPane.setHalignment(btnHelpTray, HPos.RIGHT);
 
         tglTipOfDay.selectedProperty().bindBidirectional(propTipOfDay);
         final Button btnHelpTipOfDay = PButton.helpButton(stage, "Tip des Tages anzeigen",
@@ -225,9 +229,9 @@ public class ConfigPaneController extends PAccordionPane {
         gridPane.add(btnHelpSize, 2, row);
         gridPane.add(tglSmallDownload, 0, ++row, 2, 1);
 
-        gridPane.add(new Label(" "), 0, ++row);
-        gridPane.add(tglTray, 0, ++row, 2, 1);
-        gridPane.add(btnHelpTray, 2, row);
+//        gridPane.add(new Label(" "), 0, ++row);
+//        gridPane.add(tglTray, 0, ++row, 2, 1);
+//        gridPane.add(btnHelpTray, 2, row);
 
         gridPane.add(new Label(" "), 0, ++row);
         gridPane.add(tglTipOfDay, 0, ++row, 2, 1);

@@ -30,6 +30,7 @@ import de.p2tools.p2Lib.tools.log.PLog;
 import de.p2tools.p2Lib.tools.log.PLogger;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.StringProperty;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -40,17 +41,24 @@ import java.util.Arrays;
 public class ProgTray {
     private final ProgData progData;
     private BooleanProperty propTray = ProgConfig.SYSTEM_TRAY;
+    private BooleanProperty propTrayUseOwnIcon = ProgConfig.SYSTEM_TRAY_USE_OWN_ICON;
+    private StringProperty propTrayIconPath = ProgConfig.SYSTEM_TRAY_ICON_PATH;
     private SystemTray systemTray = null;
     private boolean stopTimer = false;
 
     public ProgTray(ProgData progData) {
         this.progData = progData;
+    }
+
+    public void initProgTray() {
         propTray.addListener((observableValue, aBoolean, t1) -> {
-            if (propTray.get()) {
-                setTray();
-            } else {
-                removeTray();
-            }
+            Platform.runLater(() -> setTray());
+        });
+        propTrayUseOwnIcon.addListener((observableValue, aBoolean, t1) -> {
+            Platform.runLater(() -> setTray());
+        });
+        propTrayIconPath.addListener((observableValue, aBoolean, t1) -> {
+            Platform.runLater(() -> setTray());
         });
         Listener.addListener(new Listener(Listener.EVENT_TIMER, StatusBarController.class.getSimpleName()) {
             @Override
@@ -78,24 +86,50 @@ public class ProgTray {
                 stopTimer = false;
             }
         });
+        setTray();
     }
 
-    public void removeTray() {
+    private void removeTray() {
         if (systemTray != null) {
             Arrays.stream(systemTray.getTrayIcons()).sequential().forEach(e -> systemTray.remove(e));
             systemTray = null;
         }
     }
 
-    public void setTray() {
+    private void setTray() {
         if (!SystemTray.isSupported()) {
             return;
         }
+        if (!propTray.get()) {
+            removeTray();
+            return;
+        }
 
-        systemTray = SystemTray.getSystemTray();
-        String resource = "/de/p2tools/mtplayer/res/P2_24.png";
-        URL res = getClass().getResource(resource);
-        Image image = Toolkit.getDefaultToolkit().getImage(res);
+        if (systemTray == null) {
+            systemTray = SystemTray.getSystemTray();
+        }
+        setIcon();
+    }
+
+    private void setIcon() {
+        if (systemTray == null) {
+            return;
+        }
+
+        for (TrayIcon tr : systemTray.getTrayIcons()) {
+            //vorhandene Icons erst mal entfernen
+            systemTray.remove(tr);
+        }
+
+        Image image;
+        if (propTrayUseOwnIcon.getValue() && !propTrayIconPath.getValueSafe().isEmpty()) {
+            String resource = propTrayIconPath.getValueSafe();
+            image = Toolkit.getDefaultToolkit().getImage(resource);
+        } else {
+            String resource = "/de/p2tools/mtplayer/res/P2_24.png";
+            URL res = getClass().getResource(resource);
+            image = Toolkit.getDefaultToolkit().getImage(res);
+        }
 
         TrayIcon trayicon = new TrayIcon(image, "MTPlayer");
         addMenu(trayicon);
@@ -116,7 +150,7 @@ public class ProgTray {
         }
     }
 
-    public void addMenu(TrayIcon trayicon) {
+    private void addMenu(TrayIcon trayicon) {
 //        "1 aktiver Download (76,3%; 2.304 # 3019 MB, 6,2 MB/s, 3,2 Minuten verbleibend), 2 wartende Downloads" (so als Beispiel)
 //        Die Ausgabe von "1 aktiver ..." könnte man auch als MouseOver-Funktion vom TrayIcon implementieren. Nur so als Idee.
 
@@ -166,10 +200,8 @@ public class ProgTray {
 
     private void maxMin() {
         if (progData.primaryStage.isShowing()) {
-            System.out.println("   close");
             Platform.runLater(() -> progData.primaryStage.close());
         } else {
-            System.out.println("   show");
             PGuiSize.showSave(progData.primaryStage);
         }
 

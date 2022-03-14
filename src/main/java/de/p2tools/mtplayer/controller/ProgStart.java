@@ -53,6 +53,7 @@ public class ProgStart {
         GetIcon.addWindowP2Icon(progData.primaryStage);
         startMsg();
         setTitle(progData);
+        progData.progTray.initProgTray();
 
         progData.startTimer();
         progData.loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
@@ -116,6 +117,7 @@ public class ProgStart {
         PLog.sysLog("Konfig wurde gelesen!");
         UpdateConfig.update(); // falls es ein Programmupdate gab, Configs anpassen
         ProgColorList.setColorTheme(); // Farben einrichten
+//        ProgData.getInstance().progTray.setIcon();//wenn eigenes Icon gewählt, dann notwendig
         return true;
     }
 
