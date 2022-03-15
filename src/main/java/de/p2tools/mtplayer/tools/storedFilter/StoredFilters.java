@@ -92,6 +92,18 @@ public final class StoredFilters {
         addBackward();
     }
 
+    public BooleanProperty filterChangeProperty() {
+        return filterChange;
+    }
+
+    public BooleanProperty backwardProperty() {
+        return backward;
+    }
+
+    public BooleanProperty forwardProperty() {
+        return forward;
+    }
+
     /**
      * liefert den aktuell angezeigten Filter
      *
@@ -372,17 +384,5 @@ public final class StoredFilters {
         // dann hat sich auch Blacklist-ein/aus geändert
         progData.filmlist.filterListWithBlacklist(false);
         setFilterChange();
-    }
-
-    public BooleanProperty filterChangeProperty() {
-        return filterChange;
-    }
-
-    public BooleanProperty backwardProperty() {
-        return backward;
-    }
-
-    public BooleanProperty forwardProperty() {
-        return forward;
     }
 }
