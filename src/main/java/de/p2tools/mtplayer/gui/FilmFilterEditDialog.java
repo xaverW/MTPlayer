@@ -90,6 +90,21 @@ public class FilmFilterEditDialog extends PDialogExtra {
                 progData.storedFilters.getActFilterSettings().themeExactProperty().setValue(!newValue));
 //        tglThemeExact.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().themeExactProperty());
 
+
+        //javaBug
+        //ThemeExact
+        //https://bugs.openjdk.java.net/browse/JDK-8116061
+        tglThemeExact.disableProperty().bind(ProgConfig.SYSTEM_FILTER_RETURN);
+        if (ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
+            tglThemeExact.setSelected(false);
+        }
+        ProgConfig.SYSTEM_FILTER_RETURN.addListener((u, o, n) -> {
+            if (ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
+                tglThemeExact.setSelected(false);
+            }
+        });
+
+
         v.getChildren().add(tglThemeExact);
         vBox.getChildren().add(v);
 

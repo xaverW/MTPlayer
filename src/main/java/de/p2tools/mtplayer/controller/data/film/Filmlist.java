@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.tools.filmListFilter.FilmlistBlackFilter;
 import de.p2tools.p2Lib.tools.duration.PDuration;
+import de.p2tools.p2Lib.tools.log.PDebugLog;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
@@ -81,8 +82,14 @@ public class Filmlist extends SimpleListProperty<FilmData> {
         return filteredList;
     }
 
+    int count = 0;
+
     public synchronized void filteredListSetPred(Predicate<FilmData> predicate) {
+        PDebugLog.sysLog("=================> Filter: " + ++count);
+        PDuration.counterStart("FilmListFilter.filterList");
         filteredList.setPredicate(predicate);
+        PDuration.counterStop("FilmListFilter.filterList");
+
     }
 
     public String getFilmlistId() {

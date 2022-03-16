@@ -47,10 +47,6 @@ public class FilmFilterControllerClearFilter extends VBox {
         addButton();
     }
 
-//    public void setClearText(String txt) {
-////        btnClearFilter.setText(txt);
-//    }
-
     private void addButton() {
         btnGoBack.setGraphic(new ProgIcons().ICON_BUTTON_BACKWARD);
         btnGoBack.setOnAction(a -> progData.storedFilters.goBackward());

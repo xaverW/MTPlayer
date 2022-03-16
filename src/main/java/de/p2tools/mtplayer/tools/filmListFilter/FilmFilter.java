@@ -179,20 +179,6 @@ public class FilmFilter {
         return true;
     }
 
-//    public static boolean checkThemeDiacritic(Filter theme, FilmData film) {
-//        if (theme.exact) {
-//            // da ist keine Form optimal?? aber so passt es zur Sortierung der Themenliste
-//            if (!theme.filter.equalsIgnoreCase(DiacriticFactory.flattenDiacritic(film.arr[FilmDataXml.FILM_THEME]))) {
-//                return false;
-//            }
-//        } else {
-//            if (!check(theme, DiacriticFactory.flattenDiacritic(film.arr[FilmDataXml.FILM_THEME]))) {
-//                return false;
-//            }
-//        }
-//        return true;
-//    }
-
     public static boolean checkThemeTitle(Filter themeTitle, FilmData film) {
         if (!check(themeTitle, film.arr[FilmDataXml.FILM_THEME])
                 && !check(themeTitle, film.arr[FilmDataXml.FILM_TITLE])) {
@@ -201,27 +187,12 @@ public class FilmFilter {
         return true;
     }
 
-//    public static boolean checkThemeTitleDiacritic(Filter themeTitle, FilmData film) {
-//        if (!check(themeTitle, DiacriticFactory.flattenDiacritic(film.arr[FilmDataXml.FILM_THEME]))
-//                && !check(themeTitle, DiacriticFactory.flattenDiacritic(film.arr[FilmDataXml.FILM_TITLE]))) {
-//            return false;
-//        }
-//        return true;
-//    }
-
     public static boolean checkTitle(Filter title, FilmData film) {
         if (!check(title, film.arr[FilmDataXml.FILM_TITLE])) {
             return false;
         }
         return true;
     }
-
-//    public static boolean checkTitleDiacritic(Filter title, FilmData film) {
-//        if (!check(title, DiacriticFactory.flattenDiacritic(film.arr[FilmDataXml.FILM_TITLE]))) {
-//            return false;
-//        }
-//        return true;
-//    }
 
     public static boolean checkSomewhere(Filter somewhere, FilmData film) {
         if (!check(somewhere, film.arr[FilmDataXml.FILM_DATE])
@@ -232,16 +203,6 @@ public class FilmFilter {
         }
         return true;
     }
-
-//    public static boolean checkSomewhereDiacritic(Filter somewhere, FilmData film) {
-//        if (!check(somewhere, film.arr[FilmDataXml.FILM_DATE])
-//                && !check(somewhere, DiacriticFactory.flattenDiacritic(film.arr[FilmDataXml.FILM_THEME]))
-//                && !check(somewhere, DiacriticFactory.flattenDiacritic(film.arr[FilmDataXml.FILM_TITLE]))
-//                && !check(somewhere, DiacriticFactory.flattenDiacritic(film.arr[FilmDataXml.FILM_DESCRIPTION]))) {
-//            return false;
-//        }
-//        return true;
-//    }
 
     private static boolean checkMaxDays(int maxDays, FilmData film) {
         long days = 0;
@@ -279,20 +240,6 @@ public class FilmFilter {
 
         return true;
     }
-
-    public static boolean checkShowDate(String showDate, FilmData film) {
-        if (showDate.isEmpty() || film.filmDate.isEmpty()) {
-            //dann will der User nicht oder der Film hat kein Datum
-            return true;
-        }
-
-        if (film.arr[FilmDataXml.FILM_DATE].equals(showDate)) {
-            return true;
-        }
-
-        return false;
-    }
-
 
     public static boolean checkLengthMin(int filterLaenge, long filmLength) {
         return filterLaenge == 0 || filmLength == 0 || filmLength >= filterLaenge;

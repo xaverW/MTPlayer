@@ -21,8 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
 import de.p2tools.mtplayer.gui.tools.Listener;
-import de.p2tools.p2Lib.tools.duration.PDuration;
-import de.p2tools.p2Lib.tools.log.PDebugLog;
+import de.p2tools.mtplayer.tools.storedFilter.PredicateFactory;
 import javafx.application.Platform;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -68,31 +67,26 @@ public class FilmListFilter {
     private static final AtomicBoolean search = new AtomicBoolean(false);
     private static final AtomicBoolean research = new AtomicBoolean(false);
 
-    int count = 0;
-
     private void filterList() {
         // ist etwas "umständlich", scheint aber am flüssigsten zu laufen
         if (!search.getAndSet(true)) {
             research.set(false);
-            Thread th = new Thread(() -> {
-                try {
-                    Platform.runLater(() -> {
-                        PDebugLog.sysLog("=================> Filter: " + ++count);
-                        PDuration.counterStart("FilmListFilter.filterList");
-                        progData.filmlistFiltered.filteredListSetPred(progData.storedFilters.getActFilterSettings().getPredicate());
-                        PDuration.counterStop("FilmListFilter.filterList");
-                        search.set(false);
-                        if (research.get()) {
-                            filterList();
-                        }
-                    });
-                } catch (Exception ex) {
-                    ex.printStackTrace(); //todo???
-                }
-            });
-
-            th.setName("filterList");
-            th.start();
+//            Thread th = new Thread(() -> {
+            try {
+                Platform.runLater(() -> {
+                    progData.filmlistFiltered.filteredListSetPred(
+                            PredicateFactory.getPredicate(progData.storedFilters.getActFilterSettings()));
+                    search.set(false);
+                    if (research.get()) {
+                        filterList();
+                    }
+                });
+            } catch (Exception ex) {
+                ex.printStackTrace(); //todo???
+            }
+//            });
+//            th.setName("filterList");
+//            th.start();
         } else {
             research.set(true);
         }
