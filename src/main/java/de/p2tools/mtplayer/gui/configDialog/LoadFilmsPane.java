@@ -151,7 +151,9 @@ public class LoadFilmsPane {
 
         if (progData != null) {
             // im Startdialog brauchts das noch nicht
-            Button btnLoad = new Button("Filmliste _jetzt laden");
+            Button btnLoad = new Button("_Filmliste mit diesen Einstellungen neu laden");
+            btnLoad.setTooltip(new Tooltip("Eine komplette neue Filmliste laden.\n" +
+                    "Geänderte Einstellungen für das Laden der Filmliste werden so sofort übernommen"));
             btnLoad.setOnAction(event -> {
                 progData.loadFilmlist.loadNewFilmlistFromServer(true);
             });

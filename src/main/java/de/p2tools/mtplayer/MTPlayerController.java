@@ -134,10 +134,18 @@ public class MTPlayerController extends StackPane {
     private void initButton() {
         btnFilmlist.setMinWidth(Region.USE_PREF_SIZE);
         btnFilmlist.getStyleClass().add("btnFilmlist");
-        btnFilmlist.setTooltip(new Tooltip("neue Filmliste laden"));
+        btnFilmlist.setTooltip(new Tooltip("Eine neue Filmliste laden.\n" +
+                "Wenn die Filmliste nicht zu alt ist, wird nur ein Update geladen.\n" +
+                "Mit der rechten Maustaste wird immer die komplette Filmliste geladen."));
         btnFilmlist.setOnAction(e -> {
             progData.loadFilmlist.loadNewFilmlistFromServer();
         });
+        btnFilmlist.setOnMouseClicked(mouseEvent -> {
+            if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+                progData.loadFilmlist.loadNewFilmlistFromServer(true);
+            }
+        });
+
 
         progData.loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
 
@@ -156,7 +164,7 @@ public class MTPlayerController extends StackPane {
                 setFocus();
             }
         });
-        
+
         btnFilm.setTooltip(new Tooltip("Filme anzeigen"));
         btnFilm.setOnAction(e -> selPanelFilm());
         btnFilm.setMaxWidth(Double.MAX_VALUE);
