@@ -104,7 +104,7 @@ public class FilmFilterDialog extends PDialogExtra {
             protected void updateItem(SelectedFilter item, boolean empty) {
                 super.updateItem(item, empty);
                 if (!empty) {
-                    if (item.toString().equals(PSeparatorComboBox.SEPARATOR)) {
+                    if (PSeparatorComboBox.isSeparator(item.toString())) {
                         this.setDisable(true);
                         setStyle(ProgColorList.FILTER_PROFILE_SEPARATOR.getCssBackgroundAndSel());
                     } else {
@@ -144,7 +144,7 @@ public class FilmFilterDialog extends PDialogExtra {
                 Label lbl = new Label(selectedFilter.getName());
                 hBox.getChildren().add(lbl);
                 setGraphic(hBox);
-                if (selectedFilter.toString().equals(PSeparatorComboBox.SEPARATOR)) {
+                if (PSeparatorComboBox.isSeparator(selectedFilter.toString())) {
                     hBox.setAlignment(Pos.CENTER);
                 }
             }

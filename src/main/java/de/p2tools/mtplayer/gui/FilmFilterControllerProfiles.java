@@ -184,7 +184,7 @@ public class FilmFilterControllerProfiles extends VBox {
                         super.updateItem(item, empty);
                         if (!empty) {
                             setText(item.toString());
-                            if (item.toString().equals(PSeparatorComboBox.SEPARATOR)) {
+                            if (PSeparatorComboBox.isSeparator(item.toString())) {
                                 this.setDisable(true);
                                 setStyle(ProgColorList.FILTER_PROFILE_SEPARATOR.getCssBackgroundAndSel());
                             } else {
@@ -207,7 +207,7 @@ public class FilmFilterControllerProfiles extends VBox {
                         super.updateItem(item, empty);
                         if (!empty) {
                             setText(item.toString());
-                            if (item.toString().equals(PSeparatorComboBox.SEPARATOR)) {
+                            if (PSeparatorComboBox.isSeparator(item.toString())) {
                                 this.setDisable(true);
                                 setStyle(ProgColorList.FILTER_PROFILE_SEPARATOR.getCssBackgroundAndSel());
                             } else {
