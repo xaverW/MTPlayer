@@ -16,9 +16,11 @@
 
 package de.p2tools.mtplayer.gui;
 
+import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
+import de.p2tools.mtplayer.gui.dialog.FilmFilterDialog;
 import de.p2tools.mtplayer.gui.dialog.FilmFilterSortDialog;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.mtplayer.tools.storedFilter.ProgInitFilter;
@@ -35,6 +37,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 import javafx.util.StringConverter;
 
 import java.util.Optional;
@@ -152,11 +155,16 @@ public class FilmFilterControllerProfiles extends VBox {
         final MenuItem miResort = new MenuItem("Filterprofile sortieren");
         miResort.setOnAction(e -> new FilmFilterSortDialog(progData).showDialog());
 
+        final MenuItem miFilterDialog = new MenuItem("Filterprofile in eigenem Fenster anzeigen");
+        miFilterDialog.setOnAction(e -> new FilmFilterDialog(progData).showDialog());
+
         final MenuItem miReset = new MenuItem("alle Filterprofile wieder herstellen");
         miReset.setOnAction(e -> resetFilter());
 
         mbFilterTools.setGraphic(new ProgIcons().ICON_BUTTON_MENU);
-        mbFilterTools.getItems().addAll(miLoad, miRename, miDel, miDelAll, miSave, miNew, miAbo, miResort, new SeparatorMenuItem(), miReset);
+        mbFilterTools.getItems().addAll(miLoad, miRename, miDel, miDelAll, miSave, miNew, miAbo,
+                new SeparatorMenuItem(), miResort, miFilterDialog,
+                new SeparatorMenuItem(), miReset);
         mbFilterTools.setTooltip(new Tooltip("Gespeicherte Filterprofile bearbeiten"));
 
         cboFilterProfiles.getSelectionModel().select(filterProp.get());
@@ -167,7 +175,54 @@ public class FilmFilterControllerProfiles extends VBox {
                 loadFilter();
             }
         });
+        ProgColorList.FILTER_PROFILE_SEPARATOR.colorProperty().addListener((a, b, c) -> cboFilterProfiles.setCellFactory(new Callback<>() {
+            @Override
+            public ListCell<SelectedFilter> call(ListView<SelectedFilter> param) {
+                final ListCell<SelectedFilter> cell = new ListCell<>() {
+                    @Override
+                    public void updateItem(SelectedFilter item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (!empty) {
+                            setText(item.toString());
+                            if (item.toString().equals(PSeparatorComboBox.SEPARATOR)) {
+                                this.setDisable(true);
+                                setStyle(ProgColorList.FILTER_PROFILE_SEPARATOR.getCssBackgroundAndSel());
+                            } else {
+                                this.setDisable(false);
+                                setStyle("");
+                            }
+                        }
+                    }
+                };
+                return cell;
+            }
+        }));
+
+        cboFilterProfiles.setCellFactory(new Callback<>() {
+            @Override
+            public ListCell<SelectedFilter> call(ListView<SelectedFilter> param) {
+                final ListCell<SelectedFilter> cell = new ListCell<>() {
+                    @Override
+                    public void updateItem(SelectedFilter item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (!empty) {
+                            setText(item.toString());
+                            if (item.toString().equals(PSeparatorComboBox.SEPARATOR)) {
+                                this.setDisable(true);
+                                setStyle(ProgColorList.FILTER_PROFILE_SEPARATOR.getCssBackgroundAndSel());
+                            } else {
+                                this.setDisable(false);
+                                setStyle("");
+                            }
+                        }
+                    }
+                };
+                return cell;
+            }
+        });
+
     }
+
 
     private void initRest() {
         // Filterprofile

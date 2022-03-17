@@ -182,6 +182,8 @@ public class ProgConfig extends PDataProgConfig {
     public static IntegerProperty DOWNLOAD_BANDWIDTH_KBYTE = addInt("download-bandwidth-byte"); // da wird die genutzte Bandbreite gespeichert
 
     // Gui Film
+    public static StringProperty FILM_GUI_FILTER_DIALOG = addStr("film-gui-filter-dialog", "400:500");
+    public static BooleanProperty FILM_GUI_FILTER_DIALOG_IS_SHOWING = addBool("film-gui-filter-dialog-is-showing", Boolean.FALSE);
     public static DoubleProperty FILM_GUI_FILTER_DIVIDER = addDouble("film-gui-filter-divider", ProgConst.GUI_FILME_FILTER_DIVIDER_LOCATION);
     public static BooleanProperty FILM_GUI_FILTER_DIVIDER_ON = addBool("film-gui-filter-divider-on", Boolean.TRUE);
     public static DoubleProperty FILM_GUI_DIVIDER = addDouble("film-gui-divider", ProgConst.GUI_FILME_DIVIDER_LOCATION);

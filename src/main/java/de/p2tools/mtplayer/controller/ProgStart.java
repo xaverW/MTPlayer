@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
 import de.p2tools.mtplayer.controller.mediaDb.MediaDataWorker;
+import de.p2tools.mtplayer.gui.dialog.FilmFilterDialog;
 import de.p2tools.mtplayer.tools.update.SearchProgramUpdate;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
@@ -54,6 +55,9 @@ public class ProgStart {
         startMsg();
         setTitle(progData);
         progData.progTray.initProgTray();
+//        if (ProgConfig.FILM_GUI_FILTER_DIALOG_IS_SHOWING.getValue()) {
+//                new FilmFilterDialog(progData).showDialog();
+//        }
 
         progData.startTimer();
         progData.loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
@@ -63,6 +67,9 @@ public class ProgStart {
                     doneAtProgramstart = true;
                     MediaDataWorker.createMediaDb();
                     checkProgUpdate(progData);
+                    if (ProgConfig.FILM_GUI_FILTER_DIALOG_IS_SHOWING.getValue()) {
+                        new FilmFilterDialog(progData).showDialog();
+                    }
                     new ProgTipOfDay().showDialog(progData, false);
                 }
             }

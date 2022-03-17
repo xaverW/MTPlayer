@@ -59,6 +59,7 @@ public class TableFilm {
         ProgColorList.FILM_GEOBLOCK.colorProperty().addListener((a, b, c) -> Table.refresh_table(table));
         ProgColorList.FILM_NEW.colorProperty().addListener((a, b, c) -> Table.refresh_table(table));
         ProgColorList.FILM_HISTORY.colorProperty().addListener((a, b, c) -> Table.refresh_table(table));
+        ProgColorList.FILM_BOOKMARK.colorProperty().addListener((a, b, c) -> Table.refresh_table(table));
 
         final TableColumn<FilmData, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));

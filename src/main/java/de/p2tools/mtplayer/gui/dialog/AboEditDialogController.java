@@ -151,6 +151,71 @@ public class AboEditDialogController extends PDialogExtra {
         initDialog();
     }
 
+    @Override
+    public void make() {
+        ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> updateCss());
+        if (progData.maskerPane.isVisible()) {
+            this.getStage().getScene().getWindow().hide();
+        }
+        progData.maskerPane.visibleProperty().addListener((u, o, n) -> {
+            if (progData.maskerPane.isVisible()) {
+                this.getStage().getScene().getWindow().hide();
+            } else {
+                this.showDialog();
+            }
+        });
+
+        initSenderMenu();
+
+        btnOk.disableProperty().bind(aboCopy.nameProperty().isEmpty().or(okProp.not()));
+        btnOk.setOnAction(a -> {
+            checkChanges();
+            apply();
+            close();
+        });
+
+        btnApply.disableProperty().bind(aboCopy.nameProperty().isEmpty().or(okProp.not()));
+        btnApply.setOnAction(a -> {
+            checkChanges();
+            apply();
+        });
+
+        btnCancel.setOnAction(a -> close());
+
+        gridPane.setHgap(5);
+        gridPane.setVgap(10);
+        gridPane.setMinWidth(Control.USE_PREF_SIZE);
+        gridPane.setMaxWidth(Double.MAX_VALUE);
+        gridPane.setPadding(new Insets(10, 10, 10, 10));
+
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcComputedSizeAndHgrow(),
+                PColumnConstraints.getCcPrefSize());
+
+        if (aboList.size() > 1) {
+            Label l1 = new Label("bei allen");
+            Label l2 = new Label("ändern");
+            VBox vBox = new VBox();
+            vBox.getStyleClass().add("chk-edit-all-text");
+            vBox.setAlignment(Pos.CENTER);
+            vBox.getChildren().addAll(l1, l2);
+            gridPane.add(vBox, 2, 0);
+        }
+
+        for (int i = 0; i < AboFieldNames.MAX_ELEM; ++i) {
+            initControl(i);
+            addLabel(i);
+            addTextField(i);
+
+            if (aboList.size() > 1) {
+                // nur dann brauchts das
+                addCheckBoxEditAll(i, i + 1);
+            }
+        }
+
+        btnOk.requestFocus();
+    }
+
     private void initDialog() {
         getvBoxCont().getChildren().add(gridPane);
         addOkCancelApplyButtons(btnOk, btnCancel, btnApply);
@@ -218,59 +283,6 @@ public class AboEditDialogController extends PDialogExtra {
                 abo.properties[i].setValue(aboCopy.properties[i].getValue());
             }
         }
-    }
-
-    @Override
-    public void make() {
-        initSenderMenu();
-
-        btnOk.disableProperty().bind(aboCopy.nameProperty().isEmpty().or(okProp.not()));
-        btnOk.setOnAction(a -> {
-            checkChanges();
-            apply();
-            close();
-        });
-
-        btnApply.disableProperty().bind(aboCopy.nameProperty().isEmpty().or(okProp.not()));
-        btnApply.setOnAction(a -> {
-            checkChanges();
-            apply();
-        });
-
-        btnCancel.setOnAction(a -> close());
-
-        gridPane.setHgap(5);
-        gridPane.setVgap(10);
-        gridPane.setMinWidth(Control.USE_PREF_SIZE);
-        gridPane.setMaxWidth(Double.MAX_VALUE);
-        gridPane.setPadding(new Insets(10, 10, 10, 10));
-
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrow(),
-                PColumnConstraints.getCcPrefSize());
-
-        if (aboList.size() > 1) {
-            Label l1 = new Label("bei allen");
-            Label l2 = new Label("ändern");
-            VBox vBox = new VBox();
-            vBox.getStyleClass().add("chk-edit-all-text");
-            vBox.setAlignment(Pos.CENTER);
-            vBox.getChildren().addAll(l1, l2);
-            gridPane.add(vBox, 2, 0);
-        }
-
-        for (int i = 0; i < AboFieldNames.MAX_ELEM; ++i) {
-            initControl(i);
-            addLabel(i);
-            addTextField(i);
-
-            if (aboList.size() > 1) {
-                // nur dann brauchts das
-                addCheckBoxEditAll(i, i + 1);
-            }
-        }
-
-        btnOk.requestFocus();
     }
 
     private void initControl(int i) {

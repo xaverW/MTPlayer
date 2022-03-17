@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.gui.dialog;
 
+import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
@@ -29,6 +30,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 
 public class FilmFilterSortDialog extends PDialogExtra {
 
@@ -62,16 +64,30 @@ public class FilmFilterSortDialog extends PDialogExtra {
         HBox hBox = new HBox(10);
         hBox.getChildren().addAll(tableView, vBox);
         HBox.setHgrow(tableView, Priority.ALWAYS);
-
+        VBox.setVgrow(hBox, Priority.ALWAYS);
         getvBoxCont().getChildren().add(hBox);
 
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableView.setRowFactory(param -> new TableRow<SelectedFilter>() {
+            @Override
+            protected void updateItem(SelectedFilter item, boolean empty) {
+                super.updateItem(item, empty);
+                if (!empty) {
+                    if (item.toString().equals(PSeparatorComboBox.SEPARATOR)) {
+                        setStyle(ProgColorList.FILTER_PROFILE_SEPARATOR.getCssBackgroundAndSel());
+                    } else {
+                        setStyle("");
+                    }
+                }
+            }
+        });
 
         final TableColumn<SelectedFilter, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-
+        nameColumn.setCellFactory(cellFactory);
+        
         tableView.getColumns().add(nameColumn);
         tableView.setItems(progData.storedFilters.getStoredFilterList());
 
@@ -135,6 +151,34 @@ public class FilmFilterSortDialog extends PDialogExtra {
             }
         });
     }
+
+    private Callback<TableColumn<SelectedFilter, String>, TableCell<SelectedFilter, String>> cellFactory
+            = (final TableColumn<SelectedFilter, String> param) -> {
+
+        final TableCell<SelectedFilter, String> cell = new TableCell<>() {
+
+            @Override
+            public void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty) {
+                    setGraphic(null);
+                    setText(null);
+                    return;
+                }
+
+                SelectedFilter selectedFilter = getTableView().getItems().get(getIndex());
+                HBox hBox = new HBox();
+                Label lbl = new Label(selectedFilter.getName());
+                hBox.getChildren().add(lbl);
+                setGraphic(hBox);
+                if (selectedFilter.toString().equals(PSeparatorComboBox.SEPARATOR)) {
+                    hBox.setAlignment(Pos.CENTER);
+                }
+            }
+        };
+        return cell;
+    };
 
     private void delFilter() {
         SelectedFilter sf = tableView.getSelectionModel().getSelectedItem();
