@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
 import de.p2tools.mtplayer.controller.mediaDb.MediaDataWorker;
-import de.p2tools.mtplayer.gui.dialog.FilmFilterDialog;
+import de.p2tools.mtplayer.gui.filter.FilmFilterDialog;
 import de.p2tools.mtplayer.tools.update.SearchProgramUpdate;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;

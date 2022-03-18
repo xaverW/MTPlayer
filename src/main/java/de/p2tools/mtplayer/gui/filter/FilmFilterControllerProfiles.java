@@ -14,14 +14,12 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.gui;
+package de.p2tools.mtplayer.gui.filter;
 
 import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
-import de.p2tools.mtplayer.gui.dialog.FilmFilterDialog;
-import de.p2tools.mtplayer.gui.dialog.FilmFilterSortDialog;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.mtplayer.tools.storedFilter.ProgInitFilter;
 import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
