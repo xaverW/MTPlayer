@@ -168,16 +168,16 @@ public class FilmFilterControllerTextFilter extends VBox {
     private void initStringFilter() {
         //Theme
         //https://bugs.openjdk.java.net/browse/JDK-8116061
-        if (ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
-            progData.storedFilters.getActFilterSettings().setThemeExact(true);
-        }
-        ProgConfig.SYSTEM_FILTER_RETURN.addListener((u, o, n) -> {
-            if (ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
-                progData.storedFilters.getActFilterSettings().setThemeExact(true);
-            } else {
-
-            }
-        });
+//        if (ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
+//            progData.storedFilters.getActFilterSettings().setThemeExact(true);
+//        }
+//        ProgConfig.SYSTEM_FILTER_RETURN.addListener((u, o, n) -> {
+//            if (ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
+//                progData.storedFilters.getActFilterSettings().setThemeExact(true);
+//            } else {
+//
+//            }
+//        });
 
         cboTheme.editableProperty().bind(progData.storedFilters.getActFilterSettings().themeExactProperty().not());
         cboTheme.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
@@ -190,20 +190,20 @@ public class FilmFilterControllerTextFilter extends VBox {
             progData.storedFilters.getActFilterSettings().setTheme(cboTheme.valueProperty().getValue());
         });
         cboTheme.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
-                progData.storedFilters.getActFilterSettings().setTheme(cboTheme.getEditor().getText());
-            }
+//            if (!ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
+//              progData.storedFilters.getActFilterSettings().setTheme(cboTheme.getEditor().getText());
+//            }
+            progData.storedFilters.getActFilterSettings().setTheme(cboTheme.getEditor().getText());
         });
-        cboTheme.getEditor().setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                progData.storedFilters.getActFilterSettings().setTheme(cboTheme.getEditor().getText());
-                if (!ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
-                    progData.storedFilters.getActFilterSettings().reportFilterReturn();
-                }
-            }
-        });
+//        cboTheme.getEditor().setOnKeyPressed(event -> {
+//            if (event.getCode() == KeyCode.ENTER) {
+//                progData.storedFilters.getActFilterSettings().setTheme(cboTheme.getEditor().getText());
+//                if (!ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
+//                    progData.storedFilters.getActFilterSettings().reportFilterReturn();
+//                }
+//            }
+//        });
         progData.storedFilters.getActFilterSettings().themeProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println(progData.storedFilters.getActFilterSettings().getTheme());
             cboTheme.valueProperty().setValue(progData.storedFilters.getActFilterSettings().getTheme());
         });
         cboTheme.valueProperty().setValue(progData.storedFilters.getActFilterSettings().getTheme());

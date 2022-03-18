@@ -53,17 +53,7 @@ public class FilmFilterEditDialog extends PDialogExtra {
                 HelpText.GUI_FILMS_EDIT_FILTER);
 
         Button btnOk = new Button("_Ok");
-        btnOk.setOnAction(event -> {
-//                    if (ProgData.filterDiacritic && !ProgData.isFilteredDiacritic) {
-//                        ProgData.isFilteredDiacritic = true;
-//                        PDuration.counterStart("setDiacritic");
-//                        progData.filmlist.stream().forEach(filmData -> filmData.setDiacritic());
-//                        PDuration.counterStart("setDiacritic");
-//                    }
-                    close();
-                }
-        );
-
+        btnOk.setOnAction(event -> close());
         addOkButton(btnOk);
         addHlpButton(btnHelp);
     }
@@ -85,24 +75,23 @@ public class FilmFilterEditDialog extends PDialogExtra {
         PToggleSwitch tglThemeExact = new PToggleSwitch("  -> freie Suche mit Eingabefeld");
         tglThemeExact.disableProperty().bind(progData.storedFilters.getActFilterSettings().themeVisProperty().not());
         tglThemeExact.setMaxWidth(Double.MAX_VALUE);
+
         tglThemeExact.setSelected(!progData.storedFilters.getActFilterSettings().isThemeExact());
         tglThemeExact.selectedProperty().addListener((observable, oldValue, newValue) ->
                 progData.storedFilters.getActFilterSettings().themeExactProperty().setValue(!newValue));
-//        tglThemeExact.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().themeExactProperty());
 
-
-        //javaBug
-        //ThemeExact
-        //https://bugs.openjdk.java.net/browse/JDK-8116061
-        tglThemeExact.disableProperty().bind(ProgConfig.SYSTEM_FILTER_RETURN);
-        if (ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
-            tglThemeExact.setSelected(false);
-        }
-        ProgConfig.SYSTEM_FILTER_RETURN.addListener((u, o, n) -> {
-            if (ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
-                tglThemeExact.setSelected(false);
-            }
-        });
+//        //javaBug
+//        //ThemeExact
+//        //https://bugs.openjdk.java.net/browse/JDK-8116061
+//        tglThemeExact.disableProperty().bind(ProgConfig.SYSTEM_FILTER_RETURN);
+//        if (ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
+//            tglThemeExact.setSelected(false);
+//        }
+//        ProgConfig.SYSTEM_FILTER_RETURN.addListener((u, o, n) -> {
+//            if (ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
+//                tglThemeExact.setSelected(false);
+//            }
+//        });
 
 
         v.getChildren().add(tglThemeExact);
