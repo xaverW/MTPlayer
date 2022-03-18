@@ -88,7 +88,7 @@ public class AboEditDialogController extends PDialogExtra {
     public AboEditDialogController(ProgData progData, AboData abo) {
         //hier wird ein neues Abo angelegt!
         super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE,
-                "Abo anlegen", false, false);
+                "Abo anlegen", false, false, DECO.BORDER, true);
 
         this.progData = progData;
         this.addNewAbo = true;
@@ -103,7 +103,7 @@ public class AboEditDialogController extends PDialogExtra {
     public AboEditDialogController(ProgData progData, SelectedFilter selectedFilter, AboData abo) {
         //hier wird ein Abo an den Filter angepasst
         super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE,
-                "Abo anlegen", false, false);
+                "Abo anlegen", false, false, DECO.BORDER, true);
 
         this.progData = progData;
         this.addNewAbo = false;
@@ -138,7 +138,7 @@ public class AboEditDialogController extends PDialogExtra {
     public AboEditDialogController(ProgData progData, ObservableList<AboData> aboList) {
         //hier werden Abos geändert
         super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE,
-                "Abo ändern", false, false);
+                "Abo ändern", false, false, DECO.BORDER, true);
 
         this.progData = progData;
         this.addNewAbo = false;
@@ -157,12 +157,9 @@ public class AboEditDialogController extends PDialogExtra {
         if (progData.maskerPane.isVisible()) {
             this.getStage().getScene().getWindow().hide();
         }
+        setMaskerPane();
         progData.maskerPane.visibleProperty().addListener((u, o, n) -> {
-            if (progData.maskerPane.isVisible()) {
-                this.getStage().getScene().getWindow().hide();
-            } else {
-                this.showDialog();
-            }
+            setMaskerPane();
         });
 
         initSenderMenu();
@@ -214,6 +211,14 @@ public class AboEditDialogController extends PDialogExtra {
         }
 
         btnOk.requestFocus();
+    }
+
+    private void setMaskerPane() {
+        if (progData.maskerPane.isVisible()) {
+            this.setMaskerVisible(true);
+        } else {
+            this.setMaskerVisible(false);
+        }
     }
 
     private void initDialog() {

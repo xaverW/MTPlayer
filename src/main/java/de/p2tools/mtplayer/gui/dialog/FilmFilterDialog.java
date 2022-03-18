@@ -41,7 +41,8 @@ public class FilmFilterDialog extends PDialogExtra {
     private final ProgData progData;
 
     public FilmFilterDialog(ProgData progData) {
-        super(ProgData.getInstance().primaryStage, ProgConfig.FILM_GUI_FILTER_DIALOG, "Filmfilter", false, false, DECO.NONE);
+        super(ProgData.getInstance().primaryStage, ProgConfig.FILM_GUI_FILTER_DIALOG, "Filmfilter",
+                false, false, DECO.NONE, true);
         this.progData = progData;
         ProgConfig.FILM_GUI_FILTER_DIALOG_IS_SHOWING.setValue(true);
 
@@ -54,12 +55,9 @@ public class FilmFilterDialog extends PDialogExtra {
         if (progData.maskerPane.isVisible()) {
             this.getStage().getScene().getWindow().hide();
         }
+        setMaskerPane();
         progData.maskerPane.visibleProperty().addListener((u, o, n) -> {
-            if (progData.maskerPane.isVisible()) {
-                this.getStage().getScene().getWindow().hide();
-            } else {
-                this.showDialog();
-            }
+            setMaskerPane();
         });
 
         addOkButton(btnOk);
@@ -122,6 +120,14 @@ public class FilmFilterDialog extends PDialogExtra {
         tableView.getColumns().add(nameColumn);
         tableView.setItems(progData.storedFilters.getStoredFilterList());
 
+    }
+
+    private void setMaskerPane() {
+        if (progData.maskerPane.isVisible()) {
+            this.setMaskerVisible(true);
+        } else {
+            this.setMaskerVisible(false);
+        }
     }
 
     private Callback<TableColumn<SelectedFilter, String>, TableCell<SelectedFilter, String>> cellFactory

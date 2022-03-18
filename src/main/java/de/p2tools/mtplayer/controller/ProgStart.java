@@ -55,9 +55,9 @@ public class ProgStart {
         startMsg();
         setTitle(progData);
         progData.progTray.initProgTray();
-//        if (ProgConfig.FILM_GUI_FILTER_DIALOG_IS_SHOWING.getValue()) {
-//                new FilmFilterDialog(progData).showDialog();
-//        }
+        if (ProgConfig.FILM_GUI_FILTER_DIALOG_IS_SHOWING.getValue()) {
+            new FilmFilterDialog(progData).showDialog();
+        }
 
         progData.startTimer();
         progData.loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
@@ -67,9 +67,9 @@ public class ProgStart {
                     doneAtProgramstart = true;
                     MediaDataWorker.createMediaDb();
                     checkProgUpdate(progData);
-                    if (ProgConfig.FILM_GUI_FILTER_DIALOG_IS_SHOWING.getValue()) {
-                        new FilmFilterDialog(progData).showDialog();
-                    }
+//                    if (ProgConfig.FILM_GUI_FILTER_DIALOG_IS_SHOWING.getValue()) {
+//                        new FilmFilterDialog(progData).showDialog();
+//                    }
                     new ProgTipOfDay().showDialog(progData, false);
                 }
             }
