@@ -16,7 +16,6 @@
 
 package de.p2tools.mtplayer.gui.filter;
 
-import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.tools.storedFilter.FilterCheckRegEx;
 import javafx.beans.property.BooleanProperty;
@@ -184,25 +183,18 @@ public class FilmFilterControllerTextFilter extends VBox {
         cboTheme.setVisibleRowCount(25);
         cboTheme.setItems(progData.worker.getThemeForChannelList());
         cboTheme.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (!progData.storedFilters.getActFilterSettings().themeExactProperty().getValue()) {
-                return;
+            if (progData.storedFilters.getActFilterSettings().themeExactProperty().getValue()) {
+                progData.storedFilters.getActFilterSettings().setTheme(cboTheme.valueProperty().getValue());
             }
-            progData.storedFilters.getActFilterSettings().setTheme(cboTheme.valueProperty().getValue());
         });
         cboTheme.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
-//            if (!ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
-//              progData.storedFilters.getActFilterSettings().setTheme(cboTheme.getEditor().getText());
-//            }
             progData.storedFilters.getActFilterSettings().setTheme(cboTheme.getEditor().getText());
         });
-//        cboTheme.getEditor().setOnKeyPressed(event -> {
-//            if (event.getCode() == KeyCode.ENTER) {
-//                progData.storedFilters.getActFilterSettings().setTheme(cboTheme.getEditor().getText());
-//                if (!ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
-//                    progData.storedFilters.getActFilterSettings().reportFilterReturn();
-//                }
-//            }
-//        });
+        cboTheme.getEditor().setOnKeyReleased(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                progData.storedFilters.getActFilterSettings().reportFilterReturn();
+            }
+        });
         progData.storedFilters.getActFilterSettings().themeProperty().addListener((observable, oldValue, newValue) -> {
             cboTheme.valueProperty().setValue(progData.storedFilters.getActFilterSettings().getTheme());
         });
@@ -214,16 +206,11 @@ public class FilmFilterControllerTextFilter extends VBox {
 
         //ThemeTitle
         txtThemeTitle.textProperty().addListener((u, o, n) -> {
-            if (!ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
-                progData.storedFilters.getActFilterSettings().setThemeTitle(txtThemeTitle.getText());
-            }
+            progData.storedFilters.getActFilterSettings().setThemeTitle(txtThemeTitle.getText());
         });
         txtThemeTitle.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                progData.storedFilters.getActFilterSettings().setThemeTitle(txtThemeTitle.getText());
-                if (!ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
-                    progData.storedFilters.getActFilterSettings().reportFilterReturn();
-                }
+                progData.storedFilters.getActFilterSettings().reportFilterReturn();
             }
         });
         progData.storedFilters.getActFilterSettings().themeTitleProperty().addListener((u, o, n) -> {
@@ -236,16 +223,11 @@ public class FilmFilterControllerTextFilter extends VBox {
 
         //Title
         txtTitle.textProperty().addListener((u, o, n) -> {
-            if (!ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
-                progData.storedFilters.getActFilterSettings().setTitle(txtTitle.getText());
-            }
+            progData.storedFilters.getActFilterSettings().setTitle(txtTitle.getText());
         });
         txtTitle.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                progData.storedFilters.getActFilterSettings().setTitle(txtTitle.getText());
-                if (!ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
-                    progData.storedFilters.getActFilterSettings().reportFilterReturn();
-                }
+                progData.storedFilters.getActFilterSettings().reportFilterReturn();
             }
 
         });
@@ -259,18 +241,12 @@ public class FilmFilterControllerTextFilter extends VBox {
 
         //Somewhere
         txtSomewhere.textProperty().addListener((u, o, n) -> {
-            if (!ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
-                progData.storedFilters.getActFilterSettings().setSomewhere(txtSomewhere.getText());
-            }
+            progData.storedFilters.getActFilterSettings().setSomewhere(txtSomewhere.getText());
         });
         txtSomewhere.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                progData.storedFilters.getActFilterSettings().setSomewhere(txtSomewhere.getText());
-                if (!ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
-                    progData.storedFilters.getActFilterSettings().reportFilterReturn();
-                }
+                progData.storedFilters.getActFilterSettings().reportFilterReturn();
             }
-
         });
         progData.storedFilters.getActFilterSettings().somewhereProperty().addListener((u, o, n) -> {
             if (!txtSomewhere.getText().equals(progData.storedFilters.getActFilterSettings().getSomewhere())) {
@@ -282,16 +258,11 @@ public class FilmFilterControllerTextFilter extends VBox {
 
         //URL
         txtUrl.textProperty().addListener((u, o, n) -> {
-            if (!ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
-                progData.storedFilters.getActFilterSettings().setUrl(txtUrl.getText());
-            }
+            progData.storedFilters.getActFilterSettings().setUrl(txtUrl.getText());
         });
         txtUrl.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                progData.storedFilters.getActFilterSettings().setUrl(txtUrl.getText());
-                if (!ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
-                    progData.storedFilters.getActFilterSettings().reportFilterReturn();
-                }
+                progData.storedFilters.getActFilterSettings().reportFilterReturn();
             }
         });
         progData.storedFilters.getActFilterSettings().urlProperty().addListener((u, o, n) -> {

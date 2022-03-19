@@ -25,6 +25,7 @@ import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.property.IntegerProperty;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -147,25 +148,9 @@ public class FilmFilterEditDialog extends PDialogExtra {
         tglNot.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().notVisProperty());
         vBox.getChildren().add(tglNot);
 
-        //Diacritic
-//        PToggleSwitch tglDiacritic = new PToggleSwitch("Diakritische Zeichen ändern");
-//        tglDiacritic.setMaxWidth(Double.MAX_VALUE);
-//        tglDiacritic.setSelected(ProgData.filterDiacritic);
-//        tglDiacritic.selectedProperty().addListener((observableValue, aBoolean, t1) -> ProgData.filterDiacritic = tglDiacritic.isSelected());
-//
-//        Separator sp2 = new Separator();
-//        sp2.getStyleClass().add("pseperator2");
-//        sp2.setMinHeight(0);
-//        vBox.getChildren().addAll(sp2, tglDiacritic);
-
         //Wartezeit
-        final ToggleGroup group = new ToggleGroup();
-        RadioButton rboWait = new RadioButton();
-        RadioButton rboReturn = new RadioButton();
-        rboWait.setToggleGroup(group);
-        rboReturn.setToggleGroup(group);
-        rboWait.setSelected(!ProgConfig.SYSTEM_FILTER_RETURN.getValue());
-        rboReturn.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FILTER_RETURN);
+        CheckBox cbkReturn = new CheckBox("Suchbeginn erst mit \"Return\" starten");
+        cbkReturn.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FILTER_RETURN);
 
         Label lblValue = new Label();
         lblValue.setMinWidth(Region.USE_COMPUTED_SIZE);
@@ -173,20 +158,18 @@ public class FilmFilterEditDialog extends PDialogExtra {
         Slider slider = new Slider();
         slider.setMin(0);
         slider.setMax(ProgConst.SYSTEM_FILTER_MAX_WAIT_TIME);
-        slider.setMinorTickCount(9);//dann 10 Teile, 1000/10=alle 100 kann eingeloggt werden :)
-        slider.setBlockIncrement(100);//Bedienung über die Tastatur
-        slider.setMajorTickUnit(1000);
+        slider.setMinorTickCount(4);//dann 5 Teile, 500/5=alle 100 kann eingeloggt werden :)
+        slider.setBlockIncrement(200);//Bedienung über die Tastatur
+        slider.setMajorTickUnit(500);
+        slider.setShowTickMarks(true);
         slider.setShowTickLabels(true);
         slider.setSnapToTicks(true);
         slider.valueProperty().addListener((observable, oldValue, newValue) -> {
             waitTime.setValue(Double.valueOf(slider.getValue()).intValue());
             setLabel(lblValue);
         });
-        slider.disableProperty().bind(rboReturn.selectedProperty());
-        rboReturn.selectedProperty().addListener((u, o, n) -> {
-            changeRbo(rboReturn, slider, lblValue);
-        });
-        changeRbo(rboReturn, slider, lblValue);
+        slider.setValue(waitTime.getValue());
+        setLabel(lblValue);
 
         GridPane gridPane = new GridPane();
         gridPane.setHgap(5);
@@ -196,22 +179,21 @@ public class FilmFilterEditDialog extends PDialogExtra {
         VBox.setVgrow(gridPane, Priority.ALWAYS);
 
         int row = 0;
-        gridPane.add(new Label("In Textfeldern:"), 0, row, 3, 1);
-        gridPane.add(rboWait, 0, ++row);
-        gridPane.add(new Label("Suchbeginn wenn keine\nEingabe für:"), 1, row);
-        gridPane.add(lblValue, 2, row);
+        gridPane.add(new Label("Suchbeginn nach Eingabe\nverzögern  um:"), 0, row);
+        gridPane.add(lblValue, 1, row);
+        GridPane.setHalignment(lblValue, HPos.CENTER);
 
-        gridPane.add(slider, 1, ++row, 2, 1);
+        gridPane.add(slider, 0, ++row, 2, 1);
         GridPane.setHgrow(slider, Priority.ALWAYS);
         slider.setPadding(new Insets(5, 0, 0, 0));
 
         gridPane.add(new Label(), 0, ++row);
 
-        gridPane.add(rboReturn, 0, ++row);
-        gridPane.add(new Label("Suchbeginn bei Return-Eingabe"), 1, row, 2, 1);
+        gridPane.add(new Label("In Textfeldern:"), 0, ++row, 2, 1);
+        gridPane.add(cbkReturn, 0, ++row, 2, 1);
+//        gridPane.add(new Label("Suchbeginn erst bei Return-Eingabe"), 1, row, 2, 1);
 
         gridPane.getColumnConstraints().addAll(
-                PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcComputedSizeAndHgrowRight());
 
@@ -219,16 +201,6 @@ public class FilmFilterEditDialog extends PDialogExtra {
         sp1.getStyleClass().add("pseperator2");
         sp1.setMinHeight(0);
         vBox.getChildren().addAll(sp1, gridPane);
-    }
-
-    private void changeRbo(RadioButton rboReturn, Slider slider, Label lblValue) {
-        if (rboReturn.isSelected()) {
-            slider.setValue(0);
-            waitTime.setValue(Double.valueOf(slider.getValue()).intValue());
-        } else {
-            slider.setValue(waitTime.getValue());
-        }
-        setLabel(lblValue);
     }
 
     private int setLabel(Label lblValue) {

@@ -141,6 +141,7 @@ public final class SelectedFilter extends SelectedFilterProps {
     }
 
     private void initFilter() {
+        pause.setOnFinished(event -> reportFilterChange());
         pause.setDuration(Duration.millis(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getValue()));
         filterWaitTime.addListener((observable, oldValue, newValue) -> {
             PDebugLog.sysLog("SYSTEM_FILTER_WAIT_TIME: " + ProgConfig.SYSTEM_FILTER_WAIT_TIME.getValue());
@@ -167,97 +168,111 @@ public final class SelectedFilter extends SelectedFilterProps {
         setNotVis(false);
         setOnlyVis(false);
 
-        nameProperty().addListener(l -> reportFilterChange());
+        nameProperty().addListener(l -> setFilterChange());
 
-        channelVisProperty().addListener(l -> reportFilterChange());
+        channelVisProperty().addListener(l -> setFilterChange());
         channelProperty().addListener(l -> {
-            PDebugLog.sysLog("channelProperty: " + channelProperty().getValue());
-            reportFilterChange();
+            setFilterChange();
         });
 
-        themeVisProperty().addListener(l -> reportFilterChange());
-        themeExactProperty().addListener(l -> reportFilterChange());
+        themeVisProperty().addListener(l -> setFilterChange());
+        themeExactProperty().addListener(l -> setFilterChange());
         themeProperty().addListener(l -> {
-            PDebugLog.sysLog("themeProperty: " + themeProperty().getValue());
-            // todo -> beim Ändern der "Thema" liste wird das 3xaufgerufen
-            if (!themeExactProperty().getValue()) {
-                PDebugLog.sysLog("Pause themeProperty");
-                pause.setOnFinished(event -> reportFilterChange());
-                pause.playFromStart();
-
+            if (themeExactProperty().getValue()) {
+                setFilterChange();
             } else {
-                if (themeVisProperty().get()) {
-                    reportFilterChange();
-                }
+                setTxtFilterChange();
             }
+
+//            PDebugLog.sysLog("themeProperty: " + themeProperty().getValue());
+//            // todo -> beim Ändern der "Thema" liste wird das 3xaufgerufen
+//            if (!themeExactProperty().getValue()) {
+//                PDebugLog.sysLog("Pause themeProperty");
+//                pause.setOnFinished(event -> reportFilterChange());
+//                pause.playFromStart();
+//
+//            } else {
+//                if (themeVisProperty().get()) {
+//                    reportFilterChange();
+//                }
+//            }
         });
 
-        themeTitleVisProperty().addListener(l -> reportFilterChange());
+        themeTitleVisProperty().addListener(l -> setFilterChange());
         themeTitleProperty().addListener(l -> {
-            PDebugLog.sysLog("Pause themeTitleProperty");
-            pause.setOnFinished(event -> reportFilterChange());
-            pause.playFromStart();
+            setTxtFilterChange();
         });
 
 
-        titleVisProperty().addListener(l -> reportFilterChange());
+        titleVisProperty().addListener(l -> setFilterChange());
         titleProperty().addListener(l -> {
-            PDebugLog.sysLog("Pause titleProperty");
-            pause.setOnFinished(event -> reportFilterChange());
-            pause.playFromStart();
+            setTxtFilterChange();
         });
 
-        somewhereVisProperty().addListener(l -> reportFilterChange());
+        somewhereVisProperty().addListener(l -> setFilterChange());
         somewhereProperty().addListener(l -> {
-            PDebugLog.sysLog("Pause somewhereProperty: " + pause.getDuration().toString());
-            pause.setOnFinished(event -> reportFilterChange());
-            pause.playFromStart();
+            setTxtFilterChange();
         });
 
-        urlVisProperty().addListener(l -> reportFilterChange());
+        urlVisProperty().addListener(l -> setFilterChange());
         urlProperty().addListener(l -> {
-            PDebugLog.sysLog("Pause urlProperty");
-            pause.setOnFinished(event -> reportFilterChange());
-            pause.playFromStart();
+            setTxtFilterChange();
         });
 
-        timeRangeVisProperty().addListener(l -> reportFilterChange());
-        timeRangeProperty().addListener(l -> reportFilterChange());
+        timeRangeVisProperty().addListener(l -> setFilterChange());
+        timeRangeProperty().addListener(l -> setFilterChange());
 
-        minMaxDurVisProperty().addListener((observable, oldValue, newValue) -> reportFilterChange());
-        minDurProperty().addListener(l -> reportFilterChange());
-        maxDurProperty().addListener(l -> reportFilterChange());
+        minMaxDurVisProperty().addListener((observable, oldValue, newValue) -> setFilterChange());
+        minDurProperty().addListener(l -> setFilterChange());
+        maxDurProperty().addListener(l -> setFilterChange());
 
-        minMaxTimeVisProperty().addListener((observable, oldValue, newValue) -> reportFilterChange());
-        minMaxTimeInvertProperty().addListener((observable, oldValue, newValue) -> reportFilterChange());
-        minTimeProperty().addListener(l -> reportFilterChange());
-        maxTimeProperty().addListener(l -> reportFilterChange());
+        minMaxTimeVisProperty().addListener((observable, oldValue, newValue) -> setFilterChange());
+        minMaxTimeInvertProperty().addListener((observable, oldValue, newValue) -> setFilterChange());
+        minTimeProperty().addListener(l -> setFilterChange());
+        maxTimeProperty().addListener(l -> setFilterChange());
 
-        showDateVisProperty().addListener(l -> reportFilterChange());
-        showDateProperty().addListener(l -> reportFilterChange());
+        showDateVisProperty().addListener(l -> setFilterChange());
+        showDateProperty().addListener(l -> setFilterChange());
 
-        onlyVisProperty().addListener(l -> reportFilterChange());
-        onlyBookmarkProperty().addListener(l -> reportFilterChange());
-        onlyHdProperty().addListener(l -> reportFilterChange());
-        onlyNewProperty().addListener(l -> reportFilterChange());
-        onlyUtProperty().addListener(l -> reportFilterChange());
-        onlyLiveProperty().addListener(l -> reportFilterChange());
-        onlyActHistoryProperty().addListener(l -> reportFilterChange());
+        onlyVisProperty().addListener(l -> setFilterChange());
+        onlyBookmarkProperty().addListener(l -> setFilterChange());
+        onlyHdProperty().addListener(l -> setFilterChange());
+        onlyNewProperty().addListener(l -> setFilterChange());
+        onlyUtProperty().addListener(l -> setFilterChange());
+        onlyLiveProperty().addListener(l -> setFilterChange());
+        onlyActHistoryProperty().addListener(l -> setFilterChange());
 
-        notVisProperty().addListener(l -> reportFilterChange());
-        notAboProperty().addListener(l -> reportFilterChange());
-        notHistoryProperty().addListener(l -> reportFilterChange());
-        notDoubleProperty().addListener(l -> reportFilterChange());
-        notGeoProperty().addListener(l -> reportFilterChange());
-        notFutureProperty().addListener(l -> reportFilterChange());
+        notVisProperty().addListener(l -> setFilterChange());
+        notAboProperty().addListener(l -> setFilterChange());
+        notHistoryProperty().addListener(l -> setFilterChange());
+        notDoubleProperty().addListener(l -> setFilterChange());
+        notGeoProperty().addListener(l -> setFilterChange());
+        notFutureProperty().addListener(l -> setFilterChange());
 
         blacklistOnProperty().addListener(l -> reportBlacklistChange());
         blacklistOnlyProperty().addListener(l -> reportBlacklistChange());
     }
 
+    private void setTxtFilterChange() {
+        //wird auch ausgelöst durch Eintrag in die FilterHistory, da wird ein neuer SelectedFilter angelegt
+        PDebugLog.sysLog("setTxtFilterChange");
+        if (ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
+            //dann wird erst nach "RETURN" gestartet
+            pause.stop();
+
+        } else {
+            pause.playFromStart();
+        }
+    }
+
+    private void setFilterChange() {
+        //wird auch ausgelöst durch Eintrag in die FilterHistory, da wird ein neuer SelectedFilter angelegt
+        PDebugLog.sysLog("setFilterChange");
+        pause.playFromStart();
+    }
+
     private void reportFilterChange() {
         if (reportChange) {
-//            PDebugLog.sysLog("reportFilterChange");
             filterChange.setValue(!filterChange.getValue());
         }
     }
