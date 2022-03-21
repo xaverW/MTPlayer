@@ -56,7 +56,7 @@ public class ProgStart {
         setTitle(progData);
         progData.progTray.initProgTray();
         if (ProgConfig.FILM_GUI_FILTER_DIALOG_IS_SHOWING.getValue()) {
-            new FilmFilterDialog(progData).showDialog();
+            FilmFilterDialog.getInstanceAndShow();
         }
 
         progData.startTimer();
@@ -67,9 +67,6 @@ public class ProgStart {
                     doneAtProgramstart = true;
                     MediaDataWorker.createMediaDb();
                     checkProgUpdate(progData);
-//                    if (ProgConfig.FILM_GUI_FILTER_DIALOG_IS_SHOWING.getValue()) {
-//                        new FilmFilterDialog(progData).showDialog();
-//                    }
                     new ProgTipOfDay().showDialog(progData, false);
                 }
             }

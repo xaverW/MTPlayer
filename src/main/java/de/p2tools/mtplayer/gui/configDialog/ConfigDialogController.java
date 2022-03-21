@@ -36,6 +36,8 @@ import javafx.scene.layout.VBox;
 
 public class ConfigDialogController extends PDialogExtra {
 
+    private static ConfigDialogController instance;
+
     private TabPane tabPane = new TabPane();
     private Button btnOk = new Button("_Ok");
     private String geo = ProgConfig.SYSTEM_GEO_HOME_PLACE.get();
@@ -51,16 +53,22 @@ public class ConfigDialogController extends PDialogExtra {
     DownloadPaneController downloadPane;
     SetPaneController setPane;
 
-    public ConfigDialogController() {
-        super(ProgData.getInstance().primaryStage, ProgConfig.CONFIG_DIALOG_SIZE, "Einstellungen",
-                true, false, DECO.NONE);
+    private ConfigDialogController(ProgData progData) {
+        super(progData.primaryStage, ProgConfig.CONFIG_DIALOG_SIZE, "Einstellungen",
+                true, false, DECO.NONE, true);
 
-        this.progData = ProgData.getInstance();
-        init(true);
+        this.progData = progData;
+        init(false);
     }
+
 
     @Override
     public void make() {
+        setMaskerPane();
+        progData.maskerPane.visibleProperty().addListener((u, o, n) -> {
+            setMaskerPane();
+        });
+
         VBox.setVgrow(tabPane, Priority.ALWAYS);
         getvBoxCont().getChildren().add(tabPane);
         getvBoxCont().setPadding(new Insets(0));
@@ -73,7 +81,14 @@ public class ConfigDialogController extends PDialogExtra {
     }
 
     @Override
+    public void hide() {
+        super.close();
+    }
+
+    @Override
     public void close() {
+        progData.progTray.getDialogList().remove(instance);
+
         if (!geo.equals(ProgConfig.SYSTEM_GEO_HOME_PLACE.get())) {
             // dann hat sich der Geo-Standort geändert
             progData.filmlist.markGeoBlocked();
@@ -98,6 +113,14 @@ public class ConfigDialogController extends PDialogExtra {
 
         Listener.notify(Listener.EVEMT_SETDATA_CHANGED, ConfigDialogController.class.getSimpleName());
         super.close();
+    }
+
+    private void setMaskerPane() {
+        if (progData.maskerPane.isVisible()) {
+            this.setMaskerVisible(true);
+        } else {
+            this.setMaskerVisible(false);
+        }
     }
 
     private void initPanel() {
@@ -141,5 +164,18 @@ public class ConfigDialogController extends PDialogExtra {
         } catch (final Exception ex) {
             PLog.errorLog(784459510, ex);
         }
+    }
+
+    public synchronized static final ConfigDialogController getInstanceAndShow() {
+        if (instance == null) {
+            instance = new ConfigDialogController(ProgData.getInstance());
+        }
+        ProgData.getInstance().progTray.addDialog(instance);
+        if (!instance.isShowing()) {
+            instance.showDialog();
+        }
+        instance.getStage().toFront();
+
+        return instance;
     }
 }

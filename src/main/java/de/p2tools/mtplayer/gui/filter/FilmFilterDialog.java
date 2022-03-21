@@ -34,13 +34,15 @@ import javafx.util.Callback;
 
 public class FilmFilterDialog extends PDialogExtra {
 
+    private static FilmFilterDialog instance;
+
     private final Button btnOk = new Button("_Ok");
     private final Button btnClearFilter = new Button("Filter löschen");
 
     private final TableView<SelectedFilter> tableView = new TableView<>();
     private final ProgData progData;
 
-    public FilmFilterDialog(ProgData progData) {
+    private FilmFilterDialog(ProgData progData) {
         super(ProgData.getInstance().primaryStage, ProgConfig.FILM_GUI_FILTER_DIALOG, "Filmfilter",
                 false, false, DECO.NONE, true);
         this.progData = progData;
@@ -52,9 +54,7 @@ public class FilmFilterDialog extends PDialogExtra {
     @Override
     public void make() {
         ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> updateCss());
-        if (progData.maskerPane.isVisible()) {
-            this.getStage().getScene().getWindow().hide();
-        }
+
         setMaskerPane();
         progData.maskerPane.visibleProperty().addListener((u, o, n) -> {
             setMaskerPane();
@@ -122,6 +122,18 @@ public class FilmFilterDialog extends PDialogExtra {
 
     }
 
+    @Override
+    public void hide() {
+        super.close();
+    }
+
+    @Override
+    public void close() {
+        progData.progTray.getDialogList().remove(instance);
+        ProgConfig.FILM_GUI_FILTER_DIALOG_IS_SHOWING.setValue(false);
+        super.close();
+    }
+
     private void setMaskerPane() {
         if (progData.maskerPane.isVisible()) {
             this.setMaskerVisible(true);
@@ -158,9 +170,16 @@ public class FilmFilterDialog extends PDialogExtra {
         return cell;
     };
 
-    @Override
-    public void close() {
-        ProgConfig.FILM_GUI_FILTER_DIALOG_IS_SHOWING.setValue(false);
-        super.close();
+    public synchronized static final FilmFilterDialog getInstanceAndShow() {
+        if (instance == null) {
+            instance = new FilmFilterDialog(ProgData.getInstance());
+        }
+        ProgData.getInstance().progTray.addDialog(instance);
+        if (!instance.isShowing()) {
+            instance.showDialog();
+        }
+        instance.getStage().toFront();
+
+        return instance;
     }
 }

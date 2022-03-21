@@ -102,6 +102,5 @@ public class TrayPane {
     }
 
     public void close() {
-        tglTray.selectedProperty().unbindBidirectional(propTray);
     }
 }

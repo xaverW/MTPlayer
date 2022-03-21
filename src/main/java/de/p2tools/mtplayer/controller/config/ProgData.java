@@ -185,5 +185,4 @@ public class ProgData {
     public synchronized static final ProgData getInstance() {
         return instance == null ? instance = new ProgData() : instance;
     }
-
 }

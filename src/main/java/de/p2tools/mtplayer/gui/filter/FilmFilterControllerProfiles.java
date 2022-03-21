@@ -154,7 +154,7 @@ public class FilmFilterControllerProfiles extends VBox {
         miResort.setOnAction(e -> new FilmFilterSortDialog(progData).showDialog());
 
         final MenuItem miFilterDialog = new MenuItem("Filterprofile in eigenem Fenster anzeigen");
-        miFilterDialog.setOnAction(e -> new FilmFilterDialog(progData).showDialog());
+        miFilterDialog.setOnAction(e -> FilmFilterDialog.getInstanceAndShow());
 
         final MenuItem miReset = new MenuItem("alle Filterprofile wieder herstellen");
         miReset.setOnAction(e -> resetFilter());

@@ -87,7 +87,7 @@ public class Filmlist extends SimpleListProperty<FilmData> {
     public synchronized void filteredListSetPred(Predicate<FilmData> predicate) {
         PDebugLog.sysLog("=================> Filter: " + ++count);
         PDuration.counterStart("FilmListFilter.filterList");
-        filteredList.setPredicate(predicate);
+        getFilteredList().setPredicate(predicate);
         PDuration.counterStop("FilmListFilter.filterList");
 
     }

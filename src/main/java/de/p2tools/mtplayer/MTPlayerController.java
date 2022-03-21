@@ -181,7 +181,7 @@ public class MTPlayerController extends StackPane {
 
         // Menü
         final MenuItem miConfig = new MenuItem("Einstellungen des Programms");
-        miConfig.setOnAction(e -> new ConfigDialogController());
+        miConfig.setOnAction(e -> ConfigDialogController.getInstanceAndShow());
 
         final MenuItem miMediaCollectionConfig = new MenuItem("Einstellungen der Mediensammlung");
         miMediaCollectionConfig.setOnAction(e -> new MediaConfigDialogController());

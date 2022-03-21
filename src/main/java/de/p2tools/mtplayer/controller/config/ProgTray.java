@@ -25,6 +25,7 @@ import de.p2tools.mtplayer.gui.StatusBarController;
 import de.p2tools.mtplayer.gui.configDialog.ConfigDialogController;
 import de.p2tools.mtplayer.gui.dialog.AboutDialogController;
 import de.p2tools.mtplayer.gui.tools.Listener;
+import de.p2tools.p2Lib.dialogs.dialog.PDialog;
 import de.p2tools.p2Lib.guiTools.PGuiSize;
 import de.p2tools.p2Lib.tools.log.PLog;
 import de.p2tools.p2Lib.tools.log.PLogger;
@@ -36,13 +37,14 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ProgTray {
     private final ProgData progData;
-    private BooleanProperty propTray = ProgConfig.SYSTEM_TRAY;
-    private BooleanProperty propTrayUseOwnIcon = ProgConfig.SYSTEM_TRAY_USE_OWN_ICON;
-    private StringProperty propTrayIconPath = ProgConfig.SYSTEM_TRAY_ICON_PATH;
+    BooleanProperty propTray = ProgConfig.SYSTEM_TRAY;
+    BooleanProperty propTrayUseOwnIcon = ProgConfig.SYSTEM_TRAY_USE_OWN_ICON;
+    StringProperty propTrayIconPath = ProgConfig.SYSTEM_TRAY_ICON_PATH;
     private SystemTray systemTray = null;
     private boolean stopTimer = false;
 
@@ -162,7 +164,7 @@ public class ProgTray {
         java.awt.MenuItem miQuit = new java.awt.MenuItem("Programm Beenden");
 
         miMaxMin.addActionListener(e -> Platform.runLater(() -> maxMin()));
-        miConfig.addActionListener(e -> Platform.runLater(() -> new ConfigDialogController()));
+        miConfig.addActionListener(e -> Platform.runLater(() -> ConfigDialogController.getInstanceAndShow()));
         miLogfile.addActionListener(e -> Platform.runLater(() -> PLogger.openLogFile()));
         miTray.addActionListener(e -> Platform.runLater(() -> {
             //vor dem Ausschalten des Tray GUI anzeigen!!
@@ -171,7 +173,6 @@ public class ProgTray {
         miAbout.addActionListener(e -> Platform.runLater(() -> new AboutDialogController(progData)));
         miQuit.addActionListener(e -> Platform.runLater(() -> {
             ProgQuit.quit(false);
-            systemTray.remove(trayicon);
         }));
 
         PopupMenu popupMenu = new PopupMenu();
@@ -189,28 +190,44 @@ public class ProgTray {
     }
 
     private void closeTray() {
-        PGuiSize.showSave(progData.primaryStage);
+        //dann die Dialoge wieder anzeigen
+        show();
+        propTray.setValue(false);
+    }
 
-        if (progData.quitDialogController != null) {
-            PGuiSize.showSave(progData.quitDialogController.getStage());
+    private ArrayList<PDialog> dialogList = new ArrayList<>();
+
+    public void addDialog(PDialog pDialog) {
+        boolean found = false;
+        for (PDialog dialog : dialogList) {
+            if (dialog.equals(pDialog)) {
+                found = true;
+            }
         }
+        if (!found) {
+            dialogList.add(pDialog);
+        }
+        System.out.println("addDialog: " + found);
+    }
 
-        ProgConfig.SYSTEM_TRAY.setValue(false);
+    public ArrayList<PDialog> getDialogList() {
+        return dialogList;
     }
 
     private void maxMin() {
-        if (progData.primaryStage.isShowing()) {
-            Platform.runLater(() -> progData.primaryStage.close());
-        } else {
-            PGuiSize.showSave(progData.primaryStage);
-        }
+        Platform.runLater(() -> {
+            if (progData.primaryStage.isShowing()) {
+                progData.primaryStage.close();
+                dialogList.stream().forEach(pDialog -> pDialog.hide());
 
-        if (progData.quitDialogController != null) {
-            if (progData.quitDialogController.isShowing()) {
-                Platform.runLater(() -> progData.quitDialogController.getStage().close());
             } else {
-                PGuiSize.showSave(progData.quitDialogController.getStage());
+                show();
             }
-        }
+        });
+    }
+
+    private void show() {
+        PGuiSize.showSave(progData.primaryStage);
+        dialogList.stream().forEach(pDialog -> PGuiSize.showSave(pDialog.getStage()));
     }
 }
