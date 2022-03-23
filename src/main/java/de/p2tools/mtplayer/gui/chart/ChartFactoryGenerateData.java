@@ -80,7 +80,6 @@ public class ChartFactoryGenerateData {
         }
         chartData.setyScale(scale);
         setYAxisLabel(lineChart, scale);
-//        System.out.println("Scale: " + max + " - " + scale);
     }
 
     private static void setYAxisLabel(LineChart<Number, Number> lineChart, int scale) {

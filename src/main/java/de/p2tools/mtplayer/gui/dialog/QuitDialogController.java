@@ -142,7 +142,7 @@ public class QuitDialogController extends PDialogExtra {
 
     @Override
     public void close() {
-        ProgData.getInstance().progTray.getDialogList().remove(this);
+        ProgData.getInstance().progTray.removeDialog(this);
 
         ProgData.getInstance().quitDialogController = null;
         if (waitTask.isRunning()) {

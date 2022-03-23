@@ -87,7 +87,7 @@ public class ConfigDialogController extends PDialogExtra {
 
     @Override
     public void close() {
-        progData.progTray.getDialogList().remove(instance);
+        progData.progTray.removeDialog(instance);
 
         if (!geo.equals(ProgConfig.SYSTEM_GEO_HOME_PLACE.get())) {
             // dann hat sich der Geo-Standort geändert
@@ -171,6 +171,7 @@ public class ConfigDialogController extends PDialogExtra {
             instance = new ConfigDialogController(ProgData.getInstance());
         }
         ProgData.getInstance().progTray.addDialog(instance);
+
         if (!instance.isShowing()) {
             instance.showDialog();
         }

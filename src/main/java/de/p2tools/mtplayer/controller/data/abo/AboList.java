@@ -22,6 +22,7 @@ import de.p2tools.mtplayer.controller.data.download.DownloadTools;
 import de.p2tools.mtplayer.controller.data.film.FilmData;
 import de.p2tools.mtplayer.controller.data.film.FilmDataXml;
 import de.p2tools.mtplayer.controller.data.film.Filmlist;
+import de.p2tools.mtplayer.gui.dialog.AboAddDialogController;
 import de.p2tools.mtplayer.gui.dialog.AboEditDialogController;
 import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
 import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
@@ -148,7 +149,7 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
             abo.setThemeExact(themeExact);
         }
 
-        new AboEditDialogController(progData, abo);
+        new AboAddDialogController(progData, abo);
     }
 
     public synchronized void changeAboFromFilter(Optional<AboData> oAbo, SelectedFilter selectedFilter) {
@@ -191,7 +192,7 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
                 maxDuration,
                 namePath);
 
-        new AboEditDialogController(progData, abo);
+        new AboAddDialogController(progData, abo);
     }
 
     public synchronized void changeAbo(AboData abo) {
@@ -402,12 +403,18 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
     }
 
     public synchronized void setAboForFilm(Filmlist filmlist) {
-        // hier wird tatsächlich für jeden Film die Liste der Abos durchsucht
-        // braucht länger
+        //hier wird tatsächlich für jeden Film die Liste der Abos durchsucht,
+        //braucht länger
         PDuration.counterStart("Abo in Filmliste eintragen");
 
         // leere Abos löschen, die sind Fehler
-        stream().filter((abo) -> (abo.isEmpty())).forEach(this::remove);
+        Iterator<AboData> it = this.listIterator();
+        while (it.hasNext()) {
+            AboData aboData = it.next();
+            if (aboData.isEmpty()) {
+                it.remove();
+            }
+        }
 
         if (isEmpty()) {
             // dann nur die Abos in der Filmliste löschen

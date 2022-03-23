@@ -26,6 +26,7 @@ import de.p2tools.mtplayer.gui.configDialog.ConfigDialogController;
 import de.p2tools.mtplayer.gui.dialog.AboutDialogController;
 import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.p2Lib.dialogs.dialog.PDialog;
+import de.p2tools.p2Lib.dialogs.dialog.PDialogFactory;
 import de.p2tools.p2Lib.guiTools.PGuiSize;
 import de.p2tools.p2Lib.tools.log.PLog;
 import de.p2tools.p2Lib.tools.log.PLogger;
@@ -148,7 +149,7 @@ public class ProgTray {
         try {
             systemTray.add(trayicon);
         } catch (AWTException exception) {
-            PLog.errorLog(945120364, exception.getMessage());
+            PLog.errorLog(912547030, exception.getMessage());
         }
     }
 
@@ -191,13 +192,13 @@ public class ProgTray {
 
     private void closeTray() {
         //dann die Dialoge wieder anzeigen
-        show();
+        showDialog();
         propTray.setValue(false);
     }
 
     private ArrayList<PDialog> dialogList = new ArrayList<>();
 
-    public void addDialog(PDialog pDialog) {
+    public synchronized void addDialog(PDialog pDialog) {
         boolean found = false;
         for (PDialog dialog : dialogList) {
             if (dialog.equals(pDialog)) {
@@ -207,27 +208,37 @@ public class ProgTray {
         if (!found) {
             dialogList.add(pDialog);
         }
-        System.out.println("addDialog: " + found);
     }
 
-    public ArrayList<PDialog> getDialogList() {
-        return dialogList;
+    public synchronized void removeDialog(PDialog pDialog) {
+        Platform.runLater(() -> {
+            //sonst ist evtl. noch ein showDialog/closeDialog im Gang!!
+            dialogList.remove(pDialog);
+        });
     }
 
-    private void maxMin() {
+    private synchronized void maxMin() {
         Platform.runLater(() -> {
             if (progData.primaryStage.isShowing()) {
-                progData.primaryStage.close();
-                dialogList.stream().forEach(pDialog -> pDialog.hide());
-
+                closeDialog();
             } else {
-                show();
+                showDialog();
             }
         });
     }
 
-    private void show() {
-        PGuiSize.showSave(progData.primaryStage);
-        dialogList.stream().forEach(pDialog -> PGuiSize.showSave(pDialog.getStage()));
+    private void closeDialog() {
+        PGuiSize.getSizeStage(ProgConfig.SYSTEM_SIZE_GUI, ProgData.getInstance().primaryStage);
+        progData.primaryStage.close();
+        dialogList.stream().forEach(pDialog -> {
+            pDialog.hide();
+        });
+    }
+
+    private void showDialog() {
+        PDialogFactory.showDialog(progData.primaryStage, ProgConfig.SYSTEM_SIZE_GUI);
+        dialogList.stream().forEach(pDialog -> {
+            pDialog.showDialog();
+        });
     }
 }

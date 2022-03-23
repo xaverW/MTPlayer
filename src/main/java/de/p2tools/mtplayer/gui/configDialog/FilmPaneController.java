@@ -112,7 +112,6 @@ public class FilmPaneController extends PAccordionPane {
         tglRemoveDiacritic.selectedProperty().addListener((observableValue, aBoolean, t1) -> {
             diacriticChanged.setValue(true);
             ProgConfig.SYSTEM_SHOW_DIACRITICS.setValue(!tglRemoveDiacritic.isSelected());
-            System.out.println("Show Diacrit: " + ProgConfig.SYSTEM_SHOW_DIACRITICS.getValue());
         });
         final Button btnHelpDia = PButton.helpButton(stage, "Diakritische Zeichen",
                 HelpText.DIAKRITISCHE_ZEICHEN);

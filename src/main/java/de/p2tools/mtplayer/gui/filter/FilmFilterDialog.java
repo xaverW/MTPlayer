@@ -22,7 +22,6 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
-import de.p2tools.p2Lib.guiTools.PGuiSize;
 import de.p2tools.p2Lib.guiTools.PSeparatorComboBox;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -46,8 +45,6 @@ public class FilmFilterDialog extends PDialogExtra {
         super(ProgData.getInstance().primaryStage, ProgConfig.FILM_GUI_FILTER_DIALOG, "Filmfilter",
                 false, false, DECO.NONE, true);
         this.progData = progData;
-        ProgConfig.FILM_GUI_FILTER_DIALOG_IS_SHOWING.setValue(true);
-
         init(false);
     }
 
@@ -62,19 +59,6 @@ public class FilmFilterDialog extends PDialogExtra {
 
         addOkButton(btnOk);
         btnOk.setOnAction(a -> close());
-
-        this.getStage().getScene().getWindow().heightProperty().addListener((u, o, n) -> {
-            PGuiSize.getSizeScene(ProgConfig.FILM_GUI_FILTER_DIALOG, this.getStage());
-        });
-        this.getStage().getScene().getWindow().widthProperty().addListener((u, o, n) -> {
-            PGuiSize.getSizeScene(ProgConfig.FILM_GUI_FILTER_DIALOG, this.getStage());
-        });
-        this.getStage().getScene().getWindow().xProperty().addListener((u, o, n) -> {
-            PGuiSize.getSizeScene(ProgConfig.FILM_GUI_FILTER_DIALOG, this.getStage());
-        });
-        this.getStage().getScene().getWindow().yProperty().addListener((u, o, n) -> {
-            PGuiSize.getSizeScene(ProgConfig.FILM_GUI_FILTER_DIALOG, this.getStage());
-        });
 
         addAnyButton(btnClearFilter);
         btnClearFilter.setTooltip(new Tooltip("Der Filter (nicht das Filterprofil) wird gelöscht"));
@@ -129,7 +113,7 @@ public class FilmFilterDialog extends PDialogExtra {
 
     @Override
     public void close() {
-        progData.progTray.getDialogList().remove(instance);
+        progData.progTray.removeDialog(instance);
         ProgConfig.FILM_GUI_FILTER_DIALOG_IS_SHOWING.setValue(false);
         super.close();
     }
@@ -175,6 +159,8 @@ public class FilmFilterDialog extends PDialogExtra {
             instance = new FilmFilterDialog(ProgData.getInstance());
         }
         ProgData.getInstance().progTray.addDialog(instance);
+        ProgConfig.FILM_GUI_FILTER_DIALOG_IS_SHOWING.setValue(true);
+
         if (!instance.isShowing()) {
             instance.showDialog();
         }

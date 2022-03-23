@@ -90,7 +90,6 @@ public class Listener implements EventListener {
     }
 
     private void pingen() {
-        //System.out.println("Ping: " + ereignis);
         try {
             ping();
             Platform.runLater(() -> pingFx());
