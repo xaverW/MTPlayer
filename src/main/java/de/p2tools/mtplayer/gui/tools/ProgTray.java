@@ -15,19 +15,20 @@
  */
 
 
-package de.p2tools.mtplayer.controller.config;
+package de.p2tools.mtplayer.gui.tools;
 
 import de.p2tools.mtplayer.controller.ProgQuit;
+import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadInfosFactory;
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
 import de.p2tools.mtplayer.gui.StatusBarController;
 import de.p2tools.mtplayer.gui.configDialog.ConfigDialogController;
 import de.p2tools.mtplayer.gui.dialog.AboutDialogController;
-import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.p2Lib.dialogs.dialog.PDialog;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogFactory;
-import de.p2tools.p2Lib.guiTools.PGuiSize;
+import de.p2tools.p2Lib.tools.ProgramTools;
 import de.p2tools.p2Lib.tools.log.PLog;
 import de.p2tools.p2Lib.tools.log.PLogger;
 import javafx.application.Platform;
@@ -171,7 +172,7 @@ public class ProgTray {
             //vor dem Ausschalten des Tray GUI anzeigen!!
             closeTray();
         }));
-        miAbout.addActionListener(e -> Platform.runLater(() -> new AboutDialogController(progData)));
+        miAbout.addActionListener(e -> Platform.runLater(() -> AboutDialogController.getInstanceAndShow()));
         miQuit.addActionListener(e -> Platform.runLater(() -> {
             ProgQuit.quit(false);
         }));
@@ -180,13 +181,17 @@ public class ProgTray {
         popupMenu.add(miMaxMin);
         popupMenu.add(miConfig);
         popupMenu.add(miLogfile);
-        popupMenu.add(miTray);
-
+        if (!ProgramTools.getOs().equals(ProgramTools.OperatingSystemType.MAC)) {
+            //machen unter MAC Probleme
+            popupMenu.add(miTray);
+        }
         popupMenu.addSeparator();
         popupMenu.add(miAbout);
-        popupMenu.addSeparator();
-        popupMenu.add(miQuit);
-
+        if (!ProgramTools.getOs().equals(ProgramTools.OperatingSystemType.MAC)) {
+            //machen unter MAC Probleme
+            popupMenu.addSeparator();
+            popupMenu.add(miQuit);
+        }
         trayicon.setPopupMenu(popupMenu);
     }
 
@@ -211,34 +216,36 @@ public class ProgTray {
     }
 
     public synchronized void removeDialog(PDialog pDialog) {
-        Platform.runLater(() -> {
-            //sonst ist evtl. noch ein showDialog/closeDialog im Gang!!
-            dialogList.remove(pDialog);
-        });
+        dialogList.remove(pDialog);
     }
 
     private synchronized void maxMin() {
-        Platform.runLater(() -> {
-            if (progData.primaryStage.isShowing()) {
-                closeDialog();
-            } else {
-                showDialog();
-            }
-        });
+        if (progData.primaryStage.isShowing()) {
+            closeDialog();
+        } else {
+            showDialog();
+        }
     }
 
     private void closeDialog() {
-        PGuiSize.getSizeStage(ProgConfig.SYSTEM_SIZE_GUI, ProgData.getInstance().primaryStage);
-        progData.primaryStage.close();
+        Platform.runLater(() -> {
+            progData.primaryStage.close();
+        });
         dialogList.stream().forEach(pDialog -> {
-            pDialog.hide();
+            Platform.runLater(() -> {
+                pDialog.hide();
+            });
         });
     }
 
     private void showDialog() {
-        PDialogFactory.showDialog(progData.primaryStage, ProgConfig.SYSTEM_SIZE_GUI);
+        Platform.runLater(() -> {
+            PDialogFactory.showDialog(progData.primaryStage, ProgConfig.SYSTEM_SIZE_GUI);
+        });
         dialogList.stream().forEach(pDialog -> {
-            pDialog.showDialog();
+            Platform.runLater(() -> {
+                pDialog.showDialog();
+            });
         });
     }
 }

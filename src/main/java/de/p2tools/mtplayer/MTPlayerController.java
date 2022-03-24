@@ -21,7 +21,6 @@ import de.p2tools.mtplayer.controller.ProgSave;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgTipOfDay;
 import de.p2tools.mtplayer.controller.data.MTShortcut;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
@@ -35,6 +34,7 @@ import de.p2tools.mtplayer.gui.dialog.AboutDialogController;
 import de.p2tools.mtplayer.gui.dialog.ResetDialogController;
 import de.p2tools.mtplayer.gui.mediaConfig.MediaConfigDialogController;
 import de.p2tools.mtplayer.gui.mediaDialog.MediaDialogController;
+import de.p2tools.mtplayer.gui.tools.ProgTipOfDay;
 import de.p2tools.mtplayer.tools.update.SearchProgramUpdate;
 import de.p2tools.p2Lib.guiTools.POpen;
 import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
@@ -200,7 +200,7 @@ public class MTPlayerController extends StackPane {
         PShortcutWorker.addShortCut(miQuitWait, MTShortcut.SHORTCUT_QUIT_PROGRAM_WAIT);
 
         final MenuItem miAbout = new MenuItem("Über dieses Programm");
-        miAbout.setOnAction(event -> new AboutDialogController(progData));
+        miAbout.setOnAction(event -> AboutDialogController.getInstanceAndShow());
 
         final MenuItem miLog = new MenuItem("Logdatei öffnen");
         miLog.setOnAction(event -> {

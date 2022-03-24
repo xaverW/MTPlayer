@@ -15,8 +15,11 @@
  */
 
 
-package de.p2tools.mtplayer.controller.config;
+package de.p2tools.mtplayer.gui.tools;
 
+import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgConst;
+import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.guiTools.pTipOfDay.PTipOfDay;
 import de.p2tools.p2Lib.guiTools.pTipOfDay.PTipOfDayDialog;

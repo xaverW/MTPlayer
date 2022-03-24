@@ -24,17 +24,65 @@ import de.p2tools.mtplayer.tools.update.SearchProgramUpdate;
 import de.p2tools.p2Lib.dialogs.AboutDialog;
 
 public class AboutDialogController extends AboutDialog {
+    private static AboutDialogController instance;
+    private final ProgData progData;
 
-    public AboutDialogController(ProgData progData) {
+    private AboutDialogController(ProgData progData) {
         super(progData.primaryStage, ProgConst.PROGRAM_NAME, ProgConst.URL_WEBSITE, ProgConst.URL_WEBSITE_HELP,
                 ProgConst.FILE_PROG_ICON, ProgConfig.SYSTEM_PROG_OPEN_URL,
                 ProgConfig.SYSTEM_DARK_THEME.getValue(),
                 new String[]{"Filmliste:", "Einstellungen:"},
-                new String[]{ProgInfos.getFilmListFile(), ProgInfos.getSettingsFile().toAbsolutePath().toString()});
+                new String[]{ProgInfos.getFilmListFile(), ProgInfos.getSettingsFile().toAbsolutePath().toString()},
+                true);
+
+        this.progData = progData;
+        setMaskerPane();
+        progData.maskerPane.visibleProperty().addListener((u, o, n) -> {
+            setMaskerPane();
+        });
+    }
+
+    @Override
+    public void make() {
+        super.make();
     }
 
     @Override
     public void runCheckButtonk() {
         new SearchProgramUpdate(ProgData.getInstance(), this.getStage()).searchNewProgramVersion(true);
     }
+
+    @Override
+    public void hide() {
+        super.close();
+    }
+
+    @Override
+    public void close() {
+        progData.progTray.removeDialog(instance);
+        super.close();
+    }
+
+    private void setMaskerPane() {
+        if (progData.maskerPane.isVisible()) {
+            this.setMaskerVisible(true);
+        } else {
+            this.setMaskerVisible(false);
+        }
+    }
+
+    public synchronized static final AboutDialogController getInstanceAndShow() {
+        if (instance == null) {
+            instance = new AboutDialogController(ProgData.getInstance());
+        }
+        ProgData.getInstance().progTray.addDialog(instance);
+
+        if (!instance.isShowing()) {
+            instance.showDialog();
+        }
+        instance.getStage().toFront();
+
+        return instance;
+    }
+
 }

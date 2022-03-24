@@ -40,6 +40,7 @@ import de.p2tools.mtplayer.gui.filter.AboFilterController;
 import de.p2tools.mtplayer.gui.filter.DownloadFilterController;
 import de.p2tools.mtplayer.gui.filter.FilmFilterControllerClearFilter;
 import de.p2tools.mtplayer.gui.tools.Listener;
+import de.p2tools.mtplayer.gui.tools.ProgTray;
 import de.p2tools.mtplayer.tools.filmListFilter.FilmListFilter;
 import de.p2tools.mtplayer.tools.storedFilter.StoredFilters;
 import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
