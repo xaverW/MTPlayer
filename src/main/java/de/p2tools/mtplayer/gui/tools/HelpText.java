@@ -54,7 +54,8 @@ public class HelpText {
                     "endet (z.B. 'Der Hamburger' und '1. Burger').\n" +
                     "\n" +
                     "Mehr zu regulären Ausdrücken:\n" +
-                    "https://de.wikipedia.org/wiki/Regul%C3%A4rer_Ausdruck";
+                    "https://de.wikipedia.org/wiki/Regul%C3%A4rer_Ausdruck" +
+                    "\n";
 
     public static final String SEARCH_MEDIA_DIALOG = "" +
             "In Mediensammlung und erledigten Abos können bestimmte Daten " +
@@ -76,7 +77,8 @@ public class HelpText {
             "schnell auf einen entscheidenden Begriff reduzieren. Der Button rechts daneben stellt den " +
             "ursprünglichen Suchtext wieder her. Nach Start der Suche aus einem Kontextmenü in den " +
             "Ansichten 'Filme' oder 'Downloads' ist dies ein automatisch eingetragener Text; nach Start der Suche " +
-            "aus dem Programm-Menü ist es ein leeres Suchfeld.";
+            "aus dem Programm-Menü ist es ein leeres Suchfeld." +
+            "\n";
 
     public static final String PROG_PATHS =
             "Hier können Standardprogramme zum Ansehen und Aufzeichnen der Filme eingetragen werden.\n" +
@@ -96,7 +98,8 @@ public class HelpText {
                     "\n" +
                     "Downloadquellen:\n" +
                     "http://www.videolan.org\n" +
-                    "http://ffmpeg.org";
+                    "http://ffmpeg.org" +
+                    "\n";
 
     public static final String GUI_FILM_FILTER =
             "Die Menüs, Textfelder und Schieberegler erlauben ein detailliertes " +
@@ -146,7 +149,8 @@ public class HelpText {
                     "\n" +
                     "Darunter kann man die aktuellen Einstellungen als Profil speichern bzw. aus dem " +
                     "gespeicherten Zustand wieder laden. " +
-                    "Solange ein geladenes Profil nicht verändert wurde ist sein Name unterstrichen.\n";
+                    "Solange ein geladenes Profil nicht verändert wurde ist sein Name unterstrichen." +
+                    "\n";
 
     public static final String GUI_DOWNLOAD_FILTER =
             "Die Menüs und Schieberegler erlauben ein detailliertes " +
@@ -198,7 +202,8 @@ public class HelpText {
                     "[Thema/Titel] durchsucht in der Filmliste THEMA und TITEL.\n" +
                     "Bei einer Suche nach mehreren Suchbegriffen müssen hier alle Suchbegriffe im selben Bereich " +
                     "vorkommen. Ein Film mit 'Sport' in THEMA und 'Fussball' in TITEL wird von " +
-                    "'Sport:Fussball' nicht erfasst.";
+                    "'Sport:Fussball' nicht erfasst." +
+                    "\n";
 
     public static final String CONFIG_GEO =
             "Nicht alle Filme lassen sich aus allen Ländern abrufen (Geoblocking). Man kann hier " +
@@ -214,29 +219,45 @@ public class HelpText {
                     "MTPlayer kennt aber nicht alle Muster für geogeblockte Sendungen. Ob ein fehlerhafter " +
                     "Download auf Geoblocking zurückzuführen ist zeigt sich beim Klick auf den Link zur " +
                     "Sendung ('zur Website' ganz unten in der Ansicht 'Filme'). Wenn die Sendung auch auf der " +
-                    "Website des Senders nicht abgespielt werden kann liegt fast immer Geoblocking vor.";
+                    "Website des Senders nicht abgespielt werden kann liegt fast immer Geoblocking vor." +
+                    "\n";
 
     public static final String CONFIG_STYLE =
             "Die Schriftgröße sollte sich automatisch an die vorgegebene Größe im " +
                     "Betriebssystem einstellen. Sie kann hier eingestellt werden, wenn " +
                     "die Automatik nicht funktioniert oder eine andere Größe gewünscht wird.\n" +
                     "\n" +
-                    "Damit die Änderung wirksam wird ist evtl. ein Neustart des Programms erforderlich.";
+                    "Damit die Änderung wirksam wird ist evtl. ein Neustart des Programms erforderlich." +
+                    "\n";
 
     public static final String GUI_FILMS_EDIT_FILTER =
-            "Hier können Filter aktiviert und deaktiviert werden.\n" +
+            "Hier können Filter aktiviert und deaktiviert werden." +
+                    "\n" +
                     "\n" +
                     "Deaktivierte Filter werden beim Suchen der Filme nicht berücksichtigt, " +
-                    "daher ist eine Suche mit weniger Filtern schneller.\n" +
+                    "daher ist eine Suche mit weniger Filtern schneller." +
                     "\n" +
-                    "\"Diakritische Zeichen ändern\" meint, dass bestimmte Zeichen im \"Film: Titel, Thema, Beschreibung\" vor dem Filtern " +
-                    "angepasst werden. Aus z.B. \"äöü ń ǹ ň ñ ṅ ņ ṇ ṋ ç č c\" wird dann " +
-                    "\"äöü n n n n n n n n c c c\" das dann zum Suchen verwendet wird. Diese Anpassung ist aber aufwändig " +
-                    "so dass die Suche länger dauert!\n" +
                     "\n" +
-                    "Die Wartezeit ist die Zeit, die bei der Suche in Textfeldern während des Tippens " +
-                    "bis zum Start der Suche gewartet wird. Es wird also nicht bei jedem Buchstaben bereits " +
-                    "die Suche gestartet.";
+
+                    "Suchbeginn verzögern: Hier kann eine Zeit eingestellt werden, die den Start der " +
+                    "Suche verzögert." +
+                    "\n" +
+                    "\n" +
+                    "\"Return\": Diese Einstellung startet die Suche in den Textfeldern erst nach Eingabe " +
+                    "der Return-Taste." +
+                    "\n" +
+                    "\n" +
+                    "In den Textfeldern wird die Suche immer sofort nach Eingabe der Return-Taste " +
+                    "gestartet. Mit der Einstellung \"Return\" aber ausschließlich. " +
+                    "Bei den anderen Suchfeldern (Zeit, Datum, ..) startet die " +
+                    "Suche immer nach der eingestellten Wartezeit." +
+                    "\n" +
+                    "\n" +
+                    "Ich kann eine Suche also starten wenn ich ein Suchfeld " +
+                    "(egal welches) ändere und die Wartezeit abwarte. " +
+                    "In einem Textfeld (egal welchem) kann ich zusätzlich die Suche starten " +
+                    "wenn ich \"Return\" tippe." +
+                    "\n";
 
     public static final String SETDATA_PREFIX =
             "Wenn die URL eines Films mit <Präfix> beginnt bzw. mit <Suffix> " +
@@ -244,19 +265,22 @@ public class HelpText {
                     "Hilfsprogramm gespeichert.\n" +
                     "\n" +
                     "Mehrere Einträge sind möglich, wenn sie durch Kommas " +
-                    "getrennt sind (z.B. 'mp4,mp3,m4v,m4a').";
+                    "getrennt sind (z.B. 'mp4,mp3,m4v,m4a')." +
+                    "\n";
 
     public static final String SETDATA_RES =
             "Nicht jede Auflösung wird von jedem Sender angeboten. Wenn die gewünschte " +
                     "Auflösung nicht verfügbar ist wird automatisch die hohe Auflösung heruntergeladen.\n" +
                     "\n" +
                     "Die Auflösung gilt nur für manuell gestartete Downloads und zum " +
-                    "Abspielen von Filmen. Für Abos wird die im Abo ausgewählte Auflösung verwendet.";
+                    "Abspielen von Filmen. Für Abos wird die im Abo ausgewählte Auflösung verwendet." +
+                    "\n";
 
     public static final String ABO_RES =
             "Nicht jede Auflösung wird von jedem Sender angeboten. " +
                     "Wenn die gewünschte Auflösung nicht verfügbar ist wird " +
-                    "automatisch die hohe Auflösung heruntergeladen.";
+                    "automatisch die hohe Auflösung heruntergeladen." +
+                    "\n";
 
     public static final String ABO_SUBDIR =
             "Downloads aus Abos werden in einem Abo-eigenen Unterordner gespeichert, " +
@@ -290,7 +314,8 @@ public class HelpText {
                     "%q Qualität des Films ('HD', 'H', 'L')\n" +
                     "\n" +
                     "Beispiel:\n" +
-                    "Am 10.05.2021 liefert '%H__%t__%T' z.B. '20210510__Natur__Wildes Shetland'.";
+                    "Am 10.05.2021 liefert '%H__%t__%T' z.B. '20210510__Natur__Wildes Shetland'." +
+                    "\n";
 
     public static final String SETDATA_ABO_SUBDIR =
             "Downloads aus Abos werden in einem Abo-eigenen Unterordner gespeichert, " +
@@ -299,68 +324,81 @@ public class HelpText {
                     "\n" +
                     "Diese Einstellung wird überschrieben, wenn im Abo ein eigener " +
                     "Abozielpfad angegeben ist. Der Download wird dann immer in einem " +
-                    "Unterordner mit dem im Abozielpfad angegebenen Namen gespeichert.";
+                    "Unterordner mit dem im Abozielpfad angegebenen Namen gespeichert." +
+                    "\n";
 
     public static final String ABO_START_TIME =
             "Die Startzeit legt fest, ab wann ein Download aus diesem Abo gestartet wird.\n\n" +
                     "Der Download muss ganz normal wie andere Downloads aus Abos behandelt, also auch " +
                     "gestartet werden. Das Programm beginnt aber erst ab der vorgegebenen Startzeit " +
-                    "mit dem Laden des Downloads.";
+                    "mit dem Laden des Downloads." +
+                    "\n";
 
     public static final String SETDATA_RESET_COLOR =
             "Wenn das Set in der Ansicht \"Filme\" als Button gestartet werden " +
                     "kann (\"Button\" im Set ist eingeschaltet), kann hier die " +
-                    "Schriftfarbe des Buttons festgelegt werden.";
+                    "Schriftfarbe des Buttons festgelegt werden." +
+                    "\n";
 
     public static final String DOWNLOAD_REPLACELIST =
             "Die Tabelle wird von oben nach unten abgearbeitet. Es ist also möglich, " +
                     "dass eine Ersetzung durch eine weitere ganz oder teilweise " +
-                    "rückgängig gemacht wird!";
+                    "rückgängig gemacht wird!" +
+                    "\n";
 
     public static final String DOWNLOAD_ONLY_ASCII =
             "Es werden alle Zeichen über ASCII 127 ersetzt. Umlaute werden aufgelöst (z.B. 'ö' -> 'oe').\n" +
                     "\n" +
-                    "Wenn die Ersetzungstabelle aktiv ist wird sie vorher abgearbeitet.";
+                    "Wenn die Ersetzungstabelle aktiv ist wird sie vorher abgearbeitet." +
+                    "\n";
 
     public static final String DOWNLOAD_ONE_SERVER =
             "Es sind maximal 2 gleichzeitige Downloads pro Server möglich. Hier kann " +
                     "auf nur 1 Download begrenzt werden, was manchmal bei " +
-                    "Downloadproblemen hilft.";
+                    "Downloadproblemen hilft." +
+                    "\n";
 
     public static final String DOWNLOAD_SSL_ALWAYS_TRUE =
             "Bei Downloads mit \"https-URL\" wird die Verbindung über SSL " +
                     "aufgebaut. Wenn SSL-Zertifikate auf dem Rechner fehlen oder das Server-Zertifikat fehlerhaft ist, kommt es " +
                     "zu Download-Fehlern. Der Download bricht mit einer Fehlermeldung ab. " +
                     P2LibConst.LINE_SEPARATORx2 +
-                    "Die Überprüfung der Zertifikate kann mit dieser Funktion abgeschaltet werden.";
+                    "Die Überprüfung der Zertifikate kann mit dieser Funktion abgeschaltet werden." +
+                    "\n";
 
     public static final String DOWNLOAD_FINISHED =
-            "Wenn ein Download erfolgreich beendet ist wird mit einem Fenster informiert.";
+            "Wenn ein Download erfolgreich beendet ist wird mit einem Fenster informiert." +
+                    "\n";
 
     public static final String DOWNLOAD_ERROR =
-            "Wenn ein Download mit einem Fehler endet wird mit einem Fenster informiert.";
+            "Wenn ein Download mit einem Fehler endet wird mit einem Fenster informiert." +
+                    "\n";
 
     public static final String DOWNLOAD_ADD_AT_TIME =
             "Downloads können mit einer Startzeit gestartet werden.\n\n" +
                     "\"Nur ausgewählte Downloads starten\" zeigt die markierten Downloads und\n" +
                     "\"Alle Downloads starten\" zeigt alle Downloads die gestartet werden können.\n\n" +
-                    "Die Auswahl wird nur angezeigt, wenn auch Downloads markiert wurden.";
+                    "Die Auswahl wird nur angezeigt, wenn auch Downloads markiert wurden." +
+                    "\n";
 
     public static final String BLACKLIST_GEO =
             "Einschalten um geogeblockte Filme von Anzeige und Abo-Download auszuschließen.\n" +
-                    "Es wird der unter \"Allgemein\" angegebene Standort verwendet.";
+                    "Es wird der unter \"Allgemein\" angegebene Standort verwendet." +
+                    "\n";
 
     public static final String BLACKLIST_SIZE =
             "Filme ohne Längenangabe werden immer angezeigt und ggf. von Abos als Download angelegt.\n" +
                     "\n" +
                     "Kurze Filme sind oft nur Trailer.\n" +
                     "\n" +
-                    "Wenn die Filmliste hiermit verkürzt wird kann das Arbeiten mit den Filmen schneller werden.";
+                    "Wenn die Filmliste hiermit verkürzt wird kann das Arbeiten mit den Filmen schneller werden." +
+                    "\n";
 
     public static final String BLACKLIST_DAYS =
             "Filme ohne Datum werden immer angezeigt und ggf. von Abos als Download angelegt.\n" +
                     "\n" +
-                    "Wenn die Filmliste hiermit verkürzt wird kann das Arbeiten mit den Filmen schneller werden.";
+                    "Wenn die Filmliste hiermit verkürzt wird kann das Arbeiten mit den Filmen schneller werden." +
+                    "\n";
 
     public static final String BLACKLIST_COUNT =
             "Beim Treffer zählen wird jeder Film gegen alle Filter geprüft und jeder Treffer " +
@@ -369,14 +407,17 @@ public class HelpText {
                     "Dort wird nach dem ersten Treffer die weitere Suche abgebrochen. " +
                     "Es beschleunigt also das Filtern der Filmliste, " +
                     "wenn hier in der Tabelle die Einträge mit den meisten Treffern " +
-                    "am Anfang stehen.";
+                    "am Anfang stehen." +
+                    "\n";
 
     public static final String BLACKLIST_FUTURE =
-            "Filme mit Datum in der Zukunft sind meist nur Trailer.";
+            "Filme mit Datum in der Zukunft sind meist nur Trailer." +
+                    "\n";
 
     public static final String BLACKLIST_ABO =
             "Einschalten, wenn auch die von Abos gefundenen Downloads mit der " +
-                    "Blacklist/Whitelist gefiltert werden sollen.";
+                    "Blacklist/Whitelist gefiltert werden sollen." +
+                    "\n";
 
     public static final String LOAD_ONLY_FILMS =
             "\"Nur Filme der letzten Tage laden:\" Die Filmliste enthält nur Filme aus diesem Zeitraum. " +
@@ -392,12 +433,14 @@ public class HelpText {
                     "Filmliste nur etwa halb so groß (~ 140.000 Filme).\n" +
                     "\n" +
                     "Auswirkung hat das Filtern erst nach dem Neustart des Programms oder dem " +
-                    "Neuladen der Filmliste.";
+                    "Neuladen der Filmliste." +
+                    "\n";
 
     public static final String LOAD_FILMLIST_SENDER =
             "Filme der markierten Sender werden aus der Filmliste ausgeschlossen.\n" +
                     "\n" +
-                    "Wirksam erst nach Neustart des Programms oder Neuladen der kompletten Filmliste.";
+                    "Wirksam erst nach Neustart des Programms oder Neuladen der kompletten Filmliste." +
+                    "\n";
 
     public static final String LOAD_FILMLIST_PROGRAMSTART =
             "Die Filmliste wird beim Programmstart automatisch geladen, " +
@@ -405,12 +448,14 @@ public class HelpText {
                     "Button \"Filmliste\" in der Ansicht \"Filme\" aktualisiert werden.\n" +
                     "\n" +
                     "Zum Update werden dann nur noch Differenzlisten geladen " +
-                    "(diese enthalten nur neu hinzugekommene Filme).";
+                    "(diese enthalten nur neu hinzugekommene Filme)." +
+                    "\n";
 
     public static final String LOAD_FILMLIST_MANUAL =
             "Die Filmliste wird von der angegebenen Datei oder URL geladen. " +
                     "Bei leerem Feld wird die Filmliste auf herkömmliche Art geladen " +
-                    "und die URL dafür wird automatisch gewählt.";
+                    "und die URL dafür wird automatisch gewählt." +
+                    "\n";
 
     public static final String DIAKRITISCHE_ZEICHEN =
             "\"Diakritische Zeichen ändern\" meint, dass bestimmte Zeichen in den " +
@@ -421,35 +466,42 @@ public class HelpText {
                     "\n" +
                     "Das Programm arbeitet dann mit der angepassten " +
                     "Filmliste. Beim Suchen nach Filmen, Downloads und Abos werden die angepassten Namen für Titel, Thema und " +
-                    "Beschreibung verwendet.";
+                    "Beschreibung verwendet." +
+                    "\n";
 
     public static final String SEARCH_ABOS_IMMEDIATELY =
             "Nach dem Neuladen einer Filmliste wird automatisch nach neuen " +
                     "Downloads aus Abos gesucht. Wenn dies ausgeschaltet ist, muss man die " +
                     "Suche manuell anstoßen (in der Ansicht \"Downloads\" " +
-                    "auf \"Downloads aktualisieren\" klicken).";
+                    "auf \"Downloads aktualisieren\" klicken)." +
+                    "\n";
 
     public static final String SMALL_BUTTON =
             "In den Tabellen der Ansichten \"Filme\" und \"Downloads\" können " +
-                    "kleinere Buttons gewählt werden, um die Zeilenhöhe zu verringern.";
+                    "kleinere Buttons gewählt werden, um die Zeilenhöhe zu verringern." +
+                    "\n";
 
     public static final String TRAY =
             "Im System Tray wird für das Programm ein Symbol angezeigt. " +
-                    "Damit kann das Programm auf dem Desktop ausgeblendet werden.";
+                    "Damit kann das Programm auf dem Desktop ausgeblendet werden." +
+                    "\n";
 
     public static final String TRAY_OWN_ICON =
             "Im System Tray wird für das Programm ein Symbol angezeigt. " +
-                    "Damit kann ein eigens Bild dafür verwendet werden.";
+                    "Damit kann ein eigens Bild dafür verwendet werden." +
+                    "\n";
 
     public static final String TIP_OF_DAY =
             "Beim Programmstart wird (einmal täglich) ein Tip zur Verwendung " +
                     "des Programms angezeigt. Das passiert so oft, bis alle Tips " +
-                    "einmal angezeigt wurden.";
+                    "einmal angezeigt wurden." +
+                    "\n";
 
     public static final String DARK_THEME =
             "Das Programm wird damit mit einer dunklen Programmoberfläche angezeigt. " +
                     "Damit alle Elemente der Programmoberfläche geändert werden, kann ein " +
-                    "Programmneustart notwendig sein.";
+                    "Programmneustart notwendig sein." +
+                    "\n";
 
     public static final String SHORTCUT =
             "Zum Ändern eines Tastenkürzels seinen \"Ändern\"-Button klicken und dann " +
@@ -457,7 +509,8 @@ public class HelpText {
                     "\n" +
                     "Der \"Zurücksetzen\"-Button stellt den Originalzustand wieder her.\n" +
                     "\n" +
-                    "Damit die Änderungen wirksam werden muss das Programm neu gestartet werden.";
+                    "Damit die Änderungen wirksam werden muss das Programm neu gestartet werden." +
+                    "\n";
 
     public static final String USER_AGENT =
             "Hier kann ein User Agent angegeben werden, der bei Downloads als Absender " +
@@ -466,11 +519,13 @@ public class HelpText {
                     "Solange alles funktioniert, kann das Feld leer bleiben. Ansonsten wäre " +
                     "das z.B. eine Möglichkeit: 'Mozilla/5.0'.\n" +
                     "\n" +
-                    "Es sind nur ASCII-Zeichen erlaubt und die Textlänge ist begrenzt auf 100 Zeichen.";
+                    "Es sind nur ASCII-Zeichen erlaubt und die Textlänge ist begrenzt auf 100 Zeichen." +
+                    "\n";
 
     public static final String START_DOWNLOADS_FROM_ABOS_IMMEDIATELY =
             "Downloads die aus Abos neu angelegt wurden starten sofort. " +
-                    "Wenn dies ausgeschaltet ist muss man sie manuell starten.";
+                    "Wenn dies ausgeschaltet ist muss man sie manuell starten." +
+                    "\n";
 
     public static final String LOGFILE =
             "Im Logfile wird der Programmverlauf aufgezeichnet. Das kann hilfreich sein " +
@@ -481,30 +536,35 @@ public class HelpText {
                     "\n" +
                     "Ein geänderter Pfad zum Logfile wird erst nach einem Neustart des " +
                     "Programms genutzt; mit dem Button \"Pfad zum Logfile jetzt schon verwenden\" wird " +
-                    "sofort ins neue Log geschrieben.";
+                    "sofort ins neue Log geschrieben." +
+                    "\n";
 
     public static final String FILEMANAGER =
             "In der Ansicht \"Downloads\" kann man über das Kontextmenü den Downloadordner " +
                     "(Zielordner) des jeweiligen Downloads öffnen. Normalerweise wird dafür der " +
                     "Dateimanager des Betriebssystems gefunden und geöffnet. Klappt das nicht, kann " +
-                    "hier ein Programm dafür angegeben werden.";
+                    "hier ein Programm dafür angegeben werden." +
+                    "\n";
 
     public static final String VIDEOPLAYER =
             "In der Ansicht \"Downloads\" kann man über das Kontextmenü den gespeicherten " +
                     "Film in einem Videoplayer öffnen. Normalerweise wird der Videoplayer des " +
                     "Betriebssystems gefunden und geöffnet. Klappt das nicht, kann hier ein " +
-                    "Programm dafür angegeben werden.";
+                    "Programm dafür angegeben werden." +
+                    "\n";
 
     public static final String WEBBROWSER =
             "Wenn das Programm versucht, einen Link zu öffnen (z.B. \"Anleitung im Web\" im " +
                     "Programm-Menü unter \"Hilfe\") und der Standardbrowser nicht startet, " +
                     "kann damit ein Programm (Firefox, Chromium, …) ausgewählt und fest " +
-                    "zugeordnet werden.";
+                    "zugeordnet werden." +
+                    "\n";
 
     public static final String EXTERN_PROGRAM_SHORT_CUT =
             "In den Tastenkürzeln gibt es eines, das ein externes Programm aufruft. Dieses " +
                     "Programm kann hier gesetzt werden. Gedacht ist das z.B. um per Tastenkürzel ein " +
-                    "Programm zum Aufräumen des Download-Ordners laufen zu lassen, oder ähnliches.";
+                    "Programm zum Aufräumen des Download-Ordners laufen zu lassen, oder ähnliches." +
+                    "\n";
 
     public static final String MEDIA_DIALOG =
             "Hier kann eine Mediensammlung angelegt werden. Das ist eine Liste der " +
@@ -528,7 +588,8 @@ public class HelpText {
                     "beim Programmstart vorhanden sind.\n" +
                     "\n" +
                     "\"Mediensammlung neu aufbauen\": Auch hierfür müssen externe Medien nicht " +
-                    "angeschlossen sein.";
+                    "angeschlossen sein." +
+                    "\n";
 
     public static final String MEDIA_COLLECTION =
             "\"Keine Dateien mit diesem Suffix\" oder \"nur Dateien mit diesem Suffix\": Bestimmt " +
@@ -543,19 +604,22 @@ public class HelpText {
                     "Mediensammlung aufgenommen.\n" +
                     "\n" +
                     "Mit dem \"Export\"-Button kann die komplette Mediensammlung in eine " +
-                    "Textdatei geschrieben werden.";
+                    "Textdatei geschrieben werden." +
+                    "\n";
 
     public static final String EXTERN_MEDIA_COLLECTION =
             "Hier können externe Medienordner in der Mediensammlung verwaltet werden: " +
                     "Ordner hinzufügen, die Mediensammlung mit vorhandenen Ordnern " +
                     "manuell aktualisieren, oder vorhandene Ordner aus der " +
-                    "Mediensammlung entfernen.";
+                    "Mediensammlung entfernen." +
+                    "\n";
 
     public static final String INTERN_MEDIA_COLLECTION =
             "Hier können interne Medienordner in der Mediensammlung verwaltet werden: Ordner " +
                     "hinzufügen oder vorhandene Ordner aus der Mediensammlung entfernen. " +
                     "Eine Aktualisierung der Mediensammlung mit ihrem Inhalt erfolgt bei " +
-                    "jedem Programmstart.";
+                    "jedem Programmstart." +
+                    "\n";
 
     public static final String RESET_DIALOG =
             "-- Nichts ändern --\n" +
@@ -574,5 +638,6 @@ public class HelpText {
                     "ALLE EINSTELLUNGEN WERDEN GELÖSCHT! Das Programm wird in den " +
                     "Ursprungszustand zurückgesetzt.\n" +
                     "Es beendet sich und muss neu gestartet werden.\n" +
-                    "Der neue Start beginnt mit dem Einrichtungsdialog.";
+                    "Der neue Start beginnt mit dem Einrichtungsdialog." +
+                    "\n";
 }
