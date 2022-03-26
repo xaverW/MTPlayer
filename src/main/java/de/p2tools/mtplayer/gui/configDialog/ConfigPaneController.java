@@ -73,14 +73,12 @@ public class ConfigPaneController extends PAccordionPane {
     StringProperty propLogDir = ProgConfig.SYSTEM_LOG_DIR;
     BooleanProperty propSizeFilm = ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM;
     BooleanProperty propSizeDownload = ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD;
-    //    BooleanProperty propTray = ProgConfig.SYSTEM_TRAY;
     BooleanProperty propTipOfDay = ProgConfig.TIP_OF_DAY_SHOW;
 
     private final PToggleSwitch tglSearchAbo = new PToggleSwitch("Abos automatisch suchen:");
     private final PToggleSwitch tglStartDownload = new PToggleSwitch("Downloads aus Abos sofort starten:");
     private final PToggleSwitch tglSmallFilm = new PToggleSwitch("In der Tabelle \"Film\" nur kleine Button anzeigen:");
     private final PToggleSwitch tglSmallDownload = new PToggleSwitch("In der Tabelle \"Download\" nur kleine Button anzeigen:");
-    //    private final PToggleSwitch tglTray = new PToggleSwitch("Programm im System Tray anzeigen");
     private final PToggleSwitch tglTipOfDay = new PToggleSwitch("Tip des Tages anzeigen");
     private TextField txtUserAgent;
     private final PToggleSwitch tglEnableLog = new PToggleSwitch("Ein Logfile anlegen:");
