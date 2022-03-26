@@ -53,13 +53,7 @@ public class AboutDialogController extends AboutDialog {
     }
 
     @Override
-    public void hide() {
-        super.close();
-    }
-
-    @Override
     public void close() {
-        progData.progTray.removeDialog(instance);
         super.close();
     }
 
@@ -75,7 +69,6 @@ public class AboutDialogController extends AboutDialog {
         if (instance == null) {
             instance = new AboutDialogController(ProgData.getInstance());
         }
-        ProgData.getInstance().progTray.addDialog(instance);
 
         if (!instance.isShowing()) {
             instance.showDialog();
