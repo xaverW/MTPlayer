@@ -26,7 +26,7 @@ import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerLoadFilmlist
 import de.p2tools.mtplayer.gui.StatusBarController;
 import de.p2tools.mtplayer.gui.configDialog.ConfigDialogController;
 import de.p2tools.mtplayer.gui.dialog.AboutDialogController;
-import de.p2tools.p2Lib.dialogs.dialog.PDialog;
+import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogFactory;
 import de.p2tools.p2Lib.tools.ProgramTools;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -39,7 +39,6 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ProgTray {
@@ -201,24 +200,6 @@ public class ProgTray {
         propTray.setValue(false);
     }
 
-    private ArrayList<PDialog> dialogList = new ArrayList<>();
-
-    public synchronized void addDialog(PDialog pDialog) {
-        boolean found = false;
-        for (PDialog dialog : dialogList) {
-            if (dialog.equals(pDialog)) {
-                found = true;
-            }
-        }
-        if (!found) {
-            dialogList.add(pDialog);
-        }
-    }
-
-    public synchronized void removeDialog(PDialog pDialog) {
-        dialogList.remove(pDialog);
-    }
-
     private synchronized void maxMin() {
         if (progData.primaryStage.isShowing()) {
             closeDialog();
@@ -231,21 +212,13 @@ public class ProgTray {
         Platform.runLater(() -> {
             progData.primaryStage.close();
         });
-        dialogList.stream().forEach(pDialog -> {
-            Platform.runLater(() -> {
-                pDialog.hide();
-            });
-        });
+        PDialogExtra.closeAllDialog();
     }
 
     private void showDialog() {
         Platform.runLater(() -> {
             PDialogFactory.showDialog(progData.primaryStage, ProgConfig.SYSTEM_SIZE_GUI);
         });
-        dialogList.stream().forEach(pDialog -> {
-            Platform.runLater(() -> {
-                pDialog.showDialog();
-            });
-        });
+        PDialogExtra.showAllDialog();
     }
 }

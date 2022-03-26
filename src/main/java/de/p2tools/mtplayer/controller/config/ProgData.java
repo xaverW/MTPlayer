@@ -34,7 +34,6 @@ import de.p2tools.mtplayer.gui.AboGuiController;
 import de.p2tools.mtplayer.gui.DownloadGuiController;
 import de.p2tools.mtplayer.gui.FilmGuiController;
 import de.p2tools.mtplayer.gui.chart.ChartData;
-import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
 import de.p2tools.mtplayer.gui.dialog.QuitDialogController;
 import de.p2tools.mtplayer.gui.filter.AboFilterController;
 import de.p2tools.mtplayer.gui.filter.DownloadFilterController;
@@ -83,7 +82,6 @@ public class ProgData {
     public DownloadFilterController downloadFilterController = null;
     public AboGuiController aboGuiController = null; // Tab mit den Abos
     public AboFilterController aboFilterController = null;
-    public FilmInfoDialogController filmInfoDialogController = null;
     public FilmFilterControllerClearFilter filmFilterControllerClearFilter = null;
     public final ChartData chartData;
     public final ProgTray progTray;

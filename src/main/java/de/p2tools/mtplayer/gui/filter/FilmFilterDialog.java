@@ -107,13 +107,7 @@ public class FilmFilterDialog extends PDialogExtra {
     }
 
     @Override
-    public void hide() {
-        super.close();
-    }
-
-    @Override
     public void close() {
-        progData.progTray.removeDialog(instance);
         ProgConfig.FILM_GUI_FILTER_DIALOG_IS_SHOWING.setValue(false);
         super.close();
     }
@@ -158,7 +152,6 @@ public class FilmFilterDialog extends PDialogExtra {
         if (instance == null) {
             instance = new FilmFilterDialog(ProgData.getInstance());
         }
-        ProgData.getInstance().progTray.addDialog(instance);
         ProgConfig.FILM_GUI_FILTER_DIALOG_IS_SHOWING.setValue(true);
 
         if (!instance.isShowing()) {

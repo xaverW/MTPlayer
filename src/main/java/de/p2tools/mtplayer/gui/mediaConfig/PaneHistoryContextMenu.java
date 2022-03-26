@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.gui.mediaConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.film.FilmData;
 import de.p2tools.mtplayer.controller.history.HistoryData;
+import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.tools.PSystemUtils;
 import javafx.scene.control.ContextMenu;
@@ -71,8 +72,8 @@ public class PaneHistoryContextMenu {
         MenuItem miShowFilm = new MenuItem("Infos zum Film anzeigen");
         miShowFilm.setDisable(film == null);
         miShowFilm.setOnAction(a -> {
-            progData.filmInfoDialogController.setFilm(film);
-            progData.filmInfoDialogController.showFilmInfo();
+            FilmInfoDialogController.getInstance().setFilm(film);
+            FilmInfoDialogController.getInstanceAndShow().showFilmInfo();
         });
 
         MenuItem miDownload = new MenuItem("Download noch einmal anlegen");

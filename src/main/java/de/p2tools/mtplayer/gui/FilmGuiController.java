@@ -22,6 +22,7 @@ import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.data.SetDataList;
 import de.p2tools.mtplayer.controller.data.film.FilmData;
 import de.p2tools.mtplayer.controller.data.film.FilmTools;
+import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
 import de.p2tools.mtplayer.gui.mediaDialog.MediaDialogController;
 import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.mtplayer.gui.tools.table.Table;
@@ -91,9 +92,6 @@ public class FilmGuiController extends AnchorPane {
     public void isShown() {
         setFilm();
         tableView.requestFocus();
-//        progData.filmFilterControllerClearFilter.setClearText("Filter _löschen");
-//        progData.downloadFilterController.setClearText("Filter löschen");
-//        progData.aboFilterController.setClearText("Filter löschen");
     }
 
     public int getFilmCount() {
@@ -108,7 +106,7 @@ public class FilmGuiController extends AnchorPane {
     private void setFilm() {
         FilmData film = tableView.getSelectionModel().getSelectedItem();
         filmGuiInfoController.setFilm(film);
-        progData.filmInfoDialogController.setFilm(film);
+        FilmInfoDialogController.getInstance().setFilm(film);
     }
 
     private void selectFilm() {
@@ -128,7 +126,7 @@ public class FilmGuiController extends AnchorPane {
     }
 
     public void showFilmInfo() {
-        progData.filmInfoDialogController.showFilmInfo();
+        FilmInfoDialogController.getInstanceAndShow().showFilmInfo();
     }
 
     public void playFilmUrl() {
@@ -321,7 +319,7 @@ public class FilmGuiController extends AnchorPane {
             TableRowFilm<FilmData> row = new TableRowFilm<>();
             row.setOnMouseClicked(event -> {
                 if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                    progData.filmInfoDialogController.showFilmInfo();
+                    FilmInfoDialogController.getInstanceAndShow().showFilmInfo();
                 }
             });
             return row;

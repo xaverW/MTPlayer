@@ -40,6 +40,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 public class FilmInfoDialogController extends PDialogExtra {
+    private static FilmInfoDialogController instance;
 
     private final Text[] textTitle = new Text[FilmDataXml.MAX_ELEM];
     private final Label[] lblCont = new Label[FilmDataXml.MAX_ELEM];
@@ -61,7 +62,7 @@ public class FilmInfoDialogController extends PDialogExtra {
 
     BooleanProperty urlProperty = ProgConfig.FILM_INFO_DIALOG_SHOW_URL;
 
-    public FilmInfoDialogController() {
+    private FilmInfoDialogController() {
         super(ProgData.getInstance().primaryStage, ProgConfig.SYSTEM_SIZE_DIALOG_FILMINFO,
                 "Filminfos", false, false);
 
@@ -242,5 +243,25 @@ public class FilmInfoDialogController extends PDialogExtra {
         });
         contextMenu.getItems().addAll(menuItem);
         contextMenu.show(lbl, event.getScreenX(), event.getScreenY());
+    }
+
+    public synchronized static final FilmInfoDialogController getInstance() {
+        if (instance == null) {
+            instance = new FilmInfoDialogController();
+        }
+        return instance;
+    }
+
+    public synchronized static final FilmInfoDialogController getInstanceAndShow() {
+        if (instance == null) {
+            instance = new FilmInfoDialogController();
+        }
+
+        if (!instance.isShowing()) {
+            instance.showDialog();
+        }
+        instance.getStage().toFront();
+
+        return instance;
     }
 }

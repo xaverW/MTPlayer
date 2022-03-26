@@ -27,6 +27,7 @@ import de.p2tools.mtplayer.controller.data.film.FilmTools;
 import de.p2tools.mtplayer.gui.chart.DownloadGuiChart;
 import de.p2tools.mtplayer.gui.dialog.DownloadEditDialogController;
 import de.p2tools.mtplayer.gui.dialog.DownloadStartAtTimeController;
+import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
 import de.p2tools.mtplayer.gui.mediaDialog.MediaDialogController;
 import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.mtplayer.gui.tools.table.Table;
@@ -135,9 +136,6 @@ public class DownloadGuiController extends AnchorPane {
     public void isShown() {
         setFilm();
         tableView.requestFocus();
-//        progData.filmFilterControllerClearFilter.setClearText("Filter löschen");
-//        progData.downloadFilterController.setClearText("Filter _löschen");
-//        progData.aboFilterController.setClearText("Filter löschen");
     }
 
     public int getDownloadsShown() {
@@ -211,15 +209,15 @@ public class DownloadGuiController extends AnchorPane {
         DownloadData download = tableView.getSelectionModel().getSelectedItem();
         if (download != null) {
             filmGuiInfoController.setFilm(download.getFilm());
-            progData.filmInfoDialogController.setFilm(download.getFilm());
+            FilmInfoDialogController.getInstance().setFilm(download.getFilm());
         } else {
             filmGuiInfoController.setFilm(null);
-            progData.filmInfoDialogController.setFilm(null);
+            FilmInfoDialogController.getInstance().setFilm(null);
         }
     }
 
     public void showFilmInfo() {
-        progData.filmInfoDialogController.showFilmInfo();
+        FilmInfoDialogController.getInstanceAndShow().showFilmInfo();
     }
 
     public void guiFilmMediaCollection() {

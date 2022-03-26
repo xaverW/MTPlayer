@@ -46,8 +46,6 @@ public class QuitDialogController extends PDialogExtra {
 
     @Override
     public void make() {
-        ProgData.getInstance().progTray.addDialog(this);
-
         GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
         gridPane.setVgap(25);
@@ -136,14 +134,7 @@ public class QuitDialogController extends PDialogExtra {
     }
 
     @Override
-    public void hide() {
-        super.close();
-    }
-
-    @Override
     public void close() {
-        ProgData.getInstance().progTray.removeDialog(this);
-
         ProgData.getInstance().quitDialogController = null;
         if (waitTask.isRunning()) {
             waitTask.cancel();

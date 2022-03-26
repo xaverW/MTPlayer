@@ -20,7 +20,6 @@ import de.p2tools.mtplayer.controller.ProgStart;
 import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.mtplayer.controller.data.ListePsetVorlagen;
 import de.p2tools.mtplayer.controller.data.SetDataList;
-import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
 import de.p2tools.mtplayer.gui.startDialog.StartDialogController;
 import de.p2tools.mtplayer.tools.storedFilter.ProgInitFilter;
 import de.p2tools.p2Lib.P2LibConst;
@@ -109,7 +108,6 @@ public class MTPlayer extends Application {
     private void initRootLayout() {
         try {
             addThemeCss(); // damit es für die 2 schon mal stimmt
-            progData.filmInfoDialogController = new FilmInfoDialogController();
             progData.mtPlayerController = new MTPlayerController();
 
             scene = new Scene(progData.mtPlayerController,

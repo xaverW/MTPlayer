@@ -153,7 +153,7 @@ public class ProgConfig extends PDataProgConfig {
 
     // Fenstereinstellungen
     public static StringProperty SYSTEM_SIZE_GUI = addStr("system-size-gui", "1000:900");
-    public static StringProperty SYSTEM_SIZE_DIALOG_FILMINFO = addStr("system-size-dialog-filminfo", "600:800");
+    public static StringProperty SYSTEM_SIZE_DIALOG_FILMINFO = addStr("system-size-dialog-filminfo", "");
 
     // Einstellungen Filmliste
     public static BooleanProperty SYSTEM_LOAD_FILMS_ON_START = addBool("system-load-films-on-start", Boolean.TRUE);
