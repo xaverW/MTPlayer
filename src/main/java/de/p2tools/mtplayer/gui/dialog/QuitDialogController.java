@@ -23,6 +23,7 @@ import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.BigButton;
 import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
+import de.p2tools.p2Lib.tools.download.HttpDownload;
 import javafx.concurrent.Task;
 import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
@@ -118,12 +119,16 @@ public class QuitDialogController extends PDialogExtra {
 
         @Override
         protected Void call() throws Exception {
-            while ((ProgData.getInstance().downloadList.countStartedAndRunningDownloads() > 0) && !isCancelled()) {
+            while ((ProgData.getInstance().downloadList.countStartedAndRunningDownloads() > 0 ||
+                    HttpDownload.downloadRunning > 0) &&
+                    !isCancelled()) {
+
                 try {
                     Thread.sleep(500);
                 } catch (Exception ignore) {
                 }
             }
+
             return null;
         }
 
