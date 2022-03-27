@@ -20,7 +20,7 @@ package de.p2tools.mtplayer.controller.data.abo;
 public class AboFieldNames {
 
     public static final String ABO_NO = "Nr";
-    public static final String ABO_ACTIV = "Aktiv";
+    public static final String ABO_ACTIVE = "Aktiv";
     public static final String ABO_NAME = "Name";
     public static final String ABO_DESCRIPTION = "Beschreibung";
     public static final String ABO__RESOLUTION = "Auflösung";
@@ -34,13 +34,13 @@ public class AboFieldNames {
     public static final String ABO_MIN_DURATION = "Min. Dauer";
     public static final String ABO_MAX_DURATION = "Max. Dauer";
     public static final String ABO_START_TIME = "Startzeit";
-    public static final String ABO_SUB_DUR = "Zielpfad";
-    public static final String ABO_DATE = "Letztes Abo";
+    public static final String ABO_DEST_DIR = "Zielpfad";
+    public static final String ABO_DATE_LAST_ABO = "Letztes Abo";
     public static final String ABO_SET_DATA_ID = "Programmset";
     public static final String ABO_GEN_DATE = "Angelegt";
 
     public static final int ABO_NO_NO = 0;
-    public static final int ABO_ON_NO = 1;
+    public static final int ABO_ACTIVE_NO = 1;
     public static final int ABO_NAME_NO = 2;
     public static final int ABO_DESCRIPTION_NO = 3;
     public static final int ABO_RESOLUTION_NO = 4;
@@ -55,13 +55,13 @@ public class AboFieldNames {
     public static final int ABO_MAX_DURATION_NO = 13;
     public static final int ABO_START_TIME_NO = 14;
     public static final int ABO_DEST_PATH_NO = 15;
-    public static final int ABO_DOWN_DATE_NO = 16;
+    public static final int ABO_DATE_LAST_ABO_NO = 16;
     public static final int ABO_SET_DATA_ID_NO = 17;
     public static final int ABO_GEN_DATE_NO = 18;
 
     public static final String[] COLUMN_NAMES = {
             ABO_NO,
-            ABO_ACTIV,
+            ABO_ACTIVE,
             ABO_NAME,
             ABO_DESCRIPTION,
             ABO__RESOLUTION,
@@ -75,12 +75,14 @@ public class AboFieldNames {
             ABO_MIN_DURATION,
             ABO_MAX_DURATION,
             ABO_START_TIME,
-            ABO_SUB_DUR,
-            ABO_DATE,
+            ABO_DEST_DIR,
+            ABO_DATE_LAST_ABO,
             ABO_SET_DATA_ID,
             ABO_GEN_DATE};
 
-    public static final String[] XML_NAMES = {"Nr",
+    //ist nur noch zum Laden der alten Config!!!
+    public static final String[] XML_NAMES = {
+            "Nr",
             "aktiv",
             "Name",
             "Beschreibung",
@@ -100,5 +102,5 @@ public class AboFieldNames {
             "Programmset",
             "Erstellt"};
 
-    public static int MAX_ELEM = XML_NAMES.length;
+    public static int MAX_ELEM = COLUMN_NAMES.length;
 }

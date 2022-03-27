@@ -36,7 +36,7 @@ public class AboDataXml extends AboDataProps {
     }
 
     public void setPropsFromXml() {
-        setActive(Boolean.parseBoolean(arr[AboFieldNames.ABO_ON_NO]));
+        setActive(Boolean.parseBoolean(arr[AboFieldNames.ABO_ACTIVE_NO]));
         setResolution(arr[AboFieldNames.ABO_RESOLUTION_NO]);
         setName(arr[AboFieldNames.ABO_NAME_NO]);
         setDescription(arr[AboFieldNames.ABO_DESCRIPTION_NO]);
@@ -53,7 +53,7 @@ public class AboDataXml extends AboDataProps {
         setStartTime(arr[AboFieldNames.ABO_START_TIME_NO]);
 
         setAboSubDir(arr[AboFieldNames.ABO_DEST_PATH_NO]);
-        setDate(arr[AboFieldNames.ABO_DOWN_DATE_NO], "");
+        setDate(arr[AboFieldNames.ABO_DATE_LAST_ABO_NO], "");
         setSetDataId(arr[AboFieldNames.ABO_SET_DATA_ID_NO]);
     }
 

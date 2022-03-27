@@ -22,7 +22,6 @@ import de.p2tools.mtplayer.controller.data.download.DownloadTools;
 import de.p2tools.mtplayer.controller.data.film.FilmData;
 import de.p2tools.mtplayer.controller.data.film.FilmDataXml;
 import de.p2tools.mtplayer.controller.data.film.Filmlist;
-import de.p2tools.mtplayer.gui.dialog.AboAddDialogController;
 import de.p2tools.mtplayer.gui.dialog.AboEditDialogController;
 import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
 import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
@@ -149,7 +148,7 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
             abo.setThemeExact(themeExact);
         }
 
-        new AboAddDialogController(progData, abo);
+        new AboEditDialogController(progData, abo);
     }
 
     public synchronized void changeAboFromFilter(Optional<AboData> oAbo, SelectedFilter selectedFilter) {
@@ -192,7 +191,7 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
                 maxDuration,
                 namePath);
 
-        new AboAddDialogController(progData, abo);
+        new AboEditDialogController(progData, abo);
     }
 
     public synchronized void changeAbo(AboData abo) {

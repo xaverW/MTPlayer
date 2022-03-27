@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboConstants;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
+import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
 import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.mtplayer.gui.tools.table.TableRowAbo;
@@ -90,10 +91,7 @@ public class AboGuiController extends AnchorPane {
 
     public void isShown() {
         tableView.requestFocus();
-        progData.filmInfoDialogController.setFilm(null);
-//        progData.filmFilterControllerClearFilter.setClearText("Filter löschen");
-//        progData.downloadFilterController.setClearText("Filter löschen");
-//        progData.aboFilterController.setClearText("Filter _löschen");
+        FilmInfoDialogController.getInstance().setFilm(null);
     }
 
     public int getAboCount() {

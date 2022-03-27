@@ -17,10 +17,8 @@
 package de.p2tools.mtplayer.gui.dialog;
 
 import de.p2tools.mtplayer.controller.config.ProgColorList;
-import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
-import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.abo.AboFieldNames;
 import de.p2tools.mtplayer.controller.data.film.FilmData;
@@ -28,177 +26,42 @@ import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
 import de.p2tools.mtplayer.tools.storedFilter.FilterCheckRegEx;
 import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
-import de.p2tools.p2Lib.alert.PAlert;
-import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
-import de.p2tools.p2Lib.guiTools.PColumnConstraints;
-import de.p2tools.p2Lib.guiTools.PTextAreaIgnoreTab;
-import de.p2tools.p2Lib.guiTools.PTimePicker;
-import de.p2tools.p2Lib.guiTools.pRange.PRangeBox;
-import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
 import javafx.util.StringConverter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class AboEditDialogController extends PDialogExtra {
-
-    private final GridPane gridPane = new GridPane();
-    private final Button btnOk = new Button("_Ok");
-    private final Button btnApply = new Button("_Anwenden");
-    private final Button btnCancel = new Button("_Abbrechen");
-
-    private final ComboBox<SetData> cboSetData = new ComboBox<>();
-    private final ComboBox<String> cboDestination = new ComboBox<>();
-    private final Slider slTimeRange = new Slider();
-    private final Label lblTimeRange = new Label();
-    private final PRangeBox pRangeBoxTime = new PRangeBox(0, FilmFilter.FILTER_DURATION_MAX_MINUTE);
-    private final CheckBox cbxOn = new CheckBox();
-    private final Label[] lbl = new Label[AboFieldNames.MAX_ELEM];
-    private final TextField[] txt = new TextField[AboFieldNames.MAX_ELEM];
-    private final CheckBox[] cbx = new CheckBox[AboFieldNames.MAX_ELEM];
-    private final CheckBox[] cbxEditAll = new CheckBox[AboFieldNames.MAX_ELEM];
-    private final RadioButton rbHd = new RadioButton("HD");
-    private final RadioButton rbHigh = new RadioButton("hoch");
-    private final RadioButton rbLow = new RadioButton("niedrig");
-    private final TextArea textArea = new PTextAreaIgnoreTab(false, true);
-    private final MenuButton mbChannel = new MenuButton("");
-    private final ArrayList<CheckMenuItem> checkMenuItemsList = new ArrayList<>();
-    private final PTimePicker pTimePicker = new PTimePicker();
-    private final CheckBox chkStartTime = new CheckBox();
-
-    private boolean addNewAbo;
-    private BooleanProperty okProp = new SimpleBooleanProperty(true);
-    private String memory = "";
-
-    private final ObservableList<AboData> aboList;
-    private final AboData aboCopy;
-    private ProgData progData;
+public class AboEditDialogController extends AboDialogController {
 
     public AboEditDialogController(ProgData progData, AboData abo) {
         //hier wird ein neues Abo angelegt!
-        super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE,
-                "Abo anlegen", false, false, DECO.BORDER, true);
-
-        this.progData = progData;
-        this.addNewAbo = true;
-
-        aboList = FXCollections.observableArrayList();
-        aboList.add(abo);
-        this.aboCopy = aboList.get(0).getCopy();
-
-        initDialog();
+        super(progData, abo);
     }
 
     public AboEditDialogController(ProgData progData, SelectedFilter selectedFilter, AboData abo) {
         //hier wird ein Abo an den Filter angepasst
-        super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE,
-                "Abo anlegen", false, false, DECO.BORDER, true);
-
-        this.progData = progData;
-        this.addNewAbo = false;
-
-        aboList = FXCollections.observableArrayList();
-        aboList.add(abo);
-        aboCopy = aboList.get(0).getCopy();
-
-        final String channel = selectedFilter.isChannelVis() ? selectedFilter.getChannel() : "";
-        final String theme = selectedFilter.isThemeVis() ? selectedFilter.getTheme() : "";
-        final boolean themeExact = selectedFilter.isThemeExact();
-        final String title = selectedFilter.isTitleVis() ? selectedFilter.getTitle() : "";
-        final String themeTitle = selectedFilter.isThemeTitleVis() ? selectedFilter.getThemeTitle() : "";
-        final String somewhere = selectedFilter.isSomewhereVis() ? selectedFilter.getSomewhere() : "";
-        final int timeRange = selectedFilter.isTimeRangeVis() ? selectedFilter.getTimeRange() : FilmFilter.FILTER_TIME_RANGE_ALL_VALUE;
-        final int minDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMinDur() : FilmFilter.FILTER_DURATION_MIN_MINUTE;
-        final int maxDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMaxDur() : FilmFilter.FILTER_DURATION_MAX_MINUTE;
-
-        aboCopy.setChannel(channel);
-        aboCopy.setTheme(theme);
-        aboCopy.setThemeExact(themeExact);
-        aboCopy.setTitle(title);
-        aboCopy.setThemeTitle(themeTitle);
-        aboCopy.setSomewhere(somewhere);
-        aboCopy.setTimeRange(timeRange);
-        aboCopy.setMinDurationMinute(minDuration);
-        aboCopy.setMaxDurationMinute(maxDuration);
-
-        initDialog();
+        super(progData, selectedFilter, abo);
     }
 
     public AboEditDialogController(ProgData progData, ObservableList<AboData> aboList) {
         //hier werden Abos geändert
-        super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE,
-                "Abo ändern", false, false, DECO.BORDER, true);
-
-        this.progData = progData;
-        this.addNewAbo = false;
-
-        this.aboList = FXCollections.observableArrayList();
-        //hängt sonst an "getSelList"
-        aboList.stream().forEach(abo -> this.aboList.add(abo));
-        this.aboCopy = aboList.get(0).getCopy();
-
-        initDialog();
+        super(progData, aboList);
     }
 
     @Override
-    public void make() {
-        ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> updateCss());
-        if (progData.maskerPane.isVisible()) {
-            this.getStage().getScene().getWindow().hide();
-        }
-        setMaskerPane();
-        progData.maskerPane.visibleProperty().addListener((u, o, n) -> {
-            setMaskerPane();
-        });
-
+    void makeControl() {
         initSenderMenu();
-
-        btnOk.disableProperty().bind(aboCopy.nameProperty().isEmpty().or(okProp.not()));
-        btnOk.setOnAction(a -> {
-            checkChanges();
-            apply();
-            close();
-        });
-
-        btnApply.disableProperty().bind(aboCopy.nameProperty().isEmpty().or(okProp.not()));
-        btnApply.setOnAction(a -> {
-            checkChanges();
-            apply();
-        });
-
-        btnCancel.setOnAction(a -> close());
-
-        gridPane.setHgap(5);
-        gridPane.setVgap(10);
-        gridPane.setMinWidth(Control.USE_PREF_SIZE);
-        gridPane.setMaxWidth(Double.MAX_VALUE);
-        gridPane.setPadding(new Insets(10, 10, 10, 10));
-
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrow(),
-                PColumnConstraints.getCcPrefSize());
-
-        if (aboList.size() > 1) {
-            Label l1 = new Label("bei allen");
-            Label l2 = new Label("ändern");
-            VBox vBox = new VBox();
-            vBox.getStyleClass().add("chk-edit-all-text");
-            vBox.setAlignment(Pos.CENTER);
-            vBox.getChildren().addAll(l1, l2);
-            gridPane.add(vBox, 2, 0);
-        }
-
         for (int i = 0; i < AboFieldNames.MAX_ELEM; ++i) {
             initControl(i);
             addLabel(i);
@@ -206,86 +69,7 @@ public class AboEditDialogController extends PDialogExtra {
 
             if (aboList.size() > 1) {
                 // nur dann brauchts das
-                addCheckBoxEditAll(i, i + 1);
-            }
-        }
-
-        btnOk.requestFocus();
-    }
-
-    private void setMaskerPane() {
-        if (progData.maskerPane.isVisible()) {
-            this.setMaskerVisible(true);
-        } else {
-            this.setMaskerVisible(false);
-        }
-    }
-
-    private void initDialog() {
-        getvBoxCont().getChildren().add(gridPane);
-        addOkCancelApplyButtons(btnOk, btnCancel, btnApply);
-        SetData setData = aboCopy.getSetData(progData);
-        if (setData == null) {
-            Platform.runLater(() -> new NoSetDialogController(progData, NoSetDialogController.TEXT.ABO));
-        } else {
-            init(true);
-        }
-    }
-
-    private void checkChanges() {
-        if (addNewAbo && progData.aboList.aboExistsAlready(aboCopy)) {
-            // dann gibts das Abo schon
-            PAlert.showErrorAlert(getStage(), "Fehler", "Abo anlegen",
-                    "Ein Abo mit den Einstellungen existiert bereits");
-            return;
-        }
-
-        if (addNewAbo && aboCopy.isEmpty()) {
-            // dann ists leer
-            PAlert.showErrorAlert(getStage(), "Fehler", "Abo anlegen",
-                    "Das Abo ist \"leer\", es enthält keine Filter.");
-            return;
-        }
-
-        if (aboList.size() == 1) {
-            // entweder nur ein Abo
-            aboList.get(0).copyToMe(aboCopy);
-
-        } else {
-            // oder nur die markierten Felder bei ALLEN Abos
-            updateAboList();
-        }
-    }
-
-    private void apply() {
-        if (addNewAbo) {
-            addNewAbo = false;
-            progData.aboList.addAbo(aboCopy);
-        }
-        //da nicht modal!!
-        progData.aboList.notifyChanges();
-        // als Vorgabe merken
-        ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(aboCopy.getMinDurationMinute());
-        ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(aboCopy.getMaxDurationMinute());
-    }
-
-    private void updateAboList() {
-        for (int i = 0; i < cbxEditAll.length; ++i) {
-            if (cbxEditAll[i] == null || !cbxEditAll[i].isSelected()) {
-                continue;
-            }
-
-            // dann wird das Feld bei allen Abos geändert
-            for (final AboData abo : aboList) {
-                if (i == AboFieldNames.ABO_MIN_DURATION_NO) {
-                    // duration MIN dann AUCH max
-                    abo.properties[AboFieldNames.ABO_MAX_DURATION_NO].setValue(aboCopy.properties[AboFieldNames.ABO_MAX_DURATION_NO].getValue());
-
-                } else if (i == AboFieldNames.ABO_SET_DATA_ID_NO) {
-                    // dann auch SetData
-                    abo.setSetData(aboCopy.getSetData());
-                }
-                abo.properties[i].setValue(aboCopy.properties[i].getValue());
+                addCheckBoxEditAll(i);
             }
         }
     }
@@ -299,6 +83,7 @@ public class AboEditDialogController extends PDialogExtra {
                 textArea.setPrefRowCount(4);
                 textArea.setMinHeight(60);
                 textArea.setPrefColumnCount(1);
+                textArea.setText(aboCopy.getDescription());
                 break;
             case AboFieldNames.ABO_RESOLUTION_NO:
                 ToggleGroup tg = new ToggleGroup();
@@ -327,7 +112,7 @@ public class AboEditDialogController extends PDialogExtra {
 
             default:
                 txt[i] = new TextField("");
-                txt[i].setText(aboCopy.getStringOf(i));
+                txt[i].setText(aboCopy.properties[i].getValue().toString());
         }
 
         cbxEditAll[i] = new CheckBox();
@@ -335,15 +120,6 @@ public class AboEditDialogController extends PDialogExtra {
         cbxEditAll[i].getStyleClass().add("chk-edit-all");
         cbxEditAll[i].selectedProperty().addListener((u, o, n) -> checkOk());
         GridPane.setHalignment(cbxEditAll[i], HPos.CENTER);
-    }
-
-    private int getGridLine(int i) {
-        if (i >= AboFieldNames.ABO_MAX_DURATION_NO) {
-            //gibts nicht
-            return --i;
-        } else {
-            return i;
-        }
     }
 
     private void addLabel(int i) {
@@ -415,7 +191,7 @@ public class AboEditDialogController extends PDialogExtra {
                 });
                 this.gridPane.add(cbx[i], 1, grid);
                 break;
-            case AboFieldNames.ABO_DOWN_DATE_NO:
+            case AboFieldNames.ABO_DATE_LAST_ABO_NO:
                 txt[i].setEditable(false);
                 txt[i].setDisable(true);
                 txt[i].setText(aboCopy.getDate().toString());
@@ -427,7 +203,7 @@ public class AboEditDialogController extends PDialogExtra {
                 txt[i].setText(aboCopy.getGenDate().toString());
                 gridPane.add(txt[i], 1, grid);
                 break;
-            case AboFieldNames.ABO_ON_NO:
+            case AboFieldNames.ABO_ACTIVE_NO:
                 cbxOn.selectedProperty().bindBidirectional(aboCopy.activeProperty());
                 cbxOn.setOnAction(a -> cbxEditAll[i].setSelected(true));
                 this.gridPane.add(cbxOn, 1, grid);
@@ -461,11 +237,16 @@ public class AboEditDialogController extends PDialogExtra {
                     path.add(0, aboCopy.getAboSubDir());
                 }
                 cboDestination.setMaxWidth(Double.MAX_VALUE);
+
                 cboDestination.setItems(FXCollections.observableArrayList(path));
                 cboDestination.setEditable(true);
-                cboDestination.valueProperty().bindBidirectional(aboCopy.aboSubDirProperty());
-                cboDestination.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
-                        cbxEditAll[i].setSelected(true));
+                cboDestination.getEditor().textProperty().bindBidirectional(aboCopy.aboSubDirProperty());
+
+//                aboCopy.aboSubDirProperty().addListener((v, o, n) ->
+//                        cbxEditAll[i].setSelected(true));
+                cboDestination.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+                    cbxEditAll[i].setSelected(true);
+                });
 
                 final TextField textField = new TextField("");
                 textField.setEditable(false);
@@ -542,6 +323,7 @@ public class AboEditDialogController extends PDialogExtra {
 
                 chkStartTime.setSelected(!aboCopy.getStartTime().isEmpty());
                 chkStartTime.setOnAction(a -> {
+                    cbxEditAll[AboFieldNames.ABO_START_TIME_NO].setSelected(true);
                     if (chkStartTime.isSelected()) {
                         aboCopy.setStartTime(pTimePicker.getTime());
                     } else {
@@ -577,6 +359,16 @@ public class AboEditDialogController extends PDialogExtra {
             default:
                 setDefaultTxt(i, grid);
                 break;
+        }
+
+    }
+
+    private int getGridLine(int i) {
+        if (i >= AboFieldNames.ABO_MAX_DURATION_NO) {
+            //gibts nicht
+            return i;
+        } else {
+            return ++i;
         }
     }
 
@@ -660,23 +452,33 @@ public class AboEditDialogController extends PDialogExtra {
         gridPane.add(txt[i], 1, grid);
     }
 
-    private void addCheckBoxEditAll(int i, int grid) {
+    private void addCheckBoxEditAll(int i) {
+        final int grid = getGridLine(i);
+
         switch (i) {
-            case AboFieldNames.ABO_ON_NO:
+            case AboFieldNames.ABO_NO_NO:
+            case AboFieldNames.ABO_DATE_LAST_ABO_NO:
+            case AboFieldNames.ABO_GEN_DATE_NO:
+            case AboFieldNames.ABO_MAX_DURATION_NO:
+                break;
+
+            case AboFieldNames.ABO_ACTIVE_NO:
             case AboFieldNames.ABO_NAME_NO:
             case AboFieldNames.ABO_DESCRIPTION_NO:
             case AboFieldNames.ABO_RESOLUTION_NO:
             case AboFieldNames.ABO_CHANNEL_NO:
             case AboFieldNames.ABO_THEME_NO:
             case AboFieldNames.ABO_THEME_EXACT_NO:
-            case AboFieldNames.ABO_TITLE_NO:
             case AboFieldNames.ABO_THEME_TITLE_NO:
+            case AboFieldNames.ABO_TITLE_NO:
             case AboFieldNames.ABO_SOMEWHERE_NO:
             case AboFieldNames.ABO_TIME_RANGE_NO:
             case AboFieldNames.ABO_MIN_DURATION_NO:
+            case AboFieldNames.ABO_START_TIME_NO:
             case AboFieldNames.ABO_DEST_PATH_NO:
                 gridPane.add(cbxEditAll[i], 2, grid);
                 break;
+
             case AboFieldNames.ABO_SET_DATA_ID_NO:
                 if (progData.setDataList.getSetDataListAbo().size() > 1) {
                     // nur dann kann man was ändern
@@ -717,7 +519,10 @@ public class AboEditDialogController extends PDialogExtra {
         }
 
         MenuItem mi = new MenuItem("Auswahl löschen");
-        mi.setOnAction(a -> clearMenuText());
+        mi.setOnAction(a -> {
+            clearMenuText();
+            cbxEditAll[AboFieldNames.ABO_CHANNEL_NO].setSelected(true);
+        });
         mbChannel.getItems().add(mi);
 
         for (String s : progData.worker.getAllChannelList()) {
@@ -728,7 +533,10 @@ public class AboEditDialogController extends PDialogExtra {
             if (senderArr.contains(s.toLowerCase())) {
                 miCheck.setSelected(true);
             }
-            miCheck.setOnAction(a -> setMenuText());
+            miCheck.setOnAction(a -> {
+                setMenuText();
+                cbxEditAll[AboFieldNames.ABO_CHANNEL_NO].setSelected(true);
+            });
 
             checkMenuItemsList.add(miCheck);
             mbChannel.getItems().add(miCheck);

@@ -60,10 +60,6 @@ public class AboDataProps extends PDataSample<AboData> implements Comparable<Abo
             channel, theme, themeExact, themeTitle, title, somewhere,
             timeRange, minDurationMinute, maxDurationMinute, startTime, aboSubDir, date, setDataId, genDate};
 
-    public String getStringOf(int i) {
-        return String.valueOf(properties[i].getValue());
-    }
-
     public static final String TAG = "AboData"; //ab jetzt wird "Abo" verwendet, alt war: "Abonnement"
 
     @Override
@@ -73,7 +69,7 @@ public class AboDataProps extends PDataSample<AboData> implements Comparable<Abo
 
         ArrayList<Config> list = new ArrayList<>();
         list.add(new ConfigIntPropExtra("no", AboFieldNames.ABO_NO, no));
-        list.add(new ConfigBoolPropExtra("active", AboFieldNames.ABO_ACTIV, active));
+        list.add(new ConfigBoolPropExtra("active", AboFieldNames.ABO_ACTIVE, active));
         list.add(new ConfigStringPropExtra("name", AboFieldNames.ABO_NAME, name));
         list.add(new ConfigStringPropExtra("description", AboFieldNames.ABO_DESCRIPTION, description));
         list.add(new ConfigStringPropExtra("resolution", AboFieldNames.ABO__RESOLUTION, resolution));
@@ -87,8 +83,8 @@ public class AboDataProps extends PDataSample<AboData> implements Comparable<Abo
         list.add(new ConfigIntPropExtra("minDurationMinute", AboFieldNames.ABO_MIN_DURATION, minDurationMinute));
         list.add(new ConfigIntPropExtra("maxDurationMinute", AboFieldNames.ABO_MAX_DURATION, maxDurationMinute));
         list.add(new ConfigStringPropExtra("startTime", AboFieldNames.ABO_START_TIME, startTime));
-        list.add(new ConfigStringPropExtra("aboSubDir", AboFieldNames.ABO_SUB_DUR, aboSubDir));
-        list.add(new ConfigPDateProp("date", AboFieldNames.ABO_DATE, date));
+        list.add(new ConfigStringPropExtra("aboSubDir", AboFieldNames.ABO_DEST_DIR, aboSubDir));
+        list.add(new ConfigPDateProp("date", AboFieldNames.ABO_DATE_LAST_ABO, date));
         list.add(new ConfigStringPropExtra("setDataId", AboFieldNames.ABO_SET_DATA_ID, setDataId));
         list.add(new ConfigPDateProp("genDate", AboFieldNames.ABO_GEN_DATE, genDate));
         return list.toArray(new Config[]{});
