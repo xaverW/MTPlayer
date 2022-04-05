@@ -25,7 +25,6 @@ import de.p2tools.mtplayer.tools.storedFilter.ProgInitFilter;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.P2LibInit;
 import de.p2tools.p2Lib.configFile.IoReadWriteStyle;
-import de.p2tools.p2Lib.dialogs.dialog.PDialogFactory;
 import de.p2tools.p2Lib.guiTools.PGuiSize;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import javafx.application.Application;
@@ -36,13 +35,15 @@ import javafx.stage.Stage;
 public class MTPlayer extends Application {
 
     private Stage primaryStage;
-
     private static final String LOG_TEXT_PROGRAMSTART = "Dauer Programmstart";
-
     protected ProgData progData;
     ProgStart progStart = new ProgStart();
     Scene scene = null;
     private boolean firstProgramStart = false; // ist der allererste Programmstart: Programminit wird gemacht
+
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     @Override
     public void init() throws Exception {
@@ -57,6 +58,7 @@ public class MTPlayer extends Application {
         progData.primaryStage = primaryStage;
 
         initP2lib();
+
         workBeforeGui();
         initRootLayout();
         progStart.doWorkAfterGui(progData, firstProgramStart);
@@ -128,17 +130,26 @@ public class MTPlayer extends Application {
             });
 
             primaryStage.setScene(scene);
-            primaryStage.setOnHiding(event -> {
-                //beim einklappen durchs Tray
-                PGuiSize.getSizeStage(ProgConfig.SYSTEM_SIZE_GUI, ProgData.getInstance().primaryStage);
-            });
+//            primaryStage.setOnHiding(event -> {
+//                //beim einklappen durchs Tray
+//                PGuiSize.getSizeStage(ProgConfig.SYSTEM_SIZE_GUI, ProgData.getInstance().primaryStage);
+//            });
             primaryStage.setOnCloseRequest(e -> {
                 //beim Beenden
                 e.consume();
                 ProgQuit.quit(false);
             });
 
-            PDialogFactory.showDialog(primaryStage, ProgConfig.SYSTEM_SIZE_GUI);
+            scene.heightProperty().addListener((v, o, n) -> PGuiSize.getSizeScene(ProgConfig.SYSTEM_SIZE_GUI, primaryStage, scene));
+            scene.widthProperty().addListener((v, o, n) -> PGuiSize.getSizeScene(ProgConfig.SYSTEM_SIZE_GUI, primaryStage, scene));
+            primaryStage.xProperty().addListener((v, o, n) -> PGuiSize.getSizeScene(ProgConfig.SYSTEM_SIZE_GUI, primaryStage, scene));
+            primaryStage.yProperty().addListener((v, o, n) -> PGuiSize.getSizeScene(ProgConfig.SYSTEM_SIZE_GUI, primaryStage, scene));
+
+            //Pos setzen
+            if (!PGuiSize.setPos(ProgConfig.SYSTEM_SIZE_GUI, primaryStage)) {
+                primaryStage.centerOnScreen();
+            }
+            primaryStage.show();
 
         } catch (final Exception e) {
             e.printStackTrace();
@@ -154,9 +165,5 @@ public class MTPlayer extends Application {
             P2LibInit.removeCssFile(ProgConst.CSS_FILE_DARK_THEME);
         }
         P2LibInit.addP2LibCssToScene(scene);
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

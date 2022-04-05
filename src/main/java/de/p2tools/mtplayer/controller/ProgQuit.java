@@ -16,10 +16,8 @@
 
 package de.p2tools.mtplayer.controller;
 
-import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.dialog.QuitDialogController;
-import de.p2tools.p2Lib.guiTools.PGuiSize;
 import de.p2tools.p2Lib.tools.PShutDown;
 import de.p2tools.p2Lib.tools.download.HttpDownload;
 import de.p2tools.p2Lib.tools.log.LogMessage;
@@ -66,7 +64,7 @@ public class ProgQuit {
             } else {
                 new QuitDialogController(startWithWaiting);
             }
-            
+
         } else {
             //dann Programm beenden
             saveConfig();
@@ -111,6 +109,6 @@ public class ProgQuit {
         progData.downloadGuiController.saveTable();
         progData.aboGuiController.saveTable();
         // Hauptfenster
-        PGuiSize.getSizeStage(ProgConfig.SYSTEM_SIZE_GUI, ProgData.getInstance().primaryStage);
+//        PGuiSize.getSizeStage(ProgConfig.SYSTEM_SIZE_GUI, ProgData.getInstance().primaryStage);
     }
 }

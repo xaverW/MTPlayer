@@ -95,7 +95,7 @@ public class ColorPane {
     }
 
     public void close() {
-        tglDarkTheme.selectedProperty().unbindBidirectional(propDarkTheme);
+//        tglDarkTheme.selectedProperty().unbindBidirectional(propDarkTheme);
     }
 
     private void initTableColor(TableView<PColorData> tableView) {

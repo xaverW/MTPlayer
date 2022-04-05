@@ -27,13 +27,10 @@ import de.p2tools.mtplayer.gui.StatusBarController;
 import de.p2tools.mtplayer.gui.configDialog.ConfigDialogController;
 import de.p2tools.mtplayer.gui.dialog.AboutDialogController;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
-import de.p2tools.p2Lib.dialogs.dialog.PDialogFactory;
 import de.p2tools.p2Lib.tools.ProgramTools;
 import de.p2tools.p2Lib.tools.log.PLog;
 import de.p2tools.p2Lib.tools.log.PLogger;
 import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.StringProperty;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -43,9 +40,6 @@ import java.util.Arrays;
 
 public class ProgTray {
     private final ProgData progData;
-    BooleanProperty propTray = ProgConfig.SYSTEM_TRAY;
-    BooleanProperty propTrayUseOwnIcon = ProgConfig.SYSTEM_TRAY_USE_OWN_ICON;
-    StringProperty propTrayIconPath = ProgConfig.SYSTEM_TRAY_ICON_PATH;
     private SystemTray systemTray = null;
     private boolean stopTimer = false;
 
@@ -54,13 +48,13 @@ public class ProgTray {
     }
 
     public void initProgTray() {
-        propTray.addListener((observableValue, aBoolean, t1) -> {
+        ProgConfig.SYSTEM_TRAY.addListener((observableValue, aBoolean, t1) -> {
             Platform.runLater(() -> setTray());
         });
-        propTrayUseOwnIcon.addListener((observableValue, aBoolean, t1) -> {
+        ProgConfig.SYSTEM_TRAY_USE_OWN_ICON.addListener((observableValue, aBoolean, t1) -> {
             Platform.runLater(() -> setTray());
         });
-        propTrayIconPath.addListener((observableValue, aBoolean, t1) -> {
+        ProgConfig.SYSTEM_TRAY_ICON_PATH.addListener((observableValue, aBoolean, t1) -> {
             Platform.runLater(() -> setTray());
         });
         Listener.addListener(new Listener(Listener.EVENT_TIMER, StatusBarController.class.getSimpleName()) {
@@ -103,7 +97,7 @@ public class ProgTray {
         if (!SystemTray.isSupported()) {
             return;
         }
-        if (!propTray.get()) {
+        if (!ProgConfig.SYSTEM_TRAY.get()) {
             removeTray();
             return;
         }
@@ -125,8 +119,8 @@ public class ProgTray {
         }
 
         Image image;
-        if (propTrayUseOwnIcon.getValue() && !propTrayIconPath.getValueSafe().isEmpty()) {
-            String resource = propTrayIconPath.getValueSafe();
+        if (ProgConfig.SYSTEM_TRAY_USE_OWN_ICON.getValue() && !ProgConfig.SYSTEM_TRAY_ICON_PATH.getValueSafe().isEmpty()) {
+            String resource = ProgConfig.SYSTEM_TRAY_ICON_PATH.getValueSafe();
             image = Toolkit.getDefaultToolkit().getImage(resource);
         } else {
             String resource = "/de/p2tools/mtplayer/res/P2_24.png";
@@ -197,7 +191,7 @@ public class ProgTray {
     private void closeTray() {
         //dann die Dialoge wieder anzeigen
         showDialog();
-        propTray.setValue(false);
+        ProgConfig.SYSTEM_TRAY.setValue(false);
     }
 
     private synchronized void maxMin() {
@@ -217,7 +211,7 @@ public class ProgTray {
 
     private void showDialog() {
         Platform.runLater(() -> {
-            PDialogFactory.showDialog(progData.primaryStage, ProgConfig.SYSTEM_SIZE_GUI);
+            progData.primaryStage.show();
         });
         PDialogExtra.showAllDialog();
     }
