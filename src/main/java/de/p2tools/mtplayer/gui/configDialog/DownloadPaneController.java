@@ -18,17 +18,20 @@ package de.p2tools.mtplayer.gui.configDialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.starter.DownloadState;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2Lib.dialogs.accordion.PAccordionPane;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
-import javafx.beans.property.BooleanProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.control.TitledPane;
+import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -37,17 +40,17 @@ import java.util.Collection;
 
 public class DownloadPaneController extends PAccordionPane {
 
-    BooleanProperty propNotify = ProgConfig.DOWNLOAD_SHOW_NOTIFICATION;
-    BooleanProperty propErr = ProgConfig.DOWNLOAD_ERROR_MSG;
-    BooleanProperty propOne = ProgConfig.DOWNLOAD_MAX_ONE_PER_SERVER;
-    BooleanProperty propSSL = ProgConfig.SYSTEM_SSL_ALWAYS_TRUE;
-    BooleanProperty propBeep = ProgConfig.DOWNLOAD_BEEP;
-
     private final PToggleSwitch tglFinished = new PToggleSwitch("Benachrichtigung wenn abgeschlossen");
-    private final PToggleSwitch tglError = new PToggleSwitch("bei Downloadfehler Fehlermeldung anzeigen");
-    private final PToggleSwitch tglOne = new PToggleSwitch("nur ein Download pro Downloadserver");
+    private final PToggleSwitch tglError = new PToggleSwitch("Bei Downloadfehler Fehlermeldung anzeigen");
+
+    private final ToggleGroup group = new ToggleGroup();
+    private final RadioButton rbAsk = new RadioButton("vorher fragen");
+    private final RadioButton rbContinue = new RadioButton("immer weiterführen");
+    private final RadioButton rbRestart = new RadioButton("immer neu starten");
+
+    private final PToggleSwitch tglOne = new PToggleSwitch("Nur ein Download pro Downloadserver");
     private final PToggleSwitch tglSSL = new PToggleSwitch("SSL-Download-URLs: Bei Problemen SSL abschalten");
-    private final PToggleSwitch tglBeep = new PToggleSwitch("nach jedem Download einen \"Beep\" ausgeben");
+    private final PToggleSwitch tglBeep = new PToggleSwitch("Nach jedem Download einen \"Beep\" ausgeben");
     private ReplacePane replacePane;
 
     private final ProgData progData;
@@ -58,6 +61,7 @@ public class DownloadPaneController extends PAccordionPane {
         this.stage = stage;
         progData = ProgData.getInstance();
 
+        initRadio();
         init();
     }
 
@@ -65,11 +69,11 @@ public class DownloadPaneController extends PAccordionPane {
     public void close() {
         super.close();
         replacePane.close();
-        tglFinished.selectedProperty().unbindBidirectional(propNotify);
-        tglError.selectedProperty().unbindBidirectional(propErr);
-        tglOne.selectedProperty().unbindBidirectional(propOne);
-        tglSSL.selectedProperty().unbindBidirectional(propSSL);
-        tglBeep.selectedProperty().unbindBidirectional(propBeep);
+        tglFinished.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_SHOW_NOTIFICATION);
+        tglError.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_ERROR_MSG);
+        tglOne.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_MAX_ONE_PER_SERVER);
+        tglSSL.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_SSL_ALWAYS_TRUE);
+        tglBeep.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_BEEP);
     }
 
     @Override
@@ -81,37 +85,68 @@ public class DownloadPaneController extends PAccordionPane {
         return result;
     }
 
+    private void initRadio() {
+        rbAsk.setToggleGroup(group);
+        rbContinue.setToggleGroup(group);
+        rbRestart.setToggleGroup(group);
+        setRadio();
+        ProgConfig.DOWNLOAD_CONTINUE.addListener((v, o, n) -> setRadio());
+
+        rbAsk.setOnAction(a -> ProgConfig.DOWNLOAD_CONTINUE.setValue(DownloadState.DOWNLOAD_RESTART__ASK));
+        rbContinue.setOnAction(a -> ProgConfig.DOWNLOAD_CONTINUE.setValue(DownloadState.DOWNLOAD_RESTART__CONTINUE));
+        rbRestart.setOnAction(a -> ProgConfig.DOWNLOAD_CONTINUE.setValue(DownloadState.DOWNLOAD_RESTART__RESTART));
+    }
+
+    private void setRadio() {
+        switch (ProgConfig.DOWNLOAD_CONTINUE.getValue()) {
+            case DownloadState.DOWNLOAD_RESTART__CONTINUE:
+                rbContinue.setSelected(true);
+                break;
+            case DownloadState.DOWNLOAD_RESTART__RESTART:
+                rbRestart.setSelected(true);
+                break;
+            case DownloadState.DOWNLOAD_RESTART__ASK:
+            default:
+                rbAsk.setSelected(true);
+                break;
+        }
+    }
+
     private void makeDownload(Collection<TitledPane> result) {
         final GridPane gridPane = new GridPane();
-        gridPane.setHgap(15);
+        gridPane.setHgap(20);
         gridPane.setVgap(15);
         gridPane.setPadding(new Insets(20));
 
         TitledPane tpConfig = new TitledPane("Download", gridPane);
         result.add(tpConfig);
 
-        tglFinished.selectedProperty().bindBidirectional(propNotify);
+        tglFinished.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_SHOW_NOTIFICATION);
         final Button btnHelpFinished = PButton.helpButton(stage, "Download",
                 HelpText.DOWNLOAD_FINISHED);
 
-        tglError.selectedProperty().bindBidirectional(propErr);
+        tglError.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_ERROR_MSG);
         final Button btnHelpError = PButton.helpButton(stage, "Download",
                 HelpText.DOWNLOAD_ERROR);
 
-        tglOne.selectedProperty().bindBidirectional(propOne);
+        final Button btnHelpContinue = PButton.helpButton(stage, "Download",
+                HelpText.DOWNLOAD_CONTINUE);
+
+        tglOne.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_MAX_ONE_PER_SERVER);
         final Button btnHelpOne = PButton.helpButton(stage, "Download",
                 HelpText.DOWNLOAD_ONE_SERVER);
 
-        tglSSL.selectedProperty().bindBidirectional(propSSL);
+        tglSSL.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_SSL_ALWAYS_TRUE);
         final Button btnHelpSSL = PButton.helpButton(stage, "Download",
                 HelpText.DOWNLOAD_SSL_ALWAYS_TRUE);
 
-        tglBeep.selectedProperty().bindBidirectional(propBeep);
+        tglBeep.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_BEEP);
         final Button btnBeep = new Button("_Testen");
         btnBeep.setOnAction(a -> Toolkit.getDefaultToolkit().beep());
 
         GridPane.setHalignment(btnHelpFinished, HPos.RIGHT);
         GridPane.setHalignment(btnHelpError, HPos.RIGHT);
+        GridPane.setHalignment(btnHelpContinue, HPos.RIGHT);
         GridPane.setHalignment(btnHelpOne, HPos.RIGHT);
         GridPane.setHalignment(btnHelpSSL, HPos.RIGHT);
 
@@ -122,6 +157,14 @@ public class DownloadPaneController extends PAccordionPane {
         gridPane.add(tglError, 0, ++row);
         gridPane.add(btnHelpError, 1, row);
 
+        VBox vBox = new VBox(5);
+        HBox hBox = new HBox(20);
+        hBox.getChildren().addAll(new Label("            "), rbAsk, rbContinue, rbRestart);
+        vBox.getChildren().addAll(new Label("Beim Neustart bereits angefangener Downloads:"), hBox);
+
+        gridPane.add(vBox, 0, ++row);
+        gridPane.add(btnHelpContinue, 1, row);
+
         gridPane.add(tglOne, 0, ++row);
         gridPane.add(btnHelpOne, 1, row);
 
@@ -131,6 +174,7 @@ public class DownloadPaneController extends PAccordionPane {
         gridPane.add(tglBeep, 0, ++row);
         gridPane.add(btnBeep, 1, row);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(), PColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(),
+                PColumnConstraints.getCcPrefSize());
     }
 }

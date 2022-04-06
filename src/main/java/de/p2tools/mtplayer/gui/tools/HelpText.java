@@ -374,6 +374,16 @@ public class HelpText {
             "Wenn ein Download mit einem Fehler endet wird mit einem Fenster informiert." +
                     "\n";
 
+    public static final String DOWNLOAD_CONTINUE =
+            "Wenn ein bereits teilweise geladener Download neu startet, " +
+                    "kann er weitergeführt oder von Anfang an, neu gestartet werden." +
+                    P2LibConst.LINE_SEPARATORx2 +
+                    "Hier kann ausgewählt werden, was gemacht werden soll:\n" +
+                    "* Jedes mal vorher fragen\n" +
+                    "* Sofort weiterführen\n" +
+                    "* Immer von Anfang an neu starten." +
+                    "\n";
+
     public static final String DOWNLOAD_ADD_AT_TIME =
             "Downloads können mit einer Startzeit gestartet werden.\n\n" +
                     "\"Nur ausgewählte Downloads starten\" zeigt die markierten Downloads und\n" +

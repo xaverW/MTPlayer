@@ -18,8 +18,13 @@ package de.p2tools.mtplayer.controller.starter;
 
 public class DownloadState {
 
+    //die Vorgaben des Users:
+    public static final int DOWNLOAD_RESTART__ASK = 0;
+    public static final int DOWNLOAD_RESTART__CONTINUE = 1;
+    public static final int DOWNLOAD_RESTART__RESTART = 2;
+
+    //Antwort des Dialogs, wenn der User gefragt wird
     public enum ContinueDownload {
-        // Anwort des Dialogs: Datei schon vorhanden
         CANCEL_DOWNLOAD,
         CONTINUE_DOWNLOAD,
         RESTART_DOWNLOAD

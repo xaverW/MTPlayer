@@ -45,6 +45,7 @@ public class DownloadContinueDialogController extends PDialogExtra {
     private Button btnRestartDownload = new Button("neu _Starten");
     private Button btnCancel = new Button("_Abbrechen");
     private Button btnContinueDownload = new Button("_Weiterführen");
+    private CheckBox chkSave = new CheckBox("Merken");
 
     private Label lblFilmTitle = new Label("ARD: Tatort, ..");
     private TextField txtFileName = new TextField("");
@@ -155,10 +156,16 @@ public class DownloadContinueDialogController extends PDialogExtra {
         getvBoxCont().setSpacing(20);
         getvBoxCont().getChildren().addAll(gridPane);
 
-        addOkCancelButtons(btnContinueDownload, btnCancel);
-        ButtonBar.setButtonData(btnRestartDownload, ButtonBar.ButtonData.APPLY);
-        addAnyButton(btnRestartDownload);
-        getHboxLeft().getChildren().add(new Label("Wie möchten Sie forfahren?"));
+//        getHBoxOverButtons().getChildren().addAll(chkSave);
+//        getHBoxOverButtons().setAlignment(Pos.CENTER_RIGHT);
+
+        addCancelButton(btnCancel);
+        addOkButton(btnRestartDownload);
+        addOkButton(btnContinueDownload);
+
+        VBox vBox = new VBox(5);
+        vBox.getChildren().addAll(new Label("Wie möchten Sie forfahren?"), chkSave);
+        getHboxLeft().getChildren().add(vBox);
     }
 
     private void initButton() {
@@ -171,13 +178,20 @@ public class DownloadContinueDialogController extends PDialogExtra {
             quit();
         });
 
-//        setButtonText();
         btnRestartDownload.setOnAction(event -> {
+            if (chkSave.isSelected()) {
+                ProgConfig.DOWNLOAD_CONTINUE.setValue(DownloadState.DOWNLOAD_RESTART__RESTART);
+            }
+
             result = DownloadState.ContinueDownload.RESTART_DOWNLOAD;
             download.setPathName(cbPath.getSelectionModel().getSelectedItem(), txtFileName.getText());
             quit();
         });
         btnContinueDownload.setOnAction(event -> {
+            if (chkSave.isSelected()) {
+                ProgConfig.DOWNLOAD_CONTINUE.setValue(DownloadState.DOWNLOAD_RESTART__CONTINUE);
+            }
+
             result = DownloadState.ContinueDownload.CONTINUE_DOWNLOAD;
             quit();
         });

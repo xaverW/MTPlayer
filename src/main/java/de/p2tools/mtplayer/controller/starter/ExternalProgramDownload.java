@@ -278,13 +278,35 @@ public class ExternalProgramDownload extends Thread {
     private boolean checkCancel() {
         boolean ret = false;
         if (file.exists()) {
-            DownloadContinueDialogController downloadContinueDialogController =
-                    new DownloadContinueDialogController(ProgConfig.DOWNLOAD_DIALOG_CONTINUE_SIZE,
-                            progData, download, false /* weiterführen */);
 
-            DownloadState.ContinueDownload result = downloadContinueDialogController.getResult();
-            boolean isNewName = downloadContinueDialogController.isNewName();
-            downloadContinueDialogController = null;
+            DownloadState.ContinueDownload result;
+            boolean isNewName = false;
+
+            if (ProgConfig.DOWNLOAD_CONTINUE.getValue() == DownloadState.DOWNLOAD_RESTART__CONTINUE) {
+                //weiterführen
+                result = DownloadState.ContinueDownload.CONTINUE_DOWNLOAD;
+
+            } else if (ProgConfig.DOWNLOAD_CONTINUE.getValue() == DownloadState.DOWNLOAD_RESTART__RESTART) {
+                //neu starten
+                result = DownloadState.ContinueDownload.RESTART_DOWNLOAD;
+
+            } else {
+                //vorher fragen
+                DownloadContinueDialogController downloadContinueDialogController =
+                        new DownloadContinueDialogController(ProgConfig.DOWNLOAD_DIALOG_CONTINUE_SIZE,
+                                progData, download, false /* weiterführen */);
+
+                result = downloadContinueDialogController.getResult();
+                isNewName = downloadContinueDialogController.isNewName();
+            }
+
+//            DownloadContinueDialogController downloadContinueDialogController =
+//                    new DownloadContinueDialogController(ProgConfig.DOWNLOAD_DIALOG_CONTINUE_SIZE,
+//                            progData, download, false /* weiterführen */);
+//
+//            DownloadState.ContinueDownload result = downloadContinueDialogController.getResult();
+//            boolean isNewName = downloadContinueDialogController.isNewName();
+//            downloadContinueDialogController = null;
 
             switch (result) {
                 case CANCEL_DOWNLOAD:

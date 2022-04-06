@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.controller.config;
 
 import de.p2tools.mtplayer.controller.data.film.FilmData;
 import de.p2tools.mtplayer.controller.filmlist.filmlistUrls.FilmlistUrlList;
+import de.p2tools.mtplayer.controller.starter.DownloadState;
 import de.p2tools.mtplayer.gui.tools.SetsPrograms;
 import de.p2tools.mtplayer.tools.MLBandwidthTokenBucket;
 import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
@@ -176,6 +177,7 @@ public class ProgConfig extends PDataProgConfig {
     public static BooleanProperty DOWNLOAD_START_NOW = addBool("download-start-now", Boolean.FALSE);
     public static BooleanProperty DOWNLOAD_BEEP = addBool("download-beep");
     public static BooleanProperty DOWNLOAD_ERROR_MSG = addBool("download-error-msg", Boolean.TRUE);
+    public static IntegerProperty DOWNLOAD_CONTINUE = addInt("download-contineu", DownloadState.DOWNLOAD_RESTART__ASK);
     public static IntegerProperty DOWNLOAD_MAX_DOWNLOADS = addInt("download-max-downloads", 1);
     public static BooleanProperty DOWNLOAD_MAX_ONE_PER_SERVER = addBool("download-max-one-per-server"); // nur ein Download pro Server - sonst max 2
     public static IntegerProperty DOWNLOAD_MAX_BANDWIDTH_KBYTE = addInt("download-max-bandwidth-kilobyte", MLBandwidthTokenBucket.BANDWIDTH_MAX_KBYTE);
