@@ -36,7 +36,7 @@ import javafx.util.StringConverter;
 public class DownloadFilterController extends FilterController {
 
     private ComboBox<String> cboSrc = new ComboBox<>(); //Downloadquelle: Abo, manuell gestartet
-    private ComboBox<String> cboArt = new ComboBox<>(); //Download über Programm / direkter Downlaod, http
+    private ComboBox<String> cboKind = new ComboBox<>(); //Download über Programm / direkter Downlaod, http
     private ComboBox<String> cboChannel = new ComboBox<>();
     private ComboBox<String> cboAbo = new ComboBox<>();
     private ComboBox<String> cboState = new ComboBox<>();
@@ -67,13 +67,9 @@ public class DownloadFilterController extends FilterController {
         initBandwidth();
     }
 
-//    public void setClearText(String txt) {
-////        btnClear.setText(txt);
-//    }
-
     private void initLayout() {
         addCont("Quelle", cboSrc, vBoxFilter);
-        addCont("Downloadart", cboArt, vBoxFilter);
+        addCont("Downloadart", cboKind, vBoxFilter);
         addCont("Sender", cboChannel, vBoxFilter);
         addCont("Abo", cboAbo, vBoxFilter);
         addCont("Status", cboState, vBoxFilter);
@@ -88,8 +84,6 @@ public class DownloadFilterController extends FilterController {
         Separator sp = new Separator();
         sp.getStyleClass().add("pseperator3");
         sp.setMinHeight(0);
-//        sp.setPadding(new Insets(0, 0, 0, 0));
-
         vBoxFilter.getChildren().addAll(hBox, sp);
 
         VBox vb = new VBox(FilterController.FILTER_SPACING_DOWNLOAD);
@@ -158,11 +152,11 @@ public class DownloadFilterController extends FilterController {
                     }
                 });
 
-        cboArt.getItems().addAll(DownloadConstants.ALL,
+        cboKind.getItems().addAll(DownloadConstants.ALL,
                 DownloadConstants.TYPE_COMBO_DOWNLOAD,
                 DownloadConstants.TYPE_COMBO_PROGRAM);
 
-        Bindings.bindBidirectional(cboArt.valueProperty(), ProgConfig.FILTER_DOWNLOAD_TYPE,
+        Bindings.bindBidirectional(cboKind.valueProperty(), ProgConfig.FILTER_DOWNLOAD_TYPE,
                 new StringConverter<String>() {
 
                     @Override
@@ -197,6 +191,7 @@ public class DownloadFilterController extends FilterController {
         cboState.getItems().addAll(DownloadConstants.ALL,
                 DownloadConstants.STATE_COMBO_NOT_STARTED,
                 DownloadConstants.STATE_COMBO_WAITING,
+                DownloadConstants.STATE_COMBO_STARTED,
                 DownloadConstants.STATE_COMBO_LOADING);
         cboState.valueProperty().bindBidirectional(ProgConfig.FILTER_DOWNLOAD_STATE);
 
@@ -263,8 +258,8 @@ public class DownloadFilterController extends FilterController {
         if (cboSrc.getSelectionModel() != null) {
             cboSrc.getSelectionModel().selectFirst();
         }
-        if (cboArt.getSelectionModel() != null) {
-            cboArt.getSelectionModel().selectFirst();
+        if (cboKind.getSelectionModel() != null) {
+            cboKind.getSelectionModel().selectFirst();
         }
         if (cboChannel.getSelectionModel() != null) {
             cboChannel.getSelectionModel().selectFirst();

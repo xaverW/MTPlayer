@@ -479,6 +479,7 @@ public class DownloadGuiController extends AnchorPane {
                 (state.isEmpty() ? true : (
                         state.equals(DownloadConstants.STATE_COMBO_NOT_STARTED) && !download.isStarted() ||
                                 state.equals(DownloadConstants.STATE_COMBO_WAITING) && download.isStateStartedWaiting() ||
+                                state.equals(DownloadConstants.STATE_COMBO_STARTED) && download.isStarted() ||
                                 state.equals(DownloadConstants.STATE_COMBO_LOADING) && download.isStateStartedRun()
                 ))
         );
