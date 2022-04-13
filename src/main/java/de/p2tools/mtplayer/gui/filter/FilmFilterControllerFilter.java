@@ -152,7 +152,6 @@ public class FilmFilterControllerFilter extends VBox {
                 try {
                     progData.storedFilters.getActFilterSettings().setShowDate(newDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
                 } catch (Exception ex) {
-
                 }
 
             } else {
