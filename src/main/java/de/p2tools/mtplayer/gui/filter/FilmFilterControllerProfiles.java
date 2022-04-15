@@ -21,9 +21,8 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.gui.tools.HelpText;
-import de.p2tools.mtplayer.tools.storedFilter.ProgInitFilter;
-import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
-import de.p2tools.mtplayer.tools.storedFilter.SelectedFilterFactory;
+import de.p2tools.mtplayer.tools.filmFilter.FilmFilter;
+import de.p2tools.mtplayer.tools.filmFilter.FilmFilterFactory;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PGuiTools;
@@ -42,7 +41,7 @@ import java.util.Optional;
 
 public class FilmFilterControllerProfiles extends VBox {
 
-    private final ComboBox<SelectedFilter> cboFilterProfiles = new PSeparatorComboBox<>();
+    private final ComboBox<FilmFilter> cboFilterProfiles = new PSeparatorComboBox<>();
     private final MenuButton mbFilterTools = new MenuButton("");
     private final Button btnLoadFilter = new Button("laden");
     private final Button btnSaveFilter = new Button("speichern");
@@ -64,7 +63,7 @@ public class FilmFilterControllerProfiles extends VBox {
 
         initRest();
 
-        progData.storedFilters.filterChangeProperty().addListener((observable, oldValue, newValue) -> checkCboFilter());
+        progData.actFilmFilterWorker.filterChangeProperty().addListener((observable, oldValue, newValue) -> checkCboFilter());
         checkCboFilter();
     }
 
@@ -103,20 +102,20 @@ public class FilmFilterControllerProfiles extends VBox {
 
     private void filterProfiles() {
         // Filterprofile einrichten
-        cboFilterProfiles.setItems(progData.storedFilters.getStoredFilterList());
+        cboFilterProfiles.setItems(progData.actFilmFilterWorker.getStoredFilterList());
         cboFilterProfiles.setTooltip(new Tooltip("Gespeicherte Filterprofile können\n" +
                 "hier geladen werden"));
 
-        final StringConverter<SelectedFilter> converter = new StringConverter<SelectedFilter>() {
+        final StringConverter<FilmFilter> converter = new StringConverter<FilmFilter>() {
             @Override
-            public String toString(SelectedFilter selFilter) {
+            public String toString(FilmFilter selFilter) {
                 return selFilter == null ? "" : selFilter.getName();
             }
 
             @Override
-            public SelectedFilter fromString(String id) {
+            public FilmFilter fromString(String id) {
                 final int i = cboFilterProfiles.getSelectionModel().getSelectedIndex();
-                return progData.storedFilters.getStoredFilterList().get(i);
+                return progData.actFilmFilterWorker.getStoredFilterList().get(i);
             }
         };
         cboFilterProfiles.setConverter(converter);
@@ -146,8 +145,8 @@ public class FilmFilterControllerProfiles extends VBox {
 
         final MenuItem miAbo = new MenuItem("aus den Filtereinstellungen ein Abo erstellen");
         miAbo.setOnAction(a -> {
-            SelectedFilter selectedFilter = progData.storedFilters.getActFilterSettings();
-            progData.aboList.addNewAboFromFilter(selectedFilter);
+            FilmFilter filmFilter = progData.actFilmFilterWorker.getActFilterSettings();
+            progData.aboList.addNewAboFromFilter(filmFilter);
         });
 
         final MenuItem miResort = new MenuItem("Filterprofile sortieren");
@@ -175,10 +174,10 @@ public class FilmFilterControllerProfiles extends VBox {
         });
         ProgColorList.FILTER_PROFILE_SEPARATOR.colorProperty().addListener((a, b, c) -> cboFilterProfiles.setCellFactory(new Callback<>() {
             @Override
-            public ListCell<SelectedFilter> call(ListView<SelectedFilter> param) {
-                final ListCell<SelectedFilter> cell = new ListCell<>() {
+            public ListCell<FilmFilter> call(ListView<FilmFilter> param) {
+                final ListCell<FilmFilter> cell = new ListCell<>() {
                     @Override
-                    public void updateItem(SelectedFilter item, boolean empty) {
+                    public void updateItem(FilmFilter item, boolean empty) {
                         super.updateItem(item, empty);
                         if (!empty) {
                             setText(item.toString());
@@ -198,10 +197,10 @@ public class FilmFilterControllerProfiles extends VBox {
 
         cboFilterProfiles.setCellFactory(new Callback<>() {
             @Override
-            public ListCell<SelectedFilter> call(ListView<SelectedFilter> param) {
-                final ListCell<SelectedFilter> cell = new ListCell<>() {
+            public ListCell<FilmFilter> call(ListView<FilmFilter> param) {
+                final ListCell<FilmFilter> cell = new ListCell<>() {
                     @Override
-                    public void updateItem(SelectedFilter item, boolean empty) {
+                    public void updateItem(FilmFilter item, boolean empty) {
                         super.updateItem(item, empty);
                         if (!empty) {
                             setText(item.toString());
@@ -244,33 +243,33 @@ public class FilmFilterControllerProfiles extends VBox {
     }
 
     private void loadFilter() {
-        progData.storedFilters.setActFilterSettings(cboFilterProfiles.getSelectionModel().getSelectedItem());
+        progData.actFilmFilterWorker.setActFilterSettings(cboFilterProfiles.getSelectionModel().getSelectedItem());
     }
 
     private void saveFilter() {
-        final SelectedFilter sf = cboFilterProfiles.getSelectionModel().getSelectedItem();
+        final FilmFilter sf = cboFilterProfiles.getSelectionModel().getSelectedItem();
         if (sf == null) {
             newFilter();
         } else {
-            progData.storedFilters.saveStoredFilter(sf);
+            progData.actFilmFilterWorker.saveStoredFilter(sf);
             checkCboFilter();
         }
     }
 
     private void delFilter() {
-        SelectedFilter sf = cboFilterProfiles.getSelectionModel().getSelectedItem();
+        FilmFilter sf = cboFilterProfiles.getSelectionModel().getSelectedItem();
         if (sf == null) {
             PAlert.showInfoNoSelection();
             return;
         }
 
-        if (progData.storedFilters.removeStoredFilter(sf)) {
+        if (progData.actFilmFilterWorker.removeStoredFilter(sf)) {
             cboFilterProfiles.getSelectionModel().selectFirst();
         }
     }
 
     private void delAllFilter() {
-        progData.storedFilters.removeAllStoredFilter();
+        progData.actFilmFilterWorker.removeAllStoredFilter();
     }
 
     private void resetFilter() {
@@ -278,14 +277,14 @@ public class FilmFilterControllerProfiles extends VBox {
                 "Sollen alle Filterprofile gelöscht " +
                         "und durch die Profile vom ersten Programmstart " +
                         "ersetzt werden?")) {
-            progData.storedFilters.getStoredFilterList().clear();
-            ProgInitFilter.setProgInitFilter();
+            progData.actFilmFilterWorker.getStoredFilterList().clear();
+            FilmFilterFactory.addStandardFilter();
             cboFilterProfiles.getSelectionModel().selectFirst();
         }
     }
 
     private void newFilter() {
-        final TextInputDialog dialog = new TextInputDialog(progData.storedFilters.getNextName());
+        final TextInputDialog dialog = new TextInputDialog(progData.actFilmFilterWorker.getNextName());
         dialog.setTitle("Filterprofilname");
         dialog.setHeaderText("Den Namen des Filterprofils vorgeben");
         dialog.setContentText("Name:");
@@ -294,13 +293,13 @@ public class FilmFilterControllerProfiles extends VBox {
 
         final Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
-            progData.storedFilters.addNewStoredFilter(result.get());
+            progData.actFilmFilterWorker.addNewStoredFilter(result.get());
             cboFilterProfiles.getSelectionModel().selectLast();
         }
     }
 
     private void renameFilter() {
-        final SelectedFilter sf = cboFilterProfiles.getSelectionModel().getSelectedItem();
+        final FilmFilter sf = cboFilterProfiles.getSelectionModel().getSelectedItem();
         if (sf == null) {
             return;
         }
@@ -319,9 +318,10 @@ public class FilmFilterControllerProfiles extends VBox {
     }
 
     private void checkCboFilter() {
-        SelectedFilter sf = progData.storedFilters.getActFilterSettings();
-        SelectedFilter sfCbo = cboFilterProfiles.getSelectionModel().getSelectedItem();
-        if (SelectedFilterFactory.compareFilterWithoutNameOfFilter(sf, sfCbo)) {
+        FilmFilter sf = progData.actFilmFilterWorker.getActFilterSettings();
+        FilmFilter sfCbo = cboFilterProfiles.getSelectionModel().getSelectedItem();
+        if (sf.isSame(sfCbo, false)) {
+            //if (SelectedFilmFilterFactory.compareFilterWithoutNameOfFilter(sf, sfCbo)) {
             markFilterOk(true);
         } else {
             markFilterOk(false);

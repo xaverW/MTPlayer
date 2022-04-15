@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.controller.data.film;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.SetData;
-import de.p2tools.mtplayer.tools.filmListFilter.FilmlistBlackFilter;
+import de.p2tools.mtplayer.tools.filmFilter.BlacklistFilterFactory;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PDebugLog;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -61,9 +61,9 @@ public class Filmlist extends SimpleListProperty<FilmData> {
         // damit wird die Filmlist gegen die Blacklist geprüft:
         // Filmliste geladen, add Black, ConfigDialog, Filter blkBtn
         if (markFilms) {
-            FilmlistBlackFilter.markFilmBlack();
+            BlacklistFilterFactory.markFilmBlack();
         }
-        FilmlistBlackFilter.getBlackFiltered();
+        BlacklistFilterFactory.getBlackFiltered();
     }
 
     public SortedList<FilmData> getSortedList() {

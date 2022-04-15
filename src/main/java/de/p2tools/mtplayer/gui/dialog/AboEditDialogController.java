@@ -23,9 +23,9 @@ import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.abo.AboFieldNames;
 import de.p2tools.mtplayer.controller.data.film.FilmData;
 import de.p2tools.mtplayer.gui.tools.HelpText;
-import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
-import de.p2tools.mtplayer.tools.storedFilter.FilterCheckRegEx;
-import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
+import de.p2tools.mtplayer.tools.filmFilter.CheckFilmFilter;
+import de.p2tools.mtplayer.tools.filmFilter.FilmFilter;
+import de.p2tools.mtplayer.tools.filmFilter.FilterCheckRegEx;
 import de.p2tools.p2Lib.guiTools.PButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -49,9 +49,9 @@ public class AboEditDialogController extends AboDialogController {
         super(progData, abo);
     }
 
-    public AboEditDialogController(ProgData progData, SelectedFilter selectedFilter, AboData abo) {
+    public AboEditDialogController(ProgData progData, FilmFilter filmFilter, AboData abo) {
         //hier wird ein Abo an den Filter angepasst
-        super(progData, selectedFilter, abo);
+        super(progData, filmFilter, abo);
     }
 
     public AboEditDialogController(ProgData progData, ObservableList<AboData> aboList) {
@@ -385,8 +385,8 @@ public class AboEditDialogController extends AboDialogController {
     }
 
     private void initTimeRange() {
-        slTimeRange.setMin(FilmFilter.FILTER_TIME_RANGE_MIN_VALUE);
-        slTimeRange.setMax(FilmFilter.FILTER_TIME_RANGE_MAX_VALUE);
+        slTimeRange.setMin(CheckFilmFilter.FILTER_TIME_RANGE_MIN_VALUE);
+        slTimeRange.setMax(CheckFilmFilter.FILTER_TIME_RANGE_MAX_VALUE);
         slTimeRange.setShowTickLabels(true);
         slTimeRange.setMajorTickUnit(10);
         slTimeRange.setBlockIncrement(5);
@@ -394,7 +394,7 @@ public class AboEditDialogController extends AboDialogController {
         slTimeRange.setLabelFormatter(new StringConverter<>() {
             @Override
             public String toString(Double x) {
-                if (x == FilmFilter.FILTER_TIME_RANGE_ALL_VALUE) return "alles";
+                if (x == CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE) return "alles";
                 return x.intValue() + "";
             }
 
@@ -426,7 +426,7 @@ public class AboEditDialogController extends AboDialogController {
         int i = (int) slTimeRange.getValue();
         String tNr = i + "";
 
-        if (i == FilmFilter.FILTER_TIME_RANGE_ALL_VALUE) {
+        if (i == CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE) {
             lblTimeRange.setText(txtAll);
         } else {
             lblTimeRange.setText(tNr + (i == 1 ? " Tag" : " Tage"));

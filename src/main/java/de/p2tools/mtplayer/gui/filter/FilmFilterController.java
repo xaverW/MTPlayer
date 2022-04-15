@@ -68,8 +68,8 @@ public class FilmFilterController extends FilterController {
                 "Blacklist invers: Nur von der Blacklist erfasste Filme werden angezeigt."));
 
 
-        tglBlacklist.selectedProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().blacklistOnProperty());
-        tglBlacklist.indeterminateProperty().bindBidirectional(progData.storedFilters.getActFilterSettings().blacklistOnlyProperty());
+        tglBlacklist.selectedProperty().bindBidirectional(progData.actFilmFilterWorker.getActFilterSettings().blacklistOnProperty());
+        tglBlacklist.indeterminateProperty().bindBidirectional(progData.actFilmFilterWorker.getActFilterSettings().blacklistOnlyProperty());
 
         vBoxBlacklist = getVBoxBotton();
         HBox hBox = new HBox(5);

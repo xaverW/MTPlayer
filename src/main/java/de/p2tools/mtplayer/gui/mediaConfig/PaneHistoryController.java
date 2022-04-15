@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.history.HistoryData;
-import de.p2tools.mtplayer.tools.storedFilter.FilterCheckRegEx;
+import de.p2tools.mtplayer.tools.filmFilter.FilterCheckRegEx;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.dialogs.accordion.PAccordionPane;

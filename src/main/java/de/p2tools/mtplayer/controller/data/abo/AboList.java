@@ -23,8 +23,9 @@ import de.p2tools.mtplayer.controller.data.film.FilmData;
 import de.p2tools.mtplayer.controller.data.film.FilmDataXml;
 import de.p2tools.mtplayer.controller.data.film.Filmlist;
 import de.p2tools.mtplayer.gui.dialog.AboEditDialogController;
-import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
-import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
+import de.p2tools.mtplayer.tools.filmFilter.CheckFilmFilter;
+import de.p2tools.mtplayer.tools.filmFilter.FilmFilter;
+import de.p2tools.mtplayer.tools.filmFilter.FilmFilterFactory;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.configFile.pData.PDataList;
@@ -96,16 +97,16 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
         super.add(abo);
     }
 
-    public synchronized void addNewAboFromFilter(SelectedFilter selectedFilter) {
+    public synchronized void addNewAboFromFilter(FilmFilter filmFilter) {
         // abo anlegen, oder false wenns schon existiert
-        String channel = selectedFilter.isChannelVis() ? selectedFilter.getChannel() : "";
-        String theme = selectedFilter.isThemeVis() ? selectedFilter.getTheme().trim() : "";
-        boolean themeExact = selectedFilter.isThemeExact();
-        String title = selectedFilter.isTitleVis() ? selectedFilter.getTitle().trim() : "";
-        String themeTitle = selectedFilter.isThemeTitleVis() ? selectedFilter.getThemeTitle().trim() : "";
-        String somewhere = selectedFilter.isSomewhereVis() ? selectedFilter.getSomewhere().trim() : "";
-        int minDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMinDur() : FilmFilter.FILTER_DURATION_MIN_MINUTE;
-        int maxDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMaxDur() : FilmFilter.FILTER_DURATION_MAX_MINUTE;
+        String channel = filmFilter.isChannelVis() ? filmFilter.getChannel() : "";
+        String theme = filmFilter.isThemeVis() ? filmFilter.getTheme().trim() : "";
+        boolean themeExact = filmFilter.isThemeExact();
+        String title = filmFilter.isTitleVis() ? filmFilter.getTitle().trim() : "";
+        String themeTitle = filmFilter.isThemeTitleVis() ? filmFilter.getThemeTitle().trim() : "";
+        String somewhere = filmFilter.isSomewhereVis() ? filmFilter.getSomewhere().trim() : "";
+        int minDuration = filmFilter.isMinMaxDurVis() ? filmFilter.getMinDur() : CheckFilmFilter.FILTER_DURATION_MIN_MINUTE;
+        int maxDuration = filmFilter.isMinMaxDurVis() ? filmFilter.getMaxDur() : CheckFilmFilter.FILTER_DURATION_MAX_MINUTE;
 
         String searchTitle = "";
         String searchChannel = channel.isEmpty() ? "" : channel + " - ";
@@ -139,7 +140,7 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
                 themeTitle,
                 title,
                 somewhere,
-                selectedFilter.getTimeRange(),
+                filmFilter.getTimeRange(),
                 minDuration,
                 maxDuration,
                 searchTitle);
@@ -151,14 +152,14 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
         new AboEditDialogController(progData, abo);
     }
 
-    public synchronized void changeAboFromFilter(Optional<AboData> oAbo, SelectedFilter selectedFilter) {
+    public synchronized void changeAboFromFilter(Optional<AboData> oAbo, FilmFilter filmFilter) {
         // abo mit den Filterwerten einstellen
         if (!oAbo.isPresent()) {
             return;
         }
 
         final AboData abo = oAbo.get();
-        new AboEditDialogController(progData, selectedFilter, abo);
+        new AboEditDialogController(progData, filmFilter, abo);
     }
 
     public synchronized void addNewAbo(String aboName, String filmChannel, String filmTheme, String filmTitle) {
@@ -168,10 +169,10 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
             minDuration = ProgConfig.ABO_MINUTE_MIN_SIZE.getValue();
             maxDuration = ProgConfig.ABO_MINUTE_MAX_SIZE.getValue();
         } catch (final Exception ex) {
-            minDuration = FilmFilter.FILTER_DURATION_MIN_MINUTE;
-            maxDuration = FilmFilter.FILTER_DURATION_MAX_MINUTE;
-            ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(FilmFilter.FILTER_DURATION_MIN_MINUTE);
-            ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(FilmFilter.FILTER_DURATION_MAX_MINUTE);
+            minDuration = CheckFilmFilter.FILTER_DURATION_MIN_MINUTE;
+            maxDuration = CheckFilmFilter.FILTER_DURATION_MAX_MINUTE;
+            ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(CheckFilmFilter.FILTER_DURATION_MIN_MINUTE);
+            ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(CheckFilmFilter.FILTER_DURATION_MAX_MINUTE);
         }
 
         String namePath = DownloadTools.replaceEmptyFileName(aboName,
@@ -186,7 +187,7 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
                 "" /* filmThemaTitel */,
                 filmTitle,
                 "",
-                FilmFilter.FILTER_TIME_RANGE_ALL_VALUE,
+                CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE,
                 minDuration,
                 maxDuration,
                 namePath);
@@ -321,7 +322,7 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
     public boolean aboExistsAlready(AboData abo) {
         // true wenn es das Abo schon gibt
         for (final AboData dataAbo : this) {
-            if (FilmFilter.aboExistsAlready(dataAbo, abo)) {
+            if (FilmFilterFactory.aboExistsAlready(dataAbo, abo)) {
                 return true;
             }
         }
@@ -336,7 +337,7 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
             return null;
         } else {
             if (checkLength) {
-                if (!FilmFilter.checkLength(abo.getMinDurationMinute(), abo.getMaxDurationMinute(), film.getDurationMinute())) {
+                if (!CheckFilmFilter.checkLength(abo.getMinDurationMinute(), abo.getMaxDurationMinute(), film.getDurationMinute())) {
                     return null;
                 }
             }
@@ -365,7 +366,7 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
 
         final AboData foundAbo = stream()
                 .filter(abo -> abo.isActive())
-                .filter(abo -> FilmFilter.checkFilmWithFilter(
+                .filter(abo -> FilmFilterFactory.checkFilmWithFilter(
                         abo.fChannel,
                         abo.fTheme,
                         abo.fThemeTitle,
@@ -383,11 +384,11 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
                 .orElse(null);
 
         if (foundAbo != null) {
-            if (!FilmFilter.checkLengthMin(foundAbo.getMinDurationMinute(), film.getDurationMinute())) {
+            if (!CheckFilmFilter.checkLengthMin(foundAbo.getMinDurationMinute(), film.getDurationMinute())) {
                 // dann ist der Film zu kurz
                 film.arr[FilmDataXml.FILM_ABO_NAME] = foundAbo.arr[AboFieldNames.ABO_NAME_NO] + (" [zu kurz]");
                 film.setAbo(foundAbo);
-            } else if (!FilmFilter.checkLengthMax(foundAbo.getMaxDurationMinute(), film.getDurationMinute())) {
+            } else if (!CheckFilmFilter.checkLengthMax(foundAbo.getMaxDurationMinute(), film.getDurationMinute())) {
                 // dann ist der Film zu lang
                 film.arr[FilmDataXml.FILM_ABO_NAME] = foundAbo.arr[AboFieldNames.ABO_NAME_NO] + (" [zu lang]");
                 film.setAbo(foundAbo);

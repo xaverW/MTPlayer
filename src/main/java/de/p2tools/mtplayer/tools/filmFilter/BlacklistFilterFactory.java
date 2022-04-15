@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.tools.filmListFilter;
+package de.p2tools.mtplayer.tools.filmFilter;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
@@ -28,12 +28,55 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class FilmlistBlackFilter {
+public class BlacklistFilterFactory {
 
     private static long days = 0;
     private static boolean doNotShowFutureFilms, doNotShowGeoBlockedFilms;
     private static long filmLengthTarget_Minute = 0;
     private final static ProgData PROG_DATA = ProgData.getInstance();
+
+    private BlacklistFilterFactory() {
+    }
+
+    public static synchronized void countHits(boolean abort) {
+        //hier wird die Blacklist gegen die Filmliste gefiltert und die Treffer
+        //für jeden Blacklist-Eintrag ermittelt
+
+        PDuration.counterStart("FilmlistBlackFilterCountHits.countHits");
+        ProgData.getInstance().blackList.clearCounter();
+
+        final Filmlist filmlist = ProgData.getInstance().filmlist;
+        if (filmlist != null) {
+            filmlist.parallelStream().forEach(film -> applyBlacklist(film, abort));
+        }
+
+        PDuration.counterStop("FilmlistBlackFilterCountHits.countHits");
+    }
+
+    private static void applyBlacklist(FilmData film, boolean abort) {
+        //zum Sortieren ist es sinnvoll, dass ALLE MÖGLICHEN Treffer gesucht werden
+        for (final BlackData blackData : ProgData.getInstance().blackList) {
+
+            if (FilmFilterFactory.checkFilmWithFilter(
+                    blackData.fChannel,
+                    blackData.fTheme,
+                    blackData.fThemeTitle,
+                    blackData.fTitle,
+                    blackData.fSomewhere,
+
+                    CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE,
+                    CheckFilmFilter.FILTER_DURATION_MIN_MINUTE,
+                    CheckFilmFilter.FILTER_DURATION_MAX_MINUTE,
+
+                    film, false)) {
+
+                blackData.incCountHits();
+                if (abort) {
+                    return;
+                }
+            }
+        }
+    }
 
     public static synchronized void getBlackFiltered() {
         // hier wird die komplette Filmliste gegen die Blacklist gefiltert
@@ -52,12 +95,12 @@ public class FilmlistBlackFilter {
 
             Stream<FilmData> initialStream = filmlist.parallelStream();
 
-            if (PROG_DATA.storedFilters.getActFilterSettings().isBlacklistOnly()) {
+            if (PROG_DATA.actFilmFilterWorker.getActFilterSettings().isBlacklistOnly()) {
                 //blacklist in ONLY
                 PLog.sysLog("FilmlistBlackFilter - isBlacklistOnly");
                 initialStream = initialStream.filter(f -> !f.isBlackBlocked());
 
-            } else if (PROG_DATA.storedFilters.getActFilterSettings().isBlacklistOn()) {
+            } else if (PROG_DATA.actFilmFilterWorker.getActFilterSettings().isBlacklistOn()) {
                 //blacklist in ON
                 PLog.sysLog("FilmlistBlackFilter - isBlacklistOn");
                 initialStream = initialStream.filter(f -> f.isBlackBlocked());
@@ -143,15 +186,15 @@ public class FilmlistBlackFilter {
     private static boolean applyBlacklistFilters(FilmData film, boolean countHits) {
         for (final BlackData blackData : PROG_DATA.blackList) {
 
-            if (FilmFilter.checkFilmWithFilter(
+            if (FilmFilterFactory.checkFilmWithFilter(
                     blackData.fChannel,
                     blackData.fTheme,
                     blackData.fThemeTitle,
                     blackData.fTitle,
                     blackData.fSomewhere,
-                    FilmFilter.FILTER_TIME_RANGE_ALL_VALUE,
-                    FilmFilter.FILTER_DURATION_MIN_MINUTE,
-                    FilmFilter.FILTER_DURATION_MAX_MINUTE,
+                    CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE,
+                    CheckFilmFilter.FILTER_DURATION_MIN_MINUTE,
+                    CheckFilmFilter.FILTER_DURATION_MAX_MINUTE,
                     film,
                     false /* auch die Länge prüfen */)) {
 

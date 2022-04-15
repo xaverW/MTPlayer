@@ -14,16 +14,16 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.tools.storedFilter;
+package de.p2tools.mtplayer.tools.filmFilter;
 
 import de.p2tools.p2Lib.configFile.pData.PDataList;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 
-public final class SelectedFilterList extends SimpleListProperty<SelectedFilter> implements PDataList<SelectedFilter> {
+public final class FilmFilterList extends SimpleListProperty<FilmFilter> implements PDataList<FilmFilter> {
     public static final String TAG = "SelectedFilterList";
 
-    public SelectedFilterList() {
+    public FilmFilterList() {
         super(FXCollections.observableArrayList());
     }
 
@@ -38,32 +38,32 @@ public final class SelectedFilterList extends SimpleListProperty<SelectedFilter>
     }
 
     @Override
-    public SelectedFilter getNewItem() {
-        return new SelectedFilter();
+    public FilmFilter getNewItem() {
+        return new FilmFilter();
     }
 
     @Override
     public void addNewItem(Object obj) {
-        if (obj.getClass().equals(SelectedFilter.class)) {
-            add((SelectedFilter) obj);
+        if (obj.getClass().equals(FilmFilter.class)) {
+            add((FilmFilter) obj);
         }
     }
 
     public int top(int idx, boolean up) {
-        SelectedFilter selectedFilter = remove(idx);
+        FilmFilter filmFilter = remove(idx);
         int ret;
         if (up) {
-            add(0, selectedFilter);
+            add(0, filmFilter);
             ret = 0;
         } else {
-            add(selectedFilter);
+            add(filmFilter);
             ret = getSize() - 1;
         }
         return ret;
     }
 
     public int up(int idx, boolean up) {
-        SelectedFilter selectedFilter = remove(idx);
+        FilmFilter filmFilter = remove(idx);
         int neu = idx;
         if (up) {
             if (neu > 0) {
@@ -72,7 +72,7 @@ public final class SelectedFilterList extends SimpleListProperty<SelectedFilter>
         } else if (neu < size()) {
             ++neu;
         }
-        add(neu, selectedFilter);
+        add(neu, filmFilter);
         return neu;
     }
 }

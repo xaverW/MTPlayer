@@ -14,32 +14,29 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.tools.storedFilter;
+package de.p2tools.mtplayer.tools.filmFilter;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
 import de.p2tools.p2Lib.tools.log.PDebugLog;
 import javafx.animation.PauseTransition;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.util.Duration;
 
-public final class SelectedFilter extends SelectedFilterProps {
+public final class FilmFilter extends FilmFilterProps {
 
     private final BooleanProperty filterChange = new SimpleBooleanProperty(false);
     private final BooleanProperty blacklistChange = new SimpleBooleanProperty(false);
     private boolean reportChange = true;
     private final PauseTransition pause = new PauseTransition(Duration.millis(200));
-    IntegerProperty filterWaitTime = ProgConfig.SYSTEM_FILTER_WAIT_TIME;
 
 
-    public SelectedFilter() {
+    public FilmFilter() {
         initFilter();
         setName("Filter");
     }
 
-    public SelectedFilter(String name) {
+    public FilmFilter(String name) {
         initFilter();
         setName(name);
     }
@@ -116,15 +113,15 @@ public final class SelectedFilter extends SelectedFilterProps {
         setSomewhere("");
         setUrl("");
 
-        setTimeRange(FilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
+        setTimeRange(CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
 
         setMinDur(0);
-        setMaxDur(FilmFilter.FILTER_DURATION_MAX_MINUTE);
+        setMaxDur(CheckFilmFilter.FILTER_DURATION_MAX_MINUTE);
 
         setMinTime(0);
-        setMaxTime(FilmFilter.FILTER_FILMTIME_MAX_SEC);
+        setMaxTime(CheckFilmFilter.FILTER_FILMTIME_MAX_SEC);
 
-        setShowDate(FilmFilter.FILTER_SHOW_DATE_ALL);
+        setShowDate(CheckFilmFilter.FILTER_SHOW_DATE_ALL);
 
         setOnlyBookmark(false);
         setOnlyHd(false);
@@ -143,7 +140,7 @@ public final class SelectedFilter extends SelectedFilterProps {
     private void initFilter() {
         pause.setOnFinished(event -> reportFilterChange());
         pause.setDuration(Duration.millis(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getValue()));
-        filterWaitTime.addListener((observable, oldValue, newValue) -> {
+        ProgConfig.SYSTEM_FILTER_WAIT_TIME.addListener((observable, oldValue, newValue) -> {
             PDebugLog.sysLog("SYSTEM_FILTER_WAIT_TIME: " + ProgConfig.SYSTEM_FILTER_WAIT_TIME.getValue());
             pause.setDuration(Duration.millis(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getValue()));
         });
@@ -200,6 +197,9 @@ public final class SelectedFilter extends SelectedFilterProps {
 
         themeTitleVisProperty().addListener(l -> setFilterChange());
         themeTitleProperty().addListener(l -> {
+//            System.out.println("themeTitle: ");
+//            System.out.println(themeTitleProperty().toString());
+
             setTxtFilterChange();
         });
 

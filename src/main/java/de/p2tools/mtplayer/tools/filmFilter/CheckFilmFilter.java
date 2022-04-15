@@ -1,6 +1,6 @@
 /*
- * MTPlayer Copyright (C) 2017 W. Xaver W.Xaver[at]googlemail.com
- * https://www.p2tools.de
+ * P2tools Copyright (C) 2022 W. Xaver W.Xaver[at]googlemail.com
+ * https://www.p2tools.de/
  *
  * This program is free software: you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation, either version 3 of the
@@ -14,16 +14,15 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.tools.filmListFilter;
 
-import de.p2tools.mtplayer.controller.data.abo.AboData;
+package de.p2tools.mtplayer.tools.filmFilter;
+
 import de.p2tools.mtplayer.controller.data.film.FilmData;
 import de.p2tools.mtplayer.controller.data.film.FilmDataXml;
-import de.p2tools.mtplayer.tools.storedFilter.Filter;
 
 import java.util.regex.Pattern;
 
-public class FilmFilter {
+public class CheckFilmFilter {
 
     public static final String FILTER_SHOW_DATE_ALL = "";
     public static final int FILTER_DURATION_MIN_MINUTE = 0;
@@ -34,110 +33,7 @@ public class FilmFilter {
     public static final int FILTER_TIME_RANGE_MIN_VALUE = 0;
     public static final int FILTER_TIME_RANGE_MAX_VALUE = 50;
 
-    public static boolean aboExistsAlready(AboData aboExits, AboData checkAbo) {
-        // prüfen ob "aboExistiert" das "aboPrüfen" mit abdeckt, also die gleichen (oder mehr)
-        // Filme findet, dann wäre das neue Abo hinfällig
-
-        if (!checkAboExistArr(aboExits.getChannel(), checkAbo.getChannel(), true)) {
-            return false;
-        }
-
-        if (!checkAboExistArr(aboExits.getTheme(), checkAbo.getTheme(), true)) {
-            return false;
-        }
-
-        if (!checkAboExistArr(aboExits.getTitle(), checkAbo.getTitle(), true)) {
-            return false;
-        }
-
-        if (!checkAboExistArr(aboExits.getThemeTitle(), checkAbo.getThemeTitle(), true)) {
-            return false;
-        }
-
-        if (!checkAboExistArr(aboExits.getSomewhere(), checkAbo.getSomewhere(), true)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    private static boolean checkAboExistArr(String aboExist, String aboCheck, boolean arr) {
-        // da wird man immer eine Variante bauen können, die Filme eines bestehenden Abos
-        // mit abdeckt -> nur eine einfache offensichtliche Prüfung
-
-        aboCheck = aboCheck.trim();
-        aboExist = aboExist.trim();
-
-        if (aboCheck.isEmpty() && aboExist.isEmpty()) {
-            return true;
-        }
-
-        if (aboCheck.toLowerCase().equals(aboExist.toLowerCase())) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Abo und Blacklist prüfen
-     *
-     * @param sender
-     * @param theme
-     * @param themeTitle
-     * @param title
-     * @param somewhere
-     * @param searchLengthMinute_min
-     * @param searchLengthMinute_max
-     * @param film
-     * @param withLength
-     * @return
-     */
-    public static boolean checkFilmWithFilter(Filter sender,
-                                              Filter theme,
-                                              Filter themeTitle,
-                                              Filter title,
-                                              Filter somewhere,
-
-                                              int timeRange,
-                                              int searchLengthMinute_min,
-                                              int searchLengthMinute_max,
-
-                                              FilmData film,
-                                              boolean withLength) {
-
-
-        // geht am schnellsten
-        if (timeRange != FilmFilter.FILTER_TIME_RANGE_ALL_VALUE && !checkMaxDays(timeRange, film)) {
-            return false;
-        }
-
-        if (withLength && !checkLength(searchLengthMinute_min, searchLengthMinute_max, film.getDurationMinute())) {
-            return false;
-        }
-
-        // brauchen länger
-        if (!sender.empty && !checkChannelSmart(sender, film)) {
-            return false;
-        }
-
-        if (!theme.empty && !checkTheme(theme, film)) {
-            return false;
-        }
-
-        if (!themeTitle.empty && !checkThemeTitle(themeTitle, film)) {
-            return false;
-        }
-
-        if (!title.empty && !checkTitle(title, film)) {
-            return false;
-        }
-
-        if (!somewhere.empty && !checkSomewhere(somewhere, film)) {
-            return false;
-        }
-
-        return true;
+    private CheckFilmFilter() {
     }
 
     public static boolean checkChannelSmart(Filter sender, FilmData film) {
@@ -204,10 +100,10 @@ public class FilmFilter {
         return true;
     }
 
-    private static boolean checkMaxDays(int maxDays, FilmData film) {
+    public static boolean checkMaxDays(int maxDays, FilmData film) {
         long days = 0;
         try {
-            if (maxDays == FilmFilter.FILTER_TIME_RANGE_ALL_VALUE) {
+            if (maxDays == FILTER_TIME_RANGE_ALL_VALUE) {
                 days = 0;
             } else {
                 final long max = 1000L * 60L * 60L * 24L * maxDays;

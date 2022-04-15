@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
+import de.p2tools.mtplayer.tools.filmFilter.FilmFilter;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PSeparatorComboBox;
 import javafx.geometry.Pos;
@@ -38,7 +38,7 @@ public class FilmFilterDialog extends PDialogExtra {
     private final Button btnOk = new Button("_Ok");
     private final Button btnClearFilter = new Button("Filter löschen");
 
-    private final TableView<SelectedFilter> tableView = new TableView<>();
+    private final TableView<FilmFilter> tableView = new TableView<>();
     private final ProgData progData;
 
     private FilmFilterDialog(ProgData progData) {
@@ -63,7 +63,7 @@ public class FilmFilterDialog extends PDialogExtra {
         addAnyButton(btnClearFilter);
         btnClearFilter.setTooltip(new Tooltip("Der Filter (nicht das Filterprofil) wird gelöscht"));
         btnClearFilter.setOnAction(a -> {
-            progData.storedFilters.clearFilter();
+            progData.actFilmFilterWorker.clearFilter();
             tableView.getSelectionModel().clearSelection();
         });
 
@@ -75,15 +75,15 @@ public class FilmFilterDialog extends PDialogExtra {
         VBox.setVgrow(tableView, Priority.ALWAYS);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tableView.getSelectionModel().selectedItemProperty().addListener((u, o, n) -> {
-            SelectedFilter selectedFilter = n;
+            FilmFilter filmFilter = n;
             if (n != null) {
-                progData.storedFilters.setActFilterSettings(n);
+                progData.actFilmFilterWorker.setActFilterSettings(n);
             }
         });
 
-        tableView.setRowFactory(param -> new TableRow<SelectedFilter>() {
+        tableView.setRowFactory(param -> new TableRow<FilmFilter>() {
             @Override
-            protected void updateItem(SelectedFilter item, boolean empty) {
+            protected void updateItem(FilmFilter item, boolean empty) {
                 super.updateItem(item, empty);
                 if (!empty) {
                     if (PSeparatorComboBox.isSeparator(item.toString())) {
@@ -98,11 +98,11 @@ public class FilmFilterDialog extends PDialogExtra {
         });
 
 
-        final TableColumn<SelectedFilter, String> nameColumn = new TableColumn<>("Name");
+        final TableColumn<FilmFilter, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         nameColumn.setCellFactory(cellFactory);
         tableView.getColumns().add(nameColumn);
-        tableView.setItems(progData.storedFilters.getStoredFilterList());
+        tableView.setItems(progData.actFilmFilterWorker.getStoredFilterList());
 
     }
 
@@ -120,10 +120,10 @@ public class FilmFilterDialog extends PDialogExtra {
         }
     }
 
-    private Callback<TableColumn<SelectedFilter, String>, TableCell<SelectedFilter, String>> cellFactory
-            = (final TableColumn<SelectedFilter, String> param) -> {
+    private Callback<TableColumn<FilmFilter, String>, TableCell<FilmFilter, String>> cellFactory
+            = (final TableColumn<FilmFilter, String> param) -> {
 
-        final TableCell<SelectedFilter, String> cell = new TableCell<>() {
+        final TableCell<FilmFilter, String> cell = new TableCell<>() {
 
             @Override
             public void updateItem(String item, boolean empty) {
@@ -135,12 +135,12 @@ public class FilmFilterDialog extends PDialogExtra {
                     return;
                 }
 
-                SelectedFilter selectedFilter = getTableView().getItems().get(getIndex());
+                FilmFilter filmFilter = getTableView().getItems().get(getIndex());
                 HBox hBox = new HBox();
-                Label lbl = new Label(selectedFilter.getName());
+                Label lbl = new Label(filmFilter.getName());
                 hBox.getChildren().add(lbl);
                 setGraphic(hBox);
-                if (PSeparatorComboBox.isSeparator(selectedFilter.toString())) {
+                if (PSeparatorComboBox.isSeparator(filmFilter.toString())) {
                     hBox.setAlignment(Pos.CENTER);
                 }
             }

@@ -23,7 +23,7 @@ import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.history.HistoryData;
 import de.p2tools.mtplayer.gui.mediaConfig.SearchPredicateWorker;
 import de.p2tools.mtplayer.gui.tools.Listener;
-import de.p2tools.mtplayer.tools.storedFilter.FilterCheckRegEx;
+import de.p2tools.mtplayer.tools.filmFilter.FilterCheckRegEx;
 import de.p2tools.p2Lib.guiTools.PGuiTools;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;

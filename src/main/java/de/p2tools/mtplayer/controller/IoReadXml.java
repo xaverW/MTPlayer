@@ -31,10 +31,9 @@ import de.p2tools.mtplayer.controller.data.download.DownloadFieldNames;
 import de.p2tools.mtplayer.controller.data.film.FilmData;
 import de.p2tools.mtplayer.controller.filmlist.filmlistUrls.FilmlistUrlData;
 import de.p2tools.mtplayer.controller.mediaDb.MediaCollectionData;
-import de.p2tools.mtplayer.tools.storedFilter.FilterToXml;
-import de.p2tools.mtplayer.tools.storedFilter.ProgInitFilter;
-import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
-import de.p2tools.mtplayer.tools.storedFilter.SelectedFilterFactory;
+import de.p2tools.mtplayer.tools.filmFilter.FilmFilter;
+import de.p2tools.mtplayer.tools.filmFilter.FilmFilterFactory;
+import de.p2tools.mtplayer.tools.filmFilter.FilmFilterToXml;
 import de.p2tools.p2Lib.configFile.config.Config;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -154,19 +153,19 @@ public class IoReadXml implements AutoCloseable {
                                 }
                                 break;
 
-                            case FilterToXml.TAG:
+                            case FilmFilterToXml.TAG:
                                 // Filter
-                                final SelectedFilter sf = new SelectedFilter();
-                                final String[] ar = FilterToXml.getEmptyArray();
-                                if (get(parser, FilterToXml.TAG, FilterToXml.getXmlArray(), ar)) {
-                                    FilterToXml.setValueArray(sf, ar);
+                                final FilmFilter sf = new FilmFilter();
+                                final String[] ar = FilmFilterToXml.getEmptyArray();
+                                if (get(parser, FilmFilterToXml.TAG, FilmFilterToXml.getXmlArray(), ar)) {
+                                    FilmFilterToXml.setValueArray(sf, ar);
                                     if (filtercount == 0) {
                                         // damit das nicht schon gemeldet wird
-                                        this.progData.storedFilters.getActFilterSettings().setReportChange(false);
-                                        SelectedFilterFactory.copyFilter(sf, this.progData.storedFilters.getActFilterSettings());
-                                        this.progData.storedFilters.getActFilterSettings().setReportChange(true);
+                                        this.progData.actFilmFilterWorker.getActFilterSettings().setReportChange(false);
+                                        sf.copyTo(this.progData.actFilmFilterWorker.getActFilterSettings());
+                                        this.progData.actFilmFilterWorker.getActFilterSettings().setReportChange(true);
                                     } else {
-                                        this.progData.storedFilters.getStoredFilterList().add(sf);
+                                        this.progData.actFilmFilterWorker.getStoredFilterList().add(sf);
                                     }
                                     ++filtercount;
                                 }
@@ -365,8 +364,8 @@ public class IoReadXml implements AutoCloseable {
         progData.aboList.sort();
 
         // ListeFilmUpdateServer aufbauen
-        if (progData.storedFilters.getStoredFilterList().isEmpty()) {
-            ProgInitFilter.setProgInitFilter();
+        if (progData.actFilmFilterWorker.getStoredFilterList().isEmpty()) {
+            FilmFilterFactory.addStandardFilter();
         }
     }
 

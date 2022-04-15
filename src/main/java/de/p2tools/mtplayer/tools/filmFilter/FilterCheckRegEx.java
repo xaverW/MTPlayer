@@ -15,7 +15,7 @@
  */
 
 
-package de.p2tools.mtplayer.tools.storedFilter;
+package de.p2tools.mtplayer.tools.filmFilter;
 
 import de.p2tools.mtplayer.controller.config.ProgColorList;
 import javafx.application.Platform;

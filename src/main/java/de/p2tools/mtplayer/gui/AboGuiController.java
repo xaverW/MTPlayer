@@ -110,12 +110,12 @@ public class AboGuiController extends AnchorPane {
 
     public void setFilmFilterFromAbo() {
         Optional<AboData> abo = getSel();
-        progData.storedFilters.loadStoredFilterFromAbo(abo);
+        progData.actFilmFilterWorker.loadStoredFilterFromAbo(abo);
     }
 
     public void setAboFromFilmFilter() {
         Optional<AboData> abo = getSel();
-        progData.aboList.changeAboFromFilter(abo, progData.storedFilters.getActFilterSettings());
+        progData.aboList.changeAboFromFilter(abo, progData.actFilmFilterWorker.getActFilterSettings());
     }
 
     public void setAboActive(boolean on) {

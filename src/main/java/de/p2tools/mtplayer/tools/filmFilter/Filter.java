@@ -15,7 +15,7 @@
  */
 
 
-package de.p2tools.mtplayer.tools.storedFilter;
+package de.p2tools.mtplayer.tools.filmFilter;
 
 import java.util.regex.Pattern;
 

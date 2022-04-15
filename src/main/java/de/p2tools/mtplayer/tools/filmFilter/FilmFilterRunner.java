@@ -15,29 +15,31 @@
  */
 
 
-package de.p2tools.mtplayer.tools.filmListFilter;
+package de.p2tools.mtplayer.tools.filmFilter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
 import de.p2tools.mtplayer.gui.tools.Listener;
-import de.p2tools.mtplayer.tools.storedFilter.PredicateFactory;
 import javafx.application.Platform;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class FilmListFilter {
+public class FilmFilterRunner {
     private final ProgData progData;
+    private static final AtomicBoolean search = new AtomicBoolean(false);
+    private static final AtomicBoolean research = new AtomicBoolean(false);
+    int count = 0;
 
     /**
      * hier wird das Filtern der Filmliste "angestoßen"
      *
      * @param progData
      */
-    public FilmListFilter(ProgData progData) {
+    public FilmFilterRunner(ProgData progData) {
         this.progData = progData;
 
-        progData.storedFilters.filterChangeProperty().addListener((observable, oldValue, newValue) -> filter()); // Filmfilter (User) haben sich geändert
+        progData.actFilmFilterWorker.filterChangeProperty().addListener((observable, oldValue, newValue) -> filter()); // Filmfilter (User) haben sich geändert
         progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> filterList());
         progData.loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
             @Override
@@ -46,13 +48,13 @@ public class FilmListFilter {
             }
         });
 
-        Listener.addListener(new Listener(Listener.EVENT_BLACKLIST_CHANGED, FilmListFilter.class.getSimpleName()) {
+        Listener.addListener(new Listener(Listener.EVENT_BLACKLIST_CHANGED, FilmFilterRunner.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 filterList();
             }
         });
-        Listener.addListener(new Listener(Listener.EVENT_DIACRITIC_CHANGED, FilmListFilter.class.getSimpleName()) {
+        Listener.addListener(new Listener(Listener.EVENT_DIACRITIC_CHANGED, FilmFilterRunner.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 filterList();
@@ -64,9 +66,6 @@ public class FilmListFilter {
         Platform.runLater(() -> filterList());
     }
 
-    private static final AtomicBoolean search = new AtomicBoolean(false);
-    private static final AtomicBoolean research = new AtomicBoolean(false);
-
     private void filterList() {
         // ist etwas "umständlich", scheint aber am flüssigsten zu laufen
         if (!search.getAndSet(true)) {
@@ -74,8 +73,11 @@ public class FilmListFilter {
 //            Thread th = new Thread(() -> {
             try {
                 Platform.runLater(() -> {
+                    System.out.println("========================================");
+                    System.out.println("  ======== Filter: " + count++ + " ========");
+                    System.out.println("========================================");
                     progData.filmlistFiltered.filteredListSetPred(
-                            PredicateFactory.getPredicate(progData.storedFilters.getActFilterSettings()));
+                            PredicateFactory.getPredicate(progData.actFilmFilterWorker.getActFilterSettings()));
                     search.set(false);
                     if (research.get()) {
                         filterList();

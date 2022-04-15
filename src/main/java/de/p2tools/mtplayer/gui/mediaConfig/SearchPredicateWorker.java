@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.mediaConfig;
 
 import de.p2tools.mtplayer.controller.history.HistoryData;
 import de.p2tools.mtplayer.controller.mediaDb.MediaData;
-import de.p2tools.mtplayer.tools.storedFilter.Filter;
+import de.p2tools.mtplayer.tools.filmFilter.Filter;
 
 import java.util.function.Predicate;
 import java.util.regex.Pattern;

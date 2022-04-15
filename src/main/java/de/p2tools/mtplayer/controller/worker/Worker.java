@@ -22,8 +22,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
 import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
-import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
-import de.p2tools.mtplayer.tools.storedFilter.SelectedFilterFactory;
+import de.p2tools.mtplayer.tools.filmFilter.FilmFilter;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
@@ -40,7 +39,7 @@ public class Worker {
     private ObservableList<String> channelsForAbosList = FXCollections.observableArrayList("");
     private ObservableList<String> allAboNamesList = FXCollections.observableArrayList("");
 
-    final SelectedFilter sfTemp = new SelectedFilter();
+    final FilmFilter sfTemp = new FilmFilter();
     String downloadFilterChannel = ProgConfig.FILTER_DOWNLOAD_CHANNEL.get();
     String downloadFilterAbo = ProgConfig.FILTER_DOWNLOAD_ABO.get();
     String aboFilterChannel = ProgConfig.FILTER_ABO_CHANNEL.getValueSafe();
@@ -103,14 +102,16 @@ public class Worker {
     }
 
     private void saveFilter() {
-        SelectedFilterFactory.copyFilter(progData.storedFilters.getActFilterSettings(), sfTemp);
+        progData.actFilmFilterWorker.getActFilterSettings().copyTo(sfTemp);
+//        SelectedFilmFilterFactory.copyFilter(progData.storedFilters.getActFilterSettings(), sfTemp);
         downloadFilterChannel = ProgConfig.FILTER_DOWNLOAD_CHANNEL.getValueSafe();
         downloadFilterAbo = ProgConfig.FILTER_DOWNLOAD_ABO.getValueSafe();
         aboFilterChannel = ProgConfig.FILTER_ABO_CHANNEL.getValueSafe();
     }
 
     private void resetFilter() {
-        SelectedFilterFactory.copyFilter(sfTemp, progData.storedFilters.getActFilterSettings());
+        sfTemp.copyTo(progData.actFilmFilterWorker.getActFilterSettings());
+//        SelectedFilmFilterFactory.copyFilter(sfTemp, progData.storedFilters.getActFilterSettings());
         ProgConfig.FILTER_DOWNLOAD_CHANNEL.setValue(downloadFilterChannel);
         ProgConfig.FILTER_DOWNLOAD_ABO.setValue(downloadFilterAbo); // todo ???
         ProgConfig.FILTER_ABO_CHANNEL.setValue(aboFilterChannel);
@@ -152,7 +153,7 @@ public class Worker {
         // alle Sender laden
         allChannelList.setAll(Arrays.asList(progData.filmlist.sender));
         // und jetzt noch die Themen für den Sender des aktuellen Filter laden
-        createThemeList(progData.storedFilters.getActFilterSettings().getChannel());
+        createThemeList(progData.actFilmFilterWorker.getActFilterSettings().getChannel());
     }
 
     public void createThemeList(String sender) {
@@ -183,11 +184,11 @@ public class Worker {
 
         Platform.runLater(() -> {
             saveFilter();
-            this.progData.storedFilters.getActFilterSettings().setReportChange(false);
+            this.progData.actFilmFilterWorker.getActFilterSettings().setReportChange(false);
             themeForChannelList.setAll(theme);
-            this.progData.storedFilters.getActFilterSettings().setReportChange(true);
+            this.progData.actFilmFilterWorker.getActFilterSettings().setReportChange(true);
             resetFilter();
-            this.progData.storedFilters.initFilter();
+            this.progData.actFilmFilterWorker.initFilter();
         });
         PDuration.counterStop("createThemeList");
     }

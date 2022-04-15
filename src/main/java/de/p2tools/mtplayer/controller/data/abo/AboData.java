@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.controller.data.abo;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.data.film.FilmData;
-import de.p2tools.mtplayer.tools.storedFilter.Filter;
+import de.p2tools.mtplayer.tools.filmFilter.Filter;
 
 public class AboData extends AboDataXml {
     public int nr;

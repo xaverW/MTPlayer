@@ -25,7 +25,7 @@ import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerFilmlistLoad
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.mtplayer.gui.tools.table.Table;
-import de.p2tools.mtplayer.tools.filmListFilter.FilmlistBlackFilterCountHits;
+import de.p2tools.mtplayer.tools.filmFilter.BlacklistFilterFactory;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
@@ -211,7 +211,7 @@ public class BlackPane {
                 "Für jeden Eintrag in der Blacklist wird gezählt,\n" +
                 "wieviele Filme damit geblockt werden."));
         btnCountHits.setOnAction(a -> {
-            FilmlistBlackFilterCountHits.countHits(true);
+            BlacklistFilterFactory.countHits(true);
             Table.refresh_table(tableView);
         });
 

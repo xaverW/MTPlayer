@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.tools.table;
 import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
-import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
+import de.p2tools.mtplayer.tools.filmFilter.CheckFilmFilter;
 import de.p2tools.p2Lib.guiTools.PCheckBoxCell;
 import de.p2tools.p2Lib.tools.date.PDate;
 import javafx.scene.control.TableCell;
@@ -217,7 +217,7 @@ public class TableAbo {
                     return;
                 }
 
-                if (item == FilmFilter.FILTER_DURATION_MAX_MINUTE) {
+                if (item == CheckFilmFilter.FILTER_DURATION_MAX_MINUTE) {
                     setText("alles");
                 } else {
                     setText(item + "");

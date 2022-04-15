@@ -14,12 +14,11 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.tools.storedFilter;
+package de.p2tools.mtplayer.tools.filmFilter;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
-import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
 
-public class FilterToXml {
+public class FilmFilterToXml {
 
     public static final String SELECTED_FILTER_NAME = "Name";
     public static final String SELECTED_FILTER_CHANNEL_VIS = "Sender-vis";
@@ -177,7 +176,7 @@ public class FilterToXml {
         return array;
     }
 
-    public static void setValueArray(SelectedFilter sf, String[] array) {
+    public static void setValueArray(FilmFilter sf, String[] array) {
         // fürs Einselesen aus dem Configfile
 
         sf.setName(array[FILTER_NAME]);
@@ -225,64 +224,64 @@ public class FilterToXml {
         parsInt(sf, array);
     }
 
-    private static void parsInt(SelectedFilter sf, String[] array) {
+    private static void parsInt(FilmFilter sf, String[] array) {
         // filter days
         if (array[FILTER_TIME_RANGE].equals(ProgConst.FILTER_ALL)) {
-            sf.setTimeRange(FilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
+            sf.setTimeRange(CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
         } else {
             try {
                 sf.setTimeRange(Integer.parseInt(array[FILTER_TIME_RANGE]));
             } catch (Exception ex) {
-                sf.setTimeRange(FilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
+                sf.setTimeRange(CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
             }
         }
 
         // filter minDuration
         if (array[FILTER_MIN_DUR].equals(ProgConst.FILTER_ALL)) {
-            sf.setMinDur(FilmFilter.FILTER_DURATION_MIN_MINUTE);
+            sf.setMinDur(CheckFilmFilter.FILTER_DURATION_MIN_MINUTE);
         } else {
             try {
                 sf.setMinDur(Integer.parseInt(array[FILTER_MIN_DUR]));
             } catch (Exception ex) {
-                sf.setMinDur(FilmFilter.FILTER_DURATION_MIN_MINUTE);
+                sf.setMinDur(CheckFilmFilter.FILTER_DURATION_MIN_MINUTE);
             }
         }
 
         // filter maxDuration
         if (array[FILTER_MAX_DUR].equals(ProgConst.FILTER_ALL)) {
-            sf.setMaxDur(FilmFilter.FILTER_DURATION_MAX_MINUTE);
+            sf.setMaxDur(CheckFilmFilter.FILTER_DURATION_MAX_MINUTE);
         } else {
             try {
                 sf.setMaxDur(Integer.parseInt(array[FILTER_MAX_DUR]));
             } catch (Exception ex) {
-                sf.setMaxDur(FilmFilter.FILTER_DURATION_MAX_MINUTE);
+                sf.setMaxDur(CheckFilmFilter.FILTER_DURATION_MAX_MINUTE);
             }
         }
 
         // filter minTime
         if (array[FILTER_MIN_TIME].equals(ProgConst.FILTER_ALL)) {
-            sf.setMinTime(FilmFilter.FILTER_FILMTIME_MIN_SEC);
+            sf.setMinTime(CheckFilmFilter.FILTER_FILMTIME_MIN_SEC);
         } else {
             try {
                 sf.setMinTime(Integer.parseInt(array[FILTER_MIN_TIME]));
             } catch (Exception ex) {
-                sf.setMinTime(FilmFilter.FILTER_FILMTIME_MIN_SEC);
+                sf.setMinTime(CheckFilmFilter.FILTER_FILMTIME_MIN_SEC);
             }
         }
 
         // filter maxTime
         if (array[FILTER_MAX_TIME].equals(ProgConst.FILTER_ALL)) {
-            sf.setMaxTime(FilmFilter.FILTER_FILMTIME_MAX_SEC);
+            sf.setMaxTime(CheckFilmFilter.FILTER_FILMTIME_MAX_SEC);
         } else {
             try {
                 sf.setMaxTime(Integer.parseInt(array[FILTER_MAX_TIME]));
             } catch (Exception ex) {
-                sf.setMaxTime(FilmFilter.FILTER_FILMTIME_MAX_SEC);
+                sf.setMaxTime(CheckFilmFilter.FILTER_FILMTIME_MAX_SEC);
             }
         }
     }
 
-    public static String[] getValueArray(SelectedFilter sf) {
+    public static String[] getValueArray(FilmFilter sf) {
 // erstellt das Array der Filter fürs Schreiben ins Configfile
         final String[] array = getEmptyArray();
 
@@ -303,19 +302,19 @@ public class FilterToXml {
         array[FILTER_URL] = sf.getUrl();
 
         array[FILTER_TIME_RANGE_VIS] = String.valueOf(sf.isTimeRangeVis());
-        array[FILTER_TIME_RANGE] = sf.getTimeRange() == FilmFilter.FILTER_TIME_RANGE_ALL_VALUE ? ProgConst.FILTER_ALL : String.valueOf(sf.getTimeRange());
+        array[FILTER_TIME_RANGE] = sf.getTimeRange() == CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE ? ProgConst.FILTER_ALL : String.valueOf(sf.getTimeRange());
 
         array[FILTER_MIN_MAX_DUR_VIS] = String.valueOf(sf.isMinMaxDurVis());
-        array[FILTER_MIN_DUR] = sf.getMinDur() == FilmFilter.FILTER_DURATION_MIN_MINUTE ?
+        array[FILTER_MIN_DUR] = sf.getMinDur() == CheckFilmFilter.FILTER_DURATION_MIN_MINUTE ?
                 ProgConst.FILTER_ALL : String.valueOf(sf.getMinDur());
-        array[FILTER_MAX_DUR] = sf.getMaxDur() == FilmFilter.FILTER_DURATION_MAX_MINUTE ?
+        array[FILTER_MAX_DUR] = sf.getMaxDur() == CheckFilmFilter.FILTER_DURATION_MAX_MINUTE ?
                 ProgConst.FILTER_ALL : String.valueOf(sf.getMaxDur());
 
         array[FILTER_MIN_MAX_TIME_VIS] = String.valueOf(sf.isMinMaxTimeVis());
         array[FILTER_MIN_MAX_TIME_ON] = String.valueOf(sf.isMinMaxTimeInvert());
-        array[FILTER_MIN_TIME] = sf.getMinTime() == FilmFilter.FILTER_FILMTIME_MIN_SEC ?
+        array[FILTER_MIN_TIME] = sf.getMinTime() == CheckFilmFilter.FILTER_FILMTIME_MIN_SEC ?
                 ProgConst.FILTER_ALL : String.valueOf(sf.getMinTime());
-        array[FILTER_MAX_TIME] = sf.getMaxTime() == FilmFilter.FILTER_FILMTIME_MAX_SEC ?
+        array[FILTER_MAX_TIME] = sf.getMaxTime() == CheckFilmFilter.FILTER_FILMTIME_MAX_SEC ?
                 ProgConst.FILTER_ALL : String.valueOf(sf.getMaxTime());
 
         array[FILTER_SHOW_DATE_VIS] = String.valueOf(sf.isShowDateVis());

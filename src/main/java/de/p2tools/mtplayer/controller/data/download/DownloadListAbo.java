@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
-import de.p2tools.mtplayer.tools.filmListFilter.FilmlistBlackFilter;
+import de.p2tools.mtplayer.tools.filmFilter.BlacklistFilterFactory;
 import de.p2tools.p2Lib.tools.date.PDate;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import javafx.application.Platform;
@@ -112,7 +112,7 @@ public class DownloadListAbo {
                 return;
             }
 
-            if (checkWithBlackList && !FilmlistBlackFilter.checkBlacklistForDownloads(film)) {
+            if (checkWithBlackList && !BlacklistFilterFactory.checkBlacklistForDownloads(film)) {
                 // Blacklist auch bei Abos anwenden und Film wird blockiert
                 return;
             }

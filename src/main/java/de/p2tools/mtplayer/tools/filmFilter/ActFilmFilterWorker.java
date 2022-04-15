@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.tools.storedFilter;
+package de.p2tools.mtplayer.tools.filmFilter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
@@ -31,7 +31,7 @@ import javafx.collections.ObservableList;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public final class StoredFilters {
+public final class ActFilmFilterWorker {
 
     private final ProgData progData;
 
@@ -44,43 +44,49 @@ public final class StoredFilters {
 
     // ist der aktuell angezeigte Filter
     public static final String SELECTED_FILTER_NAME = "aktuelle Einstellung"; // dient nur der Info im Config-File
-    private SelectedFilter actFilterSettings = new SelectedFilter(SELECTED_FILTER_NAME); // ist der "aktuelle" Filter im Programm
+    private FilmFilter actFilterSettings = new FilmFilter(SELECTED_FILTER_NAME); // ist der "aktuelle" Filter im Programm
+    private FilmFilter oldActFilterSettings = new FilmFilter(SELECTED_FILTER_NAME); // ist der "aktuelle" Filter im Programm
 
     // ist die Liste der gespeicherten Filter
-    private final SelectedFilterList selectedFilterList = new SelectedFilterList();
+    private final FilmFilterList filmFilterList = new FilmFilterList();
 
     // ist die Liste der zuletzt verwendeten Filter
-    private final ObservableList<SelectedFilter> selectedFilterBackward =
-            FXCollections.observableList(new ArrayList<>(), (SelectedFilter tp) -> new Observable[]{tp.nameProperty()});
-    private final ObservableList<SelectedFilter> selectedFilterForward =
-            FXCollections.observableList(new ArrayList<>(), (SelectedFilter tp) -> new Observable[]{tp.nameProperty()});
+    private final ObservableList<FilmFilter> filmFilterBackward =
+            FXCollections.observableList(new ArrayList<>(), (FilmFilter tp) -> new Observable[]{tp.nameProperty()});
+    private final ObservableList<FilmFilter> filmFilterForward =
+            FXCollections.observableList(new ArrayList<>(), (FilmFilter tp) -> new Observable[]{tp.nameProperty()});
 
     private boolean thema = false, themaTitle = false, title = false, somewhere = false, url = false;
 
-    public StoredFilters(ProgData progData) {
+    private final ObservableList<String> lastThemaTitleFilter = FXCollections.observableArrayList("");
+    private final ObservableList<String> lastTitleFilter = FXCollections.observableArrayList("");
+    private final ObservableList<String> lastSomewhereFilter = FXCollections.observableArrayList("");
+    private final ObservableList<String> lastUrlFilter = FXCollections.observableArrayList("");
+
+
+    public ActFilmFilterWorker(ProgData progData) {
         this.progData = progData;
 
         filterChangeListener = (observable, oldValue, newValue) -> {
             postFilterChange();
-            selectedFilterForward.clear();
+            filmFilterForward.clear();
         };
         blacklistChangeListener = (observable, oldValue, newValue) -> {
             postBlacklistChange();
-            selectedFilterForward.clear();
+            filmFilterForward.clear();
         };
         actFilterSettings.filterChangeProperty().addListener(filterChangeListener); // wenn der User den Filter ändert
         actFilterSettings.blacklistChangeProperty().addListener(blacklistChangeListener); // wenn der User die Blackl. ein-/ausschaltet
 
-//        addBackward();
-        selectedFilterBackward.addListener((ListChangeListener<SelectedFilter>) c -> {
-            if (selectedFilterBackward.size() > 1) {
+        filmFilterBackward.addListener((ListChangeListener<FilmFilter>) c -> {
+            if (filmFilterBackward.size() > 1) {
                 backward.setValue(true);
             } else {
                 backward.setValue(false);
             }
         });
-        selectedFilterForward.addListener((ListChangeListener<SelectedFilter>) c -> {
-            if (selectedFilterForward.size() > 0) {
+        filmFilterForward.addListener((ListChangeListener<FilmFilter>) c -> {
+            if (filmFilterForward.size() > 0) {
                 forward.setValue(true);
             } else {
                 forward.setValue(false);
@@ -109,16 +115,16 @@ public final class StoredFilters {
      *
      * @return
      */
-    public SelectedFilter getActFilterSettings() {
+    public FilmFilter getActFilterSettings() {
         return actFilterSettings;
     }
 
     /**
-     * setzt die aktuellen Filtereinstellungen aus einen Filter (gespeicherten Filter)
+     * setzt die aktuellen Filtereinstellungen aus einem Filter (gespeicherten Filter)
      *
      * @param sf
      */
-    public synchronized void setActFilterSettings(SelectedFilter sf) {
+    public synchronized void setActFilterSettings(FilmFilter sf) {
         if (sf == null) {
             return;
         }
@@ -127,7 +133,7 @@ public final class StoredFilters {
         boolean black = actFilterSettings.blacklistOnProperty().getValue();
         boolean blackOnly = actFilterSettings.blacklistOnlyProperty().getValue();
 
-        SelectedFilterFactory.copyFilter(sf, actFilterSettings);
+        sf.copyTo(actFilterSettings);
         if (actFilterSettings.blacklistOnProperty().getValue() == black &&
                 actFilterSettings.blacklistOnlyProperty().getValue() == blackOnly) {
             // Black hat sich nicht geändert
@@ -145,8 +151,8 @@ public final class StoredFilters {
      *
      * @return
      */
-    public SelectedFilterList getStoredFilterList() {
-        return selectedFilterList;
+    public FilmFilterList getStoredFilterList() {
+        return filmFilterList;
     }
 
     /**
@@ -155,12 +161,10 @@ public final class StoredFilters {
      * @return
      */
     public String addNewStoredFilter(String name) {
-        final SelectedFilter sf = new SelectedFilter();
-        SelectedFilterFactory.copyFilter(actFilterSettings, sf);
-
+        final FilmFilter sf = new FilmFilter();
+        actFilterSettings.copyTo(sf);
         sf.setName(name.isEmpty() ? getNextName() : name);
-        selectedFilterList.add(sf);
-
+        filmFilterList.add(sf);
         return sf.getName();
     }
 
@@ -171,13 +175,12 @@ public final class StoredFilters {
         while (!found) {
 
             final String name = "Filter " + id;
-            if (!selectedFilterList.stream().filter(f -> name.equalsIgnoreCase(f.getName())).findAny().isPresent()) {
+            if (!filmFilterList.stream().filter(f -> name.equalsIgnoreCase(f.getName())).findAny().isPresent()) {
                 ret = name;
                 found = true;
             }
             ++id;
         }
-
         return ret;
     }
 
@@ -186,7 +189,7 @@ public final class StoredFilters {
      *
      * @param sf
      */
-    public boolean removeStoredFilter(SelectedFilter sf) {
+    public boolean removeStoredFilter(FilmFilter sf) {
         if (sf == null) {
             return false;
         }
@@ -195,10 +198,9 @@ public final class StoredFilters {
                 "Soll das Filterprofil: " +
                         sf.getName() + "\n" +
                         "gelöscht werden?")) {
-            selectedFilterList.remove(sf);
+            filmFilterList.remove(sf);
             return true;
         }
-
         return false;
     }
 
@@ -209,7 +211,7 @@ public final class StoredFilters {
     public boolean removeAllStoredFilter() {
         if (PAlert.showAlertOkCancel("Löschen", "Filterprofile löschen",
                 "Sollen alle Filterprofile gelöscht werden?")) {
-            selectedFilterList.clear();
+            filmFilterList.clear();
             return true;
         }
         return false;
@@ -220,12 +222,12 @@ public final class StoredFilters {
      *
      * @param sf
      */
-    public void saveStoredFilter(SelectedFilter sf) {
+    public void saveStoredFilter(FilmFilter sf) {
         if (sf == null) {
             return;
         }
         final String name = sf.getName();
-        SelectedFilterFactory.copyFilter(actFilterSettings, sf);
+        actFilterSettings.copyTo(sf);
         sf.setName(name);
     }
 
@@ -260,7 +262,7 @@ public final class StoredFilters {
         actFilterSettings.setTimeRangeVis(true);
         actFilterSettings.setTimeRange(abo.getTimeRange());
 
-        selectedFilterForward.clear();
+        filmFilterForward.clear();
         postFilterChange();
         actFilterSettings.filterChangeProperty().addListener(filterChangeListener);
         actFilterSettings.blacklistChangeProperty().addListener(blacklistChangeListener);
@@ -276,48 +278,110 @@ public final class StoredFilters {
             actFilterSettings.clearTxtFilter();
         }
 
-        selectedFilterForward.clear();
+        filmFilterForward.clear();
         postFilterChange();
         actFilterSettings.filterChangeProperty().addListener(filterChangeListener);
         actFilterSettings.blacklistChangeProperty().addListener(blacklistChangeListener);
     }
 
     public void goBackward() {
-        if (selectedFilterBackward.size() <= 1) {
+        if (filmFilterBackward.size() <= 1) {
             // dann gibts noch keine oder ist nur die aktuelle Einstellung drin
             return;
         }
 
-        SelectedFilter sf = selectedFilterBackward.remove(selectedFilterBackward.size() - 1); // ist die aktuelle Einstellung
-        selectedFilterForward.add(sf);
-        sf = selectedFilterBackward.remove(selectedFilterBackward.size() - 1); // ist die davor
+        FilmFilter sf = filmFilterBackward.remove(filmFilterBackward.size() - 1); // ist die aktuelle Einstellung
+        filmFilterForward.add(sf);
+        sf = filmFilterBackward.remove(filmFilterBackward.size() - 1); // ist die davor
         setActFilterSettings(sf);
     }
 
     public void goForward() {
-        if (selectedFilterForward.isEmpty()) {
+        if (filmFilterForward.isEmpty()) {
             // dann gibts keine
             return;
         }
 
-        final SelectedFilter sf = selectedFilterForward.remove(selectedFilterForward.size() - 1);
+        final FilmFilter sf = filmFilterForward.remove(filmFilterForward.size() - 1);
         setActFilterSettings(sf);
     }
 
-    private void setFilterChange() {
-        this.filterChange.set(!filterChange.get());
+    public ObservableList<String> getLastThemaTitleFilter() {
+        return lastThemaTitleFilter;
     }
 
-    private void addBackward() {
-        final SelectedFilter sf = new SelectedFilter();
-        SelectedFilterFactory.copyFilter(actFilterSettings, sf);
-        if (selectedFilterBackward.isEmpty()) {
-            selectedFilterBackward.add(sf);
+    public synchronized void addLastThemeTitleFilter(String filter) {
+        addLastFilter(lastThemaTitleFilter, filter);
+    }
+
+    public ObservableList<String> getLastTitleFilter() {
+        return lastTitleFilter;
+    }
+
+    public synchronized void addLastTitleFilter(String filter) {
+        addLastFilter(lastTitleFilter, filter);
+    }
+
+    public ObservableList<String> getLastSomewhereFilter() {
+        return lastSomewhereFilter;
+    }
+
+    public synchronized void addLastSomewhereFilter(String filter) {
+        addLastFilter(lastSomewhereFilter, filter);
+    }
+
+    public ObservableList<String> getLastUrlFilter() {
+        return lastUrlFilter;
+    }
+
+    public synchronized void addLastUrlFilter(String filter) {
+        addLastFilter(lastUrlFilter, filter);
+    }
+
+    private synchronized void addLastFilter(ObservableList<String> list, String filter) {
+        if (filter.isEmpty()) {
             return;
         }
 
-        SelectedFilter sfB = selectedFilterBackward.get(selectedFilterBackward.size() - 1);
-        if (SelectedFilterFactory.compareFilterWithoutNameOfFilter(sf, sfB)) {
+        final int MAX = 5;
+        if (!list.stream().filter(f -> f.equals(filter)).findAny().isPresent()) {
+            list.add(filter);
+        }
+        while (list.size() >= MAX) {
+//            System.out.println("remove");
+            list.remove(1);
+        }
+    }
+
+    int i = 0;
+
+    private void setFilterChange() {
+//        System.out.println("============================");
+//        System.out.println("setFilterChange: " + i++);
+        addLastThemeTitleFilter(progData.actFilmFilterWorker.getActFilterSettings().getThemeTitle());
+        addLastTitleFilter(progData.actFilmFilterWorker.getActFilterSettings().getTitle());
+        addLastSomewhereFilter(progData.actFilmFilterWorker.getActFilterSettings().getSomewhere());
+        addLastUrlFilter(progData.actFilmFilterWorker.getActFilterSettings().getUrl());
+
+        //hier erst mal die actFilter vergleichen, ob geändert
+        if (oldActFilterSettings.isSame(actFilterSettings, true)) {
+//            System.out.println("====> same");
+        } else {
+            actFilterSettings.copyTo(oldActFilterSettings);
+            this.filterChange.set(!filterChange.get());
+        }
+    }
+
+    private void addBackward() {
+        final FilmFilter sf = new FilmFilter();
+        actFilterSettings.copyTo(sf);
+        if (filmFilterBackward.isEmpty()) {
+            filmFilterBackward.add(sf);
+            return;
+        }
+
+        FilmFilter sfB = filmFilterBackward.get(filmFilterBackward.size() - 1);
+        if (sf.isSame(sfB, false)) {
             // dann hat sich nichts geändert (z.B. mehrmals gelöscht)
             return;
         }
@@ -349,7 +413,7 @@ public final class StoredFilters {
         }
 
         // dann wars kein Textfilter
-        selectedFilterBackward.add(sf);
+        filmFilterBackward.add(sf);
     }
 
     private void setFalse() {
@@ -360,7 +424,7 @@ public final class StoredFilters {
         url = false;
     }
 
-    private boolean checkText(StringProperty old, StringProperty nnew, SelectedFilter oldSf, SelectedFilter newSf,
+    private boolean checkText(StringProperty old, StringProperty nnew, FilmFilter oldSf, FilmFilter newSf,
                               boolean check) {
         if (old.get().equals(nnew.get())) {
             return false;
@@ -370,7 +434,7 @@ public final class StoredFilters {
             // dann hat sich nur ein Teil geändert und wird ersetzt
             old.setValue(nnew.getValue());
         } else {
-            selectedFilterBackward.add(newSf);
+            filmFilterBackward.add(newSf);
         }
         return true;
     }

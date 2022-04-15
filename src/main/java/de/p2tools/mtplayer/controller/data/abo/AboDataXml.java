@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.controller.data.abo;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
-import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
+import de.p2tools.mtplayer.tools.filmFilter.CheckFilmFilter;
 
 public class AboDataXml extends AboDataProps {
 
@@ -61,7 +61,7 @@ public class AboDataXml extends AboDataProps {
         int max;
 
         if (arr[AboFieldNames.ABO_TIME_RANGE_NO].equals(ProgConst.FILTER_ALL)) {
-            max = FilmFilter.FILTER_TIME_RANGE_ALL_VALUE;
+            max = CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE;
             setTimeRange(max);
             return;
         }
@@ -69,7 +69,7 @@ public class AboDataXml extends AboDataProps {
         try {
             max = Integer.parseInt(arr[AboFieldNames.ABO_TIME_RANGE_NO]);
         } catch (final Exception ex) {
-            max = FilmFilter.FILTER_TIME_RANGE_ALL_VALUE;
+            max = CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE;
         }
 
         setTimeRange(max);
@@ -78,7 +78,7 @@ public class AboDataXml extends AboDataProps {
     private void setDurationMinFromXml() {
         int min;
         if (arr[AboFieldNames.ABO_MIN_DURATION_NO].equals(ProgConst.FILTER_ALL)) {
-            min = FilmFilter.FILTER_DURATION_MIN_MINUTE;
+            min = CheckFilmFilter.FILTER_DURATION_MIN_MINUTE;
             setMinDurationMinute(min);
             return;
         }
@@ -86,7 +86,7 @@ public class AboDataXml extends AboDataProps {
         try {
             min = Integer.parseInt(arr[AboFieldNames.ABO_MIN_DURATION_NO]);
         } catch (final Exception ex) {
-            min = FilmFilter.FILTER_DURATION_MIN_MINUTE;
+            min = CheckFilmFilter.FILTER_DURATION_MIN_MINUTE;
         }
         setMinDurationMinute(min);
     }
@@ -94,7 +94,7 @@ public class AboDataXml extends AboDataProps {
     private void setDurationMaxFromXml() {
         int max;
         if (arr[AboFieldNames.ABO_MAX_DURATION_NO].equals(ProgConst.FILTER_ALL)) {
-            max = FilmFilter.FILTER_DURATION_MAX_MINUTE;
+            max = CheckFilmFilter.FILTER_DURATION_MAX_MINUTE;
             setMaxDurationMinute(max);
             return;
         }
@@ -102,7 +102,7 @@ public class AboDataXml extends AboDataProps {
         try {
             max = Integer.parseInt(arr[AboFieldNames.ABO_MAX_DURATION_NO]);
         } catch (final Exception ex) {
-            max = FilmFilter.FILTER_DURATION_MAX_MINUTE;
+            max = CheckFilmFilter.FILTER_DURATION_MAX_MINUTE;
         }
         setMaxDurationMinute(max);
     }

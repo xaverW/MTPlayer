@@ -22,9 +22,9 @@ import de.p2tools.mtplayer.controller.filmlist.filmlistUrls.FilmlistUrlList;
 import de.p2tools.mtplayer.controller.starter.DownloadState;
 import de.p2tools.mtplayer.gui.tools.SetsPrograms;
 import de.p2tools.mtplayer.tools.MLBandwidthTokenBucket;
-import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
-import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
-import de.p2tools.mtplayer.tools.storedFilter.StoredFilters;
+import de.p2tools.mtplayer.tools.filmFilter.ActFilmFilterWorker;
+import de.p2tools.mtplayer.tools.filmFilter.CheckFilmFilter;
+import de.p2tools.mtplayer.tools.filmFilter.FilmFilter;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.configFile.ConfigFile;
 import de.p2tools.p2Lib.configFile.config.Config;
@@ -227,8 +227,8 @@ public class ProgConfig extends PDataProgConfig {
 
     // Gui Abo
     public static BooleanProperty ABO_SEARCH_NOW = addBool("abo-search-now", Boolean.TRUE);
-    public static IntegerProperty ABO_MINUTE_MIN_SIZE = addInt("abo-minute-min-size", FilmFilter.FILTER_DURATION_MIN_MINUTE); //Vorgabe beim Anlegen eines Abos
-    public static IntegerProperty ABO_MINUTE_MAX_SIZE = addInt("abo-minute-max-size", FilmFilter.FILTER_DURATION_MAX_MINUTE); //Vorgabe beim Anlegen eines Abos
+    public static IntegerProperty ABO_MINUTE_MIN_SIZE = addInt("abo-minute-min-size", CheckFilmFilter.FILTER_DURATION_MIN_MINUTE); //Vorgabe beim Anlegen eines Abos
+    public static IntegerProperty ABO_MINUTE_MAX_SIZE = addInt("abo-minute-max-size", CheckFilmFilter.FILTER_DURATION_MAX_MINUTE); //Vorgabe beim Anlegen eines Abos
     public static StringProperty ABO_DIALOG_EDIT_SIZE = addStr("abo-dialog-edit-size", "600:800");
     public static DoubleProperty ABO_GUI_FILTER_DIVIDER = addDouble("abo-gui-filter-divider", ProgConst.GUI_ABO_FILTER_DIVIDER_LOCATION);
     public static BooleanProperty ABO_GUI_FILTER_DIVIDER_ON = addBool("abo-gui-filter-divider-on", Boolean.TRUE);
@@ -381,10 +381,10 @@ public class ProgConfig extends PDataProgConfig {
 
         configFile.addConfigs(progData.setDataList);
 
-        final SelectedFilter akt_sf = progData.storedFilters.getActFilterSettings();//akt-Filter
-        akt_sf.setName(StoredFilters.SELECTED_FILTER_NAME);// nur zur Info im Config-File
+        final FilmFilter akt_sf = progData.actFilmFilterWorker.getActFilterSettings();//akt-Filter
+        akt_sf.setName(ActFilmFilterWorker.SELECTED_FILTER_NAME);// nur zur Info im Config-File
         configFile.addConfigs(akt_sf);
-        configFile.addConfigs(progData.storedFilters.getStoredFilterList());//Filterprofile
+        configFile.addConfigs(progData.actFilmFilterWorker.getStoredFilterList());//Filterprofile
 
         configFile.addConfigs(progData.aboList);
         configFile.addConfigs(progData.blackList);

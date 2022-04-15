@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.controller.data;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.tools.Listener;
-import de.p2tools.mtplayer.tools.filmListFilter.FilmlistBlackFilterCountHits;
+import de.p2tools.mtplayer.tools.filmFilter.BlacklistFilterFactory;
 import de.p2tools.p2Lib.configFile.pData.PDataList;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
@@ -99,13 +99,13 @@ public class BlackList extends SimpleListProperty<BlackData> implements PDataLis
     public synchronized void sortIncCounter(boolean searchHitsBefore) {
         if (searchHitsBefore) {
             // zuerst ohne Abbruch Treffer suchen
-            FilmlistBlackFilterCountHits.countHits(false);
+            BlacklistFilterFactory.countHits(false);
 
             // und dann sortieren
             Collections.sort(this, Comparator.comparingInt(BlackDataProps::getCountHits).reversed());
 
             // dann die tatsächlichen Trefferzahlen ermitteln
-            FilmlistBlackFilterCountHits.countHits(true);
+            BlacklistFilterFactory.countHits(true);
         }
 
         // und dann endgültig sortieren

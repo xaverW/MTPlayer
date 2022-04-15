@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.mtplayer.controller.data.ListePsetVorlagen;
 import de.p2tools.mtplayer.controller.data.SetDataList;
 import de.p2tools.mtplayer.gui.startDialog.StartDialogController;
-import de.p2tools.mtplayer.tools.storedFilter.ProgInitFilter;
+import de.p2tools.mtplayer.tools.filmFilter.FilmFilterFactory;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.P2LibInit;
 import de.p2tools.p2Lib.configFile.IoReadWriteStyle;
@@ -103,7 +103,7 @@ public class MTPlayer extends Application {
                 PDuration.onlyPing("Erster Start: PSet geladen");
             });
 
-            ProgInitFilter.setProgInitFilter();
+            FilmFilterFactory.addStandardFilter();
         }
     }
 

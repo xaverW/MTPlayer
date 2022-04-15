@@ -19,9 +19,8 @@ package de.p2tools.mtplayer.gui;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.MTShortcut;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
-import de.p2tools.mtplayer.tools.storedFilter.BookmarkFilter;
-import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
-import de.p2tools.mtplayer.tools.storedFilter.SelectedFilterFactory;
+import de.p2tools.mtplayer.tools.filmFilter.FilmFilter;
+import de.p2tools.mtplayer.tools.filmFilter.FilmFilterFactory;
 import de.p2tools.p2Lib.tools.shortcut.PShortcutWorker;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -30,8 +29,8 @@ import javafx.scene.layout.VBox;
 public class FilmMenu {
     final private VBox vBox;
     final private ProgData progData;
-    private SelectedFilter storedActFilterSettings = null;
-    private SelectedFilter storedBookmarkFilter = null;
+    private FilmFilter storedActFilterSettings = null;
+    private FilmFilter storedBookmarkFilter = null;
     private static final String FILM_FILTER_BOOKMARK_TEXT = "Alle angelegte Bookmarks anzeigen\n\n" +
             "der zweite Klick stellt den\n" +
             "eingestellten Filter wieder her";
@@ -83,9 +82,9 @@ public class FilmMenu {
 
         btFilterBookmakr.setOnAction(a -> {
             if (storedActFilterSettings != null && storedBookmarkFilter != null) {
-                //prüfen ob sich der Filter geändert hat, wenn ja dann auf Anfang
-                SelectedFilter sf = progData.storedFilters.getActFilterSettings();
-                if (!SelectedFilterFactory.compareFilterWithoutNameOfFilter(storedBookmarkFilter, sf)) {
+                //prüfen, ob sich der Filter geändert hat, wenn ja, dann auf Anfang
+                FilmFilter sf = progData.actFilmFilterWorker.getActFilterSettings();
+                if (storedBookmarkFilter.isSame(sf, false)) {
                     // dann hat sich der Filter geändert
                     storedActFilterSettings = null;
                 }
@@ -93,23 +92,23 @@ public class FilmMenu {
 
             if (storedActFilterSettings == null) {
                 //dann wurde es noch nicht aufgerufen
-                if (progData.storedFilters.getActFilterSettings().isOnlyVis() &&
-                        progData.storedFilters.getActFilterSettings().isOnlyBookmark()) {
+                if (progData.actFilmFilterWorker.getActFilterSettings().isOnlyVis() &&
+                        progData.actFilmFilterWorker.getActFilterSettings().isOnlyBookmark()) {
                     // dann ist Bookmark schon gesetzt, dann erst mal ausschalten
-                    storedActFilterSettings = SelectedFilterFactory.getFilterCopy(progData.storedFilters.getActFilterSettings());
-                    progData.storedFilters.getActFilterSettings().clearFilter();
+                    storedActFilterSettings = progData.actFilmFilterWorker.getActFilterSettings().getCopy();
+                    progData.actFilmFilterWorker.getActFilterSettings().clearFilter();
 
                 } else {
                     // dann setzen des Bookmarkfilters
-                    storedActFilterSettings = SelectedFilterFactory.getFilterCopy(progData.storedFilters.getActFilterSettings());
-                    storedBookmarkFilter = BookmarkFilter.getBookmarkFilter(storedActFilterSettings);
-                    progData.storedFilters.setActFilterSettings(storedBookmarkFilter);
+                    storedActFilterSettings = progData.actFilmFilterWorker.getActFilterSettings().getCopy();
+                    storedBookmarkFilter = FilmFilterFactory.getBookmarkFilter(storedActFilterSettings);
+                    progData.actFilmFilterWorker.setActFilterSettings(storedBookmarkFilter);
                 }
 
             } else {
                 // dann den gemerkten Filter wieder setzen, aber ohne Bookmark
                 storedActFilterSettings.setOnlyBookmark(false);
-                progData.storedFilters.setActFilterSettings(storedActFilterSettings);
+                progData.actFilmFilterWorker.setActFilterSettings(storedActFilterSettings);
                 storedActFilterSettings = null;
             }
         });

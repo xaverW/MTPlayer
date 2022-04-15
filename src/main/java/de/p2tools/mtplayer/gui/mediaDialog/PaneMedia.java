@@ -25,7 +25,7 @@ import de.p2tools.mtplayer.controller.mediaDb.MediaDataWorker;
 import de.p2tools.mtplayer.controller.mediaDb.MediaFileSize;
 import de.p2tools.mtplayer.gui.mediaConfig.SearchPredicateWorker;
 import de.p2tools.mtplayer.gui.tools.Listener;
-import de.p2tools.mtplayer.tools.storedFilter.FilterCheckRegEx;
+import de.p2tools.mtplayer.tools.filmFilter.FilterCheckRegEx;
 import de.p2tools.p2Lib.guiTools.PCheckBoxCell;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.PGuiTools;

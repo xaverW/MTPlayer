@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.data.SetDataList;
 import de.p2tools.mtplayer.controller.data.film.FilmData;
 import de.p2tools.mtplayer.controller.data.film.FilmTools;
 import de.p2tools.mtplayer.gui.tools.table.Table;
-import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
+import de.p2tools.mtplayer.tools.filmFilter.FilmFilter;
 import de.p2tools.p2Lib.tools.PSystemUtils;
 import javafx.scene.control.*;
 
@@ -106,19 +106,19 @@ public class FilmGuiTableContextMenu {
         }
 
         final MenuItem miFilterChannel = new MenuItem("nach Sender filtern");
-        miFilterChannel.setOnAction(event -> progData.storedFilters.getActFilterSettings().setChannelAndVis(film.getChannel()));
+        miFilterChannel.setOnAction(event -> progData.actFilmFilterWorker.getActFilterSettings().setChannelAndVis(film.getChannel()));
         final MenuItem miFilterTheme = new MenuItem("nach Thema filtern");
-        miFilterTheme.setOnAction(event -> progData.storedFilters.getActFilterSettings().setThemeAndVis(film.getTheme()));
+        miFilterTheme.setOnAction(event -> progData.actFilmFilterWorker.getActFilterSettings().setThemeAndVis(film.getTheme()));
         final MenuItem miFilterChannelTheme = new MenuItem("nach Sender und Thema filtern");
         miFilterChannelTheme.setOnAction(event -> {
-            progData.storedFilters.getActFilterSettings().setChannelAndVis(film.getChannel());
-            progData.storedFilters.getActFilterSettings().setThemeAndVis(film.getTheme());
+            progData.actFilmFilterWorker.getActFilterSettings().setChannelAndVis(film.getChannel());
+            progData.actFilmFilterWorker.getActFilterSettings().setThemeAndVis(film.getTheme());
         });
         final MenuItem miFilterChannelThemeTitle = new MenuItem("nach Sender, Thema und Titel filtern");
         miFilterChannelThemeTitle.setOnAction(event -> {
-            progData.storedFilters.getActFilterSettings().setChannelAndVis(film.getChannel());
-            progData.storedFilters.getActFilterSettings().setThemeAndVis(film.getTheme());
-            progData.storedFilters.getActFilterSettings().setTitleAndVis(film.getTitle());
+            progData.actFilmFilterWorker.getActFilterSettings().setChannelAndVis(film.getChannel());
+            progData.actFilmFilterWorker.getActFilterSettings().setThemeAndVis(film.getTheme());
+            progData.actFilmFilterWorker.getActFilterSettings().setTitleAndVis(film.getTitle());
         });
 
         submenuFilter.getItems().addAll(miFilterChannel, miFilterTheme, miFilterChannelTheme, miFilterChannelThemeTitle);
@@ -140,8 +140,8 @@ public class FilmGuiTableContextMenu {
 
         // neues Abo aus Filter anlegen
         miAboAddFilter.setOnAction(a -> {
-            SelectedFilter selectedFilter = progData.storedFilters.getActFilterSettings();
-            progData.aboList.addNewAboFromFilter(selectedFilter);
+            FilmFilter filmFilter = progData.actFilmFilterWorker.getActFilterSettings();
+            progData.aboList.addNewAboFromFilter(filmFilter);
         });
 
         if (film != null && film.getAbo() == null) {

@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.MTShortcut;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
-import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
+import de.p2tools.mtplayer.tools.filmFilter.FilmFilter;
 import de.p2tools.p2Lib.tools.shortcut.PShortcutWorker;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -94,8 +94,8 @@ public class AboMenu {
         miNew.setOnAction(a -> progData.aboList.addNewAbo("Neu", "", "", ""));
         final MenuItem miAboAddFilter = new MenuItem("Aus dem Film-Filter ein Abo erstellen");
         miAboAddFilter.setOnAction(a -> {
-            SelectedFilter selectedFilter = progData.storedFilters.getActFilterSettings();
-            progData.aboList.addNewAboFromFilter(selectedFilter);
+            FilmFilter filmFilter = progData.actFilmFilterWorker.getActFilterSettings();
+            progData.aboList.addNewAboFromFilter(filmFilter);
         });
 
         mb.getItems().addAll(mbOn, mbOff, miDel, miChange, miNew, miAboAddFilter);

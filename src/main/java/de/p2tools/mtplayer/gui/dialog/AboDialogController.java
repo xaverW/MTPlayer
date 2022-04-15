@@ -21,8 +21,8 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.abo.AboFieldNames;
-import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
-import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
+import de.p2tools.mtplayer.tools.filmFilter.CheckFilmFilter;
+import de.p2tools.mtplayer.tools.filmFilter.FilmFilter;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
@@ -53,7 +53,7 @@ public class AboDialogController extends PDialogExtra {
     final ComboBox<String> cboDestination = new ComboBox<>();
     final Slider slTimeRange = new Slider();
     final Label lblTimeRange = new Label();
-    final PRangeBox pRangeBoxTime = new PRangeBox(0, FilmFilter.FILTER_DURATION_MAX_MINUTE);
+    final PRangeBox pRangeBoxTime = new PRangeBox(0, CheckFilmFilter.FILTER_DURATION_MAX_MINUTE);
     final CheckBox cbxOn = new CheckBox();
     final Label[] lbl = new Label[AboFieldNames.MAX_ELEM];
     final TextField[] txt = new TextField[AboFieldNames.MAX_ELEM];
@@ -90,7 +90,7 @@ public class AboDialogController extends PDialogExtra {
         initDialog();
     }
 
-    public AboDialogController(ProgData progData, SelectedFilter selectedFilter, AboData abo) {
+    public AboDialogController(ProgData progData, FilmFilter filmFilter, AboData abo) {
         //hier wird ein Abo an den Filter angepasst
         super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE,
                 "Abo anlegen", false, false, DECO.BORDER, true);
@@ -101,15 +101,15 @@ public class AboDialogController extends PDialogExtra {
         aboList.add(abo);
         aboCopy = abo.getCopy();
 
-        final String channel = selectedFilter.isChannelVis() ? selectedFilter.getChannel() : "";
-        final String theme = selectedFilter.isThemeVis() ? selectedFilter.getTheme() : "";
-        final boolean themeExact = selectedFilter.isThemeExact();
-        final String title = selectedFilter.isTitleVis() ? selectedFilter.getTitle() : "";
-        final String themeTitle = selectedFilter.isThemeTitleVis() ? selectedFilter.getThemeTitle() : "";
-        final String somewhere = selectedFilter.isSomewhereVis() ? selectedFilter.getSomewhere() : "";
-        final int timeRange = selectedFilter.isTimeRangeVis() ? selectedFilter.getTimeRange() : FilmFilter.FILTER_TIME_RANGE_ALL_VALUE;
-        final int minDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMinDur() : FilmFilter.FILTER_DURATION_MIN_MINUTE;
-        final int maxDuration = selectedFilter.isMinMaxDurVis() ? selectedFilter.getMaxDur() : FilmFilter.FILTER_DURATION_MAX_MINUTE;
+        final String channel = filmFilter.isChannelVis() ? filmFilter.getChannel() : "";
+        final String theme = filmFilter.isThemeVis() ? filmFilter.getTheme() : "";
+        final boolean themeExact = filmFilter.isThemeExact();
+        final String title = filmFilter.isTitleVis() ? filmFilter.getTitle() : "";
+        final String themeTitle = filmFilter.isThemeTitleVis() ? filmFilter.getThemeTitle() : "";
+        final String somewhere = filmFilter.isSomewhereVis() ? filmFilter.getSomewhere() : "";
+        final int timeRange = filmFilter.isTimeRangeVis() ? filmFilter.getTimeRange() : CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE;
+        final int minDuration = filmFilter.isMinMaxDurVis() ? filmFilter.getMinDur() : CheckFilmFilter.FILTER_DURATION_MIN_MINUTE;
+        final int maxDuration = filmFilter.isMinMaxDurVis() ? filmFilter.getMaxDur() : CheckFilmFilter.FILTER_DURATION_MAX_MINUTE;
 
         aboCopy.setChannel(channel);
         aboCopy.setTheme(theme);

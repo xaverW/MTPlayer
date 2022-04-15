@@ -14,18 +14,136 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.tools.storedFilter;
+package de.p2tools.mtplayer.tools.filmFilter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
+import de.p2tools.mtplayer.controller.data.abo.AboData;
+import de.p2tools.mtplayer.controller.data.film.FilmData;
 
-public class ProgInitFilter {
+public class FilmFilterFactory {
 
-    public static void setProgInitFilter() {
+    private FilmFilterFactory() {
+    }
+
+    public static boolean aboExistsAlready(AboData aboExits, AboData checkAbo) {
+        // prüfen ob "aboExistiert" das "aboPrüfen" mit abdeckt, also die gleichen (oder mehr)
+        // Filme findet, dann wäre das neue Abo hinfällig
+
+        if (!checkAboExistArr(aboExits.getChannel(), checkAbo.getChannel(), true)) {
+            return false;
+        }
+
+        if (!checkAboExistArr(aboExits.getTheme(), checkAbo.getTheme(), true)) {
+            return false;
+        }
+
+        if (!checkAboExistArr(aboExits.getTitle(), checkAbo.getTitle(), true)) {
+            return false;
+        }
+
+        if (!checkAboExistArr(aboExits.getThemeTitle(), checkAbo.getThemeTitle(), true)) {
+            return false;
+        }
+
+        if (!checkAboExistArr(aboExits.getSomewhere(), checkAbo.getSomewhere(), true)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private static boolean checkAboExistArr(String aboExist, String aboCheck, boolean arr) {
+        // da wird man immer eine Variante bauen können, die Filme eines bestehenden Abos
+        // mit abdeckt -> nur eine einfache offensichtliche Prüfung
+
+        aboCheck = aboCheck.trim();
+        aboExist = aboExist.trim();
+
+        if (aboCheck.isEmpty() && aboExist.isEmpty()) {
+            return true;
+        }
+
+        if (aboCheck.toLowerCase().equals(aboExist.toLowerCase())) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Abo und Blacklist prüfen
+     *
+     * @param sender
+     * @param theme
+     * @param themeTitle
+     * @param title
+     * @param somewhere
+     * @param searchLengthMinute_min
+     * @param searchLengthMinute_max
+     * @param film
+     * @param withLength
+     * @return
+     */
+    public static boolean checkFilmWithFilter(Filter sender,
+                                              Filter theme,
+                                              Filter themeTitle,
+                                              Filter title,
+                                              Filter somewhere,
+
+                                              int timeRange,
+                                              int searchLengthMinute_min,
+                                              int searchLengthMinute_max,
+
+                                              FilmData film,
+                                              boolean withLength) {
+
+
+        // geht am schnellsten
+        if (timeRange != CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE && !CheckFilmFilter.checkMaxDays(timeRange, film)) {
+            return false;
+        }
+
+        if (withLength && !CheckFilmFilter.checkLength(searchLengthMinute_min, searchLengthMinute_max, film.getDurationMinute())) {
+            return false;
+        }
+
+        // brauchen länger
+        if (!sender.empty && !CheckFilmFilter.checkChannelSmart(sender, film)) {
+            return false;
+        }
+
+        if (!theme.empty && !CheckFilmFilter.checkTheme(theme, film)) {
+            return false;
+        }
+
+        if (!themeTitle.empty && !CheckFilmFilter.checkThemeTitle(themeTitle, film)) {
+            return false;
+        }
+
+        if (!title.empty && !CheckFilmFilter.checkTitle(title, film)) {
+            return false;
+        }
+
+        if (!somewhere.empty && !CheckFilmFilter.checkSomewhere(somewhere, film)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public static FilmFilter getBookmarkFilter(FilmFilter filmFilter) {
+        FilmFilter sf = filmFilter.getCopy();
+        sf.clearFilter();
+        sf.setOnlyVis(true);
+        sf.setOnlyBookmark(true);
+        return sf;
+    }
+
+    public static void addStandardFilter() {
         ProgData progData = ProgData.getInstance();
 
         //========================================================
-        SelectedFilter sf = new SelectedFilter("alle Filme");
+        FilmFilter sf = new FilmFilter("alle Filme");
 
         sf.setChannelVis(true);
         sf.setThemeVis(false);
@@ -36,16 +154,16 @@ public class ProgInitFilter {
         sf.setUrlVis(false);
 
         sf.setTimeRangeVis(true);
-        sf.setTimeRange(FilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
+        sf.setTimeRange(CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
 
         sf.setMinMaxDurVis(false);
         sf.setMinDur(0);
-        sf.setMaxDur(FilmFilter.FILTER_DURATION_MAX_MINUTE);
+        sf.setMaxDur(CheckFilmFilter.FILTER_DURATION_MAX_MINUTE);
 
         sf.setMinMaxTimeVis(false);
         sf.setMinMaxTimeInvert(false);
         sf.setMinTime(0);
-        sf.setMaxTime(FilmFilter.FILTER_FILMTIME_MAX_SEC);
+        sf.setMaxTime(CheckFilmFilter.FILTER_FILMTIME_MAX_SEC);
 
         sf.setOnlyVis(true);
         sf.setOnlyBookmark(false);
@@ -62,10 +180,10 @@ public class ProgInitFilter {
         sf.setNotGeo(false);
         sf.setNotFuture(false);
 
-        progData.storedFilters.getStoredFilterList().add(sf);
+        progData.actFilmFilterWorker.getStoredFilterList().add(sf);
 
         //========================================================
-        sf = new SelectedFilter("nur neue Filme");
+        sf = new FilmFilter("nur neue Filme");
 
         sf.setChannelVis(true);
         sf.setThemeVis(false);
@@ -80,12 +198,12 @@ public class ProgInitFilter {
 
         sf.setMinMaxDurVis(false);
         sf.setMinDur(0);
-        sf.setMaxDur(FilmFilter.FILTER_DURATION_MAX_MINUTE);
+        sf.setMaxDur(CheckFilmFilter.FILTER_DURATION_MAX_MINUTE);
 
         sf.setMinMaxTimeVis(false);
         sf.setMinMaxTimeInvert(false);
         sf.setMinTime(0);
-        sf.setMaxTime(FilmFilter.FILTER_FILMTIME_MAX_SEC);
+        sf.setMaxTime(CheckFilmFilter.FILTER_FILMTIME_MAX_SEC);
 
         sf.setOnlyVis(true);
         sf.setOnlyBookmark(false);
@@ -102,10 +220,10 @@ public class ProgInitFilter {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.storedFilters.getStoredFilterList().add(sf);
+        progData.actFilmFilterWorker.getStoredFilterList().add(sf);
 
         //========================================================
-        sf = new SelectedFilter("nur Bookmarks");
+        sf = new FilmFilter("nur Bookmarks");
 
         sf.setChannelVis(true);
         sf.setThemeVis(false);
@@ -116,16 +234,16 @@ public class ProgInitFilter {
         sf.setUrlVis(false);
 
         sf.setTimeRangeVis(true);
-        sf.setTimeRange(FilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
+        sf.setTimeRange(CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
 
         sf.setMinMaxDurVis(false);
         sf.setMinDur(0);
-        sf.setMaxDur(FilmFilter.FILTER_DURATION_MAX_MINUTE);
+        sf.setMaxDur(CheckFilmFilter.FILTER_DURATION_MAX_MINUTE);
 
         sf.setMinMaxTimeVis(false);
         sf.setMinMaxTimeInvert(false);
         sf.setMinTime(0);
-        sf.setMaxTime(FilmFilter.FILTER_FILMTIME_MAX_SEC);
+        sf.setMaxTime(CheckFilmFilter.FILTER_FILMTIME_MAX_SEC);
 
         sf.setOnlyVis(true);
         sf.setOnlyBookmark(true);
@@ -142,10 +260,10 @@ public class ProgInitFilter {
         sf.setNotGeo(false);
         sf.setNotFuture(false);
 
-        progData.storedFilters.getStoredFilterList().add(sf);
+        progData.actFilmFilterWorker.getStoredFilterList().add(sf);
 
         //========================================================
-        sf = new SelectedFilter("aktuelle Nachrichten");
+        sf = new FilmFilter("aktuelle Nachrichten");
 
         sf.setChannelVis(true);
         sf.setThemeVis(false);
@@ -167,7 +285,7 @@ public class ProgInitFilter {
         sf.setMinMaxTimeVis(false);
         sf.setMinMaxTimeInvert(false);
         sf.setMinTime(0);
-        sf.setMaxTime(FilmFilter.FILTER_FILMTIME_MAX_SEC);
+        sf.setMaxTime(CheckFilmFilter.FILTER_FILMTIME_MAX_SEC);
 
         sf.setOnlyVis(true);
         sf.setOnlyBookmark(false);
@@ -184,10 +302,10 @@ public class ProgInitFilter {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.storedFilters.getStoredFilterList().add(sf);
+        progData.actFilmFilterWorker.getStoredFilterList().add(sf);
 
         //========================================================
-        sf = new SelectedFilter("Nachrichten mit Europa UND Brexit");
+        sf = new FilmFilter("Nachrichten mit Europa UND Brexit");
 
         sf.setChannelVis(true);
         sf.setThemeVis(false);
@@ -200,7 +318,7 @@ public class ProgInitFilter {
         sf.setUrlVis(false);
 
         sf.setTimeRangeVis(true);
-        sf.setTimeRange(FilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
+        sf.setTimeRange(CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
 
         sf.setMinMaxDurVis(true);
         sf.setMinDur(0);
@@ -209,7 +327,7 @@ public class ProgInitFilter {
         sf.setMinMaxTimeVis(false);
         sf.setMinMaxTimeInvert(false);
         sf.setMinTime(0);
-        sf.setMaxTime(FilmFilter.FILTER_FILMTIME_MAX_SEC);
+        sf.setMaxTime(CheckFilmFilter.FILTER_FILMTIME_MAX_SEC);
 
         sf.setOnlyVis(true);
         sf.setOnlyBookmark(false);
@@ -226,10 +344,10 @@ public class ProgInitFilter {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.storedFilters.getStoredFilterList().add(sf);
+        progData.actFilmFilterWorker.getStoredFilterList().add(sf);
 
         //========================================================
-        sf = new SelectedFilter("nur ARD ODER ZDF");
+        sf = new FilmFilter("nur ARD ODER ZDF");
 
         sf.setChannelVis(true);
         sf.setChannel("ard,zdf");
@@ -242,16 +360,16 @@ public class ProgInitFilter {
         sf.setUrlVis(false);
 
         sf.setTimeRangeVis(true);
-        sf.setTimeRange(FilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
+        sf.setTimeRange(CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
 
         sf.setMinMaxDurVis(false);
         sf.setMinDur(0);
-        sf.setMaxDur(FilmFilter.FILTER_DURATION_MAX_MINUTE);
+        sf.setMaxDur(CheckFilmFilter.FILTER_DURATION_MAX_MINUTE);
 
         sf.setMinMaxTimeVis(false);
         sf.setMinMaxTimeInvert(false);
         sf.setMinTime(0);
-        sf.setMaxTime(FilmFilter.FILTER_FILMTIME_MAX_SEC);
+        sf.setMaxTime(CheckFilmFilter.FILTER_FILMTIME_MAX_SEC);
 
         sf.setOnlyVis(true);
         sf.setOnlyBookmark(false);
@@ -268,10 +386,10 @@ public class ProgInitFilter {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.storedFilters.getStoredFilterList().add(sf);
+        progData.actFilmFilterWorker.getStoredFilterList().add(sf);
 
         //========================================================
-        sf = new SelectedFilter("Sport");
+        sf = new FilmFilter("Sport");
 
         sf.setChannelVis(true);
         sf.setThemeVis(false);
@@ -283,16 +401,16 @@ public class ProgInitFilter {
         sf.setUrlVis(false);
 
         sf.setTimeRangeVis(true);
-        sf.setTimeRange(FilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
+        sf.setTimeRange(CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
 
         sf.setMinMaxDurVis(false);
         sf.setMinDur(0);
-        sf.setMaxDur(FilmFilter.FILTER_DURATION_MAX_MINUTE);
+        sf.setMaxDur(CheckFilmFilter.FILTER_DURATION_MAX_MINUTE);
 
         sf.setMinMaxTimeVis(false);
         sf.setMinMaxTimeInvert(false);
         sf.setMinTime(0);
-        sf.setMaxTime(FilmFilter.FILTER_FILMTIME_MAX_SEC);
+        sf.setMaxTime(CheckFilmFilter.FILTER_FILMTIME_MAX_SEC);
 
         sf.setOnlyVis(true);
         sf.setOnlyBookmark(false);
@@ -309,10 +427,10 @@ public class ProgInitFilter {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.storedFilters.getStoredFilterList().add(sf);
+        progData.actFilmFilterWorker.getStoredFilterList().add(sf);
 
         //========================================================
-        sf = new SelectedFilter("Livestreams");
+        sf = new FilmFilter("Livestreams");
 
         sf.setChannelVis(true);
         sf.setThemeVis(false);
@@ -324,16 +442,16 @@ public class ProgInitFilter {
         sf.setUrlVis(false);
 
         sf.setTimeRangeVis(true);
-        sf.setTimeRange(FilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
+        sf.setTimeRange(CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
 
         sf.setMinMaxDurVis(false);
         sf.setMinDur(0);
-        sf.setMaxDur(FilmFilter.FILTER_DURATION_MAX_MINUTE);
+        sf.setMaxDur(CheckFilmFilter.FILTER_DURATION_MAX_MINUTE);
 
         sf.setMinMaxTimeVis(false);
         sf.setMinMaxTimeInvert(false);
         sf.setMinTime(0);
-        sf.setMaxTime(FilmFilter.FILTER_FILMTIME_MAX_SEC);
+        sf.setMaxTime(CheckFilmFilter.FILTER_FILMTIME_MAX_SEC);
 
         sf.setOnlyVis(true);
         sf.setOnlyBookmark(false);
@@ -350,10 +468,10 @@ public class ProgInitFilter {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.storedFilters.getStoredFilterList().add(sf);
+        progData.actFilmFilterWorker.getStoredFilterList().add(sf);
 
         //========================================================
-        sf = new SelectedFilter("Abendkrimi");
+        sf = new FilmFilter("Abendkrimi");
 
         sf.setChannelVis(true);
         sf.setChannel("ard,zdf");
@@ -371,12 +489,12 @@ public class ProgInitFilter {
 
         sf.setMinMaxDurVis(true);
         sf.setMinDur(40);
-        sf.setMaxDur(FilmFilter.FILTER_DURATION_MAX_MINUTE);
+        sf.setMaxDur(CheckFilmFilter.FILTER_DURATION_MAX_MINUTE);
 
         sf.setMinMaxTimeVis(true);
         sf.setMinMaxTimeInvert(false);
         sf.setMinTime(64800);
-        sf.setMaxTime(FilmFilter.FILTER_FILMTIME_MAX_SEC);
+        sf.setMaxTime(CheckFilmFilter.FILTER_FILMTIME_MAX_SEC);
 
         sf.setOnlyVis(false);
         sf.setOnlyBookmark(false);
@@ -393,10 +511,10 @@ public class ProgInitFilter {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.storedFilters.getStoredFilterList().add(sf);
+        progData.actFilmFilterWorker.getStoredFilterList().add(sf);
 
         //========================================================
-        sf = new SelectedFilter("nur \"neue\" in HD");
+        sf = new FilmFilter("nur \"neue\" in HD");
 
         sf.setChannelVis(true);
         sf.setChannel("");
@@ -414,12 +532,12 @@ public class ProgInitFilter {
 
         sf.setMinMaxDurVis(true);
         sf.setMinDur(20);
-        sf.setMaxDur(FilmFilter.FILTER_DURATION_MAX_MINUTE);
+        sf.setMaxDur(CheckFilmFilter.FILTER_DURATION_MAX_MINUTE);
 
         sf.setMinMaxTimeVis(false);
         sf.setMinMaxTimeInvert(false);
         sf.setMinTime(0);
-        sf.setMaxTime(FilmFilter.FILTER_FILMTIME_MAX_SEC);
+        sf.setMaxTime(CheckFilmFilter.FILTER_FILMTIME_MAX_SEC);
 
         sf.setOnlyVis(true);
         sf.setOnlyBookmark(false);
@@ -436,6 +554,6 @@ public class ProgInitFilter {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.storedFilters.getStoredFilterList().add(sf);
+        progData.actFilmFilterWorker.getStoredFilterList().add(sf);
     }
 }

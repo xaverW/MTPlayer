@@ -23,7 +23,6 @@ import de.p2tools.mtplayer.controller.data.film.FilmlistFactory;
 import de.p2tools.p2Lib.dialogs.ProgInfoDialog;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
-import de.p2tools.p2Lib.tools.DiacriticFactory;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -108,8 +107,8 @@ public class MTPTester {
 
         FilmlistFactory.setDiacritic(false);
 
-        System.out.println(test);
-        System.out.println(DiacriticFactory.flattenDiacritic(test));
+//        System.out.println(test);
+//        System.out.println(DiacriticFactory.flattenDiacritic(test));
 
         PDuration.counterStop("MTPTester diakritische Zeichen");
     }

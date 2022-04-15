@@ -40,8 +40,8 @@ import de.p2tools.mtplayer.gui.filter.DownloadFilterController;
 import de.p2tools.mtplayer.gui.filter.FilmFilterControllerClearFilter;
 import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.mtplayer.gui.tools.ProgTray;
-import de.p2tools.mtplayer.tools.filmListFilter.FilmListFilter;
-import de.p2tools.mtplayer.tools.storedFilter.StoredFilters;
+import de.p2tools.mtplayer.tools.filmFilter.ActFilmFilterWorker;
+import de.p2tools.mtplayer.tools.filmFilter.FilmFilterRunner;
 import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import javafx.animation.Animation;
@@ -70,8 +70,8 @@ public class ProgData {
     public SearchFilmListUrls searchFilmListUrls; // da werden die DownloadURLs der Filmliste verwaltet
     public MTColor mTColor; // verwendete Farben
     public MTShortcut mtShortcut; // verwendete Shortcuts
-    public StoredFilters storedFilters; // gespeicherte Filterprofile
-    public FilmListFilter filmListFilter;
+    public ActFilmFilterWorker actFilmFilterWorker; // gespeicherte Filterprofile
+    public FilmFilterRunner filmFilterRunner;
 
     // Gui
     public Stage primaryStage = null;
@@ -117,7 +117,7 @@ public class ProgData {
         searchFilmListUrls = new SearchFilmListUrls();
 
         loadFilmlist = new LoadFilmlist(this);
-        storedFilters = new StoredFilters(this);
+        actFilmFilterWorker = new ActFilmFilterWorker(this);
         filmlist = new Filmlist();
         filmlistFiltered = new Filmlist();
 
@@ -127,7 +127,7 @@ public class ProgData {
         downloadList = new DownloadList(this);
         downloadListButton = new DownloadList(this);
 
-        filmListFilter = new FilmListFilter(this);
+        filmFilterRunner = new FilmFilterRunner(this);
 
         history = new HistoryList(ProgConst.FILE_HISTORY,
                 ProgInfos.getSettingsDirectory_String(), false);

@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
-import de.p2tools.mtplayer.tools.storedFilter.SelectedFilter;
+import de.p2tools.mtplayer.tools.filmFilter.FilmFilter;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PSeparatorComboBox;
@@ -42,7 +42,7 @@ public class FilmFilterSortDialog extends PDialogExtra {
     private final Button btnDel = new Button();
     private final Button btnSeparator = new Button();
 
-    private final TableView<SelectedFilter> tableView = new TableView<>();
+    private final TableView<FilmFilter> tableView = new TableView<>();
     private final ProgData progData;
 
     public FilmFilterSortDialog(ProgData progData) {
@@ -70,9 +70,9 @@ public class FilmFilterSortDialog extends PDialogExtra {
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        tableView.setRowFactory(param -> new TableRow<SelectedFilter>() {
+        tableView.setRowFactory(param -> new TableRow<FilmFilter>() {
             @Override
-            protected void updateItem(SelectedFilter item, boolean empty) {
+            protected void updateItem(FilmFilter item, boolean empty) {
                 super.updateItem(item, empty);
                 if (!empty) {
                     if (PSeparatorComboBox.isSeparator(item.toString())) {
@@ -84,12 +84,12 @@ public class FilmFilterSortDialog extends PDialogExtra {
             }
         });
 
-        final TableColumn<SelectedFilter, String> nameColumn = new TableColumn<>("Name");
+        final TableColumn<FilmFilter, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         nameColumn.setCellFactory(cellFactory);
 
         tableView.getColumns().add(nameColumn);
-        tableView.setItems(progData.storedFilters.getStoredFilterList());
+        tableView.setItems(progData.actFilmFilterWorker.getStoredFilterList());
 
         btnDel.setTooltip(new Tooltip("aktuelles Filterprofil löschen"));
         btnDel.setGraphic(new ProgIcons().ICON_BUTTON_REMOVE);
@@ -107,7 +107,7 @@ public class FilmFilterSortDialog extends PDialogExtra {
             if (sel < 0) {
                 PAlert.showInfoNoSelection();
             } else {
-                int res = progData.storedFilters.getStoredFilterList().top(sel, true);
+                int res = progData.actFilmFilterWorker.getStoredFilterList().top(sel, true);
                 tableView.getSelectionModel().select(res);
             }
         });
@@ -120,7 +120,7 @@ public class FilmFilterSortDialog extends PDialogExtra {
             if (sel < 0) {
                 PAlert.showInfoNoSelection();
             } else {
-                int res = progData.storedFilters.getStoredFilterList().top(sel, false);
+                int res = progData.actFilmFilterWorker.getStoredFilterList().top(sel, false);
                 tableView.getSelectionModel().select(res);
             }
         });
@@ -133,7 +133,7 @@ public class FilmFilterSortDialog extends PDialogExtra {
             if (sel < 0) {
                 PAlert.showInfoNoSelection();
             } else {
-                int res = progData.storedFilters.getStoredFilterList().up(sel, true);
+                int res = progData.actFilmFilterWorker.getStoredFilterList().up(sel, true);
                 tableView.getSelectionModel().select(res);
             }
         });
@@ -146,16 +146,16 @@ public class FilmFilterSortDialog extends PDialogExtra {
             if (sel < 0) {
                 PAlert.showInfoNoSelection();
             } else {
-                int res = progData.storedFilters.getStoredFilterList().up(sel, false);
+                int res = progData.actFilmFilterWorker.getStoredFilterList().up(sel, false);
                 tableView.getSelectionModel().select(res);
             }
         });
     }
 
-    private Callback<TableColumn<SelectedFilter, String>, TableCell<SelectedFilter, String>> cellFactory
-            = (final TableColumn<SelectedFilter, String> param) -> {
+    private Callback<TableColumn<FilmFilter, String>, TableCell<FilmFilter, String>> cellFactory
+            = (final TableColumn<FilmFilter, String> param) -> {
 
-        final TableCell<SelectedFilter, String> cell = new TableCell<>() {
+        final TableCell<FilmFilter, String> cell = new TableCell<>() {
 
             @Override
             public void updateItem(String item, boolean empty) {
@@ -167,12 +167,12 @@ public class FilmFilterSortDialog extends PDialogExtra {
                     return;
                 }
 
-                SelectedFilter selectedFilter = getTableView().getItems().get(getIndex());
+                FilmFilter filmFilter = getTableView().getItems().get(getIndex());
                 HBox hBox = new HBox();
-                Label lbl = new Label(selectedFilter.getName());
+                Label lbl = new Label(filmFilter.getName());
                 hBox.getChildren().add(lbl);
                 setGraphic(hBox);
-                if (PSeparatorComboBox.isSeparator(selectedFilter.toString())) {
+                if (PSeparatorComboBox.isSeparator(filmFilter.toString())) {
                     hBox.setAlignment(Pos.CENTER);
                 }
             }
@@ -181,24 +181,24 @@ public class FilmFilterSortDialog extends PDialogExtra {
     };
 
     private void delFilter() {
-        SelectedFilter sf = tableView.getSelectionModel().getSelectedItem();
+        FilmFilter sf = tableView.getSelectionModel().getSelectedItem();
         if (sf == null) {
             PAlert.showInfoNoSelection();
             return;
         }
 
-        if (progData.storedFilters.removeStoredFilter(sf)) {
+        if (progData.actFilmFilterWorker.removeStoredFilter(sf)) {
             tableView.getSelectionModel().selectFirst();
         }
     }
 
     private void addSeparator() {
         final int sel = tableView.getSelectionModel().getSelectedIndex();
-        SelectedFilter sf = new SelectedFilter(PSeparatorComboBox.SEPARATOR);
+        FilmFilter sf = new FilmFilter(PSeparatorComboBox.SEPARATOR);
         if (sel < 0) {
-            progData.storedFilters.getStoredFilterList().add(sf);
+            progData.actFilmFilterWorker.getStoredFilterList().add(sf);
         } else {
-            progData.storedFilters.getStoredFilterList().add(sel + 1, sf);
+            progData.actFilmFilterWorker.getStoredFilterList().add(sel + 1, sf);
         }
     }
 }

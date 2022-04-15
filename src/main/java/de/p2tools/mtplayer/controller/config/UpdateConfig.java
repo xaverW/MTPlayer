@@ -17,7 +17,7 @@
 
 package de.p2tools.mtplayer.controller.config;
 
-import de.p2tools.mtplayer.tools.filmListFilter.FilmFilter;
+import de.p2tools.mtplayer.tools.filmFilter.CheckFilmFilter;
 
 public class UpdateConfig {
     private UpdateConfig() {
@@ -33,12 +33,12 @@ public class UpdateConfig {
             // dann müssen die gespeicherten Filter aktualisiert werden
             final int FILTER_DAYS_MAX__OLD = 30; // ist der alte Wert für "alles"
 
-            if (ProgData.getInstance().storedFilters.getActFilterSettings().getTimeRange() == FILTER_DAYS_MAX__OLD) {
-                ProgData.getInstance().storedFilters.getActFilterSettings().setTimeRange(FilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
+            if (ProgData.getInstance().actFilmFilterWorker.getActFilterSettings().getTimeRange() == FILTER_DAYS_MAX__OLD) {
+                ProgData.getInstance().actFilmFilterWorker.getActFilterSettings().setTimeRange(CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
             }
-            ProgData.getInstance().storedFilters.getStoredFilterList().stream().forEach(sf -> {
+            ProgData.getInstance().actFilmFilterWorker.getStoredFilterList().stream().forEach(sf -> {
                 if (sf.getTimeRange() == FILTER_DAYS_MAX__OLD) {
-                    sf.setTimeRange(FilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
+                    sf.setTimeRange(CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
                 }
             });
         }

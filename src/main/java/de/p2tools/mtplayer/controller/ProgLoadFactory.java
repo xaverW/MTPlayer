@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
-import de.p2tools.mtplayer.tools.storedFilter.ProgInitFilter;
+import de.p2tools.mtplayer.tools.filmFilter.FilmFilterFactory;
 import de.p2tools.p2Lib.configFile.ConfigFile;
 import de.p2tools.p2Lib.configFile.ReadConfigFile;
 import de.p2tools.p2Lib.tools.duration.PDuration;
@@ -69,8 +69,8 @@ public class ProgLoadFactory {
         progData.aboList.sort();
 
         // ListeFilmUpdateServer aufbauen
-        if (progData.storedFilters.getStoredFilterList().isEmpty()) {
-            ProgInitFilter.setProgInitFilter();
+        if (progData.actFilmFilterWorker.getStoredFilterList().isEmpty()) {
+            FilmFilterFactory.addStandardFilter();
         }
     }
 }
