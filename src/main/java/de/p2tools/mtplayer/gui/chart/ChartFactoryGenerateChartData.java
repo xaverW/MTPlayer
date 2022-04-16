@@ -62,7 +62,6 @@ public class ChartFactoryGenerateChartData {
         final double secondsPerPixel = chartData.getSecondsPerPixel();
         int bandwidthLastIdx = 0;//letzter Wert: Suchen von bandwidthIdx+1 bis bandwidthLastIdx
 
-//        System.out.println("============================");
         for (int i = 0; i < ChartFactory.MAX_CHART_DATA_PER_SCREEN; ++i) {
             //0 ..... ChartFactory.MAX_CHART_DATA_PER_SCREEN-1
 
@@ -106,9 +105,6 @@ public class ChartFactoryGenerateChartData {
 
             chartData.getChartSeriesOneSumChart().getData().get(indexChart).setXValue(actTimeMin);
             chartData.getChartSeriesOneSumChart().getData().get(indexChart).setYValue(actVal / chartData.getyScale());
-//            if (actTimeMin >= 0) {
-//                System.out.println("   actTimeMin: " + (((int) (actTimeMin * 100)) / 100.0) + " actValue: " + actVal + " secondsPerPixel: " + secondsPerPixel);
-//            }
         }
         colorChartName(lineChart, chartData);
     }

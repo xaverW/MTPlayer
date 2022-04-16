@@ -314,23 +314,12 @@ public class FilmFilterControllerTextFilter extends VBox {
             if (strProp.getValueSafe().equals(cbo.getEditor().getText())) {
                 return;
             }
-//            System.out.println("cbo.getEditor().textProperty()");
             strProp.setValue(cbo.getEditor().getText());
         });
         cbo.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
-//                    if (strProp.getValueSafe().equals(cbo.getEditor().getText())) {
-//                        return;
-//                    }
-
-//                    if (newValue != null &&
-//                            progData.storedFilters.getActFilterSettings().getThemeTitle().equals(cbo.getEditor().getText())) {
-//                        return;
-//                    }
-
                     if (cbo.getSelectionModel().getSelectedIndex() >= 0) {
                         if (ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
                             //dann wird erst nach "RETURN" gestartet
-//                            System.out.println("cbo.getSelectionModel().selectedItemProperty()" + newValue);
                             progData.actFilmFilterWorker.getActFilterSettings().reportFilterReturn();
                         }
                     }

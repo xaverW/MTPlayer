@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
 import de.p2tools.mtplayer.gui.tools.Listener;
+import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -73,9 +74,10 @@ public class FilmFilterRunner {
 //            Thread th = new Thread(() -> {
             try {
                 Platform.runLater(() -> {
-                    System.out.println("========================================");
-                    System.out.println("  ======== Filter: " + count++ + " ========");
-                    System.out.println("========================================");
+                    PLog.sysLog("========================================");
+                    PLog.sysLog("         === Filter: " + count++ + " ===");
+                    PLog.sysLog("========================================");
+
                     progData.filmlistFiltered.filteredListSetPred(
                             PredicateFactory.getPredicate(progData.actFilmFilterWorker.getActFilterSettings()));
                     search.set(false);

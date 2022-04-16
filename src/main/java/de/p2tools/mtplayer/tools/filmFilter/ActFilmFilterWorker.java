@@ -35,6 +35,8 @@ public final class ActFilmFilterWorker {
 
     private final ProgData progData;
 
+    final int MAX_FILTER_HISTORY = 15;
+
     private final BooleanProperty filterChange = new SimpleBooleanProperty(true);
     private final BooleanProperty backward = new SimpleBooleanProperty(false);
     private final BooleanProperty forward = new SimpleBooleanProperty(false);
@@ -343,12 +345,10 @@ public final class ActFilmFilterWorker {
             return;
         }
 
-        final int MAX = 5;
         if (!list.stream().filter(f -> f.equals(filter)).findAny().isPresent()) {
             list.add(filter);
         }
-        while (list.size() >= MAX) {
-//            System.out.println("remove");
+        while (list.size() >= MAX_FILTER_HISTORY) {
             list.remove(1);
         }
     }
@@ -356,17 +356,13 @@ public final class ActFilmFilterWorker {
     int i = 0;
 
     private void setFilterChange() {
-//        System.out.println("============================");
-//        System.out.println("setFilterChange: " + i++);
         addLastThemeTitleFilter(progData.actFilmFilterWorker.getActFilterSettings().getThemeTitle());
         addLastTitleFilter(progData.actFilmFilterWorker.getActFilterSettings().getTitle());
         addLastSomewhereFilter(progData.actFilmFilterWorker.getActFilterSettings().getSomewhere());
         addLastUrlFilter(progData.actFilmFilterWorker.getActFilterSettings().getUrl());
 
         //hier erst mal die actFilter vergleichen, ob geändert
-        if (oldActFilterSettings.isSame(actFilterSettings, true)) {
-//            System.out.println("====> same");
-        } else {
+        if (!oldActFilterSettings.isSame(actFilterSettings, true)) {
             actFilterSettings.copyTo(oldActFilterSettings);
             this.filterChange.set(!filterChange.get());
         }

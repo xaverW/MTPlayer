@@ -197,9 +197,6 @@ public final class FilmFilter extends FilmFilterProps {
 
         themeTitleVisProperty().addListener(l -> setFilterChange());
         themeTitleProperty().addListener(l -> {
-//            System.out.println("themeTitle: ");
-//            System.out.println(themeTitleProperty().toString());
-
             setTxtFilterChange();
         });
 

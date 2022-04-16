@@ -143,7 +143,6 @@ public class BandwidthData extends ArrayList<Long> {
         long value = 0;
         int extraIdx = 0;
 
-//        System.out.println("--------");
         if (!addData) {
             chartSeries.setName(getName());
         }
@@ -179,9 +178,6 @@ public class BandwidthData extends ArrayList<Long> {
                     chartSeries.getData().get(chartIndex).setYValue(value);
                 }
                 chartSeries.getData().get(chartIndex).setXValue(actTimeMin);
-//                System.out.println("   actTimeMin: " + (((int) (actTimeMin * 100)) / 100.0) + " EXTRA->" + " sizeWithoutExtra: " + sizeWithoutExtra + "/" + this.size() + " startIdx: " + startIdx + " endIdx: " + endIdx +
-//                        " value: " + value + " secondsPerPixel: " + secondsPerPixel);
-
             } else {
                 //der Rest oder Wenn kein EXTRA alles
                 int idx = extraIdx == 0 ? i : i - 1; //da wird wieder bei Null angefangen: neue Größe
@@ -202,8 +198,6 @@ public class BandwidthData extends ArrayList<Long> {
                     chartSeries.getData().get(chartIndex).setYValue(value);
                 }
                 chartSeries.getData().get(chartIndex).setXValue(actTimeMin);
-//                System.out.println("   actTimeMin: " + (((int) (actTimeMin * 100)) / 100.0) + " sizeWithoutExtra: " + sizeWithoutExtra + "/" + this.size() + " startIdx: " + startIdx + " endIdx: " + endIdx +
-//                        " value: " + value + " secondsPerPixel: " + secondsPerPixel);
             }
         }
     }

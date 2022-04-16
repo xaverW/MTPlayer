@@ -127,16 +127,6 @@ public class WriteMediaDb implements AutoCloseable {
     }
 
     private synchronized List<MediaData> getExternalMediaData() {
-//        List<MediaData> list = new ArrayList<>();
-//        progData.mediaDataList.stream().forEach(mediaData -> {
-//            if (mediaData == null) {
-//                System.out.println("Mist");
-//            } else if (mediaData.isExternal()) {
-//                list.add(mediaData);
-//            }
-//        });
-//        return list;
-
         return progData.mediaDataList.parallelStream().filter(mediaData -> mediaData != null && mediaData.isExternal())
                 .collect(Collectors.toList());
     }
