@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.mediaDb.MediaDataWorker;
 import de.p2tools.mtplayer.gui.tools.HelpText;
+import de.p2tools.p2Lib.dialogs.PDirFileChooser;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -42,6 +43,7 @@ public class MediaConfigDialogController extends PDialogExtra {
     private TabPane tabPane = new TabPane();
     private Button btnOk = new Button("_Ok");
     private Button btnCreateMediaDB = new Button("_Mediensammlung neu aufbauen");
+    private Button btnExportMediaDB = new Button("Mediensammlung exportieren");
     private ProgressBar progress = new ProgressBar();
     private Button btnStopSearching = new Button();
 
@@ -80,6 +82,12 @@ public class MediaConfigDialogController extends PDialogExtra {
         btnCreateMediaDB.disableProperty().bind(progData.mediaDataList.searchingProperty());
         btnCreateMediaDB.setOnAction(event -> MediaDataWorker.createMediaDb());
 
+        btnExportMediaDB.disableProperty().bind(progData.mediaDataList.searchingProperty());
+        btnExportMediaDB.setOnAction(a -> {
+            String file = PDirFileChooser.FileChooserSave(ProgData.getInstance().primaryStage, "", "Mediensammlung.json");
+            new WriteMediaCollection().write(file, progData.mediaDataList);
+        });
+
         addOkButton(btnOk);
         addHlpButton(btnHelp);
 
@@ -91,7 +99,7 @@ public class MediaConfigDialogController extends PDialogExtra {
         btnStopSearching.setOnAction(event -> progData.mediaDataList.setStopSearching(true));
         btnStopSearching.visibleProperty().bind(progData.mediaDataList.searchingProperty());
 
-        getHBoxOverButtons().getChildren().addAll(btnCreateMediaDB, progress, btnStopSearching);
+        getHBoxOverButtons().getChildren().addAll(btnCreateMediaDB, btnExportMediaDB, progress, btnStopSearching);
         initPanel();
     }
 
