@@ -103,7 +103,6 @@ public class Worker {
 
     private void saveFilter() {
         progData.actFilmFilterWorker.getActFilterSettings().copyTo(sfTemp);
-//        SelectedFilmFilterFactory.copyFilter(progData.storedFilters.getActFilterSettings(), sfTemp);
         downloadFilterChannel = ProgConfig.FILTER_DOWNLOAD_CHANNEL.getValueSafe();
         downloadFilterAbo = ProgConfig.FILTER_DOWNLOAD_ABO.getValueSafe();
         aboFilterChannel = ProgConfig.FILTER_ABO_CHANNEL.getValueSafe();
@@ -111,7 +110,6 @@ public class Worker {
 
     private void resetFilter() {
         sfTemp.copyTo(progData.actFilmFilterWorker.getActFilterSettings());
-//        SelectedFilmFilterFactory.copyFilter(sfTemp, progData.storedFilters.getActFilterSettings());
         ProgConfig.FILTER_DOWNLOAD_CHANNEL.setValue(downloadFilterChannel);
         ProgConfig.FILTER_DOWNLOAD_ABO.setValue(downloadFilterAbo); // todo ???
         ProgConfig.FILTER_ABO_CHANNEL.setValue(aboFilterChannel);
