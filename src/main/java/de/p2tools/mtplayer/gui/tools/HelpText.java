@@ -626,7 +626,14 @@ public class HelpText {
             "Hier können externe Medienordner in der Mediensammlung verwaltet werden: " +
                     "Ordner hinzufügen, die Mediensammlung mit vorhandenen Ordnern " +
                     "manuell aktualisieren, oder vorhandene Ordner aus der " +
-                    "Mediensammlung entfernen." +
+                    "Mediensammlung entfernen." + P2LibConst.LINE_SEPARATORx2 +
+                    "Wichtig ist hier noch, dass nach dem Hinzufügen oder Ändern " +
+                    "einer externen Mediensammlung, diese wieder eingelesen wird. " +
+                    "Sonst arbeitet das Programm noch mit den alten Einträgen." + P2LibConst.LINE_SEPARATORx2 +
+                    "Externe Medienordner werden nur aktualisiert, " +
+                    "wenn es mit dem Button \"gedrehte Pfeile\" " +
+                    "angestoßen wird. Dafür müssen diese Ordner (z.B. USB-Festplatte) " +
+                    "nicht dauerhaft am Rechner angeschlossen sein." +
                     "\n";
 
     public static final String INTERN_MEDIA_COLLECTION =
