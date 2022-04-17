@@ -603,7 +603,9 @@ public class HelpText {
                     "beim Programmstart vorhanden sind.\n" +
                     "\n" +
                     "\"Mediensammlung neu aufbauen\": Auch hierfür müssen externe Medien nicht " +
-                    "angeschlossen sein." +
+                    "angeschlossen sein." + P2LibConst.LINE_SEPARATORx2 +
+                    "\"Mediensammlung exportieren\": Die gesamte Mediensammlung wird in eine \"json-Datei\" " +
+                    "exportiert. Der Ziel-Dateiname wird vorher abgefragt." +
                     "\n";
 
     public static final String MEDIA_COLLECTION =

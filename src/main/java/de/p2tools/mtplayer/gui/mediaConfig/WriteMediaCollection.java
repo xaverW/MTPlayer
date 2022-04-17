@@ -21,6 +21,7 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import de.p2tools.mtplayer.controller.mediaDb.MediaData;
 import de.p2tools.mtplayer.controller.mediaDb.MediaDataList;
+import de.p2tools.p2Lib.tools.file.PFileUtils;
 import de.p2tools.p2Lib.tools.log.PLog;
 
 import java.io.FileOutputStream;
@@ -38,8 +39,10 @@ public class WriteMediaCollection {
                 for (int i = 0; i < dataList.size(); ++i) {
                     jg.writeArrayFieldStart("Datei " + (i + 1));
                     MediaData md = dataList.get(i);
+                    String destPath = PFileUtils.addsPath(md.getPath(), md.getName());
                     jg.writeString(md.getName());
                     jg.writeString(md.getPath());
+                    jg.writeString(destPath);
                     jg.writeEndArray();
                 }
             }
