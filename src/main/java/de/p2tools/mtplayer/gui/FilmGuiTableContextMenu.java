@@ -88,8 +88,17 @@ public class FilmGuiTableContextMenu {
         miMediaDb.setOnAction(a -> filmGuiController.guiFilmMediaCollection());
         miMediaDb.setDisable(film == null);
 
+        final MenuItem miCopyName = new MenuItem("Titel in die Zwischenablage kopieren");
+        miCopyName.setOnAction(a -> {
+            PSystemUtils.copyToClipboard(film.getTitle());
+        });
+        final MenuItem miCopyTheme = new MenuItem("Thema in die Zwischenablage kopieren");
+        miCopyTheme.setOnAction(a -> {
+            PSystemUtils.copyToClipboard(film.getTheme());
+        });
+
         contextMenu.getItems().add(new SeparatorMenuItem());
-        contextMenu.getItems().addAll(miFilmsSetShown, miFilmInfo, miMediaDb);
+        contextMenu.getItems().addAll(miFilmsSetShown, miFilmInfo, miMediaDb, miCopyName, miCopyTheme);
 
 
         MenuItem resetTable = new MenuItem("Tabelle zurücksetzen");
