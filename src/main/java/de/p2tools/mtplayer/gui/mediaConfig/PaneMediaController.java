@@ -144,7 +144,7 @@ public class PaneMediaController extends PAccordionPane {
 
     private void initFilter() {
         Button btnClear = new Button();
-        btnClear.setGraphic(new ProgIcons().ICON_BUTTON_STOP);
+        btnClear.setGraphic(ProgIcons.Icons.ICON_BUTTON_STOP.getImageView());
         btnClear.setOnAction(a -> txtSearch.clear());
 
         HBox hBox = new HBox(10);

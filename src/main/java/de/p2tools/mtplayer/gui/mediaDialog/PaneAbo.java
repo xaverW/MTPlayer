@@ -112,7 +112,7 @@ public class PaneAbo extends ScrollPane {
                 break;
         }
 
-        btnReset.setGraphic(new ProgIcons().ICON_BUTTON_RESET);
+        btnReset.setGraphic(ProgIcons.Icons.ICON_BUTTON_RESET.getImageView());
         btnReset.setTooltip(new Tooltip("Suchtext wieder herstellen"));
 
         GridPane gridPaneSearch = new GridPane();

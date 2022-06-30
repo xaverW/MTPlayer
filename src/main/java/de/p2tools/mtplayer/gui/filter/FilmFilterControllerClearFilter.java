@@ -18,6 +18,7 @@ package de.p2tools.mtplayer.gui.filter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
+import de.p2tools.p2Lib.guiTools.PButtonClearFilter;
 import de.p2tools.p2Lib.guiTools.PGuiTools;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import javafx.geometry.Insets;
@@ -29,7 +30,7 @@ import javafx.scene.layout.VBox;
 
 public class FilmFilterControllerClearFilter extends VBox {
 
-    private final Button btnClearFilter = new Button("");
+    private final PButtonClearFilter btnClearFilter = new PButtonClearFilter();
     private final Button btnEditFilter = new Button("");
     private final Button btnGoBack = new Button("");
     private final Button btnGoForward = new Button("");
@@ -48,21 +49,18 @@ public class FilmFilterControllerClearFilter extends VBox {
     }
 
     private void addButton() {
-        btnGoBack.setGraphic(new ProgIcons().ICON_BUTTON_BACKWARD);
+        btnGoBack.setGraphic(ProgIcons.Icons.ICON_BUTTON_BACKWARD.getImageView());
         btnGoBack.setOnAction(a -> progData.actFilmFilterWorker.goBackward());
         btnGoBack.disableProperty().bind(progData.actFilmFilterWorker.backwardProperty().not());
         btnGoBack.setTooltip(new Tooltip("letzte Filtereinstellung wieder herstellen"));
-        btnGoForward.setGraphic(new ProgIcons().ICON_BUTTON_FORWARD);
+        btnGoForward.setGraphic(ProgIcons.Icons.ICON_BUTTON_FORWARD.getImageView());
         btnGoForward.setOnAction(a -> progData.actFilmFilterWorker.goForward());
         btnGoForward.disableProperty().bind(progData.actFilmFilterWorker.forwardProperty().not());
         btnGoForward.setTooltip(new Tooltip("letzte Filtereinstellung wieder herstellen"));
 
-        btnClearFilter.setGraphic(new ProgIcons().ICON_BUTTON_CLEAR_FILTER);
-        btnClearFilter.getStyleClass().add("btnClearFilter");
         btnClearFilter.setOnAction(a -> clearFilter());
-        btnClearFilter.setTooltip(new Tooltip("Textfilter löschen, ein zweiter Klick löscht alle Filter"));
 
-        btnEditFilter.setGraphic(new ProgIcons().ICON_BUTTON_EDIT_FILTER);
+        btnEditFilter.setGraphic(ProgIcons.Icons.ICON_BUTTON_EDIT_FILTER.getImageView());
         btnEditFilter.setOnAction(a -> editFilter());
         btnEditFilter.setTooltip(new Tooltip("Filter ein/ausschalten"));
 

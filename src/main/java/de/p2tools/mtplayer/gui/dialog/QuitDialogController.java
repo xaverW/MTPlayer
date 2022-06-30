@@ -59,21 +59,21 @@ public class QuitDialogController extends PDialogExtra {
         headerLabel.setStyle("-fx-font-size: 1.5em;");
 
         //nicht beenden
-        BigButton cancelButton = new BigButton(new ProgIcons().ICON_BUTTON_QUIT,
+        BigButton cancelButton = new BigButton(ProgIcons.Icons.ICON_BUTTON_QUIT.getImageView(),
                 "Nicht beenden", "");
         cancelButton.setOnAction(e -> {
             close();
         });
 
         //beenden
-        BigButton quitButton = new BigButton(new ProgIcons().ICON_BUTTON_QUIT,
+        BigButton quitButton = new BigButton(ProgIcons.Icons.ICON_BUTTON_QUIT.getImageView(),
                 "Beenden", "Alle Downloads abbrechen und das Programm beenden.");
         quitButton.setOnAction(e -> {
             ProgQuit.quit();
         });
 
         //warten, dann beenden
-        BigButton waitButton = new BigButton(new ProgIcons().ICON_BUTTON_QUIT,
+        BigButton waitButton = new BigButton(ProgIcons.Icons.ICON_BUTTON_QUIT.getImageView(),
                 "Warten", "Alle Downloads abwarten und dann das Programm beenden.");
         waitButton.setOnAction(e -> startWaiting());
         cbxShutDown.setSelected(false);
@@ -85,7 +85,7 @@ public class QuitDialogController extends PDialogExtra {
             }
         });
 
-        gridPane.add(new ProgIcons().ICON_DIALOG_QUIT, 0, 0, 1, 1);
+        gridPane.add(ProgIcons.Icons.ICON_DIALOG_QUIT.getImageView(), 0, 0, 1, 1);
         gridPane.add(headerLabel, 1, 0);
         gridPane.add(cancelButton, 1, 1);
         gridPane.add(quitButton, 1, 2);

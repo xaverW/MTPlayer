@@ -159,7 +159,7 @@ public class SetPaneController extends AnchorPane {
     private void initButton(VBox vBox) {
         Button btnDel = new Button("");
         btnDel.setTooltip(new Tooltip("Markiertes Set löschen"));
-        btnDel.setGraphic(new ProgIcons().ICON_BUTTON_REMOVE);
+        btnDel.setGraphic(ProgIcons.Icons.ICON_BUTTON_REMOVE.getImageView());
         btnDel.setOnAction(event -> {
             SetData setData = getSelectedSelData();
             if (setData != null) {
@@ -169,7 +169,7 @@ public class SetPaneController extends AnchorPane {
 
         Button btnNew = new Button("");
         btnNew.setTooltip(new Tooltip("Ein neues Set anlegen"));
-        btnNew.setGraphic(new ProgIcons().ICON_BUTTON_ADD);
+        btnNew.setGraphic(ProgIcons.Icons.ICON_BUTTON_ADD.getImageView());
         btnNew.setOnAction(event -> {
             SetData setData = new SetData("Neu-" + ++newCounter);
             progData.setDataList.addSetData(setData);
@@ -177,7 +177,7 @@ public class SetPaneController extends AnchorPane {
 
         Button btnUp = new Button("");
         btnUp.setTooltip(new Tooltip("Markiertes Set nach oben schieben"));
-        btnUp.setGraphic(new ProgIcons().ICON_BUTTON_MOVE_UP);
+        btnUp.setGraphic(ProgIcons.Icons.ICON_BUTTON_MOVE_UP.getImageView());
         btnUp.setOnAction(event -> {
             int sel = getSelectedLine();
             if (sel >= 0) {
@@ -188,7 +188,7 @@ public class SetPaneController extends AnchorPane {
 
         Button btnDown = new Button("");
         btnDown.setTooltip(new Tooltip("Markiertes Set nach unten schieben"));
-        btnDown.setGraphic(new ProgIcons().ICON_BUTTON_MOVE_DOWN);
+        btnDown.setGraphic(ProgIcons.Icons.ICON_BUTTON_MOVE_DOWN.getImageView());
         btnDown.setOnAction(event -> {
             int sel = getSelectedLine();
             if (sel >= 0) {

@@ -71,7 +71,7 @@ public class FilmFilterController extends FilterController {
         tglBlacklist.selectedProperty().bindBidirectional(progData.actFilmFilterWorker.getActFilterSettings().blacklistOnProperty());
         tglBlacklist.indeterminateProperty().bindBidirectional(progData.actFilmFilterWorker.getActFilterSettings().blacklistOnlyProperty());
 
-        vBoxBlacklist = getVBoxBotton();
+        vBoxBlacklist = getVBoxBottom();
         HBox hBox = new HBox(5);
         HBox.setHgrow(tglBlacklist, Priority.ALWAYS);
         hBox.getChildren().addAll(tglBlacklist, lblRight);

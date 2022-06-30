@@ -100,7 +100,7 @@ public class DownloadErrorDialogController extends PDialogExtra {
             quit();
         });
 
-        imageView.setImage(new ProgIcons().IMAGE_ACHTUNG_64);
+        imageView.setImage(ProgIcons.Icons.IMAGE_ACHTUNG_64.getImage());
 
         //start the countdown...
         lblTime.setText("");

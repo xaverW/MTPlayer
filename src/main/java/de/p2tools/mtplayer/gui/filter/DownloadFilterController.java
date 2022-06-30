@@ -18,11 +18,11 @@ package de.p2tools.mtplayer.gui.filter;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.mtplayer.tools.MLBandwidthTokenBucket;
 import de.p2tools.p2Lib.guiTools.PButton;
+import de.p2tools.p2Lib.guiTools.PButtonClearFilter;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Insets;
@@ -43,7 +43,7 @@ public class DownloadFilterController extends FilterController {
 
     private Spinner<Integer> spinnerAnz = new Spinner<>();
     private Slider sliderBandwidth = new Slider();
-    private Button btnClear = new Button("");
+    private PButtonClearFilter btnClear = new PButtonClearFilter();
     private Label lblBandwidth = new Label();
 
     // funktioniert nur wenn hier angelegt, geht sonst die Ref verloren!
@@ -111,10 +111,7 @@ public class DownloadFilterController extends FilterController {
     }
 
     private void initFilter() {
-        btnClear.setGraphic(new ProgIcons().ICON_BUTTON_CLEAR_FILTER);
-        btnClear.getStyleClass().add("btnClearFilter");
         btnClear.setOnAction(a -> clearFilter());
-        btnClear.setTooltip(new Tooltip("Filter löschen"));
 
         cboSrc.getItems().addAll(DownloadConstants.ALL,
                 DownloadConstants.SRC_COMBO_DOWNLOAD,

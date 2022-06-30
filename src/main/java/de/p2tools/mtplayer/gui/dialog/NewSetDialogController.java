@@ -65,11 +65,11 @@ public class NewSetDialogController extends PDialogExtra {
                 "für den Download und das Abspielen der Filme.");
         headerLabel.setStyle("-fx-font-size: 1.5em;");
 
-        BigButton cancelButton = new BigButton(new ProgIcons().ICON_BUTTON_QUIT, "Nichts ändern",
+        BigButton cancelButton = new BigButton(ProgIcons.Icons.ICON_BUTTON_QUIT.getImageView(), "Nichts ändern",
                 "");
         cancelButton.setOnAction(e -> close());
 
-        BigButton addButton = new BigButton(new ProgIcons().ICON_BUTTON_QUIT, "Neue Sets nur anfügen",
+        BigButton addButton = new BigButton(ProgIcons.Icons.ICON_BUTTON_QUIT.getImageView(), "Neue Sets nur anfügen",
                 "Die bestehenden Einstellungen werden nicht verändert." + P2LibConst.LINE_SEPARATOR +
                         "Das neue Set wird nur angefügt und muss dann" + P2LibConst.LINE_SEPARATOR +
                         "erst noch in den Einstellungen aktiviert werden." + P2LibConst.LINE_SEPARATOR +
@@ -79,7 +79,7 @@ public class NewSetDialogController extends PDialogExtra {
             close();
         });
 
-        BigButton replaceButton = new BigButton(new ProgIcons().ICON_BUTTON_QUIT, "Aktuelle Sets durch neue ersetzen",
+        BigButton replaceButton = new BigButton(ProgIcons.Icons.ICON_BUTTON_QUIT.getImageView(), "Aktuelle Sets durch neue ersetzen",
                 "Es werden alle Programmsets (auch eigene) gelöscht" + P2LibConst.LINE_SEPARATOR +
                         "und die neuen Standardsets wieder angelegt." + P2LibConst.LINE_SEPARATORx2 +
                         "(Wenn Sie die Einstellungen nicht verändert haben" + P2LibConst.LINE_SEPARATOR +
@@ -90,7 +90,7 @@ public class NewSetDialogController extends PDialogExtra {
         });
 
 
-        gridPane.add(new ProgIcons().ICON_DIALOG_QUIT, 0, 0, 1, 1);
+        gridPane.add(ProgIcons.Icons.ICON_DIALOG_QUIT.getImageView(), 0, 0, 1, 1);
         gridPane.add(headerLabel, 1, 0);
         gridPane.add(cancelButton, 1, 1);
         gridPane.add(addButton, 1, 2);

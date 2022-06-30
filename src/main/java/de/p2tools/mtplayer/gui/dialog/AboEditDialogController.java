@@ -266,7 +266,7 @@ public class AboEditDialogController extends AboDialogController {
 
                 Button btn = new Button("");
                 btn.setTooltip(new Tooltip("Zielpfad für das Abo anpassen"));
-                btn.setGraphic(new ProgIcons().ICON_BUTTON_EDIT_ABO_PATH);
+                btn.setGraphic(ProgIcons.Icons.ICON_BUTTON_EDIT_ABO_PATH.getImageView());
                 btn.setOnAction(event -> {
                     if (textField.isVisible()) {
                         textField.setVisible(false);

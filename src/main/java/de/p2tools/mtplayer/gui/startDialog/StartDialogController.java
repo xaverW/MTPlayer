@@ -196,7 +196,7 @@ public class StartDialogController extends PDialogExtra {
         btnCancel = new Button("_Abbrechen");
         btnCancel.setOnAction(a -> closeDialog(false));
 
-        btnNext = PButton.getButton(new ProgIcons().ICON_BUTTON_NEXT, "nächste Seite");
+        btnNext = PButton.getButton(ProgIcons.Icons.ICON_BUTTON_NEXT.getImageView(), "nächste Seite");
         btnNext.setOnAction(event -> {
             switch (aktState) {
                 case START_1:
@@ -222,7 +222,7 @@ public class StartDialogController extends PDialogExtra {
             }
             selectActPane();
         });
-        btnPrev = PButton.getButton(new ProgIcons().ICON_BUTTON_PREV, "vorherige Seite");
+        btnPrev = PButton.getButton(ProgIcons.Icons.ICON_BUTTON_PREV.getImageView(), "vorherige Seite");
         btnPrev.setOnAction(event -> {
             switch (aktState) {
                 case START_1:

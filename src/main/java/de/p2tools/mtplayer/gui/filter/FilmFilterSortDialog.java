@@ -92,15 +92,15 @@ public class FilmFilterSortDialog extends PDialogExtra {
         tableView.setItems(progData.actFilmFilterWorker.getStoredFilterList());
 
         btnDel.setTooltip(new Tooltip("aktuelles Filterprofil löschen"));
-        btnDel.setGraphic(new ProgIcons().ICON_BUTTON_REMOVE);
+        btnDel.setGraphic(ProgIcons.Icons.ICON_BUTTON_REMOVE.getImageView());
         btnDel.setOnAction(e -> delFilter());
 
         btnSeparator.setTooltip(new Tooltip("einen Trenner einfügen"));
-        btnSeparator.setGraphic(new ProgIcons().ICON_BUTTON_SEPARATOR);
+        btnSeparator.setGraphic(ProgIcons.Icons.ICON_BUTTON_SEPARATOR.getImageView());
         btnSeparator.setOnAction(e -> addSeparator());
 
         btnTop.setTooltip(new Tooltip("aktuelles Filterprofil an den Anfang verschieben"));
-        btnTop.setGraphic(new ProgIcons().ICON_BUTTON_MOVE_TOP);
+        btnTop.setGraphic(ProgIcons.Icons.ICON_BUTTON_MOVE_TOP.getImageView());
         btnTop.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
 
@@ -113,7 +113,7 @@ public class FilmFilterSortDialog extends PDialogExtra {
         });
 
         btnBottom.setTooltip(new Tooltip("aktuelles Filterprofil an das Ende verschieben"));
-        btnBottom.setGraphic(new ProgIcons().ICON_BUTTON_MOVE_BOTTOM);
+        btnBottom.setGraphic(ProgIcons.Icons.ICON_BUTTON_MOVE_BOTTOM.getImageView());
         btnBottom.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
 
@@ -126,7 +126,7 @@ public class FilmFilterSortDialog extends PDialogExtra {
         });
 
         btnUp.setTooltip(new Tooltip("aktuelles Filterprofil nach oben verschieben"));
-        btnUp.setGraphic(new ProgIcons().ICON_BUTTON_MOVE_UP);
+        btnUp.setGraphic(ProgIcons.Icons.ICON_BUTTON_MOVE_UP.getImageView());
         btnUp.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
 
@@ -139,7 +139,7 @@ public class FilmFilterSortDialog extends PDialogExtra {
         });
 
         btnDown.setTooltip(new Tooltip("aktuelles Filterprofil nach unten verschieben"));
-        btnDown.setGraphic(new ProgIcons().ICON_BUTTON_MOVE_DOWN);
+        btnDown.setGraphic(ProgIcons.Icons.ICON_BUTTON_MOVE_DOWN.getImageView());
         btnDown.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
 

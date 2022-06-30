@@ -52,7 +52,7 @@ public class AboMenu {
         vBox.getChildren().add(vBoxSpace);
 
         final ToolBarButton btNew = new ToolBarButton(vBox,
-                "Neues Abo", "Neus Abo anlegen", new ProgIcons().FX_ICON_TOOLBAR_ABO_NEW);
+                "Neues Abo", "Neus Abo anlegen", ProgIcons.Icons.FX_ICON_TOOLBAR_ABO_NEW.getImageView());
 
         vBoxSpace = new VBox();
         vBoxSpace.setMaxHeight(10);
@@ -60,13 +60,13 @@ public class AboMenu {
         vBox.getChildren().add(vBoxSpace);
 
         final ToolBarButton btOn = new ToolBarButton(vBox,
-                "Abos einschalten", "Markierte Abos einschalten", new ProgIcons().FX_ICON_TOOLBAR_ABO_ON);
+                "Abos einschalten", "Markierte Abos einschalten", ProgIcons.Icons.FX_ICON_TOOLBAR_ABO_ON.getImageView());
         final ToolBarButton btOff = new ToolBarButton(vBox,
-                "Abos ausschalten", "Markierte Abos ausschalten", new ProgIcons().FX_ICON_TOOLBAR_ABO_OFF);
+                "Abos ausschalten", "Markierte Abos ausschalten", ProgIcons.Icons.FX_ICON_TOOLBAR_ABO_OFF.getImageView());
         final ToolBarButton btDel = new ToolBarButton(vBox,
-                "Abos löschen", "Markierte Abos löschen", new ProgIcons().FX_ICON_TOOLBAR_ABO_DEL);
+                "Abos löschen", "Markierte Abos löschen", ProgIcons.Icons.FX_ICON_TOOLBAR_ABO_DEL.getImageView());
         final ToolBarButton btChange = new ToolBarButton(vBox,
-                "Abos ändern", "Markierte Abos ändern", new ProgIcons().FX_ICON_TOOLBAR_ABO_CONFIG);
+                "Abos ändern", "Markierte Abos ändern", ProgIcons.Icons.FX_ICON_TOOLBAR_ABO_CONFIG.getImageView());
 
         btNew.setOnAction(a -> progData.aboList.addNewAbo("Neu", "", "", ""));
         btOn.setOnAction(a -> progData.aboGuiController.setAboActive(true));
@@ -79,7 +79,7 @@ public class AboMenu {
         // MenuButton
         final MenuButton mb = new MenuButton("");
         mb.setTooltip(new Tooltip("Abomenü anzeigen"));
-        mb.setGraphic(new ProgIcons().FX_ICON_TOOLBAR_MENU);
+        mb.setGraphic(ProgIcons.Icons.FX_ICON_TOOLBAR_MENU.getImageView());
         mb.getStyleClass().add("btnFunctionWide");
 
         final MenuItem mbOn = new MenuItem("Abos einschalten");

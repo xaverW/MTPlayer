@@ -120,7 +120,7 @@ public class PaneConfigController extends PAccordionPane {
         final Button btnHelp = PButton.helpButton(stage,
                 "Mediensammlungen verwalten", HelpText.MEDIA_COLLECTION);
         btnExportFile.setTooltip(new Tooltip("Einen Ordner für den Export auswählen"));
-        btnExportFile.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
+        btnExportFile.setGraphic(ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
 
         final ToggleGroup tg = new ToggleGroup();
         rbWithOutSuff.setToggleGroup(tg);

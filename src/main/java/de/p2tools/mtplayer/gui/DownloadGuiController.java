@@ -150,7 +150,7 @@ public class DownloadGuiController extends AnchorPane {
         final Optional<DownloadData> download = getSel();
         if (download.isPresent()) {
             POpen.playStoredFilm(download.get().getDestPathFile(),
-                    ProgConfig.SYSTEM_PROG_PLAY_FILME, new ProgIcons().ICON_BUTTON_FILE_OPEN);
+                    ProgConfig.SYSTEM_PROG_PLAY_FILME, ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
         }
     }
 
@@ -171,7 +171,7 @@ public class DownloadGuiController extends AnchorPane {
         }
 
         String s = download.get().getDestPath();
-        POpen.openDir(s, ProgConfig.SYSTEM_PROG_OPEN_DIR, new ProgIcons().ICON_BUTTON_FILE_OPEN);
+        POpen.openDir(s, ProgConfig.SYSTEM_PROG_OPEN_DIR, ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
     }
 
     public void playUrl() {

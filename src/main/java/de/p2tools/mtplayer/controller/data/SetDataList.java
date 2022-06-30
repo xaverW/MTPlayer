@@ -122,7 +122,7 @@ public class SetDataList extends SetDataListWorker {
         if (ProgConfig.SYSTEM_PATH_VLC.get().isEmpty()) {
             ProgConfig.SYSTEM_PATH_VLC.setValue(PDialogFileChosser.showFileChooser(ProgData.getInstance().primaryStage, "VLC",
                     "VLC wird nicht gefunden.", "Bitte den Pfad zum" + P2LibConst.LINE_SEPARATOR +
-                            "VLC-Player angeben.", false, new ProgIcons().ICON_BUTTON_FILE_OPEN));
+                            "VLC-Player angeben.", false, ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView()));
         }
         return ProgConfig.SYSTEM_PATH_VLC.get();
     }
@@ -132,7 +132,7 @@ public class SetDataList extends SetDataListWorker {
         if (ProgConfig.SYSTEM_PATH_FFMPEG.get().isEmpty()) {
             ProgConfig.SYSTEM_PATH_FFMPEG.setValue(PDialogFileChosser.showFileChooser(ProgData.getInstance().primaryStage, "ffmpeg",
                     "ffmpeg wird nicht gefunden.", "Bitte den Pfad zu" + P2LibConst.LINE_SEPARATOR +
-                            "ffmpeg angeben.", false, new ProgIcons().ICON_BUTTON_FILE_OPEN));
+                            "ffmpeg angeben.", false, ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView()));
         }
         return ProgConfig.SYSTEM_PATH_FFMPEG.get();
     }

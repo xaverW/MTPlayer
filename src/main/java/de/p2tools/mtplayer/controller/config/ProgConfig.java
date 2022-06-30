@@ -376,6 +376,11 @@ public class ProgConfig extends PDataProgConfig {
     public static void addConfigData(ConfigFile configFile) {
         ProgData progData = ProgData.getInstance();
 
+        // Configs der Programmversion, nur damit sie (zur Update-Suche) im Config-File stehen
+        ProgConfig.SYSTEM_PROG_VERSION.set(ProgramTools.getProgVersion());
+        ProgConfig.SYSTEM_PROG_BUILD_NO.set(ProgramTools.getBuild());
+        ProgConfig.SYSTEM_PROG_BUILD_DATE.set(ProgramTools.getCompileDate());
+
         configFile.addConfigs(ProgConfig.getInstance());//Progconfig
         configFile.addConfigs(ProgColorList.getConfigsData());//Color
 

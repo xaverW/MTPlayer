@@ -34,7 +34,6 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 
@@ -165,10 +164,10 @@ public class TableFilm {
                 final Button btnSave;
 
                 btnPlay = new Button("");
-                btnPlay.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_FILM_PLAY));
+                btnPlay.setGraphic(ProgIcons.Icons.IMAGE_TABLE_FILM_PLAY.getImageView());
 
                 btnSave = new Button("");
-                btnSave.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_FILM_SAVE));
+                btnSave.setGraphic(ProgIcons.Icons.IMAGE_TABLE_FILM_SAVE.getImageView());
 
                 if (small.get()) {
                     btnPlay.setMaxHeight(18);

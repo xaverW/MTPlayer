@@ -135,13 +135,13 @@ public class PanePath {
 
         Button btnDel = new Button("");
         btnDel.setTooltip(new Tooltip("Die markierte Sammlung wird gelöscht."));
-        btnDel.setGraphic(new ProgIcons().ICON_BUTTON_REMOVE);
+        btnDel.setGraphic(ProgIcons.Icons.ICON_BUTTON_REMOVE.getImageView());
         btnDel.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems())
                 .or(progData.mediaDataList.searchingProperty()));
         btnDel.setOnAction(a -> delete());
 
         Button btnAdd = new Button("");
-        btnAdd.setGraphic(new ProgIcons().ICON_BUTTON_ADD);
+        btnAdd.setGraphic(ProgIcons.Icons.ICON_BUTTON_ADD.getImageView());
         if (external) {
             btnAdd.setTooltip(new Tooltip("Eine neue Sammlung wird angelegt und vom angegebenen Pfad eingelesen."));
         } else {
@@ -152,7 +152,7 @@ public class PanePath {
         if (external) {
             Button btnUpdate = new Button("");
             btnUpdate.setTooltip(new Tooltip("Die markierte Sammlung wird neu eingelesen."));
-            btnUpdate.setGraphic(new ProgIcons().ICON_BUTTON_UPDATE);
+            btnUpdate.setGraphic(ProgIcons.Icons.ICON_BUTTON_UPDATE.getImageView());
             btnUpdate.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems())
                     .or(progData.mediaDataList.searchingProperty()));
 
@@ -209,7 +209,7 @@ public class PanePath {
 
         final Button btnPath = new Button("");
         btnPath.setTooltip(new Tooltip("Einen Pfad zum Einlesen einer neuen Sammlung auswählen."));
-        btnPath.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
+        btnPath.setGraphic(ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
         btnPath.setOnAction(event -> {
             PDirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtPath);
             if (txtCollectionName.getText().isEmpty()) {

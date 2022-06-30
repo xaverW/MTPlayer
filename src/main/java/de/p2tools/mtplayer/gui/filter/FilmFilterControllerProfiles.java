@@ -79,7 +79,7 @@ public class FilmFilterControllerProfiles extends VBox {
     private void initButton() {
         btnLoadFilter.setOnAction(a -> loadFilter());
         btnLoadFilter.disableProperty().bind(cboFilterProfiles.getSelectionModel().selectedItemProperty().isNull());
-        btnLoadFilter.setGraphic(new ProgIcons().FX_ICON_FILTER_FILM_LOAD);
+        btnLoadFilter.setGraphic(ProgIcons.Icons.FX_ICON_FILTER_FILM_LOAD.getImageView());
         btnLoadFilter.setText("");
         btnLoadFilter.setTooltip(new Tooltip("Filterprofil wieder laden"));
 
@@ -90,12 +90,12 @@ public class FilmFilterControllerProfiles extends VBox {
                 saveFilter();
             }
         });
-        btnSaveFilter.setGraphic(new ProgIcons().FX_ICON_FILTER_FILM_SAVE);
+        btnSaveFilter.setGraphic(ProgIcons.Icons.FX_ICON_FILTER_FILM_SAVE.getImageView());
         btnSaveFilter.setText("");
         btnSaveFilter.setTooltip(new Tooltip("Aktuelle Filtereinstellung als Filterprofil speichern"));
 
         btnNewFilter.setOnAction(a -> newFilter());
-        btnNewFilter.setGraphic(new ProgIcons().FX_ICON_FILTER_FILM_NEW);
+        btnNewFilter.setGraphic(ProgIcons.Icons.FX_ICON_FILTER_FILM_NEW.getImageView());
         btnNewFilter.setText("");
         btnNewFilter.setTooltip(new Tooltip("Aktuelle Filtereinstellung als neues Filterprofil anlegen"));
     }
@@ -158,7 +158,7 @@ public class FilmFilterControllerProfiles extends VBox {
         final MenuItem miReset = new MenuItem("alle Filterprofile wieder herstellen");
         miReset.setOnAction(e -> resetFilter());
 
-        mbFilterTools.setGraphic(new ProgIcons().ICON_BUTTON_MENU);
+        mbFilterTools.setGraphic(ProgIcons.Icons.ICON_BUTTON_MENU.getImageView());
         mbFilterTools.getItems().addAll(miLoad, miRename, miDel, miDelAll, miSave, miNew, miAbo,
                 new SeparatorMenuItem(), miResort, miFilterDialog,
                 new SeparatorMenuItem(), miReset);

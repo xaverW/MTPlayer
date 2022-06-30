@@ -162,7 +162,7 @@ public class FilmFilterControllerFilter extends VBox {
             initPDatePicker();
         });
         initPDatePicker();
-        btnClearDatePicker.setGraphic(new ProgIcons().ICON_BUTTON_CLEAR);
+        btnClearDatePicker.setGraphic(ProgIcons.Icons.ICON_BUTTON_CLEAR.getImageView());
         btnClearDatePicker.setOnAction(a -> pDatePicker.clearDate());
     }
 

@@ -57,7 +57,7 @@ public class DownPathPane {
         btnFile.setOnAction(event -> {
             PDirFileChooser.DirChooser(stage, txtPath);
         });
-        btnFile.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
+        btnFile.setGraphic(ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
         btnFile.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen"));
 
         final Button btnHelp = PButton.helpButton(stage,

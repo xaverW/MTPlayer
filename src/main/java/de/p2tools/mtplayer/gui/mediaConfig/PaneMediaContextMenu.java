@@ -49,7 +49,7 @@ public class PaneMediaContextMenu {
         miOpen.setOnAction(a -> {
             String path = mediaData.getPath();
             if (!path.isEmpty()) {
-                POpen.openDir(path, ProgConfig.SYSTEM_PROG_OPEN_DIR, new ProgIcons().ICON_BUTTON_FILE_OPEN);
+                POpen.openDir(path, ProgConfig.SYSTEM_PROG_OPEN_DIR, ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
             }
         });
 
@@ -59,7 +59,7 @@ public class PaneMediaContextMenu {
             String name = mediaData.getName();
             if (!path.isEmpty() && !name.isEmpty()) {
                 POpen.playStoredFilm(PFileUtils.addsPath(path, name),
-                        ProgConfig.SYSTEM_PROG_PLAY_FILME, new ProgIcons().ICON_BUTTON_FILE_OPEN);
+                        ProgConfig.SYSTEM_PROG_PLAY_FILME, ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
             }
         });
 

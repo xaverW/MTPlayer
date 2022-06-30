@@ -55,9 +55,9 @@ public class FilmMenu {
         vBox.getChildren().add(vBoxSpace);
 
         final ToolBarButton btPlay = new ToolBarButton(vBox,
-                "Abspielen", "Markierten Film abspielen", new ProgIcons().FX_ICON_TOOLBAR_FILM_START);
+                "Abspielen", "Markierten Film abspielen", ProgIcons.Icons.FX_ICON_TOOLBAR_FILM_START.getImageView());
         final ToolBarButton btSave = new ToolBarButton(vBox,
-                "Speichern", "Markierte Filme speichern", new ProgIcons().FX_ICON_TOOLBAR_FILM_REC);
+                "Speichern", "Markierte Filme speichern", ProgIcons.Icons.FX_ICON_TOOLBAR_FILM_REC.getImageView());
 
         vBoxSpace = new VBox();
         vBoxSpace.setMaxHeight(10);
@@ -65,13 +65,13 @@ public class FilmMenu {
         vBox.getChildren().add(vBoxSpace);
 
         final ToolBarButton btBookmark = new ToolBarButton(vBox,
-                "Bookmarks anlegen", "Bookmarks für die markierten Filme anlegen", new ProgIcons().FX_ICON_TOOLBAR_FILM_BOOKMARK);
+                "Bookmarks anlegen", "Bookmarks für die markierten Filme anlegen", ProgIcons.Icons.FX_ICON_TOOLBAR_FILM_BOOKMARK.getImageView());
         final ToolBarButton btDelBookmark = new ToolBarButton(vBox,
-                "Bookmarks löschen", "Bookmarks für die markierten Filme löschen", new ProgIcons().FX_ICON_TOOLBAR_FILM_DEL_BOOKMARK);
+                "Bookmarks löschen", "Bookmarks für die markierten Filme löschen", ProgIcons.Icons.FX_ICON_TOOLBAR_FILM_DEL_BOOKMARK.getImageView());
         final ToolBarButton btDelAllBookmark = new ToolBarButton(vBox,
-                "Alle Bookmarks löschen", "Alle angelegten Bookmarks löschen", new ProgIcons().FX_ICON_TOOLBAR_FILM_DEL_ALL_BOOKMARK);
+                "Alle Bookmarks löschen", "Alle angelegten Bookmarks löschen", ProgIcons.Icons.FX_ICON_TOOLBAR_FILM_DEL_ALL_BOOKMARK.getImageView());
         final ToolBarButton btFilterBookmakr = new ToolBarButton(vBox,
-                "Bookmarks anzeigen", FILM_FILTER_BOOKMARK_TEXT, new ProgIcons().FX_ICON_TOOLBAR_FILM_BOOKMARK_FILTER);
+                "Bookmarks anzeigen", FILM_FILTER_BOOKMARK_TEXT, ProgIcons.Icons.FX_ICON_TOOLBAR_FILM_BOOKMARK_FILTER.getImageView());
 
         btPlay.setOnAction(a -> progData.filmGuiController.playFilmUrl());
         btSave.setOnAction(a -> progData.filmGuiController.saveTheFilm());
@@ -117,7 +117,7 @@ public class FilmMenu {
     private void initFilmMenu() {
         final MenuButton mb = new MenuButton("");
         mb.setTooltip(new Tooltip("Filmmenü anzeigen"));
-        mb.setGraphic(new ProgIcons().FX_ICON_TOOLBAR_MENU);
+        mb.setGraphic(ProgIcons.Icons.FX_ICON_TOOLBAR_MENU.getImageView());
         mb.getStyleClass().add("btnFunctionWide");
 
         final MenuItem mbPlay = new MenuItem("Film abspielen");

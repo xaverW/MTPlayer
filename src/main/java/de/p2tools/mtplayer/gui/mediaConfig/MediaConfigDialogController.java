@@ -95,7 +95,7 @@ public class MediaConfigDialogController extends PDialogExtra {
         progress.setMaxWidth(Double.MAX_VALUE);
         HBox.setHgrow(progress, Priority.ALWAYS);
 
-        btnStopSearching.setGraphic(new ProgIcons().ICON_BUTTON_STOP);
+        btnStopSearching.setGraphic(ProgIcons.Icons.ICON_BUTTON_STOP.getImageView());
         btnStopSearching.setOnAction(event -> progData.mediaDataList.setStopSearching(true));
         btnStopSearching.visibleProperty().bind(progData.mediaDataList.searchingProperty());
 

@@ -34,7 +34,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.ProgressBarTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 
@@ -229,7 +228,7 @@ public class TableDownload {
                 if (item <= DownloadConstants.STATE_STOPPED) {
                     btnDownStart = new Button("");
                     btnDownStart.setTooltip(new Tooltip("Download starten"));
-                    btnDownStart.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_DOWNLOAD_START));
+                    btnDownStart.setGraphic(ProgIcons.Icons.IMAGE_TABLE_DOWNLOAD_START.getImageView());
                     btnDownStart.setOnAction((ActionEvent event) -> {
                         DownloadData download = getTableView().getItems().get(getIndex());
                         ProgData.getInstance().downloadList.startDownloads(download);
@@ -237,7 +236,7 @@ public class TableDownload {
 
                     btnDownDel = new Button("");
                     btnDownDel.setTooltip(new Tooltip("Download löschen"));
-                    btnDownDel.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_DOWNLOAD_DEL));
+                    btnDownDel.setGraphic(ProgIcons.Icons.IMAGE_TABLE_DOWNLOAD_DEL.getImageView());
                     btnDownDel.setOnAction(event -> {
                         DownloadData download = getTableView().getItems().get(getIndex());
                         ProgData.getInstance().downloadList.delDownloads(download);
@@ -255,7 +254,7 @@ public class TableDownload {
                 } else if (item < DownloadConstants.STATE_FINISHED) {
                     btnDownStop = new Button("");
                     btnDownStop.setTooltip(new Tooltip("Download stoppen"));
-                    btnDownStop.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_DOWNLOAD_STOP));
+                    btnDownStop.setGraphic(ProgIcons.Icons.IMAGE_TABLE_DOWNLOAD_STOP.getImageView());
                     btnDownStop.setOnAction((ActionEvent event) -> {
                         DownloadData download = getTableView().getItems().get(getIndex());
                         download.stopDownload();
@@ -263,7 +262,7 @@ public class TableDownload {
 
                     btnDownDel = new Button("");
                     btnDownDel.setTooltip(new Tooltip("Download löschen"));
-                    btnDownDel.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_DOWNLOAD_DEL));
+                    btnDownDel.setGraphic(ProgIcons.Icons.IMAGE_TABLE_DOWNLOAD_DEL.getImageView());
                     btnDownDel.setOnAction(event -> {
                         DownloadData download = getTableView().getItems().get(getIndex());
                         ProgData.getInstance().downloadList.delDownloads(download);
@@ -281,20 +280,20 @@ public class TableDownload {
                 } else if (item == DownloadConstants.STATE_FINISHED) {
                     btnFilmStart = new Button("");
                     btnFilmStart.setTooltip(new Tooltip("gespeicherten Film abspielen"));
-                    btnFilmStart.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_FILM_PLAY));
+                    btnFilmStart.setGraphic(ProgIcons.Icons.IMAGE_TABLE_FILM_PLAY.getImageView());
                     btnFilmStart.setOnAction((ActionEvent event) -> {
                         DownloadData download = getTableView().getItems().get(getIndex());
                         POpen.playStoredFilm(download.getDestPathFile(),
-                                ProgConfig.SYSTEM_PROG_PLAY_FILME, new ProgIcons().ICON_BUTTON_FILE_OPEN);
+                                ProgConfig.SYSTEM_PROG_PLAY_FILME, ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
                     });
 
                     btnOpenDirectory = new Button();
                     btnOpenDirectory.setTooltip(new Tooltip("Ordner mit gespeichertem Film öffnen"));
-                    btnOpenDirectory.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_DOWNLOAD_OPEN_DIR));
+                    btnOpenDirectory.setGraphic(ProgIcons.Icons.IMAGE_TABLE_DOWNLOAD_OPEN_DIR.getImageView());
                     btnOpenDirectory.setOnAction((ActionEvent event) -> {
                         DownloadData download = getTableView().getItems().get(getIndex());
                         POpen.openDir(download.getDestPath(),
-                                ProgConfig.SYSTEM_PROG_OPEN_DIR, new ProgIcons().ICON_BUTTON_FILE_OPEN);
+                                ProgConfig.SYSTEM_PROG_OPEN_DIR, ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
                     });
 
                     if (small.get()) {
@@ -309,7 +308,7 @@ public class TableDownload {
                 } else if (item == DownloadConstants.STATE_ERROR) {
                     btnDownStart = new Button("");
                     btnDownStart.setTooltip(new Tooltip("Download wieder starten"));
-                    btnDownStart.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_DOWNLOAD_START));
+                    btnDownStart.setGraphic(ProgIcons.Icons.IMAGE_TABLE_DOWNLOAD_START.getImageView());
                     btnDownStart.setOnAction((ActionEvent event) -> {
                         DownloadData download = getTableView().getItems().get(getIndex());
                         List<DownloadData> list = new ArrayList<>();
@@ -319,7 +318,7 @@ public class TableDownload {
 
                     btnDownDel = new Button("");
                     btnDownDel.setTooltip(new Tooltip("Download löschen"));
-                    btnDownDel.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_DOWNLOAD_DEL));
+                    btnDownDel.setGraphic(ProgIcons.Icons.IMAGE_TABLE_DOWNLOAD_DEL.getImageView());
                     btnDownDel.setOnAction(event -> {
                         DownloadData download = getTableView().getItems().get(getIndex());
                         ProgData.getInstance().downloadList.delDownloads(download);

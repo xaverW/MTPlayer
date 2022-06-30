@@ -55,10 +55,10 @@ public class FilmInfoDialogController extends PDialogExtra {
     private final PToggleSwitch tglUrl = new PToggleSwitch("URL");
 
     private final PHyperlink pHyperlinkUrl = new PHyperlink("",
-            ProgConfig.SYSTEM_PROG_OPEN_URL, new ProgIcons().ICON_BUTTON_FILE_OPEN);
+            ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
 
     private final PHyperlink pHyperlinkWebsite = new PHyperlink("",
-            ProgConfig.SYSTEM_PROG_OPEN_URL, new ProgIcons().ICON_BUTTON_FILE_OPEN);
+            ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
 
     BooleanProperty urlProperty = ProgConfig.FILM_INFO_DIALOG_SHOW_URL;
 
@@ -104,21 +104,21 @@ public class FilmInfoDialogController extends PDialogExtra {
                             break;
                         case FilmDataXml.FILM_HD:
                             if (film.isHd()) {
-                                ivHD.setImage(new ProgIcons().ICON_DIALOG_ON);
+                                ivHD.setImage(ProgIcons.Icons.ICON_DIALOG_ON.getImage());
                             } else {
                                 ivHD.setImage(null);
                             }
                             break;
                         case FilmDataXml.FILM_UT:
                             if (film.isUt()) {
-                                ivUT.setImage(new ProgIcons().ICON_DIALOG_ON);
+                                ivUT.setImage(ProgIcons.Icons.ICON_DIALOG_ON.getImage());
                             } else {
                                 ivUT.setImage(null);
                             }
                             break;
                         case FilmDataXml.FILM_NEW:
                             if (film.isNewFilm()) {
-                                ivNew.setImage(new ProgIcons().ICON_DIALOG_ON);
+                                ivNew.setImage(ProgIcons.Icons.ICON_DIALOG_ON.getImage());
                             } else {
                                 ivNew.setImage(null);
                             }

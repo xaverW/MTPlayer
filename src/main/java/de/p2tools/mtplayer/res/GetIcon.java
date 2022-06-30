@@ -16,40 +16,13 @@
 
 package de.p2tools.mtplayer.res;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+public class GetIcon extends de.p2tools.p2Lib.icon.GetIcon {
 
-public class GetIcon {
+    public static String P2_ICON_PATH = "/de/p2tools/mtplayer/res/program/";
 
-    private final static String PATH_PROGRAM = "/de/p2tools/mtplayer/res/program/";
-    private final static String PATH_SENDER = "/de/p2tools/mtplayer/res/sender/";
-    private final static String PATH_RES = "/de/p2tools/mtplayer/res/";
-
-    public static ImageView getImageView(String strIcon, int w, int h) {
-        return new ImageView(getImage(strIcon, PATH_PROGRAM, w, h));
+    public GetIcon() {
     }
-
-    public static ImageView getImageView(String strIcon) {
-        return new ImageView(getImage(strIcon, PATH_PROGRAM, 0, 0));
-    }
-
-    public static Image getImage(String strIcon, int w, int h) {
-        return getImage(strIcon, PATH_PROGRAM, w, h);
-    }
-
-    public static Image getImage(String strIcon) {
-        return getImage(strIcon, PATH_PROGRAM, 0, 0);
-    }
-
-    public static Image getImage(String strIcon, String path, int w, int h) {
-        Image icon;
-        icon = getStdImage(strIcon, path, w, h);
-
-        return icon;
-    }
-
-    private static Image getStdImage(String strIcon, String path, int w, int h) {
-        return new Image(GetIcon.class.getResource(path + strIcon).toExternalForm(),
-                w, h, false, true);
-    }
+//    private final static String PATH_PROGRAM = "/de/p2tools/mtplayer/res/program/";
+//    private final static String PATH_SENDER = "/de/p2tools/mtplayer/res/sender/";
+//    private final static String PATH_RES = "/de/p2tools/mtplayer/res/";
 }

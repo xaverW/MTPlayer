@@ -18,15 +18,13 @@ package de.p2tools.mtplayer.gui.filter;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.data.abo.AboConstants;
 import de.p2tools.mtplayer.tools.filmFilter.FilterCheckRegEx;
+import de.p2tools.p2Lib.guiTools.PButtonClearFilter;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -36,7 +34,7 @@ public class AboFilterController extends FilterController {
     private ComboBox<String> cboArt = new ComboBox<>(); // Abo ein-/ausgeschaltet
     private TextField txtDescription = new TextField();
     private TextField txtName = new TextField();
-    private Button btnClear = new Button("");
+    private PButtonClearFilter btnClear = new PButtonClearFilter();
 
     private final VBox vBoxFilter;
     private final ProgData progData;
@@ -60,15 +58,8 @@ public class AboFilterController extends FilterController {
 
         initFilter();
 
-        btnClear.setGraphic(new ProgIcons().ICON_BUTTON_CLEAR_FILTER);
-        btnClear.getStyleClass().add("btnClearFilter");
         btnClear.setOnAction(a -> clearFilter());
-        btnClear.setTooltip(new Tooltip("Filter löschen"));
     }
-
-//    public void setClearText(String txt) {
-////        btnClear.setText(txt);
-//    }
 
     private void initFilter() {
         txtName.textProperty().bindBidirectional(ProgConfig.FILTER_ABO_NAME);

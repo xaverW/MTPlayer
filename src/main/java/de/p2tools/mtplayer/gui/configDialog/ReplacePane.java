@@ -130,7 +130,7 @@ public class ReplacePane {
 
         Button btnDel = new Button("");
         btnDel.setTooltip(new Tooltip("Eintrag löschen"));
-        btnDel.setGraphic(new ProgIcons().ICON_BUTTON_REMOVE);
+        btnDel.setGraphic(ProgIcons.Icons.ICON_BUTTON_REMOVE.getImageView());
         btnDel.setOnAction(event -> {
             final ObservableList<ReplaceData> sels = tableView.getSelectionModel().getSelectedItems();
 
@@ -144,7 +144,7 @@ public class ReplacePane {
 
         Button btnNew = new Button("");
         btnNew.setTooltip(new Tooltip("Einen neuen Eintrag erstellen"));
-        btnNew.setGraphic(new ProgIcons().ICON_BUTTON_ADD);
+        btnNew.setGraphic(ProgIcons.Icons.ICON_BUTTON_ADD.getImageView());
         btnNew.setOnAction(event -> {
             ReplaceData replaceData = new ReplaceData();
             ProgData.getInstance().replaceList.add(replaceData);
@@ -156,7 +156,7 @@ public class ReplacePane {
 
         Button btnUp = new Button("");
         btnUp.setTooltip(new Tooltip("Eintrag nach oben schieben"));
-        btnUp.setGraphic(new ProgIcons().ICON_BUTTON_MOVE_UP);
+        btnUp.setGraphic(ProgIcons.Icons.ICON_BUTTON_MOVE_UP.getImageView());
         btnUp.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
             if (sel < 0) {
@@ -169,7 +169,7 @@ public class ReplacePane {
 
         Button btnDown = new Button("");
         btnDown.setTooltip(new Tooltip("Eintrag nach unten schieben"));
-        btnDown.setGraphic(new ProgIcons().ICON_BUTTON_MOVE_DOWN);
+        btnDown.setGraphic(ProgIcons.Icons.ICON_BUTTON_MOVE_DOWN.getImageView());
         btnDown.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
             if (sel < 0) {
@@ -182,7 +182,7 @@ public class ReplacePane {
 
         Button btnTop = new Button();
         btnTop.setTooltip(new Tooltip("Eintrag an den Anfang verschieben"));
-        btnTop.setGraphic(new ProgIcons().ICON_BUTTON_MOVE_TOP);
+        btnTop.setGraphic(ProgIcons.Icons.ICON_BUTTON_MOVE_TOP.getImageView());
         btnTop.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
             if (sel < 0) {
@@ -195,7 +195,7 @@ public class ReplacePane {
 
         Button btnBottom = new Button();
         btnBottom.setTooltip(new Tooltip("Eintrag an das Ende verschieben"));
-        btnBottom.setGraphic(new ProgIcons().ICON_BUTTON_MOVE_BOTTOM);
+        btnBottom.setGraphic(ProgIcons.Icons.ICON_BUTTON_MOVE_BOTTOM.getImageView());
         btnBottom.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
             if (sel < 0) {

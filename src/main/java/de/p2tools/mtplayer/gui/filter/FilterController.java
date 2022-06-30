@@ -60,7 +60,7 @@ public class FilterController extends PClosePaneV {
         return vbFilter;
     }
 
-    public VBox getVBoxBotton() {
+    public VBox getVBoxBottom() {
         VBox vBox = new VBox();
         vBox.getStyleClass().add("extra-pane");
         vBox.setPadding(new Insets(15, 15, 15, 15));

@@ -112,7 +112,7 @@ public class PaneMedia extends ScrollPane {
         hBoxSearch.getChildren().addAll(new Label("Suchen: "), txtSearch, btnReset);
         hBoxSearch.getStyleClass().add("extra-pane");
 
-        btnReset.setGraphic(new ProgIcons().ICON_BUTTON_RESET);
+        btnReset.setGraphic(ProgIcons.Icons.ICON_BUTTON_RESET.getImageView());
         btnReset.setTooltip(new Tooltip("Suchtext wieder herstellen"));
 
         HBox hBoxSum = new HBox(10);
@@ -220,12 +220,12 @@ public class PaneMedia extends ScrollPane {
         btnCreateMediaDB.disableProperty().bind(progData.mediaDataList.searchingProperty());
         btnCreateMediaDB.setOnAction(e -> MediaDataWorker.createMediaDb());
 
-        btnOpen.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
+        btnOpen.setGraphic(ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
         btnOpen.setTooltip(new Tooltip("Ausgewählten Pfad im Dateimanager öffnen"));
         btnOpen.setOnAction(e -> open());
         btnOpen.disableProperty().bind(txtPathMedia.textProperty().isEmpty().and(txtTitleMedia.textProperty().isEmpty()));
 
-        btnPlay.setGraphic(new ProgIcons().ICON_BUTTON_PLAY);
+        btnPlay.setGraphic(ProgIcons.Icons.ICON_BUTTON_PLAY.getImageView());
         btnPlay.setTooltip(new Tooltip("Ausgewählten Film abspielen"));
         btnPlay.setOnAction(e -> play());
         btnPlay.disableProperty().bind(txtPathMedia.textProperty().isEmpty().and(txtTitleMedia.textProperty().isEmpty()));
@@ -248,12 +248,12 @@ public class PaneMedia extends ScrollPane {
         final String name = txtTitleMedia.getText();
         if (!name.isEmpty() && !path.isEmpty()) {
             POpen.playStoredFilm(PFileUtils.addsPath(path, name),
-                    ProgConfig.SYSTEM_PROG_PLAY_FILME, new ProgIcons().ICON_BUTTON_FILE_OPEN);
+                    ProgConfig.SYSTEM_PROG_PLAY_FILME, ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
         }
     }
 
     private void open() {
         final String s = txtPathMedia.getText();
-        POpen.openDir(s, ProgConfig.SYSTEM_PROG_OPEN_DIR, new ProgIcons().ICON_BUTTON_FILE_OPEN);
+        POpen.openDir(s, ProgConfig.SYSTEM_PROG_OPEN_DIR, ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
     }
 }

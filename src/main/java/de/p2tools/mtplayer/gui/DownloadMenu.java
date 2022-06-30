@@ -48,13 +48,13 @@ public class DownloadMenu {
         vBox.getChildren().add(vBoxSpace);
 
         final ToolBarButton btDownloadRefresh = new ToolBarButton(vBox,
-                "Downloads aktualisieren", "Liste der Downloads aktualisieren", new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_REFRESH);
+                "Downloads aktualisieren", "Liste der Downloads aktualisieren", ProgIcons.Icons.FX_ICON_TOOLBAR_DOWNLOAD_REFRESH.getImageView());
         final ToolBarButton btDownloadAll = new ToolBarButton(vBox,
-                "Alle Downloads starten", "Alle Downloads starten", new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_START_ALL);
+                "Alle Downloads starten", "Alle Downloads starten", ProgIcons.Icons.FX_ICON_TOOLBAR_DOWNLOAD_START_ALL.getImageView());
         final ToolBarButton btDownloadAllTime = new ToolBarButton(vBox,
-                "Alle Downloads mit Startzeit starten", "Alle Downloads mit Startzeit starten", new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_START_ALL_TIME);
+                "Alle Downloads mit Startzeit starten", "Alle Downloads mit Startzeit starten", ProgIcons.Icons.FX_ICON_TOOLBAR_DOWNLOAD_START_ALL_TIME.getImageView());
         final ToolBarButton btDownloadClear = new ToolBarButton(vBox,
-                "Downloads aufräumen", "Liste der Downloads aufräumen", new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_CLEAN);
+                "Downloads aufräumen", "Liste der Downloads aufräumen", ProgIcons.Icons.FX_ICON_TOOLBAR_DOWNLOAD_CLEAN.getImageView());
 
         vBoxSpace = new VBox();
         vBoxSpace.setMaxHeight(10);
@@ -62,11 +62,11 @@ public class DownloadMenu {
         vBox.getChildren().add(vBoxSpace);
 
         final ToolBarButton btStartDownloads = new ToolBarButton(vBox,
-                "Downloads Starten", "Markierte Downloads starten", new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_START);
+                "Downloads Starten", "Markierte Downloads starten", ProgIcons.Icons.FX_ICON_TOOLBAR_DOWNLOAD_START.getImageView());
         final ToolBarButton btDownloadBack = new ToolBarButton(vBox,
-                "Downloads zurückstellen", "Markierte Downloads zurückstellen", new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_UNDO);
+                "Downloads zurückstellen", "Markierte Downloads zurückstellen", ProgIcons.Icons.FX_ICON_TOOLBAR_DOWNLOAD_UNDO.getImageView());
         final ToolBarButton btDownloadDel = new ToolBarButton(vBox,
-                "Downloads löschen", "Markierte Downloads löschen", new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_DEL);
+                "Downloads löschen", "Markierte Downloads löschen", ProgIcons.Icons.FX_ICON_TOOLBAR_DOWNLOAD_DEL.getImageView());
 
         vBoxSpace = new VBox();
         vBoxSpace.setMaxHeight(10);
@@ -74,7 +74,7 @@ public class DownloadMenu {
         vBox.getChildren().add(vBoxSpace);
 
         final ToolBarButton btDownloadFilm = new ToolBarButton(vBox,
-                "Film Starten", "Gespeicherten Film abspielen", new ProgIcons().FX_ICON_TOOLBAR_DOWNLOAD_FILM_START);
+                "Film Starten", "Gespeicherten Film abspielen", ProgIcons.Icons.FX_ICON_TOOLBAR_DOWNLOAD_FILM_START.getImageView());
 
         btDownloadRefresh.setOnAction(a -> progData.worker.searchForAbosAndMaybeStart());
         btDownloadAll.setOnAction(a -> progData.downloadGuiController.startDownload(true));
@@ -90,7 +90,7 @@ public class DownloadMenu {
         // MenuButton
         final MenuButton mb = new MenuButton("");
         mb.setTooltip(new Tooltip("Downloadmenü anzeigen"));
-        mb.setGraphic(new ProgIcons().FX_ICON_TOOLBAR_MENU);
+        mb.setGraphic(ProgIcons.Icons.FX_ICON_TOOLBAR_MENU.getImageView());
         mb.getStyleClass().add("btnFunctionWide");
 
         final MenuItem miDownloadStart = new MenuItem("Downloads starten");

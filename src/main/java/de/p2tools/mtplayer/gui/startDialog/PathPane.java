@@ -128,7 +128,7 @@ public class PathPane {
                 });
                 hyperlink = new PHyperlink(stage,
                         ProgConst.ADRESSE_WEBSITE_FFMPEG,
-                        ProgConfig.SYSTEM_PROG_OPEN_URL, new ProgIcons().ICON_BUTTON_FILE_OPEN);
+                        ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
                 break;
             case VLC:
             default:
@@ -140,7 +140,7 @@ public class PathPane {
                 });
                 hyperlink = new PHyperlink(stage,
                         ProgConst.ADRESSE_WEBSITE_VLC,
-                        ProgConfig.SYSTEM_PROG_OPEN_URL, new ProgIcons().ICON_BUTTON_FILE_OPEN);
+                        ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
                 break;
         }
 
@@ -161,7 +161,7 @@ public class PathPane {
         btnFile.setOnAction(event -> {
             PDirFileChooser.FileChooserOpenFile(stage, txtPlayer);
         });
-        btnFile.setGraphic(new ProgIcons().ICON_BUTTON_FILE_OPEN);
+        btnFile.setGraphic(ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
         btnFile.setTooltip(new Tooltip("Programmdatei auswählen"));
 
         HBox hBox = new HBox();

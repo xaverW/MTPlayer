@@ -33,7 +33,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.util.Callback;
 
@@ -279,7 +278,7 @@ public class DownloadStartAtTimeController extends PDialogExtra {
                 final Button btnDownDel;
                 btnDownDel = new Button("");
                 btnDownDel.setTooltip(new Tooltip("Download löschen"));
-                btnDownDel.setGraphic(new ImageView(ProgIcons.IMAGE_TABLE_DOWNLOAD_DEL));
+                btnDownDel.setGraphic(ProgIcons.Icons.IMAGE_TABLE_DOWNLOAD_DEL.getImageView());
                 btnDownDel.setOnAction(event -> {
                     DownloadData download = getTableView().getItems().get(getIndex());
                     if (rbAll.isSelected()) {

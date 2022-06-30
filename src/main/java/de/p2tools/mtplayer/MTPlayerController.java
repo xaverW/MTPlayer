@@ -127,7 +127,7 @@ public class MTPlayerController extends StackPane {
         maskerPane.toFront();
         Button btnStop = maskerPane.getButton();
         maskerPane.setButtonText("");
-        btnStop.setGraphic(new ProgIcons().ICON_BUTTON_STOP);
+        btnStop.setGraphic(ProgIcons.Icons.ICON_BUTTON_STOP.getImageView());
         btnStop.setOnAction(a -> progData.loadFilmlist.setStop(true));
     }
 
@@ -210,7 +210,7 @@ public class MTPlayerController extends StackPane {
         final MenuItem miUrlHelp = new MenuItem("Anleitung im Web");
         miUrlHelp.setOnAction(event -> {
             POpen.openURL(ProgConst.URL_WEBSITE_HELP,
-                    ProgConfig.SYSTEM_PROG_OPEN_URL, new ProgIcons().ICON_BUTTON_FILE_OPEN);
+                    ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
         });
 
         final MenuItem miReset = new MenuItem("Einstellungen zurücksetzen");
@@ -229,7 +229,7 @@ public class MTPlayerController extends StackPane {
         mbExternProgram.setVisible(false); //vorerst mal noch nicht anzeigen???
         mbExternProgram.setOnAction(e ->
                 POpen.openExternProgram(progData.primaryStage,
-                        ProgConfig.SYSTEM_PROG_EXTERN_PROGRAM, new ProgIcons().ICON_BUTTON_EXTERN_PROGRAM)
+                        ProgConfig.SYSTEM_PROG_EXTERN_PROGRAM, ProgIcons.Icons.ICON_BUTTON_EXTERN_PROGRAM.getImageView())
         );
         PShortcutWorker.addShortCut(mbExternProgram, MTShortcut.SHORTCUT_EXTERN_PROGRAM);
 
@@ -250,7 +250,7 @@ public class MTPlayerController extends StackPane {
         menuButton.setMinWidth(Region.USE_PREF_SIZE);
         menuButton.getStyleClass().add("btnFunctionWide");
         menuButton.setText("");
-        menuButton.setGraphic(new ProgIcons().FX_ICON_TOOLBAR_MENU_TOP);
+        menuButton.setGraphic(ProgIcons.Icons.FX_ICON_TOOLBAR_MENU_TOP.getImageView());
         menuButton.getItems().addAll(miConfig, miMediaCollectionConfig, miSearchMediaCollection, mHelp,
                 new SeparatorMenuItem(), miQuit, miQuitWait, mbExternProgram);
     }

@@ -40,8 +40,8 @@ public class DownloadListStarts {
     }
 
     public DownloadData getRestartDownload() {
-        // Versuch einen Fehlgeschlagenen Download zu finden um ihn wieder zu starten
-        // die Fehler laufen aber einzeln, vorsichtshalber
+        //Versuch einen fehlgeschlagenen Download zu finden, um ihn wieder zu starten
+        //die Fehler laufen aber einzeln, vorsichtshalber
 
         if (!getDown(1)) {
             // dann läuft noch einer
