@@ -53,6 +53,34 @@ public class BlacklistFilterFactory {
         PDuration.counterStop("FilmlistBlackFilterCountHits.countHits");
     }
 
+    public static synchronized void countHits(BlackData blackData) {
+        //hier wird ein BlackDate gegen die Filmliste gefiltert und die Treffer ermittelt
+        PDuration.counterStart("FilmlistBlackFilterCountHits.countHits");
+        blackData.setCountHits(0);
+        final Filmlist filmlist = ProgData.getInstance().filmlist;
+        if (filmlist != null) {
+            filmlist.parallelStream().forEach(film -> {
+
+                if (FilmFilterFactory.checkFilmWithFilter(
+                        blackData.fChannel,
+                        blackData.fTheme,
+                        blackData.fThemeTitle,
+                        blackData.fTitle,
+                        blackData.fSomewhere,
+
+                        CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE,
+                        CheckFilmFilter.FILTER_DURATION_MIN_MINUTE,
+                        CheckFilmFilter.FILTER_DURATION_MAX_MINUTE,
+
+                        film, false)) {
+
+                    blackData.incCountHits();
+                }
+            });
+        }
+        PDuration.counterStop("FilmlistBlackFilterCountHits.countHits");
+    }
+
     private static void applyBlacklist(FilmData film, boolean abort) {
         //zum Sortieren ist es sinnvoll, dass ALLE MÖGLICHEN Treffer gesucht werden
         for (final BlackData blackData : ProgData.getInstance().blackList) {

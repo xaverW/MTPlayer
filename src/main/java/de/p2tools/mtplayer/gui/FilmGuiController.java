@@ -18,10 +18,12 @@ package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.data.BlackData;
 import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.data.SetDataList;
 import de.p2tools.mtplayer.controller.data.film.FilmData;
 import de.p2tools.mtplayer.controller.data.film.FilmTools;
+import de.p2tools.mtplayer.gui.dialog.AddBlacklistDialogController;
 import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
 import de.p2tools.mtplayer.gui.mediaDialog.MediaDialogController;
 import de.p2tools.mtplayer.gui.tools.Listener;
@@ -140,6 +142,24 @@ public class FilmGuiController extends AnchorPane {
 
     public void saveTheFilm() {
         saveFilm();
+    }
+
+    public void addBlack() {
+        final Optional<FilmData> filmSelection = getSel();
+        if (filmSelection.isPresent()) {
+            addBlack(filmSelection.get().getChannel(), filmSelection.get().getTheme(), filmSelection.get().getTitle());
+        }
+    }
+
+    public void addBlack(String sender, String theme, String titel) {
+        final Optional<FilmData> filmSelection = getSel();
+        if (filmSelection.isPresent()) {
+            BlackData blackData = new BlackData(sender, theme, titel, "");
+            AddBlacklistDialogController addBlacklistDialogController = new AddBlacklistDialogController(progData, filmSelection.get(), blackData);
+            if (addBlacklistDialogController.isOk()) {
+                progData.blackList.addAndNotify(blackData);
+            }
+        }
     }
 
     public void bookmarkFilm(boolean bookmark) {

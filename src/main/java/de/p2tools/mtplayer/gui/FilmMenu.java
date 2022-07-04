@@ -142,8 +142,12 @@ public class FilmMenu {
         miFilmMediaCollection.setOnAction(a -> progData.filmGuiController.guiFilmMediaCollection());
         PShortcutWorker.addShortCut(miFilmMediaCollection, MTShortcut.SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION);
 
+        final MenuItem miBlack = new MenuItem("Blacklist-Eintrag für den Film erstellen");
+        miBlack.setOnAction(event -> progData.filmGuiController.addBlack());
+        PShortcutWorker.addShortCut(miBlack, MTShortcut.SHORTCUT_ADD_BLACKLIST);
+
         mb.getItems().add(new SeparatorMenuItem());
-        mb.getItems().addAll(miFilmShown, miFilmNotShown, miFilmInfo, miFilmMediaCollection);
+        mb.getItems().addAll(miFilmShown, miFilmNotShown, miFilmInfo, miFilmMediaCollection, miBlack);
 
         // Bookmarks
         Menu submenuBookmark = new Menu("Bookmarks");

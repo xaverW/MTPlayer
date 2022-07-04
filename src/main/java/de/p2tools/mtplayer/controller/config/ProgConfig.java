@@ -195,6 +195,7 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty FILM_GUI_TABLE_UP_DOWN = addStr("film-gui-table-up-down");
     public static StringProperty FILM_GUI_TABLE_VIS = addStr("film-gui-table-vis");
     public static StringProperty FILM_GUI_TABLE_ORDER = addStr("film-gui-table-order");
+    public static StringProperty ADD_BLACK_DIALOG_SIZE = addStr("add-black-dialog-size", "600:400");
 
     // Gui Download
     public static StringProperty DOWNLOAD_DIALOG_PATH_SAVING = addStr("download-dialog-path-saving"); // gesammelten Downloadpfade im Downloaddialog
@@ -282,6 +283,9 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty SHORTCUT_SEARCH_MEDIA_COLLECTION = addStr("SHORTCUT_SEARCH_MEDIA_COLLECTION", SHORTCUT_SEARCH_MEDIA_COLLECTION_INIT);
 
     // Shortcuts Filmmenü
+    public static String SHORTCUT_ADD_BLACKLIST_INIT = "Ctrl+B";
+    public static StringProperty SHORTCUT_ADD_BLACKLIST = addStr("SHORTCUT_ADD_BLACKLIST", SHORTCUT_ADD_BLACKLIST_INIT);
+
     public static String SHORTCUT_SEARCH_FILM_IN_MEDIA_COLLECTION_INIT = "Ctrl+M";
     public static StringProperty SHORTCUT_SEARCH_FILM_IN_MEDIA_COLLECTION = addStr("SHORTCUT_SEARCH_FILM_IN_MEDIA_COLLECTION", SHORTCUT_SEARCH_FILM_IN_MEDIA_COLLECTION_INIT);
 

@@ -44,6 +44,11 @@ public class MTShortcut {
                             "das Programm wartet auf den Download. Der Dialog mit der Abfrage was getan werden soll, wird aber übersprungen.");
 
     // Tabelle Filme
+    public static final PShortcut SHORTCUT_ADD_BLACKLIST =
+            new PShortcut(ProgConfig.SHORTCUT_ADD_BLACKLIST, ProgConfig.SHORTCUT_ADD_BLACKLIST_INIT,
+                    "Einen neuen Eintrag in der Blacklist erstellen",
+                    "Einen neuen Eintrag in der Blacklist erstellen, der markierte Film dient dabei Vorlage.");
+
     public static final PShortcut SHORTCUT_SHOW_FILTER =
             new PShortcut(ProgConfig.SHORTCUT_SHOW_FILTER, ProgConfig.SHORTCUT_SHOW_FILTER_INIT,
                     "Filter anzeigen",
@@ -124,6 +129,7 @@ public class MTShortcut {
         shortcutList.add(SHORTCUT_QUIT_PROGRAM);
         shortcutList.add(SHORTCUT_QUIT_PROGRAM_WAIT);
 
+        shortcutList.add(SHORTCUT_ADD_BLACKLIST);
         shortcutList.add(SHORTCUT_SHOW_FILTER);
         shortcutList.add(SHORTCUT_SHOW_INFOS);
         shortcutList.add(SHORTCUT_INFO_FILM);

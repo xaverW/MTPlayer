@@ -18,12 +18,14 @@ package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.BlackData;
+import de.p2tools.mtplayer.controller.data.MTShortcut;
 import de.p2tools.mtplayer.controller.data.SetDataList;
 import de.p2tools.mtplayer.controller.data.film.FilmData;
 import de.p2tools.mtplayer.controller.data.film.FilmTools;
 import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.mtplayer.tools.filmFilter.FilmFilter;
 import de.p2tools.p2Lib.tools.PSystemUtils;
+import de.p2tools.p2Lib.tools.shortcut.PShortcutWorker;
 import javafx.scene.control.*;
 
 public class FilmGuiTableContextMenu {
@@ -206,14 +208,16 @@ public class FilmGuiTableContextMenu {
             return submenuBlacklist;
         }
 
-        final MenuItem miBlackChannel = new MenuItem("Sender in die Blacklist einfügen");
-        miBlackChannel.setOnAction(event -> progData.blackList.addAndNotify(new BlackData(filmData.getChannel(), "", "", "")));
-        final MenuItem miBlackTheme = new MenuItem("Thema in die Blacklist einfügen");
-        miBlackTheme.setOnAction(event -> progData.blackList.addAndNotify(new BlackData("", filmData.getTheme(), "", "")));
-        final MenuItem miBlackChannelTheme = new MenuItem("Sender und Thema in die Blacklist einfügen");
-        miBlackChannelTheme.setOnAction(event -> progData.blackList.addAndNotify(new BlackData(filmData.getChannel(), filmData.getTheme(), "", "")));
+        final MenuItem miBlack = new MenuItem("Mit dem Film einen Eintrag in der Blacklist erstellen");
+        miBlack.setOnAction(event -> progData.filmGuiController.addBlack(filmData.getChannel(), filmData.getTheme(), filmData.getTitle()));
+        PShortcutWorker.addShortCut(miBlack, MTShortcut.SHORTCUT_ADD_BLACKLIST);
 
-        submenuBlacklist.getItems().addAll(miBlackChannel, miBlackTheme, miBlackChannelTheme);
+        final MenuItem miBlackTheme = new MenuItem("Thema direkt in die Blacklist einfügen");
+        miBlackTheme.setOnAction(event -> progData.blackList.addAndNotify(new BlackData("", filmData.getTheme(), "", "")));
+        final MenuItem miBlackTitle = new MenuItem("Titel direkt in die Blacklist einfügen");
+        miBlackTitle.setOnAction(event -> progData.blackList.addAndNotify(new BlackData("", "", filmData.getTitle(), "")));
+
+        submenuBlacklist.getItems().addAll(miBlack, miBlackTheme, miBlackTitle);
         return submenuBlacklist;
     }
 
