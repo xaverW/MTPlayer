@@ -18,14 +18,12 @@ package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.BlackData;
-import de.p2tools.mtplayer.controller.data.MTShortcut;
 import de.p2tools.mtplayer.controller.data.SetDataList;
 import de.p2tools.mtplayer.controller.data.film.FilmData;
 import de.p2tools.mtplayer.controller.data.film.FilmTools;
 import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.mtplayer.tools.filmFilter.FilmFilter;
 import de.p2tools.p2Lib.tools.PSystemUtils;
-import de.p2tools.p2Lib.tools.shortcut.PShortcutWorker;
 import javafx.scene.control.*;
 
 public class FilmGuiTableContextMenu {
@@ -208,9 +206,9 @@ public class FilmGuiTableContextMenu {
             return submenuBlacklist;
         }
 
-        final MenuItem miBlack = new MenuItem("Mit dem Film einen Eintrag in der Blacklist erstellen");
+        final MenuItem miBlack = new MenuItem("Blacklist-Eintrag für den Film erstellen");
         miBlack.setOnAction(event -> progData.filmGuiController.addBlack(filmData.getChannel(), filmData.getTheme(), filmData.getTitle()));
-        PShortcutWorker.addShortCut(miBlack, MTShortcut.SHORTCUT_ADD_BLACKLIST);
+//        PShortcutWorker.addShortCut(miBlack, MTShortcut.SHORTCUT_ADD_BLACKLIST);
 
         final MenuItem miBlackTheme = new MenuItem("Thema direkt in die Blacklist einfügen");
         miBlackTheme.setOnAction(event -> progData.blackList.addAndNotify(new BlackData("", filmData.getTheme(), "", "")));
