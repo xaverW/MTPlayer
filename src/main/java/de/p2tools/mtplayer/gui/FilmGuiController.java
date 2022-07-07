@@ -23,12 +23,12 @@ import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.data.SetDataList;
 import de.p2tools.mtplayer.controller.data.film.FilmData;
 import de.p2tools.mtplayer.controller.data.film.FilmTools;
-import de.p2tools.mtplayer.gui.dialog.AddBlacklistDialogController;
 import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
 import de.p2tools.mtplayer.gui.mediaDialog.MediaDialogController;
 import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.mtplayer.gui.tools.table.TableRowFilm;
+import de.p2tools.mtplayer.tools.filmFilter.FilmFilterFactory;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PColor;
@@ -54,6 +54,7 @@ public class FilmGuiController extends AnchorPane {
     private final SplitPane splitPane = new SplitPane();
     private final ScrollPane scrollPaneTableFilm = new ScrollPane();
     private final PClosePaneH pClosePaneH;
+    private FilmData lastShownFilmData = null;
 
     private FilmGuiInfoController filmGuiInfoController;
     private final TableView<FilmData> tableView = new TableView<>();
@@ -82,9 +83,6 @@ public class FilmGuiController extends AnchorPane {
         scrollPaneTableFilm.setFitToWidth(true);
         scrollPaneTableFilm.setContent(tableView);
 
-        sortedList.addListener((ListChangeListener<FilmData>) c -> {
-            selectFilm();
-        });
         initInfoPane();
         setInfoPane();
         initTable();
@@ -92,7 +90,7 @@ public class FilmGuiController extends AnchorPane {
     }
 
     public void isShown() {
-        setFilm();
+        setFilmInfos();
         tableView.requestFocus();
     }
 
@@ -102,29 +100,6 @@ public class FilmGuiController extends AnchorPane {
 
     public int getSelCount() {
         return tableView.getSelectionModel().getSelectedItems().size();
-    }
-
-
-    private void setFilm() {
-        FilmData film = tableView.getSelectionModel().getSelectedItem();
-        filmGuiInfoController.setFilm(film);
-        FilmInfoDialogController.getInstance().setFilm(film);
-    }
-
-    private void selectFilm() {
-        Platform.runLater(() -> {
-            if ((tableView.getItems().size() == 0)) {
-                return;
-            }
-            FilmData selFilm = tableView.getSelectionModel().getSelectedItem();
-            if (selFilm != null) {
-                tableView.scrollTo(selFilm);
-            } else {
-                tableView.getSelectionModel().clearSelection();
-                tableView.scrollTo(0);
-                tableView.getSelectionModel().select(0);
-            }
-        });
     }
 
     public void showFilmInfo() {
@@ -144,20 +119,28 @@ public class FilmGuiController extends AnchorPane {
         saveFilm();
     }
 
-    public void addBlack() {
-        final Optional<FilmData> filmSelection = getSel();
-        if (filmSelection.isPresent()) {
-            addBlack(filmSelection.get().getChannel(), filmSelection.get().getTheme(), filmSelection.get().getTitle());
-        }
-    }
 
-    public void addBlack(String sender, String theme, String titel) {
-        final Optional<FilmData> filmSelection = getSel();
-        if (filmSelection.isPresent()) {
-            BlackData blackData = new BlackData(sender, theme, titel, "");
-            AddBlacklistDialogController addBlacklistDialogController = new AddBlacklistDialogController(progData, filmSelection.get(), blackData);
-            if (addBlacklistDialogController.isOk()) {
-                progData.blackList.addAndNotify(blackData);
+    public void setLastShownFilm(BlackData blackData) {
+        final Optional<FilmData> filmSelection = ProgData.getInstance().filmGuiController.getSel();
+        if (!filmSelection.isPresent()) {
+            //nix ausgewählt
+            return;
+        }
+
+        lastShownFilmData = null;
+        if (!ProgData.getInstance().actFilmFilterWorker.getActFilterSettings().isBlacklistOn()) {
+            //dann ist der markierte Film noch zu sehen
+            lastShownFilmData = filmSelection.get();
+
+        } else {
+            //sonst wird der erste Film davor, der noch zu sehen ist, gesucht
+            int sel = tableView.getSelectionModel().getSelectedIndex();
+            for (int i = sel; i >= 0; --i) {
+                FilmData filmData = tableView.getItems().get(i);
+                if (!FilmFilterFactory.checkFilmWithBlacklistFilter(blackData, filmData)) {
+                    lastShownFilmData = filmData;
+                    break;
+                }
             }
         }
     }
@@ -222,6 +205,9 @@ public class FilmGuiController extends AnchorPane {
     }
 
     private void initListener() {
+        sortedList.addListener((ListChangeListener<FilmData>) c -> {
+            selectFilm();
+        });
         progData.setDataList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
             if (progData.setDataList.getSetDataListButton().size() > 2) {
                 boolInfoOn.set(true);
@@ -235,6 +221,97 @@ public class FilmGuiController extends AnchorPane {
                 Table.refresh_table(tableView);
             }
         });
+        Listener.addListener(new Listener(Listener.EVENT_BLACKLIST_CHANGED, this.getClass().getSimpleName()) {
+            @Override
+            public void pingFx() {
+                lastShownFilmData = null;
+            }
+
+        });
+    }
+
+    private void selectFilm() {
+        Platform.runLater(() -> {
+            if ((tableView.getItems().size() == 0)) {
+                return;
+            }
+            if (lastShownFilmData != null) {
+                tableView.getSelectionModel().clearSelection();
+                tableView.getSelectionModel().select(lastShownFilmData);
+                tableView.scrollTo(lastShownFilmData);
+
+            } else {
+                FilmData selFilm = tableView.getSelectionModel().getSelectedItem();
+                if (selFilm != null) {
+                    tableView.scrollTo(selFilm);
+                } else {
+                    tableView.getSelectionModel().clearSelection();
+                    tableView.getSelectionModel().select(0);
+                    tableView.scrollTo(0);
+                }
+            }
+        });
+    }
+
+    private void initTable() {
+        tableView.setTableMenuButtonVisible(true);
+        tableView.setEditable(false);
+        tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+
+        new Table().setTable(tableView, Table.TABLE.FILM);
+        tableView.setItems(sortedList);
+        sortedList.comparatorProperty().bind(tableView.comparatorProperty());
+
+        tableView.setRowFactory(tv -> {
+            TableRowFilm<FilmData> row = new TableRowFilm<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                    FilmInfoDialogController.getInstanceAndShow().showFilmInfo();
+                }
+            });
+            return row;
+        });
+
+        tableView.setOnMousePressed(m -> {
+            if (m.getButton().equals(MouseButton.SECONDARY)) {
+                final Optional<FilmData> optionalFilm = getSel(false);
+                FilmData film;
+                if (optionalFilm.isPresent()) {
+                    film = optionalFilm.get();
+                } else {
+                    film = null;
+                }
+                ContextMenu contextMenu = new FilmGuiTableContextMenu(progData, this, tableView).getContextMenu(film);
+                tableView.setContextMenu(contextMenu);
+            }
+        });
+
+        tableView.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
+            if (PTableFactory.SPACE.match(event)) {
+                PTableFactory.scrollVisibleRangeDown(tableView);
+                event.consume();
+            }
+            if (PTableFactory.SPACE_SHIFT.match(event)) {
+                PTableFactory.scrollVisibleRangeUp(tableView);
+                event.consume();
+            }
+
+            if (STRG_A.match(event) && tableView.getItems().size() > 3_000) {
+                //macht eingentlich keine Sinn???
+                PLog.sysLog("STRG-A: lange Liste -> verhindern");
+                event.consume();
+            }
+        });
+
+        tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
+                Platform.runLater(this::setFilmInfos));
+    }
+
+    private void setFilmInfos() {
+        FilmData film = tableView.getSelectionModel().getSelectedItem();
+        filmGuiInfoController.setFilm(film);
+        FilmInfoDialogController.getInstance().setFilm(film);
     }
 
     private void initInfoPane() {
@@ -323,61 +400,6 @@ public class FilmGuiController extends AnchorPane {
             tilePaneButton.getChildren().add(btn);
         });
         return tilePaneButton;
-    }
-
-    private void initTable() {
-        tableView.setTableMenuButtonVisible(true);
-        tableView.setEditable(false);
-        tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-
-        new Table().setTable(tableView, Table.TABLE.FILM);
-        tableView.setItems(sortedList);
-        sortedList.comparatorProperty().bind(tableView.comparatorProperty());
-
-        tableView.setRowFactory(tv -> {
-            TableRowFilm<FilmData> row = new TableRowFilm<>();
-            row.setOnMouseClicked(event -> {
-                if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                    FilmInfoDialogController.getInstanceAndShow().showFilmInfo();
-                }
-            });
-            return row;
-        });
-
-        tableView.setOnMousePressed(m -> {
-            if (m.getButton().equals(MouseButton.SECONDARY)) {
-                final Optional<FilmData> optionalFilm = getSel(false);
-                FilmData film;
-                if (optionalFilm.isPresent()) {
-                    film = optionalFilm.get();
-                } else {
-                    film = null;
-                }
-                ContextMenu contextMenu = new FilmGuiTableContextMenu(progData, this, tableView).getContextMenu(film);
-                tableView.setContextMenu(contextMenu);
-            }
-        });
-
-        tableView.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
-            if (PTableFactory.SPACE.match(event)) {
-                PTableFactory.scrollVisibleRangeDown(tableView);
-                event.consume();
-            }
-            if (PTableFactory.SPACE_SHIFT.match(event)) {
-                PTableFactory.scrollVisibleRangeUp(tableView);
-                event.consume();
-            }
-
-            if (STRG_A.match(event) && tableView.getItems().size() > 3_000) {
-                //macht eingentlich keine Sinn???
-                PLog.sysLog("STRG-A: lange Liste -> verhindern");
-                event.consume();
-            }
-        });
-
-        tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
-                Platform.runLater(this::setFilm));
     }
 
     private synchronized void startFilmUrl() {

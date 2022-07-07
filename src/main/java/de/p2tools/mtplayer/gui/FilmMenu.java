@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.gui;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.MTShortcut;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
+import de.p2tools.mtplayer.tools.filmFilter.BlacklistFilterFactory;
 import de.p2tools.mtplayer.tools.filmFilter.FilmFilter;
 import de.p2tools.mtplayer.tools.filmFilter.FilmFilterFactory;
 import de.p2tools.p2Lib.tools.shortcut.PShortcutWorker;
@@ -143,7 +144,7 @@ public class FilmMenu {
         PShortcutWorker.addShortCut(miFilmMediaCollection, MTShortcut.SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION);
 
         final MenuItem miBlack = new MenuItem("Blacklist-Eintrag für den Film erstellen");
-        miBlack.setOnAction(event -> progData.filmGuiController.addBlack());
+        miBlack.setOnAction(event -> BlacklistFilterFactory.addBlack());
         PShortcutWorker.addShortCut(miBlack, MTShortcut.SHORTCUT_ADD_BLACKLIST);
 
         mb.getItems().add(new SeparatorMenuItem());

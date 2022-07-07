@@ -17,6 +17,7 @@
 package de.p2tools.mtplayer.tools.filmFilter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.data.BlackData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.film.FilmData;
 
@@ -68,6 +69,19 @@ public class FilmFilterFactory {
         }
 
         return false;
+    }
+
+    public static boolean checkFilmWithBlacklistFilter(BlackData blackData, FilmData filmData) {
+        return checkFilmWithFilter(
+                blackData.fChannel,
+                blackData.fTheme,
+                blackData.fThemeTitle,
+                blackData.fTitle,
+                blackData.fSomewhere,
+                CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE,
+                CheckFilmFilter.FILTER_DURATION_MIN_MINUTE,
+                CheckFilmFilter.FILTER_DURATION_MAX_MINUTE,
+                filmData, false);
     }
 
     /**
