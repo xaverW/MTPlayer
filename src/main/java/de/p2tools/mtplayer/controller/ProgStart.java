@@ -25,7 +25,7 @@ import de.p2tools.mtplayer.gui.tools.ProgTipOfDay;
 import de.p2tools.mtplayer.tools.update.SearchProgramUpdate;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
-import de.p2tools.p2Lib.icon.GetIcon;
+import de.p2tools.p2Lib.icons.GetIcon;
 import de.p2tools.p2Lib.tools.ProgramTools;
 import de.p2tools.p2Lib.tools.date.PDateFactory;
 import de.p2tools.p2Lib.tools.duration.PDuration;

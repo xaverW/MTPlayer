@@ -20,7 +20,6 @@ package de.p2tools.mtplayer.controller.config;
 
 import de.p2tools.p2Lib.configFile.pConfData.PColorData;
 import de.p2tools.p2Lib.configFile.pConfData.PColorList;
-import de.p2tools.p2Lib.configFile.pData.PData;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -76,16 +75,20 @@ public class ProgColorList extends PColorList {
     //Liste der Schrift-Farben -> Rest sind Hintergrundfarben
     public static final List<PColorData> FRONT_COLOR = List.of(FILM_LIVESTREAM, FILM_NEW, FILM_GEOBLOCK);
 
+    public synchronized static PColorList getInstance() {
+        return PColorList.getInst();
+    }
+
     public static void setColorTheme() {
         final boolean dark = ProgConfig.SYSTEM_DARK_THEME.get();
-        for (int i = 0; i < getColorList().size(); ++i) {
-            getColorList().get(i).setColorTheme(dark);
+        for (int i = 0; i < getInstance().size(); ++i) {
+            getInstance().get(i).setColorTheme(dark);
         }
     }
 
     public static ObservableList<PColorData> getColorListFront() {
         ObservableList<PColorData> list = FXCollections.observableArrayList();
-        ObservableList<PColorData> pColorData = getColorList();
+        ObservableList<PColorData> pColorData = getInstance();
         pColorData.stream().filter(pc -> FRONT_COLOR.contains(pc)).forEach(pc -> list.add(pc));
 
         Comparator<PColorData> comparator = Comparator.comparing(PColorData::getText);
@@ -96,7 +99,7 @@ public class ProgColorList extends PColorList {
 
     public static ObservableList<PColorData> getColorListBackground() {
         ObservableList<PColorData> list = FXCollections.observableArrayList();
-        ObservableList<PColorData> pColorData = getColorList();
+        ObservableList<PColorData> pColorData = getInstance();
         pColorData.stream().filter(pc -> !FRONT_COLOR.contains(pc)).forEach(pc -> list.add(pc));
 
         Comparator<PColorData> comparator = Comparator.comparing(PColorData::getText);
@@ -107,7 +110,7 @@ public class ProgColorList extends PColorList {
 
     public static void setColorData(String key, String value) {
         try {
-            ObservableList<PColorData> list = getColorList();
+            ObservableList<PColorData> list = getInstance();
             list.stream().forEach(pColorData -> {
                 if (pColorData.getKey().equals(key)) {
                     Color c = Color.web(value);
@@ -123,7 +126,7 @@ public class ProgColorList extends PColorList {
         }
     }
 
-    public static PData getConfigsData() {
-        return PColorList.getPData();
-    }
+//    public static PData getConfigsData() {
+//        return PColorList.getPData();
+//    }
 }

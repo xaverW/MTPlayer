@@ -18,6 +18,7 @@
 package de.p2tools.mtplayer.controller.data;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.p2Lib.icons.GetIcon;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -119,16 +120,16 @@ public class ProgIcons {
 
         public ImageView getImageView() {
             if (ProgConfig.SYSTEM_DARK_THEME.get() && !fileNameDark.isEmpty()) {
-                return de.p2tools.p2Lib.icon.GetIcon.getImageView(fileNameDark, ICON_PATH, w, h);
+                return GetIcon.getImageView(fileNameDark, ICON_PATH, w, h);
             }
-            return de.p2tools.p2Lib.icon.GetIcon.getImageView(fileName, ICON_PATH, w, h);
+            return GetIcon.getImageView(fileName, ICON_PATH, w, h);
         }
 
         public Image getImage() {
             if (ProgConfig.SYSTEM_DARK_THEME.get() && !fileNameDark.isEmpty()) {
-                return de.p2tools.p2Lib.icon.GetIcon.getImage(fileNameDark, ICON_PATH, w, h);
+                return GetIcon.getImage(fileNameDark, ICON_PATH, w, h);
             }
-            return de.p2tools.p2Lib.icon.GetIcon.getImage(fileName, ICON_PATH, w, h);
+            return GetIcon.getImage(fileName, ICON_PATH, w, h);
         }
     }
 }

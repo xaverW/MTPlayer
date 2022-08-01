@@ -70,6 +70,7 @@ public final class ActFilmFilterWorker {
         this.progData = progData;
 
         filterChangeListener = (observable, oldValue, newValue) -> {
+            System.out.println("Filter");
             postFilterChange();
             filmFilterForward.clear();
         };
