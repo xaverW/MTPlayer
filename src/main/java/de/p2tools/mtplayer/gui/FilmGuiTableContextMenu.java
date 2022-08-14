@@ -20,19 +20,22 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.SetDataList;
 import de.p2tools.mtplayer.controller.data.film.FilmData;
 import de.p2tools.mtplayer.controller.data.film.FilmTools;
-import de.p2tools.mtplayer.gui.tools.table.Table;
+import de.p2tools.mtplayer.gui.tools.table.TableFilm;
 import de.p2tools.mtplayer.tools.filmFilter.BlacklistFilterFactory;
 import de.p2tools.mtplayer.tools.filmFilter.FilmFilter;
 import de.p2tools.p2Lib.tools.PSystemUtils;
-import javafx.scene.control.*;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.SeparatorMenuItem;
 
 public class FilmGuiTableContextMenu {
 
     private final ProgData progData;
     private final FilmGuiController filmGuiController;
-    private final TableView tableView;
+    private final TableFilm tableView;
 
-    public FilmGuiTableContextMenu(ProgData progData, FilmGuiController filmGuiController, TableView tableView) {
+    public FilmGuiTableContextMenu(ProgData progData, FilmGuiController filmGuiController, TableFilm tableView) {
         this.progData = progData;
         this.filmGuiController = filmGuiController;
         this.tableView = tableView;
@@ -102,7 +105,7 @@ public class FilmGuiTableContextMenu {
 
 
         MenuItem resetTable = new MenuItem("Tabelle zurücksetzen");
-        resetTable.setOnAction(a -> new Table().resetTable(tableView, Table.TABLE.FILM));
+        resetTable.setOnAction(a -> tableView.resetTable());
         contextMenu.getItems().add(new SeparatorMenuItem());
         contextMenu.getItems().addAll(resetTable);
     }

@@ -23,6 +23,7 @@ import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
 import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.mtplayer.gui.tools.table.Table;
+import de.p2tools.mtplayer.gui.tools.table.TableAbo;
 import de.p2tools.mtplayer.gui.tools.table.TableRowAbo;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PTableFactory;
@@ -34,7 +35,9 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Orientation;
-import javafx.scene.control.*;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SplitPane;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
@@ -48,7 +51,7 @@ public class AboGuiController extends AnchorPane {
     private final SplitPane splitPane = new SplitPane();
     private final ScrollPane scrollPane = new ScrollPane();
     private AboGuiInfoController aboGuiInfoController;
-    private final TableView<AboData> tableView = new TableView<>();
+    private final TableAbo tableView;
     private final PClosePaneH pClosePaneH;
 
     private final ProgData progData;
@@ -62,6 +65,7 @@ public class AboGuiController extends AnchorPane {
     public AboGuiController() {
         progData = ProgData.getInstance();
         pClosePaneH = new PClosePaneH(ProgConfig.ABO_GUI_DIVIDER_ON, true);
+        tableView = new TableAbo(Table.TABLE_ENUM.ABO);
 
         AnchorPane.setLeftAnchor(splitPane, 0.0);
         AnchorPane.setBottomAnchor(splitPane, 0.0);
@@ -138,7 +142,7 @@ public class AboGuiController extends AnchorPane {
 
 
     public void saveTable() {
-        new Table().saveTable(tableView, Table.TABLE.ABO);
+        Table.saveTable(tableView, Table.TABLE_ENUM.ABO);
     }
 
     private void initListener() {
@@ -175,12 +179,7 @@ public class AboGuiController extends AnchorPane {
     }
 
     private void initTable() {
-        tableView.setTableMenuButtonVisible(true);
-        tableView.setEditable(false);
-        tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-
-        new Table().setTable(tableView, Table.TABLE.ABO);
+        Table.setTable(tableView);
 
         tableView.setItems(sortedAbos);
         sortedAbos.comparatorProperty().bind(tableView.comparatorProperty());

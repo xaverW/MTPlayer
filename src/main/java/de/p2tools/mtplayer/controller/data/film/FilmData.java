@@ -20,12 +20,14 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.tools.FilmDate;
+import de.p2tools.p2Lib.configFile.config.Config;
+import de.p2tools.p2Lib.configFile.pData.PData;
 import de.p2tools.p2Lib.tools.log.PLog;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-public class FilmData extends FilmDataProps {
+public class FilmData extends FilmDataProps implements PData {
 
     public static final String RESOLUTION_NORMAL = "normal";
     public static final String RESOLUTION_HD = "hd";
@@ -42,6 +44,21 @@ public class FilmData extends FilmDataProps {
 
     public FilmData() {
 //        filmSize = new FilmSize(0); // Dateigröße in MByte
+    }
+
+    @Override
+    public String getTag() {
+        return "";
+    }
+
+    @Override
+    public String getComment() {
+        return "";
+    }
+
+    @Override
+    public Config[] getConfigsArr() {
+        return null;
     }
 
     public void init() {

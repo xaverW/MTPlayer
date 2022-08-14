@@ -23,21 +23,44 @@ import de.p2tools.mtplayer.tools.filmFilter.CheckFilmFilter;
 import de.p2tools.p2Lib.guiTools.PCheckBoxCell;
 import de.p2tools.p2Lib.guiTools.PTableFactory;
 import de.p2tools.p2Lib.tools.date.PDate;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
-public class TableAbo {
+public class TableAbo extends PTable<AboData> {
 
-    public static TableColumn[] initAboColumn(TableView table) {
-        table.getColumns().clear();
+    public TableAbo(Table.TABLE_ENUM table_enum) {
+        super(table_enum);
+        this.table_enum = table_enum;
+
+        initFileRunnerColumn();
+    }
+
+    @Override
+    public Table.TABLE_ENUM getETable() {
+        return table_enum;
+    }
+
+    public void resetTable() {
+        initFileRunnerColumn();
+        Table.resetTable(this);
+    }
+
+    private void initFileRunnerColumn() {
+        getColumns().clear();
+
+        setTableMenuButtonVisible(true);
+        setEditable(false);
+        getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
         ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> {
-            PTableFactory.refreshTable(table);
+            PTableFactory.refreshTable(this);
         });
-        ProgColorList.ABO_SWITCHED_OFF.colorProperty().addListener((a, b, c) -> table.refresh());
+        ProgColorList.ABO_SWITCHED_OFF.colorProperty().addListener((a, b, c) -> this.refresh());
 
         final TableColumn<AboData, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));
@@ -122,11 +145,11 @@ public class TableAbo {
         genDateColumn.setCellValueFactory(new PropertyValueFactory<>("genDate"));
         genDateColumn.getStyleClass().add("alignCenter");
 
-        return new TableColumn[]{
+        getColumns().addAll(
                 nrColumn, activColumn, hitColumn, nameColumn, resColumn, senderColumn,
                 themeColumn, themeExactColumn, themeTitleColumn, titleColumn,
                 somewhereColumn, timeRange, minColumn, maxColumn, startTimeColumn,
-                destinationColumn, datumColumn, psetColumn, genDateColumn};
+                destinationColumn, datumColumn, psetColumn, genDateColumn);
 
     }
 

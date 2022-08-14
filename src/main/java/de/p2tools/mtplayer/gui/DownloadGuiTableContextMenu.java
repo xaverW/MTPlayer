@@ -18,17 +18,20 @@ package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.mtplayer.gui.tools.table.Table;
+import de.p2tools.mtplayer.gui.tools.table.TableDownload;
 import de.p2tools.p2Lib.tools.PSystemUtils;
-import javafx.scene.control.*;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.SeparatorMenuItem;
 
 public class DownloadGuiTableContextMenu {
 
     private final ProgData progData;
     private final DownloadGuiController downloadGuiController;
-    private final TableView tableView;
+    private final TableDownload tableView;
 
-    public DownloadGuiTableContextMenu(final ProgData progData, final DownloadGuiController downloadGuiController, final TableView tableView) {
+    public DownloadGuiTableContextMenu(final ProgData progData, final DownloadGuiController downloadGuiController, final TableDownload tableView) {
         this.progData = progData;
         this.downloadGuiController = downloadGuiController;
         this.tableView = tableView;
@@ -167,7 +170,7 @@ public class DownloadGuiTableContextMenu {
         final MenuItem miSelection = new MenuItem("Auswahl umkehren");
         miSelection.setOnAction(a -> downloadGuiController.invertSelection());
         final MenuItem resetTable = new MenuItem("Tabelle zurücksetzen");
-        resetTable.setOnAction(a -> new Table().resetTable(tableView, Table.TABLE.DOWNLOAD));
+        resetTable.setOnAction(a -> tableView.resetTable());
 
         miSelectAll.setDisable(download == null);
         miSelection.setDisable(download == null);

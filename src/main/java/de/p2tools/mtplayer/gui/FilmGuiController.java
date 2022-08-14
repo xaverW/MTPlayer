@@ -27,6 +27,7 @@ import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
 import de.p2tools.mtplayer.gui.mediaDialog.MediaDialogController;
 import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.mtplayer.gui.tools.table.Table;
+import de.p2tools.mtplayer.gui.tools.table.TableFilm;
 import de.p2tools.mtplayer.gui.tools.table.TableRowFilm;
 import de.p2tools.mtplayer.tools.filmFilter.FilmFilterFactory;
 import de.p2tools.p2Lib.P2LibConst;
@@ -57,7 +58,7 @@ public class FilmGuiController extends AnchorPane {
     private FilmData lastShownFilmData = null;
 
     private FilmGuiInfoController filmGuiInfoController;
-    private final TableView<FilmData> tableView = new TableView<>();
+    private final TableFilm tableView;
 
     private final ProgData progData;
     private boolean boundSplitPaneDivPos = false;
@@ -71,6 +72,7 @@ public class FilmGuiController extends AnchorPane {
         progData = ProgData.getInstance();
         sortedList = progData.filmlistFiltered.getSortedList();
         pClosePaneH = new PClosePaneH(ProgConfig.FILM_GUI_DIVIDER_ON, true);
+        tableView = new TableFilm(Table.TABLE_ENUM.FILM, progData);
 
         AnchorPane.setLeftAnchor(splitPane, 0.0);
         AnchorPane.setBottomAnchor(splitPane, 0.0);
@@ -172,7 +174,7 @@ public class FilmGuiController extends AnchorPane {
     }
 
     public void saveTable() {
-        new Table().saveTable(tableView, Table.TABLE.FILM);
+        Table.saveTable(tableView, Table.TABLE_ENUM.FILM);
     }
 
     public void refreshTable() {
@@ -254,12 +256,8 @@ public class FilmGuiController extends AnchorPane {
     }
 
     private void initTable() {
-        tableView.setTableMenuButtonVisible(true);
-        tableView.setEditable(false);
-        tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+        Table.setTable(tableView);
 
-        new Table().setTable(tableView, Table.TABLE.FILM);
         tableView.setItems(sortedList);
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
 

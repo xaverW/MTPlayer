@@ -30,36 +30,52 @@ import javafx.beans.property.BooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 
-public class TableFilm {
+public class TableFilm extends PTable<FilmData> {
 
     private final ProgData progData;
     private final BooleanProperty small;
 
-    public TableFilm(ProgData progData) {
+    public TableFilm(Table.TABLE_ENUM table_enum, ProgData progData) {
+        super(table_enum);
+        this.table_enum = table_enum;
         this.progData = progData;
         small = ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM;
+
+        initFileRunnerColumn();
     }
 
-    public TableColumn[] initFilmColumn(TableView table) {
-        table.getColumns().clear();
+    @Override
+    public Table.TABLE_ENUM getETable() {
+        return table_enum;
+    }
 
-        ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM.addListener((observableValue, s, t1) -> table.refresh());
+    public void resetTable() {
+        initFileRunnerColumn();
+        Table.resetTable(this);
+    }
+
+    private void initFileRunnerColumn() {
+        getColumns().clear();
+
+        setTableMenuButtonVisible(true);
+        setEditable(false);
+        getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+
+        ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM.addListener((observableValue, s, t1) -> refresh());
 
         // bei Farbänderung der Schriftfarbe klappt es damit besser: Table.refresh_table(table)
-        ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> PTableFactory.refreshTable(table));
-        ProgColorList.FILM_LIVESTREAM.colorProperty().addListener((a, b, c) -> PTableFactory.refreshTable(table));
-        ProgColorList.FILM_GEOBLOCK.colorProperty().addListener((a, b, c) -> PTableFactory.refreshTable(table));
-        ProgColorList.FILM_NEW.colorProperty().addListener((a, b, c) -> PTableFactory.refreshTable(table));
-        ProgColorList.FILM_HISTORY.colorProperty().addListener((a, b, c) -> PTableFactory.refreshTable(table));
-        ProgColorList.FILM_BOOKMARK.colorProperty().addListener((a, b, c) -> PTableFactory.refreshTable(table));
+        ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> PTableFactory.refreshTable(this));
+        ProgColorList.FILM_LIVESTREAM.colorProperty().addListener((a, b, c) -> PTableFactory.refreshTable(this));
+        ProgColorList.FILM_GEOBLOCK.colorProperty().addListener((a, b, c) -> PTableFactory.refreshTable(this));
+        ProgColorList.FILM_NEW.colorProperty().addListener((a, b, c) -> PTableFactory.refreshTable(this));
+        ProgColorList.FILM_HISTORY.colorProperty().addListener((a, b, c) -> PTableFactory.refreshTable(this));
+        ProgColorList.FILM_BOOKMARK.colorProperty().addListener((a, b, c) -> PTableFactory.refreshTable(this));
 
         final TableColumn<FilmData, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));
@@ -127,16 +143,14 @@ public class TableFilm {
 
 //        addRowFact(table);
 
-        return new TableColumn[]{
+        getColumns().addAll(
                 nrColumn,
                 senderColumn, themeColumn, titleColumn,
                 startColumn,
                 datumColumn, timeColumn, durationColumn, sizeColumn,
                 hdColumn, utColumn,
                 geoColumn,
-                urlColumn, aboColumn,
-        };
-
+                urlColumn, aboColumn);
     }
 
     private Callback<TableColumn<FilmData, String>, TableCell<FilmData, String>> cellFactoryStart

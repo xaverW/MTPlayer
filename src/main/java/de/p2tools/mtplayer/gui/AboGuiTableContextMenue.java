@@ -19,16 +19,19 @@ package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
-import de.p2tools.mtplayer.gui.tools.table.Table;
-import javafx.scene.control.*;
+import de.p2tools.mtplayer.gui.tools.table.TableAbo;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.SeparatorMenuItem;
 
 public class AboGuiTableContextMenue {
 
     private final ProgData progData;
     private final AboGuiController aboGuiController;
-    private final TableView tableView;
+    private final TableAbo tableView;
 
-    public AboGuiTableContextMenue(ProgData progData, AboGuiController aboGuiController, TableView tableView) {
+    public AboGuiTableContextMenue(ProgData progData, AboGuiController aboGuiController, TableAbo tableView) {
 
         this.progData = progData;
         this.aboGuiController = aboGuiController;
@@ -86,7 +89,7 @@ public class AboGuiTableContextMenue {
         final MenuItem miSelection = new MenuItem("Auswahl umkehren");
         miSelection.setOnAction(a -> aboGuiController.invertSelection());
         MenuItem resetTable = new MenuItem("Tabelle zurücksetzen");
-        resetTable.setOnAction(e -> new Table().resetTable(tableView, Table.TABLE.ABO));
+        resetTable.setOnAction(e -> tableView.resetTable());
 
         miSelectAll.setDisable(abo == null);
         miSelection.setDisable(abo == null);

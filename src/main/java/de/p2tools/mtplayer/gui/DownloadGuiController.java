@@ -31,6 +31,7 @@ import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
 import de.p2tools.mtplayer.gui.mediaDialog.MediaDialogController;
 import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.mtplayer.gui.tools.table.Table;
+import de.p2tools.mtplayer.gui.tools.table.TableDownload;
 import de.p2tools.mtplayer.gui.tools.table.TableRowDownload;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.POpen;
@@ -58,7 +59,7 @@ public class DownloadGuiController extends AnchorPane {
 
     private final SplitPane splitPane = new SplitPane();
     private final ScrollPane scrollPane = new ScrollPane();
-    private final TableView<DownloadData> tableView = new TableView<>();
+    private final TableDownload tableView;
     private final TabPane tabPane = new TabPane();
 
     private FilmGuiInfoController filmGuiInfoController;
@@ -79,6 +80,7 @@ public class DownloadGuiController extends AnchorPane {
         filmGuiInfoController = new FilmGuiInfoController();
         downloadGuiChart = new DownloadGuiChart(progData);
         downloadGuiInfo = new DownloadGuiInfo();
+        tableView = new TableDownload(Table.TABLE_ENUM.DOWNLOAD);
 
         pClosePaneH = new PClosePaneH(ProgConfig.DOWNLOAD_GUI_DIVIDER_ON, false);
 
@@ -297,7 +299,7 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     public void saveTable() {
-        new Table().saveTable(tableView, Table.TABLE.DOWNLOAD);
+        Table.saveTable(tableView, Table.TABLE_ENUM.DOWNLOAD);
     }
 
     private ArrayList<DownloadData> getSelList() {
@@ -391,12 +393,7 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private void initTable() {
-        tableView.setTableMenuButtonVisible(true);
-        tableView.setEditable(false);
-        tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-
-        new Table().setTable(tableView, Table.TABLE.DOWNLOAD);
+        Table.setTable(tableView);
 
         tableView.setItems(sortedDownloads);
         sortedDownloads.comparatorProperty().bind(tableView.comparatorProperty());

@@ -42,29 +42,48 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class TableDownload {
+public class TableDownload extends PTable<DownloadData> {
 
     private final BooleanProperty geoMelden;
     private final BooleanProperty small;
 
-    public TableDownload() {
+    public TableDownload(Table.TABLE_ENUM table_enum) {
+        super(table_enum);
+        this.table_enum = table_enum;
         geoMelden = ProgConfig.SYSTEM_MARK_GEO;
         small = ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD;
+
+        initFileRunnerColumn();
     }
 
-    public TableColumn[] initDownloadColumn(TableView table) {
-        table.getColumns().clear();
+    @Override
+    public Table.TABLE_ENUM getETable() {
+        return table_enum;
+    }
+
+    public void resetTable() {
+        initFileRunnerColumn();
+        Table.resetTable(this);
+    }
+
+    private void initFileRunnerColumn() {
+        getColumns().clear();
+
+        setTableMenuButtonVisible(true);
+        setEditable(false);
+        getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
         final Comparator<String> sorter = GermanStringIntSorter.getInstance();
-        ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD.addListener((observableValue, s, t1) -> table.refresh());
+        ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD.addListener((observableValue, s, t1) -> refresh());
         ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> {
-            PTableFactory.refreshTable(table);
+            PTableFactory.refreshTable(this);
         });
-        ProgColorList.FILM_GEOBLOCK.colorProperty().addListener((a, b, c) -> table.refresh());
-        ProgColorList.DOWNLOAD_WAIT.colorProperty().addListener((a, b, c) -> table.refresh());
-        ProgColorList.DOWNLOAD_RUN.colorProperty().addListener((a, b, c) -> table.refresh());
-        ProgColorList.DOWNLOAD_FINISHED.colorProperty().addListener((a, b, c) -> table.refresh());
-        ProgColorList.DOWNLOAD_ERROR.colorProperty().addListener((a, b, c) -> table.refresh());
+        ProgColorList.FILM_GEOBLOCK.colorProperty().addListener((a, b, c) -> refresh());
+        ProgColorList.DOWNLOAD_WAIT.colorProperty().addListener((a, b, c) -> refresh());
+        ProgColorList.DOWNLOAD_RUN.colorProperty().addListener((a, b, c) -> refresh());
+        ProgColorList.DOWNLOAD_FINISHED.colorProperty().addListener((a, b, c) -> refresh());
+        ProgColorList.DOWNLOAD_ERROR.colorProperty().addListener((a, b, c) -> refresh());
 
         final TableColumn<DownloadData, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));
@@ -190,14 +209,13 @@ public class TableDownload {
         themeColumn.setPrefWidth(180);
         titleColumn.setPrefWidth(230);
 
-        return new TableColumn[]{
+        getColumns().addAll(
                 nrColumn, filmNrColumn,
                 aboColumn, senderColumn, themeColumn, titleColumn, startColumn,
                 progressColumn, remainingColumn, speedColumn, startTimeColumn, sizeColumn,
                 datumColumn, timeColumn, durationColumn,
                 hdColumn, utColumn, geoColumn, artColumn, srcColumn, /*placedBackColumn,*/
-                programColumn, setColumn, urlColumn, fileNameColumn, pathColumn
-        };
+                programColumn, setColumn, urlColumn, fileNameColumn, pathColumn);
     }
 
     private Callback<TableColumn<DownloadData, Integer>, TableCell<DownloadData, Integer>> cellFactoryState
