@@ -88,7 +88,7 @@ public class StarterClass {
     }
 
     static boolean check(ProgData progData, DownloadData download) {
-        // prüfen ob der Download geklappt hat und die Datei existiert und eine min. Größe hat
+        // prüfen, ob der Download geklappt hat und die Datei existiert und eine min. Größe hat
         boolean ret = false;
 
         final double progress = download.getProgress();

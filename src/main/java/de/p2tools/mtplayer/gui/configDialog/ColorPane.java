@@ -20,10 +20,10 @@ import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.gui.tools.HelpText;
-import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.p2Lib.configFile.pConfData.PColorData;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
+import de.p2tools.p2Lib.guiTools.PTableFactory;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import de.p2tools.p2Lib.tools.PColorFactory;
 import javafx.beans.property.BooleanProperty;
@@ -100,7 +100,7 @@ public class ColorPane {
 
     private void initTableColor(TableView<PColorData> tableView) {
         ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> {
-            Table.refresh_table(tableView);
+            PTableFactory.refreshTable(tableView);
             tableView.refresh();
         });
 

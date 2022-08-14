@@ -35,7 +35,8 @@ public final class ActFilmFilterWorker {
 
     private final ProgData progData;
 
-    final int MAX_FILTER_HISTORY = 15;
+    final int MAX_FILTER_HISTORY = 10;
+    final int MAX_FILTER_GO_BACK = 5;
 
     private final BooleanProperty filterChange = new SimpleBooleanProperty(true);
     private final BooleanProperty backward = new SimpleBooleanProperty(false);
@@ -54,9 +55,25 @@ public final class ActFilmFilterWorker {
 
     // ist die Liste der zuletzt verwendeten Filter
     private final ObservableList<FilmFilter> filmFilterBackward =
-            FXCollections.observableList(new ArrayList<>(), (FilmFilter tp) -> new Observable[]{tp.nameProperty()});
+            FXCollections.observableList(new ArrayList<>() {
+                @Override
+                public void add(int index, FilmFilter e) {
+                    while (this.size() > MAX_FILTER_GO_BACK) {
+                        remove(0);
+                    }
+                    super.add(e);
+                }
+            }, (FilmFilter tp) -> new Observable[]{tp.nameProperty()});
     private final ObservableList<FilmFilter> filmFilterForward =
-            FXCollections.observableList(new ArrayList<>(), (FilmFilter tp) -> new Observable[]{tp.nameProperty()});
+            FXCollections.observableList(new ArrayList<>() {
+                @Override
+                public void add(int index, FilmFilter e) {
+                    while (this.size() > MAX_FILTER_GO_BACK) {
+                        remove(0);
+                    }
+                    super.add(e);
+                }
+            }, (FilmFilter tp) -> new Observable[]{tp.nameProperty()});
 
     private boolean thema = false, themaTitle = false, title = false, somewhere = false, url = false;
 
@@ -72,11 +89,9 @@ public final class ActFilmFilterWorker {
         filterChangeListener = (observable, oldValue, newValue) -> {
             System.out.println("Filter");
             postFilterChange();
-            filmFilterForward.clear();
         };
         blacklistChangeListener = (observable, oldValue, newValue) -> {
             postBlacklistChange();
-            filmFilterForward.clear();
         };
         actFilterSettings.filterChangeProperty().addListener(filterChangeListener); // wenn der User den Filter ändert
         actFilterSettings.blacklistChangeProperty().addListener(blacklistChangeListener); // wenn der User die Blackl. ein-/ausschaltet
@@ -282,6 +297,8 @@ public final class ActFilmFilterWorker {
         }
 
         filmFilterForward.clear();
+        filmFilterBackward.clear();
+
         postFilterChange();
         actFilterSettings.filterChangeProperty().addListener(filterChangeListener);
         actFilterSettings.blacklistChangeProperty().addListener(blacklistChangeListener);

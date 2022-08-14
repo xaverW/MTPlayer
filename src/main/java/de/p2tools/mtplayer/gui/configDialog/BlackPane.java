@@ -24,11 +24,11 @@ import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
 import de.p2tools.mtplayer.gui.tools.HelpText;
-import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.mtplayer.tools.filmFilter.BlacklistFilterFactory;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
+import de.p2tools.p2Lib.guiTools.PTableFactory;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -202,7 +202,7 @@ public class BlackPane {
                 "sortiert werden."));
         btnSortList.setOnAction(a -> {
             ProgData.getInstance().blackList.sortIncCounter(true);
-            Table.refresh_table(tableView);
+            PTableFactory.refreshTable(tableView);
         });
 
 
@@ -212,7 +212,7 @@ public class BlackPane {
                 "wieviele Filme damit geblockt werden."));
         btnCountHits.setOnAction(a -> {
             BlacklistFilterFactory.countHits(true);
-            Table.refresh_table(tableView);
+            PTableFactory.refreshTable(tableView);
         });
 
 

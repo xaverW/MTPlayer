@@ -25,6 +25,7 @@ import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadSizeData;
 import de.p2tools.p2Lib.guiTools.PCheckBoxCell;
 import de.p2tools.p2Lib.guiTools.POpen;
+import de.p2tools.p2Lib.guiTools.PTableFactory;
 import de.p2tools.p2Lib.tools.GermanStringIntSorter;
 import de.p2tools.p2Lib.tools.date.PDate;
 import javafx.beans.property.BooleanProperty;
@@ -57,7 +58,7 @@ public class TableDownload {
         final Comparator<String> sorter = GermanStringIntSorter.getInstance();
         ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD.addListener((observableValue, s, t1) -> table.refresh());
         ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> {
-            Table.refresh_table(table);
+            PTableFactory.refreshTable(table);
         });
         ProgColorList.FILM_GEOBLOCK.colorProperty().addListener((a, b, c) -> table.refresh());
         ProgColorList.DOWNLOAD_WAIT.colorProperty().addListener((a, b, c) -> table.refresh());

@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.tools.filmFilter.CheckFilmFilter;
 import de.p2tools.p2Lib.guiTools.PCheckBoxCell;
+import de.p2tools.p2Lib.guiTools.PTableFactory;
 import de.p2tools.p2Lib.tools.date.PDate;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -34,7 +35,7 @@ public class TableAbo {
         table.getColumns().clear();
 
         ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> {
-            Table.refresh_table(table);
+            PTableFactory.refreshTable(table);
         });
         ProgColorList.ABO_SWITCHED_OFF.colorProperty().addListener((a, b, c) -> table.refresh());
 

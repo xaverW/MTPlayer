@@ -162,13 +162,13 @@ public class FilmGuiController extends AnchorPane {
     public void setFilmShown() {
         final ArrayList<FilmData> list = getSelList();
         FilmTools.setFilmShown(progData, list, true);
-        Table.refresh_table(tableView);
+        PTableFactory.refreshTable(tableView);
     }
 
     public void setFilmNotShown() {
         final ArrayList<FilmData> list = getSelList();
         FilmTools.setFilmShown(progData, list, false);
-        Table.refresh_table(tableView);
+        PTableFactory.refreshTable(tableView);
     }
 
     public void saveTable() {
@@ -176,7 +176,7 @@ public class FilmGuiController extends AnchorPane {
     }
 
     public void refreshTable() {
-        Table.refresh_table(tableView);
+        PTableFactory.refreshTable(tableView);
     }
 
     public ArrayList<FilmData> getSelList() {
@@ -218,7 +218,7 @@ public class FilmGuiController extends AnchorPane {
                 FilmGuiController.class.getSimpleName()) {
             @Override
             public void pingFx() {
-                Table.refresh_table(tableView);
+                PTableFactory.refreshTable(tableView);
             }
         });
         Listener.addListener(new Listener(Listener.EVENT_BLACKLIST_CHANGED, this.getClass().getSimpleName()) {

@@ -177,7 +177,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
     }
 
     public synchronized void addDownloadDataListToHistory(ArrayList<DownloadData> downloadList) {
-        // eine Liste Downloads in die Hitory schreiben
+        // eine Liste Downloads in die History schreiben
 
         if (downloadList == null || downloadList.isEmpty()) {
             return;

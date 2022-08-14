@@ -150,13 +150,14 @@ public class FilmFilterProps extends PDataSample<FilmFilter> implements Comparab
                 return false;
             }
         }
-        for (int i = 0; i < sfStringPropArr.length; ++i) {
+        //wenn der Name mit verglichen werden soll, dann Start bei 0, sonst 1
+        int ii = compareName ? 0 : 1;
+        for (int i = ii; i < sfStringPropArr.length; ++i) {
             if (!this.sfStringPropArr[i].getValue().equals(sf.sfStringPropArr[i].getValue())) {
                 return false;
             }
         }
-        int ii = compareName ? 0 : 1;//wenn der Name mit verglichen werden soll, dann Start bei 0, sonst 1
-        for (int i = ii; i < sfIntegerPropArr.length; ++i) {
+        for (int i = 0; i < sfIntegerPropArr.length; ++i) {
             if (!this.sfIntegerPropArr[i].getValue().equals(sf.sfIntegerPropArr[i].getValue())) {
                 return false;
             }

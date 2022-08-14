@@ -47,14 +47,6 @@ public class Table {
     private StringProperty confVis; //Spalte ist sichtbar
     private StringProperty confOrder; //"Reihenfolge" der Spalten
 
-    public static void refresh_table(TableView table) {
-        for (int i = 0; i < table.getColumns().size(); i++) {
-            TableColumn tc = ((TableColumn) (table.getColumns().get(i)));
-            tc.setVisible(!tc.isVisible());
-            tc.setVisible(!tc.isVisible());
-        }
-    }
-
     private void initConf(TABLE eTable) {
         switch (eTable) {
 
