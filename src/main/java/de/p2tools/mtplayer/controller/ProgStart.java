@@ -25,6 +25,7 @@ import de.p2tools.mtplayer.gui.tools.ProgTipOfDay;
 import de.p2tools.mtplayer.tools.update.SearchProgramUpdate;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
+import de.p2tools.p2Lib.dialogs.dialog.PDialog;
 import de.p2tools.p2Lib.icons.GetIcon;
 import de.p2tools.p2Lib.tools.ProgramTools;
 import de.p2tools.p2Lib.tools.date.PDateFactory;
@@ -52,7 +53,7 @@ public class ProgStart {
      * @param firstProgramStart
      */
     public void doWorkAfterGui(ProgData progData, boolean firstProgramStart) {
-        GetIcon.addWindowP2Icon(progData.primaryStage);
+        setProgramIcon(progData);
         startMsg();
         setTitle(progData);
         progData.progTray.initProgTray();
@@ -74,6 +75,17 @@ public class ProgStart {
         });
 
         progData.loadFilmlist.loadFilmlistProgStart(firstProgramStart);
+    }
+
+    public static void setProgramIcon(ProgData progData) {
+        if (ProgConfig.SYSTEM_USE_OWN_PROGRAM_ICON.getValue()) {
+            String resource = ProgConfig.SYSTEM_PROGRAM_ICON_PATH.getValueSafe();
+            GetIcon.addWindowP2Icon(progData.primaryStage, resource);
+            PDialog.setIconPath(resource);
+        } else {
+            GetIcon.addWindowP2Icon(progData.primaryStage);
+            PDialog.setIconPath("");
+        }
     }
 
     public static void shortStartMsg() {

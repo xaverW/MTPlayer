@@ -124,6 +124,8 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty MEDIA_DB_EXPORT_FILE = addStr("media-db-export-file");
 
     // Configs
+    public static BooleanProperty SYSTEM_USE_OWN_PROGRAM_ICON = addBool("system-use--own-program-icon", Boolean.FALSE);
+    public static StringProperty SYSTEM_PROGRAM_ICON_PATH = addStr("system-program-icon", ""); //ein eigenes Programm-Icon
     public static BooleanProperty SYSTEM_TRAY = addBool("system-tray", Boolean.FALSE);
     public static BooleanProperty SYSTEM_TRAY_USE_OWN_ICON = addBool("system-tray-own-icon", Boolean.FALSE);
     public static StringProperty SYSTEM_TRAY_ICON_PATH = addStr("system-tray-icon", ""); //ein eigenes Tray-Icon

@@ -501,6 +501,11 @@ public class HelpText {
                     "Damit kann das Programm auf dem Desktop ausgeblendet werden." +
                     "\n";
 
+    public static final String PROGRAM_ICON =
+            "Das verwendete Programmicon kann damit geändert werden. " +
+                    "Damit kann ein eigens Bild dafür verwendet werden." +
+                    "\n";
+
     public static final String TRAY_OWN_ICON =
             "Im System Tray wird für das Programm ein Symbol angezeigt. " +
                     "Damit kann ein eigens Bild dafür verwendet werden." +

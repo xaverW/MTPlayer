@@ -59,7 +59,6 @@ public class ConfigPaneController extends PAccordionPane {
     private Button btnHelpBeta;
 
     BooleanProperty logfileChanged = new SimpleBooleanProperty(false);
-
     BooleanProperty propUpdateSearch = ProgConfig.SYSTEM_UPDATE_SEARCH_ACT;
     BooleanProperty propUpdateBetaSearch = ProgConfig.SYSTEM_UPDATE_SEARCH_BETA;
     BooleanProperty propUpdateDailySearch = ProgConfig.SYSTEM_UPDATE_SEARCH_DAILY;
@@ -89,7 +88,7 @@ public class ConfigPaneController extends PAccordionPane {
     private TextField txtShortCut;
 
     private final Stage stage;
-    private TrayPane trayPane;
+    private IconPane iconPane;
     private ColorPane colorPane;
     private ShortcutPane shortcutPane;
     private GeoPane geoPane;
@@ -106,7 +105,7 @@ public class ConfigPaneController extends PAccordionPane {
     @Override
     public void close() {
         super.close();
-        trayPane.close();
+        iconPane.close();
         colorPane.close();
         shortcutPane.close();
         geoPane.close();
@@ -132,8 +131,8 @@ public class ConfigPaneController extends PAccordionPane {
     public Collection<TitledPane> createPanes() {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
         makeConfig(result);
-        trayPane = new TrayPane(stage);
-        trayPane.makeTray(result);
+        iconPane = new IconPane(stage);
+        iconPane.makeIcon(result);
         makeLogfile(result);
         colorPane = new ColorPane(stage);
         colorPane.makeColor(result);
@@ -175,11 +174,6 @@ public class ConfigPaneController extends PAccordionPane {
         final Button btnHelpSize = PButton.helpButton(stage, "Nur kleine Button anzeigen",
                 HelpText.SMALL_BUTTON);
         GridPane.setHalignment(btnHelpSize, HPos.RIGHT);
-
-//        tglTray.selectedProperty().bindBidirectional(propTray);
-//        final Button btnHelpTray = PButton.helpButton(stage, "Programm im System Tray anzeigen",
-//                HelpText.TRAY);
-//        GridPane.setHalignment(btnHelpTray, HPos.RIGHT);
 
         tglTipOfDay.selectedProperty().bindBidirectional(propTipOfDay);
         final Button btnHelpTipOfDay = PButton.helpButton(stage, "Tip des Tages anzeigen",
@@ -226,10 +220,6 @@ public class ConfigPaneController extends PAccordionPane {
         gridPane.add(tglSmallFilm, 0, ++row, 2, 1);
         gridPane.add(btnHelpSize, 2, row);
         gridPane.add(tglSmallDownload, 0, ++row, 2, 1);
-
-//        gridPane.add(new Label(" "), 0, ++row);
-//        gridPane.add(tglTray, 0, ++row, 2, 1);
-//        gridPane.add(btnHelpTray, 2, row);
 
         gridPane.add(new Label(" "), 0, ++row);
         gridPane.add(tglTipOfDay, 0, ++row, 2, 1);
