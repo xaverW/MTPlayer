@@ -46,6 +46,8 @@ public class TableFilm extends PTable<FilmData> {
         this.progData = progData;
         small = ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM;
 
+//        setFixedCellSize(25);
+
         initFileRunnerColumn();
     }
 

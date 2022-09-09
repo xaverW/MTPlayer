@@ -233,16 +233,35 @@ public class FilmGuiController extends AnchorPane {
     }
 
     private void selectFilm() {
+//        tableView.setFixedCellSize(25);
         Platform.runLater(() -> {
             if ((tableView.getItems().size() == 0)) {
                 return;
             }
             if (lastShownFilmData != null) {
+                System.out.println("===> last");
+
+
                 tableView.getSelectionModel().clearSelection();
                 tableView.getSelectionModel().select(lastShownFilmData);
-                tableView.scrollTo(lastShownFilmData);
+
+                //===========
+                int i = tableView.getSelectionModel().getSelectedIndex();
+                int ii = tableView.getSelectionModel().getFocusedIndex();
+                System.out.println("==> " + i + " " + ii);
+                tableView.getSelectionModel().select(i);
+                tableView.getSelectionModel().focus(i);
+                tableView.getSelectionModel().clearAndSelect(i);
+//                tableView.scrollTo(0);
+                tableView.scrollTo(tableView.getItems().size() - 1);
+                tableView.scrollTo(i);
+
+
+                //==============
+//                tableView.scrollTo(lastShownFilmData);
 
             } else {
+                System.out.println("---> scroll");
                 FilmData selFilm = tableView.getSelectionModel().getSelectedItem();
                 if (selFilm != null) {
                     tableView.scrollTo(selFilm);
@@ -252,6 +271,7 @@ public class FilmGuiController extends AnchorPane {
                     tableView.scrollTo(0);
                 }
             }
+//            tableView.setFixedCellSize(0);
         });
     }
 

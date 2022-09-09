@@ -374,16 +374,17 @@ public class TableDownload extends PTable<DownloadData> {
                 currentRow.setStyle("");
                 break;
             case DownloadConstants.STATE_STARTED_WAITING:
-                currentRow.setStyle(ProgColorList.DOWNLOAD_WAIT.getCssBackgroundAndSel());
+                System.out.println(ProgColorList.DOWNLOAD_WAIT.getCssBackground());
+                currentRow.setStyle(ProgColorList.DOWNLOAD_WAIT.getCssBackground());
                 break;
             case DownloadConstants.STATE_STARTED_RUN:
-                currentRow.setStyle(ProgColorList.DOWNLOAD_RUN.getCssBackgroundAndSel());
+                currentRow.setStyle(ProgColorList.DOWNLOAD_RUN.getCssBackground());
                 break;
             case DownloadConstants.STATE_FINISHED:
-                currentRow.setStyle(ProgColorList.DOWNLOAD_FINISHED.getCssBackgroundAndSel());
+                currentRow.setStyle(ProgColorList.DOWNLOAD_FINISHED.getCssBackground());
                 break;
             case DownloadConstants.STATE_ERROR:
-                currentRow.setStyle(ProgColorList.DOWNLOAD_ERROR.getCssBackgroundAndSel());
+                currentRow.setStyle(ProgColorList.DOWNLOAD_ERROR.getCssBackground());
                 break;
         }
     }
