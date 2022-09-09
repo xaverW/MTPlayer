@@ -79,6 +79,16 @@ public class MTShortcut {
                     "Filmtitel in Mediensammlung suchen",
                     "Der Titel des markierten Films in der Tabelle \"Filme\" wird in der Mediensammlung gesucht.");
 
+    public static final PShortcut SHORTCUT_COPY_FILM_THEME_TO_CLIPBOARD =
+            new PShortcut(ProgConfig.SHORTCUT_COPY_FILM_THEME_TO_CLIPBOARD, ProgConfig.SHORTCUT_COPY_FILM_THEME_TO_CLIPBOARD_INIT,
+                    "Filmthema in die Zwischenablage Kopieren",
+                    "Das Thema des markierten Films in der Tabelle \"Filme\" wird in die Zwischenablage kopiert.");
+
+    public static final PShortcut SHORTCUT_COPY_FILM_TITLE_TO_CLIPBOARD =
+            new PShortcut(ProgConfig.SHORTCUT_COPY_FILM_TITLE_TO_CLIPBOARD, ProgConfig.SHORTCUT_COPY_FILM_TITLE_TO_CLIPBOARD_INIT,
+                    "Filmtitel in die Zwischenablage Kopieren",
+                    "Der Titel des markierten Films in der Tabelle \"Filme\" wird in die Zwischenablage kopiert.");
+
     // Tabelle Download
     public static final PShortcut SHORTCUT_DOWNLOAD_START =
             new PShortcut(ProgConfig.SHORTCUT_DOWNLOAD_START, ProgConfig.SHORTCUT_DOWNLOAD_START_INIT,
@@ -136,6 +146,8 @@ public class MTShortcut {
         shortcutList.add(SHORTCUT_PLAY_FILM);
         shortcutList.add(SHORTCUT_SAVE_FILM);
         shortcutList.add(SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION);
+        shortcutList.add(SHORTCUT_COPY_FILM_THEME_TO_CLIPBOARD);
+        shortcutList.add(SHORTCUT_COPY_FILM_TITLE_TO_CLIPBOARD);
 
         shortcutList.add(SHORTCUT_DOWNLOAD_START);
         shortcutList.add(SHORTCUT_DOWNLOAD_STOP);

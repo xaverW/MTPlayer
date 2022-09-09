@@ -35,6 +35,7 @@ import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PColor;
 import de.p2tools.p2Lib.guiTools.PTableFactory;
 import de.p2tools.p2Lib.guiTools.pClosePane.PClosePaneH;
+import de.p2tools.p2Lib.tools.PSystemUtils;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -106,6 +107,13 @@ public class FilmGuiController extends AnchorPane {
 
     public void showFilmInfo() {
         FilmInfoDialogController.getInstanceAndShow().showFilmInfo();
+    }
+
+    public void copyFilmThemeTitle(boolean theme) {
+        final Optional<FilmData> filmSelection = ProgData.getInstance().filmGuiController.getSel();
+        if (filmSelection.isPresent()) {
+            PSystemUtils.copyToClipboard(theme ? filmSelection.get().getTheme() : filmSelection.get().getTitle());
+        }
     }
 
     public void playFilmUrl() {

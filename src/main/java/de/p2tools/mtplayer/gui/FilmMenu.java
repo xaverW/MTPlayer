@@ -143,12 +143,20 @@ public class FilmMenu {
         miFilmMediaCollection.setOnAction(a -> progData.filmGuiController.guiFilmMediaCollection());
         PShortcutWorker.addShortCut(miFilmMediaCollection, MTShortcut.SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION);
 
+        final MenuItem miCopyName = new MenuItem("Titel in die Zwischenablage kopieren");
+        miCopyName.setOnAction(a -> progData.filmGuiController.copyFilmThemeTitle(false));
+        PShortcutWorker.addShortCut(miCopyName, MTShortcut.SHORTCUT_COPY_FILM_TITLE_TO_CLIPBOARD);
+        final MenuItem miCopyTheme = new MenuItem("Thema in die Zwischenablage kopieren");
+        miCopyTheme.setOnAction(a -> progData.filmGuiController.copyFilmThemeTitle(true));
+        PShortcutWorker.addShortCut(miCopyTheme, MTShortcut.SHORTCUT_COPY_FILM_THEME_TO_CLIPBOARD);
+
         final MenuItem miBlack = new MenuItem("Blacklist-Eintrag für den Film erstellen");
         miBlack.setOnAction(event -> BlacklistFilterFactory.addBlack());
         PShortcutWorker.addShortCut(miBlack, MTShortcut.SHORTCUT_ADD_BLACKLIST);
 
         mb.getItems().add(new SeparatorMenuItem());
-        mb.getItems().addAll(miFilmShown, miFilmNotShown, miFilmInfo, miFilmMediaCollection, miBlack);
+        mb.getItems().addAll(miFilmShown, miFilmNotShown, miFilmInfo,
+                miFilmMediaCollection, miCopyTheme, miCopyName, miBlack);
 
         // Bookmarks
         Menu submenuBookmark = new Menu("Bookmarks");
