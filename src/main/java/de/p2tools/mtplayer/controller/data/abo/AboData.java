@@ -18,8 +18,8 @@ package de.p2tools.mtplayer.controller.data.abo;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.SetData;
-import de.p2tools.mtplayer.controller.data.film.FilmData;
-import de.p2tools.mtplayer.tools.filmFilter.Filter;
+import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.filmFilter.Filter;
 
 public class AboData extends AboDataXml {
     public int nr;
@@ -34,7 +34,7 @@ public class AboData extends AboDataXml {
     public AboData() {
         // neue Abos sind immer ein
         setActive(true);
-        setResolution(FilmData.RESOLUTION_NORMAL);
+        setResolution(FilmDataMTP.RESOLUTION_NORMAL);
         initFilter();
     }
 
@@ -52,7 +52,7 @@ public class AboData extends AboDataXml {
 
         // neue Abos sind immer ein
         setActive(true);
-        setResolution(FilmData.RESOLUTION_NORMAL);
+        setResolution(FilmDataMTP.RESOLUTION_NORMAL);
         initFilter();
 
         setName(name);

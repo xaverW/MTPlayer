@@ -19,10 +19,10 @@ package de.p2tools.mtplayer;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.film.FilmlistFactory;
 import de.p2tools.p2Lib.dialogs.ProgInfoDialog;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
+import de.p2tools.p2Lib.mtFilm.film.FilmFactory;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -103,7 +103,7 @@ public class MTPTester {
     private void check() {
         PDuration.counterStart("MTPTester diakritische Zeichen");
         ProgConfig.SYSTEM_SHOW_DIACRITICS.setValue(ProgConfig.SYSTEM_SHOW_DIACRITICS.getValue());
-        FilmlistFactory.setDiacritic(false);
+        FilmFactory.setDiacritic(progData.filmlist, ProgConfig.SYSTEM_SHOW_DIACRITICS.getValue());
         PDuration.counterStop("MTPTester diakritische Zeichen");
     }
 

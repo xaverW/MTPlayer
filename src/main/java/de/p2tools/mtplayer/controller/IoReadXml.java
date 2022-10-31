@@ -28,12 +28,11 @@ import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.abo.AboFieldNames;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFieldNames;
-import de.p2tools.mtplayer.controller.data.film.FilmData;
-import de.p2tools.mtplayer.controller.filmlist.filmlistUrls.FilmlistUrlData;
+import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.filmFilter.FilmFilter;
+import de.p2tools.mtplayer.controller.filmFilter.FilmFilterFactory;
+import de.p2tools.mtplayer.controller.filmFilter.FilmFilterToXml;
 import de.p2tools.mtplayer.controller.mediaDb.MediaCollectionData;
-import de.p2tools.mtplayer.tools.filmFilter.FilmFilter;
-import de.p2tools.mtplayer.tools.filmFilter.FilmFilterFactory;
-import de.p2tools.mtplayer.tools.filmFilter.FilmFilterToXml;
 import de.p2tools.p2Lib.configFile.config.Config;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -170,23 +169,6 @@ public class IoReadXml implements AutoCloseable {
                                     ++filtercount;
                                 }
                                 break;
-
-                            case "filmlist-update-server":
-                                // Urls Filmlisten
-                                final FilmlistUrlData filmlistUrlData = new FilmlistUrlData();
-                                if (get(parser, "filmlist-update-server",
-                                        FilmlistUrlData.FILMLIST_URL_DATA_COLUMN_NAMES, filmlistUrlData.arr)) {
-                                    filmlistUrlData.setPropsFromXml();
-                                    switch (filmlistUrlData.arr[FilmlistUrlData.FILMLIST_URL_DATA_TYPE_NO]) {
-                                        case FilmlistUrlData.SERVER_TYPE_ACT:
-                                            this.progData.searchFilmListUrls.getFilmlistUrlList_akt().addWithCheck(filmlistUrlData);
-                                            break;
-                                        case FilmlistUrlData.SERVER_TYPE_DIFF:
-                                            this.progData.searchFilmListUrls.getFilmlistUrlList_diff().addWithCheck(filmlistUrlData);
-                                            break;
-                                    }
-                                }
-                                break;
                         }
                     }
                 }
@@ -241,7 +223,7 @@ public class IoReadXml implements AutoCloseable {
             } catch (Exception ex) {
                 ProgConfig.SYSTEM_STYLE_SIZE.setValue(14);
             }
-            ProgConfig.SYSTEM_GEO_HOME_PLACE.setValue(FilmData.GEO_DE);//war ein Fehler
+            ProgConfig.SYSTEM_GEO_HOME_PLACE.setValue(FilmDataMTP.GEO_DE);//war ein Fehler
             return;
         }
         if (key.equals("path-vlc")) {

@@ -16,7 +16,7 @@
 
 package de.p2tools.mtplayer.controller.data;
 
-import de.p2tools.mtplayer.controller.data.film.FilmData;
+import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.gui.configDialog.setData.AboSubDir;
 import de.p2tools.p2Lib.configFile.config.*;
 import javafx.beans.property.*;
@@ -46,7 +46,7 @@ public class SetDataProps extends SetDataXml {
 
     private IntegerProperty maxSize = new SimpleIntegerProperty(0);
     private IntegerProperty maxField = new SimpleIntegerProperty(0);
-    private StringProperty resolution = new SimpleStringProperty(FilmData.RESOLUTION_NORMAL);
+    private StringProperty resolution = new SimpleStringProperty(FilmDataMTP.RESOLUTION_NORMAL);
     private StringProperty adOn = new SimpleStringProperty("");
     private StringProperty description = new SimpleStringProperty("");
     private StringProperty infoUrl = new SimpleStringProperty("");

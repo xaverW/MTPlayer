@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.filter;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboConstants;
-import de.p2tools.mtplayer.tools.filmFilter.FilterCheckRegEx;
+import de.p2tools.mtplayer.controller.filmFilter.FilterCheckRegEx;
 import de.p2tools.p2Lib.guiTools.PButtonClearFilter;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

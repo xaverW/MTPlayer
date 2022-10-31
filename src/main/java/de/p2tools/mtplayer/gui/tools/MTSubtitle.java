@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.tools;
 
 import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.mtplayer.tools.TimedTextMarkupLanguageParser;
+import de.p2tools.mtplayer.controller.tools.TimedTextMarkupLanguageParser;
 import de.p2tools.p2Lib.tools.log.PLog;
 import de.p2tools.p2Lib.tools.net.PUrlTools;
 

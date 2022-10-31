@@ -24,12 +24,11 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.mtplayer.controller.data.film.FilmData;
-import de.p2tools.mtplayer.controller.data.film.FilmDataXml;
-import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
-import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
+import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
+import de.p2tools.mtplayer.controller.tools.SizeTools;
 import de.p2tools.mtplayer.gui.dialog.AutomodeContinueDialogController;
-import de.p2tools.mtplayer.tools.SizeTools;
+import de.p2tools.p2Lib.mtFilm.film.FilmDataXml;
 import de.p2tools.p2Lib.tools.date.PDate;
 import de.p2tools.p2Lib.tools.date.PDateFactory;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -43,7 +42,7 @@ public class StarterClass {
     private final ProgData progData;
     private StarterThread starterThread = null;
     private boolean paused = false;
-    private boolean searchFilms = true; // beim Programmstart muss zuerst die Filmliste galaden werden
+    private boolean searchFilms = true; // beim Programmstart muss zuerst die Filmliste geladen werden
     private boolean checkQuitAfterDownload = false; // Prüfen, ob automode aktiv ist
 
     // ===================================
@@ -54,20 +53,20 @@ public class StarterClass {
         starterThread = new StarterThread();
         starterThread.start();
 
-        progData.loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
+        LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(new de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerLoadFilmlist() {
             @Override
-            public void start(ListenerFilmlistLoadEvent event) {
+            public void start(de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent event) {
                 searchFilms = true;
             }
 
             @Override
-            public void finished(ListenerFilmlistLoadEvent event) {
+            public void finished(de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent event) {
                 searchFilms = false;
             }
         });
     }
 
-    public synchronized void startUrlWithProgram(FilmData ersterFilm, SetData pSet, String resolution) {
+    public synchronized void startUrlWithProgram(FilmDataMTP ersterFilm, SetData pSet, String resolution) {
         // url mit dem Programm mit der Nr. starten (Button oder TabDownload "rechte Maustaste")
         // Quelle "Button" ist immer ein vom User gestarteter Film, also Quelle_Button!!!!!!!!!!!
 

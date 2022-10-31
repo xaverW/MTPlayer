@@ -18,9 +18,9 @@ package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
-import de.p2tools.mtplayer.controller.data.film.FilmData;
-import de.p2tools.mtplayer.controller.data.film.FilmDataXml;
+import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
+import de.p2tools.p2Lib.mtFilm.film.FilmDataXml;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -38,7 +38,7 @@ public class FilmGuiInfoController extends VBox {
     private final HBox hBox = new HBox(10);
     private final Label lblUrl = new Label("zur Website: ");
 
-    private FilmData film = null;
+    private FilmDataMTP film = null;
     private String oldDescription = "";
 
     public FilmGuiInfoController() {
@@ -67,7 +67,7 @@ public class FilmGuiInfoController extends VBox {
         getChildren().add(hBox);
     }
 
-    public void setFilm(FilmData film) {
+    public void setFilm(FilmDataMTP film) {
         hBox.getChildren().clear();
 
         if (film == null) {

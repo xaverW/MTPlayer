@@ -17,7 +17,7 @@
 
 package de.p2tools.mtplayer.controller.data;
 
-import de.p2tools.mtplayer.tools.MLConfigs;
+import de.p2tools.p2Lib.mtFilm.tools.MLConfigs;
 import de.p2tools.p2Lib.tools.PColorFactory;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;

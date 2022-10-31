@@ -17,17 +17,16 @@
 package de.p2tools.mtplayer.controller;
 
 import de.p2tools.mtplayer.controller.config.*;
-import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
-import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
+import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.controller.mediaDb.MediaDataWorker;
+import de.p2tools.mtplayer.controller.update.SearchProgramUpdate;
 import de.p2tools.mtplayer.gui.filter.FilmFilterDialog;
 import de.p2tools.mtplayer.gui.tools.ProgTipOfDay;
-import de.p2tools.mtplayer.tools.update.SearchProgramUpdate;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.dialogs.dialog.PDialog;
 import de.p2tools.p2Lib.icons.GetIcon;
-import de.p2tools.p2Lib.tools.ProgramTools;
+import de.p2tools.p2Lib.tools.ProgramToolsFactory;
 import de.p2tools.p2Lib.tools.date.PDateFactory;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.LogMessage;
@@ -62,9 +61,9 @@ public class ProgStart {
         }
 
         progData.startTimer();
-        progData.loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
+        LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(new de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerLoadFilmlist() {
             @Override
-            public void finished(ListenerFilmlistLoadEvent event) {
+            public void finished(de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent event) {
                 if (!doneAtProgramstart) {
                     doneAtProgramstart = true;
                     MediaDataWorker.createMediaDb();
@@ -74,7 +73,7 @@ public class ProgStart {
             }
         });
 
-        progData.loadFilmlist.loadFilmlistProgStart(firstProgramStart);
+        LoadFilmFactory.getInstance().loadProgStart(firstProgramStart);
     }
 
     public static void setProgramIcon(ProgData progData) {
@@ -223,12 +222,7 @@ public class ProgStart {
         // Prüfen obs ein Programmupdate gibt
         PDuration.onlyPing("checkProgUpdate");
 
-        if (ProgData.debug) {
-            // damits bei jedem Start gemacht wird
-            PLog.sysLog("DEBUG: Update-Check");
-            runUpdateCheck(progData, true);
-
-        } else if (ProgConfig.SYSTEM_UPDATE_SEARCH_ACT.getValue() &&
+        if (ProgConfig.SYSTEM_UPDATE_SEARCH_ACT.getValue() &&
                 !updateCheckTodayDone()) {
             // nach Updates suchen
             runUpdateCheck(progData, false);
@@ -258,9 +252,9 @@ public class ProgStart {
 
     private void setTitle(ProgData progData) {
         if (ProgData.debug) {
-            progData.primaryStage.setTitle(ProgConst.PROGRAM_NAME + " " + ProgramTools.getProgVersion() + " / DEBUG");
+            progData.primaryStage.setTitle(ProgConst.PROGRAM_NAME + " " + ProgramToolsFactory.getProgVersion() + " / DEBUG");
         } else {
-            progData.primaryStage.setTitle(ProgConst.PROGRAM_NAME + " " + ProgramTools.getProgVersion());
+            progData.primaryStage.setTitle(ProgConst.PROGRAM_NAME + " " + ProgramToolsFactory.getProgVersion());
         }
     }
 

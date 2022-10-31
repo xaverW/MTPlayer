@@ -16,35 +16,22 @@
 
 package de.p2tools.mtplayer;
 
-import de.p2tools.mtplayer.controller.ProgQuit;
-import de.p2tools.mtplayer.controller.ProgSave;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.MTShortcut;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
-import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
-import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
+import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.AboGuiPack;
 import de.p2tools.mtplayer.gui.DownloadGuiPack;
 import de.p2tools.mtplayer.gui.FilmGuiPack;
 import de.p2tools.mtplayer.gui.StatusBarController;
-import de.p2tools.mtplayer.gui.configDialog.ConfigDialogController;
-import de.p2tools.mtplayer.gui.dialog.AboutDialogController;
-import de.p2tools.mtplayer.gui.dialog.ResetDialogController;
-import de.p2tools.mtplayer.gui.mediaConfig.MediaConfigDialogController;
-import de.p2tools.mtplayer.gui.mediaDialog.MediaDialogController;
-import de.p2tools.mtplayer.gui.tools.ProgTipOfDay;
-import de.p2tools.mtplayer.tools.update.SearchProgramUpdate;
-import de.p2tools.p2Lib.guiTools.POpen;
 import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
 import de.p2tools.p2Lib.tools.log.PLog;
-import de.p2tools.p2Lib.tools.log.PLogger;
-import de.p2tools.p2Lib.tools.shortcut.PShortcutWorker;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.SplitPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 
@@ -55,7 +42,6 @@ public class MTPlayerController extends StackPane {
     Button btnDownload = new Button("Downloads");
     Button btnAbo = new Button("Abos");
 
-    MenuButton menuButton = new MenuButton("");
     BorderPane borderPane = new BorderPane();
     StackPane stackPaneCont = new StackPane();
 
@@ -94,7 +80,7 @@ public class MTPlayerController extends StackPane {
             tilePaneFilmDownloadAbo.setAlignment(Pos.CENTER);
             tilePaneFilmDownloadAbo.getChildren().addAll(btnFilm, btnDownload, btnAbo);
             HBox.setHgrow(tilePaneFilmDownloadAbo, Priority.ALWAYS);
-            hBoxTop.getChildren().addAll(btnFilmlist, tilePaneFilmDownloadAbo, menuButton);
+            hBoxTop.getChildren().addAll(btnFilmlist, tilePaneFilmDownloadAbo, new MTPlayerMenu());
 
             // Center
             splitPaneFilm = filmGuiPack.pack();
@@ -128,7 +114,7 @@ public class MTPlayerController extends StackPane {
         Button btnStop = maskerPane.getButton();
         maskerPane.setButtonText("");
         btnStop.setGraphic(ProgIcons.Icons.ICON_BUTTON_STOP.getImageView());
-        btnStop.setOnAction(a -> progData.loadFilmlist.setStop(true));
+        btnStop.setOnAction(a -> LoadFilmFactory.getInstance().loadFilmlist.setStop(true));
     }
 
     private void initButton() {
@@ -138,26 +124,24 @@ public class MTPlayerController extends StackPane {
                 "Wenn die Filmliste nicht zu alt ist, wird nur ein Update geladen.\n" +
                 "Mit der rechten Maustaste wird immer die komplette Filmliste geladen."));
         btnFilmlist.setOnAction(e -> {
-            progData.loadFilmlist.loadNewFilmlistFromServer();
+            LoadFilmFactory.getInstance().loadList(false);
         });
         btnFilmlist.setOnMouseClicked(mouseEvent -> {
             if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
-                progData.loadFilmlist.loadNewFilmlistFromServer(true);
+                LoadFilmFactory.getInstance().loadList(true);
             }
         });
 
-
-        progData.loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
-
+        LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(new de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerLoadFilmlist() {
             @Override
-            public void start(ListenerFilmlistLoadEvent event) {
+            public void start(de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent event) {
                 // falls "neue Filmliste" aktiv ist
                 btnFilmlist.getStyleClass().clear();
                 btnFilmlist.getStyleClass().add("btnFilmlist");
             }
 
             @Override
-            public void finished(ListenerFilmlistLoadEvent event) {
+            public void finished(de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent event) {
                 if (stackPaneCont.getChildren().size() == 0) {
                     return;
                 }
@@ -178,81 +162,6 @@ public class MTPlayerController extends StackPane {
         btnAbo.setMaxWidth(Double.MAX_VALUE);
 
         infoPane();
-
-        // Menü
-        final MenuItem miConfig = new MenuItem("Einstellungen des Programms");
-        miConfig.setOnAction(e -> ConfigDialogController.getInstanceAndShow());
-
-        final MenuItem miMediaCollectionConfig = new MenuItem("Einstellungen der Mediensammlung");
-        miMediaCollectionConfig.setOnAction(e -> new MediaConfigDialogController());
-
-        final MenuItem miSearchMediaCollection = new MenuItem("Mediensammlung durchsuchen");
-        miSearchMediaCollection.setOnAction(a -> new MediaDialogController(""));
-        PShortcutWorker.addShortCut(miSearchMediaCollection, MTShortcut.SHORTCUT_SEARCH_MEDIACOLLECTION);
-
-        final MenuItem miQuit = new MenuItem("Beenden");
-        miQuit.setOnAction(e -> ProgQuit.quit(false));
-        PShortcutWorker.addShortCut(miQuit, MTShortcut.SHORTCUT_QUIT_PROGRAM);
-
-        final MenuItem miQuitWait = new MenuItem("Beenden, laufende Downloads abwarten");
-        miQuitWait.setVisible(false); // wegen dem shortcut, aber der zusätzliche Menüpunkt verwirrt nur
-        miQuitWait.setOnAction(e -> ProgQuit.quit(true));
-        PShortcutWorker.addShortCut(miQuitWait, MTShortcut.SHORTCUT_QUIT_PROGRAM_WAIT);
-
-        final MenuItem miAbout = new MenuItem("Über dieses Programm");
-        miAbout.setOnAction(event -> AboutDialogController.getInstanceAndShow());
-
-        final MenuItem miLog = new MenuItem("Logdatei öffnen");
-        miLog.setOnAction(event -> {
-            PLogger.openLogFile();
-        });
-
-        final MenuItem miUrlHelp = new MenuItem("Anleitung im Web");
-        miUrlHelp.setOnAction(event -> {
-            POpen.openURL(ProgConst.URL_WEBSITE_HELP,
-                    ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
-        });
-
-        final MenuItem miReset = new MenuItem("Einstellungen zurücksetzen");
-        miReset.setOnAction(event -> new ResetDialogController(progData));
-
-        final MenuItem miToolTip = new MenuItem("Tip des Tages");
-        miToolTip.setOnAction(a -> new ProgTipOfDay().showDialog(progData, true));
-
-        final MenuItem miSearchUpdate = new MenuItem("Gibts ein Update?");
-        miSearchUpdate.setOnAction(a -> new SearchProgramUpdate(progData, progData.primaryStage).searchNewProgramVersion(true));
-
-        final Menu mHelp = new Menu("Hilfe");
-        mHelp.getItems().addAll(miUrlHelp, miLog, miReset, miToolTip, miSearchUpdate, new SeparatorMenuItem(), miAbout);
-
-        final MenuItem mbExternProgram = new MenuItem("Externes Programm starten");
-        mbExternProgram.setVisible(false); //vorerst mal noch nicht anzeigen???
-        mbExternProgram.setOnAction(e ->
-                POpen.openExternProgram(progData.primaryStage,
-                        ProgConfig.SYSTEM_PROG_EXTERN_PROGRAM, ProgIcons.Icons.ICON_BUTTON_EXTERN_PROGRAM.getImageView())
-        );
-        PShortcutWorker.addShortCut(mbExternProgram, MTShortcut.SHORTCUT_EXTERN_PROGRAM);
-
-        // ProgInfoDialog
-        if (ProgData.debug) {
-            final MenuItem miDebug = new MenuItem("Debugtools");
-            miDebug.setOnAction(event -> {
-                MTPTester mtpTester = new MTPTester(progData);
-                mtpTester.showDialog();
-            });
-            final MenuItem miSave = new MenuItem("Alles Speichern");
-            miSave.setOnAction(a -> new ProgSave().saveAll());
-
-            mHelp.getItems().addAll(new SeparatorMenuItem(), miDebug, miSave);
-        }
-
-        menuButton.setTooltip(new Tooltip("Programmeinstellungen anzeigen"));
-        menuButton.setMinWidth(Region.USE_PREF_SIZE);
-        menuButton.getStyleClass().add("btnFunctionWide");
-        menuButton.setText("");
-        menuButton.setGraphic(ProgIcons.Icons.FX_ICON_TOOLBAR_MENU_TOP.getImageView());
-        menuButton.getItems().addAll(miConfig, miMediaCollectionConfig, miSearchMediaCollection, mHelp,
-                new SeparatorMenuItem(), miQuit, miQuitWait, mbExternProgram);
     }
 
     private void selPanelFilm() {

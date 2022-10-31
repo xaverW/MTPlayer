@@ -98,28 +98,28 @@ public class DownloadFieldNames {
     public static final int DOWNLOAD_FILM_URL_NO = 19;
     public static final int DOWNLOAD_HISTORY_URL_NO = 20;
     public static final int DOWNLOAD_URL_NO = 21;
-    public static final int DOWNLOAD_URL_RTMP_NO = 22;
-    public static final int DOWNLOAD_URL_SUBTITLE_NO = 23;
+    //    public static final int DOWNLOAD_URL_RTMP_NO = 22;
+    public static final int DOWNLOAD_URL_SUBTITLE_NO = 22;
 
-    public static final int DOWNLOAD_SET_DATA_NO = 24;
-    public static final int DOWNLOAD_PROGRAM_NO = 25;
-    public static final int DOWNLOAD_PROGRAM_CALL_NO = 26;
-    public static final int DOWNLOAD_PROGRAM_CALL_ARRAY_NO = 27;
-    public static final int DOWNLOAD_PROGRAM_RESTART_NO = 28;
+    public static final int DOWNLOAD_SET_DATA_NO = 23;
+    public static final int DOWNLOAD_PROGRAM_NO = 24;
+    public static final int DOWNLOAD_PROGRAM_CALL_NO = 25;
+    public static final int DOWNLOAD_PROGRAM_CALL_ARRAY_NO = 26;
+    public static final int DOWNLOAD_PROGRAM_RESTART_NO = 27;
 
-    public static final int DOWNLOAD_DEST_FILE_NAME_NO = 29;
-    public static final int DOWNLOAD_DEST_PATH_NO = 30;
-    public static final int DOWNLOAD_DEST_PATH_FILE_NAME_NO = 31;
+    public static final int DOWNLOAD_DEST_FILE_NAME_NO = 28;
+    public static final int DOWNLOAD_DEST_PATH_NO = 29;
+    public static final int DOWNLOAD_DEST_PATH_FILE_NAME_NO = 30;
 
-    public static final int DOWNLOAD_TYPE_NO = 32;
-    public static final int DOWNLOAD_SOURCE_NO = 33;
-    public static final int DOWNLOAD_PLACED_BACK_NO = 34;
-    public static final int DOWNLOAD_INFO_FILE_NO = 35;
-    public static final int DOWNLOAD_SPOTLIGHT_NO = 36;
-    public static final int DOWNLOAD_SUBTITLE_NO = 37;
-    public static final int DOWNLOAD_PROGRAM_DOWNLOADMANAGER_NO = 38;
-    public static final int DOWNLOAD_START_TIME_NO = 39;
-    public static final int DOWNLOAD_REF_NO = 40;
+    public static final int DOWNLOAD_TYPE_NO = 31;
+    public static final int DOWNLOAD_SOURCE_NO = 32;
+    public static final int DOWNLOAD_PLACED_BACK_NO = 33;
+    public static final int DOWNLOAD_INFO_FILE_NO = 34;
+    public static final int DOWNLOAD_SPOTLIGHT_NO = 35;
+    public static final int DOWNLOAD_SUBTITLE_NO = 36;
+    public static final int DOWNLOAD_PROGRAM_DOWNLOADMANAGER_NO = 37;
+    public static final int DOWNLOAD_START_TIME_NO = 38;
+    public static final int DOWNLOAD_REF_NO = 39;
 
     public static final String[] COLUMN_NAMES = {
             DOWNLOAD_NO,
@@ -146,7 +146,7 @@ public class DownloadFieldNames {
             DOWNLOAD_FILM_URL,
             DOWNLOAD_HISTORY_URL,
             DOWNLOAD_URL,
-            DOWNLOAD_URL_RTMP,
+//            DOWNLOAD_URL_RTMP,
             DOWNLOAD_URL_SUBTITLE,
             DOWNLOAD_SET_DATA,
             DOWNLOAD_PROGRAM,
@@ -194,7 +194,7 @@ public class DownloadFieldNames {
             "Film-URL",
             "History-URL",
             "URL",
-            "URL-rtmp",
+//            "URL-rtmp",
             "URL-Untertitel",
             "Programmset",
             "Programm",

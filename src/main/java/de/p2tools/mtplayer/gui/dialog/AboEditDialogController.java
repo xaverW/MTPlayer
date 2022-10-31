@@ -21,11 +21,11 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.abo.AboFieldNames;
-import de.p2tools.mtplayer.controller.data.film.FilmData;
+import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.filmFilter.CheckFilmFilter;
+import de.p2tools.mtplayer.controller.filmFilter.FilmFilter;
+import de.p2tools.mtplayer.controller.filmFilter.FilterCheckRegEx;
 import de.p2tools.mtplayer.gui.tools.HelpText;
-import de.p2tools.mtplayer.tools.filmFilter.CheckFilmFilter;
-import de.p2tools.mtplayer.tools.filmFilter.FilmFilter;
-import de.p2tools.mtplayer.tools.filmFilter.FilterCheckRegEx;
 import de.p2tools.p2Lib.guiTools.PButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -91,14 +91,14 @@ public class AboEditDialogController extends AboDialogController {
                 rbHigh.setToggleGroup(tg);
                 rbLow.setToggleGroup(tg);
                 switch (aboCopy.getResolution()) {
-                    case FilmData.RESOLUTION_HD:
+                    case FilmDataMTP.RESOLUTION_HD:
                         rbHd.setSelected(true);
                         break;
-                    case FilmData.RESOLUTION_SMALL:
+                    case FilmDataMTP.RESOLUTION_SMALL:
                         rbLow.setSelected(true);
                         break;
                     default:
-                        aboCopy.setResolution(FilmData.RESOLUTION_NORMAL);
+                        aboCopy.setResolution(FilmDataMTP.RESOLUTION_NORMAL);
                         rbHigh.setSelected(true);
                 }
                 rbHd.setOnAction(event -> setResolution());
@@ -436,13 +436,13 @@ public class AboEditDialogController extends AboDialogController {
     private void setResolution() {
         cbxEditAll[AboFieldNames.ABO_RESOLUTION_NO].setSelected(true);
         if (rbHigh.isSelected()) {
-            aboCopy.setResolution(FilmData.RESOLUTION_NORMAL);
+            aboCopy.setResolution(FilmDataMTP.RESOLUTION_NORMAL);
         }
         if (rbHd.isSelected()) {
-            aboCopy.setResolution(FilmData.RESOLUTION_HD);
+            aboCopy.setResolution(FilmDataMTP.RESOLUTION_HD);
         }
         if (rbLow.isSelected()) {
-            aboCopy.setResolution(FilmData.RESOLUTION_SMALL);
+            aboCopy.setResolution(FilmDataMTP.RESOLUTION_SMALL);
         }
     }
 

@@ -18,12 +18,11 @@ package de.p2tools.mtplayer.controller.history;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.mtplayer.controller.data.film.FilmData;
-import de.p2tools.mtplayer.controller.data.film.FilmDataXml;
-import de.p2tools.mtplayer.controller.data.film.FilmTools;
-import de.p2tools.mtplayer.controller.data.film.FilmlistFactory;
+import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.film.FilmTools;
 import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.p2Lib.alert.PAlert;
+import de.p2tools.p2Lib.mtFilm.film.FilmDataXml;
 import de.p2tools.p2Lib.tools.date.PDateFactory;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -105,7 +104,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
             clearList();
             historyWorker.deleteHistoryFile();
             if (bookmark) {
-                FilmlistFactory.clearAllBookmarks();
+                FilmTools.clearAllBookmarks();
             }
             Listener.notify(Listener.EVENT_GUI_HISTORY_CHANGED, HistoryList.class.getSimpleName());
 
@@ -139,7 +138,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         PDuration.counterStop("History: addDataToHistory");
     }
 
-    public synchronized void addFilmDataToHistory(ArrayList<FilmData> filmList) {
+    public synchronized void addFilmDataToHistory(ArrayList<FilmDataMTP> filmList) {
         // eine Liste Filme in die History schreiben
 
         if (filmList == null || filmList.isEmpty()) {
@@ -150,7 +149,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         final String datum = PDateFactory.F_FORMAT_dd_MM_yyyy.format(new Date());
 
         PDuration.counterStart("History: addDataToHistory");
-        for (final FilmData film : filmList) {
+        for (final FilmDataMTP film : filmList) {
             if (film.isLive()) {
                 continue;
             }
@@ -274,7 +273,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         PDuration.counterStop("History: removeDataFromHistory");
     }
 
-    public synchronized void removeFilmDataFromHistory(ArrayList<FilmData> filmList) {
+    public synchronized void removeFilmDataFromHistory(ArrayList<FilmDataMTP> filmList) {
         // eine Liste Filme aus der History löschen und File wieder schreiben
 
         if (filmList == null || filmList.isEmpty()) {

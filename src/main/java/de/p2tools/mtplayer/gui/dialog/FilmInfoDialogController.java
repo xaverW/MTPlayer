@@ -19,12 +19,12 @@ package de.p2tools.mtplayer.gui.dialog;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
-import de.p2tools.mtplayer.controller.data.film.FilmData;
-import de.p2tools.mtplayer.controller.data.film.FilmDataXml;
+import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
+import de.p2tools.p2Lib.mtFilm.film.FilmDataXml;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.geometry.Insets;
@@ -73,7 +73,7 @@ public class FilmInfoDialogController extends PDialogExtra {
         showDialog();
     }
 
-    public void setFilm(FilmData film) {
+    public void setFilm(FilmDataMTP film) {
         Platform.runLater(() -> {
             //braucht es aktuell (noch) nicht: Platform ....
             for (int i = 0; i < FilmDataXml.MAX_ELEM; ++i) {
@@ -162,13 +162,13 @@ public class FilmInfoDialogController extends PDialogExtra {
                 case FilmDataXml.FILM_DATE_LONG:
                 case FilmDataXml.FILM_PLAY:
                 case FilmDataXml.FILM_RECORD:
-                case FilmDataXml.FILM_URL_AUTH:
+//                case FilmDataXml.FILM_URL_AUTH:
                 case FilmDataXml.FILM_URL_HD:
                 case FilmDataXml.FILM_URL_HISTORY:
                 case FilmDataXml.FILM_URL_SMALL:
-                case FilmDataXml.FILM_URL_RTMP:
-                case FilmDataXml.FILM_URL_RTMP_HD:
-                case FilmDataXml.FILM_URL_RTMP_SMALL:
+//                case FilmDataXml.FILM_URL_RTMP:
+//                case FilmDataXml.FILM_URL_RTMP_HD:
+//                case FilmDataXml.FILM_URL_RTMP_SMALL:
                 case FilmDataXml.FILM_URL_SUBTITLE:
                     // bis hier nicht anzeigen
                     break;

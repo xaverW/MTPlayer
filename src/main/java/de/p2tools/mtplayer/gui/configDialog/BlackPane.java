@@ -21,10 +21,9 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.BlackData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
-import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
-import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
+import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
+import de.p2tools.mtplayer.controller.filmFilter.BlacklistFilterFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
-import de.p2tools.mtplayer.tools.filmFilter.BlacklistFilterFactory;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
@@ -67,7 +66,7 @@ public class BlackPane {
     private final ArrayList<CheckMenuItem> checkMenuItemsList = new ArrayList<>();
 
     BooleanProperty propWhite = ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST;
-    ListenerLoadFilmlist listener;
+    de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerLoadFilmlist listener;
 
     private final BooleanProperty blackChanged;
     private final Stage stage;
@@ -92,7 +91,7 @@ public class BlackPane {
 
     public void close() {
         rbWhite.selectedProperty().unbindBidirectional(propWhite);
-        ProgData.getInstance().loadFilmlist.removeListenerLoadFilmlist(listener);
+        LoadFilmFactory.getInstance().loadFilmlist.removeListenerLoadFilmlist(listener);
     }
 
     private void makeConfig(VBox vBox) {
@@ -215,22 +214,21 @@ public class BlackPane {
             PTableFactory.refreshTable(tableView);
         });
 
-
         // toDo -> vielleicht den ganzen Dialog sperren??
-        ListenerLoadFilmlist listener = new ListenerLoadFilmlist() {
+        listener = new de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerLoadFilmlist() {
             @Override
-            public void start(ListenerFilmlistLoadEvent event) {
+            public void start(de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent event) {
                 btnSortList.setDisable(true);
                 btnCountHits.setDisable(true);
             }
 
             @Override
-            public void finished(ListenerFilmlistLoadEvent event) {
+            public void finished(de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent event) {
                 btnSortList.setDisable(false);
                 btnCountHits.setDisable(false);
             }
         };
-        ProgData.getInstance().loadFilmlist.addListenerLoadFilmlist(listener);
+        LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(listener);
 
 
         HBox hBoxCount = new HBox(10);

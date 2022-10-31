@@ -17,8 +17,8 @@
 package de.p2tools.mtplayer.controller.mediaDb;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.tools.Data;
 import de.p2tools.p2Lib.P2LibConst;
+import de.p2tools.p2Lib.mtFilm.tools.Data;
 
 public class MediaData extends Data<MediaData> {
     //sind die Daten die im "mediadb.txt" liegen!!

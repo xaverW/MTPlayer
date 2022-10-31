@@ -20,11 +20,11 @@ import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
-import de.p2tools.mtplayer.controller.data.film.FilmData;
-import de.p2tools.mtplayer.controller.data.film.FilmSize;
-import de.p2tools.mtplayer.controller.data.film.FilmTools;
+import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.film.FilmTools;
 import de.p2tools.p2Lib.guiTools.PCheckBoxCell;
 import de.p2tools.p2Lib.guiTools.PTableFactory;
+import de.p2tools.p2Lib.mtFilm.film.FilmSize;
 import de.p2tools.p2Lib.tools.date.PDate;
 import javafx.beans.property.BooleanProperty;
 import javafx.event.ActionEvent;
@@ -35,7 +35,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 
-public class TableFilm extends PTable<FilmData> {
+public class TableFilm extends PTable<FilmDataMTP> {
 
     private final ProgData progData;
     private final BooleanProperty small;
@@ -79,62 +79,62 @@ public class TableFilm extends PTable<FilmData> {
         ProgColorList.FILM_HISTORY.colorProperty().addListener((a, b, c) -> PTableFactory.refreshTable(this));
         ProgColorList.FILM_BOOKMARK.colorProperty().addListener((a, b, c) -> PTableFactory.refreshTable(this));
 
-        final TableColumn<FilmData, Integer> nrColumn = new TableColumn<>("Nr");
+        final TableColumn<FilmDataMTP, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));
         nrColumn.getStyleClass().add("alignCenterRightPadding_10");
 
-        final TableColumn<FilmData, String> senderColumn = new TableColumn<>("Sender");
+        final TableColumn<FilmDataMTP, String> senderColumn = new TableColumn<>("Sender");
         senderColumn.setCellValueFactory(new PropertyValueFactory<>("channel"));
         senderColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<FilmData, String> themeColumn = new TableColumn<>("Thema");
+        final TableColumn<FilmDataMTP, String> themeColumn = new TableColumn<>("Thema");
         themeColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
         themeColumn.getStyleClass().add("alignCenterLeft");
 
-        final TableColumn<FilmData, String> titleColumn = new TableColumn<>("Titel");
+        final TableColumn<FilmDataMTP, String> titleColumn = new TableColumn<>("Titel");
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         titleColumn.getStyleClass().add("alignCenterLeft");
 
-        final TableColumn<FilmData, String> startColumn = new TableColumn<>("");
+        final TableColumn<FilmDataMTP, String> startColumn = new TableColumn<>("");
         startColumn.setCellFactory(cellFactoryStart);
         startColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<FilmData, PDate> datumColumn = new TableColumn<>("Datum");
+        final TableColumn<FilmDataMTP, PDate> datumColumn = new TableColumn<>("Datum");
         datumColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         datumColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<FilmData, String> timeColumn = new TableColumn<>("Zeit");
+        final TableColumn<FilmDataMTP, String> timeColumn = new TableColumn<>("Zeit");
         timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
         timeColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<FilmData, Integer> durationColumn = new TableColumn<>("Dauer [min]");
+        final TableColumn<FilmDataMTP, Integer> durationColumn = new TableColumn<>("Dauer [min]");
         durationColumn.setCellFactory(cellFactoryDuration);
         durationColumn.setCellValueFactory(new PropertyValueFactory<>("durationMinute"));
         durationColumn.getStyleClass().add("alignCenterRightPadding_25");
 
-        final TableColumn<FilmData, FilmSize> sizeColumn = new TableColumn<>("Größe [MB]");
+        final TableColumn<FilmDataMTP, FilmSize> sizeColumn = new TableColumn<>("Größe [MB]");
         sizeColumn.setCellValueFactory(new PropertyValueFactory<>("filmSize"));
         sizeColumn.getStyleClass().add("alignCenterRightPadding_25");
 
-        final TableColumn<FilmData, Boolean> hdColumn = new TableColumn<>("HD");
+        final TableColumn<FilmDataMTP, Boolean> hdColumn = new TableColumn<>("HD");
         hdColumn.setCellValueFactory(new PropertyValueFactory<>("hd"));
         hdColumn.setCellFactory(new PCheckBoxCell().cellFactoryBool);
         hdColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<FilmData, Boolean> utColumn = new TableColumn<>("UT");
+        final TableColumn<FilmDataMTP, Boolean> utColumn = new TableColumn<>("UT");
         utColumn.setCellValueFactory(new PropertyValueFactory<>("ut"));
         utColumn.setCellFactory(new PCheckBoxCell().cellFactoryBool);
         utColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<FilmData, String> geoColumn = new TableColumn<>("Geo");
+        final TableColumn<FilmDataMTP, String> geoColumn = new TableColumn<>("Geo");
         geoColumn.setCellValueFactory(new PropertyValueFactory<>("geo"));
         geoColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<FilmData, String> urlColumn = new TableColumn<>("URL");
+        final TableColumn<FilmDataMTP, String> urlColumn = new TableColumn<>("URL");
         urlColumn.setCellValueFactory(new PropertyValueFactory<>("url"));
         urlColumn.getStyleClass().add("alignCenterLeft");
 
-        final TableColumn<FilmData, String> aboColumn = new TableColumn<>("Abo");
+        final TableColumn<FilmDataMTP, String> aboColumn = new TableColumn<>("Abo");
         aboColumn.setCellValueFactory(new PropertyValueFactory<>("aboName"));
         aboColumn.getStyleClass().add("alignCenterLeft");
 
@@ -155,10 +155,10 @@ public class TableFilm extends PTable<FilmData> {
                 urlColumn, aboColumn);
     }
 
-    private Callback<TableColumn<FilmData, String>, TableCell<FilmData, String>> cellFactoryStart
-            = (final TableColumn<FilmData, String> param) -> {
+    private Callback<TableColumn<FilmDataMTP, String>, TableCell<FilmDataMTP, String>> cellFactoryStart
+            = (final TableColumn<FilmDataMTP, String> param) -> {
 
-        final TableCell<FilmData, String> cell = new TableCell<>() {
+        final TableCell<FilmDataMTP, String> cell = new TableCell<>() {
 
             @Override
             public void updateItem(String item, boolean empty) {
@@ -170,7 +170,7 @@ public class TableFilm extends PTable<FilmData> {
                     return;
                 }
 
-                FilmData film = getTableView().getItems().get(getIndex());
+                FilmDataMTP film = getTableView().getItems().get(getIndex());
 
                 final HBox hbox = new HBox();
                 hbox.setSpacing(4);
@@ -206,10 +206,10 @@ public class TableFilm extends PTable<FilmData> {
         return cell;
     };
 
-    private Callback<TableColumn<FilmData, Integer>, TableCell<FilmData, Integer>> cellFactoryDuration
-            = (final TableColumn<FilmData, Integer> param) -> {
+    private Callback<TableColumn<FilmDataMTP, Integer>, TableCell<FilmDataMTP, Integer>> cellFactoryDuration
+            = (final TableColumn<FilmDataMTP, Integer> param) -> {
 
-        final TableCell<FilmData, Integer> cell = new TableCell<>() {
+        final TableCell<FilmDataMTP, Integer> cell = new TableCell<>() {
 
             @Override
             public void updateItem(Integer item, boolean empty) {

@@ -18,8 +18,7 @@ package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadInfosFactory;
-import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
-import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
+import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.geometry.Insets;
@@ -104,15 +103,14 @@ public class StatusBarController extends AnchorPane {
         stackPane.getChildren().addAll(nonePane, filmPane, downloadPane, aboPane);
         stackPane.setPadding(new Insets(2, 5, 2, 5));
         nonePane.toFront();
-
-        progData.loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
+        LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(new de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerLoadFilmlist() {
             @Override
-            public void start(ListenerFilmlistLoadEvent event) {
+            public void start(de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent event) {
                 stopTimer = true;
             }
 
             @Override
-            public void finished(ListenerFilmlistLoadEvent event) {
+            public void finished(de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent event) {
                 stopTimer = false;
                 setStatusbarIndex(statusbarIndex);
             }

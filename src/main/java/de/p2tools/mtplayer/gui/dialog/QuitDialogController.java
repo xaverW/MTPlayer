@@ -23,7 +23,7 @@ import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.BigButton;
 import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
-import de.p2tools.p2Lib.tools.download.HttpDownload;
+import de.p2tools.p2Lib.mtDownload.HttpDownload;
 import javafx.concurrent.Task;
 import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;

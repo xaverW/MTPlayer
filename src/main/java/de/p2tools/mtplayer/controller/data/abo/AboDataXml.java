@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.controller.data.abo;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
-import de.p2tools.mtplayer.tools.filmFilter.CheckFilmFilter;
+import de.p2tools.mtplayer.controller.filmFilter.CheckFilmFilter;
 
 public class AboDataXml extends AboDataProps {
 

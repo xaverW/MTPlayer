@@ -54,7 +54,7 @@ public class DownloadDataXml extends DownloadDataProps {
         setFilmUrl(arr[DownloadFieldNames.DOWNLOAD_FILM_URL_NO]);
         setHistoryUrl(arr[DownloadFieldNames.DOWNLOAD_HISTORY_URL_NO]);
         setUrl(arr[DownloadFieldNames.DOWNLOAD_URL_NO]);
-        setUrlRtmp(arr[DownloadFieldNames.DOWNLOAD_URL_RTMP_NO]);
+//        setUrlRtmp(arr[DownloadFieldNames.DOWNLOAD_URL_RTMP_NO]);
         setSubtitle(Boolean.parseBoolean(arr[DownloadFieldNames.DOWNLOAD_URL_SUBTITLE_NO]));
         setSetDataId(arr[DownloadFieldNames.DOWNLOAD_SET_DATA_NO]);
         setProgram(arr[DownloadFieldNames.DOWNLOAD_PROGRAM_NO]);

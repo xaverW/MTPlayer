@@ -18,8 +18,8 @@ package de.p2tools.mtplayer.gui.tools;
 
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFieldNames;
-import de.p2tools.mtplayer.controller.data.film.FilmDataXml;
 import de.p2tools.p2Lib.P2LibConst;
+import de.p2tools.p2Lib.mtFilm.film.FilmDataXml;
 import de.p2tools.p2Lib.tools.PSystemUtils;
 import de.p2tools.p2Lib.tools.log.PLog;
 
@@ -70,12 +70,12 @@ public class MTInfoFile {
             br.write(DownloadFieldNames.COLUMN_NAMES[DownloadFieldNames.DOWNLOAD_URL_NO] + P2LibConst.LINE_SEPARATOR);
             br.write(download.getUrl());
             br.write(P2LibConst.LINE_SEPARATORx2);
-            if (!download.getUrlRtmp().isEmpty()
-                    && !download.getUrlRtmp().equals(download.getUrl())) {
-                br.write(DownloadFieldNames.COLUMN_NAMES[DownloadFieldNames.DOWNLOAD_URL_RTMP_NO] + P2LibConst.LINE_SEPARATOR);
-                br.write(download.getUrlRtmp());
-                br.write(P2LibConst.LINE_SEPARATORx2);
-            }
+//            if (!download.getUrlRtmp().isEmpty()
+//                    && !download.getUrlRtmp().equals(download.getUrl())) {
+//                br.write(DownloadFieldNames.COLUMN_NAMES[DownloadFieldNames.DOWNLOAD_URL_RTMP_NO] + P2LibConst.LINE_SEPARATOR);
+//                br.write(download.getUrlRtmp());
+//                br.write(P2LibConst.LINE_SEPARATORx2);
+//            }
 
             if (download.getFilm() != null) {
                 int anz = 0;

@@ -18,8 +18,8 @@ package de.p2tools.mtplayer.controller;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.dialog.QuitDialogController;
+import de.p2tools.p2Lib.mtDownload.HttpDownload;
 import de.p2tools.p2Lib.tools.PShutDown;
-import de.p2tools.p2Lib.tools.download.HttpDownload;
 import de.p2tools.p2Lib.tools.log.LogMessage;
 import javafx.application.Platform;
 

@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.tools.table;
 import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
-import de.p2tools.mtplayer.tools.filmFilter.CheckFilmFilter;
+import de.p2tools.mtplayer.controller.filmFilter.CheckFilmFilter;
 import de.p2tools.p2Lib.guiTools.PCheckBoxCell;
 import de.p2tools.p2Lib.guiTools.PTableFactory;
 import de.p2tools.p2Lib.tools.date.PDate;

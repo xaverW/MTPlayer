@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.gui.mediaConfig;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.film.FilmData;
+import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.history.HistoryData;
 import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
 import de.p2tools.p2Lib.P2LibConst;
@@ -49,7 +49,7 @@ public class PaneHistoryContextMenu {
     }
 
     private void getMenu(ContextMenu contextMenu) {
-        FilmData film = progData.filmlist.getFilmByUrl(historyDataArrayList.get(0).getUrl());
+        FilmDataMTP film = progData.filmlist.getFilmByUrl(historyDataArrayList.get(0).getUrl());
 
         MenuItem miDelUrl = new MenuItem("Url aus der Liste löschen");
         miDelUrl.setOnAction(a -> {

@@ -17,7 +17,7 @@
 
 package de.p2tools.mtplayer.controller.history;
 
-import de.p2tools.mtplayer.controller.data.film.FilmlistFactory;
+import de.p2tools.p2Lib.mtFilm.film.FilmFactory;
 import de.p2tools.p2Lib.tools.log.PLog;
 
 import java.io.IOException;
@@ -69,8 +69,8 @@ public class HistoryWorker {
 
                 // 0,2s bei 80_000 Einträgen
                 // PDuration.counterStart("readHistoryDataFromFile");
-                historyData.setTheme(FilmlistFactory.cleanUnicode(historyData.getTheme()));
-                historyData.setTitle(FilmlistFactory.cleanUnicode(historyData.getTitle()));
+                historyData.setTheme(FilmFactory.cleanUnicode(historyData.getTheme()));
+                historyData.setTitle(FilmFactory.cleanUnicode(historyData.getTitle()));
                 // PDuration.counterStop("readHistoryDataFromFile");
                 // ==================================================================
                 dataList.add(historyData);

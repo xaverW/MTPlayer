@@ -17,21 +17,20 @@
 
 package de.p2tools.mtplayer.controller.config;
 
-import de.p2tools.mtplayer.controller.data.film.FilmData;
-import de.p2tools.mtplayer.controller.filmlist.filmlistUrls.FilmlistUrlList;
+import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.filmFilter.ActFilmFilterWorker;
+import de.p2tools.mtplayer.controller.filmFilter.CheckFilmFilter;
+import de.p2tools.mtplayer.controller.filmFilter.FilmFilter;
 import de.p2tools.mtplayer.controller.starter.DownloadState;
+import de.p2tools.mtplayer.controller.tools.MLBandwidthTokenBucket;
 import de.p2tools.mtplayer.gui.tools.SetsPrograms;
-import de.p2tools.mtplayer.tools.MLBandwidthTokenBucket;
-import de.p2tools.mtplayer.tools.filmFilter.ActFilmFilterWorker;
-import de.p2tools.mtplayer.tools.filmFilter.CheckFilmFilter;
-import de.p2tools.mtplayer.tools.filmFilter.FilmFilter;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.configFile.ConfigFile;
 import de.p2tools.p2Lib.configFile.config.Config;
 import de.p2tools.p2Lib.configFile.pData.PDataProgConfig;
 import de.p2tools.p2Lib.tools.PStringUtils;
 import de.p2tools.p2Lib.tools.PSystemUtils;
-import de.p2tools.p2Lib.tools.ProgramTools;
+import de.p2tools.p2Lib.tools.ProgramToolsFactory;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.beans.property.*;
 import org.apache.commons.lang3.SystemUtils;
@@ -70,13 +69,18 @@ public class ProgConfig extends PDataProgConfig {
     // ===========================================
 
     // Configs der Programmversion, nur damit sie (zur Update-Suche) im Config-File stehen
-    public static StringProperty SYSTEM_PROG_VERSION = addStr("system-prog-version", ProgramTools.getProgVersion());
-    public static StringProperty SYSTEM_PROG_BUILD_NO = addStr("system-prog-build-no", ProgramTools.getBuild());
-    public static StringProperty SYSTEM_PROG_BUILD_DATE = addStr("system-prog-build-date", ProgramTools.getCompileDate());//z.B.: 27.07.2
+    public static StringProperty SYSTEM_PROG_VERSION = addStr("system-prog-version", ProgramToolsFactory.getProgVersion());
+    public static StringProperty SYSTEM_PROG_BUILD_NO = addStr("system-prog-build-no", ProgramToolsFactory.getBuild());
+    public static StringProperty SYSTEM_PROG_BUILD_DATE = addStr("system-prog-build-date", ProgramToolsFactory.getCompileDate());//z.B.: 27.07.2
 
     //Configs zur Anzeige der Diacritics in der Filmliste
     //TRUE: dann werden Diacritics nicht geändert und angezeigt
     public static BooleanProperty SYSTEM_SHOW_DIACRITICS = addBool("system-show-diacritics", Boolean.TRUE);
+
+    //Configs zur Anzeige der Diacritics in der Filmliste
+    //TRUE: dann werden Diacritics entfernt
+    public static BooleanProperty SYSTEM_REMOVE_DIACRITICS = addBool("system-remove-diacritics", Boolean.FALSE);
+
 
     // Configs zum Aktualisieren beim Programmupdate
     public static BooleanProperty SYSTEM_AFTER_UPDATE_FILTER = addBool("system-after-update-filter", Boolean.FALSE);
@@ -137,7 +141,7 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty SYSTEM_PROG_EXTERN_PROGRAM = addStr("system-extern-program");
     public static StringProperty SYSTEM_PROG_PLAY_FILME = addStr("system-prog-play-filme");
     public static BooleanProperty SYSTEM_MARK_GEO = addBool("system-mark-geo", Boolean.TRUE);
-    public static StringProperty SYSTEM_GEO_HOME_PLACE = addStr("system-geo-home-place", FilmData.GEO_DE);
+    public static StringProperty SYSTEM_GEO_HOME_PLACE = addStr("system-geo-home-place", FilmDataMTP.GEO_DE);
     public static BooleanProperty SYSTEM_STYLE = addBool("system-style", Boolean.FALSE);
     public static IntegerProperty SYSTEM_STYLE_SIZE = addInt("system-style-size", 14);
     public static StringProperty SYSTEM_LOG_DIR = addStr("system-log-dir", "");
@@ -201,7 +205,7 @@ public class ProgConfig extends PDataProgConfig {
 
     // Gui Download
     public static StringProperty DOWNLOAD_DIALOG_PATH_SAVING = addStr("download-dialog-path-saving"); // gesammelten Downloadpfade im Downloaddialog
-    public static StringProperty DOWNLOAD_DIALOG_HD_HEIGHT_LOW = addStr("download-dialog-hd-height-low", FilmData.RESOLUTION_NORMAL);
+    public static StringProperty DOWNLOAD_DIALOG_HD_HEIGHT_LOW = addStr("download-dialog-hd-height-low", FilmDataMTP.RESOLUTION_NORMAL);
     public static BooleanProperty DOWNLOAD_DIALOG_START_DOWNLOAD_NOW = addBool("download-dialog-start-download-now", Boolean.TRUE);
     public static BooleanProperty DOWNLOAD_DIALOG_START_DOWNLOAD_NOT = addBool("download-dialog-start-download-not", Boolean.FALSE);
     public static BooleanProperty DOWNLOAD_DIALOG_START_DOWNLOAD_TIME = addBool("download-dialog-start-download-time", Boolean.FALSE);
@@ -389,9 +393,9 @@ public class ProgConfig extends PDataProgConfig {
         ProgData progData = ProgData.getInstance();
 
         // Configs der Programmversion, nur damit sie (zur Update-Suche) im Config-File stehen
-        ProgConfig.SYSTEM_PROG_VERSION.set(ProgramTools.getProgVersion());
-        ProgConfig.SYSTEM_PROG_BUILD_NO.set(ProgramTools.getBuild());
-        ProgConfig.SYSTEM_PROG_BUILD_DATE.set(ProgramTools.getCompileDate());
+        ProgConfig.SYSTEM_PROG_VERSION.set(ProgramToolsFactory.getProgVersion());
+        ProgConfig.SYSTEM_PROG_BUILD_NO.set(ProgramToolsFactory.getBuild());
+        ProgConfig.SYSTEM_PROG_BUILD_DATE.set(ProgramToolsFactory.getCompileDate());
 
         configFile.addConfigs(ProgConfig.getInstance());//Progconfig
 //        configFile.addConfigs(ProgColorList.getConfigsData());//Color
@@ -410,14 +414,6 @@ public class ProgConfig extends PDataProgConfig {
         configFile.addConfigs(progData.replaceList);
         configFile.addConfigs(progData.downloadList);
         configFile.addConfigs(progData.mediaCollectionDataList);
-
-        FilmlistUrlList filmlistUrlList = progData.searchFilmListUrls.getFilmlistUrlList_akt();
-        filmlistUrlList.setTag("filmlistUrlList-akt");
-        configFile.addConfigs(filmlistUrlList);
-
-        filmlistUrlList = progData.searchFilmListUrls.getFilmlistUrlList_diff();
-        filmlistUrlList.setTag("filmlistUrlList-diff");
-        configFile.addConfigs(filmlistUrlList);
     }
 
     public static void logAllConfigs() {

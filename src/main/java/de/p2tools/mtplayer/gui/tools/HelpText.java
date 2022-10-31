@@ -669,4 +669,25 @@ public class HelpText {
                     "Es beendet sich und muss neu gestartet werden.\n" +
                     "Der neue Start beginnt mit dem Einrichtungsdialog." +
                     "\n";
+
+    public static final String EDIT_DOWNLOAD_WITH_PROG =
+            "Der Programmaufruf wird von MTPlayer in die einzelnen Teile " +
+                    "(Programmschalter) zerlegt. Die einzelnen Programmschalter " +
+                    "werden durch \"<>\" getrennt angegeben. Dadurch ist es möglich, " +
+                    "auch Pfade mit Leerzeichen zu verwenden.\n" +
+                    "\n" +
+                    "Bei ÄNDERUNGEN des Programmaufrufs in diesem Dialog, muss diese Form\n" +
+                    "verwendet werden.\n" +
+                    "\n" +
+                    "der Aufruf:\n" +
+                    "PFAD/ffmpeg -i URL -c copy -bsf:a aac_adtstoasc ZIELPFAD/DATEI.mp4\n" +
+                    "\n" +
+                    "wird so angegeben:\n" +
+                    "Pfad/ffmpeg<>-i<>URL<>-c<>copy<>-bsf:a<>aac_adtstoasc<>ZIELPFAD/DATEI.mp4\n" +
+                    "\n" +
+                    "Der Programmaufruf kann auch so (ohne <>) angegben werden:\n" +
+                    "PFAD/ffmpeg -i URL -c copy -bsf:a aac_adtstoasc ZIELPFAD/DATEI.mp4\n" +
+                    "\n" +
+                    "Das funktioniert, kann dann aber bei Leerzeichen im Pfad zu Problemen führen.\n" +
+                    "\n";
 }

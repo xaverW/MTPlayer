@@ -20,8 +20,8 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.BlackData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
-import de.p2tools.mtplayer.controller.data.film.FilmData;
-import de.p2tools.mtplayer.tools.filmFilter.BlacklistFilterFactory;
+import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.filmFilter.BlacklistFilterFactory;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
@@ -57,16 +57,16 @@ public class AddBlacklistDialogController extends PDialogExtra {
     private final Button btnClearThemeTitel = new Button();
 
     private final ArrayList<CheckMenuItem> checkMenuItemsList = new ArrayList<>();
-    private final FilmData filmData;
+    private final FilmDataMTP filmDataMTP;
     private final BlackData blackData;
     private final ProgData progData;
 
-    public AddBlacklistDialogController(ProgData progData, FilmData filmData, BlackData blackData) {
+    public AddBlacklistDialogController(ProgData progData, FilmDataMTP filmDataMTP, BlackData blackData) {
         super(progData.primaryStage, ProgConfig.ADD_BLACK_DIALOG_SIZE,
                 "Blacklist-Eintrag erstellen", true, false);
 
         this.progData = progData;
-        this.filmData = filmData;
+        this.filmDataMTP = filmDataMTP;
         this.blackData = blackData;
         init(true);
     }
@@ -107,17 +107,17 @@ public class AddBlacklistDialogController extends PDialogExtra {
         });
 
         btnChannel.setOnAction(a -> {
-            blackData.setChannel(filmData.getChannel());
+            blackData.setChannel(filmDataMTP.getChannel());
             initSenderMenu();
         });
         btnChannel.setTooltip(new Tooltip("Daten vom Film eintragen"));
         btnChannel.setGraphic(ProgIcons.Icons.ICON_BUTTON_RESET.getImageView());
 
-        btnTheme.setOnAction(a -> blackData.setTheme(filmData.getTheme()));
+        btnTheme.setOnAction(a -> blackData.setTheme(filmDataMTP.getTheme()));
         btnTheme.setTooltip(new Tooltip("Daten vom Film eintragen"));
         btnTheme.setGraphic(ProgIcons.Icons.ICON_BUTTON_RESET.getImageView());
 
-        btnTitel.setOnAction(a -> blackData.setTitle(filmData.getTitle()));
+        btnTitel.setOnAction(a -> blackData.setTitle(filmDataMTP.getTitle()));
         btnTitel.setTooltip(new Tooltip("Daten vom Film eintragen"));
         btnTitel.setGraphic(ProgIcons.Icons.ICON_BUTTON_RESET.getImageView());
 

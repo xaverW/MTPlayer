@@ -18,8 +18,8 @@ package de.p2tools.mtplayer.controller.data.download;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.tools.FileNameUtils;
-import de.p2tools.mtplayer.tools.SizeTools;
+import de.p2tools.mtplayer.controller.tools.SizeTools;
+import de.p2tools.p2Lib.mtFilm.tools.FileNameUtils;
 import de.p2tools.p2Lib.tools.PSystemUtils;
 import de.p2tools.p2Lib.tools.file.PFileUtils;
 import de.p2tools.p2Lib.tools.log.PLog;

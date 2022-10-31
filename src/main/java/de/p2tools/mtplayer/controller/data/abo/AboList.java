@@ -19,16 +19,17 @@ package de.p2tools.mtplayer.controller.data.abo;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadTools;
-import de.p2tools.mtplayer.controller.data.film.FilmData;
-import de.p2tools.mtplayer.controller.data.film.FilmDataXml;
-import de.p2tools.mtplayer.controller.data.film.Filmlist;
+import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.film.FilmlistMTP;
+import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
+import de.p2tools.mtplayer.controller.filmFilter.CheckFilmFilter;
+import de.p2tools.mtplayer.controller.filmFilter.FilmFilter;
+import de.p2tools.mtplayer.controller.filmFilter.FilmFilterFactory;
 import de.p2tools.mtplayer.gui.dialog.AboEditDialogController;
-import de.p2tools.mtplayer.tools.filmFilter.CheckFilmFilter;
-import de.p2tools.mtplayer.tools.filmFilter.FilmFilter;
-import de.p2tools.mtplayer.tools.filmFilter.FilmFilterFactory;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.configFile.pData.PDataList;
+import de.p2tools.p2Lib.mtFilm.film.FilmDataXml;
 import de.p2tools.p2Lib.tools.GermanStringSorter;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import javafx.beans.property.BooleanProperty;
@@ -92,7 +93,7 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
             abo.setName("Abo_" + nr);
         }
         if (abo.getResolution().isEmpty()) {
-            abo.setResolution(FilmData.RESOLUTION_NORMAL);
+            abo.setResolution(FilmDataMTP.RESOLUTION_NORMAL);
         }
         super.add(abo);
     }
@@ -243,7 +244,7 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
     }
 
     public synchronized void notifyChanges() {
-        if (!progData.loadFilmlist.getPropLoadFilmlist()) {
+        if (!LoadFilmFactory.getInstance().loadFilmlist.getPropLoadFilmlist()) {
             // wird danach eh gemacht
             setAboForFilm(progData.filmlist);
         }
@@ -329,7 +330,7 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
         return false;
     }
 
-    public synchronized AboData getAboForFilm_quick(FilmData film, boolean checkLength) {
+    public synchronized AboData getAboForFilm_quick(FilmDataMTP film, boolean checkLength) {
         // da wird nur in der Filmliste geschaut, ob in "DatenFilm" ein Abo eingetragen ist
         // geht schneller, "assignAboToFilm" muss aber vorher schon gelaufen sein!!
         AboData abo = film.getAbo();
@@ -345,7 +346,7 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
         }
     }
 
-    private void deleteAboInFilm(FilmData film) {
+    private void deleteAboInFilm(FilmDataMTP film) {
         // für jeden Film Abo löschen
         film.arr[FilmDataXml.FILM_ABO_NAME] = "";
         film.setAbo(null);
@@ -357,7 +358,7 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
      *
      * @param film assignee
      */
-    private void assignAboToFilm(FilmData film) {
+    private void assignAboToFilm(FilmDataMTP film) {
         if (film.isLive()) {
             // Livestreams gehören nicht in ein Abo
             deleteAboInFilm(film);
@@ -402,7 +403,7 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
         }
     }
 
-    public synchronized void setAboForFilm(Filmlist filmlist) {
+    public synchronized void setAboForFilm(FilmlistMTP filmlist) {
         //hier wird tatsächlich für jeden Film die Liste der Abos durchsucht,
         //braucht länger
         PDuration.counterStart("Abo in Filmliste eintragen");

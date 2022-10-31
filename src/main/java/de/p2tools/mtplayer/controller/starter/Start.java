@@ -18,8 +18,8 @@ package de.p2tools.mtplayer.controller.starter;
 
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.mtplayer.tools.MLInputStream;
-import de.p2tools.mtplayer.tools.SizeTools;
+import de.p2tools.mtplayer.controller.tools.MLInputStream;
+import de.p2tools.mtplayer.controller.tools.SizeTools;
 import de.p2tools.p2Lib.tools.date.PDate;
 
 public class Start {

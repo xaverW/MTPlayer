@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.gui.filter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
-import de.p2tools.mtplayer.tools.filmFilter.CheckFilmFilter;
+import de.p2tools.mtplayer.controller.filmFilter.CheckFilmFilter;
 import de.p2tools.p2Lib.guiTools.PDatePicker;
 import de.p2tools.p2Lib.guiTools.pCheckComboBox.PCheckComboBox;
 import de.p2tools.p2Lib.guiTools.pRange.PRangeBox;

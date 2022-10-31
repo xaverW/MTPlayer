@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.controller.starter;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.mtplayer.tools.SizeTools;
+import de.p2tools.mtplayer.controller.tools.SizeTools;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.guiTools.pNotification.PNotification;
 

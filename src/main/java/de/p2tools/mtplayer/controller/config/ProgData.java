@@ -22,9 +22,9 @@ import de.p2tools.mtplayer.controller.data.*;
 import de.p2tools.mtplayer.controller.data.abo.AboList;
 import de.p2tools.mtplayer.controller.data.download.DownloadInfos;
 import de.p2tools.mtplayer.controller.data.download.DownloadList;
-import de.p2tools.mtplayer.controller.data.film.Filmlist;
-import de.p2tools.mtplayer.controller.filmlist.LoadFilmlist;
-import de.p2tools.mtplayer.controller.filmlist.filmlistUrls.SearchFilmListUrls;
+import de.p2tools.mtplayer.controller.film.FilmlistMTP;
+import de.p2tools.mtplayer.controller.filmFilter.ActFilmFilterWorker;
+import de.p2tools.mtplayer.controller.filmFilter.FilmFilterRunner;
 import de.p2tools.mtplayer.controller.history.HistoryList;
 import de.p2tools.mtplayer.controller.mediaDb.MediaCollectionDataList;
 import de.p2tools.mtplayer.controller.mediaDb.MediaDataList;
@@ -40,8 +40,6 @@ import de.p2tools.mtplayer.gui.filter.DownloadFilterController;
 import de.p2tools.mtplayer.gui.filter.FilmFilterControllerClearFilter;
 import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.mtplayer.gui.tools.ProgTray;
-import de.p2tools.mtplayer.tools.filmFilter.ActFilmFilterWorker;
-import de.p2tools.mtplayer.tools.filmFilter.FilmFilterRunner;
 import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import javafx.animation.Animation;
@@ -66,8 +64,6 @@ public class ProgData {
 
     // zentrale Klassen
     public StarterClass starterClass; // Klasse zum Ausführen der Programme (für die Downloads): VLC, flvstreamer, ...
-    public LoadFilmlist loadFilmlist; // erledigt das updaten der Filmliste
-    public SearchFilmListUrls searchFilmListUrls; // da werden die DownloadURLs der Filmliste verwaltet
     public MTColor mTColor; // verwendete Farben
     public MTShortcut mtShortcut; // verwendete Shortcuts
     public ActFilmFilterWorker actFilmFilterWorker; // gespeicherte Filterprofile
@@ -92,8 +88,8 @@ public class ProgData {
     public DownloadInfos downloadInfos;
 
     // Programmdaten
-    public Filmlist filmlist; // ist die komplette Filmliste
-    public Filmlist filmlistFiltered; // Filmliste, wie im TabFilme angezeigt
+    public FilmlistMTP filmlist; // ist die komplette Filmliste
+    public FilmlistMTP filmlistFiltered; // Filmliste, wie im TabFilme angezeigt
 
     public DownloadList downloadList; // Filme die als "Download" geladen werden sollen
     public DownloadList downloadListButton; // Filme die über "Tab Filme" als Button/Film abspielen gestartet werden
@@ -109,17 +105,14 @@ public class ProgData {
     public HistoryList erledigteAbos; // erfolgreich geladenen Abos
     public HistoryList bookmarks; // markierte Filme
 
-
     private ProgData() {
         mTColor = new MTColor();
         mtShortcut = new MTShortcut();
         replaceList = new ReplaceList();
-        searchFilmListUrls = new SearchFilmListUrls();
 
-        loadFilmlist = new LoadFilmlist(this);
         actFilmFilterWorker = new ActFilmFilterWorker(this);
-        filmlist = new Filmlist();
-        filmlistFiltered = new Filmlist();
+        filmlist = new FilmlistMTP();
+        filmlistFiltered = new FilmlistMTP();
 
         blackList = new BlackList(this);
         setDataList = new SetDataList();

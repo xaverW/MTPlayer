@@ -20,10 +20,10 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.ProgramData;
 import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
-import de.p2tools.mtplayer.controller.data.film.FilmData;
-import de.p2tools.mtplayer.controller.data.film.FilmDataXml;
+import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.gui.configDialog.setData.AboSubDir;
-import de.p2tools.mtplayer.tools.FileNameUtils;
+import de.p2tools.p2Lib.mtFilm.film.FilmDataXml;
+import de.p2tools.p2Lib.mtFilm.tools.FileNameUtils;
 import de.p2tools.p2Lib.tools.PSystemUtils;
 import de.p2tools.p2Lib.tools.date.PDateFactory;
 import de.p2tools.p2Lib.tools.file.PFileUtils;
@@ -43,7 +43,7 @@ public class DownloadProgram {
         this.download = download;
     }
 
-    public boolean makeProgParameter(FilmData film, AboData abo, String name, String path) {
+    public boolean makeProgParameter(FilmDataMTP film, AboData abo, String name, String path) {
         // zieldatei und pfad bauen und eintragen
         try {
             final ProgramData programData = download.getSetData().getProgUrl(download.getUrl());
@@ -87,7 +87,7 @@ public class DownloadProgram {
     }
 
 
-    private void buildFileNamePath(SetData setData, FilmData film, AboData abo, String nname, String ppath) {
+    private void buildFileNamePath(SetData setData, FilmDataMTP film, AboData abo, String nname, String ppath) {
         // nname und ppfad sind nur belegt, wenn der Download über den DialogAddDownload gestartet wurde
         // (aus TabFilme)
         String name;
@@ -249,7 +249,7 @@ public class DownloadProgram {
         download.setDestPathFile(PFileUtils.addsPath(pathName[0], pathName[1]));
     }
 
-    private String replaceString(String replStr, FilmData film) {
+    private String replaceString(String replStr, FilmDataMTP film) {
         // hier wird nur ersetzt!
         // Felder mit variabler Länge, evtl. vorher kürzen
 
@@ -287,18 +287,18 @@ public class DownloadProgram {
         replStr = replStr.replace("%i", String.valueOf(film.no));
 
         String res = "";
-        if (download.getUrl().equals(film.getUrlForResolution(FilmData.RESOLUTION_NORMAL))) {
+        if (download.getUrl().equals(film.getUrlForResolution(FilmDataMTP.RESOLUTION_NORMAL))) {
             res = "H";
-        } else if (download.getUrl().equals(film.getUrlForResolution(FilmData.RESOLUTION_HD))) {
+        } else if (download.getUrl().equals(film.getUrlForResolution(FilmDataMTP.RESOLUTION_HD))) {
             res = "HD";
-        } else if (download.getUrl().equals(film.getUrlForResolution(FilmData.RESOLUTION_SMALL))) {
+        } else if (download.getUrl().equals(film.getUrlForResolution(FilmDataMTP.RESOLUTION_SMALL))) {
             res = "L";
-        } else if (download.getUrl().equals(film.getUrlFlvstreamerForResolution(FilmData.RESOLUTION_NORMAL))) {
-            res = "H";
-        } else if (download.getUrl().equals(film.getUrlFlvstreamerForResolution(FilmData.RESOLUTION_HD))) {
-            res = "HD";
-        } else if (download.getUrl().equals(film.getUrlFlvstreamerForResolution(FilmData.RESOLUTION_SMALL))) {
-            res = "L";
+//        } else if (download.getUrl().equals(film.getUrlFlvstreamerForResolution(FilmData.RESOLUTION_NORMAL))) {
+//            res = "H";
+//        } else if (download.getUrl().equals(film.getUrlFlvstreamerForResolution(FilmData.RESOLUTION_HD))) {
+//            res = "HD";
+//        } else if (download.getUrl().equals(film.getUrlFlvstreamerForResolution(FilmData.RESOLUTION_SMALL))) {
+//            res = "L";
         }
         replStr = replStr.replace("%q", res); // %q Qualität des Films ("HD", "H", "L")
 
@@ -434,7 +434,7 @@ public class DownloadProgram {
     private String replaceExec(String execString) {
         execString = execString.replace("**", download.getDestPathFile());
         execString = execString.replace("%f", download.getUrl());
-        execString = execString.replace("%F", download.getUrlRtmp());
+//        execString = execString.replace("%F", download.getUrlRtmp());
         if (download.getFilm() != null) {
             execString = execString.replace("%w", download.getFilm().getWebsite());
         }

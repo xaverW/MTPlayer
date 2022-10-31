@@ -18,11 +18,11 @@ package de.p2tools.mtplayer.controller.data.abo;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.SetData;
-import de.p2tools.mtplayer.controller.data.film.FilmData;
-import de.p2tools.mtplayer.tools.Data;
-import de.p2tools.mtplayer.tools.filmFilter.CheckFilmFilter;
+import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.filmFilter.CheckFilmFilter;
 import de.p2tools.p2Lib.configFile.config.*;
 import de.p2tools.p2Lib.configFile.pData.PDataSample;
+import de.p2tools.p2Lib.mtFilm.tools.Data;
 import de.p2tools.p2Lib.tools.date.PDate;
 import de.p2tools.p2Lib.tools.date.PDateFactory;
 import de.p2tools.p2Lib.tools.date.PDateProperty;
@@ -36,7 +36,7 @@ public class AboDataProps extends PDataSample<AboData> implements Comparable<Abo
     private final BooleanProperty active = new SimpleBooleanProperty(true);
     private final StringProperty name = new SimpleStringProperty("");
     private final StringProperty description = new SimpleStringProperty("");
-    private final StringProperty resolution = new SimpleStringProperty(FilmData.RESOLUTION_NORMAL);
+    private final StringProperty resolution = new SimpleStringProperty(FilmDataMTP.RESOLUTION_NORMAL);
     private final StringProperty channel = new SimpleStringProperty("");
     private final StringProperty theme = new SimpleStringProperty("");
     private final BooleanProperty themeExact = new SimpleBooleanProperty(true);

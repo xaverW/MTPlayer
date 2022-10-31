@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.MTShortcut;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
-import de.p2tools.mtplayer.tools.filmFilter.FilmFilter;
+import de.p2tools.mtplayer.controller.filmFilter.FilmFilter;
 import de.p2tools.p2Lib.tools.shortcut.PShortcutWorker;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;

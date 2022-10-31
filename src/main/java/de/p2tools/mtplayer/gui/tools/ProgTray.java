@@ -21,13 +21,12 @@ import de.p2tools.mtplayer.controller.ProgQuit;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadInfosFactory;
-import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
-import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
+import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.StatusBarController;
 import de.p2tools.mtplayer.gui.configDialog.ConfigDialogController;
 import de.p2tools.mtplayer.gui.dialog.AboutDialogController;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
-import de.p2tools.p2Lib.tools.ProgramTools;
+import de.p2tools.p2Lib.tools.ProgramToolsFactory;
 import de.p2tools.p2Lib.tools.log.PLog;
 import de.p2tools.p2Lib.tools.log.PLogger;
 import javafx.application.Platform;
@@ -72,14 +71,14 @@ public class ProgTray {
                 }
             }
         });
-        progData.loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
+        LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(new de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerLoadFilmlist() {
             @Override
-            public void start(ListenerFilmlistLoadEvent event) {
+            public void start(de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent event) {
                 stopTimer = true;
             }
 
             @Override
-            public void finished(ListenerFilmlistLoadEvent event) {
+            public void finished(de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent event) {
                 stopTimer = false;
             }
         });
@@ -159,7 +158,7 @@ public class ProgTray {
         java.awt.MenuItem miQuit = new java.awt.MenuItem("Programm Beenden");
 
         miMaxMin.addActionListener(e -> Platform.runLater(() -> maxMin()));
-        miConfig.addActionListener(e -> Platform.runLater(() -> ConfigDialogController.getInstanceAndShow()));
+        miConfig.addActionListener(e -> Platform.runLater(() -> new ConfigDialogController(ProgData.getInstance()).showDialog()));
         miLogfile.addActionListener(e -> Platform.runLater(() -> PLogger.openLogFile()));
         miTray.addActionListener(e -> Platform.runLater(() -> {
             //vor dem Ausschalten des Tray GUI anzeigen!!
@@ -174,13 +173,13 @@ public class ProgTray {
         popupMenu.add(miMaxMin);
         popupMenu.add(miConfig);
         popupMenu.add(miLogfile);
-        if (!ProgramTools.getOs().equals(ProgramTools.OperatingSystemType.MAC)) {
+        if (!ProgramToolsFactory.getOs().equals(ProgramToolsFactory.OperatingSystemType.MAC)) {
             //machen unter MAC Probleme
             popupMenu.add(miTray);
         }
         popupMenu.addSeparator();
         popupMenu.add(miAbout);
-        if (!ProgramTools.getOs().equals(ProgramTools.OperatingSystemType.MAC)) {
+        if (!ProgramToolsFactory.getOs().equals(ProgramToolsFactory.OperatingSystemType.MAC)) {
             //machen unter MAC Probleme
             popupMenu.addSeparator();
             popupMenu.add(miQuit);

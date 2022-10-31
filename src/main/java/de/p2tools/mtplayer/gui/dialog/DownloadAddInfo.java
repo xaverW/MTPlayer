@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.dialog;
 
 import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.mtplayer.controller.data.film.FilmData;
+import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import javafx.beans.property.BooleanProperty;
 
 import java.util.Arrays;
@@ -29,10 +29,10 @@ class DownloadAddInfo {
     String fileSize_high = "";
     String fileSize_small = "";
 
-    String resolution = FilmData.RESOLUTION_HD;
+    String resolution = FilmDataMTP.RESOLUTION_HD;
     boolean info, subtitle, subDisable = false;
 
-    FilmData film;
+    FilmDataMTP film;
     DownloadData download;
     SetData psetData;
 
@@ -52,14 +52,14 @@ class DownloadAddInfo {
         if (chkAll.get()) {
 
             Arrays.stream(downloadAddInfos).forEach(d -> {
-                if (resolution.equals(FilmData.RESOLUTION_HD) && d.film.isHd()) {
-                    d.resolution = FilmData.RESOLUTION_HD;
+                if (resolution.equals(FilmDataMTP.RESOLUTION_HD) && d.film.isHd()) {
+                    d.resolution = FilmDataMTP.RESOLUTION_HD;
 
-                } else if (resolution.equals(FilmData.RESOLUTION_SMALL) && film.isSmall()) {
-                    d.resolution = FilmData.RESOLUTION_SMALL;
+                } else if (resolution.equals(FilmDataMTP.RESOLUTION_SMALL) && film.isSmall()) {
+                    d.resolution = FilmDataMTP.RESOLUTION_SMALL;
 
                 } else {
-                    d.resolution = FilmData.RESOLUTION_NORMAL;
+                    d.resolution = FilmDataMTP.RESOLUTION_NORMAL;
                 }
             });
 

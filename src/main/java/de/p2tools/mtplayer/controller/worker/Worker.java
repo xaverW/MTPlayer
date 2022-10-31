@@ -16,13 +16,11 @@
 
 package de.p2tools.mtplayer.controller.worker;
 
-import de.p2tools.mtplayer.controller.ProgSave;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerFilmlistLoadEvent;
-import de.p2tools.mtplayer.controller.filmlist.loadFilmlist.ListenerLoadFilmlist;
+import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
+import de.p2tools.mtplayer.controller.filmFilter.FilmFilter;
 import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
-import de.p2tools.mtplayer.tools.filmFilter.FilmFilter;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
@@ -31,6 +29,8 @@ import javafx.collections.ObservableList;
 
 import java.text.Collator;
 import java.util.*;
+
+import static de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerLoadFilmlist.PROGRESS_INDETERMINATE;
 
 public class Worker {
 
@@ -48,48 +48,6 @@ public class Worker {
 
     public Worker(ProgData progData) {
         this.progData = progData;
-
-        progData.loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
-            @Override
-            public void start(ListenerFilmlistLoadEvent event) {
-                if (event.progress == ListenerLoadFilmlist.PROGRESS_INDETERMINATE) {
-                    // ist dann die gespeicherte Filmliste
-                    progData.maskerPane.setMaskerVisible(true, false);
-                } else {
-                    progData.maskerPane.setMaskerVisible(true, true);
-                }
-                progData.maskerPane.setMaskerProgress(event.progress, event.text);
-
-                // the channel combo will be resetted, therefor save the filter
-                saveFilter();
-            }
-
-            @Override
-            public void progress(ListenerFilmlistLoadEvent event) {
-                progData.maskerPane.setMaskerProgress(event.progress, event.text);
-            }
-
-            @Override
-            public void loaded(ListenerFilmlistLoadEvent event) {
-                progData.maskerPane.setMaskerVisible(true, false);
-                progData.maskerPane.setMaskerProgress(ListenerLoadFilmlist.PROGRESS_INDETERMINATE, "Filmliste verarbeiten");
-            }
-
-            @Override
-            public void finished(ListenerFilmlistLoadEvent event) {
-                new ProgSave().saveAll(); // damit nichts verlorengeht
-                createChannelAndThemeList();
-                if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.automode) {
-                    searchForAbosAndMaybeStart();
-                } else {
-                    progData.maskerPane.setMaskerVisible(false);
-                }
-
-                // activate the saved filter
-                resetFilter();
-            }
-        });
-
         getAboNames();
         progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) ->
                 getAboNames());
@@ -99,6 +57,20 @@ public class Worker {
 
         progData.downloadList.sizeProperty().addListener((observable, oldValue, newValue) ->
                 getAboNames());
+    }
+
+    public void workOnLoadStart() {
+        // the channel combo will be reseted, therefore save the filter
+        saveFilter();
+    }
+
+    public void workOnLoadFinished() {
+        createChannelAndThemeList();
+        if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.automode) {
+            searchForAbosAndMaybeStart();
+        }
+        // activate the saved filter
+        resetFilter();
     }
 
     private void saveFilter() {
@@ -116,7 +88,7 @@ public class Worker {
     }
 
     public void searchForAbosAndMaybeStart() {
-        if (progData.loadFilmlist.getPropLoadFilmlist()) {
+        if (LoadFilmFactory.getInstance().loadFilmlist.getPropLoadFilmlist()) {
             // wird danach eh gemacht
             progData.maskerPane.switchOffMasker();
             return;
@@ -131,7 +103,7 @@ public class Worker {
 
         PDuration.counterStart("Worker.searchForAbosAndMaybeStart");
         progData.maskerPane.setMaskerVisible(true, false);
-        progData.maskerPane.setMaskerProgress(ListenerLoadFilmlist.PROGRESS_INDETERMINATE, "Downloads suchen");
+        progData.maskerPane.setMaskerProgress(PROGRESS_INDETERMINATE, "Downloads suchen");
 
         PLog.sysLog("Downloads aus Abos suchen");
         //erledigte entfernen, nicht gestartete Abos entfernen und nach neu Abos suchen

@@ -22,8 +22,8 @@ import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
-import de.p2tools.mtplayer.controller.data.film.FilmData;
-import de.p2tools.mtplayer.controller.data.film.FilmTools;
+import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.film.FilmTools;
 import de.p2tools.mtplayer.gui.chart.DownloadGuiChart;
 import de.p2tools.mtplayer.gui.dialog.DownloadEditDialogController;
 import de.p2tools.mtplayer.gui.dialog.DownloadStartAtTimeController;
@@ -182,18 +182,18 @@ public class DownloadGuiController extends AnchorPane {
             return;
         }
 
-        FilmData film;
+        FilmDataMTP film;
         if (download.get().getFilm() == null) {
-            film = new FilmData();
+            film = new FilmDataMTP();
         } else {
             film = download.get().getFilm().getCopy();
         }
 
         // und jetzt die tatsächlichen URLs des Downloads eintragen
-        film.arr[FilmData.FILM_URL] = download.get().getUrl();
-        film.arr[FilmData.FILM_URL_RTMP] = download.get().getUrlRtmp();
-        film.arr[FilmData.FILM_URL_SMALL] = "";
-        film.arr[FilmData.FILM_URL_RTMP_SMALL] = "";
+        film.arr[FilmDataMTP.FILM_URL] = download.get().getUrl();
+//        film.arr[FilmData.FILM_URL_RTMP] = download.get().getUrlRtmp();
+        film.arr[FilmDataMTP.FILM_URL_SMALL] = "";
+//        film.arr[FilmData.FILM_URL_RTMP_SMALL] = "";
         // und starten
         FilmTools.playFilm(film, null);
     }
@@ -485,7 +485,7 @@ public class DownloadGuiController extends AnchorPane {
     private void setFilmShown(boolean shown) {
         // Filme als (un)gesehen markieren
         final ArrayList<DownloadData> arrayDownloadData = getSelList();
-        final ArrayList<FilmData> filmArrayList = new ArrayList<>();
+        final ArrayList<FilmDataMTP> filmArrayList = new ArrayList<>();
 
         arrayDownloadData.stream().forEach(download -> {
             if (download.getFilm() != null) {

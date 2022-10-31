@@ -19,7 +19,8 @@ package de.p2tools.mtplayer.gui.configDialog;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.filmlist.LoadFactory;
+import de.p2tools.mtplayer.controller.film.FilmTools;
+import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
@@ -79,7 +80,7 @@ public class LoadFilmsPane {
         final TilePane tilePaneSender = new TilePane();
         tilePaneSender.setHgap(10);
         tilePaneSender.setVgap(10);
-        ArrayList aListChannel = LoadFactory.getSenderListNotToLoad();
+        ArrayList aListChannel = FilmTools.getSenderListNotToLoad();
         ArrayList<CheckBox> aListCb = new ArrayList<>();
         for (String s : ProgConst.SENDER) {
             final CheckBox cb = new CheckBox(s);
@@ -87,7 +88,7 @@ public class LoadFilmsPane {
             cb.setSelected(aListChannel.contains(s));
             cb.setOnAction(a -> {
                 makePropSender(aListCb);
-                LoadFactory.checkAllSenderSelectedNotToLoad(stage);
+                FilmTools.checkAllSenderSelectedNotToLoad(stage);
             });
 
             tilePaneSender.getChildren().add(cb);
@@ -155,7 +156,7 @@ public class LoadFilmsPane {
             btnLoad.setTooltip(new Tooltip("Eine komplette neue Filmliste laden.\n" +
                     "Geänderte Einstellungen für das Laden der Filmliste werden so sofort übernommen"));
             btnLoad.setOnAction(event -> {
-                progData.loadFilmlist.loadNewFilmlistFromServer(true);
+                LoadFilmFactory.getInstance().loadList(true);
             });
 
             hBox = new HBox();

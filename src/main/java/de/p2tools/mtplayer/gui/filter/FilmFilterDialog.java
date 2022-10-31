@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.tools.filmFilter.FilmFilter;
+import de.p2tools.mtplayer.controller.filmFilter.FilmFilter;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PSeparatorComboBox;
 import javafx.geometry.Pos;

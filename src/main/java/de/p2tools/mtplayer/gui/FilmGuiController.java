@@ -21,15 +21,15 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.BlackData;
 import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.data.SetDataList;
-import de.p2tools.mtplayer.controller.data.film.FilmData;
-import de.p2tools.mtplayer.controller.data.film.FilmTools;
+import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.film.FilmTools;
+import de.p2tools.mtplayer.controller.filmFilter.FilmFilterFactory;
 import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
 import de.p2tools.mtplayer.gui.mediaDialog.MediaDialogController;
 import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.mtplayer.gui.tools.table.TableFilm;
 import de.p2tools.mtplayer.gui.tools.table.TableRowFilm;
-import de.p2tools.mtplayer.tools.filmFilter.FilmFilterFactory;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PColor;
@@ -56,14 +56,14 @@ public class FilmGuiController extends AnchorPane {
     private final SplitPane splitPane = new SplitPane();
     private final ScrollPane scrollPaneTableFilm = new ScrollPane();
     private final PClosePaneH pClosePaneH;
-    private FilmData lastShownFilmData = null;
+    private FilmDataMTP lastShownFilmData = null;
 
     private FilmGuiInfoController filmGuiInfoController;
     private final TableFilm tableView;
 
     private final ProgData progData;
     private boolean boundSplitPaneDivPos = false;
-    private final SortedList<FilmData> sortedList;
+    private final SortedList<FilmDataMTP> sortedList;
     private final KeyCombination STRG_A = new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_ANY);
 
     DoubleProperty splitPaneProperty = ProgConfig.FILM_GUI_DIVIDER;
@@ -110,7 +110,7 @@ public class FilmGuiController extends AnchorPane {
     }
 
     public void copyFilmThemeTitle(boolean theme) {
-        final Optional<FilmData> filmSelection = ProgData.getInstance().filmGuiController.getSel();
+        final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().filmGuiController.getSel();
         if (filmSelection.isPresent()) {
             PSystemUtils.copyToClipboard(theme ? filmSelection.get().getTheme() : filmSelection.get().getTitle());
         }
@@ -131,7 +131,7 @@ public class FilmGuiController extends AnchorPane {
 
 
     public void setLastShownFilm(BlackData blackData) {
-        final Optional<FilmData> filmSelection = ProgData.getInstance().filmGuiController.getSel();
+        final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().filmGuiController.getSel();
         if (!filmSelection.isPresent()) {
             //nix ausgewählt
             return;
@@ -146,9 +146,9 @@ public class FilmGuiController extends AnchorPane {
             //sonst wird der erste Film davor, der noch zu sehen ist, gesucht
             int sel = tableView.getSelectionModel().getSelectedIndex();
             for (int i = sel; i >= 0; --i) {
-                FilmData filmData = tableView.getItems().get(i);
-                if (!FilmFilterFactory.checkFilmWithBlacklistFilter(blackData, filmData)) {
-                    lastShownFilmData = filmData;
+                FilmDataMTP filmDataMTP = tableView.getItems().get(i);
+                if (!FilmFilterFactory.checkFilmWithBlacklistFilter(blackData, filmDataMTP)) {
+                    lastShownFilmData = filmDataMTP;
                     break;
                 }
             }
@@ -156,27 +156,27 @@ public class FilmGuiController extends AnchorPane {
     }
 
     public void bookmarkFilm(boolean bookmark) {
-        final ArrayList<FilmData> list = getSelList();
+        final ArrayList<FilmDataMTP> list = getSelList();
         if (!list.isEmpty()) {
             FilmTools.bookmarkFilm(progData, list, bookmark);
         }
     }
 
     public void guiFilmMediaCollection() {
-        final Optional<FilmData> film = getSel();
+        final Optional<FilmDataMTP> film = getSel();
         if (film.isPresent()) {
             new MediaDialogController(film.get().getTitle());
         }
     }
 
     public void setFilmShown() {
-        final ArrayList<FilmData> list = getSelList();
+        final ArrayList<FilmDataMTP> list = getSelList();
         FilmTools.setFilmShown(progData, list, true);
         PTableFactory.refreshTable(tableView);
     }
 
     public void setFilmNotShown() {
-        final ArrayList<FilmData> list = getSelList();
+        final ArrayList<FilmDataMTP> list = getSelList();
         FilmTools.setFilmShown(progData, list, false);
         PTableFactory.refreshTable(tableView);
     }
@@ -189,8 +189,8 @@ public class FilmGuiController extends AnchorPane {
         PTableFactory.refreshTable(tableView);
     }
 
-    public ArrayList<FilmData> getSelList() {
-        final ArrayList<FilmData> ret = new ArrayList<>();
+    public ArrayList<FilmDataMTP> getSelList() {
+        final ArrayList<FilmDataMTP> ret = new ArrayList<>();
         ret.addAll(tableView.getSelectionModel().getSelectedItems());
         if (ret.isEmpty()) {
             PAlert.showInfoNoSelection();
@@ -198,11 +198,11 @@ public class FilmGuiController extends AnchorPane {
         return ret;
     }
 
-    public Optional<FilmData> getSel() {
+    public Optional<FilmDataMTP> getSel() {
         return getSel(true);
     }
 
-    public Optional<FilmData> getSel(boolean show) {
+    public Optional<FilmDataMTP> getSel(boolean show) {
         final int selectedTableRow = tableView.getSelectionModel().getSelectedIndex();
         if (selectedTableRow >= 0) {
             return Optional.of(tableView.getSelectionModel().getSelectedItem());
@@ -215,7 +215,7 @@ public class FilmGuiController extends AnchorPane {
     }
 
     private void initListener() {
-        sortedList.addListener((ListChangeListener<FilmData>) c -> {
+        sortedList.addListener((ListChangeListener<FilmDataMTP>) c -> {
             selectFilm();
         });
         progData.setDataList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
@@ -269,8 +269,8 @@ public class FilmGuiController extends AnchorPane {
 //                tableView.scrollTo(lastShownFilmData);
 
             } else {
-                System.out.println("---> scroll");
-                FilmData selFilm = tableView.getSelectionModel().getSelectedItem();
+//                System.out.println("---> scroll");
+                FilmDataMTP selFilm = tableView.getSelectionModel().getSelectedItem();
                 if (selFilm != null) {
                     tableView.scrollTo(selFilm);
                 } else {
@@ -290,7 +290,7 @@ public class FilmGuiController extends AnchorPane {
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
 
         tableView.setRowFactory(tv -> {
-            TableRowFilm<FilmData> row = new TableRowFilm<>();
+            TableRowFilm<FilmDataMTP> row = new TableRowFilm<>();
             row.setOnMouseClicked(event -> {
                 if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
                     FilmInfoDialogController.getInstanceAndShow().showFilmInfo();
@@ -301,8 +301,8 @@ public class FilmGuiController extends AnchorPane {
 
         tableView.setOnMousePressed(m -> {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
-                final Optional<FilmData> optionalFilm = getSel(false);
-                FilmData film;
+                final Optional<FilmDataMTP> optionalFilm = getSel(false);
+                FilmDataMTP film;
                 if (optionalFilm.isPresent()) {
                     film = optionalFilm.get();
                 } else {
@@ -335,7 +335,7 @@ public class FilmGuiController extends AnchorPane {
     }
 
     private void setFilmInfos() {
-        FilmData film = tableView.getSelectionModel().getSelectedItem();
+        FilmDataMTP film = tableView.getSelectionModel().getSelectedItem();
         filmGuiInfoController.setFilm(film);
         FilmInfoDialogController.getInstance().setFilm(film);
     }
@@ -429,7 +429,7 @@ public class FilmGuiController extends AnchorPane {
     }
 
     private synchronized void startFilmUrl() {
-        final Optional<FilmData> filmSelection = getSel();
+        final Optional<FilmDataMTP> filmSelection = getSel();
         if (filmSelection.isPresent()) {
             FilmTools.playFilm(filmSelection.get(), null);
         }
@@ -444,7 +444,7 @@ public class FilmGuiController extends AnchorPane {
             return;
         }
 
-        final Optional<FilmData> filmSelection = getSel();
+        final Optional<FilmDataMTP> filmSelection = getSel();
         if (!filmSelection.isPresent()) {
             return;
         }
@@ -457,7 +457,7 @@ public class FilmGuiController extends AnchorPane {
     }
 
     private synchronized void saveFilm(SetData pSet) {
-        final ArrayList<FilmData> list = getSelList();
+        final ArrayList<FilmDataMTP> list = getSelList();
         progData.filmlist.saveFilm(list, pSet);
     }
 }

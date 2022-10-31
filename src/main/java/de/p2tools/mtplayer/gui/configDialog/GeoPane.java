@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.gui.configDialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.data.film.FilmData;
+import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
@@ -62,35 +62,35 @@ public class GeoPane {
         tg.getToggles().addAll(rbDe, rbCh, rbAt, rbEu, rbSonst);
 
         switch (ProgConfig.SYSTEM_GEO_HOME_PLACE.get()) {
-            case FilmData.GEO_CH:
+            case FilmDataMTP.GEO_CH:
                 rbCh.setSelected(true);
                 break;
-            case FilmData.GEO_AT:
+            case FilmDataMTP.GEO_AT:
                 rbAt.setSelected(true);
                 break;
-            case FilmData.GEO_EU:
+            case FilmDataMTP.GEO_EU:
                 rbEu.setSelected(true);
                 break;
-            case FilmData.GEO_WELT:
+            case FilmDataMTP.GEO_WELT:
                 rbSonst.setSelected(true);
                 break;
             default:
                 rbDe.setSelected(true);
         }
         rbDe.setOnAction(e -> {
-            ProgConfig.SYSTEM_GEO_HOME_PLACE.setValue(FilmData.GEO_DE);
+            ProgConfig.SYSTEM_GEO_HOME_PLACE.setValue(FilmDataMTP.GEO_DE);
         });
         rbCh.setOnAction(e -> {
-            ProgConfig.SYSTEM_GEO_HOME_PLACE.setValue(FilmData.GEO_CH);
+            ProgConfig.SYSTEM_GEO_HOME_PLACE.setValue(FilmDataMTP.GEO_CH);
         });
         rbAt.setOnAction(e -> {
-            ProgConfig.SYSTEM_GEO_HOME_PLACE.setValue(FilmData.GEO_AT);
+            ProgConfig.SYSTEM_GEO_HOME_PLACE.setValue(FilmDataMTP.GEO_AT);
         });
         rbEu.setOnAction(e -> {
-            ProgConfig.SYSTEM_GEO_HOME_PLACE.setValue(FilmData.GEO_EU);
+            ProgConfig.SYSTEM_GEO_HOME_PLACE.setValue(FilmDataMTP.GEO_EU);
         });
         rbSonst.setOnAction(e -> {
-            ProgConfig.SYSTEM_GEO_HOME_PLACE.setValue(FilmData.GEO_WELT);
+            ProgConfig.SYSTEM_GEO_HOME_PLACE.setValue(FilmDataMTP.GEO_WELT);
         });
 
         final GridPane gridPane = new GridPane();

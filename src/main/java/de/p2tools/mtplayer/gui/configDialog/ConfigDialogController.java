@@ -18,10 +18,14 @@ package de.p2tools.mtplayer.gui.configDialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.film.FilmlistFactory;
+import de.p2tools.mtplayer.controller.data.ProgIcons;
+import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.configDialog.setData.SetPaneController;
 import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
+import de.p2tools.p2Lib.mtFilm.film.FilmFactory;
+import de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent;
+import de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerLoadFilmlist;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
@@ -35,8 +39,6 @@ import javafx.scene.layout.VBox;
 
 
 public class ConfigDialogController extends PDialogExtra {
-
-    private static ConfigDialogController instance;
 
     private TabPane tabPane = new TabPane();
     private Button btnOk = new Button("_Ok");
@@ -52,8 +54,9 @@ public class ConfigDialogController extends PDialogExtra {
     BlackListPaneController blackPane;
     DownloadPaneController downloadPane;
     SetPaneController setPane;
+    private ListenerLoadFilmlist listener;
 
-    private ConfigDialogController(ProgData progData) {
+    public ConfigDialogController(ProgData progData) {
         super(progData.primaryStage, ProgConfig.CONFIG_DIALOG_SIZE, "Einstellungen",
                 true, false, DECO.NONE, true);
 
@@ -61,13 +64,46 @@ public class ConfigDialogController extends PDialogExtra {
         init(false);
     }
 
-
     @Override
     public void make() {
         setMaskerPane();
         progData.maskerPane.visibleProperty().addListener((u, o, n) -> {
             setMaskerPane();
         });
+        Button btnStop = getMaskerPane().getButton();
+        getMaskerPane().setButtonText("");
+        btnStop.setGraphic(ProgIcons.Icons.ICON_BUTTON_STOP.getImageView());
+        btnStop.setOnAction(a -> LoadFilmFactory.getInstance().loadFilmlist.setStop(true));
+        listener = new ListenerLoadFilmlist() {
+            @Override
+            public void start(ListenerFilmlistLoadEvent event) {
+                if (event.progress == ListenerLoadFilmlist.PROGRESS_INDETERMINATE) {
+                    // ist dann die gespeicherte Filmliste
+                    getMaskerPane().setMaskerVisible(true, false);
+                } else {
+                    getMaskerPane().setMaskerVisible(true, true);
+                }
+                getMaskerPane().setMaskerProgress(event.progress, event.text);
+            }
+
+            @Override
+            public void progress(ListenerFilmlistLoadEvent event) {
+                getMaskerPane().setMaskerProgress(event.progress, event.text);
+            }
+
+            @Override
+            public void loaded(ListenerFilmlistLoadEvent event) {
+                getMaskerPane().setMaskerVisible(true, false);
+                getMaskerPane().setMaskerProgress(ListenerLoadFilmlist.PROGRESS_INDETERMINATE, "Filmliste verarbeiten");
+            }
+
+            @Override
+            public void finished(ListenerFilmlistLoadEvent event) {
+                getMaskerPane().setMaskerVisible(false);
+            }
+        };
+        LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(listener);
+
 
         VBox.setVgrow(tabPane, Priority.ALWAYS);
         getvBoxCont().getChildren().add(tabPane);
@@ -87,14 +123,14 @@ public class ConfigDialogController extends PDialogExtra {
             progData.filmlist.markGeoBlocked();
         }
 
-        if (blackChanged.get() && !progData.loadFilmlist.getPropLoadFilmlist()) {
+        if (blackChanged.get() && !LoadFilmFactory.loadFilmlist.getPropLoadFilmlist()) {
             // sonst hat sich nichts geändert oder wird dann eh gemacht
             progData.filmlist.filterListWithBlacklist(true);
             Listener.notify(Listener.EVENT_BLACKLIST_CHANGED, ConfigDialogController.class.getSimpleName());
         }
 
         if (diacriticChanged.getValue()) {
-            FilmlistFactory.setDiacritic(true);
+            FilmFactory.setDiacritic(progData.filmlist, ProgConfig.SYSTEM_SHOW_DIACRITICS.getValue());
             Listener.notify(Listener.EVENT_DIACRITIC_CHANGED, ConfigDialogController.class.getSimpleName());
         }
 
@@ -105,6 +141,7 @@ public class ConfigDialogController extends PDialogExtra {
         setPane.close();
 
         Listener.notify(Listener.EVEMT_SETDATA_CHANGED, ConfigDialogController.class.getSimpleName());
+        LoadFilmFactory.getInstance().loadFilmlist.removeListenerLoadFilmlist(listener);
         super.close();
     }
 
@@ -157,18 +194,5 @@ public class ConfigDialogController extends PDialogExtra {
         } catch (final Exception ex) {
             PLog.errorLog(784459510, ex);
         }
-    }
-
-    public synchronized static final ConfigDialogController getInstanceAndShow() {
-        if (instance == null) {
-            instance = new ConfigDialogController(ProgData.getInstance());
-        }
-
-        if (!instance.isShowing()) {
-            instance.showDialog();
-        }
-        instance.getStage().toFront();
-
-        return instance;
     }
 }

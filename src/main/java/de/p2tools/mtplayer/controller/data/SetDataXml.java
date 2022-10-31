@@ -16,7 +16,7 @@
 
 package de.p2tools.mtplayer.controller.data;
 
-import de.p2tools.mtplayer.controller.data.film.FilmData;
+import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.p2Lib.configFile.pData.PDataSample;
 
 public class SetDataXml extends PDataSample<SetData> {
@@ -80,6 +80,6 @@ public class SetDataXml extends PDataSample<SetData> {
 
         arr[PROGRAMSET_INFODATEI] = Boolean.toString(false);
         arr[PROGRAMSET_SUBTITLE] = Boolean.toString(false);
-        arr[PROGRAMSET_AUFLOESUNG] = FilmData.RESOLUTION_NORMAL;
+        arr[PROGRAMSET_AUFLOESUNG] = FilmDataMTP.RESOLUTION_NORMAL;
     }
 }

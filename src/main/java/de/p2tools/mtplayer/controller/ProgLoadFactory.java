@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
-import de.p2tools.mtplayer.tools.filmFilter.FilmFilterFactory;
+import de.p2tools.mtplayer.controller.filmFilter.FilmFilterFactory;
 import de.p2tools.p2Lib.configFile.ConfigFile;
 import de.p2tools.p2Lib.configFile.ReadConfigFile;
 import de.p2tools.p2Lib.tools.duration.PDuration;

@@ -18,7 +18,7 @@
 package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.gui.tools.Listener;
-import de.p2tools.p2Lib.tools.ProgramTools;
+import de.p2tools.p2Lib.tools.ProgramToolsFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -115,7 +115,7 @@ public class MsgMemController extends AnchorPane {
         final double countMin = countSek / 60.0; // Minuten
 
         final long maxMem;
-        if (ProgramTools.getOs() == ProgramTools.OperatingSystemType.LINUX) {
+        if (ProgramToolsFactory.getOs() == ProgramToolsFactory.OperatingSystemType.LINUX) {
             maxMem = rt.totalMemory();
         } else {
             maxMem = rt.maxMemory();

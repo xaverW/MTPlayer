@@ -16,9 +16,9 @@
 
 package de.p2tools.mtplayer.controller.data.download;
 
-import de.p2tools.mtplayer.tools.Data;
 import de.p2tools.p2Lib.configFile.config.*;
 import de.p2tools.p2Lib.configFile.pData.PDataSample;
+import de.p2tools.p2Lib.mtFilm.tools.Data;
 import de.p2tools.p2Lib.tools.date.PDate;
 import de.p2tools.p2Lib.tools.date.PDateFactory;
 import de.p2tools.p2Lib.tools.date.PDateProperty;
@@ -56,7 +56,7 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
     private final StringProperty filmUrl = new SimpleStringProperty(""); //in normaler Auflösung
     private final StringProperty historyUrl = new SimpleStringProperty("");
     private final StringProperty url = new SimpleStringProperty(""); //in der gewählte Auflösung
-    private final StringProperty urlRtmp = new SimpleStringProperty("");
+    //    private final StringProperty urlRtmp = new SimpleStringProperty("");
     private final StringProperty urlSubtitle = new SimpleStringProperty("");
 
     private final StringProperty setDataId = new SimpleStringProperty("");
@@ -80,7 +80,7 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
     public final Property[] properties = {no, filmNr, aboName, channel, theme, title,
             state, progress, remaining, bandwidth, downloadSize,
             filmDate, time, durationMinute,
-            hd, ut, geoBlocked, filmUrl, historyUrl, url, urlRtmp, urlSubtitle,
+            hd, ut, geoBlocked, filmUrl, historyUrl, url, /*urlRtmp,*/ urlSubtitle,
             setDataId, program, programCall, programCallArray, programRestart, programDownloadmanager, startTime,
             destFileName, destPath, destPathFile,
             type, source, placedBack, infoFile, subtitle};
@@ -124,7 +124,7 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
         list.add(new ConfigStringPropExtra("filmUrl", DownloadFieldNames.DOWNLOAD_FILM_URL, filmUrl));
         list.add(new ConfigStringPropExtra("historyUrl", DownloadFieldNames.DOWNLOAD_HISTORY_URL, historyUrl));
         list.add(new ConfigStringPropExtra("url", DownloadFieldNames.DOWNLOAD_URL, url));
-        list.add(new ConfigStringPropExtra("urlRtmp", DownloadFieldNames.DOWNLOAD_URL_RTMP, urlRtmp));
+//        list.add(new ConfigStringPropExtra("urlRtmp", DownloadFieldNames.DOWNLOAD_URL_RTMP, urlRtmp));
         list.add(new ConfigStringPropExtra("urlSubtitle", DownloadFieldNames.DOWNLOAD_URL_SUBTITLE, urlSubtitle));
         list.add(new ConfigStringPropExtra("setDataId", DownloadFieldNames.DOWNLOAD_SET_DATA, setDataId));
         list.add(new ConfigStringPropExtra("program", DownloadFieldNames.DOWNLOAD_PROGRAM, program));
@@ -412,17 +412,17 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
         this.url.set(url);
     }
 
-    public String getUrlRtmp() {
-        return urlRtmp.get();
-    }
-
-    public StringProperty urlRtmpProperty() {
-        return urlRtmp;
-    }
-
-    public void setUrlRtmp(String urlRtmp) {
-        this.urlRtmp.set(urlRtmp);
-    }
+//    public String getUrlRtmp() {
+//        return urlRtmp.get();
+//    }
+//
+//    public StringProperty urlRtmpProperty() {
+//        return urlRtmp;
+//    }
+//
+//    public void setUrlRtmp(String urlRtmp) {
+//        this.urlRtmp.set(urlRtmp);
+//    }
 
     public String getUrlSubtitle() {
         return urlSubtitle.get();

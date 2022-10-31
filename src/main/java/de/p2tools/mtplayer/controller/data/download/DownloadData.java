@@ -19,11 +19,11 @@ package de.p2tools.mtplayer.controller.data.download;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
-import de.p2tools.mtplayer.controller.data.film.FilmData;
-import de.p2tools.mtplayer.controller.data.film.FilmDataXml;
-import de.p2tools.mtplayer.controller.data.film.FilmTools;
+import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.starter.Start;
 import de.p2tools.p2Lib.alert.PAlert;
+import de.p2tools.p2Lib.mtFilm.film.FilmDataXml;
+import de.p2tools.p2Lib.mtFilm.film.FilmFactory;
 import de.p2tools.p2Lib.tools.PSystemUtils;
 import de.p2tools.p2Lib.tools.date.PDateFactory;
 import de.p2tools.p2Lib.tools.file.PFileUtils;
@@ -38,7 +38,7 @@ public final class DownloadData extends DownloadDataXml {
     private Start start = new Start(this);
     private final DownloadProgram downloadProgram = new DownloadProgram(this);
 
-    private FilmData film = null;
+    private FilmDataMTP film = null;
     private SetData setData = null;
     private AboData abo = null;
     private String errorMessage = "";
@@ -47,7 +47,7 @@ public final class DownloadData extends DownloadDataXml {
     }
 
     public DownloadData(SetData setData,
-                        FilmData film,
+                        FilmDataMTP film,
                         String source,
                         AboData abo,
                         String name,
@@ -65,10 +65,10 @@ public final class DownloadData extends DownloadDataXml {
 
         if (resolution.isEmpty()) {
             setUrl(film.getUrlForResolution(abo != null ? abo.getResolution() : setData.getResolution()));
-            setUrlRtmp(film.getUrlFlvstreamerForResolution(abo != null ? abo.getResolution() : setData.getResolution()));
+//            setUrlRtmp(film.getUrlFlvstreamerForResolution(abo != null ? abo.getResolution() : setData.getResolution()));
         } else {
             setUrl(film.getUrlForResolution(resolution));
-            setUrlRtmp(film.getUrlFlvstreamerForResolution(resolution));
+//            setUrlRtmp(film.getUrlFlvstreamerForResolution(resolution));
         }
 
         // und jetzt noch die Dateigröße für die entsp. URL
@@ -206,14 +206,14 @@ public final class DownloadData extends DownloadDataXml {
         if (!size.isEmpty()) {
             getDownloadSize().setSize(size);
         } else if (film != null) {
-            getDownloadSize().setSize(FilmTools.getSizeFromWeb(film, getUrl()));
+            getDownloadSize().setSize(FilmFactory.getSizeFromWeb(film, getUrl()));
         }
     }
 
     public void setSizeDownloadFromFilm() {
         if (film != null) {
-            if (film.arr[FilmData.FILM_URL].equals(getUrl())) {
-                getDownloadSize().setSize(film.arr[FilmData.FILM_SIZE]);
+            if (film.arr[FilmDataMTP.FILM_URL].equals(getUrl())) {
+                getDownloadSize().setSize(film.arr[FilmDataMTP.FILM_SIZE]);
             } else {
                 getDownloadSize().setSize("");
             }
@@ -231,11 +231,11 @@ public final class DownloadData extends DownloadDataXml {
         this.start = start;
     }
 
-    public FilmData getFilm() {
+    public FilmDataMTP getFilm() {
         return film;
     }
 
-    public void setFilm(FilmData film) {
+    public void setFilm(FilmDataMTP film) {
         if (film == null) {
             // bei gespeicherten Downloads kann es den Film nicht mehr geben
             setFilmNr(DownloadConstants.FILM_NUMBER_NOT_FOUND);
@@ -254,7 +254,7 @@ public final class DownloadData extends DownloadDataXml {
         setTime(film.arr[FilmDataXml.FILM_TIME]);
         setDurationMinute(film.getDurationMinute());
 
-        setUrlRtmp(film.arr[FilmDataXml.FILM_URL_RTMP]);
+//        setUrlRtmp(film.arr[FilmDataXml.FILM_URL_RTMP]);
         setHd(film.isHd());
         setUt(film.isUt());
         setHistoryUrl(film.getUrlHistory());

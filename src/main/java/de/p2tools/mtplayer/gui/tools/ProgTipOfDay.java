@@ -18,7 +18,6 @@
 package de.p2tools.mtplayer.gui.tools;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.guiTools.pTipOfDay.PTipOfDay;
@@ -63,7 +62,6 @@ public class ProgTipOfDay {
     }
 
     private void addTips(List<PTipOfDay> pToolTipList) {
-        // private final int listSize = 1
         String text = START;
         text += "Die Filteransicht kann über einen\n" +
                 "zweiten Klick mit der rechten\n" +
@@ -80,7 +78,6 @@ public class ProgTipOfDay {
         PTipOfDay pToolTip = new PTipOfDay(text, image);
         pToolTipList.add(pToolTip);
 
-        // private final int listSize = 2
         text = START;
         text += "Suche in der Mediensammlung:\n\n" +
                 "Ein Doppelklick auf einen\n" +
@@ -92,7 +89,6 @@ public class ProgTipOfDay {
         pToolTip = new PTipOfDay(text, image);
         pToolTipList.add(pToolTip);
 
-        // private final int listSize = 3
         text = START;
         text += "Über das Menü ist die\n" +
                 "Funktion zum Zurücksetzen\n" +
@@ -106,7 +102,6 @@ public class ProgTipOfDay {
         pToolTip = new PTipOfDay(text, image);
         pToolTipList.add(pToolTip);
 
-        // private final int listSize = 4
         text = START;
         text += "Über das Menü ist die\n" +
                 "Funktion zum Zurücksetzen\n" +
@@ -122,7 +117,6 @@ public class ProgTipOfDay {
         pToolTip = new PTipOfDay(text, image);
         pToolTipList.add(pToolTip);
 
-        // private final int listSize = 5
         text = START;
         text += "Im Download-Filter Panel können\n" +
                 "auch noch weitere Einstellungen\n" +
@@ -137,20 +131,8 @@ public class ProgTipOfDay {
         pToolTip = new PTipOfDay(text, image);
         pToolTipList.add(pToolTip);
 
-        // private final int listSize = 6
-        text = START;
-        text += "Weiter Infos finden sich auch\n" +
-                "auf der Website. Dort gibt es\n" +
-                "auch eine Anleitung zum\n" +
-                "Programm.\n\n" +
-                "Fragen zum Programm und\n" +
-                "Ideen zu den Tips gerne\n" +
-                "auch per Mail.\n\n";
-        image = "/de/p2tools/mtplayer/res/toolTips/Frage.png";
-        pToolTip = new PTipOfDay(text, image, ProgConst.URL_WEBSITE_P2TOOLS, ProgConfig.SYSTEM_PROG_OPEN_URL);
-        pToolTipList.add(pToolTip);
+        pToolTipList.add(PTipOfDay.getTipWebsite(ProgConfig.SYSTEM_PROG_OPEN_URL));
 
-        // private final int listSize = 7
         text = START;
         text += "In den Einstellungen des Abos\n" +
                 "kann auch die maximale Zeit,\n" +
@@ -163,7 +145,6 @@ public class ProgTipOfDay {
         pToolTip = new PTipOfDay(text, image);
         pToolTipList.add(pToolTip);
 
-        // private final int listSize = 8
         text = START;
         text += "In den Einstellungen des Abos\n" +
                 "kann auch die Filmlänge\n" +
@@ -176,7 +157,6 @@ public class ProgTipOfDay {
         pToolTip = new PTipOfDay(text, image);
         pToolTipList.add(pToolTip);
 
-        // private final int listSize = 9
         text = START;
         text += "Im Programm sind immer zwei\n" +
                 "Menüs sichtbar.\n\n" +
@@ -190,7 +170,6 @@ public class ProgTipOfDay {
         pToolTip = new PTipOfDay(text, image);
         pToolTipList.add(pToolTip);
 
-        // private final int listSize = 10
         text = START;
         text += "In den Einstellungen\n" +
                 "(erreichbar über das Menü)\n" +
@@ -203,7 +182,6 @@ public class ProgTipOfDay {
         pToolTip = new PTipOfDay(text, image);
         pToolTipList.add(pToolTip);
 
-        // private final int listSize = 11
         text = START;
         text += "In den Einstellungen\n" +
                 "(erreichbar über das Menü)\n" +
@@ -223,7 +201,6 @@ public class ProgTipOfDay {
         pToolTip = new PTipOfDay(text, image);
         pToolTipList.add(pToolTip);
 
-        // private final int listSize = 12
         text = START;
         text += "In den Einstellungen\n" +
                 "(erreichbar über das Menü)\n" +
@@ -235,7 +212,6 @@ public class ProgTipOfDay {
         pToolTip = new PTipOfDay(text, image);
         pToolTipList.add(pToolTip);
 
-        // private final int listSize = 13
         text = START;
         text += "In den Einstellungen\n" +
                 "(erreichbar über das Menü)\n" +
@@ -250,7 +226,6 @@ public class ProgTipOfDay {
         pToolTip = new PTipOfDay(text, image);
         pToolTipList.add(pToolTip);
 
-        // private final int listSize = 14
         text = START;
         text += "In den Einstellungen\n" +
                 "(erreichbar über das Menü)\n" +
@@ -261,7 +236,6 @@ public class ProgTipOfDay {
         pToolTip = new PTipOfDay(text, image);
         pToolTipList.add(pToolTip);
 
-        // private final int listSize = 15
         text = START;
         text += "In den Tabellen kann\n" +
                 "mit der Leertaste nach\n" +
@@ -270,7 +244,6 @@ public class ProgTipOfDay {
         pToolTip = new PTipOfDay(text, image);
         pToolTipList.add(pToolTip);
 
-        // private final int listSize = 16
         text = START;
         text += "In den Einstellungen des Abos\n" +
                 "kann auch die Startzeit\n" +
@@ -283,7 +256,6 @@ public class ProgTipOfDay {
         pToolTip = new PTipOfDay(text, image);
         pToolTipList.add(pToolTip);
 
-        // private final int listSize = 17
         text = START;
         text += "In den Filtereinstellungen bei\n" +
                 "den Filmen kann eine Wartezeit\n" +
