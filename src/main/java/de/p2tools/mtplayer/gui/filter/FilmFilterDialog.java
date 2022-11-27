@@ -33,17 +33,15 @@ import javafx.util.Callback;
 
 public class FilmFilterDialog extends PDialogExtra {
 
-    private static FilmFilterDialog instance;
-
     private final Button btnOk = new Button("_Ok");
     private final Button btnClearFilter = new Button("Filter löschen");
 
     private final TableView<FilmFilter> tableView = new TableView<>();
     private final ProgData progData;
 
-    private FilmFilterDialog(ProgData progData) {
+    public FilmFilterDialog(ProgData progData) {
         super(ProgData.getInstance().primaryStage, ProgConfig.FILM_GUI_FILTER_DIALOG, "Filmfilter",
-                false, false, DECO.NONE, true);
+                false, false, DECO.NOTHING, true);
         this.progData = progData;
         init(false);
     }
@@ -107,6 +105,12 @@ public class FilmFilterDialog extends PDialogExtra {
     }
 
     @Override
+    public void showDialog() {
+        ProgConfig.FILM_GUI_FILTER_DIALOG_IS_SHOWING.setValue(true);
+        super.showDialog();
+    }
+
+    @Override
     public void close() {
         ProgConfig.FILM_GUI_FILTER_DIALOG_IS_SHOWING.setValue(false);
         super.close();
@@ -147,18 +151,4 @@ public class FilmFilterDialog extends PDialogExtra {
         };
         return cell;
     };
-
-    public synchronized static final FilmFilterDialog getInstanceAndShow() {
-        if (instance == null) {
-            instance = new FilmFilterDialog(ProgData.getInstance());
-        }
-        ProgConfig.FILM_GUI_FILTER_DIALOG_IS_SHOWING.setValue(true);
-
-        if (!instance.isShowing()) {
-            instance.showDialog();
-        }
-        instance.getStage().toFront();
-
-        return instance;
-    }
 }

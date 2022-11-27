@@ -57,7 +57,7 @@ public class ProgStart {
         setTitle(progData);
         progData.progTray.initProgTray();
         if (ProgConfig.FILM_GUI_FILTER_DIALOG_IS_SHOWING.getValue()) {
-            FilmFilterDialog.getInstanceAndShow();
+            new FilmFilterDialog(progData).showDialog();
         }
 
         progData.startTimer();
