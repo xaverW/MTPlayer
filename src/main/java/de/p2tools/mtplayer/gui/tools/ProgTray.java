@@ -164,7 +164,7 @@ public class ProgTray {
             //vor dem Ausschalten des Tray GUI anzeigen!!
             closeTray();
         }));
-        miAbout.addActionListener(e -> Platform.runLater(() -> AboutDialogController.getInstanceAndShow()));
+        miAbout.addActionListener(e -> Platform.runLater(() -> new AboutDialogController(progData).showDialog()));
         miQuit.addActionListener(e -> Platform.runLater(() -> {
             ProgQuit.quit(false);
         }));

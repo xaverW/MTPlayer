@@ -24,10 +24,9 @@ import de.p2tools.mtplayer.controller.update.SearchProgramUpdate;
 import de.p2tools.p2Lib.dialogs.AboutDialog;
 
 public class AboutDialogController extends AboutDialog {
-    private static AboutDialogController instance;
     private final ProgData progData;
 
-    private AboutDialogController(ProgData progData) {
+    public AboutDialogController(ProgData progData) {
         super(progData.primaryStage, ProgConst.PROGRAM_NAME, ProgConst.URL_WEBSITE, ProgConst.URL_WEBSITE_HELP,
                 ProgConst.FILE_PROG_ICON, ProgConfig.SYSTEM_PROG_OPEN_URL,
                 ProgConfig.SYSTEM_DARK_THEME.getValue(),
@@ -64,18 +63,4 @@ public class AboutDialogController extends AboutDialog {
             this.setMaskerVisible(false);
         }
     }
-
-    public synchronized static final AboutDialogController getInstanceAndShow() {
-        if (instance == null) {
-            instance = new AboutDialogController(ProgData.getInstance());
-        }
-
-        if (!instance.isShowing()) {
-            instance.showDialog();
-        }
-        instance.getStage().toFront();
-
-        return instance;
-    }
-
 }

@@ -65,7 +65,7 @@ public class MTPlayerMenu extends MenuButton {
         PShortcutWorker.addShortCut(miQuitWait, MTShortcut.SHORTCUT_QUIT_PROGRAM_WAIT);
 
         final MenuItem miAbout = new MenuItem("Über dieses Programm");
-        miAbout.setOnAction(event -> AboutDialogController.getInstanceAndShow());
+        miAbout.setOnAction(event -> new AboutDialogController(progData).showDialog());
 
         final MenuItem miLog = new MenuItem("Logdatei öffnen");
         miLog.setOnAction(event -> {
