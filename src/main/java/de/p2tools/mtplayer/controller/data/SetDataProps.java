@@ -73,28 +73,28 @@ public class SetDataProps extends SetDataXml {
     @Override
     public Config[] getConfigsArr() {
         ArrayList<Config> list = new ArrayList<>();
-        list.add(new ConfigStringPropExtra("id", SetDataFieldNames.PROGRAMSET_ID, id));
-        list.add(new ConfigStringPropExtra("visibleName", SetDataFieldNames.PROGRAMSET_VISIBLE_NAME, visibleName));
-        list.add(new ConfigStringPropExtra("prefix", SetDataFieldNames.PROGRAMSET_PREFIX_DIRECT, prefix));
-        list.add(new ConfigStringPropExtra("suffix", SetDataFieldNames.PROGRAMSET_SUFFIX_DIRECT, suffix));
-        list.add(new ConfigColorProp("color", SetDataFieldNames.PROGRAMSET_COLOR, color));
-        list.add(new ConfigStringPropExtra("destPath", SetDataFieldNames.PROGRAMSET_ZIEL_PFAD, destPath));
-        list.add(new ConfigStringPropExtra("destName", SetDataFieldNames.PROGRAMSET_ZIEL_DATEINAME, destName));
-        list.add(new ConfigBoolPropExtra("play", SetDataFieldNames.PROGRAMSET_IST_ABSPIELEN, play));
-        list.add(new ConfigBoolPropExtra("save", SetDataFieldNames.PROGRAMSET_IST_SPEICHERN, save));
-        list.add(new ConfigBoolPropExtra("button", SetDataFieldNames.PROGRAMSET_IST_BUTTON, button));
-        list.add(new ConfigBoolPropExtra("abo", SetDataFieldNames.PROGRAMSET_IST_ABO, abo));
-        list.add(new ConfigIntPropExtra("maxSize", SetDataFieldNames.PROGRAMSET_MAX_LAENGE, maxSize));
-        list.add(new ConfigIntPropExtra("maxField", SetDataFieldNames.PROGRAMSET_MAX_LAENGE_FIELD, maxField));
-        list.add(new ConfigStringPropExtra("resolution", SetDataFieldNames.PROGRAMSET_AUFLOESUNG, resolution));
-        list.add(new ConfigStringPropExtra("adOn", SetDataFieldNames.PROGRAMSET_ADD_ON, adOn));
-        list.add(new ConfigStringPropExtra("description", SetDataFieldNames.PROGRAMSET_BESCHREIBUNG, description));
-        list.add(new ConfigStringPropExtra("infoUrl", SetDataFieldNames.PROGRAMSET_INFO_URL, infoUrl));
-        list.add(new ConfigBoolPropExtra("infoFile", SetDataFieldNames.PROGRAMSET_INFODATEI, infoFile));
-        list.add(new ConfigBoolPropExtra("subtitle", SetDataFieldNames.PROGRAMSET_SUBTITLE, subtitle));
-        list.add(new ConfigBoolPropExtra("genAboSubDir", SetDataFieldNames.PROGRAMSET_ABO_SUBDIR_ANLEGEN, genAboSubDir));
-        list.add(new ConfigIntPropExtra("aboSubDir_ENSubDirNo", SetDataFieldNames.PROGRAMSET_ABO_UNTERORDNER, aboSubDir_ENSubDirNo));
-        list.add(new ConfigPDataList(programList));
+        list.add(new ConfigExtra_stringProp("id", SetDataFieldNames.PROGRAMSET_ID, id));
+        list.add(new ConfigExtra_stringProp("visibleName", SetDataFieldNames.PROGRAMSET_VISIBLE_NAME, visibleName));
+        list.add(new ConfigExtra_stringProp("prefix", SetDataFieldNames.PROGRAMSET_PREFIX_DIRECT, prefix));
+        list.add(new ConfigExtra_stringProp("suffix", SetDataFieldNames.PROGRAMSET_SUFFIX_DIRECT, suffix));
+        list.add(new ConfigExtra_colorProp("color", SetDataFieldNames.PROGRAMSET_COLOR, color));
+        list.add(new ConfigExtra_stringProp("destPath", SetDataFieldNames.PROGRAMSET_ZIEL_PFAD, destPath));
+        list.add(new ConfigExtra_stringProp("destName", SetDataFieldNames.PROGRAMSET_ZIEL_DATEINAME, destName));
+        list.add(new ConfigExtra_boolProp("play", SetDataFieldNames.PROGRAMSET_IST_ABSPIELEN, play));
+        list.add(new ConfigExtra_boolProp("save", SetDataFieldNames.PROGRAMSET_IST_SPEICHERN, save));
+        list.add(new ConfigExtra_boolProp("button", SetDataFieldNames.PROGRAMSET_IST_BUTTON, button));
+        list.add(new ConfigExtra_boolProp("abo", SetDataFieldNames.PROGRAMSET_IST_ABO, abo));
+        list.add(new ConfigExtra_intProp("maxSize", SetDataFieldNames.PROGRAMSET_MAX_LAENGE, maxSize));
+        list.add(new ConfigExtra_intProp("maxField", SetDataFieldNames.PROGRAMSET_MAX_LAENGE_FIELD, maxField));
+        list.add(new ConfigExtra_stringProp("resolution", SetDataFieldNames.PROGRAMSET_AUFLOESUNG, resolution));
+        list.add(new ConfigExtra_stringProp("adOn", SetDataFieldNames.PROGRAMSET_ADD_ON, adOn));
+        list.add(new ConfigExtra_stringProp("description", SetDataFieldNames.PROGRAMSET_BESCHREIBUNG, description));
+        list.add(new ConfigExtra_stringProp("infoUrl", SetDataFieldNames.PROGRAMSET_INFO_URL, infoUrl));
+        list.add(new ConfigExtra_boolProp("infoFile", SetDataFieldNames.PROGRAMSET_INFODATEI, infoFile));
+        list.add(new ConfigExtra_boolProp("subtitle", SetDataFieldNames.PROGRAMSET_SUBTITLE, subtitle));
+        list.add(new ConfigExtra_boolProp("genAboSubDir", SetDataFieldNames.PROGRAMSET_ABO_SUBDIR_ANLEGEN, genAboSubDir));
+        list.add(new ConfigExtra_intProp("aboSubDir_ENSubDirNo", SetDataFieldNames.PROGRAMSET_ABO_UNTERORDNER, aboSubDir_ENSubDirNo));
+        list.add(new Config_pDataList(programList));
 
         return list.toArray(new Config[]{});
     }

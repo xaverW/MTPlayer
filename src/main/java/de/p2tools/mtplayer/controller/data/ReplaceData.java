@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.controller.data;
 
 import de.p2tools.p2Lib.configFile.config.Config;
-import de.p2tools.p2Lib.configFile.config.ConfigStringPropExtra;
+import de.p2tools.p2Lib.configFile.config.ConfigExtra_stringProp;
 import de.p2tools.p2Lib.configFile.pData.PDataSample;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -62,8 +62,8 @@ public class ReplaceData extends PDataSample<ReplaceData> {
     @Override
     public Config[] getConfigsArr() {
         ArrayList<Config> list = new ArrayList<>();
-        list.add(new ConfigStringPropExtra("from", REPLACE_FROM, from));
-        list.add(new ConfigStringPropExtra("to", REPLACE_TO, to));
+        list.add(new ConfigExtra_stringProp("from", REPLACE_FROM, from));
+        list.add(new ConfigExtra_stringProp("to", REPLACE_TO, to));
 
         return list.toArray(new Config[]{});
     }

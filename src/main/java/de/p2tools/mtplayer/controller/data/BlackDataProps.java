@@ -17,8 +17,8 @@
 package de.p2tools.mtplayer.controller.data;
 
 import de.p2tools.p2Lib.configFile.config.Config;
-import de.p2tools.p2Lib.configFile.config.ConfigBoolPropExtra;
-import de.p2tools.p2Lib.configFile.config.ConfigStringPropExtra;
+import de.p2tools.p2Lib.configFile.config.ConfigExtra_boolProp;
+import de.p2tools.p2Lib.configFile.config.ConfigExtra_stringProp;
 import de.p2tools.p2Lib.configFile.pData.PDataSample;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -80,11 +80,11 @@ public class BlackDataProps extends PDataSample<BlackDataProps> {
     public Config[] getConfigsArr() {
         ArrayList<Config> list = new ArrayList<>();
 //        list.add(new ConfigIntExtra("no", BLACKLIST_NO, no));
-        list.add(new ConfigStringPropExtra("channel", BLACKLIST_SENDER, channel));
-        list.add(new ConfigStringPropExtra("theme", BLACKLIST_THEME, theme));
-        list.add(new ConfigBoolPropExtra("themeExact", BLACKLIST_THEME_EXACT, themeExact));
-        list.add(new ConfigStringPropExtra("title", BLACKLIST_TITLE, title));
-        list.add(new ConfigStringPropExtra("bithemeTitletrate", BLACKLIST_THEME_TITLE, themeTitle));
+        list.add(new ConfigExtra_stringProp("channel", BLACKLIST_SENDER, channel));
+        list.add(new ConfigExtra_stringProp("theme", BLACKLIST_THEME, theme));
+        list.add(new ConfigExtra_boolProp("themeExact", BLACKLIST_THEME_EXACT, themeExact));
+        list.add(new ConfigExtra_stringProp("title", BLACKLIST_TITLE, title));
+        list.add(new ConfigExtra_stringProp("bithemeTitletrate", BLACKLIST_THEME_TITLE, themeTitle));
 //        list.add(new ConfigInntExtra("countHits", BLACKLIST_COUNT_HITS, countHits));
 
         return list.toArray(new Config[]{});

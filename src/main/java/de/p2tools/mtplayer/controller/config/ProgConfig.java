@@ -27,7 +27,7 @@ import de.p2tools.mtplayer.gui.tools.SetsPrograms;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.configFile.ConfigFile;
 import de.p2tools.p2Lib.configFile.config.Config;
-import de.p2tools.p2Lib.configFile.pData.PDataProgConfig;
+import de.p2tools.p2Lib.data.PDataProgConfig;
 import de.p2tools.p2Lib.tools.PStringUtils;
 import de.p2tools.p2Lib.tools.PSystemUtils;
 import de.p2tools.p2Lib.tools.ProgramToolsFactory;

@@ -18,8 +18,8 @@ package de.p2tools.mtplayer.controller.data;
 
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.configFile.config.Config;
-import de.p2tools.p2Lib.configFile.config.ConfigBoolPropExtra;
-import de.p2tools.p2Lib.configFile.config.ConfigStringPropExtra;
+import de.p2tools.p2Lib.configFile.config.ConfigExtra_boolProp;
+import de.p2tools.p2Lib.configFile.config.ConfigExtra_stringProp;
 import de.p2tools.p2Lib.configFile.pData.PDataSample;
 import javafx.beans.property.*;
 
@@ -66,14 +66,14 @@ public class ProgramDataProps extends PDataSample<ProgramData> {
     @Override
     public Config[] getConfigsArr() {
         return new Config[]{
-                new ConfigStringPropExtra("name", ProgramDataFieldNames.PROGRAM_NAME, name),
-                new ConfigStringPropExtra("destName", ProgramDataFieldNames.PROGRAM_DEST_FILENAME, destName),
-                new ConfigStringPropExtra("progPath", ProgramDataFieldNames.PROGRAM_PROGRAM_PATH, progPath),
-                new ConfigStringPropExtra("progSwitch", ProgramDataFieldNames.PROGRAM_SWITCH, progSwitch),
-                new ConfigStringPropExtra("prefix", ProgramDataFieldNames.PROGRAM_PREFIX, prefix),
-                new ConfigStringPropExtra("suffix", ProgramDataFieldNames.PROGRAM_SWITCH, suffix),
-                new ConfigBoolPropExtra("restart", ProgramDataFieldNames.PROGRAM_RESTART, restart),
-                new ConfigBoolPropExtra("downManager", ProgramDataFieldNames.PROGRAM_DOWNLOADMANAGER, downManager),
+                new ConfigExtra_stringProp("name", ProgramDataFieldNames.PROGRAM_NAME, name),
+                new ConfigExtra_stringProp("destName", ProgramDataFieldNames.PROGRAM_DEST_FILENAME, destName),
+                new ConfigExtra_stringProp("progPath", ProgramDataFieldNames.PROGRAM_PROGRAM_PATH, progPath),
+                new ConfigExtra_stringProp("progSwitch", ProgramDataFieldNames.PROGRAM_SWITCH, progSwitch),
+                new ConfigExtra_stringProp("prefix", ProgramDataFieldNames.PROGRAM_PREFIX, prefix),
+                new ConfigExtra_stringProp("suffix", ProgramDataFieldNames.PROGRAM_SWITCH, suffix),
+                new ConfigExtra_boolProp("restart", ProgramDataFieldNames.PROGRAM_RESTART, restart),
+                new ConfigExtra_boolProp("downManager", ProgramDataFieldNames.PROGRAM_DOWNLOADMANAGER, downManager),
         };
     }
 

@@ -84,7 +84,7 @@ public class MTPlayerMenu extends MenuButton {
         final MenuItem miToolTip = new MenuItem("Tip des Tages");
         miToolTip.setOnAction(a -> new ProgTipOfDay().showDialog(progData, true));
 
-        final MenuItem miSearchUpdate = new MenuItem("Gibts ein Update?");
+        final MenuItem miSearchUpdate = new MenuItem("Gibt's ein Update?");
         miSearchUpdate.setOnAction(a -> new SearchProgramUpdate(progData, progData.primaryStage).searchNewProgramVersion(true));
 
         final Menu mHelp = new Menu("Hilfe");
