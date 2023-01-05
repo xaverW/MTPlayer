@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.starter.Start;
-import de.p2tools.p2Lib.tools.date.PLocalTimeFactory;
+import de.p2tools.p2Lib.tools.date.PLTimeFactory;
 import de.p2tools.p2Lib.tools.log.PLog;
 
 import java.net.URL;
@@ -178,7 +178,7 @@ public class DownloadListStarts {
 
         try {
             LocalTime lNow = LocalTime.now();
-            LocalTime lDownload = PLocalTimeFactory.getPLocalTime(download.getStartTime());
+            LocalTime lDownload = PLTimeFactory.getPLocalTime(download.getStartTime());
             if (lNow.compareTo(lDownload) >= 0) {
                 return true;
             } else {

@@ -17,9 +17,9 @@
 package de.p2tools.mtplayer.controller.mediaDb;
 
 import de.p2tools.p2Lib.configFile.config.Config;
-import de.p2tools.p2Lib.configFile.config.ConfigExtra_boolProp;
-import de.p2tools.p2Lib.configFile.config.ConfigExtra_longProp;
-import de.p2tools.p2Lib.configFile.config.ConfigExtra_stringProp;
+import de.p2tools.p2Lib.configFile.config.Config_boolProp;
+import de.p2tools.p2Lib.configFile.config.Config_longProp;
+import de.p2tools.p2Lib.configFile.config.Config_stringProp;
 import de.p2tools.p2Lib.configFile.pData.PDataSample;
 import de.p2tools.p2Lib.tools.PIndex;
 import javafx.beans.property.*;
@@ -70,10 +70,10 @@ public class MediaCollectionData extends PDataSample<MediaCollectionData> {
     @Override
     public Config[] getConfigsArr() {
         ArrayList<Config> list = new ArrayList<>();
-        list.add(new ConfigExtra_longProp("id", "Id", id));
-        list.add(new ConfigExtra_stringProp("path", "Pfad", path));
-        list.add(new ConfigExtra_stringProp("collectionName", "Sammlung", collectionName));
-        list.add(new ConfigExtra_boolProp("external", "Extern", external));
+        list.add(new Config_longProp("id", "Id", id));
+        list.add(new Config_stringProp("path", "Pfad", path));
+        list.add(new Config_stringProp("collectionName", "Sammlung", collectionName));
+        list.add(new Config_boolProp("external", "Extern", external));
 
         return list.toArray(new Config[]{});
     }

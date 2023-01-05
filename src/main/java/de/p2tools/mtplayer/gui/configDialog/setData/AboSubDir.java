@@ -17,12 +17,12 @@
 
 package de.p2tools.mtplayer.gui.configDialog.setData;
 
-import de.p2tools.p2Lib.tools.date.PDateFactory;
+import de.p2tools.p2Lib.tools.date.DateFactory;
 
 import java.util.Date;
 
 public class AboSubDir {
-    private static String date = PDateFactory.F_FORMAT_yyyy_MM_dd.format(new Date());
+    private static String date = DateFactory.F_FORMAT_yyyy_MM_dd.format(new Date());
 
     public enum ENSubDir {
         // 0--> gibts nicht, da liefern die ProgVersionen ohne die Funktion dann "Thema" wie dort üblich

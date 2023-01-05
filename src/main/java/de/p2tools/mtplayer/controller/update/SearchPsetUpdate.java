@@ -25,7 +25,7 @@ import de.p2tools.mtplayer.controller.data.SetDataList;
 import de.p2tools.mtplayer.gui.dialog.NewSetDialogController;
 import de.p2tools.mtplayer.gui.tools.SetsPrograms;
 import de.p2tools.p2Lib.tools.PIndex;
-import de.p2tools.p2Lib.tools.date.PDateFactory;
+import de.p2tools.p2Lib.tools.date.DateFactory;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
 
@@ -108,7 +108,7 @@ public class SearchPsetUpdate {
                     }
 
                     // damit man sie auch findet :)
-                    final String date = PDateFactory.F_FORMAT_dd_MM_yyyy.format(new Date());
+                    final String date = DateFactory.F_FORMAT_dd_MM_yyyy.format(new Date());
                     listPsetStandard.forEach((psNew) -> {
                         psNew.setId(PIndex.getIndexStr());
                         psNew.setVisibleName(psNew.getVisibleName() + ", neu: " + date);

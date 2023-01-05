@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.filter;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.filmFilter.CheckFilmFilter;
-import de.p2tools.p2Lib.guiTools.PDatePicker;
+import de.p2tools.p2Lib.guiTools.PLDatePicker;
 import de.p2tools.p2Lib.guiTools.pCheckComboBox.PCheckComboBox;
 import de.p2tools.p2Lib.guiTools.pRange.PRangeBox;
 import de.p2tools.p2Lib.guiTools.pRange.PTimePeriodBox;
@@ -52,7 +52,7 @@ public class FilmFilterControllerFilter extends VBox {
     private final Label lblFilmTime = new Label("Sendezeit:");
 
     private final Label lblShowDate = new Label("Sendedatum:");
-    private final PDatePicker pDatePicker = new PDatePicker();
+    private final PLDatePicker pDatePicker = new PLDatePicker();
     private final Button btnClearDatePicker = new Button("");
 
     PCheckComboBox checkOnly = new PCheckComboBox();

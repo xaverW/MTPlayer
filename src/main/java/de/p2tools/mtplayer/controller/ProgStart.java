@@ -27,7 +27,7 @@ import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.dialogs.dialog.PDialog;
 import de.p2tools.p2Lib.icons.GetIcon;
 import de.p2tools.p2Lib.tools.ProgramToolsFactory;
-import de.p2tools.p2Lib.tools.date.PDateFactory;
+import de.p2tools.p2Lib.tools.date.DateFactory;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.LogMessage;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -242,11 +242,11 @@ public class ProgStart {
     }
 
     private static boolean updateCheckTodayDone() {
-        return ProgConfig.SYSTEM_UPDATE_DATE.get().equals(PDateFactory.F_FORMAT_yyyy_MM_dd.format(new Date()));
+        return ProgConfig.SYSTEM_UPDATE_DATE.get().equals(DateFactory.F_FORMAT_yyyy_MM_dd.format(new Date()));
     }
 
     private void runUpdateCheck(ProgData progData, boolean showAlways) {
-        ProgConfig.SYSTEM_UPDATE_DATE.setValue(PDateFactory.F_FORMAT_yyyy_MM_dd.format(new Date()));
+        ProgConfig.SYSTEM_UPDATE_DATE.setValue(DateFactory.F_FORMAT_yyyy_MM_dd.format(new Date()));
         new SearchProgramUpdate(progData).searchNewProgramVersion(showAlways);
     }
 
