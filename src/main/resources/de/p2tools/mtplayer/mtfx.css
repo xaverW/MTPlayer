@@ -1,99 +1,11 @@
 /*  Programmweites style sheet */
 .root {
-    -clear-filter-tab-button-1: #d6d6d6;
-    -clear-filter-tab-button-2: #e6e6e6;
-    -clear-filter-tab-button-3: #d6d6d6;
-    -clear-filter-lin-grad-1: linear-gradient(from 0% 0% to 100% 100%, -clear-filter-tab-button-1 50%, white 100%);
-    -clear-filter-rad-grad-1: radial-gradient(center 50% -40%, radius 200%, -clear-filter-tab-button-2 45%, -clear-filter-tab-button-3 50%);
-}
-
-/* CheckBoxCell: CheckBoxen in der Tabelle*/
-.checkbox-table * {
-    -fx-background-color: transparent;
-}
-.checkbox-table:disabled {
-    -fx-opacity: 1;
-}
-.checkbox-table .box {
-    -fx-border-radius: 10px;
-    -fx-border-color: lightgray;
-}
-.checkbox-table:selected .box {
-    -fx-border-color: -p2-color-blue1;
-}
-.checkbox-table:selected .mark {
-    -fx-background-color: black;
 }
 
 /*Tabelle Sets: Set ist "Abspielen" */
 .markSetPlay{
     -fx-text-fill: #ff0000;
 }
-
-/*Button zum löschen der Filter*/
-.btnClearFilter {
-    -fx-background-color: #6a7c9a, -clear-filter-lin-grad-1, -clear-filter-rad-grad-1;
-    /*-fx-background-radius: 10;*/
-    -fx-background-insets: 0,2,2;
-    -fx-text-fill: black;
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
-    -fx-padding: 5 20 5 20;
-}
-.btnClearFilter:focused{
-    -fx-background-color: #0c3f8d, -clear-filter-lin-grad-1, -clear-filter-rad-grad-1;
-    -fx-background-insets: -0.5,1,1;
-}
-.btnClearFilter:hover{
-    -fx-background-color: #00508d, -clear-filter-lin-grad-1, -clear-filter-rad-grad-1;
-    -fx-background-insets: -0.8,1,1;
-}
-.btnClearFilter:focused:hover{
-    -fx-background-color: #003462, -clear-filter-lin-grad-1, -clear-filter-rad-grad-1;
-    -fx-background-insets: -1.4,1,1;
-}
-.btnClearFilter:pressed{
-    -fx-background-color: #1d0f62,
-         linear-gradient(from 0% 0% to 100% 100%, #d6d6d6 40%, white 90%),
-         radial-gradient(center 80% -70%, radius 200%, #e6e6e6 35%, -clear-filter-tab-button-3 40%);
-}
-
-/* Button "Filmliste" */
-.btnFilmlist{
-    -fx-background-color: #c3c4c4, -lin-grad-1, -rad-grad-1;
-    -fx-background-radius: 30;
-    -fx-background-insets: 0,1,1;
-    -fx-text-fill: black;
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
-    -fx-padding: 5 20 5 20;
-}
-.btnFilmlist_{
-    -fx-background-color: #3a74d4,
-        linear-gradient(from 0% 0% to 100% 100%, #c7d4d4 50%, white 100%),
-        radial-gradient(center 50% -40%, radius 200%, #c7d4d4 45%, -tab-button-3 50%);
-    -fx-background-radius: 30;
-    -fx-background-insets: 0,2,2;
-    -fx-text-fill: black;
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
-    -fx-padding: 5 20 5 20;
-}
-.btnFilmlist:focused{
-    -fx-background-color: #8d8d8d, -lin-grad-1, -rad-grad-1;
-    -fx-background-insets: -0.5,1,1;
-}
-.btnFilmlist:hover{
-    -fx-background-color: #98abc4, -lin-grad-1, -rad-grad-1;
-    -fx-background-insets: -0.8,1,1;
-}
-.btnFilmlist:focused:hover{
-    -fx-background-color: #98abc4, -lin-grad-1, -rad-grad-1;
-    -fx-background-insets: -1.4,1,1;
-}
-.btnFilmlist:pressed{
-    -fx-background-color: #5d5e8c,
-         linear-gradient(from 0% 0% to 100% 100%, #d6d6d6 40%, white 90%),
-         radial-gradient(center 80% -70%, radius 200%, #e6e6e6 35%, -tab-button-3 40%);
-}
-
 
 /* ist die ComboBox mit den Filterprofilen: markiert wenn das Profil aktiv ist*/
 .markFilterOk > .list-cell{
@@ -120,15 +32,6 @@
     -fx-padding: 5;
 }
 
-/* ist die Senderauswahl (Mehrfachauswahl) */
-.channel-menu{
-    -fx-border-radius: 5;
-    -fx-background-radius: 5;
-}
-.channel-menu > .arrow-button > .arrow {
-    -fx-background-color: #0b99c9;
-}
-
 /* ist der abgesetzte Bereich im Download Dialog*/
 .downloadDialog {
     -fx-background-color: gainsboro;
@@ -143,21 +46,6 @@
     -fx-border-width: 1;
     -fx-border-radius: 5;
     -fx-border-color: -text-color-blue;
-}
-
-.channel-button {
-    -fx-border-radius: 5;
-    -fx-background-radius: 5;
-    -fx-font-size: 0.9em;
-}
-
-.chart-plot-background {
-    -fx-background-color: #ebebeb;
-}
-.chart-alternative-row-fill {
-    -fx-fill: #e1e1e1;
-    -fx-stroke: transparent;
-    -fx-stroke-width: 0;
 }
 
 .update-grid-cell {

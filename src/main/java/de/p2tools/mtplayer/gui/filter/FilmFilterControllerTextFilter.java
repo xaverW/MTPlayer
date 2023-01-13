@@ -62,7 +62,7 @@ public class FilmFilterControllerTextFilter extends VBox {
     }
 
     private void initSenderFilter() {
-        mbChannel.getStyleClass().add("channel-menu");
+        mbChannel.getStyleClass().add("cbo-menu");
         mbChannel.setMaxWidth(Double.MAX_VALUE);
         VBox.setVgrow(mbChannel, Priority.ALWAYS);
 
@@ -93,7 +93,7 @@ public class FilmFilterControllerTextFilter extends VBox {
         miCheckAll.setVisible(false);
 
         Button btnAll = new Button("Auswahl löschen");
-        btnAll.getStyleClass().add("channel-button");
+        btnAll.getStyleClass().add("cbo-menu-button");
         btnAll.setMaxWidth(Double.MAX_VALUE);
         btnAll.minWidthProperty().bind(mbChannel.widthProperty().add(-50));
         btnAll.setOnAction(e -> {
@@ -123,7 +123,7 @@ public class FilmFilterControllerTextFilter extends VBox {
             menuItemsList.add(menuItemClass);
 
             Button btnChannel = new Button(s);
-            btnChannel.getStyleClass().add("channel-button");
+            btnChannel.getStyleClass().add("cbo-menu-button");
             btnChannel.setMaxWidth(Double.MAX_VALUE);
             btnChannel.minWidthProperty().bind(mbChannel.widthProperty().add(-50));
             btnChannel.setOnAction(e -> {

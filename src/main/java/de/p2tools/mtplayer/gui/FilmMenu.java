@@ -119,7 +119,7 @@ public class FilmMenu {
         final MenuButton mb = new MenuButton("");
         mb.setTooltip(new Tooltip("Filmmenü anzeigen"));
         mb.setGraphic(ProgIcons.Icons.FX_ICON_TOOLBAR_MENU.getImageView());
-        mb.getStyleClass().add("btnFunctionWide");
+        mb.getStyleClass().addAll("btnFunction", "btnFunc-1");
 
         final MenuItem mbPlay = new MenuItem("Film abspielen");
         mbPlay.setOnAction(a -> progData.filmGuiController.playFilmUrl());

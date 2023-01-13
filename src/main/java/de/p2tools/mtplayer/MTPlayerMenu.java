@@ -113,7 +113,7 @@ public class MTPlayerMenu extends MenuButton {
 
         setTooltip(new Tooltip("Programmeinstellungen anzeigen"));
         setMinWidth(Region.USE_PREF_SIZE);
-        getStyleClass().add("btnFunctionWide");
+        getStyleClass().addAll("btnFunction", "btnFunc-1");
         setText("");
         setGraphic(ProgIcons.Icons.FX_ICON_TOOLBAR_MENU_TOP.getImageView());
         getItems().addAll(miConfig, miMediaCollectionConfig, miSearchMediaCollection, mHelp,

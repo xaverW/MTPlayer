@@ -504,7 +504,7 @@ public class AboEditDialogController extends AboDialogController {
     }
 
     private void initSenderMenu() {
-        mbChannel.getStyleClass().add("channel-menu");
+        mbChannel.getStyleClass().add("cbo-menu");
         mbChannel.setMaxWidth(Double.MAX_VALUE);
 
         List<String> senderArr = new ArrayList<>();

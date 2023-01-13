@@ -246,6 +246,7 @@ public class TableDownload extends PTable<DownloadData> {
 
                 if (item <= DownloadConstants.STATE_STOPPED) {
                     btnDownStart = new Button("");
+                    btnDownStart.getStyleClass().addAll("btnFunction", "btnFuncTable");
                     btnDownStart.setTooltip(new Tooltip("Download starten"));
                     btnDownStart.setGraphic(ProgIcons.Icons.IMAGE_TABLE_DOWNLOAD_START.getImageView());
                     btnDownStart.setOnAction((ActionEvent event) -> {
@@ -254,6 +255,7 @@ public class TableDownload extends PTable<DownloadData> {
                     });
 
                     btnDownDel = new Button("");
+                    btnDownDel.getStyleClass().addAll("btnFunction", "btnFuncTable");
                     btnDownDel.setTooltip(new Tooltip("Download löschen"));
                     btnDownDel.setGraphic(ProgIcons.Icons.IMAGE_TABLE_DOWNLOAD_DEL.getImageView());
                     btnDownDel.setOnAction(event -> {
@@ -272,6 +274,7 @@ public class TableDownload extends PTable<DownloadData> {
 
                 } else if (item < DownloadConstants.STATE_FINISHED) {
                     btnDownStop = new Button("");
+                    btnDownStop.getStyleClass().addAll("btnFunction", "btnFuncTable");
                     btnDownStop.setTooltip(new Tooltip("Download stoppen"));
                     btnDownStop.setGraphic(ProgIcons.Icons.IMAGE_TABLE_DOWNLOAD_STOP.getImageView());
                     btnDownStop.setOnAction((ActionEvent event) -> {
@@ -280,6 +283,7 @@ public class TableDownload extends PTable<DownloadData> {
                     });
 
                     btnDownDel = new Button("");
+                    btnDownDel.getStyleClass().addAll("btnFunction", "btnFuncTable");
                     btnDownDel.setTooltip(new Tooltip("Download löschen"));
                     btnDownDel.setGraphic(ProgIcons.Icons.IMAGE_TABLE_DOWNLOAD_DEL.getImageView());
                     btnDownDel.setOnAction(event -> {
@@ -298,6 +302,7 @@ public class TableDownload extends PTable<DownloadData> {
 
                 } else if (item == DownloadConstants.STATE_FINISHED) {
                     btnFilmStart = new Button("");
+                    btnFilmStart.getStyleClass().addAll("btnFunction", "btnFuncTable");
                     btnFilmStart.setTooltip(new Tooltip("gespeicherten Film abspielen"));
                     btnFilmStart.setGraphic(ProgIcons.Icons.IMAGE_TABLE_FILM_PLAY.getImageView());
                     btnFilmStart.setOnAction((ActionEvent event) -> {
@@ -307,6 +312,7 @@ public class TableDownload extends PTable<DownloadData> {
                     });
 
                     btnOpenDirectory = new Button();
+                    btnOpenDirectory.getStyleClass().addAll("btnFunction", "btnFuncTable");
                     btnOpenDirectory.setTooltip(new Tooltip("Ordner mit gespeichertem Film öffnen"));
                     btnOpenDirectory.setGraphic(ProgIcons.Icons.IMAGE_TABLE_DOWNLOAD_OPEN_DIR.getImageView());
                     btnOpenDirectory.setOnAction((ActionEvent event) -> {
@@ -326,6 +332,7 @@ public class TableDownload extends PTable<DownloadData> {
 
                 } else if (item == DownloadConstants.STATE_ERROR) {
                     btnDownStart = new Button("");
+                    btnDownStart.getStyleClass().addAll("btnFunction", "btnFuncTable");
                     btnDownStart.setTooltip(new Tooltip("Download wieder starten"));
                     btnDownStart.setGraphic(ProgIcons.Icons.IMAGE_TABLE_DOWNLOAD_START.getImageView());
                     btnDownStart.setOnAction((ActionEvent event) -> {
@@ -336,6 +343,7 @@ public class TableDownload extends PTable<DownloadData> {
                     });
 
                     btnDownDel = new Button("");
+                    btnDownDel.getStyleClass().addAll("btnFunction", "btnFuncTable");
                     btnDownDel.setTooltip(new Tooltip("Download löschen"));
                     btnDownDel.setGraphic(ProgIcons.Icons.IMAGE_TABLE_DOWNLOAD_DEL.getImageView());
                     btnDownDel.setOnAction(event -> {

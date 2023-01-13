@@ -178,7 +178,7 @@ public class DownloadListStarts {
 
         try {
             LocalTime lNow = LocalTime.now();
-            LocalTime lDownload = PLTimeFactory.getPLocalTime(download.getStartTime());
+            LocalTime lDownload = PLTimeFactory.fromString(download.getStartTime());
             if (lNow.compareTo(lDownload) >= 0) {
                 return true;
             } else {

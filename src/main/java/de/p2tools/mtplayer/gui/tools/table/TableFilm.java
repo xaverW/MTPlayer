@@ -181,9 +181,11 @@ public class TableFilm extends PTable<FilmDataMTP> {
                 final Button btnSave;
 
                 btnPlay = new Button("");
+                btnPlay.getStyleClass().addAll("btnFunction", "btnFuncTable");
                 btnPlay.setGraphic(ProgIcons.Icons.IMAGE_TABLE_FILM_PLAY.getImageView());
 
                 btnSave = new Button("");
+                btnSave.getStyleClass().addAll("btnFunction", "btnFuncTable");
                 btnSave.setGraphic(ProgIcons.Icons.IMAGE_TABLE_FILM_SAVE.getImageView());
 
                 if (small.get()) {

@@ -309,7 +309,7 @@ public class BlackPane {
     private void initSenderMenu() {
         mbChannel.getItems().clear();
         checkMenuItemsList.clear();
-        mbChannel.getStyleClass().add("channel-menu");
+        mbChannel.getStyleClass().add("cbo-menu");
 
         List<String> senderArr = new ArrayList<>();
         String sender = blackData.channelProperty().get();

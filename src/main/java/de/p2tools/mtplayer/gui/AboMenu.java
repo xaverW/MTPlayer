@@ -80,7 +80,7 @@ public class AboMenu {
         final MenuButton mb = new MenuButton("");
         mb.setTooltip(new Tooltip("Abomenü anzeigen"));
         mb.setGraphic(ProgIcons.Icons.FX_ICON_TOOLBAR_MENU.getImageView());
-        mb.getStyleClass().add("btnFunctionWide");
+        mb.getStyleClass().addAll("btnFunction", "btnFunc-1");
 
         final MenuItem mbOn = new MenuItem("Abos einschalten");
         mbOn.setOnAction(a -> progData.aboGuiController.setAboActive(true));
