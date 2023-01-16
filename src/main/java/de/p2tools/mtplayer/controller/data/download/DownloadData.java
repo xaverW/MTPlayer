@@ -22,6 +22,7 @@ import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.starter.Start;
 import de.p2tools.p2Lib.alert.PAlert;
+import de.p2tools.p2Lib.mtDownload.DownloadSize;
 import de.p2tools.p2Lib.mtFilm.film.FilmDataXml;
 import de.p2tools.p2Lib.mtFilm.film.FilmFactory;
 import de.p2tools.p2Lib.tools.PSystemUtils;
@@ -349,7 +350,7 @@ public final class DownloadData extends DownloadDataXml {
         }
 
         film = download.film;
-        getDownloadSize().setSize(download.getDownloadSize().getFilmSize());// die Auflösung des Films kann sich ändern
+        getDownloadSize().setSize(download.getDownloadSize().getSize());// die Auflösung des Films kann sich ändern
 
         setStart(download.getStart());
         setData = download.setData;

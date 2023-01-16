@@ -131,7 +131,7 @@ public class DirectHttpDownload extends Thread {
         download.getStart().setInputStream(new MLInputStream(conn.getInputStream(),
                 bandwidthCalculationTimer, ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE));
         fos = new FileOutputStream(file, (downloaded != 0));
-        download.getDownloadSize().addAktFileSize(downloaded);
+        download.getDownloadSize().addActFileSize(downloaded);
         final byte[] buffer = new byte[MLBandwidthTokenBucket.DEFAULT_BUFFER_SIZE];
         double percent, ppercent = DownloadConstants.PROGRESS_WAITING, startPercent = DownloadConstants.PROGRESS_NOT_STARTED;
         int len;
@@ -140,14 +140,14 @@ public class DirectHttpDownload extends Thread {
         while ((len = download.getStart().getInputStream().read(buffer)) != -1 && (!download.isStateStoped())) {
             downloaded += len;
             fos.write(buffer, 0, len);
-            download.getDownloadSize().addAktFileSize(len);
+            download.getDownloadSize().addActFileSize(len);
 
             // für die Anzeige prüfen ob sich was geändert hat
             if (aktSize != download.getDownloadSize().getActFileSize()) {
                 aktSize = download.getDownloadSize().getActFileSize();
             }
-            if (download.getDownloadSize().getFilmSize() > 0) {
-                percent = 1.0 * aktSize / download.getDownloadSize().getFilmSize();
+            if (download.getDownloadSize().getSize() > 0) {
+                percent = 1.0 * aktSize / download.getDownloadSize().getSize();
                 if (startPercent == DownloadConstants.PROGRESS_NOT_STARTED) {
                     startPercent = percent;
                 }
@@ -170,7 +170,7 @@ public class DirectHttpDownload extends Thread {
 //                        download.getStart().setTimeLeftSeconds((long) (diffTime * restPercent / (percent - startPercent)));
 
                         long timeLeft = 0;
-                        long sizeLeft = download.getDownloadSize().getFilmSize() - download.getDownloadSize().getActFileSize();
+                        long sizeLeft = download.getDownloadSize().getSize() - download.getDownloadSize().getActFileSize();
                         if (sizeLeft <= 0) {
                             timeLeft = 0;
                         } else if (aktBandwidth > 0) {
@@ -431,12 +431,12 @@ public class DirectHttpDownload extends Thread {
             if (downloadData.getFilm().getDurationMinute() > 0
                     && downloadData.getStart().getTimeLeftSeconds() > 0
                     && downloadData.getDownloadSize().getActFileSize() > 0
-                    && downloadData.getDownloadSize().getFilmSize() > 0) {
+                    && downloadData.getDownloadSize().getSize() > 0) {
 
                 // macht nur dann Sinn
                 final long filetimeAlreadyLoadedSeconds = downloadData.getFilm().getDurationMinute() * 60
                         * downloadData.getDownloadSize().getActFileSize()
-                        / downloadData.getDownloadSize().getFilmSize();
+                        / downloadData.getDownloadSize().getSize();
 
                 if (filetimeAlreadyLoadedSeconds > (downloadData.getStart().getTimeLeftSeconds() * 1.1 /* plus 10% zur Sicherheit */)) {
                     downloadData.getStart().setStartViewing(true);
