@@ -40,7 +40,7 @@ public class DownloadGuiInfo extends AnchorPane {
         gridPane.setHgap(30);
         gridPane.setVgap(10);
         gridPane.setPadding(new Insets(10));
-        gridPane.setId("infoGrid");
+        gridPane.getStyleClass().add("downloadInfoGrid");
 
         vBoxAll.setSpacing(10);
         vBoxAll.setPadding(new Insets(10));

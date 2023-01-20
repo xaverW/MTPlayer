@@ -63,10 +63,6 @@ public class MTPlayerController extends StackPane {
         init();
     }
 
-//    public void setButtonFilmlistUpdate() {
-//        btnFilmlist.getStyleClass().addAll("btnFunction", "btnFunc-3");
-//    }
-
     private void init() {
         try {
             // Toolbar
@@ -119,7 +115,7 @@ public class MTPlayerController extends StackPane {
 
     private void initButton() {
         btnFilmlist.setMinWidth(Region.USE_PREF_SIZE);
-        btnFilmlist.getStyleClass().addAll("btnFunction", "btnFunc-3");
+        btnFilmlist.getStyleClass().addAll("btnFunction", "btnFunc-4");
         btnFilmlist.setTooltip(new Tooltip("Eine neue Filmliste laden.\n" +
                 "Wenn die Filmliste nicht zu alt ist, wird nur ein Update geladen.\n" +
                 "Mit der rechten Maustaste wird immer die komplette Filmliste geladen."));
@@ -136,8 +132,8 @@ public class MTPlayerController extends StackPane {
             @Override
             public void start(de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent event) {
                 // falls "neue Filmliste" aktiv ist
-                btnFilmlist.getStyleClass().clear();
-                btnFilmlist.getStyleClass().addAll("btnFunction", "btnFunc-3");
+//                btnFilmlist.getStyleClass().clear();
+//                btnFilmlist.getStyleClass().addAll("btnFunction", "btnFunc-3");
             }
 
             @Override
@@ -251,24 +247,18 @@ public class MTPlayerController extends StackPane {
         btnAbo.getStyleClass().clear();
 
         if (btnSel.equals(btnFilm)) {
-//            btnFilm.getStyleClass().add("btnTab-sel");
             btnFilm.getStyleClass().add("btnTabTop-sel");
         } else {
-//            btnFilm.getStyleClass().add("btnTab");
             btnFilm.getStyleClass().add("btnTabTop");
         }
         if (btnSel.equals(btnDownload)) {
-//            btnDownload.getStyleClass().add("btnTab-sel");
             btnDownload.getStyleClass().add("btnTabTop-sel");
         } else {
-//            btnDownload.getStyleClass().add("btnTab");
             btnDownload.getStyleClass().add("btnTabTop");
         }
         if (btnSel.equals(btnAbo)) {
-//            btnAbo.getStyleClass().add("btnTab-sel");
             btnAbo.getStyleClass().add("btnTabTop-sel");
         } else {
-//            btnAbo.getStyleClass().add("btnTab");
             btnAbo.getStyleClass().add("btnTabTop");
         }
     }
@@ -293,13 +283,13 @@ public class MTPlayerController extends StackPane {
         }
     }
 
-    public boolean isFilmPaneShown() {
-        if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneFilm)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+//    public boolean isFilmPaneShown() {
+//        if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneFilm)) {
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
 
     public boolean isDownloadPaneShown() {
         if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneDownoad)) {
@@ -309,13 +299,13 @@ public class MTPlayerController extends StackPane {
         }
     }
 
-    public boolean isAboPaneShown() {
-        if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneAbo)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+//    public boolean isAboPaneShown() {
+//        if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneAbo)) {
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
 
     public void setFocus() {
         Node node = stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1);

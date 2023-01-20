@@ -41,11 +41,11 @@
     -fx-stroke-width: 1px;
 }
 
-#infoGrid {
-    -fx-border-style: solid inside;
+.downloadInfoGrid {
     -fx-border-width: 1;
     -fx-border-radius: 5;
     -fx-border-color: -text-color-blue;
+    -fx-background-radius: 5;
 }
 
 .update-grid-cell {

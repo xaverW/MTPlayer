@@ -3,6 +3,10 @@
 .root {
 }
 
+/* tab download: infobereich */
+.downloadInfoGrid {
+    -fx-background-color: #82888b;
+}
 /* ist die abgesetzte Zeile im Downloaddialog */
 .downloadDialog {
     -fx-background-color: #64696b;
