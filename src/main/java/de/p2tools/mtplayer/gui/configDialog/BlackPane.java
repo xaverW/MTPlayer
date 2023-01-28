@@ -292,6 +292,10 @@ public class BlackPane {
             tgTheme.selectedProperty().unbindBidirectional(blackData.themeExactProperty());
             title.textProperty().unbindBidirectional(blackData.titleProperty());
             themeTitle.textProperty().unbindBidirectional(blackData.themeTitleProperty());
+            theme.setText("");
+            tgTheme.setText("");
+            title.setText("");
+            themeTitle.setText("");
         }
 
         blackData = blackDataAct;

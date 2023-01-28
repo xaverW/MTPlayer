@@ -98,9 +98,11 @@ public class SetPane {
     void unBindProgData() {
         if (setData != null) {
             txtVisibleName.textProperty().unbindBidirectional(setData.visibleNameProperty());
+            txtVisibleName.setText("");
             txtVisibleName.textProperty().removeListener(changeListener);
 
             txtDescription.textProperty().unbindBidirectional(setData.descriptionProperty());
+            txtDescription.setText("");
         }
     }
 }

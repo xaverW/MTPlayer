@@ -173,6 +173,9 @@ public class DownloadPane {
             txtPrefix.textProperty().unbindBidirectional(setData.prefixProperty());
             txtSuffix.textProperty().unbindBidirectional(setData.suffixProperty());
 
+            txtPrefix.setText("");
+            txtSuffix.setText("");
+
             tglInfo.selectedProperty().unbindBidirectional(setData.infoFileProperty());
             tglSubtitle.selectedProperty().unbindBidirectional(setData.subtitleProperty());
         }

@@ -104,10 +104,13 @@ public class IconPane {
         btnProgIconFile.disableProperty().bind(tglOwnProgIcon.selectedProperty().not());
         txtProgIconPath.disableProperty().bind(tglOwnProgIcon.selectedProperty().not());
 
+        Label lblIcon = new Label("Datei (png, jpg):");
+        lblIcon.disableProperty().bind(tglOwnProgIcon.selectedProperty().not());
+
         gridPane.add(tglOwnProgIcon, 0, ++row, 2, 1);
         gridPane.add(btnHelpProgramIcon, 2, row);
 
-        gridPane.add(new Label("Datei (png, jpg):"), 0, ++row);
+        gridPane.add(lblIcon, 0, ++row);
         gridPane.add(txtProgIconPath, 1, row);
         gridPane.add(btnProgIconFile, 2, row);
 
@@ -125,11 +128,11 @@ public class IconPane {
         final Button btnHelpTrayOwnIcon = PButton.helpButton(stage, "Eigenes Bild im Tray anzeigen",
                 HelpText.TRAY_OWN_ICON);
         GridPane.setHalignment(btnHelpTrayOwnIcon, HPos.RIGHT);
-        btnHelpTrayOwnIcon.disableProperty().bind(tglOwnTrayIcon.selectedProperty().not().or(tglTray.selectedProperty().not()));
+        btnHelpTrayOwnIcon.disableProperty().bind(tglTray.selectedProperty().not());
 
 
         final Button btnTrayFile = new Button();
-        btnTrayFile.setTooltip(new Tooltip("Einen Ordner für das Logfile auswählen"));
+        btnTrayFile.setTooltip(new Tooltip("Eine Datei für das Icon auswählen"));
         btnTrayFile.setOnAction(event -> {
             String s = PDirFileChooser.FileChooserSelect(ProgData.getInstance().primaryStage, "", "");
             if (!s.isEmpty()) {
@@ -143,6 +146,8 @@ public class IconPane {
         txtTrayIconPath.textProperty().bindBidirectional(propTrayIcon);
         txtTrayIconPath.disableProperty().bind(tglOwnTrayIcon.selectedProperty().not().or(tglTray.selectedProperty().not()));
 
+        Label lblFile = new Label("Datei (png, jpg):");
+        lblFile.disableProperty().bind(tglOwnTrayIcon.selectedProperty().not().or(tglTray.selectedProperty().not()));
 
         gridPane.add(tglTray, 0, ++row, 2, 1);
         gridPane.add(btnHelpTray, 2, row);
@@ -150,7 +155,7 @@ public class IconPane {
         gridPane.add(tglOwnTrayIcon, 0, ++row, 2, 1);
         gridPane.add(btnHelpTrayOwnIcon, 2, row);
 
-        gridPane.add(new Label("Datei (png, jpg):"), 0, ++row);
+        gridPane.add(lblFile, 0, ++row);
         gridPane.add(txtTrayIconPath, 1, row);
         gridPane.add(btnTrayFile, 2, row);
 

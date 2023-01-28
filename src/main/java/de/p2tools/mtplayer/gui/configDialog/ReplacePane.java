@@ -27,7 +27,9 @@ import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -42,15 +44,12 @@ import java.util.Collection;
 
 public class ReplacePane {
 
-    TableView<ReplaceData> tableView = new TableView<>();
-
-    BooleanProperty propAscii = ProgConfig.SYSTEM_ONLY_ASCII;
-    BooleanProperty propReplace = ProgConfig.SYSTEM_USE_REPLACETABLE;
     private final TextField txtFrom = new TextField();
     private final TextField txtTo = new TextField();
     private final GridPane gridPane = new GridPane();
-    private ReplaceData replaceData = null;
 
+    private TableView<ReplaceData> tableView = new TableView<>();
+    private ObjectProperty<ReplaceData> replaceDateProp = new SimpleObjectProperty<>(null);
     private final PToggleSwitch tglAscii = new PToggleSwitch("nur ASCII-Zeichen erlauben");
     private final PToggleSwitch tglReplace = new PToggleSwitch("Ersetzungstabelle");
 
@@ -78,8 +77,8 @@ public class ReplacePane {
 
     public void close() {
         unbindText();
-        tglAscii.selectedProperty().unbindBidirectional(propAscii);
-        tglReplace.selectedProperty().unbindBidirectional(propReplace);
+        tglAscii.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_ONLY_ASCII);
+        tglReplace.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_USE_REPLACETABLE);
     }
 
     private void makeAscii(VBox vBox) {
@@ -89,11 +88,11 @@ public class ReplacePane {
         gridPane.setPadding(new Insets(20));
         vBox.getChildren().add(gridPane);
 
-        tglAscii.selectedProperty().bindBidirectional(propAscii);
+        tglAscii.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_ONLY_ASCII);
         final Button btnHelpAscii = PButton.helpButton(stage, "Nur ASCII-Zeichen",
                 HelpText.DOWNLOAD_ONLY_ASCII);
 
-        tglReplace.selectedProperty().bindBidirectional(propReplace);
+        tglReplace.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_USE_REPLACETABLE);
         final Button btnHelpReplace = PButton.helpButton(stage, "Ersetzungstabelle",
                 HelpText.DOWNLOAD_REPLACELIST);
 
@@ -125,6 +124,7 @@ public class ReplacePane {
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
                 Platform.runLater(this::setActReplaceData));
 
+        tableView.disableProperty().bind(ProgConfig.SYSTEM_USE_REPLACETABLE.not());
         VBox.setVgrow(tableView, Priority.ALWAYS);
         vBox.getChildren().addAll(tableView);
 
@@ -214,9 +214,9 @@ public class ReplacePane {
 
         HBox hBox = new HBox();
         hBox.setSpacing(10);
+        hBox.disableProperty().bind(ProgConfig.SYSTEM_USE_REPLACETABLE.not());
         hBox.getChildren().addAll(btnNew, btnDel, btnTop, btnUp, btnDown, btnBottom, btnReset);
         vBox.getChildren().addAll(hBox);
-
     }
 
     private void addConfigs(VBox vBox) {
@@ -233,28 +233,32 @@ public class ReplacePane {
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(), PColumnConstraints.getCcComputedSizeAndHgrow());
         vBox.getChildren().add(gridPane);
         gridPane.setDisable(true);
+        gridPane.disableProperty().bind(
+                Bindings.createBooleanBinding(() -> replaceDateProp.getValue() == null, replaceDateProp)
+                        .or(ProgConfig.SYSTEM_USE_REPLACETABLE.not()));
     }
 
     private void setActReplaceData() {
         ReplaceData replaceDataAct = tableView.getSelectionModel().getSelectedItem();
-        if (replaceDataAct == replaceData) {
+        if (replaceDataAct == replaceDateProp.getValue()) {
             return;
         }
 
         unbindText();
+        replaceDateProp.setValue(replaceDataAct);
 
-        replaceData = replaceDataAct;
-        gridPane.setDisable(replaceData == null);
-        if (replaceData != null) {
-            txtFrom.textProperty().bindBidirectional(replaceData.fromProperty());
-            txtTo.textProperty().bindBidirectional(replaceData.toProperty());
+        if (replaceDateProp.getValue() != null) {
+            txtFrom.textProperty().bindBidirectional(replaceDateProp.getValue().fromProperty());
+            txtTo.textProperty().bindBidirectional(replaceDateProp.getValue().toProperty());
         }
     }
 
     private void unbindText() {
-        if (replaceData != null) {
-            txtFrom.textProperty().unbindBidirectional(replaceData.fromProperty());
-            txtTo.textProperty().unbindBidirectional(replaceData.toProperty());
+        if (replaceDateProp.getValue() != null) {
+            txtFrom.textProperty().unbindBidirectional(replaceDateProp.getValue().fromProperty());
+            txtTo.textProperty().unbindBidirectional(replaceDateProp.getValue().toProperty());
         }
+        txtFrom.setText("");
+        txtTo.setText("");
     }
 }

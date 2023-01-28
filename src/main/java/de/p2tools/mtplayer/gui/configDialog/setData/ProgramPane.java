@@ -62,7 +62,12 @@ public class ProgramPane {
         this.stage = stage;
     }
 
-    public void setSetDate(SetData setData) {
+    public void unBindProgData() {
+        this.setData = null;
+        tableView.setItems(null);
+    }
+
+    public void bindProgData(SetData setData) {
         this.setData = setData;
         tableView.setItems(setData.getProgramList());
         if (tableView.getItems().size() > 0) {
@@ -268,6 +273,14 @@ public class ProgramPane {
             txtProgSwitch.textProperty().unbindBidirectional(programData.progSwitchProperty());
             txtPrefix.textProperty().unbindBidirectional(programData.prefixProperty());
             txtSuffix.textProperty().unbindBidirectional(programData.suffixProperty());
+
+            txtName.setText("");
+            txtDestName.setText("");
+            txtProgPath.setText("");
+            txtProgSwitch.setText("");
+            txtPrefix.setText("");
+            txtSuffix.setText("");
+
             tglRestart.selectedProperty().unbindBidirectional(programData.restartProperty());
             tglDown.selectedProperty().unbindBidirectional(programData.downManagerProperty());
         }

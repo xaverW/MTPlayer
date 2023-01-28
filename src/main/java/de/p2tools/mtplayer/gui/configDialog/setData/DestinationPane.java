@@ -207,6 +207,10 @@ public class DestinationPane {
             tglSubdir.selectedProperty().unbindBidirectional(setData.genAboSubDirProperty());
             txtDestPath.textProperty().unbindBidirectional(setData.destPathProperty());
             txtDestName.textProperty().unbindBidirectional(setData.destNameProperty());
+
+            txtDestPath.setText("");
+            txtDestName.setText("");
+
             slCut.valueProperty().unbindBidirectional(setData.maxSizeProperty());
             slCutField.valueProperty().unbindBidirectional(setData.maxFieldProperty());
         }

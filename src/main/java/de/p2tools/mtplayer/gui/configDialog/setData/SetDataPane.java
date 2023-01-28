@@ -68,6 +68,7 @@ public class SetDataPane {
         setFunction.unBindProgData();
         destinationPane.unBindProgData();
         downloadPane.unBindProgData();
+        programPane.unBindProgData();
 
         this.setData = setData;
         if (setData != null) {
@@ -75,7 +76,7 @@ public class SetDataPane {
             setFunction.bindProgData(setData);
             destinationPane.bindProgData(setData);
             downloadPane.bindProgData(setData);
-            programPane.setSetDate(setData);
+            programPane.bindProgData(setData);
         }
         setDisable();
     }
