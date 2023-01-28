@@ -264,7 +264,7 @@ public final class FilmFilter extends FilmFilterProps {
 
     private void setFilterChange() {
         //wird auch ausgelöst durch Eintrag in die FilterHistory, da wird ein neuer SelectedFilter angelegt
-        PDebugLog.sysLog("setFilterChange");
+//        PDebugLog.sysLog("setFilterChange");
         pause.playFromStart();
     }
 

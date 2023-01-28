@@ -24,7 +24,9 @@ import de.p2tools.p2Lib.guiTools.pCheckComboBox.PCheckComboBox;
 import de.p2tools.p2Lib.guiTools.pRange.PRangeBox;
 import de.p2tools.p2Lib.guiTools.pRange.PTimePeriodBox;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
+import de.p2tools.p2Lib.tools.date.PLDateFactory;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -35,7 +37,6 @@ import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 public class FilmFilterControllerFilter extends VBox {
@@ -147,11 +148,12 @@ public class FilmFilterControllerFilter extends VBox {
         GridPane.setFillWidth(tglFilmTime, false);
 
         pDatePicker.valueProperty().addListener((u, o, n) -> {
-            LocalDate newDate = pDatePicker.getValue();
+            LocalDate newDate = pDatePicker.getDateLDate();
             if (newDate != null) {
                 try {
-                    progData.actFilmFilterWorker.getActFilterSettings().setShowDate(newDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
+                    progData.actFilmFilterWorker.getActFilterSettings().setShowDate(PLDateFactory.toString(newDate));
                 } catch (Exception ex) {
+                    progData.actFilmFilterWorker.getActFilterSettings().setShowDate(CheckFilmFilter.FILTER_SHOW_DATE_ALL);
                 }
 
             } else {
@@ -169,8 +171,8 @@ public class FilmFilterControllerFilter extends VBox {
     private void initPDatePicker() {
         try {
             final String s = progData.actFilmFilterWorker.getActFilterSettings().getShowDate();
-            if (!s.isEmpty()) {
-                LocalDate localDate = LocalDate.parse(progData.actFilmFilterWorker.getActFilterSettings().getShowDate(), DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+            if (!PLDateFactory.fromString(s).equals(LocalDate.MIN) && !s.isEmpty()) {
+                LocalDate localDate = PLDateFactory.fromString(progData.actFilmFilterWorker.getActFilterSettings().getShowDate());
                 pDatePicker.setValue(localDate);
             } else {
                 pDatePicker.clearDate();
@@ -214,7 +216,8 @@ public class FilmFilterControllerFilter extends VBox {
 
         //Sendedatum
         vBox = new VBox(2);
-        HBox hBox = new HBox(0);
+        HBox hBox = new HBox(5);
+        hBox.setAlignment(Pos.CENTER_RIGHT);
         hBox.getChildren().addAll(pDatePicker, btnClearDatePicker);
         HBox.setHgrow(pDatePicker, Priority.ALWAYS);
         pDatePicker.setMaxWidth(Double.MAX_VALUE);
