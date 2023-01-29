@@ -18,8 +18,8 @@ package de.p2tools.mtplayer.gui.startDialog;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
+import de.p2tools.mtplayer.gui.configDialog.FilmSender;
 import de.p2tools.mtplayer.gui.configDialog.GeoPane;
-import de.p2tools.mtplayer.gui.configDialog.LoadFilmsPane;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
 import javafx.geometry.Insets;
@@ -72,7 +72,7 @@ public class StartDialogController extends PDialogExtra {
     private StartPane startPane2;
     private UpdatePane updatePane;
     private GeoPane geoPane;
-    private LoadFilmsPane loadFilmsPane;
+    private FilmSender filmSender;
     private DownPathPane downPathPane;
     private PathPane pathPane;
 
@@ -100,7 +100,7 @@ public class StartDialogController extends PDialogExtra {
         startPane2.close();
         updatePane.close();
         geoPane.close();
-        loadFilmsPane.close();
+        filmSender.close();
         downPathPane.close();
         pathPane.close();
         super.close();
@@ -167,8 +167,8 @@ public class StartDialogController extends PDialogExtra {
         tGeo.setCollapsible(false);
 
         //filmPane
-        loadFilmsPane = new LoadFilmsPane(getStage());
-        tFilm = loadFilmsPane.make();
+        filmSender = new FilmSender(getStage());
+        tFilm = filmSender.make(null);
         tFilm.setMaxHeight(Double.MAX_VALUE);
         tFilm.setCollapsible(false);
 

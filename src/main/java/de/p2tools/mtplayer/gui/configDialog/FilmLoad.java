@@ -21,28 +21,19 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2Lib.dialogs.PDirFileChooser;
-import de.p2tools.p2Lib.dialogs.accordion.PAccordionPane;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
-public class FilmPaneController extends PAccordionPane {
+public class FilmLoad {
 
-    private final int FILTER_DAYS_MAX = 150;
-
-    BooleanProperty propLoad = ProgConfig.SYSTEM_LOAD_FILMS_ON_START;
-    StringProperty propUrl = ProgConfig.SYSTEM_LOAD_FILMS_MANUALLY;
-
-    private LoadFilmsPane loadFilmsPane;
     private final PToggleSwitch tglLoad = new PToggleSwitch("Filmliste beim Programmstart laden");
     private TextField txtUrl;
     private final BooleanProperty diacriticChanged;
@@ -50,49 +41,30 @@ public class FilmPaneController extends PAccordionPane {
     private final ProgData progData;
     private final Stage stage;
 
-    public FilmPaneController(Stage stage, BooleanProperty diacriticChanged) {
-        super(stage, ProgConfig.CONFIG_DIALOG_ACCORDION, ProgConfig.SYSTEM_CONFIG_DIALOG_FILM);
+    public FilmLoad(Stage stage, ProgData progData, BooleanProperty diacriticChanged) {
         this.stage = stage;
         this.diacriticChanged = diacriticChanged;
-        progData = ProgData.getInstance();
-
-        init();
+        this.progData = progData;
     }
 
-    @Override
     public void close() {
-        super.close();
-        tglLoad.selectedProperty().unbindBidirectional(propLoad);
-        txtUrl.textProperty().unbindBidirectional(propUrl);
+        tglLoad.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_LOAD_FILMS_ON_START);
+        txtUrl.textProperty().unbindBidirectional(ProgConfig.SYSTEM_LOAD_FILMS_MANUALLY);
     }
 
-    @Override
-    public Collection<TitledPane> createPanes() {
-        Collection<TitledPane> result = new ArrayList<TitledPane>();
-        makeConfig(result);
-
-        loadFilmsPane = new LoadFilmsPane(stage, progData);
-        loadFilmsPane.make(result);
-
-        return result;
-    }
-
-    private void makeConfig(Collection<TitledPane> result) {
+    public TitledPane make(Collection<TitledPane> result) {
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
         gridPane.setVgap(5);
         gridPane.setPadding(new Insets(20));
 
-        TitledPane tpConfig = new TitledPane("Filmliste laden", gridPane);
-        result.add(tpConfig);
-
-        tglLoad.selectedProperty().bindBidirectional(propLoad);
+        tglLoad.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_LOAD_FILMS_ON_START);
         final Button btnHelpLoad = PButton.helpButton(stage, "Filmliste laden",
                 HelpText.LOAD_FILMLIST_PROGRAMSTART);
 
 
         txtUrl = new TextField("");
-        txtUrl.textProperty().bindBidirectional(propUrl);
+        txtUrl.textProperty().bindBidirectional(ProgConfig.SYSTEM_LOAD_FILMS_MANUALLY);
 
         final Button btnFile = new Button();
         btnFile.setOnAction(event -> {
@@ -103,7 +75,6 @@ public class FilmPaneController extends PAccordionPane {
 
         final Button btnHelp = PButton.helpButton(stage, "Filmliste laden",
                 HelpText.LOAD_FILMLIST_MANUAL);
-
 
         //Diacritic
         PToggleSwitch tglRemoveDiacritic = new PToggleSwitch("Diakritische Zeichen ändern");
@@ -123,7 +94,6 @@ public class FilmPaneController extends PAccordionPane {
 
 
         int row = 0;
-
         gridPane.add(tglLoad, 0, ++row, 2, 1);
         gridPane.add(btnHelpLoad, 2, row);
 
@@ -142,5 +112,9 @@ public class FilmPaneController extends PAccordionPane {
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(),
                 PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcPrefSize());
+
+        TitledPane tpConfig = new TitledPane("Filmliste laden", gridPane);
+        result.add(tpConfig);
+        return tpConfig;
     }
 }

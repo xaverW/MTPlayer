@@ -346,6 +346,11 @@ public class HelpText {
                     "rückgängig gemacht wird!" +
                     "\n";
 
+    public static final String FILMTITEL_NOT_LOAD =
+            "Beim Laden der Filmliste werden Filme die den Text im Titel enthalten, " +
+                    "nicht geladen." +
+                    "\n";
+
     public static final String DOWNLOAD_ONLY_ASCII =
             "Es werden alle Zeichen über ASCII 127 ersetzt. Umlaute werden aufgelöst (z.B. 'ö' -> 'oe').\n" +
                     "\n" +
@@ -440,7 +445,7 @@ public class HelpText {
                     "\n" +
                     "Das Filtern der Filmliste kann bei älteren Rechnern mit wenig Speicher " +
                     "hilfreich sein: Bei 'maximal 250 Tage' oder 'mindestens 5 Minuten' ist die " +
-                    "Filmliste nur etwa halb so groß (~ 140.000 Filme).\n" +
+                    "Filmliste nur etwa halb so groß (~ 300.000 Filme).\n" +
                     "\n" +
                     "Auswirkung hat das Filtern erst nach dem Neustart des Programms oder dem " +
                     "Neuladen der Filmliste." +

@@ -50,7 +50,7 @@ public class ConfigDialogController extends PDialogExtra {
     private final ProgData progData;
 
     ConfigPaneController configPane;
-    FilmPaneController filmPane;
+    FilmController filmPane;
     BlackController blackPane;
     DownloadPaneController downloadPane;
     SetPaneController setPane;
@@ -161,7 +161,7 @@ public class ConfigDialogController extends PDialogExtra {
             tab.setContent(configPane);
             tabPane.getTabs().add(tab);
 
-            filmPane = new FilmPaneController(getStage(), diacriticChanged);
+            filmPane = new FilmController(getStage(), diacriticChanged);
             tab = new Tab("Filmliste laden");
             tab.setClosable(false);
             tab.setContent(filmPane);

@@ -33,6 +33,7 @@ import de.p2tools.p2Lib.tools.PSystemUtils;
 import de.p2tools.p2Lib.tools.ProgramToolsFactory;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.beans.property.*;
+import javafx.collections.ObservableList;
 import org.apache.commons.lang3.SystemUtils;
 
 import java.util.ArrayList;
@@ -134,6 +135,7 @@ public class ProgConfig extends PDataProgConfig {
     public static BooleanProperty SYSTEM_TRAY_USE_OWN_ICON = addBoolProp("system-tray-own-icon", Boolean.FALSE);
     public static StringProperty SYSTEM_TRAY_ICON_PATH = addStrProp("system-tray-icon", ""); //ein eigenes Tray-Icon
     public static StringProperty SYSTEM_USERAGENT = addStrProp("system-useragent", ProgConst.USER_AGENT_DEFAULT); //Useragent für direkte Downloads
+    public static BooleanProperty SYSTEM_USE_FILMTITLE_NOT_LOAD = addBoolProp("system-use-filmtitle-not-load", Boolean.FALSE);
     public static BooleanProperty SYSTEM_USE_REPLACETABLE = addBoolProp("system-use-replacetable", SystemUtils.IS_OS_LINUX ? Boolean.TRUE : Boolean.FALSE);
     public static BooleanProperty SYSTEM_ONLY_ASCII = addBoolProp("system-only-ascii", Boolean.FALSE);
     public static StringProperty SYSTEM_PROG_OPEN_DIR = addStrProp("system-prog-open-dir");
@@ -170,6 +172,7 @@ public class ProgConfig extends PDataProgConfig {
     public static IntegerProperty SYSTEM_LOAD_FILMLIST_MIN_DURATION = addIntProp("system-load-filmlist-min-duration", 0); //es werden nur Filme mit mind. x Minuten geladen
     public static StringProperty SYSTEM_PATH_VLC = addStrProp("system-path-vlc", SetsPrograms.getTemplatePathVlc());
     public static StringProperty SYSTEM_PATH_FFMPEG = addStrProp("system-path-ffmpeg", SetsPrograms.getTemplatePathFFmpeg());
+    public static ObservableList<String> SYSTEM_LOAD_NOT_FILMLIST_TITEL = addListProp("system-load-not-filmlist-title");
 
     // Blacklist
     public static BooleanProperty SYSTEM_BLACKLIST_SHOW_NO_FUTURE = addBoolProp("system-blacklist-show-no-future");
