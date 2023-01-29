@@ -34,6 +34,7 @@ public class ProgIcons {
         ICON_BUTTON_RESET("button-reset.png", 16, 16),
         ICON_BUTTON_UPDATE("button-update.png", 16, 16),
         ICON_BUTTON_PROPOSE("button-propose.png", 16, 16),
+        ICON_BUTTON_EDIT("button-edit.png", 16, 16),
         ICON_BUTTON_EDIT_FILTER("button-edit-filter.png", 16, 16),
         ICON_BUTTON_BACKWARD("button-backward.png", 16, 16),
         ICON_BUTTON_FORWARD("button-forward.png", 16, 16),

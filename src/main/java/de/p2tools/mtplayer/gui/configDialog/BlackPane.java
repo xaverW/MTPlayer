@@ -19,347 +19,194 @@ package de.p2tools.mtplayer.gui.configDialog;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.BlackData;
-import de.p2tools.mtplayer.controller.data.ProgIcons;
-import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
-import de.p2tools.mtplayer.controller.filmFilter.BlacklistFilterFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
-import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
-import de.p2tools.p2Lib.guiTools.PTableFactory;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
-import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.SortedList;
+import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.CheckBoxTableCell;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.geometry.VPos;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 public class BlackPane {
 
-    private final TableView<BlackData> tableView = new TableView<>();
-    private final GridPane gridPane = new GridPane();
-    private final TextField theme = new TextField();
-    private final PToggleSwitch tgTheme = new PToggleSwitch("exakt:");
-    private final TextField title = new TextField();
-    private final TextField themeTitle = new TextField();
-    private BlackData blackData = null;
+    private final ProgData progData;
+    private final Slider slSize = new Slider();
+    private final Label lblSize = new Label("");
+    private final Slider slDays = new Slider();
+    private final Label lblDays = new Label("");
 
-    private final RadioButton rbBlack = new RadioButton();
-    private final RadioButton rbWhite = new RadioButton();
+    private final PToggleSwitch tglAbo = new PToggleSwitch("die Blacklist beim Suchen der Abos berücksichtigen");
+    private final PToggleSwitch tglFuture = new PToggleSwitch("Filme mit Datum in der Zukunft nicht anzeigen");
+    private final PToggleSwitch tglGeo = new PToggleSwitch("Filme, die per Geoblocking gesperrt sind, nicht anzeigen");
 
-    private final MenuButton mbChannel = new MenuButton("");
-    private final ArrayList<CheckMenuItem> checkMenuItemsList = new ArrayList<>();
-
-    BooleanProperty propWhite = ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST;
-    de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerLoadFilmlist listener;
-
+    IntegerProperty propSize = ProgConfig.SYSTEM_BLACKLIST_MIN_FILM_DURATION;
+    IntegerProperty propDay = ProgConfig.SYSTEM_BLACKLIST_MAX_FILM_DAYS;
+    BooleanProperty propGeo = ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_GEO;
+    BooleanProperty propAbo = ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO;
+    BooleanProperty propFuture = ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_FUTURE;
     private final BooleanProperty blackChanged;
     private final Stage stage;
 
     public BlackPane(Stage stage, BooleanProperty blackChanged) {
         this.stage = stage;
         this.blackChanged = blackChanged;
+        progData = ProgData.getInstance();
     }
 
-    public void makeBlackTable(Collection<TitledPane> result) {
+    public void close() {
+        tglAbo.selectedProperty().unbindBidirectional(propAbo);
+        tglFuture.selectedProperty().unbindBidirectional(propFuture);
+        tglGeo.selectedProperty().unbindBidirectional(propGeo);
+        slDays.valueProperty().unbindBidirectional(propDay);
+        slSize.valueProperty().unbindBidirectional(propSize);
+    }
+
+    public void makeBlack(Collection<TitledPane> result) {
         final VBox vBox = new VBox();
         vBox.setSpacing(10);
+        makeBlack(vBox);
 
-        makeConfig(vBox);
-        initTable(vBox);
-        addConfigs(vBox);
-
-        TitledPane tpBlack = new TitledPane("Blacklist", vBox);
+        TitledPane tpBlack = new TitledPane("Blacklist allgemein", vBox);
         result.add(tpBlack);
         tpBlack.setMaxHeight(Double.MAX_VALUE);
     }
 
-    public void close() {
-        rbWhite.selectedProperty().unbindBidirectional(propWhite);
-        LoadFilmFactory.getInstance().loadFilmlist.removeListenerLoadFilmlist(listener);
-    }
-
-    private void makeConfig(VBox vBox) {
+    private void makeBlack(VBox vBox) {
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
         gridPane.setVgap(15);
         gridPane.setPadding(new Insets(20));
 
-        vBox.getChildren().add(gridPane);
+        tglAbo.selectedProperty().bindBidirectional(propAbo);
+        tglAbo.selectedProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
+
+        final Button btnHelp = PButton.helpButton(stage, "Blacklist",
+                HelpText.BLACKLIST_ABO);
 
 
-        final ToggleGroup group = new ToggleGroup();
-        rbBlack.setToggleGroup(group);
-        rbWhite.setToggleGroup(group);
+        tglFuture.selectedProperty().bindBidirectional(propFuture);
+        tglFuture.selectedProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
 
-        rbBlack.setSelected(!ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST.getValue());
+        final Button btnHelpFuture = PButton.helpButton(stage, "Blacklist",
+                HelpText.BLACKLIST_FUTURE);
+
+
+        tglGeo.selectedProperty().bindBidirectional(propGeo);
+        tglGeo.selectedProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
+
+        final Button btnHelpGeo = PButton.helpButton(stage, "Blacklist",
+                HelpText.BLACKLIST_GEO);
+
+
+        initDays();
+
+        final Button btnHelpSize = PButton.helpButton(stage, "Blacklist",
+                HelpText.BLACKLIST_SIZE);
+
+        final Button btnHelpDays = PButton.helpButton(stage, "Blacklist",
+                HelpText.BLACKLIST_DAYS);
+
+        lblDays.setMinWidth(Region.USE_PREF_SIZE);
+        lblSize.setMinWidth(Region.USE_PREF_SIZE);
 
         int row = 0;
-        gridPane.add(rbBlack, 0, row);
-        gridPane.add(new Label("\"Sender / Thema / Titel\" werden nicht angezeigt (Blacklist)"), 1, row);
-        final Button btnHelp = PButton.helpButton(stage, "Blacklist / Whitelist",
-                HelpText.BLACKLIST_WHITELIST);
-        gridPane.add(btnHelp, 2, row);
+        gridPane.add(tglAbo, 0, row, 3, 1);
+        gridPane.add(btnHelp, 3, row);
 
-        rbWhite.selectedProperty().bindBidirectional(propWhite);
-        rbWhite.selectedProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
-        gridPane.add(rbWhite, 0, ++row);
-        gridPane.add(new Label("nur diese \"Sender / Thema / Titel\" anzeigen (Whitelist)"), 1, row);
+        gridPane.add(tglFuture, 0, ++row, 3, 1);
+        gridPane.add(btnHelpFuture, 3, row);
+
+        gridPane.add(tglGeo, 0, ++row, 3, 1);
+        gridPane.add(btnHelpGeo, 3, row);
+
+
+        gridPane.add(new Label(" "), 0, ++row);
+        gridPane.add(new Label("nur Filme der letzten Tage anzeigen:"), 0, ++row, 2, 1);
+
+        Label lbl = new Label("Filme anzeigen:");
+        gridPane.add(lbl, 0, ++row);
+        gridPane.add(slDays, 1, row);
+        gridPane.add(lblDays, 2, row);
+        gridPane.add(btnHelpDays, 3, row);
+        GridPane.setHgrow(slDays, Priority.ALWAYS);
+        GridPane.setValignment(lbl, VPos.TOP);
+        GridPane.setValignment(slDays, VPos.TOP);
+        GridPane.setValignment(lblDays, VPos.TOP);
+        GridPane.setValignment(btnHelpDays, VPos.TOP);
+
+        gridPane.add(new Label(" "), 0, ++row);
+        gridPane.add(new Label("nur Filme mit Mindestlänge anzeigen:"), 0, ++row, 2, 1);
+        lbl = new Label("Filme anzeigen:");
+        gridPane.add(lbl, 0, ++row);
+        gridPane.add(slSize, 1, row);
+        gridPane.add(lblSize, 2, row);
+        gridPane.add(btnHelpSize, 3, row);
+        GridPane.setHgrow(slSize, Priority.ALWAYS);
+        GridPane.setValignment(lbl, VPos.TOP);
+        GridPane.setValignment(slSize, VPos.TOP);
+        GridPane.setValignment(lblSize, VPos.TOP);
+        GridPane.setValignment(btnHelpSize, VPos.TOP);
 
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcComputedSizeAndHgrow());
-    }
-
-
-    private void initTable(VBox vBox) {
-        final TableColumn<BlackData, String> nrColumn = new TableColumn<>("Nr");
-        nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));
-        nrColumn.getStyleClass().add("alignCenterRightPadding_10");
-
-        final TableColumn<BlackData, String> channelColumn = new TableColumn<>("Sender");
-        channelColumn.setCellValueFactory(new PropertyValueFactory<>("channel"));
-        channelColumn.getStyleClass().add("alignCenter");
-
-        final TableColumn<BlackData, String> themeColumn = new TableColumn<>("Thema");
-        themeColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
-
-        final TableColumn<BlackData, Boolean> themeExactColumn = new TableColumn<>("Thema exakt");
-        themeExactColumn.setCellValueFactory(new PropertyValueFactory<>("themeExact"));
-        themeExactColumn.setCellFactory(CheckBoxTableCell.forTableColumn(themeExactColumn));
-
-        final TableColumn<BlackData, String> titleColumn = new TableColumn<>("Titel");
-        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-
-        final TableColumn<BlackData, String> themeTitleColumn = new TableColumn<>("Thema-Titel");
-        themeTitleColumn.setCellValueFactory(new PropertyValueFactory<>("themeTitle"));
-
-        final TableColumn<BlackData, Integer> hitsColumn = new TableColumn<>("Treffer");
-        hitsColumn.setCellValueFactory(new PropertyValueFactory<>("countHits"));
-        hitsColumn.getStyleClass().add("alignCenterRightPadding_10");
-
-        tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
-        tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-
-        tableView.getColumns().addAll(nrColumn, channelColumn, themeColumn, themeExactColumn,
-                titleColumn, themeTitleColumn, hitsColumn);
-        tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
-                Platform.runLater(this::setActBlackData));
-
-        SortedList<BlackData> sortedList;
-        sortedList = new SortedList<>(ProgData.getInstance().blackList);
-        sortedList.comparatorProperty().bind(tableView.comparatorProperty());
-        tableView.setItems(sortedList);
-
-
-        Button btnDel = new Button("");
-        btnDel.setGraphic(ProgIcons.Icons.ICON_BUTTON_REMOVE.getImageView());
-        btnDel.setOnAction(event -> {
-            blackChanged.set(true);
-            final ObservableList<BlackData> selected = tableView.getSelectionModel().getSelectedItems();
-
-            if (selected == null || selected.isEmpty()) {
-                PAlert.showInfoNoSelection();
-            } else {
-                ProgData.getInstance().blackList.removeAll(selected);
-                tableView.getSelectionModel().clearSelection();
-            }
-        });
-
-        Button btnNew = new Button("");
-        btnNew.setGraphic(ProgIcons.Icons.ICON_BUTTON_ADD.getImageView());
-        btnNew.setOnAction(event -> {
-            blackChanged.set(true);
-            BlackData blackData = new BlackData();
-            ProgData.getInstance().blackList.add(blackData);
-            tableView.getSelectionModel().clearSelection();
-            tableView.getSelectionModel().select(blackData);
-            tableView.scrollTo(blackData);
-        });
-
-        final Button btnHelpCount = PButton.helpButton(stage, "_Treffer zählen",
-                HelpText.BLACKLIST_COUNT);
-
-
-        Button btnSortList = new Button("_Liste nach Treffer sortieren");
-        btnSortList.setTooltip(new Tooltip("Damit kann die Blacklist anhand der \"Treffer\"\n" +
-                "sortiert werden."));
-        btnSortList.setOnAction(a -> {
-            ProgData.getInstance().blackList.sortIncCounter(true);
-            PTableFactory.refreshTable(tableView);
-        });
-
-
-        Button btnCountHits = new Button("_Treffer zählen");
-        btnCountHits.setTooltip(new Tooltip("Damit wird die Filmliste nach \"Treffern\" durchsucht.\n" +
-                "Für jeden Eintrag in der Blacklist wird gezählt,\n" +
-                "wieviele Filme damit geblockt werden."));
-        btnCountHits.setOnAction(a -> {
-            BlacklistFilterFactory.countHits(true);
-            PTableFactory.refreshTable(tableView);
-        });
-
-        // toDo -> vielleicht den ganzen Dialog sperren??
-        listener = new de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerLoadFilmlist() {
-            @Override
-            public void start(de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent event) {
-                btnSortList.setDisable(true);
-                btnCountHits.setDisable(true);
-            }
-
-            @Override
-            public void finished(de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent event) {
-                btnSortList.setDisable(false);
-                btnCountHits.setDisable(false);
-            }
-        };
-        LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(listener);
-
-
-        HBox hBoxCount = new HBox(10);
-        hBoxCount.setAlignment(Pos.CENTER_RIGHT);
-        HBox.setHgrow(hBoxCount, Priority.ALWAYS);
-        hBoxCount.getChildren().addAll(btnSortList, btnCountHits, btnHelpCount);
-
-        HBox hBox = new HBox(10);
-        hBox.getChildren().addAll(btnNew, btnDel, hBoxCount);
-
-        VBox.setVgrow(tableView, Priority.ALWAYS);
-        vBox.getChildren().addAll(tableView, hBox);
-    }
-
-    private void addConfigs(VBox vBox) {
-        gridPane.getStyleClass().add("extra-pane");
-        gridPane.setHgap(15);
-        gridPane.setVgap(5);
-        gridPane.setPadding(new Insets(20));
-
-        int row = 0;
-
-        mbChannel.setMaxWidth(Double.MAX_VALUE);
-        gridPane.add(new Label("Sender:"), 0, row);
-        gridPane.add(mbChannel, 1, row);
-
-        gridPane.add(new Label("Thema:"), 0, ++row);
-        gridPane.add(theme, 1, row);
-        gridPane.add(tgTheme, 2, row);
-
-        gridPane.add(new Label("Titel:"), 0, ++row);
-        gridPane.add(title, 1, row);
-
-        gridPane.add(new Label("Thema/Titel:"), 0, ++row);
-        gridPane.add(themeTitle, 1, row);
-
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrow(),
-                PColumnConstraints.getCcPrefSize());
 
         vBox.getChildren().add(gridPane);
-        gridPane.setDisable(true);
-
-        mbChannel.textProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
-        theme.textProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
-        tgTheme.selectedProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
-        title.textProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
-        themeTitle.textProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
     }
 
-    private void setActBlackData() {
-        BlackData blackDataAct = tableView.getSelectionModel().getSelectedItem();
-        if (blackDataAct == blackData) {
-            return;
-        }
+    private void initDays() {
+        slDays.setMin(0);
+        slDays.setMax(ProgConst.SYSTEM_BLACKLIST_MAX_FILM_DAYS);
 
-        if (blackData != null) {
-            mbChannel.textProperty().unbindBidirectional(blackData.channelProperty());
-            clearMenuText();
-            theme.textProperty().unbindBidirectional(blackData.themeProperty());
-            tgTheme.selectedProperty().unbindBidirectional(blackData.themeExactProperty());
-            title.textProperty().unbindBidirectional(blackData.titleProperty());
-            themeTitle.textProperty().unbindBidirectional(blackData.themeTitleProperty());
-            theme.setText("");
-            tgTheme.setText("");
-            title.setText("");
-            themeTitle.setText("");
-        }
+        slDays.setMinorTickCount(4);
+        slDays.setMajorTickUnit(100);
+        slDays.setBlockIncrement(10);
+        slDays.setShowTickLabels(true);
+        slDays.setShowTickMarks(true);
+//        slDays.setSnapToTicks(true);
 
-        blackData = blackDataAct;
-        gridPane.setDisable(blackData == null);
-        if (blackData != null) {
-            initSenderMenu();
-            mbChannel.textProperty().bindBidirectional(blackData.channelProperty());
-            theme.textProperty().bindBidirectional(blackData.themeProperty());
-            tgTheme.selectedProperty().bindBidirectional(blackData.themeExactProperty());
-            title.textProperty().bindBidirectional(blackData.titleProperty());
-            themeTitle.textProperty().bindBidirectional(blackData.themeTitleProperty());
-        }
+        slDays.valueProperty().bindBidirectional(propDay);
+        slDays.valueProperty().addListener((observable, oldValue, newValue) -> {
+            setValueSlider();
+            blackChanged.set(true);
+        });
+
+        slSize.setMin(0);
+        slSize.setMax(ProgConst.SYSTEM_BLACKLIST_MIN_FILM_DURATION);
+
+        slSize.setMinorTickCount(4);
+        slSize.setMajorTickUnit(25);
+        slSize.setBlockIncrement(10);
+        slSize.setShowTickLabels(true);
+        slSize.setShowTickMarks(true);
+//        slSize.setSnapToTicks(true);
+
+        slSize.valueProperty().bindBidirectional(propSize);
+        slSize.valueProperty().addListener((observable, oldValue, newValue) -> {
+            setValueSlider();
+            blackChanged.set(true);
+        });
+
+        setValueSlider();
     }
 
-    private void initSenderMenu() {
-        mbChannel.getItems().clear();
-        checkMenuItemsList.clear();
-        mbChannel.getStyleClass().add("cbo-menu");
+    private void setValueSlider() {
+        int min = (int) slSize.getValue();
+        lblSize.setText(min == 0 ? "alles anzeigen" : "nur Filme mit\nmindestens " + min + " Minuten Länge");
 
-        List<String> senderArr = new ArrayList<>();
-        String sender = blackData.channelProperty().get();
-        if (sender != null) {
-            if (sender.contains(",")) {
-                senderArr.addAll(Arrays.asList(sender.replace(" ", "").toLowerCase().split(",")));
-            } else {
-                senderArr.add(sender.toLowerCase());
-            }
-            senderArr.stream().forEach(s -> s = s.trim());
-        }
-
-        MenuItem mi = new MenuItem("Auswahl löschen");
-        mi.setOnAction(a -> clearMenuText());
-        mbChannel.getItems().add(mi);
-
-        for (String s : ProgData.getInstance().worker.getAllChannelList()) {
-            if (s.isEmpty()) {
-                continue;
-            }
-            CheckMenuItem miCheck = new CheckMenuItem(s);
-            if (senderArr.contains(s.toLowerCase())) {
-                miCheck.setSelected(true);
-            }
-            miCheck.setOnAction(a -> setMenuText());
-
-            checkMenuItemsList.add(miCheck);
-            mbChannel.getItems().add(miCheck);
-        }
-        setMenuText();
-    }
-
-    private void clearMenuText() {
-        for (CheckMenuItem cmi : checkMenuItemsList) {
-            cmi.setSelected(false);
-        }
-        mbChannel.setText("");
-    }
-
-    private void setMenuText() {
-        String text = "";
-        for (CheckMenuItem cmi : checkMenuItemsList) {
-            if (cmi.isSelected()) {
-                text = text + (text.isEmpty() ? "" : ", ") + cmi.getText();
-            }
-        }
-        mbChannel.setText(text);
+        min = (int) slDays.getValue();
+        lblDays.setText(min == 0 ? "alles anzeigen" : "nur Filme der\nletzten " + min + " Tage");
     }
 }

@@ -18,8 +18,12 @@ package de.p2tools.mtplayer.gui.filter;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.data.ProgIcons;
+import de.p2tools.mtplayer.gui.dialog.BlackDialog;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.control.Tooltip;
@@ -60,9 +64,16 @@ public class FilmFilterController extends FilterController {
 
         vBoxFilter.getChildren().addAll(textFilter, filter, clearFilter, sp, profiles);
 
+        Button btnBlack = new Button("");
+        btnBlack.getStyleClass().add("buttonSmall");
+        btnBlack.setGraphic(ProgIcons.Icons.ICON_BUTTON_EDIT.getImageView());
+        btnBlack.setOnAction(a -> {
+            new BlackDialog(progData);
+        });
+
         Label lblRight = new Label();
         tglBlacklist.setAllowIndeterminate(true);
-        tglBlacklist.setLabelRight(lblRight, "ein", "aus", "invers");
+        tglBlacklist.setLabelLeft("Blacklist [ein]:", "Blacklist [aus]:", "Blacklist [invers]:");
         tglBlacklist.setTooltip(new Tooltip("Blacklist aus: Alle Filme werden angezeigt.\n" +
                 "Blacklist ein: Von der Blacklist erfasste Filme werden nicht angezeigt.\n" +
                 "Blacklist invers: Nur von der Blacklist erfasste Filme werden angezeigt."));
@@ -73,8 +84,9 @@ public class FilmFilterController extends FilterController {
 
         vBoxBlacklist = getVBoxBottom();
         HBox hBox = new HBox(5);
+        hBox.setAlignment(Pos.CENTER_RIGHT);
         HBox.setHgrow(tglBlacklist, Priority.ALWAYS);
-        hBox.getChildren().addAll(tglBlacklist, lblRight);
+        hBox.getChildren().addAll(tglBlacklist, lblRight, btnBlack);
         vBoxBlacklist.getChildren().add(hBox);
     }
 }

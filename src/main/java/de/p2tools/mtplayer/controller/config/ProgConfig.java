@@ -248,6 +248,7 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty ABO_GUI_TABLE_ORDER = addStrProp("abo-gui-table-order");
 
     // ConfigDialog
+    public static StringProperty BLACK_DIALOG_SIZE = addStrProp("black-dialog--size", "600:800");
     public static StringProperty CONFIG_DIALOG_SIZE = addStrProp("config-dialog-size");
     public static BooleanProperty CONFIG_DIALOG_ACCORDION = addBoolProp("config_dialog-accordion", Boolean.TRUE);
     public static DoubleProperty CONFIG_DIALOG_SET_DIVIDER = addDoubleProp("config-dialog-set-divider", ProgConst.CONFIG_DIALOG_SET_DIVIDER);
