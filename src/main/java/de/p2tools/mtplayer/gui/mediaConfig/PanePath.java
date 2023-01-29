@@ -114,6 +114,9 @@ public class PanePath {
             if (collectionDataOld != null) {
                 txtCollectionName.textProperty().unbindBidirectional(collectionDataOld.collectionNameProperty());
                 txtPath.textProperty().unbindBidirectional(collectionDataOld.pathProperty());
+
+                txtCollectionName.setText("");
+                txtPath.setText("");
             }
             if (n != null) {
                 collectionDataOld = n;
@@ -205,8 +208,6 @@ public class PanePath {
         gridPane.setVgap(10);
         gridPane.setPadding(new Insets(20));
 
-        txtCollectionName.setText(progData.mediaCollectionDataList.getNextMediaCollectionName(external));
-
         final Button btnPath = new Button("");
         btnPath.setTooltip(new Tooltip("Einen Pfad zum Einlesen einer neuen Sammlung auswählen."));
         btnPath.setGraphic(ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
@@ -232,7 +233,7 @@ public class PanePath {
 
     private void add() {
         final MediaCollectionData mediaCollectionData;
-        mediaCollectionData = progData.mediaCollectionDataList.addNewMediaCollectionData(txtPath.getText(), txtCollectionName.getText(), external);
+        mediaCollectionData = progData.mediaCollectionDataList.addNewMediaCollectionData(external);
         tableView.getSelectionModel().clearSelection();
         tableView.getSelectionModel().select(mediaCollectionData);
         tableView.scrollTo(mediaCollectionData);

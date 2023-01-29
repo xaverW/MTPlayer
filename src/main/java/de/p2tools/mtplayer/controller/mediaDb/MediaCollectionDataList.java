@@ -113,18 +113,9 @@ public class MediaCollectionDataList extends SimpleListProperty<MediaCollectionD
         return name + count;
     }
 
-    public MediaCollectionData addNewMediaCollectionData(String path, String collectionName, boolean external) {
-        MediaCollectionData mediaCollectionData = new MediaCollectionData(path, collectionName, external);
+    public MediaCollectionData addNewMediaCollectionData(boolean external) {
+        MediaCollectionData mediaCollectionData = new MediaCollectionData("", "", external);
         add(mediaCollectionData);
-        return mediaCollectionData;
-    }
-
-
-    public MediaCollectionData getMediaCollectionData(String path, boolean external) {
-        MediaCollectionData mediaCollectionData = this.stream()
-                .filter(collectionData -> (collectionData.equals(external)))
-                .filter(collectionData -> collectionData.getPath().equals(path))
-                .findAny().orElse(null);
         return mediaCollectionData;
     }
 

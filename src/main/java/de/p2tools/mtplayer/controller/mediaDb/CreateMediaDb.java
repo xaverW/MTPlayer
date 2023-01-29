@@ -65,7 +65,7 @@ public class CreateMediaDb {
     }
 
     /**
-     * duchsucht die vom User angelegten Pfade für die interne Mediensammlung
+     * durchsucht die vom User angelegten Pfade für die interne Mediensammlung
      * und fügt die gespeicherten externen Medien hinzu
      * -> bei jedem Start
      */
