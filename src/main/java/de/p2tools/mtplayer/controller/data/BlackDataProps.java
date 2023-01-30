@@ -29,31 +29,25 @@ import java.util.ArrayList;
 
 public class BlackDataProps extends PDataSample<BlackDataProps> {
 
-    public static final String BLACKLIST_NO = "Nr";
     public static final String BLACKLIST_SENDER = "Sender";
     public static final String BLACKLIST_THEME = "Thema";
     public static final String BLACKLIST_THEME_EXACT = "Thema exakt";
     public static final String BLACKLIST_TITLE = "Titel";
     public static final String BLACKLIST_THEME_TITLE = "Thema/Titel";
-    public static final String BLACKLIST_COUNT_HITS = "Treffer";
 
-    public static final int BLACKLIST_NO_NO = 0;
-    public static final int BLACKLIST_SENDER_NO = 1;
-    public static final int BLACKLIST_THEME_NO = 2;
-    public static final int BLACKLIST_THEME_EXACT_NO = 3;
-    public static final int BLACKLIST_TITLE_NO = 4;
-    public static final int BLACKLIST_THEME_TITLE_NO = 5;
-    public static final int BLACKLIST_COUNT_HITS_NO = 6;
+    public static final int BLACKLIST_SENDER_NO = 0;
+    public static final int BLACKLIST_THEME_NO = 1;
+    public static final int BLACKLIST_THEME_EXACT_NO = 2;
+    public static final int BLACKLIST_TITLE_NO = 3;
+    public static final int BLACKLIST_THEME_TITLE_NO = 4;
 
     public static final String TAG = "BlackData";
     public static final String[] XML_NAMES = {
-            "black-nr",
             "black-sender",
             "black-thema",
             "black-thema-exakt",
             "black-titel",
-            "black-thema-titel",
-            "black-count-hits"};
+            "black-thema-titel"};
 
     public String[] arr;
 
@@ -79,14 +73,11 @@ public class BlackDataProps extends PDataSample<BlackDataProps> {
     @Override
     public Config[] getConfigsArr() {
         ArrayList<Config> list = new ArrayList<>();
-//        list.add(new ConfigIntExtra("no", BLACKLIST_NO, no));
         list.add(new Config_stringProp("channel", BLACKLIST_SENDER, channel));
         list.add(new Config_stringProp("theme", BLACKLIST_THEME, theme));
         list.add(new Config_boolProp("themeExact", BLACKLIST_THEME_EXACT, themeExact));
         list.add(new Config_stringProp("title", BLACKLIST_TITLE, title));
-        list.add(new Config_stringProp("bithemeTitletrate", BLACKLIST_THEME_TITLE, themeTitle));
-//        list.add(new ConfigInntExtra("countHits", BLACKLIST_COUNT_HITS, countHits));
-
+        list.add(new Config_stringProp("themeTitle:bithemeTitletrate", BLACKLIST_THEME_TITLE, themeTitle));
         return list.toArray(new Config[]{});
     }
 
@@ -181,10 +172,6 @@ public class BlackDataProps extends PDataSample<BlackDataProps> {
         setThemeExact(arr[BLACKLIST_THEME_EXACT_NO].isEmpty() ? true : Boolean.parseBoolean(arr[BLACKLIST_THEME_EXACT_NO]));
         setTitle(arr[BLACKLIST_TITLE_NO]);
         setThemeTitle(arr[BLACKLIST_THEME_TITLE_NO]);
-        try {
-            setCountHits(Integer.parseInt(arr[BLACKLIST_COUNT_HITS_NO]));
-        } catch (Exception ex) {
-            setCountHits(0);
-        }
+        setCountHits(0);
     }
 }

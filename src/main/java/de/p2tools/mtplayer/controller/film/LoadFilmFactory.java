@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.ProgSave;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
+import de.p2tools.mtplayer.controller.filmFilter.BlacklistFilterFactory;
 import de.p2tools.p2Lib.mtFilm.film.Filmlist;
 import de.p2tools.p2Lib.mtFilm.loadFilmlist.LoadFilmlist;
 import de.p2tools.p2Lib.mtFilm.tools.LoadFactoryConst;
@@ -128,9 +129,17 @@ public class LoadFilmFactory {
         LoadFactoryConst.primaryStage = ProgData.getInstance().primaryStage;
         LoadFactoryConst.removeDiacritic = ProgConfig.SYSTEM_REMOVE_DIACRITICS.getValue();
         LoadFactoryConst.filmlist = ProgData.getInstance().filmlist;
+
+        LoadFactoryConst.FilmChecker filmChecker = filmData ->
+                BlacklistFilterFactory.checkBlacklistFilters(filmData, ProgData.getInstance().filmLoadBlackList);
+        if (ProgConfig.SYSTEM_USE_FILMTITLE_NOT_LOAD.getValue()) {
+            //nur dann sollen Filme geprüft werden
+            LoadFactoryConst.checker = filmChecker;
+        }
     }
 
     public synchronized static final LoadFilmFactory getInstance() {
         return instance == null ? instance = new LoadFilmFactory(new FilmlistMTP(), new FilmlistMTP()) : instance;
     }
+
 }

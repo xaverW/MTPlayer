@@ -17,9 +17,10 @@
 package de.p2tools.mtplayer.gui.configDialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.BlackData;
+import de.p2tools.mtplayer.controller.data.BlackList;
+import de.p2tools.mtplayer.controller.data.BlackListFactory;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.controller.filmFilter.BlacklistFilterFactory;
@@ -27,8 +28,10 @@ import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
+import de.p2tools.p2Lib.guiTools.PGuiTools;
 import de.p2tools.p2Lib.guiTools.PTableFactory;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
+import de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerLoadFilmlist;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -62,6 +65,7 @@ public class BlackListPane {
 
     private final RadioButton rbBlack = new RadioButton();
     private final RadioButton rbWhite = new RadioButton();
+    private final PToggleSwitch tglNot = new PToggleSwitch("Filme ausschließen");
 
     private final MenuButton mbChannel = new MenuButton("");
     private final ArrayList<CheckMenuItem> checkMenuItemsList = new ArrayList<>();
@@ -69,10 +73,20 @@ public class BlackListPane {
 
     private final BooleanProperty blackChanged;
     private final Stage stage;
+    private final ProgData progData;
+    private final boolean black;
+    private final BlackList list;
 
-    public BlackListPane(Stage stage, BooleanProperty blackChanged) {
+    public BlackListPane(Stage stage, ProgData progData, boolean black, BooleanProperty blackChanged) {
         this.stage = stage;
+        this.progData = progData;
+        this.black = black;
         this.blackChanged = blackChanged;
+        if (black) {
+            list = progData.blackList;
+        } else {
+            list = progData.filmLoadBlackList;
+        }
     }
 
     public void close() {
@@ -80,15 +94,23 @@ public class BlackListPane {
         LoadFilmFactory.getInstance().loadFilmlist.removeListenerLoadFilmlist(listener);
     }
 
-    public void makeBlackListPane(Collection<TitledPane> result) {
-        final VBox vBox = new VBox();
-        vBox.setSpacing(10);
+    public void make(Collection<TitledPane> result) {
+        final VBox vBox = new VBox(10);
+        vBox.setPadding(new Insets(10));
 
-        makeConfig(vBox);
-        initTable(vBox);
+        if (black) {
+            makeConfig(vBox);
+        } else {
+            makeToggle(vBox);
+        }
+        initTable();
+        addButton(vBox);
         addConfigs(vBox);
+        if (!black) {
+            addLoadButton(vBox);
+        }
 
-        TitledPane tpBlack = new TitledPane("Blacklist", vBox);
+        TitledPane tpBlack = new TitledPane(black ? "Blacklist" : "Filme ausschließen", vBox);
         result.add(tpBlack);
         tpBlack.setMaxHeight(Double.MAX_VALUE);
     }
@@ -97,15 +119,12 @@ public class BlackListPane {
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
         gridPane.setVgap(15);
-        gridPane.setPadding(new Insets(20));
-
+        gridPane.setPadding(new Insets(5, 20, 5, 20));
         vBox.getChildren().add(gridPane);
-
 
         final ToggleGroup group = new ToggleGroup();
         rbBlack.setToggleGroup(group);
         rbWhite.setToggleGroup(group);
-
         rbBlack.setSelected(!ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST.getValue());
 
         int row = 0;
@@ -124,8 +143,18 @@ public class BlackListPane {
                 PColumnConstraints.getCcComputedSizeAndHgrow());
     }
 
+    private void makeToggle(VBox vBox) {
+        tglNot.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_USE_FILMTITLE_NOT_LOAD);
+        final Button btnHelpReplace = PButton.helpButton(stage, "Filme ausschließen",
+                HelpText.FILMTITEL_NOT_LOAD);
 
-    private void initTable(VBox vBox) {
+        HBox hBox = new HBox(10);
+        HBox.setHgrow(tglNot, Priority.ALWAYS);
+        hBox.getChildren().addAll(tglNot, btnHelpReplace);
+        vBox.getChildren().add(hBox);
+    }
+
+    private void initTable() {
         final TableColumn<BlackData, String> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));
         nrColumn.getStyleClass().add("alignCenterRightPadding_10");
@@ -152,7 +181,7 @@ public class BlackListPane {
         hitsColumn.getStyleClass().add("alignCenterRightPadding_10");
 
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
+        tableView.setMinHeight(150);
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
         tableView.getColumns().addAll(nrColumn, channelColumn, themeColumn, themeExactColumn,
@@ -161,21 +190,21 @@ public class BlackListPane {
                 Platform.runLater(this::setActBlackData));
 
         SortedList<BlackData> sortedList;
-        sortedList = new SortedList<>(ProgData.getInstance().blackList);
+        sortedList = new SortedList<>(list);
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
         tableView.setItems(sortedList);
+    }
 
-
+    private void addButton(VBox vBox) {
         Button btnDel = new Button("");
         btnDel.setGraphic(ProgIcons.Icons.ICON_BUTTON_REMOVE.getImageView());
         btnDel.setOnAction(event -> {
             blackChanged.set(true);
             final ObservableList<BlackData> selected = tableView.getSelectionModel().getSelectedItems();
-
             if (selected == null || selected.isEmpty()) {
                 PAlert.showInfoNoSelection();
             } else {
-                ProgData.getInstance().blackList.removeAll(selected);
+                list.removeAll(selected);
                 tableView.getSelectionModel().clearSelection();
             }
         });
@@ -185,21 +214,76 @@ public class BlackListPane {
         btnNew.setOnAction(event -> {
             blackChanged.set(true);
             BlackData blackData = new BlackData();
-            ProgData.getInstance().blackList.add(blackData);
+            list.add(blackData);
             tableView.getSelectionModel().clearSelection();
             tableView.getSelectionModel().select(blackData);
             tableView.scrollTo(blackData);
         });
 
+        Button btnUp = new Button("");
+        btnUp.setTooltip(new Tooltip("Eintrag nach oben schieben"));
+        btnUp.setGraphic(ProgIcons.Icons.ICON_BUTTON_MOVE_UP.getImageView());
+        btnUp.setOnAction(event -> {
+            final int sel = tableView.getSelectionModel().getSelectedIndex();
+            if (sel < 0) {
+                PAlert.showInfoNoSelection();
+            } else {
+                int res = up(sel, true);
+                tableView.getSelectionModel().clearSelection();
+                tableView.getSelectionModel().select(res);
+            }
+        });
+
+        Button btnDown = new Button("");
+        btnDown.setTooltip(new Tooltip("Eintrag nach unten schieben"));
+        btnDown.setGraphic(ProgIcons.Icons.ICON_BUTTON_MOVE_DOWN.getImageView());
+        btnDown.setOnAction(event -> {
+            final int sel = tableView.getSelectionModel().getSelectedIndex();
+            if (sel < 0) {
+                PAlert.showInfoNoSelection();
+            } else {
+                int res = up(sel, false);
+                tableView.getSelectionModel().clearSelection();
+                tableView.getSelectionModel().select(res);
+            }
+        });
+
+        Button btnTop = new Button();
+        btnTop.setTooltip(new Tooltip("Eintrag an den Anfang verschieben"));
+        btnTop.setGraphic(ProgIcons.Icons.ICON_BUTTON_MOVE_TOP.getImageView());
+        btnTop.setOnAction(event -> {
+            final int sel = tableView.getSelectionModel().getSelectedIndex();
+            if (sel < 0) {
+                PAlert.showInfoNoSelection();
+            } else {
+                int res = top(sel, true);
+                tableView.getSelectionModel().clearSelection();
+                tableView.getSelectionModel().select(res);
+            }
+        });
+
+        Button btnBottom = new Button();
+        btnBottom.setTooltip(new Tooltip("Eintrag an das Ende verschieben"));
+        btnBottom.setGraphic(ProgIcons.Icons.ICON_BUTTON_MOVE_BOTTOM.getImageView());
+        btnBottom.setOnAction(event -> {
+            final int sel = tableView.getSelectionModel().getSelectedIndex();
+            if (sel < 0) {
+                PAlert.showInfoNoSelection();
+            } else {
+                int res = top(sel, false);
+                tableView.getSelectionModel().clearSelection();
+                tableView.getSelectionModel().select(res);
+            }
+        });
+
         final Button btnHelpCount = PButton.helpButton(stage, "_Treffer zählen",
                 HelpText.BLACKLIST_COUNT);
 
-
-        Button btnSortList = new Button("_Liste nach Treffer sortieren");
+        Button btnSortList = new Button("_Nach Treffer sortieren");
         btnSortList.setTooltip(new Tooltip("Damit kann die Blacklist anhand der \"Treffer\"\n" +
                 "sortiert werden."));
         btnSortList.setOnAction(a -> {
-            ProgData.getInstance().blackList.sortIncCounter(true);
+            list.sortIncCounter(true);
             PTableFactory.refreshTable(tableView);
         });
 
@@ -207,49 +291,65 @@ public class BlackListPane {
         Button btnCountHits = new Button("_Treffer zählen");
         btnCountHits.setTooltip(new Tooltip("Damit wird die Filmliste nach \"Treffern\" durchsucht.\n" +
                 "Für jeden Eintrag in der Blacklist wird gezählt,\n" +
-                "wieviele Filme damit geblockt werden."));
+                "wie viele Filme damit geblockt werden."));
         btnCountHits.setOnAction(a -> {
-            BlacklistFilterFactory.countHits(true);
+            BlacklistFilterFactory.countHits(false, list);
             PTableFactory.refreshTable(tableView);
         });
 
+        Button btnReset = new Button("_Tabelle zurücksetzen");
+        btnReset.setTooltip(new Tooltip("Alle Einträge löschen und Standardeinträge wieder herstellen"));
+        btnReset.setOnAction(event -> {
+            if (list.size() > 0) {
+                if (!PAlert.showAlertOkCancel(stage, "Liste löschen", "Sollen alle Tabelleneinträge gelöscht werden?",
+                        "Die Tabelle wird gelöscht und die ursprünglichen Filter werden wieder hergestellt.")) {
+                    return;
+                }
+            }
+            BlackListFactory.initList(list);
+        });
         // toDo -> vielleicht den ganzen Dialog sperren??
         listener = new de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerLoadFilmlist() {
             @Override
-            public void start(de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent event) {
+            public void start(ListenerFilmlistLoadEvent event) {
                 btnSortList.setDisable(true);
                 btnCountHits.setDisable(true);
             }
 
             @Override
-            public void finished(de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent event) {
+            public void finished(ListenerFilmlistLoadEvent event) {
                 btnSortList.setDisable(false);
                 btnCountHits.setDisable(false);
             }
         };
         LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(listener);
 
+        HBox hBoxButton = new HBox(10);
+        hBoxButton.getChildren().addAll(btnNew, btnDel, PGuiTools.getHDistance(20),
+                btnTop, btnUp, btnDown, btnBottom, PGuiTools.getHBoxGrower(), btnHelpCount);
 
         HBox hBoxCount = new HBox(10);
-        hBoxCount.setAlignment(Pos.CENTER_RIGHT);
-        HBox.setHgrow(hBoxCount, Priority.ALWAYS);
-        hBoxCount.getChildren().addAll(btnSortList, btnCountHits, btnHelpCount);
+        hBoxCount.getChildren().addAll(btnSortList, btnCountHits, btnReset, PGuiTools.getHBoxGrower());
 
-        HBox hBox = new HBox(10);
-        hBox.getChildren().addAll(btnNew, btnDel, hBoxCount);
+        if (!black) {
+            tableView.disableProperty().bind(ProgConfig.SYSTEM_USE_FILMTITLE_NOT_LOAD.not());
+            hBoxButton.disableProperty().bind(ProgConfig.SYSTEM_USE_FILMTITLE_NOT_LOAD.not());
+        }
 
         VBox.setVgrow(tableView, Priority.ALWAYS);
-        vBox.getChildren().addAll(tableView, hBox);
+        VBox vb = new VBox(5);
+        vb.setPadding(new Insets(0));
+        vb.getChildren().addAll(tableView, hBoxButton, hBoxCount);
+        vBox.getChildren().add(vb);
     }
 
     private void addConfigs(VBox vBox) {
         gridPane.getStyleClass().add("extra-pane");
         gridPane.setHgap(15);
         gridPane.setVgap(5);
-        gridPane.setPadding(new Insets(20));
+        gridPane.setPadding(new Insets(10));
 
         int row = 0;
-
         mbChannel.setMaxWidth(Double.MAX_VALUE);
         gridPane.add(new Label("Sender:"), 0, row);
         gridPane.add(mbChannel, 1, row);
@@ -270,12 +370,32 @@ public class BlackListPane {
 
         vBox.getChildren().add(gridPane);
         gridPane.setDisable(true);
+        if (!black) {
+            gridPane.disableProperty().bind(ProgConfig.SYSTEM_USE_FILMTITLE_NOT_LOAD.not());
+        }
 
         mbChannel.textProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
         txtTheme.textProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
         tgTheme.selectedProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
         txtTitle.textProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
         txtThemeTitle.textProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
+    }
+
+    private void addLoadButton(VBox vBox) {
+        Button btnLoad = new Button("_Filmliste mit diesen Einstellungen neu laden");
+        btnLoad.setTooltip(new Tooltip("Eine komplette neue Filmliste laden.\n" +
+                "Geänderte Einstellungen für das Laden der Filmliste werden so sofort übernommen"));
+        btnLoad.setOnAction(event -> {
+            LoadFilmFactory.getInstance().loadList(true);
+        });
+
+        HBox hBox = new HBox();
+        hBox.setPadding(new Insets(0, 0, 10, 0));
+        hBox.setAlignment(Pos.CENTER_RIGHT);
+        hBox.getChildren().add(btnLoad);
+        VBox.setVgrow(hBox, Priority.ALWAYS);
+
+        vBox.getChildren().addAll(hBox);
     }
 
     private void setActBlackData() {
@@ -297,7 +417,9 @@ public class BlackListPane {
         }
 
         blackData = blackDataAct;
-        gridPane.setDisable(blackData == null);
+        if (black) {
+            gridPane.setDisable(blackData == null);
+        }
         if (blackData != null) {
             initSenderMenu();
             mbChannel.textProperty().bindBidirectional(blackData.channelProperty());
@@ -360,4 +482,32 @@ public class BlackListPane {
         }
         mbChannel.setText(text);
     }
+
+    private int top(int idx, boolean up) {
+        BlackData blackData = list.remove(idx);
+        int ret;
+        if (up) {
+            list.add(0, blackData);
+            ret = 0;
+        } else {
+            list.add(blackData);
+            ret = list.size() - 1;
+        }
+        return ret;
+    }
+
+    private int up(int idx, boolean up) {
+        BlackData blackData = list.remove(idx);
+        int neu = idx;
+        if (up) {
+            if (neu > 0) {
+                --neu;
+            }
+        } else if (neu < list.size()) {
+            ++neu;
+        }
+        list.add(neu, blackData);
+        return neu;
+    }
+
 }

@@ -29,13 +29,14 @@ import java.util.Comparator;
 @SuppressWarnings("serial")
 public class BlackList extends SimpleListProperty<BlackData> implements PDataList<BlackData> {
 
-    public static final String TAG = "BlackList";
+    public String TAG = "BlackList";
     private int nr = 0;
     private final ProgData progData;
 
-    public BlackList(ProgData progData) {
+    public BlackList(ProgData progData, String tag) {
         super(FXCollections.observableArrayList());
         this.progData = progData;
+        this.TAG = tag;
     }
 
     @Override
@@ -99,13 +100,13 @@ public class BlackList extends SimpleListProperty<BlackData> implements PDataLis
     public synchronized void sortIncCounter(boolean searchHitsBefore) {
         if (searchHitsBefore) {
             // zuerst ohne Abbruch Treffer suchen
-            BlacklistFilterFactory.countHits(false);
+            BlacklistFilterFactory.countHits(false, this);
 
             // und dann sortieren
             Collections.sort(this, Comparator.comparingInt(BlackDataProps::getCountHits).reversed());
 
             // dann die tatsächlichen Trefferzahlen ermitteln
-            BlacklistFilterFactory.countHits(true);
+            BlacklistFilterFactory.countHits(true, this);
         }
 
         // und dann endgültig sortieren

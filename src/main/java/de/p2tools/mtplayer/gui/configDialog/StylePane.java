@@ -77,7 +77,7 @@ public class StylePane {
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
         gridPane.setVgap(15);
-        gridPane.setPadding(new Insets(20));
+        gridPane.setPadding(new Insets(10));
 
         int row = 0;
         gridPane.add(tglStyle, 0, row, 2, 1);

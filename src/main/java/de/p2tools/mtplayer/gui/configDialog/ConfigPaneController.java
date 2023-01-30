@@ -152,7 +152,7 @@ public class ConfigPaneController extends PAccordionPane {
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
         gridPane.setVgap(5);
-        gridPane.setPadding(new Insets(20));
+        gridPane.setPadding(new Insets(10));
 
         TitledPane tpConfig = new TitledPane("Allgemein", gridPane);
         result.add(tpConfig);
@@ -239,7 +239,7 @@ public class ConfigPaneController extends PAccordionPane {
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
         gridPane.setVgap(15);
-        gridPane.setPadding(new Insets(20));
+        gridPane.setPadding(new Insets(10));
 
         TitledPane tpConfig = new TitledPane("Logfile", gridPane);
         result.add(tpConfig);
@@ -320,7 +320,7 @@ public class ConfigPaneController extends PAccordionPane {
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
         gridPane.setVgap(15);
-        gridPane.setPadding(new Insets(20));
+        gridPane.setPadding(new Insets(10));
 
         TitledPane tpConfig = new TitledPane("Programme", gridPane);
         result.add(tpConfig);
@@ -420,7 +420,7 @@ public class ConfigPaneController extends PAccordionPane {
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
         gridPane.setVgap(15);
-        gridPane.setPadding(new Insets(20));
+        gridPane.setPadding(new Insets(10));
 
         TitledPane tpConfig = new TitledPane("Programmupdate", gridPane);
         result.add(tpConfig);

@@ -18,7 +18,6 @@ package de.p2tools.mtplayer.gui.configDialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
-import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.film.FilmTools;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
@@ -41,17 +40,12 @@ public class FilmSender {
     private final Label lblDuration = new Label("");
     final Button btnClearAll = new Button("_wieder alle Sender laden");
     private final Stage stage;
-    private final ProgData progData;
+    private final boolean startDialog;
 
 
-    public FilmSender(Stage stage) {
+    public FilmSender(Stage stage, boolean startDialog) {
         this.stage = stage;
-        this.progData = null;
-    }
-
-    public FilmSender(Stage stage, ProgData progData) {
-        this.stage = stage;
-        this.progData = progData;
+        this.startDialog = startDialog;
     }
 
     public void close() {
@@ -61,8 +55,9 @@ public class FilmSender {
 
     public TitledPane make(Collection<TitledPane> result) {
         initSlider();
-        final VBox vBox = new VBox(10);
-        vBox.setPadding(new Insets(20));
+        final VBox vBox = new VBox(20);
+        vBox.setPadding(new Insets(10));
+
         makeOnly(vBox);
         makeSender(vBox);
 
@@ -110,16 +105,14 @@ public class FilmSender {
         lbl.setMaxWidth(Double.MAX_VALUE);
         hBox.getChildren().addAll(lbl, btnClearAll, btnHelpSender);
         HBox.setHgrow(lbl, Priority.ALWAYS);
-        vBox.getChildren().addAll(new Label(" "), hBox);
+
+        vBox.getChildren().add(new Label(" "));
+        vBox.getChildren().add(hBox);
 
         final TilePane tilePaneSender = getTilePaneSender();
-        hBox = new HBox(10);
-        hBox.setAlignment(Pos.CENTER_LEFT);
-        hBox.getChildren().addAll(tilePaneSender);
-        HBox.setHgrow(tilePaneSender, Priority.ALWAYS);
-        vBox.getChildren().addAll(hBox);
+        vBox.getChildren().addAll(tilePaneSender);
 
-        if (progData != null) {
+        if (!startDialog) {
             // im Startdialog brauchts das noch nicht
             Button btnLoad = new Button("_Filmliste mit diesen Einstellungen neu laden");
             btnLoad.setTooltip(new Tooltip("Eine komplette neue Filmliste laden.\n" +
@@ -129,9 +122,9 @@ public class FilmSender {
             });
 
             hBox = new HBox();
-            hBox.setAlignment(Pos.CENTER_LEFT);
+            hBox.setAlignment(Pos.CENTER_RIGHT);
             hBox.getChildren().add(btnLoad);
-            vBox.getChildren().addAll(new Label(" "), hBox);
+            vBox.getChildren().addAll(hBox);
         }
     }
 

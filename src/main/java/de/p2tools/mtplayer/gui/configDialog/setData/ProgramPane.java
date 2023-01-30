@@ -200,7 +200,7 @@ public class ProgramPane {
         gridPane.getStyleClass().add("extra-pane");
         gridPane.setHgap(15);
         gridPane.setVgap(5);
-        gridPane.setPadding(new Insets(20));
+        gridPane.setPadding(new Insets(10));
 
         final Button btnFile = new Button();
         btnFile.setOnAction(event -> PDirFileChooser.FileChooserOpenFile(ProgData.getInstance().primaryStage, txtProgPath));

@@ -64,7 +64,7 @@ public class IconPane {
 
         gridPane.setHgap(15);
         gridPane.setVgap(5);
-        gridPane.setPadding(new Insets(20));
+        gridPane.setPadding(new Insets(10));
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcComputedSizeAndHgrow(), PColumnConstraints.getCcPrefSize());
 

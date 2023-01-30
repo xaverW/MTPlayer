@@ -61,9 +61,9 @@ public class ReplacePane {
     }
 
     public void makeReplaceListTable(Collection<TitledPane> result) {
-        final VBox vBox = new VBox();
+        final VBox vBox = new VBox(10);
         vBox.setFillWidth(true);
-        vBox.setSpacing(10);
+        vBox.setPadding(new Insets(10));
 
         makeAscii(vBox);
         initTable(vBox);
@@ -85,7 +85,6 @@ public class ReplacePane {
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
         gridPane.setVgap(15);
-        gridPane.setPadding(new Insets(20));
         vBox.getChildren().add(gridPane);
 
         tglAscii.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_ONLY_ASCII);
@@ -223,7 +222,7 @@ public class ReplacePane {
         gridPane.getStyleClass().add("extra-pane");
         gridPane.setHgap(15);
         gridPane.setVgap(5);
-        gridPane.setPadding(new Insets(20));
+        gridPane.setPadding(new Insets(10));
 
         gridPane.add(new Label("Von: "), 0, 0);
         gridPane.add(txtFrom, 1, 0);

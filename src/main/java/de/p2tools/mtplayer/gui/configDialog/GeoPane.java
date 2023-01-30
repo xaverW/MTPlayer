@@ -96,7 +96,7 @@ public class GeoPane {
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
         gridPane.setVgap(15);
-        gridPane.setPadding(new Insets(20));
+        gridPane.setPadding(new Insets(10));
 
         int row = 0;
         gridPane.add(tglGeo, 0, row, 2, 1);

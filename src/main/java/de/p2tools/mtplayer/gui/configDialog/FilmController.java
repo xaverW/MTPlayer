@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2Lib.dialogs.accordion.PAccordionPane;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.control.TitledPane;
 import javafx.stage.Stage;
 
@@ -29,7 +30,7 @@ import java.util.Collection;
 public class FilmController extends PAccordionPane {
 
     private FilmLoad filmLoad;
-    private FilmTitle filmTitle;
+    private BlackListPane blackListPane;
     private FilmSender filmSender;
     private final BooleanProperty diacriticChanged;
 
@@ -48,7 +49,7 @@ public class FilmController extends PAccordionPane {
     @Override
     public void close() {
         filmLoad.close();
-        filmTitle.close();
+        blackListPane.close();
         filmSender.close();
         super.close();
     }
@@ -58,9 +59,11 @@ public class FilmController extends PAccordionPane {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
         filmLoad = new FilmLoad(stage, progData, diacriticChanged);
         filmLoad.make(result);
-        filmTitle = new FilmTitle(stage, progData);
-        filmTitle.make(result);
-        filmSender = new FilmSender(stage, progData);
+
+        blackListPane = new BlackListPane(stage, progData, false, new SimpleBooleanProperty());
+        blackListPane.make(result);
+
+        filmSender = new FilmSender(stage, false);
         filmSender.make(result);
 
         return result;

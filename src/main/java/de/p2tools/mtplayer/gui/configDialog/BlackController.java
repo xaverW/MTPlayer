@@ -56,8 +56,8 @@ public class BlackController extends PAccordionPane {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
         blackPane = new BlackPane(stage, blackChanged);
         blackPane.makeBlack(result);
-        blackListPane = new BlackListPane(stage, blackChanged);
-        blackListPane.makeBlackListPane(result);
+        blackListPane = new BlackListPane(stage, progData, true, blackChanged);
+        blackListPane.make(result);
         return result;
     }
 }

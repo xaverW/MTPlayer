@@ -69,8 +69,8 @@ public class BlackDialog extends PDialogExtra {
 
         blackPane = new BlackPane(getStage(), blackPaneChanged);
         blackPane.makeBlack(titledPanes);
-        blackListPane = new BlackListPane(getStage(), blackListPaneChanged);
-        blackListPane.makeBlackListPane(titledPanes);
+        blackListPane = new BlackListPane(getStage(), progData, true, blackListPaneChanged);
+        blackListPane.make(titledPanes);
         accordion.getPanes().addAll(titledPanes);
         accordion.setExpandedPane(accordion.getPanes().get(0));
         VBox.setVgrow(accordion, Priority.ALWAYS);

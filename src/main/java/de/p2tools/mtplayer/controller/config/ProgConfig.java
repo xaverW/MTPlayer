@@ -414,6 +414,7 @@ public class ProgConfig extends PDataProgConfig {
         configFile.addConfigs(progData.actFilmFilterWorker.getStoredFilterList());//Filterprofile
 
         configFile.addConfigs(progData.aboList);
+        configFile.addConfigs(progData.filmLoadBlackList);
         configFile.addConfigs(progData.blackList);
         configFile.addConfigs(progData.replaceList);
         configFile.addConfigs(progData.downloadList);

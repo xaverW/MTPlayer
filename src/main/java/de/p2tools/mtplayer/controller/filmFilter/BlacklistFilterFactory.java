@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.controller.filmFilter;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.BlackData;
+import de.p2tools.mtplayer.controller.data.BlackList;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmlistMTP;
 import de.p2tools.mtplayer.gui.dialog.AddBlacklistDialogController;
@@ -26,7 +27,6 @@ import de.p2tools.p2Lib.mtFilm.film.FilmData;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -66,16 +66,16 @@ public class BlacklistFilterFactory {
         ProgData.getInstance().blackList.addAndNotify(blackData);
     }
 
-    public static synchronized void countHits(boolean abort) {
+    public static synchronized void countHits(boolean abort, BlackList list) {
         //hier wird die Blacklist gegen die Filmliste gefiltert und die Treffer
         //für jeden Blacklist-Eintrag ermittelt
 
         PDuration.counterStart("FilmlistBlackFilterCountHits.countHits");
-        ProgData.getInstance().blackList.clearCounter();
+        list.clearCounter();
 
-        final FilmlistMTP filmlist = ProgData.getInstance().filmlist;
-        if (filmlist != null) {
-            filmlist.parallelStream().forEach(film -> applyBlacklist(film, abort));
+        final FilmlistMTP filmList = ProgData.getInstance().filmlist;
+        if (filmList != null) {
+            filmList.parallelStream().forEach(film -> applyBlacklist(film, abort, list));
         }
 
         PDuration.counterStop("FilmlistBlackFilterCountHits.countHits");
@@ -96,9 +96,9 @@ public class BlacklistFilterFactory {
         PDuration.counterStop("FilmlistBlackFilterCountHits.countHits");
     }
 
-    private static void applyBlacklist(FilmData film, boolean abort) {
+    private static void applyBlacklist(FilmData film, boolean abort, BlackList list) {
         //zum Sortieren ist es sinnvoll, dass ALLE MÖGLICHEN Treffer gesucht werden
-        for (final BlackData blackData : ProgData.getInstance().blackList) {
+        for (final BlackData blackData : list) {
 
             if (FilmFilterFactory.checkFilmWithBlacklistFilter(blackData, film)) {
                 blackData.incCountHits();
@@ -142,23 +142,21 @@ public class BlacklistFilterFactory {
                 PLog.sysLog("FilmlistBlackFilter - isBlacklistOff");
             }
 
-            final List<FilmDataMTP> col = initialStream.collect(Collectors.toList());
-            listFiltered.addAll(col);
-            col.clear();
+//            final List<FilmDataMTP> col = initialStream.collect(Collectors.toList());
+            listFiltered.addAll(initialStream.collect(Collectors.toList()));
+//            col.clear();
 
             // Array mit Sendernamen/Themen füllen
             listFiltered.loadTheme();
         }
 
-//        filterList.clear();
         PDuration.counterStop("FilmlistBlackFilter.getBlackFiltered");
     }
 
     public static synchronized void markFilmBlack() {
         PDuration.counterStart("FilmlistBlackFilter.markFilmBlack");
-        final ProgData progData = ProgData.getInstance();
         loadCurrentFilterSettings();
-        progData.filmlist.stream().forEach(film -> {
+        ProgData.getInstance().filmlist.stream().forEach(film -> {
             if (checkBlacklist(film)) {
                 film.setBlackBlocked(true);
             } else {
@@ -181,6 +179,23 @@ public class BlacklistFilterFactory {
 
         loadCurrentFilterSettings(); // todo das muss nur beim ersten mal gemacht werden
         return checkBlacklist(film);
+    }
+
+    /**
+     * Apply filters to film.
+     * And check only against the Blacklist
+     *
+     * @param film item to be filtered
+     * @param list list to check
+     * @return true if film can be displayed
+     */
+    public static synchronized boolean checkBlacklistFilters(FilmData film, BlackList list) {
+        for (final BlackData blackData : list) {
+            if (FilmFilterFactory.checkFilmWithBlacklistFilter(blackData, film)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static synchronized boolean checkBlacklist(FilmData film) {
@@ -216,8 +231,7 @@ public class BlacklistFilterFactory {
      */
 
     private static boolean applyBlacklistFilters(FilmData film, boolean countHits) {
-        final ProgData progData = ProgData.getInstance();
-        for (final BlackData blackData : progData.blackList) {
+        for (final BlackData blackData : ProgData.getInstance().blackList) {
             if (FilmFilterFactory.checkFilmWithBlacklistFilter(blackData, film)) {
                 if (countHits) {
                     blackData.incCountHits();
@@ -228,7 +242,6 @@ public class BlacklistFilterFactory {
 
         return !ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST.getValue();
     }
-
 
     /**
      * Load current filter settings from XvConfig

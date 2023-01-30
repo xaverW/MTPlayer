@@ -74,8 +74,8 @@ public class BlackPane {
     }
 
     public void makeBlack(Collection<TitledPane> result) {
-        final VBox vBox = new VBox();
-        vBox.setSpacing(10);
+        final VBox vBox = new VBox(10);
+        vBox.setPadding(new Insets(10));
         makeBlack(vBox);
 
         TitledPane tpBlack = new TitledPane("Blacklist allgemein", vBox);
@@ -87,7 +87,6 @@ public class BlackPane {
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
         gridPane.setVgap(15);
-        gridPane.setPadding(new Insets(20));
 
         tglAbo.selectedProperty().bindBidirectional(propAbo);
         tglAbo.selectedProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));

@@ -167,7 +167,7 @@ public class StartDialogController extends PDialogExtra {
         tGeo.setCollapsible(false);
 
         //filmPane
-        filmSender = new FilmSender(getStage());
+        filmSender = new FilmSender(getStage(), true);
         tFilm = filmSender.make(null);
         tFilm.setMaxHeight(Double.MAX_VALUE);
         tFilm.setCollapsible(false);
