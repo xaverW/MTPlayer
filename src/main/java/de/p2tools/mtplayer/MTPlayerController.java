@@ -120,11 +120,11 @@ public class MTPlayerController extends StackPane {
                 "Wenn die Filmliste nicht zu alt ist, wird nur ein Update geladen.\n" +
                 "Mit der rechten Maustaste wird immer die komplette Filmliste geladen."));
         btnFilmlist.setOnAction(e -> {
-            LoadFilmFactory.getInstance().loadList(false);
+            LoadFilmFactory.getInstance().loadNewListFromWeb(false);
         });
         btnFilmlist.setOnMouseClicked(mouseEvent -> {
             if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
-                LoadFilmFactory.getInstance().loadList(true);
+                LoadFilmFactory.getInstance().loadNewListFromWeb(true);
             }
         });
 

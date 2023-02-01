@@ -71,17 +71,14 @@ public class FilmFilterFactory {
         return false;
     }
 
-    public static boolean checkFilmWithBlacklistFilter(BlackData blackData, FilmData filmDataMTP) {
+    public static boolean checkFilmWithBlacklistFilter(BlackData blackData, FilmData filmData) {
         return checkFilmWithFilter(
                 blackData.fChannel,
                 blackData.fTheme,
                 blackData.fThemeTitle,
                 blackData.fTitle,
                 blackData.fSomewhere,
-                CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE,
-                CheckFilmFilter.FILTER_DURATION_MIN_MINUTE,
-                CheckFilmFilter.FILTER_DURATION_MAX_MINUTE,
-                filmDataMTP, false);
+                filmData);
     }
 
     /**
@@ -92,10 +89,7 @@ public class FilmFilterFactory {
      * @param themeTitle
      * @param title
      * @param somewhere
-     * @param searchLengthMinute_min
-     * @param searchLengthMinute_max
      * @param film
-     * @param withLength
      * @return
      */
     public static boolean checkFilmWithFilter(Filter sender,
@@ -103,25 +97,8 @@ public class FilmFilterFactory {
                                               Filter themeTitle,
                                               Filter title,
                                               Filter somewhere,
+                                              FilmData film) {
 
-                                              int timeRange,
-                                              int searchLengthMinute_min,
-                                              int searchLengthMinute_max,
-
-                                              FilmData film,
-                                              boolean withLength) {
-
-
-        // geht am schnellsten
-        if (timeRange != CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE && !CheckFilmFilter.checkMaxDays(timeRange, film)) {
-            return false;
-        }
-
-        if (withLength && !CheckFilmFilter.checkLength(searchLengthMinute_min, searchLengthMinute_max, film.getDurationMinute())) {
-            return false;
-        }
-
-        // brauchen länger
         if (!sender.empty && !CheckFilmFilter.checkChannelSmart(sender, film)) {
             return false;
         }

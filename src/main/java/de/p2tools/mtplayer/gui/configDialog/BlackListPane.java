@@ -72,7 +72,7 @@ public class BlackListPane {
     private ListenerLoadFilmlist listener;
 
     private final BooleanProperty blackChanged;
-    private final Stage stage;
+    private Stage stage;
     private final ProgData progData;
     private final boolean black;
     private final BlackList list;
@@ -89,9 +89,25 @@ public class BlackListPane {
         }
     }
 
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
     public void close() {
         rbWhite.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST);
         LoadFilmFactory.getInstance().loadFilmlist.removeListenerLoadFilmlist(listener);
+        if (list.size() > 0 && blackChanged.getValue()) {
+            if (!PAlert.showAlertOkCancel(stage, "Liste sortieren", "Soll die " +
+                            (black ? "Blacklist" : "Liste zum Filtern der Filme beim Neuladen der Filmliste") +
+                            " sortiert werden?",
+                    "Die Liste der Filter wird nach Anzahl der Treffer sortiert. Das beschleunigt die Filterung " +
+                            "der Filmliste.")) {
+                return;
+            } else {
+                //dann die Liste sortieren
+                list.sortTheListWithCounter();
+            }
+        }
     }
 
     public void make(Collection<TitledPane> result) {
@@ -199,11 +215,11 @@ public class BlackListPane {
         Button btnDel = new Button("");
         btnDel.setGraphic(ProgIcons.Icons.ICON_BUTTON_REMOVE.getImageView());
         btnDel.setOnAction(event -> {
-            blackChanged.set(true);
             final ObservableList<BlackData> selected = tableView.getSelectionModel().getSelectedItems();
             if (selected == null || selected.isEmpty()) {
                 PAlert.showInfoNoSelection();
             } else {
+                blackChanged.set(true);
                 list.removeAll(selected);
                 tableView.getSelectionModel().clearSelection();
             }
@@ -283,7 +299,7 @@ public class BlackListPane {
         btnSortList.setTooltip(new Tooltip("Damit kann die Blacklist anhand der \"Treffer\"\n" +
                 "sortiert werden."));
         btnSortList.setOnAction(a -> {
-            list.sortIncCounter(true);
+            list.sortTheListWithCounter();
             PTableFactory.refreshTable(tableView);
         });
 
@@ -293,22 +309,32 @@ public class BlackListPane {
                 "Für jeden Eintrag in der Blacklist wird gezählt,\n" +
                 "wie viele Filme damit geblockt werden."));
         btnCountHits.setOnAction(a -> {
-            BlacklistFilterFactory.countHits(false, list);
+            BlacklistFilterFactory.countHits(list, false);
             PTableFactory.refreshTable(tableView);
         });
 
-        Button btnReset = new Button("_Tabelle zurücksetzen");
-        btnReset.setTooltip(new Tooltip("Alle Einträge löschen und Standardeinträge wieder herstellen"));
-        btnReset.setOnAction(event -> {
+        Button btnAddStandards = new Button("_Standards einfügen");
+        btnAddStandards.setTooltip(new Tooltip("Die Standardeinträge der Liste anfügen"));
+        btnAddStandards.setOnAction(event -> {
+            BlackListFactory.addStandardsList(list);
+        });
+
+        Button btnAddBlacklist = new Button("_Blacklist einfügen");
+        btnAddBlacklist.setTooltip(new Tooltip("Die Einträge der Blacklist werden in die Liste kopiert"));
+        btnAddBlacklist.setOnAction(event -> {
+            progData.blackList.stream().forEach(bl -> list.add(bl.getCopy()));
+        });
+        Button btnClear = new Button("_Alle Einträge löschen");
+        btnClear.setTooltip(new Tooltip("Alle Einträge in der Liste werden gelöscht"));
+        btnClear.setOnAction(event -> {
             if (list.size() > 0) {
                 if (!PAlert.showAlertOkCancel(stage, "Liste löschen", "Sollen alle Tabelleneinträge gelöscht werden?",
-                        "Die Tabelle wird gelöscht und die ursprünglichen Filter werden wieder hergestellt.")) {
+                        "Die Tabelle wird komplett gelöscht und alle Einträge gehen verloren.")) {
                     return;
                 }
             }
-            BlackListFactory.initList(list);
+            list.clear();
         });
-        // toDo -> vielleicht den ganzen Dialog sperren??
         listener = new de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerLoadFilmlist() {
             @Override
             public void start(ListenerFilmlistLoadEvent event) {
@@ -329,9 +355,10 @@ public class BlackListPane {
                 btnTop, btnUp, btnDown, btnBottom, PGuiTools.getHBoxGrower(), btnHelpCount);
 
         HBox hBoxCount = new HBox(10);
-        hBoxCount.getChildren().addAll(btnSortList, btnCountHits, btnReset, PGuiTools.getHBoxGrower());
-
-        if (!black) {
+        if (black) {
+            hBoxCount.getChildren().addAll(btnCountHits, btnSortList, PGuiTools.getHBoxGrower(), btnAddStandards, btnClear);
+        } else {
+            hBoxCount.getChildren().addAll(btnCountHits, btnSortList, PGuiTools.getHBoxGrower(), btnAddStandards, btnAddBlacklist, btnClear);
             tableView.disableProperty().bind(ProgConfig.SYSTEM_USE_FILMTITLE_NOT_LOAD.not());
             hBoxButton.disableProperty().bind(ProgConfig.SYSTEM_USE_FILMTITLE_NOT_LOAD.not());
         }
@@ -374,11 +401,17 @@ public class BlackListPane {
             gridPane.disableProperty().bind(ProgConfig.SYSTEM_USE_FILMTITLE_NOT_LOAD.not());
         }
 
-        mbChannel.textProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
-        txtTheme.textProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
-        tgTheme.selectedProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
-        txtTitle.textProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
-        txtThemeTitle.textProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
+        mbChannel.textProperty().addListener((observable, oldValue, newValue) -> setBlackChanged());
+        txtTheme.textProperty().addListener((observable, oldValue, newValue) -> setBlackChanged());
+        tgTheme.selectedProperty().addListener((observable, oldValue, newValue) -> setBlackChanged());
+        txtTitle.textProperty().addListener((observable, oldValue, newValue) -> setBlackChanged());
+        txtThemeTitle.textProperty().addListener((observable, oldValue, newValue) -> setBlackChanged());
+    }
+
+    private void setBlackChanged() {
+        if (blackData != null) {
+            blackChanged.setValue(true);
+        }
     }
 
     private void addLoadButton(VBox vBox) {
@@ -386,7 +419,7 @@ public class BlackListPane {
         btnLoad.setTooltip(new Tooltip("Eine komplette neue Filmliste laden.\n" +
                 "Geänderte Einstellungen für das Laden der Filmliste werden so sofort übernommen"));
         btnLoad.setOnAction(event -> {
-            LoadFilmFactory.getInstance().loadList(true);
+            LoadFilmFactory.getInstance().loadNewListFromWeb(true);
         });
 
         HBox hBox = new HBox();

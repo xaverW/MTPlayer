@@ -73,7 +73,7 @@ public class ProgStart {
             }
         });
 
-        LoadFilmFactory.getInstance().loadProgStart(firstProgramStart);
+        LoadFilmFactory.getInstance().loadFilmlistProgStart(firstProgramStart);
     }
 
     public static void setProgramIcon(ProgData progData) {

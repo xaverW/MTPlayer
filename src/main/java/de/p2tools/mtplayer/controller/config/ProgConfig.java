@@ -33,7 +33,6 @@ import de.p2tools.p2Lib.tools.PSystemUtils;
 import de.p2tools.p2Lib.tools.ProgramToolsFactory;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.beans.property.*;
-import javafx.collections.ObservableList;
 import org.apache.commons.lang3.SystemUtils;
 
 import java.util.ArrayList;
@@ -165,14 +164,12 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty SYSTEM_SIZE_DIALOG_FILMINFO = addStrProp("system-size-dialog-filminfo", "");
 
     // Einstellungen Filmliste
-    public static BooleanProperty SYSTEM_LOAD_FILMS_ON_START = addBoolProp("system-load-films-on-start", Boolean.TRUE);
-    public static StringProperty SYSTEM_LOAD_FILMS_MANUALLY = addStrProp("system-load-films-manually", "");
+    public static BooleanProperty SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART = addBoolProp("system-load-filmlist-on-programstart", Boolean.TRUE);
     public static StringProperty SYSTEM_LOAD_NOT_SENDER = addStrProp("system-load-not-sender", "");
     public static IntegerProperty SYSTEM_LOAD_FILMLIST_MAX_DAYS = addIntProp("system-load-filmlist-max-days", 0); //es werden nur die x letzten Tage geladen
     public static IntegerProperty SYSTEM_LOAD_FILMLIST_MIN_DURATION = addIntProp("system-load-filmlist-min-duration", 0); //es werden nur Filme mit mind. x Minuten geladen
     public static StringProperty SYSTEM_PATH_VLC = addStrProp("system-path-vlc", SetsPrograms.getTemplatePathVlc());
     public static StringProperty SYSTEM_PATH_FFMPEG = addStrProp("system-path-ffmpeg", SetsPrograms.getTemplatePathFFmpeg());
-    public static ObservableList<String> SYSTEM_LOAD_NOT_FILMLIST_TITEL = addListProp("system-load-not-filmlist-title");
 
     // Blacklist
     public static BooleanProperty SYSTEM_BLACKLIST_SHOW_NO_FUTURE = addBoolProp("system-blacklist-show-no-future");

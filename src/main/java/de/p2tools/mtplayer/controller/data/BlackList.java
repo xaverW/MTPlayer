@@ -97,22 +97,20 @@ public class BlackList extends SimpleListProperty<BlackData> implements PDataLis
         }
     }
 
-    public synchronized void sortIncCounter(boolean searchHitsBefore) {
-        if (searchHitsBefore) {
-            // zuerst ohne Abbruch Treffer suchen
-            BlacklistFilterFactory.countHits(false, this);
-
-            // und dann sortieren
-            Collections.sort(this, Comparator.comparingInt(BlackDataProps::getCountHits).reversed());
-
-            // dann die tatsächlichen Trefferzahlen ermitteln
-            BlacklistFilterFactory.countHits(true, this);
-        }
-
-        // und dann endgültig sortieren
+    public synchronized void sortTheListWithCounter() {
+        //zuerst ohne Abbruch Treffer suchen
+        BlacklistFilterFactory.countHits(this, false);
+        //und dann sortieren
         Collections.sort(this, Comparator.comparingInt(BlackDataProps::getCountHits).reversed());
 
-        // zum Schluss noch neu nummerieren 1, 2, ...
+        //dann die tatsächlichen Trefferzahlen ermitteln
+        BlacklistFilterFactory.countHits(this, true);
+        // und dann endgültig sortieren
+        Collections.sort(this, Comparator.comparingInt(BlackDataProps::getCountHits).reversed());
+        //--> so sind dann evtl. doppelte Einträge unten in der Liste einsortiert und bremsen nicht
+
+
+        //zum Schluss noch neu nummerieren 1, 2, ...
         int i = 0;
         for (BlackData blackData : this) {
             blackData.setNo(++i);

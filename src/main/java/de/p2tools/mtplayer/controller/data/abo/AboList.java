@@ -20,7 +20,6 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadTools;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.film.FilmlistMTP;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.controller.filmFilter.CheckFilmFilter;
 import de.p2tools.mtplayer.controller.filmFilter.FilmFilter;
@@ -29,9 +28,7 @@ import de.p2tools.mtplayer.gui.dialog.AboEditDialogController;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.configFile.pData.PDataList;
-import de.p2tools.p2Lib.mtFilm.film.FilmDataXml;
 import de.p2tools.p2Lib.tools.GermanStringSorter;
-import de.p2tools.p2Lib.tools.duration.PDuration;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -246,7 +243,7 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
     public synchronized void notifyChanges() {
         if (!LoadFilmFactory.getInstance().loadFilmlist.getPropLoadFilmlist()) {
             // wird danach eh gemacht
-            setAboForFilm(progData.filmlist);
+            AboFactory.setAboForFilmlist(progData.filmlist, this);
         }
         listChanged.setValue(!listChanged.get());
     }
@@ -330,103 +327,51 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
         return false;
     }
 
-    public synchronized AboData getAboForFilm_quick(FilmDataMTP film, boolean checkLength) {
-        // da wird nur in der Filmliste geschaut, ob in "DatenFilm" ein Abo eingetragen ist
-        // geht schneller, "assignAboToFilm" muss aber vorher schon gelaufen sein!!
-        AboData abo = film.getAbo();
-        if (abo == null) {
-            return null;
-        } else {
-            if (checkLength) {
-                if (!CheckFilmFilter.checkLength(abo.getMinDurationMinute(), abo.getMaxDurationMinute(), film.getDurationMinute())) {
-                    return null;
-                }
-            }
-            return abo;
-        }
-    }
+//    public synchronized AboData getAboForFilm_quick(FilmDataMTP film) {
+//        //da wird nur in der Filmliste geschaut, ob in "DatenFilm" ein Abo eingetragen ist
+//        //geht schneller, "assignAboToFilm" muss aber vorher schon gelaufen sein!!
+//        //und Zeit/Filmlänge muss noch geprüft werden
+//        AboData abo = film.getAbo();
+//        if (abo == null) {
+//            return null;
+//        } else {
+//            if (!CheckFilmFilter.checkMaxDays(abo.getTimeRange(), film.filmDate.getTime())) {
+//                // dann ist der Film zu alt
+//                return null;
+//            } else if (!CheckFilmFilter.checkLength(abo.getMinDurationMinute(), abo.getMaxDurationMinute(), film.getDurationMinute())) {
+//                return null;
+//            }
+//            return abo;
+//        }
+//    }
 
-    private void deleteAboInFilm(FilmDataMTP film) {
-        // für jeden Film Abo löschen
-        film.arr[FilmDataXml.FILM_ABO_NAME] = "";
-        film.setAbo(null);
-    }
-
-
-    /**
-     * Assign found abo to the film objects. Time-intensive procedure!
-     *
-     * @param film assignee
-     */
-    private void assignAboToFilm(FilmDataMTP film) {
-        if (film.isLive()) {
-            // Livestreams gehören nicht in ein Abo
-            deleteAboInFilm(film);
-            return;
-        }
-
-        final AboData foundAbo = stream()
-                .filter(abo -> abo.isActive())
-                .filter(abo -> FilmFilterFactory.checkFilmWithFilter(
-                        abo.fChannel,
-                        abo.fTheme,
-                        abo.fThemeTitle,
-                        abo.fTitle,
-                        abo.fSomewhere,
-
-                        abo.getTimeRange(),
-                        abo.getMinDurationMinute(),
-                        abo.getMaxDurationMinute(),
-
-                        film,
-                        false))
-
-                .findFirst()
-                .orElse(null);
-
-        if (foundAbo != null) {
-            if (!CheckFilmFilter.checkLengthMin(foundAbo.getMinDurationMinute(), film.getDurationMinute())) {
-                // dann ist der Film zu kurz
-                film.arr[FilmDataXml.FILM_ABO_NAME] = foundAbo.arr[AboFieldNames.ABO_NAME_NO] + (" [zu kurz]");
-                film.setAbo(foundAbo);
-            } else if (!CheckFilmFilter.checkLengthMax(foundAbo.getMaxDurationMinute(), film.getDurationMinute())) {
-                // dann ist der Film zu lang
-                film.arr[FilmDataXml.FILM_ABO_NAME] = foundAbo.arr[AboFieldNames.ABO_NAME_NO] + (" [zu lang]");
-                film.setAbo(foundAbo);
-            } else {
-                film.arr[FilmDataXml.FILM_ABO_NAME] = foundAbo.arr[AboFieldNames.ABO_NAME_NO];
-                film.setAbo(foundAbo);
-            }
-
-        } else {
-            deleteAboInFilm(film);
-        }
-    }
-
-    public synchronized void setAboForFilm(FilmlistMTP filmlist) {
-        //hier wird tatsächlich für jeden Film die Liste der Abos durchsucht,
-        //braucht länger
-        PDuration.counterStart("Abo in Filmliste eintragen");
-
-        // leere Abos löschen, die sind Fehler
-        Iterator<AboData> it = this.listIterator();
-        while (it.hasNext()) {
-            AboData aboData = it.next();
-            if (aboData.isEmpty()) {
-                it.remove();
-            }
-        }
-
-        if (isEmpty()) {
-            // dann nur die Abos in der Filmliste löschen
-            filmlist.parallelStream().forEach(this::deleteAboInFilm);
-            return;
-        }
-
-        // das kostet die Zeit!!
-        filmlist.parallelStream().forEach(this::assignAboToFilm);
-
-        PDuration.counterStop("Abo in Filmliste eintragen");
-    }
-
+//    public synchronized void setAboForFilm(FilmlistMTP filmlistMTP) {
+//        //hier wird tatsächlich für jeden Film die Liste der Abos durchsucht,
+//        //braucht länger
+//        PDuration.counterStart("Abo in Filmliste eintragen");
+//
+//        // leere Abos löschen, die sind Fehler
+//        Iterator<AboData> it = this.listIterator();
+//        while (it.hasNext()) {
+//            AboData aboData = it.next();
+//            if (aboData.isEmpty()) {
+//                it.remove();
+//            }
+//        }
+//
+//        if (isEmpty()) {
+//            // dann nur die Abos in der Filmliste löschen
+//            filmlistMTP.parallelStream().forEach(film -> {
+//                //für jeden Film Abo löschen
+//                film.arr[FilmDataXml.FILM_ABO_NAME] = "";
+//                film.setAbo(null);
+//            });
+//            return;
+//        }
+//
+//        // das kostet die Zeit!!
+//        filmlistMTP.parallelStream().forEach(filmDataMTP -> AboFactory.assignAboToFilm(filmDataMTP, this));
+//
+//        PDuration.counterStop("Abo in Filmliste eintragen");
+//    }
 }

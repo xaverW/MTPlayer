@@ -122,7 +122,8 @@ public class PredicateFactory {
         }
 
         if (noAbos) {
-            predicate = predicate.and(f -> f.arr[FilmDataXml.FILM_ABO_NAME].isEmpty());
+            //todo -> abo??
+            predicate = predicate.and(f -> f.arr[FilmDataXml.FILM_ABO_NAME].isEmpty());//dann gibts kein Abo, auch keins "zu kleiner Film", ...
         }
         if (noShown) {
             predicate = predicate.and(f -> !f.isShown());
@@ -145,7 +146,7 @@ public class PredicateFactory {
         //anz Tage Sendezeit
         if (days != 0) {
             final long d = days;
-            predicate = predicate.and(f -> CheckFilmFilter.checkDays(d, f));
+            predicate = predicate.and(f -> CheckFilmFilter.checkDays(d, f.filmDate.getTime()));
         }
 
         // Filmlänge

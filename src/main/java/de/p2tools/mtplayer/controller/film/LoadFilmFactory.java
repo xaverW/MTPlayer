@@ -21,7 +21,11 @@ import de.p2tools.mtplayer.controller.ProgSave;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
-import de.p2tools.mtplayer.controller.filmFilter.BlacklistFilterFactory;
+import de.p2tools.mtplayer.controller.data.BlackData;
+import de.p2tools.mtplayer.controller.data.BlackList;
+import de.p2tools.mtplayer.controller.data.abo.AboFactory;
+import de.p2tools.mtplayer.controller.filmFilter.FilmFilterFactory;
+import de.p2tools.p2Lib.mtFilm.film.FilmData;
 import de.p2tools.p2Lib.mtFilm.film.Filmlist;
 import de.p2tools.p2Lib.mtFilm.loadFilmlist.LoadFilmlist;
 import de.p2tools.p2Lib.mtFilm.tools.LoadFactoryConst;
@@ -78,6 +82,12 @@ public class LoadFilmFactory {
         });
     }
 
+    public void loadNewListFromWeb(boolean alwaysLoadNew) {
+        //es wird immer eine neue Filmliste aus dem Web geladen
+        initLoadFactoryConst();
+        loadFilmlist.loadNewFilmlistFromWeb(alwaysLoadNew, ProgInfos.getLocalFilmListFile());
+    }
+
     /**
      * alles was nach einem Neuladen oder Einlesen einer gespeicherten Filmliste ansteht
      */
@@ -88,7 +98,7 @@ public class LoadFilmFactory {
 
         if (!ProgData.getInstance().aboList.isEmpty()) {
             logList.add("Abos eintragen");
-            ProgData.getInstance().aboList.setAboForFilm(ProgData.getInstance().filmlist);
+            AboFactory.setAboForFilmlist(ProgData.getInstance().filmlist, ProgData.getInstance().aboList);
         }
 
         if (!ProgData.getInstance().bookmarks.isEmpty()) {
@@ -106,15 +116,10 @@ public class LoadFilmFactory {
     }
 
 
-    public void loadProgStart(boolean firstProgramStart) {
+    public void loadFilmlistProgStart(boolean firstProgramStart) {
         initLoadFactoryConst();
         loadFilmlist.loadFilmlistProgStart(firstProgramStart,
-                ProgInfos.getFilmListFile(), ProgConfig.SYSTEM_LOAD_FILMS_ON_START.getValue());
-    }
-
-    public void loadList(boolean alwaysLoadNew) {
-        initLoadFactoryConst();
-        loadFilmlist.loadNewFilmlist(alwaysLoadNew, ProgInfos.getFilmListFile());
+                ProgInfos.getLocalFilmListFile(), ProgConfig.SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART.getValue());
     }
 
     public void initLoadFactoryConst() {
@@ -131,7 +136,8 @@ public class LoadFilmFactory {
         LoadFactoryConst.filmlist = ProgData.getInstance().filmlist;
 
         LoadFactoryConst.FilmChecker filmChecker = filmData ->
-                BlacklistFilterFactory.checkBlacklistFilters(filmData, ProgData.getInstance().filmLoadBlackList);
+                checkFilmAgainstBlacklist(filmData, ProgData.getInstance().filmLoadBlackList);
+
         if (ProgConfig.SYSTEM_USE_FILMTITLE_NOT_LOAD.getValue()) {
             //nur dann sollen Filme geprüft werden
             LoadFactoryConst.checker = filmChecker;
@@ -140,6 +146,15 @@ public class LoadFilmFactory {
 
     public synchronized static final LoadFilmFactory getInstance() {
         return instance == null ? instance = new LoadFilmFactory(new FilmlistMTP(), new FilmlistMTP()) : instance;
+    }
+
+    private static synchronized boolean checkFilmAgainstBlacklist(FilmData film, BlackList list) {
+        for (final BlackData blackData : list) {
+            if (FilmFilterFactory.checkFilmWithBlacklistFilter(blackData, film)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

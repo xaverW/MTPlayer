@@ -81,6 +81,16 @@ public class BlackDataProps extends PDataSample<BlackDataProps> {
         return list.toArray(new Config[]{});
     }
 
+    public BlackData getCopy() {
+        BlackData bl = new BlackData();
+        bl.setChannel(channel.getValueSafe());
+        bl.setTheme(theme.getValueSafe());
+        bl.setThemeExact(themeExact.getValue());
+        bl.setTitle(title.getValueSafe());
+        bl.setThemeTitle(themeTitle.getValueSafe());
+        return bl;
+    }
+
     @Override
     public String getTag() {
         return TAG;

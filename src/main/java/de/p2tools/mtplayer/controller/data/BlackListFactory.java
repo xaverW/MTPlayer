@@ -21,8 +21,7 @@ public class BlackListFactory {
     private BlackListFactory() {
     }
 
-    public static void initList(BlackList list) {
-        list.clear();
+    public static void addStandardsList(BlackList list) {
         BlackData bl = new BlackData("", "", "(mit Gebärdensprache)", "");
         bl.setThemeExact(false);
         list.add(bl);

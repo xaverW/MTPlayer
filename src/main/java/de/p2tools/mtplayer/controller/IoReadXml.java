@@ -340,7 +340,7 @@ public class IoReadXml implements AutoCloseable {
     }
 
     private void initAfterLoad() {
-        progData.blackList.sortIncCounter(false);
+//        progData.blackList.sortIncCounter(false);
         progData.downloadList.initDownloads();
         progData.aboList.initAboList();
         progData.aboList.sort();

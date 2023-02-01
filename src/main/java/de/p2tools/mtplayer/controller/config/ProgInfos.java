@@ -65,7 +65,7 @@ public class ProgInfos {
      *
      * @return Den Pfad als String
      */
-    public static String getFilmListFile() {
+    public static String getLocalFilmListFile() {
         String strFile;
         strFile = getSettingsDirectory_String() + File.separator + ProgConst.JSON_DATEI_FILME;
 

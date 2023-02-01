@@ -31,7 +31,7 @@ public class AboutDialogController extends AboutDialog {
                 ProgConst.FILE_PROG_ICON, ProgConfig.SYSTEM_PROG_OPEN_URL,
                 ProgConfig.SYSTEM_DARK_THEME.getValue(),
                 new String[]{"Filmliste:", "Einstellungen:"},
-                new String[]{ProgInfos.getFilmListFile(), ProgInfos.getSettingsFile().toAbsolutePath().toString()},
+                new String[]{ProgInfos.getLocalFilmListFile(), ProgInfos.getSettingsFile().toAbsolutePath().toString()},
                 true);
 
         this.progData = progData;

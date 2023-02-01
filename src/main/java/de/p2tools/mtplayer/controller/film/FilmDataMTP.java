@@ -21,7 +21,7 @@ import de.p2tools.p2Lib.mtFilm.film.FilmData;
 
 public class FilmDataMTP extends FilmData {
 
-    private AboData abo = null;
+    private AboData abo = null; //dann gibts ein Abo ABER: es kann ausgeschaltet, Film zu klein, ... sein!!
 
     @Override
     public FilmDataMTP getCopy() {

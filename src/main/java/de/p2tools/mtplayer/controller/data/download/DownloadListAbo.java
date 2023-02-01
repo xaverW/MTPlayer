@@ -100,17 +100,14 @@ public class DownloadListAbo {
 
         // und jetzt die Filmliste ablaufen
         progData.filmlist.parallelStream().forEach(film -> {
-            final AboData abo = progData.aboList.getAboForFilm_quick(film, true);
+            final AboData abo = film.getAbo();
             if (abo == null) {
-                // dann gibts dafür kein Abo
+                //dann gibts dafür kein Abo
+                //oder abo ist ausgeschaltet, ...
                 return;
             }
 
             abo.incrementCountHit();
-            if (!abo.isActive()) {
-                // oder es ist ausgeschaltet
-                return;
-            }
 
             if (checkWithBlackList && !BlacklistFilterFactory.checkBlacklistForDownloads(film)) {
                 // Blacklist auch bei Abos anwenden und Film wird blockiert
@@ -150,5 +147,4 @@ public class DownloadListAbo {
 
         PDuration.counterStop("DownloadListAbo.searchForNewDownloads");
     }
-
 }

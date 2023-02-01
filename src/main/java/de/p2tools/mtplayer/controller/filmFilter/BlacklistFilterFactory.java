@@ -33,9 +33,9 @@ import java.util.stream.Stream;
 
 public class BlacklistFilterFactory {
 
-    private static long days = 0;
+    private static long maxFilmDays = 0;
     private static boolean doNotShowFutureFilms, doNotShowGeoBlockedFilms;
-    private static long filmLengthTarget_Minute = 0;
+    private static long minFilmDuration = 0;
 
     private BlacklistFilterFactory() {
     }
@@ -66,11 +66,11 @@ public class BlacklistFilterFactory {
         ProgData.getInstance().blackList.addAndNotify(blackData);
     }
 
-    public static synchronized void countHits(boolean abort, BlackList list) {
+    public static synchronized void countHits(BlackList list, boolean abort) {
         //hier wird die Blacklist gegen die Filmliste gefiltert und die Treffer
         //für jeden Blacklist-Eintrag ermittelt
 
-        PDuration.counterStart("FilmlistBlackFilterCountHits.countHits");
+        PDuration.counterStart("countHitsList");
         list.clearCounter();
 
         final FilmlistMTP filmList = ProgData.getInstance().filmlist;
@@ -78,12 +78,12 @@ public class BlacklistFilterFactory {
             filmList.parallelStream().forEach(film -> applyBlacklist(film, abort, list));
         }
 
-        PDuration.counterStop("FilmlistBlackFilterCountHits.countHits");
+        PDuration.counterStop("countHitsList");
     }
 
     public static synchronized void countHits(BlackData blackData) {
         //hier wird ein BlackDate gegen die Filmliste gefiltert und die Treffer ermittelt
-        PDuration.counterStart("FilmlistBlackFilterCountHits.countHits");
+        PDuration.counterStart("countHitsBlackData");
         blackData.setCountHits(0);
         final FilmlistMTP filmlist = ProgData.getInstance().filmlist;
         if (filmlist != null) {
@@ -93,7 +93,7 @@ public class BlacklistFilterFactory {
                 }
             });
         }
-        PDuration.counterStop("FilmlistBlackFilterCountHits.countHits");
+        PDuration.counterStop("countHitsBlackData");
     }
 
     private static void applyBlacklist(FilmData film, boolean abort, BlackList list) {
@@ -112,14 +112,12 @@ public class BlacklistFilterFactory {
     public static synchronized void getBlackFiltered() {
         // hier wird die komplette Filmliste gegen die Blacklist gefiltert
         // mit der Liste wird dann im TabFilme weiter gearbeitet
-
         final ProgData progData = ProgData.getInstance();
         final FilmlistMTP filmlist = progData.filmlist;
         final FilmlistMTP listFiltered = progData.filmlistFiltered;
 
-        loadCurrentFilterSettings();
-
         PDuration.counterStart("FilmlistBlackFilter.getBlackFiltered");
+        loadCurrentFilterSettings();
         listFiltered.clear();
 
         if (filmlist != null) {
@@ -142,14 +140,11 @@ public class BlacklistFilterFactory {
                 PLog.sysLog("FilmlistBlackFilter - isBlacklistOff");
             }
 
-//            final List<FilmDataMTP> col = initialStream.collect(Collectors.toList());
             listFiltered.addAll(initialStream.collect(Collectors.toList()));
-//            col.clear();
 
             // Array mit Sendernamen/Themen füllen
             listFiltered.loadTheme();
         }
-
         PDuration.counterStop("FilmlistBlackFilter.getBlackFiltered");
     }
 
@@ -176,33 +171,15 @@ public class BlacklistFilterFactory {
         // hier werden die Filme für Downloads aus Abos gesucht,
         // und wenn die Blacklist bei den Abos berücksichtigt werden soll,
         // wird damit geprüft
-
         loadCurrentFilterSettings(); // todo das muss nur beim ersten mal gemacht werden
         return checkBlacklist(film);
-    }
-
-    /**
-     * Apply filters to film.
-     * And check only against the Blacklist
-     *
-     * @param film item to be filtered
-     * @param list list to check
-     * @return true if film can be displayed
-     */
-    public static synchronized boolean checkBlacklistFilters(FilmData film, BlackList list) {
-        for (final BlackData blackData : list) {
-            if (FilmFilterFactory.checkFilmWithBlacklistFilter(blackData, film)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     private static synchronized boolean checkBlacklist(FilmData film) {
         // hier werden die Filme gegen die Blacklist geprüft
         final ProgData progData = ProgData.getInstance();
 
-        if (days > 0 && !checkDate(film)) {
+        if (maxFilmDays > 0 && !checkDate(film)) {
             return false;
         }
         if (doNotShowGeoBlockedFilms && film.isGeoBlocked()) {
@@ -211,7 +188,7 @@ public class BlacklistFilterFactory {
         if (doNotShowFutureFilms && film.isInFuture()) {
             return false;
         }
-        if (filmLengthTarget_Minute != 0 && !checkFilmLength(film)) {
+        if (minFilmDuration != 0 && !checkFilmLength(film)) {
             return false;
         }
 
@@ -220,22 +197,9 @@ public class BlacklistFilterFactory {
             return true;
         }
 
-        return applyBlacklistFilters(film, false);
-    }
-
-    /**
-     * Apply filters to film.
-     *
-     * @param film item to be filtered
-     * @return true if film can be displayed
-     */
-
-    private static boolean applyBlacklistFilters(FilmData film, boolean countHits) {
         for (final BlackData blackData : ProgData.getInstance().blackList) {
             if (FilmFilterFactory.checkFilmWithBlacklistFilter(blackData, film)) {
-                if (countHits) {
-                    blackData.incCountHits();
-                }
+                blackData.incCountHits();
                 return ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST.getValue();
             }
         }
@@ -243,23 +207,23 @@ public class BlacklistFilterFactory {
         return !ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST.getValue();
     }
 
+
     /**
-     * Load current filter settings from XvConfig
+     * Load current filter settings from Config
      */
     private static void loadCurrentFilterSettings() {
         try {
             if (ProgConfig.SYSTEM_BLACKLIST_MAX_FILM_DAYS.getValue() == 0) {
-                days = 0;
+                maxFilmDays = 0;
             } else {
                 final long max = 1000L * 60L * 60L * 24L * ProgConfig.SYSTEM_BLACKLIST_MAX_FILM_DAYS.getValue();
-                days = System.currentTimeMillis() - max;
+                maxFilmDays = System.currentTimeMillis() - max;
             }
         } catch (final Exception ex) {
-            days = 0;
+            maxFilmDays = 0;
         }
 
-        filmLengthTarget_Minute = ProgConfig.SYSTEM_BLACKLIST_MIN_FILM_DURATION.getValue(); // Minuten
-
+        minFilmDuration = ProgConfig.SYSTEM_BLACKLIST_MIN_FILM_DURATION.getValue(); // Minuten
         doNotShowFutureFilms = ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_FUTURE.getValue();
         doNotShowGeoBlockedFilms = ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_GEO.getValue();
     }
@@ -271,12 +235,12 @@ public class BlacklistFilterFactory {
      * @return true if film can be displayed
      */
     private static boolean checkDate(FilmData film) {
-        if (days == 0) {
+        if (maxFilmDays == 0) {
             return true;
         }
 
         final long filmTime = film.filmDate.getTime();
-        if (filmTime != 0 && filmTime <= days) {
+        if (filmTime != 0 && filmTime <= maxFilmDays) {
             return false;
         }
 
@@ -290,6 +254,6 @@ public class BlacklistFilterFactory {
      * @return true if film should be displayed
      */
     private static boolean checkFilmLength(FilmData film) {
-        return film.getDurationMinute() == 0 || filmLengthTarget_Minute <= film.getDurationMinute();
+        return film.getDurationMinute() == 0 || minFilmDuration <= film.getDurationMinute();
     }
 }

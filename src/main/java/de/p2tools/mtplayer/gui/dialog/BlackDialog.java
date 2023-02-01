@@ -53,7 +53,10 @@ public class BlackDialog extends PDialogExtra {
         this.progData = progData;
 
         initDialog();
-        init(true);
+        init(false);
+        blackPane.setStage(getStage());
+        blackListPane.setStage(getStage());
+        super.showDialog();
     }
 
     @Override

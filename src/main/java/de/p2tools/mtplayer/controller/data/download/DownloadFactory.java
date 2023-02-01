@@ -33,8 +33,7 @@ public class DownloadFactory {
     }
 
     public static void deleteFilmFile(DownloadData download) {
-        // Download nur löschen wenn er nicht läuft
-
+        // Download nur löschen, wenn er nicht läuft
         if (download == null) {
             return;
         }
@@ -87,5 +86,4 @@ public class DownloadFactory {
             PLog.errorLog(915236547, "Fehler beim löschen: " + download.getDestPathFile());
         }
     }
-
 }

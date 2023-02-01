@@ -63,7 +63,7 @@ public class ProgLoadFactory {
     }
 
     private static void initAfterLoad(ProgData progData) {
-        progData.blackList.sortIncCounter(false);
+//        progData.blackList.sortIncCounter(false);//Kompromiss?? ist schneller
         progData.downloadList.initDownloads();
         progData.aboList.initAboList();
         progData.aboList.sort();

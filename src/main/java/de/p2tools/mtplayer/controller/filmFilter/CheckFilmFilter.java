@@ -101,7 +101,7 @@ public class CheckFilmFilter {
         return true;
     }
 
-    public static boolean checkMaxDays(int maxDays, FilmData film) {
+    public static boolean checkMaxDays(int maxDays, long filmTime) {
         long days = 0;
         try {
             if (maxDays == FILTER_TIME_RANGE_ALL_VALUE) {
@@ -114,7 +114,7 @@ public class CheckFilmFilter {
             days = 0;
         }
 
-        return checkDays(days, film);
+        return checkDays(days, filmTime);
     }
 
     public static boolean checkUrl(Filter url, FilmData film) {
@@ -125,12 +125,11 @@ public class CheckFilmFilter {
         return true;
     }
 
-    public static boolean checkDays(long days, FilmData film) {
+    public static boolean checkDays(long days, long filmTime) {
         if (days == 0) {
             return true;
         }
 
-        final long filmTime = film.filmDate.getTime();
         if (filmTime != 0 && filmTime < days) {
             return false;
         }
@@ -138,13 +137,18 @@ public class CheckFilmFilter {
         return true;
     }
 
-    public static boolean checkLengthMin(int filterLaenge, long filmLength) {
-        return filterLaenge == 0 || filmLength == 0 || filmLength >= filterLaenge;
+    public static boolean checkLengthMin(int filterLangth, long filmLength) {
+        return filterLangth == 0 || filmLength == 0 || filmLength >= filterLangth;
     }
 
     public static boolean checkLengthMax(int filterLaenge, long filmLength) {
         return filterLaenge == FILTER_DURATION_MAX_MINUTE || filmLength == 0
                 || filmLength <= filterLaenge;
+    }
+
+    public static boolean checkLength(int filterLeangth_minute_min, int filterLength_minute_max, long filmLength) {
+        return checkLengthMin(filterLeangth_minute_min, filmLength)
+                && checkLengthMax(filterLength_minute_max, filmLength);
     }
 
     public static boolean checkFilmTime(int timeMin, int timeMax, boolean invert, int filmTime) {
@@ -160,11 +164,6 @@ public class CheckFilmFilter {
         } else {
             return ret;
         }
-    }
-
-    public static boolean checkLength(int filterLeangth_minute_min, int filterLength_minute_max, long filmLength) {
-        return checkLengthMin(filterLeangth_minute_min, filmLength)
-                && checkLengthMax(filterLength_minute_max, filmLength);
     }
 
     private static boolean check(Filter filter, String im) {

@@ -118,7 +118,7 @@ public class FilmSender {
             btnLoad.setTooltip(new Tooltip("Eine komplette neue Filmliste laden.\n" +
                     "Geänderte Einstellungen für das Laden der Filmliste werden so sofort übernommen"));
             btnLoad.setOnAction(event -> {
-                LoadFilmFactory.getInstance().loadList(true);
+                LoadFilmFactory.getInstance().loadNewListFromWeb(true);
             });
 
             hBox = new HBox();

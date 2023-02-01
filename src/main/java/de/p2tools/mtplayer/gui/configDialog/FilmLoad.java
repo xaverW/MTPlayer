@@ -35,7 +35,7 @@ import java.util.Collection;
 
 public class FilmLoad {
 
-    private final PToggleSwitch tglLoad = new PToggleSwitch("Filmliste beim Programmstart laden");
+    private final PToggleSwitch tglLoad = new PToggleSwitch("Beim Programmstart eine neue Filmliste laden");
     private final BooleanProperty diacriticChanged;
 
     private final ProgData progData;
@@ -48,7 +48,7 @@ public class FilmLoad {
     }
 
     public void close() {
-        tglLoad.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_LOAD_FILMS_ON_START);
+        tglLoad.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART);
     }
 
     public TitledPane make(Collection<TitledPane> result) {
@@ -57,7 +57,7 @@ public class FilmLoad {
         gridPane.setVgap(5);
         gridPane.setPadding(new Insets(10));
 
-        tglLoad.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_LOAD_FILMS_ON_START);
+        tglLoad.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART);
         final Button btnHelpLoad = PButton.helpButton(stage, "Filmliste laden",
                 HelpText.LOAD_FILMLIST_PROGRAMSTART);
 

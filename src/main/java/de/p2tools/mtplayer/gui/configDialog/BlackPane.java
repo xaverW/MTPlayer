@@ -57,12 +57,16 @@ public class BlackPane {
     BooleanProperty propAbo = ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO;
     BooleanProperty propFuture = ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_FUTURE;
     private final BooleanProperty blackChanged;
-    private final Stage stage;
+    private Stage stage;
 
     public BlackPane(Stage stage, BooleanProperty blackChanged) {
         this.stage = stage;
         this.blackChanged = blackChanged;
         progData = ProgData.getInstance();
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 
     public void close() {
