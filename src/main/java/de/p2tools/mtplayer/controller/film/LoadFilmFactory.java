@@ -138,9 +138,12 @@ public class LoadFilmFactory {
         LoadFactoryConst.FilmChecker filmChecker = filmData ->
                 checkFilmAgainstBlacklist(filmData, ProgData.getInstance().filmLoadBlackList);
 
-        if (ProgConfig.SYSTEM_USE_FILMTITLE_NOT_LOAD.getValue()) {
+        if (ProgConfig.SYSTEM_USE_FILTER_LOAD_FILMLIST.getValue()) {
             //nur dann sollen Filme geprüft werden
             LoadFactoryConst.checker = filmChecker;
+        } else {
+            //ist sonst evtl. noch von "vorher" gesetzt
+            LoadFactoryConst.checker = null;
         }
     }
 

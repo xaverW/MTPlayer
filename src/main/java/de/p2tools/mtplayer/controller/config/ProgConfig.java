@@ -134,7 +134,7 @@ public class ProgConfig extends PDataProgConfig {
     public static BooleanProperty SYSTEM_TRAY_USE_OWN_ICON = addBoolProp("system-tray-own-icon", Boolean.FALSE);
     public static StringProperty SYSTEM_TRAY_ICON_PATH = addStrProp("system-tray-icon", ""); //ein eigenes Tray-Icon
     public static StringProperty SYSTEM_USERAGENT = addStrProp("system-useragent", ProgConst.USER_AGENT_DEFAULT); //Useragent für direkte Downloads
-    public static BooleanProperty SYSTEM_USE_FILMTITLE_NOT_LOAD = addBoolProp("system-use-filmtitle-not-load", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_USE_FILTER_LOAD_FILMLIST = addBoolProp("system-use-filter-load-filmlist", Boolean.FALSE);
     public static BooleanProperty SYSTEM_USE_REPLACETABLE = addBoolProp("system-use-replacetable", SystemUtils.IS_OS_LINUX ? Boolean.TRUE : Boolean.FALSE);
     public static BooleanProperty SYSTEM_ONLY_ASCII = addBoolProp("system-only-ascii", Boolean.FALSE);
     public static StringProperty SYSTEM_PROG_OPEN_DIR = addStrProp("system-prog-open-dir");

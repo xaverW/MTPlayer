@@ -25,6 +25,7 @@ import de.p2tools.mtplayer.gui.DownloadGuiPack;
 import de.p2tools.mtplayer.gui.FilmGuiPack;
 import de.p2tools.mtplayer.gui.StatusBarController;
 import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
+import de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -130,14 +131,7 @@ public class MTPlayerController extends StackPane {
 
         LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(new de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerLoadFilmlist() {
             @Override
-            public void start(de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent event) {
-                // falls "neue Filmliste" aktiv ist
-//                btnFilmlist.getStyleClass().clear();
-//                btnFilmlist.getStyleClass().addAll("btnFunction", "btnFunc-3");
-            }
-
-            @Override
-            public void finished(de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent event) {
+            public void finished(ListenerFilmlistLoadEvent event) {
                 if (stackPaneCont.getChildren().size() == 0) {
                     return;
                 }

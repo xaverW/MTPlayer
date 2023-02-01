@@ -160,7 +160,7 @@ public class BlackListPane {
     }
 
     private void makeToggle(VBox vBox) {
-        tglNot.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_USE_FILMTITLE_NOT_LOAD);
+        tglNot.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_USE_FILTER_LOAD_FILMLIST);
         final Button btnHelpReplace = PButton.helpButton(stage, "Filme ausschließen",
                 HelpText.FILMTITEL_NOT_LOAD);
 
@@ -350,17 +350,17 @@ public class BlackListPane {
         };
         LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(listener);
 
-        HBox hBoxButton = new HBox(10);
-        hBoxButton.getChildren().addAll(btnNew, btnDel, PGuiTools.getHDistance(20),
+        HBox hBoxButton = new HBox(5);
+        hBoxButton.getChildren().addAll(btnNew, btnDel, PGuiTools.getVDistance(20),
                 btnTop, btnUp, btnDown, btnBottom, PGuiTools.getHBoxGrower(), btnHelpCount);
 
-        HBox hBoxCount = new HBox(10);
+        HBox hBoxCount = new HBox(5);
         if (black) {
             hBoxCount.getChildren().addAll(btnCountHits, btnSortList, PGuiTools.getHBoxGrower(), btnAddStandards, btnClear);
         } else {
             hBoxCount.getChildren().addAll(btnCountHits, btnSortList, PGuiTools.getHBoxGrower(), btnAddStandards, btnAddBlacklist, btnClear);
-            tableView.disableProperty().bind(ProgConfig.SYSTEM_USE_FILMTITLE_NOT_LOAD.not());
-            hBoxButton.disableProperty().bind(ProgConfig.SYSTEM_USE_FILMTITLE_NOT_LOAD.not());
+            tableView.disableProperty().bind(ProgConfig.SYSTEM_USE_FILTER_LOAD_FILMLIST.not());
+            hBoxButton.disableProperty().bind(ProgConfig.SYSTEM_USE_FILTER_LOAD_FILMLIST.not());
         }
 
         VBox.setVgrow(tableView, Priority.ALWAYS);
@@ -398,7 +398,7 @@ public class BlackListPane {
         vBox.getChildren().add(gridPane);
         gridPane.setDisable(true);
         if (!black) {
-            gridPane.disableProperty().bind(ProgConfig.SYSTEM_USE_FILMTITLE_NOT_LOAD.not());
+            gridPane.disableProperty().bind(ProgConfig.SYSTEM_USE_FILTER_LOAD_FILMLIST.not());
         }
 
         mbChannel.textProperty().addListener((observable, oldValue, newValue) -> setBlackChanged());
