@@ -81,8 +81,8 @@ public class NoSetDialogController extends PDialogExtra {
         textArea.setMaxHeight(Double.MAX_VALUE);
         textArea.setPrefRowCount(prefRowCount);
         VBox.setVgrow(textArea, Priority.ALWAYS);
-        getvBoxCont().getChildren().addAll(textHeaderSave, textArea);
-        getvBoxCont().setSpacing(20);
+        getVBoxCont().getChildren().addAll(textHeaderSave, textArea);
+        getVBoxCont().setSpacing(20);
 
 
         switch (text) {

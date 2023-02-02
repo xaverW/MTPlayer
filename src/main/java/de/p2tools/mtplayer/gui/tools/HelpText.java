@@ -564,6 +564,21 @@ public class HelpText {
                     "sofort ins neue Log geschrieben." +
                     "\n";
 
+    public static final String MV_PATH =
+            "Der Konfig-Ordner von MediathekView muss hier eingetragen werden. Normalerweise " +
+                    "ist er im Benutzerverzeichnis und heist \".mediathek3\"" +
+                    "\n";
+
+    public static final String MV_SEARCH =
+            "Hier wird versucht, im MediathekView Konfig-Ordner die Einstellungen zu suchen. Die " +
+                    "gefundenen Einstellungen werden damit aber noch nicht importiert." +
+                    "\n";
+    public static final String MV_IMPORT =
+            "Hier können die gefundenen Einstellungen im Programm importiert werden. Es wird aber kontrolliert, " +
+                    "ob es die gleichen Abos/Blacks bereits gibt. Es werden also nur neue Abos/Blacks importiert. " +
+                    "Drückt man den Button mehrfach, werden nicht ein weiteres mal, die Abos/Blacks importiert." +
+                    "\n";
+
     public static final String FILEMANAGER =
             "In der Ansicht \"Downloads\" kann man über das Kontextmenü den Downloadordner " +
                     "(Zielordner) des jeweiligen Downloads öffnen. Normalerweise wird dafür der " +

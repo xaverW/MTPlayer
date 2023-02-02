@@ -131,7 +131,7 @@ public class DownloadAddDialogController extends PDialogExtra {
         this.filterResolution = filterResolution;
         this.setDataList = progData.setDataList.getSetDataListSave();
 
-        vBoxCont = getvBoxCont();
+        vBoxCont = getVBoxCont();
         init(true);
     }
 

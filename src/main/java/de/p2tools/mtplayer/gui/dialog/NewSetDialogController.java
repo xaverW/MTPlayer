@@ -115,6 +115,6 @@ public class NewSetDialogController extends PDialogExtra {
         gridPane.getColumnConstraints().addAll(new ColumnConstraints(), ccTxt);
 //        gridPane.getStyleClass().add("dialog-only-border");
 
-        getvBoxCont().getChildren().addAll(gridPane);
+        getVBoxCont().getChildren().addAll(gridPane);
     }
 }

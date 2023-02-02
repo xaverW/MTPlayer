@@ -87,7 +87,7 @@ public class MediaDialogController extends PDialogExtra {
 
             HBox hBox = new HBox(20);
             hBox.getChildren().addAll(rbMedien, rbAbos);
-            getvBoxCont().getChildren().add(hBox);
+            getVBoxCont().getChildren().add(hBox);
 
             // Stackpane
             paneMedia = new PaneMedia(getStage(), searchStrOrg, searchStrProp);
@@ -102,7 +102,7 @@ public class MediaDialogController extends PDialogExtra {
 
             stackPane.getChildren().addAll(paneMedia, paneAbo);
             VBox.setVgrow(stackPane, Priority.ALWAYS);
-            getvBoxCont().getChildren().add(stackPane);
+            getVBoxCont().getChildren().add(stackPane);
 
             Button btnHelp = PButton.helpButton(getStage(),
                     "Suche in der Mediensammlung", HelpText.SEARCH_MEDIA_DIALOG);

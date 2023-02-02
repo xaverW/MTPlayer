@@ -75,7 +75,7 @@ public class AddBlacklistDialogController extends PDialogExtra {
     public void make() {
         addOkCancelButtons(btnOk, btnCancel);
         getHboxLeft().getChildren().addAll(btnCount, lblCount);
-        getvBoxCont().getChildren().add(gridPane);
+        getVBoxCont().getChildren().add(gridPane);
         initButton();
         initGridPane();
     }

@@ -48,7 +48,7 @@ public class FilmFilterEditDialog extends PDialogExtra {
 
     @Override
     public void make() {
-        init(getvBoxCont());
+        init(getVBoxCont());
 
         final Button btnHelp = PButton.helpButton(getStage(), "Filtereinstellungen",
                 HelpText.GUI_FILMS_EDIT_FILTER);

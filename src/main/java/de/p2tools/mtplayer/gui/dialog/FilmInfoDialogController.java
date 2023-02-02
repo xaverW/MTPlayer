@@ -143,7 +143,7 @@ public class FilmInfoDialogController extends PDialogExtra {
         tglUrl.selectedProperty().addListener((observable, oldValue, newValue) -> setUrl());
 
         btnOk.setOnAction(a -> close());
-        getvBoxCont().getChildren().add(gridPane);
+        getVBoxCont().getChildren().add(gridPane);
 
         gridPane.setHgap(10);
         gridPane.setVgap(10);

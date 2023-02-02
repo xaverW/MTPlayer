@@ -22,7 +22,12 @@ public class BlackListFactory {
     }
 
     public static void addStandardsList(BlackList list) {
-        BlackData bl = new BlackData("", "", "(mit Gebärdensprache)", "");
+        //nach Auftreten sortiert!
+        BlackData bl = new BlackData("", "", "- Audiodeskription", "");
+        bl.setThemeExact(false);
+        list.add(bl);
+
+        bl = new BlackData("", "", "(Audiodeskription)", "");
         bl.setThemeExact(false);
         list.add(bl);
 
@@ -30,7 +35,7 @@ public class BlackListFactory {
         bl.setThemeExact(false);
         list.add(bl);
 
-        bl = new BlackData("", "", "in Gebärdensprache", "");
+        bl = new BlackData("", "", "(mit Gebärdensprache)", "");
         bl.setThemeExact(false);
         list.add(bl);
 
@@ -42,11 +47,7 @@ public class BlackListFactory {
         bl.setThemeExact(false);
         list.add(bl);
 
-        bl = new BlackData("", "", "(Audiodeskription)", "");
-        bl.setThemeExact(false);
-        list.add(bl);
-
-        bl = new BlackData("", "", "- Audiodeskription", "");
+        bl = new BlackData("", "", "in Gebärdensprache", "");
         bl.setThemeExact(false);
         list.add(bl);
     }

@@ -102,7 +102,7 @@ public class QuitDialogController extends PDialogExtra {
         gridPane.getColumnConstraints().addAll(new ColumnConstraints(), ccTxt);
 
         stackPane.getChildren().addAll(gridPane, maskerPane);
-        getvBoxCont().getChildren().addAll(stackPane);
+        getVBoxCont().getChildren().addAll(stackPane);
         if (startWithWaiting) {
             startWaiting();
         }

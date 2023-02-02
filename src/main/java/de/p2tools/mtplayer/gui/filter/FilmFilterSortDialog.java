@@ -65,7 +65,7 @@ public class FilmFilterSortDialog extends PDialogExtra {
         hBox.getChildren().addAll(tableView, vBox);
         HBox.setHgrow(tableView, Priority.ALWAYS);
         VBox.setVgrow(hBox, Priority.ALWAYS);
-        getvBoxCont().getChildren().add(hBox);
+        getVBoxCont().getChildren().add(hBox);
 
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);

@@ -152,9 +152,9 @@ public class DownloadContinueDialogController extends PDialogExtra {
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcComputedSizeAndHgrow());
 
-        getvBoxCont().setPadding(new Insets(5));
-        getvBoxCont().setSpacing(20);
-        getvBoxCont().getChildren().addAll(gridPane);
+        getVBoxCont().setPadding(new Insets(5));
+        getVBoxCont().setSpacing(20);
+        getVBoxCont().getChildren().addAll(gridPane);
 
 //        getHBoxOverButtons().getChildren().addAll(chkSave);
 //        getHBoxOverButtons().setAlignment(Pos.CENTER_RIGHT);

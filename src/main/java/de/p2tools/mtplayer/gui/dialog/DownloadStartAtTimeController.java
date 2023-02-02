@@ -128,7 +128,7 @@ public class DownloadStartAtTimeController extends PDialogExtra {
 
         splitPane.getItems().addAll(vBoxTable, vBoxStart);
         VBox.setVgrow(splitPane, Priority.ALWAYS);
-        getvBoxCont().getChildren().add(splitPane);
+        getVBoxCont().getChildren().add(splitPane);
     }
 
     private void initRadio() {

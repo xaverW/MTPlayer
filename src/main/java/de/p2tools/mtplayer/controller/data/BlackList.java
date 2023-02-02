@@ -117,4 +117,17 @@ public class BlackList extends SimpleListProperty<BlackData> implements PDataLis
         }
     }
 
+    public boolean blackExistsAlready(BlackData blackData) {
+        // true, wenn es das Black schon gibt
+        for (final BlackData data : this) {
+            if (data.getChannel().equalsIgnoreCase(blackData.getChannel()) &&
+                    data.getTheme().equalsIgnoreCase(blackData.getTheme()) &&
+//                    data.isThemeExact() == blackData.isThemeExact() &&
+                    data.getTitle().equalsIgnoreCase(blackData.getTitle()) &&
+                    data.getThemeTitle().equalsIgnoreCase(blackData.getThemeTitle())) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

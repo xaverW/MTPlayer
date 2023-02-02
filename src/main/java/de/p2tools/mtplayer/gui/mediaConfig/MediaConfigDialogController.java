@@ -73,8 +73,8 @@ public class MediaConfigDialogController extends PDialogExtra {
     @Override
     public void make() {
         VBox.setVgrow(tabPane, Priority.ALWAYS);
-        getvBoxCont().getChildren().add(tabPane);
-        getvBoxCont().setPadding(new Insets(0));
+        getVBoxCont().getChildren().add(tabPane);
+        getVBoxCont().setPadding(new Insets(0));
 
         final Button btnHelp = PButton.helpButton(getStage(), "Medien", HelpText.MEDIA_DIALOG);
         btnOk.setOnAction(a -> close());

@@ -201,7 +201,7 @@ public class AboDialogController extends PDialogExtra {
     }
 
     private void initDialog() {
-        getvBoxCont().getChildren().add(gridPane);
+        getVBoxCont().getChildren().add(gridPane);
         addOkCancelApplyButtons(btnOk, btnCancel, btnApply);
         SetData setData = aboCopy.getSetData(progData);
         if (setData == null) {

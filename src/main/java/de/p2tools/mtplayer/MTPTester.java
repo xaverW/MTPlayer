@@ -69,7 +69,7 @@ public class MTPTester {
 
             final StackPane stackPane = new StackPane();
             stackPane.getChildren().addAll(gridPane, maskerPane);
-            progInfoDialog.getvBoxCont().getChildren().addAll(stackPane);
+            progInfoDialog.getVBoxCont().getChildren().addAll(stackPane);
 
 
             // Create the ButtonBar instance
@@ -79,7 +79,7 @@ public class MTPTester {
             final Button cButton = new Button("Abbrechen");
             ButtonBar.setButtonData(cButton, ButtonBar.ButtonData.CANCEL_CLOSE);
             buttonBar.getButtons().addAll(okButton, cButton);
-            progInfoDialog.getvBoxCont().getChildren().add(buttonBar);
+            progInfoDialog.getVBoxCont().getChildren().add(buttonBar);
 
 
             final Text text = new Text("Debugtools");

@@ -97,7 +97,7 @@ public class ImportSetDialogController extends PDialogExtra {
         stackPane.getChildren().addAll(vBoxPath, setPaneController);
         vBoxPath.toFront();
         VBox.setVgrow(stackPane, Priority.ALWAYS);
-        getvBoxCont().getChildren().add(stackPane);
+        getVBoxCont().getChildren().add(stackPane);
 
         addOkButton(btnImport);
         addCancelButton(btnCancel);

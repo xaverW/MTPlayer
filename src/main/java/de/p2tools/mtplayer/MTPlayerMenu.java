@@ -27,6 +27,7 @@ import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.update.SearchProgramUpdate;
 import de.p2tools.mtplayer.gui.configDialog.ConfigDialogController;
 import de.p2tools.mtplayer.gui.dialog.AboutDialogController;
+import de.p2tools.mtplayer.gui.dialog.ImportMVDialog;
 import de.p2tools.mtplayer.gui.dialog.ResetDialogController;
 import de.p2tools.mtplayer.gui.mediaConfig.MediaConfigDialogController;
 import de.p2tools.mtplayer.gui.mediaDialog.MediaDialogController;
@@ -64,32 +65,6 @@ public class MTPlayerMenu extends MenuButton {
         miQuitWait.setOnAction(e -> ProgQuit.quit(true));
         PShortcutWorker.addShortCut(miQuitWait, MTShortcut.SHORTCUT_QUIT_PROGRAM_WAIT);
 
-        final MenuItem miAbout = new MenuItem("Über dieses Programm");
-        miAbout.setOnAction(event -> new AboutDialogController(progData).showDialog());
-
-        final MenuItem miLog = new MenuItem("Logdatei öffnen");
-        miLog.setOnAction(event -> {
-            PLogger.openLogFile();
-        });
-
-        final MenuItem miUrlHelp = new MenuItem("Anleitung im Web");
-        miUrlHelp.setOnAction(event -> {
-            POpen.openURL(ProgConst.URL_WEBSITE_HELP,
-                    ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
-        });
-
-        final MenuItem miReset = new MenuItem("Einstellungen zurücksetzen");
-        miReset.setOnAction(event -> new ResetDialogController(progData));
-
-        final MenuItem miToolTip = new MenuItem("Tip des Tages");
-        miToolTip.setOnAction(a -> new ProgTipOfDay().showDialog(progData, true));
-
-        final MenuItem miSearchUpdate = new MenuItem("Gibt's ein Update?");
-        miSearchUpdate.setOnAction(a -> new SearchProgramUpdate(progData, progData.primaryStage).searchNewProgramVersion(true));
-
-        final Menu mHelp = new Menu("Hilfe");
-        mHelp.getItems().addAll(miUrlHelp, miLog, miReset, miToolTip, miSearchUpdate, new SeparatorMenuItem(), miAbout);
-
         final MenuItem mbExternProgram = new MenuItem("Externes Programm starten");
         mbExternProgram.setVisible(false); //vorerst mal noch nicht anzeigen???
         mbExternProgram.setOnAction(e ->
@@ -97,8 +72,41 @@ public class MTPlayerMenu extends MenuButton {
                         ProgConfig.SYSTEM_PROG_EXTERN_PROGRAM, ProgIcons.Icons.ICON_BUTTON_EXTERN_PROGRAM.getImageView())
         );
         PShortcutWorker.addShortCut(mbExternProgram, MTShortcut.SHORTCUT_EXTERN_PROGRAM);
+        setTooltip(new Tooltip("Programmeinstellungen anzeigen"));
+        setMinWidth(Region.USE_PREF_SIZE);
+        getStyleClass().addAll("btnFunction", "btnFunc-1");
+        setText("");
+        setGraphic(ProgIcons.Icons.FX_ICON_TOOLBAR_MENU_TOP.getImageView());
+        getItems().addAll(miConfig, miMediaCollectionConfig, miSearchMediaCollection, addHelp(progData),
+                new SeparatorMenuItem(), miQuit, miQuitWait, mbExternProgram);
+    }
 
-        // ProgInfoDialog
+    private Menu addHelp(ProgData progData) {
+        final MenuItem miUrlHelp = new MenuItem("Anleitung im Web");
+        miUrlHelp.setOnAction(event -> {
+            POpen.openURL(ProgConst.URL_WEBSITE_HELP,
+                    ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
+        });
+        final MenuItem miLog = new MenuItem("Logdatei öffnen");
+        miLog.setOnAction(event -> {
+            PLogger.openLogFile();
+        });
+        final MenuItem miReset = new MenuItem("Einstellungen zurücksetzen");
+        miReset.setOnAction(event -> new ResetDialogController(progData));
+        final MenuItem miImportMV = new MenuItem("MediathekView Einstellungen importieren");
+        miImportMV.setOnAction(event -> new ImportMVDialog(progData));
+
+        final MenuItem miToolTip = new MenuItem("Tip des Tages");
+        miToolTip.setOnAction(a -> new ProgTipOfDay().showDialog(progData, true));
+        final MenuItem miSearchUpdate = new MenuItem("Gibt's ein Update?");
+        miSearchUpdate.setOnAction(a -> new SearchProgramUpdate(progData, progData.primaryStage).searchNewProgramVersion(true));
+        final MenuItem miAbout = new MenuItem("Über dieses Programm");
+        miAbout.setOnAction(event -> new AboutDialogController(progData).showDialog());
+
+        final Menu mHelp = new Menu("Hilfe");
+        mHelp.getItems().addAll(miUrlHelp, miLog, miReset, miImportMV,
+                miToolTip, miSearchUpdate, new SeparatorMenuItem(), miAbout);
+
         if (ProgData.debug) {
             final MenuItem miDebug = new MenuItem("Debugtools");
             miDebug.setOnAction(event -> {
@@ -110,13 +118,6 @@ public class MTPlayerMenu extends MenuButton {
 
             mHelp.getItems().addAll(new SeparatorMenuItem(), miDebug, miSave);
         }
-
-        setTooltip(new Tooltip("Programmeinstellungen anzeigen"));
-        setMinWidth(Region.USE_PREF_SIZE);
-        getStyleClass().addAll("btnFunction", "btnFunc-1");
-        setText("");
-        setGraphic(ProgIcons.Icons.FX_ICON_TOOLBAR_MENU_TOP.getImageView());
-        getItems().addAll(miConfig, miMediaCollectionConfig, miSearchMediaCollection, mHelp,
-                new SeparatorMenuItem(), miQuit, miQuitWait, mbExternProgram);
+        return mHelp;
     }
 }

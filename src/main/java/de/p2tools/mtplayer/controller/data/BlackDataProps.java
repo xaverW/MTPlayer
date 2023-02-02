@@ -77,7 +77,8 @@ public class BlackDataProps extends PDataSample<BlackDataProps> {
         list.add(new Config_stringProp("theme", BLACKLIST_THEME, theme));
         list.add(new Config_boolProp("themeExact", BLACKLIST_THEME_EXACT, themeExact));
         list.add(new Config_stringProp("title", BLACKLIST_TITLE, title));
-        list.add(new Config_stringProp("themeTitle:bithemeTitletrate", BLACKLIST_THEME_TITLE, themeTitle));
+        list.add(new Config_stringProp("themeTitle", BLACKLIST_THEME_TITLE, themeTitle));
+        list.add(new Config_stringProp("bithemeTitletrate", BLACKLIST_THEME_TITLE, themeTitle));//kommt weg
         return list.toArray(new Config[]{});
     }
 

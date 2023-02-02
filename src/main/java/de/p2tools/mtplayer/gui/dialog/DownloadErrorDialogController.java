@@ -70,7 +70,7 @@ public class DownloadErrorDialogController extends PDialogExtra {
         this.message = message;
 
         hBoxTitle = getHBoxTitle();
-        vBoxCont = getvBoxCont();
+        vBoxCont = getVBoxCont();
 //        hBoxOk = getHboxOk();
 
         if (ProgData.automode) {

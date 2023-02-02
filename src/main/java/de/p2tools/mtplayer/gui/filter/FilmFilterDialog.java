@@ -65,7 +65,7 @@ public class FilmFilterDialog extends PDialogExtra {
             tableView.getSelectionModel().clearSelection();
         });
 
-        getvBoxCont().getChildren().add(tableView);
+        getVBoxCont().getChildren().add(tableView);
 
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);

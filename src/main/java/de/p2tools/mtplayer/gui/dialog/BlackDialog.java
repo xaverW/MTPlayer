@@ -77,7 +77,7 @@ public class BlackDialog extends PDialogExtra {
         accordion.getPanes().addAll(titledPanes);
         accordion.setExpandedPane(accordion.getPanes().get(0));
         VBox.setVgrow(accordion, Priority.ALWAYS);
-        VBox vBox = getvBoxCont();
+        VBox vBox = getVBoxCont();
         vBox.setPadding(new Insets(0));
         vBox.getChildren().add(accordion);
 

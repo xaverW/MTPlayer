@@ -123,7 +123,7 @@ public class DownloadEditDialogController extends PDialogExtra {
     @Override
     public void make() {
         addOkCancelButtons(btnOk, btnCancel);
-        getvBoxCont().getChildren().add(gridPane);
+        getVBoxCont().getChildren().add(gridPane);
 
         getHboxLeft().getChildren().add(tglUrl);
         tglUrl.setTooltip(new Tooltip("URL anzeigen"));
