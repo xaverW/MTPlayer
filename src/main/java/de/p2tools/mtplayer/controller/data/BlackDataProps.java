@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.controller.data;
 import de.p2tools.p2Lib.configFile.config.Config;
 import de.p2tools.p2Lib.configFile.config.Config_boolProp;
 import de.p2tools.p2Lib.configFile.config.Config_stringProp;
+import de.p2tools.p2Lib.configFile.pData.PData;
 import de.p2tools.p2Lib.configFile.pData.PDataSample;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -77,8 +78,7 @@ public class BlackDataProps extends PDataSample<BlackDataProps> {
         list.add(new Config_stringProp("theme", BLACKLIST_THEME, theme));
         list.add(new Config_boolProp("themeExact", BLACKLIST_THEME_EXACT, themeExact));
         list.add(new Config_stringProp("title", BLACKLIST_TITLE, title));
-        list.add(new Config_stringProp("themeTitle", BLACKLIST_THEME_TITLE, themeTitle));
-        list.add(new Config_stringProp("bithemeTitletrate", BLACKLIST_THEME_TITLE, themeTitle));//kommt weg
+        list.add(new Config_stringProp("themeTitle" + PData.TAGGER + "bithemeTitletrate", BLACKLIST_THEME_TITLE, themeTitle));
         return list.toArray(new Config[]{});
     }
 
