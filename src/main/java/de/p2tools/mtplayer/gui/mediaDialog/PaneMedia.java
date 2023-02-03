@@ -26,6 +26,7 @@ import de.p2tools.mtplayer.controller.mediaDb.MediaDataWorker;
 import de.p2tools.mtplayer.controller.mediaDb.MediaFileSize;
 import de.p2tools.mtplayer.gui.mediaConfig.SearchPredicateWorker;
 import de.p2tools.mtplayer.gui.tools.Listener;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.guiTools.PCheckBoxCell;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.PGuiTools;
@@ -36,6 +37,7 @@ import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
@@ -106,24 +108,25 @@ public class PaneMedia extends ScrollPane {
     }
 
     private void initPanel() {
-        HBox hBoxSearch = new HBox(10);
-        hBoxSearch.setPadding(new Insets(10));
+        HBox hBoxSearch = new HBox(P2LibConst.DIST_BUTTON);
+        hBoxSearch.setPadding(new Insets(P2LibConst.DIST_EDGE));
         HBox.setHgrow(txtSearch, Priority.ALWAYS);
         hBoxSearch.getChildren().addAll(new Label("Suchen: "), txtSearch, btnReset);
+        hBoxSearch.setAlignment(Pos.CENTER_RIGHT);
         hBoxSearch.getStyleClass().add("extra-pane");
 
         btnReset.setGraphic(ProgIcons.Icons.ICON_BUTTON_RESET.getImageView());
         btnReset.setTooltip(new Tooltip("Suchtext wieder herstellen"));
 
-        HBox hBoxSum = new HBox(10);
-        hBoxSum.setPadding(new Insets(10));
+        HBox hBoxSum = new HBox(P2LibConst.DIST_BUTTON);
+//        hBoxSum.setPadding(new Insets(10));
         hBoxSum.getChildren().addAll(new Label("Treffer:"), lblTrefferMedia,
                 PGuiTools.getHBoxGrower(), new Label("Anzahl Medien gesamt:"), lblGesamtMedia);
 
         GridPane gridPane = new GridPane();
-        gridPane.setPadding(new Insets(10));
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
+//        gridPane.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
+        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
 
         txtTitleMedia.setEditable(false);
         txtPathMedia.setEditable(false);
@@ -139,8 +142,8 @@ public class PaneMedia extends ScrollPane {
                 PColumnConstraints.getCcComputedSizeAndHgrow());
 
         HBox hBoxProgess = new HBox();
-        hBoxProgess.setSpacing(10);
-        hBoxProgess.setPadding(new Insets(10));
+        hBoxProgess.setSpacing(P2LibConst.DIST_BUTTON);
+//        hBoxProgess.setPadding(new Insets(10));
         progress.setVisible(false);
         progress.setMaxHeight(Double.MAX_VALUE);
         progress.setMaxWidth(Double.MAX_VALUE);
@@ -150,9 +153,12 @@ public class PaneMedia extends ScrollPane {
         tableMedia.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
         VBox.setVgrow(tableMedia, Priority.ALWAYS);
 
-        VBox vBoxMedia = new VBox();
+        VBox vBoxMedia = new VBox(10);
         vBoxMedia.getChildren().addAll(hBoxSearch, PGuiTools.getHDistance(10), tableMedia, hBoxSum, gridPane, hBoxProgess);
 
+        this.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        this.setFitToHeight(true);
+        this.setFitToWidth(true);
         this.setContent(vBoxMedia);
     }
 

@@ -25,6 +25,7 @@ import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.controller.filmFilter.BlacklistFilterFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
@@ -112,7 +113,7 @@ public class BlackListPane {
 
     public void make(Collection<TitledPane> result) {
         final VBox vBox = new VBox(10);
-        vBox.setPadding(new Insets(10));
+        vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
 
         if (black) {
             makeConfig(vBox);
@@ -121,6 +122,7 @@ public class BlackListPane {
         }
         initTable();
         addButton(vBox);
+        vBox.getChildren().add(PGuiTools.getVDistance(10));
         addConfigs(vBox);
         if (!black) {
             addLoadButton(vBox);
@@ -133,9 +135,9 @@ public class BlackListPane {
 
     private void makeConfig(VBox vBox) {
         final GridPane gridPane = new GridPane();
-        gridPane.setHgap(15);
-        gridPane.setVgap(15);
-        gridPane.setPadding(new Insets(5, 20, 5, 20));
+        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
+        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
+//        gridPane.setPadding(new Insets(5, 20, 5, 20));
         vBox.getChildren().add(gridPane);
 
         final ToggleGroup group = new ToggleGroup();
@@ -164,7 +166,7 @@ public class BlackListPane {
         final Button btnHelpReplace = PButton.helpButton(stage, "Filme ausschließen",
                 HelpText.FILMTITEL_NOT_LOAD);
 
-        HBox hBox = new HBox(10);
+        HBox hBox = new HBox(P2LibConst.DIST_BUTTON);
         HBox.setHgrow(tglNot, Priority.ALWAYS);
         hBox.getChildren().addAll(tglNot, btnHelpReplace);
         vBox.getChildren().add(hBox);
@@ -350,11 +352,11 @@ public class BlackListPane {
         };
         LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(listener);
 
-        HBox hBoxButton = new HBox(5);
+        HBox hBoxButton = new HBox(P2LibConst.DIST_BUTTON);
         hBoxButton.getChildren().addAll(btnNew, btnDel, PGuiTools.getVDistance(20),
                 btnTop, btnUp, btnDown, btnBottom, PGuiTools.getHBoxGrower(), btnHelpCount);
 
-        HBox hBoxCount = new HBox(5);
+        HBox hBoxCount = new HBox(P2LibConst.DIST_BUTTON);
         if (black) {
             hBoxCount.getChildren().addAll(btnCountHits, btnSortList, PGuiTools.getHBoxGrower(), btnAddStandards, btnClear);
         } else {
@@ -364,17 +366,16 @@ public class BlackListPane {
         }
 
         VBox.setVgrow(tableView, Priority.ALWAYS);
-        VBox vb = new VBox(5);
-        vb.setPadding(new Insets(0));
+        VBox vb = new VBox(P2LibConst.DIST_BUTTON);
         vb.getChildren().addAll(tableView, hBoxButton, hBoxCount);
         vBox.getChildren().add(vb);
     }
 
     private void addConfigs(VBox vBox) {
         gridPane.getStyleClass().add("extra-pane");
-        gridPane.setHgap(15);
-        gridPane.setVgap(5);
-        gridPane.setPadding(new Insets(10));
+        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
+        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
+        gridPane.setPadding(new Insets(P2LibConst.DIST_EDGE));
 
         int row = 0;
         mbChannel.setMaxWidth(Double.MAX_VALUE);
@@ -394,8 +395,6 @@ public class BlackListPane {
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcComputedSizeAndHgrow(),
                 PColumnConstraints.getCcPrefSize());
-
-        vBox.getChildren().add(gridPane);
         gridPane.setDisable(true);
         if (!black) {
             gridPane.disableProperty().bind(ProgConfig.SYSTEM_USE_FILTER_LOAD_FILMLIST.not());
@@ -406,6 +405,8 @@ public class BlackListPane {
         tgTheme.selectedProperty().addListener((observable, oldValue, newValue) -> setBlackChanged());
         txtTitle.textProperty().addListener((observable, oldValue, newValue) -> setBlackChanged());
         txtThemeTitle.textProperty().addListener((observable, oldValue, newValue) -> setBlackChanged());
+
+        vBox.getChildren().add(gridPane);
     }
 
     private void setBlackChanged() {

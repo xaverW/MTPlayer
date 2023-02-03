@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.starter.DownloadState;
 import de.p2tools.mtplayer.gui.tools.HelpText;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.dialogs.accordion.PAccordionPane;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
@@ -114,9 +115,9 @@ public class DownloadPaneController extends PAccordionPane {
 
     private void makeDownload(Collection<TitledPane> result) {
         final GridPane gridPane = new GridPane();
-        gridPane.setHgap(20);
-        gridPane.setVgap(15);
-        gridPane.setPadding(new Insets(20));
+        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
+        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
+        gridPane.setPadding(new Insets(P2LibConst.DIST_EDGE));
 
         TitledPane tpConfig = new TitledPane("Download", gridPane);
         result.add(tpConfig);
@@ -141,8 +142,10 @@ public class DownloadPaneController extends PAccordionPane {
                 HelpText.DOWNLOAD_SSL_ALWAYS_TRUE);
 
         tglBeep.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_BEEP);
-        final Button btnBeep = new Button("_Testen");
+        final Button btnBeep = new Button("_Test");
+        btnBeep.getStyleClass().add("buttonSmall");
         btnBeep.setOnAction(a -> Toolkit.getDefaultToolkit().beep());
+//        GridPane.setHalignment(btnBeep, HPos.RIGHT);
 
         GridPane.setHalignment(btnHelpFinished, HPos.RIGHT);
         GridPane.setHalignment(btnHelpError, HPos.RIGHT);

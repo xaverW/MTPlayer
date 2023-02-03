@@ -32,7 +32,6 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.HPos;
-import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -94,7 +93,7 @@ public class PaneHistoryController extends PAccordionPane {
         tg.getToggles().addAll(rbTheme, rbTitle, rbTt);
         selectSearch();
 
-        VBox vBox = new VBox();
+        VBox vBox = new VBox(10);
         Collection<TitledPane> result = new ArrayList();
         TitledPane tpConfig = new TitledPane(history ? "History" : "Downloads", vBox);
         result.add(tpConfig);
@@ -205,10 +204,10 @@ public class PaneHistoryController extends PAccordionPane {
         btnClear.setGraphic(ProgIcons.Icons.ICON_BUTTON_STOP.getImageView());
         btnClear.setOnAction(a -> txtSearch.clear());
 
-        HBox hBox = new HBox(10);
+        HBox hBox = new HBox(P2LibConst.DIST_BUTTON);
         hBox.getChildren().addAll(rbTheme, rbTitle, rbTt);
 
-        HBox hBoxSum = new HBox();
+        HBox hBoxSum = new HBox(P2LibConst.DIST_BUTTON);
         hBoxSum.getChildren().addAll(lblTreffer, PGuiTools.getHBoxGrower(), btnDel);
         vBox.getChildren().addAll(hBoxSum);
 
@@ -218,9 +217,9 @@ public class PaneHistoryController extends PAccordionPane {
         GridPane.setValignment(txtSearch, VPos.CENTER);
 
         GridPane gridPane = new GridPane();
-        gridPane.setPadding(new Insets(10));
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
+//        gridPane.setPadding(new Insets(10));
+        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
+        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
 
         gridPane.add(hBoxSum, 0, 0, 3, 1);
 

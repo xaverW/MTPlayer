@@ -23,6 +23,7 @@ import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.filmFilter.FilterCheckRegEx;
 import de.p2tools.mtplayer.controller.mediaDb.MediaData;
 import de.p2tools.mtplayer.controller.mediaDb.MediaFileSize;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.dialogs.accordion.PAccordionPane;
 import de.p2tools.p2Lib.guiTools.PCheckBoxCell;
@@ -147,12 +148,12 @@ public class PaneMediaController extends PAccordionPane {
         btnClear.setGraphic(ProgIcons.Icons.ICON_BUTTON_STOP.getImageView());
         btnClear.setOnAction(a -> txtSearch.clear());
 
-        HBox hBox = new HBox(10);
+        HBox hBox = new HBox(P2LibConst.DIST_BUTTON);
         hBox.getChildren().addAll(lblTreffer);
         hBox.setAlignment(Pos.CENTER_LEFT);
         vBox.getChildren().addAll(hBox);
 
-        hBox = new HBox(10);
+        hBox = new HBox(P2LibConst.DIST_BUTTON);
         hBox.getChildren().addAll(new Label("Suchen:"), txtSearch, btnClear);
         HBox.setHgrow(txtSearch, Priority.ALWAYS);
         hBox.setAlignment(Pos.CENTER_LEFT);

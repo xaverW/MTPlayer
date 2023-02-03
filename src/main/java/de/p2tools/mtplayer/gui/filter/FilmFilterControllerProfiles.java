@@ -23,6 +23,7 @@ import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.filmFilter.FilmFilter;
 import de.p2tools.mtplayer.controller.filmFilter.FilmFilterFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PGuiTools;
@@ -223,7 +224,7 @@ public class FilmFilterControllerProfiles extends VBox {
 
     private void initRest() {
         // Filterprofile
-        HBox hBox = new HBox(10);
+        HBox hBox = new HBox(P2LibConst.DIST_BUTTON);
         btnLoadFilter.setMaxWidth(Double.MAX_VALUE);
         btnSaveFilter.setMaxWidth(Double.MAX_VALUE);
         HBox.setHgrow(btnLoadFilter, Priority.ALWAYS);

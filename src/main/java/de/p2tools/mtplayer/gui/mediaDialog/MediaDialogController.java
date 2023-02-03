@@ -19,10 +19,10 @@ package de.p2tools.mtplayer.gui.mediaDialog;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.tools.HelpText;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.tools.log.PLog;
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.Button;
@@ -36,23 +36,19 @@ import javafx.scene.layout.VBox;
 public class MediaDialogController extends PDialogExtra {
 
     private final Button btnOk = new Button("_Ok");
-
     private final RadioButton rbMedien = new RadioButton("Mediensammlung");
     private final RadioButton rbAbos = new RadioButton("erledigte Abos");
 
-    private final StackPane stackPane = new StackPane();
-    private final BooleanProperty propSearchMedia = ProgConfig.SYSTEM_MEDIA_DIALOG_SEARCH_MEDIA;
-
-    private PaneMedia paneMedia;
-    private PaneAbo paneAbo;
     private final String searchStrOrg;
     private final StringProperty searchStrProp = new SimpleStringProperty();
-
     private final ProgData progData = ProgData.getInstance();
+    private PaneMedia paneMedia;
+    private PaneAbo paneAbo;
+    final StackPane stackPane = new StackPane();
 
     public MediaDialogController(String searchStrOrg) {
         super(ProgData.getInstance().primaryStage, ProgConfig.MEDIA_DIALOG_SIZE, "Mediensammlung",
-                true, false);
+                true, false, DECO.SMALL);
 
         this.searchStrOrg = searchStrOrg.trim();
         searchStrProp.setValue(searchStrOrg);
@@ -70,7 +66,7 @@ public class MediaDialogController extends PDialogExtra {
 
     @Override
     public void close() {
-        rbMedien.selectedProperty().unbindBidirectional(propSearchMedia);
+        rbMedien.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_MEDIA_DIALOG_SEARCH_MEDIA);
         paneAbo.close();
         paneMedia.close();
 
@@ -85,20 +81,16 @@ public class MediaDialogController extends PDialogExtra {
             rbMedien.setToggleGroup(group);
             rbAbos.setToggleGroup(group);
 
-            HBox hBox = new HBox(20);
+            HBox hBox = new HBox(P2LibConst.DIST_BUTTON_BLOCK);
             hBox.getChildren().addAll(rbMedien, rbAbos);
             getVBoxCont().getChildren().add(hBox);
 
             // Stackpane
             paneMedia = new PaneMedia(getStage(), searchStrOrg, searchStrProp);
             paneMedia.make();
-            paneMedia.setFitToHeight(true);
-            paneMedia.setFitToWidth(true);
 
             paneAbo = new PaneAbo(getStage(), searchStrOrg, searchStrProp);
             paneAbo.make();
-            paneAbo.setFitToHeight(true);
-            paneAbo.setFitToWidth(true);
 
             stackPane.getChildren().addAll(paneMedia, paneAbo);
             VBox.setVgrow(stackPane, Priority.ALWAYS);
@@ -116,12 +108,12 @@ public class MediaDialogController extends PDialogExtra {
     private void initAction() {
         btnOk.setOnAction(a -> close());
 
-        rbMedien.selectedProperty().bindBidirectional(propSearchMedia);
+        rbMedien.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_MEDIA_DIALOG_SEARCH_MEDIA);
         rbMedien.setOnAction(a -> {
             setPane();
             filter();
         });
-        rbAbos.setSelected(!propSearchMedia.get());
+        rbAbos.setSelected(!ProgConfig.SYSTEM_MEDIA_DIALOG_SEARCH_MEDIA.get());
         rbAbos.setOnAction(a -> {
             setPane();
             filter();

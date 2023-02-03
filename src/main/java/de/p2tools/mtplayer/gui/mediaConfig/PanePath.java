@@ -130,7 +130,7 @@ public class PanePath {
     }
 
     private void makeButton(VBox vBox) {
-        HBox hBox = new HBox(10);
+        HBox hBox = new HBox(P2LibConst.DIST_BUTTON);
 
         final Button btnHelp = PButton.helpButton(stage,
                 external ? "Externe Mediensammlungen verwalten" : "Interne Mediensammlungen verwalten",
@@ -204,9 +204,9 @@ public class PanePath {
     private void makeGrid(VBox vBox) {
         final GridPane gridPane = new GridPane();
         gridPane.getStyleClass().add("extra-pane");
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(20));
+        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
+        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
+        gridPane.setPadding(new Insets(P2LibConst.DIST_EDGE));
 
         final Button btnPath = new Button("");
         btnPath.setTooltip(new Tooltip("Einen Pfad zum Einlesen einer neuen Sammlung auswählen."));

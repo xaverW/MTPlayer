@@ -25,6 +25,7 @@ import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.mv.LoadMV;
 import de.p2tools.mtplayer.controller.mv.MVFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.dialogs.PDirFileChooser;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
@@ -72,7 +73,8 @@ public class ImportMVDialog extends PDialogExtra {
 
     private void initDialog() {
         VBox vBox = getVBoxCont();
-        vBox.setPadding(new Insets(10));
+        vBox.setSpacing(20);
+        vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
 
         Text text = new Text("1. Pfad zum Konfigfile");
         text.setFont(Font.font(null, FontWeight.BOLD, 16));
@@ -99,9 +101,9 @@ public class ImportMVDialog extends PDialogExtra {
 
     private void addPath(VBox vBox) {
         final GridPane gridPane = new GridPane();
-        gridPane.setHgap(15);
-        gridPane.setVgap(15);
-        gridPane.setPadding(new Insets(5, 20, 5, 20));
+        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
+        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
+//        gridPane.setPadding(new Insets(5, 20, 5, 20));
         vBox.getChildren().add(gridPane);
 
         txtMVPath.setText(MVFactory.getSettingsDirectory());
@@ -128,9 +130,9 @@ public class ImportMVDialog extends PDialogExtra {
 
     private void addLoad(VBox vBox) {
         final GridPane gridPane = new GridPane();
-        gridPane.setHgap(15);
-        gridPane.setVgap(15);
-        gridPane.setPadding(new Insets(5, 20, 5, 20));
+        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
+        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
+//        gridPane.setPadding(new Insets(5, 20, 5, 20));
         vBox.getChildren().add(gridPane);
 
         final Button btnHelp = PButton.helpButton(getStageProp(), "Konfigordner", HelpText.MV_SEARCH);
@@ -168,9 +170,9 @@ public class ImportMVDialog extends PDialogExtra {
 
     private void importLoads(VBox vBox) {
         final GridPane gridPane = new GridPane();
-        gridPane.setHgap(15);
-        gridPane.setVgap(15);
-        gridPane.setPadding(new Insets(5, 20, 5, 20));
+        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
+        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
+//        gridPane.setPadding(new Insets(5, 20, 5, 20));
         vBox.getChildren().add(gridPane);
 
         final Button btnHelp = PButton.helpButton(getStageProp(), "Konfigordner", HelpText.MV_IMPORT);

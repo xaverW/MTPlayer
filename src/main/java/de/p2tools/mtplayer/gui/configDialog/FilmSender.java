@@ -21,8 +21,10 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.film.FilmTools;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
+import de.p2tools.p2Lib.guiTools.PGuiTools;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -56,7 +58,7 @@ public class FilmSender {
     public TitledPane make(Collection<TitledPane> result) {
         initSlider();
         final VBox vBox = new VBox(20);
-        vBox.setPadding(new Insets(10));
+        vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
 
         makeOnly(vBox);
         makeSender(vBox);
@@ -72,8 +74,8 @@ public class FilmSender {
         final Button btnHelpDays = PButton.helpButton(stage, "Filmliste beim Laden filtern",
                 HelpText.LOAD_ONLY_FILMS);
         final GridPane gridPane = new GridPane();
-        gridPane.setHgap(15);
-        gridPane.setVgap(15);
+        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
+        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         gridPane.setPadding(new Insets(0));
 
         int row = 0;
@@ -83,6 +85,7 @@ public class FilmSender {
         gridPane.add(lblDays, 2, row);
         gridPane.add(btnHelpDays, 3, row);
 
+        ++row;
         gridPane.add(new Label("nur Filme mit Mindestlänge laden:"), 0, ++row, 2, 1);
         gridPane.add(new Label("Filme laden:"), 0, ++row);
         gridPane.add(slDuration, 1, row);
@@ -99,12 +102,10 @@ public class FilmSender {
     private void makeSender(VBox vBox) {
         final Button btnHelpSender = PButton.helpButton(stage, "Filmliste beim Laden filtern",
                 HelpText.LOAD_FILMLIST_SENDER);
-        HBox hBox = new HBox(10);
+        HBox hBox = new HBox(P2LibConst.DIST_BUTTON);
         hBox.setAlignment(Pos.CENTER_LEFT);
         Label lbl = new Label("diese Sender  *nicht*  laden:");
-        lbl.setMaxWidth(Double.MAX_VALUE);
-        hBox.getChildren().addAll(lbl, btnClearAll, btnHelpSender);
-        HBox.setHgrow(lbl, Priority.ALWAYS);
+        hBox.getChildren().addAll(lbl, PGuiTools.getHBoxGrower(), btnClearAll, btnHelpSender);
 
         vBox.getChildren().add(new Label(" "));
         vBox.getChildren().add(hBox);

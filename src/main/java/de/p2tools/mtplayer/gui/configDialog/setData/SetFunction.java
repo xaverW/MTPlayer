@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.mtplayer.gui.tools.HelpTextPset;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
@@ -62,7 +63,7 @@ public class SetFunction {
 
         VBox vBox = new VBox(10);
         vBox.setFillWidth(true);
-        vBox.setPadding(new Insets(10));
+        vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
 
         TitledPane tpConfig = new TitledPane("Funktionen", vBox);
         result.add(tpConfig);
@@ -75,8 +76,8 @@ public class SetFunction {
         int row = 0;
         //Speichern, Button, Abo
         GridPane gridPane = new GridPane();
-        gridPane.setHgap(15);
-        gridPane.setVgap(10);
+        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
+        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         vBox.getChildren().add(gridPane);
         gridPane.add(new Label("Funktionen des Sets:"), 0, row, 3, 1);
 

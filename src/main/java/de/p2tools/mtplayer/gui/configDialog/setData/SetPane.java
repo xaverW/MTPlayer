@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.gui.configDialog.setData;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.SetData;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
@@ -55,7 +56,7 @@ public class SetPane {
     public void makePane(Collection<TitledPane> result) {
         changeListener = (observable, oldValue, newValue) -> ProgData.getInstance().setDataList.setListChanged();
 
-        VBox vBox = new VBox(10);
+        VBox vBox = new VBox(P2LibConst.DIST_EDGE);
         vBox.setFillWidth(true);
         vBox.setPadding(new Insets(10));
 
@@ -64,8 +65,8 @@ public class SetPane {
 
         // Name, Beschreibung
         GridPane gridPane = new GridPane();
-        gridPane.setHgap(15);
-        gridPane.setVgap(10);
+        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
+        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         vBox.getChildren().add(gridPane);
 
         gridPane.add(new Label("Set Name:"), 0, 0);

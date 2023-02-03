@@ -20,6 +20,7 @@ package de.p2tools.mtplayer.gui.configDialog.setData;
 import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.gui.tools.HelpText;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
@@ -53,7 +54,7 @@ public class DownloadPane {
 
     public void makePane(Collection<TitledPane> result) {
         VBox vBox = new VBox(25);
-        vBox.setPadding(new Insets(10));
+        vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
 
         TitledPane tpConfig = new TitledPane("Download", vBox);
         result.add(tpConfig);
@@ -66,8 +67,8 @@ public class DownloadPane {
     private void makePraef(VBox vBox) {
         // prefix/suffix
         GridPane gridPane = new GridPane();
-        gridPane.setHgap(15);
-        gridPane.setVgap(10);
+        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
+        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         vBox.getChildren().add(gridPane);
 
         final Button btnHelpPrefix = PButton.helpButton(stage, "Direkt speichern",
@@ -101,8 +102,8 @@ public class DownloadPane {
         rbLow.setOnAction(event -> setResolution());
 
         GridPane gridPane = new GridPane();
-        gridPane.setHgap(15);
-        gridPane.setVgap(10);
+        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
+        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         vBox.getChildren().add(gridPane);
 
         final Button btnHelpRes = PButton.helpButton(stage, "Auflösung",
@@ -122,8 +123,8 @@ public class DownloadPane {
     private void makeInfo(VBox vBox) {
         // Infodateien
         GridPane gridPane = new GridPane();
-        gridPane.setHgap(15);
-        gridPane.setVgap(10);
+        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
+        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
 
         int row = 0;
         gridPane.add(tglInfo, 0, ++row);//Platz nach oben!

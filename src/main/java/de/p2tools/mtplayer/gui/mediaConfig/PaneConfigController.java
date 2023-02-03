@@ -22,6 +22,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.mediaDb.MediaDataWorker;
 import de.p2tools.mtplayer.gui.tools.HelpText;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.dialogs.PDirFileChooser;
 import de.p2tools.p2Lib.dialogs.accordion.PAccordionPane;
 import de.p2tools.p2Lib.guiTools.PButton;
@@ -31,6 +32,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -113,7 +115,7 @@ public class PaneConfigController extends PAccordionPane {
     }
 
     private void initPane(Collection<TitledPane> result) {
-        VBox vBox = new VBox();
+        VBox vBox = new VBox(P2LibConst.DIST_EDGE);
         TitledPane tpConfig = new TitledPane("Allgemein", vBox);
         result.add(tpConfig);
 
@@ -132,9 +134,8 @@ public class PaneConfigController extends PAccordionPane {
         rbInternExtern.setToggleGroup(tgExport);
 
         final GridPane gridPane = new GridPane();
-        gridPane.setHgap(15);
-        gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(20));
+        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
+        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         int row = 0;
         gridPane.add(rbWithOutSuff, 0, row);
         gridPane.add(btnHelp, 1, row);
@@ -155,13 +156,16 @@ public class PaneConfigController extends PAccordionPane {
 
         gridPane.add(new Label(" "), 0, ++row);
         gridPane.add(new Label(" "), 0, ++row);
-        HBox hBox = new HBox(15);
+
+        HBox hBox = new HBox(P2LibConst.DIST_BUTTON);
+        hBox.setAlignment(Pos.CENTER_RIGHT);
         HBox.setHgrow(txtExport, Priority.ALWAYS);
         hBox.getChildren().addAll(new Label("Datei:"), txtExport, btnExportFile);
         gridPane.add(new Label("Mediensammlung in eine Datei exportieren:"), 0, ++row);
         gridPane.add(hBox, 0, ++row, 2, 1);
-        HBox hBoxExport = new HBox(15);
-        Label lblExport = new Label("Datei:");
+
+        HBox hBoxExport = new HBox(P2LibConst.DIST_BUTTON);
+        Label lblExport = new Label("Datei:");//wegen des Abstands :)
         lblExport.setVisible(false);
         hBoxExport.getChildren().addAll(lblExport, rbIntern, rbExtern, rbInternExtern);
         gridPane.add(hBoxExport, 0, ++row);

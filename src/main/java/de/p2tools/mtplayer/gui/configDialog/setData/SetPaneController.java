@@ -23,8 +23,10 @@ import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.gui.tools.HelpTextPset;
 import de.p2tools.mtplayer.gui.tools.SetsPrograms;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
+import de.p2tools.p2Lib.guiTools.PGuiTools;
 import javafx.beans.property.DoubleProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -51,7 +53,6 @@ public class SetPaneController extends AnchorPane {
     private final ScrollPane scrollPane = new ScrollPane();
     private final VBox vBox = new VBox();
     private final TableView<SetData> tableView = new TableView<>();
-    private final ToggleGroup toggleGroup = new ToggleGroup();
 
     static int newCounter = 1;
     private SetDataPane setDataPane;
@@ -224,17 +225,20 @@ public class SetPaneController extends AnchorPane {
         final Button btnHelp = PButton.helpButton(stage, "Set", HelpTextPset.HELP_PSET);
 
 
-        HBox hBoxButton = new HBox(10);
-        hBoxButton.getChildren().addAll(btnNew, btnDel, btnUp, btnDown);
+        HBox hBoxButton = new HBox(P2LibConst.DIST_BUTTON);
+        hBoxButton.getChildren().addAll(btnNew, btnDel, PGuiTools.getHBoxGrower(), btnUp, btnDown);
 
-        VBox vBoxSpace = new VBox();
-        VBox.setVgrow(vBoxSpace, Priority.ALWAYS);
+//        VBox vBoxSpace = new VBox();
+//        VBox.setVgrow(vBoxSpace, Priority.ALWAYS);
 
         HBox hBoxHelp = new HBox();
         hBoxHelp.setAlignment(Pos.CENTER_RIGHT);
         hBoxHelp.getChildren().add(btnHelp);
 
-        vBox.getChildren().addAll(hBoxButton, btnDup, btnNewSet, btnCheck, vBoxSpace, hBoxHelp);
+        VBox vb = new VBox(P2LibConst.DIST_BUTTON);
+        vb.getChildren().addAll(hBoxButton, btnDup, btnNewSet, btnCheck, PGuiTools.getVBoxGrower(), hBoxHelp);
+        VBox.setVgrow(vb, Priority.ALWAYS);
+        vBox.getChildren().addAll(vb);
     }
 
     private int getSelectedLine() {

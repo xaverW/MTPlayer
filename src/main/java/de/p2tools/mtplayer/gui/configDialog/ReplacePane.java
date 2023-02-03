@@ -22,9 +22,11 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.data.ReplaceData;
 import de.p2tools.mtplayer.gui.tools.HelpText;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
+import de.p2tools.p2Lib.guiTools.PGuiTools;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
@@ -63,7 +65,7 @@ public class ReplacePane {
     public void makeReplaceListTable(Collection<TitledPane> result) {
         final VBox vBox = new VBox(10);
         vBox.setFillWidth(true);
-        vBox.setPadding(new Insets(10));
+        vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
 
         makeAscii(vBox);
         initTable(vBox);
@@ -83,8 +85,8 @@ public class ReplacePane {
 
     private void makeAscii(VBox vBox) {
         final GridPane gridPane = new GridPane();
-        gridPane.setHgap(15);
-        gridPane.setVgap(15);
+        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
+        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         vBox.getChildren().add(gridPane);
 
         tglAscii.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_ONLY_ASCII);
@@ -212,17 +214,18 @@ public class ReplacePane {
         });
 
         HBox hBox = new HBox();
-        hBox.setSpacing(10);
+        hBox.setSpacing(P2LibConst.DIST_BUTTON);
         hBox.disableProperty().bind(ProgConfig.SYSTEM_USE_REPLACETABLE.not());
-        hBox.getChildren().addAll(btnNew, btnDel, btnTop, btnUp, btnDown, btnBottom, btnReset);
+        hBox.getChildren().addAll(btnNew, btnDel, PGuiTools.getVDistance(P2LibConst.DIST_BUTTON_BLOCK),
+                btnTop, btnUp, btnDown, btnBottom, PGuiTools.getHBoxGrower(), btnReset);
         vBox.getChildren().addAll(hBox);
     }
 
     private void addConfigs(VBox vBox) {
         gridPane.getStyleClass().add("extra-pane");
-        gridPane.setHgap(15);
-        gridPane.setVgap(5);
-        gridPane.setPadding(new Insets(10));
+        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
+        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
+        gridPane.setPadding(new Insets(P2LibConst.DIST_EDGE));
 
         gridPane.add(new Label("Von: "), 0, 0);
         gridPane.add(txtFrom, 1, 0);

@@ -23,6 +23,7 @@ import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.mtplayer.gui.tools.HelpTextPset;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.dialogs.PDirFileChooser;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
@@ -61,7 +62,7 @@ public class DestinationPane {
     public void makePane(Collection<TitledPane> result) {
         VBox vBox = new VBox(25);
         vBox.setFillWidth(true);
-        vBox.setPadding(new Insets(10));
+        vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
 
         TitledPane tpConfig = new TitledPane("Speicherziel", vBox);
         result.add(tpConfig);
@@ -90,8 +91,8 @@ public class DestinationPane {
 
         int row = 0;
         GridPane gridPane = new GridPane();
-        gridPane.setHgap(15);
-        gridPane.setVgap(10);
+        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
+        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         vBox.getChildren().add(gridPane);
 
         gridPane.add(tglSubdir, 0, row, 2, 1);
@@ -157,14 +158,11 @@ public class DestinationPane {
         GridPane.setValignment(slCutField, VPos.CENTER);
 
         GridPane gridPane = new GridPane();
-        gridPane.setHgap(15);
-        gridPane.setVgap(10);
-//        gridPane.setPadding(new Insets(20));
+        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
+        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         vBox.getChildren().add(gridPane);
 
         int row = 0;
-//        gridPane.add(new Label(" "), 0, row);
-
         gridPane.add(lblTxtAll, 0, ++row);//Platz nach oben!
         gridPane.add(slCut, 1, row);
         gridPane.add(lblSizeAll, 2, row);

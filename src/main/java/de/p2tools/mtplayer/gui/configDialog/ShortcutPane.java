@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.MTShortcut;
 import de.p2tools.mtplayer.gui.tools.HelpText;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -72,7 +73,7 @@ public class ShortcutPane {
         SplitPane.setResizableWithParent(txtLongDescription, Boolean.FALSE);
         splitPane.getItems().addAll(tableView, txtLongDescription);
 
-        HBox hBox = new HBox(5);
+        HBox hBox = new HBox(P2LibConst.DIST_BUTTON);
         hBox.setMaxHeight(Double.MAX_VALUE);
         hBox.getChildren().addAll(splitPane, btnHelp);
         HBox.setHgrow(splitPane, Priority.ALWAYS);

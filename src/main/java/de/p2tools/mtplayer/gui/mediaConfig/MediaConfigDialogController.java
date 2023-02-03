@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.mediaDb.MediaDataWorker;
 import de.p2tools.mtplayer.gui.tools.HelpText;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.dialogs.PDirFileChooser;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
@@ -64,7 +65,7 @@ public class MediaConfigDialogController extends PDialogExtra {
 
     public MediaConfigDialogController() {
         super(ProgData.getInstance().primaryStage, ProgConfig.MEDIA_CONFIG_DIALOG_SIZE, "Mediensammlung",
-                true, false, DECO.NONE);
+                true, false, DECO.BORDER);
 
         this.progData = ProgData.getInstance();
         init(true);
@@ -73,8 +74,6 @@ public class MediaConfigDialogController extends PDialogExtra {
     @Override
     public void make() {
         VBox.setVgrow(tabPane, Priority.ALWAYS);
-        getVBoxCont().getChildren().add(tabPane);
-        getVBoxCont().setPadding(new Insets(0));
 
         final Button btnHelp = PButton.helpButton(getStage(), "Medien", HelpText.MEDIA_DIALOG);
         btnOk.setOnAction(a -> close());
@@ -99,7 +98,11 @@ public class MediaConfigDialogController extends PDialogExtra {
         btnStopSearching.setOnAction(event -> progData.mediaDataList.setStopSearching(true));
         btnStopSearching.visibleProperty().bind(progData.mediaDataList.searchingProperty());
 
-        getHBoxOverButtons().getChildren().addAll(btnCreateMediaDB, btnExportMediaDB, progress, btnStopSearching);
+        getVBoxCont().setPadding(new Insets(P2LibConst.DIST_EDGE));
+        getVBoxCont().getChildren().add(tabPane);
+        HBox hBox = new HBox(P2LibConst.DIST_BUTTON);
+        hBox.getChildren().addAll(btnCreateMediaDB, btnExportMediaDB, progress, btnStopSearching);
+        getVBoxCont().getChildren().addAll(hBox);
         initPanel();
     }
 

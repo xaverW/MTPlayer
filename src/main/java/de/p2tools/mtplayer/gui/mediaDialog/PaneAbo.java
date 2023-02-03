@@ -24,6 +24,7 @@ import de.p2tools.mtplayer.controller.filmFilter.FilterCheckRegEx;
 import de.p2tools.mtplayer.controller.history.HistoryData;
 import de.p2tools.mtplayer.gui.mediaConfig.SearchPredicateWorker;
 import de.p2tools.mtplayer.gui.tools.Listener;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.guiTools.PGuiTools;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
@@ -116,9 +117,9 @@ public class PaneAbo extends ScrollPane {
         btnReset.setTooltip(new Tooltip("Suchtext wieder herstellen"));
 
         GridPane gridPaneSearch = new GridPane();
-        gridPaneSearch.setPadding(new Insets(10));
-        gridPaneSearch.setHgap(10);
-        gridPaneSearch.setVgap(10);
+        gridPaneSearch.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        gridPaneSearch.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
+        gridPaneSearch.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         txtSearch.setPrefWidth(Double.MAX_VALUE);
         GridPane.setHgrow(txtSearch, Priority.ALWAYS);
         gridPaneSearch.getStyleClass().add("extra-pane");
@@ -131,15 +132,15 @@ public class PaneAbo extends ScrollPane {
         gridPaneSearch.add(rbTitle, 2, 1);
         gridPaneSearch.add(rbTt, 3, 1);
 
-        HBox hBoxSum = new HBox(10);
-        hBoxSum.setPadding(new Insets(10));
+        HBox hBoxSum = new HBox(P2LibConst.DIST_BUTTON);
+//        hBoxSum.setPadding(new Insets(10));
         hBoxSum.getChildren().addAll(new Label("Treffer:"), lblTrefferAbo, PGuiTools.getHBoxGrower(),
                 new Label("Anzahl Medien gesamt:"), lblGesamtAbo);
 
         GridPane gridPane = new GridPane();
-        gridPane.setPadding(new Insets(10));
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
+//        gridPane.setPadding(new Insets(10));
+        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
+        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         GridPane.setHgrow(txtUrlAbo, Priority.ALWAYS);
         txtUrlAbo.setEditable(false);
 
@@ -148,10 +149,14 @@ public class PaneAbo extends ScrollPane {
         gridPane.add(new Label("Url:"), 0, 1);
         gridPane.add(txtUrlAbo, 1, 1);
 
-        VBox vBoxAbo = new VBox();
         VBox.setVgrow(tableAbo, Priority.ALWAYS);
-        vBoxAbo.getChildren().addAll(gridPaneSearch, PGuiTools.getHDistance(10), tableAbo, hBoxSum, gridPane);
-        this.setContent(vBoxAbo);
+        VBox vBox = new VBox(10);
+        vBox.getChildren().addAll(gridPaneSearch, PGuiTools.getHDistance(10), tableAbo, hBoxSum, gridPane);
+
+        setPadding(new Insets(P2LibConst.DIST_EDGE));
+        setFitToHeight(true);
+        setFitToWidth(true);
+        this.setContent(vBox);
     }
 
     private void initTableAbo() {
