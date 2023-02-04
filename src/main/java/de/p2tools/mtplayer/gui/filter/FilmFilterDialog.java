@@ -41,7 +41,7 @@ public class FilmFilterDialog extends PDialogExtra {
 
     public FilmFilterDialog(ProgData progData) {
         super(ProgData.getInstance().primaryStage, ProgConfig.FILM_GUI_FILTER_DIALOG, "Filmfilter",
-                false, false, DECO.NOTHING, true);
+                false, false, DECO.NO_BORDER, true);
         this.progData = progData;
         init(false);
     }

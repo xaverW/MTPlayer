@@ -40,7 +40,7 @@ public class FilmFilterEditDialog extends PDialogExtra {
     IntegerProperty waitTime = ProgConfig.SYSTEM_FILTER_WAIT_TIME;
 
     public FilmFilterEditDialog(ProgData progData) {
-        super(progData.primaryStage, null, "Filtereinstellungen", true, true, DECO.NONE);
+        super(progData.primaryStage, null, "Filtereinstellungen", true, true, DECO.NO_BORDER);
         this.progData = progData;
 
         init(true);

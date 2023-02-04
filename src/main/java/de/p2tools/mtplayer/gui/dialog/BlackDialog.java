@@ -49,7 +49,7 @@ public class BlackDialog extends PDialogExtra {
 
     public BlackDialog(ProgData progData) {
         super(progData.primaryStage, ProgConfig.BLACK_DIALOG_SIZE,
-                "Blacklist bearbeiten", false, false, DECO.NONE, true);
+                "Blacklist bearbeiten", false, false, DECO.NO_BORDER, true);
         this.progData = progData;
 
         initDialog();

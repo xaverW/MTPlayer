@@ -46,7 +46,7 @@ public class FilmFilterSortDialog extends PDialogExtra {
     private final ProgData progData;
 
     public FilmFilterSortDialog(ProgData progData) {
-        super(ProgData.getInstance().primaryStage, null, "Filmfilter", true, true, DECO.NONE);
+        super(ProgData.getInstance().primaryStage, null, "Filmfilter", true, true, DECO.NO_BORDER);
         this.progData = progData;
 
         init(false);

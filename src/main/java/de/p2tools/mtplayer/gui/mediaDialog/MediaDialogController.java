@@ -48,7 +48,7 @@ public class MediaDialogController extends PDialogExtra {
 
     public MediaDialogController(String searchStrOrg) {
         super(ProgData.getInstance().primaryStage, ProgConfig.MEDIA_DIALOG_SIZE, "Mediensammlung",
-                true, false, DECO.SMALL);
+                true, false, DECO.BORDER_SMALL);
 
         this.searchStrOrg = searchStrOrg.trim();
         searchStrProp.setValue(searchStrOrg);

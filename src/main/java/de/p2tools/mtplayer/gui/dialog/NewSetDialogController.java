@@ -37,7 +37,7 @@ public class NewSetDialogController extends PDialogExtra {
 
     public NewSetDialogController(ProgData progData) {
         super(progData.primaryStage, null, "Das Standardset wurde aktualisiert",
-                true, false, DECO.NONE);
+                true, false, DECO.NO_BORDER);
 
         this.progData = progData;
         init(true);

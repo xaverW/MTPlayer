@@ -143,7 +143,7 @@ public class DownloadPaneController extends PAccordionPane {
 
         tglBeep.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_BEEP);
         final Button btnBeep = new Button("_Test");
-        btnBeep.getStyleClass().add("buttonSmall");
+//        btnBeep.getStyleClass().add("buttonSmall");
         btnBeep.setOnAction(a -> Toolkit.getDefaultToolkit().beep());
 //        GridPane.setHalignment(btnBeep, HPos.RIGHT);
 
@@ -175,7 +175,8 @@ public class DownloadPaneController extends PAccordionPane {
         gridPane.add(btnHelpSSL, 1, row);
 
         gridPane.add(tglBeep, 0, ++row);
-        gridPane.add(btnBeep, 1, row);
+        gridPane.add(btnBeep, 0, ++row);
+        GridPane.setHalignment(btnBeep, HPos.RIGHT);
 
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(),
                 PColumnConstraints.getCcPrefSize());

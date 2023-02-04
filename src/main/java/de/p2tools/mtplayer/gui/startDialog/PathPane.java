@@ -22,6 +22,7 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.mtplayer.gui.tools.SetsPrograms;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.dialogs.PDirFileChooser;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
@@ -43,7 +44,6 @@ import java.util.List;
 
 public class PathPane {
     StringProperty vlcProp = ProgConfig.SYSTEM_PATH_VLC;
-    //    StringProperty flvProp = ProgConfig.SYSTEM_PATH_FLVSTREAMER;
     StringProperty ffmpegProp = ProgConfig.SYSTEM_PATH_FFMPEG;
     private GridPane gridPane = new GridPane();
     private int row = 0;
@@ -76,9 +76,9 @@ public class PathPane {
     }
 
     public TitledPane makePath() {
-        gridPane.setHgap(15);
-        gridPane.setVgap(15);
-        gridPane.setPadding(new Insets(20));
+        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
+        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
+        gridPane.setPadding(new Insets(P2LibConst.DIST_EDGE));
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow());
 
         Button btnEmpty = new Button(" "); // ist nur für die Zeilenhöhe
