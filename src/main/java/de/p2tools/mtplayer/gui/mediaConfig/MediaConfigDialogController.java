@@ -18,11 +18,7 @@ package de.p2tools.mtplayer.gui.mediaConfig;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.ProgIcons;
-import de.p2tools.mtplayer.controller.mediaDb.MediaDataWorker;
 import de.p2tools.mtplayer.gui.tools.HelpText;
-import de.p2tools.p2Lib.P2LibConst;
-import de.p2tools.p2Lib.dialogs.PDirFileChooser;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.tools.log.PLog;
@@ -31,10 +27,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
@@ -43,11 +37,6 @@ public class MediaConfigDialogController extends PDialogExtra {
 
     private TabPane tabPane = new TabPane();
     private Button btnOk = new Button("_Ok");
-    private Button btnCreateMediaDB = new Button("_Mediensammlung neu aufbauen");
-    private Button btnExportMediaDB = new Button("Mediensammlung exportieren");
-    private ProgressBar progress = new ProgressBar();
-    private Button btnStopSearching = new Button();
-
     private PaneConfigController paneConfigController;
     private PaneMediaController paneMediaController;
     private PaneHistoryController paneHistoryController;
@@ -65,7 +54,7 @@ public class MediaConfigDialogController extends PDialogExtra {
 
     public MediaConfigDialogController() {
         super(ProgData.getInstance().primaryStage, ProgConfig.MEDIA_CONFIG_DIALOG_SIZE, "Mediensammlung",
-                true, false, DECO.BORDER);
+                true, false, DECO.NO_BORDER);
 
         this.progData = ProgData.getInstance();
         init(true);
@@ -74,43 +63,19 @@ public class MediaConfigDialogController extends PDialogExtra {
     @Override
     public void make() {
         VBox.setVgrow(tabPane, Priority.ALWAYS);
-
         final Button btnHelp = PButton.helpButton(getStage(), "Medien", HelpText.MEDIA_DIALOG);
         btnOk.setOnAction(a -> close());
-        progress.visibleProperty().bind(progData.mediaDataList.searchingProperty());
-        btnCreateMediaDB.disableProperty().bind(progData.mediaDataList.searchingProperty());
-        btnCreateMediaDB.setOnAction(event -> MediaDataWorker.createMediaDb());
-
-        btnExportMediaDB.disableProperty().bind(progData.mediaDataList.searchingProperty());
-        btnExportMediaDB.setOnAction(a -> {
-            String file = PDirFileChooser.FileChooserSave(ProgData.getInstance().primaryStage, "", "Mediensammlung.json");
-            new WriteMediaCollection().write(file, progData.mediaDataList);
-        });
 
         addOkButton(btnOk);
         addHlpButton(btnHelp);
 
-        progress.setMaxHeight(Double.MAX_VALUE);
-        progress.setMaxWidth(Double.MAX_VALUE);
-        HBox.setHgrow(progress, Priority.ALWAYS);
-
-        btnStopSearching.setGraphic(ProgIcons.Icons.ICON_BUTTON_STOP.getImageView());
-        btnStopSearching.setOnAction(event -> progData.mediaDataList.setStopSearching(true));
-        btnStopSearching.visibleProperty().bind(progData.mediaDataList.searchingProperty());
-
-        getVBoxCont().setPadding(new Insets(P2LibConst.DIST_EDGE));
+        getVBoxCont().setPadding(new Insets(0));
         getVBoxCont().getChildren().add(tabPane);
-        HBox hBox = new HBox(P2LibConst.DIST_BUTTON);
-        hBox.getChildren().addAll(btnCreateMediaDB, btnExportMediaDB, progress, btnStopSearching);
-        getVBoxCont().getChildren().addAll(hBox);
         initPanel();
     }
 
     @Override
     public void close() {
-        progress.visibleProperty().unbind();
-        btnCreateMediaDB.disableProperty().unbind();
-
         paneConfigController.close();
         paneMediaController.close();
         paneHistoryController.close();
