@@ -27,6 +27,7 @@ import de.p2tools.mtplayer.gui.filter.FilmFilterDialog;
 import de.p2tools.mtplayer.gui.tools.ProgTipOfDay;
 import de.p2tools.p2Lib.dialogs.dialog.PDialog;
 import de.p2tools.p2Lib.icons.GetIcon;
+import de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerLoadFilmlist;
 import de.p2tools.p2Lib.tools.ProgramToolsFactory;
 import de.p2tools.p2Lib.tools.date.DateFactory;
@@ -60,7 +61,7 @@ public class ProgStartAfterGui {
         ProgData.getInstance().startTimer();
         LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
             @Override
-            public void finished(de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent event) {
+            public void finished(ListenerFilmlistLoadEvent event) {
                 if (!doneAtProgramStart) {
                     doneAtProgramStart = true;
                     MediaDataWorker.createMediaDb();
