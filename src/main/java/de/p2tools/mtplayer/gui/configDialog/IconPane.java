@@ -16,7 +16,7 @@
 
 package de.p2tools.mtplayer.gui.configDialog;
 
-import de.p2tools.mtplayer.controller.ProgStart;
+import de.p2tools.mtplayer.controller.ProgStartAfterGui;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
@@ -94,11 +94,11 @@ public class IconPane {
         btnProgIconFile.setGraphic(ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
         txtProgIconPath.textProperty().bindBidirectional(propProgIcon);
         tglOwnProgIcon.selectedProperty().addListener((v, o, n) -> {
-            ProgStart.setProgramIcon(ProgData.getInstance());
+            ProgStartAfterGui.setProgramIcon();
             GetIcon.addWindowP2Icon(stage, tglOwnProgIcon.isSelected() ? txtProgIconPath.getText() : "");
         });
         txtProgIconPath.textProperty().addListener((v, o, n) -> {
-            ProgStart.setProgramIcon(ProgData.getInstance());
+            ProgStartAfterGui.setProgramIcon();
             GetIcon.addWindowP2Icon(stage, tglOwnProgIcon.isSelected() ? txtProgIconPath.getText() : "");
         });
 

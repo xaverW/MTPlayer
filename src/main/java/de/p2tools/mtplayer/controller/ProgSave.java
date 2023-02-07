@@ -16,11 +16,14 @@
 
 package de.p2tools.mtplayer.controller;
 
+import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
+import de.p2tools.p2Lib.configFile.ConfigFile;
+import de.p2tools.p2Lib.configFile.WriteConfigFile;
 import de.p2tools.p2Lib.tools.log.PLog;
 import de.p2tools.p2Lib.tools.log.PLogger;
 import org.apache.commons.lang3.time.FastDateFormat;
@@ -38,24 +41,22 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class ProgSave {
-    final ProgData progData;
-    private boolean alreadyMadeBackup = false;
-    private boolean open = true;
+    private static boolean alreadyMadeBackup = false;
+    private static boolean open = true;
 
-    public ProgSave() {
-        progData = ProgData.getInstance();
+    private ProgSave() {
     }
 
-    public void saveAll() {
+    public static void saveAll() {
         copyConfig();
-        ProgSaveFactory.saveProgConfig();
+        saveProgConfig();
 
         if (ProgData.reset) {
             reset();
         }
     }
 
-    private void reset() {
+    private static void reset() {
         // das Programm soll beim nächsten Start mit den Standardeinstellungen gestartet werden
         // dazu wird den Ordner mit den Einstellungen umbenannt
         try {
@@ -91,7 +92,7 @@ public class ProgSave {
             }
             while (open) {
                 try {
-                    wait(100);
+                    ProgSave.class.wait(100);
                 } catch (final Exception ignored) {
                 }
             }
@@ -99,10 +100,23 @@ public class ProgSave {
 
     }
 
+    private static void saveProgConfig() {
+        //sind die Programmeinstellungen
+        PLog.sysLog("save progConfig");
+
+        final Path xmlFilePath = ProgInfos.getSettingsFile();
+        ConfigFile configFile = new ConfigFile(ProgConst.XML_START, xmlFilePath);
+        ProgConfig.addConfigData(configFile);
+
+        WriteConfigFile writeConfigFile = new WriteConfigFile();
+        writeConfigFile.addConfigFile(configFile);
+        writeConfigFile.writeConfigFile();
+    }
+
     /**
      * Create backup copies of settings file.
      */
-    private void copyConfig() {
+    private static void copyConfig() {
         if (alreadyMadeBackup) {
             return;
         }
@@ -156,7 +170,7 @@ public class ProgSave {
      *
      * @return Number of milliseconds from today´s midnight.
      */
-    private long getToday_0_0() {
+    private static long getToday_0_0() {
         final Calendar cal = Calendar.getInstance();
         cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.MINUTE, 0);

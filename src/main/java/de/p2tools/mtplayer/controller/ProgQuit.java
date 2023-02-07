@@ -75,7 +75,7 @@ public class ProgQuit {
     private static void saveConfig() {
         stopAllDownloads();
         writeTabSettings();
-        new ProgSave().saveAll();
+        ProgSave.saveAll();
         LogMessage.endMsg();
     }
 

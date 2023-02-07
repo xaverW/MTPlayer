@@ -27,6 +27,7 @@ import de.p2tools.mtplayer.controller.data.abo.AboFactory;
 import de.p2tools.mtplayer.controller.filmFilter.FilmFilterFactory;
 import de.p2tools.p2Lib.mtFilm.film.FilmData;
 import de.p2tools.p2Lib.mtFilm.film.Filmlist;
+import de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerLoadFilmlist;
 import de.p2tools.p2Lib.mtFilm.loadFilmlist.LoadFilmlist;
 import de.p2tools.p2Lib.mtFilm.tools.LoadFactoryConst;
 import de.p2tools.p2Lib.tools.duration.PDuration;
@@ -41,7 +42,7 @@ public class LoadFilmFactory {
 
     private LoadFilmFactory(Filmlist<FilmDataMTP> filmlistNew, Filmlist<FilmDataMTP> filmlistDiff) {
         loadFilmlist = new LoadFilmlist(filmlistNew, filmlistDiff);
-        loadFilmlist.addListenerLoadFilmlist(new de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerLoadFilmlist() {
+        loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
             @Override
             public synchronized void start(de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent event) {
                 ProgData.getInstance().worker.workOnLoadStart();
@@ -69,7 +70,7 @@ public class LoadFilmFactory {
             public synchronized void finished(de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent event) {
                 PDuration.onlyPing("Filme geladen: Nachbearbeiten");
                 afterLoadingFilmlist();
-                new ProgSave().saveAll(); // damit nichts verloren geht
+                ProgSave.saveAll(); // damit nichts verloren geht
                 PDuration.onlyPing("Filme nachbearbeiten: Ende");
 
                 if (!ProgConfig.ABO_SEARCH_NOW.getValue() && !ProgData.automode) {

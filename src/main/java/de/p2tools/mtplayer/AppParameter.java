@@ -17,7 +17,7 @@
 
 package de.p2tools.mtplayer;
 
-import de.p2tools.mtplayer.controller.ProgStart;
+import de.p2tools.mtplayer.controller.ProgStartAfterGui;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2Lib.tools.log.LogMessage;
@@ -56,7 +56,7 @@ public class AppParameter {
 
             if (hasOption(line, ProgParameter.VERSION)) {
                 EventQueue.invokeLater(() -> {
-                    ProgStart.shortStartMsg();
+                    ProgStartAfterGui.shortStartMsg();
                     LogMessage.endMsg();
                     System.exit(0);
                 });

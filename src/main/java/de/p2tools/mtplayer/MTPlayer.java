@@ -16,18 +16,14 @@
 package de.p2tools.mtplayer;
 
 import de.p2tools.mtplayer.controller.ProgQuit;
-import de.p2tools.mtplayer.controller.ProgStart;
+import de.p2tools.mtplayer.controller.ProgStartAfterGui;
+import de.p2tools.mtplayer.controller.ProgStartBeforeGui;
 import de.p2tools.mtplayer.controller.config.*;
-import de.p2tools.mtplayer.controller.data.ListePsetVorlagen;
-import de.p2tools.mtplayer.controller.data.SetDataList;
-import de.p2tools.mtplayer.controller.filmFilter.FilmFilterFactory;
-import de.p2tools.mtplayer.gui.startDialog.StartDialogController;
 import de.p2tools.p2Lib.P2LibInit;
 import de.p2tools.p2Lib.configFile.IoReadWriteStyle;
 import de.p2tools.p2Lib.guiTools.PGuiSize;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -35,10 +31,8 @@ public class MTPlayer extends Application {
 
     private Stage primaryStage;
     private static final String LOG_TEXT_PROGRAMSTART = "Dauer Programmstart";
-    protected ProgData progData;
-    ProgStart progStart = new ProgStart();
-    Scene scene = null;
-    private boolean firstProgramStart = false; // ist der allererste Programmstart: Programminit wird gemacht
+    private ProgData progData;
+    private Scene scene = null;
 
     public static void main(String[] args) {
         launch(args);
@@ -57,9 +51,9 @@ public class MTPlayer extends Application {
         progData.primaryStage = primaryStage;
 
         initP2lib();
-        workBeforeGui();
+        ProgStartBeforeGui.workBeforeGui();
         initRootLayout();
-        progStart.doWorkAfterGui(progData, firstProgramStart);
+        ProgStartAfterGui.doWorkAfterGui();
 
         PDuration.onlyPing("Gui steht!");
         PDuration.counterStop(LOG_TEXT_PROGRAMSTART);
@@ -70,39 +64,6 @@ public class MTPlayer extends Application {
                 "", ProgConfig.SYSTEM_DARK_THEME,
                 ProgData.debug, ProgData.duration);
         P2LibInit.addCssFile(ProgConst.CSS_FILE);
-    }
-
-    private void workBeforeGui() {
-        if (!progStart.loadAll()) {
-            PDuration.onlyPing("Erster Start");
-            firstProgramStart = true;
-
-            UpdateConfig.setUpdateDone(); // dann ists ja kein Programmupdate
-            progData.replaceList.init(); // einmal ein Muster anlegen, für Linux ist es bereits aktiv!
-
-            StartDialogController startDialogController = new StartDialogController();
-            if (!startDialogController.isOk()) {
-                // dann jetzt beenden -> Thüss
-                Platform.exit();
-                System.exit(0);
-            }
-
-            //todo das ist noch nicht ganz klar ob dahin
-            Platform.runLater(() -> {
-                PDuration.onlyPing("Erster Start: PSet");
-
-                // kann ein Dialog aufgehen
-                final SetDataList pSet = ListePsetVorlagen.getStandarset(true /*replaceMuster*/);
-                if (pSet != null) {
-                    progData.setDataList.addSetData(pSet);
-                    ProgConfig.SYSTEM_UPDATE_PROGSET_VERSION.setValue(pSet.version);
-                }
-
-                PDuration.onlyPing("Erster Start: PSet geladen");
-            });
-
-            FilmFilterFactory.addStandardFilter();
-        }
     }
 
     private void initRootLayout() {

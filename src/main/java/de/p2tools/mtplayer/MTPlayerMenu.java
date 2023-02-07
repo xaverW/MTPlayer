@@ -114,7 +114,7 @@ public class MTPlayerMenu extends MenuButton {
                 mtpTester.showDialog();
             });
             final MenuItem miSave = new MenuItem("Alles Speichern");
-            miSave.setOnAction(a -> new ProgSave().saveAll());
+            miSave.setOnAction(a -> ProgSave.saveAll());
 
             mHelp.getItems().addAll(new SeparatorMenuItem(), miDebug, miSave);
         }
