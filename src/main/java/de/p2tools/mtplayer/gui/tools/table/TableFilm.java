@@ -19,35 +19,22 @@ package de.p2tools.mtplayer.gui.tools.table;
 import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.film.FilmTools;
-import de.p2tools.p2Lib.guiTools.PCheckBoxCell;
 import de.p2tools.p2Lib.guiTools.PTableFactory;
+import de.p2tools.p2Lib.guiTools.pTable.CellCheckBox;
+import de.p2tools.p2Lib.guiTools.pTable.CellIntNull;
 import de.p2tools.p2Lib.mtFilm.film.FilmSize;
 import de.p2tools.p2Lib.tools.date.PDate;
-import javafx.beans.property.BooleanProperty;
-import javafx.event.ActionEvent;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
-import javafx.util.Callback;
 
 public class TableFilm extends PTable<FilmDataMTP> {
-
-    private final ProgData progData;
-    private final BooleanProperty small;
 
     public TableFilm(Table.TABLE_ENUM table_enum, ProgData progData) {
         super(table_enum);
         this.table_enum = table_enum;
-        this.progData = progData;
-        small = ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM;
-
-//        setFixedCellSize(25);
-
         initFileRunnerColumn();
     }
 
@@ -96,7 +83,7 @@ public class TableFilm extends PTable<FilmDataMTP> {
         titleColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<FilmDataMTP, String> startColumn = new TableColumn<>("");
-        startColumn.setCellFactory(cellFactoryStart);
+        startColumn.setCellFactory(new CellFilmStart().cellFactoryStart);
         startColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<FilmDataMTP, PDate> datumColumn = new TableColumn<>("Datum");
@@ -108,7 +95,7 @@ public class TableFilm extends PTable<FilmDataMTP> {
         timeColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<FilmDataMTP, Integer> durationColumn = new TableColumn<>("Dauer [min]");
-        durationColumn.setCellFactory(cellFactoryDuration);
+        durationColumn.setCellFactory(new CellIntNull().cellFactory);
         durationColumn.setCellValueFactory(new PropertyValueFactory<>("durationMinute"));
         durationColumn.getStyleClass().add("alignCenterRightPadding_25");
 
@@ -118,12 +105,12 @@ public class TableFilm extends PTable<FilmDataMTP> {
 
         final TableColumn<FilmDataMTP, Boolean> hdColumn = new TableColumn<>("HD");
         hdColumn.setCellValueFactory(new PropertyValueFactory<>("hd"));
-        hdColumn.setCellFactory(new PCheckBoxCell().cellFactoryBool);
+        hdColumn.setCellFactory(new CellCheckBox().cellFactoryBool);
         hdColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<FilmDataMTP, Boolean> utColumn = new TableColumn<>("UT");
         utColumn.setCellValueFactory(new PropertyValueFactory<>("ut"));
-        utColumn.setCellFactory(new PCheckBoxCell().cellFactoryBool);
+        utColumn.setCellFactory(new CellCheckBox().cellFactoryBool);
         utColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<FilmDataMTP, String> geoColumn = new TableColumn<>("Geo");
@@ -143,8 +130,6 @@ public class TableFilm extends PTable<FilmDataMTP> {
         themeColumn.setPrefWidth(180);
         titleColumn.setPrefWidth(230);
 
-//        addRowFact(table);
-
         getColumns().addAll(
                 nrColumn,
                 senderColumn, themeColumn, titleColumn,
@@ -154,85 +139,4 @@ public class TableFilm extends PTable<FilmDataMTP> {
                 geoColumn,
                 urlColumn, aboColumn);
     }
-
-    private Callback<TableColumn<FilmDataMTP, String>, TableCell<FilmDataMTP, String>> cellFactoryStart
-            = (final TableColumn<FilmDataMTP, String> param) -> {
-
-        final TableCell<FilmDataMTP, String> cell = new TableCell<>() {
-
-            @Override
-            public void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (empty) {
-                    setGraphic(null);
-                    setText(null);
-                    return;
-                }
-
-                FilmDataMTP film = getTableView().getItems().get(getIndex());
-
-                final HBox hbox = new HBox();
-                hbox.setSpacing(4);
-                hbox.setAlignment(Pos.CENTER);
-                hbox.setPadding(new Insets(0, 2, 0, 2));
-
-                final Button btnPlay;
-                final Button btnSave;
-
-                btnPlay = new Button("");
-                btnPlay.getStyleClass().addAll("btnFunction", "btnFuncTable");
-                btnPlay.setGraphic(ProgIcons.Icons.IMAGE_TABLE_FILM_PLAY.getImageView());
-
-                btnSave = new Button("");
-                btnSave.getStyleClass().addAll("btnFunction", "btnFuncTable");
-                btnSave.setGraphic(ProgIcons.Icons.IMAGE_TABLE_FILM_SAVE.getImageView());
-
-                if (small.get()) {
-                    btnPlay.setMaxHeight(18);
-                    btnPlay.setMinHeight(18);
-                    btnSave.setMaxHeight(18);
-                    btnSave.setMinHeight(18);
-                }
-
-                btnPlay.setOnAction((ActionEvent event) -> {
-                    FilmTools.playFilm(film, null);
-                });
-                btnSave.setOnAction(event -> {
-                    ProgData.getInstance().filmlist.saveFilm(film, null);
-                });
-                hbox.getChildren().addAll(btnPlay, btnSave/*, btnBookmark*/);
-                setGraphic(hbox);
-            }
-        };
-        return cell;
-    };
-
-    private Callback<TableColumn<FilmDataMTP, Integer>, TableCell<FilmDataMTP, Integer>> cellFactoryDuration
-            = (final TableColumn<FilmDataMTP, Integer> param) -> {
-
-        final TableCell<FilmDataMTP, Integer> cell = new TableCell<>() {
-
-            @Override
-            public void updateItem(Integer item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (item == null || empty) {
-                    setGraphic(null);
-                    setText(null);
-                    return;
-                }
-
-                if (item == 0) {
-                    setGraphic(null);
-                    setText(null);
-                } else {
-                    setGraphic(null);
-                    setText(item + "");
-                }
-
-            }
-        };
-        return cell;
-    };
 }

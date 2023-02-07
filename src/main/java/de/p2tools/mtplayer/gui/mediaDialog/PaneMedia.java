@@ -27,10 +27,10 @@ import de.p2tools.mtplayer.controller.mediaDb.MediaFileSize;
 import de.p2tools.mtplayer.gui.mediaConfig.SearchPredicateWorker;
 import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.p2Lib.P2LibConst;
-import de.p2tools.p2Lib.guiTools.PCheckBoxCell;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.PGuiTools;
 import de.p2tools.p2Lib.guiTools.POpen;
+import de.p2tools.p2Lib.guiTools.pTable.CellCheckBox;
 import de.p2tools.p2Lib.tools.file.PFileUtils;
 import javafx.application.Platform;
 import javafx.beans.property.StringProperty;
@@ -179,7 +179,7 @@ public class PaneMedia extends ScrollPane {
         final TableColumn<MediaData, Boolean> externalColumn = new TableColumn<>("extern");
         externalColumn.prefWidthProperty().bind(tableMedia.widthProperty().multiply(10.0 / 100));
         externalColumn.setCellValueFactory(new PropertyValueFactory<>("external"));
-        externalColumn.setCellFactory(new PCheckBoxCell().cellFactoryBool);
+        externalColumn.setCellFactory(new CellCheckBox().cellFactoryBool);
 
         tableMedia.getColumns().addAll(nameColumn, pathColumn, sizeColumn, externalColumn);
 

@@ -28,6 +28,7 @@ import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.controller.tools.SizeTools;
 import de.p2tools.mtplayer.gui.dialog.AutomodeContinueDialogController;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.mtFilm.film.FilmDataXml;
 import de.p2tools.p2Lib.tools.date.DateFactory;
 import de.p2tools.p2Lib.tools.date.PDate;
@@ -269,7 +270,7 @@ public class StarterClass {
             }
         }
 
-        download.setNo(DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED);
+        download.setNo(P2LibConst.NUMBER_NOT_STARTED);
         ProgData.getInstance().downloadGuiController.tableRefresh();
         start.setProcess(null);
         start.setInputStream(null);

@@ -19,16 +19,13 @@ package de.p2tools.mtplayer.gui.tools.table;
 import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
-import de.p2tools.mtplayer.controller.filmFilter.CheckFilmFilter;
-import de.p2tools.p2Lib.guiTools.PCheckBoxCell;
 import de.p2tools.p2Lib.guiTools.PTableFactory;
+import de.p2tools.p2Lib.guiTools.pTable.CellCheckBox;
 import de.p2tools.p2Lib.tools.date.PDate;
 import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
 
 public class TableAbo extends PTable<AboData> {
 
@@ -68,13 +65,12 @@ public class TableAbo extends PTable<AboData> {
 
         final TableColumn<AboData, Boolean> activColumn = new TableColumn<>("Aktiv");
         activColumn.setCellValueFactory(new PropertyValueFactory<>("active"));
-        activColumn.setCellFactory(new PCheckBoxCell().cellFactoryBool);
-        activColumn.setCellFactory(callbackAktiv);
+        activColumn.setCellFactory(new CellCheckBox().cellFactoryBool);
         activColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<AboData, Integer> hitColumn = new TableColumn<>("Treffer");
         hitColumn.setCellValueFactory(new PropertyValueFactory<>("hit"));
-        hitColumn.setCellFactory(callbackHits);
+        hitColumn.setCellFactory(new CellAboBackHist().callbackHits);
         hitColumn.getStyleClass().add("alignCenterRightPadding_10");
 
         final TableColumn<AboData, String> nameColumn = new TableColumn<>("Name");
@@ -95,7 +91,7 @@ public class TableAbo extends PTable<AboData> {
 
         final TableColumn<AboData, Boolean> themeExactColumn = new TableColumn<>("Thema exakt");
         themeExactColumn.setCellValueFactory(new PropertyValueFactory<>("themeExact"));
-        themeExactColumn.setCellFactory(new PCheckBoxCell().cellFactoryBool);
+        themeExactColumn.setCellFactory(new CellCheckBox().cellFactoryBool);
         themeExactColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<AboData, String> themeTitleColumn = new TableColumn<>("Thema-Titel");
@@ -111,17 +107,17 @@ public class TableAbo extends PTable<AboData> {
         somewhereColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<AboData, Integer> timeRange = new TableColumn<>("Zeitraum");
-        timeRange.setCellFactory(cellFactoryMin);
+        timeRange.setCellFactory(new CellAboMin().cellFactoryMin);
         timeRange.setCellValueFactory(new PropertyValueFactory<>("timeRange"));
         timeRange.getStyleClass().add("alignCenter");
 
         final TableColumn<AboData, Integer> minColumn = new TableColumn<>("Min");
-        minColumn.setCellFactory(cellFactoryMin);
+        minColumn.setCellFactory(new CellAboMin().cellFactoryMin);
         minColumn.setCellValueFactory(new PropertyValueFactory<>("minDurationMinute"));
         minColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<AboData, Integer> maxColumn = new TableColumn<>("Max");
-        maxColumn.setCellFactory(cellFactoryMax);
+        maxColumn.setCellFactory(new CellAboMax().cellFactoryMax);
         maxColumn.setCellValueFactory(new PropertyValueFactory<>("maxDurationMinute"));
         maxColumn.getStyleClass().add("alignCenter");
 
@@ -152,102 +148,4 @@ public class TableAbo extends PTable<AboData> {
                 destinationColumn, datumColumn, psetColumn, genDateColumn);
 
     }
-
-    private static Callback<TableColumn<AboData, Boolean>, TableCell<AboData, Boolean>> callbackAktiv =
-            (final TableColumn<AboData, Boolean> param) -> {
-
-                final PCheckBoxCell<AboData, Boolean> cell = new PCheckBoxCell<>() {
-
-                    @Override
-                    public void updateItem(Boolean item, boolean empty) {
-
-                        super.updateItem(item, empty);
-
-                        if (item == null || empty) {
-                            setGraphic(null);
-                            setText(null);
-                            return;
-                        }
-
-                        initCell(item);
-                    }
-                };
-                return cell;
-            };
-
-    private static Callback<TableColumn<AboData, Integer>, TableCell<AboData, Integer>> callbackHits =
-            (final TableColumn<AboData, Integer> param) -> {
-
-                final TableCell<AboData, Integer> cell = new TableCell<>() {
-
-                    @Override
-                    public void updateItem(Integer item, boolean empty) {
-                        super.updateItem(item, empty);
-
-                        if (item == null || empty) {
-                            setGraphic(null);
-                            setText(null);
-                            return;
-                        }
-
-                        AboData aboData = getTableView().getItems().get(getIndex());
-                        if (aboData.isActive()) {
-                            setText(item.toString());
-                        } else {
-                            setText("");
-                        }
-                    }
-                };
-                return cell;
-            };
-
-    private static Callback<TableColumn<AboData, Integer>, TableCell<AboData, Integer>> cellFactoryMin
-            = (final TableColumn<AboData, Integer> param) -> {
-
-        final TableCell<AboData, Integer> cell = new TableCell<>() {
-
-            @Override
-            public void updateItem(Integer item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (item == null || empty) {
-                    setGraphic(null);
-                    setText(null);
-                    return;
-                }
-
-                if (item == 0) {
-                    setText("alles");
-                } else {
-                    setText(item + "");
-                }
-            }
-        };
-        return cell;
-    };
-
-    private static Callback<TableColumn<AboData, Integer>, TableCell<AboData, Integer>> cellFactoryMax
-            = (final TableColumn<AboData, Integer> param) -> {
-
-        final TableCell<AboData, Integer> cell = new TableCell<>() {
-
-            @Override
-            public void updateItem(Integer item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (item == null || empty) {
-                    setGraphic(null);
-                    setText(null);
-                    return;
-                }
-
-                if (item == CheckFilmFilter.FILTER_DURATION_MAX_MINUTE) {
-                    setText("alles");
-                } else {
-                    setText(item + "");
-                }
-            }
-        };
-        return cell;
-    };
 }

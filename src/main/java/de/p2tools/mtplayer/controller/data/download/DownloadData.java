@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.starter.Start;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.mtDownload.DownloadSize;
 import de.p2tools.p2Lib.mtFilm.film.FilmDataXml;
@@ -167,7 +168,7 @@ public final class DownloadData extends DownloadDataProps {
         setRemaining("");
         setBandwidth("");
         getStart().setBandwidth(0);
-        setNo(DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED);
+        setNo(P2LibConst.NUMBER_NOT_STARTED);
 
         setState(DownloadConstants.STATE_INIT);
         setProgress(DownloadConstants.PROGRESS_NOT_STARTED);
@@ -187,7 +188,7 @@ public final class DownloadData extends DownloadDataProps {
         setRemaining("");
         setBandwidth("");
         getStart().setBandwidth(0);
-        setNo(DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED);
+        setNo(P2LibConst.NUMBER_NOT_STARTED);
     }
 
     public void makeProgParameter() {
@@ -239,7 +240,7 @@ public final class DownloadData extends DownloadDataProps {
     public void setFilm(FilmDataMTP film) {
         if (film == null) {
             // bei gespeicherten Downloads kann es den Film nicht mehr geben
-            setFilmNr(DownloadConstants.FILM_NUMBER_NOT_FOUND);
+            setFilmNr(P2LibConst.NUMBER_NOT_STARTED);
             return;
         }
 

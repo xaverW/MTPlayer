@@ -20,6 +20,7 @@ package de.p2tools.mtplayer.gui.chart;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
+import de.p2tools.p2Lib.P2LibConst;
 import javafx.geometry.Side;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -185,11 +186,11 @@ public class ChartFactory {
             }
 
             //damit beim Pausieren die Nummer nicht verloren geht
-            if (download != null && download.getNo() != DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED) {
+            if (download != null && download.getNo() != P2LibConst.NUMBER_NOT_STARTED) {
                 bandwidthData.setName(download.getNo() + "");
 
             } else if (download != null && download.getFilm() != null) {
-                final String fNo = download.getFilm().getNo() == DownloadConstants.FILM_NUMBER_NOT_FOUND ?
+                final String fNo = download.getFilm().getNo() == P2LibConst.NUMBER_NOT_STARTED ?
                         " " : "[" + download.getFilm().getNo() + "]";
                 bandwidthData.setName(fNo);
             }

@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.controller.data.download;
 
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.configFile.config.*;
 import de.p2tools.p2Lib.configFile.pData.PDataSample;
 import de.p2tools.p2Lib.mtDownload.DownloadSize;
@@ -29,8 +30,8 @@ import java.util.ArrayList;
 
 public class DownloadDataProps extends PDataSample<DownloadData> {
 
-    private final IntegerProperty no = new SimpleIntegerProperty(DownloadConstants.DOWNLOAD_NUMBER_NOT_STARTED);
-    private final IntegerProperty filmNr = new SimpleIntegerProperty(DownloadConstants.FILM_NUMBER_NOT_FOUND);
+    private final IntegerProperty no = new SimpleIntegerProperty(P2LibConst.NUMBER_NOT_STARTED);
+    private final IntegerProperty filmNr = new SimpleIntegerProperty(P2LibConst.NUMBER_NOT_STARTED);
 
     private final StringProperty aboName = new SimpleStringProperty("");
     private final StringProperty channel = new SimpleStringProperty("");

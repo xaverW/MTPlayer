@@ -28,8 +28,8 @@ import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.dialogs.PDirFileChooser;
 import de.p2tools.p2Lib.dialogs.accordion.PAccordionPane;
-import de.p2tools.p2Lib.guiTools.PCheckBoxCell;
 import de.p2tools.p2Lib.guiTools.PGuiTools;
+import de.p2tools.p2Lib.guiTools.pTable.CellCheckBox;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.transformation.SortedList;
@@ -116,7 +116,7 @@ public class PaneMediaController extends PAccordionPane {
 
         final TableColumn<MediaData, Boolean> externalColumn = new TableColumn<>("extern");
         externalColumn.setCellValueFactory(new PropertyValueFactory<>("external"));
-        externalColumn.setCellFactory(new PCheckBoxCell().cellFactoryBool);
+        externalColumn.setCellFactory(new CellCheckBox().cellFactoryBool);
 
         tableView.getColumns().addAll(nameColumn, pathColumn, sizeColumn, collectionNameColumn, externalColumn);
 
