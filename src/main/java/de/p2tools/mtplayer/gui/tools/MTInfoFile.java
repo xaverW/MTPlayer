@@ -59,7 +59,7 @@ public class MTInfoFile {
                 br.write(P2LibConst.LINE_SEPARATOR);
                 br.write(FilmDataXml.COLUMN_NAMES[FilmDataXml.FILM_DURATION] + ":   " + download.getFilm().arr[FilmDataXml.FILM_DURATION]);
                 br.write(P2LibConst.LINE_SEPARATOR);
-                br.write(DownloadFieldNames.COLUMN_NAMES[DownloadFieldNames.DOWNLOAD_SIZE_NO] + ":    " + download.getDownloadSize());
+                br.write(DownloadFieldNames.DOWNLOAD_SIZE + ":    " + download.getDownloadSize());
                 br.write(P2LibConst.LINE_SEPARATORx2);
 
                 br.write(FilmDataXml.COLUMN_NAMES[FilmDataXml.FILM_WEBSITE] + P2LibConst.LINE_SEPARATOR);
@@ -67,7 +67,7 @@ public class MTInfoFile {
                 br.write(P2LibConst.LINE_SEPARATORx2);
             }
 
-            br.write(DownloadFieldNames.COLUMN_NAMES[DownloadFieldNames.DOWNLOAD_URL_NO] + P2LibConst.LINE_SEPARATOR);
+            br.write(DownloadFieldNames.DOWNLOAD_URL + P2LibConst.LINE_SEPARATOR);
             br.write(download.getUrl());
             br.write(P2LibConst.LINE_SEPARATORx2);
 //            if (!download.getUrlRtmp().isEmpty()

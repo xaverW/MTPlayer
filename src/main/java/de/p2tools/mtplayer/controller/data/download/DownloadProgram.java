@@ -254,9 +254,9 @@ public class DownloadProgram {
 
         int length = download.getSetData().getMaxField();
 
-        replStr = replStr.replace("%t", getField(film.arr[FilmDataXml.FILM_THEME], length));
-        replStr = replStr.replace("%T", getField(film.arr[FilmDataXml.FILM_TITLE], length));
-        replStr = replStr.replace("%s", getField(film.arr[FilmDataXml.FILM_CHANNEL], length));
+        replStr = replStr.replace("%t", getField(film.getTheme(), length));
+        replStr = replStr.replace("%T", getField(film.getTitle(), length));
+        replStr = replStr.replace("%s", getField(film.getChannel(), length));
         replStr = replStr.replace("%N", getField(PUrlTools.getFileName(download.getUrl()), length));
 
         // Felder mit fester Länge werden immer ganz geschrieben

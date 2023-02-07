@@ -220,10 +220,10 @@ public class DownloadListStartStop {
                 listStartDownloads.add(download);
             }
 
-            //fehlerhafte nur wenn gewollt wieder starten
+            //fehlerhafte nur, wenn gewollt wieder starten
             if (download.isStateError()) {
                 if (answer.equals(PAlert.BUTTON.UNKNOWN)) {
-                    answer = restartDownload(list.size(), download.arr[DownloadFieldNames.DOWNLOAD_TITLE_NO], answer);
+                    answer = restartDownload(list.size(), download.getTitle(), answer);
                 }
 
                 switch (answer) {

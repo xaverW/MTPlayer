@@ -30,20 +30,6 @@ public class GetFile {
     public static final String PATH_PSET_LINUX = "/de/p2tools/mtplayer/res/file/pset_linux.xml";
     public static final String PATH_PSET_WINDOWS = "/de/p2tools/mtplayer/res/file/pset_windows.xml";
 
-//    public String getHelpSearch(String path) {
-//        String ret = "";
-//        try (InputStreamReader in = new InputStreamReader(getClass().getResource(path).openStream(), StandardCharsets.UTF_8);
-//             BufferedReader br = new BufferedReader(in)) {
-//            String strLine;
-//            while ((strLine = br.readLine()) != null) {
-//                ret = ret + P2LibConst.LINE_SEPARATOR + strLine;
-//            }
-//        } catch (final IOException ex) {
-//            PLog.errorLog(804154789, ex);
-//        }
-//        return ret;
-//    }
-
     public InputStreamReader getPsetTamplateLinux() {
         try {
             return new InputStreamReader(getClass().getResource(PATH_PSET_LINUX).openStream(), StandardCharsets.UTF_8);

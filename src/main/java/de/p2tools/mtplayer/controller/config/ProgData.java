@@ -18,7 +18,10 @@
 package de.p2tools.mtplayer.controller.config;
 
 import de.p2tools.mtplayer.MTPlayerController;
-import de.p2tools.mtplayer.controller.data.*;
+import de.p2tools.mtplayer.controller.data.BlackList;
+import de.p2tools.mtplayer.controller.data.MTShortcut;
+import de.p2tools.mtplayer.controller.data.ReplaceList;
+import de.p2tools.mtplayer.controller.data.SetDataList;
 import de.p2tools.mtplayer.controller.data.abo.AboList;
 import de.p2tools.mtplayer.controller.data.download.DownloadInfos;
 import de.p2tools.mtplayer.controller.data.download.DownloadList;
@@ -64,7 +67,7 @@ public class ProgData {
 
     // zentrale Klassen
     public StarterClass starterClass; // Klasse zum Ausführen der Programme (für die Downloads): VLC, flvstreamer, ...
-    public MTColor mTColor; // verwendete Farben
+    //    public MTColor mTColor; // verwendete Farben
     public MTShortcut mtShortcut; // verwendete Shortcuts
     public ActFilmFilterWorker actFilmFilterWorker; // gespeicherte Filterprofile
     public FilmFilterRunner filmFilterRunner;
@@ -107,7 +110,7 @@ public class ProgData {
     public HistoryList bookmarks; // markierte Filme
 
     private ProgData() {
-        mTColor = new MTColor();
+//        mTColor = new MTColor();
         mtShortcut = new MTShortcut();
         replaceList = new ReplaceList();
 

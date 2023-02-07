@@ -89,53 +89,53 @@ public class FilmFilterProps extends PDataSample<FilmFilter> implements Comparab
     @Override
     public Config[] getConfigsArr() {
         ArrayList<Config> list = new ArrayList<>();
-        list.add(new Config_stringProp("name", FilmFilterToXml.SELECTED_FILTER_NAME, name));
-        list.add(new Config_boolProp("channelVis", FilmFilterToXml.SELECTED_FILTER_CHANNEL_VIS, channelVis));
-        list.add(new Config_stringProp("channel", FilmFilterToXml.SELECTED_FILTER_CHANNEL, channel));
-        list.add(new Config_boolProp("themeVis", FilmFilterToXml.SELECTED_FILTER_THEMA_VIS, themeVis));
-        list.add(new Config_boolProp("themeExact", FilmFilterToXml.SELECTED_FILTER_THEMA_EXACT, themeExact));
-        list.add(new Config_stringProp("theme", FilmFilterToXml.SELECTED_FILTER_THEMA, theme));
-        list.add(new Config_boolProp("themeTitleVis", FilmFilterToXml.SELECTED_FILTER_THEMA_TITLE_VIS, themeTitleVis));
-        list.add(new Config_stringProp("themeTitle", FilmFilterToXml.SELECTED_FILTER_THEMA_TITLE, themeTitle));
-        list.add(new Config_boolProp("titleVis", FilmFilterToXml.SELECTED_FILTER_TITLE_VIS, titleVis));
-        list.add(new Config_stringProp("title", FilmFilterToXml.SELECTED_FILTER_TITLE, title));
-        list.add(new Config_boolProp("somewhereVis", FilmFilterToXml.SELECTED_FILTER_SOMEWHERE_VIS, somewhereVis));
-        list.add(new Config_stringProp("somewhere", FilmFilterToXml.SELECTED_FILTER_SOMEWHERE, somewhere));
-        list.add(new Config_boolProp("urlVis", FilmFilterToXml.SELECTED_FILTER_URL_VIS, urlVis));
-        list.add(new Config_stringProp("url", FilmFilterToXml.SELECTED_FILTER_URL, url));
+        list.add(new Config_stringProp("name", name));
+        list.add(new Config_boolProp("channelVis", channelVis));
+        list.add(new Config_stringProp("channel", channel));
+        list.add(new Config_boolProp("themeVis", themeVis));
+        list.add(new Config_boolProp("themeExact", themeExact));
+        list.add(new Config_stringProp("theme", theme));
+        list.add(new Config_boolProp("themeTitleVis", themeTitleVis));
+        list.add(new Config_stringProp("themeTitle", themeTitle));
+        list.add(new Config_boolProp("titleVis", titleVis));
+        list.add(new Config_stringProp("title", title));
+        list.add(new Config_boolProp("somewhereVis", somewhereVis));
+        list.add(new Config_stringProp("somewhere", somewhere));
+        list.add(new Config_boolProp("urlVis", urlVis));
+        list.add(new Config_stringProp("url", url));
 
-        list.add(new Config_boolProp("timeRangeVis", FilmFilterToXml.SELECTED_FILTER_TIME_RANGE_VIS, timeRangeVis));
-        list.add(new Config_intProp("timeRange", FilmFilterToXml.SELECTED_FILTER_TIME_RANGE, timeRange));
+        list.add(new Config_boolProp("timeRangeVis", timeRangeVis));
+        list.add(new Config_intProp("timeRange", timeRange));
 
-        list.add(new Config_boolProp("minMaxDurVis", FilmFilterToXml.SELECTED_FILTER_MIN_MAX_DUR_VIS, minMaxDurVis));
-        list.add(new Config_intProp("minDur", FilmFilterToXml.SELECTED_FILTER_MIN_DUR, minDur));
-        list.add(new Config_intProp("maxDur", FilmFilterToXml.SELECTED_FILTER_MAX_DUR, maxDur));
+        list.add(new Config_boolProp("minMaxDurVis", minMaxDurVis));
+        list.add(new Config_intProp("minDur", minDur));
+        list.add(new Config_intProp("maxDur", maxDur));
 
-        list.add(new Config_boolProp("minMaxTimeVis", FilmFilterToXml.SELECTED_FILTER_MIN_MAX_TIME_VIS, minMaxTimeVis));
-        list.add(new Config_boolProp("minMaxTimeInvert", FilmFilterToXml.SELECTED_FILTER_MIN_MAX_TIME_INVERT, minMaxTimeInvert));
-        list.add(new Config_intProp("minTime", FilmFilterToXml.SELECTED_FILTER_MIN_TIME, minTime));
-        list.add(new Config_intProp("maxTime", FilmFilterToXml.SELECTED_FILTER_MAX_TIME, maxTime));
+        list.add(new Config_boolProp("minMaxTimeVis", minMaxTimeVis));
+        list.add(new Config_boolProp("minMaxTimeInvert", minMaxTimeInvert));
+        list.add(new Config_intProp("minTime", minTime));
+        list.add(new Config_intProp("maxTime", maxTime));
 
-        list.add(new Config_boolProp("showDateVis", FilmFilterToXml.SELECTED_FILTER_SHOW_DATE_VIS, showDateVis));
-        list.add(new Config_stringProp("showDate", FilmFilterToXml.SELECTED_FILTER_SHOW_DATE, showDate));
+        list.add(new Config_boolProp("showDateVis", showDateVis));
+        list.add(new Config_stringProp("showDate", showDate));
 
-        list.add(new Config_boolProp("onlyVis", FilmFilterToXml.SELECTED_FILTER_ONLY_VIS, onlyVis));
-        list.add(new Config_boolProp("onlyBookmark", FilmFilterToXml.SELECTED_FILTER_ONLY_BOOKMARK, onlyBookmark));
-        list.add(new Config_boolProp("onlyHd", FilmFilterToXml.SELECTED_FILTER_ONLY_HD, onlyHd));
-        list.add(new Config_boolProp("onlyNew", FilmFilterToXml.SELECTED_FILTER_ONLY_NEW, onlyNew));
-        list.add(new Config_boolProp("onlyUt", FilmFilterToXml.SELECTED_FILTER_ONLY_UT, onlyUt));
-        list.add(new Config_boolProp("onlyLive", FilmFilterToXml.SELECTED_FILTER_ONLY_LIVE, onlyLive));
-        list.add(new Config_boolProp("onlyAktHistory", FilmFilterToXml.SELECTED_FILTER_ONLY_ACT_HISTORY, onlyActHistory));
+        list.add(new Config_boolProp("onlyVis", onlyVis));
+        list.add(new Config_boolProp("onlyBookmark", onlyBookmark));
+        list.add(new Config_boolProp("onlyHd", onlyHd));
+        list.add(new Config_boolProp("onlyNew", onlyNew));
+        list.add(new Config_boolProp("onlyUt", onlyUt));
+        list.add(new Config_boolProp("onlyLive", onlyLive));
+        list.add(new Config_boolProp("onlyAktHistory", onlyActHistory));
 
-        list.add(new Config_boolProp("notVis", FilmFilterToXml.SELECTED_FILTER_NOT_VIS, notVis));
-        list.add(new Config_boolProp("notAbo", FilmFilterToXml.SELECTED_FILTER_NOT_ABO, notAbo));
-        list.add(new Config_boolProp("notHistory", FilmFilterToXml.SELECTED_FILTER_NOT_HISTORY, notHistory));
-        list.add(new Config_boolProp("notDouble", FilmFilterToXml.SELECTED_FILTER_NOT_DOUBLE, notDouble));
-        list.add(new Config_boolProp("notGeo", FilmFilterToXml.SELECTED_FILTER_NOT_GEO, notGeo));
-        list.add(new Config_boolProp("notFuture", FilmFilterToXml.SELECTED_FILTER_NOT_FUTURE, notFuture));
+        list.add(new Config_boolProp("notVis", notVis));
+        list.add(new Config_boolProp("notAbo", notAbo));
+        list.add(new Config_boolProp("notHistory", notHistory));
+        list.add(new Config_boolProp("notDouble", notDouble));
+        list.add(new Config_boolProp("notGeo", notGeo));
+        list.add(new Config_boolProp("notFuture", notFuture));
 
-        list.add(new Config_boolProp("blacklistOn", FilmFilterToXml.SELECTED_FILTER_BLACKLIST_ON, blacklistOn));
-        list.add(new Config_boolProp("blacklistOnly", FilmFilterToXml.SELECTED_FILTER_BLACKLIST_ONLY, blacklistOnly));
+        list.add(new Config_boolProp("blacklistOn", blacklistOn));
+        list.add(new Config_boolProp("blacklistOnly", blacklistOnly));
 
         return list.toArray(new Config[]{});
     }

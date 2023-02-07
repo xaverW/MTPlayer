@@ -98,7 +98,6 @@ public class DownloadFieldNames {
     public static final int DOWNLOAD_FILM_URL_NO = 19;
     public static final int DOWNLOAD_HISTORY_URL_NO = 20;
     public static final int DOWNLOAD_URL_NO = 21;
-    //    public static final int DOWNLOAD_URL_RTMP_NO = 22;
     public static final int DOWNLOAD_URL_SUBTITLE_NO = 22;
 
     public static final int DOWNLOAD_SET_DATA_NO = 23;
@@ -146,7 +145,6 @@ public class DownloadFieldNames {
             DOWNLOAD_FILM_URL,
             DOWNLOAD_HISTORY_URL,
             DOWNLOAD_URL,
-//            DOWNLOAD_URL_RTMP,
             DOWNLOAD_URL_SUBTITLE,
             DOWNLOAD_SET_DATA,
             DOWNLOAD_PROGRAM,
@@ -194,7 +192,6 @@ public class DownloadFieldNames {
             "Film-URL",
             "History-URL",
             "URL",
-//            "URL-rtmp",
             "URL-Untertitel",
             "Programmset",
             "Programm",

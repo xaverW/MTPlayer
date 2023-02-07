@@ -68,25 +68,25 @@ public class AboDataProps extends PDataSample<AboData> implements Comparable<Abo
         setSetDataId(setData.getValue() == null ? "" : setData.getValue().getId());
 
         ArrayList<Config> list = new ArrayList<>();
-        list.add(new Config_intProp("no", AboFieldNames.ABO_NO, no));
-        list.add(new Config_boolProp("active", AboFieldNames.ABO_ACTIVE, active));
-        list.add(new Config_stringProp("name", AboFieldNames.ABO_NAME, name));
-        list.add(new Config_stringProp("description", AboFieldNames.ABO_DESCRIPTION, description));
-        list.add(new Config_stringProp("resolution", AboFieldNames.ABO__RESOLUTION, resolution));
-        list.add(new Config_stringProp("channel", AboFieldNames.ABO_CHANNEL, channel));
-        list.add(new Config_stringProp("theme", AboFieldNames.ABO_THEME, theme));
-        list.add(new Config_boolProp("themeExact", AboFieldNames.ABO_THEME_EXACT, themeExact));
-        list.add(new Config_stringProp("themeTitle", AboFieldNames.ABO_THEME_TITLE, themeTitle));
-        list.add(new Config_stringProp("title", AboFieldNames.ABO_TITLE, title));
-        list.add(new Config_stringProp("somewhere", AboFieldNames.ABO_SOMEWHERE, somewhere));
-        list.add(new Config_intProp("timeRange", AboFieldNames.ABO_TIME_RANGE, timeRange));
-        list.add(new Config_intProp("minDurationMinute", AboFieldNames.ABO_MIN_DURATION, minDurationMinute));
-        list.add(new Config_intProp("maxDurationMinute", AboFieldNames.ABO_MAX_DURATION, maxDurationMinute));
-        list.add(new Config_stringProp("startTime", AboFieldNames.ABO_START_TIME, startTime));
-        list.add(new Config_stringProp("aboSubDir", AboFieldNames.ABO_DEST_DIR, aboSubDir));
-        list.add(new Config_pDateProp("date", AboFieldNames.ABO_DATE_LAST_ABO, date));
-        list.add(new Config_stringProp("setDataId", AboFieldNames.ABO_SET_DATA_ID, setDataId));
-        list.add(new Config_pDateProp("genDate", AboFieldNames.ABO_GEN_DATE, genDate));
+        list.add(new Config_intProp("no", no));
+        list.add(new Config_boolProp("active", active));
+        list.add(new Config_stringProp("name", name));
+        list.add(new Config_stringProp("description", description));
+        list.add(new Config_stringProp("resolution", resolution));
+        list.add(new Config_stringProp("channel", channel));
+        list.add(new Config_stringProp("theme", theme));
+        list.add(new Config_boolProp("themeExact", themeExact));
+        list.add(new Config_stringProp("themeTitle", themeTitle));
+        list.add(new Config_stringProp("title", title));
+        list.add(new Config_stringProp("somewhere", somewhere));
+        list.add(new Config_intProp("timeRange", timeRange));
+        list.add(new Config_intProp("minDurationMinute", minDurationMinute));
+        list.add(new Config_intProp("maxDurationMinute", maxDurationMinute));
+        list.add(new Config_stringProp("startTime", startTime));
+        list.add(new Config_stringProp("aboSubDir", aboSubDir));
+        list.add(new Config_pDateProp("date", date));
+        list.add(new Config_stringProp("setDataId", setDataId));
+        list.add(new Config_pDateProp("genDate", genDate));
         return list.toArray(new Config[]{});
     }
 

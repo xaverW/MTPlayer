@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.filmFilter.Filter;
 
-public class AboData extends AboDataXml {
+public class AboData extends AboDataProps {
     public int nr;
 
     public Filter fChannel = new Filter();

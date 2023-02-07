@@ -315,12 +315,6 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
             setDownloadsChanged();
         }
     }
-//    public synchronized void resetDownloads(ArrayList<DownloadData> list) {
-//        if (downloadListStartStop.delDownloads(list)) {
-//            setDownloadsChanged();
-//        }
-
-//    }
 
     public void startDownloads(DownloadData download) {
         downloadListStartStop.startDownloads(download);

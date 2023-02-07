@@ -26,27 +26,17 @@ import java.util.ArrayList;
 
 public class ReplaceData extends PDataSample<ReplaceData> {
 
-    public final static String REPLACE_FROM = "von";
-    public final static int REPLACE_FROM_NR = 0;
-    public final static String REPLACE_TO = "to";
-    public final static int REPLACE_TO_NR = 1;
-
     public static final String TAG = "ReplaceData";
-    public static final int MAX_ELEM = 2;
-    public String[] arr;
 
     StringProperty from = new SimpleStringProperty();
     StringProperty to = new SimpleStringProperty();
 
     public ReplaceData() {
-        makeArray();
     }
 
     public ReplaceData(String from, String to) {
-        makeArray();
-        arr[REPLACE_FROM_NR] = from;
-        arr[REPLACE_TO_NR] = to;
-        setPropsFromXml();
+        setFrom(from);
+        setTo(to);
     }
 
     @Override
@@ -62,18 +52,10 @@ public class ReplaceData extends PDataSample<ReplaceData> {
     @Override
     public Config[] getConfigsArr() {
         ArrayList<Config> list = new ArrayList<>();
-        list.add(new Config_stringProp("from", REPLACE_FROM, from));
-        list.add(new Config_stringProp("to", REPLACE_TO, to));
+        list.add(new Config_stringProp("from", from));
+        list.add(new Config_stringProp("to", to));
 
         return list.toArray(new Config[]{});
-    }
-
-
-    void makeArray() {
-        arr = new String[MAX_ELEM];
-        for (int i = 0; i < arr.length; ++i) {
-            arr[i] = "";
-        }
     }
 
     public String getFrom() {
@@ -98,10 +80,5 @@ public class ReplaceData extends PDataSample<ReplaceData> {
 
     public void setTo(String to) {
         this.to.set(to);
-    }
-
-    public void setPropsFromXml() {
-        setFrom(arr[REPLACE_FROM_NR]);
-        setTo(arr[REPLACE_TO_NR]);
     }
 }

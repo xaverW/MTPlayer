@@ -19,7 +19,6 @@ package de.p2tools.mtplayer.controller.data.download;
 import de.p2tools.p2Lib.configFile.config.*;
 import de.p2tools.p2Lib.configFile.pData.PDataSample;
 import de.p2tools.p2Lib.mtDownload.DownloadSize;
-import de.p2tools.p2Lib.mtFilm.tools.Data;
 import de.p2tools.p2Lib.tools.date.DateFactory;
 import de.p2tools.p2Lib.tools.date.PDate;
 import de.p2tools.p2Lib.tools.date.PDateProperty;
@@ -104,44 +103,40 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
     @Override
     public Config[] getConfigsArr() {
         ArrayList<Config> list = new ArrayList<>();
-        list.add(new Config_intProp("no", DownloadFieldNames.DOWNLOAD_NO, no));
-        list.add(new Config_intProp("filmNr", DownloadFieldNames.DOWNLOAD_FILM_NO, filmNr));
-        list.add(new Config_stringProp("aboName", DownloadFieldNames.DOWNLOAD_ABO, aboName));
-        list.add(new Config_stringProp("channel", DownloadFieldNames.DOWNLOAD_CHANNEL, channel));
-        list.add(new Config_stringProp("theme", DownloadFieldNames.DOWNLOAD_THEME, theme));
-        list.add(new Config_stringProp("title", DownloadFieldNames.DOWNLOAD_TITLE, title));
-        list.add(new Config_intProp("state", DownloadFieldNames.DOWNLOAD_STATE, state));
-//        list.add(new Confra_intProp("guiState", DownloadFieldNames.DOWNLOAD_NR, guiState));
-        list.add(new Config_doubleProp("progress", DownloadFieldNames.DOWNLOAD_PROGRESS, progress));
-//        list.add(new Confra_doubleProp("guiProgress", DownloadFieldNames.DOWNLOAD_NR, guiProgress));
-        list.add(new Config_stringProp("remaining", DownloadFieldNames.DOWNLOAD_REMAINING_TIME, remaining));
-        list.add(new Config_stringProp("bandwidth", DownloadFieldNames.DOWNLOAD_BANDWIDTH, bandwidth));
-//        list.add(new ConfteProp("filmDate", DownloadFieldNames.DOWNLOAD_NR, filmDate));
-        list.add(new Config_stringProp("time", DownloadFieldNames.DOWNLOAD_TIME, time));
-        list.add(new Config_intProp("durationMinute", DownloadFieldNames.DOWNLOAD_DURATION, durationMinute));
-        list.add(new Config_boolProp("hd", DownloadFieldNames.DOWNLOAD_HD, hd));
-        list.add(new Config_boolProp("ut", DownloadFieldNames.DOWNLOAD_UT, ut));
-        list.add(new Config_boolProp("geoBlocked", DownloadFieldNames.DOWNLOAD_GEO, geoBlocked));
-        list.add(new Config_stringProp("filmUrl", DownloadFieldNames.DOWNLOAD_FILM_URL, filmUrl));
-        list.add(new Config_stringProp("historyUrl", DownloadFieldNames.DOWNLOAD_HISTORY_URL, historyUrl));
-        list.add(new Config_stringProp("url", DownloadFieldNames.DOWNLOAD_URL, url));
-//        list.add(new ConfingPropExtra("urlRtmp", DownloadFieldNames.DOWNLOAD_URL_RTMP, urlRtmp));
-        list.add(new Config_stringProp("urlSubtitle", DownloadFieldNames.DOWNLOAD_URL_SUBTITLE, urlSubtitle));
-        list.add(new Config_stringProp("setDataId", DownloadFieldNames.DOWNLOAD_SET_DATA, setDataId));
-        list.add(new Config_stringProp("program", DownloadFieldNames.DOWNLOAD_PROGRAM, program));
-        list.add(new Config_stringProp("programCall", DownloadFieldNames.DOWNLOAD_PROGRAM_CALL, programCall));
-        list.add(new Config_stringProp("programCallArray", DownloadFieldNames.DOWNLOAD_PROGRAM_CALL_ARRAY, programCallArray));
-        list.add(new Config_boolProp("programRestart", DownloadFieldNames.DOWNLOAD_PROGRAM_RESTART, programRestart));
-        list.add(new Config_boolProp("programDownloadmanager", DownloadFieldNames.DOWNLOAD_PROGRAM_DOWNLOADMANAGER, programDownloadmanager));
-        list.add(new Config_stringProp("startTime", DownloadFieldNames.DOWNLOAD_START_TIME, startTime));
-        list.add(new Config_stringProp("destFileName", DownloadFieldNames.DOWNLOAD_DEST_FILE_NAME, destFileName));
-        list.add(new Config_stringProp("destPath", DownloadFieldNames.DOWNLOAD_DEST_PATH, destPath));
-        list.add(new Config_stringProp("destPathFile", DownloadFieldNames.DOWNLOAD_DEST_PATH_FILE_NAME, destPathFile));
-        list.add(new Config_stringProp("type", DownloadFieldNames.DOWNLOAD_TYPE, type));
-        list.add(new Config_stringProp("source", DownloadFieldNames.DOWNLOAD_SOURCE, source));
-        list.add(new Config_boolProp("placedBack", DownloadFieldNames.DOWNLOAD_PLACED_BACK, placedBack));
-        list.add(new Config_boolProp("infoFile", DownloadFieldNames.DOWNLOAD_INFO_FILE, infoFile));
-        list.add(new Config_boolProp("subtitle", DownloadFieldNames.DOWNLOAD_SUBTITLE, subtitle));
+        list.add(new Config_intProp("no", no));
+        list.add(new Config_intProp("filmNr", filmNr));
+        list.add(new Config_stringProp("aboName", aboName));
+        list.add(new Config_stringProp("channel", channel));
+        list.add(new Config_stringProp("theme", theme));
+        list.add(new Config_stringProp("title", title));
+        list.add(new Config_intProp("state", state));
+        list.add(new Config_doubleProp("progress", progress));
+        list.add(new Config_stringProp("remaining", remaining));
+        list.add(new Config_stringProp("bandwidth", bandwidth));
+        list.add(new Config_stringProp("time", time));
+        list.add(new Config_intProp("durationMinute", durationMinute));
+        list.add(new Config_boolProp("hd", hd));
+        list.add(new Config_boolProp("ut", ut));
+        list.add(new Config_boolProp("geoBlocked", geoBlocked));
+        list.add(new Config_stringProp("filmUrl", filmUrl));
+        list.add(new Config_stringProp("historyUrl", historyUrl));
+        list.add(new Config_stringProp("url", url));
+        list.add(new Config_stringProp("urlSubtitle", urlSubtitle));
+        list.add(new Config_stringProp("setDataId", setDataId));
+        list.add(new Config_stringProp("program", program));
+        list.add(new Config_stringProp("programCall", programCall));
+        list.add(new Config_stringProp("programCallArray", programCallArray));
+        list.add(new Config_boolProp("programRestart", programRestart));
+        list.add(new Config_boolProp("programDownloadmanager", programDownloadmanager));
+        list.add(new Config_stringProp("startTime", startTime));
+        list.add(new Config_stringProp("destFileName", destFileName));
+        list.add(new Config_stringProp("destPath", destPath));
+        list.add(new Config_stringProp("destPathFile", destPathFile));
+        list.add(new Config_stringProp("type", type));
+        list.add(new Config_stringProp("source", source));
+        list.add(new Config_boolProp("placedBack", placedBack));
+        list.add(new Config_boolProp("infoFile", infoFile));
+        list.add(new Config_boolProp("subtitle", subtitle));
 
         return list.toArray(new Config[]{});
     }
@@ -617,9 +612,12 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
         this.subtitle.set(subtitle);
     }
 
-
-    public int compareTo(DownloadDataProps arg0) {
-        return Data.sorter.compare(getChannel(), arg0.getChannel());
+    @Override
+    public int compareTo(DownloadData arg0) {
+        int ret;
+        if ((ret = sorter.compare(getChannel(), arg0.getChannel())) == 0) {
+            return sorter.compare(getTheme(), arg0.getTheme());
+        }
+        return ret;
     }
-
 }

@@ -50,9 +50,9 @@ public class AboGuiInfoController extends VBox {
         gridPane.setPadding(new Insets(10));
         GridPane.setVgrow(txtInfo, Priority.ALWAYS);
 
-        gridPane.add(new Label(AboFieldNames.COLUMN_NAMES[AboFieldNames.ABO_NAME_NO]), 0, 0);
+        gridPane.add(new Label(AboFieldNames.ABO_NAME), 0, 0);
         gridPane.add(txtName, 1, 0);
-        gridPane.add(new Label(AboFieldNames.COLUMN_NAMES[AboFieldNames.ABO_DESCRIPTION_NO]), 0, 1);
+        gridPane.add(new Label(AboFieldNames.ABO_DESCRIPTION), 0, 1);
         gridPane.add(txtInfo, 1, 1);
 
         gridPane.getColumnConstraints().addAll(new ColumnConstraints(), PColumnConstraints.getCcComputedSizeAndHgrow());

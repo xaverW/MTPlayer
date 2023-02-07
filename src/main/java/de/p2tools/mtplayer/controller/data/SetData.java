@@ -114,12 +114,12 @@ public class SetData extends SetDataProps {
 
     public String getDestFileName(String url) {
         //gibt den Zieldateinamen für den Film zurück
-        final ProgramData progData = getProgUrl(url);
+        final ProgramData programData = getProgUrl(url);
         String ret = getDestName();
-        if (!checkDownloadDirect(url) && progData != null) {
+        if (!checkDownloadDirect(url) && programData != null) {
             // nur wenn kein direkter Download und ein passendes Programm
-            if (!progData.getDestName().isEmpty()) {
-                ret = progData.getDestName();
+            if (!programData.getDestName().isEmpty()) {
+                ret = programData.getDestName();
             }
         }
         return ret;
@@ -141,12 +141,6 @@ public class SetData extends SetDataProps {
         for (int i = 0; i < properties.length; ++i) {
             ret.properties[i].setValue(this.properties[i].getValue());
         }
-
-
-//        setXmlFromProps();
-//        System.arraycopy(arr, 0, ret.arr, 0, arr.length);
-//        ret.setPropsFromXml();
-
         //es darf nur einen geben!
         ret.setId(PIndex.getIndexStr());
         ret.setVisibleName("Kopie-" + getVisibleName());

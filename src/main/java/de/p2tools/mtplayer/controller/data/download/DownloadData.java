@@ -34,7 +34,7 @@ import javafx.application.Platform;
 import java.io.File;
 import java.util.Date;
 
-public final class DownloadData extends DownloadDataXml {
+public final class DownloadData extends DownloadDataProps {
 
     private Start start = new Start(this);
     private final DownloadProgram downloadProgram = new DownloadProgram(this);

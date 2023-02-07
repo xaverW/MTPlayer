@@ -36,12 +36,6 @@ public class BlackDataProps extends PDataSample<BlackDataProps> {
     public static final String BLACKLIST_TITLE = "Titel";
     public static final String BLACKLIST_THEME_TITLE = "Thema/Titel";
 
-    public static final int BLACKLIST_SENDER_NO = 0;
-    public static final int BLACKLIST_THEME_NO = 1;
-    public static final int BLACKLIST_THEME_EXACT_NO = 2;
-    public static final int BLACKLIST_TITLE_NO = 3;
-    public static final int BLACKLIST_THEME_TITLE_NO = 4;
-
     public static final String TAG = "BlackData";
     public static final String[] XML_NAMES = {
             "black-sender",
@@ -61,14 +55,6 @@ public class BlackDataProps extends PDataSample<BlackDataProps> {
     private int countHits = 0;
 
     public BlackDataProps() {
-        makeArray();
-    }
-
-    private void makeArray() {
-        arr = new String[XML_NAMES.length];
-        for (int i = 0; i < arr.length; ++i) {
-            arr[i] = "";
-        }
     }
 
     @Override
@@ -175,14 +161,5 @@ public class BlackDataProps extends PDataSample<BlackDataProps> {
 
     public void setCountHits(int countHits) {
         this.countHits = countHits;
-    }
-
-    public void setPropsFromXml() {
-        setChannel(arr[BLACKLIST_SENDER_NO]);
-        setTheme(arr[BLACKLIST_THEME_NO]);
-        setThemeExact(arr[BLACKLIST_THEME_EXACT_NO].isEmpty() ? true : Boolean.parseBoolean(arr[BLACKLIST_THEME_EXACT_NO]));
-        setTitle(arr[BLACKLIST_TITLE_NO]);
-        setThemeTitle(arr[BLACKLIST_THEME_TITLE_NO]);
-        setCountHits(0);
     }
 }

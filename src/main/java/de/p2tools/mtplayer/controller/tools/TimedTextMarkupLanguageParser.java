@@ -74,7 +74,6 @@ public class TimedTextMarkupLanguageParser {
     /**
      * Build the Subtitle objects from TTML content.
      */
-    @SuppressWarnings("deprecation")
     private void buildFilmList() throws Exception {
         final NodeList subtitleData = doc.getElementsByTagName("tt:p");
 

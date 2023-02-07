@@ -37,7 +37,6 @@ public class MediaCollectionData extends PDataSample<MediaCollectionData> {
     public final static String[] XML_NAMES = COLUMN_NAMES;
     public static final String TAG = "MediaCollectionData";
     public final static int MAX_ELEM = XML_NAMES.length;
-    public String[] arr;
 
     private LongProperty id = new SimpleLongProperty(0L);
     private StringProperty path = new SimpleStringProperty("");
@@ -46,11 +45,9 @@ public class MediaCollectionData extends PDataSample<MediaCollectionData> {
     private IntegerProperty count = new SimpleIntegerProperty(0);
 
     public MediaCollectionData() {
-        makeArr();
     }
 
     public MediaCollectionData(String path, String collectionName, boolean external) {
-        makeArr();
         setPath(path);
         setCollectionName(collectionName);
         setExternal(external);
@@ -139,25 +136,7 @@ public class MediaCollectionData extends PDataSample<MediaCollectionData> {
         this.count.set(count);
     }
 
-    public void setPropsFromXml() {
-        try {
-            id.set(Long.parseLong(arr[MEDIA_PATH_ID]));
-        } catch (final Exception ex) {
-            id.set(0L);
-        }
-        setPath(arr[MEDIA_PATH_PATH]);
-        setCollectionName(arr[MEDIA_PATH_COLLECTION_NAME]);
-        setExternal(Boolean.valueOf(arr[MEDIA_PATH_EXTERNAL]));
-    }
-
     public String getHash() {
         return getPath();
-    }
-
-    private void makeArr() {
-        arr = new String[MAX_ELEM];
-        for (int i = 0; i < arr.length; ++i) {
-            arr[i] = "";
-        }
     }
 }

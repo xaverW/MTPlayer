@@ -108,7 +108,7 @@ public class DownloadEditDialogController extends PDialogExtra {
         this.progData = progData;
         this.download = download;
         this.isStarted = isStarted;
-        orgProgArray = download.arr[DownloadFieldNames.DOWNLOAD_PROGRAM_CALL_ARRAY_NO];
+        orgProgArray = download.getProgramCallArray();
         orgPath = download.getDestPathFile();
 
         setData = download.getSetData();
@@ -299,7 +299,7 @@ public class DownloadEditDialogController extends PDialogExtra {
             PAlert.showErrorAlert("Film löschen",
                     "Konnte die Datei nicht löschen!",
                     "Fehler beim löschen: " + dataDownload.getDestPathFile());
-            PLog.errorLog(812036789, "Fehler beim löschen: " + dataDownload.arr[DownloadFieldNames.DOWNLOAD_DEST_PATH_FILE_NAME_NO]);
+            PLog.errorLog(812036789, "Fehler beim löschen: " + dataDownload.getDestPathFile());
         }
         return ret;
     }
