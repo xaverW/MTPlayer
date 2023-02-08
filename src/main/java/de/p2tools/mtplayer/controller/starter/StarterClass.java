@@ -176,7 +176,7 @@ public class StarterClass {
     }
 
     private static void finishedMsg(final DownloadData download) {
-        final de.p2tools.mtplayer.controller.starter.Start start = download.getStart();
+        final Start start = download.getStart();
         if (ProgConfig.DOWNLOAD_BEEP.getValue()) {
             try {
                 Toolkit.getDefaultToolkit().beep();
@@ -244,7 +244,7 @@ public class StarterClass {
 
     static void finalizeDownload(DownloadData download) {
 
-        final de.p2tools.mtplayer.controller.starter.Start start = download.getStart();
+        final Start start = download.getStart();
         deleteIfEmpty(new File(download.getDestPathFile()));
         setFileSize(download);
 
@@ -275,7 +275,6 @@ public class StarterClass {
         start.setProcess(null);
         start.setInputStream(null);
         start.setStartTime(null);
-
     }
 
     /**

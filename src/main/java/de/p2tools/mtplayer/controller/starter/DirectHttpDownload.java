@@ -28,6 +28,7 @@ import de.p2tools.mtplayer.gui.dialog.DownloadErrorDialogController;
 import de.p2tools.mtplayer.gui.tools.MTInfoFile;
 import de.p2tools.mtplayer.gui.tools.MTSubtitle;
 import de.p2tools.p2Lib.P2LibConst;
+import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
 
@@ -40,6 +41,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DirectHttpDownload extends Thread {
 
@@ -49,13 +51,9 @@ public class DirectHttpDownload extends Thread {
     private long downloaded = 0;
     private File file = null;
     private String responseCode;
-    private String exMessage;
 
     private FileOutputStream fos = null;
-
     private final java.util.Timer bandwidthCalculationTimer;
-    private boolean retBreak;
-    private boolean dialogBreakIsVis;
 
     public DirectHttpDownload(ProgData progData, DownloadData d, java.util.Timer bandwidthCalculationTimer) {
         super();
@@ -207,6 +205,7 @@ public class DirectHttpDownload extends Thread {
     @Override
     public synchronized void run() {
         StarterClass.startMsg(download);
+        boolean restartWithOutSSL = false;
 
         try {
             Files.createDirectories(Paths.get(download.getDestPath()));
@@ -222,45 +221,19 @@ public class DirectHttpDownload extends Thread {
                 file = new File(download.getDestPathFile());
 
                 if (!cancelDownload()) {
-                    //If the server uses self-signed X.509 certificate, we will get SSLHandshakeException -> BR!!
-                    //https://nakov.com/blog/2009/07/16/disable-certificate-validation-in-java-ssl-connections/
-//                    // Create a trust manager that does not validate certificate chains
-//                    TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
-//                        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-//                            return null;
-//                        }
-//
-//                        public void checkClientTrusted(X509Certificate[] certs, String authType) {
-//                        }
-//
-//                        public void checkServerTrusted(X509Certificate[] certs, String authType) {
-//                        }
-//                    }};
-//                    // Install the all-trusting trust manager
-//                    SSLContext sc = SSLContext.getInstance("SSL");
-//                    sc.init(null, trustAllCerts, new java.security.SecureRandom());
-//                    HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-
-
-//                    if (ProgConfig.SYSTEM_SSL_ALWAYS_TRUE.getBool()) {
-//                        // Create all-trusting host name verifier
-//                        HostnameVerifier allHostsValid = (hostname, session) -> true;
-//                        // Install the all-trusting host verifier
-//                        HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
-//                    }
-
                     download.getDownloadSize().setSize(getContentLength(url));
                     download.getDownloadSize().setActFileSize(0);
                     conn = (HttpURLConnection) url.openConnection();
                     conn.setConnectTimeout(1000 * ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getValue());
                     conn.setReadTimeout(1000 * ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getValue());
 
-                    if (ProgConfig.SYSTEM_SSL_ALWAYS_TRUE.getValue() && conn instanceof HttpsURLConnection) {
+                    if ((restartWithOutSSL || ProgConfig.SYSTEM_SSL_ALWAYS_TRUE.getValue())
+                            && conn instanceof HttpsURLConnection) {
+                        //Create a trust manager that does not validate certificate chains
                         HttpsURLConnection httpsConn = (HttpsURLConnection) conn;
                         httpsConn.setHostnameVerifier(
                                 // Create all-trusting host name verifier
                                 (hostname, session) -> true);
-//                        httpsConn.setSSLSocketFactory(sc.getSocketFactory());
                     }
 
                     setupHttpConnection(conn);
@@ -279,6 +252,7 @@ public class DirectHttpDownload extends Thread {
                             if (conn.getResponseCode() >= HttpURLConnection.HTTP_BAD_REQUEST) {
                                 download.setStateError();
                             }
+
                         } else {
                             // ==================================
                             // dann wars das
@@ -293,13 +267,35 @@ public class DirectHttpDownload extends Thread {
                         }
                     }
                 }
+
                 if (download.isStateStartedRun()) {
                     downloadContent();
                 }
+
             } catch (final Exception ex) {
-                if ((ex instanceof java.io.IOException)
+                //===========
+                //Probleme über Probleme
+                if (ex instanceof javax.net.ssl.SSLHandshakeException
                         && restartCount < ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP.getValue()) {
 
+                    //der mehrfache Versuch, fehlerhafte Downloads zu starten, macht hier keinen sinn
+                    download.getStart().setRestartCounter(ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getValue());
+
+                    //dann gabs Probleme bei https
+                    if (!restartWithOutSSL) {
+                        //nur dann nochmal fragen
+                        restartWithOutSSL = restartHttps(restartCount);
+                    }
+                    if (restartWithOutSSL) {
+                        restartCount++;
+                        restart = true;
+                    } else {
+                        download.setErrorMessage(ex.getMessage());
+                        download.setStateError();
+                    }
+
+                } else if (ex instanceof java.io.IOException
+                        && restartCount < ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP.getValue()) {
                     if (ex instanceof java.net.SocketTimeoutException) {
                         // Timeout Fehlermeldung für zxd :)
                         final ArrayList<String> text = new ArrayList<>();
@@ -308,18 +304,17 @@ public class DirectHttpDownload extends Thread {
                         text.add("URL: " + download.getUrl());
                         PLog.sysLog(text.toArray(new String[text.size()]));
                     }
-
                     restartCount++;
                     restart = true;
+
                 } else {
                     // dann weiß der Geier!
-                    exMessage = ex.getMessage();
                     PLog.errorLog(316598941, ex, "Fehler");
                     if (download.getStart().getRestartCounter() == 0) {
                         // nur beim ersten Mal melden -> nervt sonst
-                        Platform.runLater(() -> new DownloadErrorDialogController(download, exMessage));
+                        Platform.runLater(() -> new DownloadErrorDialogController(download, ex.getMessage()));
                     }
-                    download.setErrorMessage(exMessage);
+                    download.setErrorMessage(ex.getMessage());
                     download.setStateError();
                 }
             }
@@ -341,25 +336,55 @@ public class DirectHttpDownload extends Thread {
         StarterClass.finalizeDownload(download);
     }
 
+    private boolean restartHttps(int restartCount) {
+        final ArrayList<String> text = new ArrayList<>();
+        text.add("https, Download Restarts: " + restartCount);
+        text.add("Ziel: " + download.getDestPathFile());
+        text.add("URL: " + download.getUrl());
+        PLog.sysLog(text.toArray(new String[text.size()]));
+
+        AtomicBoolean dialog = new AtomicBoolean(true);
+        AtomicBoolean ret = new AtomicBoolean(false);
+        Platform.runLater(() -> {
+            ret.set(PAlert.showAlertOkCancel("HTTPS",
+                    "Problem mit der HTTPS-Verbindung",
+                    "Beim Verbindungsaufbau mit der HTTPS-URL trat ein Problem auf. Soll " +
+                            "versucht werden, die Verbindung ohne die Prüfung des Zertifikats " +
+                            "aufzubauen?\n\n" +
+                            download.getTitle() + "\n\n" +
+                            download.getUrl()));
+            dialog.set(false);
+        });
+
+        while (dialog.get()) {
+            try {
+                wait(100);
+            } catch (final Exception ignored) {
+            }
+        }
+        return ret.get();
+    }
+
     private boolean cancelDownload() {
         if (!file.exists()) {
             // dann ist alles OK
             return false;
         }
-        dialogBreakIsVis = true;
-        retBreak = true;
+
+        AtomicBoolean dialogBreakIsVis = new AtomicBoolean(true);
+        AtomicBoolean retBreak = new AtomicBoolean(true);
         Platform.runLater(() -> {
-            retBreak = break_();
-            dialogBreakIsVis = false;
+            retBreak.set(break_());
+            dialogBreakIsVis.set(false);
         });
-        while (dialogBreakIsVis) {
+        while (dialogBreakIsVis.get()) {
             try {
                 wait(100);
             } catch (final Exception ignored) {
 
             }
         }
-        return retBreak;
+        return retBreak.get();
     }
 
     private boolean break_() {

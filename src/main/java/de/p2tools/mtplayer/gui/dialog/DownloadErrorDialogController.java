@@ -71,7 +71,6 @@ public class DownloadErrorDialogController extends PDialogExtra {
 
         hBoxTitle = getHBoxTitle();
         vBoxCont = getVBoxCont();
-//        hBoxOk = getHboxOk();
 
         if (ProgData.automode) {
             // dann schaut ja eh keiner zu
@@ -94,7 +93,6 @@ public class DownloadErrorDialogController extends PDialogExtra {
         txtCont.setEditable(false);
         txtCont.setText(message);
 
-//        btnOk.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
         btnOk.setOnAction(event -> {
             stopCounter();
             quit();
@@ -148,7 +146,6 @@ public class DownloadErrorDialogController extends PDialogExtra {
         vBoxCont.setSpacing(10);
         vBoxCont.getChildren().add(hBox);
 
-//        hBoxOk.getChildren().addAll(lblTime, btnOk);
         addOkButton(btnOk);
         getHboxLeft().getChildren().add(lblTime);
     }
