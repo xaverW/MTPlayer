@@ -18,7 +18,7 @@
 package de.p2tools.mtplayer.gui.tools.table;
 
 import de.p2tools.mtplayer.controller.data.abo.AboData;
-import de.p2tools.mtplayer.controller.filmFilter.CheckFilmFilter;
+import de.p2tools.p2Lib.mtFilter.FilterCheck;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.util.Callback;
@@ -40,7 +40,7 @@ public class CellAboMax<S, T> extends TableCell<S, T> {
                     return;
                 }
 
-                if (item == CheckFilmFilter.FILTER_DURATION_MAX_MINUTE) {
+                if (item == FilterCheck.FILTER_DURATION_MAX_MINUTE) {
                     setText("alles");
                 } else {
                     setText(item + "");

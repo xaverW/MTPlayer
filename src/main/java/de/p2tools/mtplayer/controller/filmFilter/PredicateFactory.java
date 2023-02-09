@@ -19,6 +19,9 @@ package de.p2tools.mtplayer.controller.filmFilter;
 
 import de.p2tools.p2Lib.mtFilm.film.FilmData;
 import de.p2tools.p2Lib.mtFilm.film.FilmDataXml;
+import de.p2tools.p2Lib.mtFilter.FilmFilterCheck;
+import de.p2tools.p2Lib.mtFilter.Filter;
+import de.p2tools.p2Lib.mtFilter.FilterCheck;
 
 import java.util.function.Predicate;
 
@@ -78,16 +81,16 @@ public class PredicateFactory {
 
         // Länge am Slider in Min
         final int minLengthMinute = filmFilter.isMinMaxDurVis() ? filmFilter.getMinDur() : 0;
-        final int maxLengthMinute = filmFilter.isMinMaxDurVis() ? filmFilter.getMaxDur() : CheckFilmFilter.FILTER_DURATION_MAX_MINUTE;
+        final int maxLengthMinute = filmFilter.isMinMaxDurVis() ? filmFilter.getMaxDur() : FilterCheck.FILTER_DURATION_MAX_MINUTE;
 
         // FilmUhrZeit in Sek. von 0:00 Uhr
         final int minTimeSec = filmFilter.isMinMaxTimeVis() ? filmFilter.getMinTime() : 0;
-        final int maxTimeSec = filmFilter.isMinMaxTimeVis() ? filmFilter.getMaxTime() : CheckFilmFilter.FILTER_TIME_MAX_SEC;
+        final int maxTimeSec = filmFilter.isMinMaxTimeVis() ? filmFilter.getMaxTime() : FilterCheck.FILTER_TIME_MAX_SEC;
         final boolean minMaxTimeInvert = filmFilter.isMinMaxTimeInvert();
 
         long days;
         try {
-            if (filmFilter.getTimeRange() == CheckFilmFilter.FILTER_ALL_OR_MIN) {
+            if (filmFilter.getTimeRange() == FilterCheck.FILTER_ALL_OR_MIN) {
                 days = 0;
             } else {
                 final long max = 1000L * 60L * 60L * 24L * filmFilter.getTimeRange();
@@ -146,49 +149,49 @@ public class PredicateFactory {
         //anz Tage Sendezeit
         if (days != 0) {
             final long d = days;
-            predicate = predicate.and(f -> CheckFilmFilter.checkDays(d, f.filmDate.getTime()));
+            predicate = predicate.and(f -> FilmFilterCheck.checkDays(d, f.filmDate.getTime()));
         }
 
         // Filmlänge
         if (minLengthMinute != 0) {
-            predicate = predicate.and(f -> CheckFilmFilter.checkLengthMin(minLengthMinute, f.getDurationMinute()));
+            predicate = predicate.and(f -> FilmFilterCheck.checkLengthMin(minLengthMinute, f.getDurationMinute()));
         }
-        if (maxLengthMinute != CheckFilmFilter.FILTER_DURATION_MAX_MINUTE) {
-            predicate = predicate.and(f -> CheckFilmFilter.checkLengthMax(maxLengthMinute, f.getDurationMinute()));
+        if (maxLengthMinute != FilterCheck.FILTER_DURATION_MAX_MINUTE) {
+            predicate = predicate.and(f -> FilmFilterCheck.checkLengthMax(maxLengthMinute, f.getDurationMinute()));
         }
 
         // Film-Uhrzeit
-        if (minTimeSec != 0 || maxTimeSec != CheckFilmFilter.FILTER_TIME_MAX_SEC) {
-            predicate = predicate.and(f -> CheckFilmFilter.checkFilmTime(minTimeSec, maxTimeSec, minMaxTimeInvert, f.filmTime));
+        if (minTimeSec != 0 || maxTimeSec != FilterCheck.FILTER_TIME_MAX_SEC) {
+            predicate = predicate.and(f -> FilmFilterCheck.checkFilmTime(minTimeSec, maxTimeSec, minMaxTimeInvert, f.filmTime));
         }
 
 
         if (!fChannel.empty) {
-            predicate = predicate.and(f -> CheckFilmFilter.checkChannelSmart(fChannel, f));
+            predicate = predicate.and(f -> FilmFilterCheck.checkChannelSmart(fChannel, f));
         }
 
         if (!fTheme.empty) {
-            predicate = predicate.and(f -> CheckFilmFilter.checkTheme(fTheme, f));
+            predicate = predicate.and(f -> FilmFilterCheck.checkThemeExact(fTheme, f));
         }
 
         if (!fThemeTitle.empty) {
-            predicate = predicate.and(f -> CheckFilmFilter.checkThemeTitle(fThemeTitle, f));
+            predicate = predicate.and(f -> FilmFilterCheck.checkThemeTitle(fThemeTitle, f));
         }
 
         if (!fTitle.empty) {
-            predicate = predicate.and(f -> CheckFilmFilter.checkTitle(fTitle, f));
+            predicate = predicate.and(f -> FilmFilterCheck.checkTitle(fTitle, f));
         }
 
         if (!fSomewhere.empty) {
-            predicate = predicate.and(f -> CheckFilmFilter.checkSomewhere(fSomewhere, f));
+            predicate = predicate.and(f -> FilmFilterCheck.checkSomewhere(fSomewhere, f));
         }
 
         if (!fUrl.empty) {
-            predicate = predicate.and(f -> CheckFilmFilter.checkUrl(fUrl, f));
+            predicate = predicate.and(f -> FilmFilterCheck.checkUrl(fUrl, f));
         }
 
         //Sendetag
-        if (!fShowDate.filter.equals(CheckFilmFilter.FILTER_SHOW_DATE_ALL)) {
+        if (!fShowDate.filter.equals(FilterCheck.FILTER_SHOW_DATE_ALL)) {
             predicate = predicate.and(f -> checkShowDate(filmFilter.getShowDate(), f));
         }
 

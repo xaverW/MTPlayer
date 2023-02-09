@@ -19,9 +19,9 @@ package de.p2tools.mtplayer.controller.data.abo;
 
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmlistMTP;
-import de.p2tools.mtplayer.controller.filmFilter.CheckFilmFilter;
 import de.p2tools.mtplayer.controller.filmFilter.FilmFilterFactory;
 import de.p2tools.p2Lib.mtFilm.film.FilmDataXml;
+import de.p2tools.p2Lib.mtFilter.FilmFilterCheck;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 
 import java.util.Iterator;
@@ -102,17 +102,17 @@ public class AboFactory {
             film.arr[FilmDataXml.FILM_ABO_NAME] = abo.getName() + (" [ausgeschaltet]");
             film.setAbo(null);
 
-        } else if (!CheckFilmFilter.checkMaxDays(abo.getTimeRange(), film.filmDate.getTime())) {
+        } else if (!FilmFilterCheck.checkMaxDays(abo.getTimeRange(), film.filmDate.getTime())) {
             // dann ist der Film zu alt
             film.arr[FilmDataXml.FILM_ABO_NAME] = abo.getName() + (" [zu alt]");
             film.setAbo(null);
 
-        } else if (!CheckFilmFilter.checkLengthMin(abo.getMinDurationMinute(), film.getDurationMinute())) {
+        } else if (!FilmFilterCheck.checkLengthMin(abo.getMinDurationMinute(), film.getDurationMinute())) {
             // dann ist der Film zu kurz
             film.arr[FilmDataXml.FILM_ABO_NAME] = abo.getName() + (" [zu kurz]");
             film.setAbo(null);
 
-        } else if (!CheckFilmFilter.checkLengthMax(abo.getMaxDurationMinute(), film.getDurationMinute())) {
+        } else if (!FilmFilterCheck.checkLengthMax(abo.getMaxDurationMinute(), film.getDurationMinute())) {
             // dann ist der Film zu lang
             film.arr[FilmDataXml.FILM_ABO_NAME] = abo.getName() + (" [zu lang]");
             film.setAbo(null);

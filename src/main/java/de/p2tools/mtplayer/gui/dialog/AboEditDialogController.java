@@ -22,11 +22,11 @@ import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.abo.AboFieldNames;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.filmFilter.CheckFilmFilter;
 import de.p2tools.mtplayer.controller.filmFilter.FilmFilter;
-import de.p2tools.mtplayer.controller.filmFilter.FilterCheckRegEx;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2Lib.guiTools.PButton;
+import de.p2tools.p2Lib.mtFilter.FilterCheck;
+import de.p2tools.p2Lib.mtFilter.FilterCheckRegEx;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
@@ -385,8 +385,8 @@ public class AboEditDialogController extends AboDialogController {
     }
 
     private void initTimeRange() {
-        slTimeRange.setMin(CheckFilmFilter.FILTER_ALL_OR_MIN);
-        slTimeRange.setMax(CheckFilmFilter.FILTER_TIME_RANGE_MAX_VALUE);
+        slTimeRange.setMin(FilterCheck.FILTER_ALL_OR_MIN);
+        slTimeRange.setMax(FilterCheck.FILTER_TIME_RANGE_MAX_VALUE);
         slTimeRange.setShowTickLabels(true);
         slTimeRange.setMajorTickUnit(10);
         slTimeRange.setBlockIncrement(5);
@@ -394,7 +394,7 @@ public class AboEditDialogController extends AboDialogController {
         slTimeRange.setLabelFormatter(new StringConverter<>() {
             @Override
             public String toString(Double x) {
-                if (x == CheckFilmFilter.FILTER_ALL_OR_MIN) return "alles";
+                if (x == FilterCheck.FILTER_ALL_OR_MIN) return "alles";
                 return x.intValue() + "";
             }
 
@@ -426,7 +426,7 @@ public class AboEditDialogController extends AboDialogController {
         int i = (int) slTimeRange.getValue();
         String tNr = i + "";
 
-        if (i == CheckFilmFilter.FILTER_ALL_OR_MIN) {
+        if (i == FilterCheck.FILTER_ALL_OR_MIN) {
             lblTimeRange.setText(txtAll);
         } else {
             lblTimeRange.setText(tNr + (i == 1 ? " Tag" : " Tage"));

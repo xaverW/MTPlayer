@@ -17,6 +17,7 @@
 package de.p2tools.mtplayer.controller.filmFilter;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.p2Lib.mtFilter.FilterCheck;
 import de.p2tools.p2Lib.tools.log.PDebugLog;
 import javafx.animation.PauseTransition;
 import javafx.beans.property.BooleanProperty;
@@ -113,15 +114,15 @@ public final class FilmFilter extends FilmFilterProps {
         setSomewhere("");
         setUrl("");
 
-        setTimeRange(CheckFilmFilter.FILTER_ALL_OR_MIN);
+        setTimeRange(FilterCheck.FILTER_ALL_OR_MIN);
 
         setMinDur(0);
-        setMaxDur(CheckFilmFilter.FILTER_DURATION_MAX_MINUTE);
+        setMaxDur(FilterCheck.FILTER_DURATION_MAX_MINUTE);
 
         setMinTime(0);
-        setMaxTime(CheckFilmFilter.FILTER_TIME_MAX_SEC);
+        setMaxTime(FilterCheck.FILTER_TIME_MAX_SEC);
 
-        setShowDate(CheckFilmFilter.FILTER_SHOW_DATE_ALL);
+        setShowDate(FilterCheck.FILTER_SHOW_DATE_ALL);
 
         setOnlyBookmark(false);
         setOnlyHd(false);

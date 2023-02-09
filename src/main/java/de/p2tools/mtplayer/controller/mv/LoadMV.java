@@ -20,7 +20,7 @@ package de.p2tools.mtplayer.controller.mv;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.BlackData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
-import de.p2tools.mtplayer.controller.filmFilter.CheckFilmFilter;
+import de.p2tools.p2Lib.mtFilter.FilterCheck;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.collections.ObservableList;
@@ -168,14 +168,14 @@ public class LoadMV implements AutoCloseable {
                         try {
                             aboData.setMinDurationMinute(Integer.parseInt(value));
                         } catch (Exception ex) {
-                            aboData.setMinDurationMinute(CheckFilmFilter.FILTER_ALL_OR_MIN);
+                            aboData.setMinDurationMinute(FilterCheck.FILTER_ALL_OR_MIN);
                         }
                         break;
                     case "min_max":
                         if (value.equals("false")) {
                             //dann Maxdauer: Umbauen
                             aboData.setMaxDurationMinute(aboData.getMinDurationMinute());
-                            aboData.setMinDurationMinute(CheckFilmFilter.FILTER_ALL_OR_MIN);
+                            aboData.setMinDurationMinute(FilterCheck.FILTER_ALL_OR_MIN);
                         }
                         break;
                     case "Zielpfad":

@@ -62,10 +62,10 @@ public class ProgColorList extends PColorList {
             Color.rgb(225, 225, 225), Color.rgb(109, 109, 109), "Tabelle Abo, ausgeschaltet");
 
     // Filter wenn RegEx
-    public static final PColorData FILTER_REGEX = addNewKey("COLOR_FILTER_REGEX",
-            Color.rgb(225, 255, 225), Color.rgb(128, 179, 213), "Filter ist RegEx");
-    public static final PColorData FILTER_REGEX_ERROR = addNewKey("COLOR_FILTER_REGEX_ERROR",
-            Color.rgb(255, 230, 230), Color.rgb(170, 0, 0), "Filter ist Regex, fehlerhaft");
+//    public static final PColorData FILTER_REGEX = addNewKey("COLOR_FILTER_REGEX",
+//            Color.rgb(225, 255, 225), Color.rgb(128, 179, 213), "Filter ist RegEx");
+//    public static final PColorData FILTER_REGEX_ERROR = addNewKey("COLOR_FILTER_REGEX_ERROR",
+//            Color.rgb(255, 230, 230), Color.rgb(170, 0, 0), "Filter ist Regex, fehlerhaft");
 
     // DialogDownload
     public static final PColorData DOWNLOAD_NAME_ERROR = addNewKey("COLOR_DOWNLOAD_NAME_ERROR",

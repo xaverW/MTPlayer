@@ -21,7 +21,6 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.abo.AboFieldNames;
-import de.p2tools.mtplayer.controller.filmFilter.CheckFilmFilter;
 import de.p2tools.mtplayer.controller.filmFilter.FilmFilter;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
@@ -29,6 +28,7 @@ import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.PTextAreaIgnoreTab;
 import de.p2tools.p2Lib.guiTools.PTimePicker;
 import de.p2tools.p2Lib.guiTools.pRange.PRangeBox;
+import de.p2tools.p2Lib.mtFilter.FilterCheck;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -53,7 +53,7 @@ public class AboDialogController extends PDialogExtra {
     final ComboBox<String> cboDestination = new ComboBox<>();
     final Slider slTimeRange = new Slider();
     final Label lblTimeRange = new Label();
-    final PRangeBox pRangeBoxTime = new PRangeBox(0, CheckFilmFilter.FILTER_DURATION_MAX_MINUTE);
+    final PRangeBox pRangeBoxTime = new PRangeBox(0, FilterCheck.FILTER_DURATION_MAX_MINUTE);
     final CheckBox cbxOn = new CheckBox();
     final Label[] lbl = new Label[AboFieldNames.MAX_ELEM];
     final TextField[] txt = new TextField[AboFieldNames.MAX_ELEM];
@@ -107,9 +107,9 @@ public class AboDialogController extends PDialogExtra {
         final String title = filmFilter.isTitleVis() ? filmFilter.getTitle() : "";
         final String themeTitle = filmFilter.isThemeTitleVis() ? filmFilter.getThemeTitle() : "";
         final String somewhere = filmFilter.isSomewhereVis() ? filmFilter.getSomewhere() : "";
-        final int timeRange = filmFilter.isTimeRangeVis() ? filmFilter.getTimeRange() : CheckFilmFilter.FILTER_ALL_OR_MIN;
-        final int minDuration = filmFilter.isMinMaxDurVis() ? filmFilter.getMinDur() : CheckFilmFilter.FILTER_ALL_OR_MIN;
-        final int maxDuration = filmFilter.isMinMaxDurVis() ? filmFilter.getMaxDur() : CheckFilmFilter.FILTER_DURATION_MAX_MINUTE;
+        final int timeRange = filmFilter.isTimeRangeVis() ? filmFilter.getTimeRange() : FilterCheck.FILTER_ALL_OR_MIN;
+        final int minDuration = filmFilter.isMinMaxDurVis() ? filmFilter.getMinDur() : FilterCheck.FILTER_ALL_OR_MIN;
+        final int maxDuration = filmFilter.isMinMaxDurVis() ? filmFilter.getMaxDur() : FilterCheck.FILTER_DURATION_MAX_MINUTE;
 
         aboCopy.setChannel(channel);
         aboCopy.setTheme(theme);

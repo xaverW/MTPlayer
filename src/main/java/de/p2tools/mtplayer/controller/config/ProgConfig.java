@@ -19,7 +19,6 @@ package de.p2tools.mtplayer.controller.config;
 
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.filmFilter.ActFilmFilterWorker;
-import de.p2tools.mtplayer.controller.filmFilter.CheckFilmFilter;
 import de.p2tools.mtplayer.controller.filmFilter.FilmFilter;
 import de.p2tools.mtplayer.controller.starter.DownloadState;
 import de.p2tools.mtplayer.controller.tools.MLBandwidthTokenBucket;
@@ -28,6 +27,7 @@ import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.configFile.ConfigFile;
 import de.p2tools.p2Lib.configFile.config.Config;
 import de.p2tools.p2Lib.data.PDataProgConfig;
+import de.p2tools.p2Lib.mtFilter.FilterCheck;
 import de.p2tools.p2Lib.tools.PStringUtils;
 import de.p2tools.p2Lib.tools.PSystemUtils;
 import de.p2tools.p2Lib.tools.ProgramToolsFactory;
@@ -234,8 +234,8 @@ public class ProgConfig extends PDataProgConfig {
 
     // Gui Abo
     public static BooleanProperty ABO_SEARCH_NOW = addBoolProp("abo-search-now", Boolean.TRUE);
-    public static IntegerProperty ABO_MINUTE_MIN_SIZE = addIntProp("abo-minute-min-size", CheckFilmFilter.FILTER_ALL_OR_MIN); //Vorgabe beim Anlegen eines Abos
-    public static IntegerProperty ABO_MINUTE_MAX_SIZE = addIntProp("abo-minute-max-size", CheckFilmFilter.FILTER_DURATION_MAX_MINUTE); //Vorgabe beim Anlegen eines Abos
+    public static IntegerProperty ABO_MINUTE_MIN_SIZE = addIntProp("abo-minute-min-size", FilterCheck.FILTER_ALL_OR_MIN); //Vorgabe beim Anlegen eines Abos
+    public static IntegerProperty ABO_MINUTE_MAX_SIZE = addIntProp("abo-minute-max-size", FilterCheck.FILTER_DURATION_MAX_MINUTE); //Vorgabe beim Anlegen eines Abos
     public static StringProperty ABO_DIALOG_EDIT_SIZE = addStrProp("abo-dialog-edit-size", "600:800");
     public static DoubleProperty ABO_GUI_FILTER_DIVIDER = addDoubleProp("abo-gui-filter-divider", ProgConst.GUI_ABO_FILTER_DIVIDER_LOCATION);
     public static BooleanProperty ABO_GUI_FILTER_DIVIDER_ON = addBoolProp("abo-gui-filter-divider-on", Boolean.TRUE);

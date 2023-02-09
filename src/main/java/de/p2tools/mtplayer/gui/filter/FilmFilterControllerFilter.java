@@ -18,12 +18,12 @@ package de.p2tools.mtplayer.gui.filter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
-import de.p2tools.mtplayer.controller.filmFilter.CheckFilmFilter;
 import de.p2tools.p2Lib.guiTools.PLDatePicker;
 import de.p2tools.p2Lib.guiTools.pCheckComboBox.PCheckComboBox;
 import de.p2tools.p2Lib.guiTools.pRange.PRangeBox;
 import de.p2tools.p2Lib.guiTools.pRange.PTimePeriodBox;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
+import de.p2tools.p2Lib.mtFilter.FilterCheck;
 import de.p2tools.p2Lib.tools.date.PLDateFactory;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -45,7 +45,7 @@ public class FilmFilterControllerFilter extends VBox {
     private final Label lblTimeRange = new Label("Zeitraum:");
     private final Label lblTimeRangeValue = new Label();
 
-    private final PRangeBox slDur = new PRangeBox(0, CheckFilmFilter.FILTER_DURATION_MAX_MINUTE);
+    private final PRangeBox slDur = new PRangeBox(0, FilterCheck.FILTER_DURATION_MAX_MINUTE);
     private final Label lblDur = new Label("Filmlänge:");
 
     private final PTimePeriodBox slFilmTime = new PTimePeriodBox();
@@ -91,8 +91,8 @@ public class FilmFilterControllerFilter extends VBox {
     }
 
     private void initDaysFilter() {
-        slTimeRange.setMin(CheckFilmFilter.FILTER_ALL_OR_MIN);
-        slTimeRange.setMax(CheckFilmFilter.FILTER_TIME_RANGE_MAX_VALUE);
+        slTimeRange.setMin(FilterCheck.FILTER_ALL_OR_MIN);
+        slTimeRange.setMax(FilterCheck.FILTER_TIME_RANGE_MAX_VALUE);
         slTimeRange.setShowTickLabels(true);
 
         slTimeRange.setMajorTickUnit(10);
@@ -101,7 +101,7 @@ public class FilmFilterControllerFilter extends VBox {
         slTimeRange.setLabelFormatter(new StringConverter<>() {
             @Override
             public String toString(Double x) {
-                if (x == CheckFilmFilter.FILTER_ALL_OR_MIN) return "alles";
+                if (x == FilterCheck.FILTER_ALL_OR_MIN) return "alles";
 
                 return x.intValue() + "";
             }
@@ -153,11 +153,11 @@ public class FilmFilterControllerFilter extends VBox {
                 try {
                     progData.actFilmFilterWorker.getActFilterSettings().setShowDate(PLDateFactory.toString(newDate));
                 } catch (Exception ex) {
-                    progData.actFilmFilterWorker.getActFilterSettings().setShowDate(CheckFilmFilter.FILTER_SHOW_DATE_ALL);
+                    progData.actFilmFilterWorker.getActFilterSettings().setShowDate(FilterCheck.FILTER_SHOW_DATE_ALL);
                 }
 
             } else {
-                progData.actFilmFilterWorker.getActFilterSettings().setShowDate(CheckFilmFilter.FILTER_SHOW_DATE_ALL);
+                progData.actFilmFilterWorker.getActFilterSettings().setShowDate(FilterCheck.FILTER_SHOW_DATE_ALL);
             }
         });
         progData.actFilmFilterWorker.getActFilterSettings().showDateProperty().addListener((observable, oldValue, newValue) -> {
@@ -263,7 +263,7 @@ public class FilmFilterControllerFilter extends VBox {
         int i = (int) slTimeRange.getValue();
         String tNr = i + "";
 
-        if (i == CheckFilmFilter.FILTER_ALL_OR_MIN) {
+        if (i == FilterCheck.FILTER_ALL_OR_MIN) {
             lblTimeRangeValue.setText(txtAll);
         } else {
             lblTimeRangeValue.setText(tNr + (i == 1 ? " Tag" : " Tage"));

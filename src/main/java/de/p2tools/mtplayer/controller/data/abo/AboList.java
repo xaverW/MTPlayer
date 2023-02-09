@@ -21,13 +21,13 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadTools;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
-import de.p2tools.mtplayer.controller.filmFilter.CheckFilmFilter;
 import de.p2tools.mtplayer.controller.filmFilter.FilmFilter;
 import de.p2tools.mtplayer.controller.filmFilter.FilmFilterFactory;
 import de.p2tools.mtplayer.gui.dialog.AboEditDialogController;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.configFile.pData.PDataList;
+import de.p2tools.p2Lib.mtFilter.FilterCheck;
 import de.p2tools.p2Lib.tools.GermanStringSorter;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -103,8 +103,8 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
         String title = filmFilter.isTitleVis() ? filmFilter.getTitle().trim() : "";
         String themeTitle = filmFilter.isThemeTitleVis() ? filmFilter.getThemeTitle().trim() : "";
         String somewhere = filmFilter.isSomewhereVis() ? filmFilter.getSomewhere().trim() : "";
-        int minDuration = filmFilter.isMinMaxDurVis() ? filmFilter.getMinDur() : CheckFilmFilter.FILTER_ALL_OR_MIN;
-        int maxDuration = filmFilter.isMinMaxDurVis() ? filmFilter.getMaxDur() : CheckFilmFilter.FILTER_DURATION_MAX_MINUTE;
+        int minDuration = filmFilter.isMinMaxDurVis() ? filmFilter.getMinDur() : FilterCheck.FILTER_ALL_OR_MIN;
+        int maxDuration = filmFilter.isMinMaxDurVis() ? filmFilter.getMaxDur() : FilterCheck.FILTER_DURATION_MAX_MINUTE;
 
         String searchTitle = "";
         String searchChannel = channel.isEmpty() ? "" : channel + " - ";
@@ -167,10 +167,10 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
             minDuration = ProgConfig.ABO_MINUTE_MIN_SIZE.getValue();
             maxDuration = ProgConfig.ABO_MINUTE_MAX_SIZE.getValue();
         } catch (final Exception ex) {
-            minDuration = CheckFilmFilter.FILTER_ALL_OR_MIN;
-            maxDuration = CheckFilmFilter.FILTER_DURATION_MAX_MINUTE;
-            ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(CheckFilmFilter.FILTER_ALL_OR_MIN);
-            ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(CheckFilmFilter.FILTER_DURATION_MAX_MINUTE);
+            minDuration = FilterCheck.FILTER_ALL_OR_MIN;
+            maxDuration = FilterCheck.FILTER_DURATION_MAX_MINUTE;
+            ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(FilterCheck.FILTER_ALL_OR_MIN);
+            ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(FilterCheck.FILTER_DURATION_MAX_MINUTE);
         }
 
         String namePath = DownloadTools.replaceEmptyFileName(aboName,
@@ -185,7 +185,7 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
                 "" /* filmThemaTitel */,
                 filmTitle,
                 "",
-                CheckFilmFilter.FILTER_ALL_OR_MIN,
+                FilterCheck.FILTER_ALL_OR_MIN,
                 minDuration,
                 maxDuration,
                 namePath);

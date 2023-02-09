@@ -21,6 +21,7 @@ import de.p2tools.p2Lib.configFile.config.Config_boolProp;
 import de.p2tools.p2Lib.configFile.config.Config_intProp;
 import de.p2tools.p2Lib.configFile.config.Config_stringProp;
 import de.p2tools.p2Lib.configFile.pData.PDataSample;
+import de.p2tools.p2Lib.mtFilter.FilterCheck;
 import javafx.beans.property.*;
 
 import java.util.ArrayList;
@@ -49,15 +50,15 @@ public class FilmFilterProps extends PDataSample<FilmFilter> implements Comparab
 
     private final BooleanProperty minMaxDurVis = new SimpleBooleanProperty(true);
     private final IntegerProperty minDur = new SimpleIntegerProperty(0);
-    private final IntegerProperty maxDur = new SimpleIntegerProperty(CheckFilmFilter.FILTER_DURATION_MAX_MINUTE);
+    private final IntegerProperty maxDur = new SimpleIntegerProperty(FilterCheck.FILTER_DURATION_MAX_MINUTE);
 
     private final BooleanProperty minMaxTimeVis = new SimpleBooleanProperty(true);
     private final BooleanProperty minMaxTimeInvert = new SimpleBooleanProperty(false);
     private final IntegerProperty minTime = new SimpleIntegerProperty(0); // Tageszeit in Sekunden
-    private final IntegerProperty maxTime = new SimpleIntegerProperty(CheckFilmFilter.FILTER_TIME_MAX_SEC); // Tageszeit in Sekunden
+    private final IntegerProperty maxTime = new SimpleIntegerProperty(FilterCheck.FILTER_TIME_MAX_SEC); // Tageszeit in Sekunden
 
     private final BooleanProperty showDateVis = new SimpleBooleanProperty(false);
-    private final StringProperty showDate = new SimpleStringProperty(CheckFilmFilter.FILTER_SHOW_DATE_ALL); //Sendedatum
+    private final StringProperty showDate = new SimpleStringProperty(FilterCheck.FILTER_SHOW_DATE_ALL); //Sendedatum
 
     private final BooleanProperty onlyVis = new SimpleBooleanProperty(false);
     private final BooleanProperty onlyBookmark = new SimpleBooleanProperty(false);

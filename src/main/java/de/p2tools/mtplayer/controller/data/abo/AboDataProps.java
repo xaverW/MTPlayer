@@ -19,10 +19,10 @@ package de.p2tools.mtplayer.controller.data.abo;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.filmFilter.CheckFilmFilter;
 import de.p2tools.p2Lib.configFile.config.*;
 import de.p2tools.p2Lib.configFile.pData.PDataSample;
 import de.p2tools.p2Lib.mtFilm.tools.Data;
+import de.p2tools.p2Lib.mtFilter.FilterCheck;
 import de.p2tools.p2Lib.tools.date.DateFactory;
 import de.p2tools.p2Lib.tools.date.PDate;
 import de.p2tools.p2Lib.tools.date.PDateProperty;
@@ -43,9 +43,9 @@ public class AboDataProps extends PDataSample<AboData> implements Comparable<Abo
     private final StringProperty themeTitle = new SimpleStringProperty("");
     private final StringProperty title = new SimpleStringProperty("");
     private final StringProperty somewhere = new SimpleStringProperty("");
-    private final IntegerProperty timeRange = new SimpleIntegerProperty(CheckFilmFilter.FILTER_ALL_OR_MIN);
-    private final IntegerProperty minDurationMinute = new SimpleIntegerProperty(CheckFilmFilter.FILTER_ALL_OR_MIN); // Minuten
-    private final IntegerProperty maxDurationMinute = new SimpleIntegerProperty(CheckFilmFilter.FILTER_DURATION_MAX_MINUTE); //Minuten
+    private final IntegerProperty timeRange = new SimpleIntegerProperty(FilterCheck.FILTER_ALL_OR_MIN);
+    private final IntegerProperty minDurationMinute = new SimpleIntegerProperty(FilterCheck.FILTER_ALL_OR_MIN); // Minuten
+    private final IntegerProperty maxDurationMinute = new SimpleIntegerProperty(FilterCheck.FILTER_DURATION_MAX_MINUTE); //Minuten
     private final StringProperty startTime = new SimpleStringProperty("");
     private final StringProperty aboSubDir = new SimpleStringProperty("");
     private final PDateProperty date = new PDateProperty(new PDate(0));//Datum des letzten gefundenen Downloads
