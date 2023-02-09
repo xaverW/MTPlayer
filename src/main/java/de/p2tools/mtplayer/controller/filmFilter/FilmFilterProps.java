@@ -54,7 +54,7 @@ public class FilmFilterProps extends PDataSample<FilmFilter> implements Comparab
     private final BooleanProperty minMaxTimeVis = new SimpleBooleanProperty(true);
     private final BooleanProperty minMaxTimeInvert = new SimpleBooleanProperty(false);
     private final IntegerProperty minTime = new SimpleIntegerProperty(0); // Tageszeit in Sekunden
-    private final IntegerProperty maxTime = new SimpleIntegerProperty(CheckFilmFilter.FILTER_FILMTIME_MAX_SEC); // Tageszeit in Sekunden
+    private final IntegerProperty maxTime = new SimpleIntegerProperty(CheckFilmFilter.FILTER_TIME_MAX_SEC); // Tageszeit in Sekunden
 
     private final BooleanProperty showDateVis = new SimpleBooleanProperty(false);
     private final StringProperty showDate = new SimpleStringProperty(CheckFilmFilter.FILTER_SHOW_DATE_ALL); //Sendedatum

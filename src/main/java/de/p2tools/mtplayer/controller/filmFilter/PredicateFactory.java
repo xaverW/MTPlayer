@@ -82,12 +82,12 @@ public class PredicateFactory {
 
         // FilmUhrZeit in Sek. von 0:00 Uhr
         final int minTimeSec = filmFilter.isMinMaxTimeVis() ? filmFilter.getMinTime() : 0;
-        final int maxTimeSec = filmFilter.isMinMaxTimeVis() ? filmFilter.getMaxTime() : CheckFilmFilter.FILTER_FILMTIME_MAX_SEC;
+        final int maxTimeSec = filmFilter.isMinMaxTimeVis() ? filmFilter.getMaxTime() : CheckFilmFilter.FILTER_TIME_MAX_SEC;
         final boolean minMaxTimeInvert = filmFilter.isMinMaxTimeInvert();
 
         long days;
         try {
-            if (filmFilter.getTimeRange() == CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE) {
+            if (filmFilter.getTimeRange() == CheckFilmFilter.FILTER_ALL_OR_MIN) {
                 days = 0;
             } else {
                 final long max = 1000L * 60L * 60L * 24L * filmFilter.getTimeRange();
@@ -158,7 +158,7 @@ public class PredicateFactory {
         }
 
         // Film-Uhrzeit
-        if (minTimeSec != 0 || maxTimeSec != CheckFilmFilter.FILTER_FILMTIME_MAX_SEC) {
+        if (minTimeSec != 0 || maxTimeSec != CheckFilmFilter.FILTER_TIME_MAX_SEC) {
             predicate = predicate.and(f -> CheckFilmFilter.checkFilmTime(minTimeSec, maxTimeSec, minMaxTimeInvert, f.filmTime));
         }
 

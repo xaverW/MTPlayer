@@ -145,7 +145,7 @@ public class FilmFilterFactory {
         sf.setUrlVis(false);
 
         sf.setTimeRangeVis(true);
-        sf.setTimeRange(CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
+        sf.setTimeRange(CheckFilmFilter.FILTER_ALL_OR_MIN);
 
         sf.setMinMaxDurVis(false);
         sf.setMinDur(0);
@@ -154,7 +154,7 @@ public class FilmFilterFactory {
         sf.setMinMaxTimeVis(false);
         sf.setMinMaxTimeInvert(false);
         sf.setMinTime(0);
-        sf.setMaxTime(CheckFilmFilter.FILTER_FILMTIME_MAX_SEC);
+        sf.setMaxTime(CheckFilmFilter.FILTER_TIME_MAX_SEC);
 
         sf.setOnlyVis(true);
         sf.setOnlyBookmark(false);
@@ -194,7 +194,7 @@ public class FilmFilterFactory {
         sf.setMinMaxTimeVis(false);
         sf.setMinMaxTimeInvert(false);
         sf.setMinTime(0);
-        sf.setMaxTime(CheckFilmFilter.FILTER_FILMTIME_MAX_SEC);
+        sf.setMaxTime(CheckFilmFilter.FILTER_TIME_MAX_SEC);
 
         sf.setOnlyVis(true);
         sf.setOnlyBookmark(false);
@@ -225,7 +225,7 @@ public class FilmFilterFactory {
         sf.setUrlVis(false);
 
         sf.setTimeRangeVis(true);
-        sf.setTimeRange(CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
+        sf.setTimeRange(CheckFilmFilter.FILTER_ALL_OR_MIN);
 
         sf.setMinMaxDurVis(false);
         sf.setMinDur(0);
@@ -234,7 +234,7 @@ public class FilmFilterFactory {
         sf.setMinMaxTimeVis(false);
         sf.setMinMaxTimeInvert(false);
         sf.setMinTime(0);
-        sf.setMaxTime(CheckFilmFilter.FILTER_FILMTIME_MAX_SEC);
+        sf.setMaxTime(CheckFilmFilter.FILTER_TIME_MAX_SEC);
 
         sf.setOnlyVis(true);
         sf.setOnlyBookmark(true);
@@ -276,7 +276,7 @@ public class FilmFilterFactory {
         sf.setMinMaxTimeVis(false);
         sf.setMinMaxTimeInvert(false);
         sf.setMinTime(0);
-        sf.setMaxTime(CheckFilmFilter.FILTER_FILMTIME_MAX_SEC);
+        sf.setMaxTime(CheckFilmFilter.FILTER_TIME_MAX_SEC);
 
         sf.setOnlyVis(true);
         sf.setOnlyBookmark(false);
@@ -309,7 +309,7 @@ public class FilmFilterFactory {
         sf.setUrlVis(false);
 
         sf.setTimeRangeVis(true);
-        sf.setTimeRange(CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
+        sf.setTimeRange(CheckFilmFilter.FILTER_ALL_OR_MIN);
 
         sf.setMinMaxDurVis(true);
         sf.setMinDur(0);
@@ -318,7 +318,7 @@ public class FilmFilterFactory {
         sf.setMinMaxTimeVis(false);
         sf.setMinMaxTimeInvert(false);
         sf.setMinTime(0);
-        sf.setMaxTime(CheckFilmFilter.FILTER_FILMTIME_MAX_SEC);
+        sf.setMaxTime(CheckFilmFilter.FILTER_TIME_MAX_SEC);
 
         sf.setOnlyVis(true);
         sf.setOnlyBookmark(false);
@@ -351,7 +351,7 @@ public class FilmFilterFactory {
         sf.setUrlVis(false);
 
         sf.setTimeRangeVis(true);
-        sf.setTimeRange(CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
+        sf.setTimeRange(CheckFilmFilter.FILTER_ALL_OR_MIN);
 
         sf.setMinMaxDurVis(false);
         sf.setMinDur(0);
@@ -360,7 +360,7 @@ public class FilmFilterFactory {
         sf.setMinMaxTimeVis(false);
         sf.setMinMaxTimeInvert(false);
         sf.setMinTime(0);
-        sf.setMaxTime(CheckFilmFilter.FILTER_FILMTIME_MAX_SEC);
+        sf.setMaxTime(CheckFilmFilter.FILTER_TIME_MAX_SEC);
 
         sf.setOnlyVis(true);
         sf.setOnlyBookmark(false);
@@ -392,7 +392,7 @@ public class FilmFilterFactory {
         sf.setUrlVis(false);
 
         sf.setTimeRangeVis(true);
-        sf.setTimeRange(CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
+        sf.setTimeRange(CheckFilmFilter.FILTER_ALL_OR_MIN);
 
         sf.setMinMaxDurVis(false);
         sf.setMinDur(0);
@@ -401,7 +401,7 @@ public class FilmFilterFactory {
         sf.setMinMaxTimeVis(false);
         sf.setMinMaxTimeInvert(false);
         sf.setMinTime(0);
-        sf.setMaxTime(CheckFilmFilter.FILTER_FILMTIME_MAX_SEC);
+        sf.setMaxTime(CheckFilmFilter.FILTER_TIME_MAX_SEC);
 
         sf.setOnlyVis(true);
         sf.setOnlyBookmark(false);
@@ -433,7 +433,7 @@ public class FilmFilterFactory {
         sf.setUrlVis(false);
 
         sf.setTimeRangeVis(true);
-        sf.setTimeRange(CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
+        sf.setTimeRange(CheckFilmFilter.FILTER_ALL_OR_MIN);
 
         sf.setMinMaxDurVis(false);
         sf.setMinDur(0);
@@ -442,7 +442,7 @@ public class FilmFilterFactory {
         sf.setMinMaxTimeVis(false);
         sf.setMinMaxTimeInvert(false);
         sf.setMinTime(0);
-        sf.setMaxTime(CheckFilmFilter.FILTER_FILMTIME_MAX_SEC);
+        sf.setMaxTime(CheckFilmFilter.FILTER_TIME_MAX_SEC);
 
         sf.setOnlyVis(true);
         sf.setOnlyBookmark(false);
@@ -485,7 +485,7 @@ public class FilmFilterFactory {
         sf.setMinMaxTimeVis(true);
         sf.setMinMaxTimeInvert(false);
         sf.setMinTime(64800);
-        sf.setMaxTime(CheckFilmFilter.FILTER_FILMTIME_MAX_SEC);
+        sf.setMaxTime(CheckFilmFilter.FILTER_TIME_MAX_SEC);
 
         sf.setOnlyVis(false);
         sf.setOnlyBookmark(false);
@@ -528,7 +528,7 @@ public class FilmFilterFactory {
         sf.setMinMaxTimeVis(false);
         sf.setMinMaxTimeInvert(false);
         sf.setMinTime(0);
-        sf.setMaxTime(CheckFilmFilter.FILTER_FILMTIME_MAX_SEC);
+        sf.setMaxTime(CheckFilmFilter.FILTER_TIME_MAX_SEC);
 
         sf.setOnlyVis(true);
         sf.setOnlyBookmark(false);
@@ -541,6 +541,50 @@ public class FilmFilterFactory {
         sf.setNotVis(true);
         sf.setNotAbo(false);
         sf.setNotHistory(true);
+        sf.setNotDouble(true);
+        sf.setNotGeo(true);
+        sf.setNotFuture(false);
+
+        progData.actFilmFilterWorker.getStoredFilterList().add(sf);
+
+        //========================================================
+        sf = new FilmFilter("keine Beitrage mit: \"Audiodeskription\" und \"Gebärdensprache\" anzeigen");
+
+        sf.setChannelVis(true);
+        sf.setChannel("");
+        sf.setThemeVis(false);
+        sf.setThemeExact(true);
+        sf.setThemeTitleVis(true);
+        sf.setThemeTitle("");
+        sf.setTitleVis(true);
+        sf.setTitle("#:(?!.*Audiodeskription)(?!.*Gebärdensprache).*");
+        sf.setSomewhereVis(false);
+        sf.setSomewhere("");
+        sf.setUrlVis(false);
+
+        sf.setTimeRangeVis(false);
+        sf.setTimeRange(CheckFilmFilter.FILTER_ALL_OR_MIN);
+
+        sf.setMinMaxDurVis(false);
+        sf.setMinDur(CheckFilmFilter.FILTER_ALL_OR_MIN);
+        sf.setMaxDur(CheckFilmFilter.FILTER_DURATION_MAX_MINUTE);
+
+        sf.setMinMaxTimeVis(false);
+        sf.setMinMaxTimeInvert(false);
+        sf.setMinTime(CheckFilmFilter.FILTER_ALL_OR_MIN);
+        sf.setMaxTime(CheckFilmFilter.FILTER_TIME_MAX_SEC);
+
+        sf.setOnlyVis(false);
+        sf.setOnlyBookmark(false);
+        sf.setOnlyHd(false);
+        sf.setOnlyNew(false);
+        sf.setOnlyUt(false);
+        sf.setOnlyLive(false);
+        sf.setOnlyActHistory(false);
+
+        sf.setNotVis(true);
+        sf.setNotAbo(false);
+        sf.setNotHistory(false);
         sf.setNotDouble(true);
         sf.setNotGeo(true);
         sf.setNotFuture(false);

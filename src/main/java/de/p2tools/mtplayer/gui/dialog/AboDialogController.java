@@ -107,8 +107,8 @@ public class AboDialogController extends PDialogExtra {
         final String title = filmFilter.isTitleVis() ? filmFilter.getTitle() : "";
         final String themeTitle = filmFilter.isThemeTitleVis() ? filmFilter.getThemeTitle() : "";
         final String somewhere = filmFilter.isSomewhereVis() ? filmFilter.getSomewhere() : "";
-        final int timeRange = filmFilter.isTimeRangeVis() ? filmFilter.getTimeRange() : CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE;
-        final int minDuration = filmFilter.isMinMaxDurVis() ? filmFilter.getMinDur() : CheckFilmFilter.FILTER_DURATION_MIN_MINUTE;
+        final int timeRange = filmFilter.isTimeRangeVis() ? filmFilter.getTimeRange() : CheckFilmFilter.FILTER_ALL_OR_MIN;
+        final int minDuration = filmFilter.isMinMaxDurVis() ? filmFilter.getMinDur() : CheckFilmFilter.FILTER_ALL_OR_MIN;
         final int maxDuration = filmFilter.isMinMaxDurVis() ? filmFilter.getMaxDur() : CheckFilmFilter.FILTER_DURATION_MAX_MINUTE;
 
         aboCopy.setChannel(channel);

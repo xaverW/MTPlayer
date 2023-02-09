@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.controller.filmFilter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.tools.Listener;
+import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.application.Platform;
 
@@ -66,6 +67,7 @@ public class FilmFilterRunner {
 
     private void filterList() {
         // ist etwas "umständlich", scheint aber am flüssigsten zu laufen
+        PDuration.counterStart("filterList");
         if (!search.getAndSet(true)) {
             research.set(false);
             try {
@@ -87,5 +89,6 @@ public class FilmFilterRunner {
         } else {
             research.set(true);
         }
+        PDuration.counterStop("filterList");
     }
 }

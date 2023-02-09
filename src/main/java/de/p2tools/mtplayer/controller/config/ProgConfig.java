@@ -234,7 +234,7 @@ public class ProgConfig extends PDataProgConfig {
 
     // Gui Abo
     public static BooleanProperty ABO_SEARCH_NOW = addBoolProp("abo-search-now", Boolean.TRUE);
-    public static IntegerProperty ABO_MINUTE_MIN_SIZE = addIntProp("abo-minute-min-size", CheckFilmFilter.FILTER_DURATION_MIN_MINUTE); //Vorgabe beim Anlegen eines Abos
+    public static IntegerProperty ABO_MINUTE_MIN_SIZE = addIntProp("abo-minute-min-size", CheckFilmFilter.FILTER_ALL_OR_MIN); //Vorgabe beim Anlegen eines Abos
     public static IntegerProperty ABO_MINUTE_MAX_SIZE = addIntProp("abo-minute-max-size", CheckFilmFilter.FILTER_DURATION_MAX_MINUTE); //Vorgabe beim Anlegen eines Abos
     public static StringProperty ABO_DIALOG_EDIT_SIZE = addStrProp("abo-dialog-edit-size", "600:800");
     public static DoubleProperty ABO_GUI_FILTER_DIVIDER = addDoubleProp("abo-gui-filter-divider", ProgConst.GUI_ABO_FILTER_DIVIDER_LOCATION);

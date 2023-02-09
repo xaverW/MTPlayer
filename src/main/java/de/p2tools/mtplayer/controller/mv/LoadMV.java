@@ -168,14 +168,14 @@ public class LoadMV implements AutoCloseable {
                         try {
                             aboData.setMinDurationMinute(Integer.parseInt(value));
                         } catch (Exception ex) {
-                            aboData.setMinDurationMinute(CheckFilmFilter.FILTER_DURATION_MIN_MINUTE);
+                            aboData.setMinDurationMinute(CheckFilmFilter.FILTER_ALL_OR_MIN);
                         }
                         break;
                     case "min_max":
                         if (value.equals("false")) {
                             //dann Maxdauer: Umbauen
                             aboData.setMaxDurationMinute(aboData.getMinDurationMinute());
-                            aboData.setMinDurationMinute(CheckFilmFilter.FILTER_DURATION_MIN_MINUTE);
+                            aboData.setMinDurationMinute(CheckFilmFilter.FILTER_ALL_OR_MIN);
                         }
                         break;
                     case "Zielpfad":

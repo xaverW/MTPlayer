@@ -21,18 +21,13 @@ import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.p2Lib.mtFilm.film.FilmData;
 import de.p2tools.p2Lib.mtFilm.film.FilmDataXml;
 
-import java.util.regex.Pattern;
-
 public class CheckFilmFilter {
 
     public static final String FILTER_SHOW_DATE_ALL = "";
-    public static final int FILTER_DURATION_MIN_MINUTE = 0;
-    public static final int FILTER_DURATION_MAX_MINUTE = 150;
-    public static final int FILTER_FILMTIME_MIN_SEC = 0;
-    public static final int FILTER_FILMTIME_MAX_SEC = 24 * 60 * 60; // das ist eigentlich bereits 00:00 vom nächsten Tag!!
-    public static final int FILTER_TIME_RANGE_ALL_VALUE = 0;
-    public static final int FILTER_TIME_RANGE_MIN_VALUE = 0;
-    public static final int FILTER_TIME_RANGE_MAX_VALUE = 50;
+    public static final int FILTER_ALL_OR_MIN = 0;
+    public static final int FILTER_DURATION_MAX_MINUTE = 150;//Filmlänge [Minuten]
+    public static final int FILTER_TIME_MAX_SEC = 24 * 60 * 60;//Sendezeit [Minuten], das ist eigentlich bereits 00:00 vom nächsten Tag!!
+    public static final int FILTER_TIME_RANGE_MAX_VALUE = 50;//Zeitraum zurück [Tag]
 
     private CheckFilmFilter() {
     }
@@ -104,7 +99,7 @@ public class CheckFilmFilter {
     public static boolean checkMaxDays(int maxDays, long filmTime) {
         long days = 0;
         try {
-            if (maxDays == FILTER_TIME_RANGE_ALL_VALUE) {
+            if (maxDays == FILTER_ALL_OR_MIN) {
                 days = 0;
             } else {
                 final long max = 1000L * 60L * 60L * 24L * maxDays;
@@ -157,7 +152,7 @@ public class CheckFilmFilter {
         }
 
         boolean ret = (timeMin == 0 || filmTime >= timeMin) &&
-                (timeMax == FILTER_FILMTIME_MAX_SEC || filmTime <= timeMax);
+                (timeMax == FILTER_TIME_MAX_SEC || filmTime <= timeMax);
 
         if (invert) {
             return !ret;
@@ -168,45 +163,40 @@ public class CheckFilmFilter {
 
     private static boolean check(Filter filter, String im) {
         // wenn einer passt, dann ists gut
-        if (filter.filterArr.length == 1) {
-            return check(filter.filterArr[0], filter.pattern, im);
+        if (filter.pattern != null) {
+            // dann ists eine RegEx
+            return (filter.pattern.matcher(im).matches());
         }
+        
+        if (filter.exclude) {
+            //dann werden die Begriffe ausgeschlossen
+            return !checkInclude(filter, im.toLowerCase());
+        } else {
+            //dann müssen die Begriffe enthalten sein
+            return checkInclude(filter, im.toLowerCase());
+        }
+    }
 
+    private static boolean checkInclude(Filter filter, String im) {
         if (filter.filterAnd) {
-            // Suchbegriffe müssen alle passen
+            //Suchbegriffe müssen alle passen
             for (final String s : filter.filterArr) {
-                // dann jeden Suchbegriff checken
-                if (!im.toLowerCase().contains(s)) {
+                //dann jeden Suchbegriff checken
+                if (!im.contains(s)) {
                     return false;
                 }
             }
             return true;
 
         } else {
-            // nur ein Suchbegriff muss passen
+            //nur ein Suchbegriff muss passen
             for (final String s : filter.filterArr) {
-                // dann jeden Suchbegriff checken
-                if (im.toLowerCase().contains(s)) {
+                //dann jeden Suchbegriff checken
+                if (im.contains(s)) {
                     return true;
                 }
             }
         }
-
-        // nix wars
-        return false;
-    }
-
-    private static boolean check(String filter, Pattern pattern, String im) {
-        if (pattern != null) {
-            // dann ists eine RegEx
-            return (pattern.matcher(im).matches());
-        }
-        if (im.toLowerCase().contains(filter)) {
-            // wenn einer passt, dann ists gut
-            return true;
-        }
-
-        // nix wars
         return false;
     }
 }

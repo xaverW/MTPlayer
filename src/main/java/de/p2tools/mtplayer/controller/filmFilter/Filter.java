@@ -20,6 +20,8 @@ package de.p2tools.mtplayer.controller.filmFilter;
 import java.util.regex.Pattern;
 
 public class Filter {
+    public static String FILTER_REG_EX = "#:";
+    public static String FILTER_EXCLUDE = "!:";
 
     public String filter = "";
     public String[] filterArr = {""};
@@ -27,6 +29,7 @@ public class Filter {
     public boolean exact = false;
     public Pattern pattern = null;
     public boolean empty = true;
+    public boolean exclude = false;
 
     public Filter() {
     }
@@ -54,7 +57,6 @@ public class Filter {
 
     public void makeFilter() {
         // keine Auftrennung mit ":" oder "," für z.B. URLs
-
         if (filter.isEmpty()) {
             filterArr = new String[]{""};
             pattern = null;
@@ -62,9 +64,7 @@ public class Filter {
             return;
         }
 
-        empty = false;
-        pattern = makePattern(filter);
-
+        setValues();
         if (exact || pattern != null) {
             filterArr = new String[]{filter};
 
@@ -83,9 +83,7 @@ public class Filter {
             return;
         }
 
-        empty = false;
-        pattern = makePattern(filter);
-
+        setValues();
         if (exact || pattern != null) {
             filterArr = new String[]{filter};
 
@@ -104,6 +102,15 @@ public class Filter {
         }
 
         checkArray();
+    }
+
+    private void setValues() {
+        empty = false;
+        pattern = makePattern(filter);
+        exclude = isExclusion(filter);
+        if (exclude) {
+            filter = filter.substring(FILTER_EXCLUDE.length());
+        }
     }
 
     private void checkArray() {
@@ -127,7 +134,11 @@ public class Filter {
     }
 
     public static boolean isPattern(String searchText) {
-        return searchText.startsWith("#:");
+        return searchText.startsWith(FILTER_REG_EX);
+    }
+
+    public static boolean isExclusion(String searchText) {
+        return searchText.startsWith(FILTER_EXCLUDE);
     }
 }
 

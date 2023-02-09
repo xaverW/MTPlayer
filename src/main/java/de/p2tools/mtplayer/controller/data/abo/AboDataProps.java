@@ -43,8 +43,8 @@ public class AboDataProps extends PDataSample<AboData> implements Comparable<Abo
     private final StringProperty themeTitle = new SimpleStringProperty("");
     private final StringProperty title = new SimpleStringProperty("");
     private final StringProperty somewhere = new SimpleStringProperty("");
-    private final IntegerProperty timeRange = new SimpleIntegerProperty(CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
-    private final IntegerProperty minDurationMinute = new SimpleIntegerProperty(CheckFilmFilter.FILTER_DURATION_MIN_MINUTE); // Minuten
+    private final IntegerProperty timeRange = new SimpleIntegerProperty(CheckFilmFilter.FILTER_ALL_OR_MIN);
+    private final IntegerProperty minDurationMinute = new SimpleIntegerProperty(CheckFilmFilter.FILTER_ALL_OR_MIN); // Minuten
     private final IntegerProperty maxDurationMinute = new SimpleIntegerProperty(CheckFilmFilter.FILTER_DURATION_MAX_MINUTE); //Minuten
     private final StringProperty startTime = new SimpleStringProperty("");
     private final StringProperty aboSubDir = new SimpleStringProperty("");

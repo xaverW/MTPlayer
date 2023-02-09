@@ -91,7 +91,7 @@ public class FilmFilterControllerFilter extends VBox {
     }
 
     private void initDaysFilter() {
-        slTimeRange.setMin(CheckFilmFilter.FILTER_TIME_RANGE_MIN_VALUE);
+        slTimeRange.setMin(CheckFilmFilter.FILTER_ALL_OR_MIN);
         slTimeRange.setMax(CheckFilmFilter.FILTER_TIME_RANGE_MAX_VALUE);
         slTimeRange.setShowTickLabels(true);
 
@@ -101,7 +101,7 @@ public class FilmFilterControllerFilter extends VBox {
         slTimeRange.setLabelFormatter(new StringConverter<>() {
             @Override
             public String toString(Double x) {
-                if (x == CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE) return "alles";
+                if (x == CheckFilmFilter.FILTER_ALL_OR_MIN) return "alles";
 
                 return x.intValue() + "";
             }
@@ -263,7 +263,7 @@ public class FilmFilterControllerFilter extends VBox {
         int i = (int) slTimeRange.getValue();
         String tNr = i + "";
 
-        if (i == CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE) {
+        if (i == CheckFilmFilter.FILTER_ALL_OR_MIN) {
             lblTimeRangeValue.setText(txtAll);
         } else {
             lblTimeRangeValue.setText(tNr + (i == 1 ? " Tag" : " Tage"));

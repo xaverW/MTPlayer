@@ -113,13 +113,13 @@ public final class FilmFilter extends FilmFilterProps {
         setSomewhere("");
         setUrl("");
 
-        setTimeRange(CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
+        setTimeRange(CheckFilmFilter.FILTER_ALL_OR_MIN);
 
         setMinDur(0);
         setMaxDur(CheckFilmFilter.FILTER_DURATION_MAX_MINUTE);
 
         setMinTime(0);
-        setMaxTime(CheckFilmFilter.FILTER_FILMTIME_MAX_SEC);
+        setMaxTime(CheckFilmFilter.FILTER_TIME_MAX_SEC);
 
         setShowDate(CheckFilmFilter.FILTER_SHOW_DATE_ALL);
 

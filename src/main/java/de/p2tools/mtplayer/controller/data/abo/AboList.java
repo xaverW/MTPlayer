@@ -103,7 +103,7 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
         String title = filmFilter.isTitleVis() ? filmFilter.getTitle().trim() : "";
         String themeTitle = filmFilter.isThemeTitleVis() ? filmFilter.getThemeTitle().trim() : "";
         String somewhere = filmFilter.isSomewhereVis() ? filmFilter.getSomewhere().trim() : "";
-        int minDuration = filmFilter.isMinMaxDurVis() ? filmFilter.getMinDur() : CheckFilmFilter.FILTER_DURATION_MIN_MINUTE;
+        int minDuration = filmFilter.isMinMaxDurVis() ? filmFilter.getMinDur() : CheckFilmFilter.FILTER_ALL_OR_MIN;
         int maxDuration = filmFilter.isMinMaxDurVis() ? filmFilter.getMaxDur() : CheckFilmFilter.FILTER_DURATION_MAX_MINUTE;
 
         String searchTitle = "";
@@ -167,9 +167,9 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
             minDuration = ProgConfig.ABO_MINUTE_MIN_SIZE.getValue();
             maxDuration = ProgConfig.ABO_MINUTE_MAX_SIZE.getValue();
         } catch (final Exception ex) {
-            minDuration = CheckFilmFilter.FILTER_DURATION_MIN_MINUTE;
+            minDuration = CheckFilmFilter.FILTER_ALL_OR_MIN;
             maxDuration = CheckFilmFilter.FILTER_DURATION_MAX_MINUTE;
-            ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(CheckFilmFilter.FILTER_DURATION_MIN_MINUTE);
+            ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(CheckFilmFilter.FILTER_ALL_OR_MIN);
             ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(CheckFilmFilter.FILTER_DURATION_MAX_MINUTE);
         }
 
@@ -185,7 +185,7 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
                 "" /* filmThemaTitel */,
                 filmTitle,
                 "",
-                CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE,
+                CheckFilmFilter.FILTER_ALL_OR_MIN,
                 minDuration,
                 maxDuration,
                 namePath);

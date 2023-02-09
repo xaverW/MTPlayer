@@ -34,11 +34,11 @@ public class UpdateConfig {
             final int FILTER_DAYS_MAX__OLD = 30; // ist der alte Wert für "alles"
 
             if (ProgData.getInstance().actFilmFilterWorker.getActFilterSettings().getTimeRange() == FILTER_DAYS_MAX__OLD) {
-                ProgData.getInstance().actFilmFilterWorker.getActFilterSettings().setTimeRange(CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
+                ProgData.getInstance().actFilmFilterWorker.getActFilterSettings().setTimeRange(CheckFilmFilter.FILTER_ALL_OR_MIN);
             }
             ProgData.getInstance().actFilmFilterWorker.getStoredFilterList().stream().forEach(sf -> {
                 if (sf.getTimeRange() == FILTER_DAYS_MAX__OLD) {
-                    sf.setTimeRange(CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE);
+                    sf.setTimeRange(CheckFilmFilter.FILTER_ALL_OR_MIN);
                 }
             });
         }

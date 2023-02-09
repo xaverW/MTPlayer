@@ -385,7 +385,7 @@ public class AboEditDialogController extends AboDialogController {
     }
 
     private void initTimeRange() {
-        slTimeRange.setMin(CheckFilmFilter.FILTER_TIME_RANGE_MIN_VALUE);
+        slTimeRange.setMin(CheckFilmFilter.FILTER_ALL_OR_MIN);
         slTimeRange.setMax(CheckFilmFilter.FILTER_TIME_RANGE_MAX_VALUE);
         slTimeRange.setShowTickLabels(true);
         slTimeRange.setMajorTickUnit(10);
@@ -394,7 +394,7 @@ public class AboEditDialogController extends AboDialogController {
         slTimeRange.setLabelFormatter(new StringConverter<>() {
             @Override
             public String toString(Double x) {
-                if (x == CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE) return "alles";
+                if (x == CheckFilmFilter.FILTER_ALL_OR_MIN) return "alles";
                 return x.intValue() + "";
             }
 
@@ -426,7 +426,7 @@ public class AboEditDialogController extends AboDialogController {
         int i = (int) slTimeRange.getValue();
         String tNr = i + "";
 
-        if (i == CheckFilmFilter.FILTER_TIME_RANGE_ALL_VALUE) {
+        if (i == CheckFilmFilter.FILTER_ALL_OR_MIN) {
             lblTimeRange.setText(txtAll);
         } else {
             lblTimeRange.setText(tNr + (i == 1 ? " Tag" : " Tage"));
