@@ -64,7 +64,13 @@ public class AboDialogController extends PDialogExtra {
     final RadioButton rbHd = new RadioButton("HD");
     final RadioButton rbHigh = new RadioButton("hoch");
     final RadioButton rbLow = new RadioButton("niedrig");
-    final TextArea textArea = new PTextAreaIgnoreTab(false, true);
+    final TextArea textAreaDescription = new PTextAreaIgnoreTab(false, true);
+
+    final TextArea textAreaTheme = new PTextAreaIgnoreTab(false, true);
+    final TextArea textAreaThemeTitle = new PTextAreaIgnoreTab(false, true);
+    final TextArea textAreaTitle = new PTextAreaIgnoreTab(false, true);
+    final TextArea textAreaSomewhere = new PTextAreaIgnoreTab(false, true);
+
     final MenuButton mbChannel = new MenuButton("");
     final ArrayList<CheckMenuItem> checkMenuItemsList = new ArrayList<>();
     final PTimePicker pTimePicker = new PTimePicker();

@@ -74,16 +74,40 @@ public class AboEditDialogController extends AboDialogController {
         }
     }
 
+    private void setTextArea(TextArea textArea) {
+        textArea.setWrapText(true);
+        textArea.setPrefRowCount(2);
+//        textArea.setMinHeight(20);
+        textArea.setPrefColumnCount(1);
+    }
+
     private void initControl(int i) {
         lbl[i] = new Label(AboFieldNames.COLUMN_NAMES[i] + ":");
 
         switch (i) {
+            case AboFieldNames.ABO_THEME_NO:
+                setTextArea(textAreaTheme);
+                textAreaTheme.setText(aboCopy.getTheme());
+                break;
+            case AboFieldNames.ABO_THEME_TITLE_NO:
+                setTextArea(textAreaThemeTitle);
+                textAreaThemeTitle.setText(aboCopy.getThemeTitle());
+                break;
+            case AboFieldNames.ABO_TITLE_NO:
+                setTextArea(textAreaTitle);
+                textAreaTitle.setText(aboCopy.getTitle());
+                break;
+            case AboFieldNames.ABO_SOMEWHERE_NO:
+                setTextArea(textAreaSomewhere);
+                textAreaSomewhere.setText(aboCopy.getSomewhere());
+                break;
+
             case AboFieldNames.ABO_DESCRIPTION_NO:
-                textArea.setWrapText(true);
-                textArea.setPrefRowCount(4);
-                textArea.setMinHeight(60);
-                textArea.setPrefColumnCount(1);
-                textArea.setText(aboCopy.getDescription());
+                textAreaDescription.setWrapText(true);
+                textAreaDescription.setPrefRowCount(4);
+//                textAreaDescription.setMinHeight(60);
+                textAreaDescription.setPrefColumnCount(1);
+                textAreaDescription.setText(aboCopy.getDescription());
                 break;
             case AboFieldNames.ABO_RESOLUTION_NO:
                 ToggleGroup tg = new ToggleGroup();
@@ -141,14 +165,35 @@ public class AboEditDialogController extends AboDialogController {
         }
     }
 
+    private void addTextArea(TextArea textArea, int i, int grid) {
+        FilterCheckRegEx fT = new FilterCheckRegEx(textArea);
+        textArea.textProperty().addListener((observable, oldValue, newValue) -> fT.checkPattern());
+        textArea.textProperty().addListener((observable, oldValue, newValue) -> cbxEditAll[i].setSelected(true));
+        textArea.textProperty().bindBidirectional(aboCopy.properties[i]);
+        gridPane.add(textArea, 1, grid);
+    }
+
     private void addTextField(int i) {
         final int grid = getGridLine(i);
         switch (i) {
-            case AboFieldNames.ABO_DESCRIPTION_NO:
-                textArea.textProperty().bindBidirectional(aboCopy.properties[i]);
-                textArea.textProperty().addListener((observable, oldValue, newValue) -> cbxEditAll[i].setSelected(true));
-                gridPane.add(textArea, 1, grid);
+            case AboFieldNames.ABO_THEME_NO:
+                addTextArea(textAreaTheme, i, grid);
                 break;
+            case AboFieldNames.ABO_THEME_TITLE_NO:
+                addTextArea(textAreaThemeTitle, i, grid);
+                break;
+            case AboFieldNames.ABO_TITLE_NO:
+                addTextArea(textAreaTitle, i, grid);
+                break;
+            case AboFieldNames.ABO_SOMEWHERE_NO:
+                addTextArea(textAreaSomewhere, i, grid);
+                break;
+            case AboFieldNames.ABO_DESCRIPTION_NO:
+                textAreaDescription.textProperty().addListener((observable, oldValue, newValue) -> cbxEditAll[i].setSelected(true));
+                textAreaDescription.textProperty().bindBidirectional(aboCopy.properties[i]);
+                gridPane.add(textAreaDescription, 1, grid);
+                break;
+
             case AboFieldNames.ABO_NO_NO:
                 txt[i].setEditable(false);
                 txt[i].setDisable(true);
@@ -348,14 +393,14 @@ public class AboEditDialogController extends AboDialogController {
                 hBox.getChildren().addAll(chkStartTime, pTimePicker, hb);
                 gridPane.add(hBox, 1, grid);
                 break;
-            case AboFieldNames.ABO_THEME_NO:
-            case AboFieldNames.ABO_THEME_TITLE_NO:
-            case AboFieldNames.ABO_TITLE_NO:
-            case AboFieldNames.ABO_SOMEWHERE_NO:
-                FilterCheckRegEx fT = new FilterCheckRegEx(txt[i]);
-                txt[i].textProperty().addListener((observable, oldValue, newValue) -> fT.checkPattern());
-                setDefaultTxt(i, grid);
-                break;
+//            case AboFieldNames.ABO_THEME_NO:
+//            case AboFieldNames.ABO_THEME_TITLE_NO:
+//            case AboFieldNames.ABO_TITLE_NO:
+//            case AboFieldNames.ABO_SOMEWHERE_NO:
+//                FilterCheckRegEx fT = new FilterCheckRegEx(txt[i]);
+//                txt[i].textProperty().addListener((observable, oldValue, newValue) -> fT.checkPattern());
+//                setDefaultTxt(i, grid);
+//                break;
             default:
                 setDefaultTxt(i, grid);
                 break;
