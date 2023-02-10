@@ -29,7 +29,6 @@ import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PGuiTools;
 import de.p2tools.p2Lib.guiTools.PSeparatorComboBox;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -49,8 +48,6 @@ public class FilmFilterControllerProfiles extends VBox {
     private final Button btnNewFilter = new Button("neu anlegen");
 
     private final ProgData progData;
-
-    private final IntegerProperty filterProp = ProgConfig.FILTER_FILM_SEL_FILTER;
 
     public FilmFilterControllerProfiles() {
         super();
@@ -165,8 +162,8 @@ public class FilmFilterControllerProfiles extends VBox {
                 new SeparatorMenuItem(), miReset);
         mbFilterTools.setTooltip(new Tooltip("Gespeicherte Filterprofile bearbeiten"));
 
-        cboFilterProfiles.getSelectionModel().select(filterProp.get());
-        filterProp.bind(cboFilterProfiles.getSelectionModel().selectedIndexProperty());
+        cboFilterProfiles.getSelectionModel().select(ProgConfig.FILTER_FILM_SEL_FILTER.get());
+        ProgConfig.FILTER_FILM_SEL_FILTER.bind(cboFilterProfiles.getSelectionModel().selectedIndexProperty());
 
         cboFilterProfiles.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {

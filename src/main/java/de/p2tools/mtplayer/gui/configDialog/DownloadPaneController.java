@@ -143,9 +143,7 @@ public class DownloadPaneController extends PAccordionPane {
 
         tglBeep.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_BEEP);
         final Button btnBeep = new Button("_Test");
-//        btnBeep.getStyleClass().add("buttonSmall");
         btnBeep.setOnAction(a -> Toolkit.getDefaultToolkit().beep());
-//        GridPane.setHalignment(btnBeep, HPos.RIGHT);
 
         GridPane.setHalignment(btnHelpFinished, HPos.RIGHT);
         GridPane.setHalignment(btnHelpError, HPos.RIGHT);

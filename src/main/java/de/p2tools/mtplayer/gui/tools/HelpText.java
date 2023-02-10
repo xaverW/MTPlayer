@@ -20,18 +20,35 @@ import de.p2tools.p2Lib.P2LibConst;
 
 public class HelpText {
     public static final String FILTER_FIELD =
-            "Mit den Textfeldern kann entweder nach einem wörtlichen Suchtext oder nach " +
+            "Mit den Textfeldern kann nach einem wörtlichen Suchtext (Suchtext muss enthalten sein/" +
+                    "oder darf nicht enthalten sein) " +
+                    "oder nach " +
                     "regulären Ausdrücken (RegExp) gesucht werden.\n" +
                     "\n" +
                     "Groß- und Kleinschreibung wird bei beiden Arten der Suche nicht unterschieden.\n" +
                     "\n" +
-                    "-- Wörtlicher Suchtext --\n" +
+                    "-- Wörtlicher Suchtext muss enthalten sein --\n" +
                     "Ein wörtlicher Suchtext findet alle Dateien bei denen der Suchtext an beliebiger " +
                     "Stelle im durchsuchten Bereich enthalten ist.\n" +
                     "\n" +
                     "Um mehrere Begriffe zu suchen müssen diese durch Komma oder Doppelpunkt " +
-                    "getrennt werden. Das Komma verknüpft die Begriffe mit ODER (=> mindestens einer der Begriffe muss vorkommen), der Doppelpunkt mit UND (=> alle Begriffe müssen vorkommen).\n" +
+                    "getrennt werden. Das Komma verknüpft die Begriffe mit ODER (=> mindestens einer der Begriffe " +
+                    "muss vorkommen), der Doppelpunkt mit UND (=> alle Begriffe müssen vorkommen).\n" +
                     "\n" +
+                    "\n" +
+
+                    "-- Wörtlicher Suchtext darf nicht enthalten sein --\n" +
+                    "Der Suchtext muss mit '!:' (ohne die ' ') beginnen.\n" +
+                    "Ein wörtlicher Suchtext schließt alle Dateien aus, bei denen der Suchtext an beliebiger " +
+                    "Stelle im durchsuchten Bereich enthalten ist.\n" +
+                    "\n" +
+                    "Um mehrere Begriffe auszuschließen, müssen diese durch Komma oder Doppelpunkt " +
+                    "getrennt werden. Das Komma verknüpft die Begriffe mit ODER (=> mindestens einer der Begriffe " +
+                    "muss enthalten sein). Der Doppelpunkt verknüpft die Begriffe mit UND " +
+                    "(=> alle Begriffe müssen enthalten sein, damit der Beitrag ein Treffer ist).\n" +
+                    "\n" +
+                    "\n" +
+
                     "Suchtext und Suchbegriffe dürfen Leerzeichen enthalten, aber kein Komma und keinen Doppelpunkt.\n" +
                     "\n" +
                     "Beispiele:\n" +
@@ -40,6 +57,12 @@ public class HelpText {
                     "oder beides vorkommt, u.a. 'Wintersport im Mumintal' und 'Wie wird man Fussballprofi?'.\n" +
                     "'Sport:Fussball' (Doppelpunkt-getrennt) findet nur Dateien bei denen " +
                     "beides ('Sport' und 'Fussball') vorkommt, z.B. 'Wintersport, Fussball und Formel 1'.\n" +
+                    "\n" +
+                    "'!:Auto,Motorrad', es werden nur Beiträge gefunden, die weder \"Auto\" noch \"Motorrad\" " +
+                    "enthalten.\n" +
+                    "'!:Auto:Motorrad', es werden Beiträge gefunden, die \"Auto\" *und* \"Motorrad\" " +
+                    "*nicht* enthalten.\n" +
+
                     "\n" +
                     "-- Reguläre Ausdrücke --\n" +
                     "Ein Suchtext aus regulären Ausdrücken (RegExp) muss mit '#:' (ohne die ' ') beginnen.\n" +
@@ -137,7 +160,7 @@ public class HelpText {
                     "\n" +
                     "-- Besonderheiten --\n" +
                     "[Thema oder Titel] durchsucht THEMA und TITEL der Filmliste. [Irgendwo] sucht " +
-                    "außerdem noch in BESCHREIBUNG.\n" +
+                    "außerdem noch in BESCHREIBUNG und DATUM.\n" +
                     "Bei einer Suche nach mehreren Suchbegriffen müssen hier alle Suchbegriffe im selben " +
                     "Datenfeld vorkommen. Ein Film mit 'Sport' in THEMA und 'Fussball' in TITEL wird " +
                     "von 'Sport:Fussball' nicht erfasst.\n" +
@@ -189,6 +212,32 @@ public class HelpText {
                     "\n" +
                     FILTER_FIELD + "\n" +
                     "\n" +
+
+                    "-- Besonderheiten --\n" +
+                    "Wenn bei \"Thema\" der Schalter \"Exakt\" eingeschaltet ist, darf der Suchtext " +
+                    "nicht \"an beliebiger Stelle darin enthalten\" sein, sondern muss das gesamte " +
+                    "Feld darstellen.\n" +
+                    "Beispiele:\n" +
+                    "\"Exakt\" eingeschaltet: 'Dokumentation' erfasst nur 'Dokumentation' oder " +
+                    "'dokumentation', nichts sonst.\n" +
+                    "\"Exakt\" ausgeschaltet: 'Dokumentation' erfasst u.a. 'Dokumentationen und Reportagen', " +
+                    "'Reportage & Dokumentation', 'Geschichtsdokumentationen'.\n" +
+                    "\n" +
+                    "[Thema/Titel] durchsucht in der Filmliste THEMA und TITEL.\n" +
+                    "Bei einer Suche nach mehreren Suchbegriffen müssen hier alle Suchbegriffe im selben Bereich " +
+                    "vorkommen. Ein Film mit 'Sport' in THEMA und 'Fussball' in TITEL wird von " +
+                    "'Sport:Fussball' nicht erfasst." +
+                    "\n";
+
+    public static final String ABO_SEARCH =
+            "Ein Abo findet einen Download, wenn die Filtereinstellungen zum Film passen. Im \"Zielpfad\" " +
+                    "wird der Download dann gespeichert. Ist eine \"Startzeit\" vorgegeben, startet der " +
+                    "Download zu der vorgegebenen Zeit. Sind mehre Downloadsets (Download-Einstellungen) " +
+                    "im Programm angelegt, kann man auch auswählen, mit welcher die Downloads laufen sollen.\n" +
+                    "\n" +
+                    FILTER_FIELD + "\n" +
+                    "\n" +
+
                     "-- Besonderheiten --\n" +
                     "Wenn bei \"Thema\" der Schalter \"Exakt\" eingeschaltet ist, darf der Suchtext " +
                     "nicht \"an beliebiger Stelle darin enthalten\" sein, sondern muss das gesamte " +

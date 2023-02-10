@@ -22,8 +22,10 @@ import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.abo.AboFieldNames;
 import de.p2tools.mtplayer.controller.filmFilter.FilmFilter;
+import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
+import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.PTextAreaIgnoreTab;
 import de.p2tools.p2Lib.guiTools.PTimePicker;
@@ -203,6 +205,7 @@ public class AboDialogController extends PDialogExtra {
     private void initDialog() {
         getVBoxCont().getChildren().add(gridPane);
         addOkCancelApplyButtons(btnOk, btnCancel, btnApply);
+        addHlpButton(PButton.helpButton(getStageProp(), "Download", HelpText.ABO_SEARCH));
         SetData setData = aboCopy.getSetData(progData);
         if (setData == null) {
             Platform.runLater(() -> new NoSetDialogController(progData, NoSetDialogController.TEXT.ABO));
