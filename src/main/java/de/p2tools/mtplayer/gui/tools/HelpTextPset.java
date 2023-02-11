@@ -40,7 +40,9 @@ public class HelpTextPset {
                     "Keine Argumente (Schalter, Optionen, etc.)!\n" +
                     "\n" +
                     "[Schalter:] In diesem Feld werden die Argumente (Schalter, Optionen, etc.) des jeweiligen " +
-                    "Programms angegeben. Sie sollten in dessen Dokumentation zu finden sein.\n" +
+                    "Programms angegeben. Sie sollten in dessen Dokumentation zu finden sein." +
+                    "\n" +
+                    "\n" +
                     "Von MTPlayer können folgende Parameter genutzt werden:\n" +
                     "\n" +
                     "%f Original-URL des Films\n" +
@@ -48,6 +50,7 @@ public class HelpTextPset {
                     "%b Dateiname des Downloads\n" +
                     "** (= zwei Sterne) Zielpfad (= Zielverzeichnis mit Dateiname)\n" +
                     "'**' ist identisch mit '%a/%b' (Windows: '%a\\%b')\n" +
+                    "%w Website-URL des Film, gedacht z.B. für Downloadmanager\n" +
                     "\n" +
                     "-- Restart --\n" +
                     "[Restart:] Hiermit kann festgelegt werden, wie sich das Programm bei einem Downloadfehler " +
