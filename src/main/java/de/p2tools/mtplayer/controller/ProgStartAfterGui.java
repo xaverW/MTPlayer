@@ -25,8 +25,10 @@ import de.p2tools.mtplayer.controller.mediaDb.MediaDataWorker;
 import de.p2tools.mtplayer.controller.update.SearchProgramUpdate;
 import de.p2tools.mtplayer.gui.filter.FilmFilterDialog;
 import de.p2tools.mtplayer.gui.tools.ProgTipOfDay;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.dialogs.dialog.PDialog;
 import de.p2tools.p2Lib.icons.GetIcon;
+import de.p2tools.p2Lib.mtFilm.film.FilmlistFactory;
 import de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerLoadFilmlist;
 import de.p2tools.p2Lib.tools.ProgramToolsFactory;
@@ -62,6 +64,9 @@ public class ProgStartAfterGui {
         LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
             @Override
             public void finished(ListenerFilmlistLoadEvent event) {
+                int age = FilmlistFactory.getAge(ProgData.getInstance().filmlist.metaData);
+                ProgConfig.SYSTEM_FILMLIST_AGE.setValue(ProgData.getInstance().filmlist.isEmpty() ? P2LibConst.NUMBER_NOT_STARTED : age);
+
                 if (!doneAtProgramStart) {
                     doneAtProgramStart = true;
                     MediaDataWorker.createMediaDb();
@@ -71,6 +76,7 @@ public class ProgStartAfterGui {
             }
         });
 
+        //die gespeicherte Filmliste laden
         LoadFilmFactory.getInstance().loadFilmlistProgStart(ProgStartBeforeGui.firstProgramStart);
     }
 

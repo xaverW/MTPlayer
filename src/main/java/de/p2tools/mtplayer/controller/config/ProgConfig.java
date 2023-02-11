@@ -164,6 +164,7 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty SYSTEM_SIZE_DIALOG_FILMINFO = addStrProp("system-size-dialog-filminfo", "");
 
     // Einstellungen Filmliste
+    public static IntegerProperty SYSTEM_FILMLIST_AGE = addIntProp("system-FILM_AGE", P2LibConst.NUMBER_NULL);
     public static BooleanProperty SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART = addBoolProp("system-load-filmlist-on-programstart", Boolean.TRUE);
     public static StringProperty SYSTEM_LOAD_NOT_SENDER = addStrProp("system-load-not-sender", "");
     public static IntegerProperty SYSTEM_LOAD_FILMLIST_MAX_DAYS = addIntProp("system-load-filmlist-max-days", 0); //es werden nur die x letzten Tage geladen
