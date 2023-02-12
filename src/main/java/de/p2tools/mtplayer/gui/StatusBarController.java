@@ -20,18 +20,15 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadInfosFactory;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.tools.Listener;
+import de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent;
+import de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerLoadFilmlist;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 
-import java.text.NumberFormat;
-import java.util.Locale;
-
 public class StatusBarController extends AnchorPane {
-
-    private final StackPane stackPane = new StackPane();
 
     //Film
     private final Label lblSelFilm = new Label();
@@ -48,21 +45,17 @@ public class StatusBarController extends AnchorPane {
     private final Label lblLeftAbo = new Label();
     private final Label lblRightAbo = new Label();
 
+    private final StackPane stackPane = new StackPane();
     private final Pane nonePane;
     private final Pane filmPane;
     private final Pane downloadPane;
     private final Pane aboPane;
 
-    private final NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.GERMANY);
-
     public enum StatusbarIndex {NONE, FILM, DOWNLOAD, ABO}
 
     private StatusbarIndex statusbarIndex = StatusbarIndex.NONE;
-    private boolean loadList = false;
-
     private final ProgData progData;
     private boolean stopTimer = false;
-    private static final String SEPARATOR = "  ||  ";
 
     public StatusBarController(ProgData progData) {
         this.progData = progData;
@@ -103,14 +96,14 @@ public class StatusBarController extends AnchorPane {
         stackPane.getChildren().addAll(nonePane, filmPane, downloadPane, aboPane);
         stackPane.setPadding(new Insets(2, 5, 2, 5));
         nonePane.toFront();
-        LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(new de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerLoadFilmlist() {
+        LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
             @Override
-            public void start(de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent event) {
+            public void start(ListenerFilmlistLoadEvent event) {
                 stopTimer = true;
             }
 
             @Override
-            public void finished(de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent event) {
+            public void finished(ListenerFilmlistLoadEvent event) {
                 stopTimer = false;
                 setStatusbarIndex(statusbarIndex);
             }
@@ -126,6 +119,17 @@ public class StatusBarController extends AnchorPane {
                 } catch (final Exception ex) {
                     PLog.errorLog(936251087, ex);
                 }
+            }
+        });
+        progData.checkForNewFilmlist.foundNewListProperty().addListener((u, o, n) -> {
+            if (progData.checkForNewFilmlist.isFoundNewList()) {
+                lblRightFilm.setStyle("-fx-underline: true;");
+                lblRightDownload.setText("-fx-underline: true;");
+                lblRightAbo.setText("-fx-underline: true;");
+            } else {
+                lblRightFilm.setStyle("-fx-underline: false;");
+                lblRightDownload.setText("-fx-underline: false;");
+                lblRightAbo.setText("-fx-underline: false;");
             }
         });
     }
@@ -156,7 +160,6 @@ public class StatusBarController extends AnchorPane {
         }
     }
 
-
     private void setInfoFilm() {
         lblLeftFilm.setText(DownloadInfosFactory.getStatusInfosFilm());
         final int selCount = progData.filmGuiController.getSelCount();
@@ -176,7 +179,7 @@ public class StatusBarController extends AnchorPane {
     }
 
     private void setTextForRightDisplay() {
-        // Text rechts: alter/neuladenIn anzeigen
+        // Text rechts: alter anzeigen
         String strText = "Filmliste erstellt: ";
         strText += progData.filmlist.genDate();
         strText += " Uhr  ";

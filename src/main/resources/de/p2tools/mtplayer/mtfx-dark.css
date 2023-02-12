@@ -15,3 +15,8 @@
 .update-grid-cell {
     -fx-background-color: #46494c ;
 }
+
+/*LoadFilmlistButton wenn neue Liste verfügbar*/
+.buttonLoadFilmlistNewList {
+    -fx-text-fill: #cce0ea;
+}

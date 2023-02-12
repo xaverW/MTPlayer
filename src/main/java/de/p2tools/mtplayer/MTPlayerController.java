@@ -26,6 +26,7 @@ import de.p2tools.mtplayer.gui.FilmGuiPack;
 import de.p2tools.mtplayer.gui.StatusBarController;
 import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
 import de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent;
+import de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerLoadFilmlist;
 import de.p2tools.p2Lib.tools.log.PLog;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -38,13 +39,13 @@ import javafx.scene.layout.*;
 
 public class MTPlayerController extends StackPane {
 
-    Button btnFilmlist = new Button("Filmliste");
-    Button btnFilm = new Button("Filme");
-    Button btnDownload = new Button("Downloads");
-    Button btnAbo = new Button("Abos");
+    private final Button btnFilmlist = new Button("Filmliste");
+    private final Button btnFilm = new Button("Filme");
+    private final Button btnDownload = new Button("Downloads");
+    private final Button btnAbo = new Button("Abos");
 
-    BorderPane borderPane = new BorderPane();
-    StackPane stackPaneCont = new StackPane();
+    private final BorderPane borderPane = new BorderPane();
+    private final StackPane stackPaneCont = new StackPane();
 
     private PMaskerPane maskerPane = new PMaskerPane();
     private StatusBarController statusBarController;
@@ -54,10 +55,9 @@ public class MTPlayerController extends StackPane {
     private SplitPane splitPaneAbo;
 
     private final ProgData progData;
-    FilmGuiPack filmGuiPack = new FilmGuiPack();
-    DownloadGuiPack downloadGuiPack = new DownloadGuiPack();
-    AboGuiPack aboGuiPack = new AboGuiPack();
-
+    private final FilmGuiPack filmGuiPack = new FilmGuiPack();
+    private final DownloadGuiPack downloadGuiPack = new DownloadGuiPack();
+    private final AboGuiPack aboGuiPack = new AboGuiPack();
 
     public MTPlayerController() {
         progData = ProgData.getInstance();
@@ -126,10 +126,19 @@ public class MTPlayerController extends StackPane {
         btnFilmlist.setOnMouseClicked(mouseEvent -> {
             if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
                 LoadFilmFactory.getInstance().loadNewListFromWeb(true);
+
+            } else if (mouseEvent.getButton().equals(MouseButton.MIDDLE)) {
+                progData.checkForNewFilmlist.check();
             }
         });
-
-        LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(new de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerLoadFilmlist() {
+        progData.checkForNewFilmlist.foundNewListProperty().addListener((u, o, n) -> {
+            if (progData.checkForNewFilmlist.isFoundNewList()) {
+                btnFilmlist.getStyleClass().add("buttonLoadFilmlistNewList");
+            } else {
+                btnFilmlist.getStyleClass().remove("buttonLoadFilmlistNewList");
+            }
+        });
+        LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
             @Override
             public void finished(ListenerFilmlistLoadEvent event) {
                 if (stackPaneCont.getChildren().size() == 0) {
@@ -277,14 +286,6 @@ public class MTPlayerController extends StackPane {
         }
     }
 
-//    public boolean isFilmPaneShown() {
-//        if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneFilm)) {
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
-
     public boolean isDownloadPaneShown() {
         if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneDownoad)) {
             return true;
@@ -292,14 +293,6 @@ public class MTPlayerController extends StackPane {
             return false;
         }
     }
-
-//    public boolean isAboPaneShown() {
-//        if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneAbo)) {
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
 
     public void setFocus() {
         Node node = stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1);

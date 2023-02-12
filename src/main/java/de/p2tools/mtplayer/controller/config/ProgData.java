@@ -32,6 +32,7 @@ import de.p2tools.mtplayer.controller.history.HistoryList;
 import de.p2tools.mtplayer.controller.mediaDb.MediaCollectionDataList;
 import de.p2tools.mtplayer.controller.mediaDb.MediaDataList;
 import de.p2tools.mtplayer.controller.starter.StarterClass;
+import de.p2tools.mtplayer.controller.worker.CheckForNewFilmlist;
 import de.p2tools.mtplayer.controller.worker.Worker;
 import de.p2tools.mtplayer.gui.AboGuiController;
 import de.p2tools.mtplayer.gui.DownloadGuiController;
@@ -108,6 +109,7 @@ public class ProgData {
     public HistoryList history; // alle angesehenen Filme
     public HistoryList erledigteAbos; // erfolgreich geladenen Abos
     public HistoryList bookmarks; // markierte Filme
+    public CheckForNewFilmlist checkForNewFilmlist;
 
     private ProgData() {
 //        mTColor = new MTColor();
@@ -142,6 +144,7 @@ public class ProgData {
         downloadInfos = new DownloadInfos(this);
         chartData = new ChartData();
         progTray = new ProgTray(this);
+        checkForNewFilmlist = new CheckForNewFilmlist();
     }
 
     boolean oneSecond = false;
