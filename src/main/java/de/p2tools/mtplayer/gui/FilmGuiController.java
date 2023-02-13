@@ -402,12 +402,13 @@ public class FilmGuiController extends AnchorPane {
 
     private TilePane getButtonPane(SetDataList setDataList) {
         TilePane tilePaneButton = new TilePane();
-        tilePaneButton.setVgap(15);
-        tilePaneButton.setHgap(15);
-        tilePaneButton.setPadding(new Insets(10));
-        tilePaneButton.setStyle("-fx-border-color: -fx-text-box-border; " +
-                "-fx-border-radius: 5px; " +
-                "-fx-border-width: 1;");
+        tilePaneButton.setVgap(P2LibConst.DIST_BUTTON);
+        tilePaneButton.setHgap(P2LibConst.DIST_BUTTON);
+        tilePaneButton.setPadding(new Insets(P2LibConst.DIST_EDGE));
+
+//        tilePaneButton.setStyle("-fx-border-color: -fx-text-box-border; " +
+//                "-fx-border-radius: 5px; " +
+//                "-fx-border-width: 1;");
 
         setDataList.stream().forEach(setData -> {
             Button btn = new Button(setData.getVisibleName());
@@ -416,7 +417,6 @@ public class FilmGuiController extends AnchorPane {
             if (!setData.getColor().equals(SetData.RESET_COLOR)) {
                 final String c = PColor.getCssColor(setData.getColor());
                 final String css = "-fx-border-color: #" + c + "; " +
-                        "-fx-border-radius: 3px; " +
                         "-fx-border-width: 2; ";
 
                 btn.setStyle(css);

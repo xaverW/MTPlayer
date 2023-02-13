@@ -82,7 +82,7 @@ public class ListePsetVorlagen extends LinkedList<String[]> {
             InputStreamReader inReader;
             switch (ProgramToolsFactory.getOs()) {
                 case LINUX:
-                    inReader = new GetFile().getPsetTamplateLinux();
+                    inReader = new GetFile().getPsetTemplateLinux();
                     break;
                 default:
                     inReader = new GetFile().getPsetTemplateWindows();

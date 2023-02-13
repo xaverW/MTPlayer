@@ -30,7 +30,7 @@ public class GetFile {
     public static final String PATH_PSET_LINUX = "/de/p2tools/mtplayer/res/file/pset_linux.xml";
     public static final String PATH_PSET_WINDOWS = "/de/p2tools/mtplayer/res/file/pset_windows.xml";
 
-    public InputStreamReader getPsetTamplateLinux() {
+    public InputStreamReader getPsetTemplateLinux() {
         try {
             return new InputStreamReader(getClass().getResource(PATH_PSET_LINUX).openStream(), StandardCharsets.UTF_8);
         } catch (final IOException ex) {
