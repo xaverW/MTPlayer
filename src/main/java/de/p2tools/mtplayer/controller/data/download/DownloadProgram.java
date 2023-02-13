@@ -439,12 +439,10 @@ public class DownloadProgram {
             //ist für Button z.B. "search in google"
             execString = execString.replace("%t", download.getFilm().getTheme());
             execString = execString.replace("%T", download.getFilm().getTitle());
-            execString = execString.replace("%s", download.getFilm().getChannel());
         } else {
             execString = execString.replace("%w", "");
             execString = execString.replace("%t", "");
             execString = execString.replace("%T", "");
-            execString = execString.replace("%s", "");
         }
 
         execString = execString.replace("%a", download.getDestPath());

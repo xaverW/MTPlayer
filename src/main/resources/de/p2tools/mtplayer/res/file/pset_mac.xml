@@ -2,7 +2,7 @@
 <Mediathek>
 
     <Programmset>
-        <Name>Mac Speichern</Name>
+        <Name>Speichern</Name>
         <Praefix>http</Praefix>
         <Suffix>mp4,mp3,m4v,flv,m4a</Suffix>
         <Zielpfad>ZIELPFAD</Zielpfad>
@@ -33,7 +33,7 @@
     </Programm>
 
     <Programmset>
-        <Name>Mac Abspielen</Name>
+        <Name>Abspielen</Name>
         <Abspielen>true</Abspielen>
         <Speichern>false</Speichern>
         <Button>true</Button>

@@ -2,7 +2,7 @@
 <Mediathek>
 
     <Programmset>
-        <Name>Linux Speichern</Name>
+        <Name>Speichern</Name>
         <Praefix>http</Praefix>
         <Suffix>mp4,mp3,m4v,flv,m4a</Suffix>
         <Zielpfad>ZIELPFAD</Zielpfad>
@@ -32,9 +32,8 @@
         </Programmschalter>
     </Programm>
 
-
     <Programmset>
-        <Name>Linux Abspielen</Name>
+        <Name>Abspielen</Name>
         <Abspielen>true</Abspielen>
         <Speichern>false</Speichern>
         <Button>true</Button>
@@ -46,22 +45,6 @@
         <Programmname>Vlc</Programmname>
         <Programmpfad>PFAD_VLC</Programmpfad>
         <Programmschalter>%f --play-and-exit :http-user-agent="Mozilla/5.0"</Programmschalter>
-    </Programm>
-
-
-    <Programmset>
-        <Name>Google: Titel suchen</Name>
-        <Abspielen>false</Abspielen>
-        <Speichern>false</Speichern>
-        <Button>true</Button>
-        <Abo>false</Abo>
-        <max-Laenge>25</max-Laenge>
-        <Beschreibung>Set zur Suche des Filmtitels in Google</Beschreibung>
-    </Programmset>
-    <Programm>
-        <Programmname>google</Programmname>
-        <Programmpfad>firefox</Programmpfad>
-        <Programmschalter>http://www.google.de/search?q="%T"</Programmschalter>
     </Programm>
     
 </Mediathek>
