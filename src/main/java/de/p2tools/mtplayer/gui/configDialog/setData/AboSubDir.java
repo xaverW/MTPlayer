@@ -27,7 +27,7 @@ public class AboSubDir {
     public enum ENSubDir {
         // 0--> gibts nicht, da liefern die ProgVersionen ohne die Funktion dann "Thema" wie dort üblich
         SENDER("Sender", 1), THEME("Thema", 2), TITLE("Titel", 3),
-        ABONAME("Abo-Name", 4), /*ABODESCRIPTION("Abo-Beschreibung", 5),*/
+        ABONAME("Abo-Name", 4),
         SENDEDATUM("Datum der Sendung z.B.: " + date, 6), DOWNLOADDATUM("Datum des Downloads z.B.: " + date, 7);
         private final String name;
         private final int no;

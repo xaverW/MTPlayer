@@ -30,6 +30,7 @@ import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.PGuiTools;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.application.Platform;
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -43,9 +44,8 @@ import javafx.stage.Stage;
 
 import java.util.Collection;
 
-public class ProgramPane {
+public class SetPaneProgram {
     TableView<ProgramData> tableView = new TableView<>();
-    private SetData setData = null;
 
     private final GridPane gridPane = new GridPane();
     private final TextField txtName = new TextField();
@@ -58,29 +58,19 @@ public class ProgramPane {
     private final PToggleSwitch tglDown = new PToggleSwitch("Downloadmanager: ");
     private ProgramData programData = null;
     private final Stage stage;
+    private SetData setData = null;
+    private final ObjectProperty<SetData> setDataObjectProperty;
 
-    public ProgramPane(Stage stage) {
+    public SetPaneProgram(Stage stage, ObjectProperty<SetData> setDataObjectProperty) {
         this.stage = stage;
-    }
-
-    public void unBindProgData() {
-        this.setData = null;
-        tableView.setItems(null);
-    }
-
-    public void bindProgData(SetData setData) {
-        this.setData = setData;
-        tableView.setItems(setData.getProgramList());
-        if (tableView.getItems().size() > 0) {
-            tableView.getSelectionModel().select(0);
-        }
+        this.setDataObjectProperty = setDataObjectProperty;
     }
 
     public void close() {
-        unbind();
+        unbindActTableData();
     }
 
-    public void makeProgs(Collection<TitledPane> result) {
+    public void makePane(Collection<TitledPane> result) {
         VBox vBox = new VBox(10);
         vBox.setFillWidth(true);
         vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
@@ -93,6 +83,13 @@ public class ProgramPane {
         result.add(tpConfig);
         tpConfig.setMaxHeight(Double.MAX_VALUE);
         VBox.setVgrow(tpConfig, Priority.ALWAYS);
+
+        setDataObjectProperty.addListener((u, o, n) -> {
+            tpConfig.setDisable(setDataObjectProperty.getValue() == null);
+            bindProgData();
+        });
+        tpConfig.setDisable(setDataObjectProperty.getValue() == null);
+        bindProgData();
     }
 
     private void initTable(VBox vBox) {
@@ -131,7 +128,7 @@ public class ProgramPane {
         tableView.getColumns().addAll(nameColumn, destNameColumn, progColumn, switchColumn,
                 prefixColumn, suffixColumn, restartColumn, downManagerColumn);
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
-                Platform.runLater(this::setActProgramData));
+                Platform.runLater(this::bindActTableData));
 
         VBox.setVgrow(tableView, Priority.ALWAYS);
         vBox.getChildren().addAll(tableView);
@@ -146,7 +143,7 @@ public class ProgramPane {
             if (sels == null || sels.isEmpty()) {
                 PAlert.showInfoNoSelection();
             } else {
-                setData.getProgramList().removeAll(sels);
+                setDataObjectProperty.getValue().getProgramList().removeAll(sels);
                 tableView.getSelectionModel().clearSelection();
             }
         });
@@ -155,7 +152,7 @@ public class ProgramPane {
         btnNew.setGraphic(ProgIcons.Icons.ICON_BUTTON_ADD.getImageView());
         btnNew.setOnAction(event -> {
             ProgramData progData = new ProgramData();
-            setData.getProgramList().add(progData);
+            setDataObjectProperty.getValue().getProgramList().add(progData);
 
             tableView.getSelectionModel().clearSelection();
             tableView.getSelectionModel().select(progData);
@@ -167,7 +164,7 @@ public class ProgramPane {
         btnUp.setOnAction(event -> {
             int sel = getSelectedLine();
             if (sel >= 0) {
-                int newSel = setData.getProgramList().moveUp(sel, true);
+                int newSel = setDataObjectProperty.getValue().getProgramList().moveUp(sel, true);
                 tableView.getSelectionModel().clearSelection();
                 tableView.getSelectionModel().select(newSel);
             }
@@ -178,7 +175,7 @@ public class ProgramPane {
         btnDown.setOnAction(event -> {
             int sel = getSelectedLine();
             if (sel >= 0) {
-                int newSel = setData.getProgramList().moveUp(sel, false);
+                int newSel = setDataObjectProperty.getValue().getProgramList().moveUp(sel, false);
                 tableView.getSelectionModel().clearSelection();
                 tableView.getSelectionModel().select(newSel);
             }
@@ -240,13 +237,21 @@ public class ProgramPane {
         vBox.getChildren().add(gridPane);
     }
 
-    private void setActProgramData() {
+    private int getSelectedLine() {
+        final int sel = tableView.getSelectionModel().getSelectedIndex();
+        if (sel < 0) {
+            PAlert.showInfoNoSelection();
+        }
+        return sel;
+    }
+
+    private void bindActTableData() {
         ProgramData programDataAct = tableView.getSelectionModel().getSelectedItem();
         if (programDataAct == programData) {
             return;
         }
 
-        unbind();
+        unbindActTableData();
 
         programData = programDataAct;
         gridPane.setDisable(programData == null);
@@ -262,7 +267,7 @@ public class ProgramPane {
         }
     }
 
-    private void unbind() {
+    private void unbindActTableData() {
         if (programData != null) {
             txtName.textProperty().unbindBidirectional(programData.nameProperty());
             txtDestName.textProperty().unbindBidirectional(programData.destNameProperty());
@@ -283,11 +288,19 @@ public class ProgramPane {
         }
     }
 
-    private int getSelectedLine() {
-        final int sel = tableView.getSelectionModel().getSelectedIndex();
-        if (sel < 0) {
-            PAlert.showInfoNoSelection();
+    private void bindProgData() {
+        unBindProgData();
+        setData = setDataObjectProperty.getValue();
+        if (setData != null) {
+            tableView.setItems(setDataObjectProperty.getValue().getProgramList());
+            if (tableView.getItems().size() > 0) {
+                tableView.getSelectionModel().select(0);
+            }
         }
-        return sel;
+    }
+
+    private void unBindProgData() {
+        tableView.setItems(null);
+        setData = null;
     }
 }

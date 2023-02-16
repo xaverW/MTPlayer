@@ -18,11 +18,10 @@ package de.p2tools.mtplayer.gui.dialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.ListePsetVorlagen;
+import de.p2tools.mtplayer.controller.worker.ImportStandardSet;
 import de.p2tools.mtplayer.gui.configDialog.setData.SetPaneController;
 import de.p2tools.mtplayer.gui.startDialog.DownPathPane;
 import de.p2tools.mtplayer.gui.startDialog.PathPane;
-import de.p2tools.mtplayer.gui.tools.SetsPrograms;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
@@ -60,7 +59,6 @@ public class ImportSetDialogController extends PDialogExtra {
     @Override
     public void make() {
         btnCancel.setOnAction(a -> close());
-
         final Button btnHelp = PButton.helpButton("Set zurücksetzen",
                 "\"Bestehende Sets durch neue ersetzen\"" +
                         P2LibConst.LINE_SEPARATORx2 +
@@ -72,7 +70,6 @@ public class ImportSetDialogController extends PDialogExtra {
         btnImport.setOnAction(event -> {
             importSet();
         });
-
 
         // vor import
         TitledPane tpDownPath = new DownPathPane(progData.primaryStage).makePath();
@@ -110,14 +107,12 @@ public class ImportSetDialogController extends PDialogExtra {
         btnImport.setDisable(true);
 
         progData.setDataList.clear();
-
-        if (SetsPrograms.addSetTemplate(ListePsetVorlagen.getStandarset(true /*replaceMuster*/))) {
+        if (ImportStandardSet.getStandardSet()) {
             PAlert.showInfoAlert("Set", "Set importieren", "Sets wurden importiert!", false);
         } else {
             PAlert.showErrorAlert("Set importieren", "Sets konnten nicht importiert werden!");
         }
 
         setPaneController.toFront();
-        setPaneController.selectTableFirst();
     }
 }

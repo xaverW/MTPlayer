@@ -151,7 +151,7 @@ public class WriteMediaDb implements AutoCloseable {
         writer = outFactory.createXMLStreamWriter(out);
         writer.writeStartDocument(StandardCharsets.UTF_8.name(), "1.0");
         writer.writeCharacters(P2LibConst.LINE_SEPARATOR);// neue Zeile
-        writer.writeStartElement(ProgConst.XML_START);
+        writer.writeStartElement(P2LibConst.CONFIG_XML_START);
         writer.writeCharacters(P2LibConst.LINE_SEPARATOR);// neue Zeile
     }
 

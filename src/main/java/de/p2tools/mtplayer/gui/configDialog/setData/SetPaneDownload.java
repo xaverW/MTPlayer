@@ -24,6 +24,7 @@ import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
+import javafx.beans.property.ObjectProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -32,7 +33,7 @@ import javafx.stage.Stage;
 
 import java.util.Collection;
 
-public class DownloadPane {
+public class SetPaneDownload {
     private final TextField txtPrefix = new TextField();
     private final TextField txtSuffix = new TextField();
     private final RadioButton rbHd = new RadioButton("Film in HD laden");
@@ -43,9 +44,11 @@ public class DownloadPane {
 
     private final Stage stage;
     private SetData setData = null;
+    private final ObjectProperty<SetData> setDataObjectProperty;
 
-    DownloadPane(Stage stage) {
+    SetPaneDownload(Stage stage, ObjectProperty<SetData> setDataObjectProperty) {
         this.stage = stage;
+        this.setDataObjectProperty = setDataObjectProperty;
     }
 
     public void close() {
@@ -60,8 +63,15 @@ public class DownloadPane {
         result.add(tpConfig);
 
         makePraef(vBox);
-        makeReolution(vBox);
+        makeResolution(vBox);
         makeInfo(vBox);
+
+        setDataObjectProperty.addListener((u, o, n) -> {
+            tpConfig.setDisable(setDataObjectProperty.getValue() == null);
+            bindProgData();
+        });
+        tpConfig.setDisable(setDataObjectProperty.getValue() == null);
+        bindProgData();
     }
 
     private void makePraef(VBox vBox) {
@@ -91,7 +101,7 @@ public class DownloadPane {
                 PColumnConstraints.getCcPrefSize());
     }
 
-    private void makeReolution(VBox vBox) {
+    private void makeResolution(VBox vBox) {
         // Auflösung
         ToggleGroup tg = new ToggleGroup();
         rbHd.setToggleGroup(tg);
@@ -134,20 +144,19 @@ public class DownloadPane {
 
     private void setResolution() {
         if (rbHeight.isSelected()) {
-            setData.setResolution(FilmDataMTP.RESOLUTION_NORMAL);
+            setDataObjectProperty.getValue().setResolution(FilmDataMTP.RESOLUTION_NORMAL);
         }
         if (rbHd.isSelected()) {
-            setData.setResolution(FilmDataMTP.RESOLUTION_HD);
+            setDataObjectProperty.getValue().setResolution(FilmDataMTP.RESOLUTION_HD);
         }
         if (rbLow.isSelected()) {
-            setData.setResolution(FilmDataMTP.RESOLUTION_SMALL);
+            setDataObjectProperty.getValue().setResolution(FilmDataMTP.RESOLUTION_SMALL);
         }
     }
 
-    public void bindProgData(SetData setData) {
+    private void bindProgData() {
         unBindProgData();
-
-        this.setData = setData;
+        setData = setDataObjectProperty.getValue();
         if (setData != null) {
             txtPrefix.textProperty().bindBidirectional(setData.prefixProperty());
             txtSuffix.textProperty().bindBidirectional(setData.suffixProperty());
@@ -169,7 +178,7 @@ public class DownloadPane {
         }
     }
 
-    void unBindProgData() {
+    private void unBindProgData() {
         if (setData != null) {
             txtPrefix.textProperty().unbindBidirectional(setData.prefixProperty());
             txtSuffix.textProperty().unbindBidirectional(setData.suffixProperty());

@@ -97,16 +97,16 @@ public class ProgInfos {
                 ProgConst.CONFIG_FILE);
     }
 
-    /**
-     * Return the path to "mtplayer.xml"
-     *
-     * @return Path object to mtplayer.xml file
-     */
-    public static Path getSettingsFileOld() {
-        return SettingsDirectory.getSettingsFile(ProgData.configDir,
-                ProgConst.CONFIG_DIRECTORY,
-                ProgConst.CONFIG_FILE_OLD);
-    }
+//    /**
+//     * Return the path to "mtplayer.xml"
+//     *
+//     * @return Path object to mtplayer.xml file
+//     */
+//    public static Path getSettingsFileOld() {
+//        return SettingsDirectory.getSettingsFile(ProgData.configDir,
+//                ProgConst.CONFIG_DIRECTORY,
+//                ProgConst.CONFIG_FILE_OLD);
+//    }
 
     /**
      * Return the path to "mtplayer.xml"

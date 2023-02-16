@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
@@ -35,18 +36,15 @@ import javafx.stage.Stage;
 
 import java.util.Collection;
 
-public class SetPane {
+public class SetPaneName {
     private final TextField txtVisibleName = new TextField("");
     private final TextArea txtDescription = new TextArea("");
     private ChangeListener changeListener;
-
-    private final Stage stage;
     private SetData setData = null;
-    private final ProgData progData;
+    private final ObjectProperty<SetData> setDataObjectProperty;
 
-    SetPane(Stage stage) {
-        this.stage = stage;
-        progData = ProgData.getInstance();
+    SetPaneName(Stage stage, ObjectProperty<SetData> setDataObjectProperty) {
+        this.setDataObjectProperty = setDataObjectProperty;
     }
 
     public void close() {
@@ -82,12 +80,18 @@ public class SetPane {
         }
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcComputedSizeAndHgrow());
+
+        setDataObjectProperty.addListener((u, o, n) -> {
+            tpConfig.setDisable(setDataObjectProperty.getValue() == null);
+            bindProgData();
+        });
+        tpConfig.setDisable(setDataObjectProperty.getValue() == null);
+        bindProgData();
     }
 
-    public void bindProgData(SetData setData) {
+    private void bindProgData() {
         unBindProgData();
-
-        this.setData = setData;
+        setData = setDataObjectProperty.getValue();
         if (setData != null) {
             txtVisibleName.textProperty().bindBidirectional(setData.visibleNameProperty());
             txtVisibleName.textProperty().addListener(changeListener);
@@ -96,7 +100,7 @@ public class SetPane {
         }
     }
 
-    void unBindProgData() {
+    private void unBindProgData() {
         if (setData != null) {
             txtVisibleName.textProperty().unbindBidirectional(setData.visibleNameProperty());
             txtVisibleName.setText("");
@@ -105,5 +109,6 @@ public class SetPane {
             txtDescription.textProperty().unbindBidirectional(setData.descriptionProperty());
             txtDescription.setText("");
         }
+        setData = null;
     }
 }

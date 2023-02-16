@@ -17,12 +17,12 @@
 
 package de.p2tools.mtplayer.controller.config;
 
+import de.p2tools.mtplayer.controller.data.SetFactory;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.filmFilter.ActFilmFilterWorker;
 import de.p2tools.mtplayer.controller.filmFilter.FilmFilter;
 import de.p2tools.mtplayer.controller.starter.DownloadState;
 import de.p2tools.mtplayer.controller.tools.MLBandwidthTokenBucket;
-import de.p2tools.mtplayer.gui.tools.SetsPrograms;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.configFile.ConfigFile;
 import de.p2tools.p2Lib.configFile.config.Config;
@@ -87,7 +87,7 @@ public class ProgConfig extends PDataProgConfig {
 
     // Configs zur Programmupdatesuche
     public static StringProperty SYSTEM_UPDATE_DATE = addStrProp("system-update-date"); // Datum der letzten Prüfung
-    public static StringProperty SYSTEM_UPDATE_PROGSET_VERSION = addStrProp("system-update-progset-version");
+//    public static StringProperty SYSTEM_UPDATE_PROGSET_VERSION = addStrProp("system-update-progset-version");
 
     public static BooleanProperty SYSTEM_UPDATE_SEARCH_ACT = addBoolProp("system-update-search-act", Boolean.TRUE); //Infos und Programm
     public static BooleanProperty SYSTEM_UPDATE_SEARCH_BETA = addBoolProp("system-update-search-beta", Boolean.FALSE); //beta suchen
@@ -169,8 +169,8 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty SYSTEM_LOAD_NOT_SENDER = addStrProp("system-load-not-sender", "");
     public static IntegerProperty SYSTEM_LOAD_FILMLIST_MAX_DAYS = addIntProp("system-load-filmlist-max-days", 0); //es werden nur die x letzten Tage geladen
     public static IntegerProperty SYSTEM_LOAD_FILMLIST_MIN_DURATION = addIntProp("system-load-filmlist-min-duration", 0); //es werden nur Filme mit mind. x Minuten geladen
-    public static StringProperty SYSTEM_PATH_VLC = addStrProp("system-path-vlc", SetsPrograms.getTemplatePathVlc());
-    public static StringProperty SYSTEM_PATH_FFMPEG = addStrProp("system-path-ffmpeg", SetsPrograms.getTemplatePathFFmpeg());
+    public static StringProperty SYSTEM_PATH_VLC = addStrProp("system-path-vlc", SetFactory.getTemplatePathVlc());
+    public static StringProperty SYSTEM_PATH_FFMPEG = addStrProp("system-path-ffmpeg", SetFactory.getTemplatePathFFmpeg());
 
     // Blacklist
     public static BooleanProperty SYSTEM_BLACKLIST_SHOW_NO_FUTURE = addBoolProp("system-blacklist-show-no-future");
@@ -249,8 +249,8 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty ABO_GUI_TABLE_ORDER = addStrProp("abo-gui-table-order");
 
     // ConfigDialog
-    public static StringProperty IMPORT_MV_DIALOG_SIZE = addStrProp("import-mv-dialog--size", "600:800");
-    public static StringProperty BLACK_DIALOG_SIZE = addStrProp("black-dialog--size", "600:800");
+    public static StringProperty IMPORT_MV_DIALOG_SIZE = addStrProp("import-mv-dialog-size", "600:800");
+    public static StringProperty BLACK_DIALOG_SIZE = addStrProp("black-dialog-size", "600:800");
     public static StringProperty CONFIG_DIALOG_SIZE = addStrProp("config-dialog-size");
     public static BooleanProperty CONFIG_DIALOG_ACCORDION = addBoolProp("config_dialog-accordion", Boolean.TRUE);
     public static DoubleProperty CONFIG_DIALOG_SET_DIVIDER = addDoubleProp("config-dialog-set-divider", ProgConst.CONFIG_DIALOG_SET_DIVIDER);

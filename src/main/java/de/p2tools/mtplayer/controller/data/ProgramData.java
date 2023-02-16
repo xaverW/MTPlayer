@@ -17,7 +17,6 @@
 package de.p2tools.mtplayer.controller.data;
 
 import de.p2tools.mtplayer.controller.starter.RuntimeExec;
-import de.p2tools.mtplayer.gui.tools.SetsPrograms;
 
 public class ProgramData extends ProgramDataProps {
 
@@ -47,8 +46,8 @@ public class ProgramData extends ProgramDataProps {
         boolean ret = false;
         if (url != null) {
             //Felder sind entweder leer oder passen
-            if (SetsPrograms.testPrefix(getPrefix(), url, true)
-                    && SetsPrograms.testPrefix(getSuffix(), url, false)) {
+            if (SetFactory.testPrefix(getPrefix(), url, true)
+                    && SetFactory.testPrefix(getSuffix(), url, false)) {
                 ret = true;
             }
         }

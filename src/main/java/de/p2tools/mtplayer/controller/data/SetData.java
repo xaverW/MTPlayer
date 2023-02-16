@@ -16,7 +16,6 @@
 
 package de.p2tools.mtplayer.controller.data;
 
-import de.p2tools.mtplayer.gui.tools.SetsPrograms;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.tools.PIndex;
 
@@ -128,8 +127,8 @@ public class SetData extends SetDataProps {
     public boolean checkDownloadDirect(String url) {
         //auf direkte prüfen, pref oder suf: wenn angegeben dann muss es stimmen
         if (!getPrefix().isEmpty() || !getSuffix().isEmpty()) {
-            if (SetsPrograms.testPrefix(getPrefix(), url, true)
-                    && SetsPrograms.testPrefix(getSuffix(), url, false)) {
+            if (SetFactory.testPrefix(getPrefix(), url, true)
+                    && SetFactory.testPrefix(getSuffix(), url, false)) {
                 return true;
             }
         }

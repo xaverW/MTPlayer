@@ -49,9 +49,12 @@ public class NoSetDialogController extends PDialogExtra {
     @Override
     public void make() {
         btnCancel.setOnAction(a -> close());
-
         btnImport.setOnAction(event -> {
-            importSet();
+            Platform.runLater(() -> {
+                //dadurch schließt sich dieser Dialog schon mal
+                ImportSetDialogController importSetDialogController = new ImportSetDialogController(progData);
+                importSetDialogController.close();
+            });
             close();
         });
 
@@ -84,7 +87,6 @@ public class NoSetDialogController extends PDialogExtra {
         getVBoxCont().getChildren().addAll(textHeaderSave, textArea);
         getVBoxCont().setSpacing(20);
 
-
         switch (text) {
             case SAVE:
                 textArea.setText(
@@ -107,12 +109,5 @@ public class NoSetDialogController extends PDialogExtra {
 
         addOkButton(btnImport);
         addCancelButton(btnCancel);
-    }
-
-    private void importSet() {
-        Platform.runLater(() -> {
-            ImportSetDialogController importSetDialogController = new ImportSetDialogController(progData);
-            importSetDialogController.close();
-        });
     }
 }

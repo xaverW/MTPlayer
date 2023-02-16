@@ -29,7 +29,6 @@ public class ProgConst {
     public static final String CONFIG_FILE_COPY = "mtp.xml_copy_";
     public static final String CONFIG_FILE_COPY_OLD = "mtplayer.xml_copy_";
     public static final String CONFIG_DIRECTORY = "p2Mtplayer"; // im Homeverzeichnis
-    public static final String XML_START = "Mediathek";
 
     public static final String FILE_BOOKMARKS = "bookmarks.txt";
     public static final String FILE_ERLEDIGTE_ABOS = "downloads.txt";
@@ -90,9 +89,14 @@ public class ProgConst {
     public static final String URL_WEBSITE_HELP = "https://www.p2tools.de/mtplayer/manual/";
     public static final String URL_WEBSITE_DONATE = "https://www.p2tools.de/donate.html";
 
-    // die URL der Sets, nicht mehr mit jeder Programmversion hochzählen, nur noch wenn notwendig
-    public static final String URL_MTPLAYER_CONFIG_DIRECTORY = "https://www.p2tools.de/extra/mtplayer/v-4/";
-    public static final String URL_MTPLAYER_PROGRAM_SETS = URL_MTPLAYER_CONFIG_DIRECTORY + "pset-templates.xml";
+    //die URL der Sets, nicht mehr mit jeder Programmversion hochzählen, nur noch wenn notwendig
+    public static final String PROGRAM_SET_URL_LINUX = "https://www.p2tools.de/extra/mtplayer/v-5/pset_linux.xml";
+    public static final String PROGRAM_SET_URL_WINDOWS = "https://www.p2tools.de/extra/mtplayer/v-5/pset_windows.xml";
+    public static final String PROGRAM_SET_URL_MAC = "https://www.p2tools.de/extra/mtplayer/v-5/pset_mac.xml";
+
+    public static final String PSET_FILE_LINUX = "/de/p2tools/mtplayer/res/file/pset_linux.xml";
+    public static final String PSET_FILE_WINDOWS = "/de/p2tools/mtplayer/res/file/pset_windows.xml";
+    public static final String PSET_FILE_MAC = "/de/p2tools/mtplayer/res/file/pset_mac.xml";
 
     // ProgrammUrls
     public static final String ADRESSE_WEBSITE_VLC = "http://www.videolan.org";

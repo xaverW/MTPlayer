@@ -23,7 +23,7 @@ import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.configFile.ConfigFile;
-import de.p2tools.p2Lib.configFile.WriteConfigFile;
+import de.p2tools.p2Lib.configFile.ConfigFileWrite;
 import de.p2tools.p2Lib.tools.log.PLog;
 import de.p2tools.p2Lib.tools.log.PLogger;
 import org.apache.commons.lang3.time.FastDateFormat;
@@ -105,12 +105,12 @@ public class ProgSave {
         PLog.sysLog("save progConfig");
 
         final Path xmlFilePath = ProgInfos.getSettingsFile();
-        ConfigFile configFile = new ConfigFile(ProgConst.XML_START, xmlFilePath);
+        ConfigFile configFile = new ConfigFile(xmlFilePath.toString(), true);
         ProgConfig.addConfigData(configFile);
 
-        WriteConfigFile writeConfigFile = new WriteConfigFile();
-        writeConfigFile.addConfigFile(configFile);
-        writeConfigFile.writeConfigFile();
+        ConfigFileWrite configFileWrite = new ConfigFileWrite();
+        configFileWrite.addConfigFile(configFile);
+        configFileWrite.writeConfigFile();
     }
 
     /**

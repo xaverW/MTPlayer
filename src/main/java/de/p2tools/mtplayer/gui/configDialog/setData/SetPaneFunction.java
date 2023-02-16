@@ -25,6 +25,7 @@ import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -37,7 +38,7 @@ import javafx.stage.Stage;
 
 import java.util.Collection;
 
-public class SetFunction {
+public class SetPaneFunction {
     private final RadioButton rbPlay = new RadioButton("");
     private final PToggleSwitch tglSave = new PToggleSwitch("Speichern:");
     private final PToggleSwitch tglButton = new PToggleSwitch("Button:");
@@ -46,12 +47,14 @@ public class SetFunction {
     private ChangeListener changeListener;
 
     private final Stage stage;
-    private SetData setData = null;
     private final ProgData progData;
+    private SetData setData = null;
+    private final ObjectProperty<SetData> setDataObjectProperty;
 
-    SetFunction(Stage stage) {
+    SetPaneFunction(Stage stage, ObjectProperty<SetData> setDataObjectProperty) {
         this.stage = stage;
         progData = ProgData.getInstance();
+        this.setDataObjectProperty = setDataObjectProperty;
     }
 
     public void close() {
@@ -70,7 +73,7 @@ public class SetFunction {
 
         rbPlay.setTooltip(new Tooltip("Dieses Set zum Abspielen auswählen"));
         rbPlay.setOnAction(event -> {
-            progData.setDataList.setPlay(setData);
+            progData.setDataList.setPlay(setDataObjectProperty.getValue());
         });
 
         int row = 0;
@@ -107,7 +110,7 @@ public class SetFunction {
         Label lblColor = new Label("Farbe:");
         Button btnResetColor = new Button("_Standardfarbe");
         btnResetColor.setOnAction(event -> {
-            setData.setColor(SetData.RESET_COLOR);
+            setDataObjectProperty.getValue().setColor(SetData.RESET_COLOR);
         });
         final Button btnHelpColor = PButton.helpButton(stage, "Schriftfarbe auswählen",
                 HelpText.SETDATA_RESET_COLOR);
@@ -126,12 +129,18 @@ public class SetFunction {
                 PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcComputedSizeAndHgrow(),
                 PColumnConstraints.getCcPrefSize());
+
+        setDataObjectProperty.addListener((u, o, n) -> {
+            tpConfig.setDisable(setDataObjectProperty.getValue() == null);
+            bindProgData();
+        });
+        tpConfig.setDisable(setDataObjectProperty.getValue() == null);
+        bindProgData();
     }
 
-    public void bindProgData(SetData setData) {
+    private void bindProgData() {
         unBindProgData();
-
-        this.setData = setData;
+        setData = setDataObjectProperty.getValue();
         if (setData != null) {
             rbPlay.selectedProperty().bindBidirectional(setData.playProperty());
 
@@ -146,7 +155,7 @@ public class SetFunction {
         }
     }
 
-    void unBindProgData() {
+    private void unBindProgData() {
         if (setData != null) {
             rbPlay.selectedProperty().unbindBidirectional(setData.playProperty());
 

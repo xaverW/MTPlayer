@@ -29,6 +29,7 @@ import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.PComboBoxObject;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
@@ -39,7 +40,7 @@ import javafx.stage.Stage;
 
 import java.util.Collection;
 
-public class DestinationPane {
+public class SetPaneDestination {
     private final PToggleSwitch tglSubdir = new PToggleSwitch("Bei Abos Unterordner anlegen:");
     private final PComboBoxObject<AboSubDir.ENSubDir> cboDest = new PComboBoxObject();
     private final TextField txtDestPath = new TextField();
@@ -50,9 +51,11 @@ public class DestinationPane {
 
     private final Stage stage;
     private SetData setData = null;
+    private final ObjectProperty<SetData> setDataObjectProperty;
 
-    DestinationPane(Stage stage) {
+    SetPaneDestination(Stage stage, ObjectProperty<SetData> setDataObjectProperty) {
         this.stage = stage;
+        this.setDataObjectProperty = setDataObjectProperty;
     }
 
     public void close() {
@@ -64,8 +67,8 @@ public class DestinationPane {
         vBox.setFillWidth(true);
         vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
 
-        TitledPane tpConfig = new TitledPane("Speicherziel", vBox);
-        result.add(tpConfig);
+        TitledPane titledPane = new TitledPane("Speicherziel", vBox);
+        result.add(titledPane);
 
         final Button btnFile = new Button();
         btnFile.setGraphic(ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
@@ -82,8 +85,8 @@ public class DestinationPane {
             if (changeTgl) {
                 tglSubdir.setSelected(true);
             }
-            if (setData != null && cboDest.getSelValue() != null) {
-                setData.setAboSubDir_ENSubDirNo(cboDest.getSelValue().getNo());
+            if (setDataObjectProperty.getValue() != null && cboDest.getSelValue() != null) {
+                setDataObjectProperty.getValue().setAboSubDir_ENSubDirNo(cboDest.getSelValue().getNo());
             }
         });
         cboDest.setMaxWidth(Double.MAX_VALUE);
@@ -116,10 +119,17 @@ public class DestinationPane {
                 PColumnConstraints.getCcPrefSize());
 
         makeCut(vBox);
+
+        setDataObjectProperty.addListener((u, o, n) -> {
+            titledPane.setDisable(setDataObjectProperty.getValue() == null);
+            bindProgData();
+        });
+        bindProgData();
+        titledPane.setDisable(setDataObjectProperty.getValue() == null);
     }
 
     private void makeCut(VBox vBox) {
-        // cut
+        //cut
         Label lblTxtAll = new Label("Länge\nganzer Dateiname:");
         Label lblSizeAll = new Label();
         Label lblTxtField = new Label("Länge\neinzelne Felder:");
@@ -182,10 +192,9 @@ public class DestinationPane {
         lb.setText(pre + (days == 0 ? "nicht\nbeschränken" : "auf " + days + "\nZeichen beschränken"));
     }
 
-    public void bindProgData(SetData setData) {
+    private void bindProgData() {
         unBindProgData();
-
-        this.setData = setData;
+        setData = setDataObjectProperty.getValue();
         if (setData != null) {
             tglSubdir.selectedProperty().bindBidirectional(setData.genAboSubDirProperty());
             txtDestPath.textProperty().bindBidirectional(setData.destPathProperty());
@@ -194,12 +203,11 @@ public class DestinationPane {
             slCutField.valueProperty().bindBidirectional(setData.maxFieldProperty());
 
             cboDest.getSelectionModel().select(setData.getAboSubDir_ENSubDir());
-
             changeTgl = true;
         }
     }
 
-    void unBindProgData() {
+    private void unBindProgData() {
         changeTgl = false;
         if (setData != null) {
             tglSubdir.selectedProperty().unbindBidirectional(setData.genAboSubDirProperty());

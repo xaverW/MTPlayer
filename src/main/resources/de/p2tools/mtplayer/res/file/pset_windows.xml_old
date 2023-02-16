@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Mediathek>
+    
+    <Programmset>
+        <Name>Speichern</Name>
+        <Praefix>http</Praefix>
+        <Suffix>mp4,mp3,m4v,flv,m4a</Suffix>
+        <Zielpfad>ZIELPFAD</Zielpfad>
+        <Zieldateiname>%t-%T-%z</Zieldateiname>
+        <Abspielen>false</Abspielen>
+        <Speichern>true</Speichern>
+        <Button>true</Button>
+        <Abo>true</Abo>
+        <Laenge>true</Laenge> 
+        <max-Laenge>100</max-Laenge> 
+        <Beschreibung>Standardset zum Speichern der Filme</Beschreibung>
+    </Programmset>
+    <Programm>
+        <Programmname>ffmpeg</Programmname>
+        <Zieldateiname>%t-%T-%Z.mp4</Zieldateiname>
+        <Programmpfad>bin\ffmpeg.exe</Programmpfad>
+        <Programmschalter>-user_agent "Mozilla/5.0" -i %f -c copy -bsf:a aac_adtstoasc "**"</Programmschalter>
+        <Praefix>http</Praefix>
+        <Suffix>m3u8</Suffix>
+        <Restart>false</Restart>
+    </Programm>
+    <Programm>
+        <Programmname>vlc ( &lt;#&gt; )</Programmname>
+        <Zieldateiname>%t-%T-%Z.ts</Zieldateiname>
+        <Programmpfad>cmd</Programmpfad>
+        <Programmschalter>/c "PFAD_VLC" %f :sout=#standard{access=file,mux=ts,dst="**"} -I "dummy" --play-and-exit</Programmschalter>
+    </Programm>
+    
+
+    <Programmset>
+        <Name>Abspielen</Name>
+        <Abspielen>true</Abspielen>
+        <Speichern>false</Speichern>
+        <Button>true</Button>
+        <Abo>false</Abo>
+        <max-Laenge>25</max-Laenge>
+        <Beschreibung>Standardset zum direkten Abspielen der Filme</Beschreibung>
+    </Programmset>
+    <Programm>
+        <Programmname>Vlc</Programmname>
+        <Programmpfad>PFAD_VLC</Programmpfad>
+        <Programmschalter>%f --play-and-exit :http-user-agent="Mozilla/5.0"</Programmschalter>
+    </Programm>
+    
+    
+    <Programmset>
+        <Name>Google: Titel suchen</Name>
+        <Abspielen>false</Abspielen>
+        <Speichern>false</Speichern>
+        <Button>true</Button>
+        <Abo>false</Abo>
+        <max-Laenge>25</max-Laenge>
+        <Beschreibung>Set zum Suchen des Titels in Google</Beschreibung>
+    </Programmset>
+    <Programm>
+        <Programmname>Firefox</Programmname>
+        <Programmpfad>C:\Program Files\Mozilla Firefox\firefox.exe</Programmpfad>
+        <Programmschalter>http://www.google.de/search?q='%T'</Programmschalter>
+    </Programm>
+    
+</Mediathek>

@@ -17,14 +17,11 @@
 package de.p2tools.mtplayer.controller;
 
 import de.p2tools.mtplayer.controller.config.*;
-import de.p2tools.mtplayer.controller.data.ListePsetVorlagen;
-import de.p2tools.mtplayer.controller.data.SetDataList;
 import de.p2tools.mtplayer.controller.filmFilter.FilmFilterFactory;
+import de.p2tools.mtplayer.controller.worker.ImportStandardSet;
 import de.p2tools.mtplayer.gui.startDialog.StartDialogController;
-import de.p2tools.p2Lib.P2LibConst;
-import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.configFile.ConfigFile;
-import de.p2tools.p2Lib.configFile.ReadConfigFile;
+import de.p2tools.p2Lib.configFile.ConfigFileRead;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import de.p2tools.p2Lib.tools.log.PLogger;
@@ -32,7 +29,6 @@ import javafx.application.Platform;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 
 public class ProgStartBeforeGui {
     public static boolean firstProgramStart = false; // ist der allererste Programmstart: Init wird gemacht
@@ -56,18 +52,11 @@ public class ProgStartBeforeGui {
             }
 
             //todo das ist noch nicht ganz klar ob dahin
-            Platform.runLater(() -> {
-                PDuration.onlyPing("Erster Start: PSet");
-
-                // kann ein Dialog aufgehen
-                final SetDataList pSet = ListePsetVorlagen.getStandarset(true /*replaceMuster*/);
-                if (pSet != null) {
-                    ProgData.getInstance().setDataList.addSetData(pSet);
-                    ProgConfig.SYSTEM_UPDATE_PROGSET_VERSION.setValue(pSet.version);
-                }
-
-                PDuration.onlyPing("Erster Start: PSet geladen");
-            });
+//            Platform.runLater(() -> {
+            PDuration.onlyPing("Erster Start: PSet");
+            ImportStandardSet.getStandardSet();
+            PDuration.onlyPing("Erster Start: PSet geladen");
+//            });
 
             FilmFilterFactory.addStandardFilter();
         }
@@ -108,7 +97,6 @@ public class ProgStartBeforeGui {
 
     private static boolean load() {
         boolean ret = false;
-        ProgData progData = ProgData.getInstance();
         final Path xmlFilePath = new ProgInfos().getSettingsFile();
 
         try {
@@ -127,56 +115,55 @@ public class ProgStartBeforeGui {
             ex.printStackTrace();
         }
 
-        // versuchen das Backup zu laden
-        if (loadBackup()) {
-            ret = true;
-        }
+//        // versuchen das Backup zu laden
+//        if (loadBackup()) {
+//            ret = true;
+//        }
         return ret;
     }
 
-    private static boolean loadBackup() {
-        ProgData progData = ProgData.getInstance();
-        boolean ret = false;
-        final ArrayList<Path> path = new ArrayList<>();
-        new ProgInfos().getMTPlayerXmlCopyFilePath(path);
-        if (path.isEmpty()) {
-            PLog.sysLog("Es gibt kein Backup");
-            return false;
-        }
-
-        // dann gibts ein Backup
-        PLog.sysLog("Es gibt ein Backup");
-
-        // stage bzw. scene gibts noch nicht
-        if (PAlert.BUTTON.YES != PAlert.showAlert_yes_no(null, "Gesicherte Einstellungen laden?",
-                "Die Einstellungen sind beschädigt" + P2LibConst.LINE_SEPARATOR +
-                        "und können nicht geladen werden.",
-                "Soll versucht werden, mit gesicherten" + P2LibConst.LINE_SEPARATOR
-                        + "Einstellungen zu starten?" + P2LibConst.LINE_SEPARATORx2
-                        + "(ansonsten startet das Programm mit" + P2LibConst.LINE_SEPARATOR
-                        + "Standardeinstellungen)")) {
-
-            PLog.sysLog("User will kein Backup laden.");
-            return false;
-        }
-
-        for (final Path p : path) {
-            // teils geladene Reste entfernen
-            clearConfig();
-            PLog.sysLog(new String[]{"Versuch Backup zu laden:", p.toString()});
-            try {
-                if (loadProgConfigData(p)) {
-                    PLog.sysLog(new String[]{"Backup hat geklappt:", p.toString()});
-                    ret = true;
-                    break;
-                }
-            } catch (final Exception ex) {
-                ex.printStackTrace();
-            }
-
-        }
-        return ret;
-    }
+//    private static boolean loadBackup() {
+//        boolean ret = false;
+//        final ArrayList<Path> path = new ArrayList<>();
+//        new ProgInfos().getMTPlayerXmlCopyFilePath(path);
+//        if (path.isEmpty()) {
+//            PLog.sysLog("Es gibt kein Backup");
+//            return false;
+//        }
+//
+//        // dann gibts ein Backup
+//        PLog.sysLog("Es gibt ein Backup");
+//
+//        // stage bzw. scene gibts noch nicht
+//        if (PAlert.BUTTON.YES != PAlert.showAlert_yes_no(null, "Gesicherte Einstellungen laden?",
+//                "Die Einstellungen sind beschädigt" + P2LibConst.LINE_SEPARATOR +
+//                        "und können nicht geladen werden.",
+//                "Soll versucht werden, mit gesicherten" + P2LibConst.LINE_SEPARATOR
+//                        + "Einstellungen zu starten?" + P2LibConst.LINE_SEPARATORx2
+//                        + "(ansonsten startet das Programm mit" + P2LibConst.LINE_SEPARATOR
+//                        + "Standardeinstellungen)")) {
+//
+//            PLog.sysLog("User will kein Backup laden.");
+//            return false;
+//        }
+//
+//        for (final Path p : path) {
+//            // teils geladene Reste entfernen
+//            clearConfig();
+//            PLog.sysLog(new String[]{"Versuch Backup zu laden:", p.toString()});
+//            try {
+//                if (loadProgConfigData(p)) {
+//                    PLog.sysLog(new String[]{"Backup hat geklappt:", p.toString()});
+//                    ret = true;
+//                    break;
+//                }
+//            } catch (final Exception ex) {
+//                ex.printStackTrace();
+//            }
+//
+//        }
+//        return ret;
+//    }
 
     private static boolean loadProgConfigData(Path path) {
         PDuration.onlyPing("ProgStartFactory.loadProgConfigData");
@@ -198,12 +185,10 @@ public class ProgStartBeforeGui {
     private static boolean loadProgConfig(Path path) {
         PLog.sysLog("Programmstart und ProgConfig laden von: " + path);
 
-        ConfigFile configFile = new ConfigFile(ProgConst.XML_START, path);
+        ConfigFile configFile = new ConfigFile(path.toString(), true);
         ProgConfig.addConfigData(configFile);
-        ReadConfigFile readConfigFile = new ReadConfigFile();
-        readConfigFile.addConfigFile(configFile);
-
-        return readConfigFile.readConfigFile();
+        ConfigFileRead configFileRead = new ConfigFileRead();
+        return configFileRead.readConfig(configFile);
     }
 
     private static void initAfterLoad() {

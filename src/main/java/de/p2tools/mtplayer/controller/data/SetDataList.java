@@ -16,29 +16,11 @@
 
 package de.p2tools.mtplayer.controller.data;
 
-import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.download.DownloadTools;
-import de.p2tools.mtplayer.gui.tools.SetsPrograms;
-import de.p2tools.p2Lib.P2LibConst;
-import de.p2tools.p2Lib.dialogs.PDialogFileChosser;
-
 import java.util.ArrayList;
-import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("serial")
 public class SetDataList extends SetDataListWorker {
-
-    public static boolean progReplacePattern(SetDataList list) {
-        boolean ret = true;
-        for (final SetData pSet : list) {
-            if (!progReplacePattern(pSet)) {
-                ret = false;
-            }
-        }
-        return ret;
-    }
 
     public boolean removeSetData(Object obj) {
         // remove and notify
@@ -48,7 +30,7 @@ public class SetDataList extends SetDataListWorker {
     }
 
     public boolean addSetData(SetData psetData) {
-        // add and notify
+        //add and notify
         boolean play = false;
         for (final SetData sd : this) {
             if (sd.isPlay()) {
@@ -64,11 +46,15 @@ public class SetDataList extends SetDataListWorker {
         return ret;
     }
 
-    public boolean addSetData(SetDataList list) {
-        // add and notify
+    public boolean addSetData(SetDataList setDataList) {
+        //add and notify
+        if (setDataList == null || setDataList.isEmpty()) {
+            return false;
+        }
+
         boolean ret = true;
-        for (final SetData entry : list) {
-            if (!addSetData(entry)) {
+        for (final SetData setData : setDataList) {
+            if (!addSetData(setData)) {
                 ret = false;
             }
         }
@@ -76,66 +62,25 @@ public class SetDataList extends SetDataListWorker {
         return ret;
     }
 
-
-    private static boolean progReplacePattern(SetData pSet) {
-        //todo da muss vorher der Downloadpfad abgefragt werden -> beim Update suchen??
-        pSet.setDestPath(pSet.getDestPath().replace(PATTERN_PATH_DEST, DownloadTools.getDownloadPath()));
-        String vlc = "";
-        String flvstreamer = "";
-        String ffmpeg = "";
-        final String script = SetsPrograms.getPathScript();
-        // damit nur die Variablen abgefragt werden, die auch verwendet werden
-        for (int p = 0; p < pSet.getProgramList().size(); ++p) {
-            final ProgramData prog = pSet.getProg(p);
-            if (prog.getProgPath().contains(PATTERN_PATH_VLC) || prog.getProgSwitch().contains(PATTERN_PATH_VLC)) {
-                vlc = getPathVlc();
-                break;
-            }
-        }
-        for (int p = 0; p < pSet.getProgramList().size(); ++p) {
-            final ProgramData prog = pSet.getProg(p);
-            if (prog.getProgPath().contains(PATTERN_PATH_FFMPEG) || prog.getProgSwitch().contains(PATTERN_PATH_FFMPEG)) {
-                ffmpeg = getPathFFmpeg();
-                break;
-            }
-        }
-        for (int p = 0; p < pSet.getProgramList().size(); ++p) {
-            final ProgramData prog = pSet.getProg(p);
-            // VLC
-            prog.setProgPath(prog.getProgPath().replaceAll(PATTERN_PATH_VLC, Matcher.quoteReplacement(vlc)));
-            prog.setProgSwitch(prog.getProgSwitch().replaceAll(PATTERN_PATH_VLC, Matcher.quoteReplacement(vlc)));
-            // flvstreamer
-            prog.setProgPath(prog.getProgPath().replaceAll(PATTERN_PATH_FLV, Matcher.quoteReplacement(flvstreamer)));
-            prog.setProgSwitch(prog.getProgSwitch().replaceAll(PATTERN_PATH_FLV, Matcher.quoteReplacement(flvstreamer)));
-            // ffmpeg
-            prog.setProgPath(prog.getProgPath().replaceAll(PATTERN_PATH_FFMPEG, Matcher.quoteReplacement(ffmpeg)));
-            prog.setProgSwitch(prog.getProgSwitch().replaceAll(PATTERN_PATH_FFMPEG, Matcher.quoteReplacement(ffmpeg)));
-            // script
-            prog.setProgPath(prog.getProgPath().replaceAll(PATTERN_PATH_SCRIPT, Matcher.quoteReplacement(script)));
-            prog.setProgSwitch(prog.getProgSwitch().replaceAll(PATTERN_PATH_SCRIPT, Matcher.quoteReplacement(script)));
-        }
-        return true;
-    }
-
-    private static String getPathVlc() {
-        // liefert den Pfad wenn vorhanden, wenn nicht wird er in einem Dialog abgefragt
-        if (ProgConfig.SYSTEM_PATH_VLC.get().isEmpty()) {
-            ProgConfig.SYSTEM_PATH_VLC.setValue(PDialogFileChosser.showFileChooser(ProgData.getInstance().primaryStage, "VLC",
-                    "VLC wird nicht gefunden.", "Bitte den Pfad zum" + P2LibConst.LINE_SEPARATOR +
-                            "VLC-Player angeben.", false, ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView()));
-        }
-        return ProgConfig.SYSTEM_PATH_VLC.get();
-    }
-
-    private static String getPathFFmpeg() {
-        // liefert den Pfad wenn vorhanden, wenn nicht wird er in einem Dialog abgefragt
-        if (ProgConfig.SYSTEM_PATH_FFMPEG.get().isEmpty()) {
-            ProgConfig.SYSTEM_PATH_FFMPEG.setValue(PDialogFileChosser.showFileChooser(ProgData.getInstance().primaryStage, "ffmpeg",
-                    "ffmpeg wird nicht gefunden.", "Bitte den Pfad zu" + P2LibConst.LINE_SEPARATOR +
-                            "ffmpeg angeben.", false, ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView()));
-        }
-        return ProgConfig.SYSTEM_PATH_FFMPEG.get();
-    }
+//    private static String getPathVlc() {
+//        // liefert den Pfad wenn vorhanden, wenn nicht wird er in einem Dialog abgefragt
+//        if (ProgConfig.SYSTEM_PATH_VLC.get().isEmpty()) {
+//            ProgConfig.SYSTEM_PATH_VLC.setValue(PDialogFileChosser.showFileChooser(ProgData.getInstance().primaryStage, "VLC",
+//                    "VLC wird nicht gefunden.", "Bitte den Pfad zum" + P2LibConst.LINE_SEPARATOR +
+//                            "VLC-Player angeben.", false, ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView()));
+//        }
+//        return ProgConfig.SYSTEM_PATH_VLC.get();
+//    }
+//
+//    private static String getPathFFmpeg() {
+//        // liefert den Pfad wenn vorhanden, wenn nicht wird er in einem Dialog abgefragt
+//        if (ProgConfig.SYSTEM_PATH_FFMPEG.get().isEmpty()) {
+//            ProgConfig.SYSTEM_PATH_FFMPEG.setValue(PDialogFileChosser.showFileChooser(ProgData.getInstance().primaryStage, "ffmpeg",
+//                    "ffmpeg wird nicht gefunden.", "Bitte den Pfad zu" + P2LibConst.LINE_SEPARATOR +
+//                            "ffmpeg angeben.", false, ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView()));
+//        }
+//        return ProgConfig.SYSTEM_PATH_FFMPEG.get();
+//    }
 
     public SetData getSetDataPlay() {
         //liefert die Programmgruppe zum Abspielen

@@ -20,8 +20,8 @@ import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
+import de.p2tools.mtplayer.controller.data.SetFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
-import de.p2tools.mtplayer.gui.tools.SetsPrograms;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.dialogs.PDirFileChooser;
 import de.p2tools.p2Lib.guiTools.PButton;
@@ -124,7 +124,7 @@ public class PathPane {
                 property = ffmpegProp;
                 btnFind.setOnAction(event -> {
                     ProgConfig.SYSTEM_PATH_FFMPEG.setValue("");
-                    txtPlayer.setText(SetsPrograms.getTemplatePathFFmpeg());
+                    txtPlayer.setText(SetFactory.getTemplatePathFFmpeg());
                 });
                 hyperlink = new PHyperlink(stage,
                         ProgConst.ADRESSE_WEBSITE_FFMPEG,
@@ -136,7 +136,7 @@ public class PathPane {
                 property = vlcProp;
                 btnFind.setOnAction(event -> {
                     ProgConfig.SYSTEM_PATH_VLC.setValue("");
-                    txtPlayer.setText(SetsPrograms.getTemplatePathVlc());
+                    txtPlayer.setText(SetFactory.getTemplatePathVlc());
                 });
                 hyperlink = new PHyperlink(stage,
                         ProgConst.ADRESSE_WEBSITE_VLC,

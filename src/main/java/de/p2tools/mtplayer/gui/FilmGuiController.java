@@ -30,9 +30,7 @@ import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.mtplayer.gui.tools.table.TableFilm;
 import de.p2tools.mtplayer.gui.tools.table.TableRowFilm;
-import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
-import de.p2tools.p2Lib.guiTools.PColor;
 import de.p2tools.p2Lib.guiTools.PTableFactory;
 import de.p2tools.p2Lib.guiTools.pClosePane.PClosePaneH;
 import de.p2tools.p2Lib.tools.PSystemUtils;
@@ -42,7 +40,6 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.transformation.SortedList;
-import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.control.*;
 import javafx.scene.input.*;
@@ -383,7 +380,7 @@ public class FilmGuiController extends AnchorPane {
         }
 
         // Button wieder aufbauen
-        TilePane tilePaneButton = getButtonPane(setDataList);
+        TilePane tilePaneButton = new FilmGuiButtonPane(this).getButtonPane(setDataList);
 
         Tab filmInfoTab = new Tab("Beschreibung");
         filmInfoTab.setClosable(false);
@@ -398,34 +395,6 @@ public class FilmGuiController extends AnchorPane {
 
         pClosePaneH.getVBoxAll().getChildren().setAll(infoTabPane);
         VBox.setVgrow(infoTabPane, Priority.ALWAYS);
-    }
-
-    private TilePane getButtonPane(SetDataList setDataList) {
-        TilePane tilePaneButton = new TilePane();
-        tilePaneButton.setVgap(P2LibConst.DIST_BUTTON);
-        tilePaneButton.setHgap(P2LibConst.DIST_BUTTON);
-        tilePaneButton.setPadding(new Insets(P2LibConst.DIST_EDGE));
-
-//        tilePaneButton.setStyle("-fx-border-color: -fx-text-box-border; " +
-//                "-fx-border-radius: 5px; " +
-//                "-fx-border-width: 1;");
-
-        setDataList.stream().forEach(setData -> {
-            Button btn = new Button(setData.getVisibleName());
-            btn.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
-            btn.setMaxWidth(Double.MAX_VALUE);
-            if (!setData.getColor().equals(SetData.RESET_COLOR)) {
-                final String c = PColor.getCssColor(setData.getColor());
-                final String css = "-fx-border-color: #" + c + "; " +
-                        "-fx-border-width: 2; ";
-
-                btn.setStyle(css);
-            }
-
-            btn.setOnAction(a -> playFilmUrlWithSet(setData));
-            tilePaneButton.getChildren().add(btn);
-        });
-        return tilePaneButton;
     }
 
     private synchronized void startFilmUrl() {

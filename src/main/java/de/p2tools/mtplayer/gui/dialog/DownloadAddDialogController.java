@@ -23,12 +23,12 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.data.SetDataList;
+import de.p2tools.mtplayer.controller.data.SetFactory;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadTools;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.tools.SizeTools;
-import de.p2tools.mtplayer.gui.tools.SetsPrograms;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.dialogs.PDirFileChooser;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
@@ -569,7 +569,7 @@ public class DownloadAddDialogController extends PDialogExtra {
                 if (!d.path.substring(d.path.length() - 1).equals(File.separator)) {
                     d.path += File.separator;
                 }
-                if (SetsPrograms.checkPathWritable(d.path)) {
+                if (SetFactory.checkPathWritable(d.path)) {
                     ok = true;
                 } else {
                     PAlert.showErrorAlert("Fehlerhafter Pfad/Name!", "Fehlerhafter Pfad/Name!",
