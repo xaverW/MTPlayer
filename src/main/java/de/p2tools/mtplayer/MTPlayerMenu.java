@@ -60,11 +60,13 @@ public class MTPlayerMenu extends MenuButton {
         miQuit.setOnAction(e -> ProgQuit.quit(false));
         PShortcutWorker.addShortCut(miQuit, MTShortcut.SHORTCUT_QUIT_PROGRAM);
 
+        //Menüpunkt ist nur, dass das Tastenkürzel dafür funkt., wird aber sonst nicht angezeigt
         final MenuItem miQuitWait = new MenuItem("Beenden, laufende Downloads abwarten");
-        miQuitWait.setVisible(false); // wegen dem shortcut, aber der zusätzliche Menüpunkt verwirrt nur
+        miQuitWait.setVisible(false); //wegen dem shortcut, aber der zusätzliche Menüpunkt verwirrt nur
         miQuitWait.setOnAction(e -> ProgQuit.quit(true));
         PShortcutWorker.addShortCut(miQuitWait, MTShortcut.SHORTCUT_QUIT_PROGRAM_WAIT);
 
+        //Menüpunkt ist nur, dass das Tastenkürzel dafür funkt., wird aber sonst nicht angezeigt
         final MenuItem mbExternProgram = new MenuItem("Externes Programm starten");
         mbExternProgram.setVisible(false); //vorerst mal noch nicht anzeigen???
         mbExternProgram.setOnAction(e ->
@@ -72,6 +74,8 @@ public class MTPlayerMenu extends MenuButton {
                         ProgConfig.SYSTEM_PROG_EXTERN_PROGRAM, ProgIcons.Icons.ICON_BUTTON_EXTERN_PROGRAM.getImageView())
         );
         PShortcutWorker.addShortCut(mbExternProgram, MTShortcut.SHORTCUT_EXTERN_PROGRAM);
+
+
         setTooltip(new Tooltip("Programmeinstellungen anzeigen"));
         setMinWidth(Region.USE_PREF_SIZE);
         getStyleClass().addAll("btnFunction", "btnFunc-1");
