@@ -17,39 +17,39 @@
 package de.p2tools.mtplayer.controller;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.alert.PAlert;
 import de.p2tools.p2Lib.configFile.ConfigFile;
-import de.p2tools.p2Lib.configFile.ConfigFileWrite;
+import de.p2tools.p2Lib.configFile.ConfigWriteFile;
 import de.p2tools.p2Lib.tools.log.PLog;
 import de.p2tools.p2Lib.tools.log.PLogger;
 import org.apache.commons.lang3.time.FastDateFormat;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.nio.file.attribute.FileTime;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 public class ProgSave {
-    private static boolean alreadyMadeBackup = false;
     private static boolean open = true;
 
     private ProgSave() {
     }
 
     public static void saveAll() {
-        copyConfig();
-        saveProgConfig();
+        //sind die Programmeinstellungen
+        PLog.sysLog("save progConfig");
+        final Path xmlFilePath = ProgInfos.getSettingsFile();
+        ConfigFile configFile = new ConfigFile(xmlFilePath.toString(), true);
+        ProgConfig.addConfigData(configFile);
+
+        ConfigWriteFile configWriteFile = new ConfigWriteFile();
+        configWriteFile.addConfigFile(configFile);
+        configWriteFile.writeConfigFile();
 
         if (ProgData.reset) {
             reset();
@@ -98,85 +98,5 @@ public class ProgSave {
             }
         }
 
-    }
-
-    private static void saveProgConfig() {
-        //sind die Programmeinstellungen
-        PLog.sysLog("save progConfig");
-
-        final Path xmlFilePath = ProgInfos.getSettingsFile();
-        ConfigFile configFile = new ConfigFile(xmlFilePath.toString(), true);
-        ProgConfig.addConfigData(configFile);
-
-        ConfigFileWrite configFileWrite = new ConfigFileWrite();
-        configFileWrite.addConfigFile(configFile);
-        configFileWrite.writeConfigFile();
-    }
-
-    /**
-     * Create backup copies of settings file.
-     */
-    private static void copyConfig() {
-        if (alreadyMadeBackup) {
-            return;
-        }
-        ArrayList<String> list = new ArrayList<>();
-        // nur einmal pro Programmstart machen
-        list.add(PLog.LILNE3);
-        list.add("Einstellungen sichern");
-
-        try {
-            final Path xmlFilePath = new ProgInfos().getSettingsFile();
-            long creatTime = -1;
-
-            Path xmlFilePathCopy_1 = ProgInfos.getSettingsDirectory().resolve(ProgConst.CONFIG_FILE_COPY + 1);
-            if (Files.exists(xmlFilePathCopy_1)) {
-                final BasicFileAttributes attrs = Files.readAttributes(xmlFilePathCopy_1, BasicFileAttributes.class);
-                final FileTime d = attrs.lastModifiedTime();
-                creatTime = d.toMillis();
-            }
-
-            if (creatTime == -1 || creatTime < getToday_0_0()) {
-                // nur dann ist die letzte Kopie älter als einen Tag
-                for (int i = ProgConst.MAX_COPY_OF_BACKUPFILE; i > 1; --i) {
-                    xmlFilePathCopy_1 = ProgInfos.getSettingsDirectory().resolve(ProgConst.CONFIG_FILE_COPY + (i - 1));
-                    final Path xmlFilePathCopy_2 = ProgInfos.getSettingsDirectory().resolve(ProgConst.CONFIG_FILE_COPY + i);
-                    if (Files.exists(xmlFilePathCopy_1)) {
-                        Files.move(xmlFilePathCopy_1, xmlFilePathCopy_2, StandardCopyOption.REPLACE_EXISTING);
-                    }
-                }
-                if (Files.exists(xmlFilePath)) {
-                    Files.move(xmlFilePath,
-                            ProgInfos.getSettingsDirectory().resolve(ProgConst.CONFIG_FILE_COPY + 1),
-                            StandardCopyOption.REPLACE_EXISTING);
-                }
-                list.add("Einstellungen wurden gesichert");
-            } else {
-                list.add("Einstellungen wurden heute schon gesichert");
-            }
-        } catch (final IOException e) {
-            list.add("Die Einstellungen konnten nicht komplett gesichert werden!");
-            PLog.errorLog(795623147, e);
-        }
-
-        alreadyMadeBackup = true;
-        list.add(PLog.LILNE3);
-        PLog.sysLog(list);
-    }
-
-
-    /**
-     * Return the number of milliseconds from today´s midnight.
-     *
-     * @return Number of milliseconds from today´s midnight.
-     */
-    private static long getToday_0_0() {
-        final Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-
-        return cal.getTimeInMillis();
     }
 }

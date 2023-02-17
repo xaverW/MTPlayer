@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.filmFilter.FilmFilterFactory;
 import de.p2tools.mtplayer.controller.worker.ImportStandardSet;
 import de.p2tools.mtplayer.gui.startDialog.StartDialogController;
 import de.p2tools.p2Lib.configFile.ConfigFile;
-import de.p2tools.p2Lib.configFile.ConfigFileRead;
+import de.p2tools.p2Lib.configFile.ConfigReadFile;
 import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.PLog;
 import de.p2tools.p2Lib.tools.log.PLogger;
@@ -97,7 +97,7 @@ public class ProgStartBeforeGui {
                 }
             };
             ProgConfig.addConfigData(configFile);
-            if (ConfigFileRead.readConfig(configFile)) {
+            if (ConfigReadFile.readConfig(configFile)) {
                 initAfterLoad();
                 PLog.sysLog("Konfig wurde geladen!");
                 return true;

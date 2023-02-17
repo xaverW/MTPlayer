@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.SetDataList;
 import de.p2tools.mtplayer.controller.data.SetReplacePatternFactory;
 import de.p2tools.p2Lib.configFile.ConfigFile;
-import de.p2tools.p2Lib.configFile.ConfigFileRead;
+import de.p2tools.p2Lib.configFile.ConfigReadFile;
 import de.p2tools.p2Lib.tools.ProgramToolsFactory;
 import de.p2tools.p2Lib.tools.log.PLog;
 
@@ -82,7 +82,7 @@ public class ImportStandardSet extends LinkedList<String[]> {
         PLog.sysLog("Sets laden von: " + url);
         ConfigFile configFile = new ConfigFile(url, false);
         configFile.addConfigs(setDataList);
-        return ConfigFileRead.readConfig(configFile);
+        return ConfigReadFile.readConfig(configFile);
     }
 
     private static boolean loadSetDataLocalFile(SetDataList setDataList, String file) throws IOException {
@@ -90,6 +90,6 @@ public class ImportStandardSet extends LinkedList<String[]> {
         InputStreamReader is = new InputStreamReader(ProgConst.class.getResource(file).openStream(), StandardCharsets.UTF_8);
         ConfigFile configFile = new ConfigFile(is, false);
         configFile.addConfigs(setDataList);
-        return ConfigFileRead.readConfig(configFile);
+        return ConfigReadFile.readConfig(configFile);
     }
 }
