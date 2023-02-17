@@ -37,12 +37,12 @@ public class ProgStartBeforeGui {
     }
 
     public static void workBeforeGui() {
-        if (!ProgStartBeforeGui.loadAll()) {
+        if (!loadAll()) {
             PDuration.onlyPing("Erster Start");
             firstProgramStart = true;
 
-            UpdateConfig.setUpdateDone(); // dann ists ja kein Programmupdate
-            ProgData.getInstance().replaceList.init(); // einmal ein Muster anlegen, für Linux ist es bereits aktiv!
+            UpdateConfig.setUpdateDone(); //dann ists ja kein Programmupdate
+            ProgData.getInstance().replaceList.init(); //einmal ein Muster anlegen, für Linux ist es bereits aktiv!
 
             StartDialogController startDialogController = new StartDialogController();
             if (!startDialogController.isOk()) {
@@ -51,13 +51,9 @@ public class ProgStartBeforeGui {
                 System.exit(0);
             }
 
-            //todo das ist noch nicht ganz klar ob dahin
-//            Platform.runLater(() -> {
             PDuration.onlyPing("Erster Start: PSet");
             ImportStandardSet.getStandardSet();
             PDuration.onlyPing("Erster Start: PSet geladen");
-//            });
-
             FilmFilterFactory.addStandardFilter();
         }
     }
@@ -67,26 +63,57 @@ public class ProgStartBeforeGui {
      *
      * @return
      */
-    public static boolean loadAll() {
-        boolean loadOk = load();
+    private static boolean loadAll() {
         if (ProgConfig.SYSTEM_LOG_ON.getValue()) {
             PLogger.setFileHandler(ProgInfos.getLogDirectory_String());
         }
 
-        if (!loadOk) {
+        if (!load()) {
             PLog.sysLog("Weder Konfig noch Backup konnte geladen werden!");
             // teils geladene Reste entfernen
-            clearConfig();
+            clearTheConfigs();
             return false;
         }
-        PLog.sysLog("Konfig wurde gelesen!");
-        UpdateConfig.update(); // falls es ein Programmupdate gab, Configs anpassen
-        ProgColorList.setColorTheme(); // Farben einrichten
-//        ProgData.getInstance().progTray.setIcon();//wenn eigenes Icon gewählt, dann notwendig
+
         return true;
     }
 
-    private static void clearConfig() {
+    private static boolean load() {
+        final Path xmlFilePath = new ProgInfos().getSettingsFile();
+        PDuration.onlyPing("ProgStartFactory.loadProgConfigData");
+
+        try {
+            if (!Files.exists(xmlFilePath)) {
+                //dann gibts das Konfig-File gar nicht
+                PLog.sysLog("Konfig existiert nicht!");
+                return false;
+            }
+
+            PLog.sysLog("Programmstart und ProgConfig laden von: " + xmlFilePath);
+            ConfigFile configFile = new ConfigFile(xmlFilePath.toString(), true) {
+                @Override
+                public void clearConfigFile() {
+                    clearTheConfigs();
+                }
+            };
+            ProgConfig.addConfigData(configFile);
+            if (ConfigFileRead.readConfig(configFile)) {
+                initAfterLoad();
+                PLog.sysLog("Konfig wurde geladen!");
+                return true;
+
+            } else {
+                // dann hat das Laden nicht geklappt
+                PLog.sysLog("Konfig konnte nicht geladen werden!");
+                return false;
+            }
+        } catch (final Exception ex) {
+            PLog.errorLog(915470101, ex);
+        }
+        return false;
+    }
+
+    private static void clearTheConfigs() {
         ProgData progData = ProgData.getInstance();
         progData.setDataList.clear();
         progData.replaceList.clear();
@@ -95,110 +122,17 @@ public class ProgStartBeforeGui {
         progData.blackList.clear();
     }
 
-    private static boolean load() {
-        boolean ret = false;
-        final Path xmlFilePath = new ProgInfos().getSettingsFile();
-
-        try {
-            if (Files.exists(xmlFilePath)) {
-                if (loadProgConfigData(xmlFilePath)) {
-                    return true;
-                } else {
-                    // dann hat das Laden nicht geklappt
-                    PLog.sysLog("Konfig konnte nicht gelesen werden!");
-                }
-            } else {
-                // dann hat das Laden nicht geklappt
-                PLog.sysLog("Konfig existiert nicht!");
-            }
-        } catch (final Exception ex) {
-            ex.printStackTrace();
-        }
-
-//        // versuchen das Backup zu laden
-//        if (loadBackup()) {
-//            ret = true;
-//        }
-        return ret;
-    }
-
-//    private static boolean loadBackup() {
-//        boolean ret = false;
-//        final ArrayList<Path> path = new ArrayList<>();
-//        new ProgInfos().getMTPlayerXmlCopyFilePath(path);
-//        if (path.isEmpty()) {
-//            PLog.sysLog("Es gibt kein Backup");
-//            return false;
-//        }
-//
-//        // dann gibts ein Backup
-//        PLog.sysLog("Es gibt ein Backup");
-//
-//        // stage bzw. scene gibts noch nicht
-//        if (PAlert.BUTTON.YES != PAlert.showAlert_yes_no(null, "Gesicherte Einstellungen laden?",
-//                "Die Einstellungen sind beschädigt" + P2LibConst.LINE_SEPARATOR +
-//                        "und können nicht geladen werden.",
-//                "Soll versucht werden, mit gesicherten" + P2LibConst.LINE_SEPARATOR
-//                        + "Einstellungen zu starten?" + P2LibConst.LINE_SEPARATORx2
-//                        + "(ansonsten startet das Programm mit" + P2LibConst.LINE_SEPARATOR
-//                        + "Standardeinstellungen)")) {
-//
-//            PLog.sysLog("User will kein Backup laden.");
-//            return false;
-//        }
-//
-//        for (final Path p : path) {
-//            // teils geladene Reste entfernen
-//            clearConfig();
-//            PLog.sysLog(new String[]{"Versuch Backup zu laden:", p.toString()});
-//            try {
-//                if (loadProgConfigData(p)) {
-//                    PLog.sysLog(new String[]{"Backup hat geklappt:", p.toString()});
-//                    ret = true;
-//                    break;
-//                }
-//            } catch (final Exception ex) {
-//                ex.printStackTrace();
-//            }
-//
-//        }
-//        return ret;
-//    }
-
-    private static boolean loadProgConfigData(Path path) {
-        PDuration.onlyPing("ProgStartFactory.loadProgConfigData");
-        boolean loadOk = loadProgConfig(path);
-
-        if (ProgConfig.SYSTEM_LOG_ON.getValue()) {
-            PLogger.setFileHandler(ProgInfos.getLogDirectory_String());
-        }
-
-        if (!loadOk) {
-            return false;
-        }
-
-        initAfterLoad();
-        PLog.sysLog("Konfig wurde gelesen!");
-        return true;
-    }
-
-    private static boolean loadProgConfig(Path path) {
-        PLog.sysLog("Programmstart und ProgConfig laden von: " + path);
-
-        ConfigFile configFile = new ConfigFile(path.toString(), true);
-        ProgConfig.addConfigData(configFile);
-        ConfigFileRead configFileRead = new ConfigFileRead();
-        return configFileRead.readConfig(configFile);
-    }
-
     private static void initAfterLoad() {
         ProgData.getInstance().downloadList.initDownloads();
         ProgData.getInstance().aboList.initAboList();
         ProgData.getInstance().aboList.sort();
 
-        // ListeFilmUpdateServer aufbauen
+        //Filter einrichten
         if (ProgData.getInstance().actFilmFilterWorker.getStoredFilterList().isEmpty()) {
             FilmFilterFactory.addStandardFilter();
         }
+
+        UpdateConfig.update(); //falls es ein Programmupdate gab, Configs anpassen
+        ProgColorList.setColorTheme(); //Farben einrichten
     }
 }

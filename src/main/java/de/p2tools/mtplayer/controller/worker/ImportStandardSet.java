@@ -82,8 +82,7 @@ public class ImportStandardSet extends LinkedList<String[]> {
         PLog.sysLog("Sets laden von: " + url);
         ConfigFile configFile = new ConfigFile(url, false);
         configFile.addConfigs(setDataList);
-        ConfigFileRead configFileRead = new ConfigFileRead();
-        return configFileRead.readConfig(configFile);
+        return ConfigFileRead.readConfig(configFile);
     }
 
     private static boolean loadSetDataLocalFile(SetDataList setDataList, String file) throws IOException {
@@ -91,7 +90,6 @@ public class ImportStandardSet extends LinkedList<String[]> {
         InputStreamReader is = new InputStreamReader(ProgConst.class.getResource(file).openStream(), StandardCharsets.UTF_8);
         ConfigFile configFile = new ConfigFile(is, false);
         configFile.addConfigs(setDataList);
-        ConfigFileRead configFileRead = new ConfigFileRead();
-        return configFileRead.readConfig(configFile);
+        return ConfigFileRead.readConfig(configFile);
     }
 }

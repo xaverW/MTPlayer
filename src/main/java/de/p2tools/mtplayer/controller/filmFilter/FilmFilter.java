@@ -253,7 +253,7 @@ public final class FilmFilter extends FilmFilterProps {
 
     private void setTxtFilterChange() {
         //wird auch ausgelöst durch Eintrag in die FilterHistory, da wird ein neuer SelectedFilter angelegt
-        PDebugLog.sysLog("setTxtFilterChange");
+//        PDebugLog.sysLog("setTxtFilterChange");
         if (ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
             //dann wird erst nach "RETURN" gestartet
             pause.stop();
