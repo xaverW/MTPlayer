@@ -27,6 +27,7 @@ import de.p2tools.mtplayer.controller.data.abo.AboFactory;
 import de.p2tools.mtplayer.controller.filmFilter.FilmFilterFactory;
 import de.p2tools.p2Lib.mtFilm.film.FilmData;
 import de.p2tools.p2Lib.mtFilm.film.Filmlist;
+import de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerLoadFilmlist;
 import de.p2tools.p2Lib.mtFilm.loadFilmlist.LoadFilmlist;
 import de.p2tools.p2Lib.mtFilm.tools.LoadFactoryConst;
@@ -56,21 +57,23 @@ public class LoadFilmFactory {
             }
 
             @Override
-            public synchronized void progress(de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent event) {
+            public synchronized void progress(ListenerFilmlistLoadEvent event) {
                 ProgData.getInstance().maskerPane.setMaskerProgress(event.progress, event.text);
             }
 
             @Override
-            public void loaded(de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent event) {
+            public void loaded(ListenerFilmlistLoadEvent event) {
                 ProgData.getInstance().maskerPane.setMaskerVisible(true, false);
                 ProgData.getInstance().maskerPane.setMaskerProgress(PROGRESS_INDETERMINATE, "Filmliste verarbeiten");
             }
 
             @Override
-            public synchronized void finished(de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent event) {
+            public synchronized void finished(ListenerFilmlistLoadEvent event) {
                 PDuration.onlyPing("Filme geladen: Nachbearbeiten");
                 afterLoadingFilmlist();
-                ProgSave.saveAll(); // damit nichts verloren geht
+                if (ProgData.firstProgramStart) {
+                    ProgSave.saveAll(); // damit nichts verloren geht
+                }
                 PDuration.onlyPing("Filme nachbearbeiten: Ende");
 
                 if (!ProgConfig.ABO_SEARCH_NOW.getValue() && !ProgData.automode) {
@@ -117,9 +120,9 @@ public class LoadFilmFactory {
     }
 
 
-    public void loadFilmlistProgStart(boolean firstProgramStart) {
+    public void loadFilmlistProgStart() {
         initLoadFactoryConst();
-        loadFilmlist.loadFilmlistProgStart(firstProgramStart,
+        loadFilmlist.loadFilmlistProgStart(ProgData.firstProgramStart,
                 ProgInfos.getLocalFilmListFile(), ProgConfig.SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART.getValue(),
                 ProgConfig.SYSTEM_FILMLIST_AGE.getValue());
     }

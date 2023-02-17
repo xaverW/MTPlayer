@@ -42,14 +42,11 @@ public class ProgSave {
 
     public static void saveAll() {
         //sind die Programmeinstellungen
-        PLog.sysLog("save progConfig");
+        PLog.sysLog("Alle Programmeinstellungen sichern");
         final Path xmlFilePath = ProgInfos.getSettingsFile();
         ConfigFile configFile = new ConfigFile(xmlFilePath.toString(), true);
         ProgConfig.addConfigData(configFile);
-
-        ConfigWriteFile configWriteFile = new ConfigWriteFile();
-        configWriteFile.addConfigFile(configFile);
-        configWriteFile.writeConfigFile();
+        ConfigWriteFile.writeConfigFile(configFile);
 
         if (ProgData.reset) {
             reset();

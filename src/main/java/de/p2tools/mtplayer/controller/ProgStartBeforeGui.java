@@ -31,7 +31,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class ProgStartBeforeGui {
-    public static boolean firstProgramStart = false; // ist der allererste Programmstart: Init wird gemacht
+//    public static boolean firstProgramStart = false; // ist der allererste Programmstart: Init wird gemacht
 
     private ProgStartBeforeGui() {
     }
@@ -39,7 +39,7 @@ public class ProgStartBeforeGui {
     public static void workBeforeGui() {
         if (!loadAll()) {
             PDuration.onlyPing("Erster Start");
-            firstProgramStart = true;
+            ProgData.firstProgramStart = true;
 
             UpdateConfig.setUpdateDone(); //dann ists ja kein Programmupdate
             ProgData.getInstance().replaceList.init(); //einmal ein Muster anlegen, für Linux ist es bereits aktiv!

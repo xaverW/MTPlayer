@@ -77,7 +77,7 @@ public class ProgStartAfterGui {
         });
 
         //die gespeicherte Filmliste laden
-        LoadFilmFactory.getInstance().loadFilmlistProgStart(ProgStartBeforeGui.firstProgramStart);
+        LoadFilmFactory.getInstance().loadFilmlistProgStart();
     }
 
     public static void setProgramIcon() {
