@@ -649,12 +649,6 @@ public class HelpText {
                     "zugeordnet werden." +
                     "\n";
 
-    public static final String EXTERN_PROGRAM_SHORT_CUT =
-            "In den Tastenkürzeln gibt es eines, das ein externes Programm aufruft. Dieses " +
-                    "Programm kann hier gesetzt werden. Gedacht ist das z.B. um per Tastenkürzel ein " +
-                    "Programm zum Aufräumen des Download-Ordners laufen zu lassen, oder ähnliches." +
-                    "\n";
-
     public static final String MEDIA_DIALOG =
             "Hier kann eine Mediensammlung angelegt werden. Das ist eine Liste der " +
                     "bereits vorhandenen Filme.\n" +

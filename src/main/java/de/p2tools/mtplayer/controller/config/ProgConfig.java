@@ -139,7 +139,7 @@ public class ProgConfig extends PDataProgConfig {
     public static BooleanProperty SYSTEM_ONLY_ASCII = addBoolProp("system-only-ascii", Boolean.FALSE);
     public static StringProperty SYSTEM_PROG_OPEN_DIR = addStrProp("system-prog-open-dir");
     public static StringProperty SYSTEM_PROG_OPEN_URL = addStrProp("system-prog-open-url");
-    public static StringProperty SYSTEM_PROG_EXTERN_PROGRAM = addStrProp("system-extern-program");
+    //    public static StringProperty SYSTEM_PROG_EXTERN_PROGRAM = addStrProp("system-extern-program");
     public static StringProperty SYSTEM_PROG_PLAY_FILME = addStrProp("system-prog-play-filme");
     public static BooleanProperty SYSTEM_MARK_GEO = addBoolProp("system-mark-geo", Boolean.TRUE);
     public static StringProperty SYSTEM_GEO_HOME_PLACE = addStrProp("system-geo-home-place", FilmDataMTP.GEO_DE);

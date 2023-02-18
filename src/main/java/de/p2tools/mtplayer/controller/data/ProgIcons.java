@@ -42,7 +42,7 @@ public class ProgIcons {
         ICON_BUTTON_MENU("button-menu.png", 18, 15),
         ICON_BUTTON_QUIT("button-quit.png", 16, 16),
         ICON_BUTTON_FILE_OPEN("button-file-open.png", 16, 16),
-        ICON_BUTTON_EXTERN_PROGRAM("button-forward.png", 16, 16),
+        //        ICON_BUTTON_EXTERN_PROGRAM("button-forward.png", 16, 16),
         ICON_BUTTON_PLAY("button-play.png", 16, 16),
         ICON_BUTTON_CLEAR("button-clear.png", 16, 16),
         ICON_DIALOG_QUIT("dialog-quit.png", 64, 64),

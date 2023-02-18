@@ -66,23 +66,13 @@ public class MTPlayerMenu extends MenuButton {
         miQuitWait.setOnAction(e -> ProgQuit.quit(true));
         PShortcutWorker.addShortCut(miQuitWait, MTShortcut.SHORTCUT_QUIT_PROGRAM_WAIT);
 
-        //Menüpunkt ist nur, dass das Tastenkürzel dafür funkt., wird aber sonst nicht angezeigt
-        final MenuItem mbExternProgram = new MenuItem("Externes Programm starten");
-        mbExternProgram.setVisible(false); //vorerst mal noch nicht anzeigen???
-        mbExternProgram.setOnAction(e ->
-                POpen.openExternProgram(progData.primaryStage,
-                        ProgConfig.SYSTEM_PROG_EXTERN_PROGRAM, ProgIcons.Icons.ICON_BUTTON_EXTERN_PROGRAM.getImageView())
-        );
-        PShortcutWorker.addShortCut(mbExternProgram, MTShortcut.SHORTCUT_EXTERN_PROGRAM);
-
-
         setTooltip(new Tooltip("Programmeinstellungen anzeigen"));
         setMinWidth(Region.USE_PREF_SIZE);
         getStyleClass().addAll("btnFunction", "btnFunc-1");
         setText("");
         setGraphic(ProgIcons.Icons.FX_ICON_TOOLBAR_MENU_TOP.getImageView());
         getItems().addAll(miConfig, miMediaCollectionConfig, miSearchMediaCollection, addHelp(progData),
-                new SeparatorMenuItem(), miQuit, miQuitWait, mbExternProgram);
+                new SeparatorMenuItem(), miQuit, miQuitWait);
     }
 
     private Menu addHelp(ProgData progData) {

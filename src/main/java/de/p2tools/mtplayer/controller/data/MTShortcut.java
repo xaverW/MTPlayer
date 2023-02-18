@@ -125,11 +125,11 @@ public class MTShortcut {
                     "Downloads aufräumen",
                     "Die Liste der Downloads in der Tabelle \"Downloads\" wird aufgeräumt.");
 
-    public static final PShortcut SHORTCUT_EXTERN_PROGRAM =
-            new PShortcut(ProgConfig.SHORTCUT_EXTERN_PROGRAM, ProgConfig.SHORTCUT_EXTERN_PROGRAM_INIT,
-                    "Externes Programm starten",
-                    "Damit wird ein externes Programm gestartet. Das Programm kann in den Einstellungen " +
-                            "unter \"Programme\" ausgewählt werden.");
+//    public static final PShortcut SHORTCUT_EXTERN_PROGRAM =
+//            new PShortcut(ProgConfig.SHORTCUT_EXTERN_PROGRAM, ProgConfig.SHORTCUT_EXTERN_PROGRAM_INIT,
+//                    "Externes Programm starten",
+//                    "Damit wird ein externes Programm gestartet. Das Programm kann in den Einstellungen " +
+//                            "unter \"Programme\" ausgewählt werden.");
 
 
     private static ObservableList<PShortcut> shortcutList = FXCollections.observableArrayList();
@@ -156,7 +156,7 @@ public class MTShortcut {
         shortcutList.add(SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION);
         shortcutList.add(SHORTCUT_DOWNLOADS_UPDATE);
         shortcutList.add(SHORTCUT_DOWNLOADS_CLEAN_UP);
-        shortcutList.add(SHORTCUT_EXTERN_PROGRAM);
+//        shortcutList.add(SHORTCUT_EXTERN_PROGRAM);
     }
 
     public static synchronized ObservableList<PShortcut> getShortcutList() {

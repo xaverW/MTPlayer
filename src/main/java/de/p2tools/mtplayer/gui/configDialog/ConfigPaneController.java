@@ -34,7 +34,6 @@ import de.p2tools.p2Lib.tools.PStringUtils;
 import de.p2tools.p2Lib.tools.log.PLogger;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.StringProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -58,21 +57,7 @@ public class ConfigPaneController extends PAccordionPane {
     private final Button btnNow = new Button("_Jetzt suchen");
     private Button btnHelpBeta;
 
-    BooleanProperty logfileChanged = new SimpleBooleanProperty(false);
-    BooleanProperty propUpdateSearch = ProgConfig.SYSTEM_UPDATE_SEARCH_ACT;
-    BooleanProperty propUpdateBetaSearch = ProgConfig.SYSTEM_UPDATE_SEARCH_BETA;
-    BooleanProperty propUpdateDailySearch = ProgConfig.SYSTEM_UPDATE_SEARCH_DAILY;
-    BooleanProperty propAbo = ProgConfig.ABO_SEARCH_NOW;
-    BooleanProperty propDown = ProgConfig.DOWNLOAD_START_NOW;
-    StringProperty propDir = ProgConfig.SYSTEM_PROG_OPEN_DIR;
-    StringProperty propUrl = ProgConfig.SYSTEM_PROG_OPEN_URL;
-    StringProperty propExternProgram = ProgConfig.SYSTEM_PROG_EXTERN_PROGRAM;
-    StringProperty propPlay = ProgConfig.SYSTEM_PROG_PLAY_FILME;
-    BooleanProperty propLog = ProgConfig.SYSTEM_LOG_ON;
-    StringProperty propLogDir = ProgConfig.SYSTEM_LOG_DIR;
-    BooleanProperty propSizeFilm = ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM;
-    BooleanProperty propSizeDownload = ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD;
-    BooleanProperty propTipOfDay = ProgConfig.TIP_OF_DAY_SHOW;
+    private final BooleanProperty logfileChanged = new SimpleBooleanProperty(false);
 
     private final PToggleSwitch tglSearchAbo = new PToggleSwitch("Abos automatisch suchen:");
     private final PToggleSwitch tglStartDownload = new PToggleSwitch("Downloads aus Abos sofort starten:");
@@ -85,7 +70,6 @@ public class ConfigPaneController extends PAccordionPane {
     private TextField txtFileManager;
     private TextField txtFileManagerVideo;
     private TextField txtFileManagerWeb;
-    private TextField txtShortCut;
 
     private final Stage stage;
     private IconPane iconPane;
@@ -110,21 +94,21 @@ public class ConfigPaneController extends PAccordionPane {
         shortcutPane.close();
         geoPane.close();
         stylePane.close();
-        tglSearchAbo.selectedProperty().unbindBidirectional(propAbo);
-        tglStartDownload.selectedProperty().unbindBidirectional(propDown);
-        tglSmallFilm.selectedProperty().unbindBidirectional(propSizeFilm);
-        tglSmallDownload.selectedProperty().unbindBidirectional(propSizeDownload);
-//        tglTray.selectedProperty().unbindBidirectional(propTray);
-        tglTipOfDay.selectedProperty().unbindBidirectional(propTipOfDay);
+        tglSearchAbo.selectedProperty().unbindBidirectional(ProgConfig.ABO_SEARCH_NOW);
+        tglStartDownload.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_START_NOW);
+        tglSmallFilm.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM);
+        tglSmallDownload.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD);
+        tglTipOfDay.selectedProperty().unbindBidirectional(ProgConfig.TIP_OF_DAY_SHOW);
         txtUserAgent.textProperty().unbindBidirectional(ProgConfig.SYSTEM_USERAGENT);
-        tglEnableLog.selectedProperty().unbindBidirectional(propLog);
-        txtLogFile.textProperty().unbindBidirectional(propLogDir);
-        txtFileManager.textProperty().unbindBidirectional(propDir);
-        txtFileManagerVideo.textProperty().unbindBidirectional(propPlay);
-        txtFileManagerWeb.textProperty().unbindBidirectional(propUrl);
-        txtShortCut.textProperty().unbindBidirectional(propExternProgram);
-        tglSearch.selectedProperty().unbindBidirectional(propUpdateSearch);
-        tglSearchBeta.selectedProperty().unbindBidirectional(propUpdateBetaSearch);
+        tglEnableLog.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_LOG_ON);
+        txtLogFile.textProperty().unbindBidirectional(ProgConfig.SYSTEM_LOG_DIR);
+        txtFileManager.textProperty().unbindBidirectional(ProgConfig.SYSTEM_PROG_OPEN_DIR);
+        txtFileManagerVideo.textProperty().unbindBidirectional(ProgConfig.SYSTEM_PROG_PLAY_FILME);
+        txtFileManagerWeb.textProperty().unbindBidirectional(ProgConfig.SYSTEM_PROG_OPEN_URL);
+        tglSearch.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_UPDATE_SEARCH_ACT);
+        tglSearchBeta.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_UPDATE_SEARCH_BETA);
+        chkDaily.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_UPDATE_SEARCH_DAILY);
+
     }
 
     @Override
@@ -157,25 +141,25 @@ public class ConfigPaneController extends PAccordionPane {
         TitledPane tpConfig = new TitledPane("Allgemein", gridPane);
         result.add(tpConfig);
 
-        tglSearchAbo.selectedProperty().bindBidirectional(propAbo);
+        tglSearchAbo.selectedProperty().bindBidirectional(ProgConfig.ABO_SEARCH_NOW);
         final Button btnHelpAbo = PButton.helpButton(stage, "Abos automatisch suchen",
                 HelpText.SEARCH_ABOS_IMMEDIATELY);
         GridPane.setHalignment(btnHelpAbo, HPos.RIGHT);
 
 
-        tglStartDownload.selectedProperty().bindBidirectional(propDown);
+        tglStartDownload.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_START_NOW);
         final Button btnHelpDownload = PButton.helpButton(stage, "Downloads sofort starten",
                 HelpText.START_DOWNLOADS_FROM_ABOS_IMMEDIATELY);
         GridPane.setHalignment(btnHelpDownload, HPos.RIGHT);
 
 
-        tglSmallFilm.selectedProperty().bindBidirectional(propSizeFilm);
-        tglSmallDownload.selectedProperty().bindBidirectional(propSizeDownload);
+        tglSmallFilm.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM);
+        tglSmallDownload.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD);
         final Button btnHelpSize = PButton.helpButton(stage, "Nur kleine Button anzeigen",
                 HelpText.SMALL_BUTTON);
         GridPane.setHalignment(btnHelpSize, HPos.RIGHT);
 
-        tglTipOfDay.selectedProperty().bindBidirectional(propTipOfDay);
+        tglTipOfDay.selectedProperty().bindBidirectional(ProgConfig.TIP_OF_DAY_SHOW);
         final Button btnHelpTipOfDay = PButton.helpButton(stage, "Tip des Tages anzeigen",
                 HelpText.TIP_OF_DAY);
         GridPane.setHalignment(btnHelpTipOfDay, HPos.RIGHT);
@@ -244,7 +228,7 @@ public class ConfigPaneController extends PAccordionPane {
         TitledPane tpConfig = new TitledPane("Logfile", gridPane);
         result.add(tpConfig);
 
-        tglEnableLog.selectedProperty().bindBidirectional(propLog);
+        tglEnableLog.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_LOG_ON);
         tglEnableLog.selectedProperty().addListener(((observable, oldValue, newValue) -> {
             if (newValue == null) {
                 return;
@@ -259,7 +243,7 @@ public class ConfigPaneController extends PAccordionPane {
         final Button btnHelp = PButton.helpButton(stage, "Logfile", HelpText.LOGFILE);
 
         txtLogFile = new TextField();
-        txtLogFile.textProperty().bindBidirectional(propLogDir);
+        txtLogFile.textProperty().bindBidirectional(ProgConfig.SYSTEM_LOG_DIR);
         if (txtLogFile.getText().isEmpty()) {
             txtLogFile.setText(ProgInfos.getLogDirectory_String());
         }
@@ -328,13 +312,12 @@ public class ConfigPaneController extends PAccordionPane {
         addFilemanager(gridPane, 0);
         addVideoPlayer(gridPane, 1);
         addWebbrowser(gridPane, 2);
-        addShortCut(gridPane, 3);
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow());
     }
 
     private void addFilemanager(GridPane gridPane, int row) {
         txtFileManager = new TextField();
-        txtFileManager.textProperty().bindBidirectional(propDir);
+        txtFileManager.textProperty().bindBidirectional(ProgConfig.SYSTEM_PROG_OPEN_DIR);
 
         final Button btnFile = new Button();
         btnFile.setOnAction(event -> {
@@ -355,7 +338,7 @@ public class ConfigPaneController extends PAccordionPane {
 
     private void addVideoPlayer(GridPane gridPane, int row) {
         txtFileManagerVideo = new TextField();
-        txtFileManagerVideo.textProperty().bindBidirectional(propPlay);
+        txtFileManagerVideo.textProperty().bindBidirectional(ProgConfig.SYSTEM_PROG_PLAY_FILME);
 
         final Button btnFile = new Button();
         btnFile.setOnAction(event -> {
@@ -376,7 +359,7 @@ public class ConfigPaneController extends PAccordionPane {
 
     private void addWebbrowser(GridPane gridPane, int row) {
         txtFileManagerWeb = new TextField();
-        txtFileManagerWeb.textProperty().bindBidirectional(propUrl);
+        txtFileManagerWeb.textProperty().bindBidirectional(ProgConfig.SYSTEM_PROG_OPEN_URL);
 
         final Button btnFile = new Button();
         btnFile.setOnAction(event -> {
@@ -395,27 +378,6 @@ public class ConfigPaneController extends PAccordionPane {
         gridPane.add(vBox, 0, row);
     }
 
-    private void addShortCut(GridPane gridPane, int row) {
-        txtShortCut = new TextField();
-        txtShortCut.textProperty().bindBidirectional(propExternProgram);
-
-        final Button btnFile = new Button();
-        btnFile.setOnAction(event -> {
-            PDirFileChooser.FileChooserOpenFile(ProgData.getInstance().primaryStage, txtShortCut);
-        });
-        btnFile.setGraphic(ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
-        btnFile.setTooltip(new Tooltip("Ein externes Programm auswählen"));
-
-        final Button btnHelp = PButton.helpButton(stage, "Externes Programm", HelpText.EXTERN_PROGRAM_SHORT_CUT);
-
-        VBox vBox = new VBox(2);
-        HBox hBox = new HBox(5);
-        hBox.getChildren().addAll(txtShortCut, btnFile, btnHelp);
-        HBox.setHgrow(txtShortCut, Priority.ALWAYS);
-        vBox.getChildren().addAll(new Label("Externes Programm starten"), hBox);
-        gridPane.add(vBox, 0, row);
-    }
-
     private void makeUpdate(Collection<TitledPane> result) {
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
@@ -426,15 +388,15 @@ public class ConfigPaneController extends PAccordionPane {
         result.add(tpConfig);
 
         //einmal am Tag Update suchen
-        tglSearch.selectedProperty().bindBidirectional(propUpdateSearch);
+        tglSearch.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_UPDATE_SEARCH_ACT);
         final Button btnHelp = PButton.helpButton(stage, "Programmupdate suchen",
                 "Beim Programmstart wird geprüft, ob es eine neue Version des Programms gibt. " +
                         "Ist eine aktualisierte Version vorhanden, dann wird das gemeldet."
                         + P2LibConst.LINE_SEPARATOR +
                         "Das Programm wird aber nicht ungefragt ersetzt.");
 
-        tglSearchBeta.selectedProperty().bindBidirectional(propUpdateBetaSearch);
-        chkDaily.selectedProperty().bindBidirectional(propUpdateDailySearch);
+        tglSearchBeta.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_UPDATE_SEARCH_BETA);
+        chkDaily.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_UPDATE_SEARCH_DAILY);
         btnHelpBeta = PButton.helpButton(stage, "Vorabversionen suchen",
                 "Beim Programmstart wird geprüft, ob es eine neue Vorabversion des Programms gibt. " +
                         P2LibConst.LINE_SEPARATORx2 +
