@@ -20,8 +20,6 @@ import de.p2tools.p2Lib.configFile.pData.PDataList;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 
-import java.util.Iterator;
-
 @SuppressWarnings("serial")
 public class ProgramList extends SimpleListProperty<ProgramData> implements PDataList<ProgramData> {
     public static final String TAG = "ProgramList";
@@ -50,21 +48,6 @@ public class ProgramList extends SimpleListProperty<ProgramData> implements PDat
         if (obj.getClass().equals(ProgramData.class)) {
             super.add((ProgramData) obj);
         }
-    }
-
-    public ProgramData remove(String name) {
-        ProgramData ret = null;
-        final Iterator<ProgramData> it = iterator();
-        ProgramData prog;
-        while (it.hasNext()) {
-            prog = it.next();
-            if (prog.getName().equals(name)) {
-                it.remove();
-                ret = prog;
-                break;
-            }
-        }
-        return ret;
     }
 
     public int moveUp(int idx, boolean moveUp) {

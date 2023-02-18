@@ -26,20 +26,9 @@ public class HelpTextPset {
                     "Das bezieht sich nur auf die Felder mit variabler Länge:\n" +
                     "%t, %T, %s, %N (Thema, Titel, Sender, Originaldateiname).\n";
 
-    public static final String PSET_FILE_HELP_PROG =
-            "Hier werden die Programme zum jeweiligen Set eingetragen. Falls mehrere Programme " +
-                    "eingetragen sind, bestimmen die Inhalte der Felder [Präfix] und [Suffix], für welche " +
-                    "URLs jedes Programm zuständig ist.\n" +
-                    "\n" +
-                    "[Zieldateiname:] Kann für jedes Hilfsprogramm eigene Zieldateinamen festlegen. Ist das " +
-                    "Feld leer, wird die Vorgabe des Sets (unter \"Speicherziel\") verwendet. Meist muss " +
-                    "nichts angegeben werden.\n" +
-                    "\n" +
-                    "[Programm:] In dem Feld steht NUR das Programm: ('Pfad/Programmdatei', " +
-                    "Windows: 'Pfad\\Programmdatei'). " +
-                    "Keine Argumente (Schalter, Optionen, etc.)!\n" +
-                    "\n" +
-                    "[Schalter:] In diesem Feld werden die Argumente (Schalter, Optionen, etc.) des jeweiligen " +
+    public static final String PSET_SWITCH =
+            "-- Schalter --\n" +
+                    "In diesem Feld werden die Argumente (Schalter, Optionen, etc.) des jeweiligen " +
                     "Programms angegeben. Sie sollten in dessen Dokumentation zu finden sein." +
                     "\n" +
                     "\n" +
@@ -49,22 +38,58 @@ public class HelpTextPset {
                     "%a Zielverzeichnis des Downloads\n" +
                     "%b Dateiname des Downloads\n" +
                     "** (= zwei Sterne) Zielpfad (= Zielverzeichnis mit Dateiname)\n" +
-                    "'**' ist identisch mit '%a/%b' (Windows: '%a\\%b')\n" +
-                    "%w Website-URL des Film, gedacht z.B. für Downloadmanager\n" +
+                    "'**' ist identisch mit '%a/%b' (Windows: '%a\\%b')" +
+                    "\n\n" +
+                    "Für ffmpeg könnte der Schalter z.B. so aussehen:\n" +
+                    "-user_agent \"Mozilla/5.0\" -i %f -c copy -bsf:a aac_adtstoasc **\n" +
+                    "\n\n" +
+                    "Weiter sind diese Parameter möglich (gedacht z.B. für Downloadmanager, oder Buttons " +
+                    "die z.B. eine Suchmaschine aufrufen):" +
+                    "\n\n" +
+                    "%w Website-URL des Film\n" +
+                    "%s Sender des Films\n" +
+                    "%T Titel des Films\n" +
+                    "%t Thema des Films\n" +
+                    "\n" +
+                    "Z.B. wäre das ein Google-Aufruf zur Suche nach dem Titel:" +
+                    "\n\n" +
+                    "Programm (Linux):   firefox\n" +
+                    "Programm (Windows):   C:\\Program Files\\Mozilla Firefox\\firefox.exe\n" +
+                    "Schalter:   http://www.google.de/search?q='%T'";
+
+    public static final String PSET_FILE_HELP_PROG =
+            "Hier werden die Programme zum jeweiligen Set eingetragen. Falls mehrere Programme " +
+                    "eingetragen sind, bestimmen die Inhalte der Felder [Präfix] und [Suffix], für welche " +
+                    "URLs jedes Programm zuständig ist.\n" +
+                    "\n" +
+                    "-- Zieldateiname --\n" +
+                    "Kann für jedes Hilfsprogramm eigene Zieldateinamen festlegen. Ist das " +
+                    "Feld leer, wird die Vorgabe des Sets (unter \"Speicherziel\") verwendet. Meist muss " +
+                    "nichts angegeben werden.\n" +
+                    "\n" +
+                    "-- Programm --\n" +
+                    "In dem Feld steht NUR das Programm: ('Pfad/Programmdatei', " +
+                    "Windows: 'Pfad\\Programmdatei'). " +
+                    "Keine Argumente (Schalter, Optionen, etc.)!\n" +
+                    "\n" +
+                    PSET_SWITCH +
+                    "\n" +
+                    "\n" +
                     "\n" +
                     "-- Restart --\n" +
-                    "[Restart:] Hiermit kann festgelegt werden, wie sich das Programm bei einem Downloadfehler " +
+                    "Hiermit kann festgelegt werden, wie sich das Programm bei einem Downloadfehler " +
                     "verhalten soll. Ist \"Restart\" eingeschaltet, wird der Download nochmal gestartet. " +
                     "Ansonsten wird er sofort auf *fehlgeschlagen* gesetzt.\n" +
                     "\n" +
                     "-- Downloadmanager --\n" +
-                    "[Downloadmanager:] Wenn \"Downloadmanager\" eingeschaltet ist, übergibt MTPlayer die " +
+                    "Wenn \"Downloadmanager\" eingeschaltet ist, übergibt MTPlayer die " +
                     "Film-URL an dieses Programm und registriert für sich den Download als *erfolgreich " +
                     "abgeschlossen*. Das eingerichtete Hilfsprogramm muss sich um den Download komplett selbst " +
                     "kümmern, und MTPlayer erhält darüber keine Rückmeldung.\n" +
                     "\n" +
                     "Beispiel für VLC:\n" +
-                    "Programm: '/usr/bin/vlc' (Windows: '%PROGRAMFILES%\\VideoLAN\\VLC\\vlc.exe')\n" +
+                    "Programm: '/usr/bin/vlc'\n" +
+                    "(Windows: '%PROGRAMFILES%\\VideoLAN\\VLC\\vlc.exe')\n" +
                     "Schalter: '%f :sout=#standard{access=file,mux=ts,dst=**} -I dummy --play-and-exit'\n" +
                     "Dateiname: '%t-%T.ts'\n" +
                     "\n" +
@@ -117,6 +142,7 @@ public class HelpTextPset {
                     "Beispiele:\n" +
                     "Am 10.05.2021 liefert '%H__%t__%T' z.B. '20210510__Natur__Wildes Shetland' (kein Suffix)\n" +
                     "und '%H__%t__%T.S' liefert z.B. '20210510__Natur__Wildes Shetland.xxx' (mit dem Originalsuffix)";
+
 
     public static final String HELP_PSET_PLAY =
             "\"Abspielen\" ruft ein Programm zur Wiedergabe auf, wenn ein Film zum Abspielen gestartet wird. " +

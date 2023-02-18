@@ -203,6 +203,8 @@ public class PaneSetProgram {
 
         final Button btnHelpDest = PButton.helpButton(stage, "Zieldateiname",
                 HelpTextPset.PSET_FILE_NAME);
+        final Button btnHelpSwitch = PButton.helpButton(stage, "Programmschalter",
+                HelpTextPset.PSET_SWITCH);
 
         int row = 0;
         gridPane.add(new Label("Name: "), 0, row);
@@ -216,6 +218,7 @@ public class PaneSetProgram {
         gridPane.add(btnFile, 4, row);
         gridPane.add(new Label("Schalter: "), 0, ++row);
         gridPane.add(txtProgSwitch, 1, row, 3, 1);
+        gridPane.add(btnHelpSwitch, 4, row);
 
         gridPane.add(new Label("Präfix: "), 0, ++row);
         gridPane.add(txtPrefix, 1, row);
