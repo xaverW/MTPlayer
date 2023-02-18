@@ -26,7 +26,6 @@ import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.property.BooleanProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
@@ -78,10 +77,9 @@ public class PaneFilmLoad {
         sp2.setMinHeight(0);
 
         int row = 0;
-        gridPane.add(tglLoad, 0, ++row, 2, 1);
+        gridPane.add(tglLoad, 0, row, 2, 1);
         gridPane.add(btnHelpLoad, 2, row);
 
-        gridPane.add(new Label(" "), 0, ++row);
         gridPane.add(tglRemoveDiacritic, 0, ++row, 2, 1);
         gridPane.add(btnHelpDia, 2, row);
 

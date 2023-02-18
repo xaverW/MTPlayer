@@ -421,11 +421,11 @@ public class HelpText {
                     "\n";
 
     public static final String DOWNLOAD_FINISHED =
-            "Wenn ein Download erfolgreich beendet ist wird mit einem Fenster informiert." +
+            "Wenn ein Download erfolgreich beendet ist, wird mit einem Fenster informiert." +
                     "\n";
 
     public static final String DOWNLOAD_ERROR =
-            "Wenn ein Download mit einem Fehler endet wird mit einem Fenster informiert." +
+            "Wenn ein Download mit einem Fehler endet, wird mit einem Fenster informiert." +
                     "\n";
 
     public static final String DOWNLOAD_CONTINUE =

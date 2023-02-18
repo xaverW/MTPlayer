@@ -155,7 +155,7 @@ public class PaneBlackList {
         rbWhite.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST);
         rbWhite.selectedProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
         gridPane.add(rbWhite, 0, ++row);
-        gridPane.add(new Label("nur diese \"Sender / Thema / Titel\" anzeigen (Whitelist)"), 1, row);
+        gridPane.add(new Label("Nur diese \"Sender / Thema / Titel\" anzeigen (Whitelist)"), 1, row);
 
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcComputedSizeAndHgrow());

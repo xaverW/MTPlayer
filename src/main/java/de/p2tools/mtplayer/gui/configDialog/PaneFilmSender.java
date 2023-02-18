@@ -40,10 +40,10 @@ public class PaneFilmSender {
     private final Slider slDuration = new Slider();
     private final Label lblDays = new Label("");
     private final Label lblDuration = new Label("");
-    final Button btnClearAll = new Button("_wieder alle Sender laden");
+    final Button btnClearAll = new Button("_Wieder alle Sender laden");
     private final Stage stage;
     private final boolean startDialog;
-    
+
     public PaneFilmSender(Stage stage, boolean startDialog) {
         this.stage = stage;
         this.startDialog = startDialog;
@@ -78,14 +78,15 @@ public class PaneFilmSender {
         gridPane.setPadding(new Insets(0));
 
         int row = 0;
-        gridPane.add(new Label("nur Filme der letzten Tage laden:"), 0, row, 2, 1);
+        gridPane.add(new Label("Nur Filme der letzten Tage laden:"), 0, row, 2, 1);
         gridPane.add(new Label("Filme laden:"), 0, ++row);
         gridPane.add(slDays, 1, row);
         gridPane.add(lblDays, 2, row);
-        gridPane.add(btnHelpDays, 3, row);
+        gridPane.add(btnHelpDays, 3, row, 1, 2);
 
         ++row;
-        gridPane.add(new Label("nur Filme mit Mindestlänge laden:"), 0, ++row, 2, 1);
+        ++row;
+        gridPane.add(new Label("Nur Filme mit Mindestlänge laden:"), 0, ++row, 2, 1);
         gridPane.add(new Label("Filme laden:"), 0, ++row);
         gridPane.add(slDuration, 1, row);
         gridPane.add(lblDuration, 2, row);
@@ -103,7 +104,7 @@ public class PaneFilmSender {
                 HelpText.LOAD_FILMLIST_SENDER);
         HBox hBox = new HBox(P2LibConst.DIST_BUTTON);
         hBox.setAlignment(Pos.CENTER_LEFT);
-        Label lbl = new Label("diese Sender  *nicht*  laden:");
+        Label lbl = new Label("Diese Sender  *nicht*  laden:");
         hBox.getChildren().addAll(lbl, PGuiTools.getHBoxGrower(), btnClearAll, btnHelpSender);
 
         vBox.getChildren().add(new Label(" "));
@@ -124,7 +125,7 @@ public class PaneFilmSender {
             hBox = new HBox();
             hBox.setAlignment(Pos.CENTER_RIGHT);
             hBox.getChildren().add(btnLoad);
-            vBox.getChildren().addAll(hBox);
+            vBox.getChildren().addAll(PGuiTools.getHDistance(P2LibConst.DIST_BUTTON), hBox);
         }
     }
 

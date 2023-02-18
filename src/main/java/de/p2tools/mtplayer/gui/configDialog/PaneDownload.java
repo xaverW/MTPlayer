@@ -42,9 +42,9 @@ public class PaneDownload {
     private final PToggleSwitch tglError = new PToggleSwitch("Bei Downloadfehler Fehlermeldung anzeigen");
 
     private final ToggleGroup group = new ToggleGroup();
-    private final RadioButton rbAsk = new RadioButton("vorher fragen");
-    private final RadioButton rbContinue = new RadioButton("immer weiterführen");
-    private final RadioButton rbRestart = new RadioButton("immer neu starten");
+    private final RadioButton rbAsk = new RadioButton("Vorher fragen");
+    private final RadioButton rbContinue = new RadioButton("Immer weiterführen");
+    private final RadioButton rbRestart = new RadioButton("Immer neu starten");
 
     private final PToggleSwitch tglOne = new PToggleSwitch("Nur ein Download pro Downloadserver");
     private final PToggleSwitch tglSSL = new PToggleSwitch("SSL-Download-URLs: Bei Problemen SSL abschalten");
@@ -125,7 +125,7 @@ public class PaneDownload {
         gridPane.add(btnHelpSSL, 1, row);
 
         gridPane.add(tglBeep, 0, ++row);
-        gridPane.add(btnBeep, 0, ++row);
+        gridPane.add(btnBeep, 1, row);
         GridPane.setHalignment(btnBeep, HPos.RIGHT);
 
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(),

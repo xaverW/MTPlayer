@@ -62,7 +62,6 @@ public class PaneConfig {
         tglSearch.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_UPDATE_SEARCH_ACT);
         tglSearchBeta.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_UPDATE_SEARCH_BETA);
         chkDaily.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_UPDATE_SEARCH_DAILY);
-
     }
 
     public void makeConfig(Collection<TitledPane> result) {
@@ -142,7 +141,6 @@ public class PaneConfig {
         gridPane.add(tglTipOfDay, 0, ++row, 2, 1);
         gridPane.add(btnHelpTipOfDay, 2, row);
 
-        gridPane.add(new Label(" "), 0, ++row);
         gridPane.add(new Label(" "), 0, ++row);
         gridPane.add(new Label("User Agent:"), 0, ++row);
         gridPane.add(txtUserAgent, 1, row);

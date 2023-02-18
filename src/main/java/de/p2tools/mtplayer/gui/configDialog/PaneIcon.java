@@ -72,8 +72,7 @@ public class PaneIcon {
         int row = 0;
         row = addProgIcon(gridPane, row);
         gridPane.add(new Label(), 0, ++row);
-        gridPane.add(new Label(), 0, ++row);
-        addTryIcon(gridPane, row);
+        addTryIcon(gridPane, ++row);
     }
 
     private int addProgIcon(GridPane gridPane, int row) {
@@ -108,7 +107,7 @@ public class PaneIcon {
         Label lblIcon = new Label("Datei (png, jpg):");
         lblIcon.disableProperty().bind(tglOwnProgIcon.selectedProperty().not());
 
-        gridPane.add(tglOwnProgIcon, 0, ++row, 2, 1);
+        gridPane.add(tglOwnProgIcon, 0, row, 2, 1);
         gridPane.add(btnHelpProgramIcon, 2, row);
 
         gridPane.add(lblIcon, 0, ++row);
@@ -150,7 +149,7 @@ public class PaneIcon {
         Label lblFile = new Label("Datei (png, jpg):");
         lblFile.disableProperty().bind(tglOwnTrayIcon.selectedProperty().not().or(tglTray.selectedProperty().not()));
 
-        gridPane.add(tglTray, 0, ++row, 2, 1);
+        gridPane.add(tglTray, 0, row, 2, 1);
         gridPane.add(btnHelpTray, 2, row);
 
         gridPane.add(tglOwnTrayIcon, 0, ++row, 2, 1);

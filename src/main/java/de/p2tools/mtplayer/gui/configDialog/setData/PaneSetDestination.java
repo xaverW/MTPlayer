@@ -178,6 +178,7 @@ public class PaneSetDestination {
         gridPane.add(lblSizeAll, 2, row);
         gridPane.add(btnHelpDestSize, 3, row);
 
+        ++row;
         gridPane.add(lblTxtField, 0, ++row);
         gridPane.add(slCutField, 1, row);
         gridPane.add(lblSizeField, 2, row);

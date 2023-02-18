@@ -83,7 +83,7 @@ public class PaneSetDownload {
 
         final Button btnHelpPrefix = PButton.helpButton(stage, "Direkt speichern",
                 HelpText.SETDATA_PREFIX);
-        final Label lbl = new Label("direkt Speichern (Download durch dieses Programm):");
+        final Label lbl = new Label("Direkt Speichern (Download durch dieses Programm):");
 
         int row = 0;
         gridPane.add(lbl, 0, row, 2, 1);
@@ -121,7 +121,7 @@ public class PaneSetDownload {
 
         int row = 0;
         gridPane.add(rbHd, 0, ++row);//Platz nach oben!
-        gridPane.add(btnHelpRes, 1, row);
+        gridPane.add(btnHelpRes, 1, row, 1, 2);
         gridPane.add(rbHeight, 0, ++row);
         gridPane.add(rbLow, 0, ++row);
 

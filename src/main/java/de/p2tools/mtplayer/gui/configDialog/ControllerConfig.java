@@ -32,7 +32,7 @@ public class ControllerConfig extends PAccordionPane {
     private PaneColor paneColor;
     private PaneShortcut paneShortcut;
     private PaneGeo paneGeo;
-    private PaneStyle paneStyle;
+    private PaneKeySize paneKeySize;
     private PaneUpdate paneUpdate;
     private PaneProgs paneProgs;
     private PaneLogfile paneLogfile;
@@ -54,7 +54,7 @@ public class ControllerConfig extends PAccordionPane {
         paneColor.close();
         paneShortcut.close();
         paneGeo.close();
-        paneStyle.close();
+        paneKeySize.close();
         paneProgs.close();
         paneLogfile.close();
         paneUpdate.close();
@@ -83,8 +83,8 @@ public class ControllerConfig extends PAccordionPane {
         paneGeo = new PaneGeo(stage);
         paneGeo.makeGeo(result);
 
-        paneStyle = new PaneStyle(stage, progData);
-        paneStyle.makeStyle(result);
+        paneKeySize = new PaneKeySize(stage, progData);
+        paneKeySize.makeStyle(result);
 
         paneProgs = new PaneProgs(stage);
         paneProgs.makeProg(result);

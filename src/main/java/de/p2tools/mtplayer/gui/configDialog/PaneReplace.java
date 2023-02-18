@@ -52,7 +52,7 @@ public class PaneReplace {
 
     private TableView<ReplaceData> tableView = new TableView<>();
     private ObjectProperty<ReplaceData> replaceDateProp = new SimpleObjectProperty<>(null);
-    private final PToggleSwitch tglAscii = new PToggleSwitch("nur ASCII-Zeichen erlauben");
+    private final PToggleSwitch tglAscii = new PToggleSwitch("Nur ASCII-Zeichen erlauben");
     private final PToggleSwitch tglReplace = new PToggleSwitch("Ersetzungstabelle");
 
     private final Stage stage;

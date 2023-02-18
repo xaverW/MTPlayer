@@ -36,16 +36,16 @@ import javafx.stage.Stage;
 
 import java.util.Collection;
 
-public class PaneStyle {
+public class PaneKeySize {
 
-    private final PToggleSwitch tglStyle = new PToggleSwitch("die Schriftgröße im Programm ändern:");
+    private final PToggleSwitch tglStyle = new PToggleSwitch("Die Schriftgröße im Programm ändern:");
     private Spinner<Integer> spinnerAnz = new Spinner<>();
     boolean changed = false;
 
     private final Stage stage;
     private final ProgData progData;
 
-    public PaneStyle(Stage stage, ProgData progData) {
+    public PaneKeySize(Stage stage, ProgData progData) {
         this.stage = stage;
         this.progData = progData;
     }

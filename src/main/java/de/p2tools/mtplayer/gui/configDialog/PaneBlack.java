@@ -47,7 +47,7 @@ public class PaneBlack {
     private final Slider slDays = new Slider();
     private final Label lblDays = new Label("");
 
-    private final PToggleSwitch tglAbo = new PToggleSwitch("die Blacklist beim Suchen der Abos berücksichtigen");
+    private final PToggleSwitch tglAbo = new PToggleSwitch("Die Blacklist beim Suchen der Abos berücksichtigen");
     private final PToggleSwitch tglFuture = new PToggleSwitch("Filme mit Datum in der Zukunft nicht anzeigen");
     private final PToggleSwitch tglGeo = new PToggleSwitch("Filme, die per Geoblocking gesperrt sind, nicht anzeigen");
 
@@ -131,7 +131,7 @@ public class PaneBlack {
 
 
         gridPane.add(new Label(" "), 0, ++row);
-        gridPane.add(new Label("nur Filme der letzten Tage anzeigen:"), 0, ++row, 2, 1);
+        gridPane.add(new Label("Nur Filme der letzten Tage anzeigen:"), 0, ++row, 2, 1);
 
         Label lbl = new Label("Filme anzeigen:");
         gridPane.add(lbl, 0, ++row);
@@ -145,7 +145,7 @@ public class PaneBlack {
         GridPane.setValignment(btnHelpDays, VPos.TOP);
 
         gridPane.add(new Label(" "), 0, ++row);
-        gridPane.add(new Label("nur Filme mit Mindestlänge anzeigen:"), 0, ++row, 2, 1);
+        gridPane.add(new Label("Nur Filme mit Mindestlänge anzeigen:"), 0, ++row, 2, 1);
         lbl = new Label("Filme anzeigen:");
         gridPane.add(lbl, 0, ++row);
         gridPane.add(slSize, 1, row);
