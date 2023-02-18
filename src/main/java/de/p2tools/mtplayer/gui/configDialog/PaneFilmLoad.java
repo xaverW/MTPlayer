@@ -34,7 +34,7 @@ import javafx.stage.Stage;
 
 import java.util.Collection;
 
-public class FilmLoad {
+public class PaneFilmLoad {
 
     private final PToggleSwitch tglLoad = new PToggleSwitch("Beim Programmstart eine neue Filmliste laden");
     private final BooleanProperty diacriticChanged;
@@ -42,7 +42,7 @@ public class FilmLoad {
     private final ProgData progData;
     private final Stage stage;
 
-    public FilmLoad(Stage stage, ProgData progData, BooleanProperty diacriticChanged) {
+    public PaneFilmLoad(Stage stage, ProgData progData, BooleanProperty diacriticChanged) {
         this.stage = stage;
         this.diacriticChanged = diacriticChanged;
         this.progData = progData;

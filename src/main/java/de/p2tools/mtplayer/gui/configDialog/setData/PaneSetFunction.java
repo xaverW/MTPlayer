@@ -38,7 +38,7 @@ import javafx.stage.Stage;
 
 import java.util.Collection;
 
-public class SetPaneFunction {
+public class PaneSetFunction {
     private final RadioButton rbPlay = new RadioButton("");
     private final PToggleSwitch tglSave = new PToggleSwitch("Speichern:");
     private final PToggleSwitch tglButton = new PToggleSwitch("Button:");
@@ -51,7 +51,7 @@ public class SetPaneFunction {
     private SetData setData = null;
     private final ObjectProperty<SetData> setDataObjectProperty;
 
-    SetPaneFunction(Stage stage, ObjectProperty<SetData> setDataObjectProperty) {
+    PaneSetFunction(Stage stage, ObjectProperty<SetData> setDataObjectProperty) {
         this.stage = stage;
         progData = ProgData.getInstance();
         this.setDataObjectProperty = setDataObjectProperty;

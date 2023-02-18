@@ -30,23 +30,23 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class SetPaneController extends AnchorPane {
+public class ControllerSet extends AnchorPane {
 
     private final Accordion accordion = new Accordion();
     private final SplitPane splitPane = new SplitPane();
     private final ScrollPane scrollPane = new ScrollPane();
     private final ArrayList<TitledPane> titledPanes = new ArrayList<>();
 
-    private final SetPaneName setPaneName;
-    private final SetPaneFunction setPaneFunction;
-    private final SetPaneDestination setPaneDestination;
-    private final SetPaneDownload setPaneDownload;
-    private final SetPaneProgram setPaneProgram;
-    private final SetPaneSetList setPaneSetList;
+    private final PaneSetName paneSetName;
+    private final PaneSetFunction paneSetFunction;
+    private final PaneSetDestination paneSetDestination;
+    private final PaneSetDownload paneSetDownload;
+    private final PaneSetProgram paneSetProgram;
+    private final PaneSetList paneSetList;
 
     private final ObjectProperty<SetData> setDataObjectProperty = new SimpleObjectProperty<>(null);
 
-    public SetPaneController(Stage stage) {
+    public ControllerSet(Stage stage) {
         AnchorPane.setLeftAnchor(splitPane, 0.0);
         AnchorPane.setBottomAnchor(splitPane, 0.0);
         AnchorPane.setRightAnchor(splitPane, 0.0);
@@ -54,23 +54,23 @@ public class SetPaneController extends AnchorPane {
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
 
-        setPaneName = new SetPaneName(stage, setDataObjectProperty);
-        setPaneFunction = new SetPaneFunction(stage, setDataObjectProperty);
-        setPaneDestination = new SetPaneDestination(stage, setDataObjectProperty);
-        setPaneDownload = new SetPaneDownload(stage, setDataObjectProperty);
-        setPaneProgram = new SetPaneProgram(stage, setDataObjectProperty);
-        setPaneSetList = new SetPaneSetList(stage, setDataObjectProperty);
-        setPaneName.makePane(titledPanes);
-        setPaneFunction.makePane(titledPanes);
-        setPaneDestination.makePane(titledPanes);
-        setPaneDownload.makePane(titledPanes);
-        setPaneProgram.makePane(titledPanes);
+        paneSetName = new PaneSetName(stage, setDataObjectProperty);
+        paneSetFunction = new PaneSetFunction(stage, setDataObjectProperty);
+        paneSetDestination = new PaneSetDestination(stage, setDataObjectProperty);
+        paneSetDownload = new PaneSetDownload(stage, setDataObjectProperty);
+        paneSetProgram = new PaneSetProgram(stage, setDataObjectProperty);
+        paneSetList = new PaneSetList(stage, setDataObjectProperty);
+        paneSetName.makePane(titledPanes);
+        paneSetFunction.makePane(titledPanes);
+        paneSetDestination.makePane(titledPanes);
+        paneSetDownload.makePane(titledPanes);
+        paneSetProgram.makePane(titledPanes);
 
         accordion.getPanes().addAll(titledPanes);
         scrollPane.setContent(accordion);
-        splitPane.getItems().addAll(setPaneSetList, scrollPane);
+        splitPane.getItems().addAll(paneSetList, scrollPane);
         splitPane.getItems().get(0).autosize();
-        SplitPane.setResizableWithParent(setPaneSetList, Boolean.FALSE);
+        SplitPane.setResizableWithParent(paneSetList, Boolean.FALSE);
         getChildren().addAll(splitPane);
 
         splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.CONFIG_DIALOG_SET_DIVIDER);
@@ -78,15 +78,15 @@ public class SetPaneController extends AnchorPane {
 
     public void close() {
         splitPane.getDividers().get(0).positionProperty().unbindBidirectional(ProgConfig.CONFIG_DIALOG_SET_DIVIDER);
-        setPaneName.close();
-        setPaneFunction.close();
-        setPaneDestination.close();
-        setPaneDownload.close();
-        setPaneProgram.close();
-        setPaneSetList.close();
+        paneSetName.close();
+        paneSetFunction.close();
+        paneSetDestination.close();
+        paneSetDownload.close();
+        paneSetProgram.close();
+        paneSetList.close();
     }
 
     public Optional<SetData> getSel() {
-        return setPaneSetList.getSel();
+        return paneSetList.getSel();
     }
 }

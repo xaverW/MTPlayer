@@ -20,9 +20,9 @@ package de.p2tools.mtplayer.gui.dialog;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
-import de.p2tools.mtplayer.gui.configDialog.BlackListPane;
-import de.p2tools.mtplayer.gui.configDialog.BlackPane;
 import de.p2tools.mtplayer.gui.configDialog.ConfigDialogController;
+import de.p2tools.mtplayer.gui.configDialog.PaneBlack;
+import de.p2tools.mtplayer.gui.configDialog.PaneBlackList;
 import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import javafx.beans.property.BooleanProperty;
@@ -42,8 +42,8 @@ public class BlackDialog extends PDialogExtra {
     private final ProgData progData;
     private final BooleanProperty blackPaneChanged = new SimpleBooleanProperty(false);
     private final BooleanProperty blackListPaneChanged = new SimpleBooleanProperty(false);
-    private BlackPane blackPane;
-    private BlackListPane blackListPane;
+    private PaneBlack paneBlack;
+    private PaneBlackList paneBlackList;
     private final Button btnOk = new Button("_Ok");
     private final Button btnApply = new Button("_Anwenden");
 
@@ -54,15 +54,15 @@ public class BlackDialog extends PDialogExtra {
 
         initDialog();
         init(false);
-        blackPane.setStage(getStage());
-        blackListPane.setStage(getStage());
+        paneBlack.setStage(getStage());
+        paneBlackList.setStage(getStage());
         super.showDialog();
     }
 
     @Override
     public void close() {
-        blackPane.close();
-        blackListPane.close();
+        paneBlack.close();
+        paneBlackList.close();
         super.close();
     }
 
@@ -70,10 +70,10 @@ public class BlackDialog extends PDialogExtra {
         Accordion accordion = new Accordion();
         Collection<TitledPane> titledPanes = new ArrayList<>();
 
-        blackPane = new BlackPane(getStage(), blackPaneChanged);
-        blackPane.makeBlack(titledPanes);
-        blackListPane = new BlackListPane(getStage(), progData, true, blackListPaneChanged);
-        blackListPane.make(titledPanes);
+        paneBlack = new PaneBlack(getStage(), blackPaneChanged);
+        paneBlack.makeBlack(titledPanes);
+        paneBlackList = new PaneBlackList(getStage(), progData, true, blackListPaneChanged);
+        paneBlackList.make(titledPanes);
         accordion.getPanes().addAll(titledPanes);
         accordion.setExpandedPane(accordion.getPanes().get(0));
         VBox.setVgrow(accordion, Priority.ALWAYS);

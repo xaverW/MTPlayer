@@ -40,7 +40,7 @@ import javafx.stage.Stage;
 
 import java.util.Collection;
 
-public class SetPaneDestination {
+public class PaneSetDestination {
     private final PToggleSwitch tglSubdir = new PToggleSwitch("Bei Abos Unterordner anlegen:");
     private final PComboBoxObject<AboSubDir.ENSubDir> cboDest = new PComboBoxObject();
     private final TextField txtDestPath = new TextField();
@@ -53,7 +53,7 @@ public class SetPaneDestination {
     private SetData setData = null;
     private final ObjectProperty<SetData> setDataObjectProperty;
 
-    SetPaneDestination(Stage stage, ObjectProperty<SetData> setDataObjectProperty) {
+    PaneSetDestination(Stage stage, ObjectProperty<SetData> setDataObjectProperty) {
         this.stage = stage;
         this.setDataObjectProperty = setDataObjectProperty;
     }

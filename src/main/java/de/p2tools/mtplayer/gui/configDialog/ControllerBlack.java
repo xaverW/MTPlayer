@@ -20,27 +20,25 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2Lib.dialogs.accordion.PAccordionPane;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.control.TitledPane;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class FilmController extends PAccordionPane {
-
-    private FilmLoad filmLoad;
-    private BlackListPane blackListPane;
-    private FilmSender filmSender;
-    private final BooleanProperty diacriticChanged;
+public class ControllerBlack extends PAccordionPane {
 
     private final ProgData progData;
+
+    private final BooleanProperty blackChanged;
+    private PaneBlack paneBlack;
+    private PaneBlackList paneBlackList;
     private final Stage stage;
 
-    public FilmController(Stage stage, BooleanProperty diacriticChanged) {
-        super(stage, ProgConfig.CONFIG_DIALOG_ACCORDION, ProgConfig.SYSTEM_CONFIG_DIALOG_FILM);
+    public ControllerBlack(Stage stage, BooleanProperty blackChanged) {
+        super(stage, ProgConfig.CONFIG_DIALOG_ACCORDION, ProgConfig.SYSTEM_CONFIG_DIALOG_BLACKLIST);
         this.stage = stage;
-        this.diacriticChanged = diacriticChanged;
+        this.blackChanged = blackChanged;
         progData = ProgData.getInstance();
 
         init();
@@ -48,24 +46,18 @@ public class FilmController extends PAccordionPane {
 
     @Override
     public void close() {
-        filmLoad.close();
-        blackListPane.close();
-        filmSender.close();
         super.close();
+        paneBlack.close();
+        paneBlackList.close();
     }
 
     @Override
     public Collection<TitledPane> createPanes() {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
-        filmLoad = new FilmLoad(stage, progData, diacriticChanged);
-        filmLoad.make(result);
-
-        blackListPane = new BlackListPane(stage, progData, false, new SimpleBooleanProperty());
-        blackListPane.make(result);
-
-        filmSender = new FilmSender(stage, false);
-        filmSender.make(result);
-
+        paneBlack = new PaneBlack(stage, blackChanged);
+        paneBlack.makeBlack(result);
+        paneBlackList = new PaneBlackList(stage, progData, true, blackChanged);
+        paneBlackList.make(result);
         return result;
     }
 }

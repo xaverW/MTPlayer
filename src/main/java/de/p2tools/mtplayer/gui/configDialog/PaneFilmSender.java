@@ -34,7 +34,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class FilmSender {
+public class PaneFilmSender {
 
     private final Slider slDays = new Slider();
     private final Slider slDuration = new Slider();
@@ -43,9 +43,8 @@ public class FilmSender {
     final Button btnClearAll = new Button("_wieder alle Sender laden");
     private final Stage stage;
     private final boolean startDialog;
-
-
-    public FilmSender(Stage stage, boolean startDialog) {
+    
+    public PaneFilmSender(Stage stage, boolean startDialog) {
         this.stage = stage;
         this.startDialog = startDialog;
     }

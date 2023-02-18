@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
-import de.p2tools.mtplayer.gui.configDialog.setData.SetPaneController;
+import de.p2tools.mtplayer.gui.configDialog.setData.ControllerSet;
 import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.mtFilm.film.FilmFactory;
@@ -49,11 +49,11 @@ public class ConfigDialogController extends PDialogExtra {
     IntegerProperty propSelectedTab = ProgConfig.SYSTEM_CONFIG_DIALOG_TAB;
     private final ProgData progData;
 
-    ConfigPaneController configPane;
-    FilmController filmPane;
-    BlackController blackPane;
-    DownloadPaneController downloadPane;
-    SetPaneController setPane;
+    ControllerConfig controllerConfig;
+    ControllerFilm controllerFilm;
+    ControllerBlack controllerBlack;
+    ControllerDownload controllerDownload;
+    ControllerSet controllerSet;
     private ListenerLoadFilmlist listener;
 
     public ConfigDialogController(ProgData progData) {
@@ -134,11 +134,11 @@ public class ConfigDialogController extends PDialogExtra {
             Listener.notify(Listener.EVENT_DIACRITIC_CHANGED, ConfigDialogController.class.getSimpleName());
         }
 
-        configPane.close();
-        filmPane.close();
-        blackPane.close();
-        downloadPane.close();
-        setPane.close();
+        controllerConfig.close();
+        controllerFilm.close();
+        controllerBlack.close();
+        controllerDownload.close();
+        controllerSet.close();
 
         Listener.notify(Listener.EVEMT_SETDATA_CHANGED, ConfigDialogController.class.getSimpleName());
         LoadFilmFactory.getInstance().loadFilmlist.removeListenerLoadFilmlist(listener);
@@ -155,34 +155,34 @@ public class ConfigDialogController extends PDialogExtra {
 
     private void initPanel() {
         try {
-            configPane = new ConfigPaneController(getStage());
+            controllerConfig = new ControllerConfig(getStage());
             Tab tab = new Tab("Allgemein");
             tab.setClosable(false);
-            tab.setContent(configPane);
+            tab.setContent(controllerConfig);
             tabPane.getTabs().add(tab);
 
-            filmPane = new FilmController(getStage(), diacriticChanged);
+            controllerFilm = new ControllerFilm(getStage(), diacriticChanged);
             tab = new Tab("Filmliste laden");
             tab.setClosable(false);
-            tab.setContent(filmPane);
+            tab.setContent(controllerFilm);
             tabPane.getTabs().add(tab);
 
-            blackPane = new BlackController(getStage(), blackChanged);
+            controllerBlack = new ControllerBlack(getStage(), blackChanged);
             tab = new Tab("Blacklist");
             tab.setClosable(false);
-            tab.setContent(blackPane);
+            tab.setContent(controllerBlack);
             tabPane.getTabs().add(tab);
 
-            downloadPane = new DownloadPaneController(getStage());
+            controllerDownload = new ControllerDownload(getStage());
             tab = new Tab("Download");
             tab.setClosable(false);
-            tab.setContent(downloadPane);
+            tab.setContent(controllerDownload);
             tabPane.getTabs().add(tab);
 
-            setPane = new SetPaneController(getStage());
+            controllerSet = new ControllerSet(getStage());
             tab = new Tab("Aufzeichnen/Abspielen");
             tab.setClosable(false);
-            tab.setContent(setPane);
+            tab.setContent(controllerSet);
             tabPane.getTabs().add(tab);
 
             tabPane.getSelectionModel().select(propSelectedTab.get());

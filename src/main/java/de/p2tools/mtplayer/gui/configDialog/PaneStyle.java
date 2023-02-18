@@ -27,7 +27,6 @@ import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import de.p2tools.p2Lib.tools.IoReadWriteStyle;
 import de.p2tools.p2Lib.tools.log.PLog;
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
@@ -37,28 +36,27 @@ import javafx.stage.Stage;
 
 import java.util.Collection;
 
-public class StylePane {
+public class PaneStyle {
 
     private final PToggleSwitch tglStyle = new PToggleSwitch("die Schriftgröße im Programm ändern:");
     private Spinner<Integer> spinnerAnz = new Spinner<>();
-    private final Stage stage;
-    private final ProgData progData;
     boolean changed = false;
 
-    BooleanProperty styleProperty = ProgConfig.SYSTEM_STYLE;
+    private final Stage stage;
+    private final ProgData progData;
 
-    public StylePane(Stage stage, ProgData progData) {
+    public PaneStyle(Stage stage, ProgData progData) {
         this.stage = stage;
         this.progData = progData;
     }
 
     public void close() {
-        tglStyle.selectedProperty().unbindBidirectional(styleProperty);
+        tglStyle.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_STYLE);
         int size = spinnerAnz.getValue();
         ProgConfig.SYSTEM_STYLE_SIZE.setValue(size);
 
         if (changed) {
-            if (styleProperty.get()) {
+            if (ProgConfig.SYSTEM_STYLE.get()) {
                 IoReadWriteStyle.writeStyle(ProgInfos.getStyleFile(), size);
                 P2LibInit.setStyleFile(ProgInfos.getStyleFile().toString());
                 PLog.sysLog("Schriftgröße ändern: " + size);
@@ -72,7 +70,7 @@ public class StylePane {
     }
 
     public TitledPane makeStyle(Collection<TitledPane> result) {
-        tglStyle.selectedProperty().bindBidirectional(styleProperty);
+        tglStyle.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_STYLE);
         final Button btnHelpStyle = PButton.helpButton(stage, "Schriftgröße anpassen", HelpText.CONFIG_STYLE);
 
         final GridPane gridPane = new GridPane();

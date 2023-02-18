@@ -25,7 +25,6 @@ import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
@@ -40,7 +39,7 @@ import javafx.stage.Stage;
 
 import java.util.Collection;
 
-public class BlackPane {
+public class PaneBlack {
 
     private final ProgData progData;
     private final Slider slSize = new Slider();
@@ -52,15 +51,10 @@ public class BlackPane {
     private final PToggleSwitch tglFuture = new PToggleSwitch("Filme mit Datum in der Zukunft nicht anzeigen");
     private final PToggleSwitch tglGeo = new PToggleSwitch("Filme, die per Geoblocking gesperrt sind, nicht anzeigen");
 
-    IntegerProperty propSize = ProgConfig.SYSTEM_BLACKLIST_MIN_FILM_DURATION;
-    IntegerProperty propDay = ProgConfig.SYSTEM_BLACKLIST_MAX_FILM_DAYS;
-    BooleanProperty propGeo = ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_GEO;
-    BooleanProperty propAbo = ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO;
-    BooleanProperty propFuture = ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_FUTURE;
     private final BooleanProperty blackChanged;
     private Stage stage;
 
-    public BlackPane(Stage stage, BooleanProperty blackChanged) {
+    public PaneBlack(Stage stage, BooleanProperty blackChanged) {
         this.stage = stage;
         this.blackChanged = blackChanged;
         progData = ProgData.getInstance();
@@ -71,11 +65,11 @@ public class BlackPane {
     }
 
     public void close() {
-        tglAbo.selectedProperty().unbindBidirectional(propAbo);
-        tglFuture.selectedProperty().unbindBidirectional(propFuture);
-        tglGeo.selectedProperty().unbindBidirectional(propGeo);
-        slDays.valueProperty().unbindBidirectional(propDay);
-        slSize.valueProperty().unbindBidirectional(propSize);
+        tglAbo.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO);
+        tglFuture.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_FUTURE);
+        tglGeo.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_GEO);
+        slDays.valueProperty().unbindBidirectional(ProgConfig.SYSTEM_BLACKLIST_MAX_FILM_DAYS);
+        slSize.valueProperty().unbindBidirectional(ProgConfig.SYSTEM_BLACKLIST_MIN_FILM_DURATION);
     }
 
     public void makeBlack(Collection<TitledPane> result) {
@@ -93,21 +87,21 @@ public class BlackPane {
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
 
-        tglAbo.selectedProperty().bindBidirectional(propAbo);
+        tglAbo.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO);
         tglAbo.selectedProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
 
         final Button btnHelp = PButton.helpButton(stage, "Blacklist",
                 HelpText.BLACKLIST_ABO);
 
 
-        tglFuture.selectedProperty().bindBidirectional(propFuture);
+        tglFuture.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_FUTURE);
         tglFuture.selectedProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
 
         final Button btnHelpFuture = PButton.helpButton(stage, "Blacklist",
                 HelpText.BLACKLIST_FUTURE);
 
 
-        tglGeo.selectedProperty().bindBidirectional(propGeo);
+        tglGeo.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_GEO);
         tglGeo.selectedProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
 
         final Button btnHelpGeo = PButton.helpButton(stage, "Blacklist",
@@ -181,7 +175,7 @@ public class BlackPane {
         slDays.setShowTickMarks(true);
 //        slDays.setSnapToTicks(true);
 
-        slDays.valueProperty().bindBidirectional(propDay);
+        slDays.valueProperty().bindBidirectional(ProgConfig.SYSTEM_BLACKLIST_MAX_FILM_DAYS);
         slDays.valueProperty().addListener((observable, oldValue, newValue) -> {
             setValueSlider();
             blackChanged.set(true);
@@ -197,7 +191,7 @@ public class BlackPane {
         slSize.setShowTickMarks(true);
 //        slSize.setSnapToTicks(true);
 
-        slSize.valueProperty().bindBidirectional(propSize);
+        slSize.valueProperty().bindBidirectional(ProgConfig.SYSTEM_BLACKLIST_MIN_FILM_DURATION);
         slSize.valueProperty().addListener((observable, oldValue, newValue) -> {
             setValueSlider();
             blackChanged.set(true);

@@ -18,8 +18,8 @@ package de.p2tools.mtplayer.gui.startDialog;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
-import de.p2tools.mtplayer.gui.configDialog.FilmSender;
-import de.p2tools.mtplayer.gui.configDialog.GeoPane;
+import de.p2tools.mtplayer.gui.configDialog.PaneFilmSender;
+import de.p2tools.mtplayer.gui.configDialog.PaneGeo;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
 import javafx.geometry.Insets;
@@ -71,8 +71,8 @@ public class StartDialogController extends PDialogExtra {
     private StartPane startPane1;
     private StartPane startPane2;
     private UpdatePane updatePane;
-    private GeoPane geoPane;
-    private FilmSender filmSender;
+    private PaneGeo paneGeo;
+    private PaneFilmSender paneFilmSender;
     private DownPathPane downPathPane;
     private PathPane pathPane;
 
@@ -99,8 +99,8 @@ public class StartDialogController extends PDialogExtra {
         startPane1.close();
         startPane2.close();
         updatePane.close();
-        geoPane.close();
-        filmSender.close();
+        paneGeo.close();
+        paneFilmSender.close();
         downPathPane.close();
         pathPane.close();
         super.close();
@@ -161,14 +161,14 @@ public class StartDialogController extends PDialogExtra {
         tUpdate.setCollapsible(false);
 
         //geoPane
-        geoPane = new GeoPane(getStage());
-        tGeo = geoPane.makeGeo();
+        paneGeo = new PaneGeo(getStage());
+        tGeo = paneGeo.makeGeo();
         tGeo.setMaxHeight(Double.MAX_VALUE);
         tGeo.setCollapsible(false);
 
         //filmPane
-        filmSender = new FilmSender(getStage(), true);
-        tFilm = filmSender.make(null);
+        paneFilmSender = new PaneFilmSender(getStage(), true);
+        tFilm = paneFilmSender.make(null);
         tFilm.setMaxHeight(Double.MAX_VALUE);
         tFilm.setCollapsible(false);
 

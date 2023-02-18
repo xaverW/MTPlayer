@@ -44,7 +44,7 @@ import javafx.stage.Stage;
 
 import java.util.Collection;
 
-public class SetPaneProgram {
+public class PaneSetProgram {
     TableView<ProgramData> tableView = new TableView<>();
 
     private final GridPane gridPane = new GridPane();
@@ -61,7 +61,7 @@ public class SetPaneProgram {
     private SetData setData = null;
     private final ObjectProperty<SetData> setDataObjectProperty;
 
-    public SetPaneProgram(Stage stage, ObjectProperty<SetData> setDataObjectProperty) {
+    public PaneSetProgram(Stage stage, ObjectProperty<SetData> setDataObjectProperty) {
         this.stage = stage;
         this.setDataObjectProperty = setDataObjectProperty;
     }

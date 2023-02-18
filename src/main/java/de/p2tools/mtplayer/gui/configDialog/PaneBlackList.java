@@ -54,7 +54,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-public class BlackListPane {
+public class PaneBlackList {
 
     private final TableView<BlackData> tableView = new TableView<>();
     private final GridPane gridPane = new GridPane();
@@ -78,7 +78,7 @@ public class BlackListPane {
     private final boolean black;
     private final BlackList list;
 
-    public BlackListPane(Stage stage, ProgData progData, boolean black, BooleanProperty blackChanged) {
+    public PaneBlackList(Stage stage, ProgData progData, boolean black, BooleanProperty blackChanged) {
         this.stage = stage;
         this.progData = progData;
         this.black = black;

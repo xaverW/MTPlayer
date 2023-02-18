@@ -33,7 +33,7 @@ import javafx.stage.Stage;
 
 import java.util.Collection;
 
-public class SetPaneDownload {
+public class PaneSetDownload {
     private final TextField txtPrefix = new TextField();
     private final TextField txtSuffix = new TextField();
     private final RadioButton rbHd = new RadioButton("Film in HD laden");
@@ -46,7 +46,7 @@ public class SetPaneDownload {
     private SetData setData = null;
     private final ObjectProperty<SetData> setDataObjectProperty;
 
-    SetPaneDownload(Stage stage, ObjectProperty<SetData> setDataObjectProperty) {
+    PaneSetDownload(Stage stage, ObjectProperty<SetData> setDataObjectProperty) {
         this.stage = stage;
         this.setDataObjectProperty = setDataObjectProperty;
     }

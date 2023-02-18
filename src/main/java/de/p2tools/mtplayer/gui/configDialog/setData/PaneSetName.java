@@ -36,14 +36,14 @@ import javafx.stage.Stage;
 
 import java.util.Collection;
 
-public class SetPaneName {
+public class PaneSetName {
     private final TextField txtVisibleName = new TextField("");
     private final TextArea txtDescription = new TextArea("");
     private ChangeListener changeListener;
     private SetData setData = null;
     private final ObjectProperty<SetData> setDataObjectProperty;
 
-    SetPaneName(Stage stage, ObjectProperty<SetData> setDataObjectProperty) {
+    PaneSetName(Stage stage, ObjectProperty<SetData> setDataObjectProperty) {
         this.setDataObjectProperty = setDataObjectProperty;
     }
 

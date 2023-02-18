@@ -27,8 +27,6 @@ import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import de.p2tools.p2Lib.icons.GetIcon;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.StringProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -37,24 +35,26 @@ import javafx.stage.Stage;
 
 import java.util.Collection;
 
-public class IconPane {
+public class PaneIcon {
 
-    BooleanProperty propOwnProgIcon = ProgConfig.SYSTEM_USE_OWN_PROGRAM_ICON;
-    StringProperty propProgIcon = ProgConfig.SYSTEM_PROGRAM_ICON_PATH;
-    BooleanProperty propTray = ProgConfig.SYSTEM_TRAY;
-    BooleanProperty propOwnTrayIcon = ProgConfig.SYSTEM_TRAY_USE_OWN_ICON;
-    StringProperty propTrayIcon = ProgConfig.SYSTEM_TRAY_ICON_PATH;
-
-    private final Stage stage;
     private final PToggleSwitch tglOwnProgIcon = new PToggleSwitch("Ein eigenes Programmicon anzeigen");
     private final TextField txtProgIconPath = new TextField();
-
     private final PToggleSwitch tglTray = new PToggleSwitch("Programm im System Tray anzeigen");
     private final PToggleSwitch tglOwnTrayIcon = new PToggleSwitch("Ein eigenes Icon anzeigen");
     private final TextField txtTrayIconPath = new TextField();
 
-    public IconPane(Stage stage) {
+    private final Stage stage;
+
+    public PaneIcon(Stage stage) {
         this.stage = stage;
+    }
+
+    public void close() {
+        tglOwnProgIcon.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_USE_OWN_PROGRAM_ICON);
+        txtProgIconPath.textProperty().unbindBidirectional(ProgConfig.SYSTEM_PROGRAM_ICON_PATH);
+        tglTray.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_TRAY);
+        tglOwnTrayIcon.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_TRAY_USE_OWN_ICON);
+        txtTrayIconPath.textProperty().unbindBidirectional(ProgConfig.SYSTEM_TRAY_ICON_PATH);
     }
 
     public void makeIcon(Collection<TitledPane> result) {
@@ -77,7 +77,7 @@ public class IconPane {
     }
 
     private int addProgIcon(GridPane gridPane, int row) {
-        tglOwnProgIcon.selectedProperty().bindBidirectional(propOwnProgIcon);
+        tglOwnProgIcon.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_USE_OWN_PROGRAM_ICON);
         final Button btnHelpProgramIcon = PButton.helpButton(stage, "Eigenes Bild als Programmicon anzeigen",
                 HelpText.PROGRAM_ICON);
         GridPane.setHalignment(btnHelpProgramIcon, HPos.RIGHT);
@@ -92,7 +92,7 @@ public class IconPane {
             }
         });
         btnProgIconFile.setGraphic(ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
-        txtProgIconPath.textProperty().bindBidirectional(propProgIcon);
+        txtProgIconPath.textProperty().bindBidirectional(ProgConfig.SYSTEM_PROGRAM_ICON_PATH);
         tglOwnProgIcon.selectedProperty().addListener((v, o, n) -> {
             ProgStartAfterGui.setProgramIcon();
             GetIcon.addWindowP2Icon(stage, tglOwnProgIcon.isSelected() ? txtProgIconPath.getText() : "");
@@ -119,12 +119,12 @@ public class IconPane {
     }
 
     private int addTryIcon(GridPane gridPane, int row) {
-        tglTray.selectedProperty().bindBidirectional(propTray);
+        tglTray.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_TRAY);
         final Button btnHelpTray = PButton.helpButton(stage, "Programm im System Tray anzeigen",
                 HelpText.TRAY);
         GridPane.setHalignment(btnHelpTray, HPos.RIGHT);
 
-        tglOwnTrayIcon.selectedProperty().bindBidirectional(propOwnTrayIcon);
+        tglOwnTrayIcon.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_TRAY_USE_OWN_ICON);
         tglOwnTrayIcon.disableProperty().bind(tglTray.selectedProperty().not());
         final Button btnHelpTrayOwnIcon = PButton.helpButton(stage, "Eigenes Bild im Tray anzeigen",
                 HelpText.TRAY_OWN_ICON);
@@ -144,7 +144,7 @@ public class IconPane {
         btnTrayFile.setGraphic(ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
         btnTrayFile.disableProperty().bind(tglOwnTrayIcon.selectedProperty().not().or(tglTray.selectedProperty().not()));
 
-        txtTrayIconPath.textProperty().bindBidirectional(propTrayIcon);
+        txtTrayIconPath.textProperty().bindBidirectional(ProgConfig.SYSTEM_TRAY_ICON_PATH);
         txtTrayIconPath.disableProperty().bind(tglOwnTrayIcon.selectedProperty().not().or(tglTray.selectedProperty().not()));
 
         Label lblFile = new Label("Datei (png, jpg):");
@@ -161,8 +161,5 @@ public class IconPane {
         gridPane.add(btnTrayFile, 2, row);
 
         return row;
-    }
-
-    public void close() {
     }
 }

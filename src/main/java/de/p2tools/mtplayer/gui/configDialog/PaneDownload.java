@@ -17,11 +17,9 @@
 package de.p2tools.mtplayer.gui.configDialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.starter.DownloadState;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2Lib.P2LibConst;
-import de.p2tools.p2Lib.dialogs.accordion.PAccordionPane;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
@@ -36,10 +34,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.Collection;
 
-public class DownloadPaneController extends PAccordionPane {
+public class PaneDownload {
 
     private final PToggleSwitch tglFinished = new PToggleSwitch("Benachrichtigung wenn abgeschlossen");
     private final PToggleSwitch tglError = new PToggleSwitch("Bei Downloadfehler Fehlermeldung anzeigen");
@@ -52,24 +49,15 @@ public class DownloadPaneController extends PAccordionPane {
     private final PToggleSwitch tglOne = new PToggleSwitch("Nur ein Download pro Downloadserver");
     private final PToggleSwitch tglSSL = new PToggleSwitch("SSL-Download-URLs: Bei Problemen SSL abschalten");
     private final PToggleSwitch tglBeep = new PToggleSwitch("Nach jedem Download einen \"Beep\" ausgeben");
-    private ReplacePane replacePane;
 
-    private final ProgData progData;
     private final Stage stage;
 
-    public DownloadPaneController(Stage stage) {
-        super(stage, ProgConfig.CONFIG_DIALOG_ACCORDION, ProgConfig.SYSTEM_CONFIG_DIALOG_DOWNLOAD);
+    public PaneDownload(Stage stage) {
         this.stage = stage;
-        progData = ProgData.getInstance();
-
         initRadio();
-        init();
     }
 
-    @Override
     public void close() {
-        super.close();
-        replacePane.close();
         tglFinished.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_SHOW_NOTIFICATION);
         tglError.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_ERROR_MSG);
         tglOne.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_MAX_ONE_PER_SERVER);
@@ -77,43 +65,7 @@ public class DownloadPaneController extends PAccordionPane {
         tglBeep.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_BEEP);
     }
 
-    @Override
-    public Collection<TitledPane> createPanes() {
-        Collection<TitledPane> result = new ArrayList<TitledPane>();
-        makeDownload(result);
-        replacePane = new ReplacePane(stage);
-        replacePane.makeReplaceListTable(result);
-        return result;
-    }
-
-    private void initRadio() {
-        rbAsk.setToggleGroup(group);
-        rbContinue.setToggleGroup(group);
-        rbRestart.setToggleGroup(group);
-        setRadio();
-        ProgConfig.DOWNLOAD_CONTINUE.addListener((v, o, n) -> setRadio());
-
-        rbAsk.setOnAction(a -> ProgConfig.DOWNLOAD_CONTINUE.setValue(DownloadState.DOWNLOAD_RESTART__ASK));
-        rbContinue.setOnAction(a -> ProgConfig.DOWNLOAD_CONTINUE.setValue(DownloadState.DOWNLOAD_RESTART__CONTINUE));
-        rbRestart.setOnAction(a -> ProgConfig.DOWNLOAD_CONTINUE.setValue(DownloadState.DOWNLOAD_RESTART__RESTART));
-    }
-
-    private void setRadio() {
-        switch (ProgConfig.DOWNLOAD_CONTINUE.getValue()) {
-            case DownloadState.DOWNLOAD_RESTART__CONTINUE:
-                rbContinue.setSelected(true);
-                break;
-            case DownloadState.DOWNLOAD_RESTART__RESTART:
-                rbRestart.setSelected(true);
-                break;
-            case DownloadState.DOWNLOAD_RESTART__ASK:
-            default:
-                rbAsk.setSelected(true);
-                break;
-        }
-    }
-
-    private void makeDownload(Collection<TitledPane> result) {
+    public void makeDownload(Collection<TitledPane> result) {
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
@@ -178,5 +130,32 @@ public class DownloadPaneController extends PAccordionPane {
 
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(),
                 PColumnConstraints.getCcPrefSize());
+    }
+
+    private void initRadio() {
+        rbAsk.setToggleGroup(group);
+        rbContinue.setToggleGroup(group);
+        rbRestart.setToggleGroup(group);
+        setRadio();
+        ProgConfig.DOWNLOAD_CONTINUE.addListener((v, o, n) -> setRadio());
+
+        rbAsk.setOnAction(a -> ProgConfig.DOWNLOAD_CONTINUE.setValue(DownloadState.DOWNLOAD_RESTART__ASK));
+        rbContinue.setOnAction(a -> ProgConfig.DOWNLOAD_CONTINUE.setValue(DownloadState.DOWNLOAD_RESTART__CONTINUE));
+        rbRestart.setOnAction(a -> ProgConfig.DOWNLOAD_CONTINUE.setValue(DownloadState.DOWNLOAD_RESTART__RESTART));
+    }
+
+    private void setRadio() {
+        switch (ProgConfig.DOWNLOAD_CONTINUE.getValue()) {
+            case DownloadState.DOWNLOAD_RESTART__CONTINUE:
+                rbContinue.setSelected(true);
+                break;
+            case DownloadState.DOWNLOAD_RESTART__RESTART:
+                rbRestart.setSelected(true);
+                break;
+            case DownloadState.DOWNLOAD_RESTART__ASK:
+            default:
+                rbAsk.setSelected(true);
+                break;
+        }
     }
 }

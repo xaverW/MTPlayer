@@ -17,47 +17,42 @@
 package de.p2tools.mtplayer.gui.configDialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2Lib.dialogs.accordion.PAccordionPane;
-import javafx.beans.property.BooleanProperty;
 import javafx.scene.control.TitledPane;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class BlackController extends PAccordionPane {
+public class ControllerDownload extends PAccordionPane {
 
-    private final ProgData progData;
+    private PaneDownload paneDownload;
+    private PaneReplace paneReplace;
 
-    private final BooleanProperty blackChanged;
-    private BlackPane blackPane;
-    private BlackListPane blackListPane;
     private final Stage stage;
 
-    public BlackController(Stage stage, BooleanProperty blackChanged) {
-        super(stage, ProgConfig.CONFIG_DIALOG_ACCORDION, ProgConfig.SYSTEM_CONFIG_DIALOG_BLACKLIST);
+    public ControllerDownload(Stage stage) {
+        super(stage, ProgConfig.CONFIG_DIALOG_ACCORDION, ProgConfig.SYSTEM_CONFIG_DIALOG_DOWNLOAD);
         this.stage = stage;
-        this.blackChanged = blackChanged;
-        progData = ProgData.getInstance();
-
         init();
     }
 
     @Override
     public void close() {
+        paneDownload.close();
+        paneReplace.close();
         super.close();
-        blackPane.close();
-        blackListPane.close();
     }
 
     @Override
     public Collection<TitledPane> createPanes() {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
-        blackPane = new BlackPane(stage, blackChanged);
-        blackPane.makeBlack(result);
-        blackListPane = new BlackListPane(stage, progData, true, blackChanged);
-        blackListPane.make(result);
+        paneDownload = new PaneDownload(stage);
+        paneDownload.makeDownload(result);
+
+        paneReplace = new PaneReplace(stage);
+        paneReplace.makeReplaceListTable(result);
         return result;
     }
 }
+

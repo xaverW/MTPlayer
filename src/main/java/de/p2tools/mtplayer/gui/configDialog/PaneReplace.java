@@ -44,7 +44,7 @@ import javafx.stage.Stage;
 
 import java.util.Collection;
 
-public class ReplacePane {
+public class PaneReplace {
 
     private final TextField txtFrom = new TextField();
     private final TextField txtTo = new TextField();
@@ -57,9 +57,14 @@ public class ReplacePane {
 
     private final Stage stage;
 
-
-    public ReplacePane(Stage stage) {
+    public PaneReplace(Stage stage) {
         this.stage = stage;
+    }
+
+    public void close() {
+        unbindText();
+        tglAscii.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_ONLY_ASCII);
+        tglReplace.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_USE_REPLACETABLE);
     }
 
     public void makeReplaceListTable(Collection<TitledPane> result) {
@@ -75,12 +80,6 @@ public class ReplacePane {
         result.add(tpReplace);
         tpReplace.setMaxHeight(Double.MAX_VALUE);
         VBox.setVgrow(tpReplace, Priority.ALWAYS);
-    }
-
-    public void close() {
-        unbindText();
-        tglAscii.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_ONLY_ASCII);
-        tglReplace.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_USE_REPLACETABLE);
     }
 
     private void makeAscii(VBox vBox) {

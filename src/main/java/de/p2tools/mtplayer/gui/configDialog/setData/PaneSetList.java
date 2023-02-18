@@ -39,7 +39,7 @@ import javafx.util.Callback;
 
 import java.util.Optional;
 
-public class SetPaneSetList extends VBox {
+public class PaneSetList extends VBox {
 
     private final TableView<SetData> tableView = new TableView<>();
     static int newCounter = 1;
@@ -47,7 +47,7 @@ public class SetPaneSetList extends VBox {
     private final ProgData progData;
     private final ObjectProperty<SetData> setDataObjectProperty;
 
-    public SetPaneSetList(Stage stage, ObjectProperty<SetData> setDataObjectProperty) {
+    public PaneSetList(Stage stage, ObjectProperty<SetData> setDataObjectProperty) {
         this.stage = stage;
         this.setDataObjectProperty = setDataObjectProperty;
         this.progData = ProgData.getInstance();

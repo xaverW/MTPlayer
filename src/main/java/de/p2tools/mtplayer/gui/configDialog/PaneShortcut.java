@@ -17,7 +17,6 @@
 package de.p2tools.mtplayer.gui.configDialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
-import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.MTShortcut;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2Lib.P2LibConst;
@@ -40,17 +39,19 @@ import javafx.util.Callback;
 
 import java.util.Collection;
 
-public class ShortcutPane {
-    private final Stage stage;
-    private final ProgData progData;
+public class PaneShortcut {
     private boolean released = true; // damits beim ersten Mal schon passt
     private String newShortcutValue = "";
     private final TextArea txtLongDescription = new TextArea();
     private final TableView<PShortcut> tableView = new TableView<>();
 
-    public ShortcutPane(Stage stage) {
+    private final Stage stage;
+
+    public PaneShortcut(Stage stage) {
         this.stage = stage;
-        progData = ProgData.getInstance();
+    }
+
+    public void close() {
     }
 
     public void makeShortcut(Collection<TitledPane> result) {
@@ -80,9 +81,6 @@ public class ShortcutPane {
 
         TitledPane tpShortcut = new TitledPane("Tastenkürzel", hBox);
         result.add(tpShortcut);
-    }
-
-    public void close() {
     }
 
     private void initTable(TableView<PShortcut> tableView) {

@@ -23,7 +23,6 @@ import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
-import javafx.beans.property.BooleanProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -31,24 +30,22 @@ import javafx.stage.Stage;
 
 import java.util.Collection;
 
-public class GeoPane {
+public class PaneGeo {
     private final RadioButton rbDe = new RadioButton("DE - Deutschland");
     private final RadioButton rbCh = new RadioButton("CH - Schweiz");
     private final RadioButton rbAt = new RadioButton("AT - Österreich");
     private final RadioButton rbEu = new RadioButton("EU (EBU - European Broadcasting Union)");
     private final RadioButton rbSonst = new RadioButton("sonst");
-
     private final PToggleSwitch tglGeo = new PToggleSwitch("geblockte Sendungen gelb markieren:");
-    BooleanProperty geoProperty = ProgConfig.SYSTEM_MARK_GEO;
 
     private final Stage stage;
 
-    public GeoPane(Stage stage) {
+    public PaneGeo(Stage stage) {
         this.stage = stage;
     }
 
     public void close() {
-        tglGeo.selectedProperty().unbindBidirectional(geoProperty);
+        tglGeo.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_MARK_GEO);
     }
 
     public TitledPane makeGeo() {
@@ -56,7 +53,7 @@ public class GeoPane {
     }
 
     public TitledPane makeGeo(Collection<TitledPane> result) {
-        tglGeo.selectedProperty().bindBidirectional(geoProperty);
+        tglGeo.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_MARK_GEO);
         final Button btnHelpGeo = PButton.helpButton(stage, "Geogeblockte Filme", HelpText.CONFIG_GEO);
 
         ToggleGroup tg = new ToggleGroup();
