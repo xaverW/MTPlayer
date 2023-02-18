@@ -31,7 +31,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class ProgStartBeforeGui {
-//    public static boolean firstProgramStart = false; // ist der allererste Programmstart: Init wird gemacht
 
     private ProgStartBeforeGui() {
     }
@@ -81,7 +80,6 @@ public class ProgStartBeforeGui {
     private static boolean load() {
         final Path xmlFilePath = new ProgInfos().getSettingsFile();
         PDuration.onlyPing("ProgStartFactory.loadProgConfigData");
-
         try {
             if (!Files.exists(xmlFilePath)) {
                 //dann gibts das Konfig-File gar nicht
