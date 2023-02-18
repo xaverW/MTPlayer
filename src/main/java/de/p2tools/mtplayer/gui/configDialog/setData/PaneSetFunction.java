@@ -39,11 +39,12 @@ import javafx.stage.Stage;
 import java.util.Collection;
 
 public class PaneSetFunction {
-    private final RadioButton rbPlay = new RadioButton("");
+    private final Button btnPlay = new Button("Abspielen setzen");
     private final PToggleSwitch tglSave = new PToggleSwitch("Speichern:");
     private final PToggleSwitch tglButton = new PToggleSwitch("Button:");
     private final PToggleSwitch tglAbo = new PToggleSwitch("Abo:");
     private final ColorPicker colorPicker = new ColorPicker();
+    private final Label lblPlay = new Label("Abspielen:");
     private ChangeListener changeListener;
 
     private final Stage stage;
@@ -71,10 +72,12 @@ public class PaneSetFunction {
         TitledPane tpConfig = new TitledPane("Funktionen", vBox);
         result.add(tpConfig);
 
-        rbPlay.setTooltip(new Tooltip("Dieses Set zum Abspielen auswählen"));
-        rbPlay.setOnAction(event -> {
+        btnPlay.setTooltip(new Tooltip("Dieses Set zum Abspielen auswählen"));
+        btnPlay.setOnAction(event -> {
             progData.setDataList.setPlay(setDataObjectProperty.getValue());
+            playSetText();
         });
+        playSetText();
 
         int row = 0;
         //Speichern, Button, Abo
@@ -88,7 +91,7 @@ public class PaneSetFunction {
         HBox hBoxSpace = new HBox();
         HBox.setHgrow(hBoxSpace, Priority.ALWAYS);
         hBox.setAlignment(Pos.CENTER_LEFT);
-        hBox.getChildren().addAll(new Label("Abspielen:"), hBoxSpace, rbPlay);
+        hBox.getChildren().addAll(lblPlay, hBoxSpace, btnPlay);
 
         gridPane.add(new Label(" "), 0, ++row);
         gridPane.add(hBox, 1, row);
@@ -138,11 +141,20 @@ public class PaneSetFunction {
         bindProgData();
     }
 
+    private void playSetText() {
+        if (setData != null && setData.isPlay()) {
+            lblPlay.getStyleClass().add("markSetPlay");
+        } else {
+            lblPlay.getStyleClass().removeAll("markSetPlay");
+        }
+    }
+
     private void bindProgData() {
         unBindProgData();
         setData = setDataObjectProperty.getValue();
         if (setData != null) {
-            rbPlay.selectedProperty().bindBidirectional(setData.playProperty());
+            playSetText();
+            //rbPlay.selectedProperty().bindBidirectional(setData.playProperty());
 
             tglSave.selectedProperty().bindBidirectional(setData.saveProperty());
             tglAbo.selectedProperty().bindBidirectional(setData.aboProperty());
@@ -157,7 +169,8 @@ public class PaneSetFunction {
 
     private void unBindProgData() {
         if (setData != null) {
-            rbPlay.selectedProperty().unbindBidirectional(setData.playProperty());
+            playSetText();
+            //rbPlay.selectedProperty().unbindBidirectional(setData.playProperty());
 
             tglSave.selectedProperty().unbindBidirectional(setData.saveProperty());
             tglAbo.selectedProperty().unbindBidirectional(setData.aboProperty());
