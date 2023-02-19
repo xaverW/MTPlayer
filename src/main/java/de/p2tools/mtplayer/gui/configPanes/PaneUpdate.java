@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.gui.configDialog;
+package de.p2tools.mtplayer.gui.configPanes;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
@@ -24,6 +24,7 @@ import de.p2tools.mtplayer.controller.update.SearchProgramUpdate;
 import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.guiTools.PButton;
 import de.p2tools.p2Lib.guiTools.PColumnConstraints;
+import de.p2tools.p2Lib.guiTools.PGuiTools;
 import de.p2tools.p2Lib.guiTools.PHyperlink;
 import de.p2tools.p2Lib.guiTools.pToggleSwitch.PToggleSwitch;
 import javafx.geometry.HPos;
@@ -35,6 +36,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.Collection;
@@ -63,13 +65,13 @@ public class PaneUpdate {
     }
 
     public void makeUpdate(Collection<TitledPane> result) {
+        final VBox vBox = new VBox(P2LibConst.DIST_BUTTON);
+        vBox.setPadding(new Insets(0));
+
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         gridPane.setPadding(new Insets(P2LibConst.DIST_EDGE));
-
-        TitledPane tpConfig = new TitledPane("Programmupdate", gridPane);
-        result.add(tpConfig);
 
         //einmal am Tag Update suchen
         tglSearch.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_UPDATE_SEARCH_ACT);
@@ -100,11 +102,6 @@ public class PaneUpdate {
         btnNow.setOnAction(event -> new SearchProgramUpdate(progData, stage).searchNewProgramVersion(true));
         PHyperlink hyperlink = new PHyperlink(ProgConst.URL_WEBSITE,
                 ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
-        HBox hBoxHyper = new HBox();
-        hBoxHyper.setAlignment(Pos.CENTER_LEFT);
-        hBoxHyper.setPadding(new Insets(10, 0, 0, 0));
-        hBoxHyper.setSpacing(10);
-        hBoxHyper.getChildren().addAll(new Label("Infos auch auf der Website:"), hyperlink);
 
         int row = 0;
         gridPane.add(tglSearch, 0, row);
@@ -115,15 +112,23 @@ public class PaneUpdate {
         gridPane.add(chkDaily, 0, ++row, 2, 1);
         GridPane.setHalignment(chkDaily, HPos.RIGHT);
 
-        gridPane.add(btnNow, 0, ++row);
-
-        gridPane.add(new Label(" "), 0, ++row);
-        gridPane.add(hBoxHyper, 0, ++row);
+        ++row;
+        ++row;
+        gridPane.add(btnNow, 0, ++row, 3, 1);
+        GridPane.setHalignment(btnNow, HPos.RIGHT);
 
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(),
                 PColumnConstraints.getCcPrefSize());
-        gridPane.getRowConstraints().addAll(PColumnConstraints.getRcPrefSize(), PColumnConstraints.getRcPrefSize(),
-                PColumnConstraints.getRcPrefSize(), PColumnConstraints.getRcVgrow(), PColumnConstraints.getRcPrefSize());
+
+        HBox hBoxHyper = new HBox();
+        hBoxHyper.setAlignment(Pos.CENTER_LEFT);
+        hBoxHyper.setPadding(new Insets(10, 0, 0, 0));
+        hBoxHyper.setSpacing(10);
+        hBoxHyper.getChildren().addAll(new Label("Infos auch auf der Website:"), hyperlink);
+
+        vBox.getChildren().addAll(gridPane, PGuiTools.getVBoxGrower(), hBoxHyper);
+        TitledPane tpConfig = new TitledPane("Programmupdate", vBox);
+        result.add(tpConfig);
     }
 
     private void checkBeta() {

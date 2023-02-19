@@ -18,8 +18,8 @@ package de.p2tools.mtplayer.gui.startDialog;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
-import de.p2tools.mtplayer.gui.configDialog.PaneFilmSender;
-import de.p2tools.mtplayer.gui.configDialog.PaneGeo;
+import de.p2tools.mtplayer.gui.configPanes.PaneFilmSender;
+import de.p2tools.mtplayer.gui.configPanes.PaneGeo;
 import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2Lib.guiTools.PButton;
 import javafx.geometry.Insets;

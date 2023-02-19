@@ -17,6 +17,8 @@
 package de.p2tools.mtplayer.gui.configDialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.gui.configPanes.PaneDownload;
+import de.p2tools.mtplayer.gui.configPanes.PaneReplace;
 import de.p2tools.p2Lib.dialogs.accordion.PAccordionPane;
 import javafx.scene.control.TitledPane;
 import javafx.stage.Stage;

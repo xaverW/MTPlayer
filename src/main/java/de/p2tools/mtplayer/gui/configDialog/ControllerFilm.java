@@ -18,6 +18,9 @@ package de.p2tools.mtplayer.gui.configDialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.gui.configPanes.PaneBlackList;
+import de.p2tools.mtplayer.gui.configPanes.PaneFilmLoad;
+import de.p2tools.mtplayer.gui.configPanes.PaneFilmSender;
 import de.p2tools.p2Lib.dialogs.accordion.PAccordionPane;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;

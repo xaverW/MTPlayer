@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.gui.configDialog;
+package de.p2tools.mtplayer.gui.configPanes;
 
 import de.p2tools.mtplayer.controller.ProgStartAfterGui;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
