@@ -21,28 +21,17 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
-import de.p2tools.mtplayer.controller.mediaDb.MediaDataWorker;
-import de.p2tools.mtplayer.controller.update.SearchProgramUpdate;
 import de.p2tools.mtplayer.gui.filter.FilmFilterDialog;
-import de.p2tools.mtplayer.gui.tools.ProgTipOfDay;
-import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.dialogs.dialog.PDialog;
 import de.p2tools.p2Lib.icons.GetIcon;
-import de.p2tools.p2Lib.mtFilm.film.FilmlistFactory;
-import de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent;
-import de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerLoadFilmlist;
 import de.p2tools.p2Lib.tools.ProgramToolsFactory;
-import de.p2tools.p2Lib.tools.date.DateFactory;
-import de.p2tools.p2Lib.tools.duration.PDuration;
 import de.p2tools.p2Lib.tools.log.LogMessage;
 import de.p2tools.p2Lib.tools.log.PLog;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class ProgStartAfterGui {
-    private static boolean doneAtProgramStart = false;
+//    private static boolean doneAtProgramStart = false;
 
     private ProgStartAfterGui() {
     }
@@ -61,20 +50,20 @@ public class ProgStartAfterGui {
         }
 
         ProgData.getInstance().startTimer();
-        LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
-            @Override
-            public void finished(ListenerFilmlistLoadEvent event) {
-                int age = FilmlistFactory.getAge(ProgData.getInstance().filmlist.metaData);
-                ProgConfig.SYSTEM_FILMLIST_AGE.setValue(ProgData.getInstance().filmlist.isEmpty() ? P2LibConst.NUMBER_NOT_STARTED : age);
-
-                if (!doneAtProgramStart) {
-                    doneAtProgramStart = true;
-                    MediaDataWorker.createMediaDb();
-                    checkProgUpdate();
-                    new ProgTipOfDay().showDialog(ProgData.getInstance(), false);
-                }
-            }
-        });
+//        LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
+//            @Override
+//            public void finished(ListenerFilmlistLoadEvent event) {
+//                int age = FilmlistFactory.getAge(ProgData.getInstance().filmlist.metaData);
+//                ProgConfig.SYSTEM_FILMLIST_AGE.setValue(ProgData.getInstance().filmlist.isEmpty() ? P2LibConst.NUMBER_NOT_STARTED : age);
+//
+//                if (!doneAtProgramStart) {
+//                    doneAtProgramStart = true;
+//                    MediaDataWorker.createMediaDb();
+//                    checkProgUpdate();
+//                    new ProgTipOfDayFactory().showDialog(ProgData.getInstance(), false);
+//                }
+//            }
+//        });
 
         //die gespeicherte Filmliste laden
         LoadFilmFactory.getInstance().loadFilmlistProgStart();
@@ -111,36 +100,36 @@ public class ProgStartAfterGui {
         ProgConfig.logAllConfigs();
     }
 
-    private static void checkProgUpdate() {
-        // Prüfen obs ein Programmupdate gibt
-        PDuration.onlyPing("checkProgUpdate");
-        if (ProgConfig.SYSTEM_UPDATE_SEARCH_ACT.getValue() &&
-                !updateCheckTodayDone()) {
-            // nach Updates suchen
-            runUpdateCheck(false);
-
-        } else {
-            // will der User nicht --oder-- wurde heute schon gemacht
-            List list = new ArrayList(5);
-            list.add("Kein Update-Check:");
-            if (!ProgConfig.SYSTEM_UPDATE_SEARCH_ACT.getValue()) {
-                list.add("  der User will nicht");
-            }
-            if (updateCheckTodayDone()) {
-                list.add("  heute schon gemacht");
-            }
-            PLog.sysLog(list);
-        }
-    }
-
-    private static boolean updateCheckTodayDone() {
-        return ProgConfig.SYSTEM_UPDATE_DATE.get().equals(DateFactory.F_FORMAT_yyyy_MM_dd.format(new Date()));
-    }
-
-    private static void runUpdateCheck(boolean showAlways) {
-        ProgConfig.SYSTEM_UPDATE_DATE.setValue(DateFactory.F_FORMAT_yyyy_MM_dd.format(new Date()));
-        new SearchProgramUpdate(ProgData.getInstance()).searchNewProgramVersion(showAlways);
-    }
+//    private static void checkProgUpdate() {
+//        // Prüfen obs ein Programmupdate gibt
+//        PDuration.onlyPing("checkProgUpdate");
+//        if (ProgConfig.SYSTEM_UPDATE_SEARCH_ACT.getValue() &&
+//                !updateCheckTodayDone()) {
+//            // nach Updates suchen
+//            runUpdateCheck(false);
+//
+//        } else {
+//            // will der User nicht --oder-- wurde heute schon gemacht
+//            List list = new ArrayList(5);
+//            list.add("Kein Update-Check:");
+//            if (!ProgConfig.SYSTEM_UPDATE_SEARCH_ACT.getValue()) {
+//                list.add("  der User will nicht");
+//            }
+//            if (updateCheckTodayDone()) {
+//                list.add("  heute schon gemacht");
+//            }
+//            PLog.sysLog(list);
+//        }
+//    }
+//
+//    private static boolean updateCheckTodayDone() {
+//        return ProgConfig.SYSTEM_UPDATE_DATE.get().equals(DateFactory.F_FORMAT_yyyy_MM_dd.format(new Date()));
+//    }
+//
+//    private static void runUpdateCheck(boolean showAlways) {
+//        ProgConfig.SYSTEM_UPDATE_DATE.setValue(DateFactory.F_FORMAT_yyyy_MM_dd.format(new Date()));
+//        new SearchProgramUpdate(ProgData.getInstance()).searchNewProgramVersion(showAlways);
+//    }
 
     private static void setTitle() {
         if (ProgData.debug) {

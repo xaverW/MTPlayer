@@ -496,14 +496,14 @@ public class HelpText {
                     "hilfreich sein: Bei 'maximal 250 Tage' oder 'mindestens 5 Minuten' ist die " +
                     "Filmliste nur etwa halb so groß (~ 300.000 Filme).\n" +
                     "\n" +
-                    "Auswirkung hat das Filtern erst nach dem Neustart des Programms oder dem " +
+                    "Auswirkung hat das Filtern erst nach dem " +
                     "Neuladen der Filmliste." +
                     "\n";
 
     public static final String LOAD_FILMLIST_SENDER =
             "Filme der markierten Sender werden aus der Filmliste ausgeschlossen.\n" +
                     "\n" +
-                    "Wirksam erst nach Neustart des Programms oder Neuladen der kompletten Filmliste." +
+                    "Wirksam erst nach dem Neuladen der kompletten Filmliste." +
                     "\n";
 
     public static final String LOAD_FILMLIST_PROGRAMSTART =

@@ -30,15 +30,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ProgTipOfDay {
+public class ProgTipOfDayFactory {
 
-    private final String START = "                                                     " + P2LibConst.LINE_SEPARATOR;
-    private final int listSize = 17;
+    private static final String START = "                                                     " + P2LibConst.LINE_SEPARATOR;
+    private static final int listSize = 17;
 
-    public ProgTipOfDay() {
+    private ProgTipOfDayFactory() {
     }
 
-    public void showDialog(ProgData progData, boolean showAlways) {
+    public static void showDialog(ProgData progData, boolean showAlways) {
         if (!showAlways && !ProgConfig.TIP_OF_DAY_SHOW.getValue()) {
             //dann wills der User nicht :(
             PLog.sysLog("TipOfDay: Will der User nicht");
@@ -61,7 +61,7 @@ public class ProgTipOfDay {
         }
     }
 
-    private void addTips(List<PTipOfDay> pToolTipList) {
+    private static void addTips(List<PTipOfDay> pToolTipList) {
         String text = START;
         text += "Die Filteransicht kann über einen\n" +
                 "zweiten Klick mit der rechten\n" +

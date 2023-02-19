@@ -18,6 +18,7 @@
 package de.p2tools.mtplayer.controller.film;
 
 import de.p2tools.mtplayer.controller.ProgSave;
+import de.p2tools.mtplayer.controller.UpdateCheckFactory;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
@@ -25,8 +26,12 @@ import de.p2tools.mtplayer.controller.data.BlackData;
 import de.p2tools.mtplayer.controller.data.BlackList;
 import de.p2tools.mtplayer.controller.data.abo.AboFactory;
 import de.p2tools.mtplayer.controller.filmFilter.FilmFilterFactory;
+import de.p2tools.mtplayer.controller.mediaDb.MediaDataWorker;
+import de.p2tools.mtplayer.gui.tools.ProgTipOfDayFactory;
+import de.p2tools.p2Lib.P2LibConst;
 import de.p2tools.p2Lib.mtFilm.film.FilmData;
 import de.p2tools.p2Lib.mtFilm.film.Filmlist;
+import de.p2tools.p2Lib.mtFilm.film.FilmlistFactory;
 import de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent;
 import de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerLoadFilmlist;
 import de.p2tools.p2Lib.mtFilm.loadFilmlist.LoadFilmlist;
@@ -40,6 +45,7 @@ import java.util.List;
 public class LoadFilmFactory {
     private static LoadFilmFactory instance;
     public static LoadFilmlist loadFilmlist; //erledigt das Update der Filmliste
+    private static boolean doneAtProgramStart = false;
 
     private LoadFilmFactory(Filmlist<FilmDataMTP> filmlistNew, Filmlist<FilmDataMTP> filmlistDiff) {
         loadFilmlist = new LoadFilmlist(filmlistNew, filmlistDiff);
@@ -82,6 +88,17 @@ public class LoadFilmFactory {
                 }
                 ProgData.getInstance().worker.workOnLoadFinished();
                 ProgData.getInstance().filmFilterRunner.filter();
+
+
+                int age = FilmlistFactory.getAge(ProgData.getInstance().filmlist.metaData);
+                ProgConfig.SYSTEM_FILMLIST_AGE.setValue(ProgData.getInstance().filmlist.isEmpty() ? P2LibConst.NUMBER_NOT_STARTED : age);
+
+                if (!doneAtProgramStart) {
+                    doneAtProgramStart = true;
+                    MediaDataWorker.createMediaDb();
+                    UpdateCheckFactory.checkProgUpdate();
+                    ProgTipOfDayFactory.showDialog(ProgData.getInstance(), false);
+                }
             }
         });
     }

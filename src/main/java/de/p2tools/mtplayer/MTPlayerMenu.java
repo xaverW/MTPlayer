@@ -31,7 +31,7 @@ import de.p2tools.mtplayer.gui.dialog.ImportMVDialog;
 import de.p2tools.mtplayer.gui.dialog.ResetDialogController;
 import de.p2tools.mtplayer.gui.mediaConfig.MediaConfigDialogController;
 import de.p2tools.mtplayer.gui.mediaDialog.MediaDialogController;
-import de.p2tools.mtplayer.gui.tools.ProgTipOfDay;
+import de.p2tools.mtplayer.gui.tools.ProgTipOfDayFactory;
 import de.p2tools.p2Lib.guiTools.POpen;
 import de.p2tools.p2Lib.tools.log.PLogger;
 import de.p2tools.p2Lib.tools.shortcut.PShortcutWorker;
@@ -91,7 +91,7 @@ public class MTPlayerMenu extends MenuButton {
         miImportMV.setOnAction(event -> new ImportMVDialog(progData));
 
         final MenuItem miToolTip = new MenuItem("Tip des Tages");
-        miToolTip.setOnAction(a -> new ProgTipOfDay().showDialog(progData, true));
+        miToolTip.setOnAction(a -> ProgTipOfDayFactory.showDialog(progData, true));
         final MenuItem miSearchUpdate = new MenuItem("Gibt's ein Update?");
         miSearchUpdate.setOnAction(a -> new SearchProgramUpdate(progData, progData.primaryStage).searchNewProgramVersion(true));
         final MenuItem miAbout = new MenuItem("Über dieses Programm");
