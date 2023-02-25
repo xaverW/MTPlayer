@@ -18,7 +18,7 @@
 package de.p2tools.mtplayer.gui.chart;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.PLog;
 import javafx.beans.property.IntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

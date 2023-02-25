@@ -20,9 +20,9 @@ package de.p2tools.mtplayer.controller.mv;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.BlackData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
-import de.p2tools.p2Lib.mtFilter.FilterCheck;
-import de.p2tools.p2Lib.tools.duration.PDuration;
-import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2lib.mtfilter.FilterCheck;
+import de.p2tools.p2lib.tools.duration.PDuration;
+import de.p2tools.p2lib.tools.log.PLog;
 import javafx.collections.ObservableList;
 
 import javax.xml.stream.XMLInputFactory;

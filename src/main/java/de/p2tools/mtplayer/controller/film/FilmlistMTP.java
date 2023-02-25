@@ -18,10 +18,10 @@ package de.p2tools.mtplayer.controller.film;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.data.SetData;
-import de.p2tools.mtplayer.controller.filmFilter.BlacklistFilterFactory;
-import de.p2tools.p2Lib.mtFilm.film.*;
-import de.p2tools.p2Lib.tools.duration.PDuration;
-import de.p2tools.p2Lib.tools.log.PDebugLog;
+import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
+import de.p2tools.p2lib.mtfilm.film.*;
+import de.p2tools.p2lib.tools.duration.PDuration;
+import de.p2tools.p2lib.tools.log.PDebugLog;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 

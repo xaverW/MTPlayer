@@ -28,11 +28,13 @@ import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.controller.tools.SizeTools;
 import de.p2tools.mtplayer.gui.dialog.AutomodeContinueDialogController;
-import de.p2tools.p2Lib.P2LibConst;
-import de.p2tools.p2Lib.mtFilm.film.FilmDataXml;
-import de.p2tools.p2Lib.tools.date.DateFactory;
-import de.p2tools.p2Lib.tools.date.PDate;
-import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
+import de.p2tools.p2lib.mtfilm.loadfilmlist.ListenerFilmlistLoadEvent;
+import de.p2tools.p2lib.mtfilm.loadfilmlist.ListenerLoadFilmlist;
+import de.p2tools.p2lib.tools.date.DateFactory;
+import de.p2tools.p2lib.tools.date.PDate;
+import de.p2tools.p2lib.tools.log.PLog;
 import javafx.application.Platform;
 
 import java.awt.*;
@@ -54,14 +56,14 @@ public class StarterClass {
         starterThread = new StarterThread();
         starterThread.start();
 
-        LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(new de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerLoadFilmlist() {
+        LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
             @Override
-            public void start(de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent event) {
+            public void start(ListenerFilmlistLoadEvent event) {
                 searchFilms = true;
             }
 
             @Override
-            public void finished(de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent event) {
+            public void finished(ListenerFilmlistLoadEvent event) {
                 searchFilms = false;
             }
         });

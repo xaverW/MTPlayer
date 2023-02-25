@@ -17,8 +17,8 @@ package de.p2tools.mtplayer;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
-import de.p2tools.p2Lib.P2LibConst;
-import de.p2tools.p2Lib.guiTools.PHyperlink;
+import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.guitools.PHyperlink;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;

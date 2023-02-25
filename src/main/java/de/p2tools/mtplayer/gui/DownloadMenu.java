@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.MTShortcut;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
-import de.p2tools.p2Lib.tools.shortcut.PShortcutWorker;
+import de.p2tools.p2lib.tools.shortcut.PShortcutWorker;
 import javafx.beans.binding.Bindings;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;

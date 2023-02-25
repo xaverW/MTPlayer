@@ -19,12 +19,12 @@ package de.p2tools.mtplayer.controller;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
-import de.p2tools.p2Lib.P2LibConst;
-import de.p2tools.p2Lib.alert.PAlert;
-import de.p2tools.p2Lib.configFile.ConfigFile;
-import de.p2tools.p2Lib.configFile.ConfigWriteFile;
-import de.p2tools.p2Lib.tools.log.PLog;
-import de.p2tools.p2Lib.tools.log.PLogger;
+import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.configfile.ConfigFile;
+import de.p2tools.p2lib.configfile.ConfigWriteFile;
+import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.PLogger;
 import org.apache.commons.lang3.time.FastDateFormat;
 
 import java.io.File;

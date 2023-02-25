@@ -18,7 +18,7 @@
 package de.p2tools.mtplayer.gui.tools.table;
 
 import de.p2tools.mtplayer.controller.data.abo.AboData;
-import de.p2tools.p2Lib.mtFilter.FilterCheck;
+import de.p2tools.p2lib.mtfilter.FilterCheck;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.util.Callback;

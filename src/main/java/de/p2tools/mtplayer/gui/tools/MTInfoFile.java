@@ -18,10 +18,10 @@ package de.p2tools.mtplayer.gui.tools;
 
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFieldNames;
-import de.p2tools.p2Lib.P2LibConst;
-import de.p2tools.p2Lib.mtFilm.film.FilmDataXml;
-import de.p2tools.p2Lib.tools.PSystemUtils;
-import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
+import de.p2tools.p2lib.tools.PSystemUtils;
+import de.p2tools.p2lib.tools.log.PLog;
 
 import java.io.*;
 import java.nio.file.Files;

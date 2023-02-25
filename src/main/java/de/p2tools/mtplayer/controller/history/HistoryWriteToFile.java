@@ -18,8 +18,8 @@
 package de.p2tools.mtplayer.controller.history;
 
 import de.p2tools.mtplayer.gui.tools.Listener;
-import de.p2tools.p2Lib.tools.duration.PDuration;
-import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.duration.PDuration;
+import de.p2tools.p2lib.tools.log.PLog;
 import javafx.beans.property.BooleanProperty;
 
 import java.io.BufferedWriter;

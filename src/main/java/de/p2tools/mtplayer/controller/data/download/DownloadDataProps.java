@@ -16,13 +16,13 @@
 
 package de.p2tools.mtplayer.controller.data.download;
 
-import de.p2tools.p2Lib.P2LibConst;
-import de.p2tools.p2Lib.configFile.config.*;
-import de.p2tools.p2Lib.configFile.pData.PDataSample;
-import de.p2tools.p2Lib.mtDownload.DownloadSize;
-import de.p2tools.p2Lib.tools.date.DateFactory;
-import de.p2tools.p2Lib.tools.date.PDate;
-import de.p2tools.p2Lib.tools.date.PDateProperty;
+import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.configfile.config.*;
+import de.p2tools.p2lib.configfile.pdata.PDataSample;
+import de.p2tools.p2lib.mtdownload.DownloadSize;
+import de.p2tools.p2lib.tools.date.DateFactory;
+import de.p2tools.p2lib.tools.date.PDate;
+import de.p2tools.p2lib.tools.date.PDateProperty;
 import javafx.application.Platform;
 import javafx.beans.property.*;
 

@@ -19,10 +19,10 @@ package de.p2tools.mtplayer.controller.worker;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
-import de.p2tools.mtplayer.controller.filmFilter.FilmFilter;
+import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
-import de.p2tools.p2Lib.tools.duration.PDuration;
-import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.duration.PDuration;
+import de.p2tools.p2lib.tools.log.PLog;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,7 +30,7 @@ import javafx.collections.ObservableList;
 import java.text.Collator;
 import java.util.*;
 
-import static de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerLoadFilmlist.PROGRESS_INDETERMINATE;
+import static de.p2tools.p2lib.mtfilm.loadfilmlist.ListenerLoadFilmlist.PROGRESS_INDETERMINATE;
 
 public class Worker {
 

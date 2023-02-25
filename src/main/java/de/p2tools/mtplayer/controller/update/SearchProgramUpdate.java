@@ -19,10 +19,10 @@ package de.p2tools.mtplayer.controller.update;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.p2Lib.checkForActInfos.FoundAll;
-import de.p2tools.p2Lib.checkForActInfos.FoundSearchData;
-import de.p2tools.p2Lib.tools.ProgramToolsFactory;
-import de.p2tools.p2Lib.tools.date.PDate;
+import de.p2tools.p2lib.checkforactinfos.FoundAll;
+import de.p2tools.p2lib.checkforactinfos.FoundSearchData;
+import de.p2tools.p2lib.tools.ProgramToolsFactory;
+import de.p2tools.p2lib.tools.date.PDate;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 

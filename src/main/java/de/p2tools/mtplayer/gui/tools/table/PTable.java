@@ -17,7 +17,7 @@
 
 package de.p2tools.mtplayer.gui.tools.table;
 
-import de.p2tools.p2Lib.configFile.pData.PData;
+import de.p2tools.p2lib.configfile.pdata.PData;
 import javafx.scene.control.TableView;
 
 public class PTable<E extends PData> extends TableView<E> {

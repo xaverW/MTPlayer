@@ -18,9 +18,9 @@ package de.p2tools.mtplayer.controller.data;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.starter.RuntimeExec;
-import de.p2tools.p2Lib.P2LibConst;
-import de.p2tools.p2Lib.alert.PAlert;
-import de.p2tools.p2Lib.tools.ProgramToolsFactory;
+import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.tools.ProgramToolsFactory;
 
 import java.io.File;
 import java.util.ArrayList;

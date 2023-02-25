@@ -19,8 +19,8 @@ package de.p2tools.mtplayer.controller.data.download;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
-import de.p2tools.p2Lib.P2LibConst;
-import de.p2tools.p2Lib.tools.file.PFileSize;
+import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.tools.file.PFileSize;
 
 import java.text.NumberFormat;
 import java.util.Locale;

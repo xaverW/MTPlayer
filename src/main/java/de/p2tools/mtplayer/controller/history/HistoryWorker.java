@@ -17,8 +17,8 @@
 
 package de.p2tools.mtplayer.controller.history;
 
-import de.p2tools.p2Lib.mtFilm.film.FilmFactory;
-import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2lib.mtfilm.film.FilmFactory;
+import de.p2tools.p2lib.tools.log.PLog;
 
 import java.io.IOException;
 import java.io.InputStreamReader;

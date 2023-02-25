@@ -16,8 +16,8 @@
 
 package de.p2tools.mtplayer.controller.data;
 
-import de.p2tools.p2Lib.P2LibConst;
-import de.p2tools.p2Lib.tools.PIndex;
+import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.tools.PIndex;
 
 public class SetData extends SetDataProps {
 

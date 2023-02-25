@@ -18,10 +18,10 @@ package de.p2tools.mtplayer.gui.filter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
-import de.p2tools.p2Lib.P2LibConst;
-import de.p2tools.p2Lib.guiTools.PButtonClearFilter;
-import de.p2tools.p2Lib.guiTools.PGuiTools;
-import de.p2tools.p2Lib.tools.duration.PDuration;
+import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.guitools.PButtonClearFilter;
+import de.p2tools.p2lib.guitools.PGuiTools;
+import de.p2tools.p2lib.tools.duration.PDuration;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;

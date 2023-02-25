@@ -19,12 +19,12 @@ package de.p2tools.mtplayer.gui.tools;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.p2Lib.P2LibConst;
-import de.p2tools.p2Lib.guiTools.pTipOfDay.PTipOfDay;
-import de.p2tools.p2Lib.guiTools.pTipOfDay.PTipOfDayDialog;
-import de.p2tools.p2Lib.guiTools.pTipOfDay.PTipOfDayFactory;
-import de.p2tools.p2Lib.tools.date.DateFactory;
-import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.guitools.ptipofday.PTipOfDay;
+import de.p2tools.p2lib.guitools.ptipofday.PTipOfDayDialog;
+import de.p2tools.p2lib.guitools.ptipofday.PTipOfDayFactory;
+import de.p2tools.p2lib.tools.date.DateFactory;
+import de.p2tools.p2lib.tools.log.PLog;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -74,7 +74,7 @@ public class ProgTipOfDayFactory {
                 "Tabelle ein und aus.\n\n" +
                 "Beides ist auch über das\n" +
                 "Menü möglich";
-        String image = "/de/p2tools/mtplayer/res/toolTips/GuiFilme_Filter.png";
+        String image = "/de/p2tools/mtplayer/res/tooltips/GuiFilme_Filter.png";
         PTipOfDay pToolTip = new PTipOfDay(text, image);
         pToolTipList.add(pToolTip);
 
@@ -85,7 +85,7 @@ public class ProgTipOfDayFactory {
                 "Der Button daneben, stellt den\n" +
                 "ursprünglichen Suchbegriff\n" +
                 "wieder her.";
-        image = "/de/p2tools/mtplayer/res/toolTips/Mediensammlung.png";
+        image = "/de/p2tools/mtplayer/res/tooltips/Mediensammlung.png";
         pToolTip = new PTipOfDay(text, image);
         pToolTipList.add(pToolTip);
 
@@ -98,7 +98,7 @@ public class ProgTipOfDayFactory {
                 "Einstellungen zum Abspielen\n" +
                 "und Aufzeichnen zurückgesetzt\n" +
                 "werden.";
-        image = "/de/p2tools/mtplayer/res/toolTips/Ruecksetzen.png";
+        image = "/de/p2tools/mtplayer/res/tooltips/Ruecksetzen.png";
         pToolTip = new PTipOfDay(text, image);
         pToolTipList.add(pToolTip);
 
@@ -113,7 +113,7 @@ public class ProgTipOfDayFactory {
                 "Es werden alle Einstellungen\n" +
                 "zurückgesetzt und gehen\n" +
                 "verloren!";
-        image = "/de/p2tools/mtplayer/res/toolTips/Ruecksetzen_alles.png";
+        image = "/de/p2tools/mtplayer/res/tooltips/Ruecksetzen_alles.png";
         pToolTip = new PTipOfDay(text, image);
         pToolTipList.add(pToolTip);
 
@@ -127,7 +127,7 @@ public class ProgTipOfDayFactory {
                 "* Die maximale Bandbreite pro\n" +
                 "   Download kann hier\n" +
                 "   vorgegeben werden.";
-        image = "/de/p2tools/mtplayer/res/toolTips/Bandbreite.png";
+        image = "/de/p2tools/mtplayer/res/tooltips/Bandbreite.png";
         pToolTip = new PTipOfDay(text, image);
         pToolTipList.add(pToolTip);
 
@@ -141,7 +141,7 @@ public class ProgTipOfDayFactory {
                 "Es werden also nur Filme der\n" +
                 "letzten xx Tage gesucht wenn\n" +
                 "xx Tage dort vorgegeben sind.";
-        image = "/de/p2tools/mtplayer/res/toolTips/AboEinstellungen_Zeit.png";
+        image = "/de/p2tools/mtplayer/res/tooltips/AboEinstellungen_Zeit.png";
         pToolTip = new PTipOfDay(text, image);
         pToolTipList.add(pToolTip);
 
@@ -153,7 +153,7 @@ public class ProgTipOfDayFactory {
                 "Es werden dann nur Filme\n" +
                 "gefunden, deren Dauer zu\n" +
                 "den Vorgaben passt.";
-        image = "/de/p2tools/mtplayer/res/toolTips/AboEinstellungen_Dauer.png";
+        image = "/de/p2tools/mtplayer/res/tooltips/AboEinstellungen_Dauer.png";
         pToolTip = new PTipOfDay(text, image);
         pToolTipList.add(pToolTip);
 
@@ -166,7 +166,7 @@ public class ProgTipOfDayFactory {
                 "Das untere Menü ist immer\n" +
                 "für den jeweils angezeigten\n" +
                 "Tab (Filme, Downloads Abos).";
-        image = "/de/p2tools/mtplayer/res/toolTips/Menue.png";
+        image = "/de/p2tools/mtplayer/res/tooltips/Menue.png";
         pToolTip = new PTipOfDay(text, image);
         pToolTipList.add(pToolTip);
 
@@ -178,7 +178,7 @@ public class ProgTipOfDayFactory {
                 "Im Systemtray werden Infos\n" +
                 "zur aktuellen Situation des\n" +
                 "Programms angezeigt.";
-        image = "/de/p2tools/mtplayer/res/toolTips/Einstellungen_Systemtray.png";
+        image = "/de/p2tools/mtplayer/res/tooltips/Einstellungen_Systemtray.png";
         pToolTip = new PTipOfDay(text, image);
         pToolTipList.add(pToolTip);
 
@@ -197,7 +197,7 @@ public class ProgTipOfDayFactory {
                 "reagiert (vor allem wenn der\n" +
                 "Rechner mit wenig Speicher\n" +
                 "ausgestattet ist).";
-        image = "/de/p2tools/mtplayer/res/toolTips/Einstellungen_Filmliste.png";
+        image = "/de/p2tools/mtplayer/res/tooltips/Einstellungen_Filmliste.png";
         pToolTip = new PTipOfDay(text, image);
         pToolTipList.add(pToolTip);
 
@@ -208,7 +208,7 @@ public class ProgTipOfDayFactory {
                 "und -name für Downloads\n" +
                 "vorgegeben. Der Hilfebutton\n" +
                 "verrät die Möglichkeiten.";
-        image = "/de/p2tools/mtplayer/res/toolTips/Einstellungen_SetSpeicherziel.png";
+        image = "/de/p2tools/mtplayer/res/tooltips/Einstellungen_SetSpeicherziel.png";
         pToolTip = new PTipOfDay(text, image);
         pToolTipList.add(pToolTip);
 
@@ -222,7 +222,7 @@ public class ProgTipOfDayFactory {
                 "werden.\n\n" +
                 "Es wird auch angegeben, für\n" +
                 "welche Downloads das zutrifft.";
-        image = "/de/p2tools/mtplayer/res/toolTips/Einstellungen_SetHilfsprogramme.png";
+        image = "/de/p2tools/mtplayer/res/tooltips/Einstellungen_SetHilfsprogramme.png";
         pToolTip = new PTipOfDay(text, image);
         pToolTipList.add(pToolTip);
 
@@ -232,7 +232,7 @@ public class ProgTipOfDayFactory {
                 "kann die verwendete\n" +
                 "Schriftgröße im Programm\n" +
                 "vorgegeben werden.";
-        image = "/de/p2tools/mtplayer/res/toolTips/Einstellungen_Schriftgroesse.png";
+        image = "/de/p2tools/mtplayer/res/tooltips/Einstellungen_Schriftgroesse.png";
         pToolTip = new PTipOfDay(text, image);
         pToolTipList.add(pToolTip);
 
@@ -240,7 +240,7 @@ public class ProgTipOfDayFactory {
         text += "In den Tabellen kann\n" +
                 "mit der Leertaste nach\n" +
                 "unten \"geblättert\" werden.";
-        image = "/de/p2tools/mtplayer/res/toolTips/Leertaste.png";
+        image = "/de/p2tools/mtplayer/res/tooltips/Leertaste.png";
         pToolTip = new PTipOfDay(text, image);
         pToolTipList.add(pToolTip);
 
@@ -252,7 +252,7 @@ public class ProgTipOfDayFactory {
                 "Downloads aus diesem Abo\n" +
                 "haben dann automatisch\n" +
                 "diese Startzeit.";
-        image = "/de/p2tools/mtplayer/res/toolTips/AboEinstellungen_Startzeit.png";
+        image = "/de/p2tools/mtplayer/res/tooltips/AboEinstellungen_Startzeit.png";
         pToolTip = new PTipOfDay(text, image);
         pToolTipList.add(pToolTip);
 
@@ -265,7 +265,7 @@ public class ProgTipOfDayFactory {
                 "bis die Suche beginnt.\n\n" +
                 "Es wird dann nicht bei jedem\n" +
                 "Buchstaben die Suche gestartet.";
-        image = "/de/p2tools/mtplayer/res/toolTips/GuiFilme_Wartezeit.png";
+        image = "/de/p2tools/mtplayer/res/tooltips/GuiFilme_Wartezeit.png";
         pToolTip = new PTipOfDay(text, image);
         pToolTipList.add(pToolTip);
     }

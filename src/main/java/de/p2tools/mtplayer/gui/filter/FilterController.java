@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.gui.filter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.p2Lib.guiTools.pClosePane.PClosePaneV;
+import de.p2tools.p2lib.guitools.pclosepane.PClosePaneV;
 import javafx.beans.property.BooleanProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.Control;

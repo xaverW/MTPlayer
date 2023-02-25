@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.abo.AboFieldNames;
-import de.p2tools.p2Lib.guiTools.PColumnConstraints;
+import de.p2tools.p2lib.guitools.PColumnConstraints;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;

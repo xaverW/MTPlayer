@@ -20,9 +20,9 @@ package de.p2tools.mtplayer.controller.worker;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.tools.Listener;
-import de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent;
-import de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerLoadFilmlist;
-import de.p2tools.p2Lib.mtFilm.tools.SearchFilmlistUpdate;
+import de.p2tools.p2lib.mtfilm.loadfilmlist.ListenerFilmlistLoadEvent;
+import de.p2tools.p2lib.mtfilm.loadfilmlist.ListenerLoadFilmlist;
+import de.p2tools.p2lib.mtfilm.tools.SearchFilmlistUpdate;
 
 public class CheckForNewFilmlist extends SearchFilmlistUpdate {
 

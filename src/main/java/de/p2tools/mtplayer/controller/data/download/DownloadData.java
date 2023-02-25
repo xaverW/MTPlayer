@@ -21,15 +21,15 @@ import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.starter.Start;
-import de.p2tools.p2Lib.P2LibConst;
-import de.p2tools.p2Lib.alert.PAlert;
-import de.p2tools.p2Lib.mtDownload.DownloadSize;
-import de.p2tools.p2Lib.mtFilm.film.FilmDataXml;
-import de.p2tools.p2Lib.mtFilm.film.FilmFactory;
-import de.p2tools.p2Lib.tools.PSystemUtils;
-import de.p2tools.p2Lib.tools.date.DateFactory;
-import de.p2tools.p2Lib.tools.file.PFileUtils;
-import de.p2tools.p2Lib.tools.net.PUrlTools;
+import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.mtdownload.DownloadSize;
+import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
+import de.p2tools.p2lib.mtfilm.film.FilmFactory;
+import de.p2tools.p2lib.tools.PSystemUtils;
+import de.p2tools.p2lib.tools.date.DateFactory;
+import de.p2tools.p2lib.tools.file.PFileUtils;
+import de.p2tools.p2lib.tools.net.PUrlTools;
 import javafx.application.Platform;
 
 import java.io.File;
@@ -67,7 +67,7 @@ public final class DownloadData extends DownloadDataProps {
 
         if (resolution.isEmpty()) {
             setUrl(film.getUrlForResolution(abo != null ? abo.getResolution() : setData.getResolution()));
-//            setUrlRtmp(film.getUrlFlvstreamerForResolution(abo != null ? abo.getResolution() : setData.getResolution()));
+//            setUrlRtmp(film.getUrlFlvstreamerForResolution(abo != null ? abo.getResolution() : setdata.getResolution()));
         } else {
             setUrl(film.getUrlForResolution(resolution));
 //            setUrlRtmp(film.getUrlFlvstreamerForResolution(resolution));

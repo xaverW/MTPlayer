@@ -17,8 +17,8 @@
 package de.p2tools.mtplayer.gui.dialog;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.p2Lib.P2LibConst;
-import de.p2tools.p2Lib.dialogs.dialog.PDialogExtra;
+import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
 import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;

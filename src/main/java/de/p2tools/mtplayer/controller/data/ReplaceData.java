@@ -16,9 +16,9 @@
 
 package de.p2tools.mtplayer.controller.data;
 
-import de.p2tools.p2Lib.configFile.config.Config;
-import de.p2tools.p2Lib.configFile.config.Config_stringProp;
-import de.p2tools.p2Lib.configFile.pData.PDataSample;
+import de.p2tools.p2lib.configfile.config.Config;
+import de.p2tools.p2lib.configfile.config.Config_stringProp;
+import de.p2tools.p2lib.configfile.pdata.PDataSample;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 

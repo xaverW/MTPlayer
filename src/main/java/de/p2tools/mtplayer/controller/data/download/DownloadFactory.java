@@ -20,9 +20,9 @@ package de.p2tools.mtplayer.controller.data.download;
 import de.p2tools.mtplayer.gui.dialog.DeleteFilmFileDialogController;
 import de.p2tools.mtplayer.gui.tools.MTInfoFile;
 import de.p2tools.mtplayer.gui.tools.MTSubtitle;
-import de.p2tools.p2Lib.P2LibConst;
-import de.p2tools.p2Lib.alert.PAlert;
-import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.tools.log.PLog;
 
 import java.io.File;
 import java.nio.file.Path;

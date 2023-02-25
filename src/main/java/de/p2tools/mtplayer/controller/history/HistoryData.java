@@ -16,11 +16,11 @@
 
 package de.p2tools.mtplayer.controller.history;
 
-import de.p2tools.p2Lib.P2LibConst;
-import de.p2tools.p2Lib.mtFilm.tools.FilmDate;
-import de.p2tools.p2Lib.tools.GermanStringSorter;
-import de.p2tools.p2Lib.tools.PStringUtils;
-import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.mtfilm.tools.FilmDate;
+import de.p2tools.p2lib.tools.GermanStringSorter;
+import de.p2tools.p2lib.tools.PStringUtils;
+import de.p2tools.p2lib.tools.log.PLog;
 import org.apache.commons.lang3.time.FastDateFormat;
 
 public class HistoryData implements Comparable<HistoryData> {

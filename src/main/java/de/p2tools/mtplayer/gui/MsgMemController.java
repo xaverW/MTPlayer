@@ -18,7 +18,7 @@
 package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.gui.tools.Listener;
-import de.p2tools.p2Lib.tools.ProgramToolsFactory;
+import de.p2tools.p2lib.tools.ProgramToolsFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;

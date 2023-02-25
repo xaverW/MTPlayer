@@ -24,7 +24,7 @@ import de.p2tools.mtplayer.gui.dialog.DownloadContinueDialogController;
 import de.p2tools.mtplayer.gui.dialog.DownloadErrorDialogController;
 import de.p2tools.mtplayer.gui.tools.MTInfoFile;
 import de.p2tools.mtplayer.gui.tools.MTSubtitle;
-import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.PLog;
 import javafx.application.Platform;
 
 import java.io.File;

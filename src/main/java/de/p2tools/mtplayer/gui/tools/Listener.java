@@ -16,7 +16,7 @@
 
 package de.p2tools.mtplayer.gui.tools;
 
-import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.PLog;
 import javafx.application.Platform;
 
 import java.util.ArrayList;

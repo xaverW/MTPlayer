@@ -16,7 +16,7 @@
 
 package de.p2tools.mtplayer.gui.tools;
 
-import de.p2tools.p2Lib.P2LibConst;
+import de.p2tools.p2lib.P2LibConst;
 
 public class HelpText {
     public static final String FILTER_FIELD =

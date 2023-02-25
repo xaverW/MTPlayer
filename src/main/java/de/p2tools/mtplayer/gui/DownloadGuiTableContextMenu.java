@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.gui.tools.table.TableDownload;
-import de.p2tools.p2Lib.tools.PSystemUtils;
+import de.p2tools.p2lib.tools.PSystemUtils;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;

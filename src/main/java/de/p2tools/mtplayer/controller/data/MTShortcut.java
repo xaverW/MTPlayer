@@ -18,7 +18,7 @@
 package de.p2tools.mtplayer.controller.data;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.p2Lib.tools.shortcut.PShortcut;
+import de.p2tools.p2lib.tools.shortcut.PShortcut;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

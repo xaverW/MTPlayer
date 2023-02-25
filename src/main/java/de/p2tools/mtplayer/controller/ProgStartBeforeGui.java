@@ -17,14 +17,14 @@
 package de.p2tools.mtplayer.controller;
 
 import de.p2tools.mtplayer.controller.config.*;
-import de.p2tools.mtplayer.controller.filmFilter.FilmFilterFactory;
+import de.p2tools.mtplayer.controller.filmfilter.FilmFilterFactory;
 import de.p2tools.mtplayer.controller.worker.ImportStandardSet;
-import de.p2tools.mtplayer.gui.startDialog.StartDialogController;
-import de.p2tools.p2Lib.configFile.ConfigFile;
-import de.p2tools.p2Lib.configFile.ConfigReadFile;
-import de.p2tools.p2Lib.tools.duration.PDuration;
-import de.p2tools.p2Lib.tools.log.PLog;
-import de.p2tools.p2Lib.tools.log.PLogger;
+import de.p2tools.mtplayer.gui.startdialog.StartDialogController;
+import de.p2tools.p2lib.configfile.ConfigFile;
+import de.p2tools.p2lib.configfile.ConfigReadFile;
+import de.p2tools.p2lib.tools.duration.PDuration;
+import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.PLogger;
 import javafx.application.Platform;
 
 import java.nio.file.Files;

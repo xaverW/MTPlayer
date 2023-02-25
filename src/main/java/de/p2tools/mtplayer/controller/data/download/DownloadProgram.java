@@ -21,14 +21,14 @@ import de.p2tools.mtplayer.controller.data.ProgramData;
 import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.mtplayer.gui.configDialog.setData.AboSubDir;
-import de.p2tools.p2Lib.mtFilm.film.FilmDataXml;
-import de.p2tools.p2Lib.mtFilm.tools.FileNameUtils;
-import de.p2tools.p2Lib.tools.PSystemUtils;
-import de.p2tools.p2Lib.tools.date.DateFactory;
-import de.p2tools.p2Lib.tools.file.PFileUtils;
-import de.p2tools.p2Lib.tools.log.PLog;
-import de.p2tools.p2Lib.tools.net.PUrlTools;
+import de.p2tools.mtplayer.gui.configdialog.setdata.AboSubDir;
+import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
+import de.p2tools.p2lib.mtfilm.tools.FileNameUtils;
+import de.p2tools.p2lib.tools.PSystemUtils;
+import de.p2tools.p2lib.tools.date.DateFactory;
+import de.p2tools.p2lib.tools.file.PFileUtils;
+import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.net.PUrlTools;
 
 import java.io.File;
 import java.util.Date;
@@ -92,7 +92,7 @@ public class DownloadProgram {
         String name;
         String path;
         //bei Downloadmanager ist es auch nicht enthalten aber für die Info.txt brauchts doch den Pfad
-//        if (!setData.progsContainPath()) {
+//        if (!setdata.progsContainPath()) {
 //            // dann können wir uns das sparen
 //            download.setDestFileName("");
 //            download.setDestPath("");

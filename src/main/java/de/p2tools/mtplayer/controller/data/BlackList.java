@@ -17,9 +17,9 @@
 package de.p2tools.mtplayer.controller.data;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.filmFilter.BlacklistFilterFactory;
+import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
 import de.p2tools.mtplayer.gui.tools.Listener;
-import de.p2tools.p2Lib.configFile.pData.PDataList;
+import de.p2tools.p2lib.configfile.pdata.PDataList;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 

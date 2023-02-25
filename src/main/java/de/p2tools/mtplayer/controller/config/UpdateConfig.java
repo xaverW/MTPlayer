@@ -17,7 +17,7 @@
 
 package de.p2tools.mtplayer.controller.config;
 
-import de.p2tools.p2Lib.mtFilter.FilterCheck;
+import de.p2tools.p2lib.mtfilter.FilterCheck;
 
 public class UpdateConfig {
     private UpdateConfig() {

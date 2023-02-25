@@ -22,11 +22,11 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.filter.FilmFilterDialog;
-import de.p2tools.p2Lib.dialogs.dialog.PDialog;
-import de.p2tools.p2Lib.icons.GetIcon;
-import de.p2tools.p2Lib.tools.ProgramToolsFactory;
-import de.p2tools.p2Lib.tools.log.LogMessage;
-import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2lib.dialogs.dialog.PDialog;
+import de.p2tools.p2lib.icons.GetIcon;
+import de.p2tools.p2lib.tools.ProgramToolsFactory;
+import de.p2tools.p2lib.tools.log.LogMessage;
+import de.p2tools.p2lib.tools.log.PLog;
 
 import java.util.ArrayList;
 

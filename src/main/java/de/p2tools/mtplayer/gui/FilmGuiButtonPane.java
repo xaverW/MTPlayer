@@ -19,8 +19,8 @@ package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.data.SetDataList;
-import de.p2tools.p2Lib.P2LibConst;
-import de.p2tools.p2Lib.guiTools.PColor;
+import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.guitools.PColor;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.TilePane;

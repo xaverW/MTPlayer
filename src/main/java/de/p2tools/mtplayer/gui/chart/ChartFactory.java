@@ -20,7 +20,7 @@ package de.p2tools.mtplayer.gui.chart;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.p2Lib.P2LibConst;
+import de.p2tools.p2lib.P2LibConst;
 import javafx.geometry.Side;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;

@@ -19,11 +19,11 @@ package de.p2tools.mtplayer;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.p2Lib.dialogs.ProgInfoDialog;
-import de.p2tools.p2Lib.guiTools.PColumnConstraints;
-import de.p2tools.p2Lib.guiTools.pMask.PMaskerPane;
-import de.p2tools.p2Lib.mtFilm.film.FilmFactory;
-import de.p2tools.p2Lib.tools.duration.PDuration;
+import de.p2tools.p2lib.dialogs.ProgInfoDialog;
+import de.p2tools.p2lib.guitools.PColumnConstraints;
+import de.p2tools.p2lib.guitools.pmask.PMaskerPane;
+import de.p2tools.p2lib.mtfilm.film.FilmFactory;
+import de.p2tools.p2lib.tools.duration.PDuration;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;

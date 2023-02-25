@@ -15,8 +15,8 @@
  */
 package de.p2tools.mtplayer;
 
-import de.p2tools.p2Lib.guiTools.LinuxJavaFx;
-import de.p2tools.p2Lib.tools.net.Proxy;
+import de.p2tools.p2lib.guitools.LinuxJavaFx;
+import de.p2tools.p2lib.tools.net.Proxy;
 import javafx.application.Platform;
 import org.apache.commons.io.FileUtils;
 

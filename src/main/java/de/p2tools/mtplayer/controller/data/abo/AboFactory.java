@@ -19,10 +19,10 @@ package de.p2tools.mtplayer.controller.data.abo;
 
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmlistMTP;
-import de.p2tools.mtplayer.controller.filmFilter.FilmFilterFactory;
-import de.p2tools.p2Lib.mtFilm.film.FilmDataXml;
-import de.p2tools.p2Lib.mtFilter.FilmFilterCheck;
-import de.p2tools.p2Lib.tools.duration.PDuration;
+import de.p2tools.mtplayer.controller.filmfilter.FilmFilterFactory;
+import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
+import de.p2tools.p2lib.mtfilter.FilmFilterCheck;
+import de.p2tools.p2lib.tools.duration.PDuration;
 
 import java.util.Iterator;
 

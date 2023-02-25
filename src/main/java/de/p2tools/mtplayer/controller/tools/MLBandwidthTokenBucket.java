@@ -16,7 +16,7 @@
 
 package de.p2tools.mtplayer.controller.tools;
 
-import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.PLog;
 import javafx.beans.property.IntegerProperty;
 
 import java.util.concurrent.Semaphore;

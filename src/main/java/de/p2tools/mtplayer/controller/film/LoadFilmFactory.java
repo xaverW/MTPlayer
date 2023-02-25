@@ -25,19 +25,19 @@ import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.controller.data.BlackData;
 import de.p2tools.mtplayer.controller.data.BlackList;
 import de.p2tools.mtplayer.controller.data.abo.AboFactory;
-import de.p2tools.mtplayer.controller.filmFilter.FilmFilterFactory;
-import de.p2tools.mtplayer.controller.mediaDb.MediaDataWorker;
+import de.p2tools.mtplayer.controller.filmfilter.FilmFilterFactory;
+import de.p2tools.mtplayer.controller.mediadb.MediaDataWorker;
 import de.p2tools.mtplayer.gui.tools.ProgTipOfDayFactory;
-import de.p2tools.p2Lib.P2LibConst;
-import de.p2tools.p2Lib.mtFilm.film.FilmData;
-import de.p2tools.p2Lib.mtFilm.film.Filmlist;
-import de.p2tools.p2Lib.mtFilm.film.FilmlistFactory;
-import de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent;
-import de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerLoadFilmlist;
-import de.p2tools.p2Lib.mtFilm.loadFilmlist.LoadFilmlist;
-import de.p2tools.p2Lib.mtFilm.tools.LoadFactoryConst;
-import de.p2tools.p2Lib.tools.duration.PDuration;
-import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.mtfilm.film.FilmData;
+import de.p2tools.p2lib.mtfilm.film.Filmlist;
+import de.p2tools.p2lib.mtfilm.film.FilmlistFactory;
+import de.p2tools.p2lib.mtfilm.loadfilmlist.ListenerFilmlistLoadEvent;
+import de.p2tools.p2lib.mtfilm.loadfilmlist.ListenerLoadFilmlist;
+import de.p2tools.p2lib.mtfilm.loadfilmlist.LoadFilmlist;
+import de.p2tools.p2lib.mtfilm.tools.LoadFactoryConst;
+import de.p2tools.p2lib.tools.duration.PDuration;
+import de.p2tools.p2lib.tools.log.PLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +51,7 @@ public class LoadFilmFactory {
         loadFilmlist = new LoadFilmlist(filmlistNew, filmlistDiff);
         loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
             @Override
-            public synchronized void start(de.p2tools.p2Lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent event) {
+            public synchronized void start(ListenerFilmlistLoadEvent event) {
                 ProgData.getInstance().worker.workOnLoadStart();
                 if (event.progress == PROGRESS_INDETERMINATE) {
                     // ist dann die gespeicherte Filmliste
@@ -81,14 +81,14 @@ public class LoadFilmFactory {
                     ProgSave.saveAll(); // damit nichts verloren geht
                 }
                 PDuration.onlyPing("Filme nachbearbeiten: Ende");
+//                if (!ProgConfig.ABO_SEARCH_NOW.getValue() && !ProgData.automode) {
+//                    //wird sonst eh noch gemacht
+//                    ProgData.getInstance().maskerPane.switchOffMasker();
+//                }
 
-                if (!ProgConfig.ABO_SEARCH_NOW.getValue() && !ProgData.automode) {
-                    //wird sonst eh noch gemacht
-                    ProgData.getInstance().maskerPane.setMaskerVisible(false);
-                }
                 ProgData.getInstance().worker.workOnLoadFinished();
                 ProgData.getInstance().filmFilterRunner.filter();
-
+                ProgData.getInstance().maskerPane.switchOffMasker();//damit auf jedem Fall, aus
 
                 int age = FilmlistFactory.getAge(ProgData.getInstance().filmlist.metaData);
                 ProgConfig.SYSTEM_FILMLIST_AGE.setValue(ProgData.getInstance().filmlist.isEmpty() ? P2LibConst.NUMBER_NOT_STARTED : age);

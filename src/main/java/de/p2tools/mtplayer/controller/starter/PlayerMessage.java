@@ -16,7 +16,7 @@
 
 package de.p2tools.mtplayer.controller.starter;
 
-import de.p2tools.p2Lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.PLog;
 
 /**
  * das sind die Meldungen die externe Programme liefern (z.B.: VLC)
