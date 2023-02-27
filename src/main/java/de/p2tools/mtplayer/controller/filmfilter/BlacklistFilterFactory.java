@@ -116,8 +116,8 @@ public class BlacklistFilterFactory {
         final FilmlistMTP filmlist = progData.filmlist;
         final FilmlistMTP listFiltered = progData.filmlistFiltered;
 
-        PDuration.counterStart("FilmlistBlackFilter.getBlackFiltered");
-        loadCurrentFilterSettings();
+        PDuration.counterStart("getBlackFiltered");
+        loadCurrentBlacklistSettings();
         listFiltered.clear();
 
         if (filmlist != null) {
@@ -145,12 +145,16 @@ public class BlacklistFilterFactory {
             // Array mit Sendernamen/Themen füllen
             listFiltered.loadTheme();
         }
-        PDuration.counterStop("FilmlistBlackFilter.getBlackFiltered");
+        PDuration.counterStop("getBlackFiltered");
     }
 
     public static synchronized void markFilmBlack() {
-        PDuration.counterStart("FilmlistBlackFilter.markFilmBlack");
-        loadCurrentFilterSettings();
+        //hier werden die Filme gekennzeichnet, ob sie "black" sind und das dauert
+        PDuration.counterStart("markFilmBlack");
+        PLog.sysLog("markFilmBlack -> start");
+        loadCurrentBlacklistSettings();
+
+        //und jetzt die Filmliste durchlaufen
         ProgData.getInstance().filmlist.stream().forEach(film -> {
             if (checkBlacklist(film)) {
                 film.setBlackBlocked(true);
@@ -158,7 +162,8 @@ public class BlacklistFilterFactory {
                 film.setBlackBlocked(false);
             }
         });
-        PDuration.counterStop("FilmlistBlackFilter.markFilmBlack");
+        PLog.sysLog("markFilmBlack -> stop");
+        PDuration.counterStop("markFilmBlack");
     }
 
     /**
@@ -171,7 +176,7 @@ public class BlacklistFilterFactory {
         // hier werden die Filme für Downloads aus Abos gesucht,
         // und wenn die Blacklist bei den Abos berücksichtigt werden soll,
         // wird damit geprüft
-        loadCurrentFilterSettings(); // todo das muss nur beim ersten mal gemacht werden
+        loadCurrentBlacklistSettings(); // todo das muss nur beim ersten mal gemacht werden
         return checkBlacklist(film);
     }
 
@@ -207,11 +212,8 @@ public class BlacklistFilterFactory {
         return !ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST.getValue();
     }
 
-
-    /**
-     * Load current filter settings from Config
-     */
-    private static void loadCurrentFilterSettings() {
+    private static void loadCurrentBlacklistSettings() {
+        //die aktuellen allgemeinen Blacklist-Einstellungen laden
         try {
             if (ProgConfig.SYSTEM_BLACKLIST_MAX_FILM_DAYS.getValue() == 0) {
                 maxFilmDays = 0;

@@ -17,76 +17,39 @@
 package de.p2tools.mtplayer.gui.filter;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.ProgIcons;
-import de.p2tools.mtplayer.gui.dialog.BlackDialog;
-import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
-import javafx.scene.control.Tooltip;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 public class FilmFilterController extends FilterController {
 
-    private final VBox vBoxFilter;
-    private final VBox vBoxBlacklist;
-    private final ProgData progData;
-
-    private final PToggleSwitch tglBlacklist = new PToggleSwitch("Blacklist:");
-
-    FilmFilterControllerTextFilter textFilter;
-    FilmFilterControllerFilter filter;
-    FilmFilterControllerClearFilter clearFilter;
-    FilmFilterControllerProfiles profiles;
+    private FilmFilterControllerTextFilter filmFilterControllerTextFilter;
+    private FilmFilterControllerFilter filmFilterControllerFilter;
+    private FilmFilterControllerClearFilter filmFilterControllerClearFilter;
+    private FilmFilterControllerProfiles filmFilterControllerProfiles;
+    private FilmFilterControllerBlacklist filmFilterControllerBlacklist;
 
     public FilmFilterController() {
         super(ProgConfig.FILM_GUI_FILTER_DIVIDER_ON);
-        progData = ProgData.getInstance();
 
-        textFilter = new FilmFilterControllerTextFilter();
-        filter = new FilmFilterControllerFilter();
-        clearFilter = new FilmFilterControllerClearFilter();
-        profiles = new FilmFilterControllerProfiles();
+        filmFilterControllerTextFilter = new FilmFilterControllerTextFilter();
+        filmFilterControllerFilter = new FilmFilterControllerFilter();
+        filmFilterControllerClearFilter = new FilmFilterControllerClearFilter();
+        filmFilterControllerProfiles = new FilmFilterControllerProfiles();
+        filmFilterControllerBlacklist = new FilmFilterControllerBlacklist();
 
         Separator sp = new Separator();
         sp.getStyleClass().add("pseperator3");
         sp.setMinHeight(0);
         sp.setPadding(new Insets(0, 15, 0, 15));
 
-        vBoxFilter = getVBoxAll();
-        vBoxFilter.setSpacing(0);
-        VBox.setVgrow(clearFilter, Priority.ALWAYS);
+        getVBoxAll().setSpacing(0);
+        VBox.setVgrow(filmFilterControllerClearFilter, Priority.ALWAYS);
 
-        vBoxFilter.getChildren().addAll(textFilter, filter, clearFilter, sp, profiles);
+        getVBoxAll().getChildren().addAll(filmFilterControllerTextFilter, filmFilterControllerFilter,
+                filmFilterControllerClearFilter, sp, filmFilterControllerProfiles);
 
-        Button btnBlack = new Button("");
-        btnBlack.getStyleClass().add("buttonSmall");
-        btnBlack.setGraphic(ProgIcons.Icons.ICON_BUTTON_EDIT.getImageView());
-        btnBlack.setOnAction(a -> {
-            new BlackDialog(progData);
-        });
-
-        Label lblRight = new Label();
-        tglBlacklist.setAllowIndeterminate(true);
-        tglBlacklist.setLabelLeft("Blacklist [ein]:", "Blacklist [aus]:", "Blacklist [invers]:");
-        tglBlacklist.setTooltip(new Tooltip("Blacklist aus: Alle Filme werden angezeigt.\n" +
-                "Blacklist ein: Von der Blacklist erfasste Filme werden nicht angezeigt.\n" +
-                "Blacklist invers: Nur von der Blacklist erfasste Filme werden angezeigt."));
-
-
-        tglBlacklist.selectedProperty().bindBidirectional(progData.actFilmFilterWorker.getActFilterSettings().blacklistOnProperty());
-        tglBlacklist.indeterminateProperty().bindBidirectional(progData.actFilmFilterWorker.getActFilterSettings().blacklistOnlyProperty());
-
-        vBoxBlacklist = getVBoxBottom();
-        HBox hBox = new HBox(5);
-        hBox.setAlignment(Pos.CENTER_RIGHT);
-        HBox.setHgrow(tglBlacklist, Priority.ALWAYS);
-        hBox.getChildren().addAll(tglBlacklist, lblRight, btnBlack);
-        vBoxBlacklist.getChildren().add(hBox);
+        getVBoxBottom().getChildren().add(filmFilterControllerBlacklist);
     }
 }
