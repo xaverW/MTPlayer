@@ -23,7 +23,7 @@ import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.data.SetDataList;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmTools;
-import de.p2tools.mtplayer.controller.filmfilter.FilmFilterFactory;
+import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
 import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
 import de.p2tools.mtplayer.gui.mediadialog.MediaDialogController;
 import de.p2tools.mtplayer.gui.tools.Listener;
@@ -144,7 +144,7 @@ public class FilmGuiController extends AnchorPane {
             int sel = tableView.getSelectionModel().getSelectedIndex();
             for (int i = sel; i >= 0; --i) {
                 FilmDataMTP filmDataMTP = tableView.getItems().get(i);
-                if (!FilmFilterFactory.checkFilmWithBlacklistFilter(blackData, filmDataMTP)) {
+                if (!BlacklistFilterFactory.checkFilmIsBlocked(filmDataMTP, blackData, false)) {
                     lastShownFilmData = filmDataMTP;
                     break;
                 }

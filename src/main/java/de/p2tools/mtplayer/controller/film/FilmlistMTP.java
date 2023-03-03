@@ -18,7 +18,6 @@ package de.p2tools.mtplayer.controller.film;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.data.SetData;
-import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
 import de.p2tools.p2lib.mtfilm.film.*;
 import de.p2tools.p2lib.tools.duration.PDuration;
 import de.p2tools.p2lib.tools.log.PDebugLog;
@@ -41,15 +40,6 @@ public class FilmlistMTP extends Filmlist<FilmDataMTP> {
     @Override
     public FilmDataMTP getNewElement() {
         return new FilmDataMTP();
-    }
-
-    public synchronized void filterListWithBlacklist(boolean markFilms) {
-        // damit wird die Filmlist gegen die Blacklist geprüft:
-        // Filmliste geladen, add Black, ConfigDialog, Filter blkBtn
-        if (markFilms) {
-            BlacklistFilterFactory.markFilmBlack();
-        }
-        BlacklistFilterFactory.getBlackFiltered();
     }
 
     @Override
@@ -137,7 +127,6 @@ public class FilmlistMTP extends Filmlist<FilmDataMTP> {
         // läuft direkt nach dem Laden der Filmliste!
         // doppelte Filme (URL), Geo, InFuture markieren
         // viele Filme sind bei mehreren Sendern vorhanden
-
         return FilmlistFactory.markFilms(this);
     }
 

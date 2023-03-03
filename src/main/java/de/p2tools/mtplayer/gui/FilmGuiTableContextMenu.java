@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.abo.AboFactory;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmTools;
-import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
+import de.p2tools.mtplayer.controller.filmfilter.BlacklistFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.gui.tools.table.TableFilm;
 import de.p2tools.p2lib.tools.PSystemUtils;
@@ -195,14 +195,14 @@ public class FilmGuiTableContextMenu {
         Menu submenuBlacklist = new Menu("Blacklist");
 
         final MenuItem miBlack = new MenuItem("Blacklist-Eintrag für den Film erstellen");
-        miBlack.setOnAction(event -> BlacklistFilterFactory.addBlack());
+        miBlack.setOnAction(event -> BlacklistFactory.addBlack());
 
         final MenuItem miBlackSenderTheme = new MenuItem("Sender und Thema direkt in die Blacklist einfügen");
-        miBlackSenderTheme.setOnAction(event -> BlacklistFilterFactory.addBlack(filmDataMTP.getChannel(), filmDataMTP.getTheme(), ""));
+        miBlackSenderTheme.setOnAction(event -> BlacklistFactory.addBlack(filmDataMTP.getChannel(), filmDataMTP.getTheme(), ""));
         final MenuItem miBlackTheme = new MenuItem("Thema direkt in die Blacklist einfügen");
-        miBlackTheme.setOnAction(event -> BlacklistFilterFactory.addBlack("", filmDataMTP.getTheme(), ""));
+        miBlackTheme.setOnAction(event -> BlacklistFactory.addBlack("", filmDataMTP.getTheme(), ""));
         final MenuItem miBlackTitle = new MenuItem("Titel direkt in die Blacklist einfügen");
-        miBlackTitle.setOnAction(event -> BlacklistFilterFactory.addBlack("", "", filmDataMTP.getTitle()));
+        miBlackTitle.setOnAction(event -> BlacklistFactory.addBlack("", "", filmDataMTP.getTitle()));
 
         submenuBlacklist.getItems().addAll(miBlack, miBlackSenderTheme, miBlackTheme, miBlackTitle);
         return submenuBlacklist;

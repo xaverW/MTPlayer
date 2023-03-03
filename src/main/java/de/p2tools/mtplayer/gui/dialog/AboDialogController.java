@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
+import de.p2tools.mtplayer.controller.data.abo.AboFactory;
 import de.p2tools.mtplayer.controller.data.abo.AboFieldNames;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.gui.tools.HelpText;
@@ -221,7 +222,7 @@ public class AboDialogController extends PDialogExtra {
     }
 
     private boolean checkChanges() {
-        if (addNewAbo && progData.aboList.aboExistsAlready(aboCopy)) {
+        if (addNewAbo && AboFactory.aboExistsAlready(aboCopy)) {
             // dann gibts das Abo schon
             PAlert.showErrorAlert(getStage(), "Fehler", "Abo anlegen",
                     "Ein Abo mit den Einstellungen existiert bereits");

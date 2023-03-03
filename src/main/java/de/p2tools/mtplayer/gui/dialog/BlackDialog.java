@@ -20,10 +20,9 @@ package de.p2tools.mtplayer.gui.dialog;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
-import de.p2tools.mtplayer.gui.configdialog.ConfigDialogController;
+import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
 import de.p2tools.mtplayer.gui.configpanes.PaneBlack;
 import de.p2tools.mtplayer.gui.configpanes.PaneBlackList;
-import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -99,8 +98,7 @@ public class BlackDialog extends PDialogExtra {
         if ((blackPaneChanged.get() || blackListPaneChanged.getValue())
                 && !LoadFilmFactory.loadFilmlist.getPropLoadFilmlist()) {
             // sonst hat sich nichts geändert oder wird dann eh gemacht
-            progData.filmlist.filterListWithBlacklist(true);
-            Listener.notify(Listener.EVENT_BLACKLIST_CHANGED, ConfigDialogController.class.getSimpleName());
+            BlacklistFilterFactory.markFilmBlack(true);
         }
     }
 }

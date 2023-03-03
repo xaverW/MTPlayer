@@ -20,6 +20,7 @@ package de.p2tools.mtplayer.controller.mv;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.BlackData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
+import de.p2tools.mtplayer.controller.data.abo.AboFactory;
 import javafx.collections.ObservableList;
 
 import java.nio.file.Path;
@@ -43,7 +44,7 @@ public class MVFactory {
     public static int addAbos(ObservableList<AboData> aboList) {
         int ret = 0;
         for (AboData aboData : aboList) {
-            if (!ProgData.getInstance().aboList.aboExistsAlready(aboData)) {
+            if (!AboFactory.aboExistsAlready(aboData)) {
                 ++ret;
                 ProgData.getInstance().aboList.addAbo(aboData);
             }

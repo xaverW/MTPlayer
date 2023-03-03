@@ -17,114 +17,13 @@
 package de.p2tools.mtplayer.controller.filmfilter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.BlackData;
-import de.p2tools.mtplayer.controller.data.abo.AboData;
-import de.p2tools.p2lib.mtfilm.film.FilmData;
-import de.p2tools.p2lib.mtfilter.FilmFilterCheck;
-import de.p2tools.p2lib.mtfilter.Filter;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 
 public class FilmFilterFactory {
 
     private FilmFilterFactory() {
     }
-
-    public static boolean aboExistsAlready(AboData aboExits, AboData checkAbo) {
-        // prüfen ob "aboExistiert" das "aboPrüfen" mit abdeckt, also die gleichen (oder mehr)
-        // Filme findet, dann wäre das neue Abo hinfällig
-
-        if (!checkAboExistArr(aboExits.getChannel(), checkAbo.getChannel(), true)) {
-            return false;
-        }
-
-        if (!checkAboExistArr(aboExits.getTheme(), checkAbo.getTheme(), true)) {
-            return false;
-        }
-
-        if (!checkAboExistArr(aboExits.getTitle(), checkAbo.getTitle(), true)) {
-            return false;
-        }
-
-        if (!checkAboExistArr(aboExits.getThemeTitle(), checkAbo.getThemeTitle(), true)) {
-            return false;
-        }
-
-        if (!checkAboExistArr(aboExits.getSomewhere(), checkAbo.getSomewhere(), true)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    private static boolean checkAboExistArr(String aboExist, String aboCheck, boolean arr) {
-        // da wird man immer eine Variante bauen können, die Filme eines bestehenden Abos
-        // mit abdeckt -> nur eine einfache offensichtliche Prüfung
-
-        aboCheck = aboCheck.trim();
-        aboExist = aboExist.trim();
-
-        if (aboCheck.isEmpty() && aboExist.isEmpty()) {
-            return true;
-        }
-
-        if (aboCheck.toLowerCase().equals(aboExist.toLowerCase())) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public static boolean checkFilmWithBlacklistFilter(BlackData blackData, FilmData filmData) {
-        return checkFilmWithFilter(
-                blackData.fChannel,
-                blackData.fTheme,
-                blackData.fThemeTitle,
-                blackData.fTitle,
-                blackData.fSomewhere,
-                filmData);
-    }
-
-    /**
-     * Abo und Blacklist prüfen
-     *
-     * @param sender
-     * @param theme
-     * @param themeTitle
-     * @param title
-     * @param somewhere
-     * @param film
-     * @return
-     */
-    public static boolean checkFilmWithFilter(Filter sender,
-                                              Filter theme,
-                                              Filter themeTitle,
-                                              Filter title,
-                                              Filter somewhere,
-                                              FilmData film) {
-
-        if (!sender.empty && !FilmFilterCheck.checkChannelSmart(sender, film)) {
-            return false;
-        }
-
-        if (!theme.empty && !FilmFilterCheck.checkThemeExact(theme, film)) {
-            return false;
-        }
-
-        if (!themeTitle.empty && !FilmFilterCheck.checkThemeTitle(themeTitle, film)) {
-            return false;
-        }
-
-        if (!title.empty && !FilmFilterCheck.checkTitle(title, film)) {
-            return false;
-        }
-
-        if (!somewhere.empty && !FilmFilterCheck.checkSomewhere(somewhere, film)) {
-            return false;
-        }
-
-        return true;
-    }
-
+    
     public static FilmFilter getBookmarkFilter(FilmFilter filmFilter) {
         FilmFilter sf = filmFilter.getCopy();
         sf.clearFilter();

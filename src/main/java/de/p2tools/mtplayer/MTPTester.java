@@ -19,6 +19,7 @@ package de.p2tools.mtplayer;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
 import de.p2tools.p2lib.dialogs.ProgInfoDialog;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.pmask.PMaskerPane;
@@ -89,9 +90,15 @@ public class MTPTester {
             btnMarkFilm.setMaxWidth(Double.MAX_VALUE);
             btnMarkFilm.setOnAction(a -> check());
 
+            Button btnMarkBlack = new Button("MarkBlack");
+            btnMarkBlack.setMaxWidth(Double.MAX_VALUE);
+            btnMarkBlack.setOnAction(a -> BlacklistFilterFactory.markFilmBlack(true));
+
+
             int row = 0;
             gridPane.add(text, 0, row, 2, 1);
             gridPane.add(btnMarkFilm, 0, ++row);
+            gridPane.add(btnMarkBlack, 0, ++row);
 
             gridPane.add(textArea, 0, ++row, 2, 1);
 

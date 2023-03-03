@@ -25,6 +25,10 @@ public class BlackData extends BlackDataProps {
     public Filter fThemeTitle = new Filter();
     public Filter fTitle = new Filter();
     public Filter fSomewhere = new Filter();
+    public boolean quickChannel = false;
+    public boolean quickTheme = false;
+    public boolean quickThemTitle = false;
+    public boolean quickTitle = false;
 
 
     public BlackData() {
@@ -42,13 +46,13 @@ public class BlackData extends BlackDataProps {
         setThemeTitle(themeTitle);
     }
 
-    public void createFilter() {
+    private void createFilter() {
         fChannel.filter = getChannel();
-        fChannel.exact = false;
+        fChannel.isExact = false;
         fChannel.makeFilterArray();
 
         fTheme.filter = getTheme();
-        fTheme.exact = isThemeExact();
+        fTheme.isExact = isThemeExact();
         fTheme.makeFilterArray();
 
         fThemeTitle.filter = getThemeTitle();
@@ -56,6 +60,62 @@ public class BlackData extends BlackDataProps {
 
         fTitle.filter = getTitle();
         fTitle.makeFilterArray();
+        setQuickChannel();
+        setQuickTheme();
+        setQuickThemeTitle();
+        setQuickTitle();
+    }
+
+    private void setQuickChannel() {
+        if (fTheme.isEmpty &&
+                fThemeTitle.isEmpty &&
+                fTitle.isEmpty &&
+                fSomewhere.isEmpty &&
+                fChannel.isQick) {
+            quickChannel = true;
+
+        } else {
+            quickChannel = false;
+        }
+    }
+
+    private void setQuickTheme() {
+        if (fChannel.isEmpty &&
+                fThemeTitle.isEmpty &&
+                fTitle.isEmpty &&
+                fSomewhere.isEmpty &&
+                fTheme.isQick) {
+            quickTheme = true;
+
+        } else {
+            quickTheme = false;
+        }
+    }
+
+    private void setQuickThemeTitle() {
+        if (fChannel.isEmpty &&
+                fTheme.isEmpty &&
+                fTitle.isEmpty &&
+                fSomewhere.isEmpty &&
+                fThemeTitle.isQick) {
+            quickThemTitle = true;
+
+        } else {
+            quickThemTitle = false;
+        }
+    }
+
+    private void setQuickTitle() {
+        if (fChannel.isEmpty &&
+                fTheme.isEmpty &&
+                fThemeTitle.isEmpty &&
+                fSomewhere.isEmpty &&
+                fTitle.isQick) {
+            quickTitle = true;
+
+        } else {
+            quickTitle = false;
+        }
     }
 
     private void initFilter() {

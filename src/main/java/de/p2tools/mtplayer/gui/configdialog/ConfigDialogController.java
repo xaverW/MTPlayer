@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
+import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
 import de.p2tools.mtplayer.gui.configdialog.setdata.ControllerSet;
 import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
@@ -125,8 +126,7 @@ public class ConfigDialogController extends PDialogExtra {
 
         if (blackChanged.get() && !LoadFilmFactory.loadFilmlist.getPropLoadFilmlist()) {
             // sonst hat sich nichts geändert oder wird dann eh gemacht
-            progData.filmlist.filterListWithBlacklist(true);
-            Listener.notify(Listener.EVENT_BLACKLIST_CHANGED, ConfigDialogController.class.getSimpleName());
+            BlacklistFilterFactory.markFilmBlack(true);
         }
 
         if (diacriticChanged.getValue()) {

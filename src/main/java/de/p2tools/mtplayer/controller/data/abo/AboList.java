@@ -22,7 +22,6 @@ import de.p2tools.mtplayer.controller.data.download.DownloadTools;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
-import de.p2tools.mtplayer.controller.filmfilter.FilmFilterFactory;
 import de.p2tools.mtplayer.gui.dialog.AboEditDialogController;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
@@ -304,7 +303,7 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
     }
 
     public synchronized ArrayList<String> getAboNameList() {
-        // liefert ein Array mit allen Abonamen
+        // liefert ein Array mit allen AboNamen
         final ArrayList<String> name = new ArrayList<>();
         name.add("");
         for (final AboData abo : this) {
@@ -315,15 +314,5 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
         }
         name.sort(sorter);
         return name;
-    }
-
-    public boolean aboExistsAlready(AboData abo) {
-        // true wenn es das Abo schon gibt
-        for (final AboData dataAbo : this) {
-            if (FilmFilterFactory.aboExistsAlready(dataAbo, abo)) {
-                return true;
-            }
-        }
-        return false;
     }
 }

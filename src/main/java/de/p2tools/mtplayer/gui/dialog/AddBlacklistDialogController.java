@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.BlackData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
+import de.p2tools.mtplayer.controller.filmfilter.BlacklistFactory;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
@@ -102,7 +102,7 @@ public class AddBlacklistDialogController extends PDialogExtra {
     private void initGridPane() {
         initSenderMenu();
         btnCount.setOnAction(a -> {
-            BlacklistFilterFactory.countHits(blackData);
+            BlacklistFactory.countHits(blackData);
             lblCount.setText(blackData.getCountHits() + "");
         });
 

@@ -64,7 +64,7 @@ public class SearchPredicateWorker {
                 }
             }
 
-            if (filter.filterAnd) {
+            if (filter.isFilterAnd) {
                 // Suchbegriffe müssen alle passen
                 for (final String s : filter.filterArr) {
                     // dann jeden Suchbegriff checken

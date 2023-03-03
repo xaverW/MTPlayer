@@ -23,7 +23,7 @@ import de.p2tools.mtplayer.controller.data.BlackList;
 import de.p2tools.mtplayer.controller.data.BlackListFactory;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
-import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
+import de.p2tools.mtplayer.controller.filmfilter.BlacklistFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
@@ -311,7 +311,7 @@ public class PaneBlackList {
                 "Für jeden Eintrag in der Blacklist wird gezählt,\n" +
                 "wie viele Filme damit geblockt werden."));
         btnCountHits.setOnAction(a -> {
-            BlacklistFilterFactory.countHits(list, false);
+            BlacklistFactory.countHits(list, false);
             PTableFactory.refreshTable(tableView);
         });
 

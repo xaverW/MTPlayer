@@ -22,14 +22,11 @@ import de.p2tools.mtplayer.controller.UpdateCheckFactory;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
-import de.p2tools.mtplayer.controller.data.BlackData;
-import de.p2tools.mtplayer.controller.data.BlackList;
 import de.p2tools.mtplayer.controller.data.abo.AboFactory;
-import de.p2tools.mtplayer.controller.filmfilter.FilmFilterFactory;
+import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.mediadb.MediaDataWorker;
 import de.p2tools.mtplayer.gui.tools.ProgTipOfDayFactory;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.mtfilm.film.FilmData;
 import de.p2tools.p2lib.mtfilm.film.Filmlist;
 import de.p2tools.p2lib.mtfilm.film.FilmlistFactory;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.ListenerFilmlistLoadEvent;
@@ -128,7 +125,7 @@ public class LoadFilmFactory {
         }
 
         logList.add("Blacklist filtern");
-        ProgData.getInstance().filmlist.filterListWithBlacklist(true);
+        BlacklistFilterFactory.markFilmBlack(false);
 
         logList.add("Filme in Downloads eingetragen");
         ProgData.getInstance().downloadList.addFilmInList();
@@ -159,7 +156,7 @@ public class LoadFilmFactory {
         LoadFactoryConst.filmlist = ProgData.getInstance().filmlist;
 
         LoadFactoryConst.FilmChecker filmChecker = filmData ->
-                checkFilmAgainstBlacklist(filmData, ProgData.getInstance().filmLoadBlackList);
+                BlacklistFilterFactory.checkFilmIsBlockedAndCountHits(filmData, ProgData.getInstance().filmLoadBlackList, true);
 
         if (ProgConfig.SYSTEM_USE_FILTER_LOAD_FILMLIST.getValue()) {
             //nur dann sollen Filme geprüft werden
@@ -173,14 +170,4 @@ public class LoadFilmFactory {
     public synchronized static final LoadFilmFactory getInstance() {
         return instance == null ? instance = new LoadFilmFactory(new FilmlistMTP(), new FilmlistMTP()) : instance;
     }
-
-    private static synchronized boolean checkFilmAgainstBlacklist(FilmData film, BlackList list) {
-        for (final BlackData blackData : list) {
-            if (FilmFilterFactory.checkFilmWithBlacklistFilter(blackData, film)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
 }

@@ -143,7 +143,7 @@ public class PredicateFactory {
         }
 
         if (onlyBlack) {
-            predicate = predicate.and(f -> !f.isBlackBlocked());
+            predicate = predicate.and(f -> f.isBlackBlocked());
         }
 
         //anz Tage Sendezeit
@@ -154,40 +154,40 @@ public class PredicateFactory {
 
         // Filmlänge
         if (minLengthMinute != 0) {
-            predicate = predicate.and(f -> FilmFilterCheck.checkLengthMin(minLengthMinute, f.getDurationMinute()));
+            predicate = predicate.and(f -> FilmFilterCheck.checkMatchLengthMin(minLengthMinute, f.getDurationMinute()));
         }
         if (maxLengthMinute != FilterCheck.FILTER_DURATION_MAX_MINUTE) {
-            predicate = predicate.and(f -> FilmFilterCheck.checkLengthMax(maxLengthMinute, f.getDurationMinute()));
+            predicate = predicate.and(f -> FilmFilterCheck.checkMatchLengthMax(maxLengthMinute, f.getDurationMinute()));
         }
 
         // Film-Uhrzeit
         if (minTimeSec != 0 || maxTimeSec != FilterCheck.FILTER_TIME_MAX_SEC) {
-            predicate = predicate.and(f -> FilmFilterCheck.checkFilmTime(minTimeSec, maxTimeSec, minMaxTimeInvert, f.filmTime));
+            predicate = predicate.and(f -> FilmFilterCheck.checkMatchFilmTime(minTimeSec, maxTimeSec, minMaxTimeInvert, f.filmTime));
         }
 
 
-        if (!fChannel.empty) {
-            predicate = predicate.and(f -> FilmFilterCheck.checkChannelSmart(fChannel, f));
+        if (!fChannel.isEmpty) {
+            predicate = predicate.and(f -> FilmFilterCheck.checkMatchChannelSmart(fChannel, f));
         }
 
-        if (!fTheme.empty) {
-            predicate = predicate.and(f -> FilmFilterCheck.checkThemeExact(fTheme, f));
+        if (!fTheme.isEmpty) {
+            predicate = predicate.and(f -> FilmFilterCheck.checkMatchThemeExact(fTheme, f));
         }
 
-        if (!fThemeTitle.empty) {
-            predicate = predicate.and(f -> FilmFilterCheck.checkThemeTitle(fThemeTitle, f));
+        if (!fThemeTitle.isEmpty) {
+            predicate = predicate.and(f -> FilmFilterCheck.checkMatchThemeTitle(fThemeTitle, f));
         }
 
-        if (!fTitle.empty) {
-            predicate = predicate.and(f -> FilmFilterCheck.checkTitle(fTitle, f));
+        if (!fTitle.isEmpty) {
+            predicate = predicate.and(f -> FilmFilterCheck.checkMatchTitle(fTitle, f));
         }
 
-        if (!fSomewhere.empty) {
-            predicate = predicate.and(f -> FilmFilterCheck.checkSomewhere(fSomewhere, f));
+        if (!fSomewhere.isEmpty) {
+            predicate = predicate.and(f -> FilmFilterCheck.checkMatchSomewhere(fSomewhere, f));
         }
 
-        if (!fUrl.empty) {
-            predicate = predicate.and(f -> FilmFilterCheck.checkUrl(fUrl, f));
+        if (!fUrl.isEmpty) {
+            predicate = predicate.and(f -> FilmFilterCheck.checkMatchUrl(fUrl, f));
         }
 
         //Sendetag

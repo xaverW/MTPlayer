@@ -17,9 +17,10 @@
 
 package de.p2tools.mtplayer.controller.data.abo;
 
+import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmlistMTP;
-import de.p2tools.mtplayer.controller.filmfilter.FilmFilterFactory;
+import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
 import de.p2tools.p2lib.mtfilter.FilmFilterCheck;
 import de.p2tools.p2lib.tools.duration.PDuration;
@@ -38,19 +39,7 @@ public class AboFactory {
             return null;
         }
 
-        final AboData aboData = aboList.stream()
-                .filter(abo -> FilmFilterFactory.checkFilmWithFilter(
-                        abo.fChannel,
-                        abo.fTheme,
-                        abo.fThemeTitle,
-                        abo.fTitle,
-                        abo.fSomewhere,
-                        film))
-
-                .findFirst()
-                .orElse(null);
-
-        return aboData;
+        return BlacklistFilterFactory.findAbo(film, aboList);
     }
 
     public static synchronized void setAboForFilmlist(FilmlistMTP filmlistMTP, AboList aboList) {
@@ -107,12 +96,12 @@ public class AboFactory {
             film.arr[FilmDataXml.FILM_ABO_NAME] = abo.getName() + (" [zu alt]");
             film.setAbo(null);
 
-        } else if (!FilmFilterCheck.checkLengthMin(abo.getMinDurationMinute(), film.getDurationMinute())) {
+        } else if (!FilmFilterCheck.checkMatchLengthMin(abo.getMinDurationMinute(), film.getDurationMinute())) {
             // dann ist der Film zu kurz
             film.arr[FilmDataXml.FILM_ABO_NAME] = abo.getName() + (" [zu kurz]");
             film.setAbo(null);
 
-        } else if (!FilmFilterCheck.checkLengthMax(abo.getMaxDurationMinute(), film.getDurationMinute())) {
+        } else if (!FilmFilterCheck.checkMatchLengthMax(abo.getMaxDurationMinute(), film.getDurationMinute())) {
             // dann ist der Film zu lang
             film.arr[FilmDataXml.FILM_ABO_NAME] = abo.getName() + (" [zu lang]");
             film.setAbo(null);
@@ -122,5 +111,53 @@ public class AboFactory {
             film.arr[FilmDataXml.FILM_ABO_NAME] = abo.getName();
             film.setAbo(abo);
         }
+    }
+
+    public static boolean aboExistsAlready(AboData checkAbo) {
+        // prüfen ob "aboExistiert" das "aboPrüfen" mit abdeckt, also die gleichen (oder mehr)
+        // Filme findet, dann wäre das neue Abo hinfällig
+
+        // true, wenn es das Abo schon gibt
+        for (final AboData dataAbo : ProgData.getInstance().aboList) {
+            if (checkAboExistArr(dataAbo.getChannel(), checkAbo.getChannel(), true)) {
+                return true;
+            }
+
+            if (!checkAboExistArr(dataAbo.getTheme(), checkAbo.getTheme(), true)) {
+                return true;
+            }
+
+            if (!checkAboExistArr(dataAbo.getTitle(), checkAbo.getTitle(), true)) {
+                return true;
+            }
+
+            if (!checkAboExistArr(dataAbo.getThemeTitle(), checkAbo.getThemeTitle(), true)) {
+                return true;
+            }
+
+            if (!checkAboExistArr(dataAbo.getSomewhere(), checkAbo.getSomewhere(), true)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static boolean checkAboExistArr(String aboExist, String aboCheck, boolean arr) {
+        // da wird man immer eine Variante bauen können, die Filme eines bestehenden Abos
+        // mit abdeckt -> nur eine einfache offensichtliche Prüfung
+
+        aboCheck = aboCheck.trim();
+        aboExist = aboExist.trim();
+
+        if (aboCheck.isEmpty() && aboExist.isEmpty()) {
+            return true;
+        }
+
+        if (aboCheck.equalsIgnoreCase(aboExist)) {
+            return true;
+        }
+
+        return false;
     }
 }

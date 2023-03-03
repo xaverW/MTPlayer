@@ -17,8 +17,8 @@
 package de.p2tools.mtplayer.controller.data;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.filmfilter.BlacklistFactory;
 import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
-import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.p2lib.configfile.pdata.PDataList;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
@@ -71,24 +71,8 @@ public class BlackList extends SimpleListProperty<BlackData> implements PDataLis
     public synchronized boolean addAndNotify(BlackData b) {
         b.setNo(nr++);
         final boolean ret = super.add(b);
-        filterListAndNotifyListeners();
+        BlacklistFilterFactory.markFilmBlack(true);
         return ret;
-    }
-
-    public synchronized boolean removeAndNotify(Object b) {
-        final boolean ret = super.remove(b);
-        filterListAndNotifyListeners();
-        return ret;
-    }
-
-    public synchronized void clearAndNotify() {
-        super.clear();
-        filterListAndNotifyListeners();
-    }
-
-    public synchronized void filterListAndNotifyListeners() {
-        progData.filmlist.filterListWithBlacklist(true);
-        Listener.notify(Listener.EVENT_BLACKLIST_CHANGED, BlackList.class.getSimpleName());
     }
 
     public synchronized void clearCounter() {
@@ -99,12 +83,12 @@ public class BlackList extends SimpleListProperty<BlackData> implements PDataLis
 
     public synchronized void sortTheListWithCounter() {
         //zuerst ohne Abbruch Treffer suchen
-        BlacklistFilterFactory.countHits(this, false);
+        BlacklistFactory.countHits(this, false);
         //und dann sortieren
         Collections.sort(this, Comparator.comparingInt(BlackDataProps::getCountHits).reversed());
 
         //dann die tatsächlichen Trefferzahlen ermitteln
-        BlacklistFilterFactory.countHits(this, true);
+        BlacklistFactory.countHits(this, true);
         // und dann endgültig sortieren
         Collections.sort(this, Comparator.comparingInt(BlackDataProps::getCountHits).reversed());
         //--> so sind dann evtl. doppelte Einträge unten in der Liste einsortiert und bremsen nicht
