@@ -39,9 +39,7 @@ public class FilmFilterControllerBlacklist extends HBox {
         Button btnBlack = new Button("");
         btnBlack.getStyleClass().add("buttonSmall");
         btnBlack.setGraphic(ProgIcons.Icons.ICON_BUTTON_EDIT.getImageView());
-        btnBlack.setOnAction(a -> {
-            new BlackDialog(progData);
-        });
+        btnBlack.setOnAction(a -> new BlackDialog(progData));
 
         Label lblRight = new Label();
         tglBlacklist.setAllowIndeterminate(true);

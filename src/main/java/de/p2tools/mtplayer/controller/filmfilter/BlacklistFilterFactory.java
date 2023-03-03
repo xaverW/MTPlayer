@@ -145,12 +145,9 @@ public class BlacklistFilterFactory {
         doNotShowGeoBlockedFilms = ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_GEO.getValue();
     }
 
-    static int i = 0;
-
     private static synchronized boolean checkFilmIsBlocked(FilmData filmData) {
         //hier werden die Filme gegen die Blacklist geprüft
         //liefert TRUE -> wenn der Film zur Blacklist passt, also geblockt werden soll
-        ++i;
         if (doNotShowGeoBlockedFilms && filmData.isGeoBlocked()) {
             return true;
         }
@@ -162,8 +159,6 @@ public class BlacklistFilterFactory {
         }
         if (maxFilmDays > 0 && !checkOkDate(filmData)) {
             return true;
-        } else {
-            System.out.println("---> " + i);
         }
 
         filmData.setLowerCase();

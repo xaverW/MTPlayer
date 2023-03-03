@@ -259,6 +259,9 @@ public class ProgConfig extends PDataProgConfig {
     // StartDialog
     public static StringProperty START_DIALOG_DOWNLOAD_PATH = addStrProp("start-dialog-download-path", PSystemUtils.getStandardDownloadPath());
 
+    //BlacklistDialog
+    public static IntegerProperty DIALOG_BLACKLIST_OPEN_ACCORDION = new SimpleIntegerProperty(0);//wird nicht gespeichert
+
     // FilmInfoDialog
     public static BooleanProperty FILM_INFO_DIALOG_SHOW_URL = addBoolProp("film-info-dialog-show-url", Boolean.TRUE);
 
