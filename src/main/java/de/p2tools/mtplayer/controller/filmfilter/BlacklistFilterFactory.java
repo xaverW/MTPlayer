@@ -22,7 +22,6 @@ import de.p2tools.mtplayer.controller.data.BlackData;
 import de.p2tools.mtplayer.controller.data.BlackList;
 import de.p2tools.mtplayer.controller.data.BlackListFactory;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
-import de.p2tools.mtplayer.controller.data.abo.AboList;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmlistMTP;
 import de.p2tools.mtplayer.gui.tools.Listener;
@@ -222,9 +221,15 @@ public class BlacklistFilterFactory {
         return ret;
     }
 
-    public static AboData findAbo(FilmData film, AboList aboList) {
+    public static AboData findAbo(FilmData film) {
+        //liefert ein Abo zu dem Film, auch Abos die ausgeschaltet sind, Film zu klein ist, ...
+        if (film.isLive()) {
+            //Livestreams gehören nicht in ein Abo
+            return null;
+        }
+
         film.setLowerCase();
-        final AboData aboData = aboList.stream()
+        final AboData aboData = ProgData.getInstance().aboList.stream()
                 .filter(abo -> FilmFilterCheck.checkFilterMatch(
                         abo.fChannel,
                         abo.fTheme,
@@ -250,11 +255,21 @@ public class BlacklistFilterFactory {
             }
         }
         if (blackData.quickTheme) {
-            if (filmData.FILM_THEME_STR.contains(blackData.fTheme.filterArr[0])) {
-                //dann wird geblockt
-                return true;
+            if (blackData.fTheme.isExact) {
+                if (filmData.FILM_THEME_STR.equals(blackData.fTheme.filterArr[0])) {
+                    //dann wird geblockt
+                    return true;
+                } else {
+                    return false;
+                }
+
             } else {
-                return false;
+                if (filmData.FILM_THEME_STR.contains(blackData.fTheme.filterArr[0])) {
+                    //dann wird geblockt
+                    return true;
+                } else {
+                    return false;
+                }
             }
         }
         if (blackData.quickThemTitle) {

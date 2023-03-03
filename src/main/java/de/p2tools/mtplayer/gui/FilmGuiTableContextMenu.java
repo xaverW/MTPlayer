@@ -19,10 +19,10 @@ package de.p2tools.mtplayer.gui;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.SetDataList;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
-import de.p2tools.mtplayer.controller.data.abo.AboFactory;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmTools;
 import de.p2tools.mtplayer.controller.filmfilter.BlacklistFactory;
+import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.gui.tools.table.TableFilm;
 import de.p2tools.p2lib.tools.PSystemUtils;
@@ -148,7 +148,7 @@ public class FilmGuiTableContextMenu {
             FilmFilter filmFilter = progData.actFilmFilterWorker.getActFilterSettings();
             progData.aboList.addNewAboFromFilter(filmFilter);
         });
-        AboData aboData = AboFactory.findAboToFilm(film, progData.aboList);
+        AboData aboData = BlacklistFilterFactory.findAbo(film);
         if (aboData == null) {
             //nur dann gibts kein Abo, auch kein ausgeschaltetes, ...
             //neues Abo anlegen

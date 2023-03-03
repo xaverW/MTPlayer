@@ -19,7 +19,6 @@ package de.p2tools.mtplayer.controller.data.abo;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.film.FilmlistMTP;
 import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
 import de.p2tools.p2lib.mtfilter.FilmFilterCheck;
@@ -31,21 +30,11 @@ public class AboFactory {
     private AboFactory() {
     }
 
-    public static AboData findAboToFilm(FilmDataMTP film, AboList aboList) {
-        //liefert ein Abo zu dem Film, auch Abos die ausgeschaltet sind, Film zu klein ist, ...
-        if (film.isLive()) {
-            //Livestreams gehören nicht in ein Abo
-            //und gelöscht wird beim Zuordnen zu allen Filmen dann noch
-            return null;
-        }
-
-        return BlacklistFilterFactory.findAbo(film, aboList);
-    }
-
-    public static synchronized void setAboForFilmlist(FilmlistMTP filmlistMTP, AboList aboList) {
+    public static synchronized void setAboForFilmlist() {
         //hier wird tatsächlich für jeden Film die Liste der Abos durchsucht,
         //braucht länger
         PDuration.counterStart("Abo in Filmliste eintragen");
+        AboList aboList = ProgData.getInstance().aboList;
 
         // leere Abos löschen, die sind Fehler
         Iterator<AboData> it = aboList.listIterator();
@@ -58,7 +47,7 @@ public class AboFactory {
 
         if (aboList.isEmpty()) {
             // dann nur die Abos in der Filmliste löschen
-            filmlistMTP.parallelStream().forEach(film -> {
+            ProgData.getInstance().filmlist.parallelStream().forEach(film -> {
                 //für jeden Film Abo löschen
                 film.arr[FilmDataXml.FILM_ABO_NAME] = "";
                 film.setAbo(null);
@@ -74,13 +63,15 @@ public class AboFactory {
         });
 
         // das kostet die Zeit!!
-        filmlistMTP.parallelStream().forEach(filmDataMTP -> AboFactory.assignAboToFilm(filmDataMTP, aboList));
+        ProgData.getInstance().filmlist.parallelStream().
+                forEach(filmDataMTP -> AboFactory.assignAboToFilm(filmDataMTP));
 
         PDuration.counterStop("Abo in Filmliste eintragen");
     }
 
-    private static void assignAboToFilm(FilmDataMTP film, AboList aboList) {
-        final AboData abo = findAboToFilm(film, aboList);
+    private static void assignAboToFilm(FilmDataMTP film) {
+        final AboData abo = BlacklistFilterFactory.findAbo(film);
+        
         if (abo == null) {
             //kein Abo gefunden
             film.arr[FilmDataXml.FILM_ABO_NAME] = "";

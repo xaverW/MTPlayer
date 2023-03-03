@@ -111,13 +111,12 @@ public class LoadFilmFactory {
      */
     private void afterLoadingFilmlist() {
         List<String> logList = new ArrayList<>();
+
         logList.add("Themen suchen");
         ProgData.getInstance().filmlist.loadTheme();
 
-        if (!ProgData.getInstance().aboList.isEmpty()) {
-            logList.add("Abos eintragen");
-            AboFactory.setAboForFilmlist(ProgData.getInstance().filmlist, ProgData.getInstance().aboList);
-        }
+        logList.add("Abos eintragen");
+        AboFactory.setAboForFilmlist();
 
         if (!ProgData.getInstance().bookmarks.isEmpty()) {
             logList.add("Bookmarks eintragen");
