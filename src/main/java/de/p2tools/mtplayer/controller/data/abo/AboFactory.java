@@ -71,7 +71,7 @@ public class AboFactory {
 
     private static void assignAboToFilm(FilmDataMTP film) {
         final AboData abo = BlacklistFilterFactory.findAbo(film);
-        
+
         if (abo == null) {
             //kein Abo gefunden
             film.arr[FilmDataXml.FILM_ABO_NAME] = "";
@@ -104,49 +104,51 @@ public class AboFactory {
         }
     }
 
-    public static boolean aboExistsAlready(AboData checkAbo) {
+    public static AboData aboExistsAlready(AboData checkAbo) {
         // prüfen ob "aboExistiert" das "aboPrüfen" mit abdeckt, also die gleichen (oder mehr)
         // Filme findet, dann wäre das neue Abo hinfällig
 
         // true, wenn es das Abo schon gibt
         for (final AboData dataAbo : ProgData.getInstance().aboList) {
-            if (checkAboExistArr(dataAbo.getChannel(), checkAbo.getChannel(), true)) {
-                return true;
-            }
+            if (checkAboExist(dataAbo.getChannel(), checkAbo.getChannel(), true) &&
 
-            if (!checkAboExistArr(dataAbo.getTheme(), checkAbo.getTheme(), true)) {
-                return true;
-            }
+                    (dataAbo.isThemeExact() || checkAbo.isThemeExact() ?
+                            //wenn einer "exact" dann damit prüfen, ist nicht optimal? aber besser als nix
+                            checkAboExist(dataAbo.getTheme(), checkAbo.getTheme(), true) :
+                            checkAboExist(dataAbo.getTheme(), checkAbo.getTheme(), false)
+                    ) &&
 
-            if (!checkAboExistArr(dataAbo.getTitle(), checkAbo.getTitle(), true)) {
-                return true;
-            }
-
-            if (!checkAboExistArr(dataAbo.getThemeTitle(), checkAbo.getThemeTitle(), true)) {
-                return true;
-            }
-
-            if (!checkAboExistArr(dataAbo.getSomewhere(), checkAbo.getSomewhere(), true)) {
-                return true;
+                    checkAboExist(dataAbo.getThemeTitle(), checkAbo.getThemeTitle(), false) &&
+                    checkAboExist(dataAbo.getTitle(), checkAbo.getTitle(), false) &&
+                    checkAboExist(dataAbo.getSomewhere(), checkAbo.getSomewhere(), false)) {
+                return dataAbo;
             }
         }
-
-        return false;
+        return null;
     }
 
-    private static boolean checkAboExistArr(String aboExist, String aboCheck, boolean arr) {
-        // da wird man immer eine Variante bauen können, die Filme eines bestehenden Abos
-        // mit abdeckt -> nur eine einfache offensichtliche Prüfung
+    private static boolean checkAboExist(String aboExist, String aboCheck, boolean exact) {
+        //da wird man immer eine Variante bauen können, die Filme eines bestehenden Abos
+        //mit abdeckt -> nur eine einfache offensichtliche Prüfung
 
-        aboCheck = aboCheck.trim();
-        aboExist = aboExist.trim();
+        aboCheck = aboCheck.toLowerCase().trim();
+        aboExist = aboExist.toLowerCase().trim();
 
         if (aboCheck.isEmpty() && aboExist.isEmpty()) {
             return true;
         }
 
-        if (aboCheck.equalsIgnoreCase(aboExist)) {
-            return true;
+        if (exact) {
+            if (aboCheck.equals(aboExist)) {
+                //passt dann auch zu "exact", RegEx, ..
+                return true;
+            }
+
+        } else {
+            if (aboCheck.contains(aboExist)) {
+                //dann enthält der Suchbegriff das vorhandene Abo (das dann auch das Neue mit abdeckt)
+                return true;
+            }
         }
 
         return false;

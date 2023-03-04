@@ -94,8 +94,8 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
         super.add(abo);
     }
 
-    public synchronized void addNewAboFromFilter(FilmFilter filmFilter) {
-        // abo anlegen, oder false wenns schon existiert
+    public synchronized void addNewAboFromFilterButton(FilmFilter filmFilter) {
+        //abo anlegen, oder false wenns schon existiert
         String channel = filmFilter.isChannelVis() ? filmFilter.getChannel() : "";
         String theme = filmFilter.isThemeVis() ? filmFilter.getTheme().trim() : "";
         boolean themeExact = filmFilter.isThemeExact();
@@ -149,7 +149,7 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
         new AboEditDialogController(progData, abo);
     }
 
-    public synchronized void changeAboFromFilter(Optional<AboData> oAbo, FilmFilter filmFilter) {
+    public synchronized void changeAboFromFilterButton(Optional<AboData> oAbo, FilmFilter filmFilter) {
         // abo mit den Filterwerten einstellen
         if (!oAbo.isPresent()) {
             return;
@@ -159,7 +159,7 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
         new AboEditDialogController(progData, filmFilter, abo);
     }
 
-    public synchronized void addNewAbo(String aboName, String filmChannel, String filmTheme, String filmTitle) {
+    public synchronized void addNewAboButton(String aboName, String filmChannel, String filmTheme, String filmTitle) {
         // abo anlegen, oder false wenns schon existiert
         int minDuration, maxDuration;
         try {

@@ -68,7 +68,7 @@ public class AboMenu {
         final ToolBarButton btChange = new ToolBarButton(vBox,
                 "Abos ändern", "Markierte Abos ändern", ProgIcons.Icons.FX_ICON_TOOLBAR_ABO_CONFIG.getImageView());
 
-        btNew.setOnAction(a -> progData.aboList.addNewAbo("Neu", "", "", ""));
+        btNew.setOnAction(a -> progData.aboList.addNewAboButton("Neu", "", "", ""));
         btOn.setOnAction(a -> progData.aboGuiController.setAboActive(true));
         btOff.setOnAction(a -> progData.aboGuiController.setAboActive(false));
         btDel.setOnAction(a -> progData.aboGuiController.deleteAbo());
@@ -91,11 +91,11 @@ public class AboMenu {
         final MenuItem miChange = new MenuItem("Abos ändern");
         miChange.setOnAction(a -> progData.aboGuiController.changeAbo());
         final MenuItem miNew = new MenuItem("Neues Abo anlegen");
-        miNew.setOnAction(a -> progData.aboList.addNewAbo("Neu", "", "", ""));
+        miNew.setOnAction(a -> progData.aboList.addNewAboButton("Neu", "", "", ""));
         final MenuItem miAboAddFilter = new MenuItem("Aus dem Film-Filter ein Abo erstellen");
         miAboAddFilter.setOnAction(a -> {
             FilmFilter filmFilter = progData.actFilmFilterWorker.getActFilterSettings();
-            progData.aboList.addNewAboFromFilter(filmFilter);
+            progData.aboList.addNewAboFromFilterButton(filmFilter);
         });
 
         mb.getItems().addAll(mbOn, mbOff, miDel, miChange, miNew, miAboAddFilter);

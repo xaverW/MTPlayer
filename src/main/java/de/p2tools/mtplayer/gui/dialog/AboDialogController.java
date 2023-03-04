@@ -198,7 +198,6 @@ public class AboDialogController extends PDialogExtra {
     }
 
     void makeControl() {
-
     }
 
     private void setMaskerPane() {
@@ -222,11 +221,21 @@ public class AboDialogController extends PDialogExtra {
     }
 
     private boolean checkChanges() {
-        if (addNewAbo && AboFactory.aboExistsAlready(aboCopy)) {
+        AboData abo;
+        if (addNewAbo && (abo = AboFactory.aboExistsAlready(aboCopy)) != null) {
             // dann gibts das Abo schon
-            PAlert.showErrorAlert(getStage(), "Fehler", "Abo anlegen",
-                    "Ein Abo mit den Einstellungen existiert bereits");
-            return false;
+            if (PAlert.showAlert_yes_no(getStage(), "Fehler", "Abo anlegen",
+                    "Ein Abo mit den Einstellungen existiert bereits:" +
+                            "\n\n" +
+                            (abo.getChannel().isEmpty() ? "" : "Sender: " + abo.getChannel() + "\n") +
+                            (abo.getTheme().isEmpty() ? "" : "Thema: " + abo.getTheme() + "\n") +
+                            (abo.getThemeTitle().isEmpty() ? "" : "Thema/Titel: " + abo.getThemeTitle() + "\n") +
+                            (abo.getTitle().isEmpty() ? "" : "Titel: " + abo.getTitle() + "\n") +
+                            (abo.getSomewhere().isEmpty() ? "" : "Irgendwo: " + abo.getSomewhere()) +
+                            "\n\n" +
+                            "Trotzdem anlegen?").equals(PAlert.BUTTON.NO)) {
+                return false;
+            }
         }
 
         if (addNewAbo && aboCopy.isEmpty()) {
@@ -278,15 +287,6 @@ public class AboDialogController extends PDialogExtra {
                 }
                 abo.properties[i].setValue(aboCopy.properties[i].getValue());
             }
-        }
-    }
-
-    private int getGridLine(int i) {
-        if (i >= AboFieldNames.ABO_MAX_DURATION_NO) {
-            //gibts nicht
-            return i;
-        } else {
-            return ++i;
         }
     }
 }

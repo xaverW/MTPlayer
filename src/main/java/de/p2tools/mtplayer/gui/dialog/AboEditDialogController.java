@@ -45,17 +45,17 @@ import java.util.List;
 public class AboEditDialogController extends AboDialogController {
 
     public AboEditDialogController(ProgData progData, AboData abo) {
-        //hier wird ein neues Abo angelegt!
+        //hier wird ein neues Abo angelegt -> Button
         super(progData, abo);
     }
 
     public AboEditDialogController(ProgData progData, FilmFilter filmFilter, AboData abo) {
-        //hier wird ein Abo an den Filter angepasst
+        //hier wird ein Abo an dem Filter angepasst -> Button
         super(progData, filmFilter, abo);
     }
 
     public AboEditDialogController(ProgData progData, ObservableList<AboData> aboList) {
-        //hier werden Abos geändert
+        //hier werden Abos geändert -> Button
         super(progData, aboList);
     }
 
@@ -77,7 +77,6 @@ public class AboEditDialogController extends AboDialogController {
     private void setTextArea(TextArea textArea) {
         textArea.setWrapText(true);
         textArea.setPrefRowCount(2);
-//        textArea.setMinHeight(20);
         textArea.setPrefColumnCount(1);
     }
 
@@ -105,7 +104,6 @@ public class AboEditDialogController extends AboDialogController {
             case AboFieldNames.ABO_DESCRIPTION_NO:
                 textAreaDescription.setWrapText(true);
                 textAreaDescription.setPrefRowCount(4);
-//                textAreaDescription.setMinHeight(60);
                 textAreaDescription.setPrefColumnCount(1);
                 textAreaDescription.setText(aboCopy.getDescription());
                 break;
@@ -286,7 +284,6 @@ public class AboEditDialogController extends AboDialogController {
                 cboDestination.setItems(FXCollections.observableArrayList(path));
                 cboDestination.setEditable(true);
                 cboDestination.getEditor().textProperty().bindBidirectional(aboCopy.aboSubDirProperty());
-
 //                aboCopy.aboSubDirProperty().addListener((v, o, n) ->
 //                        cbxEditAll[i].setSelected(true));
                 cboDestination.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {

@@ -146,16 +146,16 @@ public class FilmGuiTableContextMenu {
         // neues Abo aus Filter anlegen
         miAboAddFilter.setOnAction(a -> {
             FilmFilter filmFilter = progData.actFilmFilterWorker.getActFilterSettings();
-            progData.aboList.addNewAboFromFilter(filmFilter);
+            progData.aboList.addNewAboFromFilterButton(filmFilter);
         });
         AboData aboData = BlacklistFilterFactory.findAbo(film);
         if (aboData == null) {
             //nur dann gibts kein Abo, auch kein ausgeschaltetes, ...
             //neues Abo anlegen
             miAboAddChannelTheme.setOnAction(a ->
-                    progData.aboList.addNewAbo(film.getTheme(), film.getChannel(), film.getTheme(), ""));
+                    progData.aboList.addNewAboButton(film.getTheme(), film.getChannel(), film.getTheme(), ""));
             miAboAddChannelThemeTitle.setOnAction(a ->
-                    progData.aboList.addNewAbo(film.getTheme(), film.getChannel(), film.getTheme(), film.getTitle()));
+                    progData.aboList.addNewAboButton(film.getTheme(), film.getChannel(), film.getTheme(), film.getTitle()));
             //Abo löschen/ändern
             miAboChange.setDisable(true);
             miAboDel.setDisable(true);

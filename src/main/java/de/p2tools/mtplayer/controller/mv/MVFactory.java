@@ -21,7 +21,11 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.BlackData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.abo.AboFactory;
+import de.p2tools.p2lib.alert.PAlert;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.ObservableList;
+import javafx.stage.Stage;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -41,13 +45,38 @@ public class MVFactory {
         return "";
     }
 
-    public static int addAbos(ObservableList<AboData> aboList) {
+    public static int addAbos(Stage stage, ObservableList<AboData> aboList) {
         int ret = 0;
+        BooleanProperty remember = new SimpleBooleanProperty(false);
+        boolean todo = true; //Abo nehmen
+
         for (AboData aboData : aboList) {
-            if (!AboFactory.aboExistsAlready(aboData)) {
-                ++ret;
-                ProgData.getInstance().aboList.addAbo(aboData);
+            AboData abo;
+
+            if ((abo = AboFactory.aboExistsAlready(aboData)) != null) {
+                // dann gibts das Abo schon, "themeExact" gibts hier nicht, ist immer false
+                PAlert.BUTTON btn;
+                if (!remember.getValue()) {
+                    btn = PAlert.alert_yes_no_remember(stage, "Fehler", "Abo anlegen",
+                            "Ein Abo mit den Einstellungen existiert bereits: " +
+                                    "\n\n" +
+                                    (abo.getChannel().isEmpty() ? "" : "Sender: " + abo.getChannel() + "\n") +
+                                    (abo.getTheme().isEmpty() ? "" : "Thema: " + abo.getTheme() + "\n") +
+                                    (abo.getThemeTitle().isEmpty() ? "" : "Thema/Titel: " + abo.getThemeTitle() + "\n") +
+                                    (abo.getTitle().isEmpty() ? "" : "Titel: " + abo.getTitle() + "\n") +
+                                    (abo.getSomewhere().isEmpty() ? "" : "Irgendwo: " + abo.getSomewhere()) +
+                                    "\n\n" +
+                                    "Trotzdem anlegen?", remember, "Immer");
+                    todo = btn.equals(PAlert.BUTTON.YES);
+                }
+
+                if (!todo) {
+                    continue;
+                }
             }
+
+            ++ret;
+            ProgData.getInstance().aboList.addAbo(aboData);
         }
         return ret;
     }
