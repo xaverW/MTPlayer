@@ -126,7 +126,7 @@ public class ConfigDialogController extends PDialogExtra {
 
         if (blackChanged.get() && !LoadFilmFactory.loadFilmlist.getPropLoadFilmlist()) {
             // sonst hat sich nichts geändert oder wird dann eh gemacht
-            BlacklistFilterFactory.markFilmBlack(true);
+            new Thread(() -> BlacklistFilterFactory.markFilmBlack(true)).start();
         }
 
         if (diacriticChanged.getValue()) {

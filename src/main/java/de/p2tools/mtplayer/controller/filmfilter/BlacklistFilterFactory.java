@@ -42,7 +42,7 @@ public class BlacklistFilterFactory {
     private BlacklistFilterFactory() {
     }
 
-    public static synchronized void getBlackFiltered() {
+    public static synchronized void getBlackFilteredFilmlist() {
         // hier wird die komplette Filmliste gegen die Blacklist gefiltert
         // mit der Liste wird dann im TabFilme weiter gearbeitet
         final ProgData progData = ProgData.getInstance();
@@ -102,9 +102,10 @@ public class BlacklistFilterFactory {
         boolean maskerSet = false;
         PDuration.counterStart("markFilmBlack");
         PLog.sysLog("markFilmBlack -> start");
+
         if (!ProgData.getInstance().maskerPane.isVisible()) {
             maskerSet = true;
-            ProgData.getInstance().maskerPane.setMaskerText("Blacklist");
+            ProgData.getInstance().maskerPane.setMaskerText("Blacklist filtern");
             ProgData.getInstance().maskerPane.setMaskerVisible(true);
         }
 
@@ -112,7 +113,7 @@ public class BlacklistFilterFactory {
         //und jetzt die Filmliste durchlaufen parallel/stream ist gleich??
         ProgData.getInstance().filmlist.stream().forEach(filmDataMTP ->
                 filmDataMTP.setBlackBlocked(checkFilmIsBlocked(filmDataMTP)));
-        getBlackFiltered();
+        getBlackFilteredFilmlist();
 
         PLog.sysLog("markFilmBlack -> stop");
         PDuration.counterStop("markFilmBlack");
@@ -121,7 +122,7 @@ public class BlacklistFilterFactory {
             Listener.notify(Listener.EVENT_BLACKLIST_CHANGED, BlackListFactory.class.getSimpleName());
         }
         if (maskerSet) {
-            //dann wirder ausschalten
+            //nur dann wieder ausschalten
             ProgData.getInstance().maskerPane.switchOffMasker();
         }
     }

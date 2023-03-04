@@ -107,7 +107,6 @@ public class PaneBlack {
         final Button btnHelpGeo = PButton.helpButton(stage, "Blacklist",
                 HelpText.BLACKLIST_GEO);
 
-
         initDays();
 
         final Button btnHelpSize = PButton.helpButton(stage, "Blacklist",
@@ -173,7 +172,6 @@ public class PaneBlack {
         slDays.setBlockIncrement(10);
         slDays.setShowTickLabels(true);
         slDays.setShowTickMarks(true);
-//        slDays.setSnapToTicks(true);
 
         slDays.valueProperty().bindBidirectional(ProgConfig.SYSTEM_BLACKLIST_MAX_FILM_DAYS);
         slDays.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -189,7 +187,6 @@ public class PaneBlack {
         slSize.setBlockIncrement(10);
         slSize.setShowTickLabels(true);
         slSize.setShowTickMarks(true);
-//        slSize.setSnapToTicks(true);
 
         slSize.valueProperty().bindBidirectional(ProgConfig.SYSTEM_BLACKLIST_MIN_FILM_DURATION);
         slSize.valueProperty().addListener((observable, oldValue, newValue) -> {

@@ -460,7 +460,7 @@ public final class ActFilmFilterWorker {
 
     private void postBlacklistChange() {
         // dann hat sich auch Blacklist-ein/aus geändert
-        BlacklistFilterFactory.getBlackFiltered();
+        BlacklistFilterFactory.getBlackFilteredFilmlist();
         setFilterChange();
     }
 }

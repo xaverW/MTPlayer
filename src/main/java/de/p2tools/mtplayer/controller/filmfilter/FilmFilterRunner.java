@@ -41,12 +41,6 @@ public class FilmFilterRunner {
 
         progData.actFilmFilterWorker.filterChangeProperty().addListener((observable, oldValue, newValue) -> filter()); // Filmfilter (User) haben sich geändert
         progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> filterList());
-//        LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
-//            @Override
-//            public void finished(de.p2tools.p2lib.mtFilm.loadFilmlist.ListenerFilmlistLoadEvent event) {
-//                filter();
-//            }
-//        });
         Listener.addListener(new Listener(Listener.EVENT_BLACKLIST_CHANGED, FilmFilterRunner.class.getSimpleName()) {
             @Override
             public void pingFx() {

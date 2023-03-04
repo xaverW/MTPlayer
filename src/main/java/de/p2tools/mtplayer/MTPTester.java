@@ -92,7 +92,8 @@ public class MTPTester {
 
             Button btnMarkBlack = new Button("MarkBlack");
             btnMarkBlack.setMaxWidth(Double.MAX_VALUE);
-            btnMarkBlack.setOnAction(a -> BlacklistFilterFactory.markFilmBlack(true));
+            btnMarkBlack.setOnAction(a -> new Thread(() ->
+                    BlacklistFilterFactory.markFilmBlack(true)).start());
 
 
             int row = 0;

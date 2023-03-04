@@ -62,7 +62,7 @@ public class BlacklistFactory {
     public static synchronized void countHits(BlackData blackData) {
         //hier wird ein BlackDate gegen die Filmliste gefiltert und die Treffer ermittelt
         PDuration.counterStart("countHits");
-        blackData.setCountHits(0);
+        blackData.clearCounter();
         final FilmlistMTP filmDataMTPS = ProgData.getInstance().filmlist;
         if (filmDataMTPS != null) {
             filmDataMTPS.parallelStream().forEach(film ->
@@ -75,8 +75,8 @@ public class BlacklistFactory {
         //hier wird die Blacklist gegen die Filmliste gefiltert und die Treffer
         //für jeden Blacklist-Eintrag ermittelt
         PDuration.counterStart("countHitsList");
-        list.clearCounter();
 
+        list.clearCounter();
         final FilmlistMTP filmList = ProgData.getInstance().filmlist;
         if (filmList != null) {
             filmList.parallelStream().forEach(film ->

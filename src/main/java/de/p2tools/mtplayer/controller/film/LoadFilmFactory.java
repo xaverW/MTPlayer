@@ -35,6 +35,7 @@ import de.p2tools.p2lib.mtfilm.loadfilmlist.LoadFilmlist;
 import de.p2tools.p2lib.mtfilm.tools.LoadFactoryConst;
 import de.p2tools.p2lib.tools.duration.PDuration;
 import de.p2tools.p2lib.tools.log.PLog;
+import javafx.application.Platform;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,28 +75,6 @@ public class LoadFilmFactory {
             public synchronized void finished(ListenerFilmlistLoadEvent event) {
                 PDuration.onlyPing("Filme geladen: Nachbearbeiten");
                 afterLoadingFilmlist();
-                if (ProgData.firstProgramStart) {
-                    ProgSave.saveAll(); // damit nichts verloren geht
-                }
-                PDuration.onlyPing("Filme nachbearbeiten: Ende");
-//                if (!ProgConfig.ABO_SEARCH_NOW.getValue() && !ProgData.automode) {
-//                    //wird sonst eh noch gemacht
-//                    ProgData.getInstance().maskerPane.switchOffMasker();
-//                }
-
-                ProgData.getInstance().worker.workOnLoadFinished();
-                ProgData.getInstance().filmFilterRunner.filter();
-                ProgData.getInstance().maskerPane.switchOffMasker();//damit auf jedem Fall, aus
-
-                int age = FilmlistFactory.getAge(ProgData.getInstance().filmlist.metaData);
-                ProgConfig.SYSTEM_FILMLIST_AGE.setValue(ProgData.getInstance().filmlist.isEmpty() ? P2LibConst.NUMBER_NOT_STARTED : age);
-
-                if (!doneAtProgramStart) {
-                    doneAtProgramStart = true;
-                    MediaDataWorker.createMediaDb();
-                    UpdateCheckFactory.checkProgUpdate();
-                    ProgTipOfDayFactory.showDialog(ProgData.getInstance(), false);
-                }
             }
         });
     }
@@ -110,26 +89,51 @@ public class LoadFilmFactory {
      * alles was nach einem Neuladen oder Einlesen einer gespeicherten Filmliste ansteht
      */
     private void afterLoadingFilmlist() {
-        List<String> logList = new ArrayList<>();
+        new Thread(() -> {
+            List<String> logList = new ArrayList<>();
 
-        logList.add("Themen suchen");
-        ProgData.getInstance().filmlist.loadTheme();
+            logList.add("Themen suchen");
+            ProgData.getInstance().filmlist.loadTheme();
 
-        logList.add("Abos eintragen");
-        AboFactory.setAboForFilmlist();
+            logList.add("Abos eintragen");
+            AboFactory.setAboForFilmlist();
 
-        if (!ProgData.getInstance().bookmarks.isEmpty()) {
             logList.add("Bookmarks eintragen");
             FilmTools.markBookmarks();
-        }
 
-        logList.add("Blacklist filtern");
-        BlacklistFilterFactory.markFilmBlack(false);
+            logList.add("Blacklist filtern");
+            ProgData.getInstance().maskerPane.setMaskerText("Blacklist filtern");
+            BlacklistFilterFactory.markFilmBlack(false);
+            ProgData.getInstance().blackList.sortTheList(true);
+            ProgData.getInstance().filmLoadBlackList.sortTheList(true);
 
-        logList.add("Filme in Downloads eingetragen");
-        ProgData.getInstance().downloadList.addFilmInList();
+            logList.add("Filme in Downloads eingetragen");
+            ProgData.getInstance().maskerPane.setMaskerText("Downloads eingetragen");
+            ProgData.getInstance().downloadList.addFilmInList();
 
-        PLog.sysLog(logList);
+            PLog.sysLog(logList);
+
+            if (ProgData.firstProgramStart) {
+                ProgSave.saveAll(); // damit nichts verloren geht
+            }
+            PDuration.onlyPing("Filme nachbearbeiten: Ende");
+
+            ProgData.getInstance().maskerPane.setMaskerText("Abos suchen");
+            ProgData.getInstance().worker.workOnLoadFinished();
+            ProgData.getInstance().filmFilterRunner.filter();
+
+            int age = FilmlistFactory.getAge(ProgData.getInstance().filmlist.metaData);
+            ProgConfig.SYSTEM_FILMLIST_AGE.setValue(ProgData.getInstance().filmlist.isEmpty() ? P2LibConst.NUMBER_NOT_STARTED : age);
+
+            if (!doneAtProgramStart) {
+                doneAtProgramStart = true;
+                MediaDataWorker.createMediaDb();
+                UpdateCheckFactory.checkProgUpdate();
+                Platform.runLater(() -> ProgTipOfDayFactory.showDialog(ProgData.getInstance(), false));
+            }
+
+            ProgData.getInstance().maskerPane.switchOffMasker();//damit auf jedem Fall, aus
+        }).start();
     }
 
 
@@ -154,6 +158,7 @@ public class LoadFilmFactory {
         LoadFactoryConst.removeDiacritic = ProgConfig.SYSTEM_REMOVE_DIACRITICS.getValue();
         LoadFactoryConst.filmlist = ProgData.getInstance().filmlist;
 
+        ProgData.getInstance().filmLoadBlackList.clearCounter();//todo evtl. nur beim Neuladen einer kompletten Liste??
         LoadFactoryConst.FilmChecker filmChecker = filmData ->
                 BlacklistFilterFactory.checkFilmIsBlockedAndCountHits(filmData, ProgData.getInstance().filmLoadBlackList, true);
 

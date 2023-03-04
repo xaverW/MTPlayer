@@ -24,6 +24,7 @@ import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
 import de.p2tools.mtplayer.gui.configpanes.PaneBlack;
 import de.p2tools.mtplayer.gui.configpanes.PaneBlackList;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
@@ -108,7 +109,13 @@ public class BlackDialog extends PDialogExtra {
         if ((blackPaneChanged.get() || blackListPaneChanged.getValue())
                 && !LoadFilmFactory.loadFilmlist.getPropLoadFilmlist()) {
             // sonst hat sich nichts geändert oder wird dann eh gemacht
-            BlacklistFilterFactory.markFilmBlack(true);
+            blackPaneChanged.setValue(false);
+            this.getMaskerPane().setMaskerVisible(true);
+            this.getMaskerPane().setMaskerText("Blacklist filtern");
+            new Thread(() -> {
+                BlacklistFilterFactory.markFilmBlack(true);
+                Platform.runLater(() -> this.setMaskerVisible(false));
+            }).start();
         }
     }
 }

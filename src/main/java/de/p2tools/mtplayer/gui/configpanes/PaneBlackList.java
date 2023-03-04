@@ -58,7 +58,7 @@ public class PaneBlackList {
 
     private final TableView<BlackData> tableView = new TableView<>();
     private final GridPane gridPane = new GridPane();
-    private final PToggleSwitch tgTheme = new PToggleSwitch("exakt:");
+    private final PToggleSwitch tgThemeExact = new PToggleSwitch("exakt:");
     private final TextField txtTheme = new TextField();
     private final TextField txtTitle = new TextField();
     private final TextField txtThemeTitle = new TextField();
@@ -73,6 +73,7 @@ public class PaneBlackList {
     private ListenerLoadFilmlist listener;
 
     private final BooleanProperty blackChanged;
+    private boolean blackChange = false;
     private Stage stage;
     private final ProgData progData;
     private final boolean black;
@@ -97,18 +98,20 @@ public class PaneBlackList {
     public void close() {
         rbWhite.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST);
         LoadFilmFactory.getInstance().loadFilmlist.removeListenerLoadFilmlist(listener);
-        if (list.size() > 0 && blackChanged.getValue()) {
-            if (!PAlert.showAlertOkCancel(stage, "Liste sortieren", "Soll die " +
-                            (black ? "Blacklist" : "Liste zum Filtern der Filme beim Neuladen der Filmliste") +
-                            " sortiert werden?",
-                    "Die Liste der Filter wird nach Anzahl der Treffer sortiert. Das beschleunigt die Filterung " +
-                            "der Filmliste.")) {
-                return;
-            } else {
-                //dann die Liste sortieren
-                list.sortTheListWithCounter();
-            }
-        }
+
+//        if (list.size() > 0 && blackChanged.getValue()) {
+//            if (!PAlert.showAlertOkCancel(stage, "Liste sortieren", "Soll die " +
+//                            (black ? "Blacklist" : "Liste zum Filtern der Filme beim Neuladen der Filmliste") +
+//                            " sortiert werden?",
+//                    "Die Liste der Filter wird nach Anzahl der Treffer sortiert. Das beschleunigt die Filterung " +
+//                            "der Filmliste.")) {
+//                return;
+//
+////            } else {
+////                //dann die Liste sortieren
+////                list.sortTheListWithCounter();
+//            }
+//        }
     }
 
     public void make(Collection<TitledPane> result) {
@@ -137,7 +140,6 @@ public class PaneBlackList {
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
-//        gridPane.setPadding(new Insets(5, 20, 5, 20));
         vBox.getChildren().add(gridPane);
 
         final ToggleGroup group = new ToggleGroup();
@@ -238,73 +240,8 @@ public class PaneBlackList {
             tableView.scrollTo(blackData);
         });
 
-        Button btnUp = new Button("");
-        btnUp.setTooltip(new Tooltip("Eintrag nach oben schieben"));
-        btnUp.setGraphic(ProgIcons.Icons.ICON_BUTTON_MOVE_UP.getImageView());
-        btnUp.setOnAction(event -> {
-            final int sel = tableView.getSelectionModel().getSelectedIndex();
-            if (sel < 0) {
-                PAlert.showInfoNoSelection();
-            } else {
-                int res = up(sel, true);
-                tableView.getSelectionModel().clearSelection();
-                tableView.getSelectionModel().select(res);
-            }
-        });
-
-        Button btnDown = new Button("");
-        btnDown.setTooltip(new Tooltip("Eintrag nach unten schieben"));
-        btnDown.setGraphic(ProgIcons.Icons.ICON_BUTTON_MOVE_DOWN.getImageView());
-        btnDown.setOnAction(event -> {
-            final int sel = tableView.getSelectionModel().getSelectedIndex();
-            if (sel < 0) {
-                PAlert.showInfoNoSelection();
-            } else {
-                int res = up(sel, false);
-                tableView.getSelectionModel().clearSelection();
-                tableView.getSelectionModel().select(res);
-            }
-        });
-
-        Button btnTop = new Button();
-        btnTop.setTooltip(new Tooltip("Eintrag an den Anfang verschieben"));
-        btnTop.setGraphic(ProgIcons.Icons.ICON_BUTTON_MOVE_TOP.getImageView());
-        btnTop.setOnAction(event -> {
-            final int sel = tableView.getSelectionModel().getSelectedIndex();
-            if (sel < 0) {
-                PAlert.showInfoNoSelection();
-            } else {
-                int res = top(sel, true);
-                tableView.getSelectionModel().clearSelection();
-                tableView.getSelectionModel().select(res);
-            }
-        });
-
-        Button btnBottom = new Button();
-        btnBottom.setTooltip(new Tooltip("Eintrag an das Ende verschieben"));
-        btnBottom.setGraphic(ProgIcons.Icons.ICON_BUTTON_MOVE_BOTTOM.getImageView());
-        btnBottom.setOnAction(event -> {
-            final int sel = tableView.getSelectionModel().getSelectedIndex();
-            if (sel < 0) {
-                PAlert.showInfoNoSelection();
-            } else {
-                int res = top(sel, false);
-                tableView.getSelectionModel().clearSelection();
-                tableView.getSelectionModel().select(res);
-            }
-        });
-
         final Button btnHelpCount = PButton.helpButton(stage, "_Treffer zählen",
                 HelpText.BLACKLIST_COUNT);
-
-        Button btnSortList = new Button("_Nach Treffer sortieren");
-        btnSortList.setTooltip(new Tooltip("Damit kann die Blacklist anhand der \"Treffer\"\n" +
-                "sortiert werden."));
-        btnSortList.setOnAction(a -> {
-            list.sortTheListWithCounter();
-            PTableFactory.refreshTable(tableView);
-        });
-
 
         Button btnCountHits = new Button("_Treffer zählen");
         btnCountHits.setTooltip(new Tooltip("Damit wird die Filmliste nach \"Treffern\" durchsucht.\n" +
@@ -326,7 +263,7 @@ public class PaneBlackList {
         btnAddBlacklist.setOnAction(event -> {
             progData.blackList.stream().forEach(bl -> list.add(bl.getCopy()));
         });
-        Button btnClear = new Button("_Alle Einträge löschen");
+        Button btnClear = new Button("_Alle löschen");
         btnClear.setTooltip(new Tooltip("Alle Einträge in der Liste werden gelöscht"));
         btnClear.setOnAction(event -> {
             if (list.size() > 0) {
@@ -340,34 +277,31 @@ public class PaneBlackList {
         listener = new ListenerLoadFilmlist() {
             @Override
             public void start(ListenerFilmlistLoadEvent event) {
-                btnSortList.setDisable(true);
                 btnCountHits.setDisable(true);
             }
 
             @Override
             public void finished(ListenerFilmlistLoadEvent event) {
-                btnSortList.setDisable(false);
                 btnCountHits.setDisable(false);
             }
         };
         LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(listener);
 
         HBox hBoxButton = new HBox(P2LibConst.DIST_BUTTON);
-        hBoxButton.getChildren().addAll(btnNew, btnDel, PGuiTools.getVDistance(20),
-                btnTop, btnUp, btnDown, btnBottom, PGuiTools.getHBoxGrower(), btnHelpCount);
+        hBoxButton.getChildren().addAll(btnNew, btnDel, btnClear);
 
-        HBox hBoxCount = new HBox(P2LibConst.DIST_BUTTON);
         if (black) {
-            hBoxCount.getChildren().addAll(btnCountHits, btnSortList, PGuiTools.getHBoxGrower(), btnAddStandards, btnClear);
+            hBoxButton.getChildren().addAll(PGuiTools.getHBoxGrower(), btnCountHits, btnAddStandards);
         } else {
-            hBoxCount.getChildren().addAll(btnCountHits, btnSortList, PGuiTools.getHBoxGrower(), btnAddStandards, btnAddBlacklist, btnClear);
+            hBoxButton.getChildren().addAll(PGuiTools.getHBoxGrower(), btnCountHits, btnAddStandards, btnAddBlacklist);
             tableView.disableProperty().bind(ProgConfig.SYSTEM_USE_FILTER_LOAD_FILMLIST.not());
             hBoxButton.disableProperty().bind(ProgConfig.SYSTEM_USE_FILTER_LOAD_FILMLIST.not());
         }
+        hBoxButton.getChildren().addAll(btnHelpCount);
 
         VBox.setVgrow(tableView, Priority.ALWAYS);
         VBox vb = new VBox(P2LibConst.DIST_BUTTON);
-        vb.getChildren().addAll(tableView, hBoxButton, hBoxCount);
+        vb.getChildren().addAll(tableView, hBoxButton/*, hBoxCount*/);
         vBox.getChildren().add(vb);
     }
 
@@ -384,7 +318,7 @@ public class PaneBlackList {
 
         gridPane.add(new Label("Thema:"), 0, ++row);
         gridPane.add(txtTheme, 1, row);
-        gridPane.add(tgTheme, 2, row);
+        gridPane.add(tgThemeExact, 2, row);
 
         gridPane.add(new Label("Titel:"), 0, ++row);
         gridPane.add(txtTitle, 1, row);
@@ -402,7 +336,7 @@ public class PaneBlackList {
 
         mbChannel.textProperty().addListener((observable, oldValue, newValue) -> setBlackChanged());
         txtTheme.textProperty().addListener((observable, oldValue, newValue) -> setBlackChanged());
-        tgTheme.selectedProperty().addListener((observable, oldValue, newValue) -> setBlackChanged());
+        tgThemeExact.selectedProperty().addListener((observable, oldValue, newValue) -> setBlackChanged());
         txtTitle.textProperty().addListener((observable, oldValue, newValue) -> setBlackChanged());
         txtThemeTitle.textProperty().addListener((observable, oldValue, newValue) -> setBlackChanged());
 
@@ -410,7 +344,7 @@ public class PaneBlackList {
     }
 
     private void setBlackChanged() {
-        if (blackData != null) {
+        if (blackChange) {
             blackChanged.setValue(true);
         }
     }
@@ -433,6 +367,8 @@ public class PaneBlackList {
     }
 
     private void setActBlackData() {
+        blackChange = false;
+
         BlackData blackDataAct = tableView.getSelectionModel().getSelectedItem();
         if (blackDataAct == blackData) {
             return;
@@ -441,7 +377,7 @@ public class PaneBlackList {
         if (blackData != null) {
             mbChannel.textProperty().unbindBidirectional(blackData.channelProperty());
             clearMenuText();
-            tgTheme.selectedProperty().unbindBidirectional(blackData.themeExactProperty());
+            tgThemeExact.selectedProperty().unbindBidirectional(blackData.themeExactProperty());
             txtTheme.textProperty().unbindBidirectional(blackData.themeProperty());
             txtTitle.textProperty().unbindBidirectional(blackData.titleProperty());
             txtThemeTitle.textProperty().unbindBidirectional(blackData.themeTitleProperty());
@@ -458,9 +394,10 @@ public class PaneBlackList {
             initSenderMenu();
             mbChannel.textProperty().bindBidirectional(blackData.channelProperty());
             txtTheme.textProperty().bindBidirectional(blackData.themeProperty());
-            tgTheme.selectedProperty().bindBidirectional(blackData.themeExactProperty());
+            tgThemeExact.selectedProperty().bindBidirectional(blackData.themeExactProperty());
             txtTitle.textProperty().bindBidirectional(blackData.titleProperty());
             txtThemeTitle.textProperty().bindBidirectional(blackData.themeTitleProperty());
+            blackChange = true;
         }
     }
 
@@ -516,32 +453,4 @@ public class PaneBlackList {
         }
         mbChannel.setText(text);
     }
-
-    private int top(int idx, boolean up) {
-        BlackData blackData = list.remove(idx);
-        int ret;
-        if (up) {
-            list.add(0, blackData);
-            ret = 0;
-        } else {
-            list.add(blackData);
-            ret = list.size() - 1;
-        }
-        return ret;
-    }
-
-    private int up(int idx, boolean up) {
-        BlackData blackData = list.remove(idx);
-        int neu = idx;
-        if (up) {
-            if (neu > 0) {
-                --neu;
-            }
-        } else if (neu < list.size()) {
-            ++neu;
-        }
-        list.add(neu, blackData);
-        return neu;
-    }
-
 }

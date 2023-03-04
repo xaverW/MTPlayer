@@ -162,4 +162,8 @@ public class BlackDataProps extends PDataSample<BlackDataProps> {
     public void setCountHits(int countHits) {
         this.countHits = countHits;
     }
+
+    public void clearCounter() {
+        this.countHits = 0;
+    }
 }

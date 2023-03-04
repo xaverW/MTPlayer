@@ -30,8 +30,6 @@ import javafx.collections.ObservableList;
 import java.text.Collator;
 import java.util.*;
 
-import static de.p2tools.p2lib.mtfilm.loadfilmlist.ListenerLoadFilmlist.PROGRESS_INDETERMINATE;
-
 public class Worker {
 
     private ObservableList<String> allChannelList = FXCollections.observableArrayList("");
@@ -65,12 +63,19 @@ public class Worker {
     }
 
     public void workOnLoadFinished() {
-        createChannelAndThemeList();
-        if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.automode) {
-            searchForAbosAndMaybeStart();
-        }
-        // activate the saved filter
-        resetFilter();
+        Platform.runLater(() -> {
+            // alle Sender laden
+            allChannelList.setAll(Arrays.asList(progData.filmlist.sender));
+
+            // und jetzt noch die Themen für den Sender des aktuellen Filters laden
+            createThemeList(progData.actFilmFilterWorker.getActFilterSettings().getChannel());
+            if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.automode) {
+                searchForAbosAndMaybeStart();
+            }
+
+            // activate the saved filter
+            resetFilter();
+        });
     }
 
     private void saveFilter() {
@@ -90,21 +95,16 @@ public class Worker {
     public void searchForAbosAndMaybeStart() {
         if (LoadFilmFactory.getInstance().loadFilmlist.getPropLoadFilmlist()) {
             // wird danach eh gemacht
-            progData.maskerPane.switchOffMasker();
             return;
         }
 
         if (progData.setDataList.getSetDataForAbo() == null) {
             // SetData sind nicht eingerichtet
             Platform.runLater(() -> new NoSetDialogController(progData, NoSetDialogController.TEXT.ABO));
-            progData.maskerPane.switchOffMasker();
             return;
         }
 
         PDuration.counterStart("Worker.searchForAbosAndMaybeStart");
-        progData.maskerPane.setMaskerVisible(true, false);
-        progData.maskerPane.setMaskerProgress(PROGRESS_INDETERMINATE, "Downloads suchen");
-
         PLog.sysLog("Downloads aus Abos suchen");
         //erledigte entfernen, nicht gestartete Abos entfernen und nach neu Abos suchen
         progData.downloadList.searchForDownloadsFromAbos();
@@ -114,16 +114,7 @@ public class Worker {
             PLog.sysLog("Downloads aus Abos starten");
             progData.downloadList.startDownloads();
         }
-
-        progData.maskerPane.switchOffMasker();
         PDuration.counterStop("Worker.searchForAbosAndMaybeStart");
-    }
-
-    private void createChannelAndThemeList() {
-        // alle Sender laden
-        allChannelList.setAll(Arrays.asList(progData.filmlist.sender));
-        // und jetzt noch die Themen für den Sender des aktuellen Filter laden
-        createThemeList(progData.actFilmFilterWorker.getActFilterSettings().getChannel());
     }
 
     public void createThemeList(String sender) {

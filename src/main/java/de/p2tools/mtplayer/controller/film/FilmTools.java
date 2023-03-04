@@ -193,6 +193,10 @@ public class FilmTools {
     }
 
     public static void markBookmarks() {
+        if (ProgData.getInstance().bookmarks.isEmpty()) {
+            return;
+        }
+
         FilmlistMTP filmlist = ProgData.getInstance().filmlist;
         HistoryList bookmarks = ProgData.getInstance().bookmarks;
 
