@@ -27,7 +27,6 @@ import de.p2tools.mtplayer.controller.filmfilter.BlacklistFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
-import de.p2tools.p2lib.dialogs.dialog.PDialog;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.PGuiTools;
@@ -48,6 +47,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -74,13 +74,13 @@ public class PaneBlackList {
 
     private final BooleanProperty blackChanged;
     private boolean blackChange = false;
-    private PDialog pDialog;
+    private Stage stage;
     private final ProgData progData;
     private final boolean black;
     private final BlackList list;
 
-    public PaneBlackList(PDialog pDialog, ProgData progData, boolean black, BooleanProperty blackChanged) {
-        this.pDialog = pDialog;
+    public PaneBlackList(Stage stage, ProgData progData, boolean black, BooleanProperty blackChanged) {
+        this.stage = stage;
         this.progData = progData;
         this.black = black;
         this.blackChanged = blackChanged;
@@ -150,7 +150,7 @@ public class PaneBlackList {
         int row = 0;
         gridPane.add(rbBlack, 0, row);
         gridPane.add(new Label("\"Sender / Thema / Titel\" werden nicht angezeigt (Blacklist)"), 1, row);
-        final Button btnHelp = PButton.helpButton(pDialog.getStage(), "Blacklist / Whitelist",
+        final Button btnHelp = PButton.helpButton(stage, "Blacklist / Whitelist",
                 HelpText.BLACKLIST_WHITELIST);
         gridPane.add(btnHelp, 2, row);
 
@@ -165,7 +165,7 @@ public class PaneBlackList {
 
     private void makeToggle(VBox vBox) {
         tglNot.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_USE_FILTER_LOAD_FILMLIST);
-        final Button btnHelpReplace = PButton.helpButton(pDialog.getStage(), "Filme ausschließen",
+        final Button btnHelpReplace = PButton.helpButton(stage, "Filme ausschließen",
                 HelpText.FILMTITEL_NOT_LOAD);
 
         HBox hBox = new HBox(P2LibConst.DIST_BUTTON);
@@ -241,7 +241,7 @@ public class PaneBlackList {
         });
 
 //        final Button btnHelpCount = PButton.helpButton(stage.getStageProp(), "_Treffer zählen",
-        final Button btnHelpCount = PButton.helpButton(pDialog.getStage(), "_Treffer zählen",
+        final Button btnHelpCount = PButton.helpButton(stage, "_Treffer zählen",
                 HelpText.BLACKLIST_COUNT);
 
         Button btnCountHits = new Button("_Treffer zählen");
@@ -274,7 +274,7 @@ public class PaneBlackList {
         btnClear.setTooltip(new Tooltip("Alle Einträge in der Liste werden gelöscht"));
         btnClear.setOnAction(event -> {
             if (list.size() > 0) {
-                if (!PAlert.showAlertOkCancel(pDialog.getStageProp().getValue(), "Liste löschen", "Sollen alle Tabelleneinträge gelöscht werden?",
+                if (!PAlert.showAlertOkCancel(stage, "Liste löschen", "Sollen alle Tabelleneinträge gelöscht werden?",
                         "Die Tabelle wird komplett gelöscht und alle Einträge gehen verloren.")) {
                     return;
                 }

@@ -22,7 +22,6 @@ import de.p2tools.mtplayer.controller.film.FilmTools;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.dialogs.dialog.PDialog;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.PGuiTools;
@@ -30,6 +29,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -41,11 +41,11 @@ public class PaneFilmSender {
     private final Label lblDays = new Label("");
     private final Label lblDuration = new Label("");
     final Button btnClearAll = new Button("_Wieder alle Sender laden");
-    private final PDialog pDialog;
+    private final Stage stage;
     private final boolean startDialog;
 
-    public PaneFilmSender(PDialog pDialog, boolean startDialog) {
-        this.pDialog = pDialog;
+    public PaneFilmSender(Stage stage, boolean startDialog) {
+        this.stage = stage;
         this.startDialog = startDialog;
     }
 
@@ -70,7 +70,7 @@ public class PaneFilmSender {
     }
 
     private void makeOnly(VBox vBox) {
-        final Button btnHelpDays = PButton.helpButton(pDialog.getStage(), "Filmliste beim Laden filtern",
+        final Button btnHelpDays = PButton.helpButton(stage, "Filmliste beim Laden filtern",
                 HelpText.LOAD_ONLY_FILMS);
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
@@ -100,7 +100,7 @@ public class PaneFilmSender {
     }
 
     private void makeSender(VBox vBox) {
-        final Button btnHelpSender = PButton.helpButton(pDialog.getStage(), "Filmliste beim Laden filtern",
+        final Button btnHelpSender = PButton.helpButton(stage, "Filmliste beim Laden filtern",
                 HelpText.LOAD_FILMLIST_SENDER);
         HBox hBox = new HBox(P2LibConst.DIST_BUTTON);
         hBox.setAlignment(Pos.CENTER_LEFT);
@@ -141,7 +141,7 @@ public class PaneFilmSender {
             cb.setSelected(aListChannel.contains(s));
             cb.setOnAction(a -> {
                 makePropSender(aListCb);
-                FilmTools.checkAllSenderSelectedNotToLoad(pDialog.getStage());
+                FilmTools.checkAllSenderSelectedNotToLoad(stage);
             });
 
             tilePaneSender.getChildren().add(cb);

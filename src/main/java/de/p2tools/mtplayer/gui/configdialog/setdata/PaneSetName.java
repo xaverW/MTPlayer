@@ -20,7 +20,6 @@ package de.p2tools.mtplayer.gui.configdialog.setdata;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.dialogs.dialog.PDialog;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -33,6 +32,7 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.util.Collection;
 
@@ -43,7 +43,7 @@ public class PaneSetName {
     private SetData setData = null;
     private final ObjectProperty<SetData> setDataObjectProperty;
 
-    PaneSetName(PDialog stage, ObjectProperty<SetData> setDataObjectProperty) {
+    PaneSetName(Stage stage, ObjectProperty<SetData> setDataObjectProperty) {
         this.setDataObjectProperty = setDataObjectProperty;
     }
 

@@ -52,10 +52,7 @@ public class BlackDialog extends PDialogExtra {
                 "Blacklist bearbeiten", false, false, DECO.NO_BORDER, true);
         this.progData = progData;
 
-        initDialog();
         init(false);
-//        paneBlack.setStage(getStage());
-//        paneBlackList.setStage(getStage());
         super.showDialog();
     }
 
@@ -66,14 +63,15 @@ public class BlackDialog extends PDialogExtra {
         super.close();
     }
 
-    private void initDialog() {
+    @Override
+    public void make() {
         Accordion accordion = new Accordion();
         Collection<TitledPane> titledPanes = new ArrayList<>();
 
-        paneBlack = new PaneBlack(this, blackPaneChanged);
+        paneBlack = new PaneBlack(this.getStage(), blackPaneChanged);
         paneBlack.makeBlack(titledPanes);
 
-        paneBlackList = new PaneBlackList(this, progData, true, blackListPaneChanged);
+        paneBlackList = new PaneBlackList(this.getStage(), progData, true, blackListPaneChanged);
         paneBlackList.make(titledPanes);
 
         accordion.getPanes().addAll(titledPanes);

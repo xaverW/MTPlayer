@@ -24,7 +24,6 @@ import de.p2tools.mtplayer.controller.worker.ImportStandardSet;
 import de.p2tools.mtplayer.gui.tools.HelpTextPset;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
-import de.p2tools.p2lib.dialogs.dialog.PDialog;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PGuiTools;
 import javafx.beans.property.ObjectProperty;
@@ -35,6 +34,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.util.Optional;
@@ -43,12 +43,12 @@ public class PaneSetList extends VBox {
 
     private final TableView<SetData> tableView = new TableView<>();
     static int newCounter = 1;
-    private final PDialog pDialog;
+    private final Stage stage;
     private final ProgData progData;
     private final ObjectProperty<SetData> setDataObjectProperty;
 
-    public PaneSetList(PDialog pDialog, ObjectProperty<SetData> setDataObjectProperty) {
-        this.pDialog = pDialog;
+    public PaneSetList(Stage stage, ObjectProperty<SetData> setDataObjectProperty) {
+        this.stage = stage;
         this.setDataObjectProperty = setDataObjectProperty;
         this.progData = ProgData.getInstance();
 
@@ -173,7 +173,7 @@ public class PaneSetList extends VBox {
         btnCheck.setOnAction(event -> SetFactory.checkPrograms(progData));
         btnCheck.setMaxWidth(Double.MAX_VALUE);
 
-        final Button btnHelp = PButton.helpButton(pDialog.getStage(), "Set", HelpTextPset.HELP_PSET);
+        final Button btnHelp = PButton.helpButton(stage, "Set", HelpTextPset.HELP_PSET);
 
         HBox hBoxButton = new HBox(P2LibConst.DIST_BUTTON);
         hBoxButton.getChildren().addAll(btnNew, btnDel, PGuiTools.getHBoxGrower(), btnUp, btnDown);

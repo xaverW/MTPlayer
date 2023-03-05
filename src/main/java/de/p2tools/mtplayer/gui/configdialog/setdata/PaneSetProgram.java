@@ -25,7 +25,6 @@ import de.p2tools.mtplayer.gui.tools.HelpTextPset;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.dialogs.PDirFileChooser;
-import de.p2tools.p2lib.dialogs.dialog.PDialog;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.PGuiTools;
@@ -41,6 +40,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.util.Collection;
 
@@ -57,12 +57,12 @@ public class PaneSetProgram {
     private final PToggleSwitch tglRestart = new PToggleSwitch("Restart:");
     private final PToggleSwitch tglDown = new PToggleSwitch("Downloadmanager: ");
     private ProgramData programData = null;
-    private final PDialog pDialog;
+    private final Stage stage;
     private SetData setData = null;
     private final ObjectProperty<SetData> setDataObjectProperty;
 
-    public PaneSetProgram(PDialog pDialog, ObjectProperty<SetData> setDataObjectProperty) {
-        this.pDialog = pDialog;
+    public PaneSetProgram(Stage stage, ObjectProperty<SetData> setDataObjectProperty) {
+        this.stage = stage;
         this.setDataObjectProperty = setDataObjectProperty;
     }
 
@@ -181,7 +181,7 @@ public class PaneSetProgram {
             }
         });
 
-        final Button btnHelpProg = PButton.helpButton(pDialog.getStage(), "Hilfsprogramme",
+        final Button btnHelpProg = PButton.helpButton(stage, "Hilfsprogramme",
                 HelpTextPset.PSET_FILE_HELP_PROG);
 
         HBox hBox = new HBox(P2LibConst.DIST_BUTTON);
@@ -201,9 +201,9 @@ public class PaneSetProgram {
         btnFile.setGraphic(ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
         btnFile.setTooltip(new Tooltip("Ein Programm zum verarbeiten der URL auswählen"));
 
-        final Button btnHelpDest = PButton.helpButton(pDialog.getStage(), "Zieldateiname",
+        final Button btnHelpDest = PButton.helpButton(stage, "Zieldateiname",
                 HelpTextPset.PSET_FILE_NAME);
-        final Button btnHelpSwitch = PButton.helpButton(pDialog.getStage(), "Programmschalter",
+        final Button btnHelpSwitch = PButton.helpButton(stage, "Programmschalter",
                 HelpTextPset.PSET_SWITCH);
 
         int row = 0;

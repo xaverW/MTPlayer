@@ -25,7 +25,6 @@ import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.mtplayer.gui.tools.HelpTextPset;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.PDirFileChooser;
-import de.p2tools.p2lib.dialogs.dialog.PDialog;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.PComboBoxObject;
@@ -37,6 +36,7 @@ import javafx.geometry.VPos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.util.Collection;
 
@@ -49,12 +49,12 @@ public class PaneSetDestination {
     private final Slider slCutField = new Slider();
     private boolean changeTgl = false;
 
-    private final PDialog pDialog;
+    private final Stage stage;
     private SetData setData = null;
     private final ObjectProperty<SetData> setDataObjectProperty;
 
-    PaneSetDestination(PDialog pDialog, ObjectProperty<SetData> setDataObjectProperty) {
-        this.pDialog = pDialog;
+    PaneSetDestination(Stage stage, ObjectProperty<SetData> setDataObjectProperty) {
+        this.stage = stage;
         this.setDataObjectProperty = setDataObjectProperty;
     }
 
@@ -75,9 +75,9 @@ public class PaneSetDestination {
         btnFile.setTooltip(new Tooltip("Einen Ordner zum Speichern der Filme auswählen"));
         btnFile.setOnAction(event -> PDirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtDestPath));
 
-        final Button btnHelSubDir = PButton.helpButton(pDialog.getStage(), "Unterordner anlegen",
+        final Button btnHelSubDir = PButton.helpButton(stage, "Unterordner anlegen",
                 HelpText.SETDATA_ABO_SUBDIR);
-        final Button btnHelpDestName = PButton.helpButton(pDialog.getStage(), "Zieldateiname",
+        final Button btnHelpDestName = PButton.helpButton(stage, "Zieldateiname",
                 HelpTextPset.PSET_FILE_NAME);
 
         cboDest.init(FXCollections.observableArrayList(AboSubDir.ENSubDir.values()));
@@ -135,7 +135,7 @@ public class PaneSetDestination {
         Label lblTxtField = new Label("Länge\neinzelne Felder:");
         Label lblSizeField = new Label();
 
-        final Button btnHelpDestSize = PButton.helpButton(pDialog.getStage(), "Länge des Zieldateinamens",
+        final Button btnHelpDestSize = PButton.helpButton(stage, "Länge des Zieldateinamens",
                 HelpTextPset.PSET_DEST_FILE_SIZE);
 
         slCut.setMin(0);

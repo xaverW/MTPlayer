@@ -161,25 +161,25 @@ public class StartDialogController extends PDialogExtra {
         tUpdate.setCollapsible(false);
 
         //geoPane
-        paneGeo = new PaneGeo(this);
+        paneGeo = new PaneGeo(this.getStage());
         tGeo = paneGeo.makeGeo();
         tGeo.setMaxHeight(Double.MAX_VALUE);
         tGeo.setCollapsible(false);
 
         //filmPane
-        paneFilmSender = new PaneFilmSender(this, true);
+        paneFilmSender = new PaneFilmSender(this.getStage(), true);
         tFilm = paneFilmSender.make(null);
         tFilm.setMaxHeight(Double.MAX_VALUE);
         tFilm.setCollapsible(false);
 
         //downPane
-        downPathPane = new DownPathPane(this);
+        downPathPane = new DownPathPane(this.getStage());
         tDown = downPathPane.makePath();
         tDown.setMaxHeight(Double.MAX_VALUE);
         tDown.setCollapsible(false);
 
         //pathPane
-        pathPane = new PathPane(this);
+        pathPane = new PathPane(this.getStage());
         tPath = pathPane.makePath();
         tPath.setMaxHeight(Double.MAX_VALUE);
         tPath.setCollapsible(false);

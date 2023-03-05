@@ -23,7 +23,6 @@ import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.PDirFileChooser;
-import de.p2tools.p2lib.dialogs.dialog.PDialog;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
@@ -33,6 +32,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 import java.util.Collection;
 
@@ -51,10 +51,10 @@ public class PaneLogfile {
     private final PToggleSwitch tglEnableLog = new PToggleSwitch("Ein Logfile anlegen:");
     private TextField txtLogFile;
 
-    private final PDialog pDialog;
+    private final Stage stage;
 
-    public PaneLogfile(PDialog pDialog) {
-        this.pDialog = pDialog;
+    public PaneLogfile(Stage stage) {
+        this.stage = stage;
     }
 
     public void close() {
@@ -91,7 +91,7 @@ public class PaneLogfile {
             }
         }));
 
-        final Button btnHelp = PButton.helpButton(pDialog.getStage(), "Logfile", HelpText.LOGFILE);
+        final Button btnHelp = PButton.helpButton(stage, "Logfile", HelpText.LOGFILE);
 
         txtLogFile = new TextField();
         txtLogFile.textProperty().bindBidirectional(ProgConfig.SYSTEM_LOG_DIR);

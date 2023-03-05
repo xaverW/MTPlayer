@@ -20,8 +20,8 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.configpanes.*;
 import de.p2tools.p2lib.dialogs.accordion.PAccordionPane;
-import de.p2tools.p2lib.dialogs.dialog.PDialog;
 import javafx.scene.control.TitledPane;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -38,12 +38,12 @@ public class ControllerConfig extends PAccordionPane {
     private PaneProgs paneProgs;
     private PaneLogfile paneLogfile;
 
-    private final PDialog pDialog;
+    private final Stage stage;
     private final ProgData progData;
 
-    public ControllerConfig(PDialog pDialog) {
+    public ControllerConfig(Stage stage) {
         super(ProgConfig.CONFIG_DIALOG_ACCORDION, ProgConfig.SYSTEM_CONFIG_DIALOG_CONFIG);
-        this.pDialog = pDialog;
+        this.stage = stage;
         this.progData = ProgData.getInstance();
         init();
     }
@@ -66,31 +66,31 @@ public class ControllerConfig extends PAccordionPane {
     public Collection<TitledPane> createPanes() {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
 
-        paneConfig = new PaneConfig(pDialog);
+        paneConfig = new PaneConfig(stage);
         paneConfig.makeConfig(result);
 
-        paneIcon = new PaneIcon(pDialog);
+        paneIcon = new PaneIcon(stage);
         paneIcon.makeIcon(result);
 
-        paneLogfile = new PaneLogfile(pDialog);
+        paneLogfile = new PaneLogfile(stage);
         paneLogfile.makeLogfile(result);
 
-        paneColor = new PaneColor(pDialog);
+        paneColor = new PaneColor(stage);
         paneColor.makeColor(result);
 
-        paneShortcut = new PaneShortcut(pDialog);
+        paneShortcut = new PaneShortcut(stage);
         paneShortcut.makeShortcut(result);
 
-        paneGeo = new PaneGeo(pDialog);
+        paneGeo = new PaneGeo(stage);
         paneGeo.makeGeo(result);
 
-        paneKeySize = new PaneKeySize(pDialog, progData);
+        paneKeySize = new PaneKeySize(stage, progData);
         paneKeySize.makeStyle(result);
 
-        paneProgs = new PaneProgs(pDialog);
+        paneProgs = new PaneProgs(stage);
         paneProgs.makeProg(result);
 
-        paneUpdate = new PaneUpdate(pDialog);
+        paneUpdate = new PaneUpdate(stage);
         paneUpdate.makeUpdate(result);
         return result;
     }
