@@ -22,6 +22,7 @@ import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.PDirFileChooser;
+import de.p2tools.p2lib.dialogs.dialog.PDialog;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
@@ -31,7 +32,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import java.util.Collection;
 
@@ -50,10 +50,10 @@ public class PaneProgs {
     private TextField txtFileManagerVideo;
     private TextField txtFileManagerWeb;
 
-    private final Stage stage;
+    private final PDialog pDialog;
 
-    public PaneProgs(Stage stage) {
-        this.stage = stage;
+    public PaneProgs(PDialog pDialog) {
+        this.pDialog = pDialog;
     }
 
     public void close() {
@@ -97,7 +97,7 @@ public class PaneProgs {
         btnFile.setGraphic(ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
         btnFile.setTooltip(new Tooltip("Einen Dateimanager manuell auswählen"));
 
-        final Button btnHelp = PButton.helpButton(stage, "Dateimanager", HelpText.FILEMANAGER);
+        final Button btnHelp = PButton.helpButton(pDialog.getStage(), "Dateimanager", HelpText.FILEMANAGER);
 
         VBox vBox = new VBox(2);
         HBox hBox = new HBox(5);
@@ -118,7 +118,7 @@ public class PaneProgs {
         btnFile.setGraphic(ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
         btnFile.setTooltip(new Tooltip("Einen Videoplayer zum Abspielen der gespeicherten Filme auswählen"));
 
-        final Button btnHelp = PButton.helpButton(stage, "Videoplayer", HelpText.VIDEOPLAYER);
+        final Button btnHelp = PButton.helpButton(pDialog.getStage(), "Videoplayer", HelpText.VIDEOPLAYER);
 
         VBox vBox = new VBox(2);
         HBox hBox = new HBox(5);
@@ -139,7 +139,7 @@ public class PaneProgs {
         btnFile.setGraphic(ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
         btnFile.setTooltip(new Tooltip("Einen Webbrowser zum Öffnen von URLs auswählen"));
 
-        final Button btnHelp = PButton.helpButton(stage, "Webbrowser", HelpText.WEBBROWSER);
+        final Button btnHelp = PButton.helpButton(pDialog.getStage(), "Webbrowser", HelpText.WEBBROWSER);
 
         VBox vBox = new VBox(2);
         HBox hBox = new HBox(5);

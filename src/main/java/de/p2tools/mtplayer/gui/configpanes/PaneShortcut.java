@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.data.MTShortcut;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.dialogs.dialog.PDialog;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.tools.log.PLog;
 import de.p2tools.p2lib.tools.shortcut.PShortcut;
@@ -34,7 +35,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.util.Collection;
@@ -45,17 +45,17 @@ public class PaneShortcut {
     private final TextArea txtLongDescription = new TextArea();
     private final TableView<PShortcut> tableView = new TableView<>();
 
-    private final Stage stage;
+    private final PDialog pDialog;
 
-    public PaneShortcut(Stage stage) {
-        this.stage = stage;
+    public PaneShortcut(PDialog pDialog) {
+        this.pDialog = pDialog;
     }
 
     public void close() {
     }
 
     public void makeShortcut(Collection<TitledPane> result) {
-        final Button btnHelp = PButton.helpButton(stage, "Tastenkürzel ändern",
+        final Button btnHelp = PButton.helpButton(pDialog.getStage(), "Tastenkürzel ändern",
                 HelpText.SHORTCUT);
 
         SplitPane splitPane = new SplitPane();

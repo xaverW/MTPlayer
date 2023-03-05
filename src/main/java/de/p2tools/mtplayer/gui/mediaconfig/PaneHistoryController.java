@@ -62,7 +62,7 @@ public class PaneHistoryController extends PAccordionPane {
     private final Stage stage;
 
     public PaneHistoryController(Stage stage, boolean history, StringProperty searchText) {
-        super(stage, ProgConfig.MEDIA_CONFIG_DIALOG_ACCORDION, ProgConfig.SYSTEM_MEDIA_DIALOG_HISTORY);
+        super(ProgConfig.MEDIA_CONFIG_DIALOG_ACCORDION, ProgConfig.SYSTEM_MEDIA_DIALOG_HISTORY);
         this.stage = stage;
         this.history = history;
         this.searchText = searchText;

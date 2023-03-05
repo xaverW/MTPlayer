@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.dialogs.dialog.PDialog;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
@@ -29,7 +30,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 
 import java.util.Collection;
 
@@ -39,10 +39,10 @@ public class PaneFilmLoad {
     private final BooleanProperty diacriticChanged;
 
     private final ProgData progData;
-    private final Stage stage;
+    private final PDialog pDialog;
 
-    public PaneFilmLoad(Stage stage, ProgData progData, BooleanProperty diacriticChanged) {
-        this.stage = stage;
+    public PaneFilmLoad(PDialog pDialog, ProgData progData, BooleanProperty diacriticChanged) {
+        this.pDialog = pDialog;
         this.diacriticChanged = diacriticChanged;
         this.progData = progData;
     }
@@ -58,7 +58,7 @@ public class PaneFilmLoad {
         gridPane.setPadding(new Insets(P2LibConst.DIST_EDGE));
 
         tglLoad.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART);
-        final Button btnHelpLoad = PButton.helpButton(stage, "Filmliste laden",
+        final Button btnHelpLoad = PButton.helpButton(pDialog.getStage(), "Filmliste laden",
                 HelpText.LOAD_FILMLIST_PROGRAMSTART);
 
         //Diacritic
@@ -69,7 +69,7 @@ public class PaneFilmLoad {
             diacriticChanged.setValue(true);
             ProgConfig.SYSTEM_SHOW_DIACRITICS.setValue(!tglRemoveDiacritic.isSelected());
         });
-        final Button btnHelpDia = PButton.helpButton(stage, "Diakritische Zeichen",
+        final Button btnHelpDia = PButton.helpButton(pDialog.getStage(), "Diakritische Zeichen",
                 HelpText.DIAKRITISCHE_ZEICHEN);
 
         Separator sp2 = new Separator();

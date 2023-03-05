@@ -23,6 +23,7 @@ import de.p2tools.p2lib.configfile.pdata.PDataList;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -30,7 +31,7 @@ import java.util.Comparator;
 public class BlackList extends SimpleListProperty<BlackData> implements PDataList<BlackData> {
 
     public String TAG = "BlackList";
-    private int nr = 0;
+    private int no = 0;
     private final ProgData progData;
 
     public BlackList(ProgData progData, String tag) {
@@ -64,13 +65,13 @@ public class BlackList extends SimpleListProperty<BlackData> implements PDataLis
 
     @Override
     public synchronized boolean add(BlackData b) {
-        b.setNo(nr++);
+        b.setNo(no++);
         return super.add(b);
     }
 
     public synchronized boolean addAndNotify(BlackData b) {
         //add durch Button
-        b.setNo(nr++);
+        b.setNo(no++);
         final boolean ret = super.add(b);
         new Thread(() -> BlacklistFilterFactory.markFilmBlack(true)).start();
         return ret;
@@ -96,24 +97,31 @@ public class BlackList extends SimpleListProperty<BlackData> implements PDataLis
 
         //mit den bestehenden Treffern sortieren
         Collections.sort(this, Comparator.comparingInt(BlackDataProps::getCountHits).reversed());
+
         //zum Schluss noch neu nummerieren 1, 2, ...
-        int i = 0;
-        for (BlackData blackData : this) {
-            blackData.setNo(++i);
-        }
+        countAll();
     }
 
-    public boolean blackExistsAlready(BlackData blackData) {
-        // true, wenn es das Black schon gibt
-        for (final BlackData data : this) {
-            if (data.getChannel().equalsIgnoreCase(blackData.getChannel()) &&
-                    data.getTheme().equalsIgnoreCase(blackData.getTheme()) &&
-//                    data.isThemeExact() == blackData.isThemeExact() &&
-                    data.getTitle().equalsIgnoreCase(blackData.getTitle()) &&
-                    data.getThemeTitle().equalsIgnoreCase(blackData.getThemeTitle())) {
-                return true;
+    public synchronized void cleanTheList() {
+        ArrayList blackList = new ArrayList();
+
+        this.stream().forEach(bl -> {
+            if (!BlackListFactory.blackIsEmpty(bl) &&
+                    !BlackListFactory.blackExistsAlready(bl, blackList)) {
+                blackList.add(bl);
             }
+        });
+
+        this.setAll(blackList);
+
+        //zum Schluss noch neu nummerieren 1, 2, ...
+        countAll();
+    }
+
+    private void countAll() {
+        no = 0;
+        for (BlackData blackData : this) {
+            blackData.setNo(++no);
         }
-        return false;
     }
 }

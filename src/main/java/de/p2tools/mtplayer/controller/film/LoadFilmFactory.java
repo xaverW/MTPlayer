@@ -104,8 +104,12 @@ public class LoadFilmFactory {
             logList.add("Blacklist filtern");
             ProgData.getInstance().maskerPane.setMaskerText("Blacklist filtern");
             BlacklistFilterFactory.markFilmBlack(false);
+
             ProgData.getInstance().blackList.sortTheList(true);
+            ProgData.getInstance().blackList.cleanTheList();
+
             ProgData.getInstance().filmLoadBlackList.sortTheList(true);
+            ProgData.getInstance().filmLoadBlackList.cleanTheList();
 
             logList.add("Filme in Downloads eingetragen");
             ProgData.getInstance().maskerPane.setMaskerText("Downloads eingetragen");

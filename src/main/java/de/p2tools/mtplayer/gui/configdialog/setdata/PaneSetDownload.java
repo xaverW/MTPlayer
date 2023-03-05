@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.dialogs.dialog.PDialog;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
@@ -29,7 +30,6 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import java.util.Collection;
 
@@ -42,12 +42,12 @@ public class PaneSetDownload {
     private final PToggleSwitch tglInfo = new PToggleSwitch("Infodatei anlegen: \"Filmname.txt\"");
     private final PToggleSwitch tglSubtitle = new PToggleSwitch("Untertitel speichern: \"Filmname.xxx\"");
 
-    private final Stage stage;
+    private final PDialog pDialog;
     private SetData setData = null;
     private final ObjectProperty<SetData> setDataObjectProperty;
 
-    PaneSetDownload(Stage stage, ObjectProperty<SetData> setDataObjectProperty) {
-        this.stage = stage;
+    PaneSetDownload(PDialog pDialog, ObjectProperty<SetData> setDataObjectProperty) {
+        this.pDialog = pDialog;
         this.setDataObjectProperty = setDataObjectProperty;
     }
 
@@ -81,7 +81,7 @@ public class PaneSetDownload {
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         vBox.getChildren().add(gridPane);
 
-        final Button btnHelpPrefix = PButton.helpButton(stage, "Direkt speichern",
+        final Button btnHelpPrefix = PButton.helpButton(pDialog.getStage(), "Direkt speichern",
                 HelpText.SETDATA_PREFIX);
         final Label lbl = new Label("Direkt Speichern (Download durch dieses Programm):");
 
@@ -116,7 +116,7 @@ public class PaneSetDownload {
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         vBox.getChildren().add(gridPane);
 
-        final Button btnHelpRes = PButton.helpButton(stage, "Auflösung",
+        final Button btnHelpRes = PButton.helpButton(pDialog.getStage(), "Auflösung",
                 HelpText.SETDATA_RES);
 
         int row = 0;

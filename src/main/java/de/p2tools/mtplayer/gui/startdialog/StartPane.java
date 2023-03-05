@@ -23,13 +23,10 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
 
 public class StartPane {
-    private final Stage stage;
 
-    public StartPane(Stage stage) {
-        this.stage = stage;
+    public StartPane() {
     }
 
     public void close() {

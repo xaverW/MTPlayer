@@ -72,11 +72,11 @@ public class ImportSetDialogController extends PDialogExtra {
         });
 
         // vor import
-        TitledPane tpDownPath = new DownPathPane(progData.primaryStage).makePath();
+        TitledPane tpDownPath = new DownPathPane(this).makePath();
         tpDownPath.setMaxHeight(Double.MAX_VALUE);
         tpDownPath.setCollapsible(false);
 
-        TitledPane tpPath = new PathPane(progData.primaryStage).makePath();
+        TitledPane tpPath = new PathPane(this).makePath();
         tpPath.setMaxHeight(Double.MAX_VALUE);
         tpPath.setCollapsible(false);
 
@@ -85,7 +85,7 @@ public class ImportSetDialogController extends PDialogExtra {
         vBoxPath.setStyle("-fx-background-color: -fx-background;");
 
         // nach Import
-        controllerSet = new ControllerSet(P2LibConst.primaryStage);
+        controllerSet = new ControllerSet(this);
         controllerSet.setMaxWidth(Double.MAX_VALUE);
         controllerSet.setMaxHeight(Double.MAX_VALUE);
         controllerSet.setStyle("-fx-background-color: -fx-background;");

@@ -22,6 +22,7 @@ import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.P2LibInit;
+import de.p2tools.p2lib.dialogs.dialog.PDialog;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
@@ -32,7 +33,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 
 import java.util.Collection;
 
@@ -42,11 +42,11 @@ public class PaneKeySize {
     private Spinner<Integer> spinnerAnz = new Spinner<>();
     boolean changed = false;
 
-    private final Stage stage;
+    private final PDialog pDialog;
     private final ProgData progData;
 
-    public PaneKeySize(Stage stage, ProgData progData) {
-        this.stage = stage;
+    public PaneKeySize(PDialog pDialog, ProgData progData) {
+        this.pDialog = pDialog;
         this.progData = progData;
     }
 
@@ -71,7 +71,7 @@ public class PaneKeySize {
 
     public TitledPane makeStyle(Collection<TitledPane> result) {
         tglStyle.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_STYLE);
-        final Button btnHelpStyle = PButton.helpButton(stage, "Schriftgröße anpassen", HelpText.CONFIG_STYLE);
+        final Button btnHelpStyle = PButton.helpButton(pDialog.getStage(), "Schriftgröße anpassen", HelpText.CONFIG_STYLE);
 
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);

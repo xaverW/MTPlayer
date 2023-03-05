@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.starter.DownloadState;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.dialogs.dialog.PDialog;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
@@ -31,7 +32,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import java.awt.*;
 import java.util.Collection;
@@ -50,10 +50,10 @@ public class PaneDownload {
     private final PToggleSwitch tglSSL = new PToggleSwitch("SSL-Download-URLs: Bei Problemen SSL abschalten");
     private final PToggleSwitch tglBeep = new PToggleSwitch("Nach jedem Download einen \"Beep\" ausgeben");
 
-    private final Stage stage;
+    private final PDialog pDialog;
 
-    public PaneDownload(Stage stage) {
-        this.stage = stage;
+    public PaneDownload(PDialog pDialog) {
+        this.pDialog = pDialog;
         initRadio();
     }
 
@@ -75,22 +75,22 @@ public class PaneDownload {
         result.add(tpConfig);
 
         tglFinished.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_SHOW_NOTIFICATION);
-        final Button btnHelpFinished = PButton.helpButton(stage, "Download",
+        final Button btnHelpFinished = PButton.helpButton(pDialog.getStage(), "Download",
                 HelpText.DOWNLOAD_FINISHED);
 
         tglError.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_ERROR_MSG);
-        final Button btnHelpError = PButton.helpButton(stage, "Download",
+        final Button btnHelpError = PButton.helpButton(pDialog.getStage(), "Download",
                 HelpText.DOWNLOAD_ERROR);
 
-        final Button btnHelpContinue = PButton.helpButton(stage, "Download",
+        final Button btnHelpContinue = PButton.helpButton(pDialog.getStage(), "Download",
                 HelpText.DOWNLOAD_CONTINUE);
 
         tglOne.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_MAX_ONE_PER_SERVER);
-        final Button btnHelpOne = PButton.helpButton(stage, "Download",
+        final Button btnHelpOne = PButton.helpButton(pDialog.getStage(), "Download",
                 HelpText.DOWNLOAD_ONE_SERVER);
 
         tglSSL.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_SSL_ALWAYS_TRUE);
-        final Button btnHelpSSL = PButton.helpButton(stage, "Download",
+        final Button btnHelpSSL = PButton.helpButton(pDialog.getStage(), "Download",
                 HelpText.DOWNLOAD_SSL_ALWAYS_TRUE);
 
         tglBeep.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_BEEP);

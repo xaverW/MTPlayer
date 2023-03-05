@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.gui.startdialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.dialogs.dialog.PDialog;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
@@ -27,15 +28,14 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 
 public class UpdatePane {
-    private final Stage stage;
+    private final PDialog pDialog;
     private final PToggleSwitch tglSearch = new PToggleSwitch("einmal am Tag nach einer neuen Programmversion suchen");
     BooleanProperty updateProp = ProgConfig.SYSTEM_UPDATE_SEARCH_ACT;
 
-    public UpdatePane(Stage stage) {
-        this.stage = stage;
+    public UpdatePane(PDialog pDialog) {
+        this.pDialog = pDialog;
     }
 
     public void close() {
@@ -52,7 +52,7 @@ public class UpdatePane {
         tglSearch.selectedProperty().bindBidirectional(updateProp);
 
 
-        final Button btnHelp = PButton.helpButton(stage, "Programmupdate suchen",
+        final Button btnHelp = PButton.helpButton(pDialog.getStage(), "Programmupdate suchen",
                 "Beim Programmstart wird geprüft, ob es eine neue Version des Programms gibt. Wenn es " +
                         "eine neue Version gibt, wird das mit einer Nachricht mitgeteilt. Es wird nicht " +
                         "automatisch das Programm verändert.");

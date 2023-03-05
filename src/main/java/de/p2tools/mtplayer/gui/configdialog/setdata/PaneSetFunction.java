@@ -22,6 +22,7 @@ import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.mtplayer.gui.tools.HelpTextPset;
 import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.dialogs.dialog.PDialog;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
@@ -34,7 +35,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import java.util.Collection;
 
@@ -47,13 +47,13 @@ public class PaneSetFunction {
     private final Label lblPlay = new Label("Abspielen:");
     private ChangeListener changeListener;
 
-    private final Stage stage;
+    private final PDialog pDialog;
     private final ProgData progData;
     private SetData setData = null;
     private final ObjectProperty<SetData> setDataObjectProperty;
 
-    PaneSetFunction(Stage stage, ObjectProperty<SetData> setDataObjectProperty) {
-        this.stage = stage;
+    PaneSetFunction(PDialog pDialog, ObjectProperty<SetData> setDataObjectProperty) {
+        this.pDialog = pDialog;
         progData = ProgData.getInstance();
         this.setDataObjectProperty = setDataObjectProperty;
     }
@@ -95,19 +95,19 @@ public class PaneSetFunction {
 
         gridPane.add(new Label(" "), 0, ++row);
         gridPane.add(hBox, 1, row);
-        gridPane.add(PButton.helpButton(stage, "Funktion des Sets",
+        gridPane.add(PButton.helpButton(pDialog.getStage(), "Funktion des Sets",
                 HelpTextPset.HELP_PSET_PLAY), 2, row);
 
         gridPane.add(tglSave, 1, ++row);
-        gridPane.add(PButton.helpButton(stage, "Funktion des Sets",
+        gridPane.add(PButton.helpButton(pDialog.getStage(), "Funktion des Sets",
                 HelpTextPset.HELP_PSET_SAVE), 2, row);
 
         gridPane.add(tglAbo, 1, ++row);
-        gridPane.add(PButton.helpButton(stage, "Funktion des Sets",
+        gridPane.add(PButton.helpButton(pDialog.getStage(), "Funktion des Sets",
                 HelpTextPset.HELP_PSET_ABO), 2, row);
 
         gridPane.add(tglButton, 1, ++row);
-        gridPane.add(PButton.helpButton(stage, "Funktion des Sets",
+        gridPane.add(PButton.helpButton(pDialog.getStage(), "Funktion des Sets",
                 HelpTextPset.HELP_PSET_BUTTON), 2, row);
 
         Label lblColor = new Label("Farbe:");
@@ -115,7 +115,7 @@ public class PaneSetFunction {
         btnResetColor.setOnAction(event -> {
             setDataObjectProperty.getValue().setColor(SetData.RESET_COLOR);
         });
-        final Button btnHelpColor = PButton.helpButton(stage, "Schriftfarbe auswählen",
+        final Button btnHelpColor = PButton.helpButton(pDialog.getStage(), "Schriftfarbe auswählen",
                 HelpText.SETDATA_RESET_COLOR);
 
         lblColor.disableProperty().bind(tglButton.selectedProperty().not());

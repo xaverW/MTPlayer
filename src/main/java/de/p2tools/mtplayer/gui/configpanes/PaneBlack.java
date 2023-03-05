@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.dialogs.dialog.PDialog;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
@@ -35,7 +36,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import java.util.Collection;
 
@@ -52,16 +52,12 @@ public class PaneBlack {
     private final PToggleSwitch tglGeo = new PToggleSwitch("Filme, die per Geoblocking gesperrt sind, nicht anzeigen");
 
     private final BooleanProperty blackChanged;
-    private Stage stage;
+    private PDialog pDialog;
 
-    public PaneBlack(Stage stage, BooleanProperty blackChanged) {
-        this.stage = stage;
+    public PaneBlack(PDialog pDialog, BooleanProperty blackChanged) {
+        this.pDialog = pDialog;
         this.blackChanged = blackChanged;
         progData = ProgData.getInstance();
-    }
-
-    public void setStage(Stage stage) {
-        this.stage = stage;
     }
 
     public void close() {
@@ -90,29 +86,29 @@ public class PaneBlack {
         tglAbo.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO);
         tglAbo.selectedProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
 
-        final Button btnHelp = PButton.helpButton(stage, "Blacklist",
+        final Button btnHelp = PButton.helpButton(pDialog.getStage(), "Blacklist",
                 HelpText.BLACKLIST_ABO);
 
 
         tglFuture.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_FUTURE);
         tglFuture.selectedProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
 
-        final Button btnHelpFuture = PButton.helpButton(stage, "Blacklist",
+        final Button btnHelpFuture = PButton.helpButton(pDialog.getStage(), "Blacklist",
                 HelpText.BLACKLIST_FUTURE);
 
 
         tglGeo.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_GEO);
         tglGeo.selectedProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
 
-        final Button btnHelpGeo = PButton.helpButton(stage, "Blacklist",
+        final Button btnHelpGeo = PButton.helpButton(pDialog.getStage(), "Blacklist",
                 HelpText.BLACKLIST_GEO);
 
         initDays();
 
-        final Button btnHelpSize = PButton.helpButton(stage, "Blacklist",
+        final Button btnHelpSize = PButton.helpButton(pDialog.getStage(), "Blacklist",
                 HelpText.BLACKLIST_SIZE);
 
-        final Button btnHelpDays = PButton.helpButton(stage, "Blacklist",
+        final Button btnHelpDays = PButton.helpButton(pDialog.getStage(), "Blacklist",
                 HelpText.BLACKLIST_DAYS);
 
         lblDays.setMinWidth(Region.USE_PREF_SIZE);

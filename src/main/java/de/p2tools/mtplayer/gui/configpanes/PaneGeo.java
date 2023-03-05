@@ -20,13 +20,13 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.dialogs.dialog.PDialog;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 
 import java.util.Collection;
 
@@ -38,10 +38,10 @@ public class PaneGeo {
     private final RadioButton rbSonst = new RadioButton("sonst");
     private final PToggleSwitch tglGeo = new PToggleSwitch("Geblockte Sendungen gelb markieren:");
 
-    private final Stage stage;
+    private final PDialog pDialog;
 
-    public PaneGeo(Stage stage) {
-        this.stage = stage;
+    public PaneGeo(PDialog pDialog) {
+        this.pDialog = pDialog;
     }
 
     public void close() {
@@ -54,7 +54,7 @@ public class PaneGeo {
 
     public TitledPane makeGeo(Collection<TitledPane> result) {
         tglGeo.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_MARK_GEO);
-        final Button btnHelpGeo = PButton.helpButton(stage, "Geogeblockte Filme", HelpText.CONFIG_GEO);
+        final Button btnHelpGeo = PButton.helpButton(pDialog.getStage(), "Geogeblockte Filme", HelpText.CONFIG_GEO);
 
         ToggleGroup tg = new ToggleGroup();
         tg.getToggles().addAll(rbDe, rbCh, rbAt, rbEu, rbSonst);

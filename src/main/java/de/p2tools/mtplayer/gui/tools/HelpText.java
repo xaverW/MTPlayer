@@ -465,14 +465,14 @@ public class HelpText {
                     "\n";
 
     public static final String BLACKLIST_COUNT =
-            "Beim Treffer zählen wird jeder Film gegen alle Filter geprüft und jeder Treffer " +
+            "Beim \"Treffer zählen\" wird jeder Film gegen alle Filter geprüft und jeder Treffer " +
                     "wird gezählt.\n" +
                     "Anders beim Filtern der Filmliste: " +
-                    "Dort wird nach dem ersten Treffer die weitere Suche abgebrochen. " +
-                    "Es beschleunigt also das Filtern der Filmliste, " +
-                    "wenn hier in der Tabelle die Einträge mit den meisten Treffern " +
-                    "am Anfang stehen." +
-                    "\n";
+                    "Dort wird nach dem ersten Treffer die weitere Suche abgebrochen. Das ist " +
+                    "dadurch also etwas schneller." +
+                    "\n\n" +
+                    "\"Putzen\" entfernt doppelte und leere Blacklist-Einträge. Das wird auch automatisch " +
+                    "beim Programmstart gemacht.";
 
     public static final String BLACKLIST_FUTURE =
             "Filme mit Datum in der Zukunft sind meist nur Trailer." +

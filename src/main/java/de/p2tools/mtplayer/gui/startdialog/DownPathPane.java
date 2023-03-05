@@ -21,22 +21,22 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.PDirFileChooser;
+import de.p2tools.p2lib.dialogs.dialog.PDialog;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 
 public class DownPathPane {
     private final TextField txtPath = new TextField();
     StringProperty pathProp = ProgConfig.START_DIALOG_DOWNLOAD_PATH;
 
-    private final Stage stage;
+    private final PDialog pDialog;
 
-    public DownPathPane(Stage stage) {
-        this.stage = stage;
+    public DownPathPane(PDialog pDialog) {
+        this.pDialog = pDialog;
     }
 
     public void close() {
@@ -56,12 +56,12 @@ public class DownPathPane {
         txtPath.textProperty().bindBidirectional(pathProp);
         final Button btnFile = new Button();
         btnFile.setOnAction(event -> {
-            PDirFileChooser.DirChooser(stage, txtPath);
+            PDirFileChooser.DirChooser(pDialog.getStage(), txtPath);
         });
         btnFile.setGraphic(ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
         btnFile.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen"));
 
-        final Button btnHelp = PButton.helpButton(stage,
+        final Button btnHelp = PButton.helpButton(pDialog.getStage(),
                 "Zielverzeichnis",
                 "Hier kann das Verzeichnis angegeben werden, " +
                         "in dem die Downloads gespeichert werden.");

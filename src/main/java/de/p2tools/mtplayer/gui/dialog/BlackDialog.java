@@ -54,8 +54,8 @@ public class BlackDialog extends PDialogExtra {
 
         initDialog();
         init(false);
-        paneBlack.setStage(getStage());
-        paneBlackList.setStage(getStage());
+//        paneBlack.setStage(getStage());
+//        paneBlackList.setStage(getStage());
         super.showDialog();
     }
 
@@ -70,10 +70,10 @@ public class BlackDialog extends PDialogExtra {
         Accordion accordion = new Accordion();
         Collection<TitledPane> titledPanes = new ArrayList<>();
 
-        paneBlack = new PaneBlack(getStage(), blackPaneChanged);
+        paneBlack = new PaneBlack(this, blackPaneChanged);
         paneBlack.makeBlack(titledPanes);
 
-        paneBlackList = new PaneBlackList(getStage(), progData, true, blackListPaneChanged);
+        paneBlackList = new PaneBlackList(this, progData, true, blackListPaneChanged);
         paneBlackList.make(titledPanes);
 
         accordion.getPanes().addAll(titledPanes);

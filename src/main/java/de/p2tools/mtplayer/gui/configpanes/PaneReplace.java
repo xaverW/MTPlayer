@@ -24,6 +24,7 @@ import de.p2tools.mtplayer.controller.data.ReplaceData;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.dialogs.dialog.PDialog;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.PGuiTools;
@@ -40,7 +41,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import java.util.Collection;
 
@@ -55,10 +55,10 @@ public class PaneReplace {
     private final PToggleSwitch tglAscii = new PToggleSwitch("Nur ASCII-Zeichen erlauben");
     private final PToggleSwitch tglReplace = new PToggleSwitch("Ersetzungstabelle");
 
-    private final Stage stage;
+    private final PDialog pDialog;
 
-    public PaneReplace(Stage stage) {
-        this.stage = stage;
+    public PaneReplace(PDialog pDialog) {
+        this.pDialog = pDialog;
     }
 
     public void close() {
@@ -89,11 +89,11 @@ public class PaneReplace {
         vBox.getChildren().add(gridPane);
 
         tglAscii.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_ONLY_ASCII);
-        final Button btnHelpAscii = PButton.helpButton(stage, "Nur ASCII-Zeichen",
+        final Button btnHelpAscii = PButton.helpButton(pDialog.getStage(), "Nur ASCII-Zeichen",
                 HelpText.DOWNLOAD_ONLY_ASCII);
 
         tglReplace.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_USE_REPLACETABLE);
-        final Button btnHelpReplace = PButton.helpButton(stage, "Ersetzungstabelle",
+        final Button btnHelpReplace = PButton.helpButton(pDialog.getStage(), "Ersetzungstabelle",
                 HelpText.DOWNLOAD_REPLACELIST);
 
         gridPane.add(tglAscii, 0, 0);

@@ -17,8 +17,38 @@
 
 package de.p2tools.mtplayer.controller.data;
 
+import java.util.List;
+
 public class BlackListFactory {
     private BlackListFactory() {
+    }
+
+    public static boolean blackIsEmpty(BlackData blackData) {
+        // true, wenn es das Black schon gibt
+        if (blackData.getChannel().isEmpty() &&
+                blackData.getTheme().isEmpty() &&
+                blackData.getTitle().isEmpty() &&
+                blackData.getThemeTitle().isEmpty()) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean blackExistsAlready(BlackData blackData, List<BlackData> list) {
+        // true, wenn es das Black schon gibt
+        for (final BlackData data : list) {
+            if (data.getChannel().equalsIgnoreCase(blackData.getChannel()) &&
+                    data.getTheme().equalsIgnoreCase(blackData.getTheme()) &&
+
+                    ((data.getTheme().isEmpty() && blackData.getTheme().isEmpty()) ||
+                            data.isThemeExact() == blackData.isThemeExact()) &&
+
+                    data.getTitle().equalsIgnoreCase(blackData.getTitle()) &&
+                    data.getThemeTitle().equalsIgnoreCase(blackData.getThemeTitle())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static void addStandardsList(BlackList list) {

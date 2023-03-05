@@ -75,7 +75,7 @@ public class PaneConfigController extends PAccordionPane {
     private final Stage stage;
 
     public PaneConfigController(Stage stage) {
-        super(stage, ProgConfig.MEDIA_CONFIG_DIALOG_ACCORDION, ProgConfig.SYSTEM_MEDIA_DIALOG_CONFIG);
+        super(ProgConfig.MEDIA_CONFIG_DIALOG_ACCORDION, ProgConfig.SYSTEM_MEDIA_DIALOG_CONFIG);
         this.stage = stage;
         progData = ProgData.getInstance();
 

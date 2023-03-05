@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.controller.mv;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.BlackData;
+import de.p2tools.mtplayer.controller.data.BlackListFactory;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.abo.AboFactory;
 import de.p2tools.p2lib.alert.PAlert;
@@ -84,7 +85,8 @@ public class MVFactory {
     public static int addBlacks(ObservableList<BlackData> blackList) {
         int ret = 0;
         for (BlackData blackData : blackList) {
-            if (!ProgData.getInstance().blackList.blackExistsAlready(blackData)) {
+            //Sender und Thema sind immer "exact"
+            if (!BlackListFactory.blackExistsAlready(blackData, ProgData.getInstance().blackList)) {
                 ++ret;
                 ProgData.getInstance().blackList.add(blackData);
             }

@@ -22,10 +22,10 @@ import de.p2tools.mtplayer.gui.configpanes.PaneBlackList;
 import de.p2tools.mtplayer.gui.configpanes.PaneFilmLoad;
 import de.p2tools.mtplayer.gui.configpanes.PaneFilmSender;
 import de.p2tools.p2lib.dialogs.accordion.PAccordionPane;
+import de.p2tools.p2lib.dialogs.dialog.PDialog;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.control.TitledPane;
-import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -38,11 +38,11 @@ public class ControllerFilm extends PAccordionPane {
     private final BooleanProperty diacriticChanged;
 
     private final ProgData progData;
-    private final Stage stage;
+    private final PDialog pDialog;
 
-    public ControllerFilm(Stage stage, BooleanProperty diacriticChanged) {
-        super(stage, ProgConfig.CONFIG_DIALOG_ACCORDION, ProgConfig.SYSTEM_CONFIG_DIALOG_FILM);
-        this.stage = stage;
+    public ControllerFilm(PDialog pDialog, BooleanProperty diacriticChanged) {
+        super(ProgConfig.CONFIG_DIALOG_ACCORDION, ProgConfig.SYSTEM_CONFIG_DIALOG_FILM);
+        this.pDialog = pDialog;
         this.diacriticChanged = diacriticChanged;
         progData = ProgData.getInstance();
 
@@ -60,13 +60,13 @@ public class ControllerFilm extends PAccordionPane {
     @Override
     public Collection<TitledPane> createPanes() {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
-        paneFilmLoad = new PaneFilmLoad(stage, progData, diacriticChanged);
+        paneFilmLoad = new PaneFilmLoad(pDialog, progData, diacriticChanged);
         paneFilmLoad.make(result);
 
-        paneBlackList = new PaneBlackList(stage, progData, false, new SimpleBooleanProperty());
+        paneBlackList = new PaneBlackList(pDialog, progData, false, new SimpleBooleanProperty());
         paneBlackList.make(result);
 
-        paneFilmSender = new PaneFilmSender(stage, false);
+        paneFilmSender = new PaneFilmSender(pDialog, false);
         paneFilmSender.make(result);
 
         return result;

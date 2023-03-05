@@ -18,6 +18,7 @@ package de.p2tools.mtplayer.gui.configdialog.setdata;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.SetData;
+import de.p2tools.p2lib.dialogs.dialog.PDialog;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.Accordion;
@@ -25,7 +26,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -46,7 +46,7 @@ public class ControllerSet extends AnchorPane {
 
     private final ObjectProperty<SetData> setDataObjectProperty = new SimpleObjectProperty<>(null);
 
-    public ControllerSet(Stage stage) {
+    public ControllerSet(PDialog pDialog) {
         AnchorPane.setLeftAnchor(splitPane, 0.0);
         AnchorPane.setBottomAnchor(splitPane, 0.0);
         AnchorPane.setRightAnchor(splitPane, 0.0);
@@ -54,12 +54,12 @@ public class ControllerSet extends AnchorPane {
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
 
-        paneSetName = new PaneSetName(stage, setDataObjectProperty);
-        paneSetFunction = new PaneSetFunction(stage, setDataObjectProperty);
-        paneSetDestination = new PaneSetDestination(stage, setDataObjectProperty);
-        paneSetDownload = new PaneSetDownload(stage, setDataObjectProperty);
-        paneSetProgram = new PaneSetProgram(stage, setDataObjectProperty);
-        paneSetList = new PaneSetList(stage, setDataObjectProperty);
+        paneSetName = new PaneSetName(pDialog, setDataObjectProperty);
+        paneSetFunction = new PaneSetFunction(pDialog, setDataObjectProperty);
+        paneSetDestination = new PaneSetDestination(pDialog, setDataObjectProperty);
+        paneSetDownload = new PaneSetDownload(pDialog, setDataObjectProperty);
+        paneSetProgram = new PaneSetProgram(pDialog, setDataObjectProperty);
+        paneSetList = new PaneSetList(pDialog, setDataObjectProperty);
         paneSetName.makePane(titledPanes);
         paneSetFunction.makePane(titledPanes);
         paneSetDestination.makePane(titledPanes);

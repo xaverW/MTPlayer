@@ -21,9 +21,9 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.configpanes.PaneBlack;
 import de.p2tools.mtplayer.gui.configpanes.PaneBlackList;
 import de.p2tools.p2lib.dialogs.accordion.PAccordionPane;
+import de.p2tools.p2lib.dialogs.dialog.PDialog;
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.control.TitledPane;
-import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -35,11 +35,11 @@ public class ControllerBlack extends PAccordionPane {
     private final BooleanProperty blackChanged;
     private PaneBlack paneBlack;
     private PaneBlackList paneBlackList;
-    private final Stage stage;
+    private final PDialog pDialog;
 
-    public ControllerBlack(Stage stage, BooleanProperty blackChanged) {
-        super(stage, ProgConfig.CONFIG_DIALOG_ACCORDION, ProgConfig.SYSTEM_CONFIG_DIALOG_BLACKLIST);
-        this.stage = stage;
+    public ControllerBlack(PDialog pDialog, BooleanProperty blackChanged) {
+        super(ProgConfig.CONFIG_DIALOG_ACCORDION, ProgConfig.SYSTEM_CONFIG_DIALOG_BLACKLIST);
+        this.pDialog = pDialog;
         this.blackChanged = blackChanged;
         progData = ProgData.getInstance();
 
@@ -56,9 +56,9 @@ public class ControllerBlack extends PAccordionPane {
     @Override
     public Collection<TitledPane> createPanes() {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
-        paneBlack = new PaneBlack(stage, blackChanged);
+        paneBlack = new PaneBlack(pDialog, blackChanged);
         paneBlack.makeBlack(result);
-        paneBlackList = new PaneBlackList(stage, progData, true, blackChanged);
+        paneBlackList = new PaneBlackList(pDialog, progData, true, blackChanged);
         paneBlackList.make(result);
         return result;
     }

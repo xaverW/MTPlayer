@@ -155,31 +155,31 @@ public class ConfigDialogController extends PDialogExtra {
 
     private void initPanel() {
         try {
-            controllerConfig = new ControllerConfig(getStage());
+            controllerConfig = new ControllerConfig(this);
             Tab tab = new Tab("Allgemein");
             tab.setClosable(false);
             tab.setContent(controllerConfig);
             tabPane.getTabs().add(tab);
 
-            controllerFilm = new ControllerFilm(getStage(), diacriticChanged);
+            controllerFilm = new ControllerFilm(this, diacriticChanged);
             tab = new Tab("Filmliste laden");
             tab.setClosable(false);
             tab.setContent(controllerFilm);
             tabPane.getTabs().add(tab);
 
-            controllerBlack = new ControllerBlack(getStage(), blackChanged);
+            controllerBlack = new ControllerBlack(this, blackChanged);
             tab = new Tab("Blacklist");
             tab.setClosable(false);
             tab.setContent(controllerBlack);
             tabPane.getTabs().add(tab);
 
-            controllerDownload = new ControllerDownload(getStage());
+            controllerDownload = new ControllerDownload(this);
             tab = new Tab("Download");
             tab.setClosable(false);
             tab.setContent(controllerDownload);
             tabPane.getTabs().add(tab);
 
-            controllerSet = new ControllerSet(getStage());
+            controllerSet = new ControllerSet(this);
             tab = new Tab("Aufzeichnen/Abspielen");
             tab.setClosable(false);
             tab.setContent(controllerSet);

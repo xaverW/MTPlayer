@@ -20,8 +20,8 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.gui.configpanes.PaneDownload;
 import de.p2tools.mtplayer.gui.configpanes.PaneReplace;
 import de.p2tools.p2lib.dialogs.accordion.PAccordionPane;
+import de.p2tools.p2lib.dialogs.dialog.PDialog;
 import javafx.scene.control.TitledPane;
-import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,11 +31,11 @@ public class ControllerDownload extends PAccordionPane {
     private PaneDownload paneDownload;
     private PaneReplace paneReplace;
 
-    private final Stage stage;
+    private final PDialog pDialog;
 
-    public ControllerDownload(Stage stage) {
-        super(stage, ProgConfig.CONFIG_DIALOG_ACCORDION, ProgConfig.SYSTEM_CONFIG_DIALOG_DOWNLOAD);
-        this.stage = stage;
+    public ControllerDownload(PDialog pDialog) {
+        super(ProgConfig.CONFIG_DIALOG_ACCORDION, ProgConfig.SYSTEM_CONFIG_DIALOG_DOWNLOAD);
+        this.pDialog = pDialog;
         init();
     }
 
@@ -49,10 +49,10 @@ public class ControllerDownload extends PAccordionPane {
     @Override
     public Collection<TitledPane> createPanes() {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
-        paneDownload = new PaneDownload(stage);
+        paneDownload = new PaneDownload(pDialog);
         paneDownload.makeDownload(result);
 
-        paneReplace = new PaneReplace(stage);
+        paneReplace = new PaneReplace(pDialog);
         paneReplace.makeReplaceListTable(result);
         return result;
     }

@@ -22,6 +22,7 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.data.PColorData;
+import de.p2tools.p2lib.dialogs.dialog.PDialog;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.PTableFactory;
@@ -35,17 +36,16 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.util.Collection;
 
 public class PaneColor {
-    private final Stage stage;
+    private final PDialog pDialog;
     private final PToggleSwitch tglDarkTheme = new PToggleSwitch("Dunkles Erscheinungsbild der Programmoberfläche");
 
-    public PaneColor(Stage stage) {
-        this.stage = stage;
+    public PaneColor(PDialog pDialog) {
+        this.pDialog = pDialog;
     }
 
     public void close() {
@@ -54,7 +54,7 @@ public class PaneColor {
 
     public void makeColor(Collection<TitledPane> result) {
         tglDarkTheme.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_DARK_THEME);
-        final Button btnHelpTheme = PButton.helpButton(stage, "Erscheinungsbild der Programmoberfläche",
+        final Button btnHelpTheme = PButton.helpButton(pDialog.getStage(), "Erscheinungsbild der Programmoberfläche",
                 HelpText.DARK_THEME);
 
         TableView<PColorData> tableViewFont = new TableView<>();

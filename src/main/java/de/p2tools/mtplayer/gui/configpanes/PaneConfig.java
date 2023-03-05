@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.dialogs.dialog.PDialog;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
@@ -28,7 +29,6 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 
 import java.util.Collection;
 
@@ -45,10 +45,10 @@ public class PaneConfig {
     private TextField txtUserAgent;
     private final PToggleSwitch tglEnableLog = new PToggleSwitch("Ein Logfile anlegen:");
 
-    private final Stage stage;
+    private final PDialog pDialog;
 
-    public PaneConfig(Stage stage) {
-        this.stage = stage;
+    public PaneConfig(PDialog pDialog) {
+        this.pDialog = pDialog;
     }
 
     public void close() {
@@ -74,29 +74,29 @@ public class PaneConfig {
         result.add(tpConfig);
 
         tglSearchAbo.selectedProperty().bindBidirectional(ProgConfig.ABO_SEARCH_NOW);
-        final Button btnHelpAbo = PButton.helpButton(stage, "Abos automatisch suchen",
+        final Button btnHelpAbo = PButton.helpButton(pDialog.getStage(), "Abos automatisch suchen",
                 HelpText.SEARCH_ABOS_IMMEDIATELY);
         GridPane.setHalignment(btnHelpAbo, HPos.RIGHT);
 
 
         tglStartDownload.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_START_NOW);
-        final Button btnHelpDownload = PButton.helpButton(stage, "Downloads sofort starten",
+        final Button btnHelpDownload = PButton.helpButton(pDialog.getStage(), "Downloads sofort starten",
                 HelpText.START_DOWNLOADS_FROM_ABOS_IMMEDIATELY);
         GridPane.setHalignment(btnHelpDownload, HPos.RIGHT);
 
 
         tglSmallFilm.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM);
         tglSmallDownload.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD);
-        final Button btnHelpSize = PButton.helpButton(stage, "Nur kleine Button anzeigen",
+        final Button btnHelpSize = PButton.helpButton(pDialog.getStage(), "Nur kleine Button anzeigen",
                 HelpText.SMALL_BUTTON);
         GridPane.setHalignment(btnHelpSize, HPos.RIGHT);
 
         tglTipOfDay.selectedProperty().bindBidirectional(ProgConfig.TIP_OF_DAY_SHOW);
-        final Button btnHelpTipOfDay = PButton.helpButton(stage, "Tip des Tages anzeigen",
+        final Button btnHelpTipOfDay = PButton.helpButton(pDialog.getStage(), "Tip des Tages anzeigen",
                 HelpText.TIP_OF_DAY);
         GridPane.setHalignment(btnHelpTipOfDay, HPos.RIGHT);
 
-        final Button btnHelpUserAgent = PButton.helpButton(stage, "User Agent festlegen",
+        final Button btnHelpUserAgent = PButton.helpButton(pDialog.getStage(), "User Agent festlegen",
                 HelpText.USER_AGENT);
         GridPane.setHalignment(btnHelpUserAgent, HPos.RIGHT);
         txtUserAgent = new TextField() {

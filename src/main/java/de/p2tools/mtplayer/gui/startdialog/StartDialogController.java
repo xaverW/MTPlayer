@@ -143,43 +143,43 @@ public class StartDialogController extends PDialogExtra {
         getVBoxCont().getChildren().add(stackpane);
 
         //startPane 1
-        startPane1 = new StartPane(getStage());
+        startPane1 = new StartPane();
         tStart1 = startPane1.makeStart1();
         tStart1.setMaxHeight(Double.MAX_VALUE);
         tStart1.setCollapsible(false);
 
         //startPane 2
-        startPane2 = new StartPane(getStage());
+        startPane2 = new StartPane();
         tStart2 = startPane2.makeStart2();
         tStart2.setMaxHeight(Double.MAX_VALUE);
         tStart2.setCollapsible(false);
 
         //updatePane
-        updatePane = new UpdatePane(getStage());
+        updatePane = new UpdatePane(this);
         tUpdate = updatePane.makeStart();
         tUpdate.setMaxHeight(Double.MAX_VALUE);
         tUpdate.setCollapsible(false);
 
         //geoPane
-        paneGeo = new PaneGeo(getStage());
+        paneGeo = new PaneGeo(this);
         tGeo = paneGeo.makeGeo();
         tGeo.setMaxHeight(Double.MAX_VALUE);
         tGeo.setCollapsible(false);
 
         //filmPane
-        paneFilmSender = new PaneFilmSender(getStage(), true);
+        paneFilmSender = new PaneFilmSender(this, true);
         tFilm = paneFilmSender.make(null);
         tFilm.setMaxHeight(Double.MAX_VALUE);
         tFilm.setCollapsible(false);
 
         //downPane
-        downPathPane = new DownPathPane(getStage());
+        downPathPane = new DownPathPane(this);
         tDown = downPathPane.makePath();
         tDown.setMaxHeight(Double.MAX_VALUE);
         tDown.setCollapsible(false);
 
         //pathPane
-        pathPane = new PathPane(getStage());
+        pathPane = new PathPane(this);
         tPath = pathPane.makePath();
         tPath.setMaxHeight(Double.MAX_VALUE);
         tPath.setCollapsible(false);
