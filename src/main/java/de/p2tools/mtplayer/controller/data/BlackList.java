@@ -31,7 +31,7 @@ import java.util.Comparator;
 public class BlackList extends SimpleListProperty<BlackData> implements PDataList<BlackData> {
 
     public String TAG = "BlackList";
-    private int no = 0;
+    private int no = 1;
     private final ProgData progData;
 
     public BlackList(ProgData progData, String tag) {
@@ -119,9 +119,9 @@ public class BlackList extends SimpleListProperty<BlackData> implements PDataLis
     }
 
     private void countAll() {
-        no = 0;
+        no = 1;
         for (BlackData blackData : this) {
-            blackData.setNo(++no);
+            blackData.setNo(no++);
         }
     }
 }
