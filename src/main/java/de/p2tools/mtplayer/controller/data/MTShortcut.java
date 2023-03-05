@@ -44,6 +44,16 @@ public class MTShortcut {
                             "das Programm wartet auf den Download. Der Dialog mit der Abfrage was getan werden soll, wird aber übersprungen.");
 
     // Tabelle Filme
+    public static final PShortcut SHORTCUT_FILM_SHOWN =
+            new PShortcut(ProgConfig.SHORTCUT_FILM_SHOWN, ProgConfig.SHORTCUT_FILM_SHOWN_INIT,
+                    "Film als gesehen markieren",
+                    "Der Film wird zur Liste der gesehenen Filme hinzugefügt.");
+
+    public static final PShortcut SHORTCUT_FILM_NOT_SHOWN =
+            new PShortcut(ProgConfig.SHORTCUT_FILM_NOT_SHOWN, ProgConfig.SHORTCUT_FILM_NOT_SHOWN_INIT,
+                    "Film als ungesehen markieren",
+                    "Der Film wird aus der Liste der gesehenen Filme gelöscht.");
+
     public static final PShortcut SHORTCUT_ADD_BLACKLIST =
             new PShortcut(ProgConfig.SHORTCUT_ADD_BLACKLIST, ProgConfig.SHORTCUT_ADD_BLACKLIST_INIT,
                     "Einen neuen Eintrag in der Blacklist erstellen",
@@ -139,6 +149,8 @@ public class MTShortcut {
         shortcutList.add(SHORTCUT_QUIT_PROGRAM);
         shortcutList.add(SHORTCUT_QUIT_PROGRAM_WAIT);
 
+        shortcutList.add(SHORTCUT_FILM_SHOWN);
+        shortcutList.add(SHORTCUT_FILM_NOT_SHOWN);
         shortcutList.add(SHORTCUT_ADD_BLACKLIST);
         shortcutList.add(SHORTCUT_SHOW_FILTER);
         shortcutList.add(SHORTCUT_SHOW_INFOS);

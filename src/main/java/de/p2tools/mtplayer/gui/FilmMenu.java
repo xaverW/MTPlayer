@@ -133,8 +133,12 @@ public class FilmMenu {
 
         final MenuItem miFilmShown = new MenuItem("Filme als gesehen markieren");
         miFilmShown.setOnAction(a -> progData.filmGuiController.setFilmShown());
+        PShortcutWorker.addShortCut(miFilmShown, MTShortcut.SHORTCUT_FILM_SHOWN);
+
         final MenuItem miFilmNotShown = new MenuItem("Filme als ungesehen markieren");
         miFilmNotShown.setOnAction(a -> progData.filmGuiController.setFilmNotShown());
+        PShortcutWorker.addShortCut(miFilmNotShown, MTShortcut.SHORTCUT_FILM_NOT_SHOWN);
+
         final MenuItem miFilmInfo = new MenuItem("Filminformation anzeigen");
         miFilmInfo.setOnAction(a -> progData.filmGuiController.showFilmInfo());
         PShortcutWorker.addShortCut(miFilmInfo, MTShortcut.SHORTCUT_INFO_FILM);

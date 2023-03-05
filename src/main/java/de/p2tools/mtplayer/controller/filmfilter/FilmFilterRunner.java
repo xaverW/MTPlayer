@@ -41,6 +41,17 @@ public class FilmFilterRunner {
 
         progData.actFilmFilterWorker.filterChangeProperty().addListener((observable, oldValue, newValue) -> filter()); // Filmfilter (User) haben sich geändert
         progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> filterList());
+        Listener.addListener(new Listener(Listener.EVENT_HISTORY_CHANGED, FilmFilterRunner.class.getSimpleName()) {
+            @Override
+            public void pingFx() {
+                FilmFilter filmFilter = progData.actFilmFilterWorker.getActFilterSettings();
+                if (filmFilter.isNotVis() && filmFilter.isNotHistory() ||
+                        filmFilter.isOnlyVis() && filmFilter.getOnlyActHistory()) {
+                    //nur dann wird History gefiltert
+                    filterList();
+                }
+            }
+        });
         Listener.addListener(new Listener(Listener.EVENT_BLACKLIST_CHANGED, FilmFilterRunner.class.getSimpleName()) {
             @Override
             public void pingFx() {

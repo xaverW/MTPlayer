@@ -44,6 +44,7 @@ public class HistoryWriteToFile implements Runnable {
         this.historyWorker = historyWorker;
     }
 
+    @Override
     public void run() {
         doWork();
         isWorking.setValue(false);
@@ -65,7 +66,7 @@ public class HistoryWriteToFile implements Runnable {
         // und jetzt schreiben
         writeHistoryDataToFile(list, append);
 
-        Listener.notify(Listener.EVENT_GUI_HISTORY_CHANGED, HistoryWriteToFile.class.getSimpleName());
+        Listener.notify(Listener.EVENT_HISTORY_CHANGED, HistoryWriteToFile.class.getSimpleName());
         PDuration.counterStop("History: Thread: HistoryWriteToFile");
     }
 

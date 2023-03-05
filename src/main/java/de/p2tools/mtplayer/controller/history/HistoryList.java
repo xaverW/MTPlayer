@@ -49,6 +49,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
     private BooleanProperty isWorking = new SimpleBooleanProperty(false);
     public final HistoryWorker historyWorker;
     private final boolean bookmark;
+    private boolean found = false;
 
     public HistoryList(String fileName, String settingsDir, boolean bookmark) {
         super(FXCollections.observableArrayList());
@@ -88,6 +89,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         filteredList.setPredicate(p -> true);
     }
 
+    //===============
     public synchronized void clearAll(Stage stage) {
         final int size = this.size();
         final String title;
@@ -106,11 +108,11 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
             if (bookmark) {
                 FilmTools.clearAllBookmarks();
             }
-            Listener.notify(Listener.EVENT_GUI_HISTORY_CHANGED, HistoryList.class.getSimpleName());
-
+            Listener.notify(Listener.EVENT_HISTORY_CHANGED, HistoryList.class.getSimpleName());
         }
     }
 
+    //===============
     public synchronized boolean checkIfUrlAlreadyIn(String urlFilm) {
         // wenn url gefunden, dann true zurück
         return urlHash.contains(urlFilm);
@@ -121,6 +123,9 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         return theme.equals(FilmTools.THEME_LIVE);
     }
 
+    //===============
+    //ADD
+    //===============
     public synchronized void addHistoryDataToHistory(String theme, String title, String url) {
         // einen Film in die History schreiben
         if (checkIfUrlAlreadyIn(url) || checkIfLiveStream(theme)) {
@@ -214,40 +219,9 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
     }
 
 
-    private void writeToFile(List<HistoryData> list, boolean append) {
-        waitWhileWorkingAndSetWorking();
-
-        try {
-            Thread th = new Thread(new HistoryWriteToFile(list, append, isWorking, historyWorker));
-            th.setName("HistoryWriteToFile");
-            th.start();
-            // th.run();
-        } catch (Exception ex) {
-            PLog.errorLog(912030254, ex, "writeToFile");
-            isWorking.setValue(false);
-        }
-    }
-
-    private void waitWhileWorking() {
-        while (isWorking.get()) {
-            // sollte nicht passieren, aber wenn ..
-            PLog.errorLog(741025896, "waitWhileWorking: write to history file");
-
-            try {
-                wait(100);
-            } catch (final Exception ex) {
-                PLog.errorLog(915236547, ex, "waitWhileWorking");
-                isWorking.setValue(false);
-            }
-        }
-
-    }
-
-    private void waitWhileWorkingAndSetWorking() {
-        waitWhileWorking();
-        isWorking.setValue(true);
-    }
-
+    //===============
+    //remove
+    //===============
     public synchronized void removeHistoryDataFromHistory(ArrayList<HistoryData> historyDataList) {
         // Historydaten aus der History löschen und File wieder schreiben
 
@@ -323,8 +297,6 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         PDuration.counterStop("History: removeDataFromHistory");
     }
 
-    private boolean found = false;
-
     private void removeFromHistory(HashSet<String> urlHash) {
         final ArrayList<HistoryData> newHistoryList = new ArrayList<>();
 
@@ -351,12 +323,47 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
             // und nur dann wurde was gelöscht und muss geschrieben werden
             replaceThisList(newHistoryList);
             writeToFile(newHistoryList, false);
-            Listener.notify(Listener.EVENT_GUI_HISTORY_CHANGED, HistoryList.class.getSimpleName());
         }
 
         PDuration.counterStop("History: removeFromHistory");
     }
 
+    //===============
+    private void writeToFile(List<HistoryData> list, boolean append) {
+        waitWhileWorkingAndSetWorking();
+
+        try {
+            Thread th = new Thread(new HistoryWriteToFile(list, append, isWorking, historyWorker));
+            th.setName("HistoryWriteToFile");
+            th.start();
+            // th.run();
+        } catch (Exception ex) {
+            PLog.errorLog(912030254, ex, "writeToFile");
+            isWorking.setValue(false);
+        }
+    }
+
+    private void waitWhileWorking() {
+        while (isWorking.get()) {
+            // sollte nicht passieren, aber wenn ..
+            PLog.errorLog(741025896, "waitWhileWorking: write to history file");
+
+            try {
+                wait(100);
+            } catch (final Exception ex) {
+                PLog.errorLog(915236547, ex, "waitWhileWorking");
+                isWorking.setValue(false);
+            }
+        }
+
+    }
+
+    private void waitWhileWorkingAndSetWorking() {
+        waitWhileWorking();
+        isWorking.setValue(true);
+    }
+
+    //===============
     private void clearList() {
         urlHash.clear();
         this.clear();

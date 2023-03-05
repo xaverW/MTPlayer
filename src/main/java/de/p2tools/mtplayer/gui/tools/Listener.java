@@ -34,8 +34,7 @@ public class Listener implements EventListener {
     public static final int EVENT_MEDIA_DB_START = count++;
     public static final int EVENT_MEDIA_DB_STOP = count++;
 
-    public static final int EVENT_REPLACELIST_CHANGED = count++;
-    public static final int EVENT_GUI_HISTORY_CHANGED = count++;
+    public static final int EVENT_HISTORY_CHANGED = count++;
     public static final int EVEMT_SETDATA_CHANGED = count++;
 
     public int[] event = {-1};

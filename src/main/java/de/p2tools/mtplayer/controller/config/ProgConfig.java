@@ -295,6 +295,12 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty SHORTCUT_SEARCH_MEDIA_COLLECTION = addStrProp("SHORTCUT_SEARCH_MEDIA_COLLECTION", SHORTCUT_SEARCH_MEDIA_COLLECTION_INIT);
 
     // Shortcuts Filmmenü
+    public static String SHORTCUT_FILM_SHOWN_INIT = "Ctrl+G";
+    public static StringProperty SHORTCUT_FILM_SHOWN = addStrProp("SHORTCUT_FILM_SHOWN", SHORTCUT_FILM_SHOWN_INIT);
+
+    public static String SHORTCUT_FILM_NOT_SHOWN_INIT = "Ctrl+Shift+G";
+    public static StringProperty SHORTCUT_FILM_NOT_SHOWN = addStrProp("SHORTCUT_FILM_NOT_SHOWN", SHORTCUT_FILM_NOT_SHOWN_INIT);
+
     public static String SHORTCUT_ADD_BLACKLIST_INIT = "Ctrl+B";
     public static StringProperty SHORTCUT_ADD_BLACKLIST = addStrProp("SHORTCUT_ADD_BLACKLIST", SHORTCUT_ADD_BLACKLIST_INIT);
 
