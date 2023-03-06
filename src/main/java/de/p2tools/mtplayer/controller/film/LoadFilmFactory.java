@@ -105,11 +105,8 @@ public class LoadFilmFactory {
             ProgData.getInstance().maskerPane.setMaskerText("Blacklist filtern");
             BlacklistFilterFactory.markFilmBlack(false);
 
-            ProgData.getInstance().blackList.sortTheList(true);
-            ProgData.getInstance().blackList.cleanTheList();
-
-            ProgData.getInstance().filmLoadBlackList.sortTheList(true);
-            ProgData.getInstance().filmLoadBlackList.cleanTheList();
+            ProgData.getInstance().blackList.sortAndCleanTheList();
+            ProgData.getInstance().filmLoadBlackList.sortAndCleanTheList();
 
             logList.add("Filme in Downloads eingetragen");
             ProgData.getInstance().maskerPane.setMaskerText("Downloads eingetragen");
@@ -139,7 +136,6 @@ public class LoadFilmFactory {
             ProgData.getInstance().maskerPane.switchOffMasker();//damit auf jedem Fall, aus
         }).start();
     }
-
 
     public void loadFilmlistProgStart() {
         initLoadFactoryConst();

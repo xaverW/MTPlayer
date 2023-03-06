@@ -249,7 +249,7 @@ public class PaneBlackList {
                 "Für jeden Eintrag in der Blacklist wird gezählt,\n" +
                 "wie viele Filme damit geblockt werden."));
         btnCountHits.setOnAction(a -> {
-            BlacklistFactory.countHits(list, false);
+            BlacklistFactory.countHits(list);
             PTableFactory.refreshTable(tableView);
         });
 
@@ -352,7 +352,7 @@ public class PaneBlackList {
 
     private void setBlackChanged() {
         if (blackChange) {
-            blackChanged.setValue(true);
+            blackChanged.set(true);
         }
     }
 

@@ -60,6 +60,7 @@ public class BlackData extends BlackDataProps {
 
         fTitle.filter = getTitle();
         fTitle.makeFilterArray();
+
         setQuickChannel();
         setQuickTheme();
         setQuickThemeTitle();
@@ -71,7 +72,7 @@ public class BlackData extends BlackDataProps {
                 fThemeTitle.isEmpty &&
                 fTitle.isEmpty &&
                 fSomewhere.isEmpty &&
-                fChannel.isQick) {
+                fChannel.isQuick) {
             quickChannel = true;
 
         } else {
@@ -84,7 +85,7 @@ public class BlackData extends BlackDataProps {
                 fThemeTitle.isEmpty &&
                 fTitle.isEmpty &&
                 fSomewhere.isEmpty &&
-                fTheme.isQick) {
+                fTheme.isQuick) {
             quickTheme = true;
 
         } else {
@@ -97,7 +98,7 @@ public class BlackData extends BlackDataProps {
                 fTheme.isEmpty &&
                 fTitle.isEmpty &&
                 fSomewhere.isEmpty &&
-                fThemeTitle.isQick) {
+                fThemeTitle.isQuick) {
             quickThemTitle = true;
 
         } else {
@@ -110,7 +111,7 @@ public class BlackData extends BlackDataProps {
                 fTheme.isEmpty &&
                 fThemeTitle.isEmpty &&
                 fSomewhere.isEmpty &&
-                fTitle.isQick) {
+                fTitle.isQuick) {
             quickTitle = true;
 
         } else {

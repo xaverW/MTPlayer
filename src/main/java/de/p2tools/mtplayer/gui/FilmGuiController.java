@@ -128,6 +128,7 @@ public class FilmGuiController extends AnchorPane {
 
 
     public void setLastShownFilm(BlackData blackData) {
+        //todo-> Black-White-List???
         final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().filmGuiController.getSel();
         if (!filmSelection.isPresent()) {
             //nix ausgewählt

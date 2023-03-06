@@ -81,20 +81,6 @@ public class BlacklistFilterFactory {
         PDuration.counterStop("getBlackFiltered");
     }
 
-    /**
-     * Filterfunction for Downloads from Abos.
-     *
-     * @param film item to te tested
-     * @return true if item should be displayed.
-     */
-    public static synchronized boolean checkBlacklistDownloadIsBlocked(FilmData film) {
-        // hier werden die Filme für Downloads aus Abos gesucht,
-        // und wenn die Blacklist bei den Abos berücksichtigt werden soll,
-        // wird damit geprüft
-        loadCurrentBlacklistSettings(); // todo das muss nur beim ersten mal gemacht werden
-        return checkFilmIsBlocked(film);
-    }
-
     public static synchronized void markFilmBlack(boolean notify) {
         //hier werden die Filme gekennzeichnet, ob sie "black" sind
         //und das dauert: Filmliste geladen, addBlack, ConfigDialog, Filter blkBtn
@@ -109,10 +95,11 @@ public class BlacklistFilterFactory {
             ProgData.getInstance().maskerPane.setMaskerVisible(true);
         }
 
-        loadCurrentBlacklistSettings();
         //und jetzt die Filmliste durchlaufen parallel/stream ist gleich??
+        ProgData.getInstance().blackList.clearCounter();
+        loadCurrentBlacklistSettings();
         ProgData.getInstance().filmlist.stream().forEach(filmDataMTP ->
-                filmDataMTP.setBlackBlocked(checkFilmIsBlocked(filmDataMTP)));
+                filmDataMTP.setBlackBlocked(checkFilmIsBlocked(filmDataMTP, true)));
         getBlackFilteredFilmlist();
 
         PLog.sysLog("markFilmBlack -> stop");
@@ -145,9 +132,13 @@ public class BlacklistFilterFactory {
         doNotShowGeoBlockedFilms = ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_GEO.getValue();
     }
 
-    private static synchronized boolean checkFilmIsBlocked(FilmData filmData) {
+    public static synchronized boolean checkFilmIsBlocked(FilmData filmData, boolean incCounter) {
+        //zum Suchen von Downloads, wenn Black im Abo beachtet werden soll
+        //und zum Markieren der Filme nach dem Neuladen einer Filmliste oder Ändern der Blacklist
         //hier werden die Filme gegen die Blacklist geprüft
         //liefert TRUE -> wenn der Film zur Blacklist passt, also geblockt werden soll
+        //Counter werden vorher schon gelöscht
+
         if (doNotShowGeoBlockedFilms && filmData.isGeoBlocked()) {
             return true;
         }
@@ -166,7 +157,9 @@ public class BlacklistFilterFactory {
             for (final BlackData blackData : ProgData.getInstance().blackList) {
                 if (checkFilmIsBlocked(blackData, filmData)) {
                     //dann hat dieser Filter getroffen -> anzeigen
-                    blackData.incCountHits();
+                    if (incCounter) {
+                        blackData.incCountHits();
+                    }
                     filmData.clearLowerCase();
                     return false;
                 }
@@ -178,7 +171,9 @@ public class BlacklistFilterFactory {
             for (final BlackData blackData : ProgData.getInstance().blackList) {
                 if (checkFilmIsBlocked(blackData, filmData)) {
                     //dann hat dieser Filter getroffen -> nicht anzeigen
-                    blackData.incCountHits();
+                    if (incCounter) {
+                        blackData.incCountHits();
+                    }
                     filmData.clearLowerCase();
                     return true;
                 }
@@ -190,6 +185,8 @@ public class BlacklistFilterFactory {
     }
 
     public static boolean checkFilmIsBlocked(FilmData filmData, BlackData blackData, boolean countHits) {
+        //zum Zählen der Treffer -> Dialog
+        //oder zum Setzen des letzten Films "setLastShownFilm" -> Gui
         filmData.setLowerCase();
         if (checkFilmIsBlocked(blackData, filmData)) {
             if (countHits) {
@@ -204,7 +201,10 @@ public class BlacklistFilterFactory {
     }
 
     public static boolean checkFilmIsBlockedAndCountHits(FilmData filmData, BlackList list, boolean abort) {
-        //zum Sortieren ist es sinnvoll, dass ALLE MÖGLICHEN Treffer gesucht werden
+        //wird nur nach dem Neuladen einer neuen Filmliste aus dem Web gemacht (FilmBlackList): nach Treffer abbrechen
+        //oder zum Zählen der Treffer gemacht: nach Treffer nicht abbrechen, alle Treffer zählen
+        //--> gibt (braucht) da keine WhiteList!!
+        //CLEAR-COUNTER wird da vorher schon gemacht
         boolean ret = false;
         filmData.setLowerCase();
         for (final BlackData blackData : list) {
@@ -213,11 +213,10 @@ public class BlacklistFilterFactory {
                 ret = true;
                 if (abort) {
                     filmData.clearLowerCase();
-                    return ret;
+                    return true;
                 }
             }
         }
-
         filmData.clearLowerCase();
         return ret;
     }

@@ -71,16 +71,15 @@ public class BlacklistFactory {
         PDuration.counterStop("countHits");
     }
 
-    public static synchronized void countHits(BlackList list, boolean abort) {
+    public static synchronized void countHits(BlackList list) {
         //hier wird die Blacklist gegen die Filmliste gefiltert und die Treffer
-        //für jeden Blacklist-Eintrag ermittelt
+        //für *jeden* Blacklist-Eintrag ermittelt, wird nicht nach einem Treffer abgebrochen
         PDuration.counterStart("countHitsList");
-
         list.clearCounter();
         final FilmlistMTP filmList = ProgData.getInstance().filmlist;
         if (filmList != null) {
             filmList.parallelStream().forEach(film ->
-                    BlacklistFilterFactory.checkFilmIsBlockedAndCountHits(film, list, abort));
+                    BlacklistFilterFactory.checkFilmIsBlockedAndCountHits(film, list, false));
         }
         PDuration.counterStop("countHitsList");
     }

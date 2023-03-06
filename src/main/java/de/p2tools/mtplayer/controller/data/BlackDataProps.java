@@ -37,14 +37,14 @@ public class BlackDataProps extends PDataSample<BlackDataProps> {
     public static final String BLACKLIST_THEME_TITLE = "Thema/Titel";
 
     public static final String TAG = "BlackData";
-    public static final String[] XML_NAMES = {
-            "black-sender",
-            "black-thema",
-            "black-thema-exakt",
-            "black-titel",
-            "black-thema-titel"};
+//    public static final String[] XML_NAMES = {
+//            "black-sender",
+//            "black-thema",
+//            "black-thema-exakt",
+//            "black-titel",
+//            "black-thema-titel"};
 
-    public String[] arr;
+//    public String[] arr;
 
     private int no = 0;
     private final StringProperty channel = new SimpleStringProperty("");
@@ -81,10 +81,6 @@ public class BlackDataProps extends PDataSample<BlackDataProps> {
     @Override
     public String getTag() {
         return TAG;
-    }
-
-    public synchronized void incCountHits() {
-        ++this.countHits;
     }
 
     public int getNo() {
@@ -161,6 +157,10 @@ public class BlackDataProps extends PDataSample<BlackDataProps> {
 
     public void setCountHits(int countHits) {
         this.countHits = countHits;
+    }
+
+    public synchronized void incCountHits() {
+        ++this.countHits;
     }
 
     public void clearCounter() {
