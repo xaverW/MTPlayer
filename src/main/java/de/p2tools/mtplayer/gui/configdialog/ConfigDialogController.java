@@ -130,10 +130,15 @@ public class ConfigDialogController extends PDialogExtra {
         }
 
         if (diacriticChanged.getValue() && ProgConfig.SYSTEM_REMOVE_DIACRITICS.getValue()) {
-            //Diacrit entfernen, macht nur dann Sinn
-            //zum Einfügen der Diacrit muss eine neue Filmliste geladen werden
-            FilmFactory.flattenDiacritic(progData.filmlist);
-            Listener.notify(Listener.EVENT_DIACRITIC_CHANGED, ConfigDialogController.class.getSimpleName());
+            //Diakritika entfernen, macht nur dann Sinn
+            //zum Einfügen der Diakritika muss eine neue Filmliste geladen werden
+            new Thread(() -> {
+                ProgData.getInstance().maskerPane.setMaskerText("Diakritika entfernen");
+                ProgData.getInstance().maskerPane.setMaskerVisible(true);
+                FilmFactory.flattenDiacritic(progData.filmlist);
+                Listener.notify(Listener.EVENT_DIACRITIC_CHANGED, ConfigDialogController.class.getSimpleName());
+                ProgData.getInstance().maskerPane.setMaskerVisible(false);
+            }).start();
         }
 
         controllerConfig.close();
