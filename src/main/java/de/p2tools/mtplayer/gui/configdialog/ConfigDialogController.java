@@ -129,8 +129,10 @@ public class ConfigDialogController extends PDialogExtra {
             new Thread(() -> BlacklistFilterFactory.markFilmBlack(true)).start();
         }
 
-        if (diacriticChanged.getValue()) {
-            FilmFactory.setDiacritic(progData.filmlist, ProgConfig.SYSTEM_SHOW_DIACRITICS.getValue());
+        if (diacriticChanged.getValue() && ProgConfig.SYSTEM_REMOVE_DIACRITICS.getValue()) {
+            //Diacrit entfernen, macht nur dann Sinn
+            //zum Einfügen der Diacrit muss eine neue Filmliste geladen werden
+            FilmFactory.flattenDiacritic(progData.filmlist);
             Listener.notify(Listener.EVENT_DIACRITIC_CHANGED, ConfigDialogController.class.getSimpleName());
         }
 

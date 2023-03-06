@@ -535,7 +535,10 @@ public class HelpText {
                     "\"Dvorak\", \"Noel\" und \"Nino\".\n" +
                     "\n" +
                     "Beim Suchen und Anlegen von Abos, muss also klar sein, ob die Funktion ein/ausgeschaltet ist, " +
-                    "ob man die Funktion nutzt oder nicht." +
+                    "ob man die Funktion nutzt oder nicht.\n" +
+                    "\n" +
+                    "Das Ändern wird sofort nach Beenden des Dialogs gemacht. Sollen Diakritische Zeichen " +
+                    "aber wieder eingeschaltet (also angezeigt) werden, muss dazu eine neue Filmliste geladen werden!" +
                     "\n";
 
     public static final String SEARCH_ABOS_IMMEDIATELY =

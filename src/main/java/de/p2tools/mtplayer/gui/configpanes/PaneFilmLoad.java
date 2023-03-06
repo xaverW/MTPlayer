@@ -18,16 +18,16 @@ package de.p2tools.mtplayer.gui.configpanes;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
 import javafx.beans.property.BooleanProperty;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Separator;
-import javafx.scene.control.TitledPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -64,13 +64,19 @@ public class PaneFilmLoad {
         //Diacritic
         PToggleSwitch tglRemoveDiacritic = new PToggleSwitch("Diakritische Zeichen ändern");
         tglRemoveDiacritic.setMaxWidth(Double.MAX_VALUE);
-        tglRemoveDiacritic.setSelected(!ProgConfig.SYSTEM_SHOW_DIACRITICS.getValue());
-        tglRemoveDiacritic.selectedProperty().addListener((observableValue, aBoolean, t1) -> {
-            diacriticChanged.setValue(true);
-            ProgConfig.SYSTEM_SHOW_DIACRITICS.setValue(!tglRemoveDiacritic.isSelected());
-        });
+        tglRemoveDiacritic.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_REMOVE_DIACRITICS);
+        tglRemoveDiacritic.selectedProperty().addListener((u, o, n) -> diacriticChanged.setValue(true));
         final Button btnHelpDia = PButton.helpButton(stage, "Diakritische Zeichen",
                 HelpText.DIAKRITISCHE_ZEICHEN);
+
+
+        Button btnLoad = new Button("_Filmliste mit diesen Einstellungen neu laden");
+        btnLoad.setTooltip(new Tooltip("Eine komplette neue Filmliste laden.\n" +
+                "Geänderte Einstellungen für das Laden der Filmliste werden so sofort übernommen"));
+        btnLoad.setOnAction(event -> {
+            LoadFilmFactory.getInstance().loadNewListFromWeb(true);
+        });
+
 
         Separator sp2 = new Separator();
         sp2.getStyleClass().add("pseperator2");
@@ -82,6 +88,10 @@ public class PaneFilmLoad {
 
         gridPane.add(tglRemoveDiacritic, 0, ++row, 2, 1);
         gridPane.add(btnHelpDia, 2, row);
+
+        gridPane.add(new Label(), 0, ++row, 3, 1);
+        gridPane.add(btnLoad, 0, ++row, 3, 1);
+        GridPane.setHalignment(btnLoad, HPos.RIGHT);
 
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(),
                 PColumnConstraints.getCcPrefSize(),

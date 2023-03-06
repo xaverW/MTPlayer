@@ -74,11 +74,11 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty SYSTEM_PROG_BUILD_DATE = addStrProp("system-prog-build-date", ProgramToolsFactory.getCompileDate());//z.B.: 27.07.2
 
     //Configs zur Anzeige der Diacritics in der Filmliste
-    //TRUE: dann werden Diacritics nicht geändert und angezeigt
+    //TRUE: dann werden Diacritics nicht geändert und angezeigt --> das kommt weg
     public static BooleanProperty SYSTEM_SHOW_DIACRITICS = addBoolProp("system-show-diacritics", Boolean.TRUE);
 
     //Configs zur Anzeige der Diacritics in der Filmliste
-    //TRUE: dann werden Diacritics entfernt
+    //TRUE: dann werden Diacritics nicht geändert und angezeigt
     public static BooleanProperty SYSTEM_REMOVE_DIACRITICS = addBoolProp("system-remove-diacritics", Boolean.FALSE);
 
 

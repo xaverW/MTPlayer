@@ -21,7 +21,6 @@ import de.p2tools.p2lib.mtfilter.FilterCheck;
 
 public class UpdateConfig {
     private UpdateConfig() {
-
     }
 
     public static void setUpdateDone() {
@@ -29,6 +28,10 @@ public class UpdateConfig {
     }
 
     public static void update() {
+        //SYSTEM_SHOW_DIACRITICS kommt weg
+        ProgConfig.SYSTEM_REMOVE_DIACRITICS.setValue(!ProgConfig.SYSTEM_SHOW_DIACRITICS.getValue());
+        ProgConfig.SYSTEM_SHOW_DIACRITICS.bind(ProgConfig.SYSTEM_REMOVE_DIACRITICS.not());
+
         if (!ProgConfig.SYSTEM_AFTER_UPDATE_FILTER.getValue()) {
             // dann müssen die gespeicherten Filter aktualisiert werden
             final int FILTER_DAYS_MAX__OLD = 30; // ist der alte Wert für "alles"
