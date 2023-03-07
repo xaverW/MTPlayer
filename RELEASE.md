@@ -1,6 +1,27 @@
 # MTPlayer
 
 
+**Release 13**
+* Das GUI wurde überarbeitet
+* Es kann ein eigenes Programm-Icon verwendet werden -> Einstellungen
+* Shortcuts wurden hinzugefügt z.B. Ctrl+G "Film gesehen" und Ctrl+Shift+G "Film ungesehen"
+* Größerer Umbau beim Laden-/Neuladen einer Filmliste
+* Das Laden der Filmliste beim Programmstart wurde überarbeitet: Wenn zu alt, wird sofort eine neue Filmliste geladen wodurch das Programm schneller startet
+* Gibts eine neue Filmliste? Das wird jetzt mit einem großen Rahmen um den Ladebutton "Filmliste" angezeigt
+* Die Anzeige des Filmlisten-Alters korrigiert
+* MediathekView Einstellungen (Abos, Blacklist) können importiert werden -> Menü->Hilfe->Import
+* HTTPS Zertifikat-Fehler: Es wird jetzt ein Dialog angezeigt, ob man trotzdem laden will
+* Abo-Dialog wurde überarbeitet
+* In Filtern (Film, Blacklist, Abo) können jetzt auch Begriffe ausgeschlossen werden: "!:"
+* Die möglichen Parameter der Sets wurden erweitert, jetzt sind z.B. Button möglich, die die Suche nach dem Filmtitel bei Google, YouTube, .. ermöglichen
+* Eine zweite Filterliste wurde hinzugefügt, mit der kann die Filmliste bereits beim Download gefiltert werden z.B. "Gebärdensprache" ausschließen -> Einstellungen
+* Beim Hinzufügen von neuen Einträgen in die Blacklist, wird dann der letzte Film "davor" selektiert
+* Das Anlegen von Blacklist-Einträgen wurde überarbeitet
+* Dialog zum Ändern der Blacklist im Filmfilter beim Schalter zum ein-/ausschalten der Blacklist
+* Die Verarbeitung der Blacklist wurde verbessert
+* ...
+
+
 **Release 12**
 *    Die interne Verarbeitung der Daten/Einstellungen wurde komplett überarbeitet
 *    Gelöschter Download: Der kann jetzt zurückgenommen werden (-> Menü)
