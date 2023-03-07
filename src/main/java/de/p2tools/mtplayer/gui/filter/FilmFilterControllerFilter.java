@@ -25,7 +25,6 @@ import de.p2tools.p2lib.guitools.prange.PTimePeriodBox;
 import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 import de.p2tools.p2lib.tools.date.PLDateFactory;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -80,13 +79,8 @@ public class FilmFilterControllerFilter extends VBox {
         super();
         progData = ProgData.getInstance();
 
-        setPadding(new Insets(10, 15, 5, 15));
-        setSpacing(FilterController.FILTER_SPACING_FILTER);
-
-        // Slider
+        setSpacing(FilterController.FILTER_SPACING_TEXTFILTER);
         addSlider();
-
-        // CheckOnOff
         addCheckFilter();
     }
 

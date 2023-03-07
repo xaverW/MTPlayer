@@ -23,7 +23,6 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
@@ -52,10 +51,7 @@ public class FilmFilterControllerTextFilter extends VBox {
         super();
         progData = ProgData.getInstance();
 
-        setPadding(new Insets(10, 15, 5, 15));
         setSpacing(FilterController.FILTER_SPACING_TEXTFILTER);
-
-        // Sender, Thema, ..
         initSenderFilter();
         initStringFilter();
         addFilter();

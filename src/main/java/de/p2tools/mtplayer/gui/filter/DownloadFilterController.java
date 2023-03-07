@@ -86,7 +86,7 @@ public class DownloadFilterController extends FilterController {
         sp.setMinHeight(0);
         vBoxFilter.getChildren().addAll(hBox, sp);
 
-        VBox vb = new VBox(FilterController.FILTER_SPACING_DOWNLOAD);
+        VBox vb = new VBox(FilterController.FILTER_SPACING_TEXTFILTER);
         addCont("gleichzeitige Downloads", spinnerAnz, vb);
 
         Label lblText = new Label("max. Bandbreite: ");

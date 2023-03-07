@@ -17,7 +17,6 @@
 package de.p2tools.mtplayer.gui.filter;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import javafx.geometry.Insets;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -42,12 +41,11 @@ public class FilmFilterController extends FilterController {
         Separator sp = new Separator();
         sp.getStyleClass().add("pseperator3");
         sp.setMinHeight(0);
-        sp.setPadding(new Insets(0, 15, 0, 15));
 
-        getVBoxAll().setSpacing(0);
+        final VBox vBoxFilter = getVBoxFilter(true);
+        vBoxFilter.setSpacing(15);
         VBox.setVgrow(filmFilterControllerClearFilter, Priority.ALWAYS);
-
-        getVBoxAll().getChildren().addAll(filmFilterControllerTextFilter, filmFilterControllerFilter,
+        vBoxFilter.getChildren().addAll(filmFilterControllerTextFilter, filmFilterControllerFilter,
                 filmFilterControllerClearFilter, sp, filmFilterControllerProfiles);
 
         getVBoxBottom().getChildren().add(filmFilterControllerBlacklist);

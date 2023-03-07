@@ -29,7 +29,6 @@ import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PGuiTools;
 import de.p2tools.p2lib.guitools.PSeparatorComboBox;
 import javafx.beans.binding.Bindings;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -53,14 +52,10 @@ public class FilmFilterControllerProfiles extends VBox {
         super();
         progData = ProgData.getInstance();
 
-        setPadding(new Insets(10, 15, 5, 15));
-        setSpacing(FilterController.FILTER_SPACING_PROFIlE);
-
+        setSpacing(FilterController.FILTER_SPACING_TEXTFILTER);
         initButton();
         filterProfiles();
-
         initRest();
-
         progData.actFilmFilterWorker.filterChangeProperty().addListener((observable, oldValue, newValue) -> checkCboFilter());
         checkCboFilter();
     }

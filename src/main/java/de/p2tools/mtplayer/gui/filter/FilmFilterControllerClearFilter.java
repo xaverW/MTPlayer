@@ -43,9 +43,7 @@ public class FilmFilterControllerClearFilter extends VBox {
         progData = ProgData.getInstance();
         progData.filmFilterControllerClearFilter = this;
 
-        setPadding(new Insets(10, 15, 5, 15));
-        setSpacing(FilterController.FILTER_SPACING_CLEAR);
-
+        setSpacing(FilterController.FILTER_SPACING_TEXTFILTER);
         addButton();
     }
 

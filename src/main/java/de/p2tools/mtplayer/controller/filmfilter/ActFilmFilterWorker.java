@@ -87,7 +87,7 @@ public final class ActFilmFilterWorker {
         this.progData = progData;
 
         filterChangeListener = (observable, oldValue, newValue) -> {
-            System.out.println("Filter");
+//            System.out.println("Filter");
             postFilterChange();
         };
         blacklistChangeListener = (observable, oldValue, newValue) -> {

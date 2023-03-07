@@ -245,7 +245,7 @@ public class FilmGuiController extends AnchorPane {
                 return;
             }
             if (lastShownFilmData != null) {
-                System.out.println("===> last");
+//                System.out.println("===> last");
 
 
                 tableView.getSelectionModel().clearSelection();
@@ -254,7 +254,7 @@ public class FilmGuiController extends AnchorPane {
                 //===========
                 int i = tableView.getSelectionModel().getSelectedIndex();
                 int ii = tableView.getSelectionModel().getFocusedIndex();
-                System.out.println("==> " + i + " " + ii);
+//                System.out.println("==> " + i + " " + ii);
                 tableView.getSelectionModel().select(i);
                 tableView.getSelectionModel().focus(i);
                 tableView.getSelectionModel().clearAndSelect(i);

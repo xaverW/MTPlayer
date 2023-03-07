@@ -16,7 +16,7 @@
 
 package de.p2tools.mtplayer.gui.filter;
 
-import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.pclosepane.PClosePaneV;
 import javafx.beans.property.BooleanProperty;
 import javafx.geometry.Insets;
@@ -28,19 +28,13 @@ import javafx.scene.layout.VBox;
 
 public class FilterController extends PClosePaneV {
 
-    public static final int FILTER_SPACING_FILTER = 15;
-    public static final int FILTER_SPACING_DOWNLOAD = 25;
     public static final int FILTER_SPACING_TEXTFILTER = 10;
-    public static final int FILTER_SPACING_CLEAR = 10;
-    public static final int FILTER_SPACING_PROFIlE = 10;
 
     private final VBox vBoxAll;
-    private final ProgData progData;
 
     public FilterController(BooleanProperty mlConfig) {
         super(mlConfig, true);
         vBoxAll = super.getVBoxAll();
-        progData = ProgData.getInstance();
     }
 
     @Override
@@ -50,7 +44,7 @@ public class FilterController extends PClosePaneV {
 
     public VBox getVBoxFilter(boolean vgrow) {
         VBox vbFilter = new VBox();
-        vbFilter.setPadding(new Insets(10, 15, 5, 15));
+        vbFilter.setPadding(new Insets(P2LibConst.DIST_EDGE));
         vbFilter.setSpacing(FILTER_SPACING_TEXTFILTER);
         if (vgrow) {
             VBox.setVgrow(vbFilter, Priority.ALWAYS);
@@ -62,9 +56,9 @@ public class FilterController extends PClosePaneV {
 
     public VBox getVBoxBottom() {
         VBox vBox = new VBox();
-        vBox.getStyleClass().add("extra-pane");
-        vBox.setPadding(new Insets(15, 15, 15, 15));
-        vBox.setSpacing(20);
+        vBox.getStyleClass().add("extra-pane-filter");
+        vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        vBox.setSpacing(FILTER_SPACING_TEXTFILTER);
         vBox.setMaxWidth(Double.MAX_VALUE);
         vBoxAll.getChildren().addAll(vBox);
         return vBox;
