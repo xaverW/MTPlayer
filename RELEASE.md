@@ -1,33 +1,45 @@
 # MTPlayer
 
 
-<br />
+**Release 12**
+*    Die interne Verarbeitung der Daten/Einstellungen wurde komplett überarbeitet
+*    Gelöschter Download: Der kann jetzt zurückgenommen werden (-> Menü)
+*    Im Filmfilter wurden fehlende Sender nachgetragen
+*    Die Möglichkeiten der gespeicherten Filmfilter wurden erweitert
+*    Diakritische Zeichen im Filmtitel/Thema können jetzt umgewandelt werden (z.B. ń ǹ ň ñ > n) -> Einstellungen
+*    Für Abos gibt es jetzt ein Datum, an dem das Abo angelegt wurde
+*    Für das Systemtray kann jetzt ein eigenes Icon verwendet werden -> Einstellungen
+*    Angefanene Downloads: “Neu starten/weiterführen”, das kann jetzt festgesetzt werden, so dass die Frage nicht mehr kommt -> Einstellungen
+*    Es gibt einen weiteren Filter->Status bei den Downloads: “Gestartet (läuft oder wartet)”
+*    Filmfilter, Textfilter: Der Umgang beim Eintippen wurde verbesser
+*    Filmfilter: Die Textfilter haben jetzt eine History
+*    Mediensammlung: Die Pfade der Mediensammlungen können nachträglich geändert werden
+*    Mediensammlung: Die Mediensammlung kann in eine json-Datei exportiert werden
+*    Tab Filme/Download: Titel/Thema kann in die Zwischenablage kopiert werden (Kontextmenü Filmliste/Downloadliste)
+*    An vielen Stellen wurden kleinere Änderungen/Erweiterungen in der Funktion oder dem Design vorgenommen
+*    …
+
 
 **Release 11**
+*    Download-Chart und Download-Infos wurden überarbeitet
+*    Der Dialog: “Programm nach Downloads beenden” hat jetzt auch die Möglichkeit den Rechner anschließend herunterzufahren
+*    Tray: Das Programm kann ins Tray gelegt werden -> In den Einstellungen kann das Tray eingeschaltet werden
+*    Downloads: Es gibt einen weiteren Parameter: “%w” für die Website des Films, z.B. für den youtube-dl
+*    In den Tabellen kann mit der Leertaste seitenweise gescrollt werden
+*    Dateigröße bei Streams wird ermittelt
+*    Download über HTTPS kann bei Problemen abgeschaltet werden
+*    Programmupdate-Suche wurde überarbeitet
+*    Downloads können mit einer Startzeit gestartet werden
+*    In den Abos kann eine Startzeit für die Downloads des Abos vorgegeben werden
+*    Im Filmfilter (bei den Textfiltern) kann eine Zeitverzögerung zum Start der Suche, eingestellt werden
+*    Im Filmfilter (bei den Textfiltern) kann eingestellt werden, dass die Suche erst nach Eingabe von “Return” startet
+*    Es gibt einen “Tip des Tages”
+*    Es gibt einen neuen Filmfilter: Sendedatum
+*    Die gespeicherten Filterprofile können sortiert werden
+*    …
 
-
-* Download-Chart und Download-Infos wurden überarbeitet
-* Der Dialog: "Programm nach Downloads beenden" hat jetzt auch die Möglichkeit den Rechner anschließend herunterzufahren
-* Tray: Das Programm kann ins Tray gelegt werden -> In den Einstellungen kann das Tray eingeschaltet werden
-* Downloads: Es gibt einen weiteren Parameter: "%w" für die Website des Films, z.B. für den youtube-dl
-* In den Tabellen kann mit der Leertaste seitenweise gescrollt werden
-* Dateigröße bei Streams wird ermittelt
-* Download über HTTPS kann bei Problemen abgeschaltet werden
-* Programmupdate-Suche wurde überarbeitet
-* Downloads können mit einer Startzeit gestartet werden
-* In den Abos kann eine Startzeit für die Downloads des Abos vorgegeben werden
-* Im Filmfilter (bei den Textfiltern) kann eine Zeitverzögerung zum Start der Suche, eingestellt werden
-* Im Filmfilter (bei den Textfiltern) kann eingestellt werden, dass die Suche erst nach Eingabe von "Return" startet
-* Es gibt einen "Tip des Tages"
-* Es gibt einen neuen Filmfilter: Sendedatum
-* Die gespeicherten Filterprofile können sortiert werden
-* ...
-
-
-<br />
 
 **Release 10**
-
 * Downloadchart: Daten bleiben auch beim Ändern der Anzeige erhalten
 * Filmfilter erhält eine “zurück” Funktion
 * Die interne Verarbeitung der Mediensammlung wurde verbessert, ist jetzt deutlich schneller bei sehr großen
@@ -54,8 +66,8 @@
 * Start eines externen Programms über ein Shortcut möglich
 * ...
 
-**Release 9**
 
+**Release 9**
 * Anordnung der Buttons (OK, Abbrechen, ..) passend zum Betriebssystem
 * Beim Schließen des Config-Dialogs Filmliste nur neu laden, wenn Blacklist geändert wurde
 * Die Möglichkeiten zum Anlegen von Verzeichnissen bei Abos wurde deutlich erweitert
@@ -75,8 +87,8 @@
 * Downloadchart wurde überarbeitet
 * ...
 
-**Release 8**
 
+**Release 8**
 * Dark Theme, die Programmoberfläche kann jetzt auch in einem "dark theme" angezeigt werden: Einstellungen->Farben
 * Neuer Filter im Tab Abos: Suche eines Abos nach Abonamen
 * Bei Filmabos kann jetzt der Suchzeitraum eingeschränkt werden: Filter "Zeitraum", es werden nur die Filme der letzten
@@ -94,9 +106,10 @@
 * fx bug beim glyphcache management wird abgefangen
 * Durch einen Fehler konnten keine Downloads (bei *nix) mit Leerzeichen im Pfad vorgenommen werden, geht wieder
 * Verbessertes Importscript (für MV), findet jetzt z.B. auch die Abo-Min. und Abo-Max Dauer
+* ...
+
 
 **Release 7**
-
 * Erkennung neuer Filme (wenn Filme nicht in jeder neuen Filmliste enthalten sind), wurde verbessert
 * Ändern von Abonamen (auch mehrere gleichzeitig) und Umbenennen von Sets jetzt möglich
 * Filmdownload löschen: Jetzt kann auch die Info- und Untertiteldatei mit gelöscht werden
@@ -112,12 +125,10 @@
   kann die Filmliste deutlich verkleinert werden) -> Einstellungen
 * Neuer Menüpunkt: In der Mediensammlung suchen (die Suche lässt sich so auch direkt starten)
 * An vielen weiteren Stellen gab es kleine Verbesserungen und Fehler und Ungereimtheiten wurden entfernt
-
-<br />
+* ...
 
 
 **Release 6**
-
 * Tabelle Filme/Downloads/Abos: Die angezeigten Farben wurden überarbeitet
 * Tabelle Download: Neuer Button zum Öffnen des Speicherordners
 * Tabelle Download: Fehlerhafte Downloads können jetzt direkt aus der Tabelle neu gestartet werden
@@ -134,19 +145,15 @@
 * Einige Fehler konnten beseitigt werden
 * Viele kleinere Änderungen die die Übersichtlichkeit und die Bedienung verbessern sollen (Danke für die vielen
   Vorschläge dazu)
-
-<br />
+* ...
 
 
 **Release 5**
-
 * In bestimmten Kon­s­tel­la­ti­onen kam es zu hoher Prozessorlast
-
-<br />
+* ...
 
 
 **Release 4**
-
 * Das Programm prüft und zeigt an, wenn es eine neue Filmliste gibt (alle 1/2h, Button "Filmliste" wird dann blau
   umrandet)
 * Filminfo (unter dem Filmtab) ist beschreibbar (und damit kann die Infodatei die parallel zu einem Film gespeichert
@@ -158,12 +165,10 @@
 * Das Programm bekam einige optische Veränderungen und einige interne Verbesserungen und auch ein paar Fehler wurden
   bereinigt
 * Habs geschafft auch eine Anleitung zu schreiben: https://www.p2tools.de/mtplayer/manual/
-
-<br />
+* ...
 
 
 **Release 3**
-
 * Das Programm ist nun unter Java >=8 (also Java8, Java9, Java10) lauffähig. Dazu musste einiges umgebaut werden und
   einige Gui-Elemente ausgetauscht werden. Die Optik hat sich desswegen etwas geändert, die Funktion ist aber erhalten
   geblieben.
@@ -175,12 +180,10 @@
 * Viele kleinere Verbesserungen: Anzeige der Dialoge, Zeilenumbruch im Logfile unter Windows, Hilfetexte, Filterprofile,
   Mediensammlung (Anzeige der Filme pro Pfad jetzt auch bei den Internen Medien), ...
 * Auch ein paar Probleme beim Anlegen des Downloadpfads und beim Reset der Programmsets wurden behoben
-
-<br />
+* ...
 
 
 **Release 2**
-
 * Mit dem Schalter "-h" lassen sich die möglichen Startparameter abfragen
 * Das Laden der Filmliste und die anschließenden Aktivitäten z.B. beim Suchen der Downloads wurde optimiert
 * Die History Liste speichert jetzt den ganzen Titel was das Suchen nach bereits gesehenen Beiträgen verbessert
@@ -192,77 +195,57 @@
   kann, entfernt und der Ordner wird als versteckt angelegt):  
   Windows: p2Mtplayer  
   Linux: .p2Mtplayer
-
-<br />
+* ...
 
 
 **Release 1-81**
-
 * Zur Programmausgabe in der Konsole wird jetzt auch ein Logfile geschrieben (in den Einstellungen kann angegeben
   werden, ob und wo es geschrieben werden soll)
 * Das Format des Log (Konsole und Logfile) wurde übersichtlicher gestaltet
 * Die Suche nach einem Programmupdate wurde geändert und auf die neue Website umgestellt
-
-<br />
+* ...
 
 
 **Release 1-55**
-
 * Es gibt einen neuen Filter (in "nicht anzeigen"): "Zukunft", damit werden Filme in der Zukunft nicht angezeigt.
-
-<br />
+* ...
 
 
 **Release 1-50**
-
 * Die Fehlermeldung "Windows: Fehlermeldung Softwareaktualisierung" beim Start durch fehlende Crypto-lib im System wird
   unterdrückt.  
   http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html  
   https://de.wikipedia.org/wiki/Java_Cryptography_Extension
-
-<br />
+* ...
 
 
 **Release 1**
-
 * Im Filter ist jetzt neben "," für ODER auch ":" für UND möglich (z.B. "Auto,Schiff" für Filme die entweder "Auto"
   oder "Schiff" im entsprechenden Feld enthalten, "Auto:Schiff" findet nur Filme die sowohl "Auto" als auch "Schiff" im
   gesuchten Feld enthalten).
-
 * In den Filtern für "Sender" und "Thema" kann man jetzt auch mit freien Begriffen suchen.
-
 * Es ist jetzt auch möglich nach Uhrzeit zu filtern und auch die Suche nach einer URL ist möglich. Auch können doppelte
   Filme (z.B. in ARD und BR) ausgeblendet werden. Beim Suchen nach Filmlänge kann ein min. und ein max. Wert vorgegeben
   werden.
-
 * Filter kann man aus- und einblenden. Zur Suche von Filmen werden nur eingeblendete und benutzte Filter verwendet (auch
   Filter die eingeblendet aber leer sind, werden nicht ausgewertet). Die Suche wird damit beschleunigt.
-
 * Es können beliebig viele eigene Filtereinstellungen gespeichert und wieder abgerufen werden.
-
 * In der Blacklist kann man die Filmliste auf xx Tage beschränken (die Einstellung ist jetzt getrennt vom Filter
   möglich), was die Suche in der Filmliste deutlich beschleunigen kann.
-
 * Das ganze Zusammenspiel zwischen "kompletter Filmliste - Blacklist - Filter - angezeigte Filme" wurde komplett
   umgebaut und ist so trotz der erweiterten Filtermöglichkeiten performanter.
-
 * Ein Klick auf den Tab (z.B. Film) bringt den entsprechenden Tab in den Vordergrund, ein weiterer Klick blendet den
   Filter ein oder aus.
-
 * Im Dialog "In der Mediensammlung suchen" kann man jetzt auch die Liste der bereits geladenen Abos durchsuchen. In
   diesem Dialog ist es möglich, durch einen Doppelklick auf ein Wort im Suchbegriff dieses frei zu stellen (z.B. wird
   nach dem Titel "Barcelona gegen Madrid ..." gesucht und man doppelklickt "Madrid", dann steht anschließend nur noch "
   Madrid" im Suchfeld).
-
 * Die Filtermöglichkeiten zum Suchen von Abos wurden erweitert.
-
 * Die Filmauflösung (HD, Hoch, Klein) für Abos kann jetzt direkt im Abo ausgewählt werden. Die Vorgabe im Set ist nur
   noch fürs Abspielen von Filmen oder für manuell gestartete Downloads zuständig.
-
 * An allen wichtigen Einstellungen oder Schaltern ist ein "Hilfebutton" mit Erklärungen zu der Funktion.
+* ...
 
-<br />
-<br />
 
 **Links**
 
