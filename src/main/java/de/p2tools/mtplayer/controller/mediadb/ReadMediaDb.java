@@ -51,7 +51,7 @@ public class ReadMediaDb implements AutoCloseable {
     // EXTERNAL MediaData aus File lesen und schreiben
     public List<MediaData> loadSavedExternalMediaData() {
         final Path urlPath = getPathMediaDB();
-        return new ReadMediaDb().read(urlPath);
+        return new ReadMediaDb().readDb(urlPath);
     }
 
     private Path getPathMediaDB() {
@@ -67,13 +67,13 @@ public class ReadMediaDb implements AutoCloseable {
         return urlPath;
     }
 
-    public ArrayList<MediaData> read(Path xmlFilePath) {
+    public ArrayList<MediaData> readDb(Path xmlFilePath) {
 
         if (!Files.exists(xmlFilePath) || xmlFilePath.toFile().length() == 0) {
             return list;
         }
 
-        PDuration.counterStart("MediaDb lesen");
+        PDuration.counterStart("readDb");
         XMLStreamReader parser = null;
 
         try (InputStream is = Files.newInputStream(xmlFilePath);
@@ -108,7 +108,7 @@ public class ReadMediaDb implements AutoCloseable {
             }
         }
 
-        PDuration.counterStop("MediaDb lesen");
+        PDuration.counterStop("readDb");
         return list;
     }
 

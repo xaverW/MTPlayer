@@ -132,7 +132,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
             return;
         }
 
-        PDuration.counterStart("History: addDataToHistory");
+        PDuration.counterStart("addHistoryDataToHistory");
         final ArrayList<HistoryData> list = new ArrayList<>();
         final String datum = DateFactory.F_FORMAT_dd_MM_yyyy.format(new Date());
         HistoryData historyData = new HistoryData(datum, theme, title, url);
@@ -140,7 +140,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         list.add(historyData);
 
         writeToFile(list, true);
-        PDuration.counterStop("History: addDataToHistory");
+        PDuration.counterStop("addHistoryDataToHistory");
     }
 
     public synchronized void addFilmDataToHistory(ArrayList<FilmDataMTP> filmList) {
@@ -153,7 +153,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         final ArrayList<HistoryData> list = new ArrayList<>(filmList.size());
         final String datum = DateFactory.F_FORMAT_dd_MM_yyyy.format(new Date());
 
-        PDuration.counterStart("History: addDataToHistory");
+        PDuration.counterStart("addFilmDataToHistory");
         for (final FilmDataMTP film : filmList) {
             if (film.isLive()) {
                 continue;
@@ -177,7 +177,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         }
 
         writeToFile(list, true);
-        PDuration.counterStop("History: addDataToHistory");
+        PDuration.counterStop("addFilmDataToHistory");
     }
 
     public synchronized void addDownloadDataListToHistory(ArrayList<DownloadData> downloadList) {
@@ -190,7 +190,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         final ArrayList<HistoryData> list = new ArrayList<>(downloadList.size());
         final String datum = DateFactory.F_FORMAT_dd_MM_yyyy.format(new Date());
 
-        PDuration.counterStart("History: addDataToHistory");
+        PDuration.counterStart("addDownloadDataListToHistory");
         for (final DownloadData download : downloadList) {
             if (checkIfLiveStream(download.getTheme())) {
                 continue;
@@ -215,7 +215,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         }
 
         writeToFile(list, true);
-        PDuration.counterStop("History: addDataToHistory");
+        PDuration.counterStop("addDownloadDataListToHistory");
     }
 
 

@@ -47,7 +47,7 @@ public class DownloadListAbo {
 
     private void refreshDownloads() {
         // fehlerhafte und nicht gestartete löschen, wird nicht gemeldet ob was gefunden wurde
-        PDuration.counterStart("DownloadListAbo.refreshDownloads");
+        PDuration.counterStart("refreshDownloads");
         List<DownloadData> syncRemoveList = Collections.synchronizedList(new ArrayList<>());
 
         downloadList.stream()
@@ -74,12 +74,12 @@ public class DownloadListAbo {
         // und zurückgestellte wieder aktivieren
         downloadList.resetPlacedBack();
 
-        PDuration.counterStop("DownloadListAbo.refreshDownloads");
+        PDuration.counterStop("refreshDownloads");
     }
 
     private void searchForNewDownloads() {
         // in der Filmliste nach passenden Filmen suchen und Downloads anlegen
-        PDuration.counterStart("DownloadListAbo.searchForNewDownloads");
+        PDuration.counterStart("searchForNewDownloads");
         List<DownloadData> syncDownloadArrayList = Collections.synchronizedList(new ArrayList<>());
 
         // den Abo-Trefferzähler zurücksetzen
@@ -145,6 +145,6 @@ public class DownloadListAbo {
         // und jetzt die hits eintragen (hier, damit nicht bei jedem die Tabelle geändert werden muss)
         progData.aboList.forEach(abo -> abo.setCountedHits());
 
-        PDuration.counterStop("DownloadListAbo.searchForNewDownloads");
+        PDuration.counterStop("searchForNewDownloads");
     }
 }

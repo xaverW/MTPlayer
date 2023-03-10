@@ -160,7 +160,7 @@ public class CreateMediaDb {
     }
 
     private void start() {
-        PDuration.counterStart("Mediensammlung erstellen");
+        PDuration.counterStart("createDB");
         mediaDataList.setStopSearching(false);
         mediaDataList.setSearching(true);
         Listener.notify(Listener.EVENT_MEDIA_DB_START, CreateMediaDb.class.getSimpleName());
@@ -170,7 +170,7 @@ public class CreateMediaDb {
         mediaDataList.setSearching(false);
         PLog.sysLog(logs);
         Listener.notify(Listener.EVENT_MEDIA_DB_STOP, CreateMediaDb.class.getSimpleName());
-        PDuration.counterStop("Mediensammlung erstellen");
+        PDuration.counterStop("createDB");
     }
 
     private void errorMsg() {

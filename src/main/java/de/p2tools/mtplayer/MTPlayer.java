@@ -30,7 +30,6 @@ import javafx.stage.Stage;
 public class MTPlayer extends Application {
 
     private Stage primaryStage;
-    private static final String LOG_TEXT_PROGRAMSTART = "Dauer Programmstart";
     private ProgData progData;
     private Scene scene = null;
 
@@ -46,7 +45,7 @@ public class MTPlayer extends Application {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
 
-        PDuration.counterStart(LOG_TEXT_PROGRAMSTART);
+        PDuration.counterStart("start");
         progData = ProgData.getInstance();
         progData.primaryStage = primaryStage;
 
@@ -56,7 +55,7 @@ public class MTPlayer extends Application {
         ProgStartAfterGui.doWorkAfterGui();
 
         PDuration.onlyPing("Gui steht!");
-        PDuration.counterStop(LOG_TEXT_PROGRAMSTART);
+        PDuration.counterStop("start");
     }
 
     private void initP2lib() {

@@ -56,7 +56,7 @@ public class HistoryWriteToFile implements Runnable {
             return;
         }
 
-        PDuration.counterStart("History: Thread: HistoryWriteToFile");
+        PDuration.counterStart("doWork");
         if (append) {
             PLog.sysLog("An Historyliste anfügen: " + list.size() + ", Datei: " + historyWorker.getFileName());
         } else {
@@ -67,7 +67,7 @@ public class HistoryWriteToFile implements Runnable {
         writeHistoryDataToFile(list, append);
 
         Listener.notify(Listener.EVENT_HISTORY_CHANGED, HistoryWriteToFile.class.getSimpleName());
-        PDuration.counterStop("History: Thread: HistoryWriteToFile");
+        PDuration.counterStop("doWork");
     }
 
     private boolean writeHistoryDataToFile(List<HistoryData> list, boolean append) {

@@ -54,7 +54,7 @@ public class DownloadListStartStop {
      */
 
     public synchronized boolean delDownloads(ArrayList<DownloadData> list) {
-        PDuration.counterStart("DownloadListStartStop.delDownloads");
+        PDuration.counterStart("delDownloads");
         if (list == null || list.isEmpty()) {
             return false;
         }
@@ -76,7 +76,7 @@ public class DownloadListStartStop {
         list.stream().filter(download -> download.isStateStartedRun()).forEach(download -> download.stopDownload());
         boolean found = downloadList.removeAll(list);
 
-        PDuration.counterStop("DownloadListStartStop.delDownloads");
+        PDuration.counterStop("delDownloads");
         return found;
     }
 
@@ -177,7 +177,7 @@ public class DownloadListStartStop {
             return false;
         }
 
-        PDuration.counterStart("DownloadListStartStop.startDownloads");
+        PDuration.counterStart("startDownloads");
         final ArrayList<DownloadData> listStartDownloads = new ArrayList<>();
 
         // das Starten von neuen Downloads etwas Pausieren
@@ -196,7 +196,7 @@ public class DownloadListStartStop {
         // alle Downloads starten/wiederstarten
         start(listStartDownloads);
 
-        PDuration.counterStop("DownloadListStartStop.startDownloads");
+        PDuration.counterStop("startDownloads");
         return true;
     }
 

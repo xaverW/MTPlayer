@@ -49,7 +49,7 @@ public class BlacklistFilterFactory {
         final FilmlistMTP filmlist = progData.filmlist;
         final FilmlistMTP listFiltered = progData.filmlistFiltered;
 
-        PDuration.counterStart("getBlackFiltered");
+        PDuration.counterStart("getBlackFilteredFilmlist");
         loadCurrentBlacklistSettings();
         listFiltered.clear();
 
@@ -78,7 +78,7 @@ public class BlacklistFilterFactory {
             // Array mit Sendernamen/Themen füllen
             listFiltered.loadTheme();
         }
-        PDuration.counterStop("getBlackFiltered");
+        PDuration.counterStop("getBlackFilteredFilmlist");
     }
 
     public static synchronized void markFilmBlack(boolean notify) {

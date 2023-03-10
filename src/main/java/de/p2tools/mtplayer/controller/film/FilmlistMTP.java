@@ -64,9 +64,9 @@ public class FilmlistMTP extends Filmlist<FilmDataMTP> {
     @Override
     public synchronized void filteredListSetPred(Predicate<FilmData> predicate) {
         PDebugLog.sysLog("=================> Filter: " + ++count);
-        PDuration.counterStart("FilmListFilter.filterList");
+        PDuration.counterStart("filteredListSetPred");
         getFilteredList().setPredicate(predicate);
-        PDuration.counterStop("FilmListFilter.filterList");
+        PDuration.counterStop("filteredListSetPred");
 
     }
 
@@ -245,7 +245,7 @@ public class FilmlistMTP extends Filmlist<FilmDataMTP> {
      * für die Filterfelder in GuiFilme.
      */
     public synchronized void loadTheme() {
-        PDuration.counterStart("Themen in Filmliste suchen");
+        PDuration.counterStart("loadTheme");
         final LinkedHashSet<String> senderSet = new LinkedHashSet<>(21);
         // der erste Sender ist ""
         senderSet.add("");
@@ -297,6 +297,6 @@ public class FilmlistMTP extends Filmlist<FilmDataMTP> {
             hashSet[i].clear();
         }
 
-        PDuration.counterStop("Themen in Filmliste suchen");
+        PDuration.counterStop("loadTheme");
     }
 }

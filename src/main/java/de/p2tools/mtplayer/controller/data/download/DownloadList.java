@@ -156,7 +156,7 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
     public synchronized void addFilmInList() {
         // bei einmal Downloads nach einem Programmstart/Neuladen der Filmliste
         // den Film wieder eintragen
-        PDuration.counterStart("DownloadList.addFilmInList");
+        PDuration.counterStart("addFilmInList");
 
         int counter = 50; //todo das dauert sonst viel zu lang
         for (DownloadData d : this) {
@@ -168,7 +168,7 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
             d.setSizeDownloadFromFilm();
         }
 
-        PDuration.counterStop("DownloadList.addFilmInList");
+        PDuration.counterStop("addFilmInList");
     }
 
     public synchronized void preferDownloads(ArrayList<DownloadData> prefDownList) {

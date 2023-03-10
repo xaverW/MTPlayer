@@ -104,7 +104,7 @@ public class Worker {
             return;
         }
 
-        PDuration.counterStart("Worker.searchForAbosAndMaybeStart");
+        PDuration.counterStart("searchForAbosAndMaybeStart");
         PLog.sysLog("Downloads aus Abos suchen");
         //erledigte entfernen, nicht gestartete Abos entfernen und nach neu Abos suchen
         progData.downloadList.searchForDownloadsFromAbos();
@@ -114,7 +114,7 @@ public class Worker {
             PLog.sysLog("Downloads aus Abos starten");
             progData.downloadList.startDownloads();
         }
-        PDuration.counterStop("Worker.searchForAbosAndMaybeStart");
+        PDuration.counterStop("searchForAbosAndMaybeStart");
     }
 
     public void createThemeList(String sender) {

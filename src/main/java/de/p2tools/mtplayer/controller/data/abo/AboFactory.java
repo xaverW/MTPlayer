@@ -33,7 +33,7 @@ public class AboFactory {
     public static synchronized void setAboForFilmlist() {
         //hier wird tatsächlich für jeden Film die Liste der Abos durchsucht,
         //braucht länger
-        PDuration.counterStart("Abo in Filmliste eintragen");
+        PDuration.counterStart("setAboForFilmlist");
         AboList aboList = ProgData.getInstance().aboList;
 
         // leere Abos löschen, die sind Fehler
@@ -66,7 +66,7 @@ public class AboFactory {
         ProgData.getInstance().filmlist.parallelStream().
                 forEach(filmDataMTP -> AboFactory.assignAboToFilm(filmDataMTP));
 
-        PDuration.counterStop("Abo in Filmliste eintragen");
+        PDuration.counterStop("setAboForFilmlist");
     }
 
     private static void assignAboToFilm(FilmDataMTP film) {
