@@ -16,7 +16,6 @@
 
 package de.p2tools.mtplayer.controller.film;
 
-import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.p2lib.mtfilm.film.*;
 import de.p2tools.p2lib.tools.duration.PDuration;
@@ -92,27 +91,26 @@ public class FilmlistMTP extends Filmlist<FilmDataMTP> {
         return add(film);
     }
 
-    private void addHash(FilmData f, HashSet<String> hash, boolean index) {
-        if (f.arr[FilmDataXml.FILM_CHANNEL].equals(ProgConst.KIKA)) {
-            // beim KIKA ändern sich die URLs laufend
-            hash.add(f.arr[FilmDataXml.FILM_THEME] + f.arr[FilmDataXml.FILM_TITLE]);
-        } else if (index) {
-            hash.add(f.getIndex());
-        } else {
-            hash.add(f.getUrlForHash());
-        }
-    }
+//    private void addHash(FilmData f, HashSet<String> hash, boolean index) {
+//        if (f.arr[FilmDataXml.FILM_CHANNEL].equals(ProgConst.KIKA)) {
+//            // beim KIKA ändern sich die URLs laufend
+//            hash.add(f.arr[FilmDataXml.FILM_THEME] + f.arr[FilmDataXml.FILM_TITLE]);
+//        } else if (index) {
+//            hash.add(f.getIndex());
+//        } else {
+//            hash.add(f.getUrlForHash());
+//        }
+//    }
 
-    public synchronized void updateList(FilmlistMTP addList,
-                                        boolean index /* Vergleich über Index, sonst nur URL */,
-                                        boolean replace) {
-        // in eine vorhandene Liste soll eine andere Filmliste einsortiert werden
-        // es werden nur Filme die noch nicht vorhanden sind, einsortiert
-        // "ersetzen": true: dann werden gleiche (index/URL) in der Liste durch neue ersetzt
-
-        FilmlistFactory.updateList(this, addList,
-                index, replace);
-    }
+//    public synchronized void updateList(FilmlistMTP addList,
+//                                        boolean index /* Vergleich über Index, sonst nur URL */,
+//                                        boolean replace) {
+//        // in eine vorhandene Liste soll eine andere Filmliste einsortiert werden
+//        // es werden nur Filme die noch nicht vorhanden sind, einsortiert
+//        // "ersetzen": true: dann werden gleiche (index/URL) in der Liste durch neue ersetzt
+//
+//        FilmlistFactory.updateList(this, addList, index, replace);
+//    }
 
     @Override
     public synchronized void markGeoBlocked() {
@@ -212,8 +210,8 @@ public class FilmlistMTP extends Filmlist<FilmDataMTP> {
      * @return true if too old or if the list is empty.
      */
     @Override
-    public synchronized boolean isTooOld() {
-        return FilmlistFactory.isTooOld(this, metaData);
+    public synchronized boolean isTooOldOrEmpty() {
+        return FilmlistFactory.isTooOldOrEmpty(this, metaData);
     }
 
     /**
@@ -222,8 +220,8 @@ public class FilmlistMTP extends Filmlist<FilmDataMTP> {
      * @return true if empty or too old.
      */
     @Override
-    public synchronized boolean isTooOldForDiff() {
-        return FilmlistFactory.isTooOldForDiff(this, metaData);
+    public synchronized boolean isTooOldForDiffOrEmpty() {
+        return FilmlistFactory.isTooOldForDiffOrEmpty(this, metaData);
     }
 
     /**

@@ -26,7 +26,6 @@ import de.p2tools.mtplayer.controller.data.abo.AboFactory;
 import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.mediadb.MediaDataWorker;
 import de.p2tools.mtplayer.gui.tools.ProgTipOfDayFactory;
-import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.mtfilm.film.Filmlist;
 import de.p2tools.p2lib.mtfilm.film.FilmlistFactory;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.ListenerFilmlistLoadEvent;
@@ -123,8 +122,8 @@ public class LoadFilmFactory {
             ProgData.getInstance().worker.workOnLoadFinished();
             ProgData.getInstance().filmFilterRunner.filter();
 
-            int age = FilmlistFactory.getAge(ProgData.getInstance().filmlist.metaData);
-            ProgConfig.SYSTEM_FILMLIST_AGE.setValue(ProgData.getInstance().filmlist.isEmpty() ? P2LibConst.NUMBER_NOT_STARTED : age);
+            String filmDate = FilmlistFactory.getAgeAsStringDate(ProgData.getInstance().filmlist.metaData);
+            ProgConfig.SYSTEM_FILMLIST_DATE.setValue(ProgData.getInstance().filmlist.isEmpty() ? "" : filmDate);
 
             if (!doneAtProgramStart) {
                 doneAtProgramStart = true;
@@ -139,24 +138,29 @@ public class LoadFilmFactory {
 
     public void loadFilmlistProgStart() {
         initLoadFactoryConst();
-        loadFilmlist.loadFilmlistProgStart(ProgData.firstProgramStart,
-                ProgInfos.getLocalFilmListFile(), ProgConfig.SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART.getValue(),
-                ProgConfig.SYSTEM_FILMLIST_AGE.getValue());
+        loadFilmlist.loadFilmlistProgStart();
     }
 
     public void initLoadFactoryConst() {
-        LoadFactoryConst.GEO_HOME_PLACE = ProgConfig.SYSTEM_GEO_HOME_PLACE.getValue();
         LoadFactoryConst.debug = ProgData.debug;
+
+        LoadFactoryConst.GEO_HOME_PLACE = ProgConfig.SYSTEM_GEO_HOME_PLACE.getValue();
         LoadFactoryConst.SYSTEM_LOAD_NOT_SENDER = ProgConfig.SYSTEM_LOAD_NOT_SENDER.getValue();
         LoadFactoryConst.DOWNLOAD_MAX_BANDWIDTH_KBYTE = ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE;
         LoadFactoryConst.downloadMaxBandwidth = ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getValue();
+
+        LoadFactoryConst.dateStoredFilmlist = ProgConfig.SYSTEM_FILMLIST_DATE.getValue();
+        LoadFactoryConst.firstProgramStart = ProgData.firstProgramStart;
+        LoadFactoryConst.localFilmListFile = ProgInfos.getLocalFilmListFile();
+        LoadFactoryConst.loadNewFilmlistOnProgramStart = ProgConfig.SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART.getValue();
+
         LoadFactoryConst.SYSTEM_LOAD_FILMLIST_MAX_DAYS = ProgConfig.SYSTEM_LOAD_FILMLIST_MAX_DAYS.getValue();
         LoadFactoryConst.SYSTEM_LOAD_FILMLIST_MIN_DURATION = ProgConfig.SYSTEM_LOAD_FILMLIST_MIN_DURATION.getValue();
+        LoadFactoryConst.removeDiacritic = ProgConfig.SYSTEM_REMOVE_DIACRITICS.getValue();
         LoadFactoryConst.userAgent = ProgConfig.SYSTEM_USERAGENT.getValue();
+        LoadFactoryConst.filmlist = ProgData.getInstance().filmlist;
         LoadFactoryConst.loadFilmlist = loadFilmlist;
         LoadFactoryConst.primaryStage = ProgData.getInstance().primaryStage;
-        LoadFactoryConst.removeDiacritic = ProgConfig.SYSTEM_REMOVE_DIACRITICS.getValue();
-        LoadFactoryConst.filmlist = ProgData.getInstance().filmlist;
 
         ProgData.getInstance().filmLoadBlackList.clearCounter();//todo evtl. nur beim Neuladen einer kompletten Liste??
         LoadFactoryConst.FilmChecker filmChecker = filmData ->
