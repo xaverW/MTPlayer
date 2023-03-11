@@ -55,6 +55,14 @@ public class SearchProgramUpdate {
         SEARCH_URL = "https://www.p2tools.de";
         SEARCH_URL_DOWNLOAD = "https://www.p2tools.de/download/";
 
+//        if (ProgData.debug) {
+//            SEARCH_URL = "http://p2.localhost:8080";
+//            SEARCH_URL_DOWNLOAD = "http://p2.localhost:8080/download/";
+//        } else {
+//            SEARCH_URL = "https://www.p2tools.de";
+//            SEARCH_URL_DOWNLOAD = "https://www.p2tools.de/download/";
+//        }
+
         final PDate pd = new PDate(ProgramToolsFactory.getCompileDate());
         final String buildDate = pd.get_yyyy_MM_dd();
 
