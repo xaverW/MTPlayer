@@ -100,6 +100,7 @@ public class ProgConfig extends PDataProgConfig {
 
     // ConfigDialog, Dialog nach Start immer gleich öffnen
     public static IntegerProperty SYSTEM_CONFIG_DIALOG_TAB = new SimpleIntegerProperty(0);
+    public static IntegerProperty SYSTEM_CONFIG_DIALOG_BLACKLIST_TAB = new SimpleIntegerProperty(0);
     public static IntegerProperty SYSTEM_CONFIG_DIALOG_CONFIG = new SimpleIntegerProperty(-1);
     public static IntegerProperty SYSTEM_CONFIG_DIALOG_FILM = new SimpleIntegerProperty(-1);
     public static IntegerProperty SYSTEM_CONFIG_DIALOG_BLACKLIST = new SimpleIntegerProperty(-1);

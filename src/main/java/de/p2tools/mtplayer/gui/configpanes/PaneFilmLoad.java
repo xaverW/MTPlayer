@@ -29,6 +29,8 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.Collection;
@@ -55,7 +57,6 @@ public class PaneFilmLoad {
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
-        gridPane.setPadding(new Insets(P2LibConst.DIST_EDGE));
 
         tglLoad.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART);
         final Button btnHelpLoad = PButton.helpButton(stage, "Filmliste laden",
@@ -97,7 +98,18 @@ public class PaneFilmLoad {
                 PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcPrefSize());
 
-        TitledPane tpConfig = new TitledPane("Filmliste laden", gridPane);
+        HBox hBox = new HBox();
+        hBox.getStyleClass().add("extra-pane");
+        hBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        hBox.setMaxWidth(Double.MAX_VALUE);
+        hBox.getChildren().add(new Label("Änderungen in diesem Tab\n" +
+                "wirken sich erst nach dem Neuladen einer Filmliste aus"));
+
+        final VBox vBox = new VBox(P2LibConst.DIST_EDGE);
+        vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        vBox.getChildren().addAll(hBox, gridPane);
+
+        TitledPane tpConfig = new TitledPane("Filmliste laden", vBox);
         result.add(tpConfig);
         return tpConfig;
     }

@@ -43,6 +43,7 @@ public class ConfigDialogController extends PDialogExtra {
 
     private TabPane tabPane = new TabPane();
     private Button btnOk = new Button("_Ok");
+    private Button btnApply = new Button("_Anwenden");
     private String geo = ProgConfig.SYSTEM_GEO_HOME_PLACE.get();
     private BooleanProperty blackChanged = new SimpleBooleanProperty(false);
     private BooleanProperty diacriticChanged = new SimpleBooleanProperty(false);
@@ -56,12 +57,26 @@ public class ConfigDialogController extends PDialogExtra {
     ControllerDownload controllerDownload;
     ControllerSet controllerSet;
     private ListenerLoadFilmlist listener;
+    private boolean blackDialog = false;
 
     public ConfigDialogController(ProgData progData) {
         super(progData.primaryStage, ProgConfig.CONFIG_DIALOG_SIZE, "Einstellungen",
                 true, false, DECO.NO_BORDER, true);
+        this.progData = progData;
+
+        init(false);
+    }
+
+    public ConfigDialogController(ProgData progData, boolean blackDialog) {
+        super(progData.primaryStage, ProgConfig.BLACK_DIALOG_SIZE,
+                "Blacklist bearbeiten", false, false, DECO.NO_BORDER, true);
 
         this.progData = progData;
+        this.blackDialog = blackDialog;
+        if (blackDialog) {
+            propSelectedTab = ProgConfig.SYSTEM_CONFIG_DIALOG_BLACKLIST_TAB;
+        }
+
         init(false);
     }
 
@@ -110,15 +125,15 @@ public class ConfigDialogController extends PDialogExtra {
         getVBoxCont().getChildren().add(tabPane);
         getVBoxCont().setPadding(new Insets(0));
 
-        addOkButton(btnOk);
+        addOkCancelApplyButtons(btnOk, null, btnApply);
         btnOk.setOnAction(a -> close());
+        btnApply.setOnAction(a -> apply());
 
         ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> updateCss());
         initPanel();
     }
 
-    @Override
-    public void close() {
+    public void apply() {
         if (!geo.equals(ProgConfig.SYSTEM_GEO_HOME_PLACE.get())) {
             // dann hat sich der Geo-Standort geändert
             progData.filmlist.markGeoBlocked();
@@ -140,7 +155,11 @@ public class ConfigDialogController extends PDialogExtra {
                 ProgData.getInstance().maskerPane.setMaskerVisible(false);
             }).start();
         }
+    }
 
+    @Override
+    public void close() {
+        apply();
         controllerConfig.close();
         controllerFilm.close();
         controllerBlack.close();
@@ -162,11 +181,15 @@ public class ConfigDialogController extends PDialogExtra {
 
     private void initPanel() {
         try {
+            Tab tab;
+
             controllerConfig = new ControllerConfig(this.getStage());
-            Tab tab = new Tab("Allgemein");
+            tab = new Tab("Allgemein");
             tab.setClosable(false);
             tab.setContent(controllerConfig);
-            tabPane.getTabs().add(tab);
+            if (!blackDialog) {
+                tabPane.getTabs().add(tab);
+            }
 
             controllerFilm = new ControllerFilm(this.getStage(), diacriticChanged);
             tab = new Tab("Filmliste laden");
@@ -184,13 +207,16 @@ public class ConfigDialogController extends PDialogExtra {
             tab = new Tab("Download");
             tab.setClosable(false);
             tab.setContent(controllerDownload);
-            tabPane.getTabs().add(tab);
-
+            if (!blackDialog) {
+                tabPane.getTabs().add(tab);
+            }
             controllerSet = new ControllerSet(this.getStage());
             tab = new Tab("Aufzeichnen/Abspielen");
             tab.setClosable(false);
             tab.setContent(controllerSet);
-            tabPane.getTabs().add(tab);
+            if (!blackDialog) {
+                tabPane.getTabs().add(tab);
+            }
 
             tabPane.getSelectionModel().select(propSelectedTab.get());
             tabPane.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {

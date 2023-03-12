@@ -233,6 +233,7 @@ public class FilmGuiController extends AnchorPane {
             @Override
             public void pingFx() {
                 lastShownFilmData = null;
+                PTableFactory.refreshTable(tableView);
             }
 
         });

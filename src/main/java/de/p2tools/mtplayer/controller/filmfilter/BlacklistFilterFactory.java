@@ -105,12 +105,12 @@ public class BlacklistFilterFactory {
         PLog.sysLog("markFilmBlack -> stop");
         PDuration.counterStop("markFilmBlack");
 
-        if (notify) {
-            Listener.notify(Listener.EVENT_BLACKLIST_CHANGED, BlackListFactory.class.getSimpleName());
-        }
         if (maskerSet) {
             //nur dann wieder ausschalten
             ProgData.getInstance().maskerPane.switchOffMasker();
+        }
+        if (notify) {
+            Listener.notify(Listener.EVENT_BLACKLIST_CHANGED, BlackListFactory.class.getSimpleName());
         }
     }
 

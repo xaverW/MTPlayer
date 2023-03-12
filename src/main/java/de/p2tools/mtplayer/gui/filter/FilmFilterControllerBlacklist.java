@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.gui.filter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
-import de.p2tools.mtplayer.gui.dialog.BlackDialog;
+import de.p2tools.mtplayer.gui.configdialog.ConfigDialogController;
 import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -39,7 +39,8 @@ public class FilmFilterControllerBlacklist extends HBox {
         Button btnBlack = new Button("");
         btnBlack.getStyleClass().add("buttonSmall");
         btnBlack.setGraphic(ProgIcons.Icons.ICON_BUTTON_EDIT.getImageView());
-        btnBlack.setOnAction(a -> new BlackDialog(progData));
+        btnBlack.setOnAction(a -> new ConfigDialogController(ProgData.getInstance(), true).showDialog());
+//        btnBlack.setOnAction(a -> new BlackDialog(progData));
 
         Label lblRight = new Label();
         tglBlacklist.setAllowIndeterminate(true);
