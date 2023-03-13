@@ -46,19 +46,20 @@ public class MTPlayer extends Application {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
 
-
-        final String xmlFilePath = new ProgInfos().getLockFileStr();
-        if (!PLock.getLockInstance(xmlFilePath)) {
-            //dann kann man sich den Rest sparen
-            return;
-        }
-
         PDuration.counterStart("start");
         progData = ProgData.getInstance();
         progData.primaryStage = primaryStage;
 
         initP2lib();
         ProgStartBeforeGui.workBeforeGui();
+
+        final String xmlFilePath = new ProgInfos().getLockFileStr();
+        //wenn gewünscht, Lock-File prüfen
+        if (ProgConfig.SYSTEM_ONLY_ONE_INSTANCE.getValue() && !PLock.getLockInstance(xmlFilePath)) {
+            //dann kann man sich den Rest sparen
+            return;
+        }
+
         initRootLayout();
         ProgStartAfterGui.doWorkAfterGui();
 

@@ -39,6 +39,7 @@ public class PaneConfig {
     private final CheckBox chkDaily = new CheckBox("Zwischenschritte (Dailys) mit einbeziehen");
     private final PToggleSwitch tglSearchAbo = new PToggleSwitch("Abos automatisch suchen:");
     private final PToggleSwitch tglStartDownload = new PToggleSwitch("Downloads aus Abos sofort starten:");
+    private final PToggleSwitch tglOnlyOneInstance = new PToggleSwitch("Nur eine Instanz des Programms öffnen");
     private final PToggleSwitch tglSmallFilm = new PToggleSwitch("In der Tabelle \"Film\" nur kleine Button anzeigen:");
     private final PToggleSwitch tglSmallDownload = new PToggleSwitch("In der Tabelle \"Download\" nur kleine Button anzeigen:");
     private final PToggleSwitch tglTipOfDay = new PToggleSwitch("Tip des Tages anzeigen");
@@ -54,6 +55,7 @@ public class PaneConfig {
     public void close() {
         tglSearchAbo.selectedProperty().unbindBidirectional(ProgConfig.ABO_SEARCH_NOW);
         tglStartDownload.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_START_NOW);
+        tglOnlyOneInstance.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_ONLY_ONE_INSTANCE);
         tglSmallFilm.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM);
         tglSmallDownload.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD);
         tglTipOfDay.selectedProperty().unbindBidirectional(ProgConfig.TIP_OF_DAY_SHOW);
@@ -83,6 +85,12 @@ public class PaneConfig {
         final Button btnHelpDownload = PButton.helpButton(stage, "Downloads sofort starten",
                 HelpText.START_DOWNLOADS_FROM_ABOS_IMMEDIATELY);
         GridPane.setHalignment(btnHelpDownload, HPos.RIGHT);
+
+
+        tglOnlyOneInstance.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_ONLY_ONE_INSTANCE);
+        final Button btnHelpOnlyOneInstance = PButton.helpButton(stage, "Nur eine Instanz des Programms öffnen",
+                HelpText.ONLY_ONE_INSTANCE);
+        GridPane.setHalignment(btnHelpOnlyOneInstance, HPos.RIGHT);
 
 
         tglSmallFilm.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM);
@@ -131,6 +139,8 @@ public class PaneConfig {
         gridPane.add(btnHelpAbo, 2, row);
         gridPane.add(tglStartDownload, 0, ++row, 2, 1);
         gridPane.add(btnHelpDownload, 2, row);
+        gridPane.add(tglOnlyOneInstance, 0, ++row, 2, 1);
+        gridPane.add(btnHelpOnlyOneInstance, 2, row);
 
         gridPane.add(new Label(" "), 0, ++row);
         gridPane.add(tglSmallFilm, 0, ++row, 2, 1);
