@@ -154,13 +154,20 @@ public class FilmMenu {
         miCopyTheme.setOnAction(a -> progData.filmGuiController.copyFilmThemeTitle(true));
         PShortcutWorker.addShortCut(miCopyTheme, MTShortcut.SHORTCUT_COPY_FILM_THEME_TO_CLIPBOARD);
 
+        //Blacklist
+        Menu submenuBlacklist = new Menu("Blacklist");
         final MenuItem miBlack = new MenuItem("Blacklist-Eintrag für den Film erstellen");
         miBlack.setOnAction(event -> BlacklistFactory.addBlack());
         PShortcutWorker.addShortCut(miBlack, MTShortcut.SHORTCUT_ADD_BLACKLIST);
 
+        final MenuItem miBlackTheme = new MenuItem("Thema direkt in die Blacklist einfügen");
+        miBlackTheme.setOnAction(event -> BlacklistFactory.addBlackTheme());
+        PShortcutWorker.addShortCut(miBlackTheme, MTShortcut.SHORTCUT_ADD_BLACKLIST_THEME);
+        submenuBlacklist.getItems().addAll(miBlack, miBlackTheme);
+
         mb.getItems().add(new SeparatorMenuItem());
         mb.getItems().addAll(miFilmShown, miFilmNotShown, miFilmInfo,
-                miFilmMediaCollection, miCopyTheme, miCopyName, miBlack);
+                miFilmMediaCollection, miCopyTheme, miCopyName, submenuBlacklist);
 
         // Bookmarks
         Menu submenuBookmark = new Menu("Bookmarks");

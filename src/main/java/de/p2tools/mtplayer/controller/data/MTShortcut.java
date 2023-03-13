@@ -59,6 +59,12 @@ public class MTShortcut {
                     "Einen neuen Eintrag in der Blacklist erstellen",
                     "Einen neuen Eintrag in der Blacklist erstellen, der markierte Film dient dabei Vorlage.");
 
+    public static final PShortcut SHORTCUT_ADD_BLACKLIST_THEME =
+            new PShortcut(ProgConfig.SHORTCUT_ADD_BLACKLIST_THEME, ProgConfig.SHORTCUT_ADD_BLACKLIST_THEME_INIT,
+                    "Thema direkt in die Blacklist einfügen",
+                    "Einen neuen Eintrag mit dem exakten Thema in der Blacklist erstellen, " +
+                            "der markierte Film dient dabei Vorlage.");
+
     public static final PShortcut SHORTCUT_SHOW_FILTER =
             new PShortcut(ProgConfig.SHORTCUT_SHOW_FILTER, ProgConfig.SHORTCUT_SHOW_FILTER_INIT,
                     "Filter anzeigen",
@@ -152,6 +158,7 @@ public class MTShortcut {
         shortcutList.add(SHORTCUT_FILM_SHOWN);
         shortcutList.add(SHORTCUT_FILM_NOT_SHOWN);
         shortcutList.add(SHORTCUT_ADD_BLACKLIST);
+        shortcutList.add(SHORTCUT_ADD_BLACKLIST_THEME);
         shortcutList.add(SHORTCUT_SHOW_FILTER);
         shortcutList.add(SHORTCUT_SHOW_INFOS);
         shortcutList.add(SHORTCUT_INFO_FILM);

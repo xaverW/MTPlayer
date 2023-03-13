@@ -53,6 +53,16 @@ public class BlacklistFactory {
         ProgData.getInstance().blackList.addAndNotify(blackData);
     }
 
+    public static void addBlackTheme() {
+        //aus markiertem Film ein Black erstellen
+        //Dialog anzeigen
+        final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().filmGuiController.getSel();
+        if (!filmSelection.isPresent()) {
+            return;
+        }
+        addBlack("", filmSelection.get().getTheme(), "");
+    }
+
     public static void addBlack(String sender, String theme, String titel) {
         BlackData blackData = new BlackData(sender, theme, titel, "");
         ProgData.getInstance().filmGuiController.setLastShownFilm(blackData);
