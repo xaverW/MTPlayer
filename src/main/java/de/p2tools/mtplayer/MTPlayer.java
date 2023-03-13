@@ -22,6 +22,7 @@ import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.p2lib.P2LibInit;
 import de.p2tools.p2lib.guitools.PGuiSize;
 import de.p2tools.p2lib.tools.IoReadWriteStyle;
+import de.p2tools.p2lib.tools.PLock;
 import de.p2tools.p2lib.tools.duration.PDuration;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -44,6 +45,13 @@ public class MTPlayer extends Application {
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
+
+
+        final String xmlFilePath = new ProgInfos().getLockFileStr();
+        if (!PLock.getLockInstance(xmlFilePath)) {
+            //dann kann man sich den Rest sparen
+            return;
+        }
 
         PDuration.counterStart("start");
         progData = ProgData.getInstance();

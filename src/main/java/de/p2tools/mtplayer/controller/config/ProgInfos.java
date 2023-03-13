@@ -97,6 +97,12 @@ public class ProgInfos {
                 ProgConst.CONFIG_FILE);
     }
 
+    public static String getLockFileStr() {
+        return SettingsDirectory.getSettingsFile(ProgData.configDir,
+                ProgConst.CONFIG_DIRECTORY,
+                "mtplayer.lock").toString();
+    }
+
 //    /**
 //     * Return the path to "mtplayer.xml"
 //     *
