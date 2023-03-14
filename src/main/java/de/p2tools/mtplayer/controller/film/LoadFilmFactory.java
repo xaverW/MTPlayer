@@ -44,6 +44,56 @@ public class LoadFilmFactory {
     public static LoadFilmlist loadFilmlist; //erledigt das Update der Filmliste
     private static boolean doneAtProgramStart = false;
 
+    public void loadFilmlistProgStart() {
+        initLoadFactoryConst();
+        loadFilmlist.loadFilmlistProgStart();
+    }
+
+    public void loadNewListFromWeb(boolean alwaysLoadNew) {
+        //es wird immer eine neue Filmliste aus dem Web geladen
+        initLoadFactoryConst();
+        loadFilmlist.loadNewFilmlistFromWeb(alwaysLoadNew, ProgInfos.getLocalFilmListFile());
+    }
+
+    public synchronized static final LoadFilmFactory getInstance() {
+        return instance == null ? instance = new LoadFilmFactory(new FilmlistMTP(), new FilmlistMTP()) : instance;
+    }
+
+    public void initLoadFactoryConst() {
+        LoadFactoryConst.debug = ProgData.debug;
+
+        LoadFactoryConst.GEO_HOME_PLACE = ProgConfig.SYSTEM_GEO_HOME_PLACE.getValue();
+        LoadFactoryConst.SYSTEM_LOAD_NOT_SENDER = ProgConfig.SYSTEM_LOAD_NOT_SENDER.getValue();
+        LoadFactoryConst.DOWNLOAD_MAX_BANDWIDTH_KBYTE = ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE;
+        LoadFactoryConst.downloadMaxBandwidth = ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getValue();
+
+        LoadFactoryConst.dateStoredFilmlist = ProgConfig.SYSTEM_FILMLIST_DATE.getValue();
+        LoadFactoryConst.firstProgramStart = ProgData.firstProgramStart;
+        LoadFactoryConst.localFilmListFile = ProgInfos.getLocalFilmListFile();
+        LoadFactoryConst.loadNewFilmlistOnProgramStart = ProgConfig.SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART.getValue();
+
+        LoadFactoryConst.SYSTEM_LOAD_FILMLIST_MAX_DAYS = ProgConfig.SYSTEM_LOAD_FILMLIST_MAX_DAYS.getValue();
+        LoadFactoryConst.SYSTEM_LOAD_FILMLIST_MIN_DURATION = ProgConfig.SYSTEM_LOAD_FILMLIST_MIN_DURATION.getValue();
+        LoadFactoryConst.removeDiacritic = ProgConfig.SYSTEM_REMOVE_DIACRITICS.getValue();
+        LoadFactoryConst.userAgent = ProgConfig.SYSTEM_USERAGENT.getValue();
+        LoadFactoryConst.filmlist = ProgData.getInstance().filmlist;
+        LoadFactoryConst.loadFilmlist = loadFilmlist;
+        LoadFactoryConst.primaryStage = ProgData.getInstance().primaryStage;
+        LoadFactoryConst.filmListUrl = ProgData.filmListUrl;
+
+        ProgData.getInstance().filmLoadBlackList.clearCounter();//todo evtl. nur beim Neuladen einer kompletten Liste??
+        LoadFactoryConst.FilmChecker filmChecker = filmData ->
+                BlacklistFilterFactory.checkFilmIsBlockedAndCountHits(filmData, ProgData.getInstance().filmLoadBlackList, true);
+
+        if (ProgConfig.SYSTEM_USE_FILTER_LOAD_FILMLIST.getValue()) {
+            //nur dann sollen Filme geprüft werden
+            LoadFactoryConst.checker = filmChecker;
+        } else {
+            //ist sonst evtl. noch von "vorher" gesetzt
+            LoadFactoryConst.checker = null;
+        }
+    }
+
     private LoadFilmFactory(Filmlist<FilmDataMTP> filmlistNew, Filmlist<FilmDataMTP> filmlistDiff) {
         loadFilmlist = new LoadFilmlist(filmlistNew, filmlistDiff);
         loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
@@ -76,12 +126,6 @@ public class LoadFilmFactory {
                 afterLoadingFilmlist();
             }
         });
-    }
-
-    public void loadNewListFromWeb(boolean alwaysLoadNew) {
-        //es wird immer eine neue Filmliste aus dem Web geladen
-        initLoadFactoryConst();
-        loadFilmlist.loadNewFilmlistFromWeb(alwaysLoadNew, ProgInfos.getLocalFilmListFile());
     }
 
     /**
@@ -134,48 +178,5 @@ public class LoadFilmFactory {
 
             ProgData.getInstance().maskerPane.switchOffMasker();//damit auf jedem Fall, aus
         }).start();
-    }
-
-    public void loadFilmlistProgStart() {
-        initLoadFactoryConst();
-        loadFilmlist.loadFilmlistProgStart();
-    }
-
-    public void initLoadFactoryConst() {
-        LoadFactoryConst.debug = ProgData.debug;
-
-        LoadFactoryConst.GEO_HOME_PLACE = ProgConfig.SYSTEM_GEO_HOME_PLACE.getValue();
-        LoadFactoryConst.SYSTEM_LOAD_NOT_SENDER = ProgConfig.SYSTEM_LOAD_NOT_SENDER.getValue();
-        LoadFactoryConst.DOWNLOAD_MAX_BANDWIDTH_KBYTE = ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE;
-        LoadFactoryConst.downloadMaxBandwidth = ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getValue();
-
-        LoadFactoryConst.dateStoredFilmlist = ProgConfig.SYSTEM_FILMLIST_DATE.getValue();
-        LoadFactoryConst.firstProgramStart = ProgData.firstProgramStart;
-        LoadFactoryConst.localFilmListFile = ProgInfos.getLocalFilmListFile();
-        LoadFactoryConst.loadNewFilmlistOnProgramStart = ProgConfig.SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART.getValue();
-
-        LoadFactoryConst.SYSTEM_LOAD_FILMLIST_MAX_DAYS = ProgConfig.SYSTEM_LOAD_FILMLIST_MAX_DAYS.getValue();
-        LoadFactoryConst.SYSTEM_LOAD_FILMLIST_MIN_DURATION = ProgConfig.SYSTEM_LOAD_FILMLIST_MIN_DURATION.getValue();
-        LoadFactoryConst.removeDiacritic = ProgConfig.SYSTEM_REMOVE_DIACRITICS.getValue();
-        LoadFactoryConst.userAgent = ProgConfig.SYSTEM_USERAGENT.getValue();
-        LoadFactoryConst.filmlist = ProgData.getInstance().filmlist;
-        LoadFactoryConst.loadFilmlist = loadFilmlist;
-        LoadFactoryConst.primaryStage = ProgData.getInstance().primaryStage;
-
-        ProgData.getInstance().filmLoadBlackList.clearCounter();//todo evtl. nur beim Neuladen einer kompletten Liste??
-        LoadFactoryConst.FilmChecker filmChecker = filmData ->
-                BlacklistFilterFactory.checkFilmIsBlockedAndCountHits(filmData, ProgData.getInstance().filmLoadBlackList, true);
-
-        if (ProgConfig.SYSTEM_USE_FILTER_LOAD_FILMLIST.getValue()) {
-            //nur dann sollen Filme geprüft werden
-            LoadFactoryConst.checker = filmChecker;
-        } else {
-            //ist sonst evtl. noch von "vorher" gesetzt
-            LoadFactoryConst.checker = null;
-        }
-    }
-
-    public synchronized static final LoadFilmFactory getInstance() {
-        return instance == null ? instance = new LoadFilmFactory(new FilmlistMTP(), new FilmlistMTP()) : instance;
     }
 }

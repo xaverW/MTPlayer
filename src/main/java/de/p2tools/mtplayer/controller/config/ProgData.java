@@ -64,7 +64,8 @@ public class ProgData {
     public static boolean firstProgramStart = false; // ist der allererste Programmstart: Init wird gemacht
 
     // Infos
-    public static String configDir = ""; // Verzeichnis zum Speichern der Programmeinstellungen
+    public static String configDir = ""; //Verzeichnis zum Speichern der Programmeinstellungen
+    public static String filmListUrl = ""; //URL von der die Filmliste geladen werde soll
 
     // zentrale Klassen
     public StarterClass starterClass; // Klasse zum Ausführen der Programme (für die Downloads): VLC, flvstreamer, ...

@@ -90,8 +90,9 @@ public class ProgStartAfterGui {
 
         list = new ArrayList<>();
         list.add(PLog.LILNE2);
-        list.add("|  Programmsets:");
-        list.addAll(ProgData.getInstance().setDataList.getStringListSetData());
+        //ist etwas viel und macht bei: MTPlayer.jar -v Probleme
+//        list.add("|  Programmsets:");
+//        list.addAll(ProgData.getInstance().setDataList.getStringListSetData());
         PLog.sysLog(list);
     }
 
