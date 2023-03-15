@@ -77,9 +77,9 @@ public class FilmFilterRunner {
             research.set(false);
             try {
                 Platform.runLater(() -> {
-                    PLog.sysLog("========================================");
-                    PLog.sysLog("         === Filter: " + count++ + " ===");
-                    PLog.sysLog("========================================");
+                    PLog.debugLog("========================================");
+                    PLog.debugLog("         === Filter: " + count++ + " ===");
+                    PLog.debugLog("========================================");
 
                     progData.filmlistFiltered.filteredListSetPred(
                             PredicateFactory.getPredicate(progData.actFilmFilterWorker.getActFilterSettings()));

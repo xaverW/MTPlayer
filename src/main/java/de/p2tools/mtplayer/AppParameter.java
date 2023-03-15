@@ -80,7 +80,7 @@ public class AppParameter {
 
             if (hasOption(line, ProgParameter.VERSION)) {
                 EventQueue.invokeLater(() -> {
-                    ProgStartAfterGui.shortStartMsg();
+                    ProgStartAfterGui.startMsg(false);
                     LogMessage.endMsg();
                     System.exit(0);
                 });

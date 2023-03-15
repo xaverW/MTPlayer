@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.controller.filmfilter;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
-import de.p2tools.p2lib.tools.log.PDebugLog;
+import de.p2tools.p2lib.tools.log.PLog;
 import javafx.animation.PauseTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -79,7 +79,7 @@ public final class FilmFilter extends FilmFilterProps {
     }
 
     public void reportFilterReturn() {
-        PDebugLog.sysLog("reportFilterReturn");
+        PLog.debugLog("reportFilterReturn");
         pause.stop();
         filterChange.setValue(!filterChange.getValue());
     }
@@ -142,7 +142,7 @@ public final class FilmFilter extends FilmFilterProps {
         pause.setOnFinished(event -> reportFilterChange());
         pause.setDuration(Duration.millis(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getValue()));
         ProgConfig.SYSTEM_FILTER_WAIT_TIME.addListener((observable, oldValue, newValue) -> {
-            PDebugLog.sysLog("SYSTEM_FILTER_WAIT_TIME: " + ProgConfig.SYSTEM_FILTER_WAIT_TIME.getValue());
+            PLog.debugLog("SYSTEM_FILTER_WAIT_TIME: " + ProgConfig.SYSTEM_FILTER_WAIT_TIME.getValue());
             pause.setDuration(Duration.millis(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getValue()));
         });
 

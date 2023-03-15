@@ -23,9 +23,7 @@ import de.p2tools.mtplayer.controller.filmfilter.ActFilmFilterWorker;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.controller.starter.DownloadState;
 import de.p2tools.mtplayer.controller.tools.MLBandwidthTokenBucket;
-import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.configfile.ConfigFile;
-import de.p2tools.p2lib.configfile.config.Config;
 import de.p2tools.p2lib.data.PDataProgConfig;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 import de.p2tools.p2lib.tools.PStringUtils;
@@ -36,12 +34,13 @@ import javafx.beans.property.*;
 import org.apache.commons.lang3.SystemUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class ProgConfig extends PDataProgConfig {
 
     private static ProgConfig instance;
-    private static final ArrayList<Config> arrayList = new ArrayList<>();
-    public static final String SYSTEM = "system";
+//    public static final String SYSTEM = "system";
 
 
     // Programm-Configs, änderbar nur im Konfig-File
@@ -360,35 +359,27 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty SHORTCUT_EXTERN_PROGRAM = addStrProp("SHORTCUT_EXTERN_PROGRAM", SHORTCUT_EXTERN_PROGRAM_INIT);
 
 
-    public static String PARAMETER_INFO = P2LibConst.LINE_SEPARATOR + "\t"
-            + "\"__system-parameter__xxx\" können nur im Konfigfile geändert werden" + P2LibConst.LINE_SEPARATOR
-            + "\t" + "und sind auch nicht für ständige Änderungen gedacht." + P2LibConst.LINE_SEPARATOR
-            + "\t" + "Wird eine Zeile gelöscht, wird der Parameter wieder mit dem Standardwert angelegt."
-            + P2LibConst.LINE_SEPARATOR
-            + P2LibConst.LINE_SEPARATOR
-
-            + "*" + "\t" + "Timeout für direkte Downloads, Standardwert: "
-            + SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getValue() + P2LibConst.LINE_SEPARATOR
-
-            + "*" + "\t" + "max. Startversuche für fehlgeschlagene Downloads, am Ende aller Downloads" + P2LibConst.LINE_SEPARATOR
-            + "\t" + "(Versuche insgesamt: DOWNLOAD_MAX_RESTART * DOWNLOAD_MAX_RESTART_HTTP), Standardwert: " +
-            SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getValue() + P2LibConst.LINE_SEPARATOR
-
-            + "*" + "\t" + "max. Startversuche für fehlgeschlagene Downloads, direkt beim Download," + P2LibConst.LINE_SEPARATOR
-            + "\t" + "(Versuche insgesamt: DOWNLOAD_MAX_RESTART * DOWNLOAD_MAX_RESTART_HTTP), Standardwert: "
-            + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP.getValue() + P2LibConst.LINE_SEPARATOR
-
-            + "*" + "\t" + "Beim Dialog \"Download weiterführen\" wird nach dieser Zeit der Download weitergeführt, Standardwert: "
-            + SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS.getValue() + P2LibConst.LINE_SEPARATOR
-
-            + "*" + "\t" + "Beim Dialog \"Automode\" wird nach dieser Zeit der das Programm beendet, Standardwert: "
-            + SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS.getValue() + P2LibConst.LINE_SEPARATOR
-
-            + "*" + "\t" + "Downloadfehlermeldung wird xx Sedunden lang angezeigt, Standardwert: "
-            + SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getValue() + P2LibConst.LINE_SEPARATOR
-
-            + "*" + "\t" + "Downloadprogress im Terminal (-auto) anzeigen: "
-            + SYSTEM_PARAMETER_DOWNLOAD_PROGRESS.getValue() + P2LibConst.LINE_SEPARATOR;
+    private static String[] PARAMETER_INFO = new String[]{
+            "\"__system-parameter__xxx\" können nur im Konfigfile geändert werden",
+            "\t" + "und sind auch nicht für ständige Änderungen gedacht.",
+            "\t" + "Wird eine Zeile gelöscht, wird der Parameter wieder mit dem Standardwert angelegt.",
+            PLog.LILNE3,
+            "  *" + "\t" + "Timeout für direkte Downloads, Standardwert: "
+                    + SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getValue(),
+            "  *" + "\t" + "max. Startversuche für fehlgeschlagene Downloads, am Ende aller Downloads",
+            "\t" + "(Versuche insgesamt: DOWNLOAD_MAX_RESTART * DOWNLOAD_MAX_RESTART_HTTP), Standardwert: " +
+                    SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getValue(),
+            "  *" + "\t" + "max. Startversuche für fehlgeschlagene Downloads, direkt beim Download,",
+            "\t" + "(Versuche insgesamt: DOWNLOAD_MAX_RESTART * DOWNLOAD_MAX_RESTART_HTTP), Standardwert: "
+                    + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP.getValue(),
+            "  *" + "\t" + "Beim Dialog \"Download weiterführen\" wird nach dieser Zeit der Download weitergeführt, Standardwert: "
+                    + SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS.getValue(),
+            "  *" + "\t" + "Beim Dialog \"Automode\" wird nach dieser Zeit der das Programm beendet, Standardwert: "
+                    + SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS.getValue(),
+            "  *" + "\t" + "Downloadfehlermeldung wird xx Sedunden lang angezeigt, Standardwert: "
+                    + SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getValue(),
+            "  *" + "\t" + "Downloadprogress im Terminal (-auto) anzeigen: "
+                    + SYSTEM_PARAMETER_DOWNLOAD_PROGRESS.getValue()};
 
     static {
         check(SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND, SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND_INIT, 5, 200);
@@ -437,13 +428,13 @@ public class ProgConfig extends PDataProgConfig {
 
     public static void logAllConfigs() {
         final ArrayList<String> list = new ArrayList<>();
+        list.add(PLog.LILNE1);
 
-        list.add(PARAMETER_INFO);
-
+        Collections.addAll(list, PARAMETER_INFO);
         list.add(PLog.LILNE2);
         list.add("Programmeinstellungen");
-        list.add("===========================");
-        arrayList.stream().forEach(c -> {
+        list.add(PLog.LILNE3);
+        Arrays.stream(ProgConfig.getInstance().getConfigsArr()).forEach(c -> {
             String s = c.getKey();
             if (s.startsWith("_")) {
                 while (s.length() < 55) {
@@ -457,12 +448,10 @@ public class ProgConfig extends PDataProgConfig {
 
             list.add(s + "  " + c.getActValueString());
         });
-        list.add(PLog.LILNE2);
-        PStringUtils.appendString(list, "|  ", "=");
+        PStringUtils.appendString(list, "#  ", "#");
 
-        PLog.emptyLine();
-        PLog.sysLog(list);
-        PLog.emptyLine();
+        list.add(PLog.LILNE1);
+        PLog.debugLog(list);
     }
 
     private static synchronized void check(IntegerProperty mlConfigs, int init, int min, int max) {

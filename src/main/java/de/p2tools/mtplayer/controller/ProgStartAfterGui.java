@@ -26,12 +26,10 @@ import de.p2tools.p2lib.dialogs.dialog.PDialog;
 import de.p2tools.p2lib.icons.GetIcon;
 import de.p2tools.p2lib.tools.ProgramToolsFactory;
 import de.p2tools.p2lib.tools.log.LogMessage;
-import de.p2tools.p2lib.tools.log.PLog;
 
 import java.util.ArrayList;
 
 public class ProgStartAfterGui {
-//    private static boolean doneAtProgramStart = false;
 
     private ProgStartAfterGui() {
     }
@@ -42,28 +40,13 @@ public class ProgStartAfterGui {
      */
     public static void doWorkAfterGui() {
         setProgramIcon();
-        startMsg();
+        startMsg(true);
         setTitle();
         ProgData.getInstance().progTray.initProgTray();
         if (ProgConfig.FILM_GUI_FILTER_DIALOG_IS_SHOWING.getValue()) {
             new FilmFilterDialog(ProgData.getInstance()).showDialog();
         }
-
         ProgData.getInstance().startTimer();
-//        LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
-//            @Override
-//            public void finished(ListenerFilmlistLoadEvent event) {
-//                int age = FilmlistFactory.getAge(ProgData.getInstance().filmlist.metaData);
-//                ProgConfig.SYSTEM_FILMLIST_AGE.setValue(ProgData.getInstance().filmlist.isEmpty() ? P2LibConst.NUMBER_NOT_STARTED : age);
-//
-//                if (!doneAtProgramStart) {
-//                    doneAtProgramStart = true;
-//                    MediaDataWorker.createMediaDb();
-//                    checkProgUpdate();
-//                    new ProgTipOfDayFactory().showDialog(ProgData.getInstance(), false);
-//                }
-//            }
-//        });
 
         //die gespeicherte Filmliste laden
         LoadFilmFactory.getInstance().loadFilmlistProgStart();
@@ -80,57 +63,16 @@ public class ProgStartAfterGui {
         }
     }
 
-    public static void shortStartMsg() {
+    public static void startMsg(boolean showAll) {
         ArrayList<String> list = new ArrayList<>();
         list.add("Verzeichnisse:");
         list.add("Programmpfad: " + ProgInfos.getPathJar());
         list.add("Verzeichnis Einstellungen: " + ProgInfos.getSettingsDirectory_String());
-
         LogMessage.startMsg(ProgConst.PROGRAM_NAME, list);
-
-        list = new ArrayList<>();
-        list.add(PLog.LILNE2);
-        //ist etwas viel und macht bei: MTPlayer.jar -v Probleme
-//        list.add("|  Programmsets:");
-//        list.addAll(ProgData.getInstance().setDataList.getStringListSetData());
-        PLog.sysLog(list);
+        if (showAll) {
+            ProgConfig.logAllConfigs();
+        }
     }
-
-    public static void startMsg() {
-        shortStartMsg();
-        ProgConfig.logAllConfigs();
-    }
-
-//    private static void checkProgUpdate() {
-//        // Prüfen obs ein Programmupdate gibt
-//        PDuration.onlyPing("checkProgUpdate");
-//        if (ProgConfig.SYSTEM_UPDATE_SEARCH_ACT.getValue() &&
-//                !updateCheckTodayDone()) {
-//            // nach Updates suchen
-//            runUpdateCheck(false);
-//
-//        } else {
-//            // will der User nicht --oder-- wurde heute schon gemacht
-//            List list = new ArrayList(5);
-//            list.add("Kein Update-Check:");
-//            if (!ProgConfig.SYSTEM_UPDATE_SEARCH_ACT.getValue()) {
-//                list.add("  der User will nicht");
-//            }
-//            if (updateCheckTodayDone()) {
-//                list.add("  heute schon gemacht");
-//            }
-//            PLog.sysLog(list);
-//        }
-//    }
-//
-//    private static boolean updateCheckTodayDone() {
-//        return ProgConfig.SYSTEM_UPDATE_DATE.get().equals(DateFactory.F_FORMAT_yyyy_MM_dd.format(new Date()));
-//    }
-//
-//    private static void runUpdateCheck(boolean showAlways) {
-//        ProgConfig.SYSTEM_UPDATE_DATE.setValue(DateFactory.F_FORMAT_yyyy_MM_dd.format(new Date()));
-//        new SearchProgramUpdate(ProgData.getInstance()).searchNewProgramVersion(showAlways);
-//    }
 
     private static void setTitle() {
         if (ProgData.debug) {

@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.controller.film;
 import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.p2lib.mtfilm.film.*;
 import de.p2tools.p2lib.tools.duration.PDuration;
-import de.p2tools.p2lib.tools.log.PDebugLog;
+import de.p2tools.p2lib.tools.log.PLog;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 
@@ -63,7 +63,7 @@ public class FilmlistMTP extends Filmlist<FilmDataMTP> {
 
     @Override
     public synchronized void filteredListSetPred(Predicate<FilmData> predicate) {
-        PDebugLog.sysLog("=================> Filter: " + ++count);
+        PLog.debugLog("=================> Filter: " + ++count);
         PDuration.counterStart("filteredListSetPred");
         getFilteredList().setPredicate(predicate);
         PDuration.counterStop("filteredListSetPred");

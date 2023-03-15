@@ -63,7 +63,7 @@ public class Listener implements EventListener {
     }
 
     public static synchronized void addListener(Listener listener) {
-        PLog.sysLog("Anz. Listener: " + listeners.size());
+        PLog.debugLog("Anz. Listener: " + listeners.size());
         listeners.add(listener);
     }
 
