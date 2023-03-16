@@ -75,17 +75,16 @@ public class FilmFilterProps extends PDataSample<FilmFilter> implements Comparab
     private final BooleanProperty notGeo = new SimpleBooleanProperty(false);
     private final BooleanProperty notFuture = new SimpleBooleanProperty(false);
 
-    private final BooleanProperty blacklistOn = new SimpleBooleanProperty(false);
-    private final BooleanProperty blacklistOnly = new SimpleBooleanProperty(false);
+    private final IntegerProperty blacklistOnOff = new SimpleIntegerProperty(BlacklistFilterFactory.BLACKLILST_FILTER_OFF);
 
     public BooleanProperty[] sfBooleanPropArr = {channelVis, themeVis, themeExact, themeTitleVis,
             titleVis, somewhereVis, urlVis, timeRangeVis, minMaxDurVis,
             minMaxTimeVis, minMaxTimeInvert, showDateVis,
             onlyVis, onlyBookmark, onlyHd, onlyNew, onlyUt, onlyLive, onlyActHistory, notVis,
-            notAbo, notHistory, notDouble, notGeo, notFuture, blacklistOn, blacklistOnly};
+            notAbo, notHistory, notDouble, notGeo, notFuture};
 
     public StringProperty[] sfStringPropArr = {name, channel, theme, themeTitle, title, somewhere, url, showDate};
-    public IntegerProperty[] sfIntegerPropArr = {timeRange, minDur, maxDur, minTime, maxTime};
+    public IntegerProperty[] sfIntegerPropArr = {timeRange, minDur, maxDur, minTime, maxTime, blacklistOnOff};
 
     @Override
     public Config[] getConfigsArr() {
@@ -135,8 +134,7 @@ public class FilmFilterProps extends PDataSample<FilmFilter> implements Comparab
         list.add(new Config_boolProp("notGeo", notGeo));
         list.add(new Config_boolProp("notFuture", notFuture));
 
-        list.add(new Config_boolProp("blacklistOn", blacklistOn));
-        list.add(new Config_boolProp("blacklistOnly", blacklistOnly));
+        list.add(new Config_intProp("blacklistOnOff", blacklistOnOff));
 
         return list.toArray(new Config[]{});
     }
@@ -650,28 +648,16 @@ public class FilmFilterProps extends PDataSample<FilmFilter> implements Comparab
         this.notFuture.set(notFuture);
     }
 
-    public boolean isBlacklistOn() {
-        return blacklistOn.get();
+    public int getBlacklistOnOff() {
+        return blacklistOnOff.get();
     }
 
-    public BooleanProperty blacklistOnProperty() {
-        return blacklistOn;
+    public IntegerProperty blacklistOnOffProperty() {
+        return blacklistOnOff;
     }
 
-    public void setBlacklistOn(boolean blacklistOn) {
-        this.blacklistOn.set(blacklistOn);
-    }
-
-    public boolean isBlacklistOnly() {
-        return blacklistOnly.get();
-    }
-
-    public BooleanProperty blacklistOnlyProperty() {
-        return blacklistOnly;
-    }
-
-    public void setBlacklistOnly(boolean blacklistOnly) {
-        this.blacklistOnly.set(blacklistOnly);
+    public void setBlacklistOnOff(int blacklistOnOff) {
+        this.blacklistOnOff.set(blacklistOnOff);
     }
 
     @Override

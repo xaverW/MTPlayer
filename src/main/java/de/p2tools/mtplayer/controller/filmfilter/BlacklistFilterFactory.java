@@ -34,6 +34,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class BlacklistFilterFactory {
+    public static final int BLACKLILST_FILTER_OFF = 0;
+    public static final int BLACKLILST_FILTER_ON = 1;
+    public static final int BLACKLILST_FILTER_INVERS = 2;
 
     private static long maxFilmDays = 0;
     private static boolean doNotShowFutureFilms, doNotShowGeoBlockedFilms;
@@ -58,18 +61,18 @@ public class BlacklistFilterFactory {
 
             Stream<FilmDataMTP> initialStream = filmlist.parallelStream();
 
-            if (progData.actFilmFilterWorker.getActFilterSettings().isBlacklistOnly()) {
-                //blacklist in ONLY
+            if (progData.actFilmFilterWorker.getActFilterSettings().getBlacklistOnOff() == BLACKLILST_FILTER_INVERS) {
+                //blacklist ONLY
                 PLog.sysLog("FilmlistBlackFilter - isBlacklistOnly");
                 initialStream = initialStream.filter(filmDataMTP -> filmDataMTP.isBlackBlocked());
 
-            } else if (progData.actFilmFilterWorker.getActFilterSettings().isBlacklistOn()) {
-                //blacklist in ON
+            } else if (progData.actFilmFilterWorker.getActFilterSettings().getBlacklistOnOff() == BLACKLILST_FILTER_ON) {
+                //blacklist ON
                 PLog.sysLog("FilmlistBlackFilter - isBlacklistOn");
                 initialStream = initialStream.filter(filmDataMTP -> !filmDataMTP.isBlackBlocked());
 
             } else {
-                //blacklist in OFF
+                //blacklist OFF
                 PLog.sysLog("FilmlistBlackFilter - isBlacklistOff");
             }
 
@@ -153,32 +156,32 @@ public class BlacklistFilterFactory {
         }
 
         filmData.setLowerCase();
-        if (ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST.getValue()) {
-            for (final BlackData blackData : ProgData.getInstance().blackList) {
-                if (checkFilmIsBlocked(blackData, filmData)) {
-                    //dann hat dieser Filter getroffen -> anzeigen
-                    if (incCounter) {
-                        blackData.incCountHits();
-                    }
-                    filmData.clearLowerCase();
-                    return false;
+//        if (ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST.getValue()) {
+//            for (final BlackData blackData : ProgData.getInstance().blackList) {
+//                if (checkFilmIsBlocked(blackData, filmData)) {
+//                    //dann hat dieser Filter getroffen -> anzeigen
+//                    if (incCounter) {
+//                        blackData.incCountHits();
+//                    }
+//                    filmData.clearLowerCase();
+//                    return false;
+//                }
+//            }
+//            //dann hat kein Filter getroffen -> nicht anzeigen
+//            return true;
+//
+//        } else {
+        for (final BlackData blackData : ProgData.getInstance().blackList) {
+            if (checkFilmIsBlocked(blackData, filmData)) {
+                //dann hat dieser Filter getroffen -> nicht anzeigen
+                if (incCounter) {
+                    blackData.incCountHits();
                 }
-            }
-            //dann hat kein Filter getroffen -> nicht anzeigen
-            return true;
-
-        } else {
-            for (final BlackData blackData : ProgData.getInstance().blackList) {
-                if (checkFilmIsBlocked(blackData, filmData)) {
-                    //dann hat dieser Filter getroffen -> nicht anzeigen
-                    if (incCounter) {
-                        blackData.incCountHits();
-                    }
-                    filmData.clearLowerCase();
-                    return true;
-                }
+                filmData.clearLowerCase();
+                return true;
             }
         }
+//        }
 
         filmData.clearLowerCase();
         return false;

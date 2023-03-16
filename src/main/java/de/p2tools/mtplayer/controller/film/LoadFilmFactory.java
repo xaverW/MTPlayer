@@ -85,7 +85,7 @@ public class LoadFilmFactory {
         LoadFactoryConst.FilmChecker filmChecker = filmData ->
                 BlacklistFilterFactory.checkFilmIsBlockedAndCountHits(filmData, ProgData.getInstance().filmLoadBlackList, true);
 
-        if (ProgConfig.SYSTEM_USE_FILTER_LOAD_FILMLIST.getValue()) {
+        if (ProgConfig.SYSTEM_FILMLIST_FILTER.getValue() != BlacklistFilterFactory.BLACKLILST_FILTER_OFF) {
             //nur dann sollen Filme geprüft werden
             LoadFactoryConst.checker = filmChecker;
         } else {

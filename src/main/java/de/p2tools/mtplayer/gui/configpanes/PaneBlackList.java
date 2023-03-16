@@ -24,6 +24,7 @@ import de.p2tools.mtplayer.controller.data.BlackListFactory;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.controller.filmfilter.BlacklistFactory;
+import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
@@ -35,6 +36,8 @@ import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.ListenerFilmlistLoadEvent;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.ListenerLoadFilmlist;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -66,7 +69,7 @@ public class PaneBlackList {
 
     private final RadioButton rbBlack = new RadioButton();
     private final RadioButton rbWhite = new RadioButton();
-    private final PToggleSwitch tglNot = new PToggleSwitch("Filme ausschließen");
+    private final RadioButton rbOff = new RadioButton();
 
     private final MenuButton mbChannel = new MenuButton("");
     private final ArrayList<CheckMenuItem> checkMenuItemsList = new ArrayList<>();
@@ -76,67 +79,45 @@ public class PaneBlackList {
     private boolean blackChange = false;
     private Stage stage;
     private final ProgData progData;
-    private final boolean black;
+    private final boolean controlBlackList;
     private final BlackList list;
 
-    public PaneBlackList(Stage stage, ProgData progData, boolean black, BooleanProperty blackChanged) {
+    public PaneBlackList(Stage stage, ProgData progData, boolean controlBlackList, BooleanProperty blackChanged) {
         this.stage = stage;
         this.progData = progData;
-        this.black = black;
+        this.controlBlackList = controlBlackList;
         this.blackChanged = blackChanged;
-        if (black) {
+        if (controlBlackList) {
             list = progData.blackList;
         } else {
             list = progData.filmLoadBlackList;
         }
     }
 
-//    public void setStage(Stage stage) {
-//        this.stage = stage;
-//    }
-
     public void close() {
-        rbWhite.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST);
         LoadFilmFactory.getInstance().loadFilmlist.removeListenerLoadFilmlist(listener);
-
-//        if (list.size() > 0 && blackChanged.getValue()) {
-//            if (!PAlert.showAlertOkCancel(stage, "Liste sortieren", "Soll die " +
-//                            (black ? "Blacklist" : "Liste zum Filtern der Filme beim Neuladen der Filmliste") +
-//                            " sortiert werden?",
-//                    "Die Liste der Filter wird nach Anzahl der Treffer sortiert. Das beschleunigt die Filterung " +
-//                            "der Filmliste.")) {
-//                return;
-//
-////            } else {
-////                //dann die Liste sortieren
-////                list.sortTheListWithCounter();
-//            }
-//        }
     }
 
     public void make(Collection<TitledPane> result) {
         final VBox vBox = new VBox(10);
         vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
 
-        if (black) {
-            makeConfig(vBox);
-        } else {
-            makeToggle(vBox);
-        }
+        makeConfigBlackList(vBox);
+
         initTable();
         addButton(vBox);
         vBox.getChildren().add(PGuiTools.getVDistance(10));
         addConfigs(vBox);
-        if (!black) {
+        if (!controlBlackList) {
             addLoadButton(vBox);
         }
 
-        TitledPane tpBlack = new TitledPane(black ? "Blacklist" : "Filme ausschließen", vBox);
+        TitledPane tpBlack = new TitledPane(controlBlackList ? "Blacklist" : "Filme ausschließen", vBox);
         result.add(tpBlack);
         tpBlack.setMaxHeight(Double.MAX_VALUE);
     }
 
-    private void makeConfig(VBox vBox) {
+    private void makeConfigBlackList(VBox vBox) {
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
@@ -145,33 +126,80 @@ public class PaneBlackList {
         final ToggleGroup group = new ToggleGroup();
         rbBlack.setToggleGroup(group);
         rbWhite.setToggleGroup(group);
-        rbBlack.setSelected(!ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST.getValue());
+        rbOff.setToggleGroup(group);
+
+        group.selectedToggleProperty().addListener((u, o, n) -> setBlackProp());
+
+        setRb();
+        progData.actFilmFilterWorker.getActFilterSettings().blacklistOnOffProperty().addListener((u, o, n) -> {
+            setRb();
+        });
 
         int row = 0;
-        gridPane.add(rbBlack, 0, row);
-        gridPane.add(new Label("\"Sender / Thema / Titel\" werden nicht angezeigt (Blacklist)"), 1, row);
+        gridPane.add(rbBlack, 0, ++row);
+        gridPane.add(new Label("\"Filter\" nicht anzeigen, (Blacklist)"), 1, row);
         final Button btnHelp = PButton.helpButton(stage, "Blacklist / Whitelist",
                 HelpText.BLACKLIST_WHITELIST);
-        gridPane.add(btnHelp, 2, row);
+        gridPane.add(btnHelp, 2, row, 1, 2);
 
-        rbWhite.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST);
-        rbWhite.selectedProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
         gridPane.add(rbWhite, 0, ++row);
-        gridPane.add(new Label("Nur diese \"Sender / Thema / Titel\" anzeigen (Whitelist)"), 1, row);
+        gridPane.add(new Label("Nur diese \"Filter\" anzeigen, (Whitelist)"), 1, row);
+
+        gridPane.add(rbOff, 0, ++row);
+        gridPane.add(new Label("Alles anzeigen"), 1, row);
 
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcComputedSizeAndHgrow());
     }
 
-    private void makeToggle(VBox vBox) {
-        tglNot.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_USE_FILTER_LOAD_FILMLIST);
-        final Button btnHelpReplace = PButton.helpButton(stage, "Filme ausschließen",
-                HelpText.FILMTITEL_NOT_LOAD);
+    private void setRb() {
+        if (!controlBlackList) {
+            return;
+        }
+        //dann wird die BlackList gesteuert
+        switch (progData.actFilmFilterWorker.getActFilterSettings().getBlacklistOnOff()) {
+            case BlacklistFilterFactory.BLACKLILST_FILTER_OFF:
+                //OFF
+                rbOff.setSelected(true);
+                break;
+            case BlacklistFilterFactory.BLACKLILST_FILTER_ON:
+                //BLACK
+                rbBlack.setSelected(true);
+                break;
+            case BlacklistFilterFactory.BLACKLILST_FILTER_INVERS:
+                //WHITE, also invers
+                rbWhite.setSelected(true);
+                break;
+        }
+    }
 
-        HBox hBox = new HBox(P2LibConst.DIST_BUTTON);
-        HBox.setHgrow(tglNot, Priority.ALWAYS);
-        hBox.getChildren().addAll(tglNot, btnHelpReplace);
-        vBox.getChildren().add(hBox);
+    private void setBlackProp() {
+        if (controlBlackList) {
+            //dann wird die BlackList gesteuert
+            if (rbBlack.isSelected()) {
+                //BLACK
+                progData.actFilmFilterWorker.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_ON);
+            } else if (rbWhite.isSelected()) {
+                //WHITE, also invers
+                progData.actFilmFilterWorker.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_INVERS);
+            } else {
+                //OFF
+                progData.actFilmFilterWorker.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_OFF);
+            }
+
+        } else {
+            //dann wird der FilmList Filter gesteuert
+            if (rbBlack.isSelected()) {
+                //BLACK
+                ProgConfig.SYSTEM_FILMLIST_FILTER.setValue(BlacklistFilterFactory.BLACKLILST_FILTER_ON);
+            } else if (rbWhite.isSelected()) {
+                //WHITE, also invers
+                ProgConfig.SYSTEM_FILMLIST_FILTER.setValue(BlacklistFilterFactory.BLACKLILST_FILTER_INVERS);
+            } else {
+                //OFF
+                ProgConfig.SYSTEM_FILMLIST_FILTER.setValue(BlacklistFilterFactory.BLACKLILST_FILTER_OFF);
+            }
+        }
     }
 
     private void initTable() {
@@ -240,7 +268,6 @@ public class PaneBlackList {
             tableView.scrollTo(blackData);
         });
 
-//        final Button btnHelpCount = PButton.helpButton(stage.getStageProp(), "_Treffer zählen",
         final Button btnHelpCount = PButton.helpButton(stage, "_Treffer zählen",
                 HelpText.BLACKLIST_COUNT);
 
@@ -297,12 +324,14 @@ public class PaneBlackList {
         HBox hBoxButton = new HBox(P2LibConst.DIST_BUTTON);
         hBoxButton.getChildren().addAll(btnNew, btnDel, btnClear);
 
-        if (black) {
+        if (controlBlackList) {
             hBoxButton.getChildren().addAll(PGuiTools.getHBoxGrower(), btnCountHits, btnAddStandards, btnCleanList);
         } else {
             hBoxButton.getChildren().addAll(PGuiTools.getHBoxGrower(), btnCountHits, btnAddStandards, btnCleanList, btnAddBlacklist);
-            tableView.disableProperty().bind(ProgConfig.SYSTEM_USE_FILTER_LOAD_FILMLIST.not());
-            hBoxButton.disableProperty().bind(ProgConfig.SYSTEM_USE_FILTER_LOAD_FILMLIST.not());
+
+            BooleanBinding binding = Bindings.equal(ProgConfig.SYSTEM_FILMLIST_FILTER, BlacklistFilterFactory.BLACKLILST_FILTER_OFF);
+            tableView.disableProperty().bind(binding);
+            hBoxButton.disableProperty().bind(binding);
         }
         hBoxButton.getChildren().addAll(btnHelpCount);
 
@@ -337,8 +366,9 @@ public class PaneBlackList {
                 PColumnConstraints.getCcComputedSizeAndHgrow(),
                 PColumnConstraints.getCcPrefSize());
         gridPane.setDisable(true);
-        if (!black) {
-            gridPane.disableProperty().bind(ProgConfig.SYSTEM_USE_FILTER_LOAD_FILMLIST.not());
+        if (!controlBlackList) {
+            BooleanBinding binding = Bindings.equal(ProgConfig.SYSTEM_FILMLIST_FILTER, BlacklistFilterFactory.BLACKLILST_FILTER_OFF);
+            gridPane.disableProperty().bind(binding);
         }
 
         mbChannel.textProperty().addListener((observable, oldValue, newValue) -> setBlackChanged());
@@ -394,7 +424,7 @@ public class PaneBlackList {
         }
 
         blackData = blackDataAct;
-        if (black) {
+        if (controlBlackList) {
             gridPane.setDisable(blackData == null);
         }
         if (blackData != null) {

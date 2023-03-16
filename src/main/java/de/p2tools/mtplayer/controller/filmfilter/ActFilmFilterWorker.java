@@ -148,12 +148,10 @@ public final class ActFilmFilterWorker {
         }
         actFilterSettings.filterChangeProperty().removeListener(filterChangeListener);
         actFilterSettings.blacklistChangeProperty().removeListener(blacklistChangeListener);
-        boolean black = actFilterSettings.blacklistOnProperty().getValue();
-        boolean blackOnly = actFilterSettings.blacklistOnlyProperty().getValue();
+        int black = actFilterSettings.blacklistOnOffProperty().getValue();
 
         sf.copyTo(actFilterSettings);
-        if (actFilterSettings.blacklistOnProperty().getValue() == black &&
-                actFilterSettings.blacklistOnlyProperty().getValue() == blackOnly) {
+        if (actFilterSettings.blacklistOnOffProperty().getValue() == black) {
             // Black hat sich nicht geändert
             postFilterChange();
         } else {

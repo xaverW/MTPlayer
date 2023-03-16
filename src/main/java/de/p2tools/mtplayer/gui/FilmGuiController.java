@@ -136,7 +136,8 @@ public class FilmGuiController extends AnchorPane {
         }
 
         lastShownFilmData = null;
-        if (!ProgData.getInstance().actFilmFilterWorker.getActFilterSettings().isBlacklistOn()) {
+        if (ProgData.getInstance().actFilmFilterWorker.getActFilterSettings().blacklistOnOffProperty().getValue() ==
+                BlacklistFilterFactory.BLACKLILST_FILTER_OFF) {
             //dann ist der markierte Film noch zu sehen
             lastShownFilmData = filmSelection.get();
 

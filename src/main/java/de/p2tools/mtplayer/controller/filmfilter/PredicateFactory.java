@@ -62,8 +62,6 @@ public class PredicateFactory {
         //ShowDate
         fShowDate = new Filter(filterShowDate, false);
 
-        //Sendedatum
-
         final boolean onlyBookmark = filmFilter.isOnlyVis() ? filmFilter.isOnlyBookmark() : false;
         final boolean onlyHd = filmFilter.isOnlyVis() ? filmFilter.isOnlyHd() : false;
         final boolean onlyUt = filmFilter.isOnlyVis() ? filmFilter.isOnlyUt() : false;
@@ -77,7 +75,7 @@ public class PredicateFactory {
         final boolean noGeo = filmFilter.isNotVis() ? filmFilter.isNotGeo() : false;
         final boolean noFuture = filmFilter.isNotVis() ? filmFilter.isNotFuture() : false;
 
-        final boolean onlyBlack = filmFilter.isBlacklistOnly();
+        final int checkBlack = filmFilter.blacklistOnOffProperty().getValue();
 
         // Länge am Slider in Min
         final int minLengthMinute = filmFilter.isMinMaxDurVis() ? filmFilter.getMinDur() : 0;
@@ -142,8 +140,14 @@ public class PredicateFactory {
             predicate = predicate.and(f -> !f.isInFuture());
         }
 
-        if (onlyBlack) {
-            predicate = predicate.and(f -> f.isBlackBlocked());
+        if (checkBlack != BlacklistFilterFactory.BLACKLILST_FILTER_OFF) {
+            //dann auch mit Blacklist suchen
+            if (checkBlack == BlacklistFilterFactory.BLACKLILST_FILTER_ON) {
+                predicate = predicate.and(f -> !f.isBlackBlocked());
+            } else {
+                //dann invers, alles was geblockt wird
+                predicate = predicate.and(f -> f.isBlackBlocked());
+            }
         }
 
         //anz Tage Sendezeit

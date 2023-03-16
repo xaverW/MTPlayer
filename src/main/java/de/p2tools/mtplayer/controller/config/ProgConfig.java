@@ -20,6 +20,7 @@ package de.p2tools.mtplayer.controller.config;
 import de.p2tools.mtplayer.controller.data.SetFactory;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.filmfilter.ActFilmFilterWorker;
+import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.controller.starter.DownloadState;
 import de.p2tools.mtplayer.controller.tools.MLBandwidthTokenBucket;
@@ -134,7 +135,8 @@ public class ProgConfig extends PDataProgConfig {
     public static BooleanProperty SYSTEM_TRAY_USE_OWN_ICON = addBoolProp("system-tray-own-icon", Boolean.FALSE);
     public static StringProperty SYSTEM_TRAY_ICON_PATH = addStrProp("system-tray-icon", ""); //ein eigenes Tray-Icon
     public static StringProperty SYSTEM_USERAGENT = addStrProp("system-useragent", ProgConst.USER_AGENT_DEFAULT); //Useragent für direkte Downloads
-    public static BooleanProperty SYSTEM_USE_FILTER_LOAD_FILMLIST = addBoolProp("system-use-filter-load-filmlist", Boolean.FALSE);
+    public static IntegerProperty SYSTEM_FILMLIST_FILTER = addIntProp("system-filmlist-filter", BlacklistFilterFactory.BLACKLILST_FILTER_OFF);
+
     public static BooleanProperty SYSTEM_USE_REPLACETABLE = addBoolProp("system-use-replacetable", SystemUtils.IS_OS_LINUX ? Boolean.TRUE : Boolean.FALSE);
     public static BooleanProperty SYSTEM_ONLY_ASCII = addBoolProp("system-only-ascii", Boolean.FALSE);
     public static StringProperty SYSTEM_PROG_OPEN_DIR = addStrProp("system-prog-open-dir");
@@ -180,7 +182,7 @@ public class ProgConfig extends PDataProgConfig {
     public static BooleanProperty SYSTEM_BLACKLIST_SHOW_ABO = addBoolProp("system-blacklist-show-abo");
     public static IntegerProperty SYSTEM_BLACKLIST_MAX_FILM_DAYS = addIntProp("system-blacklist-max-film-days", 0);
     public static IntegerProperty SYSTEM_BLACKLIST_MIN_FILM_DURATION = addIntProp("system-blacklist-min-film-duration", 0); // Minuten
-    public static BooleanProperty SYSTEM_BLACKLIST_IS_WHITELIST = addBoolProp("system-blacklist-is-whitelist");
+//    public static BooleanProperty SYSTEM_BLACKLIST_IS_WHITELIST = addBoolProp("system-blacklist-is-whitelist");
 
     // Download
     public static BooleanProperty DOWNLOAD_START_NOW = addBoolProp("download-start-now", Boolean.FALSE);

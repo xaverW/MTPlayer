@@ -63,6 +63,7 @@ public class ConfigDialogController extends PDialogExtra {
         super(progData.primaryStage, ProgConfig.CONFIG_DIALOG_SIZE, "Einstellungen",
                 true, false, DECO.NO_BORDER, true);
         this.progData = progData;
+        btnApply.setVisible(false);
 
         init(false);
     }
@@ -75,6 +76,8 @@ public class ConfigDialogController extends PDialogExtra {
         this.blackDialog = blackDialog;
         if (blackDialog) {
             propSelectedTab = ProgConfig.SYSTEM_CONFIG_DIALOG_BLACKLIST_TAB;
+        } else {
+            btnApply.setVisible(false);
         }
 
         init(false);

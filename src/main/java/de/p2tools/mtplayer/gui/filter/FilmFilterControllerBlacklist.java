@@ -18,6 +18,7 @@ package de.p2tools.mtplayer.gui.filter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
+import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
 import de.p2tools.mtplayer.gui.configdialog.ConfigDialogController;
 import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
 import javafx.geometry.Pos;
@@ -40,7 +41,6 @@ public class FilmFilterControllerBlacklist extends HBox {
         btnBlack.getStyleClass().add("buttonSmall");
         btnBlack.setGraphic(ProgIcons.Icons.ICON_BUTTON_EDIT.getImageView());
         btnBlack.setOnAction(a -> new ConfigDialogController(ProgData.getInstance(), true).showDialog());
-//        btnBlack.setOnAction(a -> new BlackDialog(progData));
 
         Label lblRight = new Label();
         tglBlacklist.setAllowIndeterminate(true);
@@ -49,9 +49,32 @@ public class FilmFilterControllerBlacklist extends HBox {
                 "Blacklist ein: Von der Blacklist erfasste Filme werden nicht angezeigt.\n" +
                 "Blacklist invers: Nur von der Blacklist erfasste Filme werden angezeigt."));
 
+        progData.actFilmFilterWorker.getActFilterSettings().blacklistOnOffProperty().addListener((u, o, n) -> {
+            switch (progData.actFilmFilterWorker.getActFilterSettings().blacklistOnOffProperty().getValue()) {
+                case BlacklistFilterFactory.BLACKLILST_FILTER_OFF:
+                    tglBlacklist.setIndeterminate(false);
+                    tglBlacklist.setSelected(false);
+                    break;
+                case BlacklistFilterFactory.BLACKLILST_FILTER_ON:
+                    tglBlacklist.setIndeterminate(false);
+                    tglBlacklist.setSelected(true);
+                    break;
+                case BlacklistFilterFactory.BLACKLILST_FILTER_INVERS:
+                    tglBlacklist.setIndeterminate(true);
+                    tglBlacklist.setSelected(false);
+                    break;
+            }
+        });
 
-        tglBlacklist.selectedProperty().bindBidirectional(progData.actFilmFilterWorker.getActFilterSettings().blacklistOnProperty());
-        tglBlacklist.indeterminateProperty().bindBidirectional(progData.actFilmFilterWorker.getActFilterSettings().blacklistOnlyProperty());
+        tglBlacklist.getCheckBox().setOnAction((mouseEvent) -> {
+            if (tglBlacklist.isIndeterminate()) {
+                progData.actFilmFilterWorker.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_INVERS);
+            } else if (tglBlacklist.isSelected()) {
+                progData.actFilmFilterWorker.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_ON);
+            } else {
+                progData.actFilmFilterWorker.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_OFF);
+            }
+        });
 
         setSpacing(5);
         setAlignment(Pos.CENTER_RIGHT);

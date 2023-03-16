@@ -247,8 +247,7 @@ public final class FilmFilter extends FilmFilterProps {
         notGeoProperty().addListener(l -> setFilterChange());
         notFutureProperty().addListener(l -> setFilterChange());
 
-        blacklistOnProperty().addListener(l -> reportBlacklistChange());
-        blacklistOnlyProperty().addListener(l -> reportBlacklistChange());
+        blacklistOnOffProperty().addListener(l -> reportBlacklistChange());
     }
 
     private void setTxtFilterChange() {
