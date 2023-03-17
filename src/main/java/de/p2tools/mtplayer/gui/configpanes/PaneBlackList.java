@@ -90,7 +90,7 @@ public class PaneBlackList {
         if (controlBlackList) {
             list = progData.blackList;
         } else {
-            list = progData.filmLoadBlackList;
+            list = progData.filmListFilter;
         }
     }
 
@@ -153,23 +153,38 @@ public class PaneBlackList {
     }
 
     private void setRb() {
-        if (!controlBlackList) {
-            return;
-        }
-        //dann wird die BlackList gesteuert
-        switch (progData.actFilmFilterWorker.getActFilterSettings().getBlacklistOnOff()) {
-            case BlacklistFilterFactory.BLACKLILST_FILTER_OFF:
-                //OFF
-                rbOff.setSelected(true);
-                break;
-            case BlacklistFilterFactory.BLACKLILST_FILTER_ON:
-                //BLACK
-                rbBlack.setSelected(true);
-                break;
-            case BlacklistFilterFactory.BLACKLILST_FILTER_INVERS:
-                //WHITE, also invers
-                rbWhite.setSelected(true);
-                break;
+        if (controlBlackList) {
+            //dann wird die BlackList gesteuert
+            switch (progData.actFilmFilterWorker.getActFilterSettings().getBlacklistOnOff()) {
+                case BlacklistFilterFactory.BLACKLILST_FILTER_OFF:
+                    //OFF
+                    rbOff.setSelected(true);
+                    break;
+                case BlacklistFilterFactory.BLACKLILST_FILTER_ON:
+                    //BLACK
+                    rbBlack.setSelected(true);
+                    break;
+                case BlacklistFilterFactory.BLACKLILST_FILTER_INVERS:
+                    //WHITE, also invers
+                    rbWhite.setSelected(true);
+                    break;
+            }
+        } else {
+            //dann wird der FilmListFilter gesteuert
+            switch (ProgConfig.SYSTEM_FILMLIST_FILTER.getValue()) {
+                case BlacklistFilterFactory.BLACKLILST_FILTER_OFF:
+                    //OFF
+                    rbOff.setSelected(true);
+                    break;
+                case BlacklistFilterFactory.BLACKLILST_FILTER_ON:
+                    //BLACK
+                    rbBlack.setSelected(true);
+                    break;
+                case BlacklistFilterFactory.BLACKLILST_FILTER_INVERS:
+                    //WHITE, also invers
+                    rbWhite.setSelected(true);
+                    break;
+            }
         }
     }
 

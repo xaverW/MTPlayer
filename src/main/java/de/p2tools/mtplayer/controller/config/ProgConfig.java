@@ -254,7 +254,7 @@ public class ProgConfig extends PDataProgConfig {
 
     // ConfigDialog
     public static StringProperty IMPORT_MV_DIALOG_SIZE = addStrProp("import-mv-dialog-size", "600:800");
-    public static StringProperty BLACK_DIALOG_SIZE = addStrProp("black-dialog-size", "600:800");
+    public static StringProperty BLACK_DIALOG_SIZE = addStrProp("black-dialog-size", "700:800");
     public static StringProperty CONFIG_DIALOG_SIZE = addStrProp("config-dialog-size");
     public static BooleanProperty CONFIG_DIALOG_ACCORDION = addBoolProp("config_dialog-accordion", Boolean.TRUE);
     public static DoubleProperty CONFIG_DIALOG_SET_DIVIDER = addDoubleProp("config-dialog-set-divider", ProgConst.CONFIG_DIALOG_SET_DIVIDER);
@@ -421,7 +421,7 @@ public class ProgConfig extends PDataProgConfig {
         configFile.addConfigs(progData.actFilmFilterWorker.getStoredFilterList());//Filterprofile
 
         configFile.addConfigs(progData.aboList);
-        configFile.addConfigs(progData.filmLoadBlackList);
+        configFile.addConfigs(progData.filmListFilter);
         configFile.addConfigs(progData.blackList);
         configFile.addConfigs(progData.replaceList);
         configFile.addConfigs(progData.downloadList);

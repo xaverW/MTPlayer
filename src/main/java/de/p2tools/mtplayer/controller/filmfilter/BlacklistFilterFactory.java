@@ -203,7 +203,22 @@ public class BlacklistFilterFactory {
         return false;
     }
 
-    public static boolean checkFilmIsBlockedAndCountHits(FilmData filmData, BlackList list, boolean abort) {
+    public static boolean checkFilmListOnLoadAndCountHits(FilmData filmData, BlackList list) {
+        //wird nur nach dem Neuladen einer neuen Filmliste aus dem Web gemacht (FilmBlackList): nach Treffer abbrechen
+        //CLEAR-COUNTER wird da vorher schon gemacht
+        filmData.setLowerCase();
+        for (final BlackData blackData : list) {
+            if (checkFilmIsBlocked(blackData, filmData)) {
+                blackData.incCountHits();
+                filmData.clearLowerCase();
+                return true;
+            }
+        }
+        filmData.clearLowerCase();
+        return false;
+    }
+
+    public static boolean checkFilmIsBlockedAndCountHits(FilmData filmData, BlackList list) {
         //wird nur nach dem Neuladen einer neuen Filmliste aus dem Web gemacht (FilmBlackList): nach Treffer abbrechen
         //oder zum Zählen der Treffer gemacht: nach Treffer nicht abbrechen, alle Treffer zählen
         //--> gibt (braucht) da keine WhiteList!!
@@ -214,10 +229,10 @@ public class BlacklistFilterFactory {
             if (checkFilmIsBlocked(blackData, filmData)) {
                 blackData.incCountHits();
                 ret = true;
-                if (abort) {
-                    filmData.clearLowerCase();
-                    return true;
-                }
+//                if (abort) {
+//                    filmData.clearLowerCase();
+//                    return true;
+//                }
             }
         }
         filmData.clearLowerCase();
@@ -269,9 +284,9 @@ public class BlacklistFilterFactory {
             } else {
                 if (filmData.FILM_THEME_STR.contains(blackData.fTheme.filterArr[0])) {
                     //dann wird geblockt
-                    return true;
+                    return blackData.fTheme.exclude ? false : true;
                 } else {
-                    return false;
+                    return blackData.fTheme.exclude ? true : false;
                 }
             }
         }
@@ -279,17 +294,17 @@ public class BlacklistFilterFactory {
             if (filmData.FILM_THEME_STR.contains(blackData.fThemeTitle.filterArr[0]) ||
                     filmData.FILM_TITLE_STR.contains(blackData.fThemeTitle.filterArr[0])) {
                 //dann wird geblockt
-                return true;
+                return blackData.fThemeTitle.exclude ? false : true;
             } else {
-                return false;
+                return blackData.fThemeTitle.exclude ? true : false;
             }
         }
         if (blackData.quickTitle) {
             if (filmData.FILM_TITLE_STR.contains(blackData.fTitle.filterArr[0])) {
                 //dann wird geblockt
-                return true;
+                return blackData.fTitle.exclude ? false : true;
             } else {
-                return false;
+                return blackData.fTitle.exclude ? true : false;
             }
         }
 

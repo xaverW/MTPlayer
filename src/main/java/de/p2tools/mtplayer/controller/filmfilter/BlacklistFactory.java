@@ -89,7 +89,7 @@ public class BlacklistFactory {
         final FilmlistMTP filmList = ProgData.getInstance().filmlist;
         if (filmList != null) {
             filmList.parallelStream().forEach(film ->
-                    BlacklistFilterFactory.checkFilmIsBlockedAndCountHits(film, list, false));
+                    BlacklistFilterFactory.checkFilmIsBlockedAndCountHits(film, list));
         }
         PDuration.counterStop("countHitsList");
     }

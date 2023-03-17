@@ -81,16 +81,18 @@ public class LoadFilmFactory {
         LoadFactoryConst.primaryStage = ProgData.getInstance().primaryStage;
         LoadFactoryConst.filmListUrl = ProgData.filmListUrl;
 
-        ProgData.getInstance().filmLoadBlackList.clearCounter();//todo evtl. nur beim Neuladen einer kompletten Liste??
-        LoadFactoryConst.FilmChecker filmChecker = filmData ->
-                BlacklistFilterFactory.checkFilmIsBlockedAndCountHits(filmData, ProgData.getInstance().filmLoadBlackList, true);
-
-        if (ProgConfig.SYSTEM_FILMLIST_FILTER.getValue() != BlacklistFilterFactory.BLACKLILST_FILTER_OFF) {
-            //nur dann sollen Filme geprüft werden
-            LoadFactoryConst.checker = filmChecker;
-        } else {
+        ProgData.getInstance().filmListFilter.clearCounter();//todo evtl. nur beim Neuladen einer kompletten Liste??
+        if (ProgConfig.SYSTEM_FILMLIST_FILTER.getValue() == BlacklistFilterFactory.BLACKLILST_FILTER_OFF) {
             //ist sonst evtl. noch von "vorher" gesetzt
             LoadFactoryConst.checker = null;
+        } else if (ProgConfig.SYSTEM_FILMLIST_FILTER.getValue() == BlacklistFilterFactory.BLACKLILST_FILTER_ON) {
+            //dann sollen Filme geprüft werden
+            LoadFactoryConst.checker = filmData -> BlacklistFilterFactory.checkFilmListOnLoadAndCountHits(filmData,
+                    ProgData.getInstance().filmListFilter);
+        } else {
+            //dann sollen Filme geprüft werden
+            LoadFactoryConst.checker = filmData -> !BlacklistFilterFactory.checkFilmListOnLoadAndCountHits(filmData,
+                    ProgData.getInstance().filmListFilter);
         }
     }
 
@@ -149,7 +151,7 @@ public class LoadFilmFactory {
             BlacklistFilterFactory.markFilmBlack(false);
 
             ProgData.getInstance().blackList.sortAndCleanTheList();
-            ProgData.getInstance().filmLoadBlackList.sortAndCleanTheList();
+            ProgData.getInstance().filmListFilter.sortAndCleanTheList();
 
             logList.add("Filme in Downloads eingetragen");
             ProgData.getInstance().maskerPane.setMaskerText("Downloads eingetragen");

@@ -72,7 +72,8 @@ public class BlackData extends BlackDataProps {
                 fThemeTitle.isEmpty &&
                 fTitle.isEmpty &&
                 fSomewhere.isEmpty &&
-                fChannel.isQuick) {
+                fChannel.isQuick &&
+                !fChannel.exclude) {
             quickChannel = true;
 
         } else {
@@ -85,7 +86,8 @@ public class BlackData extends BlackDataProps {
                 fThemeTitle.isEmpty &&
                 fTitle.isEmpty &&
                 fSomewhere.isEmpty &&
-                fTheme.isQuick) {
+                fTheme.isQuick &&
+                !fTheme.exclude) {
             quickTheme = true;
 
         } else {
@@ -98,7 +100,8 @@ public class BlackData extends BlackDataProps {
                 fTheme.isEmpty &&
                 fTitle.isEmpty &&
                 fSomewhere.isEmpty &&
-                fThemeTitle.isQuick) {
+                fThemeTitle.isQuick &&
+                !fThemeTitle.exclude) {
             quickThemTitle = true;
 
         } else {
@@ -111,7 +114,8 @@ public class BlackData extends BlackDataProps {
                 fTheme.isEmpty &&
                 fThemeTitle.isEmpty &&
                 fSomewhere.isEmpty &&
-                fTitle.isQuick) {
+                fTitle.isQuick &&
+                !fTitle.exclude) {
             quickTitle = true;
 
         } else {
