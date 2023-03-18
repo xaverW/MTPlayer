@@ -44,6 +44,7 @@ import de.p2tools.mtplayer.gui.filter.DownloadFilterController;
 import de.p2tools.mtplayer.gui.filter.FilmFilterControllerClearFilter;
 import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.mtplayer.gui.tools.ProgTray;
+import de.p2tools.p2lib.configfile.pdata.PData;
 import de.p2tools.p2lib.guitools.pmask.PMaskerPane;
 import de.p2tools.p2lib.tools.duration.PDuration;
 import javafx.animation.Animation;
@@ -121,7 +122,7 @@ public class ProgData {
         filmlist = new FilmlistMTP();
         filmlistFiltered = new FilmlistMTP();
 
-        filmListFilter = new BlackList(this, "FilmListFilter:FilmTitleList");
+        filmListFilter = new BlackList(this, "FilmListFilter" + PData.TAGGER + "FilmTitleList");
         blackList = new BlackList(this, "BlackList");
         setDataList = new SetDataList();
         aboList = new AboList(this);

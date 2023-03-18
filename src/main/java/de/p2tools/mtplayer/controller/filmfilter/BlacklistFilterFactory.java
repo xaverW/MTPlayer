@@ -156,21 +156,6 @@ public class BlacklistFilterFactory {
         }
 
         filmData.setLowerCase();
-//        if (ProgConfig.SYSTEM_BLACKLIST_IS_WHITELIST.getValue()) {
-//            for (final BlackData blackData : ProgData.getInstance().blackList) {
-//                if (checkFilmIsBlocked(blackData, filmData)) {
-//                    //dann hat dieser Filter getroffen -> anzeigen
-//                    if (incCounter) {
-//                        blackData.incCountHits();
-//                    }
-//                    filmData.clearLowerCase();
-//                    return false;
-//                }
-//            }
-//            //dann hat kein Filter getroffen -> nicht anzeigen
-//            return true;
-//
-//        } else {
         for (final BlackData blackData : ProgData.getInstance().blackList) {
             if (checkFilmIsBlocked(blackData, filmData)) {
                 //dann hat dieser Filter getroffen -> nicht anzeigen
@@ -181,7 +166,6 @@ public class BlacklistFilterFactory {
                 return true;
             }
         }
-//        }
 
         filmData.clearLowerCase();
         return false;
@@ -203,6 +187,23 @@ public class BlacklistFilterFactory {
         return false;
     }
 
+    public static boolean checkFilmIsBlockedAndCountHits(FilmData filmData, BlackList list) {
+        //wird nur nach dem Neuladen einer neuen Filmliste aus dem Web gemacht (FilmBlackList): nach Treffer abbrechen
+        //oder zum Zählen der Treffer gemacht: nach Treffer nicht abbrechen, alle Treffer zählen
+        //--> gibt (braucht) da keine WhiteList!!
+        //CLEAR-COUNTER wird da vorher schon gemacht
+        boolean ret = false;
+        filmData.setLowerCase();
+        for (final BlackData blackData : list) {
+            if (checkFilmIsBlocked(blackData, filmData)) {
+                blackData.incCountHits();
+                ret = true;
+            }
+        }
+        filmData.clearLowerCase();
+        return ret;
+    }
+
     public static boolean checkFilmListOnLoadAndCountHits(FilmData filmData, BlackList list) {
         //wird nur nach dem Neuladen einer neuen Filmliste aus dem Web gemacht (FilmBlackList): nach Treffer abbrechen
         //CLEAR-COUNTER wird da vorher schon gemacht
@@ -216,50 +217,6 @@ public class BlacklistFilterFactory {
         }
         filmData.clearLowerCase();
         return false;
-    }
-
-    public static boolean checkFilmIsBlockedAndCountHits(FilmData filmData, BlackList list) {
-        //wird nur nach dem Neuladen einer neuen Filmliste aus dem Web gemacht (FilmBlackList): nach Treffer abbrechen
-        //oder zum Zählen der Treffer gemacht: nach Treffer nicht abbrechen, alle Treffer zählen
-        //--> gibt (braucht) da keine WhiteList!!
-        //CLEAR-COUNTER wird da vorher schon gemacht
-        boolean ret = false;
-        filmData.setLowerCase();
-        for (final BlackData blackData : list) {
-            if (checkFilmIsBlocked(blackData, filmData)) {
-                blackData.incCountHits();
-                ret = true;
-//                if (abort) {
-//                    filmData.clearLowerCase();
-//                    return true;
-//                }
-            }
-        }
-        filmData.clearLowerCase();
-        return ret;
-    }
-
-    public static AboData findAbo(FilmData film) {
-        //liefert ein Abo zu dem Film, auch Abos die ausgeschaltet sind, Film zu klein ist, ...
-        if (film.isLive()) {
-            //Livestreams gehören nicht in ein Abo
-            return null;
-        }
-
-        film.setLowerCase();
-        final AboData aboData = ProgData.getInstance().aboList.stream()
-                .filter(abo -> FilmFilterCheck.checkFilterMatch(
-                        abo.fChannel,
-                        abo.fTheme,
-                        abo.fThemeTitle,
-                        abo.fTitle,
-                        abo.fSomewhere,
-                        film))
-                .findFirst()
-                .orElse(null);
-
-        film.clearLowerCase();
-        return aboData;
     }
 
     private static boolean checkFilmIsBlocked(BlackData blackData, FilmData filmData) {
@@ -322,6 +279,29 @@ public class BlacklistFilterFactory {
         } else {
             return false;
         }
+    }
+
+    public static AboData findAbo(FilmData film) {
+        //liefert ein Abo zu dem Film, auch Abos die ausgeschaltet sind, Film zu klein ist, ...
+        if (film.isLive()) {
+            //Livestreams gehören nicht in ein Abo
+            return null;
+        }
+
+        film.setLowerCase();
+        final AboData aboData = ProgData.getInstance().aboList.stream()
+                .filter(abo -> FilmFilterCheck.checkFilterMatch(
+                        abo.fChannel,
+                        abo.fTheme,
+                        abo.fThemeTitle,
+                        abo.fTitle,
+                        abo.fSomewhere,
+                        film))
+                .findFirst()
+                .orElse(null);
+
+        film.clearLowerCase();
+        return aboData;
     }
 
     /**

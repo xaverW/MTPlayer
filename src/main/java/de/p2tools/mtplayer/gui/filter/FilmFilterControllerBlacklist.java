@@ -49,21 +49,9 @@ public class FilmFilterControllerBlacklist extends HBox {
                 "Blacklist ein: Von der Blacklist erfasste Filme werden nicht angezeigt.\n" +
                 "Blacklist invers: Nur von der Blacklist erfasste Filme werden angezeigt."));
 
+        setTglBlacklist();
         progData.actFilmFilterWorker.getActFilterSettings().blacklistOnOffProperty().addListener((u, o, n) -> {
-            switch (progData.actFilmFilterWorker.getActFilterSettings().blacklistOnOffProperty().getValue()) {
-                case BlacklistFilterFactory.BLACKLILST_FILTER_OFF:
-                    tglBlacklist.setIndeterminate(false);
-                    tglBlacklist.setSelected(false);
-                    break;
-                case BlacklistFilterFactory.BLACKLILST_FILTER_ON:
-                    tglBlacklist.setIndeterminate(false);
-                    tglBlacklist.setSelected(true);
-                    break;
-                case BlacklistFilterFactory.BLACKLILST_FILTER_INVERS:
-                    tglBlacklist.setIndeterminate(true);
-                    tglBlacklist.setSelected(false);
-                    break;
-            }
+            setTglBlacklist();
         });
 
         tglBlacklist.getCheckBox().setOnAction((mouseEvent) -> {
@@ -80,5 +68,22 @@ public class FilmFilterControllerBlacklist extends HBox {
         setAlignment(Pos.CENTER_RIGHT);
         HBox.setHgrow(tglBlacklist, Priority.ALWAYS);
         getChildren().addAll(tglBlacklist, lblRight, btnBlack);
+    }
+
+    private void setTglBlacklist() {
+        switch (progData.actFilmFilterWorker.getActFilterSettings().blacklistOnOffProperty().getValue()) {
+            case BlacklistFilterFactory.BLACKLILST_FILTER_OFF:
+                tglBlacklist.setIndeterminate(false);
+                tglBlacklist.setSelected(false);
+                break;
+            case BlacklistFilterFactory.BLACKLILST_FILTER_ON:
+                tglBlacklist.setIndeterminate(false);
+                tglBlacklist.setSelected(true);
+                break;
+            case BlacklistFilterFactory.BLACKLILST_FILTER_INVERS:
+                tglBlacklist.setIndeterminate(true);
+                tglBlacklist.setSelected(false);
+                break;
+        }
     }
 }

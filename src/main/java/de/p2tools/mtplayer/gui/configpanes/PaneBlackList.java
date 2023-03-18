@@ -35,9 +35,6 @@ import de.p2tools.p2lib.guitools.PTableFactory;
 import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.ListenerFilmlistLoadEvent;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.ListenerLoadFilmlist;
-import javafx.application.Platform;
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -106,6 +103,7 @@ public class PaneBlackList {
 
         initTable();
         addButton(vBox);
+        addMoveButton(vBox);
         vBox.getChildren().add(PGuiTools.getVDistance(10));
         addConfigs(vBox);
         if (!controlBlackList) {
@@ -249,8 +247,7 @@ public class PaneBlackList {
 
         tableView.getColumns().addAll(nrColumn, channelColumn, themeColumn, themeExactColumn,
                 titleColumn, themeTitleColumn, hitsColumn);
-        tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
-                Platform.runLater(this::setActBlackData));
+        tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> setActBlackData());
 
         SortedList<BlackData> sortedList;
         sortedList = new SortedList<>(list);
@@ -283,7 +280,7 @@ public class PaneBlackList {
             tableView.scrollTo(blackData);
         });
 
-        final Button btnHelpCount = PButton.helpButton(stage, "_Treffer zählen",
+        final Button btnHelpCount = PButton.helpButton(stage, "Treffer zählen",
                 HelpText.BLACKLIST_COUNT);
 
         Button btnCountHits = new Button("_Treffer zählen");
@@ -307,11 +304,6 @@ public class PaneBlackList {
             list.cleanTheList();
         });
 
-        Button btnAddBlacklist = new Button("_Blacklist einfügen");
-        btnAddBlacklist.setTooltip(new Tooltip("Die Einträge der Blacklist werden in die Liste kopiert"));
-        btnAddBlacklist.setOnAction(event -> {
-            progData.blackList.stream().forEach(bl -> list.add(bl.getCopy()));
-        });
         Button btnClear = new Button("_Alle löschen");
         btnClear.setTooltip(new Tooltip("Alle Einträge in der Liste werden gelöscht"));
         btnClear.setOnAction(event -> {
@@ -339,15 +331,7 @@ public class PaneBlackList {
         HBox hBoxButton = new HBox(P2LibConst.DIST_BUTTON);
         hBoxButton.getChildren().addAll(btnNew, btnDel, btnClear);
 
-        if (controlBlackList) {
-            hBoxButton.getChildren().addAll(PGuiTools.getHBoxGrower(), btnCountHits, btnAddStandards, btnCleanList);
-        } else {
-            hBoxButton.getChildren().addAll(PGuiTools.getHBoxGrower(), btnCountHits, btnAddStandards, btnCleanList, btnAddBlacklist);
-
-            BooleanBinding binding = Bindings.equal(ProgConfig.SYSTEM_FILMLIST_FILTER, BlacklistFilterFactory.BLACKLILST_FILTER_OFF);
-            tableView.disableProperty().bind(binding);
-            hBoxButton.disableProperty().bind(binding);
-        }
+        hBoxButton.getChildren().addAll(PGuiTools.getHBoxGrower(), btnCountHits, btnAddStandards, btnCleanList);
         hBoxButton.getChildren().addAll(btnHelpCount);
 
         VBox.setVgrow(tableView, Priority.ALWAYS);
@@ -355,6 +339,64 @@ public class PaneBlackList {
         vb.getChildren().addAll(tableView, hBoxButton/*, hBoxCount*/);
         vBox.getChildren().add(vb);
     }
+
+    private void addMoveButton(VBox vBox) {
+        final Button btnHelpCount = PButton.helpButton(stage, "Filter kopieren oder verschieben",
+                HelpText.BLACKLIST_MOVE);
+
+        Button btnCopy = new Button(controlBlackList ? "_Kopieren nach \"Filmliste laden\"" : "_Kopieren nach \"Blacklist\"");
+        btnCopy.setTooltip(new Tooltip("Damit werden die markierten Filter in den " +
+                "anderen Filter (Filmfilter/Blacklist) kopiert"));
+        btnCopy.setOnAction(a -> {
+            final ObservableList<BlackData> selected = tableView.getSelectionModel().getSelectedItems();
+            if (selected == null || selected.isEmpty()) {
+                PAlert.showInfoNoSelection();
+
+            } else {
+                for (BlackData bl : selected) {
+                    BlackData cpy = bl.getCopy();
+                    if (controlBlackList) {
+                        //dann in den FilmListFilter einfügen
+                        progData.filmListFilter.addAll(cpy);
+                    } else {
+                        //dann in die Blacklist einfügen
+                        blackChanged.set(true);
+                        progData.blackList.addAll(cpy);
+                    }
+                }
+            }
+        });
+
+        Button btnMove = new Button(controlBlackList ? "_Verschieben zu \"Filmliste laden\"" : "_Verschieben zu \"Blacklist\"");
+        btnMove.setTooltip(new Tooltip("Damit werden die markierten Filter in den " +
+                "anderen Filter (Filmfilter/Blacklist) verschoben"));
+        btnMove.setOnAction(a -> {
+            final ObservableList<BlackData> selected = tableView.getSelectionModel().getSelectedItems();
+            if (selected == null || selected.isEmpty()) {
+                PAlert.showInfoNoSelection();
+            } else {
+                blackChanged.set(true);
+                if (controlBlackList) {
+                    //dann in den FilmListFilter verschieben
+                    progData.filmListFilter.addAll(selected);
+                } else {
+                    //dann in die Blacklist verschieben
+                    progData.blackList.addAll(selected);
+                }
+                list.removeAll(selected);
+                tableView.getSelectionModel().clearSelection();
+            }
+        });
+
+        HBox hBoxButton = new HBox(P2LibConst.DIST_BUTTON);
+        hBoxButton.getChildren().addAll(PGuiTools.getHBoxGrower(), btnCopy, btnMove, btnHelpCount);
+
+        VBox.setVgrow(tableView, Priority.ALWAYS);
+        VBox vb = new VBox(P2LibConst.DIST_BUTTON);
+        vb.getChildren().addAll(hBoxButton);
+        vBox.getChildren().add(vb);
+    }
+
 
     private void addConfigs(VBox vBox) {
         gridPane.getStyleClass().add("extra-pane");
@@ -381,10 +423,7 @@ public class PaneBlackList {
                 PColumnConstraints.getCcComputedSizeAndHgrow(),
                 PColumnConstraints.getCcPrefSize());
         gridPane.setDisable(true);
-        if (!controlBlackList) {
-            BooleanBinding binding = Bindings.equal(ProgConfig.SYSTEM_FILMLIST_FILTER, BlacklistFilterFactory.BLACKLILST_FILTER_OFF);
-            gridPane.disableProperty().bind(binding);
-        }
+        gridPane.disableProperty().bind(tableView.getSelectionModel().selectedItemProperty().isNull());
 
         mbChannel.textProperty().addListener((observable, oldValue, newValue) -> setBlackChanged());
         txtTheme.textProperty().addListener((observable, oldValue, newValue) -> setBlackChanged());
@@ -439,9 +478,6 @@ public class PaneBlackList {
         }
 
         blackData = blackDataAct;
-        if (controlBlackList) {
-            gridPane.setDisable(blackData == null);
-        }
         if (blackData != null) {
             initSenderMenu();
             mbChannel.textProperty().bindBidirectional(blackData.channelProperty());

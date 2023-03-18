@@ -474,6 +474,10 @@ public class HelpText {
                     "\"Putzen\" entfernt doppelte und leere Blacklist-Einträge. Das wird auch automatisch " +
                     "beim Programmstart gemacht.";
 
+    public static final String BLACKLIST_MOVE =
+            "Beim \"Kopieren\" oder \"Verschieben\" werden die markierten Filter in den anderen Filmfilter " +
+                    "\"Filme laden\" oder \"Blacklist\" kopiert oder verschoben.";
+
     public static final String BLACKLIST_FUTURE =
             "Filme mit Datum in der Zukunft sind meist nur Trailer." +
                     "\n";
