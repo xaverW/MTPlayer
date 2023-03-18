@@ -68,7 +68,7 @@ public class PaneBlackList {
     private final TextField txtFilterTitel = new TextField();
     private final TextField txtFilterThemaTitel = new TextField();
     private final PToggleSwitch tglFilterExact = new PToggleSwitch("Thema exakt");
-    final PButtonClearFilter btnClearFilter = new PButtonClearFilter();
+    final Button btnClearFilter = PButtonClearFilterFactory.getPButtonClear();
     private BlackData blackData = null;
 
     private final RadioButton rbBlack = new RadioButton();
@@ -468,7 +468,6 @@ public class PaneBlackList {
         tglFilterExact.selectedProperty().addListener((u, o, n) -> addPredicate());
         tglFilterExact.indeterminateProperty().addListener((u, o, n) -> addPredicate());
 
-        btnClearFilter.setGraphic(de.p2tools.p2lib.ProgIcons.Icons.ICON_BUTTON_CLEAR_FILTER_SMALL.getImageView());
         btnClearFilter.setOnAction(a -> {
             txtFilterChannel.clear();
             txtFilterThema.clear();

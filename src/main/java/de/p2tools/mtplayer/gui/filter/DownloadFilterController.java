@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.tools.MLBandwidthTokenBucket;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.guitools.PButton;
-import de.p2tools.p2lib.guitools.PButtonClearFilter;
+import de.p2tools.p2lib.guitools.PButtonClearFilterFactory;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Insets;
@@ -43,7 +43,7 @@ public class DownloadFilterController extends FilterController {
 
     private Spinner<Integer> spinnerAnz = new Spinner<>();
     private Slider sliderBandwidth = new Slider();
-    private PButtonClearFilter btnClear = new PButtonClearFilter();
+    private Button btnClear = PButtonClearFilterFactory.getPButtonClearFilter();
     private Label lblBandwidth = new Label();
 
     // funktioniert nur wenn hier angelegt, geht sonst die Ref verloren!
