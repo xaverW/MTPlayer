@@ -24,7 +24,6 @@ public class BlackData extends BlackDataProps {
     public Filter fTheme = new Filter();
     public Filter fThemeTitle = new Filter();
     public Filter fTitle = new Filter();
-    public Filter fSomewhere = new Filter();
     public boolean quickChannel = false;
     public boolean quickTheme = false;
     public boolean quickThemTitle = false;
@@ -71,7 +70,6 @@ public class BlackData extends BlackDataProps {
         if (fTheme.isEmpty &&
                 fThemeTitle.isEmpty &&
                 fTitle.isEmpty &&
-                fSomewhere.isEmpty &&
                 fChannel.isQuick &&
                 !fChannel.exclude) {
             quickChannel = true;
@@ -85,7 +83,6 @@ public class BlackData extends BlackDataProps {
         if (fChannel.isEmpty &&
                 fThemeTitle.isEmpty &&
                 fTitle.isEmpty &&
-                fSomewhere.isEmpty &&
                 fTheme.isQuick &&
                 !fTheme.exclude) {
             quickTheme = true;
@@ -99,7 +96,6 @@ public class BlackData extends BlackDataProps {
         if (fChannel.isEmpty &&
                 fTheme.isEmpty &&
                 fTitle.isEmpty &&
-                fSomewhere.isEmpty &&
                 fThemeTitle.isQuick &&
                 !fThemeTitle.exclude) {
             quickThemTitle = true;
@@ -113,7 +109,6 @@ public class BlackData extends BlackDataProps {
         if (fChannel.isEmpty &&
                 fTheme.isEmpty &&
                 fThemeTitle.isEmpty &&
-                fSomewhere.isEmpty &&
                 fTitle.isQuick &&
                 !fTitle.exclude) {
             quickTitle = true;

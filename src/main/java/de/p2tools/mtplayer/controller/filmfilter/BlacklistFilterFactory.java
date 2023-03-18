@@ -271,7 +271,6 @@ public class BlacklistFilterFactory {
                 blackData.fTheme,
                 blackData.fThemeTitle,
                 blackData.fTitle,
-                blackData.fSomewhere,
                 filmData);
 
         if (ret) {

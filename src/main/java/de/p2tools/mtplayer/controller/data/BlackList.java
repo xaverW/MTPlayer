@@ -19,12 +19,16 @@ package de.p2tools.mtplayer.controller.data;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
 import de.p2tools.p2lib.configfile.pdata.PDataList;
+import de.p2tools.p2lib.tools.duration.PDuration;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.function.Predicate;
 
 @SuppressWarnings("serial")
 public class BlackList extends SimpleListProperty<BlackData> implements PDataList<BlackData> {
@@ -33,10 +37,35 @@ public class BlackList extends SimpleListProperty<BlackData> implements PDataLis
     private int no = 1;
     private final ProgData progData;
 
+    private FilteredList<BlackData> filteredList = null;
+    private SortedList<BlackData> sortedList = null;
+
     public BlackList(ProgData progData, String tag) {
         super(FXCollections.observableArrayList());
         this.progData = progData;
         this.TAG = tag;
+    }
+
+    public SortedList<BlackData> getSortedList() {
+        if (sortedList == null || filteredList == null) {
+            filteredList = new FilteredList<BlackData>(this, p -> true);
+            sortedList = new SortedList<>(filteredList);
+        }
+        return sortedList;
+    }
+
+    public FilteredList<BlackData> getFilteredList() {
+        if (sortedList == null || filteredList == null) {
+            filteredList = new FilteredList<BlackData>(this, p -> true);
+            sortedList = new SortedList<>(filteredList);
+        }
+        return filteredList;
+    }
+
+    public synchronized void filteredListSetPred(Predicate<BlackData> predicate) {
+        PDuration.counterStart("filteredListSetPred");
+        getFilteredList().setPredicate(predicate);
+        PDuration.counterStop("filteredListSetPred");
     }
 
     @Override
