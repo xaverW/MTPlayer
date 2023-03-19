@@ -232,7 +232,7 @@ public class AboDialogController extends PDialogExtra {
                             "\n\n" +
                             (abo.getChannel().isEmpty() ? "" : "Sender: " + abo.getChannel() + "\n") +
                             (abo.getTheme().isEmpty() ? "" : "Thema: " + abo.getTheme() + "\n") +
-                            (abo.getThemeTitle().isEmpty() ? "" : "Thema/Titel: " + abo.getThemeTitle() + "\n") +
+                            (abo.getThemeTitle().isEmpty() ? "" : "Thema-Titel: " + abo.getThemeTitle() + "\n") +
                             (abo.getTitle().isEmpty() ? "" : "Titel: " + abo.getTitle() + "\n") +
                             (abo.getSomewhere().isEmpty() ? "" : "Irgendwo: " + abo.getSomewhere()) +
                             "\n\n" +

@@ -220,11 +220,9 @@ public class PaneBlackList {
         HBox.setHgrow(vb, Priority.ALWAYS);
 
         vb = new VBox(2);
-        vb.getChildren().addAll(new Label("Thema"), txtFilterThema);
-        vbAll.getChildren().add(vb);
+        vb.getChildren().addAll(new Label("Thema"), txtFilterThema, PGuiTools.getVDistance(2), tglFilterExact);
+        vbAll.getChildren().addAll(vb, PGuiTools.getVDistance(1));
         HBox.setHgrow(vb, Priority.ALWAYS);
-
-        vbAll.getChildren().add(tglFilterExact);
 
         vb = new VBox(2);
         vb.getChildren().addAll(new Label("Titel"), txtFilterTitel);
@@ -232,7 +230,7 @@ public class PaneBlackList {
         HBox.setHgrow(vb, Priority.ALWAYS);
 
         vb = new VBox(2);
-        vb.getChildren().addAll(new Label("Thema/Titel"), txtFilterThemaTitel);
+        vb.getChildren().addAll(new Label("Thema-Titel"), txtFilterThemaTitel);
         vbAll.getChildren().add(vb);
         HBox.setHgrow(vb, Priority.ALWAYS);
 
@@ -256,7 +254,7 @@ public class PaneBlackList {
                 PAlert.showInfoNoSelection();
             } else {
                 blackDataChanged.set(true);
-                sortedList.removeAll(selected);
+                list.removeAll(selected);
                 tableView.getSelectionModel().clearSelection();
             }
         });
@@ -427,7 +425,7 @@ public class PaneBlackList {
         gridPane.add(new Label("Titel:"), 0, ++row);
         gridPane.add(txtTitle, 1, row);
 
-        gridPane.add(new Label("Thema/Titel:"), 0, ++row);
+        gridPane.add(new Label("Thema-Titel:"), 0, ++row);
         gridPane.add(txtThemeTitle, 1, row);
 
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),

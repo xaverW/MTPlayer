@@ -167,7 +167,7 @@ public class AddBlacklistDialogController extends PDialogExtra {
         gridPane.add(btnClearTheme, 3, row);
         gridPane.add(tgTheme, 1, ++row);
 
-        gridPane.add(new Label("Thema/Titel:"), 0, ++row);
+        gridPane.add(new Label("Thema-Titel:"), 0, ++row);
         gridPane.add(txtThemeTitle, 1, row);
         gridPane.add(btnClearThemeTitel, 3, row);
 

@@ -223,7 +223,7 @@ public class HelpText {
                     "\"Exakt\" ausgeschaltet: 'Dokumentation' erfasst u.a. 'Dokumentationen und Reportagen', " +
                     "'Reportage & Dokumentation', 'Geschichtsdokumentationen'.\n" +
                     "\n" +
-                    "[Thema/Titel] durchsucht in der Filmliste THEMA und TITEL.\n" +
+                    "[Thema-Titel] durchsucht in der Filmliste THEMA und TITEL.\n" +
                     "Bei einer Suche nach mehreren Suchbegriffen müssen hier alle Suchbegriffe im selben Bereich " +
                     "vorkommen. Ein Film mit 'Sport' in THEMA und 'Fussball' in TITEL wird von " +
                     "'Sport:Fussball' nicht erfasst." +
@@ -248,7 +248,7 @@ public class HelpText {
                     "\"Exakt\" ausgeschaltet: 'Dokumentation' erfasst u.a. 'Dokumentationen und Reportagen', " +
                     "'Reportage & Dokumentation', 'Geschichtsdokumentationen'.\n" +
                     "\n" +
-                    "[Thema/Titel] durchsucht in der Filmliste THEMA und TITEL.\n" +
+                    "[Thema-Titel] durchsucht in der Filmliste THEMA und TITEL.\n" +
                     "Bei einer Suche nach mehreren Suchbegriffen müssen hier alle Suchbegriffe im selben Bereich " +
                     "vorkommen. Ein Film mit 'Sport' in THEMA und 'Fussball' in TITEL wird von " +
                     "'Sport:Fussball' nicht erfasst." +

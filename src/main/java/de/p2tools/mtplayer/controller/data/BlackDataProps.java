@@ -30,11 +30,11 @@ import java.util.ArrayList;
 
 public class BlackDataProps extends PDataSample<BlackDataProps> {
 
-    public static final String BLACKLIST_SENDER = "Sender";
-    public static final String BLACKLIST_THEME = "Thema";
-    public static final String BLACKLIST_THEME_EXACT = "Thema exakt";
-    public static final String BLACKLIST_TITLE = "Titel";
-    public static final String BLACKLIST_THEME_TITLE = "Thema/Titel";
+//    public static final String BLACKLIST_SENDER = "Sender";
+//    public static final String BLACKLIST_THEME = "Thema";
+//    public static final String BLACKLIST_THEME_EXACT = "Thema exakt";
+//    public static final String BLACKLIST_TITLE = "Titel";
+//    public static final String BLACKLIST_THEME_TITLE = "Thema/Titel";
 
     public static final String TAG = "BlackData";
 //    public static final String[] XML_NAMES = {
@@ -60,11 +60,11 @@ public class BlackDataProps extends PDataSample<BlackDataProps> {
     @Override
     public Config[] getConfigsArr() {
         ArrayList<Config> list = new ArrayList<>();
-        list.add(new Config_stringProp("channel", BLACKLIST_SENDER, channel));
-        list.add(new Config_stringProp("theme", BLACKLIST_THEME, theme));
-        list.add(new Config_boolProp("themeExact", BLACKLIST_THEME_EXACT, themeExact));
-        list.add(new Config_stringProp("title", BLACKLIST_TITLE, title));
-        list.add(new Config_stringProp("themeTitle" + PData.TAGGER + "bithemeTitletrate", BLACKLIST_THEME_TITLE, themeTitle));
+        list.add(new Config_stringProp("channel", channel));
+        list.add(new Config_stringProp("theme", theme));
+        list.add(new Config_boolProp("themeExact", themeExact));
+        list.add(new Config_stringProp("title", title));
+        list.add(new Config_stringProp("themeTitle" + PData.TAGGER + "bithemeTitletrate", themeTitle));
         return list.toArray(new Config[]{});
     }
 
