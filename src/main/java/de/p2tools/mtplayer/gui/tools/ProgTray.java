@@ -160,7 +160,12 @@ public class ProgTray {
         java.awt.MenuItem miQuit = new java.awt.MenuItem("Programm Beenden");
 
         miMaxMin.addActionListener(e -> Platform.runLater(() -> maxMin()));
+
         miConfig.addActionListener(e -> Platform.runLater(() -> new ConfigDialogController(ProgData.getInstance()).showDialog()));
+        miConfig.setEnabled(!ConfigDialogController.dialogIsRunning.getValue());
+        ConfigDialogController.dialogIsRunning.addListener((o, u, n) ->
+                miConfig.setEnabled(!ConfigDialogController.dialogIsRunning.getValue()));
+
         miLogfile.addActionListener(e -> Platform.runLater(() -> PLogger.openLogFile()));
         miTray.addActionListener(e -> Platform.runLater(() -> {
             //vor dem Ausschalten des Tray GUI anzeigen!!

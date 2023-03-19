@@ -48,33 +48,36 @@ public class ConfigDialogController extends PDialogExtra {
     private BooleanProperty blackChanged = new SimpleBooleanProperty(false);
     private BooleanProperty diacriticChanged = new SimpleBooleanProperty(false);
 
-    IntegerProperty propSelectedTab = ProgConfig.SYSTEM_CONFIG_DIALOG_TAB;
-    private final ProgData progData;
+    private ControllerConfig controllerConfig;
+    private ControllerFilm controllerFilm;
+    private ControllerBlack controllerBlack;
+    private ControllerDownload controllerDownload;
+    private ControllerSet controllerSet;
 
-    ControllerConfig controllerConfig;
-    ControllerFilm controllerFilm;
-    ControllerBlack controllerBlack;
-    ControllerDownload controllerDownload;
-    ControllerSet controllerSet;
+    private IntegerProperty propSelectedTab = ProgConfig.SYSTEM_CONFIG_DIALOG_TAB;
     private ListenerLoadFilmlist listener;
-    private boolean blackDialog = false;
+    private final ProgData progData;
+    private boolean blackListDialog = false;
+    public static BooleanProperty dialogIsRunning = new SimpleBooleanProperty(false);
 
     public ConfigDialogController(ProgData progData) {
         super(progData.primaryStage, ProgConfig.CONFIG_DIALOG_SIZE, "Einstellungen",
                 true, false, DECO.NO_BORDER, true);
         this.progData = progData;
+        dialogIsRunning.setValue(true);
         btnApply.setVisible(false);
 
         init(false);
     }
 
-    public ConfigDialogController(ProgData progData, boolean blackDialog) {
+    public ConfigDialogController(ProgData progData, boolean blackListDialog) {
         super(progData.primaryStage, ProgConfig.BLACK_DIALOG_SIZE,
                 "Blacklist bearbeiten", false, false, DECO.NO_BORDER, true);
 
         this.progData = progData;
-        this.blackDialog = blackDialog;
-        if (blackDialog) {
+        this.blackListDialog = blackListDialog;
+        dialogIsRunning.setValue(true);
+        if (blackListDialog) {
             propSelectedTab = ProgConfig.SYSTEM_CONFIG_DIALOG_BLACKLIST_TAB;
         } else {
             btnApply.setVisible(false);
@@ -171,6 +174,7 @@ public class ConfigDialogController extends PDialogExtra {
 
         Listener.notify(Listener.EVEMT_SETDATA_CHANGED, ConfigDialogController.class.getSimpleName());
         LoadFilmFactory.getInstance().loadFilmlist.removeListenerLoadFilmlist(listener);
+        dialogIsRunning.setValue(false);
         super.close();
     }
 
@@ -190,7 +194,7 @@ public class ConfigDialogController extends PDialogExtra {
             tab = new Tab("Allgemein");
             tab.setClosable(false);
             tab.setContent(controllerConfig);
-            if (!blackDialog) {
+            if (!blackListDialog) {
                 tabPane.getTabs().add(tab);
             }
 
@@ -210,14 +214,14 @@ public class ConfigDialogController extends PDialogExtra {
             tab = new Tab("Download");
             tab.setClosable(false);
             tab.setContent(controllerDownload);
-            if (!blackDialog) {
+            if (!blackListDialog) {
                 tabPane.getTabs().add(tab);
             }
             controllerSet = new ControllerSet(this.getStage());
             tab = new Tab("Aufzeichnen/Abspielen");
             tab.setClosable(false);
             tab.setContent(controllerSet);
-            if (!blackDialog) {
+            if (!blackListDialog) {
                 tabPane.getTabs().add(tab);
             }
 

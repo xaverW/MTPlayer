@@ -48,6 +48,7 @@ public class MTPlayerMenu extends MenuButton {
         // Menü
         final MenuItem miConfig = new MenuItem("Einstellungen des Programms");
         miConfig.setOnAction(e -> new ConfigDialogController(ProgData.getInstance()).showDialog());
+        miConfig.disableProperty().bind(ConfigDialogController.dialogIsRunning);
 
         final MenuItem miMediaCollectionConfig = new MenuItem("Einstellungen der Mediensammlung");
         miMediaCollectionConfig.setOnAction(e -> new MediaConfigDialogController());
