@@ -25,6 +25,7 @@ import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.controller.filmfilter.BlacklistFactory;
 import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
+import de.p2tools.mtplayer.gui.filter.PMenuButton;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
@@ -35,6 +36,8 @@ import de.p2tools.p2lib.mtfilm.loadfilmlist.ListenerLoadFilmlist;
 import de.p2tools.p2lib.mtfilter.Filter;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
@@ -48,53 +51,55 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.function.Predicate;
 
 public class PaneBlackList {
 
     private final TableView<BlackData> tableView = new TableView<>();
+    private final RadioButton rbBlack = new RadioButton();
+    private final RadioButton rbWhite = new RadioButton();
+    private final RadioButton rbOff = new RadioButton();
     private final GridPane gridPane = new GridPane();
+    private final Button btnClearFilter = PButtonClearFilterFactory.getPButtonClear();
+
+    private final PMenuButton mbChannel;
+    private final StringProperty mbChannelProp = new SimpleStringProperty();
     private final PToggleSwitch tgThemeExact = new PToggleSwitch("exakt:");
     private final TextField txtTheme = new TextField();
     private final TextField txtTitle = new TextField();
     private final TextField txtThemeTitle = new TextField();
 
-    private final TextField txtFilterChannel = new TextField();
+    private final PMenuButton mbFilterChannel;
+    private final StringProperty mbFilterChannelProp = new SimpleStringProperty();
     private final TextField txtFilterThema = new TextField();
     private final TextField txtFilterTitel = new TextField();
     private final TextField txtFilterThemaTitel = new TextField();
     private final PToggleSwitch tglFilterExact = new PToggleSwitch("Thema exakt");
-    final Button btnClearFilter = PButtonClearFilterFactory.getPButtonClear();
-    private BlackData blackData = null;
 
-    private final RadioButton rbBlack = new RadioButton();
-    private final RadioButton rbWhite = new RadioButton();
-    private final RadioButton rbOff = new RadioButton();
-
-    private final MenuButton mbChannel = new MenuButton("");
-    private final ArrayList<CheckMenuItem> checkMenuItemsList = new ArrayList<>();
-    private ListenerLoadFilmlist listener;
-
-    private final BooleanProperty blackChanged;
-    private boolean blackChange = false;
-    private Stage stage;
-    private final ProgData progData;
-    private final boolean controlBlackList;
-    private final SortedList<BlackData> sortedList;
     private final BlackList list;
+    private final SortedList<BlackData> sortedList;
+    private BlackData blackData = null;
+    private final BooleanProperty blackDataChanged;
+    private boolean selectedBlackDataChanged = false;
+    private final boolean controlBlackListNotFilmFilter;
+    private ListenerLoadFilmlist listenerLoadFilmlist;
 
-    public PaneBlackList(Stage stage, ProgData progData, boolean controlBlackList, BooleanProperty blackChanged) {
+    private final Stage stage;
+    private final ProgData progData;
+
+    public PaneBlackList(Stage stage, ProgData progData, boolean controlBlackListNotFilmFilter, BooleanProperty blackDataChanged) {
         this.stage = stage;
         this.progData = progData;
-        this.controlBlackList = controlBlackList;
-        this.blackChanged = blackChanged;
+        this.controlBlackListNotFilmFilter = controlBlackListNotFilmFilter;
+        this.blackDataChanged = blackDataChanged;
+        mbFilterChannel = new PMenuButton(mbFilterChannelProp,
+                ProgData.getInstance().worker.getAllChannelList());
 
+        mbChannel = new PMenuButton(mbChannelProp,
+                ProgData.getInstance().worker.getAllChannelList());
 
-        if (controlBlackList) {
+        if (controlBlackListNotFilmFilter) {
             sortedList = progData.blackList.getSortedList();
             list = progData.blackList;
         } else {
@@ -104,7 +109,7 @@ public class PaneBlackList {
     }
 
     public void close() {
-        LoadFilmFactory.getInstance().loadFilmlist.removeListenerLoadFilmlist(listener);
+        LoadFilmFactory.getInstance().loadFilmlist.removeListenerLoadFilmlist(listenerLoadFilmlist);
     }
 
     public void make(Collection<TitledPane> result) {
@@ -112,7 +117,6 @@ public class PaneBlackList {
         vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
 
         makeConfigBlackList(vBox);
-
         initTable(vBox);
         addFilterGrid(vBox);
         addButton(vBox);
@@ -120,11 +124,11 @@ public class PaneBlackList {
         makeFilter();
         vBox.getChildren().add(PGuiTools.getVDistance(10));
         addConfigs(vBox);
-        if (!controlBlackList) {
+        if (!controlBlackListNotFilmFilter) {
             addLoadButton(vBox);
         }
 
-        TitledPane tpBlack = new TitledPane(controlBlackList ? "Blacklist" : "Filme ausschließen", vBox);
+        TitledPane tpBlack = new TitledPane(controlBlackListNotFilmFilter ? "Blacklist" : "Filme ausschließen", vBox);
         result.add(tpBlack);
         tpBlack.setMaxHeight(Double.MAX_VALUE);
     }
@@ -135,12 +139,11 @@ public class PaneBlackList {
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         vBox.getChildren().add(gridPane);
 
-        final ToggleGroup group = new ToggleGroup();
-        rbBlack.setToggleGroup(group);
-        rbWhite.setToggleGroup(group);
-        rbOff.setToggleGroup(group);
-
-        group.selectedToggleProperty().addListener((u, o, n) -> setBlackProp());
+        final ToggleGroup toggleGroup = new ToggleGroup();
+        rbBlack.setToggleGroup(toggleGroup);
+        rbWhite.setToggleGroup(toggleGroup);
+        rbOff.setToggleGroup(toggleGroup);
+        toggleGroup.selectedToggleProperty().addListener((u, o, n) -> setBlackProp());
 
         setRb();
         progData.actFilmFilterWorker.getActFilterSettings().blacklistOnOffProperty().addListener((u, o, n) -> {
@@ -162,71 +165,6 @@ public class PaneBlackList {
 
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcComputedSizeAndHgrow());
-    }
-
-    private void setRb() {
-        if (controlBlackList) {
-            //dann wird die BlackList gesteuert
-            switch (progData.actFilmFilterWorker.getActFilterSettings().getBlacklistOnOff()) {
-                case BlacklistFilterFactory.BLACKLILST_FILTER_OFF:
-                    //OFF
-                    rbOff.setSelected(true);
-                    break;
-                case BlacklistFilterFactory.BLACKLILST_FILTER_ON:
-                    //BLACK
-                    rbBlack.setSelected(true);
-                    break;
-                case BlacklistFilterFactory.BLACKLILST_FILTER_INVERS:
-                    //WHITE, also invers
-                    rbWhite.setSelected(true);
-                    break;
-            }
-        } else {
-            //dann wird der FilmListFilter gesteuert
-            switch (ProgConfig.SYSTEM_FILMLIST_FILTER.getValue()) {
-                case BlacklistFilterFactory.BLACKLILST_FILTER_OFF:
-                    //OFF
-                    rbOff.setSelected(true);
-                    break;
-                case BlacklistFilterFactory.BLACKLILST_FILTER_ON:
-                    //BLACK
-                    rbBlack.setSelected(true);
-                    break;
-                case BlacklistFilterFactory.BLACKLILST_FILTER_INVERS:
-                    //WHITE, also invers
-                    rbWhite.setSelected(true);
-                    break;
-            }
-        }
-    }
-
-    private void setBlackProp() {
-        if (controlBlackList) {
-            //dann wird die BlackList gesteuert
-            if (rbBlack.isSelected()) {
-                //BLACK
-                progData.actFilmFilterWorker.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_ON);
-            } else if (rbWhite.isSelected()) {
-                //WHITE, also invers
-                progData.actFilmFilterWorker.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_INVERS);
-            } else {
-                //OFF
-                progData.actFilmFilterWorker.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_OFF);
-            }
-
-        } else {
-            //dann wird der FilmList Filter gesteuert
-            if (rbBlack.isSelected()) {
-                //BLACK
-                ProgConfig.SYSTEM_FILMLIST_FILTER.setValue(BlacklistFilterFactory.BLACKLILST_FILTER_ON);
-            } else if (rbWhite.isSelected()) {
-                //WHITE, also invers
-                ProgConfig.SYSTEM_FILMLIST_FILTER.setValue(BlacklistFilterFactory.BLACKLILST_FILTER_INVERS);
-            } else {
-                //OFF
-                ProgConfig.SYSTEM_FILMLIST_FILTER.setValue(BlacklistFilterFactory.BLACKLILST_FILTER_OFF);
-            }
-        }
     }
 
     private void initTable(VBox vBox) {
@@ -265,7 +203,48 @@ public class PaneBlackList {
 
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
         tableView.setItems(sortedList);
-//        vBox.getChildren().addAll(tableView);
+    }
+
+    private void addFilterGrid(VBox vBox) {
+        VBox vbAll = new VBox(P2LibConst.DIST_EDGE);
+        vbAll.setAlignment(Pos.TOP_LEFT);
+        vbAll.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        vbAll.getStyleClass().add("extra-pane");
+
+        Label label = new Label("Suchen:");
+        vbAll.getChildren().add(label);
+
+        VBox vb = new VBox(2);
+        vb.getChildren().addAll(new Label("Sender"), mbFilterChannel);
+        vbAll.getChildren().add(vb);
+        HBox.setHgrow(vb, Priority.ALWAYS);
+
+        vb = new VBox(2);
+        vb.getChildren().addAll(new Label("Thema"), txtFilterThema);
+        vbAll.getChildren().add(vb);
+        HBox.setHgrow(vb, Priority.ALWAYS);
+
+        vbAll.getChildren().add(tglFilterExact);
+
+        vb = new VBox(2);
+        vb.getChildren().addAll(new Label("Titel"), txtFilterTitel);
+        vbAll.getChildren().add(vb);
+        HBox.setHgrow(vb, Priority.ALWAYS);
+
+        vb = new VBox(2);
+        vb.getChildren().addAll(new Label("Thema/Titel"), txtFilterThemaTitel);
+        vbAll.getChildren().add(vb);
+        HBox.setHgrow(vb, Priority.ALWAYS);
+
+        HBox hBox = new HBox();
+        hBox.setAlignment(Pos.CENTER_RIGHT);
+        hBox.getChildren().add(btnClearFilter);
+        vbAll.getChildren().add(hBox);
+
+        HBox h = new HBox(P2LibConst.DIST_EDGE);
+        h.getChildren().addAll(tableView, vbAll);
+        HBox.setHgrow(tableView, Priority.ALWAYS);
+        vBox.getChildren().add(h);
     }
 
     private void addButton(VBox vBox) {
@@ -276,7 +255,7 @@ public class PaneBlackList {
             if (selected == null || selected.isEmpty()) {
                 PAlert.showInfoNoSelection();
             } else {
-                blackChanged.set(true);
+                blackDataChanged.set(true);
                 sortedList.removeAll(selected);
                 tableView.getSelectionModel().clearSelection();
             }
@@ -285,7 +264,7 @@ public class PaneBlackList {
         Button btnNew = new Button("");
         btnNew.setGraphic(ProgIcons.Icons.ICON_BUTTON_ADD.getImageView());
         btnNew.setOnAction(event -> {
-            blackChanged.set(true);
+            blackDataChanged.set(true);
             BlackData blackData = new BlackData();
             list.add(blackData);
             tableView.getSelectionModel().clearSelection();
@@ -328,7 +307,7 @@ public class PaneBlackList {
             }
             list.clear();
         });
-        listener = new ListenerLoadFilmlist() {
+        listenerLoadFilmlist = new ListenerLoadFilmlist() {
             @Override
             public void start(ListenerFilmlistLoadEvent event) {
                 btnCountHits.setDisable(true);
@@ -339,7 +318,7 @@ public class PaneBlackList {
                 btnCountHits.setDisable(false);
             }
         };
-        LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(listener);
+        LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(listenerLoadFilmlist);
 
         HBox hBoxButton = new HBox(P2LibConst.DIST_BUTTON);
         hBoxButton.getChildren().addAll(btnNew, btnDel, btnClear);
@@ -357,7 +336,7 @@ public class PaneBlackList {
         final Button btnHelpCount = PButton.helpButton(stage, "Filter kopieren oder verschieben",
                 HelpText.BLACKLIST_MOVE);
 
-        Button btnCopy = new Button(controlBlackList ? "_Kopieren nach \"Filmliste laden\"" : "_Kopieren nach \"Blacklist\"");
+        Button btnCopy = new Button(controlBlackListNotFilmFilter ? "_Kopieren nach \"Filmliste laden\"" : "_Kopieren nach \"Blacklist\"");
         btnCopy.setTooltip(new Tooltip("Damit werden die markierten Filter in den " +
                 "anderen Filter (Filmfilter/Blacklist) kopiert"));
         btnCopy.setOnAction(a -> {
@@ -368,30 +347,28 @@ public class PaneBlackList {
             } else {
                 for (BlackData bl : selected) {
                     BlackData cpy = bl.getCopy();
-                    if (controlBlackList) {
+                    if (controlBlackListNotFilmFilter) {
                         //dann in den FilmListFilter einfügen
                         progData.filmListFilter.addAll(cpy);
                     } else {
                         //dann in die Blacklist einfügen
-                        blackChanged.set(true);
+                        blackDataChanged.set(true);
                         progData.blackList.addAll(cpy);
                     }
                 }
             }
         });
 
-        Button btnMove = new Button(controlBlackList ? "_Verschieben zu \"Filmliste laden\"" : "_Verschieben zu \"Blacklist\"");
-        btnMove.setTooltip(new
-
-                Tooltip("Damit werden die markierten Filter in den " +
+        Button btnMove = new Button(controlBlackListNotFilmFilter ? "_Verschieben zu \"Filmliste laden\"" : "_Verschieben zu \"Blacklist\"");
+        btnMove.setTooltip(new Tooltip("Damit werden die markierten Filter in den " +
                 "anderen Filter (Filmfilter/Blacklist) verschoben"));
         btnMove.setOnAction(a -> {
             final ObservableList<BlackData> selected = tableView.getSelectionModel().getSelectedItems();
             if (selected == null || selected.isEmpty()) {
                 PAlert.showInfoNoSelection();
             } else {
-                blackChanged.set(true);
-                if (controlBlackList) {
+                blackDataChanged.set(true);
+                if (controlBlackListNotFilmFilter) {
                     //dann in den FilmListFilter verschieben
                     progData.filmListFilter.addAll(selected);
                 } else {
@@ -412,53 +389,8 @@ public class PaneBlackList {
         vBox.getChildren().add(vb);
     }
 
-    private void addFilterGrid(VBox vBox) {
-        VBox vbAll = new VBox(P2LibConst.DIST_EDGE);
-        vbAll.setAlignment(Pos.TOP_LEFT);
-        vbAll.setPadding(new Insets(P2LibConst.DIST_EDGE));
-        vbAll.getStyleClass().add("extra-pane");
-
-        Label label = new Label("Suchen:");
-        vbAll.getChildren().add(label);
-
-        VBox vb = new VBox(2);
-        vb.getChildren().addAll(new Label("Sender"), txtFilterChannel);
-        vbAll.getChildren().add(vb);
-        HBox.setHgrow(vb, Priority.ALWAYS);
-
-        vb = new VBox(2);
-        vb.getChildren().addAll(new Label("Thema"), txtFilterThema);
-        vbAll.getChildren().add(vb);
-        HBox.setHgrow(vb, Priority.ALWAYS);
-
-//        vb = new VBox(2);
-//        vb.getChildren().addAll(new Label("Thema exakt"), tglFilterExact);
-        vbAll.getChildren().add(tglFilterExact);
-//        HBox.setHgrow(vb, Priority.ALWAYS);
-
-        vb = new VBox(2);
-        vb.getChildren().addAll(new Label("Titel"), txtFilterTitel);
-        vbAll.getChildren().add(vb);
-        HBox.setHgrow(vb, Priority.ALWAYS);
-
-        vb = new VBox(2);
-        vb.getChildren().addAll(new Label("Thema/Titel"), txtFilterThemaTitel);
-        vbAll.getChildren().add(vb);
-        HBox.setHgrow(vb, Priority.ALWAYS);
-
-        HBox hBox = new HBox();
-        hBox.setAlignment(Pos.CENTER_RIGHT);
-        hBox.getChildren().add(btnClearFilter);
-        vbAll.getChildren().add(hBox);
-
-        HBox h = new HBox(P2LibConst.DIST_EDGE);
-        h.getChildren().addAll(tableView, vbAll);
-        HBox.setHgrow(tableView, Priority.ALWAYS);
-        vBox.getChildren().add(h);
-    }
-
     private void makeFilter() {
-        txtFilterChannel.textProperty().addListener((u, o, n) -> addPredicate());
+        mbFilterChannelProp.addListener((u, o, n) -> addPredicate());
         txtFilterThema.textProperty().addListener((u, o, n) -> addPredicate());
         txtFilterTitel.textProperty().addListener((u, o, n) -> addPredicate());
         txtFilterThemaTitel.textProperty().addListener((u, o, n) -> addPredicate());
@@ -469,45 +401,13 @@ public class PaneBlackList {
         tglFilterExact.indeterminateProperty().addListener((u, o, n) -> addPredicate());
 
         btnClearFilter.setOnAction(a -> {
-            txtFilterChannel.clear();
+            mbFilterChannelProp.setValue("");
             txtFilterThema.clear();
             tglFilterExact.setSelected(false);
             tglFilterExact.setIndeterminate(true);
             txtFilterTitel.clear();
             txtFilterThemaTitel.clear();
         });
-    }
-
-    private void addPredicate() {
-        Predicate<BlackData> predicate = blackData -> true;
-
-        if (!txtFilterChannel.getText().isEmpty()) {
-            Filter filter = new Filter(txtFilterChannel.getText(), true);
-            predicate = predicate.and(blackData -> FilterCheck.check(filter, blackData.getChannel()));
-        }
-        if (!txtFilterThema.getText().isEmpty()) {
-            Filter filter = new Filter(txtFilterThema.getText(), true);
-            predicate = predicate.and(blackData -> FilterCheck.check(filter, blackData.getTheme()));
-        }
-        if (!tglFilterExact.isIndeterminate()) {
-            predicate = predicate.and(blackData -> {
-                if (tglFilterExact.isSelected()) {
-                    return blackData.isThemeExact();
-                } else {
-                    return !blackData.isThemeExact();
-                }
-            });
-        }
-        if (!txtFilterTitel.getText().isEmpty()) {
-            Filter filter = new Filter(txtFilterTitel.getText(), true);
-            predicate = predicate.and(blackData -> FilterCheck.check(filter, blackData.getTitle()));
-        }
-        if (!txtFilterThemaTitel.getText().isEmpty()) {
-            Filter filter = new Filter(txtFilterThemaTitel.getText(), true);
-            predicate = predicate.and(blackData -> FilterCheck.check(filter, blackData.getThemeTitle()));
-        }
-
-        list.filteredListSetPred(predicate);
     }
 
     private void addConfigs(VBox vBox) {
@@ -537,19 +437,14 @@ public class PaneBlackList {
         gridPane.setDisable(true);
         gridPane.disableProperty().bind(tableView.getSelectionModel().selectedItemProperty().isNull());
 
-        mbChannel.textProperty().addListener((observable, oldValue, newValue) -> setBlackChanged());
-        txtTheme.textProperty().addListener((observable, oldValue, newValue) -> setBlackChanged());
-        tgThemeExact.selectedProperty().addListener((observable, oldValue, newValue) -> setBlackChanged());
-        txtTitle.textProperty().addListener((observable, oldValue, newValue) -> setBlackChanged());
-        txtThemeTitle.textProperty().addListener((observable, oldValue, newValue) -> setBlackChanged());
-
-        vBox.getChildren().add(gridPane);
-    }
-
-    private void setBlackChanged() {
-        if (blackChange) {
-            blackChanged.set(true);
+        if (selectedBlackDataChanged) {
+            mbChannel.textProperty().addListener((observable, oldValue, newValue) -> blackDataChanged.set(true));
+            txtTheme.textProperty().addListener((observable, oldValue, newValue) -> blackDataChanged.set(true));
+            tgThemeExact.selectedProperty().addListener((observable, oldValue, newValue) -> blackDataChanged.set(true));
+            txtTitle.textProperty().addListener((observable, oldValue, newValue) -> blackDataChanged.set(true));
+            txtThemeTitle.textProperty().addListener((observable, oldValue, newValue) -> blackDataChanged.set(true));
         }
+        vBox.getChildren().add(gridPane);
     }
 
     private void addLoadButton(VBox vBox) {
@@ -569,17 +464,112 @@ public class PaneBlackList {
         vBox.getChildren().addAll(hBox);
     }
 
-    private void setActBlackData() {
-        blackChange = false;
+    private void setRb() {
+        if (controlBlackListNotFilmFilter) {
+            //dann wird die BlackList gesteuert
+            switch (progData.actFilmFilterWorker.getActFilterSettings().getBlacklistOnOff()) {
+                case BlacklistFilterFactory.BLACKLILST_FILTER_OFF:
+                    //OFF
+                    rbOff.setSelected(true);
+                    break;
+                case BlacklistFilterFactory.BLACKLILST_FILTER_ON:
+                    //BLACK
+                    rbBlack.setSelected(true);
+                    break;
+                case BlacklistFilterFactory.BLACKLILST_FILTER_INVERS:
+                    //WHITE, also invers
+                    rbWhite.setSelected(true);
+                    break;
+            }
+        } else {
+            //dann wird der FilmListFilter gesteuert
+            switch (ProgConfig.SYSTEM_FILMLIST_FILTER.getValue()) {
+                case BlacklistFilterFactory.BLACKLILST_FILTER_OFF:
+                    //OFF
+                    rbOff.setSelected(true);
+                    break;
+                case BlacklistFilterFactory.BLACKLILST_FILTER_ON:
+                    //BLACK
+                    rbBlack.setSelected(true);
+                    break;
+                case BlacklistFilterFactory.BLACKLILST_FILTER_INVERS:
+                    //WHITE, also invers
+                    rbWhite.setSelected(true);
+                    break;
+            }
+        }
+    }
 
+    private void setBlackProp() {
+        if (controlBlackListNotFilmFilter) {
+            //dann wird die BlackList gesteuert
+            if (rbBlack.isSelected()) {
+                //BLACK
+                progData.actFilmFilterWorker.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_ON);
+            } else if (rbWhite.isSelected()) {
+                //WHITE, also invers
+                progData.actFilmFilterWorker.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_INVERS);
+            } else {
+                //OFF
+                progData.actFilmFilterWorker.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_OFF);
+            }
+
+        } else {
+            //dann wird der FilmList Filter gesteuert
+            if (rbBlack.isSelected()) {
+                //BLACK
+                ProgConfig.SYSTEM_FILMLIST_FILTER.setValue(BlacklistFilterFactory.BLACKLILST_FILTER_ON);
+            } else if (rbWhite.isSelected()) {
+                //WHITE, also invers
+                ProgConfig.SYSTEM_FILMLIST_FILTER.setValue(BlacklistFilterFactory.BLACKLILST_FILTER_INVERS);
+            } else {
+                //OFF
+                ProgConfig.SYSTEM_FILMLIST_FILTER.setValue(BlacklistFilterFactory.BLACKLILST_FILTER_OFF);
+            }
+        }
+    }
+
+    private void addPredicate() {
+        Predicate<BlackData> predicate = blackData -> true;
+
+        if (!mbFilterChannelProp.getValueSafe().isEmpty()) {
+            Filter filter = new Filter(mbFilterChannelProp.getValueSafe(), true);
+            predicate = predicate.and(blackData -> FilterCheck.check(filter, blackData.getChannel()));
+        }
+        if (!txtFilterThema.getText().isEmpty()) {
+            Filter filter = new Filter(txtFilterThema.getText(), true);
+            predicate = predicate.and(blackData -> FilterCheck.check(filter, blackData.getTheme()));
+        }
+        if (!tglFilterExact.isIndeterminate()) {
+            predicate = predicate.and(blackData -> {
+                if (tglFilterExact.isSelected()) {
+                    return blackData.isThemeExact();
+                } else {
+                    return !blackData.isThemeExact();
+                }
+            });
+        }
+        if (!txtFilterTitel.getText().isEmpty()) {
+            Filter filter = new Filter(txtFilterTitel.getText(), true);
+            predicate = predicate.and(blackData -> FilterCheck.check(filter, blackData.getTitle()));
+        }
+        if (!txtFilterThemaTitel.getText().isEmpty()) {
+            Filter filter = new Filter(txtFilterThemaTitel.getText(), true);
+            predicate = predicate.and(blackData -> FilterCheck.check(filter, blackData.getThemeTitle()));
+        }
+
+        list.filteredListSetPred(predicate);
+    }
+
+    private void setActBlackData() {
+        selectedBlackDataChanged = false;
         BlackData blackDataAct = tableView.getSelectionModel().getSelectedItem();
         if (blackDataAct == blackData) {
             return;
         }
 
         if (blackData != null) {
-            mbChannel.textProperty().unbindBidirectional(blackData.channelProperty());
-            clearMenuText();
+            mbChannelProp.unbindBidirectional(blackData.channelProperty());
             tgThemeExact.selectedProperty().unbindBidirectional(blackData.themeExactProperty());
             txtTheme.textProperty().unbindBidirectional(blackData.themeProperty());
             txtTitle.textProperty().unbindBidirectional(blackData.titleProperty());
@@ -591,66 +581,12 @@ public class PaneBlackList {
 
         blackData = blackDataAct;
         if (blackData != null) {
-            initSenderMenu();
-            mbChannel.textProperty().bindBidirectional(blackData.channelProperty());
+            mbChannelProp.bindBidirectional(blackData.channelProperty());
             txtTheme.textProperty().bindBidirectional(blackData.themeProperty());
             tgThemeExact.selectedProperty().bindBidirectional(blackData.themeExactProperty());
             txtTitle.textProperty().bindBidirectional(blackData.titleProperty());
             txtThemeTitle.textProperty().bindBidirectional(blackData.themeTitleProperty());
-            blackChange = true;
+            selectedBlackDataChanged = true;
         }
-    }
-
-    private void initSenderMenu() {
-        mbChannel.getItems().clear();
-        checkMenuItemsList.clear();
-        mbChannel.getStyleClass().add("cbo-menu");
-
-        List<String> senderArr = new ArrayList<>();
-        String sender = blackData.channelProperty().get();
-        if (sender != null) {
-            if (sender.contains(",")) {
-                senderArr.addAll(Arrays.asList(sender.replace(" ", "").toLowerCase().split(",")));
-            } else {
-                senderArr.add(sender.toLowerCase());
-            }
-            senderArr.stream().forEach(s -> s = s.trim());
-        }
-
-        MenuItem mi = new MenuItem("Auswahl löschen");
-        mi.setOnAction(a -> clearMenuText());
-        mbChannel.getItems().add(mi);
-
-        for (String s : ProgData.getInstance().worker.getAllChannelList()) {
-            if (s.isEmpty()) {
-                continue;
-            }
-            CheckMenuItem miCheck = new CheckMenuItem(s);
-            if (senderArr.contains(s.toLowerCase())) {
-                miCheck.setSelected(true);
-            }
-            miCheck.setOnAction(a -> setMenuText());
-
-            checkMenuItemsList.add(miCheck);
-            mbChannel.getItems().add(miCheck);
-        }
-        setMenuText();
-    }
-
-    private void clearMenuText() {
-        for (CheckMenuItem cmi : checkMenuItemsList) {
-            cmi.setSelected(false);
-        }
-        mbChannel.setText("");
-    }
-
-    private void setMenuText() {
-        String text = "";
-        for (CheckMenuItem cmi : checkMenuItemsList) {
-            if (cmi.isSelected()) {
-                text = text + (text.isEmpty() ? "" : ", ") + cmi.getText();
-            }
-        }
-        mbChannel.setText(text);
     }
 }

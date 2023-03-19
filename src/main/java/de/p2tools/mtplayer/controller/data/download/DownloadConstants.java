@@ -59,10 +59,11 @@ public class DownloadConstants {
     public static final String TYPE_COMBO_DOWNLOAD = "nur direkte Downloads";
     public static final String TYPE_COMBO_PROGRAM = "nur Programme";
 
-    public static final String STATE_COMBO_NOT_STARTED = "noch nicht gestartet";
-    public static final String STATE_COMBO_WAITING = "gestartet und wartet noch";
-    public static final String STATE_COMBO_STARTED = "gestartet (läuft oder wartet)";
-    public static final String STATE_COMBO_LOADING = "läuft";
+    public static final String STATE_COMBO_NOT_STARTED = "Noch nicht gestartet";
+    public static final String STATE_COMBO_WAITING = "Gestartet, wartet noch";
+    public static final String STATE_COMBO_STARTED = "Gestartet, läuft oder wartet";
+    public static final String STATE_COMBO_LOADING = "Läuft";
+    public static final String STATE_COMBO_ERROR = "Fehlerhaft";
 
     //Download wird so oft gestartet, falls er beim ersten Mal nicht anspringt
     public static final int START_COUNTER_MAX = 3;

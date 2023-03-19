@@ -31,7 +31,7 @@ import javafx.scene.layout.VBox;
 
 public class AboFilterController extends FilterController {
 
-    private ComboBox<String> cboChannel = new ComboBox<>();
+    private PMenuButton mbChannel;
     private ComboBox<String> cboArt = new ComboBox<>(); // Abo ein-/ausgeschaltet
     private TextField txtDescription = new TextField();
     private TextField txtName = new TextField();
@@ -45,8 +45,11 @@ public class AboFilterController extends FilterController {
         vBoxFilter = getVBoxFilter(true);
         progData = ProgData.getInstance();
         progData.aboFilterController = this;
+        mbChannel = new PMenuButton(ProgConfig.FILTER_ABO_CHANNEL,
+                progData.worker.getChannelsForAbosList());
 
-        addCont("Abos für Sender", cboChannel, vBoxFilter);
+
+        addCont("Abos für Sender", mbChannel, vBoxFilter);
         addCont("Status", cboArt, vBoxFilter);
         addCont("Name", txtName, vBoxFilter);
         addCont("Beschreibung", txtDescription, vBoxFilter);
@@ -71,8 +74,8 @@ public class AboFilterController extends FilterController {
         FilterCheckRegEx fD = new FilterCheckRegEx(txtDescription);
         txtDescription.textProperty().addListener((observable, oldValue, newValue) -> fD.checkPattern());
 
-        cboChannel.setItems(progData.worker.getChannelsForAbosList());
-        cboChannel.valueProperty().bindBidirectional(ProgConfig.FILTER_ABO_CHANNEL);
+//        cboChannel.setItems(progData.worker.getChannelsForAbosList());
+//        cboChannel.valueProperty().bindBidirectional(ProgConfig.FILTER_ABO_CHANNEL);
 
         cboArt.getItems().addAll(AboConstants.ALL,
                 AboConstants.ABO_ON,
@@ -83,9 +86,11 @@ public class AboFilterController extends FilterController {
     private void clearFilter() {
         txtName.setText("");
         txtDescription.setText("");
-        if (cboChannel.getSelectionModel() != null) {
-            cboChannel.getSelectionModel().selectFirst();
-        }
+//        if (cboChannel.getSelectionModel() != null) {
+//            cboChannel.getSelectionModel().selectFirst();
+//        }
+        ProgConfig.FILTER_ABO_CHANNEL.setValue("");
+
         if (cboArt.getSelectionModel() != null) {
             cboArt.getSelectionModel().selectFirst();
         }

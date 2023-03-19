@@ -39,8 +39,6 @@ import javafx.scene.layout.StackPane;
 import javafx.util.StringConverter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class AboEditDialogController extends AboDialogController {
 
@@ -61,7 +59,7 @@ public class AboEditDialogController extends AboDialogController {
 
     @Override
     void makeControl() {
-        initSenderMenu();
+//        initSenderMenu();
         for (int i = 0; i < AboFieldNames.MAX_ELEM; ++i) {
             initControl(i);
             addLabel(i);
@@ -545,63 +543,63 @@ public class AboEditDialogController extends AboDialogController {
         okProp.set(ok);
     }
 
-    private void initSenderMenu() {
-        mbChannel.getStyleClass().add("cbo-menu");
-        mbChannel.setMaxWidth(Double.MAX_VALUE);
+//    private void initSenderMenu() {
+//        mbChannel.getStyleClass().add("cbo-menu");
+//        mbChannel.setMaxWidth(Double.MAX_VALUE);
+//
+//        List<String> senderArr = new ArrayList<>();
+//        String sender = aboCopy.channelProperty().get();
+//        if (sender != null) {
+//            if (sender.contains(",")) {
+//                senderArr.addAll(Arrays.asList(sender.replace(" ", "").toLowerCase().split(",")));
+//            } else {
+//                senderArr.add(sender.toLowerCase());
+//            }
+//            senderArr.stream().forEach(s -> s = s.trim());
+//        }
+//
+//        MenuItem mi = new MenuItem("Auswahl löschen");
+//        mi.setOnAction(a -> {
+//            clearMenuText();
+//            cbxEditAll[AboFieldNames.ABO_CHANNEL_NO].setSelected(true);
+//        });
+//        mbChannel.getItems().add(mi);
+//
+//        for (String s : progData.worker.getAllChannelList()) {
+//            if (s.isEmpty()) {
+//                continue;
+//            }
+//            CheckMenuItem miCheck = new CheckMenuItem(s);
+//            if (senderArr.contains(s.toLowerCase())) {
+//                miCheck.setSelected(true);
+//            }
+//            miCheck.setOnAction(a -> {
+//                setMenuText();
+//                cbxEditAll[AboFieldNames.ABO_CHANNEL_NO].setSelected(true);
+//            });
+//
+//            checkMenuItemsList.add(miCheck);
+//            mbChannel.getItems().add(miCheck);
+//        }
+//        setMenuText();
+//    }
 
-        List<String> senderArr = new ArrayList<>();
-        String sender = aboCopy.channelProperty().get();
-        if (sender != null) {
-            if (sender.contains(",")) {
-                senderArr.addAll(Arrays.asList(sender.replace(" ", "").toLowerCase().split(",")));
-            } else {
-                senderArr.add(sender.toLowerCase());
-            }
-            senderArr.stream().forEach(s -> s = s.trim());
-        }
-
-        MenuItem mi = new MenuItem("Auswahl löschen");
-        mi.setOnAction(a -> {
-            clearMenuText();
-            cbxEditAll[AboFieldNames.ABO_CHANNEL_NO].setSelected(true);
-        });
-        mbChannel.getItems().add(mi);
-
-        for (String s : progData.worker.getAllChannelList()) {
-            if (s.isEmpty()) {
-                continue;
-            }
-            CheckMenuItem miCheck = new CheckMenuItem(s);
-            if (senderArr.contains(s.toLowerCase())) {
-                miCheck.setSelected(true);
-            }
-            miCheck.setOnAction(a -> {
-                setMenuText();
-                cbxEditAll[AboFieldNames.ABO_CHANNEL_NO].setSelected(true);
-            });
-
-            checkMenuItemsList.add(miCheck);
-            mbChannel.getItems().add(miCheck);
-        }
-        setMenuText();
-    }
-
-    private void clearMenuText() {
-        for (CheckMenuItem cmi : checkMenuItemsList) {
-            cmi.setSelected(false);
-        }
-        mbChannel.setText("");
-        aboCopy.channelProperty().setValue("");
-    }
-
-    private void setMenuText() {
-        String text = "";
-        for (CheckMenuItem cmi : checkMenuItemsList) {
-            if (cmi.isSelected()) {
-                text = text + (text.isEmpty() ? "" : ", ") + cmi.getText();
-            }
-        }
-        mbChannel.setText(text);
-        aboCopy.channelProperty().setValue(text);
-    }
+//    private void clearMenuText() {
+//        for (CheckMenuItem cmi : checkMenuItemsList) {
+//            cmi.setSelected(false);
+//        }
+//        mbChannel.setText("");
+//        aboCopy.channelProperty().setValue("");
+//    }
+//
+//    private void setMenuText() {
+//        String text = "";
+//        for (CheckMenuItem cmi : checkMenuItemsList) {
+//            if (cmi.isSelected()) {
+//                text = text + (text.isEmpty() ? "" : ", ") + cmi.getText();
+//            }
+//        }
+//        mbChannel.setText(text);
+//        aboCopy.channelProperty().setValue(text);
+//    }
 }

@@ -28,6 +28,8 @@ import de.p2tools.mtplayer.gui.tools.table.TableRowAbo;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.guitools.PTableFactory;
 import de.p2tools.p2lib.guitools.pclosepane.PClosePaneH;
+import de.p2tools.p2lib.mtfilter.Filter;
+import de.p2tools.p2lib.mtfilter.FilterCheck;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.collections.ListChangeListener;
@@ -45,6 +47,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 import java.util.Optional;
+import java.util.function.Predicate;
 
 public class AboGuiController extends AnchorPane {
 
@@ -259,19 +262,47 @@ public class AboGuiController extends AnchorPane {
         ProgConfig.FILTER_ABO_DESCRIPTION.addListener((observable, oldValue, newValue) -> setFilter());
     }
 
+//    private void setFilter() {
+//        final String sender = ProgConfig.FILTER_ABO_CHANNEL.getValueSafe();
+//        final String type = ProgConfig.FILTER_ABO_TYPE.getValueSafe();
+//        final String name = ProgConfig.FILTER_ABO_NAME.getValueSafe().trim().toLowerCase();
+//        final String description = ProgConfig.FILTER_ABO_DESCRIPTION.get().trim().toLowerCase();
+//
+//        filteredAbos.setPredicate(abo ->
+//                (sender.isEmpty() || abo.getChannel().contains(sender)) &&
+//                        (name.isEmpty() || abo.getName().toLowerCase().contains(name)) &&
+//                        (description.isEmpty() || abo.getDescription().toLowerCase().contains(description)) &&
+//                        (type.isEmpty() ||
+//                                type.equals(AboConstants.ABO_ON) && abo.isActive() ||
+//                                type.equals(AboConstants.ABO_OFF) && !abo.isActive())
+//        );
+//    }
+
     private void setFilter() {
+        Predicate<AboData> predicate = downloadData -> true;
         final String sender = ProgConfig.FILTER_ABO_CHANNEL.getValueSafe();
         final String type = ProgConfig.FILTER_ABO_TYPE.getValueSafe();
-        final String name = ProgConfig.FILTER_ABO_NAME.getValueSafe().trim().toLowerCase();
-        final String description = ProgConfig.FILTER_ABO_DESCRIPTION.get().trim().toLowerCase();
+        final String name = ProgConfig.FILTER_ABO_NAME.getValueSafe().trim();
+        final String description = ProgConfig.FILTER_ABO_DESCRIPTION.get().trim();
 
-        filteredAbos.setPredicate(abo ->
-                (sender.isEmpty() || abo.getChannel().contains(sender)) &&
-                        (name.isEmpty() || abo.getName().toLowerCase().contains(name)) &&
-                        (description.isEmpty() || abo.getDescription().toLowerCase().contains(description)) &&
-                        (type.isEmpty() ||
-                                type.equals(AboConstants.ABO_ON) && abo.isActive() ||
-                                type.equals(AboConstants.ABO_OFF) && !abo.isActive())
-        );
+        if (!sender.isEmpty()) {
+            Filter filter = new Filter(sender, true);
+            predicate = predicate.and(aboData -> FilterCheck.check(filter, aboData.getChannel()));
+        }
+
+        if (!type.isEmpty()) {
+            predicate = predicate.and(aboData -> type.isEmpty() ||
+                    type.equals(AboConstants.ABO_ON) && aboData.isActive() ||
+                    type.equals(AboConstants.ABO_OFF) && !aboData.isActive());
+        }
+        if (!name.isEmpty()) {
+            Filter filter = new Filter(name, true);
+            predicate = predicate.and(aboData -> FilterCheck.check(filter, aboData.getName()));
+        }
+        if (!description.isEmpty()) {
+            Filter filter = new Filter(description, true);
+            predicate = predicate.and(aboData -> FilterCheck.check(filter, aboData.getDescription()));
+        }
+        filteredAbos.setPredicate(predicate);
     }
 }

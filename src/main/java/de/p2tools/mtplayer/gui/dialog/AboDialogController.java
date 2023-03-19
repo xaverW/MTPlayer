@@ -23,6 +23,7 @@ import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.abo.AboFactory;
 import de.p2tools.mtplayer.controller.data.abo.AboFieldNames;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
+import de.p2tools.mtplayer.gui.filter.PMenuButton;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
@@ -42,8 +43,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-
-import java.util.ArrayList;
 
 public class AboDialogController extends PDialogExtra {
 
@@ -72,8 +71,8 @@ public class AboDialogController extends PDialogExtra {
     final TextArea textAreaTitle = new PTextAreaIgnoreTab(false, true);
     final TextArea textAreaSomewhere = new PTextAreaIgnoreTab(false, true);
 
-    final MenuButton mbChannel = new MenuButton("");
-    final ArrayList<CheckMenuItem> checkMenuItemsList = new ArrayList<>();
+    final PMenuButton mbChannel;
+    //    final ArrayList<CheckMenuItem> checkMenuItemsList = new ArrayList<>();
     final PTimePicker pTimePicker = new PTimePicker();
     final CheckBox chkStartTime = new CheckBox();
 
@@ -92,9 +91,10 @@ public class AboDialogController extends PDialogExtra {
 
         this.progData = progData;
         this.addNewAbo = true;
-
         aboList.add(abo);
         this.aboCopy = abo.getCopy();
+        this.mbChannel = new PMenuButton(aboCopy.channelProperty(),
+                ProgData.getInstance().worker.getAllChannelList());
 
         initDialog();
     }
@@ -106,9 +106,10 @@ public class AboDialogController extends PDialogExtra {
 
         this.progData = progData;
         this.addNewAbo = false;
-
         aboList.add(abo);
         aboCopy = abo.getCopy();
+        this.mbChannel = new PMenuButton(aboCopy.channelProperty(),
+                ProgData.getInstance().worker.getAllChannelList());
 
         final String channel = filmFilter.isChannelVis() ? filmFilter.getChannel() : "";
         final String theme = filmFilter.isThemeVis() ? filmFilter.getTheme() : "";
@@ -144,6 +145,8 @@ public class AboDialogController extends PDialogExtra {
         //hängt sonst an "getSelList"
         this.aboList.addAll(aboList);
         this.aboCopy = aboList.get(0).getCopy();
+        this.mbChannel = new PMenuButton(aboCopy.channelProperty(),
+                ProgData.getInstance().worker.getAllChannelList());
 
         initDialog();
     }

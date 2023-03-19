@@ -37,6 +37,8 @@ import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.guitools.POpen;
 import de.p2tools.p2lib.guitools.PTableFactory;
 import de.p2tools.p2lib.guitools.pclosepane.PClosePaneH;
+import de.p2tools.p2lib.mtfilter.Filter;
+import de.p2tools.p2lib.mtfilter.FilterCheck;
 import de.p2tools.p2lib.tools.PSystemUtils;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -54,6 +56,7 @@ import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 public class DownloadGuiController extends AnchorPane {
 
@@ -459,28 +462,61 @@ public class DownloadGuiController extends AnchorPane {
         });
     }
 
+//    private void setFilter() {
+//        final String sender = ProgConfig.FILTER_DOWNLOAD_CHANNEL.getValueSafe();
+//        final String abo = ProgConfig.FILTER_DOWNLOAD_ABO.getValueSafe();
+//        final String source = ProgConfig.FILTER_DOWNLOAD_SOURCE.getValueSafe();
+//        final String type = ProgConfig.FILTER_DOWNLOAD_TYPE.getValueSafe();
+//        final String state = ProgConfig.FILTER_DOWNLOAD_STATE.getValueSafe();
+//
+//        filteredDownloads.setPredicate(download -> !download.getPlacedBack() &&
+//                (sender.isEmpty() ? true : download.getChannel().equals(sender)) &&
+//                (abo.isEmpty() ? true : download.getAboName().equals(abo)) &&
+//                (source.isEmpty() ? true : download.getSource().equals(source)) &&
+//                (type.isEmpty() ? true : download.getType().equals(type)) &&
+//
+//                (state.isEmpty() ? true : (
+//                        state.equals(DownloadConstants.STATE_COMBO_NOT_STARTED) && !download.isStarted() ||
+//                                state.equals(DownloadConstants.STATE_COMBO_WAITING) && download.isStateStartedWaiting() ||
+//                                state.equals(DownloadConstants.STATE_COMBO_STARTED) && download.isStarted() ||
+//                                state.equals(DownloadConstants.STATE_COMBO_LOADING) && download.isStateStartedRun()
+//                ))
+//        );
+//    }
+
     private void setFilter() {
+        Predicate<DownloadData> predicate = downloadData -> true;
         final String sender = ProgConfig.FILTER_DOWNLOAD_CHANNEL.getValueSafe();
         final String abo = ProgConfig.FILTER_DOWNLOAD_ABO.getValueSafe();
         final String source = ProgConfig.FILTER_DOWNLOAD_SOURCE.getValueSafe();
         final String type = ProgConfig.FILTER_DOWNLOAD_TYPE.getValueSafe();
         final String state = ProgConfig.FILTER_DOWNLOAD_STATE.getValueSafe();
 
-        filteredDownloads.setPredicate(download -> !download.getPlacedBack() &&
+        if (!sender.isEmpty()) {
+            Filter filter = new Filter(sender, true);
+            predicate = predicate.and(blackData -> FilterCheck.check(filter, blackData.getChannel()));
+        }
 
-                (sender.isEmpty() ? true : download.getChannel().equals(sender)) &&
-                (abo.isEmpty() ? true : download.getAboName().equals(abo)) &&
-                (source.isEmpty() ? true : download.getSource().equals(source)) &&
-                (type.isEmpty() ? true : download.getType().equals(type)) &&
+        if (!abo.isEmpty()) {
+            predicate = predicate.and(downloadData -> downloadData.getAboName().equals(abo));
+        }
+        if (!source.isEmpty()) {
+            predicate = predicate.and(downloadData -> downloadData.getSource().equals(source));
+        }
+        if (!type.isEmpty()) {
+            predicate = predicate.and(downloadData -> downloadData.getType().equals(type));
+        }
+        if (!state.isEmpty()) {
+            predicate = predicate.and(downloadData -> state.equals(DownloadConstants.STATE_COMBO_NOT_STARTED) && !downloadData.isStarted() ||
+                    state.equals(DownloadConstants.STATE_COMBO_WAITING) && downloadData.isStateStartedWaiting() ||
+                    state.equals(DownloadConstants.STATE_COMBO_STARTED) && downloadData.isStarted() ||
+                    state.equals(DownloadConstants.STATE_COMBO_LOADING) && downloadData.isStateStartedRun() ||
+                    state.equals(DownloadConstants.STATE_COMBO_ERROR) && downloadData.isStateError());
+        }
 
-                (state.isEmpty() ? true : (
-                        state.equals(DownloadConstants.STATE_COMBO_NOT_STARTED) && !download.isStarted() ||
-                                state.equals(DownloadConstants.STATE_COMBO_WAITING) && download.isStateStartedWaiting() ||
-                                state.equals(DownloadConstants.STATE_COMBO_STARTED) && download.isStarted() ||
-                                state.equals(DownloadConstants.STATE_COMBO_LOADING) && download.isStateStartedRun()
-                ))
-        );
+        filteredDownloads.setPredicate(predicate);
     }
+
 
     private void setFilmShown(boolean shown) {
         // Filme als (un)gesehen markieren

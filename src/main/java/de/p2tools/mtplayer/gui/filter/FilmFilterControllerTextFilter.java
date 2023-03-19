@@ -23,160 +23,36 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Control;
+import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class FilmFilterControllerTextFilter extends VBox {
 
     private final ComboBox<String> cboTheme = new ComboBox<>();
-    private final MenuButton mbChannel = new MenuButton("");
+    private final PMenuButton mbChannel;
     private final ComboBox<String> cboThemeTitle = new ComboBox();
     private final ComboBox<String> cboTitle = new ComboBox();
     private final ComboBox<String> cboSomewhere = new ComboBox();
     private final ComboBox<String> cboUrl = new ComboBox();
-
-    private final ArrayList<MenuItemClass> menuItemsList = new ArrayList<>();
 
     private final ProgData progData;
 
     public FilmFilterControllerTextFilter() {
         super();
         progData = ProgData.getInstance();
-
+        mbChannel = new PMenuButton(ProgData.getInstance().actFilmFilterWorker.getActFilterSettings().channelProperty(),
+                ProgData.getInstance().worker.getAllChannelList());
         setSpacing(FilterController.FILTER_SPACING_TEXTFILTER);
-        initSenderFilter();
         initStringFilter();
         addFilter();
     }
 
-    private void initSenderFilter() {
-        mbChannel.getStyleClass().add("cbo-menu");
-        mbChannel.setMaxWidth(Double.MAX_VALUE);
-        VBox.setVgrow(mbChannel, Priority.ALWAYS);
-
-        initChannelMenu();
-        progData.actFilmFilterWorker.getActFilterSettings().channelProperty().addListener((observable, oldValue, newValue) -> {
-            initChannelMenu();
-        });
-        progData.worker.getAllChannelList().addListener((ListChangeListener<String>) c -> initChannelMenu());
-        mbChannel.textProperty().bindBidirectional(progData.actFilmFilterWorker.getActFilterSettings().channelProperty());
-    }
-
-    private void initChannelMenu() {
-        mbChannel.getItems().clear();
-        menuItemsList.clear();
-
-        List<String> channelFilterList = new ArrayList<>();
-        String channelFilter = progData.actFilmFilterWorker.getActFilterSettings().channelProperty().get();
-        if (channelFilter != null) {
-            if (channelFilter.contains(",")) {
-                channelFilterList.addAll(Arrays.asList(channelFilter.replace(" ", "").toLowerCase().split(",")));
-            } else {
-                channelFilterList.add(channelFilter.toLowerCase());
-            }
-            channelFilterList.stream().forEach(s -> s = s.trim());
-        }
-
-        CheckBox miCheckAll = new CheckBox();
-        miCheckAll.setVisible(false);
-
-        Button btnAll = new Button("Auswahl löschen");
-        btnAll.getStyleClass().add("cbo-menu-button");
-        btnAll.setMaxWidth(Double.MAX_VALUE);
-        btnAll.minWidthProperty().bind(mbChannel.widthProperty().add(-50));
-        btnAll.setOnAction(e -> {
-            clearMenuText();
-            mbChannel.hide();
-        });
-
-        HBox hBoxAll = new HBox(10);
-        hBoxAll.setAlignment(Pos.CENTER_LEFT);
-        hBoxAll.getChildren().addAll(miCheckAll, btnAll);
-
-        CustomMenuItem cmiAll = new CustomMenuItem(hBoxAll);
-        mbChannel.getItems().add(cmiAll);
-
-        for (String s : progData.worker.getAllChannelList()) {
-            if (s.isEmpty()) {
-                continue;
-            }
-
-            CheckBox miCheck = new CheckBox();
-            if (channelFilterList.contains(s.toLowerCase())) {
-                miCheck.setSelected(true);
-            }
-            miCheck.setOnAction(a -> setMenuText());
-
-            MenuItemClass menuItemClass = new MenuItemClass(s, miCheck);
-            menuItemsList.add(menuItemClass);
-
-            Button btnChannel = new Button(s);
-            btnChannel.getStyleClass().add("cbo-menu-button");
-            btnChannel.setMaxWidth(Double.MAX_VALUE);
-            btnChannel.minWidthProperty().bind(mbChannel.widthProperty().add(-50));
-            btnChannel.setOnAction(e -> {
-                setCheckBoxAndMenuText(menuItemClass);
-                mbChannel.hide();
-            });
-
-            HBox hBox = new HBox(10);
-            hBox.setAlignment(Pos.CENTER_LEFT);
-            hBox.getChildren().addAll(miCheck, btnChannel);
-
-            CustomMenuItem cmi = new CustomMenuItem(hBox);
-            mbChannel.getItems().add(cmi);
-        }
-    }
-
-    private void setCheckBoxAndMenuText(MenuItemClass cmi) {
-        for (MenuItemClass cm : menuItemsList) {
-            cm.getCheckBox().setSelected(false);
-        }
-        cmi.getCheckBox().setSelected(true);
-        setMenuText();
-    }
-
-    private void clearMenuText() {
-        for (MenuItemClass cmi : menuItemsList) {
-            cmi.getCheckBox().setSelected(false);
-        }
-        mbChannel.setText("");
-        progData.worker.createThemeList("");
-    }
-
-    private void setMenuText() {
-        String text = "";
-        for (MenuItemClass cmi : menuItemsList) {
-            if (cmi.getCheckBox().isSelected()) {
-                text = text + (text.isEmpty() ? "" : ", ") + cmi.getText();
-            }
-        }
-        mbChannel.setText(text);
-        progData.worker.createThemeList(text);
-    }
-
     private void initStringFilter() {
         //Theme
-        //https://bugs.openjdk.java.net/browse/JDK-8116061
-//        if (ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
-//            progData.storedFilters.getActFilterSettings().setThemeExact(true);
-//        }
-//        ProgConfig.SYSTEM_FILTER_RETURN.addListener((u, o, n) -> {
-//            if (ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
-//                progData.storedFilters.getActFilterSettings().setThemeExact(true);
-//            } else {
-//
-//            }
-//        });
-
         cboTheme.editableProperty().bind(progData.actFilmFilterWorker.getActFilterSettings().themeExactProperty().not());
         cboTheme.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         cboTheme.setVisibleRowCount(25);
@@ -202,84 +78,15 @@ public class FilmFilterControllerTextFilter extends VBox {
             cboTheme.valueProperty().setValue(progData.actFilmFilterWorker.getActFilterSettings().getTheme());
         });
 
-
-        //ThemeTitle
-//        cboThemeTitle.setEditable(true);
-//        cboThemeTitle.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-//        cboThemeTitle.setVisibleRowCount(25);
-//        cboThemeTitle.setItems(progData.storedFilters.getLastThemaTitleFilter());
-//        cboThemeTitle.getEditor().textProperty().addListener((u, o, n) -> {
-//            progData.storedFilters.getActFilterSettings().setThemeTitle(cboThemeTitle.getEditor().getText());
-//        });
-//        cboThemeTitle.setOnKeyPressed(event -> {
-//            if (event.getCode() == KeyCode.ENTER) {
-//                progData.storedFilters.getActFilterSettings().reportFilterReturn();
-//            }
-//        });
-//        progData.storedFilters.getActFilterSettings().themeTitleProperty().addListener((u, o, n) -> {
-//            cboThemeTitle.valueProperty().setValue(progData.storedFilters.getActFilterSettings().getThemeTitle());
-//        });
-//        cboThemeTitle.getEditor().setText(progData.storedFilters.getActFilterSettings().getThemeTitle());
-
         addTextFilter(cboThemeTitle, progData.actFilmFilterWorker.getLastThemaTitleFilter(),
                 progData.actFilmFilterWorker.getActFilterSettings().themeTitleProperty());
-
-        //Title
-//        txtTitle.textProperty().addListener((u, o, n) -> {
-//            progData.storedFilters.getActFilterSettings().setTitle(txtTitle.getText());
-//        });
-//        txtTitle.setOnKeyPressed(event -> {
-//            if (event.getCode() == KeyCode.ENTER) {
-//                progData.storedFilters.getActFilterSettings().reportFilterReturn();
-//            }
-//
-//        });
-//        progData.storedFilters.getActFilterSettings().titleProperty().addListener((u, o, n) -> {
-//            if (!txtTitle.getText().equals(progData.storedFilters.getActFilterSettings().getTitle())) {
-//                txtTitle.setText(progData.storedFilters.getActFilterSettings().getTitle());
-//            }
-//        });
-//        txtTitle.setText(progData.storedFilters.getActFilterSettings().getTitle());
 
         addTextFilter(cboTitle, progData.actFilmFilterWorker.getLastTitleFilter(),
                 progData.actFilmFilterWorker.getActFilterSettings().titleProperty());
 
-
-        //Somewhere
-//        txtSomewhere.textProperty().addListener((u, o, n) -> {
-//            progData.storedFilters.getActFilterSettings().setSomewhere(txtSomewhere.getText());
-//        });
-//        txtSomewhere.setOnKeyPressed(event -> {
-//            if (event.getCode() == KeyCode.ENTER) {
-//                progData.storedFilters.getActFilterSettings().reportFilterReturn();
-//            }
-//        });
-//        progData.storedFilters.getActFilterSettings().somewhereProperty().addListener((u, o, n) -> {
-//            if (!txtSomewhere.getText().equals(progData.storedFilters.getActFilterSettings().getSomewhere())) {
-//                txtSomewhere.setText(progData.storedFilters.getActFilterSettings().getSomewhere());
-//            }
-//        });
-//        txtSomewhere.setText(progData.storedFilters.getActFilterSettings().getSomewhere());
-
         addTextFilter(cboSomewhere, progData.actFilmFilterWorker.getLastSomewhereFilter(),
                 progData.actFilmFilterWorker.getActFilterSettings().somewhereProperty());
 
-
-        //URL
-//        txtUrl.textProperty().addListener((u, o, n) -> {
-//            progData.storedFilters.getActFilterSettings().setUrl(txtUrl.getText());
-//        });
-//        txtUrl.setOnKeyPressed(event -> {
-//            if (event.getCode() == KeyCode.ENTER) {
-//                progData.storedFilters.getActFilterSettings().reportFilterReturn();
-//            }
-//        });
-//        progData.storedFilters.getActFilterSettings().urlProperty().addListener((u, o, n) -> {
-//            if (!txtUrl.getText().equals(progData.storedFilters.getActFilterSettings().getUrl())) {
-//                txtUrl.setText(progData.storedFilters.getActFilterSettings().getUrl());
-//            }
-//        });
-//        txtUrl.setText(progData.storedFilters.getActFilterSettings().getUrl());
         addTextFilter(cboUrl, progData.actFilmFilterWorker.getLastUrlFilter(),
                 progData.actFilmFilterWorker.getActFilterSettings().urlProperty());
 
@@ -294,10 +101,6 @@ public class FilmFilterControllerTextFilter extends VBox {
         FilterCheckRegEx fU = new FilterCheckRegEx(cboUrl.getEditor());
         cboUrl.getEditor().textProperty().addListener((observable, oldValue, newValue) -> fU.checkPattern());
     }
-
-
-    boolean klick = false;
-    int count = 0;
 
     private void addTextFilter(ComboBox<String> cbo, ObservableList<String> items, StringProperty strProp) {
         cbo.setEditable(true);
@@ -367,24 +170,5 @@ public class FilmFilterControllerTextFilter extends VBox {
 
         vBox.visibleProperty().bind(booleanProperty);
         vBox.managedProperty().bind(booleanProperty);
-    }
-
-    private class MenuItemClass {
-
-        private final String text;
-        private final CheckBox checkBox;
-
-        MenuItemClass(String text, CheckBox checkbox) {
-            this.text = text;
-            this.checkBox = checkbox;
-        }
-
-        public String getText() {
-            return text;
-        }
-
-        public CheckBox getCheckBox() {
-            return checkBox;
-        }
     }
 }

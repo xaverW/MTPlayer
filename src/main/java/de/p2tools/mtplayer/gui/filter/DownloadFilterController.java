@@ -37,7 +37,7 @@ public class DownloadFilterController extends FilterController {
 
     private ComboBox<String> cboSrc = new ComboBox<>(); //Downloadquelle: Abo, manuell gestartet
     private ComboBox<String> cboKind = new ComboBox<>(); //Download über Programm / direkter Downlaod, http
-    private ComboBox<String> cboChannel = new ComboBox<>();
+    private PMenuButton mbChannel;
     private ComboBox<String> cboAbo = new ComboBox<>();
     private ComboBox<String> cboState = new ComboBox<>();
 
@@ -60,6 +60,9 @@ public class DownloadFilterController extends FilterController {
         progData = ProgData.getInstance();
         progData.downloadFilterController = this;
 
+        mbChannel = new PMenuButton(ProgConfig.FILTER_DOWNLOAD_CHANNEL,
+                ProgData.getInstance().worker.getAllChannelList());
+
         initLayout();
         initFilter();
 
@@ -70,7 +73,7 @@ public class DownloadFilterController extends FilterController {
     private void initLayout() {
         addCont("Quelle", cboSrc, vBoxFilter);
         addCont("Downloadart", cboKind, vBoxFilter);
-        addCont("Sender", cboChannel, vBoxFilter);
+        addCont("Sender", mbChannel, vBoxFilter);
         addCont("Abo", cboAbo, vBoxFilter);
         addCont("Status", cboState, vBoxFilter);
 
@@ -189,12 +192,13 @@ public class DownloadFilterController extends FilterController {
                 DownloadConstants.STATE_COMBO_NOT_STARTED,
                 DownloadConstants.STATE_COMBO_WAITING,
                 DownloadConstants.STATE_COMBO_STARTED,
-                DownloadConstants.STATE_COMBO_LOADING);
+                DownloadConstants.STATE_COMBO_LOADING,
+                DownloadConstants.STATE_COMBO_ERROR);
         cboState.valueProperty().bindBidirectional(ProgConfig.FILTER_DOWNLOAD_STATE);
 
-        cboChannel.setItems(progData.worker.getAllChannelList());
-        cboChannel.setVisibleRowCount(25);
-        cboChannel.valueProperty().bindBidirectional(ProgConfig.FILTER_DOWNLOAD_CHANNEL);
+//        cboChannel.setItems(progData.worker.getAllChannelList());
+//        cboChannel.setVisibleRowCount(25);
+//        cboChannel.valueProperty().bindBidirectional(ProgConfig.FILTER_DOWNLOAD_CHANNEL);
 
         cboAbo.setItems(progData.worker.getAllAboNamesList()); // todo evtl. nur die vorhandenen Abos
         cboAbo.valueProperty().bindBidirectional(ProgConfig.FILTER_DOWNLOAD_ABO);
@@ -258,9 +262,12 @@ public class DownloadFilterController extends FilterController {
         if (cboKind.getSelectionModel() != null) {
             cboKind.getSelectionModel().selectFirst();
         }
-        if (cboChannel.getSelectionModel() != null) {
-            cboChannel.getSelectionModel().selectFirst();
-        }
+
+        ProgConfig.FILTER_DOWNLOAD_CHANNEL.setValue("");
+//        mbChannel.clear();
+//        if (cboChannel.getSelectionModel() != null) {
+//            cboChannel.getSelectionModel().selectFirst();
+//        }
         if (cboAbo.getSelectionModel() != null) {
             cboAbo.getSelectionModel().selectFirst();
         }

@@ -22,6 +22,7 @@ import de.p2tools.mtplayer.controller.data.BlackData;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.filmfilter.BlacklistFactory;
+import de.p2tools.mtplayer.gui.filter.PMenuButton;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
@@ -30,8 +31,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class AddBlacklistDialogController extends PDialogExtra {
 
@@ -43,7 +42,7 @@ public class AddBlacklistDialogController extends PDialogExtra {
     private final Button btnCount = new Button("Treffer zählen");
     private final Label lblCount = new Label();
 
-    private final MenuButton mbChannel = new MenuButton("");
+    private final PMenuButton mbChannel;
     private final TextField txtTheme = new TextField();
     private final PToggleSwitch tgTheme = new PToggleSwitch("exakt:");
     private final TextField txtTitle = new TextField();
@@ -68,6 +67,11 @@ public class AddBlacklistDialogController extends PDialogExtra {
         this.progData = progData;
         this.filmDataMTP = filmDataMTP;
         this.blackData = blackData;
+
+        mbChannel = new PMenuButton(blackData.channelProperty(),
+                ProgData.getInstance().worker.getAllChannelList());
+
+
         init(true);
     }
 
@@ -100,7 +104,7 @@ public class AddBlacklistDialogController extends PDialogExtra {
     }
 
     private void initGridPane() {
-        initSenderMenu();
+//        initSenderMenu();
         btnCount.setOnAction(a -> {
             BlacklistFactory.countHits(blackData);
             lblCount.setText(blackData.getCountHits() + "");
@@ -108,7 +112,7 @@ public class AddBlacklistDialogController extends PDialogExtra {
 
         btnChannel.setOnAction(a -> {
             blackData.setChannel(filmDataMTP.getChannel());
-            initSenderMenu();
+//            blackData.channelProperty().setValue("");
         });
         btnChannel.setTooltip(new Tooltip("Daten vom Film eintragen"));
         btnChannel.setGraphic(ProgIcons.Icons.ICON_BUTTON_RESET.getImageView());
@@ -121,7 +125,7 @@ public class AddBlacklistDialogController extends PDialogExtra {
         btnTitel.setTooltip(new Tooltip("Daten vom Film eintragen"));
         btnTitel.setGraphic(ProgIcons.Icons.ICON_BUTTON_RESET.getImageView());
 
-        btnClearChannel.setOnAction(a -> clearMenuText());
+        btnClearChannel.setOnAction(a -> blackData.channelProperty().setValue(""));
         btnClearChannel.setTooltip(new Tooltip("Feld löschen"));
         btnClearChannel.setGraphic(ProgIcons.Icons.ICON_BUTTON_CLEAR.getImageView());
 
@@ -137,7 +141,7 @@ public class AddBlacklistDialogController extends PDialogExtra {
         btnClearThemeTitel.setTooltip(new Tooltip("Feld löschen"));
         btnClearThemeTitel.setGraphic(ProgIcons.Icons.ICON_BUTTON_CLEAR.getImageView());
 
-        mbChannel.textProperty().bindBidirectional(blackData.channelProperty());
+//        mbChannel.textProperty().bindBidirectional(blackData.channelProperty());
         mbChannel.setMaxWidth(Double.MAX_VALUE);
 
         txtTheme.textProperty().bindBidirectional(blackData.themeProperty());
@@ -176,56 +180,56 @@ public class AddBlacklistDialogController extends PDialogExtra {
         gridPane.add(btnClearTitel, 3, row);
     }
 
-    private void initSenderMenu() {
-        mbChannel.getItems().clear();
-        checkMenuItemsList.clear();
-        mbChannel.getStyleClass().add("cbo-menu");
-
-        List<String> senderArr = new ArrayList<>();
-        String sender = blackData.channelProperty().get();
-        if (sender != null) {
-            if (sender.contains(",")) {
-                senderArr.addAll(Arrays.asList(sender.replace(" ", "").toLowerCase().split(",")));
-            } else {
-                senderArr.add(sender.toLowerCase());
-            }
-            senderArr.stream().forEach(s -> s = s.trim());
-        }
-
-        MenuItem mi = new MenuItem("Auswahl löschen");
-        mi.setOnAction(a -> clearMenuText());
-        mbChannel.getItems().add(mi);
-
-        for (String s : ProgData.getInstance().worker.getAllChannelList()) {
-            if (s.isEmpty()) {
-                continue;
-            }
-            CheckMenuItem miCheck = new CheckMenuItem(s);
-            if (senderArr.contains(s.toLowerCase())) {
-                miCheck.setSelected(true);
-            }
-            miCheck.setOnAction(a -> setMenuText());
-
-            checkMenuItemsList.add(miCheck);
-            mbChannel.getItems().add(miCheck);
-        }
-        setMenuText();
-    }
-
-    private void clearMenuText() {
-        for (CheckMenuItem cmi : checkMenuItemsList) {
-            cmi.setSelected(false);
-        }
-        mbChannel.setText("");
-    }
-
-    private void setMenuText() {
-        String text = "";
-        for (CheckMenuItem cmi : checkMenuItemsList) {
-            if (cmi.isSelected()) {
-                text = text + (text.isEmpty() ? "" : ", ") + cmi.getText();
-            }
-        }
-        mbChannel.setText(text);
-    }
+//    private void initSenderMenu() {
+//        mbChannel.getItems().clear();
+//        checkMenuItemsList.clear();
+//        mbChannel.getStyleClass().add("cbo-menu");
+//
+//        List<String> senderArr = new ArrayList<>();
+//        String sender = blackData.channelProperty().get();
+//        if (sender != null) {
+//            if (sender.contains(",")) {
+//                senderArr.addAll(Arrays.asList(sender.replace(" ", "").toLowerCase().split(",")));
+//            } else {
+//                senderArr.add(sender.toLowerCase());
+//            }
+//            senderArr.stream().forEach(s -> s = s.trim());
+//        }
+//
+//        MenuItem mi = new MenuItem("Auswahl löschen");
+//        mi.setOnAction(a -> clearMenuText());
+//        mbChannel.getItems().add(mi);
+//
+//        for (String s : ProgData.getInstance().worker.getAllChannelList()) {
+//            if (s.isEmpty()) {
+//                continue;
+//            }
+//            CheckMenuItem miCheck = new CheckMenuItem(s);
+//            if (senderArr.contains(s.toLowerCase())) {
+//                miCheck.setSelected(true);
+//            }
+//            miCheck.setOnAction(a -> setMenuText());
+//
+//            checkMenuItemsList.add(miCheck);
+//            mbChannel.getItems().add(miCheck);
+//        }
+//        setMenuText();
+//    }
+//
+//    private void clearMenuText() {
+//        for (CheckMenuItem cmi : checkMenuItemsList) {
+//            cmi.setSelected(false);
+//        }
+//        mbChannel.setText("");
+//    }
+//
+//    private void setMenuText() {
+//        String text = "";
+//        for (CheckMenuItem cmi : checkMenuItemsList) {
+//            if (cmi.isSelected()) {
+//                text = text + (text.isEmpty() ? "" : ", ") + cmi.getText();
+//            }
+//        }
+//        mbChannel.setText(text);
+//    }
 }
