@@ -97,7 +97,7 @@ public class PaneBlackList {
                 ProgData.getInstance().worker.getAllChannelList());
 
         mbChannel = new PMenuButton(mbChannelProp,
-                ProgData.getInstance().worker.getAllChannelList());
+                ProgData.getInstance().worker.getAllChannelList(), true);
 
         if (controlBlackListNotFilmFilter) {
             sortedList = progData.blackList.getSortedList();
@@ -417,7 +417,6 @@ public class PaneBlackList {
         gridPane.setPadding(new Insets(P2LibConst.DIST_EDGE));
 
         int row = 0;
-        mbChannel.setMaxWidth(Double.MAX_VALUE);
         gridPane.add(new Label("Sender:"), 0, row);
         gridPane.add(mbChannel, 1, row);
 

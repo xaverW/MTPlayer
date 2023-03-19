@@ -46,6 +46,16 @@ public class PMenuButton extends MenuButton {
         initMenuButton();
     }
 
+    public PMenuButton(StringProperty filter, ObservableList<String> allFilterList, boolean minWidth) {
+        this.filter = filter;
+        this.allFilterList = allFilterList;
+        initMenuButton();
+        if (minWidth) {
+            setMaxWidth(-1);
+            setMinWidth(200);
+        }
+    }
+
     private void initMenuButton() {
         getStyleClass().add("cbo-menu");
         setMaxWidth(Double.MAX_VALUE);
@@ -86,11 +96,12 @@ public class PMenuButton extends MenuButton {
             hide();
         });
 
-        HBox hBoxAll = new HBox(10);
+        HBox hBoxAll = new HBox(5);
         hBoxAll.setAlignment(Pos.CENTER_LEFT);
         hBoxAll.getChildren().addAll(miCheckAll, btnClear);
 
         CustomMenuItem cmiAll = new CustomMenuItem(hBoxAll);
+        cmiAll.getStyleClass().add("cbo-menu-item");
         getItems().add(cmiAll);
 
         for (String s : allFilterList) {
@@ -116,11 +127,12 @@ public class PMenuButton extends MenuButton {
                 hide();
             });
 
-            HBox hBox = new HBox(10);
+            HBox hBox = new HBox(5);
             hBox.setAlignment(Pos.CENTER_LEFT);
             hBox.getChildren().addAll(miCheck, btnChannel);
 
             CustomMenuItem cmi = new CustomMenuItem(hBox);
+            cmi.getStyleClass().add("cbo-menu-item");
             getItems().add(cmi);
         }
     }

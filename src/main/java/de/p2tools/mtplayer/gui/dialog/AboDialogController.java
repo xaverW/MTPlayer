@@ -94,7 +94,7 @@ public class AboDialogController extends PDialogExtra {
         aboList.add(abo);
         this.aboCopy = abo.getCopy();
         this.mbChannel = new PMenuButton(aboCopy.channelProperty(),
-                ProgData.getInstance().worker.getAllChannelList());
+                ProgData.getInstance().worker.getAllChannelList(), true);
 
         initDialog();
     }
@@ -109,7 +109,7 @@ public class AboDialogController extends PDialogExtra {
         aboList.add(abo);
         aboCopy = abo.getCopy();
         this.mbChannel = new PMenuButton(aboCopy.channelProperty(),
-                ProgData.getInstance().worker.getAllChannelList());
+                ProgData.getInstance().worker.getAllChannelList(), true);
 
         final String channel = filmFilter.isChannelVis() ? filmFilter.getChannel() : "";
         final String theme = filmFilter.isThemeVis() ? filmFilter.getTheme() : "";
@@ -146,7 +146,7 @@ public class AboDialogController extends PDialogExtra {
         this.aboList.addAll(aboList);
         this.aboCopy = aboList.get(0).getCopy();
         this.mbChannel = new PMenuButton(aboCopy.channelProperty(),
-                ProgData.getInstance().worker.getAllChannelList());
+                ProgData.getInstance().worker.getAllChannelList(), true);
 
         initDialog();
     }

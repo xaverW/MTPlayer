@@ -59,7 +59,6 @@ public class AboEditDialogController extends AboDialogController {
 
     @Override
     void makeControl() {
-//        initSenderMenu();
         for (int i = 0; i < AboFieldNames.MAX_ELEM; ++i) {
             initControl(i);
             addLabel(i);
@@ -269,7 +268,7 @@ public class AboEditDialogController extends AboDialogController {
                 }
                 break;
             case AboFieldNames.ABO_CHANNEL_NO:
-                mbChannel.setMaxWidth(Double.MAX_VALUE);
+//                mbChannel.setMaxWidth(Double.MAX_VALUE);
                 this.gridPane.add(mbChannel, 1, grid);
                 break;
             case AboFieldNames.ABO_DEST_PATH_NO:
@@ -282,8 +281,6 @@ public class AboEditDialogController extends AboDialogController {
                 cboDestination.setItems(FXCollections.observableArrayList(path));
                 cboDestination.setEditable(true);
                 cboDestination.getEditor().textProperty().bindBidirectional(aboCopy.aboSubDirProperty());
-//                aboCopy.aboSubDirProperty().addListener((v, o, n) ->
-//                        cbxEditAll[i].setSelected(true));
                 cboDestination.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
                     cbxEditAll[i].setSelected(true);
                 });
@@ -542,64 +539,4 @@ public class AboEditDialogController extends AboDialogController {
         }
         okProp.set(ok);
     }
-
-//    private void initSenderMenu() {
-//        mbChannel.getStyleClass().add("cbo-menu");
-//        mbChannel.setMaxWidth(Double.MAX_VALUE);
-//
-//        List<String> senderArr = new ArrayList<>();
-//        String sender = aboCopy.channelProperty().get();
-//        if (sender != null) {
-//            if (sender.contains(",")) {
-//                senderArr.addAll(Arrays.asList(sender.replace(" ", "").toLowerCase().split(",")));
-//            } else {
-//                senderArr.add(sender.toLowerCase());
-//            }
-//            senderArr.stream().forEach(s -> s = s.trim());
-//        }
-//
-//        MenuItem mi = new MenuItem("Auswahl löschen");
-//        mi.setOnAction(a -> {
-//            clearMenuText();
-//            cbxEditAll[AboFieldNames.ABO_CHANNEL_NO].setSelected(true);
-//        });
-//        mbChannel.getItems().add(mi);
-//
-//        for (String s : progData.worker.getAllChannelList()) {
-//            if (s.isEmpty()) {
-//                continue;
-//            }
-//            CheckMenuItem miCheck = new CheckMenuItem(s);
-//            if (senderArr.contains(s.toLowerCase())) {
-//                miCheck.setSelected(true);
-//            }
-//            miCheck.setOnAction(a -> {
-//                setMenuText();
-//                cbxEditAll[AboFieldNames.ABO_CHANNEL_NO].setSelected(true);
-//            });
-//
-//            checkMenuItemsList.add(miCheck);
-//            mbChannel.getItems().add(miCheck);
-//        }
-//        setMenuText();
-//    }
-
-//    private void clearMenuText() {
-//        for (CheckMenuItem cmi : checkMenuItemsList) {
-//            cmi.setSelected(false);
-//        }
-//        mbChannel.setText("");
-//        aboCopy.channelProperty().setValue("");
-//    }
-//
-//    private void setMenuText() {
-//        String text = "";
-//        for (CheckMenuItem cmi : checkMenuItemsList) {
-//            if (cmi.isSelected()) {
-//                text = text + (text.isEmpty() ? "" : ", ") + cmi.getText();
-//            }
-//        }
-//        mbChannel.setText(text);
-//        aboCopy.channelProperty().setValue(text);
-//    }
 }

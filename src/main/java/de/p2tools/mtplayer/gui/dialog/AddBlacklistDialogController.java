@@ -69,7 +69,7 @@ public class AddBlacklistDialogController extends PDialogExtra {
         this.blackData = blackData;
 
         mbChannel = new PMenuButton(blackData.channelProperty(),
-                ProgData.getInstance().worker.getAllChannelList());
+                ProgData.getInstance().worker.getAllChannelList(), true);
 
 
         init(true);
@@ -140,9 +140,6 @@ public class AddBlacklistDialogController extends PDialogExtra {
         btnClearThemeTitel.setOnAction(a -> blackData.setThemeTitle(""));
         btnClearThemeTitel.setTooltip(new Tooltip("Feld löschen"));
         btnClearThemeTitel.setGraphic(ProgIcons.Icons.ICON_BUTTON_CLEAR.getImageView());
-
-//        mbChannel.textProperty().bindBidirectional(blackData.channelProperty());
-        mbChannel.setMaxWidth(Double.MAX_VALUE);
 
         txtTheme.textProperty().bindBidirectional(blackData.themeProperty());
         tgTheme.selectedProperty().bindBidirectional(blackData.themeExactProperty());
