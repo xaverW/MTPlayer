@@ -49,7 +49,7 @@ public class BlacklistFactory {
             return;
         }
 
-        ProgData.getInstance().filmGuiController.setLastShownFilm(blackData);
+//        ProgData.getInstance().filmGuiController.setLastShownFilm(blackData);
         ProgData.getInstance().blackList.addAndNotify(blackData);
     }
 
@@ -65,7 +65,7 @@ public class BlacklistFactory {
 
     public static void addBlack(String sender, String theme, String titel) {
         BlackData blackData = new BlackData(sender, theme, titel, "");
-        ProgData.getInstance().filmGuiController.setLastShownFilm(blackData);
+//        ProgData.getInstance().filmGuiController.setLastShownFilm(blackData);
         ProgData.getInstance().blackList.addAndNotify(blackData);
     }
 
