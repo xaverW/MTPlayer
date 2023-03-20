@@ -76,6 +76,7 @@ public class PaneBlackList {
     private final TextField txtFilterTitel = new TextField();
     private final TextField txtFilterThemaTitel = new TextField();
     private final PToggleSwitch tglFilterExact = new PToggleSwitch("Thema exakt");
+    private final TextField txtFilterAll = new TextField();
 
     private final BlackList list;
     private final SortedList<BlackData> sortedList;
@@ -113,8 +114,9 @@ public class PaneBlackList {
     }
 
     public void make(Collection<TitledPane> result) {
-        final VBox vBox = new VBox(10);
+        final VBox vBox = new VBox(P2LibConst.DIST_EDGE);
         vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        vBox.setAlignment(Pos.TOP_RIGHT);
 
         makeConfigBlackList(vBox);
         initTable(vBox);
@@ -206,42 +208,54 @@ public class PaneBlackList {
     }
 
     private void addFilterGrid(VBox vBox) {
-        VBox vbAll = new VBox(P2LibConst.DIST_EDGE);
-        vbAll.setAlignment(Pos.TOP_LEFT);
-        vbAll.setPadding(new Insets(P2LibConst.DIST_EDGE));
-        vbAll.getStyleClass().add("extra-pane");
+        final int SPACE_TITLE = 1;
+        final int SPACE_VBOX = 5;
+        VBox vbAll1 = new VBox(8);
+        vbAll1.setAlignment(Pos.TOP_LEFT);
+        vbAll1.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        vbAll1.getStyleClass().add("extra-pane");
 
-        Label label = new Label("Suchen:");
-        vbAll.getChildren().add(label);
+        Label label = new Label("Diese Felder durchsuchen:");
+        vbAll1.getChildren().add(label);
 
-        VBox vb = new VBox(2);
+        VBox vb = new VBox(SPACE_TITLE);
         vb.getChildren().addAll(new Label("Sender"), mbFilterChannel);
-        vbAll.getChildren().add(vb);
+        vbAll1.getChildren().add(vb);
         HBox.setHgrow(vb, Priority.ALWAYS);
 
-        vb = new VBox(2);
+        vb = new VBox(SPACE_TITLE);
         vb.getChildren().addAll(new Label("Thema"), txtFilterThema, PGuiTools.getVDistance(2), tglFilterExact);
-        vbAll.getChildren().addAll(vb, PGuiTools.getVDistance(1));
+        vbAll1.getChildren().addAll(vb, PGuiTools.getVDistance(1));
         HBox.setHgrow(vb, Priority.ALWAYS);
 
-        vb = new VBox(2);
+        vb = new VBox(SPACE_TITLE);
         vb.getChildren().addAll(new Label("Titel"), txtFilterTitel);
-        vbAll.getChildren().add(vb);
+        vbAll1.getChildren().add(vb);
         HBox.setHgrow(vb, Priority.ALWAYS);
 
-        vb = new VBox(2);
+        vb = new VBox(SPACE_TITLE);
         vb.getChildren().addAll(new Label("Thema-Titel"), txtFilterThemaTitel);
-        vbAll.getChildren().add(vb);
+        vbAll1.getChildren().add(vb);
         HBox.setHgrow(vb, Priority.ALWAYS);
 
-        HBox hBox = new HBox();
-        hBox.setAlignment(Pos.CENTER_RIGHT);
-        hBox.getChildren().add(btnClearFilter);
-        vbAll.getChildren().add(hBox);
+        VBox vbAll2 = new VBox(SPACE_VBOX);
+        vbAll2.setAlignment(Pos.TOP_LEFT);
+        vbAll2.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        vbAll2.getStyleClass().add("extra-pane");
 
-        HBox h = new HBox(P2LibConst.DIST_EDGE);
-        h.getChildren().addAll(tableView, vbAll);
+        vb = new VBox(SPACE_TITLE);
+        vb.getChildren().addAll(new Label("Alle Felder durchsuchen:"), txtFilterAll);
+        vbAll2.getChildren().add(vb);
+        HBox.setHgrow(vb, Priority.ALWAYS);
+
+        VBox v = new VBox(SPACE_VBOX);
+        v.getChildren().addAll(vbAll1, vbAll2, btnClearFilter);
+        v.setAlignment(Pos.TOP_RIGHT);
+
+        HBox h = new HBox(SPACE_VBOX);
+        h.getChildren().addAll(tableView, v);
         HBox.setHgrow(tableView, Priority.ALWAYS);
+        VBox.setVgrow(h, Priority.ALWAYS);
         vBox.getChildren().add(h);
     }
 
@@ -392,6 +406,7 @@ public class PaneBlackList {
         txtFilterThema.textProperty().addListener((u, o, n) -> addPredicate());
         txtFilterTitel.textProperty().addListener((u, o, n) -> addPredicate());
         txtFilterThemaTitel.textProperty().addListener((u, o, n) -> addPredicate());
+        txtFilterAll.textProperty().addListener((u, o, n) -> addPredicate());
 
         tglFilterExact.setIndeterminate(true);
         tglFilterExact.setAllowIndeterminate(true);
@@ -405,6 +420,7 @@ public class PaneBlackList {
             tglFilterExact.setIndeterminate(true);
             txtFilterTitel.clear();
             txtFilterThemaTitel.clear();
+            txtFilterAll.clear();
         });
     }
 
@@ -451,14 +467,7 @@ public class PaneBlackList {
         btnLoad.setOnAction(event -> {
             LoadFilmFactory.getInstance().loadNewListFromWeb(true);
         });
-
-        HBox hBox = new HBox();
-        hBox.setPadding(new Insets(0, 0, 10, 0));
-        hBox.setAlignment(Pos.CENTER_RIGHT);
-        hBox.getChildren().add(btnLoad);
-        VBox.setVgrow(hBox, Priority.ALWAYS);
-
-        vBox.getChildren().addAll(hBox);
+        vBox.getChildren().addAll(btnLoad);
     }
 
     private void setRb() {
@@ -553,6 +562,16 @@ public class PaneBlackList {
         if (!txtFilterThemaTitel.getText().isEmpty()) {
             Filter filter = new Filter(txtFilterThemaTitel.getText(), true);
             predicate = predicate.and(blackData -> FilterCheck.check(filter, blackData.getThemeTitle()));
+        }
+
+        if (!txtFilterAll.getText().isEmpty()) {
+            Filter filter = new Filter(txtFilterAll.getText(), true);
+            predicate = predicate.and(blackData -> FilterCheck.check(filter, blackData.getChannel()) ||
+                    FilterCheck.check(filter, blackData.getTheme()) ||
+                    FilterCheck.check(filter, blackData.getTitle()) ||
+                    FilterCheck.check(filter, blackData.getThemeTitle())
+
+            );
         }
 
         list.filteredListSetPred(predicate);
