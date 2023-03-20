@@ -110,7 +110,7 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
         list.add(new Config_stringProp("channel", channel));
         list.add(new Config_stringProp("theme", theme));
         list.add(new Config_stringProp("title", title));
-        list.add(new Config_intProp("state", state));
+//        list.add(new Config_intProp("state", state)); Downloads starten immer in "init" damit sie nicht automatisch starten
         list.add(new Config_doubleProp("progress", progress));
         list.add(new Config_stringProp("remaining", remaining));
         list.add(new Config_stringProp("bandwidth", bandwidth));
