@@ -88,10 +88,13 @@ public class ConfigDialogController extends PDialogExtra {
 
     @Override
     public void make() {
-        setMaskerPane();
-        progData.maskerPane.visibleProperty().addListener((u, o, n) -> {
-            setMaskerPane();
-        });
+//        setMaskerPane();
+
+        this.getMaskerPane().visibleProperty().bind(ProgData.getInstance().maskerPane.visibleProperty());
+//        progData.maskerPane.visibleProperty().addListener((u, o, n) -> {
+//            //bind geht da nicht: wird im Listener gesetzt->todo nur Button dort setzen
+//            setMaskerPane();
+//        });
         Button btnStop = getMaskerPane().getButton();
         getMaskerPane().setButtonText("");
         btnStop.setGraphic(ProgIcons.Icons.ICON_BUTTON_STOP.getImageView());
@@ -101,9 +104,11 @@ public class ConfigDialogController extends PDialogExtra {
             public void start(ListenerFilmlistLoadEvent event) {
                 if (event.progress == ListenerLoadFilmlist.PROGRESS_INDETERMINATE) {
                     // ist dann die gespeicherte Filmliste
-                    getMaskerPane().setMaskerVisible(true, false);
+//                    getMaskerPane().setMaskerVisible(true, false);
+                    getMaskerPane().setButtonVisible(false);
                 } else {
-                    getMaskerPane().setMaskerVisible(true, true);
+//                    getMaskerPane().setMaskerVisible(true, true);
+                    getMaskerPane().setButtonVisible(true);
                 }
                 getMaskerPane().setMaskerProgress(event.progress, event.text);
             }
@@ -115,13 +120,14 @@ public class ConfigDialogController extends PDialogExtra {
 
             @Override
             public void loaded(ListenerFilmlistLoadEvent event) {
-                getMaskerPane().setMaskerVisible(true, false);
+//                getMaskerPane().setMaskerVisible(true, false);
+                getMaskerPane().setButtonVisible(false);
                 getMaskerPane().setMaskerProgress(ListenerLoadFilmlist.PROGRESS_INDETERMINATE, "Filmliste verarbeiten");
             }
 
             @Override
             public void finished(ListenerFilmlistLoadEvent event) {
-                getMaskerPane().setMaskerVisible(false);
+//                getMaskerPane().setMaskerVisible(false);
             }
         };
         LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(listener);
@@ -155,10 +161,10 @@ public class ConfigDialogController extends PDialogExtra {
             //zum Einfügen der Diakritika muss eine neue Filmliste geladen werden
             new Thread(() -> {
                 ProgData.getInstance().maskerPane.setMaskerText("Diakritika entfernen");
-                ProgData.getInstance().maskerPane.setMaskerVisible(true);
+                ProgData.getInstance().maskerPane.setMaskerVisible(true, true, false);
                 FilmFactory.flattenDiacritic(progData.filmlist);
                 Listener.notify(Listener.EVENT_DIACRITIC_CHANGED, ConfigDialogController.class.getSimpleName());
-                ProgData.getInstance().maskerPane.setMaskerVisible(false);
+                ProgData.getInstance().maskerPane.switchOffMasker();
             }).start();
         }
     }
@@ -178,13 +184,13 @@ public class ConfigDialogController extends PDialogExtra {
         super.close();
     }
 
-    private void setMaskerPane() {
-        if (progData.maskerPane.isVisible()) {
-            this.setMaskerVisible(true);
-        } else {
-            this.setMaskerVisible(false);
-        }
-    }
+//    private void setMaskerPane() {
+//        if (progData.maskerPane.isVisible()) {
+//            this.setMaskerVisible(true);
+//        } else {
+//            this.setMaskerVisible(false);
+//        }
+//    }
 
     private void initPanel() {
         try {

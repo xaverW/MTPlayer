@@ -95,7 +95,7 @@ public class BlacklistFilterFactory {
         if (!ProgData.getInstance().maskerPane.isVisible()) {
             maskerSet = true;
             ProgData.getInstance().maskerPane.setMaskerText("Blacklist filtern");
-            ProgData.getInstance().maskerPane.setMaskerVisible(true);
+            ProgData.getInstance().maskerPane.setMaskerVisible(true, true, false);
         }
 
         //und jetzt die Filmliste durchlaufen parallel/stream ist gleich??

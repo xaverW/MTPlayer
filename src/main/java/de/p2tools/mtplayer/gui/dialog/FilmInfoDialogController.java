@@ -64,7 +64,7 @@ public class FilmInfoDialogController extends PDialogExtra {
 
     private FilmInfoDialogController() {
         super(ProgData.getInstance().primaryStage, ProgConfig.SYSTEM_SIZE_DIALOG_FILMINFO,
-                "Filminfos", false, false);
+                "Filminfos", false, false, DECO.BORDER_SMALL, true);
 
         init(false);
     }
@@ -136,6 +136,9 @@ public class FilmInfoDialogController extends PDialogExtra {
     public void make() {
         ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> updateCss());
         addOkButton(btnOk);
+
+        getMaskerPane().setTextVisible(false);
+        this.getMaskerPane().visibleProperty().bind(ProgData.getInstance().maskerPane.visibleProperty());
 
         getHboxLeft().getChildren().add(tglUrl);
         tglUrl.setTooltip(new Tooltip("URL anzeigen"));

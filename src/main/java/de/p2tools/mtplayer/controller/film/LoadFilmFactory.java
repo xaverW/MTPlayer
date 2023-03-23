@@ -104,9 +104,9 @@ public class LoadFilmFactory {
                 ProgData.getInstance().worker.workOnLoadStart();
                 if (event.progress == PROGRESS_INDETERMINATE) {
                     // ist dann die gespeicherte Filmliste
-                    ProgData.getInstance().maskerPane.setMaskerVisible(true, false);
+                    ProgData.getInstance().maskerPane.setMaskerVisible(true, true, false);
                 } else {
-                    ProgData.getInstance().maskerPane.setMaskerVisible(true, true);
+                    ProgData.getInstance().maskerPane.setMaskerVisible(true, true, true);
                 }
                 ProgData.getInstance().maskerPane.setMaskerProgress(event.progress, event.text);
             }
@@ -118,7 +118,7 @@ public class LoadFilmFactory {
 
             @Override
             public void loaded(ListenerFilmlistLoadEvent event) {
-                ProgData.getInstance().maskerPane.setMaskerVisible(true, false);
+                ProgData.getInstance().maskerPane.setMaskerVisible(true, true, false);
                 ProgData.getInstance().maskerPane.setMaskerProgress(PROGRESS_INDETERMINATE, "Filmliste verarbeiten");
             }
 
@@ -178,7 +178,8 @@ public class LoadFilmFactory {
                 Platform.runLater(() -> ProgTipOfDayFactory.showDialog(ProgData.getInstance(), false));
             }
 
-            ProgData.getInstance().maskerPane.switchOffMasker();//damit auf jedem Fall, aus
+            ProgData.getInstance().maskerPane.switchOffMasker();
+            ;//damit auf jedem Fall, aus
         }).start();
     }
 }

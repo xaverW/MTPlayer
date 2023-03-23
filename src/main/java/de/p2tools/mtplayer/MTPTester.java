@@ -64,7 +64,7 @@ public class MTPTester {
             gridPane.setPadding(new Insets(10));
             gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow());
 
-            maskerPane.setMaskerVisible(false);
+            maskerPane.switchOffMasker();
             maskerPane.setButtonText("Abbrechen");
             maskerPane.getButton().setOnAction(a -> close());
 
