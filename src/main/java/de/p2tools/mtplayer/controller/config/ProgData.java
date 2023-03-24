@@ -58,11 +58,12 @@ public class ProgData {
     private static ProgData instance;
 
     // flags
-    public static boolean debug = false; // Debugmodus
-    public static boolean automode = false; // Automodus: start, laden, beenden
-    public static boolean duration = false; // Duration ausgeben
-    public static boolean reset = false; // Programm auf Starteinstellungen zurücksetzen
-    public static boolean firstProgramStart = false; // ist der allererste Programmstart: Init wird gemacht
+    public static boolean debug = false; //Debugmodus
+    public static boolean automode = false; //Automodus: start, laden, beenden
+    public static boolean duration = false; //Duration ausgeben
+    public static boolean startMinimized = false; //Minimiert starten
+    public static boolean reset = false; //Programm auf Starteinstellungen zurücksetzen
+    public static boolean firstProgramStart = false; //ist der allererste Programmstart: Init wird gemacht
 
     // Infos
     public static String configDir = ""; //Verzeichnis zum Speichern der Programmeinstellungen

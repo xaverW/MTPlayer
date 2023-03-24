@@ -115,6 +115,8 @@ public class MTPlayer extends Application {
             scene.widthProperty().addListener((v, o, n) -> PGuiSize.getSizeScene(ProgConfig.SYSTEM_SIZE_GUI, primaryStage, scene));
             primaryStage.xProperty().addListener((v, o, n) -> PGuiSize.getSizeScene(ProgConfig.SYSTEM_SIZE_GUI, primaryStage, scene));
             primaryStage.yProperty().addListener((v, o, n) -> PGuiSize.getSizeScene(ProgConfig.SYSTEM_SIZE_GUI, primaryStage, scene));
+
+            primaryStage.setIconified(ProgData.startMinimized);
             primaryStage.show();
         } catch (final Exception e) {
             e.printStackTrace();

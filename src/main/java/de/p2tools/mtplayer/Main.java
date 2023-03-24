@@ -34,6 +34,7 @@ public class Main {
      * -t,  --time          show timekeeping info
      * -p,  --path <arg>    path of configuration file
      * -v,  --version       show version
+     * -m,  --minimize      start minimized
      *
      */
 

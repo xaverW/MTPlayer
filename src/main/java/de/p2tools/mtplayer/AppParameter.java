@@ -39,6 +39,7 @@ public class AppParameter {
         DEBUG("d", "debug", false, "show debug info"),
         AUTOMODE("a", "auto", false, "use automode: start, load, quit"),
         DURATION("t", "time", false, "show timekeeping info"),
+        START_MINIMIZED("m", "minimize", false, "start minimized"),
         FILMLIST_URL("u", "url", true, "use url for filmList download");
 
         final String shortname;
@@ -103,6 +104,9 @@ public class AppParameter {
                 setConfigDir(path);
             }
 
+            if (hasOption(line, ProgParameter.START_MINIMIZED)) {
+                ProgData.startMinimized = true;
+            }
             if (hasOption(line, ProgParameter.FILMLIST_URL)) {
                 String url = line.getOptionValue(ProgParameter.FILMLIST_URL.name);
                 setFilmlistUrl(url);
