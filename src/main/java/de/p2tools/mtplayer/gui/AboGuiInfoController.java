@@ -23,7 +23,6 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -62,14 +61,17 @@ public class AboGuiInfoController extends VBox {
         gridPaneLeft.add(txtName, 1, 0);
         gridPaneLeft.add(new Label(AboFieldNames.ABO_DESCRIPTION), 0, 1);
         gridPaneLeft.add(txtInfo, 1, 1);
-        gridPaneLeft.getColumnConstraints().addAll(new ColumnConstraints(), PColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPaneLeft.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(), PColumnConstraints.getCcComputedSizeAndHgrow());
+
         VBox.setVgrow(gridPaneLeft, Priority.ALWAYS);
 
 
         final GridPane gridPaneRight = new GridPane();
+        gridPaneRight.getStyleClass().add("extra-pane-info");
         gridPaneRight.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPaneRight.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         gridPaneRight.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        gridPaneRight.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(), PColumnConstraints.getCcComputedSizeAndHgrow());
 
         chkExact.setDisable(true);
         int row = 0;

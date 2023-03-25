@@ -165,7 +165,7 @@ public class FilmGuiTableContextMenu {
             miAboAddChannelThemeTitle.setDisable(true);
             //Abo löschen/ändern
             miAboChange.setOnAction(event ->
-                    progData.aboList.changeAbo(aboData));
+                    progData.aboList.aboEditDialog(aboData));
             miAboDel.setOnAction(event ->
                     progData.aboList.deleteAbo(aboData));
         }

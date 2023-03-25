@@ -72,7 +72,7 @@ public class AboMenu {
         btOn.setOnAction(a -> progData.aboGuiController.setAboActive(true));
         btOff.setOnAction(a -> progData.aboGuiController.setAboActive(false));
         btDel.setOnAction(a -> progData.aboGuiController.deleteAbo());
-        btChange.setOnAction(a -> progData.aboGuiController.changeAbo());
+        btChange.setOnAction(a -> progData.aboGuiController.aboEditDialog());
     }
 
     private void initMenu() {
@@ -89,7 +89,7 @@ public class AboMenu {
         final MenuItem miDel = new MenuItem("Abos löschen");
         miDel.setOnAction(a -> progData.aboGuiController.deleteAbo());
         final MenuItem miChange = new MenuItem("Abos ändern");
-        miChange.setOnAction(a -> progData.aboGuiController.changeAbo());
+        miChange.setOnAction(a -> progData.aboGuiController.aboEditDialog());
         final MenuItem miNew = new MenuItem("Neues Abo anlegen");
         miNew.setOnAction(a -> progData.aboList.addNewAboButton("Neu", "", "", ""));
         final MenuItem miAboAddFilter = new MenuItem("Aus dem Film-Filter ein Abo erstellen");

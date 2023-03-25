@@ -280,19 +280,30 @@ public class FilmGuiController extends AnchorPane {
 
     private void initTable() {
         Table.setTable(tableView);
-
         tableView.setItems(sortedList);
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
 
-        tableView.setRowFactory(tv -> {
+        tableView.setRowFactory(tableView -> {
             TableRowFilm<FilmDataMTP> row = new TableRowFilm<>();
             row.setOnMouseClicked(event -> {
                 if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
                     FilmInfoDialogController.getInstanceAndShow().showFilmInfo();
                 }
             });
+            row.hoverProperty().addListener((observable) -> {
+                final FilmDataMTP filmDataMTP = (FilmDataMTP) row.getItem();
+                if (row.isHover() && filmDataMTP != null) {
+                    filmGuiInfoController.setFilm(filmDataMTP);
+                    FilmInfoDialogController.getInstance().setFilm(filmDataMTP);
+                } else {
+                    setFilmInfos();
+                }
+            });
             return row;
         });
+        tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
+                //wird auch durch FilmlistenUpdate ausgelöst
+                Platform.runLater(this::setFilmInfos));
 
         tableView.setOnMousePressed(m -> {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
@@ -324,9 +335,6 @@ public class FilmGuiController extends AnchorPane {
                 event.consume();
             }
         });
-
-        tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
-                Platform.runLater(this::setFilmInfos));
     }
 
     private void setFilmInfos() {

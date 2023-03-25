@@ -192,15 +192,14 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
         new AboEditDialogController(progData, abo);
     }
 
-    public synchronized void changeAbo(AboData abo) {
+    public synchronized void aboEditDialog(AboData abo) {
         //Abo aus Tab Filme/Download ändern
         if (abo != null) {
-            ObservableList<AboData> lAbo = FXCollections.observableArrayList(abo);
-            changeAbo(lAbo);
+            aboEditDialog(FXCollections.observableArrayList(abo));
         }
     }
 
-    public synchronized void changeAbo(ObservableList<AboData> lAbo) {
+    public synchronized void aboEditDialog(ObservableList<AboData> lAbo) {
         if (!lAbo.isEmpty()) {
             new AboEditDialogController(progData, lAbo);
         }

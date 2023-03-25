@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.ProgIcons;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.PHyperlink;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
 import javafx.geometry.Insets;
@@ -72,9 +73,11 @@ public class FilmGuiInfoController extends VBox {
         vBoxLeft.getChildren().addAll(lblTitle, stackPane, hBoxUrl);
 
         final GridPane gridPane = new GridPane();
+        gridPane.getStyleClass().add("extra-pane-info");
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         gridPane.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(), PColumnConstraints.getCcComputedSizeAndHgrow());
 
         int row = 0;
         gridPane.add(new Label("Datum: "), 0, row);

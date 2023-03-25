@@ -59,7 +59,7 @@ public class AboGuiTableContextMenue {
         final MenuItem miDel = new MenuItem("Abos löschen");
         miDel.setOnAction(a -> aboGuiController.deleteAbo());
         final MenuItem miChange = new MenuItem("Abos ändern");
-        miChange.setOnAction(a -> aboGuiController.changeAbo());
+        miChange.setOnAction(a -> aboGuiController.aboEditDialog());
         final MenuItem miNew = new MenuItem("neues Abo anlegen");
         miNew.setOnAction(a -> progData.aboList.addNewAboButton("Neu", "", "", ""));
 

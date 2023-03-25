@@ -122,7 +122,7 @@ public class DownloadGuiTableContextMenu {
         final MenuItem miChangeAbo = new MenuItem("Abo ändern");
         final MenuItem miDelAbo = new MenuItem("Abo löschen");
         if (download != null && download.getAbo() != null) {
-            miChangeAbo.setOnAction(event -> progData.aboList.changeAbo(download.getAbo()));
+            miChangeAbo.setOnAction(event -> progData.aboList.aboEditDialog(download.getAbo()));
             miDelAbo.setOnAction(event -> progData.aboList.deleteAbo(download.getAbo()));
         } else {
             miChangeAbo.setDisable(true);

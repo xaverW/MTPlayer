@@ -43,7 +43,6 @@ import de.p2tools.p2lib.tools.PSystemUtils;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
-import javafx.collections.ListChangeListener;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Orientation;
@@ -139,7 +138,7 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     public void isShown() {
-        setFilm();
+        setFilmInfos();
         tableView.requestFocus();
     }
 
@@ -210,7 +209,7 @@ public class DownloadGuiController extends AnchorPane {
         PSystemUtils.copyToClipboard(download.get().getUrl());
     }
 
-    private void setFilm() {
+    private void setFilmInfos() {
         DownloadData download = tableView.getSelectionModel().getSelectedItem();
         if (download != null) {
             filmGuiInfoController.setFilm(download.getFilm());
@@ -397,7 +396,6 @@ public class DownloadGuiController extends AnchorPane {
 
     private void initTable() {
         Table.setTable(tableView);
-
         tableView.setItems(sortedDownloads);
         sortedDownloads.comparatorProperty().bind(tableView.comparatorProperty());
 
@@ -408,8 +406,22 @@ public class DownloadGuiController extends AnchorPane {
                     changeDownload();
                 }
             });
+
+            row.hoverProperty().addListener((observable) -> {
+                final DownloadData downloadData = (DownloadData) row.getItem();
+                if (row.isHover() && downloadData != null) {
+                    filmGuiInfoController.setFilm(downloadData.getFilm());
+                    FilmInfoDialogController.getInstance().setFilm(downloadData.getFilm());
+                } else {
+                    setFilmInfos();
+                }
+            });
             return row;
         });
+        tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
+                //wird auch durch FilmlistenUpdate ausgelöst
+                Platform.runLater(this::setFilmInfos));
+
         tableView.setOnMousePressed(m -> {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
                 final Optional<DownloadData> optionalDownload = getSel(false);
@@ -423,15 +435,7 @@ public class DownloadGuiController extends AnchorPane {
                 tableView.setContextMenu(contextMenu);
             }
         });
-        tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            Platform.runLater(() -> setFilm());
-        });
-        tableView.getItems().addListener((ListChangeListener<DownloadData>) c -> {
-            if (tableView.getItems().size() == 1) {
-                // wenns nur eine Zeile gibt, dann gleich selektieren
-                tableView.getSelectionModel().select(0);
-            }
-        });
+
         tableView.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
             if (PTableFactory.SPACE.match(event)) {
                 PTableFactory.scrollVisibleRangeDown(tableView);
@@ -564,7 +568,6 @@ public class DownloadGuiController extends AnchorPane {
     private synchronized void change() {
         final Optional<DownloadData> download = getSel();
         if (download.isPresent()) {
-
             DownloadData downloadCopy = download.get().getCopy();
             DownloadEditDialogController downloadEditDialogController =
                     new DownloadEditDialogController(progData, downloadCopy, download.get().isStateStartedRun());
