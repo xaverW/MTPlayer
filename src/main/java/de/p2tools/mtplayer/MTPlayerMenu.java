@@ -63,7 +63,7 @@ public class MTPlayerMenu extends MenuButton {
 
         //Menüpunkt ist nur, dass das Tastenkürzel dafür funkt., wird aber sonst nicht angezeigt
         final MenuItem miQuitWait = new MenuItem("Beenden, laufende Downloads abwarten");
-        miQuitWait.setVisible(false); //wegen dem shortcut, aber der zusätzliche Menüpunkt verwirrt nur
+        miQuitWait.setVisible(false); //ist wegen des shortcuts, der zusätzliche Menüpunkt verwirrt nur
         miQuitWait.setOnAction(e -> ProgQuit.quit(true));
         PShortcutWorker.addShortCut(miQuitWait, MTShortcut.SHORTCUT_QUIT_PROGRAM_WAIT);
 

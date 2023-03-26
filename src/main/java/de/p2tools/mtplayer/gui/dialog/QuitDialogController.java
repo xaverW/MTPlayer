@@ -26,6 +26,7 @@ import de.p2tools.p2lib.guitools.pmask.PMaskerPane;
 import de.p2tools.p2lib.mtdownload.HttpDownload;
 import javafx.concurrent.Task;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
@@ -42,6 +43,7 @@ public class QuitDialogController extends PDialogExtra {
         super(ProgData.getInstance().primaryStage, null, "Programm beenden", true, false);
         ProgData.getInstance().quitDialogController = this;
         this.startWithWaiting = startWithWaiting;
+        addButton();
         init(true);
     }
 
@@ -106,6 +108,15 @@ public class QuitDialogController extends PDialogExtra {
         if (startWithWaiting) {
             startWaiting();
         }
+    }
+
+    private void addButton() {
+        Button btnHide = new Button("Ausblenden");
+        addAnyButton(btnHide);
+        btnHide.setOnAction(a -> {
+            ProgData.getInstance().primaryStage.setIconified(true);
+            this.getStage().setIconified(true);
+        });
     }
 
     public void startWaiting() {
