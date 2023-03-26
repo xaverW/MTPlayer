@@ -30,21 +30,7 @@ import java.util.ArrayList;
 
 public class BlackDataProps extends PDataSample<BlackDataProps> {
 
-//    public static final String BLACKLIST_SENDER = "Sender";
-//    public static final String BLACKLIST_THEME = "Thema";
-//    public static final String BLACKLIST_THEME_EXACT = "Thema exakt";
-//    public static final String BLACKLIST_TITLE = "Titel";
-//    public static final String BLACKLIST_THEME_TITLE = "Thema/Titel";
-
     public static final String TAG = "BlackData";
-//    public static final String[] XML_NAMES = {
-//            "black-sender",
-//            "black-thema",
-//            "black-thema-exakt",
-//            "black-titel",
-//            "black-thema-titel"};
-
-//    public String[] arr;
 
     private int no = 0;
     private final StringProperty channel = new SimpleStringProperty("");
