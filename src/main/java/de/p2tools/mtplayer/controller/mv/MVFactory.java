@@ -18,8 +18,8 @@
 package de.p2tools.mtplayer.controller.mv;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.BlackData;
-import de.p2tools.mtplayer.controller.data.BlackListFactory;
+import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
+import de.p2tools.mtplayer.controller.data.blackdata.BlackListFactory;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.abo.AboFactory;
 import de.p2tools.p2lib.alert.PAlert;

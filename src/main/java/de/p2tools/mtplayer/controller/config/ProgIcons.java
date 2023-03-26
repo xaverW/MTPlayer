@@ -15,9 +15,8 @@
  */
 
 
-package de.p2tools.mtplayer.controller.data;
+package de.p2tools.mtplayer.controller.config;
 
-import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.p2lib.icons.GetIcon;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -28,7 +27,6 @@ public class ProgIcons {
 
     public enum Icons {
         ICON_DIALOG_ON("dialog-ein.png", "dialog-ein-sw.png"),
-        IMAGE_ACHTUNG_32("achtung_32.png"),
         IMAGE_ACHTUNG_64("achtung_64.png"),
 
         ICON_BUTTON_RESET("button-reset.png", 16, 16),
@@ -42,7 +40,6 @@ public class ProgIcons {
         ICON_BUTTON_MENU("button-menu.png", 18, 15),
         ICON_BUTTON_QUIT("button-quit.png", 16, 16),
         ICON_BUTTON_FILE_OPEN("button-file-open.png", 16, 16),
-        //        ICON_BUTTON_EXTERN_PROGRAM("button-forward.png", 16, 16),
         ICON_BUTTON_PLAY("button-play.png", 16, 16),
         ICON_BUTTON_CLEAR("button-clear.png", 16, 16),
         ICON_DIALOG_QUIT("dialog-quit.png", 64, 64),
@@ -64,33 +61,33 @@ public class ProgIcons {
         ICON_BUTTON_MOVE_TOP("button-move-top.png", 16, 16),
         ICON_BUTTON_MOVE_BOTTOM("button-move-bottom.png", 16, 16),
 
-        FX_ICON_TOOLBAR_MENU("toolbar-menu.png", 18, 15),
-        FX_ICON_TOOLBAR_MENU_TOP("toolbar-menu-top.png", 32, 18),
-        FX_ICON_TOOLBAR_DOWNLOAD_CLEAN("toolbar-download-clean.png", 32, 32),
-        FX_ICON_TOOLBAR_DOWNLOAD_START("toolbar-download-starten.png", 32, 32),
-        FX_ICON_TOOLBAR_DOWNLOAD_DEL("toolbar-download-del.png", 32, 32),
-        FX_ICON_TOOLBAR_DOWNLOAD_UNDO("toolbar-download-undo.png", 32, 32),
-        FX_ICON_TOOLBAR_DOWNLOAD_FILM_START("toolbar-download-film-start.png", 32, 32),
-        FX_ICON_TOOLBAR_DOWNLOAD_REFRESH("toolbar-download-refresh.png", 32, 32),
-        FX_ICON_TOOLBAR_DOWNLOAD_START_ALL("toolbar-download-start-all.png", 32, 32),
-        FX_ICON_TOOLBAR_DOWNLOAD_START_ALL_TIME("toolbar-download-start-time.png", 32, 32),
+        ICON_TOOLBAR_MENU("toolbar-menu.png", 18, 15),
+        ICON_TOOLBAR_MENU_TOP("toolbar-menu-top.png", 32, 18),
+        ICON_TOOLBAR_DOWNLOAD_CLEAN("toolbar-download-clean.png", 32, 32),
+        ICON_TOOLBAR_DOWNLOAD_START("toolbar-download-starten.png", 32, 32),
+        ICON_TOOLBAR_DOWNLOAD_DEL("toolbar-download-del.png", 32, 32),
+        ICON_TOOLBAR_DOWNLOAD_UNDO("toolbar-download-undo.png", 32, 32),
+        ICON_TOOLBAR_DOWNLOAD_FILM_START("toolbar-download-film-start.png", 32, 32),
+        ICON_TOOLBAR_DOWNLOAD_REFRESH("toolbar-download-refresh.png", 32, 32),
+        ICON_TOOLBAR_DOWNLOAD_START_ALL("toolbar-download-start-all.png", 32, 32),
+        ICON_TOOLBAR_DOWNLOAD_START_ALL_TIME("toolbar-download-start-time.png", 32, 32),
 
-        FX_ICON_TOOLBAR_FILM_START("toolbar-filme-start.png", 32, 32),
-        FX_ICON_TOOLBAR_FILM_REC("toolbar-filme-rec.png", 32, 32),
-        FX_ICON_TOOLBAR_FILM_BOOKMARK("toolbar-filme-bookmark.png", 32, 32),
-        FX_ICON_TOOLBAR_FILM_BOOKMARK_FILTER("toolbar-filme-bookmark-filter.png", 32, 32),
-        FX_ICON_TOOLBAR_FILM_DEL_BOOKMARK("toolbar-filme-del-bookmark.png", 32, 32),
-        FX_ICON_TOOLBAR_FILM_DEL_ALL_BOOKMARK("toolbar-filme-del-all-bookmark.png", 32, 32),
+        ICON_TOOLBAR_FILM_START("toolbar-filme-start.png", 32, 32),
+        ICON_TOOLBAR_FILM_REC("toolbar-filme-rec.png", 32, 32),
+        ICON_TOOLBAR_FILM_BOOKMARK("toolbar-filme-bookmark.png", 32, 32),
+        ICON_TOOLBAR_FILM_BOOKMARK_FILTER("toolbar-filme-bookmark-filter.png", 32, 32),
+        ICON_TOOLBAR_FILM_DEL_BOOKMARK("toolbar-filme-del-bookmark.png", 32, 32),
+        ICON_TOOLBAR_FILM_DEL_ALL_BOOKMARK("toolbar-filme-del-all-bookmark.png", 32, 32),
 
-        FX_ICON_TOOLBAR_ABO_NEW("toolbar-abo-new.png", 32, 32),
-        FX_ICON_TOOLBAR_ABO_ON("toolbar-abo-on.png", 32, 32),
-        FX_ICON_TOOLBAR_ABO_OFF("toolbar-abo-off.png", 32, 32),
-        FX_ICON_TOOLBAR_ABO_DEL("toolbar-abo-del.png", 32, 32),
-        FX_ICON_TOOLBAR_ABO_CONFIG("toolbar-abo-config.png", 32, 32),
+        ICON_TOOLBAR_ABO_NEW("toolbar-abo-new.png", 32, 32),
+        ICON_TOOLBAR_ABO_ON("toolbar-abo-on.png", 32, 32),
+        ICON_TOOLBAR_ABO_OFF("toolbar-abo-off.png", 32, 32),
+        ICON_TOOLBAR_ABO_DEL("toolbar-abo-del.png", 32, 32),
+        ICON_TOOLBAR_ABO_CONFIG("toolbar-abo-config.png", 32, 32),
 
-        FX_ICON_FILTER_FILM_LOAD("filter-film-load.png", 22, 22),
-        FX_ICON_FILTER_FILM_SAVE("filter-film-save.png", 22, 22),
-        FX_ICON_FILTER_FILM_NEW("filter-film-new.png", 22, 22);
+        ICON_FILTER_FILM_LOAD("filter-film-load.png", 22, 22),
+        ICON_FILTER_FILM_SAVE("filter-film-save.png", 22, 22),
+        ICON_FILTER_FILM_NEW("filter-film-new.png", 22, 22);
 
         private String fileName;
         private String fileNameDark = "";

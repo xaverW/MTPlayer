@@ -18,8 +18,8 @@ package de.p2tools.mtplayer.controller.worker;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.SetDataList;
-import de.p2tools.mtplayer.controller.data.SetReplacePatternFactory;
+import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
+import de.p2tools.mtplayer.controller.data.setdata.SetReplacePatternFactory;
 import de.p2tools.p2lib.configfile.ConfigFile;
 import de.p2tools.p2lib.configfile.ConfigReadFile;
 import de.p2tools.p2lib.tools.ProgramToolsFactory;

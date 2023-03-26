@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.gui.configdialog.setdata;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.data.SetData;
+import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.Accordion;

@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.mediadialog;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.ProgIcons;
+import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.history.HistoryData;
 import de.p2tools.mtplayer.gui.mediaconfig.SearchPredicateWorker;
 import de.p2tools.mtplayer.gui.tools.Listener;

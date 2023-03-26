@@ -17,8 +17,8 @@
 
 package de.p2tools.mtplayer.gui.dialog;
 
-import de.p2tools.mtplayer.controller.data.SetData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
+import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import javafx.beans.property.BooleanProperty;
 

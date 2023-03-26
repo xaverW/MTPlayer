@@ -17,8 +17,8 @@
 package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.MTShortcut;
-import de.p2tools.mtplayer.controller.data.ProgIcons;
+import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.config.ProgShortcut;
 import de.p2tools.mtplayer.controller.filmfilter.BlacklistFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilterFactory;
@@ -56,9 +56,9 @@ public class FilmMenu {
         vBox.getChildren().add(vBoxSpace);
 
         final ToolBarButton btPlay = new ToolBarButton(vBox,
-                "Abspielen", "Markierten Film abspielen", ProgIcons.Icons.FX_ICON_TOOLBAR_FILM_START.getImageView());
+                "Abspielen", "Markierten Film abspielen", ProgIcons.Icons.ICON_TOOLBAR_FILM_START.getImageView());
         final ToolBarButton btSave = new ToolBarButton(vBox,
-                "Speichern", "Markierte Filme speichern", ProgIcons.Icons.FX_ICON_TOOLBAR_FILM_REC.getImageView());
+                "Speichern", "Markierte Filme speichern", ProgIcons.Icons.ICON_TOOLBAR_FILM_REC.getImageView());
 
         vBoxSpace = new VBox();
         vBoxSpace.setMaxHeight(10);
@@ -66,13 +66,13 @@ public class FilmMenu {
         vBox.getChildren().add(vBoxSpace);
 
         final ToolBarButton btBookmark = new ToolBarButton(vBox,
-                "Bookmarks anlegen", "Bookmarks für die markierten Filme anlegen", ProgIcons.Icons.FX_ICON_TOOLBAR_FILM_BOOKMARK.getImageView());
+                "Bookmarks anlegen", "Bookmarks für die markierten Filme anlegen", ProgIcons.Icons.ICON_TOOLBAR_FILM_BOOKMARK.getImageView());
         final ToolBarButton btDelBookmark = new ToolBarButton(vBox,
-                "Bookmarks löschen", "Bookmarks für die markierten Filme löschen", ProgIcons.Icons.FX_ICON_TOOLBAR_FILM_DEL_BOOKMARK.getImageView());
+                "Bookmarks löschen", "Bookmarks für die markierten Filme löschen", ProgIcons.Icons.ICON_TOOLBAR_FILM_DEL_BOOKMARK.getImageView());
         final ToolBarButton btDelAllBookmark = new ToolBarButton(vBox,
-                "Alle Bookmarks löschen", "Alle angelegten Bookmarks löschen", ProgIcons.Icons.FX_ICON_TOOLBAR_FILM_DEL_ALL_BOOKMARK.getImageView());
+                "Alle Bookmarks löschen", "Alle angelegten Bookmarks löschen", ProgIcons.Icons.ICON_TOOLBAR_FILM_DEL_ALL_BOOKMARK.getImageView());
         final ToolBarButton btFilterBookmakr = new ToolBarButton(vBox,
-                "Bookmarks anzeigen", FILM_FILTER_BOOKMARK_TEXT, ProgIcons.Icons.FX_ICON_TOOLBAR_FILM_BOOKMARK_FILTER.getImageView());
+                "Bookmarks anzeigen", FILM_FILTER_BOOKMARK_TEXT, ProgIcons.Icons.ICON_TOOLBAR_FILM_BOOKMARK_FILTER.getImageView());
 
         btPlay.setOnAction(a -> progData.filmGuiController.playFilmUrl());
         btSave.setOnAction(a -> progData.filmGuiController.saveTheFilm());
@@ -118,51 +118,51 @@ public class FilmMenu {
     private void initFilmMenu() {
         final MenuButton mb = new MenuButton("");
         mb.setTooltip(new Tooltip("Filmmenü anzeigen"));
-        mb.setGraphic(ProgIcons.Icons.FX_ICON_TOOLBAR_MENU.getImageView());
+        mb.setGraphic(ProgIcons.Icons.ICON_TOOLBAR_MENU.getImageView());
         mb.getStyleClass().addAll("btnFunction", "btnFunc-1");
 
         final MenuItem mbPlay = new MenuItem("Film abspielen");
         mbPlay.setOnAction(a -> progData.filmGuiController.playFilmUrl());
-        PShortcutWorker.addShortCut(mbPlay, MTShortcut.SHORTCUT_PLAY_FILM);
+        PShortcutWorker.addShortCut(mbPlay, ProgShortcut.SHORTCUT_PLAY_FILM);
 
         final MenuItem mbSave = new MenuItem("Film speichern");
         mbSave.setOnAction(e -> progData.filmGuiController.saveTheFilm());
-        PShortcutWorker.addShortCut(mbSave, MTShortcut.SHORTCUT_SAVE_FILM);
+        PShortcutWorker.addShortCut(mbSave, ProgShortcut.SHORTCUT_SAVE_FILM);
 
         mb.getItems().addAll(mbPlay, mbSave);
 
         final MenuItem miFilmShown = new MenuItem("Filme als gesehen markieren");
         miFilmShown.setOnAction(a -> progData.filmGuiController.setFilmShown());
-        PShortcutWorker.addShortCut(miFilmShown, MTShortcut.SHORTCUT_FILM_SHOWN);
+        PShortcutWorker.addShortCut(miFilmShown, ProgShortcut.SHORTCUT_FILM_SHOWN);
 
         final MenuItem miFilmNotShown = new MenuItem("Filme als ungesehen markieren");
         miFilmNotShown.setOnAction(a -> progData.filmGuiController.setFilmNotShown());
-        PShortcutWorker.addShortCut(miFilmNotShown, MTShortcut.SHORTCUT_FILM_NOT_SHOWN);
+        PShortcutWorker.addShortCut(miFilmNotShown, ProgShortcut.SHORTCUT_FILM_NOT_SHOWN);
 
         final MenuItem miFilmInfo = new MenuItem("Filminformation anzeigen");
         miFilmInfo.setOnAction(a -> progData.filmGuiController.showFilmInfo());
-        PShortcutWorker.addShortCut(miFilmInfo, MTShortcut.SHORTCUT_INFO_FILM);
+        PShortcutWorker.addShortCut(miFilmInfo, ProgShortcut.SHORTCUT_INFO_FILM);
 
         final MenuItem miFilmMediaCollection = new MenuItem("Titel in der Mediensammlung suchen");
         miFilmMediaCollection.setOnAction(a -> progData.filmGuiController.guiFilmMediaCollection());
-        PShortcutWorker.addShortCut(miFilmMediaCollection, MTShortcut.SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION);
+        PShortcutWorker.addShortCut(miFilmMediaCollection, ProgShortcut.SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION);
 
         final MenuItem miCopyName = new MenuItem("Titel in die Zwischenablage kopieren");
         miCopyName.setOnAction(a -> progData.filmGuiController.copyFilmThemeTitle(false));
-        PShortcutWorker.addShortCut(miCopyName, MTShortcut.SHORTCUT_COPY_FILM_TITLE_TO_CLIPBOARD);
+        PShortcutWorker.addShortCut(miCopyName, ProgShortcut.SHORTCUT_COPY_FILM_TITLE_TO_CLIPBOARD);
         final MenuItem miCopyTheme = new MenuItem("Thema in die Zwischenablage kopieren");
         miCopyTheme.setOnAction(a -> progData.filmGuiController.copyFilmThemeTitle(true));
-        PShortcutWorker.addShortCut(miCopyTheme, MTShortcut.SHORTCUT_COPY_FILM_THEME_TO_CLIPBOARD);
+        PShortcutWorker.addShortCut(miCopyTheme, ProgShortcut.SHORTCUT_COPY_FILM_THEME_TO_CLIPBOARD);
 
         //Blacklist
         Menu submenuBlacklist = new Menu("Blacklist");
         final MenuItem miBlack = new MenuItem("Blacklist-Eintrag für den Film erstellen");
         miBlack.setOnAction(event -> BlacklistFactory.addBlack());
-        PShortcutWorker.addShortCut(miBlack, MTShortcut.SHORTCUT_ADD_BLACKLIST);
+        PShortcutWorker.addShortCut(miBlack, ProgShortcut.SHORTCUT_ADD_BLACKLIST);
 
         final MenuItem miBlackTheme = new MenuItem("Thema direkt in die Blacklist einfügen");
         miBlackTheme.setOnAction(event -> BlacklistFactory.addBlackTheme());
-        PShortcutWorker.addShortCut(miBlackTheme, MTShortcut.SHORTCUT_ADD_BLACKLIST_THEME);
+        PShortcutWorker.addShortCut(miBlackTheme, ProgShortcut.SHORTCUT_ADD_BLACKLIST_THEME);
         submenuBlacklist.getItems().addAll(miBlack, miBlackTheme);
 
         mb.getItems().add(new SeparatorMenuItem());
@@ -183,11 +183,11 @@ public class FilmMenu {
 
         final MenuItem miShowFilter = new MenuItem("Filter ein-/ausblenden");
         miShowFilter.setOnAction(a -> progData.mtPlayerController.setFilter());
-        PShortcutWorker.addShortCut(miShowFilter, MTShortcut.SHORTCUT_SHOW_FILTER);
+        PShortcutWorker.addShortCut(miShowFilter, ProgShortcut.SHORTCUT_SHOW_FILTER);
 
         final MenuItem miShowInfo = new MenuItem("Infos ein-/ausblenden");
         miShowInfo.setOnAction(a -> progData.mtPlayerController.setInfos());
-        PShortcutWorker.addShortCut(miShowInfo, MTShortcut.SHORTCUT_SHOW_INFOS);
+        PShortcutWorker.addShortCut(miShowInfo, ProgShortcut.SHORTCUT_SHOW_INFOS);
 
         mb.getItems().add(new SeparatorMenuItem());
         mb.getItems().addAll(miShowFilter, miShowInfo);

@@ -40,7 +40,7 @@ public class ProgStartBeforeGui {
             PDuration.onlyPing("Erster Start");
             ProgData.firstProgramStart = true;
 
-            UpdateConfig.setUpdateDone(); //dann ists ja kein Programmupdate
+            ProgConfigUpdate.setUpdateDone(); //dann ists ja kein Programmupdate
             ProgData.getInstance().replaceList.init(); //einmal ein Muster anlegen, für Linux ist es bereits aktiv!
 
             StartDialogController startDialogController = new StartDialogController();
@@ -130,7 +130,7 @@ public class ProgStartBeforeGui {
             FilmFilterFactory.addStandardFilter();
         }
 
-        UpdateConfig.update(); //falls es ein Programmupdate gab, Configs anpassen
+        ProgConfigUpdate.update(); //falls es ein Programmupdate gab, Configs anpassen
         ProgColorList.setColorTheme(); //Farben einrichten
     }
 }

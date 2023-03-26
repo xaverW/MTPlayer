@@ -18,13 +18,12 @@
 package de.p2tools.mtplayer.controller.config;
 
 import de.p2tools.mtplayer.MTPlayerController;
-import de.p2tools.mtplayer.controller.data.BlackList;
-import de.p2tools.mtplayer.controller.data.MTShortcut;
-import de.p2tools.mtplayer.controller.data.ReplaceList;
-import de.p2tools.mtplayer.controller.data.SetDataList;
 import de.p2tools.mtplayer.controller.data.abo.AboList;
+import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
 import de.p2tools.mtplayer.controller.data.download.DownloadInfos;
 import de.p2tools.mtplayer.controller.data.download.DownloadList;
+import de.p2tools.mtplayer.controller.data.download.ReplaceList;
+import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
 import de.p2tools.mtplayer.controller.film.FilmlistMTP;
 import de.p2tools.mtplayer.controller.filmfilter.ActFilmFilterWorker;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilterRunner;
@@ -72,7 +71,7 @@ public class ProgData {
     // zentrale Klassen
     public StarterClass starterClass; // Klasse zum Ausführen der Programme (für die Downloads): VLC, flvstreamer, ...
     //    public MTColor mTColor; // verwendete Farben
-    public MTShortcut mtShortcut; // verwendete Shortcuts
+    public ProgShortcut progShortcut; // verwendete Shortcuts
     public ActFilmFilterWorker actFilmFilterWorker; // gespeicherte Filterprofile
     public FilmFilterRunner filmFilterRunner;
 
@@ -116,7 +115,7 @@ public class ProgData {
 
     private ProgData() {
 //        mTColor = new MTColor();
-        mtShortcut = new MTShortcut();
+        progShortcut = new ProgShortcut();
         replaceList = new ReplaceList();
 
         actFilmFilterWorker = new ActFilmFilterWorker(this);

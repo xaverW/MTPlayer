@@ -17,8 +17,8 @@
 package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.MTShortcut;
-import de.p2tools.mtplayer.controller.data.ProgIcons;
+import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.config.ProgShortcut;
 import de.p2tools.p2lib.tools.shortcut.PShortcutWorker;
 import javafx.beans.binding.Bindings;
 import javafx.scene.control.*;
@@ -48,13 +48,13 @@ public class DownloadMenu {
         vBox.getChildren().add(vBoxSpace);
 
         final ToolBarButton btDownloadRefresh = new ToolBarButton(vBox,
-                "Downloads aktualisieren", "Liste der Downloads aktualisieren", ProgIcons.Icons.FX_ICON_TOOLBAR_DOWNLOAD_REFRESH.getImageView());
+                "Downloads aktualisieren", "Liste der Downloads aktualisieren", ProgIcons.Icons.ICON_TOOLBAR_DOWNLOAD_REFRESH.getImageView());
         final ToolBarButton btDownloadAll = new ToolBarButton(vBox,
-                "Alle Downloads starten", "Alle Downloads starten", ProgIcons.Icons.FX_ICON_TOOLBAR_DOWNLOAD_START_ALL.getImageView());
+                "Alle Downloads starten", "Alle Downloads starten", ProgIcons.Icons.ICON_TOOLBAR_DOWNLOAD_START_ALL.getImageView());
         final ToolBarButton btDownloadAllTime = new ToolBarButton(vBox,
-                "Alle Downloads mit Startzeit starten", "Alle Downloads mit Startzeit starten", ProgIcons.Icons.FX_ICON_TOOLBAR_DOWNLOAD_START_ALL_TIME.getImageView());
+                "Alle Downloads mit Startzeit starten", "Alle Downloads mit Startzeit starten", ProgIcons.Icons.ICON_TOOLBAR_DOWNLOAD_START_ALL_TIME.getImageView());
         final ToolBarButton btDownloadClear = new ToolBarButton(vBox,
-                "Downloads aufräumen", "Liste der Downloads aufräumen", ProgIcons.Icons.FX_ICON_TOOLBAR_DOWNLOAD_CLEAN.getImageView());
+                "Downloads aufräumen", "Liste der Downloads aufräumen", ProgIcons.Icons.ICON_TOOLBAR_DOWNLOAD_CLEAN.getImageView());
 
         vBoxSpace = new VBox();
         vBoxSpace.setMaxHeight(10);
@@ -62,11 +62,11 @@ public class DownloadMenu {
         vBox.getChildren().add(vBoxSpace);
 
         final ToolBarButton btStartDownloads = new ToolBarButton(vBox,
-                "Downloads Starten", "Markierte Downloads starten", ProgIcons.Icons.FX_ICON_TOOLBAR_DOWNLOAD_START.getImageView());
+                "Downloads Starten", "Markierte Downloads starten", ProgIcons.Icons.ICON_TOOLBAR_DOWNLOAD_START.getImageView());
         final ToolBarButton btDownloadBack = new ToolBarButton(vBox,
-                "Downloads zurückstellen", "Markierte Downloads zurückstellen", ProgIcons.Icons.FX_ICON_TOOLBAR_DOWNLOAD_UNDO.getImageView());
+                "Downloads zurückstellen", "Markierte Downloads zurückstellen", ProgIcons.Icons.ICON_TOOLBAR_DOWNLOAD_UNDO.getImageView());
         final ToolBarButton btDownloadDel = new ToolBarButton(vBox,
-                "Downloads löschen", "Markierte Downloads löschen", ProgIcons.Icons.FX_ICON_TOOLBAR_DOWNLOAD_DEL.getImageView());
+                "Downloads löschen", "Markierte Downloads löschen", ProgIcons.Icons.ICON_TOOLBAR_DOWNLOAD_DEL.getImageView());
 
         vBoxSpace = new VBox();
         vBoxSpace.setMaxHeight(10);
@@ -74,7 +74,7 @@ public class DownloadMenu {
         vBox.getChildren().add(vBoxSpace);
 
         final ToolBarButton btDownloadFilm = new ToolBarButton(vBox,
-                "Film Starten", "Gespeicherten Film abspielen", ProgIcons.Icons.FX_ICON_TOOLBAR_DOWNLOAD_FILM_START.getImageView());
+                "Film Starten", "Gespeicherten Film abspielen", ProgIcons.Icons.ICON_TOOLBAR_DOWNLOAD_FILM_START.getImageView());
 
         btDownloadRefresh.setOnAction(a -> progData.worker.searchForAbosAndMaybeStart());
         btDownloadAll.setOnAction(a -> progData.downloadGuiController.startDownload(true));
@@ -90,24 +90,24 @@ public class DownloadMenu {
         // MenuButton
         final MenuButton mb = new MenuButton("");
         mb.setTooltip(new Tooltip("Downloadmenü anzeigen"));
-        mb.setGraphic(ProgIcons.Icons.FX_ICON_TOOLBAR_MENU.getImageView());
+        mb.setGraphic(ProgIcons.Icons.ICON_TOOLBAR_MENU.getImageView());
         mb.getStyleClass().addAll("btnFunction", "btnFunc-1");
 
         final MenuItem miDownloadStart = new MenuItem("Downloads starten");
         miDownloadStart.setOnAction(a -> progData.downloadGuiController.startDownload(false));
-        PShortcutWorker.addShortCut(miDownloadStart, MTShortcut.SHORTCUT_DOWNLOAD_START);
+        PShortcutWorker.addShortCut(miDownloadStart, ProgShortcut.SHORTCUT_DOWNLOAD_START);
 
         final MenuItem miDownloadStop = new MenuItem("Downloads stoppen");
         miDownloadStop.setOnAction(a -> progData.downloadGuiController.stopDownload(false));
-        PShortcutWorker.addShortCut(miDownloadStop, MTShortcut.SHORTCUT_DOWNLOAD_STOP);
+        PShortcutWorker.addShortCut(miDownloadStop, ProgShortcut.SHORTCUT_DOWNLOAD_STOP);
 
         final MenuItem miChange = new MenuItem("Download ändern");
         miChange.setOnAction(a -> progData.downloadGuiController.changeDownload());
-        PShortcutWorker.addShortCut(miChange, MTShortcut.SHORTCUT_DOWNLOAD_CHANGE);
+        PShortcutWorker.addShortCut(miChange, ProgShortcut.SHORTCUT_DOWNLOAD_CHANGE);
 
         final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen");
         miUndo.setOnAction(a -> progData.downloadGuiController.undoDeleteDownload());
-        PShortcutWorker.addShortCut(miUndo, MTShortcut.SHORTCUT_DOWNLOAD_UNDO_DELETE);
+        PShortcutWorker.addShortCut(miUndo, ProgShortcut.SHORTCUT_DOWNLOAD_UNDO_DELETE);
         miUndo.disableProperty().bind(Bindings.isEmpty(progData.downloadList.getUndoList()));
 
         mb.getItems().addAll(miDownloadStart, miDownloadStop, miChange, miUndo);
@@ -136,11 +136,11 @@ public class DownloadMenu {
         mbStopWait.setOnAction(a -> progData.downloadGuiController.stopWaitingDownloads());
         final MenuItem mbUpdateList = new MenuItem("Liste der Downloads aktualisieren");
         mbUpdateList.setOnAction(e -> progData.worker.searchForAbosAndMaybeStart());
-        PShortcutWorker.addShortCut(mbUpdateList, MTShortcut.SHORTCUT_DOWNLOADS_UPDATE);
+        PShortcutWorker.addShortCut(mbUpdateList, ProgShortcut.SHORTCUT_DOWNLOADS_UPDATE);
 
         final MenuItem mbClean = new MenuItem("Liste der Downloads aufräumen");
         mbClean.setOnAction(e -> progData.downloadGuiController.cleanUp());
-        PShortcutWorker.addShortCut(mbClean, MTShortcut.SHORTCUT_DOWNLOADS_CLEAN_UP);
+        PShortcutWorker.addShortCut(mbClean, ProgShortcut.SHORTCUT_DOWNLOADS_CLEAN_UP);
 
         Menu submenuAllDownloads = new Menu("Alle Downloads");
         submenuAllDownloads.getItems().addAll(mbStartAll, mbStartTimeAll, mbStopAll, mbStopWait, mbUpdateList, mbClean);
@@ -148,11 +148,11 @@ public class DownloadMenu {
 
         MenuItem miMediaDb = new MenuItem("Titel in der Mediensammlung suchen");
         miMediaDb.setOnAction(a -> progData.downloadGuiController.guiFilmMediaCollection());
-        PShortcutWorker.addShortCut(miMediaDb, MTShortcut.SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION);
+        PShortcutWorker.addShortCut(miMediaDb, ProgShortcut.SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION);
 
         MenuItem miFilmInfo = new MenuItem("Filminformation anzeigen");
         miFilmInfo.setOnAction(a -> progData.downloadGuiController.showFilmInfo());
-        PShortcutWorker.addShortCut(miFilmInfo, MTShortcut.SHORTCUT_INFO_FILM);
+        PShortcutWorker.addShortCut(miFilmInfo, ProgShortcut.SHORTCUT_INFO_FILM);
 
         MenuItem miPlayUrl = new MenuItem("Film (URL) abspielen");
         miPlayUrl.setOnAction(a -> progData.downloadGuiController.playUrl());
@@ -173,11 +173,11 @@ public class DownloadMenu {
         final MenuItem miShowFilter = new MenuItem("Filter ein-/ausblenden");
         //ausgeführt wird aber der Button im Tab Filme!!
         miShowFilter.setOnAction(a -> progData.mtPlayerController.setFilter());
-        PShortcutWorker.addShortCut(miShowFilter, MTShortcut.SHORTCUT_SHOW_FILTER);
+        PShortcutWorker.addShortCut(miShowFilter, ProgShortcut.SHORTCUT_SHOW_FILTER);
 
         final MenuItem miShowInfo = new MenuItem("Infos ein-/ausblenden");
         miShowInfo.setOnAction(a -> progData.mtPlayerController.setInfos());
-        PShortcutWorker.addShortCut(miShowInfo, MTShortcut.SHORTCUT_SHOW_INFOS);
+        PShortcutWorker.addShortCut(miShowInfo, ProgShortcut.SHORTCUT_SHOW_INFOS);
 
         mb.getItems().add(new SeparatorMenuItem());
         mb.getItems().addAll(miShowFilter, miShowInfo);

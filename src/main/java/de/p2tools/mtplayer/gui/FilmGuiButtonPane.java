@@ -17,8 +17,8 @@
 
 package de.p2tools.mtplayer.gui;
 
-import de.p2tools.mtplayer.controller.data.SetData;
-import de.p2tools.mtplayer.controller.data.SetDataList;
+import de.p2tools.mtplayer.controller.data.setdata.SetData;
+import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.PColor;
 import javafx.geometry.Insets;

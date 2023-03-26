@@ -15,16 +15,15 @@
  */
 
 
-package de.p2tools.mtplayer.controller.data;
+package de.p2tools.mtplayer.controller.config;
 
-import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.p2lib.tools.shortcut.PShortcut;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.HashSet;
 
-public class MTShortcut {
+public class ProgShortcut {
 
     // Menü
     public static final PShortcut SHORTCUT_SEARCH_MEDIACOLLECTION =
@@ -150,7 +149,7 @@ public class MTShortcut {
 
     private static ObservableList<PShortcut> shortcutList = FXCollections.observableArrayList();
 
-    public MTShortcut() {
+    public ProgShortcut() {
         shortcutList.add(SHORTCUT_SEARCH_MEDIACOLLECTION);
         shortcutList.add(SHORTCUT_QUIT_PROGRAM);
         shortcutList.add(SHORTCUT_QUIT_PROGRAM_WAIT);

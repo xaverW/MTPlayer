@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.controller.data;
+package de.p2tools.mtplayer.controller.data.setdata;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;

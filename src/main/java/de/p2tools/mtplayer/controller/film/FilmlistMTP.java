@@ -16,7 +16,7 @@
 
 package de.p2tools.mtplayer.controller.film;
 
-import de.p2tools.mtplayer.controller.data.SetData;
+import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.p2lib.mtfilm.film.*;
 import de.p2tools.p2lib.tools.duration.PDuration;
 import de.p2tools.p2lib.tools.log.PLog;

@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.gui.mediaconfig;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.ProgIcons;
+import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.mediadb.MediaData;
 import de.p2tools.p2lib.guitools.POpen;
 import de.p2tools.p2lib.tools.file.PFileUtils;

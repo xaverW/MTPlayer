@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.gui.startdialog;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.ProgIcons;
+import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.gui.configpanes.PaneFilmSender;
 import de.p2tools.mtplayer.gui.configpanes.PaneGeo;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;

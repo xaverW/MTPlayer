@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.gui.configpanes;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
-import de.p2tools.mtplayer.controller.data.MTShortcut;
+import de.p2tools.mtplayer.controller.config.ProgShortcut;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
@@ -114,7 +114,7 @@ public class PaneShortcut {
         orgShortcutColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(15.0 / 100));
 
         tableView.getColumns().addAll(descriptionColumn, actShortcutColumn, changeColumn, resetColumn, orgShortcutColumn);
-        tableView.setItems(MTShortcut.getShortcutList());
+        tableView.setItems(ProgShortcut.getShortcutList());
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
                 Platform.runLater(this::setActReplaceData));
 
@@ -162,7 +162,7 @@ public class PaneShortcut {
                     pShortcut.setActShortcut(newShortcutValue);
 
                     //Prüfen auf Doppelte
-                    if (MTShortcut.checkDoubleShortcutList()) {
+                    if (ProgShortcut.checkDoubleShortcutList()) {
                         PAlert.showErrorAlert("Tastenkürzel", "das angegebene Tastenkürzel " +
                                 "wird zweimal verwendet.");
                     }

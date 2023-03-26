@@ -19,11 +19,7 @@ package de.p2tools.mtplayer;
 
 import de.p2tools.mtplayer.controller.ProgQuit;
 import de.p2tools.mtplayer.controller.ProgSave;
-import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgConst;
-import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.MTShortcut;
-import de.p2tools.mtplayer.controller.data.ProgIcons;
+import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.mtplayer.controller.update.SearchProgramUpdate;
 import de.p2tools.mtplayer.gui.configdialog.ConfigDialogController;
 import de.p2tools.mtplayer.gui.dialog.AboutDialogController;
@@ -55,23 +51,23 @@ public class MTPlayerMenu extends MenuButton {
 
         final MenuItem miSearchMediaCollection = new MenuItem("Mediensammlung durchsuchen");
         miSearchMediaCollection.setOnAction(a -> new MediaDialogController(""));
-        PShortcutWorker.addShortCut(miSearchMediaCollection, MTShortcut.SHORTCUT_SEARCH_MEDIACOLLECTION);
+        PShortcutWorker.addShortCut(miSearchMediaCollection, ProgShortcut.SHORTCUT_SEARCH_MEDIACOLLECTION);
 
         final MenuItem miQuit = new MenuItem("Beenden");
         miQuit.setOnAction(e -> ProgQuit.quit(false));
-        PShortcutWorker.addShortCut(miQuit, MTShortcut.SHORTCUT_QUIT_PROGRAM);
+        PShortcutWorker.addShortCut(miQuit, ProgShortcut.SHORTCUT_QUIT_PROGRAM);
 
         //Menüpunkt ist nur, dass das Tastenkürzel dafür funkt., wird aber sonst nicht angezeigt
         final MenuItem miQuitWait = new MenuItem("Beenden, laufende Downloads abwarten");
         miQuitWait.setVisible(false); //ist wegen des shortcuts, der zusätzliche Menüpunkt verwirrt nur
         miQuitWait.setOnAction(e -> ProgQuit.quit(true));
-        PShortcutWorker.addShortCut(miQuitWait, MTShortcut.SHORTCUT_QUIT_PROGRAM_WAIT);
+        PShortcutWorker.addShortCut(miQuitWait, ProgShortcut.SHORTCUT_QUIT_PROGRAM_WAIT);
 
         setTooltip(new Tooltip("Programmeinstellungen anzeigen"));
         setMinWidth(Region.USE_PREF_SIZE);
         getStyleClass().addAll("btnFunction", "btnFunc-1");
         setText("");
-        setGraphic(ProgIcons.Icons.FX_ICON_TOOLBAR_MENU_TOP.getImageView());
+        setGraphic(ProgIcons.Icons.ICON_TOOLBAR_MENU_TOP.getImageView());
         getItems().addAll(miConfig, miMediaCollectionConfig, miSearchMediaCollection, addHelp(progData),
                 new SeparatorMenuItem(), miQuit, miQuitWait);
     }

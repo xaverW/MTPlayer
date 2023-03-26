@@ -15,7 +15,7 @@
  */
 
 
-package de.p2tools.mtplayer.controller.data;
+package de.p2tools.mtplayer.controller.data.setdata;
 
 public class ProgramDataFieldNames {
 
