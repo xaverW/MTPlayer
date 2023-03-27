@@ -36,6 +36,7 @@ public class FilmGuiInfoController extends VBox {
 
     private final TextArea textArea = new TextArea();
     private final Button btnReset = new Button("@");
+    private final Label lblTheme = new Label("");
     private final Label lblTitle = new Label("");
     private final HBox hBoxUrl = new HBox(10);
     private final Label lblUrl = new Label("zur Website: ");
@@ -60,7 +61,8 @@ public class FilmGuiInfoController extends VBox {
         btnReset.setTooltip(new Tooltip("Beschreibung zurücksetzen"));
         btnReset.setVisible(false);
 
-        lblTitle.setFont(Font.font(null, FontWeight.BOLD, -1));
+        lblTheme.setFont(Font.font(null, FontWeight.BOLD, -1));
+//        lblTitle.setFont(Font.font(null, FontWeight.BOLD, -1));
         hBoxUrl.setAlignment(Pos.CENTER_LEFT);
         lblUrl.setMinWidth(Region.USE_PREF_SIZE);
 
@@ -68,9 +70,12 @@ public class FilmGuiInfoController extends VBox {
         textArea.setPrefRowCount(4);
         textArea.textProperty().addListener((a, b, c) -> setFilmDescription());
 
-        vBoxLeft.setSpacing(P2LibConst.DIST_EDGE);
+        VBox v = new VBox();
+        v.setSpacing(0);
+        v.getChildren().addAll(lblTheme, lblTitle);
+        vBoxLeft.setSpacing(2);
         vBoxLeft.setPadding(new Insets(P2LibConst.DIST_EDGE));
-        vBoxLeft.getChildren().addAll(lblTitle, stackPane, hBoxUrl);
+        vBoxLeft.getChildren().addAll(v, stackPane, hBoxUrl);
 
         final GridPane gridPane = new GridPane();
         gridPane.getStyleClass().add("extra-pane-info");
@@ -106,6 +111,7 @@ public class FilmGuiInfoController extends VBox {
 
         if (film == null) {
             this.film = null;
+            lblTheme.setText("");
             lblTitle.setText("");
             textArea.clear();
             oldDescription = "";
@@ -121,7 +127,8 @@ public class FilmGuiInfoController extends VBox {
 
         this.film = film;
 
-        lblTitle.setText(film.arr[FilmDataXml.FILM_CHANNEL] + "  -  " + film.arr[FilmDataXml.FILM_TITLE]);
+        lblTheme.setText(film.arr[FilmDataXml.FILM_CHANNEL] + "  -  " + film.arr[FilmDataXml.FILM_THEME]);
+        lblTitle.setText(film.arr[FilmDataXml.FILM_TITLE]);
         textArea.setText(film.getDescription());
         oldDescription = film.getDescription();
         btnReset.setVisible(false);

@@ -38,6 +38,7 @@ public class BlackDataProps extends PDataSample<BlackDataProps> {
     private final BooleanProperty themeExact = new SimpleBooleanProperty(true);
     private final StringProperty title = new SimpleStringProperty("");
     private final StringProperty themeTitle = new SimpleStringProperty("");
+    private final BooleanProperty active = new SimpleBooleanProperty(true);
     private int countHits = 0;
 
     public BlackDataProps() {
@@ -51,6 +52,7 @@ public class BlackDataProps extends PDataSample<BlackDataProps> {
         list.add(new Config_boolProp("themeExact", themeExact));
         list.add(new Config_stringProp("title", title));
         list.add(new Config_stringProp("themeTitle" + PData.TAGGER + "bithemeTitletrate", themeTitle));
+        list.add(new Config_boolProp("active", active));
         return list.toArray(new Config[]{});
     }
 
@@ -61,6 +63,7 @@ public class BlackDataProps extends PDataSample<BlackDataProps> {
         bl.setThemeExact(themeExact.getValue());
         bl.setTitle(title.getValueSafe());
         bl.setThemeTitle(themeTitle.getValueSafe());
+        bl.setActive(active.getValue());
         return bl;
     }
 
@@ -135,6 +138,18 @@ public class BlackDataProps extends PDataSample<BlackDataProps> {
 
     public void setThemeTitle(String themeTitle) {
         this.themeTitle.set(themeTitle);
+    }
+
+    public boolean isActive() {
+        return active.get();
+    }
+
+    public BooleanProperty activeProperty() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active.set(active);
     }
 
     public int getCountHits() {

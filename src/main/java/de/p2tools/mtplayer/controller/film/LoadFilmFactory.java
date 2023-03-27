@@ -81,18 +81,20 @@ public class LoadFilmFactory {
         LoadFactoryConst.primaryStage = ProgData.getInstance().primaryStage;
         LoadFactoryConst.filmListUrl = ProgData.filmListUrl;
 
-        ProgData.getInstance().filmListFilter.clearCounter();//todo evtl. nur beim Neuladen einer kompletten Liste??
+        // ProgData.getInstance().filmListFilter.clearCounter();//todo evtl. nur beim Neuladen einer kompletten Liste??
         if (ProgConfig.SYSTEM_FILMLIST_FILTER.getValue() == BlacklistFilterFactory.BLACKLILST_FILTER_OFF) {
             //ist sonst evtl. noch von "vorher" gesetzt
             LoadFactoryConst.checker = null;
         } else if (ProgConfig.SYSTEM_FILMLIST_FILTER.getValue() == BlacklistFilterFactory.BLACKLILST_FILTER_ON) {
             //dann sollen Filme geprüft werden
-            LoadFactoryConst.checker = filmData -> BlacklistFilterFactory.checkFilmListOnLoadAndCountHits(filmData,
-                    ProgData.getInstance().filmListFilter);
+            ProgData.getInstance().filmListFilter.clearCounter();
+            LoadFactoryConst.checker = filmData -> BlacklistFilterFactory.checkFilmListFilterAndCountHits(filmData,
+                    ProgData.getInstance().filmListFilter, true);
         } else {
-            //dann sollen Filme geprüft werden
-            LoadFactoryConst.checker = filmData -> !BlacklistFilterFactory.checkFilmListOnLoadAndCountHits(filmData,
-                    ProgData.getInstance().filmListFilter);
+            //dann ist er inverse
+            ProgData.getInstance().filmListFilter.clearCounter();
+            LoadFactoryConst.checker = filmData -> !BlacklistFilterFactory.checkFilmListFilterAndCountHits(filmData,
+                    ProgData.getInstance().filmListFilter, true);
         }
     }
 

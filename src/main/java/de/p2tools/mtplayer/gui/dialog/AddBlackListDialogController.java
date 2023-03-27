@@ -32,7 +32,7 @@ import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
 
-public class AddBlacklistDialogController extends PDialogExtra {
+public class AddBlackListDialogController extends PDialogExtra {
 
     private boolean ok = false;
     private Button btnOk = new Button("_Ok");
@@ -60,7 +60,7 @@ public class AddBlacklistDialogController extends PDialogExtra {
     private final BlackData blackData;
     private final ProgData progData;
 
-    public AddBlacklistDialogController(ProgData progData, FilmDataMTP filmDataMTP, BlackData blackData) {
+    public AddBlackListDialogController(ProgData progData, FilmDataMTP filmDataMTP, BlackData blackData) {
         super(progData.primaryStage, ProgConfig.ADD_BLACK_DIALOG_SIZE,
                 "Blacklist-Eintrag erstellen", true, false);
 

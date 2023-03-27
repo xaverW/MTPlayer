@@ -18,10 +18,9 @@ package de.p2tools.mtplayer.controller.filmfilter;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
-import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
-import de.p2tools.mtplayer.controller.data.blackdata.BlackListFactory;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
+import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
+import de.p2tools.mtplayer.controller.data.blackdata.BlackListFactory;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmlistMTP;
 import de.p2tools.mtplayer.gui.tools.Listener;
@@ -30,6 +29,7 @@ import de.p2tools.p2lib.mtfilter.FilmFilterCheck;
 import de.p2tools.p2lib.tools.duration.PDuration;
 import de.p2tools.p2lib.tools.log.PLog;
 
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -45,43 +45,27 @@ public class BlacklistFilterFactory {
     private BlacklistFilterFactory() {
     }
 
-    public static synchronized void getBlackFilteredFilmlist() {
-        // hier wird die komplette Filmliste gegen die Blacklist gefiltert
-        // mit der Liste wird dann im TabFilme weiter gearbeitet
-        final ProgData progData = ProgData.getInstance();
-        final FilmlistMTP filmlist = progData.filmlist;
-        final FilmlistMTP listFiltered = progData.filmlistFiltered;
-
-        PDuration.counterStart("getBlackFilteredFilmlist");
-        loadCurrentBlacklistSettings();
-        listFiltered.clear();
-
-        if (filmlist != null) {
-            listFiltered.setMeta(filmlist);
-
-            Stream<FilmDataMTP> initialStream = filmlist.parallelStream();
-
-            if (progData.actFilmFilterWorker.getActFilterSettings().getBlacklistOnOff() == BLACKLILST_FILTER_INVERS) {
-                //blacklist ONLY
-                PLog.sysLog("FilmlistBlackFilter - isBlacklistOnly");
-                initialStream = initialStream.filter(filmDataMTP -> filmDataMTP.isBlackBlocked());
-
-            } else if (progData.actFilmFilterWorker.getActFilterSettings().getBlacklistOnOff() == BLACKLILST_FILTER_ON) {
-                //blacklist ON
-                PLog.sysLog("FilmlistBlackFilter - isBlacklistOn");
-                initialStream = initialStream.filter(filmDataMTP -> !filmDataMTP.isBlackBlocked());
-
-            } else {
-                //blacklist OFF
-                PLog.sysLog("FilmlistBlackFilter - isBlacklistOff");
-            }
-
-            listFiltered.addAll(initialStream.collect(Collectors.toList()));
-
-            // Array mit Sendernamen/Themen füllen
-            listFiltered.loadTheme();
+    public static AboData findAbo(FilmData film) {
+        //liefert ein Abo zu dem Film, auch Abos die ausgeschaltet sind, Film zu klein ist, ...
+        if (film.isLive()) {
+            //Livestreams gehören nicht in ein Abo
+            return null;
         }
-        PDuration.counterStop("getBlackFilteredFilmlist");
+
+        film.setLowerCase();
+        final AboData aboData = ProgData.getInstance().aboList.stream()
+                .filter(abo -> FilmFilterCheck.checkFilterMatch(
+                        abo.fChannel,
+                        abo.fTheme,
+                        abo.fThemeTitle,
+                        abo.fTitle,
+                        abo.fSomewhere,
+                        film))
+                .findFirst()
+                .orElse(null);
+
+        film.clearLowerCase();
+        return aboData;
     }
 
     public static synchronized void markFilmBlack(boolean notify) {
@@ -101,8 +85,10 @@ public class BlacklistFilterFactory {
         //und jetzt die Filmliste durchlaufen parallel/stream ist gleich??
         ProgData.getInstance().blackList.clearCounter();
         loadCurrentBlacklistSettings();
+        //Filmliste durchlaufen und geblockte Filme markieren
         ProgData.getInstance().filmlist.stream().forEach(filmDataMTP ->
-                filmDataMTP.setBlackBlocked(checkFilmIsBlocked(filmDataMTP, true)));
+                filmDataMTP.setBlackBlocked(checkFilmIsBlockedCompleteBlackData(filmDataMTP, true)));
+        //und jetzt die filteredList erstellen
         getBlackFilteredFilmlist();
 
         PLog.sysLog("markFilmBlack -> stop");
@@ -115,6 +101,47 @@ public class BlacklistFilterFactory {
         if (notify) {
             Listener.notify(Listener.EVENT_BLACKLIST_CHANGED, BlackListFactory.class.getSimpleName());
         }
+    }
+
+    public static synchronized void getBlackFilteredFilmlist() {
+        //hier wird die komplette Filmliste durchlaufen und BLACK-Markierte
+        //Filme werden in die filmListFiltered gesetzt
+        //je nach Einstellungen BLACK-ON  --  BLACK_OFF -- WHITE
+        //mit der Liste wird dann im TabFilme weiter gearbeitet
+        final ProgData progData = ProgData.getInstance();
+        final FilmlistMTP filmList = progData.filmlist;
+        final FilmlistMTP filmListFiltered = progData.filmlistFiltered;
+
+        PDuration.counterStart("getBlackFilteredFilmlist");
+        loadCurrentBlacklistSettings();
+        filmListFiltered.clear();
+
+        if (filmList != null) {
+            filmListFiltered.setMeta(filmList);
+
+            Stream<FilmDataMTP> initialStream = filmList.parallelStream();
+
+            if (progData.actFilmFilterWorker.getActFilterSettings().getBlacklistOnOff() == BLACKLILST_FILTER_INVERS) {
+                //blacklist ONLY
+                PLog.sysLog("FilmlistBlackFilter - isBlacklistOnly");
+                initialStream = initialStream.filter(filmDataMTP -> filmDataMTP.isBlackBlocked());
+
+            } else if (progData.actFilmFilterWorker.getActFilterSettings().getBlacklistOnOff() == BLACKLILST_FILTER_ON) {
+                //blacklist ON
+                PLog.sysLog("FilmlistBlackFilter - isBlacklistOn");
+                initialStream = initialStream.filter(filmDataMTP -> !filmDataMTP.isBlackBlocked());
+
+            } else {
+                //blacklist OFF
+                PLog.sysLog("FilmlistBlackFilter - isBlacklistOff");
+            }
+
+            filmListFiltered.addAll(initialStream.collect(Collectors.toList()));
+
+            // Array mit Sendernamen/Themen füllen
+            filmListFiltered.loadTheme();
+        }
+        PDuration.counterStop("getBlackFilteredFilmlist");
     }
 
     private static void loadCurrentBlacklistSettings() {
@@ -135,11 +162,11 @@ public class BlacklistFilterFactory {
         doNotShowGeoBlockedFilms = ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_GEO.getValue();
     }
 
-    public static synchronized boolean checkFilmIsBlocked(FilmData filmData, boolean incCounter) {
+    public static synchronized boolean checkFilmIsBlockedCompleteBlackData(FilmData filmData, boolean incCounter) {
+        //hier werden die Filme gegen alle BLACK-Einstellungen geprüft
         //zum Suchen von Downloads, wenn Black im Abo beachtet werden soll
-        //und zum Markieren der Filme nach dem Neuladen einer Filmliste oder Ändern der Blacklist
-        //hier werden die Filme gegen die Blacklist geprüft
-        //liefert TRUE -> wenn der Film zur Blacklist passt, also geblockt werden soll
+        //und zum Markieren der Filme nach dem Laden einer Filmliste oder Ändern der Blacklist
+        //liefert TRUE -> wenn der Film zur Blacklist passt, also geblockt werden soll (oder nicht WHITE)
         //Counter werden vorher schon gelöscht
 
         if (doNotShowGeoBlockedFilms && filmData.isGeoBlocked()) {
@@ -155,42 +182,12 @@ public class BlacklistFilterFactory {
             return true;
         }
 
-        filmData.setLowerCase();
-        for (final BlackData blackData : ProgData.getInstance().blackList) {
-            if (checkFilmIsBlocked(blackData, filmData)) {
-                //dann hat dieser Filter getroffen -> nicht anzeigen
-                if (incCounter) {
-                    blackData.incCountHits();
-                }
-                filmData.clearLowerCase();
-                return true;
-            }
-        }
-
-        filmData.clearLowerCase();
-        return false;
+        return checkFilmListFilterAndCountHits(filmData, ProgData.getInstance().blackList, incCounter);
     }
 
-    public static boolean checkFilmIsBlocked(FilmData filmData, BlackData blackData, boolean countHits) {
-        //zum Zählen der Treffer -> Dialog
-        //oder zum Setzen des letzten Films "setLastShownFilm" -> Gui
-        filmData.setLowerCase();
-        if (checkFilmIsBlocked(blackData, filmData)) {
-            if (countHits) {
-                blackData.incCountHits();
-            }
-            filmData.clearLowerCase();
-            return true;
-        }
-
-        filmData.clearLowerCase();
-        return false;
-    }
-
-    public static boolean checkFilmIsBlockedAndCountHits(FilmData filmData, BlackList list) {
-        //wird nur nach dem Neuladen einer neuen Filmliste aus dem Web gemacht (FilmBlackList): nach Treffer abbrechen
-        //oder zum Zählen der Treffer gemacht: nach Treffer nicht abbrechen, alle Treffer zählen
-        //--> gibt (braucht) da keine WhiteList!!
+    public static boolean checkFilmIsBlockedAndCountHits(FilmData filmData, List<BlackData> list) {
+        //Aufruf durch Button aus dem BlacklistDialog, BlackListPanel
+        //zum Zählen der Treffer: nach Treffer **nicht** abbrechen, alle Treffer zählen
         //CLEAR-COUNTER wird da vorher schon gemacht
         boolean ret = false;
         filmData.setLowerCase();
@@ -204,13 +201,22 @@ public class BlacklistFilterFactory {
         return ret;
     }
 
-    public static boolean checkFilmListOnLoadAndCountHits(FilmData filmData, BlackList list) {
-        //wird nur nach dem Neuladen einer neuen Filmliste aus dem Web gemacht (FilmBlackList): nach Treffer abbrechen
+    public static boolean checkFilmListFilterAndCountHits(FilmData filmData, List<BlackData> list, boolean countHits) {
+        //Aufruf nach dem Neuladen einer Filmliste aus dem Web (FilmListFilter)
+        //nach Treffer **abbrechen**
         //CLEAR-COUNTER wird da vorher schon gemacht
         filmData.setLowerCase();
         for (final BlackData blackData : list) {
+            if (!blackData.isActive()) {
+                //dann ist er ausgeschaltet
+                System.out.println("BlackData not active");
+                continue;
+            }
+
             if (checkFilmIsBlocked(blackData, filmData)) {
-                blackData.incCountHits();
+                if (countHits) {
+                    blackData.incCountHits();
+                }
                 filmData.clearLowerCase();
                 return true;
             }
@@ -278,29 +284,6 @@ public class BlacklistFilterFactory {
         } else {
             return false;
         }
-    }
-
-    public static AboData findAbo(FilmData film) {
-        //liefert ein Abo zu dem Film, auch Abos die ausgeschaltet sind, Film zu klein ist, ...
-        if (film.isLive()) {
-            //Livestreams gehören nicht in ein Abo
-            return null;
-        }
-
-        film.setLowerCase();
-        final AboData aboData = ProgData.getInstance().aboList.stream()
-                .filter(abo -> FilmFilterCheck.checkFilterMatch(
-                        abo.fChannel,
-                        abo.fTheme,
-                        abo.fThemeTitle,
-                        abo.fTitle,
-                        abo.fSomewhere,
-                        film))
-                .findFirst()
-                .orElse(null);
-
-        film.clearLowerCase();
-        return aboData;
     }
 
     /**

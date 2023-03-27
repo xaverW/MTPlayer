@@ -109,7 +109,7 @@ public class DownloadListAbo {
 
             abo.incrementCountHit();
 
-            if (checkWithBlackList && BlacklistFilterFactory.checkFilmIsBlocked(film, false)) {
+            if (checkWithBlackList && BlacklistFilterFactory.checkFilmIsBlockedCompleteBlackData(film, false)) {
                 // Blacklist auch bei Abos anwenden und Film wird blockiert
                 return;
             }

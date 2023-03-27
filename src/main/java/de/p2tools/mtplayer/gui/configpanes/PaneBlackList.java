@@ -69,6 +69,7 @@ public class PaneBlackList {
     private final TextField txtTheme = new TextField();
     private final TextField txtTitle = new TextField();
     private final TextField txtThemeTitle = new TextField();
+    private final PToggleSwitch tglActive = new PToggleSwitch("Aktiv:");
 
     private final PMenuButton mbFilterChannel;
     private final StringProperty mbFilterChannelProp = new SimpleStringProperty();
@@ -76,6 +77,7 @@ public class PaneBlackList {
     private final TextField txtFilterTitel = new TextField();
     private final TextField txtFilterThemaTitel = new TextField();
     private final PToggleSwitch tglFilterExact = new PToggleSwitch("Thema exakt");
+    private final PToggleSwitch tglFilterActive = new PToggleSwitch("Aktiv");
     private final TextField txtFilterAll = new TextField();
 
     private final BlackList list;
@@ -191,6 +193,10 @@ public class PaneBlackList {
         final TableColumn<BlackData, String> themeTitleColumn = new TableColumn<>("Thema-Titel");
         themeTitleColumn.setCellValueFactory(new PropertyValueFactory<>("themeTitle"));
 
+        final TableColumn<BlackData, Boolean> activeColumn = new TableColumn<>("Aktiv");
+        activeColumn.setCellValueFactory(new PropertyValueFactory<>("active"));
+        activeColumn.setCellFactory(CheckBoxTableCell.forTableColumn(activeColumn));
+
         final TableColumn<BlackData, Integer> hitsColumn = new TableColumn<>("Treffer");
         hitsColumn.setCellValueFactory(new PropertyValueFactory<>("countHits"));
         hitsColumn.getStyleClass().add("alignCenterRightPadding_10");
@@ -200,8 +206,14 @@ public class PaneBlackList {
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
         tableView.getColumns().addAll(nrColumn, channelColumn, themeColumn, themeExactColumn,
-                titleColumn, themeTitleColumn, hitsColumn);
+                titleColumn, themeTitleColumn, activeColumn, hitsColumn);
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> setActBlackData());
+
+        tableView.setRowFactory(tv -> {
+            TableRowBlackList<BlackData> row = new TableRowBlackList<>();
+            return row;
+        });
+
 
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
         tableView.setItems(sortedList);
@@ -237,6 +249,10 @@ public class PaneBlackList {
         vb.getChildren().addAll(new Label("Thema-Titel"), txtFilterThemaTitel);
         vbAll1.getChildren().add(vb);
         HBox.setHgrow(vb, Priority.ALWAYS);
+
+        vbAll1.getChildren().add(PGuiTools.getVDistance(5));
+        vbAll1.getChildren().add(tglFilterActive);
+
 
         VBox vbAll2 = new VBox(SPACE_VBOX);
         vbAll2.setAlignment(Pos.TOP_LEFT);
@@ -299,12 +315,14 @@ public class PaneBlackList {
         Button btnAddStandards = new Button("_Standards einfügen");
         btnAddStandards.setTooltip(new Tooltip("Die Standardeinträge der Liste anfügen"));
         btnAddStandards.setOnAction(event -> {
+            blackDataChanged.set(true);
             BlackListFactory.addStandardsList(list);
         });
 
         Button btnCleanList = new Button("_Putzen");
         btnCleanList.setTooltip(new Tooltip("In der Liste werden doppelte und leere Einträge gelöscht"));
         btnCleanList.setOnAction(event -> {
+            blackDataChanged.set(true);
             list.cleanTheList();
         });
 
@@ -317,6 +335,7 @@ public class PaneBlackList {
                     return;
                 }
             }
+            blackDataChanged.set(true);
             list.clear();
         });
         listenerLoadFilmlist = new ListenerLoadFilmlist() {
@@ -413,6 +432,11 @@ public class PaneBlackList {
         tglFilterExact.selectedProperty().addListener((u, o, n) -> addPredicate());
         tglFilterExact.indeterminateProperty().addListener((u, o, n) -> addPredicate());
 
+        tglFilterActive.setIndeterminate(true);
+        tglFilterActive.setAllowIndeterminate(true);
+        tglFilterActive.selectedProperty().addListener((u, o, n) -> addPredicate());
+        tglFilterActive.indeterminateProperty().addListener((u, o, n) -> addPredicate());
+
         btnClearFilter.setOnAction(a -> {
             mbFilterChannelProp.setValue("");
             txtFilterThema.clear();
@@ -421,6 +445,8 @@ public class PaneBlackList {
             txtFilterTitel.clear();
             txtFilterThemaTitel.clear();
             txtFilterAll.clear();
+            tglFilterActive.setSelected(false);
+            tglFilterActive.setIndeterminate(true);
         });
     }
 
@@ -444,20 +470,27 @@ public class PaneBlackList {
         gridPane.add(new Label("Thema-Titel:"), 0, ++row);
         gridPane.add(txtThemeTitle, 1, row);
 
+        gridPane.add(tglActive, 0, ++row, 2, 1);
+
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcComputedSizeAndHgrow(),
                 PColumnConstraints.getCcPrefSize());
         gridPane.setDisable(true);
         gridPane.disableProperty().bind(tableView.getSelectionModel().selectedItemProperty().isNull());
 
-        if (selectedBlackDataChanged) {
-            mbChannel.textProperty().addListener((observable, oldValue, newValue) -> blackDataChanged.set(true));
-            txtTheme.textProperty().addListener((observable, oldValue, newValue) -> blackDataChanged.set(true));
-            tgThemeExact.selectedProperty().addListener((observable, oldValue, newValue) -> blackDataChanged.set(true));
-            txtTitle.textProperty().addListener((observable, oldValue, newValue) -> blackDataChanged.set(true));
-            txtThemeTitle.textProperty().addListener((observable, oldValue, newValue) -> blackDataChanged.set(true));
-        }
+        mbChannel.textProperty().addListener((observable, oldValue, newValue) -> setChanged());
+        txtTheme.textProperty().addListener((observable, oldValue, newValue) -> setChanged());
+        tgThemeExact.selectedProperty().addListener((observable, oldValue, newValue) -> setChanged());
+        txtTitle.textProperty().addListener((observable, oldValue, newValue) -> setChanged());
+        txtThemeTitle.textProperty().addListener((observable, oldValue, newValue) -> setChanged());
+        tglActive.selectedProperty().addListener((observable, oldValue, newValue) -> setChanged());
         vBox.getChildren().add(gridPane);
+    }
+
+    private void setChanged() {
+        if (selectedBlackDataChanged) {
+            blackDataChanged.set(true);
+        }
     }
 
     private void addLoadButton(VBox vBox) {
@@ -563,6 +596,15 @@ public class PaneBlackList {
             Filter filter = new Filter(txtFilterThemaTitel.getText(), true);
             predicate = predicate.and(blackData -> FilterCheck.check(filter, blackData.getThemeTitle()));
         }
+        if (!tglFilterActive.isIndeterminate()) {
+            predicate = predicate.and(blackData -> {
+                if (tglFilterActive.isSelected()) {
+                    return blackData.isActive();
+                } else {
+                    return !blackData.isActive();
+                }
+            });
+        }
 
         if (!txtFilterAll.getText().isEmpty()) {
             Filter filter = new Filter(txtFilterAll.getText(), true);
@@ -590,6 +632,7 @@ public class PaneBlackList {
             txtTheme.textProperty().unbindBidirectional(blackData.themeProperty());
             txtTitle.textProperty().unbindBidirectional(blackData.titleProperty());
             txtThemeTitle.textProperty().unbindBidirectional(blackData.themeTitleProperty());
+            tglActive.selectedProperty().unbindBidirectional(blackData.activeProperty());
             txtTheme.setText("");
             txtTitle.setText("");
             txtThemeTitle.setText("");
@@ -602,6 +645,7 @@ public class PaneBlackList {
             tgThemeExact.selectedProperty().bindBidirectional(blackData.themeExactProperty());
             txtTitle.textProperty().bindBidirectional(blackData.titleProperty());
             txtThemeTitle.textProperty().bindBidirectional(blackData.themeTitleProperty());
+            tglActive.selectedProperty().bindBidirectional(blackData.activeProperty());
             selectedBlackDataChanged = true;
         }
     }

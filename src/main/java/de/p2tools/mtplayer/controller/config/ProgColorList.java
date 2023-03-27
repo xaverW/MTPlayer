@@ -61,6 +61,10 @@ public class ProgColorList extends PColorList {
     public static final PColorData ABO_SWITCHED_OFF = addNewKey("COLOR_ABO_SWITCHED_OFF",
             Color.rgb(225, 225, 225), Color.rgb(109, 109, 109), "Tabelle Abo, ausgeschaltet");
 
+    // Tabelle Blacklist
+    public static final PColorData BLACK_DATA_SWITCHED_OFF = addNewKey("BLACK_DATA_SWITCHED_OFF",
+            Color.rgb(225, 225, 225), Color.rgb(109, 109, 109), "Tabelle Blacklist, ausgeschaltet");
+
     // Filter wenn RegEx
 //    public static final PColorData FILTER_REGEX = addNewKey("COLOR_FILTER_REGEX",
 //            Color.rgb(225, 255, 225), Color.rgb(128, 179, 213), "Filter ist RegEx");

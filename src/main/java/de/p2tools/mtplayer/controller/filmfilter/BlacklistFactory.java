@@ -19,12 +19,13 @@ package de.p2tools.mtplayer.controller.filmfilter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
-import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmlistMTP;
-import de.p2tools.mtplayer.gui.dialog.AddBlacklistDialogController;
+import de.p2tools.mtplayer.gui.dialog.AddBlackListDialogController;
 import de.p2tools.p2lib.tools.duration.PDuration;
+import javafx.beans.property.SimpleListProperty;
 
+import java.util.List;
 import java.util.Optional;
 
 public class BlacklistFactory {
@@ -41,8 +42,8 @@ public class BlacklistFactory {
 
         BlackData blackData = new BlackData(filmSelection.get().getChannel(), filmSelection.get().getTheme(),
                 filmSelection.get().getTitle(), "");
-        AddBlacklistDialogController addBlacklistDialogController =
-                new AddBlacklistDialogController(ProgData.getInstance(), filmSelection.get(), blackData);
+        AddBlackListDialogController addBlacklistDialogController =
+                new AddBlackListDialogController(ProgData.getInstance(), filmSelection.get(), blackData);
 
         if (!addBlacklistDialogController.isOk()) {
             //dann doch nicht
@@ -70,27 +71,39 @@ public class BlacklistFactory {
     }
 
     public static synchronized void countHits(BlackData blackData) {
+        //Aufruf mit Button zum Zählen
         //hier wird ein BlackDate gegen die Filmliste gefiltert und die Treffer ermittelt
-        PDuration.counterStart("countHits");
-        blackData.clearCounter();
-        final FilmlistMTP filmDataMTPS = ProgData.getInstance().filmlist;
-        if (filmDataMTPS != null) {
-            filmDataMTPS.parallelStream().forEach(film ->
-                    BlacklistFilterFactory.checkFilmIsBlocked(film, blackData, true));
-        }
-        PDuration.counterStop("countHits");
+        List<BlackData> bl = new SimpleListProperty<>();
+        bl.add(blackData);
+        countHits(bl);
+//        PDuration.counterStart("countHits");
+//        blackData.clearCounter();
+//
+//        final FilmlistMTP filmDataMTPS = ProgData.getInstance().filmlist;
+//        if (filmDataMTPS != null) {
+//            filmDataMTPS.parallelStream().forEach(film ->
+//                    BlacklistFilterFactory.checkFilmIsBlocked(film, blackData, true));
+//        }
+//
+//        PDuration.counterStop("countHits");
     }
 
-    public static synchronized void countHits(BlackList list) {
+    public static synchronized void countHits(List<BlackData> list) {
+        //Aufruf mit Button zum Zählen
         //hier wird die Blacklist gegen die Filmliste gefiltert und die Treffer
         //für *jeden* Blacklist-Eintrag ermittelt, wird nicht nach einem Treffer abgebrochen
         PDuration.counterStart("countHitsList");
-        list.clearCounter();
-        final FilmlistMTP filmList = ProgData.getInstance().filmlist;
-        if (filmList != null) {
-            filmList.parallelStream().forEach(film ->
+        for (BlackData bl : list) {
+            bl.clearCounter();
+        }
+//        list.clearCounter();
+
+        final FilmlistMTP filmDataMTPS = ProgData.getInstance().filmlist;
+        if (filmDataMTPS != null) {
+            filmDataMTPS.parallelStream().forEach(film ->
                     BlacklistFilterFactory.checkFilmIsBlockedAndCountHits(film, list));
         }
+
         PDuration.counterStop("countHitsList");
     }
 }
