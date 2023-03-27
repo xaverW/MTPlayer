@@ -264,9 +264,18 @@ public class PaneBlackList {
         vbAll2.getChildren().add(vb);
         HBox.setHgrow(vb, Priority.ALWAYS);
 
+        VBox vbAll3 = new VBox(0);
+        vbAll3.setAlignment(Pos.CENTER_RIGHT);
+        vbAll3.setPadding(new Insets(SPACE_VBOX));
+        vbAll3.getStyleClass().add("extra-pane");
+        vbAll3.getChildren().addAll(btnClearFilter);
+
         VBox v = new VBox(SPACE_VBOX);
-        v.getChildren().addAll(vbAll1, vbAll2, btnClearFilter);
+        v.getChildren().addAll(vbAll1, vbAll2, vbAll3);
         v.setAlignment(Pos.TOP_RIGHT);
+
+        tableView.setStyle("-fx-border-width: 1px;");
+        tableView.setStyle("-fx-border-color: -text-color-blue;");
 
         HBox h = new HBox(SPACE_VBOX);
         h.getChildren().addAll(tableView, v);
