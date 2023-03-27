@@ -205,10 +205,12 @@ public class HelpText {
 
     public static final String BLACKLIST_WHITELIST =
             "Die Funktion \"Blacklist\" blendet alle Filme aus, die den Angaben in mindestens einer Zeile " +
-                    "in der Tabelle entsprechen.\n" +
+                    "in der Tabelle entsprechen." +
+                    "\n\n" +
                     "Bei der \"Whitelist\" ist es umgekehrt, es werden nur Filme angezeigt, die den " +
-                    "Angaben in mindestens einer Zeile entsprechen.\n" +
-                    "Beim Umschalten zwischen ihnen wird also die Auswahl der angezeigten Filme invertiert.\n" +
+                    "Angaben in mindestens einer Zeile entsprechen." +
+                    "\n\n" +
+                    "Beim Umschalten zwischen Blacklist und Whitelist wird also die Auswahl der angezeigten Filme invertiert.\n" +
                     "\n" +
                     FILTER_FIELD + "\n" +
                     "\n" +

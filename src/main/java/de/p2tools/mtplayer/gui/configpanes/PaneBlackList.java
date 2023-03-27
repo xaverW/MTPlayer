@@ -57,9 +57,9 @@ import java.util.function.Predicate;
 public class PaneBlackList {
 
     private final TableView<BlackData> tableView = new TableView<>();
-    private final RadioButton rbBlack = new RadioButton();
-    private final RadioButton rbWhite = new RadioButton();
-    private final RadioButton rbOff = new RadioButton();
+    private final RadioButton rbBlack = new RadioButton("Blacklist");
+    private final RadioButton rbWhite = new RadioButton("Whitelist");
+    private final RadioButton rbOff = new RadioButton("Alles anzeigen");
     private final GridPane gridPane = new GridPane();
     private final Button btnClearFilter = PButtonClearFilterFactory.getPButtonClear();
 
@@ -126,11 +126,7 @@ public class PaneBlackList {
         addButton(vBox);
         addMoveButton(vBox);
         makeFilter();
-        vBox.getChildren().add(PGuiTools.getVDistance(10));
         addConfigs(vBox);
-        if (!controlBlackListNotFilmFilter) {
-            addLoadButton(vBox);
-        }
 
         TitledPane tpBlack = new TitledPane(controlBlackListNotFilmFilter ? "Blacklist" : "Filme ausschließen", vBox);
         result.add(tpBlack);
@@ -138,37 +134,22 @@ public class PaneBlackList {
     }
 
     private void makeConfigBlackList(VBox vBox) {
-        final GridPane gridPane = new GridPane();
-        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
-        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
-        vBox.getChildren().add(gridPane);
+        final Button btnHelp = PButton.helpButton(stage, "Blacklist / Whitelist",
+                HelpText.BLACKLIST_WHITELIST);
 
         final ToggleGroup toggleGroup = new ToggleGroup();
         rbBlack.setToggleGroup(toggleGroup);
         rbWhite.setToggleGroup(toggleGroup);
         rbOff.setToggleGroup(toggleGroup);
         toggleGroup.selectedToggleProperty().addListener((u, o, n) -> setBlackProp());
-
         setRb();
         progData.actFilmFilterWorker.getActFilterSettings().blacklistOnOffProperty().addListener((u, o, n) -> {
             setRb();
         });
 
-        int row = 0;
-        gridPane.add(rbBlack, 0, ++row);
-        gridPane.add(new Label("\"Filter\" nicht anzeigen, (Blacklist)"), 1, row);
-        final Button btnHelp = PButton.helpButton(stage, "Blacklist / Whitelist",
-                HelpText.BLACKLIST_WHITELIST);
-        gridPane.add(btnHelp, 2, row, 1, 2);
-
-        gridPane.add(rbWhite, 0, ++row);
-        gridPane.add(new Label("Nur diese \"Filter\" anzeigen, (Whitelist)"), 1, row);
-
-        gridPane.add(rbOff, 0, ++row);
-        gridPane.add(new Label("Alles anzeigen"), 1, row);
-
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrow());
+        HBox hBox = new HBox(P2LibConst.DIST_EDGE);
+        hBox.getChildren().addAll(rbBlack, rbWhite, rbOff, PGuiTools.getHBoxGrower(), btnHelp);
+        vBox.getChildren().add(hBox);
     }
 
     private void initTable(VBox vBox) {
@@ -222,63 +203,58 @@ public class PaneBlackList {
     private void addFilterGrid(VBox vBox) {
         final int SPACE_TITLE = 1;
         final int SPACE_VBOX = 5;
-        VBox vbAll1 = new VBox(8);
-        vbAll1.setAlignment(Pos.TOP_LEFT);
-        vbAll1.setPadding(new Insets(P2LibConst.DIST_EDGE));
-        vbAll1.getStyleClass().add("extra-pane");
+
+        VBox vb1 = new VBox(SPACE_VBOX);
+        vb1.setAlignment(Pos.TOP_LEFT);
+        vb1.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        vb1.getStyleClass().add("extra-pane");
 
         Label label = new Label("Diese Felder durchsuchen:");
-        vbAll1.getChildren().add(label);
+        vb1.getChildren().add(label);
 
         VBox vb = new VBox(SPACE_TITLE);
         vb.getChildren().addAll(new Label("Sender"), mbFilterChannel);
-        vbAll1.getChildren().add(vb);
+        vb1.getChildren().add(vb);
         HBox.setHgrow(vb, Priority.ALWAYS);
 
         vb = new VBox(SPACE_TITLE);
         vb.getChildren().addAll(new Label("Thema"), txtFilterThema, PGuiTools.getVDistance(2), tglFilterExact);
-        vbAll1.getChildren().addAll(vb, PGuiTools.getVDistance(1));
+        vb1.getChildren().addAll(vb, PGuiTools.getVDistance(1));
         HBox.setHgrow(vb, Priority.ALWAYS);
 
         vb = new VBox(SPACE_TITLE);
         vb.getChildren().addAll(new Label("Titel"), txtFilterTitel);
-        vbAll1.getChildren().add(vb);
+        vb1.getChildren().add(vb);
         HBox.setHgrow(vb, Priority.ALWAYS);
 
         vb = new VBox(SPACE_TITLE);
         vb.getChildren().addAll(new Label("Thema-Titel"), txtFilterThemaTitel);
-        vbAll1.getChildren().add(vb);
+        vb1.getChildren().add(vb);
         HBox.setHgrow(vb, Priority.ALWAYS);
 
-        vbAll1.getChildren().add(PGuiTools.getVDistance(5));
-        vbAll1.getChildren().add(tglFilterActive);
+        vb1.getChildren().add(PGuiTools.getVDistance(5));
+        vb1.getChildren().add(tglFilterActive);
 
+        VBox vb2 = new VBox();
+        vb2.setAlignment(Pos.TOP_LEFT);
+        vb2.setPadding(new Insets(SPACE_VBOX));
+        vb2.getStyleClass().add("extra-pane");
+        vb2.getChildren().addAll(new Label("Alle Felder durchsuchen:"), txtFilterAll);
 
-        VBox vbAll2 = new VBox(SPACE_VBOX);
-        vbAll2.setAlignment(Pos.TOP_LEFT);
-        vbAll2.setPadding(new Insets(P2LibConst.DIST_EDGE));
-        vbAll2.getStyleClass().add("extra-pane");
+        VBox vb3 = new VBox();
+        vb3.setAlignment(Pos.CENTER_RIGHT);
+        vb3.setPadding(new Insets(SPACE_VBOX));
+        vb3.getStyleClass().add("extra-pane");
+        vb3.getChildren().addAll(btnClearFilter);
 
-        vb = new VBox(SPACE_TITLE);
-        vb.getChildren().addAll(new Label("Alle Felder durchsuchen:"), txtFilterAll);
-        vbAll2.getChildren().add(vb);
-        HBox.setHgrow(vb, Priority.ALWAYS);
-
-        VBox vbAll3 = new VBox(0);
-        vbAll3.setAlignment(Pos.CENTER_RIGHT);
-        vbAll3.setPadding(new Insets(SPACE_VBOX));
-        vbAll3.getStyleClass().add("extra-pane");
-        vbAll3.getChildren().addAll(btnClearFilter);
-
-        VBox v = new VBox(SPACE_VBOX);
-        v.getChildren().addAll(vbAll1, vbAll2, vbAll3);
-        v.setAlignment(Pos.TOP_RIGHT);
+        VBox vAll = new VBox(SPACE_VBOX);
+        vAll.getChildren().addAll(vb1, vb2, vb3);
 
         tableView.setStyle("-fx-border-width: 1px;");
         tableView.setStyle("-fx-border-color: -text-color-blue;");
 
         HBox h = new HBox(SPACE_VBOX);
-        h.getChildren().addAll(tableView, v);
+        h.getChildren().addAll(tableView, vAll);
         HBox.setHgrow(tableView, Priority.ALWAYS);
         VBox.setVgrow(h, Priority.ALWAYS);
         vBox.getChildren().add(h);
@@ -420,7 +396,17 @@ public class PaneBlackList {
             }
         });
 
+        Button btnLoad = new Button("_Filmliste mit diesen Einstellungen neu laden");
+        btnLoad.setTooltip(new Tooltip("Eine komplette neue Filmliste laden.\n" +
+                "Geänderte Einstellungen für das Laden der Filmliste werden so sofort übernommen"));
+        btnLoad.setOnAction(event -> {
+            LoadFilmFactory.getInstance().loadNewListFromWeb(true);
+        });
+
         HBox hBoxButton = new HBox(P2LibConst.DIST_BUTTON);
+        if (!controlBlackListNotFilmFilter) {
+            hBoxButton.getChildren().addAll(btnLoad);
+        }
         hBoxButton.getChildren().addAll(PGuiTools.getHBoxGrower(), btnCopy, btnMove, btnHelpCount);
 
         VBox.setVgrow(tableView, Priority.ALWAYS);
@@ -462,7 +448,7 @@ public class PaneBlackList {
     private void addConfigs(VBox vBox) {
         gridPane.getStyleClass().add("extra-pane");
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
-        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
+        gridPane.setVgap(2);
         gridPane.setPadding(new Insets(P2LibConst.DIST_EDGE));
 
         int row = 0;
@@ -500,16 +486,6 @@ public class PaneBlackList {
         if (selectedBlackDataChanged) {
             blackDataChanged.set(true);
         }
-    }
-
-    private void addLoadButton(VBox vBox) {
-        Button btnLoad = new Button("_Filmliste mit diesen Einstellungen neu laden");
-        btnLoad.setTooltip(new Tooltip("Eine komplette neue Filmliste laden.\n" +
-                "Geänderte Einstellungen für das Laden der Filmliste werden so sofort übernommen"));
-        btnLoad.setOnAction(event -> {
-            LoadFilmFactory.getInstance().loadNewListFromWeb(true);
-        });
-        vBox.getChildren().addAll(btnLoad);
     }
 
     private void setRb() {
