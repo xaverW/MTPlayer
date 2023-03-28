@@ -38,6 +38,7 @@ import java.util.Collection;
 public class PaneFilmLoad {
 
     private final PToggleSwitch tglLoad = new PToggleSwitch("Beim Programmstart eine neue Filmliste laden");
+    private final PToggleSwitch tglLoadNewList = new PToggleSwitch("Neue Filmlisten sofort laden");
     private final BooleanProperty diacriticChanged;
 
     private final ProgData progData;
@@ -51,6 +52,7 @@ public class PaneFilmLoad {
 
     public void close() {
         tglLoad.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART);
+        tglLoadNewList.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_LOAD_NEW_FILMLIST_IMMEDIATELY);
     }
 
     public TitledPane make(Collection<TitledPane> result) {
@@ -59,8 +61,13 @@ public class PaneFilmLoad {
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
 
         tglLoad.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART);
+        tglLoadNewList.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_LOAD_NEW_FILMLIST_IMMEDIATELY);
+
         final Button btnHelpLoad = PButton.helpButton(stage, "Filmliste laden",
                 HelpText.LOAD_FILMLIST_PROGRAMSTART);
+
+        final Button btnHelpNewList = PButton.helpButton(stage, "Filmliste laden",
+                HelpText.LOAD_FILMLIST_IMMEDIATELY);
 
         //Diacritic
         PToggleSwitch tglRemoveDiacritic = new PToggleSwitch("Diakritische Zeichen ändern");
@@ -86,6 +93,9 @@ public class PaneFilmLoad {
         int row = 0;
         gridPane.add(tglLoad, 0, row, 2, 1);
         gridPane.add(btnHelpLoad, 2, row);
+
+        gridPane.add(tglLoadNewList, 0, ++row, 2, 1);
+        gridPane.add(btnHelpNewList, 2, row);
 
         gridPane.add(tglRemoveDiacritic, 0, ++row, 2, 1);
         gridPane.add(btnHelpDia, 2, row);

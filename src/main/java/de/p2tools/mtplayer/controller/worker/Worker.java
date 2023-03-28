@@ -55,6 +55,25 @@ public class Worker {
 
         progData.downloadList.sizeProperty().addListener((observable, oldValue, newValue) ->
                 getAboNames());
+
+        progData.checkForNewFilmlist.foundNewListProperty().addListener((u, o, n) -> {
+            if (!ProgConfig.SYSTEM_LOAD_NEW_FILMLIST_IMMEDIATELY.getValue()) {
+                //dann soll gar keine geladen werden
+                return;
+            }
+            if (!progData.checkForNewFilmlist.isFoundNewList()) {
+                //dann gibts auch keine
+                return;
+            }
+            if (LoadFilmFactory.getInstance().loadFilmlist.getPropLoadFilmlist()) {
+                //wird eh grad gemacht
+                return;
+            }
+
+            //dann soll sofort eine neue Liste geladen werden
+            PLog.sysLog("Es gibt eine neue Filmliste und die soll sofort geladen werden");
+            LoadFilmFactory.getInstance().loadNewListFromWeb(false);
+        });
     }
 
     public void workOnLoadStart() {

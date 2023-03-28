@@ -209,7 +209,6 @@ public class BlacklistFilterFactory {
         for (final BlackData blackData : list) {
             if (!blackData.isActive()) {
                 //dann ist er ausgeschaltet
-                System.out.println("BlackData not active");
                 continue;
             }
 

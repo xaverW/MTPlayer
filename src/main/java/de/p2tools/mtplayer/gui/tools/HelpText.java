@@ -515,16 +515,15 @@ public class HelpText {
     public static final String LOAD_FILMLIST_PROGRAMSTART =
             "Die Filmliste wird beim Programmstart automatisch geladen, " +
                     "wenn sie älter als 3 Stunden ist. Sie kann auch über den " +
-                    "Button \"Filmliste\" in der Ansicht \"Filme\" aktualisiert werden.\n" +
+                    "Button \"Filmliste\" aktualisiert werden.\n" +
                     "\n" +
                     "Zum Update werden dann nur noch Differenzlisten geladen " +
                     "(diese enthalten nur neu hinzugekommene Filme)." +
                     "\n";
 
-    public static final String LOAD_FILMLIST_MANUAL =
-            "Die Filmliste wird von der angegebenen Datei oder URL geladen. " +
-                    "Bei leerem Feld wird die Filmliste auf herkömmliche Art geladen " +
-                    "und die URL dafür wird automatisch gewählt." +
+    public static final String LOAD_FILMLIST_IMMEDIATELY =
+            "Wenn es eine neue Filmliste gibt, wird sie automatisch sofort geladen. " +
+                    "Die Filmliste wird also sofort aktualisiert wenn es ein Update gibt." +
                     "\n";
 
     public static final String DIAKRITISCHE_ZEICHEN =

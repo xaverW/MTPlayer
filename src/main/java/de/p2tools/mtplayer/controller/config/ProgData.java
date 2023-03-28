@@ -142,11 +142,12 @@ public class ProgData {
         mediaCollectionDataList = new MediaCollectionDataList();
 
         starterClass = new StarterClass(this);
-        worker = new Worker(this);
         downloadInfos = new DownloadInfos(this);
         chartData = new ChartData();
         progTray = new ProgTray(this);
         checkForNewFilmlist = new CheckForNewFilmlist();
+
+        worker = new Worker(this);
     }
 
     boolean oneSecond = false;
