@@ -161,7 +161,7 @@ public class ProgTray {
 
         miMaxMin.addActionListener(e -> Platform.runLater(() -> maxMin()));
 
-        miConfig.addActionListener(e -> Platform.runLater(() -> new ConfigDialogController(ProgData.getInstance()).showDialog()));
+        miConfig.addActionListener(e -> Platform.runLater(() -> new ConfigDialogController(ProgData.getInstance())));
         miConfig.setEnabled(!ConfigDialogController.dialogIsRunning.getValue());
         ConfigDialogController.dialogIsRunning.addListener((o, u, n) ->
                 miConfig.setEnabled(!ConfigDialogController.dialogIsRunning.getValue()));

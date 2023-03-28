@@ -40,7 +40,7 @@ public class FilmFilterControllerBlacklist extends HBox {
         Button btnBlack = new Button("");
         btnBlack.getStyleClass().add("buttonSmall");
         btnBlack.setGraphic(ProgIcons.Icons.ICON_BUTTON_EDIT.getImageView());
-        btnBlack.setOnAction(a -> new ConfigDialogController(ProgData.getInstance(), true).showDialog());
+        btnBlack.setOnAction(a -> new ConfigDialogController(ProgData.getInstance(), true));
         btnBlack.disableProperty().bind(ConfigDialogController.dialogIsRunning);
 
         Label lblRight = new Label();

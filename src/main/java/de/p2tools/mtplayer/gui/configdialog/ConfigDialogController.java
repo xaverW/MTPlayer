@@ -67,7 +67,7 @@ public class ConfigDialogController extends PDialogExtra {
         dialogIsRunning.setValue(true);
         btnApply.setVisible(false);
 
-        init(false);
+        init(true);
     }
 
     public ConfigDialogController(ProgData progData, boolean blackListDialog) {
@@ -83,18 +83,12 @@ public class ConfigDialogController extends PDialogExtra {
             btnApply.setVisible(false);
         }
 
-        init(false);
+        init(true);
     }
 
     @Override
     public void make() {
-//        setMaskerPane();
-
         this.getMaskerPane().visibleProperty().bind(ProgData.getInstance().maskerPane.visibleProperty());
-//        progData.maskerPane.visibleProperty().addListener((u, o, n) -> {
-//            //bind geht da nicht: wird im Listener gesetzt->todo nur Button dort setzen
-//            setMaskerPane();
-//        });
         Button btnStop = getMaskerPane().getButton();
         getMaskerPane().setButtonText("");
         btnStop.setGraphic(ProgIcons.Icons.ICON_BUTTON_STOP.getImageView());
@@ -104,10 +98,8 @@ public class ConfigDialogController extends PDialogExtra {
             public void start(ListenerFilmlistLoadEvent event) {
                 if (event.progress == ListenerLoadFilmlist.PROGRESS_INDETERMINATE) {
                     // ist dann die gespeicherte Filmliste
-//                    getMaskerPane().setMaskerVisible(true, false);
                     getMaskerPane().setButtonVisible(false);
                 } else {
-//                    getMaskerPane().setMaskerVisible(true, true);
                     getMaskerPane().setButtonVisible(true);
                 }
                 getMaskerPane().setMaskerProgress(event.progress, event.text);
@@ -120,14 +112,12 @@ public class ConfigDialogController extends PDialogExtra {
 
             @Override
             public void loaded(ListenerFilmlistLoadEvent event) {
-//                getMaskerPane().setMaskerVisible(true, false);
                 getMaskerPane().setButtonVisible(false);
                 getMaskerPane().setMaskerProgress(ListenerLoadFilmlist.PROGRESS_INDETERMINATE, "Filmliste verarbeiten");
             }
 
             @Override
             public void finished(ListenerFilmlistLoadEvent event) {
-//                getMaskerPane().setMaskerVisible(false);
             }
         };
         LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(listener);
@@ -138,16 +128,26 @@ public class ConfigDialogController extends PDialogExtra {
         getVBoxCont().setPadding(new Insets(0));
 
         addOkCancelApplyButtons(btnOk, null, btnApply);
-        btnOk.setOnAction(a -> close());
-        btnApply.setOnAction(a -> apply());
+        btnApply.setOnAction(a -> onlyApply());
+        btnOk.setOnAction(a -> onlyClose());
 
         ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> updateCss());
         initPanel();
     }
 
-    public void apply() {
+    private void onlyApply() {
+        if (!LoadFilmFactory.loadFilmlist.getPropLoadFilmlist()) {
+            //dann wird die Blacklist immer neu gemacht, sonst wirds dann eh gemacht
+            new Thread(() -> {
+                BlacklistFilterFactory.markFilmBlack(true);
+                blackChanged.setValue(false);
+            }).start();
+        }
+    }
+
+    private void onlyClose() {
         if (!geo.equals(ProgConfig.SYSTEM_GEO_HOME_PLACE.get())) {
-            // dann hat sich der Geo-Standort geändert
+            //dann hat sich der Geo-Standort geändert
             progData.filmlist.markGeoBlocked();
         }
 
@@ -167,11 +167,11 @@ public class ConfigDialogController extends PDialogExtra {
                 ProgData.getInstance().maskerPane.switchOffMasker();
             }).start();
         }
+        close();
     }
 
     @Override
     public void close() {
-        apply();
         controllerConfig.close();
         controllerFilm.close();
         controllerBlack.close();
@@ -184,18 +184,9 @@ public class ConfigDialogController extends PDialogExtra {
         super.close();
     }
 
-//    private void setMaskerPane() {
-//        if (progData.maskerPane.isVisible()) {
-//            this.setMaskerVisible(true);
-//        } else {
-//            this.setMaskerVisible(false);
-//        }
-//    }
-
     private void initPanel() {
         try {
             Tab tab;
-
             controllerConfig = new ControllerConfig(this.getStage());
             tab = new Tab("Allgemein");
             tab.setClosable(false);

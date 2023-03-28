@@ -56,6 +56,7 @@ import java.util.function.Predicate;
 
 public class PaneBlackList {
 
+    private final SplitPane splitPane = new SplitPane();
     private final TableView<BlackData> tableView = new TableView<>();
     private final RadioButton rbBlack = new RadioButton("Blacklist");
     private final RadioButton rbWhite = new RadioButton("Whitelist");
@@ -113,6 +114,11 @@ public class PaneBlackList {
 
     public void close() {
         LoadFilmFactory.getInstance().loadFilmlist.removeListenerLoadFilmlist(listenerLoadFilmlist);
+        if (controlBlackListNotFilmFilter) {
+            splitPane.getDividers().get(0).positionProperty().unbindBidirectional(ProgConfig.CONFIG_DIALOG_BLACKLIST_SPLITPANE);
+        } else {
+            splitPane.getDividers().get(0).positionProperty().unbindBidirectional(ProgConfig.CONFIG_DIALOG_FILMLIST_FILTER_SPLITPANE);
+        }
     }
 
     public void make(Collection<TitledPane> result) {
@@ -253,11 +259,16 @@ public class PaneBlackList {
         tableView.setStyle("-fx-border-width: 1px;");
         tableView.setStyle("-fx-border-color: -text-color-blue;");
 
-        HBox h = new HBox(SPACE_VBOX);
-        h.getChildren().addAll(tableView, vAll);
-        HBox.setHgrow(tableView, Priority.ALWAYS);
-        VBox.setVgrow(h, Priority.ALWAYS);
-        vBox.getChildren().add(h);
+        splitPane.getItems().addAll(tableView, vAll);
+        splitPane.getItems().get(0).autosize();
+        SplitPane.setResizableWithParent(vAll, false);
+
+        if (controlBlackListNotFilmFilter) {
+            splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.CONFIG_DIALOG_BLACKLIST_SPLITPANE);
+        } else {
+            splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.CONFIG_DIALOG_FILMLIST_FILTER_SPLITPANE);
+        }
+        vBox.getChildren().add(splitPane);
     }
 
     private void addButton(VBox vBox) {

@@ -30,8 +30,6 @@ import de.p2tools.p2lib.guitools.PTableFactory;
 import de.p2tools.p2lib.guitools.pclosepane.PClosePaneH;
 import de.p2tools.p2lib.mtfilter.Filter;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.DoubleProperty;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -61,9 +59,6 @@ public class AboGuiController extends AnchorPane {
     private final FilteredList<AboData> filteredAbos;
     private final SortedList<AboData> sortedAbos;
 
-    DoubleProperty splitPaneProperty = ProgConfig.ABO_GUI_DIVIDER;
-    BooleanProperty boolInfoOn = ProgConfig.ABO_GUI_DIVIDER_ON;
-
     public AboGuiController() {
         progData = ProgData.getInstance();
         pClosePaneH = new PClosePaneH(ProgConfig.ABO_GUI_DIVIDER_ON, true);
@@ -83,7 +78,7 @@ public class AboGuiController extends AnchorPane {
         aboGuiInfoController = new AboGuiInfoController();
         VBox.setVgrow(aboGuiInfoController, Priority.ALWAYS);
         pClosePaneH.getVBoxAll().getChildren().add(aboGuiInfoController);
-        boolInfoOn.addListener((observable, oldValue, newValue) -> setInfoPane());
+        ProgConfig.ABO_GUI_DIVIDER_ON.addListener((observable, oldValue, newValue) -> setInfoPane());
 
         filteredAbos = new FilteredList<>(progData.aboList, p -> true);
         sortedAbos = new SortedList<>(filteredAbos);
@@ -159,12 +154,12 @@ public class AboGuiController extends AnchorPane {
     }
 
     private void setInfoPane() {
-        pClosePaneH.setVisible(boolInfoOn.getValue());
-        pClosePaneH.setManaged(boolInfoOn.getValue());
+        pClosePaneH.setVisible(ProgConfig.ABO_GUI_DIVIDER_ON.getValue());
+        pClosePaneH.setManaged(ProgConfig.ABO_GUI_DIVIDER_ON.getValue());
 
-        if (!boolInfoOn.getValue()) {
+        if (!ProgConfig.ABO_GUI_DIVIDER_ON.getValue()) {
             if (bound) {
-                splitPane.getDividers().get(0).positionProperty().unbindBidirectional(splitPaneProperty);
+                splitPane.getDividers().get(0).positionProperty().unbindBidirectional(ProgConfig.ABO_GUI_DIVIDER);
             }
 
             splitPane.getItems().clear();
@@ -175,7 +170,7 @@ public class AboGuiController extends AnchorPane {
             splitPane.getItems().clear();
             splitPane.getItems().addAll(scrollPane, pClosePaneH);
             SplitPane.setResizableWithParent(pClosePaneH, false);
-            splitPane.getDividers().get(0).positionProperty().bindBidirectional(splitPaneProperty);
+            splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.ABO_GUI_DIVIDER);
         }
     }
 
