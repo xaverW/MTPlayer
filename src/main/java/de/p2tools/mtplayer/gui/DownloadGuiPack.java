@@ -19,8 +19,6 @@ package de.p2tools.mtplayer.gui;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.filter.DownloadFilterController;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.DoubleProperty;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -31,8 +29,6 @@ public class DownloadGuiPack {
     ProgData progData;
     private final SplitPane splitPane = new SplitPane();
     private final HBox hBox = new HBox();
-    DoubleProperty doubleProperty; //sonst geht die Ref verloren
-    BooleanProperty boolDivOn;
     private final DownloadFilterController downloadFilterController;
     private final DownloadGuiController guiController;
 
@@ -40,25 +36,23 @@ public class DownloadGuiPack {
 
     public DownloadGuiPack() {
         progData = ProgData.getInstance();
-        this.doubleProperty = ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER;
-        this.boolDivOn = ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER_ON;
         downloadFilterController = new DownloadFilterController();
         guiController = new DownloadGuiController();
     }
 
     public void closeSplit() {
-        boolDivOn.setValue(!boolDivOn.get());
+        ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER_ON.setValue(!ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER_ON.get());
     }
 
     private void setSplit() {
-        if (boolDivOn.getValue()) {
+        if (ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER_ON.getValue()) {
             splitPane.getItems().clear();
             splitPane.getItems().addAll(downloadFilterController, guiController);
             bound = true;
-            splitPane.getDividers().get(0).positionProperty().bindBidirectional(doubleProperty);
+            splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER);
         } else {
             if (bound) {
-                splitPane.getDividers().get(0).positionProperty().unbindBidirectional(doubleProperty);
+                splitPane.getDividers().get(0).positionProperty().unbindBidirectional(ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER);
             }
             splitPane.getItems().clear();
             splitPane.getItems().addAll(guiController);
@@ -82,7 +76,7 @@ public class DownloadGuiPack {
         HBox.setHgrow(splitPane, Priority.ALWAYS);
         hBox.getChildren().addAll(splitPane, menuController);
 
-        boolDivOn.addListener((observable, oldValue, newValue) -> setSplit());
+        ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER_ON.addListener((observable, oldValue, newValue) -> setSplit());
         setSplit();
         return new SplitPane(hBox);
     }

@@ -19,6 +19,25 @@ package de.p2tools.mtplayer.gui.tools;
 import de.p2tools.p2lib.P2LibConst;
 
 public class HelpText {
+    private static final String MEDIA = "Im Menü kann eingestellt werden, ob der Titel, Thema oder Titel-Thema " +
+            "vom ausgewählten Download im Suchtext angezeigt " +
+            "werden soll." +
+            "\n\n" +
+            "Beim Putzen wird der Suchtext auf die wichtigsten Wörter aus Thema/Titel reduziert. " +
+            "Verknüpfen meint, dass die Wörter des geputzten Suchtextes mit \"UND\" oder \"ODER\" verknüpft werden." +
+            "\n\n" +
+            "Bei \"UND\" steht ein \":\" zwischen den Wörtern und sie müssen alle vorkommen. " +
+            "Bei \"ODER\" steht ein \",\" zwischen den " +
+            "Wörtern und nur eins muss im Suchtext (Thema oder Titel des Films) vorkommen.";
+
+    public static final String DOWNLOAD_GUI_MEDIA = "Hier werden Filme aus der Mediensammlung angezeigt. " +
+            "Mit dem Suchtext kann in der Mediensammlung gesucht werden." +
+            "\n\n" + MEDIA;
+
+    public static final String DOWNLOAD_GUI_ABO = "Hier werden Filme von bereits gespeicherten Abos angezeigt. " +
+            "Mit dem Suchtext kann in der Liste der erledigten Abos gesucht werden." +
+            "\n\n" + MEDIA;
+
     public static final String FILTER_FIELD =
             "Mit den Textfeldern kann nach einem wörtlichen Suchtext (Suchtext muss enthalten sein/" +
                     "oder darf nicht enthalten sein) " +

@@ -19,147 +19,31 @@ package de.p2tools.mtplayer.gui.mediadialog;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.history.HistoryData;
 import de.p2tools.mtplayer.gui.mediaconfig.SearchPredicateWorker;
-import de.p2tools.mtplayer.gui.tools.Listener;
-import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.PGuiTools;
-import de.p2tools.p2lib.mtfilter.FilterCheckRegEx;
 import javafx.application.Platform;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
-import javafx.collections.ListChangeListener;
 import javafx.collections.transformation.SortedList;
-import javafx.geometry.Insets;
-import javafx.scene.control.*;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import java.util.Date;
 
-public class PaneAbo extends ScrollPane {
+public class PaneAbo extends PaneDialog {
 
-    private Label lblGesamtAbo = new Label();
-    private Label lblTrefferAbo = new Label();
-    private TableView<HistoryData> tableAbo = new TableView();
-    private TextField txtTitleAbo = new TextField();
-    private TextField txtUrlAbo = new TextField();
-    private final TextField txtSearch = new TextField();
-    private final Button btnReset = new Button("");
-    private final RadioButton rbTheme = new RadioButton("Thema");
-    private final RadioButton rbTitle = new RadioButton("Titel");
-    private final RadioButton rbTt = new RadioButton("Thema oder Titel");
-    private final IntegerProperty search;
-    private final Listener listenerDbStart;
-    private final Listener listenerDbStop;
     private ProgData progData = ProgData.getInstance();
 
-    private final String searchStrOrg;
-    private StringProperty searchStrProp;
-
-    private ListChangeListener<HistoryData> listener;
-
-    public PaneAbo(Stage stage, String searchStrOrg, StringProperty searchStrProp) {
-        this.searchStrOrg = searchStrOrg;
-        this.searchStrProp = searchStrProp;
-        search = ProgConfig.MEDIA_DIALOG_SEARCH_ABO;
-        listenerDbStart = new Listener(Listener.EVENT_MEDIA_DB_START, MediaDialogController.class.getSimpleName()) {
-            @Override
-            public void pingFx() {
-                // neue DB suchen
-                txtSearch.setDisable(true);
-            }
-        };
-        listenerDbStop = new Listener(Listener.EVENT_MEDIA_DB_STOP, MediaDialogController.class.getSimpleName()) {
-            @Override
-            public void pingFx() {
-                // neue DB liegt vor
-                txtSearch.setDisable(false);
-            }
-        };
+    public PaneAbo(String searchStrOrg, StringProperty searchStrProp) {
+        super(searchStrOrg, searchStrProp, false);
     }
 
-    public void make() {
-        initPanel();
-        initTableAbo();
-        initAction();
-        filter();
-    }
-
+    @Override
     public void close() {
-        Listener.removeListener(listenerDbStart);
-        Listener.removeListener(listenerDbStop);
         progData.erledigteAbos.removeListener(listener);
     }
 
-    private void initPanel() {
-        ToggleGroup tg = new ToggleGroup();
-        tg.getToggles().addAll(rbTheme, rbTitle, rbTt);
-        switch (search.get()) {
-            case ProgConst.MEDIA_COLLECTION_SEARCH_THEMA:
-                rbTheme.setSelected(true);
-                break;
-            case ProgConst.MEDIA_COLLECTION_SEARCH_TITEL:
-                rbTitle.setSelected(true);
-                break;
-            case ProgConst.MEDIA_COLLECTION_SEARCH_THEMA_TITEL:
-            default:
-                rbTt.setSelected(true);
-                break;
-        }
-
-        btnReset.setGraphic(ProgIcons.Icons.ICON_BUTTON_RESET.getImageView());
-        btnReset.setTooltip(new Tooltip("Suchtext wieder herstellen"));
-
-        GridPane gridPaneSearch = new GridPane();
-        gridPaneSearch.setPadding(new Insets(P2LibConst.DIST_EDGE));
-        gridPaneSearch.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
-        gridPaneSearch.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
-        txtSearch.setPrefWidth(Double.MAX_VALUE);
-        GridPane.setHgrow(txtSearch, Priority.ALWAYS);
-        gridPaneSearch.getStyleClass().add("extra-pane");
-
-        gridPaneSearch.add(new Label("Suchen: "), 0, 0);
-        gridPaneSearch.add(txtSearch, 1, 0, 3, 1);
-        gridPaneSearch.add(btnReset, 4, 0);
-
-        gridPaneSearch.add(rbTheme, 1, 1);
-        gridPaneSearch.add(rbTitle, 2, 1);
-        gridPaneSearch.add(rbTt, 3, 1);
-
-        HBox hBoxSum = new HBox(P2LibConst.DIST_BUTTON);
-//        hBoxSum.setPadding(new Insets(10));
-        hBoxSum.getChildren().addAll(new Label("Treffer:"), lblTrefferAbo, PGuiTools.getHBoxGrower(),
-                new Label("Anzahl Medien gesamt:"), lblGesamtAbo);
-
-        GridPane gridPane = new GridPane();
-//        gridPane.setPadding(new Insets(10));
-        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
-        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
-        GridPane.setHgrow(txtUrlAbo, Priority.ALWAYS);
-        txtUrlAbo.setEditable(false);
-
-        gridPane.add(new Label("Titel:"), 0, 0);
-        gridPane.add(txtTitleAbo, 1, 0);
-        gridPane.add(new Label("Url:"), 0, 1);
-        gridPane.add(txtUrlAbo, 1, 1);
-
-        VBox.setVgrow(tableAbo, Priority.ALWAYS);
-        VBox vBox = new VBox(10);
-        vBox.getChildren().addAll(gridPaneSearch, PGuiTools.getHDistance(10), tableAbo, hBoxSum, gridPane);
-
-        setPadding(new Insets(P2LibConst.DIST_EDGE));
-        setFitToHeight(true);
-        setFitToWidth(true);
-        this.setContent(vBox);
-    }
-
-    private void initTableAbo() {
+    @Override
+    void initTable() {
         final TableColumn<HistoryData, String> themeColumn = new TableColumn<>("Thema");
         themeColumn.prefWidthProperty().bind(tableAbo.widthProperty().multiply(20.0 / 100));
         themeColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
@@ -182,11 +66,11 @@ public class PaneAbo extends ScrollPane {
 
         tableAbo.getSelectionModel().selectedItemProperty().addListener((observableValue, dataOld, dataNew) -> {
             if (dataNew != null) {
-                txtTitleAbo.setText(dataNew.getTitle());
-                txtUrlAbo.setText(dataNew.getUrl());
+                txtTitleMedia.setText(dataNew.getTitle());
+                txtPathMedia.setText(dataNew.getUrl());
             } else {
-                txtTitleAbo.setText("");
-                txtUrlAbo.setText("");
+                txtTitleMedia.setText("");
+                txtPathMedia.setText("");
             }
         });
 
@@ -195,27 +79,21 @@ public class PaneAbo extends ScrollPane {
         tableAbo.setItems(sortedList);
     }
 
-    private void initAction() {
-        FilterCheckRegEx fTT = new FilterCheckRegEx(txtSearch);
-        txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
-            fTT.checkPattern();
-            filter();
-            searchStrProp.setValue(txtSearch.getText());
-        });
-        txtSearch.setOnMouseClicked(event -> {
-            if (event.getClickCount() > 1) {
-                String sel = txtSearch.getSelectedText();
-                txtSearch.setText(sel);
+    @Override
+    void initAction() {
+        super.initAction();
+        btnAndOr.setOnAction(a -> {
+            ProgConfig.DOWNLOAD_GUI_MEDIA_AND_OR_ABO.setValue(!ProgConfig.DOWNLOAD_GUI_MEDIA_AND_OR_ABO.getValue());
+            if (ProgConfig.DOWNLOAD_GUI_MEDIA_AND_OR_ABO.getValue()) {
+                txtSearch.setText(txtSearch.getText().replace(",", ":"));
+            } else {
+                txtSearch.setText(txtSearch.getText().replace(":", ","));
             }
         });
-        btnReset.setOnAction(a -> txtSearch.setText(searchStrOrg));
 
-        Listener.addListener(listenerDbStart);
-        Listener.addListener(listenerDbStop);
-
-        lblGesamtAbo.setText(progData.erledigteAbos.size() + "");
+        lblGesamtMedia.setText(progData.erledigteAbos.size() + "");
         listener = c -> Platform.runLater(() -> {
-            lblGesamtAbo.setText(progData.erledigteAbos.size() + "");
+            lblGesamtMedia.setText(progData.erledigteAbos.size() + "");
             filter();
         });
         progData.erledigteAbos.addListener(listener);
@@ -225,22 +103,18 @@ public class PaneAbo extends ScrollPane {
         rbTt.selectedProperty().addListener((o, ol, ne) -> filter());
     }
 
-    public void filter(String searStr) {
-        txtSearch.setText(searStr);
-        filter();
-    }
-
-    private void filter() {
+    @Override
+    void filter() {
         if (rbTheme.isSelected()) {
-            search.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_THEMA);
+            ProgConfig.MEDIA_DIALOG_SEARCH_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_THEMA);
         } else if (rbTitle.isSelected()) {
-            search.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_TITEL);
+            ProgConfig.MEDIA_DIALOG_SEARCH_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_TITEL);
         } else {
-            search.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_THEMA_TITEL);
+            ProgConfig.MEDIA_DIALOG_SEARCH_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_THEMA_TITEL);
         }
 
         progData.erledigteAbos.filteredListSetPredicate(SearchPredicateWorker.getPredicateHistoryData(rbTheme.isSelected(), rbTitle.isSelected(),
                 txtSearch.getText(), false));
-        lblTrefferAbo.setText(progData.erledigteAbos.getFilteredList().size() + "");
+        lblHits.setText(progData.erledigteAbos.getFilteredList().size() + "");
     }
 }

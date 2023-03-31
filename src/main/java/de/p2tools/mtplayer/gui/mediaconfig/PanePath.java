@@ -49,8 +49,9 @@ public class PanePath {
 
     private final TableView<MediaCollectionData> tableView = new TableView<>();
     private final boolean external;
-    private final TextField txtPath = new TextField();
     private final TextField txtCollectionName = new TextField();
+    private final TextField txtPath = new TextField();
+    private final Button btnPath = new Button("");
 
     private final ProgData progData;
     private final Stage stage;
@@ -109,6 +110,7 @@ public class PanePath {
 
         txtCollectionName.disableProperty().bind(tableView.getSelectionModel().selectedItemProperty().isNull());
         txtPath.disableProperty().bind(tableView.getSelectionModel().selectedItemProperty().isNull());
+        btnPath.disableProperty().bind(tableView.getSelectionModel().selectedItemProperty().isNull());
 
         tableView.getSelectionModel().selectedItemProperty().addListener((v, o, n) -> {
             if (collectionDataOld != null) {
@@ -208,7 +210,6 @@ public class PanePath {
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         gridPane.setPadding(new Insets(P2LibConst.DIST_EDGE));
 
-        final Button btnPath = new Button("");
         btnPath.setTooltip(new Tooltip("Einen Pfad zum Einlesen einer neuen Sammlung auswählen."));
         btnPath.setGraphic(ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
         btnPath.setOnAction(event -> {

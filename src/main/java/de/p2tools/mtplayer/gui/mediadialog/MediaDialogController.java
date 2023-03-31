@@ -44,7 +44,18 @@ public class MediaDialogController extends PDialogExtra {
     private final ProgData progData = ProgData.getInstance();
     private PaneMedia paneMedia;
     private PaneAbo paneAbo;
-    final StackPane stackPane = new StackPane();
+    private final StackPane stackPane = new StackPane();
+
+    public MediaDialogController(String searchStrOrg, boolean openMedia) {
+        super(ProgData.getInstance().primaryStage, ProgConfig.MEDIA_DIALOG_SIZE, "Mediensammlung",
+                true, false, DECO.BORDER);
+
+        this.searchStrOrg = searchStrOrg.trim();
+        ProgConfig.SYSTEM_MEDIA_DIALOG_SEARCH_MEDIA.setValue(openMedia);
+        searchStrProp.setValue(searchStrOrg);
+
+        init(true);
+    }
 
     public MediaDialogController(String searchStrOrg) {
         super(ProgData.getInstance().primaryStage, ProgConfig.MEDIA_DIALOG_SIZE, "Mediensammlung",
@@ -86,10 +97,10 @@ public class MediaDialogController extends PDialogExtra {
             getVBoxCont().getChildren().add(hBox);
 
             // Stackpane
-            paneMedia = new PaneMedia(getStage(), searchStrOrg, searchStrProp);
+            paneMedia = new PaneMedia(searchStrOrg, searchStrProp);
             paneMedia.make();
 
-            paneAbo = new PaneAbo(getStage(), searchStrOrg, searchStrProp);
+            paneAbo = new PaneAbo(searchStrOrg, searchStrProp);
             paneAbo.make();
 
             stackPane.getChildren().addAll(paneMedia, paneAbo);

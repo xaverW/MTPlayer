@@ -29,6 +29,7 @@ public class ProgIcons {
         ICON_DIALOG_ON("dialog-ein.png", "dialog-ein-sw.png"),
         IMAGE_ACHTUNG_64("achtung_64.png"),
 
+        ICON_BUTTON_CLEAN("clean_16.png", 16, 16),
         ICON_BUTTON_RESET("button-reset.png", 16, 16),
         ICON_BUTTON_UPDATE("button-update.png", 16, 16),
         ICON_BUTTON_PROPOSE("button-propose.png", 16, 16),
@@ -62,6 +63,7 @@ public class ProgIcons {
         ICON_BUTTON_MOVE_BOTTOM("button-move-bottom.png", 16, 16),
 
         ICON_TOOLBAR_MENU("toolbar-menu.png", 18, 15),
+        ICON_TOOLBAR_MENU_SMALL("toolbar-menu-small.png", 15, 12),
         ICON_TOOLBAR_MENU_TOP("toolbar-menu-top.png", 32, 18),
         ICON_TOOLBAR_DOWNLOAD_CLEAN("toolbar-download-clean.png", 32, 32),
         ICON_TOOLBAR_DOWNLOAD_START("toolbar-download-starten.png", 32, 32),

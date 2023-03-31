@@ -24,6 +24,7 @@ import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.controller.starter.DownloadState;
 import de.p2tools.mtplayer.controller.tools.MLBandwidthTokenBucket;
+import de.p2tools.mtplayer.gui.DownloadGuiMedia;
 import de.p2tools.p2lib.configfile.ConfigFile;
 import de.p2tools.p2lib.data.PDataProgConfig;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
@@ -232,6 +233,16 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty DOWNLOAD_GUI_TABLE_VIS = addStrProp("download-gui-table-vis");
     public static StringProperty DOWNLOAD_GUI_TABLE_ORDER = addStrProp("download-gui-table-order");
     public static BooleanProperty DOWNLOAD_SHOW_NOTIFICATION = addBoolProp("download-show-notification", Boolean.TRUE);
+    public static DoubleProperty DOWNLOAD_GUI_MEDIA_DIVIDER = addDoubleProp("download-gui-media-divider", 0.5);
+
+    //Gui Download Media
+    public static IntegerProperty DOWNLOAD_GUI_MEDIA_SHOW_TT_MEDIA = addIntProp("download-gui-media-show-tt-media", DownloadGuiMedia.SHOW_TITEL);//was angezeigt wird: T/Th/TT
+    public static BooleanProperty DOWNLOAD_GUI_MEDIA_CLEAN_MEDIA = addBoolProp("download-gui-media-clean-media", Boolean.TRUE);
+    public static BooleanProperty DOWNLOAD_GUI_MEDIA_AND_OR_MEDIA = addBoolProp("download-gui-media-and-or-media", Boolean.TRUE);
+
+    public static IntegerProperty DOWNLOAD_GUI_MEDIA_SHOW_TT_ABO = addIntProp("download-gui-media-show-tt-abo", DownloadGuiMedia.SHOW_TITEL);//was angezeigt wird: T/Th/TT
+    public static BooleanProperty DOWNLOAD_GUI_MEDIA_CLEAN_ABO = addBoolProp("download-gui-media-clean-abo", Boolean.TRUE);
+    public static BooleanProperty DOWNLOAD_GUI_MEDIA_AND_OR_ABO = addBoolProp("download-gui-media-and-or-abo", Boolean.TRUE);
 
     // Downloadchart
     public static BooleanProperty DOWNLOAD_CHART_SEPARAT = addBoolProp("download-chart-separat", Boolean.TRUE);

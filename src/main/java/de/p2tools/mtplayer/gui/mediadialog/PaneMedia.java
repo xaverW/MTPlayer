@@ -17,152 +17,39 @@
 package de.p2tools.mtplayer.gui.mediadialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.mediadb.MediaData;
 import de.p2tools.mtplayer.controller.mediadb.MediaDataWorker;
 import de.p2tools.mtplayer.controller.mediadb.MediaFileSize;
 import de.p2tools.mtplayer.gui.mediaconfig.SearchPredicateWorker;
-import de.p2tools.mtplayer.gui.tools.Listener;
-import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.PColumnConstraints;
-import de.p2tools.p2lib.guitools.PGuiTools;
 import de.p2tools.p2lib.guitools.POpen;
 import de.p2tools.p2lib.guitools.ptable.CellCheckBox;
-import de.p2tools.p2lib.mtfilter.FilterCheckRegEx;
 import de.p2tools.p2lib.tools.file.PFileUtils;
 import javafx.application.Platform;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.collections.transformation.SortedList;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
-public class PaneMedia extends ScrollPane {
+public class PaneMedia extends PaneDialog {
 
-    private Button btnCreateMediaDB = new Button("_Mediensammlung neu aufbauen");
-    private Button btnPlay = new Button();
-    private Button btnOpen = new Button();
-
-    private final TextField txtSearch = new TextField();
-    private final Button btnReset = new Button("");
-    private ProgressBar progress = new ProgressBar();
-
-    private Label lblGesamtMedia = new Label();
-    private Label lblTrefferMedia = new Label();
-    private TableView<MediaData> tableMedia = new TableView();
-    private TextField txtTitleMedia = new TextField();
-    private TextField txtPathMedia = new TextField();
-    private final Listener listenerDbStart;
-    private final Listener listenerDbStop;
     private ProgData progData = ProgData.getInstance();
 
-    private final String searchStrOrg;
-    private StringProperty searchStrProp;
-
-    private ChangeListener sizeListener;
-
-    public PaneMedia(Stage stage, String searchStrOrg, StringProperty searchStrProp) {
-        this.searchStrOrg = searchStrOrg;
-        this.searchStrProp = searchStrProp;
-
-        listenerDbStart = new Listener(Listener.EVENT_MEDIA_DB_START, MediaDialogController.class.getSimpleName()) {
-            @Override
-            public void pingFx() {
-                // neue DB suchen
-                txtSearch.setDisable(true);
-            }
-        };
-        listenerDbStop = new Listener(Listener.EVENT_MEDIA_DB_STOP, MediaDialogController.class.getSimpleName()) {
-            @Override
-            public void pingFx() {
-                // neue DB liegt vor
-                txtSearch.setDisable(false);
-                filter();
-            }
-        };
+    public PaneMedia(String searchStrOrg, StringProperty searchStrProp) {
+        super(searchStrOrg, searchStrProp, true);
     }
 
-    public void make() {
-        initPanel();
-        initTableMedia();
-        initAction();
-        filter();
-    }
-
+    @Override
     public void close() {
-        Listener.removeListener(listenerDbStart);
-        Listener.removeListener(listenerDbStop);
-        Listener.removeListener(listenerDbStop);
         progData.mediaDataList.sizeProperty().removeListener(sizeListener);
         progress.visibleProperty().unbind();
         btnCreateMediaDB.disableProperty().unbind();
     }
 
-    private void initPanel() {
-        HBox hBoxSearch = new HBox(P2LibConst.DIST_BUTTON);
-        hBoxSearch.setPadding(new Insets(P2LibConst.DIST_EDGE));
-        HBox.setHgrow(txtSearch, Priority.ALWAYS);
-        hBoxSearch.getChildren().addAll(new Label("Suchen: "), txtSearch, btnReset);
-        hBoxSearch.setAlignment(Pos.CENTER_RIGHT);
-        hBoxSearch.getStyleClass().add("extra-pane");
-
-        btnReset.setGraphic(ProgIcons.Icons.ICON_BUTTON_RESET.getImageView());
-        btnReset.setTooltip(new Tooltip("Suchtext wieder herstellen"));
-
-        HBox hBoxSum = new HBox(P2LibConst.DIST_BUTTON);
-//        hBoxSum.setPadding(new Insets(10));
-        hBoxSum.getChildren().addAll(new Label("Treffer:"), lblTrefferMedia,
-                PGuiTools.getHBoxGrower(), new Label("Anzahl Medien gesamt:"), lblGesamtMedia);
-
-        GridPane gridPane = new GridPane();
-//        gridPane.setPadding(new Insets(P2LibConst.DIST_EDGE));
-        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
-        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
-
-        txtTitleMedia.setEditable(false);
-        txtPathMedia.setEditable(false);
-
-        gridPane.add(new Label("Titel:"), 0, 0);
-        gridPane.add(txtTitleMedia, 1, 0);
-        gridPane.add(btnPlay, 2, 0);
-        gridPane.add(new Label("Pfad:"), 0, 1);
-        gridPane.add(txtPathMedia, 1, 1);
-        gridPane.add(btnOpen, 2, 1);
-
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrow());
-
-        HBox hBoxProgess = new HBox();
-        hBoxProgess.setSpacing(P2LibConst.DIST_BUTTON);
-//        hBoxProgess.setPadding(new Insets(10));
-        progress.setVisible(false);
-        progress.setMaxHeight(Double.MAX_VALUE);
-        progress.setMaxWidth(Double.MAX_VALUE);
-        hBoxProgess.getChildren().addAll(btnCreateMediaDB, progress);
-        HBox.setHgrow(progress, Priority.ALWAYS);
-
-        tableMedia.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
-        VBox.setVgrow(tableMedia, Priority.ALWAYS);
-
-        VBox vBoxMedia = new VBox(10);
-        vBoxMedia.getChildren().addAll(hBoxSearch, PGuiTools.getHDistance(10), tableMedia, hBoxSum, gridPane, hBoxProgess);
-
-        this.setPadding(new Insets(P2LibConst.DIST_EDGE));
-        this.setFitToHeight(true);
-        this.setFitToWidth(true);
-        this.setContent(vBoxMedia);
-    }
-
-    private void initTableMedia() {
+    @Override
+    void initTable() {
         final TableColumn<MediaData, String> nameColumn = new TableColumn<>("Name");
         nameColumn.prefWidthProperty().bind(tableMedia.widthProperty().multiply(50.0 / 100));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -198,23 +85,17 @@ public class PaneMedia extends ScrollPane {
         tableMedia.setItems(sortedList);
     }
 
-    private void initAction() {
-        FilterCheckRegEx fTT = new FilterCheckRegEx(txtSearch);
-        txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
-            fTT.checkPattern();
-            filter();
-            searchStrProp.setValue(txtSearch.getText());
-        });
-        txtSearch.setOnMouseClicked(event -> {
-            if (event.getClickCount() > 1) {
-                String sel = txtSearch.getSelectedText();
-                txtSearch.setText(sel);
+    @Override
+    void initAction() {
+        super.initAction();
+        btnAndOr.setOnAction(a -> {
+            ProgConfig.DOWNLOAD_GUI_MEDIA_AND_OR_MEDIA.setValue(!ProgConfig.DOWNLOAD_GUI_MEDIA_AND_OR_MEDIA.getValue());
+            if (ProgConfig.DOWNLOAD_GUI_MEDIA_AND_OR_MEDIA.getValue()) {
+                txtSearch.setText(txtSearch.getText().replace(",", ":"));
+            } else {
+                txtSearch.setText(txtSearch.getText().replace(":", ","));
             }
         });
-        btnReset.setOnAction(a -> txtSearch.setText(searchStrOrg));
-
-        Listener.addListener(listenerDbStart);
-        Listener.addListener(listenerDbStop);
 
         lblGesamtMedia.setText(progData.mediaDataList.size() + "");
         sizeListener = (observable, oldValue, newValue) -> {
@@ -237,16 +118,10 @@ public class PaneMedia extends ScrollPane {
         btnPlay.disableProperty().bind(txtPathMedia.textProperty().isEmpty().and(txtTitleMedia.textProperty().isEmpty()));
     }
 
-    public void filter(String searStr) {
-        txtSearch.setText(searStr);
-        filter();
-    }
-
-
-    private void filter() {
+    @Override
+    void filter() {
         progData.mediaDataList.filteredListSetPredicate(SearchPredicateWorker.getPredicateMediaData(txtSearch.getText(), false));
-//        progData.mediaDataList.filteredListSetPredicate(SearchPredicateWorker.getPredicateMediaData_(txtSearch.getText(), false));
-        lblTrefferMedia.setText(progData.mediaDataList.getFilteredList().size() + "");
+        lblHits.setText(progData.mediaDataList.getFilteredList().size() + "");
     }
 
     private void play() {

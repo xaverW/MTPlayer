@@ -41,8 +41,6 @@ import de.p2tools.p2lib.mtfilter.Filter;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 import de.p2tools.p2lib.tools.PSystemUtils;
 import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.DoubleProperty;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Orientation;
@@ -65,21 +63,25 @@ public class DownloadGuiController extends AnchorPane {
     private final TabPane tabPane = new TabPane();
 
     private FilmGuiInfoController filmGuiInfoController;
+    private DownloadGuiMedia downloadGuiMedia;
     private DownloadGuiChart downloadGuiChart;
     private DownloadGuiInfo downloadGuiInfo;
     private final PClosePaneH pClosePaneH;
+
+    private final Tab tabFilm = new Tab("Filminfo");
+    private final Tab tabMedia = new Tab("Mediensammlung");
+    private final Tab tabBand = new Tab("Bandbreite");
+    private final Tab tabDown = new Tab("DownloadInfos");
 
     private final ProgData progData;
     private boolean bound = false;
     private final FilteredList<DownloadData> filteredDownloads;
     private final SortedList<DownloadData> sortedDownloads;
 
-    DoubleProperty splitPaneProperty = ProgConfig.DOWNLOAD_GUI_DIVIDER;
-    BooleanProperty boolInfoOn = ProgConfig.DOWNLOAD_GUI_DIVIDER_ON;
-
     public DownloadGuiController() {
         progData = ProgData.getInstance();
         filmGuiInfoController = new FilmGuiInfoController();
+        downloadGuiMedia = new DownloadGuiMedia();
         downloadGuiChart = new DownloadGuiChart(progData);
         downloadGuiInfo = new DownloadGuiInfo();
         tableView = new TableDownload(Table.TABLE_ENUM.DOWNLOAD);
@@ -97,27 +99,15 @@ public class DownloadGuiController extends AnchorPane {
         scrollPane.setFitToWidth(true);
         scrollPane.setContent(tableView);
 
-        Tab tabFilm = new Tab("Filminfo");
-        tabFilm.setClosable(false);
-        tabFilm.setContent(filmGuiInfoController);
-
-        Tab tabBand = new Tab("Bandbreite");
-        tabBand.setClosable(false);
-        tabBand.setContent(downloadGuiChart);
-
-        Tab tabDown = new Tab("DownloadInfos");
-        tabDown.setClosable(false);
-        tabDown.setContent(downloadGuiInfo);
-
-        tabPane.getTabs().addAll(tabFilm, tabBand, tabDown);
         pClosePaneH.getVBoxAll().getChildren().clear();
         pClosePaneH.getVBoxAll().getChildren().add(tabPane);
         VBox.setVgrow(tabPane, Priority.ALWAYS);
-        boolInfoOn.addListener((observable, oldValue, newValue) -> setInfoPane());
+        ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.addListener((observable, oldValue, newValue) -> setInfoPane());
 
         filteredDownloads = new FilteredList<>(progData.downloadList, p -> true);
         sortedDownloads = new SortedList<>(filteredDownloads);
 
+        addTabs();
         setInfoPane();
         initTable();
         initListener();
@@ -138,7 +128,7 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     public void isShown() {
-        setFilmInfos();
+        setFilmInfos(tableView.getSelectionModel().getSelectedItem());
         tableView.requestFocus();
     }
 
@@ -160,7 +150,6 @@ public class DownloadGuiController extends AnchorPane {
 
     public void deleteFilmFile() {
         // Download nur löschen wenn er nicht läuft
-
         final Optional<DownloadData> download = getSel();
         if (!download.isPresent()) {
             return;
@@ -193,9 +182,7 @@ public class DownloadGuiController extends AnchorPane {
 
         // und jetzt die tatsächlichen URLs des Downloads eintragen
         film.arr[FilmDataMTP.FILM_URL] = download.get().getUrl();
-//        film.arr[FilmData.FILM_URL_RTMP] = download.get().getUrlRtmp();
         film.arr[FilmDataMTP.FILM_URL_SMALL] = "";
-//        film.arr[FilmData.FILM_URL_RTMP_SMALL] = "";
         // und starten
         FilmTools.playFilm(film, null);
     }
@@ -209,15 +196,12 @@ public class DownloadGuiController extends AnchorPane {
         PSystemUtils.copyToClipboard(download.get().getUrl());
     }
 
-    private void setFilmInfos() {
-        DownloadData download = tableView.getSelectionModel().getSelectedItem();
-        if (download != null) {
-            filmGuiInfoController.setFilm(download.getFilm());
-            FilmInfoDialogController.getInstance().setFilm(download.getFilm());
-        } else {
-            filmGuiInfoController.setFilm(null);
-            FilmInfoDialogController.getInstance().setFilm(null);
+    private void setFilmInfos(DownloadData download) {
+        if (tabPane.getSelectionModel().getSelectedItem().equals(tabMedia)) {
+            downloadGuiMedia.setSearchPredicate(download);
         }
+        filmGuiInfoController.setFilm(download != null ? download.getFilm() : null);
+        FilmInfoDialogController.getInstance().setFilm(download != null ? download.getFilm() : null);
     }
 
     public void showFilmInfo() {
@@ -304,6 +288,27 @@ public class DownloadGuiController extends AnchorPane {
         Table.saveTable(tableView, Table.TABLE_ENUM.DOWNLOAD);
     }
 
+    private void addTabs() {
+        tabFilm.setClosable(false);
+        tabFilm.setContent(filmGuiInfoController);
+
+        tabMedia.setClosable(false);
+        tabMedia.setContent(downloadGuiMedia);
+        tabPane.getSelectionModel().selectedItemProperty().addListener((u, o, n) -> {
+            if (tabPane.getSelectionModel().getSelectedItem().equals(tabMedia)) {
+                setFilmInfos(tableView.getSelectionModel().getSelectedItem());
+            }
+        });
+
+        tabBand.setClosable(false);
+        tabBand.setContent(downloadGuiChart);
+
+        tabDown.setClosable(false);
+        tabDown.setContent(downloadGuiInfo);
+
+        tabPane.getTabs().addAll(tabFilm, tabMedia, tabBand, tabDown);
+    }
+
     private ArrayList<DownloadData> getSelList() {
         // todo observableList -> abo
         final ArrayList<DownloadData> ret = new ArrayList<>();
@@ -374,12 +379,12 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private void setInfoPane() {
-        pClosePaneH.setVisible(boolInfoOn.getValue());
-        pClosePaneH.setManaged(boolInfoOn.getValue());
+        pClosePaneH.setVisible(ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.getValue());
+        pClosePaneH.setManaged(ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.getValue());
 
-        if (!boolInfoOn.getValue()) {
+        if (!ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.getValue()) {
             if (bound) {
-                splitPane.getDividers().get(0).positionProperty().unbindBidirectional(splitPaneProperty);
+                splitPane.getDividers().get(0).positionProperty().unbindBidirectional(ProgConfig.DOWNLOAD_GUI_DIVIDER);
             }
             splitPane.getItems().clear();
             splitPane.getItems().add(scrollPane);
@@ -389,7 +394,7 @@ public class DownloadGuiController extends AnchorPane {
 
             splitPane.getItems().clear();
             splitPane.getItems().addAll(scrollPane, pClosePaneH);
-            splitPane.getDividers().get(0).positionProperty().bindBidirectional(splitPaneProperty);
+            splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.DOWNLOAD_GUI_DIVIDER);
             SplitPane.setResizableWithParent(pClosePaneH, false);
         }
     }
@@ -410,17 +415,16 @@ public class DownloadGuiController extends AnchorPane {
             row.hoverProperty().addListener((observable) -> {
                 final DownloadData downloadData = (DownloadData) row.getItem();
                 if (row.isHover() && downloadData != null) {
-                    filmGuiInfoController.setFilm(downloadData.getFilm());
-                    FilmInfoDialogController.getInstance().setFilm(downloadData.getFilm());
+                    setFilmInfos(downloadData);
                 } else {
-                    setFilmInfos();
+                    setFilmInfos(tableView.getSelectionModel().getSelectedItem());
                 }
             });
             return row;
         });
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
                 //wird auch durch FilmlistenUpdate ausgelöst
-                Platform.runLater(this::setFilmInfos));
+                Platform.runLater(() -> setFilmInfos(tableView.getSelectionModel().getSelectedItem())));
 
         tableView.setOnMousePressed(m -> {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
@@ -465,28 +469,6 @@ public class DownloadGuiController extends AnchorPane {
             setFilter();
         });
     }
-
-//    private void setFilter() {
-//        final String sender = ProgConfig.FILTER_DOWNLOAD_CHANNEL.getValueSafe();
-//        final String abo = ProgConfig.FILTER_DOWNLOAD_ABO.getValueSafe();
-//        final String source = ProgConfig.FILTER_DOWNLOAD_SOURCE.getValueSafe();
-//        final String type = ProgConfig.FILTER_DOWNLOAD_TYPE.getValueSafe();
-//        final String state = ProgConfig.FILTER_DOWNLOAD_STATE.getValueSafe();
-//
-//        filteredDownloads.setPredicate(download -> !download.getPlacedBack() &&
-//                (sender.isEmpty() ? true : download.getChannel().equals(sender)) &&
-//                (abo.isEmpty() ? true : download.getAboName().equals(abo)) &&
-//                (source.isEmpty() ? true : download.getSource().equals(source)) &&
-//                (type.isEmpty() ? true : download.getType().equals(type)) &&
-//
-//                (state.isEmpty() ? true : (
-//                        state.equals(DownloadConstants.STATE_COMBO_NOT_STARTED) && !download.isStarted() ||
-//                                state.equals(DownloadConstants.STATE_COMBO_WAITING) && download.isStateStartedWaiting() ||
-//                                state.equals(DownloadConstants.STATE_COMBO_STARTED) && download.isStarted() ||
-//                                state.equals(DownloadConstants.STATE_COMBO_LOADING) && download.isStateStartedRun()
-//                ))
-//        );
-//    }
 
     private void setFilter() {
         Predicate<DownloadData> predicate = downloadData -> true;
@@ -549,7 +531,6 @@ public class DownloadGuiController extends AnchorPane {
         // bezieht sich auf "alle" oder nur die markierten Filme
         // der/die noch nicht gestartet sind, werden gestartet
         // Filme dessen Start schon auf fehler steht werden wieder gestartet
-
         final ArrayList<DownloadData> startDownloadsList = new ArrayList<>();
         startDownloadsList.addAll(all ? tableView.getItems() : getSelList());
         progData.downloadList.startDownloads(startDownloadsList, true);
@@ -563,7 +544,6 @@ public class DownloadGuiController extends AnchorPane {
         progData.downloadList.stopDownloads(listDownloadsSelected);
         setFilter();
     }
-
 
     private synchronized void change() {
         final Optional<DownloadData> download = getSel();

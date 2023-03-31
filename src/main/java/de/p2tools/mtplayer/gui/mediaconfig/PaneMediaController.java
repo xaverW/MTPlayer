@@ -197,7 +197,7 @@ public class PaneMediaController extends PAccordionPane {
     }
 
     public void filter() {
-        progData.mediaDataList.filteredListSetPredicate(SearchPredicateWorker.getPredicateMediaData_(txtSearch.getText(), true));
+        progData.mediaDataList.filteredListSetPredicate(SearchPredicateWorker.getPredicateMediaData(txtSearch.getText(), true));
         writeQuantity();
     }
 
