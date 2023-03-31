@@ -46,10 +46,21 @@ public class HelpText {
                     "\n" +
                     "Groß- und Kleinschreibung wird bei beiden Arten der Suche nicht unterschieden.\n" +
                     "\n" +
+
                     "-- Wörtlicher Suchtext muss enthalten sein --\n" +
                     "Ein wörtlicher Suchtext findet alle Dateien bei denen der Suchtext an beliebiger " +
-                    "Stelle im durchsuchten Bereich enthalten ist.\n" +
+                    "Stelle im durchsuchten Bereich enthalten ist." +
                     "\n" +
+                    "\n" +
+                    "Wörtlicher Suchtext kann in \" angegeben werden. Dann wird alles gefunden, was im durchsuchten " +
+                    "Bereich den Inhalt zwischen den \" enthält. Hier sind auch \",\" und \":\" erlaubt. Der gesamte Suchtext " +
+                    "muss aber in \" eingeschlossen werden, z.B. \"das, das und das wird gesucht\". Dann muss der durchsuchte " +
+                    "Bereich genau das \"das, das und das wird gesucht\" enthalten (ohne die \")." +
+                    "\n" +
+                    "Eine Suche mit RegEx, z.B. \"#:.*pass,+.*\" kann damit verkürzt werden: \"pass,\". " +
+                    "Das ist kürzer und läuft im Programm auch schneller." +
+                    "\n\n" +
+
                     "Um mehrere Begriffe zu suchen müssen diese durch Komma oder Doppelpunkt " +
                     "getrennt werden. Das Komma verknüpft die Begriffe mit ODER (=> mindestens einer der Begriffe " +
                     "muss vorkommen), der Doppelpunkt mit UND (=> alle Begriffe müssen vorkommen).\n" +
@@ -68,7 +79,9 @@ public class HelpText {
                     "\n" +
                     "\n" +
 
-                    "Suchtext und Suchbegriffe dürfen Leerzeichen enthalten, aber kein Komma und keinen Doppelpunkt.\n" +
+                    "Suchtext und Suchbegriffe dürfen Leerzeichen enthalten, aber kein Komma und keinen Doppelpunkt " +
+                    "(wenn der gesamte Suchtext nicht in \" eingeschlossen ist.)" +
+                    "\n" +
                     "\n" +
                     "Beispiele:\n" +
                     "'Tagesschau' findet u.a. 'Tagesschau, 12:00 Uhr', 'ARD Tagesschau Livestream', 'Bei Logo und der Tagesschau'.\n" +
@@ -172,7 +185,7 @@ public class HelpText {
                     "-- Suchen und Filtern --\n" +
                     "Mit den Textfeldern ([Thema] wenn eingeschaltet, [Thema oder Titel], [Titel], [Irgendwo] " +
                     "und [URL]) kann sehr detailliert gesucht werden. \"Zeitraum\", \"Filmlänge\", \"Sendezeit\" " +
-                    "(ein- oder ausschließen), \"anzeigen:\" und \"ausschließen:\" erlauben noch " +
+                    "(ein- oder ausschließen), \"anzeigen\" und \"ausschließen\" erlauben noch " +
                     "weitergehende Filterung.\n" +
                     "\n" +
                     FILTER_FIELD + "\n" +
