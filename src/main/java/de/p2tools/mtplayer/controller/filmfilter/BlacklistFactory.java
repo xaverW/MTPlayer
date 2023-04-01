@@ -23,8 +23,8 @@ import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmlistMTP;
 import de.p2tools.mtplayer.gui.dialog.AddBlackListDialogController;
 import de.p2tools.p2lib.tools.duration.PDuration;
-import javafx.beans.property.SimpleListProperty;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,8 +49,6 @@ public class BlacklistFactory {
             //dann doch nicht
             return;
         }
-
-//        ProgData.getInstance().filmGuiController.setLastShownFilm(blackData);
         ProgData.getInstance().blackList.addAndNotify(blackData);
     }
 
@@ -66,26 +64,15 @@ public class BlacklistFactory {
 
     public static void addBlack(String sender, String theme, String titel) {
         BlackData blackData = new BlackData(sender, theme, titel, "");
-//        ProgData.getInstance().filmGuiController.setLastShownFilm(blackData);
         ProgData.getInstance().blackList.addAndNotify(blackData);
     }
 
     public static synchronized void countHits(BlackData blackData) {
         //Aufruf mit Button zum Zählen
         //hier wird ein BlackDate gegen die Filmliste gefiltert und die Treffer ermittelt
-        List<BlackData> bl = new SimpleListProperty<>();
+        List<BlackData> bl = new ArrayList<>();
         bl.add(blackData);
         countHits(bl);
-//        PDuration.counterStart("countHits");
-//        blackData.clearCounter();
-//
-//        final FilmlistMTP filmDataMTPS = ProgData.getInstance().filmlist;
-//        if (filmDataMTPS != null) {
-//            filmDataMTPS.parallelStream().forEach(film ->
-//                    BlacklistFilterFactory.checkFilmIsBlocked(film, blackData, true));
-//        }
-//
-//        PDuration.counterStop("countHits");
     }
 
     public static synchronized void countHits(List<BlackData> list) {
@@ -96,14 +83,11 @@ public class BlacklistFactory {
         for (BlackData bl : list) {
             bl.clearCounter();
         }
-//        list.clearCounter();
-
         final FilmlistMTP filmDataMTPS = ProgData.getInstance().filmlist;
         if (filmDataMTPS != null) {
             filmDataMTPS.parallelStream().forEach(film ->
                     BlacklistFilterFactory.checkFilmIsBlockedAndCountHits(film, list));
         }
-
         PDuration.counterStop("countHitsList");
     }
 }
