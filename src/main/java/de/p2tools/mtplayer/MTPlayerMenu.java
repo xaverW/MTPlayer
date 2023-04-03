@@ -25,7 +25,6 @@ import de.p2tools.mtplayer.gui.configdialog.ConfigDialogController;
 import de.p2tools.mtplayer.gui.dialog.AboutDialogController;
 import de.p2tools.mtplayer.gui.dialog.ImportMVDialog;
 import de.p2tools.mtplayer.gui.dialog.ResetDialogController;
-import de.p2tools.mtplayer.gui.mediaconfig.MediaConfigDialogController;
 import de.p2tools.mtplayer.gui.mediadialog.MediaDialogController;
 import de.p2tools.mtplayer.gui.tools.ProgTipOfDayFactory;
 import de.p2tools.p2lib.guitools.POpen;
@@ -46,11 +45,8 @@ public class MTPlayerMenu extends MenuButton {
         miConfig.setOnAction(e -> new ConfigDialogController(ProgData.getInstance()));
         miConfig.disableProperty().bind(ConfigDialogController.dialogIsRunning);
 
-        final MenuItem miMediaCollectionConfig = new MenuItem("Einstellungen der Mediensammlung");
-        miMediaCollectionConfig.setOnAction(e -> new MediaConfigDialogController());
-
-        final MenuItem miSearchMediaCollection = new MenuItem("Mediensammlung durchsuchen");
-        miSearchMediaCollection.setOnAction(a -> new MediaDialogController(""));
+        final MenuItem miSearchMediaCollection = new MenuItem("Mediensammlung");
+        miSearchMediaCollection.setOnAction(a -> new MediaDialogController("", ""));
         PShortcutWorker.addShortCut(miSearchMediaCollection, ProgShortcut.SHORTCUT_SEARCH_MEDIACOLLECTION);
 
         final MenuItem miQuit = new MenuItem("Beenden");
@@ -68,7 +64,7 @@ public class MTPlayerMenu extends MenuButton {
         getStyleClass().addAll("btnFunction", "btnFunc-1");
         setText("");
         setGraphic(ProgIcons.Icons.ICON_TOOLBAR_MENU_TOP.getImageView());
-        getItems().addAll(miConfig, miMediaCollectionConfig, miSearchMediaCollection, addHelp(progData),
+        getItems().addAll(miConfig, miSearchMediaCollection, addHelp(progData),
                 new SeparatorMenuItem(), miQuit, miQuitWait);
     }
 

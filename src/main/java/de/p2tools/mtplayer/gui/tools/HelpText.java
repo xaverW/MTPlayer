@@ -19,6 +19,56 @@ package de.p2tools.mtplayer.gui.tools;
 import de.p2tools.p2lib.P2LibConst;
 
 public class HelpText {
+    public static final String CLEANING_MEDIA =
+            "Zum Suchen in der Mediensammlung oder den geladenen Abos kann der Suchtext aufbereitet werden." +
+                    "\n\n" +
+                    "Zuerst kann ausgewählt werden, ob der Titel, das Thema oder Titel + Thema zum Suchen " +
+                    "genutzt werden soll." +
+                    "\n\n" +
+                    "*Exakt den Begriff suchen*\n" +
+                    "Dann wird exakt der Suchtext zum Suchen verwendet, er wird dazu in \" eingeschlossen." +
+                    "\n\n" +
+                    "*Putzen*\n" +
+                    "Dann wird der Suchtext aufbereitet, ansonsten wird er direkt zum Suchen verwendet" +
+                    "\n\n" +
+                    "*Verknüpfen mit UND*\n" +
+                    "Die einzelnen Wörter im Suchtext müssen alle im gesuchten Film vorkommen, ansonsten muss nur eines davon " +
+                    "vorkommen." +
+                    "\n\n" +
+                    "*Zahlen entfernen*\n" +
+                    "Das macht genau das, Zahlen im Suchtext werden entfernt." +
+                    "\n\n" +
+                    "*Datum entfernen*\n" +
+                    "Erkanntes Datum, wird aus dem Suchtext entfernt." +
+                    "\n\n" +
+                    "*Klammern entfernen*\n" +
+                    "Hier werden Klammern: [], {}, () mit ihrem Inhalt entfernt." +
+                    "\n\n" +
+                    "*Cleaning Liste anwenden*\n" +
+                    "Die Zeichen/Wörter die in der Cleaning Liste stehen, werden aus dem Suchtext entfernt. Damit " +
+                    "können viele \"Füllwörter\" aus dem Suchtext gelöscht werden und damit das Suchergebnis verbessert " +
+                    "werden." +
+                    "\n\n" +
+                    "Beim Entfernen von Teilen des Suchtextes wird der entfernte Text durch ein Leerzeichen ersetzt. So " +
+                    "kann dann der restliche Teil des Suchtextes gut mit ',' oder ':' zusammengesetzt werden (Suche mit " +
+                    "UND oder ODER)." +
+                    "\n";
+    public static final String CLEANING_LIST =
+            "Die Zeichen/Wörter die in der Cleaning Liste stehen, werden aus dem Suchtext entfernt. Damit " +
+                    "können viele \"Füllwörter\" aus dem Suchtext gelöscht werden und damit das Suchergebnis verbessert " +
+                    "werden." +
+                    "\n\n" +
+                    "Wenn ein ganzes Wort entfernt werden soll, ist es wichtig, dass das Wort in der Cleaning Liste dann " +
+                    "auch mit einem Leerzeichen beginnt und mit einem Leerzeichen endet: " +
+                    "_ENTFERNEN_\n" +
+                    "Ansonsten werden auch Teile aus anderen Wörtern entfernt, z.B. wird nach ’wo’ gesucht, dann wird auch " +
+                    "aus dem Wort ’irgendwo’ das 'wo' entfernt." +
+                    "\n\n" +
+                    "Beim Entfernen von Teilen des Suchtextes wird der entfernte Text durch ein Leerzeichen ersetzt. So " +
+                    "kann dann der restliche Teil des Suchtextes gut mit ',' oder ':' zusammengesetzt werden (Suche mit " +
+                    "UND oder ODER)." +
+                    "\n";
+
     private static final String MEDIA = "Im Menü kann eingestellt werden, ob der Titel, Thema oder Titel-Thema " +
             "vom ausgewählten Download im Suchtext angezeigt " +
             "werden soll." +
@@ -32,10 +82,6 @@ public class HelpText {
 
     public static final String DOWNLOAD_GUI_MEDIA = "Hier werden Filme aus der Mediensammlung angezeigt. " +
             "Mit dem Suchtext kann in der Mediensammlung gesucht werden." +
-            "\n\n" + MEDIA;
-
-    public static final String DOWNLOAD_GUI_ABO = "Hier werden Filme von bereits gespeicherten Abos angezeigt. " +
-            "Mit dem Suchtext kann in der Liste der erledigten Abos gesucht werden." +
             "\n\n" + MEDIA;
 
     public static final String FILTER_FIELD =

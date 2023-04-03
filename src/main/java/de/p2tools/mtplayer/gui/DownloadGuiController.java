@@ -211,7 +211,7 @@ public class DownloadGuiController extends AnchorPane {
     public void guiFilmMediaCollection() {
         final Optional<DownloadData> download = getSel();
         if (download.isPresent()) {
-            new MediaDialogController(download.get().getTitle());
+            new MediaDialogController(download.get().getTheme(), download.get().getTitle());
         }
     }
 

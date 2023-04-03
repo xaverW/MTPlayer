@@ -68,9 +68,11 @@ public class ProgConst {
     // Mediensammlung
     public static final int MEDIA_COLLECTION_FILESIZE_ALL_FILES = 0;
     public static final int MEDIA_COLLECTION_FILESIZE_MAX = 20;
-    public static final int MEDIA_COLLECTION_SEARCH_THEMA = 0; // dann wird nach Thema gesucht
-    public static final int MEDIA_COLLECTION_SEARCH_TITEL = 1; // dann wird nach Titel gesucht
-    public static final int MEDIA_COLLECTION_SEARCH_THEMA_TITEL = 2; // dann wird nach TT gesucht
+
+    public final static int MEDIA_COLLECTION_SEARCH_IN_THEME = 0;
+    public final static int MEDIA_COLLECTION_SEARCH_IN_TITEL = 1;
+    public final static int MEDIA_COLLECTION_SEARCH_IN_TT = 2;
+
     public static final String MEDIA_COLLECTION_EXPORT_FILE_NAME = "MediaDB.txt"; // der erste vorgegebene Name für den Export
     public static final int MEDIA_COLLECTION_EXPORT_INTERN = 0; // nur interne exportieren
     public static final int MEDIA_COLLECTION_EXPORT_EXTERN = 1; // nur externe exportieren

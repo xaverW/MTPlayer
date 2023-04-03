@@ -19,50 +19,55 @@ package de.p2tools.mtplayer.gui.mediadialog;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.tools.HelpText;
-import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.HBox;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 public class MediaDialogController extends PDialogExtra {
 
+    private TabPane tabPane = new TabPane();
+    private Tab tabMedia;
+    private Tab tabAbo;
+    private Tab tabHistory;
     private final Button btnOk = new Button("_Ok");
-    private final RadioButton rbMedien = new RadioButton("Mediensammlung");
-    private final RadioButton rbAbos = new RadioButton("erledigte Abos");
 
-    private final String searchStrOrg;
-    private final StringProperty searchStrProp = new SimpleStringProperty();
+    private final String searchTitelOrg;
+    private final String searchThemeOrg;
+
+    private final StringProperty searchStringProp = new SimpleStringProperty();
     private final ProgData progData = ProgData.getInstance();
+
     private PaneMedia paneMedia;
     private PaneAbo paneAbo;
-    private final StackPane stackPane = new StackPane();
+    private PaneAbo paneHistory;
 
-    public MediaDialogController(String searchStrOrg, boolean openMedia) {
+    public MediaDialogController(String SearchTheme, String searchTitel, boolean openMedia) {
         super(ProgData.getInstance().primaryStage, ProgConfig.MEDIA_DIALOG_SIZE, "Mediensammlung",
                 true, false, DECO.BORDER);
 
-        this.searchStrOrg = searchStrOrg.trim();
+        this.searchThemeOrg = SearchTheme.trim();
+        this.searchTitelOrg = searchTitel.trim();
+        searchStringProp.setValue(searchThemeOrg + " " + searchTitelOrg);
         ProgConfig.SYSTEM_MEDIA_DIALOG_SEARCH_MEDIA.setValue(openMedia);
-        searchStrProp.setValue(searchStrOrg);
 
         init(true);
     }
 
-    public MediaDialogController(String searchStrOrg) {
+    public MediaDialogController(String SearchTheme, String searchTitel) {
         super(ProgData.getInstance().primaryStage, ProgConfig.MEDIA_DIALOG_SIZE, "Mediensammlung",
                 true, false, DECO.BORDER);
 
-        this.searchStrOrg = searchStrOrg.trim();
-        searchStrProp.setValue(searchStrOrg);
+        this.searchThemeOrg = SearchTheme.trim();
+        this.searchTitelOrg = searchTitel.trim();
+        searchStringProp.setValue(SearchTheme + " " + searchTitel);
 
         init(true);
     }
@@ -72,14 +77,16 @@ public class MediaDialogController extends PDialogExtra {
         initPanel();
         initAction();
         setPane();
-        filter();
+        paneMedia.filter(searchStringProp.getValueSafe());
+        paneAbo.filter(searchStringProp.getValueSafe());
+        paneHistory.filter(searchStringProp.getValueSafe());
     }
 
     @Override
     public void close() {
-        rbMedien.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_MEDIA_DIALOG_SEARCH_MEDIA);
-        paneAbo.close();
         paneMedia.close();
+        paneAbo.close();
+        paneHistory.close();
 
         progData.erledigteAbos.filterdListSetPredFalse();
         progData.mediaDataList.filterdListSetPredFalse();
@@ -88,24 +95,33 @@ public class MediaDialogController extends PDialogExtra {
 
     private void initPanel() {
         try {
-            final ToggleGroup group = new ToggleGroup();
-            rbMedien.setToggleGroup(group);
-            rbAbos.setToggleGroup(group);
-
-            HBox hBox = new HBox(P2LibConst.DIST_BUTTON_BLOCK);
-            hBox.getChildren().addAll(rbMedien, rbAbos);
-            getVBoxCont().getChildren().add(hBox);
-
-            // Stackpane
-            paneMedia = new PaneMedia(searchStrOrg, searchStrProp);
+            paneMedia = new PaneMedia(getStage(), searchThemeOrg, searchTitelOrg, searchStringProp);
             paneMedia.make();
 
-            paneAbo = new PaneAbo(searchStrOrg, searchStrProp);
+            paneAbo = new PaneAbo(getStage(), searchThemeOrg, searchTitelOrg, searchStringProp, true);
             paneAbo.make();
 
-            stackPane.getChildren().addAll(paneMedia, paneAbo);
-            VBox.setVgrow(stackPane, Priority.ALWAYS);
-            getVBoxCont().getChildren().add(stackPane);
+            paneHistory = new PaneAbo(getStage(), searchThemeOrg, searchTitelOrg, searchStringProp, false);
+            paneHistory.make();
+
+            tabMedia = new Tab("Mediensammlung");
+            tabMedia.setClosable(false);
+            tabMedia.setContent(paneMedia);
+            tabPane.getTabs().add(tabMedia);
+
+            tabAbo = new Tab("Erledigte Abos");
+            tabAbo.setClosable(false);
+            tabAbo.setContent(paneAbo);
+            tabPane.getTabs().add(tabAbo);
+
+            tabHistory = new Tab("gesehene Filme");
+            tabHistory.setClosable(false);
+            tabHistory.setContent(paneHistory);
+            tabPane.getTabs().add(tabHistory);
+
+            getVBoxCont().setPadding(new Insets(0));
+            VBox.setVgrow(tabPane, Priority.ALWAYS);
+            getVBoxCont().getChildren().add(tabPane);
 
             Button btnHelp = PButton.helpButton(getStage(),
                     "Suche in der Mediensammlung", HelpText.SEARCH_MEDIA_DIALOG);
@@ -119,31 +135,16 @@ public class MediaDialogController extends PDialogExtra {
     private void initAction() {
         btnOk.setOnAction(a -> close());
 
-        rbMedien.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_MEDIA_DIALOG_SEARCH_MEDIA);
-        rbMedien.setOnAction(a -> {
-            setPane();
-            filter();
-        });
-        rbAbos.setSelected(!ProgConfig.SYSTEM_MEDIA_DIALOG_SEARCH_MEDIA.get());
-        rbAbos.setOnAction(a -> {
-            setPane();
-            filter();
+        tabPane.getSelectionModel().selectedItemProperty().addListener((u, o, n) -> {
+            ProgConfig.SYSTEM_MEDIA_DIALOG_SEARCH_MEDIA.setValue(tabPane.getSelectionModel().getSelectedItem().equals(tabMedia));
         });
     }
 
     private void setPane() {
-        if (rbMedien.isSelected()) {
-            paneMedia.toFront();
+        if (ProgConfig.SYSTEM_MEDIA_DIALOG_SEARCH_MEDIA.getValue()) {
+            tabPane.getSelectionModel().select(tabMedia);
         } else {
-            paneAbo.toFront();
-        }
-    }
-
-    private void filter() {
-        if (rbMedien.isSelected()) {
-            paneMedia.filter(searchStrProp.getValueSafe());
-        } else {
-            paneAbo.filter(searchStrProp.getValueSafe());
+            tabPane.getSelectionModel().select(tabAbo);
         }
     }
 }

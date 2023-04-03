@@ -22,23 +22,37 @@ import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.mediadb.MediaData;
 import de.p2tools.mtplayer.controller.mediadb.MediaDataWorker;
 import de.p2tools.mtplayer.controller.mediadb.MediaFileSize;
+import de.p2tools.mtplayer.gui.mediaconfig.PaneMediaContextMenu;
 import de.p2tools.mtplayer.gui.mediaconfig.SearchPredicateWorker;
+import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.guitools.POpen;
 import de.p2tools.p2lib.guitools.ptable.CellCheckBox;
 import de.p2tools.p2lib.tools.file.PFileUtils;
 import javafx.application.Platform;
 import javafx.beans.property.StringProperty;
+import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.stage.Stage;
 
 public class PaneMedia extends PaneDialog {
 
+    private final Stage stage;
+    private final FilteredList<MediaData> filteredList;
+    private final SortedList<MediaData> sortedList;
+
     private ProgData progData = ProgData.getInstance();
 
-    public PaneMedia(String searchStrOrg, StringProperty searchStrProp) {
-        super(searchStrOrg, searchStrProp, true);
+    public PaneMedia(Stage stage, String searchThemeOrg, String searchTitelOrg, StringProperty searchStringProp) {
+        super(searchThemeOrg, searchTitelOrg, searchStringProp, true);
+        this.stage = stage;
+        this.filteredList = new FilteredList<>(progData.mediaDataList, p -> true);
+        this.sortedList = new SortedList<>(filteredList);
     }
 
     @Override
@@ -71,31 +85,53 @@ public class PaneMedia extends PaneDialog {
         tableMedia.getColumns().addAll(nameColumn, pathColumn, sizeColumn, externalColumn);
 
         tableMedia.getSelectionModel().selectedItemProperty().addListener((observableValue, dataOld, dataNew) -> {
-            if (dataNew != null) {
-                txtPathMedia.setText(dataNew.getPath());
-                txtTitleMedia.setText(dataNew.getName());
-            } else {
-                txtPathMedia.setText("");
-                txtTitleMedia.setText("");
+            setTableSel(dataNew);
+        });
+        tableMedia.setOnMousePressed(m -> {
+            if (tableMedia.getItems().isEmpty()) {
+                return;
+            }
+            if (m.getButton().equals(MouseButton.SECONDARY)) {
+                MediaData mediaData = tableMedia.getSelectionModel().getSelectedItem();
+                if (mediaData == null) {
+                    PAlert.showInfoNoSelection();
+
+                } else {
+                    ContextMenu contextMenu = new PaneMediaContextMenu(stage, mediaData).getContextMenu();
+                    tableMedia.setContextMenu(contextMenu);
+                }
             }
         });
+        tableMedia.setRowFactory(tv -> {
+            TableRow<MediaData> row = new TableRow<>();
+            row.hoverProperty().addListener((observable) -> {
+                final MediaData mediaData = row.getItem();
+                if (row.isHover() && mediaData != null) {
+                    setTableSel(mediaData);
+                } else {
+                    setTableSel(tableMedia.getSelectionModel().getSelectedItem());
+                }
+            });
+            return row;
+        });
 
-        SortedList<MediaData> sortedList = progData.mediaDataList.getSortedList();
         sortedList.comparatorProperty().bind(tableMedia.comparatorProperty());
         tableMedia.setItems(sortedList);
+    }
+
+    private void setTableSel(MediaData mediaData) {
+        if (mediaData != null) {
+            txtPathMedia.setText(mediaData.getPath());
+            txtTitleMedia.setText(mediaData.getName());
+        } else {
+            txtPathMedia.setText("");
+            txtTitleMedia.setText("");
+        }
     }
 
     @Override
     void initAction() {
         super.initAction();
-        btnAndOr.setOnAction(a -> {
-            ProgConfig.DOWNLOAD_GUI_MEDIA_AND_OR_MEDIA.setValue(!ProgConfig.DOWNLOAD_GUI_MEDIA_AND_OR_MEDIA.getValue());
-            if (ProgConfig.DOWNLOAD_GUI_MEDIA_AND_OR_MEDIA.getValue()) {
-                txtSearch.setText(txtSearch.getText().replace(",", ":"));
-            } else {
-                txtSearch.setText(txtSearch.getText().replace(":", ","));
-            }
-        });
 
         lblGesamtMedia.setText(progData.mediaDataList.size() + "");
         sizeListener = (observable, oldValue, newValue) -> {
@@ -120,8 +156,8 @@ public class PaneMedia extends PaneDialog {
 
     @Override
     void filter() {
-        progData.mediaDataList.filteredListSetPredicate(SearchPredicateWorker.getPredicateMediaData(txtSearch.getText(), false));
-        lblHits.setText(progData.mediaDataList.getFilteredList().size() + "");
+        filteredList.setPredicate(SearchPredicateWorker.getPredicateMediaData(txtSearch.getText(), true));
+        lblHits.setText(filteredList.size() + "");
     }
 
     private void play() {

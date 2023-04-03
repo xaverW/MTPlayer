@@ -118,12 +118,14 @@ public class ProgStartBeforeGui {
         progData.aboList.clear();
         progData.downloadList.clear();
         progData.blackList.clear();
+        progData.mediaCleaningList.clear();
     }
 
     private static void initAfterLoad() {
         ProgData.getInstance().downloadList.initDownloads();
         ProgData.getInstance().aboList.initAboList();
         ProgData.getInstance().aboList.sort();
+        ProgData.getInstance().mediaCleaningList.initList();
 
         //Filter einrichten
         if (ProgData.getInstance().actFilmFilterWorker.getStoredFilterList().isEmpty()) {

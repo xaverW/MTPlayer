@@ -20,26 +20,54 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.history.HistoryData;
+import de.p2tools.mtplayer.controller.history.HistoryList;
+import de.p2tools.mtplayer.gui.mediaconfig.PaneHistoryContextMenu;
 import de.p2tools.mtplayer.gui.mediaconfig.SearchPredicateWorker;
+import de.p2tools.p2lib.alert.PAlert;
 import javafx.application.Platform;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class PaneAbo extends PaneDialog {
 
+    private final boolean abo;
+    private final HistoryList list;
+    private final Stage stage;
+    private final IntegerProperty searchIn;
+    private final FilteredList<HistoryData> filteredList;
+    private final SortedList<HistoryData> sortedList;
+
     private ProgData progData = ProgData.getInstance();
 
-    public PaneAbo(String searchStrOrg, StringProperty searchStrProp) {
-        super(searchStrOrg, searchStrProp, false);
+    public PaneAbo(Stage stage, String searchThemeOrg, String searchTitelOrg, StringProperty searchStringProp, boolean abo) {
+        super(searchThemeOrg, searchTitelOrg, searchStringProp, false);
+        this.stage = stage;
+        this.abo = abo;
+        if (abo) {
+            this.searchIn = ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_DIALOG_ABO;
+            list = progData.erledigteAbos;
+        } else {
+            list = progData.history;
+            this.searchIn = ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_DIALOG_HISTOY;
+        }
+        this.filteredList = new FilteredList<>(list, p -> true);
+        this.sortedList = new SortedList<>(filteredList);
     }
 
     @Override
     public void close() {
-        progData.erledigteAbos.removeListener(listener);
+        list.removeListener(listener);
     }
 
     @Override
@@ -65,56 +93,93 @@ public class PaneAbo extends PaneDialog {
         tableAbo.getColumns().addAll(themeColumn, titleColumn, dateColumn, pathColumn);
 
         tableAbo.getSelectionModel().selectedItemProperty().addListener((observableValue, dataOld, dataNew) -> {
-            if (dataNew != null) {
-                txtTitleMedia.setText(dataNew.getTitle());
-                txtPathMedia.setText(dataNew.getUrl());
-            } else {
-                txtTitleMedia.setText("");
-                txtPathMedia.setText("");
+            setTableSel(dataNew);
+        });
+        tableAbo.setOnMousePressed(m -> {
+            if (m.getButton().equals(MouseButton.SECONDARY)) {
+                ArrayList<HistoryData> historyDataArrayList = new ArrayList<>();
+                historyDataArrayList.addAll(tableAbo.getSelectionModel().getSelectedItems());
+                if (historyDataArrayList.isEmpty()) {
+                    PAlert.showInfoNoSelection();
+
+                } else {
+                    ContextMenu contextMenu =
+                            new PaneHistoryContextMenu(stage, historyDataArrayList, !abo).getContextMenu();
+                    tableAbo.setContextMenu(contextMenu);
+                }
             }
         });
+        tableAbo.setRowFactory(tv -> {
+            TableRow<HistoryData> row = new TableRow<>();
+            row.hoverProperty().addListener((observable) -> {
+                final HistoryData historyData = row.getItem();
+                if (row.isHover() && historyData != null) {
+                    setTableSel(historyData);
+                } else {
+                    setTableSel(tableAbo.getSelectionModel().getSelectedItem());
+                }
+            });
+            return row;
+        });
 
-        SortedList<HistoryData> sortedList = progData.erledigteAbos.getSortedList();
         sortedList.comparatorProperty().bind(tableAbo.comparatorProperty());
         tableAbo.setItems(sortedList);
+    }
+
+    private void setTableSel(HistoryData historyData) {
+        if (historyData == null) {
+            txtTitleMedia.setText("");
+            txtPathMedia.setText("");
+        } else {
+            txtTitleMedia.setText(historyData.getTitle());
+            txtPathMedia.setText(historyData.getUrl());
+        }
     }
 
     @Override
     void initAction() {
         super.initAction();
-        btnAndOr.setOnAction(a -> {
-            ProgConfig.DOWNLOAD_GUI_MEDIA_AND_OR_ABO.setValue(!ProgConfig.DOWNLOAD_GUI_MEDIA_AND_OR_ABO.getValue());
-            if (ProgConfig.DOWNLOAD_GUI_MEDIA_AND_OR_ABO.getValue()) {
-                txtSearch.setText(txtSearch.getText().replace(",", ":"));
-            } else {
-                txtSearch.setText(txtSearch.getText().replace(":", ","));
-            }
-        });
 
-        lblGesamtMedia.setText(progData.erledigteAbos.size() + "");
+        lblGesamtMedia.setText(list.size() + "");
         listener = c -> Platform.runLater(() -> {
-            lblGesamtMedia.setText(progData.erledigteAbos.size() + "");
+            lblGesamtMedia.setText(list.size() + "");
             filter();
         });
-        progData.erledigteAbos.addListener(listener);
+        list.addListener(listener);
 
         rbTheme.selectedProperty().addListener((o, ol, ne) -> filter());
         rbTitle.selectedProperty().addListener((o, ol, ne) -> filter());
         rbTt.selectedProperty().addListener((o, ol, ne) -> filter());
+        btnClearList.setOnAction(a -> {
+            list.clearAll(stage);
+        });
+        switch (searchIn.get()) {
+            case ProgConst.MEDIA_COLLECTION_SEARCH_IN_THEME:
+                rbTheme.setSelected(true);
+                break;
+            case ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL:
+                rbTitle.setSelected(true);
+                break;
+            case ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT:
+            default:
+                rbTt.setSelected(true);
+                break;
+        }
     }
 
     @Override
     void filter() {
         if (rbTheme.isSelected()) {
-            ProgConfig.MEDIA_DIALOG_SEARCH_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_THEMA);
+            searchIn.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_THEME);
         } else if (rbTitle.isSelected()) {
-            ProgConfig.MEDIA_DIALOG_SEARCH_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_TITEL);
+            searchIn.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);
         } else {
-            ProgConfig.MEDIA_DIALOG_SEARCH_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_THEMA_TITEL);
+            searchIn.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT);
         }
 
-        progData.erledigteAbos.filteredListSetPredicate(SearchPredicateWorker.getPredicateHistoryData(rbTheme.isSelected(), rbTitle.isSelected(),
-                txtSearch.getText(), false));
-        lblHits.setText(progData.erledigteAbos.getFilteredList().size() + "");
+        filteredList.setPredicate(SearchPredicateWorker.getPredicateHistoryData(txtSearch.getText(),
+                rbTheme.isSelected() ? ProgConst.MEDIA_COLLECTION_SEARCH_IN_THEME :
+                        (rbTitle.isSelected() ? ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL : ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT)));
+        lblHits.setText(filteredList.size() + "");
     }
 }

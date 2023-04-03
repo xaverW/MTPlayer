@@ -17,6 +17,7 @@
 
 package de.p2tools.mtplayer.gui.mediaconfig;
 
+import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.history.HistoryData;
 import de.p2tools.mtplayer.controller.mediadb.MediaData;
 import de.p2tools.p2lib.mtfilter.Filter;
@@ -29,82 +30,39 @@ public class SearchPredicateWorker {
     private SearchPredicateWorker() {
     }
 
-//    public static Predicate<MediaData> getPredicateMediaData___(String searchStr, boolean showEmpty) {
-//        final String search = searchStr.trim();
-//        return media -> {
-//            if (search.isEmpty()) {
-//                return showEmpty;
-//            }
-//
-//            Filter fTitle = new Filter(searchStr, true);
-//            if (!FilterCheck.check(fTitle, search)) {
-//                return false;
-//            }
-//            return true;
-//
-////            final Pattern p = Filter.makePattern(search);
-////            if (p != null) {
-////                return p.matcher(media.getName()).matches();
-////            } else {
-////                return media.getName().toLowerCase().contains(search);
-////            }
-//        };
-//    }
-
     public static Predicate<MediaData> getPredicateMediaData(String searchStr, boolean showEmpty) {
         final String search = searchStr.trim();
-//        Filter filter = new Filter(search, true);
-
         return media -> {
             if (search.isEmpty()) {
                 return showEmpty;
             }
 
-            Filter fTitle = new Filter(search, true);
-            if (!FilterCheck.check(fTitle, media.getName())) {
-                return false;
-            }
-            return true;
-
-
-//            // wenn einer passt, dann ists gut
-//            if (filter.filterArr.length == 1) {
-//                final Pattern p = Filter.makePattern(search);
-//                if (p != null) {
-//                    return p.matcher(media.getName()).matches();
-//                } else {
-//                    return media.getName().toLowerCase().contains(filter.filter);
-//                }
-//            }
-//
-//            if (filter.isFilterAnd) {
-//                // Suchbegriffe müssen alle passen
-//                for (final String s : filter.filterArr) {
-//                    // dann jeden Suchbegriff checken
-//                    if (!media.getName().toLowerCase().contains(s)) {
-//                        return false;
-//                    }
-//                }
-//                return true;
-//
-//            } else {
-//                // nur ein Suchbegriff muss passen
-//                for (final String s : filter.filterArr) {
-//                    // dann jeden Suchbegriff checken
-//                    if (media.getName().toLowerCase().contains(s)) {
-//                        return true;
-//                    }
-//                }
-//            }
-//
-//            // nix wars
-//            return false;
+            Filter filter = new Filter(search, true);
+            return FilterCheck.check(filter, media.getName());
         };
     }
 
-    public static Predicate<HistoryData> getPredicateHistoryData(boolean thema, boolean title, String searchStr, boolean showEmpty) {
-        // gibt Themen/Titel mit "," oder ":" -> also gehts nicht mit dem üblichen Suchen mit ":" und "," :(
+    public static Predicate<HistoryData> getPredicateHistoryData(String searchStr, int searachIn) {
+        final String search = searchStr.trim();
+        return historyData -> {
+            if (search.isEmpty()) {
+                return true;
+            }
 
+            Filter filter = new Filter(search, true);
+            if (searachIn == ProgConst.MEDIA_COLLECTION_SEARCH_IN_THEME) {
+                return FilterCheck.check(filter, historyData.getTheme());
+            } else if (searachIn == ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL) {
+                return FilterCheck.check(filter, historyData.getTitle());
+            } else {
+                return FilterCheck.check(filter, historyData.getTheme()) ||
+                        FilterCheck.check(filter, historyData.getTitle());
+            }
+        };
+    }
+
+    public static Predicate<HistoryData> getPredicateHistoryData(boolean theme, boolean title, String searchStr, boolean showEmpty) {
+        // gibt Themen/Titel mit "," oder ":" -> also gehts nicht mit dem üblichen Suchen mit ":" und "," :(
         final String search = searchStr.toLowerCase().trim();
         return historyData -> {
             if (search.isEmpty()) {
@@ -113,7 +71,7 @@ public class SearchPredicateWorker {
 
             final Pattern p = Filter.makePattern(search);
             if (p != null) {
-                if (thema) {
+                if (theme) {
                     return p.matcher(historyData.getTheme()).matches();
                 } else if (title) {
                     return p.matcher(historyData.getTitle()).matches();
@@ -121,7 +79,7 @@ public class SearchPredicateWorker {
                     return p.matcher(historyData.getTheme()).matches() || p.matcher(historyData.getTitle()).matches();
                 }
             } else {
-                if (thema) {
+                if (theme) {
                     return (historyData.getTheme().toLowerCase().contains(search));
                 } else if (title) {
                     return (historyData.getTitle().toLowerCase().contains(search));

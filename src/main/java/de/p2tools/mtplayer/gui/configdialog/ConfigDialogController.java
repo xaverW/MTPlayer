@@ -52,6 +52,7 @@ public class ConfigDialogController extends PDialogExtra {
     private ControllerFilm controllerFilm;
     private ControllerBlack controllerBlack;
     private ControllerDownload controllerDownload;
+    private ControllerMedia controllerMedia;
     private ControllerSet controllerSet;
 
     private IntegerProperty propSelectedTab = ProgConfig.SYSTEM_CONFIG_DIALOG_TAB;
@@ -176,6 +177,7 @@ public class ConfigDialogController extends PDialogExtra {
         controllerFilm.close();
         controllerBlack.close();
         controllerDownload.close();
+        controllerMedia.close();
         controllerSet.close();
 
         Listener.notify(Listener.EVEMT_SETDATA_CHANGED, ConfigDialogController.class.getSimpleName());
@@ -214,6 +216,15 @@ public class ConfigDialogController extends PDialogExtra {
             if (!blackListDialog) {
                 tabPane.getTabs().add(tab);
             }
+
+            controllerMedia = new ControllerMedia(this.getStage());
+            tab = new Tab("Mediensammlung");
+            tab.setClosable(false);
+            tab.setContent(controllerMedia);
+            if (!blackListDialog) {
+                tabPane.getTabs().add(tab);
+            }
+
             controllerSet = new ControllerSet(this.getStage());
             tab = new Tab("Aufzeichnen/Abspielen");
             tab.setClosable(false);

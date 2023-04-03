@@ -28,7 +28,7 @@ public class ProgShortcut {
     // Menü
     public static final PShortcut SHORTCUT_SEARCH_MEDIACOLLECTION =
             new PShortcut(ProgConfig.SHORTCUT_SEARCH_MEDIA_COLLECTION, ProgConfig.SHORTCUT_SEARCH_MEDIA_COLLECTION_INIT,
-                    "Mediensammlung durchsuchen",
+                    "Mediensammlung",
                     "Der Dialog zum Durchsuchen der Mediensammlung wird angezeigt.");
 
     public static final PShortcut SHORTCUT_QUIT_PROGRAM =

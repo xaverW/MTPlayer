@@ -173,18 +173,18 @@ public class PaneHistoryController extends PAccordionPane {
 
     private void selectSearch() {
         switch (search.get()) {
-            case ProgConst.MEDIA_COLLECTION_SEARCH_THEMA:
+            case ProgConst.MEDIA_COLLECTION_SEARCH_IN_THEME:
                 rbTheme.setSelected(true);
                 break;
-            case ProgConst.MEDIA_COLLECTION_SEARCH_TITEL:
+            case ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL:
                 rbTitle.setSelected(true);
                 break;
-            case ProgConst.MEDIA_COLLECTION_SEARCH_THEMA_TITEL:
+            case ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT:
                 rbTt.setSelected(true);
                 break;
             default:
                 rbTt.setSelected(true);
-                search.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_THEMA_TITEL);
+                search.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT);
                 break;
         }
     }
@@ -251,11 +251,11 @@ public class PaneHistoryController extends PAccordionPane {
 
     public void filter() {
         if (rbTheme.isSelected()) {
-            search.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_THEMA);
+            search.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_THEME);
         } else if (rbTitle.isSelected()) {
-            search.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_TITEL);
+            search.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);
         } else {
-            search.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_THEMA_TITEL);
+            search.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT);
         }
 
         if (history) {

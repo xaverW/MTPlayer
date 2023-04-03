@@ -111,7 +111,7 @@ public class QuitDialogController extends PDialogExtra {
     }
 
     private void addButton() {
-        Button btnHide = new Button("Ausblenden");
+        Button btnHide = new Button("Minimieren");
         addAnyButton(btnHide);
         btnHide.setOnAction(a -> {
             ProgData.getInstance().primaryStage.setIconified(true);

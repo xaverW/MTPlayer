@@ -162,7 +162,7 @@ public class FilmGuiController extends AnchorPane {
     public void guiFilmMediaCollection() {
         final Optional<FilmDataMTP> film = getSel();
         if (film.isPresent()) {
-            new MediaDialogController(film.get().getTitle());
+            new MediaDialogController(film.get().getTheme(), film.get().getTitle());
         }
     }
 
