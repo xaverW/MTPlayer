@@ -74,8 +74,8 @@ public class MediaCleaningDialogController extends PDialogExtra {
 
     private void initPanel() {
         try {
-            Tab tabConfig = null;
-            Tab tabCleaningList = null;
+            Tab tabConfig;
+            Tab tabCleaningList;
 
             paneCleaningConfigControllerMedia = new PaneCleaningConfigController(getStage(), true);
             tabConfig = new Tab("Einstellungen Mediensammlung");
@@ -84,7 +84,7 @@ public class MediaCleaningDialogController extends PDialogExtra {
             tabPane.getTabs().add(tabConfig);
 
             paneCleaningConfigControllerAbo = new PaneCleaningConfigController(getStage(), false);
-            tabConfig = new Tab("Einstellungen Abos");
+            tabConfig = new Tab("Einstellungen Abos und History");
             tabConfig.setClosable(false);
             tabConfig.setContent(paneCleaningConfigControllerAbo.makePane());
             tabPane.getTabs().add(tabConfig);

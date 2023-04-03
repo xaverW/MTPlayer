@@ -28,6 +28,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
@@ -105,16 +106,19 @@ public class MediaDialogController extends PDialogExtra {
             paneHistory.make();
 
             tabMedia = new Tab("Mediensammlung");
+            tabMedia.setTooltip(new Tooltip("Hier wird der Inhalt der Mediensammlung angezeigt"));
             tabMedia.setClosable(false);
             tabMedia.setContent(paneMedia);
             tabPane.getTabs().add(tabMedia);
 
             tabAbo = new Tab("Erledigte Abos");
+            tabAbo.setTooltip(new Tooltip("Hier werden erledigte Abos angezeigt"));
             tabAbo.setClosable(false);
             tabAbo.setContent(paneAbo);
             tabPane.getTabs().add(tabAbo);
 
-            tabHistory = new Tab("gesehene Filme");
+            tabHistory = new Tab("History");
+            tabHistory.setTooltip(new Tooltip("Hier werden die bereits gesehenen Filme angezeigt"));
             tabHistory.setClosable(false);
             tabHistory.setContent(paneHistory);
             tabPane.getTabs().add(tabHistory);

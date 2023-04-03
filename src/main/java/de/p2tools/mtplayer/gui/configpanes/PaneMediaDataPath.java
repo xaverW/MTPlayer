@@ -15,7 +15,7 @@
  */
 
 
-package de.p2tools.mtplayer.gui.mediaconfig;
+package de.p2tools.mtplayer.gui.configpanes;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
@@ -45,7 +45,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class PanePath {
+public class PaneMediaDataPath {
 
     private final TableView<MediaCollectionData> tableView = new TableView<>();
     private final boolean external;
@@ -57,7 +57,7 @@ public class PanePath {
     private final Stage stage;
     private MediaCollectionData collectionDataOld = null;
 
-    public PanePath(Stage stage, boolean external) {
+    public PaneMediaDataPath(Stage stage, boolean external) {
         this.stage = stage;
         this.external = external;
         this.progData = ProgData.getInstance();

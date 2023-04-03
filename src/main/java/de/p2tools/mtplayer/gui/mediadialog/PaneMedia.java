@@ -22,8 +22,7 @@ import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.mediadb.MediaData;
 import de.p2tools.mtplayer.controller.mediadb.MediaDataWorker;
 import de.p2tools.mtplayer.controller.mediadb.MediaFileSize;
-import de.p2tools.mtplayer.gui.mediaconfig.PaneMediaContextMenu;
-import de.p2tools.mtplayer.gui.mediaconfig.SearchPredicateWorker;
+import de.p2tools.mtplayer.controller.mediadb.MediaSearchPredicateFactory;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.guitools.POpen;
 import de.p2tools.p2lib.guitools.ptable.CellCheckBox;
@@ -156,7 +155,7 @@ public class PaneMedia extends PaneDialog {
 
     @Override
     void filter() {
-        filteredList.setPredicate(SearchPredicateWorker.getPredicateMediaData(txtSearch.getText(), true));
+        filteredList.setPredicate(MediaSearchPredicateFactory.getPredicateMediaData(txtSearch.getText(), true));
         lblHits.setText(filteredList.size() + "");
     }
 

@@ -15,19 +15,17 @@
  */
 
 
-package de.p2tools.mtplayer.gui.mediaconfig;
+package de.p2tools.mtplayer.controller.mediadb;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.history.HistoryData;
-import de.p2tools.mtplayer.controller.mediadb.MediaData;
 import de.p2tools.p2lib.mtfilter.Filter;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 
 import java.util.function.Predicate;
-import java.util.regex.Pattern;
 
-public class SearchPredicateWorker {
-    private SearchPredicateWorker() {
+public class MediaSearchPredicateFactory {
+    private MediaSearchPredicateFactory() {
     }
 
     public static Predicate<MediaData> getPredicateMediaData(String searchStr, boolean showEmpty) {
@@ -57,36 +55,6 @@ public class SearchPredicateWorker {
             } else {
                 return FilterCheck.check(filter, historyData.getTheme()) ||
                         FilterCheck.check(filter, historyData.getTitle());
-            }
-        };
-    }
-
-    public static Predicate<HistoryData> getPredicateHistoryData(boolean theme, boolean title, String searchStr, boolean showEmpty) {
-        // gibt Themen/Titel mit "," oder ":" -> also gehts nicht mit dem üblichen Suchen mit ":" und "," :(
-        final String search = searchStr.toLowerCase().trim();
-        return historyData -> {
-            if (search.isEmpty()) {
-                return showEmpty;
-            }
-
-            final Pattern p = Filter.makePattern(search);
-            if (p != null) {
-                if (theme) {
-                    return p.matcher(historyData.getTheme()).matches();
-                } else if (title) {
-                    return p.matcher(historyData.getTitle()).matches();
-                } else {
-                    return p.matcher(historyData.getTheme()).matches() || p.matcher(historyData.getTitle()).matches();
-                }
-            } else {
-                if (theme) {
-                    return (historyData.getTheme().toLowerCase().contains(search));
-                } else if (title) {
-                    return (historyData.getTitle().toLowerCase().contains(search));
-                } else {
-                    return (historyData.getTheme().toLowerCase().contains(search)
-                            || historyData.getTitle().toLowerCase().contains(search));
-                }
             }
         };
     }

@@ -20,10 +20,10 @@ import de.p2tools.p2lib.P2LibConst;
 
 public class HelpText {
     public static final String CLEANING_MEDIA =
-            "Zum Suchen in der Mediensammlung oder den geladenen Abos kann der Suchtext aufbereitet werden." +
+            "Zum Suchen in der Mediensammlung oder den geladenen Abos/der History kann der Suchtext aufbereitet werden." +
                     "\n\n" +
                     "Zuerst kann ausgewählt werden, ob der Titel, das Thema oder Titel + Thema zum Suchen " +
-                    "genutzt werden soll." +
+                    "des Films genutzt werden soll." +
                     "\n\n" +
                     "*Exakt den Begriff suchen*\n" +
                     "Dann wird exakt der Suchtext zum Suchen verwendet, er wird dazu in \" eingeschlossen." +
@@ -55,8 +55,7 @@ public class HelpText {
                     "\n";
     public static final String CLEANING_LIST =
             "Die Zeichen/Wörter die in der Cleaning Liste stehen, werden aus dem Suchtext entfernt. Damit " +
-                    "können viele \"Füllwörter\" aus dem Suchtext gelöscht werden und damit das Suchergebnis verbessert " +
-                    "werden." +
+                    "können viele \"Füllwörter\" aus dem Suchtext gelöscht werden um dadurch das Suchergebnis zu verbessern." +
                     "\n\n" +
                     "Wenn ein ganzes Wort entfernt werden soll, ist es wichtig, dass das Wort in der Cleaning Liste dann " +
                     "auch mit einem Leerzeichen beginnt und mit einem Leerzeichen endet: " +
@@ -69,19 +68,18 @@ public class HelpText {
                     "UND oder ODER)." +
                     "\n";
 
-    private static final String MEDIA = "Im Menü kann eingestellt werden, ob der Titel, Thema oder Titel-Thema " +
+    private static final String MEDIA = "Im Einstellungsdialog dazu kann eingestellt werden, " +
+            "ob der Titel, Thema oder Titel-Thema " +
             "vom ausgewählten Download im Suchtext angezeigt " +
             "werden soll." +
             "\n\n" +
-            "Beim Putzen wird der Suchtext auf die wichtigsten Wörter aus Thema/Titel reduziert. " +
-            "Verknüpfen meint, dass die Wörter des geputzten Suchtextes mit \"UND\" oder \"ODER\" verknüpft werden." +
-            "\n\n" +
-            "Bei \"UND\" steht ein \":\" zwischen den Wörtern und sie müssen alle vorkommen. " +
-            "Bei \"ODER\" steht ein \",\" zwischen den " +
-            "Wörtern und nur eins muss im Suchtext (Thema oder Titel des Films) vorkommen.";
+            "Dort wird auch festgelegt, ob und wie der Suchtext \"geputzt\" " +
+            "werden soll. Beim Putzen wird der Suchtext auf die wichtigsten Wörter aus Thema/Titel reduziert um das " +
+            "Suchergebnis zu verbessern.";
 
-    public static final String DOWNLOAD_GUI_MEDIA = "Hier werden Filme aus der Mediensammlung angezeigt. " +
-            "Mit dem Suchtext kann in der Mediensammlung gesucht werden." +
+    public static final String DOWNLOAD_GUI_MEDIA = "Hier werden Filme aus der Mediensammlung und den " +
+            "erledigten Abos angezeigt. " +
+            "Mit dem Suchtext kann in der Mediensammlung/Abos gesucht werden." +
             "\n\n" + MEDIA;
 
     public static final String FILTER_FIELD =
@@ -159,26 +157,39 @@ public class HelpText {
                     "\n";
 
     public static final String SEARCH_MEDIA_DIALOG = "" +
-            "In Mediensammlung und erledigten Abos können bestimmte Daten " +
-            "durchsucht werden: In der Mediensammlung DATEINAME, " +
-            "in der Liste der erledigten Abos THEMA und TITEL.\n" +
+            "In Mediensammlung und erledigten Abos/der History kann nach Filmen gesucht " +
+            "werden. Dazu wird in der Mediensammlung nach dem DATEINAMEN, " +
+            "in der Liste der erledigten Abos/History nach THEMA und/oder TITEL gesucht." +
             "\n" +
-            FILTER_FIELD + "\n" +
+            "\n" +
+            "Der Button (gedrehte Pfeile) stellt den ursprünglichen Suchtext wieder her." +
+            "\n" +
+            "Der Button (Besen) \"putzt\" den Suchbegriff." +
+            "\n" +
+            "Der Button (Zahnrad) öffnet die Einstellungen zum Putzen." +
+            "\n" +
             "\n" +
             "-- Besonderheiten --\n" +
-            "Beim Durchsuchen der Mediensammlung muss der Suchtext den eigenen Vorgaben für " +
+            "Beim Durchsuchen der Mediensammlungen muss der Suchtext den eigenen Vorgaben für " +
             "Dateinamen entsprechen. Eine Suche nach 'mein Film' würde den Film 'Das ist mein Film.avi' " +
             "finden, aber nicht 'Das_ist_mein_Film.avi'.\n" +
             "\n" +
-            "Bei der Suche nach mehreren Suchbegriffen in erledigten Abos müssen alle im selben Datenfeld " +
+            "Bei der Suche nach mehreren Suchbegriffen in erledigten Abos/History müssen alle im selben Datenfeld " +
             "vorkommen. Ein erledigtes Abo mit 'Sport' in THEMA und 'Fussball' in TITEL wird " +
             "von 'Sport:Fussball' nicht erfasst.\n" +
             "\n" +
             "Ein Doppelklick auf ein Wort im Suchtext stellt dieses frei. So kann man den Suchtext " +
-            "schnell auf einen entscheidenden Begriff reduzieren. Der Button rechts daneben stellt den " +
-            "ursprünglichen Suchtext wieder her. Nach Start der Suche aus einem Kontextmenü in den " +
+            "schnell auf einen entscheidenden Begriff reduzieren." +
+            "\n\n" +
+            "Nach Start der Suche aus einem Kontextmenü in den " +
             "Ansichten 'Filme' oder 'Downloads' ist dies ein automatisch eingetragener Text; nach Start der Suche " +
             "aus dem Programm-Menü ist es ein leeres Suchfeld." +
+            "\n" +
+            "\n" +
+            "\n" +
+            "--- Suchregeln ---" +
+            "\n" +
+            FILTER_FIELD +
             "\n";
 
     public static final String PROG_PATHS =

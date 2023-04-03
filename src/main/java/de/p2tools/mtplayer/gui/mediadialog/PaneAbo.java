@@ -21,8 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.history.HistoryData;
 import de.p2tools.mtplayer.controller.history.HistoryList;
-import de.p2tools.mtplayer.gui.mediaconfig.PaneHistoryContextMenu;
-import de.p2tools.mtplayer.gui.mediaconfig.SearchPredicateWorker;
+import de.p2tools.mtplayer.controller.mediadb.MediaSearchPredicateFactory;
 import de.p2tools.p2lib.alert.PAlert;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
@@ -177,7 +176,7 @@ public class PaneAbo extends PaneDialog {
             searchIn.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT);
         }
 
-        filteredList.setPredicate(SearchPredicateWorker.getPredicateHistoryData(txtSearch.getText(),
+        filteredList.setPredicate(MediaSearchPredicateFactory.getPredicateHistoryData(txtSearch.getText(),
                 rbTheme.isSelected() ? ProgConst.MEDIA_COLLECTION_SEARCH_IN_THEME :
                         (rbTitle.isSelected() ? ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL : ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT)));
         lblHits.setText(filteredList.size() + "");

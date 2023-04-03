@@ -24,8 +24,8 @@ import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.history.HistoryData;
 import de.p2tools.mtplayer.controller.mediadb.MediaCleaningFactory;
 import de.p2tools.mtplayer.controller.mediadb.MediaData;
+import de.p2tools.mtplayer.controller.mediadb.MediaSearchPredicateFactory;
 import de.p2tools.mtplayer.gui.mediacleaning.MediaCleaningDialogController;
-import de.p2tools.mtplayer.gui.mediaconfig.SearchPredicateWorker;
 import de.p2tools.mtplayer.gui.mediadialog.MediaDialogController;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
@@ -47,10 +47,6 @@ import javafx.scene.text.Text;
 import java.util.Date;
 
 public class DownloadGuiMedia extends VBox {
-
-    public final static int SHOW_TITEL = 0;
-    public final static int SHOW_THEME = 1;
-    public final static int SHOW_TT = 2;
 
     private TableView<MediaData> tableMedia = new TableView();
     private TableView<HistoryData> tableAbo = new TableView();
@@ -155,18 +151,13 @@ public class DownloadGuiMedia extends VBox {
     }
 
     private void initMenu(boolean media) {
-        btnMenu.setTooltip(new Tooltip("Einstellungen anzeigen"));
+        btnMenu.setTooltip(new Tooltip("Einstellungen anzeigen:\n" +
+                " -> rechte Maustaste: Mediensammlung voreingestellt,\n" +
+                " -> linke Maustaste: Abos voreingestellt"));
         btnMenu.setGraphic(ProgIcons.Icons.ICON_BUTTON_EDIT.getImageView());
-//        btnMenu.getStyleClass().addAll("btnFunction", "btnFunc-5");
         btnMenu.setOnAction(a -> {
             new MediaCleaningDialogController(true);
         });
-
-        btnDialogMedia.setTooltip(new Tooltip("Dialog Mediensammlung"));
-//        btnDialogMedia.setGraphic(ProgIcons.Icons.ICON_BUTTON_INFO.getImageView());
-        btnDialogMedia.setGraphic(ProgIcons.Icons.ICON_BUTTON_MENU.getImageView());
-//        btnDialogMedia.getStyleClass().addAll("btnFunction", "btnFunc-5");
-
         btnMenu.setOnAction(a -> {
             new MediaCleaningDialogController(true);
             getSearchString(downloadData, true);
@@ -180,6 +171,10 @@ public class DownloadGuiMedia extends VBox {
             }
         });
 
+        btnDialogMedia.setTooltip(new Tooltip("Dialog Mediensammlung öffnen:\n" +
+                " -> rechte Maustaste: Mediensammlung voreingestellt,\n" +
+                " -> linke Maustaste: Abos voreingestellt"));
+        btnDialogMedia.setGraphic(ProgIcons.Icons.ICON_BUTTON_MENU.getImageView());
         btnDialogMedia.setOnAction(a -> new MediaDialogController(
                 downloadData == null ? "" : downloadData.getTheme(),
                 downloadData == null ? "" : downloadData.getTitle(), true));
@@ -222,11 +217,11 @@ public class DownloadGuiMedia extends VBox {
     private void filter(boolean media) {
         if (media) {
             progData.mediaDataList.filteredListSetPredicate(
-                    SearchPredicateWorker.getPredicateMediaData(txtSearchMedia.getText(), true));
+                    MediaSearchPredicateFactory.getPredicateMediaData(txtSearchMedia.getText(), true));
             lblSumMedia.setText(progData.mediaDataList.getFilteredList().size() + "");
         } else {
             progData.erledigteAbos.filteredListSetPredicate(
-                    SearchPredicateWorker.getPredicateHistoryData(txtSearchAbo.getText(),
+                    MediaSearchPredicateFactory.getPredicateHistoryData(txtSearchAbo.getText(),
                             rbTheme.isSelected() ? ProgConst.MEDIA_COLLECTION_SEARCH_IN_THEME :
                                     (rbTitle.isSelected() ? ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL : ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT)));
             lblSumAbo.setText(progData.erledigteAbos.getFilteredList().size() + "");

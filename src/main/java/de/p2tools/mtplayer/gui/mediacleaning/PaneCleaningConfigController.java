@@ -66,9 +66,9 @@ public class PaneCleaningConfigController {
 
     private void initPane(VBox vBox) {
         //Media
-        RadioButton rbTheme = new RadioButton("Thema");
-        RadioButton rbTitel = new RadioButton("Titel");
-        RadioButton rbTT = new RadioButton("Thema-Titel");
+        RadioButton rbTheme = new RadioButton("Thema des Films");
+        RadioButton rbTitel = new RadioButton("Titel des Films");
+        RadioButton rbTT = new RadioButton("Thema-Titel des Films");
         ToggleGroup tg = new ToggleGroup();
         rbTitel.setToggleGroup(tg);
         rbTheme.setToggleGroup(tg);
@@ -154,9 +154,11 @@ public class PaneCleaningConfigController {
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(), PColumnConstraints.getCcPrefSize());
         vBox.getChildren().addAll(gridPane);
 
-        gridPane.add(rbTheme, 0, row);
+        gridPane.add(new Label("Zum Suchen verwenden:"), 0, row);
         gridPane.add(btnHelp, 1, row, 1, 2);
         GridPane.setValignment(btnHelp, VPos.TOP);
+        
+        gridPane.add(rbTheme, 0, ++row);
         gridPane.add(rbTitel, 0, ++row);
         gridPane.add(rbTT, 0, ++row);
 
@@ -166,12 +168,11 @@ public class PaneCleaningConfigController {
         gridPane.add(new Label(""), 0, ++row);
         gridPane.add(tglClean, 0, ++row);
 
-        ++row;
+        gridPane.add(new Label(""), 0, ++row);
         gridPane.add(tglAndOr, 0, ++row);
         gridPane.add(tglNum, 0, ++row);
         gridPane.add(tglDate, 0, ++row);
         gridPane.add(tglClip, 0, ++row);
         gridPane.add(tglList, 0, ++row);
-
     }
 }

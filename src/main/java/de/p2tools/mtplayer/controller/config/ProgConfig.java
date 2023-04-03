@@ -24,7 +24,6 @@ import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.controller.starter.DownloadState;
 import de.p2tools.mtplayer.controller.tools.MLBandwidthTokenBucket;
-import de.p2tools.mtplayer.gui.DownloadGuiMedia;
 import de.p2tools.p2lib.configfile.ConfigFile;
 import de.p2tools.p2lib.data.PDataProgConfig;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
@@ -236,11 +235,11 @@ public class ProgConfig extends PDataProgConfig {
     public static DoubleProperty DOWNLOAD_GUI_MEDIA_DIVIDER = addDoubleProp("download-gui-media-divider", 0.5);
 
     //Gui Download Media
-    public static IntegerProperty DOWNLOAD_GUI_MEDIA_SHOW_TT_MEDIA = addIntProp("download-gui-media-show-tt-media", DownloadGuiMedia.SHOW_TITEL);//was angezeigt wird: T/Th/TT
-    public static IntegerProperty DOWNLOAD_GUI_MEDIA_SHOW_TT_ABO = addIntProp("download-gui-media-show-tt-abo", DownloadGuiMedia.SHOW_TITEL);//was angezeigt wird: T/Th/TT
-    public static IntegerProperty DOWNLOAD_GUI_MEDIA_SEARCH_IN_DIALOG_ABO = addIntProp("download-gui-media-search-in-dialog-abo", DownloadGuiMedia.SHOW_TITEL);//wo bei Abos gesucht wird: T/Th/TT
-    public static IntegerProperty DOWNLOAD_GUI_MEDIA_SEARCH_IN_DIALOG_HISTOY = addIntProp("download-gui-media-search-in-dialog-history", DownloadGuiMedia.SHOW_TITEL);//wo bei Abos gesucht wird: T/Th/TT
-    public static IntegerProperty DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO = addIntProp("download-gui-media-search-in-abo", DownloadGuiMedia.SHOW_TITEL);//wo bei Abos gesucht wird: T/Th/TT
+    public static IntegerProperty DOWNLOAD_GUI_MEDIA_SHOW_TT_MEDIA = addIntProp("download-gui-media-show-tt-media", ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);//was angezeigt wird: T/Th/TT
+    public static IntegerProperty DOWNLOAD_GUI_MEDIA_SHOW_TT_ABO = addIntProp("download-gui-media-show-tt-abo", ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);//was angezeigt wird: T/Th/TT
+    public static IntegerProperty DOWNLOAD_GUI_MEDIA_SEARCH_IN_DIALOG_ABO = addIntProp("download-gui-media-search-in-dialog-abo", ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);//wo bei Abos gesucht wird: T/Th/TT
+    public static IntegerProperty DOWNLOAD_GUI_MEDIA_SEARCH_IN_DIALOG_HISTOY = addIntProp("download-gui-media-search-in-dialog-history", ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);//wo bei Abos gesucht wird: T/Th/TT
+    public static IntegerProperty DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO = addIntProp("download-gui-media-search-in-abo", ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);//wo bei Abos gesucht wird: T/Th/TT
     public static BooleanProperty DOWNLOAD_GUI_MEDIA_EXACT_MEDIA = addBoolProp("download-gui-media-exact-media", Boolean.FALSE);
     public static BooleanProperty DOWNLOAD_GUI_MEDIA_EXACT_ABO = addBoolProp("download-gui-media-exact-abo", Boolean.FALSE);
     public static BooleanProperty DOWNLOAD_GUI_MEDIA_CLEAN_MEDIA = addBoolProp("download-gui-media-clean-media", Boolean.TRUE);
