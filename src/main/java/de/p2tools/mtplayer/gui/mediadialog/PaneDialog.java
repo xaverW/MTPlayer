@@ -50,7 +50,6 @@ public class PaneDialog extends ScrollPane {
     final Button btnClean = new Button("");
     final Button btnEdit = new Button();
     final Button btnClearList = new Button("_Liste löschen");
-
     TextField txtSearch = new TextField();
 
     ProgressBar progress = new ProgressBar();

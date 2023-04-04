@@ -131,19 +131,21 @@ public class HelpText {
                     "jedem Programmstart." +
                     "\n";
 
-    private static final String MEDIA = "Im Einstellungsdialog dazu kann eingestellt werden, " +
-            "ob der Titel, Thema oder Titel-Thema " +
-            "vom ausgewählten Download im Suchtext angezeigt " +
-            "werden soll." +
-            "\n\n" +
-            "Dort wird auch festgelegt, ob und wie der Suchtext \"geputzt\" " +
-            "werden soll. Beim Putzen wird der Suchtext auf die wichtigsten Wörter aus Thema/Titel reduziert um das " +
-            "Suchergebnis zu verbessern.";
-
-    public static final String DOWNLOAD_GUI_MEDIA = "Hier werden Filme aus der Mediensammlung und den " +
-            "erledigten Abos angezeigt. " +
-            "Mit dem Suchtext kann in der Mediensammlung/Abos gesucht werden." +
-            "\n\n" + MEDIA;
+    public static final String DOWNLOAD_GUI_MEDIA =
+            "Hier werden Filme aus der Mediensammlung und den " +
+                    "erledigten Abos angezeigt. " +
+                    "Mit dem Suchtext kann in der Mediensammlung/Abos gesucht werden. " +
+                    "Ein Doppelklick auf ein Wort im Suchtext stellt es frei." +
+                    "\n\n" +
+                    "Im Einstellungsdialog kann ausgewählt werden, " +
+                    "ob der Titel, Thema oder Titel-Thema " +
+                    "vom ausgewählten Download im Suchtext angezeigt werden soll." +
+                    "\n\n" +
+                    "Dort wird auch festgelegt, ob und wie der Suchtext \"geputzt\" " +
+                    "werden soll. Beim Putzen wird der Suchtext auf die wichtigsten Wörter " +
+                    "aus Thema/Titel reduziert um das " +
+                    "Suchergebnis zu verbessern." +
+                    "\n";
 
     public static final String FILTER_FIELD =
             "Mit den Textfeldern kann nach einem wörtlichen Suchtext (Suchtext muss enthalten sein/" +

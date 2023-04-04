@@ -191,9 +191,20 @@ public class DownloadGuiMedia extends VBox {
         txtSearchMedia.textProperty().addListener((u, o, n) -> {
             filter(true);
         });
-
+        txtSearchMedia.setOnMouseClicked(event -> {
+            if (event.getClickCount() > 1) {
+                String sel = txtSearchMedia.getSelectedText();
+                txtSearchMedia.setText(sel);
+            }
+        });
         txtSearchAbo.textProperty().addListener((u, o, n) -> {
             filter(false);
+        });
+        txtSearchAbo.setOnMouseClicked(event -> {
+            if (event.getClickCount() > 1) {
+                String sel = txtSearchAbo.getSelectedText();
+                txtSearchAbo.setText(sel);
+            }
         });
         ToggleGroup tg = new ToggleGroup();
         tg.getToggles().addAll(rbTheme, rbTitle, rbTt);
