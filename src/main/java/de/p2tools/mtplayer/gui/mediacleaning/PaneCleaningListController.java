@@ -21,10 +21,8 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.mediacleaningdata.MediaCleaningData;
 import de.p2tools.mtplayer.controller.mediadb.MediaCleaningFactory;
-import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
-import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PGuiTools;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -135,12 +133,9 @@ public class PaneCleaningListController {
             MediaCleaningFactory.initMediaCleaningList(progData.mediaCleaningList);
         });
 
-        final Button btnHelp = PButton.helpButton(stage, "Cleaning Liste",
-                HelpText.CLEANING_LIST);
-
         HBox hBox1 = new HBox(P2LibConst.DIST_EDGE);
         hBox1.setPadding(new Insets(P2LibConst.DIST_BUTTON));
-        hBox1.getChildren().addAll(btnNew, btnDel, btnClear, PGuiTools.getHBoxGrower(), btnAddStandards, btnHelp);
+        hBox1.getChildren().addAll(btnNew, btnDel, btnClear, PGuiTools.getHBoxGrower(), btnAddStandards);
         vBox.getChildren().add(hBox1);
     }
 

@@ -19,14 +19,10 @@ package de.p2tools.mtplayer.gui.mediacleaning;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
 import javafx.geometry.Insets;
-import javafx.geometry.VPos;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
@@ -143,9 +139,6 @@ public class PaneCleaningConfigController {
         tglList.selectedProperty().bindBidirectional(media ?
                 ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_LIST_MEDIA : ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_LIST_ABO);
 
-        final Button btnHelp = PButton.helpButton(stage, "Putzen",
-                HelpText.CLEANING_MEDIA);
-
         int row = 0;
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
@@ -155,9 +148,6 @@ public class PaneCleaningConfigController {
         vBox.getChildren().addAll(gridPane);
 
         gridPane.add(new Label("Zum Suchen verwenden:"), 0, row);
-        gridPane.add(btnHelp, 1, row, 1, 2);
-        GridPane.setValignment(btnHelp, VPos.TOP);
-        
         gridPane.add(rbTheme, 0, ++row);
         gridPane.add(rbTitel, 0, ++row);
         gridPane.add(rbTT, 0, ++row);

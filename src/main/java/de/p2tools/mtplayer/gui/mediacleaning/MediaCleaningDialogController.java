@@ -53,7 +53,7 @@ public class MediaCleaningDialogController extends PDialogExtra {
     @Override
     public void make() {
         VBox.setVgrow(tabPane, Priority.ALWAYS);
-        final Button btnHelp = PButton.helpButton(getStage(), "Medien", HelpText.MEDIA_DIALOG);
+        final Button btnHelp = PButton.helpButton(getStage(), "Medien", HelpText.MEDIA_CLEANING_CONFIG_DIALOG);
         btnOk.setOnAction(a -> close());
 
         addOkButton(btnOk);

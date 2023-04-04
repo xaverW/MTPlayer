@@ -19,8 +19,10 @@ package de.p2tools.mtplayer.gui.tools;
 import de.p2tools.p2lib.P2LibConst;
 
 public class HelpText {
-    public static final String CLEANING_MEDIA =
-            "Zum Suchen in der Mediensammlung oder den geladenen Abos/der History kann der Suchtext aufbereitet werden." +
+
+    public static final String MEDIA_CLEANING_CONFIG_DIALOG =
+            "=== Allgemein ===\n" +
+                    "Zum Suchen in der Mediensammlung oder den geladenen Abos/der History kann der Suchtext aufbereitet werden." +
                     "\n\n" +
                     "Zuerst kann ausgewählt werden, ob der Titel, das Thema oder Titel + Thema zum Suchen " +
                     "des Films genutzt werden soll." +
@@ -52,9 +54,10 @@ public class HelpText {
                     "Beim Entfernen von Teilen des Suchtextes wird der entfernte Text durch ein Leerzeichen ersetzt. So " +
                     "kann dann der restliche Teil des Suchtextes gut mit ',' oder ':' zusammengesetzt werden (Suche mit " +
                     "UND oder ODER)." +
-                    "\n";
-    public static final String CLEANING_LIST =
-            "Die Zeichen/Wörter die in der Cleaning Liste stehen, werden aus dem Suchtext entfernt. Damit " +
+                    "\n" +
+                    "\n" +
+                    "=== Cleaning Liste ===\n" +
+                    "Die Zeichen/Wörter die in der Cleaning Liste stehen, werden aus dem Suchtext entfernt. Damit " +
                     "können viele \"Füllwörter\" aus dem Suchtext gelöscht werden um dadurch das Suchergebnis zu verbessern." +
                     "\n\n" +
                     "Wenn ein ganzes Wort entfernt werden soll, ist es wichtig, dass das Wort in der Cleaning Liste dann " +
@@ -66,6 +69,66 @@ public class HelpText {
                     "Beim Entfernen von Teilen des Suchtextes wird der entfernte Text durch ein Leerzeichen ersetzt. So " +
                     "kann dann der restliche Teil des Suchtextes gut mit ',' oder ':' zusammengesetzt werden (Suche mit " +
                     "UND oder ODER)." +
+                    "\n";
+
+    public static final String MEDIA_COLLECTION =
+            "Hier kann eine Mediensammlung angelegt werden. Das ist eine Liste der " +
+                    "bereits vorhandenen Filme.\n" +
+                    "\n" +
+                    "Vor dem Download eines Films kann darin der Filmtitel gesucht werden, " +
+                    "um doppelte Downloads zu vermeiden. Bei Filmen in den Ansichten \"Filme\" " +
+                    "und \"Downloads\" geht dies mit dem Kontextmenü \"Titel in der Mediensammlung " +
+                    "suchen\". Ein Dialog listet dann gefundene Filmtitel aus der Mediensammlung auf.\n" +
+                    "Im Tab Download werden die Medien auch unter der Tabelle mit angezeigt." +
+                    "\n" +
+                    "\n" +
+                    "Hier im Konfigurations-Dialog werden die Ordner angegeben, deren Filmdateien " +
+                    "in die Mediensammlung aufgenommen werden.\n" +
+                    "\n" +
+                    "\"Interne Medien\": Die angegebenen Pfade werden beim Programmstart durchsucht, " +
+                    "sie müssen deshalb verfügbar sein, während das Programm läuft. Die Mediensammlung " +
+                    "ist daher für interne Medien immer aktuell.\n" +
+                    "\n" +
+                    "\"Externe Medien\": Ihr Inhalt an Mediendateien wird beim Hinzufügen zur Liste " +
+                    "hinzugefügt und steht dann dauerhaft im Programm und bei der Suche in der " +
+                    "Mediensammlung zur Verfügung. Es ist daher nicht nötig, dass externe Medien " +
+                    "beim Programmstart vorhanden sind.\n" +
+                    "\n" +
+
+                    "\"Keine Dateien mit diesem Suffix\" oder \"nur Dateien mit diesem Suffix\": Bestimmt " +
+                    "durch die angegebenen Suffixe welche Dateien in die Mediensammlung aufgenommen werden. " +
+                    "Mehrere Suffixe können durch Komma getrennt angegeben werden, z.B. 'txt,xml'. Ist die " +
+                    "Zeile leer, werden alle Dateien aufgenommen.\n" +
+                    "\n" +
+                    "\"Keine versteckten Dateien suchen:\" Unabhängig vom Suffix werden versteckte " +
+                    "Dateien nicht in die Mediensammlung aufgenommen.\n" +
+                    "\n" +
+                    "\"Nur Dateien mit Mindestgröße suchen:\" Kleinere Dateien werden nicht in die " +
+                    "Mediensammlung aufgenommen.\n" +
+                    "\n" +
+                    "Mit dem \"Export\"-Button kann die komplette Mediensammlung in eine " +
+                    "Textdatei geschrieben werden." +
+                    "\n";
+
+    public static final String EXTERN_MEDIA_COLLECTION =
+            "Hier können externe Medienordner in der Mediensammlung verwaltet werden: " +
+                    "Ordner hinzufügen, die Mediensammlung mit vorhandenen Ordnern " +
+                    "manuell aktualisieren, oder vorhandene Ordner aus der " +
+                    "Mediensammlung entfernen." + P2LibConst.LINE_SEPARATORx2 +
+                    "Wichtig ist hier noch, dass nach dem Hinzufügen oder Ändern " +
+                    "einer externen Mediensammlung, diese wieder eingelesen wird. " +
+                    "Sonst arbeitet das Programm noch mit den alten Einträgen." + P2LibConst.LINE_SEPARATORx2 +
+                    "Externe Medienordner werden nur aktualisiert, " +
+                    "wenn es mit dem Button \"gedrehte Pfeile\" " +
+                    "angestoßen wird. Dafür müssen diese Ordner (z.B. USB-Festplatte) " +
+                    "nicht dauerhaft am Rechner angeschlossen sein." +
+                    "\n";
+
+    public static final String INTERN_MEDIA_COLLECTION =
+            "Hier können interne Medienordner in der Mediensammlung verwaltet werden: Ordner " +
+                    "hinzufügen oder vorhandene Ordner aus der Mediensammlung entfernen. " +
+                    "Eine Aktualisierung der Mediensammlung mit ihrem Inhalt erfolgt bei " +
+                    "jedem Programmstart." +
                     "\n";
 
     private static final String MEDIA = "Im Einstellungsdialog dazu kann eingestellt werden, " +
@@ -757,70 +820,6 @@ public class HelpText {
                     "Programm-Menü unter \"Hilfe\") und der Standardbrowser nicht startet, " +
                     "kann damit ein Programm (Firefox, Chromium, …) ausgewählt und fest " +
                     "zugeordnet werden." +
-                    "\n";
-
-    public static final String MEDIA_DIALOG =
-            "Hier kann eine Mediensammlung angelegt werden. Das ist eine Liste der " +
-                    "bereits vorhandenen Filme.\n" +
-                    "\n" +
-                    "Vor dem Download eines Films kann darin der Filmtitel gesucht werden, " +
-                    "um doppelte Downloads zu vermeiden. Bei Filmen in den Ansichten \"Filme\" " +
-                    "und \"Downloads\" geht dies mit dem Kontextmenü \"Titel in der Mediensammlung " +
-                    "suchen\". Ein Dialog listet dann gefundene Filmtitel aus der Mediensammlung auf.\n" +
-                    "\n" +
-                    "Hier im Konfigurations-Dialog werden die Ordner angegeben, deren Filmdateien " +
-                    "in die Mediensammlung aufgenommen werden.\n" +
-                    "\n" +
-                    "\"Interne Medien\": Die angegebenen Pfade werden beim Programmstart durchsucht, " +
-                    "sie müssen deshalb verfügbar sein, während das Programm läuft. Die Mediensammlung " +
-                    "ist daher für interne Medien immer aktuell.\n" +
-                    "\n" +
-                    "\"Externe Medien\": Ihr Inhalt an Mediendateien wird beim Hinzufügen zur Liste " +
-                    "hinzugefügt und steht dann dauerhaft im Programm und bei der Suche in der " +
-                    "Mediensammlung zur Verfügung. Es ist daher nicht nötig, dass externe Medien " +
-                    "beim Programmstart vorhanden sind.\n" +
-                    "\n" +
-                    "\"Mediensammlung neu aufbauen\": Auch hierfür müssen externe Medien nicht " +
-                    "angeschlossen sein." + P2LibConst.LINE_SEPARATORx2 +
-                    "\"Mediensammlung exportieren\": Die gesamte Mediensammlung wird in eine \"json-Datei\" " +
-                    "exportiert. Der Ziel-Dateiname wird vorher abgefragt." +
-                    "\n";
-
-    public static final String MEDIA_COLLECTION =
-            "\"Keine Dateien mit diesem Suffix\" oder \"nur Dateien mit diesem Suffix\": Bestimmt " +
-                    "durch die angegebenen Suffixe welche Dateien in die Mediensammlung aufgenommen werden. " +
-                    "Mehrere Suffixe können durch Komma getrennt angegeben werden, z.B. 'txt,xml'. Ist die " +
-                    "Zeile leer, werden alle Dateien aufgenommen.\n" +
-                    "\n" +
-                    "\"Keine versteckten Dateien suchen:\" Unabhängig vom Suffix werden versteckte " +
-                    "Dateien nicht in die Mediensammlung aufgenommen.\n" +
-                    "\n" +
-                    "\"Nur Dateien mit Mindestgröße suchen:\" Kleinere Dateien werden nicht in die " +
-                    "Mediensammlung aufgenommen.\n" +
-                    "\n" +
-                    "Mit dem \"Export\"-Button kann die komplette Mediensammlung in eine " +
-                    "Textdatei geschrieben werden." +
-                    "\n";
-
-    public static final String EXTERN_MEDIA_COLLECTION =
-            "Hier können externe Medienordner in der Mediensammlung verwaltet werden: " +
-                    "Ordner hinzufügen, die Mediensammlung mit vorhandenen Ordnern " +
-                    "manuell aktualisieren, oder vorhandene Ordner aus der " +
-                    "Mediensammlung entfernen." + P2LibConst.LINE_SEPARATORx2 +
-                    "Wichtig ist hier noch, dass nach dem Hinzufügen oder Ändern " +
-                    "einer externen Mediensammlung, diese wieder eingelesen wird. " +
-                    "Sonst arbeitet das Programm noch mit den alten Einträgen." + P2LibConst.LINE_SEPARATORx2 +
-                    "Externe Medienordner werden nur aktualisiert, " +
-                    "wenn es mit dem Button \"gedrehte Pfeile\" " +
-                    "angestoßen wird. Dafür müssen diese Ordner (z.B. USB-Festplatte) " +
-                    "nicht dauerhaft am Rechner angeschlossen sein." +
-                    "\n";
-
-    public static final String INTERN_MEDIA_COLLECTION =
-            "Hier können interne Medienordner in der Mediensammlung verwaltet werden: Ordner " +
-                    "hinzufügen oder vorhandene Ordner aus der Mediensammlung entfernen. " +
-                    "Eine Aktualisierung der Mediensammlung mit ihrem Inhalt erfolgt bei " +
-                    "jedem Programmstart." +
                     "\n";
 
     public static final String RESET_DIALOG =
