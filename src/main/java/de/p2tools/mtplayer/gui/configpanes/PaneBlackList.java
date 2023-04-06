@@ -201,7 +201,6 @@ public class PaneBlackList {
             return row;
         });
 
-
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
         tableView.setItems(sortedList);
     }
@@ -268,6 +267,7 @@ public class PaneBlackList {
         } else {
             splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.CONFIG_DIALOG_FILMLIST_FILTER_SPLITPANE);
         }
+        VBox.setVgrow(splitPane, Priority.ALWAYS);
         vBox.getChildren().add(splitPane);
     }
 

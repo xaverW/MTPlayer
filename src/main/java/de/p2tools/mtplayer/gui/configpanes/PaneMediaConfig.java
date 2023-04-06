@@ -76,6 +76,8 @@ public class PaneMediaConfig {
 
     public void make(Collection<TitledPane> result) {
         VBox vBox = new VBox(P2LibConst.DIST_EDGE);
+        vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        
         TitledPane tpConfig = new TitledPane("Allgemein", vBox);
         result.add(tpConfig);
 

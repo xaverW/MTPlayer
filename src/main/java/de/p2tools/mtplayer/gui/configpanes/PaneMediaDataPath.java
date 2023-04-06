@@ -64,7 +64,8 @@ public class PaneMediaDataPath {
     }
 
     public void make(Collection<TitledPane> result) {
-        VBox vBox = new VBox(10);
+        VBox vBox = new VBox(P2LibConst.DIST_VBOX);
+        vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
 
         TitledPane tpConfig = new TitledPane(external ? "Externe Medien" : "Interne Medien", vBox);
         result.add(tpConfig);
