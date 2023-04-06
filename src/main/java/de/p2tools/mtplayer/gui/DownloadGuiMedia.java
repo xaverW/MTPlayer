@@ -73,7 +73,7 @@ public class DownloadGuiMedia extends VBox {
         initSearch();
         this.visibleProperty().addListener((u, o, n) -> {
             if (this.isVisible()) {
-                System.out.println("==> visible");
+                System.out.println("==>DownloadGuiMedia visible");
             }
         });
     }

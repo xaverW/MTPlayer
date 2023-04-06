@@ -28,7 +28,7 @@ public class MediaCleaningFactory {
     private static final String TRENNER_OR = ",";
     private static final String TRENNER_AND = ":";
 
-    public static String[] CLEAN_LIST = {",", "·", ".", ";", "-",
+    public static String[] CLEAN_LIST = {",", "·", ".", ";", "-", "–",
             "/", ":", "&", "!", "?", "°", "=", "\"",
             " am ", " auf ",
             " du ", " der ", " die ", " das ", " den ", " dem ", " er ", " es ",
@@ -56,16 +56,16 @@ public class MediaCleaningFactory {
     public static String cleanSearchText(String searchTheme, String searchTitel,
                                          boolean media,
                                          boolean andOr, boolean date, boolean number, boolean clip, boolean list) {
-        String searchString = "";
+        String searchString;
         switch (media ? ProgConfig.DOWNLOAD_GUI_MEDIA_SHOW_TT_MEDIA.getValue() : ProgConfig.DOWNLOAD_GUI_MEDIA_SHOW_TT_ABO.getValue()) {
             case ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL:
-                searchString = searchTitel;
+                searchString = searchTitel.toLowerCase();
                 break;
             case ProgConst.MEDIA_COLLECTION_SEARCH_IN_THEME:
-                searchString = searchTheme;
+                searchString = searchTheme.toLowerCase();
                 break;
             default:
-                searchString = searchTheme + " " + searchTitel;
+                searchString = searchTheme.toLowerCase() + " " + searchTitel.toLowerCase();
         }
 
         if (media ? ProgConfig.DOWNLOAD_GUI_MEDIA_EXACT_MEDIA.getValue() : ProgConfig.DOWNLOAD_GUI_MEDIA_EXACT_ABO.getValue()) {
@@ -77,7 +77,6 @@ public class MediaCleaningFactory {
             //dann wird nicht gereinigt
             return searchString;
         }
-
 
         //dann reinigen
         if (clip) {
