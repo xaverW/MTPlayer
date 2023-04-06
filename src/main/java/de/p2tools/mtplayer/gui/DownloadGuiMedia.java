@@ -54,6 +54,7 @@ public class DownloadGuiMedia extends VBox {
     private TextField txtSearchAbo = new TextField();
     private final Button btnMenu = new Button();
     private final Button btnDialogMedia = new Button();
+    private final Button btnClear = new Button();
     private DownloadData downloadData = null;
     private final RadioButton rbTheme = new RadioButton("Thema");
     private final RadioButton rbTitle = new RadioButton("Titel");
@@ -109,7 +110,7 @@ public class DownloadGuiMedia extends VBox {
         hBoxTop.setAlignment(Pos.CENTER);
 
         HBox hBoxButton = new HBox(P2LibConst.DIST_BUTTON);
-        hBoxButton.getChildren().addAll(btnMenu, btnDialogMedia, btnHelpMedia);
+        hBoxButton.getChildren().addAll(btnMenu, btnDialogMedia, btnClear, btnHelpMedia);
         hBoxTop.getChildren().addAll(txtSearchMedia, hBoxButton, txtSearchAbo);
         HBox.setHgrow(txtSearchMedia, Priority.ALWAYS);
         HBox.setHgrow(txtSearchAbo, Priority.ALWAYS);
@@ -184,6 +185,13 @@ public class DownloadGuiMedia extends VBox {
                         downloadData == null ? "" : downloadData.getTheme(),
                         downloadData == null ? "" : downloadData.getTitle(), false);
             }
+        });
+
+        btnClear.setTooltip(new Tooltip("Die Suchfelder löschen"));
+        btnClear.setGraphic(ProgIcons.Icons.ICON_BUTTON_STOP.getImageView());
+        btnClear.setOnAction(a -> {
+            txtSearchMedia.clear();
+            txtSearchAbo.clear();
         });
     }
 

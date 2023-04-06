@@ -49,6 +49,8 @@ public class PaneDialog extends ScrollPane {
     final Button btnReset = new Button("");
     final Button btnClean = new Button("");
     final Button btnEdit = new Button();
+    final Button btnClear = new Button();
+
     final Button btnClearList = new Button("_Liste löschen");
     TextField txtSearch = new TextField();
 
@@ -134,6 +136,10 @@ public class PaneDialog extends ScrollPane {
         btnEdit.setGraphic(ProgIcons.Icons.ICON_BUTTON_EDIT.getImageView());
         btnEdit.setTooltip(new Tooltip("Einstellungen zum Putzen"));
 
+        btnClear.setGraphic(ProgIcons.Icons.ICON_BUTTON_STOP.getImageView());
+        btnClear.setTooltip(new Tooltip("Das Suchfeld löschen"));
+        btnClear.setOnAction(a -> txtSearch.clear());
+
         GridPane gridPaneSearch = new GridPane();
         gridPaneSearch.setPadding(new Insets(P2LibConst.DIST_EDGE));
         gridPaneSearch.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
@@ -147,13 +153,14 @@ public class PaneDialog extends ScrollPane {
         gridPaneSearch.add(btnReset, 5, 0);
         gridPaneSearch.add(btnClean, 6, 0);
         gridPaneSearch.add(btnEdit, 7, 0);
+        gridPaneSearch.add(btnClear, 8, 0);
 
         if (!media) {
             gridPaneSearch.add(new Label("Suchen im:"), 1, 1);
             gridPaneSearch.add(rbTheme, 2, 1);
             gridPaneSearch.add(rbTitle, 3, 1);
             gridPaneSearch.add(rbTt, 4, 1);
-            gridPaneSearch.add(btnClearList, 5, 1, 3, 1);
+            gridPaneSearch.add(btnClearList, 6, 1, 3, 1);
             GridPane.setHalignment(btnClearList, HPos.RIGHT);
         }
 
