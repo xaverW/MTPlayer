@@ -54,6 +54,8 @@ public class ProgStartBeforeGui {
             ImportStandardSet.getStandardSet();
             PDuration.onlyPing("Erster Start: PSet geladen");
             FilmFilterFactory.addStandardFilter();
+            PDuration.onlyPing("Erster Start: CleaningList init");
+            ProgData.getInstance().mediaCleaningList.initList();
         }
     }
 

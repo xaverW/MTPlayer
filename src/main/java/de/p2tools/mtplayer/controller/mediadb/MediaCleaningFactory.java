@@ -107,6 +107,7 @@ public class MediaCleaningFactory {
         }
 
         if (list) {
+            //dann wird die PUTZ-LISTE angewandt
             final String[] searchArr = ProgData.getInstance().mediaCleaningList.getSearchArr();
             for (String s : searchArr) {
                 searchString = searchString.replace(s, " ");
