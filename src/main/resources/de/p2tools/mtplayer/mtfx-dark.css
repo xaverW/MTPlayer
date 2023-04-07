@@ -20,3 +20,9 @@
 .buttonLoadFilmlistNewList {
     -fx-text-fill: #cce0ea;
 }
+
+/* ist der Label mit der Anzahl markierter Tabellenzeilen in der Taskbar*/
+.lblSelectedLines {
+    -fx-background-color: #3a3a3a;
+}
+

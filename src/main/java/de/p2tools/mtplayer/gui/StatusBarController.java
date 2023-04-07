@@ -20,13 +20,21 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadInfosFactory;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.tools.Listener;
+import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.guitools.PGuiTools;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.ListenerFilmlistLoadEvent;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.ListenerLoadFilmlist;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.layout.*;
+import javafx.scene.control.Tooltip;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 
 public class StatusBarController extends AnchorPane {
 
@@ -34,16 +42,19 @@ public class StatusBarController extends AnchorPane {
     private final Label lblSelFilm = new Label();
     private final Label lblLeftFilm = new Label();
     private final Label lblRightFilm = new Label();
+    private final Circle circleFilm = new Circle(6);
 
     //Download
     private final Label lblSelDownload = new Label();
     private final Label lblLeftDownload = new Label();
     private final Label lblRightDownload = new Label();
+    private final Circle circleDownload = new Circle(6);
 
     //Abo
     private final Label lblSelAbo = new Label();
     private final Label lblLeftAbo = new Label();
     private final Label lblRightAbo = new Label();
+    private final Circle circleAbo = new Circle(6);
 
     private final StackPane stackPane = new StackPane();
     private final Pane nonePane;
@@ -67,26 +78,26 @@ public class StatusBarController extends AnchorPane {
         AnchorPane.setTopAnchor(stackPane, 0.0);
 
         nonePane = new HBox();
-        filmPane = getHbox(lblSelFilm, lblLeftFilm, lblRightFilm);
-        downloadPane = getHbox(lblSelDownload, lblLeftDownload, lblRightDownload);
-        aboPane = getHbox(lblSelAbo, lblLeftAbo, lblRightAbo);
+        lblSelFilm.setTooltip(new Tooltip("Anzahl markierter Filme"));
+        lblSelDownload.setTooltip(new Tooltip("Anzahl markierter Downloads"));
+        lblSelAbo.setTooltip(new Tooltip("Anzahl markierter Abos"));
+        filmPane = getHBox(lblSelFilm, lblLeftFilm, circleFilm, lblRightFilm);
+        downloadPane = getHBox(lblSelDownload, lblLeftDownload, circleDownload, lblRightDownload);
+        aboPane = getHBox(lblSelAbo, lblLeftAbo, circleAbo, lblRightAbo);
 
         make();
     }
 
-    private HBox getHbox(Label lblSel, Label lblLeft, Label lblRight) {
+    private HBox getHBox(Label lblSel, Label lblLeft, Circle circle, Label lblRight) {
         HBox hBox = new HBox();
         hBox.setPadding(new Insets(2, 5, 2, 5));
-        hBox.setSpacing(10);
+        hBox.setSpacing(P2LibConst.DIST_HBOX);
         hBox.setAlignment(Pos.CENTER_RIGHT);
 
-        lblSel.setPadding(new Insets(0, 10, 0, 0));
+        lblSel.setPadding(new Insets(1, 5, 1, 5));
         lblSel.getStyleClass().add("lblSelectedLines");
 
-        lblLeft.setMaxWidth(Double.MAX_VALUE);
-        HBox.setHgrow(lblLeft, Priority.ALWAYS);
-
-        hBox.getChildren().addAll(lblSel, lblLeft, lblRight);
+        hBox.getChildren().addAll(lblSel, lblLeft, circle, PGuiTools.getHBoxGrower(), lblRight);
         hBox.setStyle("-fx-background-color: -fx-background ;");
         return hBox;
     }
@@ -125,7 +136,6 @@ public class StatusBarController extends AnchorPane {
 
     public void setStatusbarIndex(StatusbarIndex statusbarIndex) {
         this.statusbarIndex = statusbarIndex;
-
         switch (statusbarIndex) {
             case FILM:
                 filmPane.toFront();
@@ -150,21 +160,46 @@ public class StatusBarController extends AnchorPane {
     }
 
     private void setInfoFilm() {
-        lblLeftFilm.setText(DownloadInfosFactory.getStatusInfosFilm());
+        setCircleStyle();
+        lblLeftFilm.setText(DownloadInfosFactory.getStatusInfosFilm() + "  ||");
         final int selCount = progData.filmGuiController.getSelCount();
         lblSelFilm.setText(selCount > 0 ? selCount + "" : " ");
     }
 
     private void setInfoDownload() {
-        lblLeftDownload.setText(DownloadInfosFactory.getStatusInfosDownload());
+        setCircleStyle();
+        lblLeftDownload.setText(DownloadInfosFactory.getStatusInfosDownload() + "  ||");
         final int selCount = progData.downloadGuiController.getSelCount();
         lblSelDownload.setText(selCount > 0 ? selCount + "" : " ");
     }
 
     private void setInfoAbo() {
-        lblLeftAbo.setText(DownloadInfosFactory.getStatusInfosAbo());
+        setCircleStyle();
+        lblLeftAbo.setText(DownloadInfosFactory.getStatusInfosAbo() + "  ||");
+
         final int selCount = progData.aboGuiController.getSelCount();
         lblSelAbo.setText(selCount > 0 ? selCount + "" : " ");
+    }
+
+    private boolean setCircleStyle() {
+        if (progData.downloadInfos.getFinishedError() > 0) {
+            circleFilm.setFill(Paint.valueOf("red"));
+            circleDownload.setFill(Paint.valueOf("red"));
+            circleAbo.setFill(Paint.valueOf("red"));
+            return true;
+
+        } else if (progData.downloadInfos.getLoading() > 0) {
+            circleFilm.setFill(Paint.valueOf("green"));
+            circleDownload.setFill(Paint.valueOf("green"));
+            circleAbo.setFill(Paint.valueOf("green"));
+            return true;
+
+        } else {
+            circleFilm.setFill(Paint.valueOf("#666666"));
+            circleDownload.setFill(Paint.valueOf("#666666"));
+            circleAbo.setFill(Paint.valueOf("#666666"));
+            return false;
+        }
     }
 
     private void setTextForRightDisplay() {
