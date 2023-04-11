@@ -66,12 +66,12 @@ public class PaneUpdate {
 
     public void makeUpdate(Collection<TitledPane> result) {
         final VBox vBox = new VBox(P2LibConst.DIST_BUTTON);
-        vBox.setPadding(new Insets(0));
+        vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
 
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
-        gridPane.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        gridPane.setPadding(new Insets(0));
 
         //einmal am Tag Update suchen
         tglSearch.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_UPDATE_SEARCH_ACT);

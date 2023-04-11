@@ -2,6 +2,11 @@
 .root {
 }
 
+/*ist der Text in Downloads unten im Tab Mediensammlung*/
+.downloadGuiMediaText{
+    -fx-fill: #000000;
+}
+
 /*Tabelle Sets: Set ist "Abspielen" */
 .markSetPlay{
     -fx-text-fill: #ff0000;

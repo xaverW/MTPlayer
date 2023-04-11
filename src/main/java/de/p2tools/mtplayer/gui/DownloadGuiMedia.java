@@ -121,6 +121,7 @@ public class DownloadGuiMedia extends VBox {
         hBox.setPadding(new Insets(P2LibConst.DIST_BUTTON));
         Text text = new Text("Mediensammlung, suchen im Dateinamen");
         text.setFont(Font.font(null, FontWeight.BOLD, -1));
+        text.getStyleClass().add("downloadGuiMediaText");
         hBox.getChildren().addAll(text, PGuiTools.getHBoxGrower(), lblSumMedia);
         VBox vLeft = new VBox(0);
         vLeft.setPadding(new Insets(0));
@@ -131,6 +132,7 @@ public class DownloadGuiMedia extends VBox {
         hBox.setPadding(new Insets(P2LibConst.DIST_BUTTON));
         text = new Text("Abos, suchen im:");
         text.setFont(Font.font(null, FontWeight.BOLD, -1));
+        text.getStyleClass().add("downloadGuiMediaText");
         hBox.getChildren().addAll(text, rbTheme, rbTitle, rbTt, PGuiTools.getHBoxGrower(), lblSumAbo);
         VBox vRight = new VBox(0);
         vRight.setPadding(new Insets(0));

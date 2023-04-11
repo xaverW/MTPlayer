@@ -3,6 +3,11 @@
 .root {
 }
 
+/*ist der Text in Downloads unten im Tab Mediensammlung*/
+.downloadGuiMediaText{
+    -fx-fill: #e7e7e7;
+}
+
 /* tab download: infobereich */
 .downloadInfoGrid {
     -fx-background-color: #82888b;
