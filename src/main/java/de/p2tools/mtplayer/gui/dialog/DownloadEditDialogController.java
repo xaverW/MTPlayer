@@ -89,7 +89,7 @@ public class DownloadEditDialogController extends PDialogExtra {
     private String fileSize_high = "";
     private String fileSize_small = "";
     private String resolution = FilmDataMTP.RESOLUTION_NORMAL;
-    private final PTimePicker pTimePicker = new PTimePicker();
+    private final PTimePicker pTimePicker = new PTimePicker(true);
     private final CheckBox chkStartTime = new CheckBox();
 
     private final DownloadData download;

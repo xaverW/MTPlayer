@@ -67,7 +67,7 @@ public class DownloadAddDialogController extends PDialogExtra {
     private final Button btnPrev = new Button("<");
     private final Button btnNext = new Button(">");
     private final Label lblSum = new Label("");
-    private final PTimePicker pTimePicker = new PTimePicker();
+    private final PTimePicker pTimePicker = new PTimePicker(true);
 
     private final CheckBox chkAll = new CheckBox("Änderungen auf alle Filme anwenden");
     private final Label lblSet = new Label("Set:");
@@ -425,6 +425,7 @@ public class DownloadAddDialogController extends PDialogExtra {
 
     private void initCheckBox() {
         // und jetzt noch die Listener anhängen
+        pTimePicker.disableProperty().bind(rbTime.selectedProperty().not());
         pTimePicker.setOnAction(a -> rbTime.setSelected(true));
         rbStart.setToggleGroup(toggleGroupStart);
         rbNot.setToggleGroup(toggleGroupStart);

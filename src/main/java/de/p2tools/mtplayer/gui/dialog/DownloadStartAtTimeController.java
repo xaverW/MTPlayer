@@ -46,7 +46,7 @@ public class DownloadStartAtTimeController extends PDialogExtra {
     private Button btnCancel = new Button("_Abbrechen");
 
     private final ToggleGroup toggleGroup = new ToggleGroup();
-    private final PTimePicker pTimePicker = new PTimePicker();
+    private final PTimePicker pTimePicker = new PTimePicker(true);
     private final CheckBox chkStartNow = new CheckBox();
     private final RadioButton rbAll = new RadioButton();
     private final RadioButton rbOnlySel = new RadioButton();
