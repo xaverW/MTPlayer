@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.gui;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.config.ProgShortcut;
+import de.p2tools.p2lib.guitools.PGuiTools;
 import de.p2tools.p2lib.tools.shortcut.PShortcutWorker;
 import javafx.beans.binding.Bindings;
 import javafx.scene.control.*;
@@ -42,45 +43,35 @@ public class DownloadMenu {
 
     private void initButton() {
         // Button
-        VBox vBoxSpace = new VBox();
-        vBoxSpace.setMaxHeight(0);
-        vBoxSpace.setMinHeight(0);
-        vBox.getChildren().add(vBoxSpace);
-
+        vBox.getChildren().add(PGuiTools.getVDistance(10));
         final ToolBarButton btDownloadRefresh = new ToolBarButton(vBox,
                 "Downloads aktualisieren", "Liste der Downloads aktualisieren", ProgIcons.Icons.ICON_TOOLBAR_DOWNLOAD_REFRESH.getImageView());
+        final ToolBarButton btDownloadClear = new ToolBarButton(vBox,
+                "Downloads aufräumen", "Liste der Downloads aufräumen", ProgIcons.Icons.ICON_TOOLBAR_DOWNLOAD_CLEAN.getImageView());
+
+        vBox.getChildren().add(PGuiTools.getVDistance(10));
+        final ToolBarButton btStartDownloads = new ToolBarButton(vBox,
+                "Downloads Starten", "Markierte Downloads starten", ProgIcons.Icons.ICON_TOOLBAR_DOWNLOAD_START.getImageView());
         final ToolBarButton btDownloadAll = new ToolBarButton(vBox,
                 "Alle Downloads starten", "Alle Downloads starten", ProgIcons.Icons.ICON_TOOLBAR_DOWNLOAD_START_ALL.getImageView());
         final ToolBarButton btDownloadAllTime = new ToolBarButton(vBox,
                 "Alle Downloads mit Startzeit starten", "Alle Downloads mit Startzeit starten", ProgIcons.Icons.ICON_TOOLBAR_DOWNLOAD_START_ALL_TIME.getImageView());
-        final ToolBarButton btDownloadClear = new ToolBarButton(vBox,
-                "Downloads aufräumen", "Liste der Downloads aufräumen", ProgIcons.Icons.ICON_TOOLBAR_DOWNLOAD_CLEAN.getImageView());
 
-        vBoxSpace = new VBox();
-        vBoxSpace.setMaxHeight(10);
-        vBoxSpace.setMinHeight(10);
-        vBox.getChildren().add(vBoxSpace);
-
-        final ToolBarButton btStartDownloads = new ToolBarButton(vBox,
-                "Downloads Starten", "Markierte Downloads starten", ProgIcons.Icons.ICON_TOOLBAR_DOWNLOAD_START.getImageView());
+        vBox.getChildren().add(PGuiTools.getVDistance(10));
         final ToolBarButton btDownloadBack = new ToolBarButton(vBox,
                 "Downloads zurückstellen", "Markierte Downloads zurückstellen", ProgIcons.Icons.ICON_TOOLBAR_DOWNLOAD_UNDO.getImageView());
         final ToolBarButton btDownloadDel = new ToolBarButton(vBox,
                 "Downloads löschen", "Markierte Downloads löschen", ProgIcons.Icons.ICON_TOOLBAR_DOWNLOAD_DEL.getImageView());
 
-        vBoxSpace = new VBox();
-        vBoxSpace.setMaxHeight(10);
-        vBoxSpace.setMinHeight(10);
-        vBox.getChildren().add(vBoxSpace);
-
+        vBox.getChildren().add(PGuiTools.getVDistance(10));
         final ToolBarButton btDownloadFilm = new ToolBarButton(vBox,
                 "Film Starten", "Gespeicherten Film abspielen", ProgIcons.Icons.ICON_TOOLBAR_DOWNLOAD_FILM_START.getImageView());
 
         btDownloadRefresh.setOnAction(a -> progData.worker.searchForAbosAndMaybeStart());
-        btDownloadAll.setOnAction(a -> progData.downloadGuiController.startDownload(true));
-        btDownloadAllTime.setOnAction(a -> progData.downloadGuiController.startDownloadTime());
         btDownloadClear.setOnAction(a -> progData.downloadGuiController.cleanUp());
         btStartDownloads.setOnAction(a -> progData.downloadGuiController.startDownload(false));
+        btDownloadAll.setOnAction(a -> progData.downloadGuiController.startDownload(true));
+        btDownloadAllTime.setOnAction(a -> progData.downloadGuiController.startDownloadTime());
         btDownloadBack.setOnAction(a -> progData.downloadGuiController.moveDownloadBack());
         btDownloadDel.setOnAction(a -> progData.downloadGuiController.deleteDownloads());
         btDownloadFilm.setOnAction(a -> progData.downloadGuiController.playFilm());

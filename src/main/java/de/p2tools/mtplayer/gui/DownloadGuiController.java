@@ -478,6 +478,8 @@ public class DownloadGuiController extends AnchorPane {
         final String type = ProgConfig.FILTER_DOWNLOAD_TYPE.getValueSafe();
         final String state = ProgConfig.FILTER_DOWNLOAD_STATE.getValueSafe();
 
+        predicate = predicate.and(download -> !download.isPlacedBack());
+
         if (!sender.isEmpty()) {
             Filter filter = new Filter(sender, true);
             predicate = predicate.and(blackData -> FilterCheck.check(filter, blackData.getChannel()));

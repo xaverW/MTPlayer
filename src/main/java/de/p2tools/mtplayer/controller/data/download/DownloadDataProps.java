@@ -577,7 +577,7 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
         this.source.set(source);
     }
 
-    public boolean getPlacedBack() {
+    public boolean isPlacedBack() {
         return placedBack.get();
     }
 

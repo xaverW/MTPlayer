@@ -33,7 +33,7 @@ public class DownloadInfos {
     private int amountAbo = 0; //davon Abos
     private int amountDownload = 0; //und manuelle Downloads
 
-    private int notStarted = 0; //davon gestartet, alle, egal ob warten, laden oder fertig
+    private int notStarted = 0; //davon gestartet, alle, egal ob warten, laden oder fertig (keine zurückgestellten)
     private int started = 0; //davon gestartet, alle, egal ob warten, laden oder fertig
 
     private int loadingM3u8 = 0; //gestarte m3u8-URLs
@@ -187,7 +187,7 @@ public class DownloadInfos {
         // davon gestartet und warten, laufen, fertig OK, fertig Fehler
 
         for (final DownloadData download : progData.downloadList) {
-            if (download.getPlacedBack()) {
+            if (download.isPlacedBack()) {
                 ++placedBack;
             } else {
                 ++amount;
@@ -216,7 +216,8 @@ public class DownloadInfos {
                         ++finishedError;
                     }
                 }
-            } else {
+            } else if (!download.isPlacedBack()) {
+                //dann die angezeigten und noch nicht gestartet
                 ++notStarted;
             }
         }

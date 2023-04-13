@@ -103,14 +103,12 @@ public class DownloadInfosFactory {
             // nur Abos
             textLinks += SEPARATOR;
             textLinks += "nur aus Abos";
-            textLinks += SEPARATOR;
 
         } else if (progData.downloadInfos.getAmountAbo() == 0 &&
                 progData.downloadInfos.getAmountDownload() > 0) {
             // keine Abos
             textLinks += SEPARATOR;
             textLinks += "nur direkte Downloads";
-            textLinks += SEPARATOR;
 
         } else if (progData.downloadInfos.getAmountAbo() > 0
                 && progData.downloadInfos.getAmountDownload() > 0) {
@@ -118,20 +116,17 @@ public class DownloadInfosFactory {
 
             // Abos
             textLinks += numberFormat.format(progData.downloadInfos.getAmountAbo()) + " aus Abos, ";
-
             // direkte Downloads
             if (progData.downloadInfos.getAmountDownload() == 1) {
                 textLinks += "1 direkter Download";
             } else if (progData.downloadInfos.getAmountDownload() > 1) {
                 textLinks += numberFormat.format(progData.downloadInfos.getAmountDownload()) + " direkte Downloads";
             }
-
-            textLinks += SEPARATOR;
         }
-
 
         if (progData.downloadInfos.getAmount() > 0) {
             // nur wenn ein Download läuft, wartet, ..
+            textLinks += SEPARATOR;
             textLinks += getRunningDownloadsInfos();
         }
 
