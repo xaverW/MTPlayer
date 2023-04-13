@@ -124,6 +124,7 @@ public class DownloadGuiInfo extends AnchorPane {
     private void getInfoText() {
         Text text1 = new Text("Downloads: " + progData.downloadList.size());
         text1.setFont(Font.font(null, FontWeight.BOLD, -1));
+        text1.getStyleClass().add("downloadGuiMediaText");
         vBoxHeader.getChildren().add(text1);
 
         if (progData.downloadList.size() > 0) {
@@ -171,6 +172,7 @@ public class DownloadGuiInfo extends AnchorPane {
 
             txt += " )";
             Text text2 = new Text(txt);
+            text2.getStyleClass().add("downloadGuiMediaText");
             vBoxHeader.getChildren().add(text2);
         }
     }
