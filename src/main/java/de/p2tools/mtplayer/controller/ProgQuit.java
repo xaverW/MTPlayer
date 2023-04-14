@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.controller;
 
+import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.dialog.QuitDialogController;
 import de.p2tools.p2lib.mtdownload.HttpDownload;
@@ -41,7 +42,7 @@ public class ProgQuit {
      */
     public static void quitShutDown() {
         saveConfig();
-        PShutDown.shutDown();
+        PShutDown.shutDown(ProgConfig.SYSTEM_SHUT_DOWN_CALL.getValueSafe());
         exitProg();
     }
 
@@ -53,7 +54,7 @@ public class ProgQuit {
     public static void quit(boolean startWithWaiting) {
         final ProgData progData = ProgData.getInstance();
 
-        // erst mal prüfen ob noch Downloads (Filme) gestartet sind oder laufen
+        // erst mal prüfen, ob noch Downloads (Filme) gestartet sind oder laufen
         if (progData.downloadList.countStartedAndRunningDownloads() > 0 ||
                 HttpDownload.downloadRunning > 0) {
             if (progData.quitDialogController != null) {

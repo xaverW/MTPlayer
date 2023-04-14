@@ -20,8 +20,11 @@ package de.p2tools.mtplayer.gui.dialog;
 import de.p2tools.mtplayer.controller.ProgQuit;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.gui.tools.HelpText;
+import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2lib.guitools.BigButton;
+import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.pmask.PMaskerPane;
 import de.p2tools.p2lib.mtdownload.HttpDownload;
 import javafx.concurrent.Task;
@@ -29,6 +32,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.*;
 
 public class QuitDialogController extends PDialogExtra {
@@ -87,13 +91,22 @@ public class QuitDialogController extends PDialogExtra {
             }
         });
 
+        final Button btnHelp = PButton.helpButton(getStage(), "Rechner herunterfahren", HelpText.CONFIG_SHUT_DOWN_CALL);
+        final Button btnEdit = new Button();
+        btnEdit.setGraphic(ProgIcons.Icons.ICON_BUTTON_EDIT_FILTER.getImageView());
+        btnEdit.setOnAction(a -> new ChangeShutDownCallDialog(getStageProp().getValue()));
+        btnEdit.setTooltip(new Tooltip("Systembefehl nach Programmende anpassen"));
+
         gridPane.add(ProgIcons.Icons.ICON_DIALOG_QUIT.getImageView(), 0, 0, 1, 1);
         gridPane.add(headerLabel, 1, 0);
         gridPane.add(cancelButton, 1, 1);
         gridPane.add(quitButton, 1, 2);
 
-        VBox vBox = new VBox(5);
-        vBox.getChildren().addAll(waitButton, cbxShutDown);
+        VBox vBox = new VBox(P2LibConst.DIST_VBOX);
+        HBox hBox = new HBox(P2LibConst.DIST_HBOX);
+        hBox.setAlignment(Pos.CENTER_RIGHT);
+        hBox.getChildren().addAll(cbxShutDown, btnEdit, btnHelp);
+        vBox.getChildren().addAll(waitButton, hBox);
         vBox.setAlignment(Pos.CENTER_RIGHT);
         gridPane.add(vBox, 1, 3);
 

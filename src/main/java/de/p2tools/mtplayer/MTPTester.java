@@ -20,6 +20,7 @@ package de.p2tools.mtplayer;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
+import de.p2tools.mtplayer.gui.dialog.QuitDialogController;
 import de.p2tools.p2lib.dialogs.ProgInfoDialog;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.pmask.PMaskerPane;
@@ -27,7 +28,7 @@ import de.p2tools.p2lib.mtfilm.film.FilmFactory;
 import de.p2tools.p2lib.tools.duration.PDuration;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -72,17 +73,6 @@ public class MTPTester {
             stackPane.getChildren().addAll(gridPane, maskerPane);
             progInfoDialog.getVBoxCont().getChildren().addAll(stackPane);
 
-
-            // Create the ButtonBar instance
-            final ButtonBar buttonBar = new ButtonBar();
-            final Button okButton = new Button("OK");
-            ButtonBar.setButtonData(okButton, ButtonBar.ButtonData.OK_DONE);
-            final Button cButton = new Button("Abbrechen");
-            ButtonBar.setButtonData(cButton, ButtonBar.ButtonData.CANCEL_CLOSE);
-            buttonBar.getButtons().addAll(okButton, cButton);
-            progInfoDialog.getVBoxCont().getChildren().add(buttonBar);
-
-
             final Text text = new Text("Debugtools");
             text.setFont(Font.font(null, FontWeight.BOLD, 15));
 
@@ -103,6 +93,10 @@ public class MTPTester {
 
             gridPane.add(textArea, 0, ++row, 2, 1);
 
+            Button btnShutDown = new Button("ShutDownDialog");
+            btnShutDown.setOnAction(a -> new QuitDialogController(false));
+            gridPane.add(new Label(), 0, ++row);
+            gridPane.add(btnShutDown, 0, ++row);
         }
     }
 

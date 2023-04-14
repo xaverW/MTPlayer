@@ -864,4 +864,13 @@ public class HelpText {
                     "\n" +
                     "Das funktioniert, kann dann aber bei Leerzeichen im Pfad zu Problemen führen.\n" +
                     "\n";
+
+    public static final String CONFIG_SHUT_DOWN_CALL =
+            "Hiermit kann der Rechner nach den Downloads automatisch heruntergefahren werden. Für Linux und Windows " +
+                    "bringt das Programm die Standard-Befehle dafür mit." +
+                    "\n\n" +
+                    "Diese können aber auch angepasst werden. " +
+                    "So ist es z.B. auch möglich, einen ganz anderen Befehl auszuführen oder ein Skript/Programm " +
+                    "nach dem Programmende zu starten." +
+                    "\n";
 }
