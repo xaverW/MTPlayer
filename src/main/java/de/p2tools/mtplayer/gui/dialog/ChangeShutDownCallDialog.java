@@ -17,6 +17,7 @@
 
 package de.p2tools.mtplayer.gui.dialog;
 
+import de.p2tools.mtplayer.controller.ProgSave;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
@@ -64,7 +65,10 @@ public class ChangeShutDownCallDialog extends PDialogExtra {
         btnStandard.setOnAction(a -> txtCall.setText(PShutDown.getShutDownCommand()));
 
         Button btnTest = new Button("Testen");
-        btnTest.setOnAction(a -> PShutDown.shutDown(ProgConfig.SYSTEM_SHUT_DOWN_CALL.getValueSafe()));
+        btnTest.setOnAction(a -> {
+            ProgSave.saveAll(); // damit nichts verloren geht
+            PShutDown.shutDown(ProgConfig.SYSTEM_SHUT_DOWN_CALL.getValueSafe());
+        });
 
         Button btnHelp = PButton.helpButton(getStageProp(), "Rechner herunterfahren", HelpText.CONFIG_SHUT_DOWN_CALL);
 
