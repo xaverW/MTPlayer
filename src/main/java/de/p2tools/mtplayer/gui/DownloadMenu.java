@@ -46,8 +46,6 @@ public class DownloadMenu {
         vBox.getChildren().add(PGuiTools.getVDistance(10));
         final ToolBarButton btDownloadRefresh = new ToolBarButton(vBox,
                 "Downloads aktualisieren", "Liste der Downloads aktualisieren", ProgIcons.Icons.ICON_TOOLBAR_DOWNLOAD_REFRESH.getImageView());
-        final ToolBarButton btDownloadClear = new ToolBarButton(vBox,
-                "Downloads aufräumen", "Liste der Downloads aufräumen", ProgIcons.Icons.ICON_TOOLBAR_DOWNLOAD_CLEAN.getImageView());
 
         vBox.getChildren().add(PGuiTools.getVDistance(10));
         final ToolBarButton btStartDownloads = new ToolBarButton(vBox,
@@ -62,6 +60,8 @@ public class DownloadMenu {
                 "Downloads zurückstellen", "Markierte Downloads zurückstellen", ProgIcons.Icons.ICON_TOOLBAR_DOWNLOAD_UNDO.getImageView());
         final ToolBarButton btDownloadDel = new ToolBarButton(vBox,
                 "Downloads löschen", "Markierte Downloads löschen", ProgIcons.Icons.ICON_TOOLBAR_DOWNLOAD_DEL.getImageView());
+        final ToolBarButton btDownloadClear = new ToolBarButton(vBox,
+                "Downloads aufräumen", "Liste der Downloads aufräumen", ProgIcons.Icons.ICON_TOOLBAR_DOWNLOAD_CLEAN.getImageView());
 
         vBox.getChildren().add(PGuiTools.getVDistance(10));
         final ToolBarButton btDownloadFilm = new ToolBarButton(vBox,

@@ -31,6 +31,7 @@ public class ControllerConfig extends PAccordionPane {
     private PaneConfig paneConfig;
     private PaneIcon paneIcon;
     private PaneColor paneColor;
+    private PaneStatusBar paneStatusBar;
     private PaneShortcut paneShortcut;
     private PaneGeo paneGeo;
     private PaneKeySize paneKeySize;
@@ -53,6 +54,7 @@ public class ControllerConfig extends PAccordionPane {
         paneConfig.close();
         paneIcon.close();
         paneColor.close();
+        paneStatusBar.close();
         paneShortcut.close();
         paneGeo.close();
         paneKeySize.close();
@@ -77,6 +79,9 @@ public class ControllerConfig extends PAccordionPane {
 
         paneColor = new PaneColor(stage);
         paneColor.makeColor(result);
+
+        paneStatusBar = new PaneStatusBar(stage);
+        paneStatusBar.makeStatusBar(result);
 
         paneShortcut = new PaneShortcut(stage);
         paneShortcut.makeShortcut(result);

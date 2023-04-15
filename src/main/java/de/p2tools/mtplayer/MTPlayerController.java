@@ -87,6 +87,8 @@ public class MTPlayerController extends StackPane {
 
             // Statusbar
             statusBarController = new StatusBarController(progData);
+            statusBarController.visibleProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_ON);
+            statusBarController.managedProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_ON);
 
             // Gui zusammenbauen
             borderPane.setTop(hBoxTop);

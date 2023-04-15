@@ -139,6 +139,14 @@ public class ProgConfig extends PDataProgConfig {
     public static IntegerProperty SYSTEM_FILMLIST_FILTER = addIntProp("system-filmlist-filter", BlacklistFilterFactory.BLACKLILST_FILTER_OFF);
     public static StringProperty SYSTEM_SHUT_DOWN_CALL = addStrProp("system-shut-down-call", PShutDown.getShutDownCommand()); //ein eigenes Tray-Icon
 
+    //Configs Statusbar
+    public static BooleanProperty SYSTEM_STATUS_BAR_ON = addBoolProp("system-status-bar-on", true);
+    public static BooleanProperty SYSTEM_STATUS_BAR_FIELD_SEL = addBoolProp("system-status-bar-field-sel", true);
+    public static BooleanProperty SYSTEM_STATUS_BAR_FIELD_LEFT = addBoolProp("system-status-bar-field-left", true);
+    public static BooleanProperty SYSTEM_STATUS_BAR_FIELD_DOT = addBoolProp("system-status-bar-field-dot", false);
+    public static BooleanProperty SYSTEM_STATUS_BAR_FIELD_RIGHT = addBoolProp("system-status-bar-field-right", true);
+
+
     public static BooleanProperty SYSTEM_USE_REPLACETABLE = addBoolProp("system-use-replacetable", SystemUtils.IS_OS_LINUX ? Boolean.TRUE : Boolean.FALSE);
     public static BooleanProperty SYSTEM_ONLY_ASCII = addBoolProp("system-only-ascii", Boolean.FALSE);
     public static StringProperty SYSTEM_PROG_OPEN_DIR = addStrProp("system-prog-open-dir");
