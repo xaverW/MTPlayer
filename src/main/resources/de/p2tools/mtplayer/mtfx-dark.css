@@ -26,8 +26,11 @@
     -fx-text-fill: #cce0ea;
 }
 
-/* ist der Label mit der Anzahl markierter Tabellenzeilen in der Taskbar*/
+/* sind die Label in der Statusleiste */
 .lblSelectedLines {
+    -fx-background-color: #3a3a3a;
+}
+.lblInfo {
     -fx-background-color: #3a3a3a;
 }
 
