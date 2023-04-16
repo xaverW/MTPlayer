@@ -64,21 +64,21 @@ public class QuitDialogController extends PDialogExtra {
         Label headerLabel = new Label("Es laufen noch Downloads!");
         headerLabel.setStyle("-fx-font-size: 1.5em;");
 
-        //nicht beenden
+        // nicht beenden
         BigButton cancelButton = new BigButton(ProgIcons.Icons.ICON_BUTTON_QUIT.getImageView(),
                 "Nicht beenden", "");
         cancelButton.setOnAction(e -> {
             close();
         });
 
-        //beenden
+        // beenden
         BigButton quitButton = new BigButton(ProgIcons.Icons.ICON_BUTTON_QUIT.getImageView(),
                 "Beenden", "Alle Downloads abbrechen und das Programm beenden.");
         quitButton.setOnAction(e -> {
             ProgQuit.quit();
         });
 
-        //warten, dann beenden
+        // warten, dann beenden
         BigButton waitButton = new BigButton(ProgIcons.Icons.ICON_BUTTON_QUIT.getImageView(),
                 "Warten", "Alle Downloads abwarten und dann das Programm beenden.");
         waitButton.setOnAction(e -> startWaiting());

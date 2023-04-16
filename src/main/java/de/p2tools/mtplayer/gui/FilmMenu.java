@@ -83,7 +83,7 @@ public class FilmMenu {
 
         btFilterBookmakr.setOnAction(a -> {
             if (storedActFilterSettings != null && storedBookmarkFilter != null) {
-                //prüfen, ob sich der Filter geändert hat, wenn ja, dann auf Anfang
+                // prüfen, ob sich der Filter geändert hat, wenn ja, dann auf Anfang
                 FilmFilter sf = progData.actFilmFilterWorker.getActFilterSettings();
                 if (storedBookmarkFilter.isSame(sf, false)) {
                     // dann hat sich der Filter geändert
@@ -92,7 +92,7 @@ public class FilmMenu {
             }
 
             if (storedActFilterSettings == null) {
-                //dann wurde es noch nicht aufgerufen
+                // dann wurde es noch nicht aufgerufen
                 if (progData.actFilmFilterWorker.getActFilterSettings().isOnlyVis() &&
                         progData.actFilmFilterWorker.getActFilterSettings().isOnlyBookmark()) {
                     // dann ist Bookmark schon gesetzt, dann erst mal ausschalten

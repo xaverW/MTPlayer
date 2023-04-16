@@ -85,7 +85,7 @@ public class AboDialogController extends PDialogExtra {
     ProgData progData;
 
     public AboDialogController(ProgData progData, AboData abo) {
-        //hier wird ein neues Abo angelegt!
+        // hier wird ein neues Abo angelegt!
         super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE,
                 "Abo anlegen", false, false, DECO.BORDER, true);
 
@@ -100,7 +100,7 @@ public class AboDialogController extends PDialogExtra {
     }
 
     public AboDialogController(ProgData progData, FilmFilter filmFilter, AboData abo) {
-        //hier wird ein Abo an den Filter angepasst
+        // hier wird ein Abo an den Filter angepasst
         super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE,
                 "Abo anlegen", false, false, DECO.BORDER, true);
 
@@ -135,14 +135,14 @@ public class AboDialogController extends PDialogExtra {
     }
 
     public AboDialogController(ProgData progData, ObservableList<AboData> aboList) {
-        //hier werden Abos geändert
+        // hier werden Abos geändert
         super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE,
                 "Abo ändern", false, false, DECO.BORDER, true);
 
         this.progData = progData;
         this.addNewAbo = false;
 
-        //hängt sonst an "getSelList"
+        // hängt sonst an "getSelList"
         this.aboList.addAll(aboList);
         this.aboCopy = aboList.get(0).getCopy();
         this.mbChannel = new PMenuButton(aboCopy.channelProperty(),
@@ -268,7 +268,7 @@ public class AboDialogController extends PDialogExtra {
         ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(aboCopy.getMinDurationMinute());
         ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(aboCopy.getMaxDurationMinute());
 
-        //da nicht modal!!
+        // da nicht modal!!
         progData.aboList.notifyChanges();
     }
 

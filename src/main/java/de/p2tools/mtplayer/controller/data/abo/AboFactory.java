@@ -31,8 +31,8 @@ public class AboFactory {
     }
 
     public static synchronized void setAboForFilmlist() {
-        //hier wird tatsächlich für jeden Film die Liste der Abos durchsucht,
-        //braucht länger
+        // hier wird tatsächlich für jeden Film die Liste der Abos durchsucht,
+        // braucht länger
         PDuration.counterStart("setAboForFilmlist");
         AboList aboList = ProgData.getInstance().aboList;
 
@@ -48,7 +48,7 @@ public class AboFactory {
         if (aboList.isEmpty()) {
             // dann nur die Abos in der Filmliste löschen
             ProgData.getInstance().filmlist.parallelStream().forEach(film -> {
-                //für jeden Film Abo löschen
+                // für jeden Film Abo löschen
                 film.arr[FilmDataXml.FILM_ABO_NAME] = "";
                 film.setAbo(null);
             });
@@ -56,7 +56,7 @@ public class AboFactory {
         }
 
         aboList.stream().forEach(abo -> {
-            //damit jedes Abo auch einen Namen hat
+            // damit jedes Abo auch einen Namen hat
             if (abo.getName().isEmpty()) {
                 abo.setName("Abo " + abo.getNo());
             }
@@ -73,7 +73,7 @@ public class AboFactory {
         final AboData abo = BlacklistFilterFactory.findAbo(film);
 
         if (abo == null) {
-            //kein Abo gefunden
+            // kein Abo gefunden
             film.arr[FilmDataXml.FILM_ABO_NAME] = "";
             film.setAbo(null);
 
@@ -98,7 +98,7 @@ public class AboFactory {
             film.setAbo(null);
 
         } else {
-            //nur dann passt er :)
+            // nur dann passt er :)
             film.arr[FilmDataXml.FILM_ABO_NAME] = abo.getName();
             film.setAbo(abo);
         }
@@ -113,7 +113,7 @@ public class AboFactory {
             if (checkAboExist(dataAbo.getChannel(), checkAbo.getChannel(), true) &&
 
                     (dataAbo.isThemeExact() || checkAbo.isThemeExact() ?
-                            //wenn einer "exact" dann damit prüfen, ist nicht optimal? aber besser als nix
+                            // wenn einer "exact" dann damit prüfen, ist nicht optimal? aber besser als nix
                             checkAboExist(dataAbo.getTheme(), checkAbo.getTheme(), true) :
                             checkAboExist(dataAbo.getTheme(), checkAbo.getTheme(), false)
                     ) &&
@@ -128,8 +128,8 @@ public class AboFactory {
     }
 
     private static boolean checkAboExist(String aboExist, String aboCheck, boolean exact) {
-        //da wird man immer eine Variante bauen können, die Filme eines bestehenden Abos
-        //mit abdeckt -> nur eine einfache offensichtliche Prüfung
+        // da wird man immer eine Variante bauen können, die Filme eines bestehenden Abos
+        // mit abdeckt -> nur eine einfache offensichtliche Prüfung
 
         aboCheck = aboCheck.toLowerCase().trim();
         aboExist = aboExist.toLowerCase().trim();
@@ -140,13 +140,13 @@ public class AboFactory {
 
         if (exact) {
             if (aboCheck.equals(aboExist)) {
-                //passt dann auch zu "exact", RegEx, ..
+                // passt dann auch zu "exact", RegEx, ..
                 return true;
             }
 
         } else {
             if (aboCheck.contains(aboExist)) {
-                //dann enthält der Suchbegriff das vorhandene Abo (das dann auch das Neue mit abdeckt)
+                // dann enthält der Suchbegriff das vorhandene Abo (das dann auch das Neue mit abdeckt)
                 return true;
             }
         }

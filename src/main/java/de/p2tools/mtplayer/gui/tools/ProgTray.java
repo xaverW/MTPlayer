@@ -115,7 +115,7 @@ public class ProgTray {
         }
 
         for (TrayIcon tr : systemTray.getTrayIcons()) {
-            //vorhandene Icons erst mal entfernen
+            // vorhandene Icons erst mal entfernen
             systemTray.remove(tr);
         }
 
@@ -168,7 +168,7 @@ public class ProgTray {
 
         miLogfile.addActionListener(e -> Platform.runLater(() -> PLogger.openLogFile()));
         miTray.addActionListener(e -> Platform.runLater(() -> {
-            //vor dem Ausschalten des Tray GUI anzeigen!!
+            // vor dem Ausschalten des Tray GUI anzeigen!!
             closeTray();
         }));
         miAbout.addActionListener(e -> Platform.runLater(() -> new AboutDialogController(progData).showDialog()));
@@ -181,13 +181,13 @@ public class ProgTray {
         popupMenu.add(miConfig);
         popupMenu.add(miLogfile);
         if (!ProgramToolsFactory.getOs().equals(ProgramToolsFactory.OperatingSystemType.MAC)) {
-            //machen unter MAC Probleme
+            // machen unter MAC Probleme
             popupMenu.add(miTray);
         }
         popupMenu.addSeparator();
         popupMenu.add(miAbout);
         if (!ProgramToolsFactory.getOs().equals(ProgramToolsFactory.OperatingSystemType.MAC)) {
-            //machen unter MAC Probleme
+            // machen unter MAC Probleme
             popupMenu.addSeparator();
             popupMenu.add(miQuit);
         }
@@ -195,7 +195,7 @@ public class ProgTray {
     }
 
     private void closeTray() {
-        //dann die Dialoge wieder anzeigen
+        // dann die Dialoge wieder anzeigen
         showDialog();
         ProgConfig.SYSTEM_TRAY.setValue(false);
     }
