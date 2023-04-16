@@ -17,8 +17,8 @@
 package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
+import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmTools;
 import de.p2tools.mtplayer.controller.filmfilter.BlacklistFactory;
@@ -88,7 +88,7 @@ public class FilmGuiTableContextMenu {
         MenuItem miFilmInfo = new MenuItem("Filminformation anzeigen");
         miFilmInfo.setOnAction(a -> filmGuiController.showFilmInfo());
 
-        MenuItem miMediaDb = new MenuItem("Titel in der Mediensammlung suchen");
+        MenuItem miMediaDb = new MenuItem("Film in der Mediensammlung suchen");
         miMediaDb.setOnAction(a -> filmGuiController.guiFilmMediaCollection());
 
         final MenuItem miCopyName = new MenuItem("Titel in die Zwischenablage kopieren");

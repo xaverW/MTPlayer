@@ -143,7 +143,7 @@ public class FilmMenu {
         miFilmInfo.setOnAction(a -> progData.filmGuiController.showFilmInfo());
         PShortcutWorker.addShortCut(miFilmInfo, ProgShortcut.SHORTCUT_INFO_FILM);
 
-        final MenuItem miFilmMediaCollection = new MenuItem("Titel in der Mediensammlung suchen");
+        final MenuItem miFilmMediaCollection = new MenuItem("Film in der Mediensammlung suchen");
         miFilmMediaCollection.setOnAction(a -> progData.filmGuiController.guiFilmMediaCollection());
         PShortcutWorker.addShortCut(miFilmMediaCollection, ProgShortcut.SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION);
 

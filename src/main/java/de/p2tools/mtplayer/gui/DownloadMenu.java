@@ -137,10 +137,6 @@ public class DownloadMenu {
         submenuAllDownloads.getItems().addAll(mbStartAll, mbStartTimeAll, mbStopAll, mbStopWait, mbUpdateList, mbClean);
         mb.getItems().addAll(submenuAllDownloads);
 
-        MenuItem miMediaDb = new MenuItem("Titel in der Mediensammlung suchen");
-        miMediaDb.setOnAction(a -> progData.downloadGuiController.guiFilmMediaCollection());
-        PShortcutWorker.addShortCut(miMediaDb, ProgShortcut.SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION);
-
         MenuItem miFilmInfo = new MenuItem("Filminformation anzeigen");
         miFilmInfo.setOnAction(a -> progData.downloadGuiController.showFilmInfo());
         PShortcutWorker.addShortCut(miFilmInfo, ProgShortcut.SHORTCUT_INFO_FILM);
@@ -150,8 +146,12 @@ public class DownloadMenu {
         MenuItem miCopyUrl = new MenuItem("Download (URL) kopieren");
         miCopyUrl.setOnAction(a -> progData.downloadGuiController.copyUrl());
 
+        MenuItem miMediaDb = new MenuItem("Download in der Mediensammlung suchen");
+        miMediaDb.setOnAction(a -> progData.downloadGuiController.guiFilmMediaCollection());
+        PShortcutWorker.addShortCut(miMediaDb, ProgShortcut.SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION);
+
         mb.getItems().add(new SeparatorMenuItem());
-        mb.getItems().addAll(miMediaDb, miFilmInfo, miPlayUrl, miCopyUrl);
+        mb.getItems().addAll(miFilmInfo, miPlayUrl, miCopyUrl, miMediaDb);
 
         final MenuItem miSelectAll = new MenuItem("Alles auswählen");
         miSelectAll.setOnAction(a -> progData.downloadGuiController.selectAll());

@@ -22,41 +22,41 @@ public class HelpText {
 
     public static final String MEDIA_CLEANING_CONFIG_DIALOG =
             "=== Allgemein ===\n" +
-                    "Zum Suchen in der Mediensammlung oder den geladenen Abos/der History kann der Suchtext aufbereitet werden." +
+                    "Zum Suchen in der Mediensammlung oder den geladenen Abos/der History kann " +
+                    "der Suchtext aufbereitet werden." +
                     "\n\n" +
-                    "Zuerst kann ausgewählt werden, ob der Titel, das Thema oder Titel + Thema zum Suchen " +
-                    "des Films genutzt werden soll." +
+                    "Zuerst kann ausgewählt werden, WIE der Suchtext gebaut wird. Die Auswahl ist: " +
+                    "Der Titel oder das Thema und der Titel des Films wird zum Erstellen des Suchtext verwendet." +
                     "\n\n" +
-                    "*Exakt den Begriff suchen*\n" +
+                    "Dann wird angegeben, WO der Suchtext vorkommen muss, also wo der Suchtext gesucht wird." +
+                    "\n" +
+                    "Hier steht in der Mediensammlung der Dateiname oder der Pfad und der Dateiname zur Auswahl. " +
+                    "Der Suchtext muss entweder im Dateinamen - oder - im Pfad ODER Dateinamen vorkommen." +
+                    "\n" +
+                    "Bei den Abos/der History kann der Suchtext im Titel oder Thema und Titel des Abo-Films / History-Films " +
+                    "gesucht werden. Er muss also im Titel - oder - im Thema ODER Titel des " +
+                    "Abo-Films / History-Films vorkommen." +
+                    "\n\n" +
+                    "* Exakt den Begriff suchen *\n" +
                     "Dann wird exakt der Suchtext zum Suchen verwendet, er wird dazu in \" eingeschlossen." +
                     "\n\n" +
-                    "*Putzen*\n" +
+                    "* Putzen *\n" +
                     "Dann wird der Suchtext aufbereitet, ansonsten wird er direkt zum Suchen verwendet" +
                     "\n\n" +
-                    "*Verknüpfen mit UND*\n" +
-                    "Die einzelnen Wörter im Suchtext müssen alle im gesuchten Film vorkommen, ansonsten muss nur eines davon " +
+                    "* Verknüpfen mit UND *\n" +
+                    "Die einzelnen Wörter im Suchtext müssen ALLE im gesuchten Film vorkommen, ansonsten muss nur eines davon " +
                     "vorkommen." +
                     "\n\n" +
-                    "*Zahlen entfernen*\n" +
+                    "* Zahlen entfernen *\n" +
                     "Das macht genau das, Zahlen im Suchtext werden entfernt." +
                     "\n\n" +
-                    "*Datum entfernen*\n" +
-                    "Erkanntes Datum, wird aus dem Suchtext entfernt." +
+                    "* Datum entfernen *\n" +
+                    "Ein erkanntes Datum, wird aus dem Suchtext entfernt." +
                     "\n\n" +
-                    "*Klammern entfernen*\n" +
+                    "* Klammern entfernen *\n" +
                     "Hier werden Klammern: [], {}, () mit ihrem Inhalt entfernt." +
                     "\n\n" +
-                    "*Cleaning Liste anwenden*\n" +
-                    "Die Zeichen/Wörter die in der Cleaning Liste stehen, werden aus dem Suchtext entfernt. Damit " +
-                    "können viele \"Füllwörter\" aus dem Suchtext gelöscht werden und damit das Suchergebnis verbessert " +
-                    "werden." +
-                    "\n\n" +
-                    "Beim Entfernen von Teilen des Suchtextes wird der entfernte Text durch ein Leerzeichen ersetzt. So " +
-                    "kann dann der restliche Teil des Suchtextes gut mit ',' oder ':' zusammengesetzt werden (Suche mit " +
-                    "UND oder ODER)." +
-                    "\n" +
-                    "\n" +
-                    "=== Cleaning Liste ===\n" +
+                    "* Cleaning Liste anwenden *\n" +
                     "Die Zeichen/Wörter die in der Cleaning Liste stehen, werden aus dem Suchtext entfernt. Damit " +
                     "können viele \"Füllwörter\" aus dem Suchtext gelöscht werden um dadurch das Suchergebnis zu verbessern." +
                     "\n\n" +
@@ -134,17 +134,16 @@ public class HelpText {
     public static final String DOWNLOAD_GUI_MEDIA =
             "Hier werden Filme aus der Mediensammlung und den " +
                     "erledigten Abos angezeigt. " +
-                    "Mit dem Suchtext kann in der Mediensammlung/Abos gesucht werden. " +
+                    "Mit dem Suchtext kann in der Mediensammlung / erledigten Abos gesucht werden. " +
                     "Ein Doppelklick auf ein Wort im Suchtext stellt es frei." +
                     "\n\n" +
-                    "Im Einstellungsdialog kann ausgewählt werden, " +
-                    "ob der Titel, Thema oder Titel-Thema " +
-                    "vom ausgewählten Download im Suchtext angezeigt werden soll." +
+                    "Im Einstellungsdialog kann ausgewählt werden, wie der Suchtext beim Klick auf einen " +
+                    "Download gebaut wird und wo (in der Mediensammlung / erledigten Abos) gesucht " +
+                    "werden soll." +
                     "\n\n" +
                     "Dort wird auch festgelegt, ob und wie der Suchtext \"geputzt\" " +
-                    "werden soll. Beim Putzen wird der Suchtext auf die wichtigsten Wörter " +
-                    "aus Thema/Titel reduziert um das " +
-                    "Suchergebnis zu verbessern." +
+                    "wird. Beim Putzen wird der Suchtext auf die wichtigsten Wörter " +
+                    "reduziert um das Suchergebnis zu verbessern." +
                     "\n";
 
     public static final String FILTER_FIELD =
@@ -222,16 +221,18 @@ public class HelpText {
                     "\n";
 
     public static final String SEARCH_MEDIA_DIALOG = "" +
-            "In Mediensammlung und erledigten Abos/der History kann nach Filmen gesucht " +
-            "werden. Dazu wird in der Mediensammlung nach dem DATEINAMEN, " +
-            "in der Liste der erledigten Abos/History nach THEMA und/oder TITEL gesucht." +
+            "In der Mediensammlung und den erledigten Abos / der History kann nach Filmen gesucht " +
+            "werden. Dazu wird in der Mediensammlung nach dem DATEINAMEN - oder - PFAD und " +
+            "DATEINAMEN gesucht. In der Liste der erledigten Abos / History wird nach " +
+            "dem TITEL - oder - dem THEMA und TITEL des Abo-Films / History-Films gesucht." +
             "\n" +
             "\n" +
             "Der Button (gedrehte Pfeile) stellt den ursprünglichen Suchtext wieder her." +
             "\n" +
             "Der Button (Besen) \"putzt\" den Suchbegriff." +
             "\n" +
-            "Der Button (Zahnrad) öffnet die Einstellungen zum Putzen." +
+            "Der Button (Zahnrad) öffnet die Einstellungen zum Putzen. Beim \"Putzen\" wird der Suchtext " +
+            "aufbereitet um das Suchergebnis zu verbesser." +
             "\n" +
             "\n" +
             "-- Besonderheiten --\n" +
@@ -239,15 +240,22 @@ public class HelpText {
             "Dateinamen entsprechen. Eine Suche nach 'mein Film' würde den Film 'Das ist mein Film.avi' " +
             "finden, aber nicht 'Das_ist_mein_Film.avi'.\n" +
             "\n" +
-            "Bei der Suche nach mehreren Suchbegriffen in erledigten Abos/History müssen alle im selben Datenfeld " +
-            "vorkommen. Ein erledigtes Abo mit 'Sport' in THEMA und 'Fussball' in TITEL wird " +
-            "von 'Sport:Fussball' nicht erfasst.\n" +
+            "Bei der Suche nach mehreren UND-Verknüpften Suchbegriffen in der Mediensammlung oder " +
+            "erledigten Abos / History müssen alle im selben Datenfeld " +
+            "vorkommen. Ein erledigtes Abo mit 'Sport' im THEMA (Pfad bei der Mediensammlung) " +
+            "und 'Fussball' im TITEL (Dateinamen bei der Mediensammlung) wird " +
+            "von 'Sport:Fussball' nicht gefunden." +
+            "\n" +
+            "Sind die Suchbegriffe dagegen ODER-Verknüpft, z.B.: 'Sport,Fussball' dann wird es gefunden. " +
+            "Dann muss ein Suchbegriff entweder im THEMA (Pfad bei der Mediensammlung) ODER " +
+            "im TITEL (Dateinamen bei der Mediensammlung) vorkommen." +
+            "\n" +
             "\n" +
             "Ein Doppelklick auf ein Wort im Suchtext stellt dieses frei. So kann man den Suchtext " +
             "schnell auf einen entscheidenden Begriff reduzieren." +
             "\n\n" +
             "Nach Start der Suche aus einem Kontextmenü in den " +
-            "Ansichten 'Filme' oder 'Downloads' ist dies ein automatisch eingetragener Text; nach Start der Suche " +
+            "Ansichten 'Filme' oder 'Downloads' ist dies ein automatisch eingetragener Text, nach Start der Suche " +
             "aus dem Programm-Menü ist es ein leeres Suchfeld." +
             "\n" +
             "\n" +

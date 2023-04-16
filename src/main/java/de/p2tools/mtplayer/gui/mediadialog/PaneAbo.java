@@ -169,7 +169,7 @@ public class PaneAbo extends PaneDialog {
 
     @Override
     void filter() {
-        progData.erledigteAbos.filteredListSetPredicate(
+        filteredList.setPredicate(
                 MediaSearchPredicateFactory.getPredicateHistoryData(
                         txtSearch.getText()));
         lblHits.setText(filteredList.size() + "");

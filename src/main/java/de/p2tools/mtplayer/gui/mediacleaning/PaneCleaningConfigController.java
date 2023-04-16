@@ -208,7 +208,7 @@ public class PaneCleaningConfigController {
         ++row;
         gridPane.add(tglExact, 0, ++row);
 
-        ++row;
+        gridPane.add(new Label(), 0, ++row);
         gridPane.add(tglClean, 0, ++row);
 
         ++row;

@@ -135,8 +135,6 @@ public class DownloadGuiTableContextMenu {
         contextMenu.getItems().addAll(submenuAbo);
 
 
-        final MenuItem miMediaDb = new MenuItem("Titel in der Mediensammlung suchen");
-        miMediaDb.setOnAction(a -> downloadGuiController.guiFilmMediaCollection());
         final MenuItem miFilmInfo = new MenuItem("Filminformation anzeigen");
         miFilmInfo.setOnAction(a -> downloadGuiController.showFilmInfo());
         final MenuItem miPlayUrl = new MenuItem("Film (URL) abspielen");
@@ -144,6 +142,8 @@ public class DownloadGuiTableContextMenu {
         final MenuItem miCopyUrl = new MenuItem("Download (URL) kopieren");
         miCopyUrl.setOnAction(a -> downloadGuiController.copyUrl());
 
+        final MenuItem miMediaDb = new MenuItem("Download in der Mediensammlung suchen");
+        miMediaDb.setOnAction(a -> downloadGuiController.guiFilmMediaCollection());
 
         final MenuItem miCopyName = new MenuItem("Titel in die Zwischenablage kopieren");
         miCopyName.setOnAction(a -> {
@@ -154,15 +154,15 @@ public class DownloadGuiTableContextMenu {
             PSystemUtils.copyToClipboard(download.getTheme());
         });
 
-        miMediaDb.setDisable(download == null);
         miFilmInfo.setDisable(download == null);
         miPlayUrl.setDisable(download == null);
         miCopyUrl.setDisable(download == null);
+        miMediaDb.setDisable(download == null);
         miCopyName.setDisable(download == null);
         miCopyTheme.setDisable(download == null);
 
         contextMenu.getItems().add(new SeparatorMenuItem());
-        contextMenu.getItems().addAll(miMediaDb, miFilmInfo, miPlayUrl, miCopyUrl, miCopyName, miCopyTheme);
+        contextMenu.getItems().addAll(miFilmInfo, miPlayUrl, miCopyUrl, miMediaDb, miCopyName, miCopyTheme);
 
 
         final MenuItem miSelectAll = new MenuItem("Alles auswählen");

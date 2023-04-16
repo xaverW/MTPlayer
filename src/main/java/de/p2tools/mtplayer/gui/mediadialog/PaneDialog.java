@@ -51,7 +51,7 @@ public class PaneDialog extends ScrollPane {
 
     final Button btnReset = new Button("");
     final Button btnClean = new Button("");
-    final Button btnEdit = new Button();
+    final Button btnConfig = new Button();
     final Button btnClear = new Button();
 
     final Button btnClearList = new Button("_Liste löschen");
@@ -129,8 +129,8 @@ public class PaneDialog extends ScrollPane {
         btnClean.setGraphic(ProgIcons.Icons.ICON_BUTTON_CLEAN.getImageView());
         btnClean.setTooltip(new Tooltip("Suchtext putzen"));
 
-        btnEdit.setGraphic(ProgIcons.Icons.ICON_BUTTON_EDIT.getImageView());
-        btnEdit.setTooltip(new Tooltip("Einstellungen zum Putzen"));
+        btnConfig.setGraphic(ProgIcons.Icons.ICON_BUTTON_EDIT.getImageView());
+        btnConfig.setTooltip(new Tooltip("Einstellungen zum Putzen"));
 
         btnClear.setGraphic(ProgIcons.Icons.ICON_BUTTON_STOP.getImageView());
         btnClear.setTooltip(new Tooltip("Das Suchfeld löschen"));
@@ -165,7 +165,7 @@ public class PaneDialog extends ScrollPane {
         gridPaneSearch.add(txtSearch, 1, row, 4, 1);
         gridPaneSearch.add(btnReset, 5, row);
         gridPaneSearch.add(btnClean, 6, row);
-        gridPaneSearch.add(btnEdit, 7, row);
+        gridPaneSearch.add(btnConfig, 7, row);
         gridPaneSearch.add(btnClear, 8, row);
 
         if (media) {
@@ -242,7 +242,10 @@ public class PaneDialog extends ScrollPane {
                 media ? ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_CLIP_MEDIA.getValue() : ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_CLIP_ABO.getValue(),
                 media ? ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_LIST_MEDIA.getValue() : ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_LIST_ABO.getValue())));
 
-        btnEdit.setOnAction(a -> new MediaCleaningDialogController(media));
+        btnConfig.setOnAction(a -> {
+            new MediaCleaningDialogController(media);
+            filter();
+        });
 
         Listener.addListener(listenerDbStart);
         Listener.addListener(listenerDbStop);
