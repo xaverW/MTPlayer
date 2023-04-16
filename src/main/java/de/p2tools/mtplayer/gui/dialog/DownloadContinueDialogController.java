@@ -73,7 +73,7 @@ public class DownloadContinueDialogController extends PDialogExtra {
         this.directDownload = directDownload;
         this.oldPathFile = download.getDestPathFile();
 
-        if (ProgData.automode) {
+        if (ProgData.autoMode) {
             // dann schaut ja eh keiner zu, also restart des Downloads
             result = DownloadState.ContinueDownload.RESTART_DOWNLOAD;
             return;

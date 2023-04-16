@@ -18,6 +18,7 @@ package de.p2tools.mtplayer.gui.dialog;
 
 
 import de.p2tools.mtplayer.controller.ProgQuit;
+import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.gui.tools.HelpText;
@@ -45,7 +46,6 @@ public class QuitDialogController extends PDialogExtra {
 
     public QuitDialogController(boolean startWithWaiting) {
         super(ProgData.getInstance().primaryStage, null, "Programm beenden", true, false);
-        ProgData.getInstance().quitDialogController = this;
         this.startWithWaiting = startWithWaiting;
         addButton();
         init(true);
@@ -82,7 +82,7 @@ public class QuitDialogController extends PDialogExtra {
         BigButton waitButton = new BigButton(ProgIcons.Icons.ICON_BUTTON_QUIT.getImageView(),
                 "Warten", "Alle Downloads abwarten und dann das Programm beenden.");
         waitButton.setOnAction(e -> startWaiting());
-        cbxShutDown.setSelected(false);
+        cbxShutDown.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_SHUT_DOWN_CALL_ON);
         waitTask.setOnSucceeded(event -> {
             if (cbxShutDown.isSelected()) {
                 ProgQuit.quitShutDown();
@@ -140,7 +140,6 @@ public class QuitDialogController extends PDialogExtra {
     }
 
     private class WaitTask extends Task<Void> {
-
         @Override
         protected Void call() throws Exception {
             while ((ProgData.getInstance().downloadList.countStartedAndRunningDownloads() > 0 ||
@@ -164,7 +163,6 @@ public class QuitDialogController extends PDialogExtra {
 
     @Override
     public void close() {
-        ProgData.getInstance().quitDialogController = null;
         if (waitTask.isRunning()) {
             waitTask.cancel();
         }

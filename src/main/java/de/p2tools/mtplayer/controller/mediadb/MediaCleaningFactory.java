@@ -29,7 +29,7 @@ public class MediaCleaningFactory {
     private static final String TRENNER_AND = ":";
 
     public static String[] CLEAN_LIST = {",", "·", ".", ";", "-", "–", "˗",
-            "/", ":", "&", "!", "?", "°", "=", "\"",
+            "/", ":", "&", "!", "?", "°", "=", "\"", "|",
             " am ", " auf ",
             " du ", " der ", " die ", " das ", " den ", " dem ", " er ", " es ",
             " einen ", " eine ", " ein ", " für ", " ist ", " in ", " ich ", " mit ",
@@ -96,29 +96,31 @@ public class MediaCleaningFactory {
         }
 
         if (number) {
-            //29.
+            // 29.
             searchString = searchString.replaceAll("([0-9]+)(\\.|\\/|-)", " ");
 
-            //29
+            // 29
             searchString = searchString.replaceAll("([0-9])", " ");
         }
 
         if (list) {
-            //dann wird die PUTZ-LISTE angewandt
+            // dann wird die PUTZ-LISTE angewandt
             final String[] searchArr = ProgData.getInstance().mediaCleaningList.getSearchArr();
             for (String s : searchArr) {
                 searchString = searchString.replace(s, " ");
             }
         }
 
+        // erst mal putzen
         searchString = searchString.trim();
+        while (searchString.contains("  ")) {
+            searchString = searchString.replaceAll("  ", " ");
+        }
+
+        // und jetzt ersetzten
         if (andOr) {
-            searchString = searchString.replaceAll("   ", TRENNER_AND);
-            searchString = searchString.replaceAll("  ", TRENNER_AND);
             searchString = searchString.replaceAll(" ", TRENNER_AND);
         } else {
-            searchString = searchString.replaceAll("   ", TRENNER_OR);
-            searchString = searchString.replaceAll("  ", TRENNER_OR);
             searchString = searchString.replaceAll(" ", TRENNER_OR);
         }
 

@@ -92,7 +92,7 @@ public class AppParameter {
             }
 
             if (hasOption(line, ProgParameter.AUTOMODE)) {
-                ProgData.automode = true;
+                ProgData.autoMode = true;
             }
 
             if (hasOption(line, ProgParameter.DURATION)) {

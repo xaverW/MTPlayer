@@ -349,7 +349,7 @@ public class DownloadGuiController extends AnchorPane {
         Listener.addListener(new Listener(Listener.EVENT_BLACKLIST_CHANGED, DownloadGuiController.class.getSimpleName()) {
             @Override
             public void pingFx() {
-                if ((ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.automode)
+                if ((ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode)
                         && ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.getValue()) {
                     // nur auf Blacklist reagieren, wenn auch für Abos eingeschaltet
                     progData.worker.searchForAbosAndMaybeStart();
@@ -367,12 +367,12 @@ public class DownloadGuiController extends AnchorPane {
                 Platform.runLater(() -> setFilter()));
 
         ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.addListener((observable, oldValue, newValue) -> {
-            if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.automode) {
+            if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode) {
                 Platform.runLater(() -> progData.worker.searchForAbosAndMaybeStart());
             }
         });
         progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
-            if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.automode) {
+            if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode) {
                 Platform.runLater(() -> progData.worker.searchForAbosAndMaybeStart());
             }
         });

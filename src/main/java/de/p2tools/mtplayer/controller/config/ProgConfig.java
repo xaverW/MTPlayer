@@ -42,8 +42,6 @@ import java.util.Collections;
 public class ProgConfig extends PDataProgConfig {
 
     private static ProgConfig instance;
-//    public static final String SYSTEM = "system";
-
 
     // Programm-Configs, änderbar nur im Konfig-File
     // ============================================
@@ -88,7 +86,6 @@ public class ProgConfig extends PDataProgConfig {
 
     // Configs zur Programmupdatesuche
     public static StringProperty SYSTEM_UPDATE_DATE = addStrProp("system-update-date"); // Datum der letzten Prüfung
-//    public static StringProperty SYSTEM_UPDATE_PROGSET_VERSION = addStrProp("system-update-progset-version");
 
     public static BooleanProperty SYSTEM_UPDATE_SEARCH_ACT = addBoolProp("system-update-search-act", Boolean.TRUE); //Infos und Programm
     public static BooleanProperty SYSTEM_UPDATE_SEARCH_BETA = addBoolProp("system-update-search-beta", Boolean.FALSE); //beta suchen
@@ -109,10 +106,6 @@ public class ProgConfig extends PDataProgConfig {
     public static IntegerProperty SYSTEM_CONFIG_DIALOG_MEDIA = new SimpleIntegerProperty(-1);
 
     // MediaDialog, Dialog nach Start immer gleich öffnen
-    public static IntegerProperty SYSTEM_MEDIA_DIALOG_TAB = new SimpleIntegerProperty(0);
-    public static IntegerProperty SYSTEM_MEDIA_DIALOG_CONFIG = new SimpleIntegerProperty(-1);
-    public static IntegerProperty SYSTEM_MEDIA_DIALOG_MEDIA = new SimpleIntegerProperty(-1);
-    public static IntegerProperty SYSTEM_MEDIA_DIALOG_HISTORY = new SimpleIntegerProperty(-1);
     public static BooleanProperty SYSTEM_MEDIA_DIALOG_SEARCH_MEDIA = new SimpleBooleanProperty(true);
 
     // MediaDB
@@ -135,6 +128,7 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty SYSTEM_USERAGENT = addStrProp("system-useragent", ProgConst.USER_AGENT_DEFAULT); //Useragent für direkte Downloads
     public static IntegerProperty SYSTEM_FILMLIST_FILTER = addIntProp("system-filmlist-filter", BlacklistFilterFactory.BLACKLILST_FILTER_OFF);
     public static StringProperty SYSTEM_SHUT_DOWN_CALL = addStrProp("system-shut-down-call", PShutDown.getShutDownCommand()); //ein eigenes Tray-Icon
+    public static BooleanProperty SYSTEM_SHUT_DOWN_CALL_ON = addBoolProp("system-shut-down-call-on", false); // das shutDown ist aktiv
 
     //Configs Statusbar
     public static BooleanProperty SYSTEM_STATUS_BAR_ON = addBoolProp("system-status-bar-on", true);
@@ -148,7 +142,6 @@ public class ProgConfig extends PDataProgConfig {
     public static BooleanProperty SYSTEM_ONLY_ASCII = addBoolProp("system-only-ascii", Boolean.FALSE);
     public static StringProperty SYSTEM_PROG_OPEN_DIR = addStrProp("system-prog-open-dir");
     public static StringProperty SYSTEM_PROG_OPEN_URL = addStrProp("system-prog-open-url");
-    //    public static StringProperty SYSTEM_PROG_EXTERN_PROGRAM = addStrProp("system-extern-program");
     public static StringProperty SYSTEM_PROG_PLAY_FILME = addStrProp("system-prog-play-filme");
     public static BooleanProperty SYSTEM_MARK_GEO = addBoolProp("system-mark-geo", Boolean.TRUE);
     public static StringProperty SYSTEM_GEO_HOME_PLACE = addStrProp("system-geo-home-place", FilmDataMTP.GEO_DE);
@@ -175,7 +168,6 @@ public class ProgConfig extends PDataProgConfig {
 
     // Einstellungen Filmliste
     public static StringProperty SYSTEM_FILMLIST_DATE = addStrProp("system-filmlist-date", "");
-    //    public static IntegerProperty SYSTEM_FILMLIST_AGE = addIntProp("system-filmlist-age", P2LibConst.NUMBER_NULL);
     public static BooleanProperty SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART = addBoolProp("system-load-filmlist-on-programstart", Boolean.TRUE);
     public static BooleanProperty SYSTEM_LOAD_NEW_FILMLIST_IMMEDIATELY = addBoolProp("system-load-new-filmlist-immediately", Boolean.FALSE);
     public static StringProperty SYSTEM_LOAD_NOT_SENDER = addStrProp("system-load-not-sender", "");
@@ -190,7 +182,6 @@ public class ProgConfig extends PDataProgConfig {
     public static BooleanProperty SYSTEM_BLACKLIST_SHOW_ABO = addBoolProp("system-blacklist-show-abo");
     public static IntegerProperty SYSTEM_BLACKLIST_MAX_FILM_DAYS = addIntProp("system-blacklist-max-film-days", 0);
     public static IntegerProperty SYSTEM_BLACKLIST_MIN_FILM_DURATION = addIntProp("system-blacklist-min-film-duration", 0); // Minuten
-//    public static BooleanProperty SYSTEM_BLACKLIST_IS_WHITELIST = addBoolProp("system-blacklist-is-whitelist");
 
     // Download
     public static BooleanProperty DOWNLOAD_START_NOW = addBoolProp("download-start-now", Boolean.FALSE);
@@ -260,7 +251,6 @@ public class ProgConfig extends PDataProgConfig {
     public static BooleanProperty DOWNLOAD_GUI_MEDIA_CLEAN_CLIP_ABO = addBoolProp("download-gui-media-clean-clip-abo", Boolean.TRUE);
     public static BooleanProperty DOWNLOAD_GUI_MEDIA_CLEAN_LIST_MEDIA = addBoolProp("download-gui-media-clean-list-media", Boolean.TRUE);
     public static BooleanProperty DOWNLOAD_GUI_MEDIA_CLEAN_LIST_ABO = addBoolProp("download-gui-media-clean-list-abo", Boolean.TRUE);
-
     public static StringProperty DOWNLOAD_GUI_MEDIA_CONFIG_DIALOG_SIZE = addStrProp("download-gui-media-config-dialog-size", "800:700");
 
     // Downloadchart
@@ -297,9 +287,6 @@ public class ProgConfig extends PDataProgConfig {
 
     // StartDialog
     public static StringProperty START_DIALOG_DOWNLOAD_PATH = addStrProp("start-dialog-download-path", PSystemUtils.getStandardDownloadPath());
-
-    //BlacklistDialog
-    public static IntegerProperty DIALOG_BLACKLIST_OPEN_ACCORDION = new SimpleIntegerProperty(0);//wird nicht gespeichert
 
     // FilmInfoDialog
     public static BooleanProperty FILM_INFO_DIALOG_SHOW_URL = addBoolProp("film-info-dialog-show-url", Boolean.TRUE);
@@ -393,7 +380,6 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty SHORTCUT_DOWNLOAD_CLEAN_UP = addStrProp("SHORTCUT_DOWNLOAD_CLEAN_UP", SHORTCUT_DOWNLOAD_CLEAN_UP_INIT);
 
     public static String SHORTCUT_EXTERN_PROGRAM_INIT = "CTRL+E";
-    public static StringProperty SHORTCUT_EXTERN_PROGRAM = addStrProp("SHORTCUT_EXTERN_PROGRAM", SHORTCUT_EXTERN_PROGRAM_INIT);
 
 
     private static String[] PARAMETER_INFO = new String[]{
@@ -444,9 +430,7 @@ public class ProgConfig extends PDataProgConfig {
         ProgConfig.SYSTEM_PROG_BUILD_DATE.set(ProgramToolsFactory.getCompileDate());
 
         configFile.addConfigs(ProgConfig.getInstance());//Progconfig
-//        configFile.addConfigs(ProgColorList.getConfigsData());//Color
         configFile.addConfigs(ProgColorList.getInstance());//Color
-
 
         configFile.addConfigs(progData.setDataList);
 

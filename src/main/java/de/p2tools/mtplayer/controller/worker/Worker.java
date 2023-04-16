@@ -88,7 +88,7 @@ public class Worker {
 
             // und jetzt noch die Themen für den Sender des aktuellen Filters laden
             createThemeList(progData.actFilmFilterWorker.getActFilterSettings().getChannel());
-            if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.automode) {
+            if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode) {
                 searchForAbosAndMaybeStart();
             }
 
@@ -128,7 +128,7 @@ public class Worker {
         //erledigte entfernen, nicht gestartete Abos entfernen und nach neu Abos suchen
         progData.downloadList.searchForDownloadsFromAbos();
 
-        if (ProgConfig.DOWNLOAD_START_NOW.getValue() || ProgData.automode) {
+        if (ProgConfig.DOWNLOAD_START_NOW.getValue() || ProgData.autoMode) {
             // und wenn gewollt auch gleich starten, kann kein Dialog aufgehen: false!
             PLog.sysLog("Downloads aus Abos starten");
             progData.downloadList.startDownloads();

@@ -21,9 +21,9 @@ import de.p2tools.mtplayer.controller.ProgQuit;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
+import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.controller.tools.SizeTools;
@@ -46,7 +46,7 @@ public class StarterClass {
     private StarterThread starterThread = null;
     private boolean paused = false;
     private boolean searchFilms = true; // beim Programmstart muss zuerst die Filmliste geladen werden
-    private boolean checkQuitAfterDownload = false; // Prüfen, ob automode aktiv ist
+    private boolean checkQuitAfterDownload = false; // Prüfen, ob autoMode aktiv ist
 
     // ===================================
     // Public
@@ -308,7 +308,7 @@ public class StarterClass {
 
     // ********************************************
     // Hier wird dann gestartet
-    // ewige Schleife die die Downloads startet
+    // ewige Schleife, die die Downloads startet
     // ********************************************
     private class StarterThread extends Thread {
 
@@ -348,6 +348,7 @@ public class StarterClass {
                     progData.downloadListButton.cleanUpButtonStarts(); // Button Starts aus der Liste
                     if (!checkQuitAfterDownload) {
                         // ist für den auto mode
+                        // wenn noch nicht geprüft, dann jetzt und beenden, wenn autoMode
                         quitProgramAfterDownload();
                     }
 
@@ -360,25 +361,25 @@ public class StarterClass {
 
         private void quitProgramAfterDownload() {
             checkQuitAfterDownload = true;
-            if (ProgData.automode) {
-                // dann haben wir den "Automodus"
+            if (ProgData.autoMode) {
+                //dann haben wir den "Automodus"
                 Platform.runLater(() -> {
                     if (progData.downloadList.countStartedAndRunningDownloads() == 0) {
-                        // dann gibts keine gestarteten Downloads und das Programm beendet sich sofort nach dem Start
-                        // drum nur eine kurze Info
+                        //dann gibts keine gestarteten Downloads und das Programm beendet sich sofort nach dem Start
+                        //drum nur eine kurze Info
                         final AutomodeContinueDialogController dialogController = new AutomodeContinueDialogController();
                         if (dialogController.isContinueAutomode()) {
                             ProgQuit.quit(true);
                         } else {
-                            // automode abgebrochen
-                            ProgData.automode = false;
+                            // autoMode abgebrochen
+                            ProgData.autoMode = false;
                         }
 
                     } else {
-                        // dann gleich den "Quitt-Dialog" anzeigen, ist ja eine Weile zu sehen
+                        //dann gleich den "Quitt-Dialog" anzeigen, ist ja eine Weile zu sehen
                         ProgQuit.quit(true); //->todo
-                        // dann wurde das "Beenden" abgebrochen
-                        ProgData.automode = false;
+                        //dann wurde das "Beenden" abgebrochen
+                        ProgData.autoMode = false;
                     }
                 });
             }

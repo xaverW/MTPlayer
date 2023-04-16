@@ -57,14 +57,7 @@ public class ProgQuit {
         // erst mal prüfen, ob noch Downloads (Filme) gestartet sind oder laufen
         if (progData.downloadList.countStartedAndRunningDownloads() > 0 ||
                 HttpDownload.downloadRunning > 0) {
-            if (progData.quitDialogController != null) {
-                progData.quitDialogController.getStage().toFront();
-                if (startWithWaiting) {
-                    progData.quitDialogController.startWaiting();
-                }
-            } else {
-                new QuitDialogController(startWithWaiting);
-            }
+            new QuitDialogController(startWithWaiting);
 
         } else {
             //dann Programm beenden
