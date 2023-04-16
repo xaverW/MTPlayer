@@ -36,6 +36,34 @@ public class MediaDataWorker {
     }
 
     // **************************************************************
+    // INTERNAL
+    // MediaDataList INTERN anlegen und die gespeicherten EXTERNEN anfügen
+    public static synchronized void createMediaDb() {
+        if (progData.mediaDataList.isSearching()) {
+            // dann mach mers gerade schon :)
+            return;
+        }
+
+        Thread th = new Thread(new CreateTheMediaDB());
+        th.setName("CreateTheMediaDB -> createInternalMediaDb");
+        th.start();
+    }
+
+    // **************************************************************
+    // EXTERNAL
+    // MediaDataList EXTERN: eine collection neu einlesen
+    public static synchronized void updateExternalCollection(MediaCollectionData mediaCollectionData) {
+        if (progData.mediaDataList.isSearching()) {
+            // dann mach mers gerade schon :)
+            return;
+        }
+
+        Thread th = new Thread(new UpdateExternal(mediaCollectionData));
+        th.setName("UpdateExternal");
+        th.start();
+    }
+
+    // **************************************************************
     // MediaDataList in eine Textdatei schreiben
     public static synchronized void exportMediaDB(List<MediaData> list, String pathStr, boolean internDB, boolean externDB) {
         if (exportIsWorking.get()) {
@@ -75,55 +103,7 @@ public class MediaDataWorker {
     }
 
     // **************************************************************
-    // INTERNAL
-    // MediaDataList INTERN anlegen und die gespeicherten EXTERNEN anfügen
-    public static synchronized void createMediaDb() {
-        if (progData.mediaDataList.isSearching()) {
-            // dann mach mers gerade schon :)
-            return;
-        }
-
-        Thread th = new Thread(new CreateTheMediaDB());
-        th.setName("CreateTheMediaDB -> createInternalMediaDb");
-        th.start();
-    }
-
-    // **************************************************************
-    // EXTERNAL
-    // MediaDataList EXTERN: eine neue collection anlegen
-    public static synchronized void createExternalCollection(MediaCollectionData mediaCollectionData) {
-        if (progData.mediaCollectionDataList.getMediaCollectionData(mediaCollectionData.getId()) == null) {
-            // evtl. erst mal die Collection anlegen
-            progData.mediaCollectionDataList.add(mediaCollectionData);
-        }
-
-        if (progData.mediaDataList.isSearching()) {
-            // dann mach mers gerade schon :)
-            return;
-        }
-
-        // und jetzt Medien suchen
-        Thread th = new Thread(new CreateTheMediaDB(mediaCollectionData));
-        th.setName("CreateTheMediaDB -> createExternalCollection");
-        th.start();
-    }
-
-    // **************************************************************
-    // EXTERNAL
-    // MediaDataList EXTERN: eine collection neu einlesen
-    public static synchronized void updateExternalCollection(MediaCollectionData mediaCollectionData) {
-        if (progData.mediaDataList.isSearching()) {
-            // dann mach mers gerade schon :)
-            return;
-        }
-
-        Thread th = new Thread(new UpdateExternal(mediaCollectionData));
-        th.setName("UpdateExternal");
-        th.start();
-    }
-
-    // **************************************************************
-    // INTERN/EXTERNAL: eine collection und ihre medien löschen
+    // INTERN/EXTERNAL: eine collection und ihre Medien löschen
     // EXTERNAL media in Datei schreiben
     public static synchronized void removeMediaCollection(List<Long> idList) {
         if (progData.mediaDataList.isSearching()) {
@@ -150,11 +130,6 @@ public class MediaDataWorker {
     // create/update threads
     private static class CreateTheMediaDB implements Runnable {
         MediaCollectionData mediaCollectionData = null;
-
-        // nur eine mediaCollection einlesen
-        public CreateTheMediaDB(MediaCollectionData mediaCollectionData) {
-            this.mediaCollectionData = mediaCollectionData;
-        }
 
         // interne MediaDB einlesen und extern anfügen
         public CreateTheMediaDB() {

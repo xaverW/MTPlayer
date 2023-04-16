@@ -17,6 +17,7 @@
 
 package de.p2tools.mtplayer.controller.mediadb;
 
+import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.history.HistoryData;
 import de.p2tools.p2lib.mtfilter.Filter;
@@ -28,19 +29,24 @@ public class MediaSearchPredicateFactory {
     private MediaSearchPredicateFactory() {
     }
 
-    public static Predicate<MediaData> getPredicateMediaData(String searchStr, boolean showEmpty) {
+    public static Predicate<MediaData> getPredicateMediaData(String searchStr) {
         final String search = searchStr.trim();
         return media -> {
             if (search.isEmpty()) {
-                return showEmpty;
+                return true;
             }
 
             Filter filter = new Filter(search, true);
-            return FilterCheck.check(filter, media.getName());
+            if (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL) {
+                return FilterCheck.check(filter, media.getName());
+            } else {
+                return FilterCheck.check(filter, media.getPath()) ||
+                        FilterCheck.check(filter, media.getName());
+            }
         };
     }
 
-    public static Predicate<HistoryData> getPredicateHistoryData(String searchStr, int searachIn) {
+    public static Predicate<HistoryData> getPredicateHistoryData(String searchStr) {
         final String search = searchStr.trim();
         return historyData -> {
             if (search.isEmpty()) {
@@ -48,9 +54,7 @@ public class MediaSearchPredicateFactory {
             }
 
             Filter filter = new Filter(search, true);
-            if (searachIn == ProgConst.MEDIA_COLLECTION_SEARCH_IN_THEME) {
-                return FilterCheck.check(filter, historyData.getTheme());
-            } else if (searachIn == ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL) {
+            if (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL) {
                 return FilterCheck.check(filter, historyData.getTitle());
             } else {
                 return FilterCheck.check(filter, historyData.getTheme()) ||

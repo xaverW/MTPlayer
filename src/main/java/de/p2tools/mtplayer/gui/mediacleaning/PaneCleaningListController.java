@@ -77,11 +77,15 @@ public class PaneCleaningListController {
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
-        final TableColumn<MediaCleaningData, String> dateColumn = new TableColumn<>("Entfernen");
-        dateColumn.setCellValueFactory(new PropertyValueFactory<>("cleaningData"));
-        dateColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.9));
+        final TableColumn<MediaCleaningData, String> removeColumn = new TableColumn<>("Entfernen");
+        removeColumn.setCellValueFactory(new PropertyValueFactory<>("cleaningData"));
+        removeColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.45));
 
-        tableView.getColumns().addAll(dateColumn);
+        final TableColumn<MediaCleaningData, String> utfCodeColumn = new TableColumn<>("UTF-8 Code");
+        utfCodeColumn.setCellValueFactory(new PropertyValueFactory<>("codePoint"));
+        utfCodeColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.45));
+
+        tableView.getColumns().addAll(removeColumn, utfCodeColumn);
         SortedList<MediaCleaningData> sortedList = progData.mediaCleaningList.getSortedList();
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
         tableView.setItems(sortedList);

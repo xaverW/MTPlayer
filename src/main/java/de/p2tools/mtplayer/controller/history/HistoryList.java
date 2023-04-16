@@ -81,11 +81,11 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         filteredList.setPredicate(predicate);
     }
 
-    public synchronized void filterdListSetPredFalse() {
+    public synchronized void filteredListSetPredFalse() {
         filteredList.setPredicate(p -> false);
     }
 
-    public synchronized void filterdListSetPredTrue() {
+    public synchronized void filteredListSetPredTrue() {
         filteredList.setPredicate(p -> true);
     }
 

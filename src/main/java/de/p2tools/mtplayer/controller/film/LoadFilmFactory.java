@@ -180,8 +180,8 @@ public class LoadFilmFactory {
                 Platform.runLater(() -> ProgTipOfDayFactory.showDialog(ProgData.getInstance(), false));
             }
 
+            //damit auf jedem Fall, aus
             ProgData.getInstance().maskerPane.switchOffMasker();
-            ;//damit auf jedem Fall, aus
         }).start();
     }
 }

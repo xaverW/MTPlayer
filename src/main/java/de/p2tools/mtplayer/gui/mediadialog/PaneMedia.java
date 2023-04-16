@@ -155,7 +155,7 @@ public class PaneMedia extends PaneDialog {
 
     @Override
     void filter() {
-        filteredList.setPredicate(MediaSearchPredicateFactory.getPredicateMediaData(txtSearch.getText(), true));
+        filteredList.setPredicate(MediaSearchPredicateFactory.getPredicateMediaData(txtSearch.getText()));
         lblHits.setText(filteredList.size() + "");
     }
 

@@ -24,10 +24,8 @@ public class ProgConst {
 
     // settings file
     public static final String CONFIG_FILE = "mtp.xml";
-    public static final String CONFIG_FILE_OLD = "mtplayer.xml";
     public static final String STYLE_FILE = "style.css";
     public static final String CONFIG_FILE_COPY = "mtp.xml_copy_";
-    public static final String CONFIG_FILE_COPY_OLD = "mtplayer.xml_copy_";
     public static final String CONFIG_DIRECTORY = "p2Mtplayer"; // im Homeverzeichnis
 
     public static final String FILE_BOOKMARKS = "bookmarks.txt";
@@ -38,10 +36,6 @@ public class ProgConst {
     public static final String CSS_FILE = "de/p2tools/mtplayer/mtfx.css";
     public static final String CSS_FILE_DARK_THEME = "de/p2tools/mtplayer/mtfx-dark.css";
 
-    public static final String FORMAT_ZIP = ".zip";
-    public static final String FORMAT_XZ = ".xz";
-    public static final String RTMP_PRTOKOLL = "rtmp";
-    public static final String RTMP_FLVSTREAMER = "-r ";
     public static final String M3U8_URL = "m3u8";
 
     public static final int SYSTEM_BLACKLIST_MAX_FILM_DAYS = 300; // Filter Blacklist: nur Filme der letzten xx Tage laden
@@ -49,27 +43,14 @@ public class ProgConst {
 
     public static final int SYSTEM_LOAD_FILMLIST_MAX_DAYS = 300; // Filter beim Programmstart/Blacklist: nur Filme der letzten xx Tage laden
     public static final int SYSTEM_LOAD_FILMLIST_MIN_DURATION = 30; // Filter Programmstart: nur Filme mit mind. xx Minuten länge laden
-
     public static final int SYSTEM_FILTER_MAX_WAIT_TIME = 2_000; // 1.000 ms
-
-
-    // prüfen ob es eine neue Filmliste gibt: alle ... Min. oder ... nach dem Programmstart
-    public static final int CHECK_FILMLIST_UPDATE = 30 * 60; // 30 Minuten
-    public static final int CHECK_FILMLIST_UPDATE_PROGRAMSTART = CHECK_FILMLIST_UPDATE - 5 * 60; // 5 Minuten, Startwert beim Programmstart
 
     public static final int DOWNLOAD_DIALOG_LOAD_MAX_FILESIZE_FROM_WEB = 10;
 
-    // beim Programmstart wird die Liste geladen wenn sie älter ist als ..
-    public static final int ALTER_FILMLISTE_SEKUNDEN_FUER_AUTOUPDATE = 4 * 60 * 60;
-
-    // Uhrzeit ab der die Diffliste alle Änderungen abdeckt, die Filmliste darf also nicht vor xx erstellt worden sein
-    public static final String TIME_MAX_AGE_FOR_DIFF = "09";
-
-    // Mediensammlung
+    //Mediensammlung
     public static final int MEDIA_COLLECTION_FILESIZE_ALL_FILES = 0;
     public static final int MEDIA_COLLECTION_FILESIZE_MAX = 20;
 
-    public final static int MEDIA_COLLECTION_SEARCH_IN_THEME = 0;
     public final static int MEDIA_COLLECTION_SEARCH_IN_TITEL = 1;
     public final static int MEDIA_COLLECTION_SEARCH_IN_TT = 2;
 
@@ -79,19 +60,12 @@ public class ProgConst {
     public static final int MEDIA_COLLECTION_EXPORT_INTERN_EXTERN = 2; // alles exportieren
 
 
-    // MediathekView URLs
-    public static final String ADRESSE_FILMLISTEN_SERVER_DIFF = "http://res.mediathekview.de/diff.xml";
-    public static final String ADRESSE_FILMLISTEN_SERVER_AKT = "http://res.mediathekview.de/akt.xml";
-
-
     // Website MTPlayer
-    public static final String URL_WEBSITE_P2TOOLS = "https://www.p2tools.de";
     public static final String URL_WEBSITE = "https://www.p2tools.de/mtplayer/";
     public static final String URL_WEBSITE_DOWNLOAD = "https://www.p2tools.de/mtplayer/download.html";
     public static final String URL_WEBSITE_HELP = "https://www.p2tools.de/mtplayer/manual/";
-    public static final String URL_WEBSITE_DONATE = "https://www.p2tools.de/donate.html";
 
-    //die URL der Sets, nicht mehr mit jeder Programmversion hochzählen, nur noch wenn notwendig
+    // die URL der Sets, nicht mehr mit jeder Programmversion hochzählen, nur noch wenn notwendig
     public static final String PROGRAM_SET_URL_LINUX = "https://www.p2tools.de/extra/mtplayer/v-5/pset_linux.xml";
     public static final String PROGRAM_SET_URL_WINDOWS = "https://www.p2tools.de/extra/mtplayer/v-5/pset_windows.xml";
     public static final String PROGRAM_SET_URL_MAC = "https://www.p2tools.de/extra/mtplayer/v-5/pset_mac.xml";
@@ -133,11 +107,7 @@ public class ProgConst {
 
     public static final int MIN_TABLE_HEIGHT = 200;
     public static final int MIN_TABLE_HEIGHT_LOW = 100;
-    public static final int MIN_TEXTAREA_HEIGHT = 75;
     public static final int MIN_TEXTAREA_HEIGHT_LOW = 50;
-
-    public static final String FILTER_ALL = "alles"; // im config bei "alles" steht das dann
-
 
     public static final String DREISAT = "3Sat";
     public static final String ARD = "ARD";

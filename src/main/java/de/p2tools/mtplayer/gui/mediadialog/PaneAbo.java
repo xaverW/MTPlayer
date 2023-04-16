@@ -24,7 +24,6 @@ import de.p2tools.mtplayer.controller.history.HistoryList;
 import de.p2tools.mtplayer.controller.mediadb.MediaSearchPredicateFactory;
 import de.p2tools.p2lib.alert.PAlert;
 import javafx.application.Platform;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -33,6 +32,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -43,7 +45,6 @@ public class PaneAbo extends PaneDialog {
     private final boolean abo;
     private final HistoryList list;
     private final Stage stage;
-    private final IntegerProperty searchIn;
     private final FilteredList<HistoryData> filteredList;
     private final SortedList<HistoryData> sortedList;
 
@@ -54,11 +55,26 @@ public class PaneAbo extends PaneDialog {
         this.stage = stage;
         this.abo = abo;
         if (abo) {
-            this.searchIn = ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_DIALOG_ABO;
             list = progData.erledigteAbos;
+            textSearch = new Text("Abos, suchen im: " +
+                    (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL ?
+                            "Titel des Abos" : "Thema oder Titel des Abos"));
+            textSearch.setFont(Font.font(null, FontWeight.BOLD, -1));
+            textSearch.getStyleClass().add("downloadGuiMediaText");
+            ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.addListener((u, o, n) -> textSearch.setText("Abos, suchen im: " +
+                    (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL ?
+                            "Titel des Abos" : "Thema oder Titel des Abos")));
+
         } else {
             list = progData.history;
-            this.searchIn = ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_DIALOG_HISTOY;
+            textSearch = new Text("History, suchen im: " +
+                    (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL ?
+                            "Titel des History-Films" : "Thema oder Titel des History-Films"));
+            textSearch.setFont(Font.font(null, FontWeight.BOLD, -1));
+            textSearch.getStyleClass().add("downloadGuiMediaText");
+            ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.addListener((u, o, n) -> textSearch.setText("Abos, suchen im: " +
+                    (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL ?
+                            "Titel des History-Films" : "Thema oder Titel des History-Films")));
         }
         this.filteredList = new FilteredList<>(list, p -> true);
         this.sortedList = new SortedList<>(filteredList);
@@ -146,39 +162,16 @@ public class PaneAbo extends PaneDialog {
         });
         list.addListener(listener);
 
-        rbTheme.selectedProperty().addListener((o, ol, ne) -> filter());
-        rbTitle.selectedProperty().addListener((o, ol, ne) -> filter());
-        rbTt.selectedProperty().addListener((o, ol, ne) -> filter());
         btnClearList.setOnAction(a -> {
             list.clearAll(stage);
         });
-        switch (searchIn.get()) {
-            case ProgConst.MEDIA_COLLECTION_SEARCH_IN_THEME:
-                rbTheme.setSelected(true);
-                break;
-            case ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL:
-                rbTitle.setSelected(true);
-                break;
-            case ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT:
-            default:
-                rbTt.setSelected(true);
-                break;
-        }
     }
 
     @Override
     void filter() {
-        if (rbTheme.isSelected()) {
-            searchIn.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_THEME);
-        } else if (rbTitle.isSelected()) {
-            searchIn.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);
-        } else {
-            searchIn.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT);
-        }
-
-        filteredList.setPredicate(MediaSearchPredicateFactory.getPredicateHistoryData(txtSearch.getText(),
-                rbTheme.isSelected() ? ProgConst.MEDIA_COLLECTION_SEARCH_IN_THEME :
-                        (rbTitle.isSelected() ? ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL : ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT)));
+        progData.erledigteAbos.filteredListSetPredicate(
+                MediaSearchPredicateFactory.getPredicateHistoryData(
+                        txtSearch.getText()));
         lblHits.setText(filteredList.size() + "");
     }
 }

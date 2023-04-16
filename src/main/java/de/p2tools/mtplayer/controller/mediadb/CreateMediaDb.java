@@ -54,7 +54,7 @@ public class CreateMediaDb {
 
     public void createDB(MediaCollectionData mediaCollectionData) {
         if (mediaCollectionData == null) {
-            // duchsucht die vom User angelegten Pfade für die interne Mediensammlung
+            // durchsucht die vom User angelegten Pfade für die interne Mediensammlung
             // und fügt die gespeicherten externen Medien hinzu
             create();
         } else {

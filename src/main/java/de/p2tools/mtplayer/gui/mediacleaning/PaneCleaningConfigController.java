@@ -29,6 +29,9 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class PaneCleaningConfigController {
@@ -36,6 +39,18 @@ public class PaneCleaningConfigController {
     private final ProgData progData;
     private final Stage stage;
     private boolean media;
+    private final RadioButton rbTitel = new RadioButton("Titel des Films");
+    private final RadioButton rbTT = new RadioButton("Thema und Titel des Films");
+    private final RadioButton rbInTitel = new RadioButton();
+    private final RadioButton rbInTT = new RadioButton();
+
+    private final PToggleSwitch tglExact = new PToggleSwitch("Exakt den Begriff suchen");
+    private final PToggleSwitch tglClean = new PToggleSwitch("Putzen");
+    private final PToggleSwitch tglAndOr = new PToggleSwitch("Verknüpfen mit UND [sonst ODER]");
+    private final PToggleSwitch tglNum = new PToggleSwitch("Zahlen entfernen: 20, 20.");
+    private final PToggleSwitch tglDate = new PToggleSwitch("Datum entfernen: 20.03.2023");
+    private final PToggleSwitch tglClip = new PToggleSwitch("Klammern entfernen: [], {}, ()");
+    private final PToggleSwitch tglList = new PToggleSwitch("Cleaning Liste anwenden");
 
     public PaneCleaningConfigController(Stage stage, boolean media) {
         this.stage = stage;
@@ -49,7 +64,8 @@ public class PaneCleaningConfigController {
     public AnchorPane makePane() {
         final VBox vBox = new VBox(10);
         vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
-        initPane(vBox);
+        initPane();
+        addGrid(vBox);
         AnchorPane anchorPane = new AnchorPane();
         AnchorPane.setTopAnchor(vBox, 0.0);
         AnchorPane.setRightAnchor(vBox, 0.0);
@@ -60,19 +76,13 @@ public class PaneCleaningConfigController {
     }
 
 
-    private void initPane(VBox vBox) {
-        //Media
-        RadioButton rbTheme = new RadioButton("Thema des Films");
-        RadioButton rbTitel = new RadioButton("Titel des Films");
-        RadioButton rbTT = new RadioButton("Thema-Titel des Films");
+    private void initPane() {
+        //Suchbegriff
         ToggleGroup tg = new ToggleGroup();
         rbTitel.setToggleGroup(tg);
-        rbTheme.setToggleGroup(tg);
         rbTT.setToggleGroup(tg);
-        switch (media ? ProgConfig.DOWNLOAD_GUI_MEDIA_SHOW_TT_MEDIA.getValue() : ProgConfig.DOWNLOAD_GUI_MEDIA_SHOW_TT_ABO.getValue()) {
-            case ProgConst.MEDIA_COLLECTION_SEARCH_IN_THEME:
-                rbTheme.setSelected(true);
-                break;
+        switch (media ? ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_TT_MEDIA.getValue() :
+                ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_TT_ABO.getValue()) {
             case ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL:
                 rbTitel.setSelected(true);
                 break;
@@ -80,65 +90,85 @@ public class PaneCleaningConfigController {
                 rbTT.setSelected(true);
                 break;
         }
-        rbTheme.selectedProperty().addListener((u, o, n) -> {
-            if (n) {
-                if (media) {
-                    ProgConfig.DOWNLOAD_GUI_MEDIA_SHOW_TT_MEDIA.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_THEME);
-                } else {
-                    ProgConfig.DOWNLOAD_GUI_MEDIA_SHOW_TT_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_THEME);
-                }
-            }
-        });
         rbTitel.selectedProperty().addListener((u, o, n) -> {
             if (n) {
                 if (media) {
-                    ProgConfig.DOWNLOAD_GUI_MEDIA_SHOW_TT_MEDIA.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);
+                    ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_TT_MEDIA.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);
                 } else {
-                    ProgConfig.DOWNLOAD_GUI_MEDIA_SHOW_TT_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);
+                    ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_TT_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);
                 }
             }
         });
         rbTT.selectedProperty().addListener((u, o, n) -> {
             if (n) {
                 if (media) {
-                    ProgConfig.DOWNLOAD_GUI_MEDIA_SHOW_TT_MEDIA.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT);
+                    ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_TT_MEDIA.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT);
                 } else {
-                    ProgConfig.DOWNLOAD_GUI_MEDIA_SHOW_TT_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT);
+                    ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_TT_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT);
                 }
             }
         });
 
-        PToggleSwitch tglExact = new PToggleSwitch("Exakt den Begriff suchen");
+        //suchen wo
+        ToggleGroup tgIn = new ToggleGroup();
+        rbInTitel.setToggleGroup(tgIn);
+        rbInTT.setToggleGroup(tgIn);
+        rbInTitel.setText(media ? "Dateinamen" : "Titel des Abos / History-Films");
+        rbInTT.setText(media ? "Pfad oder Dateinamen" : "Thema oder Titel des Abos / History-Films");
+        switch (media ? ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.intValue() :
+                ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.getValue()) {
+            case ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL:
+                rbInTitel.setSelected(true);
+                break;
+            default:
+                rbInTT.setSelected(true);
+                break;
+        }
+        rbInTitel.selectedProperty().addListener((u, o, n) -> {
+            if (n) {
+                if (media) {
+                    ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);
+                } else {
+                    ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);
+                }
+            }
+        });
+        rbInTT.selectedProperty().addListener((u, o, n) -> {
+            if (n) {
+                if (media) {
+                    ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT);
+                } else {
+                    ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT);
+                }
+            }
+        });
+
         tglExact.selectedProperty().bindBidirectional(media ? ProgConfig.DOWNLOAD_GUI_MEDIA_EXACT_MEDIA : ProgConfig.DOWNLOAD_GUI_MEDIA_EXACT_ABO);
 
-        PToggleSwitch tglClean = new PToggleSwitch("Putzen");
         tglClean.disableProperty().bind(tglExact.selectedProperty());
         tglClean.selectedProperty().bindBidirectional(media ? ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_MEDIA : ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_ABO);
 
-        PToggleSwitch tglAndOr = new PToggleSwitch("Verknüpfen mit UND [sonst ODER]");
         tglAndOr.disableProperty().bind(tglExact.selectedProperty().or(tglClean.selectedProperty().not()));
         tglAndOr.selectedProperty().bindBidirectional(media ? ProgConfig.DOWNLOAD_GUI_MEDIA_AND_OR_MEDIA : ProgConfig.DOWNLOAD_GUI_MEDIA_AND_OR_ABO);
 
-        PToggleSwitch tglNum = new PToggleSwitch("Zahlen entfernen: 20, 20.");
         tglNum.disableProperty().bind(tglExact.selectedProperty().or(tglClean.selectedProperty().not()));
         tglNum.selectedProperty().bindBidirectional(media ?
                 ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_NUMBER_MEDIA : ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_NUMBER_ABO);
 
-        PToggleSwitch tglDate = new PToggleSwitch("Datum entfernen: 20.03.2023");
         tglDate.disableProperty().bind(tglExact.selectedProperty().or(tglClean.selectedProperty().not()));
         tglDate.selectedProperty().bindBidirectional(media ?
                 ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_DATE_MEDIA : ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_DATE_ABO);
 
-        PToggleSwitch tglClip = new PToggleSwitch("Klammern entfernen: [], {}, ()");
         tglClip.disableProperty().bind(tglExact.selectedProperty().or(tglClean.selectedProperty().not()));
         tglClip.selectedProperty().bindBidirectional(media ?
                 ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_CLIP_MEDIA : ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_CLIP_ABO);
 
-        PToggleSwitch tglList = new PToggleSwitch("Cleaning Liste anwenden");
         tglList.disableProperty().bind(tglExact.selectedProperty().or(tglClean.selectedProperty().not()));
         tglList.selectedProperty().bindBidirectional(media ?
                 ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_LIST_MEDIA : ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_LIST_ABO);
+    }
 
+    private void addGrid(VBox vBox) {
         int row = 0;
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
@@ -147,18 +177,41 @@ public class PaneCleaningConfigController {
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(), PColumnConstraints.getCcPrefSize());
         vBox.getChildren().addAll(gridPane);
 
-        gridPane.add(new Label("Zum Suchen verwenden:"), 0, row);
-        gridPane.add(rbTheme, 0, ++row);
+        //Suchen was
+        Text text;
+        if (media) {
+            text = new Text("Suche in der Mediensammlung");
+        } else {
+            text = new Text("Suche in den Abos und der History");
+        }
+        text.setFont(Font.font(null, FontWeight.BOLD, -1));
+        text.getStyleClass().add("downloadGuiMediaText");
+        gridPane.add(text, 0, row);
+        ++row;
+        gridPane.add(new Label("Der Suchbegriff wird gebildet aus dem:"), 0, ++row);
         gridPane.add(rbTitel, 0, ++row);
         gridPane.add(rbTT, 0, ++row);
 
+        //Suchen wo
+        ++row;
+        gridPane.add(new Label("Der Suchbegriff muss vorkommen im:"), 0, ++row);
+        gridPane.add(rbInTitel, 0, ++row);
+        gridPane.add(rbInTT, 0, ++row);
+
+        //Sucheinstellungen
+        text = new Text("Einstellungen der Suche");
+        text.setFont(Font.font(null, FontWeight.BOLD, -1));
+        text.getStyleClass().add("downloadGuiMediaText");
         gridPane.add(new Label(""), 0, ++row);
+        gridPane.add(text, 0, ++row);
+
+        ++row;
         gridPane.add(tglExact, 0, ++row);
 
-        gridPane.add(new Label(""), 0, ++row);
+        ++row;
         gridPane.add(tglClean, 0, ++row);
 
-        gridPane.add(new Label(""), 0, ++row);
+        ++row;
         gridPane.add(tglAndOr, 0, ++row);
         gridPane.add(tglNum, 0, ++row);
         gridPane.add(tglDate, 0, ++row);

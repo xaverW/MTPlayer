@@ -32,16 +32,19 @@ import de.p2tools.p2lib.mtfilter.FilterCheckRegEx;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.ListChangeListener;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 
 public class PaneDialog extends ScrollPane {
 
+    Text textSearch = new Text();
     Button btnCreateMediaDB = new Button("_Mediensammlung neu aufbauen");
     Button btnPlay = new Button();
     Button btnOpen = new Button();
@@ -56,10 +59,6 @@ public class PaneDialog extends ScrollPane {
 
     ProgressBar progress = new ProgressBar();
     private Button btnStopSearching = new Button();
-
-    final RadioButton rbTheme = new RadioButton("Thema");
-    final RadioButton rbTitle = new RadioButton("Titel");
-    final RadioButton rbTt = new RadioButton("Thema oder Titel");
 
     Label lblGesamtMedia = new Label();
     Label lblHits = new Label();
@@ -124,9 +123,6 @@ public class PaneDialog extends ScrollPane {
 
         VBox vBoxMedia = new VBox(P2LibConst.DIST_EDGE);
 
-        ToggleGroup tg = new ToggleGroup();
-        tg.getToggles().addAll(rbTheme, rbTitle, rbTt);
-
         btnReset.setGraphic(ProgIcons.Icons.ICON_BUTTON_RESET.getImageView());
         btnReset.setTooltip(new Tooltip("Suchtext wieder herstellen"));
 
@@ -147,21 +143,45 @@ public class PaneDialog extends ScrollPane {
         txtSearch.setPrefWidth(Double.MAX_VALUE);
         GridPane.setHgrow(txtSearch, Priority.ALWAYS);
         gridPaneSearch.getStyleClass().add("extra-pane");
+        gridPaneSearch.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcComputedSizeAndHgrow());
 
-        gridPaneSearch.add(new Label("Suchen: "), 0, 0);
-        gridPaneSearch.add(txtSearch, 1, 0, 4, 1);
-        gridPaneSearch.add(btnReset, 5, 0);
-        gridPaneSearch.add(btnClean, 6, 0);
-        gridPaneSearch.add(btnEdit, 7, 0);
-        gridPaneSearch.add(btnClear, 8, 0);
+        final Text text1 = new Text("Mediensammlung, suchen im: " +
+                (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL ?
+                        "Dateinamen" : "Pfad und Dateinamen"));
+        text1.setFont(Font.font(null, FontWeight.BOLD, -1));
+        text1.getStyleClass().add("downloadGuiMediaText");
+        ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.addListener((u, o, n) -> text1.setText("Mediensammlung, suchen im: " +
+                (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL ?
+                        "Dateinamen" : "Pfad und Dateinamen")));
 
-        if (!media) {
-            gridPaneSearch.add(new Label("Suchen im:"), 1, 1);
-            gridPaneSearch.add(rbTheme, 2, 1);
-            gridPaneSearch.add(rbTitle, 3, 1);
-            gridPaneSearch.add(rbTt, 4, 1);
-            gridPaneSearch.add(btnClearList, 6, 1, 3, 1);
-            GridPane.setHalignment(btnClearList, HPos.RIGHT);
+        int row = 0;
+        if (media) {
+            gridPaneSearch.add(text1, 0, row, 5, 1);
+        } else {
+            gridPaneSearch.add(textSearch, 0, row, 5, 1);
+        }
+        gridPaneSearch.add(new Label("Suchen: "), 0, ++row);
+        gridPaneSearch.add(txtSearch, 1, row, 4, 1);
+        gridPaneSearch.add(btnReset, 5, row);
+        gridPaneSearch.add(btnClean, 6, row);
+        gridPaneSearch.add(btnEdit, 7, row);
+        gridPaneSearch.add(btnClear, 8, row);
+
+        if (media) {
+            HBox hBoxProgress = new HBox();
+            hBoxProgress.setSpacing(P2LibConst.DIST_BUTTON);
+            progress.setVisible(false);
+            progress.setMaxHeight(Double.MAX_VALUE);
+            progress.setMaxWidth(Double.MAX_VALUE);
+            btnStopSearching.setGraphic(ProgIcons.Icons.ICON_BUTTON_STOP.getImageView());
+            btnStopSearching.setOnAction(event -> progData.mediaDataList.setStopSearching(true));
+            btnStopSearching.visibleProperty().bind(progData.mediaDataList.searchingProperty());
+            hBoxProgress.getChildren().addAll(btnCreateMediaDB, progress, btnStopSearching);
+            HBox.setHgrow(progress, Priority.ALWAYS);
+            gridPaneSearch.add(hBoxProgress, 0, ++row, 9, 1);
+        } else {
+            gridPaneSearch.add(btnClearList, 0, ++row, 3, 1);
         }
 
         HBox hBoxSum = new HBox(P2LibConst.DIST_BUTTON);
@@ -182,18 +202,6 @@ public class PaneDialog extends ScrollPane {
                 PColumnConstraints.getCcComputedSizeAndHgrow());
 
         if (media) {
-            HBox hBoxProgress = new HBox();
-            hBoxProgress.setSpacing(P2LibConst.DIST_BUTTON);
-            progress.setVisible(false);
-            progress.setMaxHeight(Double.MAX_VALUE);
-            progress.setMaxWidth(Double.MAX_VALUE);
-            btnStopSearching.setGraphic(ProgIcons.Icons.ICON_BUTTON_STOP.getImageView());
-            btnStopSearching.setOnAction(event -> progData.mediaDataList.setStopSearching(true));
-            btnStopSearching.visibleProperty().bind(progData.mediaDataList.searchingProperty());
-            hBoxProgress.getChildren().addAll(btnCreateMediaDB, progress, btnStopSearching);
-            HBox.setHgrow(progress, Priority.ALWAYS);
-            gridPaneSearch.add(hBoxProgress, 0, 1, 8, 1);
-
             tableMedia.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
             VBox.setVgrow(tableMedia, Priority.ALWAYS);
             vBoxMedia.getChildren().addAll(gridPaneSearch, tableMedia, hBoxSum, gridPane);
@@ -203,7 +211,6 @@ public class PaneDialog extends ScrollPane {
             VBox.setVgrow(tableAbo, Priority.ALWAYS);
             vBoxMedia.getChildren().addAll(gridPaneSearch, tableAbo, hBoxSum, gridPane);
         }
-
         this.setPadding(new Insets(P2LibConst.DIST_EDGE));
         this.setFitToHeight(true);
         this.setFitToWidth(true);

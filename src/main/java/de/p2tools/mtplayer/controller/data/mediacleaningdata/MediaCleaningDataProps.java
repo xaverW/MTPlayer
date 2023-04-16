@@ -29,8 +29,10 @@ public class MediaCleaningDataProps extends PDataSample<MediaCleaningDataProps> 
     public static final String TAG = "MediaCleaningData";
 
     private final StringProperty cleaningData = new SimpleStringProperty("");
+    private final StringProperty codePoint = new SimpleStringProperty("");
 
     public MediaCleaningDataProps() {
+        cleaningData.addListener((u, o, n) -> makeUtfCodePoint());
     }
 
     @Override
@@ -43,6 +45,7 @@ public class MediaCleaningDataProps extends PDataSample<MediaCleaningDataProps> 
     public MediaCleaningData getCopy() {
         MediaCleaningData data = new MediaCleaningData();
         data.setCleaningData(cleaningData.getValueSafe());
+        data.setCodePoint(codePoint.getValueSafe());
         return data;
     }
 
@@ -61,5 +64,30 @@ public class MediaCleaningDataProps extends PDataSample<MediaCleaningDataProps> 
 
     public void setCleaningData(String cleaningData) {
         this.cleaningData.set(cleaningData);
+        makeUtfCodePoint();
+    }
+
+    public String getCodePoint() {
+        return codePoint.get();
+    }
+
+    public StringProperty codePointProperty() {
+        return codePoint;
+    }
+
+    public void setCodePoint(String codePoint) {
+        this.codePoint.set(codePoint);
+    }
+
+    public void makeUtfCodePoint() {
+        String s = "";
+        char[] chars = cleaningData.getValueSafe().toCharArray();
+        for (int i = 0; i < chars.length; ++i) {
+            if (i > 0) {
+                s += ", ";
+            }
+            s += Character.codePointAt(chars, i) + "";
+        }
+        codePoint.setValue(s);
     }
 }
