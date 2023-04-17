@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.gui.configpanes;
 
+import de.p2tools.mtplayer.controller.ProgSave;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
@@ -24,7 +25,8 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.PDirFileChooser;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
-import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
+import de.p2tools.p2lib.guitools.PGuiTools;
+import de.p2tools.p2lib.tools.PShutDown;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -37,18 +39,11 @@ import java.util.Collection;
 
 public class PaneProgs {
 
-    private final PToggleSwitch tglSearch = new PToggleSwitch("einmal am Tag nach einer neuen Programmversion suchen");
-    private final PToggleSwitch tglSearchBeta = new PToggleSwitch("auch nach neuen Vorabversionen suchen");
-    private final CheckBox chkDaily = new CheckBox("Zwischenschritte (Dailys) mit einbeziehen");
-    private final PToggleSwitch tglSearchAbo = new PToggleSwitch("Abos automatisch suchen:");
-    private final PToggleSwitch tglStartDownload = new PToggleSwitch("Downloads aus Abos sofort starten:");
-    private final PToggleSwitch tglSmallFilm = new PToggleSwitch("In der Tabelle \"Film\" nur kleine Button anzeigen:");
-    private final PToggleSwitch tglSmallDownload = new PToggleSwitch("In der Tabelle \"Download\" nur kleine Button anzeigen:");
-    private final PToggleSwitch tglTipOfDay = new PToggleSwitch("Tip des Tages anzeigen");
-    private final PToggleSwitch tglEnableLog = new PToggleSwitch("Ein Logfile anlegen:");
-    private TextField txtFileManager;
-    private TextField txtFileManagerVideo;
-    private TextField txtFileManagerWeb;
+    private TextField txtFileManager = new TextField();
+    private TextField txtFileManagerVideo = new TextField();
+    private TextField txtFileManagerWeb = new TextField();
+    private TextField txtSystemCall = new TextField();
+    private CheckBox cbxSystemCallOn = new CheckBox("Den Systemaufruf nach der Wartezeit und dem Programmende, aufrufen");
 
     private final Stage stage;
 
@@ -57,18 +52,11 @@ public class PaneProgs {
     }
 
     public void close() {
-        tglSearchAbo.selectedProperty().unbindBidirectional(ProgConfig.ABO_SEARCH_NOW);
-        tglStartDownload.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_START_NOW);
-        tglSmallFilm.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM);
-        tglSmallDownload.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD);
-        tglTipOfDay.selectedProperty().unbindBidirectional(ProgConfig.TIP_OF_DAY_SHOW);
-        tglEnableLog.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_LOG_ON);
         txtFileManager.textProperty().unbindBidirectional(ProgConfig.SYSTEM_PROG_OPEN_DIR);
         txtFileManagerVideo.textProperty().unbindBidirectional(ProgConfig.SYSTEM_PROG_PLAY_FILME);
         txtFileManagerWeb.textProperty().unbindBidirectional(ProgConfig.SYSTEM_PROG_OPEN_URL);
-        tglSearch.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_UPDATE_SEARCH_ACT);
-        tglSearchBeta.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_UPDATE_SEARCH_BETA);
-        chkDaily.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_UPDATE_SEARCH_DAILY);
+        txtSystemCall.textProperty().unbindBidirectional(ProgConfig.SYSTEM_SHUT_DOWN_CALL);
+        cbxSystemCallOn.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_SHUT_DOWN_CALL_ON);
     }
 
     public void makeProg(Collection<TitledPane> result) {
@@ -83,11 +71,11 @@ public class PaneProgs {
         addFilemanager(gridPane, 0);
         addVideoPlayer(gridPane, 1);
         addWebbrowser(gridPane, 2);
+        addSystemCall(gridPane, 3);
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow());
     }
 
     private void addFilemanager(GridPane gridPane, int row) {
-        txtFileManager = new TextField();
         txtFileManager.textProperty().bindBidirectional(ProgConfig.SYSTEM_PROG_OPEN_DIR);
 
         final Button btnFile = new Button();
@@ -108,7 +96,6 @@ public class PaneProgs {
     }
 
     private void addVideoPlayer(GridPane gridPane, int row) {
-        txtFileManagerVideo = new TextField();
         txtFileManagerVideo.textProperty().bindBidirectional(ProgConfig.SYSTEM_PROG_PLAY_FILME);
 
         final Button btnFile = new Button();
@@ -129,7 +116,6 @@ public class PaneProgs {
     }
 
     private void addWebbrowser(GridPane gridPane, int row) {
-        txtFileManagerWeb = new TextField();
         txtFileManagerWeb.textProperty().bindBidirectional(ProgConfig.SYSTEM_PROG_OPEN_URL);
 
         final Button btnFile = new Button();
@@ -146,6 +132,31 @@ public class PaneProgs {
         hBox.getChildren().addAll(txtFileManagerWeb, btnFile, btnHelp);
         HBox.setHgrow(txtFileManagerWeb, Priority.ALWAYS);
         vBox.getChildren().addAll(new Label("Webbrowser zum Öffnen von URLs"), hBox);
+        gridPane.add(vBox, 0, row);
+    }
+
+    private void addSystemCall(GridPane gridPane, int row) {
+        txtSystemCall.textProperty().bindBidirectional(ProgConfig.SYSTEM_SHUT_DOWN_CALL);
+        cbxSystemCallOn.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_SHUT_DOWN_CALL_ON);
+
+        final Button btnHelp = PButton.helpButton(stage, "Webbrowser", HelpText.CONFIG_SHUT_DOWN_CALL);
+
+        Button btnTest = new Button("Testen");
+        btnTest.setOnAction(a -> {
+            ProgSave.saveAll(); // damit nichts verloren geht
+            PShutDown.shutDown(ProgConfig.SYSTEM_SHUT_DOWN_CALL.getValueSafe());
+        });
+
+        Button btnStandard = new Button("Standard setzen");
+        btnStandard.setOnAction(a -> txtSystemCall.setText(PShutDown.getShutDownCommand()));
+
+        VBox vBox = new VBox(2);
+        HBox hBox = new HBox(5);
+        hBox.getChildren().addAll(txtSystemCall, btnTest, btnStandard, btnHelp);
+        HBox.setHgrow(txtSystemCall, Priority.ALWAYS);
+        HBox hBoxOn = new HBox();
+        hBoxOn.getChildren().addAll(PGuiTools.getVDistance(20), cbxSystemCallOn);
+        vBox.getChildren().addAll(new Label("Systemaufruf nach dem \"Auf Downloads warten\" Dialog"), hBox, hBoxOn);
         gridPane.add(vBox, 0, row);
     }
 }

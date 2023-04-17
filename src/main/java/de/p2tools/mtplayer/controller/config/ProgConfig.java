@@ -127,7 +127,7 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty SYSTEM_TRAY_ICON_PATH = addStrProp("system-tray-icon", ""); //ein eigenes Tray-Icon
     public static StringProperty SYSTEM_USERAGENT = addStrProp("system-useragent", ProgConst.USER_AGENT_DEFAULT); //Useragent für direkte Downloads
     public static IntegerProperty SYSTEM_FILMLIST_FILTER = addIntProp("system-filmlist-filter", BlacklistFilterFactory.BLACKLILST_FILTER_OFF);
-    public static StringProperty SYSTEM_SHUT_DOWN_CALL = addStrProp("system-shut-down-call", PShutDown.getShutDownCommand()); //ein eigenes Tray-Icon
+    public static StringProperty SYSTEM_SHUT_DOWN_CALL = addStrProp("system-shut-down-call", PShutDown.getShutDownCommand()); // shutDown call
     public static BooleanProperty SYSTEM_SHUT_DOWN_CALL_ON = addBoolProp("system-shut-down-call-on", false); // das shutDown ist aktiv
 
     //Configs Statusbar

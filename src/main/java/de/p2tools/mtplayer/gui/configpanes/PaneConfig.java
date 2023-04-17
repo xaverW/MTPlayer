@@ -26,7 +26,10 @@ import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
 import de.p2tools.p2lib.tools.PStringUtils;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -34,9 +37,6 @@ import java.util.Collection;
 
 public class PaneConfig {
 
-    private final PToggleSwitch tglSearch = new PToggleSwitch("einmal am Tag nach einer neuen Programmversion suchen");
-    private final PToggleSwitch tglSearchBeta = new PToggleSwitch("auch nach neuen Vorabversionen suchen");
-    private final CheckBox chkDaily = new CheckBox("Zwischenschritte (Dailys) mit einbeziehen");
     private final PToggleSwitch tglSearchAbo = new PToggleSwitch("Abos automatisch suchen:");
     private final PToggleSwitch tglStartDownload = new PToggleSwitch("Downloads aus Abos sofort starten:");
     private final PToggleSwitch tglOnlyOneInstance = new PToggleSwitch("Nur eine Instanz des Programms öffnen");
@@ -44,7 +44,6 @@ public class PaneConfig {
     private final PToggleSwitch tglSmallDownload = new PToggleSwitch("In der Tabelle \"Download\" nur kleine Button anzeigen:");
     private final PToggleSwitch tglTipOfDay = new PToggleSwitch("Tip des Tages anzeigen");
     private TextField txtUserAgent;
-    private final PToggleSwitch tglEnableLog = new PToggleSwitch("Ein Logfile anlegen:");
 
     private final Stage stage;
 
@@ -60,10 +59,6 @@ public class PaneConfig {
         tglSmallDownload.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD);
         tglTipOfDay.selectedProperty().unbindBidirectional(ProgConfig.TIP_OF_DAY_SHOW);
         txtUserAgent.textProperty().unbindBidirectional(ProgConfig.SYSTEM_USERAGENT);
-        tglEnableLog.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_LOG_ON);
-        tglSearch.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_UPDATE_SEARCH_ACT);
-        tglSearchBeta.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_UPDATE_SEARCH_BETA);
-        chkDaily.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_UPDATE_SEARCH_DAILY);
     }
 
     public void makeConfig(Collection<TitledPane> result) {

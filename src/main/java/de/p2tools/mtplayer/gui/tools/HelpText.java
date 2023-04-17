@@ -874,11 +874,21 @@ public class HelpText {
                     "\n";
 
     public static final String CONFIG_SHUT_DOWN_CALL =
-            "Hiermit kann der Rechner nach den Downloads automatisch heruntergefahren werden. Für Linux und Windows " +
+            "Wird das Programm bei noch laufenden Downloads beendet, erscheint der \"Auf Downloads warten\" Dialog. " +
+                    "Hier kann dann ausgewählt werden:" +
+                    "\n\n" +
+                    "-> Nicht beenden\n" +
+                    "-> Beenden\n" +
+                    "-> Warten" +
+                    "\n\n" +
+                    "Wird \"Warten\" ausgewählt, beendet sich das Programm erst wenn alle Downloads erledigt sind. " +
+                    "Nach dem Warten ist es dann möglich, einen Systemaufruf abzusetzen. " +
+                    "Gedacht ist das, um nach der Wartezeit das Programm zu beenden und " +
+                    "den Rechner herunterzufahren. Für Linux und Windows " +
                     "bringt das Programm die Standard-Befehle dafür mit." +
                     "\n\n" +
                     "Diese können aber auch angepasst werden. " +
-                    "So ist es z.B. auch möglich, einen ganz anderen Befehl auszuführen oder ein Skript/Programm " +
-                    "nach dem Programmende zu starten." +
+                    "So ist es z.B. auch möglich, einen ganz anderen Befehl oder ein eigenes Skript " +
+                    "nach dem Warten auf die Downloads und dem Programmende, auszuführen." +
                     "\n";
 }
