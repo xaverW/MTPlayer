@@ -152,23 +152,17 @@ public class QuitDialogController extends PDialogExtra {
     }
 
     private void addButton() {
-        Button btnTray = new Button("Ausblenden");
+        // Wenn es ein Tray gibt, dann ins Tray legen, ansonsten nur minimieren
+        Button btnTray = new Button(ProgData.getInstance().progTray.getSystemTray() != null ? "Ausblenden" : "Minimieren");
         btnTray.setOnAction(a -> {
             if (ProgData.getInstance().progTray.getSystemTray() != null) {
                 ProgData.getInstance().progTray.closeDialog();
+            } else {
+                ProgData.getInstance().primaryStage.setIconified(true);
+                this.getStage().setIconified(true);
             }
         });
-        if (ProgData.getInstance().progTray.getSystemTray() != null) {
-            //nur dann machts Sinn
-            addAnyButton(btnTray);
-        }
-
-        Button btnHide = new Button("Minimieren");
-        addAnyButton(btnHide);
-        btnHide.setOnAction(a -> {
-            ProgData.getInstance().primaryStage.setIconified(true);
-            this.getStage().setIconified(true);
-        });
+        addAnyButton(btnTray);
     }
 
     public void startWaiting() {
