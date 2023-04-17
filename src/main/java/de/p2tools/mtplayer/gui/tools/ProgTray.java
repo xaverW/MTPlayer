@@ -87,6 +87,10 @@ public class ProgTray {
         setTray();
     }
 
+    public SystemTray getSystemTray() {
+        return systemTray;
+    }
+
     private void removeTray() {
         if (systemTray != null) {
             Arrays.stream(systemTray.getTrayIcons()).sequential().forEach(e -> systemTray.remove(e));
@@ -208,7 +212,7 @@ public class ProgTray {
         }
     }
 
-    private void closeDialog() {
+    public void closeDialog() {
         Platform.runLater(() -> {
             progData.primaryStage.close();
         });

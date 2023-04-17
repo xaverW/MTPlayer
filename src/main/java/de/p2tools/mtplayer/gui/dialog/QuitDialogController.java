@@ -152,6 +152,17 @@ public class QuitDialogController extends PDialogExtra {
     }
 
     private void addButton() {
+        Button btnTray = new Button("Ausblenden");
+        btnTray.setOnAction(a -> {
+            if (ProgData.getInstance().progTray.getSystemTray() != null) {
+                ProgData.getInstance().progTray.closeDialog();
+            }
+        });
+        if (ProgData.getInstance().progTray.getSystemTray() != null) {
+            //nur dann machts Sinn
+            addAnyButton(btnTray);
+        }
+
         Button btnHide = new Button("Minimieren");
         addAnyButton(btnHide);
         btnHide.setOnAction(a -> {
