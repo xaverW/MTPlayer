@@ -29,6 +29,7 @@ public class ProgIcons {
         ICON_DIALOG_ON("dialog-ein.png", "dialog-ein-sw.png"),
         IMAGE_ACHTUNG_64("achtung_64.png"),
 
+        ICON_BUTTON_CHANGE("button-change.png", 16, 16),
         ICON_BUTTON_CLEAN("clean_16.png", 16, 16),
         ICON_BUTTON_RESET("button-reset.png", 16, 16),
         ICON_BUTTON_UPDATE("button-update.png", 16, 16),

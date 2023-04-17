@@ -72,7 +72,7 @@ public class PaneAbo extends PaneDialog {
                             "Titel des History-Films" : "Thema oder Titel des History-Films"));
             textSearch.setFont(Font.font(null, FontWeight.BOLD, -1));
             textSearch.getStyleClass().add("downloadGuiMediaText");
-            ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.addListener((u, o, n) -> textSearch.setText("Abos, suchen im: " +
+            ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.addListener((u, o, n) -> textSearch.setText("History, suchen im: " +
                     (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL ?
                             "Titel des History-Films" : "Thema oder Titel des History-Films")));
         }

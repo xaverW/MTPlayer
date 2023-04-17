@@ -32,6 +32,7 @@ import de.p2tools.p2lib.mtfilter.FilterCheckRegEx;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.ListChangeListener;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -155,11 +156,40 @@ public class PaneDialog extends ScrollPane {
                 (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL ?
                         "Dateinamen" : "Pfad und Dateinamen")));
 
+        Button btnChangeMedia = new Button();
+        btnChangeMedia.getStyleClass().add("buttonVeryLow");
+        btnChangeMedia.setTooltip(new Tooltip("Einstellung wo gesucht wird, ändern"));
+        btnChangeMedia.setGraphic(ProgIcons.Icons.ICON_BUTTON_CHANGE.getImageView());
+        btnChangeMedia.setOnAction(a -> {
+            if (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL) {
+                ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT);
+            } else {
+                ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);
+            }
+            filter();
+        });
+        Button btnChangeAbo = new Button();
+        btnChangeAbo.getStyleClass().add("buttonVeryLow");
+        btnChangeAbo.setTooltip(new Tooltip("Einstellung wo gesucht wird, ändern"));
+        btnChangeAbo.setGraphic(ProgIcons.Icons.ICON_BUTTON_CHANGE.getImageView());
+        btnChangeAbo.setOnAction(a -> {
+            if (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL) {
+                ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT);
+            } else {
+                ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);
+            }
+            filter();
+        });
+
         int row = 0;
         if (media) {
-            gridPaneSearch.add(text1, 0, row, 5, 1);
+            gridPaneSearch.add(text1, 0, row, 4, 1);
+            gridPaneSearch.add(btnChangeMedia, 8, row);
+            GridPane.setHalignment(btnChangeMedia, HPos.RIGHT);
         } else {
-            gridPaneSearch.add(textSearch, 0, row, 5, 1);
+            gridPaneSearch.add(textSearch, 0, row, 4, 1);
+            gridPaneSearch.add(btnChangeAbo, 8, row);
+            GridPane.setHalignment(btnChangeAbo, HPos.RIGHT);
         }
         gridPaneSearch.add(new Label("Suchen: "), 0, ++row);
         gridPaneSearch.add(txtSearch, 1, row, 4, 1);
