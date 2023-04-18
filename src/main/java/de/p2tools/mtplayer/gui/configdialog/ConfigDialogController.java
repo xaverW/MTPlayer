@@ -128,8 +128,13 @@ public class ConfigDialogController extends PDialogExtra {
         getVBoxCont().getChildren().add(tabPane);
         getVBoxCont().setPadding(new Insets(0));
 
-        addOkCancelApplyButtons(btnOk, null, btnApply);
-        btnApply.setOnAction(a -> onlyApply());
+        if (btnApply.isVisible()) {
+            // nur dann einfügen
+            addOkCancelApplyButtons(btnOk, null, btnApply);
+            btnApply.setOnAction(a -> onlyApply());
+        } else {
+            addOkButton(btnOk);
+        }
         btnOk.setOnAction(a -> onlyClose());
 
         ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> updateCss());
