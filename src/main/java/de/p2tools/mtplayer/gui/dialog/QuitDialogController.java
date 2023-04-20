@@ -64,7 +64,8 @@ public class QuitDialogController extends PDialogExtra {
     public void make() {
         maskerPane.switchOffMasker();
         maskerPane.setButtonText("Abbrechen");
-        maskerPane.getButton().setOnAction(a -> close());
+        maskerPane.setTxtBtnHorizontal(false);
+        maskerPane.getButton().setOnAction(a -> closeMaskerPane());
 
         Label headerLabel = new Label("Es laufen noch Downloads!");
         headerLabel.setStyle("-fx-font-size: 1.5em;");
@@ -139,12 +140,12 @@ public class QuitDialogController extends PDialogExtra {
     private void setSystemCallText() {
         if (ProgConfig.SYSTEM_SHUT_DOWN_CALL.getValueSafe().equals(PShutDown.getShutDownCommand())) {
             //dann ist es der normale Systemaufruf zum Herunterfahren
-            chkShutDown.setText("Nach dem Warten Rechner herunterfahren");
+            chkShutDown.setText("Nach Warten und Programmende, Rechner herunterfahren");
             lblSystemCall.setText("");
             lblSystemCall.setVisible(false);
             lblSystemCall.setManaged(false);
         } else {
-            chkShutDown.setText("Nach dem Warten Systembefehl aufrufen");
+            chkShutDown.setText("Nach Warten und Programmende, Systembefehl aufrufen");
             lblSystemCall.setVisible(true);
             lblSystemCall.setManaged(true);
             lblSystemCall.setText(ProgConfig.SYSTEM_SHUT_DOWN_CALL.getValueSafe());
@@ -166,7 +167,11 @@ public class QuitDialogController extends PDialogExtra {
     }
 
     public void startWaiting() {
-        maskerPane.setMaskerVisible(true, false, true);
+        maskerPane.setMaskerVisible(true,
+                chkShutDown.isSelected() ? true : false,
+                true);
+        maskerPane.setMaskerText(chkShutDown.isSelected() ? chkShutDown.getText() : "");
+
         Thread th = new Thread(waitTask);
         th.setName("startWaiting");
         th.start();
@@ -192,6 +197,13 @@ public class QuitDialogController extends PDialogExtra {
         public boolean cancel(boolean mayInterruptIfRunning) {
             return super.cancel(mayInterruptIfRunning);
         }
+    }
+
+    public void closeMaskerPane() {
+        if (waitTask.isRunning()) {
+            waitTask.cancel();
+        }
+        maskerPane.switchOffMasker();
     }
 
     @Override
