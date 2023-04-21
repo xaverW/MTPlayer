@@ -37,7 +37,9 @@ public class MediaSearchPredicateFactory {
             }
 
             Filter filter = new Filter(search, true);
-            if (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL) {
+            if (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_THEME) {
+                return FilterCheck.check(filter, media.getPath());
+            } else if (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_TITEL) {
                 return FilterCheck.check(filter, media.getName());
             } else {
                 return FilterCheck.check(filter, media.getPath()) ||
@@ -54,7 +56,9 @@ public class MediaSearchPredicateFactory {
             }
 
             Filter filter = new Filter(search, true);
-            if (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL) {
+            if (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_THEME) {
+                return FilterCheck.check(filter, historyData.getTheme());
+            } else if (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_TITEL) {
                 return FilterCheck.check(filter, historyData.getTitle());
             } else {
                 return FilterCheck.check(filter, historyData.getTheme()) ||

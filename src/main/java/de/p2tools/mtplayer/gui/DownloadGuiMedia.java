@@ -17,7 +17,6 @@
 package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
@@ -44,9 +43,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 
 import java.util.Date;
 
@@ -86,21 +82,19 @@ public class DownloadGuiMedia extends VBox {
         }
 
         this.downloadData = downloadData;
-        getSearchString(downloadData, true);
-        getSearchString(downloadData, false);
+        setSearchString(true);
+        setSearchString(false);
     }
 
-    private void getSearchString(DownloadData downloadData, boolean media) {
-        String searchString = "";
+    private void setSearchString(boolean media) {
         if (downloadData == null) {
             return;
         }
 
-        searchString = MediaCleaningFactory.cleanSearchText(downloadData, media);
         if (media) {
-            txtSearchMedia.setText(searchString);
+            txtSearchMedia.setText(MediaCleaningFactory.cleanSearchText(downloadData.getTheme(), downloadData.getTitle(), media));
         } else {
-            txtSearchAbo.setText(searchString);
+            txtSearchAbo.setText(MediaCleaningFactory.cleanSearchText(downloadData.getTheme(), downloadData.getTitle(), media));
         }
     }
 
@@ -116,67 +110,20 @@ public class DownloadGuiMedia extends VBox {
         HBox.setHgrow(txtSearchMedia, Priority.ALWAYS);
         HBox.setHgrow(txtSearchAbo, Priority.ALWAYS);
 
+        // Suchen in den Medien
+        VBox vLeft = DownloadGuiMediaSearch.getSearchMedia(lblSumMedia);
+        vLeft.getChildren().add(tableMedia);
+        VBox vRight = DownloadGuiMediaSearch.getSearchAbo(lblSumAbo, true);
+        vRight.getChildren().add(tableAbo);
 
-        HBox hBox = new HBox(P2LibConst.DIST_EDGE);
-        hBox.setAlignment(Pos.CENTER_LEFT);
-        hBox.setPadding(new Insets(P2LibConst.DIST_BUTTON));
-        final Text text1 = new Text("Mediensammlung, suchen im: " +
-                (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL ?
-                        "Dateinamen" : "Pfad und Dateinamen"));
-        text1.setFont(Font.font(null, FontWeight.BOLD, -1));
-        text1.getStyleClass().add("downloadGuiMediaText");
-        ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.addListener((u, o, n) -> text1.setText("Mediensammlung, suchen im: " +
-                (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL ?
-                        "Dateinamen" : "Pfad und Dateinamen")));
-        Button btnChangeMedia = new Button();
-        btnChangeMedia.getStyleClass().add("buttonVerySmall");
-        btnChangeMedia.setTooltip(new Tooltip("Einstellung wo gesucht wird, ändern"));
-        btnChangeMedia.setGraphic(ProgIcons.Icons.ICON_BUTTON_CHANGE.getImageView());
-        btnChangeMedia.setOnAction(a -> {
-            if (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL) {
-                ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT);
-            } else {
-                ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);
-            }
-            filter(true);
+        ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.addListener((u, o, n) -> filter(true));
+        ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.addListener((u, o, n) -> filter(false));
+        ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_MEDIA.addListener((u, o, n) -> {
+            setSearchString(true);
         });
-
-        hBox.getChildren().addAll(text1, PGuiTools.getHBoxGrower(), lblSumMedia, btnChangeMedia);
-
-        VBox vLeft = new VBox(0);
-        vLeft.setPadding(new Insets(0));
-        vLeft.getChildren().addAll(hBox, tableMedia);
-
-        hBox = new HBox(P2LibConst.DIST_EDGE);
-        hBox.setAlignment(Pos.CENTER_LEFT);
-        hBox.setPadding(new Insets(P2LibConst.DIST_BUTTON));
-        Text text2 = new Text("Abos, suchen im: " +
-                (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL ?
-                        "Titel des Abos" : "Thema oder Titel des Abos"));
-        text2.setFont(Font.font(null, FontWeight.BOLD, -1));
-        text2.getStyleClass().add("downloadGuiMediaText");
-        ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.addListener((u, o, n) -> text2.setText("Abos, suchen im: " +
-                (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL ?
-                        "Titel des Abos" : "Thema oder Titel des Abos")));
-
-        Button btnChangeAbo = new Button();
-        btnChangeAbo.getStyleClass().add("buttonVerySmall");
-        btnChangeAbo.setTooltip(new Tooltip("Einstellung wo gesucht wird, ändern"));
-        btnChangeAbo.setGraphic(ProgIcons.Icons.ICON_BUTTON_CHANGE.getImageView());
-        btnChangeAbo.setOnAction(a -> {
-            if (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL) {
-                ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT);
-            } else {
-                ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);
-            }
-            filter(false);
+        ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_ABO.addListener((u, o, n) -> {
+            setSearchString(false);
         });
-
-        hBox.getChildren().addAll(text2, PGuiTools.getHBoxGrower(), lblSumAbo, btnChangeAbo);
-
-        VBox vRight = new VBox(0);
-        vRight.setPadding(new Insets(0));
-        vRight.getChildren().addAll(hBox, tableAbo);
 
         tableMedia.setStyle("-fx-border-width: 1px;");
         tableMedia.setStyle("-fx-border-color: -text-color-blue;");
@@ -195,36 +142,32 @@ public class DownloadGuiMedia extends VBox {
 
     private void initMenu(boolean media) {
         btnConfig.setTooltip(new Tooltip("Einstellungen anzeigen:\n" +
-                " -> rechte Maustaste: Mediensammlung voreingestellt,\n" +
-                " -> linke Maustaste: Abos voreingestellt"));
+                " -> linke Maustaste: Mediensammlung voreingestellt,\n" +
+                " -> rechte Maustaste: Abos voreingestellt"));
         btnConfig.setGraphic(ProgIcons.Icons.ICON_BUTTON_EDIT.getImageView());
         btnConfig.setOnAction(a -> {
             new MediaCleaningDialogController(true);
-            getSearchString(downloadData, true);
-            getSearchString(downloadData, false);
-            filter(true);
-            filter(false);
+            setSearchString(true);
+            setSearchString(false);
         });
         btnConfig.setOnMouseClicked(e -> {
             if (e.getButton() == MouseButton.SECONDARY) {
                 new MediaCleaningDialogController(false);
-                getSearchString(downloadData, true);
-                getSearchString(downloadData, false);
-                filter(true);
-                filter(false);
+                setSearchString(true);
+                setSearchString(false);
             }
         });
 
         btnDialogMedia.setTooltip(new Tooltip("Dialog Mediensammlung öffnen:\n" +
-                " -> rechte Maustaste: Mediensammlung voreingestellt,\n" +
-                " -> linke Maustaste: Abos voreingestellt"));
+                " -> linke Maustaste: Mediensammlung voreingestellt,\n" +
+                " -> rechte Maustaste: Abos voreingestellt"));
         btnDialogMedia.setGraphic(ProgIcons.Icons.ICON_BUTTON_MENU.getImageView());
         btnDialogMedia.setOnAction(a -> {
             new MediaDialogController(
                     downloadData == null ? "" : downloadData.getTheme(),
                     downloadData == null ? txtSearchMedia.getText() : downloadData.getTitle(), true);
-            filter(true);
-            filter(false);
+            setSearchString(true);
+            setSearchString(false);
         });
         btnDialogMedia.setOnMouseClicked(e -> {
             if (e.getButton() == MouseButton.SECONDARY) {
@@ -232,8 +175,8 @@ public class DownloadGuiMedia extends VBox {
                         downloadData == null ? "" : downloadData.getTheme(),
                         downloadData == null ? txtSearchAbo.getText() : downloadData.getTitle(), false);
             }
-            filter(true);
-            filter(false);
+            setSearchString(true);
+            setSearchString(false);
         });
 
         btnClear.setTooltip(new Tooltip("Die Suchfelder löschen"));
@@ -272,7 +215,7 @@ public class DownloadGuiMedia extends VBox {
         });
     }
 
-    private void filter(boolean media) {
+    void filter(boolean media) {
         if (media) {
             progData.mediaDataList.filteredListSetPredicate(
                     MediaSearchPredicateFactory.getPredicateMediaData(txtSearchMedia.getText()));
@@ -286,13 +229,16 @@ public class DownloadGuiMedia extends VBox {
         final TableColumn<MediaData, String> pathColumn = new TableColumn<>("Pfad");
         pathColumn.setCellValueFactory(new PropertyValueFactory<>("path"));
         pathColumn.getStyleClass().add("special-column-style");
+        pathColumn.prefWidthProperty().bind(tableMedia.widthProperty().multiply(45.0 / 100));
 
         final TableColumn<MediaData, String> nameColumn = new TableColumn<>("Dateiname");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         nameColumn.getStyleClass().add("special-column-style");
+        nameColumn.prefWidthProperty().bind(tableMedia.widthProperty().multiply(45.0 / 100));
 
         tableMedia.getColumns().addAll(nameColumn, pathColumn);
-        tableMedia.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableMedia.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+
 
         SortedList<MediaData> sortedList = progData.mediaDataList.getSortedList();
         sortedList.comparatorProperty().bind(tableMedia.comparatorProperty());
@@ -333,7 +279,7 @@ public class DownloadGuiMedia extends VBox {
         dateColumn.getStyleClass().add("alignCenter");
 
         tableAbo.getColumns().addAll(themeColumn, titleColumn, dateColumn);
-        tableAbo.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableAbo.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
         SortedList<HistoryData> sortedList = progData.erledigteAbos.getSortedList();
         sortedList.comparatorProperty().bind(tableAbo.comparatorProperty());

@@ -20,7 +20,6 @@ package de.p2tools.mtplayer.controller.mediadb;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.mediacleaningdata.MediaCleaningData;
 import de.p2tools.mtplayer.controller.data.mediacleaningdata.MediaCleaningList;
 
@@ -44,45 +43,41 @@ public class MediaCleaningFactory {
         }
     }
 
-    public static String cleanSearchText(DownloadData downloadData, boolean media) {
-        return cleanSearchText(downloadData.getTheme(), downloadData.getTitle(), media,
-                media ? ProgConfig.DOWNLOAD_GUI_MEDIA_AND_OR_MEDIA.getValue() : ProgConfig.DOWNLOAD_GUI_MEDIA_AND_OR_ABO.getValue(),
-                media ? ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_DATE_MEDIA.getValue() : ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_DATE_ABO.getValue(),
-                media ? ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_NUMBER_MEDIA.getValue() : ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_NUMBER_ABO.getValue(),
-                media ? ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_CLIP_MEDIA.getValue() : ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_CLIP_ABO.getValue(),
-                media ? ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_LIST_MEDIA.getValue() : ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_LIST_ABO.getValue());
-    }
-
-    public static String cleanSearchText(String searchTheme, String searchTitel,
-                                         boolean media,
-                                         boolean andOr, boolean date, boolean number, boolean clip, boolean list) {
+    public static String cleanSearchText(String searchTheme, String searchTitel, boolean media) {
         String searchString;
-        switch (media ? ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_TT_MEDIA.getValue() : ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_TT_ABO.getValue()) {
-            case ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL:
+        switch (media ? ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_MEDIA.getValue() : ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_ABO.getValue()) {
+            case ProgConst.MEDIA_COLLECTION_SEARCH_THEME:
+                searchString = searchTheme.toLowerCase();
+                break;
+            case ProgConst.MEDIA_COLLECTION_SEARCH_TITEL:
                 searchString = searchTitel.toLowerCase();
                 break;
             default:
                 searchString = searchTheme.toLowerCase() + " " + searchTitel.toLowerCase();
         }
 
-        if (media ? ProgConfig.DOWNLOAD_GUI_MEDIA_EXACT_MEDIA.getValue() : ProgConfig.DOWNLOAD_GUI_MEDIA_EXACT_ABO.getValue()) {
+        if (media ? ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_EXACT_MEDIA.getValue() :
+                ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_EXACT_ABO.getValue()) {
             //dann wird nicht gereinigt, aber EXACT
             return "\"" + searchString + "\"";
         }
 
-        if (media ? !ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_MEDIA.getValue() : !ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_ABO.getValue()) {
+        if (media ? !ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_MEDIA.getValue() :
+                !ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_ABO.getValue()) {
             //dann wird nicht gereinigt
             return searchString;
         }
 
         //dann reinigen
-        if (clip) {
+        if (media ? ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_CLIP_MEDIA.getValue() :
+                ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_CLIP_ABO.getValue()) {
             searchString = cleanSearchString(searchString, "(", ")");
             searchString = cleanSearchString(searchString, "[", "]");
             searchString = cleanSearchString(searchString, "{", "}");
         }
 
-        if (date) {
+        if (media ? ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_DATE_MEDIA.getValue() :
+                ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_DATE_ABO.getValue()) {
             //29.03.2023
             searchString = searchString.replaceAll("(0[1-9]|[12][0-9]|3[01])(\\.|\\/|-)(0[1-9]|1[0-2])(\\.|\\/|-)((?:19|20)\\d{2})",
                     " ");
@@ -95,7 +90,8 @@ public class MediaCleaningFactory {
                     "(januar|februar|märz|april|mai|juni|juli|augist|september|oktober|november|dezember)", " ");
         }
 
-        if (number) {
+        if (media ? ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_NUMBER_MEDIA.getValue() :
+                ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_NUMBER_ABO.getValue()) {
             // 29.
             searchString = searchString.replaceAll("([0-9]+)(\\.|\\/|-)", " ");
 
@@ -103,7 +99,8 @@ public class MediaCleaningFactory {
             searchString = searchString.replaceAll("([0-9])", " ");
         }
 
-        if (list) {
+        if (media ? ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_LIST_MEDIA.getValue() :
+                ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_LIST_ABO.getValue()) {
             // dann wird die PUTZ-LISTE angewandt
             final String[] searchArr = ProgData.getInstance().mediaCleaningList.getSearchArr();
             for (String s : searchArr) {
@@ -118,7 +115,8 @@ public class MediaCleaningFactory {
         }
 
         // und jetzt ersetzten
-        if (andOr) {
+        if (media ? ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_AND_OR_MEDIA.getValue() :
+                ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_AND_OR_ABO.getValue()) {
             searchString = searchString.replaceAll(" ", TRENNER_AND);
         } else {
             searchString = searchString.replaceAll(" ", TRENNER_OR);

@@ -48,7 +48,7 @@ public class PaneMedia extends PaneDialog {
     private ProgData progData = ProgData.getInstance();
 
     public PaneMedia(Stage stage, String searchThemeOrg, String searchTitelOrg, StringProperty searchStringProp) {
-        super(searchThemeOrg, searchTitelOrg, searchStringProp, true);
+        super(searchThemeOrg, searchTitelOrg, searchStringProp, true, false);
         this.stage = stage;
         this.filteredList = new FilteredList<>(progData.mediaDataList, p -> true);
         this.sortedList = new SortedList<>(filteredList);
@@ -154,7 +154,7 @@ public class PaneMedia extends PaneDialog {
     }
 
     @Override
-    void filter() {
+    public void filter() {
         filteredList.setPredicate(MediaSearchPredicateFactory.getPredicateMediaData(txtSearch.getText()));
         lblHits.setText(filteredList.size() + "");
     }

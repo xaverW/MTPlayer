@@ -23,6 +23,7 @@ import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.history.HistoryData;
 import de.p2tools.mtplayer.controller.mediadb.MediaCleaningFactory;
 import de.p2tools.mtplayer.controller.mediadb.MediaData;
+import de.p2tools.mtplayer.gui.DownloadGuiMediaSearch;
 import de.p2tools.mtplayer.gui.mediacleaning.MediaCleaningDialogController;
 import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.p2lib.P2LibConst;
@@ -32,15 +33,13 @@ import de.p2tools.p2lib.mtfilter.FilterCheckRegEx;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.ListChangeListener;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 public class PaneDialog extends ScrollPane {
@@ -77,17 +76,20 @@ public class PaneDialog extends ScrollPane {
     private final StringProperty searchStringProp;
 
     private final boolean media;
+    private final boolean abo;
+
     private ProgData progData = ProgData.getInstance();
 
     ChangeListener sizeListener;
     ListChangeListener<HistoryData> listener;
 
     public PaneDialog(String searchThemeOrg, String searchTitelOrg,
-                      StringProperty searchStringProp, boolean media) {
+                      StringProperty searchStringProp, boolean media, boolean abo) {
         this.searchThemeOrg = searchThemeOrg;
         this.searchTitelOrg = searchTitelOrg;
         this.searchStringProp = searchStringProp;
         this.media = media;
+        this.abo = abo;
 
         listenerDbStart = new Listener(Listener.EVENT_MEDIA_DB_START, MediaDialogController.class.getSimpleName()) {
             @Override
@@ -122,8 +124,6 @@ public class PaneDialog extends ScrollPane {
         txtTitleMedia.setEditable(false);
         txtPathMedia.setEditable(false);
 
-        VBox vBoxMedia = new VBox(P2LibConst.DIST_EDGE);
-
         btnReset.setGraphic(ProgIcons.Icons.ICON_BUTTON_RESET.getImageView());
         btnReset.setTooltip(new Tooltip("Suchtext wieder herstellen"));
 
@@ -137,70 +137,35 @@ public class PaneDialog extends ScrollPane {
         btnClear.setTooltip(new Tooltip("Das Suchfeld löschen"));
         btnClear.setOnAction(a -> txtSearch.clear());
 
-        GridPane gridPaneSearch = new GridPane();
-        gridPaneSearch.setPadding(new Insets(P2LibConst.DIST_EDGE));
-        gridPaneSearch.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
-        gridPaneSearch.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
-        txtSearch.setPrefWidth(Double.MAX_VALUE);
-        GridPane.setHgrow(txtSearch, Priority.ALWAYS);
-        gridPaneSearch.getStyleClass().add("extra-pane");
-        gridPaneSearch.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrow());
+        // Suchen was
+        VBox vLeft = DownloadGuiMediaSearch.getSearchMedia(null);
+        VBox vRight = DownloadGuiMediaSearch.getSearchAbo(null, abo);
 
-        final Text text1 = new Text("Mediensammlung, suchen im: " +
-                (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL ?
-                        "Dateinamen" : "Pfad und Dateinamen"));
-        text1.setFont(Font.font(null, FontWeight.BOLD, -1));
-        text1.getStyleClass().add("downloadGuiMediaText");
-        ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.addListener((u, o, n) -> text1.setText("Mediensammlung, suchen im: " +
-                (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL ?
-                        "Dateinamen" : "Pfad und Dateinamen")));
-
-        Button btnChangeMedia = new Button();
-        btnChangeMedia.getStyleClass().add("buttonVeryLow");
-        btnChangeMedia.setTooltip(new Tooltip("Einstellung wo gesucht wird, ändern"));
-        btnChangeMedia.setGraphic(ProgIcons.Icons.ICON_BUTTON_CHANGE.getImageView());
-        btnChangeMedia.setOnAction(a -> {
-            if (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL) {
-                ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT);
-            } else {
-                ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);
-            }
-            filter();
+        ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.addListener((u, o, n) -> filter());
+        ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.addListener((u, o, n) -> filter());
+        ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_MEDIA.addListener((u, o, n) -> {
+            setSearchString();
+//            filter();
         });
-        Button btnChangeAbo = new Button();
-        btnChangeAbo.getStyleClass().add("buttonVeryLow");
-        btnChangeAbo.setTooltip(new Tooltip("Einstellung wo gesucht wird, ändern"));
-        btnChangeAbo.setGraphic(ProgIcons.Icons.ICON_BUTTON_CHANGE.getImageView());
-        btnChangeAbo.setOnAction(a -> {
-            if (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL) {
-                ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT);
-            } else {
-                ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);
-            }
-            filter();
+        ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_ABO.addListener((u, o, n) -> {
+            setSearchString();
+//            filter();
         });
 
-        int row = 0;
-        if (media) {
-            gridPaneSearch.add(text1, 0, row, 4, 1);
-            gridPaneSearch.add(btnChangeMedia, 8, row);
-            GridPane.setHalignment(btnChangeMedia, HPos.RIGHT);
-        } else {
-            gridPaneSearch.add(textSearch, 0, row, 4, 1);
-            gridPaneSearch.add(btnChangeAbo, 8, row);
-            GridPane.setHalignment(btnChangeAbo, HPos.RIGHT);
-        }
-        gridPaneSearch.add(new Label("Suchen: "), 0, ++row);
-        gridPaneSearch.add(txtSearch, 1, row, 4, 1);
-        gridPaneSearch.add(btnReset, 5, row);
-        gridPaneSearch.add(btnClean, 6, row);
-        gridPaneSearch.add(btnConfig, 7, row);
-        gridPaneSearch.add(btnClear, 8, row);
+        txtSearch.setMaxWidth(Double.MAX_VALUE);
+        HBox.setHgrow(txtSearch, Priority.ALWAYS);
+
+        HBox hBoxSearch = new HBox(P2LibConst.DIST_HBOX);
+        hBoxSearch.setPadding(new Insets(0));
+        hBoxSearch.setAlignment(Pos.CENTER_RIGHT);
+        hBoxSearch.getChildren().addAll(new Label("Suchen: "), txtSearch, btnReset, btnClean, btnConfig, btnClear);
+        VBox.setVgrow(hBoxSearch, Priority.ALWAYS);
 
         if (media) {
-            HBox hBoxProgress = new HBox();
-            hBoxProgress.setSpacing(P2LibConst.DIST_BUTTON);
+            HBox hBoxProgress = new HBox(P2LibConst.DIST_HBOX);
+            hBoxProgress.setPadding(new Insets(0));
+            hBoxProgress.setAlignment(Pos.CENTER_RIGHT);
+
             progress.setVisible(false);
             progress.setMaxHeight(Double.MAX_VALUE);
             progress.setMaxWidth(Double.MAX_VALUE);
@@ -209,9 +174,9 @@ public class PaneDialog extends ScrollPane {
             btnStopSearching.visibleProperty().bind(progData.mediaDataList.searchingProperty());
             hBoxProgress.getChildren().addAll(btnCreateMediaDB, progress, btnStopSearching);
             HBox.setHgrow(progress, Priority.ALWAYS);
-            gridPaneSearch.add(hBoxProgress, 0, ++row, 9, 1);
+            vLeft.getChildren().addAll(hBoxSearch, hBoxProgress);
         } else {
-            gridPaneSearch.add(btnClearList, 0, ++row, 3, 1);
+            vRight.getChildren().addAll(hBoxSearch, btnClearList);
         }
 
         HBox hBoxSum = new HBox(P2LibConst.DIST_BUTTON);
@@ -231,16 +196,19 @@ public class PaneDialog extends ScrollPane {
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcComputedSizeAndHgrow());
 
+        VBox vBoxMedia = new VBox(P2LibConst.DIST_EDGE);
+
         if (media) {
             tableMedia.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
             VBox.setVgrow(tableMedia, Priority.ALWAYS);
-            vBoxMedia.getChildren().addAll(gridPaneSearch, tableMedia, hBoxSum, gridPane);
+            vBoxMedia.getChildren().addAll(vLeft, tableMedia, hBoxSum, gridPane);
 
         } else {
             tableAbo.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
             VBox.setVgrow(tableAbo, Priority.ALWAYS);
-            vBoxMedia.getChildren().addAll(gridPaneSearch, tableAbo, hBoxSum, gridPane);
+            vBoxMedia.getChildren().addAll(vRight, tableAbo, hBoxSum, gridPane);
         }
+
         this.setPadding(new Insets(P2LibConst.DIST_EDGE));
         this.setFitToHeight(true);
         this.setFitToWidth(true);
@@ -264,13 +232,10 @@ public class PaneDialog extends ScrollPane {
             }
         });
         btnReset.setOnAction(a -> txtSearch.setText(searchThemeOrg + " " + searchTitelOrg));
-        btnClean.setOnAction(a -> txtSearch.setText(MediaCleaningFactory.cleanSearchText(searchThemeOrg, searchTitelOrg,
-                media,
-                media ? ProgConfig.DOWNLOAD_GUI_MEDIA_AND_OR_MEDIA.getValue() : ProgConfig.DOWNLOAD_GUI_MEDIA_AND_OR_ABO.getValue(),
-                media ? ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_DATE_MEDIA.getValue() : ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_DATE_ABO.getValue(),
-                media ? ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_NUMBER_MEDIA.getValue() : ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_NUMBER_ABO.getValue(),
-                media ? ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_CLIP_MEDIA.getValue() : ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_CLIP_ABO.getValue(),
-                media ? ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_LIST_MEDIA.getValue() : ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_LIST_ABO.getValue())));
+        btnClean.setOnAction(a -> {
+            setSearchString();
+            filter();
+        });
 
         btnConfig.setOnAction(a -> {
             new MediaCleaningDialogController(media);
@@ -286,6 +251,10 @@ public class PaneDialog extends ScrollPane {
         filter();
     }
 
-    void filter() {
+    public void filter() {
+    }
+
+    private void setSearchString() {
+        txtSearch.setText(MediaCleaningFactory.cleanSearchText(searchThemeOrg, searchTitelOrg, media));
     }
 }

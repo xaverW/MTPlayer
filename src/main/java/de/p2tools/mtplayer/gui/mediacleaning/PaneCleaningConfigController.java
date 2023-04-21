@@ -17,17 +17,15 @@
 package de.p2tools.mtplayer.gui.mediacleaning;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -39,10 +37,10 @@ public class PaneCleaningConfigController {
     private final ProgData progData;
     private final Stage stage;
     private boolean media;
-    private final RadioButton rbTitel = new RadioButton("Titel des Films");
-    private final RadioButton rbTT = new RadioButton("Thema und Titel des Films");
-    private final RadioButton rbInTitel = new RadioButton();
-    private final RadioButton rbInTT = new RadioButton();
+//    private final RadioButton rbTitel = new RadioButton("Titel des Films");
+//    private final RadioButton rbTT = new RadioButton("Thema und Titel des Films");
+//    private final RadioButton rbInTitel = new RadioButton();
+//    private final RadioButton rbInTT = new RadioButton();
 
     private final PToggleSwitch tglExact = new PToggleSwitch("Exakt den Begriff suchen");
     private final PToggleSwitch tglClean = new PToggleSwitch("Putzen");
@@ -78,78 +76,78 @@ public class PaneCleaningConfigController {
 
     private void initPane() {
         //Suchbegriff
-        ToggleGroup tg = new ToggleGroup();
-        rbTitel.setToggleGroup(tg);
-        rbTT.setToggleGroup(tg);
-        switch (media ? ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_TT_MEDIA.getValue() :
-                ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_TT_ABO.getValue()) {
-            case ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL:
-                rbTitel.setSelected(true);
-                break;
-            default:
-                rbTT.setSelected(true);
-                break;
-        }
-        rbTitel.selectedProperty().addListener((u, o, n) -> {
-            if (n) {
-                if (media) {
-                    ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_TT_MEDIA.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);
-                } else {
-                    ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_TT_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);
-                }
-            }
-        });
-        rbTT.selectedProperty().addListener((u, o, n) -> {
-            if (n) {
-                if (media) {
-                    ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_TT_MEDIA.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT);
-                } else {
-                    ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_TT_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT);
-                }
-            }
-        });
+//        ToggleGroup tg = new ToggleGroup();
+//        rbTitel.setToggleGroup(tg);
+//        rbTT.setToggleGroup(tg);
+//        switch (media ? ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_TT_MEDIA.getValue() :
+//                ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_TT_ABO.getValue()) {
+//            case ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL:
+//                rbTitel.setSelected(true);
+//                break;
+//            default:
+//                rbTT.setSelected(true);
+//                break;
+//        }
+//        rbTitel.selectedProperty().addListener((u, o, n) -> {
+//            if (n) {
+//                if (media) {
+//                    ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_TT_MEDIA.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);
+//                } else {
+//                    ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_TT_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);
+//                }
+//            }
+//        });
+//        rbTT.selectedProperty().addListener((u, o, n) -> {
+//            if (n) {
+//                if (media) {
+//                    ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_TT_MEDIA.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT);
+//                } else {
+//                    ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_TT_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT);
+//                }
+//            }
+//        });
 
         //suchen wo
-        ToggleGroup tgIn = new ToggleGroup();
-        rbInTitel.setToggleGroup(tgIn);
-        rbInTT.setToggleGroup(tgIn);
-        rbInTitel.setText(media ? "Dateinamen" : "Titel des Abos / History-Films");
-        rbInTT.setText(media ? "Pfad oder Dateinamen" : "Thema oder Titel des Abos / History-Films");
-        switch (media ? ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.intValue() :
-                ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.getValue()) {
-            case ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL:
-                rbInTitel.setSelected(true);
-                break;
-            default:
-                rbInTT.setSelected(true);
-                break;
-        }
-        rbInTitel.selectedProperty().addListener((u, o, n) -> {
-            if (n) {
-                if (media) {
-                    ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);
-                } else {
-                    ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);
-                }
-            }
-        });
-        rbInTT.selectedProperty().addListener((u, o, n) -> {
-            if (n) {
-                if (media) {
-                    ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT);
-                } else {
-                    ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT);
-                }
-            }
-        });
+//        ToggleGroup tgIn = new ToggleGroup();
+//        rbInTitel.setToggleGroup(tgIn);
+//        rbInTT.setToggleGroup(tgIn);
+//        rbInTitel.setText(media ? "Dateinamen" : "Titel des Abos / History-Films");
+//        rbInTT.setText(media ? "Pfad oder Dateinamen" : "Thema oder Titel des Abos / History-Films");
+//        switch (media ? ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.intValue() :
+//                ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.getValue()) {
+//            case ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL:
+//                rbInTitel.setSelected(true);
+//                break;
+//            default:
+//                rbInTT.setSelected(true);
+//                break;
+//        }
+//        rbInTitel.selectedProperty().addListener((u, o, n) -> {
+//            if (n) {
+//                if (media) {
+//                    ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);
+//                } else {
+//                    ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);
+//                }
+//            }
+//        });
+//        rbInTT.selectedProperty().addListener((u, o, n) -> {
+//            if (n) {
+//                if (media) {
+//                    ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT);
+//                } else {
+//                    ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT);
+//                }
+//            }
+//        });
 
-        tglExact.selectedProperty().bindBidirectional(media ? ProgConfig.DOWNLOAD_GUI_MEDIA_EXACT_MEDIA : ProgConfig.DOWNLOAD_GUI_MEDIA_EXACT_ABO);
+        tglExact.selectedProperty().bindBidirectional(media ? ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_EXACT_MEDIA : ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_EXACT_ABO);
 
         tglClean.disableProperty().bind(tglExact.selectedProperty());
         tglClean.selectedProperty().bindBidirectional(media ? ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_MEDIA : ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_ABO);
 
         tglAndOr.disableProperty().bind(tglExact.selectedProperty().or(tglClean.selectedProperty().not()));
-        tglAndOr.selectedProperty().bindBidirectional(media ? ProgConfig.DOWNLOAD_GUI_MEDIA_AND_OR_MEDIA : ProgConfig.DOWNLOAD_GUI_MEDIA_AND_OR_ABO);
+        tglAndOr.selectedProperty().bindBidirectional(media ? ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_AND_OR_MEDIA : ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_AND_OR_ABO);
 
         tglNum.disableProperty().bind(tglExact.selectedProperty().or(tglClean.selectedProperty().not()));
         tglNum.selectedProperty().bindBidirectional(media ?
@@ -178,39 +176,58 @@ public class PaneCleaningConfigController {
         vBox.getChildren().addAll(gridPane);
 
         //Suchen was
-        Text text;
         if (media) {
-            text = new Text("Suche in der Mediensammlung");
+            Text text = new Text("Suche in der ");
+            text.setFont(Font.font(null, FontWeight.BOLD, -1));
+            text.getStyleClass().add("downloadGuiMediaText");
+            Text txtMed = new Text("Mediensammlung");
+            txtMed.setUnderline(true);
+            txtMed.setFont(Font.font(null, FontWeight.BOLD, -1));
+            txtMed.getStyleClass().add("downloadGuiMediaText");
+            HBox h = new HBox(0);
+            h.getChildren().addAll(text, txtMed);
+            gridPane.add(h, 0, row);
+
         } else {
-            text = new Text("Suche in den Abos und der History");
+            Text text = new Text("Suche in den ");
+            text.setFont(Font.font(null, FontWeight.BOLD, -1));
+            text.getStyleClass().add("downloadGuiMediaText");
+            Text txtAbo = new Text("Abos und der History");
+            txtAbo.setFont(Font.font(null, FontWeight.BOLD, -1));
+            txtAbo.getStyleClass().add("downloadGuiMediaText");
+            txtAbo.setUnderline(true);
+            HBox h = new HBox(0);
+            h.getChildren().addAll(text, txtAbo);
+            gridPane.add(h, 0, row);
         }
-        text.setFont(Font.font(null, FontWeight.BOLD, -1));
-        text.getStyleClass().add("downloadGuiMediaText");
-        gridPane.add(text, 0, row);
-        ++row;
-        gridPane.add(new Label("Der Suchbegriff wird gebildet aus dem:"), 0, ++row);
-        gridPane.add(rbTitel, 0, ++row);
-        gridPane.add(rbTT, 0, ++row);
+
+
+//        ++row;
+//        gridPane.add(new Label("Der Suchbegriff wird gebildet aus dem:"), 0, ++row);
+//        gridPane.add(rbTitel, 0, ++row);
+//        gridPane.add(rbTT, 0, ++row);
 
         //Suchen wo
-        ++row;
-        gridPane.add(new Label("Der Suchbegriff muss vorkommen im:"), 0, ++row);
-        gridPane.add(rbInTitel, 0, ++row);
-        gridPane.add(rbInTT, 0, ++row);
+//        ++row;
+//        gridPane.add(new Label("Der Suchbegriff muss vorkommen im:"), 0, ++row);
+//        gridPane.add(rbInTitel, 0, ++row);
+//        gridPane.add(rbInTT, 0, ++row);
 
         //Sucheinstellungen
-        text = new Text("Einstellungen der Suche");
-        text.setFont(Font.font(null, FontWeight.BOLD, -1));
-        text.getStyleClass().add("downloadGuiMediaText");
-        gridPane.add(new Label(""), 0, ++row);
-        gridPane.add(text, 0, ++row);
+//        text = new Text("Einstellungen der Suche");
+//        text.setFont(Font.font(null, FontWeight.BOLD, -1));
+//        text.getStyleClass().add("downloadGuiMediaText");
+//        gridPane.add(new Label(""), 0, ++row);
+//        gridPane.add(text, 0, ++row);
+//
 
-        ++row;
+        gridPane.add(new Label(), 0, ++row);
         gridPane.add(tglExact, 0, ++row);
 
         gridPane.add(new Label(), 0, ++row);
         gridPane.add(tglClean, 0, ++row);
 
+        ++row;
         ++row;
         gridPane.add(tglAndOr, 0, ++row);
         gridPane.add(tglNum, 0, ++row);

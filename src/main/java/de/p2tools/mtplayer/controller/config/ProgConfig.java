@@ -233,16 +233,16 @@ public class ProgConfig extends PDataProgConfig {
     public static DoubleProperty DOWNLOAD_GUI_MEDIA_DIVIDER = addDoubleProp("download-gui-media-divider", 0.5);
 
     //Gui Download Media
-    public static IntegerProperty DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_TT_MEDIA = addIntProp("download-gui-media-build-search-tt-media", ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);//aus was der Suchbegriff gebaut wird: T/Th/TT
-    public static IntegerProperty DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_TT_ABO = addIntProp("download-gui-media-build-search-tt-abo", ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);//aus was der Suchbegriff gebaut wird: T/Th/TT
-    public static IntegerProperty DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA = addIntProp("download-gui-media-search-in-media", ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);//wo bei Medien gesucht wird: T/Th/TT
-    public static IntegerProperty DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO = addIntProp("download-gui-media-search-in-abo", ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);//wo bei Abos gesucht wird: T/Th/TT
-    public static BooleanProperty DOWNLOAD_GUI_MEDIA_EXACT_MEDIA = addBoolProp("download-gui-media-exact-media", Boolean.FALSE);
-    public static BooleanProperty DOWNLOAD_GUI_MEDIA_EXACT_ABO = addBoolProp("download-gui-media-exact-abo", Boolean.FALSE);
+    public static IntegerProperty DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_MEDIA = addIntProp("download-gui-media-build-search-media", ProgConst.MEDIA_COLLECTION_SEARCH_TITEL);//aus was der Suchbegriff gebaut wird: T/Th/TT
+    public static IntegerProperty DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_ABO = addIntProp("download-gui-media-build-search-abo", ProgConst.MEDIA_COLLECTION_SEARCH_TITEL);//aus was der Suchbegriff gebaut wird: T/Th/TT
+    public static IntegerProperty DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA = addIntProp("download-gui-media-search-in-media", ProgConst.MEDIA_COLLECTION_SEARCH_TITEL);//wo bei Medien gesucht wird: T/Th/TT
+    public static IntegerProperty DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO = addIntProp("download-gui-media-search-in-abo", ProgConst.MEDIA_COLLECTION_SEARCH_TITEL);//wo bei Abos gesucht wird: T/Th/TT
     public static BooleanProperty DOWNLOAD_GUI_MEDIA_CLEAN_MEDIA = addBoolProp("download-gui-media-clean-media", Boolean.TRUE);
     public static BooleanProperty DOWNLOAD_GUI_MEDIA_CLEAN_ABO = addBoolProp("download-gui-media-clean-abo", Boolean.TRUE);
-    public static BooleanProperty DOWNLOAD_GUI_MEDIA_AND_OR_MEDIA = addBoolProp("download-gui-media-and-or-media", Boolean.TRUE);
-    public static BooleanProperty DOWNLOAD_GUI_MEDIA_AND_OR_ABO = addBoolProp("download-gui-media-and-or-abo", Boolean.TRUE);
+    public static BooleanProperty DOWNLOAD_GUI_MEDIA_CLEAN_EXACT_MEDIA = addBoolProp("download-gui-media-clean-exact-media", Boolean.FALSE);
+    public static BooleanProperty DOWNLOAD_GUI_MEDIA_CLEAN_EXACT_ABO = addBoolProp("download-gui-media-clean-exact-abo", Boolean.FALSE);
+    public static BooleanProperty DOWNLOAD_GUI_MEDIA_CLEAN_AND_OR_MEDIA = addBoolProp("download-gui-media-clean-and-or-media", Boolean.TRUE);
+    public static BooleanProperty DOWNLOAD_GUI_MEDIA_CLEAN_AND_OR_ABO = addBoolProp("download-gui-media-clean-and-or-abo", Boolean.TRUE);
     public static BooleanProperty DOWNLOAD_GUI_MEDIA_CLEAN_NUMBER_MEDIA = addBoolProp("download-gui-media-clean-number-media", Boolean.TRUE);
     public static BooleanProperty DOWNLOAD_GUI_MEDIA_CLEAN_NUMBER_ABO = addBoolProp("download-gui-media-clean-number-abo", Boolean.TRUE);
     public static BooleanProperty DOWNLOAD_GUI_MEDIA_CLEAN_DATE_MEDIA = addBoolProp("download-gui-media-clean-date-media", Boolean.TRUE);
