@@ -199,9 +199,6 @@ public class DirectHttpDownload extends Thread {
                 // Anzeige ändern - bei Fehler fehlt der Eintrag
                 download.setStateError();
             }
-        } else {
-            // todo
-            download.setProgress(DownloadConstants.PROGRESS_NOT_STARTED);
         }
     }
 

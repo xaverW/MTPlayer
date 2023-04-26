@@ -48,7 +48,7 @@ public class Start {
 
     public void setBandwidth(long bandwidth) {
         this.bandwidth = bandwidth;
-        download.setBandwidth(SizeTools.humanReadableByteCount(bandwidth, true));
+        download.setBandwidth(bandwidth == 0 ? "" : SizeTools.humanReadableByteCount(bandwidth, true));
     }
 
     public long getTimeLeftSeconds() {
