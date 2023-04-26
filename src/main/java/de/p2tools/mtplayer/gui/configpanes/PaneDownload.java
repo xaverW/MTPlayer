@@ -25,6 +25,7 @@ import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.*;
@@ -40,6 +41,11 @@ public class PaneDownload {
 
     private final PToggleSwitch tglFinished = new PToggleSwitch("Benachrichtigung wenn abgeschlossen");
     private final PToggleSwitch tglError = new PToggleSwitch("Bei Downloadfehler Fehlermeldung anzeigen");
+
+    private final ToggleGroup groupStop = new ToggleGroup();
+    private final RadioButton rbStopAsk = new RadioButton("Vorher fragen");
+    private final RadioButton rbStopDelete = new RadioButton("Angefangene Dateien immer löschen");
+    private final RadioButton rbStopNothing = new RadioButton("Nie etwas machen");
 
     private final ToggleGroup group = new ToggleGroup();
     private final RadioButton rbAsk = new RadioButton("Vorher fragen");
@@ -67,10 +73,6 @@ public class PaneDownload {
 
     public void makeDownload(Collection<TitledPane> result) {
         final GridPane gridPane = new GridPane();
-        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
-        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
-        gridPane.setPadding(new Insets(P2LibConst.DIST_EDGE));
-
         TitledPane tpConfig = new TitledPane("Download", gridPane);
         result.add(tpConfig);
 
@@ -81,6 +83,9 @@ public class PaneDownload {
         tglError.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_ERROR_MSG);
         final Button btnHelpError = PButton.helpButton(stage, "Download",
                 HelpText.DOWNLOAD_ERROR);
+
+        final Button btnHelpStop = PButton.helpButton(stage, "Download",
+                HelpText.DOWNLOAD_STOP);
 
         final Button btnHelpContinue = PButton.helpButton(stage, "Download",
                 HelpText.DOWNLOAD_CONTINUE);
@@ -99,24 +104,41 @@ public class PaneDownload {
 
         GridPane.setHalignment(btnHelpFinished, HPos.RIGHT);
         GridPane.setHalignment(btnHelpError, HPos.RIGHT);
+        GridPane.setHalignment(btnHelpStop, HPos.RIGHT);
         GridPane.setHalignment(btnHelpContinue, HPos.RIGHT);
         GridPane.setHalignment(btnHelpOne, HPos.RIGHT);
         GridPane.setHalignment(btnHelpSSL, HPos.RIGHT);
 
+        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
+        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
+        gridPane.setPadding(new Insets(P2LibConst.DIST_EDGE));
+
         int row = 0;
-        gridPane.add(tglFinished, 0, row);
+        VBox vBox = new VBox(5);
+        HBox hBox = new HBox(20);
+        vBox.getChildren().addAll(new Label("Beim Abbrechen angefangener Downloads:"), hBox);
+        hBox.getChildren().addAll(new Label("            "), rbStopAsk, rbStopDelete, rbStopNothing);
+
+        gridPane.add(vBox, 0, row);
+        gridPane.add(btnHelpStop, 1, row, 1, 2);
+        GridPane.setValignment(btnHelpStop, VPos.TOP);
+
+        ++row;
+        vBox = new VBox(5);
+        hBox = new HBox(20);
+        vBox.getChildren().addAll(new Label("Beim Neustart bereits angefangener Downloads:"), hBox);
+        hBox.getChildren().addAll(new Label("            "), rbAsk, rbContinue, rbRestart);
+
+        gridPane.add(vBox, 0, ++row);
+        gridPane.add(btnHelpContinue, 1, row, 1, 2);
+
+        gridPane.add(new Label(), 0, ++row);
+        gridPane.add(tglFinished, 0, ++row);
         gridPane.add(btnHelpFinished, 1, row);
+        GridPane.setValignment(btnHelpFinished, VPos.TOP);
 
         gridPane.add(tglError, 0, ++row);
         gridPane.add(btnHelpError, 1, row);
-
-        VBox vBox = new VBox(5);
-        HBox hBox = new HBox(20);
-        hBox.getChildren().addAll(new Label("            "), rbAsk, rbContinue, rbRestart);
-        vBox.getChildren().addAll(new Label("Beim Neustart bereits angefangener Downloads:"), hBox);
-
-        gridPane.add(vBox, 0, ++row);
-        gridPane.add(btnHelpContinue, 1, row);
 
         gridPane.add(tglOne, 0, ++row);
         gridPane.add(btnHelpOne, 1, row);
@@ -133,18 +155,39 @@ public class PaneDownload {
     }
 
     private void initRadio() {
+        rbStopAsk.setToggleGroup(groupStop);
+        rbStopDelete.setToggleGroup(groupStop);
+        rbStopNothing.setToggleGroup(groupStop);
+
         rbAsk.setToggleGroup(group);
         rbContinue.setToggleGroup(group);
         rbRestart.setToggleGroup(group);
+
         setRadio();
         ProgConfig.DOWNLOAD_CONTINUE.addListener((v, o, n) -> setRadio());
+        ProgConfig.DOWNLOAD_STOP.addListener((v, o, n) -> setRadio());
 
+        rbStopAsk.setOnAction(a -> ProgConfig.DOWNLOAD_STOP.setValue(DownloadState.DOWNLOAD_STOP__ASK));
+        rbStopDelete.setOnAction(a -> ProgConfig.DOWNLOAD_STOP.setValue(DownloadState.DOWNLOAD_STOP__DELETE));
+        rbStopNothing.setOnAction(a -> ProgConfig.DOWNLOAD_STOP.setValue(DownloadState.DOWNLOAD_STOP__NOTHING));
         rbAsk.setOnAction(a -> ProgConfig.DOWNLOAD_CONTINUE.setValue(DownloadState.DOWNLOAD_RESTART__ASK));
         rbContinue.setOnAction(a -> ProgConfig.DOWNLOAD_CONTINUE.setValue(DownloadState.DOWNLOAD_RESTART__CONTINUE));
         rbRestart.setOnAction(a -> ProgConfig.DOWNLOAD_CONTINUE.setValue(DownloadState.DOWNLOAD_RESTART__RESTART));
     }
 
     private void setRadio() {
+        switch (ProgConfig.DOWNLOAD_STOP.getValue()) {
+            case DownloadState.DOWNLOAD_STOP__DELETE:
+                rbStopDelete.setSelected(true);
+                break;
+            case DownloadState.DOWNLOAD_STOP__NOTHING:
+                rbStopNothing.setSelected(true);
+                break;
+            case DownloadState.DOWNLOAD_STOP__ASK:
+            default:
+                rbStopAsk.setSelected(true);
+                break;
+        }
         switch (ProgConfig.DOWNLOAD_CONTINUE.getValue()) {
             case DownloadState.DOWNLOAD_RESTART__CONTINUE:
                 rbContinue.setSelected(true);

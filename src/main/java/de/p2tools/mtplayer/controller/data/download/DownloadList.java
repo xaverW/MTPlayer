@@ -35,9 +35,8 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
     private final ProgData progData;
     private final DownloadListAbo downloadListAbo;
     private final DownloadListStarts downloadListStarts;
-    private final DownloadListStartStop downloadListStartStop;
     private final ObservableList<DownloadData> undoList = FXCollections.observableArrayList();
-    ;
+
     private BooleanProperty downloadsChanged = new SimpleBooleanProperty(true);
 
     public DownloadList(ProgData progData) {
@@ -45,7 +44,6 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
         this.progData = progData;
         this.downloadListAbo = new DownloadListAbo(progData, this);
         this.downloadListStarts = new DownloadListStarts(progData, this);
-        this.downloadListStartStop = new DownloadListStartStop(progData, this);
     }
 
     @Override
@@ -236,7 +234,7 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
         while (it.hasNext()) {
             DownloadData download = it.next();
             if (download.isStateInit() ||
-                    download.isStateStoped()) {
+                    download.isStateStopped()) {
                 continue;
             }
             if (download.isStateFinished()) {
@@ -295,30 +293,37 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
 
     // ==============================
     // DownloadListStartStop
-    public synchronized void stopDownloads(ArrayList<DownloadData> list) {
-        if (downloadListStartStop.stopDownloads(list)) {
+    public synchronized void stopAllDownloads() {
+        stopDownloads(this);
+    }
+
+    public synchronized void stopDownloads(List<DownloadData> list) {
+        // Aufruf aus den Menüs
+        if (DownloadListStartStopFactory.stopDownloads(list)) {
             setDownloadsChanged();
         }
     }
 
     public synchronized void delDownloads(DownloadData download) {
-        downloadListStartStop.delDownloads(download);
+        // aus dem Menü
+        DownloadListStartStopFactory.delDownloads(this, download);
     }
 
     public synchronized void delDownloads(ArrayList<DownloadData> list) {
-        if (downloadListStartStop.delDownloads(list)) {
+        // aus dem Menü
+        if (DownloadListStartStopFactory.delDownloads(this, list)) {
             setDownloadsChanged();
         }
     }
 
     public synchronized void putBackDownloads(ArrayList<DownloadData> list) {
-        if (downloadListStartStop.putBackDownloads(list)) {
+        if (DownloadListStartStopFactory.putBackDownloads(list)) {
             setDownloadsChanged();
         }
     }
 
     public void startDownloads(DownloadData download) {
-        downloadListStartStop.startDownloads(download);
+        DownloadListStartStopFactory.startDownloads(this, download);
         setDownloadsChanged();
     }
 
@@ -327,13 +332,13 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
     }
 
     public void startDownloads(Collection<DownloadData> list) {
-        if (downloadListStartStop.startDownloads(list, false)) {
+        if (DownloadListStartStopFactory.startDownloads(this, list, false)) {
             setDownloadsChanged();
         }
     }
 
     public void startDownloads(Collection<DownloadData> list, boolean alsoFinished) {
-        if (downloadListStartStop.startDownloads(list, alsoFinished)) {
+        if (DownloadListStartStopFactory.startDownloads(this, list, alsoFinished)) {
             setDownloadsChanged();
         }
     }

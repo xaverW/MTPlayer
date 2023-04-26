@@ -187,7 +187,8 @@ public class ProgConfig extends PDataProgConfig {
     public static BooleanProperty DOWNLOAD_START_NOW = addBoolProp("download-start-now", Boolean.FALSE);
     public static BooleanProperty DOWNLOAD_BEEP = addBoolProp("download-beep");
     public static BooleanProperty DOWNLOAD_ERROR_MSG = addBoolProp("download-error-msg", Boolean.TRUE);
-    public static IntegerProperty DOWNLOAD_CONTINUE = addIntProp("download-contineu", DownloadState.DOWNLOAD_RESTART__ASK);
+    public static IntegerProperty DOWNLOAD_STOP = addIntProp("download-stop", DownloadState.DOWNLOAD_STOP__ASK);
+    public static IntegerProperty DOWNLOAD_CONTINUE = addIntProp("download-continue", DownloadState.DOWNLOAD_RESTART__ASK);
     public static IntegerProperty DOWNLOAD_MAX_DOWNLOADS = addIntProp("download-max-downloads", 1);
     public static BooleanProperty DOWNLOAD_MAX_ONE_PER_SERVER = addBoolProp("download-max-one-per-server"); // nur ein Download pro Server - sonst max 2
     public static IntegerProperty DOWNLOAD_MAX_BANDWIDTH_KBYTE = addIntProp("download-max-bandwidth-kilobyte", MLBandwidthTokenBucket.BANDWIDTH_MAX_KBYTE);
@@ -231,6 +232,7 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty DOWNLOAD_GUI_TABLE_ORDER = addStrProp("download-gui-table-order");
     public static BooleanProperty DOWNLOAD_SHOW_NOTIFICATION = addBoolProp("download-show-notification", Boolean.TRUE);
     public static DoubleProperty DOWNLOAD_GUI_MEDIA_DIVIDER = addDoubleProp("download-gui-media-divider", 0.5);
+    public static StringProperty DOWNLOAD_STOP_DIALOG_SIZE = addStrProp("download-stop-dialog-size", "600:500");
 
     //Gui Download Media
     public static IntegerProperty DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_MEDIA = addIntProp("download-gui-media-build-search-media", ProgConst.MEDIA_COLLECTION_SEARCH_TITEL);//aus was der Suchbegriff gebaut wird: T/Th/TT

@@ -592,6 +592,16 @@ public class HelpText {
             "Wenn ein Download mit einem Fehler endet, wird mit einem Fenster informiert." +
                     "\n";
 
+    public static final String DOWNLOAD_STOP =
+            "Wenn ein bereits teilweise geladener Download abgebrochen wird, " +
+                    "können die teilweise geladenen Dateien gleich gelöscht werden." +
+                    P2LibConst.LINE_SEPARATORx2 +
+                    "Hier kann ausgewählt werden, was gemacht werden soll:\n" +
+                    "* Jedes mal vorher fragen\n" +
+                    "* Immer löschen\n" +
+                    "* Nie etwas machen." +
+                    "\n";
+
     public static final String DOWNLOAD_CONTINUE =
             "Wenn ein bereits teilweise geladener Download neu startet, " +
                     "kann er weitergeführt oder von Anfang an, neu gestartet werden." +

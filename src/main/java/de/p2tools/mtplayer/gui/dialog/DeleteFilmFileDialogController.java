@@ -154,7 +154,6 @@ public class DeleteFilmFileDialogController extends PDialogExtra {
         String delFile = "";
         boolean ret = true;
         try {
-
             if (chkFilm.isSelected()) {
                 delFile = filmFile.getAbsolutePath();
                 PLog.sysLog(new String[]{"Datei löschen: ", delFile});
@@ -196,7 +195,6 @@ public class DeleteFilmFileDialogController extends PDialogExtra {
                     "Fehler beim löschen von:" + P2LibConst.LINE_SEPARATORx2 + delFile);
             PLog.errorLog(302020149, "Fehler beim löschen: " + delFile);
         }
-
         return ret;
     }
 

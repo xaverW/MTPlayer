@@ -51,7 +51,7 @@ public class DownloadListAbo {
         List<DownloadData> syncRemoveList = Collections.synchronizedList(new ArrayList<>());
 
         downloadList.stream()
-                .filter(d -> !d.isStateStoped())
+                .filter(d -> !d.isStateStopped())
                 .filter(d -> d.isAbo())
                 .forEach(download -> {
                     if (download.isStateInit()) {

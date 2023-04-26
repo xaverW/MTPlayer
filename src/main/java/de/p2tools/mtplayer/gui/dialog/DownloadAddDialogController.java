@@ -578,7 +578,7 @@ public class DownloadAddDialogController extends PDialogExtra {
     }
 
     private void quit() {
-        //damit der Focus nicht aus der Tabelle verlorengeht
+        //damit der Focus nicht aus der Tabelle verloren geht
         progData.mtPlayerController.setFocus();
 
         if (!ok) {

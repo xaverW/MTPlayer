@@ -41,7 +41,7 @@ import javafx.util.Duration;
 
 public class DownloadContinueDialogController extends PDialogExtra {
 
-    private Label lblHeader = new Label("Die Filmdatei existiert bereits.");
+    private Label lblHeader = new Label("Die Filmdatei existiert bereits");
     private Button btnRestartDownload = new Button("neu _Starten");
     private Button btnCancel = new Button("_Abbrechen");
     private Button btnContinueDownload = new Button("_Weiterführen");
@@ -66,7 +66,8 @@ public class DownloadContinueDialogController extends PDialogExtra {
 
     public DownloadContinueDialogController(StringProperty conf, ProgData progData,
                                             DownloadData download, boolean directDownload) {
-        super(progData.primaryStage, conf, "Download weiterführen", true, false);
+        super(progData.primaryStage, conf, "Download weiterführen",
+                true, false, DECO.BORDER_SMALL);
 
         this.progData = progData;
         this.download = download;
@@ -164,7 +165,7 @@ public class DownloadContinueDialogController extends PDialogExtra {
         addOkButton(btnContinueDownload);
 
         VBox vBox = new VBox(5);
-        vBox.getChildren().addAll(new Label("Wie möchten Sie forfahren?"), chkSave);
+        vBox.getChildren().addAll(new Label("Wie möchten Sie fortfahren?"), chkSave);
         getHboxLeft().getChildren().add(vBox);
     }
 

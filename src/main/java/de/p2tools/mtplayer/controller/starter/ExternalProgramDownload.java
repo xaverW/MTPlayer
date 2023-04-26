@@ -147,9 +147,8 @@ public class ExternalProgramDownload extends Thread {
     }
 
     private int startDownload() {
-        // versuch das Programm zu Starten
+        // versuch das Programm zu starten
         // die Reihenfolge: startCounter - startmeldung ist wichtig!
-
         int retStat;
         download.getStart().setStartCounter(download.getStart().getStartCounter() + 1);
         startMsg(download);
@@ -169,15 +168,16 @@ public class ExternalProgramDownload extends Thread {
 
     private int runDownload() {
         // hier läuft der Download bis zum Abbruch oder Ende
-
         int retStatus = stat_running;
         try {
-            if (download.isStateStoped()) {
+            if (download.isStateStopped()) {
                 // abbrechen
                 retStatus = stat_finished_abort;
                 if (download.getStart().getProcess() != null) {
                     download.getStart().getProcess().destroy();
                 }
+                download.stopDownload();// nochmal da RUNTIME_EXEC ja weiter läuft
+
             } else {
                 final int exitV = download.getStart().getProcess().exitValue(); //liefert ex wenn noch nicht fertig
                 if (exitV != 0) {

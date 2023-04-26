@@ -82,7 +82,7 @@ public class ProgQuit {
     }
 
     private static void stopAllDownloads() {
-        //erst mal alle Downloads stoppen
+        //erst mal alle Downloads stoppen und da evtl. auch aus AUTO: kein Dialog
         ProgData.getInstance().downloadList.forEach(download -> {
             if (download.isStateStartedRun()) {
                 download.stopDownload();
@@ -92,7 +92,7 @@ public class ProgQuit {
         //unterbrochene werden gespeichert, dass die Info "Interrupt" erhalten bleibt
         //Download, (Abo müssen neu angelegt werden)
         ProgData.getInstance().downloadList.removeIf(download ->
-                (!download.isStateStoped() &&
+                (!download.isStateStopped() &&
                         (download.isAbo() || download.isStateFinished())));
     }
 

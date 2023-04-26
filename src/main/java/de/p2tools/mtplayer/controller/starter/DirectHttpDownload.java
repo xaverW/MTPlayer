@@ -135,7 +135,7 @@ public class DirectHttpDownload extends Thread {
         int len;
         long aktBandwidth = 0, aktSize = 0;
 
-        while ((len = download.getStart().getInputStream().read(buffer)) != -1 && (!download.isStateStoped())) {
+        while ((len = download.getStart().getInputStream().read(buffer)) != -1 && (!download.isStateStopped())) {
             downloaded += len;
             fos.write(buffer, 0, len);
             download.getDownloadSize().addActFileSize(len);
@@ -188,7 +188,7 @@ public class DirectHttpDownload extends Thread {
             }
         }
 
-        if (!download.isStateStoped()) {
+        if (!download.isStateStopped()) {
             if (download.getSource().equals(DownloadConstants.SRC_BUTTON)) {
                 // direkter Start mit dem Button
                 download.setStateFinished();
@@ -199,6 +199,9 @@ public class DirectHttpDownload extends Thread {
                 // Anzeige ändern - bei Fehler fehlt der Eintrag
                 download.setStateError();
             }
+        } else {
+            // todo
+            download.setProgress(DownloadConstants.PROGRESS_NOT_STARTED);
         }
     }
 

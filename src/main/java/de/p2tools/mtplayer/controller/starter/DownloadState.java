@@ -19,6 +19,11 @@ package de.p2tools.mtplayer.controller.starter;
 public class DownloadState {
 
     //die Vorgaben des Users:
+    public static final int DOWNLOAD_STOP__ASK = 0;
+    public static final int DOWNLOAD_STOP__DELETE = 1;
+    public static final int DOWNLOAD_STOP__NOTHING = 2;
+
+    //die Vorgaben des Users:
     public static final int DOWNLOAD_RESTART__ASK = 0;
     public static final int DOWNLOAD_RESTART__CONTINUE = 1;
     public static final int DOWNLOAD_RESTART__RESTART = 2;

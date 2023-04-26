@@ -187,7 +187,7 @@ public class StarterClass {
         }
         final ArrayList<String> list = new ArrayList<>();
         list.add(PLog.LILNE3);
-        if (download.isStateStoped()) {
+        if (download.isStateStopped()) {
             list.add("Download wurde abgebrochen");
         } else if (download.getSource().equals(DownloadConstants.SRC_BUTTON)) {
             list.add("Film fertig");
@@ -237,7 +237,7 @@ public class StarterClass {
         list.add(PLog.LILNE_EMPTY);
         PLog.sysLog(list);
 
-        if (!download.getSource().equals(DownloadConstants.SRC_BUTTON) && !download.isStateStoped()) {
+        if (!download.getSource().equals(DownloadConstants.SRC_BUTTON) && !download.isStateStopped()) {
             //war ein Abo und wurde nicht abgebrochen
             MTNotification.addNotification(download, download.isStateError());
         }
@@ -254,7 +254,7 @@ public class StarterClass {
 
         if (download.isStateError()) {
             download.setProgress(DownloadConstants.PROGRESS_NOT_STARTED);
-        } else if (!download.isStateStoped()) {
+        } else if (!download.isStateStopped()) {
             //dann ist er gelaufen
             start.setTimeLeftSeconds(0);
             download.setProgress(DownloadConstants.PROGRESS_FINISHED);

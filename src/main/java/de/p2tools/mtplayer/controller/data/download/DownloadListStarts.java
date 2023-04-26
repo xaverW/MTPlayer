@@ -59,7 +59,7 @@ public class DownloadListStarts {
 
                 int restarted = download.getStart().getRestartCounter();
                 if (download.getType().equals(DownloadConstants.TYPE_DOWNLOAD)) {
-                    download.restartDownload();
+                    download.resetDownload();
                     progData.downloadList.startDownloads(download);
                     // UND jetzt den Restartcounter wieder setzen!!
                     download.getStart().setRestartCounter(++restarted);

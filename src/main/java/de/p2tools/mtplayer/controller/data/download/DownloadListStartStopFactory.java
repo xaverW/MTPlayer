@@ -23,44 +23,41 @@ import de.p2tools.p2lib.tools.duration.PDuration;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
-public class DownloadListStartStop {
+public class DownloadListStartStopFactory {
 
-    private final ProgData progData;
-    private final DownloadList downloadList;
-
-    public DownloadListStartStop(ProgData progData, DownloadList downloadList) {
-        this.progData = progData;
-        this.downloadList = downloadList;
+    private DownloadListStartStopFactory() {
     }
 
-
     /**
-     * einen Download aus der "Dwonloadliste"  stoppen und dann entfernen
+     * einen Download aus der "DownloadList" stoppen und dann entfernen
      *
      * @param download
      */
-    public synchronized void delDownloads(DownloadData download) {
+    public static synchronized void delDownloads(DownloadList downloadList, DownloadData download) {
+        // aus dem Menü
         ArrayList<DownloadData> list = new ArrayList<>();
         list.add(download);
-        delDownloads(list);
+        delDownloads(downloadList, list);
     }
 
 
     /**
-     * eine Liste Downloads aus der "Dwonloadliste"  stoppen und dann entfernen
+     * eine Liste Downloads aus der "DownloadListe" stoppen und dann entfernen
      *
      * @param list
      */
 
-    public synchronized boolean delDownloads(ArrayList<DownloadData> list) {
+    public static synchronized boolean delDownloads(DownloadList downloadList, ArrayList<DownloadData> list) {
+        // aus dem Menü
         PDuration.counterStart("delDownloads");
         if (list == null || list.isEmpty()) {
             return false;
         }
         // das Starten von neuen Downloads etwas Pausieren
-        progData.starterClass.setPaused();
-        progData.downloadList.addDownloadUndoList(list);
+        ProgData.getInstance().starterClass.setPaused();
+        ProgData.getInstance().downloadList.addDownloadUndoList(list);
 
         final ArrayList<DownloadData> aboHistoryList = new ArrayList<>();
         for (final DownloadData download : list) {
@@ -70,10 +67,10 @@ public class DownloadListStartStop {
             }
         }
         if (!aboHistoryList.isEmpty()) {
-            progData.erledigteAbos.addDownloadDataListToHistory(aboHistoryList);
+            ProgData.getInstance().erledigteAbos.addDownloadDataListToHistory(aboHistoryList);
         }
 
-        list.stream().filter(download -> download.isStateStartedRun()).forEach(download -> download.stopDownload());
+        stopDownloads(list);
         boolean found = downloadList.removeAll(list);
 
         PDuration.counterStop("delDownloads");
@@ -85,7 +82,7 @@ public class DownloadListStartStop {
      *
      * @param list
      */
-    public synchronized boolean putBackDownloads(ArrayList<DownloadData> list) {
+    public static synchronized boolean putBackDownloads(ArrayList<DownloadData> list) {
         boolean found = false;
 
         if (list == null || list.isEmpty()) {
@@ -93,10 +90,10 @@ public class DownloadListStartStop {
         }
 
         // das Starten von neuen Downloads etwas Pausieren
-        progData.starterClass.setPaused();
+        ProgData.getInstance().starterClass.setPaused();
 
         for (final DownloadData download : list) {
-            if (download.isStateInit() || download.isStateStoped()) {
+            if (download.isStateInit() || download.isStateStopped()) {
                 download.putBack();
                 found = true;
             }
@@ -105,34 +102,44 @@ public class DownloadListStartStop {
         return found;
     }
 
+    public static synchronized boolean stopDownloads(DownloadData downloadData) {
+        ArrayList<DownloadData> list = new ArrayList<>();
+        list.add(downloadData);
+        return stopDownloads(list);
+    }
+
     /**
      * eine Liste Downloads stoppen
      *
      * @param list
      */
-    public synchronized boolean stopDownloads(ArrayList<DownloadData> list) {
+    public static synchronized boolean stopDownloads(List<DownloadData> list) {
+        // Aufruf aus den Menüs
         boolean found = false;
-
         if (list == null || list.isEmpty()) {
             return false;
         }
 
         // das Starten von neuen Downloads etwas Pausieren
-        progData.starterClass.setPaused();
+        ProgData.getInstance().starterClass.setPaused();
 
+        ArrayList<DownloadData> foundList = new ArrayList<>();
         for (DownloadData download : list) {
             if (download.isStateStartedWaiting() || download.isStateStartedRun() || download.isStateError()) {
                 // nur dann läuft er
                 download.stopDownload();
+                foundList.add(download);
                 found = true;
             }
         }
 
+        if (found) {
+            DownloadFactory.deleteFilmFile(foundList);
+        }
         return found;
     }
-
-
-    private PAlert.BUTTON restartDownload(int size, String title, PAlert.BUTTON answer) {
+    
+    private static PAlert.BUTTON restartDownload(int size, String title, PAlert.BUTTON answer) {
         if (answer.equals(PAlert.BUTTON.UNKNOWN)) {
             // nur einmal fragen
             String text;
@@ -146,21 +153,21 @@ public class DownloadListStartStop {
         return answer;
     }
 
-    private void start(ArrayList<DownloadData> downloads) {
+    private static void start(DownloadList downloadList, ArrayList<DownloadData> downloads) {
         if (downloads.isEmpty()) {
             return;
         }
         downloads.stream().forEach(download -> download.initStartDownload());
         downloadList.addNumber(downloads);
-        progData.history.addDownloadDataListToHistory(downloads);
+        ProgData.getInstance().history.addDownloadDataListToHistory(downloads);
     }
 
-    public void startDownloads(DownloadData download) {
+    public static void startDownloads(DownloadList downloadList, DownloadData download) {
         // Download starten
         ArrayList<DownloadData> list = new ArrayList<>();
         list.add(download);
 
-        start(list);
+        start(downloadList, list);
     }
 
 
@@ -171,8 +178,7 @@ public class DownloadListStartStop {
      * @param alsoFinished
      */
 
-    public boolean startDownloads(Collection<DownloadData> list, boolean alsoFinished) {
-
+    public static boolean startDownloads(DownloadList downloadList, Collection<DownloadData> list, boolean alsoFinished) {
         if (list == null || list.isEmpty()) {
             return false;
         }
@@ -181,7 +187,7 @@ public class DownloadListStartStop {
         final ArrayList<DownloadData> listStartDownloads = new ArrayList<>();
 
         // das Starten von neuen Downloads etwas Pausieren
-        progData.starterClass.setPaused();
+        ProgData.getInstance().starterClass.setPaused();
 
         // nicht gestartete einfach starten
         list.stream().filter(download -> download.isStateInit()).forEach(download ->
@@ -194,24 +200,23 @@ public class DownloadListStartStop {
         }
 
         // alle Downloads starten/wiederstarten
-        start(listStartDownloads);
+        start(downloadList, listStartDownloads);
 
         PDuration.counterStop("startDownloads");
         return true;
     }
 
-    private boolean startAlsoFinishedDownloads(Collection<DownloadData> list, ArrayList<DownloadData> listStartDownloads) {
-
+    private static boolean startAlsoFinishedDownloads(Collection<DownloadData> list, ArrayList<DownloadData> listStartDownloads) {
         PAlert.BUTTON answer = PAlert.BUTTON.UNKNOWN;
         final ArrayList<DownloadData> listDelDownloads = new ArrayList<>();
         final ArrayList<DownloadData> listDownloadsRemoveAboHistory = new ArrayList<>();
 
         // bereits gestartete erst vorbehandeln: wenn er noch läuft/fertig ist gibts nix
-        // fehlerhafte nur wenn gewollt
+        // fehlerhafte nur, wenn gewollt
         for (DownloadData download : list) {
 
             // abgebrochene starten
-            if (download.isStateStoped()) {
+            if (download.isStateStopped()) {
                 listDelDownloads.add(download);
                 if (download.isAbo()) {
                     // wenn er schon feritg ist und ein Abos ist, Url auch aus dem Logfile löschen, der Film ist damit wieder auf "Anfang"
@@ -236,7 +241,8 @@ public class DownloadListStartStop {
                     default:
                         listDelDownloads.add(download);
                         if (download.isAbo()) {
-                            // wenn er schon feritg ist und ein Abos ist, Url auch aus dem Logfile löschen, der Film ist damit wieder auf "Anfang"
+                            // wenn er schon fertig ist und ein Abos ist, Url auch aus dem Logfile löschen,
+                            // der Film ist damit wieder auf "Anfang"
                             listDownloadsRemoveAboHistory.add(download);
                         }
                         listStartDownloads.add(download);
@@ -250,12 +256,10 @@ public class DownloadListStartStop {
         }
 
         //aus der AboHistory löschen
-        progData.erledigteAbos.removeDownloadDataFromHistory(listDownloadsRemoveAboHistory);
+        ProgData.getInstance().erledigteAbos.removeDownloadDataFromHistory(listDownloadsRemoveAboHistory);
 
         // jetzt noch die Starts stoppen
         listDelDownloads.stream().forEach(download -> download.stopDownload());
-
         return true;
     }
-
 }

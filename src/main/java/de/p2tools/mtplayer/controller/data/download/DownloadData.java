@@ -23,7 +23,6 @@ import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.starter.Start;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
-import de.p2tools.p2lib.mtdownload.DownloadSize;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
 import de.p2tools.p2lib.mtfilm.film.FilmFactory;
 import de.p2tools.p2lib.tools.PSystemUtils;
@@ -86,7 +85,7 @@ public final class DownloadData extends DownloadDataProps {
         return getState() == DownloadConstants.STATE_INIT;
     }
 
-    public boolean isStateStoped() {
+    public boolean isStateStopped() {
         return getState() == DownloadConstants.STATE_STOPPED;
     }
 
@@ -128,7 +127,7 @@ public final class DownloadData extends DownloadDataProps {
     }
 
     public boolean isNotStartedOrFinished() {
-        return isStateInit() || isStateStoped();
+        return isStateInit() || isStateStopped();
     }
 
     public boolean isFinishedOrError() {
@@ -142,6 +141,7 @@ public final class DownloadData extends DownloadDataProps {
     }
 
     public void initStartDownload() {
+        // Download zum Start vorbereiten
         getStart().setRestartCounter(0);
         getStart().setBandwidth(0);
         setStateStartedWaiting();
@@ -149,29 +149,16 @@ public final class DownloadData extends DownloadDataProps {
     }
 
     public void putBack() {
-        // download resetten, und als "zurückgestellt" markieren
+        // Download resetten, und als "zurückgestellt" markieren
         setPlacedBack(true);
         resetDownload();
     }
 
-    // todo: reset, restart, stop????
     public void resetDownload() {
         // stoppen und alles zurücksetzen
         stopDownload();
+        setProgress(DownloadConstants.PROGRESS_NOT_STARTED);// damit auch fehlerhafte zurückgesetzt werden
         setState(DownloadConstants.STATE_INIT);
-    }
-
-    public void restartDownload() {
-        // stoppen und alles zurücksetzen
-        final DownloadSize downSize = getDownloadSize();
-        downSize.reset();
-        setRemaining("");
-        setBandwidth("");
-        getStart().setBandwidth(0);
-        setNo(P2LibConst.NUMBER_NOT_STARTED);
-
-        setState(DownloadConstants.STATE_INIT);
-        setProgress(DownloadConstants.PROGRESS_NOT_STARTED);
     }
 
     public void stopDownload() {
@@ -179,12 +166,11 @@ public final class DownloadData extends DownloadDataProps {
             // damit fehlerhafte nicht wieder starten
             getStart().setRestartCounter(ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getValue());
         } else {
-            setState(DownloadConstants.STATE_STOPPED);
             setProgress(DownloadConstants.PROGRESS_NOT_STARTED);
+            setState(DownloadConstants.STATE_STOPPED);
         }
 
-        final DownloadSize downSize = getDownloadSize();
-        downSize.reset();
+        getDownloadSize().reset();
         setRemaining("");
         setBandwidth("");
         getStart().setBandwidth(0);

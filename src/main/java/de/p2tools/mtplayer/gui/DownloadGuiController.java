@@ -149,7 +149,7 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     public void deleteFilmFile() {
-        // Download nur löschen wenn er nicht läuft
+        // Download nur löschen, wenn er nicht läuft
         final Optional<DownloadData> download = getSel();
         if (!download.isPresent()) {
             return;
@@ -226,10 +226,12 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     public void stopDownload(boolean all) {
+        // Downloads stoppen -> aus Menü
         stopDownloads(all);
     }
 
     public void stopWaitingDownloads() {
+        // aus dem Menü
         stopWaiting();
     }
 
@@ -242,6 +244,7 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     public void deleteDownloads() {
+        // aus dem Menü
         int sel = tableView.getSelectionModel().getSelectedIndex();
         progData.downloadList.delDownloads(getSelList());
         if (sel >= 0) {
@@ -520,7 +523,8 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private void stopWaiting() {
-        // es werden alle noch nicht gestarteten Downloads gestoppt
+        // aus dem Menü
+        // es werden alle noch nicht gestarteten Downloads, gestoppt
         final ArrayList<DownloadData> listStopDownload = new ArrayList<>();
         tableView.getItems().stream().filter(download -> download.isStateStartedWaiting()).forEach(download -> {
             listStopDownload.add(download);
@@ -539,10 +543,12 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private void stopDownloads(boolean all) {
+        // stoppen aus Menü
         // bezieht sich auf "alle" oder nur die markierten Filme
         final ArrayList<DownloadData> listDownloadsSelected = new ArrayList<>();
         // die URLs sammeln
         listDownloadsSelected.addAll(all ? tableView.getItems() : getSelList());
+
         progData.downloadList.stopDownloads(listDownloadsSelected);
         setFilter();
     }
