@@ -18,7 +18,6 @@ package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
-import de.p2tools.mtplayer.controller.data.abo.AboFieldNames;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import javafx.geometry.Insets;
@@ -57,14 +56,10 @@ public class AboGuiInfoController extends VBox {
         gridPaneLeft.setPadding(new Insets(P2LibConst.DIST_EDGE));
         GridPane.setVgrow(txtInfo, Priority.ALWAYS);
 
-        gridPaneLeft.add(new Label(AboFieldNames.ABO_NAME), 0, 0);
-        gridPaneLeft.add(txtName, 1, 0);
-        gridPaneLeft.add(new Label(AboFieldNames.ABO_DESCRIPTION), 0, 1);
-        gridPaneLeft.add(txtInfo, 1, 1);
-        gridPaneLeft.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(), PColumnConstraints.getCcComputedSizeAndHgrow());
-
+        gridPaneLeft.add(txtName, 0, 0);
+        gridPaneLeft.add(txtInfo, 0, 1);
+        gridPaneLeft.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow());
         VBox.setVgrow(gridPaneLeft, Priority.ALWAYS);
-
 
         final GridPane gridPaneRight = new GridPane();
         gridPaneRight.getStyleClass().add("extra-pane-info");
