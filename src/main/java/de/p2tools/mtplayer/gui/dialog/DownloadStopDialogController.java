@@ -33,8 +33,8 @@ public class DownloadStopDialogController extends PDialogExtra {
 
     private VBox vBoxCont;
     private Label lblHeader = new Label("Angebrochene Filmdateien existieren bereits");
-    private Button btnOk = new Button("_Dateien Löschen");
-    private Button btnCancel = new Button("_Abbrechen");
+    private Button btnOk = new Button("DL und Datei löschen");
+    private Button btnCancel = new Button("DL löschen, Datei behalten");
     private CheckBox chkAlways = new CheckBox("Immer ausführen");
     private final ObservableList<File> list;
     private boolean delete = false;
