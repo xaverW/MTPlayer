@@ -69,18 +69,17 @@ public class StarterClass {
         });
     }
 
-    public synchronized void startUrlWithProgram(FilmDataMTP ersterFilm, SetData pSet, String resolution) {
-        // url mit dem Programm mit der Nr. starten (Button oder TabDownload "rechte Maustaste")
+    public synchronized void startUrlWithProgram(FilmDataMTP film, SetData pSet, String resolution) {
+        // url mit dem Programm mit der Nr. starten (Button oder TabFilm, TabDownload "rechte Maustaste")
         // Quelle "Button" ist immer ein vom User gestarteter Film, also Quelle_Button!!!!!!!!!!!
 
-        final String url = ersterFilm.arr[FilmDataXml.FILM_URL];
+        final String url = film.arr[FilmDataXml.FILM_URL];
         if (!url.isEmpty()) {
-            final DownloadData download = new DownloadData(pSet, ersterFilm, DownloadConstants.SRC_BUTTON, null, "", "", resolution);
+            final DownloadData download = new DownloadData(pSet, film, DownloadConstants.SRC_BUTTON, null, "", "", resolution);
             progData.downloadList.startDownloads(download);
-
             starterThread.startDownload(download); // da nicht in der ListeDownloads
 
-            // und jetzt noch in die Downloadliste damit die Farbe im Tab Filme passt
+            // und jetzt noch in die DownloadListe damit die Farbe im Tab Filme passt
             progData.downloadListButton.addWithNr(download);
         }
     }

@@ -75,7 +75,10 @@ public class ExternalProgramDownload extends Thread {
                 new MTSubtitle().writeSubtitle(this.download);
             }
 
-            Files.createDirectories(Paths.get(this.download.getDestPath()));
+            if (!download.getSetData().isPlay()) {
+                // sonst wird ja nur abgespielt
+                Files.createDirectories(Paths.get(this.download.getDestPath()));
+            }
         } catch (final IOException ignored) {
         } catch (final Exception ex) {
             PLog.errorLog(469365281, ex);
