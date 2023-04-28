@@ -69,6 +69,7 @@ public class DownloadGuiInfo extends AnchorPane {
             // dann gibts keine :)
             text1 = new Text("keine Downloads");
             text1.setFont(Font.font(null, FontWeight.BOLD, -1));
+            text1.getStyleClass().add("downloadGuiMediaText");
             vBoxHeader.getChildren().add(text1);
             gridPane.setVisible(false);
             return;
@@ -82,27 +83,33 @@ public class DownloadGuiInfo extends AnchorPane {
         // Beschriftung erste Zeile
         text1 = new Text("laufende Downloads: " + progData.downloadInfos.getLoading());
         text1.setFont(Font.font(null, FontWeight.BOLD, -1));
+        text1.getStyleClass().add("downloadGuiMediaText");
         gridPane.add(text1, 1, row);
 
         text1 = new Text("wartende Downloads: " + progData.downloadInfos.getStartedNotLoading());
         text1.setFont(Font.font(null, FontWeight.BOLD, -1));
+        text1.getStyleClass().add("downloadGuiMediaText");
         gridPane.add(text1, 2, row);
 
         text1 = new Text("nicht gestartete Downloads: " + progData.downloadInfos.getNotStarted());
         text1.setFont(Font.font(null, FontWeight.BOLD, -1));
+        text1.getStyleClass().add("downloadGuiMediaText");
         gridPane.add(text1, 3, row);
 
         // Beschriftung weitere Zeilen
         text1 = new Text("Größe: ");
         text1.setFont(Font.font(null, FontWeight.BOLD, -1));
+        text1.getStyleClass().add("downloadGuiMediaText");
         gridPane.add(text1, 0, ++row);
 
         text1 = new Text("Restzeit: ");
         text1.setFont(Font.font(null, FontWeight.BOLD, -1));
+        text1.getStyleClass().add("downloadGuiMediaText");
         gridPane.add(text1, 0, ++row);
 
         text1 = new Text("Bandbreite: ");
         text1.setFont(Font.font(null, FontWeight.BOLD, -1));
+        text1.getStyleClass().add("downloadGuiMediaText");
         gridPane.add(text1, 0, ++row);
 
         //Downloadgröße
@@ -117,6 +124,7 @@ public class DownloadGuiInfo extends AnchorPane {
         ++row;
         if (progData.downloadInfos.getBandwidth() > 0) {
             text2 = new Text(progData.downloadInfos.getBandwidthStr());
+            text2.getStyleClass().add("downloadGuiMediaText");
             gridPane.add(text2, 1, row);
         }
     }
@@ -186,9 +194,11 @@ public class DownloadGuiInfo extends AnchorPane {
             if (progData.downloadInfos.getByteLoadingDownloads() > 0) {
                 text2 = new Text(PFileSize.convertToStr(progData.downloadInfos.getByteLoadingDownloadsAlreadyLoaded()) + " von "
                         + PFileSize.convertToStr(progData.downloadInfos.getByteLoadingDownloads()));
+                text2.getStyleClass().add("downloadGuiMediaText");
 
             } else {
                 text2 = new Text(PFileSize.convertToStr(progData.downloadInfos.getByteLoadingDownloadsAlreadyLoaded()));
+                text2.getStyleClass().add("downloadGuiMediaText");
             }
             gridPane.add(text2, 1, row);
         }
@@ -196,12 +206,14 @@ public class DownloadGuiInfo extends AnchorPane {
         // Größe wartende Downloads
         if (progData.downloadInfos.getByteWaitingDownloads() > 0) {
             text2 = new Text(PFileSize.convertToStr(progData.downloadInfos.getByteWaitingDownloads()));
+            text2.getStyleClass().add("downloadGuiMediaText");
             gridPane.add(text2, 2, row);
         }
 
         // Größe nicht gestartete Downloads
         if (progData.downloadInfos.getByteNotStartedDownloads() > 0) {
             text2 = new Text(PFileSize.convertToStr(progData.downloadInfos.getByteNotStartedDownloads()));
+            text2.getStyleClass().add("downloadGuiMediaText");
             gridPane.add(text2, 3, row);
         }
     }
@@ -212,18 +224,21 @@ public class DownloadGuiInfo extends AnchorPane {
         if (progData.downloadInfos.getTimeLeftLoadingDownloads() > 0 &&
                 progData.downloadInfos.getTimeLeftLoadingDownloads() > 0) {
             text2 = new Text(progData.downloadInfos.getTimeLeftLoading());
+            text2.getStyleClass().add("downloadGuiMediaText");
             gridPane.add(text2, 1, row);
         }
 
         // Restzeit wartende Downloads
         if (progData.downloadInfos.getTimeLeftWaitingDownloads() > 0) {
             text2 = new Text(progData.downloadInfos.getTimeLeftWaiting());
+            text2.getStyleClass().add("downloadGuiMediaText");
             gridPane.add(text2, 2, row);
         }
 
         // Restzeit nicht gestartete Downloads
         if (progData.downloadInfos.getTimeLeftNotStartedDownloads() > 0) {
             text2 = new Text(progData.downloadInfos.getTimeLeftNotStarted());
+            text2.getStyleClass().add("downloadGuiMediaText");
             gridPane.add(text2, 3, row);
         }
     }
