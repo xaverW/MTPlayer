@@ -60,23 +60,22 @@ public class NoSetDialogController extends PDialogExtra {
 
         Text textHeaderSave = new Text("Kein Set zum Aufzeichnen!");
         textHeaderSave.setFont(Font.font(null, FontWeight.BOLD, -1));
+        textHeaderSave.getStyleClass().add("downloadGuiMediaText");
 
         Text textHeaderPlay = new Text("Kein Videoplayer zum Abspielen!");
         textHeaderPlay.setFont(Font.font(null, FontWeight.BOLD, -1));
+        textHeaderPlay.getStyleClass().add("downloadGuiMediaText");
 
         Text textHeaderAbo = new Text("Kein Set zum Aufzeichnen der Abos!");
         textHeaderAbo.setFont(Font.font(null, FontWeight.BOLD, -1));
+        textHeaderAbo.getStyleClass().add("downloadGuiMediaText");
 
         final String txtAdd = "Im Menü Einstellungen unter" + P2LibConst.LINE_SEPARATOR +
-
                 "   ->Aufzeichnen und Abspielen" + P2LibConst.LINE_SEPARATOR +
-
                 "die Programme zum Abspielen von Filmen und " + P2LibConst.LINE_SEPARATOR +
                 "Aufzeichnen von Abos korrigieren." + P2LibConst.LINE_SEPARATORx3 +
-
                 "Oder die Einstellungen zurücksetzen und" + P2LibConst.LINE_SEPARATOR +
                 "die Standardsets wieder herstellen.";
-
 
         final int prefRowCount = 14;
         TextArea textArea = new TextArea();
@@ -84,23 +83,25 @@ public class NoSetDialogController extends PDialogExtra {
         textArea.setMaxHeight(Double.MAX_VALUE);
         textArea.setPrefRowCount(prefRowCount);
         VBox.setVgrow(textArea, Priority.ALWAYS);
-        getVBoxCont().getChildren().addAll(textHeaderSave, textArea);
         getVBoxCont().setSpacing(20);
 
         switch (text) {
             case SAVE:
+                getVBoxCont().getChildren().addAll(textHeaderSave, textArea);
                 textArea.setText(
                         "Es ist kein Set von Programmen zum" + P2LibConst.LINE_SEPARATOR +
                                 "Aufzeichnen der Filme angelegt." + P2LibConst.LINE_SEPARATORx2 +
                                 txtAdd);
                 break;
             case PLAY:
+                getVBoxCont().getChildren().addAll(textHeaderPlay, textArea);
                 textArea.setText(
                         "Es ist kein Videoplayer zum Abspielen" + P2LibConst.LINE_SEPARATOR +
                                 "der Filme angelegt." + P2LibConst.LINE_SEPARATORx2 +
                                 txtAdd);
                 break;
             case ABO:
+                getVBoxCont().getChildren().addAll(textHeaderAbo, textArea);
                 textArea.setText(
                         "Es ist kein Set von Programmen zum" + P2LibConst.LINE_SEPARATOR +
                                 "Aufzeichnen der Abos angelegt." + P2LibConst.LINE_SEPARATORx2 +

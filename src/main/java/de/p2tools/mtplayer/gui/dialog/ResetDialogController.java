@@ -92,12 +92,19 @@ public class ResetDialogController extends PDialogExtra {
                         "es werden auch eigene Buttons, Abos" + P2LibConst.LINE_SEPARATOR +
                         "und die Blacklist gelöscht.");
         allButton.setOnAction(e -> {
-            Text t = new Text("ALLE");
-            t.setFont(Font.font(null, FontWeight.BOLD, -1));
+            Text t1 = new Text("Es werden ");
+            t1.getStyleClass().add("downloadGuiMediaText");
+
+            Text t2 = new Text("ALLE");
+            t2.setFont(Font.font(null, FontWeight.BOLD, -1));
+            t2.getStyleClass().add("downloadGuiMediaText");
+
+            Text t3 = new Text(" von Ihnen erzeugten Änderungen gelöscht." + P2LibConst.LINE_SEPARATORx2 +
+                    "Möchten Sie wirklich alle Einstellungen zurücksetzen?");
+            t3.getStyleClass().add("downloadGuiMediaText");
 
             TextFlow tf = new TextFlow();
-            tf.getChildren().addAll(new Text("Es werden "), t, new Text(" von Ihnen erzeugten Änderungen gelöscht." + P2LibConst.LINE_SEPARATORx2 +
-                    "Möchten Sie wirklich alle Einstellungen zurücksetzen?"));
+            tf.getChildren().addAll(t1, t2, t3);
 
             if (PAlert.showAlert_yes_no_cancel("Einstellungen zurücksetzen",
                     "alle Einstellungen zurücksetzen!", tf, false) == PAlert.BUTTON.YES) {

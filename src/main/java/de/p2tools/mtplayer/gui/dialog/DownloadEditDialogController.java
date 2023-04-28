@@ -255,6 +255,7 @@ public class DownloadEditDialogController extends PDialogExtra {
         for (int i = 0; i < DownloadFieldNames.MAX_ELEM; ++i) {
             text[i] = new Text(DownloadFieldNames.COLUMN_NAMES[i] + ":");
             text[i].setFont(Font.font(null, FontWeight.BOLD, -1));
+//            text[i].getStyleClass().add("downloadGuiMediaText");
 
             lblCont[i] = new Label("");
             final int ii = i;
@@ -263,6 +264,7 @@ public class DownloadEditDialogController extends PDialogExtra {
             });
 
             txt[i] = new TextField("");
+//            txt[i].getStyleClass().add("downloadGuiMediaText");
             txt[i].setEditable(false);
             txt[i].setMaxWidth(Double.MAX_VALUE);
             txt[i].setPrefWidth(Control.USE_COMPUTED_SIZE);
@@ -668,7 +670,11 @@ public class DownloadEditDialogController extends PDialogExtra {
 
             Text t = new Text("Auflösung:");
             t.setFont(Font.font(null, FontWeight.BOLD, -1));
-            t.setFill(Color.BLUE);
+            if (ProgConfig.SYSTEM_DARK_THEME.getValue()) {
+                t.setFill(Color.rgb(31, 162, 206));
+            } else {
+                t.setFill(Color.BLUE);
+            }
             gridPane.add(t, 0, row);
             gridPane.add(hBox, 1, row, 3, 1);
             ++row;
@@ -703,7 +709,13 @@ public class DownloadEditDialogController extends PDialogExtra {
 
         for (int i = 0; i < DownloadFieldNames.MAX_ELEM; ++i) {
             if (txt[i].isEditable() || !cbx[i].isDisabled()) {
-                text[i].setFill(Color.BLUE);
+                if (ProgConfig.SYSTEM_DARK_THEME.getValue()) {
+                    text[i].setFill(Color.rgb(31, 162, 206));
+                } else {
+                    text[i].setFill(Color.BLUE);
+                }
+            } else {
+                text[i].getStyleClass().add("downloadGuiMediaText");
             }
         }
         return row;

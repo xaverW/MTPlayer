@@ -22,7 +22,6 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.history.HistoryData;
 import de.p2tools.mtplayer.controller.history.HistoryList;
 import de.p2tools.mtplayer.controller.mediadb.MediaSearchPredicateFactory;
-import de.p2tools.mtplayer.gui.DownloadGuiMediaSearch;
 import de.p2tools.p2lib.alert.PAlert;
 import javafx.application.Platform;
 import javafx.beans.property.StringProperty;
@@ -33,7 +32,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -66,7 +64,6 @@ public class PaneAbo extends PaneDialog {
             ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.addListener((u, o, n) -> textSearch.setText("Abos, suchen im: " +
                     (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_TITEL ?
                             "Titel des Abos" : "Thema oder Titel des Abos")));
-            VBox vRight = DownloadGuiMediaSearch.getSearchAbo(null, true);
 
         } else {
             list = progData.history;
@@ -78,7 +75,6 @@ public class PaneAbo extends PaneDialog {
             ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.addListener((u, o, n) -> textSearch.setText("History, suchen im: " +
                     (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_TITEL ?
                             "Titel des History-Films" : "Thema oder Titel des History-Films")));
-            VBox vRight = DownloadGuiMediaSearch.getSearchAbo(null, false);
         }
         this.filteredList = new FilteredList<>(list, p -> true);
         this.sortedList = new SortedList<>(filteredList);

@@ -78,18 +78,21 @@ public class ImportMVDialog extends PDialogExtra {
 
         Text text = new Text("1. Pfad zum Konfigfile");
         text.setFont(Font.font(null, FontWeight.BOLD, 16));
+        text.getStyleClass().add("downloadGuiMediaText");
         vBox.getChildren().add(text);
         addPath(vBox);
         vBox.getChildren().add(PGuiTools.getHDistance(20));
 
         text = new Text("2. Einstellungen suchen");
         text.setFont(Font.font(null, FontWeight.BOLD, 16));
+        text.getStyleClass().add("downloadGuiMediaText");
         vBox.getChildren().add(text);
         addLoad(vBox);
         vBox.getChildren().add(PGuiTools.getHDistance(20));
 
         text = new Text("3. Einstellungen anfügen");
         text.setFont(Font.font(null, FontWeight.BOLD, 16));
+        text.getStyleClass().add("downloadGuiMediaText");
         vBox.getChildren().add(text);
         importLoads(vBox);
 

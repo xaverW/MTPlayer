@@ -158,6 +158,7 @@ public class FilmInfoDialogController extends PDialogExtra {
         for (int i = 0; i < FilmDataXml.MAX_ELEM; ++i) {
             textTitle[i] = new Text(FilmDataXml.COLUMN_NAMES[i] + ":");
             textTitle[i].setFont(Font.font(null, FontWeight.BOLD, -1));
+            textTitle[i].getStyleClass().add("downloadGuiMediaText");
             lblCont[i] = new Label("");
             lblCont[i].setWrapText(true);
 

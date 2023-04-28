@@ -121,6 +121,7 @@ public class PathPane {
         switch (player) {
             case FFMPEG:
                 text = new Text("Pfad zum ffmpeg-Player auswählen");
+                text.getStyleClass().add("downloadGuiMediaText");
                 property = ffmpegProp;
                 btnFind.setOnAction(event -> {
                     ProgConfig.SYSTEM_PATH_FFMPEG.setValue("");
@@ -133,6 +134,7 @@ public class PathPane {
             case VLC:
             default:
                 text = new Text("Pfad zum VLC-Player auswählen");
+                text.getStyleClass().add("downloadGuiMediaText");
                 property = vlcProp;
                 btnFind.setOnAction(event -> {
                     ProgConfig.SYSTEM_PATH_VLC.setValue("");
