@@ -21,7 +21,6 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.film.FilmTools;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -74,7 +73,8 @@ public class CellFilmStart<S, T> extends TableCell<S, T> {
                 }
 
                 btnPlay.setOnAction((ActionEvent event) -> {
-                    FilmTools.playFilm(film, null);
+                    ProgData.getInstance().filmGuiController.startFilmUrl(film);
+//                    FilmTools.playFilm(film, null);
                 });
                 btnSave.setOnAction(event -> {
                     ProgData.getInstance().filmlist.saveFilm(film, null);

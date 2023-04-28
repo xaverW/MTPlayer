@@ -105,7 +105,7 @@ public class FilmGuiController extends AnchorPane {
     }
 
     public void copyFilmThemeTitle(boolean theme) {
-        final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().filmGuiController.getSel();
+        final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().filmGuiController.getSel(false, false);
         if (filmSelection.isPresent()) {
             PSystemUtils.copyToClipboard(theme ? filmSelection.get().getTheme() : filmSelection.get().getTitle());
         }
@@ -117,6 +117,7 @@ public class FilmGuiController extends AnchorPane {
     }
 
     public void playFilmUrlWithSet(SetData psetData) {
+        // Button/Menü: Film mit Set starten
         startFilmUrlWithSet(psetData);
     }
 
@@ -159,8 +160,9 @@ public class FilmGuiController extends AnchorPane {
         }
     }
 
-    public void guiFilmMediaCollection() {
-        final Optional<FilmDataMTP> film = getSel();
+    public void searchFilmInMediaCollection() {
+        // aus dem Menü
+        final Optional<FilmDataMTP> film = getSel(false, true);
         if (film.isPresent()) {
             new MediaDialogController(film.get().getTheme(), film.get().getTitle());
         }
@@ -195,29 +197,28 @@ public class FilmGuiController extends AnchorPane {
         return ret;
     }
 
-    public Optional<FilmDataMTP> getSel() {
-        return getSel(true);
-    }
-
-    public Optional<FilmDataMTP> getSel(boolean show) {
+    public Optional<FilmDataMTP> getSel(boolean markSel, boolean show) {
+        Optional<FilmDataMTP> mtp;
         final int selectedTableRow = tableView.getSelectionModel().getSelectedIndex();
+
         if (selectedTableRow >= 0) {
-            return Optional.of(tableView.getSelectionModel().getSelectedItem());
+            mtp = Optional.of(tableView.getSelectionModel().getSelectedItem());
         } else {
             if (show) {
                 PAlert.showInfoNoSelection();
             }
-            return Optional.empty();
+            mtp = Optional.empty();
         }
+
+        if (markSel && mtp.isPresent()) {
+            setWasShown(mtp.get());
+        }
+        return mtp;
     }
 
     private void initListener() {
         sortedList.addListener((ListChangeListener<FilmDataMTP>) c -> {
-//            selectFilm();
-            FilmDataMTP selFilm = tableView.getSelectionModel().getSelectedItem();
-            if (selFilm != null) {
-                tableView.scrollTo(selFilm);
-            }
+            selectShown();
         });
         progData.setDataList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
             if (progData.setDataList.getSetDataListButton().size() > 2) {
@@ -307,7 +308,7 @@ public class FilmGuiController extends AnchorPane {
 
         tableView.setOnMousePressed(m -> {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
-                final Optional<FilmDataMTP> optionalFilm = getSel(false);
+                final Optional<FilmDataMTP> optionalFilm = getSel(true, false);// ist für Blacklist wichtig
                 FilmDataMTP film;
                 if (optionalFilm.isPresent()) {
                     film = optionalFilm.get();
@@ -404,13 +405,72 @@ public class FilmGuiController extends AnchorPane {
     }
 
     private synchronized void startFilmUrl() {
-        final Optional<FilmDataMTP> filmSelection = getSel();
+        // Menü/Button Film (URL) abspielen
+        final Optional<FilmDataMTP> filmSelection = getSel(true, true);
         if (filmSelection.isPresent()) {
-            FilmTools.playFilm(filmSelection.get(), null);
+            startFilmUrl(filmSelection.get());
         }
     }
 
+    public synchronized void startFilmUrl(FilmDataMTP mtp) {
+        if (mtp != null) {
+            tableView.getSelectionModel().select(mtp);
+            setWasShown(mtp);
+            FilmTools.playFilm(mtp, null);
+        }
+    }
+
+    private void setWasShown(FilmDataMTP mtp) {
+        boolean set = true;
+        for (int i = 0; i < tableView.getItems().size(); ++i) {
+            FilmDataMTP f = tableView.getItems().get(i);
+            if (f == mtp) {
+                // dann ist der Start
+                set = false;
+            }
+            f.setWasHere(set);
+        }
+    }
+
+    private void selectShown() {
+        Platform.runLater(() -> {
+            // bei der Blacklist kommt das außer der Reihe
+            if (tableView.getSelectionModel().getSelectedItem() != null) {
+                // dann ist schon was selektiert, passt.
+                System.out.println("=========================");
+                System.out.println("ist schon sel");
+                tableView.scrollTo(tableView.getSelectionModel().getSelectedItem());
+                tableView.requestFocus();
+                return;
+            }
+
+            for (int i = tableView.getItems().size() - 1; i >= 0; --i) {
+                FilmDataMTP f = tableView.getItems().get(i);
+                if (f.isWasHere()) {
+                    //dann haben wir den ersten
+                    System.out.println("============================");
+                    System.out.println("--> " + f.getNo());
+
+                    tableView.getSelectionModel().select(f);
+                    tableView.scrollTo(f);
+                    tableView.requestFocus();
+//                int ii = tableView.getSelectionModel().getSelectedIndex();
+//                tableView.getSelectionModel().focus(ii);
+
+//                tableView.getSelectionModel().select(ii);
+//                tableView.getSelectionModel().focus(ii);
+//                tableView.getSelectionModel().clearAndSelect(ii);
+//                tableView.scrollTo(tableView.getItems().size() - 1);
+//                tableView.scrollTo(ii);
+
+                    break;
+                }
+            }
+        });
+    }
+
     private void startFilmUrlWithSet(SetData pSet) {
+        // Button/Menü: Film mit Set starten
         // Url mit Prognr. starten
         if (pSet.isSave()) {
             // wenn das pSet zum Speichern (über die Button) gewählt wurde,
@@ -419,7 +479,7 @@ public class FilmGuiController extends AnchorPane {
             return;
         }
 
-        final Optional<FilmDataMTP> filmSelection = getSel();
+        final Optional<FilmDataMTP> filmSelection = getSel(true, true);
         if (!filmSelection.isPresent()) {
             return;
         }

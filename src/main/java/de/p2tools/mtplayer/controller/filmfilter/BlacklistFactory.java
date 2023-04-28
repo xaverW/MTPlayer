@@ -33,9 +33,9 @@ public class BlacklistFactory {
     }
 
     public static void addBlack() {
-        //aus markiertem Film, ein Black erstellen
-        //Dialog anzeigen
-        final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().filmGuiController.getSel();
+        // aus dem Menü: mit markiertem Film ein Black erstellen
+        // Dialog anzeigen
+        final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().filmGuiController.getSel(true, true);
         if (!filmSelection.isPresent()) {
             return;
         }
@@ -53,9 +53,9 @@ public class BlacklistFactory {
     }
 
     public static void addBlackTheme() {
-        //aus markiertem Film ein Black erstellen
-        //Dialog anzeigen
-        final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().filmGuiController.getSel();
+        // aus dem Menü: mit markiertem Film ein Black erstellen
+        // Dialog anzeigen
+        final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().filmGuiController.getSel(true, true);
         if (!filmSelection.isPresent()) {
             return;
         }

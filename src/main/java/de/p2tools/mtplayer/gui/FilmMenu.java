@@ -144,7 +144,7 @@ public class FilmMenu {
         PShortcutWorker.addShortCut(miFilmInfo, ProgShortcut.SHORTCUT_INFO_FILM);
 
         final MenuItem miFilmMediaCollection = new MenuItem("Film in der Mediensammlung suchen");
-        miFilmMediaCollection.setOnAction(a -> progData.filmGuiController.guiFilmMediaCollection());
+        miFilmMediaCollection.setOnAction(a -> progData.filmGuiController.searchFilmInMediaCollection());
         PShortcutWorker.addShortCut(miFilmMediaCollection, ProgShortcut.SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION);
 
         final MenuItem miCopyName = new MenuItem("Titel in die Zwischenablage kopieren");

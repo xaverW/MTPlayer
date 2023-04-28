@@ -89,7 +89,7 @@ public class FilmGuiTableContextMenu {
         miFilmInfo.setOnAction(a -> filmGuiController.showFilmInfo());
 
         MenuItem miMediaDb = new MenuItem("Film in der Mediensammlung suchen");
-        miMediaDb.setOnAction(a -> filmGuiController.guiFilmMediaCollection());
+        miMediaDb.setOnAction(a -> filmGuiController.searchFilmInMediaCollection());
 
         final MenuItem miCopyName = new MenuItem("Titel in die Zwischenablage kopieren");
         miCopyName.setOnAction(a -> {
