@@ -51,7 +51,6 @@ public class FilmGuiController extends AnchorPane {
     private final SplitPane splitPane = new SplitPane();
     private final ScrollPane scrollPaneTableFilm = new ScrollPane();
     private final PClosePaneH pClosePaneH;
-    private FilmDataMTP lastShownFilmData = null;
 
     private FilmGuiInfoController filmGuiInfoController;
     private final TableFilm tableView;
@@ -125,34 +124,6 @@ public class FilmGuiController extends AnchorPane {
         saveFilm();
     }
 
-
-//    public void setLastShownFilm(BlackData blackData) {
-//        //todo-> Black-White-List???
-//        final Optional<FilmDataMTP> filmSelection = getSel();
-//        if (!filmSelection.isPresent()) {
-//            //nix ausgewählt
-//            return;
-//        }
-//
-//        lastShownFilmData = null;
-//        if (ProgData.getInstance().actFilmFilterWorker.getActFilterSettings().blacklistOnOffProperty().getValue() ==
-//                BlacklistFilterFactory.BLACKLILST_FILTER_OFF) {
-//            //dann ist der markierte Film noch zu sehen
-//            lastShownFilmData = filmSelection.get();
-//
-//        } else {
-//            //sonst wird der erste Film davor, der noch zu sehen ist, gesucht
-//            int sel = tableView.getSelectionModel().getSelectedIndex();
-//            for (int i = sel; i >= 0; --i) {
-//                FilmDataMTP filmDataMTP = tableView.getItems().get(i);
-//                if (!BlacklistFilterFactory.checkFilmIsBlocked(filmDataMTP, blackData, false)) {
-//                    lastShownFilmData = filmDataMTP;
-//                    break;
-//                }
-//            }
-//        }
-//    }
-
     public void bookmarkFilm(boolean bookmark) {
         final ArrayList<FilmDataMTP> list = getSelList();
         if (!list.isEmpty()) {
@@ -169,9 +140,15 @@ public class FilmGuiController extends AnchorPane {
     }
 
     public void setFilmShown() {
+        // aus dem Menü/Kontext Tabelle
         final ArrayList<FilmDataMTP> list = getSelList();
+        if (list.isEmpty()) {
+            return;
+        }
+        getSel(true, false);// damit sel gesetzt wird
         FilmTools.setFilmShown(progData, list, true);
-        PTableFactory.refreshTable(tableView);
+        selectShown();
+//        PTableFactory.refreshTable(tableView);
     }
 
     public void setFilmNotShown() {
@@ -236,48 +213,11 @@ public class FilmGuiController extends AnchorPane {
         Listener.addListener(new Listener(Listener.EVENT_BLACKLIST_CHANGED, this.getClass().getSimpleName()) {
             @Override
             public void pingFx() {
-                lastShownFilmData = null;
                 PTableFactory.refreshTable(tableView);
             }
 
         });
     }
-
-//    private void selectFilm() {
-//        Platform.runLater(() -> {
-//            if ((tableView.getItems().size() == 0)) {
-//                return;
-//            }
-//
-//            System.out.println("=========> select");
-//            if (lastShownFilmData != null) {
-//                tableView.getSelectionModel().clearSelection();
-//                tableView.getSelectionModel().select(lastShownFilmData);
-//                FilmDataMTP selFilm = tableView.getSelectionModel().getSelectedItem();
-//                if (selFilm != null) {
-//                    tableView.scrollTo(selFilm);
-//                }
-//
-//
-////                int i = tableView.getSelectionModel().getSelectedIndex();
-////                tableView.getSelectionModel().select(i);
-////                tableView.getSelectionModel().focus(i);
-////                tableView.getSelectionModel().clearAndSelect(i);
-////                tableView.scrollTo(tableView.getItems().size() - 1);
-////                tableView.scrollTo(i);
-//
-//            } else {
-//                FilmDataMTP selFilm = tableView.getSelectionModel().getSelectedItem();
-//                if (selFilm != null) {
-//                    tableView.scrollTo(selFilm);
-////                } else {
-////                    tableView.getSelectionModel().clearSelection();
-////                    tableView.getSelectionModel().select(0);
-////                    tableView.scrollTo(0);
-//                }
-//            }
-//        });
-//    }
 
     private void initTable() {
         Table.setTable(tableView);
@@ -435,15 +375,22 @@ public class FilmGuiController extends AnchorPane {
     private void selectShown() {
         Platform.runLater(() -> {
             // bei der Blacklist kommt das außer der Reihe
+            if (tableView.getItems().isEmpty()) {
+                System.out.println("===> empty");
+                return;
+            }
+
             if (tableView.getSelectionModel().getSelectedItem() != null) {
                 // dann ist schon was selektiert, passt.
                 System.out.println("=========================");
                 System.out.println("ist schon sel");
+
                 tableView.scrollTo(tableView.getSelectionModel().getSelectedItem());
                 tableView.requestFocus();
                 return;
             }
 
+            boolean found = false;
             for (int i = tableView.getItems().size() - 1; i >= 0; --i) {
                 FilmDataMTP f = tableView.getItems().get(i);
                 if (f.isWasHere()) {
@@ -454,17 +401,16 @@ public class FilmGuiController extends AnchorPane {
                     tableView.getSelectionModel().select(f);
                     tableView.scrollTo(f);
                     tableView.requestFocus();
-//                int ii = tableView.getSelectionModel().getSelectedIndex();
-//                tableView.getSelectionModel().focus(ii);
-
-//                tableView.getSelectionModel().select(ii);
-//                tableView.getSelectionModel().focus(ii);
-//                tableView.getSelectionModel().clearAndSelect(ii);
-//                tableView.scrollTo(tableView.getItems().size() - 1);
-//                tableView.scrollTo(ii);
-
+                    found = true;
                     break;
                 }
+            }
+
+            if (!found) {
+                // dann wurde der erste Tabelleneintrag entfernt
+                tableView.getSelectionModel().select(0);
+                tableView.scrollTo(0);
+                tableView.requestFocus();
             }
         });
     }
