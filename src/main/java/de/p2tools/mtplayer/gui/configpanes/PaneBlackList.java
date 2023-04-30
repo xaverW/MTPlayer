@@ -30,6 +30,7 @@ import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.guitools.*;
+import de.p2tools.p2lib.guitools.ptable.CellLocalDate;
 import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.ListenerFilmlistLoadEvent;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.ListenerLoadFilmlist;
@@ -51,6 +52,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.function.Predicate;
 
@@ -184,6 +186,10 @@ public class PaneBlackList {
         activeColumn.setCellValueFactory(new PropertyValueFactory<>("active"));
         activeColumn.setCellFactory(CheckBoxTableCell.forTableColumn(activeColumn));
 
+        final TableColumn<BlackData, LocalDate> dateColumn = new TableColumn<>("Erstelldatum");
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("genDate"));
+        dateColumn.setCellFactory(new CellLocalDate().cellFactory);
+
         final TableColumn<BlackData, Integer> hitsColumn = new TableColumn<>("Treffer");
         hitsColumn.setCellValueFactory(new PropertyValueFactory<>("countHits"));
         hitsColumn.getStyleClass().add("alignCenterRightPadding_10");
@@ -192,8 +198,8 @@ public class PaneBlackList {
         tableView.setMinHeight(150);
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
-        tableView.getColumns().addAll(nrColumn, channelColumn, themeColumn, themeExactColumn,
-                titleColumn, themeTitleColumn, activeColumn, hitsColumn);
+        tableView.getColumns().addAll(nrColumn, hitsColumn, channelColumn, themeColumn,
+                themeExactColumn, titleColumn, themeTitleColumn, activeColumn, dateColumn);
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> setActBlackData());
 
         tableView.setRowFactory(tv -> {

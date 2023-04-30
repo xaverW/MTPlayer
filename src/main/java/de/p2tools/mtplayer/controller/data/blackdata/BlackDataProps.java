@@ -18,14 +18,17 @@ package de.p2tools.mtplayer.controller.data.blackdata;
 
 import de.p2tools.p2lib.configfile.config.Config;
 import de.p2tools.p2lib.configfile.config.Config_boolProp;
+import de.p2tools.p2lib.configfile.config.Config_lDate;
 import de.p2tools.p2lib.configfile.config.Config_stringProp;
 import de.p2tools.p2lib.configfile.pdata.PData;
 import de.p2tools.p2lib.configfile.pdata.PDataSample;
+import de.p2tools.p2lib.tools.date.PLDateFactory;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class BlackDataProps extends PDataSample<BlackDataProps> {
@@ -39,6 +42,7 @@ public class BlackDataProps extends PDataSample<BlackDataProps> {
     private final StringProperty title = new SimpleStringProperty("");
     private final StringProperty themeTitle = new SimpleStringProperty("");
     private final BooleanProperty active = new SimpleBooleanProperty(true);
+    private LocalDate genDate = LocalDate.now();
     private int countHits = 0;
 
     public BlackDataProps() {
@@ -53,6 +57,12 @@ public class BlackDataProps extends PDataSample<BlackDataProps> {
         list.add(new Config_stringProp("title", title));
         list.add(new Config_stringProp("themeTitle" + PData.TAGGER + "bithemeTitletrate", themeTitle));
         list.add(new Config_boolProp("active", active));
+        list.add(new Config_lDate("genDate", PLDateFactory.toString(genDate)) {
+            @Override
+            public void setUsedValue(LocalDate act) {
+                genDate = act;
+            }
+        });
         return list.toArray(new Config[]{});
     }
 
@@ -64,6 +74,7 @@ public class BlackDataProps extends PDataSample<BlackDataProps> {
         bl.setTitle(title.getValueSafe());
         bl.setThemeTitle(themeTitle.getValueSafe());
         bl.setActive(active.getValue());
+        bl.setGenDate(genDate);
         return bl;
     }
 
@@ -150,6 +161,14 @@ public class BlackDataProps extends PDataSample<BlackDataProps> {
 
     public void setActive(boolean active) {
         this.active.set(active);
+    }
+
+    public LocalDate getGenDate() {
+        return genDate;
+    }
+
+    public void setGenDate(LocalDate genDate) {
+        this.genDate = genDate;
     }
 
     public int getCountHits() {
