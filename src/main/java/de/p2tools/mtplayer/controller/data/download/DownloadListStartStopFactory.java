@@ -115,7 +115,6 @@ public class DownloadListStartStopFactory {
      */
     public static synchronized boolean stopDownloads(List<DownloadData> list) {
         // Aufruf aus den Menüs
-        boolean found = false;
         if (list == null || list.isEmpty()) {
             return false;
         }
@@ -123,22 +122,9 @@ public class DownloadListStartStopFactory {
         // das Starten von neuen Downloads etwas Pausieren
         ProgData.getInstance().starterClass.setPaused();
 
-        ArrayList<DownloadData> foundList = new ArrayList<>();
-        for (DownloadData download : list) {
-            if (download.isStateStartedWaiting() || download.isStateStartedRun() || download.isStateError()) {
-                // nur dann läuft er
-                download.stopDownload();
-                foundList.add(download);
-                found = true;
-            }
-        }
-
-        if (found) {
-            DownloadFactory.deleteFilmFile(foundList);
-        }
-        return found;
+        return DownloadFactory.stopDownloadDeleteFilmFile(list);
     }
-    
+
     private static PAlert.BUTTON restartDownload(int size, String title, PAlert.BUTTON answer) {
         if (answer.equals(PAlert.BUTTON.UNKNOWN)) {
             // nur einmal fragen

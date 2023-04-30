@@ -33,11 +33,12 @@ public class DownloadStopDialogController extends PDialogExtra {
 
     private VBox vBoxCont;
     private Label lblHeader = new Label("Angebrochene Filmdateien existieren bereits");
-    private Button btnOk = new Button("DL und Datei löschen");
-    private Button btnCancel = new Button("DL löschen, Datei behalten");
+    private Button btnDelDlFile = new Button("DL und Datei löschen");
+    private Button btnDelDl = new Button("DL löschen, Datei behalten");
+    private Button btnCancel = new Button("Abbrechen");
     private CheckBox chkAlways = new CheckBox("Immer ausführen");
     private final ObservableList<File> list;
-    private boolean delete = false;
+    private STATE state;
 
     public DownloadStopDialogController(ObservableList<File> list) {
         super(ProgData.getInstance().primaryStage, ProgConfig.DOWNLOAD_STOP_DIALOG_SIZE, "Datei löschen",
@@ -48,13 +49,15 @@ public class DownloadStopDialogController extends PDialogExtra {
         init(true);
     }
 
-    public boolean isDelete() {
-        return delete;
+    public STATE getState() {
+        return state;
     }
 
     @Override
     public void make() {
-        getHBoxTitle().getChildren().add(lblHeader);
+        getHBoxTitle().getChildren().add(list.isEmpty() ?
+                new Label("Es liegen noch keine angebrochene Filmdateien vor") :
+                new Label("Angebrochene Filmdateien existieren bereits"));
 
         vBoxCont.setPadding(new Insets(P2LibConst.DIST_EDGE));
         vBoxCont.setSpacing(P2LibConst.DIST_VBOX);
@@ -75,25 +78,35 @@ public class DownloadStopDialogController extends PDialogExtra {
         table.setItems(list);
 
         vBoxCont.getChildren().addAll(table);
-        addOkCancelButtons(btnOk, btnCancel);
+        addCancelButton(btnCancel);
+        addAnyButton(btnDelDlFile);
+        addAnyButton(btnDelDl);
 
         VBox vBox = new VBox(P2LibConst.DIST_VBOX);
         vBox.getChildren().addAll(new Label("Wie möchten Sie fortfahren?"), chkAlways);
         getHboxLeft().getChildren().add(vBox);
 
-        btnOk.setOnAction(event -> {
-            delete = true;// dann wird gelöscht
+        btnDelDlFile.setOnAction(event -> {
+            // löschen: DL und Dateien
+            state = STATE.STATE_1;
             if (chkAlways.isSelected()) {
                 // dann merken wir uns das
                 ProgConfig.DOWNLOAD_STOP.setValue(DownloadState.DOWNLOAD_STOP__DELETE);
             }
             quit();
         });
-        btnCancel.setOnAction(event -> {
+        btnDelDl.setOnAction(event -> {
+            // löschen: nur Download
+            state = STATE.STATE_2;
             if (chkAlways.isSelected()) {
                 // dann merken wir uns das
                 ProgConfig.DOWNLOAD_STOP.setValue(DownloadState.DOWNLOAD_STOP__NOTHING);
             }
+            quit();
+        });
+        btnCancel.setOnAction(a -> {
+            // nix
+            state = STATE.STATE_CANCEL;
             quit();
         });
     }

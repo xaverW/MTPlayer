@@ -99,6 +99,7 @@ public class CellDownloadState<S, T> extends TableCell<S, T> {
                     btnDownStop.setOnAction((ActionEvent event) -> {
                         DownloadData download = getTableView().getItems().get(getIndex());
                         DownloadListStartStopFactory.stopDownloads(download);
+                        getTableView().refresh();// damit neuer Status/Fortschritt angezeigt wird
                     });
 
                     btnDownDel = new Button("");

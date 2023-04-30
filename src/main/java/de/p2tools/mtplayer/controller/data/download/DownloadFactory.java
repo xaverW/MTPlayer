@@ -25,6 +25,7 @@ import de.p2tools.mtplayer.gui.tools.MTInfoFile;
 import de.p2tools.mtplayer.gui.tools.MTSubtitle;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,95 +34,116 @@ import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class DownloadFactory {
 
     private DownloadFactory() {
     }
 
-    public static void deleteFilmFile(ArrayList<DownloadData> downloadList) {
-        // Download nur löschen, wenn er nicht läuft
-        if (downloadList == null || downloadList.isEmpty() ||
-                ProgConfig.DOWNLOAD_STOP.getValue() == DownloadState.DOWNLOAD_STOP__NOTHING) {
-            // dann ist die Liste leer oder er will sowieso nicht löschen, nix wie weiter
-            return;
+    public static boolean stopDownloadDeleteFilmFile(List<DownloadData> downloads) {
+        ArrayList<DownloadData> foundList = new ArrayList<>();
+        for (DownloadData download : downloads) {
+            if (download.isStateStartedWaiting() || download.isStateStartedRun() || download.isStateError()) {
+                // nur dann läuft er
+                foundList.add(download);
+            }
         }
 
-        ArrayList<DownloadData> delDownloadList = new ArrayList<>();
-        delDownloadList.addAll(downloadList.stream().filter(downloadData -> !downloadData.isStarted()).collect(Collectors.toList()));
-        if (delDownloadList.isEmpty()) {
-            // gibt nix zum Löschen
-            return;
+        if (foundList.isEmpty()) {
+            // gibt nix zu tun
+            return false;
         }
 
         try {
-            ObservableList<File> delFileList = FXCollections.observableArrayList();
-            delDownloadList.stream().forEach(downloadData -> {
-                // Film
-                File file = new File(downloadData.getDestPathFile());
-                if (file.exists()) {
-                    delFileList.add(file);
-                }
 
-                // Infofile
-                if (downloadData.getInfoFile()) {
-                    Path infoPath = MTInfoFile.getInfoFilePath(downloadData);
-                    if (infoPath != null) {
-                        file = infoPath.toFile();
-                        if (file.exists()) {
-                            delFileList.add(file);
-                        }
+            switch (ProgConfig.DOWNLOAD_STOP.getValue()) {
+                case DownloadState.DOWNLOAD_STOP__NOTHING:
+                    // DL löschen, Dateien nicht
+                    PLog.sysLog("Stop Download: DL löschen, Dateien nicht");
+                    foundList.forEach(DownloadData::stopDownload);
+                    break;
+
+                case DownloadState.DOWNLOAD_STOP__DELETE:
+                    // DL und Dateien löschen
+                    PLog.sysLog("Stop Download: DL und Dateien löschen");
+                    foundList.forEach(DownloadData::stopDownload);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (Exception ignore) {
+                        System.out.println("================>");
                     }
-                }
+                    deleteFile(getFileList(foundList));
+                    break;
 
-                // Unteritel
-                if (downloadData.isSubtitle()) {
-                    Path subtitlePath = MTSubtitle.getSubtitlePath(downloadData);
-                    if (subtitlePath != null) {
-                        file = subtitlePath.toFile();
-                        if (file.exists()) {
-                            delFileList.add(file);
-                        }
+                default:
+                    // dann erstmal fragen
+                    PLog.sysLog("Stop Download: Erst mal fragen");
+                    ObservableList<File> fileList = getFileList(foundList);
+                    DownloadStopDialogController downloadStopDialogController = new DownloadStopDialogController(fileList);
+                    if (downloadStopDialogController.getState() == PDialogExtra.STATE.STATE_1) {
+                        // dann soll DL und Datei gelöscht werden
+                        PLog.sysLog("Stop Download: DL und Dateien löschen");
+                        foundList.forEach(DownloadData::stopDownload);
+                        deleteFile(fileList);
+
+                    } else if (downloadStopDialogController.getState() == PDialogExtra.STATE.STATE_2) {
+                        // dann soll nur der DL gelöscht werden
+                        PLog.sysLog("Stop Download: Nur DL löschen");
+                        foundList.forEach(DownloadData::stopDownload);
+
+                    } else {
+                        //dann soll nix gemacht werden
+                        PLog.sysLog("Stop Download: Abbruch");
                     }
-                }
-                if (downloadData.isSubtitle()) {
-                    Path subtitlePathSrt = MTSubtitle.getSrtPath(downloadData);
-                    if (subtitlePathSrt != null) {
-                        file = subtitlePathSrt.toFile();
-                        if (file.exists()) {
-                            delFileList.add(file);
-                        }
-                    }
-                }
-            });
-
-            if (delFileList.isEmpty()) {
-                // dann gibts eh nix zu tun
-                return;
-            }
-
-            if (ProgConfig.DOWNLOAD_STOP.getValue() == DownloadState.DOWNLOAD_STOP__ASK) {
-                // dann will er erst gefragt werden
-                DownloadStopDialogController downloadStopDialogController = new DownloadStopDialogController(delFileList);
-                if (downloadStopDialogController.isDelete()) {
-                    // dann soll gelöscht werden
-                    deleteFile(delFileList);
-                }
-
-            } else if (ProgConfig.DOWNLOAD_STOP.getValue() == DownloadState.DOWNLOAD_STOP__DELETE) {
-                // dann will er nicht gefragt werden, wird sofort gelöscht
-                try {
-                    Thread.sleep(1000);
-                } catch (Exception ignore) {
-                    System.out.println("================>");
-                }
-                deleteFile(delFileList);
             }
         } catch (Exception ex) {
             PAlert.showErrorAlert("Film löschen", "Konnte die Datei nicht löschen!", "Fehler beim löschen");
             PLog.errorLog(503231450, "Fehler beim löschen");
         }
+        return true;
+    }
+
+    private static ObservableList<File> getFileList(List<DownloadData> list) {
+        ObservableList<File> delFileList = FXCollections.observableArrayList();
+        list.stream().forEach(downloadData -> {
+            // Film
+            File file = new File(downloadData.getDestPathFile());
+            if (file.exists()) {
+                delFileList.add(file);
+            }
+
+            // Infofile
+            if (downloadData.getInfoFile()) {
+                Path infoPath = MTInfoFile.getInfoFilePath(downloadData);
+                if (infoPath != null) {
+                    file = infoPath.toFile();
+                    if (file.exists()) {
+                        delFileList.add(file);
+                    }
+                }
+            }
+
+            // Unteritel
+            if (downloadData.isSubtitle()) {
+                Path subtitlePath = MTSubtitle.getSubtitlePath(downloadData);
+                if (subtitlePath != null) {
+                    file = subtitlePath.toFile();
+                    if (file.exists()) {
+                        delFileList.add(file);
+                    }
+                }
+            }
+            if (downloadData.isSubtitle()) {
+                Path subtitlePathSrt = MTSubtitle.getSrtPath(downloadData);
+                if (subtitlePathSrt != null) {
+                    file = subtitlePathSrt.toFile();
+                    if (file.exists()) {
+                        delFileList.add(file);
+                    }
+                }
+            }
+        });
+        return delFileList;
     }
 
     private static boolean deleteFile(List<File> list) {
@@ -154,7 +176,6 @@ public class DownloadFactory {
         if (download.isStateStartedRun()) {
             PAlert.showErrorAlert("Film löschen", "Download läuft noch", "Download erst stoppen!");
         }
-
 
         try {
             // Film

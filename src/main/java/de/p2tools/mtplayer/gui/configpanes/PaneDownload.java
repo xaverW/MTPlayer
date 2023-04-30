@@ -44,8 +44,8 @@ public class PaneDownload {
 
     private final ToggleGroup groupStop = new ToggleGroup();
     private final RadioButton rbStopAsk = new RadioButton("Vorher fragen");
-    private final RadioButton rbStopDelete = new RadioButton("Angefangene Dateien immer löschen");
-    private final RadioButton rbStopNothing = new RadioButton("Nie etwas machen");
+    private final RadioButton rbStopDelete = new RadioButton("Download und angefangene Dateien immer löschen");
+    private final RadioButton rbStopNothing = new RadioButton("Download immer löschen, keine Dateien löschen");
 
     private final ToggleGroup group = new ToggleGroup();
     private final RadioButton rbAsk = new RadioButton("Vorher fragen");
@@ -116,8 +116,12 @@ public class PaneDownload {
         int row = 0;
         VBox vBox = new VBox(5);
         HBox hBox = new HBox(20);
-        vBox.getChildren().addAll(new Label("Beim Abbrechen angefangener Downloads:"), hBox);
-        hBox.getChildren().addAll(new Label("            "), rbStopAsk, rbStopDelete, rbStopNothing);
+        vBox.getChildren().addAll(new Label("Beim Abbrechen angefangener Downloads:"));
+        hBox.getChildren().addAll(new Label("            "), rbStopAsk);
+        vBox.getChildren().addAll(hBox);
+        hBox = new HBox(20);
+        hBox.getChildren().addAll(new Label("            "), rbStopDelete, rbStopNothing);
+        vBox.getChildren().addAll(hBox);
 
         gridPane.add(vBox, 0, row);
         gridPane.add(btnHelpStop, 1, row, 1, 2);
@@ -126,8 +130,12 @@ public class PaneDownload {
         ++row;
         vBox = new VBox(5);
         hBox = new HBox(20);
-        vBox.getChildren().addAll(new Label("Beim Neustart bereits angefangener Downloads:"), hBox);
-        hBox.getChildren().addAll(new Label("            "), rbAsk, rbContinue, rbRestart);
+        vBox.getChildren().addAll(new Label("Beim Neustart bereits angefangener Downloads:"));
+        hBox.getChildren().addAll(new Label("            "), rbAsk);
+        vBox.getChildren().addAll(hBox);
+        hBox = new HBox(20);
+        hBox.getChildren().addAll(new Label("            "), rbContinue, rbRestart);
+        vBox.getChildren().addAll(hBox);
 
         gridPane.add(vBox, 0, ++row);
         gridPane.add(btnHelpContinue, 1, row, 1, 2);

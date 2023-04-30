@@ -199,6 +199,9 @@ public class DirectHttpDownload extends Thread {
                 // Anzeige ändern - bei Fehler fehlt der Eintrag
                 download.setStateError();
             }
+        } else {
+            System.out.println("????????????????");
+            download.stopDownload();// nochmal da RUNTIME_EXEC ja weiter läuft
         }
     }
 
