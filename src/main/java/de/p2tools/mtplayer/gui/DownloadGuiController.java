@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
+import de.p2tools.mtplayer.controller.data.download.DownloadFactoryDelFilmFile;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmTools;
 import de.p2tools.mtplayer.gui.chart.DownloadGuiChart;
@@ -154,7 +154,7 @@ public class DownloadGuiController extends AnchorPane {
         if (!download.isPresent()) {
             return;
         }
-        DownloadFactory.deleteFilmFile(download.get());
+        DownloadFactoryDelFilmFile.deleteFilmFile(download.get());
     }
 
     public void openDestinationDir() {
@@ -168,6 +168,7 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     public void playUrl() {
+        // aus Menü
         final Optional<DownloadData> download = getSel();
         if (!download.isPresent()) {
             return;
@@ -255,10 +256,6 @@ public class DownloadGuiController extends AnchorPane {
                 tableView.getSelectionModel().selectLast();
             }
         }
-    }
-
-    public void cleanUp() {
-        progData.downloadList.cleanUpList();
     }
 
     public void changeDownload() {

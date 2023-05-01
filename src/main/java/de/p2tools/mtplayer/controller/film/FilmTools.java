@@ -19,8 +19,8 @@ package de.p2tools.mtplayer.controller.film;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
+import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.history.HistoryList;
 import de.p2tools.mtplayer.gui.dialog.DownloadAddDialogController;
 import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
@@ -61,6 +61,7 @@ public class FilmTools {
     }
 
     public static void playFilm(FilmDataMTP film, SetData psetData) {
+        // aus Menü
         SetData setData;
         String resolution = "";
 
@@ -109,7 +110,7 @@ public class FilmTools {
 
         for (final FilmDataMTP film : list) {
             // erst mal schauen obs den schon gibt
-            DownloadData download = progData.downloadList.getDownloadUrlFilm(film.arr[FilmDataMTP.FILM_URL]);
+            DownloadData download = progData.downloadList.getDownloadWithFilmUrl(film.arr[FilmDataMTP.FILM_URL]);
             if (download == null) {
                 filmsAddDownloadList.add(film);
             } else {

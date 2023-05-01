@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.controller.data.abo;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.download.DownloadTools;
+import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
@@ -125,7 +125,7 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
             searchTitle = "Abo aus Filter";
         }
 
-        searchTitle = DownloadTools.replaceEmptyFileName(searchTitle,
+        searchTitle = DownloadFactory.replaceEmptyFileName(searchTitle,
                 false /* nur ein Ordner */,
                 ProgConfig.SYSTEM_USE_REPLACETABLE.getValue(),
                 ProgConfig.SYSTEM_ONLY_ASCII.getValue());
@@ -172,7 +172,7 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
             ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(FilterCheck.FILTER_DURATION_MAX_MINUTE);
         }
 
-        String namePath = DownloadTools.replaceEmptyFileName(aboName,
+        String namePath = DownloadFactory.replaceEmptyFileName(aboName,
                 false /* nur ein Ordner */,
                 ProgConfig.SYSTEM_USE_REPLACETABLE.getValue(),
                 ProgConfig.SYSTEM_ONLY_ASCII.getValue());

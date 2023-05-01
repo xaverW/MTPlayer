@@ -31,19 +31,21 @@ import java.io.File;
 
 public class DownloadStopDialogController extends PDialogExtra {
 
-    private VBox vBoxCont;
-    private Label lblHeader = new Label("Angebrochene Filmdateien existieren bereits");
-    private Button btnDelDlFile = new Button("DL und Datei löschen");
-    private Button btnDelDl = new Button("DL löschen, Datei behalten");
-    private Button btnCancel = new Button("Abbrechen");
-    private CheckBox chkAlways = new CheckBox("Immer ausführen");
+    private final VBox vBoxCont;
+    private final Label lblHeader = new Label();
+    private final Button btnDelDlFile = new Button();
+    private final Button btnDelDl = new Button("DL löschen, Datei behalten");
+    private final Button btnCancel = new Button("Abbrechen");
+    private final CheckBox chkAlways = new CheckBox("Immer ausführen");
     private final ObservableList<File> list;
+    private final boolean delete;// nur zur Anzeige des Button-Textes
     private STATE state;
 
-    public DownloadStopDialogController(ObservableList<File> list) {
+    public DownloadStopDialogController(ObservableList<File> list, boolean delete) {
         super(ProgData.getInstance().primaryStage, ProgConfig.DOWNLOAD_STOP_DIALOG_SIZE, "Datei löschen",
                 true, false, DECO.BORDER_SMALL);
         this.list = list;
+        this.delete = delete;
 
         vBoxCont = getVBoxCont();
         init(true);
@@ -55,6 +57,16 @@ public class DownloadStopDialogController extends PDialogExtra {
 
     @Override
     public void make() {
+        if (delete) {
+            // dann werden die Downloads gelöscht
+            btnDelDlFile.setText("DL und Datei löschen");
+            btnDelDl.setText("DL löschen, Datei behalten");
+        } else {
+            // dann werden die Downloads nur gestoppt
+            btnDelDlFile.setText("DL abbrechen und Datei löschen");
+            btnDelDl.setText("DL abbrechen, Datei behalten");
+        }
+
         getHBoxTitle().getChildren().add(list.isEmpty() ?
                 new Label("Es liegen noch keine angebrochene Filmdateien vor") :
                 new Label("Angebrochene Filmdateien existieren bereits"));
@@ -62,7 +74,7 @@ public class DownloadStopDialogController extends PDialogExtra {
         vBoxCont.setPadding(new Insets(P2LibConst.DIST_EDGE));
         vBoxCont.setSpacing(P2LibConst.DIST_VBOX);
 
-        TableView table = new TableView();
+        TableView<File> table = new TableView();
         final TableColumn<File, String> fileColumn = new TableColumn<>("Datei");
         fileColumn.prefWidthProperty().bind(table.widthProperty().multiply(60.0 / 100));
         fileColumn.setCellValueFactory(new PropertyValueFactory<>("name"));

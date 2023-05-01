@@ -23,8 +23,9 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.mtplayer.controller.data.download.DownloadListStartStopFactory;
+import de.p2tools.mtplayer.controller.data.download.DownloadFactoryStopDownload;
 import de.p2tools.p2lib.guitools.POpen;
+import de.p2tools.p2lib.tools.PGetList;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -98,7 +99,7 @@ public class CellDownloadState<S, T> extends TableCell<S, T> {
                     btnDownStop.setGraphic(ProgIcons.Icons.IMAGE_TABLE_DOWNLOAD_STOP.getImageView());
                     btnDownStop.setOnAction((ActionEvent event) -> {
                         DownloadData download = getTableView().getItems().get(getIndex());
-                        DownloadListStartStopFactory.stopDownloads(download);
+                        DownloadFactoryStopDownload.stopDownloads(new PGetList<DownloadData>().getArrayList(download));
                         getTableView().refresh();// damit neuer Status/Fortschritt angezeigt wird
                     });
 

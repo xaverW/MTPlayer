@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.controller.data.setdata;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
-import de.p2tools.mtplayer.controller.data.download.DownloadTools;
+import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.PDialogFileChosser;
 
@@ -42,7 +42,7 @@ public class SetReplacePatternFactory {
 
     private static boolean progReplacePattern(SetData pSet) {
         //todo da muss vorher der Downloadpfad abgefragt werden -> beim Update suchen??
-        pSet.setDestPath(pSet.getDestPath().replace(PATTERN_PATH_DEST, DownloadTools.getDownloadPath()));
+        pSet.setDestPath(pSet.getDestPath().replace(PATTERN_PATH_DEST, DownloadFactory.getDownloadPath()));
         String vlc = "";
         String ffmpeg = "";
         // damit nur die Variablen abgefragt werden, die auch verwendet werden

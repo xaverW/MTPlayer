@@ -74,14 +74,10 @@ public class DownloadStartAtTimeController extends PDialogExtra {
 //        this.downloadListSel.setAll(dListSel);
 
         //nur noch nicht gestartete in die Listen laden
-        dListAll.stream().filter(d -> d.isNotStartedOrFinished()).forEach(d -> downloadListAll.add(d));
-        dListSel.stream().filter(d -> d.isNotStartedOrFinished()).forEach(d -> downloadListSel.add(d));
+        dListAll.stream().filter(DownloadData::isNotStartedOrFinished).forEach(downloadListAll::add);
+        dListSel.stream().filter(DownloadData::isNotStartedOrFinished).forEach(downloadListSel::add);
 
-        if (this.downloadListSel == null || this.downloadListSel.isEmpty()) {
-            onlyAll = true;
-        } else {
-            onlyAll = false;
-        }
+        onlyAll = this.downloadListSel.isEmpty();
 
         init(true);
     }
@@ -230,14 +226,14 @@ public class DownloadStartAtTimeController extends PDialogExtra {
 
         if (chkStartNow.isSelected()) {
             //dann sofort starten und evtl. Startzeit löschen
-            downloadList.stream().forEach(download -> download.setStartTime(""));
+            downloadList.forEach(download -> download.setStartTime(""));
         } else {
             //noch nicht gestartete nach Zeitangabe starten
             //Downloads dessen Start schon auf Fehler steht, werden nicht gestartet
             final String time = pTimePicker.getTime();
-            downloadList.stream().forEach(download -> download.setStartTime(time));
+            downloadList.forEach(download -> download.setStartTime(time));
         }
-        downloadList.stream().forEach(download -> download.resetDownload());
+        downloadList.forEach(DownloadData::resetDownload);
         progData.downloadList.startDownloads(downloadList, false);
     }
 

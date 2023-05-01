@@ -68,7 +68,7 @@ public class DownloadMenu {
                 "Film Starten", "Gespeicherten Film abspielen", ProgIcons.Icons.ICON_TOOLBAR_DOWNLOAD_FILM_START.getImageView());
 
         btDownloadRefresh.setOnAction(a -> progData.worker.searchForAbosAndMaybeStart());
-        btDownloadClear.setOnAction(a -> progData.downloadGuiController.cleanUp());
+        btDownloadClear.setOnAction(a -> progData.downloadList.cleanUpList());
         btStartDownloads.setOnAction(a -> progData.downloadGuiController.startDownload(false));
         btDownloadAll.setOnAction(a -> progData.downloadGuiController.startDownload(true));
         btDownloadAllTime.setOnAction(a -> progData.downloadGuiController.startDownloadTime());
@@ -130,7 +130,7 @@ public class DownloadMenu {
         PShortcutWorker.addShortCut(mbUpdateList, ProgShortcut.SHORTCUT_DOWNLOADS_UPDATE);
 
         final MenuItem mbClean = new MenuItem("Liste der Downloads aufräumen");
-        mbClean.setOnAction(e -> progData.downloadGuiController.cleanUp());
+        mbClean.setOnAction(e -> progData.downloadList.cleanUpList());
         PShortcutWorker.addShortCut(mbClean, ProgShortcut.SHORTCUT_DOWNLOADS_CLEAN_UP);
 
         Menu submenuAllDownloads = new Menu("Alle Downloads");

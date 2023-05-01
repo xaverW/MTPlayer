@@ -34,15 +34,12 @@ import java.io.File;
 import java.util.Date;
 
 
-public class DownloadProgram {
+public class DownloadFactoryProgram {
 
-    private final DownloadData download;
-
-    public DownloadProgram(DownloadData download) {
-        this.download = download;
+    private DownloadFactoryProgram() {
     }
 
-    public boolean makeProgParameter(FilmDataMTP film, AboData abo, String name, String path) {
+    public static boolean makeProgParameter(DownloadData download, FilmDataMTP film, AboData abo, String name, String path) {
         // zieldatei und pfad bauen und eintragen
         try {
             final ProgramData programData = download.getSetData().getProgUrl(download.getUrl());
@@ -62,31 +59,31 @@ public class DownloadProgram {
 
             download.setProgramRestart(programData.isRestart());
             download.setProgramDownloadmanager(programData.isDownManager());
-            buildFileNamePath(download.getSetData(), film, abo, name, path);
-            buildProgParameter(programData);
+            buildFileNamePath(download, download.getSetData(), film, abo, name, path);
+            buildProgParameter(download, programData);
         } catch (final Exception ex) {
             PLog.errorLog(825600145, ex);
         }
         return true;
     }
 
-    private void buildProgParameter(ProgramData program) {
+    private static void buildProgParameter(DownloadData download, ProgramData program) {
         if (download.getType().equals(DownloadConstants.TYPE_DOWNLOAD)) {
             download.setProgramCall("");
             download.setProgramCallArray("");
         } else {
             String befehlsString = program.getProgrammAufruf();
-            befehlsString = replaceExec(befehlsString);
+            befehlsString = replaceExec(download, befehlsString);
             download.setProgramCall(befehlsString);
 
             String progArray = program.getProgrammAufrufArray();
-            progArray = replaceExec(progArray);
+            progArray = replaceExec(download, progArray);
             download.setProgramCallArray(progArray);
         }
     }
 
 
-    private void buildFileNamePath(SetData setData, FilmDataMTP film, AboData abo, String nname, String ppath) {
+    private static void buildFileNamePath(DownloadData download, SetData setData, FilmDataMTP film, AboData abo, String nname, String ppath) {
         // nname und ppfad sind nur belegt, wenn der Download über den DialogAddDownload gestartet wurde
         // (aus TabFilme)
         String name;
@@ -115,7 +112,7 @@ public class DownloadProgram {
             }
 
             // Tags ersetzen
-            name = replaceString(name, film); // %D ... ersetzen
+            name = replaceString(download, name, film); // %D ... ersetzen
 
             String suff = "";
             if (name.contains(".")) {
@@ -129,7 +126,7 @@ public class DownloadProgram {
                 }
             }
 
-            name = DownloadTools.replaceEmptyFileName(name,
+            name = DownloadFactory.replaceEmptyFileName(name,
                     false /* pfad */,
                     ProgConfig.SYSTEM_USE_REPLACETABLE.getValue(),
                     ProgConfig.SYSTEM_ONLY_ASCII.getValue());
@@ -216,13 +213,13 @@ public class DownloadProgram {
                 // --> das wird aber nur beim ersten mal klappen, dann wird im
                 // Downloaddialog immer der letzte Pfad zuerst angeboten
                 path = PFileUtils.addsPath(path,
-                        DownloadTools.replaceEmptyFileName(download.getTheme(),
+                        DownloadFactory.replaceEmptyFileName(download.getTheme(),
                                 true /* pfad */,
                                 ProgConfig.SYSTEM_USE_REPLACETABLE.getValue(),
                                 ProgConfig.SYSTEM_ONLY_ASCII.getValue()));
             }
 
-            path = replaceString(path, film); // %D ... ersetzen
+            path = replaceString(download, path, film); // %D ... ersetzen
         }
 
         if (path.endsWith(File.separator)) {
@@ -248,7 +245,7 @@ public class DownloadProgram {
         download.setDestPathFile(PFileUtils.addsPath(pathName[0], pathName[1]));
     }
 
-    private String replaceString(String replStr, FilmDataMTP film) {
+    private static String replaceString(DownloadData download, String replStr, FilmDataMTP film) {
         // hier wird nur ersetzt!
         // Felder mit variabler Länge, evtl. vorher kürzen
 
@@ -310,8 +307,8 @@ public class DownloadProgram {
         return replStr;
     }
 
-    private String getField(String name, int length) {
-        name = DownloadTools.replaceEmptyFileName(name,
+    private static String getField(String name, int length) {
+        name = DownloadFactory.replaceEmptyFileName(name,
                 false /* pfad */,
                 ProgConfig.SYSTEM_USE_REPLACETABLE.getValue(),
                 ProgConfig.SYSTEM_ONLY_ASCII.getValue());
@@ -326,23 +323,23 @@ public class DownloadProgram {
         return name;
     }
 
-    private String getNow_HHMMSS() {
+    private static String getNow_HHMMSS() {
         return DateFactory.F_FORMAT_HHmmss.format(new Date());
     }
 
-    private String getNow_HH_MM_SS() {
+    private static String getNow_HH_MM_SS() {
         return DateFactory.F_FORMAT_HH__mm__ss.format(new Date());
     }
 
-    private String getToday_yyyyMMdd() {
+    private static String getToday_yyyyMMdd() {
         return DateFactory.F_FORMAT_yyyyMMdd.format(new Date());
     }
 
-    private String getToday_yyyy_MM_dd() {
+    private static String getToday_yyyy_MM_dd() {
         return DateFactory.F_FORMAT_yyyy_MM_dd.format(new Date());
     }
 
-    private String getToday__yyyy_o_MM_o_dd() {
+    private static String getToday__yyyy_o_MM_o_dd() {
         return DateFactory.F_FORMAT_dd_MM_yyyy.format(new Date());
     }
 
@@ -430,7 +427,7 @@ public class DownloadProgram {
     }
 
 
-    private String replaceExec(String execString) {
+    private static String replaceExec(DownloadData download, String execString) {
         execString = execString.replace("**", download.getDestPathFile());
         execString = execString.replace("%f", download.getUrl());
         //execString = execString.replace("%F", download.getUrlRtmp());

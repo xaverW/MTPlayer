@@ -87,7 +87,7 @@ public class DownloadGuiTableContextMenu {
         final MenuItem miUpdate = new MenuItem("Liste der Downloads aktualisieren");
         miUpdate.setOnAction(e -> progData.worker.searchForAbosAndMaybeStart());
         final MenuItem miCleanUp = new MenuItem("Liste der Downloads aufräumen");
-        miCleanUp.setOnAction(e -> downloadGuiController.cleanUp());
+        miCleanUp.setOnAction(e -> progData.downloadList.cleanUpList());
 
         miStartAll.setDisable(download == null);
         miStartTimeAll.setDisable(download == null);

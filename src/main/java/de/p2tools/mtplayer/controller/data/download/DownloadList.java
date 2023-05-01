@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.configfile.pdata.PDataList;
+import de.p2tools.p2lib.tools.PGetList;
 import de.p2tools.p2lib.tools.duration.PDuration;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -27,23 +28,21 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 public class DownloadList extends SimpleListProperty<DownloadData> implements PDataList<DownloadData> {
 
     public static final String TAG = "DownloadList";
     private final ProgData progData;
-    private final DownloadListAbo downloadListAbo;
-    private final DownloadListStarts downloadListStarts;
     private final ObservableList<DownloadData> undoList = FXCollections.observableArrayList();
-
-    private BooleanProperty downloadsChanged = new SimpleBooleanProperty(true);
+    private final BooleanProperty downloadsChanged = new SimpleBooleanProperty(true);
 
     public DownloadList(ProgData progData) {
         super(FXCollections.observableArrayList());
         this.progData = progData;
-        this.downloadListAbo = new DownloadListAbo(progData, this);
-        this.downloadListStarts = new DownloadListStarts(progData, this);
     }
 
     @Override
@@ -66,37 +65,6 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
         if (obj.getClass().equals(DownloadData.class)) {
             add((DownloadData) obj);
         }
-    }
-
-    public ObservableList<DownloadData> getUndoList() {
-        return undoList;
-    }
-
-    public synchronized void addDownloadUndoList(List<DownloadData> list) {
-        undoList.clear();
-        undoList.addAll(list);
-    }
-
-    public synchronized void undoDownloads() {
-        if (undoList.isEmpty()) {
-            return;
-        }
-        //aus der AboHistory löschen
-        progData.erledigteAbos.removeDownloadDataFromHistory(undoList);
-        addAll(undoList);
-        undoList.clear();
-    }
-
-    public boolean getDownloadsChanged() {
-        return downloadsChanged.get();
-    }
-
-    synchronized void setDownloadsChanged() {
-        downloadsChanged.set(!downloadsChanged.get());
-    }
-
-    public BooleanProperty downloadsChangedProperty() {
-        return downloadsChanged;
     }
 
     public synchronized void initDownloads() {
@@ -134,9 +102,35 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
         setNumbersInList();
     }
 
-    @Override
-    public synchronized boolean removeAll(Collection<?> objects) {
-        return super.removeAll(objects);
+    public boolean getDownloadsChanged() {
+        return downloadsChanged.get();
+    }
+
+    synchronized void setDownloadsChanged() {
+        downloadsChanged.set(!downloadsChanged.get());
+    }
+
+    public BooleanProperty downloadsChangedProperty() {
+        return downloadsChanged;
+    }
+
+    public ObservableList<DownloadData> getUndoList() {
+        return undoList;
+    }
+
+    public synchronized void addDownloadsToUndoList(List<DownloadData> list) {
+        undoList.clear();
+        undoList.addAll(list);
+    }
+
+    public synchronized void undoDownloads() {
+        if (undoList.isEmpty()) {
+            return;
+        }
+        //aus der AboHistory löschen
+        progData.erledigteAbos.removeDownloadDataFromHistory(undoList);
+        addAll(undoList);
+        undoList.clear();
     }
 
     public synchronized int countStartedAndRunningDownloads() {
@@ -170,54 +164,10 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
     }
 
     public synchronized void preferDownloads(ArrayList<DownloadData> prefDownList) {
-        // macht nur Sinn, wenn der Download auf Laden wartet: Init
-        // todo auch bei noch nicht gestarteten ermöglichen
-        prefDownList.removeIf(d -> d.getState() != DownloadConstants.STATE_STARTED_WAITING);
-        if (prefDownList.isEmpty()) {
-            return;
-        }
-
-        // zum neu nummerieren der alten Downloads
-        List<DownloadData> list = new ArrayList<>();
-        for (final DownloadData download : this) {
-            final int i = download.getNo();
-            if (i < P2LibConst.NUMBER_NOT_STARTED) {
-                list.add(download);
-            }
-        }
-        prefDownList.stream().forEach(d -> list.remove(d));
-        Collections.sort(list, new Comparator<DownloadData>() {
-            @Override
-            public int compare(DownloadData d1, DownloadData d2) {
-                return (d1.getNo() < d2.getNo()) ? -1 : 1;
-            }
-        });
-        int addNr = prefDownList.size();
-        for (final DownloadData download : list) {
-            ++addNr;
-            download.setNo(addNr);
-        }
-
-        // und jetzt die vorgezogenen Downloads nummerieren
-        int i = 1;
-        for (final DownloadData dataDownload : prefDownList) {
-            dataDownload.setNo(i++);
-        }
+        DownloadFactory.preferDownloads(this, prefDownList);
     }
 
-    public synchronized DownloadData getDownloadByUrl(String url) {
-        DownloadData ret = null;
-        for (final DownloadData download : this) {
-            if (download.getUrl().equals(url)) {
-                ret = download;
-                break;
-            }
-        }
-        return ret;
-    }
-
-
-    public synchronized DownloadData getDownloadUrlFilm(String urlFilm) {
+    public synchronized DownloadData getDownloadWithFilmUrl(String urlFilm) {
         for (final DownloadData dataDownload : this) {
             if (dataDownload.getFilmUrl().equals(urlFilm)) {
                 return dataDownload;
@@ -227,30 +177,7 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
     }
 
     public synchronized void cleanUpList() {
-        // fertige Downloads löschen, fehlerhafte zurücksetzen
-
-        boolean found = false;
-        Iterator<DownloadData> it = this.iterator();
-        while (it.hasNext()) {
-            DownloadData download = it.next();
-            if (download.isStateInit() ||
-                    download.isStateStopped()) {
-                continue;
-            }
-            if (download.isStateFinished()) {
-                // alles was fertig/fehlerhaft ist, kommt beim putzen weg
-                it.remove();
-                found = true;
-            } else if (download.isStateError()) {
-                // fehlerhafte werden zurückgesetzt
-                download.resetDownload();
-                found = true;
-            }
-        }
-
-        if (found) {
-            setDownloadsChanged();
-        }
+        DownloadFactory.cleanUpList(this);
     }
 
     /**
@@ -258,7 +185,7 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
      */
     public synchronized void searchForDownloadsFromAbos() {
         final int count = getSize();
-        downloadListAbo.searchDownloadsFromAbos();
+        DownloadFactoryAbo.searchDownloadsFromAbos(this);
         if (getSize() == count) {
             // dann wurden evtl. nur zurückgestellte Downloads wieder aktiviert
             setDownloadsChanged();
@@ -266,24 +193,24 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
     }
 
     public synchronized List<DownloadData> getListOfStartsNotFinished(String source) {
-        return downloadListStarts.getListOfStartsNotFinished(source);
+        return DownloadFactoryStarts.getListOfStartsNotFinished(this, source);
     }
 
     public synchronized List<DownloadData> getListOfStartsNotLoading(String source) {
-        return downloadListStarts.getListOfStartsNotLoading(source);
+        return DownloadFactoryStarts.getListOfStartsNotLoading(this, source);
     }
 
     public synchronized DownloadData getRestartDownload() {
-        return downloadListStarts.getRestartDownload();
+        return DownloadFactoryStarts.getRestartDownload(this);
     }
 
 
     public synchronized void cleanUpButtonStarts() {
-        downloadListStarts.cleanUpButtonStarts();
+        DownloadFactoryStarts.cleanUpButtonStarts(this);
     }
 
     public synchronized DownloadData getNextStart() {
-        return downloadListStarts.getNextStart();
+        return DownloadFactoryStarts.getNextStart(this);
     }
 
     public synchronized void resetPlacedBack() {
@@ -293,52 +220,43 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
 
     // ==============================
     // DownloadListStartStop
-    public synchronized void stopAllDownloads() {
-        stopDownloads(this);
-    }
-
     public synchronized void stopDownloads(List<DownloadData> list) {
         // Aufruf aus den Menüs
-        if (DownloadListStartStopFactory.stopDownloads(list)) {
+        if (DownloadFactoryStopDownload.stopDownloads(list)) {
             setDownloadsChanged();
         }
     }
 
     public synchronized void delDownloads(DownloadData download) {
         // aus dem Menü
-        DownloadListStartStopFactory.delDownloads(this, download);
+        DownloadFactoryStopDownload.delDownloads(this, new PGetList<DownloadData>().getArrayList(download));
     }
 
     public synchronized void delDownloads(ArrayList<DownloadData> list) {
         // aus dem Menü
-        if (DownloadListStartStopFactory.delDownloads(this, list)) {
+        if (DownloadFactoryStopDownload.delDownloads(this, list)) {
             setDownloadsChanged();
         }
     }
 
     public synchronized void putBackDownloads(ArrayList<DownloadData> list) {
-        if (DownloadListStartStopFactory.putBackDownloads(list)) {
+        if (DownloadFactoryStopDownload.putBackDownloads(list)) {
             setDownloadsChanged();
         }
     }
 
-    public void startDownloads(DownloadData download) {
-        DownloadListStartStopFactory.startDownloads(this, download);
-        setDownloadsChanged();
-    }
-
-    public void startDownloads() {
+    public void startAllDownloads() {
         startDownloads(this, false);
     }
 
-    public void startDownloads(Collection<DownloadData> list) {
-        if (DownloadListStartStopFactory.startDownloads(this, list, false)) {
-            setDownloadsChanged();
-        }
+    public void startDownloads(DownloadData download) {
+        DownloadFactoryStartDownload.startDownloads(this,
+                new PGetList<DownloadData>().getArrayList(download));
+        setDownloadsChanged();
     }
 
     public void startDownloads(Collection<DownloadData> list, boolean alsoFinished) {
-        if (DownloadListStartStopFactory.startDownloads(this, list, alsoFinished)) {
+        if (DownloadFactoryStartDownload.startDownloads(this, list, alsoFinished)) {
             setDownloadsChanged();
         }
     }

@@ -131,7 +131,7 @@ public class Worker {
         if (ProgConfig.DOWNLOAD_START_NOW.getValue() || ProgData.autoMode) {
             // und wenn gewollt auch gleich starten, kann kein Dialog aufgehen: false!
             PLog.sysLog("Downloads aus Abos starten");
-            progData.downloadList.startDownloads();
+            progData.downloadList.startAllDownloads();
         }
         PDuration.counterStop("searchForAbosAndMaybeStart");
     }

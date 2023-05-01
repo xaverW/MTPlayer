@@ -37,8 +37,6 @@ import java.util.Date;
 public final class DownloadData extends DownloadDataProps {
 
     private Start start = new Start(this);
-    private final DownloadProgram downloadProgram = new DownloadProgram(this);
-
     private FilmDataMTP film = null;
     private SetData setData = null;
     private AboData abo = null;
@@ -75,7 +73,7 @@ public final class DownloadData extends DownloadDataProps {
         // und jetzt noch die Dateigröße für die entsp. URL
         setSizeDownloadFromFilm();
         // und endlich Aufruf bauen :)
-        downloadProgram.makeProgParameter(film, abo, name, path);
+        DownloadFactoryProgram.makeProgParameter(this, film, abo, name, path);
     }
 
     //==============================================
@@ -178,7 +176,7 @@ public final class DownloadData extends DownloadDataProps {
     }
 
     public void makeProgParameter() {
-        downloadProgram.makeProgParameter(film, abo, getDestFileName(), getDestPath());
+        DownloadFactoryProgram.makeProgParameter(this, film, abo, getDestFileName(), getDestPath());
     }
 
     public String getFileNameWithoutSuffix() {

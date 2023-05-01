@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.dialog;
 import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.mtplayer.controller.data.download.DownloadTools;
+import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
 import de.p2tools.mtplayer.controller.data.setdata.SetFactory;
@@ -610,7 +610,7 @@ public class DownloadAddDialogController extends PDialogExtra {
         progData.downloadList.addWithNr(list);
         if (rbStart.isSelected() || rbTime.isSelected()) {
             // und evtl. auch gleich starten
-            progData.downloadList.startDownloads(list);
+            progData.downloadList.startDownloads(list, false);
         }
 
         close();
@@ -762,7 +762,7 @@ public class DownloadAddDialogController extends PDialogExtra {
     private String getNextName(String stdPath, String actDownPath, String theme) {
         String ret = actDownPath;
 
-        theme = DownloadTools.replaceEmptyFileName(theme,
+        theme = DownloadFactory.replaceEmptyFileName(theme,
                 false /* pfad */,
                 ProgConfig.SYSTEM_USE_REPLACETABLE.getValue(),
                 ProgConfig.SYSTEM_ONLY_ASCII.getValue());

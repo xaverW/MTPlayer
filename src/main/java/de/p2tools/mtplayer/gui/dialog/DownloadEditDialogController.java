@@ -22,8 +22,8 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
+import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
 import de.p2tools.mtplayer.controller.data.download.DownloadFieldNames;
-import de.p2tools.mtplayer.controller.data.download.DownloadTools;
 import de.p2tools.mtplayer.controller.data.setdata.ProgramData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
@@ -456,10 +456,10 @@ public class DownloadEditDialogController extends PDialogExtra {
         cbPath.valueProperty().addListener((observable, oldValue, newValue) -> {
             final String s = cbPath.getSelectionModel().getSelectedItem();
             resetDownloadCallForProgramm();
-            DownloadTools.calculateAndCheckDiskSpace(download, s, lblSizeFree);
+            DownloadFactory.calculateAndCheckDiskSpace(download, s, lblSizeFree);
         });
 
-        DownloadTools.calculateAndCheckDiskSpace(download, cbPath.getSelectionModel().getSelectedItem(), lblSizeFree);
+        DownloadFactory.calculateAndCheckDiskSpace(download, cbPath.getSelectionModel().getSelectedItem(), lblSizeFree);
         return row;
     }
 

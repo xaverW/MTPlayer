@@ -353,6 +353,7 @@ public class FilmGuiController extends AnchorPane {
     }
 
     public synchronized void startFilmUrl(FilmDataMTP mtp) {
+        // aus Menü
         if (mtp != null) {
             tableView.getSelectionModel().select(mtp);
             setWasShown(mtp);
