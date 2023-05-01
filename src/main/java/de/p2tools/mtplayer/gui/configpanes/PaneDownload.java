@@ -116,7 +116,7 @@ public class PaneDownload {
         int row = 0;
         VBox vBox = new VBox(5);
         HBox hBox = new HBox(20);
-        vBox.getChildren().addAll(new Label("Beim Abbrechen angefangener Downloads:"));
+        vBox.getChildren().addAll(new Label("Beim Abbrechen oder Löschen von Downloads:"));
         hBox.getChildren().addAll(new Label("            "), rbStopAsk);
         vBox.getChildren().addAll(hBox);
         hBox = new HBox(20);
@@ -176,8 +176,8 @@ public class PaneDownload {
         ProgConfig.DOWNLOAD_STOP.addListener((v, o, n) -> setRadio());
 
         rbStopAsk.setOnAction(a -> ProgConfig.DOWNLOAD_STOP.setValue(DownloadState.DOWNLOAD_STOP__ASK));
-        rbStopDelete.setOnAction(a -> ProgConfig.DOWNLOAD_STOP.setValue(DownloadState.DOWNLOAD_STOP__DELETE));
-        rbStopNothing.setOnAction(a -> ProgConfig.DOWNLOAD_STOP.setValue(DownloadState.DOWNLOAD_STOP__NOTHING));
+        rbStopDelete.setOnAction(a -> ProgConfig.DOWNLOAD_STOP.setValue(DownloadState.DOWNLOAD_STOP__DELETE_FILE));
+        rbStopNothing.setOnAction(a -> ProgConfig.DOWNLOAD_STOP.setValue(DownloadState.DOWNLOAD_STOP__DO_NOT_DELETE));
         rbAsk.setOnAction(a -> ProgConfig.DOWNLOAD_CONTINUE.setValue(DownloadState.DOWNLOAD_RESTART__ASK));
         rbContinue.setOnAction(a -> ProgConfig.DOWNLOAD_CONTINUE.setValue(DownloadState.DOWNLOAD_RESTART__CONTINUE));
         rbRestart.setOnAction(a -> ProgConfig.DOWNLOAD_CONTINUE.setValue(DownloadState.DOWNLOAD_RESTART__RESTART));
@@ -185,10 +185,10 @@ public class PaneDownload {
 
     private void setRadio() {
         switch (ProgConfig.DOWNLOAD_STOP.getValue()) {
-            case DownloadState.DOWNLOAD_STOP__DELETE:
+            case DownloadState.DOWNLOAD_STOP__DELETE_FILE:
                 rbStopDelete.setSelected(true);
                 break;
-            case DownloadState.DOWNLOAD_STOP__NOTHING:
+            case DownloadState.DOWNLOAD_STOP__DO_NOT_DELETE:
                 rbStopNothing.setSelected(true);
                 break;
             case DownloadState.DOWNLOAD_STOP__ASK:

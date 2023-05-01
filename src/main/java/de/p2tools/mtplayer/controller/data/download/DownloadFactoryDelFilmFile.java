@@ -96,10 +96,13 @@ public class DownloadFactoryDelFilmFile {
 
     public static boolean stopDownloadDeleteFilmFile(List<DownloadData> downloads, boolean delete) {
         boolean delDownload;
+        ObservableList<File> fileList;
 
         ArrayList<DownloadData> foundList = new ArrayList<>();
         for (DownloadData download : downloads) {
-            if (download.isStateStartedWaiting() || download.isStateStartedRun() || download.isStateError()) {
+            // DELETE: dann können alle Downloads gelöscht werden, ABBRECHEN: dann nur gestartet
+            if (delete ||
+                    download.isStateStartedWaiting() || download.isStateStartedRun() || download.isStateError()) {
                 // nur dann läuft er
                 foundList.add(download);
             }
@@ -112,36 +115,44 @@ public class DownloadFactoryDelFilmFile {
 
         try {
             switch (ProgConfig.DOWNLOAD_STOP.getValue()) {
-                case DownloadState.DOWNLOAD_STOP__NOTHING:
+                case DownloadState.DOWNLOAD_STOP__DO_NOT_DELETE:
                     // DL löschen, Dateien nicht
                     PLog.sysLog("Stop Download: DL löschen, Dateien nicht");
                     foundList.forEach(DownloadData::stopDownload);
+
                     delDownload = true;
                     break;
 
-                case DownloadState.DOWNLOAD_STOP__DELETE:
+                case DownloadState.DOWNLOAD_STOP__DELETE_FILE:
                     // DL und Dateien löschen
                     PLog.sysLog("Stop Download: DL und Dateien löschen");
                     foundList.forEach(DownloadData::stopDownload);
-                    try {
-                        Thread.sleep(1000);
-                    } catch (Exception ignore) {
-                        System.out.println("================>");
+                    // und jetzt noch Dateien löschen
+                    fileList = getFileList(foundList);
+                    if (!fileList.isEmpty()) {
+                        try {
+                            Thread.sleep(1000);
+                        } catch (Exception ignore) {
+                            System.out.println("================>");
+                        }
+                        deleteFile(fileList);
                     }
-                    deleteFile(getFileList(foundList));
+
                     delDownload = true;
                     break;
 
                 default:
                     // dann erstmal fragen
                     PLog.sysLog("Stop Download: Erst mal fragen");
-                    ObservableList<File> fileList = getFileList(foundList);
+                    fileList = getFileList(foundList);
                     DownloadStopDialogController downloadStopDialogController =
                             new DownloadStopDialogController(fileList, delete);
+
                     if (downloadStopDialogController.getState() == PDialogExtra.STATE.STATE_1) {
                         // dann soll DL und Datei gelöscht werden
                         PLog.sysLog("Stop Download: DL und Dateien löschen");
                         foundList.forEach(DownloadData::stopDownload);
+                        // und Dateien löschen
                         deleteFile(fileList);
                         delDownload = true;
 

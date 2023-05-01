@@ -598,8 +598,8 @@ public class HelpText {
                     P2LibConst.LINE_SEPARATORx2 +
                     "Hier kann ausgewählt werden, was gemacht werden soll:\n" +
                     "* Jedes mal vorher fragen\n" +
-                    "* Immer löschen\n" +
-                    "* Nie etwas machen." +
+                    "* Immer den Download löschen oder Abbrechen und die Datei löschen\n" +
+                    "* Nur den Download löschen oder abbrechen." +
                     "\n";
 
     public static final String DOWNLOAD_CONTINUE =
@@ -901,4 +901,17 @@ public class HelpText {
                     "So ist es z.B. auch möglich, einen ganz anderen Befehl oder ein eigenes Skript " +
                     "nach dem Warten auf die Downloads und dem Programmende, auszuführen." +
                     "\n";
+
+    public static final String DOWNLOAD_CANCEL =
+            "Wenn ein Download abgebrochen oder gelöscht wird, " +
+                    "können zusätzlich auch noch bereits geladene oder " +
+                    "teilweise geladene Filmdateien " +
+                    "mit gelöscht werden." +
+                    "\n\n" +
+                    "Wird \"Immer ausführen\" angeklickt, wird die Einstellung in Zukunft " +
+                    "immer ausgeführt, der Dialog erscheint dann nicht mehr. Diese Einstellung kann aber " +
+                    "in den Programmeinstellungen->Downloads auch wieder geändert werden." +
+                    "\n";
+
+
 }

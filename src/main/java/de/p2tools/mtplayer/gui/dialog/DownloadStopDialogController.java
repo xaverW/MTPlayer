@@ -19,10 +19,13 @@ package de.p2tools.mtplayer.gui.dialog;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.starter.DownloadState;
+import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
+import de.p2tools.p2lib.guitools.PButton;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
@@ -32,7 +35,6 @@ import java.io.File;
 public class DownloadStopDialogController extends PDialogExtra {
 
     private final VBox vBoxCont;
-    private final Label lblHeader = new Label();
     private final Button btnDelDlFile = new Button();
     private final Button btnDelDl = new Button("DL löschen, Datei behalten");
     private final Button btnCancel = new Button("Abbrechen");
@@ -74,7 +76,7 @@ public class DownloadStopDialogController extends PDialogExtra {
         vBoxCont.setPadding(new Insets(P2LibConst.DIST_EDGE));
         vBoxCont.setSpacing(P2LibConst.DIST_VBOX);
 
-        TableView<File> table = new TableView();
+        TableView<File> table = new TableView<>();
         final TableColumn<File, String> fileColumn = new TableColumn<>("Datei");
         fileColumn.prefWidthProperty().bind(table.widthProperty().multiply(60.0 / 100));
         fileColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -88,22 +90,22 @@ public class DownloadStopDialogController extends PDialogExtra {
         table.getColumns().addAll(fileColumn, pathColumn);
         table.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
         table.setItems(list);
-
         vBoxCont.getChildren().addAll(table);
-        addCancelButton(btnCancel);
-        addAnyButton(btnDelDlFile);
-        addAnyButton(btnDelDl);
 
-        VBox vBox = new VBox(P2LibConst.DIST_VBOX);
-        vBox.getChildren().addAll(new Label("Wie möchten Sie fortfahren?"), chkAlways);
-        getHboxLeft().getChildren().add(vBox);
+        getHBoxOverButtons().setAlignment(Pos.CENTER_RIGHT);
+        getHBoxOverButtons().getChildren().addAll(chkAlways);
 
+        btnDelDlFile.setTooltip(new Tooltip("Der Download wird abgebrochen oder gelöscht," +
+                "\ndie angefangenen Filmdateien werden auch gelöscht."));
+        btnDelDl.setTooltip(new Tooltip("Der Download wird abgebrochen oder gelöscht," +
+                "\ndie angefangenen Filmdateien werden aber NICHT gelöscht."));
+        btnCancel.setTooltip(new Tooltip("Es wird nichts abgebrochen oder gelöscht."));
         btnDelDlFile.setOnAction(event -> {
             // löschen: DL und Dateien
             state = STATE.STATE_1;
             if (chkAlways.isSelected()) {
                 // dann merken wir uns das
-                ProgConfig.DOWNLOAD_STOP.setValue(DownloadState.DOWNLOAD_STOP__DELETE);
+                ProgConfig.DOWNLOAD_STOP.setValue(DownloadState.DOWNLOAD_STOP__DELETE_FILE);
             }
             quit();
         });
@@ -112,7 +114,7 @@ public class DownloadStopDialogController extends PDialogExtra {
             state = STATE.STATE_2;
             if (chkAlways.isSelected()) {
                 // dann merken wir uns das
-                ProgConfig.DOWNLOAD_STOP.setValue(DownloadState.DOWNLOAD_STOP__NOTHING);
+                ProgConfig.DOWNLOAD_STOP.setValue(DownloadState.DOWNLOAD_STOP__DO_NOT_DELETE);
             }
             quit();
         });
@@ -121,6 +123,12 @@ public class DownloadStopDialogController extends PDialogExtra {
             state = STATE.STATE_CANCEL;
             quit();
         });
+        Button btnHelp = PButton.helpButton(getStage(),
+                "Download abbrechen oder löschen", HelpText.DOWNLOAD_CANCEL);
+        addHlpButton(btnHelp);
+        addAnyButton(btnDelDlFile);
+        addAnyButton(btnDelDl);
+        addCancelButton(btnCancel);
     }
 
     private void quit() {
