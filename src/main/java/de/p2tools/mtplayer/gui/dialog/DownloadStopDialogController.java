@@ -18,6 +18,7 @@ package de.p2tools.mtplayer.gui.dialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.starter.DownloadState;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
@@ -29,6 +30,9 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 
 import java.io.File;
 
@@ -41,11 +45,13 @@ public class DownloadStopDialogController extends PDialogExtra {
     private final CheckBox chkAlways = new CheckBox("Immer ausführen");
     private final ObservableList<File> list;
     private final boolean delete;// nur zur Anzeige des Button-Textes
+    private final ObservableList<DownloadData> foundDownloadList;
     private STATE state;
 
-    public DownloadStopDialogController(ObservableList<File> list, boolean delete) {
+    public DownloadStopDialogController(ObservableList<DownloadData> foundDownloadList, ObservableList<File> list, boolean delete) {
         super(ProgData.getInstance().primaryStage, ProgConfig.DOWNLOAD_STOP_DIALOG_SIZE, "Datei löschen",
                 true, false, DECO.BORDER_SMALL);
+        this.foundDownloadList = foundDownloadList;
         this.list = list;
         this.delete = delete;
 
@@ -65,7 +71,7 @@ public class DownloadStopDialogController extends PDialogExtra {
             btnDelDl.setText("DL löschen, Datei behalten");
         } else {
             // dann werden die Downloads nur gestoppt
-            btnDelDlFile.setText("DL abbrechen und Datei löschen");
+            btnDelDlFile.setText("DL abbrechen, Datei löschen");
             btnDelDl.setText("DL abbrechen, Datei behalten");
         }
 
@@ -75,6 +81,27 @@ public class DownloadStopDialogController extends PDialogExtra {
 
         vBoxCont.setPadding(new Insets(P2LibConst.DIST_EDGE));
         vBoxCont.setSpacing(P2LibConst.DIST_VBOX);
+
+
+        TableView<DownloadData> tableDownload = new TableView<>();
+        final TableColumn<DownloadData, String> themeColumn = new TableColumn<>("Thema");
+        themeColumn.prefWidthProperty().bind(tableDownload.widthProperty().multiply(40.0 / 100));
+        themeColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
+        themeColumn.getStyleClass().add("special-column-style");
+
+        final TableColumn<DownloadData, String> titleColumn = new TableColumn<>("Titel");
+        titleColumn.prefWidthProperty().bind(tableDownload.widthProperty().multiply(55.0 / 100));
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        titleColumn.getStyleClass().add("special-column-style");
+
+        tableDownload.getColumns().addAll(themeColumn, titleColumn);
+        tableDownload.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+        tableDownload.setItems(foundDownloadList);
+        Text text = new Text("Downloads");
+        text.setFont(Font.font(null, FontWeight.BOLD, -1));
+        text.getStyleClass().add("downloadGuiMediaText");
+        vBoxCont.getChildren().addAll(text, tableDownload);
+
 
         TableView<File> table = new TableView<>();
         final TableColumn<File, String> fileColumn = new TableColumn<>("Datei");
@@ -90,7 +117,10 @@ public class DownloadStopDialogController extends PDialogExtra {
         table.getColumns().addAll(fileColumn, pathColumn);
         table.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
         table.setItems(list);
-        vBoxCont.getChildren().addAll(table);
+        text = new Text("Dateien");
+        text.setFont(Font.font(null, FontWeight.BOLD, -1));
+        text.getStyleClass().add("downloadGuiMediaText");
+        vBoxCont.getChildren().addAll(text, table);
 
         getHBoxOverButtons().setAlignment(Pos.CENTER_RIGHT);
         getHBoxOverButtons().getChildren().addAll(chkAlways);

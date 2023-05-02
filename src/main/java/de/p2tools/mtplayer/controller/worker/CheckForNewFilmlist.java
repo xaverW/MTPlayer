@@ -37,7 +37,8 @@ public class CheckForNewFilmlist extends SearchFilmlistUpdate {
         Listener.addListener(new Listener(Listener.EVENT_TIMER, CheckForNewFilmlist.class.getSimpleName()) {
             @Override
             public void pingFx() {
-                hasNewFilmlist(ProgData.getInstance().filmlist.getFilmlistId());
+                // kan dauern und hält dann das Programm beim Start auf
+                new Thread(() -> hasNewFilmlist(ProgData.getInstance().filmlist.getFilmlistId())).start();
             }
         });
     }

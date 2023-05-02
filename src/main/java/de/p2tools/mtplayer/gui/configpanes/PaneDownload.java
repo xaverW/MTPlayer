@@ -32,6 +32,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -42,15 +45,19 @@ public class PaneDownload {
     private final PToggleSwitch tglFinished = new PToggleSwitch("Benachrichtigung wenn abgeschlossen");
     private final PToggleSwitch tglError = new PToggleSwitch("Bei Downloadfehler Fehlermeldung anzeigen");
 
-    private final ToggleGroup groupStop = new ToggleGroup();
-    private final RadioButton rbStopAsk = new RadioButton("Vorher fragen");
-    private final RadioButton rbStopDelete = new RadioButton("Download und angefangene Dateien immer löschen");
-    private final RadioButton rbStopNothing = new RadioButton("Download immer löschen, keine Dateien löschen");
+    private final ToggleGroup groupOnlyStop = new ToggleGroup();
+    private final RadioButton rbOnlyStopAsk = new RadioButton("Vorher fragen");
+    private final RadioButton rbOnlyStopDelete = new RadioButton("Download immer löschen");
 
-    private final ToggleGroup group = new ToggleGroup();
-    private final RadioButton rbAsk = new RadioButton("Vorher fragen");
-    private final RadioButton rbContinue = new RadioButton("Immer weiterführen");
-    private final RadioButton rbRestart = new RadioButton("Immer neu starten");
+    private final ToggleGroup groupDelStop = new ToggleGroup();
+    private final RadioButton rbDelStopAsk = new RadioButton("Vorher fragen");
+    private final RadioButton rbDelStopDelete = new RadioButton("Download und angefangene Dateien immer löschen");
+    private final RadioButton rbDelStopNothing = new RadioButton("Download immer löschen, keine Dateien löschen");
+
+    private final ToggleGroup groupRestart = new ToggleGroup();
+    private final RadioButton rbRestartAsk = new RadioButton("Vorher fragen");
+    private final RadioButton rbRestartContinue = new RadioButton("Immer weiterführen");
+    private final RadioButton rbRestartRestart = new RadioButton("Immer neu starten");
 
     private final PToggleSwitch tglOne = new PToggleSwitch("Nur ein Download pro Downloadserver");
     private final PToggleSwitch tglSSL = new PToggleSwitch("SSL-Download-URLs: Bei Problemen SSL abschalten");
@@ -113,28 +120,47 @@ public class PaneDownload {
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         gridPane.setPadding(new Insets(P2LibConst.DIST_EDGE));
 
+        Text text = new Text("Downloads abbrechen oder löschen");
+        text.setFont(Font.font(null, FontWeight.BOLD, -1));
+        text.getStyleClass().add("downloadGuiMediaText");
+
         int row = 0;
+        gridPane.add(text, 0, row);
+        gridPane.add(btnHelpStop, 1, row, 1, 2);
+
+        final String LEER = "     ";
         VBox vBox = new VBox(5);
         HBox hBox = new HBox(20);
-        vBox.getChildren().addAll(new Label("Beim Abbrechen oder Löschen von Downloads:"));
-        hBox.getChildren().addAll(new Label("            "), rbStopAsk);
+        vBox.getChildren().addAll(new Label(LEER + "wenn noch keine geladenen Filme vorhanden sind:"));
+        hBox.getChildren().addAll(new Label(LEER), rbOnlyStopAsk);
         vBox.getChildren().addAll(hBox);
         hBox = new HBox(20);
-        hBox.getChildren().addAll(new Label("            "), rbStopDelete, rbStopNothing);
+        hBox.getChildren().addAll(new Label(LEER), rbOnlyStopDelete);
         vBox.getChildren().addAll(hBox);
 
-        gridPane.add(vBox, 0, row);
-        gridPane.add(btnHelpStop, 1, row, 1, 2);
+        gridPane.add(vBox, 0, ++row);
         GridPane.setValignment(btnHelpStop, VPos.TOP);
 
-        ++row;
+        vBox = new VBox(5);
+        hBox = new HBox(20);
+        vBox.getChildren().addAll(new Label(LEER + "wenn schon geladene Filme vorhanden sind:"));
+        hBox.getChildren().addAll(new Label(LEER), rbDelStopAsk);
+        vBox.getChildren().addAll(hBox);
+        hBox = new HBox(20);
+        hBox.getChildren().addAll(new Label(LEER), rbDelStopDelete, rbDelStopNothing);
+        vBox.getChildren().addAll(hBox);
+
+        gridPane.add(vBox, 0, ++row);
+
+
+        vBox.getChildren().addAll(new Label(""));
         vBox = new VBox(5);
         hBox = new HBox(20);
         vBox.getChildren().addAll(new Label("Beim Neustart bereits angefangener Downloads:"));
-        hBox.getChildren().addAll(new Label("            "), rbAsk);
+        hBox.getChildren().addAll(new Label(LEER), rbRestartAsk);
         vBox.getChildren().addAll(hBox);
         hBox = new HBox(20);
-        hBox.getChildren().addAll(new Label("            "), rbContinue, rbRestart);
+        hBox.getChildren().addAll(new Label(LEER), rbRestartContinue, rbRestartRestart);
         vBox.getChildren().addAll(hBox);
 
         gridPane.add(vBox, 0, ++row);
@@ -163,49 +189,67 @@ public class PaneDownload {
     }
 
     private void initRadio() {
-        rbStopAsk.setToggleGroup(groupStop);
-        rbStopDelete.setToggleGroup(groupStop);
-        rbStopNothing.setToggleGroup(groupStop);
-
-        rbAsk.setToggleGroup(group);
-        rbContinue.setToggleGroup(group);
-        rbRestart.setToggleGroup(group);
-
         setRadio();
-        ProgConfig.DOWNLOAD_CONTINUE.addListener((v, o, n) -> setRadio());
-        ProgConfig.DOWNLOAD_STOP.addListener((v, o, n) -> setRadio());
 
-        rbStopAsk.setOnAction(a -> ProgConfig.DOWNLOAD_STOP.setValue(DownloadState.DOWNLOAD_STOP__ASK));
-        rbStopDelete.setOnAction(a -> ProgConfig.DOWNLOAD_STOP.setValue(DownloadState.DOWNLOAD_STOP__DELETE_FILE));
-        rbStopNothing.setOnAction(a -> ProgConfig.DOWNLOAD_STOP.setValue(DownloadState.DOWNLOAD_STOP__DO_NOT_DELETE));
-        rbAsk.setOnAction(a -> ProgConfig.DOWNLOAD_CONTINUE.setValue(DownloadState.DOWNLOAD_RESTART__ASK));
-        rbContinue.setOnAction(a -> ProgConfig.DOWNLOAD_CONTINUE.setValue(DownloadState.DOWNLOAD_RESTART__CONTINUE));
-        rbRestart.setOnAction(a -> ProgConfig.DOWNLOAD_CONTINUE.setValue(DownloadState.DOWNLOAD_RESTART__RESTART));
+        rbOnlyStopAsk.setToggleGroup(groupOnlyStop);
+        rbOnlyStopDelete.setToggleGroup(groupOnlyStop);
+
+        rbDelStopAsk.setToggleGroup(groupDelStop);
+        rbDelStopDelete.setToggleGroup(groupDelStop);
+        rbDelStopNothing.setToggleGroup(groupDelStop);
+
+        rbRestartAsk.setToggleGroup(groupRestart);
+        rbRestartContinue.setToggleGroup(groupRestart);
+        rbRestartRestart.setToggleGroup(groupRestart);
+
+        ProgConfig.DOWNLOAD_ONLY_STOP.addListener((v, o, n) -> setRadio());
+        ProgConfig.DOWNLOAD_STOP.addListener((v, o, n) -> setRadio());
+        ProgConfig.DOWNLOAD_CONTINUE.addListener((v, o, n) -> setRadio());
+
+        rbOnlyStopAsk.setOnAction(a -> ProgConfig.DOWNLOAD_ONLY_STOP.setValue(DownloadState.DOWNLOAD_ONLY_STOP__ASK));
+        rbOnlyStopDelete.setOnAction(a -> ProgConfig.DOWNLOAD_ONLY_STOP.setValue(DownloadState.DOWNLOAD_ONLY_STOP__DELETE));
+
+        rbDelStopAsk.setOnAction(a -> ProgConfig.DOWNLOAD_STOP.setValue(DownloadState.DOWNLOAD_STOP__ASK));
+        rbDelStopDelete.setOnAction(a -> ProgConfig.DOWNLOAD_STOP.setValue(DownloadState.DOWNLOAD_STOP__DELETE_FILE));
+        rbDelStopNothing.setOnAction(a -> ProgConfig.DOWNLOAD_STOP.setValue(DownloadState.DOWNLOAD_STOP__DO_NOT_DELETE));
+
+        rbRestartAsk.setOnAction(a -> ProgConfig.DOWNLOAD_CONTINUE.setValue(DownloadState.DOWNLOAD_RESTART__ASK));
+        rbRestartContinue.setOnAction(a -> ProgConfig.DOWNLOAD_CONTINUE.setValue(DownloadState.DOWNLOAD_RESTART__CONTINUE));
+        rbRestartRestart.setOnAction(a -> ProgConfig.DOWNLOAD_CONTINUE.setValue(DownloadState.DOWNLOAD_RESTART__RESTART));
     }
 
     private void setRadio() {
+        switch (ProgConfig.DOWNLOAD_ONLY_STOP.getValue()) {
+            case DownloadState.DOWNLOAD_ONLY_STOP__DELETE:
+                rbOnlyStopDelete.setSelected(true);
+                break;
+            case DownloadState.DOWNLOAD_ONLY_STOP__ASK:
+            default:
+                rbOnlyStopAsk.setSelected(true);
+                break;
+        }
         switch (ProgConfig.DOWNLOAD_STOP.getValue()) {
             case DownloadState.DOWNLOAD_STOP__DELETE_FILE:
-                rbStopDelete.setSelected(true);
+                rbDelStopDelete.setSelected(true);
                 break;
             case DownloadState.DOWNLOAD_STOP__DO_NOT_DELETE:
-                rbStopNothing.setSelected(true);
+                rbDelStopNothing.setSelected(true);
                 break;
             case DownloadState.DOWNLOAD_STOP__ASK:
             default:
-                rbStopAsk.setSelected(true);
+                rbDelStopAsk.setSelected(true);
                 break;
         }
         switch (ProgConfig.DOWNLOAD_CONTINUE.getValue()) {
             case DownloadState.DOWNLOAD_RESTART__CONTINUE:
-                rbContinue.setSelected(true);
+                rbRestartContinue.setSelected(true);
                 break;
             case DownloadState.DOWNLOAD_RESTART__RESTART:
-                rbRestart.setSelected(true);
+                rbRestartRestart.setSelected(true);
                 break;
             case DownloadState.DOWNLOAD_RESTART__ASK:
             default:
-                rbAsk.setSelected(true);
+                rbRestartAsk.setSelected(true);
                 break;
         }
     }

@@ -913,5 +913,13 @@ public class HelpText {
                     "in den Programmeinstellungen->Downloads auch wieder geändert werden." +
                     "\n";
 
+    public static final String DOWNLOAD_ONLY_CANCEL =
+            "Hier kann ein Download abgebrochen oder gelöscht werden. " +
+                    "\n\n" +
+                    "Wird \"Immer ausführen\" angeklickt, wird der Download in Zukunft " +
+                    "immer abgebrochen oder gelöscht. Der Dialog erscheint dann nicht mehr. Diese Einstellung kann aber " +
+                    "in den Programmeinstellungen->Downloads auch wieder geändert werden." +
+                    "\n";
+
 
 }

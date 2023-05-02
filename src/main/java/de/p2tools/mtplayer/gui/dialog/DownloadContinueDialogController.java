@@ -33,6 +33,7 @@ import javafx.animation.Timeline;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
@@ -41,25 +42,24 @@ import javafx.util.Duration;
 
 public class DownloadContinueDialogController extends PDialogExtra {
 
-    private Label lblHeader = new Label("Die Filmdatei existiert bereits");
-    private Button btnRestartDownload = new Button("neu _Starten");
-    private Button btnCancel = new Button("_Abbrechen");
-    private Button btnContinueDownload = new Button("_Weiterführen");
-    private CheckBox chkSave = new CheckBox("Merken");
+    private final Label lblHeader = new Label("Die Filmdatei existiert bereits");
+    private final Button btnRestartDownload = new Button("neu _Starten");
+    private final Button btnCancel = new Button("_Abbrechen");
+    private final Button btnContinueDownload = new Button("_Weiterführen");
+    private final CheckBox chkAlways = new CheckBox("Immer ausführen");
 
-    private Label lblFilmTitle = new Label("ARD: Tatort, ..");
-    private TextField txtFileName = new TextField("");
-    private ComboBox<String> cbPath = new ComboBox<>();
-    private Label lblSizeFree = new Label("");
+    private final Label lblFilmTitle = new Label("ARD: Tatort, ..");
+    private final TextField txtFileName = new TextField("");
+    private final ComboBox<String> cbPath = new ComboBox<>();
+    private final Label lblSizeFree = new Label("");
 
-    private Button btnPath = new Button("");
-    private GridPane gridPane = new GridPane();
+    private final Button btnPath = new Button("");
+    private final GridPane gridPane = new GridPane();
 
-    private final ProgData progData;
     private final DownloadData download;
     private DownloadState.ContinueDownload result = DownloadState.ContinueDownload.CANCEL_DOWNLOAD;
     private final boolean directDownload;
-    private String oldPathFile;
+    private final String oldPathFile;
 
     private Timeline timeline = null;
     private Integer timeSeconds = ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS.getValue();
@@ -69,7 +69,6 @@ public class DownloadContinueDialogController extends PDialogExtra {
         super(progData.primaryStage, conf, "Download weiterführen",
                 true, false, DECO.BORDER_SMALL);
 
-        this.progData = progData;
         this.download = download;
         this.directDownload = directDownload;
         this.oldPathFile = download.getDestPathFile();
@@ -164,9 +163,8 @@ public class DownloadContinueDialogController extends PDialogExtra {
         addOkButton(btnRestartDownload);
         addOkButton(btnContinueDownload);
 
-        VBox vBox = new VBox(5);
-        vBox.getChildren().addAll(new Label("Wie möchten Sie fortfahren?"), chkSave);
-        getHboxLeft().getChildren().add(vBox);
+        getHBoxOverButtons().setAlignment(Pos.CENTER_RIGHT);
+        getHBoxOverButtons().getChildren().addAll(chkAlways);
     }
 
     private void initButton() {
@@ -180,7 +178,7 @@ public class DownloadContinueDialogController extends PDialogExtra {
         });
 
         btnRestartDownload.setOnAction(event -> {
-            if (chkSave.isSelected()) {
+            if (chkAlways.isSelected()) {
                 ProgConfig.DOWNLOAD_CONTINUE.setValue(DownloadState.DOWNLOAD_RESTART__RESTART);
             }
 
@@ -189,7 +187,7 @@ public class DownloadContinueDialogController extends PDialogExtra {
             quit();
         });
         btnContinueDownload.setOnAction(event -> {
-            if (chkSave.isSelected()) {
+            if (chkAlways.isSelected()) {
                 ProgConfig.DOWNLOAD_CONTINUE.setValue(DownloadState.DOWNLOAD_RESTART__CONTINUE);
             }
 

@@ -161,13 +161,8 @@ public class FilmGuiController extends AnchorPane {
         Table.saveTable(tableView, Table.TABLE_ENUM.FILM);
     }
 
-    public void refreshTable() {
-        PTableFactory.refreshTable(tableView);
-    }
-
     public ArrayList<FilmDataMTP> getSelList() {
-        final ArrayList<FilmDataMTP> ret = new ArrayList<>();
-        ret.addAll(tableView.getSelectionModel().getSelectedItems());
+        final ArrayList<FilmDataMTP> ret = new ArrayList<>(tableView.getSelectionModel().getSelectedItems());
         if (ret.isEmpty()) {
             PAlert.showInfoNoSelection();
         }
@@ -215,7 +210,6 @@ public class FilmGuiController extends AnchorPane {
             public void pingFx() {
                 PTableFactory.refreshTable(tableView);
             }
-
         });
     }
 
@@ -250,11 +244,7 @@ public class FilmGuiController extends AnchorPane {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
                 final Optional<FilmDataMTP> optionalFilm = getSel(true, false);// ist für Blacklist wichtig
                 FilmDataMTP film;
-                if (optionalFilm.isPresent()) {
-                    film = optionalFilm.get();
-                } else {
-                    film = null;
-                }
+                film = optionalFilm.orElse(null);
                 ContextMenu contextMenu = new FilmGuiTableContextMenu(progData, this, tableView).getContextMenu(film);
                 tableView.setContextMenu(contextMenu);
             }
@@ -271,7 +261,7 @@ public class FilmGuiController extends AnchorPane {
             }
 
             if (STRG_A.match(event) && tableView.getItems().size() > 3_000) {
-                //macht eingentlich keine Sinn???
+                //macht eigentlich keinen Sinn???
                 PLog.sysLog("STRG-A: lange Liste -> verhindern");
                 event.consume();
             }
@@ -347,9 +337,7 @@ public class FilmGuiController extends AnchorPane {
     private synchronized void startFilmUrl() {
         // Menü/Button Film (URL) abspielen
         final Optional<FilmDataMTP> filmSelection = getSel(true, true);
-        if (filmSelection.isPresent()) {
-            startFilmUrl(filmSelection.get());
-        }
+        filmSelection.ifPresent(this::startFilmUrl);
     }
 
     public synchronized void startFilmUrl(FilmDataMTP mtp) {
@@ -387,7 +375,7 @@ public class FilmGuiController extends AnchorPane {
                 System.out.println("ist schon sel");
 
                 tableView.scrollTo(tableView.getSelectionModel().getSelectedItem());
-                tableView.requestFocus();
+//                tableView.requestFocus();
                 return;
             }
 
@@ -401,7 +389,7 @@ public class FilmGuiController extends AnchorPane {
 
                     tableView.getSelectionModel().select(f);
                     tableView.scrollTo(f);
-                    tableView.requestFocus();
+//                    tableView.requestFocus();
                     found = true;
                     break;
                 }
@@ -411,7 +399,7 @@ public class FilmGuiController extends AnchorPane {
                 // dann wurde der erste Tabelleneintrag entfernt
                 tableView.getSelectionModel().select(0);
                 tableView.scrollTo(0);
-                tableView.requestFocus();
+//                tableView.requestFocus();
             }
         });
     }
@@ -427,7 +415,7 @@ public class FilmGuiController extends AnchorPane {
         }
 
         final Optional<FilmDataMTP> filmSelection = getSel(true, true);
-        if (!filmSelection.isPresent()) {
+        if (filmSelection.isEmpty()) {
             return;
         }
 
