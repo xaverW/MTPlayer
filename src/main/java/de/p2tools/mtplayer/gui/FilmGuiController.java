@@ -365,14 +365,14 @@ public class FilmGuiController extends AnchorPane {
         Platform.runLater(() -> {
             // bei der Blacklist kommt das außer der Reihe
             if (tableView.getItems().isEmpty()) {
-                System.out.println("===> empty");
+//                System.out.println("===> empty");
                 return;
             }
 
             if (tableView.getSelectionModel().getSelectedItem() != null) {
                 // dann ist schon was selektiert, passt.
-                System.out.println("=========================");
-                System.out.println("ist schon sel");
+//                System.out.println("=========================");
+//                System.out.println("ist schon sel");
 
                 tableView.scrollTo(tableView.getSelectionModel().getSelectedItem());
 //                tableView.requestFocus();
@@ -384,8 +384,8 @@ public class FilmGuiController extends AnchorPane {
                 FilmDataMTP f = tableView.getItems().get(i);
                 if (f.isWasHere()) {
                     //dann haben wir den ersten
-                    System.out.println("============================");
-                    System.out.println("--> " + f.getNo());
+//                    System.out.println("============================");
+//                    System.out.println("--> " + f.getNo());
 
                     tableView.getSelectionModel().select(f);
                     tableView.scrollTo(f);

@@ -69,11 +69,11 @@ public class DownloadGuiMedia extends VBox {
         initTableMedia();
         initTableAbo();
         initSearch();
-        this.visibleProperty().addListener((u, o, n) -> {
-            if (this.isVisible()) {
-                System.out.println("==>DownloadGuiMedia visible");
-            }
-        });
+//        this.visibleProperty().addListener((u, o, n) -> {
+//            if (this.isVisible()) {
+//                System.out.println("==>DownloadGuiMedia visible");
+//            }
+//        });
     }
 
     public void setSearchPredicate(DownloadData downloadData) {
