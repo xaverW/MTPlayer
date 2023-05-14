@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
+import de.p2tools.mtplayer.controller.filmfilter.BlacklistFactory;
 import de.p2tools.mtplayer.gui.AboGuiPack;
 import de.p2tools.mtplayer.gui.DownloadGuiPack;
 import de.p2tools.mtplayer.gui.FilmGuiPack;
@@ -294,6 +295,68 @@ public class MTPlayerController extends StackPane {
             ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.setValue(!ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.getValue());
         } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneAbo)) {
             ProgConfig.ABO_GUI_DIVIDER_ON.setValue(!ProgConfig.ABO_GUI_DIVIDER_ON.getValue());
+        }
+    }
+
+    public void showFilmInfos() {
+        if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneFilm)) {
+            progData.filmGuiController.showFilmInfo();
+        } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneDownoad)) {
+            progData.downloadGuiController.showFilmInfo();
+        } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneAbo)) {
+            System.out.println("NIX");
+        }
+    }
+
+    public void copyTheme() {
+        if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneFilm)) {
+            progData.filmGuiController.copyFilmThemeTitle(true);
+        } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneDownoad)) {
+            progData.downloadGuiController.copyFilmThemeTitle(true);
+        } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneAbo)) {
+            System.out.println("NIX");
+        }
+    }
+
+    public void copyTitle() {
+        if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneFilm)) {
+            progData.filmGuiController.copyFilmThemeTitle(false);
+        } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneDownoad)) {
+            progData.downloadGuiController.copyFilmThemeTitle(false);
+        } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneAbo)) {
+            System.out.println("NIX");
+        }
+    }
+
+    public void addBlacklist() {
+        if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneFilm)) {
+            BlacklistFactory.addBlackFilm();
+        } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneDownoad)) {
+            BlacklistFactory.addBlackDownload();
+        } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneAbo)) {
+            System.out.println("NIX");
+        }
+    }
+
+    public void addBlacklistTheme() {
+        if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneFilm)) {
+            BlacklistFactory.addBlackThemeFilm();
+        } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneDownoad)) {
+            BlacklistFactory.addBlackThemeDownload();
+        } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneAbo)) {
+            System.out.println("NIX");
+        }
+    }
+
+    public void setMediaCollection() {
+        if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneFilm)) {
+            progData.filmGuiController.searchFilmInMediaCollection();
+
+        } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneDownoad)) {
+            progData.downloadGuiController.searchFilmInMediaCollection();
+
+        } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneAbo)) {
+            System.out.println("NIX");
         }
     }
 

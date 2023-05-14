@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.controller.filmfilter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
+import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmlistMTP;
 import de.p2tools.mtplayer.gui.dialog.AddBlackListDialogController;
@@ -32,18 +33,19 @@ public class BlacklistFactory {
     private BlacklistFactory() {
     }
 
-    public static void addBlack() {
+    public static void addBlackFilm() {
         // aus dem Menü: mit markiertem Film ein Black erstellen
         // Dialog anzeigen
         final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().filmGuiController.getSel(true, true);
-        if (!filmSelection.isPresent()) {
+        if (filmSelection.isEmpty()) {
             return;
         }
 
         BlackData blackData = new BlackData(filmSelection.get().getChannel(), filmSelection.get().getTheme(),
                 filmSelection.get().getTitle(), "");
         AddBlackListDialogController addBlacklistDialogController =
-                new AddBlackListDialogController(ProgData.getInstance(), filmSelection.get(), blackData);
+                new AddBlackListDialogController(ProgData.getInstance(), filmSelection.get().FILM_CHANNEL_STR,
+                        filmSelection.get().getTheme(), filmSelection.get().getTitle(), blackData);
 
         if (!addBlacklistDialogController.isOk()) {
             //dann doch nicht
@@ -52,14 +54,45 @@ public class BlacklistFactory {
         ProgData.getInstance().blackList.addAndNotify(blackData);
     }
 
-    public static void addBlackTheme() {
+    public static void addBlackDownload() {
+        // aus dem Menü: mit markiertem Download ein Black erstellen
+        // Dialog anzeigen
+        final Optional<DownloadData> downloadData = ProgData.getInstance().downloadGuiController.getSel(true);
+        if (downloadData.isEmpty()) {
+            return;
+        }
+
+        BlackData blackData = new BlackData(downloadData.get().getChannel(), downloadData.get().getTheme(),
+                downloadData.get().getTitle(), "");
+        AddBlackListDialogController addBlacklistDialogController =
+                new AddBlackListDialogController(ProgData.getInstance(), downloadData.get().getChannel(),
+                        downloadData.get().getTheme(), downloadData.get().getTitle(), blackData);
+
+        if (!addBlacklistDialogController.isOk()) {
+            //dann doch nicht
+            return;
+        }
+        ProgData.getInstance().blackList.addAndNotify(blackData);
+    }
+
+    public static void addBlackThemeFilm() {
         // aus dem Menü: mit markiertem Film ein Black erstellen
         // Dialog anzeigen
         final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().filmGuiController.getSel(true, true);
-        if (!filmSelection.isPresent()) {
+        if (filmSelection.isEmpty()) {
             return;
         }
         addBlack("", filmSelection.get().getTheme(), "");
+    }
+
+    public static void addBlackThemeDownload() {
+        // aus dem Menü: mit markiertem Film ein Black erstellen
+        // Dialog anzeigen
+        final Optional<DownloadData> downloadData = ProgData.getInstance().downloadGuiController.getSel(true);
+        if (downloadData.isEmpty()) {
+            return;
+        }
+        addBlack("", downloadData.get().getTheme(), "");
     }
 
     public static void addBlack(String sender, String theme, String titel) {

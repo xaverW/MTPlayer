@@ -92,17 +92,19 @@ public class ProgShortcut {
     public static final PShortcut SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION =
             new PShortcut(ProgConfig.SHORTCUT_SEARCH_FILM_IN_MEDIA_COLLECTION, ProgConfig.SHORTCUT_SEARCH_FILM_IN_MEDIA_COLLECTION_INIT,
                     "Filmtitel in Mediensammlung suchen",
-                    "Der Titel des markierten Films in der Tabelle \"Filme\" wird in der Mediensammlung gesucht.");
+                    "Der Titel des markierten Films in der Tabelle \"Filme\" und \"Downloads\" wird in der Mediensammlung gesucht.");
 
     public static final PShortcut SHORTCUT_COPY_FILM_THEME_TO_CLIPBOARD =
             new PShortcut(ProgConfig.SHORTCUT_COPY_FILM_THEME_TO_CLIPBOARD, ProgConfig.SHORTCUT_COPY_FILM_THEME_TO_CLIPBOARD_INIT,
                     "Filmthema in die Zwischenablage Kopieren",
-                    "Das Thema des markierten Films in der Tabelle \"Filme\" wird in die Zwischenablage kopiert.");
+                    "Das Thema des markierten Films/Downloads in der " +
+                            "Tabelle \"Filme\" und \"Downloads\" wird in die Zwischenablage kopiert.");
 
     public static final PShortcut SHORTCUT_COPY_FILM_TITLE_TO_CLIPBOARD =
             new PShortcut(ProgConfig.SHORTCUT_COPY_FILM_TITLE_TO_CLIPBOARD, ProgConfig.SHORTCUT_COPY_FILM_TITLE_TO_CLIPBOARD_INIT,
                     "Filmtitel in die Zwischenablage Kopieren",
-                    "Der Titel des markierten Films in der Tabelle \"Filme\" wird in die Zwischenablage kopiert.");
+                    "Der Titel des markierten Films/Downloads in der " +
+                            "Tabelle \"Filme\" und \"Downloads\" wird in die Zwischenablage kopiert.");
 
     // Tabelle Download
     public static final PShortcut SHORTCUT_DOWNLOAD_START =
@@ -125,11 +127,6 @@ public class ProgShortcut {
                     "Gelöschten Download wieder anlegen",
                     "Der markierte Download in der Tabelle \"Downloads\" kann geändert werden.");
 
-    public static final PShortcut SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION =
-            new PShortcut(ProgConfig.SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIA_COLLECTION, ProgConfig.SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIA_COLLECTION_INIT,
-                    "Download in Mediensammlung suchen",
-                    "Der Titel des markierten Downloads in der Tabelle \"Downloads\" wird in der Mediensammlung gesucht.");
-
     public static final PShortcut SHORTCUT_DOWNLOADS_UPDATE =
             new PShortcut(ProgConfig.SHORTCUT_DOWNLOAD_UPDATE, ProgConfig.SHORTCUT_DOWNLOADS_UPDATE_INIT,
                     "Downloads aktualisieren",
@@ -139,13 +136,6 @@ public class ProgShortcut {
             new PShortcut(ProgConfig.SHORTCUT_DOWNLOAD_CLEAN_UP, ProgConfig.SHORTCUT_DOWNLOAD_CLEAN_UP_INIT,
                     "Downloads aufräumen",
                     "Die Liste der Downloads in der Tabelle \"Downloads\" wird aufgeräumt.");
-
-//    public static final PShortcut SHORTCUT_EXTERN_PROGRAM =
-//            new PShortcut(ProgConfig.SHORTCUT_EXTERN_PROGRAM, ProgConfig.SHORTCUT_EXTERN_PROGRAM_INIT,
-//                    "Externes Programm starten",
-//                    "Damit wird ein externes Programm gestartet. Das Programm kann in den Einstellungen " +
-//                            "unter \"Programme\" ausgewählt werden.");
-
 
     private static ObservableList<PShortcut> shortcutList = FXCollections.observableArrayList();
 
@@ -171,7 +161,6 @@ public class ProgShortcut {
         shortcutList.add(SHORTCUT_DOWNLOAD_STOP);
         shortcutList.add(SHORTCUT_DOWNLOAD_CHANGE);
         shortcutList.add(SHORTCUT_DOWNLOAD_UNDO_DELETE);
-        shortcutList.add(SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION);
         shortcutList.add(SHORTCUT_DOWNLOADS_UPDATE);
         shortcutList.add(SHORTCUT_DOWNLOADS_CLEAN_UP);
 //        shortcutList.add(SHORTCUT_EXTERN_PROGRAM);

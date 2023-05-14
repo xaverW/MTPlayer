@@ -91,17 +91,17 @@ public class FilmGuiTableContextMenu {
         MenuItem miMediaDb = new MenuItem("Film in der Mediensammlung suchen");
         miMediaDb.setOnAction(a -> filmGuiController.searchFilmInMediaCollection());
 
-        final MenuItem miCopyName = new MenuItem("Titel in die Zwischenablage kopieren");
-        miCopyName.setOnAction(a -> {
-            PSystemUtils.copyToClipboard(film.getTitle());
-        });
         final MenuItem miCopyTheme = new MenuItem("Thema in die Zwischenablage kopieren");
         miCopyTheme.setOnAction(a -> {
             PSystemUtils.copyToClipboard(film.getTheme());
         });
+        final MenuItem miCopyName = new MenuItem("Titel in die Zwischenablage kopieren");
+        miCopyName.setOnAction(a -> {
+            PSystemUtils.copyToClipboard(film.getTitle());
+        });
 
         contextMenu.getItems().add(new SeparatorMenuItem());
-        contextMenu.getItems().addAll(miFilmsSetShown, miFilmInfo, miMediaDb, miCopyName, miCopyTheme);
+        contextMenu.getItems().addAll(miFilmsSetShown, miFilmInfo, miMediaDb, miCopyTheme, miCopyName);
 
 
         MenuItem resetTable = new MenuItem("Tabelle zurücksetzen");
@@ -195,7 +195,7 @@ public class FilmGuiTableContextMenu {
         Menu submenuBlacklist = new Menu("Blacklist");
 
         final MenuItem miBlack = new MenuItem("Blacklist-Eintrag für den Film erstellen");
-        miBlack.setOnAction(event -> BlacklistFactory.addBlack());
+        miBlack.setOnAction(event -> BlacklistFactory.addBlackFilm());
 
         final MenuItem miBlackSenderTheme = new MenuItem("Sender und Thema direkt in die Blacklist einfügen");
         miBlackSenderTheme.setOnAction(event -> BlacklistFactory.addBlack(filmDataMTP.getChannel(), filmDataMTP.getTheme(), ""));

@@ -18,6 +18,7 @@ package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
+import de.p2tools.mtplayer.controller.filmfilter.BlacklistFactory;
 import de.p2tools.mtplayer.gui.tools.table.TableDownload;
 import de.p2tools.p2lib.tools.PSystemUtils;
 import javafx.scene.control.ContextMenu;
@@ -134,6 +135,9 @@ public class DownloadGuiTableContextMenu {
         submenuAbo.getItems().addAll(miChangeAbo, miDelAbo);
         contextMenu.getItems().addAll(submenuAbo);
 
+        Menu mBlacklist = addBlacklist(download);// Blacklist
+        contextMenu.getItems().addAll(mBlacklist);
+
 
         final MenuItem miFilmInfo = new MenuItem("Filminformation anzeigen");
         miFilmInfo.setOnAction(a -> downloadGuiController.showFilmInfo());
@@ -143,7 +147,7 @@ public class DownloadGuiTableContextMenu {
         miCopyUrl.setOnAction(a -> downloadGuiController.copyUrl());
 
         final MenuItem miMediaDb = new MenuItem("Download in der Mediensammlung suchen");
-        miMediaDb.setOnAction(a -> downloadGuiController.guiFilmMediaCollection());
+        miMediaDb.setOnAction(a -> downloadGuiController.searchFilmInMediaCollection());
 
         final MenuItem miCopyName = new MenuItem("Titel in die Zwischenablage kopieren");
         miCopyName.setOnAction(a -> {
@@ -178,4 +182,23 @@ public class DownloadGuiTableContextMenu {
         contextMenu.getItems().add(new SeparatorMenuItem());
         contextMenu.getItems().addAll(miSelectAll, miSelection, resetTable);
     }
+
+    private Menu addBlacklist(DownloadData downloadData) {
+        Menu submenuBlacklist = new Menu("Blacklist");
+
+        final MenuItem miBlack = new MenuItem("Blacklist-Eintrag für den Film erstellen");
+        miBlack.setOnAction(event -> BlacklistFactory.addBlackDownload());
+
+        final MenuItem miBlackSenderTheme = new MenuItem("Sender und Thema direkt in die Blacklist einfügen");
+        miBlackSenderTheme.setOnAction(event -> BlacklistFactory.addBlack(downloadData.getChannel(), downloadData.getTheme(), ""));
+        final MenuItem miBlackTheme = new MenuItem("Thema direkt in die Blacklist einfügen");
+        miBlackTheme.setOnAction(event -> BlacklistFactory.addBlack("", downloadData.getTheme(), ""));
+        final MenuItem miBlackTitle = new MenuItem("Titel direkt in die Blacklist einfügen");
+        miBlackTitle.setOnAction(event -> BlacklistFactory.addBlack("", "", downloadData.getTitle()));
+
+        submenuBlacklist.getItems().addAll(miBlack, miBlackSenderTheme, miBlackTheme, miBlackTitle);
+        return submenuBlacklist;
+    }
+
+
 }

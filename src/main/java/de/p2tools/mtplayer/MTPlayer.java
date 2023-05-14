@@ -108,6 +108,8 @@ public class MTPlayer extends Application {
                 ProgQuit.quit(false);
             });
 
+            ShortKeyFactory.addShortKey(scene);
+            
             //Pos setzen
             PGuiSize.setOnlyPos(ProgConfig.SYSTEM_SIZE_GUI, primaryStage);
 

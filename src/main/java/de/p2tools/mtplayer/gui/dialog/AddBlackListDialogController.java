@@ -20,17 +20,17 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
-import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.filmfilter.BlacklistFactory;
 import de.p2tools.mtplayer.gui.filter.PMenuButton;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
 import javafx.geometry.Insets;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
-
-import java.util.ArrayList;
 
 public class AddBlackListDialogController extends PDialogExtra {
 
@@ -55,17 +55,19 @@ public class AddBlackListDialogController extends PDialogExtra {
     private final Button btnClearTitel = new Button();
     private final Button btnClearThemeTitel = new Button();
 
-    private final ArrayList<CheckMenuItem> checkMenuItemsList = new ArrayList<>();
-    private final FilmDataMTP filmDataMTP;
-    private final BlackData blackData;
-    private final ProgData progData;
+    private final String channel;
+    private final String theme;
+    private final String title;
 
-    public AddBlackListDialogController(ProgData progData, FilmDataMTP filmDataMTP, BlackData blackData) {
+    private final BlackData blackData;
+
+    public AddBlackListDialogController(ProgData progData, String channel, String theme, String title, BlackData blackData) {
         super(progData.primaryStage, ProgConfig.ADD_BLACK_DIALOG_SIZE,
                 "Blacklist-Eintrag erstellen", true, false);
 
-        this.progData = progData;
-        this.filmDataMTP = filmDataMTP;
+        this.channel = channel;
+        this.theme = theme;
+        this.title = title;
         this.blackData = blackData;
 
         mbChannel = new PMenuButton(blackData.channelProperty(),
@@ -111,17 +113,17 @@ public class AddBlackListDialogController extends PDialogExtra {
         });
 
         btnChannel.setOnAction(a -> {
-            blackData.setChannel(filmDataMTP.getChannel());
+            blackData.setChannel(channel);
 //            blackData.channelProperty().setValue("");
         });
         btnChannel.setTooltip(new Tooltip("Daten vom Film eintragen"));
         btnChannel.setGraphic(ProgIcons.Icons.ICON_BUTTON_RESET.getImageView());
 
-        btnTheme.setOnAction(a -> blackData.setTheme(filmDataMTP.getTheme()));
+        btnTheme.setOnAction(a -> blackData.setTheme(theme));
         btnTheme.setTooltip(new Tooltip("Daten vom Film eintragen"));
         btnTheme.setGraphic(ProgIcons.Icons.ICON_BUTTON_RESET.getImageView());
 
-        btnTitel.setOnAction(a -> blackData.setTitle(filmDataMTP.getTitle()));
+        btnTitel.setOnAction(a -> blackData.setTitle(title));
         btnTitel.setTooltip(new Tooltip("Daten vom Film eintragen"));
         btnTitel.setGraphic(ProgIcons.Icons.ICON_BUTTON_RESET.getImageView());
 

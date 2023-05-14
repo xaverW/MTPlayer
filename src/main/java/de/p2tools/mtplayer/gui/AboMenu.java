@@ -16,11 +16,11 @@
 
 package de.p2tools.mtplayer.gui;
 
+import de.p2tools.mtplayer.ShortKeyFactory;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.config.ProgShortcut;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
-import de.p2tools.p2lib.tools.shortcut.PShortcutWorker;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
@@ -108,24 +108,18 @@ public class AboMenu {
         mb.getItems().add(new SeparatorMenuItem());
         mb.getItems().addAll(miSelectAll, miSelection);
 
-        final MenuItem miShowFilter = new MenuItem("Filter ein-/ausblenden");
+        final MenuItem miShowFilter = new MenuItem("Filter ein-/ausblenden" +
+                ShortKeyFactory.SHORT_CUT_LEER + ProgShortcut.SHORTCUT_SHOW_FILTER.getActShortcut());
         //ausgeführt wird aber der Button im Tab Filme!!
         miShowFilter.setOnAction(a -> {
-            if (!ProgData.getInstance().guiAboIsVisible.getValue()) {
-                return;
-            }
             progData.mtPlayerController.setFilter();
         });
-        PShortcutWorker.addShortCut(miShowFilter, ProgShortcut.SHORTCUT_SHOW_FILTER);
 
-        final MenuItem miShowInfo = new MenuItem("Infos ein-/ausblenden");
+        final MenuItem miShowInfo = new MenuItem("Infos ein-/ausblenden" +
+                ShortKeyFactory.SHORT_CUT_LEER + ProgShortcut.SHORTCUT_SHOW_INFOS.getActShortcut());
         miShowInfo.setOnAction(a -> {
-            if (!ProgData.getInstance().guiAboIsVisible.getValue()) {
-                return;
-            }
             progData.mtPlayerController.setInfos();
         });
-        PShortcutWorker.addShortCut(miShowInfo, ProgShortcut.SHORTCUT_SHOW_INFOS);
 
         mb.getItems().add(new SeparatorMenuItem());
         mb.getItems().addAll(miShowFilter, miShowInfo);

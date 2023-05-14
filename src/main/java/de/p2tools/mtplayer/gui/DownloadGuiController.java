@@ -142,16 +142,14 @@ public class DownloadGuiController extends AnchorPane {
 
     public void playFilm() {
         final Optional<DownloadData> download = getSel();
-        if (download.isPresent()) {
-            POpen.playStoredFilm(download.get().getDestPathFile(),
-                    ProgConfig.SYSTEM_PROG_PLAY_FILME, ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
-        }
+        download.ifPresent(downloadData -> POpen.playStoredFilm(downloadData.getDestPathFile(),
+                ProgConfig.SYSTEM_PROG_PLAY_FILME, ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView()));
     }
 
     public void deleteFilmFile() {
         // Download nur löschen, wenn er nicht läuft
         final Optional<DownloadData> download = getSel();
-        if (!download.isPresent()) {
+        if (download.isEmpty()) {
             return;
         }
         DownloadFactoryDelFilmFile.deleteFilmFile(download.get());
@@ -159,7 +157,7 @@ public class DownloadGuiController extends AnchorPane {
 
     public void openDestinationDir() {
         final Optional<DownloadData> download = getSel();
-        if (!download.isPresent()) {
+        if (download.isEmpty()) {
             return;
         }
 
@@ -170,7 +168,7 @@ public class DownloadGuiController extends AnchorPane {
     public void playUrl() {
         // aus Menü
         final Optional<DownloadData> download = getSel();
-        if (!download.isPresent()) {
+        if (download.isEmpty()) {
             return;
         }
 
@@ -188,10 +186,14 @@ public class DownloadGuiController extends AnchorPane {
         FilmTools.playFilm(film, null);
     }
 
+    public void copyFilmThemeTitle(boolean theme) {
+        final Optional<DownloadData> downloadData = getSel(true);
+        downloadData.ifPresent(data -> PSystemUtils.copyToClipboard(theme ? data.getTheme() : data.getTitle()));
+    }
 
     public void copyUrl() {
         final Optional<DownloadData> download = getSel();
-        if (!download.isPresent()) {
+        if (download.isEmpty()) {
             return;
         }
         PSystemUtils.copyToClipboard(download.get().getUrl());
@@ -209,11 +211,9 @@ public class DownloadGuiController extends AnchorPane {
         FilmInfoDialogController.getInstanceAndShow().showFilmInfo();
     }
 
-    public void guiFilmMediaCollection() {
+    public void searchFilmInMediaCollection() {
         final Optional<DownloadData> download = getSel();
-        if (download.isPresent()) {
-            new MediaDialogController(download.get().getTheme(), download.get().getTitle());
-        }
+        download.ifPresent(downloadData -> new MediaDialogController(downloadData.getTheme(), downloadData.getTitle()));
     }
 
     public void startDownload(boolean all) {
@@ -319,11 +319,11 @@ public class DownloadGuiController extends AnchorPane {
         return ret;
     }
 
-    private Optional<DownloadData> getSel() {
+    public Optional<DownloadData> getSel() {
         return getSel(true);
     }
 
-    private Optional<DownloadData> getSel(boolean show) {
+    public Optional<DownloadData> getSel(boolean show) {
         final int selectedTableRow = tableView.getSelectionModel().getSelectedIndex();
         if (selectedTableRow >= 0) {
             return Optional.of(tableView.getSelectionModel().getSelectedItem());

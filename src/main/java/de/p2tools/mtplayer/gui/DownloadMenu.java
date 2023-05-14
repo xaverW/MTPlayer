@@ -16,9 +16,11 @@
 
 package de.p2tools.mtplayer.gui;
 
+import de.p2tools.mtplayer.ShortKeyFactory;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.config.ProgShortcut;
+import de.p2tools.mtplayer.controller.filmfilter.BlacklistFactory;
 import de.p2tools.p2lib.guitools.PGuiTools;
 import de.p2tools.p2lib.tools.shortcut.PShortcutWorker;
 import javafx.beans.binding.Bindings;
@@ -167,31 +169,49 @@ public class DownloadMenu {
         submenuAllDownloads.getItems().addAll(mbStartAll, mbStartTimeAll, mbStopAll, mbStopWait, mbUpdateList, mbClean);
         mb.getItems().addAll(submenuAllDownloads);
 
-        MenuItem miFilmInfo = new MenuItem("Filminformation anzeigen");
+        MenuItem miFilmInfo = new MenuItem("Filminformation anzeigen" + ShortKeyFactory.SHORT_CUT_LEER +
+                ProgShortcut.SHORTCUT_INFO_FILM.getActShortcut());
         miFilmInfo.setOnAction(a -> {
-            if (!ProgData.getInstance().guiDownloadIsVisible.getValue()) {
-                return;
-            }
             progData.downloadGuiController.showFilmInfo();
         });
-        PShortcutWorker.addShortCut(miFilmInfo, ProgShortcut.SHORTCUT_INFO_FILM);
+
+        final MenuItem miCopyTheme = new MenuItem("Thema in die Zwischenablage kopieren" +
+                ShortKeyFactory.SHORT_CUT_LEER + ProgShortcut.SHORTCUT_COPY_FILM_THEME_TO_CLIPBOARD.getActShortcut());
+        miCopyTheme.setOnAction(a -> progData.mtPlayerController.copyTheme());
+
+        final MenuItem miCopyTitle = new MenuItem("Titel in die Zwischenablage kopieren" +
+                ShortKeyFactory.SHORT_CUT_LEER + ProgShortcut.SHORTCUT_COPY_FILM_TITLE_TO_CLIPBOARD.getActShortcut());
+        miCopyTitle.setOnAction(a -> progData.mtPlayerController.copyTitle());
+
+        //Blacklist
+        Menu submenuBlacklist = new Menu("Blacklist");
+        final MenuItem miBlack = new MenuItem("Blacklist-Eintrag für den Film erstellen" +
+                ShortKeyFactory.SHORT_CUT_LEER + ProgShortcut.SHORTCUT_ADD_BLACKLIST.getActShortcut());
+        miBlack.setOnAction(event -> {
+            BlacklistFactory.addBlackDownload();
+        });
+
+        final MenuItem miBlackTheme = new MenuItem("Thema direkt in die Blacklist einfügen" +
+                ShortKeyFactory.SHORT_CUT_LEER + ProgShortcut.SHORTCUT_ADD_BLACKLIST_THEME.getActShortcut());
+        miBlackTheme.setOnAction(event -> {
+            BlacklistFactory.addBlackThemeDownload();
+        });
+        submenuBlacklist.getItems().addAll(miBlack, miBlackTheme);
+
 
         MenuItem miPlayUrl = new MenuItem("Film (URL) abspielen");
         miPlayUrl.setOnAction(a -> progData.downloadGuiController.playUrl());
         MenuItem miCopyUrl = new MenuItem("Download (URL) kopieren");
         miCopyUrl.setOnAction(a -> progData.downloadGuiController.copyUrl());
 
-        MenuItem miMediaDb = new MenuItem("Download in der Mediensammlung suchen");
+        MenuItem miMediaDb = new MenuItem("Download in der Mediensammlung suchen" + ShortKeyFactory.SHORT_CUT_LEER +
+                ProgShortcut.SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION.getActShortcut());
         miMediaDb.setOnAction(a -> {
-            if (!ProgData.getInstance().guiDownloadIsVisible.getValue()) {
-                return;
-            }
-            progData.downloadGuiController.guiFilmMediaCollection();
+            progData.downloadGuiController.searchFilmInMediaCollection();
         });
-        PShortcutWorker.addShortCut(miMediaDb, ProgShortcut.SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION);
 
         mb.getItems().add(new SeparatorMenuItem());
-        mb.getItems().addAll(miFilmInfo, miPlayUrl, miCopyUrl, miMediaDb);
+        mb.getItems().addAll(miFilmInfo, miCopyTheme, miCopyTitle, submenuBlacklist, miPlayUrl, miCopyUrl, miMediaDb);
 
         final MenuItem miSelectAll = new MenuItem("Alles auswählen");
         miSelectAll.setOnAction(a -> progData.downloadGuiController.selectAll());
@@ -201,24 +221,18 @@ public class DownloadMenu {
         mb.getItems().add(new SeparatorMenuItem());
         mb.getItems().addAll(miSelectAll, miSelection);
 
-        final MenuItem miShowFilter = new MenuItem("Filter ein-/ausblenden");
+        final MenuItem miShowFilter = new MenuItem("Filter ein-/ausblenden" + ShortKeyFactory.SHORT_CUT_LEER +
+                ProgShortcut.SHORTCUT_SHOW_FILTER.getActShortcut());
         //ausgeführt wird aber der Button im Tab Filme!!
         miShowFilter.setOnAction(a -> {
-            if (!ProgData.getInstance().guiDownloadIsVisible.getValue()) {
-                return;
-            }
             progData.mtPlayerController.setFilter();
         });
-        PShortcutWorker.addShortCut(miShowFilter, ProgShortcut.SHORTCUT_SHOW_FILTER);
 
-        final MenuItem miShowInfo = new MenuItem("Infos ein-/ausblenden");
+        final MenuItem miShowInfo = new MenuItem("Infos ein-/ausblenden" + ShortKeyFactory.SHORT_CUT_LEER +
+                ProgShortcut.SHORTCUT_SHOW_INFOS.getActShortcut());
         miShowInfo.setOnAction(a -> {
-            if (!ProgData.getInstance().guiDownloadIsVisible.getValue()) {
-                return;
-            }
             progData.mtPlayerController.setInfos();
         });
-        PShortcutWorker.addShortCut(miShowInfo, ProgShortcut.SHORTCUT_SHOW_INFOS);
 
         mb.getItems().add(new SeparatorMenuItem());
         mb.getItems().addAll(miShowFilter, miShowInfo);

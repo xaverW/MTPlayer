@@ -233,8 +233,8 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty DOWNLOAD_GUI_TABLE_ORDER = addStrProp("download-gui-table-order");
     public static BooleanProperty DOWNLOAD_SHOW_NOTIFICATION = addBoolProp("download-show-notification", Boolean.TRUE);
     public static DoubleProperty DOWNLOAD_GUI_MEDIA_DIVIDER = addDoubleProp("download-gui-media-divider", 0.5);
-    public static StringProperty DOWNLOAD_STOP_DIALOG_SIZE = addStrProp("download-stop-dialog-size", "600:500");
-    public static StringProperty DOWNLOAD_ONLY_STOP_DIALOG_SIZE = addStrProp("download-only-stop-dialog-size", "400:300");
+    public static StringProperty DOWNLOAD_STOP_DIALOG_SIZE = addStrProp("download-stop-dialog-size", "850:600");
+    public static StringProperty DOWNLOAD_ONLY_STOP_DIALOG_SIZE = addStrProp("download-only-stop-dialog-size", "600:400");
 
     //Gui Download Media
     public static IntegerProperty DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_MEDIA = addIntProp("download-gui-media-build-search-media", ProgConst.MEDIA_COLLECTION_SEARCH_TITEL);//aus was der Suchbegriff gebaut wird: T/Th/TT
@@ -362,9 +362,6 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty SHORTCUT_SAVE_FILM = addStrProp("SHORTCUT_SAVE_FILM", SHORTCUT_SAVE_FILM_INIT);
 
     // Shortcuts Downloadmenü
-    public static String SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIA_COLLECTION_INIT = "Alt+M";
-    public static StringProperty SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIA_COLLECTION = addStrProp("SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIA_COLLECTION", SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIA_COLLECTION_INIT);
-
     public static String SHORTCUT_DOWNLOAD_START_INIT = "Ctrl+D";
     public static StringProperty SHORTCUT_DOWNLOAD_START = addStrProp("SHORTCUT_DOWNLOAD_START", SHORTCUT_DOWNLOAD_START_INIT);
 
