@@ -122,46 +122,96 @@ public class FilmMenu {
         mb.getStyleClass().addAll("btnFunction", "btnFunc-1");
 
         final MenuItem mbPlay = new MenuItem("Film abspielen");
-        mbPlay.setOnAction(a -> progData.filmGuiController.playFilmUrl());
+        mbPlay.setOnAction(a -> {
+            if (!ProgData.getInstance().guiFilmIsVisible.getValue()) {
+                return;
+            }
+            progData.filmGuiController.playFilmUrl();
+        });
         PShortcutWorker.addShortCut(mbPlay, ProgShortcut.SHORTCUT_PLAY_FILM);
 
         final MenuItem mbSave = new MenuItem("Film speichern");
-        mbSave.setOnAction(e -> progData.filmGuiController.saveTheFilm());
+        mbSave.setOnAction(e -> {
+            if (!ProgData.getInstance().guiFilmIsVisible.getValue()) {
+                return;
+            }
+            progData.filmGuiController.saveTheFilm();
+        });
         PShortcutWorker.addShortCut(mbSave, ProgShortcut.SHORTCUT_SAVE_FILM);
 
         mb.getItems().addAll(mbPlay, mbSave);
 
         final MenuItem miFilmShown = new MenuItem("Filme als gesehen markieren");
-        miFilmShown.setOnAction(a -> progData.filmGuiController.setFilmShown());
+        miFilmShown.setOnAction(a -> {
+            if (!ProgData.getInstance().guiFilmIsVisible.getValue()) {
+                return;
+            }
+            progData.filmGuiController.setFilmShown();
+        });
         PShortcutWorker.addShortCut(miFilmShown, ProgShortcut.SHORTCUT_FILM_SHOWN);
 
         final MenuItem miFilmNotShown = new MenuItem("Filme als ungesehen markieren");
-        miFilmNotShown.setOnAction(a -> progData.filmGuiController.setFilmNotShown());
+        miFilmNotShown.setOnAction(a -> {
+            if (!ProgData.getInstance().guiFilmIsVisible.getValue()) {
+                return;
+            }
+            progData.filmGuiController.setFilmNotShown();
+        });
         PShortcutWorker.addShortCut(miFilmNotShown, ProgShortcut.SHORTCUT_FILM_NOT_SHOWN);
 
         final MenuItem miFilmInfo = new MenuItem("Filminformation anzeigen");
-        miFilmInfo.setOnAction(a -> progData.filmGuiController.showFilmInfo());
+        miFilmInfo.setOnAction(a -> {
+            if (!ProgData.getInstance().guiFilmIsVisible.getValue()) {
+                return;
+            }
+            progData.filmGuiController.showFilmInfo();
+        });
         PShortcutWorker.addShortCut(miFilmInfo, ProgShortcut.SHORTCUT_INFO_FILM);
 
         final MenuItem miFilmMediaCollection = new MenuItem("Film in der Mediensammlung suchen");
-        miFilmMediaCollection.setOnAction(a -> progData.filmGuiController.searchFilmInMediaCollection());
+        miFilmMediaCollection.setOnAction(a -> {
+            if (!ProgData.getInstance().guiFilmIsVisible.getValue()) {
+                return;
+            }
+            progData.filmGuiController.searchFilmInMediaCollection();
+        });
         PShortcutWorker.addShortCut(miFilmMediaCollection, ProgShortcut.SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION);
 
         final MenuItem miCopyName = new MenuItem("Titel in die Zwischenablage kopieren");
-        miCopyName.setOnAction(a -> progData.filmGuiController.copyFilmThemeTitle(false));
+        miCopyName.setOnAction(a -> {
+            if (!ProgData.getInstance().guiFilmIsVisible.getValue()) {
+                return;
+            }
+            progData.filmGuiController.copyFilmThemeTitle(false);
+        });
         PShortcutWorker.addShortCut(miCopyName, ProgShortcut.SHORTCUT_COPY_FILM_TITLE_TO_CLIPBOARD);
         final MenuItem miCopyTheme = new MenuItem("Thema in die Zwischenablage kopieren");
-        miCopyTheme.setOnAction(a -> progData.filmGuiController.copyFilmThemeTitle(true));
+        miCopyTheme.setOnAction(a -> {
+            if (!ProgData.getInstance().guiFilmIsVisible.getValue()) {
+                return;
+            }
+            progData.filmGuiController.copyFilmThemeTitle(true);
+        });
         PShortcutWorker.addShortCut(miCopyTheme, ProgShortcut.SHORTCUT_COPY_FILM_THEME_TO_CLIPBOARD);
 
         //Blacklist
         Menu submenuBlacklist = new Menu("Blacklist");
         final MenuItem miBlack = new MenuItem("Blacklist-Eintrag für den Film erstellen");
-        miBlack.setOnAction(event -> BlacklistFactory.addBlack());
+        miBlack.setOnAction(event -> {
+            if (!ProgData.getInstance().guiFilmIsVisible.getValue()) {
+                return;
+            }
+            BlacklistFactory.addBlack();
+        });
         PShortcutWorker.addShortCut(miBlack, ProgShortcut.SHORTCUT_ADD_BLACKLIST);
 
         final MenuItem miBlackTheme = new MenuItem("Thema direkt in die Blacklist einfügen");
-        miBlackTheme.setOnAction(event -> BlacklistFactory.addBlackTheme());
+        miBlackTheme.setOnAction(event -> {
+            if (!ProgData.getInstance().guiFilmIsVisible.getValue()) {
+                return;
+            }
+            BlacklistFactory.addBlackTheme();
+        });
         PShortcutWorker.addShortCut(miBlackTheme, ProgShortcut.SHORTCUT_ADD_BLACKLIST_THEME);
         submenuBlacklist.getItems().addAll(miBlack, miBlackTheme);
 
@@ -182,11 +232,21 @@ public class FilmMenu {
         mb.getItems().add(submenuBookmark);
 
         final MenuItem miShowFilter = new MenuItem("Filter ein-/ausblenden");
-        miShowFilter.setOnAction(a -> progData.mtPlayerController.setFilter());
+        miShowFilter.setOnAction(a -> {
+            if (!ProgData.getInstance().guiFilmIsVisible.getValue()) {
+                return;
+            }
+            progData.mtPlayerController.setFilter();
+        });
         PShortcutWorker.addShortCut(miShowFilter, ProgShortcut.SHORTCUT_SHOW_FILTER);
 
         final MenuItem miShowInfo = new MenuItem("Infos ein-/ausblenden");
-        miShowInfo.setOnAction(a -> progData.mtPlayerController.setInfos());
+        miShowInfo.setOnAction(a -> {
+            if (!ProgData.getInstance().guiFilmIsVisible.getValue()) {
+                return;
+            }
+            progData.mtPlayerController.setInfos();
+        });
         PShortcutWorker.addShortCut(miShowInfo, ProgShortcut.SHORTCUT_SHOW_INFOS);
 
         mb.getItems().add(new SeparatorMenuItem());

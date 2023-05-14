@@ -50,6 +50,8 @@ import de.p2tools.p2lib.tools.duration.PDuration;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -89,6 +91,9 @@ public class ProgData {
     public final ChartData chartData;
     public final ProgTray progTray;
     public QuitDialogController quitDialogController = null;
+    public BooleanProperty guiFilmIsVisible = new SimpleBooleanProperty(false);
+    public BooleanProperty guiDownloadIsVisible = new SimpleBooleanProperty(false);
+    public BooleanProperty guiAboIsVisible = new SimpleBooleanProperty(false);
 
     // Worker
     public Worker worker; // Liste aller Sender, Themen, ...

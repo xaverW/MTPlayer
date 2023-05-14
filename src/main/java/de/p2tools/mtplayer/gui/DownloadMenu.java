@@ -85,19 +85,39 @@ public class DownloadMenu {
         mb.getStyleClass().addAll("btnFunction", "btnFunc-1");
 
         final MenuItem miDownloadStart = new MenuItem("Downloads starten");
-        miDownloadStart.setOnAction(a -> progData.downloadGuiController.startDownload(false));
+        miDownloadStart.setOnAction(a -> {
+            if (!ProgData.getInstance().guiDownloadIsVisible.getValue()) {
+                return;
+            }
+            progData.downloadGuiController.startDownload(false);
+        });
         PShortcutWorker.addShortCut(miDownloadStart, ProgShortcut.SHORTCUT_DOWNLOAD_START);
 
         final MenuItem miDownloadStop = new MenuItem("Downloads stoppen");
-        miDownloadStop.setOnAction(a -> progData.downloadGuiController.stopDownload(false));
+        miDownloadStop.setOnAction(a -> {
+            if (!ProgData.getInstance().guiDownloadIsVisible.getValue()) {
+                return;
+            }
+            progData.downloadGuiController.stopDownload(false);
+        });
         PShortcutWorker.addShortCut(miDownloadStop, ProgShortcut.SHORTCUT_DOWNLOAD_STOP);
 
         final MenuItem miChange = new MenuItem("Download ändern");
-        miChange.setOnAction(a -> progData.downloadGuiController.changeDownload());
+        miChange.setOnAction(a -> {
+            if (!ProgData.getInstance().guiDownloadIsVisible.getValue()) {
+                return;
+            }
+            progData.downloadGuiController.changeDownload();
+        });
         PShortcutWorker.addShortCut(miChange, ProgShortcut.SHORTCUT_DOWNLOAD_CHANGE);
 
         final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen");
-        miUndo.setOnAction(a -> progData.downloadGuiController.undoDeleteDownload());
+        miUndo.setOnAction(a -> {
+            if (!ProgData.getInstance().guiDownloadIsVisible.getValue()) {
+                return;
+            }
+            progData.downloadGuiController.undoDeleteDownload();
+        });
         PShortcutWorker.addShortCut(miUndo, ProgShortcut.SHORTCUT_DOWNLOAD_UNDO_DELETE);
         miUndo.disableProperty().bind(Bindings.isEmpty(progData.downloadList.getUndoList()));
 
@@ -126,11 +146,21 @@ public class DownloadMenu {
         final MenuItem mbStopWait = new MenuItem("Alle wartenden Downloads stoppen");
         mbStopWait.setOnAction(a -> progData.downloadGuiController.stopWaitingDownloads());
         final MenuItem mbUpdateList = new MenuItem("Liste der Downloads aktualisieren");
-        mbUpdateList.setOnAction(e -> progData.worker.searchForAbosAndMaybeStart());
+        mbUpdateList.setOnAction(e -> {
+            if (!ProgData.getInstance().guiDownloadIsVisible.getValue()) {
+                return;
+            }
+            progData.worker.searchForAbosAndMaybeStart();
+        });
         PShortcutWorker.addShortCut(mbUpdateList, ProgShortcut.SHORTCUT_DOWNLOADS_UPDATE);
 
         final MenuItem mbClean = new MenuItem("Liste der Downloads aufräumen");
-        mbClean.setOnAction(e -> progData.downloadList.cleanUpList());
+        mbClean.setOnAction(e -> {
+            if (!ProgData.getInstance().guiDownloadIsVisible.getValue()) {
+                return;
+            }
+            progData.downloadList.cleanUpList();
+        });
         PShortcutWorker.addShortCut(mbClean, ProgShortcut.SHORTCUT_DOWNLOADS_CLEAN_UP);
 
         Menu submenuAllDownloads = new Menu("Alle Downloads");
@@ -138,7 +168,12 @@ public class DownloadMenu {
         mb.getItems().addAll(submenuAllDownloads);
 
         MenuItem miFilmInfo = new MenuItem("Filminformation anzeigen");
-        miFilmInfo.setOnAction(a -> progData.downloadGuiController.showFilmInfo());
+        miFilmInfo.setOnAction(a -> {
+            if (!ProgData.getInstance().guiDownloadIsVisible.getValue()) {
+                return;
+            }
+            progData.downloadGuiController.showFilmInfo();
+        });
         PShortcutWorker.addShortCut(miFilmInfo, ProgShortcut.SHORTCUT_INFO_FILM);
 
         MenuItem miPlayUrl = new MenuItem("Film (URL) abspielen");
@@ -147,7 +182,12 @@ public class DownloadMenu {
         miCopyUrl.setOnAction(a -> progData.downloadGuiController.copyUrl());
 
         MenuItem miMediaDb = new MenuItem("Download in der Mediensammlung suchen");
-        miMediaDb.setOnAction(a -> progData.downloadGuiController.guiFilmMediaCollection());
+        miMediaDb.setOnAction(a -> {
+            if (!ProgData.getInstance().guiDownloadIsVisible.getValue()) {
+                return;
+            }
+            progData.downloadGuiController.guiFilmMediaCollection();
+        });
         PShortcutWorker.addShortCut(miMediaDb, ProgShortcut.SHORTCUT_SEARCH_DOWNLOAD_IN_MEDIACOLLECTION);
 
         mb.getItems().add(new SeparatorMenuItem());
@@ -163,11 +203,21 @@ public class DownloadMenu {
 
         final MenuItem miShowFilter = new MenuItem("Filter ein-/ausblenden");
         //ausgeführt wird aber der Button im Tab Filme!!
-        miShowFilter.setOnAction(a -> progData.mtPlayerController.setFilter());
+        miShowFilter.setOnAction(a -> {
+            if (!ProgData.getInstance().guiDownloadIsVisible.getValue()) {
+                return;
+            }
+            progData.mtPlayerController.setFilter();
+        });
         PShortcutWorker.addShortCut(miShowFilter, ProgShortcut.SHORTCUT_SHOW_FILTER);
 
         final MenuItem miShowInfo = new MenuItem("Infos ein-/ausblenden");
-        miShowInfo.setOnAction(a -> progData.mtPlayerController.setInfos());
+        miShowInfo.setOnAction(a -> {
+            if (!ProgData.getInstance().guiDownloadIsVisible.getValue()) {
+                return;
+            }
+            progData.mtPlayerController.setInfos();
+        });
         PShortcutWorker.addShortCut(miShowInfo, ProgShortcut.SHORTCUT_SHOW_INFOS);
 
         mb.getItems().add(new SeparatorMenuItem());

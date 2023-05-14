@@ -180,6 +180,9 @@ public class MTPlayerController extends StackPane {
         splitPaneFilm.toFront();
         progData.filmGuiController.isShown();
         statusBarController.setStatusbarIndex(StatusBarController.StatusbarIndex.FILM);
+        progData.guiFilmIsVisible.setValue(true);
+        progData.guiDownloadIsVisible.setValue(false);
+        progData.guiAboIsVisible.setValue(false);
     }
 
     private void selPanelDownload() {
@@ -197,6 +200,9 @@ public class MTPlayerController extends StackPane {
         splitPaneDownoad.toFront();
         progData.downloadGuiController.isShown();
         statusBarController.setStatusbarIndex(StatusBarController.StatusbarIndex.DOWNLOAD);
+        progData.guiFilmIsVisible.setValue(false);
+        progData.guiDownloadIsVisible.setValue(true);
+        progData.guiAboIsVisible.setValue(false);
     }
 
     private void selPanelAbo() {
@@ -214,6 +220,9 @@ public class MTPlayerController extends StackPane {
         splitPaneAbo.toFront();
         progData.aboGuiController.isShown();
         statusBarController.setStatusbarIndex(StatusBarController.StatusbarIndex.ABO);
+        progData.guiFilmIsVisible.setValue(false);
+        progData.guiDownloadIsVisible.setValue(false);
+        progData.guiAboIsVisible.setValue(true);
     }
 
     private void infoPane() {

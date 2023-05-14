@@ -110,11 +110,21 @@ public class AboMenu {
 
         final MenuItem miShowFilter = new MenuItem("Filter ein-/ausblenden");
         //ausgeführt wird aber der Button im Tab Filme!!
-        miShowFilter.setOnAction(a -> progData.mtPlayerController.setFilter());
+        miShowFilter.setOnAction(a -> {
+            if (!ProgData.getInstance().guiAboIsVisible.getValue()) {
+                return;
+            }
+            progData.mtPlayerController.setFilter();
+        });
         PShortcutWorker.addShortCut(miShowFilter, ProgShortcut.SHORTCUT_SHOW_FILTER);
 
         final MenuItem miShowInfo = new MenuItem("Infos ein-/ausblenden");
-        miShowInfo.setOnAction(a -> progData.mtPlayerController.setInfos());
+        miShowInfo.setOnAction(a -> {
+            if (!ProgData.getInstance().guiAboIsVisible.getValue()) {
+                return;
+            }
+            progData.mtPlayerController.setInfos();
+        });
         PShortcutWorker.addShortCut(miShowInfo, ProgShortcut.SHORTCUT_SHOW_INFOS);
 
         mb.getItems().add(new SeparatorMenuItem());
