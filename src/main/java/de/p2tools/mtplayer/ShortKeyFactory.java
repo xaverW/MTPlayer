@@ -17,7 +17,6 @@
 
 package de.p2tools.mtplayer;
 
-import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgShortcut;
 import de.p2tools.p2lib.tools.shortcut.PShortcut;
 import javafx.scene.Scene;
@@ -43,7 +42,7 @@ public class ShortKeyFactory {
             System.out.println("--->");
         });
         kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
-        rn = () -> ProgData.getInstance().mtPlayerController.setInfos();
+        rn = MTPlayerFactory::setInfos;
         scene.getAccelerators().put(kc, rn);
 
         // Filter
@@ -52,7 +51,7 @@ public class ShortKeyFactory {
             System.out.println("--->");
         });
         kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
-        rn = () -> ProgData.getInstance().mtPlayerController.setFilter();
+        rn = MTPlayerFactory::setFilter;
         scene.getAccelerators().put(kc, rn);
 
         // Mediensammlung
@@ -61,7 +60,7 @@ public class ShortKeyFactory {
             System.out.println("--->");
         });
         kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
-        rn = () -> ProgData.getInstance().mtPlayerController.setMediaCollection();
+        rn = MTPlayerFactory::setMediaCollection;
         scene.getAccelerators().put(kc, rn);
 
         // FilmInfos
@@ -70,7 +69,7 @@ public class ShortKeyFactory {
             System.out.println("--->");
         });
         kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
-        rn = () -> ProgData.getInstance().mtPlayerController.showFilmInfos();
+        rn = MTPlayerFactory::showFilmInfos;
         scene.getAccelerators().put(kc, rn);
 
 
@@ -80,7 +79,7 @@ public class ShortKeyFactory {
             System.out.println("--->");
         });
         kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
-        rn = () -> ProgData.getInstance().mtPlayerController.copyTheme();
+        rn = MTPlayerFactory::copyTheme;
         scene.getAccelerators().put(kc, rn);
 
         // Titel kopieren
@@ -89,7 +88,7 @@ public class ShortKeyFactory {
             System.out.println("--->");
         });
         kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
-        rn = () -> ProgData.getInstance().mtPlayerController.copyTitle();
+        rn = MTPlayerFactory::copyTitle;
         scene.getAccelerators().put(kc, rn);
 
         // Blacklist
@@ -98,7 +97,7 @@ public class ShortKeyFactory {
             System.out.println("--->");
         });
         kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
-        rn = () -> ProgData.getInstance().mtPlayerController.addBlacklist();
+        rn = MTPlayerFactory::addBlacklist;
         scene.getAccelerators().put(kc, rn);
 
         // Blacklist, Thema
@@ -107,7 +106,7 @@ public class ShortKeyFactory {
             System.out.println("--->");
         });
         kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
-        rn = () -> ProgData.getInstance().mtPlayerController.addBlacklistTheme();
+        rn = MTPlayerFactory::addBlacklistTheme;
         scene.getAccelerators().put(kc, rn);
     }
 }

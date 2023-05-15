@@ -16,6 +16,8 @@
 
 package de.p2tools.mtplayer.gui;
 
+import de.p2tools.mtplayer.MTPlayerController;
+import de.p2tools.mtplayer.MTPlayerFactory;
 import de.p2tools.mtplayer.ShortKeyFactory;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
@@ -88,7 +90,7 @@ public class DownloadMenu {
 
         final MenuItem miDownloadStart = new MenuItem("Downloads starten");
         miDownloadStart.setOnAction(a -> {
-            if (!ProgData.getInstance().guiDownloadIsVisible.getValue()) {
+            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.DOWNLOAD) {
                 return;
             }
             progData.downloadGuiController.startDownload(false);
@@ -97,7 +99,7 @@ public class DownloadMenu {
 
         final MenuItem miDownloadStop = new MenuItem("Downloads stoppen");
         miDownloadStop.setOnAction(a -> {
-            if (!ProgData.getInstance().guiDownloadIsVisible.getValue()) {
+            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.DOWNLOAD) {
                 return;
             }
             progData.downloadGuiController.stopDownload(false);
@@ -106,7 +108,7 @@ public class DownloadMenu {
 
         final MenuItem miChange = new MenuItem("Download ändern");
         miChange.setOnAction(a -> {
-            if (!ProgData.getInstance().guiDownloadIsVisible.getValue()) {
+            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.DOWNLOAD) {
                 return;
             }
             progData.downloadGuiController.changeDownload();
@@ -115,7 +117,7 @@ public class DownloadMenu {
 
         final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen");
         miUndo.setOnAction(a -> {
-            if (!ProgData.getInstance().guiDownloadIsVisible.getValue()) {
+            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.DOWNLOAD) {
                 return;
             }
             progData.downloadGuiController.undoDeleteDownload();
@@ -149,7 +151,7 @@ public class DownloadMenu {
         mbStopWait.setOnAction(a -> progData.downloadGuiController.stopWaitingDownloads());
         final MenuItem mbUpdateList = new MenuItem("Liste der Downloads aktualisieren");
         mbUpdateList.setOnAction(e -> {
-            if (!ProgData.getInstance().guiDownloadIsVisible.getValue()) {
+            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.DOWNLOAD) {
                 return;
             }
             progData.worker.searchForAbosAndMaybeStart();
@@ -158,7 +160,7 @@ public class DownloadMenu {
 
         final MenuItem mbClean = new MenuItem("Liste der Downloads aufräumen");
         mbClean.setOnAction(e -> {
-            if (!ProgData.getInstance().guiDownloadIsVisible.getValue()) {
+            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.DOWNLOAD) {
                 return;
             }
             progData.downloadList.cleanUpList();
@@ -177,11 +179,11 @@ public class DownloadMenu {
 
         final MenuItem miCopyTheme = new MenuItem("Thema in die Zwischenablage kopieren" +
                 ShortKeyFactory.SHORT_CUT_LEER + ProgShortcut.SHORTCUT_COPY_FILM_THEME_TO_CLIPBOARD.getActShortcut());
-        miCopyTheme.setOnAction(a -> progData.mtPlayerController.copyTheme());
+        miCopyTheme.setOnAction(a -> MTPlayerFactory.copyTheme());
 
         final MenuItem miCopyTitle = new MenuItem("Titel in die Zwischenablage kopieren" +
                 ShortKeyFactory.SHORT_CUT_LEER + ProgShortcut.SHORTCUT_COPY_FILM_TITLE_TO_CLIPBOARD.getActShortcut());
-        miCopyTitle.setOnAction(a -> progData.mtPlayerController.copyTitle());
+        miCopyTitle.setOnAction(a -> MTPlayerFactory.copyTitle());
 
         //Blacklist
         Menu submenuBlacklist = new Menu("Blacklist");
@@ -224,15 +226,11 @@ public class DownloadMenu {
         final MenuItem miShowFilter = new MenuItem("Filter ein-/ausblenden" + ShortKeyFactory.SHORT_CUT_LEER +
                 ProgShortcut.SHORTCUT_SHOW_FILTER.getActShortcut());
         //ausgeführt wird aber der Button im Tab Filme!!
-        miShowFilter.setOnAction(a -> {
-            progData.mtPlayerController.setFilter();
-        });
+        miShowFilter.setOnAction(a -> MTPlayerFactory.setFilter());
 
         final MenuItem miShowInfo = new MenuItem("Infos ein-/ausblenden" + ShortKeyFactory.SHORT_CUT_LEER +
                 ProgShortcut.SHORTCUT_SHOW_INFOS.getActShortcut());
-        miShowInfo.setOnAction(a -> {
-            progData.mtPlayerController.setInfos();
-        });
+        miShowInfo.setOnAction(a -> MTPlayerFactory.setInfos());
 
         mb.getItems().add(new SeparatorMenuItem());
         mb.getItems().addAll(miShowFilter, miShowInfo);

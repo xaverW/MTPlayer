@@ -20,7 +20,6 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
-import de.p2tools.mtplayer.controller.filmfilter.BlacklistFactory;
 import de.p2tools.mtplayer.gui.AboGuiPack;
 import de.p2tools.mtplayer.gui.DownloadGuiPack;
 import de.p2tools.mtplayer.gui.FilmGuiPack;
@@ -40,6 +39,10 @@ import javafx.scene.layout.*;
 
 public class MTPlayerController extends StackPane {
 
+    public static enum PANE_SHOWN {FILM, DOWNLOAD, ABO}
+
+    public static PANE_SHOWN paneShown = null;
+
     private final Button btnFilmlist = new Button("Filmliste");
     private final Button btnFilm = new Button("Filme");
     private final Button btnDownload = new Button("Downloads");
@@ -52,7 +55,7 @@ public class MTPlayerController extends StackPane {
     private StatusBarController statusBarController;
 
     private SplitPane splitPaneFilm;
-    private SplitPane splitPaneDownoad;
+    private SplitPane splitPaneDownload;
     private SplitPane splitPaneAbo;
 
     private final ProgData progData;
@@ -82,9 +85,9 @@ public class MTPlayerController extends StackPane {
 
             // Center
             splitPaneFilm = filmGuiPack.pack();
-            splitPaneDownoad = downloadGuiPack.pack();
+            splitPaneDownload = downloadGuiPack.pack();
             splitPaneAbo = aboGuiPack.pack();
-            stackPaneCont.getChildren().addAll(splitPaneFilm, splitPaneDownoad, splitPaneAbo);
+            stackPaneCont.getChildren().addAll(splitPaneFilm, splitPaneDownload, splitPaneAbo);
 
             // Statusbar
             statusBarController = new StatusBarController(progData);
@@ -163,73 +166,8 @@ public class MTPlayerController extends StackPane {
         btnAbo.setOnAction(e -> selPanelAbo());
         btnAbo.setMaxWidth(Double.MAX_VALUE);
 
-        infoPane();
-    }
-
-    private void selPanelFilm() {
-        if (maskerPane.isVisible()) {
-            return;
-        }
-
-        if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneFilm)) {
-            // dann ist der 2. Klick
-            filmGuiPack.closeSplit();
-            return;
-        }
-
-        setButtonStyle(btnFilm);
-        splitPaneFilm.toFront();
-        progData.filmGuiController.isShown();
-        statusBarController.setStatusbarIndex(StatusBarController.StatusbarIndex.FILM);
-        progData.guiFilmIsVisible.setValue(true);
-        progData.guiDownloadIsVisible.setValue(false);
-        progData.guiAboIsVisible.setValue(false);
-    }
-
-    private void selPanelDownload() {
-        if (maskerPane.isVisible()) {
-            return;
-        }
-
-        if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneDownoad)) {
-            // dann ist der 2. Klick
-            downloadGuiPack.closeSplit();
-            return;
-        }
-
-        setButtonStyle(btnDownload);
-        splitPaneDownoad.toFront();
-        progData.downloadGuiController.isShown();
-        statusBarController.setStatusbarIndex(StatusBarController.StatusbarIndex.DOWNLOAD);
-        progData.guiFilmIsVisible.setValue(false);
-        progData.guiDownloadIsVisible.setValue(true);
-        progData.guiAboIsVisible.setValue(false);
-    }
-
-    private void selPanelAbo() {
-        if (maskerPane.isVisible()) {
-            return;
-        }
-
-        if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneAbo)) {
-            // dann ist der 2. Klick
-            aboGuiPack.closeSplit();
-            return;
-        }
-
-        setButtonStyle(btnAbo);
-        splitPaneAbo.toFront();
-        progData.aboGuiController.isShown();
-        statusBarController.setStatusbarIndex(StatusBarController.StatusbarIndex.ABO);
-        progData.guiFilmIsVisible.setValue(false);
-        progData.guiDownloadIsVisible.setValue(false);
-        progData.guiAboIsVisible.setValue(true);
-    }
-
-    private void infoPane() {
         btnFilm.setOnMouseClicked(mouseEvent -> {
-            if (maskerPane.isVisible() ||
-                    !stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneFilm)) {
+            if (maskerPane.isVisible() || paneShown != PANE_SHOWN.FILM) {
                 return;
             }
             if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
@@ -237,8 +175,7 @@ public class MTPlayerController extends StackPane {
             }
         });
         btnDownload.setOnMouseClicked(mouseEvent -> {
-            if (maskerPane.isVisible() ||
-                    !stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneDownoad)) {
+            if (maskerPane.isVisible() || paneShown != PANE_SHOWN.DOWNLOAD) {
                 return;
             }
             if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
@@ -246,8 +183,7 @@ public class MTPlayerController extends StackPane {
             }
         });
         btnAbo.setOnMouseClicked(mouseEvent -> {
-            if (maskerPane.isVisible() ||
-                    !stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneAbo)) {
+            if (maskerPane.isVisible() || paneShown != PANE_SHOWN.ABO) {
                 return;
             }
             if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
@@ -256,127 +192,94 @@ public class MTPlayerController extends StackPane {
         });
     }
 
-    private void setButtonStyle(Button btnSel) {
+    private void selPanelFilm() {
+//        if (maskerPane.isVisible()) {
+//            return;
+//        }
+
+        if (paneShown == PANE_SHOWN.FILM) {
+            // dann ist der 2. Klick
+            filmGuiPack.closeSplit();
+            return;
+        }
+
+        paneShown = PANE_SHOWN.FILM;
+        setButtonStyle();
+        splitPaneFilm.toFront();
+        progData.filmGuiController.isShown();
+        statusBarController.setStatusbarIndex();
+    }
+
+    private void selPanelDownload() {
+//        if (maskerPane.isVisible()) {
+//            return;
+//        }
+
+        if (paneShown == PANE_SHOWN.DOWNLOAD) {
+            // dann ist der 2. Klick
+            downloadGuiPack.closeSplit();
+            return;
+        }
+
+        paneShown = PANE_SHOWN.DOWNLOAD;
+        setButtonStyle();
+        splitPaneDownload.toFront();
+        progData.downloadGuiController.isShown();
+        statusBarController.setStatusbarIndex();
+    }
+
+    private void selPanelAbo() {
+//        if (maskerPane.isVisible()) {
+//            return;
+//        }
+
+        if (paneShown == PANE_SHOWN.ABO) {
+            // dann ist der 2. Klick
+            aboGuiPack.closeSplit();
+            return;
+        }
+
+        paneShown = PANE_SHOWN.ABO;
+        setButtonStyle();
+        splitPaneAbo.toFront();
+        progData.aboGuiController.isShown();
+        statusBarController.setStatusbarIndex();
+    }
+
+    private void setButtonStyle() {
         btnFilm.getStyleClass().clear();
         btnDownload.getStyleClass().clear();
         btnAbo.getStyleClass().clear();
 
-        if (btnSel.equals(btnFilm)) {
+        if (paneShown == PANE_SHOWN.FILM) {
             btnFilm.getStyleClass().add("btnTabTop-sel");
         } else {
             btnFilm.getStyleClass().add("btnTabTop");
         }
-        if (btnSel.equals(btnDownload)) {
+        if (paneShown == PANE_SHOWN.DOWNLOAD) {
             btnDownload.getStyleClass().add("btnTabTop-sel");
         } else {
             btnDownload.getStyleClass().add("btnTabTop");
         }
-        if (btnSel.equals(btnAbo)) {
+        if (paneShown == PANE_SHOWN.ABO) {
             btnAbo.getStyleClass().add("btnTabTop-sel");
         } else {
             btnAbo.getStyleClass().add("btnTabTop");
         }
     }
 
-    public void setFilter() {
-        if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneFilm)) {
-            ProgConfig.FILM_GUI_FILTER_DIVIDER_ON.setValue(!ProgConfig.FILM_GUI_FILTER_DIVIDER_ON.getValue());
-        } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneDownoad)) {
-            ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER_ON.setValue(!ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER_ON.getValue());
-        } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneAbo)) {
-            ProgConfig.ABO_GUI_FILTER_DIVIDER_ON.setValue(!ProgConfig.ABO_GUI_FILTER_DIVIDER_ON.getValue());
-        }
-    }
-
-    public void setInfos() {
-        if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneFilm)) {
-            ProgConfig.FILM_GUI_DIVIDER_ON.setValue(!ProgConfig.FILM_GUI_DIVIDER_ON.getValue());
-        } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneDownoad)) {
-            ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.setValue(!ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.getValue());
-        } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneAbo)) {
-            ProgConfig.ABO_GUI_DIVIDER_ON.setValue(!ProgConfig.ABO_GUI_DIVIDER_ON.getValue());
-        }
-    }
-
-    public void showFilmInfos() {
-        if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneFilm)) {
-            progData.filmGuiController.showFilmInfo();
-        } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneDownoad)) {
-            progData.downloadGuiController.showFilmInfo();
-        } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneAbo)) {
-            System.out.println("NIX");
-        }
-    }
-
-    public void copyTheme() {
-        if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneFilm)) {
-            progData.filmGuiController.copyFilmThemeTitle(true);
-        } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneDownoad)) {
-            progData.downloadGuiController.copyFilmThemeTitle(true);
-        } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneAbo)) {
-            System.out.println("NIX");
-        }
-    }
-
-    public void copyTitle() {
-        if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneFilm)) {
-            progData.filmGuiController.copyFilmThemeTitle(false);
-        } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneDownoad)) {
-            progData.downloadGuiController.copyFilmThemeTitle(false);
-        } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneAbo)) {
-            System.out.println("NIX");
-        }
-    }
-
-    public void addBlacklist() {
-        if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneFilm)) {
-            BlacklistFactory.addBlackFilm();
-        } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneDownoad)) {
-            BlacklistFactory.addBlackDownload();
-        } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneAbo)) {
-            System.out.println("NIX");
-        }
-    }
-
-    public void addBlacklistTheme() {
-        if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneFilm)) {
-            BlacklistFactory.addBlackThemeFilm();
-        } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneDownoad)) {
-            BlacklistFactory.addBlackThemeDownload();
-        } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneAbo)) {
-            System.out.println("NIX");
-        }
-    }
-
-    public void setMediaCollection() {
-        if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneFilm)) {
-            progData.filmGuiController.searchFilmInMediaCollection();
-
-        } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneDownoad)) {
-            progData.downloadGuiController.searchFilmInMediaCollection();
-
-        } else if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneAbo)) {
-            System.out.println("NIX");
-        }
-    }
-
-    public boolean isDownloadPaneShown() {
-        if (stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1).equals(splitPaneDownoad)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public void setFocus() {
         Node node = stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1);
-        if (node != null && node == splitPaneFilm) {
+        if (node == null) {
+            System.out.println("=============");
+        }
+        if (paneShown == PANE_SHOWN.FILM) {
             progData.filmGuiController.isShown();
         }
-        if (node != null && node == splitPaneDownoad) {
+        if (paneShown == PANE_SHOWN.DOWNLOAD) {
             progData.downloadGuiController.isShown();
         }
-        if (node != null && node == splitPaneAbo) {
+        if (paneShown == PANE_SHOWN.ABO) {
             progData.aboGuiController.isShown();
         }
     }

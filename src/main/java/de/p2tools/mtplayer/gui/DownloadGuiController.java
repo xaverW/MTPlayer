@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.gui;
 
+import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
@@ -117,7 +118,7 @@ public class DownloadGuiController extends AnchorPane {
         Listener.addListener(new Listener(Listener.EVENT_TIMER, DownloadGuiChart.class.getSimpleName()) {
             @Override
             public void pingFx() {
-                downloadGuiChart.searchInfos(progData.mtPlayerController.isDownloadPaneShown() &&
+                downloadGuiChart.searchInfos(MTPlayerController.paneShown == MTPlayerController.PANE_SHOWN.DOWNLOAD &&
                         tabPane.getSelectionModel().getSelectedItem().equals(tabBand));
             }
         });

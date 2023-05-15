@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.gui;
 
+import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadInfosFactory;
@@ -64,14 +65,10 @@ public class StatusBarController extends AnchorPane {
     private final HBox hBoxCircleAbo = new HBox(0);
 
     private final StackPane stackPane = new StackPane();
-    private final Pane nonePane;
     private final Pane filmPane;
     private final Pane downloadPane;
     private final Pane aboPane;
 
-    public enum StatusbarIndex {NONE, FILM, DOWNLOAD, ABO}
-
-    private StatusbarIndex statusbarIndex = StatusbarIndex.NONE;
     private final ProgData progData;
     private boolean stopTimer = false;
     private boolean halfSecond = false;
@@ -86,7 +83,6 @@ public class StatusBarController extends AnchorPane {
         AnchorPane.setRightAnchor(stackPane, 0.0);
         AnchorPane.setTopAnchor(stackPane, 0.0);
 
-        nonePane = new HBox();
         lblSelFilm.setTooltip(new Tooltip("Anzahl markierter Filme"));
         lblSelDownload.setTooltip(new Tooltip("Anzahl markierter Downloads"));
         lblSelAbo.setTooltip(new Tooltip("Anzahl markierter Abos"));
@@ -161,9 +157,9 @@ public class StatusBarController extends AnchorPane {
             }
         });
 
-        stackPane.getChildren().addAll(nonePane, filmPane, downloadPane, aboPane);
+        stackPane.getChildren().addAll(filmPane, downloadPane, aboPane);
         stackPane.setPadding(new Insets(0));
-        nonePane.toFront();
+        filmPane.toFront();
         LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
             @Override
             public void start(ListenerFilmlistLoadEvent event) {
@@ -173,7 +169,7 @@ public class StatusBarController extends AnchorPane {
             @Override
             public void finished(ListenerFilmlistLoadEvent event) {
                 stopTimer = false;
-                setStatusbarIndex(statusbarIndex);
+                setStatusbarIndex();
             }
         });
 
@@ -183,7 +179,7 @@ public class StatusBarController extends AnchorPane {
                 halfSecond = !halfSecond;
                 try {
                     if (!stopTimer) {
-                        setStatusbarIndex(statusbarIndex);
+                        setStatusbarIndex();
                     }
                 } catch (final Exception ex) {
                     PLog.errorLog(936251087, ex);
@@ -214,9 +210,8 @@ public class StatusBarController extends AnchorPane {
         contextMenu.getItems().addAll(miOn, miSelOn, miLeftOn, miDotOn, miRightOn);
     }
 
-    public void setStatusbarIndex(StatusbarIndex statusbarIndex) {
-        this.statusbarIndex = statusbarIndex;
-        switch (statusbarIndex) {
+    public void setStatusbarIndex() {
+        switch (MTPlayerController.paneShown) {
             case FILM:
                 filmPane.toFront();
                 setInfoFilm();
@@ -231,10 +226,6 @@ public class StatusBarController extends AnchorPane {
                 aboPane.toFront();
                 setInfoAbo();
                 setTextForRightDisplay();
-                break;
-            case NONE:
-            default:
-                nonePane.toFront();
                 break;
         }
     }

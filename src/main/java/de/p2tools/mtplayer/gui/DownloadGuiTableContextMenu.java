@@ -45,7 +45,6 @@ public class DownloadGuiTableContextMenu {
     }
 
     private void getMenu(final ContextMenu contextMenu, final DownloadData download) {
-
         final MenuItem miStart = new MenuItem("Download starten");
         miStart.setOnAction(a -> downloadGuiController.startDownload(false));
         final MenuItem miStop = new MenuItem("Download stoppen");
@@ -58,84 +57,22 @@ public class DownloadGuiTableContextMenu {
         miChange.setDisable(download == null);
         contextMenu.getItems().addAll(miStart, miStop, miChange);
 
-
         // Submenü "Download"
-        final MenuItem miPrefer = new MenuItem("Downloads vorziehen");
-        miPrefer.setOnAction(a -> downloadGuiController.preferDownload());
-        final MenuItem miPutBack = new MenuItem("Downloads zurückstellen");
-        miPutBack.setOnAction(a -> downloadGuiController.moveDownloadBack());
-        final MenuItem miRemove = new MenuItem("Downloads aus Liste entfernen");
-        miRemove.setOnAction(a -> downloadGuiController.deleteDownloads());
-
-        final Menu submenuDownload = new Menu("Downloads");
-        submenuDownload.setDisable(download == null);
-        submenuDownload.getItems().addAll(miPrefer, miPutBack, miRemove);
         contextMenu.getItems().add(new SeparatorMenuItem());
-        contextMenu.getItems().addAll(submenuDownload);
-
+        contextMenu.getItems().addAll(addSubMenuDownload(download));
 
         // Submenü "alle Downloads"
-        final MenuItem miStartAll = new MenuItem("Alle Downloads starten");
-        miStartAll.setOnAction(a -> downloadGuiController.startDownload(true /* alle */));
-
-        final MenuItem miStartTimeAll = new MenuItem("Alle Downloads mit Startzeit starten");
-        miStartTimeAll.setOnAction(a -> progData.downloadGuiController.startDownloadTime());
-
-        final MenuItem miStopAll = new MenuItem("Alle Downloads stoppen");
-        miStopAll.setOnAction(a -> downloadGuiController.stopDownload(true /* alle */));
-        final MenuItem miStopWaiting = new MenuItem("Alle wartenden Downloads stoppen");
-        miStopWaiting.setOnAction(a -> downloadGuiController.stopWaitingDownloads());
-        final MenuItem miUpdate = new MenuItem("Liste der Downloads aktualisieren");
-        miUpdate.setOnAction(e -> progData.worker.searchForAbosAndMaybeStart());
-        final MenuItem miCleanUp = new MenuItem("Liste der Downloads aufräumen");
-        miCleanUp.setOnAction(e -> progData.downloadList.cleanUpList());
-
-        miStartAll.setDisable(download == null);
-        miStartTimeAll.setDisable(download == null);
-        miStopAll.setDisable(download == null);
-        miStopWaiting.setDisable(download == null);
-
-        final Menu submenuAllDownloads = new Menu("Alle Downloads");
-        submenuAllDownloads.getItems().addAll(miStartAll, miStartTimeAll, miStopAll, miStopWaiting, miUpdate, miCleanUp);
-        contextMenu.getItems().addAll(submenuAllDownloads);
-
+        contextMenu.getItems().addAll(addSubMenuAllDownload(download));
 
         // Submenü "gespeicherte Filme"
-        final MenuItem miDownloadShown = new MenuItem("Filme als gesehen markieren");
-        miDownloadShown.setOnAction(a -> downloadGuiController.setFilmShown());
-        final MenuItem miDownloadNotShown = new MenuItem("Filme als ungesehen markieren");
-        miDownloadNotShown.setOnAction(a -> downloadGuiController.setFilmNotShown());
-        final MenuItem miPlayerDownload = new MenuItem("Gespeicherten Film (Datei) abspielen");
-        miPlayerDownload.setOnAction(a -> downloadGuiController.playFilm());
-        final MenuItem miDeleteDownload = new MenuItem("Gespeicherten Film (Datei) löschen");
-        miDeleteDownload.setOnAction(a -> downloadGuiController.deleteFilmFile());
-        final MenuItem miOpenDir = new MenuItem("Zielordner öffnen");
-        miOpenDir.setOnAction(e -> downloadGuiController.openDestinationDir());
-
-        final Menu submenuFilm = new Menu("Gespeicherten Film");
-        submenuFilm.setDisable(download == null);
-        submenuFilm.getItems().addAll(miDownloadShown, miDownloadNotShown, miPlayerDownload, miDeleteDownload, miOpenDir);
         contextMenu.getItems().add(new SeparatorMenuItem());
-        contextMenu.getItems().addAll(submenuFilm);
-
+        contextMenu.getItems().addAll(addSubMenuFilm(download));
 
         // Submenü "Abo"
-        final MenuItem miChangeAbo = new MenuItem("Abo ändern");
-        final MenuItem miDelAbo = new MenuItem("Abo löschen");
-        if (download != null && download.getAbo() != null) {
-            miChangeAbo.setOnAction(event -> progData.aboList.aboEditDialog(download.getAbo()));
-            miDelAbo.setOnAction(event -> progData.aboList.deleteAbo(download.getAbo()));
-        } else {
-            miChangeAbo.setDisable(true);
-            miDelAbo.setDisable(true);
-        }
+        contextMenu.getItems().addAll(addSubMenuAbo(download));
 
-        final Menu submenuAbo = new Menu("Abo");
-        submenuAbo.setDisable(download == null);
-        submenuAbo.getItems().addAll(miChangeAbo, miDelAbo);
-        contextMenu.getItems().addAll(submenuAbo);
-
-        Menu mBlacklist = addBlacklist(download);// Blacklist
+        // Blacklist
+        Menu mBlacklist = addBlacklist(download);
         contextMenu.getItems().addAll(mBlacklist);
 
 
@@ -196,9 +133,97 @@ public class DownloadGuiTableContextMenu {
         final MenuItem miBlackTitle = new MenuItem("Titel direkt in die Blacklist einfügen");
         miBlackTitle.setOnAction(event -> BlacklistFactory.addBlack("", "", downloadData.getTitle()));
 
+        miBlack.setDisable(downloadData == null);
+        miBlackSenderTheme.setDisable(downloadData == null);
+        miBlackTheme.setDisable(downloadData == null);
+        miBlackTitle.setDisable(downloadData == null);
+
         submenuBlacklist.getItems().addAll(miBlack, miBlackSenderTheme, miBlackTheme, miBlackTitle);
         return submenuBlacklist;
     }
 
+    private Menu addSubMenuFilm(DownloadData download) {
+        final MenuItem miDownloadShown = new MenuItem("Filme als gesehen markieren");
+        miDownloadShown.setOnAction(a -> downloadGuiController.setFilmShown());
+        final MenuItem miDownloadNotShown = new MenuItem("Filme als ungesehen markieren");
+        miDownloadNotShown.setOnAction(a -> downloadGuiController.setFilmNotShown());
+        final MenuItem miPlayerDownload = new MenuItem("Gespeicherten Film (Datei) abspielen");
+        miPlayerDownload.setOnAction(a -> downloadGuiController.playFilm());
+        final MenuItem miDeleteDownload = new MenuItem("Gespeicherten Film (Datei) löschen");
+        miDeleteDownload.setOnAction(a -> downloadGuiController.deleteFilmFile());
+        final MenuItem miOpenDir = new MenuItem("Zielordner öffnen");
+        miOpenDir.setOnAction(e -> downloadGuiController.openDestinationDir());
 
+        final Menu submenuFilm = new Menu("Gespeicherten Film");
+
+        miDownloadShown.setDisable(download == null);
+        miDownloadNotShown.setDisable(download == null);
+        miPlayerDownload.setDisable(download == null);
+        miDeleteDownload.setDisable(download == null);
+        miOpenDir.setDisable(download == null);
+        submenuFilm.getItems().addAll(miDownloadShown, miDownloadNotShown, miPlayerDownload, miDeleteDownload, miOpenDir);
+        return submenuFilm;
+    }
+
+    private Menu addSubMenuAbo(DownloadData download) {
+        final MenuItem miChangeAbo = new MenuItem("Abo ändern");
+        final MenuItem miDelAbo = new MenuItem("Abo löschen");
+        // shon hier, wird evtl. nochmal passive
+        miChangeAbo.setDisable(download == null);
+        miDelAbo.setDisable(download == null);
+
+        if (download != null && download.getAbo() != null) {
+            miChangeAbo.setOnAction(event -> progData.aboList.aboEditDialog(download.getAbo()));
+            miDelAbo.setOnAction(event -> progData.aboList.deleteAbo(download.getAbo()));
+        } else {
+            miChangeAbo.setDisable(true);
+            miDelAbo.setDisable(true);
+        }
+
+        final Menu submenuAbo = new Menu("Abo");
+        submenuAbo.getItems().addAll(miChangeAbo, miDelAbo);
+        return submenuAbo;
+    }
+
+    private Menu addSubMenuDownload(DownloadData download) {
+        final MenuItem miPrefer = new MenuItem("Downloads vorziehen");
+        miPrefer.setOnAction(a -> downloadGuiController.preferDownload());
+        final MenuItem miPutBack = new MenuItem("Downloads zurückstellen");
+        miPutBack.setOnAction(a -> downloadGuiController.moveDownloadBack());
+        final MenuItem miRemove = new MenuItem("Downloads aus Liste entfernen");
+        miRemove.setOnAction(a -> downloadGuiController.deleteDownloads());
+
+        final Menu submenuDownload = new Menu("Downloads");
+        miPrefer.setDisable(download == null || !download.isStateStartedWaiting());// macht nur dann Sinn
+        miPutBack.setDisable(download == null);
+        miRemove.setDisable(download == null);
+        submenuDownload.getItems().addAll(miPrefer, miPutBack, miRemove);
+        return submenuDownload;
+    }
+
+    private Menu addSubMenuAllDownload(DownloadData download) {
+        final MenuItem miStartAll = new MenuItem("Alle Downloads starten");
+        miStartAll.setOnAction(a -> downloadGuiController.startDownload(true /* alle */));
+
+        final MenuItem miStartTimeAll = new MenuItem("Alle Downloads mit Startzeit starten");
+        miStartTimeAll.setOnAction(a -> progData.downloadGuiController.startDownloadTime());
+
+        final MenuItem miStopAll = new MenuItem("Alle Downloads stoppen");
+        miStopAll.setOnAction(a -> downloadGuiController.stopDownload(true /* alle */));
+        final MenuItem miStopWaiting = new MenuItem("Alle wartenden Downloads stoppen");
+        miStopWaiting.setOnAction(a -> downloadGuiController.stopWaitingDownloads());
+        final MenuItem miUpdate = new MenuItem("Liste der Downloads aktualisieren");
+        miUpdate.setOnAction(e -> progData.worker.searchForAbosAndMaybeStart());
+        final MenuItem miCleanUp = new MenuItem("Liste der Downloads aufräumen");
+        miCleanUp.setOnAction(e -> progData.downloadList.cleanUpList());
+
+        miStartAll.setDisable(download == null);
+        miStartTimeAll.setDisable(download == null);
+        miStopAll.setDisable(download == null);
+        miStopWaiting.setDisable(download == null);
+
+        final Menu submenuAllDownloads = new Menu("Alle Downloads");
+        submenuAllDownloads.getItems().addAll(miStartAll, miStartTimeAll, miStopAll, miStopWaiting, miUpdate, miCleanUp);
+        return submenuAllDownloads;
+    }
 }

@@ -37,7 +37,7 @@ public class DownloadConstants {
     public static final int FILM_NUMBER_NOT_FOUND = Integer.MAX_VALUE;
 
     // Stati
-    public static final int STATE_INIT = 0; // noch nicht gestart
+    public static final int STATE_INIT = 0; // noch nicht gestartet
     public static final int STATE_STOPPED = 1; // gestartet und wieder abgebrochen
     public static final int STATE_STARTED_WAITING = 2; // gestartet, warten auf das Downloaden
     public static final int STATE_STARTED_RUN = 3; //Download läuft

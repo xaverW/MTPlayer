@@ -125,6 +125,11 @@ public class TableFilm extends PTable<FilmDataMTP> {
         aboColumn.setCellValueFactory(new PropertyValueFactory<>("aboName"));
         aboColumn.getStyleClass().add("alignCenterLeft");
 
+        final TableColumn<FilmDataMTP, Boolean> bookmarkColumn = new TableColumn<>("Bookmark");
+        bookmarkColumn.setCellValueFactory(new PropertyValueFactory<>("bookmark"));
+        bookmarkColumn.setCellFactory(new CellCheckBox().cellFactoryBool);
+        bookmarkColumn.getStyleClass().add("alignCenterLeft");
+
         nrColumn.setPrefWidth(50);
         senderColumn.setPrefWidth(80);
         themeColumn.setPrefWidth(180);
@@ -137,6 +142,6 @@ public class TableFilm extends PTable<FilmDataMTP> {
                 datumColumn, timeColumn, durationColumn, sizeColumn,
                 hdColumn, utColumn,
                 geoColumn,
-                urlColumn, aboColumn);
+                urlColumn, aboColumn, bookmarkColumn);
     }
 }

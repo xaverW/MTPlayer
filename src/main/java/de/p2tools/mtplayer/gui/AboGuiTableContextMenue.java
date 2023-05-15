@@ -47,7 +47,6 @@ public class AboGuiTableContextMenue {
 
 
     private void getMenu(ContextMenu contextMenu, AboData abo) {
-
         final MenuItem miOnOff;
         if (abo != null && abo.isActive()) {
             miOnOff = new MenuItem("Abos ausschalten");
@@ -69,18 +68,9 @@ public class AboGuiTableContextMenue {
 
         contextMenu.getItems().addAll(miOnOff, miDel, miChange, miNew);
 
-
         // Submenu "Filter"
-        final MenuItem miAboToFilter = new MenuItem("Abo  -->  Filmfilter (Filmfilter aus Abo setzen)");
-        miAboToFilter.setOnAction(a -> aboGuiController.setFilmFilterFromAbo());
-        final MenuItem miFilterToAbo = new MenuItem("Filmfilter  -->  Abo (Abo aus Filmfilter setzen)");
-        miFilterToAbo.setOnAction(a -> aboGuiController.setAboFromFilmFilterButton());
-
-        Menu mFilter = new Menu("Filmfilter - Abo");
-        mFilter.setDisable(abo == null);
-        mFilter.getItems().addAll(miAboToFilter, miFilterToAbo);
         contextMenu.getItems().add(new SeparatorMenuItem());
-        contextMenu.getItems().addAll(mFilter);
+        contextMenu.getItems().addAll(getSubMenuFilter(abo));
 
 
         // Auswahl
@@ -96,6 +86,18 @@ public class AboGuiTableContextMenue {
 
         contextMenu.getItems().add(new SeparatorMenuItem());
         contextMenu.getItems().addAll(miSelectAll, miSelection, resetTable);
+    }
+
+    private Menu getSubMenuFilter(AboData abo) {
+        final MenuItem miAboToFilter = new MenuItem("Abo  -->  Filmfilter (Filmfilter aus Abo setzen)");
+        miAboToFilter.setOnAction(a -> aboGuiController.setFilmFilterFromAbo());
+        final MenuItem miFilterToAbo = new MenuItem("Filmfilter  -->  Abo (Abo aus Filmfilter setzen)");
+        miFilterToAbo.setOnAction(a -> aboGuiController.setAboFromFilmFilterButton());
+
+        Menu mFilter = new Menu("Filmfilter - Abo");
+        mFilter.setDisable(abo == null);
+        mFilter.getItems().addAll(miAboToFilter, miFilterToAbo);
+        return mFilter;
     }
 }
 

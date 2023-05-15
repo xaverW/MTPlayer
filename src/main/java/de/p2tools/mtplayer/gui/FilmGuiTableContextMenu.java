@@ -46,38 +46,37 @@ public class FilmGuiTableContextMenu {
     public ContextMenu getContextMenu(FilmDataMTP film) {
         final ContextMenu contextMenu = new ContextMenu();
 
-        if (film == null) {
-            //dann gibts nur den
-            MenuItem resetTable = new MenuItem("Tabelle zurücksetzen");
-            resetTable.setOnAction(a -> tableView.resetTable());
-            contextMenu.getItems().addAll(resetTable);
-            return contextMenu;
-        }
-
         // Start/Save
         MenuItem miStart = new MenuItem("Film abspielen");
         miStart.setOnAction(a -> filmGuiController.playFilmUrl());
         MenuItem miSave = new MenuItem("Film speichern");
         miSave.setOnAction(a -> filmGuiController.saveTheFilm());
+        miStart.setDisable(film == null);
+        miSave.setDisable(film == null);
         contextMenu.getItems().addAll(miStart, miSave);
 
-        Menu mFilter = addFilter(film);// Filter
-        Menu mAddAbo = addAbo(film);// Abo
+        // Filter
+        Menu mFilter = addFilter(film);
+        // Abo
+        Menu mAddAbo = addAbo(film);
         contextMenu.getItems().add(new SeparatorMenuItem());
         contextMenu.getItems().addAll(mFilter, mAddAbo);
 
-        Menu mStartFilm = startFilmWithSet(); // Film mit Set starten
+        Menu mStartFilm = startFilmWithSet(film); // Film mit Set starten
         if (mStartFilm != null) {
             contextMenu.getItems().add(mStartFilm);
         }
 
-        Menu mBlacklist = addBlacklist(film);// Blacklist
-        Menu mBookmark = addBookmark(film);// Bookmark
-        Menu mCopyUrl = copyUrl(film);// URL kopieren
+        // Blacklist
+        Menu mBlacklist = addBlacklist(film);
+        // Bookmark
+        Menu mBookmark = addBookmark(film);
+        // URL kopieren
+        Menu mCopyUrl = copyUrl(film);
         contextMenu.getItems().addAll(mBlacklist, mBookmark, mCopyUrl);
 
         final MenuItem miFilmsSetShown;
-        if (film.isShown()) {
+        if (film != null && film.isShown()) {
             miFilmsSetShown = new MenuItem("Filme als ungesehen markieren");
             miFilmsSetShown.setOnAction(a -> filmGuiController.setFilmNotShown());
         } else {
@@ -92,17 +91,18 @@ public class FilmGuiTableContextMenu {
         miMediaDb.setOnAction(a -> filmGuiController.searchFilmInMediaCollection());
 
         final MenuItem miCopyTheme = new MenuItem("Thema in die Zwischenablage kopieren");
-        miCopyTheme.setOnAction(a -> {
-            PSystemUtils.copyToClipboard(film.getTheme());
-        });
+        miCopyTheme.setOnAction(a -> PSystemUtils.copyToClipboard(film.getTheme()));
         final MenuItem miCopyName = new MenuItem("Titel in die Zwischenablage kopieren");
-        miCopyName.setOnAction(a -> {
-            PSystemUtils.copyToClipboard(film.getTitle());
-        });
+        miCopyName.setOnAction(a -> PSystemUtils.copyToClipboard(film.getTitle()));
+
+        miFilmsSetShown.setDisable(film == null);
+        miFilmInfo.setDisable(film == null);
+        miMediaDb.setDisable(film == null);
+        miCopyTheme.setDisable(film == null);
+        miCopyName.setDisable(film == null);
 
         contextMenu.getItems().add(new SeparatorMenuItem());
         contextMenu.getItems().addAll(miFilmsSetShown, miFilmInfo, miMediaDb, miCopyTheme, miCopyName);
-
 
         MenuItem resetTable = new MenuItem("Tabelle zurücksetzen");
         resetTable.setOnAction(a -> tableView.resetTable());
@@ -131,24 +131,34 @@ public class FilmGuiTableContextMenu {
             progData.actFilmFilterWorker.getActFilterSettings().setTitleAndVis(film.getTitle());
         });
 
+        miFilterChannel.setDisable(film == null);
+        miFilterTheme.setDisable(film == null);
+        miFilterChannelTheme.setDisable(film == null);
+        miFilterChannelThemeTitle.setDisable(film == null);
         submenuFilter.getItems().addAll(miFilterChannel, miFilterTheme, miFilterChannelTheme, miFilterChannelThemeTitle);
         return submenuFilter;
     }
 
     private Menu addAbo(FilmDataMTP film) {
         Menu submenuAbo = new Menu("Abo");
-        final MenuItem miAboDel = new MenuItem("Abo löschen");
         final MenuItem miAboAddFilter = new MenuItem("aus dem Filter ein Abo erstellen");
         final MenuItem miAboAddChannelTheme = new MenuItem("Abo mit Sender und Thema anlegen");
         final MenuItem miAboAddChannelThemeTitle = new MenuItem("Abo mit Sender und Thema und Titel anlegen");
         final MenuItem miAboChange = new MenuItem("Abo ändern");
+        final MenuItem miAboDel = new MenuItem("Abo löschen");
+
+        // gleich hier weil dann evtl. nochmals ausgeschaltet
+        miAboAddChannelTheme.setDisable(film == null);
+        miAboAddChannelThemeTitle.setDisable(film == null);
+        miAboChange.setDisable(film == null);
+        miAboDel.setDisable(film == null);
 
         // neues Abo aus Filter anlegen
         miAboAddFilter.setOnAction(a -> {
             FilmFilter filmFilter = progData.actFilmFilterWorker.getActFilterSettings();
             progData.aboList.addNewAboFromFilterButton(filmFilter);
         });
-        AboData aboData = BlacklistFilterFactory.findAbo(film);
+        AboData aboData = film == null ? null : BlacklistFilterFactory.findAbo(film);
         if (aboData == null) {
             //nur dann gibts kein Abo, auch kein ausgeschaltetes, ...
             //neues Abo anlegen
@@ -170,17 +180,17 @@ public class FilmGuiTableContextMenu {
                     progData.aboList.deleteAbo(aboData));
         }
 
-        submenuAbo.getItems().addAll(miAboAddFilter, miAboAddChannelTheme, miAboAddChannelThemeTitle, miAboChange, miAboDel);
+        submenuAbo.getItems().addAll(miAboAddChannelTheme, miAboAddChannelThemeTitle, miAboAddFilter, miAboChange, miAboDel);
         return submenuAbo;
     }
 
-    private Menu startFilmWithSet() {
+    private Menu startFilmWithSet(FilmDataMTP film) {
         final SetDataList list = progData.setDataList.getSetDataListButton();
         if (!list.isEmpty()) {
             Menu submenuSet = new Menu("Film mit Set starten");
-
-            list.stream().forEach(setData -> {
+            list.forEach(setData -> {
                 final MenuItem item = new MenuItem(setData.getVisibleName());
+                item.setDisable(film == null);
                 item.setOnAction(event -> filmGuiController.playFilmUrlWithSet(setData));
                 submenuSet.getItems().add(item);
             });
@@ -191,53 +201,61 @@ public class FilmGuiTableContextMenu {
         return null;
     }
 
-    private Menu addBlacklist(FilmDataMTP filmDataMTP) {
+    private Menu addBlacklist(FilmDataMTP film) {
         Menu submenuBlacklist = new Menu("Blacklist");
 
         final MenuItem miBlack = new MenuItem("Blacklist-Eintrag für den Film erstellen");
         miBlack.setOnAction(event -> BlacklistFactory.addBlackFilm());
 
         final MenuItem miBlackSenderTheme = new MenuItem("Sender und Thema direkt in die Blacklist einfügen");
-        miBlackSenderTheme.setOnAction(event -> BlacklistFactory.addBlack(filmDataMTP.getChannel(), filmDataMTP.getTheme(), ""));
+        miBlackSenderTheme.setOnAction(event -> BlacklistFactory.addBlack(film.getChannel(), film.getTheme(), ""));
         final MenuItem miBlackTheme = new MenuItem("Thema direkt in die Blacklist einfügen");
-        miBlackTheme.setOnAction(event -> BlacklistFactory.addBlack("", filmDataMTP.getTheme(), ""));
+        miBlackTheme.setOnAction(event -> BlacklistFactory.addBlack("", film.getTheme(), ""));
         final MenuItem miBlackTitle = new MenuItem("Titel direkt in die Blacklist einfügen");
-        miBlackTitle.setOnAction(event -> BlacklistFactory.addBlack("", "", filmDataMTP.getTitle()));
+        miBlackTitle.setOnAction(event -> BlacklistFactory.addBlack("", "", film.getTitle()));
 
+        miBlack.setDisable(film == null);
+        miBlackSenderTheme.setDisable(film == null);
+        miBlackTheme.setDisable(film == null);
+        miBlackTitle.setDisable(film == null);
         submenuBlacklist.getItems().addAll(miBlack, miBlackSenderTheme, miBlackTheme, miBlackTitle);
         return submenuBlacklist;
     }
 
-    private Menu addBookmark(FilmDataMTP filmDataMTP) {
+    private Menu addBookmark(FilmDataMTP film) {
         Menu submenuBookmark = new Menu("Bookmark");
         final MenuItem miBookmarkAdd = new MenuItem("neues Bookmark anlegen");
         final MenuItem miBookmarkDel = new MenuItem("Bookmark löschen");
         final MenuItem miBookmarkDelAll = new MenuItem("alle Bookmarks löschen");
 
-
-        if (filmDataMTP.isBookmark()) {
+        if (film != null && film.isBookmark()) {
             // Bookmark löschen
-            miBookmarkDel.setOnAction(a -> FilmTools.bookmarkFilm(progData, filmDataMTP, false));
+            miBookmarkDel.setOnAction(a -> FilmTools.bookmarkFilm(progData, film, false));
             miBookmarkAdd.setDisable(true);
 
         } else {
             // Bookmark anlegen
             miBookmarkDel.setDisable(true);
-            miBookmarkAdd.setOnAction(a -> FilmTools.bookmarkFilm(progData, filmDataMTP, true));
+            miBookmarkAdd.setOnAction(a -> FilmTools.bookmarkFilm(progData, film, true));
         }
         miBookmarkDelAll.setOnAction(a -> progData.bookmarks.clearAll(progData.primaryStage));
 
+        miBookmarkAdd.setDisable(film == null);
+        miBookmarkDel.setDisable(film == null);
+        miBookmarkDelAll.setDisable(film == null);
         submenuBookmark.getItems().addAll(miBookmarkAdd, miBookmarkDel, new SeparatorMenuItem(), miBookmarkDelAll);
         return submenuBookmark;
     }
 
-    private Menu copyUrl(FilmDataMTP filmDataMTP) {
+    private Menu copyUrl(FilmDataMTP film) {
         final Menu subMenuURL = new Menu("Film-URL kopieren");
+        subMenuURL.setDisable(film == null);
 
-        final String uNormal = filmDataMTP.getUrlForResolution(FilmDataMTP.RESOLUTION_NORMAL);
-        String uHd = filmDataMTP.getUrlForResolution(FilmDataMTP.RESOLUTION_HD);
-        String uLow = filmDataMTP.getUrlForResolution(FilmDataMTP.RESOLUTION_SMALL);
-        String uSub = filmDataMTP.getUrlSubtitle();
+        final String uNormal = film == null ? "" : film.getUrlForResolution(FilmDataMTP.RESOLUTION_NORMAL);
+        String uHd = film == null ? "" : film.getUrlForResolution(FilmDataMTP.RESOLUTION_HD);
+        String uLow = film == null ? "" : film.getUrlForResolution(FilmDataMTP.RESOLUTION_SMALL);
+        String uSub = film == null ? "" : film.getUrlSubtitle();
+
         if (uHd.equals(uNormal)) {
             uHd = ""; // dann gibts keine
         }
@@ -250,32 +268,33 @@ public class FilmGuiTableContextMenu {
             // HD
             if (!uHd.isEmpty()) {
                 item = new MenuItem("in HD-Auflösung");
-                item.setOnAction(a -> PSystemUtils.copyToClipboard(filmDataMTP.getUrlForResolution(FilmDataMTP.RESOLUTION_HD)));
+                item.setOnAction(a -> PSystemUtils.copyToClipboard(film.getUrlForResolution(FilmDataMTP.RESOLUTION_HD)));
                 subMenuURL.getItems().add(item);
             }
 
             // normale Auflösung, gibts immer
             item = new MenuItem("in hoher Auflösung");
-            item.setOnAction(a -> PSystemUtils.copyToClipboard(filmDataMTP.getUrlForResolution(FilmDataMTP.RESOLUTION_NORMAL)));
+            item.setOnAction(a -> PSystemUtils.copyToClipboard(film.getUrlForResolution(FilmDataMTP.RESOLUTION_NORMAL)));
             subMenuURL.getItems().add(item);
 
             // kleine Auflösung
             if (!uLow.isEmpty()) {
                 item = new MenuItem("in geringer Auflösung");
-                item.setOnAction(a -> PSystemUtils.copyToClipboard(filmDataMTP.getUrlForResolution(FilmDataMTP.RESOLUTION_SMALL)));
+                item.setOnAction(a -> PSystemUtils.copyToClipboard(film.getUrlForResolution(FilmDataMTP.RESOLUTION_SMALL)));
                 subMenuURL.getItems().add(item);
             }
 
             // Untertitel
-            if (!filmDataMTP.getUrlSubtitle().isEmpty()) {
+            if (!film.getUrlSubtitle().isEmpty()) {
                 item = new MenuItem("Untertitel-URL kopieren");
-                item.setOnAction(a -> PSystemUtils.copyToClipboard(filmDataMTP.getUrlSubtitle()));
+                item.setOnAction(a -> PSystemUtils.copyToClipboard(film.getUrlSubtitle()));
                 subMenuURL.getItems().addAll(new SeparatorMenuItem(), item);
             }
 
         } else {
             item = new MenuItem("Film-URL kopieren");
-            item.setOnAction(a -> PSystemUtils.copyToClipboard(filmDataMTP.getUrlForResolution(FilmDataMTP.RESOLUTION_NORMAL)));
+            item.setDisable(film == null);
+            item.setOnAction(a -> PSystemUtils.copyToClipboard(film.getUrlForResolution(FilmDataMTP.RESOLUTION_NORMAL)));
             subMenuURL.getItems().add(item);
         }
 
