@@ -41,12 +41,12 @@ import javafx.scene.layout.VBox;
 
 public class ConfigDialogController extends PDialogExtra {
 
-    private TabPane tabPane = new TabPane();
-    private Button btnOk = new Button("_Ok");
-    private Button btnApply = new Button("_Anwenden");
-    private String geo = ProgConfig.SYSTEM_GEO_HOME_PLACE.get();
-    private BooleanProperty blackChanged = new SimpleBooleanProperty(false);
-    private BooleanProperty diacriticChanged = new SimpleBooleanProperty(false);
+    private final TabPane tabPane = new TabPane();
+    private final Button btnOk = new Button("_Ok");
+    private final Button btnApply = new Button("_Anwenden");
+    private final String geo = ProgConfig.SYSTEM_GEO_HOME_PLACE.get();
+    private final BooleanProperty blackChanged = new SimpleBooleanProperty(false);
+    private final BooleanProperty diacriticChanged = new SimpleBooleanProperty(false);
 
     private ControllerConfig controllerConfig;
     private ControllerFilm controllerFilm;

@@ -49,10 +49,10 @@ import java.util.Date;
 
 public class DownloadGuiMedia extends VBox {
 
-    private TableView<MediaData> tableMedia = new TableView();
-    private TableView<HistoryData> tableAbo = new TableView();
-    private TextField txtSearchMedia = new TextField();
-    private TextField txtSearchAbo = new TextField();
+    private final TableView<MediaData> tableMedia = new TableView<>();
+    private final TableView<HistoryData> tableAbo = new TableView<>();
+    private final TextField txtSearchMedia = new TextField();
+    private final TextField txtSearchAbo = new TextField();
     private final Button btnConfig = new Button();
     private final Button btnDialogMedia = new Button();
     private final Button btnClear = new Button();

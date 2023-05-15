@@ -78,6 +78,12 @@ public class MTPlayerMenu extends MenuButton {
         miLog.setOnAction(event -> {
             PLogger.openLogFile();
         });
+        final MenuItem miShortCut = new MenuItem("Tastaturbefehle festlegen");
+        miShortCut.setOnAction(event -> {
+            ProgConfig.SYSTEM_CONFIG_DIALOG_TAB.setValue(0);
+            ProgConfig.SYSTEM_CONFIG_DIALOG_CONFIG.setValue(5);
+            new ConfigDialogController(ProgData.getInstance());
+        });
         final MenuItem miReset = new MenuItem("Einstellungen zurücksetzen");
         miReset.setOnAction(event -> new ResetDialogController(progData));
         final MenuItem miImportMV = new MenuItem("MediathekView Einstellungen importieren");
@@ -91,8 +97,8 @@ public class MTPlayerMenu extends MenuButton {
         miAbout.setOnAction(event -> new AboutDialogController(progData).showDialog());
 
         final Menu mHelp = new Menu("Hilfe");
-        mHelp.getItems().addAll(miUrlHelp, miLog, miReset, miImportMV,
-                miToolTip, miSearchUpdate, new SeparatorMenuItem(), miAbout);
+        mHelp.getItems().addAll(miUrlHelp, miLog, miShortCut, miReset, miImportMV,
+                miToolTip, new SeparatorMenuItem(), miSearchUpdate, miAbout);
 
         if (ProgData.debug) {
             final MenuItem miDebug = new MenuItem("Debugtools");
