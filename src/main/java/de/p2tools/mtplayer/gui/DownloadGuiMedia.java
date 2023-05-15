@@ -23,6 +23,7 @@ import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.history.HistoryData;
 import de.p2tools.mtplayer.controller.mediadb.MediaCleaningFactory;
 import de.p2tools.mtplayer.controller.mediadb.MediaData;
+import de.p2tools.mtplayer.controller.mediadb.MediaFileSize;
 import de.p2tools.mtplayer.controller.mediadb.MediaSearchPredicateFactory;
 import de.p2tools.mtplayer.gui.mediacleaning.MediaCleaningDialogController;
 import de.p2tools.mtplayer.gui.mediadialog.MediaDialogController;
@@ -226,17 +227,23 @@ public class DownloadGuiMedia extends VBox {
     }
 
     private void initTableMedia() {
-        final TableColumn<MediaData, String> pathColumn = new TableColumn<>("Pfad");
-        pathColumn.setCellValueFactory(new PropertyValueFactory<>("path"));
-        pathColumn.getStyleClass().add("special-column-style");
-        pathColumn.prefWidthProperty().bind(tableMedia.widthProperty().multiply(45.0 / 100));
-
         final TableColumn<MediaData, String> nameColumn = new TableColumn<>("Dateiname");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         nameColumn.getStyleClass().add("special-column-style");
         nameColumn.prefWidthProperty().bind(tableMedia.widthProperty().multiply(45.0 / 100));
 
-        tableMedia.getColumns().addAll(nameColumn, pathColumn);
+        final TableColumn<MediaData, String> pathColumn = new TableColumn<>("Pfad");
+        pathColumn.setCellValueFactory(new PropertyValueFactory<>("path"));
+        pathColumn.getStyleClass().add("special-column-style");
+        pathColumn.prefWidthProperty().bind(tableMedia.widthProperty().multiply(35.0 / 100));
+
+        final TableColumn<MediaData, MediaFileSize> sizeColumn = new TableColumn<>("Größe [MB]");
+        sizeColumn.prefWidthProperty().bind(tableMedia.widthProperty().multiply(15.0 / 100));
+        sizeColumn.setCellValueFactory(new PropertyValueFactory<>("size"));
+        sizeColumn.getStyleClass().add("alignCenterRightPadding_25");
+
+
+        tableMedia.getColumns().addAll(nameColumn, pathColumn, sizeColumn);
         tableMedia.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
 
