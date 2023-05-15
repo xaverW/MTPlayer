@@ -169,15 +169,19 @@ public class DownloadGuiMedia extends VBox {
                     downloadData == null ? txtSearchMedia.getText() : downloadData.getTitle(), true);
             setSearchString(true);
             setSearchString(false);
+            filter(true);// wegen Dialog, wenn vorher schon leer
+            filter(false);
         });
         btnDialogMedia.setOnMouseClicked(e -> {
             if (e.getButton() == MouseButton.SECONDARY) {
                 new MediaDialogController(
                         downloadData == null ? "" : downloadData.getTheme(),
                         downloadData == null ? txtSearchAbo.getText() : downloadData.getTitle(), false);
+                setSearchString(true);
+                setSearchString(false);
+                filter(true);// wegen Dialog, wenn vorher schon leer
+                filter(false);
             }
-            setSearchString(true);
-            setSearchString(false);
         });
 
         btnClear.setTooltip(new Tooltip("Die Suchfelder löschen"));
