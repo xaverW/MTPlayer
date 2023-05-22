@@ -55,6 +55,10 @@ public class SearchProgramUpdate {
         SEARCH_URL = "https://www.p2tools.de";
         SEARCH_URL_DOWNLOAD = "https://www.p2tools.de/download/";
 
+//        SEARCH_URL = "http://hugo.localhost:8080/";
+//        SEARCH_URL_DOWNLOAD = "http://hugo.localhost:8080/download/";
+
+
 //        if (ProgData.debug) {
 //            SEARCH_URL = "http://p2.localhost:8080";
 //            SEARCH_URL_DOWNLOAD = "http://p2.localhost:8080/download/";
