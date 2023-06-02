@@ -196,10 +196,6 @@ public class DownloadFilterController extends FilterController {
                 DownloadConstants.STATE_COMBO_ERROR);
         cboState.valueProperty().bindBidirectional(ProgConfig.FILTER_DOWNLOAD_STATE);
 
-//        cboChannel.setItems(progData.worker.getAllChannelList());
-//        cboChannel.setVisibleRowCount(25);
-//        cboChannel.valueProperty().bindBidirectional(ProgConfig.FILTER_DOWNLOAD_CHANNEL);
-
         cboAbo.setItems(progData.worker.getAllAboNamesList()); // todo evtl. nur die vorhandenen Abos
         cboAbo.valueProperty().bindBidirectional(ProgConfig.FILTER_DOWNLOAD_ABO);
     }
@@ -264,10 +260,6 @@ public class DownloadFilterController extends FilterController {
         }
 
         ProgConfig.FILTER_DOWNLOAD_CHANNEL.setValue("");
-//        mbChannel.clear();
-//        if (cboChannel.getSelectionModel() != null) {
-//            cboChannel.getSelectionModel().selectFirst();
-//        }
         if (cboAbo.getSelectionModel() != null) {
             cboAbo.getSelectionModel().selectFirst();
         }

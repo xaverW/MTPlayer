@@ -39,7 +39,6 @@ public class ProgIcons {
         ICON_BUTTON_BACKWARD("button-backward.png", 16, 16),
         ICON_BUTTON_FORWARD("button-forward.png", 16, 16),
         ICON_BUTTON_EDIT_ABO_PATH("button-edit-filter.png", 16, 16),
-        ICON_BUTTON_INFO("button-info.png", 16, 16),
         ICON_BUTTON_MENU("button-menu.png", 18, 15),
         ICON_BUTTON_QUIT("button-quit.png", 16, 16),
         ICON_BUTTON_FILE_OPEN("button-file-open.png", 16, 16),
@@ -65,7 +64,6 @@ public class ProgIcons {
         ICON_BUTTON_MOVE_BOTTOM("button-move-bottom.png", 16, 16),
 
         ICON_TOOLBAR_MENU("toolbar-menu.png", 18, 15),
-        ICON_TOOLBAR_MENU_SMALL("toolbar-menu-small.png", 15, 12),
         ICON_TOOLBAR_MENU_TOP("toolbar-menu-top.png", 32, 18),
         ICON_TOOLBAR_DOWNLOAD_CLEAN("toolbar-download-clean.png", 32, 32),
         ICON_TOOLBAR_DOWNLOAD_START("toolbar-download-starten.png", 32, 32),

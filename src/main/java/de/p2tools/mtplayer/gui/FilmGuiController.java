@@ -148,7 +148,6 @@ public class FilmGuiController extends AnchorPane {
         getSel(true, false);// damit sel gesetzt wird
         FilmTools.setFilmShown(progData, list, true);
         selectShown();
-//        PTableFactory.refreshTable(tableView);
     }
 
     public void setFilmNotShown() {

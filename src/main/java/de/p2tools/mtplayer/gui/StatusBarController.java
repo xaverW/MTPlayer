@@ -189,9 +189,6 @@ public class StatusBarController extends AnchorPane {
     }
 
     private void getMenu(ContextMenu contextMenu) {
-//        MenuItem miConfig = new MenuItem("Einstellungen ändern");
-//        miConfig.setOnAction(a -> new ConfigDialogController(ProgData.getInstance()));
-
         CheckMenuItem miOn = new CheckMenuItem("Statusleiste anzeigen");
         miOn.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_STATUS_BAR_ON);
 

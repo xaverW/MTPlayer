@@ -258,22 +258,6 @@ public class AboGuiController extends AnchorPane {
         ProgConfig.FILTER_ABO_DESCRIPTION.addListener((observable, oldValue, newValue) -> setFilter());
     }
 
-//    private void setFilter() {
-//        final String sender = ProgConfig.FILTER_ABO_CHANNEL.getValueSafe();
-//        final String type = ProgConfig.FILTER_ABO_TYPE.getValueSafe();
-//        final String name = ProgConfig.FILTER_ABO_NAME.getValueSafe().trim().toLowerCase();
-//        final String description = ProgConfig.FILTER_ABO_DESCRIPTION.get().trim().toLowerCase();
-//
-//        filteredAbos.setPredicate(abo ->
-//                (sender.isEmpty() || abo.getChannel().contains(sender)) &&
-//                        (name.isEmpty() || abo.getName().toLowerCase().contains(name)) &&
-//                        (description.isEmpty() || abo.getDescription().toLowerCase().contains(description)) &&
-//                        (type.isEmpty() ||
-//                                type.equals(AboConstants.ABO_ON) && abo.isActive() ||
-//                                type.equals(AboConstants.ABO_OFF) && !abo.isActive())
-//        );
-//    }
-
     private void setFilter() {
         Predicate<AboData> predicate = downloadData -> true;
         final String sender = ProgConfig.FILTER_ABO_CHANNEL.getValueSafe();

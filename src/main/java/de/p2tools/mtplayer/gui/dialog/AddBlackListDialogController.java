@@ -106,7 +106,6 @@ public class AddBlackListDialogController extends PDialogExtra {
     }
 
     private void initGridPane() {
-//        initSenderMenu();
         btnCount.setOnAction(a -> {
             BlacklistFactory.countHits(blackData);
             lblCount.setText(blackData.getCountHits() + "");
@@ -114,7 +113,6 @@ public class AddBlackListDialogController extends PDialogExtra {
 
         btnChannel.setOnAction(a -> {
             blackData.setChannel(channel);
-//            blackData.channelProperty().setValue("");
         });
         btnChannel.setTooltip(new Tooltip("Daten vom Film eintragen"));
         btnChannel.setGraphic(ProgIcons.Icons.ICON_BUTTON_RESET.getImageView());
@@ -178,57 +176,4 @@ public class AddBlackListDialogController extends PDialogExtra {
         gridPane.add(btnTitel, 2, row);
         gridPane.add(btnClearTitel, 3, row);
     }
-
-//    private void initSenderMenu() {
-//        mbChannel.getItems().clear();
-//        checkMenuItemsList.clear();
-//        mbChannel.getStyleClass().add("cbo-menu");
-//
-//        List<String> senderArr = new ArrayList<>();
-//        String sender = blackData.channelProperty().get();
-//        if (sender != null) {
-//            if (sender.contains(",")) {
-//                senderArr.addAll(Arrays.asList(sender.replace(" ", "").toLowerCase().split(",")));
-//            } else {
-//                senderArr.add(sender.toLowerCase());
-//            }
-//            senderArr.stream().forEach(s -> s = s.trim());
-//        }
-//
-//        MenuItem mi = new MenuItem("Auswahl löschen");
-//        mi.setOnAction(a -> clearMenuText());
-//        mbChannel.getItems().add(mi);
-//
-//        for (String s : ProgData.getInstance().worker.getAllChannelList()) {
-//            if (s.isEmpty()) {
-//                continue;
-//            }
-//            CheckMenuItem miCheck = new CheckMenuItem(s);
-//            if (senderArr.contains(s.toLowerCase())) {
-//                miCheck.setSelected(true);
-//            }
-//            miCheck.setOnAction(a -> setMenuText());
-//
-//            checkMenuItemsList.add(miCheck);
-//            mbChannel.getItems().add(miCheck);
-//        }
-//        setMenuText();
-//    }
-//
-//    private void clearMenuText() {
-//        for (CheckMenuItem cmi : checkMenuItemsList) {
-//            cmi.setSelected(false);
-//        }
-//        mbChannel.setText("");
-//    }
-//
-//    private void setMenuText() {
-//        String text = "";
-//        for (CheckMenuItem cmi : checkMenuItemsList) {
-//            if (cmi.isSelected()) {
-//                text = text + (text.isEmpty() ? "" : ", ") + cmi.getText();
-//            }
-//        }
-//        mbChannel.setText(text);
-//    }
 }

@@ -70,15 +70,10 @@ public class DownloadStartAtTimeController extends PDialogExtra {
                 "Downloads starten", true, false, DECO.NO_BORDER);
 
         this.progData = progData;
-//        this.downloadListAll.setAll(dListAll);
-//        this.downloadListSel.setAll(dListSel);
-
         //nur noch nicht gestartete in die Listen laden
         dListAll.stream().filter(DownloadData::isNotStartedOrFinished).forEach(downloadListAll::add);
         dListSel.stream().filter(DownloadData::isNotStartedOrFinished).forEach(downloadListSel::add);
-
         onlyAll = this.downloadListSel.isEmpty();
-
         init(true);
     }
 

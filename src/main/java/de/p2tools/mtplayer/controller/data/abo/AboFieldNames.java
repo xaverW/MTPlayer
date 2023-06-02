@@ -80,27 +80,5 @@ public class AboFieldNames {
             ABO_SET_DATA_ID,
             ABO_GEN_DATE};
 
-//    //ist nur noch zum Laden der alten Config!!!
-//    public static final String[] XML_NAMES = {
-//            "Nr",
-//            "aktiv",
-//            "Name",
-//            "Beschreibung",
-//            "Aufloesung",
-//            "Sender",
-//            "Thema",
-//            "Thema-exakt",
-//            "Thema-Titel",
-//            "Titel",
-//            "Irgendwo",
-//            "Zeitraum",
-//            "Mindestdauer",
-//            "Maxdauer",
-//            "Startzeit",
-//            "Zielpfad",
-//            "letztes_Abo",
-//            "Programmset",
-//            "Erstellt"};
-
     public static int MAX_ELEM = COLUMN_NAMES.length;
 }

@@ -25,6 +25,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 public class FileSizeUrl {
+    //todo ??
 
     public static String getFileSizeFromUrl(String url) {
         // liefert die Dateigröße einer URL in MB!!

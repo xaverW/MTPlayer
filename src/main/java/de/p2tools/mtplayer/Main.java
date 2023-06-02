@@ -66,9 +66,7 @@ public class Main {
 //        }
 
         checkMemory(args);
-
         MTPlayer.main(args);
-//        Application.launch(MTPlayer.class, args);
     }
 
     private void checkMemory(final String[] args) {
@@ -84,5 +82,4 @@ public class Main {
             }
         }
     }
-
 }

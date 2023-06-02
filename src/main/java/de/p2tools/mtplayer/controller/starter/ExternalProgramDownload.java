@@ -303,14 +303,6 @@ public class ExternalProgramDownload extends Thread {
                 isNewName = downloadContinueDialogController.isNewName();
             }
 
-//            DownloadContinueDialogController downloadContinueDialogController =
-//                    new DownloadContinueDialogController(ProgConfig.DOWNLOAD_DIALOG_CONTINUE_SIZE,
-//                            progData, download, false /* weiterführen */);
-//
-//            DownloadState.ContinueDownload result = downloadContinueDialogController.getResult();
-//            boolean isNewName = downloadContinueDialogController.isNewName();
-//            downloadContinueDialogController = null;
-
             switch (result) {
                 case CANCEL_DOWNLOAD:
                     // dann wars das

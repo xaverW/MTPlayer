@@ -21,11 +21,9 @@ import de.p2tools.p2lib.configfile.SettingsDirectory;
 import de.p2tools.p2lib.tools.PException;
 
 import java.io.File;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.CodeSource;
-import java.util.ArrayList;
 
 public class ProgInfos {
 
@@ -103,17 +101,6 @@ public class ProgInfos {
                 "mtplayer.lock").toString();
     }
 
-//    /**
-//     * Return the path to "mtplayer.xml"
-//     *
-//     * @return Path object to mtplayer.xml file
-//     */
-//    public static Path getSettingsFileOld() {
-//        return SettingsDirectory.getSettingsFile(ProgData.configDir,
-//                ProgConst.CONFIG_DIRECTORY,
-//                ProgConst.CONFIG_FILE_OLD);
-//    }
-
     /**
      * Return the path to "mtplayer.xml"
      *
@@ -139,19 +126,5 @@ public class ProgInfos {
 
     public static String getSettingsDirectory_String() {
         return getSettingsDirectory().toString();
-    }
-
-    /**
-     * Return the path to "mtplayer.xml_copy_" first copy exists
-     *
-     * @param xmlFilePath Path to file.
-     */
-    public void getMTPlayerXmlCopyFilePath(ArrayList<Path> xmlFilePath) {
-        for (int i = 1; i <= ProgConst.MAX_COPY_OF_BACKUPFILE; ++i) {
-            final Path path = getSettingsDirectory().resolve(ProgConst.CONFIG_FILE_COPY + i);
-            if (Files.exists(path)) {
-                xmlFilePath.add(path);
-            }
-        }
     }
 }

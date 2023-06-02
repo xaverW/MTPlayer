@@ -113,7 +113,6 @@ public class DownloadEditDialogController extends PDialogExtra {
 
         setData = download.getSetData();
         if (setData == null) {
-//            Platform.runLater(() -> new NoSetDialogController(progData, NoSetDialogController.TEXT.ABO));
             new NoSetDialogController(progData, NoSetDialogController.TEXT.ABO);
         } else {
             init(true);
@@ -255,7 +254,6 @@ public class DownloadEditDialogController extends PDialogExtra {
         for (int i = 0; i < DownloadFieldNames.MAX_ELEM; ++i) {
             text[i] = new Text(DownloadFieldNames.COLUMN_NAMES[i] + ":");
             text[i].setFont(Font.font(null, FontWeight.BOLD, -1));
-//            text[i].getStyleClass().add("downloadGuiMediaText");
 
             lblCont[i] = new Label("");
             final int ii = i;
@@ -264,7 +262,6 @@ public class DownloadEditDialogController extends PDialogExtra {
             });
 
             txt[i] = new TextField("");
-//            txt[i].getStyleClass().add("downloadGuiMediaText");
             txt[i].setEditable(false);
             txt[i].setMaxWidth(Double.MAX_VALUE);
             txt[i].setPrefWidth(Control.USE_COMPUTED_SIZE);
@@ -679,12 +676,10 @@ public class DownloadEditDialogController extends PDialogExtra {
         }
 
         //---------------------------------
-//        pHyperlinkUrlFilm.setUrl(download.filmUrlProperty().getValueSafe());
         pHyperlinkUrlFilm.setWrapText(true);
         pHyperlinkUrlFilm.setMinHeight(Region.USE_PREF_SIZE);
         pHyperlinkUrlFilm.setPadding(new Insets(5));
 
-//        pHyperlinkUrlDownload.setUrl(download.urlProperty().getValueSafe());
         pHyperlinkUrlDownload.setWrapText(true);
         pHyperlinkUrlDownload.setMinHeight(Region.USE_PREF_SIZE);
         pHyperlinkUrlDownload.setPadding(new Insets(5));

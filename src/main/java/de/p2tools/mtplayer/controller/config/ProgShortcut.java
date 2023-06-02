@@ -163,7 +163,6 @@ public class ProgShortcut {
         shortcutList.add(SHORTCUT_DOWNLOAD_UNDO_DELETE);
         shortcutList.add(SHORTCUT_DOWNLOADS_UPDATE);
         shortcutList.add(SHORTCUT_DOWNLOADS_CLEAN_UP);
-//        shortcutList.add(SHORTCUT_EXTERN_PROGRAM);
     }
 
     public static synchronized ObservableList<PShortcut> getShortcutList() {

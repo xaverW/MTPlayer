@@ -183,39 +183,4 @@ public class DownloadFactory {
         }
         return ret;
     }
-
-//    public static void checkDoubleNames(List<DownloadData> foundDownloads, List<DownloadData> downloadList) {
-//        // prüfen ob schon ein Download mit dem Zieldateinamen in der Downloadliste existiert
-//        try {
-//            final List<DownloadData> alreadyDone = new ArrayList<>();
-//
-//            foundDownloads.stream().forEach(download -> {
-//                final String oldName = download.getDestFileName();
-//                String newName = oldName;
-//                int i = 1;
-//                while (searchName(downloadList, newName) || searchName(alreadyDone, newName)) {
-//                    newName = getNewName(oldName, ++i);
-//                }
-//
-//                if (!oldName.equals(newName)) {
-//                    download.setDestFileName(newName);
-//                }
-//
-//                alreadyDone.add(download);
-//            });
-//        } catch (final Exception ex) {
-//            PLog.errorLog(303021458, ex);
-//        }
-//    }
-//
-//    private static String getNewName(String oldName, int i) {
-//        String base = FilenameUtils.getBaseName(oldName);
-//        String suff = FilenameUtils.getExtension(oldName);
-//        return base + "_" + i + "." + suff;
-//    }
-//
-//    private static boolean searchName(List<DownloadData> searchDownloadList, String name) {
-//        return searchDownloadList.stream().filter(download -> download.getDestFileName().equals(name)).findAny().isPresent();
-//    }
-
 }

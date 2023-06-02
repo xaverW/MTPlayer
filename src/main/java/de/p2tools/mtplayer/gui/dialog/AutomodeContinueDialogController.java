@@ -49,11 +49,8 @@ public class AutomodeContinueDialogController extends PDialogExtra {
         super(ProgData.getInstance().primaryStage, null, "Automodus", true, false);
 
         vBoxCont = getVBoxCont();
-//        hBoxOk = getHboxOk();
-
         btnCancel = new Button("_Programm nicht beenden");
         btnContinue = new Button("_Beenden in " + timeSeconds + " s");
-
         init(true);
     }
 

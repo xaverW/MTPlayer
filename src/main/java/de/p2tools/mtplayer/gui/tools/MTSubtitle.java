@@ -87,7 +87,6 @@ public class MTSubtitle {
     }
 
     public void writeSubtitle(DownloadData download) {
-//        String suffix;
         String urlSubtitle = download.getUrlSubtitle();
         InputStream in = null;
 
@@ -99,22 +98,13 @@ public class MTSubtitle {
             PLog.sysLog(new String[]{"Untertitel: ", download.getUrlSubtitle(),
                     "schreiben nach: ", download.getDestPath()});
 
-//            suffix = PUrlTools.getSuffixFromUrl(urlSubtitle);
-//            if (!suffix.endsWith(SUFFIX_SRT) && !suffix.endsWith(SUFFIX_VTT)) {
-//                suffix = SUFFIX_TTML;
-//            }
-
             Files.createDirectories(Paths.get(download.getDestPath()));
-
-//            urlSubtitle = download.getUrlSubtitle();
             final HttpURLConnection conn = (HttpURLConnection) new URL(urlSubtitle).openConnection();
             setupConnection(conn);
 
             if ((conn.getResponseCode()) < HttpURLConnection.HTTP_BAD_REQUEST) {
 
                 in = getContentDecoder(conn.getContentEncoding(), conn.getInputStream());
-
-//                final String strSubtitelFile = download.getFileNameWithoutSuffix() + '.' + suffix;
                 final String strSubtitelFile = getSubtitleStr(download);
                 downloadContent(in, strSubtitelFile);
 

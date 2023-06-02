@@ -100,7 +100,6 @@ public class DownloadFactoryStarts {
 
     public static synchronized void cleanUpButtonStarts(DownloadList downloadList) {
         // Starts durch Button (zB. Film abspielen) die fertig sind, löschen
-        boolean found = false;
         final Iterator<DownloadData> it = downloadList.iterator();
         while (it.hasNext()) {
             final DownloadData d = it.next();
@@ -108,12 +107,8 @@ public class DownloadFactoryStarts {
                 if (d.getSource().equals(DownloadConstants.SRC_BUTTON)) {
                     // dann ist er fertig oder abgebrochen
                     it.remove();
-                    found = true;
                 }
             }
-        }
-        if (found) {
-//            Listener.notify(Listener.EREIGNIS_START_EVENT_BUTTON, this.getClass().getSimpleName());
         }
     }
 

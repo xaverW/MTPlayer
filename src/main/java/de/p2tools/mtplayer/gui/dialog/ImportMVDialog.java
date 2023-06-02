@@ -106,7 +106,6 @@ public class ImportMVDialog extends PDialogExtra {
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
-//        gridPane.setPadding(new Insets(5, 20, 5, 20));
         vBox.getChildren().add(gridPane);
 
         txtMVPath.setText(MVFactory.getSettingsDirectory());
@@ -135,7 +134,6 @@ public class ImportMVDialog extends PDialogExtra {
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
-//        gridPane.setPadding(new Insets(5, 20, 5, 20));
         vBox.getChildren().add(gridPane);
 
         final Button btnHelp = PButton.helpButton(getStageProp(), "Konfigordner", HelpText.MV_SEARCH);
@@ -175,7 +173,6 @@ public class ImportMVDialog extends PDialogExtra {
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
-//        gridPane.setPadding(new Insets(5, 20, 5, 20));
         vBox.getChildren().add(gridPane);
 
         final Button btnHelp = PButton.helpButton(getStageProp(), "Konfigordner", HelpText.MV_IMPORT);

@@ -145,11 +145,9 @@ public class PaneDialog extends ScrollPane {
         ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.addListener((u, o, n) -> filter());
         ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_MEDIA.addListener((u, o, n) -> {
             setSearchString();
-//            filter();
         });
         ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_ABO.addListener((u, o, n) -> {
             setSearchString();
-//            filter();
         });
 
         txtSearch.setMaxWidth(Double.MAX_VALUE);

@@ -74,9 +74,6 @@ public class AboFilterController extends FilterController {
         FilterCheckRegEx fD = new FilterCheckRegEx(txtDescription);
         txtDescription.textProperty().addListener((observable, oldValue, newValue) -> fD.checkPattern());
 
-//        cboChannel.setItems(progData.worker.getChannelsForAbosList());
-//        cboChannel.valueProperty().bindBidirectional(ProgConfig.FILTER_ABO_CHANNEL);
-
         cboArt.getItems().addAll(AboConstants.ALL,
                 AboConstants.ABO_ON,
                 AboConstants.ABO_OFF);
@@ -86,9 +83,6 @@ public class AboFilterController extends FilterController {
     private void clearFilter() {
         txtName.setText("");
         txtDescription.setText("");
-//        if (cboChannel.getSelectionModel() != null) {
-//            cboChannel.getSelectionModel().selectFirst();
-//        }
         ProgConfig.FILTER_ABO_CHANNEL.setValue("");
 
         if (cboArt.getSelectionModel() != null) {

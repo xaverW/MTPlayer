@@ -98,10 +98,6 @@ public class MTPlayer extends Application {
             });
 
             primaryStage.setScene(scene);
-//            primaryStage.setOnHiding(event -> {
-//                //beim einklappen durchs Tray
-//                PGuiSize.getSizeStage(ProgConfig.SYSTEM_SIZE_GUI, ProgData.getInstance().primaryStage);
-//            });
             primaryStage.setOnCloseRequest(e -> {
                 //beim Beenden
                 e.consume();
@@ -109,7 +105,7 @@ public class MTPlayer extends Application {
             });
 
             ShortKeyFactory.addShortKey(scene);
-            
+
             //Pos setzen
             PGuiSize.setOnlyPos(ProgConfig.SYSTEM_SIZE_GUI, primaryStage);
 

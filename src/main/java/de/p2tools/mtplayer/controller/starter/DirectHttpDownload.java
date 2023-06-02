@@ -412,10 +412,6 @@ public class DirectHttpDownload extends Thread {
                 result = downloadContinueDialogController.getResult();
             }
 
-//            DownloadState.ContinueDownload result = downloadContinueDialogController.getResult();
-//            boolean isNewName = downloadContinueDialogController.isNewName();
-//            downloadContinueDialogController = null;
-
             switch (result) {
                 case CANCEL_DOWNLOAD:
                     // dann wars das

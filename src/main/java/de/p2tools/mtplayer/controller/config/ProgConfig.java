@@ -380,9 +380,6 @@ public class ProgConfig extends PDataProgConfig {
     public static String SHORTCUT_DOWNLOAD_CLEAN_UP_INIT = "CTRL+O";
     public static StringProperty SHORTCUT_DOWNLOAD_CLEAN_UP = addStrProp("SHORTCUT_DOWNLOAD_CLEAN_UP", SHORTCUT_DOWNLOAD_CLEAN_UP_INIT);
 
-    public static String SHORTCUT_EXTERN_PROGRAM_INIT = "CTRL+E";
-
-
     private static String[] PARAMETER_INFO = new String[]{
             "\"__system-parameter__xxx\" können nur im Konfigfile geändert werden",
             "\t" + "und sind auch nicht für ständige Änderungen gedacht.",

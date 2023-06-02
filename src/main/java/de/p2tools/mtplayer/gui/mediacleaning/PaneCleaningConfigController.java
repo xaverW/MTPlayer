@@ -37,10 +37,6 @@ public class PaneCleaningConfigController {
     private final ProgData progData;
     private final Stage stage;
     private boolean media;
-//    private final RadioButton rbTitel = new RadioButton("Titel des Films");
-//    private final RadioButton rbTT = new RadioButton("Thema und Titel des Films");
-//    private final RadioButton rbInTitel = new RadioButton();
-//    private final RadioButton rbInTT = new RadioButton();
 
     private final PToggleSwitch tglExact = new PToggleSwitch("Exakt den Begriff suchen");
     private final PToggleSwitch tglClean = new PToggleSwitch("Putzen");
@@ -75,72 +71,6 @@ public class PaneCleaningConfigController {
 
 
     private void initPane() {
-        //Suchbegriff
-//        ToggleGroup tg = new ToggleGroup();
-//        rbTitel.setToggleGroup(tg);
-//        rbTT.setToggleGroup(tg);
-//        switch (media ? ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_TT_MEDIA.getValue() :
-//                ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_TT_ABO.getValue()) {
-//            case ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL:
-//                rbTitel.setSelected(true);
-//                break;
-//            default:
-//                rbTT.setSelected(true);
-//                break;
-//        }
-//        rbTitel.selectedProperty().addListener((u, o, n) -> {
-//            if (n) {
-//                if (media) {
-//                    ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_TT_MEDIA.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);
-//                } else {
-//                    ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_TT_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);
-//                }
-//            }
-//        });
-//        rbTT.selectedProperty().addListener((u, o, n) -> {
-//            if (n) {
-//                if (media) {
-//                    ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_TT_MEDIA.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT);
-//                } else {
-//                    ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_TT_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT);
-//                }
-//            }
-//        });
-
-        //suchen wo
-//        ToggleGroup tgIn = new ToggleGroup();
-//        rbInTitel.setToggleGroup(tgIn);
-//        rbInTT.setToggleGroup(tgIn);
-//        rbInTitel.setText(media ? "Dateinamen" : "Titel des Abos / History-Films");
-//        rbInTT.setText(media ? "Pfad oder Dateinamen" : "Thema oder Titel des Abos / History-Films");
-//        switch (media ? ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.intValue() :
-//                ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.getValue()) {
-//            case ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL:
-//                rbInTitel.setSelected(true);
-//                break;
-//            default:
-//                rbInTT.setSelected(true);
-//                break;
-//        }
-//        rbInTitel.selectedProperty().addListener((u, o, n) -> {
-//            if (n) {
-//                if (media) {
-//                    ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);
-//                } else {
-//                    ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TITEL);
-//                }
-//            }
-//        });
-//        rbInTT.selectedProperty().addListener((u, o, n) -> {
-//            if (n) {
-//                if (media) {
-//                    ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT);
-//                } else {
-//                    ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_IN_TT);
-//                }
-//            }
-//        });
-
         tglExact.selectedProperty().bindBidirectional(media ? ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_EXACT_MEDIA : ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_EXACT_ABO);
 
         tglClean.disableProperty().bind(tglExact.selectedProperty());
@@ -200,26 +130,6 @@ public class PaneCleaningConfigController {
             h.getChildren().addAll(text, txtAbo);
             gridPane.add(h, 0, row);
         }
-
-
-//        ++row;
-//        gridPane.add(new Label("Der Suchbegriff wird gebildet aus dem:"), 0, ++row);
-//        gridPane.add(rbTitel, 0, ++row);
-//        gridPane.add(rbTT, 0, ++row);
-
-        //Suchen wo
-//        ++row;
-//        gridPane.add(new Label("Der Suchbegriff muss vorkommen im:"), 0, ++row);
-//        gridPane.add(rbInTitel, 0, ++row);
-//        gridPane.add(rbInTT, 0, ++row);
-
-        //Sucheinstellungen
-//        text = new Text("Einstellungen der Suche");
-//        text.setFont(Font.font(null, FontWeight.BOLD, -1));
-//        text.getStyleClass().add("downloadGuiMediaText");
-//        gridPane.add(new Label(""), 0, ++row);
-//        gridPane.add(text, 0, ++row);
-//
 
         gridPane.add(new Label(), 0, ++row);
         gridPane.add(tglExact, 0, ++row);

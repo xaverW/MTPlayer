@@ -91,27 +91,6 @@ public class FilmlistMTP extends Filmlist<FilmDataMTP> {
         return add(film);
     }
 
-//    private void addHash(FilmData f, HashSet<String> hash, boolean index) {
-//        if (f.arr[FilmDataXml.FILM_CHANNEL].equals(ProgConst.KIKA)) {
-//            // beim KIKA ändern sich die URLs laufend
-//            hash.add(f.arr[FilmDataXml.FILM_THEME] + f.arr[FilmDataXml.FILM_TITLE]);
-//        } else if (index) {
-//            hash.add(f.getIndex());
-//        } else {
-//            hash.add(f.getUrlForHash());
-//        }
-//    }
-
-//    public synchronized void updateList(FilmlistMTP addList,
-//                                        boolean index /* Vergleich über Index, sonst nur URL */,
-//                                        boolean replace) {
-//        // in eine vorhandene Liste soll eine andere Filmliste einsortiert werden
-//        // es werden nur Filme die noch nicht vorhanden sind, einsortiert
-//        // "ersetzen": true: dann werden gleiche (index/URL) in der Liste durch neue ersetzt
-//
-//        FilmlistFactory.updateList(this, addList, index, replace);
-//    }
-
     @Override
     public synchronized void markGeoBlocked() {
         // geblockte Filme markieren

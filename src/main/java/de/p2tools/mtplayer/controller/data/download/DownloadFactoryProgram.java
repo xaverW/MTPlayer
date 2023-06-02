@@ -88,13 +88,6 @@ public class DownloadFactoryProgram {
         // (aus TabFilme)
         String name;
         String path;
-        //bei Downloadmanager ist es auch nicht enthalten aber für die Info.txt brauchts doch den Pfad
-//        if (!setdata.progsContainPath()) {
-//            // dann können wir uns das sparen
-//            download.setDestFileName("");
-//            download.setDestPath("");
-//            return;
-//        }
 
         // ##############################################
         // Name
@@ -186,9 +179,6 @@ public class DownloadFactoryProgram {
                             case ABONAME:
                                 addPpath = abo.getName();
                                 break;
-                           /* case ABODESCRIPTION:
-                                addPpath = abo.getDescription();
-                                break;*/
                             case SENDEDATUM:
                                 addPpath = download.getFilmDate().get_yyyy_MM_dd();
                                 break;

@@ -38,13 +38,11 @@ import de.p2tools.mtplayer.gui.AboGuiController;
 import de.p2tools.mtplayer.gui.DownloadGuiController;
 import de.p2tools.mtplayer.gui.FilmGuiController;
 import de.p2tools.mtplayer.gui.chart.ChartData;
-import de.p2tools.mtplayer.gui.dialog.QuitDialogController;
 import de.p2tools.mtplayer.gui.filter.AboFilterController;
 import de.p2tools.mtplayer.gui.filter.DownloadFilterController;
 import de.p2tools.mtplayer.gui.filter.FilmFilterControllerClearFilter;
 import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.mtplayer.gui.tools.ProgTray;
-import de.p2tools.p2lib.configfile.pdata.PData;
 import de.p2tools.p2lib.guitools.pmask.PMaskerPane;
 import de.p2tools.p2lib.tools.duration.PDuration;
 import javafx.animation.Animation;
@@ -71,7 +69,6 @@ public class ProgData {
 
     // zentrale Klassen
     public StarterClass starterClass; // Klasse zum Ausführen der Programme (für die Downloads): VLC, ...
-    //    public MTColor mTColor; // verwendete Farben
     public ProgShortcut progShortcut; // verwendete Shortcuts
     public ActFilmFilterWorker actFilmFilterWorker; // gespeicherte Filterprofile
     public FilmFilterRunner filmFilterRunner;
@@ -88,10 +85,6 @@ public class ProgData {
     public FilmFilterControllerClearFilter filmFilterControllerClearFilter = null;
     public final ChartData chartData;
     public final ProgTray progTray;
-    public QuitDialogController quitDialogController = null;
-//    public BooleanProperty guiFilmIsVisible = new SimpleBooleanProperty(false);
-//    public BooleanProperty guiDownloadIsVisible = new SimpleBooleanProperty(false);
-//    public BooleanProperty guiAboIsVisible = new SimpleBooleanProperty(false);
 
     // Worker
     public Worker worker; // Liste aller Sender, Themen, ...
@@ -119,7 +112,6 @@ public class ProgData {
     public CheckForNewFilmlist checkForNewFilmlist;
 
     private ProgData() {
-//        mTColor = new MTColor();
         progShortcut = new ProgShortcut();
         replaceList = new ReplaceList();
 
@@ -127,7 +119,7 @@ public class ProgData {
         filmlist = new FilmlistMTP();
         filmlistFiltered = new FilmlistMTP();
 
-        filmListFilter = new BlackList(this, "FilmListFilter" + PData.TAGGER + "FilmTitleList");
+        filmListFilter = new BlackList(this, "FilmListFilter");
         blackList = new BlackList(this, "BlackList");
         mediaCleaningList = new MediaCleaningList(this);
         setDataList = new SetDataList();

@@ -32,21 +32,13 @@ public class BandwidthData extends ArrayList<Long> {
     private long tmpData = 0;
     private int tmpCount = 0;
 
-    private int lastIdx = 0;
-    //    private int amountDataPerPixel = 1;
-    private int secondsPerPixel = 1;
     final private ChartData chartData;
     private int dataAllSecond = ChartFactory.DATA_ALL_SECONDS;
-//    private final XYChart.Series<Number, Number> chartSeries;
 
     public BandwidthData(ChartData chartData, DownloadData download) {
         this.chartData = chartData;
         this.download = download;
-//        this.chartSeries = new XYChart.Series<>("", FXCollections.observableArrayList());
-//        this.add(0L);
-//        ChartFactory.initChartSeries(chartSeries);
         setDownloadState();
-        genData();
     }
 
     public DownloadData getDownload() {
@@ -98,7 +90,6 @@ public class BandwidthData extends ArrayList<Long> {
             //dann auch die Startzeit neu setzen
             setStartTimeNow();
         }
-        genData();
         return super.add(a);
     }
 
@@ -245,6 +236,5 @@ public class BandwidthData extends ArrayList<Long> {
     }
 
     private void genData() {
-        secondsPerPixel = chartData.getSecondsPerPixel();
     }
 }

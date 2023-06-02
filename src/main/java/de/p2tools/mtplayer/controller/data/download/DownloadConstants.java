@@ -31,11 +31,6 @@ public class DownloadConstants {
     public static final double PROGRESS_NEARLY_FINISHED = 0.995; //99,5%
     public static final double PROGRESS_FINISHED = 1; //100%
 
-    // Startnummer (Reihenfolge) der Downloads
-    public static final int DOWNLOAD_NUMBER_NOT_STARTED = Integer.MAX_VALUE;
-    // FilmNr wenn kein Film mehr gefunden wird
-    public static final int FILM_NUMBER_NOT_FOUND = Integer.MAX_VALUE;
-
     // Stati
     public static final int STATE_INIT = 0; // noch nicht gestartet
     public static final int STATE_STOPPED = 1; // gestartet und wieder abgebrochen

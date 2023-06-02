@@ -90,7 +90,6 @@ public class BlackList extends SimpleListProperty<BlackData> implements PDataLis
         }
     }
 
-
     @Override
     public synchronized boolean add(BlackData b) {
         b.setNo(no++);

@@ -62,7 +62,6 @@ public class FilmGuiInfoController extends VBox {
         btnReset.setVisible(false);
 
         lblTheme.setFont(Font.font(null, FontWeight.BOLD, -1));
-//        lblTitle.setFont(Font.font(null, FontWeight.BOLD, -1));
         hBoxUrl.setAlignment(Pos.CENTER_LEFT);
         lblUrl.setMinWidth(Region.USE_PREF_SIZE);
 

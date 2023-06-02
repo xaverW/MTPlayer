@@ -385,14 +385,6 @@ public class AboEditDialogController extends AboDialogController {
                 hBox.getChildren().addAll(chkStartTime, pTimePicker, hb);
                 gridPane.add(hBox, 1, grid);
                 break;
-//            case AboFieldNames.ABO_THEME_NO:
-//            case AboFieldNames.ABO_THEME_TITLE_NO:
-//            case AboFieldNames.ABO_TITLE_NO:
-//            case AboFieldNames.ABO_SOMEWHERE_NO:
-//                FilterCheckRegEx fT = new FilterCheckRegEx(txt[i]);
-//                txt[i].textProperty().addListener((observable, oldValue, newValue) -> fT.checkPattern());
-//                setDefaultTxt(i, grid);
-//                break;
             default:
                 setDefaultTxt(i, grid);
                 break;

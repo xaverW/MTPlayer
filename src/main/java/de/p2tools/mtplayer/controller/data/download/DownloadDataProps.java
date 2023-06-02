@@ -57,7 +57,6 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
     private final StringProperty filmUrl = new SimpleStringProperty(""); //in normaler Auflösung
     private final StringProperty historyUrl = new SimpleStringProperty("");
     private final StringProperty url = new SimpleStringProperty(""); //in der gewählte Auflösung
-    //    private final StringProperty urlRtmp = new SimpleStringProperty("");
     private final StringProperty urlSubtitle = new SimpleStringProperty("");
 
     private final StringProperty setDataId = new SimpleStringProperty("");
@@ -81,7 +80,7 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
     public final Property[] properties = {no, filmNr, aboName, channel, theme, title,
             state, progress, remaining, bandwidth, downloadSize,
             filmDate, time, durationMinute,
-            hd, ut, geoBlocked, filmUrl, historyUrl, url, /*urlRtmp,*/ urlSubtitle,
+            hd, ut, geoBlocked, filmUrl, historyUrl, url, urlSubtitle,
             setDataId, program, programCall, programCallArray, programRestart, programDownloadmanager, startTime,
             destFileName, destPath, destPathFile,
             type, source, placedBack, infoFile, subtitle};
@@ -408,18 +407,6 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
     public void setUrl(String url) {
         this.url.set(url);
     }
-
-//    public String getUrlRtmp() {
-//        return urlRtmp.get();
-//    }
-//
-//    public StringProperty urlRtmpProperty() {
-//        return urlRtmp;
-//    }
-//
-//    public void setUrlRtmp(String urlRtmp) {
-//        this.urlRtmp.set(urlRtmp);
-//    }
 
     public String getUrlSubtitle() {
         return urlSubtitle.get();

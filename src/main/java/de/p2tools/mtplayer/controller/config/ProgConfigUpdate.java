@@ -45,7 +45,6 @@ public class ProgConfigUpdate {
                 }
             });
         }
-
         setUpdateDone();
     }
 }

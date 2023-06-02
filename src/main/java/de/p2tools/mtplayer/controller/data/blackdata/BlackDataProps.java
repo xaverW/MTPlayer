@@ -20,7 +20,6 @@ import de.p2tools.p2lib.configfile.config.Config;
 import de.p2tools.p2lib.configfile.config.Config_boolProp;
 import de.p2tools.p2lib.configfile.config.Config_lDate;
 import de.p2tools.p2lib.configfile.config.Config_stringProp;
-import de.p2tools.p2lib.configfile.pdata.PData;
 import de.p2tools.p2lib.configfile.pdata.PDataSample;
 import de.p2tools.p2lib.tools.date.PLDateFactory;
 import javafx.beans.property.BooleanProperty;
@@ -55,7 +54,7 @@ public class BlackDataProps extends PDataSample<BlackDataProps> {
         list.add(new Config_stringProp("theme", theme));
         list.add(new Config_boolProp("themeExact", themeExact));
         list.add(new Config_stringProp("title", title));
-        list.add(new Config_stringProp("themeTitle" + PData.TAGGER + "bithemeTitletrate", themeTitle));
+        list.add(new Config_stringProp("themeTitle", themeTitle));
         list.add(new Config_boolProp("active", active));
         list.add(new Config_lDate("genDate", PLDateFactory.toString(genDate)) {
             @Override

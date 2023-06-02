@@ -65,12 +65,6 @@ public class ProgColorList extends PColorList {
     public static final PColorData BLACK_DATA_SWITCHED_OFF = addNewKey("BLACK_DATA_SWITCHED_OFF",
             Color.rgb(225, 225, 225), Color.rgb(109, 109, 109), "Tabelle Blacklist, ausgeschaltet");
 
-    // Filter wenn RegEx
-//    public static final PColorData FILTER_REGEX = addNewKey("COLOR_FILTER_REGEX",
-//            Color.rgb(225, 255, 225), Color.rgb(128, 179, 213), "Filter ist RegEx");
-//    public static final PColorData FILTER_REGEX_ERROR = addNewKey("COLOR_FILTER_REGEX_ERROR",
-//            Color.rgb(255, 230, 230), Color.rgb(170, 0, 0), "Filter ist Regex, fehlerhaft");
-
     // DialogDownload
     public static final PColorData DOWNLOAD_NAME_ERROR = addNewKey("COLOR_DOWNLOAD_NAME_ERROR",
             Color.rgb(255, 233, 233), Color.rgb(200, 183, 183), "Download, Dateiname ist fehlerhaft");
@@ -129,8 +123,4 @@ public class ProgColorList extends PColorList {
             PLog.errorLog(956410210, "setColorData");
         }
     }
-
-//    public static PData getConfigsData() {
-//        return PColorList.getPData();
-//    }
 }

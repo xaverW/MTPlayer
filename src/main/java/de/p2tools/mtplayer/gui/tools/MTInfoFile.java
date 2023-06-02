@@ -70,12 +70,6 @@ public class MTInfoFile {
             br.write(DownloadFieldNames.DOWNLOAD_URL + P2LibConst.LINE_SEPARATOR);
             br.write(download.getUrl());
             br.write(P2LibConst.LINE_SEPARATORx2);
-//            if (!download.getUrlRtmp().isEmpty()
-//                    && !download.getUrlRtmp().equals(download.getUrl())) {
-//                br.write(DownloadFieldNames.COLUMN_NAMES[DownloadFieldNames.DOWNLOAD_URL_RTMP_NO] + P2LibConst.LINE_SEPARATOR);
-//                br.write(download.getUrlRtmp());
-//                br.write(P2LibConst.LINE_SEPARATORx2);
-//            }
 
             if (download.getFilm() != null) {
                 int anz = 0;

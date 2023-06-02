@@ -47,9 +47,7 @@ public class SetDataProps extends SetDataXml {
     private IntegerProperty maxSize = new SimpleIntegerProperty(0);
     private IntegerProperty maxField = new SimpleIntegerProperty(0);
     private StringProperty resolution = new SimpleStringProperty(FilmDataMTP.RESOLUTION_NORMAL);
-    //    private StringProperty adOn = new SimpleStringProperty("");
     private StringProperty description = new SimpleStringProperty("");
-    //    private StringProperty infoUrl = new SimpleStringProperty("");
     private BooleanProperty infoFile = new SimpleBooleanProperty(false);
     private BooleanProperty subtitle = new SimpleBooleanProperty(false);
 
@@ -87,9 +85,7 @@ public class SetDataProps extends SetDataXml {
         list.add(new Config_intProp("maxSize", maxSize));
         list.add(new Config_intProp("maxField", maxField));
         list.add(new Config_stringProp("resolution", resolution));
-//        list.add(new Config_stringProp("adOn", adOn));
         list.add(new Config_stringProp("description", description));
-//        list.add(new Config_stringProp("infoUrl", infoUrl));
         list.add(new Config_boolProp("infoFile", infoFile));
         list.add(new Config_boolProp("subtitle", subtitle));
         list.add(new Config_boolProp("genAboSubDir", genAboSubDir));
@@ -267,18 +263,6 @@ public class SetDataProps extends SetDataXml {
         this.resolution.set(resolution);
     }
 
-//    public String getAdOn() {
-//        return adOn.get();
-//    }
-//
-//    public StringProperty adOnProperty() {
-//        return adOn;
-//    }
-//
-//    public void setAdOn(String adOn) {
-//        this.adOn.set(adOn);
-//    }
-
     public String getDescription() {
         return description.get();
     }
@@ -290,18 +274,6 @@ public class SetDataProps extends SetDataXml {
     public void setDescription(String description) {
         this.description.set(description);
     }
-
-//    public String getInfoUrl() {
-//        return infoUrl.get();
-//    }
-//
-//    public StringProperty infoUrlProperty() {
-//        return infoUrl;
-//    }
-//
-//    public void setInfoUrl(String infoUrl) {
-//        this.infoUrl.set(infoUrl);
-//    }
 
     public boolean isInfoFile() {
         return infoFile.get();
@@ -358,63 +330,6 @@ public class SetDataProps extends SetDataXml {
     public String getAboSubDir_ENSubDir_Name() {
         return getAboSubDir_ENSubDir().getName();
     }
-
-//    public void setPropsFromXml() {
-//        setId(arr[PROGRAMSET_ID]);
-//        setVisibleName(arr[PROGRAMSET_VISIBLE_NAME]);
-//        setPrefix(arr[PROGRAMSET_PREFIX_DIRECT]);
-//        setSuffix(arr[PROGRAMSET_SUFFIX_DIRECT]);
-//
-//        setColorFromHex(arr[PROGRAMSET_COLOR]);
-//
-//        int aboPath;
-//        try {
-//            aboPath = Integer.parseInt(arr[PROGRAMSET_ABO_UNTERORDNER]);
-//        } catch (final Exception ex) {
-//            aboPath = 0;
-//        }
-//        setAboSubDir_ENSubDirNo(aboPath);
-//
-//        setDestPath(arr[PROGRAMSET_ZIEL_PFAD]);
-//        setDestName(arr[PROGRAMSET_ZIEL_DATEINAME]);
-//        setGenAboSubDir(Boolean.parseBoolean(arr[PROGRAMSET_ABO_SUBDIR_ANLEGEN]));
-//        setPlay(Boolean.parseBoolean(arr[PROGRAMSET_IST_ABSPIELEN]));
-//        setSave(Boolean.parseBoolean(arr[PROGRAMSET_IST_SPEICHERN]));
-//        setButton(Boolean.parseBoolean(arr[PROGRAMSET_IST_BUTTON]));
-//        setAbo(Boolean.parseBoolean(arr[PROGRAMSET_IST_ABO]));
-//
-//        setMaxFromXml();
-//
-//        setResolution(arr[PROGRAMSET_AUFLOESUNG]);
-////        setAdOn(arr[PROGRAMSET_ADD_ON]);
-//        setDescription(arr[PROGRAMSET_BESCHREIBUNG]);
-//        setInfoUrl(arr[PROGRAMSET_INFO_URL]);
-//
-//        setInfoFile(Boolean.parseBoolean(arr[PROGRAMSET_INFODATEI]));
-//        setSubtitle(Boolean.parseBoolean(arr[PROGRAMSET_SUBTITLE]));
-//    }
-
-//    private void setMaxFromXml() {
-//        int maxSize;
-//        int maxField;
-//        try {
-//            maxSize = Integer.parseInt(arr[PROGRAMSET_MAX_LAENGE]);
-//            maxField = Integer.parseInt(arr[PROGRAMSET_MAX_LAENGE_FIELD]);
-//        } catch (final Exception ex) {
-//            maxSize = 0;
-//            maxField = 0;
-//        }
-//        setMaxSize(maxSize);
-//        setMaxField(maxField);
-//    }
-//
-//    private void setColorFromHex(String hex) {
-//        try {
-//            setColor(Color.web(hex));
-//        } catch (Exception ex) {
-//
-//        }
-//    }
 
     @Override
     public String toString() {

@@ -72,7 +72,6 @@ public class AboDialogController extends PDialogExtra {
     final TextArea textAreaSomewhere = new PTextAreaIgnoreTab(false, true);
 
     final PMenuButton mbChannel;
-    //    final ArrayList<CheckMenuItem> checkMenuItemsList = new ArrayList<>();
     final PTimePicker pTimePicker = new PTimePicker();
     final CheckBox chkStartTime = new CheckBox();
 

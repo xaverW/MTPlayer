@@ -166,13 +166,9 @@ public class FilmInfoDialogController extends PDialogExtra {
                 case FilmDataXml.FILM_DATE_LONG:
                 case FilmDataXml.FILM_PLAY:
                 case FilmDataXml.FILM_RECORD:
-//                case FilmDataXml.FILM_URL_AUTH:
                 case FilmDataXml.FILM_URL_HD:
                 case FilmDataXml.FILM_URL_HISTORY:
                 case FilmDataXml.FILM_URL_SMALL:
-//                case FilmDataXml.FILM_URL_RTMP:
-//                case FilmDataXml.FILM_URL_RTMP_HD:
-//                case FilmDataXml.FILM_URL_RTMP_SMALL:
                 case FilmDataXml.FILM_URL_SUBTITLE:
                     // bis hier nicht anzeigen
                     break;

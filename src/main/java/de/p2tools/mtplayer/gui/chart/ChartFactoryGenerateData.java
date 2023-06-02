@@ -24,8 +24,6 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 
 public class ChartFactoryGenerateData {
-//    private static int runChart = 0;
-//    private static long[] bandwidthSumArr = new long[ChartFactory.MAX_CHART_DATA_PER_SCREEN];
 
     private ChartFactoryGenerateData() {
     }
@@ -133,11 +131,7 @@ public class ChartFactoryGenerateData {
         } else {
             lower = MIN;
         }
-//        upper = Math.ceil(chartData.getCountMinutes());
         upper = chartData.getCountProgRunningTimeMinutes();
-
-//        xAxis.setUpperBound(upper);
-//        xAxis.setLowerBound(lower);
 
         double res = 1.0 * secondsPerPixel / 60.0;
         if (xAxis.getUpperBound() < upper || xAxis.getUpperBound() > upper + res) {

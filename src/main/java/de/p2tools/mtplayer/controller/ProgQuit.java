@@ -102,7 +102,5 @@ public class ProgQuit {
         progData.filmGuiController.saveTable();
         progData.downloadGuiController.saveTable();
         progData.aboGuiController.saveTable();
-        // Hauptfenster
-//        PGuiSize.getSizeStage(ProgConfig.SYSTEM_SIZE_GUI, ProgData.getInstance().primaryStage);
     }
 }

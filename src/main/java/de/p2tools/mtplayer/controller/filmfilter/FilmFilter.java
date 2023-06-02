@@ -182,7 +182,6 @@ public final class FilmFilter extends FilmFilterProps {
                 setTxtFilterChange();
             }
 
-//            PDebugLog.sysLog("themeProperty: " + themeProperty().getValue());
 //            // todo -> beim Ändern der "Thema" liste wird das 3xaufgerufen
 //            if (!themeExactProperty().getValue()) {
 //                PDebugLog.sysLog("Pause themeProperty");

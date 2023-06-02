@@ -81,20 +81,6 @@ public class FilmFilterEditDialog extends PDialogExtra {
         tglThemeExact.selectedProperty().addListener((observable, oldValue, newValue) ->
                 progData.actFilmFilterWorker.getActFilterSettings().themeExactProperty().setValue(!newValue));
 
-//        //javaBug
-//        //ThemeExact
-//        //https://bugs.openjdk.java.net/browse/JDK-8116061
-//        tglThemeExact.disableProperty().bind(ProgConfig.SYSTEM_FILTER_RETURN);
-//        if (ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
-//            tglThemeExact.setSelected(false);
-//        }
-//        ProgConfig.SYSTEM_FILTER_RETURN.addListener((u, o, n) -> {
-//            if (ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
-//                tglThemeExact.setSelected(false);
-//            }
-//        });
-
-
         v.getChildren().add(tglThemeExact);
         vBox.getChildren().add(v);
 
@@ -191,7 +177,6 @@ public class FilmFilterEditDialog extends PDialogExtra {
 
         gridPane.add(new Label("In Textfeldern:"), 0, ++row, 2, 1);
         gridPane.add(cbkReturn, 0, ++row, 2, 1);
-//        gridPane.add(new Label("Suchbeginn erst bei Return-Eingabe"), 1, row, 2, 1);
 
         gridPane.getColumnConstraints().addAll(
                 PColumnConstraints.getCcPrefSize(),
