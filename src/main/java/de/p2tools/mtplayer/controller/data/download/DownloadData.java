@@ -64,10 +64,8 @@ public final class DownloadData extends DownloadDataProps {
 
         if (resolution.isEmpty()) {
             setUrl(film.getUrlForResolution(abo != null ? abo.getResolution() : setData.getResolution()));
-//            setUrlRtmp(film.getUrlFlvstreamerForResolution(abo != null ? abo.getResolution() : setdata.getResolution()));
         } else {
             setUrl(film.getUrlForResolution(resolution));
-//            setUrlRtmp(film.getUrlFlvstreamerForResolution(resolution));
         }
 
         // und jetzt noch die Dateigröße für die entsp. URL

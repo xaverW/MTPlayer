@@ -49,7 +49,7 @@ public class PathPane {
     private int row = 0;
     private final Stage stage;
 
-    private enum PLAYER {VLC, /*FLV,*/ FFMPEG}
+    private enum PLAYER {VLC, FFMPEG}
 
     private class UnBind {
         private TextField txt;
@@ -96,9 +96,6 @@ public class PathPane {
                 addPlayer(PLAYER.VLC);
                 gridPane.add(new Label(" "), 0, ++row);
                 ++row;
-//                addPlayer(PLAYER.FLV);
-//                gridPane.add(new Label(" "), 0, ++row);
-//                ++row;
                 addPlayer(PLAYER.FFMPEG);
         }
 

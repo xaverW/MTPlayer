@@ -70,7 +70,7 @@ public class ProgData {
     public static String filmListUrl = ""; //URL von der die Filmliste geladen werde soll
 
     // zentrale Klassen
-    public StarterClass starterClass; // Klasse zum Ausführen der Programme (für die Downloads): VLC, flvstreamer, ...
+    public StarterClass starterClass; // Klasse zum Ausführen der Programme (für die Downloads): VLC, ...
     //    public MTColor mTColor; // verwendete Farben
     public ProgShortcut progShortcut; // verwendete Shortcuts
     public ActFilmFilterWorker actFilmFilterWorker; // gespeicherte Filterprofile

@@ -200,7 +200,6 @@ public class DirectHttpDownload extends Thread {
                 download.setStateError();
             }
         } else {
-//            System.out.println("????????????????");
             download.stopDownload();// nochmal da RUNTIME_EXEC ja weiter läuft
         }
     }

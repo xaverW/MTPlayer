@@ -1,105 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Mediathek>
-	
-!--Liste aller SetData-->
-<SetDataList>
-	<SetData>
-		<id>Speichern</id>
-        <visibleName>Speichern</visibleName>
-		<prefix>http</prefix>
-		<suffix>mp4,mp3,m4v,flv,m4a</suffix>
-		<destPath>ZIELPFAD</destPath>
-		<destName>%t-%T-%z</destName>
-		<play>false</play>
-		<save>true</save>
-		<button>true</button>
-		<abo>true</abo>
-		<maxSize>0</maxSize>
-		<maxField>25</maxField>
-		<description>Standardset zum Speichern der Filme</description>
-		<ProgramList>
-			<Program>
-				<name>ffmpeg</name>
-				<destName>%t-%T-%Z.mp4</destName>
-				<progPath>PFAD_FFMPEG</progPath>
-				<progSwitch>-user_agent "Mozilla/5.0" -i %f -c copy -bsf:a aac_adtstoasc **</progSwitch>
-				<prefix>http</prefix>
-				<suffix>m3u8</suffix>
-				<restart>false</restart>
-				<downManager>false</downManager>
-			</Program>
-			<Program>
-				<name>VLC</name>
-				<destName>%t-%T-%Z.ts</destName>
-				<progPath>PFAD_VLC</progPath>
-				<progSwitch>%f :sout=#standard{access=file,mux=ts,dst=**} -I dummy --play-and-exit :http-user-agent="Mozilla/5.0"</progSwitch>
-				<restart>false</restart>
-				<downManager>false</downManager>
-			</Program>
-		</ProgramList>
-	</SetData>
 
-	<SetData>
-		<id>Abspielen</id>
-		<visibleName>Abspielen</visibleName>
-		<play>true</play>
-		<save>false</save>
-		<button>true</button>
-		<abo>false</abo>
-		<maxSize>0</maxSize>
-		<maxField>25</maxField>
-		<description>Standardset zum direkten Abspielen der Filme</description>
-		<ProgramList>
-			<Program>
-				<name>Vlc</name>
-				<progPath>PFAD_VLC</progPath>
-				<progSwitch>%f --play-and-exit :http-user-agent="Mozilla/5.0"</progSwitch>
-			</Program>
-		</ProgramList>
-	</SetData>
-    
-   
-   	<SetData>
-		<id>Google: Titel suchen</id>
-		<visibleName>Google: Titel suchen</visibleName>
-		<color>#002fbeff</color>
-		<play>false</play>
-		<save>false</save>
-		<button>true</button>
-		<abo>false</abo>
-		<maxSize>0</maxSize>
-		<maxField>0</maxField>
-		<description>Set zum Suchen des Titels in Google</description>
-		<ProgramList>
-			<Program>
-				<name>Firefox</name>
-				<progPath>firefox</progPath>
-				<progSwitch>http://www.google.de/search?q='%T'</progSwitch>
-				<restart>false</restart>
-			</Program>
-		</ProgramList>
+    !--Liste aller SetData-->
+    <SetDataList>
+        <SetData>
+            <id>Speichern</id>
+            <visibleName>Speichern</visibleName>
+            <prefix>http</prefix>
+            <suffix>mp4,mp3,m4v,m4a</suffix>
+            <destPath>ZIELPFAD</destPath>
+            <destName>%t-%T-%z</destName>
+            <play>false</play>
+            <save>true</save>
+            <button>true</button>
+            <abo>true</abo>
+            <maxSize>0</maxSize>
+            <maxField>25</maxField>
+            <description>Standardset zum Speichern der Filme</description>
+            <ProgramList>
+                <Program>
+                    <name>ffmpeg</name>
+                    <destName>%t-%T-%Z.mp4</destName>
+                    <progPath>PFAD_FFMPEG</progPath>
+                    <progSwitch>-user_agent "Mozilla/5.0" -i %f -c copy -bsf:a aac_adtstoasc **</progSwitch>
+                    <prefix>http</prefix>
+                    <suffix>m3u8</suffix>
+                    <restart>false</restart>
+                    <downManager>false</downManager>
+                </Program>
+                <Program>
+                    <name>VLC</name>
+                    <destName>%t-%T-%Z.ts</destName>
+                    <progPath>PFAD_VLC</progPath>
+                    <progSwitch>%f :sout=#standard{access=file,mux=ts,dst=**} -I dummy --play-and-exit
+                        :http-user-agent="Mozilla/5.0"
+                    </progSwitch>
+                    <restart>false</restart>
+                    <downManager>false</downManager>
+                </Program>
+            </ProgramList>
         </SetData>
-		
-		
-		<SetData>
-		<id>Youtube: Titel suchen</id>
-		<visibleName>Youtube: Titel suchen</visibleName>
-		<color>#002fbeff</color>
-		<play>false</play>
-		<save>false</save>
-		<button>true</button>
-		<abo>false</abo>
-		<maxSize>0</maxSize>
-		<maxField>0</maxField>
-		<description>Set zum Suchen des Titels in Youtube</description>
-		<ProgramList>
-			<Program>
-				<name>Firefox</name>
-				<progPath>firefox</progPath>
-				<progSwitch>https://www.youtube.com/results?search_query='%T'</progSwitch>
-				<restart>false</restart>
-			</Program>
-		</ProgramList>
+
+        <SetData>
+            <id>Abspielen</id>
+            <visibleName>Abspielen</visibleName>
+            <play>true</play>
+            <save>false</save>
+            <button>true</button>
+            <abo>false</abo>
+            <maxSize>0</maxSize>
+            <maxField>25</maxField>
+            <description>Standardset zum direkten Abspielen der Filme</description>
+            <ProgramList>
+                <Program>
+                    <name>Vlc</name>
+                    <progPath>PFAD_VLC</progPath>
+                    <progSwitch>%f --play-and-exit :http-user-agent="Mozilla/5.0"</progSwitch>
+                </Program>
+            </ProgramList>
+        </SetData>
+
+
+        <SetData>
+            <id>Google: Titel suchen</id>
+            <visibleName>Google: Titel suchen</visibleName>
+            <color>#002fbeff</color>
+            <play>false</play>
+            <save>false</save>
+            <button>true</button>
+            <abo>false</abo>
+            <maxSize>0</maxSize>
+            <maxField>0</maxField>
+            <description>Set zum Suchen des Titels in Google</description>
+            <ProgramList>
+                <Program>
+                    <name>Firefox</name>
+                    <progPath>firefox</progPath>
+                    <progSwitch>http://www.google.de/search?q='%T'</progSwitch>
+                    <restart>false</restart>
+                </Program>
+            </ProgramList>
+        </SetData>
+
+
+        <SetData>
+            <id>Youtube: Titel suchen</id>
+            <visibleName>Youtube: Titel suchen</visibleName>
+            <color>#002fbeff</color>
+            <play>false</play>
+            <save>false</save>
+            <button>true</button>
+            <abo>false</abo>
+            <maxSize>0</maxSize>
+            <maxField>0</maxField>
+            <description>Set zum Suchen des Titels in Youtube</description>
+            <ProgramList>
+                <Program>
+                    <name>Firefox</name>
+                    <progPath>firefox</progPath>
+                    <progSwitch>https://www.youtube.com/results?search_query='%T'</progSwitch>
+                    <restart>false</restart>
+                </Program>
+            </ProgramList>
         </SetData>
     </SetDataList>
 </Mediathek>

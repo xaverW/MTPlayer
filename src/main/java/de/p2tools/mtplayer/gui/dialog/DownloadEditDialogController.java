@@ -336,9 +336,7 @@ public class DownloadEditDialogController extends PDialogExtra {
             res = FilmDataMTP.RESOLUTION_NORMAL;
         }
         download.setUrl(download.getFilm().getUrlForResolution(res));
-//        download.setUrlRtmp(download.getFilm().getUrlFlvstreamerForResolution(res));
         txt[DownloadFieldNames.DOWNLOAD_URL_NO].setText(download.getUrl());
-//        txt[DownloadFieldNames.DOWNLOAD_URL_RTMP_NO].setText(download.getUrlRtmp());
         setHyperLink();
 
         final String size;

@@ -203,7 +203,6 @@ public class CellDownloadState<S, T> extends TableCell<S, T> {
                 currentRow.setStyle("");
                 break;
             case DownloadConstants.STATE_STARTED_WAITING:
-//                System.out.println(ProgColorList.DOWNLOAD_WAIT.getCssBackground());
                 currentRow.setStyle(ProgColorList.DOWNLOAD_WAIT.getCssBackground());
                 break;
             case DownloadConstants.STATE_STARTED_RUN:

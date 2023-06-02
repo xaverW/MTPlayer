@@ -384,12 +384,8 @@ public class FilmGuiController extends AnchorPane {
                 FilmDataMTP f = tableView.getItems().get(i);
                 if (f.isWasHere()) {
                     //dann haben wir den ersten
-//                    System.out.println("============================");
-//                    System.out.println("--> " + f.getNo());
-
                     tableView.getSelectionModel().select(f);
                     tableView.scrollTo(f);
-//                    tableView.requestFocus();
                     found = true;
                     break;
                 }
@@ -399,7 +395,6 @@ public class FilmGuiController extends AnchorPane {
                 // dann wurde der erste Tabelleneintrag entfernt
                 tableView.getSelectionModel().select(0);
                 tableView.scrollTo(0);
-//                tableView.requestFocus();
             }
         });
     }

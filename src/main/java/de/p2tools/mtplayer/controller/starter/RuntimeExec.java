@@ -37,9 +37,6 @@ public class RuntimeExec {
     Thread clearIn;
     Thread clearOut;
     private Process process = null;
-    private static int procNr = 0;
-    private static final Pattern patternFlvstreamer = Pattern.compile("([0-9]*.[0-9]{1}%)");
-    private static final Pattern patternFlvstreamerComplete = Pattern.compile("Download complete");
     private static final Pattern patternFfmpeg = Pattern.compile("(?<=  Duration: )[^,]*"); // Duration: 00:00:30.28, start: 0.000000, bitrate: N/A
     private static final Pattern patternTime = Pattern.compile("(?<=time=)[^ ]*");  // frame=  147 fps= 17 q=-1.0 size=    1588kB time=00:00:05.84 bitrate=2226.0kbits/s
     private static final Pattern patternSize = Pattern.compile("(?<=size=)[^k]*");  // frame=  147 fps= 17 q=-1.0 size=    1588kB time=00:00:05.84 bitrate=2226.0kbits/s
@@ -53,7 +50,6 @@ public class RuntimeExec {
     private String[] arrProgCallArray = null;
     private String strProgCallArray = "";
     private PlayerMessage playerMessage = new PlayerMessage();
-    private boolean flvstreamer = false;
 
     public RuntimeExec(DownloadData download) {
         this.download = download;
@@ -95,12 +91,6 @@ public class RuntimeExec {
                 process = Runtime.getRuntime().exec(strProgCall);
             }
 
-            if (strProgCall.contains("flvstreamer")) {
-                PLog.sysLog("=====================");
-                PLog.sysLog("flvstreamer");
-                PLog.sysLog("=====================");
-                flvstreamer = true;
-            }
             clearIn = new Thread(new ClearInOut(INPUT, process));
             clearOut = new Thread(new ClearInOut(ERROR, process));
 
@@ -165,29 +155,7 @@ public class RuntimeExec {
         }
 
         private void GetPercentageFromErrorStream(String input) {
-            // by: siedlerchr für den flvstreamer und rtmpdump
             Matcher matcher;
-            matcher = patternFlvstreamer.matcher(input);
-            if (flvstreamer && matcher.find()) {
-                try {
-                    String percent = matcher.group();
-                    percent = percent.substring(0, percent.length() - 1);
-                    final double d = Double.parseDouble(percent);
-                    notifyDouble(d);
-                } catch (final Exception ex) {
-                    if (ProgData.debug) {
-                        PLog.errorLog(954120125, input);
-                    }
-                }
-                return;
-            }
-            matcher = patternFlvstreamerComplete.matcher(input);
-            if (flvstreamer && matcher.find()) {
-                // dann ist der Download fertig, zur sicheren Erkennung von 100%
-                notifyDouble(100);
-                return;
-            }
-
             // für ffmpeg
             // ffmpeg muss dazu mit dem Parameter -i gestartet werden:
             // -i %f -acodec copy -vcodec copy -y **

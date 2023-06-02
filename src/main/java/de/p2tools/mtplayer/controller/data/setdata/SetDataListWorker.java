@@ -28,13 +28,6 @@ import java.util.Collection;
 public class SetDataListWorker extends SimpleListProperty<SetData> implements PDataList<SetData> {
     // Liste aller Programmsets
     public static final String TAG = "SetDataList";
-//    public static final String PATTERN_PATH_DEST = "ZIELPFAD";
-//    public static final String PATTERN_PATH_VLC = "PFAD_VLC";
-//    public static final String PATTERN_PATH_FLV = "PFAD_FLVSTREAMER";
-//    public static final String PATTERN_PATH_FFMPEG = "PFAD_FFMPEG";
-//    public static final String PATTERN_PATH_SCRIPT = "PFAD_SCRIPT";
-//    public String version = "";
-
     private BooleanProperty listChanged = new SimpleBooleanProperty(true);
 
     public SetDataListWorker() {

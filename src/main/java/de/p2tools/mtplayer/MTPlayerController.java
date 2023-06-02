@@ -270,9 +270,6 @@ public class MTPlayerController extends StackPane {
 
     public void setFocus() {
         Node node = stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1);
-        if (node == null) {
-            System.out.println("=============");
-        }
         if (paneShown == PANE_SHOWN.FILM) {
             progData.filmGuiController.isShown();
         }

@@ -261,7 +261,6 @@ public class DownloadFactoryDelFilmFile {
             try {
                 Thread.sleep(1000);
             } catch (Exception ignore) {
-//                System.out.println("================>");
             }
 
             String delFile = "";

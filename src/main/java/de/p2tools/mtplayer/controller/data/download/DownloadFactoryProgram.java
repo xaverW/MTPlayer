@@ -289,12 +289,6 @@ public class DownloadFactoryProgram {
             res = "HD";
         } else if (download.getUrl().equals(film.getUrlForResolution(FilmDataMTP.RESOLUTION_SMALL))) {
             res = "L";
-//        } else if (download.getUrl().equals(film.getUrlFlvstreamerForResolution(FilmData.RESOLUTION_NORMAL))) {
-//            res = "H";
-//        } else if (download.getUrl().equals(film.getUrlFlvstreamerForResolution(FilmData.RESOLUTION_HD))) {
-//            res = "HD";
-//        } else if (download.getUrl().equals(film.getUrlFlvstreamerForResolution(FilmData.RESOLUTION_SMALL))) {
-//            res = "L";
         }
         replStr = replStr.replace("%q", res); // %q Qualität des Films ("HD", "H", "L")
 

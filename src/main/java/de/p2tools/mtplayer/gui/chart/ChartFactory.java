@@ -61,10 +61,7 @@ public class ChartFactory {
             ChartFactoryGenerateData.genChartSeries(chartData);
 
             ChartFactoryGenerateChartData.generateChartData(lineChart, chartData);
-//            lineChart.getXAxis().setAutoRanging(true);
             ChartFactoryGenerateData.zoomXAxis(lineChart, chartData);
-
-//            ChartFactoryGenerateData.zoomYAxis(lineChart, chartData);
         }
     }
 

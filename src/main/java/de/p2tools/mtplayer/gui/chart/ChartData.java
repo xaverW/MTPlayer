@@ -32,7 +32,6 @@ public class ChartData {
     private int countProgRunningTimeSeconds = 0;
     private double countProgRunningTimeMinutes = 0;
     private int yScale = 1;
-    //    private int lastIdx = 0;
     private int oldestSecond = 0;
     private int maxTimeMinutes = downloadChartMaxTimeMinutes.get();
     private int maxTimeSeconds = downloadChartMaxTimeMinutes.get() * 60;
@@ -71,9 +70,6 @@ public class ChartData {
                 //alte oder noch leere
                 continue;
             }
-//            if (!bandwidthData.isShowing()) {
-//                continue;
-//            }
             if (oldest > bandwidthData.getStartTimeSec()) {
                 oldest = bandwidthData.getStartTimeSec();
             }

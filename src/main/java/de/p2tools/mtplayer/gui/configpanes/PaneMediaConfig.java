@@ -44,7 +44,7 @@ import java.util.Collection;
 public class PaneMediaConfig {
 
     private final RadioButton rbWithOutSuff = new RadioButton("keine Dateien mit diesem Suffix (z.B.: txt,xml,jpg)");
-    private final RadioButton rbWithSuff = new RadioButton("nur Dateien mit diesem Suffix (z.B.: mp4,flv,m4v)");
+    private final RadioButton rbWithSuff = new RadioButton("nur Dateien mit diesem Suffix (z.B.: mp4, m4v)");
     private TextField txtSuff = new TextField();
     private final PToggleSwitch tglNoHiddenFiles = new PToggleSwitch("keine versteckten Dateien suchen:");
     private final Slider slFileSize = new Slider();
@@ -77,7 +77,7 @@ public class PaneMediaConfig {
     public void make(Collection<TitledPane> result) {
         VBox vBox = new VBox(P2LibConst.DIST_EDGE);
         vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
-        
+
         TitledPane tpConfig = new TitledPane("Allgemein", vBox);
         result.add(tpConfig);
 

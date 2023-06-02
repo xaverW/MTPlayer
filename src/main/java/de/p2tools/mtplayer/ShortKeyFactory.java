@@ -38,36 +38,24 @@ public class ShortKeyFactory {
 
         // Info
         pShortcut = ProgShortcut.SHORTCUT_SHOW_INFOS;
-        pShortcut.actShortcutProperty().addListener(c -> {
-            System.out.println("--->");
-        });
         kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
         rn = MTPlayerFactory::setInfos;
         scene.getAccelerators().put(kc, rn);
 
         // Filter
         pShortcut = ProgShortcut.SHORTCUT_SHOW_FILTER;
-        pShortcut.actShortcutProperty().addListener(c -> {
-            System.out.println("--->");
-        });
         kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
         rn = MTPlayerFactory::setFilter;
         scene.getAccelerators().put(kc, rn);
 
         // Mediensammlung
         pShortcut = ProgShortcut.SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION;
-        pShortcut.actShortcutProperty().addListener(c -> {
-            System.out.println("--->");
-        });
         kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
         rn = MTPlayerFactory::setMediaCollection;
         scene.getAccelerators().put(kc, rn);
 
         // FilmInfos
         pShortcut = ProgShortcut.SHORTCUT_INFO_FILM;
-        pShortcut.actShortcutProperty().addListener(c -> {
-            System.out.println("--->");
-        });
         kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
         rn = MTPlayerFactory::showFilmInfos;
         scene.getAccelerators().put(kc, rn);
@@ -75,36 +63,24 @@ public class ShortKeyFactory {
 
         // Thema kopieren
         pShortcut = ProgShortcut.SHORTCUT_COPY_FILM_THEME_TO_CLIPBOARD;
-        pShortcut.actShortcutProperty().addListener(c -> {
-            System.out.println("--->");
-        });
         kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
         rn = MTPlayerFactory::copyTheme;
         scene.getAccelerators().put(kc, rn);
 
         // Titel kopieren
         pShortcut = ProgShortcut.SHORTCUT_COPY_FILM_TITLE_TO_CLIPBOARD;
-        pShortcut.actShortcutProperty().addListener(c -> {
-            System.out.println("--->");
-        });
         kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
         rn = MTPlayerFactory::copyTitle;
         scene.getAccelerators().put(kc, rn);
 
         // Blacklist
         pShortcut = ProgShortcut.SHORTCUT_ADD_BLACKLIST;
-        pShortcut.actShortcutProperty().addListener(c -> {
-            System.out.println("--->");
-        });
         kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
         rn = MTPlayerFactory::addBlacklist;
         scene.getAccelerators().put(kc, rn);
 
         // Blacklist, Thema
         pShortcut = ProgShortcut.SHORTCUT_ADD_BLACKLIST_THEME;
-        pShortcut.actShortcutProperty().addListener(c -> {
-            System.out.println("--->");
-        });
         kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
         rn = MTPlayerFactory::addBlacklistTheme;
         scene.getAccelerators().put(kc, rn);
