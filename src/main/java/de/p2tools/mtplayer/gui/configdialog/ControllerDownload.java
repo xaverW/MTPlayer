@@ -18,6 +18,7 @@ package de.p2tools.mtplayer.gui.configdialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.gui.configpanes.PaneDownload;
+import de.p2tools.mtplayer.gui.configpanes.PaneDownloadStop;
 import de.p2tools.mtplayer.gui.configpanes.PaneReplace;
 import de.p2tools.p2lib.dialogs.accordion.PAccordionPane;
 import javafx.scene.control.TitledPane;
@@ -29,6 +30,7 @@ import java.util.Collection;
 public class ControllerDownload extends PAccordionPane {
 
     private PaneDownload paneDownload;
+    private PaneDownloadStop paneDownloadStop;
     private PaneReplace paneReplace;
 
     private final Stage stage;
@@ -42,6 +44,7 @@ public class ControllerDownload extends PAccordionPane {
     @Override
     public void close() {
         paneDownload.close();
+        paneDownloadStop.close();
         paneReplace.close();
         super.close();
     }
@@ -51,6 +54,9 @@ public class ControllerDownload extends PAccordionPane {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
         paneDownload = new PaneDownload(stage);
         paneDownload.makeDownload(result);
+        
+        paneDownloadStop = new PaneDownloadStop(stage);
+        paneDownloadStop.makeDownload(result);
 
         paneReplace = new PaneReplace(stage);
         paneReplace.makeReplaceListTable(result);

@@ -24,7 +24,6 @@ import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PButtonClearFilterFactory;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -35,21 +34,16 @@ import javafx.util.StringConverter;
 
 public class DownloadFilterController extends FilterController {
 
-    private ComboBox<String> cboSrc = new ComboBox<>(); //Downloadquelle: Abo, manuell gestartet
-    private ComboBox<String> cboKind = new ComboBox<>(); //Download über Programm / direkter Downlaod, http
-    private PMenuButton mbChannel;
-    private ComboBox<String> cboAbo = new ComboBox<>();
-    private ComboBox<String> cboState = new ComboBox<>();
+    private final ComboBox<String> cboSrc = new ComboBox<>(); //Downloadquelle: Abo, manuell gestartet
+    private final ComboBox<String> cboKind = new ComboBox<>(); //Download über Programm / direkter Downlaod, http
+    private final PMenuButton mbChannel;
+    private final ComboBox<String> cboAbo = new ComboBox<>();
+    private final ComboBox<String> cboState = new ComboBox<>();
 
-    private Spinner<Integer> spinnerAnz = new Spinner<>();
-    private Slider sliderBandwidth = new Slider();
-    private Button btnClear = PButtonClearFilterFactory.getPButtonClearFilter();
-    private Label lblBandwidth = new Label();
-
-    // funktioniert nur wenn hier angelegt, geht sonst die Ref verloren!
-    IntegerProperty bandwidthValue = ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE;
-    IntegerProperty anzValue = ProgConfig.DOWNLOAD_MAX_DOWNLOADS;
-    IntegerProperty integerProperty;
+    private final Spinner<Integer> spinnerAnz = new Spinner<>(1, 9, 1);
+    private final Slider sliderBandwidth = new Slider();
+    private final Button btnClear = PButtonClearFilterFactory.getPButtonClearFilter();
+    private final Label lblBandwidth = new Label();
 
     private final VBox vBoxFilter;
     private final ProgData progData;
@@ -90,9 +84,9 @@ public class DownloadFilterController extends FilterController {
         vBoxFilter.getChildren().addAll(hBox, sp);
 
         VBox vb = new VBox(FilterController.FILTER_SPACING_TEXTFILTER);
-        addCont("gleichzeitige Downloads", spinnerAnz, vb);
+        addCont("Gleichzeitige Downloads", spinnerAnz, vb);
 
-        Label lblText = new Label("max. Bandbreite: ");
+        Label lblText = new Label("Max. Bandbreite: ");
         lblText.setMinWidth(0);
         lblText.setTooltip(new Tooltip("Maximale Bandbreite die ein einzelner Dowload beanspruchen darf \n" +
                 "oder unbegrenzt wenn \"aus\""));
@@ -201,9 +195,13 @@ public class DownloadFilterController extends FilterController {
     }
 
     private void initNumberDownloads() {
-        spinnerAnz.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 9, 1));
-        integerProperty = IntegerProperty.integerProperty(spinnerAnz.getValueFactory().valueProperty());
-        integerProperty.bindBidirectional(anzValue);
+        spinnerAnz.valueProperty().addListener((u, o, n) -> {
+            ProgConfig.DOWNLOAD_MAX_DOWNLOADS.setValue(spinnerAnz.getValue());
+        });
+        ProgConfig.DOWNLOAD_MAX_DOWNLOADS.addListener((u, o, n) -> {
+            spinnerAnz.getValueFactory().setValue(ProgConfig.DOWNLOAD_MAX_DOWNLOADS.getValue());
+        });
+        spinnerAnz.getValueFactory().setValue(ProgConfig.DOWNLOAD_MAX_DOWNLOADS.getValue());
     }
 
     private void initBandwidth() {
@@ -231,7 +229,7 @@ public class DownloadFilterController extends FilterController {
             }
         });
 
-        sliderBandwidth.valueProperty().bindBidirectional(bandwidthValue);
+        sliderBandwidth.valueProperty().bindBidirectional(ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE);
         setTextBandwidth();
 
         sliderBandwidth.valueProperty().addListener((obs, oldValue, newValue) -> {

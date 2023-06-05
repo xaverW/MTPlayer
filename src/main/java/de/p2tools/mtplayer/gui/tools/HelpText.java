@@ -583,6 +583,17 @@ public class HelpText {
                     P2LibConst.LINE_SEPARATORx2 +
                     "Die Überprüfung der Zertifikate kann mit dieser Funktion abgeschaltet werden." +
                     "\n";
+    public static final String DOWNLOAD_BANDWIDTH =
+            "Mit den Schiebereglern ([gleichzeitige Downloads] und [max. Bandbreite] kann die Anzahl " +
+                    "der gleichzeitigen Downloads die geladen werden, festgelegt werden. " +
+                    "Die vorgegebene maximale Bandbreite gilt pro Download.\n" +
+                    "\n" +
+                    "-- Besonderheiten --\n" +
+                    "Für die maximale Anzahl an Downloads gibt es noch eine Einschränkung: " +
+                    "Es können maximal 2 Downloads pro Server (ist meist dann auch pro Sender) " +
+                    "geladen werden. Wenn z.B. alle Downloads vom ZDF sind, werden maximal 2 " +
+                    "Downloads gestartet auch wenn als Maximum mehr vorgegeben ist.\n" +
+                    "(Ausgenommen davon sind explizite Downloadfarmen wie z.B. Akamai die ARTE benutzt.)\n";
 
     public static final String DOWNLOAD_FINISHED =
             "Wenn ein Download erfolgreich beendet ist, wird mit einem Fenster informiert." +
