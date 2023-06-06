@@ -17,8 +17,10 @@
 
 package de.p2tools.mtplayer.controller.data.download;
 
+import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
+import de.p2tools.mtplayer.controller.tools.MLBandwidthTokenBucket;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.tools.file.PFileSize;
 
@@ -130,6 +132,11 @@ public class DownloadInfosFactory {
             textLinks += getRunningDownloadsInfos();
         }
 
+        if (ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getValue() != MLBandwidthTokenBucket.BANDWIDTH_MAX_KBYTE) {
+            System.out.println(ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getValue());
+            textLinks += SEPARATOR;
+            textLinks += "Max. Bandbreite: " + ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getValue() + "kB/s";
+        }
         return textLinks;
     }
 
