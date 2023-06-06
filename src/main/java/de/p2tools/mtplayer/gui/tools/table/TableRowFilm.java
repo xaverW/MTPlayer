@@ -22,6 +22,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.control.TableRow;
+import javafx.scene.control.Tooltip;
 
 
 public class TableRowFilm<T> extends TableRow {
@@ -40,6 +41,8 @@ public class TableRowFilm<T> extends TableRow {
         if (film == null || empty) {
             setStyle("");
         } else {
+            setTooltip(new Tooltip(film.getTheme() + "\n" + film.getTitle()));
+
             if (film.isLive()) {
                 // livestream
                 for (int i = 0; i < getChildren().size(); i++) {
