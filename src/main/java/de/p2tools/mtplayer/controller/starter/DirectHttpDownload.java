@@ -25,6 +25,7 @@ import de.p2tools.mtplayer.controller.tools.MLBandwidthTokenBucket;
 import de.p2tools.mtplayer.controller.tools.MLInputStream;
 import de.p2tools.mtplayer.gui.dialog.DownloadContinueDialogController;
 import de.p2tools.mtplayer.gui.dialog.DownloadErrorDialogController;
+import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.mtplayer.gui.tools.MTInfoFile;
 import de.p2tools.mtplayer.gui.tools.MTSubtitle;
 import de.p2tools.p2lib.P2LibConst;
@@ -45,15 +46,27 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DirectHttpDownload extends Thread {
 
+    /**
+     * HTTP Timeout in milliseconds.
+     */
+    private static final int TIMEOUT_LENGTH = 5000;
     private final ProgData progData;
     private final DownloadData download;
+    private final java.util.Timer bandwidthCalculationTimer;
+    private long aktBandwidth = 0, aktSize = 0;
+    private double percent, ppercent = DownloadConstants.PROGRESS_WAITING, startPercent = DownloadConstants.PROGRESS_NOT_STARTED;
     private HttpURLConnection conn = null;
     private long downloaded = 0;
     private File file = null;
     private String responseCode;
-
+    private boolean work = false;
+    private final Listener listener = new Listener(Listener.EVENT_TIMER_HALF_SECOND, DirectHttpDownload.class.getSimpleName()) {
+        @Override
+        public void ping() {
+            work = true;
+        }
+    };
     private FileOutputStream fos = null;
-    private final java.util.Timer bandwidthCalculationTimer;
 
     public DirectHttpDownload(ProgData progData, DownloadData d, java.util.Timer bandwidthCalculationTimer) {
         super();
@@ -62,146 +75,7 @@ public class DirectHttpDownload extends Thread {
         download = d;
         setName("DIRECT DL THREAD: " + d.getTitle());
         download.setStateStartedRun();
-    }
-
-    /**
-     * HTTP Timeout in milliseconds.
-     */
-    private static final int TIMEOUT_LENGTH = 5000;
-
-    /**
-     * Return the content length of the requested Url.
-     *
-     * @param url {@link java.net.URL} to the specified content.
-     * @return Length in bytes or -1 on error.
-     */
-    private long getContentLength(final URL url) {
-        long ret = -1;
-        HttpURLConnection connection = null;
-        try {
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestProperty("User-Agent", ProgInfos.getUserAgent());
-            connection.setReadTimeout(TIMEOUT_LENGTH);
-            connection.setConnectTimeout(TIMEOUT_LENGTH);
-            if (connection.getResponseCode() < HttpURLConnection.HTTP_BAD_REQUEST) {
-                ret = connection.getContentLengthLong();
-            }
-            // alles unter 300k sind Playlisten, ...
-            if (ret < 300 * 1000) {
-                ret = -1;
-            }
-        } catch (final Exception ex) {
-            ret = -1;
-            PLog.errorLog(643298301, ex);
-        } finally {
-            if (connection != null) {
-                connection.disconnect();
-            }
-        }
-        return ret;
-    }
-
-    /**
-     * Setup the HTTP connection common settings
-     *
-     * @param conn The active connection.
-     */
-    private void setupHttpConnection(HttpURLConnection conn) {
-        conn.setRequestProperty("Range", "bytes=" + downloaded + '-');
-        conn.setRequestProperty("User-Agent", ProgInfos.getUserAgent());
-        conn.setDoInput(true);
-        conn.setDoOutput(true);
-    }
-
-    /**
-     * Start the actual download process here.
-     *
-     * @throws Exception
-     */
-    private void downloadContent() throws Exception {
-        if (download.getInfoFile()) {
-            MTInfoFile.writeInfoFile(download);
-        }
-        if (download.isSubtitle()) {
-            new MTSubtitle().writeSubtitle(download);
-        }
-
-        download.getStart().setInputStream(new MLInputStream(conn.getInputStream(),
-                bandwidthCalculationTimer, ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE));
-        fos = new FileOutputStream(file, (downloaded != 0));
-        download.getDownloadSize().addActFileSize(downloaded);
-        final byte[] buffer = new byte[MLBandwidthTokenBucket.DEFAULT_BUFFER_SIZE];
-        double percent, ppercent = DownloadConstants.PROGRESS_WAITING, startPercent = DownloadConstants.PROGRESS_NOT_STARTED;
-        int len;
-        long aktBandwidth = 0, aktSize = 0;
-
-        while ((len = download.getStart().getInputStream().read(buffer)) != -1 && (!download.isStateStopped())) {
-            downloaded += len;
-            fos.write(buffer, 0, len);
-            download.getDownloadSize().addActFileSize(len);
-
-            // für die Anzeige prüfen ob sich was geändert hat
-            if (aktSize != download.getDownloadSize().getActFileSize()) {
-                aktSize = download.getDownloadSize().getActFileSize();
-            }
-            if (download.getDownloadSize().getSize() > 0) {
-                percent = 1.0 * aktSize / download.getDownloadSize().getSize();
-                if (startPercent == DownloadConstants.PROGRESS_NOT_STARTED) {
-                    startPercent = percent;
-                }
-
-                // percent muss zwischen 0 und 1 liegen
-                if (percent == DownloadConstants.PROGRESS_WAITING) {
-                    percent = DownloadConstants.PROGRESS_STARTED;
-                } else if (percent >= DownloadConstants.PROGRESS_FINISHED) {
-                    percent = DownloadConstants.PROGRESS_NEARLY_FINISHED;
-                }
-                download.setProgress(percent);
-                if (percent != ppercent) {
-                    ppercent = percent;
-
-                    // Restzeit ermitteln
-                    if (percent > (DownloadConstants.PROGRESS_STARTED) && percent > startPercent) {
-                        // sonst macht es noch keinen Sinn
-//                        final int diffTime = download.getStart().getStartTime().diffInSeconds();
-//                        final double restPercent = DownloadConstants.PROGRESS_FINISHED - percent;
-//                        download.getStart().setTimeLeftSeconds((long) (diffTime * restPercent / (percent - startPercent)));
-
-                        long timeLeft = 0;
-                        long sizeLeft = download.getDownloadSize().getSize() - download.getDownloadSize().getActFileSize();
-                        if (sizeLeft <= 0) {
-                            timeLeft = 0;
-                        } else if (aktBandwidth > 0) {
-                            timeLeft = sizeLeft / aktBandwidth;
-                        }
-                        download.getStart().setTimeLeftSeconds(timeLeft);
-
-                        // anfangen zum Schauen kann man, wenn die Restzeit kürzer ist
-                        // als die bereits geladene Speilzeit des Films
-                        canAlreadyStarted(download);
-                    }
-                }
-            }
-            aktBandwidth = download.getStart().getInputStream().getBandwidth(); // bytes per second
-            if (aktBandwidth != download.getStart().getBandwidth()) {
-                download.getStart().setBandwidth(aktBandwidth);
-            }
-        }
-
-        if (!download.isStateStopped()) {
-            if (download.getSource().equals(DownloadConstants.SRC_BUTTON)) {
-                // direkter Start mit dem Button
-                download.setStateFinished();
-            } else if (StarterClass.check(progData, download)) {
-                // Anzeige ändern - fertig
-                download.setStateFinished();
-            } else {
-                // Anzeige ändern - bei Fehler fehlt der Eintrag
-                download.setStateError();
-            }
-        } else {
-            download.stopDownload();// nochmal da RUNTIME_EXEC ja weiter läuft
-        }
+        Listener.addListener(listener);
     }
 
     @Override
@@ -336,6 +210,144 @@ public class DirectHttpDownload extends Thread {
         }
 
         StarterClass.finalizeDownload(download);
+        Listener.removeListener(listener);
+    }
+
+    /**
+     * Return the content length of the requested Url.
+     *
+     * @param url {@link java.net.URL} to the specified content.
+     * @return Length in bytes or -1 on error.
+     */
+    private long getContentLength(final URL url) {
+        long ret = -1;
+        HttpURLConnection connection = null;
+        try {
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestProperty("User-Agent", ProgInfos.getUserAgent());
+            connection.setReadTimeout(TIMEOUT_LENGTH);
+            connection.setConnectTimeout(TIMEOUT_LENGTH);
+            if (connection.getResponseCode() < HttpURLConnection.HTTP_BAD_REQUEST) {
+                ret = connection.getContentLengthLong();
+            }
+            // alles unter 300k sind Playlisten, ...
+            if (ret < 300 * 1000) {
+                ret = -1;
+            }
+        } catch (final Exception ex) {
+            ret = -1;
+            PLog.errorLog(643298301, ex);
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+        return ret;
+    }
+
+    /**
+     * Setup the HTTP connection common settings
+     *
+     * @param conn The active connection.
+     */
+    private void setupHttpConnection(HttpURLConnection conn) {
+        conn.setRequestProperty("Range", "bytes=" + downloaded + '-');
+        conn.setRequestProperty("User-Agent", ProgInfos.getUserAgent());
+        conn.setDoInput(true);
+        conn.setDoOutput(true);
+    }
+
+    /**
+     * Start the actual download process here.
+     *
+     * @throws Exception
+     */
+    private void downloadContent() throws Exception {
+        if (download.getInfoFile()) {
+            MTInfoFile.writeInfoFile(download);
+        }
+        if (download.isSubtitle()) {
+            new MTSubtitle().writeSubtitle(download);
+        }
+
+        download.getStart().setInputStream(new MLInputStream(conn.getInputStream(),
+                bandwidthCalculationTimer, ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE));
+        fos = new FileOutputStream(file, (downloaded != 0));
+        download.getDownloadSize().setActFileSize(downloaded);
+        final byte[] buffer = new byte[MLBandwidthTokenBucket.DEFAULT_BUFFER_SIZE];
+        int len;
+
+
+        while ((len = download.getStart().getInputStream().read(buffer)) != -1 && (!download.isStateStopped())) {
+            downloaded += len;
+            fos.write(buffer, 0, len);
+
+            if (!work) {
+                continue;
+            }
+            work = false;
+            setDownloaded();
+        }
+        setDownloaded();
+
+        if (!download.isStateStopped()) {
+            if (download.getSource().equals(DownloadConstants.SRC_BUTTON)) {
+                // direkter Start mit dem Button
+                download.setStateFinished();
+            } else if (StarterClass.check(progData, download)) {
+                // Anzeige ändern - fertig
+                download.setStateFinished();
+            } else {
+                // Anzeige ändern - bei Fehler fehlt der Eintrag
+                download.setStateError();
+            }
+        } else {
+            download.stopDownload();// nochmal da RUNTIME_EXEC ja weiter läuft
+        }
+    }
+
+    private void setDownloaded() {
+        download.getDownloadSize().setActFileSize(downloaded);
+
+        // für die Anzeige prüfen ob sich was geändert hat
+        if (aktSize != download.getDownloadSize().getActFileSize()) {
+            aktSize = download.getDownloadSize().getActFileSize();
+        }
+        if (download.getDownloadSize().getSize() > 0) {
+            percent = 1.0 * aktSize / download.getDownloadSize().getSize();
+            if (startPercent == DownloadConstants.PROGRESS_NOT_STARTED) {
+                startPercent = percent;
+            }
+
+            // percent muss zwischen 0 und 1 liegen
+            if (percent == DownloadConstants.PROGRESS_WAITING) {
+                percent = DownloadConstants.PROGRESS_STARTED;
+            } else if (percent >= DownloadConstants.PROGRESS_FINISHED) {
+                percent = DownloadConstants.PROGRESS_NEARLY_FINISHED;
+            }
+            download.setProgress(percent);
+            if (percent != ppercent) {
+                ppercent = percent;
+
+                // Restzeit ermitteln
+                if (percent > (DownloadConstants.PROGRESS_STARTED) && percent > startPercent) {
+                    long timeLeft = 0;
+                    long sizeLeft = download.getDownloadSize().getSize() - download.getDownloadSize().getActFileSize();
+                    if (sizeLeft > 0 && aktBandwidth > 0) {
+                        timeLeft = sizeLeft / aktBandwidth;
+                    }
+                    download.getStart().setTimeLeftSeconds(timeLeft);
+
+                    // anfangen zum Schauen kann man, wenn die Restzeit kürzer ist
+                    // als die bereits geladene Spielzeit des Films
+                    canAlreadyStarted(download);
+                }
+            }
+        }
+        aktBandwidth = download.getStart().getInputStream().getBandwidth(); // bytes per second
+        if (aktBandwidth != download.getStart().getBandwidth()) {
+            download.getStart().setBandwidth(aktBandwidth);
+        }
     }
 
     private boolean restartHttps(int restartCount) {

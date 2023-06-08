@@ -24,22 +24,18 @@ import java.util.EventListener;
 
 
 public class Listener implements EventListener {
+    private static final ArrayList<Listener> listeners = new ArrayList<>();
     static int count = 0;
-
     public static final int EVENT_BLACKLIST_CHANGED = count++;
     public static final int EVENT_DIACRITIC_CHANGED = count++;
     public static final int EVENT_TIMER = count++;
     public static final int EVENT_TIMER_HALF_SECOND = count++;
-
     public static final int EVENT_MEDIA_DB_START = count++;
     public static final int EVENT_MEDIA_DB_STOP = count++;
-
     public static final int EVENT_HISTORY_CHANGED = count++;
     public static final int EVEMT_SETDATA_CHANGED = count++;
-
     public int[] event = {-1};
     public String eventClass = "";
-    private static final ArrayList<Listener> listeners = new ArrayList<>();
 
     public Listener() {
     }
@@ -54,14 +50,6 @@ public class Listener implements EventListener {
         this.eventClass = eventClass;
     }
 
-    public void pingFx() {
-        // das passiert im application thread
-    }
-
-    public void ping() {
-        // das ist asynchron zum application thread
-    }
-
     public static synchronized void addListener(Listener listener) {
         PLog.debugLog("Anz. Listener: " + listeners.size());
         listeners.add(listener);
@@ -72,9 +60,7 @@ public class Listener implements EventListener {
     }
 
     public static synchronized void notify(int eventNotify, String eventClass) {
-
         listeners.stream().forEach(listener -> {
-
             for (final int event : listener.event) {
                 // um einen Kreislauf zu verhindern
                 if (event == eventNotify && !listener.eventClass.equals(eventClass)) {
@@ -82,10 +68,15 @@ public class Listener implements EventListener {
                 }
 
             }
-
-
         });
+    }
 
+    public void pingFx() {
+        // das passiert im application thread
+    }
+
+    public void ping() {
+        // das ist asynchron zum application thread
     }
 
     private void pingen() {
