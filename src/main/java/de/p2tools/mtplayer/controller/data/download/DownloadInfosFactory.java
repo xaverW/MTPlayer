@@ -133,7 +133,6 @@ public class DownloadInfosFactory {
         }
 
         if (ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getValue() != MLBandwidthTokenBucket.BANDWIDTH_MAX_KBYTE) {
-            System.out.println(ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getValue());
             textLinks += SEPARATOR;
             textLinks += "Max. Bandbreite: " + ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getValue() + "kB/s";
         }

@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.gui.dialog;
 
+import de.p2tools.mtplayer.controller.ProgSave;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
@@ -74,13 +75,11 @@ public class AboDialogController extends PDialogExtra {
     final PMenuButton mbChannel;
     final PTimePicker pTimePicker = new PTimePicker();
     final CheckBox chkStartTime = new CheckBox();
-
+    final ObservableList<AboData> aboList = FXCollections.observableArrayList();
+    final AboData aboCopy;
     boolean addNewAbo;
     BooleanProperty okProp = new SimpleBooleanProperty(true);
     String memory = "";
-
-    final ObservableList<AboData> aboList = FXCollections.observableArrayList();
-    final AboData aboCopy;
     ProgData progData;
 
     public AboDialogController(ProgData progData, AboData abo) {
@@ -269,6 +268,9 @@ public class AboDialogController extends PDialogExtra {
 
         // da nicht modal!!
         progData.aboList.notifyChanges();
+
+        // und jetzt noch die Einstellungen speichern
+        ProgSave.saveAll();
     }
 
     private void updateAboList() {

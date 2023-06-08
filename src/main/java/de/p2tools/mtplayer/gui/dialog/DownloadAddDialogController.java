@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.gui.dialog;
 
+import de.p2tools.mtplayer.controller.ProgSave;
 import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
@@ -57,18 +58,18 @@ import java.util.List;
 
 public class DownloadAddDialogController extends PDialogExtra {
 
-    private VBox vBoxCont;
-
+    private static final String SEPARATOR = File.separator;
+    private static final String FORMATTER_ddMMyyyy_str = "yyyyMMdd";
+    private static final FastDateFormat FORMATTER_ddMMyyyy = FastDateFormat.getInstance(FORMATTER_ddMMyyyy_str);
+    final String[] storedPath = ProgConfig.DOWNLOAD_DIALOG_PATH_SAVING.get().split("<>");
     private final VBox vBoxAllDownloads = new VBox();
     private final HBox hBoxTop = new HBox();
     private final HBox hBoxAll = new HBox();
     private final HBox hBoxSize = new HBox();
-
     private final Button btnPrev = new Button("<");
     private final Button btnNext = new Button(">");
     private final Label lblSum = new Label("");
     private final PTimePicker pTimePicker = new PTimePicker(true);
-
     private final CheckBox chkAll = new CheckBox("Änderungen auf alle Filme anwenden");
     private final Label lblSet = new Label("Set:");
     private final ComboBox<SetData> cbSet = new ComboBox<>();
@@ -82,34 +83,24 @@ public class DownloadAddDialogController extends PDialogExtra {
     private final RadioButton rbStart = new RadioButton("sofort");
     private final RadioButton rbTime = new RadioButton("um: ");
     private final ToggleGroup toggleGroupStart = new ToggleGroup();
-
     private final CheckBox cbxInfo = new CheckBox("Infodatei anlegen: \"Filmname.txt\"");
     private final CheckBox cbxSubtitle = new CheckBox("Untertitel speichern: \"Filmname.xxx\"");
-
     private final RadioButton rbHd = new RadioButton("HD");
     private final RadioButton rbHigh = new RadioButton("Hoch");
     private final RadioButton rbSmall = new RadioButton("Klein");
     private final ToggleGroup toggleGroupSize = new ToggleGroup();
-
     private final Label lblFree = new Label("4M noch frei");
     private final Label lblFilm = new Label("Film:");
     private final Label lblFilmTitle = new Label("ARD: Tatort, ..");
     private final GridPane gridPane = new GridPane();
-
     private final String textHd = "HD";
     private final String textHeight = "hohe Auflösung";
     private final String textLow = "niedrige Auflösung";
-
     private final ProgData progData;
     final private SetDataList setDataList;
+    private VBox vBoxCont;
     private SetData setData;
     private String filterResolution;
-    final String[] storedPath = ProgConfig.DOWNLOAD_DIALOG_PATH_SAVING.get().split("<>");
-
-    private static final String SEPARATOR = File.separator;
-    private static final String FORMATTER_ddMMyyyy_str = "yyyyMMdd";
-    private static final FastDateFormat FORMATTER_ddMMyyyy = FastDateFormat.getInstance(FORMATTER_ddMMyyyy_str);
-
     private boolean ok = false;
     private int actFilmIsShown = 0;
     private ArrayList<FilmDataMTP> filmsToDownloadList;
@@ -612,6 +603,9 @@ public class DownloadAddDialogController extends PDialogExtra {
             // und evtl. auch gleich starten
             progData.downloadList.startDownloads(list, false);
         }
+
+        // und jetzt noch die Einstellungen speichern
+        ProgSave.saveAll();
 
         close();
     }
