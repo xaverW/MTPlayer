@@ -17,6 +17,7 @@
 package de.p2tools.mtplayer.gui.infoPane;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.p2lib.guitools.pclosepane.PClosePaneH;
 import javafx.scene.layout.Priority;
@@ -58,7 +59,7 @@ public class AboInfoController extends PClosePaneH {
     private void dialogInfo() {
         new InfoPaneDialog(paneAboInfo, "Aboinfos",
                 ProgConfig.ABO_PANE_DIALOG_INFO_SIZE, ProgConfig.ABO_PANE_DIALOG_INFO_ON,
-                ProgConfig.ABO_GUI_DIVIDER_ON, ProgConfig.ABO_TAB_ON);
+                ProgConfig.ABO_GUI_DIVIDER_ON, ProgData.ABO_TAB_ON);
     }
 
     private void setInfoTabPane() {

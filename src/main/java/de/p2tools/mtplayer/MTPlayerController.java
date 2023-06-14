@@ -204,9 +204,9 @@ public class MTPlayerController extends StackPane {
         splitPaneFilm.toFront();
         progData.filmGuiController.isShown();
         statusBarController.setStatusbarIndex();
-        ProgConfig.DOWNLOAD_TAB_ON.setValue(false);
-        ProgConfig.ABO_TAB_ON.setValue(false);
-        ProgConfig.FILM_TAB_ON.setValue(true);
+        ProgData.DOWNLOAD_TAB_ON.setValue(Boolean.FALSE);
+        ProgData.ABO_TAB_ON.setValue(Boolean.FALSE);
+        ProgData.FILM_TAB_ON.setValue(Boolean.TRUE);
     }
 
     private void selPanelDownload() {
@@ -221,9 +221,9 @@ public class MTPlayerController extends StackPane {
         splitPaneDownload.toFront();
         progData.downloadGuiController.isShown();
         statusBarController.setStatusbarIndex();
-        ProgConfig.FILM_TAB_ON.setValue(false);
-        ProgConfig.ABO_TAB_ON.setValue(false);
-        ProgConfig.DOWNLOAD_TAB_ON.setValue(true);
+        ProgData.FILM_TAB_ON.setValue(Boolean.FALSE);
+        ProgData.ABO_TAB_ON.setValue(Boolean.FALSE);
+        ProgData.DOWNLOAD_TAB_ON.setValue(Boolean.TRUE);
     }
 
     private void selPanelAbo() {
@@ -238,9 +238,9 @@ public class MTPlayerController extends StackPane {
         splitPaneAbo.toFront();
         progData.aboGuiController.isShown();
         statusBarController.setStatusbarIndex();
-        ProgConfig.FILM_TAB_ON.setValue(false);
-        ProgConfig.DOWNLOAD_TAB_ON.setValue(false);
-        ProgConfig.ABO_TAB_ON.setValue(true);
+        ProgData.FILM_TAB_ON.setValue(Boolean.FALSE);
+        ProgData.DOWNLOAD_TAB_ON.setValue(Boolean.FALSE);
+        ProgData.ABO_TAB_ON.setValue(Boolean.TRUE);
     }
 
     private void setButtonStyle() {

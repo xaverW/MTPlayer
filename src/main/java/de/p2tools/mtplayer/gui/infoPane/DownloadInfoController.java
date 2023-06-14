@@ -141,26 +141,26 @@ public class DownloadInfoController extends PClosePaneH {
     private void dialogInfo() {
         new InfoPaneDialog(paneFilmInfo, "Filminfos",
                 ProgConfig.DOWNLOAD_PANE_DIALOG_INFO_SIZE, ProgConfig.DOWNLOAD_PANE_DIALOG_INFO_ON,
-                ProgConfig.DOWNLOAD_GUI_DIVIDER_ON, ProgConfig.DOWNLOAD_TAB_ON);
+                ProgConfig.DOWNLOAD_GUI_DIVIDER_ON, ProgData.DOWNLOAD_TAB_ON);
     }
 
 
     private void dialogMedia() {
         new InfoPaneDialog(paneDownloadMedia, "Mediensammlung",
                 ProgConfig.DOWNLOAD_PANE_DIALOG_MEDIA_SIZE, ProgConfig.DOWNLOAD_PANE_DIALOG_MEDIA_ON,
-                ProgConfig.DOWNLOAD_GUI_DIVIDER_ON, ProgConfig.DOWNLOAD_TAB_ON);
+                ProgConfig.DOWNLOAD_GUI_DIVIDER_ON, ProgData.DOWNLOAD_TAB_ON);
     }
 
     private void dialogChart() {
         new InfoPaneDialog(paneDownloadChart, "Downloadchart",
                 ProgConfig.DOWNLOAD_PANE_DIALOG_CHART_SIZE, ProgConfig.DOWNLOAD_PANE_DIALOG_CHART_ON,
-                ProgConfig.DOWNLOAD_GUI_DIVIDER_ON, ProgConfig.DOWNLOAD_TAB_ON);
+                ProgConfig.DOWNLOAD_GUI_DIVIDER_ON, ProgData.DOWNLOAD_TAB_ON);
     }
 
     private void dialogDownloadInfo() {
         new InfoPaneDialog(paneDownloadInfo, "Downloadinfos",
                 ProgConfig.DOWNLOAD_PANE_DIALOG_DOWN_INFO_SIZE, ProgConfig.DOWNLOAD_PANE_DIALOG_DOWN_INFO_ON,
-                ProgConfig.DOWNLOAD_GUI_DIVIDER_ON, ProgConfig.DOWNLOAD_TAB_ON);
+                ProgConfig.DOWNLOAD_GUI_DIVIDER_ON, ProgData.DOWNLOAD_TAB_ON);
     }
 
     private void setInfoTabPane() {

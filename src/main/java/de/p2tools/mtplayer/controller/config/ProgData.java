@@ -48,6 +48,8 @@ import de.p2tools.p2lib.tools.duration.PDuration;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -62,6 +64,9 @@ public class ProgData {
     public static boolean startMinimized = false; //Minimiert starten
     public static boolean reset = false; //Programm auf Starteinstellungen zurücksetzen
     public static boolean firstProgramStart = false; //ist der allererste Programmstart: Init wird gemacht
+    public static BooleanProperty FILM_TAB_ON = new SimpleBooleanProperty(Boolean.FALSE);
+    public static BooleanProperty DOWNLOAD_TAB_ON = new SimpleBooleanProperty(Boolean.FALSE);
+    public static BooleanProperty ABO_TAB_ON = new SimpleBooleanProperty(Boolean.FALSE);
 
     // Infos
     public static String configDir = ""; //Verzeichnis zum Speichern der Programmeinstellungen

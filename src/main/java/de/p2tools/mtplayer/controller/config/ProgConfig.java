@@ -280,10 +280,6 @@ public class ProgConfig extends PDataProgConfig {
     public static DoubleProperty ABO_GUI_INFO_DIVIDER = addDoubleProp("abo-gui-info-divider", ProgConst.FILM_GUI_INFO_DIVIDER_LOCATION);
 
     // GuiPaneDialog
-    public static BooleanProperty FILM_TAB_ON = addBoolProp("film-tab-on", Boolean.FALSE);
-    public static BooleanProperty DOWNLOAD_TAB_ON = addBoolProp("download-tab-on", Boolean.FALSE);
-    public static BooleanProperty ABO_TAB_ON = addBoolProp("abo-tab-on", Boolean.FALSE);
-
     public static StringProperty FILM_PANE_DIALOG_INFO_SIZE = addStrProp("film-pane-dialog-info-size");
     public static BooleanProperty FILM_PANE_DIALOG_INFO_ON = addBoolProp("film-pane-dialog-info-on");
     public static StringProperty FILM_PANE_DIALOG_BUTTON_SIZE = addStrProp("film-pane-dialog-button-size");

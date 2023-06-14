@@ -82,13 +82,13 @@ public class FilmInfoController extends PClosePaneH {
     private void dialogInfo() {
         new InfoPaneDialog(paneFilmInfo, "Filminfos",
                 ProgConfig.FILM_PANE_DIALOG_INFO_SIZE, ProgConfig.FILM_PANE_DIALOG_INFO_ON,
-                ProgConfig.FILM_GUI_DIVIDER_ON, ProgConfig.FILM_TAB_ON);
+                ProgConfig.FILM_GUI_DIVIDER_ON, ProgData.FILM_TAB_ON);
     }
 
     private void dialogButton() {
         new InfoPaneDialog(PaneFilmButton.getButtonPane(), "Startbutton",
                 ProgConfig.FILM_PANE_DIALOG_BUTTON_SIZE, ProgConfig.FILM_PANE_DIALOG_BUTTON_ON,
-                ProgConfig.FILM_GUI_DIVIDER_ON, ProgConfig.FILM_TAB_ON);
+                ProgConfig.FILM_GUI_DIVIDER_ON, ProgData.FILM_TAB_ON);
     }
 
     private void setInfoTabPane() {
