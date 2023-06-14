@@ -30,7 +30,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-public class FilmGuiInfoController extends VBox {
+public class PaneFilmInfo extends VBox {
     private final SplitPane splitPane = new SplitPane();
     private final VBox vBoxLeft = new VBox();
 
@@ -50,7 +50,7 @@ public class FilmGuiInfoController extends VBox {
     private FilmDataMTP film = null;
     private String oldDescription = "";
 
-    public FilmGuiInfoController() {
+    public PaneFilmInfo() {
         StackPane stackPane = new StackPane();
         stackPane.getChildren().addAll(textArea, btnReset);
         StackPane.setAlignment(btnReset, Pos.BOTTOM_RIGHT);

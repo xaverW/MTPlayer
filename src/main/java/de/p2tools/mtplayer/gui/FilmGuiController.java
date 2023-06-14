@@ -19,10 +19,10 @@ package de.p2tools.mtplayer.gui;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
-import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmTools;
 import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
+import de.p2tools.mtplayer.gui.infoPane.FilmInfoController;
 import de.p2tools.mtplayer.gui.mediadialog.MediaDialogController;
 import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.mtplayer.gui.tools.table.Table;
@@ -30,18 +30,18 @@ import de.p2tools.mtplayer.gui.tools.table.TableFilm;
 import de.p2tools.mtplayer.gui.tools.table.TableRowFilm;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.guitools.PTableFactory;
-import de.p2tools.p2lib.guitools.pclosepane.PClosePaneH;
 import de.p2tools.p2lib.tools.PSystemUtils;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Orientation;
-import javafx.scene.control.*;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SplitPane;
 import javafx.scene.input.*;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -50,23 +50,19 @@ public class FilmGuiController extends AnchorPane {
 
     private final SplitPane splitPane = new SplitPane();
     private final ScrollPane scrollPaneTableFilm = new ScrollPane();
-    private final PClosePaneH pClosePaneH;
+    private final FilmInfoController filmInfoController;
 
-    private FilmGuiInfoController filmGuiInfoController;
     private final TableFilm tableView;
-
     private final ProgData progData;
-    private boolean boundSplitPaneDivPos = false;
     private final SortedList<FilmDataMTP> sortedList;
     private final KeyCombination STRG_A = new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_ANY);
-
     DoubleProperty splitPaneProperty = ProgConfig.FILM_GUI_DIVIDER;
-    BooleanProperty boolInfoOn = ProgConfig.FILM_GUI_DIVIDER_ON;
+    private boolean boundSplitPaneDivPos = false;
 
     public FilmGuiController() {
         progData = ProgData.getInstance();
         sortedList = progData.filmlistFiltered.getSortedList();
-        pClosePaneH = new PClosePaneH(ProgConfig.FILM_GUI_DIVIDER_ON, true);
+        filmInfoController = new FilmInfoController();
         tableView = new TableFilm(Table.TABLE_ENUM.FILM, progData);
 
         AnchorPane.setLeftAnchor(splitPane, 0.0);
@@ -80,7 +76,6 @@ public class FilmGuiController extends AnchorPane {
         scrollPaneTableFilm.setFitToWidth(true);
         scrollPaneTableFilm.setContent(tableView);
 
-        initInfoPane();
         setInfoPane();
         initTable();
         initListener();
@@ -105,9 +100,7 @@ public class FilmGuiController extends AnchorPane {
 
     public void copyFilmThemeTitle(boolean theme) {
         final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().filmGuiController.getSel(false, false);
-        if (filmSelection.isPresent()) {
-            PSystemUtils.copyToClipboard(theme ? filmSelection.get().getTheme() : filmSelection.get().getTitle());
-        }
+        filmSelection.ifPresent(mtp -> PSystemUtils.copyToClipboard(theme ? mtp.getTheme() : mtp.getTitle()));
     }
 
     public void playFilmUrl() {
@@ -134,9 +127,7 @@ public class FilmGuiController extends AnchorPane {
     public void searchFilmInMediaCollection() {
         // aus dem Menü
         final Optional<FilmDataMTP> film = getSel(false, true);
-        if (film.isPresent()) {
-            new MediaDialogController(film.get().getTheme(), film.get().getTitle());
-        }
+        film.ifPresent(mtp -> new MediaDialogController(mtp.getTheme(), mtp.getTitle()));
     }
 
     public void setFilmShown() {
@@ -168,7 +159,7 @@ public class FilmGuiController extends AnchorPane {
         return ret;
     }
 
-    public Optional<FilmDataMTP> getSel(boolean markSel, boolean show) {
+    public Optional<FilmDataMTP> getSel(boolean markSel/*markieren was vor dem SEL ist*/, boolean show) {
         Optional<FilmDataMTP> mtp;
         final int selectedTableRow = tableView.getSelectionModel().getSelectedIndex();
 
@@ -188,14 +179,14 @@ public class FilmGuiController extends AnchorPane {
     }
 
     private void initListener() {
+        ProgConfig.FILM_GUI_DIVIDER_ON.addListener((observable, oldValue, newValue) -> setInfoPane());
         sortedList.addListener((ListChangeListener<FilmDataMTP>) c -> {
             selectShown();
         });
         progData.setDataList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
             if (progData.setDataList.getSetDataListButton().size() > 2) {
-                boolInfoOn.set(true);
+                ProgConfig.FILM_GUI_DIVIDER_ON.set(true);
             }
-            setInfoPane();
         });
         Listener.addListener(new Listener(new int[]{Listener.EVENT_HISTORY_CHANGED},
                 FilmGuiController.class.getSimpleName()) {
@@ -227,7 +218,7 @@ public class FilmGuiController extends AnchorPane {
             row.hoverProperty().addListener((observable) -> {
                 final FilmDataMTP filmDataMTP = (FilmDataMTP) row.getItem();
                 if (row.isHover() && filmDataMTP != null) {
-                    filmGuiInfoController.setFilm(filmDataMTP);
+                    filmInfoController.setFilmInfos(filmDataMTP);
                     FilmInfoDialogController.getInstance().setFilm(filmDataMTP);
                 } else {
                     setFilmInfos();
@@ -267,72 +258,6 @@ public class FilmGuiController extends AnchorPane {
         });
     }
 
-    private void setFilmInfos() {
-        FilmDataMTP film = tableView.getSelectionModel().getSelectedItem();
-        filmGuiInfoController.setFilm(film);
-        FilmInfoDialogController.getInstance().setFilm(film);
-    }
-
-    private void initInfoPane() {
-        filmGuiInfoController = new FilmGuiInfoController();
-        boolInfoOn.addListener((observable, oldValue, newValue) -> setInfoPane());
-    }
-
-    private void setInfoPane() {
-        if (boolInfoOn.getValue()) {
-            boundSplitPaneDivPos = true;
-            setInfoTabPane();
-            splitPane.getDividers().get(0).positionProperty().bindBidirectional(splitPaneProperty);
-
-        } else {
-            if (boundSplitPaneDivPos) {
-                splitPane.getDividers().get(0).positionProperty().unbindBidirectional(splitPaneProperty);
-            }
-
-            if (splitPane.getItems().size() != 1) {
-                splitPane.getItems().clear();
-                splitPane.getItems().add(scrollPaneTableFilm);
-            }
-        }
-    }
-
-    private void setInfoTabPane() {
-        if (splitPane.getItems().size() != 2) {
-            //erst mal splitPane einrichten, dass Tabelle ind Info angezeigt wird
-            splitPane.getItems().clear();
-            splitPane.getItems().addAll(scrollPaneTableFilm, pClosePaneH);
-            SplitPane.setResizableWithParent(pClosePaneH, false);
-        }
-
-        pClosePaneH.getVBoxAll().getChildren().clear();
-        pClosePaneH.getVBoxAll().setMinHeight(Region.USE_PREF_SIZE);
-
-        final SetDataList setDataList = progData.setDataList.getSetDataListButton();
-        if (setDataList.isEmpty()) {
-            //dann brauchen wir den Tab mit den Button nicht
-            pClosePaneH.getVBoxAll().getChildren().setAll(filmGuiInfoController);
-            VBox.setVgrow(filmGuiInfoController, Priority.ALWAYS);
-            return;
-        }
-
-        // Button wieder aufbauen
-        TilePane tilePaneButton = new FilmGuiButtonPane(this).getButtonPane(setDataList);
-
-        Tab filmInfoTab = new Tab("Beschreibung");
-        filmInfoTab.setClosable(false);
-        filmInfoTab.setContent(filmGuiInfoController);
-
-        Tab buttonTab = new Tab("Startbutton");
-        buttonTab.setClosable(false);
-        buttonTab.setContent(tilePaneButton);
-
-        TabPane infoTabPane = new TabPane();
-        infoTabPane.getTabs().addAll(filmInfoTab, buttonTab);
-
-        pClosePaneH.getVBoxAll().getChildren().setAll(infoTabPane);
-        VBox.setVgrow(infoTabPane, Priority.ALWAYS);
-    }
-
     private synchronized void startFilmUrl() {
         // Menü/Button Film (URL) abspielen
         final Optional<FilmDataMTP> filmSelection = getSel(true, true);
@@ -364,17 +289,12 @@ public class FilmGuiController extends AnchorPane {
         Platform.runLater(() -> {
             // bei der Blacklist kommt das außer der Reihe
             if (tableView.getItems().isEmpty()) {
-//                System.out.println("===> empty");
                 return;
             }
 
             if (tableView.getSelectionModel().getSelectedItem() != null) {
                 // dann ist schon was selektiert, passt.
-//                System.out.println("=========================");
-//                System.out.println("ist schon sel");
-
                 tableView.scrollTo(tableView.getSelectionModel().getSelectedItem());
-//                tableView.requestFocus();
                 return;
             }
 
@@ -423,5 +343,35 @@ public class FilmGuiController extends AnchorPane {
     private synchronized void saveFilm(SetData pSet) {
         final ArrayList<FilmDataMTP> list = getSelList();
         progData.filmlist.saveFilm(list, pSet);
+    }
+
+    private void setFilmInfos() {
+        // Film in FilmInfoDialog setzen
+        FilmDataMTP film = tableView.getSelectionModel().getSelectedItem();
+        filmInfoController.setFilmInfos(film);
+        FilmInfoDialogController.getInstance().setFilm(film);
+    }
+
+    private void setInfoPane() {
+        // hier wird das InfoPane ein- ausgeblendet
+        if (ProgConfig.FILM_GUI_DIVIDER_ON.getValue()) {
+            boundSplitPaneDivPos = true;
+            if (splitPane.getItems().size() != 2) {
+                //erst mal splitPane einrichten, dass Tabelle und Infos angezeigt werden
+                splitPane.getItems().clear();
+                splitPane.getItems().addAll(scrollPaneTableFilm, filmInfoController);
+                SplitPane.setResizableWithParent(filmInfoController, false);
+            }
+            splitPane.getDividers().get(0).positionProperty().bindBidirectional(splitPaneProperty);
+
+        } else {
+            if (boundSplitPaneDivPos) {
+                splitPane.getDividers().get(0).positionProperty().unbindBidirectional(splitPaneProperty);
+            }
+            if (splitPane.getItems().size() != 1) {
+                splitPane.getItems().clear();
+                splitPane.getItems().add(scrollPaneTableFilm);
+            }
+        }
     }
 }

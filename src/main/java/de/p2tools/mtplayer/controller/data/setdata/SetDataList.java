@@ -173,7 +173,7 @@ public class SetDataList extends SetDataListWorker {
         }
 
         return stream()
-                .filter(setData -> setData.isButton())
+                .filter(SetDataProps::isButton)
                 .filter(setData -> !setData.getProgramList().isEmpty())
                 .filter(setData -> !setData.getVisibleName().isEmpty())
                 .collect(Collectors.toCollection(SetDataList::new));
@@ -181,7 +181,7 @@ public class SetDataList extends SetDataListWorker {
 
     public SetDataList getSetDataListAbo() {
         // liefert eine Liste Programmsets, die für Abos angelegt sind (ist meist nur eins)
-        return stream().filter(data -> data.isAbo())
+        return stream().filter(SetDataProps::isAbo)
                 .collect(Collectors.toCollection(SetDataList::new));
     }
 

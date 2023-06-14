@@ -39,7 +39,7 @@ import javafx.scene.layout.*;
 
 public class MTPlayerController extends StackPane {
 
-    public static enum PANE_SHOWN {FILM, DOWNLOAD, ABO}
+    public enum PANE_SHOWN {FILM, DOWNLOAD, ABO}
 
     public static PANE_SHOWN paneShown = null;
 
@@ -204,6 +204,9 @@ public class MTPlayerController extends StackPane {
         splitPaneFilm.toFront();
         progData.filmGuiController.isShown();
         statusBarController.setStatusbarIndex();
+        ProgConfig.DOWNLOAD_TAB_ON.setValue(false);
+        ProgConfig.ABO_TAB_ON.setValue(false);
+        ProgConfig.FILM_TAB_ON.setValue(true);
     }
 
     private void selPanelDownload() {
@@ -218,6 +221,9 @@ public class MTPlayerController extends StackPane {
         splitPaneDownload.toFront();
         progData.downloadGuiController.isShown();
         statusBarController.setStatusbarIndex();
+        ProgConfig.FILM_TAB_ON.setValue(false);
+        ProgConfig.ABO_TAB_ON.setValue(false);
+        ProgConfig.DOWNLOAD_TAB_ON.setValue(true);
     }
 
     private void selPanelAbo() {
@@ -232,6 +238,9 @@ public class MTPlayerController extends StackPane {
         splitPaneAbo.toFront();
         progData.aboGuiController.isShown();
         statusBarController.setStatusbarIndex();
+        ProgConfig.FILM_TAB_ON.setValue(false);
+        ProgConfig.DOWNLOAD_TAB_ON.setValue(false);
+        ProgConfig.ABO_TAB_ON.setValue(true);
     }
 
     private void setButtonStyle() {

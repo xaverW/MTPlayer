@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.gui;
+package de.p2tools.mtplayer.gui.infoPane;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
@@ -28,7 +28,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-public class AboGuiInfoController extends VBox {
+public class PaneAboInfo extends VBox {
     private final SplitPane splitPane = new SplitPane();
 
     private final TextArea txtInfo = new TextArea();
@@ -43,7 +43,7 @@ public class AboGuiInfoController extends VBox {
 
     private AboData abo = null;
 
-    public AboGuiInfoController() {
+    public PaneAboInfo() {
         txtName.setFont(Font.font(null, FontWeight.BOLD, -1));
         txtName.setTooltip(new Tooltip("Name des Abos"));
         txtInfo.setWrapText(true);

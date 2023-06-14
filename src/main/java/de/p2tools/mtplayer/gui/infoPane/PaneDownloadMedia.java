@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.gui;
+package de.p2tools.mtplayer.gui.infoPane;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
@@ -25,6 +25,7 @@ import de.p2tools.mtplayer.controller.mediadb.MediaCleaningFactory;
 import de.p2tools.mtplayer.controller.mediadb.MediaData;
 import de.p2tools.mtplayer.controller.mediadb.MediaFileSize;
 import de.p2tools.mtplayer.controller.mediadb.MediaSearchPredicateFactory;
+import de.p2tools.mtplayer.gui.DownloadGuiMediaSearch;
 import de.p2tools.mtplayer.gui.mediacleaning.MediaCleaningDialogController;
 import de.p2tools.mtplayer.gui.mediadialog.MediaDialogController;
 import de.p2tools.mtplayer.gui.mediadialog.PaneMediaContextMenu;
@@ -47,7 +48,7 @@ import javafx.scene.layout.VBox;
 
 import java.util.Date;
 
-public class DownloadGuiMedia extends VBox {
+public class PaneDownloadMedia extends VBox {
 
     private final TableView<MediaData> tableMedia = new TableView<>();
     private final TableView<HistoryData> tableAbo = new TableView<>();
@@ -62,7 +63,7 @@ public class DownloadGuiMedia extends VBox {
 
     private final ProgData progData;
 
-    public DownloadGuiMedia() {
+    public PaneDownloadMedia() {
         progData = ProgData.getInstance();
         init();
         initMenu(true);

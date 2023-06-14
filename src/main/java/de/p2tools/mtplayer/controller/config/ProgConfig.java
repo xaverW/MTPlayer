@@ -279,6 +279,28 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty ABO_GUI_TABLE_ORDER = addStrProp("abo-gui-table-order");
     public static DoubleProperty ABO_GUI_INFO_DIVIDER = addDoubleProp("abo-gui-info-divider", ProgConst.FILM_GUI_INFO_DIVIDER_LOCATION);
 
+    // GuiPaneDialog
+    public static BooleanProperty FILM_TAB_ON = addBoolProp("film-tab-on", Boolean.FALSE);
+    public static BooleanProperty DOWNLOAD_TAB_ON = addBoolProp("download-tab-on", Boolean.FALSE);
+    public static BooleanProperty ABO_TAB_ON = addBoolProp("abo-tab-on", Boolean.FALSE);
+
+    public static StringProperty FILM_PANE_DIALOG_INFO_SIZE = addStrProp("film-pane-dialog-info-size");
+    public static BooleanProperty FILM_PANE_DIALOG_INFO_ON = addBoolProp("film-pane-dialog-info-on");
+    public static StringProperty FILM_PANE_DIALOG_BUTTON_SIZE = addStrProp("film-pane-dialog-button-size");
+    public static BooleanProperty FILM_PANE_DIALOG_BUTTON_ON = addBoolProp("film-pane-dialog-button-on");
+
+    public static StringProperty DOWNLOAD_PANE_DIALOG_INFO_SIZE = addStrProp("download-pane-dialog-info-size");
+    public static BooleanProperty DOWNLOAD_PANE_DIALOG_INFO_ON = addBoolProp("download-pane-dialog-info-on");
+    public static StringProperty DOWNLOAD_PANE_DIALOG_MEDIA_SIZE = addStrProp("download-pane-dialog-media-size");
+    public static BooleanProperty DOWNLOAD_PANE_DIALOG_MEDIA_ON = addBoolProp("download-pane-dialog-media-on");
+    public static StringProperty DOWNLOAD_PANE_DIALOG_CHART_SIZE = addStrProp("download-pane-dialog-chart-size");
+    public static BooleanProperty DOWNLOAD_PANE_DIALOG_CHART_ON = addBoolProp("download-pane-dialog-chart-on");
+    public static StringProperty DOWNLOAD_PANE_DIALOG_DOWN_INFO_SIZE = addStrProp("download-pane-dialog-down-info-size");
+    public static BooleanProperty DOWNLOAD_PANE_DIALOG_DOWN_INFO_ON = addBoolProp("download-pane-dialog-down-info-on");
+
+    public static StringProperty ABO_PANE_DIALOG_INFO_SIZE = addStrProp("abo-pane-dialog-info-size");
+    public static BooleanProperty ABO_PANE_DIALOG_INFO_ON = addBoolProp("abo-pane-dialog-info-on");
+
     // ConfigDialog
     public static StringProperty IMPORT_MV_DIALOG_SIZE = addStrProp("import-mv-dialog-size", "600:800");
     public static StringProperty BLACK_DIALOG_SIZE = addStrProp("black-dialog-size", "700:800");

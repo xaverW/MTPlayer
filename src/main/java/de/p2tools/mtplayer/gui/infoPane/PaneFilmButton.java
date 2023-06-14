@@ -15,7 +15,7 @@
  */
 
 
-package de.p2tools.mtplayer.gui;
+package de.p2tools.mtplayer.gui.infoPane;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
@@ -26,18 +26,20 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.TilePane;
 
-public class FilmGuiButtonPane {
+public class PaneFilmButton {
 
-    public FilmGuiButtonPane() {
+    private PaneFilmButton() {
     }
 
-    public TilePane getButtonPane(SetDataList setDataList) {
+    public static TilePane getButtonPane() {
+        SetDataList setDataList = ProgData.getInstance().setDataList.getSetDataListButton();
+
         TilePane tilePaneButton = new TilePane();
         tilePaneButton.setVgap(P2LibConst.DIST_BUTTON);
         tilePaneButton.setHgap(P2LibConst.DIST_BUTTON);
         tilePaneButton.setPadding(new Insets(P2LibConst.DIST_EDGE));
 
-        setDataList.stream().forEach(setData -> {
+        setDataList.forEach(setData -> {
             Button btn = new Button(setData.getVisibleName());
             btn.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
             btn.setMaxWidth(Double.MAX_VALUE);
@@ -53,5 +55,4 @@ public class FilmGuiButtonPane {
         });
         return tilePaneButton;
     }
-
 }

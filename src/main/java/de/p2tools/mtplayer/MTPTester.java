@@ -22,6 +22,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
 import de.p2tools.mtplayer.gui.dialog.QuitDialogController;
 import de.p2tools.p2lib.dialogs.ProgInfoDialog;
+import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.pmask.PMaskerPane;
 import de.p2tools.p2lib.mtfilm.film.FilmFactory;
@@ -97,6 +98,11 @@ public class MTPTester {
             btnShutDown.setOnAction(a -> new QuitDialogController(false));
             gridPane.add(new Label(), 0, ++row);
             gridPane.add(btnShutDown, 0, ++row);
+
+            Button btnCloseDialog = new Button("Alle Dialoge schließen");
+            btnCloseDialog.setOnAction(a -> PDialogExtra.closeAllDialog());
+            gridPane.add(new Label(), 0, ++row);
+            gridPane.add(btnCloseDialog, 0, ++row);
         }
     }
 

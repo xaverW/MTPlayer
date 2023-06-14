@@ -16,7 +16,6 @@
 
 package de.p2tools.mtplayer.gui;
 
-import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
@@ -25,10 +24,10 @@ import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactoryDelFilmFile;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmTools;
-import de.p2tools.mtplayer.gui.chart.DownloadGuiChart;
 import de.p2tools.mtplayer.gui.dialog.DownloadEditDialogController;
 import de.p2tools.mtplayer.gui.dialog.DownloadStartAtTimeController;
 import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
+import de.p2tools.mtplayer.gui.infoPane.DownloadInfoController;
 import de.p2tools.mtplayer.gui.mediadialog.MediaDialogController;
 import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.mtplayer.gui.tools.table.Table;
@@ -37,7 +36,6 @@ import de.p2tools.mtplayer.gui.tools.table.TableRowDownload;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.guitools.POpen;
 import de.p2tools.p2lib.guitools.PTableFactory;
-import de.p2tools.p2lib.guitools.pclosepane.PClosePaneH;
 import de.p2tools.p2lib.mtfilter.Filter;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 import de.p2tools.p2lib.tools.PSystemUtils;
@@ -45,12 +43,12 @@ import javafx.application.Platform;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Orientation;
-import javafx.scene.control.*;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SplitPane;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -61,33 +59,16 @@ public class DownloadGuiController extends AnchorPane {
     private final SplitPane splitPane = new SplitPane();
     private final ScrollPane scrollPane = new ScrollPane();
     private final TableDownload tableView;
-    private final TabPane tabPane = new TabPane();
-
-    private FilmGuiInfoController filmGuiInfoController;
-    private DownloadGuiMedia downloadGuiMedia;
-    private DownloadGuiChart downloadGuiChart;
-    private DownloadGuiInfo downloadGuiInfo;
-    private final PClosePaneH pClosePaneH;
-
-    private final Tab tabFilm = new Tab("Filminfo");
-    private final Tab tabMedia = new Tab("Mediensammlung");
-    private final Tab tabBand = new Tab("Bandbreite");
-    private final Tab tabDown = new Tab("DownloadInfos");
-
+    private final DownloadInfoController downloadInfoController;
     private final ProgData progData;
-    private boolean bound = false;
     private final FilteredList<DownloadData> filteredDownloads;
     private final SortedList<DownloadData> sortedDownloads;
+    private boolean bound = false;
 
     public DownloadGuiController() {
         progData = ProgData.getInstance();
-        filmGuiInfoController = new FilmGuiInfoController();
-        downloadGuiMedia = new DownloadGuiMedia();
-        downloadGuiChart = new DownloadGuiChart(progData);
-        downloadGuiInfo = new DownloadGuiInfo();
+        downloadInfoController = new DownloadInfoController();
         tableView = new TableDownload(Table.TABLE_ENUM.DOWNLOAD);
-
-        pClosePaneH = new PClosePaneH(ProgConfig.DOWNLOAD_GUI_DIVIDER_ON, false);
 
         AnchorPane.setLeftAnchor(splitPane, 0.0);
         AnchorPane.setBottomAnchor(splitPane, 0.0);
@@ -100,28 +81,16 @@ public class DownloadGuiController extends AnchorPane {
         scrollPane.setFitToWidth(true);
         scrollPane.setContent(tableView);
 
-        pClosePaneH.getVBoxAll().getChildren().clear();
-        pClosePaneH.getVBoxAll().getChildren().add(tabPane);
-        VBox.setVgrow(tabPane, Priority.ALWAYS);
         ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.addListener((observable, oldValue, newValue) -> setInfoPane());
 
         filteredDownloads = new FilteredList<>(progData.downloadList, p -> true);
         sortedDownloads = new SortedList<>(filteredDownloads);
 
-        addTabs();
         setInfoPane();
         initTable();
         initListener();
         setFilterProperty();
         setFilter();
-
-        Listener.addListener(new Listener(Listener.EVENT_TIMER, DownloadGuiChart.class.getSimpleName()) {
-            @Override
-            public void pingFx() {
-                downloadGuiChart.searchInfos(MTPlayerController.paneShown == MTPlayerController.PANE_SHOWN.DOWNLOAD &&
-                        tabPane.getSelectionModel().getSelectedItem().equals(tabBand));
-            }
-        });
     }
 
     public void tableRefresh() {
@@ -201,10 +170,10 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private void setFilmInfos(DownloadData download) {
-        if (tabPane.getSelectionModel().getSelectedItem().equals(tabMedia)) {
-            downloadGuiMedia.setSearchPredicate(download);
-        }
-        filmGuiInfoController.setFilm(download != null ? download.getFilm() : null);
+//        if (tabPane.getSelectionModel().getSelectedItem().equals(tabMedia)) {
+//            downloadGuiMedia.setSearchPredicate(download);
+//        }
+        downloadInfoController.setDownloadInfos(download);
         FilmInfoDialogController.getInstance().setFilm(download != null ? download.getFilm() : null);
     }
 
@@ -289,27 +258,6 @@ public class DownloadGuiController extends AnchorPane {
         Table.saveTable(tableView, Table.TABLE_ENUM.DOWNLOAD);
     }
 
-    private void addTabs() {
-        tabFilm.setClosable(false);
-        tabFilm.setContent(filmGuiInfoController);
-
-        tabMedia.setClosable(false);
-        tabMedia.setContent(downloadGuiMedia);
-        tabPane.getSelectionModel().selectedItemProperty().addListener((u, o, n) -> {
-            if (tabPane.getSelectionModel().getSelectedItem().equals(tabMedia)) {
-                setFilmInfos(tableView.getSelectionModel().getSelectedItem());
-            }
-        });
-
-        tabBand.setClosable(false);
-        tabBand.setContent(downloadGuiChart);
-
-        tabDown.setClosable(false);
-        tabDown.setContent(downloadGuiInfo);
-
-        tabPane.getTabs().addAll(tabFilm, tabMedia, tabBand, tabDown);
-    }
-
     private ArrayList<DownloadData> getSelList() {
         // todo observableList -> abo
         final ArrayList<DownloadData> ret = new ArrayList<>();
@@ -379,27 +327,6 @@ public class DownloadGuiController extends AnchorPane {
         });
     }
 
-    private void setInfoPane() {
-        pClosePaneH.setVisible(ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.getValue());
-        pClosePaneH.setManaged(ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.getValue());
-
-        if (!ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.getValue()) {
-            if (bound) {
-                splitPane.getDividers().get(0).positionProperty().unbindBidirectional(ProgConfig.DOWNLOAD_GUI_DIVIDER);
-            }
-            splitPane.getItems().clear();
-            splitPane.getItems().add(scrollPane);
-
-        } else {
-            bound = true;
-
-            splitPane.getItems().clear();
-            splitPane.getItems().addAll(scrollPane, pClosePaneH);
-            splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.DOWNLOAD_GUI_DIVIDER);
-            SplitPane.setResizableWithParent(pClosePaneH, false);
-        }
-    }
-
     private void initTable() {
         Table.setTable(tableView);
         tableView.setItems(sortedDownloads);
@@ -431,11 +358,7 @@ public class DownloadGuiController extends AnchorPane {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
                 final Optional<DownloadData> optionalDownload = getSel(false);
                 DownloadData download;
-                if (optionalDownload.isPresent()) {
-                    download = optionalDownload.get();
-                } else {
-                    download = null;
-                }
+                download = optionalDownload.orElse(null);
                 ContextMenu contextMenu = new DownloadGuiTableContextMenu(progData, this, tableView).getContextMenu(download);
                 tableView.setContextMenu(contextMenu);
             }
@@ -561,6 +484,24 @@ public class DownloadGuiController extends AnchorPane {
             if (downloadEditDialogController.isOk()) {
                 download.get().copyToMe(downloadCopy);
             }
+        }
+    }
+
+    private void setInfoPane() {
+        if (!ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.getValue()) {
+            if (bound) {
+                splitPane.getDividers().get(0).positionProperty().unbindBidirectional(ProgConfig.DOWNLOAD_GUI_DIVIDER);
+            }
+            splitPane.getItems().clear();
+            splitPane.getItems().add(scrollPane);
+
+        } else {
+            bound = true;
+
+            splitPane.getItems().clear();
+            splitPane.getItems().addAll(scrollPane, downloadInfoController);
+            splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.DOWNLOAD_GUI_DIVIDER);
+            SplitPane.setResizableWithParent(downloadInfoController, false);
         }
     }
 }

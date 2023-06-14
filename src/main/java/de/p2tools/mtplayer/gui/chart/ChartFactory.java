@@ -42,6 +42,8 @@ public class ChartFactory {
     private ChartFactory() {
     }
 
+    static int i = 0;
+
     public static synchronized void runChart(LineChart<Number, Number> lineChart, ChartData chartData,
                                              ProgData progData, boolean visible) {
         chartData.addCountSek(); // Sekunden
@@ -56,6 +58,7 @@ public class ChartFactory {
         }
 
         if (visible) {
+            System.out.println("SEARCH INFOS: " + ++i);
             ChartFactoryGenerateData.setChartDataShowing(chartData);
             ChartFactoryGenerateData.generateYScale(lineChart, chartData);
             ChartFactoryGenerateData.genChartSeries(chartData);

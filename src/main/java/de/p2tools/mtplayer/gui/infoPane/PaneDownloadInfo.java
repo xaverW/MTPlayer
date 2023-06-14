@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.gui;
+package de.p2tools.mtplayer.gui.infoPane;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.tools.Listener;
@@ -27,14 +27,14 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-public class DownloadGuiInfo extends AnchorPane {
+public class PaneDownloadInfo extends AnchorPane {
 
     private final VBox vBoxAll = new VBox();
     private final VBox vBoxHeader = new VBox();
     private final GridPane gridPane = new GridPane();
     private final ProgData progData;
 
-    public DownloadGuiInfo() {
+    public PaneDownloadInfo() {
         progData = ProgData.getInstance();
 
         gridPane.setHgap(30);
@@ -52,7 +52,7 @@ public class DownloadGuiInfo extends AnchorPane {
         AnchorPane.setRightAnchor(gridPane, 0.0);
         AnchorPane.setTopAnchor(gridPane, 0.0);
 
-        Listener.addListener(new Listener(Listener.EVENT_TIMER, DownloadGuiInfo.class.getSimpleName()) {
+        Listener.addListener(new Listener(Listener.EVENT_TIMER, PaneDownloadInfo.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 setInfoText();

@@ -23,7 +23,7 @@ import de.p2tools.p2lib.mtfilm.film.FilmData;
 public class FilmDataMTP extends FilmData {
 
     private AboData abo = null; //dann gibts ein Abo ABER: es kann ausgeschaltet, Film zu klein, ... sein!!
-    private boolean wasHere = false;
+    private boolean wasHere = false; //markiert die Filme VOR dem selektierten Film
 
     @Override
     public FilmDataMTP getCopy() {
