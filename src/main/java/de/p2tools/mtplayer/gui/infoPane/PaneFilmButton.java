@@ -17,6 +17,7 @@
 
 package de.p2tools.mtplayer.gui;
 
+import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
 import de.p2tools.p2lib.P2LibConst;
@@ -26,10 +27,8 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.TilePane;
 
 public class FilmGuiButtonPane {
-    private final FilmGuiController filmGuiController;
 
-    public FilmGuiButtonPane(FilmGuiController filmGuiController) {
-        this.filmGuiController = filmGuiController;
+    public FilmGuiButtonPane() {
     }
 
     public TilePane getButtonPane(SetDataList setDataList) {
@@ -49,7 +48,7 @@ public class FilmGuiButtonPane {
                 btn.getStyleClass().add("setButton");
             }
 
-            btn.setOnAction(a -> filmGuiController.playFilmUrlWithSet(setData));
+            btn.setOnAction(a -> ProgData.getInstance().filmGuiController.playFilmUrlWithSet(setData));
             tilePaneButton.getChildren().add(btn);
         });
         return tilePaneButton;
