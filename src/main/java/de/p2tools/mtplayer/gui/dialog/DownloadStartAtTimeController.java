@@ -277,7 +277,7 @@ public class DownloadStartAtTimeController extends PDialogExtra {
                     } else {
                         downloadListSel.remove(download);
                     }
-                    fillTable();//todo sollte es nicht brauchen??
+                    fillTable(); // todo sollte es nicht brauchen??
                 });
 
                 hbox.getChildren().addAll(btnDownDel);

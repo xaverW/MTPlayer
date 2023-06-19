@@ -136,7 +136,7 @@ public class FilmGuiController extends AnchorPane {
         if (list.isEmpty()) {
             return;
         }
-        getSel(true, false);// damit sel gesetzt wird
+        getSel(true, false); // damit sel gesetzt wird
         FilmTools.setFilmShown(progData, list, true);
         selectShown();
     }
@@ -232,7 +232,7 @@ public class FilmGuiController extends AnchorPane {
 
         tableView.setOnMousePressed(m -> {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
-                final Optional<FilmDataMTP> optionalFilm = getSel(true, false);// ist für Blacklist wichtig
+                final Optional<FilmDataMTP> optionalFilm = getSel(true, false); // ist für Blacklist wichtig
                 FilmDataMTP film;
                 film = optionalFilm.orElse(null);
                 ContextMenu contextMenu = new FilmGuiTableContextMenu(progData, this, tableView).getContextMenu(film);

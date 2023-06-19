@@ -18,7 +18,8 @@ package de.p2tools.mtplayer.gui.infoPane;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.gui.chart.ChartData;
+import de.p2tools.mtplayer.gui.chart.BandwidthDataFactory;
+import de.p2tools.mtplayer.gui.chart.ChartDataFactory;
 import de.p2tools.mtplayer.gui.chart.ChartFactory;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
@@ -38,12 +39,10 @@ public class PaneDownloadChart extends AnchorPane {
     private final ProgData progData;
 
     private LineChart<Number, Number> lineChart = null;
-    private final ChartData chartData;
     private ContextMenu cm = null;
 
     public PaneDownloadChart(ProgData progData) {
         this.progData = progData;
-        chartData = progData.chartData;
 
         initList();
         initCharts();
@@ -51,7 +50,7 @@ public class PaneDownloadChart extends AnchorPane {
     }
 
     private synchronized void initList() {
-        chartData.setyScale(1);
+        progData.chartData.setyScale(1);
     }
 
     private void initCharts() {
@@ -83,31 +82,36 @@ public class PaneDownloadChart extends AnchorPane {
 
     private void selectChartData() {
         if (separatChartProp.get()) {
-            lineChart.setData(chartData.getChartSeriesList_SeparateCharts());
+            lineChart.setData(progData.chartData.getChartSeriesList_SeparateCharts());
         } else {
-            lineChart.setData(chartData.getChartSeriesList_OneSumChart());
+            lineChart.setData(progData.chartData.getChartSeriesList_OneSumChart());
         }
     }
 
     private synchronized void clearChart() {
-        chartData.getBandwidthDataList().clear(); // da werden alle gesammelten Daten gelöscht
-        chartData.setyScale(1);
+        progData.chartData.getBandwidthDataList().clear(); // da werden alle gesammelten Daten gelöscht
+        progData.chartData.setyScale(1);
     }
 
     private ContextMenu initContextMenu() {
-        final Label lblValue = new Label(" " + chartData.getDownloadChartMaxTimeMinutes() + " Min.");
+        if (ProgConfig.DOWNLOAD_CHART_SHOW_MAX_TIME_MIN.getValue() % 10 != 0) {
+            // vorsichtshalber
+            ProgConfig.DOWNLOAD_CHART_SHOW_MAX_TIME_MIN.setValue(30);
+        }
+
+        final Label lblValue = new Label(" " + ProgConfig.DOWNLOAD_CHART_SHOW_MAX_TIME_MIN.get() + " Min.");
         final Label lblInfo = new Label("Zeitraum:");
 
         final Slider slMaxTime = new Slider();
         slMaxTime.setMinWidth(250);
-        slMaxTime.setMin(ProgData.debug ? 1 : 10);
-        slMaxTime.setMax(ChartFactory.MAX_MINUTES_SHOWING);
+        slMaxTime.setMin(10);
+        slMaxTime.setMax(BandwidthDataFactory.MAX_SECONDS_SHOWING / 60.0);
         slMaxTime.setBlockIncrement(10);
         slMaxTime.setShowTickLabels(true);
         slMaxTime.setSnapToTicks(true);
         slMaxTime.setShowTickMarks(true);
-        slMaxTime.setMinorTickCount(13);
-        slMaxTime.setMajorTickUnit(140);
+        slMaxTime.setMinorTickCount(0);
+        slMaxTime.setMajorTickUnit(10);
 
         IntegerProperty ip = ProgConfig.DOWNLOAD_CHART_SHOW_MAX_TIME_MIN;
         slMaxTime.valueProperty().bindBidirectional(ip);
@@ -160,6 +164,9 @@ public class PaneDownloadChart extends AnchorPane {
     // Daten generieren
     // ============================
     public synchronized void searchInfos(boolean visible) {
-        ChartFactory.runChart(lineChart, chartData, progData, visible);
+        BandwidthDataFactory.addBandwidthData();
+        if (visible) {
+            ChartDataFactory.runChart(lineChart);
+        }
     }
 }

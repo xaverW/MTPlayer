@@ -194,7 +194,7 @@ public class DownloadGuiTableContextMenu {
         miRemove.setOnAction(a -> downloadGuiController.deleteDownloads());
 
         final Menu submenuDownload = new Menu("Downloads");
-        miPrefer.setDisable(download == null || !download.isStateStartedWaiting());// macht nur dann Sinn
+        miPrefer.setDisable(download == null || !download.isStateStartedWaiting()); // macht nur dann Sinn
         miPutBack.setDisable(download == null);
         miRemove.setDisable(download == null);
         submenuDownload.getItems().addAll(miPrefer, miPutBack, miRemove);

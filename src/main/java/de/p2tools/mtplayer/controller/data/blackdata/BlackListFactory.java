@@ -80,5 +80,9 @@ public class BlackListFactory {
         bl = new BlackData("", "", "in Gebärdensprache", "");
         bl.setThemeExact(false);
         list.add(bl);
+
+        bl = new BlackData("", "in Gebärdensprache", "", "");
+        bl.setThemeExact(false);
+        list.add(bl);
     }
 }

@@ -127,7 +127,7 @@ public class PaneMediaConfig {
         gridPane.add(hBox, 0, ++row, 2, 1);
 
         HBox hBoxExport = new HBox(P2LibConst.DIST_BUTTON);
-        Label lblExport = new Label("Datei:");//wegen des Abstands :)
+        Label lblExport = new Label("Datei:"); // wegen des Abstands :)
         lblExport.setVisible(false);
         hBoxExport.getChildren().addAll(lblExport, rbIntern, rbExtern, rbInternExtern);
         gridPane.add(hBoxExport, 0, ++row);

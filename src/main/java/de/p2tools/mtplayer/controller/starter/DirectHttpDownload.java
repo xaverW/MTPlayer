@@ -302,7 +302,7 @@ public class DirectHttpDownload extends Thread {
                 download.setStateError();
             }
         } else {
-            download.stopDownload();// nochmal da RUNTIME_EXEC ja weiter läuft
+            download.stopDownload(); // nochmal da RUNTIME_EXEC ja weiter läuft
         }
     }
 

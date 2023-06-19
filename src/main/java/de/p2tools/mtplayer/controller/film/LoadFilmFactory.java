@@ -81,7 +81,7 @@ public class LoadFilmFactory {
         LoadFactoryConst.primaryStage = ProgData.getInstance().primaryStage;
         LoadFactoryConst.filmListUrl = ProgData.filmListUrl;
 
-        // ProgData.getInstance().filmListFilter.clearCounter();//todo evtl. nur beim Neuladen einer kompletten Liste??
+        // ProgData.getInstance().filmListFilter.clearCounter(); //todo evtl. nur beim Neuladen einer kompletten Liste??
         if (ProgConfig.SYSTEM_FILMLIST_FILTER.getValue() == BlacklistFilterFactory.BLACKLILST_FILTER_OFF) {
             //ist sonst evtl. noch von "vorher" gesetzt
             LoadFactoryConst.checker = null;

@@ -31,7 +31,7 @@ public class AboGuiPack {
     ProgData progData;
     private final SplitPane splitPane = new SplitPane();
     private final HBox hBox = new HBox();
-    DoubleProperty doubleProperty;//sonst geht die Ref verloren
+    DoubleProperty doubleProperty; // sonst geht die Ref verloren
     BooleanProperty boolDivOn;
     private final AboFilterController aboFilterController;
     private AboGuiController aboGuiController;

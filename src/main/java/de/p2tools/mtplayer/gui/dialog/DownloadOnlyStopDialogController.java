@@ -37,7 +37,7 @@ public class DownloadOnlyStopDialogController extends PDialogExtra {
     private final Button btnDelDl = new Button("DL löschen, Datei behalten");
     private final Button btnCancel = new Button("Abbrechen");
     private final CheckBox chkAlways = new CheckBox("Immer ausführen");
-    private final boolean delete;// nur zur Anzeige des Button-Textes
+    private final boolean delete; //  nur zur Anzeige des Button-Textes
     private final ObservableList<DownloadData> foundDownloadList;
     private STATE state;
 

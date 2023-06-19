@@ -153,7 +153,7 @@ public final class DownloadData extends DownloadDataProps {
     public void resetDownload() {
         // stoppen und alles zurücksetzen
         stopDownload();
-        setProgress(DownloadConstants.PROGRESS_NOT_STARTED);// damit auch fehlerhafte zurückgesetzt werden
+        setProgress(DownloadConstants.PROGRESS_NOT_STARTED); // damit auch fehlerhafte zurückgesetzt werden
         setState(DownloadConstants.STATE_INIT);
     }
 
@@ -332,7 +332,7 @@ public final class DownloadData extends DownloadDataProps {
         }
 
         film = download.film;
-        getDownloadSize().setSize(download.getDownloadSize().getSize());// die Auflösung des Films kann sich ändern
+        getDownloadSize().setSize(download.getDownloadSize().getSize()); // die Auflösung des Films kann sich ändern
 
         setStart(download.getStart());
         setData = download.setData;

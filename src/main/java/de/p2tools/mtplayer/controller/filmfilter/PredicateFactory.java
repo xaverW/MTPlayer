@@ -124,7 +124,7 @@ public class PredicateFactory {
 
         if (noAbos) {
             //todo -> abo??
-            predicate = predicate.and(f -> f.arr[FilmDataXml.FILM_ABO_NAME].isEmpty());//dann gibts kein Abo, auch keins "zu kleiner Film", ...
+            predicate = predicate.and(f -> f.arr[FilmDataXml.FILM_ABO_NAME].isEmpty()); //dann gibts kein Abo, auch keins "zu kleiner Film", ...
         }
         if (noShown) {
             predicate = predicate.and(f -> !f.isShown());

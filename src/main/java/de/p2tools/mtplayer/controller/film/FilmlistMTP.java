@@ -237,7 +237,7 @@ public class FilmlistMTP extends Filmlist<FilmDataMTP> {
         themePerChannel = new String[senderLength][];
 
         final TreeSet<String>[] tree = (TreeSet<String>[]) new TreeSet<?>[senderLength];
-        final HashSet<String>[] hashSet = (HashSet<String>[]) new HashSet<?>[senderLength];// wäre nicht nötig ist aber so fast doppelt so schnell
+        final HashSet<String>[] hashSet = (HashSet<String>[]) new HashSet<?>[senderLength]; // wäre nicht nötig ist aber so fast doppelt so schnell
         for (int i = 0; i < tree.length; ++i) {
             // tree[i] = new TreeSet<>(GermanStringSorter.getInstance());
             // das Sortieren passt nicht richtig zum Filter!

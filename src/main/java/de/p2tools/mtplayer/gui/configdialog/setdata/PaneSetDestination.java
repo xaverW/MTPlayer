@@ -173,7 +173,7 @@ public class PaneSetDestination {
         vBox.getChildren().add(gridPane);
 
         int row = 0;
-        gridPane.add(lblTxtAll, 0, ++row);//Platz nach oben!
+        gridPane.add(lblTxtAll, 0, ++row); // Platz nach oben!
         gridPane.add(slCut, 1, row);
         gridPane.add(lblSizeAll, 2, row);
         gridPane.add(btnHelpDestSize, 3, row);

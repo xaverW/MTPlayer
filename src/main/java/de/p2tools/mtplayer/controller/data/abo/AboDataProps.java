@@ -48,9 +48,9 @@ public class AboDataProps extends PDataSample<AboData> implements Comparable<Abo
     private final IntegerProperty maxDurationMinute = new SimpleIntegerProperty(FilterCheck.FILTER_DURATION_MAX_MINUTE); //Minuten
     private final StringProperty startTime = new SimpleStringProperty("");
     private final StringProperty aboSubDir = new SimpleStringProperty("");
-    private final PDateProperty date = new PDateProperty(new PDate(0));//Datum des letzten gefundenen Downloads
-    private final StringProperty setDataId = new SimpleStringProperty("");//nur zum Speichern/Laden
-    private final PDateProperty genDate = new PDateProperty(new PDate());//Erstelldatum
+    private final PDateProperty date = new PDateProperty(new PDate(0)); //Datum des letzten gefundenen Downloads
+    private final StringProperty setDataId = new SimpleStringProperty(""); //nur zum Speichern/Laden
+    private final PDateProperty genDate = new PDateProperty(new PDate()); //Erstelldatum
 
     private final ObjectProperty<SetData> setData = new SimpleObjectProperty<>();
     private final IntegerProperty hit = new SimpleIntegerProperty(0);

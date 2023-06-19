@@ -120,7 +120,7 @@ public class PaneSetDownload {
                 HelpText.SETDATA_RES);
 
         int row = 0;
-        gridPane.add(rbHd, 0, ++row);//Platz nach oben!
+        gridPane.add(rbHd, 0, ++row); // Platz nach oben!
         gridPane.add(btnHelpRes, 1, row, 1, 2);
         gridPane.add(rbHeight, 0, ++row);
         gridPane.add(rbLow, 0, ++row);
@@ -137,7 +137,7 @@ public class PaneSetDownload {
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
 
         int row = 0;
-        gridPane.add(tglInfo, 0, ++row);//Platz nach oben!
+        gridPane.add(tglInfo, 0, ++row); // Platz nach oben!
         gridPane.add(tglSubtitle, 0, ++row);
         vBox.getChildren().add(gridPane);
     }

@@ -260,7 +260,7 @@ public class StatusBarController extends AnchorPane {
             circleDownload.setVisible(true);
             circleAbo.setVisible(true);
         }
-        blink = progData.downloadInfos.getNotStarted() > 0;//dann soll geblinkt werden
+        blink = progData.downloadInfos.getNotStarted() > 0; //dann soll geblinkt werden
 
         if (progData.downloadInfos.getFinishedError() > 0) {
             circleFilm.setFill(Paint.valueOf("red"));

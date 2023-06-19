@@ -67,6 +67,7 @@ public class ProgData {
     public static BooleanProperty FILM_TAB_ON = new SimpleBooleanProperty(Boolean.FALSE);
     public static BooleanProperty DOWNLOAD_TAB_ON = new SimpleBooleanProperty(Boolean.FALSE);
     public static BooleanProperty ABO_TAB_ON = new SimpleBooleanProperty(Boolean.FALSE);
+    public static long countRunningTimeSeconds = 0; // Gesamtzeit die das Programm läuft
 
     // Infos
     public static String configDir = ""; //Verzeichnis zum Speichern der Programmeinstellungen
@@ -174,6 +175,7 @@ public class ProgData {
     }
 
     private void doTimerWorkOneSecond() {
+        ++countRunningTimeSeconds;
         Listener.notify(Listener.EVENT_TIMER, ProgData.class.getName());
     }
 

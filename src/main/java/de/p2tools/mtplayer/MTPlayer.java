@@ -81,7 +81,7 @@ public class MTPlayer extends Application {
 
             scene = new Scene(progData.mtPlayerController,
                     PGuiSize.getWidth(ProgConfig.SYSTEM_SIZE_GUI),
-                    PGuiSize.getHeight(ProgConfig.SYSTEM_SIZE_GUI));//Größe der scene!= Größe stage!!!
+                    PGuiSize.getHeight(ProgConfig.SYSTEM_SIZE_GUI)); //Größe der scene!= Größe stage!!!
             addThemeCss(); // und jetzt noch für die neue Scene
             ProgColorList.setColorTheme(); // Farben einrichten
 

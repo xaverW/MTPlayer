@@ -18,60 +18,20 @@
 package de.p2tools.mtplayer.gui.chart;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
-import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.p2lib.P2LibConst;
 import javafx.geometry.Side;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
 import javafx.util.StringConverter;
 
-import java.util.Iterator;
-
 public class ChartFactory {
-    public static int MAX_CHART_DATA_PER_SCREEN = 60;
-    public static int DATA_ALL_SECONDS = 2;
-
-    public static int MAX_MINUTES_SHOWING = 300;
-    public static int MAX_SECONDS_SHOWING = MAX_MINUTES_SHOWING * 60; //18_000
-
-    public static int MAX_DATA = MAX_SECONDS_SHOWING / DATA_ALL_SECONDS; // 9_000
-    private static int tmpCount = 0;
-
     private ChartFactory() {
-    }
-
-    static int i = 0;
-
-    public static synchronized void runChart(LineChart<Number, Number> lineChart, ChartData chartData,
-                                             ProgData progData, boolean visible) {
-        chartData.addCountSek(); // Sekunden
-        chartData.genActValues();
-        cleanUpData(chartData, progData);
-        inputDownloadData(chartData, progData);
-
-        ++tmpCount;
-        if (tmpCount >= ChartFactory.DATA_ALL_SECONDS) {
-            tmpCount = 0;
-            addTmpData(chartData);
-        }
-
-        if (visible) {
-            System.out.println("SEARCH INFOS: " + ++i);
-            ChartFactoryGenerateData.setChartDataShowing(chartData);
-            ChartFactoryGenerateData.generateYScale(lineChart, chartData);
-            ChartFactoryGenerateData.genChartSeries(chartData);
-
-            ChartFactoryGenerateChartData.generateChartData(lineChart, chartData);
-            ChartFactoryGenerateData.zoomXAxis(lineChart, chartData);
-        }
     }
 
     public static NumberAxis createXAxis() {
         final NumberAxis xAxis = new NumberAxis();
         xAxis.setAutoRanging(false);
-        xAxis.setLabel("Programmlaufzeit [min]");
+        setXAxisLabel(xAxis);
+        BandwidthDataFactory.SHOW_MINUTES.addListener((u, o, n) -> setXAxisLabel(xAxis));
         xAxis.setLowerBound(0.0);
         xAxis.setSide(Side.RIGHT);
         xAxis.setTickLabelFormatter(new StringConverter<>() {
@@ -79,10 +39,10 @@ public class ChartFactory {
             public String toString(Number object) {
                 if (object.doubleValue() > 60) {
                     int i = (int) object.doubleValue();
-                    return i + "";
+                    return String.valueOf(i);
                 } else {
                     int i = (int) (object.doubleValue() * 10);
-                    return ((i / 10.0) + "");
+                    return (String.valueOf(i / 10.0));
                 }
             }
 
@@ -94,6 +54,20 @@ public class ChartFactory {
         return xAxis;
     }
 
+    public static synchronized void zoomXAxis(LineChart<Number, Number> lineChart, ChartData chartData) {
+        final NumberAxis xAxis = (NumberAxis) lineChart.getXAxis();
+        xAxis.setUpperBound(ProgData.countRunningTimeSeconds / (BandwidthDataFactory.SHOW_MINUTES.getValue() ? 60.0 : 1.0));
+
+        final double secondsPerPixel = chartData.getSecondsPerPixel();
+        final double MIN = ProgData.countRunningTimeSeconds - BandwidthDataFactory.CHART_SUM_PIXEL * secondsPerPixel;
+        final double lower = Math.max(MIN, 0);
+        xAxis.setLowerBound(lower / (BandwidthDataFactory.SHOW_MINUTES.getValue() ? 60.0 : 1.0));
+    }
+
+    private static void setXAxisLabel(NumberAxis xAxis) {
+        xAxis.setLabel("Programmlaufzeit " + (BandwidthDataFactory.SHOW_MINUTES.getValue() ? "[min]" : "[s]"));
+    }
+
     public static NumberAxis createYAxis() {
         final NumberAxis yAxis = new NumberAxis();
         yAxis.setAutoRanging(true);
@@ -102,112 +76,34 @@ public class ChartFactory {
         return yAxis;
     }
 
-    private static synchronized void cleanUpData(ChartData chartData, ProgData progData) {
-        chartData.setyScale(1);
-        boolean foundDownload;
+    public static synchronized void generateYScale(LineChart<Number, Number> lineChart, ChartData chartData) {
+        double max = 0;
+        int scale = 1;
 
-        //alle Messpunkte vor MAX-Zeit löschen
-        chartData.getBandwidthDataList().stream().forEach(bandwidthData -> {
-            while (bandwidthData.size() > ChartFactory.MAX_DATA) {
-                bandwidthData.removeFirst();
+        for (BandwidthData bandwidthData : chartData.getBandwidthDataList()) {
+            if (!bandwidthData.isShowing()) {
+                continue;
             }
-            while ((chartData.getCountProgRunningTimeSeconds() - bandwidthData.getStartTimeSec()) > ChartFactory.MAX_SECONDS_SHOWING) {
-                if (bandwidthData.isEmpty()) {
-                    break;
-                }
-                bandwidthData.removeFirst();
-            }
-        });
 
-        //Downloads die es nicht mehr gibt: "Download" entfernen
-        //wurde bereits alles aus "BandwidthData" gelöscht, kommts auch weg
-        Iterator<BandwidthData> it = chartData.getBandwidthDataList().listIterator();
-        while (it.hasNext()) {
-            foundDownload = false;
-            final BandwidthData bandwidthData = it.next();
-            for (final DownloadData download : progData.downloadList) {
-                if (bandwidthData.getDownload() != null && bandwidthData.getDownload().equals(download)) {
-                    foundDownload = true;
-                    break;
-                }
-            }
-            if (!foundDownload) {
-                bandwidthData.setDownload(null);
-                if (bandwidthData.isEmpty()) {
-                    it.remove();
-                }
+            long m = bandwidthData.getMaxValue();
+            if (m > max) {
+                max = m;
             }
         }
 
-        //fertige Downloads abschließen, Download gibts nicht mehr oder läuft nicht mehr,
-        //dann einen Wert "0" anfügen, wenn noch nicht geschehen
-        it = chartData.getBandwidthDataList().listIterator();
-        while (it.hasNext()) {
-            BandwidthData bandwidthData = it.next();
-            foundDownload = false;
-            for (final DownloadData download : progData.downloadList.getListOfStartsNotFinished(DownloadConstants.ALL)) {
-                if (bandwidthData.getDownload() != null && bandwidthData.getDownload().equals(download)) {
-                    foundDownload = true;
-                    break;
-                }
-            }
-            if (!foundDownload) {
-                bandwidthData.cleanUpData();
-            }
+        while (max > 25_000) {
+            max /= 1_000;
+            scale *= 1_000;
         }
+        chartData.setyScale(scale);
+        setYAxisLabel(lineChart, scale);
     }
 
-    private static synchronized void inputDownloadData(ChartData chartData, ProgData progData) {
-        //Downloads in BandwidthData eintragen und jeden Download prüfen
-        boolean foundDownload;
-        for (final DownloadData download : progData.downloadList) {
-            foundDownload = false;
-            for (final BandwidthData bandwidthData : chartData.getBandwidthDataList()) {
-                if (bandwidthData.getDownload() != null && bandwidthData.getDownload().equals(download)) {
-                    foundDownload = true;
-                    break;
-                }
-            }
-            if (!foundDownload && download.isStarted()) {
-                // dann ist es ein neu gestarteter
-                BandwidthData bwd = new BandwidthData(chartData, download);
-                chartData.getBandwidthDataList().add(bwd);
-            }
-        }
-
-        for (final BandwidthData bandwidthData : chartData.getBandwidthDataList()) {
-            final DownloadData download = bandwidthData.getDownload();
-            if (download != null && download.isStateStartedRun()) {
-                // sonst läuft er noch nicht/nicht mehr
-                final long bandwidth = download.getStart().getBandwidth();
-                bandwidthData.addTmpData(bandwidth);
-            } else {
-                bandwidthData.addTmpData(0L);
-            }
-
-            //damit beim Pausieren die Nummer nicht verloren geht
-            if (download != null && download.getNo() != P2LibConst.NUMBER_NOT_STARTED) {
-                bandwidthData.setName(download.getNo() + "");
-
-            } else if (download != null && download.getFilm() != null) {
-                final String fNo = download.getFilm().getNo() == P2LibConst.NUMBER_NOT_STARTED ?
-                        " " : "[" + download.getFilm().getNo() + "]";
-                bandwidthData.setName(fNo);
-            }
-        }
-    }
-
-    private static synchronized void addTmpData(ChartData chartData) {
-        //temp-data in BandwidthData eintragen
-        for (final BandwidthData bandwidthData : chartData.getBandwidthDataList()) {
-            bandwidthData.addFromTmpData();
-        }
-    }
-
-    public static void initChartSeries(XYChart.Series<Number, Number> chartSeries) {
-        chartSeries.getData().clear();
-        for (int i = 0; i < ChartFactory.MAX_CHART_DATA_PER_SCREEN; ++i) {
-            chartSeries.getData().add(new XYChart.Data<>(i, 0));
+    private static void setYAxisLabel(LineChart<Number, Number> lineChart, int scale) {
+        switch (scale) {
+            case 1 -> lineChart.getYAxis().setLabel("Bandbreite [B/s]");
+            case 1_000 -> lineChart.getYAxis().setLabel("Bandbreite [kB/s]");
+            case 1_000_000 -> lineChart.getYAxis().setLabel("Bandbreite [MB/s]");
         }
     }
 }

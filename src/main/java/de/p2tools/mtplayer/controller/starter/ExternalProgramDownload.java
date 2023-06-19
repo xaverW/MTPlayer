@@ -179,7 +179,7 @@ public class ExternalProgramDownload extends Thread {
                 if (download.getStart().getProcess() != null) {
                     download.getStart().getProcess().destroy();
                 }
-                download.stopDownload();// nochmal da RUNTIME_EXEC ja weiter läuft
+                download.stopDownload(); // nochmal da RUNTIME_EXEC ja weiter läuft
 
             } else {
                 final int exitV = download.getStart().getProcess().exitValue(); //liefert ex wenn noch nicht fertig

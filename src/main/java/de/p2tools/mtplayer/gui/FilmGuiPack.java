@@ -31,7 +31,7 @@ public class FilmGuiPack {
     ProgData progData;
     private final SplitPane splitPane = new SplitPane();
     private final HBox hBox = new HBox();
-    static DoubleProperty doubleProperty;//sonst geht die Ref verloren
+    static DoubleProperty doubleProperty; //sonst geht die Ref verloren
     static BooleanProperty boolDivOn;
     private final FilmFilterController filmFilterController;
     private final FilmGuiController guiController;

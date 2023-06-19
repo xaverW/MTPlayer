@@ -70,7 +70,7 @@ public class ProgConfig extends PDataProgConfig {
     // Configs der Programmversion, nur damit sie (zur Update-Suche) im Config-File stehen
     public static StringProperty SYSTEM_PROG_VERSION = addStrProp("system-prog-version", ProgramToolsFactory.getProgVersion());
     public static StringProperty SYSTEM_PROG_BUILD_NO = addStrProp("system-prog-build-no", ProgramToolsFactory.getBuild());
-    public static StringProperty SYSTEM_PROG_BUILD_DATE = addStrProp("system-prog-build-date", ProgramToolsFactory.getCompileDate());//z.B.: 27.07.2
+    public static StringProperty SYSTEM_PROG_BUILD_DATE = addStrProp("system-prog-build-date", ProgramToolsFactory.getCompileDate()); //z.B.: 27.07.2
 
     //Configs zur Anzeige der Diakritika in der Filmliste
     //TRUE: dann werden Diakritika nicht geändert und angezeigt --> das kommt weg
@@ -155,8 +155,8 @@ public class ProgConfig extends PDataProgConfig {
     public static BooleanProperty SYSTEM_DARK_THEME = addBoolProp("system-dark-theme", Boolean.FALSE);
     public static BooleanProperty SYSTEM_THEME_CHANGED = addBoolProp("system-theme-changed");
     public static BooleanProperty SYSTEM_SSL_ALWAYS_TRUE = addBoolProp("system-ssl-always-true");
-    public static BooleanProperty TIP_OF_DAY_SHOW = addBoolProp("tip-of-day-show", Boolean.TRUE);//Tips anzeigen
-    public static StringProperty TIP_OF_DAY_WAS_SHOWN = addStrProp("tip-of-day-was-shown");//bereits angezeigte Tips
+    public static BooleanProperty TIP_OF_DAY_SHOW = addBoolProp("tip-of-day-show", Boolean.TRUE); //Tips anzeigen
+    public static StringProperty TIP_OF_DAY_WAS_SHOWN = addStrProp("tip-of-day-was-shown"); //bereits angezeigte Tips
     public static StringProperty TIP_OF_DAY_DATE = addStrProp("tip-of-day-date"); //Datum des letzten Tips
     public static IntegerProperty SYSTEM_FILTER_WAIT_TIME = addIntProp("system-filter-wait-time", 100);
     public static BooleanProperty SYSTEM_FILTER_RETURN = addBoolProp("system-filter-return", Boolean.FALSE);
@@ -187,8 +187,8 @@ public class ProgConfig extends PDataProgConfig {
     public static BooleanProperty DOWNLOAD_START_NOW = addBoolProp("download-start-now", Boolean.FALSE);
     public static BooleanProperty DOWNLOAD_BEEP = addBoolProp("download-beep");
     public static BooleanProperty DOWNLOAD_ERROR_MSG = addBoolProp("download-error-msg", Boolean.TRUE);
-    public static IntegerProperty DOWNLOAD_ONLY_STOP = addIntProp("download-only-stop", DownloadState.DOWNLOAD_STOP__ASK);// das sind Downloads ohne Dateien
-    public static IntegerProperty DOWNLOAD_STOP = addIntProp("download-stop", DownloadState.DOWNLOAD_STOP__ASK);// das sind Downloads mit bereits geladenen Dateien
+    public static IntegerProperty DOWNLOAD_ONLY_STOP = addIntProp("download-only-stop", DownloadState.DOWNLOAD_STOP__ASK); // das sind Downloads ohne Dateien
+    public static IntegerProperty DOWNLOAD_STOP = addIntProp("download-stop", DownloadState.DOWNLOAD_STOP__ASK); // das sind Downloads mit bereits geladenen Dateien
     public static IntegerProperty DOWNLOAD_CONTINUE = addIntProp("download-continue", DownloadState.DOWNLOAD_RESTART__ASK);
     public static IntegerProperty DOWNLOAD_MAX_DOWNLOADS = addIntProp("download-max-downloads", 1);
     public static BooleanProperty DOWNLOAD_MAX_ONE_PER_SERVER = addBoolProp("download-max-one-per-server"); // nur ein Download pro Server - sonst max 2
@@ -233,14 +233,14 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty DOWNLOAD_GUI_TABLE_ORDER = addStrProp("download-gui-table-order");
     public static BooleanProperty DOWNLOAD_SHOW_NOTIFICATION = addBoolProp("download-show-notification", Boolean.TRUE);
     public static DoubleProperty DOWNLOAD_GUI_MEDIA_DIVIDER = addDoubleProp("download-gui-media-divider", 0.5);
-    public static StringProperty DOWNLOAD_STOP_DIALOG_SIZE = addStrProp("download-stop-dialog-size", "850:600");
+    public static StringProperty DOWNLOAD_STOP_DIALOG_SIZE = addStrProp("download-stop-dialog-size", "950:600");
     public static StringProperty DOWNLOAD_ONLY_STOP_DIALOG_SIZE = addStrProp("download-only-stop-dialog-size", "600:400");
 
     //Gui Download Media
-    public static IntegerProperty DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_MEDIA = addIntProp("download-gui-media-build-search-media", ProgConst.MEDIA_COLLECTION_SEARCH_TITEL);//aus was der Suchbegriff gebaut wird: T/Th/TT
-    public static IntegerProperty DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_ABO = addIntProp("download-gui-media-build-search-abo", ProgConst.MEDIA_COLLECTION_SEARCH_TITEL);//aus was der Suchbegriff gebaut wird: T/Th/TT
-    public static IntegerProperty DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA = addIntProp("download-gui-media-search-in-media", ProgConst.MEDIA_COLLECTION_SEARCH_TITEL);//wo bei Medien gesucht wird: T/Th/TT
-    public static IntegerProperty DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO = addIntProp("download-gui-media-search-in-abo", ProgConst.MEDIA_COLLECTION_SEARCH_TITEL);//wo bei Abos gesucht wird: T/Th/TT
+    public static IntegerProperty DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_MEDIA = addIntProp("download-gui-media-build-search-media", ProgConst.MEDIA_COLLECTION_SEARCH_TITEL); //aus was der Suchbegriff gebaut wird: T/Th/TT
+    public static IntegerProperty DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_ABO = addIntProp("download-gui-media-build-search-abo", ProgConst.MEDIA_COLLECTION_SEARCH_TITEL); //aus was der Suchbegriff gebaut wird: T/Th/TT
+    public static IntegerProperty DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA = addIntProp("download-gui-media-search-in-media", ProgConst.MEDIA_COLLECTION_SEARCH_TITEL); //wo bei Medien gesucht wird: T/Th/TT
+    public static IntegerProperty DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO = addIntProp("download-gui-media-search-in-abo", ProgConst.MEDIA_COLLECTION_SEARCH_TITEL); //wo bei Abos gesucht wird: T/Th/TT
     public static BooleanProperty DOWNLOAD_GUI_MEDIA_CLEAN_MEDIA = addBoolProp("download-gui-media-clean-media", Boolean.TRUE);
     public static BooleanProperty DOWNLOAD_GUI_MEDIA_CLEAN_ABO = addBoolProp("download-gui-media-clean-abo", Boolean.TRUE);
     public static BooleanProperty DOWNLOAD_GUI_MEDIA_CLEAN_EXACT_MEDIA = addBoolProp("download-gui-media-clean-exact-media", Boolean.FALSE);
@@ -445,15 +445,15 @@ public class ProgConfig extends PDataProgConfig {
         ProgConfig.SYSTEM_PROG_BUILD_NO.set(ProgramToolsFactory.getBuild());
         ProgConfig.SYSTEM_PROG_BUILD_DATE.set(ProgramToolsFactory.getCompileDate());
 
-        configFile.addConfigs(ProgConfig.getInstance());//Progconfig
-        configFile.addConfigs(ProgColorList.getInstance());//Color
+        configFile.addConfigs(ProgConfig.getInstance()); //Progconfig
+        configFile.addConfigs(ProgColorList.getInstance()); //Color
 
         configFile.addConfigs(progData.setDataList);
 
-        final FilmFilter akt_sf = progData.actFilmFilterWorker.getActFilterSettings();//akt-Filter
-        akt_sf.setName(ActFilmFilterWorker.SELECTED_FILTER_NAME);// nur zur Info im Config-File
+        final FilmFilter akt_sf = progData.actFilmFilterWorker.getActFilterSettings(); //akt-Filter
+        akt_sf.setName(ActFilmFilterWorker.SELECTED_FILTER_NAME); // nur zur Info im Config-File
         configFile.addConfigs(akt_sf);
-        configFile.addConfigs(progData.actFilmFilterWorker.getStoredFilterList());//Filterprofile
+        configFile.addConfigs(progData.actFilmFilterWorker.getStoredFilterList()); //Filterprofile
 
         configFile.addConfigs(progData.aboList);
         configFile.addConfigs(progData.filmListFilter);

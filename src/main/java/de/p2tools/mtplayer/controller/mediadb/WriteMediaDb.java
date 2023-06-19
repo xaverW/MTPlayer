@@ -150,9 +150,9 @@ public class WriteMediaDb implements AutoCloseable {
         final XMLOutputFactory outFactory = XMLOutputFactory.newInstance();
         writer = outFactory.createXMLStreamWriter(out);
         writer.writeStartDocument(StandardCharsets.UTF_8.name(), "1.0");
-        writer.writeCharacters(P2LibConst.LINE_SEPARATOR);// neue Zeile
+        writer.writeCharacters(P2LibConst.LINE_SEPARATOR); // neue Zeile
         writer.writeStartElement(P2LibConst.CONFIG_XML_START);
-        writer.writeCharacters(P2LibConst.LINE_SEPARATOR);// neue Zeile
+        writer.writeCharacters(P2LibConst.LINE_SEPARATOR); // neue Zeile
     }
 
     private void xmlWrite() throws XMLStreamException {

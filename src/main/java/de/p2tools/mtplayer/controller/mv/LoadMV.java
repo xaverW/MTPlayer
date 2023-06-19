@@ -18,8 +18,8 @@
 package de.p2tools.mtplayer.controller.mv;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
+import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 import de.p2tools.p2lib.tools.duration.PDuration;
 import de.p2tools.p2lib.tools.log.PLog;
@@ -119,7 +119,7 @@ public class LoadMV implements AutoCloseable {
         boolean ret = false;
         AboData aboData = new AboData();
         aboList.add(aboData);
-        String xmlElem = parser.getLocalName();//von der "Umrandung"
+        String xmlElem = parser.getLocalName(); //von der "Umrandung"
         try {
             while (parser.hasNext()) {
                 final int event = parser.next();
@@ -202,20 +202,20 @@ public class LoadMV implements AutoCloseable {
         boolean ret = false;
         BlackData blackData = new BlackData();
         blackList.add(blackData);
-        blackData.setThemeExact(false);//ist schöner
+        blackData.setThemeExact(false); // ist schöner
 
-        String xmlElem = parser.getLocalName();//von der "Umrandung"
+        String xmlElem = parser.getLocalName(); // von der "Umrandung"
         try {
             while (parser.hasNext()) {
                 final int event = parser.next();
 
                 if (event == XMLStreamConstants.END_ELEMENT && parser.getLocalName().equals(xmlElem)) {
-                    //dann ist die "Umrandung" beendet
+                    // dann ist die "Umrandung" beendet
                     break;
                 }
 
                 if (event != XMLStreamConstants.START_ELEMENT) {
-                    //Inhalt geht wieder mit einem Startelement los
+                    // Inhalt geht wieder mit einem Startelement los
                     continue;
                 }
 
