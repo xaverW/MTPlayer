@@ -36,6 +36,7 @@ public class TableRowAbo<T> extends TableRow {
         AboData abo = (AboData) f;
         if (abo == null || empty) {
             setStyle("");
+            setTooltip(null);
 
         } else {
             setTooltip(new Tooltip(

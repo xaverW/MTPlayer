@@ -40,6 +40,8 @@ public class TableRowFilm<T> extends TableRow {
         FilmDataMTP film = (FilmDataMTP) f;
         if (film == null || empty) {
             setStyle("");
+            setTooltip(null);
+
         } else {
             setTooltip(new Tooltip(film.getTheme() + "\n" + film.getTitle()));
 

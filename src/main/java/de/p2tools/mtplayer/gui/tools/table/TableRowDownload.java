@@ -40,6 +40,7 @@ public class TableRowDownload<T> extends TableRow {
         DownloadData download = (DownloadData) f;
         if (download == null || empty) {
             setStyle("");
+            setTooltip(null);
 
         } else {
             setTooltip(new Tooltip(download.getTheme() + "\n" +
