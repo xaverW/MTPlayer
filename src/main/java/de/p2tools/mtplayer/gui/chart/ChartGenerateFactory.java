@@ -96,8 +96,8 @@ public class ChartGenerateFactory {
     private static void fillData(ChartData chartData, BandwidthData bandwidthData, XYChart.Series<Number, Number> chartSeries) {
         final double secondsPerPixel = chartData.getSecondsPerPixel(); //nur vom Slider und den max. vorhandenen Daten abhängig
         final double dataPerPixel = chartData.getDataPerPixel();
-        System.out.println("sPerPixel: " + secondsPerPixel);
-        System.out.println("dPerPixel: " + dataPerPixel);
+//        System.out.println("sPerPixel: " + secondsPerPixel);
+//        System.out.println("dPerPixel: " + dataPerPixel);
 
         for (int chartPos = 0; chartPos < BandwidthDataFactory.CHART_SUM_PIXEL; ++chartPos) {
             // 0 == der aktuellste Wert und der steht am SCHLUSS!!
@@ -108,7 +108,7 @@ public class ChartGenerateFactory {
     }
 
     private static double getActTime(double secondsPerPixel, int chartPos) {
-        return (ProgData.countRunningTimeSeconds - secondsPerPixel * chartPos - BandwidthDataFactory.TMP_COUNT) /
+        return (ProgData.countRunningTimeSeconds - secondsPerPixel * chartPos - BandwidthDataFactory.GET_DATA_COUNT) /
                 (BandwidthDataFactory.SHOW_MINUTES.getValue() ? 60.0 : 1.0);
     }
 

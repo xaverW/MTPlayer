@@ -77,7 +77,7 @@ public class ChartFactory {
     }
 
     public static synchronized void generateYScale(LineChart<Number, Number> lineChart, ChartData chartData) {
-        double max = 0;
+        int max = 0;
         int scale = 1;
 
         for (BandwidthData bandwidthData : chartData.getBandwidthDataList()) {
@@ -85,7 +85,7 @@ public class ChartFactory {
                 continue;
             }
 
-            long m = bandwidthData.getMaxValue();
+            int m = bandwidthData.getMaxValue();
             if (m > max) {
                 max = m;
             }
@@ -101,9 +101,9 @@ public class ChartFactory {
 
     private static void setYAxisLabel(LineChart<Number, Number> lineChart, int scale) {
         switch (scale) {
-            case 1 -> lineChart.getYAxis().setLabel("Bandbreite [B/s]");
-            case 1_000 -> lineChart.getYAxis().setLabel("Bandbreite [kB/s]");
-            case 1_000_000 -> lineChart.getYAxis().setLabel("Bandbreite [MB/s]");
+            case 1 -> lineChart.getYAxis().setLabel("Bandbreite [kB/s]");
+            case 1_000 -> lineChart.getYAxis().setLabel("Bandbreite [MB/s]");
+            case 1_000_000 -> lineChart.getYAxis().setLabel("Bandbreite [GB/s]");
         }
     }
 }

@@ -28,9 +28,9 @@ public class BandwidthData {
     private DownloadData download;
     private int downloadState = DownloadConstants.STATE_INIT;
     private String name = "";
-    private long startTimeSec = -1; //Startzeit in Sekunden
+    private long startTimeSec = -1; // Startzeit in Sekunden
     private boolean isShowing = false;
-    long[] data = new long[BandwidthDataFactory.MAX_DATA];
+    int[] data = new int[BandwidthDataFactory.MAX_DATA]; // sind kByte!!!!
 
     public BandwidthData(DownloadData download) {
         this.download = download;
@@ -70,7 +70,7 @@ public class BandwidthData {
         Arrays.fill(data, 0);
     }
 
-    private long tmpValue = 0;
+    private int tmpValue = 0;
 
     public void addData(long a) {
         // wenn der erste Wert, dann Startzeit setzen
@@ -78,8 +78,8 @@ public class BandwidthData {
             setStartTimeNow();
         }
 
-        tmpValue += a;
-        if (BandwidthDataFactory.TMP_COUNT >= BandwidthDataFactory.DATA_ALL_SECONDS - 1) {
+        tmpValue += a / 1000; // data sind kByte!!!!!!!!
+        if (BandwidthDataFactory.GET_DATA_COUNT >= BandwidthDataFactory.DATA_ALL_SECONDS - 1) {
             // neuer Wert wird der LETZTE in der Liste
             for (int i = 1; i < data.length; ++i) {
                 data[i - 1] = data[i];
@@ -106,8 +106,8 @@ public class BandwidthData {
     }
 
     public boolean isEmpty() {
-        for (int i = 0; i < data.length; ++i) {
-            if (data[i] > 0) {
+        for (int datum : data) {
+            if (datum > 0) {
                 return false;
             }
         }
@@ -115,17 +115,17 @@ public class BandwidthData {
     }
 
     public boolean allValuesEmpty() {
-        for (int i = 0; i < data.length; ++i) {
-            if (data[i] > 0) {
+        for (int datum : data) {
+            if (datum > 0) {
                 return false;
             }
         }
         return true;
     }
 
-    public long getMaxValue() {
+    public int getMaxValue() {
         // liefert den MAX im angezeigten Zeitbereich
-        long max = 0;
+        int max = 0;
         for (int i = getMaxFirstIdx(); i < data.length; ++i) {
             if (data[i] > max) {
                 max = data[i];

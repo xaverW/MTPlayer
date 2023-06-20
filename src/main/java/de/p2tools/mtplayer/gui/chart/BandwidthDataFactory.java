@@ -28,13 +28,13 @@ import java.util.Iterator;
 
 public class BandwidthDataFactory {
     // Daten
-    public static int MAX_SECONDS_SHOWING = 300 * 60; // 18_000
-    public static int DATA_ALL_SECONDS = 3;
-    public static int MAX_DATA = MAX_SECONDS_SHOWING / DATA_ALL_SECONDS; // 6_000
-    public static int TMP_COUNT = 0;
+    public static int MAX_SECONDS_SHOWING = 250 * 60; // 15_000
+    public static int DATA_ALL_SECONDS = 5; // -> 3000 Daten
+    public static int MAX_DATA = MAX_SECONDS_SHOWING / DATA_ALL_SECONDS; // 3_000
+    public static int GET_DATA_COUNT = 0;
 
     // Chart
-    public static int CHART_SUM_PIXEL = 600;
+    public static int CHART_SUM_PIXEL = 500;
     public static BooleanProperty SHOW_MINUTES = new SimpleBooleanProperty(false);
 
     private BandwidthDataFactory() {
@@ -66,9 +66,9 @@ public class BandwidthDataFactory {
 
         // und jetzt noch die aktuelle Bandbreite eintragen
         readBandwidthDate(progData);
-        ++BandwidthDataFactory.TMP_COUNT;
-        if (BandwidthDataFactory.TMP_COUNT >= BandwidthDataFactory.DATA_ALL_SECONDS) {
-            BandwidthDataFactory.TMP_COUNT = 0;
+        ++BandwidthDataFactory.GET_DATA_COUNT;
+        if (BandwidthDataFactory.GET_DATA_COUNT >= BandwidthDataFactory.DATA_ALL_SECONDS) {
+            BandwidthDataFactory.GET_DATA_COUNT = 0;
         }
     }
 
