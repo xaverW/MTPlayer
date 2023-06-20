@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.controller.filmfilter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
+import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmlistMTP;
@@ -122,5 +123,72 @@ public class BlacklistFactory {
                     BlacklistFilterFactory.checkFilmIsBlockedAndCountHits(film, list));
         }
         PDuration.counterStop("countHitsList");
+    }
+
+    public static boolean blackIsEmpty(BlackData blackData) {
+        // true, wenn es das Black schon gibt
+        if (blackData.getChannel().isEmpty() &&
+                blackData.getTheme().isEmpty() &&
+                blackData.getTitle().isEmpty() &&
+                blackData.getThemeTitle().isEmpty()) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean blackExistsAlready(BlackData blackData, List<BlackData> list) {
+        // true, wenn es das Black schon gibt
+        for (final BlackData data : list) {
+            if (data.getChannel().equalsIgnoreCase(blackData.getChannel()) &&
+                    data.getTheme().equalsIgnoreCase(blackData.getTheme()) &&
+
+                    ((data.getTheme().isEmpty() && blackData.getTheme().isEmpty()) ||
+                            data.isThemeExact() == blackData.isThemeExact()) &&
+
+                    data.getTitle().equalsIgnoreCase(blackData.getTitle()) &&
+                    data.getThemeTitle().equalsIgnoreCase(blackData.getThemeTitle())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void addStandardsList(BlackList list) {
+        //nach Auftreten sortiert!
+        BlackData bl = new BlackData("", "", "- Audiodeskription", "");
+        bl.setThemeExact(false);
+        list.add(bl);
+
+        bl = new BlackData("", "", "(Audiodeskription)", "");
+        bl.setThemeExact(false);
+        list.add(bl);
+
+        bl = new BlackData("", "", "(Gebärdensprache)", "");
+        bl.setThemeExact(false);
+        list.add(bl);
+
+        bl = new BlackData("", "", "mit Gebärdensprache", "");
+        bl.setThemeExact(false);
+        list.add(bl);
+
+        bl = new BlackData("", "", "(mit Untertitel)", "");
+        bl.setThemeExact(false);
+        list.add(bl);
+
+        bl = new BlackData("", "", "(Originalversion mit Untertitel)", "");
+        bl.setThemeExact(false);
+        list.add(bl);
+
+        bl = new BlackData("", "", "in Gebärdensprache", "");
+        bl.setThemeExact(false);
+        list.add(bl);
+
+        bl = new BlackData("", "in Gebärdensprache", "", "");
+        bl.setThemeExact(false);
+        list.add(bl);
+
+        bl = new BlackData("", "", "\"Trailer:\"", "");
+        bl.setThemeExact(false);
+        list.add(bl);
     }
 }

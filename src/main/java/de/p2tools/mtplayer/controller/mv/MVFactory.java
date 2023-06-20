@@ -18,10 +18,10 @@
 package de.p2tools.mtplayer.controller.mv;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
-import de.p2tools.mtplayer.controller.data.blackdata.BlackListFactory;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.abo.AboFactory;
+import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
+import de.p2tools.mtplayer.controller.filmfilter.BlacklistFactory;
 import de.p2tools.p2lib.alert.PAlert;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -86,7 +86,7 @@ public class MVFactory {
         int ret = 0;
         for (BlackData blackData : blackList) {
             //Sender und Thema sind immer "exact"
-            if (!BlackListFactory.blackExistsAlready(blackData, ProgData.getInstance().blackList)) {
+            if (!BlacklistFactory.blackExistsAlready(blackData, ProgData.getInstance().blackList)) {
                 ++ret;
                 ProgData.getInstance().blackList.add(blackData);
             }

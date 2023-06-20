@@ -17,6 +17,7 @@
 package de.p2tools.mtplayer.controller.data.blackdata;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.filmfilter.BlacklistFactory;
 import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
 import de.p2tools.p2lib.configfile.pdata.PDataList;
 import de.p2tools.p2lib.tools.duration.PDuration;
@@ -122,8 +123,8 @@ public class BlackList extends SimpleListProperty<BlackData> implements PDataLis
         ArrayList blackList = new ArrayList();
 
         this.stream().forEach(bl -> {
-            if (!BlackListFactory.blackIsEmpty(bl) &&
-                    !BlackListFactory.blackExistsAlready(bl, blackList)) {
+            if (!BlacklistFactory.blackIsEmpty(bl) &&
+                    !BlacklistFactory.blackExistsAlready(bl, blackList)) {
                 blackList.add(bl);
             }
         });

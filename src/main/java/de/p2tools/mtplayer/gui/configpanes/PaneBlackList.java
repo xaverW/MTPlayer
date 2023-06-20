@@ -21,7 +21,6 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
-import de.p2tools.mtplayer.controller.data.blackdata.BlackListFactory;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.controller.filmfilter.BlacklistFactory;
 import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
@@ -318,7 +317,7 @@ public class PaneBlackList {
         btnAddStandards.setTooltip(new Tooltip("Die Standardeinträge der Liste anfügen"));
         btnAddStandards.setOnAction(event -> {
             blackDataChanged.set(true);
-            BlackListFactory.addStandardsList(list);
+            BlacklistFactory.addStandardsList(list);
         });
 
         Button btnCleanList = new Button("_Putzen");
