@@ -25,7 +25,7 @@ import javafx.scene.chart.XYChart;
 public class ChartData {
     //    private int countProgRunningTimeSeconds = 0; // Gesamtzeit die das Chart/Programm läuft
     private int yScale = 1;
-    private int maxTimeSeconds = ProgConfig.DOWNLOAD_CHART_SHOW_MAX_TIME_MIN.get() * 60;
+    private int maxTimeSeconds = ProgConfig.DOWNLOAD_CHART_MAX_TIME_TO_SHOW_MIN.get() * 60;
     private double dataPerPixel = 1;
     private double secondsPerPixel = 1;
 
@@ -43,9 +43,9 @@ public class ChartData {
 
     public ChartData() {
         ChartDataFactory.initChartSeries(chartSeriesOneSumChart);
-        ProgConfig.DOWNLOAD_CHART_SHOW_MAX_TIME_MIN.addListener((ob, ol, ne) -> {
+        ProgConfig.DOWNLOAD_CHART_MAX_TIME_TO_SHOW_MIN.addListener((ob, ol, ne) -> {
             //die muss dann neu gesetzt werden!!
-            maxTimeSeconds = ProgConfig.DOWNLOAD_CHART_SHOW_MAX_TIME_MIN.get() * 60;
+            maxTimeSeconds = ProgConfig.DOWNLOAD_CHART_MAX_TIME_TO_SHOW_MIN.get() * 60;
             ChartDataFactory.genActShowingTimeValues(this);
         });
     }

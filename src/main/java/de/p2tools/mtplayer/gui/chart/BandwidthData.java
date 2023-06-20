@@ -136,7 +136,7 @@ public class BandwidthData {
 
     private int getMaxFirstIdx() {
         final int first = data.length -
-                (ProgConfig.DOWNLOAD_CHART_SHOW_MAX_TIME_MIN.get() * 60) / BandwidthDataFactory.DATA_ALL_SECONDS;
+                (ProgConfig.DOWNLOAD_CHART_MAX_TIME_TO_SHOW_MIN.get() * 60) / BandwidthDataFactory.DATA_ALL_SECONDS;
         return Math.max(first, 0);
     }
 }

@@ -261,7 +261,7 @@ public class ProgConfig extends PDataProgConfig {
     public static BooleanProperty DOWNLOAD_CHART_SEPARAT = addBoolProp("download-chart-separat", Boolean.TRUE);
     public static BooleanProperty DOWNLOAD_CHART_ONLY_EXISTING = addBoolProp("download-chart-only-existing", Boolean.FALSE);
     public static BooleanProperty DOWNLOAD_CHART_ONLY_RUNNING = addBoolProp("download-chart-only-running", Boolean.FALSE);
-    public static IntegerProperty DOWNLOAD_CHART_SHOW_MAX_TIME_MIN = addIntProp("download-chart-show-max-time-min", 30); //MAX Minuten im Chart
+    public static IntegerProperty DOWNLOAD_CHART_MAX_TIME_TO_SHOW_MIN = addIntProp("download-chart-max-time-to-show-min", 30); //MAX Minuten im Chart
 
     // Gui Abo
     public static BooleanProperty ABO_SEARCH_NOW = addBoolProp("abo-search-now", Boolean.TRUE);

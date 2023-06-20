@@ -94,12 +94,12 @@ public class PaneDownloadChart extends AnchorPane {
     }
 
     private ContextMenu initContextMenu() {
-        if (ProgConfig.DOWNLOAD_CHART_SHOW_MAX_TIME_MIN.getValue() % 10 != 0) {
+        if (ProgConfig.DOWNLOAD_CHART_MAX_TIME_TO_SHOW_MIN.getValue() % 10 != 0) {
             // vorsichtshalber
-            ProgConfig.DOWNLOAD_CHART_SHOW_MAX_TIME_MIN.setValue(30);
+            ProgConfig.DOWNLOAD_CHART_MAX_TIME_TO_SHOW_MIN.setValue(30);
         }
 
-        final Label lblValue = new Label(" " + ProgConfig.DOWNLOAD_CHART_SHOW_MAX_TIME_MIN.get() + " Min.");
+        final Label lblValue = new Label(" " + ProgConfig.DOWNLOAD_CHART_MAX_TIME_TO_SHOW_MIN.get() + " Min.");
         final Label lblInfo = new Label("Zeitraum:");
 
         final Slider slMaxTime = new Slider();
@@ -113,7 +113,7 @@ public class PaneDownloadChart extends AnchorPane {
         slMaxTime.setMinorTickCount(0);
         slMaxTime.setMajorTickUnit(10);
 
-        IntegerProperty ip = ProgConfig.DOWNLOAD_CHART_SHOW_MAX_TIME_MIN;
+        IntegerProperty ip = ProgConfig.DOWNLOAD_CHART_MAX_TIME_TO_SHOW_MIN;
         slMaxTime.valueProperty().bindBidirectional(ip);
         slMaxTime.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
