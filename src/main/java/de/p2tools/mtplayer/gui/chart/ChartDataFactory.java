@@ -17,6 +17,7 @@
 
 package de.p2tools.mtplayer.gui.chart;
 
+import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
@@ -55,44 +56,50 @@ public class ChartDataFactory {
             }
         }
 
-        // mind. Anzeigedauer auf geraden Wert legen
-        int maxTimeSecondsAct;
-        long timeToShow = ProgData.countRunningTimeSeconds - oldest;
+        final int maxTimeToShowSeconds;
+        long timeToShowSeconds = ProgData.countRunningTimeSeconds - oldest;
+        final int maxTimeSelectedSeconds = ProgConfig.DOWNLOAD_CHART_MAX_TIME_TO_SHOW_MIN.get() * 60;
 
-        timeToShow = Math.min(timeToShow, chartData.getMaxTimeSeconds());
-        BandwidthDataFactory.SHOW_MINUTES.setValue(timeToShow >= 2 * 60);
+        if (maxTimeSelectedSeconds < timeToShowSeconds) {
+            // dann auf den vorgegebenen Wert begrenzen
+            maxTimeToShowSeconds = maxTimeSelectedSeconds;
 
-        if (timeToShow < 60) {
-            // 1 min.
-            maxTimeSecondsAct = 60;
-        } else if (timeToShow < 2 * 60) {
-            // 2 min.
-            maxTimeSecondsAct = 2 * 60;
-        } else if (timeToShow < 10 * 60) {
-            // 10 min.
-            maxTimeSecondsAct = 10 * 60;
-        } else if (timeToShow < 30 * 60) {
-            maxTimeSecondsAct = 30 * 60;
-        } else if (timeToShow < 60 * 60) {
-            maxTimeSecondsAct = 60 * 60;
-        } else if (timeToShow < 100 * 60) {
-            maxTimeSecondsAct = 100 * 60;
-        } else if (timeToShow < 120 * 60) {
-            maxTimeSecondsAct = 120 * 60;
-        } else if (timeToShow < 150 * 60) {
-            maxTimeSecondsAct = 150 * 60;
-        } else if (timeToShow < 200 * 60) {
-            maxTimeSecondsAct = 200 * 60;
         } else {
-            maxTimeSecondsAct = BandwidthDataFactory.MAX_SECONDS_SHOWING;
+            // dann wird der max. vorhandene Wert angezeigt
+            if (timeToShowSeconds < 60) {
+                // 1 min.
+                maxTimeToShowSeconds = 60;
+            } else if (timeToShowSeconds < 2 * 60) {
+                // 2 min.
+                maxTimeToShowSeconds = 2 * 60;
+            } else if (timeToShowSeconds < 10 * 60) {
+                // 10 min.
+                maxTimeToShowSeconds = 10 * 60;
+            } else if (timeToShowSeconds < 30 * 60) {
+                // 30 min.
+                maxTimeToShowSeconds = 30 * 60;
+            } else if (timeToShowSeconds < 60 * 60) {
+                maxTimeToShowSeconds = 60 * 60;
+            } else if (timeToShowSeconds < 100 * 60) {
+                maxTimeToShowSeconds = 100 * 60;
+            } else if (timeToShowSeconds < 120 * 60) {
+                maxTimeToShowSeconds = 120 * 60;
+            } else if (timeToShowSeconds < 150 * 60) {
+                maxTimeToShowSeconds = 150 * 60;
+            } else if (timeToShowSeconds < 200 * 60) {
+                maxTimeToShowSeconds = 200 * 60;
+            } else {
+                maxTimeToShowSeconds = BandwidthDataFactory.MAX_SECONDS_SHOWING;
+            }
         }
+        BandwidthDataFactory.SHOW_MINUTES.setValue(timeToShowSeconds >= 2 * 60);
 
         //Anzahl der Sekunden/Pixel
-        chartData.setSecondsPerPixel(1.0 * maxTimeSecondsAct / BandwidthDataFactory.CHART_SUM_PIXEL);
-//        System.out.println("sPerPixel: " + chartData.getSecondsPerPixel());
+        chartData.setSecondsPerPixel(1.0 * maxTimeToShowSeconds / BandwidthDataFactory.CHART_SUM_PIXEL);
+        // System.out.println("sPerPixel: " + chartData.getSecondsPerPixel());
 
         //Anzahl der Daten/Pixel
         chartData.setDataPerPixel(chartData.getSecondsPerPixel() / BandwidthDataFactory.DATA_ALL_SECONDS);
-//        System.out.println("dPerPixel: " + chartData.getDataPerPixel());
+        // System.out.println("dPerPixel: " + chartData.getDataPerPixel());
     }
 }
