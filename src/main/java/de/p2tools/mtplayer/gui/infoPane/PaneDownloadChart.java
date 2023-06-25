@@ -57,7 +57,7 @@ public class PaneDownloadChart extends AnchorPane {
         lineChart = new LineChart<>(ChartFactory.createXAxis(), ChartFactory.createYAxis());
         lineChart.getStyleClass().add("thick-chart");
         lineChart.setLegendSide(Side.RIGHT);
-        lineChart.setLegendVisible(true);
+        lineChart.setLegendVisible(true); // rechts die Anzeige der lines namen
         lineChart.setAnimated(false);
         lineChart.setCreateSymbols(ProgData.debug ? true : false);
         lineChart.setTitle("Downloads");

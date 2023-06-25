@@ -99,6 +99,7 @@ public class ChartGenerateFactory {
 //        System.out.println("sPerPixel: " + secondsPerPixel);
 //        System.out.println("dPerPixel: " + dataPerPixel);
 
+        chartSeries.setName(bandwidthData.getName());
         for (int chartPos = 0; chartPos < BandwidthDataFactory.CHART_SUM_PIXEL; ++chartPos) {
             // 0 == der aktuellste Wert und der steht am SCHLUSS!!
             final double actTimeMin = getActTime(secondsPerPixel, chartPos);
