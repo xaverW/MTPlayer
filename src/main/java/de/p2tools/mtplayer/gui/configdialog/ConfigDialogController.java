@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.gui.configdialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
 import de.p2tools.mtplayer.gui.configdialog.setdata.ControllerSet;
@@ -92,7 +92,7 @@ public class ConfigDialogController extends PDialogExtra {
         this.getMaskerPane().visibleProperty().bind(ProgData.getInstance().maskerPane.visibleProperty());
         Button btnStop = getMaskerPane().getButton();
         getMaskerPane().setButtonText("");
-        btnStop.setGraphic(ProgIcons.Icons.ICON_BUTTON_STOP.getImageView());
+        btnStop.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_STOP.getImageView());
         btnStop.setOnAction(a -> LoadFilmFactory.getInstance().loadFilmlist.setStop(true));
         listener = new ListenerLoadFilmlist() {
             @Override

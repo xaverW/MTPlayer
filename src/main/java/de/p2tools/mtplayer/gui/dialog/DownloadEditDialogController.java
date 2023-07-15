@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.dialog;
 import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
@@ -80,9 +80,9 @@ public class DownloadEditDialogController extends PDialogExtra {
     private final TextArea textAreaCallArray = new TextArea();
     private final PToggleSwitch tglUrl = new PToggleSwitch("URL");
     PHyperlink pHyperlinkUrlFilm = new PHyperlink("",
-            ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
+            ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
     PHyperlink pHyperlinkUrlDownload = new PHyperlink("",
-            ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
+            ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
 
     private final ToggleGroup group = new ToggleGroup();
     private String fileSize_HD = "";
@@ -129,7 +129,7 @@ public class DownloadEditDialogController extends PDialogExtra {
         tglUrl.selectedProperty().bindBidirectional(urlProperty);
         tglUrl.selectedProperty().addListener((observable, oldValue, newValue) -> setUrlVis());
 
-        btnPath.setGraphic(ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
+        btnPath.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
         btnPath.setText("");
         btnPath.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen."));
         btnPath.setOnAction(event -> getDestination());
@@ -391,7 +391,7 @@ public class DownloadEditDialogController extends PDialogExtra {
 
                 final Button btnReset = new Button("");
                 btnReset.setTooltip(new Tooltip("Reset"));
-                btnReset.setGraphic(ProgIcons.Icons.ICON_BUTTON_RESET.getImageView());
+                btnReset.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_RESET.getImageView());
                 btnReset.setOnAction(e -> txt[DownloadFieldNames.DOWNLOAD_PROGRAM_CALL_ARRAY_NO].setText(orgProgArray));
 
                 final Button btnHelp = PButton.helpButton("Den Programmaufruf ändern",
@@ -594,7 +594,7 @@ public class DownloadEditDialogController extends PDialogExtra {
         h.getChildren().add(text[DownloadFieldNames.DOWNLOAD_HD_NO]);
         if (download.isHd()) {
             ImageView imageView = new ImageView();
-            imageView.setImage(ProgIcons.Icons.ICON_DIALOG_ON.getImage());
+            imageView.setImage(ProgIconsMTPlayer.ICON_DIALOG_ON.getImage());
             h.getChildren().add(imageView);
         }
         gridPane.add(h, 0, row);
@@ -603,7 +603,7 @@ public class DownloadEditDialogController extends PDialogExtra {
         h.getChildren().add(text[DownloadFieldNames.DOWNLOAD_UT_NO]);
         if (download.isUt()) {
             ImageView imageView = new ImageView();
-            imageView.setImage(ProgIcons.Icons.ICON_DIALOG_ON.getImage());
+            imageView.setImage(ProgIconsMTPlayer.ICON_DIALOG_ON.getImage());
             h.getChildren().add(imageView);
         }
         gridPane.add(h, 1, row);
@@ -612,7 +612,7 @@ public class DownloadEditDialogController extends PDialogExtra {
         h.getChildren().add(text[DownloadFieldNames.DOWNLOAD_GEO_NO]);
         if (download.getGeoBlocked()) {
             ImageView imageView = new ImageView();
-            imageView.setImage(ProgIcons.Icons.ICON_DIALOG_ON.getImage());
+            imageView.setImage(ProgIconsMTPlayer.ICON_DIALOG_ON.getImage());
             h.getChildren().add(imageView);
         }
         gridPane.add(h, 2, row);

@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.mediadialog;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.history.HistoryData;
 import de.p2tools.mtplayer.controller.mediadb.MediaCleaningFactory;
 import de.p2tools.mtplayer.controller.mediadb.MediaData;
@@ -124,16 +124,16 @@ public class PaneDialog extends ScrollPane {
         txtTitleMedia.setEditable(false);
         txtPathMedia.setEditable(false);
 
-        btnReset.setGraphic(ProgIcons.Icons.ICON_BUTTON_RESET.getImageView());
+        btnReset.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_RESET.getImageView());
         btnReset.setTooltip(new Tooltip("Suchtext wieder herstellen"));
 
-        btnClean.setGraphic(ProgIcons.Icons.ICON_BUTTON_CLEAN.getImageView());
+        btnClean.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_CLEAN.getImageView());
         btnClean.setTooltip(new Tooltip("Suchtext putzen"));
 
-        btnConfig.setGraphic(ProgIcons.Icons.ICON_BUTTON_EDIT.getImageView());
+        btnConfig.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_EDIT.getImageView());
         btnConfig.setTooltip(new Tooltip("Einstellungen zum Putzen"));
 
-        btnClear.setGraphic(ProgIcons.Icons.ICON_BUTTON_STOP.getImageView());
+        btnClear.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_STOP.getImageView());
         btnClear.setTooltip(new Tooltip("Das Suchfeld löschen"));
         btnClear.setOnAction(a -> txtSearch.clear());
 
@@ -167,7 +167,7 @@ public class PaneDialog extends ScrollPane {
             progress.setVisible(false);
             progress.setMaxHeight(Double.MAX_VALUE);
             progress.setMaxWidth(Double.MAX_VALUE);
-            btnStopSearching.setGraphic(ProgIcons.Icons.ICON_BUTTON_STOP.getImageView());
+            btnStopSearching.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_STOP.getImageView());
             btnStopSearching.setOnAction(event -> progData.mediaDataList.setStopSearching(true));
             btnStopSearching.visibleProperty().bind(progData.mediaDataList.searchingProperty());
             hBoxProgress.getChildren().addAll(btnCreateMediaDB, progress, btnStopSearching);

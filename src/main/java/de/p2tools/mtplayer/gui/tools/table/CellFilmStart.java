@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.tools.table;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -59,11 +59,11 @@ public class CellFilmStart<S, T> extends TableCell<S, T> {
 
                 btnPlay = new Button("");
                 btnPlay.getStyleClass().addAll("btnFunction", "btnFuncTable");
-                btnPlay.setGraphic(ProgIcons.Icons.IMAGE_TABLE_FILM_PLAY.getImageView());
+                btnPlay.setGraphic(ProgIconsMTPlayer.IMAGE_TABLE_FILM_PLAY.getImageView());
 
                 btnSave = new Button("");
                 btnSave.getStyleClass().addAll("btnFunction", "btnFuncTable");
-                btnSave.setGraphic(ProgIcons.Icons.IMAGE_TABLE_FILM_SAVE.getImageView());
+                btnSave.setGraphic(ProgIconsMTPlayer.IMAGE_TABLE_FILM_SAVE.getImageView());
 
                 if (ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM.get()) {
                     btnPlay.setMaxHeight(18);

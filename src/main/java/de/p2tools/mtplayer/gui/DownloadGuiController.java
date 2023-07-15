@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactoryDelFilmFile;
@@ -113,7 +113,7 @@ public class DownloadGuiController extends AnchorPane {
     public void playFilm() {
         final Optional<DownloadData> download = getSel();
         download.ifPresent(downloadData -> POpen.playStoredFilm(downloadData.getDestPathFile(),
-                ProgConfig.SYSTEM_PROG_PLAY_FILME, ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView()));
+                ProgConfig.SYSTEM_PROG_PLAY_FILME, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView()));
     }
 
     public void deleteFilmFile() {
@@ -132,7 +132,7 @@ public class DownloadGuiController extends AnchorPane {
         }
 
         String s = download.get().getDestPath();
-        POpen.openDir(s, ProgConfig.SYSTEM_PROG_OPEN_DIR, ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
+        POpen.openDir(s, ProgConfig.SYSTEM_PROG_OPEN_DIR, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
     }
 
     public void playUrl() {

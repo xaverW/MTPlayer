@@ -303,12 +303,12 @@ public class DownloadAddDialogController extends PDialogExtra {
     }
 
     private void initButton() {
-        btnDest.setGraphic(ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
+        btnDest.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
         btnDest.setText("");
         btnDest.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen."));
         btnDest.setOnAction(event -> getDestination());
 
-        btnPropose.setGraphic(ProgIcons.Icons.ICON_BUTTON_PROPOSE.getImageView());
+        btnPropose.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_PROPOSE.getImageView());
         btnPropose.setText("");
         btnPropose.setTooltip(new Tooltip("Einen Pfad zum Speichern vorschlagen lassen."));
         btnPropose.setOnAction(event -> proposeDestination());

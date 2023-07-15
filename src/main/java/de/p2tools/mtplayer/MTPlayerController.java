@@ -18,7 +18,7 @@ package de.p2tools.mtplayer;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.AboGuiPack;
 import de.p2tools.mtplayer.gui.DownloadGuiPack;
@@ -116,7 +116,7 @@ public class MTPlayerController extends StackPane {
         maskerPane.toFront();
         Button btnStop = maskerPane.getButton();
         maskerPane.setButtonText("");
-        btnStop.setGraphic(ProgIcons.Icons.ICON_BUTTON_STOP.getImageView());
+        btnStop.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_STOP.getImageView());
         btnStop.setOnAction(a -> LoadFilmFactory.getInstance().loadFilmlist.setStop(true));
     }
 

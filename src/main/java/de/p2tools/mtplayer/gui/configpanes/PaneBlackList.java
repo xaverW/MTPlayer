@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.gui.configpanes;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
@@ -278,7 +278,7 @@ public class PaneBlackList {
 
     private void addButton(VBox vBox) {
         Button btnDel = new Button("");
-        btnDel.setGraphic(ProgIcons.Icons.ICON_BUTTON_REMOVE.getImageView());
+        btnDel.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_REMOVE.getImageView());
         btnDel.setOnAction(event -> {
             final ObservableList<BlackData> selected = tableView.getSelectionModel().getSelectedItems();
             if (selected == null || selected.isEmpty()) {
@@ -291,7 +291,7 @@ public class PaneBlackList {
         });
 
         Button btnNew = new Button("");
-        btnNew.setGraphic(ProgIcons.Icons.ICON_BUTTON_ADD.getImageView());
+        btnNew.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_ADD.getImageView());
         btnNew.setOnAction(event -> {
             blackDataChanged.set(true);
             BlackData blackData = new BlackData();

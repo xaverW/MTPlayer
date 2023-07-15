@@ -81,8 +81,20 @@ public class FilmFilterRunner {
                     PLog.debugLog("         === Filter: " + count++ + " ===");
                     PLog.debugLog("========================================");
 
+                    System.out.println("==========START========");
+//                    progData.filmGuiController.remove();
+                    progData.filmGuiController.tableView.setVisible(false);
                     progData.filmlistFiltered.filteredListSetPred(
                             PredicateFactory.getPredicate(progData.actFilmFilterWorker.getActFilterSettings()));
+
+                    Platform.runLater(() -> {
+//                        progData.filmGuiController.set();
+                        progData.filmGuiController.tableView.setVisible(true);
+                        System.out.println("visible");
+                    });
+
+                    System.out.println("==========STOP========");
+
                     search.set(false);
                     if (research.get()) {
                         filterList();

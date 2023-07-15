@@ -16,7 +16,7 @@
 package de.p2tools.mtplayer;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.PHyperlink;
 import javafx.application.Application;
@@ -70,7 +70,7 @@ public class MTStartErrorWindow extends Application {
             HBox hBoxUrl = new HBox(10);
             hBoxUrl.setAlignment(Pos.CENTER_LEFT);
             PHyperlink hyperlink = new PHyperlink(url,
-                    ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
+                    ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
             hBoxUrl.getChildren().addAll(new Label("Infos:"), hyperlink);
 
             Button btnOk = new Button("_Ok");

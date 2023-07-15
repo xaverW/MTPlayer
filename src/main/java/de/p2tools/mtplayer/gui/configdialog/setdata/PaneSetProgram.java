@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.gui.configdialog.setdata;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.data.setdata.ProgramData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.gui.tools.HelpTextPset;
@@ -136,7 +136,7 @@ public class PaneSetProgram {
 
     private void initButton(VBox vBox) {
         Button btnDel = new Button("");
-        btnDel.setGraphic(ProgIcons.Icons.ICON_BUTTON_REMOVE.getImageView());
+        btnDel.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_REMOVE.getImageView());
         btnDel.setOnAction(event -> {
             final ObservableList<ProgramData> sels = tableView.getSelectionModel().getSelectedItems();
 
@@ -149,7 +149,7 @@ public class PaneSetProgram {
         });
 
         Button btnNew = new Button("");
-        btnNew.setGraphic(ProgIcons.Icons.ICON_BUTTON_ADD.getImageView());
+        btnNew.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_ADD.getImageView());
         btnNew.setOnAction(event -> {
             ProgramData progData = new ProgramData();
             setDataObjectProperty.getValue().getProgramList().add(progData);
@@ -160,7 +160,7 @@ public class PaneSetProgram {
         });
 
         Button btnUp = new Button("");
-        btnUp.setGraphic(ProgIcons.Icons.ICON_BUTTON_MOVE_UP.getImageView());
+        btnUp.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_MOVE_UP.getImageView());
         btnUp.setOnAction(event -> {
             int sel = getSelectedLine();
             if (sel >= 0) {
@@ -171,7 +171,7 @@ public class PaneSetProgram {
         });
 
         Button btnDown = new Button("");
-        btnDown.setGraphic(ProgIcons.Icons.ICON_BUTTON_MOVE_DOWN.getImageView());
+        btnDown.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_MOVE_DOWN.getImageView());
         btnDown.setOnAction(event -> {
             int sel = getSelectedLine();
             if (sel >= 0) {
@@ -198,7 +198,7 @@ public class PaneSetProgram {
 
         final Button btnFile = new Button();
         btnFile.setOnAction(event -> PDirFileChooser.FileChooserOpenFile(ProgData.getInstance().primaryStage, txtProgPath));
-        btnFile.setGraphic(ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
+        btnFile.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
         btnFile.setTooltip(new Tooltip("Ein Programm zum verarbeiten der URL auswählen"));
 
         final Button btnHelpDest = PButton.helpButton(stage, "Zieldateiname",

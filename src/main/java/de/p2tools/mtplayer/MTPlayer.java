@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.ProgStartAfterGui;
 import de.p2tools.mtplayer.controller.ProgStartBeforeGui;
 import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.p2lib.P2LibInit;
+import de.p2tools.p2lib.ProgIconsP2Lib;
 import de.p2tools.p2lib.guitools.PGuiSize;
 import de.p2tools.p2lib.tools.IoReadWriteStyle;
 import de.p2tools.p2lib.tools.PLock;
@@ -50,7 +51,7 @@ public class MTPlayer extends Application {
         progData = ProgData.getInstance();
         progData.primaryStage = primaryStage;
 
-        initP2lib();
+        initLib();
         ProgStartBeforeGui.workBeforeGui();
 
         final String xmlFilePath = new ProgInfos().getLockFileStr();
@@ -67,7 +68,9 @@ public class MTPlayer extends Application {
         PDuration.counterStop("start");
     }
 
-    private void initP2lib() {
+    private void initLib() {
+        ProgIconsMTPlayer.initIcons();
+        ProgIconsP2Lib.initIcons();
         P2LibInit.initLib(primaryStage, ProgConst.PROGRAM_NAME,
                 "", ProgConfig.SYSTEM_DARK_THEME,
                 ProgData.debug, ProgData.duration);

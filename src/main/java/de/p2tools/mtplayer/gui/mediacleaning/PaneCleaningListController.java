@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.gui.mediacleaning;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.data.mediacleaningdata.MediaCleaningData;
 import de.p2tools.mtplayer.controller.mediadb.MediaCleaningFactory;
 import de.p2tools.p2lib.P2LibConst;
@@ -98,7 +98,7 @@ public class PaneCleaningListController {
 
     private void addButton(VBox vBox) {
         Button btnDel = new Button("");
-        btnDel.setGraphic(ProgIcons.Icons.ICON_BUTTON_REMOVE.getImageView());
+        btnDel.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_REMOVE.getImageView());
         btnDel.setOnAction(event -> {
             final ObservableList<MediaCleaningData> selected = tableView.getSelectionModel().getSelectedItems();
             if (selected == null || selected.isEmpty()) {
@@ -110,7 +110,7 @@ public class PaneCleaningListController {
         });
 
         Button btnNew = new Button("");
-        btnNew.setGraphic(ProgIcons.Icons.ICON_BUTTON_ADD.getImageView());
+        btnNew.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_ADD.getImageView());
         btnNew.setOnAction(event -> {
             MediaCleaningData blackData = new MediaCleaningData();
             progData.mediaCleaningList.add(blackData);

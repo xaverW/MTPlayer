@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.gui.infoPane;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.history.HistoryData;
 import de.p2tools.mtplayer.controller.mediadb.MediaCleaningFactory;
@@ -141,7 +141,7 @@ public class PaneDownloadMedia extends VBox {
         btnConfig.setTooltip(new Tooltip("Einstellungen anzeigen:\n" +
                 " -> linke Maustaste: Mediensammlung voreingestellt,\n" +
                 " -> rechte Maustaste: Abos voreingestellt"));
-        btnConfig.setGraphic(ProgIcons.Icons.ICON_BUTTON_EDIT.getImageView());
+        btnConfig.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_EDIT.getImageView());
         btnConfig.setOnAction(a -> {
             new MediaCleaningDialogController(true);
             setSearchString(true);
@@ -158,7 +158,7 @@ public class PaneDownloadMedia extends VBox {
         btnDialogMedia.setTooltip(new Tooltip("Dialog Mediensammlung öffnen:\n" +
                 " -> linke Maustaste: Mediensammlung voreingestellt,\n" +
                 " -> rechte Maustaste: Abos voreingestellt"));
-        btnDialogMedia.setGraphic(ProgIcons.Icons.ICON_BUTTON_MENU.getImageView());
+        btnDialogMedia.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_MENU.getImageView());
         btnDialogMedia.setOnAction(a -> {
             new MediaDialogController(
                     downloadData == null ? "" : downloadData.getTheme(),
@@ -181,7 +181,7 @@ public class PaneDownloadMedia extends VBox {
         });
 
         btnClear.setTooltip(new Tooltip("Die Suchfelder löschen"));
-        btnClear.setGraphic(ProgIcons.Icons.ICON_BUTTON_STOP.getImageView());
+        btnClear.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_STOP.getImageView());
         btnClear.setOnAction(a -> {
             txtSearchMedia.clear();
             txtSearchAbo.clear();

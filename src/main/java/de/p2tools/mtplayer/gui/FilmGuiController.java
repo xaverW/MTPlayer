@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmTools;
+import de.p2tools.mtplayer.controller.film.FilmlistMTP;
 import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
 import de.p2tools.mtplayer.gui.infoPane.FilmInfoController;
 import de.p2tools.mtplayer.gui.mediadialog.MediaDialogController;
@@ -52,7 +53,7 @@ public class FilmGuiController extends AnchorPane {
     private final ScrollPane scrollPaneTableFilm = new ScrollPane();
     private final FilmInfoController filmInfoController;
 
-    private final TableFilm tableView;
+    public final TableFilm tableView;
     private final ProgData progData;
     private final SortedList<FilmDataMTP> sortedList;
     private final KeyCombination STRG_A = new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_ANY);
@@ -201,6 +202,15 @@ public class FilmGuiController extends AnchorPane {
                 PTableFactory.refreshTable(tableView);
             }
         });
+    }
+
+    public void remove() {
+        FilmlistMTP list = new FilmlistMTP();
+        tableView.setItems(list.getSortedList());
+    }
+
+    public void set() {
+        tableView.setItems(sortedList);
     }
 
     private void initTable() {

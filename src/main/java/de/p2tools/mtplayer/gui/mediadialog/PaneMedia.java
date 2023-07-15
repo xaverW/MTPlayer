@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.gui.mediadialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.mediadb.MediaData;
 import de.p2tools.mtplayer.controller.mediadb.MediaDataWorker;
 import de.p2tools.mtplayer.controller.mediadb.MediaFileSize;
@@ -142,12 +142,12 @@ public class PaneMedia extends PaneDialog {
         btnCreateMediaDB.disableProperty().bind(progData.mediaDataList.searchingProperty());
         btnCreateMediaDB.setOnAction(e -> MediaDataWorker.createMediaDb());
 
-        btnOpen.setGraphic(ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
+        btnOpen.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
         btnOpen.setTooltip(new Tooltip("Ausgewählten Pfad im Dateimanager öffnen"));
         btnOpen.setOnAction(e -> open());
         btnOpen.disableProperty().bind(txtPathMedia.textProperty().isEmpty().and(txtTitleMedia.textProperty().isEmpty()));
 
-        btnPlay.setGraphic(ProgIcons.Icons.ICON_BUTTON_PLAY.getImageView());
+        btnPlay.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_PLAY.getImageView());
         btnPlay.setTooltip(new Tooltip("Ausgewählten Film abspielen"));
         btnPlay.setOnAction(e -> play());
         btnPlay.disableProperty().bind(txtPathMedia.textProperty().isEmpty().and(txtTitleMedia.textProperty().isEmpty()));
@@ -164,12 +164,12 @@ public class PaneMedia extends PaneDialog {
         final String name = txtTitleMedia.getText();
         if (!name.isEmpty() && !path.isEmpty()) {
             POpen.playStoredFilm(PFileUtils.addsPath(path, name),
-                    ProgConfig.SYSTEM_PROG_PLAY_FILME, ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
+                    ProgConfig.SYSTEM_PROG_PLAY_FILME, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
         }
     }
 
     private void open() {
         final String s = txtPathMedia.getText();
-        POpen.openDir(s, ProgConfig.SYSTEM_PROG_OPEN_DIR, ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
+        POpen.openDir(s, ProgConfig.SYSTEM_PROG_OPEN_DIR, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
     }
 }

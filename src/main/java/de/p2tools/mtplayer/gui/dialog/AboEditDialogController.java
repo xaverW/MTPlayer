@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.gui.dialog;
 
 import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.abo.AboFieldNames;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
@@ -303,7 +303,7 @@ public class AboEditDialogController extends AboDialogController {
 
                 Button btn = new Button("");
                 btn.setTooltip(new Tooltip("Zielpfad für das Abo anpassen"));
-                btn.setGraphic(ProgIcons.Icons.ICON_BUTTON_EDIT_ABO_PATH.getImageView());
+                btn.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_EDIT_ABO_PATH.getImageView());
                 btn.setOnAction(event -> {
                     if (textField.isVisible()) {
                         textField.setVisible(false);

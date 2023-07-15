@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.gui.mediadialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.mediadb.MediaData;
 import de.p2tools.p2lib.guitools.POpen;
 import de.p2tools.p2lib.tools.file.PFileUtils;
@@ -49,7 +49,7 @@ public class PaneMediaContextMenu {
         miOpen.setOnAction(a -> {
             String path = mediaData.getPath();
             if (!path.isEmpty()) {
-                POpen.openDir(path, ProgConfig.SYSTEM_PROG_OPEN_DIR, ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
+                POpen.openDir(path, ProgConfig.SYSTEM_PROG_OPEN_DIR, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
             }
         });
 
@@ -59,7 +59,7 @@ public class PaneMediaContextMenu {
             String name = mediaData.getName();
             if (!path.isEmpty() && !name.isEmpty()) {
                 POpen.playStoredFilm(PFileUtils.addsPath(path, name),
-                        ProgConfig.SYSTEM_PROG_PLAY_FILME, ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
+                        ProgConfig.SYSTEM_PROG_PLAY_FILME, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
             }
         });
 

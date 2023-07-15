@@ -20,7 +20,7 @@ package de.p2tools.mtplayer.gui.dialog;
 import de.p2tools.mtplayer.controller.ProgQuit;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
@@ -71,21 +71,21 @@ public class QuitDialogController extends PDialogExtra {
         headerLabel.setStyle("-fx-font-size: 1.5em;");
 
         // nicht beenden
-        BigButton cancelButton = new BigButton(ProgIcons.Icons.ICON_BUTTON_QUIT.getImageView(),
+        BigButton cancelButton = new BigButton(ProgIconsMTPlayer.ICON_BUTTON_QUIT.getImageView(),
                 "Nicht beenden", "");
         cancelButton.setOnAction(e -> {
             close();
         });
 
         // beenden
-        BigButton quitButton = new BigButton(ProgIcons.Icons.ICON_BUTTON_QUIT.getImageView(),
+        BigButton quitButton = new BigButton(ProgIconsMTPlayer.ICON_BUTTON_QUIT.getImageView(),
                 "Beenden", "Alle Downloads abbrechen und das Programm beenden.");
         quitButton.setOnAction(e -> {
             ProgQuit.quit();
         });
 
         // warten, dann beenden
-        BigButton waitButton = new BigButton(ProgIcons.Icons.ICON_BUTTON_QUIT.getImageView(),
+        BigButton waitButton = new BigButton(ProgIconsMTPlayer.ICON_BUTTON_QUIT.getImageView(),
                 "Warten", "Alle Downloads abwarten und dann das Programm beenden.");
         waitButton.setOnAction(e -> startWaiting());
         chkShutDown.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_SHUT_DOWN_CALL_ON);
@@ -103,7 +103,7 @@ public class QuitDialogController extends PDialogExtra {
 
         final Button btnHelp = PButton.helpButton(getStage(), "Rechner herunterfahren", HelpText.CONFIG_SHUT_DOWN_CALL);
         final Button btnEdit = new Button();
-        btnEdit.setGraphic(ProgIcons.Icons.ICON_BUTTON_EDIT_FILTER.getImageView());
+        btnEdit.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_EDIT_FILTER.getImageView());
         btnEdit.setOnAction(a -> new ChangeShutDownCallDialog(getStageProp().getValue()));
         btnEdit.setTooltip(new Tooltip("Systembefehl nach Programmende anpassen"));
 
@@ -113,7 +113,7 @@ public class QuitDialogController extends PDialogExtra {
         gridPane.setPadding(new Insets(20));
 
         int row = 0;
-        gridPane.add(ProgIcons.Icons.ICON_DIALOG_QUIT.getImageView(), 0, 0, 1, 1);
+        gridPane.add(ProgIconsMTPlayer.ICON_DIALOG_QUIT.getImageView(), 0, 0, 1, 1);
         gridPane.add(headerLabel, 1, row);
         gridPane.add(cancelButton, 1, ++row);
         gridPane.add(quitButton, 1, ++row);

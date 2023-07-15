@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.gui.configpanes;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
@@ -104,10 +104,10 @@ public class PaneLogfile {
         btnFile.setOnAction(event -> {
             PDirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtLogFile);
         });
-        btnFile.setGraphic(ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
+        btnFile.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
 
         final Button btnReset = new Button();
-        btnReset.setGraphic(ProgIcons.Icons.ICON_BUTTON_RESET.getImageView());
+        btnReset.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_RESET.getImageView());
         btnReset.setTooltip(new Tooltip("Standardpfad für das Logfile wieder herstellen"));
         btnReset.setOnAction(event -> {
             txtLogFile.setText(ProgInfos.getStandardLogDirectory_String());

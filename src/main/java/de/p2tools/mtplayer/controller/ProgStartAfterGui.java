@@ -23,7 +23,7 @@ import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.filter.FilmFilterDialog;
 import de.p2tools.p2lib.dialogs.dialog.PDialog;
-import de.p2tools.p2lib.icons.GetIcon;
+import de.p2tools.p2lib.guitools.P2WindowIcon;
 import de.p2tools.p2lib.tools.ProgramToolsFactory;
 import de.p2tools.p2lib.tools.log.LogMessage;
 
@@ -55,10 +55,10 @@ public class ProgStartAfterGui {
     public static void setProgramIcon() {
         if (ProgConfig.SYSTEM_USE_OWN_PROGRAM_ICON.getValue()) {
             String resource = ProgConfig.SYSTEM_PROGRAM_ICON_PATH.getValueSafe();
-            GetIcon.addWindowP2Icon(ProgData.getInstance().primaryStage, resource);
+            P2WindowIcon.setWindowIcon(ProgData.getInstance().primaryStage, resource);
             PDialog.setIconPath(resource);
         } else {
-            GetIcon.addWindowP2Icon(ProgData.getInstance().primaryStage);
+            P2WindowIcon.addWindowP2Icon(ProgData.getInstance().primaryStage);
             PDialog.setIconPath("");
         }
     }

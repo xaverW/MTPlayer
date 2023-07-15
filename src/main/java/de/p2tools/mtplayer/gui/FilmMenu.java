@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.mtplayer.MTPlayerFactory;
 import de.p2tools.mtplayer.ShortKeyFactory;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.config.ProgShortcut;
 import de.p2tools.mtplayer.controller.filmfilter.BlacklistFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
@@ -59,9 +59,9 @@ public class FilmMenu {
         vBox.getChildren().add(vBoxSpace);
 
         final ToolBarButton btPlay = new ToolBarButton(vBox,
-                "Abspielen", "Markierten Film abspielen", ProgIcons.Icons.ICON_TOOLBAR_FILM_START.getImageView());
+                "Abspielen", "Markierten Film abspielen", ProgIconsMTPlayer.ICON_TOOLBAR_FILM_START.getImageView());
         final ToolBarButton btSave = new ToolBarButton(vBox,
-                "Speichern", "Markierte Filme speichern", ProgIcons.Icons.ICON_TOOLBAR_FILM_REC.getImageView());
+                "Speichern", "Markierte Filme speichern", ProgIconsMTPlayer.ICON_TOOLBAR_FILM_REC.getImageView());
 
         vBoxSpace = new VBox();
         vBoxSpace.setMaxHeight(10);
@@ -69,13 +69,13 @@ public class FilmMenu {
         vBox.getChildren().add(vBoxSpace);
 
         final ToolBarButton btBookmark = new ToolBarButton(vBox,
-                "Bookmarks anlegen", "Bookmarks für die markierten Filme anlegen", ProgIcons.Icons.ICON_TOOLBAR_FILM_BOOKMARK.getImageView());
+                "Bookmarks anlegen", "Bookmarks für die markierten Filme anlegen", ProgIconsMTPlayer.ICON_TOOLBAR_FILM_BOOKMARK.getImageView());
         final ToolBarButton btDelBookmark = new ToolBarButton(vBox,
-                "Bookmarks löschen", "Bookmarks für die markierten Filme löschen", ProgIcons.Icons.ICON_TOOLBAR_FILM_DEL_BOOKMARK.getImageView());
+                "Bookmarks löschen", "Bookmarks für die markierten Filme löschen", ProgIconsMTPlayer.ICON_TOOLBAR_FILM_DEL_BOOKMARK.getImageView());
         final ToolBarButton btDelAllBookmark = new ToolBarButton(vBox,
-                "Alle Bookmarks löschen", "Alle angelegten Bookmarks löschen", ProgIcons.Icons.ICON_TOOLBAR_FILM_DEL_ALL_BOOKMARK.getImageView());
+                "Alle Bookmarks löschen", "Alle angelegten Bookmarks löschen", ProgIconsMTPlayer.ICON_TOOLBAR_FILM_DEL_ALL_BOOKMARK.getImageView());
         final ToolBarButton btFilterBookmakr = new ToolBarButton(vBox,
-                "Bookmarks anzeigen", FILM_FILTER_BOOKMARK_TEXT, ProgIcons.Icons.ICON_TOOLBAR_FILM_BOOKMARK_FILTER.getImageView());
+                "Bookmarks anzeigen", FILM_FILTER_BOOKMARK_TEXT, ProgIconsMTPlayer.ICON_TOOLBAR_FILM_BOOKMARK_FILTER.getImageView());
 
         btPlay.setOnAction(a -> progData.filmGuiController.playFilmUrl());
         btSave.setOnAction(a -> progData.filmGuiController.saveTheFilm());
@@ -121,7 +121,7 @@ public class FilmMenu {
     private void initFilmMenu() {
         final MenuButton mb = new MenuButton("");
         mb.setTooltip(new Tooltip("Filmmenü anzeigen"));
-        mb.setGraphic(ProgIcons.Icons.ICON_TOOLBAR_MENU.getImageView());
+        mb.setGraphic(ProgIconsMTPlayer.ICON_TOOLBAR_MENU.getImageView());
         mb.getStyleClass().addAll("btnFunction", "btnFunc-1");
 
         final MenuItem mbPlay = new MenuItem("Film abspielen");

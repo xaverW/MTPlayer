@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.gui.startdialog;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.gui.configpanes.PaneFilmSender;
 import de.p2tools.mtplayer.gui.configpanes.PaneGeo;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
@@ -197,7 +197,7 @@ public class StartDialogController extends PDialogExtra {
         btnCancel = new Button("_Abbrechen");
         btnCancel.setOnAction(a -> closeDialog(false));
 
-        btnNext = PButton.getButton(ProgIcons.Icons.ICON_BUTTON_NEXT.getImageView(), "nächste Seite");
+        btnNext = PButton.getButton(ProgIconsMTPlayer.ICON_BUTTON_NEXT.getImageView(), "nächste Seite");
         btnNext.setOnAction(event -> {
             switch (aktState) {
                 case START_1:
@@ -223,7 +223,7 @@ public class StartDialogController extends PDialogExtra {
             }
             selectActPane();
         });
-        btnPrev = PButton.getButton(ProgIcons.Icons.ICON_BUTTON_PREV.getImageView(), "vorherige Seite");
+        btnPrev = PButton.getButton(ProgIconsMTPlayer.ICON_BUTTON_PREV.getImageView(), "vorherige Seite");
         btnPrev.setOnAction(event -> {
             switch (aktState) {
                 case START_1:

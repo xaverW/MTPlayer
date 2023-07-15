@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.PGuiTools;
 import javafx.beans.property.IntegerProperty;
@@ -46,7 +46,7 @@ public class DownloadGuiMediaSearch {
         Button btnChangeMedia = new Button();
         btnChangeMedia.getStyleClass().add("buttonVerySmall");
         btnChangeMedia.setTooltip(new Tooltip("Einstellung wo gesucht wird, ändern"));
-        btnChangeMedia.setGraphic(ProgIcons.Icons.ICON_BUTTON_CHANGE.getImageView());
+        btnChangeMedia.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_CHANGE.getImageView());
         btnChangeMedia.setOnAction(a -> {
             if (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_THEME) {
                 ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_TITEL);
@@ -84,7 +84,7 @@ public class DownloadGuiMediaSearch {
         Button btnChangeAbo = new Button();
         btnChangeAbo.getStyleClass().add("buttonVerySmall");
         btnChangeAbo.setTooltip(new Tooltip("Einstellung wo gesucht wird, ändern"));
-        btnChangeAbo.setGraphic(ProgIcons.Icons.ICON_BUTTON_CHANGE.getImageView());
+        btnChangeAbo.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_CHANGE.getImageView());
         btnChangeAbo.setOnAction(a -> {
             if (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_THEME) {
                 ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_TITEL);
@@ -153,7 +153,7 @@ public class DownloadGuiMediaSearch {
         Button btnChangeMedia = new Button();
         btnChangeMedia.getStyleClass().add("buttonVerySmall");
         btnChangeMedia.setTooltip(new Tooltip("Einstellung wie der Suchtext gebaut wird, ändern"));
-        btnChangeMedia.setGraphic(ProgIcons.Icons.ICON_BUTTON_CHANGE.getImageView());
+        btnChangeMedia.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_CHANGE.getImageView());
         btnChangeMedia.setOnAction(a -> {
             if (ip.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_THEME) {
                 ip.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_TITEL);

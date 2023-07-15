@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.configpanes;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.mediadb.MediaCollectionData;
 import de.p2tools.mtplayer.controller.mediadb.MediaDataWorker;
 import de.p2tools.mtplayer.gui.tools.HelpText;
@@ -141,13 +141,13 @@ public class PaneMediaDataPath {
 
         Button btnDel = new Button("");
         btnDel.setTooltip(new Tooltip("Die markierte Sammlung wird gelöscht."));
-        btnDel.setGraphic(ProgIcons.Icons.ICON_BUTTON_REMOVE.getImageView());
+        btnDel.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_REMOVE.getImageView());
         btnDel.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems())
                 .or(progData.mediaDataList.searchingProperty()));
         btnDel.setOnAction(a -> delete());
 
         Button btnAdd = new Button("");
-        btnAdd.setGraphic(ProgIcons.Icons.ICON_BUTTON_ADD.getImageView());
+        btnAdd.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_ADD.getImageView());
         if (external) {
             btnAdd.setTooltip(new Tooltip("Eine neue Sammlung wird angelegt und vom angegebenen Pfad eingelesen."));
         } else {
@@ -158,7 +158,7 @@ public class PaneMediaDataPath {
         if (external) {
             Button btnUpdate = new Button("");
             btnUpdate.setTooltip(new Tooltip("Die markierte Sammlung wird neu eingelesen."));
-            btnUpdate.setGraphic(ProgIcons.Icons.ICON_BUTTON_UPDATE.getImageView());
+            btnUpdate.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_UPDATE.getImageView());
             btnUpdate.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems())
                     .or(progData.mediaDataList.searchingProperty()));
 
@@ -212,7 +212,7 @@ public class PaneMediaDataPath {
         gridPane.setPadding(new Insets(P2LibConst.DIST_EDGE));
 
         btnPath.setTooltip(new Tooltip("Einen Pfad zum Einlesen einer neuen Sammlung auswählen."));
-        btnPath.setGraphic(ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
+        btnPath.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
         btnPath.setOnAction(event -> {
             PDirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtPath);
             if (txtCollectionName.getText().isEmpty()) {

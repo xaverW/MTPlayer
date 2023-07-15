@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.gui.infoPane;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
@@ -134,7 +134,7 @@ public class PaneFilmInfo extends VBox {
 
         if (!film.arr[FilmDataXml.FILM_WEBSITE].isEmpty()) {
             PHyperlink hyperlink = new PHyperlink(film.arr[FilmDataXml.FILM_WEBSITE],
-                    ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIcons.Icons.ICON_BUTTON_FILE_OPEN.getImageView());
+                    ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
             hBoxUrl.getChildren().addAll(lblUrl, hyperlink);
         }
 

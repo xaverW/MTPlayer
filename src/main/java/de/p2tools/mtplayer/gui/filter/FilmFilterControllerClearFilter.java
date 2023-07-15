@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.gui.filter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.PButtonClearFilterFactory;
 import de.p2tools.p2lib.guitools.PGuiTools;
@@ -48,18 +48,18 @@ public class FilmFilterControllerClearFilter extends VBox {
     }
 
     private void addButton() {
-        btnGoBack.setGraphic(ProgIcons.Icons.ICON_BUTTON_BACKWARD.getImageView());
+        btnGoBack.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_BACKWARD.getImageView());
         btnGoBack.setOnAction(a -> progData.actFilmFilterWorker.goBackward());
         btnGoBack.disableProperty().bind(progData.actFilmFilterWorker.backwardProperty().not());
         btnGoBack.setTooltip(new Tooltip("letzte Filtereinstellung wieder herstellen"));
-        btnGoForward.setGraphic(ProgIcons.Icons.ICON_BUTTON_FORWARD.getImageView());
+        btnGoForward.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_FORWARD.getImageView());
         btnGoForward.setOnAction(a -> progData.actFilmFilterWorker.goForward());
         btnGoForward.disableProperty().bind(progData.actFilmFilterWorker.forwardProperty().not());
         btnGoForward.setTooltip(new Tooltip("letzte Filtereinstellung wieder herstellen"));
 
         btnClearFilter.setOnAction(a -> clearFilter());
 
-        btnEditFilter.setGraphic(ProgIcons.Icons.ICON_BUTTON_EDIT_FILTER.getImageView());
+        btnEditFilter.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_EDIT_FILTER.getImageView());
         btnEditFilter.setOnAction(a -> editFilter());
         btnEditFilter.setTooltip(new Tooltip("Filter ein/ausschalten"));
 
